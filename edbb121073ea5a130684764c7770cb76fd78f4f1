@@ -1,0 +1,90 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "fef6fa56_618b6b95",
+        "filename": "extensions/common/api/media_perception_private.idl",
+        "patchSetId": 4
+      },
+      "lineNbr": 57,
+      "author": {
+        "id": 1000232
+      },
+      "writtenOn": "2017-11-03T21:48:56Z",
+      "side": 1,
+      "message": "maybe something like ComponentType or AvailableFunctionality \n\n(I could imagine version becoming overloaded in the API, e.g. if there is a desire to use a min version of the same component type)",
+      "range": {
+        "startLine": 57,
+        "startChar": 7,
+        "endLine": 57,
+        "endChar": 23
+      },
+      "revId": "edbb121073ea5a130684764c7770cb76fd78f4f1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4129f695_d9d2d8dd",
+        "filename": "extensions/common/api/media_perception_private.idl",
+        "patchSetId": 4
+      },
+      "lineNbr": 63,
+      "author": {
+        "id": 1000232
+      },
+      "writtenOn": "2017-11-03T21:48:56Z",
+      "side": 1,
+      "message": "wdyt about \"LIMITED\" and \"FULL\" (though, LIMITED is not really well defined)",
+      "range": {
+        "startLine": 63,
+        "startChar": 4,
+        "endLine": 63,
+        "endChar": 9
+      },
+      "revId": "edbb121073ea5a130684764c7770cb76fd78f4f1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "fabf22bf_fa56746c",
+        "filename": "extensions/common/api/media_perception_private.idl",
+        "patchSetId": 4
+      },
+      "lineNbr": 72,
+      "author": {
+        "id": 1000232
+      },
+      "writtenOn": "2017-11-03T21:48:56Z",
+      "side": 1,
+      "message": "FAILED_TO_INSTALL?",
+      "range": {
+        "startLine": 72,
+        "startChar": 4,
+        "endLine": 72,
+        "endChar": 18
+      },
+      "revId": "edbb121073ea5a130684764c7770cb76fd78f4f1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "db99437e_bb03d1b2",
+        "filename": "extensions/common/api/media_perception_private.idl",
+        "patchSetId": 4
+      },
+      "lineNbr": 246,
+      "author": {
+        "id": 1000232
+      },
+      "writtenOn": "2017-11-03T21:48:56Z",
+      "side": 1,
+      "message": "what happens if this is called more than once (with different |component|)?",
+      "revId": "edbb121073ea5a130684764c7770cb76fd78f4f1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
