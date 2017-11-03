@@ -92,7 +92,7 @@ IN_PROC_BROWSER_TEST_F(ContentBrowserTest, RendererCrashCallStack) {
   std::string crash_string =
 #if !defined(ADDRESS_SANITIZER) && !defined(LEAK_SANITIZER) && \
     !defined(MEMORY_SANITIZER) && !defined(THREAD_SANITIZER)
-      "content::RenderFrameImpl::PrepareRenderViewForNavigation";
+      "content::RenderFrameImpl::NavigateInternal";
 #else
       "#0 ";
 #endif
