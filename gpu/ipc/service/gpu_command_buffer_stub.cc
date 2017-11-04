@@ -600,10 +600,14 @@ gpu::ContextResult GpuCommandBufferStub::Initialize(
 
   use_virtualized_gl_context_ |=
       context_group_->feature_info()->workarounds().use_virtualized_gl_contexts;
+  LOG(INFO) << __FUNCTION__ << ";;; use_virtualized_gl_context_="
+            << use_virtualized_gl_context_;
 
   // MailboxManagerSync synchronization correctness currently depends on having
   // only a single context. See crbug.com/510243 for details.
   use_virtualized_gl_context_ |= manager->mailbox_manager()->UsesSync();
+  LOG(INFO) << __FUNCTION__ << ";;; use_virtualized_gl_context_="
+            << use_virtualized_gl_context_;
 
   bool offscreen = (surface_handle_ == kNullSurfaceHandle);
   gl::GLSurface* default_surface = manager->GetDefaultOffscreenSurface();
@@ -638,8 +642,13 @@ gpu::ContextResult GpuCommandBufferStub::Initialize(
   // config is compatible with the offscreen ones - otherwise MakeCurrent fails.
   // Example use case is a client requesting an onscreen RGBA8888 buffer for
   // fullscreen video on a low-spec device with RGB565 default format.
-  if (!surface_format.IsCompatible(default_surface->GetFormat()) && !offscreen)
+  if (!surface_format.IsCompatible(default_surface->GetFormat()) &&
+      !offscreen) {
     use_virtualized_gl_context_ = false;
+    LOG(INFO) << __FUNCTION__ << ";;; use_virtualized_gl_context_="
+              << use_virtualized_gl_context_ << " offscreen=" << offscreen
+              << " (surface format not compatible?)";
+  }
 #endif
 
   command_buffer_ = std::make_unique<CommandBufferService>(
@@ -678,6 +687,8 @@ gpu::ContextResult GpuCommandBufferStub::Initialize(
     if (!surface_format.IsCompatible(default_surface->GetFormat())) {
       DVLOG(1) << __FUNCTION__ << ": Hit the OwnOffscreenSurface path";
       use_virtualized_gl_context_ = false;
+      LOG(INFO) << __FUNCTION__ << ";;; use_virtualized_gl_context_="
+                << use_virtualized_gl_context_ << " OwnOffscreenSurface";
       surface_ = gl::init::CreateOffscreenGLSurfaceWithFormat(gfx::Size(),
                                                               surface_format);
       if (!surface_) {
@@ -709,6 +720,9 @@ gpu::ContextResult GpuCommandBufferStub::Initialize(
       return gpu::ContextResult::kFatalFailure;
     }
   }
+
+  LOG(INFO) << __FUNCTION__ << ";;; final use_virtualized_gl_context_="
+            << use_virtualized_gl_context_;
 
   if (context_group_->use_passthrough_cmd_decoder()) {
     // When using the passthrough command decoder, only share with other

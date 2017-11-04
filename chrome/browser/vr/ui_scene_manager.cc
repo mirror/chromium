@@ -873,11 +873,13 @@ void UiSceneManager::CreateToasts(Model* model) {
   element->AddBinding(base::MakeUnique<Binding<bool>>(
       base::Bind(
           [](Model* m) {
+            LOG(INFO) << __FUNCTION__ << ";;; m->web_vr_timeout_state=" << m->web_vr_timeout_state;
             return m->web_vr_timeout_state == kWebVrNoTimeoutPending;
           },
           base::Unretained(model)),
       base::Bind(
           [](UiElement* v, const bool& b) {
+            LOG(INFO) << __FUNCTION__ << ";;; b=" << b;
             if (b)
               v->SetVisible(b);
           },

@@ -45,6 +45,7 @@ base::WeakPtr<vr::BrowserUiInterface> Ui::GetBrowserUiWeakPtr() {
 }
 
 void Ui::SetWebVrMode(bool enabled, bool show_toast) {
+  LOG(INFO) << __FUNCTION__ << ";;; enabled=" << enabled << " show_toast=" << show_toast;
   model_->web_vr_timeout_state =
       enabled ? kWebVrAwaitingFirstFrame : kWebVrNoTimeoutPending;
   scene_manager_->SetWebVrMode(enabled, show_toast);
@@ -68,6 +69,7 @@ void Ui::SetLoading(bool loading) {
 }
 
 void Ui::SetLoadProgress(float progress) {
+  LOG(INFO) << __FUNCTION__ << ";;; progress=" << progress;
   model_->load_progress = progress;
 }
 
@@ -147,15 +149,18 @@ void Ui::OnProjMatrixChanged(const gfx::Transform& proj_matrix) {
 }
 
 void Ui::OnWebVrFrameAvailable() {
+  LOG(INFO) << __FUNCTION__ << ";;;";
   model_->web_vr_timeout_state = kWebVrNoTimeoutPending;
   scene_manager_->OnWebVrFrameAvailable();
 }
 
 void Ui::OnWebVrTimeoutImminent() {
+  LOG(INFO) << __FUNCTION__ << ";;;";
   model_->web_vr_timeout_state = kWebVrTimeoutImminent;
 }
 
 void Ui::OnWebVrTimedOut() {
+  LOG(INFO) << __FUNCTION__ << ";;;";
   model_->web_vr_timeout_state = kWebVrTimedOut;
 }
 
