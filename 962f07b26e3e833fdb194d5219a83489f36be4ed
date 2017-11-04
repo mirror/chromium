@@ -93,6 +93,30 @@
       "revId": "962f07b26e3e833fdb194d5219a83489f36be4ed",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6b40f001_2fa690e3",
+        "filename": "media/remoting/proto_utils_unittest.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 160,
+      "author": {
+        "id": 1157930
+      },
+      "writtenOn": "2017-11-04T00:13:27Z",
+      "side": 1,
+      "message": "Sorry I might have confused you when discussing offline. PS9 can not detect any newly added field as Mounir says in the comment because we memset both |original| and |converted| with the same value.\n\nIf assuming the person who change PipelineStatistics always updates the operator\u003d\u003d, Chris\u0027s proposal works except when the new field has a default value of 0xcd in every byte (which very unlikely happens).The idea is that we don\u0027t memset |orginal|, but still memset |converted| with |0xcd| before conversion. Check with EXPECT_EQ(original, converted) after conversion is done. The check will fail for new fields as original has default value while converted has 0xcd in every byte of the new fields.\n\nMounir: Feel free to go ahead with Chris\u0027s proposal or leave it to me :). Thanks.",
+      "parentUuid": "54ed924e_a46ded49",
+      "range": {
+        "startLine": 160,
+        "startChar": 5,
+        "endLine": 160,
+        "endChar": 9
+      },
+      "revId": "962f07b26e3e833fdb194d5219a83489f36be4ed",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
