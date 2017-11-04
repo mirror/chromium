@@ -1,0 +1,106 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "d44574bb_ac629573",
+        "filename": "components/autofill/core/browser/BUILD.gn",
+        "patchSetId": 19
+      },
+      "lineNbr": 336,
+      "author": {
+        "id": 1003016
+      },
+      "writtenOn": "2017-11-04T18:44:16Z",
+      "side": 1,
+      "message": "try putting this on line 139 of third_party/libaddressinput/BUILD.gn (before the test_support block)",
+      "revId": "94431d5f540e8d50a73984c621eb9838aace8c1e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f9b216ee_e6e00779",
+        "filename": "components/autofill/core/browser/BUILD.gn",
+        "patchSetId": 19
+      },
+      "lineNbr": 415,
+      "author": {
+        "id": 1003016
+      },
+      "writtenOn": "2017-11-04T18:44:16Z",
+      "side": 1,
+      "message": "Try putting this on line 156 of third_party/libaddressinput/BUILD.gn",
+      "revId": "94431d5f540e8d50a73984c621eb9838aace8c1e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "99a29287_7b1f7af8",
+        "filename": "components/autofill/core/browser/BUILD.gn",
+        "patchSetId": 19
+      },
+      "lineNbr": 450,
+      "author": {
+        "id": 1003016
+      },
+      "writtenOn": "2017-11-04T18:44:16Z",
+      "side": 1,
+      "message": "try adding \"//third_party/libaddressinput:test_support\" here",
+      "revId": "94431d5f540e8d50a73984c621eb9838aace8c1e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "09e5a778_ae89b8bb",
+        "filename": "components/autofill/core/browser/BUILD.gn",
+        "patchSetId": 19
+      },
+      "lineNbr": 455,
+      "author": {
+        "id": 1003016
+      },
+      "writtenOn": "2017-11-04T18:44:16Z",
+      "side": 1,
+      "message": "Try putting this in the test_support block of third_party/libaddressinput/BUILD.gn",
+      "revId": "94431d5f540e8d50a73984c621eb9838aace8c1e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9226d661_cc6e769d",
+        "filename": "components/autofill/core/browser/address_validation_util_unittest.cc",
+        "patchSetId": 19
+      },
+      "lineNbr": 33,
+      "author": {
+        "id": 1003016
+      },
+      "writtenOn": "2017-11-04T18:44:16Z",
+      "side": 1,
+      "message": "You can chain them like so: https://cs.chromium.org/chromium/src/media/filters/ffmpeg_demuxer_unittest.cc?rcl\u003d5ef1786c5699e2f160a3104390089e74752d626b\u0026l\u003d360",
+      "revId": "94431d5f540e8d50a73984c621eb9838aace8c1e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4485dd28_ef0c56d2",
+        "filename": "components/autofill/core/browser/subkey_requester_unittest.cc",
+        "patchSetId": 19
+      },
+      "lineNbr": 91,
+      "author": {
+        "id": 1003016
+      },
+      "writtenOn": "2017-11-04T18:44:16Z",
+      "side": 1,
+      "message": "same comment about chaining",
+      "revId": "94431d5f540e8d50a73984c621eb9838aace8c1e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
