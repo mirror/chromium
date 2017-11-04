@@ -117,6 +117,30 @@
       "revId": "17f6338cec8a1300e59edbf4be204d87b896d706",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "895ec99e_f67f680a",
+        "filename": "chrome/browser/ui/cocoa/status_bubble_mac.mm",
+        "patchSetId": 6
+      },
+      "lineNbr": 456,
+      "author": {
+        "id": 1160249
+      },
+      "writtenOn": "2017-11-04T15:51:09Z",
+      "side": 1,
+      "message": "By the way, I tried this and it does make the status bubble float above other windows, for what it\u0027s worth.",
+      "parentUuid": "87c03e7b_9fb9918c",
+      "range": {
+        "startLine": 456,
+        "startChar": 20,
+        "endLine": 456,
+        "endChar": 39
+      },
+      "revId": "17f6338cec8a1300e59edbf4be204d87b896d706",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
