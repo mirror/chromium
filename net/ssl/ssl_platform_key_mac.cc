@@ -48,6 +48,21 @@ namespace net {
 
 namespace {
 
+// TODO(davidben): Remove this when we switch to building to the 10.13
+// SDK. https://crbug.com/780980
+#if !defined(MAC_OS_X_VERSION_10_13) || \
+    MAC_OS_X_VERSION_MIN_ALLOWED < MAC_OS_X_VERSION_10_13
+API_AVAILABLE(macosx(10.13))
+const SecKeyAlgorithm kSecKeyAlgorithmRSASignatureDigestPSSSHA256 =
+    CFSTR("algid:sign:RSA:digest-PSS:SHA256:SHA256:32");
+API_AVAILABLE(macosx(10.13))
+const SecKeyAlgorithm kSecKeyAlgorithmRSASignatureDigestPSSSHA384 =
+    CFSTR("algid:sign:RSA:digest-PSS:SHA384:SHA384:48");
+API_AVAILABLE(macosx(10.13))
+const SecKeyAlgorithm kSecKeyAlgorithmRSASignatureDigestPSSSHA512 =
+    CFSTR("algid:sign:RSA:digest-PSS:SHA512:SHA512:64");
+#endif
+
 class ScopedCSSM_CC_HANDLE {
  public:
   ScopedCSSM_CC_HANDLE() : handle_(0) {}
@@ -83,7 +98,7 @@ class SSLPlatformKeyCSSM : public ThreadedSSLPrivateKey::Delegate {
   ~SSLPlatformKeyCSSM() override {}
 
   std::vector<uint16_t> GetPreferences() override {
-    return SSLPrivateKey::DefaultPreferences(type_);
+    return SSLPrivateKey::DefaultPreferences(type_, false /* no PSS */);
   }
 
   Error SignDigest(uint16_t algorithm,
@@ -164,6 +179,44 @@ class SSLPlatformKeyCSSM : public ThreadedSSLPrivateKey::Delegate {
   DISALLOW_COPY_AND_ASSIGN(SSLPlatformKeyCSSM);
 };
 
+// Returns the corresponding SecKeyAlgorithm or nullptr if unrecognized.
+API_AVAILABLE(macosx(10.12))
+SecKeyAlgorithm GetSecKeyAlgorithm(uint16_t algorithm) {
+  switch (algorithm) {
+    case SSL_SIGN_RSA_PKCS1_SHA512:
+      return kSecKeyAlgorithmRSASignatureDigestPKCS1v15SHA512;
+    case SSL_SIGN_RSA_PKCS1_SHA384:
+      return kSecKeyAlgorithmRSASignatureDigestPKCS1v15SHA384;
+    case SSL_SIGN_RSA_PKCS1_SHA256:
+      return kSecKeyAlgorithmRSASignatureDigestPKCS1v15SHA256;
+    case SSL_SIGN_RSA_PKCS1_SHA1:
+      return kSecKeyAlgorithmRSASignatureDigestPKCS1v15SHA1;
+    case SSL_SIGN_RSA_PKCS1_MD5_SHA1:
+      return kSecKeyAlgorithmRSASignatureDigestPKCS1v15Raw;
+    case SSL_SIGN_ECDSA_SECP521R1_SHA512:
+      return kSecKeyAlgorithmECDSASignatureDigestX962SHA512;
+    case SSL_SIGN_ECDSA_SECP384R1_SHA384:
+      return kSecKeyAlgorithmECDSASignatureDigestX962SHA384;
+    case SSL_SIGN_ECDSA_SECP256R1_SHA256:
+      return kSecKeyAlgorithmECDSASignatureDigestX962SHA256;
+    case SSL_SIGN_ECDSA_SHA1:
+      return kSecKeyAlgorithmECDSASignatureDigestX962SHA1;
+  }
+
+  if (__builtin_available(macOS 10.13, *)) {
+    switch (algorithm) {
+      case SSL_SIGN_RSA_PSS_SHA512:
+        return kSecKeyAlgorithmRSASignatureDigestPSSSHA512;
+      case SSL_SIGN_RSA_PSS_SHA384:
+        return kSecKeyAlgorithmRSASignatureDigestPSSSHA384;
+      case SSL_SIGN_RSA_PSS_SHA256:
+        return kSecKeyAlgorithmRSASignatureDigestPSSSHA256;
+    }
+  }
+
+  return nullptr;
+}
+
 class API_AVAILABLE(macosx(10.12)) SSLPlatformKeySecKey
     : public ThreadedSSLPrivateKey::Delegate {
  public:
@@ -173,44 +226,18 @@ class API_AVAILABLE(macosx(10.12)) SSLPlatformKeySecKey
   ~SSLPlatformKeySecKey() override {}
 
   std::vector<uint16_t> GetPreferences() override {
-    return SSLPrivateKey::DefaultPreferences(type_);
+    // RSA-PSS is supported as of macOS 10.13.
+    return SSLPrivateKey::DefaultPreferences(type_,
+                                             base::mac::IsAtLeastOS10_13());
   }
 
   Error SignDigest(uint16_t algorithm,
                    const base::StringPiece& input,
                    std::vector<uint8_t>* signature) override {
-    SecKeyAlgorithm sec_algorithm;
-    switch (algorithm) {
-      case SSL_SIGN_RSA_PKCS1_SHA512:
-        sec_algorithm = kSecKeyAlgorithmRSASignatureDigestPKCS1v15SHA512;
-        break;
-      case SSL_SIGN_RSA_PKCS1_SHA384:
-        sec_algorithm = kSecKeyAlgorithmRSASignatureDigestPKCS1v15SHA384;
-        break;
-      case SSL_SIGN_RSA_PKCS1_SHA256:
-        sec_algorithm = kSecKeyAlgorithmRSASignatureDigestPKCS1v15SHA256;
-        break;
-      case SSL_SIGN_RSA_PKCS1_SHA1:
-        sec_algorithm = kSecKeyAlgorithmRSASignatureDigestPKCS1v15SHA1;
-        break;
-      case SSL_SIGN_RSA_PKCS1_MD5_SHA1:
-        sec_algorithm = kSecKeyAlgorithmRSASignatureDigestPKCS1v15Raw;
-        break;
-      case SSL_SIGN_ECDSA_SECP521R1_SHA512:
-        sec_algorithm = kSecKeyAlgorithmECDSASignatureDigestX962SHA512;
-        break;
-      case SSL_SIGN_ECDSA_SECP384R1_SHA384:
-        sec_algorithm = kSecKeyAlgorithmECDSASignatureDigestX962SHA384;
-        break;
-      case SSL_SIGN_ECDSA_SECP256R1_SHA256:
-        sec_algorithm = kSecKeyAlgorithmECDSASignatureDigestX962SHA256;
-        break;
-      case SSL_SIGN_ECDSA_SHA1:
-        sec_algorithm = kSecKeyAlgorithmECDSASignatureDigestX962SHA1;
-        break;
-      default:
-        NOTREACHED();
-        return ERR_FAILED;
+    SecKeyAlgorithm sec_algorithm = GetSecKeyAlgorithm(algorithm);
+    if (!sec_algorithm) {
+      NOTREACHED();
+      return ERR_FAILED;
     }
 
     base::ScopedCFTypeRef<CFDataRef> input_ref(CFDataCreateWithBytesNoCopy(
