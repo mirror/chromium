@@ -58,7 +58,9 @@ class RuntimeHooksDelegateTest : public NativeExtensionBindingsSystemUnittest {
         std::make_unique<NativeRendererMessagingService>(bindings_system());
 
     bindings_system()->api_system()->GetHooksForAPI("runtime")->SetDelegate(
-        std::make_unique<RuntimeHooksDelegate>(messaging_service_.get()));
+        std::make_unique<RuntimeHooksDelegate>(
+            messaging_service_.get(),
+            base::Bind(&RunFunctionOnGlobalAndReturnHandle)));
 
     scoped_refptr<Extension> mutable_extension = BuildExtension();
     RegisterExtension(mutable_extension);
