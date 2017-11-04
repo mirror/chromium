@@ -570,6 +570,39 @@ static void SetSurfaceIsClipped(const ClipTree& clip_tree,
   render_surface->SetIsClipped(is_clipped);
 }
 
+static void SetSurfaceDrawColorScales(const EffectTree& tree,
+                                      RenderSurfaceImpl* render_surface) {
+  const EffectNode* node = tree.Node(render_surface->EffectTreeIndex());
+  gfx::Vector3dF draw_color_scales = node->color_scales;
+  for (node = tree.parent(node); node && !node->has_render_surface;
+       node = tree.parent(node)) {
+    draw_color_scales =
+        gfx::ScaleVector3d(draw_color_scales, node->color_scales);
+  }
+  render_surface->SetDrawColorScales(draw_color_scales);
+}
+
+static gfx::Vector3dF LayerDrawColorScales(const LayerImpl* layer,
+                                           const EffectTree& tree) {
+  gfx::Vector3dF draw_color_scales(1.f, 1.f, 1.f);
+  if (!layer->render_target())
+    return draw_color_scales;
+
+  const EffectNode* target_node =
+      tree.Node(layer->render_target()->EffectTreeIndex());
+  const EffectNode* node = tree.Node(layer->effect_tree_index());
+  if (node == target_node)
+    return draw_color_scales;
+
+  while (node != target_node) {
+    draw_color_scales =
+        gfx::ScaleVector3d(draw_color_scales, node->color_scales);
+    node = tree.parent(node);
+  }
+
+  return draw_color_scales;
+}
+
 static void SetSurfaceDrawOpacity(const EffectTree& tree,
                                   RenderSurfaceImpl* render_surface) {
   // Draw opacity of a surface is the product of opacities between the surface
@@ -961,6 +994,8 @@ void ComputeDrawPropertiesOfVisibleLayers(const LayerImplList* layer_list,
   // Compute effects and determine if render surfaces have contributing layers
   // that escape clip.
   for (LayerImpl* layer : *layer_list) {
+    layer->draw_properties().color_scales =
+        LayerDrawColorScales(layer, property_trees->effect_tree);
     layer->draw_properties().opacity =
         LayerDrawOpacity(layer, property_trees->effect_tree);
     RenderSurfaceImpl* render_target = layer->render_target();
@@ -1016,6 +1051,7 @@ void ComputeMaskDrawProperties(LayerImpl* mask_layer,
 void ComputeSurfaceDrawProperties(PropertyTrees* property_trees,
                                   RenderSurfaceImpl* render_surface) {
   SetSurfaceIsClipped(property_trees->clip_tree, render_surface);
+  SetSurfaceDrawColorScales(property_trees->effect_tree, render_surface);
   SetSurfaceDrawOpacity(property_trees->effect_tree, render_surface);
   SetSurfaceDrawTransform(property_trees, render_surface);
   render_surface->SetScreenSpaceTransform(

@@ -42,6 +42,7 @@ Layer::Inputs::Inputs(int layer_id)
     : layer_id(layer_id),
       masks_to_bounds(false),
       mask_layer(nullptr),
+      color_scales_(1.f, 1.f, 1.f),
       opacity(1.f),
       blend_mode(SkBlendMode::kSrcOver),
       is_root_for_isolated_group(false),
@@ -511,6 +512,35 @@ void Layer::SetFiltersOrigin(const gfx::PointF& filters_origin) {
     return;
   inputs_.filters_origin = filters_origin;
   SetSubtreePropertyChanged();
+  SetPropertyTreesNeedRebuild();
+  SetNeedsCommit();
+}
+
+void Layer::SetColorScales(const gfx::Vector3dF& color_scales) {
+  DCHECK(IsPropertyChangeAllowed());
+  DCHECK_GE(color_scales.x(), 0.f);
+  DCHECK_LE(color_scales.x(), 1.f);
+  DCHECK_GE(color_scales.y(), 0.f);
+  DCHECK_LE(color_scales.y(), 1.f);
+  DCHECK_GE(color_scales.z(), 0.f);
+  DCHECK_LE(color_scales.z(), 1.f);
+
+  if (inputs_.color_scales_ == color_scales)
+    return;
+
+  inputs_.color_scales_ = color_scales;
+  SetSubtreePropertyChanged();
+
+  if (layer_tree_host_) {
+    PropertyTrees* property_trees = layer_tree_host_->property_trees();
+    if (EffectNode* node =
+            property_trees->effect_tree.Node(effect_tree_index())) {
+      node->color_scales = color_scales;
+      node->effect_changed = true;
+      property_trees->effect_tree.set_needs_update(true);
+    }
+  }
+
   SetPropertyTreesNeedRebuild();
   SetNeedsCommit();
 }

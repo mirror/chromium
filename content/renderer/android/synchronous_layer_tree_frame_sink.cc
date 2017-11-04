@@ -309,7 +309,8 @@ void SynchronousLayerTreeFrameSink::SubmitCompositorFrame(
     shared_quad_state->SetAll(
         child_transform, gfx::Rect(child_size), gfx::Rect(child_size),
         gfx::Rect() /* clip_rect */, false /* is_clipped */,
-        are_contents_opaque /* are_contents_opaque */, 1.f /* opacity */,
+        are_contents_opaque /* are_contents_opaque */,
+        gfx::Vector3dF(1.f, 1.f, 1.f) /* color_scales */, 1.f /* opacity */,
         SkBlendMode::kSrcOver, 0 /* sorting_context_id */);
     surface_quad->SetNew(
         shared_quad_state, gfx::Rect(child_size), gfx::Rect(child_size),
