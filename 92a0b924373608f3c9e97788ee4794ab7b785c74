@@ -34,6 +34,24 @@
       "revId": "92a0b924373608f3c9e97788ee4794ab7b785c74",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8bb56969_220dd14d",
+        "filename": "third_party/WebKit/LayoutTests/animations/3d/change-transform-in-end-event.html",
+        "patchSetId": 1
+      },
+      "lineNbr": 47,
+      "author": {
+        "id": 1003011
+      },
+      "writtenOn": "2017-11-04T20:07:43Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "6c4ae5a7_130adf03",
+      "revId": "92a0b924373608f3c9e97788ee4794ab7b785c74",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
