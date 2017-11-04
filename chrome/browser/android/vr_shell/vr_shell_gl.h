@@ -31,20 +31,35 @@
 #include "ui/gfx/geometry/size_f.h"
 #include "ui/gfx/native_widget_types.h"
 
+extern "C" typedef struct AHardwareBuffer AHardwareBuffer;
+
 namespace blink {
 class WebMouseEvent;
 }  // namespace blink
 
+namespace gfx {
+struct GpuFenceHandle;
+}
+
 namespace gl {
 class GLContext;
 class GLFenceEGL;
+class GLImageEGL;
 class GLSurface;
+class GPUTimingClient;
+class GPUTimer;
 class ScopedJavaSurface;
 class SurfaceTexture;
 }  // namespace gl
 
+namespace gfx {
+struct GpuMemoryBufferHandle;
+}  // namespace gfx
+
 namespace gpu {
 struct MailboxHolder;
+struct SyncToken;
+class GpuMemoryBufferImplAndroidHardwareBuffer;
 }  // namespace gpu
 
 namespace vr {
@@ -62,6 +77,8 @@ class MailboxToSurfaceBridge;
 class GlBrowserInterface;
 class VrController;
 class VrShell;
+
+class GLFenceNativeEGL;
 
 struct WebVrBounds {
   WebVrBounds(const gfx::RectF& left,
@@ -100,7 +117,8 @@ class VrShellGl : public device::mojom::VRPresentationProvider,
   }
 
   void SetWebVrMode(bool enabled);
-  void CreateOrResizeWebVRSurface(const gfx::Size& size);
+  void ResizeWebVrSurfaceIfChanged(const gfx::Size& size);
+  void SetWebVrSurfaceSize(const gfx::Size& size);
   void CreateContentSurface();
   void ContentBoundsChanged(int width, int height);
   void ContentPhysicalBoundsChanged(int width, int height);
@@ -123,6 +141,7 @@ class VrShellGl : public device::mojom::VRPresentationProvider,
  private:
   void GvrInit(gvr_context* gvr_api);
   void InitializeRenderer();
+  void OnGpuProcessConnectionReady();
   // Returns true if successfully resized.
   bool ResizeForWebVR(int16_t frame_index);
   void UpdateSamples();
@@ -137,7 +156,7 @@ class VrShellGl : public device::mojom::VRPresentationProvider,
                                 std::unique_ptr<gl::GLFenceEGL> fence);
   void DrawFrameSubmitNow(int16_t frame_index, const gfx::Transform& head_pose);
   bool ShouldDrawWebVr();
-  void DrawWebVr();
+  void DrawWebVr(int16_t frame_index);
   bool WebVrPoseByteIsValid(int pose_index_byte);
 
   void UpdateController(const gfx::Transform& head_pose);
@@ -188,6 +207,8 @@ class VrShellGl : public device::mojom::VRPresentationProvider,
                    const gpu::MailboxHolder& mailbox) override;
   void SubmitFrameWithTextureHandle(int16_t frame_index,
                                     mojo::ScopedHandle texture_handle) override;
+  void SubmitFrameZeroCopy3(int16_t frame_index,
+                            const gpu::SyncToken&) override;
   void UpdateLayerBounds(int16_t frame_index,
                          const gfx::RectF& left_bounds,
                          const gfx::RectF& right_bounds,
@@ -229,6 +250,32 @@ class VrShellGl : public device::mojom::VRPresentationProvider,
   // The default size for the render buffers.
   gfx::Size render_size_default_;
   gfx::Size render_size_webvr_ui_;
+
+  bool webvr_use_shared_buffer_draw_ = false;
+  std::vector<std::unique_ptr<gl::GLFenceEGL>> webvr_frame_presubmit_fence_;
+  void WebVrWaitForServerFence(int16_t frame_index);
+  void OnWebVRTokenSignaled(int16_t frame_index, const gfx::GpuFenceHandle&);
+  bool webvr_block_vsync_until_sync_token_draw_done_ = false;
+  std::vector<std::unique_ptr<gpu::MailboxHolder>>
+      webvr_sharedbuffer_mailbox_holders_;
+  std::vector<std::unique_ptr<gpu::GpuMemoryBufferImplAndroidHardwareBuffer>> webvr_sharedbuffers_;
+  //std::vector<gfx::GpuMemoryBufferHandle> webvr_sharedbuffer_handles_;
+  bool WebVrUseSharedBufferDraw() { return webvr_use_shared_buffer_draw_; }
+
+  // Currently use post submit client wait just for shared buffer draw,
+  // but technically it's an orthogonal decision. See how well this works
+  // for Surface transport.
+  bool WebVrUsePostSubmitClientWait() { return webvr_use_shared_buffer_draw_; }
+  // bool WebVrUsePostSubmitClientWait() { return false; }
+  // bool WebVrUsePostSubmitClientWait() { return true; }
+  void DrawFramePostSubmitClientWait(int16_t frame_index,
+                                     std::unique_ptr<gl::GLFenceEGL> fence);
+  void DrawFramePostSubmit(int16_t frame_index);
+  int webvr_submitted_incomplete_frames_ = 0;
+  base::OnceClosure webvr_deferred_drawframe_;
+  std::vector<scoped_refptr<gl::GLImageEGL>> webvr_bufferimages_;
+
+  std::unique_ptr<vr::VrShellRenderer> vr_shell_renderer_;
 
   bool cardboard_ = false;
   gfx::Quaternion controller_quat_;
