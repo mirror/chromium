@@ -190,8 +190,8 @@ bool LocationArbitrator::IsNewPositionBetter(
     } else if (from_same_provider) {
       // Same provider, fresher location.
       return true;
-    } else if ((GetTimeNow() - base::Time::FromDoubleT(old_position.timestamp))
-                   .InMilliseconds() > kFixStaleTimeoutMilliseconds) {
+    } else if ((GetTimeNow() - old_position.timestamp).InMilliseconds() >
+               kFixStaleTimeoutMilliseconds) {
       // Existing fix is stale.
       return true;
     }
