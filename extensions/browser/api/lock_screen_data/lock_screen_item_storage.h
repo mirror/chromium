@@ -40,6 +40,7 @@ class LocalValueStoreCache;
 namespace lock_screen_data {
 
 class DataItem;
+class LockScreenValueStoreMigrator;
 enum class OperationResult;
 
 // Keeps track of lock screen data items created by extensions.
@@ -82,6 +83,7 @@ class LockScreenItemStorage : public ExtensionRegistryObserver {
   LockScreenItemStorage(content::BrowserContext* context,
                         PrefService* local_state,
                         const std::string& crypto_key,
+                        const base::FilePath& deprecated_storage_root,
                         const base::FilePath& storage_root);
   ~LockScreenItemStorage() override;
 
@@ -120,6 +122,11 @@ class LockScreenItemStorage : public ExtensionRegistryObserver {
                               const Extension* extension,
                               UninstallReason reason) override;
 
+  using ValueStoreMigratorFactoryCallback =
+      base::Callback<std::unique_ptr<LockScreenValueStoreMigrator>()>;
+  static void SetValueStoreMigratorFactoryForTesting(
+      ValueStoreMigratorFactoryCallback* factory_callback);
+
   // Used in tests to inject fake data items implementations.
   using ItemFactoryCallback =
       base::Callback<std::unique_ptr<DataItem>(const std::string& id,
@@ -153,6 +160,8 @@ class LockScreenItemStorage : public ExtensionRegistryObserver {
       // The set of registered data items has been loaded; the cached list of
       // items should be up to date.
       kLoaded,
+      // The data for the extension is being removed.
+      kRemoving,
     };
 
     CachedExtensionData();
@@ -172,6 +181,8 @@ class LockScreenItemStorage : public ExtensionRegistryObserver {
 
   // The session state as seen by the LockScreenItemStorage.
   enum class SessionLockedState { kUnknown, kLocked, kNotLocked };
+
+  void OnItemsMigratedForExtension(const std::string& extension_id);
 
   // Whether the context is allowed to use LockScreenItemStorage.
   // Result depends on the current LockScreenItemStorage state - see
@@ -247,6 +258,8 @@ class LockScreenItemStorage : public ExtensionRegistryObserver {
   // should be deleted (for example if they are not installed anymore).
   std::set<std::string> GetExtensionsWithDataItems(bool include_empty);
 
+  std::set<std::string> GetExtensionsToMigrate();
+
   // Deletes data item data for all extensions that have existing data items,
   // but are not currently installed.
   void ClearUninstalledAppData();
@@ -263,7 +276,6 @@ class LockScreenItemStorage : public ExtensionRegistryObserver {
   const std::string user_id_;
   const std::string crypto_key_;
   PrefService* local_state_;
-  const base::FilePath storage_root_;
 
   std::unique_ptr<base::TickClock> tick_clock_;
 
@@ -273,7 +285,10 @@ class LockScreenItemStorage : public ExtensionRegistryObserver {
       extension_registry_observer_;
 
   // Expected to be used only on FILE thread.
+  std::unique_ptr<LocalValueStoreCache> deprecated_value_store_cache_;
   std::unique_ptr<LocalValueStoreCache> value_store_cache_;
+
+  std::unique_ptr<LockScreenValueStoreMigrator> storage_migrator_;
 
   // Mapping containing all known data items for extensions.
   ExtensionDataMap data_item_cache_;
