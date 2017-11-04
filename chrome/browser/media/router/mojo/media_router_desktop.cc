@@ -178,6 +178,30 @@ void MediaRouterDesktop::ProvideSinks(const std::string& provider_name,
   media_route_provider_->ProvideSinks(provider_name, std::move(sinks));
 }
 
+bool MediaRouterDesktop::RegisterMediaSinksObserver(
+    MediaSinksObserver* observer) {
+  DCHECK_CURRENTLY_ON(content::BrowserThread::UI);
+  DCHECK(observer);
+
+  if (IsDialMediaSource(observer->source())) {
+    if (dial_media_sink_service_proxy_) {
+      return dial_media_sink_service_proxy_->RegisterMediaSinksObserver(
+          observer);
+    }
+  }
+  return MediaRouterMojoImpl::RegisterMediaSinksObserver(observer);
+}
+
+void MediaRouterDesktop::UnregisterMediaSinksObserver(
+    MediaSinksObserver* observer) {
+  DCHECK_CURRENTLY_ON(content::BrowserThread::UI);
+  DCHECK(observer);
+
+  MediaRouterMojoImpl::UnregisterMediaSinksObserver(observer);
+  if (dial_media_sink_service_proxy_)
+    dial_media_sink_service_proxy_->UnregisterMediaSinksObserver(observer);
+}
+
 #if defined(OS_WIN)
 void MediaRouterDesktop::EnsureMdnsDiscoveryEnabled() {
   if (is_mdns_enabled_)
