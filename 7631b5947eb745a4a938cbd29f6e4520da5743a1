@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "bddbe421_ffb87b84",
+        "filename": "third_party/WebKit/Source/modules/media_controls/MediaControlsImpl.cpp",
+        "patchSetId": 4
+      },
+      "lineNbr": 1061,
+      "author": {
+        "id": 1215059
+      },
+      "writtenOn": "2017-11-04T01:35:16Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "e7c1126e_b9adb42b",
+      "revId": "7631b5947eb745a4a938cbd29f6e4520da5743a1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "bde6cc29_0d256068",
         "filename": "third_party/WebKit/Source/modules/media_controls/MediaControlsImpl.cpp",
         "patchSetId": 4
@@ -30,6 +48,24 @@
       "writtenOn": "2017-10-26T13:47:33Z",
       "side": 1,
       "message": "I think calling `OnControlsListUpdated()` is working as a side effect. Probably this would be more straightforward:\n```\nif (!was_finite_duration \u0026\u0026 std::isfinite(duration)) {\n  download_button_-\u003eSetIsWanted(\n      download_button_-\u003eShouldDisplayDownloadButton());\n}\n```",
+      "revId": "7631b5947eb745a4a938cbd29f6e4520da5743a1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9836aef9_3cf7d282",
+        "filename": "third_party/WebKit/Source/modules/media_controls/MediaControlsImpl.cpp",
+        "patchSetId": 4
+      },
+      "lineNbr": 1072,
+      "author": {
+        "id": 1215059
+      },
+      "writtenOn": "2017-11-04T01:35:16Z",
+      "side": 1,
+      "message": "Actually calling ShouldDisplayDownloadButton is not enough. It wont check that in time.",
+      "parentUuid": "bde6cc29_0d256068",
       "revId": "7631b5947eb745a4a938cbd29f6e4520da5743a1",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
