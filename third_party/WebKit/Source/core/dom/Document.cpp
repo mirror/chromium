@@ -4298,8 +4298,12 @@ bool Document::IsSecureContextImpl() const {
   //
   // In all cases, a frame must be potentially trustworthy in addition to
   // having an exception listed in order for the exception to be granted.
+  // LOG(WARNING)<<"xxx IsSecureContextImpl cp0 GetSecurityOrigin="
+  //<<GetSecurityOrigin()->ToString();
   if (!GetSecurityOrigin()->IsPotentiallyTrustworthy())
     return false;
+
+  // LOG(WARNING)<<"xxx IsSecureContextImpl cp1";
 
   if (SchemeRegistry::SchemeShouldBypassSecureContextCheck(
           GetSecurityOrigin()->Protocol()))
@@ -4309,6 +4313,7 @@ bool Document::IsSecureContextImpl() const {
     return true;
   Frame* parent = frame_->Tree().Parent();
   while (parent) {
+    // LOG(WARNING)<<"xxx IsSecureContextImpl cp2";
     if (!parent->GetSecurityContext()
              ->GetSecurityOrigin()
              ->IsPotentiallyTrustworthy())

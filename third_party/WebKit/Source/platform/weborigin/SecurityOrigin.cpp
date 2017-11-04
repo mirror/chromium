@@ -349,6 +349,16 @@ bool SecurityOrigin::CanDisplay(const KURL& url) const {
 
 bool SecurityOrigin::IsPotentiallyTrustworthy() const {
   DCHECK_NE(protocol_, "data");
+  /*
+  LOG(WARNING)<<"xxx IsPotentiallyTrustworthy cp0 "
+  <<" url="<<ToString()
+  <<" is_unique_origin_potentially_trustworthy_="
+  <<is_unique_origin_potentially_trustworthy_
+  <<" IsUnique()="<<IsUnique()
+  <<" host_="<<host_
+  <<" domain_="<<domain_
+  <<" protocol_="<<protocol_;
+  */
   if (IsUnique())
     return is_unique_origin_potentially_trustworthy_;
 
