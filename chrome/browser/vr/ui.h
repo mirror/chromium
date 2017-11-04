@@ -15,6 +15,8 @@
 namespace vr {
 class BrowserUiInterface;
 class ContentInputDelegate;
+class ContentInputForwarder;
+class PlatformController;
 class UiBrowserInterface;
 class UiInputManager;
 class UiRenderer;
@@ -37,11 +39,11 @@ struct UiInitialState {
 
 // This class manages all GLThread owned objects and GL rendering for VrShell.
 // It is not threadsafe and must only be used on the GL thread.
-class Ui : public BrowserUiInterface, public UiInterface {
+class Ui : public BrowserUiInterface {
  public:
   Ui(UiBrowserInterface* browser,
-     ContentInputDelegate* content_input_delegate,
-     const vr::UiInitialState& ui_initial_state);
+     ContentInputForwarder* content_input_forwarder,
+     const UiInitialState& ui_initial_state);
   ~Ui() override;
 
   // TODO(crbug.com/767957): Refactor to hide these behind the UI interface.
@@ -70,19 +72,20 @@ class Ui : public BrowserUiInterface, public UiInterface {
   void SetSpeechRecognitionEnabled(bool enabled) override;
   void OnSpeechRecognitionStateChanged(int new_state) override;
 
-  // UiInterface
-  bool ShouldRenderWebVr() override;
-  void OnGlInitialized(
-      unsigned int content_texture_id,
-      UiElementRenderer::TextureLocation content_location) override;
-  void OnAppButtonClicked() override;
-  void OnAppButtonGesturePerformed(UiInterface::Direction direction) override;
+  bool ShouldRenderWebVr();
+  void OnGlInitialized(unsigned int content_texture_id,
+                       UiElementRenderer::TextureLocation content_location);
+  void OnAppButtonClicked();
+  void OnAppButtonGesturePerformed(UiInterface::Direction direction);
   void OnControllerUpdated(const ControllerModel& controller_model,
-                           const ReticleModel& reticle_model) override;
-  void OnProjMatrixChanged(const gfx::Transform& proj_matrix) override;
-  void OnWebVrFrameAvailable() override;
-  void OnWebVrTimedOut() override;
-  void OnWebVrTimeoutImminent() override;
+                           const ReticleModel& reticle_model);
+  void OnProjMatrixChanged(const gfx::Transform& proj_matrix);
+  void OnWebVrFrameAvailable();
+  void OnWebVrTimedOut();
+  void OnWebVrTimeoutImminent();
+  void OnSwapContents(int new_content_id);
+  void OnContentBoundsChanged(int width, int height);
+  void OnPlatformControllerInitialized(PlatformController* controller);
 
   void SetOmniboxSuggestions(std::unique_ptr<OmniboxSuggestions> suggestions);
 
@@ -90,6 +93,7 @@ class Ui : public BrowserUiInterface, public UiInterface {
   // This state may be further abstracted into a SkiaUi object.
   std::unique_ptr<vr::UiScene> scene_;
   std::unique_ptr<vr::Model> model_;
+  std::unique_ptr<vr::ContentInputDelegate> content_input_delegate_;
   std::unique_ptr<vr::UiSceneManager> scene_manager_;
   std::unique_ptr<vr::VrShellRenderer> vr_shell_renderer_;
   std::unique_ptr<vr::UiInputManager> input_manager_;
