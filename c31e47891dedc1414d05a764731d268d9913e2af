@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "8f0656fc_f5b127c6",
+        "filename": "gpu/command_buffer/service/gles2_cmd_decoder.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 19874,
+      "author": {
+        "id": 1003154
+      },
+      "writtenOn": "2017-11-04T00:34:51Z",
+      "side": 1,
+      "message": "ALthough correct, but it\u0027s confusing, because ClearFramebuffer\u0027s param is framebuffer_size.\n\nSo maybe rename the function param to max_viewport?",
+      "range": {
+        "startLine": 19874,
+        "startChar": 22,
+        "endLine": 19874,
+        "endChar": 41
+      },
+      "revId": "c31e47891dedc1414d05a764731d268d9913e2af",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
