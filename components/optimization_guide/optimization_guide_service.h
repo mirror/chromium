@@ -13,8 +13,8 @@
 #include "base/sequence_checker.h"
 #include "base/sequenced_task_runner.h"
 #include "base/single_thread_task_runner.h"
-#include "base/task_scheduler/post_task.h"
 #include "base/version.h"
+#include "components/optimization_guide/proto/hints.pb.h"
 
 namespace optimization_guide {
 
@@ -49,10 +49,16 @@ class OptimizationGuideService {
   virtual void ReadAndIndexHints(
       const UnindexedHintsInfo& unindexed_hints_info);
 
+  // Sets the latest processed version for testing.
+  void SetLatestProcessedVersionForTesting(base::Version version);
+
  private:
   // Always called as part of a background priority task.
   void ReadAndIndexHintsInBackground(
       const UnindexedHintsInfo& unindexed_hints_info);
+
+  // Dispatches hints to listeners on IO thread.
+  void DispatchHintsOnIOThread(std::unique_ptr<Configuration> config);
 
   // Runner for indexing tasks.
   scoped_refptr<base::SequencedTaskRunner> background_task_runner_;
@@ -60,6 +66,8 @@ class OptimizationGuideService {
 
   // Runner for IO Thread tasks.
   scoped_refptr<base::SingleThreadTaskRunner> io_thread_task_runner_;
+
+  base::Version latest_processed_version_;
 
   DISALLOW_COPY_AND_ASSIGN(OptimizationGuideService);
 };
