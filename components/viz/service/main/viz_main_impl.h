@@ -11,6 +11,7 @@
 #include "gpu/ipc/service/gpu_init.h"
 #include "mojo/public/cpp/bindings/associated_binding_set.h"
 #include "mojo/public/cpp/bindings/binding.h"
+#include "services/metrics/public/interfaces/ukm_interface.mojom.h"
 #include "services/viz/privileged/interfaces/gl/gpu_service.mojom.h"
 #include "services/viz/privileged/interfaces/viz_main.mojom.h"
 
@@ -18,6 +19,14 @@ namespace gpu {
 class GpuMemoryBufferFactory;
 class SyncPointManager;
 }  // namespace gpu
+
+namespace service_manager {
+class Connector;
+}
+
+namespace ukm {
+class MojoUkmRecorder;
+}
 
 namespace viz {
 class DisplayProvider;
@@ -53,6 +62,7 @@ class VizMainImpl : public gpu::GpuSandboxHelper, public mojom::VizMain {
     gpu::SyncPointManager* sync_point_manager = nullptr;
     base::WaitableEvent* shutdown_event = nullptr;
     scoped_refptr<base::SingleThreadTaskRunner> io_thread_task_runner;
+    service_manager::Connector* connector = nullptr;
 
    private:
     DISALLOW_COPY_AND_ASSIGN(ExternalDependencies);
@@ -84,6 +94,11 @@ class VizMainImpl : public gpu::GpuSandboxHelper, public mojom::VizMain {
   GpuServiceImpl* gpu_service() { return gpu_service_.get(); }
   const GpuServiceImpl* gpu_service() const { return gpu_service_.get(); }
 
+  void set_ukm_recorder_ptr_info(
+      ukm::mojom::UkmRecorderInterfacePtrInfo ukm_recorder_ptr_info) {
+    ukm_recorder_ptr_info_ = std::move(ukm_recorder_ptr_info);
+  }
+
  private:
   void CreateFrameSinkManagerInternal(
       mojom::FrameSinkManagerRequest request,
@@ -91,6 +106,7 @@ class VizMainImpl : public gpu::GpuSandboxHelper, public mojom::VizMain {
   void CreateFrameSinkManagerOnCompositorThread(
       mojom::FrameSinkManagerRequest request,
       mojom::FrameSinkManagerClientPtrInfo client_info);
+  void CreateUkmRecorder();
 
   void CloseVizMainBindingOnGpuThread(base::WaitableEvent* wait);
   void TearDownOnCompositorThread(base::WaitableEvent* wait);
@@ -104,6 +120,7 @@ class VizMainImpl : public gpu::GpuSandboxHelper, public mojom::VizMain {
 
   Delegate* const delegate_;
 
+  ukm::mojom::UkmRecorderInterfacePtrInfo ukm_recorder_ptr_info_;
   const ExternalDependencies dependencies_;
 
   // The thread that handles IO events for Gpu (if one isn't already provided).
@@ -134,6 +151,7 @@ class VizMainImpl : public gpu::GpuSandboxHelper, public mojom::VizMain {
   std::unique_ptr<base::Thread> compositor_thread_;
   scoped_refptr<base::SingleThreadTaskRunner> compositor_thread_task_runner_;
 
+  std::unique_ptr<ukm::MojoUkmRecorder> ukm_recorder_;
   std::unique_ptr<base::PowerMonitor> power_monitor_;
   mojo::Binding<mojom::VizMain> binding_;
   mojo::AssociatedBinding<mojom::VizMain> associated_binding_;

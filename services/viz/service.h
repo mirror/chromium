@@ -15,7 +15,7 @@ class VizMainImpl;
 
 class Service : public service_manager::Service {
  public:
-  Service();
+  explicit Service(std::string ukm_service_name);
   ~Service() override;
 
  private:
@@ -30,6 +30,7 @@ class Service : public service_manager::Service {
   service_manager::BinderRegistry registry_;
 
   std::unique_ptr<VizMainImpl> viz_main_;
+  std::string ukm_service_name_;
 
   DISALLOW_COPY_AND_ASSIGN(Service);
 };

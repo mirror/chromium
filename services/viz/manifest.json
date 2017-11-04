@@ -18,6 +18,7 @@
       "requires": {
         "*": [ "app" ],
         "catalog": [ "app" ],
+        "metrics": [ "url_keyed_metrics" ],
         "service_manager": [ "service_manager:all_users" ],
         "ui": [ "ozone" ]
       }
