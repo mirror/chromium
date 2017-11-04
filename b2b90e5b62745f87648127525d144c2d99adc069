@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "af8e8bdd_d3b4cff7",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/IntentHandler.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 402,
+      "author": {
+        "id": 1161045
+      },
+      "writtenOn": "2017-11-04T00:42:09Z",
+      "side": 1,
+      "message": "For notification for multiple links, I think we cannot go here, it only sets class as ChromeLauncherActivity.class and puts extra indicating for multiple links. It will go to handleWebSearchIntent() and then immediately return.",
+      "parentUuid": "a89d8160_d38013ea",
+      "range": {
+        "startLine": 402,
+        "startChar": 18,
+        "endLine": 402,
+        "endChar": 38
+      },
+      "revId": "b2b90e5b62745f87648127525d144c2d99adc069",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "a812a508_f7ecb6e5",
         "filename": "chrome/android/java/src/org/chromium/chrome/browser/browseractions/BrowserActionsService.java",
         "patchSetId": 2
@@ -45,6 +69,30 @@
       "revId": "b2b90e5b62745f87648127525d144c2d99adc069",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "eca55454_fa60468c",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/browseractions/BrowserActionsService.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 223,
+      "author": {
+        "id": 1161045
+      },
+      "writtenOn": "2017-11-04T00:42:09Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "a812a508_f7ecb6e5",
+      "range": {
+        "startLine": 223,
+        "startChar": 34,
+        "endLine": 223,
+        "endChar": 63
+      },
+      "revId": "b2b90e5b62745f87648127525d144c2d99adc069",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
