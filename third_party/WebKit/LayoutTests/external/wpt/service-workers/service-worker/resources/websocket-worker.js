@@ -8,7 +8,8 @@ function reportFailure(details) {
 onmessage = event => {
   port = event.source;
 
-  const ws = new WebSocket('ws://localhost:8880/echo');
+//  port.postMessage('wss://{{host}}:{{ports[ws][0]}}/echo');
+  const ws = new WebSocket('ws://{{host}}:{{ports[ws][0]}}/echo');
   ws.onopen = () => {
     ws.send('Hello');
   };
