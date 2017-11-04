@@ -53,7 +53,7 @@ gfx::GpuFenceHandle GpuFence::GetHandle() {
 }
 
 std::unique_ptr<gl::GLFenceEGL> GpuFence::GetGLFence() {
-  return std::move(fence_);
+  return base::WrapUnique(fence_.release());
 }
 
 }  // namespace gl
