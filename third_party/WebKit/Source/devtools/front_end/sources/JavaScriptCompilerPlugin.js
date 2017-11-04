@@ -2,25 +2,33 @@
 // Use of this source code is governed by a BSD-style license that can be
 // found in the LICENSE file.
 /**
- * @unrestricted
+ * @implements {Sources.UISourceCodeFrame.Plugin}
  */
-Sources.JavaScriptCompiler = class {
+Sources.JavaScriptCompilerPlugin = class {
   /**
-   * @param {!Sources.JavaScriptSourceFrame} sourceFrame
+   * @param {!SourceFrame.SourcesTextEditor} textEditor
+   * @param {!Workspace.UISourceCode} uiSourceCode
    */
-  constructor(sourceFrame) {
-    this._sourceFrame = sourceFrame;
+  constructor(textEditor, uiSourceCode) {
+    this._textEditor = textEditor;
+    this._uiSourceCode = uiSourceCode;
     this._compiling = false;
+    this._recompileScheduled = false;
+    this._timeout = null;
+    this._message = null;
+
+    this._textEditor.addEventListener(UI.TextEditor.Events.TextChanged, this._scheduleCompile, this);
+    this._scheduleCompile();
   }
 
-  scheduleCompile() {
+  _scheduleCompile() {
     if (this._compiling) {
       this._recompileScheduled = true;
       return;
     }
     if (this._timeout)
       clearTimeout(this._timeout);
-    this._timeout = setTimeout(this._compile.bind(this), Sources.JavaScriptCompiler.CompileDelay);
+    this._timeout = setTimeout(this._compile.bind(this), Sources.JavaScriptCompilerPlugin.CompileDelay);
   }
 
   /**
@@ -29,9 +37,8 @@ Sources.JavaScriptCompiler = class {
   _findRuntimeModel() {
     // TODO(dgozman): grab correct runtime model from JavaScriptSourceFrame instead.
     var debuggerModels = SDK.targetManager.models(SDK.DebuggerModel);
-    var sourceCode = this._sourceFrame.uiSourceCode();
     for (var i = 0; i < debuggerModels.length; ++i) {
-      var scriptFile = Bindings.debuggerWorkspaceBinding.scriptFile(sourceCode, debuggerModels[i]);
+      var scriptFile = Bindings.debuggerWorkspaceBinding.scriptFile(this._uiSourceCode, debuggerModels[i]);
       if (scriptFile)
         return debuggerModels[i].runtimeModel();
     }
@@ -47,27 +54,36 @@ Sources.JavaScriptCompiler = class {
       return;
 
     this._compiling = true;
-    var code = this._sourceFrame.textEditor.text();
+    var code = this._textEditor.text();
     var result = await runtimeModel.compileScript(code, '', false, currentExecutionContext.id);
     if (!result)
       return;
     this._compiling = false;
     if (this._recompileScheduled) {
-      delete this._recompileScheduled;
-      this.scheduleCompile();
+      this._recompileScheduled = false;
+      this._scheduleCompile();
       return;
     }
     if (!result.exceptionDetails)
       return;
     var exceptionDetails = result.exceptionDetails;
     var text = SDK.RuntimeModel.simpleTextFromException(exceptionDetails);
-    this._sourceFrame.uiSourceCode().addLineMessage(
+    this._message = this._uiSourceCode.addLineMessage(
         Workspace.UISourceCode.Message.Level.Error, text, exceptionDetails.lineNumber, exceptionDetails.columnNumber);
     this._compilationFinishedForTest();
   }
 
   _compilationFinishedForTest() {
   }
+
+  /**
+   * @override
+   */
+  dispose() {
+    this._textEditor.removeEventListener(UI.TextEditor.Events.TextChanged, this._scheduleCompile, this);
+    if (this._message)
+      this._uiSourceCode.removeMessage(this._message);
+  }
 };
 
-Sources.JavaScriptCompiler.CompileDelay = 1000;
+Sources.JavaScriptCompilerPlugin.CompileDelay = 1000;

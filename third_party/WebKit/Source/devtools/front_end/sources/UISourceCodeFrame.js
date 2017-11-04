@@ -252,8 +252,36 @@ Sources.UISourceCodeFrame = class extends SourceFrame.SourceFrame {
 
   _refreshPlugins() {
     this._disposePlugins();
+
+    var pluginUISourceCode = this._uiSourceCodeForPlugins();
     if (this._uiSourceCode.contentType().isStyleSheet())
       this._plugins.push(new Sources.CSSPlugin(this.textEditor));
+    if (this._shouldCompileJavaScript())
+      this._plugins.push(new Sources.JavaScriptCompilerPlugin(this.textEditor, pluginUISourceCode));
+  }
+
+  /**
+   * @return {!Workspace.UISourceCode}
+   */
+  _uiSourceCodeForPlugins() {
+    var binding = Persistence.persistence.binding(this._uiSourceCode);
+    return binding ? binding.network : this._uiSourceCode;
+  }
+
+  /**
+   * @return {boolean}
+   */
+  _shouldCompileJavaScript() {
+    var debuggerSourceCode = this._uiSourceCodeForPlugins();
+    if (debuggerSourceCode.extension() === 'js')
+      return true;
+    if (debuggerSourceCode.project().type() === Workspace.projectTypes.Snippets)
+      return true;
+    for (var debuggerModel of SDK.targetManager.models(SDK.DebuggerModel)) {
+      if (Bindings.debuggerWorkspaceBinding.scriptFile(debuggerSourceCode, debuggerModel))
+        return true;
+    }
+    return false;
   }
 
   _disposePlugins() {
