@@ -355,10 +355,19 @@ const char* ShelfButton::GetClassName() const {
 
 bool ShelfButton::OnMousePressed(const ui::MouseEvent& event) {
   Button::OnMousePressed(event);
+
+  // No need to scale up the app for mouse right click since the app can't be
+  // dragged through right button.
+  if (!(event.flags() & ui::EF_LEFT_MOUSE_BUTTON))
+    return true;
+
   shelf_view_->PointerPressedOnButton(this, ShelfView::MOUSE, event);
-  drag_timer_.Start(
-      FROM_HERE, base::TimeDelta::FromMilliseconds(kDragTimeThresholdMs),
-      base::Bind(&ShelfButton::OnTouchDragTimer, base::Unretained(this)));
+
+  if (shelf_view_->IsDraggedView(this)) {
+    drag_timer_.Start(
+        FROM_HERE, base::TimeDelta::FromMilliseconds(kDragTimeThresholdMs),
+        base::Bind(&ShelfButton::OnTouchDragTimer, base::Unretained(this)));
+  }
   return true;
 }
 
@@ -366,7 +375,12 @@ void ShelfButton::OnMouseReleased(const ui::MouseEvent& event) {
   Button::OnMouseReleased(event);
   shelf_view_->PointerReleasedOnButton(this, ShelfView::MOUSE, false);
   drag_timer_.Stop();
-  ClearState(STATE_DRAGGING);
+  // Dragging the opened and pinned app from the shelf will make it as unpin.
+  // The old pinned app will be removed from the |view_model_| and a new unpin
+  // type app will be added to the |view_model_|. No need to clear the state if
+  // the app has been removed.
+  if (shelf_view_->IsInCurrentViewModel(this))
+    ClearState(STATE_DRAGGING);
 }
 
 void ShelfButton::OnMouseCaptureLost() {

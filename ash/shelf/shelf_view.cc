@@ -565,6 +565,14 @@ bool ShelfView::IsDraggedView(const ShelfButton* view) const {
   return drag_view_ == view;
 }
 
+bool ShelfView::IsInCurrentViewModel(views::View* view) {
+  for (int i = 0; i < view_model_->view_size(); ++i) {
+    if (view_model_->view_at(i) == view)
+      return true;
+  }
+  return false;
+}
+
 void ShelfView::DestroyDragIconProxy() {
   drag_image_.reset();
   drag_image_offset_ = gfx::Vector2d(0, 0);

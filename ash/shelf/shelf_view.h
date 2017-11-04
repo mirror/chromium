@@ -178,6 +178,9 @@ class ASH_EXPORT ShelfView : public views::View,
   // True if the current |drag_view_| is the given |drag_view|.
   bool IsDraggedView(const ShelfButton* drag_view) const;
 
+  // True if the given |view| is in |view_model_|.
+  bool IsInCurrentViewModel(views::View* view);
+
   // Return the view model for test purposes.
   const views::ViewModel* view_model_for_test() const {
     return view_model_.get();
