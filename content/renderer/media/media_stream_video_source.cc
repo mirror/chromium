@@ -82,7 +82,8 @@ void MediaStreamVideoSource::AddTrack(
   }
 }
 
-void MediaStreamVideoSource::RemoveTrack(MediaStreamVideoTrack* video_track) {
+void MediaStreamVideoSource::RemoveTrack(MediaStreamVideoTrack* video_track,
+                                         base::OnceClosure callback) {
   DCHECK_CALLED_ON_VALID_SEQUENCE(sequence_checker_);
   std::vector<MediaStreamVideoTrack*>::iterator it =
       std::find(tracks_.begin(), tracks_.end(), video_track);
@@ -101,8 +102,50 @@ void MediaStreamVideoSource::RemoveTrack(MediaStreamVideoTrack* video_track) {
   // failed and |frame_adapter_->AddCallback| has not been called.
   track_adapter_->RemoveTrack(video_track);
 
-  if (tracks_.empty())
+  if (tracks_.empty()) {
+    if (callback) {
+      // Using StopForRestart() in order to get a notification of when the
+      // source is actually stopped, if supported. The source will not be
+      // restarted.
+      StopForRestart(base::BindOnce(&MediaStreamVideoSource::DidRemoveLastTrack,
+                                    weak_factory_.GetWeakPtr(),
+                                    std::move(callback)));
+      if (state_ == STOPPING_FOR_RESTART || state_ == STOPPED_FOR_RESTART) {
+        // If the source supports StopForRestart(), it is necessary to
+        // call FinalizeStopSource() to ensure the same behavior as a normal
+        // StopSource(). Tab capture in particular requires the source's stop
+        // callback to be invoked on this task for correct behavior.
+        FinalizeStopSource();
+      } else {
+        // If the source does not support StopForRestart(), call StopSource()
+        // to ensure stop on this task. The notification will be received
+        // on another task anyway since StopForRestart() was called.
+        StopSource();
+      }
+    } else {
+      StopSource();
+    }
+  } else if (callback) {
+    std::move(callback).Run();
+  }
+}
+
+void MediaStreamVideoSource::DidRemoveLastTrack(base::OnceClosure callback,
+                                                RestartResult result) {
+  DCHECK_CALLED_ON_VALID_SEQUENCE(sequence_checker_);
+  DCHECK(callback);
+  DCHECK_EQ(Owner().GetReadyState(),
+            blink::WebMediaStreamSource::kReadyStateEnded);
+  if (result == RestartResult::IS_STOPPED) {
+    state_ = ENDED;
+  }
+
+  if (state_ != ENDED) {
+    LOG(WARNING) << "Source unexpectedly failed to stop. Force stopping and "
+                    "sending notification anyway";
     StopSource();
+  }
+  std::move(callback).Run();
 }
 
 void MediaStreamVideoSource::ReconfigureTrack(
@@ -139,8 +182,9 @@ void MediaStreamVideoSource::StopSourceForRestartImpl() {
 
 void MediaStreamVideoSource::OnStopForRestartDone(bool did_stop_for_restart) {
   DCHECK_CALLED_ON_VALID_SEQUENCE(sequence_checker_);
-  if (state_ == ENDED)
+  if (state_ == ENDED) {
     return;
+  }
 
   DCHECK_EQ(state_, STOPPING_FOR_RESTART);
   if (did_stop_for_restart) {
