@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "c52b8d67_ab599656",
+        "filename": "third_party/WebKit/Source/core/layout/ng/ng_block_node.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 175,
+      "author": {
+        "id": 1002487
+      },
+      "writtenOn": "2017-11-04T02:09:43Z",
+      "side": 1,
+      "message": "This is not correct if the element has a width specified :(",
+      "revId": "294b5f169d6c69ed9eaa2f98ddb7960169daaca8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
