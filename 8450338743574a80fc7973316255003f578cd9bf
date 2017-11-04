@@ -123,6 +123,24 @@
       "revId": "8450338743574a80fc7973316255003f578cd9bf",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8b62be5e_4ad674b2",
+        "filename": "ios/chrome/test/earl_grey/chrome_test_case.mm",
+        "patchSetId": 2
+      },
+      "lineNbr": 206,
+      "author": {
+        "id": 1000119
+      },
+      "writtenOn": "2017-11-04T01:35:28Z",
+      "side": 1,
+      "message": "Aha, ok.  I\u0027ll rework my dependent CL to use EmbeddedTestServer, which will remove my need for this fix.\n\nI\u0027m happy to still land this CL if we find it useful.  I think that calling RemoveAllResponseProviders() here is more correct, but if the HttpServer has been deprecated than it doesn\u0027t really matter much either way.",
+      "parentUuid": "175dce14_c97e5b81",
+      "revId": "8450338743574a80fc7973316255003f578cd9bf",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
