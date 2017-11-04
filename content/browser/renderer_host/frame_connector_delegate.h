@@ -67,9 +67,13 @@ class CONTENT_EXPORT FrameConnectorDelegate {
   virtual void SetChildFrameSurface(const viz::SurfaceInfo& surface_info,
                                     const viz::SurfaceSequence& sequence) {}
 
-  // Return the rect that the RenderWidgetHostViewChildFrame's content will
-  // render into.
-  virtual gfx::Rect ChildFrameRect();
+  // Return the rect in DIP that the RenderWidgetHostViewChildFrame's content
+  // will render into.
+  const gfx::Rect& frame_rect_in_dip() { return frame_rect_in_dip_; }
+
+  // Return the rect in pixels that the RenderWidgetHostViewChildFrame's content
+  // will render into.
+  const gfx::Rect& frame_rect_in_pixels() { return frame_rect_in_pixels_; }
 
   // Request that the platform change the mouse cursor when the mouse is
   // positioned over this view's content.
@@ -179,6 +183,8 @@ class CONTENT_EXPORT FrameConnectorDelegate {
   gfx::Rect viewport_intersection_rect_;
 
   ScreenInfo screen_info_;
+  gfx::Rect frame_rect_in_dip_;
+  gfx::Rect frame_rect_in_pixels_;
   viz::LocalSurfaceId local_surface_id_;
 };
 

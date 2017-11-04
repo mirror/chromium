@@ -121,10 +121,6 @@ void CrossProcessFrameConnector::OnRequireSequence(
   GetFrameSinkManager()->surface_manager()->RequireSequence(id, sequence);
 }
 
-gfx::Rect CrossProcessFrameConnector::ChildFrameRect() {
-  return frame_rect_in_dip_;
-}
-
 void CrossProcessFrameConnector::UpdateCursor(const WebCursor& cursor) {
   RenderWidgetHostViewBase* root_view = GetRootRenderWidgetHostView();
   // UpdateCursor messages are ignored if the root view does not support
@@ -280,7 +276,7 @@ void CrossProcessFrameConnector::OnUpdateResizeParams(
     const viz::LocalSurfaceId& local_surface_id) {
   // If the |frame_rect| or |screen_info| of the frame has changed, then the
   // viz::LocalSurfaceId must also change.
-  if ((frame_rect_.size() != frame_rect.size() ||
+  if ((frame_rect_in_pixels_.size() != frame_rect.size() ||
        screen_info_ != screen_info) &&
       local_surface_id_ == local_surface_id) {
     bad_message::ReceivedBadMessage(
@@ -350,8 +346,8 @@ void CrossProcessFrameConnector::OnSetIsInert(bool inert) {
 }
 
 void CrossProcessFrameConnector::SetRect(const gfx::Rect& frame_rect) {
-  gfx::Rect old_rect = frame_rect_;
-  frame_rect_ = frame_rect;
+  gfx::Rect old_rect = frame_rect_in_pixels_;
+  frame_rect_in_pixels_ = frame_rect;
   frame_rect_in_dip_ = frame_rect;
   if (IsUseZoomForDSFEnabled()) {
     frame_rect_in_dip_ = gfx::ScaleToEnclosingRect(
@@ -366,7 +362,8 @@ void CrossProcessFrameConnector::SetRect(const gfx::Rect& frame_rect) {
     // need to have their screen rects updated.
     FrameTreeNode* proxy_node =
         frame_proxy_in_parent_renderer_->frame_tree_node();
-    if (old_rect.x() != frame_rect_.x() || old_rect.y() != frame_rect_.y()) {
+    if (old_rect.x() != frame_rect_in_pixels_.x() ||
+        old_rect.y() != frame_rect_in_pixels_.y()) {
       for (FrameTreeNode* node :
            proxy_node->frame_tree()->SubtreeNodes(proxy_node)) {
         if (node != proxy_node && node->current_frame_host()->is_local_root())
@@ -458,7 +455,8 @@ void CrossProcessFrameConnector::SetVisibilityForChildViews(
 
 void CrossProcessFrameConnector::ResetFrameRect() {
   local_surface_id_ = viz::LocalSurfaceId();
-  frame_rect_ = gfx::Rect();
+  frame_rect_in_pixels_ = gfx::Rect();
+  frame_rect_in_dip_ = gfx::Rect();
 }
 
 }  // namespace content

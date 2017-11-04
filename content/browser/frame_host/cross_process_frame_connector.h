@@ -77,7 +77,6 @@ class CONTENT_EXPORT CrossProcessFrameConnector
   void RenderProcessGone() override;
   void SetChildFrameSurface(const viz::SurfaceInfo& surface_info,
                             const viz::SurfaceSequence& sequence) override;
-  gfx::Rect ChildFrameRect() override;
   void UpdateCursor(const WebCursor& cursor) override;
   gfx::PointF TransformPointToRootCoordSpace(
       const gfx::PointF& point,
@@ -144,8 +143,6 @@ class CONTENT_EXPORT CrossProcessFrameConnector
   // The RenderWidgetHostView for the frame. Initially NULL.
   RenderWidgetHostViewChildFrame* view_;
 
-  gfx::Rect frame_rect_;
-  gfx::Rect frame_rect_in_dip_;
   bool is_inert_ = false;
 
   // Visibility state of the corresponding frame owner element in parent process
