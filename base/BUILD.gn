@@ -156,7 +156,6 @@ jumbo_component("base") {
     "android/content_uri_utils.cc",
     "android/content_uri_utils.h",
     "android/cpu_features.cc",
-    "android/cxa_demangle_stub.cc",
     "android/early_trace_event_binding.cc",
     "android/event_log.cc",
     "android/event_log.h",
@@ -1153,6 +1152,7 @@ jumbo_component("base") {
     ":cfi_flags",
     ":debugging_flags",
     "//base/numerics:base_numerics",
+    "//build/config:exe_and_shlib_deps",
   ]
 
   # Needed for <atomic> if using newer C++ library than sysroot, except if
