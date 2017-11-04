@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "6f23fb5c_c2398c36",
+        "filename": "content/renderer/service_worker/service_worker_context_client.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 819,
+      "author": {
+        "id": 1161621
+      },
+      "writtenOn": "2017-11-04T10:27:39Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "79c2d8d3_56bda7fd",
+      "revId": "216a27025893cb8b60cd839015418580d871d32f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "3127265a_42d2e29b",
         "filename": "content/renderer/service_worker/service_worker_dispatcher.h",
         "patchSetId": 9
@@ -33,6 +51,24 @@
       "revId": "216a27025893cb8b60cd839015418580d871d32f",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "baf6fd3f_7c15655e",
+        "filename": "content/renderer/service_worker/service_worker_dispatcher.h",
+        "patchSetId": 9
+      },
+      "lineNbr": 98,
+      "author": {
+        "id": 1161621
+      },
+      "writtenOn": "2017-11-04T10:27:39Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "3127265a_42d2e29b",
+      "revId": "216a27025893cb8b60cd839015418580d871d32f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -53,6 +89,24 @@
     },
     {
       "key": {
+        "uuid": "4f5e6b79_a953995a",
+        "filename": "content/renderer/service_worker/service_worker_provider_context.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 80,
+      "author": {
+        "id": 1161621
+      },
+      "writtenOn": "2017-11-04T10:27:39Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "b8ee83c5_a4bc3edc",
+      "revId": "216a27025893cb8b60cd839015418580d871d32f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "1a385558_89a03df1",
         "filename": "content/renderer/service_worker/service_worker_provider_context.cc",
         "patchSetId": 9
@@ -64,6 +118,24 @@
       "writtenOn": "2017-11-03T11:54:45Z",
       "side": 1,
       "message": "Could we instead make the test class a friend?",
+      "revId": "216a27025893cb8b60cd839015418580d871d32f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9b92049e_a4c174c0",
+        "filename": "content/renderer/service_worker/service_worker_provider_context.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 408,
+      "author": {
+        "id": 1161621
+      },
+      "writtenOn": "2017-11-04T10:27:39Z",
+      "side": 1,
+      "message": "I\u0027ve already made the test class a friend, to be able to call this private function ContainsServiceWorkerRegistrationForTesting(). \nBecause registrations_ is defined in the struct ControlleeState within this .cc file, even a friend class of |this| can not see it.",
+      "parentUuid": "1a385558_89a03df1",
       "revId": "216a27025893cb8b60cd839015418580d871d32f",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -87,6 +159,24 @@
     },
     {
       "key": {
+        "uuid": "82df0424_4d162502",
+        "filename": "content/renderer/service_worker/service_worker_provider_context.h",
+        "patchSetId": 9
+      },
+      "lineNbr": 105,
+      "author": {
+        "id": 1161621
+      },
+      "writtenOn": "2017-11-04T10:27:39Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "47cc8ee9_164609d4",
+      "revId": "216a27025893cb8b60cd839015418580d871d32f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "ad294695_46e1503b",
         "filename": "content/renderer/service_worker/service_worker_provider_context.h",
         "patchSetId": 9
@@ -101,6 +191,24 @@
       "revId": "216a27025893cb8b60cd839015418580d871d32f",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6df951f9_828459f5",
+        "filename": "content/renderer/service_worker/service_worker_provider_context.h",
+        "patchSetId": 9
+      },
+      "lineNbr": 153,
+      "author": {
+        "id": 1161621
+      },
+      "writtenOn": "2017-11-04T10:27:39Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "ad294695_46e1503b",
+      "revId": "216a27025893cb8b60cd839015418580d871d32f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -121,6 +229,24 @@
     },
     {
       "key": {
+        "uuid": "c5b39026_4ed4086b",
+        "filename": "content/renderer/service_worker/service_worker_provider_context.h",
+        "patchSetId": 9
+      },
+      "lineNbr": 204,
+      "author": {
+        "id": 1161621
+      },
+      "writtenOn": "2017-11-04T10:27:39Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "204c8bcc_92926379",
+      "revId": "216a27025893cb8b60cd839015418580d871d32f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "3ae95a63_ff6c2f65",
         "filename": "content/renderer/service_worker/service_worker_provider_context_unittest.cc",
         "patchSetId": 9
@@ -132,6 +258,24 @@
       "writtenOn": "2017-11-03T11:54:45Z",
       "side": 1,
       "message": "Just make this class a friend?",
+      "revId": "216a27025893cb8b60cd839015418580d871d32f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a9af871e_b78760e9",
+        "filename": "content/renderer/service_worker/service_worker_provider_context_unittest.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 178,
+      "author": {
+        "id": 1161621
+      },
+      "writtenOn": "2017-11-04T10:27:39Z",
+      "side": 1,
+      "message": "Replied at previous comment.",
+      "parentUuid": "3ae95a63_ff6c2f65",
       "revId": "216a27025893cb8b60cd839015418580d871d32f",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -155,6 +299,24 @@
     },
     {
       "key": {
+        "uuid": "bc1504ca_d5c4a011",
+        "filename": "content/renderer/service_worker/web_service_worker_registration_impl.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 382,
+      "author": {
+        "id": 1161621
+      },
+      "writtenOn": "2017-11-04T10:27:39Z",
+      "side": 1,
+      "message": "At line62 CreateForServiceWorkerGlobalScope() passes a null context here, because the provider context is unnecessary to service worker execution context. I\u0027ve also added a comment \u0027|context_| is always null for service worker execution context.\u0027 in the .h file.",
+      "parentUuid": "3ff0614f_74365bbe",
+      "revId": "216a27025893cb8b60cd839015418580d871d32f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "fb2b6154_92a3d124",
         "filename": "content/renderer/service_worker/web_service_worker_registration_impl.h",
         "patchSetId": 9
@@ -169,6 +331,24 @@
       "revId": "216a27025893cb8b60cd839015418580d871d32f",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a7da1c02_0692cba2",
+        "filename": "content/renderer/service_worker/web_service_worker_registration_impl.h",
+        "patchSetId": 9
+      },
+      "lineNbr": 131,
+      "author": {
+        "id": 1161621
+      },
+      "writtenOn": "2017-11-04T10:27:39Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "fb2b6154_92a3d124",
+      "revId": "216a27025893cb8b60cd839015418580d871d32f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
