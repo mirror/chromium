@@ -1013,6 +1013,9 @@ void TabInfoBarObserver::OnInfoBarReplaced(infobars::InfoBar* old_infobar,
 }
 
 - (void)webStateDidDismissInterstitial:(web::WebState*)webState {
+  // This callback is the only existing signal to get Omnibox updated as
+  // DidFinishNavigation are not called when the user dismisses the interstitial
+  // via "Back To Safety" interstitial button.
   [_parentTabModel notifyTabChanged:self];
 }
 
