@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "6c1a5441_d85965c5",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/infobar/SurveyInfoBarDelegate.java",
+        "patchSetId": 10
+      },
+      "lineNbr": 14,
+      "author": {
+        "id": 1116043
+      },
+      "writtenOn": "2017-11-04T04:42:33Z",
+      "side": 1,
+      "message": "nit: all methods are public in an interface, so you can drop the public modifier",
+      "range": {
+        "startLine": 14,
+        "startChar": 4,
+        "endLine": 14,
+        "endChar": 10
+      },
+      "revId": "5b11596f232bf0153891a891c1249b530c42c852",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
