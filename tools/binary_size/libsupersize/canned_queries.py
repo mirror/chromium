@@ -20,7 +20,7 @@ class _Grouper(object):
     return group.Inverted()
 
   def Finalize(self, remaining):
-    self.groups.sort(key=lambda s:(s.name.startswith('Other'), -s.pss))
+    self.groups.sort(key=lambda s:(s.name.startswith('Other'), -abs(s.pss)))
     if remaining:
       stars = remaining.Filter(lambda s: s.name.startswith('*'))
       if stars:
@@ -42,8 +42,22 @@ def _CategorizeByChromeComponent(symbols):
   # to optimize speed.
   symbols = g.Add('WebRTC', symbols.WhereMatches(r'(?i)webrtc'))
   symbols = g.Add('Skia', symbols.Filter(lambda s: 'skia/' in s.source_path))
-  symbols = g.Add('V8', symbols.Filter(
+  symbols = g.Add('v8', symbols.Filter(
       lambda s: s.source_path.startswith('v8/')))
+  symbols = g.Add('cc', symbols.Filter(
+      lambda s: s.source_path.startswith('cc/')))
+  symbols = g.Add('gpu', symbols.Filter(
+      lambda s: s.source_path.startswith('gpu/')))
+  symbols = g.Add('net', symbols.Filter(
+      lambda s: s.source_path.startswith('net/')))
+  symbols = g.Add('base', symbols.Filter(
+      lambda s: s.source_path.startswith('base/')))
+  symbols = g.Add('media', symbols.Filter(
+      lambda s: s.source_path.startswith('media/')))
+  symbols = g.Add('ui/gfx', symbols.Filter(
+      lambda s: s.source_path.startswith('ui/gfx/')))
+  symbols = g.Add('viz', symbols.Filter(
+      lambda s: s.source_path.startswith('components/viz')))
 
   # Next, put non-regex queries, since they're a bit faster.
   symbols = g.Add('ICU', symbols.Filter(lambda s: '/icu/' in s.source_path))
@@ -130,7 +144,7 @@ class CannedQueries(object):
 
   def _SymbolsArg(self, arg):
     arg = arg if arg is not None else self._size_infos[-1]
-    if isinstance(arg, models.SizeInfo):
+    if isinstance(arg, (models.SizeInfo, models.DeltaSizeInfo)):
       arg = arg.symbols
     return arg
 
