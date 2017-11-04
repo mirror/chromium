@@ -1,0 +1,55 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "279c0cf4_fd28db85",
+        "filename": "ios/build/bots/chromium.fyi/ios-simulator.json",
+        "patchSetId": 8
+      },
+      "lineNbr": 3,
+      "author": {
+        "id": 1147750
+      },
+      "writtenOn": "2017-11-04T00:54:30Z",
+      "side": 1,
+      "message": "Update comment (here and in all files)? Could you also say what this configuration is used for? This will help between waterfall/cq/fyi",
+      "revId": "7fcb6539d90dd3ff80f6082f34c90660d19e8705",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c755cc6e_b071d1ce",
+        "filename": "ios/build/bots/chromium.fyi/ios-simulator.json",
+        "patchSetId": 8
+      },
+      "lineNbr": 19,
+      "author": {
+        "id": 1147750
+      },
+      "writtenOn": "2017-11-04T00:54:30Z",
+      "side": 1,
+      "message": "why do we need these common tests on FYI?",
+      "revId": "7fcb6539d90dd3ff80f6082f34c90660d19e8705",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c95e27ce_d6d03546",
+        "filename": "ios/build/bots/tests/eg_tests.json",
+        "patchSetId": 8
+      },
+      "lineNbr": 2,
+      "author": {
+        "id": 1147750
+      },
+      "writtenOn": "2017-11-04T00:54:30Z",
+      "side": 1,
+      "message": "What do you think about including the tests from eg_cq_tests.json in here? We probably want to run them on main. When something runs on the CQ it should also run on main. I see that your CL covers that.\n\nNevermind - it should be okay because we run ios-simulator on CQ and main? We just have to make sure to not include anything in both?\n\nCan we add the comment explaining what this file is for?",
+      "revId": "7fcb6539d90dd3ff80f6082f34c90660d19e8705",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
