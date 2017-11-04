@@ -46,6 +46,30 @@
       "revId": "3d039e15fbb97442c125db1c64a726879819cfeb",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f9dd46ff_ea455328",
+        "filename": "device/bluetooth/bluetooth_remote_gatt_service_win.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 175,
+      "author": {
+        "id": 1108705
+      },
+      "writtenOn": "2017-11-04T00:41:30Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "863daa62_5672e124",
+      "range": {
+        "startLine": 175,
+        "startChar": 6,
+        "endLine": 175,
+        "endChar": 41
+      },
+      "revId": "3d039e15fbb97442c125db1c64a726879819cfeb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
