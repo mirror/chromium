@@ -10,6 +10,7 @@
 
 #include "base/files/file_path.h"
 #include "base/files/file_util.h"
+#include "base/mac/mac_util.h"
 #include "base/mac/scoped_cftyperef.h"
 #include "base/memory/ref_counted.h"
 #include "net/ssl/ssl_private_key.h"
@@ -75,7 +76,8 @@ TEST_P(SSLPlatformKeyMacTest, KeyMatches) {
   ASSERT_TRUE(key);
 
   // All Mac keys are expected to have the default preferences.
-  EXPECT_EQ(SSLPrivateKey::DefaultPreferences(test_key.type),
+  EXPECT_EQ(SSLPrivateKey::DefaultPreferences(test_key.type,
+                                              base::mac::IsAtLeastOS10_13()),
             key->GetPreferences());
 
   TestSSLPrivateKeyMatches(key.get(), pkcs8);

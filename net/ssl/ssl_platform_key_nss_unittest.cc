@@ -132,8 +132,9 @@ TEST_P(SSLPlatformKeyNSSTest, KeyMatches) {
   ASSERT_TRUE(key);
 
   // All NSS keys are expected to have the default preferences.
-  EXPECT_EQ(SSLPrivateKey::DefaultPreferences(test_key.type),
-            key->GetPreferences());
+  EXPECT_EQ(
+      SSLPrivateKey::DefaultPreferences(test_key.type, true /* supports pss */),
+      key->GetPreferences());
 
   TestSSLPrivateKeyMatches(key.get(), pkcs8);
 }
