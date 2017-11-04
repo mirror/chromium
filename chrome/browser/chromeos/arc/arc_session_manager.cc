@@ -24,8 +24,6 @@
 #include "chrome/browser/chromeos/arc/optin/arc_terms_of_service_oobe_negotiator.h"
 #include "chrome/browser/chromeos/arc/policy/arc_android_management_checker.h"
 #include "chrome/browser/chromeos/arc/policy/arc_policy_util.h"
-#include "chrome/browser/chromeos/login/ui/login_display_host.h"
-#include "chrome/browser/chromeos/login/wizard_controller.h"
 #include "chrome/browser/lifetime/application_lifetime.h"
 #include "chrome/browser/policy/profile_policy_connector.h"
 #include "chrome/browser/policy/profile_policy_connector_factory.h"
@@ -161,41 +159,6 @@ ArcSessionManager::~ArcSessionManager() {
 ArcSessionManager* ArcSessionManager::Get() {
   DCHECK_CURRENTLY_ON(content::BrowserThread::UI);
   return g_arc_session_manager;
-}
-
-// static
-bool ArcSessionManager::IsOobeOptInActive() {
-  // Check if Chrome OS OOBE or OPA OptIn flow is currently showing.
-  // TODO(b/65861628): Rename the method since it is no longer accurate.
-  // Redesign the OptIn flow since there is no longer reason to have two
-  // different OptIn flows.
-  chromeos::LoginDisplayHost* host = chromeos::LoginDisplayHost::default_host();
-  if (!host)
-    return false;
-
-  // Make sure the wizard controller is active and have the ARC ToS screen
-  // showing for the voice interaction OptIn flow.
-  if (host->IsVoiceInteractionOobe()) {
-    const chromeos::WizardController* wizard_controller =
-        host->GetWizardController();
-    if (!wizard_controller)
-      return false;
-    const chromeos::BaseScreen* screen = wizard_controller->current_screen();
-    if (!screen)
-      return false;
-    return screen->screen_id() ==
-           chromeos::OobeScreen::SCREEN_ARC_TERMS_OF_SERVICE;
-  }
-
-  // Use the legacy logic for first sign-in OOBE OptIn flow. Make sure the user
-  // is new and the swtich is appended.
-  if (!user_manager::UserManager::Get()->IsCurrentUserNew())
-    return false;
-  if (!base::CommandLine::ForCurrentProcess()->HasSwitch(
-          chromeos::switches::kEnableArcOOBEOptIn)) {
-    return false;
-  }
-  return true;
 }
 
 // static
@@ -482,6 +445,8 @@ void ArcSessionManager::ShutdownSession() {
       break;
     case State::NEGOTIATING_TERMS_OF_SERVICE:
     case State::CHECKING_ANDROID_MANAGEMENT:
+      // We need to kill the mini-container that might be running here.
+      arc_session_runner_->RequestStop();
       // Those operations are synchronously cancelled, so set the state to
       // STOPPED immediately.
       state_ = State::STOPPED;
@@ -610,7 +575,7 @@ bool ArcSessionManager::RequestEnableImpl() {
     return false;
   }
 
-  oobe_start_ = IsOobeOptInActive();
+  oobe_start_ = IsArcOobeOptInActive();
 
   PrefService* const prefs = profile_->GetPrefs();
 
@@ -739,7 +704,7 @@ void ArcSessionManager::MaybeStartTermsOfServiceNegotiation() {
     return;
   }
 
-  if (IsOobeOptInActive()) {
+  if (IsArcOobeOptInActive()) {
     VLOG(1) << "Use OOBE negotiator.";
     terms_of_service_negotiator_ =
         std::make_unique<ArcTermsOfServiceOobeNegotiator>();
@@ -862,11 +827,13 @@ void ArcSessionManager::OnAndroidManagementChecked(
       ShowArcSupportHostError(
           ArcSupportHost::Error::ANDROID_MANAGEMENT_REQUIRED_ERROR, false);
       UpdateOptInCancelUMA(OptInCancelReason::ANDROID_MANAGEMENT_REQUIRED);
+      SetArcPlayStoreEnabledForProfile(profile_, false);
       break;
     case policy::AndroidManagementClient::Result::ERROR:
       ShowArcSupportHostError(ArcSupportHost::Error::SERVER_COMMUNICATION_ERROR,
                               true);
       UpdateOptInCancelUMA(OptInCancelReason::NETWORK_ERROR);
+      SetArcPlayStoreEnabledForProfile(profile_, false);
       break;
   }
 }
