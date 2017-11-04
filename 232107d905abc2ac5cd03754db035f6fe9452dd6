@@ -1,0 +1,44 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "fe38653d_e388b087",
+        "filename": "tools/metrics/histograms/enums.xml",
+        "patchSetId": 13
+      },
+      "lineNbr": 23834,
+      "author": {
+        "id": 1001310
+      },
+      "writtenOn": "2017-11-04T03:23:33Z",
+      "side": 1,
+      "message": "optional nit: usually people write human readable descriptions for these labels",
+      "revId": "232107d905abc2ac5cd03754db035f6fe9452dd6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6ff68462_22d3497d",
+        "filename": "tools/metrics/histograms/histograms.xml",
+        "patchSetId": 13
+      },
+      "lineNbr": 22154,
+      "author": {
+        "id": 1001310
+      },
+      "writtenOn": "2017-11-04T03:23:33Z",
+      "side": 1,
+      "message": "optional nit: clarify when this happens, e.g., \n// , which usually happens on profile open.",
+      "range": {
+        "startLine": 22154,
+        "startChar": 72,
+        "endLine": 22154,
+        "endChar": 0
+      },
+      "revId": "232107d905abc2ac5cd03754db035f6fe9452dd6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
