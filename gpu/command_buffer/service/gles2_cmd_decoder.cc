@@ -15977,13 +15977,8 @@ void GLES2DecoderImpl::FinishAsyncSwapBuffers(gfx::SwapResult result) {
 }
 
 void GLES2DecoderImpl::FinishSwapBuffers(gfx::SwapResult result) {
-  if (result == gfx::SwapResult::SWAP_FAILED) {
-    LOG(ERROR) << "Context lost because SwapBuffers failed.";
-    if (!CheckResetStatus()) {
-      MarkContextLost(error::kUnknown);
-      group_->LoseContexts(error::kUnknown);
-    }
-  }
+  CHECK_NE(gfx::SwapResult::SWAP_FAILED, result) << "SwapBuffers failed.";
+
   ++swaps_since_resize_;
   if (swaps_since_resize_ == 1 && surface_->BuffersFlipped()) {
     // The second buffer after a resize is new and needs to be cleared to
