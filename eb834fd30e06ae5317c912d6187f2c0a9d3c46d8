@@ -37,6 +37,207 @@
     },
     {
       "key": {
+        "uuid": "b38c6a6c_1d6fd638",
+        "filename": "chrome/browser/offline_pages/prefetch/prefetch_importer_impl.cc",
+        "patchSetId": 11
+      },
+      "lineNbr": 111,
+      "author": {
+        "id": 1134722
+      },
+      "writtenOn": "2017-11-04T00:39:06Z",
+      "side": 1,
+      "message": "DCHECK that archive.offline_id is not kInvalidOfflineId",
+      "range": {
+        "startLine": 111,
+        "startChar": 36,
+        "endLine": 111,
+        "endChar": 54
+      },
+      "revId": "eb834fd30e06ae5317c912d6187f2c0a9d3c46d8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "00628d3a_38469d0e",
+        "filename": "chrome/browser/offline_pages/prefetch/prefetch_importer_impl.cc",
+        "patchSetId": 11
+      },
+      "lineNbr": 128,
+      "author": {
+        "id": 1134722
+      },
+      "writtenOn": "2017-11-04T00:39:06Z",
+      "side": 1,
+      "message": "Please add DCHECK for |offline_id| being valid.",
+      "range": {
+        "startLine": 128,
+        "startChar": 55,
+        "endLine": 128,
+        "endChar": 65
+      },
+      "revId": "eb834fd30e06ae5317c912d6187f2c0a9d3c46d8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3feed3cc_03a9ae80",
+        "filename": "chrome/browser/offline_pages/prefetch/prefetch_importer_impl.cc",
+        "patchSetId": 11
+      },
+      "lineNbr": 140,
+      "author": {
+        "id": 1134722
+      },
+      "writtenOn": "2017-11-04T00:39:06Z",
+      "side": 1,
+      "message": "This should be called with the (valid) offline_id provided when the import request was made. This seems to be the/one of the causes of our items being left at the IMPORTING state.\nPlease also add a test to cover this situation.",
+      "range": {
+        "startLine": 140,
+        "startChar": 26,
+        "endLine": 140,
+        "endChar": 61
+      },
+      "revId": "eb834fd30e06ae5317c912d6187f2c0a9d3c46d8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8fd80676_ec8e5f19",
+        "filename": "components/offline_pages/core/prefetch/import_cleanup_task.cc",
+        "patchSetId": 11
+      },
+      "lineNbr": 26,
+      "author": {
+        "id": 1134722
+      },
+      "writtenOn": "2017-11-04T00:39:06Z",
+      "side": 1,
+      "message": "nit: This could be all in a single line.",
+      "range": {
+        "startLine": 24,
+        "startChar": 6,
+        "endLine": 26,
+        "endChar": 24
+      },
+      "revId": "eb834fd30e06ae5317c912d6187f2c0a9d3c46d8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "438e5041_4a06d616",
+        "filename": "components/offline_pages/core/prefetch/import_cleanup_task.cc",
+        "patchSetId": 11
+      },
+      "lineNbr": 39,
+      "author": {
+        "id": 1134722
+      },
+      "writtenOn": "2017-11-04T00:39:06Z",
+      "side": 1,
+      "message": "This is already checked for in CleanupImportsSync. Please remove.",
+      "range": {
+        "startLine": 38,
+        "startChar": 0,
+        "endLine": 39,
+        "endChar": 17
+      },
+      "revId": "eb834fd30e06ae5317c912d6187f2c0a9d3c46d8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5bf3462b_c3f6764d",
+        "filename": "components/offline_pages/core/prefetch/import_cleanup_task.cc",
+        "patchSetId": 11
+      },
+      "lineNbr": 69,
+      "author": {
+        "id": 1134722
+      },
+      "writtenOn": "2017-11-04T00:39:06Z",
+      "side": 1,
+      "message": "nit: int64_t is not much longer than auto and makes it a tiny bit easier to know the type.",
+      "range": {
+        "startLine": 69,
+        "startChar": 13,
+        "endLine": 69,
+        "endChar": 17
+      },
+      "revId": "eb834fd30e06ae5317c912d6187f2c0a9d3c46d8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "89e9584a_2e7a7345",
+        "filename": "components/offline_pages/core/prefetch/import_cleanup_task.cc",
+        "patchSetId": 11
+      },
+      "lineNbr": 72,
+      "author": {
+        "id": 1134722
+      },
+      "writtenOn": "2017-11-04T00:39:06Z",
+      "side": 1,
+      "message": "nit: using set::count would make this shorter.",
+      "range": {
+        "startLine": 72,
+        "startChar": 39,
+        "endLine": 72,
+        "endChar": 43
+      },
+      "revId": "eb834fd30e06ae5317c912d6187f2c0a9d3c46d8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a410cc59_dbb225e6",
+        "filename": "components/offline_pages/core/prefetch/import_cleanup_task_unittest.cc",
+        "patchSetId": 11
+      },
+      "lineNbr": 99,
+      "author": {
+        "id": 1134722
+      },
+      "writtenOn": "2017-11-04T00:39:06Z",
+      "side": 1,
+      "message": "Can you also add a 2nd entry that should be cleaned up here? Having items in both situations should better cover our code.",
+      "revId": "eb834fd30e06ae5317c912d6187f2c0a9d3c46d8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6329fc9b_89f5288e",
+        "filename": "components/offline_pages/core/prefetch/import_completed_task.cc",
+        "patchSetId": 11
+      },
+      "lineNbr": 67,
+      "author": {
+        "id": 1134722
+      },
+      "writtenOn": "2017-11-04T00:39:06Z",
+      "side": 1,
+      "message": "Could you rename the two different |success| variables in this file to disambiguate them?",
+      "range": {
+        "startLine": 67,
+        "startChar": 56,
+        "endLine": 67,
+        "endChar": 63
+      },
+      "revId": "eb834fd30e06ae5317c912d6187f2c0a9d3c46d8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "66d393cc_117c35d7",
         "filename": "components/offline_pages/core/prefetch/import_completed_task.cc",
         "patchSetId": 11
@@ -69,6 +270,87 @@
       "revId": "eb834fd30e06ae5317c912d6187f2c0a9d3c46d8",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "e815c219_b9f12660",
+        "filename": "components/offline_pages/core/prefetch/import_completed_task.cc",
+        "patchSetId": 11
+      },
+      "lineNbr": 71,
+      "author": {
+        "id": 1134722
+      },
+      "writtenOn": "2017-11-04T00:39:06Z",
+      "side": 1,
+      "message": "Also please make sure this behavior is covered by a test.",
+      "parentUuid": "069edf75_b2ede12a",
+      "revId": "eb834fd30e06ae5317c912d6187f2c0a9d3c46d8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "acc2b586_dedf548d",
+        "filename": "components/offline_pages/core/prefetch/prefetch_dispatcher_impl.cc",
+        "patchSetId": 11
+      },
+      "lineNbr": 333,
+      "author": {
+        "id": 1134722
+      },
+      "writtenOn": "2017-11-04T00:39:06Z",
+      "side": 1,
+      "message": "Please add DCHECK for |offline_id| being valid.",
+      "range": {
+        "startLine": 333,
+        "startChar": 53,
+        "endLine": 333,
+        "endChar": 63
+      },
+      "revId": "eb834fd30e06ae5317c912d6187f2c0a9d3c46d8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "517bd32b_f12f46f7",
+        "filename": "components/offline_pages/core/prefetch/prefetch_importer.h",
+        "patchSetId": 11
+      },
+      "lineNbr": 9,
+      "author": {
+        "id": 1134722
+      },
+      "writtenOn": "2017-11-04T00:39:06Z",
+      "side": 1,
+      "message": "#include \u003ccstdint\u003e",
+      "revId": "eb834fd30e06ae5317c912d6187f2c0a9d3c46d8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b6b0564b_fdd0a05a",
+        "filename": "components/offline_pages/core/prefetch/prefetch_importer.h",
+        "patchSetId": 11
+      },
+      "lineNbr": 25,
+      "author": {
+        "id": 1134722
+      },
+      "writtenOn": "2017-11-04T00:39:06Z",
+      "side": 1,
+      "message": "nit: successfully",
+      "range": {
+        "startLine": 25,
+        "startChar": 14,
+        "endLine": 25,
+        "endChar": 25
+      },
+      "revId": "eb834fd30e06ae5317c912d6187f2c0a9d3c46d8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     },
     {
       "key": {
@@ -107,6 +389,52 @@
     },
     {
       "key": {
+        "uuid": "ba3be4f3_7321d717",
+        "filename": "components/offline_pages/core/prefetch/prefetch_importer.h",
+        "patchSetId": 11
+      },
+      "lineNbr": 35,
+      "author": {
+        "id": 1134722
+      },
+      "writtenOn": "2017-11-04T00:39:06Z",
+      "side": 1,
+      "message": "nit: reacts to the?",
+      "range": {
+        "startLine": 35,
+        "startChar": 18,
+        "endLine": 35,
+        "endChar": 28
+      },
+      "revId": "eb834fd30e06ae5317c912d6187f2c0a9d3c46d8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "cd5de34c_1a904649",
+        "filename": "components/offline_pages/core/prefetch/prefetch_types.h",
+        "patchSetId": 11
+      },
+      "lineNbr": 184,
+      "author": {
+        "id": 1134722
+      },
+      "writtenOn": "2017-11-04T00:39:06Z",
+      "side": 1,
+      "message": "nit: being imported",
+      "range": {
+        "startLine": 184,
+        "startChar": 17,
+        "endLine": 184,
+        "endChar": 26
+      },
+      "revId": "eb834fd30e06ae5317c912d6187f2c0a9d3c46d8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "5a848988_19b20316",
         "filename": "tools/metrics/histograms/enums.xml",
         "patchSetId": 11
@@ -136,6 +464,29 @@
       "side": 1,
       "message": "We tend to put \"deprecated\" in the label most of time.",
       "parentUuid": "5a848988_19b20316",
+      "revId": "eb834fd30e06ae5317c912d6187f2c0a9d3c46d8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c44d3c28_f970d4a9",
+        "filename": "tools/metrics/histograms/enums.xml",
+        "patchSetId": 11
+      },
+      "lineNbr": 29535,
+      "author": {
+        "id": 1134722
+      },
+      "writtenOn": "2017-11-04T00:39:06Z",
+      "side": 1,
+      "message": "nit: The importing was not completed probably due to Chrome being killed before it was done.",
+      "range": {
+        "startLine": 29534,
+        "startChar": 4,
+        "endLine": 29535,
+        "endChar": 53
+      },
       "revId": "eb834fd30e06ae5317c912d6187f2c0a9d3c46d8",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
