@@ -37,6 +37,24 @@
     },
     {
       "key": {
+        "uuid": "649d839f_3bc01b31",
+        "filename": "chrome/browser/resources/vr_daydream_resources.grd",
+        "patchSetId": 2
+      },
+      "lineNbr": 7,
+      "author": {
+        "id": 1000537
+      },
+      "writtenOn": "2017-11-04T01:15:55Z",
+      "side": 1,
+      "message": "I was hoping to create a generic controller for testing (probably just a box with colored squares for the buttons); which grd would that go in?",
+      "parentUuid": "b55201ed_18a9aabe",
+      "revId": "5918d2348a271a19f0bf9d6fc67bf002825cb373",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "1929210d_822a2812",
         "filename": "chrome/browser/vr/BUILD.gn",
         "patchSetId": 2
@@ -66,6 +84,24 @@
       "side": 1,
       "message": "The existing .h file is somewhat platform-specific but has some utility methods and overall shape that could be reused.  In particular, the State enum seems quite daydream-specific, but exposing index/vertex/texture buffers seems fairly cross-platform.\n\nIf we follow the same pattern of using GLTF models + textures for assets, the existing class/implementation could be adapted to be cross platform.  However, if we obtain models through OpenVR APIs, a new implementation cc file may be needed.",
       "parentUuid": "1929210d_822a2812",
+      "revId": "5918d2348a271a19f0bf9d6fc67bf002825cb373",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a791851c_3d85d39e",
+        "filename": "chrome/browser/vr/BUILD.gn",
+        "patchSetId": 2
+      },
+      "lineNbr": 159,
+      "author": {
+        "id": 1000537
+      },
+      "writtenOn": "2017-11-04T01:15:55Z",
+      "side": 1,
+      "message": "Gotcha.",
+      "parentUuid": "a633806a_7348d83d",
       "revId": "5918d2348a271a19f0bf9d6fc67bf002825cb373",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
