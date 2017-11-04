@@ -322,9 +322,11 @@ class GPU_EXPORT Texture final : public TextureBase {
   // Initialize TEXTURE_MAX_ANISOTROPY to 1 if we haven't done so yet.
   void InitTextureMaxAnisotropyIfNeeded(GLenum target);
 
-  void DumpLevelMemory(base::trace_event::ProcessMemoryDump* pmd,
-                       uint64_t client_tracing_id,
-                       const std::string& dump_name) const;
+  void DumpLevelMemory(
+      base::trace_event::ProcessMemoryDump* pmd,
+      uint64_t client_tracing_id,
+      const std::string& dump_name,
+      const base::trace_event::MemoryAllocatorDumpGuid& parent_guid) const;
 
   void ApplyFormatWorkarounds(FeatureInfo* feature_info);
 
