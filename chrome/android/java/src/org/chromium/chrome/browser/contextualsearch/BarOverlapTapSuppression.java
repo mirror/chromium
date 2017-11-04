@@ -47,10 +47,11 @@ public class BarOverlapTapSuppression extends ContextualSearchHeuristic {
     }
 
     @Override
-    protected void logResultsSeen(boolean wasSearchContentViewSeen, boolean wasActivatedByTap) {
+    protected void logResultsSeen(
+            boolean wasSearchContentViewSeen, boolean wasActivatedByTap, long panelViewDurationMs) {
         if (ContextualSearchFieldTrial.isBarOverlapCollectionEnabled()) {
-            ContextualSearchUma.logBarOverlapResultsSeen(
-                    wasSearchContentViewSeen, wasActivatedByTap, mIsConditionSatisfied);
+            ContextualSearchUma.logBarOverlapResultsSeen(wasSearchContentViewSeen,
+                    wasActivatedByTap, mIsConditionSatisfied, panelViewDurationMs);
         }
     }
 

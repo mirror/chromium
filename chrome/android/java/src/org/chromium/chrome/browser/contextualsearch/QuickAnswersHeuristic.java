@@ -49,7 +49,8 @@ class QuickAnswersHeuristic extends ContextualSearchHeuristic {
     }
 
     @Override
-    protected void logResultsSeen(boolean wasSearchContentViewSeen, boolean wasActivatedByTap) {
+    protected void logResultsSeen(
+            boolean wasSearchContentViewSeen, boolean wasActivatedByTap, long panelViewDurationMs) {
         if (wasActivatedByTap) {
             ContextualSearchUma.logQuickAnswerSeen(
                     wasSearchContentViewSeen, mIsConditionSatisfied, mDidAnswer);

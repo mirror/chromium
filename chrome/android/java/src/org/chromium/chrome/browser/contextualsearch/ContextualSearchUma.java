@@ -619,7 +619,7 @@ public class ContextualSearchUma {
     }
 
     /**
-     * Logs the duration of a Contextual Search panel being viewed by the user.
+     * Logs the duration of a Contextual Search panel being viewed by the user while open.
      * @param wereResultsSeen Whether search results were seen.
      * @param isChained Whether the Contextual Search ended with the start of another.
      * @param durationMs The duration of the contextual search in milliseconds.
@@ -739,15 +739,27 @@ public class ContextualSearchUma {
 
     /**
      * Logs the whether the panel was seen and the type of the trigger and if Bar nearly overlapped.
+     * If the panel was seen, logs the duration of the panel view into a BarOverlap or BarNoOverlap
+     * duration histogram.
      * @param wasPanelSeen Whether the panel was seen.
      * @param wasTap Whether the gesture was a Tap or not.
      * @param wasBarOverlap Whether the trigger location overlapped the Bar area.
+     * @param panelViewDurationMs The duration that the panel was viewed (opened only) by the user.
      */
     public static void logBarOverlapResultsSeen(
-            boolean wasPanelSeen, boolean wasTap, boolean wasBarOverlap) {
+            boolean wasPanelSeen, boolean wasTap, boolean wasBarOverlap, long panelViewDurationMs) {
         RecordHistogram.recordEnumeratedHistogram("Search.ContextualSearchBarOverlapSeen",
                 getBarOverlapEnum(wasBarOverlap, wasPanelSeen, wasTap),
                 BAR_OVERLAP_RESULTS_BOUNDARY);
+        if (wasPanelSeen && panelViewDurationMs > 0) {
+            String histogram = wasBarOverlap ? "Search.ContextualSearchBarOverlap.DurationSeen"
+                                             : "Search.ContextualSearchBarNoOverlap.DurationSeen";
+            int min = 1;
+            int max = 1000;
+            int numBuckets = 100;
+            RecordHistogram.recordCustomCountHistogram(
+                    histogram, (int) panelViewDurationMs, min, max, numBuckets);
+        }
     }
 
     /**

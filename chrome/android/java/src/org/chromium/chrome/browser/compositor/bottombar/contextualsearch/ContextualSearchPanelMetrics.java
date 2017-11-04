@@ -87,11 +87,13 @@ public class ContextualSearchPanelMetrics {
         }
 
         if (isEndingSearch) {
-            long durationMs = (System.nanoTime() - mFirstPeekTimeNs) / MILLISECONDS_TO_NANOSECONDS;
-            ContextualSearchUma.logPanelViewDurationAction(durationMs);
+            long panelViewDurationMs =
+                    (System.nanoTime() - mFirstPeekTimeNs) / MILLISECONDS_TO_NANOSECONDS;
+            ContextualSearchUma.logPanelViewDurationAction(panelViewDurationMs);
             if (!mDidSearchInvolvePromo) {
                 // Measure duration only when the promo is not involved.
-                ContextualSearchUma.logDuration(mWasSearchContentViewSeen, isChained, durationMs);
+                ContextualSearchUma.logDuration(
+                        mWasSearchContentViewSeen, isChained, panelViewDurationMs);
             }
             if (mIsPromoActive) {
                 // The user is exiting still in the promo, without choosing an option.
@@ -122,7 +124,7 @@ public class ContextualSearchPanelMetrics {
 
             if (mResultsSeenExperiments != null) {
                 mResultsSeenExperiments.logResultsSeen(
-                        mWasSearchContentViewSeen, mWasActivatedByTap);
+                        mWasSearchContentViewSeen, mWasActivatedByTap, panelViewDurationMs);
                 if (mRankerLogger != null) {
                     mResultsSeenExperiments.logRankerTapSuppressionOutcome(mRankerLogger);
                 }

@@ -74188,12 +74188,32 @@ http://cs/file:chrome/histograms.xml - but prefer this file for new entries.
   </summary>
 </histogram>
 
+<histogram name="Search.ContextualSearchBarNoOverlap.DurationSeen" units="ms">
+  <owner>donnd@chromium.org</owner>
+  <owner>twellington@chromium.org</owner>
+  <summary>
+    The duration that the panel was open when triggered by a tap that was not at
+    the bottom of the screen where it overlaps the Bar.  Logged when the panel
+    is closed. Implemented for Android.
+  </summary>
+</histogram>
+
 <histogram name="Search.ContextualSearchBarOverlap"
     enum="ContextualSearchTapSuppression">
   <owner>donnd@chromium.org</owner>
   <owner>twellington@chromium.org</owner>
   <summary>
     Whether a Tap was suppressed because the Bar overlapped the selection area.
+    Implemented for Android.
+  </summary>
+</histogram>
+
+<histogram name="Search.ContextualSearchBarOverlap.DurationSeen" units="ms">
+  <owner>donnd@chromium.org</owner>
+  <owner>twellington@chromium.org</owner>
+  <summary>
+    The duration that the panel was open when triggered by a tap at the bottom
+    of the screen where it overlaps the Bar.  Logged when the panel is closed.
     Implemented for Android.
   </summary>
 </histogram>
