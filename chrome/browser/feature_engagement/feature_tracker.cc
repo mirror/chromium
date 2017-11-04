@@ -4,10 +4,12 @@
 
 #include "chrome/browser/feature_engagement/feature_tracker.h"
 
+#include "base/files/file_util.h"
 #include "base/metrics/field_trial_params.h"
 #include "base/strings/string_number_conversions.h"
 #include "base/time/time.h"
 #include "chrome/browser/feature_engagement/tracker_factory.h"
+#include "chrome/browser/first_run/first_run_internal.h"
 #include "components/feature_engagement/public/event_constants.h"
 #include "components/feature_engagement/public/feature_constants.h"
 #include "components/feature_engagement/public/tracker.h"
@@ -51,7 +53,7 @@ bool FeatureTracker::ShouldShowPromo() {
         session_duration_updater_.GetCumulativeElapsedSessionTime());
   }
 
-  return GetTracker()->ShouldTriggerHelpUI(*feature_);
+  return IsNewUser() ? GetTracker()->ShouldTriggerHelpUI(*feature_) : false;
 }
 
 Tracker* FeatureTracker::GetTracker() const {
@@ -92,6 +94,31 @@ bool FeatureTracker::HasEnoughSessionTimeElapsed(
     base::TimeDelta total_session_time) {
   return total_session_time.InSeconds() >=
          GetSessionTimeRequiredToShow().InSeconds();
+}
+
+bool FeatureTracker::IsNewUser() {
+  // Gets the creation time of the first sentinel.
+  base::FilePath first_run_sentinel;
+  base::Time first_run_sentinel_creation_time = base::Time();
+  if (first_run::internal::GetFirstRunSentinelFilePath(&first_run_sentinel)) {
+    base::File::Info info;
+    if (base::GetFileInfo(first_run_sentinel, &info))
+      first_run_sentinel_creation_time = info.creation_time;
+  }
+
+  // Gets the date in seconds the experiment was released.
+  std::string field_trial_string_value = base::GetFieldTrialParamValueByFeature(
+      *feature_, "date_released_in_seconds");
+  double field_trial_double_value;
+  base::StringToDouble(field_trial_string_value, &field_trial_double_value);
+  double twenty_four_hours_in_seconds = 86400;
+
+  // We consider a new user only if the user-data-dir has been created no more
+  // than 24 hours before the date released.
+  return (base::TimeDelta::FromSecondsD(field_trial_double_value) -
+          base::TimeDelta::FromSecondsD(
+              first_run_sentinel_creation_time.ToDoubleT())) <=
+         base::TimeDelta::FromSeconds(twenty_four_hours_in_seconds);
 }
 
 }  // namespace feature_engagement
