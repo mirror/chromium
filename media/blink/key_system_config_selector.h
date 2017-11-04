@@ -45,6 +45,7 @@ class MEDIA_BLINK_EXPORT KeySystemConfigSelector {
       const blink::WebVector<blink::WebMediaKeySystemConfiguration>&
           candidate_configurations,
       const blink::WebSecurityOrigin& security_origin,
+      bool is_encrypted_media_enabled,
       base::Callback<void(const blink::WebMediaKeySystemConfiguration&,
                           const CdmConfig&)> succeeded_cb,
       base::Callback<void(const blink::WebString&)> not_supported_cb);

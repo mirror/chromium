@@ -9,6 +9,7 @@
 #include "base/bind.h"
 #include "base/memory/ptr_util.h"
 #include "base/metrics/histogram.h"
+#include "base/metrics/histogram_macros.h"
 #include "base/strings/string_util.h"
 #include "base/strings/utf_string_conversions.h"
 #include "media/base/key_systems.h"
@@ -108,9 +109,17 @@ void WebEncryptedMediaClientImpl::RequestMediaKeySystemAccess(
     media_log_->RecordRapporWithSecurityOrigin("Media.OriginUrl.EME.Insecure");
   }
 
+  // Only report this UMA at most once per renderer process.
+  static bool has_reported_encrypted_media_enabled_uma = false;
+  if (!has_reported_encrypted_media_enabled_uma) {
+    has_reported_encrypted_media_enabled_uma = true;
+    UMA_HISTOGRAM_BOOLEAN("Media.EME.EncryptedMediaEnabled",
+                          request.IsEncryptedMediaEnabled());
+  }
+
   key_system_config_selector_.SelectConfig(
       request.KeySystem(), request.SupportedConfigurations(),
-      request.GetSecurityOrigin(),
+      request.GetSecurityOrigin(), request.IsEncryptedMediaEnabled(),
       base::Bind(&WebEncryptedMediaClientImpl::OnRequestSucceeded,
                  weak_factory_.GetWeakPtr(), request),
       base::Bind(&WebEncryptedMediaClientImpl::OnRequestNotSupported,

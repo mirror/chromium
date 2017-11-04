@@ -29,6 +29,7 @@ class WebEncryptedMediaRequest {
   SupportedConfigurations() const;
 
   BLINK_PLATFORM_EXPORT WebSecurityOrigin GetSecurityOrigin() const;
+  BLINK_PLATFORM_EXPORT bool IsEncryptedMediaEnabled() const;
 
   BLINK_PLATFORM_EXPORT void RequestSucceeded(
       WebContentDecryptionModuleAccess*);
