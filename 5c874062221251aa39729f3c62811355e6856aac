@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "06b1beb4_5d7fde9d",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 3
+      },
+      "lineNbr": 10,
+      "author": {
+        "id": 1115594
+      },
+      "writtenOn": "2017-11-04T10:39:41Z",
+      "side": 1,
+      "message": "Nit: ... or is the top-level document.",
+      "range": {
+        "startLine": 10,
+        "startChar": 9,
+        "endLine": 10,
+        "endChar": 21
+      },
+      "revId": "5c874062221251aa39729f3c62811355e6856aac",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "cb6eaf49_a31b4e42",
+        "filename": "third_party/WebKit/LayoutTests/svg/dom/tooltip-title-inline-svg.html",
+        "patchSetId": 3
+      },
+      "lineNbr": 14,
+      "author": {
+        "id": 1115594
+      },
+      "writtenOn": "2017-11-04T10:39:41Z",
+      "side": 1,
+      "message": "You can make this setup(...) instead.",
+      "range": {
+        "startLine": 14,
+        "startChar": 0,
+        "endLine": 14,
+        "endChar": 4
+      },
+      "revId": "5c874062221251aa39729f3c62811355e6856aac",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
