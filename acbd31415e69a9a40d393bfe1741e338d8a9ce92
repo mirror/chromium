@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "edbf762d_06985285",
+        "filename": "content/browser/indexed_db/indexed_db_backing_store.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 1856,
+      "author": {
+        "id": 1163599
+      },
+      "writtenOn": "2017-11-04T00:21:02Z",
+      "side": 1,
+      "message": "Leftover debugging, or is this on purpose?\n\nIf it\u0027s the latter, can you please make the message a bit more descriptive? \"Deleting blob ${key} from IndexedDB database ${database_id} at path ....\"",
+      "revId": "acbd31415e69a9a40d393bfe1741e338d8a9ce92",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
