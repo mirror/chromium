@@ -571,6 +571,16 @@ source_set("unit_tests") {
   sources = [
     "h264_decoder_unittest.cc",
   ]
+
+  if (use_vaapi) {
+    sources += [ "vaapi_video_decode_accelerator_unittest.cc" ]
+    deps += [
+      ":gpu",
+      "//gpu:test_support",
+      "//ui/gfx:test_support",
+      "//ui/gfx/geometry",
+    ]
+  }
 }
 
 test("video_decode_accelerator_service_unittest") {
