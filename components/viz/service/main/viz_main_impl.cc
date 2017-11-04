@@ -21,6 +21,10 @@
 #include "gpu/ipc/gpu_in_process_thread_service.h"
 #include "gpu/ipc/service/gpu_memory_buffer_factory.h"
 #include "gpu/ipc/service/gpu_watchdog_thread.h"
+#include "services/metrics/public/cpp/delegating_ukm_recorder.h"
+#include "services/metrics/public/cpp/mojo_ukm_recorder.h"
+#include "services/metrics/public/interfaces/constants.mojom.h"
+#include "services/service_manager/public/cpp/connector.h"
 
 namespace {
 
@@ -105,6 +109,20 @@ VizMainImpl::VizMainImpl(Delegate* delegate,
     compositor_thread_task_runner_ = compositor_thread_->task_runner();
   }
 
+  // Initialize GPU's UkmRecorder if GPU is running in it's own process.
+  // If GPU is running in the browser process, we can use browser's UKMRecorder.
+  if (!gpu_init_->gpu_info().in_process_gpu) {
+    ukm::mojom::UkmRecorderInterfacePtr ukm_recorder_ptr;
+    dependencies.connector->BindInterface(metrics::mojom::kMetricsServiceName,
+                                          mojo::MakeRequest(&ukm_recorder_ptr));
+    DCHECK(ukm_recorder_ptr.is_bound())
+        << "Expecting a valid UKM Recorder Interface pointer when GPU is in "
+        << "a separate process.";
+    ukm_recorder_ =
+        base::MakeUnique<ukm::MojoUkmRecorder>(std::move(ukm_recorder_ptr));
+    ukm::DelegatingUkmRecorder::Get()->AddDelegate(ukm_recorder_->GetWeakPtr());
+  }
+
   gpu_service_ = base::MakeUnique<GpuServiceImpl>(
       gpu_init_->gpu_info(), gpu_init_->TakeWatchdogThread(),
       io_thread_ ? io_thread_->task_runner()
@@ -114,6 +132,8 @@ VizMainImpl::VizMainImpl(Delegate* delegate,
 
 VizMainImpl::~VizMainImpl() {
   DCHECK(gpu_thread_task_runner_->BelongsToCurrentThread());
+  if (ukm_recorder_)
+    ukm::DelegatingUkmRecorder::Get()->RemoveDelegate(ukm_recorder_.get());
   if (io_thread_)
     io_thread_->Stop();
 }
