@@ -70,6 +70,30 @@
       "revId": "5eac0ae23ed33fe77754ee1c7b9723e830048687",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e80e2e4a_03423f7f",
+        "filename": "chrome/browser/ui/cocoa/download/md_download_item_progress_indicator.mm",
+        "patchSetId": 1
+      },
+      "lineNbr": 131,
+      "author": {
+        "id": 1160249
+      },
+      "writtenOn": "2017-11-04T15:48:20Z",
+      "side": 1,
+      "message": "OK. Yeah, I\u0027ve thought about that too, it\u0027d be useful. For now, this new patch set has significantly fewer lambdas :).",
+      "parentUuid": "afdca031_6a9ee2b7",
+      "range": {
+        "startLine": 131,
+        "startChar": 62,
+        "endLine": 131,
+        "endChar": 69
+      },
+      "revId": "5eac0ae23ed33fe77754ee1c7b9723e830048687",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
