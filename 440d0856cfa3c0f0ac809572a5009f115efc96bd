@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "d58fc4dc_ac8d46a9",
+        "filename": "ios/chrome/browser/ui/browser_view_controller.mm",
+        "patchSetId": 5
+      },
+      "lineNbr": 2059,
+      "author": {
+        "id": 1165759
+      },
+      "writtenOn": "2017-11-04T01:13:01Z",
+      "side": 1,
+      "message": "I had to add this if temporary in order to make test pass, since I was having problem Mocking the webToolbarController (There\u0027s a weird assert going on).",
+      "revId": "440d0856cfa3c0f0ac809572a5009f115efc96bd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b953beaa_26d7ff20",
+        "filename": "ios/chrome/browser/ui/browser_view_controller_unittest.mm",
+        "patchSetId": 5
+      },
+      "lineNbr": 211,
+      "author": {
+        "id": 1165759
+      },
+      "writtenOn": "2017-11-04T01:13:01Z",
+      "side": 1,
+      "message": "Please ignore this and the commented code, when trying to use the mock test pass but OCMock asserts on dealloc... Will further look into this.\nAlso, the 2 commented tests Pass, forgot to uncomment before uploading this CL!",
+      "revId": "440d0856cfa3c0f0ac809572a5009f115efc96bd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
