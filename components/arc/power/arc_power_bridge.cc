@@ -164,6 +164,7 @@ void ArcPowerBridge::OnInstanceClosed() {
   chromeos::DBusThreadManager::Get()->GetPowerManagerClient()->
       RemoveObserver(this);
   wake_lock_requestors_.clear();
+  binding_.Close();
 }
 
 void ArcPowerBridge::SuspendImminent(
