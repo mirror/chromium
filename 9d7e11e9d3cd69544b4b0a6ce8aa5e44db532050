@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "97f672de_6e102809",
+        "filename": "device/geolocation/public/interfaces/geoposition.mojom",
+        "patchSetId": 10
+      },
+      "lineNbr": 8,
+      "author": {
+        "id": 1177311
+      },
+      "writtenOn": "2017-11-04T00:26:43Z",
+      "side": 1,
+      "message": "Yes, we didn\u0027t change that.",
+      "parentUuid": "dbaa3d40_a6a4d70c",
+      "revId": "9d7e11e9d3cd69544b4b0a6ce8aa5e44db532050",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "df3d4841_e8c76a54",
         "filename": "device/geolocation/public/interfaces/geoposition.mojom",
         "patchSetId": 10
@@ -30,6 +48,24 @@
       "writtenOn": "2017-11-03T16:19:13Z",
       "side": 1,
       "message": "if these constants are only used in this file it might be a good idea to put them in some kind of anonymous namespace (as they used to be in geoposition.cc). not sure if it\u0027s possible with mojo though..",
+      "revId": "9d7e11e9d3cd69544b4b0a6ce8aa5e44db532050",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a5a8495d_a60aa896",
+        "filename": "device/geolocation/public/interfaces/geoposition.mojom",
+        "patchSetId": 10
+      },
+      "lineNbr": 10,
+      "author": {
+        "id": 1177311
+      },
+      "writtenOn": "2017-11-04T00:26:43Z",
+      "side": 1,
+      "message": "I think the anonymous namespace is not suportted in mojo",
+      "parentUuid": "df3d4841_e8c76a54",
       "revId": "9d7e11e9d3cd69544b4b0a6ce8aa5e44db532050",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
