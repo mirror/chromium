@@ -34,6 +34,24 @@
       "revId": "6002ef9292e19e6d88f06960e6ca084eeb8225b7",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "303e8737_91906116",
+        "filename": "ios/web_view/internal/web_view_web_test.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 23,
+      "author": {
+        "id": 1123009
+      },
+      "writtenOn": "2017-11-04T00:03:37Z",
+      "side": 1,
+      "message": "Also I found ios_web_view::WebViewTest, which creates a real CWVWebView. I think we should rename ios_web_view::WebViewTest to ios_web_view::WebViewIntTest, as this fixture can not be used for unit testing.",
+      "parentUuid": "c0208d1d_7761c00a",
+      "revId": "6002ef9292e19e6d88f06960e6ca084eeb8225b7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
