@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "fa371508_230552ed",
+        "filename": "third_party/WebKit/LayoutTests/svg/dom/tooltip-title-external-svg.svg",
+        "patchSetId": 2
+      },
+      "lineNbr": 1,
+      "author": {
+        "id": 1230579
+      },
+      "writtenOn": "2017-11-04T02:53:43Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "606e41c3_ca0526e9",
+      "range": {
+        "startLine": 1,
+        "startChar": 0,
+        "endLine": 1,
+        "endChar": 65
+      },
+      "revId": "08131c78d6986a6f6c48698436d44896afbc0f1d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "196fb712_195a0190",
         "filename": "third_party/WebKit/LayoutTests/svg/dom/tooltip-title-inline-svg.html",
         "patchSetId": 2
@@ -36,6 +60,30 @@
       "writtenOn": "2017-11-01T09:46:51Z",
       "side": 1,
       "message": "If you do this within the test function, then the test will fail instead - making it obvious that the test requires eventSender et al. (The existence checks can either be an assert in each test or a setup I believe.)",
+      "range": {
+        "startLine": 20,
+        "startChar": 4,
+        "endLine": 23,
+        "endChar": 33
+      },
+      "revId": "08131c78d6986a6f6c48698436d44896afbc0f1d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8c660eb3_502efa38",
+        "filename": "third_party/WebKit/LayoutTests/svg/dom/tooltip-title-inline-svg.html",
+        "patchSetId": 2
+      },
+      "lineNbr": 23,
+      "author": {
+        "id": 1230579
+      },
+      "writtenOn": "2017-11-04T02:53:43Z",
+      "side": 1,
+      "message": "I have now added an assert for eventSender and testRunner outside the testTooltipText function. I was just trying to carry over the same pattern from previous similar patch you reviewed, https://codereview.chromium.org/2706583002/diff/80001/third_party/WebKit/LayoutTests/svg/dom/tooltip-title-with-use.html\nDo you want me to modify that test as well then?",
+      "parentUuid": "196fb712_195a0190",
       "range": {
         "startLine": 20,
         "startChar": 4,

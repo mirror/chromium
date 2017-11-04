@@ -73,6 +73,30 @@
     },
     {
       "key": {
+        "uuid": "06faf3d7_76749af5",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 1
+      },
+      "lineNbr": 10,
+      "author": {
+        "id": 1230579
+      },
+      "writtenOn": "2017-11-04T02:53:43Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "8228d829_ff6a104e",
+      "range": {
+        "startLine": 9,
+        "startChar": 0,
+        "endLine": 10,
+        "endChar": 22
+      },
+      "revId": "01593a257f4b17c32e3853234e1d9cf5a810e17e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "9eb27668_ef93e531",
         "filename": "third_party/WebKit/Source/core/svg/SVGElement.cpp",
         "patchSetId": 1
@@ -132,6 +156,30 @@
       "side": 1,
       "message": "\"SVG element\" is a general element in the SVG namespace. \u003csvg\u003e is SVGSVGElement (DOM type) and will be the document element in a \"standalone\" SVG (SVG document.) The document element should not be confused with the document node. Checking against the document element is the more common pattern here, and the full \"weight\" of IsOutermostSVGSVGElement is unnecessary here. We do want to limit the condition to \u003csvg\u003e only, and hence we should be checking that as well. (The document element could be replaced, but it\u0027s very uncommon in practice.)",
       "parentUuid": "49973fbf_a3023a6f",
+      "range": {
+        "startLine": 172,
+        "startChar": 6,
+        "endLine": 172,
+        "endChar": 66
+      },
+      "revId": "01593a257f4b17c32e3853234e1d9cf5a810e17e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d5c955a1_32659889",
+        "filename": "third_party/WebKit/Source/core/svg/SVGElement.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 172,
+      "author": {
+        "id": 1230579
+      },
+      "writtenOn": "2017-11-04T02:53:43Z",
+      "side": 1,
+      "message": "Thanks for clarifying the difference between SVGElement and SVGSVGElement. It was really helpful in understanding the code better. I have updated the condition to just check for SVGSVGElement and if it is a Document Element or not.",
+      "parentUuid": "c74abe04_4c958e85",
       "range": {
         "startLine": 172,
         "startChar": 6,
