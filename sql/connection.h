@@ -391,8 +391,8 @@ class SQL_EXPORT Connection {
   // handle under |attachment_point|.  |attachment_point| should only
   // contain characters from [a-zA-Z0-9_].
   //
-  // Note that calling attach or detach with an open transaction is an
-  // error.
+  // Databases attached in a transaction cannot be detached until the
+  // transaction is committed or aborted.
   bool AttachDatabase(const base::FilePath& other_db_path,
                       const char* attachment_point);
   bool DetachDatabase(const char* attachment_point);
