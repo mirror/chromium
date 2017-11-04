@@ -266,6 +266,9 @@ group("gn_all") {
       "//ui/ozone/demo",
       "//ui/ozone/gl:ozone_gl_unittests",
     ]
+    if (use_vaapi) {
+      deps += [ "//media/gpu:vaapi_video_decode_accelerator_unittests" ]
+    }
   }
 
   if (use_x11 || ozone_platform_x11) {
@@ -845,6 +848,9 @@ if (is_chromeos) {
         "//media/gpu:video_decode_accelerator_unittest",
         "//media/gpu:video_encode_accelerator_unittest",
       ]
+    }
+    if (use_vaapi) {
+      deps += [ "//media/gpu:vaapi_video_decode_accelerator_unittest" ]
     }
   }
 }
