@@ -45,12 +45,15 @@
 #include "gpu/ipc/service/gpu_memory_tracking.h"
 #include "gpu/ipc/service/gpu_watchdog_thread.h"
 #include "gpu/ipc/service/image_transport_surface.h"
+#include "ui/gfx/gpu_fence_handle.h"
 #include "ui/gl/gl_bindings.h"
 #include "ui/gl/gl_context.h"
 #include "ui/gl/gl_image.h"
 #include "ui/gl/gl_implementation.h"
+#include "ui/gl/gl_surface_egl.h"
 #include "ui/gl/gl_switches.h"
 #include "ui/gl/gl_workarounds.h"
+#include "ui/gl/gpu_fence.h"
 #include "ui/gl/init/gl_factory.h"
 
 #if defined(OS_WIN)
@@ -298,6 +301,8 @@ bool GpuCommandBufferStub::OnMessageReceived(const IPC::Message& message) {
     IPC_MESSAGE_HANDLER(GpuCommandBufferMsg_DestroyImage, OnDestroyImage);
     IPC_MESSAGE_HANDLER(GpuCommandBufferMsg_CreateStreamTexture,
                         OnCreateStreamTexture)
+    IPC_MESSAGE_HANDLER(GpuCommandBufferMsg_FetchGpuFence, OnFetchGpuFence)
+    IPC_MESSAGE_HANDLER(GpuCommandBufferMsg_PlaceGpuFence, OnPlaceGpuFence)
     IPC_MESSAGE_UNHANDLED(handled = false)
   IPC_END_MESSAGE_MAP()
 
@@ -1069,6 +1074,48 @@ void GpuCommandBufferStub::OnSignalQuery(uint32_t query_id, uint32_t id) {
   }
   // Something went wrong, run callback immediately.
   OnSignalAck(id);
+}
+
+void GpuCommandBufferStub::OnFetchGpuFence(uint32_t fetch_id) {
+  TRACE_EVENT0("gpu", __FUNCTION__);
+  // LOG(INFO) << __FUNCTION__ << ";;; start, fetch_id=" << fetch_id;
+
+  gfx::GpuFenceHandle handle;
+
+  if (gl::GLSurfaceEGL::IsAndroidNativeFenceSyncSupported()) {
+    TRACE_EVENT_BEGIN0("gpu", "DupNativeFenceFD");
+    gl::GpuFence fence;
+    handle = fence.GetHandle();
+    TRACE_EVENT_END0("gpu", "DupNativeFenceFD");
+    //LOG(INFO) << __FUNCTION__ << ";;; sync_fd=" << sync_fd;
+  } else {
+    LOG(INFO) << __FUNCTION__ << ";;; eglDupNativeFenceFDANDROID not supported";
+  }
+
+  GpuCommandBufferMsg_FetchGpuFence_Return ret;
+  // IPC Send takes ownership of the file descriptor.
+  ret.sync_point = handle;
+  {
+    TRACE_EVENT0("gpu", "SendReply");
+    Send(new GpuCommandBufferMsg_FetchGpuFenceComplete(
+        route_id_, fetch_id, ret));
+  }
+
+  //LOG(INFO) << __FUNCTION__ << ";;; end";
+}
+
+void GpuCommandBufferStub::OnPlaceGpuFence(const gfx::GpuFenceHandle& handle) {
+  TRACE_EVENT0("gpu", __FUNCTION__);
+  // LOG(INFO) << __FUNCTION__ << ";;; start, fetch_id=" << fetch_id;
+
+  if (!gl::GLSurfaceEGL::IsAndroidNativeFenceSyncSupported())
+    return;
+
+  auto gpu_fence = gl::GpuFence::FromHandle(handle);
+  if (!gpu_fence)
+    return;
+
+  gpu_fence->GetGLFence()->ServerWait();
 }
 
 void GpuCommandBufferStub::OnFenceSyncRelease(uint64_t release) {
