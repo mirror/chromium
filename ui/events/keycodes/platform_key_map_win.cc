@@ -28,7 +28,7 @@ const EventFlags modifier_flags[] = {
     EF_CONTROL_DOWN,
     EF_ALT_DOWN,
     // EF_COMMAND_DOWN,
-    EF_ALTGR_DOWN,
+    // EF_ALTGR_DOWN, // Simulated as Control+Alt.
     // EF_NUM_LOCK_ON,
     EF_CAPS_LOCK_ON,
     // EF_SCROLL_LOCK_ON
@@ -60,24 +60,7 @@ void SetModifierState(BYTE* keyboard_state, int flags) {
   if (flags & EF_ALT_DOWN)
     keyboard_state[VK_MENU] |= 0x80;
 
-  if (flags & EF_ALTGR_DOWN) {
-    // AltGr should be RightAlt+LeftControl within Windows, but actually only
-    // the non-located keys will work here.
-    keyboard_state[VK_MENU] |= 0x80;
-    keyboard_state[VK_CONTROL] |= 0x80;
-  }
-
-  if (flags & EF_COMMAND_DOWN)
-    keyboard_state[VK_LWIN] |= 0x80;
-
-  if (flags & EF_NUM_LOCK_ON)
-    keyboard_state[VK_NUMLOCK] |= 0x01;
-
-  if (flags & EF_CAPS_LOCK_ON)
-    keyboard_state[VK_CAPITAL] |= 0x01;
-
-  if (flags & EF_SCROLL_LOCK_ON)
-    keyboard_state[VK_SCROLL] |= 0x01;
+  DCHECK_EQ(flags & ~(EF_SHIFT_DOWN | EF_CONTROL_DOWN | EF_ALT_DOWN), 0);
 }
 
 // This table must be sorted by |key_code| for binary search.
@@ -286,10 +269,10 @@ PlatformKeyMap::PlatformKeyMap(HKL layout) {
 PlatformKeyMap::~PlatformKeyMap() {}
 
 DomKey PlatformKeyMap::DomKeyFromKeyboardCodeImpl(KeyboardCode key_code,
-                                                  int flags) const {
+                                                  int* flags) const {
   // Windows expresses right-Alt as VKEY_MENU with the extended flag set.
   // This key should generate AltGraph under layouts which use that modifier.
-  if (key_code == VKEY_MENU && (flags & EF_IS_EXTENDED_KEY) && has_alt_graph_) {
+  if (key_code == VKEY_MENU && (*flags & EF_IS_EXTENDED_KEY) && has_alt_graph_) {
     return DomKey::ALT_GRAPH;
   }
 
@@ -302,9 +285,8 @@ DomKey PlatformKeyMap::DomKeyFromKeyboardCodeImpl(KeyboardCode key_code,
       // If the combination doesn't produce a printable character, the key value
       // should be the key with no modifiers except for Shift and AltGr.
       // See https://w3c.github.io/uievents/#keys-guidelines
-      flags,
-      flags & (EF_SHIFT_DOWN | EF_ALTGR_DOWN | EF_CAPS_LOCK_ON),
-      flags & (EF_SHIFT_DOWN | EF_CAPS_LOCK_ON),
+      *flags,
+      *flags & (EF_SHIFT_DOWN | EF_CAPS_LOCK_ON),
       EF_NONE,
   };
 
@@ -313,9 +295,19 @@ DomKey PlatformKeyMap::DomKeyFromKeyboardCodeImpl(KeyboardCode key_code,
         std::make_pair(static_cast<int>(key_code), try_flags));
     if (it != printable_keycode_to_key_.end()) {
       key = it->second;
-      if (key != DomKey::NONE)
+      if (key != DomKey::NONE) {
+        constexpr int kControlAndAltFlags = EF_CONTROL_DOWN | EF_ALT_DOWN;
+        if ((try_flags & kControlAndAltFlags) == kControlAndAltFlags) {
+          // Printable character generated via Control+Alt means AltGraph.
+          *flags = (*flags & ~kControlAndAltFlags) | EF_ALTGR_DOWN;
+        }
         return key;
+      }
     }
+    
+    // If we found nothing with no flags set, there is nothing left to try.
+    if (try_flags == EF_NONE)
+      break;
   }
 
   // Return DomKey::UNIDENTIFIED to prevent US layout fall-back.
@@ -324,7 +316,7 @@ DomKey PlatformKeyMap::DomKeyFromKeyboardCodeImpl(KeyboardCode key_code,
 
 // static
 DomKey PlatformKeyMap::DomKeyFromKeyboardCode(KeyboardCode key_code,
-                                              int flags) {
+                                              int* flags) {
   // Use TLS because KeyboardLayout is per thread.
   // However currently PlatformKeyMap will only be used by the host application,
   // which is just one process and one thread.
@@ -340,6 +332,28 @@ DomKey PlatformKeyMap::DomKeyFromKeyboardCode(KeyboardCode key_code,
   HKL current_layout = ::GetKeyboardLayout(0);
   platform_key_map->UpdateLayout(current_layout);
   return platform_key_map->DomKeyFromKeyboardCodeImpl(key_code, flags);
+}
+
+// static
+DomKey PlatformKeyMap::DomKeyFromKeyboardCode(KeyboardCode key_code,
+                                              int flags) {
+  return DomKeyFromKeyboardCode(key_code, &flags);
+}
+                                              
+// static
+bool PlatformKeyMap::UsesAltGraph() {
+  base::ThreadLocalStorage::Slot* platform_key_map_tls =
+      g_platform_key_map_tls_lazy.Pointer();
+  PlatformKeyMap* platform_key_map =
+      reinterpret_cast<PlatformKeyMap*>(platform_key_map_tls->Get());
+  if (!platform_key_map) {
+    platform_key_map = new PlatformKeyMap();
+    platform_key_map_tls->Set(platform_key_map);
+  }
+
+  HKL current_layout = ::GetKeyboardLayout(0);
+  platform_key_map->UpdateLayout(current_layout);
+  return platform_key_map->has_alt_graph_;
 }
 
 void PlatformKeyMap::UpdateLayout(HKL layout) {
