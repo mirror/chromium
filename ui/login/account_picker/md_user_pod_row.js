@@ -428,7 +428,7 @@ cr.define('login', function() {
         parentPod.passwordEntryContainerElement.classList.toggle(
             'custom-icon-shown', validIcon);
       }
-      this.hidden = validIcon ? false : true;
+      this.hidden = !validIcon;
     },
 
     /**
@@ -2913,6 +2913,9 @@ cr.define('login', function() {
     // LANDSCAPE_MODE_LIMIT or PORTRAIT_MODE_LIMIT.
     overlayColors_: {maskColor: undefined, scrollColor: undefined},
 
+    // Whether we should add background to user pods and small pods container.
+    shouldAddPodBackground_: false,
+
     /** @override */
     decorate: function() {
       // Event listeners that are installed for the time period during which
@@ -3693,9 +3696,10 @@ cr.define('login', function() {
       this.smallPodsContainer.hidden = false;
       var pods = this.pods;
       if ((pods.length > LANDSCAPE_MODE_LIMIT && !this.isPortraitMode_()) ||
-          (pods.length > PORTRAIT_MODE_LIMIT && this.isPortraitMode_())) {
-        // If the pod count exceeds limits, they should be in extra small size
-        // and the container will become scrollable.
+          (pods.length > PORTRAIT_MODE_LIMIT && this.isPortraitMode_()) ||
+          this.shouldAddPodBackground_) {
+        // The container will be placed on the rightmost side of the screen and
+        // have a solid color background.
         this.placePodsOnScrollableContainer_();
         return;
       }
@@ -3936,6 +3940,22 @@ cr.define('login', function() {
     handleAfterPodPlacement_: function() {
       var pods = this.pods;
       for (var pod of pods) {
+        // When |shouldAddPodBackground_| is false, all the pods should have
+        // transparent background. When it is true, large pods (up to two)
+        // should have solid color background. One exception: when the pod is a
+        // public session pod in expanded state, it has its own background
+        // color, and we should not change it here.
+        var is_expanded_public_pod = pod.isPublicSessionPod &&
+            pod.getPodStyle() == UserPod.Style.LARGE && pod.expanded;
+        if (this.shouldAddPodBackground_ &&
+            pod.getPodStyle() == UserPod.Style.LARGE &&
+            !is_expanded_public_pod) {
+          pod.style.backgroundColor = this.overlayColors_.scrollColor;
+          pod.classList.add('rounded-corner');
+        } else if (!is_expanded_public_pod) {
+          pod.style.backgroundColor = 'unset';
+          pod.classList.remove('rounded-corner');
+        }
         if (pod.getPodStyle() != UserPod.Style.LARGE)
           continue;
         // Make sure that user name on each large pod is centered and extra
@@ -4075,10 +4095,12 @@ cr.define('login', function() {
       this.parentNode.classList.toggle('public-account-expanded', expanded);
       if (expanded) {
         this.centerPod_(pod, PUBLIC_EXPANDED_WIDTH, PUBLIC_EXPANDED_HEIGHT);
+        pod.style.backgroundColor = 'rgba(0, 0, 0, 0.56)';
       } else {
         // Return the pod to its last position.
         pod.left = pod.lastPosition.left;
         pod.top = pod.lastPosition.top;
+        pod.style.backgroundColor = 'unset';
         // Pod placement has already finished by this point, but we still need
         // to make sure that the styles of all the elements in the pod row are
         // updated before being shown.
@@ -4162,12 +4184,14 @@ cr.define('login', function() {
       // chance that the small pod was at the end of the scrollable container
       // and had a non-zero paddingBottom.
       var paddingBottom = pod.style.paddingBottom;
+      var backgroundColor = pod.style.backgroundColor;
       var parent = pod.parentNode;
       parent.removeChild(pod);
       this.appendChild(pod);
       pod.left = this.mainPod_.left;
       pod.top = this.mainPod_.top;
       pod.style.paddingBottom = cr.ui.toCssPx(0);
+      pod.style.backgroundColor = this.mainPod_.style.backgroundColor;
 
       this.removeChild(this.mainPod_);
       // It must have the same index with the original small pod, instead
@@ -4177,6 +4201,7 @@ cr.define('login', function() {
       this.mainPod_.left = left;
       this.mainPod_.top = top;
       this.mainPod_.style.paddingBottom = paddingBottom;
+      this.mainPod_.style.backgroundColor = backgroundColor;
       this.mainPod_ = pod;
       // The new main pod should already be focused but we need a focus update
       // in order to focus on the input box.
@@ -4211,8 +4236,10 @@ cr.define('login', function() {
      * wallpaper.
      * @param {string} maskColor Color for the gradient mask.
      * @param {string} scrollColor Color for the small pods container.
+     * @param {boolean} shouldAddPodBackground Whether to add background behind
+     *     user pods.
      */
-    setOverlayColors: function(maskColor, scrollColor) {
+    setOverlayColors: function(maskColor, scrollColor, shouldAddPodBackground) {
       if (this.smallPodsContainer.classList.contains('scroll'))
         this.smallPodsContainer.style.backgroundColor = scrollColor;
       if (!this.topMask.hidden) {
@@ -4224,6 +4251,13 @@ cr.define('login', function() {
       // become visible later.
       this.overlayColors_.maskColor = maskColor;
       this.overlayColors_.scrollColor = scrollColor;
+
+      if (this.shouldAddPodBackground_ != shouldAddPodBackground) {
+        this.shouldAddPodBackground_ = shouldAddPodBackground;
+        // The value of |shouldAddPodBackground_| affects the layout of the
+        // small pods container, so we should redo the pod placement.
+        this.placePods_();
+      }
     },
 
     /**

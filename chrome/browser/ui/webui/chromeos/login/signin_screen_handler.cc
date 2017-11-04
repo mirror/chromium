@@ -875,13 +875,18 @@ void SigninScreenHandler::ReloadGaia(bool force_reload) {
 void SigninScreenHandler::UpdateAccountPickerColors() {
   color_utils::ColorProfile color_profile(color_utils::LumaRange::DARK,
                                           color_utils::SaturationRange::MUTED);
-  SkColor dark_muted_color = ash::login_constants::kDefaultBaseColor;
   // TODO(wzang): Make this work under mash.
-  if (GetAshConfig() != ash::Config::MASH) {
-    dark_muted_color =
-        ash::Shell::Get()->wallpaper_controller()->GetProminentColor(
-            color_profile);
-  }
+  SkColor dark_muted_color =
+      GetAshConfig() == ash::Config::MASH
+          ? ash::login_constants::kDefaultBaseColor
+          : ash::Shell::Get()->wallpaper_controller()->GetProminentColor(
+                color_profile);
+  bool should_add_pod_background = GetAshConfig() == ash::Config::MASH
+                                       ? false
+                                       : ash::Shell::Get()
+                                             ->wallpaper_controller()
+                                             ->IsDevicePolicyWallpaper();
+
   if (dark_muted_color == ash::WallpaperController::kInvalidColor)
     dark_muted_color = ash::login_constants::kDefaultBaseColor;
 
@@ -894,7 +899,8 @@ void SigninScreenHandler::UpdateAccountPickerColors() {
       SkColorSetA(base_color, ash::login_constants::kScrollTranslucentAlpha);
   CallJSOrDefer("login.AccountPickerScreen.setOverlayColors",
                 color_utils::SkColorToRgbaString(dark_muted_color),
-                color_utils::SkColorToRgbaString(scroll_color));
+                color_utils::SkColorToRgbaString(scroll_color),
+                should_add_pod_background);
 }
 
 void SigninScreenHandler::Initialize() {

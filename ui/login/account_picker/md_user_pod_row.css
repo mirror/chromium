@@ -58,6 +58,10 @@ pin-keyboard {
   opacity: 1;
 }
 
+.pod.rounded-corner {
+  border-radius: 8px;
+}
+
 .user-image-pane {
   height: 96px;
   left: 105px;
@@ -805,7 +809,6 @@ html[dir=rtl] .user-type-bubble {
 
 .pod.public-account.expanded {
   animation: fade-in 180ms;
-  background-color: rgba(0, 0, 0, 0.56);
   border-radius: 2px;
   height: 324px;
   transition: none;
