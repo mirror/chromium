@@ -1551,18 +1551,21 @@ const int kExternalFilesCleanupDelaySeconds = 60;
                                  completion:nil];
 }
 
-- (void)showSyncPassphraseSettings {
+- (void)showSyncPassphraseSettingsFromViewController:
+    (UIViewController*)baseViewController {
   if (_settingsNavigationController) {
-    [_settingsNavigationController showSyncPassphraseSettings];
+    // |baseViewController| is intentionally nil because this navigation
+    // controller is already presented.
+    [_settingsNavigationController
+        showSyncPassphraseSettingsFromViewController:nil];
     return;
   }
   _settingsNavigationController = [SettingsNavigationController
       newSyncEncryptionPassphraseController:_mainBrowserState
                                    delegate:self];
-  [[self topPresentedViewController]
-      presentViewController:_settingsNavigationController
-                   animated:YES
-                 completion:nil];
+  [baseViewController presentViewController:_settingsNavigationController
+                                   animated:YES
+                                 completion:nil];
 }
 
 #pragma mark - chromeExecuteCommand

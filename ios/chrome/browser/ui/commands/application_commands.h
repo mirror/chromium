@@ -27,7 +27,8 @@
     (UIViewController*)baseViewController;
 
 // Shows the sync encryption passphrase UI.
-- (void)showSyncPassphraseSettings;
+- (void)showSyncPassphraseSettingsFromViewController:
+    (UIViewController*)baseViewController;
 
 @end
 
