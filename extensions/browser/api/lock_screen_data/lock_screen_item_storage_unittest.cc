@@ -18,8 +18,10 @@
 #include "base/memory/ptr_util.h"
 #include "base/memory/ref_counted.h"
 #include "base/run_loop.h"
+#include "base/stl_util.h"
 #include "base/task_scheduler/post_task.h"
 #include "base/time/time.h"
+#include "base/values.h"
 #include "chromeos/login/login_state.h"
 #include "components/prefs/scoped_user_pref_update.h"
 #include "components/prefs/testing_pref_service.h"
@@ -28,6 +30,7 @@
 #include "content/public/test/test_browser_context.h"
 #include "content/public/test/test_browser_thread_bundle.h"
 #include "extensions/browser/api/lock_screen_data/data_item.h"
+#include "extensions/browser/api/lock_screen_data/lock_screen_value_store_migrator.h"
 #include "extensions/browser/api/lock_screen_data/operation_result.h"
 #include "extensions/browser/event_router.h"
 #include "extensions/browser/event_router_factory.h"
@@ -44,8 +47,11 @@ namespace lock_screen_data {
 
 namespace {
 
-const char kTestUserIdHash[] = "user_id_hash";
-const char kTestSymmetricKey[] = "fake_symmetric_key";
+constexpr char kTestUserIdHash[] = "user_id_hash";
+constexpr char kTestSymmetricKey[] = "fake_symmetric_key";
+
+constexpr char kTestExtensionId[] = "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa";
+constexpr char kSecondTestExtensionId[] = "bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb";
 
 void RecordCreateResult(OperationResult* result_out,
                         const DataItem** item_out,
@@ -330,6 +336,8 @@ class OperationQueue {
 
   const std::vector<char>& content() const { return content_; }
 
+  void set_content(const std::vector<char>& content) { content_ = content; }
+
  private:
   std::string id_;
   ItemRegistry* item_registry_;
@@ -379,6 +387,66 @@ class TestDataItem : public DataItem {
   DISALLOW_COPY_AND_ASSIGN(TestDataItem);
 };
 
+class TestLockScreenValueStoreMigrator : public LockScreenValueStoreMigrator {
+ public:
+  TestLockScreenValueStoreMigrator() = default;
+  ~TestLockScreenValueStoreMigrator() override = default;
+
+  void Run(const std::set<std::string>& extensions_to_migrate,
+           const ExtensionMigratedCallback& callback) override {
+    ASSERT_TRUE(migration_callback_.is_null());
+    ASSERT_TRUE(extensions_to_migrate_.empty());
+
+    migration_callback_ = callback;
+    extensions_to_migrate_ = extensions_to_migrate;
+  }
+
+  void ClearDataForExtension(const std::string& extension_id,
+                             const base::Closure& callback) override {
+    EXPECT_EQ(clear_data_callbacks_.count(extension_id), 0u);
+    EXPECT_GT(extensions_to_migrate_.count(extension_id), 0u);
+
+    extensions_to_migrate_.erase(extension_id);
+    clear_data_callbacks_[extension_id] = callback;
+  }
+
+  bool MigratingExtensionData(const std::string& extension_id) const override {
+    return extensions_to_migrate_.count(extension_id) > 0;
+  }
+
+  bool ClearingDataForExtension(const std::string& extension_id) const {
+    return clear_data_callbacks_.count(extension_id) > 0;
+  }
+
+  bool FinishMigration(const std::string& extension_id) {
+    if (!MigratingExtensionData(extension_id))
+      return false;
+    migration_callback_.Run(extension_id);
+    return true;
+  }
+
+  bool FinishClearData(const std::string& extension_id) {
+    if (clear_data_callbacks_.count(extension_id) == 0)
+      return false;
+
+    base::Closure callback = clear_data_callbacks_[extension_id];
+    clear_data_callbacks_.erase(extension_id);
+    callback.Run();
+    return true;
+  }
+
+  const std::set<std::string>& extensions_to_migrate() const {
+    return extensions_to_migrate_;
+  }
+
+ private:
+  ExtensionMigratedCallback migration_callback_;
+  std::set<std::string> extensions_to_migrate_;
+  std::map<std::string, base::Closure> clear_data_callbacks_;
+
+  DISALLOW_COPY_AND_ASSIGN(TestLockScreenValueStoreMigrator);
+};
+
 class LockScreenItemStorageTest : public ExtensionsTest {
  public:
   LockScreenItemStorageTest()
@@ -398,11 +466,16 @@ class LockScreenItemStorageTest : public ExtensionsTest {
         chromeos::LoginState::LOGGED_IN_ACTIVE,
         chromeos::LoginState::LOGGED_IN_USER_REGULAR, kTestUserIdHash);
 
-    CreateTestExtension();
+    extension_ = CreateTestExtension(kTestExtensionId);
     item_registry_ = std::make_unique<ItemRegistry>(extension()->id());
 
     // Inject custom data item factory to be used with LockScreenItemStorage
     // instances.
+    migrator_factory_ = base::Bind(&LockScreenItemStorageTest::CreateMigrator,
+                                   base::Unretained(this));
+    LockScreenItemStorage::SetValueStoreMigratorFactoryForTesting(
+        &migrator_factory_);
+
     item_factory_ = base::Bind(&LockScreenItemStorageTest::CreateItem,
                                base::Unretained(this));
     registered_items_getter_ = base::Bind(
@@ -433,9 +506,10 @@ class LockScreenItemStorageTest : public ExtensionsTest {
 
   void ResetLockScreenItemStorage() {
     lock_screen_item_storage_.reset();
+    value_store_migrator_ = nullptr;
     lock_screen_item_storage_ = std::make_unique<LockScreenItemStorage>(
         browser_context(), &local_state_, kTestSymmetricKey,
-        test_dir_.GetPath());
+        base::FilePath("deprecated_local_storage"), test_dir_.GetPath());
   }
 
   // Utility method for setting test item content.
@@ -500,6 +574,51 @@ class LockScreenItemStorageTest : public ExtensionsTest {
     return nullptr;
   }
 
+  struct ExtensionPersistedState {
+    std::string extension_id;
+    int storage_version;
+    int item_count;
+  };
+
+  void InitExtensionLocalState(
+      const std::vector<ExtensionPersistedState>& states) {
+    for (const auto& state : states) {
+      ASSERT_TRUE(state.storage_version == 1 || state.storage_version == 2)
+          << "Failed to init local state " << state.extension_id;
+
+      DictionaryPrefUpdate update(&local_state_, "lockScreenDataItems");
+      if (state.storage_version == 1) {
+        update->SetPath({kTestUserIdHash, state.extension_id},
+                        base::Value(state.item_count));
+      } else {
+        base::Value info(base::Value::Type::DICTIONARY);
+        info.SetKey("count", base::Value(state.item_count));
+        info.SetKey("storage_version", base::Value(2));
+        update->SetPath({kTestUserIdHash, state.extension_id}, std::move(info));
+      }
+    }
+  }
+
+  struct MigratedItem {
+    std::string id;
+    std::vector<char> content;
+  };
+
+  bool FinishMigration(const std::string& extension_id,
+                       const std::vector<MigratedItem>& items) {
+    if (extension_id != extension_->id())
+      return false;
+
+    if (!value_store_migrator())
+      return false;
+
+    for (const auto& item : items) {
+      item_registry_->Add(item.id);
+      GetOrCreateOperations(item.id)->set_content(item.content);
+    }
+    return value_store_migrator()->FinishMigration(extension_id);
+  }
+
   LockScreenItemStorage* lock_screen_item_storage() {
     return lock_screen_item_storage_.get();
   }
@@ -516,8 +635,12 @@ class LockScreenItemStorageTest : public ExtensionsTest {
 
   ItemRegistry* item_registry() { return item_registry_.get(); }
 
- private:
-  void CreateTestExtension() {
+  TestLockScreenValueStoreMigrator* value_store_migrator() {
+    return value_store_migrator_;
+  }
+
+  scoped_refptr<const Extension> CreateTestExtension(
+      const std::string& extension_id) {
     DictionaryBuilder app_builder;
     app_builder.Set("background",
                     DictionaryBuilder()
@@ -528,8 +651,9 @@ class LockScreenItemStorageTest : public ExtensionsTest {
                                     .Set("action", "new_note")
                                     .SetBoolean("enabled_on_lock_screen", true)
                                     .Build());
-    extension_ =
+    scoped_refptr<const Extension> extension =
         ExtensionBuilder()
+            .SetID(extension_id)
             .SetManifest(
                 DictionaryBuilder()
                     .Set("name", "Test app")
@@ -541,7 +665,25 @@ class LockScreenItemStorageTest : public ExtensionsTest {
                          ListBuilder().Append("lockScreen").Build())
                     .Build())
             .Build();
-    ExtensionRegistry::Get(browser_context())->AddEnabled(extension_);
+    ExtensionRegistry::Get(browser_context())->AddEnabled(extension);
+    return extension;
+  }
+
+ private:
+  std::unique_ptr<LockScreenValueStoreMigrator> CreateMigrator() {
+    auto result = std::make_unique<TestLockScreenValueStoreMigrator>();
+    value_store_migrator_ = result.get();
+    return result;
+  }
+
+  OperationQueue* GetOrCreateOperations(const std::string& id) {
+    OperationQueue* operation_queue = GetOperations(id);
+    if (!operation_queue) {
+      operations_[id] =
+          std::make_unique<OperationQueue>(id, item_registry_.get());
+      operation_queue = operations_[id].get();
+    }
+    return operation_queue;
   }
 
   // Callback for creating test data items - this is the callback passed to
@@ -552,14 +694,9 @@ class LockScreenItemStorageTest : public ExtensionsTest {
     EXPECT_EQ(extension()->id(), extension_id);
     EXPECT_EQ(kTestSymmetricKey, crypto_key);
 
+    OperationQueue* operation_queue = GetOrCreateOperations(id);
     // If there is an operation queue for the item id, reuse it in order to
     // retain state on LockScreenItemStorage restart.
-    OperationQueue* operation_queue = GetOperations(id);
-    if (!operation_queue) {
-      operations_[id] =
-          std::make_unique<OperationQueue>(id, item_registry_.get());
-      operation_queue = operations_[id].get();
-    }
     return std::make_unique<TestDataItem>(id, extension_id, crypto_key,
                                           operation_queue);
   }
@@ -589,6 +726,7 @@ class LockScreenItemStorageTest : public ExtensionsTest {
 
   sync_preferences::TestingPrefServiceSyncable testing_pref_service_;
 
+  LockScreenItemStorage::ValueStoreMigratorFactoryCallback migrator_factory_;
   LockScreenItemStorage::ItemFactoryCallback item_factory_;
   LockScreenItemStorage::RegisteredItemsGetter registered_items_getter_;
   LockScreenItemStorage::ItemStoreDeleter item_store_deleter_;
@@ -597,6 +735,8 @@ class LockScreenItemStorageTest : public ExtensionsTest {
 
   std::unique_ptr<ItemRegistry> item_registry_;
   std::map<std::string, std::unique_ptr<OperationQueue>> operations_;
+
+  TestLockScreenValueStoreMigrator* value_store_migrator_ = nullptr;
 
   DISALLOW_COPY_AND_ASSIGN(LockScreenItemStorageTest);
 };
@@ -623,6 +763,7 @@ TEST_F(LockScreenItemStorageTest, GetDependingOnSessionState) {
 
 TEST_F(LockScreenItemStorageTest, SetAndGetContent) {
   lock_screen_item_storage()->SetSessionLocked(true);
+  EXPECT_FALSE(value_store_migrator());
 
   const DataItem* item = CreateNewItem();
   ASSERT_TRUE(item);
@@ -1040,6 +1181,343 @@ TEST_F(LockScreenItemStorageTest,
   EXPECT_TRUE(items.empty());
 
   EXPECT_TRUE(event_router->was_locked_values().empty());
+}
+
+TEST_F(LockScreenItemStorageTest, OperationsBlockedOnMigration) {
+  EXPECT_FALSE(value_store_migrator());
+
+  lock_screen_item_storage()->SetSessionLocked(true);
+
+  // Create an item in the extension's value store.
+  const DataItem* initial_item = CreateNewItem();
+  ASSERT_TRUE(initial_item);
+  const std::string initial_item_id = initial_item->id();
+
+  // Update the local state so it seems that there are extensions that have
+  // entries in the deprecated value storei ,and recreate item storage.
+  scoped_refptr<const Extension> second_extension =
+      CreateTestExtension(kSecondTestExtensionId);
+  InitExtensionLocalState(
+      {{extension()->id(), 1, 2}, {second_extension->id(), 2, 2}});
+
+  ResetLockScreenItemStorage();
+
+  // This time, the lock screen item storage should have created the store
+  // migrator.
+  ASSERT_TRUE(value_store_migrator());
+  EXPECT_EQ(std::set<std::string>({extension()->id()}),
+            value_store_migrator()->extensions_to_migrate());
+
+  const std::string migrated_item_id = "migrated";
+  const std::vector<char> migrated_item_content = {'a', 'b', 'c'};
+
+  // Verify that requests for the migrating extension are throttled while
+  // migration is in progress.
+  EXPECT_FALSE(item_registry()->HasPendingCallback());
+
+  OperationResult write_result = OperationResult::kFailed;
+  lock_screen_item_storage()->SetItemContent(
+      extension()->id(), initial_item_id, {'x'},
+      base::Bind(&RecordWriteResult, &write_result));
+
+  OperationResult read_result = OperationResult::kFailed;
+  std::unique_ptr<std::vector<char>> read_content;
+  lock_screen_item_storage()->GetItemContent(
+      extension()->id(), migrated_item_id,
+      base::Bind(&RecordReadResult, &read_result, &read_content));
+
+  std::vector<std::string> items;
+  lock_screen_item_storage()->GetAllForExtension(
+      extension()->id(), base::Bind(&RecordGetAllItemsResult, &items));
+  EXPECT_TRUE(items.empty());
+
+  OperationResult delete_result = OperationResult::kFailed;
+  lock_screen_item_storage()->DeleteItem(
+      extension()->id(), initial_item_id,
+      base::Bind(&RecordWriteResult, &delete_result));
+
+  OperationQueue* initial_item_operations = GetOperations(initial_item_id);
+  ASSERT_TRUE(initial_item_operations);
+  EXPECT_FALSE(initial_item_operations->HasPendingOperations());
+
+  OperationQueue* migrated_item_operations = GetOperations(migrated_item_id);
+  EXPECT_FALSE(migrated_item_operations &&
+               migrated_item_operations->HasPendingOperations());
+
+  OperationResult create_result = OperationResult::kFailed;
+  const DataItem* new_item = nullptr;
+  lock_screen_item_storage()->CreateItem(
+      extension()->id(),
+      base::Bind(&RecordCreateResult, &create_result, &new_item));
+  EXPECT_FALSE(new_item);
+
+  // Finish item migration - all queued operations should be now run.
+  ASSERT_TRUE(FinishMigration(extension()->id(),
+                              {{migrated_item_id, migrated_item_content}}));
+
+  migrated_item_operations = GetOperations(migrated_item_id);
+  ASSERT_TRUE(migrated_item_operations);
+  EXPECT_TRUE(migrated_item_operations->HasPendingOperations());
+
+  EXPECT_TRUE(initial_item_operations->HasPendingOperations());
+
+  initial_item_operations->CompleteNextOperation(
+      OperationQueue::OperationType::kWrite, OperationResult::kSuccess);
+  migrated_item_operations->CompleteNextOperation(
+      OperationQueue::OperationType::kRead, OperationResult::kSuccess);
+  initial_item_operations->CompleteNextOperation(
+      OperationQueue::OperationType::kDelete, OperationResult::kSuccess);
+
+  EXPECT_EQ(OperationResult::kSuccess, write_result);
+  EXPECT_EQ(OperationResult::kSuccess, read_result);
+  ASSERT_TRUE(read_content);
+  EXPECT_EQ(migrated_item_content, *read_content);
+  EXPECT_EQ(OperationResult::kSuccess, delete_result);
+  EXPECT_EQ(OperationResult::kSuccess, create_result);
+
+  EXPECT_TRUE(new_item);
+
+  EXPECT_EQ(2u, items.size());
+  EXPECT_TRUE(base::ContainsValue(items, migrated_item_id));
+  EXPECT_TRUE(base::ContainsValue(items, initial_item_id));
+
+  GetAllItems(&items);
+  ASSERT_EQ(2u, items.size());
+  EXPECT_TRUE(base::ContainsValue(items, migrated_item_id));
+  EXPECT_TRUE(base::ContainsValue(items, new_item->id()));
+}
+
+TEST_F(LockScreenItemStorageTest,
+       OperationsBlockedOnAnotherExtensionMigration) {
+  EXPECT_FALSE(value_store_migrator());
+
+  lock_screen_item_storage()->SetSessionLocked(true);
+
+  // Update the local state so it seems that there are extensions that have
+  // entries in the deprecated value storei ,and recreate item storage.
+  scoped_refptr<const Extension> second_extension =
+      CreateTestExtension(kSecondTestExtensionId);
+  InitExtensionLocalState(
+      {{extension()->id(), 2, 1}, {second_extension->id(), 1, 1}});
+
+  ResetLockScreenItemStorage();
+
+  // This time, the lock screen item storage should have created the store
+  // migrator.
+  ASSERT_TRUE(value_store_migrator());
+  EXPECT_EQ(std::set<std::string>({second_extension->id()}),
+            value_store_migrator()->extensions_to_migrate());
+
+  lock_screen_item_storage()->SetSessionLocked(true);
+  const DataItem* item = CreateItemWithContent({'f', 'i', 'l', 'e', '1'});
+  EXPECT_TRUE(item);
+
+  std::vector<std::string> items;
+  GetAllItems(&items);
+  EXPECT_EQ(std::vector<std::string>{item->id()}, items);
+}
+
+TEST_F(LockScreenItemStorageTest, MigrationNotReAttemptedAfterSuccess) {
+  EXPECT_FALSE(value_store_migrator());
+
+  // Update the local state so it seems that there are extensions that have
+  // entries in the deprecated value storei ,and recreate item storage.
+  InitExtensionLocalState({{extension()->id(), 1, 1}});
+
+  ResetLockScreenItemStorage();
+
+  // This time, the lock screen item storage should have created the store
+  // migrator.
+  ASSERT_TRUE(value_store_migrator());
+  EXPECT_EQ(std::set<std::string>({extension()->id()}),
+            value_store_migrator()->extensions_to_migrate());
+
+  const std::string migrated_item_id = "migrated";
+  const std::vector<char> migrated_item_content = {'a', 'b', 'c'};
+  ASSERT_TRUE(FinishMigration(extension()->id(),
+                              {{migrated_item_id, migrated_item_content}}));
+
+  // Reset the storage, and verify that storage migrator is not recreated.
+  ResetLockScreenItemStorage();
+
+  EXPECT_FALSE(value_store_migrator());
+
+  std::vector<std::string> items;
+  GetAllItems(&items);
+  EXPECT_EQ(std::vector<std::string>{"migrated"}, items);
+}
+
+TEST_F(LockScreenItemStorageTest,
+       MigrationNotReAttemptedAfterSuccess_NoItemsMigrated) {
+  TestEventRouter* event_router = static_cast<TestEventRouter*>(
+      extensions::EventRouterFactory::GetInstance()->SetTestingFactoryAndUse(
+          browser_context(), &TestEventRouterFactoryFunction));
+  ASSERT_TRUE(event_router);
+
+  EXPECT_FALSE(value_store_migrator());
+
+  // Create an item in the extension's value store. The test will verify it's
+  // recorded in the local state even if no additional items are migrated.
+  const DataItem* initial_item = CreateNewItem();
+  ASSERT_TRUE(initial_item);
+  const std::string initial_item_id = initial_item->id();
+
+  // Update the local state so it seems that there are extensions that have
+  // entries in the deprecated value storei ,and recreate item storage.
+  InitExtensionLocalState({{extension()->id(), 1, 1}});
+
+  ResetLockScreenItemStorage();
+  lock_screen_item_storage()->SetSessionLocked(true);
+
+  // This time, the lock screen item storage should have created the store
+  // migrator.
+  ASSERT_TRUE(value_store_migrator());
+  EXPECT_EQ(std::set<std::string>({extension()->id()}),
+            value_store_migrator()->extensions_to_migrate());
+
+  ASSERT_TRUE(FinishMigration(extension()->id(), std::vector<MigratedItem>()));
+
+  // Make sure that extension is notified about available items after
+  // migration if no items got migrated, but an item exists in the storage.
+  lock_screen_item_storage()->SetSessionLocked(false);
+  EXPECT_EQ(std::vector<bool>({true}), event_router->was_locked_values());
+
+  // Reset the storage, and verify that storage migrator is not recreated.
+  ResetLockScreenItemStorage();
+
+  EXPECT_FALSE(value_store_migrator());
+
+  std::vector<std::string> items;
+  GetAllItems(&items);
+  EXPECT_EQ(std::vector<std::string>{initial_item_id}, items);
+}
+
+TEST_F(LockScreenItemStorageTest,
+       ReAttemptMigrationIfStorageIsResetBeforeRegisteredItemsAreReFetched) {
+  EXPECT_FALSE(value_store_migrator());
+
+  // Update the local state so it seems that there are extensions that have
+  // entries in the deprecated value storei ,and recreate item storage.
+  InitExtensionLocalState({{extension()->id(), 1, 1}});
+
+  ResetLockScreenItemStorage();
+
+  // This time, the lock screen item storage should have created the store
+  // migrator.
+  ASSERT_TRUE(value_store_migrator());
+  EXPECT_EQ(std::set<std::string>({extension()->id()}),
+            value_store_migrator()->extensions_to_migrate());
+
+  item_registry()->set_throttle_get(true);
+
+  const std::string migrated_item_id = "migrated";
+  const std::vector<char> migrated_item_content = {'a', 'b', 'c'};
+  ASSERT_TRUE(FinishMigration(extension()->id(),
+                              {{migrated_item_id, migrated_item_content}}));
+
+  // Reset the storage, and verify that storage migrator is created again, as
+  // item storage got reset before it refetched info about registered items.
+  ResetLockScreenItemStorage();
+
+  EXPECT_TRUE(value_store_migrator());
+}
+
+TEST_F(LockScreenItemStorageTest,
+       ItemAvailableEventNotSentIfItemsLostDuringMigration) {
+  TestEventRouter* event_router = static_cast<TestEventRouter*>(
+      extensions::EventRouterFactory::GetInstance()->SetTestingFactoryAndUse(
+          browser_context(), &TestEventRouterFactoryFunction));
+  ASSERT_TRUE(event_router);
+
+  EXPECT_FALSE(value_store_migrator());
+
+  // Update the local state so it seems that there are extensions that have
+  // entries in the deprecated value storei ,and recreate item storage.
+  InitExtensionLocalState({{extension()->id(), 1, 1}});
+
+  ResetLockScreenItemStorage();
+  lock_screen_item_storage()->SetSessionLocked(true);
+
+  // This time, the lock screen item storage should have created the store
+  // migrator.
+  ASSERT_TRUE(value_store_migrator());
+  EXPECT_EQ(std::set<std::string>({extension()->id()}),
+            value_store_migrator()->extensions_to_migrate());
+
+  ASSERT_TRUE(FinishMigration(extension()->id(), std::vector<MigratedItem>()));
+
+  // Make sure that extension is notified about available items after
+  // migration if no items got migrated, but an item exists in the storage.
+  lock_screen_item_storage()->SetSessionLocked(false);
+  EXPECT_TRUE(event_router->was_locked_values().empty());
+
+  // Reset the storage, and verify that storage migrator is not recreated.
+  ResetLockScreenItemStorage();
+
+  EXPECT_FALSE(value_store_migrator());
+}
+
+TEST_F(LockScreenItemStorageTest, DontAttemptMigrationWhenNoDataRecorded) {
+  EXPECT_FALSE(value_store_migrator());
+
+  // Update the local state so it seems that there are extensions that have
+  // entries in the deprecated value storei ,and recreate item storage.
+  InitExtensionLocalState({{extension()->id(), 1, 0}});
+
+  ResetLockScreenItemStorage();
+  EXPECT_FALSE(value_store_migrator());
+}
+
+TEST_F(LockScreenItemStorageTest, ExtensionUninstalledDuringMigration) {
+  // Update the local state so it seems that there are extensions that have
+  // entries in the deprecated value storei ,and recreate item storage.
+  InitExtensionLocalState({{extension()->id(), 1, 2}});
+
+  ResetLockScreenItemStorage();
+  ASSERT_TRUE(value_store_migrator());
+
+  ExtensionRegistry::Get(browser_context())->RemoveEnabled(extension()->id());
+  ExtensionRegistry::Get(browser_context())
+      ->TriggerOnUninstalled(extension(), UNINSTALL_REASON_FOR_TESTING);
+
+  ASSERT_TRUE(value_store_migrator()->FinishClearData(extension()->id()));
+
+  // There should be no migrator, as the extension data should have been
+  // cleared.
+  ResetLockScreenItemStorage();
+  EXPECT_FALSE(value_store_migrator());
+}
+
+TEST_F(LockScreenItemStorageTest,
+       ExtensionUninstalledDuringMigration_StorageResetBeforeDataCleared) {
+  // Update the local state so it seems that there are extensions that have
+  // entries in the deprecated value storei ,and recreate item storage.
+  InitExtensionLocalState({{extension()->id(), 1, 2}});
+
+  ResetLockScreenItemStorage();
+  ASSERT_TRUE(value_store_migrator());
+
+  ExtensionRegistry::Get(browser_context())->RemoveEnabled(extension()->id());
+  ExtensionRegistry::Get(browser_context())
+      ->TriggerOnUninstalled(extension(), UNINSTALL_REASON_FOR_TESTING);
+
+  EXPECT_TRUE(
+      value_store_migrator()->ClearingDataForExtension(extension()->id()));
+
+  // Reset lock screen storage before data cleanup completes.
+  // When the storage is recreated it should create migrator and start data
+  // cleanup right away.
+  ResetLockScreenItemStorage();
+
+  ASSERT_TRUE(value_store_migrator());
+  EXPECT_TRUE(
+      value_store_migrator()->ClearingDataForExtension(extension()->id()));
+  ASSERT_TRUE(value_store_migrator()->FinishClearData(extension()->id()));
+
+  // There should be no migrator, as the extension data should have been
+  // cleared.
+  ResetLockScreenItemStorage();
+  EXPECT_FALSE(value_store_migrator());
 }
 
 }  // namespace lock_screen_data
