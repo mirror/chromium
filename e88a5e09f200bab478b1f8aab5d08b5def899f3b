@@ -2,6 +2,29 @@
   "comments": [
     {
       "key": {
+        "uuid": "9d1a6947_21a62bd0",
+        "filename": "device/geolocation/geoposition.h",
+        "patchSetId": 31
+      },
+      "lineNbr": 74,
+      "author": {
+        "id": 1182889
+      },
+      "writtenOn": "2017-11-04T04:04:48Z",
+      "side": 1,
+      "message": "We won\u0027t be needing this now that crrev.com/c/732197 is submitted and indeed the whole CL needs to be rebased on to that.",
+      "range": {
+        "startLine": 74,
+        "startChar": 0,
+        "endLine": 74,
+        "endChar": 20
+      },
+      "revId": "e88a5e09f200bab478b1f8aab5d08b5def899f3b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "d79956fb_2dda33d8",
         "filename": "services/device/device_service.cc",
         "patchSetId": 31
