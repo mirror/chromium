@@ -5,6 +5,8 @@
 #ifndef CHROME_BROWSER_CHROMEOS_CERTIFICATE_PROVIDER_CERTIFICATE_INFO_H_
 #define CHROME_BROWSER_CHROMEOS_CERTIFICATE_PROVIDER_CERTIFICATE_INFO_H_
 
+#include <stdint.h>
+
 #include <vector>
 
 #include "base/memory/ref_counted.h"
@@ -22,7 +24,7 @@ struct CertificateInfo {
   ~CertificateInfo();
 
   scoped_refptr<net::X509Certificate> certificate;
-  std::vector<net::SSLPrivateKey::Hash> supported_hashes;
+  std::vector<uint16_t> supported_algorithms;
 };
 using CertificateInfoList = std::vector<CertificateInfo>;
 
