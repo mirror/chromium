@@ -19,6 +19,14 @@ class GpuMemoryBufferFactory;
 class SyncPointManager;
 }  // namespace gpu
 
+namespace service_manager {
+class Connector;
+}
+
+namespace ukm {
+class MojoUkmRecorder;
+}
+
 namespace viz {
 class DisplayProvider;
 class FrameSinkManagerImpl;
@@ -53,6 +61,7 @@ class VizMainImpl : public gpu::GpuSandboxHelper, public mojom::VizMain {
     gpu::SyncPointManager* sync_point_manager = nullptr;
     base::WaitableEvent* shutdown_event = nullptr;
     scoped_refptr<base::SingleThreadTaskRunner> io_thread_task_runner;
+    service_manager::Connector* connector = nullptr;
 
    private:
     DISALLOW_COPY_AND_ASSIGN(ExternalDependencies);
@@ -91,6 +100,7 @@ class VizMainImpl : public gpu::GpuSandboxHelper, public mojom::VizMain {
   void CreateFrameSinkManagerOnCompositorThread(
       mojom::FrameSinkManagerRequest request,
       mojom::FrameSinkManagerClientPtrInfo client_info);
+  void CreateUkmRecorder();
 
   void CloseVizMainBindingOnGpuThread(base::WaitableEvent* wait);
   void TearDownOnCompositorThread(base::WaitableEvent* wait);
@@ -134,6 +144,7 @@ class VizMainImpl : public gpu::GpuSandboxHelper, public mojom::VizMain {
   std::unique_ptr<base::Thread> compositor_thread_;
   scoped_refptr<base::SingleThreadTaskRunner> compositor_thread_task_runner_;
 
+  std::unique_ptr<ukm::MojoUkmRecorder> ukm_recorder_;
   std::unique_ptr<base::PowerMonitor> power_monitor_;
   mojo::Binding<mojom::VizMain> binding_;
   mojo::AssociatedBinding<mojom::VizMain> associated_binding_;
