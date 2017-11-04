@@ -1837,9 +1837,11 @@ GLStreamTextureImage* Texture::GetLevelStreamTextureImage(GLint target,
   return info->stream_texture_image.get();
 }
 
-void Texture::DumpLevelMemory(base::trace_event::ProcessMemoryDump* pmd,
-                              uint64_t client_tracing_id,
-                              const std::string& dump_name) const {
+void Texture::DumpLevelMemory(
+    base::trace_event::ProcessMemoryDump* pmd,
+    uint64_t client_tracing_id,
+    const std::string& dump_name,
+    const base::trace_event::MemoryAllocatorDumpGuid& parent_guid) const {
   for (uint32_t face_index = 0; face_index < face_infos_.size(); ++face_index) {
     const auto& level_infos = face_infos_[face_index].level_infos;
     for (uint32_t level_index = 0; level_index < level_infos.size();
@@ -1865,6 +1867,10 @@ void Texture::DumpLevelMemory(base::trace_event::ProcessMemoryDump* pmd,
             MemoryAllocatorDump::kNameSize, MemoryAllocatorDump::kUnitsBytes,
             static_cast<uint64_t>(level_infos[level_index].estimated_size));
       }
+      MemoryAllocatorDump* dump = pmd->GetOrCreateAllocatorDump(
+          base::StringPrintf("%s/face_%d/level_%d", dump_name.c_str(),
+                             face_index, level_index));
+      pmd->AddOwnershipEdge(dump->guid(), parent_guid);
     }
   }
 }
@@ -3530,7 +3536,7 @@ void TextureManager::DumpTextureRef(base::trace_event::ProcessMemoryDump* pmd,
   // Dump all sub-levels held by the texture. They will appear below the main
   // gl/textures/client_X/texture_Y dump.
   ref->texture()->DumpLevelMemory(pmd, memory_tracker_->ClientTracingId(),
-                                  dump_name);
+                                  dump_name, client_guid);
 }
 
 GLenum TextureManager::ExtractFormatFromStorageFormat(GLenum internalformat) {
