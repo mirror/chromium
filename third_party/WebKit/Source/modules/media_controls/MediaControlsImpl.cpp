@@ -1165,6 +1165,8 @@ void MediaControlsImpl::OnTimeUpdate() {
 
 void MediaControlsImpl::OnDurationChange() {
   const double duration = MediaElement().duration();
+  bool was_infinite_duration =
+      !std::isfinite(duration_display_->CurrentValue());
 
   // Update the displayed current time/duration.
   duration_display_->SetCurrentValue(duration);
@@ -1175,6 +1177,9 @@ void MediaControlsImpl::OnDurationChange() {
 
   // Update the timeline (the UI with the seek marker).
   timeline_->SetDuration(duration);
+  if (was_infinite_duration && std::isfinite(duration)) {
+    OnControlsListUpdated();
+  }
 }
 
 void MediaControlsImpl::OnPlay() {
