@@ -104,9 +104,6 @@ class ModuleScriptLoaderTestModulator final : public DummyModulator {
   Vector<ModuleRequest> ModuleRequestsFromScriptModule(ScriptModule) override {
     return requests_;
   }
-  ScriptModuleState GetRecordStatus(ScriptModule) override {
-    return ScriptModuleState::kUninstantiated;
-  }
 
   ModuleScriptFetcher* CreateModuleScriptFetcher() override {
     auto* execution_context = ExecutionContext::From(script_state_.get());
@@ -218,6 +215,7 @@ TEST_F(ModuleScriptLoaderTest, FetchDataURL) {
       << "ModuleScriptLoader should finish synchronously.";
   ASSERT_TRUE(client->GetModuleScript());
   EXPECT_FALSE(client->GetModuleScript()->HasEmptyRecord());
+  EXPECT_FALSE(client->GetModuleScript()->HasParseError());
 }
 
 TEST_F(ModuleScriptLoaderTest, FetchDataURL_OnWorklet) {
@@ -232,6 +230,7 @@ TEST_F(ModuleScriptLoaderTest, FetchDataURL_OnWorklet) {
   EXPECT_TRUE(client1->WasNotifyFinished());
   ASSERT_TRUE(client1->GetModuleScript());
   EXPECT_FALSE(client1->GetModuleScript()->HasEmptyRecord());
+  EXPECT_FALSE(client1->GetModuleScript()->HasParseError());
 
   // Try to fetch the same URL again in order to verify the case where
   // WorkletModuleResponsesMap serves a cache.
@@ -245,6 +244,7 @@ TEST_F(ModuleScriptLoaderTest, FetchDataURL_OnWorklet) {
   EXPECT_TRUE(client2->WasNotifyFinished());
   ASSERT_TRUE(client2->GetModuleScript());
   EXPECT_FALSE(client2->GetModuleScript()->HasEmptyRecord());
+  EXPECT_FALSE(client2->GetModuleScript()->HasParseError());
 }
 
 void ModuleScriptLoaderTest::TestInvalidSpecifier(
@@ -266,6 +266,7 @@ TEST_F(ModuleScriptLoaderTest, InvalidSpecifier) {
       << "ModuleScriptLoader should finish synchronously.";
   ASSERT_TRUE(client->GetModuleScript());
   EXPECT_TRUE(client->GetModuleScript()->HasEmptyRecord());
+  EXPECT_TRUE(client->GetModuleScript()->HasParseError());
 }
 
 TEST_F(ModuleScriptLoaderTest, InvalidSpecifier_OnWorklet) {
@@ -280,6 +281,7 @@ TEST_F(ModuleScriptLoaderTest, InvalidSpecifier_OnWorklet) {
   EXPECT_TRUE(client->WasNotifyFinished());
   ASSERT_TRUE(client->GetModuleScript());
   EXPECT_TRUE(client->GetModuleScript()->HasEmptyRecord());
+  EXPECT_TRUE(client->GetModuleScript()->HasParseError());
 }
 
 void ModuleScriptLoaderTest::TestFetchInvalidURL(
