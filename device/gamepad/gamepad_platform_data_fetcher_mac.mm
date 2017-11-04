@@ -22,6 +22,20 @@ namespace device {
 
 namespace {
 
+// http://www.usb.org/developers/hidpage
+const uint32_t kGenericDesktopUsagePage = 0x01;
+const uint32_t kGameControlsUsagePage = 0x05;
+const uint32_t kButtonUsagePage = 0x09;
+const uint32_t kJoystickUsageNumber = 0x04;
+const uint32_t kGameUsageNumber = 0x05;
+const uint32_t kMultiAxisUsageNumber = 0x08;
+const uint32_t kAxisMinimumUsageNumber = 0x30;
+
+const int kVendorSteelSeries = 0x1038;
+const int kProductNimbus = 0x1420;
+
+const int kRumbleMagnitudeMax = 10000;
+
 void CopyNSStringAsUTF16LittleEndian(NSString* src,
                                      UChar* dest,
                                      size_t dest_len) {
@@ -57,17 +71,96 @@ float NormalizeUInt32Axis(uint32_t value, uint32_t min, uint32_t max) {
   return (2.f * (value - min) / static_cast<float>(max - min)) - 1.f;
 }
 
-// http://www.usb.org/developers/hidpage
-const uint32_t kGenericDesktopUsagePage = 0x01;
-const uint32_t kGameControlsUsagePage = 0x05;
-const uint32_t kButtonUsagePage = 0x09;
-const uint32_t kJoystickUsageNumber = 0x04;
-const uint32_t kGameUsageNumber = 0x05;
-const uint32_t kMultiAxisUsageNumber = 0x08;
-const uint32_t kAxisMinimumUsageNumber = 0x30;
+FFDeviceObjectReference CreateForceFeedbackDevice(IOHIDDeviceRef device_ref) {
+  io_service_t service = IOHIDDeviceGetService(device_ref);
 
-const int kVendorSteelSeries = 0x1038;
-const int kProductNimbus = 0x1420;
+  if (service == MACH_PORT_NULL)
+    return nullptr;
+
+  HRESULT res = FFIsForceFeedback(service);
+  if (res != FF_OK)
+    return nullptr;
+
+  FFDeviceObjectReference ff_device_ref;
+  res = FFCreateDevice(service, &ff_device_ref);
+  if (res != FF_OK)
+    return nullptr;
+
+  return ff_device_ref;
+}
+
+FFEffectObjectReference CreateForceFeedbackEffect(
+    FFDeviceObjectReference ff_device_ref,
+    FFEFFECT* ff_effect,
+    FFCUSTOMFORCE* ff_custom_force,
+    LONG* force_data,
+    DWORD* axes_data,
+    LONG* direction_data) {
+  DCHECK(ff_effect);
+  DCHECK(ff_custom_force);
+  DCHECK(force_data);
+  DCHECK(axes_data);
+  DCHECK(direction_data);
+
+  FFCAPABILITIES caps;
+  HRESULT res = FFDeviceGetForceFeedbackCapabilities(ff_device_ref, &caps);
+  if (res != FF_OK)
+    return nullptr;
+
+  if ((caps.supportedEffects & FFCAP_ET_CUSTOMFORCE) == 0)
+    return nullptr;
+
+  force_data[0] = 0;
+  force_data[1] = 0;
+  axes_data[0] = caps.ffAxes[0];
+  axes_data[1] = caps.ffAxes[1];
+  direction_data[0] = 0;
+  direction_data[1] = 0;
+  ff_custom_force->cChannels = 2;
+  ff_custom_force->cSamples = 2;
+  ff_custom_force->rglForceData = force_data;
+  ff_custom_force->dwSamplePeriod = 100000;  // 100 ms
+  ff_effect->dwSize = sizeof(FFEFFECT);
+  ff_effect->dwFlags = FFEFF_OBJECTOFFSETS | FFEFF_SPHERICAL;
+  ff_effect->dwDuration = 0;
+  ff_effect->dwSamplePeriod = 100000;  // 100 ms
+  ff_effect->dwGain = 10000;
+  ff_effect->dwTriggerButton = FFEB_NOTRIGGER;
+  ff_effect->dwTriggerRepeatInterval = 0;
+  ff_effect->cAxes = caps.numFfAxes;
+  ff_effect->rgdwAxes = axes_data;
+  ff_effect->rglDirection = direction_data;
+  ff_effect->lpEnvelope = nullptr;
+  ff_effect->cbTypeSpecificParams = sizeof(FFCUSTOMFORCE);
+  ff_effect->lpvTypeSpecificParams = ff_custom_force;
+  ff_effect->dwStartDelay = 0;
+
+  FFEffectObjectReference ff_effect_ref;
+  res = FFDeviceCreateEffect(ff_device_ref, kFFEffectType_CustomForce_ID,
+                             ff_effect, &ff_effect_ref);
+  if (res != FF_OK)
+    return nullptr;
+
+  return ff_effect_ref;
+}
+
+void UpdateForceFeedbackEffect(double duration,
+                               double start_delay,
+                               double strong_magnitude,
+                               double weak_magnitude,
+                               FFEFFECT* ff_effect) {
+  DCHECK(ff_effect);
+  DCHECK(ff_effect->ff_custom_force);
+  DCHECK(ff_effect->ff_custom_force.rglForceData);
+
+  // FFEFFECT stores the duration and startDelay parameters in microseconds.
+  ff_effect->dwDuration = static_cast<DWORD>(duration * 1000);
+  ff_effect->dwStartDelay = static_cast<DWORD>(start_delay * 1000);
+  ff_effect->ff_custom_force.rglForceData[0] =
+      static_cast<LONG>(strong_magnitude * kRumbleMagnitudeMax);
+  ff_effect->ff_custom_force.rglForceData[1] =
+      static_cast<LONG>(weak_magnitude * kRumbleMagnitudeMax);
+}
 
 }  // namespace
 
@@ -285,6 +378,14 @@ size_t GamepadPlatformDataFetcherMac::GetSlotForDevice(IOHIDDeviceRef device) {
   return GetEmptySlot();
 }
 
+size_t GamepadPlatformDataFetcherMac::SlotForLocation(int location_id) {
+  for (size_t slot = 0; slot < Gamepads::kItemsLengthCap; ++slot) {
+    if (associated_[slot].location_id == location_id)
+      return slot;
+  }
+  return Gamepads::kItemsLengthCap;
+}
+
 void GamepadPlatformDataFetcherMac::DeviceAdd(IOHIDDeviceRef device) {
   using base::mac::CFToNSCast;
   using base::mac::CFCastStrict;
@@ -355,8 +456,20 @@ void GamepadPlatformDataFetcherMac::DeviceAdd(IOHIDDeviceRef device) {
   if (!AddButtonsAndAxes(CFToNSCast(elements), state, slot))
     return;
 
-  associated_[slot].location_id = location_int;
-  associated_[slot].device_ref = device;
+  slot_info.location_id = location_int;
+  slot_info.device_ref = device;
+  slot_info.ff_device_ref = CreateForceFeedbackDevice(device);
+  if (slot_info.ff_device_ref) {
+    slot_info.ff_effect_ref = CreateForceFeedbackEffect(
+        slot_info.ff_device_ref, &slot_info.ff_effect,
+        &slot_info.ff_custom_force, slot_info.force_data, slot_info.axes_data,
+        slot_info.direction_data);
+  }
+
+  state->data.vibration_actuator.type = GamepadHapticActuatorType::kDualRumble;
+  state->data.vibration_actuator.not_null =
+      (slot_info.ff_device_ref != nullptr);
+
   state->data.connected = true;
 }
 
@@ -371,8 +484,17 @@ void GamepadPlatformDataFetcherMac::DeviceRemove(IOHIDDeviceRef device) {
       break;
   }
   if (slot < Gamepads::kItemsLengthCap) {
-    associated_[slot].location_id = 0;
-    associated_[slot].device_ref = nullptr;
+    auto& slot_info = associated_[slot];
+    slot_info.location_id = 0;
+    slot_info.device_ref = nullptr;
+    if (slot_info.ff_effect_ref) {
+      FFDeviceReleaseEffect(slot_info.ff_device_ref, slot_info.ff_effect_ref);
+      slot_info.ff_effect_ref = nullptr;
+    }
+    if (slot_info.ff_device_ref) {
+      FFReleaseDevice(slot_info.ff_device_ref);
+      slot_info.ff_device_ref = nullptr;
+    }
   }
 }
 
@@ -456,6 +578,137 @@ void GamepadPlatformDataFetcherMac::GetGamepadData(bool) {
       GetPadState(associated_[slot].location_id);
     }
   }
+}
+
+void GamepadPlatformDataFetcherMac::PlayEffect(
+    int source_id,
+    mojom::GamepadHapticEffectType type,
+    mojom::GamepadEffectParametersPtr params,
+    mojom::GamepadHapticsManager::PlayVibrationEffectOnceCallback callback) {
+  size_t slot = SlotForLocation(source_id);
+  if (slot == Gamepads::kItemsLengthCap) {
+    // No connected gamepad with this location.
+    std::move(callback).Run(
+        mojom::GamepadHapticsResult::GamepadHapticsResultError);
+    return;
+  }
+  auto& slot_info = associated_[slot];
+
+  if (!slot_info.ff_device_ref) {
+    std::move(callback).Run(
+        mojom::GamepadHapticsResult::GamepadHapticsResultNotSupported);
+    return;
+  }
+
+  if (type !=
+      mojom::GamepadHapticEffectType::GamepadHapticEffectTypeDualRumble) {
+    std::move(callback).Run(
+        mojom::GamepadHapticsResult::GamepadHapticsResultNotSupported);
+    return;
+  }
+
+  int sequence_id = ++slot_info.sequence_id;
+
+  if (playing_effect_callbacks_[slot]) {
+    RunCallbackOnMojoThread(
+        slot, mojom::GamepadHapticsResult::GamepadHapticsResultPreempted);
+  }
+
+  callback_runners_[slot] = base::ThreadTaskRunnerHandle::Get();
+  playing_effect_callbacks_[slot] = std::move(callback);
+
+  GamepadPlatformDataFetcherMac::PlayDualRumbleEffect(
+      sequence_id, slot, params->duration, params->start_delay,
+      params->strong_magnitude, params->weak_magnitude);
+}
+
+void GamepadPlatformDataFetcherMac::ResetVibration(
+    int source_id,
+    mojom::GamepadHapticsManager::ResetVibrationActuatorCallback callback) {
+  size_t slot = SlotForLocation(source_id);
+  if (slot == Gamepads::kItemsLengthCap) {
+    // No connected gamepad with this location.
+    std::move(callback).Run(
+        mojom::GamepadHapticsResult::GamepadHapticsResultError);
+    return;
+  }
+  auto& slot_info = associated_[slot];
+
+  ++slot_info.sequence_id;
+
+  if (playing_effect_callbacks_[slot]) {
+    FFEffectStop(slot_info.ff_effect_ref);
+    RunCallbackOnMojoThread(
+        slot, mojom::GamepadHapticsResult::GamepadHapticsResultPreempted);
+  }
+
+  std::move(callback).Run(
+      mojom::GamepadHapticsResult::GamepadHapticsResultComplete);
+}
+
+void GamepadPlatformDataFetcherMac::PlayDualRumbleEffect(
+    int sequence_id,
+    size_t slot,
+    double duration,
+    double start_delay,
+    double strong_magnitude,
+    double weak_magnitude) {
+  auto& slot_info = associated_[slot];
+
+  UpdateForceFeedbackEffect(duration, start_delay, strong_magnitude,
+                            weak_magnitude, &slot_info.ff_effect);
+
+  // Download the effect to the device and start the effect.
+  HRESULT res = FFEffectSetParameters(
+      slot_info.ff_effect_ref, &slot_info.ff_effect,
+      FFEP_DURATION | FFEP_STARTDELAY | FFEP_TYPESPECIFICPARAMS);
+  if (res != FF_OK) {
+    RunCallbackOnMojoThread(
+        slot, mojom::GamepadHapticsResult::GamepadHapticsResultError);
+    return;
+  }
+
+  res = FFEffectStart(slot_info.ff_effect_ref, 1, FFES_SOLO);
+  if (res != FF_OK) {
+    RunCallbackOnMojoThread(
+        slot, mojom::GamepadHapticsResult::GamepadHapticsResultError);
+    return;
+  }
+
+  base::ThreadTaskRunnerHandle::Get()->PostDelayedTask(
+      FROM_HERE,
+      base::BindOnce(&GamepadPlatformDataFetcherMac::FinishEffect,
+                     base::Unretained(this), sequence_id, slot),
+      base::TimeDelta::FromMillisecondsD(start_delay + duration));
+}
+
+void GamepadPlatformDataFetcherMac::FinishEffect(int sequence_id, size_t slot) {
+  if (sequence_id != associated_[slot].sequence_id)
+    return;
+
+  RunCallbackOnMojoThread(
+      slot, mojom::GamepadHapticsResult::GamepadHapticsResultComplete);
+}
+
+void GamepadPlatformDataFetcherMac::RunCallbackOnMojoThread(
+    size_t slot,
+    mojom::GamepadHapticsResult result) {
+  if (callback_runners_[slot]->RunsTasksInCurrentSequence()) {
+    DoRunCallback(std::move(playing_effect_callbacks_[slot]), result);
+    return;
+  }
+
+  callback_runners_[slot]->PostTask(
+      FROM_HERE,
+      base::BindOnce(&GamepadPlatformDataFetcherMac::DoRunCallback,
+                     std::move(playing_effect_callbacks_[slot]), result));
+}
+
+// static
+void GamepadPlatformDataFetcherMac::DoRunCallback(
+    mojom::GamepadHapticsManager::PlayVibrationEffectOnceCallback callback,
+    mojom::GamepadHapticsResult result) {
+  std::move(callback).Run(result);
 }
 
 }  // namespace device
