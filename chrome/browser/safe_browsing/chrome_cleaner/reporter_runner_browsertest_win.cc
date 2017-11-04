@@ -21,6 +21,7 @@
 #include "base/message_loop/message_loop.h"
 #include "base/run_loop.h"
 #include "base/single_thread_task_runner.h"
+#include "base/test/scoped_feature_list.h"
 #include "base/test/test_mock_time_task_runner.h"
 #include "base/threading/sequenced_task_runner_handle.h"
 #include "base/threading/thread_task_runner_handle.h"
@@ -50,14 +51,24 @@ namespace {
 constexpr char kSRTPromptGroup[] = "SRTGroup";
 
 // Parameters for this test:
+//  - bool user_initiated_runs_enabled_: identifies if feature
+//        UserInitiatedChromeCleanups is enabled.
+//  - SwReporterInvocationType invocation_type_: identifies the type of
+//        invocation being tested.
 //  - const char* old_seed_: The old "Seed" Finch parameter saved in prefs.
 //  - const char* incoming_seed_: The new "Seed" Finch parameter.
-class ReporterRunnerTest : public InProcessBrowserTest,
-                           public SwReporterTestingDelegate,
-                           public ::testing::WithParamInterface<
-                               testing::tuple<const char*, const char*>> {
+typedef std::tuple<bool, SwReporterInvocationType, const char*, const char*>
+    ReporterRunnerTestParams;
+
+class ReporterRunnerTest
+    : public InProcessBrowserTest,
+      public SwReporterTestingDelegate,
+      public ::testing::WithParamInterface<ReporterRunnerTestParams> {
  public:
-  ReporterRunnerTest() { std::tie(old_seed_, incoming_seed_) = GetParam(); }
+  ReporterRunnerTest() {
+    std::tie(user_initiated_runs_enabled_, invocation_type_, old_seed_,
+             incoming_seed_) = GetParam();
+  }
 
   void SetUpCommandLine(base::CommandLine* command_line) override {
     variations::testing::VariationParamsManager::AppendVariationParams(
@@ -70,6 +81,14 @@ class ReporterRunnerTest : public InProcessBrowserTest,
   }
 
   void SetUpOnMainThread() override {
+    if (user_initiated_runs_enabled_) {
+      scoped_feature_list_.InitAndEnableFeature(
+          kUserInitiatedChromeCleanupsFeature);
+    } else {
+      scoped_feature_list_.InitAndDisableFeature(
+          kUserInitiatedChromeCleanupsFeature);
+    }
+
     // During the test, use a task runner with a mock clock.
     saved_task_runner_ = base::ThreadTaskRunnerHandle::Get();
     ASSERT_NE(mock_time_task_runner_, saved_task_runner_);
@@ -122,26 +141,36 @@ class ReporterRunnerTest : public InProcessBrowserTest,
     return mock_time_task_runner_.get();
   }
 
+  SwReporterInvocationsSequence CreateInvocationSequence(
+      SwReporterInvocationResult expected_result,
+      const SwReporterInvocationsSequence::Container& container =
+          SwReporterInvocationsSequence::Container()) {
+    return SwReporterInvocationsSequence(
+        base::Version("1.2.3"), container,
+        base::BindOnce(&ReporterRunnerTest::ExpectReporterResult,
+                       base::Unretained(this), expected_result));
+  }
+
   // Schedules a single reporter to run.
   void RunReporter(int exit_code_to_report,
+                   SwReporterInvocationResult expected_result,
                    const base::FilePath& exe_path = base::FilePath()) {
+    LOG(ERROR) << "Exit code: " << exit_code_to_report;
     exit_code_to_report_ = exit_code_to_report;
-    auto invocation = SwReporterInvocation::FromFilePath(exe_path);
-    invocation.supported_behaviours =
-        SwReporterInvocation::BEHAVIOUR_LOG_EXIT_CODE_TO_PREFS |
-        SwReporterInvocation::BEHAVIOUR_TRIGGER_PROMPT |
-        SwReporterInvocation::BEHAVIOUR_ALLOW_SEND_REPORTER_LOGS;
+    auto invocation =
+        SwReporterInvocation(base::CommandLine(exe_path))
+            .WithSupportedBehaviours(
+                SwReporterInvocation::BEHAVIOUR_ENABLED_BY_DEFAULT);
 
-    SwReporterQueue invocations;
-    invocations.push_back(invocation);
-    RunSwReporters(invocations, base::Version("1.2.3"));
+    RunSwReporters(invocation_type_,
+                   CreateInvocationSequence(expected_result, {invocation}));
   }
 
   // Schedules a queue of reporters to run.
   void RunReporterQueue(int exit_code_to_report,
-                        const SwReporterQueue& invocations) {
+                        SwReporterInvocationsSequence&& invocations) {
     exit_code_to_report_ = exit_code_to_report;
-    RunSwReporters(invocations, base::Version("1.2.3"));
+    RunSwReporters(invocation_type_, std::move(invocations));
   }
 
   // Sets |path| in the local state to a date corresponding to |days| days ago.
@@ -227,7 +256,7 @@ class ReporterRunnerTest : public InProcessBrowserTest,
                        i < reporter_launch_parameters_.size();
          ++i) {
       EXPECT_EQ(expected_launch_paths[i],
-                reporter_launch_parameters_[i].command_line.GetProgram());
+                reporter_launch_parameters_[i].command_line().GetProgram());
     }
   }
 
@@ -259,13 +288,46 @@ class ReporterRunnerTest : public InProcessBrowserTest,
         chrome_cleaner::kChromeChannelSwitch};
 
     const base::CommandLine::SwitchMap& invocation_switches =
-        invocation.command_line.GetSwitches();
+        invocation.command_line().GetSwitches();
     // Checks if switches that enable logging on the reporter are present on
     // the invocation if and only if logging is allowed.
     for (const std::string& logging_switch : logging_switches) {
       EXPECT_EQ(expect_switches, invocation_switches.find(logging_switch) !=
                                      invocation_switches.end());
     }
+  }
+
+  void ExpectReporterLoggingHappenedInTheLastHour(int invocation_index) {
+    ExpectLoggingSwitches(reporter_launch_parameters_[invocation_index], true);
+    ExpectLastReportSentInTheLastHour();
+  }
+
+  void ExpectNoReporterLoggingWithLastTimeSentReportNotSet(
+      int invocation_index) {
+    ExpectLoggingSwitches(reporter_launch_parameters_[invocation_index], false);
+    ExpectLastTimeSentReportNotSet();
+  }
+
+  void ExpectNoReporterLoggingWithLastTimeSentReportSet(
+      int invocation_index,
+      int64_t last_time_sent_logs) {
+    ExpectLoggingSwitches(reporter_launch_parameters_[invocation_index], false);
+    EXPECT_EQ(last_time_sent_logs, GetLastTimeSentReport());
+  }
+
+  bool LogsEnabledByUser() {
+    return invocation_type_ ==
+           SwReporterInvocationType::kUserInitiatedWithLogsAllowed;
+  }
+
+  bool LogsDisabledByUser() {
+    return invocation_type_ ==
+           SwReporterInvocationType::kUserInitiatedWithLogsDisallowed;
+  }
+
+  void ExpectReporterResult(SwReporterInvocationResult expected_result,
+                            SwReporterInvocationResult result) {
+    EXPECT_EQ(expected_result, result);
   }
 
   // A task runner with a mock clock.
@@ -276,6 +338,8 @@ class ReporterRunnerTest : public InProcessBrowserTest,
   scoped_refptr<base::SingleThreadTaskRunner> saved_task_runner_;
 
   // Test parameters.
+  bool user_initiated_runs_enabled_;
+  SwReporterInvocationType invocation_type_;
   std::string old_seed_;
   std::string incoming_seed_;
 
@@ -289,14 +353,20 @@ class ReporterRunnerTest : public InProcessBrowserTest,
   // all launch on the same mock clock tick.
   base::OnceClosure first_launch_callback_;
 
+  base::test::ScopedFeatureList scoped_feature_list_;
+
  private:
   DISALLOW_COPY_AND_ASSIGN(ReporterRunnerTest);
 };
 
-}  // namespace
+// Used for test cases that are only applicable to periodic runs.
+using PeriodicOnlyReporterRunnerTest = ReporterRunnerTest;
+// Used for test cases that are only applicable to user-initiated runs.
+using UserInitiatedOnlyReporterRunnerTest = ReporterRunnerTest;
 
 IN_PROC_BROWSER_TEST_P(ReporterRunnerTest, NothingFound) {
-  RunReporter(chrome_cleaner::kSwReporterNothingFound);
+  RunReporter(chrome_cleaner::kSwReporterNothingFound,
+              SwReporterInvocationResult::kNothingFound);
   ExpectReporterLaunches(0, 1, false);
   ExpectToRunAgain(kDaysBetweenSuccessfulSwReporterRuns);
 }
@@ -304,69 +374,48 @@ IN_PROC_BROWSER_TEST_P(ReporterRunnerTest, NothingFound) {
 IN_PROC_BROWSER_TEST_P(ReporterRunnerTest, CleanupNeeded) {
   bool expect_prompt = incoming_seed_.empty() || (incoming_seed_ != old_seed_);
 
-  RunReporter(chrome_cleaner::kSwReporterCleanupNeeded);
+  RunReporter(chrome_cleaner::kSwReporterCleanupNeeded,
+              SwReporterInvocationResult::kCleanupNeeded);
   ExpectReporterLaunches(0, 1, expect_prompt);
   ExpectToRunAgain(kDaysBetweenSuccessfulSwReporterRuns);
 }
 
-IN_PROC_BROWSER_TEST_P(ReporterRunnerTest, RanRecently) {
+IN_PROC_BROWSER_TEST_P(PeriodicOnlyReporterRunnerTest, RanRecently) {
   constexpr int kDaysLeft = 1;
   SetDaysSinceLastTriggered(kDaysBetweenSuccessfulSwReporterRuns - kDaysLeft);
-  RunReporter(chrome_cleaner::kSwReporterNothingFound);
+  RunReporter(chrome_cleaner::kSwReporterNothingFound,
+              SwReporterInvocationResult::kNothingFound);
+  // Periodic runs are supposed to no be triggered if the reporter ran
+  // less than |kDaysBetweenSuccessfulSwReporterRuns| days ago.
   ExpectReporterLaunches(0, 0, false);
   ExpectToRunAgain(kDaysLeft);
   ExpectReporterLaunches(kDaysLeft, 1, false);
   ExpectToRunAgain(kDaysBetweenSuccessfulSwReporterRuns);
 }
 
-// Test is flaky. crbug.com/705608
-IN_PROC_BROWSER_TEST_P(ReporterRunnerTest, DISABLED_WaitForBrowser) {
-  Profile* profile = browser()->profile();
-
-  // Ensure that even though we're closing the last browser, we don't enter the
-  // "shutting down" state, which will prevent the test from starting another
-  // browser.
-  ScopedKeepAlive test_keep_alive(KeepAliveOrigin::SESSION_RESTORE,
-                                  KeepAliveRestartOption::ENABLED);
-
-  // Use the standard task runner for browser cleanup, which will wait forever
-  // with the mock clock.
-  base::MessageLoop::current()->SetTaskRunner(saved_task_runner_);
-  CloseBrowserSynchronously(browser());
-  base::MessageLoop::current()->SetTaskRunner(mock_time_task_runner_);
-  ASSERT_EQ(0u, chrome::GetTotalBrowserCount());
-  ASSERT_FALSE(chrome::FindLastActive());
-
-  // Start the reporter while the browser is closed. The prompt should not open.
-  RunReporter(chrome_cleaner::kSwReporterCleanupNeeded);
+IN_PROC_BROWSER_TEST_P(UserInitiatedOnlyReporterRunnerTest, RanRecently) {
+  constexpr int kDaysLeft = 1;
+  SetDaysSinceLastTriggered(kDaysBetweenSuccessfulSwReporterRuns - kDaysLeft);
+  RunReporter(chrome_cleaner::kSwReporterNothingFound,
+              SwReporterInvocationResult::kNothingFound);
+  // User-initiated runs are supposed to start regardless of the last
+  // time the reporter ran.
   ExpectReporterLaunches(0, 1, false);
-
-  // Create a Browser object directly instead of using helper functions like
-  // CreateBrowser, because they all wait on timed events but do not advance the
-  // mock timer. The Browser constructor registers itself with the global
-  // BrowserList, which is cleaned up when InProcessBrowserTest exits.
-  new Browser(Browser::CreateParams(profile, /*user_gesture=*/false));
-  ASSERT_EQ(1u, chrome::GetTotalBrowserCount());
-
-  // Some browser startup tasks are scheduled to run in the first few minutes
-  // after creation. Make sure they've all been processed so that the only
-  // pending task in the queue is the next reporter check.
-  mock_time_task_runner_->FastForwardBy(base::TimeDelta::FromMinutes(10));
-
-  // On opening the new browser, the prompt should be shown and the reporter
-  // should be scheduled to run later.
-  EXPECT_EQ(1, reporter_launch_count_);
-  EXPECT_TRUE(prompt_trigger_called_);
+  ExpectToRunAgain(kDaysBetweenSuccessfulSwReporterRuns);
+  ExpectReporterLaunches(kDaysBetweenSuccessfulSwReporterRuns, 1, false);
   ExpectToRunAgain(kDaysBetweenSuccessfulSwReporterRuns);
 }
 
 IN_PROC_BROWSER_TEST_P(ReporterRunnerTest, Failure) {
-  RunReporter(kReporterNotLaunchedExitCode);
+  RunReporter(kReporterNotLaunchedExitCode,
+              SwReporterInvocationResult::kFailed);
   ExpectReporterLaunches(0, 1, false);
   ExpectToRunAgain(kDaysBetweenSuccessfulSwReporterRuns);
 }
 
-IN_PROC_BROWSER_TEST_P(ReporterRunnerTest, ParameterChange) {
+IN_PROC_BROWSER_TEST_P(PeriodicOnlyReporterRunnerTest, ParameterChange) {
+  CHECK_EQ(SwReporterInvocationType::kPeriodicRun, invocation_type_);
+
   // If the reporter is run several times with different parameters, it should
   // only be launched once, with the last parameter set.
   const base::FilePath path1(L"path1");
@@ -379,7 +428,8 @@ IN_PROC_BROWSER_TEST_P(ReporterRunnerTest, ParameterChange) {
   {
     SCOPED_TRACE("N days left until next reporter run");
     SetDaysSinceLastTriggered(kDaysBetweenSuccessfulSwReporterRuns - kDaysLeft);
-    RunReporter(chrome_cleaner::kSwReporterNothingFound, path1);
+    RunReporter(chrome_cleaner::kSwReporterNothingFound,
+                SwReporterInvocationResult::kNothingFound, path1);
     ExpectReporterLaunches(0, {}, false);
   }
 
@@ -387,9 +437,11 @@ IN_PROC_BROWSER_TEST_P(ReporterRunnerTest, ParameterChange) {
   // Now the reporter should launch, just once, using path2.
   {
     SCOPED_TRACE("Reporter runs now");
-    RunReporter(chrome_cleaner::kSwReporterNothingFound, path2);
+    RunReporter(chrome_cleaner::kSwReporterNothingFound,
+                SwReporterInvocationResult::kNothingFound, path2);
     // Schedule it twice; it should only actually run once.
-    RunReporter(chrome_cleaner::kSwReporterNothingFound, path2);
+    RunReporter(chrome_cleaner::kSwReporterNothingFound,
+                SwReporterInvocationResult::kNothingFound, path2);
     ExpectReporterLaunches(kDaysLeft, {path2}, false);
   }
 
@@ -397,7 +449,8 @@ IN_PROC_BROWSER_TEST_P(ReporterRunnerTest, ParameterChange) {
   // The reporter should not launch.
   {
     SCOPED_TRACE("No more time passed");
-    RunReporter(chrome_cleaner::kSwReporterNothingFound, path3);
+    RunReporter(chrome_cleaner::kSwReporterNothingFound,
+                SwReporterInvocationResult::kNothingFound, path3);
     ExpectReporterLaunches(0, {}, false);
   }
 
@@ -415,7 +468,8 @@ IN_PROC_BROWSER_TEST_P(ReporterRunnerTest, ParameterChange) {
   // passed, even though the parameters haven't changed.
   {
     SCOPED_TRACE("Run with same parameters");
-    RunReporter(chrome_cleaner::kSwReporterNothingFound, path3);
+    RunReporter(chrome_cleaner::kSwReporterNothingFound,
+                SwReporterInvocationResult::kNothingFound, path3);
     ExpectReporterLaunches(kDaysBetweenSuccessfulSwReporterRuns, {path3},
                            false);
   }
@@ -423,19 +477,86 @@ IN_PROC_BROWSER_TEST_P(ReporterRunnerTest, ParameterChange) {
   ExpectToRunAgain(kDaysBetweenSuccessfulSwReporterRuns);
 }
 
-IN_PROC_BROWSER_TEST_P(ReporterRunnerTest, MultipleLaunches) {
+IN_PROC_BROWSER_TEST_P(UserInitiatedOnlyReporterRunnerTest, ParameterChange) {
+  CHECK_NE(SwReporterInvocationType::kPeriodicRun, invocation_type_);
+
+  // If the reporter is run several times with different parameters, it should
+  // only be launched once, with the last parameter set.
   const base::FilePath path1(L"path1");
   const base::FilePath path2(L"path2");
   const base::FilePath path3(L"path3");
 
-  SwReporterQueue invocations;
-  invocations.push_back(SwReporterInvocation::FromFilePath(path1));
-  invocations.push_back(SwReporterInvocation::FromFilePath(path2));
+  // Schedule path1 with a day left in the reporting period.
+  // The reporter should not launch.
+  constexpr int kDaysLeft = 1;
+  {
+    SCOPED_TRACE("N days left until next reporter run");
+    SetDaysSinceLastTriggered(kDaysBetweenSuccessfulSwReporterRuns - kDaysLeft);
+    RunReporter(chrome_cleaner::kSwReporterNothingFound,
+                SwReporterInvocationResult::kNothingFound, path1);
+    ExpectReporterLaunches(0, {}, false);
+  }
+
+  // Schedule path2 just as we enter the next reporting period.
+  // Now the reporter should launch, just once, using path2.
+  {
+    SCOPED_TRACE("Reporter runs now");
+    RunReporter(chrome_cleaner::kSwReporterNothingFound,
+                SwReporterInvocationResult::kNothingFound, path2);
+    // Schedule it twice; it should only actually run once.
+    RunReporter(chrome_cleaner::kSwReporterNothingFound,
+                SwReporterInvocationResult::kNothingFound, path2);
+    ExpectReporterLaunches(kDaysLeft, {path2}, false);
+  }
+
+  // Schedule path3 before any more time has passed.
+  // The reporter should not launch.
+  {
+    SCOPED_TRACE("No more time passed");
+    RunReporter(chrome_cleaner::kSwReporterNothingFound,
+                SwReporterInvocationResult::kNothingFound, path3);
+    ExpectReporterLaunches(0, {}, false);
+  }
+
+  // Enter the next reporting period as path3 is still scheduled.
+  // Now the reporter should launch again using path3. (Tests that the
+  // parameters from the first launch aren't reused.)
+  {
+    SCOPED_TRACE("Previous run still scheduled");
+    ExpectReporterLaunches(kDaysBetweenSuccessfulSwReporterRuns, {path3},
+                           false);
+  }
+
+  // Schedule path3 again in the next reporting period.
+  // The reporter should launch again using path3, since enough time has
+  // passed, even though the parameters haven't changed.
+  {
+    SCOPED_TRACE("Run with same parameters");
+    RunReporter(chrome_cleaner::kSwReporterNothingFound,
+                SwReporterInvocationResult::kNothingFound, path3);
+    ExpectReporterLaunches(kDaysBetweenSuccessfulSwReporterRuns, {path3},
+                           false);
+  }
+
+  ExpectToRunAgain(kDaysBetweenSuccessfulSwReporterRuns);
+}
+
+IN_PROC_BROWSER_TEST_P(PeriodicOnlyReporterRunnerTest, MultipleLaunches) {
+  CHECK_EQ(SwReporterInvocationType::kPeriodicRun, invocation_type_);
+
+  const base::FilePath path1(L"path1");
+  const base::FilePath path2(L"path2");
+
+  SwReporterInvocationsSequence::Container container{
+      SwReporterInvocation(base::CommandLine(path1)),
+      SwReporterInvocation(base::CommandLine(path2))};
 
   {
     SCOPED_TRACE("Launch 2 times");
     SetDaysSinceLastTriggered(kDaysBetweenSuccessfulSwReporterRuns);
-    RunReporterQueue(chrome_cleaner::kSwReporterNothingFound, invocations);
+    RunReporterQueue(chrome_cleaner::kSwReporterNothingFound,
+                     CreateInvocationSequence(
+                         SwReporterInvocationResult::kNothingFound, container));
     ExpectReporterLaunches(0, {path1, path2}, false);
     ExpectToRunAgain(kDaysBetweenSuccessfulSwReporterRuns);
   }
@@ -444,38 +565,79 @@ IN_PROC_BROWSER_TEST_P(ReporterRunnerTest, MultipleLaunches) {
   // just run 2 times, not 4.
   {
     SCOPED_TRACE("Launch 2 times with retry");
-    RunReporterQueue(chrome_cleaner::kSwReporterNothingFound, invocations);
-    RunReporterQueue(chrome_cleaner::kSwReporterNothingFound, invocations);
+    RunReporterQueue(chrome_cleaner::kSwReporterNothingFound,
+                     CreateInvocationSequence(
+                         SwReporterInvocationResult::kNothingFound, container));
+    RunReporterQueue(chrome_cleaner::kSwReporterNothingFound,
+                     CreateInvocationSequence(
+                         SwReporterInvocationResult::kNothingFound, container));
     ExpectReporterLaunches(kDaysBetweenSuccessfulSwReporterRuns, {path1, path2},
                            false);
-    ExpectToRunAgain(kDaysBetweenSuccessfulSwReporterRuns);
-  }
-
-  // Another launch with 2 elements is already scheduled. Add a third while the
-  // queue is running.
-  {
-    SCOPED_TRACE("Add third launch while running");
-    invocations.push_back(SwReporterInvocation::FromFilePath(path3));
-    first_launch_callback_ = base::BindOnce(
-        &ReporterRunnerTest::RunReporterQueue, base::Unretained(this),
-        chrome_cleaner::kSwReporterNothingFound, invocations);
-
-    // Only the first two elements should execute since the third was added
-    // during the cycle.
-    ExpectReporterLaunches(kDaysBetweenSuccessfulSwReporterRuns, {path1, path2},
-                           false);
-    ExpectToRunAgain(kDaysBetweenSuccessfulSwReporterRuns);
-
-    // Time passes... Now the 3-element queue should run.
-    ExpectReporterLaunches(kDaysBetweenSuccessfulSwReporterRuns,
-                           {path1, path2, path3}, false);
     ExpectToRunAgain(kDaysBetweenSuccessfulSwReporterRuns);
   }
 
   // Second launch should not occur after a failure.
   {
     SCOPED_TRACE("Launch multiple times with failure");
-    RunReporterQueue(kReporterNotLaunchedExitCode, invocations);
+    RunReporterQueue(kReporterNotLaunchedExitCode,
+                     CreateInvocationSequence(
+                         SwReporterInvocationResult::kFailed, container));
+    ExpectReporterLaunches(kDaysBetweenSuccessfulSwReporterRuns, {path1},
+                           false);
+    ExpectToRunAgain(kDaysBetweenSuccessfulSwReporterRuns);
+
+    // If we try again before the reporting period is up, it should not do
+    // anything.
+    ExpectReporterLaunches(0, {}, false);
+
+    // After enough time has passed, should try the queue again.
+    ExpectReporterLaunches(kDaysBetweenSuccessfulSwReporterRuns, {path1},
+                           false);
+    ExpectToRunAgain(kDaysBetweenSuccessfulSwReporterRuns);
+  }
+}
+
+IN_PROC_BROWSER_TEST_P(UserInitiatedOnlyReporterRunnerTest, MultipleLaunches) {
+  CHECK_NE(SwReporterInvocationType::kPeriodicRun, invocation_type_);
+
+  const base::FilePath path1(L"path1");
+  const base::FilePath path2(L"path2");
+
+  SwReporterInvocationsSequence::Container container{
+      SwReporterInvocation(base::CommandLine(path1)),
+      SwReporterInvocation(base::CommandLine(path2))};
+
+  {
+    SCOPED_TRACE("Launch 2 times");
+    SetDaysSinceLastTriggered(kDaysBetweenSuccessfulSwReporterRuns);
+    RunReporterQueue(chrome_cleaner::kSwReporterNothingFound,
+                     CreateInvocationSequence(
+                         SwReporterInvocationResult::kNothingFound, container));
+    ExpectReporterLaunches(0, {path1, path2}, false);
+    ExpectToRunAgain(kDaysBetweenSuccessfulSwReporterRuns);
+  }
+
+  // Schedule a launch with 2 elements, then another with the same 2. It should
+  // just run 2 times, not 4.
+  {
+    SCOPED_TRACE("Launch 2 times with retry");
+    RunReporterQueue(chrome_cleaner::kSwReporterNothingFound,
+                     CreateInvocationSequence(
+                         SwReporterInvocationResult::kNothingFound, container));
+    RunReporterQueue(chrome_cleaner::kSwReporterNothingFound,
+                     CreateInvocationSequence(
+                         SwReporterInvocationResult::kNothingFound, container));
+    ExpectReporterLaunches(kDaysBetweenSuccessfulSwReporterRuns, {path1, path2},
+                           false);
+    ExpectToRunAgain(kDaysBetweenSuccessfulSwReporterRuns);
+  }
+
+  // Second launch should not occur after a failure.
+  {
+    SCOPED_TRACE("Launch multiple times with failure");
+    RunReporterQueue(kReporterNotLaunchedExitCode,
+                     CreateInvocationSequence(
+                         SwReporterInvocationResult::kFailed, container));
     ExpectReporterLaunches(kDaysBetweenSuccessfulSwReporterRuns, {path1},
                            false);
     ExpectToRunAgain(kDaysBetweenSuccessfulSwReporterRuns);
@@ -493,10 +655,14 @@ IN_PROC_BROWSER_TEST_P(ReporterRunnerTest, MultipleLaunches) {
 
 IN_PROC_BROWSER_TEST_P(ReporterRunnerTest,
                        ReporterLogging_NoSBExtendedReporting) {
-  RunReporter(chrome_cleaner::kSwReporterNothingFound);
+  RunReporter(chrome_cleaner::kSwReporterNothingFound,
+              SwReporterInvocationResult::kNothingFound);
   ExpectReporterLaunches(0, 1, false);
-  ExpectLoggingSwitches(reporter_launch_parameters_.front(), false);
-  ExpectLastTimeSentReportNotSet();
+  if (LogsEnabledByUser()) {
+    ExpectReporterLoggingHappenedInTheLastHour(0);
+  } else {
+    ExpectNoReporterLoggingWithLastTimeSentReportNotSet(0);
+  }
   ExpectToRunAgain(kDaysBetweenSuccessfulSwReporterRuns);
 }
 
@@ -505,10 +671,14 @@ IN_PROC_BROWSER_TEST_P(ReporterRunnerTest, ReporterLogging_EnabledFirstRun) {
   // Note: don't set last time sent logs in the local state.
   // SBER is enabled and there is no record in the local state of the last time
   // logs have been sent, so we should send logs in this run.
-  RunReporter(chrome_cleaner::kSwReporterNothingFound);
+  RunReporter(chrome_cleaner::kSwReporterNothingFound,
+              SwReporterInvocationResult::kNothingFound);
   ExpectReporterLaunches(0, 1, false);
-  ExpectLoggingSwitches(reporter_launch_parameters_.front(), true);
-  ExpectLastReportSentInTheLastHour();
+  if (LogsDisabledByUser()) {
+    ExpectNoReporterLoggingWithLastTimeSentReportNotSet(0);
+  } else {
+    ExpectReporterLoggingHappenedInTheLastHour(0);
+  }
   ExpectToRunAgain(kDaysBetweenSuccessfulSwReporterRuns);
 }
 
@@ -518,10 +688,15 @@ IN_PROC_BROWSER_TEST_P(ReporterRunnerTest,
   // |kDaysBetweenReporterLogsSent| day ago, so we should send logs in this run.
   EnableSBExtendedReporting();
   SetLastTimeSentReport(kDaysBetweenReporterLogsSent + 3);
-  RunReporter(chrome_cleaner::kSwReporterNothingFound);
+  int64_t last_time_sent_logs = GetLastTimeSentReport();
+  RunReporter(chrome_cleaner::kSwReporterNothingFound,
+              SwReporterInvocationResult::kNothingFound);
   ExpectReporterLaunches(0, 1, false);
-  ExpectLoggingSwitches(reporter_launch_parameters_.front(), true);
-  ExpectLastReportSentInTheLastHour();
+  if (LogsDisabledByUser()) {
+    ExpectNoReporterLoggingWithLastTimeSentReportSet(0, last_time_sent_logs);
+  } else {
+    ExpectReporterLoggingHappenedInTheLastHour(0);
+  }
   ExpectToRunAgain(kDaysBetweenSuccessfulSwReporterRuns);
 }
 
@@ -533,54 +708,146 @@ IN_PROC_BROWSER_TEST_P(ReporterRunnerTest,
   EnableSBExtendedReporting();
   SetLastTimeSentReport(kDaysBetweenReporterLogsSent - 1);
   int64_t last_time_sent_logs = GetLastTimeSentReport();
-  RunReporter(chrome_cleaner::kSwReporterNothingFound);
+  RunReporter(chrome_cleaner::kSwReporterNothingFound,
+              SwReporterInvocationResult::kNothingFound);
   ExpectReporterLaunches(0, 1, false);
-  ExpectLoggingSwitches(reporter_launch_parameters_.front(), false);
-  EXPECT_EQ(last_time_sent_logs, GetLastTimeSentReport());
+  if (LogsEnabledByUser()) {
+    ExpectReporterLoggingHappenedInTheLastHour(0);
+  } else {
+    ExpectNoReporterLoggingWithLastTimeSentReportSet(0, last_time_sent_logs);
+  }
   ExpectToRunAgain(kDaysBetweenSuccessfulSwReporterRuns);
 }
 
 IN_PROC_BROWSER_TEST_P(ReporterRunnerTest, ReporterLogging_MultipleLaunches) {
   EnableSBExtendedReporting();
   SetLastTimeSentReport(kDaysBetweenReporterLogsSent + 3);
+  int64_t last_time_sent_logs = GetLastTimeSentReport();
 
   const base::FilePath path1(L"path1");
   const base::FilePath path2(L"path2");
-  SwReporterQueue invocations;
-  for (const auto& path : {path1, path2}) {
-    auto invocation = SwReporterInvocation::FromFilePath(path);
-    invocation.supported_behaviours =
-        SwReporterInvocation::BEHAVIOUR_ALLOW_SEND_REPORTER_LOGS;
-    invocations.push_back(invocation);
-  }
-  RunReporterQueue(chrome_cleaner::kSwReporterNothingFound, invocations);
+
+  SwReporterInvocationsSequence::Container container{
+      SwReporterInvocation(base::CommandLine(path1)),
+      SwReporterInvocation(base::CommandLine(path2)),
+  };
+  RunReporterQueue(chrome_cleaner::kSwReporterNothingFound,
+                   CreateInvocationSequence(
+                       SwReporterInvocationResult::kNothingFound, container));
 
   // SBER is enabled and last time logs were sent was more than
   // |kDaysBetweenReporterLogsSent| day ago, so we should send logs in this run.
   {
     SCOPED_TRACE("first launch");
-    first_launch_callback_ =
-        base::BindOnce(&ReporterRunnerTest::ExpectLastReportSentInTheLastHour,
-                       base::Unretained(this));
+    if (LogsDisabledByUser()) {
+      first_launch_callback_ = base::BindOnce(
+          &ReporterRunnerTest::ExpectNoReporterLoggingWithLastTimeSentReportSet,
+          base::Unretained(this), 0, last_time_sent_logs);
+    } else {
+      first_launch_callback_ = base::BindOnce(
+          &ReporterRunnerTest::ExpectReporterLoggingHappenedInTheLastHour,
+          base::Unretained(this), 0);
+    }
     ExpectReporterLaunches(0, {path1, path2}, false);
-    ExpectLoggingSwitches(reporter_launch_parameters_[0], true);
   }
 
   // Logs should also be sent for the next run, even though LastTimeSentReport
   // is now recent, because the run is part of the same set of invocations.
   {
     SCOPED_TRACE("second launch");
-    ExpectLoggingSwitches(reporter_launch_parameters_[1], true);
-    ExpectLastReportSentInTheLastHour();
+    if (LogsDisabledByUser()) {
+      ExpectNoReporterLoggingWithLastTimeSentReportSet(1, last_time_sent_logs);
+    } else {
+      ExpectReporterLoggingHappenedInTheLastHour(1);
+    }
   }
   ExpectToRunAgain(kDaysBetweenSuccessfulSwReporterRuns);
 }
 
+// Make all the test parameter types printable.
+
+std::ostream& operator<<(std::ostream& out,
+                         SwReporterInvocationType invocation_type) {
+  switch (invocation_type) {
+    case SwReporterInvocationType::kPeriodicRun:
+      return out << "PeriodicRun";
+    case SwReporterInvocationType::kUserInitiatedWithLogsDisallowed:
+      return out << "UserInitiatedWithLogsDisallowed";
+    case SwReporterInvocationType::kUserInitiatedWithLogsAllowed:
+      return out << "UserInitiatedWithLogsAllowed";
+  }
+}
+
+// ::testing::PrintToStringParamName does not format tuples as a valid test
+// name, so this functor can be used to get each element in the tuple
+// explicitly and format them using the above operator<< overrides.
+struct ReporterRunTestParamsToString {
+  std::string operator()(
+      const ::testing::TestParamInfo<ReporterRunnerTestParams>& info) const {
+    std::ostringstream param_name;
+    param_name << std::get<0>(info.param) << "_";
+    param_name << std::get<1>(info.param) << "_";
+    const std::string old_seed(std::get<2>(info.param));
+    param_name << (old_seed.empty() ? "EmptySeed" : old_seed) << "_";
+    const std::string incoming_seed(std::get<3>(info.param));
+    param_name << (incoming_seed.empty() ? "EmptySeed" : incoming_seed);
+    return param_name.str();
+  }
+};
+
+// Tests for user-initiated runs feature disabled (only periodic runs are
+// possible).
 INSTANTIATE_TEST_CASE_P(
-    Default,
+    UserInitiatedRunsDisabled,
     ReporterRunnerTest,
     ::testing::Combine(
-        ::testing::Values("", "Seed1"),             // old_seed_
-        ::testing::Values("", "Seed1", "Seed2")));  // incoming_seed
+        ::testing::Values(false),  // user_initiated_runs_enabled_
+        ::testing::Values(SwReporterInvocationType::kPeriodicRun),
+        ::testing::Values("", "Seed1"),            // old_seed_
+        ::testing::Values("", "Seed1", "Seed2")),  // incoming_seed_
+    ReporterRunTestParamsToString());
+
+// Tests for user-initiated runs feature enabled (both periodic and
+// user-initiated runs are possible).
+INSTANTIATE_TEST_CASE_P(
+    UserInitiatedRunsEnabled,
+    ReporterRunnerTest,
+    ::testing::Combine(
+        ::testing::Values(true),  // user_initiated_runs_enabled_
+        ::testing::Values(
+            SwReporterInvocationType::kPeriodicRun,
+            SwReporterInvocationType::kUserInitiatedWithLogsDisallowed,
+            SwReporterInvocationType::kUserInitiatedWithLogsAllowed),
+        ::testing::Values("", "Seed1"),            // old_seed_
+        ::testing::Values("", "Seed1", "Seed2")),  // incoming_seed_
+    ReporterRunTestParamsToString());
+
+// Test cases only applicable for periodic runs. Tested when the user-initiated
+// runs feature is either enabled or disabled.
+INSTANTIATE_TEST_CASE_P(
+    All,
+    PeriodicOnlyReporterRunnerTest,
+    ::testing::Combine(
+        ::testing::Bool(),  // user_initiated_runs_enabled_
+        ::testing::Values(SwReporterInvocationType::kPeriodicRun),
+        ::testing::Values("", "Seed1"),            // old_seed_
+        ::testing::Values("", "Seed1", "Seed2")),  // incoming_seed_
+    ReporterRunTestParamsToString());
+
+// Test cases only applicable for user-initiated runs. Tested when the
+// user-initiated runs feature is either enabled or disabled.
+INSTANTIATE_TEST_CASE_P(
+    All,
+    UserInitiatedOnlyReporterRunnerTest,
+    ::testing::Combine(
+        ::testing::Values(true),  // user_initiated_runs_enabled_
+        ::testing::Values(
+            SwReporterInvocationType::kUserInitiatedWithLogsDisallowed,
+            SwReporterInvocationType::kUserInitiatedWithLogsAllowed),
+        ::testing::Values("", "Seed1"),            // old_seed_
+        ::testing::Values("", "Seed1", "Seed2")),  // incoming_seed_
+    ReporterRunTestParamsToString());
+
+}  // namespace
 
 }  // namespace safe_browsing

@@ -13,6 +13,8 @@ const char kChromeMojoPipeTokenSwitch[] = "chrome-mojo-pipe-token";
 const char kChromePromptSwitch[] = "chrome-prompt";
 const char kChromeSystemInstallSwitch[] = "chrome-system-install";
 const char kChromeVersionSwitch[] = "chrome-version";
+const char kEnableCleanupLoggingInScanningModeSwitch[] =
+    "enable-cleanup-logging-in-scanning-mode";
 const char kEnableCrashReportingSwitch[] = "enable-crash-reporting";
 const char kEngineExperimentGroupSwitch[] = "engine-experiment-group";
 const char kEngineSwitch[] = "engine";
