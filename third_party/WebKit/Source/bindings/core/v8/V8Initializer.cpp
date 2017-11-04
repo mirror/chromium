@@ -504,11 +504,9 @@ class ArrayBufferAllocator : public v8::ArrayBuffer::Allocator {
                      Protection protection) override {
     switch (protection) {
       case Protection::kNoAccess:
-        CHECK(WTF::SetSystemPagesAccess(data, length, WTF::PageInaccessible));
-        return;
+        return WTF::SetSystemPagesAccess(data, length, WTF::PageInaccessible);
       case Protection::kReadWrite:
-        CHECK(WTF::SetSystemPagesAccess(data, length, WTF::PageReadWrite));
-        return;
+        return WTF::SetSystemPagesAccess(data, length, WTF::PageReadWrite);
       default:
         NOTREACHED();
     }
