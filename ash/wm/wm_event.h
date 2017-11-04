@@ -20,7 +20,7 @@ enum WMEventType {
   // state and the request may not be fullfilled.
 
   // NORMAL is used as a restore operation with a few exceptions.
-  WM_EVENT_NORMAL,
+  WM_EVENT_NORMAL = 0,
   WM_EVENT_MAXIMIZE,
   WM_EVENT_MINIMIZE,
   WM_EVENT_FULLSCREEN,
@@ -101,6 +101,11 @@ class ASH_EXPORT WMEvent {
 
   WMEventType type() const { return type_; }
 
+  bool IsWorkspaceEvent() const;
+  bool IsCompoundEvent() const;
+  bool IsPinEvent() const;
+  bool IsStateTransitionEvent() const;
+
  private:
   WMEventType type_;
   DISALLOW_COPY_AND_ASSIGN(WMEvent);
@@ -114,7 +119,7 @@ class ASH_EXPORT SetBoundsEvent : public WMEvent {
 
   const gfx::Rect& requested_bounds() const { return requested_bounds_; }
 
- private:
+private:
   gfx::Rect requested_bounds_;
 
   DISALLOW_COPY_AND_ASSIGN(SetBoundsEvent);

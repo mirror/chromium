@@ -11,6 +11,61 @@ WMEvent::WMEvent(WMEventType type) : type_(type) {}
 
 WMEvent::~WMEvent() {}
 
+bool WMEvent::IsWorkspaceEvent() const {
+  switch (type_) {
+    case WM_EVENT_ADDED_TO_WORKSPACE:
+    case WM_EVENT_WORKAREA_BOUNDS_CHANGED:
+    case WM_EVENT_DISPLAY_BOUNDS_CHANGED:
+      return true;
+    default:
+      break;
+  }
+  return false;
+}
+
+bool WMEvent::IsCompoundEvent() const {
+  switch (type_) {
+    case WM_EVENT_TOGGLE_MAXIMIZE_CAPTION:
+    case WM_EVENT_TOGGLE_MAXIMIZE:
+    case WM_EVENT_TOGGLE_VERTICAL_MAXIMIZE:
+    case WM_EVENT_TOGGLE_HORIZONTAL_MAXIMIZE:
+    case WM_EVENT_TOGGLE_FULLSCREEN:
+    case WM_EVENT_CYCLE_SNAP_LEFT:
+    case WM_EVENT_CYCLE_SNAP_RIGHT:
+    case WM_EVENT_CENTER:
+      return true;
+    default:
+      break;
+  }
+  return false;
+}
+
+bool WMEvent::IsStateTransitionEvent() const {
+  switch (type_) {
+    case WM_EVENT_NORMAL:
+    case WM_EVENT_MAXIMIZE:
+    case WM_EVENT_MINIMIZE:
+    case WM_EVENT_FULLSCREEN:
+    case WM_EVENT_SNAP_LEFT:
+    case WM_EVENT_SNAP_RIGHT:
+      return true;
+    default:
+      break;
+  }
+  return false;
+}
+
+bool WMEvent::IsPinEvent() const {
+  switch (type_) {
+    case WM_EVENT_PIN:
+    case WM_EVENT_TRUSTED_PIN:
+      return true;
+    default:
+      break;
+  }
+  return false;
+}
+
 SetBoundsEvent::SetBoundsEvent(WMEventType type, const gfx::Rect& bounds)
     : WMEvent(type), requested_bounds_(bounds) {}
 
