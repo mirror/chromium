@@ -8,8 +8,6 @@
 
 #include <memory>
 
-#include <va/va.h>
-
 #include "base/bind.h"
 #include "base/files/scoped_file.h"
 #include "base/logging.h"
@@ -61,7 +59,8 @@ static const uint8_t kZigzagScan8x8[64] = {
 // format decoded frames in VASurfaces are converted into.
 const gfx::BufferFormat kAllocatePictureFormat = gfx::BufferFormat::BGRX_8888;
 const gfx::BufferFormat kImportPictureFormat = gfx::BufferFormat::YVU_420;
-}
+
+}  // namespace
 
 static void ReportToUMA(VAVDADecoderFailure failure) {
   UMA_HISTOGRAM_ENUMERATION("Media.VAVDA.DecoderFailure", failure,
@@ -271,11 +270,45 @@ class VaapiVideoDecodeAccelerator::VaapiVP9Accelerator
   DISALLOW_COPY_AND_ASSIGN(VaapiVP9Accelerator);
 };
 
+// Queue of T that blocks until it has values to produce on front() or pop().
+template <typename T>
+class VaapiVideoDecodeAccelerator::BlockingQueue {
+ public:
+  explicit BlockingQueue(base::Lock* lock) : queue_has_data_cv_(lock) {}
+  ~BlockingQueue() = default;
+
+  void push(T&& value) {
+    queue_.push(std::forward<T>(value));
+    queue_has_data_cv_.Signal();
+    TRACE_COUNTER1("Video Decoder", "InputBuffers at decoder", queue_.size());
+  }
+  T& front() {
+    while (queue_.empty())
+      queue_has_data_cv_.Wait();
+    return queue_.front();
+  }
+  void pop() {
+    while (queue_.empty())
+      queue_has_data_cv_.Wait();
+    queue_.pop();
+    TRACE_COUNTER1("Video Decoder", "InputBuffers at decoder", queue_.size());
+  }
+  bool empty() const { return queue_.empty(); }
+
+ private:
+  base::queue<T> queue_;
+  base::ConditionVariable queue_has_data_cv_;
+
+  DISALLOW_IMPLICIT_CONSTRUCTORS(BlockingQueue);
+};
+
 class VaapiVideoDecodeAccelerator::InputBuffer {
  public:
   InputBuffer() = default;
   InputBuffer(uint32_t id, std::unique_ptr<SharedMemoryRegion> shm)
       : id_(id), shm_(std::move(shm)) {}
+  explicit InputBuffer(InputBuffer&& c) : id_(c.id_), shm_(std::move(c.shm_)) {}
+
   ~InputBuffer() = default;
 
   // Indicates this is a dummy buffer for flush request.
@@ -285,7 +318,9 @@ class VaapiVideoDecodeAccelerator::InputBuffer {
 
  private:
   const int32_t id_ = -1;
-  const std::unique_ptr<SharedMemoryRegion> shm_;
+  std::unique_ptr<SharedMemoryRegion> shm_;
+
+  DISALLOW_COPY_AND_ASSIGN(InputBuffer);
 };
 
 void VaapiVideoDecodeAccelerator::NotifyError(Error error) {
@@ -323,8 +358,7 @@ VaapiVideoDecodeAccelerator::VaapiVideoDecodeAccelerator(
     const MakeGLContextCurrentCallback& make_context_current_cb,
     const BindGLImageCallback& bind_image_cb)
     : state_(kUninitialized),
-      num_stream_bufs_at_decoder_(0),
-      input_ready_(&lock_),
+      input_buffers_(new BlockingQueue<InputBuffer>(&lock_)),
       surfaces_available_(&lock_),
       task_runner_(base::ThreadTaskRunnerHandle::Get()),
       decoder_thread_("VaapiDecoderThread"),
@@ -490,21 +524,15 @@ void VaapiVideoDecodeAccelerator::QueueInputBuffer(
   if (bitstream_buffer.size() == 0) {
     // Dummy buffer for flush.
     DCHECK(!base::SharedMemory::IsHandleValid(bitstream_buffer.handle()));
-    input_buffers_.push(make_linked_ptr(new InputBuffer()));
+    input_buffers_->push(InputBuffer());
   } else {
     std::unique_ptr<SharedMemoryRegion> shm(
         new SharedMemoryRegion(bitstream_buffer, true));
     RETURN_AND_NOTIFY_ON_FAILURE(shm->Map(), "Failed to map input buffer",
                                  UNREADABLE_INPUT, );
 
-    input_buffers_.push(make_linked_ptr(
-        new InputBuffer(bitstream_buffer.id(), std::move(shm))));
-    ++num_stream_bufs_at_decoder_;
-    TRACE_COUNTER1("Video Decoder", "Stream buffers at decoder",
-                   num_stream_bufs_at_decoder_);
+    input_buffers_->push(InputBuffer(bitstream_buffer.id(), std::move(shm)));
   }
-
-  input_ready_.Signal();
 
   switch (state_) {
     case kIdle:
@@ -533,62 +561,51 @@ void VaapiVideoDecodeAccelerator::QueueInputBuffer(
 }
 
 bool VaapiVideoDecodeAccelerator::GetInputBuffer_Locked() {
+  VLOGF(4) << __func__;
   DCHECK(decoder_thread_task_runner_->BelongsToCurrentThread());
   lock_.AssertAcquired();
 
-  if (curr_input_buffer_.get())
+  // |decoder_| is already servicing an InputBuffer.
+  if (decoding_one_input_buffer_)
     return true;
+  decoding_one_input_buffer_ = true;
 
-  // Will only wait if it is expected that in current state new buffers will
-  // be queued from the client via Decode(). The state can change during wait.
-  while (input_buffers_.empty() && (state_ == kDecoding || state_ == kIdle)) {
-    input_ready_.Wait();
-  }
+  // Retrieve the first ready InputBuffer but only if it is expected that in
+  // the current |state_| new buffers will be queued from the client.
+  if (state_ != kDecoding && state_ != kIdle)
+    return false;
+  auto& input_buffer = input_buffers_->front();
 
   // We could have got woken up in a different state or never got to sleep
-  // due to current state; check for that.
-  switch (state_) {
-    case kDecoding:
-    case kIdle:
-      DCHECK(!input_buffers_.empty());
+  // due to current state; if so, ignore any already queued inputs.
+  if (state_ != kDecoding && state_ != kIdle)
+    return false;
 
-      curr_input_buffer_ = input_buffers_.front();
-      input_buffers_.pop();
-
-      if (curr_input_buffer_->IsFlushRequest()) {
-        VLOGF(4) << "New flush buffer";
-      } else {
-        VLOGF(4) << "New current bitstream buffer, id: "
-                 << curr_input_buffer_->id()
-                 << " size: " << curr_input_buffer_->shm()->size();
-
-        decoder_->SetStream(
-            static_cast<uint8_t*>(curr_input_buffer_->shm()->memory()),
-            curr_input_buffer_->shm()->size());
-      }
-      return true;
-
-    default:
-      // We got woken up due to being destroyed/reset, ignore any already
-      // queued inputs.
-      return false;
+  DCHECK(!input_buffers_->empty());
+  if (input_buffer.IsFlushRequest()) {
+    VLOGF(4) << "New flush buffer";
+    return true;
   }
+
+  VLOGF(4) << "New InputBuffer, id: " << input_buffer.id()
+           << " size: " << input_buffer.shm()->size();
+  decoder_->SetStream(static_cast<uint8_t*>(input_buffer.shm()->memory()),
+                      input_buffer.shm()->size());
+  return true;
 }
 
-void VaapiVideoDecodeAccelerator::ReturnCurrInputBuffer_Locked() {
-  lock_.AssertAcquired();
+void VaapiVideoDecodeAccelerator::ReturnInputBuffer_Locked() {
+  VLOGF(4) << __func__;
   DCHECK(decoder_thread_task_runner_->BelongsToCurrentThread());
-  DCHECK(curr_input_buffer_.get());
+  lock_.AssertAcquired();
 
-  const int32_t id = curr_input_buffer_->id();
-  curr_input_buffer_.reset();
-  VLOGF(4) << "End of input buffer " << id;
+  DCHECK(!input_buffers_->empty());
+  const int32_t id = input_buffers_->front().id();
+  input_buffers_->pop();
+  decoding_one_input_buffer_ = false;
+
   task_runner_->PostTask(
       FROM_HERE, base::Bind(&Client::NotifyEndOfBitstreamBuffer, client_, id));
-
-  --num_stream_bufs_at_decoder_;
-  TRACE_COUNTER1("Video Decoder", "Stream buffers at decoder",
-                 num_stream_bufs_at_decoder_);
 }
 
 // TODO(posciak): refactor the whole class to remove sleeping in wait for
@@ -614,16 +631,11 @@ void VaapiVideoDecodeAccelerator::DecodeTask() {
 
   if (state_ != kDecoding)
     return;
+  VLOGF(4) << __func__;
 
-  // Main decode task.
-  VLOGF(4) << "Decode task";
-
-  // Try to decode what stream data is (still) in the decoder until we run out
-  // of it.
+  // Try to decode data (still) in the decoder until we run out of it.
   while (GetInputBuffer_Locked()) {
-    DCHECK(curr_input_buffer_.get());
-
-    if (curr_input_buffer_->IsFlushRequest()) {
+    if (input_buffers_->front().IsFlushRequest()) {
       FlushTask();
       break;
     }
@@ -652,7 +664,7 @@ void VaapiVideoDecodeAccelerator::DecodeTask() {
         return;
 
       case AcceleratedVideoDecoder::kRanOutOfStreamData:
-        ReturnCurrInputBuffer_Locked();
+        ReturnInputBuffer_Locked();
         break;
 
       case AcceleratedVideoDecoder::kRanOutOfSurfaces:
@@ -914,12 +926,11 @@ void VaapiVideoDecodeAccelerator::ReusePictureBuffer(
 }
 
 void VaapiVideoDecodeAccelerator::FlushTask() {
+  VLOGF(2) << __func__;
   DCHECK(decoder_thread_task_runner_->BelongsToCurrentThread());
-  DCHECK(curr_input_buffer_.get() && curr_input_buffer_->IsFlushRequest());
 
-  VLOGF(2) << "Flush task";
-
-  curr_input_buffer_.reset();
+  DCHECK(!input_buffers_->empty() && input_buffers_->front().IsFlushRequest());
+  input_buffers_->pop();
 
   // First flush all the pictures that haven't been outputted, notifying the
   // client to output them.
@@ -962,7 +973,7 @@ void VaapiVideoDecodeAccelerator::FinishFlush() {
   }
 
   // Resume decoding if necessary.
-  if (input_buffers_.empty()) {
+  if (input_buffers_->empty()) {
     state_ = kIdle;
   } else {
     decoder_thread_task_runner_->PostTask(
@@ -977,8 +988,8 @@ void VaapiVideoDecodeAccelerator::FinishFlush() {
 }
 
 void VaapiVideoDecodeAccelerator::ResetTask() {
+  VLOGF(2) << __func__;
   DCHECK(decoder_thread_task_runner_->BelongsToCurrentThread());
-  VLOGF(2) << "ResetTask";
 
   // All the decoding tasks from before the reset request from client are done
   // by now, as this task was scheduled after them and client is expected not
@@ -988,8 +999,8 @@ void VaapiVideoDecodeAccelerator::ResetTask() {
   base::AutoLock auto_lock(lock_);
 
   // Return current input buffer, if present.
-  if (curr_input_buffer_.get())
-    ReturnCurrInputBuffer_Locked();
+  if (!input_buffers_->empty())
+    ReturnInputBuffer_Locked();
 
   // And let client know that we are done with reset.
   task_runner_->PostTask(
@@ -1007,24 +1018,21 @@ void VaapiVideoDecodeAccelerator::Reset() {
   finish_flush_pending_ = false;
 
   // Drop all remaining input buffers, if present.
-  while (!input_buffers_.empty()) {
-    const auto& input_buffer = input_buffers_.front();
-    if (!input_buffer->IsFlushRequest()) {
+  while (!input_buffers_->empty()) {
+    const auto& input_buffer = input_buffers_->front();
+    if (!input_buffer.IsFlushRequest()) {
       task_runner_->PostTask(
           FROM_HERE, base::Bind(&Client::NotifyEndOfBitstreamBuffer, client_,
-                                input_buffer->id()));
-      --num_stream_bufs_at_decoder_;
+                                input_buffer.id()));
     }
-    input_buffers_.pop();
+    input_buffers_->pop();
   }
-  TRACE_COUNTER1("Video Decoder", "Stream buffers at decoder",
-                 num_stream_bufs_at_decoder_);
 
   decoder_thread_task_runner_->PostTask(
       FROM_HERE, base::Bind(&VaapiVideoDecodeAccelerator::ResetTask,
                             base::Unretained(this)));
 
-  input_ready_.Signal();
+  input_buffers_->push(InputBuffer());
   surfaces_available_.Signal();
 }
 
@@ -1063,7 +1071,7 @@ void VaapiVideoDecodeAccelerator::FinishReset() {
   // sleep forever waiting for Decode() in that case. Having two of them
   // in the pipe is harmless, the additional one will return as soon as it sees
   // that we are back in kDecoding state.
-  if (!input_buffers_.empty()) {
+  if (!input_buffers_->empty()) {
     state_ = kDecoding;
     decoder_thread_task_runner_->PostTask(
         FROM_HERE, base::Bind(&VaapiVideoDecodeAccelerator::DecodeTask,
@@ -1089,7 +1097,7 @@ void VaapiVideoDecodeAccelerator::Cleanup() {
   // Signal all potential waiters on the decoder_thread_, let them early-exit,
   // as we've just moved to the kDestroying state, and wait for all tasks
   // to finish.
-  input_ready_.Signal();
+  input_buffers_->push(InputBuffer());
   surfaces_available_.Signal();
   {
     base::AutoUnlock auto_unlock(lock_);
@@ -1150,6 +1158,7 @@ void VaapiVideoDecodeAccelerator::SurfaceReady(
 
 scoped_refptr<VaapiVideoDecodeAccelerator::VaapiDecodeSurface>
 VaapiVideoDecodeAccelerator::CreateSurface() {
+  VLOGF(2) << __func__ << ", id: " << input_buffers_->front().id();
   DCHECK(decoder_thread_task_runner_->BelongsToCurrentThread());
   base::AutoLock auto_lock(lock_);
 
@@ -1163,7 +1172,7 @@ VaapiVideoDecodeAccelerator::CreateSurface() {
   available_va_surfaces_.pop_front();
 
   scoped_refptr<VaapiDecodeSurface> dec_surface =
-      new VaapiDecodeSurface(curr_input_buffer_->id(), va_surface);
+      new VaapiDecodeSurface(input_buffers_->front().id(), va_surface);
 
   return dec_surface;
 }
