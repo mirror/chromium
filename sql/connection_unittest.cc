@@ -1032,8 +1032,7 @@ TEST_F(SQLConnectionTest, Poison) {
   EXPECT_FALSE(db().CommitTransaction());
 }
 
-// Test attaching and detaching databases from the connection.
-TEST_F(SQLConnectionTest, Attach) {
+TEST_F(SQLConnectionTest, AttachDatabase) {
   EXPECT_TRUE(db().Execute("CREATE TABLE foo (a, b)"));
 
   // Create a database to attach to.
@@ -1050,21 +1049,10 @@ TEST_F(SQLConnectionTest, Attach) {
   // Cannot see the attached database, yet.
   EXPECT_FALSE(db().IsSQLValid("SELECT count(*) from other.bar"));
 
-  // Attach fails in a transaction.
-  EXPECT_TRUE(db().BeginTransaction());
-  {
-    sql::test::ScopedErrorExpecter expecter;
-    expecter.ExpectError(SQLITE_ERROR);
-    EXPECT_FALSE(db().AttachDatabase(attach_path, kAttachmentPoint));
-    ASSERT_TRUE(expecter.SawExpectedErrors());
-  }
-
-  // Attach succeeds when the transaction is closed.
-  db().RollbackTransaction();
   EXPECT_TRUE(db().AttachDatabase(attach_path, kAttachmentPoint));
   EXPECT_TRUE(db().IsSQLValid("SELECT count(*) from other.bar"));
 
-  // Queries can touch both databases.
+  // Queries can touch both databases after the ATTACH.
   EXPECT_TRUE(db().Execute("INSERT INTO foo SELECT a, b FROM other.bar"));
   {
     sql::Statement s(db().GetUniqueStatement("SELECT COUNT(*) FROM foo"));
@@ -1072,8 +1060,41 @@ TEST_F(SQLConnectionTest, Attach) {
     EXPECT_EQ(1, s.ColumnInt(0));
   }
 
-  // Detach also fails in a transaction.
+  EXPECT_TRUE(db().DetachDatabase(kAttachmentPoint));
+  EXPECT_FALSE(db().IsSQLValid("SELECT count(*) from other.bar"));
+}
+
+TEST_F(SQLConnectionTest, AttachDatabaseWithOpenTransaction) {
+  EXPECT_TRUE(db().Execute("CREATE TABLE foo (a, b)"));
+
+  // Create a database to attach to.
+  base::FilePath attach_path =
+      db_path().DirName().AppendASCII("SQLConnectionAttach.db");
+  const char kAttachmentPoint[] = "other";
+  {
+    sql::Connection other_db;
+    ASSERT_TRUE(other_db.Open(attach_path));
+    EXPECT_TRUE(other_db.Execute("CREATE TABLE bar (a, b)"));
+    EXPECT_TRUE(other_db.Execute("INSERT INTO bar VALUES ('hello', 'world')"));
+  }
+
+  // Cannot see the attached database, yet.
+  EXPECT_FALSE(db().IsSQLValid("SELECT count(*) from other.bar"));
+
+  // Attach succeeds in a transaction.
   EXPECT_TRUE(db().BeginTransaction());
+  EXPECT_TRUE(db().AttachDatabase(attach_path, kAttachmentPoint));
+  EXPECT_TRUE(db().IsSQLValid("SELECT count(*) from other.bar"));
+
+  // Queries can touch both databases after the ATTACH.
+  EXPECT_TRUE(db().Execute("INSERT INTO foo SELECT a, b FROM other.bar"));
+  {
+    sql::Statement s(db().GetUniqueStatement("SELECT COUNT(*) FROM foo"));
+    ASSERT_TRUE(s.Step());
+    EXPECT_EQ(1, s.ColumnInt(0));
+  }
+
+  // Detaching the same database fails, database is locked in the transaction.
   {
     sql::test::ScopedErrorExpecter expecter;
     expecter.ExpectError(SQLITE_ERROR);
@@ -1082,10 +1103,9 @@ TEST_F(SQLConnectionTest, Attach) {
     ASSERT_TRUE(expecter.SawExpectedErrors());
   }
 
-  // Detach succeeds outside of a transaction.
+  // Detach succeeds when the transaction is closed.
   db().RollbackTransaction();
   EXPECT_TRUE(db().DetachDatabase(kAttachmentPoint));
-
   EXPECT_FALSE(db().IsSQLValid("SELECT count(*) from other.bar"));
 }
 
