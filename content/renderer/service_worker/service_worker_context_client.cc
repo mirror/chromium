@@ -8,6 +8,7 @@
 #include <memory>
 #include <utility>
 
+#include "base/compiler_specific.h"
 #include "base/lazy_instance.h"
 #include "base/logging.h"
 #include "base/memory/ptr_util.h"
@@ -803,11 +804,6 @@ void ServiceWorkerContextClient::WorkerContextStarted(
   // willDestroyWorkerContext.
   context_.reset(new WorkerContextData(this));
 
-  blink::mojom::ServiceWorkerRegistrationObjectInfoPtr registration_info =
-      provider_context_->TakeRegistrationForServiceWorkerGlobalScope();
-  DCHECK_NE(registration_info->registration_id,
-            blink::mojom::kInvalidServiceWorkerRegistrationId);
-
   DCHECK(pending_dispatcher_request_.is_pending());
   DCHECK(pending_controller_request_.is_pending());
   DCHECK(!context_->event_dispatcher_binding.is_bound());
@@ -820,7 +816,15 @@ void ServiceWorkerContextClient::WorkerContextStarted(
         std::move(pending_controller_request_), GetWeakPtr());
   }
 
-  SetRegistrationInServiceWorkerGlobalScope(std::move(registration_info));
+  // Prepare to be used by
+  // provider_context_->GetOrCreateRegistrationForServiceWorkerGlobalScope().
+  ServiceWorkerDispatcher::GetOrCreateThreadSpecificInstance(
+      sender_.get(), main_thread_task_runner_.get());
+  // Register a registration and its version attributes with the dispatcher
+  // living on the worker thread.
+  proxy_->SetRegistration(WebServiceWorkerRegistrationImpl::CreateHandle(
+      provider_context_->TakeRegistrationForServiceWorkerGlobalScope(
+          io_thread_task_runner_)));
 
   (*instance_host_)->OnThreadStarted(WorkerThread::GetCurrentId());
 
@@ -1404,20 +1408,6 @@ void ServiceWorkerContextClient::SendWorkerStarted() {
   (*instance_host_)->OnStarted(std::move(timing));
   TRACE_EVENT_NESTABLE_ASYNC_END0("ServiceWorker", "ServiceWorkerContextClient",
                                   this);
-}
-
-void ServiceWorkerContextClient::SetRegistrationInServiceWorkerGlobalScope(
-    blink::mojom::ServiceWorkerRegistrationObjectInfoPtr info) {
-  DCHECK(worker_task_runner_->RunsTasksInCurrentSequence());
-  ServiceWorkerDispatcher* dispatcher =
-      ServiceWorkerDispatcher::GetOrCreateThreadSpecificInstance(
-          sender_.get(), main_thread_task_runner_.get());
-
-  // Register a registration and its version attributes with the dispatcher
-  // living on the worker thread.
-  proxy_->SetRegistration(WebServiceWorkerRegistrationImpl::CreateHandle(
-      dispatcher->GetOrCreateRegistrationForServiceWorkerGlobalScope(
-          std::move(info), io_thread_task_runner_)));
 }
 
 void ServiceWorkerContextClient::DispatchActivateEvent(
