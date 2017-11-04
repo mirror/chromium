@@ -8,8 +8,6 @@
 
 #include <memory>
 
-#include <va/va.h>
-
 #include "base/bind.h"
 #include "base/files/scoped_file.h"
 #include "base/logging.h"
