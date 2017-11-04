@@ -49,6 +49,10 @@ class MockAndroidOverlay : public testing::StrictMock<AndroidOverlay>,
   // Return callbacks that can be used to control the overlay.
   Callbacks GetCallbacks();
 
+  MOCK_METHOD0(MockAddSurfaceDestroyedCallback, void());
+  void AddSurfaceDestroyedCallback(
+      AndroidOverlayConfig::DestroyedCB cb) override;
+
   // Send callbacks.
   void OnOverlayReady();
   void OnOverlayFailed();
