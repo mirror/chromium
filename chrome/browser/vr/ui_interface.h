@@ -13,6 +13,7 @@ class Transform;
 
 namespace vr {
 
+class PlatformController;
 struct ControllerModel;
 struct ReticleModel;
 
@@ -43,6 +44,8 @@ class UiInterface {
   virtual void OnWebVrFrameAvailable() = 0;
   virtual void OnWebVrTimedOut() = 0;
   virtual void OnWebVrTimeoutImminent() = 0;
+  virtual void OnPlatformControlerInitialized(
+      PlatformController* controller) = 0;
 };
 
 }  // namespace vr

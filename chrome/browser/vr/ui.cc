@@ -6,6 +6,7 @@
 
 #include "base/memory/ptr_util.h"
 #include "base/threading/thread_task_runner_handle.h"
+#include "chrome/browser/vr/content_input_delegate.h"
 #include "chrome/browser/vr/model/model.h"
 #include "chrome/browser/vr/model/omnibox_suggestions.h"
 #include "chrome/browser/vr/speech_recognizer.h"
@@ -19,17 +20,19 @@
 namespace vr {
 
 Ui::Ui(UiBrowserInterface* browser,
-       ContentInputDelegate* content_input_delegate,
-       const vr::UiInitialState& ui_initial_state)
-    : scene_(base::MakeUnique<vr::UiScene>()),
-      model_(base::MakeUnique<vr::Model>()),
+       ContentInputForwarder* content_input_forwarder,
+       const UiInitialState& ui_initial_state)
+    : scene_(base::MakeUnique<UiScene>()),
+      model_(base::MakeUnique<Model>()),
+      content_input_delegate_(
+          base::MakeUnique<ContentInputDelegate>(content_input_forwarder)),
       scene_manager_(
-          base::MakeUnique<vr::UiSceneManager>(browser,
-                                               scene_.get(),
-                                               content_input_delegate,
-                                               model_.get(),
-                                               ui_initial_state)),
-      input_manager_(base::MakeUnique<vr::UiInputManager>(scene_.get())),
+          base::MakeUnique<UiSceneManager>(browser,
+                                           scene_.get(),
+                                           content_input_delegate_.get(),
+                                           model_.get(),
+                                           ui_initial_state)),
+      input_manager_(base::MakeUnique<UiInputManager>(scene_.get())),
       weak_ptr_factory_(this) {
   model_->started_for_autopresentation =
       ui_initial_state.web_vr_autopresentation_expected;
@@ -37,7 +40,7 @@ Ui::Ui(UiBrowserInterface* browser,
 
 Ui::~Ui() = default;
 
-base::WeakPtr<vr::BrowserUiInterface> Ui::GetBrowserUiWeakPtr() {
+base::WeakPtr<BrowserUiInterface> Ui::GetBrowserUiWeakPtr() {
   return weak_ptr_factory_.GetWeakPtr();
 }
 
@@ -118,9 +121,9 @@ bool Ui::ShouldRenderWebVr() {
 
 void Ui::OnGlInitialized(unsigned int content_texture_id,
                          UiElementRenderer::TextureLocation content_location) {
-  vr_shell_renderer_ = base::MakeUnique<vr::VrShellRenderer>();
+  vr_shell_renderer_ = base::MakeUnique<VrShellRenderer>();
   ui_renderer_ =
-      base::MakeUnique<vr::UiRenderer>(scene_.get(), vr_shell_renderer_.get());
+      base::MakeUnique<UiRenderer>(scene_.get(), vr_shell_renderer_.get());
   scene_manager_->OnGlInitialized(content_texture_id, content_location);
 }
 
@@ -153,6 +156,18 @@ void Ui::OnWebVrTimeoutImminent() {
 
 void Ui::OnWebVrTimedOut() {
   model_->web_vr_timeout_state = kWebVrTimedOut;
+}
+
+void Ui::OnSwapContents(int new_content_id) {
+  content_input_delegate_->OnSwapContents(new_content_id);
+}
+
+void Ui::OnContentBoundsChanged(int width, int height) {
+  content_input_delegate_->OnContentBoundsChanged(width, height);
+}
+
+void Ui::OnPlatformControllerInitialized(PlatformController* controller) {
+  content_input_delegate_->OnPlatformControllerInitialized(controller);
 }
 
 }  // namespace vr
