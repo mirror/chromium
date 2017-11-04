@@ -16,6 +16,24 @@
       "revId": "de16dde22ee299d3cd629ce5de7e7f1584c54719",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7453e610_f8d46d53",
+        "filename": "third_party/WebKit/LayoutTests/fast/table/intrinsic-padding-when-cell-child-doesnt-layout.html",
+        "patchSetId": 2
+      },
+      "lineNbr": 18,
+      "author": {
+        "id": 1115755
+      },
+      "writtenOn": "2017-11-04T11:02:54Z",
+      "side": 1,
+      "message": "I put a backtrace on this to try and understand it when writing the test. The focus/click on the element triggers a layout on the layoutview from RenderViewImpl::FocusedNodeChanged(), but because the width of the table cell hasn\u0027t changed its children don\u0027t get a layout. I couldn\u0027t think of an equivalent way of achieving this, so just stuck with the click.",
+      "parentUuid": "0a58db50_59f4379d",
+      "revId": "de16dde22ee299d3cd629ce5de7e7f1584c54719",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
