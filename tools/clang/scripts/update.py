@@ -433,7 +433,7 @@ def UpdateClang(args):
   except:
     pass
 
-  expected_stamp = ','.join([PACKAGE_VERSION] + target_os)
+  expected_stamp = ','.join(PACKAGE_VERSION + target_os)
   if ReadStampFile() == expected_stamp and not args.force_local_build:
     return 0
 

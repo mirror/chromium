@@ -85,9 +85,14 @@ class MEDIA_GPU_EXPORT VaapiVideoDecodeAccelerator
   static VideoDecodeAccelerator::SupportedProfiles GetSupportedProfiles();
 
  private:
+  friend class VaapiVideoDecodeAcceleratorTest;
+
   class VaapiH264Accelerator;
   class VaapiVP8Accelerator;
   class VaapiVP9Accelerator;
+
+  template <typename T>
+  class BlockingQueue;
 
   // An input buffer with id provided by the client and awaiting consumption.
   class InputBuffer;
@@ -98,15 +103,15 @@ class MEDIA_GPU_EXPORT VaapiVideoDecodeAccelerator
   // Queue a input buffer for decode.
   void QueueInputBuffer(const BitstreamBuffer& bitstream_buffer);
 
-  // Get a new input buffer from the queue and set it up in decoder. This will
-  // sleep if no input buffers are available. Return true if a new buffer has
-  // been set up, false if an early exit has been requested (due to initiated
-  // reset/flush/destroy).
+  // Gets a new Inputbuffer from |input_buffers_| and sets it up in |decoder_|.
+  // This will wait until input buffers are available. Returns true if a (new)
+  // buffer has been set up, or false if an early exit has been requested (due
+  // to initiated reset/flush/destroy).
   bool GetInputBuffer_Locked();
 
-  // Signal the client that the current buffer has been read and can be
+  // Signals the client that the current buffer has been read and can be
   // returned. Will also release the mapping.
-  void ReturnCurrInputBuffer_Locked();
+  void ReturnInputBuffer_Locked();
 
   // Wait for more surfaces to become available. Return true once they do or
   // false if an early exit has been requested (due to an initiated
@@ -212,23 +217,19 @@ class MEDIA_GPU_EXPORT VaapiVideoDecodeAccelerator
   State state_;
   Config::OutputMode output_mode_;
 
-  // Queue of available InputBuffers (picture_buffer_ids).
-  base::queue<linked_ptr<InputBuffer>> input_buffers_;
-  // Number of !IsFlush() InputBuffers in |input_buffers_| for tracing.
-  int num_stream_bufs_at_decoder_;
-  // Signalled when input buffers are queued onto |input_buffers_| queue.
-  base::ConditionVariable input_ready_;
+  // Blocking queue of InputBuffers (encoded data) passed on QueueInputBuffer().
+  std::unique_ptr<BlockingQueue<InputBuffer>> input_buffers_;
+  // |decoder_| can only be decoding one InputBuffer at a time. This variable
+  // marks that period.
+  bool decoding_one_input_buffer_ = false;
 
-  // Current input buffer at decoder.
-  linked_ptr<InputBuffer> curr_input_buffer_;
-
-  // Queue for incoming output buffers (texture ids).
+  // Queue for output buffers (texture ids) coming from |decoder_|..
   using OutputBuffers = base::queue<int32_t>;
   OutputBuffers output_buffers_;
 
   scoped_refptr<VaapiWrapper> vaapi_wrapper_;
 
-  typedef std::map<int32_t, linked_ptr<VaapiPicture>> Pictures;
+  using Pictures = std::map<int32_t, linked_ptr<VaapiPicture>>;
   // All allocated Pictures, regardless of their current state.
   // Pictures are allocated once and destroyed at the end of decode.
   // Comes after vaapi_wrapper_ to ensure all pictures are destroyed
