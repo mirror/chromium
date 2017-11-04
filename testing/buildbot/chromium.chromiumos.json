@@ -468,6 +468,12 @@
         "swarming": {
           "can_use_on_swarming_builders": true
         },
+        "test": "vaapi_video_decode_accelerator_unittest"
+      },
+      {
+        "swarming": {
+          "can_use_on_swarming_builders": true
+        },
         "test": "views_mus_interactive_ui_tests"
       },
       {
