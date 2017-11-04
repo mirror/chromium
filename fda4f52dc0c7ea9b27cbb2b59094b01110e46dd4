@@ -1,0 +1,276 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "b56e25c1_2f971cc6",
+        "filename": "components/viz/host/host_frame_sink_client.h",
+        "patchSetId": 9
+      },
+      "lineNbr": 19,
+      "author": {
+        "id": 1115911
+      },
+      "writtenOn": "2017-11-04T00:49:05Z",
+      "side": 1,
+      "message": "OnFrameTokenChanged",
+      "revId": "fda4f52dc0c7ea9b27cbb2b59094b01110e46dd4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "27b7021b_583e8230",
+        "filename": "components/viz/host/host_frame_sink_manager.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 128,
+      "author": {
+        "id": 1115911
+      },
+      "writtenOn": "2017-11-04T00:49:05Z",
+      "side": 1,
+      "message": "OnFrameTokenChanged",
+      "revId": "fda4f52dc0c7ea9b27cbb2b59094b01110e46dd4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "439b4d83_7752be63",
+        "filename": "components/viz/host/host_frame_sink_manager.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 131,
+      "author": {
+        "id": 1115911
+      },
+      "writtenOn": "2017-11-04T00:49:05Z",
+      "side": 1,
+      "message": "1. Check if frame_sink_id is in frame_sink_data_map_. If it\u0027s not, then exit early.\n\n2. If it is then check if client exists, and call OnFrameTokenChanged.",
+      "revId": "fda4f52dc0c7ea9b27cbb2b59094b01110e46dd4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4363c77e_85aabefc",
+        "filename": "components/viz/host/host_frame_sink_manager.h",
+        "patchSetId": 9
+      },
+      "lineNbr": 127,
+      "author": {
+        "id": 1115911
+      },
+      "writtenOn": "2017-11-04T00:49:05Z",
+      "side": 1,
+      "message": "OnFrameTokenChanged",
+      "revId": "fda4f52dc0c7ea9b27cbb2b59094b01110e46dd4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "43241d24_342b7728",
+        "filename": "components/viz/service/frame_sinks/compositor_frame_sink_support.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 235,
+      "author": {
+        "id": 1115911
+      },
+      "writtenOn": "2017-11-04T00:49:05Z",
+      "side": 1,
+      "message": "Move this to OnSurfaceActivation.",
+      "revId": "fda4f52dc0c7ea9b27cbb2b59094b01110e46dd4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0f8ffa93_c71df8d3",
+        "filename": "components/viz/service/frame_sinks/compositor_frame_sink_support_unittest.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 92,
+      "author": {
+        "id": 1115911
+      },
+      "writtenOn": "2017-11-04T00:49:05Z",
+      "side": 1,
+      "message": "OnFrameTokenChanged",
+      "revId": "fda4f52dc0c7ea9b27cbb2b59094b01110e46dd4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d07fc432_835e69ab",
+        "filename": "components/viz/service/frame_sinks/frame_sink_manager_impl.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 384,
+      "author": {
+        "id": 1115911
+      },
+      "writtenOn": "2017-11-04T00:49:05Z",
+      "side": 1,
+      "message": "OnFrameTokenChanged.",
+      "revId": "fda4f52dc0c7ea9b27cbb2b59094b01110e46dd4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "30e0b8c9_f9cf98ae",
+        "filename": "components/viz/service/frame_sinks/frame_sink_manager_impl.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 387,
+      "author": {
+        "id": 1115911
+      },
+      "writtenOn": "2017-11-04T00:49:05Z",
+      "side": 1,
+      "message": "if (client_)\n  client_-\u003eOnFrameTokenChanged(...)",
+      "revId": "fda4f52dc0c7ea9b27cbb2b59094b01110e46dd4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "cf1611f4_f4441755",
+        "filename": "components/viz/service/frame_sinks/frame_sink_manager_impl.h",
+        "patchSetId": 9
+      },
+      "lineNbr": 155,
+      "author": {
+        "id": 1115911
+      },
+      "writtenOn": "2017-11-04T00:49:05Z",
+      "side": 1,
+      "message": "OnFrameTokenChanged + comment describing what this does.",
+      "revId": "fda4f52dc0c7ea9b27cbb2b59094b01110e46dd4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c39202f5_70777b3b",
+        "filename": "content/browser/renderer_host/delegated_frame_host.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 602,
+      "author": {
+        "id": 1115911
+      },
+      "writtenOn": "2017-11-04T00:49:05Z",
+      "side": 1,
+      "message": "OnFrameTokenChanged",
+      "revId": "fda4f52dc0c7ea9b27cbb2b59094b01110e46dd4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "76e7009f_7bae8e37",
+        "filename": "content/browser/renderer_host/delegated_frame_host.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 603,
+      "author": {
+        "id": 1115911
+      },
+      "writtenOn": "2017-11-04T00:49:05Z",
+      "side": 1,
+      "message": "OnFrameTokenChanged",
+      "revId": "fda4f52dc0c7ea9b27cbb2b59094b01110e46dd4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2bae3d13_4c6700a2",
+        "filename": "content/browser/renderer_host/delegated_frame_host.h",
+        "patchSetId": 9
+      },
+      "lineNbr": 75,
+      "author": {
+        "id": 1115911
+      },
+      "writtenOn": "2017-11-04T00:49:05Z",
+      "side": 1,
+      "message": "OnFrameTokenChanged",
+      "revId": "fda4f52dc0c7ea9b27cbb2b59094b01110e46dd4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a88b9276_ba73b0b4",
+        "filename": "content/browser/renderer_host/delegated_frame_host.h",
+        "patchSetId": 9
+      },
+      "lineNbr": 131,
+      "author": {
+        "id": 1115911
+      },
+      "writtenOn": "2017-11-04T00:49:05Z",
+      "side": 1,
+      "message": "OnFrameTokenChanged",
+      "revId": "fda4f52dc0c7ea9b27cbb2b59094b01110e46dd4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "36f49777_b3600bdd",
+        "filename": "content/browser/renderer_host/render_widget_host_impl.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 2702,
+      "author": {
+        "id": 1115911
+      },
+      "writtenOn": "2017-11-04T00:49:05Z",
+      "side": 1,
+      "message": "Please don\u0027t use if defines. This should work on all platforms.",
+      "revId": "fda4f52dc0c7ea9b27cbb2b59094b01110e46dd4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5ebbabc0_3d002c63",
+        "filename": "content/browser/renderer_host/render_widget_host_impl.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 2748,
+      "author": {
+        "id": 1115911
+      },
+      "writtenOn": "2017-11-04T00:49:05Z",
+      "side": 1,
+      "message": "Please don\u0027t use if defines. This should work on all platforms.",
+      "revId": "fda4f52dc0c7ea9b27cbb2b59094b01110e46dd4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "619e8fee_6803f02f",
+        "filename": "services/viz/privileged/interfaces/compositing/frame_sink_manager.mojom",
+        "patchSetId": 9
+      },
+      "lineNbr": 112,
+      "author": {
+        "id": 1115911
+      },
+      "writtenOn": "2017-11-04T00:49:05Z",
+      "side": 1,
+      "message": "OnFrameTokenChanged(FrameSinkId frame_sink_id, uint32 frame_token); + comment",
+      "revId": "fda4f52dc0c7ea9b27cbb2b59094b01110e46dd4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
