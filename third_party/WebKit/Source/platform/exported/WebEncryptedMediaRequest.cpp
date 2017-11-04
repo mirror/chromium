@@ -39,6 +39,10 @@ WebSecurityOrigin WebEncryptedMediaRequest::GetSecurityOrigin() const {
   return WebSecurityOrigin(private_->GetSecurityOrigin());
 }
 
+bool WebEncryptedMediaRequest::IsEncryptedMediaEnabled() const {
+  return private_->IsEncryptedMediaEnabled();
+}
+
 void WebEncryptedMediaRequest::RequestSucceeded(
     WebContentDecryptionModuleAccess* access) {
   private_->RequestSucceeded(access);
