@@ -40,7 +40,7 @@ base::WeakPtr<VrShellGl> VrGLThread::GetVrShellGl() {
 
 void VrGLThread::Init() {
   vr_shell_gl_ =
-      base::MakeUnique<VrShellGl>(this, this, ui_initial_state_, gvr_api_,
+      base::MakeUnique<VrShellGl>(this, this, this, ui_initial_state_, gvr_api_,
                                   reprojected_rendering_, daydream_support_);
 
   browser_ui_ = vr_shell_gl_->GetBrowserUiWeakPtr();
@@ -72,9 +72,8 @@ void VrGLThread::UpdateGamepadData(device::GvrGamepadData pad) {
       FROM_HERE, base::Bind(&VrShell::UpdateGamepadData, weak_vr_shell_, pad));
 }
 
-void VrGLThread::ProcessContentGesture(
-    std::unique_ptr<blink::WebInputEvent> event,
-    int content_id) {
+void VrGLThread::ForwardEvent(std::unique_ptr<blink::WebInputEvent> event,
+                              int content_id) {
   DCHECK(OnGlThread());
   main_thread_task_runner_->PostTask(
       FROM_HERE, base::Bind(&VrShell::ProcessContentGesture, weak_vr_shell_,
