@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "bb8034f0_611bd7ea",
+        "filename": "chrome/android/javatests/src/org/chromium/chrome/browser/contextualsearch/ContextualSearchManagerTest.java",
+        "patchSetId": 12
+      },
+      "lineNbr": 3375,
+      "author": {
+        "id": 1116043
+      },
+      "writtenOn": "2017-11-04T04:46:15Z",
+      "side": 1,
+      "message": "is this what clang formatting did?  that looks odd to indent like there where it should be throws() on the subsequent line",
+      "range": {
+        "startLine": 3375,
+        "startChar": 4,
+        "endLine": 3375,
+        "endChar": 22
+      },
+      "revId": "50582502a8fc1c6d98f6cee0350a9f892f4cd197",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
