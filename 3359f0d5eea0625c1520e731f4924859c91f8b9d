@@ -55,6 +55,24 @@
     },
     {
       "key": {
+        "uuid": "55afc2a5_7cd7ced2",
+        "filename": "services/ui/ws/server_window.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 122,
+      "author": {
+        "id": 1211635
+      },
+      "writtenOn": "2017-11-04T00:54:29Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "bcc33881_4062e8d2",
+      "revId": "3359f0d5eea0625c1520e731f4924859c91f8b9d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "b897baa2_3641fedf",
         "filename": "services/ui/ws/server_window.cc",
         "patchSetId": 6
@@ -66,6 +84,24 @@
       "writtenOn": "2017-11-03T17:47:01Z",
       "side": 1,
       "message": "Is this ever false?",
+      "revId": "3359f0d5eea0625c1520e731f4924859c91f8b9d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "755b8873_37dffb75",
+        "filename": "services/ui/ws/server_window.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 126,
+      "author": {
+        "id": 1211635
+      },
+      "writtenOn": "2017-11-04T00:54:29Z",
+      "side": 1,
+      "message": "It\u0027s only false in unittests because many tests don\u0027t set HFSM, or even WS. WDYT changing this if to a DCHECK and update all unittests in another CL?",
+      "parentUuid": "b897baa2_3641fedf",
       "revId": "3359f0d5eea0625c1520e731f4924859c91f8b9d",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -131,6 +167,30 @@
       "side": 1,
       "message": "Won\u0027t the high bits be set for that window, so that client shouldn\u0027t have to worry?",
       "parentUuid": "e9201664_d6c62ba5",
+      "range": {
+        "startLine": 138,
+        "startChar": 53,
+        "endLine": 138,
+        "endChar": 67
+      },
+      "revId": "3359f0d5eea0625c1520e731f4924859c91f8b9d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e1eae13b_d84cd2fb",
+        "filename": "services/ui/ws/window_server.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 138,
+      "author": {
+        "id": 1211635
+      },
+      "writtenOn": "2017-11-04T00:54:29Z",
+      "side": 1,
+      "message": "I think there are two options for choosing the client_window_id for the embed window in embedded client:\n1. Update root\u0027s FrameSinkId before initializing the embedded\u0027s WindowTree, in which case its client_window_id would be Id(embedded\u0027s client id, 1), so when sending this id back to the embedded\u0027s WindowTreeClient it becomes (0, 1) [1]. This patch uses this option.\n2. Update root\u0027s FrameSinkId after initializing the embedded\u0027s window tree, in which case its client_window_id would be its old FrameSinkId [2], i.e. Id(embedder\u0027s client id, embedder\u0027s window id), so high bits would be set in this case.\n\nHowever, in either case, FrameSinkId(embedded\u0027s client id, 1) will be taken after we update root\u0027s FrameSinkId. When the embedded client creates a window itself, the FrameSinkId for that window is going to be (embedded\u0027s client id, next_window_id_) so next_window_id_ needs to start at 2 in either case?\n\n[1] https://cs.chromium.org/chromium/src/services/ui/ws/window_tree.cc?type\u003dcs\u0026l\u003d1118\n[2] https://cs.chromium.org/chromium/src/services/ui/ws/window_tree.cc?type\u003dcs\u0026sq\u003dpackage:chromium\u0026l\u003d1248",
+      "parentUuid": "53531b3f_53e2c11f",
       "range": {
         "startLine": 138,
         "startChar": 53,
@@ -237,6 +297,24 @@
       "side": 1,
       "message": "Doesn\u0027t this conflict with what you\u0027re saying above (my question about WmCreateTopLevelWindow(). client() in this case is the wm, so why do you need to tell the wm the framsinkid in two places? I also find it confusing that you\u0027re overloading ClientSpecificId for frame sink id in some places. Please make the mojom clear when the ids are frame sink ids.",
       "parentUuid": "6bd9ac58_a91e2bea",
+      "revId": "3359f0d5eea0625c1520e731f4924859c91f8b9d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "778134e5_3017e2bf",
+        "filename": "services/ui/ws/window_tree.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 2641,
+      "author": {
+        "id": 1211635
+      },
+      "writtenOn": "2017-11-04T00:54:29Z",
+      "side": 1,
+      "message": "Ah I see what you mean. Yes client()-\u003eOnFrameSinkIdAllocated is not needed anymore. Client already knows about the new FrameSinkId in WindowTreeClient::WmCreateTopLevelWindow so changed to call OnFrameSinkIdAllocated directly from there.\n\nWindowTree::NewTopLevelWindow still needs to send embedded\u0027s window id tho, so that embedder knows the new FrameSinkId [1]? WmCreateTopLevelWindow also needs to keep sending |requesting_client_id| and |requesting_window_id| for window-\u003eUpdateFrameSinkId here, instead of updating FrameSinkId in OnWindowManagerCreatedTopLevelWindow because I think it would make more sense for embedder to update the embed window?\n\nBoth |requesting_client_id| and |requesting_window_id| are ClientSpecificIds. FrameSinkId contains two uint32 (one uint32 has the value of requesting_client_id and one of requesting_window_id).\n\n[1] https://cs.chromium.org/chromium/src/ui/aura/mus/window_tree_client.cc?type\u003dcs\u0026q\u003dwindow_tree_client.cc\u0026l\u003d1189",
+      "parentUuid": "3a346788_04e04dd1",
       "revId": "3359f0d5eea0625c1520e731f4924859c91f8b9d",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
