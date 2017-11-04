@@ -192,6 +192,24 @@
       "revId": "0fcde530ef703b367cecad7861b1ea06ff710947",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f4349f5a_497d991e",
+        "filename": "services/device/wake_lock/power_save_blocker/power_save_blocker_x11.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 278,
+      "author": {
+        "id": 1000042
+      },
+      "writtenOn": "2017-11-04T01:18:49Z",
+      "side": 1,
+      "message": "ken, regarding this renaming suggestion: when i grep through .mojom files, includes ones that are part of the device service, MACRO_STYLE naming seems overwhelmingly more common for enum values than kConstantStyle. should i instead switch these to e.g. PREVENT_DISPLAY_SLEEP? (i\u0027m aware that the google c++ style guide advocates constant-style.)",
+      "parentUuid": "e4292d8a_27b4ce3a",
+      "revId": "0fcde530ef703b367cecad7861b1ea06ff710947",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
