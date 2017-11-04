@@ -105,11 +105,10 @@ class CompositingRequirementsUpdater::OverlapMap {
       overlap_stack_[overlap_stack_.size() - 2].unclipped.Add(bounds);
   }
 
-  bool OverlapsLayers(const IntRect& bounds, bool is_clipped) const {
+  bool OverlapsLayers(const IntRect& bounds, bool test_unclipped) const {
     bool clipped_overlap = overlap_stack_.back().clipped.OverlapsLayers(bounds);
-    if (is_clipped)
+    if (!test_unclipped)
       return clipped_overlap;
-    // Unclipped is allowed to overlap clipped, but not vice-versa.
     return clipped_overlap ||
            overlap_stack_.back().unclipped.OverlapsLayers(bounds);
   }
@@ -278,6 +277,14 @@ void CompositingRequirementsUpdater::UpdateRecursive(
                                                 false) &
        kCompositingReasonOverflowScrollingTouch);
 
+  // See the note in OverlapMap::Add for why we separate clipped and unclipped
+  // bounding rects. We carve out an exception for fixed layers since, with
+  // root-layer-scrolls, they'll have a composited scrolling ancestor but they
+  // don't actually scroll with it. They must be overlap tested with other
+  // clipped rects, thus they must also use a clipped rect for overlap testing.
+  bool use_clipped_bounding_rect =
+      !has_composited_scrolling_ancestor || layer->FixedToViewport();
+
   // We have to promote the sticky element to work around the bug
   // (https://crbug.com/698358) of not being able to invalidate the ancestor
   // after updating the sticky layer position.
@@ -367,14 +374,16 @@ void CompositingRequirementsUpdater::UpdateRecursive(
     }
   }
 
-  const IntRect& abs_bounds = has_composited_scrolling_ancestor
-                                  ? layer->UnclippedAbsoluteBoundingBox()
-                                  : layer->ClippedAbsoluteBoundingBox();
+  const IntRect& abs_bounds = use_clipped_bounding_rect
+                                  ? layer->ClippedAbsoluteBoundingBox()
+                                  : layer->UnclippedAbsoluteBoundingBox();
   absolute_descendant_bounding_box = abs_bounds;
   if (current_recursion_data.testing_overlap_ &&
       !RequiresCompositingOrSquashing(direct_reasons)) {
+    // Unclipped is allowed to overlap clipped, but not vice-versa. Fixed
+    // Elements should be overlap tested against both.
     bool overlaps = overlap_map.OverlapsLayers(
-        abs_bounds, !has_composited_scrolling_ancestor);
+        abs_bounds, !use_clipped_bounding_rect || layer->FixedToViewport());
     overlap_compositing_reason =
         overlaps ? kCompositingReasonOverlap : kCompositingReasonNone;
   }
@@ -514,7 +523,7 @@ void CompositingRequirementsUpdater::UpdateRecursive(
     // for overlap.
     if (child_recursion_data.compositing_ancestor_ &&
         !child_recursion_data.compositing_ancestor_->IsRootLayer())
-      overlap_map.Add(layer, abs_bounds, !has_composited_scrolling_ancestor);
+      overlap_map.Add(layer, abs_bounds, use_clipped_bounding_rect);
 
     // Now check for reasons to become composited that depend on the state of
     // descendant layers.
@@ -532,7 +541,7 @@ void CompositingRequirementsUpdater::UpdateRecursive(
       // second-from-top context of the stack.
       overlap_map.BeginNewOverlapTestingContext();
       overlap_map.Add(layer, absolute_descendant_bounding_box,
-                      !has_composited_scrolling_ancestor);
+                      use_clipped_bounding_rect);
       will_be_composited_or_squashed = true;
     }
 
