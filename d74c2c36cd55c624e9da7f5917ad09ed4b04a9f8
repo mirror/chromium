@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "0f47300d_d3702e88",
+        "filename": "components/arc/power/arc_power_bridge.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 167,
+      "author": {
+        "id": 1000042
+      },
+      "writtenOn": "2017-11-04T04:30:41Z",
+      "side": 1,
+      "message": "is this the right thing to do here? the new test that\u0027s attempting to close the instance and then report it as ready again crashes otherwise (due to the binding getting reused), but i\u0027m not sure if that mirrors reality. (i actually don\u0027t know enough about arc to know if OnInstanceReady can be called again after OnInstanceClosed...) :-/",
+      "revId": "d74c2c36cd55c624e9da7f5917ad09ed4b04a9f8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
