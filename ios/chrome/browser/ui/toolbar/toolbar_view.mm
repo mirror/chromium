@@ -57,6 +57,10 @@
   return hitView;
 }
 
+- (void)setHidden:(BOOL)hidden {
+  [super setHidden:hidden];
+}
+
 - (void)layoutSubviews {
   [super layoutSubviews];
   [delegate_ toolbarDidLayout];

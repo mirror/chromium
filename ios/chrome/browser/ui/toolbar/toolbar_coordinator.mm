@@ -16,6 +16,10 @@
 @synthesize tabModel = _tabModel;
 @synthesize webToolbarController = _webToolbarController;
 
+- (void)stop {
+  self.webToolbarController = nil;
+}
+
 - (ToolbarController*)toolbarController {
   return self.webToolbarController;
 }
