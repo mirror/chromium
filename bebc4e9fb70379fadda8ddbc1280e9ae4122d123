@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "0ed90441_2337cfc9",
+        "filename": "net/quic/chromium/mock_crypto_client_stream_factory.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 8,
+      "author": {
+        "id": 1210939
+      },
+      "writtenOn": "2017-11-04T03:11:51Z",
+      "side": 1,
+      "message": "Right, this came up with git cl lint from the existing std::unique_ptr usage.",
+      "parentUuid": "20158832_ed7c6f10",
+      "range": {
+        "startLine": 8,
+        "startChar": 17,
+        "endLine": 8,
+        "endChar": 0
+      },
+      "revId": "bebc4e9fb70379fadda8ddbc1280e9ae4122d123",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "21604c7d_324d225f",
         "filename": "net/quic/chromium/quic_stream_factory_fuzzer.cc",
         "patchSetId": 5
@@ -48,6 +72,30 @@
     },
     {
       "key": {
+        "uuid": "29303db7_2d6c968e",
+        "filename": "net/quic/chromium/quic_stream_factory_fuzzer.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 53,
+      "author": {
+        "id": 1210939
+      },
+      "writtenOn": "2017-11-04T03:11:51Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "21604c7d_324d225f",
+      "range": {
+        "startLine": 53,
+        "startChar": 12,
+        "endLine": 53,
+        "endChar": 0
+      },
+      "revId": "bebc4e9fb70379fadda8ddbc1280e9ae4122d123",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "83f94f19_31e5c6f2",
         "filename": "net/quic/chromium/quic_stream_factory_fuzzer.cc",
         "patchSetId": 5
@@ -59,6 +107,30 @@
       "writtenOn": "2017-11-03T21:01:28Z",
       "side": 1,
       "message": "Is this clang-formatted? It looks off, but that\u0027s probably because Env() is so short?",
+      "range": {
+        "startLine": 56,
+        "startChar": 68,
+        "endLine": 56,
+        "endChar": 0
+      },
+      "revId": "bebc4e9fb70379fadda8ddbc1280e9ae4122d123",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3f9445c2_fa6576dc",
+        "filename": "net/quic/chromium/quic_stream_factory_fuzzer.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 56,
+      "author": {
+        "id": 1210939
+      },
+      "writtenOn": "2017-11-04T03:11:51Z",
+      "side": 1,
+      "message": "Yes. The weird formatting came from the long constant names, so I made them shorter.",
+      "parentUuid": "83f94f19_31e5c6f2",
       "range": {
         "startLine": 56,
         "startChar": 68,
@@ -94,6 +166,30 @@
     },
     {
       "key": {
+        "uuid": "17e1a7af_1e1bb4c3",
+        "filename": "net/quic/chromium/quic_stream_factory_fuzzer.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 65,
+      "author": {
+        "id": 1210939
+      },
+      "writtenOn": "2017-11-04T03:11:51Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "f9c89d81_cb3a0c91",
+      "range": {
+        "startLine": 65,
+        "startChar": 18,
+        "endLine": 65,
+        "endChar": 0
+      },
+      "revId": "bebc4e9fb70379fadda8ddbc1280e9ae4122d123",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "b7ee1d0a_a4498c82",
         "filename": "net/quic/chromium/quic_stream_factory_fuzzer.cc",
         "patchSetId": 5
@@ -117,6 +213,30 @@
     },
     {
       "key": {
+        "uuid": "f54904d6_42759353",
+        "filename": "net/quic/chromium/quic_stream_factory_fuzzer.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 113,
+      "author": {
+        "id": 1210939
+      },
+      "writtenOn": "2017-11-04T03:11:51Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "b7ee1d0a_a4498c82",
+      "range": {
+        "startLine": 113,
+        "startChar": 42,
+        "endLine": 113,
+        "endChar": 43
+      },
+      "revId": "bebc4e9fb70379fadda8ddbc1280e9ae4122d123",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "2240d541_60573c71",
         "filename": "net/quic/chromium/quic_stream_factory_fuzzer.cc",
         "patchSetId": 5
@@ -134,6 +254,24 @@
     },
     {
       "key": {
+        "uuid": "194e1697_e3d5e43e",
+        "filename": "net/quic/chromium/quic_stream_factory_fuzzer.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 120,
+      "author": {
+        "id": 1210939
+      },
+      "writtenOn": "2017-11-04T03:11:51Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "2240d541_60573c71",
+      "revId": "bebc4e9fb70379fadda8ddbc1280e9ae4122d123",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "048227ac_2ccb9ec4",
         "filename": "net/quic/test_tools/mock_decrypter.h",
         "patchSetId": 5
@@ -145,6 +283,24 @@
       "writtenOn": "2017-11-03T21:01:28Z",
       "side": 1,
       "message": "Can you add a class comment which explains what this does? I\u0027m guessing the ciphertext is simply equal to the plaintext with no auth hash? (I\u0027ve not looked at the .cc file yet:\u003e)",
+      "revId": "bebc4e9fb70379fadda8ddbc1280e9ae4122d123",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "29152cc7_bcc09f1b",
+        "filename": "net/quic/test_tools/mock_decrypter.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 20,
+      "author": {
+        "id": 1210939
+      },
+      "writtenOn": "2017-11-04T03:11:51Z",
+      "side": 1,
+      "message": "Exactly. I\u0027ve added a comment. Let me know if it\u0027s unclear.",
+      "parentUuid": "048227ac_2ccb9ec4",
       "revId": "bebc4e9fb70379fadda8ddbc1280e9ae4122d123",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -171,6 +327,30 @@
       "revId": "bebc4e9fb70379fadda8ddbc1280e9ae4122d123",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a58b76ad_dea0c26b",
+        "filename": "net/quic/test_tools/mock_encrypter.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 19,
+      "author": {
+        "id": 1210939
+      },
+      "writtenOn": "2017-11-04T03:11:51Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "abfceb0b_33375baa",
+      "range": {
+        "startLine": 19,
+        "startChar": 64,
+        "endLine": 19,
+        "endChar": 0
+      },
+      "revId": "bebc4e9fb70379fadda8ddbc1280e9ae4122d123",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
