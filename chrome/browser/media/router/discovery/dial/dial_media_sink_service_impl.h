@@ -10,6 +10,7 @@
 
 #include "base/memory/weak_ptr.h"
 #include "chrome/browser/media/router/discovery/dial/device_description_service.h"
+#include "chrome/browser/media/router/discovery/dial/dial_app_discovery_service.h"
 #include "chrome/browser/media/router/discovery/dial/dial_registry.h"
 #include "chrome/browser/media/router/discovery/media_sink_discovery_metrics.h"
 #include "chrome/browser/media/router/discovery/media_sink_service_base.h"
@@ -38,8 +39,18 @@ class DialMediaSinkServiceImpl
       public DialRegistry::Observer,
       public base::SupportsWeakPtr<DialMediaSinkServiceImpl> {
  public:
-  DialMediaSinkServiceImpl(const OnSinksDiscoveredCallback& callback,
-                           net::URLRequestContextGetter* request_context);
+  // Called when a new sink becomes available or an available sink becomes
+  // unavailable for |app_name|.
+  // |app_name|: app name on receiver device (e.g. YouTube)
+  // |available_sinks|: list of currently available sinks for |app_name|
+  using OnAvailableSinksUpdatedCallback =
+      base::Callback<void(const std::string& app_name,
+                          const std::vector<MediaSink>& available_sinks)>;
+
+  DialMediaSinkServiceImpl(
+      const OnSinksDiscoveredCallback& callback,
+      const OnAvailableSinksUpdatedCallback& available_sinks_updated_callback,
+      net::URLRequestContextGetter* request_context);
   ~DialMediaSinkServiceImpl() override;
 
   // Does not take ownership of |observer|. Caller should make sure |observer|
@@ -48,6 +59,13 @@ class DialMediaSinkServiceImpl
 
   // Sets |observer_| to nullptr.
   void ClearObserver();
+
+  // Starts monitoring available sinks for |app_name|. If available sinks
+  // change, invokes |available_sinks_updated_callback_|.
+  void StartMonitoringAvailableSinksForApp(const std::string& app_name);
+
+  // Stops monitoring available sinks for |app_name|.
+  void StopMonitoringAvailableSinksForApp(const std::string& app_name);
 
   // MediaSinkService implementation
   void Start() override;
@@ -89,10 +107,28 @@ class DialMediaSinkServiceImpl
   void OnDeviceDescriptionError(const DialDeviceData& device,
                                 const std::string& error_message);
 
+  // Called when app discovery service successfully fetches and parses app info
+  // XML.
+  void OnDialAppInfoAvailable(const GURL& app_url,
+                              const ParsedDialAppInfo& app_info);
+
+  // Called when fails to fetch or parse app info XML.
+  void OnDialAppInfoError(const GURL& app_url,
+                          const std::string& error_message);
+
+  void OnDialAppInfoUpdated(const GURL& app_url, bool is_available);
+
+  void NotifySinkObservers(const std::string& app_name,
+                           const std::set<std::string>& available_sink_id_set);
+
   // MediaSinkServiceBase implementation.
   void RecordDeviceCounts() override;
 
   std::unique_ptr<DeviceDescriptionService> description_service_;
+
+  std::unique_ptr<DialAppDiscoveryService> app_discovery_service_;
+
+  OnAvailableSinksUpdatedCallback available_sinks_updated_callback_;
 
   // Raw pointer to DialRegistry singleton.
   DialRegistry* dial_registry_ = nullptr;
@@ -102,6 +138,9 @@ class DialMediaSinkServiceImpl
 
   // Device data list from current round of discovery.
   DialRegistry::DeviceList current_devices_;
+
+  // Map of sets of available sink ids keyed by app name.
+  std::map<std::string, std::set<std::string>> app_name_sink_id_map_;
 
   DialMediaSinkServiceObserver* observer_;
 

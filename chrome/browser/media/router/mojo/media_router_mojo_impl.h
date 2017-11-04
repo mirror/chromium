@@ -124,6 +124,10 @@ class MediaRouterMojoImpl : public MediaRouterBase,
 
   content::BrowserContext* context() const { return context_; }
 
+  // MediaRouter implementation.
+  bool RegisterMediaSinksObserver(MediaSinksObserver* observer) override;
+  void UnregisterMediaSinksObserver(MediaSinksObserver* observer) override;
+
   // Mojo proxy object for the Media Route Provider Manager.
   // Set to null initially, and later set to the Provider Manager proxy object
   // passed in via |RegisterMediaRouteProvider()|.
@@ -214,8 +218,6 @@ class MediaRouterMojoImpl : public MediaRouterBase,
   };
 
   // MediaRouter implementation.
-  bool RegisterMediaSinksObserver(MediaSinksObserver* observer) override;
-  void UnregisterMediaSinksObserver(MediaSinksObserver* observer) override;
   void RegisterMediaRoutesObserver(MediaRoutesObserver* observer) override;
   void UnregisterMediaRoutesObserver(MediaRoutesObserver* observer) override;
   void RegisterRouteMessageObserver(RouteMessageObserver* observer) override;
