@@ -52,6 +52,29 @@
       "revId": "6002ef9292e19e6d88f06960e6ca084eeb8225b7",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b8c21da3_1fefe2a6",
+        "filename": "ios/web_view/internal/web_view_web_test.mm",
+        "patchSetId": 2
+      },
+      "lineNbr": 20,
+      "author": {
+        "id": 1205249
+      },
+      "writtenOn": "2017-11-04T00:17:39Z",
+      "side": 1,
+      "message": "nit: You can put \"\u003d default;\" at the definition in the header.",
+      "range": {
+        "startLine": 20,
+        "startChar": 36,
+        "endLine": 20,
+        "endChar": 43
+      },
+      "revId": "6002ef9292e19e6d88f06960e6ca084eeb8225b7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
