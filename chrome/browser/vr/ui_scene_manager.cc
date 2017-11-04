@@ -1161,7 +1161,7 @@ void UiSceneManager::OnAppButtonClicked() {
 }
 
 void UiSceneManager::OnAppButtonGesturePerformed(
-    UiInterface::Direction direction) {}
+    PlatformController::SwipeDirection direction) {}
 
 void UiSceneManager::SetFullscreen(bool fullscreen) {
   if (fullscreen_ == fullscreen)
