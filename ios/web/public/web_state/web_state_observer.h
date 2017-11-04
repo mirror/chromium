@@ -105,6 +105,9 @@ class WebStateObserver {
                           PageLoadCompletionStatus load_completion_status) {}
 
   // Called when the interstitial is dismissed by the user.
+  // TODO(crbug.com/781553): Remove this callback once interstitial dismissal
+  // generates all required callbacks (DidChangeVisibleSecurityState and
+  // DidFinishNavigation).
   virtual void InterstitialDismissed(WebState* web_state) {}
 
   // Notifies the observer that the page has made some progress loading.
