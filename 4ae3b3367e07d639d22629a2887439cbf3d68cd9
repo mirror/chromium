@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "b2934d97_4927d650",
+        "filename": "content/test/data/media/getusermedia-depth-capture.html",
+        "patchSetId": 1
+      },
+      "lineNbr": 35,
+      "author": {
+        "id": 1143639
+      },
+      "writtenOn": "2017-11-04T11:51:40Z",
+      "side": 1,
+      "message": "Do you need to pass a failedCallback to handle getFake16bitStream() rejections here?\nApplies to other calls below too.\nIt\u0027s OK if getFake16bitStream() never rejects.",
+      "range": {
+        "startLine": 35,
+        "startChar": 0,
+        "endLine": 35,
+        "endChar": 7
+      },
+      "revId": "4ae3b3367e07d639d22629a2887439cbf3d68cd9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2a15e1a6_7de7859b",
+        "filename": "content/test/data/media/peerconnection-call.html",
+        "patchSetId": 1
+      },
+      "lineNbr": 563,
+      "author": {
+        "id": 1143639
+      },
+      "writtenOn": "2017-11-04T11:51:40Z",
+      "side": 1,
+      "message": "This TODO should be a plain comment since it doesn\u0027t state anything that needs to be done.\nIf there is actually anything to do, say it and also add a crbug.com reference. Otherwise, make it a regular comment.",
+      "range": {
+        "startLine": 563,
+        "startChar": 23,
+        "endLine": 563,
+        "endChar": 27
+      },
+      "revId": "4ae3b3367e07d639d22629a2887439cbf3d68cd9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
