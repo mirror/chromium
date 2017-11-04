@@ -1909,6 +1909,19 @@ void PaintLayerScrollableArea::UpdateCompositingLayersAfterScroll() {
           kGraphicsLayerUpdateSubtree);
       compositor->SetNeedsCompositingUpdate(
           kCompositingUpdateAfterGeometryChange);
+
+      if (Layer()->IsRootLayer() &&
+          RuntimeEnabledFeatures::RootLayerScrollingEnabled()) {
+        LocalFrame* frame = Box().GetFrame();
+        if (!frame)
+          return;
+
+        if (LocalFrameView* frame_view = frame->View()) {
+          if (frame_view->HasViewportConstrainedObjects()) {
+            Layer()->SetNeedsCompositingInputsUpdate();
+          }
+        }
+      }
     } else {
       Layer()->SetNeedsCompositingInputsUpdate();
     }
