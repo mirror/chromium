@@ -92,6 +92,10 @@ IPC_STRUCT_BEGIN(GpuCommandBufferMsg_SwapBuffersCompleted_Params)
   IPC_STRUCT_MEMBER(gfx::SwapResult, result)
 IPC_STRUCT_END()
 
+IPC_STRUCT_BEGIN(GpuCommandBufferMsg_FetchGpuFence_Return)
+  IPC_STRUCT_MEMBER(gfx::GpuFenceHandle, sync_point)
+IPC_STRUCT_END()
+
 //------------------------------------------------------------------------------
 // GPU Channel Messages
 // These are messages from a renderer process to the GPU process.
@@ -257,5 +261,16 @@ IPC_SYNC_MESSAGE_ROUTED2_1(GpuCommandBufferMsg_CreateStreamTexture,
 
 // Start or stop VSync sygnal production on GPU side (Windows only).
 IPC_MESSAGE_ROUTED1(GpuCommandBufferMsg_SetNeedsVSync, bool /* needs_vsync */)
+
+// Place a GpuFence based on provided handle
+IPC_MESSAGE_ROUTED1(GpuCommandBufferMsg_PlaceGpuFence, gfx::GpuFenceHandle);
+
+// Create a new GpuFence for handle fetch callback
+IPC_MESSAGE_ROUTED1(GpuCommandBufferMsg_FetchGpuFence, uint32_t /* fetch_id */);
+
+// Response to FetchGpuFence
+IPC_MESSAGE_ROUTED2(GpuCommandBufferMsg_FetchGpuFenceComplete,
+                    uint32_t /* fetch_id */,
+                    GpuCommandBufferMsg_FetchGpuFence_Return);
 
 #endif  // GPU_IPC_COMMON_GPU_MESSAGES_H_
