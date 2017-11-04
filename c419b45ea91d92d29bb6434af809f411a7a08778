@@ -52,6 +52,24 @@
       "revId": "c419b45ea91d92d29bb6434af809f411a7a08778",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "7b11446f_4138aea7",
+        "filename": "chrome/test/data/extensions/declarative_net_request/subresources/extension_types.png",
+        "patchSetId": 9
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1161815
+      },
+      "writtenOn": "2017-11-04T01:08:42Z",
+      "side": 0,
+      "message": "Don\u0027t think you should. Had replaced it with image.png.",
+      "parentUuid": "126670dd_f188874f",
+      "revId": "c419b45ea91d92d29bb6434af809f411a7a08778",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }

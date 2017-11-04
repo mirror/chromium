@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "4e4533bc_2490fc0e",
+        "filename": "chrome/browser/extensions/api/declarative_net_request/declarative_net_request_browsertest.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 628,
+      "author": {
+        "id": 1161815
+      },
+      "writtenOn": "2017-11-04T01:08:42Z",
+      "side": 1,
+      "message": "Marking as resolved.",
+      "parentUuid": "bd4cda8d_fcebc73d",
+      "range": {
+        "startLine": 628,
+        "startChar": 34,
+        "endLine": 628,
+        "endChar": 69
+      },
+      "revId": "62d3ec8ce0703b20f9772c9ed59367cc093d7217",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "de8ef131_ff91aca0",
         "filename": "chrome/browser/extensions/api/declarative_net_request/declarative_net_request_browsertest.cc",
         "patchSetId": 5
@@ -39,6 +63,24 @@
       "revId": "62d3ec8ce0703b20f9772c9ed59367cc093d7217",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4905961b_c0ad4e16",
+        "filename": "chrome/browser/extensions/api/declarative_net_request/declarative_net_request_browsertest.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 792,
+      "author": {
+        "id": 1161815
+      },
+      "writtenOn": "2017-11-04T01:08:42Z",
+      "side": 1,
+      "message": "Marking as resolved.",
+      "parentUuid": "de8ef131_ff91aca0",
+      "revId": "62d3ec8ce0703b20f9772c9ed59367cc093d7217",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -62,6 +104,30 @@
       "revId": "62d3ec8ce0703b20f9772c9ed59367cc093d7217",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4634d51b_274873a3",
+        "filename": "extensions/browser/api/web_request/web_request_api.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 640,
+      "author": {
+        "id": 1161815
+      },
+      "writtenOn": "2017-11-04T01:08:42Z",
+      "side": 1,
+      "message": "Marking as resolved.",
+      "parentUuid": "9356c800_0584c600",
+      "range": {
+        "startLine": 640,
+        "startChar": 16,
+        "endLine": 640,
+        "endChar": 70
+      },
+      "revId": "62d3ec8ce0703b20f9772c9ed59367cc093d7217",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }

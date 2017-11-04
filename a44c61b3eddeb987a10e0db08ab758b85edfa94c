@@ -22,6 +22,30 @@
       "revId": "a44c61b3eddeb987a10e0db08ab758b85edfa94c",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "79737068_f76570f2",
+        "filename": "extensions/browser/api/declarative_net_request/rules_monitor_service.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 144,
+      "author": {
+        "id": 1161815
+      },
+      "writtenOn": "2017-11-04T01:08:42Z",
+      "side": 1,
+      "message": "Marking as resolved.",
+      "parentUuid": "0e04e021_11bbfc04",
+      "range": {
+        "startLine": 144,
+        "startChar": 5,
+        "endLine": 144,
+        "endChar": 12
+      },
+      "revId": "a44c61b3eddeb987a10e0db08ab758b85edfa94c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
