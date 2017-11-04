@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "e0cff09f_b32aec65",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 5
+      },
+      "lineNbr": 7,
+      "author": {
+        "id": 1115745
+      },
+      "writtenOn": "2017-11-04T01:15:47Z",
+      "side": 1,
+      "message": "The basic format for this should be:\n\n-------\n\n\u003ctitle, one line, ideally \u003c\u003d72 chars\u003e\n\n\u003csummary, ideally wrapped at 72 chars\u003e\n\nBug: \u003cbug\u003e[here this can be `None`, or we could file a bug for adding more docs]\n\n-------\n\nSo, maybe something like:\n\n[Extensions Docs] Update the mac shortcut in a sample extension\n\nMac now has a default shortcut for \"Command+Shift+Y\", so update\nthe commands sample extension to use \"MacCtrl+Shift+Y\" to avoid\nconflict.\n\nBug: None\n\n\nOtherwise, the commit title for this patch will be \"Mac now has a default shortcut for \"Command+Shift+Y\",\" and that\u0027s a bit misleading (it would, to me, imply that we\u0027re adding a default shortcut for command-shift-y to the mac browser or something)",
+      "revId": "6528f452e036bcff2bd6e6e5ec03c6a267238eb2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
