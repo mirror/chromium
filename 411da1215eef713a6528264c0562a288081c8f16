@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "6dc9dc80_e152cfcf",
+        "filename": "tools/binary_size/libsupersize/canned_queries.py",
+        "patchSetId": 1
+      },
+      "lineNbr": 16,
+      "author": {
+        "id": 1001928
+      },
+      "writtenOn": "2017-11-04T16:22:51Z",
+      "side": 1,
+      "message": "Would it be useful to print group size here?",
+      "range": {
+        "startLine": 16,
+        "startChar": 28,
+        "endLine": 16,
+        "endChar": 38
+      },
+      "revId": "411da1215eef713a6528264c0562a288081c8f16",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
