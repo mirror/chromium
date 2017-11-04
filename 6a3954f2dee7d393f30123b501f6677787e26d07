@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "e87c16ba_f72ccc99",
+        "filename": "third_party/WebKit/Source/core/animation/WorkletAnimationBase.h",
+        "patchSetId": 20
+      },
+      "lineNbr": 12,
+      "author": {
+        "id": 1003011
+      },
+      "writtenOn": "2017-11-04T19:33:50Z",
+      "side": 1,
+      "message": "I suspect this is having no effect, as we are not explicitly specifying WTF::String below.\n\nPerhaps include platform/wtf/Forward.h instead. It has\nusing WTF::String;",
+      "revId": "6a3954f2dee7d393f30123b501f6677787e26d07",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
