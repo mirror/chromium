@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "bc58c194_19df4bd9",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 4
+      },
+      "lineNbr": 22,
+      "author": {
+        "id": 1001934
+      },
+      "writtenOn": "2017-11-04T02:09:21Z",
+      "side": 1,
+      "message": "nit: Can you can limit the commit message to 72 chars / line? There\u0027s also a trailing space on line 19.",
+      "revId": "7558bcf6e398d47537e0fdcfd666a5183e52f239",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
