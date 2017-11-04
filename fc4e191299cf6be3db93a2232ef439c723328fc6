@@ -1,0 +1,234 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "ca7c9df7_bb1d2d46",
+        "filename": "ash/accelerators/accelerator_controller.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 1146,
+      "author": {
+        "id": 1125479
+      },
+      "writtenOn": "2017-11-04T03:19:31Z",
+      "side": 1,
+      "message": "You should return false if DisplayManager::IsInUnifiedMode() is true. Possibly mirroring too (until we support mirroring some displays and leaving others unmirrored ~~ Please check with weidongg).",
+      "range": {
+        "startLine": 1143,
+        "startChar": 0,
+        "endLine": 1146,
+        "endChar": 35
+      },
+      "revId": "fc4e191299cf6be3db93a2232ef439c723328fc6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9ba82cff_aded81c1",
+        "filename": "ash/accelerators/accelerator_table.h",
+        "patchSetId": 7
+      },
+      "lineNbr": 101,
+      "author": {
+        "id": 1125479
+      },
+      "writtenOn": "2017-11-04T03:19:31Z",
+      "side": 1,
+      "message": "Nit: Maybe below/above is better than down/up?",
+      "range": {
+        "startLine": 101,
+        "startChar": 2,
+        "endLine": 101,
+        "endChar": 27
+      },
+      "revId": "fc4e191299cf6be3db93a2232ef439c723328fc6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a360a584_58f96998",
+        "filename": "ash/display/display_move_window_controller.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 40,
+      "author": {
+        "id": 1125479
+      },
+      "writtenOn": "2017-11-04T03:19:31Z",
+      "side": 1,
+      "message": "Can you do \u003d default in the header instead?",
+      "range": {
+        "startLine": 38,
+        "startChar": 0,
+        "endLine": 40,
+        "endChar": 70
+      },
+      "revId": "fc4e191299cf6be3db93a2232ef439c723328fc6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ce7d45b6_6e0e7dbf",
+        "filename": "ash/display/display_move_window_controller.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 75,
+      "author": {
+        "id": 1125479
+      },
+      "writtenOn": "2017-11-04T03:19:31Z",
+      "side": 1,
+      "message": "This is kind of unreadable. I suggest the following:\n- Instead of indices of 0 and 1, define an internal enum class DisplayCandidateType {kInMovementDirection \u003d 0, kInCycledDirection \u003d 1};  or something like this.\n- Instead of the c-style arrays, use std::array or base::flat_map.\n\nYour code below will be more readable and more robust.",
+      "range": {
+        "startLine": 75,
+        "startChar": 0,
+        "endLine": 75,
+        "endChar": 35
+      },
+      "revId": "fc4e191299cf6be3db93a2232ef439c723328fc6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b25953fa_a522d06a",
+        "filename": "ash/display/display_move_window_controller.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 76,
+      "author": {
+        "id": 1125479
+      },
+      "writtenOn": "2017-11-04T03:19:31Z",
+      "side": 1,
+      "message": "Would be better if called `candidate_display`?",
+      "range": {
+        "startLine": 76,
+        "startChar": 19,
+        "endLine": 76,
+        "endChar": 26
+      },
+      "revId": "fc4e191299cf6be3db93a2232ef439c723328fc6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a58bc12d_e9462f11",
+        "filename": "ash/display/display_move_window_controller.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 81,
+      "author": {
+        "id": 1125479
+      },
+      "writtenOn": "2017-11-04T03:19:31Z",
+      "side": 1,
+      "message": "Add a comment here to explain what is this check is doing?",
+      "range": {
+        "startLine": 81,
+        "startChar": 6,
+        "endLine": 81,
+        "endChar": 15
+      },
+      "revId": "fc4e191299cf6be3db93a2232ef439c723328fc6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "89c23bea_3d74b4dd",
+        "filename": "ash/display/display_move_window_controller.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 86,
+      "author": {
+        "id": 1125479
+      },
+      "writtenOn": "2017-11-04T03:19:31Z",
+      "side": 1,
+      "message": "Declare these locals as consts since you don\u0027t change them after declarations.",
+      "range": {
+        "startLine": 86,
+        "startChar": 4,
+        "endLine": 86,
+        "endChar": 7
+      },
+      "revId": "fc4e191299cf6be3db93a2232ef439c723328fc6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "411ee670_36eae956",
+        "filename": "ash/display/display_move_window_controller.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 230,
+      "author": {
+        "id": 1125479
+      },
+      "writtenOn": "2017-11-04T03:19:31Z",
+      "side": 1,
+      "message": "This code duplication is not good at all. Please extract the common code into a single function  which takes the direction as a parameter.\n\nThe uncommon code can be extracted into functions that does the calculation based on the direction. For example:\n\n    int candidate_down_space \u003d\n        display.bounds().y() - origin_display.bounds().bottom();\n\nWould become:\n\n    const int candidate_space \u003d \n        GetSpaceBetweenDisplays(candidate_display, origin_display, direction);\n\nAnd so on.",
+      "range": {
+        "startLine": 230,
+        "startChar": 0,
+        "endLine": 230,
+        "endChar": 1
+      },
+      "revId": "fc4e191299cf6be3db93a2232ef439c723328fc6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e43bd717_6c03dfa0",
+        "filename": "ash/display/display_move_window_controller.h",
+        "patchSetId": 7
+      },
+      "lineNbr": 23,
+      "author": {
+        "id": 1125479
+      },
+      "writtenOn": "2017-11-04T03:19:31Z",
+      "side": 1,
+      "message": "Nit: The new style is kLeft, kUp, ..etc: http://google.github.io/styleguide/cppguide.html#Enumerator_Names",
+      "range": {
+        "startLine": 23,
+        "startChar": 25,
+        "endLine": 23,
+        "endChar": 46
+      },
+      "revId": "fc4e191299cf6be3db93a2232ef439c723328fc6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "646b545f_5a64ce13",
+        "filename": "internal_gyp",
+        "patchSetId": 7
+      },
+      "lineNbr": 1,
+      "author": {
+        "id": 1125479
+      },
+      "writtenOn": "2017-11-04T03:19:31Z",
+      "side": 1,
+      "message": "File committed by accident?",
+      "range": {
+        "startLine": 1,
+        "startChar": 0,
+        "endLine": 1,
+        "endChar": 1
+      },
+      "revId": "fc4e191299cf6be3db93a2232ef439c723328fc6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
