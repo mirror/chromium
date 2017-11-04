@@ -128,6 +128,8 @@ class ArcNavigationThrottle : public content::NavigationThrottle {
   NavigationThrottle::ThrottleCheckResult HandleRequest();
   void OnAppCandidatesReceived(
       std::vector<mojom::IntentHandlerInfoPtr> handlers);
+  bool FoundPreferredOrVerifiedArcApp(
+      std::vector<mojom::IntentHandlerInfoPtr>& handlers);
   void OnAppIconsReceived(
       std::vector<mojom::IntentHandlerInfoPtr> handlers,
       std::unique_ptr<ArcIntentHelperBridge::ActivityToIconsMap> icons);
