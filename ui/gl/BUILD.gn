@@ -179,6 +179,8 @@ component("gl") {
       "gl_image_egl.h",
       "gl_surface_egl.cc",
       "gl_surface_egl.h",
+      "gpu_fence.cc",
+      "gpu_fence.h",
     ]
 
     if (is_linux) {
