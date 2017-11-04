@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "b5f2f981_4e5ad5ba",
+        "filename": "media/cdm/cdm_adapter.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 1157,
+      "author": {
+        "id": 1002182
+      },
+      "writtenOn": "2017-11-04T00:16:27Z",
+      "side": 1,
+      "message": "We don\u0027t trust the CDM. So we should fail the request instead of DCHECK it.",
+      "revId": "5d5791d72614715db836e8576bc936ae0710d5ba",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "397839cf_9838bf3d",
+        "filename": "media/cdm/ppapi/ppapi_cdm_adapter.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 1203,
+      "author": {
+        "id": 1002182
+      },
+      "writtenOn": "2017-11-04T00:16:27Z",
+      "side": 1,
+      "message": "ditto",
+      "revId": "5d5791d72614715db836e8576bc936ae0710d5ba",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
