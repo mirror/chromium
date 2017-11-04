@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "1338243f_3c446c1c",
+        "filename": "components/autofill/core/browser/autofill_manager_unittest.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 438,
+      "author": {
+        "id": 1171614
+      },
+      "writtenOn": "2017-11-04T01:03:57Z",
+      "side": 1,
+      "message": "Nope!  Removed.  Also getting rid of the ones above this that essentially do the same thing and aren\u0027t overrides.",
+      "parentUuid": "954588d6_93b1a719",
+      "revId": "12b485c8a250f9f2f5f44ee2cfeb366f638308b1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "b7db16db_e2b09c22",
         "filename": "components/autofill/core/browser/autofill_manager_unittest.cc",
         "patchSetId": 1
@@ -33,6 +51,24 @@
       "revId": "12b485c8a250f9f2f5f44ee2cfeb366f638308b1",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2241dee5_92594e95",
+        "filename": "components/autofill/core/browser/autofill_manager_unittest.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 442,
+      "author": {
+        "id": 1171614
+      },
+      "writtenOn": "2017-11-04T01:03:57Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "b7db16db_e2b09c22",
+      "revId": "12b485c8a250f9f2f5f44ee2cfeb366f638308b1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -56,6 +92,30 @@
       "revId": "12b485c8a250f9f2f5f44ee2cfeb366f638308b1",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1cf5d23b_e921cd36",
+        "filename": "components/autofill/core/browser/autofill_manager_unittest.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 1253,
+      "author": {
+        "id": 1171614
+      },
+      "writtenOn": "2017-11-04T01:03:57Z",
+      "side": 1,
+      "message": "Opting not to; see other comments.",
+      "parentUuid": "f9565aeb_8b2da193",
+      "range": {
+        "startLine": 1253,
+        "startChar": 32,
+        "endLine": 1253,
+        "endChar": 49
+      },
+      "revId": "12b485c8a250f9f2f5f44ee2cfeb366f638308b1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -106,6 +166,30 @@
     },
     {
       "key": {
+        "uuid": "f91e4d36_51733c8f",
+        "filename": "components/autofill/core/browser/autofill_manager_unittest.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 2031,
+      "author": {
+        "id": 1171614
+      },
+      "writtenOn": "2017-11-04T01:03:57Z",
+      "side": 1,
+      "message": "Thanks Roger.  With no database being used by this fake class, I assume it\u0027s best to drop the std::moves, then.",
+      "parentUuid": "2e02eac7_fb59a68b",
+      "range": {
+        "startLine": 2031,
+        "startChar": 35,
+        "endLine": 2031,
+        "endChar": 46
+      },
+      "revId": "12b485c8a250f9f2f5f44ee2cfeb366f638308b1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "f7211296_3156c4a2",
         "filename": "components/autofill/core/browser/autofill_manager_unittest.cc",
         "patchSetId": 1
@@ -129,6 +213,30 @@
     },
     {
       "key": {
+        "uuid": "fe92bdb0_d2581a6b",
+        "filename": "components/autofill/core/browser/autofill_manager_unittest.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 2164,
+      "author": {
+        "id": 1171614
+      },
+      "writtenOn": "2017-11-04T01:03:57Z",
+      "side": 1,
+      "message": "Technically.  Looks like the original authors were referring collectively to these four functions.  I\u0027m not a fan of the confusion; I\u0027ll update it.",
+      "parentUuid": "f7211296_3156c4a2",
+      "range": {
+        "startLine": 2163,
+        "startChar": 24,
+        "endLine": 2164,
+        "endChar": 17
+      },
+      "revId": "12b485c8a250f9f2f5f44ee2cfeb366f638308b1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "b60c9cce_3d24e7e9",
         "filename": "components/autofill/core/browser/autofill_manager_unittest.cc",
         "patchSetId": 1
@@ -143,6 +251,24 @@
       "revId": "12b485c8a250f9f2f5f44ee2cfeb366f638308b1",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "11ea57ad_5382cc8a",
+        "filename": "components/autofill/core/browser/autofill_manager_unittest.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 2165,
+      "author": {
+        "id": 1171614
+      },
+      "writtenOn": "2017-11-04T01:03:57Z",
+      "side": 1,
+      "message": "The original CreateTestCreditCardsYearAndMonth(~) function also cleared.  The 4 cards in this instance means the 4 tests collectively, not the 3 default + 1 more...I\u0027ll update the comments to make it more clear what\u0027s going on.  (In the case of test #4, the comment was actually wrong...!)",
+      "parentUuid": "b60c9cce_3d24e7e9",
+      "revId": "12b485c8a250f9f2f5f44ee2cfeb366f638308b1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -169,6 +295,30 @@
     },
     {
       "key": {
+        "uuid": "4b7ca4b5_dd4f48e8",
+        "filename": "components/autofill/core/browser/autofill_manager_unittest.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 2517,
+      "author": {
+        "id": 1171614
+      },
+      "writtenOn": "2017-11-04T01:03:57Z",
+      "side": 1,
+      "message": "Gladly.  Done!",
+      "parentUuid": "4ca9ddfe_cad4b63f",
+      "range": {
+        "startLine": 2517,
+        "startChar": 13,
+        "endLine": 2517,
+        "endChar": 24
+      },
+      "revId": "12b485c8a250f9f2f5f44ee2cfeb366f638308b1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "dad732ad_23b5b135",
         "filename": "components/autofill/core/browser/autofill_manager_unittest.cc",
         "patchSetId": 1
@@ -180,6 +330,30 @@
       "writtenOn": "2017-11-03T00:08:09Z",
       "side": 1,
       "message": "We could set constants for the default values? so that they are easier to change.\n\nEx: kDefauldCardNumber \u003d \"4234567890654321\"",
+      "range": {
+        "startLine": 3557,
+        "startChar": 27,
+        "endLine": 3558,
+        "endChar": 43
+      },
+      "revId": "12b485c8a250f9f2f5f44ee2cfeb366f638308b1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "90f8db02_dd4f61d3",
+        "filename": "components/autofill/core/browser/autofill_manager_unittest.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 3558,
+      "author": {
+        "id": 1171614
+      },
+      "writtenOn": "2017-11-04T01:03:57Z",
+      "side": 1,
+      "message": "Opted away from this for the moment because I\u0027d like your feedback on it (and then maybe follow up as a separate CL).  On my team, we try to keep constants out of tests.  If you\u0027re going to be asserting that the number is 4234567890654321 or the suggestion shows up as \"***4321\", you should explicitly set it in the test so you don\u0027t have to scroll 3000 lines up and look at the value of the constant.  In most of these cases, it is indeed asserting on the suggestion label or the value, so the constant would be avoided.  Any remaining cases where the test doesn\u0027t care what the card number is would be fair game.  Thoughts?",
+      "parentUuid": "dad732ad_23b5b135",
       "range": {
         "startLine": 3557,
         "startChar": 27,
@@ -239,6 +413,30 @@
     },
     {
       "key": {
+        "uuid": "000adcb8_1f4233ba",
+        "filename": "components/autofill/core/browser/country_combobox_model_unittest.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 38,
+      "author": {
+        "id": 1171614
+      },
+      "writtenOn": "2017-11-04T01:03:57Z",
+      "side": 1,
+      "message": "Looks like it\u0027s necessary because MostCommonCountryCodeFromProfiles() calls IsAutofillEnabled() which checks the PrefService.  There are two options:\n\n1) Override IsAutofillEnabled() with a boolean the fake class returns, easily toggleable by the class itself.  Pros: Don\u0027t need PrefService anymore.  Cons: IsAutofillEnabled() no longer relies on the PrefService, so if a test ever DID want to check that a pref can change enabling Autofill, they\u0027d be out of luck.  They\u0027d have to either revert this or override it again, which defeats the purpose of having a single fake class...\n\n2) Keep PrefService and have anyone that needs to call IsAutofillEnabled() create one.\n\n3) [BONUS IDEA] I wanted to do #2 but have the fake class always set it up itself unless otherwise overridden, avoiding the need for users of the fake class to care about it.  But autofill::test::PrefServiceForTesting returns a std::unique_ptr, so the fake class would need to hold onto it so it doesn\u0027t immediately go out of scope in the constructor.  That might cause it to be out of sync with test classes that actually need their own pref service...so I guess I\u0027m stuck with #2 for now.",
+      "parentUuid": "cb0313d1_a7e4d427",
+      "range": {
+        "startLine": 38,
+        "startChar": 2,
+        "endLine": 38,
+        "endChar": 45
+      },
+      "revId": "12b485c8a250f9f2f5f44ee2cfeb366f638308b1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "0b20b2d1_27dc4a47",
         "filename": "components/autofill/core/browser/test_personal_data_manager.cc",
         "patchSetId": 1
@@ -262,6 +460,30 @@
     },
     {
       "key": {
+        "uuid": "e92a3218_0028b1ac",
+        "filename": "components/autofill/core/browser/test_personal_data_manager.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 43,
+      "author": {
+        "id": 1171614
+      },
+      "writtenOn": "2017-11-04T01:03:57Z",
+      "side": 1,
+      "message": "Unclear!  Looks like it was added 2 years ago in https://codereview.chromium.org/1432333002, with maybe a plan to update PersonalDataManager later (dunno if that happened).  It doesn\u0027t fail any tests when I remove it, so I\u0027ll do so.",
+      "parentUuid": "0b20b2d1_27dc4a47",
+      "range": {
+        "startLine": 43,
+        "startChar": 2,
+        "endLine": 43,
+        "endChar": 59
+      },
+      "revId": "12b485c8a250f9f2f5f44ee2cfeb366f638308b1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "1062568f_453604c3",
         "filename": "components/autofill/core/browser/test_personal_data_manager.cc",
         "patchSetId": 1
@@ -273,6 +495,30 @@
       "writtenOn": "2017-11-03T00:25:09Z",
       "side": 1,
       "message": "unh, web_profiles_ is a bunch of std::unique_ptr? odd.",
+      "range": {
+        "startLine": 44,
+        "startChar": 2,
+        "endLine": 44,
+        "endChar": 15
+      },
+      "revId": "12b485c8a250f9f2f5f44ee2cfeb366f638308b1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "434328d9_02f3485b",
+        "filename": "components/autofill/core/browser/test_personal_data_manager.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 44,
+      "author": {
+        "id": 1171614
+      },
+      "writtenOn": "2017-11-04T01:03:57Z",
+      "side": 1,
+      "message": "Surprise! :D\nhttps://cs.chromium.org/chromium/src/components/autofill/core/browser/personal_data_manager.h?l\u003d453\u0026rcl\u003d19b5af15457e3901f7ea3c5e7bff99ff54c5bd00",
+      "parentUuid": "1062568f_453604c3",
       "range": {
         "startLine": 44,
         "startChar": 2,
@@ -308,6 +554,30 @@
     },
     {
       "key": {
+        "uuid": "ec80274a_a6dc3a3d",
+        "filename": "components/autofill/core/browser/test_personal_data_manager.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 25,
+      "author": {
+        "id": 1171614
+      },
+      "writtenOn": "2017-11-04T01:03:57Z",
+      "side": 1,
+      "message": "Generally, yes.  They\u0027re overridden for the same reason any test class needs an overriding fake PersonalDataManager; to skip calls to uncreated databases or services, or to make things easier to toggle, etc.  I\u0027ll try to expand the comment a little.",
+      "parentUuid": "ed4ece08_26c66459",
+      "range": {
+        "startLine": 25,
+        "startChar": 35,
+        "endLine": 25,
+        "endChar": 0
+      },
+      "revId": "12b485c8a250f9f2f5f44ee2cfeb366f638308b1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "4327de27_41b9a8ed",
         "filename": "components/autofill/core/browser/test_personal_data_manager.h",
         "patchSetId": 1
@@ -322,6 +592,24 @@
       "revId": "12b485c8a250f9f2f5f44ee2cfeb366f638308b1",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ae7bfbee_6b604b70",
+        "filename": "components/autofill/core/browser/test_personal_data_manager.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 31,
+      "author": {
+        "id": 1171614
+      },
+      "writtenOn": "2017-11-04T01:03:57Z",
+      "side": 1,
+      "message": "Can\u0027t make it a plain AutofillProfile because the real PDM uses pass-by-reference, and this function has to override it exactly in order to take over its functionality.",
+      "parentUuid": "4327de27_41b9a8ed",
+      "revId": "12b485c8a250f9f2f5f44ee2cfeb366f638308b1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
