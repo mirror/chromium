@@ -65,9 +65,18 @@ void WebInterstitialImpl::DontProceed() {
     return;
   action_taken_ = true;
 
+  NavigationManager* nav_manager = GetWebStateImpl()->GetNavigationManager();
+  SSLStatus interstitial_ssl = nav_manager->GetVisibleItem()->GetSSL();
+
   // Clear the pending entry, since that's the page that's not being
   // proceeded to.
-  GetWebStateImpl()->GetNavigationManager()->DiscardNonCommittedItems();
+  nav_manager->DiscardNonCommittedItems();
+
+  // Signal visible security state change if necessary.
+  NavigationItem* new_item = nav_manager->GetVisibleItem();
+  if (!new_item || !new_item->GetSSL().Equals(interstitial_ssl)) {
+    GetWebStateImpl()->OnVisibleSecurityStateChange();
+  }
 
   Hide();
 
