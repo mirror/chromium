@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "261a067f_09c47766",
+        "filename": "ui/latency/latency_info.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 176,
+      "author": {
+        "id": 1115962
+      },
+      "writtenOn": "2017-11-04T18:54:20Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "2c01dd2a_221e20c7",
+      "range": {
+        "startLine": 176,
+        "startChar": 29,
+        "endLine": 176,
+        "endChar": 45
+      },
+      "revId": "ae7e9553f06340ed1428a9aa86bcb12962eee1ac",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "9471974e_13c0959e",
         "filename": "ui/latency/latency_info.h",
         "patchSetId": 1
@@ -119,6 +143,30 @@
     },
     {
       "key": {
+        "uuid": "ede504ad_6632ff3a",
+        "filename": "ui/latency/latency_tracker.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 39,
+      "author": {
+        "id": 1115962
+      },
+      "writtenOn": "2017-11-04T18:54:20Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "19b4c18c_b425f7cb",
+      "range": {
+        "startLine": 39,
+        "startChar": 14,
+        "endLine": 39,
+        "endChar": 24
+      },
+      "revId": "ae7e9553f06340ed1428a9aa86bcb12962eee1ac",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "9ee81794_fc3f5e19",
         "filename": "ui/latency/latency_tracker.cc",
         "patchSetId": 1
@@ -130,6 +178,30 @@
       "writtenOn": "2017-11-03T17:59:37Z",
       "side": 1,
       "message": "Doesn\u0027t this run on the GPU service side in viz? The UkmRecorder singleton is only in the browser process.",
+      "range": {
+        "startLine": 104,
+        "startChar": 35,
+        "endLine": 104,
+        "endChar": 58
+      },
+      "revId": "ae7e9553f06340ed1428a9aa86bcb12962eee1ac",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "da7b3fdb_7b272185",
+        "filename": "ui/latency/latency_tracker.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 104,
+      "author": {
+        "id": 1115962
+      },
+      "writtenOn": "2017-11-04T18:54:20Z",
+      "side": 1,
+      "message": "Once this CL lands, UkmRecorder will be available in the GPU process:\nhttps://chromium-review.googlesource.com/c/chromium/src/+/744544\nAlso, this is actually the base class for RWHLatencyTracker, so this code is used outside of viz too.",
+      "parentUuid": "9ee81794_fc3f5e19",
       "range": {
         "startLine": 104,
         "startChar": 35,
@@ -162,6 +234,30 @@
       "revId": "ae7e9553f06340ed1428a9aa86bcb12962eee1ac",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "01675e2f_b75f3ff0",
+        "filename": "ui/latency/latency_tracker.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 31,
+      "author": {
+        "id": 1115962
+      },
+      "writtenOn": "2017-11-04T18:54:20Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "3515422d_87a41d51",
+      "range": {
+        "startLine": 31,
+        "startChar": 2,
+        "endLine": 31,
+        "endChar": 37
+      },
+      "revId": "ae7e9553f06340ed1428a9aa86bcb12962eee1ac",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
