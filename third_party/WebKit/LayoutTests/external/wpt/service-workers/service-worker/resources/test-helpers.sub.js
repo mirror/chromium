@@ -8,9 +8,7 @@ function service_worker_unregister_and_register(test, url, scope) {
   return service_worker_unregister(test, scope)
     .then(function() {
         return navigator.serviceWorker.register(url, options);
-      })
-    .catch(unreached_rejection(test,
-                               'unregister and register should not fail'));
+      });
 }
 
 // This unregisters the registration that precisely matches scope. Use this
