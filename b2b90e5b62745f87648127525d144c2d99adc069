@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "a89d8160_d38013ea",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/IntentHandler.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 402,
+      "author": {
+        "id": 1116074
+      },
+      "writtenOn": "2017-11-04T00:22:39Z",
+      "side": 1,
+      "message": "Shouldn\u0027t we call this inside ChromeTabbedActivity#processViewIntent?\n\nThe context about browser actions seem a bit out of place here imho.",
+      "range": {
+        "startLine": 402,
+        "startChar": 18,
+        "endLine": 402,
+        "endChar": 38
+      },
+      "revId": "b2b90e5b62745f87648127525d144c2d99adc069",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a812a508_f7ecb6e5",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/browseractions/BrowserActionsService.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 223,
+      "author": {
+        "id": 1116074
+      },
+      "writtenOn": "2017-11-04T00:22:39Z",
+      "side": 1,
+      "message": "I would do\n\nif (hasBrowser.....()) {\nsTitleResId \u003d ....\n} else {\nsTitleResId \u003d ....\nRecordUserAction....\n}\n\nhere",
+      "range": {
+        "startLine": 223,
+        "startChar": 34,
+        "endLine": 223,
+        "endChar": 63
+      },
+      "revId": "b2b90e5b62745f87648127525d144c2d99adc069",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
