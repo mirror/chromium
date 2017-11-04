@@ -16,10 +16,6 @@ FrameConnectorDelegate::GetRootRenderWidgetHostView() {
   return nullptr;
 }
 
-gfx::Rect FrameConnectorDelegate::ChildFrameRect() {
-  return gfx::Rect();
-}
-
 gfx::PointF FrameConnectorDelegate::TransformPointToRootCoordSpace(
     const gfx::PointF& point,
     const viz::SurfaceId& surface_id) {

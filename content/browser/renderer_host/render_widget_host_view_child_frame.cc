@@ -242,7 +242,7 @@ bool RenderWidgetHostViewChildFrame::IsShowing() {
 gfx::Rect RenderWidgetHostViewChildFrame::GetViewBounds() const {
   gfx::Rect rect;
   if (frame_connector_) {
-    rect = frame_connector_->ChildFrameRect();
+    rect = frame_connector_->frame_rect_in_dip();
 
     RenderWidgetHostView* parent_view =
         frame_connector_->GetParentRenderWidgetHostView();
@@ -315,13 +315,9 @@ SkColor RenderWidgetHostViewChildFrame::background_color() const {
 }
 
 gfx::Size RenderWidgetHostViewChildFrame::GetPhysicalBackingSize() const {
-  gfx::Size size;
-  if (frame_connector_) {
-    size = gfx::ScaleToCeiledSize(
-        frame_connector_->ChildFrameRect().size(),
-        frame_connector_->screen_info().device_scale_factor);
-  }
-  return size;
+  if (frame_connector_)
+    return frame_connector_->frame_rect_in_pixels().size();
+  return gfx::Size();
 }
 
 void RenderWidgetHostViewChildFrame::InitAsPopup(
