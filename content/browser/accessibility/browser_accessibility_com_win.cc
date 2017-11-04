@@ -2298,6 +2298,9 @@ LONG BrowserAccessibilityComWin::FindBoundary(
         BrowserAccessibilityPositionInstance next_line =
             position->CreateNextLineStartPosition(
                 ui::AXBoundaryBehavior::StopAtAnchorBoundary);
+        LOG(ERROR) << "Next line start\n"
+                   << position->ToString() << '\n'
+                   << next_line->ToString();
         return next_line->text_offset();
       }
       case ui::BACKWARDS_DIRECTION: {
@@ -2306,6 +2309,9 @@ LONG BrowserAccessibilityComWin::FindBoundary(
         BrowserAccessibilityPositionInstance previous_line =
             position->CreatePreviousLineStartPosition(
                 ui::AXBoundaryBehavior::StopIfAlreadyAtBoundary);
+        LOG(ERROR) << "Previous line start\n"
+                   << position->ToString() << '\n'
+                   << previous_line->ToString();
         return previous_line->text_offset();
       }
     }
