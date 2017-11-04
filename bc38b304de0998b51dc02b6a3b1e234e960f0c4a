@@ -426,6 +426,24 @@
       "revId": "bc38b304de0998b51dc02b6a3b1e234e960f0c4a",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4d7e599d_c569b3cd",
+        "filename": "chrome/browser/chromeos/arc/arc_session_manager.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 769,
+      "author": {
+        "id": 1228980
+      },
+      "writtenOn": "2017-11-04T00:48:03Z",
+      "side": 1,
+      "message": "I figured it out. RequestDisable is called as you suggested. The issue is that since enable_requested_ is true, RequestDisable doesn\u0027t early out and call ASR-\u003eRequestStop(). Instead, it does the normal shutdown. The eventual call to ShutdownSession doesn\u0027t do anything when state_ \u003d\u003d NEGOTIATING_TERMS_OF_SERVICE so the mini-container is never killed. To fix this, I added the ASR-\u003eRequestStop call for that state AND when state_ \u003d\u003d CHECKING_ANDROID_MANAGEMENT for similar reasons.\n\nThis lead me to notice what I think is an existing bug. ASM::OnAndroidManagementChecked doesn\u0027t do anything when the check fails and arc is disabled. The state_ is stuck in CHECKING_ANDROID_MANAGEMENT when it should probably be set to STOPPED, and the preference should be set to false. I\u0027ll add the original author of the Android Management check to validate this.",
+      "parentUuid": "4c92248e_13b014f9",
+      "revId": "bc38b304de0998b51dc02b6a3b1e234e960f0c4a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
