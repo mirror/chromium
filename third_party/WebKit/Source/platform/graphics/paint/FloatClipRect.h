@@ -69,6 +69,10 @@ inline bool operator==(const FloatClipRect& a, const FloatClipRect& b) {
   return false;
 }
 
+inline bool operator!=(const FloatClipRect& a, const FloatClipRect& b) {
+  return !(a == b);
+}
+
 }  // namespace blink
 
 #endif  // FloatClipRect_h
