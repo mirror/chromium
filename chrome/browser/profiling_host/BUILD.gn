@@ -8,6 +8,8 @@ if (!is_android) {
 
     sources = [
       "memlog_browsertest.cc",
+      "profiling_test_driver.cc",
+      "profiling_test_driver.h",
     ]
 
     defines = [ "HAS_OUT_OF_PROC_TEST_RUNNER" ]
@@ -21,7 +23,40 @@ if (!is_android) {
     ]
   }
 } else {
+  import("//build/config/android/rules.gni")
+
   # In-process browser tests aren't supported on Android.
   group("profiling_browsertests") {
   }
+
+  generate_jni("jni_headers") {
+    sources = [
+      "../../android/javatests/src/org/chromium/chrome/browser/profiling_host/TestAndroidShim.java",
+      ]
+    jni_package = "chrome_profiling_host"
+  }
+
+  # chrome_public_apk [the target used to build the chrome apk], depends on the
+  # shared_library libchrome, which in turn depends on the source_set
+  # chrome_android-core, which depends on //chrome/browser. Thus, it's okay for
+  # this shared_library to also depends on //chrome/browser.
+  shared_library("libprofiling_browser_test_helpers") {
+    testonly = true
+    deps = [
+      "//base",
+#      "//chrome/android:libchrome",
+      ":jni_headers",
+      "//chrome/browser",
+#      "//content/public/browser",
+#      "//content/public/common",
+    ]
+
+    sources = [
+      "test_android_shim.cc",
+      "test_android_shim.h",
+      "profiling_test_driver.cc",
+      "profiling_test_driver.h",
+    ]
+  }
 }
+
