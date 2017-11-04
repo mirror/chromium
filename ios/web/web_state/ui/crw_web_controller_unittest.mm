@@ -22,7 +22,10 @@
 #import "ios/web/navigation/navigation_manager_impl.h"
 #import "ios/web/public/crw_navigation_item_storage.h"
 #import "ios/web/public/crw_session_storage.h"
+#import "ios/web/public/download/download_controller.h"
+#import "ios/web/public/download/download_task.h"
 #include "ios/web/public/referrer.h"
+#include "ios/web/public/test/fakes/fake_download_controller_observer.h"
 #import "ios/web/public/test/fakes/test_native_content.h"
 #import "ios/web/public/test/fakes/test_native_content_provider.h"
 #import "ios/web/public/test/fakes/test_web_client.h"
@@ -60,6 +63,18 @@
 #error "This file requires ARC support."
 #endif
 
+@interface CRWNavigationResponse : WKNavigationResponse
+@property(nonatomic, getter=isForMainFrame) BOOL forMainFrame;
+@property(nonatomic, copy) NSURLResponse* response;
+@property(nonatomic) BOOL canShowMIMEType;
+@end
+
+@implementation CRWNavigationResponse
+@synthesize forMainFrame = _forMainFrame;
+@synthesize response = _response;
+@synthesize canShowMIMEType = _canShowMIMEType;
+@end
+
 @interface CRWWebController (PrivateAPI)
 @property(nonatomic, readwrite) web::PageDisplayState pageDisplayState;
 @end
@@ -86,6 +101,8 @@ const char kInvalidURL[] = "http://%3";
 
 const char kTestURLString[] = "http://www.google.com/";
 const char kTestAppSpecificURL[] = "testwebui://test/";
+
+const char kTestMimeType[] = "application/vnd.test";
 
 // Returns true if the current device is a large iPhone (6 or 6+).
 bool IsIPhone6Or6Plus() {
@@ -611,6 +628,85 @@ TEST_F(CRWWebControllerJSExecutionTest, WindowIdMissmatch) {
   // Script is not evaluated because of windowID mismatch.
   ExecuteJavaScript(@"window.test2 = '2';");
   EXPECT_FALSE(ExecuteJavaScript(@"window.test2"));
+}
+
+class CRWWebControllerDownloadTest : public CRWWebControllerTest {
+ protected:
+  CRWWebControllerDownloadTest() : observer_(download_controller()) {}
+
+  // Calls webView:decidePolicyForNavigationResponse:decisionHandler: callback
+  // and waits for decision handler call. Returns false if decision handler call
+  // times out.
+  bool CallDecidePolicyForNavigationResponseWithResponse(
+      NSURLResponse* response) WARN_UNUSED_RESULT {
+    CRWNavigationResponse* navigation_response =
+        [[CRWNavigationResponse alloc] init];
+    navigation_response.response = response;
+
+    // Wait for decidePolicyForNavigationResponse: callback.
+    __block bool callback_called = false;
+    [navigation_delegate_ webView:mock_web_view_
+        decidePolicyForNavigationResponse:navigation_response
+                          decisionHandler:^(WKNavigationResponsePolicy policy) {
+                            callback_called = true;
+                          }];
+    return testing::WaitUntilConditionOrTimeout(1, ^{
+      return callback_called;
+    });
+  }
+
+  DownloadController* download_controller() {
+    return DownloadController::FromBrowserState(GetBrowserState());
+  }
+
+  FakeDownloadControllerObserver observer_;
+};
+
+// Tests that DownloadTask is created for NSURLResponse passed to
+// webView:decidePolicyForNavigationResponse:decisionHandler:
+TEST_F(CRWWebControllerDownloadTest, CreationWithNSURLResponse) {
+  // Simulate download response.
+  NSURLResponse* response =
+      [[NSURLResponse alloc] initWithURL:[NSURL URLWithString:@(kTestURLString)]
+                                MIMEType:@(kTestMimeType)
+                   expectedContentLength:10
+                        textEncodingName:nil];
+  ASSERT_TRUE(CallDecidePolicyForNavigationResponseWithResponse(response));
+
+  // Verify that download task was created.
+  ASSERT_EQ(1U, observer_.alive_download_tasks().size());
+  DownloadTask* task = observer_.alive_download_tasks()[0].second.get();
+  ASSERT_TRUE(task);
+  EXPECT_TRUE(task->GetIndentifier());
+  EXPECT_EQ(kTestURLString, task->GetOriginalUrl());
+  EXPECT_EQ(10, task->GetTotalBytes());
+  EXPECT_EQ("", task->GetContentDisposition());
+  EXPECT_EQ(kTestMimeType, task->GetMimeType());
+}
+
+// Tests that DownloadTask is created for NSURLResponse passed to
+// webView:decidePolicyForNavigationResponse:decisionHandler:
+TEST_F(CRWWebControllerDownloadTest, CreationWithNSHTTPURLResponse) {
+  // Simulate download response.
+  const char kContentDisposition[] = "attachment; filename=download.test";
+  NSURLResponse* response = [[NSHTTPURLResponse alloc]
+       initWithURL:[NSURL URLWithString:@(kTestURLString)]
+        statusCode:200
+       HTTPVersion:nil
+      headerFields:@{
+        @"content-disposition" : @(kContentDisposition),
+      }];
+  ASSERT_TRUE(CallDecidePolicyForNavigationResponseWithResponse(response));
+
+  // Verify that download task was created.
+  ASSERT_EQ(1U, observer_.alive_download_tasks().size());
+  DownloadTask* task = observer_.alive_download_tasks()[0].second.get();
+  ASSERT_TRUE(task);
+  EXPECT_TRUE(task->GetIndentifier());
+  EXPECT_EQ(kTestURLString, task->GetOriginalUrl());
+  EXPECT_EQ(-1, task->GetTotalBytes());
+  EXPECT_EQ(kContentDisposition, task->GetContentDisposition());
+  EXPECT_EQ("", task->GetMimeType());
 }
 
 // Tests |currentURLWithTrustLevel:| method.
