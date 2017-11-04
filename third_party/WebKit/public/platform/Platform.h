@@ -62,7 +62,6 @@
 #include "mojo/public/cpp/system/data_pipe.h"
 #include "mojo/public/cpp/system/message_pipe.h"
 #include "public/platform/scheduler/single_thread_task_runner.h"
-#include "third_party/WebKit/common/feature_policy/feature_policy.h"
 
 namespace device {
 class Gamepads;
@@ -719,24 +718,6 @@ class BLINK_PLATFORM_EXPORT Platform {
   // tools/v8_context_snapshot/v8_context_snapshot_generator is running (which
   // runs during Chromium's build step).
   virtual bool IsTakingV8ContextSnapshot() { return false; }
-
-  // Feature Policy -----------------------------------------------------
-
-  // Create a new feature policy object for a document, given its parent
-  // document's policy (may be nullptr), its container policy (may be empty),
-  // the header policy with which it was delivered (may be empty), and the
-  // document's origin.
-  virtual std::unique_ptr<FeaturePolicy> CreateFeaturePolicy(
-      const FeaturePolicy* parent_policy,
-      const ParsedFeaturePolicy& container_policy,
-      const ParsedFeaturePolicy& policy_header,
-      const WebSecurityOrigin&);
-
-  // Create a new feature policy for a document whose origin has changed, given
-  // the previous policy object and the new origin.
-  virtual std::unique_ptr<FeaturePolicy> DuplicateFeaturePolicyWithOrigin(
-      const FeaturePolicy&,
-      const WebSecurityOrigin&);
 
  protected:
   Platform();
