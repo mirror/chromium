@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "fade8227_57da4052",
+        "filename": "gpu/command_buffer/service/gles2_cmd_decoder.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 12957,
+      "author": {
+        "id": 1003154
+      },
+      "writtenOn": "2017-11-04T00:45:16Z",
+      "side": 1,
+      "message": "It seems to be we need to reset these params and recover them afterwards regardless if a UNPACK_BUFFER is bound or not, because the above computed size doesn\u0027t take into consideration these params.",
+      "range": {
+        "startLine": 12957,
+        "startChar": 13,
+        "endLine": 12957,
+        "endChar": 28
+      },
+      "revId": "ab3622bcf3caaf25d0f3176ea840307762cf5641",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
