@@ -70,6 +70,30 @@
       "revId": "f00f74feef559540a7ff68a7da56200b86ba7eea",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3841940e_83854be5",
+        "filename": "ash/display/touch_calibrator_controller.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 26,
+      "author": {
+        "id": 1180289
+      },
+      "writtenOn": "2017-11-04T01:16:37Z",
+      "side": 1,
+      "message": "\u003e Always fails in tests, fails when running on linux desktop, or fails on device?\n\nThis always fails in test for --mash and --mus. \n\n\u003e Regardless of what you do with the tests, I\u0027d suggest making sure that in production your code is actually getting valid touchscreen target displays under --mus.\n\nI am not sure how to test for mus/mash on device. Is there BUILD flag i need to set?\n\n\u003e  However, in ash_unittests we don\u0027t talk to that. I suspect TouchTransformSetterMus just early exits in tests.\n\nI believe this is what is happening. TouchTransformSetterMus returns early if the touch_device_server_ is not bound.\n\n\u003e install an observer to track when they become available.\n\nIs there an example where this has been implemented that I can look at?",
+      "parentUuid": "7fbbfb21_7fcc2c89",
+      "range": {
+        "startLine": 25,
+        "startChar": 2,
+        "endLine": 26,
+        "endChar": 52
+      },
+      "revId": "f00f74feef559540a7ff68a7da56200b86ba7eea",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
