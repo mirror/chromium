@@ -27,6 +27,7 @@
 #include "core/dom/SecurityContext.h"
 
 #include "core/frame/csp/ContentSecurityPolicy.h"
+#include "platform/feature_policy/FeaturePolicy.h"
 #include "platform/runtime_enabled_features.h"
 #include "platform/weborigin/SecurityOrigin.h"
 #include "public/platform/Platform.h"
@@ -107,15 +108,15 @@ void SecurityContext::InitializeFeaturePolicy(
     const ParsedFeaturePolicy& container_policy,
     const FeaturePolicy* parent_feature_policy) {
   WebSecurityOrigin origin = WebSecurityOrigin(security_origin_);
-  feature_policy_ = Platform::Current()->CreateFeaturePolicy(
-      parent_feature_policy, container_policy, parsed_header, origin);
+  feature_policy_ = FeaturePolicy::CreateFromParentPolicy(
+      parent_feature_policy, container_policy, security_origin_->ToUrlOrigin());
 }
 
 void SecurityContext::UpdateFeaturePolicyOrigin() {
   if (!feature_policy_)
     return;
-  feature_policy_ = Platform::Current()->DuplicateFeaturePolicyWithOrigin(
-      *feature_policy_, WebSecurityOrigin(security_origin_));
+  feature_policy_ = FeaturePolicy::CreateFromPolicyWithOrigin(
+      *feature_policy_, security_origin_->ToUrlOrigin());
 }
 
 }  // namespace blink
