@@ -80290,6 +80290,9 @@ http://cs/file:chrome/histograms.xml - but prefer this file for new entries.
 </histogram>
 
 <histogram name="SoftwareReporter.Cleaner.HasRebooted" enum="BooleanRebooted">
+  <obsolete>
+    Removed on 2017-11-01.
+  </obsolete>
   <owner>mad@chromium.org</owner>
   <summary>
     Whether a reboot happened since the software reporter cleaner tool has
