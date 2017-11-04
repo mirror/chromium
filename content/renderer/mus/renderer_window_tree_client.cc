@@ -103,7 +103,7 @@ RendererWindowTreeClient::CreateMusEmbeddedFrame(
     MusEmbeddedFrameDelegate* delegate,
     const base::UnguessableToken& token) {
   std::unique_ptr<MusEmbeddedFrame> frame = base::WrapUnique<MusEmbeddedFrame>(
-      new MusEmbeddedFrame(this, delegate, ++next_window_id_, token));
+      new MusEmbeddedFrame(this, delegate, next_window_id_++, token));
   embedded_frames_.insert(frame.get());
   return frame;
 }
@@ -172,6 +172,7 @@ void RendererWindowTreeClient::OnEmbed(
     bool drawn,
     const base::Optional<viz::LocalSurfaceId>& local_surface_id) {
   root_window_id_ = root->window_id;
+  next_window_id_ = root_window_id_ + 1;
   tree_ = std::move(tree);
   tree_->SetWindowVisibility(GetAndAdvanceNextChangeId(), root_window_id_,
                              visible_);

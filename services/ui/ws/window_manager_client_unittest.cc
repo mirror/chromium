@@ -390,7 +390,7 @@ TEST_F(WindowServerTest, Embed) {
   EXPECT_EQ(1u, embed_result->window_tree_client->GetRoots().size());
   EXPECT_EQ(embed_root, GetFirstRoot(embed_result->window_tree_client.get()));
   EXPECT_EQ(LoWord(server_id(window)), LoWord(server_id(embed_root)));
-  EXPECT_NE(0u, server_id(embed_root) >> 16);
+  EXPECT_EQ(0u, server_id(embed_root) >> 16);
   EXPECT_EQ(nullptr, embed_root->parent());
   EXPECT_TRUE(embed_root->children().empty());
 }
@@ -404,7 +404,7 @@ TEST_F(WindowServerTest, EmbeddedDoesntSeeChild) {
   ASSERT_TRUE(embed_result->IsValid());
   aura::Window* embed_root = embed_result->window_tree_host->window();
   EXPECT_EQ(LoWord(server_id(window)), LoWord(server_id(embed_root)));
-  EXPECT_NE(0u, server_id(embed_root) >> 16);
+  EXPECT_EQ(0u, server_id(embed_root) >> 16);
   EXPECT_EQ(nullptr, embed_root->parent());
   EXPECT_TRUE(embed_root->children().empty());
 }

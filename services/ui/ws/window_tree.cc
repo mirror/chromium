@@ -1572,8 +1572,8 @@ void WindowTree::NewTopLevelWindow(
 
   display_root->window_manager_state()
       ->window_tree()
-      ->window_manager_internal_->WmCreateTopLevelWindow(wm_change_id, id_,
-                                                         transport_properties);
+      ->window_manager_internal_->WmCreateTopLevelWindow(
+          wm_change_id, id_, LoWord(transport_window_id), transport_properties);
 }
 
 void WindowTree::DeleteWindow(uint32_t change_id, Id transport_window_id) {
@@ -2623,8 +2623,11 @@ void WindowTree::WmSetCursorTouchVisible(bool enabled) {
   window_manager_state_->SetCursorTouchVisible(enabled);
 }
 
-void WindowTree::OnWmCreatedTopLevelWindow(uint32_t change_id,
-                                           Id transport_window_id) {
+void WindowTree::OnWmCreatedTopLevelWindow(
+    uint32_t change_id,
+    Id transport_window_id,
+    ClientSpecificId requesting_client_id,
+    ClientSpecificId requesting_window_id) {
   ServerWindow* window =
       GetWindowByClientId(MakeClientWindowId(transport_window_id));
   if (window && window->id().client_id != id_) {
@@ -2633,8 +2636,8 @@ void WindowTree::OnWmCreatedTopLevelWindow(uint32_t change_id,
     window = nullptr;
   }
   if (window) {
-    client()->OnFrameSinkIdAllocated(transport_window_id,
-                                     window->frame_sink_id());
+    window->UpdateFrameSinkId(
+        ClientWindowId(requesting_client_id, requesting_window_id));
   }
   window_server_->WindowManagerCreatedTopLevelWindow(this, change_id, window);
 }
