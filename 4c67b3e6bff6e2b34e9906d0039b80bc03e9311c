@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "e5bded12_397d405e",
+        "filename": "chrome/install_static/install_details.h",
+        "patchSetId": 23
+      },
+      "lineNbr": 110,
+      "author": {
+        "id": 1228990
+      },
+      "writtenOn": "2017-11-04T04:30:26Z",
+      "side": 1,
+      "message": "Sorry I forgot to remove const from these methods/variables after converting to CLSID. Done.",
+      "parentUuid": "bb938305_dbd33eba",
+      "revId": "4c67b3e6bff6e2b34e9906d0039b80bc03e9311c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "5e7c9c60_1e3ae98a",
         "filename": "chrome/install_static/install_modes_unittest.cc",
         "patchSetId": 23
@@ -30,6 +48,24 @@
       "writtenOn": "2017-11-03T11:30:33Z",
       "side": 1,
       "message": "is this needed? if so, move down above ctype.h -- windows.h is by itself here because it should generally be included before other window-ish headers.",
+      "revId": "4c67b3e6bff6e2b34e9906d0039b80bc03e9311c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "931f403d_920ec84c",
+        "filename": "chrome/install_static/install_modes_unittest.cc",
+        "patchSetId": 23
+      },
+      "lineNbr": 7,
+      "author": {
+        "id": 1228990
+      },
+      "writtenOn": "2017-11-04T04:30:26Z",
+      "side": 1,
+      "message": "I fixed it to cguid.h for the definition of GUID_NULL (which is then used for CLSID_NULL). Position is fixed too.",
+      "parentUuid": "5e7c9c60_1e3ae98a",
       "revId": "4c67b3e6bff6e2b34e9906d0039b80bc03e9311c",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -50,6 +86,24 @@
       "revId": "4c67b3e6bff6e2b34e9906d0039b80bc03e9311c",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9e575c85_a62718ae",
+        "filename": "chrome/install_static/install_util.cc",
+        "patchSetId": 23
+      },
+      "lineNbr": 7,
+      "author": {
+        "id": 1228990
+      },
+      "writtenOn": "2017-11-04T04:30:26Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "5a07dd99_d746bf76",
+      "revId": "4c67b3e6bff6e2b34e9906d0039b80bc03e9311c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -76,6 +130,30 @@
     },
     {
       "key": {
+        "uuid": "cde63a33_620c8cdc",
+        "filename": "chrome/install_static/install_util_unittest.cc",
+        "patchSetId": 23
+      },
+      "lineNbr": 461,
+      "author": {
+        "id": 1228990
+      },
+      "writtenOn": "2017-11-04T04:30:26Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "cedfa1b8_0dcec448",
+      "range": {
+        "startLine": 461,
+        "startChar": 19,
+        "endLine": 461,
+        "endChar": 24
+      },
+      "revId": "4c67b3e6bff6e2b34e9906d0039b80bc03e9311c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "1a03055b_0896b6d6",
         "filename": "chrome/install_static/install_util_unittest.cc",
         "patchSetId": 23
@@ -87,6 +165,24 @@
       "writtenOn": "2017-11-03T11:30:33Z",
       "side": 1,
       "message": "copy-n-paste gone awry. :-)",
+      "revId": "4c67b3e6bff6e2b34e9906d0039b80bc03e9311c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "374d54d7_ec49698c",
+        "filename": "chrome/install_static/install_util_unittest.cc",
+        "patchSetId": 23
+      },
+      "lineNbr": 484,
+      "author": {
+        "id": 1228990
+      },
+      "writtenOn": "2017-11-04T04:30:26Z",
+      "side": 1,
+      "message": "Oops... Done.",
+      "parentUuid": "1a03055b_0896b6d6",
       "revId": "4c67b3e6bff6e2b34e9906d0039b80bc03e9311c",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -113,6 +209,30 @@
       "revId": "4c67b3e6bff6e2b34e9906d0039b80bc03e9311c",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "906720ea_b4976441",
+        "filename": "chrome/install_static/install_util_unittest.cc",
+        "patchSetId": 23
+      },
+      "lineNbr": 492,
+      "author": {
+        "id": 1228990
+      },
+      "writtenOn": "2017-11-04T04:30:26Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "ed3759b7_346ff9c4",
+      "range": {
+        "startLine": 492,
+        "startChar": 19,
+        "endLine": 492,
+        "endChar": 24
+      },
+      "revId": "4c67b3e6bff6e2b34e9906d0039b80bc03e9311c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -150,6 +270,24 @@
       "writtenOn": "2017-11-03T11:30:33Z",
       "side": 1,
       "message": "is this needed?",
+      "revId": "4c67b3e6bff6e2b34e9906d0039b80bc03e9311c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7e480f1c_9035c5ed",
+        "filename": "chrome/installer/util/shell_util_unittest.cc",
+        "patchSetId": 23
+      },
+      "lineNbr": 7,
+      "author": {
+        "id": 1228990
+      },
+      "writtenOn": "2017-11-04T04:30:26Z",
+      "side": 1,
+      "message": "I fixed it to cguid.h for the definition of GUID_NULL, which is then used for CLSID_NULL.",
+      "parentUuid": "23b6de96_4ca204e7",
       "revId": "4c67b3e6bff6e2b34e9906d0039b80bc03e9311c",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
