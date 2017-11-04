@@ -94,8 +94,9 @@
   [self showAlert:@"showSyncSettingsFromViewController:"];
 }
 
-- (void)showSyncPassphraseSettings {
-  [self showAlert:@"showSyncPassphraseSettings"];
+- (void)showSyncPassphraseSettingsFromViewController:
+    (UIViewController*)baseViewController {
+  [self showAlert:@"showSyncPassphraseSettingsFromViewController:"];
 }
 
 #pragma mark - Private

@@ -527,7 +527,11 @@ initWithRootViewController:(UIViewController*)rootViewController
   [self pushViewController:controller animated:YES];
 }
 
-- (void)showSyncPassphraseSettings {
+- (void)showSyncPassphraseSettingsFromViewController:
+    (UIViewController*)baseViewController {
+  // |baseViewController| is intentionally unused because
+  // this navigation controller is already presented.
+  DCHECK_EQ(nil, baseViewController);
   SyncEncryptionPassphraseCollectionViewController* controller =
       [[SyncEncryptionPassphraseCollectionViewController alloc]
           initWithBrowserState:mainBrowserState_];
