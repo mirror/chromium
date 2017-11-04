@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "5bc420d5_cc7dab3b",
+        "filename": "chromeos/network/client_cert_resolver.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 347,
+      "author": {
+        "id": 1126309
+      },
+      "writtenOn": "2017-11-04T00:27:25Z",
+      "side": 1,
+      "message": "nit: Perhaps add a sequence DCHECK here too?",
+      "revId": "14dad2f3b29fa64668aec03541843388454b986d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
