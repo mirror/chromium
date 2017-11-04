@@ -12,6 +12,7 @@
 #include "base/strings/string_util.h"
 #include "base/strings/utf_string_conversions.h"
 #include "media/base/cdm_config.h"
+#include "media/base/key_system_names.h"
 #include "media/base/key_systems.h"
 #include "media/base/media_permission.h"
 #include "media/base/mime_util.h"
@@ -856,6 +857,7 @@ void KeySystemConfigSelector::SelectConfig(
     const blink::WebVector<blink::WebMediaKeySystemConfiguration>&
         candidate_configurations,
     const blink::WebSecurityOrigin& security_origin,
+    bool is_encrypted_media_enabled,
     base::Callback<void(const blink::WebMediaKeySystemConfiguration&,
                         const CdmConfig&)> succeeded_cb,
     base::Callback<void(const blink::WebString&)> not_supported_cb) {
@@ -872,6 +874,17 @@ void KeySystemConfigSelector::SelectConfig(
 
   std::string key_system_ascii = key_system.Ascii();
   if (!key_systems_->IsSupportedKeySystem(key_system_ascii)) {
+    not_supported_cb.Run(kUnsupportedKeySystemOrConfigMessage);
+    return;
+  }
+
+  // According to Section 9 "Common Key Systems": All user agents MUST support
+  // the common key systems described in this section.
+  //   9.1 Clear Key
+  //
+  // Therefore, always support Clear Key key system and only check settings for
+  // other key systems.
+  if (!IsClearKey(key_system_ascii) && !is_encrypted_media_enabled) {
     not_supported_cb.Run(kUnsupportedKeySystemOrConfigMessage);
     return;
   }

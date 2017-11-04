@@ -26,6 +26,7 @@ class EncryptedMediaRequest
   SupportedConfigurations() const = 0;
 
   virtual SecurityOrigin* GetSecurityOrigin() const = 0;
+  virtual bool IsEncryptedMediaEnabled() const = 0;
 
   virtual void RequestSucceeded(WebContentDecryptionModuleAccess*) = 0;
   virtual void RequestNotSupported(const WebString& error_message) = 0;
