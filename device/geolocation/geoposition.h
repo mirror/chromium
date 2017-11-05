@@ -16,6 +16,10 @@
 
 namespace device {
 
+namespace mojom {
+class Geoposition;
+}
+
 struct DEVICE_GEOLOCATION_EXPORT Geoposition {
  public:
   // These values follow the W3C geolocation specification and can be returned
@@ -63,6 +67,12 @@ struct DEVICE_GEOLOCATION_EXPORT Geoposition {
   // Human-readable error message.
   std::string error_message;
 };
+
+// Converts a device::Geoposition into a device::mojom::Geoposition by filling
+// in the fields of the specified |mojom_geoposition| from |position|.
+void DEVICE_GEOLOCATION_EXPORT
+FillMojomGeoposition(const Geoposition& position,
+                     mojom::Geoposition* mojom_geoposition);
 
 }  // namespace device
 
