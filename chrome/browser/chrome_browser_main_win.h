@@ -11,6 +11,7 @@
 
 #include "base/files/file_path_watcher.h"
 #include "base/macros.h"
+#include "base/win/com_object_register.h"
 #include "chrome/browser/chrome_browser_main.h"
 
 class ModuleWatcher;
@@ -18,6 +19,12 @@ class ModuleWatcher;
 namespace base {
 class CommandLine;
 }
+
+namespace base {
+namespace win {
+class ComObjectRegister;
+}
+}  // namespace base
 
 // Handle uninstallation when given the appropriate the command-line switch.
 // If |chrome_still_running| is true a modal dialog will be shown asking the
@@ -34,7 +41,9 @@ class ChromeBrowserMainPartsWin : public ChromeBrowserMainParts {
   // BrowserParts overrides.
   void ToolkitInitialized() override;
   void PreMainMessageLoopStart() override;
+  void PostMainMessageLoopStart() override;
   int PreCreateThreads() override;
+  void PostMainMessageLoopRun() override;
 
   // ChromeBrowserMainParts overrides.
   void ShowMissingLocaleMessageBox() override;
@@ -73,6 +82,10 @@ class ChromeBrowserMainPartsWin : public ChromeBrowserMainParts {
  private:
   // Watches module load events and forwards them to the ModuleDatabase.
   std::unique_ptr<ModuleWatcher> module_watcher_;
+
+  // Registers the toast activator COM object.
+  std::unique_ptr<base::win::ComObjectRegister>
+      notification_com_object_register_;
 
   DISALLOW_COPY_AND_ASSIGN(ChromeBrowserMainPartsWin);
 };

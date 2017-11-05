@@ -4,10 +4,11 @@
 
 #include "chrome/browser/chrome_browser_main_win.h"
 
+#include <windows.h>
+
 #include <shellapi.h>
 #include <stddef.h>
 #include <stdint.h>
-#include <windows.h>
 
 #include <algorithm>
 #include <memory>
@@ -33,7 +34,9 @@
 #include "base/version.h"
 #include "base/win/pe_image.h"
 #include "base/win/registry.h"
+#include "base/win/scoped_winrt_initializer.h"
 #include "base/win/win_util.h"
+#include "base/win/windows_version.h"
 #include "base/win/wrapped_window_proc.h"
 #include "chrome/browser/browser_process.h"
 #include "chrome/browser/conflicts/enumerate_input_method_editors_win.h"
@@ -61,6 +64,7 @@
 #include "chrome/common/conflicts/module_watcher_win.h"
 #include "chrome/common/crash_keys.h"
 #include "chrome/common/env_vars.h"
+#include "chrome/common/features.h"
 #include "chrome/grit/chromium_strings.h"
 #include "chrome/grit/generated_resources.h"
 #include "chrome/install_static/install_details.h"
@@ -393,6 +397,36 @@ void MaybePostSettingsResetPrompt() {
   }
 }
 
+// For the app to be able to be activated when it's not running, it needs to
+// register a COM server with the OS and register the CLSID of that COM server
+// on the shortcut installed on Start Menu.
+// https://msdn.microsoft.com/en-us/library/windows/desktop/mt643715(v=vs.85).aspx
+void PrepareForNativeNotification(std::unique_ptr<base::win::ComObjectRegister>*
+                                      notificiation_com_object_register) {
+  base::win::ScopedWinrtInitializer scoped_winrt_initializer;
+  if (!scoped_winrt_initializer.Succeeded())
+    return;
+
+  notificiation_com_object_register->reset(new base::win::ComObjectRegister());
+  (*notificiation_com_object_register)->Run();
+}
+
+// Starts a thread to do preparing work for Windows 10 native notification
+// features.
+void StartNativeNotificationThread(
+    std::unique_ptr<base::win::ComObjectRegister>*
+        notificiation_com_object_register) {
+  DCHECK_CURRENTLY_ON(content::BrowserThread::UI);
+
+  base::Thread notification_thread("Native Notification Thread");
+  notification_thread.init_com_with_mta(true);
+  notification_thread.Start();
+  notification_thread.task_runner()->PostTask(
+      FROM_HERE,
+      base::Bind(&PrepareForNativeNotification,
+                 base::Unretained(notificiation_com_object_register)));
+}
+
 }  // namespace
 
 int DoUninstallTasks(bool chrome_still_running) {
@@ -468,9 +502,27 @@ void ChromeBrowserMainPartsWin::PreMainMessageLoopStart() {
   }
 }
 
+void ChromeBrowserMainPartsWin::PostMainMessageLoopStart() {
+#if BUILDFLAG(ENABLE_NATIVE_NOTIFICATIONS)
+  // Post a task to the main thread to trigger creation of a new thread, which
+  // is used to prepare for Windows 10 native notification features.
+  // The task is delay-posted to minimize the impact on startup time.
+  if (base::win::GetVersion() >= base::win::VERSION_WIN10_RS1 &&
+      base::FeatureList::IsEnabled(features::kNativeNotifications)) {
+    notification_com_object_register_.reset(new base::win::ComObjectRegister());
+    content::BrowserThread::PostDelayedTask(
+        content::BrowserThread::UI, FROM_HERE,
+        base::Bind(&StartNativeNotificationThread,
+                   base::Unretained(&notification_com_object_register_)),
+        base::TimeDelta::FromSeconds(3));
+#endif  // BUILDFLAG(ENABLE_NATIVE_NOTIFICATIONS)
+  }
+}
+
 int ChromeBrowserMainPartsWin::PreCreateThreads() {
-  // Record whether the machine is enterprise managed in a crash key. This will
-  // be used to better identify whether crashes are from enterprise users.
+  // Record whether the machine is enterprise managed in a crash key. This
+  // will be used to better identify whether crashes are from enterprise
+  // users.
   base::debug::SetCrashKeyValue(
       crash_keys::kIsEnterpriseManaged,
       base::win::IsEnterpriseManaged() ? "yes" : "no");
@@ -486,6 +538,10 @@ int ChromeBrowserMainPartsWin::PreCreateThreads() {
   return ChromeBrowserMainParts::PreCreateThreads();
 }
 
+void ChromeBrowserMainPartsWin::PostMainMessageLoopRun() {
+  notification_com_object_register_.reset();
+}
+
 void ChromeBrowserMainPartsWin::ShowMissingLocaleMessageBox() {
   ui::MessageBox(NULL,
                  base::ASCIIToUTF16(chrome_browser::kMissingLocaleDataMessage),
@@ -496,8 +552,8 @@ void ChromeBrowserMainPartsWin::ShowMissingLocaleMessageBox() {
 void ChromeBrowserMainPartsWin::PostProfileInit() {
   ChromeBrowserMainParts::PostProfileInit();
 
-  // Create the module database and hook up the in-process module watcher. This
-  // needs to be done before any child processes are initialized as the
+  // Create the module database and hook up the in-process module watcher.
+  // This needs to be done before any child processes are initialized as the
   // ModuleDatabase is an endpoint for IPC from child processes.
   if (base::FeatureList::IsEnabled(features::kModuleDatabase))
     SetupModuleDatabase(&module_watcher_);
@@ -506,8 +562,8 @@ void ChromeBrowserMainPartsWin::PostProfileInit() {
 void ChromeBrowserMainPartsWin::PostBrowserStart() {
   ChromeBrowserMainParts::PostBrowserStart();
 
-  UMA_HISTOGRAM_BOOLEAN("Windows.Tablet",
-      base::win::IsTabletDevice(nullptr, ui::GetHiddenWindow()));
+  UMA_HISTOGRAM_BOOLEAN("Windows.Tablet", base::win::IsTabletDevice(
+                                              nullptr, ui::GetHiddenWindow()));
 
   // Set up a task to verify installed modules in the current process.
   // TODO(gab): Use base::PostTaskWithTraits() directly when we're convinced
@@ -524,8 +580,8 @@ void ChromeBrowserMainPartsWin::PostBrowserStart() {
   InitializeChromeElf();
 
   // Reset settings for the current profile if it's tagged to be reset after a
-  // complete run of the Chrome Cleanup tool. If post-cleanup settings reset is
-  // enabled, we delay checks for settings reset prompt until the scheduled
+  // complete run of the Chrome Cleanup tool. If post-cleanup settings reset
+  // is enabled, we delay checks for settings reset prompt until the scheduled
   // reset is finished.
   if (safe_browsing::PostCleanupSettingsResetter::IsEnabled()) {
     // Using last opened profiles, because we want to find reset the profile
@@ -542,11 +598,9 @@ void ChromeBrowserMainPartsWin::PostBrowserStart() {
 
   // Record UMA data about whether the fault-tolerant heap is enabled.
   // Use a delayed task to minimize the impact on startup time.
-  content::BrowserThread::PostDelayedTask(
-      content::BrowserThread::UI,
-      FROM_HERE,
-      base::Bind(&DetectFaultTolerantHeap),
-      base::TimeDelta::FromMinutes(1));
+  content::BrowserThread::PostDelayedTask(content::BrowserThread::UI, FROM_HERE,
+                                          base::Bind(&DetectFaultTolerantHeap),
+                                          base::TimeDelta::FromMinutes(1));
 }
 
 // static
@@ -567,8 +621,8 @@ void ChromeBrowserMainPartsWin::PrepareRestartOnCrashEnviroment(
     return;
 
   // The encoding we use for the info is "title|context|direction" where
-  // direction is either env_vars::kRtlLocale or env_vars::kLtrLocale depending
-  // on the current locale.
+  // direction is either env_vars::kRtlLocale or env_vars::kLtrLocale
+  // depending on the current locale.
   base::string16 dlg_strings(
       l10n_util::GetStringUTF16(IDS_CRASH_RECOVERY_TITLE));
   dlg_strings.push_back('|');
@@ -581,116 +635,118 @@ void ChromeBrowserMainPartsWin::PrepareRestartOnCrashEnviroment(
       base::i18n::IsRTL() ? env_vars::kRtlLocale : env_vars::kLtrLocale));
 
   env->SetVar(env_vars::kRestartInfo, base::UTF16ToUTF8(dlg_strings));
-}
-
-// static
-void ChromeBrowserMainPartsWin::RegisterApplicationRestart(
-    const base::CommandLine& parsed_command_line) {
-  base::ScopedNativeLibrary library(base::FilePath(L"kernel32.dll"));
-  // Get the function pointer for RegisterApplicationRestart.
-  RegisterApplicationRestartProc register_application_restart =
-      reinterpret_cast<RegisterApplicationRestartProc>(
-          library.GetFunctionPointer("RegisterApplicationRestart"));
-  if (!register_application_restart) {
-    LOG(WARNING) << "Cannot find RegisterApplicationRestart in kernel32.dll";
-    return;
   }
-  // The Windows Restart Manager expects a string of command line flags only,
-  // without the program.
-  base::CommandLine command_line(base::CommandLine::NO_PROGRAM);
-  command_line.AppendArguments(parsed_command_line, false);
-  if (!command_line.HasSwitch(switches::kRestoreLastSession))
-    command_line.AppendSwitch(switches::kRestoreLastSession);
 
-  // Restart Chrome if the computer is restarted as the result of an update.
-  // This could be extended to handle crashes, hangs, and patches.
-  const auto& command_line_string = command_line.GetCommandLineString();
-  HRESULT hr = register_application_restart(
-      command_line_string.c_str(),
-      RESTART_NO_CRASH | RESTART_NO_HANG | RESTART_NO_PATCH);
-  if (FAILED(hr)) {
-    if (hr == E_INVALIDARG) {
-      LOG(WARNING) << "Command line too long for RegisterApplicationRestart: "
-                   << command_line_string;
-    } else {
-      NOTREACHED() << "RegisterApplicationRestart failed. hr: " << hr
-                   << ", command_line: " << command_line_string;
+  // static
+  void ChromeBrowserMainPartsWin::RegisterApplicationRestart(
+      const base::CommandLine& parsed_command_line) {
+    base::ScopedNativeLibrary library(base::FilePath(L"kernel32.dll"));
+    // Get the function pointer for RegisterApplicationRestart.
+    RegisterApplicationRestartProc register_application_restart =
+        reinterpret_cast<RegisterApplicationRestartProc>(
+            library.GetFunctionPointer("RegisterApplicationRestart"));
+    if (!register_application_restart) {
+      LOG(WARNING) << "Cannot find RegisterApplicationRestart in kernel32.dll";
+      return;
     }
-  }
-}
+    // The Windows Restart Manager expects a string of command line flags only,
+    // without the program.
+    base::CommandLine command_line(base::CommandLine::NO_PROGRAM);
+    command_line.AppendArguments(parsed_command_line, false);
+    if (!command_line.HasSwitch(switches::kRestoreLastSession))
+      command_line.AppendSwitch(switches::kRestoreLastSession);
 
-// static
-int ChromeBrowserMainPartsWin::HandleIconsCommands(
-    const base::CommandLine& parsed_command_line) {
-  if (parsed_command_line.HasSwitch(switches::kHideIcons)) {
-    // TODO(740976): This is not up-to-date and not localized. Figure out if
-    // the --hide-icons and --show-icons switches are still used.
-    base::string16 cp_applet(L"Programs and Features");
-    const base::string16 msg =
-        l10n_util::GetStringFUTF16(IDS_HIDE_ICONS_NOT_SUPPORTED, cp_applet);
-    const base::string16 caption = l10n_util::GetStringUTF16(IDS_PRODUCT_NAME);
-    const UINT flags = MB_OKCANCEL | MB_ICONWARNING | MB_TOPMOST;
-    if (IDOK == ui::MessageBox(NULL, msg, caption, flags))
-      ShellExecute(NULL, NULL, L"appwiz.cpl", NULL, NULL, SW_SHOWNORMAL);
-
-    // Exit as we are not launching the browser.
-    return content::RESULT_CODE_NORMAL_EXIT;
-  }
-  // We don't hide icons so we shouldn't do anything special to show them
-  return chrome::RESULT_CODE_UNSUPPORTED_PARAM;
-}
-
-// static
-bool ChromeBrowserMainPartsWin::CheckMachineLevelInstall() {
-  BrowserDistribution* dist = BrowserDistribution::GetDistribution();
-  base::Version version;
-  InstallUtil::GetChromeVersion(dist, true, &version);
-  if (version.IsValid()) {
-    base::FilePath exe_path;
-    PathService::Get(base::DIR_EXE, &exe_path);
-    std::wstring exe = exe_path.value();
-    base::FilePath user_exe_path(installer::GetChromeInstallPath(false));
-    if (base::FilePath::CompareEqualIgnoreCase(exe, user_exe_path.value())) {
-      base::CommandLine uninstall_cmd(
-          InstallUtil::GetChromeUninstallCmd(false));
-      if (!uninstall_cmd.GetProgram().empty()) {
-        uninstall_cmd.AppendSwitch(installer::switches::kSelfDestruct);
-        uninstall_cmd.AppendSwitch(installer::switches::kForceUninstall);
-        uninstall_cmd.AppendSwitch(
-            installer::switches::kDoNotRemoveSharedItems);
-
-        // Trigger Active Setup for the system-level Chrome to make sure
-        // per-user shortcuts to the system-level Chrome are created. Skip this
-        // if the system-level Chrome will undergo first run anyway, as Active
-        // Setup is triggered on system-level Chrome's first run.
-        // TODO(gab): Instead of having callers of Active Setup think about
-        // other callers, have Active Setup itself register when it ran and
-        // no-op otherwise (http://crbug.com/346843).
-        if (!first_run::IsChromeFirstRun())
-          uninstall_cmd.AppendSwitch(installer::switches::kTriggerActiveSetup);
-
-        const base::FilePath setup_exe(uninstall_cmd.GetProgram());
-        const base::string16 params(uninstall_cmd.GetArgumentsString());
-
-        SHELLEXECUTEINFO sei = { sizeof(sei) };
-        sei.fMask = SEE_MASK_NOASYNC;
-        sei.nShow = SW_SHOWNORMAL;
-        sei.lpFile = setup_exe.value().c_str();
-        sei.lpParameters = params.c_str();
-
-        if (!::ShellExecuteEx(&sei))
-          DPCHECK(false);
+    // Restart Chrome if the computer is restarted as the result of an update.
+    // This could be extended to handle crashes, hangs, and patches.
+    const auto& command_line_string = command_line.GetCommandLineString();
+    HRESULT hr = register_application_restart(
+        command_line_string.c_str(),
+        RESTART_NO_CRASH | RESTART_NO_HANG | RESTART_NO_PATCH);
+    if (FAILED(hr)) {
+      if (hr == E_INVALIDARG) {
+        LOG(WARNING) << "Command line too long for RegisterApplicationRestart: "
+                     << command_line_string;
+      } else {
+        NOTREACHED() << "RegisterApplicationRestart failed. hr: " << hr
+                     << ", command_line: " << command_line_string;
       }
-      return true;
     }
   }
-  return false;
-}
 
-base::string16 TranslationDelegate::GetLocalizedString(
-    int installer_string_id) {
-  int resource_id = 0;
-  switch (installer_string_id) {
+  // static
+  int ChromeBrowserMainPartsWin::HandleIconsCommands(
+      const base::CommandLine& parsed_command_line) {
+    if (parsed_command_line.HasSwitch(switches::kHideIcons)) {
+      // TODO(740976): This is not up-to-date and not localized. Figure out if
+      // the --hide-icons and --show-icons switches are still used.
+      base::string16 cp_applet(L"Programs and Features");
+      const base::string16 msg =
+          l10n_util::GetStringFUTF16(IDS_HIDE_ICONS_NOT_SUPPORTED, cp_applet);
+      const base::string16 caption =
+          l10n_util::GetStringUTF16(IDS_PRODUCT_NAME);
+      const UINT flags = MB_OKCANCEL | MB_ICONWARNING | MB_TOPMOST;
+      if (IDOK == ui::MessageBox(NULL, msg, caption, flags))
+        ShellExecute(NULL, NULL, L"appwiz.cpl", NULL, NULL, SW_SHOWNORMAL);
+
+      // Exit as we are not launching the browser.
+      return content::RESULT_CODE_NORMAL_EXIT;
+    }
+    // We don't hide icons so we shouldn't do anything special to show them
+    return chrome::RESULT_CODE_UNSUPPORTED_PARAM;
+  }
+
+  // static
+  bool ChromeBrowserMainPartsWin::CheckMachineLevelInstall() {
+    BrowserDistribution* dist = BrowserDistribution::GetDistribution();
+    base::Version version;
+    InstallUtil::GetChromeVersion(dist, true, &version);
+    if (version.IsValid()) {
+      base::FilePath exe_path;
+      PathService::Get(base::DIR_EXE, &exe_path);
+      std::wstring exe = exe_path.value();
+      base::FilePath user_exe_path(installer::GetChromeInstallPath(false));
+      if (base::FilePath::CompareEqualIgnoreCase(exe, user_exe_path.value())) {
+        base::CommandLine uninstall_cmd(
+            InstallUtil::GetChromeUninstallCmd(false));
+        if (!uninstall_cmd.GetProgram().empty()) {
+          uninstall_cmd.AppendSwitch(installer::switches::kSelfDestruct);
+          uninstall_cmd.AppendSwitch(installer::switches::kForceUninstall);
+          uninstall_cmd.AppendSwitch(
+              installer::switches::kDoNotRemoveSharedItems);
+
+          // Trigger Active Setup for the system-level Chrome to make sure
+          // per-user shortcuts to the system-level Chrome are created. Skip
+          // this if the system-level Chrome will undergo first run anyway, as
+          // Active Setup is triggered on system-level Chrome's first run.
+          // TODO(gab): Instead of having callers of Active Setup think about
+          // other callers, have Active Setup itself register when it ran and
+          // no-op otherwise (http://crbug.com/346843).
+          if (!first_run::IsChromeFirstRun())
+            uninstall_cmd.AppendSwitch(
+                installer::switches::kTriggerActiveSetup);
+
+          const base::FilePath setup_exe(uninstall_cmd.GetProgram());
+          const base::string16 params(uninstall_cmd.GetArgumentsString());
+
+          SHELLEXECUTEINFO sei = {sizeof(sei)};
+          sei.fMask = SEE_MASK_NOASYNC;
+          sei.nShow = SW_SHOWNORMAL;
+          sei.lpFile = setup_exe.value().c_str();
+          sei.lpParameters = params.c_str();
+
+          if (!::ShellExecuteEx(&sei))
+            DPCHECK(false);
+        }
+        return true;
+      }
+    }
+    return false;
+  }
+
+  base::string16 TranslationDelegate::GetLocalizedString(
+      int installer_string_id) {
+    int resource_id = 0;
+    switch (installer_string_id) {
   // HANDLE_STRING is used by the DO_INSTALLER_STRING_MAPPING macro which is in
   // the generated header installer_util_strings.h.
 #define HANDLE_STRING(base_id, chrome_id) \
