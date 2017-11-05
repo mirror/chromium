@@ -75,7 +75,11 @@ if (is_win) {
   # This is in a separate config so the flags can be applied to dependents.
   # ldflags in GN aren't automatically inherited.
   config("base_win_linker_flags") {
+    libs = [ "runtimeobject.lib" ]
     ldflags = [
+      "/DELAYLOAD:api-ms-win-core-winrt-error-l1-1-0.dll",
+      "/DELAYLOAD:api-ms-win-core-winrt-l1-1-0.dll",
+      "/DELAYLOAD:api-ms-win-core-winrt-string-l1-1-0.dll",
       "/DELAYLOAD:cfgmgr32.dll",
       "/DELAYLOAD:powrprof.dll",
       "/DELAYLOAD:setupapi.dll",
@@ -1033,6 +1037,8 @@ jumbo_component("base") {
     "win/com_init_check_hook.h",
     "win/com_init_util.cc",
     "win/com_init_util.h",
+    "win/com_object_register.cc",
+    "win/com_object_register.h",
     "win/core_winrt_util.cc",
     "win/core_winrt_util.h",
     "win/current_module.h",
