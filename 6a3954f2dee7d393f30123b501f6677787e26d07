@@ -2,6 +2,40 @@
   "comments": [
     {
       "key": {
+        "uuid": "31dbf6b5_e079237d",
+        "filename": "cc/animation/scroll_timeline.h",
+        "patchSetId": 20
+      },
+      "lineNbr": 43,
+      "author": {
+        "id": 1001365
+      },
+      "writtenOn": "2017-11-05T21:32:06Z",
+      "side": 1,
+      "message": "If we can\u0027t find the scroller, we should probably assume the node is no longer scrollable for now (i.e. assume an offset of 0).",
+      "revId": "6a3954f2dee7d393f30123b501f6677787e26d07",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "aadc0372_faab796d",
+        "filename": "third_party/WebKit/LayoutTests/virtual/threaded/fast/animationworklet/animation-worklet-scroll-timeline.html",
+        "patchSetId": 20
+      },
+      "lineNbr": 26,
+      "author": {
+        "id": 1001365
+      },
+      "writtenOn": "2017-11-05T21:32:06Z",
+      "side": 1,
+      "message": "Bug reference?",
+      "revId": "6a3954f2dee7d393f30123b501f6677787e26d07",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "e87c16ba_f72ccc99",
         "filename": "third_party/WebKit/Source/core/animation/WorkletAnimationBase.h",
         "patchSetId": 20
@@ -13,6 +47,46 @@
       "writtenOn": "2017-11-04T19:33:50Z",
       "side": 1,
       "message": "I suspect this is having no effect, as we are not explicitly specifying WTF::String below.\n\nPerhaps include platform/wtf/Forward.h instead. It has\nusing WTF::String;",
+      "revId": "6a3954f2dee7d393f30123b501f6677787e26d07",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "fe132672_0e2aa053",
+        "filename": "third_party/WebKit/Source/core/animation/WorkletAnimationController.cpp",
+        "patchSetId": 20
+      },
+      "lineNbr": 53,
+      "author": {
+        "id": 1001365
+      },
+      "writtenOn": "2017-11-05T21:32:06Z",
+      "side": 1,
+      "message": "Thinking about this, failure should not be possible once we have everything working. Should this not be a log message instead of a console message?",
+      "revId": "6a3954f2dee7d393f30123b501f6677787e26d07",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "50a00de2_b4d6986f",
+        "filename": "third_party/WebKit/Source/modules/animationworklet/WorkletAnimation.cpp",
+        "patchSetId": 20
+      },
+      "lineNbr": 53,
+      "author": {
+        "id": 1001365
+      },
+      "writtenOn": "2017-11-05T21:32:06Z",
+      "side": 1,
+      "message": "I think you just want kPaintsIntoOwnBacking. If it paints into a grouped backing you can\u0027t refer to the individual element on the compositor.",
+      "range": {
+        "startLine": 53,
+        "startChar": 9,
+        "endLine": 53,
+        "endChar": 73
+      },
       "revId": "6a3954f2dee7d393f30123b501f6677787e26d07",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
