@@ -163,6 +163,16 @@ IN_PROC_BROWSER_TEST_F(DumpAccessibilityEventsTest,
 }
 
 IN_PROC_BROWSER_TEST_F(DumpAccessibilityEventsTest,
+                       AccessibilityEventsAriaLiveIgnoresClick) {
+  RunEventTest(FILE_PATH_LITERAL("aria-live-ignores-click.html"));
+}
+
+IN_PROC_BROWSER_TEST_F(DumpAccessibilityEventsTest,
+                       AccessibilityEventsAriaLivePolite) {
+  RunEventTest(FILE_PATH_LITERAL("aria-live-polite.html"));
+}
+
+IN_PROC_BROWSER_TEST_F(DumpAccessibilityEventsTest,
                        AccessibilityEventsAriaTreeCollapse) {
   RunEventTest(FILE_PATH_LITERAL("aria-tree-collapse.html"));
 }
