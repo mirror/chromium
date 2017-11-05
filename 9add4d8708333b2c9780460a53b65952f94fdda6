@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "9a5095a9_6acf0234",
+        "filename": "third_party/WebKit/LayoutTests/virtual/stable/webexposed/element-instance-property-listing-expected.txt",
+        "patchSetId": 2
+      },
+      "lineNbr": 695,
+      "author": {
+        "id": 1223919
+      },
+      "writtenOn": "2017-11-05T06:22:51Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "1dd443cf_c046c0ac",
+      "revId": "9add4d8708333b2c9780460a53b65952f94fdda6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "940f111c_b5ab79c1",
         "filename": "third_party/WebKit/LayoutTests/virtual/stable/webexposed/global-interface-listing-expected.txt",
         "patchSetId": 2
@@ -33,6 +51,24 @@
       "revId": "9add4d8708333b2c9780460a53b65952f94fdda6",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d89e9cdf_3269bf60",
+        "filename": "third_party/WebKit/LayoutTests/virtual/stable/webexposed/global-interface-listing-expected.txt",
+        "patchSetId": 2
+      },
+      "lineNbr": 2405,
+      "author": {
+        "id": 1223919
+      },
+      "writtenOn": "2017-11-05T06:22:51Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "940f111c_b5ab79c1",
+      "revId": "9add4d8708333b2c9780460a53b65952f94fdda6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -70,6 +106,24 @@
     },
     {
       "key": {
+        "uuid": "4163ad43_4b50f1c7",
+        "filename": "third_party/WebKit/Source/modules/serviceworkers/ServiceWorkerContainer.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 47,
+      "author": {
+        "id": 1223919
+      },
+      "writtenOn": "2017-11-05T06:22:51Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "b946df91_3ac0fd61",
+      "revId": "9add4d8708333b2c9780460a53b65952f94fdda6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "877c56f3_debf1154",
         "filename": "third_party/WebKit/Source/modules/serviceworkers/ServiceWorkerRegistration.cpp",
         "patchSetId": 2
@@ -84,6 +138,24 @@
       "revId": "9add4d8708333b2c9780460a53b65952f94fdda6",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d3bee46b_125192e0",
+        "filename": "third_party/WebKit/Source/modules/serviceworkers/ServiceWorkerRegistration.cpp",
+        "patchSetId": 2
+      },
+      "lineNbr": 20,
+      "author": {
+        "id": 1223919
+      },
+      "writtenOn": "2017-11-05T06:22:51Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "877c56f3_debf1154",
+      "revId": "9add4d8708333b2c9780460a53b65952f94fdda6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -104,6 +176,24 @@
     },
     {
       "key": {
+        "uuid": "74563068_1c450acb",
+        "filename": "third_party/WebKit/Source/modules/serviceworkers/ServiceWorkerRegistration.cpp",
+        "patchSetId": 2
+      },
+      "lineNbr": 103,
+      "author": {
+        "id": 1223919
+      },
+      "writtenOn": "2017-11-05T06:22:51Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "9942ae7b_84cdafb7",
+      "revId": "9add4d8708333b2c9780460a53b65952f94fdda6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "3fb952a0_155da05d",
         "filename": "third_party/WebKit/Source/modules/serviceworkers/ServiceWorkerRegistration.idl",
         "patchSetId": 2
@@ -118,6 +208,24 @@
       "revId": "9add4d8708333b2c9780460a53b65952f94fdda6",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "223aff7e_ea6d7d0e",
+        "filename": "third_party/WebKit/Source/modules/serviceworkers/ServiceWorkerRegistration.idl",
+        "patchSetId": 2
+      },
+      "lineNbr": 17,
+      "author": {
+        "id": 1223919
+      },
+      "writtenOn": "2017-11-05T06:22:51Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "3fb952a0_155da05d",
+      "revId": "9add4d8708333b2c9780460a53b65952f94fdda6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -138,6 +246,24 @@
     },
     {
       "key": {
+        "uuid": "6c9f593d_28497764",
+        "filename": "third_party/WebKit/Source/modules/serviceworkers/ServiceWorkerRegistration.idl",
+        "patchSetId": 2
+      },
+      "lineNbr": 25,
+      "author": {
+        "id": 1223919
+      },
+      "writtenOn": "2017-11-05T06:22:51Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "1cdab4f4_14787dae",
+      "revId": "9add4d8708333b2c9780460a53b65952f94fdda6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "f689f391_cbb0391b",
         "filename": "third_party/WebKit/public/platform/modules/serviceworker/WebServiceWorkerProvider.h",
         "patchSetId": 2
@@ -155,6 +281,24 @@
     },
     {
       "key": {
+        "uuid": "c1b62c96_a0224d0a",
+        "filename": "third_party/WebKit/public/platform/modules/serviceworker/WebServiceWorkerProvider.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 37,
+      "author": {
+        "id": 1223919
+      },
+      "writtenOn": "2017-11-05T06:22:51Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "f689f391_cbb0391b",
+      "revId": "9add4d8708333b2c9780460a53b65952f94fdda6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "7279e8ff_5e53aeea",
         "filename": "third_party/WebKit/public/platform/modules/serviceworker/WebServiceWorkerRegistration.h",
         "patchSetId": 2
@@ -166,6 +310,24 @@
       "writtenOn": "2017-11-04T07:56:26Z",
       "side": 1,
       "message": "Could we just make it \u003d 0 to ensure the derived class implements it? I\u0027m not sure we some of the functions here are blank and some are \u003d 0.",
+      "revId": "9add4d8708333b2c9780460a53b65952f94fdda6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c174e633_2d3a7e11",
+        "filename": "third_party/WebKit/public/platform/modules/serviceworker/WebServiceWorkerRegistration.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 57,
+      "author": {
+        "id": 1223919
+      },
+      "writtenOn": "2017-11-05T06:22:51Z",
+      "side": 1,
+      "message": "If we make it pure virtual, we need to implement the method in WebServieWorkerRegistrationImpl at the same time, which makes it impossible to just change the Blink side. It will make the patch significantly larger. What do you think?",
+      "parentUuid": "7279e8ff_5e53aeea",
       "revId": "9add4d8708333b2c9780460a53b65952f94fdda6",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
