@@ -104,6 +104,7 @@
 #include "chrome/browser/ui/blocked_content/blocked_window_params.h"
 #include "chrome/browser/ui/blocked_content/popup_blocker_tab_helper.h"
 #include "chrome/browser/ui/blocked_content/tab_under_navigation_throttle.h"
+#include "chrome/browser/ui/browser_finder.h"
 #include "chrome/browser/ui/browser_navigator.h"
 #include "chrome/browser/ui/browser_navigator_params.h"
 #include "chrome/browser/ui/chrome_select_file_policy.h"
@@ -268,8 +269,8 @@
 #include "chrome/browser/chromeos/policy/browser_policy_connector_chromeos.h"
 #include "chrome/browser/chromeos/system/input_device_settings.h"
 #include "chrome/browser/metrics/leak_detector/leak_detector_remote_controller.h"
+#include "chrome/browser/ui/browser.h"
 #include "chrome/browser/ui/browser_dialogs.h"
-#include "chrome/browser/ui/browser_finder.h"
 #include "chrome/browser/ui/views/ash/chrome_browser_main_extra_parts_ash.h"
 #include "chromeos/chromeos_constants.h"
 #include "chromeos/chromeos_switches.h"
@@ -345,7 +346,9 @@
 #include "chrome/browser/apps/platform_app_navigation_redirector.h"
 #include "chrome/browser/extensions/bookmark_app_navigation_throttle.h"
 #include "chrome/browser/extensions/chrome_content_browser_client_extensions_part.h"
+#include "chrome/browser/extensions/tab_helper.h"
 #include "chrome/browser/speech/extension_api/tts_engine_extension_api.h"
+#include "chrome/browser/ui/extensions/hosted_app_browser_controller.h"
 #include "components/guest_view/browser/guest_view_base.h"
 #include "components/guest_view/browser/guest_view_manager.h"
 #include "extensions/browser/extension_navigation_throttle.h"
@@ -2259,6 +2262,29 @@ void ChromeContentBrowserClient::AllowCertificateError(
 
   // Otherwise, display an SSL blocking page. The interstitial page takes
   // ownership of ssl_blocking_page.
+
+#if BUILDFLAG(ENABLE_EXTENSIONS)
+  // If we are in a Hosted App window then first show a Hosted App Error
+  // page asking the user to open the site in a regular browser window
+  // first.
+  Browser* browser = chrome::FindBrowserWithWebContents(web_contents);
+  if (browser &&
+      extensions::HostedAppBrowserController::IsForExperimentalHostedAppBrowser(
+          browser)) {
+    extensions::TabHelper::FromWebContents(web_contents)
+        ->ShowHostedAppErrorPage(base::BindOnce(
+            &ChromeContentBrowserClient::AllowCertificateError,
+            // It's safe to pass a pointer to the WebContents here
+            // because if it gets destroyed, the TabHelper will also
+            // be destroyed and the callback won't be called.
+            weak_factory_.GetWeakPtr(), web_contents, cert_error,
+            // ssl_info is owned by the SSLErrorHandler in |callback|
+            // so it's safe to pass it here.
+            base::ConstRef(ssl_info), request_url, resource_type,
+            strict_enforcement, expired_previous_decision, callback));
+    return;
+  }
+#endif
 
   CertificateReportingService* cert_reporting_service =
       CertificateReportingServiceFactory::GetForBrowserContext(

@@ -7,12 +7,14 @@
 #include <utility>
 
 #include "chrome/browser/defaults.h"
+#include "chrome/browser/extensions/tab_helper.h"
 #include "chrome/browser/ui/aura/tab_contents/web_drag_bookmark_handler_aura.h"
 #include "chrome/browser/ui/browser.h"
 #include "chrome/browser/ui/browser_finder.h"
 #include "chrome/browser/ui/browser_window.h"
 #include "chrome/browser/ui/sad_tab_helper.h"
 #include "chrome/browser/ui/tab_contents/chrome_web_contents_view_delegate.h"
+#include "chrome/browser/ui/views/extensions/hosted_app_error_view.h"
 #include "chrome/browser/ui/views/renderer_context_menu/render_view_context_menu_views.h"
 #include "chrome/browser/ui/views/sad_tab_view.h"
 #include "components/web_modal/web_contents_modal_dialog_manager.h"
@@ -52,6 +54,17 @@ bool ChromeWebContentsViewDelegateViews::Focus() {
     SadTabView* sad_tab = static_cast<SadTabView*>(sad_tab_helper->sad_tab());
     if (sad_tab) {
       sad_tab->RequestFocus();
+      return true;
+    }
+  }
+
+  extensions::TabHelper* extensions_tab_helper =
+      extensions::TabHelper::FromWebContents(web_contents_);
+  if (extensions_tab_helper) {
+    HostedAppErrorView* error_page = static_cast<HostedAppErrorView*>(
+        extensions_tab_helper->hosted_app_error_page());
+    if (error_page) {
+      error_page->GetContentsView()->RequestFocus();
       return true;
     }
   }
@@ -132,11 +145,22 @@ void ChromeWebContentsViewDelegateViews::ShowContextMenu(
 
 void ChromeWebContentsViewDelegateViews::SizeChanged(const gfx::Size& size) {
   SadTabHelper* sad_tab_helper = SadTabHelper::FromWebContents(web_contents_);
-  if (!sad_tab_helper)
-    return;
-  SadTabView* sad_tab = static_cast<SadTabView*>(sad_tab_helper->sad_tab());
-  if (sad_tab)
-    sad_tab->GetWidget()->SetBounds(gfx::Rect(size));
+  if (sad_tab_helper) {
+    SadTabView* sad_tab = static_cast<SadTabView*>(sad_tab_helper->sad_tab());
+    if (sad_tab) {
+      sad_tab->GetWidget()->SetBounds(gfx::Rect(size));
+    }
+  }
+
+  extensions::TabHelper* extensions_tab_helper =
+      extensions::TabHelper::FromWebContents(web_contents_);
+  if (extensions_tab_helper) {
+    HostedAppErrorView* error_page = static_cast<HostedAppErrorView*>(
+        extensions_tab_helper->hosted_app_error_page());
+    if (error_page) {
+      error_page->GetWidget()->SetBounds(gfx::Rect(size));
+    }
+  }
 }
 
 aura::Window* ChromeWebContentsViewDelegateViews::GetActiveNativeView() {

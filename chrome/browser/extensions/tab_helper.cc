@@ -29,6 +29,7 @@
 #include "chrome/browser/ui/browser_commands.h"
 #include "chrome/browser/ui/browser_dialogs.h"
 #include "chrome/browser/ui/browser_finder.h"
+#include "chrome/browser/ui/extensions/hosted_app_error.h"
 #include "chrome/browser/web_applications/web_app.h"
 #include "chrome/common/extensions/api/webstore/webstore_api_constants.h"
 #include "chrome/common/extensions/extension_constants.h"
@@ -530,6 +531,21 @@ void TabHelper::SetAppIcon(const SkBitmap& app_icon) {
 void TabHelper::SetWebstoreInlineInstallerFactoryForTests(
     WebstoreInlineInstallerFactory* factory) {
   webstore_inline_installer_factory_.reset(factory);
+}
+
+void TabHelper::ShowHostedAppErrorPage(
+    base::OnceClosure on_web_contents_reparented) {
+  hosted_app_error_ = HostedAppError::Create(
+      web_contents(),
+      base::BindOnce(&TabHelper::OnHostedAppErrorPageProceed,
+                     weak_ptr_factory_.GetWeakPtr(),
+                     base::Passed(&on_web_contents_reparented)));
+}
+
+void TabHelper::OnHostedAppErrorPageProceed(
+    base::OnceClosure on_web_contents_reparented) {
+  hosted_app_error_.reset();
+  std::move(on_web_contents_reparented).Run();
 }
 
 void TabHelper::OnImageLoaded(const gfx::Image& image) {
