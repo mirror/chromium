@@ -7,21 +7,21 @@
       "backgroundColor": "#FFFFFF",
       "paintInvalidations": [
         {
-          "object": "LayoutBlockFlow DIV",
-          "rect": [8, 120, 100, 300],
-          "reason": "paint property change"
+          "object": "LayoutBlockFlow DIV id='target' class='item'",
+          "rect": [18, 18, 764, 20],
+          "reason": "disappeared"
         },
         {
-          "object": "LayoutBlockFlow DIV",
-          "rect": [8, 120, 100, 100],
-          "reason": "paint property change"
+          "object": "LayoutBlockFlow HTML",
+          "rect": [18, 18, 764, 20],
+          "reason": "appeared"
         }
       ]
     }
   ],
   "objectPaintInvalidations": [
     {
-      "object": "LayoutBlockFlow DIV id='content'",
+      "object": "LayoutBlockFlow DIV id='target' class='item'",
       "reason": "style change"
     }
   ]
