@@ -205,6 +205,15 @@ BoxPaintInvalidator::ComputeBackgroundInvalidation() {
   if (box_.BackgroundChangedSinceLastPaintInvalidation())
     return BackgroundInvalidationType::kFull;
 
+  if (box_.IsLayoutView() &&
+      RuntimeEnabledFeatures::RootLayerScrollingEnabled()) {
+    const auto* document_element = box_.GetDocument().documentElement();
+    const auto* background =
+        document_element ? document_element->GetLayoutObject() : nullptr;
+    if (background && background->BackgroundChangedSinceLastPaintInvalidation())
+      return BackgroundInvalidationType::kFull;
+  }
+
   bool layout_overflow_change_causes_invalidation =
       (BackgroundGeometryDependsOnLayoutOverflowRect() ||
        BackgroundPaintsOntoScrollingContentsLayer());
