@@ -570,8 +570,7 @@ void ServiceWorkerProviderHost::CountFeature(uint32_t feature) {
 
   // CountFeature message should be sent only for controllees.
   DCHECK(IsProviderForClient());
-  Send(new ServiceWorkerMsg_CountFeature(render_thread_id_, provider_id(),
-                                         feature));
+  container_->CountFeature(feature);
 }
 
 void ServiceWorkerProviderHost::AddScopedProcessReferenceToPattern(

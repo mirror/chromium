@@ -112,20 +112,9 @@ ServiceWorkerProviderContext::ServiceWorkerProviderContext(
     controllee_state_ = std::make_unique<ControlleeState>(
         std::move(default_loader_factory_getter));
   }
-
-  // |dispatcher| may be null in tests.
-  // TODO(falken): Figure out how to make a dispatcher in tests.
-  if (dispatcher)
-    dispatcher->AddProviderContext(this);
 }
 
-ServiceWorkerProviderContext::~ServiceWorkerProviderContext() {
-  if (ServiceWorkerDispatcher* dispatcher =
-          ServiceWorkerDispatcher::GetThreadSpecificInstance()) {
-    // Remove this context from the dispatcher living on the main thread.
-    dispatcher->RemoveProviderContext(this);
-  }
-}
+ServiceWorkerProviderContext::~ServiceWorkerProviderContext() {}
 
 void ServiceWorkerProviderContext::SetRegistrationForServiceWorkerGlobalScope(
     blink::mojom::ServiceWorkerRegistrationObjectInfoPtr registration,
@@ -188,14 +177,6 @@ mojom::ServiceWorkerContainerHost*
 ServiceWorkerProviderContext::container_host() const {
   DCHECK_EQ(SERVICE_WORKER_PROVIDER_FOR_WINDOW, provider_type_);
   return container_host_.get();
-}
-
-void ServiceWorkerProviderContext::CountFeature(uint32_t feature) {
-  // ServiceWorkerProviderContext keeps track of features in order to propagate
-  // it to WebServiceWorkerProviderClient, which actually records the
-  // UseCounter.
-  DCHECK(controllee_state_);
-  controllee_state_->used_features.insert(feature);
 }
 
 const std::set<uint32_t>& ServiceWorkerProviderContext::used_features() const {
@@ -312,6 +293,20 @@ void ServiceWorkerProviderContext::PostMessageToClient(
   if (state->web_service_worker_provider) {
     state->web_service_worker_provider->PostMessageToClient(
         std::move(source), message, std::move(message_pipes));
+  }
+}
+
+void ServiceWorkerProviderContext::CountFeature(uint32_t feature) {
+  DCHECK(main_thread_task_runner_->RunsTasksInCurrentSequence());
+  // ServiceWorkerProviderContext keeps track of features in order to propagate
+  // it to WebServiceWorkerProviderClient, which actually records the
+  // UseCounter.
+  DCHECK(controllee_state_);
+  controllee_state_->used_features.insert(feature);
+  ControlleeState* state = controllee_state_.get();
+
+  if (state->web_service_worker_provider) {
+    state->web_service_worker_provider->CountFeature(feature);
   }
 }
 

@@ -104,6 +104,7 @@ interface ServiceWorkerContainer {
                       mojo.common.mojom.String16 message,
                       array<handle<message_pipe>> message_ports);
 
-  // TODO(xiaofeng.zhang): implement it.
-  // ServiceWorkerStateChanged();
+  // Notifies a client that its controller used a |feature|, for UseCounter
+  // purposes (browser->renderer).
+  CountFeature(uint32 feature);
 };
