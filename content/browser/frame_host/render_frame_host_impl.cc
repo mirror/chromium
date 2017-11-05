@@ -576,6 +576,10 @@ RenderFrameHostImpl::RenderFrameHostImpl(SiteInstance* site_instance,
 
   ax_tree_id_ = ui::AXTreeIDRegistry::GetInstance()->GetOrCreateAXTreeID(
       GetProcess()->GetID(), routing_id_);
+
+  // Pause the new frame if needed.
+  if (frame_tree_node_->pause_count() > 0)
+    frame_->Pause(true, base::BindOnce([]() {}));
 }
 
 RenderFrameHostImpl::~RenderFrameHostImpl() {
@@ -2323,6 +2327,27 @@ void RenderFrameHostImpl::OnUpdateEncoding(const std::string& encoding_name) {
 
 void RenderFrameHostImpl::OnDidBlockFramebust(const GURL& url) {
   delegate_->OnDidBlockFramebust(url);
+}
+
+void RenderFrameHostImpl::Pause(bool should_pause, PauseCallback callback) {
+  if (should_pause)
+    frame_tree_->PauseFrame(frame_tree_node_, std::move(callback));
+  else
+    frame_tree_->UnpauseFrame(frame_tree_node_, std::move(callback));
+}
+
+void RenderFrameHostImpl::PauseFrame(
+    base::ScopedClosureRunner scoped_callback) {
+  frame_->Pause(true,
+                base::BindOnce([](base::ScopedClosureRunner scoped_callback) {},
+                               std::move(scoped_callback)));
+}
+
+void RenderFrameHostImpl::UnpauseFrame(
+    base::ScopedClosureRunner scoped_callback) {
+  frame_->Pause(false,
+                base::BindOnce([](base::ScopedClosureRunner scoped_callback) {},
+                               std::move(scoped_callback)));
 }
 
 void RenderFrameHostImpl::OnBeginNavigation(

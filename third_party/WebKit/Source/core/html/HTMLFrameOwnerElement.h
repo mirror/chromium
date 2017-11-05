@@ -65,6 +65,9 @@ class CORE_EXPORT HTMLFrameOwnerElement : public HTMLElement,
 
   bool LoadedNonEmptyDocument() const { return did_load_non_empty_document_; }
   void DidLoadNonEmptyDocument() { did_load_non_empty_document_ = true; }
+  ScriptPromise pause(ScriptState*);
+  ScriptPromise unpause(ScriptState*);
+  bool paused();
 
   void SetEmbeddedContentView(EmbeddedContentView*);
   EmbeddedContentView* ReleaseEmbeddedContentView();
@@ -170,6 +173,7 @@ class CORE_EXPORT HTMLFrameOwnerElement : public HTMLElement,
   Member<EmbeddedContentView> embedded_content_view_;
   SandboxFlags sandbox_flags_;
   bool did_load_non_empty_document_;
+  bool paused_;
 
   WebParsedFeaturePolicy container_policy_;
 };

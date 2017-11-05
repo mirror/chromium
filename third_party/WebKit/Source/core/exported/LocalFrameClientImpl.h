@@ -191,6 +191,8 @@ class LocalFrameClientImpl final : public LocalFrameClient {
   void DidAddContentSecurityPolicies(
       const blink::WebVector<WebContentSecurityPolicy>&) override;
   void DidChangeFrameOwnerProperties(HTMLFrameOwnerElement*) override;
+  void DidPauseFrame(base::OnceClosure callback) override;
+  void DidUnpauseFrame(base::OnceClosure callback) override;
 
   void DispatchWillStartUsingPeerConnectionHandler(
       WebRTCPeerConnectionHandler*) override;

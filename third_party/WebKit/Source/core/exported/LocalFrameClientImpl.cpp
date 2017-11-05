@@ -966,6 +966,18 @@ void LocalFrameClientImpl::DidChangeFrameOwnerProperties(
           frame_element->Csp()));
 }
 
+void LocalFrameClientImpl::DidPauseFrame(base::OnceClosure callback) {
+  if (!web_frame_->Client())
+    return;
+  web_frame_->Client()->DidPauseFrame(std::move(callback));
+}
+
+void LocalFrameClientImpl::DidUnpauseFrame(base::OnceClosure callback) {
+  if (!web_frame_->Client())
+    return;
+  web_frame_->Client()->DidUnpauseFrame(std::move(callback));
+}
+
 void LocalFrameClientImpl::DispatchWillStartUsingPeerConnectionHandler(
     WebRTCPeerConnectionHandler* handler) {
   web_frame_->Client()->WillStartUsingPeerConnectionHandler(handler);
