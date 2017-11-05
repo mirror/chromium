@@ -1034,6 +1034,10 @@
       name: "TrackLayoutPassesPerBlock",
     },
     {
+      name: "TransferSizePolicy",
+      status: "experimental",
+    },
+    {
       name: "TrustedDOMTypes",
       status: "experimental",
     },

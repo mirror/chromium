@@ -42,6 +42,7 @@
 #include "content/browser/bad_message.h"
 #include "content/browser/browsing_data/clear_site_data_throttle.h"
 #include "content/browser/child_process_security_policy_impl.h"
+#include "content/browser/frame_host/frame_tree_node.h"
 #include "content/browser/frame_host/navigation_request_info.h"
 #include "content/browser/loader/async_resource_handler.h"
 #include "content/browser/loader/detachable_resource_handler.h"
@@ -313,6 +314,26 @@ void LogBackForwardNavigationFlagsHistogram(int load_flags) {
 
   if (load_flags & net::LOAD_DISABLE_CACHE)
     RecordCacheFlags(HISTOGRAM_DISABLE_CACHE);
+}
+
+void NotifyUIThreadOfNetworkRequestComplete(
+    const GURL& url,
+    const content::ResourceRequestInfo::FrameTreeNodeIdGetter&
+        frame_tree_node_id_getter,
+    int raw_body_bytes) {
+  int frame_tree_node_id = frame_tree_node_id_getter.Run();
+  if (frame_tree_node_id == -1)
+    return;
+
+  LOG(ERROR) << "Finished: " << url.spec() << ":" << raw_body_bytes << ":"
+             << frame_tree_node_id;
+
+  FrameTreeNode* frame_tree_node =
+      FrameTreeNode::GloballyFindByID(frame_tree_node_id);
+  if (!frame_tree_node)
+    return;
+
+  frame_tree_node->NotifyNetworkBytesRead(raw_body_bytes);
 }
 
 }  // namespace
@@ -725,6 +746,16 @@ void ResourceDispatcherHostImpl::DidFinishLoading(ResourceLoader* loader) {
     UMA_HISTOGRAM_SPARSE_SLOWLY(
         "Net.ErrorCodesForSubresources2",
         -loader->request()->status().error());
+  }
+
+  // Notify the UI thread that the request has completed.
+  if (!loader->request()->was_cached()) {
+    BrowserThread::PostTask(
+        BrowserThread::UI, FROM_HERE,
+        base::BindOnce(&NotifyUIThreadOfNetworkRequestComplete,
+                       loader->request()->url(),
+                       info->GetFrameTreeNodeIdGetterForRequest(),
+                       loader->request()->GetRawBodyBytes()));
   }
 
   if (delegate_)

@@ -3065,6 +3065,10 @@ void RenderFrameImpl::GetInterfaceProvider(
                               std::move(provider));
 }
 
+void RenderFrameImpl::TransferSizeExceeded() {
+  frame_->TransferSizeExceeded();
+}
+
 void RenderFrameImpl::AllowBindings(int32_t enabled_bindings_flags) {
   if (IsMainFrame() && (enabled_bindings_flags & BINDINGS_POLICY_WEB_UI) &&
       !(enabled_bindings_ & BINDINGS_POLICY_WEB_UI)) {
@@ -3546,10 +3550,12 @@ void RenderFrameImpl::DidUpdateToUniqueOrigin(
 void RenderFrameImpl::DidChangeFramePolicy(
     blink::WebFrame* child_frame,
     blink::WebSandboxFlags flags,
-    const blink::WebParsedFeaturePolicy& container_policy) {
+    const blink::WebParsedFeaturePolicy& container_policy,
+    int transfer_size_kb) {
+  LOG(ERROR) << "Sending";
   Send(new FrameHostMsg_DidChangeFramePolicy(
       routing_id_, RenderFrame::GetRoutingIdForWebFrame(child_frame),
-      {flags, FeaturePolicyHeaderFromWeb(container_policy)}));
+      {flags, FeaturePolicyHeaderFromWeb(container_policy)}, transfer_size_kb));
 }
 
 void RenderFrameImpl::DidSetFeaturePolicyHeader(

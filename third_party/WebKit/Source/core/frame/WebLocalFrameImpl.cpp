@@ -2532,6 +2532,19 @@ void WebLocalFrameImpl::AdvanceFocusInForm(WebFocusType focus_type) {
   next_element->focus();
 }
 
+void WebLocalFrameImpl::TransferSizeExceeded() {
+  LOG(ERROR) << "About to dispatch transfer size exceeded";
+  HTMLFrameOwnerElement* owner_element =
+      GetFrame()->GetDocument()->LocalOwner();
+  if (!owner_element)
+    return;
+  LOG(ERROR) << "About to dispatch transfer size exceeded 2";
+  // Fire event on owner_element.
+  // I think I need to fire this on the iframe elemenet and not the frame owner
+  // element? Not entirely sure...
+  owner_element->DispatchEvent(Event::Create(EventTypeNames::transferexceeded));
+}
+
 TextCheckerClient& WebLocalFrameImpl::GetTextCheckerClient() const {
   return *text_checker_client_;
 }

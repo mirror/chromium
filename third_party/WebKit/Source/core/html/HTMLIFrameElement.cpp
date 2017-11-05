@@ -196,6 +196,13 @@ void HTMLIFrameElement::ParseAttribute(
         }
       }
     }
+  } else if (RuntimeEnabledFeatures::TransferSizePolicyEnabled() &&
+             name == transfersizeAttr) {
+    bool ok;
+    int transfer_size = value.ToInt(&ok);
+
+    if (ok && transfer_size >= 0)
+      UpdateTransferSizePolicy(transfer_size);
   } else {
     if (name == srcAttr)
       LogUpdateAttributeIfIsolatedWorldAndInDocument("iframe", params);
