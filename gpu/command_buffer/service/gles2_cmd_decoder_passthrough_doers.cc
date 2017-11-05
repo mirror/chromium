@@ -3225,7 +3225,8 @@ error::Error GLES2DecoderPassthroughImpl::DoSwapBuffers() {
     return error::kNoError;
   }
 
-  gfx::SwapResult result = surface_->SwapBuffers();
+  gfx::SwapResult result = surface_->SwapBuffers(
+      base::Bind([](base::TimeTicks, base::TimeDelta, uint32_t) {}));
   if (result == gfx::SwapResult::SWAP_FAILED) {
     LOG(ERROR) << "Context lost because SwapBuffers failed.";
     if (!CheckResetStatus()) {
@@ -3806,7 +3807,8 @@ error::Error GLES2DecoderPassthroughImpl::DoSwapBuffersWithBoundsCHROMIUM(
     bounds[i] = gfx::Rect(rects[i * 4 + 0], rects[i * 4 + 1], rects[i * 4 + 2],
                           rects[i * 4 + 3]);
   }
-  gfx::SwapResult result = surface_->SwapBuffersWithBounds(bounds);
+  gfx::SwapResult result = surface_->SwapBuffersWithBounds(
+      bounds, base::Bind([](base::TimeTicks, base::TimeDelta, uint32_t) {}));
   if (result == gfx::SwapResult::SWAP_FAILED) {
     LOG(ERROR) << "Context lost because SwapBuffersWithBounds failed.";
   }
@@ -3825,7 +3827,9 @@ error::Error GLES2DecoderPassthroughImpl::DoPostSubBufferCHROMIUM(
     return error::kNoError;
   }
 
-  gfx::SwapResult result = surface_->PostSubBuffer(x, y, width, height);
+  gfx::SwapResult result = surface_->PostSubBuffer(
+      x, y, width, height,
+      base::Bind([](base::TimeTicks, base::TimeDelta, uint32_t) {}));
   if (result == gfx::SwapResult::SWAP_FAILED) {
     LOG(ERROR) << "Context lost because PostSubBuffer failed.";
     if (!CheckResetStatus()) {
