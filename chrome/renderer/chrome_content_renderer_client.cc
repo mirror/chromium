@@ -535,7 +535,7 @@ void ChromeContentRendererClient::RenderFrameCreated(
   bool should_whitelist_for_content_settings =
       base::CommandLine::ForCurrentProcess()->HasSwitch(
           switches::kInstantProcess);
-  extensions::Dispatcher* ext_dispatcher = NULL;
+  extensions::Dispatcher* ext_dispatcher = nullptr;
 #if BUILDFLAG(ENABLE_EXTENSIONS)
   ext_dispatcher =
       ChromeExtensionsRendererClient::GetInstance()->extension_dispatcher();
@@ -748,7 +748,7 @@ WebPlugin* ChromeContentRendererClient::CreatePlugin(
   ChromeViewHostMsg_GetPluginInfo_Status status = output.status;
   GURL url(original_params.url);
   std::string orig_mime_type = original_params.mime_type.Utf8();
-  ChromePluginPlaceholder* placeholder = NULL;
+  ChromePluginPlaceholder* placeholder = nullptr;
 
   // If the browser plugin is to be enabled, this should be handled by the
   // renderer, so the code won't reach here due to the early exit in

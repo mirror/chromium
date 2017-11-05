@@ -92,7 +92,7 @@ int32_t PepperFlashFontFileHost::OnGetFontTable(
   std::string contents;
   int32_t result = PP_ERROR_FAILED;
   size_t length = 0;
-  if (GetFontData(table, NULL, &length)) {
+  if (GetFontData(table, nullptr, &length)) {
     contents.resize(length);
     uint8_t* contents_ptr =
         reinterpret_cast<uint8_t*>(const_cast<char*>(contents.c_str()));

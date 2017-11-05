@@ -257,7 +257,7 @@ TEST_F(PhishingClassifierTest, TestClassificationWhenSchemeNotSupported) {
 TEST_F(PhishingClassifierTest, DisableDetection) {
   EXPECT_TRUE(classifier_->is_ready());
   // Set a NULL scorer, which turns detection back off.
-  classifier_->set_phishing_scorer(NULL);
+  classifier_->set_phishing_scorer(nullptr);
   EXPECT_FALSE(classifier_->is_ready());
 }
 

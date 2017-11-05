@@ -21,7 +21,7 @@ RendererPermissionsPolicyDelegate::RendererPermissionsPolicyDelegate(
   PermissionsData::SetPolicyDelegate(this);
 }
 RendererPermissionsPolicyDelegate::~RendererPermissionsPolicyDelegate() {
-  PermissionsData::SetPolicyDelegate(NULL);
+  PermissionsData::SetPolicyDelegate(nullptr);
 }
 
 bool RendererPermissionsPolicyDelegate::CanExecuteScriptOnPage(

@@ -196,8 +196,7 @@ void PepperFlashMenuHost::OnMenuClosed(int request_id) {
 
 void PepperFlashMenuHost::SendMenuReply(int32_t result, int action) {
   ppapi::host::ReplyMessageContext reply_context(
-      ppapi::proxy::ResourceMessageReplyParams(pp_resource(), 0),
-      NULL,
+      ppapi::proxy::ResourceMessageReplyParams(pp_resource(), 0), nullptr,
       MSG_ROUTING_NONE);
   reply_context.params.set_result(result);
   host()->SendReply(reply_context, PpapiPluginMsg_FlashMenu_ShowReply(action));

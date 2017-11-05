@@ -68,7 +68,7 @@ bool PhishingClassifierFilter::OnControlMessageReceived(
 }
 
 void PhishingClassifierFilter::OnSetPhishingModel(const std::string& model) {
-  safe_browsing::Scorer* scorer = NULL;
+  safe_browsing::Scorer* scorer = nullptr;
   // An empty model string means we should disable client-side phishing
   // detection.
   if (!model.empty()) {

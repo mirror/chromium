@@ -60,12 +60,12 @@ Scorer* Scorer::Create(const base::StringPiece& model_str) {
     DLOG(ERROR) << "Unable to parse phishing model.  This Scorer object is "
                 << "invalid.";
     RecordScorerCreationStatus(SCORER_FAIL_MODEL_PARSE_ERROR);
-    return NULL;
+    return nullptr;
   } else if (!model.IsInitialized()) {
     DLOG(ERROR) << "Unable to parse phishing model.  The model is missing "
                 << "some required fields.  Maybe the .proto file changed?";
     RecordScorerCreationStatus(SCORER_FAIL_MODEL_MISSING_FIELDS);
-    return NULL;
+    return nullptr;
   }
   RecordScorerCreationStatus(SCORER_SUCCESS);
   for (int i = 0; i < model.page_term_size(); ++i) {

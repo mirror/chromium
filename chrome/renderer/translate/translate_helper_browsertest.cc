@@ -144,7 +144,7 @@ class TestTranslateHelper : public translate::TranslateHelper {
 
 class TranslateHelperBrowserTest : public ChromeRenderViewTest {
  public:
-  TranslateHelperBrowserTest() : translate_helper_(NULL) {}
+  TranslateHelperBrowserTest() : translate_helper_(nullptr) {}
 
  protected:
   void SetUp() override {
@@ -194,7 +194,8 @@ TEST_F(TranslateHelperBrowserTest, TranslateLibNeverReady) {
   base::RunLoop().RunUntilIdle();
 
   translate::TranslateErrors::Type error;
-  ASSERT_TRUE(translate_helper_->GetPageTranslatedResult(NULL, NULL, &error));
+  ASSERT_TRUE(
+      translate_helper_->GetPageTranslatedResult(nullptr, nullptr, &error));
   EXPECT_EQ(translate::TranslateErrors::TRANSLATION_TIMEOUT, error);
 }
 
@@ -279,7 +280,8 @@ TEST_F(TranslateHelperBrowserTest, TranslateFailure) {
   base::RunLoop().RunUntilIdle();
 
   translate::TranslateErrors::Type error;
-  ASSERT_TRUE(translate_helper_->GetPageTranslatedResult(NULL, NULL, &error));
+  ASSERT_TRUE(
+      translate_helper_->GetPageTranslatedResult(nullptr, nullptr, &error));
   EXPECT_EQ(translate::TranslateErrors::TRANSLATION_ERROR, error);
 }
 

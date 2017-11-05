@@ -52,7 +52,7 @@ bool AppCategorizer::IsWhitelistedApp(
 
   bool is_hangouts_app =
       manifest_url.SchemeIsFileSystem() &&
-      manifest_url.inner_url() != NULL &&
+      manifest_url.inner_url() != nullptr &&
       manifest_url.inner_url()->SchemeIsCryptographic() &&
       // The manifest must be loaded from the host's FileSystem.
       (manifest_url.inner_url()->host() == app_url.host()) &&

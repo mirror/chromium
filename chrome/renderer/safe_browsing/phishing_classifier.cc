@@ -60,7 +60,7 @@ void RecordReasonForSkippingClassificationToUMA(
 PhishingClassifier::PhishingClassifier(content::RenderFrame* render_frame,
                                        FeatureExtractorClock* clock)
     : render_frame_(render_frame),
-      scorer_(NULL),
+      scorer_(nullptr),
       clock_(clock),
       weak_factory_(this) {
   Clear();
@@ -96,7 +96,7 @@ void PhishingClassifier::set_phishing_scorer(const Scorer* scorer) {
 }
 
 bool PhishingClassifier::is_ready() const {
-  return scorer_ != NULL;
+  return scorer_ != nullptr;
 }
 
 void PhishingClassifier::BeginClassification(
@@ -241,10 +241,10 @@ void PhishingClassifier::RunFailureCallback() {
 }
 
 void PhishingClassifier::Clear() {
-  page_text_ = NULL;
+  page_text_ = nullptr;
   done_callback_.Reset();
-  features_.reset(NULL);
-  shingle_hashes_.reset(NULL);
+  features_.reset(nullptr);
+  shingle_hashes_.reset(nullptr);
 }
 
 }  // namespace safe_browsing

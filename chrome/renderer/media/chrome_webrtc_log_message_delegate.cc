@@ -60,7 +60,7 @@ void ChromeWebRtcLogMessageDelegate::LogMessageOnIOThread(
 
 void ChromeWebRtcLogMessageDelegate::OnFilterRemoved() {
   DCHECK_CALLED_ON_VALID_SEQUENCE(sequence_checker_);
-  message_filter_ = NULL;
+  message_filter_ = nullptr;
 }
 
 void ChromeWebRtcLogMessageDelegate::OnStartLogging() {

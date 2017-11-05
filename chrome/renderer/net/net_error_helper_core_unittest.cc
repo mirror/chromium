@@ -153,7 +153,7 @@ class NetErrorHelperCoreTest : public testing::Test,
                                public NetErrorHelperCore::Delegate {
  public:
   NetErrorHelperCoreTest()
-      : timer_(NULL),
+      : timer_(nullptr),
         update_count_(0),
         error_html_update_count_(0),
         reload_count_(0),
@@ -378,7 +378,7 @@ class NetErrorHelperCoreTest : public testing::Test,
     std::unique_ptr<base::Value> parsed_body(
         reader.Read(navigation_correction_request_body));
     ASSERT_TRUE(parsed_body);
-    base::DictionaryValue* dict = NULL;
+    base::DictionaryValue* dict = nullptr;
     ASSERT_TRUE(parsed_body->GetAsDictionary(&dict));
 
     EXPECT_TRUE(StringValueEquals(*dict, "params.urlQuery", kFailedUrl));
@@ -424,7 +424,7 @@ class NetErrorHelperCoreTest : public testing::Test,
     std::unique_ptr<base::Value> parsed_body(
         reader.Read(tracking_request_body));
     ASSERT_TRUE(parsed_body);
-    base::DictionaryValue* dict = NULL;
+    base::DictionaryValue* dict = nullptr;
     ASSERT_TRUE(parsed_body->GetAsDictionary(&dict));
 
     EXPECT_TRUE(

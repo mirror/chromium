@@ -25,7 +25,7 @@ TEST_F(CastSessionBrowserTest, CreateAndDestroy) {
   scoped_refptr<CastSession> session(new CastSession());
 
   // Causes CastSession to destruct.
-  session = NULL;
+  session = nullptr;
   base::RunLoop().RunUntilIdle();
 }
 

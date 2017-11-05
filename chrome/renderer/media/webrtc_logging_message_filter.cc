@@ -13,8 +13,8 @@
 WebRtcLoggingMessageFilter::WebRtcLoggingMessageFilter(
     const scoped_refptr<base::SingleThreadTaskRunner>& io_task_runner)
     : io_task_runner_(io_task_runner),
-      log_message_delegate_(NULL),
-      sender_(NULL) {
+      log_message_delegate_(nullptr),
+      sender_(nullptr) {
   // May be null in a browsertest using MockRenderThread.
   if (io_task_runner_.get()) {
     io_task_runner_->PostTask(
@@ -46,13 +46,13 @@ void WebRtcLoggingMessageFilter::OnFilterAdded(IPC::Channel* channel) {
 
 void WebRtcLoggingMessageFilter::OnFilterRemoved() {
   DCHECK(!io_task_runner_.get() || io_task_runner_->BelongsToCurrentThread());
-  sender_ = NULL;
+  sender_ = nullptr;
   log_message_delegate_->OnFilterRemoved();
 }
 
 void WebRtcLoggingMessageFilter::OnChannelClosing() {
   DCHECK(!io_task_runner_.get() || io_task_runner_->BelongsToCurrentThread());
-  sender_ = NULL;
+  sender_ = nullptr;
   log_message_delegate_->OnFilterRemoved();
 }
 

@@ -738,7 +738,7 @@ CastRtpStream* CastStreamingNativeHandler::GetRtpStreamOrThrow(
   v8::Isolate* isolate = context()->v8_context()->GetIsolate();
   isolate->ThrowException(v8::Exception::RangeError(v8::String::NewFromUtf8(
       isolate, kRtpStreamNotFound)));
-  return NULL;
+  return nullptr;
 }
 
 CastUdpTransport* CastStreamingNativeHandler::GetUdpTransportOrThrow(
@@ -750,7 +750,7 @@ CastUdpTransport* CastStreamingNativeHandler::GetUdpTransportOrThrow(
   v8::Isolate* isolate = context()->v8_context()->GetIsolate();
   isolate->ThrowException(v8::Exception::RangeError(
       v8::String::NewFromUtf8(isolate, kUdpTransportNotFound)));
-  return NULL;
+  return nullptr;
 }
 
 bool CastStreamingNativeHandler::FrameReceiverConfigFromArg(

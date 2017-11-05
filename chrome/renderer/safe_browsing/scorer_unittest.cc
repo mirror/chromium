@@ -68,7 +68,7 @@ class PhishingScorerTest : public ::testing::Test {
 TEST_F(PhishingScorerTest, HasValidModel) {
   std::unique_ptr<Scorer> scorer;
   scorer.reset(Scorer::Create(model_.SerializeAsString()));
-  EXPECT_TRUE(scorer.get() != NULL);
+  EXPECT_TRUE(scorer.get() != nullptr);
 
   // Invalid model string.
   scorer.reset(Scorer::Create("bogus string"));
