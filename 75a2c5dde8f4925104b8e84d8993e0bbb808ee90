@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "485f091a_09ccb122",
+        "filename": "third_party/WebKit/Source/core/css/cssom/CSSSkew.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 28,
+      "author": {
+        "id": 1197444
+      },
+      "writtenOn": "2017-11-05T21:06:07Z",
+      "side": 1,
+      "message": "nit: I would swap the order of these two, since this one is now the \"Constructor defined in the IDL\".",
+      "revId": "75a2c5dde8f4925104b8e84d8993e0bbb808ee90",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
