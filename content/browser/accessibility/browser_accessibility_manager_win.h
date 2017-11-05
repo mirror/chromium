@@ -33,6 +33,9 @@ class CONTENT_EXPORT BrowserAccessibilityManagerWin
   // Get the closest containing HWND.
   HWND GetParentHWND();
 
+  // Get the IAccessible* for the HWND.
+  IAccessible* GetParentIAccessible();
+
   // IAccessible2UsageObserver
   void OnIAccessible2Used() override;
 
