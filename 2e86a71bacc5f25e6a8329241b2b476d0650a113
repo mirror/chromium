@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "26d4c91b_3b639f11",
+        "filename": "content/public/android/java/src/org/chromium/content/browser/webcontents/WebContentsImpl.java",
+        "patchSetId": 14
+      },
+      "lineNbr": 164,
+      "author": {
+        "id": 1149077
+      },
+      "writtenOn": "2017-11-05T23:17:45Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "8438520b_3bb460ae",
+      "range": {
+        "startLine": 164,
+        "startChar": 4,
+        "endLine": 164,
+        "endChar": 10
+      },
+      "revId": "2e86a71bacc5f25e6a8329241b2b476d0650a113",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "8fe47710_7bd07c68",
         "filename": "content/public/android/java/src/org/chromium/content/browser/webcontents/WebContentsImpl.java",
         "patchSetId": 14
@@ -48,6 +72,30 @@
     },
     {
       "key": {
+        "uuid": "cd1bea5b_9d604519",
+        "filename": "content/public/android/java/src/org/chromium/content/browser/webcontents/WebContentsImpl.java",
+        "patchSetId": 14
+      },
+      "lineNbr": 734,
+      "author": {
+        "id": 1149077
+      },
+      "writtenOn": "2017-11-05T23:17:45Z",
+      "side": 1,
+      "message": "Acknowledged. Added a javadoc to clarify the intention for now.",
+      "parentUuid": "8fe47710_7bd07c68",
+      "range": {
+        "startLine": 734,
+        "startChar": 4,
+        "endLine": 734,
+        "endChar": 10
+      },
+      "revId": "2e86a71bacc5f25e6a8329241b2b476d0650a113",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "bd420ad8_417002e8",
         "filename": "content/public/android/java/src/org/chromium/content/browser/webcontents/WebContentsImpl.java",
         "patchSetId": 14
@@ -68,6 +116,30 @@
       "revId": "2e86a71bacc5f25e6a8329241b2b476d0650a113",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "10a52701_045d27bc",
+        "filename": "content/public/android/java/src/org/chromium/content/browser/webcontents/WebContentsImpl.java",
+        "patchSetId": 14
+      },
+      "lineNbr": 739,
+      "author": {
+        "id": 1149077
+      },
+      "writtenOn": "2017-11-05T23:17:45Z",
+      "side": 1,
+      "message": "Thanks for the suggestion. Left a todo for a reminder.",
+      "parentUuid": "bd420ad8_417002e8",
+      "range": {
+        "startLine": 739,
+        "startChar": 17,
+        "endLine": 739,
+        "endChar": 32
+      },
+      "revId": "2e86a71bacc5f25e6a8329241b2b476d0650a113",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
