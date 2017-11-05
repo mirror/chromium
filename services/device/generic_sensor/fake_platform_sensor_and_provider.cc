@@ -47,6 +47,12 @@ double FakePlatformSensor::GetMinimumSupportedFrequency() {
   return 1.0;
 }
 
+FakePlatformSensorClient::FakePlatformSensorClient() {
+  ON_CALL(*this, IsSuspended()).WillByDefault(testing::Return(false));
+}
+
+FakePlatformSensorClient::~FakePlatformSensorClient() = default;
+
 FakePlatformSensorProvider::FakePlatformSensorProvider() = default;
 FakePlatformSensorProvider::~FakePlatformSensorProvider() = default;
 

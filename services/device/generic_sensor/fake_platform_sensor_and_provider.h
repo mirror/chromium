@@ -36,6 +36,21 @@ class FakePlatformSensor : public PlatformSensor {
   DISALLOW_COPY_AND_ASSIGN(FakePlatformSensor);
 };
 
+// TODO: Make a generic PlatformSensorClient implementation
+// which is used through all the existing tests.
+class FakePlatformSensorClient : public PlatformSensor::Client {
+ public:
+  FakePlatformSensorClient();
+  ~FakePlatformSensorClient() override;
+  // PlatformSensor::Client interface.
+  MOCK_METHOD1(OnSensorReadingChanged, void(mojom::SensorType type));
+  MOCK_METHOD0(OnSensorError, void());
+  MOCK_METHOD0(IsSuspended, bool());
+
+ private:
+  DISALLOW_COPY_AND_ASSIGN(FakePlatformSensorClient);
+};
+
 class FakePlatformSensorProvider : public PlatformSensorProvider {
  public:
   FakePlatformSensorProvider();

@@ -41,9 +41,6 @@ class PlatformSensor : public base::RefCountedThreadSafe<PlatformSensor> {
 
   virtual mojom::ReportingMode GetReportingMode() = 0;
   virtual PlatformSensorConfiguration GetDefaultConfiguration() = 0;
-  virtual bool StartSensor(
-      const PlatformSensorConfiguration& configuration) = 0;
-  virtual void StopSensor() = 0;
   virtual bool CheckSensorConfiguration(
       const PlatformSensorConfiguration& configuration) = 0;
 
@@ -63,6 +60,9 @@ class PlatformSensor : public base::RefCountedThreadSafe<PlatformSensor> {
   bool StartListening(Client* client,
                       const PlatformSensorConfiguration& config);
   bool StopListening(Client* client, const PlatformSensorConfiguration& config);
+  // Stops all the configurations tied to the |client|, but the |client| still
+  // gets notification.
+  bool StopListening(Client* client);
 
   void UpdateSensor();
 
@@ -70,9 +70,15 @@ class PlatformSensor : public base::RefCountedThreadSafe<PlatformSensor> {
   void RemoveClient(Client*);
 
   bool GetLatestReading(SensorReading* result);
+  // Returns 'true' if the sensor has active configurations; returns
+  // 'false' otherwise.
+  bool IsActive() const;
 
  protected:
   virtual ~PlatformSensor();
+  virtual bool StartSensor(
+      const PlatformSensorConfiguration& configuration) = 0;
+  virtual void StopSensor() = 0;
   PlatformSensor(mojom::SensorType type,
                  mojo::ScopedSharedBufferMapping mapping,
                  PlatformSensorProvider* provider);
