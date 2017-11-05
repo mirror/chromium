@@ -3291,4 +3291,37 @@ TEST(NetworkQualityEstimatorTest,
   EXPECT_EQ(12, estimator.ComputeIncreaseInTransportRTTForTests().value_or(0));
 }
 
+// Tests that the ECT is computed when more than N RTT samples have been
+// received.
+TEST(NetworkQualityEstimatorTest, MaybeComputeECTAfterNSamples) {
+  base::TimeTicks now = base::TimeTicks::Now();
+  base::TimeTicks historical = now - base::TimeDelta::FromMinutes(10);
+
+  std::map<std::string, std::string> variation_params;
+  TestNetworkQualityEstimator estimator(variation_params);
+
+  const base::TimeDelta rtt = base::TimeDelta::FromSeconds(1);
+  uint64_t host = 1u;
+
+  for (size_t i = 0; i < 300 * 1.5 + 2; ++i) {
+    estimator.AddAndNotifyObserversOfRTT(NetworkQualityEstimator::Observation(
+        rtt.InMilliseconds(), historical, INT32_MIN,
+        NETWORK_QUALITY_OBSERVATION_SOURCE_HTTP, host));
+    if (i % 100 == 0 && i != 0) {
+      LOG(WARNING) << "xxx estimator.GetHttpRTT()="
+                   << estimator.GetHttpRTT().value_or(
+                          base::TimeDelta::FromSeconds(1000));
+    }
+  }
+  EXPECT_EQ(rtt, estimator.GetHttpRTT().value());
+
+  const base::TimeDelta rtt_new = base::TimeDelta::FromSeconds(3);
+  for (size_t i = 0; i < 50; ++i) {
+    estimator.AddAndNotifyObserversOfRTT(NetworkQualityEstimator::Observation(
+        rtt_new.InMilliseconds(), now, INT32_MIN,
+        NETWORK_QUALITY_OBSERVATION_SOURCE_HTTP, host));
+  }
+  EXPECT_EQ(rtt_new, estimator.GetHttpRTT().value());
+}
+
 }  // namespace net

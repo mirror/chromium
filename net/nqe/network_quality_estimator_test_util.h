@@ -227,6 +227,7 @@ class TestNetworkQualityEstimator : public NetworkQualityEstimator {
   using NetworkQualityEstimator::SetTickClockForTesting;
   using NetworkQualityEstimator::OnConnectionTypeChanged;
   using NetworkQualityEstimator::OnUpdatedTransportRTTAvailable;
+  using NetworkQualityEstimator::AddAndNotifyObserversOfRTT;
 
  private:
   class LocalHttpTestServer : public EmbeddedTestServer {
