@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "53dc5ef0_53bd190a",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 4
+      },
+      "lineNbr": 9,
+      "author": {
+        "id": 1214309
+      },
+      "writtenOn": "2017-11-05T06:25:58Z",
+      "side": 1,
+      "message": "trailing ws in this commit comment.",
+      "range": {
+        "startLine": 9,
+        "startChar": 70,
+        "endLine": 9,
+        "endChar": 0
+      },
+      "revId": "2026518d36e016d7f95dd8e5d3d05dee28846a7f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2a9e3658_89e11ba8",
+        "filename": "content/browser/accessibility/browser_accessibility_com_win.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 96,
+      "author": {
+        "id": 1214309
+      },
+      "writtenOn": "2017-11-05T06:25:58Z",
+      "side": 1,
+      "message": "Can we fix this in AXPlatformNodeWin::get_accParent?",
+      "range": {
+        "startLine": 96,
+        "startChar": 17,
+        "endLine": 96,
+        "endChar": 29
+      },
+      "revId": "2026518d36e016d7f95dd8e5d3d05dee28846a7f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
