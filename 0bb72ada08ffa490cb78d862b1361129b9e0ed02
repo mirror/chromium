@@ -1,0 +1,119 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "96a97602_90a7d25f",
+        "filename": "third_party/WebKit/Source/core/editing/ime/InputMethodController.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 573,
+      "author": {
+        "id": 1144165
+      },
+      "writtenOn": "2017-11-05T05:37:55Z",
+      "side": 1,
+      "message": "Seems better to declare a const for this behavior.\n\nIs the same behavior used at other places in InputMethodController?",
+      "range": {
+        "startLine": 569,
+        "startChar": 6,
+        "endLine": 573,
+        "endChar": 18
+      },
+      "revId": "0bb72ada08ffa490cb78d862b1361129b9e0ed02",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "cdf19d1c_83555915",
+        "filename": "third_party/WebKit/Source/core/editing/ime/InputMethodController.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 610,
+      "author": {
+        "id": 1144165
+      },
+      "writtenOn": "2017-11-05T05:37:55Z",
+      "side": 1,
+      "message": "Ditto.",
+      "range": {
+        "startLine": 606,
+        "startChar": 6,
+        "endLine": 610,
+        "endChar": 18
+      },
+      "revId": "0bb72ada08ffa490cb78d862b1361129b9e0ed02",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "460b8d1a_513d5623",
+        "filename": "third_party/WebKit/Source/core/editing/ime/InputMethodController.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 621,
+      "author": {
+        "id": 1144165
+      },
+      "writtenOn": "2017-11-05T05:37:55Z",
+      "side": 1,
+      "message": "The exact meaning of |relative_caret_position| isn\u0027t straightforward.\n\nTo ease reviewing and improve documentation, could you add some comment to this function in IMC.h?",
+      "range": {
+        "startLine": 621,
+        "startChar": 5,
+        "endLine": 621,
+        "endChar": 58
+      },
+      "revId": "0bb72ada08ffa490cb78d862b1361129b9e0ed02",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "08854775_b21e9eb1",
+        "filename": "third_party/WebKit/Source/core/editing/ime/InputMethodController.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 679,
+      "author": {
+        "id": 1144165
+      },
+      "writtenOn": "2017-11-05T05:37:55Z",
+      "side": 1,
+      "message": "Ditto.",
+      "range": {
+        "startLine": 679,
+        "startChar": 28,
+        "endLine": 679,
+        "endChar": 50
+      },
+      "revId": "0bb72ada08ffa490cb78d862b1361129b9e0ed02",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6e34394f_d2b6815f",
+        "filename": "third_party/WebKit/Source/core/editing/ime/InputMethodController.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 919,
+      "author": {
+        "id": 1144165
+      },
+      "writtenOn": "2017-11-05T05:37:55Z",
+      "side": 1,
+      "message": "It seems better to file a bug and move the discussion there, and leave only a \"behavior needs discussion\" note with bug number here.",
+      "range": {
+        "startLine": 894,
+        "startChar": 0,
+        "endLine": 919,
+        "endChar": 74
+      },
+      "revId": "0bb72ada08ffa490cb78d862b1361129b9e0ed02",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
