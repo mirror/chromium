@@ -29,18 +29,29 @@
 class ClientHintsBrowserTest : public InProcessBrowserTest {
  public:
   ClientHintsBrowserTest()
-      : https_server_(net::EmbeddedTestServer::TYPE_HTTPS),
+      : http_server_(net::EmbeddedTestServer::TYPE_HTTP),
+        https_server_(net::EmbeddedTestServer::TYPE_HTTPS),
         expect_client_hints_(false),
         expect_client_hints_on_main_frame_only_(false),
         count_client_hints_headers_seen_(0) {
+    http_server_.ServeFilesFromSourceDirectory("chrome/test/data/client_hints");
     https_server_.ServeFilesFromSourceDirectory(
         "chrome/test/data/client_hints");
 
+    http_server_.RegisterRequestMonitor(
+        base::Bind(&ClientHintsBrowserTest::MonitorResourceRequest,
+                   base::Unretained(this)));
     https_server_.RegisterRequestMonitor(
         base::Bind(&ClientHintsBrowserTest::MonitorResourceRequest,
                    base::Unretained(this)));
 
+    EXPECT_TRUE(http_server_.Start());
     EXPECT_TRUE(https_server_.Start());
+
+    accept_ch_with_lifetime_http_url_ =
+        http_server_.GetURL("/accept_ch_with_lifetime.html");
+    EXPECT_TRUE(accept_ch_with_lifetime_http_url_.SchemeIsHTTPOrHTTPS());
+    EXPECT_FALSE(accept_ch_with_lifetime_http_url_.SchemeIsCryptographic());
 
     accept_ch_with_lifetime_url_ =
         https_server_.GetURL("/accept_ch_with_lifetime.html");
@@ -77,6 +88,10 @@ class ClientHintsBrowserTest : public InProcessBrowserTest {
 
   void SetClientHintExpectationsOnMainFrameOnly(bool expect_client_hints) {
     expect_client_hints_on_main_frame_only_ = expect_client_hints;
+  }
+
+  const GURL& accept_ch_with_lifetime_http_url() const {
+    return accept_ch_with_lifetime_http_url_;
   }
 
   // A URL whose response headers include Accept-CH and Accept-CH-Lifetime
@@ -138,7 +153,10 @@ class ClientHintsBrowserTest : public InProcessBrowserTest {
       count_client_hints_headers_seen_++;
   }
 
+  net::EmbeddedTestServer http_server_;
   net::EmbeddedTestServer https_server_;
+  GURL accept_ch_with_lifetime_http_url_;
+
   GURL accept_ch_with_lifetime_url_;
   GURL accept_ch_without_lifetime_url_;
   GURL without_accept_ch_without_lifetime_url_;
@@ -158,6 +176,26 @@ class ClientHintsBrowserTest : public InProcessBrowserTest {
 IN_PROC_BROWSER_TEST_F(ClientHintsBrowserTest, ClientHintsHttps) {
   base::HistogramTester histogram_tester;
   ui_test_utils::NavigateToURL(browser(), accept_ch_with_lifetime_url());
+
+  histogram_tester.ExpectUniqueSample("ClientHints.UpdateEventCount", 1, 1);
+
+  content::FetchHistogramsFromChildProcesses();
+  SubprocessMetricsProvider::MergeHistogramDeltasForTesting();
+
+  // client_hints_url() sets two client hints.
+  histogram_tester.ExpectUniqueSample("ClientHints.UpdateSize", 2, 1);
+  // accept_ch_with_lifetime_url() sets client hints persist duration to 3600
+  // seconds.
+  histogram_tester.ExpectUniqueSample("ClientHints.PersistDuration",
+                                      3600 * 1000, 1);
+}
+
+// Loads a webpage that requests persisting of client hints. Verifies that
+// the browser receives the mojo notification from the renderer and persists the
+// client hints to the disk.
+IN_PROC_BROWSER_TEST_F(ClientHintsBrowserTest, ClientHintsHttp) {
+  base::HistogramTester histogram_tester;
+  ui_test_utils::NavigateToURL(browser(), accept_ch_with_lifetime_http_url());
 
   histogram_tester.ExpectUniqueSample("ClientHints.UpdateEventCount", 1, 1);
 
