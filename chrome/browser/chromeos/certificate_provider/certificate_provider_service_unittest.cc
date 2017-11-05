@@ -97,7 +97,7 @@ class TestDelegate : public CertificateProviderService::Delegate {
       int sign_request_id,
       uint16_t algorithm,
       const scoped_refptr<net::X509Certificate>& certificate,
-      const std::string& input) override {
+      base::span<const uint8_t> input) override {
     EXPECT_EQ(expected_request_type_, RequestType::SIGN);
     last_sign_request_id_ = sign_request_id;
     last_extension_id_ = extension_id;
@@ -469,7 +469,7 @@ TEST_F(CertificateProviderServiceTest, SignRequest) {
   test_delegate_->ClearAndExpectRequest(TestDelegate::RequestType::SIGN);
 
   std::vector<uint8_t> received_signature;
-  private_key->SignDigest(
+  private_key->Sign(
       SSL_SIGN_RSA_PKCS1_SHA256, std::string("any input data"),
       base::Bind(&ExpectOKAndStoreSignature, &received_signature));
 
@@ -505,9 +505,8 @@ TEST_F(CertificateProviderServiceTest, UnloadExtensionDuringSign) {
   test_delegate_->ClearAndExpectRequest(TestDelegate::RequestType::SIGN);
 
   net::Error error = net::OK;
-  private_key->SignDigest(
-      SSL_SIGN_RSA_PKCS1_SHA256, std::string("any input data"),
-      base::Bind(&ExpectEmptySignatureAndStoreError, &error));
+  private_key->Sign(SSL_SIGN_RSA_PKCS1_SHA256, std::string("any input data"),
+                    base::Bind(&ExpectEmptySignatureAndStoreError, &error));
 
   task_runner_->RunUntilIdle();
 
