@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "7dc9ff31_d43c52d4",
+        "filename": "chrome/browser/extensions/bookmark_app_navigation_throttle.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 58,
+      "author": {
+        "id": 1133035
+      },
+      "writtenOn": "2017-11-05T23:42:27Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "470991c6_4411078c",
+      "revId": "e6aae1cc02638fe0a3d0744760c324ee4a8eead3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "2cb4fe08_a5a41284",
         "filename": "chrome/browser/extensions/bookmark_app_navigation_throttle.cc",
         "patchSetId": 6
@@ -42,6 +60,30 @@
     },
     {
       "key": {
+        "uuid": "80786e4b_09836b98",
+        "filename": "chrome/browser/extensions/bookmark_app_navigation_throttle.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 148,
+      "author": {
+        "id": 1133035
+      },
+      "writtenOn": "2017-11-05T23:42:27Z",
+      "side": 1,
+      "message": "I\u0027m worried that we are breaking a well-defined contract of target\u003d_self links. Developers assume that once a user clicks a target\u003d_self link the current context will be navigated to the target. I think it\u0027s OK to do so for the MVP but I would like to revisit the decision afterwards.",
+      "parentUuid": "2cb4fe08_a5a41284",
+      "range": {
+        "startLine": 148,
+        "startChar": 22,
+        "endLine": 148,
+        "endChar": 28
+      },
+      "revId": "e6aae1cc02638fe0a3d0744760c324ee4a8eead3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "b8d44b6f_554dd782",
         "filename": "chrome/browser/extensions/bookmark_app_navigation_throttle.cc",
         "patchSetId": 6
@@ -53,6 +95,24 @@
       "writtenOn": "2017-11-02T03:22:25Z",
       "side": 1,
       "message": "What prevents this opening a new app window if matching_app_ref is the same as the current app?",
+      "revId": "e6aae1cc02638fe0a3d0744760c324ee4a8eead3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "db3853aa_1e0e25cd",
+        "filename": "chrome/browser/extensions/bookmark_app_navigation_throttle.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 212,
+      "author": {
+        "id": 1133035
+      },
+      "writtenOn": "2017-11-05T23:42:27Z",
+      "side": 1,
+      "message": "That would be the origin check on line 178. If the target\u0027s origin is the same as the current\u0027s page origin then don\u0027t redirect the navigation.",
+      "parentUuid": "b8d44b6f_554dd782",
       "revId": "e6aae1cc02638fe0a3d0744760c324ee4a8eead3",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
