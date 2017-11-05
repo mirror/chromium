@@ -9,6 +9,7 @@
 #include <queue>
 #include <utility>
 
+#include "base/feature_list.h"
 #include "base/lazy_instance.h"
 #include "base/macros.h"
 #include "base/memory/ptr_util.h"
@@ -24,6 +25,7 @@
 #include "content/common/site_isolation_policy.h"
 #include "content/public/browser/browser_thread.h"
 #include "content/public/common/browser_side_navigation_policy.h"
+#include "content/public/common/content_features.h"
 #include "third_party/WebKit/public/web/WebSandboxFlags.h"
 
 namespace content {
@@ -160,7 +162,9 @@ FrameTreeNode::FrameTreeNode(FrameTree* frame_tree,
       devtools_frame_token_(devtools_frame_token),
       frame_owner_properties_(frame_owner_properties),
       loading_progress_(kLoadingProgressNotStarted),
-      blame_context_(frame_tree_node_id_, parent) {
+      pause_count_(parent ? parent->pause_count() : 0),
+      blame_context_(frame_tree_node_id_, parent),
+      weak_ptr_factory_(this) {
   std::pair<FrameTreeNodeIdMap::iterator, bool> result =
       g_frame_tree_node_id_map.Get().insert(
           std::make_pair(frame_tree_node_id_, this));

@@ -49,4 +49,8 @@ interface HTMLIFrameElement : HTMLElement {
 
     [CEReactions, Reflect, TreatNullAs=EmptyString] attribute DOMString marginHeight;
     [CEReactions, Reflect, TreatNullAs=EmptyString] attribute DOMString marginWidth;
+
+    [RuntimeEnabled=PauseFrame, CallWith=ScriptState] Promise<void> pause();
+    [RuntimeEnabled=PauseFrame, CallWith=ScriptState] Promise<void> unpause();
+    [RuntimeEnabled=PauseFrame] readonly attribute boolean paused;
 };

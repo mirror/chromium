@@ -344,6 +344,16 @@ class CONTENT_EXPORT FrameTreeNode {
 
   void OnSetHasReceivedUserGesture();
 
+  int pause_count() const { return pause_count_; }
+  void set_pause_count(int pause_count) {
+    DCHECK_LE(0, pause_count);
+    pause_count_ = pause_count;
+  }
+
+  base::WeakPtr<FrameTreeNode> AsWeakPtr() {
+    return weak_ptr_factory_.GetWeakPtr();
+  }
+
  private:
   FRIEND_TEST_ALL_PREFIXES(SitePerProcessFeaturePolicyBrowserTest,
                            ContainerPolicyDynamic);
@@ -448,10 +458,18 @@ class CONTENT_EXPORT FrameTreeNode {
 
   base::TimeTicks last_focus_time_;
 
+  // The PauseFrameAPI pause counter. This value is inherited from its parent
+  // on creation (0 if no parent). If a frame (or its parent) is paused, this
+  // value increments. When the frame (or its ancestor) is unpaused, it's
+  // decremented. Don't let the value go negative, the lowest value is zero.
+  int pause_count_;
+
   // A helper for tracing the snapshots of this FrameTreeNode and attributing
   // browser process activities to this node (when possible).  It is unrelated
   // to the core logic of FrameTreeNode.
   FrameTreeNodeBlameContext blame_context_;
+
+  base::WeakPtrFactory<FrameTreeNode> weak_ptr_factory_;
 
   DISALLOW_COPY_AND_ASSIGN(FrameTreeNode);
 };

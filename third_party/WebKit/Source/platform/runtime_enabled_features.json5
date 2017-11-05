@@ -765,6 +765,10 @@
       name: "PassPaintVisualRectToCompositor",
     },
     {
+      name: "PauseFrame",
+      status: "experimental",
+    },
+    {
       name: "PaymentApp",
       status: "experimental",
     },

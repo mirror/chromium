@@ -285,6 +285,10 @@ class BLINK_EXPORT WebFrameClient {
   virtual void DidChangeFrameOwnerProperties(WebFrame* child_frame,
                                              const WebFrameOwnerProperties&) {}
 
+  // Called when the a frame has been paused or resumed by script.
+  virtual void DidPauseFrame(base::OnceClosure callback) {}
+  virtual void DidUnpauseFrame(base::OnceClosure callback) {}
+
   // Called when a watched CSS selector matches or stops matching.
   virtual void DidMatchCSS(
       const WebVector<WebString>& newly_matching_selectors,

@@ -1366,6 +1366,28 @@ void WebLocalFrameImpl::SetCaretVisible(bool visible) {
   GetFrame()->Selection().SetCaretVisible(visible);
 }
 
+void WebLocalFrameImpl::Pause() {
+  if (!GetFrame()->GetDocument()->LocalOwner())
+    return;
+
+  // Pause the frame's posted tasks.
+  Scheduler()->SetPaused(true);
+
+  // Pause loading.
+  GetFrame()->Loader().SetDefersLoading(true);
+
+  GetFrame()->GetDocument()->set_paused(true);
+}
+
+void WebLocalFrameImpl::Unpause() {
+  if (!GetFrame()->GetDocument()->LocalOwner())
+    return;
+
+  GetFrame()->GetDocument()->set_paused(false);
+  GetFrame()->Loader().SetDefersLoading(false);
+  Scheduler()->SetPaused(false);
+}
+
 VisiblePosition WebLocalFrameImpl::VisiblePositionForViewportPoint(
     const WebPoint& point_in_viewport) {
   return VisiblePositionForContentsPoint(
