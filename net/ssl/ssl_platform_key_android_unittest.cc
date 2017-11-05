@@ -92,8 +92,9 @@ TEST_P(SSLPlatformKeyAndroidTest, Matches) {
   ASSERT_TRUE(key);
 
   // All Android keys are expected to have the default preferences.
-  EXPECT_EQ(SSLPrivateKey::DefaultPreferences(test_key.type),
-            key->GetPreferences());
+  EXPECT_EQ(
+      SSLPrivateKey::DefaultPreferences(test_key.type, false /* no PSS */),
+      key->GetPreferences());
 
   TestSSLPrivateKeyMatches(key.get(), key_bytes);
 }
