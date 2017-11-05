@@ -25,11 +25,13 @@ WebRtcReceiverAdded::WebRtcReceiverAdded(WebRtcReceiverAdded&& other)
 WebRtcReceiverAdded::~WebRtcReceiverAdded() {}
 
 WebRtcReceiverRemoved::WebRtcReceiverRemoved(
-    scoped_refptr<webrtc::RtpReceiverInterface> receiver)
-    : receiver(std::move(receiver)) {}
+    scoped_refptr<webrtc::RtpReceiverInterface> receiver,
+    std::unique_ptr<WebRtcMediaStreamTrackAdapterMap::AdapterRef> track_ref)
+    : receiver(std::move(receiver)), track_ref(std::move(track_ref)) {}
 
 WebRtcReceiverRemoved::WebRtcReceiverRemoved(WebRtcReceiverRemoved&& other)
-    : receiver(std::move(other.receiver)) {}
+    : receiver(std::move(other.receiver)),
+      track_ref(std::move(other.track_ref)) {}
 
 WebRtcReceiverRemoved::~WebRtcReceiverRemoved() {}
 
@@ -90,8 +92,11 @@ void WebRtcSetRemoteDescriptionObserverHandler::OnSuccess(
 
   for (const auto& webrtc_receiver_removed :
        webrtc_state_changes.receivers_removed) {
-    content_state_changes.receivers_removed.push_back(
-        WebRtcReceiverRemoved(webrtc_receiver_removed.get()));
+    std::unique_ptr<WebRtcMediaStreamTrackAdapterMap::AdapterRef> track_ref =
+        track_adapter_map()->GetOrCreateRemoteTrackAdapter(
+            webrtc_receiver_removed->track().get());
+    content_state_changes.receivers_removed.push_back(WebRtcReceiverRemoved(
+        webrtc_receiver_removed.get(), std::move(track_ref)));
   }
 
   main_thread_->PostTask(

@@ -66,7 +66,9 @@ struct CONTENT_EXPORT WebRtcReceiverAdded {
 // operate on different threads, webrtc objects may have been modified by the
 // time this event is processed on the main thread.
 struct CONTENT_EXPORT WebRtcReceiverRemoved {
-  WebRtcReceiverRemoved(scoped_refptr<webrtc::RtpReceiverInterface> receiver);
+  WebRtcReceiverRemoved(
+      scoped_refptr<webrtc::RtpReceiverInterface> receiver,
+      std::unique_ptr<WebRtcMediaStreamTrackAdapterMap::AdapterRef> track_ref);
   WebRtcReceiverRemoved(const WebRtcReceiverRemoved& other) = delete;
   WebRtcReceiverRemoved(WebRtcReceiverRemoved&& other);
   ~WebRtcReceiverRemoved();
@@ -74,6 +76,10 @@ struct CONTENT_EXPORT WebRtcReceiverRemoved {
   // The receiver that was removed. Note that the state of the receiver may have
   // been modified by the time this event is processed on the main thread.
   scoped_refptr<webrtc::RtpReceiverInterface> receiver;
+
+  // The receiver's track when this event occurred.
+  std::unique_ptr<WebRtcMediaStreamTrackAdapterMap::AdapterRef>
+      track_ref;  // TODO(hbos): add test coverage
 };
 
 // The content layer correspondent of webrtc::SetRemoteDescriptionObserver.
