@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "2cf2e90b_dec6fbdc",
+        "filename": "device/geolocation/network_location_request.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 42,
+      "author": {
+        "id": 1113991
+      },
+      "writtenOn": "2017-11-05T15:27:51Z",
+      "side": 1,
+      "message": "nit: using LocationResponseCallback \u003d... ?",
+      "range": {
+        "startLine": 39,
+        "startChar": 2,
+        "endLine": 42,
+        "endChar": 31
+      },
+      "revId": "74f27d63cdd6c973de51dca4cd55e3be176c1e99",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "49c5357f_8304c14f",
+        "filename": "device/geolocation/network_location_request.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 54,
+      "author": {
+        "id": 1113991
+      },
+      "writtenOn": "2017-11-05T15:27:51Z",
+      "side": 1,
+      "message": "As a client I\u0027d understand that I should somehow hold on to\n|wifi_data| until the associated |position.timestamp| is\nreturned to me via the LocationResponseCallback. If that\u0027s\nthe meaning, then it\u0027s fine.",
+      "range": {
+        "startLine": 53,
+        "startChar": 32,
+        "endLine": 54,
+        "endChar": 18
+      },
+      "revId": "74f27d63cdd6c973de51dca4cd55e3be176c1e99",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    }
+  ]
+}
