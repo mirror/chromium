@@ -1,0 +1,55 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "ff87c242_d0bcdac7",
+        "filename": "third_party/WebKit/LayoutTests/paint/invalidation/flexbox/repaint-opacity-change.html",
+        "patchSetId": 3
+      },
+      "lineNbr": 5,
+      "author": {
+        "id": 1002481
+      },
+      "writtenOn": "2017-11-05T21:45:13Z",
+      "side": 1,
+      "message": "There are two changes in this file to make it work for SPv175+.\n1. Now change opacity from 0.5 to 1, instead of from 1 to 0.5 then back to 1. For SPv175+, the original test just changes nothing.",
+      "revId": "993f1843027215274246868c9e8682ad827c3042",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "023e2bd7_f2027b05",
+        "filename": "third_party/WebKit/LayoutTests/paint/invalidation/flexbox/repaint-opacity-change.html",
+        "patchSetId": 3
+      },
+      "lineNbr": 14,
+      "author": {
+        "id": 1002481
+      },
+      "writtenOn": "2017-11-05T21:45:13Z",
+      "side": 1,
+      "message": "2. Added background to make the target visible. Previously there was nothing visibily changed.",
+      "revId": "993f1843027215274246868c9e8682ad827c3042",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ba57f5e3_a5955364",
+        "filename": "third_party/WebKit/LayoutTests/paint/invalidation/invalidate-descendants-when-receiving-paint-layer.html",
+        "patchSetId": 3
+      },
+      "lineNbr": 15,
+      "author": {
+        "id": 1002481
+      },
+      "writtenOn": "2017-11-05T21:45:13Z",
+      "side": 1,
+      "message": "Added backgrounds to make the div visible. Previously there was nothing visibly changed.",
+      "revId": "993f1843027215274246868c9e8682ad827c3042",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
