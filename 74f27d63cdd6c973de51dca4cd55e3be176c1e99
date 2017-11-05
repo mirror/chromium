@@ -93,6 +93,30 @@
       "revId": "74f27d63cdd6c973de51dca4cd55e3be176c1e99",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3636c8a7_6c5c90f6",
+        "filename": "device/geolocation/network_location_request.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 54,
+      "author": {
+        "id": 1182889
+      },
+      "writtenOn": "2017-11-05T22:58:57Z",
+      "side": 1,
+      "message": "Resolving with a Yes per offline discussion",
+      "parentUuid": "f738a2e2_e35d3df2",
+      "range": {
+        "startLine": 53,
+        "startChar": 32,
+        "endLine": 54,
+        "endChar": 18
+      },
+      "revId": "74f27d63cdd6c973de51dca4cd55e3be176c1e99",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
