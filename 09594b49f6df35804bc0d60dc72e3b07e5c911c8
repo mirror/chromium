@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "e0edd3fa_992fe5b7",
+        "filename": "extensions/browser/extension_throttle_manager.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 171,
+      "author": {
+        "id": 1245983
+      },
+      "writtenOn": "2017-11-05T15:30:54Z",
+      "side": 1,
+      "message": "We are removing all entries from url_entries_. I think we are not performing \"constructive\" or \"destructive\" actions related to the connection itself. So I think there is no need for extra checks for \"type (!\u003d or \u003d\u003d) CONNECTION_NONE\".",
+      "range": {
+        "startLine": 171,
+        "startChar": 20,
+        "endLine": 171,
+        "endChar": 0
+      },
+      "revId": "09594b49f6df35804bc0d60dc72e3b07e5c911c8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
