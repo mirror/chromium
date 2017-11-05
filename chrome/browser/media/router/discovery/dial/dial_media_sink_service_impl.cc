@@ -63,8 +63,8 @@ void DialMediaSinkServiceImpl::OnUserGesture() {
   DVLOG(2) << "OnUserGesture: re-syncing " << current_sinks_.size()
            << " sinks to CastMediaSinkService";
   if (observer_) {
-    for (const auto& sink : current_sinks_)
-      observer_->OnDialSinkAdded(sink);
+    for (const auto& id_and_sink : current_sinks_)
+      observer_->OnDialSinkAdded(id_and_sink.second);
   }
 }
 
@@ -146,7 +146,7 @@ void DialMediaSinkServiceImpl::OnDeviceDescriptionAvailable(
   }
 
   MediaSinkInternal dial_sink(sink, extra_data);
-  current_sinks_.insert(dial_sink);
+  current_sinks_.insert_or_assign(sink.id(), dial_sink);
   if (observer_)
     observer_->OnDialSinkAdded(dial_sink);
 

@@ -8,14 +8,18 @@
 #include <memory>
 #include <set>
 
-#include "base/containers/small_map.h"
+#include "base/containers/flat_map.h"
+#include "base/containers/flat_set.h"
 #include "base/gtest_prod_util.h"
 #include "base/memory/ref_counted.h"
 #include "base/memory/weak_ptr.h"
 #include "base/sequence_checker.h"
+#include "chrome/browser/media/router/cast/cast_requests.h"
+#include "chrome/browser/media/router/cast/parsed_media_source.h"
 #include "chrome/browser/media/router/discovery/discovery_network_monitor.h"
 #include "chrome/browser/media/router/discovery/media_sink_discovery_metrics.h"
 #include "chrome/browser/media/router/discovery/media_sink_service_base.h"
+#include "chrome/common/media_router/media_source.h"
 #include "components/cast_channel/cast_channel_enum.h"
 #include "components/cast_channel/cast_socket.h"
 #include "net/base/backoff_entry.h"
@@ -36,6 +40,8 @@ class CastMediaSinkServiceImpl
       public DiscoveryNetworkMonitor::Observer {
  public:
   using SinkSource = CastDeviceCountMetrics::SinkSource;
+  using SinkAppAvailabilityUpdatedCallback =
+      base::RepeatingCallback<void(const MediaSink&, CastAppId, bool)>;
 
   // Default Cast control port to open Cast Socket from DIAL sink.
   static constexpr int kCastControlPort = 8009;
@@ -46,6 +52,7 @@ class CastMediaSinkServiceImpl
 
   CastMediaSinkServiceImpl(
       const OnSinksDiscoveredCallback& callback,
+      const SinkAppAvailabilityUpdatedCallback& app_availability_updated_cb,
       cast_channel::CastSocketService* cast_socket_service,
       DiscoveryNetworkMonitor* network_monitor,
       scoped_refptr<net::URLRequestContextGetter> url_request_context_getter,
@@ -75,6 +82,9 @@ class CastMediaSinkServiceImpl
   // discovery, but without opened cast channels.
   // |cast_sinks|: list of sinks found by current round of mDNS discovery.
   void AttemptConnection(const std::vector<MediaSinkInternal>& cast_sinks);
+
+  void AddAppAvailabilityRequest(std::vector<CastAppId> app_ids);
+  void RemoveAppAvailabilityRequest(std::vector<CastAppId> app_ids);
 
  private:
   friend class CastMediaSinkServiceImplTest;
@@ -257,7 +267,8 @@ class CastMediaSinkServiceImpl
   // RecordDeviceCounts().
   std::set<net::IPEndPoint> known_ip_endpoints_;
 
-  using MediaSinkInternalMap = std::map<net::IPEndPoint, MediaSinkInternal>;
+  using MediaSinkInternalMap =
+      base::flat_map<net::IPEndPoint, MediaSinkInternal>;
 
   // Map of sinks with opened cast channels keyed by IP endpoint.
   MediaSinkInternalMap current_sinks_map_;
@@ -292,7 +303,7 @@ class CastMediaSinkServiceImpl
   // failed to open a cast channel for a sink that is discovered via DIAL
   // exclusively. The count is reset for a sink when it is discovered via mDNS,
   // or if we detected a network change.
-  base::small_map<std::map<net::IPAddress, int>> dial_sink_failure_count_;
+  base::flat_map<net::IPAddress, int> dial_sink_failure_count_;
 
   scoped_refptr<base::SequencedTaskRunner> task_runner_;
 
@@ -301,6 +312,25 @@ class CastMediaSinkServiceImpl
   scoped_refptr<net::URLRequestContextGetter> url_request_context_getter_;
 
   std::unique_ptr<base::Clock> clock_;
+
+  // For handling sink queries.
+  enum class CastAppAvailability {
+    kAvailable,
+    kAvailableRescan,
+    kUnavailable,
+    kUnavailableRescan,
+    kUnknown
+  };
+
+  void OnAppAvailability(const MediaSink::Id& sink_id,
+                         const CastAppId& app_id,
+                         GetAppAvailabilityResult result);
+  void AddOrReplaceSink(const net::IPEndPoint& ip_endpoint,
+                        const MediaSinkInternal& sink);
+
+  base::flat_set<CastAppId> registered_apps_;
+  std::unique_ptr<CastMessageSender> message_sender_;
+  SinkAppAvailabilityUpdatedCallback app_availability_updated_cb_;
 
   SEQUENCE_CHECKER(sequence_checker_);
 

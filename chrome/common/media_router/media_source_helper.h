@@ -20,6 +20,9 @@ constexpr char kCastDialPresentationUrlScheme[] = "cast-dial";
 constexpr char kDialPresentationUrlScheme[] = "dial";
 constexpr char kRemotePlaybackPresentationUrlScheme[] = "remote-playback";
 
+constexpr char kLegacyCastPresentationUrlPrefix[] =
+    "https://google.com/cast#__castAppId__=";
+
 // Helper library for protocol-specific media source object creation.
 // Returns MediaSource URI depending on the type of source.
 MediaSource MediaSourceForTab(int tab_id);
@@ -47,6 +50,10 @@ int TabIdFromMediaSource(const MediaSource& source);
 // Checks that |source| is a parseable URN and is of a known type.
 // Does not deeper protocol-level syntax checks.
 bool IsValidMediaSource(const MediaSource& source);
+
+// Returns |true| if |url| represents a legact Cast presentation URL, i.e., it
+// starts with |kLegacyCastPresentationUrlPrefix|.
+bool IsLegacyCastPresentationUrl(const GURL& url);
 
 // Returns true if |url| is a valid presentation URL.
 bool IsValidPresentationUrl(const GURL& url);

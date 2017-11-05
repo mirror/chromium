@@ -25,9 +25,6 @@ constexpr char kDesktopMediaUrn[] = "urn:x-org.chromium.media:source:desktop";
 constexpr char kTabRemotingUrnFormat[] =
     "urn:x-org.chromium.media:source:tab_content_remoting:%d";
 
-constexpr char kCastPresentationUrlDomain[] = "google.com";
-constexpr char kCastPresentationUrlPath[] = "/cast";
-
 // This value must be the same as |chrome.cast.AUTO_JOIN_PRESENTATION_ID| in the
 // component extension.
 constexpr char kAutoJoinPresentationId[] = "auto-join";
@@ -91,9 +88,7 @@ bool CanConnectToMediaSource(const MediaSource& source) {
   // Compare host, port, scheme, and path prefix for source.url().
   const GURL& url = source.url();
   return url.SchemeIs(kCastPresentationUrlScheme) ||
-         (url.SchemeIs(url::kHttpsScheme) &&
-          url.DomainIs(kCastPresentationUrlDomain) && url.has_path() &&
-          url.path() == kCastPresentationUrlPath);
+         IsLegacyCastPresentationUrl(url);
 }
 
 int TabIdFromMediaSource(const MediaSource& source) {
@@ -110,6 +105,11 @@ bool IsValidMediaSource(const MediaSource& source) {
   return TabIdFromMediaSource(source) > 0 ||
          IsDesktopMirroringMediaSource(source) ||
          IsValidPresentationUrl(GURL(source.id()));
+}
+
+bool IsLegacyCastPresentationUrl(const GURL& url) {
+  return base::StartsWith(url.spec(), kLegacyCastPresentationUrlPrefix,
+                          base::CompareCase::INSENSITIVE_ASCII);
 }
 
 bool IsValidPresentationUrl(const GURL& url) {

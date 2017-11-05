@@ -19,6 +19,10 @@ static_library("discovery") {
     "//content/public/common",
   ]
   sources = [
+    "../cast/cast_requests.cc",
+    "../cast/cast_requests.h",
+    "../cast/parsed_media_source.cc",
+    "../cast/parsed_media_source.h",
     "dial/device_description_fetcher.cc",
     "dial/device_description_fetcher.h",
     "dial/device_description_service.cc",

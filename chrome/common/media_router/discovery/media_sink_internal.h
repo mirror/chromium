@@ -7,6 +7,7 @@
 
 #include <utility>
 
+#include "base/containers/flat_map.h"
 #include "chrome/common/media_router/media_sink.h"
 #include "net/base/ip_address.h"
 #include "net/base/ip_endpoint.h"
@@ -33,6 +34,14 @@ struct DialSinkExtraData {
 
 // Extra data for Cast media sink.
 struct CastSinkExtraData {
+  enum class AppAvailability {
+    kAvailable,
+    kAvailableRescan,
+    kUnavailable,
+    kUnavailableRescan,
+    kUnknown
+  };
+
   net::IPEndPoint ip_endpoint;
 
   int port = 0;
@@ -51,6 +60,9 @@ struct CastSinkExtraData {
 
   // True if Cast channel is opened from DIAL sink.
   bool discovered_by_dial = false;
+
+  // XXX: CastAppId
+  base::flat_map<std::string, AppAvailability> app_availabilities;
 
   CastSinkExtraData();
   CastSinkExtraData(const CastSinkExtraData& other);
@@ -103,6 +115,7 @@ class MediaSinkInternal {
 
   // Must only be called if the sink is a Cast sink.
   const CastSinkExtraData& cast_data() const;
+  CastSinkExtraData& cast_data();
 
   bool is_dial_sink() const { return sink_type_ == SinkType::DIAL; }
   bool is_cast_sink() const { return sink_type_ == SinkType::CAST; }

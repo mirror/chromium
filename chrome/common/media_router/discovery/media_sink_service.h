@@ -14,6 +14,8 @@
 
 namespace media_router {
 
+class MediaSinksObserver;
+
 // A service which can be used to start background discovery and resolution of
 // MediaSinks. Often these are remote devices, like Chromecast. In addition, the
 // service is capable of answering MediaSink queries using the sinks that it
@@ -47,6 +49,9 @@ class MediaSinkService {
   // opened). Implementations may override this to perform actions (such as
   // forcing a discovery cycle to happen right away) to be more responsive.
   virtual void OnUserGesture() {}
+
+  virtual void RegisterMediaSinksObserver(MediaSinksObserver* observer) {}
+  virtual void UnregisterMediaSinksObserver(MediaSinksObserver* observer) {}
 
  protected:
   OnSinksDiscoveredCallback sink_discovery_callback_;
