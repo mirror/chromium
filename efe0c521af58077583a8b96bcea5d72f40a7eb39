@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "84a8af87_f748c639",
+        "filename": "chrome/browser/page_load_metrics/observers/use_counter/ukm_features.cc",
+        "patchSetId": 11
+      },
+      "lineNbr": 11,
+      "author": {
+        "id": 1176519
+      },
+      "writtenOn": "2017-11-05T21:29:37Z",
+      "side": 1,
+      "message": "base::flat_set sounds like a better match",
+      "revId": "efe0c521af58077583a8b96bcea5d72f40a7eb39",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
