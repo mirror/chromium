@@ -230,6 +230,7 @@ TEST_F(UiInputManagerTest, ElementDeletion) {
 }
 
 TEST_F(UiInputManagerContentTest, NoMouseMovesDuringClick) {
+  EXPECT_TRUE(AnimateBy(MsToDelta(500)));
   // It would be nice if the controller weren't platform specific and we could
   // mock out the underlying sensor data. For now, we will hallucinate
   // parameters to HandleInput.
