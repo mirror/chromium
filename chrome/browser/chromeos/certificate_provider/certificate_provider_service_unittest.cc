@@ -469,7 +469,7 @@ TEST_F(CertificateProviderServiceTest, SignRequest) {
   test_delegate_->ClearAndExpectRequest(TestDelegate::RequestType::SIGN);
 
   std::vector<uint8_t> received_signature;
-  private_key->SignDigest(
+  private_key->Sign(
       SSL_SIGN_RSA_PKCS1_SHA256, std::string("any input data"),
       base::Bind(&ExpectOKAndStoreSignature, &received_signature));
 
@@ -505,9 +505,8 @@ TEST_F(CertificateProviderServiceTest, UnloadExtensionDuringSign) {
   test_delegate_->ClearAndExpectRequest(TestDelegate::RequestType::SIGN);
 
   net::Error error = net::OK;
-  private_key->SignDigest(
-      SSL_SIGN_RSA_PKCS1_SHA256, std::string("any input data"),
-      base::Bind(&ExpectEmptySignatureAndStoreError, &error));
+  private_key->Sign(SSL_SIGN_RSA_PKCS1_SHA256, std::string("any input data"),
+                    base::Bind(&ExpectEmptySignatureAndStoreError, &error));
 
   task_runner_->RunUntilIdle();
 
