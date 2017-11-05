@@ -45,6 +45,8 @@ class CORE_EXPORT HTMLFrameOwnerElement : public HTMLElement,
   USING_GARBAGE_COLLECTED_MIXIN(HTMLFrameOwnerElement);
 
  public:
+  DEFINE_ATTRIBUTE_EVENT_LISTENER(transferexceeded);
+
   ~HTMLFrameOwnerElement() override;
 
   DOMWindow* contentWindow() const;
@@ -154,6 +156,8 @@ class CORE_EXPORT HTMLFrameOwnerElement : public HTMLElement,
   void UpdateContainerPolicy(Vector<String>* messages = nullptr,
                              bool* old_syntax = nullptr);
 
+  void UpdateTransferSizePolicy(int transfer_size_kb);
+
  private:
   // Intentionally private to prevent redundant checks when the type is
   // already HTMLFrameOwnerElement.
@@ -170,6 +174,8 @@ class CORE_EXPORT HTMLFrameOwnerElement : public HTMLElement,
   Member<EmbeddedContentView> embedded_content_view_;
   SandboxFlags sandbox_flags_;
   bool did_load_non_empty_document_;
+
+  int transfer_size_kb_;
 
   WebParsedFeaturePolicy container_policy_;
 };

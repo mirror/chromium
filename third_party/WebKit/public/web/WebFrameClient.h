@@ -265,7 +265,8 @@ class BLINK_EXPORT WebFrameClient {
   virtual void DidChangeFramePolicy(
       WebFrame* child_frame,
       WebSandboxFlags flags,
-      const WebParsedFeaturePolicy& container_policy) {}
+      const WebParsedFeaturePolicy& container_policy,
+      int frame_size_kb) {}
 
   // Called when a Feature-Policy HTTP header is encountered while loading the
   // frame's document.

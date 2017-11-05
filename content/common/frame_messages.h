@@ -1249,10 +1249,11 @@ IPC_MESSAGE_ROUTED1(FrameHostMsg_DidChangeOpener, int /* opener_routing_id */)
 
 // Notifies the browser that sandbox flags or container policy have changed for
 // a subframe of this frame.
-IPC_MESSAGE_ROUTED2(
+IPC_MESSAGE_ROUTED3(
     FrameHostMsg_DidChangeFramePolicy,
     int32_t /* subframe_routing_id */,
-    content::FramePolicy /* updated sandbox flags and container policy */)
+    content::FramePolicy /* updated sandbox flags and container policy */,
+    int32_t /* transfer_size_kb */)
 
 // Notifies the browser that frame owner properties have changed for a subframe
 // of this frame.

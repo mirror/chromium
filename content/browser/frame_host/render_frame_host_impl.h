@@ -664,6 +664,10 @@ class CONTENT_EXPORT RenderFrameHostImpl
   // sending a mojo overlay factory.
   const base::UnguessableToken& GetOverlayRoutingToken();
 
+  // Called the the frame's transfersize was exceeded. Triggers the event on
+  // the frame.
+  void TransferSizeExceeded();
+
   // Binds the request end of the InterfaceProvider interface through which
   // services provided by this RenderFrameHost are exposed to the correponding
   // RenderFrame. The caller is responsible for plumbing the client end to the
@@ -785,7 +789,8 @@ class CONTENT_EXPORT RenderFrameHostImpl
   void OnEnforceInsecureRequestPolicy(blink::WebInsecureRequestPolicy policy);
   void OnUpdateToUniqueOrigin(bool is_potentially_trustworthy_unique_origin);
   void OnDidChangeFramePolicy(int32_t frame_routing_id,
-                              const FramePolicy& frame_policy);
+                              const FramePolicy& frame_policy,
+                              int transfer_size_kb);
   void OnDidChangeFrameOwnerProperties(int32_t frame_routing_id,
                                        const FrameOwnerProperties& properties);
   void OnUpdateTitle(const base::string16& title,

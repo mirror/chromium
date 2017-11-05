@@ -339,6 +339,7 @@
     "text",
     "title",
     "topmargin",
+    "transfersize",
     "translate",
     "truespeed",
     "type",
