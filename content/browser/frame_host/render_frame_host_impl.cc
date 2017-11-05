@@ -3400,7 +3400,8 @@ void RenderFrameHostImpl::CommitNavigation(
     GetNavigationControl()->CommitNavigation(
         ResourceResponseHead(), GURL(), common_params, request_params,
         mojo::ScopedDataPipeConsumerHandle(),
-        /*subresource_loader_factories=*/base::nullopt);
+        /*subresource_loader_factories=*/base::nullopt,
+        /*controller_service_worker=*/nullptr);
     return;
   }
 
@@ -3422,6 +3423,9 @@ void RenderFrameHostImpl::CommitNavigation(
       response->head : ResourceResponseHead();
   const bool is_same_document =
       FrameMsg_Navigate_Type::IsSameDocument(common_params.navigation_type);
+
+  mojom::URLLoaderFactoryPtr default_subresource_url_loader_factory;
+  mojom::ControllerServiceWorkerInfoPtr controller_service_worker_info;
 
   // TODO(scottmg): Pass a factory for SW, etc. once we have one.
   base::Optional<URLLoaderFactoryBundle> subresource_loader_factories;
@@ -3458,6 +3462,12 @@ void RenderFrameHostImpl::CommitNavigation(
         mojo::MakeRequest(&blob_factory));
     subresource_loader_factories->RegisterFactory(url::kBlobScheme,
                                                   std::move(blob_factory));
+
+    // Passes the controller service worker info if we have one.
+    if (subresource_loader_params) {
+      controller_service_worker_info =
+          std::move(subresource_loader_params->controller_service_worker_info);
+    }
   }
 
   // It is imperative that cross-document navigations always provide a set of
@@ -3468,7 +3478,8 @@ void RenderFrameHostImpl::CommitNavigation(
 
   GetNavigationControl()->CommitNavigation(
       head, body_url, common_params, request_params, std::move(handle),
-      std::move(subresource_loader_factories));
+      std::move(subresource_loader_factories),
+      std::move(controller_service_worker_info));
 
   // If a network request was made, update the Previews state.
   if (IsURLHandledByNetworkStack(common_params.url) &&

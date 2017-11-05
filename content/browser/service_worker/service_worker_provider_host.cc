@@ -22,6 +22,7 @@
 #include "content/browser/service_worker/service_worker_handle.h"
 #include "content/browser/service_worker/service_worker_registration_handle.h"
 #include "content/browser/service_worker/service_worker_script_url_loader_factory.h"
+#include "content/browser/service_worker/service_worker_type_converters.h"
 #include "content/browser/service_worker/service_worker_version.h"
 #include "content/browser/url_loader_factory_getter.h"
 #include "content/browser/worker_interface_binders.h"
@@ -329,6 +330,17 @@ void ServiceWorkerProviderHost::OnSkippedWaiting(
                                 true /* notify_controllerchange */);
 }
 
+mojom::ControllerServiceWorkerPtr
+ServiceWorkerProviderHost::GetControllerServiceWorkerPtr() {
+  DCHECK(ServiceWorkerUtils::IsServicificationEnabled());
+  DCHECK(controller_);
+  DCHECK(controller_->running_status() == EmbeddedWorkerStatus::STARTING ||
+         controller_->running_status() == EmbeddedWorkerStatus::RUNNING);
+  mojom::ControllerServiceWorkerPtr controller_ptr;
+  controller_->controller()->Clone(mojo::MakeRequest(&controller_ptr));
+  return controller_ptr;
+}
+
 void ServiceWorkerProviderHost::SetDocumentUrl(const GURL& url) {
   DCHECK(!url.has_ref());
   document_url_ = url;
@@ -522,9 +534,19 @@ ServiceWorkerProviderHost::CreateServiceWorkerRegistrationObjectInfo(
 blink::mojom::ServiceWorkerObjectInfoPtr
 ServiceWorkerProviderHost::GetOrCreateServiceWorkerHandle(
     ServiceWorkerVersion* version) {
-  DCHECK(dispatcher_host_);
+  static int g_precreated_handler_id = -2;
+  // DCHECK(dispatcher_host_);
   if (!context_ || !version)
     return blink::mojom::ServiceWorkerObjectInfo::New();
+  if (!dispatcher_host_) {
+    auto info = blink::mojom::ServiceWorkerObjectInfo::New();
+    info->handle_id = g_precreated_handler_id--;
+    info->url = version->script_url();
+    info->state =
+        mojo::ConvertTo<blink::mojom::ServiceWorkerState>(version->status());
+    info->version_id = version->version_id();
+    return info;
+  }
   ServiceWorkerHandle* handle = dispatcher_host_->FindServiceWorkerHandle(
       provider_id(), version->version_id());
   if (handle) {
@@ -883,8 +905,17 @@ void ServiceWorkerProviderHost::SendSetControllerServiceWorker(
       }
     }
   }
-  container_->SetController(GetOrCreateServiceWorkerHandle(version),
-                            used_features, notify_controllerchange);
+
+  auto controller_info = mojom::ControllerServiceWorkerInfo::New();
+  controller_info->object_info = GetOrCreateServiceWorkerHandle(version);
+
+  // S13nServiceWorker: Send the controller ptr too.
+  if (version && ServiceWorkerUtils::IsServicificationEnabled())
+    controller_info->endpoint = GetControllerServiceWorkerPtr();
+
+  usleep(10000);
+  container_->SetController(std::move(controller_info), used_features,
+                            notify_controllerchange);
 }
 
 void ServiceWorkerProviderHost::Register(

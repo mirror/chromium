@@ -324,7 +324,7 @@ void ServiceWorkerDispatcherHost::OnPostMessageToWorker(
     return;
 
   ServiceWorkerHandle* handle = handles_.Lookup(handle_id);
-  if (!handle) {
+  if (!handle && handle_id >= 0) {
     bad_message::ReceivedBadMessage(this, bad_message::SWDH_POST_MESSAGE);
     return;
   }
@@ -334,6 +334,15 @@ void ServiceWorkerDispatcherHost::OnPostMessageToWorker(
   if (!sender_provider_host) {
     // This may occur when destruction of the sender provider overtakes
     // postMessage() because of thread hopping on WebServiceWorkerImpl.
+    return;
+  }
+
+  if (handle_id < 0 && sender_provider_host->controller()) {
+    // Means that this is for the controller.
+    DispatchExtendableMessageEvent(
+        sender_provider_host->controller(), message, source_origin,
+        sent_message_ports, sender_provider_host,
+        base::Bind(&ServiceWorkerUtils::NoOpStatusCallback));
     return;
   }
 
