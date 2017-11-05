@@ -87,15 +87,24 @@ class SSLPlatformKeyAndroid : public ThreadedSSLPrivateKey::Delegate {
     return SSLPrivateKey::DefaultPreferences(type_, false /* no PSS */);
   }
 
-  Error SignDigest(uint16_t algorithm,
-                   const base::StringPiece& input_in,
-                   std::vector<uint8_t>* signature) override {
-    base::StringPiece input = input_in;
+  Error Sign(uint16_t algorithm,
+             base::StringPiece input,
+             std::vector<uint8_t>* signature) override {
+    // Hash the input.
+    const EVP_MD* md = SSL_get_signature_algorithm_digest(algorithm);
+    uint8_t digest[EVP_MAX_MD_SIZE];
+    unsigned digest_len;
+    if (!md || !EVP_Digest(input.data(), input.size(), digest, &digest_len, md,
+                           nullptr)) {
+      return ERR_SSL_CLIENT_AUTH_SIGNATURE_FAILED;
+    }
+    input =
+        base::StringPiece(reinterpret_cast<const char*>(digest), digest_len);
 
     // Prepend the DigestInfo for RSA.
     bssl::UniquePtr<uint8_t> digest_info_storage;
     if (SSL_get_signature_algorithm_key_type(algorithm) == EVP_PKEY_RSA) {
-      int hash_nid = EVP_MD_type(SSL_get_signature_algorithm_digest(algorithm));
+      int hash_nid = EVP_MD_type(md);
       uint8_t* digest_info;
       size_t digest_info_len;
       int is_alloced;

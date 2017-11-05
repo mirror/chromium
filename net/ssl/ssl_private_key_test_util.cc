@@ -30,29 +30,26 @@ namespace net {
 namespace {
 
 bool VerifyWithOpenSSL(uint16_t algorithm,
-                       const base::StringPiece& digest,
+                       base::StringPiece input,
                        EVP_PKEY* key,
-                       const base::StringPiece& signature) {
-  bssl::UniquePtr<EVP_PKEY_CTX> ctx(EVP_PKEY_CTX_new(key, nullptr));
-  if (!ctx || !EVP_PKEY_verify_init(ctx.get()) ||
-      !EVP_PKEY_CTX_set_signature_md(
-          ctx.get(), SSL_get_signature_algorithm_digest(algorithm))) {
+                       base::StringPiece signature) {
+  bssl::ScopedEVP_MD_CTX ctx;
+  EVP_PKEY_CTX* pctx;
+  if (!EVP_DigestVerifyInit(ctx.get(), &pctx,
+                            SSL_get_signature_algorithm_digest(algorithm),
+                            nullptr, key)) {
     return false;
   }
   if (SSL_is_signature_algorithm_rsa_pss(algorithm)) {
-    if (!EVP_PKEY_CTX_set_rsa_padding(ctx.get(), RSA_PKCS1_PSS_PADDING) ||
-        !EVP_PKEY_CTX_set_rsa_pss_saltlen(
-            ctx.get(), -1 /* salt length is digest length */)) {
+    if (!EVP_PKEY_CTX_set_rsa_padding(pctx, RSA_PKCS1_PSS_PADDING) ||
+        !EVP_PKEY_CTX_set_rsa_pss_saltlen(pctx, -1 /* hash length */)) {
       return false;
     }
   }
-  if (!EVP_PKEY_verify(
-          ctx.get(), reinterpret_cast<const uint8_t*>(signature.data()),
-          signature.size(), reinterpret_cast<const uint8_t*>(digest.data()),
-          digest.size())) {
-    return false;
-  }
-  return true;
+  return EVP_DigestVerify(
+      ctx.get(), reinterpret_cast<const uint8_t*>(signature.data()),
+      signature.size(), reinterpret_cast<const uint8_t*>(input.data()),
+      input.size());
 }
 
 void OnSignComplete(base::RunLoop* loop,
@@ -67,14 +64,13 @@ void OnSignComplete(base::RunLoop* loop,
 
 Error DoKeySigningWithWrapper(SSLPrivateKey* key,
                               uint16_t algorithm,
-                              const base::StringPiece& digest,
+                              base::StringPiece input,
                               std::string* result) {
   Error error;
   base::RunLoop loop;
-  key->SignDigest(
-      algorithm, digest,
-      base::Bind(OnSignComplete, base::Unretained(&loop),
-                 base::Unretained(&error), base::Unretained(result)));
+  key->Sign(algorithm, input,
+            base::Bind(OnSignComplete, base::Unretained(&loop),
+                       base::Unretained(&error), base::Unretained(result)));
   loop.Run();
   return error;
 }
@@ -117,16 +113,13 @@ void TestSSLPrivateKeyMatches(SSLPrivateKey* key, const std::string& pkcs8) {
       continue;
     }
 
-    const EVP_MD* md = SSL_get_signature_algorithm_digest(algorithm);
-    ASSERT_TRUE(md);
-    std::string digest(EVP_MD_size(md), 'a');
-
     // Test the key generates valid signatures.
+    std::string input = "hello, world";
     std::string signature;
-    Error error = DoKeySigningWithWrapper(key, algorithm, digest, &signature);
+    Error error = DoKeySigningWithWrapper(key, algorithm, input, &signature);
     EXPECT_THAT(error, IsOk());
     EXPECT_TRUE(
-        VerifyWithOpenSSL(algorithm, digest, openssl_key.get(), signature));
+        VerifyWithOpenSSL(algorithm, input, openssl_key.get(), signature));
   }
 }
 

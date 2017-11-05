@@ -78,8 +78,7 @@ void StoreDigest(std::vector<uint8_t>* digest,
   callback.Run();
 }
 
-// See net::SSLPrivateKey::SignDigest for the expected padding and DigestInfo
-// prefixing.
+// See RFC 8017 for the expected padding and DigestInfo prefixing.
 bool RsaSign(const std::vector<uint8_t>& digest,
              crypto::RSAPrivateKey* key,
              std::vector<uint8_t>* signature) {
