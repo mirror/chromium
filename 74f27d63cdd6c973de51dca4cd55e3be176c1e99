@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "e0559965_8f531f55",
+        "filename": "device/geolocation/network_location_request.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 42,
+      "author": {
+        "id": 1182889
+      },
+      "writtenOn": "2017-11-05T15:39:53Z",
+      "side": 1,
+      "message": "SGTM, updated it to modern style",
+      "parentUuid": "2cf2e90b_dec6fbdc",
+      "range": {
+        "startLine": 39,
+        "startChar": 2,
+        "endLine": 42,
+        "endChar": 31
+      },
+      "revId": "74f27d63cdd6c973de51dca4cd55e3be176c1e99",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "49c5357f_8304c14f",
         "filename": "device/geolocation/network_location_request.h",
         "patchSetId": 1
@@ -45,6 +69,30 @@
       "revId": "74f27d63cdd6c973de51dca4cd55e3be176c1e99",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "f738a2e2_e35d3df2",
+        "filename": "device/geolocation/network_location_request.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 54,
+      "author": {
+        "id": 1182889
+      },
+      "writtenOn": "2017-11-05T15:39:53Z",
+      "side": 1,
+      "message": "The client gets back both the wifi_data and the timestamp (via position) in the callback.\n\nThe client thus doesn\u0027t need to hold on to the wifi_data if they want to do something with it in the reponse (i.e, insert it into a cache, is what this is used for in practice).\n\nFor timestamp, it gets stuffed into position.timestamp because the timestamp of the geoposition is taken to be the client\u0027s stated timestamp of the source data.\n\nDo you think the comment makes sense in light of this?",
+      "parentUuid": "49c5357f_8304c14f",
+      "range": {
+        "startLine": 53,
+        "startChar": 32,
+        "endLine": 54,
+        "endChar": 18
+      },
+      "revId": "74f27d63cdd6c973de51dca4cd55e3be176c1e99",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
