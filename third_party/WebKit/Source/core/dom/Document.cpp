@@ -657,7 +657,10 @@ Document::Document(const DocumentInit& initializer,
       would_load_reason_(WouldLoadReason::kInvalid),
       password_count_(0),
       logged_field_edit_(false),
-      engagement_level_(mojom::blink::EngagementLevel::NONE) {
+      engagement_level_(mojom::blink::EngagementLevel::NONE),
+      rendering_paused_(false),
+      loading_paused_(false),
+      script_paused_(false) {
   if (frame_) {
     DCHECK(frame_->GetPage());
     ProvideContextFeaturesToDocumentFrom(*this, *frame_->GetPage());
@@ -7174,6 +7177,19 @@ scoped_refptr<WebTaskRunner> Document::GetTaskRunner(TaskType type) {
   // passed-in document or ContextDocument() used to be attached to a Frame but
   // has since been detached).
   return Platform::Current()->CurrentThread()->GetWebTaskRunner();
+}
+
+void Document::SetPaused(bool rendering, bool loading, bool script) {
+  rendering_paused_ = rendering;
+  loading_paused_ = loading;
+  script_paused_ = script;
+}
+
+void Document::SuspendScriptedAnimationController() {
+  EnsureScriptedAnimationController().Suspend();
+}
+void Document::ResumeScriptedAnimationController() {
+  EnsureScriptedAnimationController().Resume();
 }
 
 void Document::Trace(blink::Visitor* visitor) {

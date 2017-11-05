@@ -292,6 +292,8 @@ class PLATFORM_EXPORT ResourceFetcher
   bool images_enabled_ : 1;
   bool allow_stale_resources_ : 1;
   bool image_fetched_ : 1;
+
+  bool defers_loading_ = false;
 };
 
 class ResourceCacheValidationSuppressor {

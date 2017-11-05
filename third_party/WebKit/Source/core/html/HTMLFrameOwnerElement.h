@@ -27,6 +27,7 @@
 #include "core/frame/EmbeddedContentView.h"
 #include "core/frame/FrameOwner.h"
 #include "core/html/HTMLElement.h"
+#include "core/html/PauseOptions.h"
 #include "platform/feature_policy/FeaturePolicy.h"
 #include "platform/heap/Handle.h"
 #include "platform/scroll/ScrollTypes.h"
@@ -65,6 +66,9 @@ class CORE_EXPORT HTMLFrameOwnerElement : public HTMLElement,
 
   bool LoadedNonEmptyDocument() const { return did_load_non_empty_document_; }
   void DidLoadNonEmptyDocument() { did_load_non_empty_document_ = true; }
+  ScriptPromise pause(ScriptState*, const PauseOptions& options);
+  ScriptPromise unpause(ScriptState*);
+  bool paused();
 
   void SetEmbeddedContentView(EmbeddedContentView*);
   EmbeddedContentView* ReleaseEmbeddedContentView();
@@ -170,6 +174,7 @@ class CORE_EXPORT HTMLFrameOwnerElement : public HTMLElement,
   Member<EmbeddedContentView> embedded_content_view_;
   SandboxFlags sandbox_flags_;
   bool did_load_non_empty_document_;
+  bool paused_;
 
   WebParsedFeaturePolicy container_policy_;
 };

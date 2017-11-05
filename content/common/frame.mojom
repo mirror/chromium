@@ -21,6 +21,11 @@ const string kNavigation_FrameSpec = "navigation:frame";
 // Implemented by the frame provider (e.g. renderer processes).
 interface Frame {
   GetInterfaceProvider(service_manager.mojom.InterfaceProvider& interfaces);
+
+  // Sent by the browser host when a frame owned by the renderer needs to be
+  // paused or unpaused.
+  Pause(bool rendering, bool loading, bool script) => ();
+  Unpause() => ();
 };
 
 // See src/content/common/navigation_params.h
@@ -157,4 +162,10 @@ interface FrameHost {
   // Sent by the renderer when a navigation commits in the frame.
   DidCommitProvisionalLoad(
       DidCommitProvisionalLoadParams params);
+
+  // Sent by the renderer when script has asked to pause or unpause the
+  // associated frame. The server then tells each of the descendants of the
+  // frame to pause.
+  Pause(bool rendering, bool loading, bool script) => ();
+  Unpause() => ();
 };

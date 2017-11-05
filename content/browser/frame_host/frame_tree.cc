@@ -112,7 +112,8 @@ FrameTree::FrameTree(Navigator* navigator,
                               base::UnguessableToken::Create(),
                               FrameOwnerProperties())),
       focused_frame_tree_node_id_(FrameTreeNode::kFrameTreeNodeInvalidId),
-      load_progress_(0.0) {}
+      load_progress_(0.0),
+      pause_manager_(this) {}
 
 FrameTree::~FrameTree() {
   delete root_;
@@ -495,6 +496,21 @@ void FrameTree::SetPageFocus(SiteInstance* instance, bool is_focused) {
         root_manager->GetRenderFrameProxyHost(instance);
     proxy->Send(new InputMsg_SetFocus(proxy->GetRoutingID(), is_focused));
   }
+}
+
+void FrameTree::PauseFrame(FrameTreeNode* frame_tree_node,
+                           bool rendering,
+                           bool loading,
+                           bool script,
+                           base::OnceClosure callback) {
+  pause_manager_.PauseFrame(frame_tree_node->AsWeakPtr(), rendering, loading,
+                            script, std::move(callback));
+}
+
+void FrameTree::UnpauseFrame(FrameTreeNode* frame_tree_node,
+                             base::OnceClosure callback) {
+  pause_manager_.UnpauseFrame(frame_tree_node->AsWeakPtr(),
+                              std::move(callback));
 }
 
 }  // namespace content

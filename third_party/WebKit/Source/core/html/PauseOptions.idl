@@ -1,0 +1,5 @@
+  dictionary PauseOptions {
+    [nodoc] boolean? rendering;
+    [nodoc] boolean? loading;
+    [nodoc] boolean? script;
+  };

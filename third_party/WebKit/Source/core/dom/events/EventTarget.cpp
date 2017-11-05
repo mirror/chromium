@@ -526,6 +526,13 @@ bool EventTarget::dispatchEventForBindings(Event* event,
 }
 
 DispatchEventResult EventTarget::DispatchEvent(Event* event) {
+  // // Discard UI events for a paused frame
+  // if (event->target() && )
+  // if (event->target()->ToDOMWindow())
+  // if (event->InterfaceName() == EventNames::UIEvent) {
+
+  // }
+
   event->SetTrusted(true);
   return DispatchEventInternal(event);
 }

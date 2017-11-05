@@ -20,9 +20,13 @@
 
 #include "core/html/HTMLFrameOwnerElement.h"
 
+#include "bindings/core/v8/CallbackPromiseAdapter.h"
 #include "bindings/core/v8/ExceptionMessages.h"
 #include "bindings/core/v8/ExceptionState.h"
+#include "bindings/core/v8/ScriptPromise.h"
+#include "bindings/core/v8/ScriptPromiseResolver.h"
 #include "core/dom/AXObjectCache.h"
+#include "core/dom/DOMException.h"
 #include "core/dom/ExceptionCode.h"
 #include "core/dom/events/Event.h"
 #include "core/frame/LocalFrame.h"
@@ -36,8 +40,11 @@
 #include "core/loader/FrameLoader.h"
 #include "core/page/Page.h"
 #include "core/plugins/PluginView.h"
+#include "platform/bindings/ScriptState.h"
 #include "platform/heap/HeapAllocator.h"
 #include "platform/weborigin/SecurityOrigin.h"
+#include "platform/wtf/Functional.h"
+
 #include "public/platform/modules/fetch/fetch_api_request.mojom-shared.h"
 
 namespace blink {
@@ -48,6 +55,10 @@ using PluginSet = PersistentHeapHashSet<Member<PluginView>>;
 PluginSet& PluginsPendingDispose() {
   DEFINE_STATIC_LOCAL(PluginSet, set, ());
   return set;
+}
+
+void ResolveCallback(ScriptPromiseResolver* resolver) {
+  resolver->Resolve();
 }
 
 }  // namespace
@@ -213,6 +224,53 @@ Document* HTMLFrameOwnerElement::getSVGDocument(
   if (doc && doc->IsSVGDocument())
     return doc;
   return nullptr;
+}
+
+ScriptPromise HTMLFrameOwnerElement::pause(ScriptState* script_state,
+                                           const PauseOptions& options) {
+  Document* content_doc = contentDocument();
+  if (!content_doc)
+    return ScriptPromise::RejectWithDOMException(
+        script_state, DOMException::Create(
+                          kAbortError, "Pause failed - no content document"));
+
+  ScriptPromiseResolver* resolver = ScriptPromiseResolver::Create(script_state);
+  ScriptPromise promise = resolver->Promise();
+
+  bool pause_rendering = options.hasRendering() ? options.rendering() : false;
+  bool pause_loading = options.hasLoading() ? options.loading() : false;
+  bool pause_script = options.hasScript() ? options.script() : false;
+
+  LOG(ERROR) << "pausing: " << pause_rendering << " " << pause_loading << " "
+             << pause_script;
+
+  content_doc->GetFrame()->Client()->DidPauseFrame(
+      pause_rendering, pause_loading, pause_script,
+      ConvertToBaseCallback(
+          WTF::Bind(&ResolveCallback, WrapPersistent(resolver))));
+  return promise;
+}
+
+ScriptPromise HTMLFrameOwnerElement::unpause(ScriptState* script_state) {
+  Document* content_doc = contentDocument();
+  if (!content_doc)
+    return ScriptPromise::RejectWithDOMException(
+        script_state, DOMException::Create(
+                          kAbortError, "Unpause failed - no content document"));
+
+  ScriptPromiseResolver* resolver = ScriptPromiseResolver::Create(script_state);
+  ScriptPromise promise = resolver->Promise();
+
+  content_doc->GetFrame()->Client()->DidUnpauseFrame(ConvertToBaseCallback(
+      WTF::Bind(&ResolveCallback, WrapPersistent(resolver))));
+  return promise;
+}
+
+bool HTMLFrameOwnerElement::paused() {
+  Document* content_doc = contentDocument();
+  if (!content_doc)
+    return false;
+  return content_doc->paused();
 }
 
 void HTMLFrameOwnerElement::SetEmbeddedContentView(

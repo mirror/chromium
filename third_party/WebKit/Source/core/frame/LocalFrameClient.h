@@ -287,6 +287,12 @@ class CORE_EXPORT LocalFrameClient : public FrameClient {
 
   virtual void DidChangeFrameOwnerProperties(HTMLFrameOwnerElement*) {}
 
+  virtual void DidPauseFrame(bool rendering,
+                             bool loading,
+                             bool script,
+                             base::OnceClosure callback) {}
+  virtual void DidUnpauseFrame(base::OnceClosure callback) {}
+
   virtual void DispatchWillStartUsingPeerConnectionHandler(
       WebRTCPeerConnectionHandler*) {}
 

@@ -1350,6 +1350,33 @@ void WebLocalFrameImpl::SetCaretVisible(bool visible) {
   GetFrame()->Selection().SetCaretVisible(visible);
 }
 
+void WebLocalFrameImpl::Pause(bool rendering, bool loading, bool script) {
+  if (!GetFrame()->GetDocument()->LocalOwner())
+    return;
+
+  LOG(ERROR) << "Actually pausing: " << rendering << " " << loading << " "
+             << script;
+
+  Scheduler()->SetPaused(script);
+
+  if (script && !GetFrame()->GetDocument()->script_paused())
+    GetFrame()->GetDocument()->SuspendScriptedAnimationController();
+
+  GetFrame()->GetDocument()->Fetcher()->SetDefersLoading(loading);
+  GetFrame()->GetDocument()->SetPaused(rendering, loading, script);
+}
+
+void WebLocalFrameImpl::Unpause() {
+  if (!GetFrame()->GetDocument()->LocalOwner())
+    return;
+
+  if (GetFrame()->GetDocument()->script_paused())
+    GetFrame()->GetDocument()->ResumeScriptedAnimationController();
+  GetFrame()->GetDocument()->SetPaused(false, false, false);
+  GetFrame()->GetDocument()->Fetcher()->SetDefersLoading(false);
+  Scheduler()->SetPaused(false);
+}
+
 VisiblePosition WebLocalFrameImpl::VisiblePositionForViewportPoint(
     const WebPoint& point_in_viewport) {
   return VisiblePositionForContentsPoint(

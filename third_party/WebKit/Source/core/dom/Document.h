@@ -1394,6 +1394,17 @@ class CORE_EXPORT Document : public ContainerNode,
 
   scoped_refptr<WebTaskRunner> GetTaskRunner(TaskType) override;
 
+  void SetPaused(bool rendering, bool loading, bool script);
+
+  bool rendering_paused() const { return rendering_paused_; }
+  bool loading_paused() const { return loading_paused_; }
+  bool script_paused() const { return script_paused_; }
+  bool paused() const {
+    return rendering_paused_ || loading_paused_ || script_paused_;
+  }
+  void SuspendScriptedAnimationController();
+  void ResumeScriptedAnimationController();
+
  protected:
   Document(const DocumentInit&, DocumentClassFlags = kDefaultDocumentClass);
 
@@ -1772,6 +1783,10 @@ class CORE_EXPORT Document : public ContainerNode,
   // the document to recorde UKM.
   std::unique_ptr<ukm::UkmRecorder> ukm_recorder_;
   int64_t ukm_source_id_;
+
+  bool rendering_paused_;
+  bool loading_paused_;
+  bool script_paused_;
 };
 
 extern template class CORE_EXTERN_TEMPLATE_EXPORT Supplement<Document>;

@@ -3577,6 +3577,17 @@ void RenderFrameImpl::DidChangeFrameOwnerProperties(
           frame_owner_properties)));
 }
 
+void RenderFrameImpl::DidPauseFrame(bool rendering,
+                                    bool loading,
+                                    bool script,
+                                    base::OnceClosure callback) {
+  GetFrameHost()->Pause(rendering, loading, script, std::move(callback));
+}
+
+void RenderFrameImpl::DidUnpauseFrame(base::OnceClosure callback) {
+  GetFrameHost()->Unpause(std::move(callback));
+}
+
 void RenderFrameImpl::DidMatchCSS(
     const blink::WebVector<blink::WebString>& newly_matching_selectors,
     const blink::WebVector<blink::WebString>& stopped_matching_selectors) {
@@ -4535,6 +4546,19 @@ void RenderFrameImpl::ShowContextMenu(const blink::WebContextMenuData& data) {
 
 void RenderFrameImpl::ShowDeferredContextMenu(const ContextMenuParams& params) {
   Send(new FrameHostMsg_ContextMenu(routing_id_, params));
+}
+
+void RenderFrameImpl::Pause(bool rendering,
+                            bool loading,
+                            bool script,
+                            PauseCallback callback) {
+  frame_->Pause(rendering, loading, script);
+  std::move(callback).Run();
+}
+
+void RenderFrameImpl::Unpause(UnpauseCallback callback) {
+  frame_->Unpause();
+  std::move(callback).Run();
 }
 
 void RenderFrameImpl::SaveImageFromDataURL(const blink::WebString& data_url) {

@@ -17,6 +17,7 @@
 #include <vector>
 
 #include "base/callback.h"
+#include "base/callback_helpers.h"
 #include "base/compiler_specific.h"
 #include "base/gtest_prod_util.h"
 #include "base/macros.h"
@@ -681,6 +682,13 @@ class CONTENT_EXPORT RenderFrameHostImpl
     return frame_host_associated_binding_;
   }
 
+  // Called when a frame needs to be paused.
+  void PauseFrame(bool rendering,
+                  bool loading,
+                  bool script,
+                  base::ScopedClosureRunner scoped_callback);
+  void UnpauseFrame(base::ScopedClosureRunner scoped_callback);
+
  protected:
   friend class RenderFrameHostFactory;
 
@@ -860,6 +868,18 @@ class CONTENT_EXPORT RenderFrameHostImpl
   void DidCommitProvisionalLoad(
       std::unique_ptr<FrameHostMsg_DidCommitProvisionalLoad_Params>
           validated_params) override;
+  void Pause(bool rendering,
+             bool loading,
+             bool script,
+             PauseCallback callback) override;
+  void Unpause(UnpauseCallback callback) override;
+
+  void RunCreateWindowCompleteCallback(CreateNewWindowCallback callback,
+                                       mojom::CreateNewWindowReplyPtr reply,
+                                       int render_view_route_id,
+                                       int main_frame_route_id,
+                                       int main_frame_widget_route_id,
+                                       int cloned_session_storage_namespace_id);
 
   // Registers Mojo interfaces that this frame host makes available.
   void RegisterMojoInterfaces();

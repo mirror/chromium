@@ -1161,7 +1161,8 @@ void LocalFrameView::UpdateLayout() {
   // here, since the original call to UpdateLayout will do its work.  This is
   // not just an optimization: SVG document size negotiation relies on this.
   if (IsInPerformLayout() || ShouldThrottleRendering() ||
-      forcing_layout_parent_view_ || !frame_->GetDocument()->IsActive())
+      forcing_layout_parent_view_ || !frame_->GetDocument()->IsActive() ||
+      IsFramePaused())
     return;
 
   TRACE_EVENT0("blink,benchmark", "LocalFrameView::layout");
@@ -5362,6 +5363,11 @@ void LocalFrameView::SetNeedsIntersectionObservation() {
   needs_intersection_observation_ = true;
   if (LocalFrameView* parent = ParentFrameView())
     parent->SetNeedsIntersectionObservation();
+}
+
+bool LocalFrameView::IsFramePaused() const {
+  Document* document = frame_->GetDocument();
+  return document && document->rendering_paused();
 }
 
 bool LocalFrameView::ShouldThrottleRendering() const {

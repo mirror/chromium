@@ -1481,6 +1481,8 @@ bool ResourceFetcher::StartLoad(Resource* resource) {
   }
 
   loader->Start();
+  loader->SetDefersLoading(defers_loading_);
+
   return true;
 }
 
@@ -1506,6 +1508,7 @@ void ResourceFetcher::SetDefersLoading(bool defers) {
     loader->SetDefersLoading(defers);
   for (const auto& loader : loaders_)
     loader->SetDefersLoading(defers);
+  defers_loading_ = defers;
 }
 
 void ResourceFetcher::UpdateAllImageResourcePriorities() {

@@ -344,6 +344,17 @@ class CONTENT_EXPORT FrameTreeNode {
 
   void OnSetHasReceivedUserGesture();
 
+  bool pause_rendering() const { return pause_rendering_; }
+  bool pause_loading() const { return pause_loading_; }
+  bool pause_script() const { return pause_script_; }
+  void MergePaused(bool rendering, bool loading, bool script);
+  void ClearPaused();
+  bool Paused() const;
+
+  base::WeakPtr<FrameTreeNode> AsWeakPtr() {
+    return weak_ptr_factory_.GetWeakPtr();
+  }
+
  private:
   FRIEND_TEST_ALL_PREFIXES(SitePerProcessFeaturePolicyBrowserTest,
                            ContainerPolicyDynamic);
@@ -448,10 +459,16 @@ class CONTENT_EXPORT FrameTreeNode {
 
   base::TimeTicks last_focus_time_;
 
+  bool pause_rendering_ = false;
+  bool pause_loading_ = false;
+  bool pause_script_ = false;
+
   // A helper for tracing the snapshots of this FrameTreeNode and attributing
   // browser process activities to this node (when possible).  It is unrelated
   // to the core logic of FrameTreeNode.
   FrameTreeNodeBlameContext blame_context_;
+
+  base::WeakPtrFactory<FrameTreeNode> weak_ptr_factory_;
 
   DISALLOW_COPY_AND_ASSIGN(FrameTreeNode);
 };

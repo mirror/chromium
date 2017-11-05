@@ -514,6 +514,11 @@ class CONTENT_EXPORT RenderFrameImpl
   // mojom::Frame implementation:
   void GetInterfaceProvider(
       service_manager::mojom::InterfaceProviderRequest request) override;
+  void Pause(bool rendering,
+             bool loading,
+             bool script,
+             PauseCallback callback) override;
+  void Unpause(UnpauseCallback callback) override;
 
   // mojom::FrameBindingsControl implementation:
   void AllowBindings(int32_t enabled_bindings_flags) override;
@@ -582,6 +587,11 @@ class CONTENT_EXPORT RenderFrameImpl
   void DidChangeFrameOwnerProperties(
       blink::WebFrame* child_frame,
       const blink::WebFrameOwnerProperties& frame_owner_properties) override;
+  void DidPauseFrame(bool rendering,
+                     bool loading,
+                     bool script,
+                     base::OnceClosure callback) override;
+  void DidUnpauseFrame(base::OnceClosure callback) override;
   void DidMatchCSS(
       const blink::WebVector<blink::WebString>& newly_matching_selectors,
       const blink::WebVector<blink::WebString>& stopped_matching_selectors)
