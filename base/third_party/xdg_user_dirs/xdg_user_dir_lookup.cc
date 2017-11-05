@@ -60,23 +60,23 @@ xdg_user_dir_lookup_with_fallback (const char *type, const char *fallback)
   
   home_dir = getenv ("HOME");
 
-  if (home_dir == NULL)
+  if (home_dir == nullptr)
     goto error;
 
   config_home = getenv ("XDG_CONFIG_HOME");
-  if (config_home == NULL || config_home[0] == 0)
-    {
-      config_file = (char*) malloc (strlen (home_dir) + strlen ("/.config/user-dirs.dirs") + 1);
-      if (config_file == NULL)
-        goto error;
+  if (config_home == nullptr || config_home[0] == 0) {
+    config_file =
+        (char*)malloc(strlen(home_dir) + strlen("/.config/user-dirs.dirs") + 1);
+    if (config_file == nullptr)
+      goto error;
 
-      strcpy (config_file, home_dir);
-      strcat (config_file, "/.config/user-dirs.dirs");
+    strcpy(config_file, home_dir);
+    strcat(config_file, "/.config/user-dirs.dirs");
     }
   else
     {
       config_file = (char*) malloc (strlen (config_home) + strlen ("/user-dirs.dirs") + 1);
-      if (config_file == NULL)
+      if (config_file == nullptr)
         goto error;
 
       strcpy (config_file, config_home);
@@ -85,10 +85,10 @@ xdg_user_dir_lookup_with_fallback (const char *type, const char *fallback)
 
   file = fopen (config_file, "r");
   free (config_file);
-  if (file == NULL)
+  if (file == nullptr)
     goto error;
 
-  user_dir = NULL;
+  user_dir = nullptr;
   while (fgets (buffer, sizeof (buffer), file))
     {
       /* Remove newline at end */
@@ -136,7 +136,7 @@ xdg_user_dir_lookup_with_fallback (const char *type, const char *fallback)
       if (relative)
 	{
 	  user_dir = (char*) malloc (strlen (home_dir) + 1 + strlen (p) + 1);
-          if (user_dir == NULL)
+          if (user_dir == nullptr)
             goto error2;
 
 	  strcpy (user_dir, home_dir);
@@ -145,7 +145,7 @@ xdg_user_dir_lookup_with_fallback (const char *type, const char *fallback)
       else
 	{
 	  user_dir = (char*) malloc (strlen (p) + 1);
-          if (user_dir == NULL)
+          if (user_dir == nullptr)
             goto error2;
 
 	  *user_dir = 0;
@@ -169,7 +169,7 @@ error2:
  error:
   if (fallback)
     return strdup (fallback);
-  return NULL;
+  return nullptr;
 }
 
 /**
@@ -193,22 +193,22 @@ char *
 xdg_user_dir_lookup (const char *type)
 {
   char *dir, *home_dir, *user_dir;
-	  
-  dir = xdg_user_dir_lookup_with_fallback (type, NULL);
-  if (dir != NULL)
+
+  dir = xdg_user_dir_lookup_with_fallback(type, nullptr);
+  if (dir != nullptr)
     return dir;
   
   home_dir = getenv ("HOME");
-  
-  if (home_dir == NULL)
+
+  if (home_dir == nullptr)
     return strdup ("/tmp");
   
   /* Special case desktop for historical compatibility */
   if (strcmp (type, "DESKTOP") == 0)
     {
       user_dir = (char*) malloc (strlen (home_dir) + strlen ("/Desktop") + 1);
-      if (user_dir == NULL)
-        return NULL;
+      if (user_dir == nullptr)
+        return nullptr;
 
       strcpy (user_dir, home_dir);
       strcat (user_dir, "/Desktop");
