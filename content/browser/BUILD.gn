@@ -743,6 +743,8 @@ source_set("browser") {
     "frame_host/form_submission_throttle.h",
     "frame_host/frame_navigation_entry.cc",
     "frame_host/frame_navigation_entry.h",
+    "frame_host/frame_pause_manager.cc",
+    "frame_host/frame_pause_manager.h",
     "frame_host/frame_tree.cc",
     "frame_host/frame_tree.h",
     "frame_host/frame_tree_node.cc",

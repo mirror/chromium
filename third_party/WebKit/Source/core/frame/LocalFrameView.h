@@ -1113,6 +1113,8 @@ class CORE_EXPORT LocalFrameView final
 
   PaintController* GetPaintController() { return paint_controller_.get(); }
 
+  bool IsFramePaused() const;
+
   LayoutSize size_;
 
   typedef HashSet<scoped_refptr<LayoutEmbeddedObject>> EmbeddedObjectSet;

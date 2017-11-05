@@ -527,6 +527,9 @@ class WebLocalFrame : public WebFrame {
 
   virtual void SetCaretVisible(bool) = 0;
 
+  virtual void Pause() = 0;
+  virtual void Unpause() = 0;
+
   // Moves the selection extent point. This function does not allow the
   // selection to collapse. If the new extent is set to the same position as
   // the current base, this function will do nothing.

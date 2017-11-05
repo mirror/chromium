@@ -63,6 +63,10 @@ class CORE_EXPORT HTMLFrameOwnerElement : public HTMLElement,
 
   Document* getSVGDocument(ExceptionState&) const;
 
+  ScriptPromise pause(ScriptState*);
+  ScriptPromise unpause(ScriptState*);
+  bool paused();
+
   virtual bool LoadedNonEmptyDocument() const { return false; }
   virtual void DidLoadNonEmptyDocument() {}
 

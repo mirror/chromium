@@ -15,6 +15,7 @@
 #include "base/containers/queue.h"
 #include "base/gtest_prod_util.h"
 #include "base/macros.h"
+#include "content/browser/frame_host/frame_pause_manager.h"
 #include "content/browser/frame_host/frame_tree_node.h"
 #include "content/common/content_export.h"
 #include "services/service_manager/public/interfaces/interface_provider.mojom.h"
@@ -218,6 +219,9 @@ class CONTENT_EXPORT FrameTree {
   // identified by |instance|.
   void SetPageFocus(SiteInstance* instance, bool is_focused);
 
+  void PauseFrame(FrameTreeNode* frame_tree_node, base::OnceClosure callback);
+  void UnpauseFrame(FrameTreeNode* frame_tree_node, base::OnceClosure callback);
+
  private:
   friend class FrameTreeTest;
   FRIEND_TEST_ALL_PREFIXES(RenderFrameHostImplBrowserTest, RemoveFocusedFrame);
@@ -257,6 +261,8 @@ class CONTENT_EXPORT FrameTree {
 
   // Overall load progress.
   double load_progress_;
+
+  FramePauseManager pause_manager_;
 
   DISALLOW_COPY_AND_ASSIGN(FrameTree);
 };
