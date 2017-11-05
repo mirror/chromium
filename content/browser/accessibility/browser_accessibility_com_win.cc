@@ -1824,11 +1824,16 @@ void BrowserAccessibilityComWin::UpdateStep3FireEvents(
   // The rest of the events only fire on changes, not on new objects.
   if (old_win_attributes_->ia_role != 0 ||
       !old_win_attributes_->role_name.empty()) {
-    // Fire an event if the name, description, help, or value changes.
-    if (name() != old_win_attributes_->name)
-      FireNativeEvent(EVENT_OBJECT_NAMECHANGE);
+    // Fire an event if the name changes.
+    // TODO(aleventhal) this causes double speaking in live regions,
+    // how can we avoid that?
+    // if (name() != old_win_attributes_->name)
+    // FireNativeEvent(EVENT_OBJECT_NAMECHANGE);
+
+    // Fire an event if the description changes.
     if (description() != old_win_attributes_->description)
       FireNativeEvent(EVENT_OBJECT_DESCRIPTIONCHANGE);
+    // Fire an event if the value changes.
     if (value() != old_win_attributes_->value)
       FireNativeEvent(EVENT_OBJECT_VALUECHANGE);
 
@@ -1885,7 +1890,9 @@ void BrowserAccessibilityComWin::UpdateStep3FireEvents(
     if (new_len > 0) {
       // In-process screen readers may call IAccessibleText::get_newText
       // in reaction to this event to retrieve the text that was inserted.
-      FireNativeEvent(IA2_EVENT_TEXT_INSERTED);
+      // TODO(aleventhal) This causes double speaking in live regions, how
+      // can we avoid that?
+      // FireNativeEvent(IA2_EVENT_TEXT_INSERTED);
     }
 
     // Changing a static text node can affect the IA2 hypertext of its parent

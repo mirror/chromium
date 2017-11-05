@@ -1,0 +1,19 @@
+<!DOCTYPE html>
+<html>
+<body>
+<p aria-live="polite" id="p">Para</p>
+<h2 aria-live="polite" id="h">Heading</h2>
+<script>
+  function modifyPara() {
+    document.querySelector('#p').textContent = 'Modified Para';
+  }
+  function modifyHeading() {
+    document.querySelector('#h').firstChild.data = 'Modified Heading';
+  }
+  function go() {
+    modifyPara();
+    modifyHeading();
+  }
+</script>
+</body>
+</html>
