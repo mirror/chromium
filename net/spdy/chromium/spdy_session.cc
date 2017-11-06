@@ -18,6 +18,7 @@
 #include "base/single_thread_task_runner.h"
 #include "base/stl_util.h"
 #include "base/strings/string_number_conversions.h"
+#include "base/strings/string_split.h"
 #include "base/strings/string_util.h"
 #include "base/strings/utf_string_conversions.h"
 #include "base/threading/thread_task_runner_handle.h"
@@ -76,6 +77,56 @@ const uint32_t kDefaultInitialMaxFrameSize = 16384;
 
 // The maximum size of header list that the server is allowed to send.
 const uint32_t kSpdyMaxHeaderListSize = 256 * 1024;
+
+// Values of Vary response header on pushed streams.  This is logged to
+// Net.PushedStreamVaryResponseHeader, entries must not be changed.
+enum PushedStreamVaryResponseHeaderValues {
+  // There is no Vary header.
+  kNoVaryHeader = 0,
+  // The value of Vary is empty.
+  kVaryIsEmpty = 1,
+  // The value of Vary is "*".
+  kVaryIsStar = 2,
+  // The value of Vary is "accept-encoding" (case insensitive).
+  kVaryIsAcceptEncoding = 3,
+  // The value of Vary contains "accept-encoding" (case insensitive) and some
+  // other field names as well.
+  kVaryHasAcceptEncoding = 4,
+  // The value of Vary does not contain "accept-encoding", is not empty, and is
+  // not "*".
+  kVaryHasNoAcceptEncoding = 5,
+  // The number of entries above.
+  kNumberOfVaryEntries = 6
+};
+
+// String literals for parsing the Vary header in a pushed response.
+const char kVary[] = "vary";
+const char kStar[] = "*";
+const char kAcceptEncoding[] = "accept-encoding";
+
+enum PushedStreamVaryResponseHeaderValues ParseVaryInPushedResponse(
+    const SpdyHeaderBlock& headers) {
+  SpdyHeaderBlock::iterator it = headers.find(kVary);
+  if (it == headers.end())
+    return kNoVaryHeader;
+  base::StringPiece value(it->second);
+  if (value.empty())
+    return kVaryIsEmpty;
+  if (value == kStar)
+    return kVaryIsStar;
+  std::string lowercase_value = ToLowerASCII(value);
+  if (lowercase_value == kAcceptEncoding)
+    return kVaryIsAcceptEncoding;
+  // Both comma and newline delimiters occur in the wild.
+  for (const auto& substr :
+       SplitString(lowercase_value, ",\n", base::TRIM_WHITESPACE,
+                   base::SPLIT_WANT_NONEMPTY)) {
+    if (substr == kAcceptEncoding)
+      return kVaryHasAcceptEncoding;
+  }
+
+  return kVaryHasNoAcceptEncoding;
+}
 
 bool IsSpdySettingAtDefaultInitialValue(SpdySettingsIds setting_id,
                                         uint32_t value) {
@@ -2908,6 +2959,12 @@ void SpdySession::OnHeaders(SpdyStreamId stream_id,
 
   SpdyStream* stream = it->second;
   CHECK_EQ(stream->stream_id(), stream_id);
+
+  if (stream->type() == SPDY_PUSH_STREAM) {
+    UMA_HISTOGRAM_ENUMERATION("Net.PushedStreamVaryResponseHeader",
+                              ParseVaryInPushedResponse(headers),
+                              kNumberOfVaryEntries);
+  }
 
   stream->AddRawReceivedBytes(last_compressed_frame_len_);
   last_compressed_frame_len_ = 0;
