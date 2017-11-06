@@ -34,7 +34,6 @@
 #include "mojo/edk/embedder/outgoing_broker_client_invitation.h"
 #include "mojo/edk/embedder/platform_channel_pair.h"
 #include "mojo/edk/embedder/platform_channel_utils_posix.h"
-#include "mojo/edk/embedder/platform_handle_vector.h"
 #include "mojo/edk/embedder/scoped_platform_handle.h"
 #include "mojo/public/cpp/bindings/binding.h"
 
@@ -417,9 +416,8 @@ mojo::ScopedMessagePipeHandle ArcSessionDelegateImpl::ConnectMojoInternal(
       mojo::edk::ConnectionParams(mojo::edk::TransportProtocol::kLegacy,
                                   channel_pair.PassServerHandle()));
 
-  mojo::edk::ScopedPlatformHandleVectorPtr handles(
-      new mojo::edk::PlatformHandleVector{
-          channel_pair.PassClientHandle().release()});
+  mojo::edk::ScopedPlatformHandleVector handles{
+      channel_pair.PassClientHandle()};
 
   // We need to send the length of the message as a single byte, so make sure it
   // fits.
@@ -428,8 +426,7 @@ mojo::ScopedMessagePipeHandle ArcSessionDelegateImpl::ConnectMojoInternal(
   struct iovec iov[] = {{&message_length, sizeof(message_length)},
                         {const_cast<char*>(token.c_str()), token.size()}};
   ssize_t result = mojo::edk::PlatformChannelSendmsgWithHandles(
-      scoped_fd.get(), iov, sizeof(iov) / sizeof(iov[0]), handles->data(),
-      handles->size());
+      scoped_fd.get(), iov, sizeof(iov) / sizeof(iov[0]), handles);
   if (result == -1) {
     PLOG(ERROR) << "sendmsg";
     return mojo::ScopedMessagePipeHandle();
