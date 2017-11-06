@@ -16,6 +16,24 @@
       "revId": "e72dcb1a77407d5f3a4cc00933ed8ba1836e4719",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c1bbd1ff_609651f4",
+        "filename": "third_party/WebKit/Source/bindings/scripts/v8_methods.py",
+        "patchSetId": 2
+      },
+      "lineNbr": 424,
+      "author": {
+        "id": 1002507
+      },
+      "writtenOn": "2017-11-06T07:05:15Z",
+      "side": 1,
+      "message": "Great catch!!  I simply overlooked this check (I completely forgot it despite that I\u0027d seen it long before).  Will update this patch or simply revert this.",
+      "parentUuid": "2dd4a5ca_f960ca67",
+      "revId": "e72dcb1a77407d5f3a4cc00933ed8ba1836e4719",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
