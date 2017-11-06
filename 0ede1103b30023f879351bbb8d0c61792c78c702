@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "87c82d15_7d842a74",
+        "filename": "content/renderer/media/media_factory.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 142,
+      "author": {
+        "id": 1149164
+      },
+      "writtenOn": "2017-11-06T22:02:17Z",
+      "side": 1,
+      "message": "It keeps the code safe and debuggable, as same as the other subclass of WebSurfaceLayerBridge (https://cs.chromium.org/chromium/src/third_party/WebKit/Source/platform/graphics/SurfaceLayerBridge.cpp?l\u003d84), where bridge and bridgeObserver are likely to be dependent on each other. If this bridge instance is accessed after being deleted, any calls to its observer will just manifest as a nullptr crash, which is safer than calling a deallocated observer and causes unknown behavior.",
+      "parentUuid": "beb359f5_97ab251a",
+      "range": {
+        "startLine": 142,
+        "startChar": 46,
+        "endLine": 142,
+        "endChar": 66
+      },
+      "revId": "0ede1103b30023f879351bbb8d0c61792c78c702",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "966ba5e4_013453f8",
         "filename": "content/renderer/media/media_factory.cc",
         "patchSetId": 5
@@ -36,6 +60,30 @@
       "writtenOn": "2017-11-06T21:09:33Z",
       "side": 1,
       "message": "this seems like a change in functionality.  didn\u0027t WebMediaPlayerImpl get a WebLayer before?",
+      "range": {
+        "startLine": 143,
+        "startChar": 57,
+        "endLine": 143,
+        "endChar": 64
+      },
+      "revId": "0ede1103b30023f879351bbb8d0c61792c78c702",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e5df5974_fa486101",
+        "filename": "content/renderer/media/media_factory.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 143,
+      "author": {
+        "id": 1149164
+      },
+      "writtenOn": "2017-11-06T22:02:17Z",
+      "side": 1,
+      "message": "This is not a change in functionality. In the current implementation, media player directly\nuses SurfaceLayerBridge\u0027s implementation (see Create function in the to_be_deleted WebSurfaceLayerBridge.cpp). In SurfaceLayerBridge, the getter GetWebLayer() only has something non-null to return when either its OnFirstSurfaceActivation() or CreateSolidColorLayer() is invoked; yet currently none of these functions is invoked in media player. In addition, in the\nwebmediaplayer_impl_unittest.cc, the surface_layer_bridge_ is mocked and this function is overridden as MOCK_CONST_METHOD0 as well.",
+      "parentUuid": "966ba5e4_013453f8",
       "range": {
         "startLine": 143,
         "startChar": 57,
