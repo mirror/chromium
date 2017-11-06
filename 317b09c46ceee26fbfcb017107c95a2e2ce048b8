@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "fc18f78a_3ba0e616",
+        "filename": "content/browser/devtools/protocol/emulation_handler.cc",
+        "patchSetId": 11
+      },
+      "lineNbr": 107,
+      "author": {
+        "id": 1002532
+      },
+      "writtenOn": "2017-11-06T15:19:08Z",
+      "side": 1,
+      "message": "nit: undo",
+      "revId": "317b09c46ceee26fbfcb017107c95a2e2ce048b8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
