@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "f59fa54c_e96a6652",
+        "filename": "ios/chrome/browser/ui/payments/billing_address_selection_mediator_unittest.mm",
+        "patchSetId": 3
+      },
+      "lineNbr": 40,
+      "author": {
+        "id": 1115957
+      },
+      "writtenOn": "2017-11-06T21:10:43Z",
+      "side": 1,
+      "message": "nit: pretty sure you don\u0027t need std::move here and below, as you get an rvalue from a function, not an lvalue",
+      "range": {
+        "startLine": 40,
+        "startChar": 21,
+        "endLine": 40,
+        "endChar": 30
+      },
+      "revId": "ca1a6c53b0b8b2fb61c26b66355630bc1d21ac8e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
