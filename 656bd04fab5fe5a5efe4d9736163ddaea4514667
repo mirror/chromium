@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "b582b80e_4d09741a",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 2
+      },
+      "lineNbr": 9,
+      "author": {
+        "id": 1177311
+      },
+      "writtenOn": "2017-11-06T02:29:56Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "40e2bf1a_5e7a12ab",
+      "revId": "656bd04fab5fe5a5efe4d9736163ddaea4514667",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "d869c5fa_809e4afd",
         "filename": "device/geolocation/public/interfaces/BUILD.gn",
         "patchSetId": 2
@@ -33,6 +51,24 @@
       "revId": "656bd04fab5fe5a5efe4d9736163ddaea4514667",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7a3661d1_c9341d14",
+        "filename": "device/geolocation/public/interfaces/BUILD.gn",
+        "patchSetId": 2
+      },
+      "lineNbr": 13,
+      "author": {
+        "id": 1177311
+      },
+      "writtenOn": "2017-11-06T02:29:56Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "d869c5fa_809e4afd",
+      "revId": "656bd04fab5fe5a5efe4d9736163ddaea4514667",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
