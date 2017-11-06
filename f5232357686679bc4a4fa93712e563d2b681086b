@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "e341de44_4d52f403",
+        "filename": "chrome/browser/resource_coordinator/tab_manager_web_contents_data.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 131,
+      "author": {
+        "id": 1112850
+      },
+      "writtenOn": "2017-11-06T21:28:18Z",
+      "side": 1,
+      "message": "Can we put this part in a dedicated function and make both |DidStopLoading| and |NotifyAlmostIdle| call it? Maybe call it |OnTabIsLoaded|? (just to match TAB_IS_LOADED). And the corresponding API in TabManager and TabManagerStatsCollector (OnDidStopLoading) should also match the new name.\n\nAnd some comments for TAB_IS_LOADED should be added.\n\nAnd in TabManagerTest, most tests use |tab_manager-\u003eGetWebContentsData(contents)-\u003eDidStopLoading()| to simulate a tab has finished loading. Those tests should all be updated to use the new function |OnTabIsLoaded|. Only the test that use almost idle signal should use |NotifyAlmostIdle| and |DidStopLoading|.",
+      "range": {
+        "startLine": 126,
+        "startChar": 0,
+        "endLine": 131,
+        "endChar": 3
+      },
+      "revId": "f5232357686679bc4a4fa93712e563d2b681086b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
