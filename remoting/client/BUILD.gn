@@ -55,6 +55,8 @@ static_library("client") {
       "dual_buffer_frame_consumer.h",
       "gesture_interpreter.cc",
       "gesture_interpreter.h",
+      "oauth_token_getter_proxy.cc",
+      "oauth_token_getter_proxy.h",
     ]
     deps += [
       "//remoting/client/display",
