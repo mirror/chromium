@@ -23415,6 +23415,7 @@ uploading your change for review.  These are checked by presubmit scripts.
   <int value="11" label="Unknown (WebAPK)"/>
   <int value="12" label="Trusted Web Activity"/>
   <int value="13" label="WebShareTarget (WebAPK)"/>
+  <int value="14" label="External intent from Chrome (WebAPK)"/>
 </enum>
 
 <enum name="LaunchIntentFlags">
