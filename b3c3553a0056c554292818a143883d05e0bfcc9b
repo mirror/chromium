@@ -72,6 +72,24 @@
     },
     {
       "key": {
+        "uuid": "4566ede0_92038e6c",
+        "filename": "third_party/WebKit/Source/core/loader/LinkLoader.cpp",
+        "patchSetId": 6
+      },
+      "lineNbr": 420,
+      "author": {
+        "id": 1115924
+      },
+      "writtenOn": "2017-11-06T19:06:35Z",
+      "side": 1,
+      "message": "Probably this is good, because this code block should directly corresponds to the ScriptLoader code block, not the FetchParameters code block kouhei@ mentioned (actually they correspond to different spec statements).",
+      "parentUuid": "bd4b5a3e_45e29c41",
+      "revId": "b3c3553a0056c554292818a143883d05e0bfcc9b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "c2b69da4_4cc5fc2d",
         "filename": "third_party/WebKit/Source/core/loader/LinkLoader.cpp",
         "patchSetId": 6

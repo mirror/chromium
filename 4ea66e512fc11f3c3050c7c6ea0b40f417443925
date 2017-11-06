@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "ea07d163_01c54dea",
+        "filename": "third_party/WebKit/Source/core/loader/LinkLoader.cpp",
+        "patchSetId": 11
+      },
+      "lineNbr": 425,
+      "author": {
+        "id": 1115924
+      },
+      "writtenOn": "2017-11-06T19:06:35Z",
+      "side": 1,
+      "message": "This |document| is the *element document* of a \u003clink\u003e element when called from LinkLoader::LoadLink() (not sure for LinkLoader::LoadLinksFromHeader()), while ScriptLoader uses the *context document* of a \u003cscript\u003e element to get Modulator.\nDoes this make differences?",
+      "range": {
+        "startLine": 425,
+        "startChar": 48,
+        "endLine": 425,
+        "endChar": 56
+      },
+      "revId": "4ea66e512fc11f3c3050c7c6ea0b40f417443925",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
