@@ -88,6 +88,7 @@
 #include "ui/base/class_property.h"
 #include "ui/base/hit_test.h"
 #include "ui/base/ui_features.h"
+#include "ui/compositor/compositor_vsync_manager.h"
 #include "ui/display/display_observer.h"
 #include "ui/display/manager/managed_display_info.h"
 #include "ui/display/screen.h"
@@ -98,6 +99,7 @@
 #include "ui/views/widget/widget_observer.h"
 #include "ui/wm/core/coordinate_conversion.h"
 #include "ui/wm/core/window_animations.h"
+#include "ui/wm/public/activation_change_observer.h"
 
 #if defined(USE_OZONE)
 #include <drm_fourcc.h>
@@ -2164,8 +2166,8 @@ const struct zcr_notification_surface_v1_interface
 
 // Implements remote shell interface and monitors workspace state needed
 // for the remote shell interface.
-class WaylandRemoteShell : public WMHelper::TabletModeObserver,
-                           public WMHelper::ActivationObserver,
+class WaylandRemoteShell : public ash::TabletModeObserver,
+                           public wm::ActivationChangeObserver,
                            public display::DisplayObserver {
  public:
   WaylandRemoteShell(Display* display, wl_resource* remote_shell_resource)
@@ -2257,8 +2259,9 @@ class WaylandRemoteShell : public WMHelper::TabletModeObserver,
   }
   void OnTabletModeEnded() override {}
 
-  // Overridden from WMHelper::ActivationObserver:
-  void OnWindowActivated(aura::Window* gained_active,
+  // Overridden from wm::ActivationChangeObserver:
+  void OnWindowActivated(ActivationReason reason,
+                         aura::Window* gained_active,
                          aura::Window* lost_active) override {
     SendActivated(gained_active, lost_active);
   }
@@ -2632,7 +2635,7 @@ void bind_aura_shell(wl_client* client,
 // vsync_timing_interface:
 
 // Implements VSync timing interface by monitoring updates to VSync parameters.
-class VSyncTiming final : public WMHelper::VSyncObserver {
+class VSyncTiming final : public ui::CompositorVSyncManager::Observer {
  public:
   ~VSyncTiming() override {
     WMHelper::GetInstance()->RemoveVSyncObserver(this);
