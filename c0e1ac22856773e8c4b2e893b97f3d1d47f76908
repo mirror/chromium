@@ -46,6 +46,99 @@
       "revId": "c0e1ac22856773e8c4b2e893b97f3d1d47f76908",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6dbf6b43_0224be21",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/tabmodel/TabPersistentStore.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 826,
+      "author": {
+        "id": 1116043
+      },
+      "writtenOn": "2017-11-06T21:44:45Z",
+      "side": 1,
+      "message": "Looks like we might just be able to have the next method (serializeTabModelSelector) return a TabListMetadata.\n\nI\u0027d also recommend renaming to TabModelSelectorMetadata to be consistent with TabModelMetadata.\n\nThe meta data could be the two TabModelMetadata(s) as well as the List of TabRestoreDetails.  tabsToRestore is constructed in this method, so we don\u0027t have to worry about it becoming invalidated right away.",
+      "parentUuid": "345b2e24_a5a9c94b",
+      "range": {
+        "startLine": 819,
+        "startChar": 6,
+        "endLine": 826,
+        "endChar": 9
+      },
+      "revId": "c0e1ac22856773e8c4b2e893b97f3d1d47f76908",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "98cb47a1_b95b663f",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/tabmodel/TabPersistentStore.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 1179,
+      "author": {
+        "id": 1116043
+      },
+      "writtenOn": "2017-11-06T21:44:45Z",
+      "side": 1,
+      "message": "these all should be final",
+      "range": {
+        "startLine": 1179,
+        "startChar": 15,
+        "endLine": 1179,
+        "endChar": 19
+      },
+      "revId": "c0e1ac22856773e8c4b2e893b97f3d1d47f76908",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ce504e6a_4d28960d",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/tabmodel/TabPersistentStore.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 1180,
+      "author": {
+        "id": 1116043
+      },
+      "writtenOn": "2017-11-06T21:44:45Z",
+      "side": 1,
+      "message": "Ideally, we\u0027d prevent modification of this using something like https://developer.android.com/reference/java/util/Collections.html#unmodifiableSet(java.util.Set\u003c? extends T\u003e), but that isn\u0027t available till api 24.",
+      "range": {
+        "startLine": 1180,
+        "startChar": 28,
+        "endLine": 1180,
+        "endChar": 43
+      },
+      "revId": "c0e1ac22856773e8c4b2e893b97f3d1d47f76908",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "450a929e_369f4852",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/tabmodel/TabPersistentStore.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 1453,
+      "author": {
+        "id": 1116043
+      },
+      "writtenOn": "2017-11-06T21:44:45Z",
+      "side": 1,
+      "message": "do we need a corresponding removeObserver method?",
+      "range": {
+        "startLine": 1453,
+        "startChar": 19,
+        "endLine": 1453,
+        "endChar": 30
+      },
+      "revId": "c0e1ac22856773e8c4b2e893b97f3d1d47f76908",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
