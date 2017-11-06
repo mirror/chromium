@@ -94,6 +94,30 @@
       "revId": "f00f74feef559540a7ff68a7da56200b86ba7eea",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f60de0a3_c9ab33ac",
+        "filename": "ash/display/touch_calibrator_controller.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 26,
+      "author": {
+        "id": 1000045
+      },
+      "writtenOn": "2017-11-06T15:04:17Z",
+      "side": 1,
+      "message": "For --mus / --mash, see go/mustash. Briefly, you can either set it in about:flags (slightly dangerous, as you\u0027ll get stuck if there\u0027s a startup crash) or edit /etc/chrome_dev.conf to add the --mus or --mash flag. You can do the latter with a \"mount --bind\" so the flag will be discarded if the device reboots, which is handy if you get stuck.\n\nFor observers, I\u0027m not 100% sure, but I see InputDeviceEventObserver::OnDeviceListsComplete, which seems promising:\n\nhttps://cs.chromium.org/chromium/src/ui/events/devices/input_device_event_observer.h?sq\u003dpackage:chromium\u0026dr\u003dCSs\u0026l\u003d15",
+      "parentUuid": "3841940e_83854be5",
+      "range": {
+        "startLine": 25,
+        "startChar": 2,
+        "endLine": 26,
+        "endChar": 52
+      },
+      "revId": "f00f74feef559540a7ff68a7da56200b86ba7eea",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
