@@ -72,7 +72,7 @@ class CONTENT_EXPORT BackgroundFetchContext
   // Updates the title of the Background Fetch identified by |unique_id|. The
   // |callback| will be invoked when the title has been updated, or an error
   // occurred that prevents it from doing so.
-  void UpdateRegistrationUI(
+  void UpdateUI(
       const std::string& unique_id,
       const std::string& title,
       blink::mojom::BackgroundFetchService::UpdateUICallback callback);
@@ -102,7 +102,7 @@ class CONTENT_EXPORT BackgroundFetchContext
       const base::Optional<BackgroundFetchRegistration>& registration);
 
   // Called when the new title has been updated in the data manager.
-  void DidUpdateStoredRegistrationUI(
+  void DidUpdateStoredUI(
       const std::string& unique_id,
       const std::string& title,
       blink::mojom::BackgroundFetchService::UpdateUICallback callback,
