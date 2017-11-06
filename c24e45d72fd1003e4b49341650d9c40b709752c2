@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "0b9857aa_6391ade6",
+        "filename": "third_party/WebKit/Source/core/paint/compositing/CompositingLayerAssigner.cpp",
+        "patchSetId": 8
+      },
+      "lineNbr": 225,
+      "author": {
+        "id": 1115878
+      },
+      "writtenOn": "2017-11-06T17:27:09Z",
+      "side": 1,
+      "message": "Why does this squashing-disallowed reason only apply for assumed-overlap\ntriggered by a previous sibling? Also, the siblings don\u0027t necessarily\npaint in tree order, in the presence of z-index. I don\u0027t see yet why\nthis is correct.",
+      "revId": "c24e45d72fd1003e4b49341650d9c40b709752c2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
