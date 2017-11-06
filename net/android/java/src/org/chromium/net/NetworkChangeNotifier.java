@@ -6,6 +6,7 @@ package org.chromium.net;
 
 import android.annotation.SuppressLint;
 
+import org.chromium.base.NonThreadSafe;
 import org.chromium.base.ObserverList;
 import org.chromium.base.VisibleForTesting;
 import org.chromium.base.annotations.CalledByNative;
@@ -22,7 +23,7 @@ import java.util.ArrayList;
  * Embedders may choose to have this class auto-detect changes in network connectivity by invoking
  * the setAutoDetectConnectivityState function.
  *
- * WARNING: This class is not thread-safe.
+ * WARNING: This class is not thread-safe. This class lives on main thread in Chrome.
  */
 @JNINamespace("net")
 public class NetworkChangeNotifier {
@@ -42,11 +43,13 @@ public class NetworkChangeNotifier {
 
     @SuppressLint("StaticFieldLeak")
     private static NetworkChangeNotifier sInstance;
+    private static NonThreadSafe sThreadCheck;
 
     @VisibleForTesting
     protected NetworkChangeNotifier() {
         mNativeChangeNotifiers = new ArrayList<Long>();
         mConnectionTypeObservers = new ObserverList<ConnectionTypeObserver>();
+        sThreadCheck = new NonThreadSafe();
     }
 
     /**
@@ -57,10 +60,12 @@ public class NetworkChangeNotifier {
         if (sInstance == null) {
             sInstance = new NetworkChangeNotifier();
         }
+        assert sThreadCheck.calledOnValidThread();
         return sInstance;
     }
 
     public static boolean isInitialized() {
+        assert sThreadCheck.calledOnValidThread();
         return sInstance != null;
     }
 
@@ -70,11 +75,13 @@ public class NetworkChangeNotifier {
 
     @CalledByNative
     public int getCurrentConnectionType() {
+        assert sThreadCheck.calledOnValidThread();
         return mCurrentConnectionType;
     }
 
     @CalledByNative
     public int getCurrentConnectionSubtype() {
+        assert sThreadCheck.calledOnValidThread();
         return mAutoDetector == null
                 ? ConnectionSubtype.SUBTYPE_UNKNOWN
                 : mAutoDetector.getCurrentNetworkState().getConnectionSubtype();
@@ -87,6 +94,7 @@ public class NetworkChangeNotifier {
      */
     @CalledByNative
     public long getCurrentDefaultNetId() {
+        assert sThreadCheck.calledOnValidThread();
         return mAutoDetector == null ? NetId.INVALID : mAutoDetector.getDefaultNetId();
     }
 
@@ -100,6 +108,7 @@ public class NetworkChangeNotifier {
      */
     @CalledByNative
     public long[] getCurrentNetworksAndTypes() {
+        assert sThreadCheck.calledOnValidThread();
         return mAutoDetector == null ? new long[0] : mAutoDetector.getNetworksAndTypes();
     }
 
@@ -108,6 +117,7 @@ public class NetworkChangeNotifier {
      */
     @CalledByNative
     public void addNativeObserver(long nativeChangeNotifier) {
+        assert sThreadCheck.calledOnValidThread();
         mNativeChangeNotifiers.add(nativeChangeNotifier);
     }
 
@@ -116,6 +126,7 @@ public class NetworkChangeNotifier {
      */
     @CalledByNative
     public void removeNativeObserver(long nativeChangeNotifier) {
+        assert sThreadCheck.calledOnValidThread();
         mNativeChangeNotifiers.remove(nativeChangeNotifier);
     }
 
@@ -124,6 +135,7 @@ public class NetworkChangeNotifier {
      */
     public static NetworkChangeNotifier getInstance() {
         assert sInstance != null;
+        assert sThreadCheck.calledOnValidThread();
         return sInstance;
     }
 
@@ -163,6 +175,7 @@ public class NetworkChangeNotifier {
     }
 
     private void destroyAutoDetector() {
+        assert sThreadCheck.calledOnValidThread();
         if (mAutoDetector != null) {
             mAutoDetector.destroy();
             mAutoDetector = null;
@@ -171,6 +184,7 @@ public class NetworkChangeNotifier {
 
     private void setAutoDetectConnectivityStateInternal(
             boolean shouldAutoDetect, NetworkChangeNotifierAutoDetect.RegistrationPolicy policy) {
+        assert sThreadCheck.calledOnValidThread();
         if (shouldAutoDetect) {
             if (mAutoDetector == null) {
                 mAutoDetector = new NetworkChangeNotifierAutoDetect(
@@ -278,6 +292,7 @@ public class NetworkChangeNotifier {
     }
 
     private void updateCurrentConnectionType(int newConnectionType) {
+        assert sThreadCheck.calledOnValidThread();
         mCurrentConnectionType = newConnectionType;
         notifyObserversOfConnectionTypeChange(newConnectionType);
     }
@@ -286,10 +301,12 @@ public class NetworkChangeNotifier {
      * Alerts all observers of a connection change.
      */
     void notifyObserversOfConnectionTypeChange(int newConnectionType) {
+        assert sThreadCheck.calledOnValidThread();
         notifyObserversOfConnectionTypeChange(newConnectionType, getCurrentDefaultNetId());
     }
 
     private void notifyObserversOfConnectionTypeChange(int newConnectionType, long defaultNetId) {
+        assert sThreadCheck.calledOnValidThread();
         for (Long nativeChangeNotifier : mNativeChangeNotifiers) {
             nativeNotifyConnectionTypeChanged(
                     nativeChangeNotifier, newConnectionType, defaultNetId);
@@ -303,6 +320,7 @@ public class NetworkChangeNotifier {
      * Alerts all observers of a bandwidth change.
      */
     void notifyObserversOfConnectionSubtypeChange(int connectionSubtype) {
+        assert sThreadCheck.calledOnValidThread();
         for (Long nativeChangeNotifier : mNativeChangeNotifiers) {
             nativeNotifyMaxBandwidthChanged(nativeChangeNotifier, connectionSubtype);
         }
@@ -312,6 +330,7 @@ public class NetworkChangeNotifier {
      * Alerts all observers of a network connect.
      */
     void notifyObserversOfNetworkConnect(long netId, int connectionType) {
+        assert sThreadCheck.calledOnValidThread();
         for (Long nativeChangeNotifier : mNativeChangeNotifiers) {
             nativeNotifyOfNetworkConnect(nativeChangeNotifier, netId, connectionType);
         }
@@ -321,6 +340,7 @@ public class NetworkChangeNotifier {
      * Alerts all observers of a network soon to be disconnected.
      */
     void notifyObserversOfNetworkSoonToDisconnect(long netId) {
+        assert sThreadCheck.calledOnValidThread();
         for (Long nativeChangeNotifier : mNativeChangeNotifiers) {
             nativeNotifyOfNetworkSoonToDisconnect(nativeChangeNotifier, netId);
         }
@@ -330,6 +350,7 @@ public class NetworkChangeNotifier {
      * Alerts all observers of a network disconnect.
      */
     void notifyObserversOfNetworkDisconnect(long netId) {
+        assert sThreadCheck.calledOnValidThread();
         for (Long nativeChangeNotifier : mNativeChangeNotifiers) {
             nativeNotifyOfNetworkDisconnect(nativeChangeNotifier, netId);
         }
@@ -342,6 +363,7 @@ public class NetworkChangeNotifier {
      * been missed, and acts to keep cached lists of active networks accurate.
      */
     void notifyObserversToPurgeActiveNetworkList(long[] activeNetIds) {
+        assert sThreadCheck.calledOnValidThread();
         for (Long nativeChangeNotifier : mNativeChangeNotifiers) {
             nativeNotifyPurgeActiveNetworkList(nativeChangeNotifier, activeNetIds);
         }
