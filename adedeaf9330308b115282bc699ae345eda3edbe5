@@ -22,6 +22,47 @@
       "revId": "adedeaf9330308b115282bc699ae345eda3edbe5",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "62fe88e3_c4fc7072",
+        "filename": "chrome/browser/chromeos/login/ui/webui_login_view.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 163,
+      "author": {
+        "id": 1000101
+      },
+      "writtenOn": "2017-11-06T18:31:40Z",
+      "side": 1,
+      "message": "Let\u0027s register with AccelerateController for all the accelerators. Change L186 to do that for classic ash and fallback to AddAccelerator for mash for now.",
+      "parentUuid": "38467850_c039d3a0",
+      "range": {
+        "startLine": 162,
+        "startChar": 13,
+        "endLine": 163,
+        "endChar": 76
+      },
+      "revId": "adedeaf9330308b115282bc699ae345eda3edbe5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7e7ea420_4fde5a06",
+        "filename": "chrome/browser/chromeos/login/ui/webui_login_view.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 331,
+      "author": {
+        "id": 1000101
+      },
+      "writtenOn": "2017-11-06T18:31:40Z",
+      "side": 1,
+      "message": "Can we do\n\n  if (!GetWidget()-\u003eIsActive())\n     GetWidget()-\u003eActivate();\n\ninstead?",
+      "revId": "adedeaf9330308b115282bc699ae345eda3edbe5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
