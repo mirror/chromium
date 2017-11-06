@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "3939184a_2bb9edf5",
+        "filename": "components/previews/content/previews_io_data_unittest.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 303,
+      "author": {
+        "id": 1124674
+      },
+      "writtenOn": "2017-11-06T20:00:16Z",
+      "side": 1,
+      "message": "Consider migrating trials to FeatureApi and using ScopedFeatureList?",
+      "range": {
+        "startLine": 303,
+        "startChar": 4,
+        "endLine": 303,
+        "endChar": 50
+      },
+      "revId": "075e432ee576a869516163133a24a0852cb51b9e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    }
+  ]
+}
