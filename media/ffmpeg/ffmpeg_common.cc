@@ -471,6 +471,10 @@ bool AVStreamToVideoDecoderConfig(const AVStream* stream,
     // TODO(servolk): Find a way to obtain actual VP9 profile from FFmpeg.
     // crbug.com/592074
     profile = VP9PROFILE_PROFILE0;
+#if BUILDFLAG(ENABLE_HEVC_DEMUXING)
+  else if (codec == kCodecHEVC)
+    profile = HEVCPROFILE_MAIN;
+#endif
   else if (codec == kCodecTheora)
     profile = THEORAPROFILE_ANY;
   else
