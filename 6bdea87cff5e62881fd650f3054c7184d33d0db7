@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "f167eb18_bf921d32",
+        "filename": "build/config/android/internal_rules.gni",
+        "patchSetId": 3
+      },
+      "lineNbr": 1788,
+      "author": {
+        "id": 1002869
+      },
+      "writtenOn": "2017-11-06T17:59:50Z",
+      "side": 1,
+      "message": "Good idea!",
+      "parentUuid": "a795dce6_94b22b71",
+      "range": {
+        "startLine": 1788,
+        "startChar": 36,
+        "endLine": 1788,
+        "endChar": 39
+      },
+      "revId": "6bdea87cff5e62881fd650f3054c7184d33d0db7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "b3a8ba40_86c55963",
         "filename": "build/config/android/rules.gni",
         "patchSetId": 3
@@ -39,6 +63,24 @@
       "revId": "6bdea87cff5e62881fd650f3054c7184d33d0db7",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "da1fe5fb_7372ab07",
+        "filename": "build/config/android/rules.gni",
+        "patchSetId": 3
+      },
+      "lineNbr": 2426,
+      "author": {
+        "id": 1002869
+      },
+      "writtenOn": "2017-11-06T17:59:50Z",
+      "side": 1,
+      "message": "Unconditional is fine with me. Will build all targets and see.",
+      "parentUuid": "b3a8ba40_86c55963",
+      "revId": "6bdea87cff5e62881fd650f3054c7184d33d0db7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
