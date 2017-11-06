@@ -91,6 +91,8 @@ void ExtensionLocalizationPeer::OnTransferSizeUpdated(int transfer_size_diff) {
 
 void ExtensionLocalizationPeer::OnCompletedRequest(
     int error_code,
+    base::Optional<network::mojom::CORSError> cors_error,
+    scoped_refptr<net::HttpResponseHeaders> error_response_headers,
     bool stale_copy_in_cache,
     const base::TimeTicks& completion_time,
     int64_t total_transfer_size,
@@ -100,9 +102,10 @@ void ExtensionLocalizationPeer::OnCompletedRequest(
   if (error_code != net::OK) {
     // We failed to load the resource.
     original_peer_->OnReceivedResponse(response_info_);
-    original_peer_->OnCompletedRequest(net::ERR_ABORTED, stale_copy_in_cache,
-                                       completion_time, total_transfer_size,
-                                       encoded_body_size, decoded_body_size);
+    original_peer_->OnCompletedRequest(
+        net::ERR_ABORTED, cors_error, error_response_headers,
+        stale_copy_in_cache, completion_time, total_transfer_size,
+        encoded_body_size, decoded_body_size);
     return;
   }
 
@@ -111,9 +114,10 @@ void ExtensionLocalizationPeer::OnCompletedRequest(
   original_peer_->OnReceivedResponse(response_info_);
   if (!data_.empty())
     original_peer_->OnReceivedData(base::MakeUnique<StringData>(data_));
-  original_peer_->OnCompletedRequest(error_code, stale_copy_in_cache,
-                                     completion_time, total_transfer_size,
-                                     encoded_body_size, decoded_body_size);
+  original_peer_->OnCompletedRequest(
+      error_code, cors_error, error_response_headers, stale_copy_in_cache,
+      completion_time, total_transfer_size, encoded_body_size,
+      decoded_body_size);
 }
 
 void ExtensionLocalizationPeer::ReplaceMessages() {

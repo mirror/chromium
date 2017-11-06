@@ -410,12 +410,15 @@ class WebURLLoaderImpl::Context : public base::RefCounted<Context> {
   void OnReceivedData(std::unique_ptr<ReceivedData> data);
   void OnTransferSizeUpdated(int transfer_size_diff);
   void OnReceivedCachedMetadata(const char* data, int len);
-  void OnCompletedRequest(int error_code,
-                          bool stale_copy_in_cache,
-                          const base::TimeTicks& completion_time,
-                          int64_t total_transfer_size,
-                          int64_t encoded_body_size,
-                          int64_t decoded_body_size);
+  void OnCompletedRequest(
+      int error_code,
+      base::Optional<network::mojom::CORSError> cors_error,
+      scoped_refptr<net::HttpResponseHeaders> error_response_headers,
+      bool stale_copy_in_cache,
+      const base::TimeTicks& completion_time,
+      int64_t total_transfer_size,
+      int64_t encoded_body_size,
+      int64_t decoded_body_size);
 
  private:
   friend class base::RefCounted<Context>;
@@ -473,12 +476,15 @@ class WebURLLoaderImpl::RequestPeerImpl : public RequestPeer {
   void OnReceivedData(std::unique_ptr<ReceivedData> data) override;
   void OnTransferSizeUpdated(int transfer_size_diff) override;
   void OnReceivedCachedMetadata(const char* data, int len) override;
-  void OnCompletedRequest(int error_code,
-                          bool stale_copy_in_cache,
-                          const base::TimeTicks& completion_time,
-                          int64_t total_transfer_size,
-                          int64_t encoded_body_size,
-                          int64_t decoded_body_size) override;
+  void OnCompletedRequest(
+      int error_code,
+      base::Optional<network::mojom::CORSError> cors_error,
+      scoped_refptr<net::HttpResponseHeaders> error_response_headers,
+      bool stale_copy_in_cache,
+      const base::TimeTicks& completion_time,
+      int64_t total_transfer_size,
+      int64_t encoded_body_size,
+      int64_t decoded_body_size) override;
 
  private:
   scoped_refptr<Context> context_;
@@ -895,6 +901,8 @@ void WebURLLoaderImpl::Context::OnReceivedCachedMetadata(
 
 void WebURLLoaderImpl::Context::OnCompletedRequest(
     int error_code,
+    base::Optional<network::mojom::CORSError> cors_error,
+    scoped_refptr<net::HttpResponseHeaders> error_response_headers,
     bool stale_copy_in_cache,
     const base::TimeTicks& completion_time,
     int64_t total_transfer_size,
@@ -921,7 +929,9 @@ void WebURLLoaderImpl::Context::OnCompletedRequest(
         this, TRACE_EVENT_FLAG_FLOW_IN);
 
     if (error_code != net::OK) {
-      WebURLError error(url_, stale_copy_in_cache, error_code);
+      WebURLError error(
+          url_, stale_copy_in_cache, error_code, cors_error,
+          error_response_headers ? error_response_headers->response_code() : 0);
       client_->DidFail(error, total_transfer_size, encoded_body_size,
                        decoded_body_size);
     } else {
@@ -958,8 +968,10 @@ void WebURLLoaderImpl::Context::CancelBodyStreaming() {
   }
   if (client_) {
     // TODO(yhirano): Set |stale_copy_in_cache| appropriately if possible.
-    client_->DidFail(WebURLError(url_, false, net::ERR_ABORTED),
-                     WebURLLoaderClient::kUnknownEncodedDataLength, 0, 0);
+    client_->DidFail(
+        WebURLError(url_, false, net::ERR_ABORTED,
+                    base::nullopt /* cors_error */, 0 /* status_code */),
+        WebURLLoaderClient::kUnknownEncodedDataLength, 0, 0);
   }
 
   // Notify the browser process that the request is canceled.
@@ -1032,8 +1044,9 @@ void WebURLLoaderImpl::Context::HandleDataURL() {
       OnReceivedData(std::make_unique<FixedReceivedData>(data.data(), size));
   }
 
-  OnCompletedRequest(error_code, false, base::TimeTicks::Now(), 0, data.size(),
-                     data.size());
+  OnCompletedRequest(error_code, base::nullopt /* cors_error */,
+                     nullptr /* error_response_headers */, false,
+                     base::TimeTicks::Now(), 0, data.size(), data.size());
 }
 
 // static
@@ -1191,12 +1204,15 @@ void WebURLLoaderImpl::RequestPeerImpl::OnReceivedCachedMetadata(
 
 void WebURLLoaderImpl::RequestPeerImpl::OnCompletedRequest(
     int error_code,
+    base::Optional<network::mojom::CORSError> cors_error,
+    scoped_refptr<net::HttpResponseHeaders> error_response_headers,
     bool stale_copy_in_cache,
     const base::TimeTicks& completion_time,
     int64_t total_transfer_size,
     int64_t encoded_body_size,
     int64_t decoded_body_size) {
-  context_->OnCompletedRequest(error_code, stale_copy_in_cache, completion_time,
+  context_->OnCompletedRequest(error_code, cors_error, error_response_headers,
+                               stale_copy_in_cache, completion_time,
                                total_transfer_size, encoded_body_size,
                                decoded_body_size);
 }
@@ -1374,10 +1390,14 @@ void WebURLLoaderImpl::LoadSynchronously(const WebURLRequest& request,
   // status code or status text.
   int error_code = sync_load_response.error_code;
   if (error_code != net::OK) {
-    error = WebURLError(final_url, false, error_code);
+    error = WebURLError(
+        final_url, false, error_code, sync_load_response.cors_error,
+        sync_load_response.headers ? sync_load_response.headers->response_code()
+                                   : 0);
     if (error_code == net::ERR_ABORTED) {
       // SyncResourceHandler returns ERR_ABORTED for CORS redirect errors,
       // so we treat the error as a web security violation.
+      // TODO(toyoshim): Revisit this to confirm using |cors_error|.
       error.is_web_security_violation = true;
     }
     return;

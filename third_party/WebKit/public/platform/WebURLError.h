@@ -33,6 +33,8 @@
 
 #include "WebString.h"
 #include "WebURL.h"
+#include "base/optional.h"
+#include "services/network/public/interfaces/cors.mojom-shared.h"
 
 namespace blink {
 
@@ -51,6 +53,8 @@ struct WebURLError {
     // net/base/net_error_list.h.
     kNet,
 
+    // TODO(toyoshim): Should we have kCORS for |cors_error|?
+
     // Used for testing.
     kTest,
   };
@@ -59,6 +63,12 @@ struct WebURLError {
   // A numeric error code detailing the reason for this error. A value
   // of 0 means no error.
   int reason = 0;
+
+  // Optional CORS error details.
+  base::Optional<network::mojom::CORSError> cors_error;
+
+  // HTTP response statue code if it is available. Otherwise 0.
+  int status_code = 0;
 
   // A flag showing whether or not "unreachableURL" has a copy in the
   // cache that was too stale to return for this request.
@@ -74,7 +84,9 @@ struct WebURLError {
   // This constructor infers some members from the parameters.
   BLINK_PLATFORM_EXPORT WebURLError(const WebURL&,
                                     bool stale_copy_in_cache,
-                                    int reason);
+                                    int reason,
+                                    base::Optional<network::mojom::CORSError>,
+                                    int status_code);
 
 #if INSIDE_BLINK
   BLINK_PLATFORM_EXPORT WebURLError(const ResourceError&);

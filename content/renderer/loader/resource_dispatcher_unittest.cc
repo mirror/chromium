@@ -426,20 +426,24 @@ class TestResourceDispatcherDelegate : public ResourceDispatcherDelegate {
     }
     void OnTransferSizeUpdated(int transfer_size_diff) override {}
 
-    void OnCompletedRequest(int error_code,
-                            bool stale_copy_in_cache,
-                            const base::TimeTicks& completion_time,
-                            int64_t total_transfer_size,
-                            int64_t encoded_body_size,
-                            int64_t decoded_body_size) override {
+    void OnCompletedRequest(
+        int error_code,
+        base::Optional<network::mojom::CORSError> cors_error,
+        scoped_refptr<net::HttpResponseHeaders> error_response_headers,
+        bool stale_copy_in_cache,
+        const base::TimeTicks& completion_time,
+        int64_t total_transfer_size,
+        int64_t encoded_body_size,
+        int64_t decoded_body_size) override {
       original_peer_->OnReceivedResponse(response_info_);
       if (!data_.empty()) {
         original_peer_->OnReceivedData(
             std::make_unique<FixedReceivedData>(data_.data(), data_.size()));
       }
-      original_peer_->OnCompletedRequest(error_code, stale_copy_in_cache,
-                                         completion_time, total_transfer_size,
-                                         encoded_body_size, decoded_body_size);
+      original_peer_->OnCompletedRequest(
+          error_code, cors_error, error_response_headers, stale_copy_in_cache,
+          completion_time, total_transfer_size, encoded_body_size,
+          decoded_body_size);
     }
 
    private:

@@ -10,7 +10,11 @@
 #include <memory>
 #include <string>
 
+#include "base/memory/scoped_refptr.h"
+#include "base/optional.h"
 #include "content/common/content_export.h"
+#include "net/http/http_response_headers.h"
+#include "services/network/public/interfaces/cors.mojom.h"
 
 namespace base {
 class TimeTicks;
@@ -93,12 +97,15 @@ class CONTENT_EXPORT RequestPeer {
 
   // Called when the response is complete.  This method signals completion of
   // the resource load.
-  virtual void OnCompletedRequest(int error_code,
-                                  bool stale_copy_in_cache,
-                                  const base::TimeTicks& completion_time,
-                                  int64_t total_transfer_size,
-                                  int64_t encoded_body_size,
-                                  int64_t decoded_body_size) = 0;
+  virtual void OnCompletedRequest(
+      int error_code,
+      base::Optional<network::mojom::CORSError> cors_error,
+      scoped_refptr<net::HttpResponseHeaders> error_response_headers,
+      bool stale_copy_in_cache,
+      const base::TimeTicks& completion_time,
+      int64_t total_transfer_size,
+      int64_t encoded_body_size,
+      int64_t decoded_body_size) = 0;
 
   virtual ~RequestPeer() {}
 };

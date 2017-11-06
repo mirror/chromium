@@ -372,12 +372,13 @@ void ResourceDispatcher::OnRequestComplete(
   // TODO(kinuko): Revisit here. This probably needs to call request_info->peer
   // but the past attempt to change it seems to have caused crashes.
   // (crbug.com/547047)
-  peer->OnCompletedRequest(request_complete_data.error_code,
-                           request_complete_data.exists_in_cache,
-                           renderer_completion_time,
-                           request_complete_data.encoded_data_length,
-                           request_complete_data.encoded_body_length,
-                           request_complete_data.decoded_body_length);
+  peer->OnCompletedRequest(
+      request_complete_data.error_code, request_complete_data.cors_error,
+      request_complete_data.error_response_headers,
+      request_complete_data.exists_in_cache, renderer_completion_time,
+      request_complete_data.encoded_data_length,
+      request_complete_data.encoded_body_length,
+      request_complete_data.decoded_body_length);
 }
 
 bool ResourceDispatcher::RemovePendingRequest(int request_id) {

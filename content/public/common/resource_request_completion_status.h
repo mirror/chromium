@@ -8,9 +8,11 @@
 #include <stdint.h>
 #include <string>
 
+#include "base/memory/scoped_refptr.h"
 #include "base/optional.h"
 #include "base/time/time.h"
 #include "content/common/content_export.h"
+#include "net/http/http_response_headers.h"
 #include "services/network/public/interfaces/cors.mojom.h"
 
 namespace content {
@@ -33,6 +35,13 @@ struct CONTENT_EXPORT ResourceRequestCompletionStatus {
   // The error code. ERR_FAILED is set for CORS errors.
   int error_code = 0;
 
+  // Optional CORS error details.
+  base::Optional<network::mojom::CORSError> cors_error;
+
+  // Partial HTTP response headers including status line that will be useful to
+  // generate a human readable error message.
+  scoped_refptr<net::HttpResponseHeaders> error_response_headers;
+
   // A copy of the data requested exists in the cache.
   bool exists_in_cache = false;
 
@@ -47,9 +56,6 @@ struct CONTENT_EXPORT ResourceRequestCompletionStatus {
 
   // The length of the response body after decoding.
   int64_t decoded_body_length = 0;
-
-  // Optional CORS error details.
-  base::Optional<network::mojom::CORSError> cors_error;
 };
 
 }  // namespace content
