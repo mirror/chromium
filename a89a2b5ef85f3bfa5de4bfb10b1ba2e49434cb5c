@@ -34,6 +34,24 @@
       "revId": "a89a2b5ef85f3bfa5de4bfb10b1ba2e49434cb5c",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0ea8bca8_9d45ff83",
+        "filename": "ash/wm/overview/window_selector_item.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 181,
+      "author": {
+        "id": 1000111
+      },
+      "writtenOn": "2017-11-06T16:10:27Z",
+      "side": 1,
+      "message": "What about other events? e.g. pinch? I assume all those events would go to (3): reset to previous state? If so, I suggest handling handling GESTURE_TAP, GESTURE_SCROLL_END/FLING_START, and GESTURE_END separately, and more explicitly. For example:\n\n  case ui::ET_GESTURE_TAP:\n    listener()-\u003eActivateWindowAt(screen_location);\n    break;\n  case SCROLL_END:\n  case FLING_START:\n    listener()-\u003eCompleteDragAt(screen_location);\n    break;\n  case ui::ET_GESTURE_END:\n    listener()-\u003eResetGesture(screen_location);\n    break;",
+      "parentUuid": "5c6e978a_9f02c645",
+      "revId": "a89a2b5ef85f3bfa5de4bfb10b1ba2e49434cb5c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
