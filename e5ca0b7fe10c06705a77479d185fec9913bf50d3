@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "6d647369_a4375743",
+        "filename": "chrome/browser/ui/cocoa/find_bar/find_bar_bridge_unittest.mm",
+        "patchSetId": 6
+      },
+      "lineNbr": 26,
+      "author": {
+        "id": 1161819
+      },
+      "writtenOn": "2017-11-06T21:45:24Z",
+      "side": 1,
+      "message": "For what this test is seemingly testing, the nullptr shouldn\u0027t cause any issues. Since this is a Mac only test, I\u0027m not very clear what the impact of such a change would be.",
+      "parentUuid": "6ccf092d_a0bdea91",
+      "range": {
+        "startLine": 26,
+        "startChar": 31,
+        "endLine": 26,
+        "endChar": 38
+      },
+      "revId": "e5ca0b7fe10c06705a77479d185fec9913bf50d3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "6c21985c_55875ca7",
         "filename": "chrome/browser/ui/find_bar/find_bar_controller.cc",
         "patchSetId": 6
@@ -48,6 +72,30 @@
     },
     {
       "key": {
+        "uuid": "55432fa0_7d3afefd",
+        "filename": "chrome/browser/ui/find_bar/find_bar_controller.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 87,
+      "author": {
+        "id": 1161819
+      },
+      "writtenOn": "2017-11-06T21:45:24Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "6c21985c_55875ca7",
+      "range": {
+        "startLine": 87,
+        "startChar": 2,
+        "endLine": 87,
+        "endChar": 13
+      },
+      "revId": "e5ca0b7fe10c06705a77479d185fec9913bf50d3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "6dbb4ef3_104218c0",
         "filename": "chrome/browser/ui/find_bar/find_bar_controller.h",
         "patchSetId": 6
@@ -68,6 +116,30 @@
       "revId": "e5ca0b7fe10c06705a77479d185fec9913bf50d3",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b266936f_f851c32e",
+        "filename": "chrome/browser/ui/find_bar/find_bar_controller.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 45,
+      "author": {
+        "id": 1161819
+      },
+      "writtenOn": "2017-11-06T21:45:24Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "6dbb4ef3_104218c0",
+      "range": {
+        "startLine": 45,
+        "startChar": 2,
+        "endLine": 45,
+        "endChar": 11
+      },
+      "revId": "e5ca0b7fe10c06705a77479d185fec9913bf50d3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
