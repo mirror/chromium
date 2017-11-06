@@ -22,6 +22,30 @@
       "revId": "914c394e2cfa7a85f8d929950432cec897870223",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "00beeede_69a815b2",
+        "filename": "chrome/browser/vr/ui_input_manager.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 376,
+      "author": {
+        "id": 1000537
+      },
+      "writtenOn": "2017-11-06T15:30:53Z",
+      "side": 1,
+      "message": "That\u0027s a good thought. We could make a memoized call to \"get everything\" that takes the frame number. It would be good to add something like this in the CL that updates the UI renderer so that it\u0027s traversing the entire tree rather than pulling distinct swaths.",
+      "parentUuid": "a6451b22_ae055ea5",
+      "range": {
+        "startLine": 376,
+        "startChar": 16,
+        "endLine": 376,
+        "endChar": 25
+      },
+      "revId": "914c394e2cfa7a85f8d929950432cec897870223",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
