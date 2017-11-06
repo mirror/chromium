@@ -15,7 +15,9 @@
 #include "components/image_fetcher/core/image_fetcher.h"
 #include "components/keyed_service/core/keyed_service.h"
 #include "components/ntp_snippets/callbacks.h"
+#include "components/ntp_snippets/contextual/contextual_suggestion.h"
 #include "components/ntp_snippets/contextual/contextual_suggestions_fetcher.h"
+#include "components/ntp_snippets/contextual/timestamped_mru_cache.h"
 
 namespace ntp_snippets {
 
@@ -39,7 +41,8 @@ class ContextualContentSuggestionsService : public KeyedService {
                               const GURL& url,
                               std::vector<ContentSuggestion> suggestions)>;
 
-  // Asynchronously fetches contextual suggestions for the given URL.
+  // Fetches contextual suggestions for the given URL.
+  // Asynchronous if network is queried.
   void FetchContextualSuggestions(const GURL& url,
                                   FetchContextualSuggestionsCallback callback);
 
@@ -53,6 +56,7 @@ class ContextualContentSuggestionsService : public KeyedService {
   void DidFetchContextualSuggestions(
       const GURL& url,
       FetchContextualSuggestionsCallback callback,
+      bool from_cache,
       Status status,
       ContextualSuggestionsFetcher::OptionalSuggestions fetched_suggestions);
 
@@ -67,6 +71,10 @@ class ContextualContentSuggestionsService : public KeyedService {
   // Look up by ContentSuggestion::ID::id_within_category() aka std::string to
   // get image URL.
   std::map<std::string, GURL> image_url_by_id_;
+
+  // Non-persistent cache for contextual suggestions.
+  internal::TimestampedMRUCache<GURL, std::vector<ContextualSuggestion>>
+      cached_url_responses_;
 
   DISALLOW_COPY_AND_ASSIGN(ContextualContentSuggestionsService);
 };

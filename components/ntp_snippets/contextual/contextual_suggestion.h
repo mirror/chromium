@@ -28,6 +28,8 @@ class ContextualSuggestion {
 
   ~ContextualSuggestion();
 
+  ContextualSuggestion(const ContextualSuggestion&);
+
   // Creates a ContextualSuggestion from a dictionary. Returns a null pointer if
   // the dictionary doesn't correspond to a valid suggestion.
   static std::unique_ptr<ContextualSuggestion> CreateFromDictionary(

@@ -125,20 +125,20 @@ class ContextualContentSuggestionsServiceTest : public testing::Test {
     std::unique_ptr<FakeContextualSuggestionsFetcher> fetcher =
         base::MakeUnique<FakeContextualSuggestionsFetcher>();
     fetcher_ = fetcher.get();
-    source_ = base::MakeUnique<ContextualContentSuggestionsService>(
+    service_ = base::MakeUnique<ContextualContentSuggestionsService>(
         std::move(fetcher),
         base::MakeUnique<FakeCachedImageFetcher>(&pref_service_),
         std::unique_ptr<RemoteSuggestionsDatabase>());
   }
 
   FakeContextualSuggestionsFetcher* fetcher() { return fetcher_; }
-  ContextualContentSuggestionsService* source() { return source_.get(); }
+  ContextualContentSuggestionsService* service() { return service_.get(); }
 
  private:
   FakeContextualSuggestionsFetcher* fetcher_;
   base::MessageLoop message_loop_;
   TestingPrefServiceSimple pref_service_;
-  std::unique_ptr<ContextualContentSuggestionsService> source_;
+  std::unique_ptr<ContextualContentSuggestionsService> service_;
 
   DISALLOW_COPY_AND_ASSIGN(ContextualContentSuggestionsServiceTest);
 };
@@ -162,7 +162,7 @@ TEST_F(ContextualContentSuggestionsServiceTest,
                                         Category::FromKnownCategory(
                                             KnownCategories::CONTEXTUAL))),
                       Property(&ContentSuggestion::url, GURL(kToUrl)))))));
-  source()->FetchContextualSuggestions(
+  service()->FetchContextualSuggestions(
       GURL(kValidFromUrl), mock_suggestions_callback.ToOnceCallback());
   base::RunLoop().RunUntilIdle();
 }
@@ -175,7 +175,7 @@ TEST_F(ContextualContentSuggestionsServiceTest,
                              ContextualSuggestion::PtrVector());
   EXPECT_CALL(mock_suggestions_callback, Run(Property(&Status::IsSuccess, true),
                                              GURL(kEmpty), Pointee(IsEmpty())));
-  source()->FetchContextualSuggestions(
+  service()->FetchContextualSuggestions(
       GURL(kEmpty), mock_suggestions_callback.ToOnceCallback());
   base::RunLoop().RunUntilIdle();
 }
@@ -188,7 +188,7 @@ TEST_F(ContextualContentSuggestionsServiceTest, ShouldRunCallbackOnError) {
   EXPECT_CALL(mock_suggestions_callback,
               Run(Property(&Status::IsSuccess, false), GURL(kEmpty),
                   Pointee(IsEmpty())));
-  source()->FetchContextualSuggestions(
+  service()->FetchContextualSuggestions(
       GURL(kEmpty), mock_suggestions_callback.ToOnceCallback());
   base::RunLoop().RunUntilIdle();
 }
@@ -201,8 +201,8 @@ TEST_F(ContextualContentSuggestionsServiceTest,
       Category::FromKnownCategory(KnownCategories::CONTEXTUAL), kEmpty);
   EXPECT_CALL(mock_image_fetched_callback,
               Run(Property(&gfx::Image::IsEmpty, true)));
-  source()->FetchContextualSuggestionImage(id,
-                                           mock_image_fetched_callback.Get());
+  service()->FetchContextualSuggestionImage(id,
+                                            mock_image_fetched_callback.Get());
   // TODO(gaschler): Verify with a mock that the image fetcher is not called if
   // the id is unknown.
   base::RunLoop().RunUntilIdle();
@@ -223,7 +223,7 @@ TEST_F(ContextualContentSuggestionsServiceTest,
   std::vector<ContentSuggestion> suggestions;
   EXPECT_CALL(mock_suggestions_callback, Run(_, _, _))
       .WillOnce(MoveArg<2>(&suggestions));
-  source()->FetchContextualSuggestions(
+  service()->FetchContextualSuggestions(
       GURL(kValidFromUrl), mock_suggestions_callback.ToOnceCallback());
   base::RunLoop().RunUntilIdle();
 
@@ -231,9 +231,45 @@ TEST_F(ContextualContentSuggestionsServiceTest,
   base::MockCallback<ImageFetchedCallback> mock_image_fetched_callback;
   EXPECT_CALL(mock_image_fetched_callback,
               Run(Property(&gfx::Image::IsEmpty, false)));
-  source()->FetchContextualSuggestionImage(suggestions[0].id(),
-                                           mock_image_fetched_callback.Get());
+  service()->FetchContextualSuggestionImage(suggestions[0].id(),
+                                            mock_image_fetched_callback.Get());
   base::RunLoop().RunUntilIdle();
 }
+
+TEST_F(ContextualContentSuggestionsServiceTest, ShouldFetchOnlyOnceForSameUrl) {
+  const std::string kValidFromUrl = "http://some.url";
+  const std::string kToUrl = "http://another.url";
+  const std::string kValidImageUrl = "http://some.url/image.png";
+  ContextualSuggestionsFetcher::OptionalSuggestions contextual_suggestions =
+      ContextualSuggestion::PtrVector();
+  contextual_suggestions->push_back(
+      ContextualSuggestion::CreateForTesting(kToUrl, kValidImageUrl));
+  fetcher()->SetFakeResponse(Status::Success(),
+                             std::move(contextual_suggestions));
+  MockFetchContextualSuggestionsCallback mock_suggestions_callback;
+  std::vector<ContentSuggestion> suggestions;
+  EXPECT_CALL(mock_suggestions_callback, Run(_, _, _))
+      .WillOnce(MoveArg<2>(&suggestions));
+  service()->FetchContextualSuggestions(
+      GURL(kValidFromUrl), mock_suggestions_callback.ToOnceCallback());
+  base::RunLoop().RunUntilIdle();
+  ASSERT_THAT(suggestions, Not(IsEmpty()));
+
+  fetcher()->SetFakeResponse(Status::Success(),
+                             ContextualSuggestion::PtrVector());
+  EXPECT_CALL(mock_suggestions_callback, Run(_, _, _))
+      .WillOnce(MoveArg<2>(&suggestions));
+  service()->FetchContextualSuggestions(
+      GURL(kValidFromUrl), mock_suggestions_callback.ToOnceCallback());
+  base::RunLoop().RunUntilIdle();
+  // Expect result retrieved from cache even though fetcher response would be
+  // empty.
+  // TODO(gaschler): look into contents and make sure there is exactly one
+  // suggestion.
+  EXPECT_THAT(suggestions, Not(IsEmpty()));
+}
+
+// TODO(gaschler): Add test with fake clock to verify that cache does not
+// provide old results.
 
 }  // namespace ntp_snippets

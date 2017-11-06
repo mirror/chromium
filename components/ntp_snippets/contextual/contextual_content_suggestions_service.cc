@@ -16,6 +16,11 @@
 #include "components/ntp_snippets/remote/remote_suggestions_provider_impl.h"
 #include "ui/gfx/image/image.h"
 
+namespace {
+const int kMaxResponsesInCache = 100;
+const int kMaxCachedResponseAgeHours = 24;
+}  // namespace
+
 namespace ntp_snippets {
 
 ContextualContentSuggestionsService::ContextualContentSuggestionsService(
@@ -27,7 +32,10 @@ ContextualContentSuggestionsService::ContextualContentSuggestionsService(
           std::move(contextual_suggestions_database)),
       contextual_suggestions_fetcher_(
           std::move(contextual_suggestions_fetcher)),
-      image_fetcher_(std::move(image_fetcher)) {}
+      image_fetcher_(std::move(image_fetcher)),
+      cached_url_responses_(
+          kMaxResponsesInCache,
+          base::TimeDelta::FromHours(kMaxCachedResponseAgeHours)) {}
 
 ContextualContentSuggestionsService::~ContextualContentSuggestionsService() =
     default;
@@ -35,11 +43,27 @@ ContextualContentSuggestionsService::~ContextualContentSuggestionsService() =
 void ContextualContentSuggestionsService::FetchContextualSuggestions(
     const GURL& url,
     FetchContextualSuggestionsCallback callback) {
+  auto cached_suggestions = cached_url_responses_.Get(url);
+  if (cached_suggestions.has_value()) {
+    ContextualSuggestionsFetcher::OptionalSuggestions suggestions =
+        ContextualSuggestion::PtrVector();
+    for (const ContextualSuggestion& cached_suggestion :
+         cached_suggestions.value()) {
+      suggestions->push_back(
+          base::MakeUnique<ContextualSuggestion>(cached_suggestion));
+    }
+    DidFetchContextualSuggestions(url, std::move(callback),
+                                  /*from_cache=*/true, Status::Success(),
+                                  std::move(suggestions));
+    return;
+  }
+
   contextual_suggestions_fetcher_->FetchContextualSuggestions(
       url,
       base::BindOnce(
           &ContextualContentSuggestionsService::DidFetchContextualSuggestions,
-          base::Unretained(this), url, std::move(callback)));
+          base::Unretained(this), url, std::move(callback),
+          /*from_cache=*/false));
 }
 
 void ContextualContentSuggestionsService::FetchContextualSuggestionImage(
@@ -58,20 +82,30 @@ void ContextualContentSuggestionsService::FetchContextualSuggestionImage(
   }
 }
 
-// TODO(gaschler): Cache contextual suggestions at run-time.
 void ContextualContentSuggestionsService::DidFetchContextualSuggestions(
     const GURL& url,
     FetchContextualSuggestionsCallback callback,
+    bool from_cache,
     Status status,
     ContextualSuggestionsFetcher::OptionalSuggestions fetched_suggestions) {
   std::vector<ContentSuggestion> suggestions;
   if (fetched_suggestions.has_value()) {
+    suggestions.reserve(fetched_suggestions->size());
     for (const std::unique_ptr<ContextualSuggestion>& suggestion :
          fetched_suggestions.value()) {
       suggestions.emplace_back(suggestion->ToContentSuggestion());
       ContentSuggestion::ID id = suggestions.back().id();
       GURL image_url = suggestion->salient_image_url();
       image_url_by_id_[id.id_within_category()] = image_url;
+    }
+    if (!from_cache) {
+      std::vector<ContextualSuggestion> cached_suggestions;
+      cached_suggestions.reserve(fetched_suggestions.value().size());
+      for (const std::unique_ptr<ContextualSuggestion>& suggestion :
+           fetched_suggestions.value()) {
+        cached_suggestions.push_back(*suggestion);
+      }
+      cached_url_responses_.Put(url, cached_suggestions);
     }
   }
   std::move(callback).Run(status, url, std::move(suggestions));

@@ -44,6 +44,9 @@ ContextualSuggestion::ContextualSuggestion(const std::string& id) : id_(id) {}
 
 ContextualSuggestion::~ContextualSuggestion() = default;
 
+ContextualSuggestion::ContextualSuggestion(const ContextualSuggestion&) =
+    default;
+
 // static
 std::unique_ptr<ContextualSuggestion>
 ContextualSuggestion::CreateFromDictionary(const base::DictionaryValue& dict) {
