@@ -103,79 +103,35 @@ void CycleSnap(WindowState* window_state, WMEventType event) {
 }  // namespace
 
 DefaultState::DefaultState(mojom::WindowStateType initial_state_type)
-    : state_type_(initial_state_type), stored_window_state_(nullptr) {}
+    : BaseState(initial_state_type), stored_window_state_(nullptr) {}
 
 DefaultState::~DefaultState() {}
 
-void DefaultState::OnWMEvent(WindowState* window_state, const WMEvent* event) {
-  if (ProcessWorkspaceEvents(window_state, event))
-    return;
-
-  // Do not change the PINNED window state if this is not unpin event.
+bool DefaultState::ProcessPinEvents(WindowState* window_state,
+                                    const WMEvent* event) {
   if (window_state->IsTrustedPinned() && event->type() != WM_EVENT_NORMAL)
-    return;
+    return true;
+  return false;
+}
 
-  if (ProcessCompoundEvents(window_state, event))
+void DefaultState::ProcessRegularEvents(WindowState* window_state,
+                                        const WMEvent* event) {
+  if (event->type() == WM_EVENT_SET_BOUNDS) {
+    SetBounds(window_state, static_cast<const SetBoundsEvent*>(event));
     return;
-
+  }
   mojom::WindowStateType current_state_type = window_state->GetStateType();
-  mojom::WindowStateType next_state_type = mojom::WindowStateType::NORMAL;
-  switch (event->type()) {
-    case WM_EVENT_NORMAL:
-      next_state_type = mojom::WindowStateType::NORMAL;
-      break;
-    case WM_EVENT_MAXIMIZE:
-      next_state_type = mojom::WindowStateType::MAXIMIZED;
-      break;
-    case WM_EVENT_MINIMIZE:
-      next_state_type = mojom::WindowStateType::MINIMIZED;
-      break;
-    case WM_EVENT_FULLSCREEN:
-      next_state_type = mojom::WindowStateType::FULLSCREEN;
-      break;
-    case WM_EVENT_SNAP_LEFT:
-      next_state_type = mojom::WindowStateType::LEFT_SNAPPED;
-      break;
-    case WM_EVENT_SNAP_RIGHT:
-      next_state_type = mojom::WindowStateType::RIGHT_SNAPPED;
-      break;
-    case WM_EVENT_SET_BOUNDS:
-      SetBounds(window_state, static_cast<const SetBoundsEvent*>(event));
-      return;
-    case WM_EVENT_SHOW_INACTIVE:
-      next_state_type = mojom::WindowStateType::INACTIVE;
-      break;
-    case WM_EVENT_PIN:
-    case WM_EVENT_TRUSTED_PIN:
-      // If there already is a pinned window, it is not allowed to set it
-      // to this window.
-      // TODO(hidehiko): If a system modal window is openening, the pinning
-      // probably should fail.
-      if (Shell::Get()->screen_pinning_controller()->IsPinned()) {
-        LOG(ERROR) << "An PIN event will be failed since another window is "
-                   << "already in pinned mode.";
-        next_state_type = current_state_type;
-      } else {
-        next_state_type = event->type() == WM_EVENT_PIN
-                              ? mojom::WindowStateType::PINNED
-                              : mojom::WindowStateType::TRUSTED_PINNED;
-      }
-      break;
-    case WM_EVENT_TOGGLE_MAXIMIZE_CAPTION:
-    case WM_EVENT_TOGGLE_MAXIMIZE:
-    case WM_EVENT_TOGGLE_VERTICAL_MAXIMIZE:
-    case WM_EVENT_TOGGLE_HORIZONTAL_MAXIMIZE:
-    case WM_EVENT_TOGGLE_FULLSCREEN:
-    case WM_EVENT_CYCLE_SNAP_LEFT:
-    case WM_EVENT_CYCLE_SNAP_RIGHT:
-    case WM_EVENT_CENTER:
-      NOTREACHED() << "Compound event should not reach here:" << event;
-      return;
-    case WM_EVENT_ADDED_TO_WORKSPACE:
-    case WM_EVENT_WORKAREA_BOUNDS_CHANGED:
-    case WM_EVENT_DISPLAY_BOUNDS_CHANGED:
-      NOTREACHED() << "Workspace event should not reach here:" << event;
-      return;
+  mojom::WindowStateType next_state_type = GetStateForEvent(event);
+  if (event->IsPinEvent()) {
+    // If there already is a pinned window, it is not allowed to set it
+    // to this window.
+    // TODO(hidehiko): If a system modal window is openening, the pinning
+    // probably should fail.
+    if (Shell::Get()->screen_pinning_controller()->IsPinned()) {
+      LOG(ERROR) << "An PIN event will be failed since another window is "
+                 << "already in pinned mode.";
+      next_state_type = current_state_type;
+    }
   }
 
   if (next_state_type == current_state_type && window_state->IsSnapped()) {

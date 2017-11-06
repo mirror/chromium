@@ -163,6 +163,8 @@ bool ScreenPinningController::IsPinned() const {
 }
 
 void ScreenPinningController::SetPinnedWindow(aura::Window* pinned_window) {
+  LOG(ERROR) << "SetPinnedWindow:"
+             << wm::GetWindowState(pinned_window)->IsPinned();
   if (wm::GetWindowState(pinned_window)->IsPinned()) {
     if (pinned_window_) {
       LOG(DFATAL) << "Pinned mode is enabled, while it is already in "

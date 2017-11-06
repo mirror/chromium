@@ -20,7 +20,7 @@ enum WMEventType {
   // state and the request may not be fullfilled.
 
   // NORMAL is used as a restore operation with a few exceptions.
-  WM_EVENT_NORMAL,
+  WM_EVENT_NORMAL = 0,
   WM_EVENT_MAXIMIZE,
   WM_EVENT_MINIMIZE,
   WM_EVENT_FULLSCREEN,
@@ -100,6 +100,11 @@ class ASH_EXPORT WMEvent {
   virtual ~WMEvent();
 
   WMEventType type() const { return type_; }
+
+  bool IsWorkspaceEvent() const;
+  bool IsCompoundEvent() const;
+  bool IsPinEvent() const;
+  bool IsStateTransitionEvent() const;
 
  private:
   WMEventType type_;
