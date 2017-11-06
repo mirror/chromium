@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "ca7f349f_bf543362",
+        "filename": "services/device/geolocation/public_ip_address_geolocator.cc",
+        "patchSetId": 34
+      },
+      "lineNbr": 36,
+      "author": {
+        "id": 1182889
+      },
+      "writtenOn": "2017-11-06T09:48:05Z",
+      "side": 1,
+      "message": "Oops this needs a return; after it!",
+      "revId": "40333572569cc15cb7c4e418e80659cf17549836",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
