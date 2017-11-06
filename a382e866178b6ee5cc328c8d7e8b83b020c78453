@@ -49,6 +49,30 @@
     },
     {
       "key": {
+        "uuid": "37c5d852_77adc9b9",
+        "filename": "chrome/browser/component_updater/cros_component_installer.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 115,
+      "author": {
+        "id": 1116033
+      },
+      "writtenOn": "2017-11-06T22:12:45Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "cb04ec5b_9ad563b0",
+      "range": {
+        "startLine": 115,
+        "startChar": 49,
+        "endLine": 115,
+        "endChar": 53
+      },
+      "revId": "a382e866178b6ee5cc328c8d7e8b83b020c78453",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "949b9b75_4ac35382",
         "filename": "components/component_updater/component_installer.h",
         "patchSetId": 2
@@ -78,6 +102,24 @@
       "side": 1,
       "message": "Done",
       "parentUuid": "949b9b75_4ac35382",
+      "revId": "a382e866178b6ee5cc328c8d7e8b83b020c78453",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "db57017d_8934ce71",
+        "filename": "components/component_updater/component_installer.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 65,
+      "author": {
+        "id": 1116033
+      },
+      "writtenOn": "2017-11-06T22:12:45Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "e35e08cd_1226242d",
       "revId": "a382e866178b6ee5cc328c8d7e8b83b020c78453",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": false
