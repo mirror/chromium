@@ -22,6 +22,30 @@
       "revId": "c6fa00011a52adba13da9f33804705e627b3a18b",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e7e32b46_28839cc1",
+        "filename": "components/metrics/reporting_service.cc",
+        "patchSetId": 13
+      },
+      "lineNbr": 204,
+      "author": {
+        "id": 1243399
+      },
+      "writtenOn": "2017-11-06T19:39:16Z",
+      "side": 1,
+      "message": "I changed this one to check for the error code instead of including it in the else clause (since we don\u0027t want to retry over http if there is any response at all, as that would indicate the problem was not HTTPS related).\n\nNot quite sure I understand how to do the checks from ReportingInfo and make it simpler. There would still be the need to check for GetInsecureUploadURL().empty(), so at the end there would be more checks than before. As for checking it in LogUploader, unless I\u0027m misunderstanding it seems that I would need to pass two parameters then (was_https and retry_next_over_http), to account for the case where the attempt was over HTTPS but we are not retrying, which seems to me would also cause the code to be more complicated.",
+      "parentUuid": "733bb827_1ec815a5",
+      "range": {
+        "startLine": 204,
+        "startChar": 6,
+        "endLine": 204,
+        "endChar": 32
+      },
+      "revId": "c6fa00011a52adba13da9f33804705e627b3a18b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
