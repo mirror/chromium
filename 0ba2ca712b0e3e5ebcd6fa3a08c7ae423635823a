@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "e6f5bbd9_c0050b37",
+        "filename": "media/capture/video/video_capture_device_client_unittest.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 61,
+      "author": {
+        "id": 1123894
+      },
+      "writtenOn": "2017-11-06T21:29:53Z",
+      "side": 1,
+      "message": "s/controller_/receiver_/ ?",
+      "range": {
+        "startLine": 61,
+        "startChar": 26,
+        "endLine": 61,
+        "endChar": 37
+      },
+      "revId": "0ba2ca712b0e3e5ebcd6fa3a08c7ae423635823a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
