@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "138a1b48_d827418c",
+        "filename": "base/callback_internal.h",
+        "patchSetId": 7
+      },
+      "lineNbr": 46,
+      "author": {
+        "id": 1001168
+      },
+      "writtenOn": "2017-11-06T19:16:14Z",
+      "side": 1,
+      "message": "Use the templated type alias trick so consumers of this code don\u0027t need to write out \u0027typename\u0027:\n\ntemplate \u003ctypename T\u003e\nusing PassingTraitsType \u003d typename PassingTraits\u003cT\u003e::Type;",
+      "revId": "75ed8b0e541bb7f853eac5109e0aca7293bb2dd8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
