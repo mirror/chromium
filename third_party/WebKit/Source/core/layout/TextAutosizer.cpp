@@ -742,8 +742,9 @@ bool TextAutosizer::ClusterHasEnoughTextToAutosize(
       // resolvedTextLength() because the lineboxes will not be built until
       // layout. These values can be different.
       // Note: This is an approximation assuming each character is 1em wide.
-      length += ToLayoutText(descendant)->GetText().StripWhiteSpace().length() *
-                descendant->Style()->SpecifiedFontSize();
+      length += document_->GetPage()->GetChromeClient().WindowToViewportScalar(
+          ToLayoutText(descendant)->GetText().StripWhiteSpace().length() *
+          descendant->Style()->SpecifiedFontSize());
 
       if (length >= minimum_text_length_to_autosize) {
         cluster->has_enough_text_to_autosize_ = kHasEnoughText;
