@@ -3291,4 +3291,48 @@ TEST(NetworkQualityEstimatorTest,
   EXPECT_EQ(12, estimator.ComputeIncreaseInTransportRTTForTests().value_or(0));
 }
 
+// Tests that the ECT is computed when more than N RTT samples have been
+// received.
+TEST(NetworkQualityEstimatorTest, MaybeComputeECTAfterNSamples) {
+  std::unique_ptr<base::SimpleTestTickClock> tick_clock(
+      new base::SimpleTestTickClock());
+  base::SimpleTestTickClock* tick_clock_ptr = tick_clock.get();
+  tick_clock_ptr->Advance(base::TimeDelta::FromMinutes(1));
+
+  std::map<std::string, std::string> variation_params;
+  variation_params["add_default_platform_observations"] = "false";
+  TestNetworkQualityEstimator estimator(variation_params);
+  estimator.DisableOfflineCheckForTesting(true);
+  base::RunLoop().RunUntilIdle();
+  estimator.SetTickClockForTesting(std::move(tick_clock));
+  estimator.SimulateNetworkChange(
+      NetworkChangeNotifier::ConnectionType::CONNECTION_UNKNOWN, "test");
+  tick_clock_ptr->Advance(base::TimeDelta::FromMinutes(1));
+
+  const base::TimeDelta rtt = base::TimeDelta::FromSeconds(1);
+  uint64_t host = 1u;
+
+  for (size_t i = 0; i < 300; ++i) {
+    estimator.AddAndNotifyObserversOfRTT(NetworkQualityEstimator::Observation(
+        rtt.InMilliseconds(), tick_clock_ptr->NowTicks(), INT32_MIN,
+        NETWORK_QUALITY_OBSERVATION_SOURCE_HTTP, host));
+    if (i % 100 == 0 && i != 0) {
+      LOG(WARNING) << "xxx estimator.GetHttpRTT()="
+                   << estimator.GetHttpRTT().value_or(
+                          base::TimeDelta::FromSeconds(1000))
+                   << " ect=" << estimator.GetEffectiveConnectionType();
+    }
+  }
+  EXPECT_EQ(rtt, estimator.GetHttpRTT().value());
+  tick_clock_ptr->Advance(base::TimeDelta::FromMinutes(60));
+
+  const base::TimeDelta rtt_new = base::TimeDelta::FromSeconds(3);
+  for (size_t i = 0; i < 101; ++i) {
+    estimator.AddAndNotifyObserversOfRTT(NetworkQualityEstimator::Observation(
+        rtt_new.InMilliseconds(), tick_clock_ptr->NowTicks(), INT32_MIN,
+        NETWORK_QUALITY_OBSERVATION_SOURCE_HTTP, host));
+  }
+  EXPECT_EQ(rtt_new, estimator.GetHttpRTT().value());
+}
+
 }  // namespace net

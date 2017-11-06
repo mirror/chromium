@@ -214,6 +214,9 @@ class NET_EXPORT NetworkQualityEstimator
       const std::map<nqe::internal::NetworkID,
                      nqe::internal::CachedNetworkQuality> read_prefs);
 
+  typedef nqe::internal::Observation Observation;
+  typedef nqe::internal::ObservationBuffer ObservationBuffer;
+
  protected:
   // Different experimental statistic algorithms that can be used for computing
   // the predictions.
@@ -319,6 +322,16 @@ class NET_EXPORT NetworkQualityEstimator
   virtual void NotifyRTTAndThroughputEstimatesObserverIfPresent(
       RTTAndThroughputEstimatesObserver* observer) const;
 
+  // Adds |observation| to the buffer of RTT observations, and notifies RTT
+  // observers of |observation|. May also trigger recomputation of effective
+  // connection type.
+  void AddAndNotifyObserversOfRTT(const Observation& observation);
+
+  // Adds |observation| to the buffer of throughput observations, and notifies
+  // throughput observers of |observation|. May also trigger recomputation of
+  // effective connection type.
+  void AddAndNotifyObserversOfThroughput(const Observation& observation);
+
   base::Optional<int32_t> ComputeIncreaseInTransportRTTForTests() {
     return ComputeIncreaseInTransportRTT();
   }
@@ -356,9 +369,6 @@ class NET_EXPORT NetworkQualityEstimator
   FRIEND_TEST_ALL_PREFIXES(
       NetworkQualityEstimatorTest,
       TestComputeIncreaseInTransportRTTPartialHostsOverlap);
-
-  typedef nqe::internal::Observation Observation;
-  typedef nqe::internal::ObservationBuffer ObservationBuffer;
 
   // Defines how a metric (e.g, transport RTT) should be used when computing
   // the effective connection type.
@@ -405,16 +415,6 @@ class NET_EXPORT NetworkQualityEstimator
   // Returns the current network ID checking by calling the platform APIs.
   // Virtualized for testing.
   virtual nqe::internal::NetworkID GetCurrentNetworkID() const;
-
-  // Adds |observation| to the buffer of RTT observations, and notifies RTT
-  // observers of |observation|. May also trigger recomputation of effective
-  // connection type.
-  void AddAndNotifyObserversOfRTT(const Observation& observation);
-
-  // Adds |observation| to the buffer of throughput observations, and notifies
-  // throughput observers of |observation|. May also trigger recomputation of
-  // effective connection type.
-  void AddAndNotifyObserversOfThroughput(const Observation& observation);
 
   // Returns true only if the |request| can be used for RTT estimation.
   bool RequestProvidesRTTObservation(const URLRequest& request) const;
@@ -594,6 +594,14 @@ class NET_EXPORT NetworkQualityEstimator
   // type was last recomputed.
   size_t rtt_observations_size_at_last_ect_computation_;
   size_t throughput_observations_size_at_last_ect_computation_;
+
+  // Number of RTT observations received since the effective connection type was
+  // last computed.
+  size_t new_rtt_observations_since_last_ect_computation_;
+
+  // Number of throughput observations received since the effective connection
+  // type was last computed.
+  size_t new_throughput_observations_since_last_ect_computation_;
 
   // Current estimate of the network quality.
   nqe::internal::NetworkQuality network_quality_;
