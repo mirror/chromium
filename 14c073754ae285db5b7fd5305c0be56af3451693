@@ -46,6 +46,30 @@
       "revId": "14c073754ae285db5b7fd5305c0be56af3451693",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f8068133_ec359546",
+        "filename": "content/browser/webrtc/webrtc_internals.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 212,
+      "author": {
+        "id": 1002285
+      },
+      "writtenOn": "2017-11-06T15:54:11Z",
+      "side": 1,
+      "message": "1. Here\u0027s the C++11/14 guideline: https://chromium-cpp.appspot.com/. It says \"Enum classes are still enums and follow enum naming rules.\"\n\n2. I see both in base/ and throughout the codebase for enum classes. The upper case usage is since when that was enforced in the coding style. I guess it could be that enums have been changed to enum classes, while not changing the naming of enum values (presumably because that\u0027s a larger change).",
+      "parentUuid": "f0c7c81c_d33b3cee",
+      "range": {
+        "startLine": 212,
+        "startChar": 4,
+        "endLine": 212,
+        "endChar": 18
+      },
+      "revId": "14c073754ae285db5b7fd5305c0be56af3451693",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
