@@ -22,7 +22,7 @@
 #include "content/public/browser/local_storage_usage_info.h"
 #include "content/public/test/test_browser_thread_bundle.h"
 #include "content/public/test/test_utils.h"
-#include "content/test/mock_leveldb_database.h"
+#include "content/test/fake_leveldb_database.h"
 #include "mojo/public/cpp/bindings/associated_binding.h"
 #include "mojo/public/cpp/bindings/binding.h"
 #include "mojo/public/cpp/bindings/binding_set.h"
@@ -211,7 +211,7 @@ class LocalStorageContextMojoTest : public testing::Test {
   TestBrowserThreadBundle thread_bundle_;
   base::ScopedTempDir temp_path_;
   std::map<std::vector<uint8_t>, std::vector<uint8_t>> mock_data_;
-  MockLevelDBDatabase db_;
+  FakeLevelDBDatabase db_;
   mojo::AssociatedBinding<leveldb::mojom::LevelDBDatabase> db_binding_;
 
   scoped_refptr<MockDOMStorageTaskRunner> task_runner_;
@@ -1263,11 +1263,11 @@ class MockLevelDBService : public leveldb::mojom::LevelDBService {
   mojo::BindingSet<leveldb::mojom::LevelDBService> bindings_;
 };
 
-class MockLevelDBDatabaseErrorOnWrite : public MockLevelDBDatabase {
+class MockLevelDBDatabaseErrorOnWrite : public FakeLevelDBDatabase {
  public:
   explicit MockLevelDBDatabaseErrorOnWrite(
       std::map<std::vector<uint8_t>, std::vector<uint8_t>>* mock_data)
-      : MockLevelDBDatabase(mock_data) {}
+      : FakeLevelDBDatabase(mock_data) {}
 
   void Write(std::vector<leveldb::mojom::BatchedOperationPtr> operations,
              WriteCallback callback) override {
@@ -1392,7 +1392,7 @@ TEST_F(LocalStorageContextMojoTestWithService, RecreateOnCommitFailure) {
   ASSERT_EQ(1u, mock_leveldb_service.open_requests_.size());
   auto& reopen_request = mock_leveldb_service.open_requests_[0];
   mock_db = mojo::MakeStrongAssociatedBinding(
-      std::make_unique<MockLevelDBDatabase>(&test_data),
+      std::make_unique<FakeLevelDBDatabase>(&test_data),
       std::move(reopen_request.request));
   std::move(reopen_request.callback).Run(leveldb::mojom::DatabaseError::OK);
   mock_leveldb_service.open_requests_.clear();
