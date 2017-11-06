@@ -7,11 +7,14 @@
 
 #include <vector>
 
+#include "ash/wm/tablet_mode/tablet_mode_observer.h"
 #include "base/containers/flat_map.h"
 #include "base/macros.h"
+#include "base/observer_list.h"
 #include "components/exo/keyboard_observer.h"
 #include "components/exo/surface_observer.h"
-#include "components/exo/wm_helper.h"
+#include "ui/aura/client/focus_change_observer.h"
+#include "ui/events/devices/input_device_event_observer.h"
 #include "ui/events/event.h"
 #include "ui/events/event_handler.h"
 
@@ -28,9 +31,9 @@ class Surface;
 // This class implements a client keyboard that represents one or more keyboard
 // devices.
 class Keyboard : public ui::EventHandler,
-                 public WMHelper::FocusObserver,
-                 public WMHelper::InputDeviceEventObserver,
-                 public WMHelper::TabletModeObserver,
+                 public aura::client::FocusChangeObserver,
+                 public ui::InputDeviceEventObserver,
+                 public ash::TabletModeObserver,
                  public SurfaceObserver {
  public:
   explicit Keyboard(KeyboardDelegate* delegate);
