@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "4c33a5f7_4bb31885",
+        "filename": "third_party/WebKit/Source/core/animation/TransitionKeyframe.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 22,
+      "author": {
+        "id": 1003011
+      },
+      "writtenOn": "2017-11-06T18:56:56Z",
+      "side": 1,
+      "message": "SVG attribute.\n\nYes, DCHECK for CSS Property would be fine.",
+      "revId": "4064082d344dd2338cddcefb9d9217454cb49f53",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
