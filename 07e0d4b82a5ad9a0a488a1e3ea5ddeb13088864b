@@ -16,6 +16,24 @@
       "revId": "07e0d4b82a5ad9a0a488a1e3ea5ddeb13088864b",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "488d5915_0e4696a8",
+        "filename": "third_party/WebKit/LayoutTests/external/wpt/service-workers/service-worker/ServiceWorkerGlobalScope/registration-attribute.https.html",
+        "patchSetId": 4
+      },
+      "lineNbr": 47,
+      "author": {
+        "id": 1000128
+      },
+      "writtenOn": "2017-11-06T18:47:55Z",
+      "side": 1,
+      "message": "Good idea, done. Also made the test-wide variable named \"registration\" and the local ones named \"reg\".",
+      "parentUuid": "f05f5e7d_38868e7e",
+      "revId": "07e0d4b82a5ad9a0a488a1e3ea5ddeb13088864b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
