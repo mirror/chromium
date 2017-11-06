@@ -1,0 +1,344 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "dbce8ab1_412f24c3",
+        "filename": "chrome/browser/component_updater/sw_reporter_installer_win.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 501,
+      "author": {
+        "id": 1159306
+      },
+      "writtenOn": "2017-11-06T22:05:55Z",
+      "side": 1,
+      "message": "Nit: \"result\" isn\u0027t needed here because the meaning of the parameter is obvious from the type.",
+      "revId": "706f05a32ffb91dc72cbf6bcd743f7f3da8de0b8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "dc6b6e32_10781374",
+        "filename": "chrome/browser/safe_browsing/chrome_cleaner/reporter_runner_win.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 485,
+      "author": {
+        "id": 1159306
+      },
+      "writtenOn": "2017-11-06T22:05:55Z",
+      "side": 1,
+      "message": "invocation should be a const ref, or it\u0027s copied twice - once when calling base::Bind, and again into the function parameter.",
+      "revId": "706f05a32ffb91dc72cbf6bcd743f7f3da8de0b8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c23c9323_2f3bcb80",
+        "filename": "chrome/browser/safe_browsing/chrome_cleaner/reporter_runner_win.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 561,
+      "author": {
+        "id": 1159306
+      },
+      "writtenOn": "2017-11-06T22:05:55Z",
+      "side": 1,
+      "message": "Nit: typo \"create\"",
+      "revId": "706f05a32ffb91dc72cbf6bcd743f7f3da8de0b8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6ff22d0b_a9782fe9",
+        "filename": "chrome/browser/safe_browsing/chrome_cleaner/reporter_runner_win.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 597,
+      "author": {
+        "id": 1159306
+      },
+      "writtenOn": "2017-11-06T22:05:55Z",
+      "side": 1,
+      "message": "Nit: I think the formatting would be easier to read with a blank line before \"Note\" and the rest not indented.",
+      "revId": "706f05a32ffb91dc72cbf6bcd743f7f3da8de0b8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2825c6bd_e7b3cd2b",
+        "filename": "chrome/browser/safe_browsing/chrome_cleaner/reporter_runner_win.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 645,
+      "author": {
+        "id": 1159306
+      },
+      "writtenOn": "2017-11-06T22:05:55Z",
+      "side": 1,
+      "message": "The \"allow sending logs\" part of the comment doesn\u0027t apply to this function.",
+      "revId": "706f05a32ffb91dc72cbf6bcd743f7f3da8de0b8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "bf673d4a_4047bcc2",
+        "filename": "chrome/browser/safe_browsing/chrome_cleaner/reporter_runner_win.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 647,
+      "author": {
+        "id": 1159306
+      },
+      "writtenOn": "2017-11-06T22:05:55Z",
+      "side": 1,
+      "message": "I\u0027m not sure if the \"last_time_triggered_\" check is a good idea - we don\u0027t want to accidentally run over and over again.",
+      "revId": "706f05a32ffb91dc72cbf6bcd743f7f3da8de0b8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b1a1de93_bc1d3ee9",
+        "filename": "chrome/browser/safe_browsing/chrome_cleaner/reporter_runner_win.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 813,
+      "author": {
+        "id": 1159306
+      },
+      "writtenOn": "2017-11-06T22:05:55Z",
+      "side": 1,
+      "message": "You could use is_user_initiated here.",
+      "revId": "706f05a32ffb91dc72cbf6bcd743f7f3da8de0b8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a86e7d2d_767f500d",
+        "filename": "chrome/browser/safe_browsing/chrome_cleaner/reporter_runner_win.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 1052,
+      "author": {
+        "id": 1159306
+      },
+      "writtenOn": "2017-11-06T22:05:55Z",
+      "side": 1,
+      "message": "Nit: since \"queue\" is a common type name, should call this \"invocation_queue\" or something.",
+      "revId": "706f05a32ffb91dc72cbf6bcd743f7f3da8de0b8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7b90bbad_ea713bdd",
+        "filename": "chrome/browser/safe_browsing/chrome_cleaner/reporter_runner_win.h",
+        "patchSetId": 8
+      },
+      "lineNbr": 37,
+      "author": {
+        "id": 1159306
+      },
+      "writtenOn": "2017-11-06T22:05:55Z",
+      "side": 1,
+      "message": "Nit: \"whether a prompt dialog will be shown\"",
+      "revId": "706f05a32ffb91dc72cbf6bcd743f7f3da8de0b8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e7414abb_5ad2ae84",
+        "filename": "chrome/browser/safe_browsing/chrome_cleaner/reporter_runner_win.h",
+        "patchSetId": 8
+      },
+      "lineNbr": 43,
+      "author": {
+        "id": 1159306
+      },
+      "writtenOn": "2017-11-06T22:05:55Z",
+      "side": 1,
+      "message": "Nit: extra \"they\"",
+      "revId": "706f05a32ffb91dc72cbf6bcd743f7f3da8de0b8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6681ef07_fe7a0dea",
+        "filename": "chrome/browser/safe_browsing/chrome_cleaner/reporter_runner_win.h",
+        "patchSetId": 8
+      },
+      "lineNbr": 60,
+      "author": {
+        "id": 1159306
+      },
+      "writtenOn": "2017-11-06T22:05:55Z",
+      "side": 1,
+      "message": "\"may\" or \"will\"?",
+      "revId": "706f05a32ffb91dc72cbf6bcd743f7f3da8de0b8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "152b6573_6cb5671c",
+        "filename": "chrome/browser/safe_browsing/chrome_cleaner/reporter_runner_win.h",
+        "patchSetId": 8
+      },
+      "lineNbr": 62,
+      "author": {
+        "id": 1159306
+      },
+      "writtenOn": "2017-11-06T22:05:55Z",
+      "side": 1,
+      "message": "Nit: typo \"is found\"",
+      "revId": "706f05a32ffb91dc72cbf6bcd743f7f3da8de0b8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9f363823_4974fba0",
+        "filename": "chrome/browser/safe_browsing/chrome_cleaner/reporter_runner_win.h",
+        "patchSetId": 8
+      },
+      "lineNbr": 85,
+      "author": {
+        "id": 1159306
+      },
+      "writtenOn": "2017-11-06T22:05:55Z",
+      "side": 1,
+      "message": "If you define a copy constructor, please also define operator\u003d",
+      "revId": "706f05a32ffb91dc72cbf6bcd743f7f3da8de0b8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ba375b41_d2f17279",
+        "filename": "chrome/browser/safe_browsing/chrome_cleaner/reporter_runner_win.h",
+        "patchSetId": 8
+      },
+      "lineNbr": 100,
+      "author": {
+        "id": 1159306
+      },
+      "writtenOn": "2017-11-06T22:05:55Z",
+      "side": 1,
+      "message": "Nit: Can you name this mutable_command_line()? Otherwise it can be hard to tell which overload is being called.",
+      "revId": "706f05a32ffb91dc72cbf6bcd743f7f3da8de0b8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a05373bd_c4fc5fe7",
+        "filename": "chrome/browser/safe_browsing/chrome_cleaner/reporter_runner_win.h",
+        "patchSetId": 8
+      },
+      "lineNbr": 120,
+      "author": {
+        "id": 1159306
+      },
+      "writtenOn": "2017-11-06T22:05:55Z",
+      "side": 1,
+      "message": "I think this be initialized to BEHAVIOUR_ENABLED_BY_DEFAULT.",
+      "revId": "706f05a32ffb91dc72cbf6bcd743f7f3da8de0b8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6aa173cf_36c5c72b",
+        "filename": "chrome/browser/safe_browsing/chrome_cleaner/reporter_runner_win.h",
+        "patchSetId": 8
+      },
+      "lineNbr": 124,
+      "author": {
+        "id": 1159306
+      },
+      "writtenOn": "2017-11-06T22:05:55Z",
+      "side": 1,
+      "message": "Nit: This comment should really go with the suffix() accessor.",
+      "revId": "706f05a32ffb91dc72cbf6bcd743f7f3da8de0b8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "cc574ad5_c87fded4",
+        "filename": "chrome/browser/safe_browsing/chrome_cleaner/reporter_runner_win.h",
+        "patchSetId": 8
+      },
+      "lineNbr": 148,
+      "author": {
+        "id": 1159306
+      },
+      "writtenOn": "2017-11-06T22:05:55Z",
+      "side": 1,
+      "message": "s/boolean/result parameter",
+      "revId": "706f05a32ffb91dc72cbf6bcd743f7f3da8de0b8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "53c60dbb_80becf8d",
+        "filename": "chrome/browser/safe_browsing/chrome_cleaner/reporter_runner_win.h",
+        "patchSetId": 8
+      },
+      "lineNbr": 153,
+      "author": {
+        "id": 1159306
+      },
+      "writtenOn": "2017-11-06T22:05:55Z",
+      "side": 1,
+      "message": "In English it should be \"SwReporterInvocationSequence\" (with Invocation not plural).",
+      "revId": "706f05a32ffb91dc72cbf6bcd743f7f3da8de0b8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d02b4111_621866ac",
+        "filename": "chrome/browser/safe_browsing/chrome_cleaner/reporter_runner_win.h",
+        "patchSetId": 8
+      },
+      "lineNbr": 166,
+      "author": {
+        "id": 1159306
+      },
+      "writtenOn": "2017-11-06T22:05:55Z",
+      "side": 1,
+      "message": "Missing comment.",
+      "revId": "706f05a32ffb91dc72cbf6bcd743f7f3da8de0b8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "753beff7_1acc6f23",
+        "filename": "chrome/browser/safe_browsing/chrome_cleaner/reporter_runner_win.h",
+        "patchSetId": 8
+      },
+      "lineNbr": 174,
+      "author": {
+        "id": 1159306
+      },
+      "writtenOn": "2017-11-06T22:05:55Z",
+      "side": 1,
+      "message": "Can you name this mutable_container()?",
+      "revId": "706f05a32ffb91dc72cbf6bcd743f7f3da8de0b8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
