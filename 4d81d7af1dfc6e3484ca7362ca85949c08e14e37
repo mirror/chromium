@@ -1,0 +1,123 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "0289863c_b540e69a",
+        "filename": "content/renderer/media_recorder/audio_track_encoder.cc",
+        "patchSetId": 12
+      },
+      "lineNbr": 15,
+      "author": {
+        "id": 1001250
+      },
+      "writtenOn": "2017-11-06T18:46:12Z",
+      "side": 1,
+      "message": "DETACH_FROM_THREAD(...)",
+      "revId": "4d81d7af1dfc6e3484ca7362ca85949c08e14e37",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "321d2c96_608be829",
+        "filename": "content/renderer/media_recorder/audio_track_pcm_encoder.cc",
+        "patchSetId": 12
+      },
+      "lineNbr": 28,
+      "author": {
+        "id": 1001250
+      },
+      "writtenOn": "2017-11-06T18:46:12Z",
+      "side": 1,
+      "message": "Presumably the webm muxer will properly identify channel count and sample rate changes?",
+      "revId": "4d81d7af1dfc6e3484ca7362ca85949c08e14e37",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ad0bda07_f429942c",
+        "filename": "content/renderer/media_recorder/audio_track_recorder.cc",
+        "patchSetId": 12
+      },
+      "lineNbr": 28,
+      "author": {
+        "id": 1001250
+      },
+      "writtenOn": "2017-11-06T18:46:12Z",
+      "side": 1,
+      "message": "Could just make this a constant in the header instead of a function if you like.",
+      "revId": "4d81d7af1dfc6e3484ca7362ca85949c08e14e37",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0af96537_090419ae",
+        "filename": "content/renderer/media_recorder/audio_track_recorder.cc",
+        "patchSetId": 12
+      },
+      "lineNbr": 35,
+      "author": {
+        "id": 1001250
+      },
+      "writtenOn": "2017-11-06T18:46:12Z",
+      "side": 1,
+      "message": "Delete const.",
+      "revId": "4d81d7af1dfc6e3484ca7362ca85949c08e14e37",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7fbd25ba_3b645a41",
+        "filename": "content/renderer/media_recorder/audio_track_recorder.cc",
+        "patchSetId": 12
+      },
+      "lineNbr": 63,
+      "author": {
+        "id": 1001250
+      },
+      "writtenOn": "2017-11-06T18:46:12Z",
+      "side": 1,
+      "message": "Delete const.",
+      "revId": "4d81d7af1dfc6e3484ca7362ca85949c08e14e37",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6dfa8ea7_66f30a02",
+        "filename": "content/renderer/media_recorder/audio_track_recorder.cc",
+        "patchSetId": 12
+      },
+      "lineNbr": 67,
+      "author": {
+        "id": 1001250
+      },
+      "writtenOn": "2017-11-06T18:46:12Z",
+      "side": 1,
+      "message": "Could pull this out from both constructors if you like.",
+      "revId": "4d81d7af1dfc6e3484ca7362ca85949c08e14e37",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0832a380_5e5a6e3f",
+        "filename": "content/renderer/media_recorder/media_recorder_handler.cc",
+        "patchSetId": 12
+      },
+      "lineNbr": 260,
+      "author": {
+        "id": 1001250
+      },
+      "writtenOn": "2017-11-06T18:46:12Z",
+      "side": 1,
+      "message": "std::move cb?",
+      "revId": "4d81d7af1dfc6e3484ca7362ca85949c08e14e37",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}

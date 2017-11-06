@@ -177,6 +177,24 @@
     },
     {
       "key": {
+        "uuid": "5bf27f49_60bfdf12",
+        "filename": "content/renderer/media_recorder/audio_track_opus_encoder.cc",
+        "patchSetId": 11
+      },
+      "lineNbr": 84,
+      "author": {
+        "id": 1001250
+      },
+      "writtenOn": "2017-11-06T18:46:12Z",
+      "side": 1,
+      "message": "Ah, processing in this case in unclear, but it just means the code is free to assume the returned data is all zeros. Not that it won\u0027t ask for more; just that it won\u0027t even look at what you returned.",
+      "parentUuid": "19661eb7_b86eebeb",
+      "revId": "8d849e9f8f19b65b1a3ded6697be1b09f9e17bd3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "0e8b7923_ccde5dad",
         "filename": "content/renderer/media_recorder/audio_track_pcm_encoder.cc",
         "patchSetId": 11
@@ -311,6 +329,24 @@
       "side": 1,
       "message": "Done. Is reinterpret_cast\u003cfloat*\u003e(char*) well defined? I can\u0027t quite figure it out from the spec. http://en.cppreference.com/w/cpp/language/reinterpret_cast suggests that int* --\u003e float* is undefined behavior, but I\u0027m not sure about char* --\u003e float*.",
       "parentUuid": "243318c2_521b824d",
+      "revId": "8d849e9f8f19b65b1a3ded6697be1b09f9e17bd3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "150f442d_46202aba",
+        "filename": "content/renderer/media_recorder/audio_track_pcm_encoder.cc",
+        "patchSetId": 11
+      },
+      "lineNbr": 46,
+      "author": {
+        "id": 1001250
+      },
+      "writtenOn": "2017-11-06T18:46:12Z",
+      "side": 1,
+      "message": "I believe char/uchar are special exceptions: \"[Unless] AliasedType is std::byte, (since C++17)char, or unsigned char: this permits examination of the object representation of any object as an array of bytes.\"\n\nhttps://cs.chromium.org/chromium/src/base/bit_cast.h has some details as well.\n\nA simple test program with -Wall -Werror (which thus includes strict aliasing checks) passes as well:\n\n#include \u003cstdio.h\u003e\n\nint main(int argc, char* argv[]) {\n  char bytes[4];\n  float f \u003d 3.14f;\n  float* float_ptr \u003d reinterpret_cast\u003cfloat*\u003e(\u0026bytes);\n  *float_ptr \u003d f;\n  printf(\"%c %c %c %c\\n\", bytes[0], bytes[1], bytes[2], bytes[3]);\n  return 0;\n}",
+      "parentUuid": "cc0fea53_c946a7df",
       "revId": "8d849e9f8f19b65b1a3ded6697be1b09f9e17bd3",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": false
