@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "a6451b22_ae055ea5",
+        "filename": "chrome/browser/vr/ui_input_manager.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 376,
+      "author": {
+        "id": 1002411
+      },
+      "writtenOn": "2017-11-06T15:28:58Z",
+      "side": 1,
+      "message": "Just a thought, not really for this CL: We get all of the visible elements multiple times per frame, right? Might be worth caching the visible elements in draw order or something.",
+      "range": {
+        "startLine": 376,
+        "startChar": 16,
+        "endLine": 376,
+        "endChar": 25
+      },
+      "revId": "914c394e2cfa7a85f8d929950432cec897870223",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
