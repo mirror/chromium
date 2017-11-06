@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "e99bcfc8_f5d2a48e",
+        "filename": "components/viz/common/resources/release_callback.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 16,
+      "author": {
+        "id": 1211094
+      },
+      "writtenOn": "2017-11-06T05:04:27Z",
+      "side": 1,
+      "message": "There are several users who call it more than once:\n 1. VideoLayerImpl::software_release_callback_\n 2. release_mailbox{1,2,3}_ in TextureLayerWithMailboxTest.\n 3. In VideoResourceUpdaterTest.GenerateReleaseSyncToken.\n\n(1) and (2) look easy to fix, but (3) is not without context.",
+      "parentUuid": "b268e248_d9159942",
+      "revId": "e76e3bb6794d78051e539aae54bf9d8805457690",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "38c31921_07163499",
         "filename": "components/viz/common/resources/release_callback.h",
         "patchSetId": 2
