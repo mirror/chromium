@@ -22,6 +22,30 @@
       "revId": "3cb24dcd23fcdf4f7104b9a10ba95ee6f492074f",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7f6303fb_c92471db",
+        "filename": "third_party/WebKit/Source/platform/wtf/RefPtr.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 30,
+      "author": {
+        "id": 1233284
+      },
+      "writtenOn": "2017-11-06T14:24:39Z",
+      "side": 0,
+      "message": "Sure, I\u0027m gonna upload new one after removing them too. Thanks.",
+      "parentUuid": "fb413d7d_ad66328c",
+      "range": {
+        "startLine": 30,
+        "startChar": 0,
+        "endLine": 30,
+        "endChar": 32
+      },
+      "revId": "3cb24dcd23fcdf4f7104b9a10ba95ee6f492074f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
