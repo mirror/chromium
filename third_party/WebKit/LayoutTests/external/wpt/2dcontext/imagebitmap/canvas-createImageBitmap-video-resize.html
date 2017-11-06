@@ -1,6 +1,6 @@
 <!DOCTYPE HTML>
-<script src="../../resources/testharness.js"></script>
-<script src="../../resources/testharnessreport.js"></script>
+<script src="/resources/testharness.js"></script>
+<script src="/resources/testharnessreport.js"></script>
 <script>
 function createNewCanvas(width, height)
 {
@@ -58,5 +58,5 @@ var video = document.createElement("video");
 video.oncanplaythrough = t.step_func(function() {
     return generateTest();
 });
-video.src = "../../compositing/resources/video.ogv";
+video.src = "/media/video.ogv";
 </script>

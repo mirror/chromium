@@ -1,6 +1,6 @@
 <!DOCTYPE HTML>
-<script src="../../resources/testharness.js"></script>
-<script src="../../resources/testharnessreport.js"></script>
+<script src="/resources/testharness.js"></script>
+<script src="/resources/testharnessreport.js"></script>
 <script>
 function checkNoCrop(imageBitmap)
 {
@@ -117,7 +117,7 @@ function initializeTestCanvas()
 promise_test(function() {
     return new Promise((resolve, reject) => {
         var xhr = new XMLHttpRequest();
-        xhr.open("GET", 'resources/pattern.png');
+        xhr.open("GET", '/images/pattern.png');
         xhr.responseType = 'blob';
         xhr.send();
         xhr.onload = function() {
@@ -139,7 +139,7 @@ promise_test(function() {
         image.onload = function() {
             resolve(image);
         }
-        image.src = 'resources/pattern.png'
+        image.src = '/images/pattern.png'
     }).then(testImageBitmap);
 }, 'createImageBitmap from a HTMLImageElement with resize option.');
 
