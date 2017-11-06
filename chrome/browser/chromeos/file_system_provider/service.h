@@ -8,6 +8,7 @@
 #include <map>
 #include <memory>
 #include <string>
+#include <unordered_map>
 #include <utility>
 #include <vector>
 
@@ -164,6 +165,11 @@ class Service : public KeyedService,
   void OnWatcherListChanged(const ProvidedFileSystemInfo& file_system_info,
                             const Watchers& watchers) override;
 
+  // Registers a File System Factory to the |provider_id| in the
+  // file_system_facotry map
+  void RegisterFileSystemFactory(const std::string& provider_id,
+                                 FileSystemFactoryCallback file_system_factory);
+
  private:
   FRIEND_TEST_ALL_PREFIXES(FileSystemProviderServiceTest, RememberFileSystem);
 
@@ -196,6 +202,12 @@ class Service : public KeyedService,
   // |provider_id| provided file system.
   void RestoreFileSystems(const std::string& provider_id);
 
+  // Retrieves the mapped File System Factory from file_system_factory_map_
+  // Return corresponding factory from map, or file_system_factory if no entry
+  // is found in map
+  FileSystemFactoryCallback GetFileSystemFactory(
+      const std::string& provider_id);
+
   Profile* profile_;
   extensions::ExtensionRegistry* extension_registry_;  // Not owned.
   FileSystemFactoryCallback file_system_factory_;
@@ -205,6 +217,8 @@ class Service : public KeyedService,
   std::map<std::string, FileSystemKey> mount_point_name_to_key_map_;
   std::unique_ptr<RegistryInterface> registry_;
   base::ThreadChecker thread_checker_;
+  std::unordered_map<std::string, FileSystemFactoryCallback>
+      file_system_factory_map_;
 
   base::WeakPtrFactory<Service> weak_ptr_factory_;
   DISALLOW_COPY_AND_ASSIGN(Service);

@@ -186,8 +186,10 @@ base::File::Error Service::MountFileSystemInternal(
     return base::File::FILE_ERROR_INVALID_OPERATION;
   }
 
+  Service::FileSystemFactoryCallback factory =
+      GetFileSystemFactory(file_system_info.provider_id());
   std::unique_ptr<ProvidedFileSystemInterface> file_system =
-      file_system_factory_.Run(profile_, file_system_info);
+      factory.Run(profile_, file_system_info);
   DCHECK(file_system);
   ProvidedFileSystemInterface* file_system_ptr = file_system.get();
   file_system_map_[FileSystemKey(provider_id, options.file_system_id)] =
@@ -456,6 +458,23 @@ void Service::OnWatcherListChanged(
     const ProvidedFileSystemInfo& file_system_info,
     const Watchers& watchers) {
   registry_->RememberFileSystem(file_system_info, watchers);
+}
+
+// TODO(baileyberro): Remove CHECK() and update provider_id to class
+void Service::RegisterFileSystemFactory(
+    const std::string& provider_id,
+    FileSystemFactoryCallback file_system_factory) {
+  CHECK(provider_id.length() != 32);
+  file_system_factory_map_[provider_id] = file_system_factory;
+}
+
+Service::FileSystemFactoryCallback Service::GetFileSystemFactory(
+    const std::string& provider_id) {
+  auto it = file_system_factory_map_.find(provider_id);
+  if (it != file_system_factory_map_.end()) {
+    return it->second;
+  }
+  return file_system_factory_;
 }
 
 }  // namespace file_system_provider
