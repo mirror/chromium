@@ -629,6 +629,30 @@
       "revId": "723d3c637ab0e4f8a340d173ccfcfdde3765fa45",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "fd8eaf37_00cfdbdf",
+        "filename": "ios/chrome/browser/ui/activity_services/canonical_url_getter_unittest.mm",
+        "patchSetId": 6
+      },
+      "lineNbr": 154,
+      "author": {
+        "id": 1125535
+      },
+      "writtenOn": "2017-11-06T14:59:42Z",
+      "side": 1,
+      "message": "Seems like it will be more efficient to resolve this now than to wait till all code is done and then have security review come in to take a look.",
+      "parentUuid": "3c4a1b64_990263f3",
+      "range": {
+        "startLine": 154,
+        "startChar": 31,
+        "endLine": 154,
+        "endChar": 59
+      },
+      "revId": "723d3c637ab0e4f8a340d173ccfcfdde3765fa45",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
