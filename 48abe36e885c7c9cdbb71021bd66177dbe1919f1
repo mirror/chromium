@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "9f109f90_67dceda2",
+        "filename": "base/BUILD.gn",
+        "patchSetId": 1
+      },
+      "lineNbr": 1659,
+      "author": {
+        "id": 1174099
+      },
+      "writtenOn": "2017-11-06T17:33:46Z",
+      "side": 1,
+      "message": "Rather than listing time_exploded_posix.cc twice (it’s also on line 1654), we should do:\n\nif (is_posix \u0026\u0026 !is_fuchsia \u0026\u0026 !is_ios) {\n  sources +\u003d [ \"time/time_exploded_posix.cc\" ]\n}\nif (is_posix \u0026\u0026 !is_fuchsia \u0026\u0026 !is_mac \u0026\u0026 !is_ios) {\n  sources +\u003d [ \"time/time_conversion_posix.cc\", \"time/time_now_posix.cc\" ]\n}",
+      "revId": "48abe36e885c7c9cdbb71021bd66177dbe1919f1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "76b379e6_d636281d",
+        "filename": "base/time/time_exploded_posix.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 31,
+      "author": {
+        "id": 1174099
+      },
+      "writtenOn": "2017-11-06T17:33:46Z",
+      "side": 1,
+      "message": "This probably would be fine for 64-bit iOS. Maybe this should be:\n\n  #if defined(OS_MACOSX)\n  static_assert(sizeof(time_t) \u003e\u003d 8, \"Y2038 problem!\");\n  #endif",
+      "revId": "48abe36e885c7c9cdbb71021bd66177dbe1919f1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
