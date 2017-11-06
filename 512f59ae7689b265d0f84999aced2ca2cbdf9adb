@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "6056c2df_ced13698",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/browseractions/BrowserActionsContextMenuHelper.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 192,
+      "author": {
+        "id": 1116043
+      },
+      "writtenOn": "2017-11-06T19:46:40Z",
+      "side": 1,
+      "message": "I wonder if this can ever be expensive.  I don\u0027t think it will because resources appear to be cached by the Android framework for the recent apps, so this is likely a hashmap lookup essentially.\n\nI wonder if we start using this more broadly for custom tab stuff, we might need to consider putting it in a background thread to prevent any jank.",
+      "range": {
+        "startLine": 192,
+        "startChar": 27,
+        "endLine": 192,
+        "endChar": 53
+      },
+      "revId": "512f59ae7689b265d0f84999aced2ca2cbdf9adb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6c2cbc1b_de244af8",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/browseractions/BrowserActionsContextMenuHelper.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 199,
+      "author": {
+        "id": 1116043
+      },
+      "writtenOn": "2017-11-06T19:46:40Z",
+      "side": 1,
+      "message": "I think we should catch exceptions here in case we are passed bad drawable IDs.\n\nIf we get a bad drawable, should we ignore all of them?",
+      "range": {
+        "startLine": 199,
+        "startChar": 27,
+        "endLine": 199,
+        "endChar": 48
+      },
+      "revId": "512f59ae7689b265d0f84999aced2ca2cbdf9adb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
