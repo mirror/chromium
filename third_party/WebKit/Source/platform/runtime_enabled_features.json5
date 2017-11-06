@@ -932,6 +932,10 @@
       name: "ServiceWorkerScriptStreaming",
     },
     {
+      name: "ServiceWorkerUpdateViaCache",
+      status: "experimental",
+    },
+    {
       name: "SetRootScroller",
       status: "experimental",
     },

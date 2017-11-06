@@ -1,5 +1,5 @@
 This is a testharness.js-based test.
-Found 2604 tests; 2413 PASS, 191 FAIL, 0 TIMEOUT, 0 NOTRUN.
+Found 2604 tests; 2475 PASS, 129 FAIL, 0 TIMEOUT, 0 NOTRUN.
 PASS head.title: 32 tests
 PASS head.lang: 32 tests
 PASS head.dir: 62 tests
@@ -199,68 +199,7 @@ NOTRUN test
 NOTRUN test
 NOTRUN test
 NOTRUN test
-NOTRUN test
-NOTRUN test
-NOTRUN test
-NOTRUN test
-NOTRUN test
-NOTRUN test
-NOTRUN test
-NOTRUN test
-NOTRUN test
-NOTRUN test
-NOTRUN test
-NOTRUN test
-NOTRUN test
-NOTRUN test
-NOTRUN test
-NOTRUN test
-NOTRUN test
-NOTRUN test
-NOTRUN test
-NOTRUN test
-NOTRUN test
-NOTRUN test
-NOTRUN test
-NOTRUN test
-NOTRUN test
-NOTRUN test
-NOTRUN test
-NOTRUN test
-NOTRUN test
-NOTRUN test
-NOTRUN test
-NOTRUN test
-NOTRUN test
-NOTRUN test
-NOTRUN test
-NOTRUN test
-NOTRUN test
-NOTRUN test
-NOTRUN test
-NOTRUN test
-NOTRUN test
-NOTRUN test
-NOTRUN test
-NOTRUN test
-NOTRUN test
-NOTRUN test
-NOTRUN test
-NOTRUN test
-NOTRUN test
-NOTRUN test
-NOTRUN test
-NOTRUN test
-NOTRUN test
-NOTRUN test
-NOTRUN test
-NOTRUN test
-NOTRUN test
-NOTRUN test
-NOTRUN test
-NOTRUN test
-NOTRUN test
-NOTRUN test
+PASS link.updateViaCache: 62 tests
 PASS link.charset: 32 tests
 PASS link.rev: 32 tests
 PASS link.target: 32 tests

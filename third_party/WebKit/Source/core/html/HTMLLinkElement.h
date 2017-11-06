@@ -37,6 +37,7 @@
 #include "core/loader/LinkLoaderClient.h"
 #include "platform/WebTaskRunner.h"
 #include "platform/bindings/TraceWrapperMember.h"
+#include "public/platform/modules/serviceworker/service_worker_registration.mojom-shared.h"
 
 namespace blink {
 
@@ -63,6 +64,9 @@ class CORE_EXPORT HTMLLinkElement final : public HTMLElement,
     return static_cast<DOMTokenList&>(*rel_list_);
   }
   String Scope() const { return scope_; }
+  mojom::ServiceWorkerUpdateViaCache UpdateViaCache() const {
+    return update_via_cache_;
+  }
 
   const AtomicString& GetType() const;
 
@@ -151,6 +155,8 @@ class CORE_EXPORT HTMLLinkElement final : public HTMLElement,
   void DidSendDOMContentLoadedForLinkPrerender() override;
   scoped_refptr<WebTaskRunner> GetLoadingTaskRunner() override;
 
+  void ParseUpdateViaCacheAttribute();
+
   Member<LinkResource> link_;
   Member<LinkLoader> link_loader_;
 
@@ -163,6 +169,7 @@ class CORE_EXPORT HTMLLinkElement final : public HTMLElement,
   TraceWrapperMember<RelList> rel_list_;
   LinkRelAttribute rel_attribute_;
   String scope_;
+  mojom::ServiceWorkerUpdateViaCache update_via_cache_;
 
   bool created_by_parser_;
 };
