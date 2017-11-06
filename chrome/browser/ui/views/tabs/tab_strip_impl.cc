@@ -275,17 +275,10 @@ void TabStripImpl::RemoveTabDelegate::AnimationCanceled(
 
 TabStripImpl::TabStripImpl(std::unique_ptr<TabStripController> controller)
     : controller_(std::move(controller)),
-      new_tab_button_(NULL),
       current_inactive_width_(Tab::GetStandardSize().width()),
       current_active_width_(Tab::GetStandardSize().width()),
-      available_width_for_tabs_(-1),
-      in_tab_close_(false),
       animation_container_(new gfx::AnimationContainer()),
-      bounds_animator_(this),
-      stacked_layout_(false),
-      adjust_layout_(false),
-      reset_to_shrink_on_exit_(false),
-      mouse_move_count_(0) {
+      bounds_animator_(this) {
   Init();
   SetEventTargeter(
       std::unique_ptr<views::ViewTargeter>(new views::ViewTargeter(this)));
