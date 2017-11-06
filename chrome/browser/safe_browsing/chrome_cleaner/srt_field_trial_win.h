@@ -74,6 +74,7 @@ bool UserInitiatedCleanupsEnabled();
 
 // Returns true if this Chrome is in a field trial group which enables running
 // the SwReporter.
+// TODO(crbug.com/774623): this is no longer needed and can be deleted.
 bool IsSwReporterEnabled();
 
 // Returns the correct SRT download URL for the current field trial.
