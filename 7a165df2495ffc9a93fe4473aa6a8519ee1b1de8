@@ -22,6 +22,30 @@
       "revId": "7a165df2495ffc9a93fe4473aa6a8519ee1b1de8",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2b07c3e6_098d90c0",
+        "filename": "third_party/WebKit/Source/core/editing/SelectionModifier.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 105,
+      "author": {
+        "id": 1002258
+      },
+      "writtenOn": "2017-11-06T07:12:25Z",
+      "side": 1,
+      "message": "No for at this time. There are 90+ usages in member functions in SelectionModifier.\n\nTo make |selection_| as local variable, we should pass |selection_| as\nparameter and convert member functions as file local function.\n\nI would like to do above in after this patch incrementally.",
+      "parentUuid": "900b3ee7_f065df17",
+      "range": {
+        "startLine": 105,
+        "startChar": 19,
+        "endLine": 105,
+        "endChar": 29
+      },
+      "revId": "7a165df2495ffc9a93fe4473aa6a8519ee1b1de8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
