@@ -55,6 +55,24 @@
     },
     {
       "key": {
+        "uuid": "1d6ca9cf_8b437c6a",
+        "filename": "base/BUILD.gn",
+        "patchSetId": 1
+      },
+      "lineNbr": 1659,
+      "author": {
+        "id": 1002076
+      },
+      "writtenOn": "2017-11-06T21:00:14Z",
+      "side": 1,
+      "message": "(and this is described in the comments at the top of this file)",
+      "parentUuid": "b49f1745_2eabda1e",
+      "revId": "48abe36e885c7c9cdbb71021bd66177dbe1919f1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "76b379e6_d636281d",
         "filename": "base/time/time_exploded_posix.cc",
         "patchSetId": 1
