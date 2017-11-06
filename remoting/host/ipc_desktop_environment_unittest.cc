@@ -205,6 +205,7 @@ class IpcDesktopEnvironmentTest : public testing::Test {
 
   scoped_refptr<AutoThreadTaskRunner> task_runner_;
   scoped_refptr<AutoThreadTaskRunner> io_task_runner_;
+  scoped_refptr<base::SingleThreadTaskRunner> ipc_task_runner_;
 
   std::string client_jid_;
 
@@ -268,6 +269,7 @@ void IpcDesktopEnvironmentTest::SetUp() {
 
   io_task_runner_ = AutoThread::CreateWithType(
       "IPC thread", task_runner_, base::MessageLoop::TYPE_IO);
+  ipc_task_runner_ = base::ThreadTaskRunnerHandle::Get();
 
   setup_run_loop_.reset(new base::RunLoop());
 
@@ -416,7 +418,7 @@ void IpcDesktopEnvironmentTest::CreateDesktopProcess() {
   mojo::MessagePipe pipe;
   desktop_channel_ = IPC::ChannelProxy::Create(
       pipe.handle0.release(), IPC::Channel::MODE_SERVER, &desktop_listener_,
-      io_task_runner_.get());
+      io_task_runner_.get(), ipc_task_runner_.get());
 
   // Create and start the desktop process.
   desktop_process_.reset(new DesktopProcess(

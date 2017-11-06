@@ -97,6 +97,7 @@ DesktopSessionProxy::DesktopSessionProxy(
     : audio_capture_task_runner_(audio_capture_task_runner),
       caller_task_runner_(caller_task_runner),
       io_task_runner_(io_task_runner),
+      ipc_task_runner_(base::ThreadTaskRunnerHandle::Get()),
       client_session_control_(client_session_control),
       desktop_session_connector_(desktop_session_connector),
       pending_capture_frame_requests_(0),
@@ -222,9 +223,9 @@ bool DesktopSessionProxy::AttachToDesktop(
     return false;
 
   // Connect to the desktop process.
-  desktop_channel_ = IPC::ChannelProxy::Create(desktop_pipe,
-                                               IPC::Channel::MODE_CLIENT, this,
-                                               io_task_runner_.get());
+  desktop_channel_ =
+      IPC::ChannelProxy::Create(desktop_pipe, IPC::Channel::MODE_CLIENT, this,
+                                io_task_runner_.get(), ipc_task_runner_);
 
   // Pass ID of the client (which is authenticated at this point) to the desktop
   // session agent and start the agent.

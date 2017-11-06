@@ -165,6 +165,7 @@ DesktopSessionAgent::DesktopSessionAgent(
       caller_task_runner_(caller_task_runner),
       input_task_runner_(input_task_runner),
       io_task_runner_(io_task_runner),
+      ipc_task_runner_(base::ThreadTaskRunnerHandle::Get()),
       current_process_stats_("DesktopSessionAgent"),
       weak_factory_(this) {
   DCHECK(caller_task_runner_->BelongsToCurrentThread());
@@ -402,7 +403,8 @@ mojo::ScopedMessagePipeHandle DesktopSessionAgent::Start(
 
   mojo::MessagePipe pipe;
   network_channel_ = IPC::ChannelProxy::Create(
-      pipe.handle0.release(), IPC::Channel::MODE_SERVER, this, io_task_runner_);
+      pipe.handle0.release(), IPC::Channel::MODE_SERVER, this, io_task_runner_,
+      ipc_task_runner_);
   return std::move(pipe.handle1);
 }
 

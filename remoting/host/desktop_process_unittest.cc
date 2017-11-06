@@ -155,6 +155,8 @@ class DesktopProcessTest : public testing::Test {
 
   scoped_refptr<AutoThreadTaskRunner> io_task_runner_;
 
+  scoped_refptr<base::SingleThreadTaskRunner> ipc_task_runner_;
+
   // The network's end of the network-to-desktop channel.
   std::unique_ptr<IPC::ChannelProxy> network_channel_;
 
@@ -171,9 +173,9 @@ DesktopProcessTest::~DesktopProcessTest() {
 
 void DesktopProcessTest::ConnectNetworkChannel(
     const IPC::ChannelHandle& channel_handle) {
-  network_channel_ =
-      IPC::ChannelProxy::Create(channel_handle, IPC::Channel::MODE_CLIENT,
-                                &network_listener_, io_task_runner_.get());
+  network_channel_ = IPC::ChannelProxy::Create(
+      channel_handle, IPC::Channel::MODE_CLIENT, &network_listener_,
+      io_task_runner_.get(), ipc_task_runner_.get());
 }
 
 void DesktopProcessTest::OnDesktopAttached(
@@ -224,6 +226,7 @@ void DesktopProcessTest::DisconnectChannels() {
   daemon_channel_.reset();
   network_channel_.reset();
   io_task_runner_ = nullptr;
+  ipc_task_runner_ = nullptr;
 }
 
 void DesktopProcessTest::PostDisconnectChannels() {
@@ -243,11 +246,12 @@ void DesktopProcessTest::RunDesktopProcess() {
 
   io_task_runner_ = AutoThread::CreateWithType(
       "IPC thread", ui_task_runner, base::MessageLoop::TYPE_IO);
+  ipc_task_runner_ = base::ThreadTaskRunnerHandle::Get();
 
   mojo::MessagePipe pipe;
   daemon_channel_ = IPC::ChannelProxy::Create(
       pipe.handle0.release(), IPC::Channel::MODE_SERVER, &daemon_listener_,
-      io_task_runner_.get());
+      io_task_runner_.get(), ipc_task_runner_.get());
 
   std::unique_ptr<MockDesktopEnvironmentFactory> desktop_environment_factory(
       new MockDesktopEnvironmentFactory());

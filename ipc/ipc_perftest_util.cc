@@ -19,6 +19,10 @@ scoped_refptr<base::SingleThreadTaskRunner> GetIOThreadTaskRunner() {
       static_cast<base::SingleThreadTaskRunner*>(runner.get()));
 }
 
+scoped_refptr<base::SingleThreadTaskRunner> GetIPCTTaskRunner() {
+  return base::ThreadTaskRunnerHandle::Get();
+}
+
 ChannelReflectorListener::ChannelReflectorListener() : channel_(NULL) {
   VLOG(1) << "Client listener up";
 }
@@ -112,9 +116,9 @@ int MojoPerfTestClient::Run(MojoHandle handle) {
   LockThreadAffinity thread_locker(kSharedCore);
 
   base::RunLoop run_loop;
-  std::unique_ptr<ChannelProxy> channel =
-      IPC::ChannelProxy::Create(handle_.release(), Channel::MODE_CLIENT,
-                                listener_.get(), GetIOThreadTaskRunner());
+  std::unique_ptr<ChannelProxy> channel = IPC::ChannelProxy::Create(
+      handle_.release(), Channel::MODE_CLIENT, listener_.get(),
+      GetIOThreadTaskRunner(), GetIPCTaskRunner());
   listener_->Init(channel.get(), run_loop.QuitWhenIdleClosure());
   run_loop.Run();
   return 0;

@@ -167,8 +167,11 @@ class DesktopSessionAgent
   // Task runner on which keyboard/mouse input is injected.
   scoped_refptr<AutoThreadTaskRunner> input_task_runner_;
 
-  // Task runner used by the IPC channel.
+  // Task runner used by the IPC channel for IO.
   scoped_refptr<AutoThreadTaskRunner> io_task_runner_;
+
+  // Task runner used by the IPC channel.
+  scoped_refptr<base::SingleThreadTaskRunner> ipc_task_runner_;
 
   // Captures audio output.
   std::unique_ptr<AudioCapturer> audio_capturer_;

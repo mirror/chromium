@@ -64,6 +64,10 @@ class ServiceProcess : public ServiceIPCServer::Client,
     return io_thread_ ? io_thread_->task_runner() : nullptr;
   }
 
+  scoped_refptr<base::SingleThreadTaskRunner> ipc_task_runner() {
+    return base::ThreadTaskRunnerHandle::Get();
+  }
+
   // A global event object that is signalled when the main thread's message
   // loop exits. This gives background threads a way to observe the main
   // thread shutting down.
