@@ -71,6 +71,13 @@ IN_PROC_BROWSER_TEST_F(ContentBrowserTest, MANUAL_RendererCrash) {
   message_loop_runner->Run();
 }
 
+#if (defined(ADDRESS_SANITIZER) || defined(LEAK_SANITIZER) || \
+     defined(MEMORY_SANITIZER) || defined(THREAD_SANITIZER))
+#define IS_SANITIZER_BUILD 1
+#else
+#define IS_SANITIZER_BUILD 0
+#endif
+
 // Tests that browser tests print the callstack when a child process crashes.
 IN_PROC_BROWSER_TEST_F(ContentBrowserTest, RendererCrashCallStack) {
   base::ThreadRestrictions::ScopedAllowIO allow_io_for_temp_dir;
@@ -90,8 +97,7 @@ IN_PROC_BROWSER_TEST_F(ContentBrowserTest, RendererCrashCallStack) {
   // so the stack that the tests sees here looks like:
   // "#0 0x0000007ea911 (...content_browsertests+0x7ea910)"
   std::string crash_string =
-#if !defined(ADDRESS_SANITIZER) && !defined(LEAK_SANITIZER) && \
-    !defined(MEMORY_SANITIZER) && !defined(THREAD_SANITIZER)
+#if !IS_SANITIZER_BUILD || defined(OS_WIN)
       "content::RenderFrameImpl::PrepareRenderViewForNavigation";
 #else
       "#0 ";
@@ -125,8 +131,7 @@ IN_PROC_BROWSER_TEST_F(ContentBrowserTest, BrowserCrashCallStack) {
   // so the stack that the test sees here looks like:
   // "#0 0x0000007ea911 (...content_browsertests+0x7ea910)"
   std::string crash_string =
-#if !defined(ADDRESS_SANITIZER) && !defined(LEAK_SANITIZER) && \
-    !defined(MEMORY_SANITIZER) && !defined(THREAD_SANITIZER)
+#if !IS_SANITIZER_BUILD || defined(OS_WIN)
       "content::ContentBrowserTest_MANUAL_BrowserCrash_Test::"
       "RunTestOnMainThread";
 #else
