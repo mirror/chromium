@@ -225,6 +225,30 @@
     },
     {
       "key": {
+        "uuid": "0d3f31ac_d51e005c",
+        "filename": "ios/web/public/download/download_controller_observer.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 46,
+      "author": {
+        "id": 1123009
+      },
+      "writtenOn": "2017-11-06T17:31:40Z",
+      "side": 1,
+      "message": "After giving more thoughts I think I like unique_ptr and Delegate+Observer combination better. \nDownloadControllerObserver::OnDownloadCreated method creates a problem, where multiple observers can start the download, which will lead to bugs. \n\nWhat do you think about the following interface?:\nclass DownloadControllerDelegate {\n  virtual void OnDownloadCreated(DownloadControllerDelegate*,\n                                 const WebState*,\n                                 std::unique_ptr\u003cDownloadTask\u003e);\n  virtual void OnDownloadControllerDestroyed(DownloadController*);\n};\n\nclass DownloadTaskObserver {\n  virtual void OnDownloadUpdated(DownloadTask*, const WebState*) {}\n};\n\nAnd DownloadController will not own DownloadTask.",
+      "parentUuid": "1e717d21_22afffaf",
+      "range": {
+        "startLine": 46,
+        "startChar": 15,
+        "endLine": 46,
+        "endChar": 34
+      },
+      "revId": "81a40f8cb67927f746a655cab9e5ca0166afcc2e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "19b28d95_264ed847",
         "filename": "ios/web/public/download/download_task.h",
         "patchSetId": 3
