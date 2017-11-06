@@ -126,6 +126,8 @@ class CONTENT_EXPORT RenderWidgetHostViewAndroid
                        const ReadbackRequestCallback& callback,
                        const SkColorType color_type) override;
   bool DoBrowserControlsShrinkBlinkSize() const override;
+  void SetTopControlsHeight(int height, bool controls_resize_view) override;
+  void SetBottomControlsHeight(int height) override;
   float GetTopControlsHeight() const override;
   float GetBottomControlsHeight() const override;
   void UpdateCursor(const WebCursor& cursor) override;
@@ -472,6 +474,11 @@ class CONTENT_EXPORT RenderWidgetHostViewAndroid
 
   float prev_top_shown_pix_;
   float prev_bottom_shown_pix_;
+
+  // In DIP
+  int top_controls_height_;
+  int bottom_controls_height_;
+  bool controls_shrink_blink_size_;
 
   base::TimeTicks prev_mousedown_timestamp_;
   gfx::Point prev_mousedown_point_;
