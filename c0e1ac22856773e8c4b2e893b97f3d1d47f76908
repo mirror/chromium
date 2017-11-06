@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "345b2e24_a5a9c94b",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/tabmodel/TabPersistentStore.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 826,
+      "author": {
+        "id": 1122966
+      },
+      "writtenOn": "2017-11-06T19:47:56Z",
+      "side": 1,
+      "message": "We already loop through all of the tabs, generating a list of IDs in serializeTabModelSelector(). Can we share that list somehow instead of looping through all of the tabs twice and generating two lists?",
+      "range": {
+        "startLine": 819,
+        "startChar": 6,
+        "endLine": 826,
+        "endChar": 9
+      },
+      "revId": "c0e1ac22856773e8c4b2e893b97f3d1d47f76908",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
