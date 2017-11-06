@@ -27,6 +27,9 @@ class CORE_EXPORT BoxPaintInvalidator {
 
   PaintInvalidationReason InvalidatePaint();
 
+  enum BackgroundInvalidationType { kNone = 0, kIncremental, kFull };
+  void InvalidateBackground(BackgroundInvalidationType);
+
  private:
   friend class BoxPaintInvalidatorTest;
 
@@ -36,9 +39,7 @@ class CORE_EXPORT BoxPaintInvalidator {
       const LayoutRect& old_layout_overflow,
       const LayoutRect& new_layout_overflow);
 
-  enum BackgroundInvalidationType { kNone = 0, kIncremental, kFull };
   BackgroundInvalidationType ComputeBackgroundInvalidation();
-  void InvalidateScrollingContentsBackground(BackgroundInvalidationType);
 
   PaintInvalidationReason ComputePaintInvalidationReason();
 
