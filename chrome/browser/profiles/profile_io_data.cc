@@ -87,6 +87,7 @@
 #include "extensions/features/features.h"
 #include "net/cert/caching_cert_verifier.h"
 #include "net/cert/cert_verifier.h"
+#include "net/cert/cert_verifier_factory.h"
 #include "net/cert/cert_verify_proc.h"
 #include "net/cert/ct_log_verifier.h"
 #include "net/cert/ct_policy_enforcer.h"
@@ -179,7 +180,7 @@ using content::ResourceContext;
 
 namespace {
 
-net::CertVerifier* g_cert_verifier_for_testing = nullptr;
+net::CertVerifierFactory* g_cert_verifier_factory_for_testing = nullptr;
 
 #if BUILDFLAG(DEBUG_DEVTOOLS)
 bool IsSupportedDevToolsURL(const GURL& url, base::FilePath* path) {
@@ -509,7 +510,7 @@ void ProfileIOData::InitializeOnUIThread(Profile* profile) {
   network_prediction_options_.MoveToThread(io_task_runner);
 
 #if defined(OS_CHROMEOS)
-  if (!g_cert_verifier_for_testing) {
+  if (!g_cert_verifier_factory_for_testing) {
     profile_params_->policy_cert_verifier =
         policy::PolicyCertServiceFactory::CreateForProfile(profile);
   }
@@ -810,9 +811,9 @@ void ProfileIOData::AddProtocolHandlersToBuilder(
 }
 
 // static
-void ProfileIOData::SetCertVerifierForTesting(
-    net::CertVerifier* cert_verifier) {
-  g_cert_verifier_for_testing = cert_verifier;
+void ProfileIOData::SetCertVerifierFactoryForTesting(
+    net::CertVerifierFactory* cert_verifier_factory) {
+  g_cert_verifier_factory_for_testing = cert_verifier_factory;
 }
 
 content::ResourceContext* ProfileIOData::GetResourceContext() const {
@@ -1099,8 +1100,9 @@ void ProfileIOData::Init(
   certificate_provider_ = std::move(profile_params_->certificate_provider);
 #endif
 
-  if (g_cert_verifier_for_testing) {
-    builder->set_shared_cert_verifier(g_cert_verifier_for_testing);
+  if (g_cert_verifier_factory_for_testing) {
+    builder->SetCertVerifier(
+        g_cert_verifier_factory_for_testing->CreateCertVerifier());
   } else {
     std::unique_ptr<net::CertVerifier> cert_verifier;
 #if defined(OS_CHROMEOS)

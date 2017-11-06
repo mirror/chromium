@@ -153,8 +153,7 @@ class ChromeContentRendererClientBrowserTest :
  public:
   ChromeContentRendererClientBrowserTest()
       : https_server_(std::make_unique<net::EmbeddedTestServer>(
-            net::EmbeddedTestServer::TYPE_HTTPS)),
-        mock_cert_verifier_(std::make_unique<net::MockCertVerifier>()) {}
+            net::EmbeddedTestServer::TYPE_HTTPS)) {}
 
   void MonitorRequestHandler(const net::test_server::HttpRequest& request) {
     // We're only interested in YouTube video embeds
@@ -194,14 +193,16 @@ class ChromeContentRendererClientBrowserTest :
   void SetUpInProcessBrowserTestFixture() override {
     InProcessBrowserTest::SetUpInProcessBrowserTestFixture();
 
-    mock_cert_verifier_->set_default_result(net::OK);
-    ProfileIOData::SetCertVerifierForTesting(mock_cert_verifier_.get());
+    mock_cert_verifier_factory_.mock_cert_verifier()->set_default_result(
+        net::OK);
+    ProfileIOData::SetCertVerifierFactoryForTesting(
+        &mock_cert_verifier_factory_);
   }
 
   void TearDownInProcessBrowserTestFixture() override {
     InProcessBrowserTest::TearDownInProcessBrowserTestFixture();
 
-    ProfileIOData::SetCertVerifierForTesting(nullptr);
+    ProfileIOData::SetCertVerifierFactoryForTesting(nullptr);
   }
 
   net::EmbeddedTestServer* https_server() const { return https_server_.get(); }
@@ -210,7 +211,7 @@ class ChromeContentRendererClientBrowserTest :
   scoped_refptr<content::MessageLoopRunner> message_runner_;
 
   std::unique_ptr<net::EmbeddedTestServer> https_server_;
-  std::unique_ptr<net::MockCertVerifier> mock_cert_verifier_;
+  net::MockCertVerifierFactory mock_cert_verifier_factory_;
 };
 
 IN_PROC_BROWSER_TEST_P(ChromeContentRendererClientBrowserTest,
