@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "39022f69_16355814",
+        "filename": "components/viz/service/main/viz_main_impl.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 116,
+      "author": {
+        "id": 1115962
+      },
+      "writtenOn": "2017-11-06T16:51:01Z",
+      "side": 1,
+      "message": "Ack. Will do.",
+      "parentUuid": "1b6c6df9_e577a7be",
+      "revId": "ce799ce036a1963cbffc8f1b0a22575869e62ac6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "b035d996_8b22f336",
         "filename": "components/viz/service/main/viz_main_impl.cc",
         "patchSetId": 5
@@ -30,6 +48,24 @@
       "writtenOn": "2017-11-06T15:27:18Z",
       "side": 1,
       "message": "Will this ever fail, after the call to MakeRequest() in the previous line?",
+      "revId": "ce799ce036a1963cbffc8f1b0a22575869e62ac6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "712f1c89_3eb0f6d9",
+        "filename": "components/viz/service/main/viz_main_impl.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 118,
+      "author": {
+        "id": 1115962
+      },
+      "writtenOn": "2017-11-06T16:51:01Z",
+      "side": 1,
+      "message": "Maybe? I mean it really shouldn\u0027t when running chrome normally, but it\u0027s possible there is a valid configuration in which it will. I personally find it a little scary that Mojo configuration can break semi-silently now, and so I thought making these breakages a little more explicit is good. That said, this DCHECK will not even catch all the breakages, so I don\u0027t have a problem removing it if that\u0027s what you prefer.",
+      "parentUuid": "b035d996_8b22f336",
       "revId": "ce799ce036a1963cbffc8f1b0a22575869e62ac6",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -53,6 +89,24 @@
     },
     {
       "key": {
+        "uuid": "198b04f3_bf81daa3",
+        "filename": "components/viz/service/main/viz_main_impl.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 135,
+      "author": {
+        "id": 1115962
+      },
+      "writtenOn": "2017-11-06T16:51:01Z",
+      "side": 1,
+      "message": "\u003e This is a little bit weird. This code means that it is possible for the MojoUkmRecorder to have been destroyed earlier, without being removed from DelegatingUkmRecorder. This seems potentially problematic. Is it possible that MUR removes itself from DUR before destruction, or some other mechanism to remove it from DUR before MUR is destroyed?\n\nIt may have not been initialized in the first place (e.g. if GPU is in-process).\nAlso see my comment in MUR",
+      "parentUuid": "29bafd87_704eeb8c",
+      "revId": "ce799ce036a1963cbffc8f1b0a22575869e62ac6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "4d2584a1_6940c464",
         "filename": "services/metrics/public/cpp/mojo_ukm_recorder.h",
         "patchSetId": 5
@@ -64,6 +118,24 @@
       "writtenOn": "2017-11-06T15:27:18Z",
       "side": 1,
       "message": "Not totally sure if this is a good thing to add. See comment in VizMainImpl.",
+      "revId": "ce799ce036a1963cbffc8f1b0a22575869e62ac6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "404ef647_96c47e78",
+        "filename": "services/metrics/public/cpp/mojo_ukm_recorder.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 47,
+      "author": {
+        "id": 1115962
+      },
+      "writtenOn": "2017-11-06T16:51:01Z",
+      "side": 1,
+      "message": "See my response in VizMainImpl.\n\nThat said, I agree this sort of complexity associated with DelegatingUkmRecorder seems a bit unfortunate. E.g. there\u0027s no way to tell if the global UkmRecorder has been initialized. IMHO it would be nice if UR or MUR or DUR exposed an interface which could be used as if UR was a global process singleton, and then tests had some sort of a backdoor to add an additional listener/delegate. Perhaps holte@ has some thoughts on this.\n\u003c/rant\u003e",
+      "parentUuid": "4d2584a1_6940c464",
       "revId": "ce799ce036a1963cbffc8f1b0a22575869e62ac6",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
