@@ -1,0 +1,96 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "d9b87306_2c62b289",
+        "filename": "device/geolocation/location_arbitrator.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 194,
+      "author": {
+        "id": 1113991
+      },
+      "writtenOn": "2017-11-06T15:58:17Z",
+      "side": 1,
+      "message": "Now that timestamps are objects, use them throughout, i.e.\nmake |kFixStaleTimeoutMilliseconds| a base::TimeDelta (using\nbase::TimeDelta::FromMilliseconds()) and compare it directly \nwith (GetTimeNow() - old_position.timestamp) here.",
+      "range": {
+        "startLine": 193,
+        "startChar": 13,
+        "endLine": 194,
+        "endChar": 44
+      },
+      "revId": "f69e0b63ed061f870e26447fbd9e6565939d05e8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "205dcf1c_ba531571",
+        "filename": "device/geolocation/public/interfaces/geoposition.mojom",
+        "patchSetId": 4
+      },
+      "lineNbr": 51,
+      "author": {
+        "id": 1113991
+      },
+      "writtenOn": "2017-11-06T15:58:17Z",
+      "side": 1,
+      "message": "Following up with my comments in the next file, consider\nspecifying which Epoch we\u0027re talking about, Unix or Windows.",
+      "range": {
+        "startLine": 51,
+        "startChar": 44,
+        "endLine": 51,
+        "endChar": 68
+      },
+      "revId": "f69e0b63ed061f870e26447fbd9e6565939d05e8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "22954608_337a8059",
+        "filename": "third_party/WebKit/LayoutTests/geolocation-api/resources/geolocation-mock.js",
+        "patchSetId": 4
+      },
+      "lineNbr": 91,
+      "author": {
+        "id": 1113991
+      },
+      "writtenOn": "2017-11-06T15:58:17Z",
+      "side": 1,
+      "message": "nit: remove \"the\"",
+      "range": {
+        "startLine": 91,
+        "startChar": 52,
+        "endLine": 91,
+        "endChar": 55
+      },
+      "revId": "f69e0b63ed061f870e26447fbd9e6565939d05e8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e133f810_e1f30a2c",
+        "filename": "third_party/WebKit/LayoutTests/geolocation-api/resources/geolocation-mock.js",
+        "patchSetId": 4
+      },
+      "lineNbr": 97,
+      "author": {
+        "id": 1113991
+      },
+      "writtenOn": "2017-11-06T15:58:17Z",
+      "side": 1,
+      "message": "Wouldn\u0027t this only apply to Windows systems?\n\nAlso, consider making this a calculated constant, e.g.:\n\nconst windowsEpoch \u003d new Date(YYYY, MM, DD, 0, 0, 0, 0);\nconst posixEpoch \u003d new Date(ZZZZ, NN, EE, 0, 0, 0, 0);\nconst epochDeltaInMs \u003d posixEpoch.getTime() - windowsEpoch.getTime();",
+      "range": {
+        "startLine": 97,
+        "startChar": 9,
+        "endLine": 97,
+        "endChar": 46
+      },
+      "revId": "f69e0b63ed061f870e26447fbd9e6565939d05e8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
