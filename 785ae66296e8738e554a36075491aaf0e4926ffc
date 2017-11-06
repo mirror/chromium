@@ -1,0 +1,73 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "eee3e93a_6de2cb68",
+        "filename": "net/http/http_server_properties_impl.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 599,
+      "author": {
+        "id": 1157934
+      },
+      "writtenOn": "2017-11-06T18:54:36Z",
+      "side": 1,
+      "message": "Canonical suffix only applies to HTTPS, how about check the scheme and return nullptr if scheme is HTTP?",
+      "range": {
+        "startLine": 599,
+        "startChar": 79,
+        "endLine": 599,
+        "endChar": 0
+      },
+      "revId": "785ae66296e8738e554a36075491aaf0e4926ffc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5a3115bd_6f1e345d",
+        "filename": "net/http/http_server_properties_impl.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 605,
+      "author": {
+        "id": 1157934
+      },
+      "writtenOn": "2017-11-06T18:54:36Z",
+      "side": 1,
+      "message": "nit: If I read it correctly, the comment and code are out of sync. We are actually iterating in MRU order, and returns the most recent server that matches the canonical suffix?",
+      "range": {
+        "startLine": 605,
+        "startChar": 52,
+        "endLine": 605,
+        "endChar": 0
+      },
+      "revId": "785ae66296e8738e554a36075491aaf0e4926ffc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "71ac8a88_d9a35a62",
+        "filename": "net/http/http_server_properties_impl_unittest.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 1377,
+      "author": {
+        "id": 1157934
+      },
+      "writtenOn": "2017-11-06T18:54:36Z",
+      "side": 1,
+      "message": "How about check the order of the QuicServerInfoMap is not changed? It would also be a good idea to have two googlevideo.com entries in the quic_server_info_map so that we could verify which one is returned(the most recently used or the other).",
+      "range": {
+        "startLine": 1377,
+        "startChar": 66,
+        "endLine": 1377,
+        "endChar": 0
+      },
+      "revId": "785ae66296e8738e554a36075491aaf0e4926ffc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
