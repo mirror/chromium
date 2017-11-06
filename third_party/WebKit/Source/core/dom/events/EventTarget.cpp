@@ -39,6 +39,7 @@
 #include "bindings/core/v8/event_listener_options_or_boolean.h"
 #include "core/dom/ExceptionCode.h"
 #include "core/dom/events/Event.h"
+#include "core/dom/events/EventTargetImpl.h"
 #include "core/editing/Editor.h"
 #include "core/events/EventUtil.h"
 #include "core/events/PointerEvent.h"
@@ -186,6 +187,17 @@ MessagePort* EventTarget::ToMessagePort() {
 
 ServiceWorker* EventTarget::ToServiceWorker() {
   return nullptr;
+}
+
+// An instance of EventTargetImpl is returned because EventTarget
+// is an abstract class, and making it non-abstract is unfavorable
+// due to performance reasons. We also don't use
+// implementedAs=EventTargetImpl in EventTarget.idl because it will
+// result in some complications with classes that are currently derived
+// from EventTarget.
+// Spec: https://dom.spec.whatwg.org/#dom-eventtarget-eventtarget
+EventTarget* EventTarget::Create(ScriptState* script_state) {
+  return new EventTargetImpl(script_state);
 }
 
 inline LocalDOMWindow* EventTarget::ExecutingWindow() {
