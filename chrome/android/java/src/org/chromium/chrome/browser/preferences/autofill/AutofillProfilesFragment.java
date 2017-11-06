@@ -7,6 +7,7 @@ package org.chromium.chrome.browser.preferences.autofill;
 import android.graphics.PorterDuff;
 import android.graphics.drawable.Drawable;
 import android.os.Bundle;
+import android.os.StrictMode;
 import android.preference.Preference;
 import android.preference.PreferenceFragment;
 import android.support.annotation.VisibleForTesting;
@@ -80,7 +81,12 @@ public class AutofillProfilesFragment
         pref.setIcon(plusIcon);
         pref.setTitle(R.string.autofill_create_profile);
         pref.setKey(PREF_NEW_PROFILE); // For testing.
-        getPreferenceScreen().addPreference(pref);
+        StrictMode.ThreadPolicy oldPolicy = StrictMode.allowThreadDiskWrites();
+        try {
+            getPreferenceScreen().addPreference(pref);
+        } finally {
+            StrictMode.setThreadPolicy(oldPolicy);
+        }
     }
 
     @Override
