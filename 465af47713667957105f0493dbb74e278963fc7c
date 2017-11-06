@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "8088fb83_d889995b",
+        "filename": "chrome/browser/page_load_metrics/observers/OWNERS",
+        "patchSetId": 12
+      },
+      "lineNbr": 6,
+      "author": {
+        "id": 1221384
+      },
+      "writtenOn": "2017-11-06T16:07:36Z",
+      "side": 1,
+      "message": "https://chromium-review.googlesource.com/c/chromium/src/+/713960/8/chrome/browser/page_load_metrics/observers/OWNERS\n\nQuote:\n\"there are probably a bunch of people in that owners who aren\u0027t as familiar with UKM privacy. i wonder if we should perhaps manually list the people who are well suited to review changes here, e.g.\n\nrkaplow, holte, asvitkine, bmcquade, engedy, msramek\n\notherwise i could imagine someone getting a LGTM for e.g. ukm.xml from someone else on metrics team, and that giving approval for this file as well my mistake, even if the ukm.xml reviewer did not understand the constraints for this directory.\" -- bmcquade",
+      "parentUuid": "367b1568_5fe5ad85",
+      "range": {
+        "startLine": 6,
+        "startChar": 44,
+        "endLine": 6,
+        "endChar": 0
+      },
+      "revId": "465af47713667957105f0493dbb74e278963fc7c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "507a6450_9633d35a",
         "filename": "chrome/browser/page_load_metrics/observers/use_counter_page_load_metrics_observer.cc",
         "patchSetId": 12
@@ -48,6 +72,30 @@
     },
     {
       "key": {
+        "uuid": "9e189231_f2bed225",
+        "filename": "chrome/browser/page_load_metrics/observers/use_counter_page_load_metrics_observer.cc",
+        "patchSetId": 12
+      },
+      "lineNbr": 34,
+      "author": {
+        "id": 1221384
+      },
+      "writtenOn": "2017-11-06T16:07:36Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "507a6450_9633d35a",
+      "range": {
+        "startLine": 34,
+        "startChar": 12,
+        "endLine": 34,
+        "endChar": 19
+      },
+      "revId": "465af47713667957105f0493dbb74e278963fc7c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "99cf9e6a_c7f6364b",
         "filename": "chrome/browser/page_load_metrics/observers/use_counter_page_load_metrics_observer.h",
         "patchSetId": 12
@@ -59,6 +107,30 @@
       "writtenOn": "2017-11-06T15:53:47Z",
       "side": 1,
       "message": "Suggest putting this class under page_load_metrics namespace (since it\u0027s under the directory) so that you can remove the page_load_metrics:: namespace prefixes below.",
+      "range": {
+        "startLine": 21,
+        "startChar": 6,
+        "endLine": 21,
+        "endChar": 39
+      },
+      "revId": "465af47713667957105f0493dbb74e278963fc7c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "39a1215b_d159d7c9",
+        "filename": "chrome/browser/page_load_metrics/observers/use_counter_page_load_metrics_observer.h",
+        "patchSetId": 12
+      },
+      "lineNbr": 21,
+      "author": {
+        "id": 1221384
+      },
+      "writtenOn": "2017-11-06T16:07:36Z",
+      "side": 1,
+      "message": "I scanned through a few other observer classes in this directory, none of them is in the namespace of page_load_metrics. I think I should be consistent with the other observers here.",
+      "parentUuid": "99cf9e6a_c7f6364b",
       "range": {
         "startLine": 21,
         "startChar": 6,
@@ -91,6 +163,30 @@
       "revId": "465af47713667957105f0493dbb74e278963fc7c",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "94e63956_583c4f3a",
+        "filename": "chrome/browser/page_load_metrics/page_load_metrics_observer.h",
+        "patchSetId": 12
+      },
+      "lineNbr": 405,
+      "author": {
+        "id": 1221384
+      },
+      "writtenOn": "2017-11-06T16:07:36Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "2110cded_5c31801c",
+      "range": {
+        "startLine": 405,
+        "startChar": 29,
+        "endLine": 405,
+        "endChar": 30
+      },
+      "revId": "465af47713667957105f0493dbb74e278963fc7c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
