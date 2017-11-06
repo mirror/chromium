@@ -16,6 +16,9 @@ const int kResizeInsideBoundsSize = 1;
 
 const SkColor kChromeOsBootColor = SkColorSetRGB(0xfe, 0xfe, 0xfe);
 
+// The alpha to draw inactive icons with.
+const float kInactiveFrameButtonIconAlphaRatio = 0.2f;
+
 const SkColor kFocusBorderColor = SkColorSetA(gfx::kGoogleBlue500, 0x99);
 const int kFocusBorderThickness = 2;
 
