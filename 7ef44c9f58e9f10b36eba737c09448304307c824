@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "36eda418_66c07e25",
+        "filename": "chrome/browser/resource_coordinator/tab_manager.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 1187,
+      "author": {
+        "id": 1112850
+      },
+      "writtenOn": "2017-11-06T19:48:53Z",
+      "side": 1,
+      "message": "Scott, can you take a look at this fix here? Given the crash report from http://crbug.com/781669, |TabUIHelper::FromWebContents(contents)| giving nullptr or some wrong address is the only reason that I can think of.",
+      "range": {
+        "startLine": 1184,
+        "startChar": 54,
+        "endLine": 1187,
+        "endChar": 46
+      },
+      "revId": "7ef44c9f58e9f10b36eba737c09448304307c824",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
