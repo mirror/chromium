@@ -204,6 +204,11 @@ BASE_EXPORT extern NSString* const CIDetectorTypeText;
 - (void)performWindowDragWithEvent:(NSEvent*)event;
 @end
 
+@interface NSFont (ElCapitanSDK)
++ (NSFont*)monospacedDigitSystemFontOfSize:(CGFloat)fontSize
+                                    weight:(CGFloat)weight;
+@end
+
 @interface CIRectangleFeature (ElCapitanSDK)
 @property(readonly) CGRect bounds;
 @end
