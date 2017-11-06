@@ -37,6 +37,24 @@
     },
     {
       "key": {
+        "uuid": "168927c1_53e5d5eb",
+        "filename": "chrome/browser/vr/testapp/vr_test_context.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 197,
+      "author": {
+        "id": 1117479
+      },
+      "writtenOn": "2017-11-06T20:47:36Z",
+      "side": 1,
+      "message": "Hmmm, there\u0027s also a discontinuity in the beam when the controller is pointing directly left or right, and the controller itself is a mirror image of what it should be when pointed toward the rear hemisphere.",
+      "parentUuid": "2a760534_6364f3fe",
+      "revId": "28c9356759ee76b5dcf3b837c63ea7a899845841",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "4d9dd986_aa68f892",
         "filename": "chrome/browser/vr/testapp/vr_test_context.cc",
         "patchSetId": 1
