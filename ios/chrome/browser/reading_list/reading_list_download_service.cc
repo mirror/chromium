@@ -82,11 +82,11 @@ ReadingListDownloadService::ReadingListDownloadService(
                  base::Unretained(this)),
       base::Bind(&ReadingListDownloadService::OnDeleteEnd,
                  base::Unretained(this)));
-  net::NetworkChangeNotifier::AddConnectionTypeObserver(this);
+  net::NetworkChangeNotifier::AddNetworkChangeObserver(this);
 }
 
 ReadingListDownloadService::~ReadingListDownloadService() {
-  net::NetworkChangeNotifier::RemoveConnectionTypeObserver(this);
+  net::NetworkChangeNotifier::RemoveNetworkChangeObserver(this);
 }
 
 void ReadingListDownloadService::Initialize() {
