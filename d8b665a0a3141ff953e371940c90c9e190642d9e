@@ -1,0 +1,257 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "8afcb8db_01367f71",
+        "filename": "chrome/browser/component_updater/downloadable_strings_component_installer.cc",
+        "patchSetId": 11
+      },
+      "lineNbr": 255,
+      "author": {
+        "id": 1103654
+      },
+      "writtenOn": "2017-11-06T16:06:21Z",
+      "side": 1,
+      "message": "Nit: No else after return",
+      "range": {
+        "startLine": 255,
+        "startChar": 12,
+        "endLine": 255,
+        "endChar": 0
+      },
+      "revId": "d8b665a0a3141ff953e371940c90c9e190642d9e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "982c37e8_f2529a87",
+        "filename": "chrome/browser/component_updater/downloadable_strings_component_installer.cc",
+        "patchSetId": 11
+      },
+      "lineNbr": 286,
+      "author": {
+        "id": 1103654
+      },
+      "writtenOn": "2017-11-06T16:06:21Z",
+      "side": 1,
+      "message": "Remove default: case if you\u0027re handling all the values. This way, clang will warn when a new one is introduced and you\u0027re not handling it.",
+      "range": {
+        "startLine": 286,
+        "startChar": 14,
+        "endLine": 286,
+        "endChar": 0
+      },
+      "revId": "d8b665a0a3141ff953e371940c90c9e190642d9e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "399e4e62_6b306b4e",
+        "filename": "chrome/browser/component_updater/downloadable_strings_component_installer.h",
+        "patchSetId": 11
+      },
+      "lineNbr": 35,
+      "author": {
+        "id": 1103654
+      },
+      "writtenOn": "2017-11-06T16:06:21Z",
+      "side": 1,
+      "message": "Nit: Convention for this comment is:\n\n// ComponentInstallerTraits:",
+      "range": {
+        "startLine": 35,
+        "startChar": 61,
+        "endLine": 35,
+        "endChar": 0
+      },
+      "revId": "d8b665a0a3141ff953e371940c90c9e190642d9e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "39395ac3_bf35a3e0",
+        "filename": "chrome/browser/component_updater/downloadable_strings_component_installer.h",
+        "patchSetId": 11
+      },
+      "lineNbr": 52,
+      "author": {
+        "id": 1103654
+      },
+      "writtenOn": "2017-11-06T16:06:21Z",
+      "side": 1,
+      "message": "Can these static private function instead be functions in the anonymous namespace defined just in the .cc file? If so, please make that change since that is preferred.",
+      "range": {
+        "startLine": 52,
+        "startChar": 69,
+        "endLine": 52,
+        "endChar": 0
+      },
+      "revId": "d8b665a0a3141ff953e371940c90c9e190642d9e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b197cf8a_e8177000",
+        "filename": "chrome/browser/component_updater/downloadable_strings_component_installer.h",
+        "patchSetId": 11
+      },
+      "lineNbr": 65,
+      "author": {
+        "id": 1103654
+      },
+      "writtenOn": "2017-11-06T16:06:21Z",
+      "side": 1,
+      "message": "Seems strange for this to be free-standing in a file that also declares a class. How about making it a public static function on the class instead. It could even just be named Register() since it will be prefixed with the class name when called.",
+      "range": {
+        "startLine": 65,
+        "startChar": 5,
+        "endLine": 65,
+        "endChar": 41
+      },
+      "revId": "d8b665a0a3141ff953e371940c90c9e190642d9e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1124a662_1a44c185",
+        "filename": "components/crx_file/id_util.cc",
+        "patchSetId": 11
+      },
+      "lineNbr": 23,
+      "author": {
+        "id": 1103654
+      },
+      "writtenOn": "2017-11-06T16:06:21Z",
+      "side": 1,
+      "message": "Nit: const auto\u0026",
+      "range": {
+        "startLine": 23,
+        "startChar": 7,
+        "endLine": 23,
+        "endChar": 11
+      },
+      "revId": "d8b665a0a3141ff953e371940c90c9e190642d9e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a81b6c32_0a26939c",
+        "filename": "components/crx_file/id_util.cc",
+        "patchSetId": 11
+      },
+      "lineNbr": 24,
+      "author": {
+        "id": 1103654
+      },
+      "writtenOn": "2017-11-06T16:06:21Z",
+      "side": 1,
+      "message": "Nit: value",
+      "range": {
+        "startLine": 24,
+        "startChar": 8,
+        "endLine": 24,
+        "endChar": 11
+      },
+      "revId": "d8b665a0a3141ff953e371940c90c9e190642d9e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e7132367_d17a0561",
+        "filename": "components/crx_file/id_util.h",
+        "patchSetId": 11
+      },
+      "lineNbr": 8,
+      "author": {
+        "id": 1103654
+      },
+      "writtenOn": "2017-11-06T16:06:21Z",
+      "side": 1,
+      "message": "This should come after the system headers.",
+      "range": {
+        "startLine": 8,
+        "startChar": 38,
+        "endLine": 8,
+        "endChar": 0
+      },
+      "revId": "d8b665a0a3141ff953e371940c90c9e190642d9e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1f77099d_8f068200",
+        "filename": "tools/metrics/histograms/histograms.xml",
+        "patchSetId": 11
+      },
+      "lineNbr": 17501,
+      "author": {
+        "id": 1103654
+      },
+      "writtenOn": "2017-11-06T16:06:21Z",
+      "side": 1,
+      "message": "If this is just Chrome\u0027s locale, then this is already sent in UMA and you don\u0027t need to log it yourself. It\u0027s here in the SystemProfile proto:\n\nhttps://cs.chromium.org/chromium/src/third_party/metrics_proto/system_profile.proto?rcl\u003d76a5bbc5907cc79c1c5b8c77c5f0555cd10582d1\u0026l\u003d78\n\nAdditionally, on server-side we visualize it as a histogram under the name UMA.SystemProfile.ApplicationLocale.",
+      "range": {
+        "startLine": 17501,
+        "startChar": 50,
+        "endLine": 17501,
+        "endChar": 0
+      },
+      "revId": "d8b665a0a3141ff953e371940c90c9e190642d9e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "dac96f49_74be4a1f",
+        "filename": "tools/metrics/histograms/histograms.xml",
+        "patchSetId": 11
+      },
+      "lineNbr": 17524,
+      "author": {
+        "id": 1103654
+      },
+      "writtenOn": "2017-11-06T16:06:21Z",
+      "side": 1,
+      "message": "This is logically more like an enumeration than a numeric metric (i.e. percentiles and means are useless). So please specify enum\u003d on this and define a corresponding enum. You don\u0027t have to fully enumerate the 1000 codes - but you could at least at the 0 case for undetermined.",
+      "range": {
+        "startLine": 17524,
+        "startChar": 37,
+        "endLine": 17524,
+        "endChar": 51
+      },
+      "revId": "d8b665a0a3141ff953e371940c90c9e190642d9e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7c32a0c9_f92743c3",
+        "filename": "tools/metrics/histograms/histograms.xml",
+        "patchSetId": 11
+      },
+      "lineNbr": 17528,
+      "author": {
+        "id": 1103654
+      },
+      "writtenOn": "2017-11-06T16:06:21Z",
+      "side": 1,
+      "message": "This description does not mention when this is logged. Is it once on startup? Is it periodically? Does it capture the SIM card changing at runtime (i.e. user ejects and inserts a new card). What happens on phones that have multiple SIM cards?",
+      "range": {
+        "startLine": 17528,
+        "startChar": 57,
+        "endLine": 17528,
+        "endChar": 0
+      },
+      "revId": "d8b665a0a3141ff953e371940c90c9e190642d9e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
