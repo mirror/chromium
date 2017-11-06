@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "fefeac76_d3ebfb2e",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 1
+      },
+      "lineNbr": 16,
+      "author": {
+        "id": 1123405
+      },
+      "writtenOn": "2017-11-06T17:36:39Z",
+      "side": 1,
+      "message": "Since we currently don\u0027t have unittests for server.cc, can you briefly described how you tested this?",
+      "revId": "8b844ddd5e04adb5436505f235bfecf410479705",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
