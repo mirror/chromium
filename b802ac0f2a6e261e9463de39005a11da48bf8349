@@ -53,6 +53,24 @@
     },
     {
       "key": {
+        "uuid": "913d2fe9_e0b2110f",
+        "filename": "chrome/browser/extensions/api/tabs/tabs_api.cc",
+        "patchSetId": 13
+      },
+      "lineNbr": 605,
+      "author": {
+        "id": 1001380
+      },
+      "writtenOn": "2017-11-06T20:56:54Z",
+      "side": 1,
+      "message": "Yes, you should be able to just set that property to TRUSTED_PINNED when the application requested to be locked. No need to add new SHOW_STATE.",
+      "parentUuid": "bfddd998_6240732f",
+      "revId": "b802ac0f2a6e261e9463de39005a11da48bf8349",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "6ac3dbfd_ebf10d28",
         "filename": "chrome/browser/extensions/api/tabs/tabs_api.cc",
         "patchSetId": 13
