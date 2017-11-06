@@ -31,7 +31,7 @@
 #include "ui/gfx/geometry/dip_util.h"
 #include "ui/gfx/geometry/point3_f.h"
 #include "ui/gfx/geometry/point_conversions.h"
-
+#include "base/debug/stack_trace.h" 
 namespace ui {
 namespace ws {
 namespace {
@@ -280,6 +280,8 @@ void WindowManagerState::AddSystemModalWindow(ServerWindow* window) {
 
 void WindowManagerState::DeleteWindowManagerDisplayRoot(
     ServerWindow* display_root) {
+  LOG(ERROR) << "MSW DeleteWindowManagerDisplayRoot A"; 
+  // base::debug::StackTrace().Print(); 
   for (auto iter = orphaned_window_manager_display_roots_.begin();
        iter != orphaned_window_manager_display_roots_.end(); ++iter) {
     if ((*iter)->root() == display_root) {
@@ -297,7 +299,7 @@ void WindowManagerState::DeleteWindowManagerDisplayRoot(
     }
   }
 
-  NOTREACHED();
+  // NOTREACHED();
 }
 
 const UserId& WindowManagerState::user_id() const {

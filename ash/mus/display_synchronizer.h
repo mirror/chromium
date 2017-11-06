@@ -7,6 +7,7 @@
 
 #include "ash/display/window_tree_host_manager.h"
 #include "base/macros.h"
+#include "services/ui/public/interfaces/window_manager_constants.mojom.h"
 #include "ui/display/display_observer.h"
 
 namespace aura {
@@ -26,6 +27,9 @@ class DisplaySynchronizer : public WindowTreeHostManager::Observer,
   ~DisplaySynchronizer() override;
 
  private:
+  // Get the metrics for the display with the given |id|.
+  ui::mojom::WmViewportMetricsPtr GetMetricsForDisplay(int64_t id) const;
+
   void SendDisplayConfigurationToServer();
 
   // WindowTreeHostManager::Observer:

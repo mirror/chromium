@@ -41,7 +41,7 @@
 #include "ui/display/types/display_constants.h"
 #include "ui/platform_window/mojo/ime_type_converters.h"
 #include "ui/platform_window/text_input_state.h"
-
+#include "base/debug/stack_trace.h" 
 using mojo::InterfaceRequest;
 
 using EventProperties = std::unordered_map<std::string, std::vector<uint8_t>>;
@@ -311,16 +311,11 @@ ServerWindow* WindowTree::ProcessSetDisplayRoot(
     const ClientWindowId& client_window_id,
     const std::vector<display::Display>& mirrors) {
   DCHECK(window_manager_state_);  // Only called for window manager.
+  LOG(ERROR) << "MSW SetDisplayRoot A"; 
   DVLOG(3) << "SetDisplayRoot client=" << id_
            << " global window_id=" << client_window_id.ToString();
-  if (display_manager()->GetDisplayById(display_to_create.id())) {
-    DVLOG(1) << "SetDisplayRoot called with existing display "
-             << display_to_create.id();
-    return nullptr;
-  }
-
   if (automatically_create_display_roots_) {
-    DVLOG(1) << "SetDisplayRoot is only applicable when "
+    DVLOG(3) << "SetDisplayRoot is only applicable when "
              << "automatically_create_display_roots is false";
     return nullptr;
   }
@@ -329,28 +324,48 @@ ServerWindow* WindowTree::ProcessSetDisplayRoot(
   const bool is_moving_to_new_display =
       window && window->parent() && base::ContainsKey(roots_, window);
   if (!window || (window->parent() && !is_moving_to_new_display)) {
-    DVLOG(1) << "SetDisplayRoot called with invalid window id "
+    DVLOG(3) << "SetDisplayRoot called with invalid window id "
              << client_window_id.ToString();
     return nullptr;
   }
 
   if (base::ContainsKey(roots_, window) && !is_moving_to_new_display) {
-    DVLOG(1) << "SetDisplayRoot called with existing root";
+    DVLOG(3) << "SetDisplayRoot called with existing root";
     return nullptr;
   }
 
-  if (!mirrors.empty()) {
+  Display* display = display_manager()->GetDisplayById(display_to_create.id());
+  if (display) {
+    LOG(ERROR) << "MSW SetDisplayRoot called with existing display:" << display_to_create.id(); 
+  } else {
+    LOG(ERROR) << "MSW SetDisplayRoot called with unknown display:" << display_to_create.id(); 
+    LOG(ERROR) << "MSW SetDisplayRoot manager-displays:" << display_manager()->displays().size()
+               << " plus manager-pending_displays:" << display_manager()->pending_displays().size()
+               << " vs screen-displays:" << display::ScreenManager::GetInstance()->GetScreen()->display_list().displays().size(); 
+    for (Display* display : display_manager()->displays())
+      LOG(ERROR) << "MSW manager-displays ID: " << display->GetDisplay().id();
+    for (const display::Display& display : display::ScreenManager::GetInstance()->GetScreen()->display_list().displays())
+      LOG(ERROR) << "MSW screen-displays ID: " << display.id();
+
+      // TODO(msw): Check pending... 
+    display = display_manager()->AddDisplayForWindowManager(
+        is_primary_display, display_to_create, viewport_metrics);
+  }
+
+  if (!mirrors.empty())
     NOTIMPLEMENTED() << "TODO(crbug.com/764472): Mus unified/mirroring modes.";
-    return nullptr;
-  }
 
-  Display* display = display_manager()->AddDisplayForWindowManager(
-      is_primary_display, display_to_create, viewport_metrics);
   DCHECK(display);
   WindowManagerDisplayRoot* display_root =
       display->GetWindowManagerDisplayRootForUser(
           window_manager_state_->user_id());
   DCHECK(display_root);
+  ServerWindow* root = display_root->root();
+  // Remove existing children (MSW: except the requested root if already there?) 
+  while (!root->children().empty()) {
+    LOG(ERROR) << "MSW REMOVING ROOT WINDOW CHILDREN"; 
+    root->Remove(root->children()[0]);
+  }
   DCHECK(display_root->root()->children().empty());
 
   // NOTE: this doesn't resize the window in any way. We assume the client takes

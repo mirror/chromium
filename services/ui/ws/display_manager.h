@@ -78,6 +78,7 @@ class DisplayManager : public UserIdTrackerObserver,
   void DestroyAllDisplays();
   const std::set<Display*>& displays() { return displays_; }
   std::set<const Display*> displays() const;
+  const std::set<Display*>& pending_displays() { return pending_displays_; } 
 
   // Notifies when something about the Display changes.
   void OnDisplayUpdated(const display::Display& display);

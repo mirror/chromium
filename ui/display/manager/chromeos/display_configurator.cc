@@ -285,6 +285,10 @@ bool DisplayConfigurator::DisplayLayoutManagerImpl::GetDisplayLayout(
 
       for (size_t i = 0; i < states.size(); ++i) {
         const DisplayState* state = &states[i];
+        // Hardware mirroring cannot be used on the desktop-linux Chrome OS
+        // environment with fake displays; fallback to software mirroring.
+        if (state->display->type() == DISPLAY_CONNECTION_TYPE_UNKNOWN)
+          return false;
         (*requests)[i].mode = display_power[i] ? state->mirror_mode : NULL;
       }
       break;
@@ -874,8 +878,7 @@ void DisplayConfigurator::SetDisplayMode(MultipleDisplayState new_state) {
   if (!configure_display_ || display_externally_controlled_)
     return;
 
-  VLOG(1) << "SetDisplayMode: state="
-          << MultipleDisplayStateToString(new_state);
+  LOG(ERROR) << "MSW SetDisplayMode: state:" << MultipleDisplayStateToString(current_display_state_) << "->" << MultipleDisplayStateToString(new_state);
   if (current_display_state_ == new_state) {
     // Cancel software mirroring if the state is moving from
     // MULTIPLE_DISPLAY_STATE_MULTI_EXTENDED to

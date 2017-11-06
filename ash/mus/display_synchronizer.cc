@@ -6,7 +6,6 @@
 
 #include "ash/host/ash_window_tree_host.h"
 #include "ash/shell.h"
-#include "services/ui/public/interfaces/window_manager_constants.mojom.h"
 #include "ui/aura/mus/window_manager_delegate.h"
 #include "ui/aura/mus/window_tree_host_mus.h"
 #include "ui/display/manager/display_manager.h"
@@ -34,6 +33,18 @@ DisplaySynchronizer::~DisplaySynchronizer() {
   Shell::Get()->window_tree_host_manager()->RemoveObserver(this);
 }
 
+ui::mojom::WmViewportMetricsPtr DisplaySynchronizer::GetMetricsForDisplay(
+    int64_t id) const {
+  ui::mojom::WmViewportMetricsPtr viewport_metrics =
+      ui::mojom::WmViewportMetrics::New();
+  const display::ManagedDisplayInfo& display_info =
+      Shell::Get()->display_manager()->GetDisplayInfo(id);
+  viewport_metrics->bounds_in_pixels = display_info.bounds_in_native();
+  viewport_metrics->device_scale_factor = display_info.device_scale_factor();
+  viewport_metrics->ui_scale_factor = display_info.configured_ui_scale();
+  return viewport_metrics;
+}
+
 void DisplaySynchronizer::SendDisplayConfigurationToServer() {
   if (processing_display_changes_)
     return;
@@ -47,19 +58,19 @@ void DisplaySynchronizer::SendDisplayConfigurationToServer() {
   std::vector<ui::mojom::WmViewportMetricsPtr> metrics;
   for (size_t i = 0; i < display_count; ++i) {
     displays.push_back(display_manager->GetDisplayAt(i));
-    ui::mojom::WmViewportMetricsPtr viewport_metrics =
-        ui::mojom::WmViewportMetrics::New();
-    const display::ManagedDisplayInfo& display_info =
-        display_manager->GetDisplayInfo(displays.back().id());
-    viewport_metrics->bounds_in_pixels = display_info.bounds_in_native();
-    viewport_metrics->device_scale_factor = display_info.device_scale_factor();
-    viewport_metrics->ui_scale_factor = display_info.configured_ui_scale();
-    metrics.push_back(std::move(viewport_metrics));
+    metrics.push_back(GetMetricsForDisplay(displays[i].id()));
   }
+  const std::vector<display::Display>& mirrors =
+      display_manager->software_mirroring_display_list();
+  // TODO(msw): Also send hardware mirrors? 
+  // for (const auto& id : display_manager->GetMirroringDstDisplayIdList()) 
+  //   mirrors.push_back(display_manager->CreateMirroringDisplayFromDisplayInfoById(id, gfx::Point(), 1.0f)); 
+  for (size_t i = 0; i < mirrors.size(); ++i)
+    metrics.push_back(GetMetricsForDisplay(mirrors[i].id()));
+  LOG(ERROR) << "MSW SetDisplayConfiguration displays:" << displays.size() << " mirrors:" << mirrors.size() << " hardware:" << display_manager->GetMirroringDstDisplayIdList().size(); 
   window_manager_client_->SetDisplayConfiguration(
       displays, std::move(metrics),
-      WindowTreeHostManager::GetPrimaryDisplayId(),
-      display_manager->software_mirroring_display_list());
+      WindowTreeHostManager::GetPrimaryDisplayId(), mirrors);
 
   sent_initial_config_ = true;
 }
