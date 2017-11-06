@@ -177,8 +177,7 @@ void WebContentsViewAndroid::GetScreenInfo(ScreenInfo* result) const {
 }
 
 void WebContentsViewAndroid::GetContainerBounds(gfx::Rect* out) const {
-  *out = content_view_core_ ? gfx::Rect(content_view_core_->GetViewSize())
-                            : gfx::Rect();
+  *out = GetViewBounds();
 }
 
 void WebContentsViewAndroid::SetPageTitle(const base::string16& title) {
@@ -222,10 +221,7 @@ DropData* WebContentsViewAndroid::GetDropData() const {
 }
 
 gfx::Rect WebContentsViewAndroid::GetViewBounds() const {
-  if (content_view_core_)
-    return gfx::Rect(content_view_core_->GetViewSize());
-
-  return gfx::Rect();
+  return gfx::Rect(view_.GetSize());
 }
 
 void WebContentsViewAndroid::CreateView(

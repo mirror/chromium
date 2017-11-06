@@ -110,6 +110,8 @@ class CONTENT_EXPORT RenderWidgetHostViewBase : public RenderWidgetHostView,
   void WasUnOccluded() override {}
   void WasOccluded() override {}
   void SetIsInVR(bool is_in_vr) override;
+  void SetTopControlsHeight(int height, bool controls_resize_view) override {}
+  void SetBottomControlsHeight(int height) override {}
   base::string16 GetSelectedText() override;
   bool IsMouseLocked() override;
   gfx::Size GetVisibleViewportSize() const override;
