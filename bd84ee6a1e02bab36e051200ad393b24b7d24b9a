@@ -16,6 +16,24 @@
       "revId": "bd84ee6a1e02bab36e051200ad393b24b7d24b9a",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "71117cdc_9cf385d5",
+        "filename": "third_party/WebKit/Source/core/html/forms/HTMLFormControlElement.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 201,
+      "author": {
+        "id": 1175471
+      },
+      "writtenOn": "2017-11-06T22:26:35Z",
+      "side": 1,
+      "message": "\u003e Or maybe imitate the way that the other states above work, with an \"unknown\" state as well?\n\nThat\u0027s how I initially implemented this, but the unknown state wasn\u0027t necessary so I removed it. I could add it back if you think it makes things easier to understand? I wasn\u0027t convinced. The unknown state for data_list_ancestor_state_ and ancestor_disabled_state_ actually serve a purpose. \n\n\u003e Another thought: should these all be invalidated at once, since they\u0027re all computed with an ancestor walk that could be done at once? Especially since FieldSetAncestorsSetNeedsValidityCheck already seems to do an ancestor walk that examines fieldsets. Something like:\n\nbool ancestor_state_is_current_ : 1;\n// These are only valid if |ancestor_state_is_current_| is true.\nbool has_data_list_ancestor_ : 1;\nbool has_fieldset_ancestor_ : 1;\nbool disabled_due_to_ancestor_ : 1;\n\nThe main problem with this is that currently, these fields can be validated independently. IsDisabledFormControl is where disabled_due_to_ancestor and has_fieldset_ancestor would get updated, and that is called in places other than RecalcWillValidate (which is where has_data_list gets a value set). So perhaps, has_fieldset_ancestor and disabled_due_to_ancestor could share a validity flag, but I don\u0027t think has_fieldset_ancestor actually needs one.",
+      "parentUuid": "2c66c72f_314c8d5b",
+      "revId": "bd84ee6a1e02bab36e051200ad393b24b7d24b9a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
