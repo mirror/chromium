@@ -20,10 +20,6 @@
 #include "net/log/net_log_util.h"
 #include "net/url_request/url_request_context_builder.h"
 
-#if defined(OS_ANDROID)
-#include "net/android/network_change_notifier_factory_android.h"
-#endif
-
 namespace content {
 
 std::unique_ptr<NetworkService> NetworkService::Create(
@@ -87,10 +83,7 @@ NetworkServiceImpl::NetworkServiceImpl(
   // is running inside of the browser process.
   if (!net::NetworkChangeNotifier::HasNetworkChangeNotifier()) {
 #if defined(OS_ANDROID)
-    network_change_notifier_factory_ =
-        std::make_unique<net::NetworkChangeNotifierFactoryAndroid>();
-    network_change_notifier =
-        base::WrapUnique(network_change_notifier_factory_->CreateInstance());
+    NOTREACHED();
 #elif defined(OS_CHROMEOS) || defined(OS_IOS) || defined(OS_FUCHSIA)
     // ChromeOS has its own implementation of NetworkChangeNotifier that lives
     // outside of //net. iOS doesn't embed //content. Fuchsia doesn't have an
