@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "9a5615e3_1b6c7388",
+        "filename": "chrome/browser/android/oom_intervention/oom_intervention_tab_helper.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 51,
+      "author": {
+        "id": 1115960
+      },
+      "writtenOn": "2017-11-06T21:15:33Z",
+      "side": 1,
+      "message": "I think you could use UMA_HISTOGRAM_BOOLEAN here instead and eliminate the enum entirely. You would still be able to put a custom message through enums.xml to explain what true/false means.\n\nI would also rename this from UserAction to something like \"Decision\" because that terminology is a bit overloaded.",
+      "range": {
+        "startLine": 51,
+        "startChar": 2,
+        "endLine": 51,
+        "endChar": 27
+      },
+      "revId": "1ebefa252b0adf720239e2c174e1a19fa4b63986",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
