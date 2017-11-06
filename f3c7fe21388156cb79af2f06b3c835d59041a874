@@ -338,6 +338,24 @@
     },
     {
       "key": {
+        "uuid": "fa1a2bcb_c7d4356e",
+        "filename": "components/viz/common/gpu/vulkan_in_process_context_provider.h",
+        "patchSetId": 17
+      },
+      "lineNbr": 31,
+      "author": {
+        "id": 1242053
+      },
+      "writtenOn": "2017-11-06T10:21:33Z",
+      "side": 1,
+      "message": "Thanks for the suggestion, Done",
+      "parentUuid": "e24006fb_b0ff18f0",
+      "revId": "f3c7fe21388156cb79af2f06b3c835d59041a874",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "46dfb5c8_1cf5a268",
         "filename": "components/viz/common/gpu/vulkan_in_process_context_provider.h",
         "patchSetId": 17
