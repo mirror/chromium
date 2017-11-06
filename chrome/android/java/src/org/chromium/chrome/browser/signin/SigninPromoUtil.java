@@ -15,6 +15,10 @@ import org.chromium.components.signin.AccountManagerFacade;
 import org.chromium.components.signin.ChromeSigninController;
 import org.chromium.ui.base.WindowAndroid;
 
+import java.util.HashSet;
+import java.util.List;
+import java.util.Set;
+
 /**
 * Helper functions for promoting sign in.
 */
@@ -37,7 +41,8 @@ public class SigninPromoUtil {
 
         // Don't show if user is signed in or there are no Google accounts on the device.
         if (ChromeSigninController.get().isSignedIn()) return false;
-        if (AccountManagerFacade.get().tryGetGoogleAccountNames().size() == 0) return false;
+        List<String> accountNames = AccountManagerFacade.get().tryGetGoogleAccountNames();
+        if (accountNames.size() == 0) return false;
 
         // Don't show if user has manually signed out.
         String lastSyncAccountName = PrefServiceBridge.getInstance().getSyncLastAccountName();
@@ -46,8 +51,16 @@ public class SigninPromoUtil {
         // Promo can be shown at most once every 2 Chrome major versions.
         if (currentMajorVersion < lastPromoMajorVersion + 2) return false;
 
+        // Don't show if account list hasn't changed since the last time promo was shown.
+        Set<String> previousAccountNames = preferenceManager.getSigninPromoLastAccountNames();
+        Set<String> currentAccountNames = new HashSet<>(accountNames);
+        if (previousAccountNames != null && previousAccountNames.equals(currentAccountNames)) {
+            return false;
+        }
+
         AccountSigninActivity.startIfAllowed(activity, SigninAccessPoint.SIGNIN_PROMO);
         preferenceManager.setSigninPromoLastShownVersion(currentMajorVersion);
+        preferenceManager.setSigninPromoLastAccountNames(currentAccountNames);
         return true;
     }
 
