@@ -34,9 +34,9 @@ AutofillClientIOS::AutofillClientIOS(
     id<AutofillClientIOSBridge> bridge,
     std::unique_ptr<IdentityProvider> identity_provider,
     scoped_refptr<AutofillWebDataService> autofill_web_data_service)
-    : pref_service_(pref_service),
+    : web_state_(web_state),
+      pref_service_(pref_service),
       personal_data_manager_(personal_data_manager),
-      web_state_(web_state),
       bridge_(bridge),
       identity_provider_(std::move(identity_provider)),
       autofill_web_data_service_(autofill_web_data_service) {}
@@ -142,9 +142,7 @@ scoped_refptr<AutofillWebDataService> AutofillClientIOS::GetDatabase() {
 }
 
 void AutofillClientIOS::DidInteractWithNonsecureCreditCardInput(
-    content::RenderFrameHost* rfh) {
-  web_state_->OnCreditCardInputShownOnHttp();
-}
+    content::RenderFrameHost* rfh) {}
 
 bool AutofillClientIOS::IsContextSecure() {
   // This implementation differs slightly from other platforms. Other platforms'
