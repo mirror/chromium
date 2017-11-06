@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "9f2be770_74e919ab",
+        "filename": "chrome/browser/android/oom_intervention/oom_intervention_tab_helper.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 113,
+      "author": {
+        "id": 1115916
+      },
+      "writtenOn": "2017-11-06T09:26:55Z",
+      "side": 1,
+      "message": "This looks reasonable but what\u0027s a reason you have to handle chrome-native:// specially?",
+      "revId": "02dbc5989174a6beb2924e2c571362a27207bddc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
