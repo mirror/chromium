@@ -10,6 +10,7 @@
 #include "base/callback.h"
 #include "base/macros.h"
 #include "base/memory/ref_counted.h"
+#include "base/time/time.h"
 #include "build/build_config.h"
 #include "ui/gfx/geometry/rect.h"
 #include "ui/gfx/geometry/rect_f.h"
@@ -81,15 +82,52 @@ class GL_EXPORT GLSurface : public base::RefCounted<GLSurface> {
   // Returns true if this surface is offscreen.
   virtual bool IsOffscreen() = 0;
 
+  // Bitmask of flags in |PresentationCallback|. See
+  // //services/viz/public/interfaces/compositing/compositor_frame_sink.mojom
+  // for detail.
+  enum PresentationFlags {
+    VSYNC = 1 << 0,  // The presentation was synchronized to VSYNC.
+    HW_CLOCK =
+        1 << 1,  // The display hardware measurements that the hardware
+                 // driver converted into a presentation timestamp. Sampling a
+                 // clock in user space is not acceptable for this flag.
+    HW_COMPLETION = 1 << 2,  // The display hardware signalled that it started
+                             // using the new content. The opposite of this is
+                             // e.g. a timer being used to guess when the
+                             // display hardware has switched to the new image
+                             // content.
+    ZERO_COPY = 1 << 3,  // The presentation of this update was done zero-copy.
+                         // Possible zero-copy cases include direct scanout of a
+                         // fullscreen surface and a surface on a hardware
+                         // overlay.
+  };
+
+  // The callback for receiving presentation feedback for SwapBuffers,
+  // PostSubBuffer, CommitOverlayPlanes, etc. The |timestamp| is the time when
+  // the buffer was or will be presented on screen. The |timestamp| wil be 0,
+  // if the buffer will never be presented on screen. The |refresh| is time till
+  // the next refresh. The |flags| is a combination of |PresentationFlags|.
+  // If |SupportsPresentationCallback()| returns true, it is guarantee that the
+  // |PresentationCallback| will be called.
+  using PresentationCallback = base::Callback<
+      void(base::TimeTicks timestamp, base::TimeDelta refresh, uint32_t flags)>;
+
   // Swaps front and back buffers. This has no effect for off-screen
   // contexts.
-  virtual gfx::SwapResult SwapBuffers() = 0;
+  virtual gfx::SwapResult SwapBuffers(const PresentationCallback& callback) = 0;
 
   // Get the size of the surface.
   virtual gfx::Size GetSize() = 0;
 
   // Get the underlying platform specific surface "handle".
   virtual void* GetHandle() = 0;
+
+  // Returns whether of not the surface supports the |PresentationCallback|
+  // of |SwapBuffers|, |SwapBuffersAsync|, |SwapBuffersWithBounds|,
+  // |PostSubBuffer|, |PostSubBufferAsync|, |CommitOverlayPlanes|,
+  // |CommitOverlayPlanesAsync|, etc. Returns false, the |PresentationCallback|
+  // will never be called.
+  virtual bool SupportsPresentationCallback();
 
   // Returns whether or not the surface supports SwapBuffersWithBounds
   virtual bool SupportsSwapBuffersWithBounds();
@@ -107,43 +145,55 @@ class GL_EXPORT GLSurface : public base::RefCounted<GLSurface> {
   // FBO. Otherwise returns 0.
   virtual unsigned int GetBackingFramebufferObject();
 
-  typedef base::Callback<void(gfx::SwapResult)> SwapCompletionCallback;
+  using SwapCompletionCallback = base::Callback<void(gfx::SwapResult)>;
   // Swaps front and back buffers. This has no effect for off-screen
   // contexts. On some platforms, we want to send SwapBufferAck only after the
   // surface is displayed on screen. The callback can be used to delay sending
   // SwapBufferAck till that data is available. The callback should be run on
   // the calling thread (i.e. same thread SwapBuffersAsync is called)
-  virtual void SwapBuffersAsync(const SwapCompletionCallback& callback);
+  virtual void SwapBuffersAsync(
+      const SwapCompletionCallback& completion_callback,
+      const PresentationCallback& presentation_callback);
 
   // Swap buffers with content bounds.
   virtual gfx::SwapResult SwapBuffersWithBounds(
-      const std::vector<gfx::Rect>& rects);
+      const std::vector<gfx::Rect>& rects,
+      const PresentationCallback& callback);
 
   // Copy part of the backbuffer to the frontbuffer.
-  virtual gfx::SwapResult PostSubBuffer(int x, int y, int width, int height);
+  virtual gfx::SwapResult PostSubBuffer(int x,
+                                        int y,
+                                        int width,
+                                        int height,
+                                        const PresentationCallback& callback);
 
   // Copy part of the backbuffer to the frontbuffer. On some platforms, we want
   // to send SwapBufferAck only after the surface is displayed on screen. The
   // callback can be used to delay sending SwapBufferAck till that data is
   // available. The callback should be run on the calling thread (i.e. same
   // thread PostSubBufferAsync is called)
-  virtual void PostSubBufferAsync(int x,
-                                  int y,
-                                  int width,
-                                  int height,
-                                  const SwapCompletionCallback& callback);
+  virtual void PostSubBufferAsync(
+      int x,
+      int y,
+      int width,
+      int height,
+      const SwapCompletionCallback& completion_callback,
+      const PresentationCallback& presentation_callback);
 
   // Show overlay planes but don't swap the front and back buffers. This acts
   // like SwapBuffers from the point of view of the client, but is cheaper when
   // overlays account for all the damage.
-  virtual gfx::SwapResult CommitOverlayPlanes();
+  virtual gfx::SwapResult CommitOverlayPlanes(
+      const PresentationCallback& callback);
 
   // Show overlay planes but don't swap the front and back buffers. On some
   // platforms, we want to send SwapBufferAck only after the overlays are
   // displayed on screen. The callback can be used to delay sending
   // SwapBufferAck till that data is available. The callback should be run on
   // the calling thread (i.e. same thread CommitOverlayPlanesAsync is called).
-  virtual void CommitOverlayPlanesAsync(const SwapCompletionCallback& callback);
+  virtual void CommitOverlayPlanesAsync(
+      const SwapCompletionCallback& completion_callback,
+      const PresentationCallback& presentation_callback);
 
   // Called after a context is made current with this surface. Returns false
   // on error.
@@ -270,19 +320,31 @@ class GL_EXPORT GLSurfaceAdapter : public GLSurface {
   bool Recreate() override;
   bool DeferDraws() override;
   bool IsOffscreen() override;
-  gfx::SwapResult SwapBuffers() override;
-  void SwapBuffersAsync(const SwapCompletionCallback& callback) override;
+  gfx::SwapResult SwapBuffers(const PresentationCallback& callback) override;
+  void SwapBuffersAsync(
+      const SwapCompletionCallback& completion_callback,
+      const PresentationCallback& presentation_callback) override;
   gfx::SwapResult SwapBuffersWithBounds(
-      const std::vector<gfx::Rect>& rects) override;
-  gfx::SwapResult PostSubBuffer(int x, int y, int width, int height) override;
-  void PostSubBufferAsync(int x,
-                          int y,
-                          int width,
-                          int height,
-                          const SwapCompletionCallback& callback) override;
-  gfx::SwapResult CommitOverlayPlanes() override;
+      const std::vector<gfx::Rect>& rects,
+      const PresentationCallback& callback) override;
+  gfx::SwapResult PostSubBuffer(int x,
+                                int y,
+                                int width,
+                                int height,
+                                const PresentationCallback& callback) override;
+  void PostSubBufferAsync(
+      int x,
+      int y,
+      int width,
+      int height,
+      const SwapCompletionCallback& completion_callback,
+      const PresentationCallback& presentation_callback) override;
+  gfx::SwapResult CommitOverlayPlanes(
+      const PresentationCallback& callback) override;
   void CommitOverlayPlanesAsync(
-      const SwapCompletionCallback& callback) override;
+      const SwapCompletionCallback& completion_callback,
+      const PresentationCallback& presentation_callback) override;
+  bool SupportsPresentationCallback() override;
   bool SupportsSwapBuffersWithBounds() override;
   bool SupportsPostSubBuffer() override;
   bool SupportsCommitOverlayPlanes() override;

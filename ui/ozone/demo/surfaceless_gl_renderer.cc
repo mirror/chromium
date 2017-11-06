@@ -212,7 +212,8 @@ void SurfacelessGlRenderer::RenderFrame() {
   back_buffer_ ^= 1;
   surface_->SwapBuffersAsync(
       base::Bind(&SurfacelessGlRenderer::PostRenderFrameTask,
-                 weak_ptr_factory_.GetWeakPtr()));
+                 weak_ptr_factory_.GetWeakPtr()),
+      base::Bind([](base::TimeTicks, base::TimeDelta, uint32_t) {}));
 }
 
 void SurfacelessGlRenderer::PostRenderFrameTask(gfx::SwapResult result) {

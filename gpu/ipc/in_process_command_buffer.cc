@@ -1093,6 +1093,20 @@ void InProcessCommandBuffer::UpdateVSyncParameters(base::TimeTicks timebase,
                  client_thread_weak_ptr_, timebase, interval));
 }
 
+void InProcessCommandBuffer::BufferPresented(uint32_t count,
+                                             base::TimeTicks timestamp,
+                                             base::TimeDelta refresh,
+                                             uint32_t flags) {
+  if (!origin_task_runner_) {
+    BufferPresentedOnOriginThread(count, timestamp, refresh, flags);
+    return;
+  }
+  origin_task_runner_->PostTask(
+      FROM_HERE,
+      base::Bind(&InProcessCommandBuffer::BufferPresentedOnOriginThread,
+                 client_thread_weak_ptr_, count, timestamp, refresh, flags));
+}
+
 void InProcessCommandBuffer::AddFilter(IPC::MessageFilter* message_filter) {
   NOTREACHED();
 }
@@ -1124,10 +1138,11 @@ void InProcessCommandBuffer::DidSwapBuffersCompleteOnOriginThread(
             params.latency_info,
             "InProcessCommandBuffer::DidSwapBuffersComplete")) {
       swap_buffers_completion_callback_.Run(std::vector<ui::LatencyInfo>(),
-                                            params.result, mac_frame_ptr);
+                                            params.result, params.count,
+                                            mac_frame_ptr);
     } else {
       swap_buffers_completion_callback_.Run(params.latency_info, params.result,
-                                            mac_frame_ptr);
+                                            params.count, mac_frame_ptr);
     }
   }
 }
@@ -1135,8 +1150,24 @@ void InProcessCommandBuffer::DidSwapBuffersCompleteOnOriginThread(
 void InProcessCommandBuffer::UpdateVSyncParametersOnOriginThread(
     base::TimeTicks timebase,
     base::TimeDelta interval) {
+  DCHECK(!base::CommandLine::ForCurrentProcess()->HasSwitch(
+      switches::kEnablePresentationCallback));
   if (!update_vsync_parameters_completion_callback_.is_null())
     update_vsync_parameters_completion_callback_.Run(timebase, interval);
+}
+
+void InProcessCommandBuffer::BufferPresentedOnOriginThread(
+    uint32_t count,
+    base::TimeTicks timestamp,
+    base::TimeDelta refresh,
+    uint32_t flags) {
+  DCHECK(base::CommandLine::ForCurrentProcess()->HasSwitch(
+      switches::kEnablePresentationCallback));
+  if (presentation_callback_)
+    presentation_callback_.Run(count, timestamp, refresh, flags);
+  if (update_vsync_parameters_completion_callback_ &&
+      timestamp != base::TimeTicks())
+    update_vsync_parameters_completion_callback_.Run(timestamp, refresh);
 }
 
 void InProcessCommandBuffer::SetSwapBuffersCompletionCallback(
@@ -1147,6 +1178,11 @@ void InProcessCommandBuffer::SetSwapBuffersCompletionCallback(
 void InProcessCommandBuffer::SetUpdateVSyncParametersCallback(
     const UpdateVSyncParametersCallback& callback) {
   update_vsync_parameters_completion_callback_ = callback;
+}
+
+void InProcessCommandBuffer::SetPresentationCallback(
+    const PresentationCallback& callback) {
+  presentation_callback_ = callback;
 }
 
 namespace {

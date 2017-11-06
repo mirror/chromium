@@ -200,7 +200,9 @@ void* DirectCompositionChildSurfaceWin::GetHandle() {
   return real_surface_ ? real_surface_ : default_surface_;
 }
 
-gfx::SwapResult DirectCompositionChildSurfaceWin::SwapBuffers() {
+gfx::SwapResult DirectCompositionChildSurfaceWin::SwapBuffers(
+    const PresentationCallback& callback) {
+  // TODO(penghuang): Provide presentation feedback. https://crbug.com/776877
   ReleaseDrawTexture(false);
   return gfx::SwapResult::SWAP_ACK;
 }

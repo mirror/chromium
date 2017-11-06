@@ -192,7 +192,8 @@ void DrmThread::SchedulePageFlip(gfx::AcceleratedWidget widget,
   if (window)
     window->SchedulePageFlip(planes, std::move(callback));
   else
-    std::move(callback).Run(gfx::SwapResult::SWAP_ACK);
+    std::move(callback).Run(gfx::SwapResult::SWAP_ACK, base::TimeTicks(),
+                            base::TimeDelta(), 0u);
 }
 
 void DrmThread::GetVSyncParameters(
