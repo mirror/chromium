@@ -1,0 +1,55 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "c0579905_2771d9a1",
+        "filename": "ash/shelf/shelf_button.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 361,
+      "author": {
+        "id": 1000101
+      },
+      "writtenOn": "2017-11-06T19:36:58Z",
+      "side": 1,
+      "message": "Think we should combine this with L366 because right click could be used to close context menu and we might want to keep that behavior.",
+      "revId": "08ea47db1035fa96b677b1e40dc0da704484726d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "245cf85a_6b7d1918",
+        "filename": "ash/shelf/shelf_view.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 569,
+      "author": {
+        "id": 1000101
+      },
+      "writtenOn": "2017-11-06T19:36:58Z",
+      "side": 1,
+      "message": "nit: return view_model_-\u003eGetIndexOfView(view) !\u003d -1;",
+      "revId": "08ea47db1035fa96b677b1e40dc0da704484726d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7c7b6143_721e7cc3",
+        "filename": "ash/shelf/shelf_view.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 182,
+      "author": {
+        "id": 1000101
+      },
+      "writtenOn": "2017-11-06T19:36:58Z",
+      "side": 1,
+      "message": "nit: const method.",
+      "revId": "08ea47db1035fa96b677b1e40dc0da704484726d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
