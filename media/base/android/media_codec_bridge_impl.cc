@@ -23,6 +23,7 @@
 #include "media/base/bit_reader.h"
 #include "media/base/subsample_entry.h"
 #include "media/base/video_codecs.h"
+//#include "media/base/video_color_space.h"
 
 using base::android::AttachCurrentThread;
 using base::android::ConvertJavaStringToUTF8;
@@ -240,6 +241,8 @@ std::unique_ptr<MediaCodecBridge> MediaCodecBridgeImpl::CreateVideoDecoder(
     const JavaRef<jobject>& media_crypto,
     const std::vector<uint8_t>& csd0,
     const std::vector<uint8_t>& csd1,
+    const VideoColorSpace& color_space,
+    const base::Optional<HDRMetadata>& hdr_metadata,
     bool allow_adaptive_playback) {
   if (!MediaCodecUtil::IsMediaCodecAvailable())
     return nullptr;
@@ -270,6 +273,25 @@ std::unique_ptr<MediaCodecBridge> MediaCodecBridgeImpl::CreateVideoDecoder(
     ScopedJavaLocalRef<jbyteArray> j_csd1 =
         base::android::ToJavaByteArray(env, csd1.data(), csd1.size());
     Java_MediaCodecBridge_setCodecSpecificData(env, j_format, 1, j_csd1);
+  }
+
+  if (hdr_metadata.has_value()) {
+    Java_MediaCodecBridge_setColorSpace(env, j_format,
+                                        static_cast<int>(color_space.primaries),
+                                        static_cast<int>(color_space.transfer),
+                                        static_cast<int>(color_space.range));
+
+    const ::media::HDRMetadata& metadata = hdr_metadata.value();
+    const ::media::MasteringMetadata& mastering_metadata =
+        metadata.mastering_metadata;
+    Java_MediaCodecBridge_setHdrMatadata(
+        env, j_format, mastering_metadata.primary_r.x(),
+        mastering_metadata.primary_r.y(), mastering_metadata.primary_g.x(),
+        mastering_metadata.primary_g.y(), mastering_metadata.primary_b.x(),
+        mastering_metadata.primary_b.y(), mastering_metadata.white_point.x(),
+        mastering_metadata.white_point.y(), mastering_metadata.luminance_max,
+        mastering_metadata.luminance_min, metadata.max_content_light_level,
+        metadata.max_frame_average_light_level);
   }
 
   if (!Java_MediaCodecBridge_configureVideo(env, bridge->j_bridge_, j_format,
