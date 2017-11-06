@@ -458,5 +458,22 @@ void Service::OnWatcherListChanged(
   registry_->RememberFileSystem(file_system_info, watchers);
 }
 
+// TODO(baileyberro): Remove CHECK() and update provider_id to class
+void Service::RegisterFileSystemFactory(
+    const std::string& provider_id,
+    FileSystemFactoryCallback file_system_factory) {
+  CHECK(provider_id.length() != 32);
+  file_system_factory_map_[provider_id] = file_system_factory;
+}
+
+Service::FileSystemFactoryCallback Service::GetFileSystemFactory(
+    const std::string& provider_id) {
+  auto it = file_system_factory_map_.find(provider_id);
+  if (it != file_system_factory_map_.end()) {
+    return it->second;
+  }
+  return file_system_factory_;
+}
+
 }  // namespace file_system_provider
 }  // namespace chromeos
