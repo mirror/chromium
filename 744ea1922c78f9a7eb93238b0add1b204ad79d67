@@ -22,6 +22,30 @@
       "revId": "744ea1922c78f9a7eb93238b0add1b204ad79d67",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9139bb73_d79fee36",
+        "filename": "components/dom_distiller/ios/distiller_page_ios.mm",
+        "patchSetId": 1
+      },
+      "lineNbr": 201,
+      "author": {
+        "id": 1116027
+      },
+      "writtenOn": "2017-11-06T14:31:37Z",
+      "side": 1,
+      "message": "This code was written by olivierrobin@. I asked him, and it is a work-around introduced in https://bugs.chromium.org/p/chromium/issues/detail?id\u003d680472. He told me that IsLoading() was returning the value expected by the distiller when an SSL error interstitial was presented.\n\nThe distiller wants to consider this as a loading failure since the page is never presented.\n\nIt may have been fixed according to olivierrobin. I think that fixing this to use WebState::IsLoading() if possible should be done in a followup CL, probably owned by someone who is more familiar with the code than I.",
+      "parentUuid": "6e22c9b8_c9ac763b",
+      "range": {
+        "startLine": 201,
+        "startChar": 7,
+        "endLine": 201,
+        "endChar": 15
+      },
+      "revId": "744ea1922c78f9a7eb93238b0add1b204ad79d67",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
