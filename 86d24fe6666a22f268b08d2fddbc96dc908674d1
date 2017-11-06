@@ -1,0 +1,44 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "4956953b_8b4d6cf0",
+        "filename": "chrome/test/data/webui/md_history/history_list_test.js",
+        "patchSetId": 4
+      },
+      "lineNbr": 249,
+      "author": {
+        "id": 1002603
+      },
+      "writtenOn": "2017-11-06T07:29:03Z",
+      "side": 1,
+      "message": "Move this out of the flushTasks and delete the second flushTasks here.",
+      "range": {
+        "startLine": 249,
+        "startChar": 37,
+        "endLine": 249,
+        "endChar": 43
+      },
+      "revId": "86d24fe6666a22f268b08d2fddbc96dc908674d1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f1ecbcf3_ae93b7c1",
+        "filename": "chrome/test/data/webui/md_history/history_list_test.js",
+        "patchSetId": 4
+      },
+      "lineNbr": 261,
+      "author": {
+        "id": 1002603
+      },
+      "writtenOn": "2017-11-06T07:29:03Z",
+      "side": 1,
+      "message": "nit: Tabs to spaces.",
+      "revId": "86d24fe6666a22f268b08d2fddbc96dc908674d1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
