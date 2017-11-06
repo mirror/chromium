@@ -38,7 +38,7 @@ void UiScene::AddUiElement(UiElementName parent,
   CHECK_EQ(GetUiElementById(element->id()), nullptr);
   CHECK_GE(element->draw_phase(), 0);
   if (gl_initialized_)
-    element->Initialize();
+    element->Initialize(provider_);
   GetUiElementByName(parent)->AddChild(std::move(element));
   is_dirty_ = true;
 }
@@ -217,10 +217,12 @@ UiScene::~UiScene() = default;
 
 // TODO(vollick): we should bind to gl-initialized state. Elements will
 // initialize when the binding fires, automatically.
-void UiScene::OnGlInitialized() {
+void UiScene::OnGlInitialized(SkiaSurfaceProvider* provider) {
   gl_initialized_ = true;
+  provider_ = provider;
+
   for (auto& element : *root_element_)
-    element.Initialize();
+    element.Initialize(provider);
 }
 
 }  // namespace vr

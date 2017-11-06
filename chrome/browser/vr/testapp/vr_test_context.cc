@@ -187,7 +187,7 @@ void VrTestContext::OnGlInitialized(const gfx::Size& window_size) {
 
   window_size_ = window_size;
   ui_->OnGlInitialized(content_texture_id,
-                       UiElementRenderer::kTextureLocationLocal);
+                       UiElementRenderer::kTextureLocationLocal, false);
 }
 
 unsigned int VrTestContext::CreateFakeContentTexture() {

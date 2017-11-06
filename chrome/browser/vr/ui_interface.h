@@ -30,7 +30,8 @@ class UiInterface {
 
   virtual void OnGlInitialized(
       unsigned int content_texture_id,
-      UiElementRenderer::TextureLocation content_location) = 0;
+      UiElementRenderer::TextureLocation content_location,
+      bool use_ganesh) = 0;
   virtual void OnAppButtonClicked() = 0;
   virtual void OnAppButtonGesturePerformed(
       UiInterface::Direction direction) = 0;
