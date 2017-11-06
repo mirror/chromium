@@ -40,6 +40,7 @@
 #include "core/event_names.h"
 #include "core/event_target_names.h"
 #include "core/event_type_names.h"
+#include "platform/bindings/ScriptState.h"
 #include "platform/bindings/ScriptWrappable.h"
 #include "platform/heap/Handle.h"
 #include "platform/wtf/Allocator.h"
@@ -129,6 +130,8 @@ class CORE_EXPORT EventTarget : public ScriptWrappable {
   virtual LocalDOMWindow* ToLocalDOMWindow();
   virtual MessagePort* ToMessagePort();
   virtual ServiceWorker* ToServiceWorker();
+
+  static EventTarget* Create(ScriptState*);
 
   bool addEventListener(const AtomicString& event_type,
                         EventListener*,
