@@ -1,0 +1,142 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "02029bf7_690928c8",
+        "filename": "chrome/browser/extensions/api/tab_capture/offscreen_tab.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 208,
+      "author": {
+        "id": 1002076
+      },
+      "writtenOn": "2017-11-06T22:15:36Z",
+      "side": 1,
+      "message": "I think we\u0027ve over-shared implementation here: Not all offscreen tabs are presentation receivers. There is an extension API to allow anyone to create an offscreen tab (for whatever other purposes). Even if they have the same WCDelegate behavior now, it\u0027s possible that future code changes could break one of the two features. So, I\u0027d suggest:\n\n1. Revert all the WebContentsDelegate changes to this class.\n\n2. Delete the PresentationTabDelegate, and merge its code into PresentationReceiverWindow.",
+      "range": {
+        "startLine": 207,
+        "startChar": 0,
+        "endLine": 208,
+        "endChar": 77
+      },
+      "revId": "fdff4829c550ffe2d3ca3527d29ef24f88755743",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ead55a40_5c3783e4",
+        "filename": "chrome/browser/media/router/presentation_receiver_window.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 90,
+      "author": {
+        "id": 1002076
+      },
+      "writtenOn": "2017-11-06T22:15:36Z",
+      "side": 1,
+      "message": "Seems like this null check should be a DCHECK(). If a RVHost is ever missing, the prefs will not be set up correctly, and that would mean things are broken, right?",
+      "range": {
+        "startLine": 89,
+        "startChar": 0,
+        "endLine": 90,
+        "endChar": 60
+      },
+      "revId": "fdff4829c550ffe2d3ca3527d29ef24f88755743",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "fd040fef_b76973da",
+        "filename": "chrome/browser/media/router/presentation_receiver_window.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 98,
+      "author": {
+        "id": 1002076
+      },
+      "writtenOn": "2017-11-06T22:15:36Z",
+      "side": 1,
+      "message": "Should the navigation be done before this call to Navigate()?\n\nSee: https://cs.chromium.org/chromium/src/chrome/browser/ui/browser_navigator.cc?rcl\u003d89e4745fec7543e2e53d2fe1e019a286b4f42da1\u0026l\u003d562",
+      "range": {
+        "startLine": 98,
+        "startChar": 2,
+        "endLine": 98,
+        "endChar": 32
+      },
+      "revId": "fdff4829c550ffe2d3ca3527d29ef24f88755743",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7ff6dc24_d34ce73d",
+        "filename": "chrome/browser/media/router/presentation_receiver_window.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 101,
+      "author": {
+        "id": 1002076
+      },
+      "writtenOn": "2017-11-06T22:15:36Z",
+      "side": 1,
+      "message": "Which screen will the browser window enter fullscreen mode on?",
+      "range": {
+        "startLine": 99,
+        "startChar": 0,
+        "endLine": 101,
+        "endChar": 38
+      },
+      "revId": "fdff4829c550ffe2d3ca3527d29ef24f88755743",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f8a36939_47f6787b",
+        "filename": "chrome/browser/media/router/presentation_receiver_window.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 48,
+      "author": {
+        "id": 1002076
+      },
+      "writtenOn": "2017-11-06T22:15:36Z",
+      "side": 1,
+      "message": "I\u0027m not a fan of duplicated state (the |presentation_web_contents_| member). How about we delete that member, and make this a const accessor method:\n\n  content::WebContents* presentation_web_contents() const {\n    return tab_strip_model()-\u003eGetWebContentsAt(0);\n  }",
+      "range": {
+        "startLine": 48,
+        "startChar": 0,
+        "endLine": 48,
+        "endChar": 38
+      },
+      "revId": "fdff4829c550ffe2d3ca3527d29ef24f88755743",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a8536cfc_1938d89f",
+        "filename": "chrome/browser/profiles/profile_destroyer.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 64,
+      "author": {
+        "id": 1002076
+      },
+      "writtenOn": "2017-11-06T22:15:36Z",
+      "side": 1,
+      "message": "mfoltz should look at this, as he had to do quite a dance to fix the profile issue w.r.t. offscreen tabs.\n\nAlso, should the code change be in ~Browser() instead, like it is for offscreen tab profiles?\n See: https://cs.chromium.org/chromium/src/chrome/browser/ui/browser.cc?rcl\u003dfbefdb0bac773bb088f7145e24c6e582e7415aad\u0026l\u003d542",
+      "range": {
+        "startLine": 64,
+        "startChar": 0,
+        "endLine": 64,
+        "endChar": 36
+      },
+      "revId": "fdff4829c550ffe2d3ca3527d29ef24f88755743",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
