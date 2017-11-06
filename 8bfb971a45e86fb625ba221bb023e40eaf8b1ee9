@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "ae184177_dfdad143",
+        "filename": "chrome/browser/ui/task_manager/task_manager_columns.cc",
+        "patchSetId": 11
+      },
+      "lineNbr": 89,
+      "author": {
+        "id": 1002169
+      },
+      "writtenOn": "2017-11-06T23:10:43Z",
+      "side": 1,
+      "message": "How realistic a worst-case is 100,000/sec?",
+      "revId": "8bfb971a45e86fb625ba221bb023e40eaf8b1ee9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
