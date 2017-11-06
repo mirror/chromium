@@ -18,6 +18,7 @@
 #include "content/browser/loader/navigation_resource_handler.h"
 #include "content/browser/loader/navigation_resource_throttle.h"
 #include "content/browser/loader/navigation_url_loader_delegate.h"
+#include "content/browser/loader/resource_dispatcher_host_impl.h"
 #include "content/browser/loader/url_loader_request_handler.h"
 #include "content/browser/resource_context_impl.h"
 #include "content/browser/service_worker/service_worker_navigation_handle.h"
@@ -38,6 +39,7 @@
 #include "content/public/browser/navigation_ui_data.h"
 #include "content/public/browser/ssl_status.h"
 #include "content/public/browser/stream_handle.h"
+#include "content/public/common/content_features.h"
 #include "content/public/common/referrer.h"
 #include "content/public/common/url_constants.h"
 #include "content/public/common/url_loader_factory.mojom.h"
@@ -137,6 +139,36 @@ class NavigationURLLoaderNetworkService::URLLoaderRequestController
     DCHECK_CURRENTLY_ON(BrowserThread::IO);
   }
 
+  void StartWithoutNetworkService(
+      net::URLRequestContextGetter* url_request_context_getter,
+      storage::FileSystemContext* upload_file_system_context,
+      ServiceWorkerNavigationHandleCore* service_worker_navigation_handle_core,
+      AppCacheNavigationHandleCore* appcache_handle_core,
+      std::unique_ptr<NavigationRequestInfo> request_info,
+      std::unique_ptr<NavigationUIData> navigation_ui_data) {
+    DCHECK_CURRENTLY_ON(BrowserThread::IO);
+    DCHECK(!started_);
+    started_ = true;
+
+    BrowserThread::PostTask(
+        BrowserThread::UI, FROM_HERE,
+        base::BindOnce(&NavigationURLLoaderNetworkService::OnRequestStarted,
+                       owner_, base::TimeTicks::Now()));
+
+    // The ResourceDispatcherHostImpl can be null in unit tests.
+    if (!ResourceDispatcherHostImpl::Get())
+      return;
+
+    mojom::URLLoaderClientPtr client_ptr;
+    response_loader_binding_.Bind(mojo::MakeRequest(&client_ptr));
+    ResourceDispatcherHostImpl::Get()->BeginNavigationRequest(
+        resource_context_, url_request_context_getter->GetURLRequestContext(),
+        upload_file_system_context, *request_info,
+        std::move(navigation_ui_data), nullptr, std::move(client_ptr),
+        mojo::MakeRequest(&response_url_loader_),
+        service_worker_navigation_handle_core, appcache_handle_core);
+  }
+
   void Start(
       ServiceWorkerNavigationHandleCore* service_worker_navigation_handle_core,
       AppCacheNavigationHandleCore* appcache_handle_core,
@@ -151,6 +183,7 @@ class NavigationURLLoaderNetworkService::URLLoaderRequestController
     started_ = true;
     web_contents_getter_ =
         base::Bind(&GetWebContentsFromFrameTreeNodeID, frame_tree_node_id);
+
     const ResourceType resource_type = request_info->is_main_frame
                                            ? RESOURCE_TYPE_MAIN_FRAME
                                            : RESOURCE_TYPE_SUB_FRAME;
@@ -311,10 +344,17 @@ class NavigationURLLoaderNetworkService::URLLoaderRequestController
 
   void FollowRedirect() {
     DCHECK_CURRENTLY_ON(BrowserThread::IO);
-    DCHECK(url_loader_);
-    DCHECK(!response_url_loader_);
     DCHECK(!redirect_info_.new_url.is_empty());
 
+    if (!base::FeatureList::IsEnabled(features::kNetworkService)) {
+      DCHECK(!redirect_info_.new_url.is_empty());
+      DCHECK(response_url_loader_.is_bound());
+      response_url_loader_->FollowRedirect();
+      return;
+    }
+
+    DCHECK(!response_url_loader_);
+    DCHECK(url_loader_);
     // Update resource_request_ and call Restart to give our handlers_ a chance
     // at handling the new location. If no handler wants to take over, we'll
     // use the existing url_loader to follow the redirect, see MaybeStartLoader.
@@ -369,11 +409,13 @@ class NavigationURLLoaderNetworkService::URLLoaderRequestController
       const base::Optional<net::SSLInfo>& ssl_info,
       mojom::DownloadedTempFilePtr downloaded_file) override {
     received_response_ = true;
-    // If the default loader (network) was used to handle the URL load request
-    // we need to see if the handlers want to potentially create a new loader
-    // for the response. e.g. AppCache.
-    if (MaybeCreateLoaderForResponse(head))
-      return;
+    if (base::FeatureList::IsEnabled(features::kNetworkService)) {
+      // If the default loader (network) was used to handle the URL load request
+      // we need to see if the handlers want to potentially create a new loader
+      // for the response. e.g. AppCache.
+      if (MaybeCreateLoaderForResponse(head))
+        return;
+    }
     scoped_refptr<ResourceResponse> response(new ResourceResponse());
     response->head = head;
 
@@ -540,6 +582,35 @@ NavigationURLLoaderNetworkService::NavigationURLLoaderNetworkService(
       request_info->common_params.navigation_start, "FrameTreeNode id",
       request_info->frame_tree_node_id);
 
+  ServiceWorkerNavigationHandleCore* service_worker_navigation_handle_core =
+      service_worker_navigation_handle
+          ? service_worker_navigation_handle->core()
+          : nullptr;
+
+  AppCacheNavigationHandleCore* appcache_handle_core =
+      appcache_handle ? appcache_handle->core() : nullptr;
+
+  if (!base::FeatureList::IsEnabled(features::kNetworkService)) {
+    DCHECK(!request_controller_);
+    request_controller_ = std::make_unique<URLLoaderRequestController>(
+        /* initial_handlers = */
+        std::vector<std::unique_ptr<URLLoaderRequestHandler>>(),
+        /* resource_request = */ nullptr, resource_context,
+        /* default_url_factory_getter = */ nullptr, weak_factory_.GetWeakPtr());
+
+    BrowserThread::PostTask(
+        BrowserThread::IO, FROM_HERE,
+        base::BindOnce(
+            &URLLoaderRequestController::StartWithoutNetworkService,
+            base::Unretained(request_controller_.get()),
+            base::Unretained(storage_partition->GetURLRequestContext()),
+            base::Unretained(storage_partition->GetFileSystemContext()),
+            service_worker_navigation_handle_core, appcache_handle_core,
+            base::Passed(std::move(request_info)),
+            base::Passed(std::move(navigation_ui_data))));
+    return;
+  }
+
   // TODO(scottmg): Port over stuff from RDHI::BeginNavigationRequest() here.
   auto new_request = std::make_unique<ResourceRequest>();
 
@@ -607,10 +678,8 @@ NavigationURLLoaderNetworkService::NavigationURLLoaderNetworkService(
       BrowserThread::IO, FROM_HERE,
       base::BindOnce(&URLLoaderRequestController::Start,
                      base::Unretained(request_controller_.get()),
-                     service_worker_navigation_handle
-                         ? service_worker_navigation_handle->core()
-                         : nullptr,
-                     appcache_handle ? appcache_handle->core() : nullptr,
+                     service_worker_navigation_handle_core,
+                     appcache_handle_core,
                      base::Passed(std::move(request_info)),
                      base::Passed(std::move(factory_for_webui)),
                      base::Passed(std::move(subresource_factory_for_webui)),
@@ -704,6 +773,11 @@ void NavigationURLLoaderNetworkService::OnComplete(
   delegate_->OnRequestFailed(completion_status.exists_in_cache,
                              completion_status.error_code, ssl_info_,
                              should_ssl_errors_be_fatal);
+}
+
+void NavigationURLLoaderNetworkService::OnRequestStarted(
+    base::TimeTicks timestamp) {
+  delegate_->OnRequestStarted(timestamp);
 }
 
 bool NavigationURLLoaderNetworkService::IsDownload() const {
