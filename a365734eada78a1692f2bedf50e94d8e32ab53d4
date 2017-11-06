@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "1c7036a6_e8356cdc",
+        "filename": "third_party/WebKit/Source/core/loader/resource/ScriptResource.cpp",
+        "patchSetId": 5
+      },
+      "lineNbr": 68,
+      "author": {
+        "id": 1115930
+      },
+      "writtenOn": "2017-11-06T20:43:46Z",
+      "side": 1,
+      "message": "How did this compile? I\u0027ve got two variables named |client| here, albeit in different scopes. I didn\u0027t think C++ allowed that.\n\nDone.",
+      "parentUuid": "4a253d79_c2bd3f65",
+      "revId": "a365734eada78a1692f2bedf50e94d8e32ab53d4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "820669ef_6decbfaa",
         "filename": "third_party/WebKit/Source/core/loader/resource/ScriptResource.cpp",
         "patchSetId": 5
@@ -30,6 +48,24 @@
       "writtenOn": "2017-11-02T23:38:37Z",
       "side": 1,
       "message": "We should early-return before Resource::DidAddClient() if |client| is not in Clients(), because theoretically it can be removed in NotifyAppendData().",
+      "revId": "a365734eada78a1692f2bedf50e94d8e32ab53d4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "feba9081_26d5bdab",
+        "filename": "third_party/WebKit/Source/core/loader/resource/ScriptResource.cpp",
+        "patchSetId": 5
+      },
+      "lineNbr": 72,
+      "author": {
+        "id": 1115930
+      },
+      "writtenOn": "2017-11-06T20:43:46Z",
+      "side": 1,
+      "message": "Good point. Done.",
+      "parentUuid": "820669ef_6decbfaa",
       "revId": "a365734eada78a1692f2bedf50e94d8e32ab53d4",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
