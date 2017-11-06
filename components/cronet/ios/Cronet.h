@@ -33,6 +33,15 @@ FOUNDATION_EXPORT GRPC_SUPPORT_EXPORT NSString* const CRNInvalidArgumentKey;
 // be handled.
 typedef BOOL (^RequestFilterBlock)(NSURLRequest* request);
 
+// Interface for the Metrics callback.  This is registered (and unregistered)
+// with the addMetricsDelegate (or removeMetricsDelegate) method of the Cronet
+// class, and the callback, didFinishCollectingMetrics is called after Cronet
+// has collected metrics.
+@interface CronetMetricsDelegate : NSObject
+- (void)didFinishCollectingMetrics:(NSURLSessionTaskTransactionMetrics*)metrics
+    NS_AVAILABLE_IOS(10.0);
+@end
+
 // Interface for installing Cronet.
 // TODO(gcasto): Should this macro be separate from the one defined in
 // bidirectional_stream_c.h?
@@ -194,5 +203,24 @@ GRPC_SUPPORT_EXPORT
 // Enables TestCertVerifier which accepts all certificates for testing.
 // This method only has any effect before |start| is called.
 + (void)enableTestCertVerifierForTesting;
+
+// Register and unregister a CronetMetricsDelegate callback. The client is
+// responsible for creating an object which implements CronetMetricsDelegate
+// and passing that as an argument to these functions.
+
+// Registers a CronetMetricsDelegate callback.  The client is responsible for
+// creating an object which implements CronetMetricsDelegate, and passing
+// that as an |delegate|.  Returns |YES| if the delegate is added successfully,
+// and |NO| if it was not (because there is already an identical delegate
+// registered).
++ (BOOL)addMetricsDelegate:(CronetMetricsDelegate*)delegate
+    NS_AVAILABLE_IOS(10.0);
+
+// Unregisters a CronetMetricsDelegate callback.  |delegate| should be a
+// pointer to the delegate which is to be removed.  It returns |YES| if the
+// delegate is successfully removed and |NO| if there the delegate is not
+// contained in the set of delegates (and therefore cannot be removed).
++ (BOOL)removeMetricsDelegate:(CronetMetricsDelegate*)delegate
+    NS_AVAILABLE_IOS(10.0);
 
 @end
