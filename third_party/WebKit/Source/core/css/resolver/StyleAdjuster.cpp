@@ -337,7 +337,7 @@ static void AdjustStyleForDisplay(ComputedStyle& style,
        style.Display() == EDisplay::kTableRowGroup ||
        style.Display() == EDisplay::kTableFooterGroup ||
        style.Display() == EDisplay::kTableRow) &&
-      style.HasInFlowPosition())
+      style.GetPosition() == EPosition::kSticky)
     style.SetPosition(EPosition::kStatic);
 
   // Cannot support position: sticky for table columns and column groups because
