@@ -6,6 +6,7 @@ package org.chromium.device.bluetooth;
 
 import android.annotation.TargetApi;
 import android.bluetooth.BluetoothDevice;
+import android.bluetooth.BluetoothGatt;
 import android.bluetooth.le.ScanFilter;
 import android.bluetooth.le.ScanSettings;
 import android.content.BroadcastReceiver;
@@ -570,6 +571,7 @@ class Fakes {
             }
             fakeService.mCharacteristics.add(new FakeBluetoothGattCharacteristic(fakeService,
                     /* instanceId */ countOfDuplicateUUID, properties, uuid));
+            fakeService.mDevice.mGattCallback.onServicesDiscovered(BluetoothGatt.GATT_SUCCESS);
         }
 
         // -----------------------------------------------------------------------------------------
