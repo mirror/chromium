@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "801c767c_6eb8f20d",
+        "filename": "components/ntp_snippets/contextual/contextual_content_suggestions_service.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 22,
+      "author": {
+        "id": 1210565
+      },
+      "writtenOn": "2017-11-06T11:00:27Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "41695880_f30354bd",
+      "revId": "52c06cf230a54a997e2f78c3301b919161563578",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "fab24cef_73d5fdb5",
         "filename": "components/ntp_snippets/contextual/contextual_content_suggestions_service.cc",
         "patchSetId": 6
@@ -39,6 +57,30 @@
       "revId": "52c06cf230a54a997e2f78c3301b919161563578",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "cea2923b_e9032333",
+        "filename": "components/ntp_snippets/contextual/contextual_content_suggestions_service.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 56,
+      "author": {
+        "id": 1210565
+      },
+      "writtenOn": "2017-11-06T11:00:27Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "fab24cef_73d5fdb5",
+      "range": {
+        "startLine": 56,
+        "startChar": 34,
+        "endLine": 56,
+        "endChar": 48
+      },
+      "revId": "52c06cf230a54a997e2f78c3301b919161563578",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -105,6 +147,30 @@
     },
     {
       "key": {
+        "uuid": "0285b725_e2c1dae7",
+        "filename": "components/ntp_snippets/contextual/contextual_content_suggestions_service.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 75,
+      "author": {
+        "id": 1210565
+      },
+      "writtenOn": "2017-11-06T11:00:27Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "1183eafa_ab028cb5",
+      "range": {
+        "startLine": 75,
+        "startChar": 9,
+        "endLine": 75,
+        "endChar": 19
+      },
+      "revId": "52c06cf230a54a997e2f78c3301b919161563578",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "f69f9409_674173b6",
         "filename": "components/ntp_snippets/contextual/contextual_suggestion.h",
         "patchSetId": 6
@@ -116,6 +182,30 @@
       "writtenOn": "2017-10-11T10:04:53Z",
       "side": 1,
       "message": "See other comment; I don\u0027t think this is required (or desirable).",
+      "range": {
+        "startLine": 31,
+        "startChar": 52,
+        "endLine": 31,
+        "endChar": 0
+      },
+      "revId": "52c06cf230a54a997e2f78c3301b919161563578",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0bc79177_66629179",
+        "filename": "components/ntp_snippets/contextual/contextual_suggestion.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 31,
+      "author": {
+        "id": 1210565
+      },
+      "writtenOn": "2017-11-06T11:00:27Z",
+      "side": 1,
+      "message": "I\u0027m not sure how to cache without some kind of copying.\nFor content suggestions, the \"copy\" is a proto that goes into the proto database.\nAny suggestions, such as using a shared pointer?\nOr making the copy more obvious to avoid accidental copying?",
+      "parentUuid": "f69f9409_674173b6",
       "range": {
         "startLine": 31,
         "startChar": 52,
@@ -145,6 +235,24 @@
     },
     {
       "key": {
+        "uuid": "a3389af6_95ef1dce",
+        "filename": "components/ntp_snippets/contextual/timestamped_mru_cache.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 10,
+      "author": {
+        "id": 1210565
+      },
+      "writtenOn": "2017-11-06T11:00:27Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "15370df4_49db0b02",
+      "revId": "52c06cf230a54a997e2f78c3301b919161563578",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "72d17a23_ace8012a",
         "filename": "components/ntp_snippets/contextual/timestamped_mru_cache.h",
         "patchSetId": 6
@@ -168,6 +276,30 @@
     },
     {
       "key": {
+        "uuid": "5ef31fa3_41548505",
+        "filename": "components/ntp_snippets/contextual/timestamped_mru_cache.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 17,
+      "author": {
+        "id": 1210565
+      },
+      "writtenOn": "2017-11-06T11:00:27Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "72d17a23_ace8012a",
+      "range": {
+        "startLine": 17,
+        "startChar": 12,
+        "endLine": 17,
+        "endChar": 22
+      },
+      "revId": "52c06cf230a54a997e2f78c3301b919161563578",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "b24b48a9_42793310",
         "filename": "components/ntp_snippets/contextual/timestamped_mru_cache.h",
         "patchSetId": 6
@@ -179,6 +311,24 @@
       "writtenOn": "2017-10-11T10:04:53Z",
       "side": 1,
       "message": "This is only ever instantiated with KeyType\u003dGURL and PayloadType\u003dvector\u003cContextualSuggestion\u003e, right? And we have no expectation of reusing it with other types any time soon? Then I\u0027d just specialize for those types.",
+      "revId": "52c06cf230a54a997e2f78c3301b919161563578",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f72782ac_ae85398c",
+        "filename": "components/ntp_snippets/contextual/timestamped_mru_cache.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 19,
+      "author": {
+        "id": 1210565
+      },
+      "writtenOn": "2017-11-06T11:00:27Z",
+      "side": 1,
+      "message": "My plan is to cache both contextual suggestions and their thumbnails with this, so different payload types are used\nBoth will have key GURL. Should I specialize for this type?\nCurrently, the thumbnails are cached persistently but not properly cleaned, also they are pretty short-lived and good for non-persistent caching, so this cache would resolve crbug.com/750006 in addition.",
+      "parentUuid": "b24b48a9_42793310",
       "revId": "52c06cf230a54a997e2f78c3301b919161563578",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -208,6 +358,30 @@
     },
     {
       "key": {
+        "uuid": "2608fb69_9704be2c",
+        "filename": "components/ntp_snippets/contextual/timestamped_mru_cache.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 22,
+      "author": {
+        "id": 1210565
+      },
+      "writtenOn": "2017-11-06T11:00:27Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "319e2e9a_ae453223",
+      "range": {
+        "startLine": 22,
+        "startChar": 22,
+        "endLine": 22,
+        "endChar": 27
+      },
+      "revId": "52c06cf230a54a997e2f78c3301b919161563578",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "622fe26b_238c825e",
         "filename": "components/ntp_snippets/contextual/timestamped_mru_cache.h",
         "patchSetId": 6
@@ -228,6 +402,30 @@
       "revId": "52c06cf230a54a997e2f78c3301b919161563578",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d4d3221e_c62dd181",
+        "filename": "components/ntp_snippets/contextual/timestamped_mru_cache.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 35,
+      "author": {
+        "id": 1210565
+      },
+      "writtenOn": "2017-11-06T11:00:27Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "622fe26b_238c825e",
+      "range": {
+        "startLine": 35,
+        "startChar": 56,
+        "endLine": 35,
+        "endChar": 0
+      },
+      "revId": "52c06cf230a54a997e2f78c3301b919161563578",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }

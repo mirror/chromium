@@ -378,6 +378,30 @@
     },
     {
       "key": {
+        "uuid": "753b9d06_b4024e33",
+        "filename": "components/ntp_snippets/contextual/contextual_suggestions_fetcher_impl.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 344,
+      "author": {
+        "id": 1210565
+      },
+      "writtenOn": "2017-11-06T11:00:27Z",
+      "side": 1,
+      "message": "I rewrote this part.",
+      "parentUuid": "26f2b049_0ac34119",
+      "range": {
+        "startLine": 344,
+        "startChar": 4,
+        "endLine": 344,
+        "endChar": 34
+      },
+      "revId": "5f7c40d724b469f357f71b14bd8906759d4fd0f5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "7ef1d6e0_fd28700a",
         "filename": "components/ntp_snippets/contextual/contextual_suggestions_fetcher_impl.h",
         "patchSetId": 1
