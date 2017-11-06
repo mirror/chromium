@@ -160,6 +160,24 @@
     },
     {
       "key": {
+        "uuid": "c378849a_951cd26a",
+        "filename": "chrome/browser/vr/ganesh_surface_provider.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 49,
+      "author": {
+        "id": 1213279
+      },
+      "writtenOn": "2017-11-06T21:29:49Z",
+      "side": 1,
+      "message": "We can optimize it by drawing all textures in one go so that we don\u0027t have to reset to the main buffer every time. That should be in a follow-up change though I think.",
+      "parentUuid": "cb0b2844_a1a8924b",
+      "revId": "0ed93e3105107468a313b40164d4c50a567dcb0f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "5e7c5e69_b2833d1a",
         "filename": "chrome/browser/vr/ui.cc",
         "patchSetId": 6
