@@ -6,7 +6,8 @@
 
 [
     ImplementedAs=WindowAudioWorklet,
-    RuntimeEnabled=AudioWorklet
+    RuntimeEnabled=AudioWorklet,
+    SecureContext
 ] partial interface Window {
     readonly attribute Worklet audioWorklet;
 };

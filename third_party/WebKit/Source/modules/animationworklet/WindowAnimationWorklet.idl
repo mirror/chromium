@@ -4,7 +4,8 @@
 
 [
     ImplementedAs=WindowAnimationWorklet,
-    RuntimeEnabled=AnimationWorklet
+    RuntimeEnabled=AnimationWorklet,
+    SecureContext
 ] partial interface Window {
     readonly attribute Worklet animationWorklet;
 };

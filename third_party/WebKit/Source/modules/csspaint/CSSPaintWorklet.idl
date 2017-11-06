@@ -7,6 +7,8 @@
 [
     ImplementedAs=CSSPaintWorklet,
     RuntimeEnabled=CSSPaintAPI
+    // TODO(nhiroki): Specify the [SecureContext] attribute when it's supported
+    // on static attributes.
 ] partial interface CSS {
     [CallWith=ScriptState] static readonly attribute Worklet paintWorklet;
 };
