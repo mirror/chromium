@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "c3c9b45b_fb81a74f",
+        "filename": "chrome/browser/resource_coordinator/tab_manager.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 116,
+      "author": {
+        "id": 1001187
+      },
+      "writtenOn": "2017-11-06T18:57:16Z",
+      "side": 1,
+      "message": "Replacing this with MemoryCondition feels wrong. This is truly a condition on the discard itself, which happens to be driven by a memory condition signal.\n\nThe memory pressure stuff is disappearing, and the explicit direct connection between memory pressure and discarding is likely to disappear with it.\n\nWhat is the motivation for this change?",
+      "range": {
+        "startLine": 116,
+        "startChar": 18,
+        "endLine": 116,
+        "endChar": 33
+      },
+      "revId": "bb2f0d4bd9ab08cf72fd0e715de8ab69ddf14981",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
