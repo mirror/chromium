@@ -143,4 +143,14 @@ void WaylandPointer::Axis(void* data,
   pointer->callback_.Run(&event);
 }
 
+void WaylandPointer::OnModifiersUpdated(int modifiers) {
+  // Remove old modifiers from flags and then update them with new modifiers.
+  flags_ &= ~modifiers_;
+  modifiers_ = modifiers;
+
+  int old_flags = flags_;
+  flags_ |= modifiers_;
+  DCHECK(VerifyFlagsAfterMasking(flags_, old_flags, modifiers_));
+}
+
 }  // namespace ui

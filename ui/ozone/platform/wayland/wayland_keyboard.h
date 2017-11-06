@@ -12,8 +12,18 @@ namespace ui {
 
 class WaylandKeyboard {
  public:
+  class ModifiersObserver {
+   public:
+    // Notifies observers about updated keyboard modifiers.
+    virtual void OnModifiersUpdated(int modifiers) = 0;
+  };
+
   WaylandKeyboard(wl_keyboard* keyboard, const EventDispatchCallback& callback);
   virtual ~WaylandKeyboard();
+
+  void AddObserver(ModifiersObserver* observer);
+  void RemoveObserver(ModifiersObserver* observer);
+  void NotifyModifiersUpdated();
 
  private:
   // wl_keyboard_listener
@@ -52,6 +62,8 @@ class WaylandKeyboard {
   wl::Object<wl_keyboard> obj_;
   EventDispatchCallback callback_;
   uint8_t modifiers_ = 0;
+
+  base::ObserverList<ModifiersObserver> observers_;
 };
 
 }  // namespace ui
