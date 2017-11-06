@@ -216,6 +216,7 @@ BubbleDialogDelegateView::BubbleDialogDelegateView(View* anchor_view,
       accept_events_(true),
       adjust_if_offscreen_(true),
       parent_window_(nullptr) {
+  SetPaintToLayer();
   LayoutProvider* provider = LayoutProvider::Get();
   // An individual bubble should override these margins if its layout differs
   // from the typical title/text/buttons.
