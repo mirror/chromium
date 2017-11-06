@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "7c4a1bb9_14277208",
+        "filename": "components/translate/core/browser/translate_prefs.cc",
+        "patchSetId": 10
+      },
+      "lineNbr": 286,
+      "author": {
+        "id": 1115913
+      },
+      "writtenOn": "2017-11-06T04:27:22Z",
+      "side": 1,
+      "message": "I guess std::set is fine:\n\n\u003e Generally avoid std::unordered_set and std::unordered_map. In the common case, query performance is unlikely to be sufficiently higher than std::map to make a difference, insert performance is slightly worse, and the memory overhead is high. This makes sense mostly for large tables where you expect a lot of lookups.\n\nhttps://chromium.googlesource.com/chromium/src/base/+/master/containers/",
+      "revId": "f090037d2636b7b2e1383adcf551b08f284a27e6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
