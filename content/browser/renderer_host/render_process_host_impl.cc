@@ -2115,6 +2115,12 @@ void RenderProcessHostImpl::PurgeAndSuspend() {
 
 void RenderProcessHostImpl::Resume() {}
 
+void RenderProcessHostImpl::SetCurrentTimeOverride(
+    double time_millis,
+    const base::Optional<std::string>& timezone) {
+  GetRendererInterface()->SetCurrentTimeOverride(time_millis, timezone);
+}
+
 mojom::Renderer* RenderProcessHostImpl::GetRendererInterface() {
   return renderer_interface_.get();
 }

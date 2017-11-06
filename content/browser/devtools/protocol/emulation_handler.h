@@ -56,6 +56,8 @@ class EmulationHandler : public DevToolsDomainHandler,
 
   Response SetVisibleSize(int width, int height) override;
 
+  Response SetTimeOverride(Maybe<double> time, Maybe<String> timezone) override;
+
   blink::WebDeviceEmulationParams GetDeviceEmulationParams();
   void SetDeviceEmulationParams(const blink::WebDeviceEmulationParams& params);
 
@@ -74,6 +76,8 @@ class EmulationHandler : public DevToolsDomainHandler,
   blink::WebDeviceEmulationParams device_emulation_params_;
 
   RenderFrameHostImpl* host_;
+
+  std::unique_ptr<String> saved_time_zone_id_;
 
   DISALLOW_COPY_AND_ASSIGN(EmulationHandler);
 };

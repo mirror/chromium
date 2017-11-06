@@ -8,7 +8,9 @@
 #include "base/compiler_specific.h"
 #include "base/lazy_instance.h"
 #include "base/macros.h"
+#include "base/optional.h"
 #include "gin/gin_export.h"
+#include "third_party/icu/source/i18n/unicode/timezone.h"
 #include "v8/include/v8-platform.h"
 
 namespace gin {
@@ -36,6 +38,9 @@ class GIN_EXPORT V8Platform : public v8::Platform {
   StackTracePrinter GetStackTracePrinter() override;
   v8::TracingController* GetTracingController() override;
 
+  void SetCurrentTimeOverride(const base::Optional<double> time_millis,
+                              const base::Optional<std::string> time_zone);
+
  private:
   friend struct base::LazyInstanceTraitsBase<V8Platform>;
 
@@ -44,6 +49,8 @@ class GIN_EXPORT V8Platform : public v8::Platform {
 
   class TracingControllerImpl;
   std::unique_ptr<TracingControllerImpl> tracing_controller_;
+  base::Optional<double> clock_time_in_millis_override_;
+  std::unique_ptr<icu::TimeZone> saved_time_zone_;
 
   DISALLOW_COPY_AND_ASSIGN(V8Platform);
 };
