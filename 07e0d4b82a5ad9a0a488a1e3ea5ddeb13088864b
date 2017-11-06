@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "f05f5e7d_38868e7e",
+        "filename": "third_party/WebKit/LayoutTests/external/wpt/service-workers/service-worker/ServiceWorkerGlobalScope/registration-attribute.https.html",
+        "patchSetId": 4
+      },
+      "lineNbr": 47,
+      "author": {
+        "id": 1110029
+      },
+      "writtenOn": "2017-11-06T18:32:14Z",
+      "side": 1,
+      "message": "nit: for consistency it might make sense to have these two tests behave the same wrt to unregistration? So save registration in a variable, and return reg.unregister() at the end (in addition to the add_result_callback)?",
+      "revId": "07e0d4b82a5ad9a0a488a1e3ea5ddeb13088864b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
