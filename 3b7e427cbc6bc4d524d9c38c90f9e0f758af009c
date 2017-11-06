@@ -168,6 +168,30 @@
     },
     {
       "key": {
+        "uuid": "161ccfb4_dd1049d7",
+        "filename": "components/arc/test/fake_power_instance.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 16,
+      "author": {
+        "id": 1002808
+      },
+      "writtenOn": "2017-11-06T15:01:43Z",
+      "side": 1,
+      "message": "https://cs.chromium.org/chromium/src/docs/callback.md?rcl\u003dedd14e0644b2580407ef5ddabb07af6c0c7a7e43\u0026l\u003d80",
+      "parentUuid": "9a87cf6c_aaee435a",
+      "range": {
+        "startLine": 16,
+        "startChar": 9,
+        "endLine": 16,
+        "endChar": 19
+      },
+      "revId": "3b7e427cbc6bc4d524d9c38c90f9e0f758af009c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "85a3a758_2688056d",
         "filename": "components/arc/test/fake_power_instance.h",
         "patchSetId": 4
