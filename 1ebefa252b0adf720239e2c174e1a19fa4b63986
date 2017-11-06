@@ -2,6 +2,23 @@
   "comments": [
     {
       "key": {
+        "uuid": "3c3a786e_9132fc2a",
+        "filename": "chrome/browser/DEPS",
+        "patchSetId": 7
+      },
+      "lineNbr": 151,
+      "author": {
+        "id": 1002532
+      },
+      "writtenOn": "2017-11-06T21:59:03Z",
+      "side": 1,
+      "message": "please also update content/browser/DEPS which has a similar section",
+      "revId": "1ebefa252b0adf720239e2c174e1a19fa4b63986",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "9a5615e3_1b6c7388",
         "filename": "chrome/browser/android/oom_intervention/oom_intervention_tab_helper.cc",
         "patchSetId": 7
