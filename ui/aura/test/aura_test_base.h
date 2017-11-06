@@ -121,6 +121,7 @@ class AuraTestBase : public testing::Test,
   void OnWmSetCanFocus(Window* window, bool can_focus) override;
   Window* OnWmCreateTopLevelWindow(
       ui::mojom::WindowType window_type,
+      const std::string& remote_service_name,
       std::map<std::string, std::vector<uint8_t>>* properties) override;
   void OnWmClientJankinessChanged(const std::set<Window*>& client_windows,
                                   bool janky) override;

@@ -336,6 +336,15 @@ void WindowState::SetWindowPositionManaged(bool managed) {
   window_->SetProperty(kWindowPositionManagedTypeKey, managed);
 }
 
+bool WindowState::GetCanConsumeSystemKeys() const {
+  return window_->GetProperty(kCanConsumeSystemKeysKey);
+}
+
+void WindowState::SetCanConsumeSystemKeys(bool can_consume_system_keys) {
+  base::AutoReset<bool> resetter(&ignore_property_change_, true);
+  window_->SetProperty(kCanConsumeSystemKeysKey, can_consume_system_keys);
+}
+
 void WindowState::set_bounds_changed_by_user(bool bounds_changed_by_user) {
   bounds_changed_by_user_ = bounds_changed_by_user;
   if (bounds_changed_by_user)
@@ -557,6 +566,27 @@ void WindowState::OnWindowPropertyChanged(aura::Window* window,
       // This change came from somewhere else. Revert it.
       window->SetProperty(kWindowStateTypeKey, GetStateType());
     }
+    return;
+  }
+  if (key == kCanConsumeSystemKeysKey) {
+    if (!ignore_property_change_) {
+      // This change came from somewhere else; it can only be set from other
+      // processes during startup where we perform security checks. Revert it.
+      window->SetProperty(kCanConsumeSystemKeysKey, static_cast<bool>(old));
+    }
+    return;
+
+    // std::string* name = window->GetProperty(kRemoteServiceNameKey);
+    // if (name && *name == "content_browser") {
+    //   // State: we had a patch which went green on the telemetry_perf_unittests
+    //   // bots when I got rid of setting the property in the classic ash version
+    //   // of browser frame. Can I now switch this over back to storing the can
+    //   // consume system key state in the window?
+    //   LOG(ERROR) << "------------ SETTING CAN CONSUME SYSTEM";
+    //   can_consume_system_keys_ = window->GetProperty(kCanConsumeSystemKeysKey);
+    // } else {
+    //   window->SetProperty(kCanConsumeSystemKeysKey, static_cast<bool>(old));
+    // }
     return;
   }
 }

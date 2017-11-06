@@ -111,6 +111,7 @@ class TestWM : public service_manager::Service,
   void OnWmSetCanFocus(aura::Window* window, bool can_focus) override {}
   aura::Window* OnWmCreateTopLevelWindow(
       ui::mojom::WindowType window_type,
+      const std::string& remote_service_name,
       std::map<std::string, std::vector<uint8_t>>* properties) override {
     aura::Window* window = new aura::Window(nullptr);
     window->SetProperty(aura::client::kEmbedType,

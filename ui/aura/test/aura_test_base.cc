@@ -186,6 +186,7 @@ void AuraTestBase::OnWmSetCanFocus(Window* window, bool can_focus) {}
 
 Window* AuraTestBase::OnWmCreateTopLevelWindow(
     ui::mojom::WindowType window_type,
+    const std::string& remote_service_name,
     std::map<std::string, std::vector<uint8_t>>* properties) {
   Window* window = new Window(nullptr);
   SetWindowType(window, window_type);

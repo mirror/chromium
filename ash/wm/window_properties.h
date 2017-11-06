@@ -44,6 +44,11 @@ enum class WidgetCreationType {
 // bounds outside of its root window is set.
 ASH_EXPORT extern const aura::WindowProperty<bool>* const kLockedToRootKey;
 
+// A property key which stores a window's remote service name. This name is
+// the remote service name as reported to us by mus.
+ASH_EXPORT extern const aura::WindowProperty<std::string*>* const
+    kRemoteServiceNameKey;
+
 // A property key which stores the bounds to restore a window to. These take
 // preference over the current bounds/state. This is used by e.g. the always
 // tablet mode window manager.
