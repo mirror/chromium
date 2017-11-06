@@ -62,6 +62,8 @@ class ComponentInstallerPolicy {
       const base::DictionaryValue& manifest,
       const base::FilePath& install_dir) = 0;
 
+  virtual void OnCustomUninstall() = 0;
+
   // ComponentReady is called in two cases:
   //   1) After an installation is successfully completed.
   //   2) During component registration if the component is already installed.
