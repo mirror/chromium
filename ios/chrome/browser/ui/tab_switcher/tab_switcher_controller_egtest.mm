@@ -19,9 +19,6 @@
 #import "ios/chrome/test/earl_grey/chrome_matchers.h"
 #import "ios/chrome/test/earl_grey/chrome_test_case.h"
 #import "ios/testing/wait_util.h"
-#import "ios/web/public/test/http_server/blank_page_response_provider.h"
-#import "ios/web/public/test/http_server/http_server.h"
-#include "ios/web/public/test/http_server/http_server_util.h"
 #include "ui/base/l10n/l10n_util.h"
 
 #if !defined(__has_feature) || !__has_feature(objc_arc)
@@ -39,7 +36,6 @@ using chrome_test_util::TabletTabSwitcherNewTabButton;
 using chrome_test_util::TabletTabSwitcherOpenButton;
 using chrome_test_util::TabletTabSwitcherOpenTabsPanelButton;
 using chrome_test_util::TabletTabSwitcherOtherDevicesButton;
-using web::test::HttpServer;
 
 @interface TabSwitcherControllerTestCase : ChromeTestCase
 @end
@@ -256,9 +252,8 @@ using web::test::HttpServer;
     EARL_GREY_TEST_SKIPPED(@"TabSwitcherController is only used on iPads.");
 
   // Load the blank test page so that JavaScript can be executed.
-  const GURL kBlankPageURL = HttpServer::MakeUrl("http://blank-page");
-  web::test::AddResponseProvider(
-      web::test::CreateBlankPageResponseProvider(kBlankPageURL));
+  GREYAssertTrue(self.testServer->Start(), @"Test server failed to start");
+  const GURL kBlankPageURL = self.testServer->GetURL("/defaultresponse");
   [ChromeEarlGrey loadURL:kBlankPageURL];
 
   // Enter the tab switcher and show a dialog from the test page.

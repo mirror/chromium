@@ -25,15 +25,10 @@
 #import "ios/chrome/test/earl_grey/chrome_matchers.h"
 #import "ios/chrome/test/earl_grey/chrome_test_case.h"
 #import "ios/testing/wait_util.h"
-#import "ios/web/public/test/http_server/blank_page_response_provider.h"
-#import "ios/web/public/test/http_server/http_server.h"
-#include "ios/web/public/test/http_server/http_server_util.h"
 
 #if !defined(__has_feature) || !__has_feature(objc_arc)
 #error "This file requires ARC support."
 #endif
-
-using web::test::HttpServer;
 
 namespace {
 
@@ -292,9 +287,8 @@ void SelectTabUsingStackView(Tab* tab) {
     EARL_GREY_TEST_SKIPPED(@"Stack view is not used on iPads.");
 
   // Load the blank test page so that JavaScript can be executed.
-  const GURL kBlankPageURL = HttpServer::MakeUrl("http://blank-page");
-  web::test::AddResponseProvider(
-      web::test::CreateBlankPageResponseProvider(kBlankPageURL));
+  GREYAssertTrue(self.testServer->Start(), @"Test server failed to start");
+  const GURL kBlankPageURL = self.testServer->GetURL("/defaultresponse");
   [ChromeEarlGrey loadURL:kBlankPageURL];
 
   // Enter stack view and show a dialog from the test page.
