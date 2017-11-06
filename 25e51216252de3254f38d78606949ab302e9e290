@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "1633ed09_eb7d2384",
+        "filename": "chrome/browser/resource_coordinator/page_signal_receiver.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 33,
+      "author": {
+        "id": 1112850
+      },
+      "writtenOn": "2017-11-06T17:57:17Z",
+      "side": 1,
+      "message": "nit: s/and/receives",
+      "range": {
+        "startLine": 33,
+        "startChar": 3,
+        "endLine": 33,
+        "endChar": 6
+      },
+      "revId": "25e51216252de3254f38d78606949ab302e9e290",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f9bc5d5a_bf683024",
+        "filename": "chrome/browser/resource_coordinator/page_signal_receiver.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 34,
+      "author": {
+        "id": 1112850
+      },
+      "writtenOn": "2017-11-06T17:57:17Z",
+      "side": 1,
+      "message": "nit: s/PageSignalObserver/PageSignalObservers",
+      "range": {
+        "startLine": 34,
+        "startChar": 18,
+        "endLine": 34,
+        "endChar": 36
+      },
+      "revId": "25e51216252de3254f38d78606949ab302e9e290",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
