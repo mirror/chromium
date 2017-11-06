@@ -238,6 +238,11 @@ void BluetoothDeviceAndroid::OnGattServicesDiscovered(
   SetGattServicesDiscoveryComplete(true);
   adapter_->NotifyGattServicesDiscovered(this);
   adapter_->NotifyDeviceChanged(this);
+  // On Android, onServicesDiscovered indicates that discovery is complete.
+  // https://developer.android.com/reference/android/bluetooth/BluetoothGattCallback.html#onServicesDiscovered(android.bluetooth.BluetoothGatt, int)
+  for (auto const& service_pair : gatt_services_) {
+    adapter_->NotifyGattDiscoveryComplete(service_pair.second.get());
+  }
 }
 
 void BluetoothDeviceAndroid::CreateGattRemoteService(
