@@ -16,6 +16,24 @@
       "revId": "a940e28d3e7550ca94a7903cac2624c86cdb523e",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e99a9570_bdfbeb6a",
+        "filename": "chrome/browser/safe_browsing/chrome_password_protection_service.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 239,
+      "author": {
+        "id": 1144209
+      },
+      "writtenOn": "2017-11-06T21:33:46Z",
+      "side": 1,
+      "message": "I believe it is synchronous based on where ExitFullScreen(..) gets called in other places.\ne.g. https://cs.chromium.org/search/?q\u003dweb_contents-%3EExitFullScreen\u0026type\u003dcs",
+      "parentUuid": "52558f27_1ac64a4c",
+      "revId": "a940e28d3e7550ca94a7903cac2624c86cdb523e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
