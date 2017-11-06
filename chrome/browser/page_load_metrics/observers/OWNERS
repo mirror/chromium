@@ -1,0 +1,3 @@
+# Strict reviews needed for opt-in features measured in ukm use counter.
+# Must satisfy UKM privacy requirements.
+per-file ukm_features.*=file://tools/metrics/ukm/OWNERS

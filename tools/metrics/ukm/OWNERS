@@ -1,3 +1,9 @@
 # Metrics changes should always be reviewed by owners.
-per-file ukm.xml=file://base/metrics/OWNERS
+# Constriants on UKM privacy must also be satified.
+per-file ukm.xml=asvitkine@chromium.org
+per-file ukm.xml=bmcquade@chromium.org
+per-file ukm.xml=engedy@chromium.org
+per-file ukm.xml=holte@chromium.org
+per-file ukm.xml=msramek@chromium.org
+per-file ukm.xml=rkaplow@chromium.org
 per-file ukm.xml=set noparent
