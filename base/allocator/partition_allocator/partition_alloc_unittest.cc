@@ -2160,6 +2160,19 @@ TEST_F(PartitionAllocTest, ReallocMovesCookies) {
   PartitionFreeGeneric(generic_allocator.root(), ptr);
 }
 
+TEST_F(PartitionAllocTest, SmallReallocDoesNotMoveTrailingCookie) {
+  // For crbug.com/781473
+  const size_t kSize = 264;
+  void* ptr = PartitionAllocGeneric(generic_allocator.root(), kSize, type_name);
+  EXPECT_TRUE(ptr);
+
+  ptr = PartitionReallocGeneric(generic_allocator.root(), ptr, kSize + 16,
+                                type_name);
+  EXPECT_TRUE(ptr);
+
+  PartitionFreeGeneric(generic_allocator.root(), ptr);
+}
+
 }  // namespace base
 
 #endif  // !defined(MEMORY_TOOL_REPLACES_ALLOCATOR)
