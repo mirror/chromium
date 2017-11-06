@@ -2,10 +2,11 @@
 // Use of this source code is governed by a BSD-style license that can be
 // found in the LICENSE file.
 
-#include "platform/audio/IIRFilter.h"
-
+#include <algorithm>
 #include <complex>
+
 #include "platform/audio/AudioUtilities.h"
+#include "platform/audio/IIRFilter.h"
 #include "platform/audio/VectorMath.h"
 #include "platform/wtf/MathExtras.h"
 
