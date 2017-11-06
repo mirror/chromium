@@ -1,0 +1,44 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "7922cdda_03221fef",
+        "filename": "chrome/browser/page_load_metrics/observers/OWNERS",
+        "patchSetId": 14
+      },
+      "lineNbr": 3,
+      "author": {
+        "id": 1103654
+      },
+      "writtenOn": "2017-11-06T18:01:25Z",
+      "side": 1,
+      "message": "I don\u0027t think this works because that file lists per-file OWNERS for ukm.xml. How about adding PRIVACY_OWNERS to that directory and having both OWNERS files reference that one?",
+      "revId": "2d00c349c315ed3f0a27d7b11039058c3f7e4b7d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a5c01e00_0e92e0b3",
+        "filename": "tools/metrics/ukm/OWNERS",
+        "patchSetId": 14
+      },
+      "lineNbr": 2,
+      "author": {
+        "id": 1103654
+      },
+      "writtenOn": "2017-11-06T18:01:25Z",
+      "side": 1,
+      "message": "Constriants -\u003e Constraints\nsatified -\u003e satisfied\n\nI would suggest changing this comment to be explicit. Something like:\n\n# UKM metrics require additional considerations from the privacy side,\n# so we use a specific set of reviewers from metrics and privacy teams.",
+      "range": {
+        "startLine": 2,
+        "startChar": 21,
+        "endLine": 2,
+        "endChar": 28
+      },
+      "revId": "2d00c349c315ed3f0a27d7b11039058c3f7e4b7d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
