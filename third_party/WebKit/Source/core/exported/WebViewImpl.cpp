@@ -3398,7 +3398,8 @@ void WebViewImpl::SetDomainRelaxationForbidden(bool forbidden,
 }
 
 void WebViewImpl::SetWindowFeatures(const WebWindowFeatures& features) {
-  page_->SetWindowFeatures(features);
+  if (GetPage())
+    GetPage()->SetWindowFeatures(features);
 }
 
 void WebViewImpl::SetOpenedByDOM() {
