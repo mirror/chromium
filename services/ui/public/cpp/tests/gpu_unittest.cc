@@ -21,39 +21,24 @@ class TestGpuImpl : public mojom::Gpu {
   TestGpuImpl() {}
   ~TestGpuImpl() override {}
 
-  mojom::GpuPtr GetPtr() {
-    mojom::GpuPtr ptr;
-    bindings_.AddBinding(this, mojo::MakeRequest(&ptr));
-    return ptr;
+  void SetRequestWillSucceed(bool request_will_succeed) {
+    request_will_succeed_ = request_will_succeed;
   }
 
-  void WaitUntilChannelRequest() {
-    DCHECK(quit_closure_.is_null());
-    base::RunLoop run_loop;
-    quit_closure_ = run_loop.QuitClosure();
-    run_loop.Run();
-    quit_closure_ = base::Closure();
-  }
-
-  bool RespondToGpuChannelRequests(bool success = false) {
-    if (establish_channel_callback_.is_null())
-      return false;
-    constexpr int client_id = 1;
-    mojo::ScopedMessagePipeHandle handle;
-    if (success)
-      handle = std::move(mojo::MessagePipe().handle0);
-    base::ResetAndReturn(&establish_channel_callback_)
-        .Run(client_id, std::move(handle), gpu::GPUInfo(),
-             gpu::GpuFeatureInfo());
-    return true;
+  void BindRequest(mojom::GpuRequest request) {
+    bindings_.AddBinding(this, std::move(request));
   }
 
   // ui::mojom::Gpu overrides:
   void EstablishGpuChannel(
       const EstablishGpuChannelCallback& callback) override {
-    establish_channel_callback_ = callback;
-    if (!quit_closure_.is_null())
-      quit_closure_.Run();
+    constexpr int client_id = 1;
+    mojo::ScopedMessagePipeHandle handle;
+    if (request_will_succeed_)
+      handle = std::move(mojo::MessagePipe().handle0);
+
+    callback.Run(client_id, std::move(handle), gpu::GPUInfo(),
+                 gpu::GpuFeatureInfo());
   }
 
   void CreateJpegDecodeAccelerator(
@@ -73,10 +58,8 @@ class TestGpuImpl : public mojom::Gpu {
                               const gpu::SyncToken& sync_token) override {}
 
  private:
-  EstablishGpuChannelCallback establish_channel_callback_;
-
+  bool request_will_succeed_ = true;
   mojo::BindingSet<mojom::Gpu> bindings_;
-  base::Closure quit_closure_;
 
   DISALLOW_COPY_AND_ASSIGN(TestGpuImpl);
 };
@@ -85,24 +68,66 @@ class TestGpuImpl : public mojom::Gpu {
 
 class GpuTest : public testing::Test {
  public:
-  GpuTest() {}
+  GpuTest() : io_thread_("GPUIOThread") {
+    base::Thread::Options thread_options(base::MessageLoop::TYPE_IO, 0);
+    thread_options.priority = base::ThreadPriority::NORMAL;
+    CHECK(io_thread_.StartWithOptions(thread_options));
+    io_task_runner_ = io_thread_.task_runner();
+  }
   ~GpuTest() override {}
 
   Gpu* gpu() { return gpu_.get(); }
+  TestGpuImpl* gpu_impl() { return gpu_impl_.get(); }
 
-  TestGpuImpl* gpu_impl() { return &gpu_impl_; }
+  void FlushIO() {
+    base::RunLoop run_loop;
+    io_task_runner_->PostTask(
+        FROM_HERE, base::Bind([](base::Closure callback) { callback.Run(); },
+                              run_loop.QuitClosure()));
+    run_loop.Run();
+  }
 
   // testing::Test:
   void SetUp() override {
+    gpu_impl_ = std::make_unique<TestGpuImpl>();
     auto factory =
-        base::BindRepeating(&TestGpuImpl::GetPtr, base::Unretained(&gpu_impl_));
-    gpu_ = base::WrapUnique(new Gpu(std::move(factory), nullptr));
+        base::BindRepeating(&GpuTest::GetPtr, base::Unretained(this));
+    gpu_ =
+        base::WrapUnique(new Gpu(std::move(factory), io_thread_.task_runner()));
+  }
+  void TearDown() override {
+    base::WaitableEvent event(base::WaitableEvent::ResetPolicy::AUTOMATIC,
+                              base::WaitableEvent::InitialState::NOT_SIGNALED);
+    DestroyOnIO(&event);
+    event.Wait();
   }
 
  private:
+  mojom::GpuPtr GetPtr() {
+    mojom::GpuPtr ptr;
+    io_task_runner_->PostTask(
+        FROM_HERE,
+        base::Bind(&TestGpuImpl::BindRequest, base::Unretained(gpu_impl_.get()),
+                   base::Passed(MakeRequest(&ptr))));
+    return ptr;
+  }
+
+  void DestroyOnIO(base::WaitableEvent* event) {
+    io_task_runner_->PostTask(FROM_HERE,
+                              base::Bind(
+                                  [](std::unique_ptr<TestGpuImpl> gpu_impl,
+                                     base::WaitableEvent* event) {
+                                    gpu_impl.reset();
+                                    event->Signal();
+                                  },
+                                  base::Passed(std::move(gpu_impl_)), event));
+  }
+
   base::test::ScopedTaskEnvironment env_;
-  TestGpuImpl gpu_impl_;
+  base::Thread io_thread_;
+  scoped_refptr<base::SingleThreadTaskRunner> io_task_runner_;
   std::unique_ptr<Gpu> gpu_;
+  std::unique_ptr<TestGpuImpl> gpu_impl_;
 
   DISALLOW_COPY_AND_ASSIGN(GpuTest);
 };
@@ -117,6 +142,7 @@ TEST_F(GpuTest, EstablishRequestsQueued) {
   auto callback = base::Bind(
       [](int* counter, const base::Closure& callback,
          scoped_refptr<gpu::GpuChannelHost> channel) {
+        EXPECT_TRUE(channel);
         --(*counter);
         if (*counter == 0)
           callback.Run();
@@ -125,18 +151,17 @@ TEST_F(GpuTest, EstablishRequestsQueued) {
   gpu()->EstablishGpuChannel(callback);
   gpu()->EstablishGpuChannel(callback);
   EXPECT_EQ(2, counter);
-  gpu_impl()->WaitUntilChannelRequest();
-
-  EXPECT_TRUE(gpu_impl()->RespondToGpuChannelRequests());
   run_loop.Run();
   EXPECT_EQ(0, counter);
+
+  FlushIO();
 }
 
 // Tests that a new request for establishing a gpu channel from a callback of a
 // previous callback is processed correctly.
 TEST_F(GpuTest, EstablishRequestOnFailureOnPreviousRequest) {
-  base::RunLoop run_loop;
   scoped_refptr<gpu::GpuChannelHost> host;
+
   auto callback = base::Bind(
       [](scoped_refptr<gpu::GpuChannelHost>* out_host,
          const base::Closure& callback,
@@ -144,52 +169,94 @@ TEST_F(GpuTest, EstablishRequestOnFailureOnPreviousRequest) {
         callback.Run();
         *out_host = std::move(host);
       },
-      &host, run_loop.QuitClosure());
-  gpu()->EstablishGpuChannel(base::Bind(
-      [](ui::Gpu* gpu, const gpu::GpuChannelEstablishedCallback& callback,
-         scoped_refptr<gpu::GpuChannelHost> host) {
-        DCHECK(!host);
-        gpu->EstablishGpuChannel(callback);
-      },
-      gpu(), callback));
-  gpu_impl()->WaitUntilChannelRequest();
-  EXPECT_TRUE(gpu_impl()->RespondToGpuChannelRequests());
+      &host);
 
-  // Responding to the first request would issue a second request immediately.
-  // So wait for that request to reach the TestGpuImpl, and have that respond
-  // again. That should run quit-closure of |run_loop|.
-  gpu_impl()->WaitUntilChannelRequest();
-  EXPECT_TRUE(gpu_impl()->RespondToGpuChannelRequests(true /* success */));
-  run_loop.Run();
-  EXPECT_TRUE(host);
+  {
+    base::RunLoop run_loop;
+    gpu()->EstablishGpuChannel(base::Bind(callback, run_loop.QuitClosure()));
+    gpu_impl()->SetRequestWillSucceed(false);
+    run_loop.Run();
+    EXPECT_FALSE(host);
+  }
+
+  {
+    base::RunLoop run_loop;
+    gpu()->EstablishGpuChannel(base::Bind(callback, run_loop.QuitClosure()));
+    gpu_impl()->SetRequestWillSucceed(true);
+    run_loop.Run();
+    EXPECT_TRUE(host);
+  }
+
+  FlushIO();
 }
 
 // Tests that if a request for a gpu channel succeeded, then subsequent requests
 // are met synchronously.
 TEST_F(GpuTest, EstablishRequestResponseSynchronouslyOnSuccess) {
-  scoped_refptr<gpu::GpuChannelHost> host;
   base::RunLoop run_loop;
   gpu()->EstablishGpuChannel(base::Bind(
-      [](scoped_refptr<gpu::GpuChannelHost>* out_host,
-         const base::Closure& callback,
+      [](const base::Closure& callback,
          scoped_refptr<gpu::GpuChannelHost> host) {
-        *out_host = std::move(host);
+        EXPECT_TRUE(host);
         callback.Run();
       },
-      &host, run_loop.QuitClosure()));
-  gpu_impl()->WaitUntilChannelRequest();
-  EXPECT_TRUE(gpu_impl()->RespondToGpuChannelRequests(true /* success */));
-  EXPECT_FALSE(host);
+      run_loop.QuitClosure()));
   run_loop.Run();
-  EXPECT_TRUE(host);
 
   int counter = 0;
-  auto callback =
-      base::Bind([](int* counter,
-                    scoped_refptr<gpu::GpuChannelHost> host) { ++(*counter); },
-                 &counter);
+  auto callback = base::Bind(
+      [](int* counter, scoped_refptr<gpu::GpuChannelHost> host) {
+        EXPECT_TRUE(host);
+        ++(*counter);
+      },
+      &counter);
   gpu()->EstablishGpuChannel(callback);
   EXPECT_EQ(1, counter);
+
+  FlushIO();
+}
+
+// Tests that if EstablishGpuChannel() was called but hasn't finished yet and
+// EstablishGpuChannelSync() is called, that EstablishGpuChannelSync() blocks
+// the thread until the original call returns.
+TEST_F(GpuTest, EstablishRequestAsyncThenSync) {
+  int counter = 0;
+  gpu()->EstablishGpuChannel(base::Bind(
+      [](int* counter, scoped_refptr<gpu::GpuChannelHost> host) {
+        EXPECT_TRUE(host);
+        ++(*counter);
+      },
+      base::Unretained(&counter)));
+
+  bool connection_error = false;
+  scoped_refptr<gpu::GpuChannelHost> host =
+      gpu()->EstablishGpuChannelSync(&connection_error);
+  EXPECT_FALSE(connection_error);
+  EXPECT_EQ(1, counter);
+  EXPECT_TRUE(host);
+
+  FlushIO();
+}
+
+TEST_F(GpuTest, EstablishRequestAsyncThenSyncWait) {
+  int counter = 0;
+  gpu()->EstablishGpuChannel(base::Bind(
+      [](int* counter, scoped_refptr<gpu::GpuChannelHost> host) {
+        EXPECT_TRUE(host);
+        ++(*counter);
+      },
+      base::Unretained(&counter)));
+
+  sleep(1);
+
+  bool connection_error = false;
+  scoped_refptr<gpu::GpuChannelHost> host =
+      gpu()->EstablishGpuChannelSync(&connection_error);
+  EXPECT_FALSE(connection_error);
+  EXPECT_EQ(1, counter);
+  EXPECT_TRUE(host);
+
+  FlushIO();
 }
 
 }  // namespace ui
