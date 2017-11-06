@@ -286,6 +286,30 @@
     },
     {
       "key": {
+        "uuid": "eec2fc45_6b5ae30f",
+        "filename": "net/http/http_server_properties_impl.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 619,
+      "author": {
+        "id": 1143554
+      },
+      "writtenOn": "2017-11-06T23:50:27Z",
+      "side": 1,
+      "message": "Sorry, I meant we don\u0027t populate |canonical_host_to_origin_map_| when we populate QuicServerInfo.",
+      "parentUuid": "4dcf21da_740a54b6",
+      "range": {
+        "startLine": 619,
+        "startChar": 3,
+        "endLine": 619,
+        "endChar": 0
+      },
+      "revId": "785ae66296e8738e554a36075491aaf0e4926ffc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "71ac8a88_d9a35a62",
         "filename": "net/http/http_server_properties_impl_unittest.cc",
         "patchSetId": 2
