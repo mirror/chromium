@@ -84,6 +84,11 @@ class VideoFrameCompositorTest : public VideoRendererSink::RenderCallback,
                                    size, base::TimeDelta());
   }
 
+  scoped_refptr<VideoFrame> UpdateIfStaleAndGetCurrentFrame() {
+    compositor_->UpdateCurrentFrameIfStale();
+    return compositor_->GetCurrentFrame_Locked();
+  }
+
   VideoFrameCompositor* compositor() { return compositor_.get(); }
 
  protected:
@@ -253,7 +258,7 @@ TEST_P(VideoFrameCompositorTest, GetCurrentFrameAndUpdateIfStale) {
 
   // |current_frame_| should be null at this point since we don't have a client
   // or a callback.
-  ASSERT_FALSE(compositor()->GetCurrentFrameAndUpdateIfStale());
+  ASSERT_FALSE(UpdateIfStaleAndGetCurrentFrame());
 
   // Starting the video renderer should return a single frame.
   EXPECT_CALL(*this, Render(_, _, true)).WillOnce(Return(opaque_frame_1));
@@ -262,7 +267,7 @@ TEST_P(VideoFrameCompositorTest, GetCurrentFrameAndUpdateIfStale) {
   // Since we have a client, this call should not call background render, even
   // if a lot of time has elapsed between calls.
   tick_clock_->Advance(base::TimeDelta::FromSeconds(1));
-  ASSERT_EQ(opaque_frame_1, compositor()->GetCurrentFrameAndUpdateIfStale());
+  ASSERT_EQ(opaque_frame_1, UpdateIfStaleAndGetCurrentFrame());
 
   // An update current frame call should stop background rendering.
   EXPECT_CALL(*this, Render(_, _, false)).WillOnce(Return(opaque_frame_2));
@@ -270,7 +275,7 @@ TEST_P(VideoFrameCompositorTest, GetCurrentFrameAndUpdateIfStale) {
       compositor()->UpdateCurrentFrame(base::TimeTicks(), base::TimeTicks()));
 
   // This call should still not call background render.
-  ASSERT_EQ(opaque_frame_2, compositor()->GetCurrentFrameAndUpdateIfStale());
+  ASSERT_EQ(opaque_frame_2, UpdateIfStaleAndGetCurrentFrame());
 
   testing::Mock::VerifyAndClearExpectations(this);
 
@@ -283,7 +288,7 @@ TEST_P(VideoFrameCompositorTest, GetCurrentFrameAndUpdateIfStale) {
 
   // This call should still not call background render, because we aren't in the
   // background rendering state yet.
-  ASSERT_EQ(opaque_frame_2, compositor()->GetCurrentFrameAndUpdateIfStale());
+  ASSERT_EQ(opaque_frame_2, UpdateIfStaleAndGetCurrentFrame());
 
   // Wait for background rendering to tick again.
   base::RunLoop run_loop;
@@ -295,11 +300,12 @@ TEST_P(VideoFrameCompositorTest, GetCurrentFrameAndUpdateIfStale) {
 
   // This call should still not call background render, because not enough time
   // has elapsed since the last background render call.
-  ASSERT_EQ(opaque_frame_1, compositor()->GetCurrentFrameAndUpdateIfStale());
+  compositor()->UpdateCurrentFrameIfStale();
+  ASSERT_EQ(opaque_frame_1, UpdateIfStaleAndGetCurrentFrame());
 
   // Advancing the tick clock should allow a new frame to be requested.
   tick_clock_->Advance(base::TimeDelta::FromMilliseconds(10));
-  ASSERT_EQ(opaque_frame_2, compositor()->GetCurrentFrameAndUpdateIfStale());
+  ASSERT_EQ(opaque_frame_2, UpdateIfStaleAndGetCurrentFrame());
 
   // Background rendering should tick another render callback.
   StopVideoRendererSink(false);
