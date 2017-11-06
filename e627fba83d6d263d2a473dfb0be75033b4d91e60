@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "114a55bc_efa932d8",
+        "filename": "components/sync/engine_impl/sync_manager_impl.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 565,
+      "author": {
+        "id": 1120845
+      },
+      "writtenOn": "2017-11-06T20:40:20Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "13dbc3d9_ab60ca18",
+      "revId": "e627fba83d6d263d2a473dfb0be75033b4d91e60",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "2e997db8_fc13f9a1",
         "filename": "components/sync/engine_impl/sync_scheduler_impl.cc",
         "patchSetId": 2
@@ -51,6 +69,24 @@
       "revId": "e627fba83d6d263d2a473dfb0be75033b4d91e60",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8645eac8_5db5aba7",
+        "filename": "components/sync/engine_impl/sync_scheduler_impl.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 168,
+      "author": {
+        "id": 1120845
+      },
+      "writtenOn": "2017-11-06T20:40:20Z",
+      "side": 1,
+      "message": "Done. Neat! Thanks for the suggestion.",
+      "parentUuid": "1d8b3413_24daaaf1",
+      "revId": "e627fba83d6d263d2a473dfb0be75033b4d91e60",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
