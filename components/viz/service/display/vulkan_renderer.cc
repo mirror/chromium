@@ -34,8 +34,8 @@ ResourceFormat VulkanRenderer::BackbufferFormat() const {
   return resource_provider_->best_texture_format();
 }
 
-bool VulkanRenderer::BindFramebufferToTexture(
-    const cc::ScopedResource* resource) {
+bool VulkanRenderer::BindFramebufferToTextureAndInitializeViewport(
+    const RenderPassId render_pass_id) {
   NOTIMPLEMENTED();
   return false;
 }
