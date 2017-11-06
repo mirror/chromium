@@ -317,6 +317,10 @@ class ChromeContentBrowserClient : public content::ContentBrowserClient {
       const service_manager::BindSourceInfo& source_info,
       const std::string& interface_name,
       mojo::ScopedMessagePipeHandle* interface_pipe) override;
+  void BindEmbedderInterface(
+      const service_manager::Identity& renderer_identity,
+      const std::string& interface_name,
+      mojo::ScopedMessagePipeHandle interface_pipe) override;
   void RegisterInProcessServices(StaticServiceMap* services) override;
   void RegisterOutOfProcessServices(
       OutOfProcessServiceMap* services) override;
@@ -441,6 +445,8 @@ class ChromeContentBrowserClient : public content::ContentBrowserClient {
       service_manager::BinderRegistryWithArgs<content::RenderProcessHost*,
                                               const url::Origin&>>
       worker_interfaces_parameterized_;
+
+  ChromeService chrome_service_;
 
   base::WeakPtrFactory<ChromeContentBrowserClient> weak_factory_;
 
