@@ -220,8 +220,8 @@ IN_PROC_BROWSER_TEST_F(ServiceProcessControlBrowserTest, LaunchAndReconnect) {
 
 // This tests the case when a service process is launched when the browser
 // starts but we try to launch it again while setting up Cloud Print.
-// Flaky on Mac. http://crbug.com/517420
-#if defined(OS_MACOSX)
+// Flaky on Mac. Flaky on Windows ASan. http://crbug.com/517420
+#if defined(OS_MACOSX) || (defined(OS_WIN) && defined(ADDRESS_SANITIZER))
 #define MAYBE_LaunchTwice DISABLED_LaunchTwice
 #else
 #define MAYBE_LaunchTwice LaunchTwice
