@@ -602,6 +602,14 @@ class NET_EXPORT NetworkQualityEstimator
   size_t rtt_observations_size_at_last_ect_computation_;
   size_t throughput_observations_size_at_last_ect_computation_;
 
+  // Number of RTT observations received since the effective connection type was
+  // last computed.
+  size_t new_rtt_observations_since_last_ect_computation_;
+
+  // Number of throughput observations received since the effective connection
+  // type was last computed.
+  size_t new_throughput_observations_since_last_ect_computation_;
+
   // Current estimate of the network quality.
   nqe::internal::NetworkQuality network_quality_;
 
