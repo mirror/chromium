@@ -437,6 +437,20 @@ void RenderWidgetHostViewChildFrame::GestureEventAck(
   if (!frame_connector_)
     return;
   if (wheel_scroll_latching_enabled()) {
+    if ((event.GetType() == blink::WebInputEvent::kGestureScrollBegin) &&
+        (ack_result == INPUT_EVENT_ACK_STATE_CONSUMED_SHOULD_BUBBLE)) {
+      DCHECK(!bubbled_scroll_sequence_consumable_by_child_);
+      // The child has informed us that it cannot scroll with this GSB's
+      // delta hint and so we should bubble this sequence. However, the child
+      // will still try to consume the sequence, so we will immediately bubble
+      // (and not forward to the child) events that we don't want the child to
+      // consume, in order to preserve scroll latching.
+      bubbled_scroll_sequence_consumable_by_child_ = true;
+    } else if (event.GetType() == blink::WebInputEvent::kGestureScrollEnd ||
+               event.GetType() == blink::WebInputEvent::kGestureFlingStart) {
+      bubbled_scroll_sequence_consumable_by_child_ = false;
+    }
+
     // GestureScrollBegin is a blocking event; It is forwarded for bubbling if
     // its ack is not consumed. For the rest of the scroll events
     // (GestureScrollUpdate, GestureScrollEnd, GestureFlingStart) the
@@ -699,6 +713,30 @@ void RenderWidgetHostViewChildFrame::ProcessTouchEvent(
 void RenderWidgetHostViewChildFrame::ProcessGestureEvent(
     const blink::WebGestureEvent& event,
     const ui::LatencyInfo& latency) {
+  if (wheel_scroll_latching_enabled() &&
+      bubbled_scroll_sequence_consumable_by_child_ &&
+      (event.GetType() == blink::WebInputEvent::kGestureFlingStart) &&
+      frame_connector_) {
+    // We're bubbling and we have a child that can consume scroll.
+    // For GestureFlingStarts, we send a GestureScrollEnd to the child in order
+    // to conclude the scrolling sequence but without allowing the child to
+    // actually fling if the fling is in a scrollable direction in the child.
+    // We bubble the fling to the target intended to consume it.
+    frame_connector_->BubbleScrollEvent(event);
+
+    blink::WebGestureEvent scroll_end(event);
+    scroll_end.SetType(blink::WebInputEvent::kGestureScrollEnd);
+    scroll_end.data.scroll_end.inertial_phase =
+        blink::WebGestureEvent::kUnknownMomentumPhase;
+    scroll_end.data.scroll_end.delta_units =
+        blink::WebGestureEvent::kPrecisePixels;
+    // Since we've just bubbled the fling, the |frame_connector_| knows that
+    // the sequence has ended, so it will just drop this synthesised GSE when
+    // we get the ack.
+    host_->ForwardGestureEvent(scroll_end);
+    return;
+  }
+
   host_->ForwardGestureEventWithLatencyInfo(event, latency);
 }
 
@@ -886,6 +924,17 @@ InputEventAckState RenderWidgetHostViewChildFrame::FilterInputEvent(
       // TenderWidgetHostViewAura::FilterInputEvent().
       return INPUT_EVENT_ACK_STATE_NO_CONSUMER_EXISTS;
     }
+  }
+
+  if (wheel_scroll_latching_enabled() &&
+      bubbled_scroll_sequence_consumable_by_child_ &&
+      (input_event.GetType() == blink::WebInputEvent::kGestureScrollUpdate) &&
+      frame_connector_) {
+    // If we're bubbling, then to preserve latching behaviour, the child should
+    // not consume this event. However, the child is not aware that it should
+    // not consume scroll due to bubbling. So we immediately bubble any scroll
+    // updates without giving the child a chance to consume them.
+    return INPUT_EVENT_ACK_STATE_NO_CONSUMER_EXISTS;
   }
 
   // Allow the root RWHV a chance to consume the child's GestureScrollUpdates
