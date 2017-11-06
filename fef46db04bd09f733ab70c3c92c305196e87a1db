@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "9dfd5d82_00fdac58",
+        "filename": "chrome/browser/chromeos/arc/fileapi/arc_file_system_bridge.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 283,
+      "author": {
+        "id": 1115919
+      },
+      "writtenOn": "2017-11-06T08:40:17Z",
+      "side": 1,
+      "message": "emplace_front() without arg, taking iterator, then assign it looks a bit tricky, to me.\nAlso, AFAIK, it is not much common in chromium to Bind() an iterator.\nCould you comment how these work, and the iterator should not be invalidated?\n\n(optional): Or another alternatives;\n\n1) Use std::find on removing (maybe replacing list by other container, like std::vector?),\nif the number of opened stream forwarder is expected small enough.\nstd::vector\u003cFileStreamForwarderPtr\u003e forwarders_;\nOnReadRequestCompleted() {\n  auto it \u003d std::find(...);\n  if (it !\u003d fowraders_.end())\n    forwarders_.erase(it);\n}\n\n2) Use forwarder id.\nint current_forwarder_id_;\nstd::map\u003cint /* forwarder_id */, FileStreamForwarderPtr\u003e file_stream_forwarders_;\nint forwarder_id \u003d current_forwader_id_++;\nfile_stream_forwarders_[forwarder_id] \u003d FileStreamForwarderPtr(\n   new FileStreamForwarder(...,\n       base::BindONce(..., forwarder_id)));\nfile_stream_forwarders_.erase(forwarder_id);\n\n3) Use custom deleter looks still an option (though you said it\u0027s overkill)?\nstd::set\u003cFileStreamForwarderPtr\u003e file_stream_forwarders_;\nFileStreamForwarder* forwarder \u003d ...;\n// Hmm, it would be nice if we have operator\u003d\u003d for unique_ptr and raw ptr...\nauto it \u003d file_stream_forwarders_.find(\n    std::unique_ptr\u003cFileStreamForwarder, void(void*)\u003e(\n        forwarder, [](void*){ /* do not delete */}));\nif (it !\u003d file_stream_forwarders_.end())\n  file_stream_forwarders_.erace(it);",
+      "revId": "fef46db04bd09f733ab70c3c92c305196e87a1db",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
