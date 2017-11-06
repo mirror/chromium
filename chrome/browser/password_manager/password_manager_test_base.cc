@@ -449,11 +449,11 @@ void PasswordManagerBrowserTestBase::TearDownOnMainThread() {
 }
 
 void PasswordManagerBrowserTestBase::SetUpInProcessBrowserTestFixture() {
-  ProfileIOData::SetCertVerifierForTesting(&mock_cert_verifier_);
+  ProfileIOData::SetCertVerifierFactoryForTesting(&mock_cert_verifier_factory_);
 }
 
 void PasswordManagerBrowserTestBase::TearDownInProcessBrowserTestFixture() {
-  ProfileIOData::SetCertVerifierForTesting(nullptr);
+  ProfileIOData::SetCertVerifierFactoryForTesting(nullptr);
 }
 
 content::WebContents* PasswordManagerBrowserTestBase::WebContents() {

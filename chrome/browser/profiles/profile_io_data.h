@@ -77,7 +77,7 @@ class InfoMap;
 }
 
 namespace net {
-class CertVerifier;
+class CertVerifierFactory;
 class ChannelIDService;
 class ClientCertStore;
 class CookieStore;
@@ -136,8 +136,9 @@ class ProfileIOData {
       net::URLRequestContextBuilder* builder,
       content::ProtocolHandlerMap* protocol_handlers);
 
-  // Sets a global CertVerifier to use when initializing all profiles.
-  static void SetCertVerifierForTesting(net::CertVerifier* cert_verifier);
+  // Sets a global CertVerifierFactory to use when initializing all profiles.
+  static void SetCertVerifierFactoryForTesting(
+      net::CertVerifierFactory* cert_verifier_factory);
 
   // Called by Profile.
   content::ResourceContext* GetResourceContext() const;

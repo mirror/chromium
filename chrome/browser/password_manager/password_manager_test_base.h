@@ -195,11 +195,13 @@ class PasswordManagerBrowserTestBase : public InProcessBrowserTest {
   content::RenderViewHost* RenderViewHost();
   content::RenderFrameHost* RenderFrameHost();
   net::EmbeddedTestServer& https_test_server() { return https_test_server_; }
-  net::MockCertVerifier& mock_cert_verifier() { return mock_cert_verifier_; }
+  net::MockCertVerifier& mock_cert_verifier() {
+    return *mock_cert_verifier_factory_.mock_cert_verifier();
+  }
 
  private:
   net::EmbeddedTestServer https_test_server_;
-  net::MockCertVerifier mock_cert_verifier_;
+  net::MockCertVerifierFactory mock_cert_verifier_factory_;
   // A tab with some hooks injected.
   content::WebContents* web_contents_;
   DISALLOW_COPY_AND_ASSIGN(PasswordManagerBrowserTestBase);
