@@ -24,10 +24,11 @@
 #include "base/os_compat_nacl.h"
 #endif
 
-// Ensure the Mac build does not include this module. Instead, non-POSIX
-// implementation is used to support Time::Exploded.
-#if defined(OS_MACOSX)
-#error "This implementation is for POSIX platforms other than Mac."
+// Ensure the iOS build does not include this module. Instead, non-POSIX
+// implementation is used to support Time::Exploded. This is fine to use on Mac
+// as that build is always 64 bit and doesn't suffer from year 2038 time_t cap.
+#if defined(OS_IOS)
+#error "This implementation is for POSIX platforms other than iOS."
 #endif
 
 namespace {
