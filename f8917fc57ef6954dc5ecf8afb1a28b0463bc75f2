@@ -1,0 +1,73 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "80c2ee28_47481042",
+        "filename": "ios/chrome/app/main_controller.mm",
+        "patchSetId": 6
+      },
+      "lineNbr": 1541,
+      "author": {
+        "id": 1115958
+      },
+      "writtenOn": "2017-11-06T12:23:52Z",
+      "side": 1,
+      "message": "Hmm. Why not just pass the base VC anyway and let the setting nav controller work it out? What is the expected value of |baseViewController| in this case?\n\nFor example, if all of the senders of this command that can exist when settings are show can be determined, maybe there\u0027s a different \"showSyncSettingsPanel\" call for them since they are changing what\u0027s being show in the Settings UI. Then that can be the first step in detangling the various settings commands that are implemented by the Settings VCs and those that are implemented here.",
+      "range": {
+        "startLine": 1540,
+        "startChar": 62,
+        "endLine": 1541,
+        "endChar": 37
+      },
+      "revId": "f8917fc57ef6954dc5ecf8afb1a28b0463bc75f2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "09cd1c0a_324afb48",
+        "filename": "ios/chrome/browser/ui/settings/settings_navigation_controller.mm",
+        "patchSetId": 6
+      },
+      "lineNbr": 520,
+      "author": {
+        "id": 1115958
+      },
+      "writtenOn": "2017-11-06T12:23:52Z",
+      "side": 1,
+      "message": "It\u0027s not so much that it\u0027s already presented; it\u0027s that it\u0027s a nav controller and it has a more specific way of handling the display of the sync settings. For example, if SettingsNavigationController were contained, we wouldn\u0027t necessarily change the implementation of this method.",
+      "range": {
+        "startLine": 520,
+        "startChar": 35,
+        "endLine": 520,
+        "endChar": 52
+      },
+      "revId": "f8917fc57ef6954dc5ecf8afb1a28b0463bc75f2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a61d2db1_12054caf",
+        "filename": "ios/chrome/browser/ui/settings/settings_navigation_controller.mm",
+        "patchSetId": 6
+      },
+      "lineNbr": 521,
+      "author": {
+        "id": 1115958
+      },
+      "writtenOn": "2017-11-06T12:23:52Z",
+      "side": 1,
+      "message": "I realize that passing around VCs is temporary, but I don\u0027t like APIs where it\u0027s up to the caller to clean up the inputs because of implementation details. I\u0027d prefer that this just ignore the |baseViewController| value, I think.",
+      "range": {
+        "startLine": 521,
+        "startChar": 2,
+        "endLine": 521,
+        "endChar": 37
+      },
+      "revId": "f8917fc57ef6954dc5ecf8afb1a28b0463bc75f2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
