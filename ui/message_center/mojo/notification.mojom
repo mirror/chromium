@@ -8,6 +8,74 @@ import "mojo/common/string16.mojom";
 import "ui/gfx/image/mojo/image.mojom";
 import "url/mojo/url.mojom";
 
+struct RichNotificationData {
+    // Priority of the notification. This must be one of the NotificationPriority
+  // values defined in notification_types.h.
+  int priority = DEFAULT_PRIORITY;
+
+  // Whether the notification should remain on screen indefinitely.
+  bool never_timeout = false;
+
+  // Time indicating when the notification was shown. Defaults to the time at
+  // which the RichNotificationData instance is constructed.
+  base::Time timestamp;
+
+  // Context message to display below the notification's content. Optional. May
+  // not be used for notifications that have an explicit origin URL set.
+  base::string16 context_message;
+
+  // Large image to display on the notification. Optional.
+  gfx::Image image;
+
+  // Small badge to display on the notification to illustrate the source of the
+  // notification. Optional.
+  gfx::Image small_image;
+
+  // Vector version of |small_image|.
+  // Used by Notification::GenerateMaskedSmallIcon.
+  // If not available, |small_image| will be used by the method. Optional.
+  //
+  // Due to the restriction of CreateVectorIcon, this should be a pointer to
+  // globally defined VectorIcon instance e.g. kNotificationCapsLockIcon.
+  // gfx::Image created by gfx::CreateVectorIcon internally stores reference to
+  // VectorIcon, so the VectorIcon should live longer than gfx::Image instance.
+  // As a temporary solution to this problem, we make this variable a pointer
+  // and only pass globally defined constants.
+  // TODO(tetsui): Remove the pointer, after fixing VectorIconSource not to
+  // retain VectorIcon reference.  https://crbug.com/760866
+  const gfx::VectorIcon* vector_small_image = &gfx::kNoneIcon;
+
+  // Items to display on the notification. Only applicable for notifications
+  // that have type NOTIFICATION_TYPE_MULTIPLE.
+  std::vector<NotificationItem> items;
+
+  int progress;
+  mojo.common.mojom.String16 progress_status;
+
+  // Buttons that should show up on the notification. A maximum of 16 buttons
+  // is supported by the current implementation, but this may differ between
+  // platforms.
+  std::vector<ButtonInfo> buttons;
+
+/////////////////// FIXME continue up from here ////////////////
+
+  bool should_make_spoken_feedback_for_popup_updates;
+  bool clickable;
+  bool pinned;
+
+  // FIXME don't need !android std::vector<int> vibration_pattern;
+  // FIXME don't need !android bool renotify = false;
+  // FIXME don't need !android bool silent;
+  mojo.common.mojom.String16 accessible_name;
+  uint32 accent_color;
+  bool use_image_as_icon;
+
+  // FIXME
+  SettingsButtonHandler settings_button_handler = SettingsButtonHandler::NONE;
+
+  FullscreenVisibility fullscreen_visibility = FullscreenVisibility::NONE;
+};
+
 // TODO(mhashmi): Add the rest of the fields for a Notification
 struct Notification {
   // TODO(mhashmi): Server-side code (in Ash) needs to make sure this id won't
