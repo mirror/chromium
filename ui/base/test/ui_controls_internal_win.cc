@@ -14,8 +14,10 @@
 #include "base/memory/ref_counted.h"
 #include "base/single_thread_task_runner.h"
 #include "base/threading/thread_task_runner_handle.h"
+#include "ui/display/win/screen_win.h"
 #include "ui/events/keycodes/keyboard_code_conversion_win.h"
 #include "ui/events/keycodes/keyboard_codes.h"
+#include "ui/gfx/geometry/point.h"
 
 namespace {
 
@@ -26,6 +28,7 @@ namespace {
 class InputDispatcher : public base::RefCounted<InputDispatcher> {
  public:
   InputDispatcher(const base::Closure& task, WPARAM message_waiting_for);
+  InputDispatcher(const base::Closure& task, long mouse_x, long mouse_y);
 
   // Invoked from the hook. If mouse_message matches message_waiting_for_
   // MatchingMessageFound is invoked.
@@ -48,6 +51,10 @@ class InputDispatcher : public base::RefCounted<InputDispatcher> {
 
   // Message we're waiting for. Not used for keyboard events.
   const WPARAM message_waiting_for_;
+
+  // The desired mouse position for a mouse move event.
+  long mouse_x_;
+  long mouse_y_;
 
   DISALLOW_COPY_AND_ASSIGN(InputDispatcher);
 };
@@ -112,8 +119,21 @@ void UninstallHook(InputDispatcher* dispatcher) {
 
 InputDispatcher::InputDispatcher(const base::Closure& task,
                                  WPARAM message_waiting_for)
-    : task_(task), message_waiting_for_(message_waiting_for) {
+    : task_(task),
+      message_waiting_for_(message_waiting_for),
+      mouse_x_(0),
+      mouse_y_(0) {
   InstallHook(this, message_waiting_for == WM_KEYUP);
+}
+
+InputDispatcher::InputDispatcher(const base::Closure& task,
+                                 long mouse_x,
+                                 long mouse_y)
+    : task_(task),
+      message_waiting_for_(WM_MOUSEMOVE),
+      mouse_x_(mouse_x),
+      mouse_y_(mouse_y) {
+  InstallHook(this, false);
 }
 
 InputDispatcher::~InputDispatcher() {
@@ -122,8 +142,19 @@ InputDispatcher::~InputDispatcher() {
 }
 
 void InputDispatcher::DispatchedMessage(WPARAM message) {
-  if (message == message_waiting_for_)
+  if (message == message_waiting_for_) {
+    if (message == WM_MOUSEMOVE) {
+      // Verify that the mouse ended up at the desired location.
+      POINT current_pos;
+      ::GetCursorPos(&current_pos);
+      if (mouse_x_ != current_pos.x || mouse_y_ != current_pos.y) {
+        LOG(ERROR) << "Mouse moved to (" << current_pos.x << ", "
+                   << current_pos.y << ") rather than (" << mouse_x_ << ", "
+                   << mouse_y_ << "); check the math in SendMouseMoveImpl.";
+      }
+    }
     MatchingMessageFound();
+  }
 }
 
 void InputDispatcher::MatchingMessageFound() {
@@ -298,19 +329,15 @@ bool SendKeyPressImpl(HWND window,
 bool SendMouseMoveImpl(long screen_x,
                        long screen_y,
                        const base::Closure& task) {
-  // First check if the mouse is already there.
-  POINT current_pos;
-  ::GetCursorPos(&current_pos);
-  if (screen_x == current_pos.x && screen_y == current_pos.y) {
-    if (task)
-      base::ThreadTaskRunnerHandle::Get()->PostTask(FROM_HERE, task);
-    return true;
-  }
+  gfx::Point screen_point =
+      display::win::ScreenWin::DIPToScreenPoint({screen_x, screen_y});
+  screen_x = screen_point.x();
+  screen_y = screen_point.y();
 
   // Get the max screen coordinate for use in computing the normalized absolute
   // coordinates required by SendInput.
-  int max_x = ::GetSystemMetrics(SM_CXSCREEN) - 1;
-  int max_y = ::GetSystemMetrics(SM_CYSCREEN) - 1;
+  const int max_x = ::GetSystemMetrics(SM_CXSCREEN) - 1;
+  const int max_y = ::GetSystemMetrics(SM_CYSCREEN) - 1;
 
   // Clamp the inputs.
   if (screen_x < 0)
@@ -322,6 +349,15 @@ bool SendMouseMoveImpl(long screen_x,
   else if (screen_y > max_y)
     screen_y = max_y;
 
+  // Check if the mouse is already there.
+  POINT current_pos;
+  ::GetCursorPos(&current_pos);
+  if (screen_x == current_pos.x && screen_y == current_pos.y) {
+    if (task)
+      base::ThreadTaskRunnerHandle::Get()->PostTask(FROM_HERE, task);
+    return true;
+  }
+
   // Form the input data containing the normalized absolute coordinates.
   INPUT input = {INPUT_MOUSE};
   input.mi.dx = static_cast<LONG>(std::ceil(screen_x * (65535.0 / max_x)));
@@ -330,7 +366,8 @@ bool SendMouseMoveImpl(long screen_x,
 
   scoped_refptr<InputDispatcher> dispatcher;
   if (task)
-    dispatcher = base::MakeRefCounted<InputDispatcher>(task, WM_MOUSEMOVE);
+    dispatcher =
+        base::MakeRefCounted<InputDispatcher>(task, screen_x, screen_y);
 
   if (!::SendInput(1, &input, sizeof(input)))
     return false;
