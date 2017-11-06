@@ -37,6 +37,24 @@
     },
     {
       "key": {
+        "uuid": "b49f1745_2eabda1e",
+        "filename": "base/BUILD.gn",
+        "patchSetId": 1
+      },
+      "lineNbr": 1659,
+      "author": {
+        "id": 1002076
+      },
+      "writtenOn": "2017-11-06T20:57:57Z",
+      "side": 1,
+      "message": "Wait. Please undo. I was explicitly told in a past code review not to do it this way. Instead, each platform should separately include the files it needs, even if the same file appears in multiple places in the BUILD file.\n\nSo, for this change, we should only be adding \"time/time_exploded_posix.cc\" at around line 1500 above.",
+      "parentUuid": "dd6417f5_e5218ebe",
+      "revId": "48abe36e885c7c9cdbb71021bd66177dbe1919f1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "76b379e6_d636281d",
         "filename": "base/time/time_exploded_posix.cc",
         "patchSetId": 1
