@@ -111,6 +111,8 @@ class BrowserNonClientFrameViewAsh : public BrowserNonClientFrameView,
   // need their frames painted.
   bool ShouldPaint() const;
 
+  void SetShouldPaintHeaderForV1App(bool paint);
+
   // View which contains the window controls.
   ash::FrameCaptionButtonContainerView* caption_button_container_;
 
@@ -125,6 +127,13 @@ class BrowserNonClientFrameViewAsh : public BrowserNonClientFrameView,
   // Container for extra frame buttons shown for hosted app windows.
   // Owned by views hierarchy.
   HostedAppButtonContainer* hosted_app_button_container_;
+
+  // False to skip painting the header for v1 apps in overview mode. It is not
+  // guaranteed to hide the header in other situations because this is the last
+  // flag to check in ShouldPaint(), which means it may paint header even this
+  // flag is false. In addition, this value has no effect for normal browser
+  // type.
+  bool should_paint_for_v1_app_;
 
   DISALLOW_COPY_AND_ASSIGN(BrowserNonClientFrameViewAsh);
 };

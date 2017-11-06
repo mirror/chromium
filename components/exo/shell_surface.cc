@@ -72,30 +72,110 @@ const struct {
     {ui::VKEY_W, ui::EF_SHIFT_DOWN | ui::EF_CONTROL_DOWN},
     {ui::VKEY_F4, ui::EF_ALT_DOWN}};
 
-class CustomFrameView : public views::NonClientFrameView {
+class CustomFrameViewAshExo : public ash::CustomFrameViewAsh {
  public:
-  explicit CustomFrameView(views::Widget* widget) : widget_(widget) {}
-  ~CustomFrameView() override {}
+  using ShapeRects = std::vector<gfx::Rect>;
+
+  explicit CustomFrameViewAshExo(views::Widget* widget, bool frame_enabled)
+      : ash::CustomFrameViewAsh(widget),
+        widget_(widget),
+        frame_enabled_(frame_enabled) {
+    if (!frame_enabled_)
+      ash::CustomFrameViewAsh::SetShouldPaintHeader(false);
+  }
+  ~CustomFrameViewAshExo() override {}
+
+  // Overridden from CustomFrameViewAsh:
+  void SetShouldPaintHeader(bool paint) override {
+    aura::Window* window = widget_->GetNativeWindow();
+    ui::Layer* layer = window->layer();
+    if (paint) {
+      layer->SetAlphaShape(
+          original_window_shape_
+              ? std::make_unique<ShapeRects>(*original_window_shape_)
+              : nullptr);
+      layer->SetMasksToBounds(false);
+    } else {
+      if (!determined_original_window_shape_) {
+        determined_original_window_shape_ = true;
+        const ShapeRects* window_shape = layer->alpha_shape();
+        if (!original_window_shape_ && window_shape)
+          original_window_shape_ = std::make_unique<ShapeRects>(*window_shape);
+      }
+      gfx::Rect bound(bounds().size());
+      int inset = window->GetProperty(aura::client::kTopViewInset);
+      if (inset > 0) {
+        bound.Inset(0, inset, 0, 0);
+        std::unique_ptr<ShapeRects> shape;
+        if (original_window_shape_) {
+          // When the |window| has a shape, use the new bounds to clip that
+          // shape.
+          shape = std::make_unique<ShapeRects>(*original_window_shape_);
+          for (auto& rect : *shape)
+            rect.Intersect(bound);
+        } else {
+          shape = std::make_unique<ShapeRects>();
+          shape->push_back(bound);
+        }
+        layer->SetAlphaShape(std::move(shape));
+        layer->SetMasksToBounds(true);
+      }
+    }
+  }
 
   // Overridden from views::NonClientFrameView:
-  gfx::Rect GetBoundsForClientView() const override { return bounds(); }
+  gfx::Rect GetBoundsForClientView() const override {
+    if (frame_enabled_)
+      return ash::CustomFrameViewAsh::GetBoundsForClientView();
+    else
+      return bounds();
+  }
+
   gfx::Rect GetWindowBoundsForClientBounds(
       const gfx::Rect& client_bounds) const override {
-    return client_bounds;
+    if (frame_enabled_) {
+      return ash::CustomFrameViewAsh::GetWindowBoundsForClientBounds(
+          client_bounds);
+    } else {
+      return client_bounds;
+    }
   }
+
   int NonClientHitTest(const gfx::Point& point) override {
-    return widget_->client_view()->NonClientHitTest(point);
+    if (frame_enabled_)
+      return ash::CustomFrameViewAsh::NonClientHitTest(point);
+    else
+      return widget_->client_view()->NonClientHitTest(point);
   }
-  void GetWindowMask(const gfx::Size& size, gfx::Path* window_mask) override {}
-  void ResetWindowControls() override {}
-  void UpdateWindowIcon() override {}
-  void UpdateWindowTitle() override {}
-  void SizeConstraintsChanged() override {}
+
+  void ResetWindowControls() override {
+    if (frame_enabled_)
+      ash::CustomFrameViewAsh::ResetWindowControls();
+  }
+
+  void UpdateWindowTitle() override {
+    if (frame_enabled_)
+      ash::CustomFrameViewAsh::UpdateWindowTitle();
+  }
+
+  void SizeConstraintsChanged() override {
+    if (frame_enabled_)
+      ash::CustomFrameViewAsh::SizeConstraintsChanged();
+  }
 
  private:
   views::Widget* const widget_;
 
-  DISALLOW_COPY_AND_ASSIGN(CustomFrameView);
+  bool frame_enabled_;
+
+  // Original |window_|'s shape, if it was set on the window.
+  std::unique_ptr<ShapeRects> original_window_shape_;
+
+  // True after the |original_window_shape_| has been set or after it has
+  // been determined that window shape was not originally set on the |window_|.
+  bool determined_original_window_shape_ = false;
+
+  DISALLOW_COPY_AND_ASSIGN(CustomFrameViewAshExo);
 };
 
 class CustomWindowTargeter : public aura::WindowTargeter {
@@ -940,10 +1020,7 @@ views::NonClientFrameView* ShellSurface::CreateNonClientFrameView(
   aura::Window* window = widget_->GetNativeWindow();
   // ShellSurfaces always use immersive mode.
   window->SetProperty(aura::client::kImmersiveFullscreenKey, true);
-  if (frame_enabled_)
-    return new ash::CustomFrameViewAsh(widget);
-
-  return new CustomFrameView(widget);
+  return new CustomFrameViewAshExo(widget, frame_enabled_);
 }
 
 bool ShellSurface::WidgetHasHitTestMask() const {

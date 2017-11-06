@@ -9,6 +9,7 @@
 
 #include "ash/ash_export.h"
 #include "ash/public/interfaces/window_style.mojom.h"
+#include "ash/shell_observer.h"
 #include "base/macros.h"
 #include "base/optional.h"
 #include "third_party/skia/include/core/SkColor.h"
@@ -37,7 +38,8 @@ enum class FrameBackButtonState {
 // The window header overlay slides onscreen when the user hovers the mouse at
 // the top of the screen. See also views::CustomFrameView and
 // BrowserNonClientFrameViewAsh.
-class ASH_EXPORT CustomFrameViewAsh : public views::NonClientFrameView {
+class ASH_EXPORT CustomFrameViewAsh : public views::NonClientFrameView,
+                                      public ash::ShellObserver {
  public:
   // Internal class name.
   static const char kViewClassName[];
@@ -99,6 +101,12 @@ class ASH_EXPORT CustomFrameViewAsh : public views::NonClientFrameView {
   void SetVisible(bool visible) override;
 
   const views::View* GetAvatarIconViewForTest() const;
+
+  // ash::ShellObserver:
+  void OnOverviewModeStarting() override;
+  void OnOverviewModeEnded() override;
+
+  virtual void SetShouldPaintHeader(bool paint);
 
  private:
   class AvatarObserver;

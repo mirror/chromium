@@ -321,9 +321,13 @@ CustomFrameViewAsh::CustomFrameViewAsh(
         new CustomFrameViewAshWindowStateDelegate(window_state, this,
                                                   enable_immersive)));
   }
+
+  Shell::Get()->AddShellObserver(this);
 }
 
-CustomFrameViewAsh::~CustomFrameViewAsh() {}
+CustomFrameViewAsh::~CustomFrameViewAsh() {
+  Shell::Get()->RemoveShellObserver(this);
+}
 
 void CustomFrameViewAsh::InitImmersiveFullscreenControllerForView(
     ImmersiveFullscreenController* immersive_fullscreen_controller) {
@@ -470,6 +474,19 @@ void CustomFrameViewAsh::SetVisible(bool visible) {
 
 const views::View* CustomFrameViewAsh::GetAvatarIconViewForTest() const {
   return header_view_->avatar_icon();
+}
+
+// ash::ShellObserver:
+void CustomFrameViewAsh::OnOverviewModeStarting() {
+  SetShouldPaintHeader(false);
+}
+
+void CustomFrameViewAsh::OnOverviewModeEnded() {
+  SetShouldPaintHeader(true);
+}
+
+void CustomFrameViewAsh::SetShouldPaintHeader(bool paint) {
+  header_view_->SetShouldPaintHeader(paint);
 }
 
 ////////////////////////////////////////////////////////////////////////////////
