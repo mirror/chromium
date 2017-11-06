@@ -66,7 +66,7 @@ class WebUIIOS;
 class WebStateImpl : public WebState, public NavigationManagerDelegate {
  public:
   // Constructor for WebStateImpls created for new sessions.
-  WebStateImpl(const CreateParams& params);
+  explicit WebStateImpl(const CreateParams& params);
   // Constructor for WebStatesImpls created for deserialized sessions
   WebStateImpl(const CreateParams& params, CRWSessionStorage* session_storage);
   ~WebStateImpl() override;
@@ -85,7 +85,7 @@ class WebStateImpl : public WebState, public NavigationManagerDelegate {
   void OnTitleChanged();
 
   // Called when the visible security state of the page changes.
-  void OnVisibleSecurityStateChange();
+  void OnVisibleSecurityStateChange() override;
 
   // Called when a dialog or child window open request was suppressed.
   void OnDialogSuppressed();
@@ -220,8 +220,6 @@ class WebStateImpl : public WebState, public NavigationManagerDelegate {
   void ShowTransientContentView(CRWContentView* content_view) override;
   bool IsShowingWebInterstitial() const override;
   WebInterstitial* GetWebInterstitial() const override;
-  void OnPasswordInputShownOnHttp() override;
-  void OnCreditCardInputShownOnHttp() override;
   void AddScriptCommandCallback(const ScriptCommandCallback& callback,
                                 const std::string& command_prefix) override;
   void RemoveScriptCommandCallback(const std::string& command_prefix) override;
