@@ -53,6 +53,8 @@ class ProfileChooserView : public content::WebContentsDelegate,
       const signin::ManageAccountsParams& manage_accounts_params,
       signin_metrics::AccessPoint access_point,
       views::View* anchor_view,
+      gfx::NativeView parent_window,
+      gfx::Rect anchor_rect,
       Browser* browser,
       bool is_source_keyboard);
   static bool IsShowing();
