@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "bad5625f_d7223019",
+        "filename": "tools/cygprofile/process_profiles.py",
+        "patchSetId": 5
+      },
+      "lineNbr": 176,
+      "author": {
+        "id": 1000429
+      },
+      "writtenOn": "2017-11-06T14:49:49Z",
+      "side": 1,
+      "message": "okay, so now this has nothing to do with symbols, and is used only once, so either can be inlined or:\n\n_WriteNewlineSeparatedStringsToFile()?",
+      "range": {
+        "startLine": 176,
+        "startChar": 4,
+        "endLine": 176,
+        "endChar": 27
+      },
+      "revId": "0e4569d4107d8f583ec573537b5b85d1d389d555",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}

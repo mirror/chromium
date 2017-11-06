@@ -143,6 +143,30 @@
     },
     {
       "key": {
+        "uuid": "5965e31d_23c937e8",
+        "filename": "tools/cygprofile/orderfile_generator.py",
+        "patchSetId": 1
+      },
+      "lineNbr": 161,
+      "author": {
+        "id": 1000429
+      },
+      "writtenOn": "2017-11-06T14:49:49Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "43644d4d_ff83be74",
+      "range": {
+        "startLine": 161,
+        "startChar": 4,
+        "endLine": 161,
+        "endChar": 31
+      },
+      "revId": "a5115527777a00c7192aeddf8e1fc73ebd75d782",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "10385b02_5c9d2e58",
         "filename": "tools/cygprofile/orderfile_generator.py",
         "patchSetId": 1
@@ -225,6 +249,30 @@
       "side": 1,
       "message": "The same \"compiler\" object is used for both the instrumented and non-instrumented builds, and the first argument actually takes several values. Is it OK to keep it as is?",
       "parentUuid": "935887e5_d9e14bfa",
+      "range": {
+        "startLine": 305,
+        "startChar": 43,
+        "endLine": 305,
+        "endChar": 76
+      },
+      "revId": "a5115527777a00c7192aeddf8e1fc73ebd75d782",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "96adb7b4_cfc2322b",
+        "filename": "tools/cygprofile/orderfile_generator.py",
+        "patchSetId": 1
+      },
+      "lineNbr": 305,
+      "author": {
+        "id": 1000429
+      },
+      "writtenOn": "2017-11-06T14:49:49Z",
+      "side": 1,
+      "message": "For argument |instrumented| I agree to keep it as is .. mainly because it is not default-initialized, but also because you are not modifying it here :)\n\nTwo default-initialized booleans at the end of the argument list, however, make me nervous.\n\nI was referring to the argument \u0027lightweight_instrumentation\u0027, which is not supposed to change at runtime, unless I am missing something ..\n\nyou could call it StepRecorder._lightweight_instrumentation_mode for more clarity. It sounds quite natural to be compiling with no instrumentation, but in _lightweight_instrumentation_mode, which could add extra checks, different orderfile etc etc.\n\nAs of |force_relink|, I forgot what it means, and OK to keep it as is for now.",
+      "parentUuid": "b5c35f6c_05babcd4",
       "range": {
         "startLine": 305,
         "startChar": 43,
@@ -389,6 +437,30 @@
       "side": 1,
       "message": "More time, as the symbols need to be re-read from the native library.",
       "parentUuid": "e5fdec8a_43587a16",
+      "range": {
+        "startLine": 242,
+        "startChar": 4,
+        "endLine": 242,
+        "endChar": 29
+      },
+      "revId": "a5115527777a00c7192aeddf8e1fc73ebd75d782",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8375ef50_966ca55c",
+        "filename": "tools/cygprofile/process_profiles.py",
+        "patchSetId": 1
+      },
+      "lineNbr": 242,
+      "author": {
+        "id": 1000429
+      },
+      "writtenOn": "2017-11-06T14:49:49Z",
+      "side": 1,
+      "message": "I wanted to express that both here and in MergeDumpsAndWriteSymbolOffsets() the same work is being done:\nMergeDumps()\nGetOffsetToSymbolArray()\nGetReachedSymbolsFromDump()\n\nThen here it also makes WriteReachedSymbolOffsets() optional.\n\nTo reduce potential errors from repetitions (classic things like \u0027fixed the bug here, forgot to fix in another place\u0027) I suggested to add an arg to the function like |write_offsets| and rename to GetReachedSymbols(). Or .. GetReachedSymbolsAndMaybeWriteSymbolOffsets().\n\nI did not realize that reached_symbols contains the offsets already. This makes reusing even simpler, without an extra argument. Modulo two logging messages. Do we need them to behave differently?",
+      "parentUuid": "4ba38d33_555bcdb2",
       "range": {
         "startLine": 242,
         "startChar": 4,
