@@ -70,8 +70,6 @@ class CORE_EXPORT WheelEvent final : public MouseEvent {
   bool IsMouseEvent() const override;
   bool IsWheelEvent() const override;
 
-  EventDispatchMediator* CreateMediator() override;
-
   const WebMouseWheelEvent& NativeEvent() const { return native_event_; }
 
   virtual void Trace(blink::Visitor*);
