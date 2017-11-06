@@ -241,8 +241,10 @@ PaymentRequestSpec::GetApplicableModifier(
         &payment_method_identifiers_set, &stringified_method_data);
 
     if (selected_instrument->IsValidForModifier(
-            modifier->method_data->supported_methods, supported_networks,
-            supported_types, !modifier->method_data->supported_types.empty())) {
+            modifier->method_data->supported_methods,
+            !modifier->method_data->supported_networks.empty(),
+            supported_networks, !modifier->method_data->supported_types.empty(),
+            supported_types)) {
       return &modifier;
     }
   }
