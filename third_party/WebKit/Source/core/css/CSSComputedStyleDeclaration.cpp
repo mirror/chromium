@@ -195,7 +195,7 @@ const Vector<CSSPropertyID>&
 CSSComputedStyleDeclaration::ComputableProperties() {
   DEFINE_STATIC_LOCAL(Vector<CSSPropertyID>, properties, ());
   if (properties.IsEmpty()) {
-    CSSPropertyAPI::FilterEnabledCSSPropertiesIntoVector(
+    CSSProperty::FilterEnabledCSSPropertiesIntoVector(
         kComputedPropertyArray, WTF_ARRAY_LENGTH(kComputedPropertyArray),
         properties);
   }
@@ -325,7 +325,7 @@ CSSComputedStyleDeclaration::GetVariables() const {
 }
 
 const CSSValue* CSSComputedStyleDeclaration::GetPropertyCSSValue(
-    const CSSPropertyAPI& property_api) const {
+    const CSSProperty& property_api) const {
   Node* styled_node = StyledNode();
   if (!styled_node)
     return nullptr;
@@ -368,7 +368,7 @@ const CSSValue* CSSComputedStyleDeclaration::GetPropertyCSSValue(
 
 String CSSComputedStyleDeclaration::GetPropertyValue(
     CSSPropertyID property_id) const {
-  const CSSValue* value = GetPropertyCSSValue(CSSPropertyAPI::Get(property_id));
+  const CSSValue* value = GetPropertyCSSValue(CSSProperty::Get(property_id));
   if (value)
     return value->CssText();
   return "";
@@ -405,7 +405,7 @@ bool CSSComputedStyleDeclaration::CssPropertyMatches(
         return true;
     }
   }
-  const CSSValue* value = GetPropertyCSSValue(CSSPropertyAPI::Get(property_id));
+  const CSSValue* value = GetPropertyCSSValue(CSSProperty::Get(property_id));
   return DataEquivalent(value, property_value);
 }
 
@@ -419,7 +419,7 @@ MutableStylePropertySet* CSSComputedStyleDeclaration::CopyPropertiesInSet(
   list.ReserveInitialCapacity(properties.size());
   for (unsigned i = 0; i < properties.size(); ++i) {
     const CSSValue* value =
-        GetPropertyCSSValue(CSSPropertyAPI::Get(properties[i]));
+        GetPropertyCSSValue(CSSProperty::Get(properties[i]));
     if (value)
       list.push_back(CSSPropertyValue(properties[i], *value, false));
   }
@@ -442,7 +442,7 @@ String CSSComputedStyleDeclaration::getPropertyValue(
     return String();
   }
 #if DCHECK_IS_ON
-  DCHECK(CSSPropertyAPI::Get(property_id).IsEnabled());
+  DCHECK(CSSProperty::Get(property_id).IsEnabled());
 #endif
   return GetPropertyValue(property_id);
 }
@@ -482,7 +482,7 @@ String CSSComputedStyleDeclaration::removeProperty(
 
 const CSSValue* CSSComputedStyleDeclaration::GetPropertyCSSValueInternal(
     CSSPropertyID property_id) {
-  return GetPropertyCSSValue(CSSPropertyAPI::Get(property_id));
+  return GetPropertyCSSValue(CSSProperty::Get(property_id));
 }
 
 const CSSValue* CSSComputedStyleDeclaration::GetPropertyCSSValueInternal(

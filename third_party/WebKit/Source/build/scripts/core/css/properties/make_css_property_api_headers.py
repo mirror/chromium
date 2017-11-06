@@ -12,18 +12,18 @@ import json5_generator
 import template_expander
 
 from collections import defaultdict, namedtuple
-from make_css_property_api_base import CSSPropertyAPIWriter
+from make_css_property_api_base import CSSPropertyWriter
 
 
 class ApiMethod(namedtuple('ApiMethod', 'name,return_type,parameters')):
     pass
 
 
-class CSSPropertyAPIHeadersWriter(CSSPropertyAPIWriter):
+class CSSPropertyHeadersWriter(CSSPropertyWriter):
     def __init__(self, json5_file_paths):
-        super(CSSPropertyAPIHeadersWriter, self).__init__(json5_file_paths)
+        super(CSSPropertyHeadersWriter, self).__init__(json5_file_paths)
         assert len(json5_file_paths) == 3,\
-            ('CSSPropertyAPIHeadersWriter requires 3 input json5 files, ' +
+            ('CSSPropertyHeadersWriter requires 3 input json5 files, ' +
              'got {}.'.format(len(json5_file_paths)))
 
         # Map of API method name -> (return_type, parameters)
@@ -41,23 +41,22 @@ class CSSPropertyAPIHeadersWriter(CSSPropertyAPIWriter):
         self._outputs = {}
         output_dir = sys.argv[sys.argv.index('--output_dir') + 1]
         properties = self.css_properties.longhands
-        class_prefix = 'CSSPropertyAPI'
         if 'shorthands' in output_dir:
             properties = self.css_properties.shorthands
-            class_prefix = 'CSSShorthandPropertyAPI'
         for property_ in properties:
-            if property_['api_class'] is None:
+            if property_['property_class'] is None:
                 continue
             property_['unique'] = isinstance(
-                property_['api_class'], types.BooleanType)
+                property_['property_class'], types.BooleanType)
             property_['api_methods'] = [
                 self._api_methods[method_name]
                 for method_name in property_['api_methods']
             ]
-            class_data = self.get_class(property_, class_prefix)
+            property_['namespace'] = 'CSSShorthand' if property_['longhands'] else 'CSSLonghand'
+            class_data = self.get_class(property_)
             # Functions should only be declared on the API classes if they are
-            # implemented and not shared (denoted by api_class = true. Shared
-            # classes are denoted by api_class = "some string").
+            # implemented and not shared (denoted by property_class = true. Shared
+            # classes are denoted by property_class = "some string").
             property_['should_declare_application_functions'] = \
                 property_['unique'] \
                 and property_['is_property'] \
@@ -69,13 +68,13 @@ class CSSPropertyAPIHeadersWriter(CSSPropertyAPIWriter):
                 self.generate_property_api_h_builder(
                     class_data.classname, property_))
 
-    def generate_property_api_h_builder(self, api_classname, property_):
+    def generate_property_api_h_builder(self, property_classname, property_):
         @template_expander.use_jinja(
-            'core/css/properties/templates/CSSPropertyAPISubclass.h.tmpl')
+            'core/css/properties/templates/CSSPropertySubclass.h.tmpl')
         def generate_property_api_h():
             return {
                 'input_files': self._input_files,
-                'api_classname': api_classname,
+                'property_classname': property_classname,
                 'property': property_,
             }
         return generate_property_api_h
@@ -84,7 +83,7 @@ class CSSPropertyAPIHeadersWriter(CSSPropertyAPIWriter):
         # First collect which classes correspond to which properties.
         class_names_to_properties = defaultdict(list)
         for property_ in self.css_properties.properties_including_aliases:
-            if property_['api_class'] is None:
+            if property_['property_class'] is None:
                 continue
             class_data = self.get_class(property_)
             class_names_to_properties[class_data.classname].append(property_)
@@ -92,22 +91,22 @@ class CSSPropertyAPIHeadersWriter(CSSPropertyAPIWriter):
         # names.
         for properties in class_names_to_properties.values():
             if len(properties) == 1:
-                assert properties[0]['api_class'] is True, 'Unique api_class ' \
-                    '{} defined on {}. api_class as a string is reserved for ' \
+                assert properties[0]['property_class'] is True, 'Unique property_class ' \
+                    '{} defined on {}. property_class as a string is reserved for ' \
                     'use with properties that share logic. Did you mean ' \
-                    'api_class: true?'.format(
-                        properties[0]['api_class'], properties[0]['name'])
+                    'property_class: true?'.format(
+                        properties[0]['property_class'], properties[0]['name'])
 
             api_methods = set(properties[0]['api_methods'])
             for property_ in properties[1:]:
                 assert api_methods == set(property_['api_methods']), \
-                    'Properties {} and {} share the same api_class but do ' \
+                    'Properties {} and {} share the same property_class but do ' \
                     'not declare the same api_methods. Properties sharing ' \
-                    'the same api_class must declare the same list of ' \
+                    'the same property_class must declare the same list of ' \
                     'api_methods to ensure deterministic code ' \
                     'generation.'.format(
                         properties[0]['name'], property_['name'])
 
 
 if __name__ == '__main__':
-    json5_generator.Maker(CSSPropertyAPIHeadersWriter).main()
+    json5_generator.Maker(CSSPropertyHeadersWriter).main()
