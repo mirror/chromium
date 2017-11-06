@@ -1,0 +1,96 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "b5cf0b07_c558b674",
+        "filename": "third_party/WebKit/LayoutTests/fast/imagecapture/ImageCapture-creation-expected.txt",
+        "patchSetId": 7
+      },
+      "lineNbr": 3,
+      "author": {
+        "id": 1143639
+      },
+      "writtenOn": "2017-11-06T11:08:08Z",
+      "side": 1,
+      "message": "nit: This test is failing because MediaStreamTrack.stop() is currently handled by MockWebMediaStreamCenter, which we should get rid of too.\nCan you file a bug for that?\n\nNote: MediaStreamTrack.stop() is moving from MediaStreamCenter to UserMediaClient, so that will fix this, but we have to remove MockWebMediaStreamCenter anyway.",
+      "range": {
+        "startLine": 3,
+        "startChar": 5,
+        "endLine": 3,
+        "endChar": 14
+      },
+      "revId": "03dc0139da158f18c7ac989659273ab6f8f59a0f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e51bf25b_6d7be2d2",
+        "filename": "third_party/WebKit/LayoutTests/fast/mediastream/MediaStreamTrack-applyConstraints-expected.txt",
+        "patchSetId": 7
+      },
+      "lineNbr": 4,
+      "author": {
+        "id": 1143639
+      },
+      "writtenOn": "2017-11-06T11:08:08Z",
+      "side": 1,
+      "message": "nit: Can you file a bug to have this test fixed?",
+      "range": {
+        "startLine": 4,
+        "startChar": 8,
+        "endLine": 4,
+        "endChar": 19
+      },
+      "revId": "03dc0139da158f18c7ac989659273ab6f8f59a0f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2c85979b_04bbf957",
+        "filename": "third_party/WebKit/LayoutTests/fast/mediastream/MediaStreamTrack-getConstraints-expected.txt",
+        "patchSetId": 7
+      },
+      "lineNbr": 4,
+      "author": {
+        "id": 1143639
+      },
+      "writtenOn": "2017-11-06T11:08:08Z",
+      "side": 1,
+      "message": "ditto",
+      "range": {
+        "startLine": 4,
+        "startChar": 8,
+        "endLine": 4,
+        "endChar": 9
+      },
+      "revId": "03dc0139da158f18c7ac989659273ab6f8f59a0f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "32f1df73_99c33c1c",
+        "filename": "third_party/WebKit/LayoutTests/fast/mediastream/getusermedia-constraints-expected.txt",
+        "patchSetId": 7
+      },
+      "lineNbr": 1,
+      "author": {
+        "id": 1143639
+      },
+      "writtenOn": "2017-11-06T11:08:08Z",
+      "side": 1,
+      "message": "nit: Can you file a bug to fix this test? Things like valid_but_unsupported_1 were valid in the mock but are ignored by the real thing in content.",
+      "range": {
+        "startLine": 1,
+        "startChar": 83,
+        "endLine": 1,
+        "endChar": 0
+      },
+      "revId": "03dc0139da158f18c7ac989659273ab6f8f59a0f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
