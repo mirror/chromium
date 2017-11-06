@@ -159,6 +159,7 @@ source_set("browser_sources") {
     "extension_request_limiting_throttle.cc",
     "extension_request_limiting_throttle.h",
     "extension_scoped_prefs.h",
+    "extension_service_interface.h",
     "extension_service_worker_message_filter.cc",
     "extension_service_worker_message_filter.h",
     "extension_system.cc",
