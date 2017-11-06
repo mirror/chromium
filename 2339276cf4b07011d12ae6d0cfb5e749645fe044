@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "bb80ba58_466907c0",
+        "filename": "ash/shelf/shelf_button.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 381,
+      "author": {
+        "id": 1000101
+      },
+      "writtenOn": "2017-11-06T22:50:33Z",
+      "side": 1,
+      "message": "Good comment.\n\nFrom the comment, the problem seems to be that PointerReleasedOnButton() call at L376 would cause the ShelfButton be released. In this case, just protecting the ClearState() call is not enough. |drag_timer_| etc woudl be UAF and could cause seg fault too.\n\nHow about move L376 to the end of the function?",
+      "range": {
+        "startLine": 378,
+        "startChar": 0,
+        "endLine": 381,
+        "endChar": 30
+      },
+      "revId": "2339276cf4b07011d12ae6d0cfb5e749645fe044",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
