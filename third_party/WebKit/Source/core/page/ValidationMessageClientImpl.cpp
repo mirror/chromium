@@ -101,7 +101,7 @@ void ValidationMessageClientImpl::HideValidationMessage(const Element& anchor) {
     return;
   DCHECK(overlay_);
   overlay_delegate_->StartToHide();
-  timer_ = WTF::MakeUnique<TaskRunnerTimer<ValidationMessageClientImpl>>(
+  timer_ = std::make_unique<TaskRunnerTimer<ValidationMessageClientImpl>>(
       anchor.GetDocument().GetTaskRunner(TaskType::kUnspecedTimer), this,
       &ValidationMessageClientImpl::Reset);
   // This should be equal to or larger than transition duration of

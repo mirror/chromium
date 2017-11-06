@@ -717,7 +717,7 @@ void ComputedStyle::UpdatePropertySpecificDifferences(
 
 void ComputedStyle::AddPaintImage(StyleImage* image) {
   if (!MutablePaintImagesInternal()) {
-    SetPaintImagesInternal(WTF::MakeUnique<PaintImages>());
+    SetPaintImagesInternal(std::make_unique<PaintImages>());
   }
   MutablePaintImagesInternal()->push_back(image);
 }

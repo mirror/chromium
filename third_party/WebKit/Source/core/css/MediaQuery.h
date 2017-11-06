@@ -61,7 +61,7 @@ class CORE_EXPORT MediaQuery {
   String CssText() const;
 
   std::unique_ptr<MediaQuery> Copy() const {
-    return WTF::MakeUnique<MediaQuery>(*this);
+    return std::make_unique<MediaQuery>(*this);
   }
 
  private:

@@ -151,7 +151,7 @@ void FetchParameters::SetAllowImagePlaceholder() {
 
 std::unique_ptr<CrossThreadFetchParametersData> FetchParameters::CopyData()
     const {
-  auto data = WTF::MakeUnique<CrossThreadFetchParametersData>();
+  auto data = std::make_unique<CrossThreadFetchParametersData>();
   data->resource_request = resource_request_.CopyData();
   data->decoder_options = decoder_options_;
   data->options = CrossThreadResourceLoaderOptionsData(options_);

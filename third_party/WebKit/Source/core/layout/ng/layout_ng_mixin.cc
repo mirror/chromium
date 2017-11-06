@@ -32,7 +32,7 @@ NGInlineNodeData* LayoutNGMixin<Base>::GetNGInlineNodeData() const {
 
 template <typename Base>
 void LayoutNGMixin<Base>::ResetNGInlineNodeData() {
-  ng_inline_node_data_ = WTF::MakeUnique<NGInlineNodeData>();
+  ng_inline_node_data_ = std::make_unique<NGInlineNodeData>();
 }
 
 // The current fragment from the last layout cycle for this box.
@@ -142,7 +142,7 @@ LayoutNGMixin<Base>::CachedLayoutResultForTesting() {
 template <typename Base>
 void LayoutNGMixin<Base>::SetPaintFragment(
     scoped_refptr<const NGPhysicalFragment> fragment) {
-  paint_fragment_ = WTF::MakeUnique<NGPaintFragment>(std::move(fragment));
+  paint_fragment_ = std::make_unique<NGPaintFragment>(std::move(fragment));
 }
 
 template <typename Base>

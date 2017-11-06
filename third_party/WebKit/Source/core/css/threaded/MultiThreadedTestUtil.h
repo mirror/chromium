@@ -56,7 +56,7 @@ class MultiThreadedTest : public ::testing::Test {
 
     for (int i = 0; i < num_threads_; ++i) {
       threads.push_back(WebThreadSupportingGC::Create(""));
-      waits.push_back(WTF::MakeUnique<WaitableEvent>());
+      waits.push_back(std::make_unique<WaitableEvent>());
     }
 
     for (int i = 0; i < num_threads_; ++i) {
