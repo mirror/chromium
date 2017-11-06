@@ -1,0 +1,78 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "73b6ab06_03cab85a",
+        "filename": "content/renderer/service_worker/service_worker_context_client.cc",
+        "patchSetId": 10
+      },
+      "lineNbr": 826,
+      "author": {
+        "id": 1125915
+      },
+      "writtenOn": "2017-11-06T07:27:46Z",
+      "side": 1,
+      "message": "Sorry if I\u0027m missing something. \nHave you removed the code to keep the registration into map in the controller case? \nIn my understanding, currently we don\u0027t implement APIs to get other registrations, but it\u0027s not coming from the spec. I think we don\u0027t have to treat the registration object for service workers as special.",
+      "revId": "44e56963bb4bea01848dfa07a58df26f4c8b7342",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "182031eb_de8ebd8b",
+        "filename": "content/renderer/service_worker/service_worker_dispatcher.h",
+        "patchSetId": 10
+      },
+      "lineNbr": 98,
+      "author": {
+        "id": 1125915
+      },
+      "writtenOn": "2017-11-06T07:27:46Z",
+      "side": 1,
+      "message": "nit: How about const ref?",
+      "range": {
+        "startLine": 98,
+        "startChar": 2,
+        "endLine": 98,
+        "endChar": 33
+      },
+      "revId": "44e56963bb4bea01848dfa07a58df26f4c8b7342",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "699d899f_8c683045",
+        "filename": "content/renderer/service_worker/service_worker_provider_context.cc",
+        "patchSetId": 10
+      },
+      "lineNbr": 83,
+      "author": {
+        "id": 1125915
+      },
+      "writtenOn": "2017-11-06T07:27:46Z",
+      "side": 1,
+      "message": "I don\u0027t think we need to limit the tracking to clients. What do you think of keeping it as a member of SWProviderContext?",
+      "revId": "44e56963bb4bea01848dfa07a58df26f4c8b7342",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1f760b3f_58b1e5e3",
+        "filename": "content/renderer/service_worker/service_worker_provider_context.cc",
+        "patchSetId": 10
+      },
+      "lineNbr": 182,
+      "author": {
+        "id": 1125915
+      },
+      "writtenOn": "2017-11-06T07:27:46Z",
+      "side": 1,
+      "message": "Once we move |controllee_state_-\u003eregistrations_| to the member of SWProviderContext, we can replace these codes by SWProviderContext::GetOrCreateRegistartion().",
+      "revId": "44e56963bb4bea01848dfa07a58df26f4c8b7342",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
