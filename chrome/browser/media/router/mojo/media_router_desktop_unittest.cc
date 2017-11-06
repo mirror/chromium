@@ -22,6 +22,7 @@
 #include "testing/gtest/include/gtest/gtest.h"
 
 using testing::_;
+using testing::AtLeast;
 using testing::Invoke;
 using testing::Mock;
 using testing::Return;
@@ -68,12 +69,13 @@ class MediaRouterDesktopTest : public MediaRouterMojoTest {
 
 #if defined(OS_WIN)
 TEST_F(MediaRouterDesktopTest, EnableMdnsAfterEachRegister) {
+  // EnableMdnsDiscovery() is never called except on Windows.
+  EXPECT_CALL(mock_extension_provider_, EnableMdnsDiscovery())
+      .Times(Atleast(1));
+  RegisterExtensionProvider();
+
   EXPECT_CALL(mock_extension_provider_,
               UpdateMediaSinks(MediaSourceForDesktop().id()));
-  // EnableMdnsDiscovery() is never called except on Windows.
-  EXPECT_CALL(mock_extension_provider_, EnableMdnsDiscovery());
-  RegisterExtensionProvider();
-  // Should not call EnableMdnsDiscovery(), but will call UpdateMediaSinks.
   router()->OnUserGesture();
   base::RunLoop().RunUntilIdle();
 }
