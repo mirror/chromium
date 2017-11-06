@@ -928,6 +928,12 @@ void LocalFrameClientImpl::DidUpdateToUniqueOrigin() {
       web_frame_->GetSecurityOrigin().IsPotentiallyTrustworthy());
 }
 
+void LocalFrameClientImpl::DidUpdateAboutBlank(const KURL& url) {
+  if (!web_frame_->Client())
+    return;
+  web_frame_->Client()->DidUpdateAboutBlank(url);
+}
+
 void LocalFrameClientImpl::DidChangeFramePolicy(
     Frame* child_frame,
     SandboxFlags flags,
