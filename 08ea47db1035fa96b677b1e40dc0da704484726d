@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "ec7980aa_98fe5194",
+        "filename": "ash/shelf/shelf_button.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 361,
+      "author": {
+        "id": 1202846
+      },
+      "writtenOn": "2017-11-06T21:26:34Z",
+      "side": 1,
+      "message": "Seems that we can always close the context menu with right click. The logic in ShelfView::PointerPressedOnButton to close the context menu when it is opend (L689 in ShelfView) was added to close the context menu when try to drag the app with touch.\nHow about move that logic after check |drag_view_| and keep it as is here? Please check the new patch set. Thanks.",
+      "parentUuid": "c0579905_2771d9a1",
+      "revId": "08ea47db1035fa96b677b1e40dc0da704484726d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "245cf85a_6b7d1918",
         "filename": "ash/shelf/shelf_view.cc",
         "patchSetId": 1
@@ -36,6 +54,24 @@
     },
     {
       "key": {
+        "uuid": "8c83125a_64bebb78",
+        "filename": "ash/shelf/shelf_view.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 569,
+      "author": {
+        "id": 1202846
+      },
+      "writtenOn": "2017-11-06T21:26:34Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "245cf85a_6b7d1918",
+      "revId": "08ea47db1035fa96b677b1e40dc0da704484726d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "7c7b6143_721e7cc3",
         "filename": "ash/shelf/shelf_view.h",
         "patchSetId": 1
@@ -50,6 +86,24 @@
       "revId": "08ea47db1035fa96b677b1e40dc0da704484726d",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8e63280d_68b9ad04",
+        "filename": "ash/shelf/shelf_view.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 182,
+      "author": {
+        "id": 1202846
+      },
+      "writtenOn": "2017-11-06T21:26:34Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "7c7b6143_721e7cc3",
+      "revId": "08ea47db1035fa96b677b1e40dc0da704484726d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
