@@ -1,0 +1,73 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "8f0297f8_b351b740",
+        "filename": "chrome/browser/resource_coordinator/tab_manager.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 204,
+      "author": {
+        "id": 1112850
+      },
+      "writtenOn": "2017-11-06T22:50:29Z",
+      "side": 1,
+      "message": "nit: Can we use OnXYZ style to be consistent with other APIs here? (Same for stats collector)",
+      "range": {
+        "startLine": 204,
+        "startChar": 7,
+        "endLine": 204,
+        "endChar": 24
+      },
+      "revId": "b037954bf162792434d223d0fb1c7e3ffe2786f9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c577721e_dc05d707",
+        "filename": "chrome/browser/resource_coordinator/tab_manager_web_contents_data.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 117,
+      "author": {
+        "id": 1112850
+      },
+      "writtenOn": "2017-11-06T22:50:29Z",
+      "side": 1,
+      "message": "After merging with NotifyTabIsLoaded, probably better to also add the if-check in PageSignalGenerator and DCHECK in PageSignalReceiver (not observer after your other CL to decouple them).",
+      "range": {
+        "startLine": 117,
+        "startChar": 7,
+        "endLine": 117,
+        "endChar": 36
+      },
+      "revId": "b037954bf162792434d223d0fb1c7e3ffe2786f9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "fb2f323c_0dfa0a8a",
+        "filename": "chrome/browser/resource_coordinator/tab_manager_web_contents_data.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 207,
+      "author": {
+        "id": 1112850
+      },
+      "writtenOn": "2017-11-06T22:50:29Z",
+      "side": 1,
+      "message": "As discussed offline, we can just merge this with NotifyAlmostIdle.",
+      "range": {
+        "startLine": 207,
+        "startChar": 7,
+        "endLine": 207,
+        "endChar": 24
+      },
+      "revId": "b037954bf162792434d223d0fb1c7e3ffe2786f9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
