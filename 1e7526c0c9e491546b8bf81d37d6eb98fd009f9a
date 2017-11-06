@@ -1,0 +1,141 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "f55a7adf_0249db9e",
+        "filename": "chrome/browser/prefs/browser_prefs.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 467,
+      "author": {
+        "id": 1116027
+      },
+      "writtenOn": "2017-11-06T13:37:48Z",
+      "side": 1,
+      "message": "The Profile prefs should be registered in the factory:\n\n  void ConsentAuditorFactory::RegisterProfilePrefs(\n      user_prefs::PrefRegistrySyncable* registry) {\n    consent_auditor::ConsentAuditor::RegisterPrefs(registry);\n  }",
+      "revId": "1e7526c0c9e491546b8bf81d37d6eb98fd009f9a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9305abe7_2daa66d0",
+        "filename": "components/consent_auditor/consent_auditor.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 28,
+      "author": {
+        "id": 1116027
+      },
+      "writtenOn": "2017-11-06T13:37:48Z",
+      "side": 1,
+      "message": "This appears to be unused. Remove?",
+      "range": {
+        "startLine": 28,
+        "startChar": 35,
+        "endLine": 28,
+        "endChar": 54
+      },
+      "revId": "1e7526c0c9e491546b8bf81d37d6eb98fd009f9a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f8dadc3e_f5976897",
+        "filename": "components/consent_auditor/consent_auditor.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 35,
+      "author": {
+        "id": 1116027
+      },
+      "writtenOn": "2017-11-06T13:37:48Z",
+      "side": 1,
+      "message": "Code should drop any pointer it holds to other KeyedService in Shutdown, so user_event_service_ should probably be set to null here.",
+      "revId": "1e7526c0c9e491546b8bf81d37d6eb98fd009f9a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3bb279ce_4fd3917b",
+        "filename": "components/consent_auditor/consent_auditor.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 45,
+      "author": {
+        "id": 1116027
+      },
+      "writtenOn": "2017-11-06T13:37:48Z",
+      "side": 1,
+      "message": "RegisterDictionaryPref already creates the value, so this condition should never happen, except maybe in unit tests. For unit tests, it is the responsibility of the test to invoke ConsentAudito::RegisterPrefs.",
+      "revId": "1e7526c0c9e491546b8bf81d37d6eb98fd009f9a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7f3a4e8a_8c2f6b1c",
+        "filename": "components/consent_auditor/consent_auditor.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 50,
+      "author": {
+        "id": 1116027
+      },
+      "writtenOn": "2017-11-06T13:37:48Z",
+      "side": 1,
+      "message": "Can you add a comment to explain why a block is required here? Because, I don\u0027t see why it is needed. AFAICT, the DictionaryPrefUpdate will happens before the method return anyway, and it does not look like any code between the end of the block and the return statement depends on DictionaryPrefUpdate destructor being executed.",
+      "revId": "1e7526c0c9e491546b8bf81d37d6eb98fd009f9a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "68de539f_d86bfec4",
+        "filename": "components/consent_auditor/consent_auditor.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 32,
+      "author": {
+        "id": 1116027
+      },
+      "writtenOn": "2017-11-06T13:37:48Z",
+      "side": 1,
+      "message": "Since those are profile specific settings, the convention is to call this method RegisterProfilePrefs (yes, even for components that would be used on other platforms like iOS that do not have a Profile).\n\nThis is to allow for non-profile specific settings registration method.",
+      "range": {
+        "startLine": 32,
+        "startChar": 14,
+        "endLine": 32,
+        "endChar": 27
+      },
+      "revId": "1e7526c0c9e491546b8bf81d37d6eb98fd009f9a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7079794b_be0da805",
+        "filename": "components/consent_auditor/consent_auditor_unittest.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 37,
+      "author": {
+        "id": 1116027
+      },
+      "writtenOn": "2017-11-06T13:37:48Z",
+      "side": 1,
+      "message": "This method seems to be unused. Remove?",
+      "range": {
+        "startLine": 37,
+        "startChar": 28,
+        "endLine": 37,
+        "endChar": 48
+      },
+      "revId": "1e7526c0c9e491546b8bf81d37d6eb98fd009f9a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
