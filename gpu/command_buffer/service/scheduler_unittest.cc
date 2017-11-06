@@ -300,6 +300,55 @@ TEST_F(SchedulerTest, ReleaseSequenceIsPrioritized) {
   release_state->Destroy();
 }
 
+TEST_F(SchedulerTest, ReleaseSequenceHasPriorityOfWaiter) {
+  SequenceId sequence_id1 =
+      scheduler()->CreateSequence(SchedulingPriority::kLow);
+  CommandBufferNamespace namespace_id = CommandBufferNamespace::GPU_IO;
+  CommandBufferId command_buffer_id = CommandBufferId::FromUnsafeValue(1);
+  scoped_refptr<SyncPointClientState> release_state =
+      sync_point_manager()->CreateSyncPointClientState(
+          namespace_id, command_buffer_id, sequence_id1);
+
+  uint64_t release = 1;
+  bool ran1 = false;
+  scheduler()->ScheduleTask(Scheduler::Task(sequence_id1, GetClosure([&] {
+                                              release_state->ReleaseFenceSync(
+                                                  release);
+                                              ran1 = true;
+                                            }),
+                                            std::vector<SyncToken>()));
+
+  bool ran2 = false;
+  SyncToken sync_token(namespace_id, 0, command_buffer_id, release);
+  SequenceId sequence_id2 =
+      scheduler()->CreateSequence(SchedulingPriority::kNormal);
+  scheduler()->ScheduleTask(Scheduler::Task(
+      sequence_id2, GetClosure([&] { ran2 = true; }), {sync_token}));
+
+  SequenceId sequence_id3 =
+      scheduler()->CreateSequence(SchedulingPriority::kHigh);
+
+  bool ran3 = false;
+  scheduler()->ScheduleTask(Scheduler::Task(sequence_id3,
+                                            GetClosure([&] { ran3 = true; }),
+                                            std::vector<SyncToken>()));
+
+  task_runner()->RunPendingTasks();
+  EXPECT_FALSE(ran1);
+  EXPECT_FALSE(ran2);
+  EXPECT_TRUE(ran3);
+
+  task_runner()->RunPendingTasks();
+  EXPECT_TRUE(ran1);
+  EXPECT_FALSE(ran2);
+  EXPECT_TRUE(sync_point_manager()->IsSyncTokenReleased(sync_token));
+
+  task_runner()->RunPendingTasks();
+  EXPECT_TRUE(ran2);
+
+  release_state->Destroy();
+}
+
 TEST_F(SchedulerTest, ReleaseSequenceShouldYield) {
   SequenceId sequence_id1 =
       scheduler()->CreateSequence(SchedulingPriority::kLow);
