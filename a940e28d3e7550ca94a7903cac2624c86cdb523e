@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "52558f27_1ac64a4c",
+        "filename": "chrome/browser/safe_browsing/chrome_password_protection_service.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 239,
+      "author": {
+        "id": 1122060
+      },
+      "writtenOn": "2017-11-06T20:25:41Z",
+      "side": 1,
+      "message": "q: Is this synchronous, or will it happen some time later?  Maybe it doesn\u0027t matter, as long as they end up in a state where they can see the omnibox and the dialog.",
+      "revId": "a940e28d3e7550ca94a7903cac2624c86cdb523e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
