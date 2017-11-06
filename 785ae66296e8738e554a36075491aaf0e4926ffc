@@ -120,6 +120,30 @@
     },
     {
       "key": {
+        "uuid": "52746ca4_463877b4",
+        "filename": "net/http/http_server_properties_impl.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 599,
+      "author": {
+        "id": 1143554
+      },
+      "writtenOn": "2017-11-06T23:47:31Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "d8ac6573_13237743",
+      "range": {
+        "startLine": 599,
+        "startChar": 79,
+        "endLine": 599,
+        "endChar": 0
+      },
+      "revId": "785ae66296e8738e554a36075491aaf0e4926ffc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "5a3115bd_6f1e345d",
         "filename": "net/http/http_server_properties_impl.cc",
         "patchSetId": 2
@@ -238,6 +262,30 @@
     },
     {
       "key": {
+        "uuid": "4dcf21da_740a54b6",
+        "filename": "net/http/http_server_properties_impl.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 619,
+      "author": {
+        "id": 1143554
+      },
+      "writtenOn": "2017-11-06T23:47:31Z",
+      "side": 1,
+      "message": "That sounds plausible. What should happen if multiple hosts map to the same canonical name? The CanonicalHostMap has 1-to-1 relationship. I guess we only need to hold the reference to the MRU origin for a given canonical host.\n\nWe don\u0027t populate QuicServerInfo. I will add it to this CL.",
+      "parentUuid": "efdc1f27_f46b991c",
+      "range": {
+        "startLine": 619,
+        "startChar": 3,
+        "endLine": 619,
+        "endChar": 0
+      },
+      "revId": "785ae66296e8738e554a36075491aaf0e4926ffc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "71ac8a88_d9a35a62",
         "filename": "net/http/http_server_properties_impl_unittest.cc",
         "patchSetId": 2
@@ -258,6 +306,30 @@
       "revId": "785ae66296e8738e554a36075491aaf0e4926ffc",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4ee6f36a_8f8f37a6",
+        "filename": "net/http/http_server_properties_impl_unittest.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 1377,
+      "author": {
+        "id": 1143554
+      },
+      "writtenOn": "2017-11-06T23:47:31Z",
+      "side": 1,
+      "message": "Added more tests that cover the above mentioned functionality.",
+      "parentUuid": "71ac8a88_d9a35a62",
+      "range": {
+        "startLine": 1377,
+        "startChar": 66,
+        "endLine": 1377,
+        "endChar": 0
+      },
+      "revId": "785ae66296e8738e554a36075491aaf0e4926ffc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
