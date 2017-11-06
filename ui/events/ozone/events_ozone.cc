@@ -11,6 +11,7 @@ namespace ui {
 void DispatchEventFromNativeUiEvent(const base::NativeEvent& native_event,
                                     base::Callback<void(ui::Event*)> callback) {
   ui::Event* native_ui_event = static_cast<ui::Event*>(native_event);
+  LOG(INFO) << "Event ***";
   if (native_ui_event->IsKeyEvent()) {
     ui::KeyEvent key_event(native_event);
     callback.Run(&key_event);

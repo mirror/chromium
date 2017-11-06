@@ -6,6 +6,7 @@
 
 #include "base/location.h"
 #include "base/threading/thread_task_runner_handle.h"
+#include "base/time/time.h"
 #include "base/trace_event/trace_event.h"
 #include "ui/gl/gl_bindings.h"
 #include "ui/gl/gl_context.h"
@@ -52,14 +53,21 @@ void GlRenderer::RenderFrame() {
   glClearColor(1 - fraction, fraction, 0.0, 1.0);
   glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 
-  surface_->SwapBuffersAsync(base::Bind(&GlRenderer::PostRenderFrameTask,
-                                        weak_ptr_factory_.GetWeakPtr()));
+  // surface_->SwapBuffersAsync(base::Bind(&GlRenderer::PostRenderFrameTask,
+  // weak_ptr_factory_.GetWeakPtr()));
+  surface_->SwapBuffers();
+  PostRenderFrameTask(gfx::SwapResult::SWAP_ACK);
 }
 
 void GlRenderer::PostRenderFrameTask(gfx::SwapResult result) {
-  base::ThreadTaskRunnerHandle::Get()->PostTask(
+  // base::ThreadTaskRunnerHandle::Get()->PostTask(
+  // FROM_HERE,
+  // base::Bind(&GlRenderer::RenderFrame, weak_ptr_factory_.GetWeakPtr()));
+
+  base::ThreadTaskRunnerHandle::Get()->PostDelayedTask(
       FROM_HERE,
-      base::Bind(&GlRenderer::RenderFrame, weak_ptr_factory_.GetWeakPtr()));
+      base::Bind(&GlRenderer::RenderFrame, weak_ptr_factory_.GetWeakPtr()),
+      base::TimeDelta::FromSecondsD(1.0 / 60));
 }
 
 }  // namespace ui

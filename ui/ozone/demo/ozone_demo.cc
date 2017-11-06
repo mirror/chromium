@@ -126,6 +126,7 @@ class DemoWindow : public ui::PlatformWindowDelegate {
         weak_ptr_factory_(this) {
     platform_window_ =
         ui::OzonePlatform::GetInstance()->CreatePlatformWindow(this, bounds);
+    platform_window_->Show();
   }
   ~DemoWindow() override {}
 
@@ -225,8 +226,8 @@ std::unique_ptr<ui::Renderer> RendererFactory::CreateRenderer(
       scoped_refptr<gl::GLSurface> surface = CreateGLSurface(widget);
       if (!surface)
         LOG(FATAL) << "Failed to create GL surface";
-      if (!surface->SupportsAsyncSwap())
-        LOG(FATAL) << "GL surface must support SwapBuffersAsync";
+      // if (!surface->SupportsAsyncSwap())
+      // LOG(FATAL) << "GL surface must support SwapBuffersAsync";
       if (surface->IsSurfaceless())
         return std::make_unique<ui::SurfacelessGlRenderer>(widget, surface,
                                                            size);
