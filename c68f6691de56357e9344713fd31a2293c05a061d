@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "181d7873_ad1b158b",
+        "filename": "chrome/browser/ui/cocoa/hung_renderer_controller.mm",
+        "patchSetId": 2
+      },
+      "lineNbr": 55,
+      "author": {
+        "id": 1001216
+      },
+      "writtenOn": "2017-11-06T21:03:43Z",
+      "side": 1,
+      "message": "nit: restart",
+      "range": {
+        "startLine": 55,
+        "startChar": 16,
+        "endLine": 55,
+        "endChar": 25
+      },
+      "revId": "c68f6691de56357e9344713fd31a2293c05a061d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d8d27c21_2b093219",
+        "filename": "chrome/browser/ui/cocoa/hung_renderer_controller.mm",
+        "patchSetId": 2
+      },
+      "lineNbr": 276,
+      "author": {
+        "id": 1001216
+      },
+      "writtenOn": "2017-11-06T21:03:43Z",
+      "side": 1,
+      "message": "nit: so restart",
+      "range": {
+        "startLine": 276,
+        "startChar": 21,
+        "endLine": 276,
+        "endChar": 29
+      },
+      "revId": "c68f6691de56357e9344713fd31a2293c05a061d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
