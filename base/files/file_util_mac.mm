@@ -21,8 +21,33 @@ bool CopyFile(const FilePath& from_path, const FilePath& to_path) {
   ThreadRestrictions::AssertIOAllowed();
   if (from_path.ReferencesParent() || to_path.ReferencesParent())
     return false;
-  return (copyfile(from_path.value().c_str(),
-                   to_path.value().c_str(), NULL, COPYFILE_DATA) == 0);
+
+  stat_wrapper_t file_info = {};
+  FilePath final_path = to_path;
+  // Follow symbolic links and retrieve POSIX file info for destination file.
+  while (lstat(final_path.value().c_str(), &file_info) == 0 &&
+         S_ISLNK(file_info.st_mode)) {
+    if (!ReadSymbolicLink(final_path, &final_path))
+      return false;
+  }
+  if (S_ISDIR(file_info.st_mode))
+    return false;
+  if (copyfile(from_path.value().c_str(), final_path.value().c_str(), NULL,
+               COPYFILE_CLONE | COPYFILE_UNLINK | COPYFILE_ALL) != 0)
+    return false;
+
+  // If the destination file existed, restore its original permissions, undoing
+  // COPYFILE_SECURITY behavior.
+  // if the destionation file was newly created, make sure it's writable.
+  if (file_info.st_mode) {
+    chmod(final_path.value().c_str(), file_info.st_mode);
+  } else if (stat(final_path.value().c_str(), &file_info) != 0) {
+    return false;
+  } else if (!(file_info.st_mode & S_IWUSR)) {
+    chmod(final_path.value().c_str(), file_info.st_mode | S_IWUSR);
+  }
+
+  return true;
 }
 
 bool GetTempDir(base::FilePath* path) {

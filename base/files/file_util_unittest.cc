@@ -1079,7 +1079,7 @@ TEST_F(FileUtilTest, CopyFileExecutablePermission) {
 
   ASSERT_TRUE(GetPosixFilePermissions(dst, &mode));
 #if defined(OS_MACOSX)
-  expected_mode = 0755;
+  expected_mode = 0777;
 #elif defined(OS_CHROMEOS)
   expected_mode = 0644;
 #else
