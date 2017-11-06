@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "454a2098_0705e5ca",
+        "filename": "components/test/run_all_unittests.cc",
+        "patchSetId": 14
+      },
+      "lineNbr": 17,
+      "author": {
+        "id": 1116027
+      },
+      "writtenOn": "2017-11-06T09:14:33Z",
+      "side": 1,
+      "message": "This seems incorrect. I don\u0027t think the generic test runner should know about a particular service. Why can\u0027t this be done in the individual unit test SetUp method?\n\n+blundell that knows more than I do about services.",
+      "revId": "b1c6dac8351cfdb6e1e17d2d13eb13240a36859d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
