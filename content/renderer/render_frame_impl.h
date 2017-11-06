@@ -571,6 +571,7 @@ class CONTENT_EXPORT RenderFrameImpl
       blink::WebInsecureRequestPolicy policy) override;
   void DidUpdateToUniqueOrigin(
       bool is_potentially_trustworthy_unique_origin) override;
+  void DidUpdateAboutBlank(const blink::WebURL& url) override;
   void DidChangeFramePolicy(
       blink::WebFrame* child_frame,
       blink::WebSandboxFlags flags,

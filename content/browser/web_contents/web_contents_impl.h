@@ -1130,6 +1130,9 @@ class CONTENT_EXPORT WebContentsImpl : public WebContents,
                                         SkColor color);
   void OnUpdatePageImportanceSignals(RenderFrameHostImpl* source,
                                      const PageImportanceSignals& signals);
+
+  void OnUpdateAboutBlank(const GURL& url);
+
 #if BUILDFLAG(ENABLE_PLUGINS)
   void OnPepperInstanceCreated(RenderFrameHostImpl* source,
                                int32_t pp_instance);

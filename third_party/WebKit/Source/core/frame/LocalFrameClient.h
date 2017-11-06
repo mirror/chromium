@@ -270,6 +270,7 @@ class CORE_EXPORT LocalFrameClient : public FrameClient {
   virtual void DidEnforceInsecureRequestPolicy(WebInsecureRequestPolicy) {}
 
   virtual void DidUpdateToUniqueOrigin() {}
+  virtual void DidUpdateAboutBlank(const KURL& url) {}
 
   virtual void DidChangeFramePolicy(Frame* child_frame,
                                     SandboxFlags,
