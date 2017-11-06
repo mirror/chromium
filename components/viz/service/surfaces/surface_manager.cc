@@ -181,6 +181,10 @@ void SurfaceManager::InvalidateFrameSinkId(const FrameSinkId& frame_sink_id) {
   GarbageCollectSurfaces();
 }
 
+bool SurfaceManager::IsFrameSinkIdValid(const FrameSinkId& frame_sink_id) {
+  return valid_frame_sink_labels_.count(frame_sink_id);
+}
+
 void SurfaceManager::SetFrameSinkDebugLabel(const FrameSinkId& frame_sink_id,
                                             const std::string& debug_label) {
 #if DCHECK_IS_ON()
@@ -610,6 +614,11 @@ void SurfaceManager::SurfaceReferencesToStringImpl(const SurfaceId& surface_id,
 
 bool SurfaceManager::IsMarkedForDestruction(const SurfaceId& surface_id) {
   return surfaces_to_destroy_.count(surface_id) != 0;
+}
+
+void SurfaceManager::SurfaceWillBeDrawn(const SurfaceId& surface_id) {
+  for (auto& observer : observer_list_)
+    observer.OnSurfaceWillBeDrawn(surface_id);
 }
 
 }  // namespace viz
