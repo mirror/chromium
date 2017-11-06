@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "b5b1b7b4_ee5c4453",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/signin/SigninPromoUtil.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 57,
+      "author": {
+        "id": 1116043
+      },
+      "writtenOn": "2017-11-06T21:21:46Z",
+      "side": 1,
+      "message": "ApiCompatibilityUtils.objectEquals(previousAccountNames, currentAccountNames) was our goal to help with these checks",
+      "range": {
+        "startLine": 57,
+        "startChar": 12,
+        "endLine": 57,
+        "endChar": 32
+      },
+      "revId": "fcae1f813994928e1795800eb68ea03eb0edf879",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
