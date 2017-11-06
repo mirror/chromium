@@ -1,0 +1,73 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "9829dc3f_5264a60f",
+        "filename": "chrome/browser/ui/cocoa/dock_icon.mm",
+        "patchSetId": 2
+      },
+      "lineNbr": 19,
+      "author": {
+        "id": 1000022
+      },
+      "writtenOn": "2017-11-06T13:58:50Z",
+      "side": 1,
+      "message": "does this do the right thing if the user has resized their dock to be huge or tiny? the old code\u0027s fraction approach seems like it would have tolerated but I\u0027m not sure having a fixed size will.",
+      "range": {
+        "startLine": 19,
+        "startChar": 18,
+        "endLine": 19,
+        "endChar": 28
+      },
+      "revId": "ace027236d43714dcce95fb5132fb2a35705f0a0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2d694afa_3cb584c3",
+        "filename": "chrome/browser/ui/cocoa/dock_icon.mm",
+        "patchSetId": 2
+      },
+      "lineNbr": 136,
+      "author": {
+        "id": 1000022
+      },
+      "writtenOn": "2017-11-06T13:58:50Z",
+      "side": 1,
+      "message": "this whole loop should probably be a helper function, with an explanatory comment about what it\u0027s doing and unit tests",
+      "range": {
+        "startLine": 136,
+        "startChar": 9,
+        "endLine": 136,
+        "endChar": 10
+      },
+      "revId": "ace027236d43714dcce95fb5132fb2a35705f0a0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "551cf8af_7cf4dc6c",
+        "filename": "chrome/browser/ui/cocoa/dock_icon.mm",
+        "patchSetId": 2
+      },
+      "lineNbr": 166,
+      "author": {
+        "id": 1000022
+      },
+      "writtenOn": "2017-11-06T13:58:50Z",
+      "side": 1,
+      "message": "instead of doing:\n\nwhile (1) { ... if (cond) break; }\n\nI think this can be:\n\ndo { ... } while (!cond);",
+      "range": {
+        "startLine": 166,
+        "startChar": 6,
+        "endLine": 166,
+        "endChar": 11
+      },
+      "revId": "ace027236d43714dcce95fb5132fb2a35705f0a0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
