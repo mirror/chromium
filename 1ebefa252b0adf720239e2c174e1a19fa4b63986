@@ -39,6 +39,23 @@
       "revId": "1ebefa252b0adf720239e2c174e1a19fa4b63986",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9ea56fef_73f664b7",
+        "filename": "third_party/WebKit/Source/controller/OomInterventionImpl.cpp",
+        "patchSetId": 7
+      },
+      "lineNbr": 20,
+      "author": {
+        "id": 1001168
+      },
+      "writtenOn": "2017-11-06T22:08:53Z",
+      "side": 1,
+      "message": "Nit: no need to use unique_ptr + new anymore",
+      "revId": "1ebefa252b0adf720239e2c174e1a19fa4b63986",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
