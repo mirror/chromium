@@ -766,6 +766,11 @@ void PaintArtifactCompositor::Update(
     chunk.raster_invalidation_rects.clear();
     chunk.raster_invalidation_tracking.clear();
   }
+
+#if DCHECK_IS_ON()
+  if (RuntimeEnabledFeatures::PaintDebugEnabled())
+    ShowDebugData();
+#endif
 }
 
 std::unique_ptr<WebLayer>
@@ -781,12 +786,13 @@ PaintArtifactCompositor::ExtraDataForTesting::ScrollHitTestWebLayerAt(
       scroll_hit_test_layers[index].get());
 }
 
-#ifndef NDEBUG
+#if DCHECK_IS_ON()
 void PaintArtifactCompositor::ShowDebugData() {
-  LOG(ERROR) << LayersAsJSON(kLayerTreeIncludesDebugInfo)
-                    ->ToPrettyJSONString()
-                    .Utf8()
-                    .data();
+  LOG(INFO) << LayersAsJSON(kLayerTreeIncludesDebugInfo |
+                            kLayerTreeIncludesPaintInvalidations)
+                   ->ToPrettyJSONString()
+                   .Utf8()
+                   .data();
 }
 #endif
 

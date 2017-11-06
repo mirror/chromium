@@ -29,8 +29,12 @@ function runRepaintTest()
         testRunner.dumpAsText();
 
     testRunner.layoutAndPaintAsyncThen(function() {
-        window.internals.startTrackingRepaints(document);
+        internals.startTrackingRepaints(document);
+        if (internals.runtimeFlags.paintDebugEnabled)
+            console.log('----------------------- Before repaintTest() -------------------------');
         repaintTest();
+        if (internals.runtimeFlags.paintDebugEnabled)
+            console.log('----------------------- After repaintTest() --------------------------');
         if (!window.testIsAsync)
             finishRepaintTest();
     });
@@ -76,7 +80,9 @@ function finishRepaintTest()
     if (!window.testRunner || !window.internals)
         return;
 
-    // Force a style recalc.
+    if (internals.runtimeFlags.paintDebugEnabled)
+        console.log('----------------------- finishRepaintTest() --------------------------');
+
     forceStyleRecalc();
 
     var flags = window.internals.LAYER_TREE_INCLUDES_PAINT_INVALIDATIONS;

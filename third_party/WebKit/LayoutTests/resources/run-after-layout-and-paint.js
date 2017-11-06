@@ -36,7 +36,11 @@ function runAfterLayoutAndPaint(callback, autoNotifyDone) {
         testRunner.waitUntilDone();
 
     testRunner.layoutAndPaintAsyncThen(function() {
+        if (internals.runtimeFlags.paintDebugEnabled)
+            console.log('--------------- Before runAfterLayoutAndPaint callback ---------------');
         callback();
+        if (internals.runtimeFlags.paintDebugEnabled)
+            console.log('--------------- After runAfterLayoutAndPaint callback ----------------');
         if (autoNotifyDone)
             testRunner.notifyDone();
     });

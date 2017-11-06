@@ -765,6 +765,9 @@
       status: "stable",
     },
     {
+      name: "PaintDebug",
+    },
+    {
       name: "PaintUnderInvalidationChecking",
       settable_from_internals: true,
     },

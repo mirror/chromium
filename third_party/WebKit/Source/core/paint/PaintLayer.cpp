@@ -3430,8 +3430,7 @@ DisableCompositingQueryAsserts::DisableCompositingQueryAsserts()
 
 }  // namespace blink
 
-#ifndef NDEBUG
-// FIXME: Rename?
+#if DCHECK_IS_ON()
 void showLayerTree(const blink::PaintLayer* layer) {
   blink::DisableCompositingQueryAsserts disabler;
   if (!layer) {

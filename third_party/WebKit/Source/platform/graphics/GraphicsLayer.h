@@ -439,7 +439,7 @@ class PLATFORM_EXPORT ScopedSetNeedsDisplayInRectForTrackingOnly {
 
 }  // namespace blink
 
-#ifndef NDEBUG
+#if DCHECK_IS_ON()
 // Outside the blink namespace for ease of invocation from gdb.
 void PLATFORM_EXPORT showGraphicsLayerTree(const blink::GraphicsLayer*);
 void PLATFORM_EXPORT showGraphicsLayers(const blink::GraphicsLayer*);
