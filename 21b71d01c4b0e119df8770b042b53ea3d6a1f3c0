@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "41dccc4c_252bcfe4",
+        "filename": "chrome/browser/apps/guest_view/web_view_browsertest.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 3894,
+      "author": {
+        "id": 1228384
+      },
+      "writtenOn": "2017-11-06T21:14:27Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "23bc6ae5_11fa9ba1",
+      "range": {
+        "startLine": 3894,
+        "startChar": 11,
+        "endLine": 3894,
+        "endChar": 31
+      },
+      "revId": "21b71d01c4b0e119df8770b042b53ea3d6a1f3c0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "12514d0c_ecfb26a6",
         "filename": "chrome/browser/apps/guest_view/web_view_browsertest.cc",
         "patchSetId": 3
@@ -45,6 +69,30 @@
       "revId": "21b71d01c4b0e119df8770b042b53ea3d6a1f3c0",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5d89ee6e_a7289ed9",
+        "filename": "chrome/browser/apps/guest_view/web_view_browsertest.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 3910,
+      "author": {
+        "id": 1228384
+      },
+      "writtenOn": "2017-11-06T21:14:27Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "12514d0c_ecfb26a6",
+      "range": {
+        "startLine": 3910,
+        "startChar": 11,
+        "endLine": 3910,
+        "endChar": 31
+      },
+      "revId": "21b71d01c4b0e119df8770b042b53ea3d6a1f3c0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -160,6 +208,30 @@
       "side": 1,
       "message": "Ack",
       "parentUuid": "a1960b66_b6bc1164",
+      "range": {
+        "startLine": 227,
+        "startChar": 67,
+        "endLine": 227,
+        "endChar": 75
+      },
+      "revId": "21b71d01c4b0e119df8770b042b53ea3d6a1f3c0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "dab258d7_ef2c22b6",
+        "filename": "content/public/browser/render_widget_host.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 227,
+      "author": {
+        "id": 1228384
+      },
+      "writtenOn": "2017-11-06T21:14:27Z",
+      "side": 1,
+      "message": "InputEventObserver has since been updated with InputEventAckState as a parameter and the enum has been moved to content/public/. So we don\u0027t need any of these changes in this CL anymore. Yay.",
+      "parentUuid": "b1594916_e9e70bf6",
       "range": {
         "startLine": 227,
         "startChar": 67,
