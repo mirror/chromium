@@ -1,0 +1,113 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "152c37f2_40d7a5ef",
+        "filename": "chrome/browser/chromeos/arc/intent_helper/arc_navigation_throttle.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 219,
+      "author": {
+        "id": 1000303
+      },
+      "writtenOn": "2017-11-06T18:39:29Z",
+      "side": 1,
+      "message": "can you move this to the header side?",
+      "range": {
+        "startLine": 217,
+        "startChar": 0,
+        "endLine": 219,
+        "endChar": 44
+      },
+      "revId": "17b8eb04aef8fe897e65e5c1b73c2005f5d1efab",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b10729e4_1529321c",
+        "filename": "chrome/browser/chromeos/arc/intent_helper/arc_navigation_throttle.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 222,
+      "author": {
+        "id": 1000303
+      },
+      "writtenOn": "2017-11-06T18:39:29Z",
+      "side": 1,
+      "message": "std::move(handlers)\n\n(see my comment on the header side.)",
+      "range": {
+        "startLine": 222,
+        "startChar": 37,
+        "endLine": 222,
+        "endChar": 45
+      },
+      "revId": "17b8eb04aef8fe897e65e5c1b73c2005f5d1efab",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4e74360a_c99bbd39",
+        "filename": "chrome/browser/chromeos/arc/intent_helper/arc_navigation_throttle.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 228,
+      "author": {
+        "id": 1000303
+      },
+      "writtenOn": "2017-11-06T18:39:29Z",
+      "side": 1,
+      "message": "omit {} for one-line if-else?",
+      "range": {
+        "startLine": 224,
+        "startChar": 0,
+        "endLine": 228,
+        "endChar": 5
+      },
+      "revId": "17b8eb04aef8fe897e65e5c1b73c2005f5d1efab",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8eb37357_0910b953",
+        "filename": "chrome/browser/chromeos/arc/intent_helper/arc_navigation_throttle.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 236,
+      "author": {
+        "id": 1000303
+      },
+      "writtenOn": "2017-11-06T18:39:29Z",
+      "side": 1,
+      "message": "same",
+      "range": {
+        "startLine": 234,
+        "startChar": 0,
+        "endLine": 236,
+        "endChar": 21
+      },
+      "revId": "17b8eb04aef8fe897e65e5c1b73c2005f5d1efab",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a47e7271_2d3f04a8",
+        "filename": "chrome/browser/chromeos/arc/intent_helper/arc_navigation_throttle.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 132,
+      "author": {
+        "id": 1000303
+      },
+      "writtenOn": "2017-11-06T18:39:29Z",
+      "side": 1,
+      "message": "non-const reference is not allowed:\nhttps://google.github.io/styleguide/cppguide.html#Reference_Arguments\n\nPlease remove \u0027\u0026\u0027.",
+      "revId": "17b8eb04aef8fe897e65e5c1b73c2005f5d1efab",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
