@@ -76,6 +76,72 @@
           "ignore_task_failure": false,
           "io_timeout": 3600
         }
+      },
+      {
+        "args": [
+          "heap_profiling.disabled",
+          "-v",
+          "--upload-results",
+          "--output-format=chartjson",
+          "--browser=release",
+          "--xvfb"
+        ],
+        "isolate_name": "telemetry_perf_tests",
+        "name": "heap_profiling.disabled",
+        "override_compile_targets": [
+          "telemetry_perf_tests"
+        ],
+        "swarming": {
+          "can_use_on_swarming_builders": true,
+          "expiration": 36000,
+          "hard_timeout": 10800,
+          "ignore_task_failure": false,
+          "io_timeout": 3600
+        }
+      },
+      {
+        "args": [
+          "heap_profiling.native",
+          "-v",
+          "--upload-results",
+          "--output-format=chartjson",
+          "--browser=release",
+          "--xvfb"
+        ],
+        "isolate_name": "telemetry_perf_tests",
+        "name": "heap_profiling.native",
+        "override_compile_targets": [
+          "telemetry_perf_tests"
+        ],
+        "swarming": {
+          "can_use_on_swarming_builders": true,
+          "expiration": 36000,
+          "hard_timeout": 10800,
+          "ignore_task_failure": false,
+          "io_timeout": 3600
+        }
+      },
+      {
+        "args": [
+          "heap_profiling.pseudo",
+          "-v",
+          "--upload-results",
+          "--output-format=chartjson",
+          "--browser=release",
+          "--xvfb"
+        ],
+        "isolate_name": "telemetry_perf_tests",
+        "name": "heap_profiling.pseudo",
+        "override_compile_targets": [
+          "telemetry_perf_tests"
+        ],
+        "swarming": {
+          "can_use_on_swarming_builders": true,
+          "expiration": 36000,
+          "hard_timeout": 10800,
+          "ignore_task_failure": false,
+          "io_timeout": 3600
+        }
       }
     ]
   },
