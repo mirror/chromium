@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "8c730364_49e503be",
+        "filename": "chrome/browser/DEPS",
+        "patchSetId": 7
+      },
+      "lineNbr": 151,
+      "author": {
+        "id": 1115863
+      },
+      "writtenOn": "2017-11-06T23:00:37Z",
+      "side": 1,
+      "message": "Will do in a separate CL.",
+      "parentUuid": "3c3a786e_9132fc2a",
+      "revId": "1ebefa252b0adf720239e2c174e1a19fa4b63986",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "9a5615e3_1b6c7388",
         "filename": "chrome/browser/android/oom_intervention/oom_intervention_tab_helper.cc",
         "patchSetId": 7
@@ -42,6 +60,30 @@
     },
     {
       "key": {
+        "uuid": "55349501_214e4af5",
+        "filename": "chrome/browser/android/oom_intervention/oom_intervention_tab_helper.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 51,
+      "author": {
+        "id": 1115863
+      },
+      "writtenOn": "2017-11-06T23:00:37Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "9a5615e3_1b6c7388",
+      "range": {
+        "startLine": 51,
+        "startChar": 2,
+        "endLine": 51,
+        "endChar": 27
+      },
+      "revId": "1ebefa252b0adf720239e2c174e1a19fa4b63986",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "9ea56fef_73f664b7",
         "filename": "third_party/WebKit/Source/controller/OomInterventionImpl.cpp",
         "patchSetId": 7
@@ -56,6 +98,24 @@
       "revId": "1ebefa252b0adf720239e2c174e1a19fa4b63986",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2ceb7f10_a2dc6ccb",
+        "filename": "third_party/WebKit/Source/controller/OomInterventionImpl.cpp",
+        "patchSetId": 7
+      },
+      "lineNbr": 20,
+      "author": {
+        "id": 1115863
+      },
+      "writtenOn": "2017-11-06T23:00:37Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "9ea56fef_73f664b7",
+      "revId": "1ebefa252b0adf720239e2c174e1a19fa4b63986",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
