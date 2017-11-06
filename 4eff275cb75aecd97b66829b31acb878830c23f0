@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "8c14a2e9_8f366052",
+        "filename": "third_party/WebKit/Source/core/layout/TextAutosizer.cpp",
+        "patchSetId": 2
+      },
+      "lineNbr": 745,
+      "author": {
+        "id": 1110037
+      },
+      "writtenOn": "2017-11-06T22:57:14Z",
+      "side": 1,
+      "message": "Nit: This is called many times whereas minimum_text_length_to_autosize is just calculated once. Would it be possible to scale minimum_text_length_to_autosize instead?",
+      "revId": "4eff275cb75aecd97b66829b31acb878830c23f0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
