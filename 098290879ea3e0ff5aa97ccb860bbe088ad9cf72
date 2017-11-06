@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "b9154c5a_f5dc8997",
+        "filename": "chrome/browser/chromeos/arc/arc_session_manager.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 448,
+      "author": {
+        "id": 1228980
+      },
+      "writtenOn": "2017-11-06T20:18:57Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "ae7343b1_03047ce6",
+      "revId": "098290879ea3e0ff5aa97ccb860bbe088ad9cf72",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "2e06bb4c_1ab0e8ed",
         "filename": "chrome/browser/chromeos/arc/arc_session_manager.cc",
         "patchSetId": 8
@@ -33,6 +51,24 @@
       "revId": "098290879ea3e0ff5aa97ccb860bbe088ad9cf72",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "bd1db572_f7d143ad",
+        "filename": "chrome/browser/chromeos/arc/arc_session_manager.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 451,
+      "author": {
+        "id": 1228980
+      },
+      "writtenOn": "2017-11-06T20:18:57Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "2e06bb4c_1ab0e8ed",
+      "revId": "098290879ea3e0ff5aa97ccb860bbe088ad9cf72",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -53,6 +89,24 @@
     },
     {
       "key": {
+        "uuid": "2e5da65f_288b3773",
+        "filename": "chrome/browser/chromeos/arc/arc_session_manager.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 830,
+      "author": {
+        "id": 1228980
+      },
+      "writtenOn": "2017-11-06T20:18:57Z",
+      "side": 1,
+      "message": "I have very little understanding of this AndroidManagement, but from what I can tell, this case statement in entered when android is managed for the account, but chromeos isn\u0027t. I don\u0027t see the benefit of a retry case here. It it in case they call up the admin and the admin fixes it on the spot so they can press retry?\n\nI\u0027ll revert it since the mini-instance will be cleaned correctly, but I\u0027m still curious to know what the retry page is for.",
+      "parentUuid": "066206dc_4c1516d2",
+      "revId": "098290879ea3e0ff5aa97ccb860bbe088ad9cf72",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "f760cb1e_0e17071d",
         "filename": "chrome/browser/chromeos/arc/arc_session_manager_unittest.cc",
         "patchSetId": 8
@@ -70,6 +124,24 @@
     },
     {
       "key": {
+        "uuid": "69597a29_ee1cb491",
+        "filename": "chrome/browser/chromeos/arc/arc_session_manager_unittest.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 979,
+      "author": {
+        "id": 1228980
+      },
+      "writtenOn": "2017-11-06T20:18:57Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "f760cb1e_0e17071d",
+      "revId": "098290879ea3e0ff5aa97ccb860bbe088ad9cf72",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "f0065bd3_9c79a04c",
         "filename": "chrome/browser/chromeos/arc/arc_session_manager_unittest.cc",
         "patchSetId": 8
@@ -84,6 +156,24 @@
       "revId": "098290879ea3e0ff5aa97ccb860bbe088ad9cf72",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b2fd53f4_fc3d8054",
+        "filename": "chrome/browser/chromeos/arc/arc_session_manager_unittest.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 994,
+      "author": {
+        "id": 1228980
+      },
+      "writtenOn": "2017-11-06T20:18:57Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "f0065bd3_9c79a04c",
+      "revId": "098290879ea3e0ff5aa97ccb860bbe088ad9cf72",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
