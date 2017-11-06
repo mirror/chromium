@@ -40,7 +40,7 @@ class PLATFORM_EXPORT DisplayItemList
   }
 
   DisplayItem& AppendByMoving(DisplayItem& item) {
-#ifndef NDEBUG
+#if DCHECK_IS_ON()
     String original_debug_string = item.AsDebugString();
 #endif
     DCHECK(item.HasValidClient());
@@ -50,7 +50,7 @@ class PLATFORM_EXPORT DisplayItemList
     // on item which replaces it with a tombstone/"dead display item" that
     // can be safely destructed but should never be used.
     DCHECK(!item.HasValidClient());
-#ifndef NDEBUG
+#if DCHECK_IS_ON()
     // Save original debug string in the old item to help debugging.
     item.SetClientDebugString(original_debug_string);
 #endif
@@ -74,15 +74,14 @@ class PLATFORM_EXPORT DisplayItemList
   Range<iterator> ItemsInPaintChunk(const PaintChunk&);
   Range<const_iterator> ItemsInPaintChunk(const PaintChunk&) const;
 
+#if DCHECK_IS_ON()
   enum JsonOptions {
     kDefault = 0,
     kShowPaintRecords = 1,
     kSkipNonDrawings = 1 << 1,
-    kShowClientDebugName = 1 << 2,
-    kShownOnlyDisplayItemTypes = 1 << 3
+    kShownOnlyDisplayItemTypes = 1 << 2
   };
   typedef unsigned JsonFlags;
-
   std::unique_ptr<JSONArray> SubsequenceAsJSON(size_t begin_index,
                                                size_t end_index,
                                                JsonFlags) const;
@@ -90,6 +89,7 @@ class PLATFORM_EXPORT DisplayItemList
                                size_t end_index,
                                JsonFlags,
                                JSONArray&) const;
+#endif  // DCHECK_IS_ON()
 };
 
 }  // namespace blink
