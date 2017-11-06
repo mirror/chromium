@@ -238,6 +238,7 @@ class CONTENT_EXPORT RenderWidgetHostViewAndroid
   void DidReceiveCompositorFrameAck() override;
   void ReclaimResources(
       const std::vector<viz::ReturnedResource>& resources) override;
+  void UpdateFrameToken(uint32_t frame_token) override;
 
   // viz::BeginFrameObserver implementation.
   void OnBeginFrame(const viz::BeginFrameArgs& args) override;

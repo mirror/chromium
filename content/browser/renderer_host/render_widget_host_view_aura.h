@@ -98,6 +98,7 @@ class CONTENT_EXPORT RenderWidgetHostViewAura
                            bool is_guest_view_hack,
                            bool enable_surface_synchronization);
 
+  void ProcessFramesBeforeToken(uint32_t frame_token);
   // RenderWidgetHostView implementation.
   void InitAsChild(gfx::NativeView parent_view) override;
   RenderWidgetHost* GetRenderWidgetHost() const override;
