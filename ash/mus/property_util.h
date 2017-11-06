@@ -71,6 +71,10 @@ void ApplyProperties(
     aura::PropertyConverter* property_converter,
     const std::map<std::string, std::vector<uint8_t>>& properties);
 
+// Removes properties which only content_browser can set.
+void FilterRestrictedProperties(
+    std::map<std::string, std::vector<uint8_t>>* properties);
+
 }  // namespace mus
 }  // namespace ash
 

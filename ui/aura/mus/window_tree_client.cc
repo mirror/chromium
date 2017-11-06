@@ -1798,6 +1798,7 @@ void WindowTreeClient::WmSetCanFocus(Id window_id, bool can_focus) {
 void WindowTreeClient::WmCreateTopLevelWindow(
     uint32_t change_id,
     ClientSpecificId requesting_client_id,
+    const std::string& remote_service_name,
     const std::unordered_map<std::string, std::vector<uint8_t>>&
         transport_properties) {
   std::map<std::string, std::vector<uint8_t>> properties =
@@ -1811,7 +1812,7 @@ void WindowTreeClient::WmCreateTopLevelWindow(
         mojo::ConvertTo<int32_t>(type_iter->second));
   }
   Window* window = window_manager_delegate_->OnWmCreateTopLevelWindow(
-      window_type, &properties);
+      window_type, remote_service_name, &properties);
   if (!window) {
     window_manager_client_->OnWmCreatedTopLevelWindow(change_id,
                                                       kInvalidServerId);

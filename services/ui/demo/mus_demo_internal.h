@@ -40,6 +40,7 @@ class MusDemoInternal : public MusDemo, public aura::WindowManagerDelegate {
   void OnWmSetCanFocus(aura::Window* window, bool can_focus) final;
   aura::Window* OnWmCreateTopLevelWindow(
       ui::mojom::WindowType window_type,
+      const std::string& remote_service_name,
       std::map<std::string, std::vector<uint8_t>>* properties) final;
   void OnWmClientJankinessChanged(const std::set<aura::Window*>& client_windows,
                                   bool janky) final;
