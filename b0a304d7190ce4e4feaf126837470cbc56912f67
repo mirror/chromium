@@ -46,6 +46,30 @@
       "revId": "b0a304d7190ce4e4feaf126837470cbc56912f67",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "44945da0_2a370038",
+        "filename": "content/browser/webrtc/webrtc_internals.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 212,
+      "author": {
+        "id": 1143639
+      },
+      "writtenOn": "2017-11-06T13:10:12Z",
+      "side": 1,
+      "message": "Both conventions are valid. All caps was the only one allowed in Chrome originally and now both are allowed.",
+      "parentUuid": "8faabdc9_8372e4f1",
+      "range": {
+        "startLine": 212,
+        "startChar": 4,
+        "endLine": 212,
+        "endChar": 16
+      },
+      "revId": "b0a304d7190ce4e4feaf126837470cbc56912f67",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
