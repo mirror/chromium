@@ -3,6 +3,7 @@
 // found in the LICENSE file.
 
 function addSavePasswordProgressLog(logText) {
+  debugger;
   var logDiv = $('log-entries');
   if (!logDiv)
     return;

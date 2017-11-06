@@ -14,6 +14,8 @@ source_set("webui") {
     "mojo_web_ui_ios_controller.h",
     "ntp_tiles_internals_ui.cc",
     "ntp_tiles_internals_ui.h",
+    "password_manager_internals_ui_ios.cc",
+    "password_manager_internals_ui_ios.h",
     "physical_web_ui.cc",
     "physical_web_ui.h",
     "suggestions_ui.cc",
