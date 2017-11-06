@@ -121,6 +121,74 @@
     },
     {
       "key": {
+        "uuid": "011e5e72_47cc01d4",
+        "filename": "third_party/WebKit/LayoutTests/http/tests/inspector-protocol/network/request-interception-on-both-redirect-rewrite.js",
+        "patchSetId": 4
+      },
+      "lineNbr": 5,
+      "author": {
+        "id": 1115876
+      },
+      "writtenOn": "2017-11-06T19:49:54Z",
+      "side": 1,
+      "message": "drop this",
+      "revId": "b1ae6a3504607db757a0ec9613f21f585539f2ae",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e771a7e4_03f51509",
+        "filename": "third_party/WebKit/LayoutTests/http/tests/inspector-protocol/network/request-interception-on-both-redirect-rewrite.js",
+        "patchSetId": 4
+      },
+      "lineNbr": 70,
+      "author": {
+        "id": 1115876
+      },
+      "writtenOn": "2017-11-06T19:49:54Z",
+      "side": 1,
+      "message": "Any chance to reuse InterceptionHelper here?",
+      "revId": "b1ae6a3504607db757a0ec9613f21f585539f2ae",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "52b63bc7_357b6434",
+        "filename": "third_party/WebKit/LayoutTests/http/tests/inspector-protocol/network/request-interception-on-both-redirect-rewrite.js",
+        "patchSetId": 4
+      },
+      "lineNbr": 120,
+      "author": {
+        "id": 1115876
+      },
+      "writtenOn": "2017-11-06T19:49:54Z",
+      "side": 1,
+      "message": "Let\u0027s instead cherry-pick header names to dump. You don\u0027t want this to fail because of a new header.",
+      "revId": "b1ae6a3504607db757a0ec9613f21f585539f2ae",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b4ccddfa_ad9a882a",
+        "filename": "third_party/WebKit/LayoutTests/http/tests/inspector-protocol/network/request-interception-on-response.js",
+        "patchSetId": 4
+      },
+      "lineNbr": 15,
+      "author": {
+        "id": 1115876
+      },
+      "writtenOn": "2017-11-06T19:49:54Z",
+      "side": 1,
+      "message": "as above",
+      "revId": "b1ae6a3504607db757a0ec9613f21f585539f2ae",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "a77f7aa0_285a0821",
         "filename": "third_party/WebKit/LayoutTests/http/tests/inspector-protocol/resources/interception-test.js",
         "patchSetId": 4
