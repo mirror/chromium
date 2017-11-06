@@ -2792,6 +2792,8 @@ uploading your change for review.  These are checked by presubmit scripts.
       label="CPFC_RESIZE_PARAMS_CHANGED_LOCAL_SURFACE_ID_UNCHANGED"/>
   <int value="183"
       label="BPG_RESIZE_PARAMS_CHANGED_LOCAL_SURFACE_ID_UNCHANGED"/>
+  <int value="184" label="RFH_INTERFACE_PROVIDER_MISSING"/>
+  <int value="185" label="RFH_INTERFACE_PROVIDER_SUPERFLUOUS"/>
 </enum>
 
 <enum name="BadMessageReasonExtensions">

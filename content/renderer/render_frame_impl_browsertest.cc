@@ -3,7 +3,11 @@
 // found in the LICENSE file.
 
 #include <stdint.h>
+#include <tuple>
+#include <utility>
 
+#include "base/bind.h"
+#include "base/bind_helpers.h"
 #include "base/command_line.h"
 #include "base/debug/leak_annotations.h"
 #include "base/run_loop.h"
@@ -14,6 +18,7 @@
 #include "content/common/renderer.mojom.h"
 #include "content/common/view_messages.h"
 #include "content/public/common/previews_state.h"
+#include "content/public/renderer/content_renderer_client.h"
 #include "content/public/renderer/document_state.h"
 #include "content/public/test/frame_load_waiter.h"
 #include "content/public/test/render_view_test.h"
@@ -23,6 +28,11 @@
 #include "content/renderer/render_frame_impl.h"
 #include "content/renderer/render_view_impl.h"
 #include "content/test/fake_compositor_dependencies.h"
+#include "content/test/frame_host_test_interface.mojom.h"
+#include "content/test/test_render_frame.h"
+#include "services/service_manager/public/cpp/interface_provider.h"
+#include "services/service_manager/public/interfaces/interface_provider.mojom.h"
+#include "testing/gmock/include/gmock/gmock.h"
 #include "testing/gtest/include/gtest/gtest.h"
 #include "third_party/WebKit/public/platform/WebEffectiveConnectionType.h"
 #include "third_party/WebKit/public/platform/WebRuntimeFeatures.h"
@@ -37,13 +47,15 @@
 using blink::WebString;
 using blink::WebURLRequest;
 
-namespace {
-const int32_t kSubframeRouteId = 20;
-const int32_t kSubframeWidgetRouteId = 21;
-const int32_t kFrameProxyRouteId = 22;
-}  // namespace
-
 namespace content {
+
+namespace {
+
+constexpr int32_t kSubframeRouteId = 20;
+constexpr int32_t kSubframeWidgetRouteId = 21;
+constexpr int32_t kFrameProxyRouteId = 22;
+
+}  // namespace
 
 // RenderFrameImplTest creates a RenderFrameImpl that is a child of the
 // main frame, and has its own RenderWidget. This behaves like an out
@@ -82,7 +94,8 @@ class RenderFrameImplTest : public RenderViewTest {
         base::UnguessableToken::Create(), frame_replication_state,
         &compositor_deps_, widget_params, FrameOwnerProperties());
 
-    frame_ = RenderFrameImpl::FromRoutingID(kSubframeRouteId);
+    frame_ = static_cast<TestRenderFrame*>(
+        RenderFrameImpl::FromRoutingID(kSubframeRouteId));
     EXPECT_FALSE(frame_->is_main_frame_);
   }
 
@@ -104,11 +117,11 @@ class RenderFrameImplTest : public RenderViewTest {
     frame->effective_connection_type_ = type;
   }
 
-  RenderFrameImpl* GetMainRenderFrame() {
-    return static_cast<RenderFrameImpl*>(view_->GetMainRenderFrame());
+  TestRenderFrame* GetMainRenderFrame() {
+    return static_cast<TestRenderFrame*>(view_->GetMainRenderFrame());
   }
 
-  RenderFrameImpl* frame() { return frame_; }
+  TestRenderFrame* frame() { return frame_; }
 
   content::RenderWidget* frame_widget() const {
     return frame_->render_widget_.get();
@@ -123,7 +136,7 @@ class RenderFrameImplTest : public RenderViewTest {
 #endif
 
  private:
-  RenderFrameImpl* frame_;
+  TestRenderFrame* frame_;
   FakeCompositorDependencies compositor_deps_;
 };
 
@@ -586,6 +599,414 @@ TEST_F(RenderFrameImplTest, ShouldUseClientLoFiForRequest) {
               frame()->ShouldUseClientLoFiForRequest(request))
         << (&test - tests);
   }
+}
+
+// RenderFrameRemoteInterfacesTest ------------------------------------
+
+namespace {
+
+constexpr char kTestFirstURL[] = "http://foo.com/";
+constexpr char kTestSecondURL[] = "http://bar.com/";
+
+constexpr char kFrameEventDidCreateNewFrame[] = "did-create-new-frame";
+constexpr char kFrameEventDidCreateNewDocument[] = "did-create-new-document";
+constexpr char kFrameEventDidCreateDocumentElement[] =
+    "did-create-document-element";
+constexpr char kFrameEventWillCommitProvisionalLoad[] =
+    "will-commit-provisional-load";
+constexpr char kFrameEventDidCommitProvisionalLoad[] =
+    "did-commit-provisional-load";
+constexpr char kFrameEventDidCommitSameDocumentLoad[] =
+    "did-commit-same-document-load";
+constexpr char kFrameEventAfterCommit[] = "after-commit";
+
+// A simple testing implementation of mojom::InterfaceProvider that binds
+// interface requests only for one hard-coded kind of interface.
+class TestSimpleInterfaceProviderImpl
+    : public service_manager::mojom::InterfaceProvider {
+ public:
+  using BinderCallback =
+      base::RepeatingCallback<void(mojo::ScopedMessagePipeHandle)>;
+
+  // Incoming interface requests for |interface_name| will invoke |binder|.
+  // Everything else is ignored.
+  TestSimpleInterfaceProviderImpl(const std::string interface_name,
+                                  BinderCallback binder)
+      : binding_(this), interface_name_(interface_name), binder_(binder) {}
+
+  void BindAndFlush(service_manager::mojom::InterfaceProviderRequest request) {
+    ASSERT_FALSE(binding_.is_bound());
+    binding_.Bind(std::move(request));
+    // binding_.FlushForTesting();
+  }
+
+ private:
+  // mojom::InterfaceProvider:
+  void GetInterface(const std::string& interface_name,
+                    mojo::ScopedMessagePipeHandle handle) override {
+    if (interface_name == interface_name_)
+      binder_.Run(std::move(handle));
+  }
+
+  mojo::Binding<service_manager::mojom::InterfaceProvider> binding_;
+
+  std::string interface_name_;
+  BinderCallback binder_;
+
+  DISALLOW_COPY_AND_ASSIGN(TestSimpleInterfaceProviderImpl);
+};
+
+// The source URL and event for an interface request.
+using SourceAnnotation = std::tuple<GURL, std::string>;
+
+class TestFrameHostTestInterfaceImpl : public mojom::FrameHostTestInterface {
+ public:
+  TestFrameHostTestInterfaceImpl() : binding_(this) {}
+  ~TestFrameHostTestInterfaceImpl() override {}
+
+  void BindAndFlush(mojom::FrameHostTestInterfaceRequest request) {
+    binding_.Bind(std::move(request));
+    binding_.WaitForIncomingMethodCall();
+  }
+
+  const base::Optional<SourceAnnotation>& ping_source() const {
+    return ping_source_;
+  }
+
+ protected:
+  void Ping(const GURL& url, const std::string& event) override {
+    ping_source_ = std::make_tuple(url, event);
+  }
+
+ private:
+  mojo::Binding<mojom::FrameHostTestInterface> binding_;
+  base::Optional<SourceAnnotation> ping_source_;
+
+  DISALLOW_COPY_AND_ASSIGN(TestFrameHostTestInterfaceImpl);
+};
+
+// RenderFrameObserver that issues FrameHostTestInterface interface requests
+// through the RenderFrame's |remote_interfaces_| in response to observing
+// important milestones in a frame's lifecycle.
+class FrameHostTestInterfaceRequestIssuer : public RenderFrameObserver {
+ public:
+  FrameHostTestInterfaceRequestIssuer(RenderFrame* render_frame)
+      : RenderFrameObserver(render_frame) {}
+
+  void RequestTestInterfaceOnFrameEvent(const std::string& event) {
+    mojom::FrameHostTestInterfacePtr ptr;
+    render_frame()->GetRemoteInterfaces()->GetInterface(
+        mojo::MakeRequest(&ptr));
+
+    blink::WebDocument document = render_frame()->GetWebFrame()->GetDocument();
+    ptr->Ping(!document.IsNull() ? GURL(document.Url()) : GURL(), event);
+  }
+
+ private:
+  // RenderFrameObserver:
+  void OnDestruct() override {}
+
+  void DidCreateDocumentElement() override {
+    RequestTestInterfaceOnFrameEvent(kFrameEventDidCreateDocumentElement);
+  }
+
+  void DidCreateNewDocument() override {
+    RequestTestInterfaceOnFrameEvent(kFrameEventDidCreateNewDocument);
+  }
+
+  void WillCommitProvisionalLoad() override {
+    RequestTestInterfaceOnFrameEvent(kFrameEventWillCommitProvisionalLoad);
+  }
+
+  void DidCommitProvisionalLoad(bool is_new_navigation,
+                                bool is_same_document_navigation) override {
+    RequestTestInterfaceOnFrameEvent(is_same_document_navigation
+                                         ? kFrameEventDidCommitSameDocumentLoad
+                                         : kFrameEventDidCommitProvisionalLoad);
+  }
+
+  DISALLOW_COPY_AND_ASSIGN(FrameHostTestInterfaceRequestIssuer);
+};
+
+// Testing ContentRendererClient implementation that fires the |callback|
+// whenever a new frame is created.
+class FrameCreationObservingRendererClient : public ContentRendererClient {
+ public:
+  using FrameCreatedCallback = base::RepeatingCallback<void(TestRenderFrame*)>;
+
+  FrameCreationObservingRendererClient() {}
+  ~FrameCreationObservingRendererClient() override {}
+
+  void set_callback(FrameCreatedCallback callback) {
+    callback_ = std::move(callback);
+  }
+
+  void reset_callback() { callback_.Reset(); }
+
+ protected:
+  void RenderFrameCreated(RenderFrame* render_frame) override {
+    ContentRendererClient::RenderFrameCreated(render_frame);
+    if (callback_)
+      callback_.Run(static_cast<TestRenderFrame*>(render_frame));
+  }
+
+ private:
+  FrameCreatedCallback callback_;
+
+  DISALLOW_COPY_AND_ASSIGN(FrameCreationObservingRendererClient);
+};
+
+// Extracts all interface requests for FrameHostTestInterface pending on the
+// specified |interface_provider_request| has pending, and returns a list of the
+// source annotation provided in the pending Ping() call on each of these
+// FrameHostTestInterface requests.
+void ExpectSourcesOfPendingInterfaceRequests(
+    service_manager::mojom::InterfaceProviderRequest interface_provider_request,
+    std::vector<SourceAnnotation> expected_sources) {
+  std::vector<SourceAnnotation> sources;
+  TestSimpleInterfaceProviderImpl provider(
+      mojom::FrameHostTestInterface::Name_,
+      base::Bind(
+          [](std::vector<SourceAnnotation>* sources,
+             mojo::ScopedMessagePipeHandle handle) {
+            TestFrameHostTestInterfaceImpl impl;
+            impl.BindAndFlush(
+                mojom::FrameHostTestInterfaceRequest(std::move(handle)));
+            ASSERT_TRUE(impl.ping_source().has_value());
+            sources->push_back(impl.ping_source().value());
+          },
+          base::Unretained(&sources)));
+  provider.BindAndFlush(std::move(interface_provider_request));
+  base::RunLoop().RunUntilIdle();
+  EXPECT_THAT(sources, ::testing::ElementsAreArray(expected_sources));
+}
+
+// Verifies that when RenderFrame observers call GetRemoteInterfaces(), the
+// correct interface connection is returned at various stages of a new frame's
+// lifetime.
+class ScopedRemoteInterfaceVerifier {
+ public:
+  ScopedRemoteInterfaceVerifier(
+      FrameCreationObservingRendererClient* frame_creation_observer)
+      : frame_creation_observer_(frame_creation_observer) {
+    frame_creation_observer_->set_callback(
+        base::Bind(&ScopedRemoteInterfaceVerifier::OnFrameCreated,
+                   base::Unretained(this)));
+  }
+
+  ~ScopedRemoteInterfaceVerifier() {
+    frame_creation_observer_->reset_callback();
+  }
+
+  void ExpectNewFrameAndWaitForLoad(const GURL& committed_url) {
+    ASSERT_NE(nullptr, frame_);
+    frame_load_waiter_->Wait();
+
+    ASSERT_FALSE(frame_->current_history_item().IsNull());
+    ASSERT_FALSE(frame_->GetWebFrame()->GetDocument().IsNull());
+    EXPECT_EQ(committed_url, GURL(frame_->GetWebFrame()->GetDocument().Url()));
+
+    first_committed_url_ = committed_url;
+
+    interface_request_for_first_document_ =
+        frame_->TakeLastInterfaceProviderRequest();
+  }
+
+  void VerifyInterfaceProviderRequestFromInitialEmptyDocument() {
+    const GURL initial_empty_url("about:blank");
+    ASSERT_TRUE(interface_request_for_initial_empty_document_.is_pending());
+    ExpectSourcesOfPendingInterfaceRequests(
+        std::move(interface_request_for_initial_empty_document_),
+        {{GURL(), kFrameEventDidCreateNewFrame},
+         {initial_empty_url, kFrameEventDidCreateNewDocument},
+         {initial_empty_url, kFrameEventDidCreateDocumentElement},
+         {initial_empty_url, kFrameEventWillCommitProvisionalLoad},
+         // TODO(engedy): Is this really what we want?
+         {first_committed_url_, kFrameEventDidCreateNewDocument}});
+  }
+
+  void VerifiyIntefaceProviderRequestFromFirstCommittedLoad() {
+    ASSERT_TRUE(interface_request_for_first_document_.is_pending());
+    ExpectSourcesOfPendingInterfaceRequests(
+        std::move(interface_request_for_first_document_),
+        {{first_committed_url_, kFrameEventDidCommitProvisionalLoad},
+         {first_committed_url_, kFrameEventDidCreateDocumentElement}});
+  }
+
+ private:
+  void OnFrameCreated(TestRenderFrame* frame) {
+    ASSERT_EQ(nullptr, frame_);
+    frame_ = frame;
+    frame_load_waiter_.emplace(frame);
+    test_request_issuer_.emplace(frame);
+    test_request_issuer_->RequestTestInterfaceOnFrameEvent(
+        kFrameEventDidCreateNewFrame);
+    interface_request_for_initial_empty_document_ =
+        frame->TakeLastInterfaceProviderRequest();
+    EXPECT_TRUE(frame->current_history_item().IsNull());
+  }
+
+  FrameCreationObservingRendererClient* frame_creation_observer_;
+  TestRenderFrame* frame_ = nullptr;
+  GURL first_committed_url_;
+
+  base::Optional<FrameLoadWaiter> frame_load_waiter_;
+  base::Optional<FrameHostTestInterfaceRequestIssuer> test_request_issuer_;
+
+  service_manager::mojom::InterfaceProviderRequest
+      interface_request_for_initial_empty_document_;
+  service_manager::mojom::InterfaceProviderRequest
+      interface_request_for_first_document_;
+
+  DISALLOW_COPY_AND_ASSIGN(ScopedRemoteInterfaceVerifier);
+};
+
+}  // namespace
+
+class RenderFrameRemoteInterfacesTest : public RenderViewTest {
+ public:
+  RenderFrameRemoteInterfacesTest() {}
+  ~RenderFrameRemoteInterfacesTest() override {}
+
+ protected:
+  void SetUp() override {
+    RenderViewTest::SetUp();
+    LoadHTML("Nothing to see here.");
+  }
+
+  void TearDown() override {
+#if defined(LEAK_SANITIZER)
+    // Do this before shutting down V8 in RenderViewTest::TearDown().
+    // http://crbug.com/328552
+    __lsan_do_leak_check();
+#endif
+    RenderViewTest::TearDown();
+  }
+
+  FrameCreationObservingRendererClient* frame_creation_observer() {
+    DCHECK(frame_creation_observer_);
+    return frame_creation_observer_;
+  }
+
+  TestRenderFrame* GetMainRenderFrame() {
+    return static_cast<TestRenderFrame*>(view_->GetMainRenderFrame());
+  }
+
+  ContentRendererClient* CreateContentRendererClient() override {
+    frame_creation_observer_ = new FrameCreationObservingRendererClient();
+    return frame_creation_observer_;
+  }
+
+ private:
+  // Owned by RenderViewTest.
+  FrameCreationObservingRendererClient* frame_creation_observer_ = nullptr;
+
+  DISALLOW_COPY_AND_ASSIGN(RenderFrameRemoteInterfacesTest);
+};
+
+// Expect that |remote_interfaces_| is bound before the first committed load in
+// a child frame, and then re-bound on the first commit.
+TEST_F(RenderFrameRemoteInterfacesTest, ChildFrameAtFirstCommittedLoad) {
+  constexpr struct {
+    const char* main_frame_url_override;
+    const char* child_frame_url;
+  } kTestCases[] = {
+      {kTestFirstURL, "about:blank"},
+      {kTestSecondURL, "data:text/html,Child"},
+      {"about:blank", "about:blank"},
+  };
+
+  for (const auto& test_case : kTestCases) {
+    SCOPED_TRACE(::testing::Message() << test_case.main_frame_url_override);
+
+    ScopedRemoteInterfaceVerifier verifier(frame_creation_observer());
+    std::string html = base::StringPrintf("<iframe src=\"%s\"></iframe>",
+                                          test_case.child_frame_url);
+    LoadHTMLWithUrlOverride(html.c_str(), test_case.main_frame_url_override);
+    ASSERT_NO_FATAL_FAILURE(
+        verifier.ExpectNewFrameAndWaitForLoad(GURL(test_case.child_frame_url)));
+    verifier.VerifyInterfaceProviderRequestFromInitialEmptyDocument();
+    verifier.VerifiyIntefaceProviderRequestFromFirstCommittedLoad();
+  }
+}
+
+// Expect that |remote_interfaces_| is bound before the first committed load in
+// the main frame of an opened window, and then re-bound on the first commit.
+TEST_F(RenderFrameRemoteInterfacesTest,
+       MainFrameOfOpenedWindowAtFirstCommittedLoad) {
+  constexpr struct {
+    const char* main_frame_url_override;
+    const char* new_window_url;
+  } kTestCases[] = {
+      {kTestFirstURL, "about:blank"},
+      {kTestSecondURL, "data:text/html,NewWindow"},
+      {"about:blank", "about:blank"},
+  };
+
+  for (const auto& test_case : kTestCases) {
+    SCOPED_TRACE(::testing::Message() << test_case.main_frame_url_override);
+
+    ScopedRemoteInterfaceVerifier verifier(frame_creation_observer());
+    std::string html =
+        base::StringPrintf("<script>window.open(\"%s\", \"_blank\")</script>",
+                           test_case.new_window_url);
+    LoadHTMLWithUrlOverride(html.c_str(), test_case.main_frame_url_override);
+    ASSERT_NO_FATAL_FAILURE(
+        verifier.ExpectNewFrameAndWaitForLoad(GURL(test_case.new_window_url)));
+    verifier.VerifyInterfaceProviderRequestFromInitialEmptyDocument();
+    verifier.VerifiyIntefaceProviderRequestFromFirstCommittedLoad();
+  }
+}
+
+// Expect that |remote_interfaces_| is bound to a new pipe on non-same-document
+// navigations.
+TEST_F(RenderFrameRemoteInterfacesTest, ReplacedOnNonSameDocumentNavigation) {
+  LoadHTMLWithUrlOverride("", kTestFirstURL);
+
+  auto interface_provider_request_for_first_document =
+      GetMainRenderFrame()->TakeLastInterfaceProviderRequest();
+
+  FrameHostTestInterfaceRequestIssuer requester(GetMainRenderFrame());
+  requester.RequestTestInterfaceOnFrameEvent(kFrameEventAfterCommit);
+
+  LoadHTMLWithUrlOverride("", kTestSecondURL);
+
+  auto interface_provider_request_for_second_document =
+      GetMainRenderFrame()->TakeLastInterfaceProviderRequest();
+
+  ASSERT_TRUE(interface_provider_request_for_first_document.is_pending());
+  ExpectSourcesOfPendingInterfaceRequests(
+      std::move(interface_provider_request_for_first_document),
+      {{GURL(kTestFirstURL), kFrameEventAfterCommit},
+       {GURL(kTestFirstURL), kFrameEventWillCommitProvisionalLoad},
+       {GURL(kTestSecondURL), kFrameEventDidCreateNewDocument}});
+
+  ASSERT_TRUE(interface_provider_request_for_second_document.is_pending());
+  ExpectSourcesOfPendingInterfaceRequests(
+      std::move(interface_provider_request_for_second_document),
+      {{GURL(kTestSecondURL), kFrameEventDidCommitProvisionalLoad},
+       {GURL(kTestSecondURL), kFrameEventDidCreateDocumentElement}});
+}
+
+// Expect that |remote_interfaces_| is not bound to a new pipe on same-document
+// navigations.
+TEST_F(RenderFrameRemoteInterfacesTest, ReusedOnSameDocumentNavigation) {
+  LoadHTMLWithUrlOverride("", kTestFirstURL);
+
+  auto interface_provider_request =
+      GetMainRenderFrame()->TakeLastInterfaceProviderRequest();
+
+  FrameHostTestInterfaceRequestIssuer requester(GetMainRenderFrame());
+  OnSameDocumentNavigation(GetMainFrame(), true /* is_new_navigation */,
+                           true /* is_contenet_initiated */);
+
+  EXPECT_FALSE(
+      GetMainRenderFrame()->TakeLastInterfaceProviderRequest().is_pending());
+
+  ASSERT_TRUE(interface_provider_request.is_pending());
+  ExpectSourcesOfPendingInterfaceRequests(
+      std::move(interface_provider_request),
+      {{GURL(kTestFirstURL), kFrameEventDidCommitSameDocumentLoad}});
 }
 
 }  // namespace content

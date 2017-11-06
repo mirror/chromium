@@ -8,7 +8,9 @@
 
 #include "base/macros.h"
 #include "base/run_loop.h"
+#include "base/test/mock_callback.h"
 #include "content/browser/frame_host/navigation_handle_impl.h"
+#include "content/browser/interface_provider_filtering.h"
 #include "content/browser/web_contents/web_contents_impl.h"
 #include "content/common/frame_messages.h"
 #include "content/public/browser/javascript_dialog_manager.h"
@@ -24,10 +26,13 @@
 #include "content/public/test/test_navigation_observer.h"
 #include "content/public/test/test_utils.h"
 #include "content/shell/browser/shell.h"
+#include "content/test/did_commit_provisional_load_interceptor.h"
+#include "content/test/frame_host_test_interface.mojom.h"
 #include "content/test/test_content_browser_client.h"
 #include "net/dns/mock_host_resolver.h"
 #include "net/test/embedded_test_server/embedded_test_server.h"
 #include "net/test/embedded_test_server/http_request.h"
+#include "testing/gmock/include/gmock/gmock.h"
 
 namespace content {
 
@@ -61,7 +66,6 @@ class PrerenderTestContentBrowserClient : public TestContentBrowserClient {
 
   DISALLOW_COPY_AND_ASSIGN(PrerenderTestContentBrowserClient);
 };
-
 }  // anonymous namespace
 
 // TODO(mlamouri): part of these tests were removed because they were dependent
@@ -818,6 +822,282 @@ IN_PROC_BROWSER_TEST_F(
   std::string second_part_received;
   EXPECT_TRUE(dom_message_queue.WaitForMessage(&second_part_received));
   EXPECT_EQ("\"Second part received\"", second_part_received);
+}
+
+namespace {
+
+// Allows injecting a fake, test-provided |interface_provider_request| into
+// DidCommitProvisionalLoad messages in a given |render_frame_host| instead of
+// the real one coming from the renderer process.
+class ScopedFakeInterfaceProviderRequestInjector
+    : public DidCommitProvisionalLoadInterceptor {
+ public:
+  ScopedFakeInterfaceProviderRequestInjector(RenderFrameHost* render_frame_host)
+      : DidCommitProvisionalLoadInterceptor(
+            WebContents::FromRenderFrameHost(render_frame_host)),
+        render_frame_host_(render_frame_host) {}
+  ~ScopedFakeInterfaceProviderRequestInjector() override = default;
+
+  // Sets the fake InterfaceProvider |request| to inject into the next incoming
+  // DidCommitProvisionalLoad message.
+  void set_fake_request_for_next_commit(
+      service_manager::mojom::InterfaceProviderRequest request) {
+    next_fake_request_ = std::move(request);
+  }
+
+  GURL url_of_last_intercepted_commit() const {
+    return url_of_last_intercepted_commit_;
+  }
+
+ protected:
+  void WillDispatchDidCommitProvisionalLoad(
+      RenderFrameHost* render_frame_host,
+      ::FrameHostMsg_DidCommitProvisionalLoad_Params* params,
+      service_manager::mojom::InterfaceProviderRequest*
+          interface_provider_request) override {
+    EXPECT_EQ(render_frame_host_, render_frame_host);
+    EXPECT_TRUE(interface_provider_request->is_pending());
+    url_of_last_intercepted_commit_ = params->url;
+    *interface_provider_request = std::move(next_fake_request_);
+  }
+
+ private:
+  RenderFrameHost* render_frame_host_;
+  service_manager::mojom::InterfaceProviderRequest next_fake_request_;
+  GURL url_of_last_intercepted_commit_;
+
+  DISALLOW_COPY_AND_ASSIGN(ScopedFakeInterfaceProviderRequestInjector);
+};
+
+// Monitors the |document_scoped_interface_provider_binding_| of the given
+// |render_frame_host| for incoming interface requests for |interface_name|, and
+// invokes |callback| synchronously just before such a request would be
+// dispatched.
+class ScopedInterfaceRequestMonitor
+    : public service_manager::mojom::InterfaceProviderInterceptorForTesting {
+ public:
+  ScopedInterfaceRequestMonitor(RenderFrameHost* render_frame_host,
+                                base::StringPiece interface_name,
+                                base::RepeatingClosure callback)
+      : rfhi_(static_cast<RenderFrameHostImpl*>(render_frame_host)),
+        impl_(binding().SwapImplForTesting(this)),
+        interface_name_(interface_name),
+        request_callback_(callback) {}
+
+  ~ScopedInterfaceRequestMonitor() override {
+    auto* old_impl = binding().SwapImplForTesting(impl_);
+    DCHECK_EQ(old_impl, this);
+  }
+
+ protected:
+  // service_manager::mojom::InterfaceProviderInterceptorForTesting:
+  service_manager::mojom::InterfaceProvider* GetForwardingInterface() override {
+    return impl_;
+  }
+
+  void GetInterface(const std::string& interface_name,
+                    mojo::ScopedMessagePipeHandle pipe) override {
+    if (interface_name == interface_name_)
+      request_callback_.Run();
+    GetForwardingInterface()->GetInterface(interface_name, std::move(pipe));
+  }
+
+ private:
+  mojo::Binding<service_manager::mojom::InterfaceProvider>& binding() {
+    return rfhi_->document_scoped_interface_provider_binding_for_testing();
+  }
+
+  RenderFrameHostImpl* rfhi_;
+  service_manager::mojom::InterfaceProvider* impl_;
+
+  std::string interface_name_;
+  base::RepeatingClosure request_callback_;
+
+  DISALLOW_COPY_AND_ASSIGN(ScopedInterfaceRequestMonitor);
+};
+
+// Calls |callback| whenever a navigation finishes in |render_frame_host|.
+class DidFinishNavigationObserver : public WebContentsObserver {
+ public:
+  DidFinishNavigationObserver(RenderFrameHost* render_frame_host,
+                              base::RepeatingClosure callback)
+      : WebContentsObserver(
+            WebContents::FromRenderFrameHost(render_frame_host)),
+        callback_(callback) {}
+
+ protected:
+  // WebContentsObserver:
+  void DidFinishNavigation(NavigationHandle* navigation_handle) override {
+    callback_.Run();
+  }
+
+ private:
+  base::RepeatingClosure callback_;
+  DISALLOW_COPY_AND_ASSIGN(DidFinishNavigationObserver);
+};
+
+}  // anonymous namespace
+
+// For non-same-document navigations, the DidCommitProvisionalLoad message from
+// the renderer process will set the |interface_provider_request| argument to
+// the request end of a new InterfaceProvider interface connection that will be
+// used by the newly committed document to access services exposed by the
+// RenderFrameHost.
+//
+// This test verifies that even if |interface_provider_request| already has
+// pending interface requests, the RenderFrameHostImpl binds this in such a way
+// that these pending interface requests are dispatched strictly after
+// WebContentsObserver::DidFinishNavigation has fired, so that the requests will
+// be served correctly in the security context of the newly committed document.
+IN_PROC_BROWSER_TEST_F(
+    RenderFrameHostImplBrowserTest,
+    EarlyInterfaceRequestsFromNewDocumentDispatchedAfterNavigationFinished) {
+  const GURL first_url(embedded_test_server()->GetURL("/title1.html"));
+  const GURL second_url(embedded_test_server()->GetURL("/title2.html"));
+
+  // Load a URL that maps to the same SiteInstance as the second URL, to make
+  // sure the second navigation will not be cross-process.
+  ASSERT_TRUE(NavigateToURL(shell(), first_url));
+
+  // Prepare an InterfaceProviderRequest with pending interface requests.
+  service_manager::mojom::InterfaceProviderPtr
+      interface_provider_with_pending_request;
+  service_manager::mojom::InterfaceProviderRequest
+      interface_provider_request_with_pending_request =
+          mojo::MakeRequest(&interface_provider_with_pending_request);
+  mojom::FrameHostTestInterfacePtr test_interface;
+  interface_provider_with_pending_request->GetInterface(
+      mojom::FrameHostTestInterface::Name_,
+      mojo::MakeRequest(&test_interface).PassMessagePipe());
+
+  // Replace the |interface_provider_request| argument in the next
+  // DidCommitProvisionalLoad message coming from the renderer with the
+  // rigged |interface_provider_with_pending_request| from above.
+  auto* main_rfh = shell()->web_contents()->GetMainFrame();
+  ScopedFakeInterfaceProviderRequestInjector injector(main_rfh);
+  injector.set_fake_request_for_next_commit(
+      std::move(interface_provider_request_with_pending_request));
+
+  // Set up |dispatched_interface_request_callback| to be invoked when the
+  // interface request for FrameHostTestInterface is dispatched to the
+  // RenderFrameHostImpl.
+  base::MockCallback<base::Closure> dispatched_interface_request_callback;
+  ScopedInterfaceRequestMonitor monitor(
+      main_rfh, mojom::FrameHostTestInterface::Name_,
+      dispatched_interface_request_callback.Get());
+
+  // Set up |navigation_finished_callback| to be fired on
+  // WebContentsObserver::DidFinishNavigation.
+  base::MockCallback<base::Closure> navigation_finished_callback;
+  DidFinishNavigationObserver navigation_finish_observer(
+      main_rfh, navigation_finished_callback.Get());
+
+  // Expect that dispatching takes place first, and DidFinishNavigation second.
+  testing::InSequence in_sequence;
+  EXPECT_CALL(navigation_finished_callback, Run());
+  EXPECT_CALL(dispatched_interface_request_callback, Run());
+
+  // Start the same-process navigation.
+  test::ScopedInterfaceFilterBypass filter_bypass;
+  ASSERT_TRUE(NavigateToURL(shell(), second_url));
+  ASSERT_EQ(main_rfh, shell()->web_contents()->GetMainFrame());
+  ASSERT_EQ(second_url, injector.url_of_last_intercepted_commit());
+}
+
+// The InterfaceProvider interface, which is used by the RenderFrame to access
+// Mojo services exposed by the RenderFrameHost, is not Channel-associated,
+// thus not synchronized with navigation IPC messages. As a result, when the
+// renderer commits a load, the DidCommitProvisional message might be at race
+// with GetInterface messages, for example, an interface request issued by the
+// previous document in its unload handler might arrive to the browser process
+// just a moment after DidCommitProvisionalLoad.
+//
+// This test verifies that even if there is such a last-second GetInterface
+// message originating from the previous document, it is no longer serviced.
+IN_PROC_BROWSER_TEST_F(RenderFrameHostImplBrowserTest,
+                       LateInterfaceRequestsFromOldDocumentNotDispatched) {
+  const GURL first_url(embedded_test_server()->GetURL("/title1.html"));
+  const GURL second_url(embedded_test_server()->GetURL("/title2.html"));
+
+  // Prepare an InterfaceProviderRequest with no pending requests.
+  service_manager::mojom::InterfaceProviderPtr interface_provider;
+  service_manager::mojom::InterfaceProviderRequest interface_provider_request =
+      mojo::MakeRequest(&interface_provider);
+
+  // Set up a cunning mechnism to replace the |interface_provider_request|
+  // argument in next DidCommitProvisionalLoad message with the rigged
+  // |interface_provider_request| from above, whose client end is controlled by
+  // this test; then trigger a navigation.
+  auto* main_rfh = shell()->web_contents()->GetMainFrame();
+  {
+    ScopedFakeInterfaceProviderRequestInjector injector(main_rfh);
+    test::ScopedInterfaceFilterBypass filter_bypass;
+    injector.set_fake_request_for_next_commit(
+        std::move(interface_provider_request));
+
+    ASSERT_TRUE(NavigateToURL(shell(), first_url));
+    ASSERT_EQ(first_url, injector.url_of_last_intercepted_commit());
+  }
+
+  // Prepare an interface request for FrameHostTestInterface.
+  mojom::FrameHostTestInterfacePtr test_interface;
+  auto test_interface_request = mojo::MakeRequest(&test_interface);
+
+  // Set up |dispatched_interface_request_callback| that would be invoked if the
+  // interface request for FrameHostTestInterface was ever dispatched to the
+  // RenderFrameHostImpl.
+  base::MockCallback<base::Closure> dispatched_interface_request_callback;
+  ScopedInterfaceRequestMonitor monitor(
+      main_rfh, mojom::FrameHostTestInterface::Name_,
+      dispatched_interface_request_callback.Get());
+
+  // Set up the |test_interface request| to arrive on the InterfaceProvider
+  // connection corresponding to the old document in the middle of the firing of
+  // WebContentsObserver::DidFinishNavigation.
+  // TODO(engedy): Should we PostTask() this instead just before synchronously
+  // invoking DidCommitProvisionalLoad?
+  //
+  // Also set up |navigation_finished_callback| to be invoked afterwards, as a
+  // sanity check to ensure that the request injection is actually executed.
+  base::MockCallback<base::Closure> navigation_finished_callback;
+  DidFinishNavigationObserver navigation_finish_observer(
+      main_rfh,
+      base::Bind(
+          [](service_manager::mojom::InterfaceProviderPtr
+                 old_interface_provider,
+             mojom::FrameHostTestInterfaceRequest test_interface_request,
+             base::Closure callback) {
+            old_interface_provider->GetInterface(
+                mojom::FrameHostTestInterface::Name_,
+                test_interface_request.PassMessagePipe());
+            std::move(callback).Run();
+          },
+          base::Passed(&interface_provider),
+          base::Passed(&test_interface_request),
+          navigation_finished_callback.Get()));
+
+  // The InterfaceProvider connection that semantically belongs to the old
+  // document, but whose client end is actually controlled by this test, should
+  // still be alive and well.
+  ASSERT_TRUE(test_interface.is_bound());
+  ASSERT_FALSE(test_interface.encountered_error());
+
+  // Expect that the GetInterface message will never be dispatched, but the
+  // DidFinishNavigation callback wll be invoked.
+  EXPECT_CALL(dispatched_interface_request_callback, Run()).Times(0);
+  EXPECT_CALL(navigation_finished_callback, Run());
+
+  // Start the same-process navigation.
+  ASSERT_TRUE(NavigateToURL(shell(), second_url));
+
+  // Wait for a connection error on the |test_interface| as a signal, after
+  // which it can be safely assumed that no GetInterface message will ever be
+  // dispatched from that old InterfaceConnection.
+  base::RunLoop run_loop;
+  test_interface.set_connection_error_handler(run_loop.QuitWhenIdleClosure());
+  run_loop.Run();
+
+  EXPECT_TRUE(test_interface.encountered_error());
 }
 
 }  // namespace content
