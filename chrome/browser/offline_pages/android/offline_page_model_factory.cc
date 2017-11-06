@@ -11,6 +11,7 @@
 #include "base/path_service.h"
 #include "base/sequenced_task_runner.h"
 #include "base/task_scheduler/post_task.h"
+#include "chrome/browser/download/download_prefs.h"
 #include "chrome/browser/offline_pages/android/cct_origin_observer.h"
 #include "chrome/browser/offline_pages/fresh_offline_content_observer.h"
 #include "chrome/browser/profiles/profile.h"
@@ -51,7 +52,8 @@ KeyedService* OfflinePageModelFactory::BuildServiceInstanceFor(
       new OfflinePageMetadataStoreSQL(background_task_runner, store_path));
 
   base::FilePath persistent_archives_dir =
-      profile->GetPath().Append(chrome::kOfflinePageArchivesDirname);
+      DownloadPrefs::GetDefaultDownloadDirectory();
+
   // If PathService::Get returns false, the temporary_archives_dir will be
   // empty, and no temporary pages will be saved during this chrome lifecycle.
   base::FilePath temporary_archives_dir;
