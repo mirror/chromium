@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "f1d4c84f_67674579",
+        "filename": "content/browser/webrtc/webrtc_internals.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 212,
+      "author": {
+        "id": 1002285
+      },
+      "writtenOn": "2017-11-06T09:21:40Z",
+      "side": 1,
+      "message": "enum classes follow the same naming rules as enums, i.e. kRtcEventLogs etc.",
+      "range": {
+        "startLine": 212,
+        "startChar": 4,
+        "endLine": 212,
+        "endChar": 16
+      },
+      "revId": "b0a304d7190ce4e4feaf126837470cbc56912f67",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
