@@ -16,6 +16,24 @@
       "revId": "e49403327faee603266393f4ca6ddbd07a6f5a50",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "57d87a0a_f521f023",
+        "filename": "content/public/common/common_param_traits_macros.h",
+        "patchSetId": 8
+      },
+      "lineNbr": 109,
+      "author": {
+        "id": 1210615
+      },
+      "writtenOn": "2017-11-06T22:54:51Z",
+      "side": 0,
+      "message": "When these were left in common_param_traits_macros.h, then included in webplugininfo.typemap, we got dependencies on //ui when building the mojo targets (due to the includes in common_param_traits_macros.h). That meant we had to change visibility rules and introduce more tricks for component builds. This was far simpler.",
+      "parentUuid": "7d294134_3d1010e3",
+      "revId": "e49403327faee603266393f4ca6ddbd07a6f5a50",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
