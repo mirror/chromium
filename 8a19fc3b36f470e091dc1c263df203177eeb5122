@@ -16,6 +16,29 @@
       "revId": "8a19fc3b36f470e091dc1c263df203177eeb5122",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "530f85f4_a5af8b7c",
+        "filename": "content/common/leveldb_wrapper.mojom",
+        "patchSetId": 16
+      },
+      "lineNbr": 78,
+      "author": {
+        "id": 1001917
+      },
+      "writtenOn": "2017-11-06T22:15:54Z",
+      "side": 1,
+      "message": "mmmm I don\u0027t like this. It\u0027s making this service a localstorage-specific service, but what if other people want to use this wrapper as their database? I want to use it for session storage, which is similar, and probably wont\u0027 be a problem, but I don\u0027t like seeing nice generic implementations turn very specific to one user :( in a restrictive way",
+      "range": {
+        "startLine": 78,
+        "startChar": 0,
+        "endLine": 78,
+        "endChar": 56
+      },
+      "revId": "8a19fc3b36f470e091dc1c263df203177eeb5122",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
