@@ -16,6 +16,23 @@
       "revId": "b09b1a9573bb4990683a08e7c5a1bb7eba8e8041",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "89acd6e2_dfa6e92a",
+        "filename": "content/renderer/pepper/pepper_graphics_2d_host.cc",
+        "patchSetId": 11
+      },
+      "lineNbr": 658,
+      "author": {
+        "id": 1000887
+      },
+      "writtenOn": "2017-11-06T21:02:52Z",
+      "side": 1,
+      "message": "Thank you that\u0027s a good point! Done. I moved the Gen/Produce up into the else block above where we make the texture id. And just copy the mailbox from the recycled vector in the if block.",
+      "revId": "b09b1a9573bb4990683a08e7c5a1bb7eba8e8041",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
