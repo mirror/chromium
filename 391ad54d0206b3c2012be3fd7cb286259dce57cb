@@ -107,6 +107,30 @@
     },
     {
       "key": {
+        "uuid": "ecadf4fb_53da27f1",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/tab/Tab.java",
+        "patchSetId": 10
+      },
+      "lineNbr": 1454,
+      "author": {
+        "id": 1107894
+      },
+      "writtenOn": "2017-11-06T18:52:04Z",
+      "side": 1,
+      "message": "Yusuf, What do you think about Ted\u0027s question about removing onReparentingFinished?  I mentioned it in a bug to remove the EmptyTabObserver (crbug.com/781359).",
+      "parentUuid": "7cb057ef_786bb922",
+      "range": {
+        "startLine": 1454,
+        "startChar": 21,
+        "endLine": 1454,
+        "endChar": 42
+      },
+      "revId": "391ad54d0206b3c2012be3fd7cb286259dce57cb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "c5d8a9f2_42007136",
         "filename": "chrome/android/java/src/org/chromium/chrome/browser/tab/TabObserver.java",
         "patchSetId": 10

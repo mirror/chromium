@@ -22,6 +22,30 @@
       "revId": "50582502a8fc1c6d98f6cee0350a9f892f4cd197",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d4ead703_5045e39e",
+        "filename": "chrome/android/javatests/src/org/chromium/chrome/browser/contextualsearch/ContextualSearchManagerTest.java",
+        "patchSetId": 12
+      },
+      "lineNbr": 3375,
+      "author": {
+        "id": 1107894
+      },
+      "writtenOn": "2017-11-06T18:52:04Z",
+      "side": 1,
+      "message": "Yes, clank wants to break this into two lines even though it all fits on one line!  \n\nI guessed that the @CommandLineFlags with multiple command-line flags was confusing it and we already set the DISABLE_FIRST_RUN_EXPERIENCE for the class, so I removed that one.  Now this issue is fixed.  I\u0027ll file a bug.",
+      "parentUuid": "bb8034f0_611bd7ea",
+      "range": {
+        "startLine": 3375,
+        "startChar": 4,
+        "endLine": 3375,
+        "endChar": 22
+      },
+      "revId": "50582502a8fc1c6d98f6cee0350a9f892f4cd197",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
