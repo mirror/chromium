@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "75b4c5d2_d239295a",
+        "filename": "third_party/WebKit/Source/core/editing/Editor.cpp",
+        "patchSetId": 13
+      },
+      "lineNbr": 963,
+      "author": {
+        "id": 1210620
+      },
+      "writtenOn": "2017-11-06T16:54:04Z",
+      "side": 1,
+      "message": "This is for DragAndDropCommand, as the last_typing_command is replaced with DragAndDropCommand, so directional from the existing cmd is taken.",
+      "revId": "c20e364071d0c0210b6be10cee53bbbe01489e4d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
