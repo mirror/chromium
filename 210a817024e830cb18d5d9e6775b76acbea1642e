@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "19d9d42b_331b7fa3",
+        "filename": "content/browser/background_fetch/background_fetch_context.h",
+        "patchSetId": 7
+      },
+      "lineNbr": 75,
+      "author": {
+        "id": 1204345
+      },
+      "writtenOn": "2017-11-06T12:14:22Z",
+      "side": 1,
+      "message": "I copied the method signature from DataManager and just kept the name. You\u0027re right, it\u0027s better to match the Mojo call.",
+      "parentUuid": "a5cbd086_1ea8e8a1",
+      "revId": "210a817024e830cb18d5d9e6775b76acbea1642e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "e75f76af_a4251bb3",
         "filename": "content/browser/background_fetch/background_fetch_delegate_proxy.h",
         "patchSetId": 7
@@ -33,6 +51,24 @@
       "revId": "210a817024e830cb18d5d9e6775b76acbea1642e",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7fc6ac3a_369388fd",
+        "filename": "content/browser/background_fetch/background_fetch_delegate_proxy.h",
+        "patchSetId": 7
+      },
+      "lineNbr": 86,
+      "author": {
+        "id": 1204345
+      },
+      "writtenOn": "2017-11-06T12:14:22Z",
+      "side": 1,
+      "message": "I\u0027ve updated in a follow up CL.",
+      "parentUuid": "e75f76af_a4251bb3",
+      "revId": "210a817024e830cb18d5d9e6775b76acbea1642e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
