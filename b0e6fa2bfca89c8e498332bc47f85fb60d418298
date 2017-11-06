@@ -16,6 +16,47 @@
       "revId": "b0e6fa2bfca89c8e498332bc47f85fb60d418298",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c3d3bd41_6eb19f13",
+        "filename": "media/blink/webmediaplayer_impl.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 88,
+      "author": {
+        "id": 1215059
+      },
+      "writtenOn": "2017-11-06T19:15:46Z",
+      "side": 1,
+      "message": "+1 to move it out of webmediaplayer",
+      "parentUuid": "88b9cf40_4d0c74d6",
+      "revId": "b0e6fa2bfca89c8e498332bc47f85fb60d418298",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3f1ff5e2_d1b70add",
+        "filename": "third_party/WebKit/Source/core/html/HTMLCanvasElement.cpp",
+        "patchSetId": 4
+      },
+      "lineNbr": 1507,
+      "author": {
+        "id": 1215059
+      },
+      "writtenOn": "2017-11-06T19:15:46Z",
+      "side": 1,
+      "message": "Why not keep this as a MakeUnique?",
+      "range": {
+        "startLine": 1507,
+        "startChar": 13,
+        "endLine": 1507,
+        "endChar": 23
+      },
+      "revId": "b0e6fa2bfca89c8e498332bc47f85fb60d418298",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
