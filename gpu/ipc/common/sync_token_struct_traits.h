@@ -13,6 +13,7 @@ namespace mojo {
 template <>
 struct StructTraits<gpu::mojom::SyncTokenDataView, gpu::SyncToken> {
   static bool verified_flush(const gpu::SyncToken& token) {
+    DCHECK(!token.HasData() || token.verified_flush());
     return token.verified_flush();
   }
 
@@ -40,8 +41,9 @@ struct StructTraits<gpu::mojom::SyncTokenDataView, gpu::SyncToken> {
         data.extra_data_field(),
         gpu::CommandBufferId::FromUnsafeValue(data.command_buffer_id()),
         data.release_count());
-    if (data.verified_flush())
-      out->SetVerifyFlush();
+    if (out->HasData() && !data.verified_flush())
+      return false;
+    out->SetVerifyFlush();
     return true;
   }
 };
