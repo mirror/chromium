@@ -46,6 +46,30 @@
       "revId": "89ed7104bfad74f08cff39f3761c49ea91d59110",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b0e683e2_402554c5",
+        "filename": "third_party/WebKit/Source/modules/webaudio/AudioWorkletProcessor.cpp",
+        "patchSetId": 14
+      },
+      "lineNbr": 29,
+      "author": {
+        "id": 1130280
+      },
+      "writtenOn": "2017-11-06T03:59:32Z",
+      "side": 1,
+      "message": "I was originally using ToWorkletGlobalScope(global_scope) here, but it\u0027s failing at:\nhttps://cs.chromium.org/chromium/src/third_party/WebKit/Source/bindings/core/v8/V8AbstractEventListener.cpp?sq\u003dpackage:chromium\u0026l\u003d63",
+      "parentUuid": "99ad53bd_e23d3b17",
+      "range": {
+        "startLine": 29,
+        "startChar": 2,
+        "endLine": 29,
+        "endChar": 78
+      },
+      "revId": "89ed7104bfad74f08cff39f3761c49ea91d59110",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
