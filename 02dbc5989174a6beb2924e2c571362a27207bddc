@@ -34,6 +34,24 @@
       "revId": "02dbc5989174a6beb2924e2c571362a27207bddc",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "57f4b4e7_0aced740",
+        "filename": "chrome/browser/android/oom_intervention/oom_intervention_tab_helper.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 113,
+      "author": {
+        "id": 1115960
+      },
+      "writtenOn": "2017-11-06T20:05:14Z",
+      "side": 1,
+      "message": "I don\u0027t quite understand the idea. Why do we not want to record metrics for pages reached from NTP? We now promote a lot of articles and other content through zine, not sure why it would make sense to exempt this content from the intervention.",
+      "parentUuid": "b0f6e4ee_5d551978",
+      "revId": "02dbc5989174a6beb2924e2c571362a27207bddc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
