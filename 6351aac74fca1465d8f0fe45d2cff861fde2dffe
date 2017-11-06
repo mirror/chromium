@@ -49,6 +49,57 @@
     },
     {
       "key": {
+        "uuid": "86847f15_64d78f8a",
+        "filename": "third_party/libaom/BUILD.gn",
+        "patchSetId": 3
+      },
+      "lineNbr": 59,
+      "author": {
+        "id": 1002691
+      },
+      "writtenOn": "2017-11-06T18:26:50Z",
+      "side": 1,
+      "message": "I think it would be better if the include directories were relative to this one. So for this:\n  \"source/config/$os_category/$cpu_arch_full\"",
+      "revId": "6351aac74fca1465d8f0fe45d2cff861fde2dffe",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f5b811fc_3b9a80ac",
+        "filename": "third_party/libaom/BUILD.gn",
+        "patchSetId": 3
+      },
+      "lineNbr": 63,
+      "author": {
+        "id": 1002691
+      },
+      "writtenOn": "2017-11-06T18:26:50Z",
+      "side": 1,
+      "message": "Can you separate this out into a variable above the config:\n  libaom_include_dirs \u003d [...]\n  config(\"libaom_config\") {\n    include_dirs \u003d libaom_include_dirs\n  }\nThen you can use this below.",
+      "revId": "6351aac74fca1465d8f0fe45d2cff861fde2dffe",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1ec4fdef_98544512",
+        "filename": "third_party/libaom/BUILD.gn",
+        "patchSetId": 3
+      },
+      "lineNbr": 64,
+      "author": {
+        "id": 1002691
+      },
+      "writtenOn": "2017-11-06T18:26:50Z",
+      "side": 1,
+      "message": "This block can be:\n  \"source/config\",\n  platform_include_dir,\n  \"source/libaom\",\n  target_gen_dir,  # Provides aom_rtcd.h.",
+      "revId": "6351aac74fca1465d8f0fe45d2cff861fde2dffe",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "f14dee3b_da481a4e",
         "filename": "third_party/libaom/BUILD.gn",
         "patchSetId": 3
@@ -81,6 +132,57 @@
       "revId": "6351aac74fca1465d8f0fe45d2cff861fde2dffe",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "b1f535a3_2609c6ee",
+        "filename": "third_party/libaom/BUILD.gn",
+        "patchSetId": 3
+      },
+      "lineNbr": 74,
+      "author": {
+        "id": 1002691
+      },
+      "writtenOn": "2017-11-06T18:26:50Z",
+      "side": 1,
+      "message": "This is always used with \"libaom_config\" in the targets below. Can you just merge them?",
+      "revId": "6351aac74fca1465d8f0fe45d2cff861fde2dffe",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "fc482c19_f76968e9",
+        "filename": "third_party/libaom/BUILD.gn",
+        "patchSetId": 3
+      },
+      "lineNbr": 108,
+      "author": {
+        "id": 1002691
+      },
+      "writtenOn": "2017-11-06T18:26:50Z",
+      "side": 1,
+      "message": "include_dirs \u003d [ \"source/libaom\" ]",
+      "revId": "6351aac74fca1465d8f0fe45d2cff861fde2dffe",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e8f5fa08_3a0f6eed",
+        "filename": "third_party/libaom/BUILD.gn",
+        "patchSetId": 3
+      },
+      "lineNbr": 126,
+      "author": {
+        "id": 1002691
+      },
+      "writtenOn": "2017-11-06T18:26:50Z",
+      "side": 1,
+      "message": "If you do the above, this can be:\n  include_dirs \u003d libaom_include_dirs",
+      "revId": "6351aac74fca1465d8f0fe45d2cff861fde2dffe",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
