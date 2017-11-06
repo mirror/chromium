@@ -4,8 +4,10 @@
 
 #import "ios/chrome/browser/ui/toolbar/public/toolbar_controller_base_feature.h"
 
+#import "ios/chrome/browser/ui/toolbar/public/toolbar_controller_base_feature+protected.h"
+
 const base::Feature kSafeAreaCompatibleToolbar{
-    "SafeAreaCompatibleToolbar", base::FEATURE_DISABLED_BY_DEFAULT};
+    "SafeAreaCompatibleToolbar", base::FEATURE_ENABLED_BY_DEFAULT};
 
 extern const base::Feature kPropertyAnimationsToolbar{
     "PropertyAnimationsToolbar", base::FEATURE_DISABLED_BY_DEFAULT};
