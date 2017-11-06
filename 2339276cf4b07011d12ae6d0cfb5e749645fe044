@@ -22,6 +22,30 @@
       "revId": "2339276cf4b07011d12ae6d0cfb5e749645fe044",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "35b348a9_9bb4fe2b",
+        "filename": "ash/shelf/shelf_button.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 381,
+      "author": {
+        "id": 1202846
+      },
+      "writtenOn": "2017-11-06T23:31:56Z",
+      "side": 1,
+      "message": "That should be a better solution, then we don\u0027t need to introduce a new function in ShelfView. Thanks.",
+      "parentUuid": "bb80ba58_466907c0",
+      "range": {
+        "startLine": 378,
+        "startChar": 0,
+        "endLine": 381,
+        "endChar": 30
+      },
+      "revId": "2339276cf4b07011d12ae6d0cfb5e749645fe044",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
