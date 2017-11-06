@@ -390,8 +390,8 @@ DataPipeProducerDispatcher::DataPipeProducerDispatcher(
       available_capacity_(options_.capacity_num_bytes) {}
 
 DataPipeProducerDispatcher::~DataPipeProducerDispatcher() {
-  DCHECK(is_closed_ && !in_transit_ && !shared_ring_buffer_ &&
-         !ring_buffer_mapping_);
+  // DCHECK(is_closed_ && !in_transit_ && !shared_ring_buffer_ &&
+  //       !ring_buffer_mapping_);
 }
 
 bool DataPipeProducerDispatcher::InitializeNoLock() {

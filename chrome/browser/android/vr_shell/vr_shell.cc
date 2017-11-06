@@ -45,6 +45,7 @@
 #include "content/public/browser/browser_thread.h"
 #include "content/public/browser/navigation_controller.h"
 #include "content/public/browser/navigation_entry.h"
+#include "content/public/browser/render_frame_host.h"
 #include "content/public/browser/render_view_host.h"
 #include "content/public/browser/render_widget_host.h"
 #include "content/public/browser/render_widget_host_iterator.h"
@@ -757,6 +758,7 @@ void VrShell::PollMediaAccessFlag() {
 
   std::unique_ptr<content::RenderWidgetHostIterator> widgets(
       content::RenderWidgetHost::GetRenderWidgetHosts());
+  std::string package_name = "";
   while (content::RenderWidgetHost* rwh = widgets->GetNextHost()) {
     content::RenderViewHost* rvh = content::RenderViewHost::From(rwh);
     if (!rvh)
@@ -777,12 +779,14 @@ void VrShell::PollMediaAccessFlag() {
       num_tabs_capturing_screen++;
     if (web_contents->IsConnectedToBluetoothDevice())
       num_tabs_bluetooth_connected++;
+    package_name = rvh->GetMainFrame()->GetPackageName();
   }
   auto* connector =
       content::ServiceManagerConnection::GetForProcess()->GetConnector();
   connector->BindInterface("content_browser", &geolocation_config_);
 
   geolocation_config_->IsHighAccuracyLocationBeingCaptured(
+      package_name,
       base::Bind(&VrShell::SetHighAccuracyLocation, base::Unretained(this)));
 
   bool is_capturing_audio = num_tabs_capturing_audio > 0;

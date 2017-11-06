@@ -148,8 +148,17 @@ blink::mojom::PermissionStatus LayoutTestPermissionManager::GetPermissionStatus(
   return it->second;
 }
 
+blink::mojom::PermissionStatus LayoutTestPermissionManager::GetPermissionStatus(
+    PermissionType permission,
+    content::RenderFrameHost* render_frame_host,
+    const GURL& requesting_origin,
+    const GURL& embedding_origin) {
+  return GetPermissionStatus(permission, requesting_origin, embedding_origin);
+}
+
 int LayoutTestPermissionManager::SubscribePermissionStatusChange(
     PermissionType permission,
+    content::RenderFrameHost* render_frame_host,
     const GURL& requesting_origin,
     const GURL& embedding_origin,
     const base::Callback<void(blink::mojom::PermissionStatus)>& callback) {

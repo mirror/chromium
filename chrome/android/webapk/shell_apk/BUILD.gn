@@ -60,6 +60,7 @@ android_library("webapk_java") {
     "src/org/chromium/webapk/shell_apk/ShareActivity2.java",
     "src/org/chromium/webapk/shell_apk/ShareActivity3.java",
     "src/org/chromium/webapk/shell_apk/ShareActivity4.java",
+    "src/org/chromium/webapk/shell_apk/PermissionActivity.java",
     "src/org/chromium/webapk/shell_apk/WebApkSandboxedProcessService.java",
     "src/org/chromium/webapk/shell_apk/WebApkSandboxedProcessService0.java",
     "src/org/chromium/webapk/shell_apk/WebApkSandboxedProcessService1.java",

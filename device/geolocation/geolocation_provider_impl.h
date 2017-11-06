@@ -18,18 +18,15 @@
 #include "device/geolocation/location_provider.h"
 #include "device/geolocation/public/interfaces/geoposition.mojom.h"
 
-namespace base {
-template <typename Type>
-struct DefaultSingletonTraits;
-class SingleThreadTaskRunner;
-}
-
 namespace device {
 
 class DEVICE_GEOLOCATION_EXPORT GeolocationProviderImpl
     : public GeolocationProvider,
       public base::Thread {
  public:
+  explicit GeolocationProviderImpl(const std::string& package_name);
+  ~GeolocationProviderImpl() override;
+
   // GeolocationProvider implementation:
   std::unique_ptr<GeolocationProvider::Subscription> AddLocationUpdateCallback(
       const LocationUpdateCallback& callback,
@@ -42,11 +39,11 @@ class DEVICE_GEOLOCATION_EXPORT GeolocationProviderImpl
   void OnLocationUpdate(const LocationProvider* provider,
                         const mojom::Geoposition& position);
 
-  // Gets a pointer to the singleton instance of the location relayer, which
-  // is in turn bound to the browser's global context objects. This must only be
+  // Gets a pointer to the instance of the location relayer, which is one per
+  // pcakge name in turn bound to the global context objects. This must only be
   // called on the UI thread so that the GeolocationProviderImpl is always
   // instantiated on the same thread. Ownership is NOT returned.
-  static GeolocationProviderImpl* GetInstance();
+  static GeolocationProvider* Get(const std::string& package_name);
 
   bool user_did_opt_into_location_services_for_testing() {
     return user_did_opt_into_location_services_;
@@ -57,10 +54,6 @@ class DEVICE_GEOLOCATION_EXPORT GeolocationProviderImpl
   void SetArbitratorForTesting(std::unique_ptr<LocationProvider> arbitrator);
 
  private:
-  friend struct base::DefaultSingletonTraits<GeolocationProviderImpl>;
-  GeolocationProviderImpl();
-  ~GeolocationProviderImpl() override;
-
   bool OnGeolocationThread() const;
 
   // Start and stop providers as needed when clients are added or removed.
@@ -99,6 +92,8 @@ class DEVICE_GEOLOCATION_EXPORT GeolocationProviderImpl
 
   // Only to be used on the geolocation thread.
   std::unique_ptr<LocationProvider> arbitrator_;
+
+  std::string package_name_;
 
   DISALLOW_COPY_AND_ASSIGN(GeolocationProviderImpl);
 };

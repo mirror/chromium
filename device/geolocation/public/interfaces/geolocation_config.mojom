@@ -9,5 +9,5 @@ module device.mojom;
 interface GeolocationConfig {
   // Returns true if the location is being captured and high_accuracy is
   // enabled.
-  IsHighAccuracyLocationBeingCaptured() => (bool high_accuracy);
+  IsHighAccuracyLocationBeingCaptured(string package_name) => (bool high_accuracy);
 };

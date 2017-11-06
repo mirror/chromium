@@ -128,6 +128,7 @@ void PermissionContextBase::RequestPermission(
       id.render_process_id(), id.render_frame_id());
   PermissionResult result =
       GetPermissionStatus(rfh, requesting_origin, embedding_origin);
+  std::string package_name = rfh != nullptr ? rfh->GetPackageName() : "";
 
   if (result.content_setting == CONTENT_SETTING_ALLOW ||
       result.content_setting == CONTENT_SETTING_BLOCK) {

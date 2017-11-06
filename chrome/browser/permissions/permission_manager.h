@@ -64,6 +64,12 @@ class PermissionManager : public KeyedService,
                                        const GURL& requesting_origin,
                                        const GURL& embedding_origin);
 
+  PermissionResult GetPermissionStatus(
+      ContentSettingsType permission,
+      content::RenderFrameHost* render_frame_host,
+      const GURL& requesting_origin,
+      const GURL& embedding_origin);
+
   // Returns the permission status for a given frame. This should be preferred
   // over GetPermissionStatus as additional checks can be performed when we know
   // the exact context the request is coming from.
@@ -99,8 +105,14 @@ class PermissionManager : public KeyedService,
       content::PermissionType permission,
       const GURL& requesting_origin,
       const GURL& embedding_origin) override;
+  blink::mojom::PermissionStatus GetPermissionStatus(
+      content::PermissionType permission,
+      content::RenderFrameHost* render_frame_host,
+      const GURL& requesting_origin,
+      const GURL& embedding_origin) override;
   int SubscribePermissionStatusChange(
       content::PermissionType permission,
+      content::RenderFrameHost* render_frame_host,
       const GURL& requesting_origin,
       const GURL& embedding_origin,
       const base::Callback<void(blink::mojom::PermissionStatus)>& callback)

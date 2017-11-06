@@ -196,8 +196,7 @@ IN_PROC_BROWSER_TEST_F(AutofillRiskFingerprintTest, GetFingerprint) {
   position.timestamp = (base::Time::UnixEpoch() +
                         base::TimeDelta::FromMilliseconds(kGeolocationTime))
                            .ToDoubleT();
-  device::GeolocationProvider::GetInstance()->OverrideLocationForTesting(
-      position);
+  device::GeolocationProvider::Get("")->OverrideLocationForTesting(position);
 
   content::ScreenInfo screen_info;
   screen_info.depth = kScreenColorDepth;

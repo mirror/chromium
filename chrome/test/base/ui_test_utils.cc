@@ -504,8 +504,7 @@ void OverrideGeolocation(double latitude, double longitude) {
   position.altitude = 0.;
   position.accuracy = 0.;
   position.timestamp = base::Time::Now().ToDoubleT();
-  device::GeolocationProvider::GetInstance()->OverrideLocationForTesting(
-      position);
+  device::GeolocationProvider::Get("")->OverrideLocationForTesting(position);
 }
 
 HistoryEnumerator::HistoryEnumerator(Profile* profile) {

@@ -7,8 +7,13 @@ package org.chromium.webapk.lib.runtime_library;
 import android.app.Notification;
 import android.app.NotificationManager;
 import android.content.Context;
+import android.content.Intent;
 import android.os.Binder;
 import android.os.Bundle;
+import android.os.Handler;
+import android.os.Looper;
+import android.os.Message;
+import android.os.Messenger;
 import android.os.Parcel;
 import android.os.RemoteException;
 import android.support.v4.app.NotificationManagerCompat;
@@ -17,9 +22,11 @@ import android.support.v4.app.NotificationManagerCompat;
  * Implements services offered by the WebAPK to Chrome.
  */
 public class WebApkServiceImpl extends IWebApkApi.Stub {
-
     public static final String KEY_SMALL_ICON_ID = "small_icon_id";
     public static final String KEY_HOST_BROWSER_UID = "host_browser_uid";
+    public static final String EXTRA_PERMISSIONS = "extra.permissions";
+    public static final String EXTRA_GRANT_RESULTS = "extra.granted.results";
+    public static final String EXTRA_RESULT_RECEIVER = "extra.result.receiver";
 
     private static final String TAG = "WebApkServiceImpl";
 
@@ -35,6 +42,8 @@ public class WebApkServiceImpl extends IWebApkApi.Stub {
      * different uid calls the service, the service throws a RemoteException.
      */
     private final int mHostUid;
+
+    private boolean mIsProviderGmsCore;
 
     /**
      * Creates an instance of WebApkServiceImpl.
@@ -71,6 +80,80 @@ public class WebApkServiceImpl extends IWebApkApi.Stub {
     @Override
     public void cancelNotification(String platformTag, int platformID) {
         getNotificationManager().cancel(platformTag, platformID);
+    }
+
+    @Override
+    public void startLocationProvider(
+            final ILocationChangedCallback callback, final boolean enableHighAccuracy) {
+        mIsProviderGmsCore = LocationProviderGmsCore.isGooglePlayServicesAvailable(mContext);
+        Handler mainHandler = new Handler(Looper.getMainLooper());
+        Runnable myRunnable = new Runnable() {
+            @Override
+            public void run() {
+                if (mIsProviderGmsCore) {
+                    LocationProviderGmsCore.getInstance(mContext).start(
+                            callback, enableHighAccuracy);
+                } else {
+                    LocationProviderAndroid.getInstance().start(
+                            mContext, callback, enableHighAccuracy);
+                }
+            }
+        };
+        mainHandler.post(myRunnable);
+    }
+
+    @Override
+    public void stopLocationProvider() {
+        Handler mainHandler = new Handler(Looper.getMainLooper());
+        Runnable myRunnable = new Runnable() {
+            @Override
+            public void run() {
+                if (mIsProviderGmsCore) {
+                    LocationProviderGmsCore.getInstance(mContext).stop();
+                } else {
+                    LocationProviderAndroid.getInstance().stop();
+                }
+            }
+        };
+        mainHandler.post(myRunnable);
+    }
+
+    @Override
+    public boolean isLocationProviderRunning() {
+        if (mIsProviderGmsCore) {
+            return LocationProviderGmsCore.getInstance(mContext).isRunning();
+        }
+        return LocationProviderAndroid.getInstance().isRunning();
+    }
+
+    @Override
+    public void requestPermission(
+            final IPermissionRequestCallback callback, final String[] permissions) {
+        Handler handler = new Handler(Looper.getMainLooper(), new Handler.Callback() {
+            @Override
+            public boolean handleMessage(Message message) {
+                Bundle data = message.getData();
+                final int[] results = data.getIntArray(EXTRA_GRANT_RESULTS).clone();
+                try {
+                    callback.onRequestPermissionsResult(results);
+                } catch (RemoteException e) {
+                    e.printStackTrace();
+                }
+                return true;
+            }
+        });
+        final Messenger messenger = new Messenger(handler);
+        handler.post(new Runnable() {
+            @Override
+            public void run() {
+                Intent intent = new Intent();
+                intent.setClassName(mContext, "org.chromium.webapk.shell_apk.PermissionActivity");
+                intent.putExtra(EXTRA_PERMISSIONS, permissions);
+                intent.putExtra(EXTRA_RESULT_RECEIVER, messenger);
+                intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_NEW_DOCUMENT);
+                mContext.startActivity(intent);
+            }
+        });
     }
 
     public boolean notificationPermissionEnabled() {

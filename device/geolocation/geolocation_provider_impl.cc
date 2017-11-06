@@ -18,11 +18,19 @@
 #include "base/threading/thread_task_runner_handle.h"
 #include "device/geolocation/geolocation_delegate.h"
 #include "device/geolocation/location_arbitrator.h"
+#include "device/geolocation/location_provider_apk_android.h"
 #include "device/geolocation/public/cpp/geoposition.h"
 
 namespace device {
 
 namespace {
+// const static char* kDefaultPackageName = "com.google.chrome";
+
+using ProviderMap =
+    std::map<std::string, std::unique_ptr<GeolocationProviderImpl>>;
+base::LazyInstance<ProviderMap>::DestructorAtExit g_provider_map =
+    LAZY_INSTANCE_INITIALIZER;
+
 base::LazyInstance<std::unique_ptr<GeolocationDelegate>>::Leaky g_delegate =
     LAZY_INSTANCE_INITIALIZER;
 base::LazyInstance<GeolocationProvider::RequestContextProducer>::Leaky
@@ -31,8 +39,14 @@ base::LazyInstance<std::string>::Leaky g_api_key = LAZY_INSTANCE_INITIALIZER;
 }  // namespace
 
 // static
-GeolocationProvider* GeolocationProvider::GetInstance() {
-  return GeolocationProviderImpl::GetInstance();
+GeolocationProvider* GeolocationProvider::Get(const std::string& package_name) {
+  ProviderMap* map = g_provider_map.Pointer();
+  ProviderMap::iterator it = map->find(package_name);
+  if (it == map->end()) {
+    map->insert(std::make_pair(
+        package_name, std::make_unique<GeolocationProviderImpl>(package_name)));
+  }
+  return map->find(package_name)->second.get();
 }
 
 // static
@@ -105,16 +119,13 @@ void GeolocationProviderImpl::OnLocationUpdate(
                             base::Unretained(this), position));
 }
 
-// static
-GeolocationProviderImpl* GeolocationProviderImpl::GetInstance() {
-  return base::Singleton<GeolocationProviderImpl>::get();
-}
-
-GeolocationProviderImpl::GeolocationProviderImpl()
+GeolocationProviderImpl::GeolocationProviderImpl(
+    const std::string& package_name)
     : base::Thread("Geolocation"),
       user_did_opt_into_location_services_(false),
       ignore_location_updates_(false),
-      main_task_runner_(base::ThreadTaskRunnerHandle::Get()) {
+      main_task_runner_(base::ThreadTaskRunnerHandle::Get()),
+      package_name_(package_name) {
   DCHECK(main_task_runner_->BelongsToCurrentThread());
   high_accuracy_callbacks_.set_removal_callback(base::Bind(
       &GeolocationProviderImpl::OnClientsChanged, base::Unretained(this)));
@@ -213,9 +224,13 @@ void GeolocationProviderImpl::Init() {
   if (!g_delegate.Get())
     g_delegate.Get().reset(new GeolocationDelegate);
 
-  arbitrator_ = std::make_unique<LocationArbitrator>(
-      base::WrapUnique(g_delegate.Get().get()),
-      g_request_context_producer.Get(), g_api_key.Get());
+  if (package_name_.empty()) {
+    arbitrator_ = std::make_unique<LocationArbitrator>(
+        base::WrapUnique(g_delegate.Get().get()),
+        g_request_context_producer.Get(), g_api_key.Get());
+  } else {
+    arbitrator_ = std::make_unique<LocationProviderApkAndroid>(package_name_);
+  }
   arbitrator_->SetUpdateCallback(callback);
 }
 

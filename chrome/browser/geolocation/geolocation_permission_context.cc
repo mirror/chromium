@@ -83,7 +83,12 @@ void GeolocationPermissionContext::UpdateTabContext(
         requesting_frame.GetOrigin(), allowed);
 
   if (allowed) {
-    device::GeolocationProvider::GetInstance()
+    content::RenderFrameHost* rfh = content::RenderFrameHost::FromID(
+        id.render_process_id(), id.render_frame_id());
+    std::string package_name = "";
+    if (rfh != nullptr)
+      package_name = rfh->GetPackageName();
+    device::GeolocationProvider::Get(package_name)
         ->UserDidOptIntoLocationServices();
   }
 }

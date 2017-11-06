@@ -282,6 +282,7 @@ class CONTENT_EXPORT RenderFrameHost : public IPC::Listener,
   // implemented in Java in the browser process to C++ code in the browser
   // process.
   virtual service_manager::InterfaceProvider* GetJavaInterfaces() = 0;
+  virtual std::string GetPackageName() = 0;
 #endif  // OS_ANDROID
 
   // Stops and disables the hang monitor for beforeunload. This avoids flakiness

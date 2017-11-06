@@ -649,6 +649,7 @@ class CONTENT_EXPORT RenderFrameHostImpl
 #if defined(OS_ANDROID)
   base::android::ScopedJavaLocalRef<jobject> GetJavaRenderFrameHost();
   service_manager::InterfaceProvider* GetJavaInterfaces() override;
+  std::string GetPackageName() override;
 #endif
 
   // Propagates the visibility state along the immediate local roots by calling

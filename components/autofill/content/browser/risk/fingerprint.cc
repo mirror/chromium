@@ -33,6 +33,7 @@
 #include "content/public/browser/gpu_data_manager.h"
 #include "content/public/browser/gpu_data_manager_observer.h"
 #include "content/public/browser/plugin_service.h"
+#include "content/public/browser/render_frame_host.h"
 #include "content/public/browser/render_widget_host.h"
 #include "content/public/browser/render_widget_host_view.h"
 #include "content/public/browser/web_contents.h"
@@ -189,6 +190,7 @@ class FingerprintDataLoader : public content::GpuDataManagerObserver {
       const std::string& app_locale,
       const std::string& user_agent,
       const base::TimeDelta& timeout,
+      const std::string& package_name,
       const base::Callback<void(std::unique_ptr<Fingerprint>)>& callback);
 
  private:
@@ -266,6 +268,7 @@ FingerprintDataLoader::FingerprintDataLoader(
     const std::string& app_locale,
     const std::string& user_agent,
     const base::TimeDelta& timeout,
+    const std::string& package_name,
     const base::Callback<void(std::unique_ptr<Fingerprint>)>& callback)
     : gpu_data_manager_(content::GpuDataManager::GetInstance()),
       gpu_observer_(this),
@@ -310,11 +313,12 @@ FingerprintDataLoader::FingerprintDataLoader(
                  weak_ptr_factory_.GetWeakPtr()));
 
   // Load geolocation data.
-  geolocation_subscription_ = device::GeolocationProvider::GetInstance()->
-      AddLocationUpdateCallback(
-          base::Bind(&FingerprintDataLoader::OnGotGeoposition,
-                      weak_ptr_factory_.GetWeakPtr()),
-          false);
+  geolocation_subscription_ =
+      device::GeolocationProvider::Get(package_name)
+          ->AddLocationUpdateCallback(
+              base::Bind(&FingerprintDataLoader::OnGotGeoposition,
+                         weak_ptr_factory_.GetWeakPtr()),
+              false);
 }
 
 void FingerprintDataLoader::OnGpuInfoUpdate() {
@@ -448,13 +452,14 @@ void GetFingerprintInternal(
     const std::string& app_locale,
     const std::string& user_agent,
     const base::TimeDelta& timeout,
+    const std::string& package_name,
     const base::Callback<void(std::unique_ptr<Fingerprint>)>& callback) {
   // Begin loading all of the data that we need to load asynchronously.
   // This class is responsible for freeing its own memory.
   new FingerprintDataLoader(obfuscated_gaia_id, window_bounds, content_bounds,
                             screen_info, version, charset, accept_languages,
                             install_time, app_locale, user_agent, timeout,
-                            callback);
+                            package_name, callback);
 }
 
 }  // namespace internal
@@ -478,10 +483,15 @@ void GetFingerprint(
   if (host_view)
     host_view->GetRenderWidgetHost()->GetScreenInfo(&screen_info);
 
+  std::string package_name = "";
+  content::RenderFrameHost* rfh = web_contents->GetMainFrame();
+  if (rfh != nullptr)
+    package_name = rfh->GetPackageName();
+
   internal::GetFingerprintInternal(
       obfuscated_gaia_id, window_bounds, content_bounds, screen_info, version,
       charset, accept_languages, install_time, app_locale, user_agent,
-      base::TimeDelta::FromSeconds(kTimeoutSeconds), callback);
+      base::TimeDelta::FromSeconds(kTimeoutSeconds), package_name, callback);
 }
 
 }  // namespace risk

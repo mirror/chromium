@@ -40,8 +40,14 @@ class ShellPermissionManager : public PermissionManager {
       PermissionType permission,
       const GURL& requesting_origin,
       const GURL& embedding_origin) override;
+  blink::mojom::PermissionStatus GetPermissionStatus(
+      PermissionType permission,
+      content::RenderFrameHost* render_frame_host,
+      const GURL& requesting_origin,
+      const GURL& embedding_origin) override;
   int SubscribePermissionStatusChange(
       PermissionType permission,
+      RenderFrameHost* render_frame_host,
       const GURL& requesting_origin,
       const GURL& embedding_origin,
       const base::Callback<void(blink::mojom::PermissionStatus)>& callback)
