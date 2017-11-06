@@ -22,6 +22,30 @@
       "revId": "7ef44c9f58e9f10b36eba737c09448304307c824",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3f2f841e_480003d3",
+        "filename": "chrome/browser/resource_coordinator/tab_manager.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 1187,
+      "author": {
+        "id": 1000023
+      },
+      "writtenOn": "2017-11-06T20:02:33Z",
+      "side": 1,
+      "message": "That\u0027s not how I read the crash report.\n\nYou attach TabUIHelper in tab_helpers.cc, which means that it is attached to every tab in every browser window.\n\nThe crash has a \"BrowserPluginGuest\", which is a WebContents nested inside a WebContents. If that guest WebContents is the one for which your code is being called, of course it won\u0027t have the TabUIHelper as it\u0027s not a WebContents being used as a tab in a browser window.\n\nPlease think through the implications of there being guest WebContentses, and adjust your code accordingly. Perhaps calling CreateForWC here is appropriate, but do so because you fully understand what is going on rather than guessing that it\u0027s being called too early.",
+      "parentUuid": "36eda418_66c07e25",
+      "range": {
+        "startLine": 1184,
+        "startChar": 54,
+        "endLine": 1187,
+        "endChar": 46
+      },
+      "revId": "7ef44c9f58e9f10b36eba737c09448304307c824",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
