@@ -630,6 +630,20 @@ class NET_EXPORT SpdySession : public BufferedSpdyFramerVisitorInterface,
     size_t EstimateMemoryUsage() const;
 
    private:
+    // A handle for unclaimed pushed streams managed by Http2PushPromiseIndex.
+    class NET_EXPORT_PRIVATE PushPromise : public Http2PushPromiseIndex::Entry {
+     public:
+      PushPromise() = delete;
+      explicit PushPromise(SpdySession* spdy_session);
+      ~PushPromise() override;
+
+      bool Validate(const SpdySessionKey& key) const override;
+      base::WeakPtr<SpdySession> spdy_session() const override;
+
+     private:
+      base::WeakPtr<SpdySession> spdy_session_;
+    };
+
     SpdySession* spdy_session_;
 
     // (Bijective) map from the URL to the ID of the streams that have

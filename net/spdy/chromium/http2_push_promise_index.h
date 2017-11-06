@@ -6,6 +6,7 @@
 #define NET_SPDY_CHROMIUM_HTTP2_PUSH_PROMISE_INDEX_H_
 
 #include <map>
+#include <memory>
 #include <vector>
 
 #include "base/macros.h"
@@ -28,6 +29,23 @@ class SpdySession;
 // (for example, http) are fully managed within each SpdySession.
 class NET_EXPORT Http2PushPromiseIndex {
  public:
+  // Interface for the internal representation of unclaimed pushed streams.
+  class NET_EXPORT Entry {
+   public:
+    Entry() {}
+    virtual ~Entry() {}
+
+    // Return true if the pushed stream can be used for a request with |key|.
+    virtual bool Validate(const SpdySessionKey& key) const = 0;
+
+    // Return a weak pointer to the SpdySession that has the unclaimed pushed
+    // stream.
+    virtual base::WeakPtr<SpdySession> spdy_session() const = 0;
+
+   private:
+    DISALLOW_COPY_AND_ASSIGN(Entry);
+  };
+
   Http2PushPromiseIndex();
   ~Http2PushPromiseIndex();
 
@@ -36,22 +54,20 @@ class NET_EXPORT Http2PushPromiseIndex {
   base::WeakPtr<SpdySession> Find(const SpdySessionKey& key,
                                   const GURL& url) const;
 
-  // (Un)registers a SpdySession with an unclaimed pushed stream for |url|.
-  void RegisterUnclaimedPushedStream(const GURL& url,
-                                     base::WeakPtr<SpdySession> spdy_session);
-  void UnregisterUnclaimedPushedStream(const GURL& url,
-                                       SpdySession* spdy_session);
+  // (Un)registers an unclaimed pushed stream entry for |url|.
+  void Register(const GURL& url, std::unique_ptr<Entry> entry);
+  void Unregister(const GURL& url, const Entry& entry);
 
  private:
-  typedef std::vector<base::WeakPtr<SpdySession>> WeakSessionList;
-  typedef std::map<GURL, WeakSessionList> UnclaimedPushedStreamMap;
+  using EntryList = std::vector<std::unique_ptr<Entry>>;
+  using EntryMap = std::map<GURL, EntryList>;
 
-  // A multimap of all SpdySessions that have an unclaimed pushed stream for a
-  // GURL.  SpdySession must unregister its streams before destruction,
-  // therefore all weak pointers must be valid.  A single SpdySession can only
-  // have at most one pushed stream for each GURL, but it is possible that
-  // multiple SpdySessions have pushed streams for the same GURL.
-  UnclaimedPushedStreamMap unclaimed_pushed_streams_;
+  // A multimap of Entries keyed off URL.  SpdySession must unregister its
+  // streams before destruction, therefore all weak pointers must be valid.  A
+  // single SpdySession can only have at most one unclaimed pushed stream for
+  // each GURL, but it is possible that multiple SpdySessions have pushed
+  // streams for the same GURL.
+  EntryMap entries_;
 
   DISALLOW_COPY_AND_ASSIGN(Http2PushPromiseIndex);
 };
