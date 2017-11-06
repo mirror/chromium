@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "2c6e1073_0e8c3352",
+        "filename": "third_party/WebKit/LayoutTests/virtual/threaded/fast/animationworklet/worklet-animation-creation.html",
+        "patchSetId": 1
+      },
+      "lineNbr": 76,
+      "author": {
+        "id": 1125304
+      },
+      "writtenOn": "2017-11-06T17:39:22Z",
+      "side": 1,
+      "message": "Does this fail if effect2 had a null target? See my other comment.",
+      "range": {
+        "startLine": 76,
+        "startChar": 0,
+        "endLine": 76,
+        "endChar": 73
+      },
+      "revId": "7e6fb055230e6cafdf86f4078bd8a66bda3c4b8d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "af820251_b4e2b24c",
+        "filename": "third_party/WebKit/Source/modules/animationworklet/WorkletAnimation.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 27,
+      "author": {
+        "id": 1125304
+      },
+      "writtenOn": "2017-11-06T17:39:22Z",
+      "side": 1,
+      "message": "I think we should iterate all effects and check their targets.",
+      "range": {
+        "startLine": 27,
+        "startChar": 7,
+        "endLine": 27,
+        "endChar": 30
+      },
+      "revId": "7e6fb055230e6cafdf86f4078bd8a66bda3c4b8d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
