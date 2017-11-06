@@ -90,6 +90,49 @@ bool CheckVlogIsOn(LoggingSeverity severity, const char (&file)[N]) {
 #undef PLOG
 #define PLOG(sev, err) LOG_ERR_EX(sev, err)
 
+// TODO(bugs.webrtc.org/8452): when WebRTC will stop to use unprefixed LOG
+// macros remove the definition of LOG* macros (above) and make RTC_* macros
+// become the standard glue layer between Chromium and WebRTC.
+// Start -- Forward compatibility
+#define RTC_LOG_CHECK_LEVEL(sev) CheckVlogIsOn(rtc::sev, __FILE__)
+#define RTC_LOG_CHECK_LEVEL_V(sev) CheckVlogIsOn(sev, __FILE__)
+
+#define RTC_LOG_V(sev) DIAGNOSTIC_LOG(sev, NONE, 0)
+#undef RTC_LOG
+#define RTC_LOG(sev) DIAGNOSTIC_LOG(rtc::sev, NONE, 0)
+
+// The _F version prefixes the message with the current function name.
+#if defined(__GNUC__) && defined(_DEBUG)
+#define RTC_LOG_F(sev) RTC_LOG(sev) << __PRETTY_FUNCTION__ << ": "
+#else
+#define RTC_LOG_F(sev) RTC_LOG(sev) << __FUNCTION__ << ": "
+#endif
+
+#define RTC_LOG_E(sev, ctx, err, ...) \
+  DIAGNOSTIC_LOG(rtc::sev, ctx, err, ##__VA_ARGS__)
+
+#undef RTC_LOG_ERRNO_EX
+#define RTC_LOG_ERRNO_EX(sev, err) RTC_LOG_E(sev, ERRNO, err)
+#undef RTC_LOG_ERRNO
+#define RTC_LOG_ERRNO(sev) RTC_LOG_ERRNO_EX(sev, errno)
+
+#if defined(WEBRTC_WIN)
+#define RTC_LOG_GLE_EX(sev, err) RTC_LOG_E(sev, HRESULT, err)
+#define RTC_LOG_GLE(sev) RTC_LOG_GLE_EX(sev, GetLastError())
+#define RTC_LOG_GLEM(sev, mod) RTC_LOG_E(sev, HRESULT, GetLastError(), mod)
+#define RTC_LOG_ERR_EX(sev, err) RTC_LOG_GLE_EX(sev, err)
+#define RTC_LOG_ERR(sev) RTC_LOG_GLE(sev)
+#define RTC_LAST_SYSTEM_ERROR (::GetLastError())
+#else
+#define RTC_LOG_ERR_EX(sev, err) RTC_LOG_ERRNO_EX(sev, err)
+#define RTC_LOG_ERR(sev) RTC_LOG_ERRNO(sev)
+#define RTC_LAST_SYSTEM_ERROR (errno)
+#endif  // OS_WIN
+
+#undef RTC_PLOG
+#define RTC_PLOG(sev, err) RTC_LOG_ERR_EX(sev, err)
+// End -- Forward compatibility
+
 #endif  // LOGGING_INSIDE_WEBRTC
 
 #endif  // THIRD_PARTY_WEBRTC_OVERRIDES_WEBRTC_RTC_BASE_LOGGING_H_
