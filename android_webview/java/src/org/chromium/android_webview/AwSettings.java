@@ -378,7 +378,7 @@ public class AwSettings {
      */
     public boolean getSafeBrowsingEnabled() {
         synchronized (mAwSettingsLock) {
-            Boolean userOptIn = AwSafeBrowsingConfigHelper.getSafeBrowsingUserOptIn();
+            Boolean userOptIn = AwSafeBrowsingConfigHelper.getInstance().getSafeBrowsingUserOptIn();
 
             // If we don't know yet what the user's preference is, we go through Safe Browsing logic
             // anyway and correct the assumption before sending data to GMS.
