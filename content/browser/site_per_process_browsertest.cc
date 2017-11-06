@@ -286,6 +286,29 @@ double GetPageScaleFactor(Shell* shell) {
       .page_scale_factor;
 }
 
+class HitTestCallback {
+ public:
+  HitTestCallback(const base::Closure& quit_closure, int frame_id_expected)
+      : quit_closure_(quit_closure),
+        frame_id_expected_(frame_id_expected),
+        weak_ptr_factory_(this) {}
+  void Callback(int frame_id) {
+    ASSERT_EQ(frame_id_expected_, frame_id);
+    quit_closure_.Run();
+  }
+
+  base::WeakPtr<HitTestCallback> GetWeakPtr() {
+    return weak_ptr_factory_.GetWeakPtr();
+  }
+
+ private:
+  base::Closure quit_closure_;
+  int frame_id_expected_;
+  base::WeakPtrFactory<HitTestCallback> weak_ptr_factory_;
+
+  DISALLOW_COPY_AND_ASSIGN(HitTestCallback);
+};
+
 // Helper function that performs a surface hittest.
 void SurfaceHitTestTestHelper(
     Shell* shell,
@@ -369,6 +392,18 @@ void SurfaceHitTestTestHelper(
   EXPECT_TRUE(main_frame_monitor.EventWasReceived());
   EXPECT_NEAR(2, main_frame_monitor.event().PositionInWidget().x, 2);
   EXPECT_NEAR(2, main_frame_monitor.event().PositionInWidget().y, 2);
+
+  // Check the renderer hit-test API return the correct frame for
+  // the cross site iframe.
+  base::RunLoop run_loop;
+  HitTestCallback hit_test_callback_child(
+      content::GetDeferredQuitTaskForRunLoop(&run_loop),
+      rwhv_child->GetRenderWidgetHost()->GetRoutingID());
+  root->current_frame_host()->GetInputTargetClient()->WidgetRoutingIdAt(
+      gfx::Point(100, 100),
+      base::BindOnce(&HitTestCallback::Callback,
+                     hit_test_callback_child.GetWeakPtr()));
+  content::RunThisRunLoop(&run_loop);
 }
 
 class RedirectNotificationObserver : public NotificationObserver {

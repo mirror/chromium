@@ -53,6 +53,7 @@
 #include "services/device/public/interfaces/wake_lock_context.mojom.h"
 #include "services/service_manager/public/cpp/binder_registry.h"
 #include "services/service_manager/public/interfaces/interface_provider.mojom.h"
+#include "services/viz/public/interfaces/hit_test/input_target_client.mojom.h"
 #include "third_party/WebKit/public/platform/WebFocusType.h"
 #include "third_party/WebKit/public/platform/WebInsecureRequestPolicy.h"
 #include "third_party/WebKit/public/platform/WebSuddenTerminationDisablerType.h"
@@ -247,6 +248,8 @@ class CONTENT_EXPORT RenderFrameHostImpl
       SourceLocation* source_location) const override;
 
   mojom::FrameInputHandler* GetFrameInputHandler();
+
+  viz::mojom::InputTargetClient* GetInputTargetClient();
 
   // Creates a RenderFrame in the renderer process.
   bool CreateRenderFrame(int proxy_routing_id,
@@ -1334,6 +1337,7 @@ class CONTENT_EXPORT RenderFrameHostImpl
   // have created one yet.
   base::Optional<base::UnguessableToken> overlay_routing_token_;
 
+  viz::mojom::InputTargetClientPtr input_target_client_;
   mojom::FrameInputHandlerPtr frame_input_handler_;
   std::unique_ptr<LegacyIPCFrameInputHandler> legacy_frame_input_handler_;
 
