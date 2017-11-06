@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "8622d9e5_ac9b71b3",
+        "filename": "third_party/WebKit/LayoutTests/external/wpt/worklets/resources/service-worker-interception-tests.js",
+        "patchSetId": 5
+      },
+      "lineNbr": 19,
+      "author": {
+        "id": 1001472
+      },
+      "writtenOn": "2017-11-06T07:50:58Z",
+      "side": 1,
+      "message": "nit: by owner doc -\u003e by the owner doc",
+      "revId": "89d0afb4e69ac75cf45465ff97eb0fac6ad73efb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7ada7e3b_b10fd2e7",
+        "filename": "third_party/WebKit/LayoutTests/external/wpt/worklets/resources/service-worker-interception-tests.js",
+        "patchSetId": 5
+      },
+      "lineNbr": 54,
+      "author": {
+        "id": 1001472
+      },
+      "writtenOn": "2017-11-06T07:50:58Z",
+      "side": 1,
+      "message": "ditto",
+      "revId": "89d0afb4e69ac75cf45465ff97eb0fac6ad73efb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
