@@ -94,6 +94,30 @@
       "revId": "7227bd351fb4e04f639beb57f204df4c619ac591",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9cb5df5d_2714d2eb",
+        "filename": "components/bookmarks/browser/bookmark_model.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 1031,
+      "author": {
+        "id": 1000763
+      },
+      "writtenOn": "2017-11-06T17:31:44Z",
+      "side": 1,
+      "message": "Fair enough.",
+      "parentUuid": "566d784c_a7aae141",
+      "range": {
+        "startLine": 1030,
+        "startChar": 3,
+        "endLine": 1031,
+        "endChar": 24
+      },
+      "revId": "7227bd351fb4e04f639beb57f204df4c619ac591",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
