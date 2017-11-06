@@ -374,7 +374,8 @@ const int kExternalFilesCleanupDelaySeconds = 60;
                        identity:(ChromeIdentity*)identity
                     accessPoint:(signin_metrics::AccessPoint)accessPoint
                     promoAction:(signin_metrics::PromoAction)promoAction
-                       callback:(ShowSigninCommandCompletionCallback)callback;
+                       callback:(ShowSigninCommandCompletionCallback)callback
+             baseViewController:(UIViewController*)baseViewController;
 // Shows the tab switcher UI.
 - (void)showTabSwitcher;
 // Starts a voice search on the current BVC.
@@ -1478,7 +1479,8 @@ const int kExternalFilesCleanupDelaySeconds = 60;
   }
 }
 
-- (void)showSignin:(ShowSigninCommand*)command {
+- (void)showSignin:(ShowSigninCommand*)command
+    baseViewController:(UIViewController*)baseViewController {
   if (command.operation == AUTHENTICATION_OPERATION_DISMISS) {
     [self dismissSigninInteractionCoordinator];
   } else {
@@ -1486,7 +1488,8 @@ const int kExternalFilesCleanupDelaySeconds = 60;
                          identity:command.identity
                       accessPoint:command.accessPoint
                       promoAction:command.promoAction
-                         callback:command.callback];
+                         callback:command.callback
+               baseViewController:baseViewController];
   }
 }
 
@@ -2046,7 +2049,8 @@ const int kExternalFilesCleanupDelaySeconds = 60;
                        identity:(ChromeIdentity*)identity
                     accessPoint:(signin_metrics::AccessPoint)accessPoint
                     promoAction:(signin_metrics::PromoAction)promoAction
-                       callback:(ShowSigninCommandCompletionCallback)callback {
+                       callback:(ShowSigninCommandCompletionCallback)callback
+             baseViewController:(UIViewController*)baseViewController {
   DCHECK_NE(AUTHENTICATION_OPERATION_DISMISS, operation);
 
   if (!self.signinInteractionCoordinator) {
@@ -2064,16 +2068,15 @@ const int kExternalFilesCleanupDelaySeconds = 60;
       [self.signinInteractionCoordinator
           reAuthenticateWithAccessPoint:accessPoint
                             promoAction:promoAction
-               presentingViewController:[self topPresentedViewController]
+               presentingViewController:baseViewController
                              completion:callback];
       break;
     case AUTHENTICATION_OPERATION_SIGNIN:
-      [self.signinInteractionCoordinator
-                signInWithIdentity:identity
-                       accessPoint:accessPoint
-                       promoAction:promoAction
-          presentingViewController:[self topPresentedViewController]
-                        completion:callback];
+      [self.signinInteractionCoordinator signInWithIdentity:identity
+                                                accessPoint:accessPoint
+                                                promoAction:promoAction
+                                   presentingViewController:baseViewController
+                                                 completion:callback];
       break;
   }
 }
