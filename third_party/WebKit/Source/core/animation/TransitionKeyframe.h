@@ -12,8 +12,14 @@
 
 namespace blink {
 
+// An implementation of Keyframe specifically for CSS Transitions.
+//
+// TransitionKeyframes are a simple form of keyframe, which only have one
+// (property, value) pair.
 class CORE_EXPORT TransitionKeyframe : public Keyframe {
  public:
+  // TODO(smcgruer): It appears like TransitionKeyframe are never created for
+  // SVG elements; codify that with a DCHECK here?
   static scoped_refptr<TransitionKeyframe> Create(
       const PropertyHandle& property) {
     return WTF::AdoptRef(new TransitionKeyframe(property));
