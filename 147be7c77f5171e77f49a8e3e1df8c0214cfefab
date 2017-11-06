@@ -1,0 +1,329 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "4f003c2e_92b6c84c",
+        "filename": "services/shape_detection/detection_utils_win.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 28,
+      "author": {
+        "id": 1178124
+      },
+      "writtenOn": "2017-11-06T10:31:35Z",
+      "side": 1,
+      "message": "apologies, i forgot to mention in the previous round that kFooBar is now preferred over FOO_BAR (https://google.github.io/styleguide/cppguide.html#Enumerator_Names). since you\u0027re using enum clss, these no longer need a prefix like ASYNC_, so please switch to:\n  kOperating,\n  kFailed,\netc",
+      "revId": "147be7c77f5171e77f49a8e3e1df8c0214cfefab",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7c802c6a_3edfaf76",
+        "filename": "services/shape_detection/detection_utils_win.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 31,
+      "author": {
+        "id": 1178124
+      },
+      "writtenOn": "2017-11-06T10:31:35Z",
+      "side": 1,
+      "message": "\"AsyncOperationStatus\" seems general purpose. should this value be generalized (i.e., no \"detector\" in it)?",
+      "revId": "147be7c77f5171e77f49a8e3e1df8c0214cfefab",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5116f782_2a5078f2",
+        "filename": "services/shape_detection/detection_utils_win.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 46,
+      "author": {
+        "id": 1178124
+      },
+      "writtenOn": "2017-11-06T10:31:35Z",
+      "side": 1,
+      "message": "please move this into the private: section if Create() is the way everyone should use this class.",
+      "revId": "147be7c77f5171e77f49a8e3e1df8c0214cfefab",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c384ab62_7ff2d0cf",
+        "filename": "services/shape_detection/detection_utils_win.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 57,
+      "author": {
+        "id": 1178124
+      },
+      "writtenOn": "2017-11-06T10:31:35Z",
+      "side": 1,
+      "message": "nit: i find it hard to differentiate \"async_operation\" from \"async_op_ptr\". how about changing the name of this one to \"instance\" since it\u0027s the thing being created by this factory function?",
+      "range": {
+        "startLine": 57,
+        "startChar": 9,
+        "endLine": 57,
+        "endChar": 24
+      },
+      "revId": "147be7c77f5171e77f49a8e3e1df8c0214cfefab",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "701dd77c_34d0012c",
+        "filename": "services/shape_detection/detection_utils_win.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 68,
+      "author": {
+        "id": 1178124
+      },
+      "writtenOn": "2017-11-06T10:31:35Z",
+      "side": 1,
+      "message": "nit: async_callback",
+      "range": {
+        "startLine": 68,
+        "startChar": 9,
+        "endLine": 68,
+        "endChar": 22
+      },
+      "revId": "147be7c77f5171e77f49a8e3e1df8c0214cfefab",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "27e0b071_789360cc",
+        "filename": "services/shape_detection/detection_utils_win.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 81,
+      "author": {
+        "id": 1178124
+      },
+      "writtenOn": "2017-11-06T10:31:35Z",
+      "side": 1,
+      "message": "this std::move seems a bit odd. is there a reason this is needed? why not async_op_ptr-\u003eput_Completed?",
+      "range": {
+        "startLine": 81,
+        "startChar": 8,
+        "endLine": 81,
+        "endChar": 31
+      },
+      "revId": "147be7c77f5171e77f49a8e3e1df8c0214cfefab",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e1b59c19_20d095de",
+        "filename": "services/shape_detection/detection_utils_win.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 96,
+      "author": {
+        "id": 1178124
+      },
+      "writtenOn": "2017-11-06T10:31:35Z",
+      "side": 1,
+      "message": "?\n  DCHECK_EQ(async_op, async_op_ptr_.Get());",
+      "range": {
+        "startLine": 96,
+        "startChar": 60,
+        "endLine": 96,
+        "endChar": 68
+      },
+      "revId": "147be7c77f5171e77f49a8e3e1df8c0214cfefab",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "db5c4649_4dbec353",
+        "filename": "services/shape_detection/detection_utils_win.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 100,
+      "author": {
+        "id": 1178124
+      },
+      "writtenOn": "2017-11-06T10:31:35Z",
+      "side": 1,
+      "message": "the callback is run with an empty async_op_ptr_ in case of error? please document this in the comment for the Callback type above.",
+      "revId": "147be7c77f5171e77f49a8e3e1df8c0214cfefab",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "02413fbf_b2d3f04e",
+        "filename": "services/shape_detection/face_detection_impl_win.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 65,
+      "author": {
+        "id": 1178124
+      },
+      "writtenOn": "2017-11-06T10:31:35Z",
+      "side": 1,
+      "message": "nit: a -\u003e an",
+      "range": {
+        "startLine": 65,
+        "startChar": 12,
+        "endLine": 65,
+        "endChar": 13
+      },
+      "revId": "147be7c77f5171e77f49a8e3e1df8c0214cfefab",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "fbc636b2_3e46820b",
+        "filename": "services/shape_detection/face_detection_impl_win.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 79,
+      "author": {
+        "id": 1178124
+      },
+      "writtenOn": "2017-11-06T10:31:35Z",
+      "side": 1,
+      "message": "initialize async_status_ to something",
+      "revId": "147be7c77f5171e77f49a8e3e1df8c0214cfefab",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e506245c_95684fa3",
+        "filename": "services/shape_detection/face_detection_impl_win.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 87,
+      "author": {
+        "id": 1178124
+      },
+      "writtenOn": "2017-11-06T10:31:35Z",
+      "side": 1,
+      "message": "could you use a switch statement here? if you do, omit a \"default:\" clause if possible so that the compiler will complain if someone adds a new status value in the future.",
+      "revId": "147be7c77f5171e77f49a8e3e1df8c0214cfefab",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ad749de3_1ceeb34e",
+        "filename": "services/shape_detection/face_detection_impl_win.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 98,
+      "author": {
+        "id": 1178124
+      },
+      "writtenOn": "2017-11-06T10:31:35Z",
+      "side": 1,
+      "message": "nit: BeginCreateFaceDetector or StartCreateFaceDetector or something like that to make it more clear that this kicks off an async operation. feel free to scan the code to see if there\u0027s a common naming scheme for things like this.",
+      "range": {
+        "startLine": 98,
+        "startChar": 30,
+        "endLine": 98,
+        "endChar": 48
+      },
+      "revId": "147be7c77f5171e77f49a8e3e1df8c0214cfefab",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "bcdc6a96_eb22a49f",
+        "filename": "services/shape_detection/face_detection_impl_win.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 108,
+      "author": {
+        "id": 1178124
+      },
+      "writtenOn": "2017-11-06T10:31:35Z",
+      "side": 1,
+      "message": "personal preference nit: avoid personal pronouns in doc comments. i find that they can often be more clear and more succinct without.",
+      "revId": "147be7c77f5171e77f49a8e3e1df8c0214cfefab",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9536e7d6_60b6e364",
+        "filename": "services/shape_detection/face_detection_impl_win.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 132,
+      "author": {
+        "id": 1178124
+      },
+      "writtenOn": "2017-11-06T10:31:35Z",
+      "side": 1,
+      "message": "should async_status_ be set to something here?",
+      "revId": "147be7c77f5171e77f49a8e3e1df8c0214cfefab",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8402af21_906a1e6f",
+        "filename": "services/shape_detection/face_detection_impl_win.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 136,
+      "author": {
+        "id": 1178124
+      },
+      "writtenOn": "2017-11-06T10:31:35Z",
+      "side": 1,
+      "message": "nit:\n  if (callback_for_testing_)",
+      "revId": "147be7c77f5171e77f49a8e3e1df8c0214cfefab",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a9c1a559_05f06b89",
+        "filename": "services/shape_detection/face_detection_impl_win.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 41,
+      "author": {
+        "id": 1178124
+      },
+      "writtenOn": "2017-11-06T10:31:35Z",
+      "side": 1,
+      "message": "move into private: section (remember to revise the order in the .cc file, too)",
+      "revId": "147be7c77f5171e77f49a8e3e1df8c0214cfefab",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d37118f9_2dcf2d34",
+        "filename": "services/shape_detection/face_detection_impl_win_unittest.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 56,
+      "author": {
+        "id": 1178124
+      },
+      "writtenOn": "2017-11-06T10:31:35Z",
+      "side": 1,
+      "message": "i don\u0027t think that gmock is the right tool for the job here. it seems simpler to either set the callback to the QuitClosure directly here, or stash the quit callback in a member of FaceDetectionImplWinTest and run it directly in the two methods you\u0027ve added to handle the callback.",
+      "revId": "147be7c77f5171e77f49a8e3e1df8c0214cfefab",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
