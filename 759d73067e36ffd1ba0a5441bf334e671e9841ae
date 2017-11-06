@@ -1,0 +1,124 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "d831a487_c256ab44",
+        "filename": "components/payments/content/payment_request_converter.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 71,
+      "author": {
+        "id": 1003016
+      },
+      "writtenOn": "2017-11-06T19:07:37Z",
+      "side": 1,
+      "message": "move comments to .h",
+      "revId": "759d73067e36ffd1ba0a5441bf334e671e9841ae",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "dde1f29d_4781204d",
+        "filename": "components/payments/content/service_worker_payment_instrument.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 188,
+      "author": {
+        "id": 1003016
+      },
+      "writtenOn": "2017-11-06T19:07:37Z",
+      "side": 1,
+      "message": "no curly brackets",
+      "revId": "759d73067e36ffd1ba0a5441bf334e671e9841ae",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "96c85c80_6f062bfd",
+        "filename": "components/payments/content/service_worker_payment_instrument.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 193,
+      "author": {
+        "id": 1003016
+      },
+      "writtenOn": "2017-11-06T19:07:37Z",
+      "side": 1,
+      "message": "if (matched_methods.size() \u003e 1U || matched_methods[0] !\u003d \"basic-card\")\n  return true;\n\n// Checking the capabilities of this instrument against the modifier.",
+      "revId": "759d73067e36ffd1ba0a5441bf334e671e9841ae",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3afd8c06_6a800808",
+        "filename": "components/payments/content/service_worker_payment_instrument.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 194,
+      "author": {
+        "id": 1003016
+      },
+      "writtenOn": "2017-11-06T19:07:37Z",
+      "side": 1,
+      "message": "nit: not specified in the modifier.",
+      "range": {
+        "startLine": 194,
+        "startChar": 55,
+        "endLine": 194,
+        "endChar": 68
+      },
+      "revId": "759d73067e36ffd1ba0a5441bf334e671e9841ae",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "cee8e756_37b1f1f6",
+        "filename": "components/payments/content/service_worker_payment_instrument.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 198,
+      "author": {
+        "id": 1003016
+      },
+      "writtenOn": "2017-11-06T19:07:37Z",
+      "side": 1,
+      "message": "nit: no capabilities for this instrument.",
+      "range": {
+        "startLine": 198,
+        "startChar": 26,
+        "endLine": 198,
+        "endChar": 39
+      },
+      "revId": "759d73067e36ffd1ba0a5441bf334e671e9841ae",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5932569a_2f2a3a22",
+        "filename": "components/payments/content/service_worker_payment_instrument.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 205,
+      "author": {
+        "id": 1003016
+      },
+      "writtenOn": "2017-11-06T19:07:37Z",
+      "side": 1,
+      "message": "should make this and |supported_networks| a std::set so you could do set intersection instead of your custom version of the method?",
+      "range": {
+        "startLine": 205,
+        "startChar": 8,
+        "endLine": 205,
+        "endChar": 32
+      },
+      "revId": "759d73067e36ffd1ba0a5441bf334e671e9841ae",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
