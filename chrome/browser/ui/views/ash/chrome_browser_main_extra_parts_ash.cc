@@ -5,7 +5,6 @@
 #include "chrome/browser/ui/views/ash/chrome_browser_main_extra_parts_ash.h"
 
 #include "ash/public/cpp/mus_property_mirror_ash.h"
-#include "ash/public/cpp/window_pin_type.h"
 #include "ash/public/cpp/window_properties.h"
 #include "ash/public/cpp/window_state_type.h"
 #include "ash/public/interfaces/window_pin_type.mojom.h"
@@ -77,9 +76,6 @@ void ChromeBrowserMainExtraPartsAsh::ServiceManagerConnectionStarted(
     converter->RegisterPrimitiveProperty(
         ash::kWindowStateTypeKey, ash::mojom::kWindowStateType_Property,
         base::Bind(&ash::IsValidWindowStateType));
-    converter->RegisterPrimitiveProperty(
-        ash::kWindowPinTypeKey, ash::mojom::kWindowPinType_Property,
-        base::Bind(&ash::IsValidWindowPinType));
     converter->RegisterPrimitiveProperty(
         ash::kWindowPositionManagedTypeKey,
         ash::mojom::kWindowPositionManaged_Property,
