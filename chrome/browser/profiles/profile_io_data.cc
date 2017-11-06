@@ -36,6 +36,7 @@
 #include "chrome/browser/net/chrome_http_user_agent_settings.h"
 #include "chrome/browser/net/chrome_network_delegate.h"
 #include "chrome/browser/net/chrome_url_request_context_getter.h"
+#include "chrome/browser/net/cross_thread_network_context_params.h"
 #include "chrome/browser/net/loading_predictor_observer.h"
 #include "chrome/browser/net/profile_network_context_service.h"
 #include "chrome/browser/net/profile_network_context_service_factory.h"
@@ -394,9 +395,13 @@ void ProfileIOData::InitializeOnUIThread(Profile* profile) {
 
   params->io_thread = g_browser_process->io_thread();
 
+  content::mojom::NetworkContextParamsPtr main_network_context_params;
   ProfileNetworkContextServiceFactory::GetForContext(profile)
       ->SetUpProfileIODataMainContext(&params->main_network_context_request,
-                                      &params->main_network_context_params);
+                                      &main_network_context_params);
+  params->main_network_context_params =
+      std::make_unique<CrossThreadNetworkContextParams>(
+          std::move(main_network_context_params));
 
   params->cookie_settings = CookieSettingsFactory::GetForProfile(profile);
   params->host_content_settings_map =
@@ -1164,7 +1169,7 @@ void ProfileIOData::Init(
   main_network_context_ =
       io_thread_globals->network_service->CreateNetworkContextWithBuilder(
           std::move(profile_params_->main_network_context_request),
-          std::move(profile_params_->main_network_context_params),
+          profile_params_->main_network_context_params->ExtractParams(),
           std::move(builder), &main_request_context_);
 
   if (chrome_network_delegate_unowned->domain_reliability_monitor()) {
