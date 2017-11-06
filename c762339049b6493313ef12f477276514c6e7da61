@@ -70,6 +70,52 @@
       "revId": "c762339049b6493313ef12f477276514c6e7da61",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "70737fbc_0ad75ce9",
+        "filename": "third_party/WebKit/Source/core/page/PageLifecycleState.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 11,
+      "author": {
+        "id": 1150969
+      },
+      "writtenOn": "2017-11-06T21:56:17Z",
+      "side": 1,
+      "message": "Is it really kUnknown? Sounds like it should be kNormal or kActive instead?",
+      "range": {
+        "startLine": 11,
+        "startChar": 2,
+        "endLine": 11,
+        "endChar": 10
+      },
+      "revId": "c762339049b6493313ef12f477276514c6e7da61",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2e16eab0_ddf218d0",
+        "filename": "third_party/WebKit/Source/platform/scheduler/renderer/web_view_scheduler_impl.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 145,
+      "author": {
+        "id": 1150969
+      },
+      "writtenOn": "2017-11-06T21:56:17Z",
+      "side": 1,
+      "message": "nit: if (delegate_) { ... } ?",
+      "range": {
+        "startLine": 145,
+        "startChar": 6,
+        "endLine": 145,
+        "endChar": 26
+      },
+      "revId": "c762339049b6493313ef12f477276514c6e7da61",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
