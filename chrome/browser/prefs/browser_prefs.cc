@@ -71,6 +71,7 @@
 #include "components/autofill/core/browser/autofill_manager.h"
 #include "components/browsing_data/core/pref_names.h"
 #include "components/certificate_transparency/ct_policy_manager.h"
+#include "components/consent_auditor/consent_auditor.h"
 #include "components/content_settings/core/browser/host_content_settings_map.h"
 #include "components/dom_distiller/core/distilled_page_prefs.h"
 #include "components/feature_engagement/features.h"
@@ -463,6 +464,7 @@ void RegisterProfilePrefs(user_prefs::PrefRegistrySyncable* registry) {
   chrome_browser_net::Predictor::RegisterProfilePrefs(registry);
   chrome_browser_net::RegisterPredictionOptionsProfilePrefs(registry);
   chrome_prefs::RegisterProfilePrefs(registry);
+  consent_auditor::ConsentAuditor::RegisterPrefs(registry);
   dom_distiller::DistilledPagePrefs::RegisterProfilePrefs(registry);
   DownloadPrefs::RegisterProfilePrefs(registry);
   HostContentSettingsMap::RegisterProfilePrefs(registry);
