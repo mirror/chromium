@@ -134,7 +134,14 @@ class CORE_EXPORT ImageData final : public ScriptWrappable,
   CanvasColorParams GetCanvasColorParams();
   bool ImageDataInCanvasColorSettings(CanvasColorSpace,
                                       CanvasPixelFormat,
-                                      std::unique_ptr<uint8_t[]>&);
+                                      std::unique_ptr<uint8_t[]>&,
+                                      DataU8ColorType);
+  void SetCropRect(const IntRect&);
+  IntRect GetCropRect();
+  void ResetCropRect();
+  bool IsCropped();
+  void SwizzleIfNeeded(DataU8ColorType);
+  int CroppedByteLength();
 
   // ImageBitmapSource implementation
   IntSize BitmapSourceSize() const override { return size_; }
@@ -165,6 +172,7 @@ class CORE_EXPORT ImageData final : public ScriptWrappable,
             const ImageDataColorSettings* = nullptr);
 
   IntSize size_;
+  IntRect crop_rect_;
   ImageDataColorSettings color_settings_;
   ImageDataArray data_union_;
   Member<DOMUint8ClampedArray> data_;
