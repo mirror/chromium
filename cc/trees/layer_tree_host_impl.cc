@@ -1844,6 +1844,26 @@ bool LayerTreeHostImpl::DrawLayers(FrameData* frame) {
   resource_provider_->PrepareSendToParent(resources,
                                           &compositor_frame.resource_list);
   compositor_frame.render_pass_list = std::move(frame->render_passes);
+
+  // Only doing start bound for now.
+  gfx::SelectionBound start_bound = compositor_frame.metadata.selection.start;
+  if (start_bound.type() != gfx::SelectionBound::EMPTY) {
+    gfx::Point handle_location = start_bound.edge_top_rounded();
+    gfx::Size handle_size(50, 50);
+    gfx::Rect rect(handle_location, handle_size);
+    bool is_clipped = false;
+    bool are_contents_opaque = true;
+    std::unique_ptr<viz::RenderPass>& render_pass =
+        compositor_frame.render_pass_list.front();
+    viz::SharedQuadState* quad_state =
+        render_pass->CreateAndAppendSharedQuadState();
+    quad_state->SetAll(gfx::Transform(), rect, rect, rect, is_clipped,
+                       are_contents_opaque, 1.f, SkBlendMode::kSrcOver, 0);
+    viz::SolidColorDrawQuad* solid_quad =
+        render_pass->CreateAndAppendDrawQuad<viz::SolidColorDrawQuad>();
+    solid_quad->SetNew(quad_state, rect, rect, SK_ColorRED, false);
+  }
+
   // TODO(fsamuel): Once all clients get their viz::LocalSurfaceId from their
   // parent, the viz::LocalSurfaceId should hang off CompositorFrameMetadata.
   if (settings_.enable_surface_synchronization &&
