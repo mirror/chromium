@@ -385,6 +385,12 @@ public class VrShellDelegate
         }
     }
 
+    public static boolean hasAudioPermission() {
+        assert sInstance != null;
+        if (sInstance == null) return false;
+        return sInstance.hasAudioPermissionInternal();
+    }
+
     public static void showDoffAndExitVr(boolean optional) {
         assert sInstance != null;
         sInstance.showDoffAndExitVrInternal(optional);
@@ -1115,6 +1121,10 @@ public class VrShellDelegate
         }
         mOnExitVrRequestListener = listener;
         mVrShell.requestToExitVr(reason);
+    }
+
+    private boolean hasAudioPermissionInternal() {
+        return mActivity.getWindowAndroid().hasPermission(android.Manifest.permission.RECORD_AUDIO);
     }
 
     @CalledByNative

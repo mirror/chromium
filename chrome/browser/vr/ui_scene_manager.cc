@@ -1193,10 +1193,16 @@ void UiSceneManager::SetExitVrPromptEnabled(bool enabled,
     browser_->OnExitVrPromptResult(exit_vr_prompt_reason_,
                                    ExitVrPromptChoice::CHOICE_NONE);
   }
-  exit_prompt_->SetContentMessageId(
-      (reason == UiUnsupportedMode::kUnhandledPageInfo)
-          ? IDS_VR_SHELL_EXIT_PROMPT_DESCRIPTION_SITE_INFO
-          : IDS_VR_SHELL_EXIT_PROMPT_DESCRIPTION);
+  if (reason == UiUnsupportedMode::kUnhandledPageInfo) {
+    exit_prompt_->SetContentMessageId(
+        IDS_VR_SHELL_EXIT_PROMPT_DESCRIPTION_SITE_INFO);
+  } else if (reason == UiUnsupportedMode::kAndroidPermissionNeeded) {
+    // TODO (asimjour): Replace this with appropriate message
+    exit_prompt_->SetContentMessageId(
+        IDS_VR_SHELL_EXIT_PROMPT_DESCRIPTION_SITE_INFO);
+  } else {
+    exit_prompt_->SetContentMessageId(IDS_VR_SHELL_EXIT_PROMPT_DESCRIPTION);
+  }
   exit_vr_prompt_reason_ = reason;
   prompting_to_exit_ = enabled;
   ConfigureScene();
