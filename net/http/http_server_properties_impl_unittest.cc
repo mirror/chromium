@@ -1357,6 +1357,26 @@ TEST_F(QuicServerInfoServerPropertiesTest, SetQuicServerInfo) {
   EXPECT_EQ(nullptr, impl_.GetQuicServerInfo(quic_server_id));
 }
 
+TEST_F(QuicServerInfoServerPropertiesTest, TestCanonicalSuffixMatch) {
+  // Set up HttpServerProperties.
+  // Add a host that has the same canonical suffix.
+  QuicServerId foo_server_id("foo.googlevideo.com", 443, PRIVACY_MODE_ENABLED);
+  std::string foo_server_info("foo_server_info");
+  impl_.SetQuicServerInfo(foo_server_id, foo_server_info);
+
+  // Add a host that has a different canonical suffix.
+  QuicServerId baz_server_id("baz.video.com", 443, PRIVACY_MODE_ENABLED);
+  std::string baz_server_info("baz_server_info");
+  impl_.SetQuicServerInfo(baz_server_id, baz_server_info);
+
+  // Create QuicServerId with a host that has the same canonical suffix.
+  QuicServerId bar_server_id("bar.googlevideo.com", 443, PRIVACY_MODE_ENABLED);
+
+  // Check the the server info associated with "foo" is returned for "bar".
+  const std::string* bar_server_info = impl_.GetQuicServerInfo(bar_server_id);
+  EXPECT_STREQ(foo_server_info.c_str(), bar_server_info->c_str());
+}
+
 }  // namespace
 
 }  // namespace net

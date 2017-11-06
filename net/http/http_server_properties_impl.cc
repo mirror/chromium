@@ -593,8 +593,30 @@ bool HttpServerPropertiesImpl::SetQuicServerInfo(
 const std::string* HttpServerPropertiesImpl::GetQuicServerInfo(
     const QuicServerId& server_id) {
   QuicServerInfoMap::iterator it = quic_server_info_map_.Get(server_id);
-  if (it == quic_server_info_map_.end())
+  // If the exact match for |server_id| wasn't found, try to search for entries
+  // with the same canonical name.
+  if (it == quic_server_info_map_.end()) {
+    const std::string* canonical_suffix = GetCanonicalSuffix(server_id.host());
+    if (!canonical_suffix)
+      return nullptr;
+    QuicServerId canonical_id_to_search(*canonical_suffix, server_id.port(),
+                                        server_id.privacy_mode());
+    // Iterate through |quic_server_info_map_| in RLU order and return the
+    // first record that matches the canonical host.
+    for (const std::pair<QuicServerId, std::string>& info_pair :
+         quic_server_info_map_) {
+      const std::string* canonical_suffix_in_map =
+          GetCanonicalSuffix(info_pair.first.host());
+      if (!canonical_suffix_in_map)
+        continue;
+      QuicServerId canonical_id_in_map(*canonical_suffix_in_map,
+                                       info_pair.first.port(),
+                                       info_pair.first.privacy_mode());
+      if (canonical_id_to_search == canonical_id_in_map)
+        return &info_pair.second;
+    }
     return nullptr;
+  }
   return &it->second;
 }
 
