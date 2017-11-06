@@ -16,6 +16,24 @@
       "revId": "97364a23963db1772cc7c09fb9528355736ef881",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d8e66ee3_6659b010",
+        "filename": "ui/compositor/property_change_reason.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 14,
+      "author": {
+        "id": 1002897
+      },
+      "writtenOn": "2017-11-06T21:08:34Z",
+      "side": 1,
+      "message": "Yes, I initially thought about that, but it involved more refactoring since the code that changes a property (e.g. https://cs.chromium.org/chromium/src/ui/compositor/layer_animation_element.cc?l\u003d177\u0026rcl\u003d3f6c980434d478741a819d0cc1372ae0b1f66d59) doesn\u0027t necessarily know if the animation is ending (t\u003d1 doesn\u0027t mean that the animation is ending if is_cycling is true). Since my goal is to land WindowOcclusionTracker as soon as possible, I would like to stick with the solution that we agreed on at https://groups.google.com/a/google.com/forum/#!topic/chrome-tmt/nTBgFpPlEGQ\n\nIf you want, I could add a TODO.",
+      "parentUuid": "1ca81133_02429348",
+      "revId": "97364a23963db1772cc7c09fb9528355736ef881",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
