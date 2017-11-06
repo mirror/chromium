@@ -16,6 +16,24 @@
       "revId": "101b1eb92cca510adf0aea8864f12950cdedbf57",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "47110497_a70e382e",
+        "filename": "testing/libfuzzer/fuzzers/BUILD.gn",
+        "patchSetId": 1
+      },
+      "lineNbr": 420,
+      "author": {
+        "id": 1106289
+      },
+      "writtenOn": "2017-11-06T19:12:03Z",
+      "side": 1,
+      "message": "Maybe eventually, but I don\u0027t think it would find many more issues. Note that since we don\u0027t actually execute the Reactor generated code, we could exercise the ARM code generation on x86 as well. Anyway, all of that would require SwiftShader BUILD.gn changes first.",
+      "parentUuid": "327c49e8_341a23c0",
+      "revId": "101b1eb92cca510adf0aea8864f12950cdedbf57",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
