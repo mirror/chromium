@@ -239,6 +239,10 @@ MediaRouterIntegrationBrowserTest::StartSessionWithTestPageAndChooseSink() {
   WebContents* web_contents = StartSessionWithTestPageAndSink();
   WaitUntilSinkDiscoveredOnUI();
   ChooseSink(web_contents, receiver_);
+
+  // Wait a few seconds for MediaRouter to receive updates containing the
+  // created route.
+  Wait(base::TimeDelta::FromSeconds(3));
   return web_contents;
 }
 
@@ -656,10 +660,6 @@ void MediaRouterIntegrationBrowserTest::RunReconnectSessionTest() {
   CheckSessionValidity(web_contents);
   std::string session_id(GetStartedConnectionId(web_contents));
 
-  // Wait a few seconds for MediaRouter to receive updates containing the
-  // created route.
-  Wait(base::TimeDelta::FromSeconds(3));
-
   OpenTestPageInNewTab(FILE_PATH_LITERAL("basic_test.html"));
   WebContents* new_web_contents = GetActiveWebContents();
   ASSERT_TRUE(new_web_contents);
@@ -775,10 +775,6 @@ IN_PROC_BROWSER_TEST_F(MediaRouterIntegrationBrowserTest,
   WebContents* web_contents = StartSessionWithTestPageAndChooseSink();
   CheckSessionValidity(web_contents);
   std::string session_id(GetStartedConnectionId(web_contents));
-
-  // Wait a few seconds for MediaRouter to receive updates containing the
-  // created route.
-  Wait(base::TimeDelta::FromSeconds(3));
 
   SetTestData(FILE_PATH_LITERAL("fail_reconnect_session.json"));
   OpenTestPageInNewTab(FILE_PATH_LITERAL("fail_reconnect_session.html"));
