@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "48c0afd7_c242af81",
+        "filename": "chrome/android/javatests/src/org/chromium/chrome/browser/ntp/NtpUiCaptureTestData.java",
+        "patchSetId": 6
+      },
+      "lineNbr": 167,
+      "author": {
+        "id": 1001606
+      },
+      "writtenOn": "2017-11-06T14:06:49Z",
+      "side": 1,
+      "message": "I figured someone might want to use it, but you\u0027re right, we don\u0027t actually need it public.",
+      "parentUuid": "aeaac9e5_3c54aaa5",
+      "range": {
+        "startLine": 167,
+        "startChar": 18,
+        "endLine": 167,
+        "endChar": 35
+      },
+      "revId": "3ea175fdbd29a4e205038afcb2a0643116846c0d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "e9131eda_070b5b03",
         "filename": "chrome/android/javatests/src/org/chromium/chrome/browser/ntp/NtpUiCaptureTestData.java",
         "patchSetId": 6
@@ -48,6 +72,30 @@
     },
     {
       "key": {
+        "uuid": "41acbe32_b1ae46b4",
+        "filename": "chrome/android/javatests/src/org/chromium/chrome/browser/ntp/NtpUiCaptureTestData.java",
+        "patchSetId": 6
+      },
+      "lineNbr": 173,
+      "author": {
+        "id": 1001606
+      },
+      "writtenOn": "2017-11-06T14:06:49Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "e9131eda_070b5b03",
+      "range": {
+        "startLine": 173,
+        "startChar": 18,
+        "endLine": 173,
+        "endChar": 38
+      },
+      "revId": "3ea175fdbd29a4e205038afcb2a0643116846c0d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "21503537_0092a487",
         "filename": "chrome/android/javatests/src/org/chromium/chrome/browser/suggestions/HomeSheetCardsUiCaptureTest.java",
         "patchSetId": 6
@@ -68,6 +116,30 @@
       "revId": "3ea175fdbd29a4e205038afcb2a0643116846c0d",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f13d89f1_f4ad655f",
+        "filename": "chrome/android/javatests/src/org/chromium/chrome/browser/suggestions/HomeSheetCardsUiCaptureTest.java",
+        "patchSetId": 6
+      },
+      "lineNbr": 56,
+      "author": {
+        "id": 1001606
+      },
+      "writtenOn": "2017-11-06T14:06:49Z",
+      "side": 1,
+      "message": "Oh, turns out that one is used in testContentSuggestionPlaceholder() below, so I updated the SuggestionsDependenciesRule to use it too.",
+      "parentUuid": "21503537_0092a487",
+      "range": {
+        "startLine": 56,
+        "startChar": 66,
+        "endLine": 56,
+        "endChar": 79
+      },
+      "revId": "3ea175fdbd29a4e205038afcb2a0643116846c0d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
