@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "77ba7ed8_87ad1cb8",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 7
+      },
+      "lineNbr": 21,
+      "author": {
+        "id": 1140584
+      },
+      "writtenOn": "2017-11-06T03:00:37Z",
+      "side": 1,
+      "message": "nit: I dont like the function name :/ it reads awkwardly",
+      "revId": "867458cb435a287a6e1ba483fa047f144bf22eb0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
