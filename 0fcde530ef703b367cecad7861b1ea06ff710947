@@ -228,6 +228,24 @@
       "revId": "0fcde530ef703b367cecad7861b1ea06ff710947",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "509e3a92_bb8b96c9",
+        "filename": "services/device/wake_lock/power_save_blocker/power_save_blocker_x11.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 278,
+      "author": {
+        "id": 1000042
+      },
+      "writtenOn": "2017-11-06T22:18:49Z",
+      "side": 1,
+      "message": "thanks, uploaded https://chromium-review.googlesource.com/#/c/chromium/src/+/755884 to fix these.",
+      "parentUuid": "f063b45e_2e2138a6",
+      "revId": "0fcde530ef703b367cecad7861b1ea06ff710947",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
