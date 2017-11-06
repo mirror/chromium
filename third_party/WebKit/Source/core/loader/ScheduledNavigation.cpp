@@ -28,7 +28,7 @@ ScheduledNavigation::~ScheduledNavigation() {}
 
 std::unique_ptr<UserGestureIndicator>
 ScheduledNavigation::CreateUserGestureIndicator() {
-  return WTF::MakeUnique<UserGestureIndicator>(user_gesture_token_);
+  return std::make_unique<UserGestureIndicator>(user_gesture_token_);
 }
 
 }  // namespace blink

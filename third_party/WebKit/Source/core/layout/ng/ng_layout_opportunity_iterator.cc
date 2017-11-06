@@ -208,7 +208,7 @@ void InsertExclusion(NGLayoutOpportunityTreeNode* node,
       opportunities.push_back(top_layout_opp);
 
     node->exclusions.push_back(exclusion);
-    node->combined_exclusion = WTF::MakeUnique<NGExclusion>(*exclusion);
+    node->combined_exclusion = std::make_unique<NGExclusion>(*exclusion);
     return;
   }
 

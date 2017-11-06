@@ -200,7 +200,7 @@ class TestPluginWebFrameClient : public FrameTestHelpers::TestWebFrameClient {
       const WebParsedFeaturePolicy& container_policy,
       const WebFrameOwnerProperties&) {
     return CreateLocalChild(*parent, scope,
-                            WTF::MakeUnique<TestPluginWebFrameClient>());
+                            std::make_unique<TestPluginWebFrameClient>());
   }
 
   WebPlugin* CreatePlugin(const WebPluginParams& params) override {

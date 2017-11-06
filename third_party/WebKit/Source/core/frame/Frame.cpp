@@ -200,7 +200,7 @@ std::unique_ptr<UserGestureIndicator> Frame::NotifyUserActivation(
     UserGestureToken::Status status) {
   if (frame)
     frame->NotifyUserActivation();
-  return WTF::MakeUnique<UserGestureIndicator>(status);
+  return std::make_unique<UserGestureIndicator>(status);
 }
 
 // static

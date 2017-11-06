@@ -80,7 +80,7 @@ class BaseAudioContextTestPlatform : public TestingPlatformSupport {
       WebAudioDevice::RenderCallback*,
       const WebString& device_id,
       const WebSecurityOrigin&) override {
-    return WTF::MakeUnique<MockWebAudioDeviceForBaseAudioContext>(
+    return std::make_unique<MockWebAudioDeviceForBaseAudioContext>(
         AudioHardwareSampleRate(), AudioHardwareBufferSize());
   }
 
@@ -115,7 +115,7 @@ class BaseAudioContextAutoplayTest
     GetDocument().GetSettings()->SetAutoplayPolicy(GetParam());
     ChildDocument().GetSettings()->SetAutoplayPolicy(GetParam());
 
-    histogram_tester_ = WTF::MakeUnique<HistogramTester>();
+    histogram_tester_ = std::make_unique<HistogramTester>();
     AudioWorkletThread::CreateSharedBackingThreadForTest();
   }
 
