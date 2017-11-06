@@ -1,0 +1,141 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "2a169cfb_364a8243",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 15
+      },
+      "lineNbr": 38,
+      "author": {
+        "id": 1001216
+      },
+      "writtenOn": "2017-11-06T23:23:24Z",
+      "side": 1,
+      "message": "I have some race concerns about approach #2 (described below).  We may be able to deal with them, but I also wonder if it\u0027s worth considering a variation of these earlier approaches.\n\nIt sounds like some RFOs care about getting notified before the DidCommit IPC goes out (e.g., PLT), while others want to run script before the document does anything.  It also sounds like WillCommitProvisionalLoad isn\u0027t suitable for the first group\u0027s needs.  Maybe we should have an RFO method that gets called from the current location of the RFO::DidCommitProvisionalLoad one,  and another one that gets called after the IPC?  We could then move any script execution cases to the latter one.\n\nAs for naming, we could use some kind of PreCommit and PostCommit nomenclature.  Or maybe we could see if the earlier one would work for the two current users of WillCommitProvisionalLoad and simply move them over, letting us keep WillCommit and DidCommit?\n\n(Not sure if this is worth pursuing, but I thought I\u0027d point it out as an option to avoid the race concerns.)",
+      "revId": "ca00fff4646b858999fce22c0a43206fc86be798",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4838a319_9f033047",
+        "filename": "chrome/browser/renderer_host/render_process_host_chrome_browsertest.cc",
+        "patchSetId": 15
+      },
+      "lineNbr": 106,
+      "author": {
+        "id": 1001216
+      },
+      "writtenOn": "2017-11-06T23:23:24Z",
+      "side": 1,
+      "message": "While you\u0027re here, can you change this to GetLastCommittedURL()?  (Slowly whittling away the uses of WebContents::GetURL.)",
+      "range": {
+        "startLine": 106,
+        "startChar": 14,
+        "endLine": 106,
+        "endChar": 20
+      },
+      "revId": "ca00fff4646b858999fce22c0a43206fc86be798",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ddad0903_fae4a201",
+        "filename": "chrome/renderer/chrome_render_frame_observer.cc",
+        "patchSetId": 15
+      },
+      "lineNbr": 381,
+      "author": {
+        "id": 1001216
+      },
+      "writtenOn": "2017-11-06T23:23:24Z",
+      "side": 1,
+      "message": "I worry about a time of check to time of use bug here, with the posted task.  If we can\u0027t do this in the same task as DidCommitProvisionalLoad (after the IPC is sent), maybe we should verify that the frame is still on the same page and still has WebUI bindings before running the script?\n\nPotentially worse, I wonder if the page might able to start parsing and running its own scripts before these injected scripts run if we post them in a task.  That might defeat the purpose of injecting it right at the start.",
+      "revId": "ca00fff4646b858999fce22c0a43206fc86be798",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "22a3f1d7_ef7c8330",
+        "filename": "content/renderer/devtools/devtools_frontend_impl.cc",
+        "patchSetId": 15
+      },
+      "lineNbr": 46,
+      "author": {
+        "id": 1001216
+      },
+      "writtenOn": "2017-11-06T23:23:24Z",
+      "side": 1,
+      "message": "Same concern about TOCTOU bugs.  Presumably this object doesn\u0027t go away when the document changes?  Maybe it should check that the URL is as expected here.",
+      "revId": "ca00fff4646b858999fce22c0a43206fc86be798",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ae495d99_ede9aa5c",
+        "filename": "content/renderer/render_frame_impl.cc",
+        "patchSetId": 15
+      },
+      "lineNbr": 2151,
+      "author": {
+        "id": 1001216
+      },
+      "writtenOn": "2017-11-06T23:23:24Z",
+      "side": 1,
+      "message": "Maybe it\u0027s useful to have a message as well, like \"Not safe to execute script before commit: \" \u003c\u003c jscript;",
+      "range": {
+        "startLine": 2151,
+        "startChar": 36,
+        "endLine": 2151,
+        "endChar": 43
+      },
+      "revId": "ca00fff4646b858999fce22c0a43206fc86be798",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3289a3b5_5e449b01",
+        "filename": "content/renderer/render_frame_impl.cc",
+        "patchSetId": 15
+      },
+      "lineNbr": 2191,
+      "author": {
+        "id": 1001216
+      },
+      "writtenOn": "2017-11-06T23:23:24Z",
+      "side": 1,
+      "message": "Same.",
+      "range": {
+        "startLine": 2191,
+        "startChar": 36,
+        "endLine": 2191,
+        "endChar": 43
+      },
+      "revId": "ca00fff4646b858999fce22c0a43206fc86be798",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e306bf10_aac6fa7d",
+        "filename": "content/renderer/render_frame_impl.cc",
+        "patchSetId": 15
+      },
+      "lineNbr": 4445,
+      "author": {
+        "id": 1001216
+      },
+      "writtenOn": "2017-11-06T23:23:24Z",
+      "side": 1,
+      "message": "Is this the right way to detect that?  There\u0027s logic around committed_first_load_ and current_history_item_ in lines 3886-3903 which seems related, though I worry about dcheng\u0027s comments about removing part of it.",
+      "revId": "ca00fff4646b858999fce22c0a43206fc86be798",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}

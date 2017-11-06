@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "c9dc56ff_ba0400e5",
+        "filename": "chrome/browser/resources/chromeos/chromevox/braille/braille_display_manager_test.unitjs",
+        "patchSetId": 7
+      },
+      "lineNbr": 179,
+      "author": {
+        "id": 1001216
+      },
+      "writtenOn": "2017-11-06T23:23:24Z",
+      "side": 0,
+      "message": "Ack",
+      "parentUuid": "80969caa_5e48b7fd",
+      "range": {
+        "startLine": 168,
+        "startChar": 0,
+        "endLine": 179,
+        "endChar": 2
+      },
+      "revId": "37249b59c9b5307638d726a5b0350f5ac745fcf7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "7df668e5_f2bee493",
         "filename": "chrome/browser/resources/chromeos/chromevox/braille/braille_input_handler_test.unitjs",
         "patchSetId": 7
@@ -48,6 +72,30 @@
     },
     {
       "key": {
+        "uuid": "6cc9bb8f_1dffdf19",
+        "filename": "chrome/browser/resources/chromeos/chromevox/braille/braille_input_handler_test.unitjs",
+        "patchSetId": 7
+      },
+      "lineNbr": 15,
+      "author": {
+        "id": 1001216
+      },
+      "writtenOn": "2017-11-06T23:23:24Z",
+      "side": 0,
+      "message": "Ack",
+      "parentUuid": "7df668e5_f2bee493",
+      "range": {
+        "startLine": 10,
+        "startChar": 0,
+        "endLine": 15,
+        "endChar": 35
+      },
+      "revId": "37249b59c9b5307638d726a5b0350f5ac745fcf7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "93fd9687_c588512c",
         "filename": "content/renderer/devtools/devtools_frontend_impl.cc",
         "patchSetId": 7
@@ -59,6 +107,30 @@
       "writtenOn": "2017-11-02T21:37:06Z",
       "side": 0,
       "message": "This used to fail the new DCHECKs from the following callstack:\n\n#2 0x7f214486e199 content::RenderFrameImpl::OnJavaScriptExecuteRequest()\n#3 0x7f214487a0f3 content::RenderFrameImpl::ExecuteJavaScript()\n#4 0x7f214468655f content::DevToolsClient::DidClearWindowObject()\n#5 0x7f21448890a8 content::RenderFrameImpl::DidClearWindowObject()\n#6 0x7f2138f4d5e1 blink::LocalFrameClientImpl::DispatchDidClearWindowObjectInMainWorld()\n#7 0x7f2139892bfb blink::FrameLoader::DispatchDidClearWindowObjectInMainWorld()\n#8 0x7f213869b40b blink::LocalWindowProxy::Initialize()\n#9 0x7f213873146a blink::WindowProxy::SetGlobalProxy()\n#10 0x7f213873213b blink::WindowProxyManager::SetGlobalProxies()\n#11 0x7f2138f80d13 blink::WebFrame::Swap()\n#12 0x7f21448762ff content::RenderFrameImpl::SwapIn()\n#13 0x7f21448856da content::RenderFrameImpl::DidCommitProvisionalLoad()\n...",
+      "range": {
+        "startLine": 32,
+        "startChar": 20,
+        "endLine": 32,
+        "endChar": 37
+      },
+      "revId": "37249b59c9b5307638d726a5b0350f5ac745fcf7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "21592504_a62c4fd6",
+        "filename": "content/renderer/devtools/devtools_frontend_impl.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 32,
+      "author": {
+        "id": 1001216
+      },
+      "writtenOn": "2017-11-06T23:23:24Z",
+      "side": 0,
+      "message": "Ack",
+      "parentUuid": "93fd9687_c588512c",
       "range": {
         "startLine": 32,
         "startChar": 20,

@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "189c5599_7e378163",
+        "filename": "chrome/browser/renderer_host/render_process_host_chrome_browsertest.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 105,
+      "author": {
+        "id": 1001216
+      },
+      "writtenOn": "2017-11-06T23:23:24Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "6928c025_899b01fc",
+      "range": {
+        "startLine": 105,
+        "startChar": 4,
+        "endLine": 105,
+        "endChar": 40
+      },
+      "revId": "5a772b3121dee54d26a2d0979f802ab366b6e510",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "8071a6b8_640dd338",
         "filename": "chrome/browser/ui/browser_focus_uitest.cc",
         "patchSetId": 7
@@ -36,6 +60,30 @@
       "writtenOn": "2017-11-02T21:37:06Z",
       "side": 1,
       "message": "Waits until commit / until we are ready to execute scripts (e.g. on line 764 below).",
+      "range": {
+        "startLine": 757,
+        "startChar": 2,
+        "endLine": 757,
+        "endChar": 58
+      },
+      "revId": "5a772b3121dee54d26a2d0979f802ab366b6e510",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "191a7540_8ba61c88",
+        "filename": "chrome/browser/ui/browser_focus_uitest.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 757,
+      "author": {
+        "id": 1001216
+      },
+      "writtenOn": "2017-11-06T23:23:24Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "8071a6b8_640dd338",
       "range": {
         "startLine": 757,
         "startChar": 2,
@@ -71,6 +119,30 @@
     },
     {
       "key": {
+        "uuid": "ab6526b2_6b20bc28",
+        "filename": "chrome/browser/ui/webui/web_ui_test_handler.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 7,
+      "author": {
+        "id": 1001216
+      },
+      "writtenOn": "2017-11-06T23:23:24Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "e50d3782_2a984dca",
+      "range": {
+        "startLine": 7,
+        "startChar": 0,
+        "endLine": 7,
+        "endChar": 17
+      },
+      "revId": "5a772b3121dee54d26a2d0979f802ab366b6e510",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "4e5fae75_7353ca6f",
         "filename": "chrome/browser/ui/webui/web_ui_test_handler.cc",
         "patchSetId": 7
@@ -82,6 +154,30 @@
       "writtenOn": "2017-11-02T21:37:06Z",
       "side": 1,
       "message": "WebUITestHandler is the only called of this method - therefore, to help future readers of that code, let\u0027s add a ForTesting suffix.  Initially, I had incorrectly assumed that (before this CL) this enabled *production* code to run scripts before a DidCommitProvisionalLoad IPC.",
+      "range": {
+        "startLine": 44,
+        "startChar": 45,
+        "endLine": 44,
+        "endChar": 55
+      },
+      "revId": "5a772b3121dee54d26a2d0979f802ab366b6e510",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "38a13d64_4d56476d",
+        "filename": "chrome/browser/ui/webui/web_ui_test_handler.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 44,
+      "author": {
+        "id": 1001216
+      },
+      "writtenOn": "2017-11-06T23:23:24Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "4e5fae75_7353ca6f",
       "range": {
         "startLine": 44,
         "startChar": 45,
@@ -140,6 +236,30 @@
     },
     {
       "key": {
+        "uuid": "8bdc5f0b_5766444f",
+        "filename": "chrome/test/base/web_ui_browser_test.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 464,
+      "author": {
+        "id": 1001216
+      },
+      "writtenOn": "2017-11-06T23:23:24Z",
+      "side": 1,
+      "message": "\u003e At this point |error_messages_| can contain error messages from \"preloaded\" javascript libraries (note that PreloadJavaScript on line 472 is \"asynchronous\" - it just stuffs the scripts into ChromeRenderFrameObserver::webui_javascript_ field).  We should not look at errors of other scripts (only at errors from executing |content|), therefore we should reset the error count before executing the |content| script (not afterwards).\n\u003e \n\u003e Ideally the tests would fail when there are errors when executing the \"preloaded\" javascript libraries, but the errors are happening even before the CL under review (they just aren\u0027t caught in all the cases - see also https://crbug.com/780589).\n\nOk.  Can you add a comment to this effect?",
+      "parentUuid": "f04b4019_1d645835",
+      "range": {
+        "startLine": 464,
+        "startChar": 2,
+        "endLine": 464,
+        "endChar": 32
+      },
+      "revId": "5a772b3121dee54d26a2d0979f802ab366b6e510",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "e9cfe92d_61273962",
         "filename": "content/browser/frame_host/render_frame_host_manager_browsertest.cc",
         "patchSetId": 7
@@ -163,6 +283,30 @@
     },
     {
       "key": {
+        "uuid": "f186cc0f_f6196075",
+        "filename": "content/browser/frame_host/render_frame_host_manager_browsertest.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 308,
+      "author": {
+        "id": 1001216
+      },
+      "writtenOn": "2017-11-06T23:23:24Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "e9cfe92d_61273962",
+      "range": {
+        "startLine": 302,
+        "startChar": 0,
+        "endLine": 308,
+        "endChar": 0
+      },
+      "revId": "5a772b3121dee54d26a2d0979f802ab366b6e510",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "04e51c2f_f500daa0",
         "filename": "content/renderer/render_frame_impl.cc",
         "patchSetId": 7
@@ -174,6 +318,30 @@
       "writtenOn": "2017-11-02T21:37:06Z",
       "side": 1,
       "message": "AFAIR there are only 2 tests preventing this:\n\n*) RenderFrameHostManagerTest.ClickLinkAfter204Error - after a navigation that does *not* commit, the test calls ExecuteScript(... location.href\u003d...) to trigger a renderer-initiated navigation.\n\n*) NavigationControllerBrowserTest.FrameNavigationEntry_SlowNestedAutoSubframe - also tries to execute scripts after a navigation that did *not* commit (this time because of web_contents-\u003eStop(), rather than because of a 204 response).\n\n\nOTOH, fixing these tests seems difficult (Q: how to let a test trigger a renderer-initiated navigation without executing a script?).  I think it is okay to land the CL as-is and\n1. get the benefit of the 2 newly added DCHECKs\n2. unblock tightening of localStorage enforcements (https://crrev.com/c/666317)\nand deal with the tests at a later point in time.",
+      "range": {
+        "startLine": 2182,
+        "startChar": 5,
+        "endLine": 2182,
+        "endChar": 47
+      },
+      "revId": "5a772b3121dee54d26a2d0979f802ab366b6e510",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "6753d8cd_9d616321",
+        "filename": "content/renderer/render_frame_impl.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 2182,
+      "author": {
+        "id": 1001216
+      },
+      "writtenOn": "2017-11-06T23:23:24Z",
+      "side": 1,
+      "message": "\u003e AFAIR there are only 2 tests preventing this:\n\u003e \n\u003e *) RenderFrameHostManagerTest.ClickLinkAfter204Error - after a navigation that does *not* commit, the test calls ExecuteScript(... location.href\u003d...) to trigger a renderer-initiated navigation.\n\nIf we want to fix this one, we may be able to split the ClickLinkAfter204Error test into two tests.  The original version of it in https://codereview.chromium.org/6724026 had two separate pages and ensured that renderer-initiated navigations worked after the 204.  We then modified/reused the test to exercise a different bug about leaving the URL visible in blank new tabs in https://codereview.chromium.org/245943002.  It\u0027s not clear to me that the latter test cares about the renderer-initiated navigation case, or if it did, maybe we could trigger the navigation from another tab instead.\n\n\u003e \n\u003e *) NavigationControllerBrowserTest.FrameNavigationEntry_SlowNestedAutoSubframe - also tries to execute scripts after a navigation that did *not* commit (this time because of web_contents-\u003eStop(), rather than because of a 204 response).\n\u003e \n\u003e \n\u003e OTOH, fixing these tests seems difficult (Q: how to let a test trigger a renderer-initiated navigation without executing a script?).  I think it is okay to land the CL as-is and\n\u003e 1. get the benefit of the 2 newly added DCHECKs\n\u003e 2. unblock tightening of localStorage enforcements (https://crrev.com/c/666317)\n\u003e and deal with the tests at a later point in time.\n\nActually, can both tests just use another frame in the same browsing instance to run the script?  I would expect that to avoid your DCHECKs.",
+      "parentUuid": "04e51c2f_f500daa0",
       "range": {
         "startLine": 2182,
         "startChar": 5,
