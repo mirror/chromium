@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "5361531a_fed0b618",
+        "filename": "content/test/DEPS",
+        "patchSetId": 4
+      },
+      "lineNbr": 30,
+      "author": {
+        "id": 1115968
+      },
+      "writtenOn": "2017-11-06T20:01:22Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "dbe0ea36_dc8dadc6",
+      "range": {
+        "startLine": 30,
+        "startChar": 0,
+        "endLine": 30,
+        "endChar": 1
+      },
+      "revId": "e90b9a8bdd8e266339ae37573ef2540127cf6485",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "a027e0fb_706bd4b5",
         "filename": "services/proxy_resolver/proxy_resolver_factory_impl_unittest.cc",
         "patchSetId": 4
@@ -36,6 +60,24 @@
       "writtenOn": "2017-11-06T17:59:02Z",
       "side": 1,
       "message": "I think these tests could benefit from using the TestConnectorFactory. You can create a  TestConnectorFactory instance and give it an instance of your service and then get a connector instance from it where Bind() calls are directly routed to your service. Instead of tracking refs to the service you could then track when the service is deleted (maybe by subclassing the proxy resolver service and having a wek ptr pointing to it).\nAnyway, this is just a suggestion and may not be doable, so feel free to ignore :-)",
+      "revId": "e90b9a8bdd8e266339ae37573ef2540127cf6485",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f6da05ec_f2e42abd",
+        "filename": "services/proxy_resolver/proxy_resolver_factory_impl_unittest.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 1,
+      "author": {
+        "id": 1115968
+      },
+      "writtenOn": "2017-11-06T20:01:22Z",
+      "side": 1,
+      "message": "We\u0027d need to add to the service the ability to either inject a ProxyResolverV8TracingFactory, or use the real one.  Also, anything that accesses expects there to be a pending request would no longer would work, as we can never actually check that with a mojo interface.  We\u0027d actually be unable to access |mock_factory_| at all, unless we also inject that into the service as well (Which makes this a bit dependent on how we resolve your other comment).  I\u0027m a bit reluctant to re-evaluate all these tests in this CL, though there aren\u0027t a huge number of them.",
+      "parentUuid": "a027e0fb_706bd4b5",
       "revId": "e90b9a8bdd8e266339ae37573ef2540127cf6485",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -65,6 +107,30 @@
     },
     {
       "key": {
+        "uuid": "ebf725ff_2d4b69c0",
+        "filename": "services/proxy_resolver/proxy_resolver_service.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 19,
+      "author": {
+        "id": 1115968
+      },
+      "writtenOn": "2017-11-06T20:01:22Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "4f5fa52e_3bbeede6",
+      "range": {
+        "startLine": 19,
+        "startChar": 6,
+        "endLine": 19,
+        "endChar": 30
+      },
+      "revId": "e90b9a8bdd8e266339ae37573ef2540127cf6485",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "dffd55bf_12cdcd24",
         "filename": "services/proxy_resolver/proxy_resolver_service.h",
         "patchSetId": 4
@@ -76,6 +142,30 @@
       "writtenOn": "2017-11-06T17:59:02Z",
       "side": 1,
       "message": "I wonder if it\u0027s better to have a single ProxyResolverFactoryImpl instance in the service or if it might be easier to have one per requests? (so then each ProxyResolverFactoryImpl instance would keep its ServiceContextRef and that would make this a bit simpler).\nWhat are the benefits of sharing a unique instance?",
+      "range": {
+        "startLine": 43,
+        "startChar": 27,
+        "endLine": 43,
+        "endChar": 50
+      },
+      "revId": "e90b9a8bdd8e266339ae37573ef2540127cf6485",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "66f0a3b6_a201e02d",
+        "filename": "services/proxy_resolver/proxy_resolver_service.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 43,
+      "author": {
+        "id": 1115968
+      },
+      "writtenOn": "2017-11-06T20:01:22Z",
+      "side": 1,
+      "message": "It depends...If they each have their own ProxyResolverV8Tracing, then all ProxyResolvers / ProxyResolverFactoryImpl::Jobs need to keep their own ProxyResolverFactory alive.  Given that reference counting is in general a bit of an anti-pattern, due to making ownership unclear and resulting in destruction ordering issues, I\u0027d rather not go that route.\n\nIf we still have a shared ProxyResolverV8Tracing, we avoid that, and have more control over the numver of parallel jobs we run across Chrome, which I think we want (If we decide we want them all on one thread, we can.  If we want each ProxyResolver to use its own thread, we can do that, too, etc).  About all that gets us is the ability to remove OnConnectionError from ProxyResolverFactoryImpl, I think.  We could also make Jobs own themselves, instead of PorxyResolverFactoryImpl (Though we can do that without multiple ProxyResolverFactoryImpls, too).\n\nI don\u0027t think that\u0027s all that much simpler (Other than the ::Job change), but I can do it, if you prefer.  Or just do the ::Job change alone.  I went with this approach mostly because it was similar to the existing architecture, and switching doesn\u0027t seem to get us much, just lets us remove the OnConnectionError from ProxyResolverFactoryImpl.",
+      "parentUuid": "dffd55bf_12cdcd24",
       "range": {
         "startLine": 43,
         "startChar": 27,
