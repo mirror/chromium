@@ -1,0 +1,95 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "775cf5d9_691a376c",
+        "filename": "third_party/WebKit/Source/core/html/HTMLLinkElement.idl",
+        "patchSetId": 3
+      },
+      "lineNbr": 57,
+      "author": {
+        "id": 1115976
+      },
+      "writtenOn": "2017-11-06T03:56:20Z",
+      "side": 1,
+      "message": "Can you add a link to https://w3c.github.io/ServiceWorker/#link-type-serviceworker ?",
+      "revId": "78aef8f0c025eee33ca9edde6e42c9a9c4bbae39",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5f1258d6_f1e45d58",
+        "filename": "third_party/WebKit/Source/modules/serviceworkers/ServiceWorkerRegistration.idl",
+        "patchSetId": 3
+      },
+      "lineNbr": 4,
+      "author": {
+        "id": 1115976
+      },
+      "writtenOn": "2017-11-06T03:56:20Z",
+      "side": 1,
+      "message": "Can you add a link to https://w3c.github.io/ServiceWorker/#enumdef-serviceworkerupdateviacache ?",
+      "revId": "78aef8f0c025eee33ca9edde6e42c9a9c4bbae39",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "826fc361_383b3319",
+        "filename": "third_party/WebKit/Source/modules/serviceworkers/ServiceWorkerRegistration.idl",
+        "patchSetId": 3
+      },
+      "lineNbr": 32,
+      "author": {
+        "id": 1115976
+      },
+      "writtenOn": "2017-11-06T03:56:20Z",
+      "side": 1,
+      "message": "Can you remove this blank line?",
+      "revId": "78aef8f0c025eee33ca9edde6e42c9a9c4bbae39",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8de3f2b1_db23e7a8",
+        "filename": "third_party/WebKit/Source/platform/runtime_enabled_features.json5",
+        "patchSetId": 3
+      },
+      "lineNbr": 936,
+      "author": {
+        "id": 1115976
+      },
+      "writtenOn": "2017-11-06T03:56:20Z",
+      "side": 1,
+      "message": "experimental",
+      "range": {
+        "startLine": 936,
+        "startChar": 15,
+        "endLine": 936,
+        "endChar": 19
+      },
+      "revId": "78aef8f0c025eee33ca9edde6e42c9a9c4bbae39",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3d37c002_6bafbd8d",
+        "filename": "third_party/WebKit/public/platform/modules/serviceworker/service_worker_registration.mojom",
+        "patchSetId": 3
+      },
+      "lineNbr": 18,
+      "author": {
+        "id": 1115976
+      },
+      "writtenOn": "2017-11-06T03:56:20Z",
+      "side": 1,
+      "message": "Is kUnknown necessary?",
+      "revId": "78aef8f0c025eee33ca9edde6e42c9a9c4bbae39",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
