@@ -16,6 +16,24 @@
       "revId": "bd091f439f01a24d76d454870499e3b128d38fc6",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "74e7aa2f_4ea5d715",
+        "filename": "ios/web/public/web_state/web_state_observer.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 119,
+      "author": {
+        "id": 1123009
+      },
+      "writtenOn": "2017-11-06T18:17:46Z",
+      "side": 1,
+      "message": "Thank you for bringing this up. PageLoaded is an odd callback, and I agree that it *should be* called for \"CANCELLED\" error. Content has separate callbacks for successful and failed load. And I\u0027m pretty sure that \"failed loading\" callback is called for cancelled navigation with \"CANCELLED\" error code. For iOS I see 2 possible options:\n1.) Match content and have 2 separate callbacks\n2.) Have a single PageLoaded callback, but pass error_code instead of load_completion_status (CANCELLED may be one of those error codes).\nI think the first option is better, because it will avoid code duplication (same code often should be executed for success and failure cases) and will allow to eliminate DidStopLoading.\n\nI guess the difference between DidStopLoading is |load_completion_status| argument, but then it\u0027s totally unclear why DidStopLoading even exist in the first place. I think that DidStartLoading/DidFinishLoading(int error_code) would be sufficient pair of callbacks, but I need to run this proposal with creis@. I will file a bug and will start a discussion in bugtracker.",
+      "parentUuid": "a3e08ae4_9958bc6a",
+      "revId": "bd091f439f01a24d76d454870499e3b128d38fc6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
