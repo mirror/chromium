@@ -29905,6 +29905,11 @@ Called by update_use_counter_css.py.-->
   <int value="3" label="(non-invalidated) replies received"/>
 </enum>
 
+<enum name="OomInterventionUserAction">
+  <int value="0" label="Accepted"/>
+  <int value="1" label="Declined"/>
+</enum>
+
 <enum name="OpenFileSystemResult">
   <int value="0" label="OK."/>
   <int value="1" label="In incognito mode."/>
