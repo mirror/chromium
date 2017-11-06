@@ -72,6 +72,24 @@
     },
     {
       "key": {
+        "uuid": "58a6650a_210be6ba",
+        "filename": "chrome/browser/chromeos/preferences.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 108,
+      "author": {
+        "id": 1000191
+      },
+      "writtenOn": "2017-11-06T18:41:34Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "41852cb3_63b80c4c",
+      "revId": "cc8e7873169bceda1284def2959c85439994396e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "b8702be9_33df33ca",
         "filename": "chrome/browser/chromeos/system/timezone_resolver_manager.cc",
         "patchSetId": 4
@@ -142,6 +160,24 @@
     },
     {
       "key": {
+        "uuid": "4cc0c2b4_782bd13c",
+        "filename": "chrome/browser/chromeos/system/timezone_resolver_manager.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 238,
+      "author": {
+        "id": 1000191
+      },
+      "writtenOn": "2017-11-06T18:41:34Z",
+      "side": 1,
+      "message": "I\u0027m not convinced that this is more readable, but I don\u0027t feel too strongly. This is what clang does:\n\nreturn (value \u003c 0 ||\n        value \u003e\u003d static_cast\u003cint\u003e(TimeZoneResolveMethod::METHODS_NUMBER))\n           ? TimeZoneResolveMethod::DISABLED\n           : static_cast\u003cTimeZoneResolveMethod\u003e(value);",
+      "parentUuid": "5feb0046_9fab6824",
+      "revId": "cc8e7873169bceda1284def2959c85439994396e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "047503ad_04f51c1b",
         "filename": "chrome/common/pref_names.cc",
         "patchSetId": 4
@@ -171,6 +207,24 @@
       "side": 1,
       "message": "Probably both ;)\nMy idea was that we always send only one type of data, which is [Google Maps Geolocation API Geolocation Request] as specified here:  https://developers.google.com/maps/documentation/geolocation/intro . But we control the amount of data sent, basically whether we fill in \"wifiAccessPoints\" and \"cellTowers\" request fields, or not.\n\nBut yes, another point of view is also correct ;)\n\nI updated both comments to match.",
       "parentUuid": "047503ad_04f51c1b",
+      "revId": "cc8e7873169bceda1284def2959c85439994396e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ae753301_dff1ddac",
+        "filename": "chrome/common/pref_names.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 1933,
+      "author": {
+        "id": 1000191
+      },
+      "writtenOn": "2017-11-06T18:41:34Z",
+      "side": 1,
+      "message": "The amount isn\u0027t as interesting as the fact that *different* data is sent. \"amount and type\" is fine. \"This setting controls what information is sent to the server\" would be fine also.",
+      "parentUuid": "5f8fa9c7_3edbb5a7",
       "revId": "cc8e7873169bceda1284def2959c85439994396e",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
