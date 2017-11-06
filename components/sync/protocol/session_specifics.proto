@@ -167,10 +167,18 @@ message TabNavigation {
   // B is got by clicking a link on page of A. This relationship is used to
   // define a Chrome Task as a tree rooted by a navigation.
   repeated int64 ancestor_task_id = 28;
+
+  // When a history entry is replaced (e.g. history.replaceState()), information
+  // about each entry (oldest first) prior to being replaced.
+  repeated ReplacedNavigation replaced_navigation = 29;
 }
 
 // Navigation information for a single redirection within a single navigation.
 message NavigationRedirect {
   // A URL that redirected while navigating to the virtual_url.
   optional string url = 1;
+}
+
+message ReplacedNavigation {
+  optional int64 timestamp = 1;
 }

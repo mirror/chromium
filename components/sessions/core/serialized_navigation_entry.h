@@ -145,6 +145,9 @@ class SESSIONS_EXPORT SerializedNavigationEntry {
     content_pack_categories_ = content_pack_categories;
   }
   const std::vector<GURL>& redirect_chain() const { return redirect_chain_; }
+  const std::vector<base::Time>& replaced_timestamps() const {
+    return replaced_timestamps_;
+  }
 
   const std::map<std::string, std::string>& extended_info_map() const {
     return extended_info_map_;
@@ -179,8 +182,9 @@ class SESSIONS_EXPORT SerializedNavigationEntry {
   base::string16 search_terms_;
   GURL favicon_url_;
   int http_status_code_ = 0;
-  bool is_restored_ = false;          // Not persisted.
-  std::vector<GURL> redirect_chain_;  // Not persisted.
+  bool is_restored_ = false;                     // Not persisted.
+  std::vector<GURL> redirect_chain_;             // Not persisted.
+  std::vector<base::Time> replaced_timestamps_;  // Not persisted.
 
   // Additional information.
   BlockedState blocked_state_ = STATE_INVALID;

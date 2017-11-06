@@ -554,6 +554,16 @@ const std::vector<GURL>& NavigationEntryImpl::GetRedirectChain() const {
   return root_node()->frame_entry->redirect_chain();
 }
 
+void NavigationEntryImpl::SetReplacedTimestamps(
+    const std::vector<base::Time>& replaced_timestamps) {
+  replaced_timestamps_ = replaced_timestamps;
+}
+
+const std::vector<base::Time>& NavigationEntryImpl::GetReplacedTimestamps()
+    const {
+  return replaced_timestamps_;
+}
+
 bool NavigationEntryImpl::IsRestored() const {
   return restore_type_ != RestoreType::NONE;
 }
@@ -650,6 +660,7 @@ std::unique_ptr<NavigationEntryImpl> NavigationEntryImpl::CloneAndReplace(
 #endif
   // ResetForCommit: reload_type_
   copy->extra_data_ = extra_data_;
+  copy->replaced_timestamps_ = replaced_timestamps_;
 
   return copy;
 }

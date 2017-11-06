@@ -477,6 +477,12 @@ sync_pb::TabNavigation SerializedNavigationEntry::ToSyncData() const {
     }
   }
 
+  for (const base::Time replaced_timestamp : replaced_timestamps_) {
+    sync_pb::ReplacedNavigation* replaced_navigation =
+        sync_data.add_replaced_navigation();
+    replaced_navigation->set_timestamp(replaced_timestamp.ToInternalValue());
+  }
+
   sync_data.set_is_restored(is_restored_);
 
   return sync_data;

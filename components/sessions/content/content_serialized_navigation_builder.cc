@@ -45,6 +45,7 @@ ContentSerializedNavigationBuilder::FromNavigationEntry(
     navigation.favicon_url_ = entry.GetFavicon().url;
   navigation.http_status_code_ = entry.GetHttpStatusCode();
   navigation.redirect_chain_ = entry.GetRedirectChain();
+  navigation.replaced_timestamps_ = entry.GetReplacedTimestamps();
   navigation.password_state_ = GetPasswordStateFromNavigation(entry);
 
   for (const auto& handler_entry :

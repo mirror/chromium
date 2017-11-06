@@ -217,6 +217,12 @@ class NavigationEntry {
   virtual void SetRedirectChain(const std::vector<GURL>& redirects) = 0;
   virtual const std::vector<GURL>& GetRedirectChain() const = 0;
 
+  // When a history entry is replaced (e.g. history.replaceState()), the list of
+  // timestamps (oldest first) prior to being replaced.
+  virtual void SetReplacedTimestamps(
+      const std::vector<base::Time>& replaced_timestamps) = 0;
+  virtual const std::vector<base::Time>& GetReplacedTimestamps() const = 0;
+
   // True if this entry is restored and hasn't been loaded.
   virtual bool IsRestored() const = 0;
 

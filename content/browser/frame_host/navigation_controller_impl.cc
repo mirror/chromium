@@ -1342,6 +1342,11 @@ void NavigationControllerImpl::RendererDidNavigateToExistingPage(
     // which land us at the last committed entry.
     entry = GetLastCommittedEntry();
 
+    std::vector<base::Time> replaced_timestamps =
+        entry->GetReplacedTimestamps();
+    replaced_timestamps.push_back(entry->GetTimestamp());
+    entry->SetReplacedTimestamps(replaced_timestamps);
+
     // If this is a same document navigation, then there's no SSLStatus in the
     // NavigationHandle so don't overwrite the existing entry's SSLStatus.
     if (!is_same_document)

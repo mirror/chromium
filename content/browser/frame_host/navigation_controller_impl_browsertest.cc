@@ -3707,6 +3707,59 @@ IN_PROC_BROWSER_TEST_F(NavigationControllerBrowserTest,
   EXPECT_EQ(1, controller.GetLastCommittedEntryIndex());
 }
 
+// Verify that history.replaceState() populates the navigation entry's replaced
+// timestamps.
+IN_PROC_BROWSER_TEST_F(NavigationControllerBrowserTest,
+                       FrameNavigationEntry_ReplaceState) {
+  FrameTreeNode* root = static_cast<WebContentsImpl*>(shell()->web_contents())
+                            ->GetFrameTree()
+                            ->root();
+  const NavigationControllerImpl& controller =
+      static_cast<const NavigationControllerImpl&>(
+          shell()->web_contents()->GetController());
+  GURL url1(embedded_test_server()->GetURL(
+      "/navigation_controller/simple_page_1.html"));
+
+  // Test fixture: start with typing a URL.
+  {
+    ASSERT_TRUE(NavigateToURL(shell(), url1));
+    ASSERT_EQ(1, controller.GetEntryCount());
+    ASSERT_TRUE(ui::PageTransitionTypeIncludingQualifiersIs(
+        controller.GetEntryAtIndex(0)->GetTransitionType(),
+        ui::PageTransitionFromInt(ui::PAGE_TRANSITION_TYPED |
+                                  ui::PAGE_TRANSITION_FROM_ADDRESS_BAR)));
+  }
+
+  const base::Time time1 = controller.GetEntryAtIndex(0)->GetTimestamp();
+
+  {
+    // Reload from the renderer side.
+    FrameNavigateParamsCapturer capturer(root);
+    ASSERT_TRUE(ExecuteScript(root, "location.reload()"));
+    capturer.Wait();
+    ASSERT_FALSE(capturer.is_same_document());
+    ASSERT_EQ(1, controller.GetEntryCount());
+    EXPECT_THAT(controller.GetEntryAtIndex(0)->GetReplacedTimestamps(),
+                testing::ElementsAre(time1));
+  }
+
+  const base::Time time2 = controller.GetEntryAtIndex(0)->GetTimestamp();
+  ASSERT_NE(time1, time2);
+
+  {
+    // history.replaceState().
+    FrameNavigateParamsCapturer capturer(root);
+    std::string script =
+        "history.replaceState({}, 'page 2', 'simple_page_2.html')";
+    ASSERT_TRUE(ExecuteScript(root, script));
+    capturer.Wait();
+    ASSERT_TRUE(capturer.is_same_document());
+    ASSERT_EQ(1, controller.GetEntryCount());
+    EXPECT_THAT(controller.GetEntryAtIndex(0)->GetReplacedTimestamps(),
+                testing::ElementsAre(time1, time2));
+  }
+}
+
 // Verify that subframes can be restored in a new NavigationController using the
 // PageState of an existing NavigationEntry.
 IN_PROC_BROWSER_TEST_F(NavigationControllerBrowserTest,
