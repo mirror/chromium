@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "24549f1e_8e017a10",
+        "filename": "chrome/browser/ui/android/infobars/near_oom_infobar.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 86,
+      "author": {
+        "id": 1135279
+      },
+      "writtenOn": "2017-11-06T17:38:33Z",
+      "side": 1,
+      "message": "nit: can you use base::MakeUnique here instead?",
+      "range": {
+        "startLine": 86,
+        "startChar": 22,
+        "endLine": 86,
+        "endChar": 68
+      },
+      "revId": "007bd7d5597950eaa23503a9dd1324274629bd6e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
