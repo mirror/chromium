@@ -11,6 +11,7 @@
 #include "ui/views/animation/ink_drop_ripple.h"
 #include "ui/views/background.h"
 #include "ui/views/border.h"
+#include "ui/views/controls/styled_label.h"
 #include "ui/views/focus/focus_manager.h"
 #include "ui/views/layout/grid_layout.h"
 
@@ -94,9 +95,11 @@ HoverButton::HoverButton(views::ButtonListener* button_listener,
   columns->AddColumn(views::GridLayout::CENTER, views::GridLayout::CENTER,
                      kFixed, views::GridLayout::USE_PREF, 0, 0);
   columns->AddPaddingColumn(kFixed, icon_label_spacing);
-  columns->AddColumn(views::GridLayout::LEADING, views::GridLayout::CENTER,
+  columns->AddColumn(views::GridLayout::LEADING, views::GridLayout::FILL,
                      kStretchy, views::GridLayout::USE_PREF, 0, 0);
 
+  // Make sure hovering over the icon also hovers the |HoverButton|.
+  icon_view->set_can_process_events_within_subtree(false);
   // Don't cover |icon_view| when the ink drops are being painted. |LabelButton|
   // already does this with its own image.
   icon_view->SetPaintToLayer();
@@ -107,8 +110,12 @@ HoverButton::HoverButton(views::ButtonListener* button_listener,
   grid_layout->StartRow(0, 0, row_height);
   grid_layout->AddView(icon_view.release(), 1, num_labels);
 
-  title_ = new views::Label(title);
+  title_ = new views::StyledLabel(title, nullptr);
+  // Hover the whole button when hovering |title_|. This is OK because |title_|
+  // will never have a link in it.
+  title_->set_can_process_events_within_subtree(false);
   grid_layout->AddView(title_);
+  title_->SizeToFit(0);
 
   if (!subtitle.empty()) {
     grid_layout->StartRow(0, 0, row_height);
@@ -131,6 +138,20 @@ void HoverButton::SetSubtitleElideBehavior(gfx::ElideBehavior elide_behavior) {
   DCHECK(subtitle_);
   if (!subtitle_->text().empty())
     subtitle_->SetElideBehavior(elide_behavior);
+}
+
+void HoverButton::SetTitleText(const base::string16& title_text) {
+  DCHECK(title_);
+  title_->SetText(title_text);
+  title_->SizeToFit(0);
+}
+
+void HoverButton::ApplyStyleRangeToTitle(const gfx::Range& range) {
+  DCHECK(title_);
+  views::StyledLabel::RangeStyleInfo style_info;
+  style_info.text_style = views::style::STYLE_DISABLED;
+  title_->AddStyleRange(range, style_info);
+  title_->SizeToFit(0);
 }
 
 bool HoverButton::ShouldUseFloodFillInkDrop() const {
