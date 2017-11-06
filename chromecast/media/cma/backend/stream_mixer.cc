@@ -386,8 +386,6 @@ void StreamMixer::AddInput(std::unique_ptr<InputQueue> input) {
       if (!found_filter_group && default_filter_) {
         found_filter_group = true;
         input->set_filter_group(default_filter_);
-        LOG(INFO) << "Added input of type " << input->device_id() << " to "
-                  << default_filter_->name();
       }
 
       CHECK(found_filter_group)
