@@ -1,0 +1,89 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "ae7343b1_03047ce6",
+        "filename": "chrome/browser/chromeos/arc/arc_session_manager.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 448,
+      "author": {
+        "id": 1115919
+      },
+      "writtenOn": "2017-11-06T12:36:03Z",
+      "side": 1,
+      "message": "nit: s/mini-container/mini instance/ for wording consistency.",
+      "revId": "098290879ea3e0ff5aa97ccb860bbe088ad9cf72",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2e06bb4c_1ab0e8ed",
+        "filename": "chrome/browser/chromeos/arc/arc_session_manager.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 451,
+      "author": {
+        "id": 1115919
+      },
+      "writtenOn": "2017-11-06T12:36:03Z",
+      "side": 1,
+      "message": "Could you add that;\nmini instance stop is actually an asynchronous operation, but here we can consider it is done synchronously, because it is encapsulated well. I.e., immediately following ArcSessionRunner::RequestStart() would work correctly.",
+      "revId": "098290879ea3e0ff5aa97ccb860bbe088ad9cf72",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "066206dc_4c1516d2",
+        "filename": "chrome/browser/chromeos/arc/arc_session_manager.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 830,
+      "author": {
+        "id": 1115919
+      },
+      "writtenOn": "2017-11-06T12:36:03Z",
+      "side": 1,
+      "message": "IIUC, not setting pref here is intentional, because the error page should have a retry button, which expects kArcEnabled\u003d\u003dtrue in OnRetryClicked() still.\nOn closing the window, CancelAuthCode() is called via OnWindowClosed(), which sets the kArcEnabled pref to false.",
+      "revId": "098290879ea3e0ff5aa97ccb860bbe088ad9cf72",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f760cb1e_0e17071d",
+        "filename": "chrome/browser/chromeos/arc/arc_session_manager_unittest.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 979,
+      "author": {
+        "id": 1115919
+      },
+      "writtenOn": "2017-11-06T12:36:03Z",
+      "side": 1,
+      "message": "I think you need to revert this as well, because you no longer call RequestStop() for TOS result directly. Could you run trybots?",
+      "revId": "098290879ea3e0ff5aa97ccb860bbe088ad9cf72",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f0065bd3_9c79a04c",
+        "filename": "chrome/browser/chromeos/arc/arc_session_manager_unittest.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 994,
+      "author": {
+        "id": 1115919
+      },
+      "writtenOn": "2017-11-06T12:36:03Z",
+      "side": 1,
+      "message": "Ditto.",
+      "revId": "098290879ea3e0ff5aa97ccb860bbe088ad9cf72",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
