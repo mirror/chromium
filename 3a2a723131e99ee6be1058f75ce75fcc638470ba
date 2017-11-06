@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "a3972085_2161cf96",
+        "filename": "chrome/browser/thumbnails/thumbnail_browsertest.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 300,
+      "author": {
+        "id": 1116059
+      },
+      "writtenOn": "2017-11-06T16:27:20Z",
+      "side": 1,
+      "message": "Renamed.",
+      "parentUuid": "ae2f224c_786ddb47",
+      "revId": "3a2a723131e99ee6be1058f75ce75fcc638470ba",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "e1a8a75e_14343b7c",
         "filename": "chrome/browser/thumbnails/thumbnail_browsertest.cc",
         "patchSetId": 1
@@ -39,6 +57,30 @@
       "revId": "3a2a723131e99ee6be1058f75ce75fcc638470ba",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3b82c79c_42e0b3c6",
+        "filename": "chrome/browser/thumbnails/thumbnail_browsertest.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 344,
+      "author": {
+        "id": 1116059
+      },
+      "writtenOn": "2017-11-06T16:27:20Z",
+      "side": 1,
+      "message": "I don\u0027t know, does it? At least from casual reading, it seems like without this, the test would still pass - the above expectation is satisfied, and there\u0027s one extra \"uninteresting call\".\nMaybe setting an expectation will actually make it \"strict\", but I\u0027d prefer to leave this here explicitly. It doesn\u0027t hurt, and it makes things clearer to me.",
+      "parentUuid": "e1a8a75e_14343b7c",
+      "range": {
+        "startLine": 344,
+        "startChar": 16,
+        "endLine": 344,
+        "endChar": 0
+      },
+      "revId": "3a2a723131e99ee6be1058f75ce75fcc638470ba",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
