@@ -285,6 +285,13 @@ void GraphicsLayer::Paint(const IntRect* interest_rect,
     return;
 
   GetPaintController().CommitNewDisplayItems();
+#if DCHECK_IS_ON()
+  if (RuntimeEnabledFeatures::PaintDebugEnabled()) {
+    LOG(INFO) << "Painted GraphicsLayer: " << DebugName()
+              << " interest_rect=" << InterestRect().ToString();
+    GetPaintController().ShowDebugData();
+  }
+#endif
 
   if (layer_state_) {
     // Generate raster invalidations for SPv175 (but not SPv2).
@@ -1357,7 +1364,7 @@ bool ScopedSetNeedsDisplayInRectForTrackingOnly::s_enabled_ = false;
 
 }  // namespace blink
 
-#ifndef NDEBUG
+#if DCHECK_IS_ON()
 void showGraphicsLayerTree(const blink::GraphicsLayer* layer) {
   if (!layer) {
     LOG(INFO) << "Cannot showGraphicsLayerTree for (nil).";

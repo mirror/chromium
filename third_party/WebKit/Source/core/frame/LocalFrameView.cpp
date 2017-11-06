@@ -92,6 +92,7 @@
 #include "core/paint/BlockPaintInvalidator.h"
 #include "core/paint/FramePainter.h"
 #include "core/paint/PaintLayer.h"
+#include "core/paint/PaintPropertyTreePrinter.h"
 #include "core/paint/PaintTiming.h"
 #include "core/paint/PrePaintTreeWalk.h"
 #include "core/paint/compositing/CompositedLayerMapping.h"
@@ -3320,6 +3321,15 @@ void LocalFrameView::PrePaint() {
   {
     SCOPED_BLINK_UMA_HISTOGRAM_TIMER("Blink.PrePaint.UpdateTime");
     PrePaintTreeWalk().Walk(*this);
+
+#if DCHECK_IS_ON()
+    if (RuntimeEnabledFeatures::PaintDebugEnabled()) {
+#ifndef NDEBUG
+      showLayoutTree(GetLayoutView());
+#endif
+      showAllPropertyTrees(*this);
+    }
+#endif
   }
 
   ForAllNonThrottledLocalFrameViews([](LocalFrameView& frame_view) {
@@ -3360,6 +3370,13 @@ void LocalFrameView::PaintTree() {
       PaintInternal(graphics_context, kGlobalPaintNormalPhase,
                     CullRect(LayoutRect::InfiniteIntRect()));
       paint_controller_->CommitNewDisplayItems();
+
+#if DCHECK_IS_ON()
+      if (RuntimeEnabledFeatures::PaintDebugEnabled()) {
+        LOG(INFO) << "Painted LocalFrameView";
+        paint_controller_->ShowDebugData();
+      }
+#endif
     }
   } else {
     // A null graphics layer can occur for painting of SVG images that are not
@@ -3368,6 +3385,10 @@ void LocalFrameView::PaintTree() {
     // the host page and will be painted during painting of the host page.
     if (GraphicsLayer* root_graphics_layer =
             view.Compositor()->RootGraphicsLayer()) {
+#if DCHECK_IS_ON()
+      if (RuntimeEnabledFeatures::PaintDebugEnabled())
+        showGraphicsLayerTree(root_graphics_layer);
+#endif
       PaintGraphicsLayerRecursively(root_graphics_layer);
     }
 
