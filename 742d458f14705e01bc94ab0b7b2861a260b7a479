@@ -166,6 +166,24 @@
     },
     {
       "key": {
+        "uuid": "74beb228_8abedbb6",
+        "filename": "chrome/browser/printing/pdf_to_emf_converter_browsertest.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 129,
+      "author": {
+        "id": 1002246
+      },
+      "writtenOn": "2017-11-06T18:37:40Z",
+      "side": 1,
+      "message": "Actually the sizes referenced in the header seems to change with the screen resolution. So when I generated the EMF ref files I was remote desktoping. I came in this morning, runs them again on a larger monitor and now they fail.",
+      "parentUuid": "09ca84c4_5be30c7f",
+      "revId": "742d458f14705e01bc94ab0b7b2861a260b7a479",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "12f0d3a1_865a45e8",
         "filename": "content/browser/download/mhtml_generation_browsertest.cc",
         "patchSetId": 8
