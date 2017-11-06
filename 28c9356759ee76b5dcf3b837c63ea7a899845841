@@ -55,6 +55,24 @@
     },
     {
       "key": {
+        "uuid": "75c58685_2bc36bc0",
+        "filename": "chrome/browser/vr/testapp/vr_test_context.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 197,
+      "author": {
+        "id": 1000537
+      },
+      "writtenOn": "2017-11-06T21:28:26Z",
+      "side": 1,
+      "message": "Ah, turns out there\u0027s a handy quaternion ctor that solves this problem. :)",
+      "parentUuid": "168927c1_53e5d5eb",
+      "revId": "28c9356759ee76b5dcf3b837c63ea7a899845841",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "4d9dd986_aa68f892",
         "filename": "chrome/browser/vr/testapp/vr_test_context.cc",
         "patchSetId": 1
