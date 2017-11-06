@@ -331,7 +331,7 @@ const base::string16& WebStateImpl::GetTitle() const {
   // TODO(stuartmorgan): Implement the NavigationManager logic necessary to
   // match the WebContents implementation of this method.
   DCHECK(Configured());
-  web::NavigationItem* item = navigation_manager_->GetLastCommittedItem();
+  web::NavigationItem* item = navigation_manager_->GetVisibleItem();
   return item ? item->GetTitleForDisplay() : empty_string16_;
 }
 
