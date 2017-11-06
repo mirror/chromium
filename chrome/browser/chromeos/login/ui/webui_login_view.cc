@@ -4,6 +4,7 @@
 
 #include "chrome/browser/chromeos/login/ui/webui_login_view.h"
 
+#include "ash/accelerators/accelerator_controller.h"
 #include "ash/focus_cycler.h"
 #include "ash/root_window_controller.h"
 #include "ash/shelf/shelf_widget.h"
@@ -143,9 +144,17 @@ WebUILoginView::WebUILoginView(const WebViewSettings& settings)
   }
   accel_map_[ui::Accelerator(ui::VKEY_V, ui::EF_ALT_DOWN)] =
       kAccelNameVersion;
-  accel_map_[ui::Accelerator(
-      ui::VKEY_R, ui::EF_CONTROL_DOWN | ui::EF_ALT_DOWN | ui::EF_SHIFT_DOWN)] =
-      kAccelNameReset;
+
+  ui::Accelerator reset_accelerator(
+      ui::VKEY_R, ui::EF_CONTROL_DOWN | ui::EF_ALT_DOWN | ui::EF_SHIFT_DOWN);
+  accel_map_[reset_accelerator] = kAccelNameReset;
+  if (!ash_util::IsRunningInMash()) {
+    // To make reset accelerator work while system tray is open, register it at
+    // accelerator controller.
+    ash::Shell::Get()->accelerator_controller()->Register({reset_accelerator},
+                                                          this);
+  }
+
   accel_map_[ui::Accelerator(ui::VKEY_X,
       ui::EF_CONTROL_DOWN | ui::EF_ALT_DOWN | ui::EF_SHIFT_DOWN)] =
       kAccelNameEnableDebugging;
@@ -194,6 +203,9 @@ WebUILoginView::~WebUILoginView() {
     ash::Shell::Get()->system_tray_notifier()->RemoveSystemTrayFocusObserver(
         this);
   }
+
+  if (!ash_util::IsRunningInMash())
+    ash::Shell::Get()->accelerator_controller()->UnregisterAll(this);
 
   // Clear any delegates we have set on the WebView.
   WebContents* web_contents = web_view()->GetWebContents();
@@ -312,6 +324,13 @@ bool WebUILoginView::AcceleratorPressed(const ui::Accelerator& accelerator) {
 
   content::WebUI* web_ui = GetWebUI();
   if (web_ui) {
+    if (entry->second == kAccelNameReset && !ash_util::IsRunningInMash() &&
+        ash::Shell::Get()->GetPrimarySystemTray()) {
+      // System tray is not closed automatically by performing reset
+      // accelerator. Manually close the tray here.
+      ash::Shell::Get()->GetPrimarySystemTray()->CloseBubble();
+    }
+
     base::Value accel_name(entry->second);
     web_ui->CallJavascriptFunctionUnsafe("cr.ui.Oobe.handleAccelerator",
                                          accel_name);
