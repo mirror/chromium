@@ -37,6 +37,24 @@
     },
     {
       "key": {
+        "uuid": "d6633419_14cc0c9c",
+        "filename": "third_party/WebKit/Source/core/loader/resource/ScriptResource.cpp",
+        "patchSetId": 5
+      },
+      "lineNbr": 68,
+      "author": {
+        "id": 1115924
+      },
+      "writtenOn": "2017-11-06T20:51:54Z",
+      "side": 1,
+      "message": "the |client| in Line 69 below should be removed.\nThe latest CL just looks fine.",
+      "parentUuid": "1c7036a6_e8356cdc",
+      "revId": "a365734eada78a1692f2bedf50e94d8e32ab53d4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "820669ef_6decbfaa",
         "filename": "third_party/WebKit/Source/core/loader/resource/ScriptResource.cpp",
         "patchSetId": 5
@@ -69,6 +87,24 @@
       "revId": "a365734eada78a1692f2bedf50e94d8e32ab53d4",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "50cc8035_4eea2806",
+        "filename": "third_party/WebKit/Source/core/loader/resource/ScriptResource.cpp",
+        "patchSetId": 5
+      },
+      "lineNbr": 72,
+      "author": {
+        "id": 1115924
+      },
+      "writtenOn": "2017-11-06T20:51:54Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "feba9081_26d5bdab",
+      "revId": "a365734eada78a1692f2bedf50e94d8e32ab53d4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
