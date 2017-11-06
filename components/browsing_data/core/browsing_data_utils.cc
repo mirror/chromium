@@ -33,6 +33,8 @@ base::Time CalculateBeginDeleteTime(TimePeriod time_period) {
     case TimePeriod::FOUR_WEEKS:
       diff = base::TimeDelta::FromHours(4 * 7 * 24);
       break;
+    case TimePeriod::OLDER_THAN_30_DAYS:
+    case TimePeriod::OLDER_THAN_90_DAYS:
     case TimePeriod::ALL_TIME:
       delete_begin_time = base::Time();
       break;
@@ -41,8 +43,14 @@ base::Time CalculateBeginDeleteTime(TimePeriod time_period) {
 }
 
 base::Time CalculateEndDeleteTime(TimePeriod time_period) {
-  // No TimePeriod currently supports the second time bound.
-  return base::Time::Max();
+  base::TimeDelta diff;
+  base::Time delete_end_time = base::Time::Now();
+  if (time_period == TimePeriod::OLDER_THAN_30_DAYS) {
+    diff = base::TimeDelta::FromDays(30);
+  } else if (time_period == TimePeriod::OLDER_THAN_90_DAYS) {
+    diff = base::TimeDelta::FromDays(90);
+  }
+  return delete_end_time - diff;
 }
 
 void RecordDeletionForPeriod(TimePeriod period) {
@@ -59,6 +67,14 @@ void RecordDeletionForPeriod(TimePeriod period) {
     case TimePeriod::FOUR_WEEKS:
       base::RecordAction(
           base::UserMetricsAction("ClearBrowsingData_LastMonth"));
+      break;
+    case TimePeriod::OLDER_THAN_30_DAYS:
+      base::RecordAction(
+          base::UserMetricsAction("ClearBrowsingData_OlderThan30Days"));
+      break;
+    case TimePeriod::OLDER_THAN_90_DAYS:
+      base::RecordAction(
+          base::UserMetricsAction("ClearBrowsingData_OlderThan90Days"));
       break;
     case TimePeriod::ALL_TIME:
       base::RecordAction(
@@ -84,6 +100,14 @@ void RecordTimePeriodChange(TimePeriod period) {
     case TimePeriod::FOUR_WEEKS:
       base::RecordAction(base::UserMetricsAction(
           "ClearBrowsingData_TimePeriodChanged_LastMonth"));
+      break;
+    case TimePeriod::OLDER_THAN_30_DAYS:
+      base::RecordAction(base::UserMetricsAction(
+          "ClearBrowsingData_TimePeriodChanged_OlderThan30Days"));
+      break;
+    case TimePeriod::OLDER_THAN_90_DAYS:
+      base::RecordAction(base::UserMetricsAction(
+          "ClearBrowsingData_TimePeriodChanged_OlderThan90Days"));
       break;
     case TimePeriod::ALL_TIME:
       base::RecordAction(base::UserMetricsAction(

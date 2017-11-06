@@ -53,6 +53,12 @@ public class ClearBrowsingDataPreferencesTab extends ClearBrowsingDataPreference
                         activity.getString(R.string.clear_browsing_data_tab_period_7_days)),
                 new TimePeriodSpinnerOption(TimePeriod.FOUR_WEEKS,
                         activity.getString(R.string.clear_browsing_data_tab_period_four_weeks)),
+                new TimePeriodSpinnerOption(TimePeriod.OLDER_THAN_30_DAYS,
+                        activity.getString(
+                                R.string.clear_browsing_data_tab_period_older_than_30_days)),
+                new TimePeriodSpinnerOption(TimePeriod.OLDER_THAN_90_DAYS,
+                        activity.getString(
+                                R.string.clear_browsing_data_tab_period_older_than_90_days)),
                 new TimePeriodSpinnerOption(TimePeriod.ALL_TIME,
                         activity.getString(R.string.clear_browsing_data_tab_period_everything))};
 
