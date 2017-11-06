@@ -16,6 +16,24 @@
       "revId": "f0e3f338e12ac0a82913ac263e8e3d9ab2e97572",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "87208a0a_eb4f790a",
+        "filename": "testing/buildbot/chromium.perf.fyi.json",
+        "patchSetId": 3
+      },
+      "lineNbr": 56,
+      "author": {
+        "id": 1149089
+      },
+      "writtenOn": "2017-11-06T17:05:10Z",
+      "side": 1,
+      "message": "Yes, any linux on FYI waterfall.",
+      "parentUuid": "c86438b4_7d8fb6cb",
+      "revId": "f0e3f338e12ac0a82913ac263e8e3d9ab2e97572",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
