@@ -84,6 +84,24 @@
     },
     {
       "key": {
+        "uuid": "7499acab_c460a7d5",
+        "filename": "services/proxy_resolver/proxy_resolver_factory_impl_unittest.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 1,
+      "author": {
+        "id": 1002246
+      },
+      "writtenOn": "2017-11-06T21:10:08Z",
+      "side": 1,
+      "message": "Sounds good.",
+      "parentUuid": "f6da05ec_f2e42abd",
+      "revId": "e90b9a8bdd8e266339ae37573ef2540127cf6485",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "4f5fa52e_3bbeede6",
         "filename": "services/proxy_resolver/proxy_resolver_service.h",
         "patchSetId": 4
@@ -175,6 +193,30 @@
       "revId": "e90b9a8bdd8e266339ae37573ef2540127cf6485",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f5d9830f_7d832505",
+        "filename": "services/proxy_resolver/proxy_resolver_service.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 43,
+      "author": {
+        "id": 1002246
+      },
+      "writtenOn": "2017-11-06T21:10:08Z",
+      "side": 1,
+      "message": "Thanks for the explanation.\nSounds fair to keep it as is.",
+      "parentUuid": "66f0a3b6_a201e02d",
+      "range": {
+        "startLine": 43,
+        "startChar": 27,
+        "endLine": 43,
+        "endChar": 50
+      },
+      "revId": "e90b9a8bdd8e266339ae37573ef2540127cf6485",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
