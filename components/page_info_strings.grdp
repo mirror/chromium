@@ -2,24 +2,46 @@
 <grit-part>
   <!-- Security summary strings -->
   <!-- TODO(crbug.com/716305): Rename remaining IDS_PAGE_INFO_* strings to IDS_PAGE_INFO_* -->
-  <message name="IDS_PAGE_INFO_SECURE_SUMMARY" desc="A short summary phrase at the top of the Page Info bubble (which shows when you click the lock icon) that indicates that the connection to the current website is secure.">
-    Secure connection
-  </message>
-  <message name="IDS_PAGE_INFO_MIXED_CONTENT_SUMMARY" desc="A one-line summary at the top of the Page Info bubble (which shows when you click the security indicator) if the connection to the current website is using mainly using a secure connection but has some insecure parts (like insecurely loaded images).">
-    Your connection to this site is not fully secure
-  </message>
-  <message name="IDS_PAGE_INFO_NOT_SECURE_SUMMARY" desc="A one-line summary at the top of the Page Info bubble (which shows when you click the security indicator) if the connection to the current website is not secure.">
-    Your connection to this site is not secure
-  </message>
-  <message name="IDS_PAGE_INFO_MALWARE_SUMMARY" desc="A one-line summary at the top of the Page Info bubble (which shows when you click the security indicator) if the current website has been flagged as containing malware.">
-    This site contains malware
-  </message>
-  <message name="IDS_PAGE_INFO_SOCIAL_ENGINEERING_SUMMARY" desc="A one-line summary at the top of the Page Info bubble (which shows when you click the security indicator) if the current website has been flagged as social engineering.">
-    This site is deceptive
-  </message>
-  <message name="IDS_PAGE_INFO_UNWANTED_SOFTWARE_SUMMARY" desc="A one-line summary at the top of the Page Info bubble (which shows when you click the security indicator) if the current website has been flagged as containing unwanted software.">
-    This site contains harmful programs
-  </message>
+  <if expr="not use_titlecase">
+    <message name="IDS_PAGE_INFO_SECURE_SUMMARY" desc="A short summary phrase at the top of the Page Info bubble (which shows when you click the lock icon) that indicates that the connection to the current website is secure.">
+      Secure connection
+    </message>
+    <message name="IDS_PAGE_INFO_MIXED_CONTENT_SUMMARY" desc="A one-line summary at the top of the Page Info bubble (which shows when you click the security indicator) if the connection to the current website is using mainly using a secure connection but has some insecure parts (like insecurely loaded images).">
+      Your connection to this site is not fully secure
+    </message>
+    <message name="IDS_PAGE_INFO_NOT_SECURE_SUMMARY" desc="A one-line summary at the top of the Page Info bubble (which shows when you click the security indicator) if the connection to the current website is not secure.">
+      Your connection to this site is not secure
+    </message>
+    <message name="IDS_PAGE_INFO_MALWARE_SUMMARY" desc="A one-line summary at the top of the Page Info bubble (which shows when you click the security indicator) if the current website has been flagged as containing malware.">
+      This site contains malware
+    </message>
+    <message name="IDS_PAGE_INFO_SOCIAL_ENGINEERING_SUMMARY" desc="A one-line summary at the top of the Page Info bubble (which shows when you click the security indicator) if the current website has been flagged as social engineering.">
+      This site is deceptive
+    </message>
+    <message name="IDS_PAGE_INFO_UNWANTED_SOFTWARE_SUMMARY" desc="A one-line summary at the top of the Page Info bubble (which shows when you click the security indicator) if the current website has been flagged as containing unwanted software.">
+      This site contains harmful programs
+    </message>
+  </if>  <!-- not use_titlecase -->
+  <if expr="use_titlecase">
+    <message name="IDS_PAGE_INFO_SECURE_SUMMARY" desc="In Title Case: A short summary phrase at the top of the Page Info bubble (which shows when you click the lock icon) that indicates that the connection to the current website is secure.">
+      Secure Connection
+    </message>
+    <message name="IDS_PAGE_INFO_MIXED_CONTENT_SUMMARY" desc="In Title Case: A one-line summary at the top of the Page Info bubble (which shows when you click the security indicator) if the connection to the current website is using mainly using a secure connection but has some insecure parts (like insecurely loaded images).">
+      Your Connection to This Site Is Not Fully Secure
+    </message>
+    <message name="IDS_PAGE_INFO_NOT_SECURE_SUMMARY" desc="In Title Case: A one-line summary at the top of the Page Info bubble (which shows when you click the security indicator) if the connection to the current website is not secure.">
+      Your Connection to This Site Is Not Secure
+    </message>
+    <message name="IDS_PAGE_INFO_MALWARE_SUMMARY" desc="In Title Case: A one-line summary at the top of the Page Info bubble (which shows when you click the security indicator) if the current website has been flagged as containing malware.">
+      This Site Contains Malware
+    </message>
+    <message name="IDS_PAGE_INFO_SOCIAL_ENGINEERING_SUMMARY" desc="In Title Case: A one-line summary at the top of the Page Info bubble (which shows when you click the security indicator) if the current website has been flagged as social engineering.">
+      This Site Is Deceptive
+    </message>
+    <message name="IDS_PAGE_INFO_UNWANTED_SOFTWARE_SUMMARY" desc="In Title Case: A one-line summary at the top of the Page Info bubble (which shows when you click the security indicator) if the current website has been flagged as containing unwanted software.">
+      This Site Contains Harmful Programs
+    </message>
+  </if>  <!-- use_titlecase -->
 
   <!-- Internal page summary strings -->
   <!-- Note: IDS_PAGE_INFO_INTERNAL_PAGE would be here, but it is in components_{chromium,google_chrome}_strings.grd because it uses the browser name. -->
@@ -334,12 +356,22 @@
 
     <!-- Password Protection -->
     <if expr="not is_android">
-      <message name="IDS_PAGE_INFO_CHANGE_PASSWORD_SUMMARY" desc="A one-line summary at the top of the Page Info bubble (which shows when you click the security indicator) if user has reuse their google password on current website.">
-        This site may have just stolen your password
-      </message>
-      <message name="IDS_PAGE_INFO_CHANGE_PASSWORD_SUMMARY_SOFTER" desc="A one-line summary at the top of the Page Info bubble (which shows when you click the security indicator) if user has reuse their google password on current website.">
-        Your password may be compromised
-      </message>
+      <if expr="not use_titlecase">
+        <message name="IDS_PAGE_INFO_CHANGE_PASSWORD_SUMMARY" desc="A one-line summary at the top of the Page Info bubble (which shows when you click the security indicator) if user has reuse their google password on current website.">
+          This site may have just stolen your password
+        </message>
+        <message name="IDS_PAGE_INFO_CHANGE_PASSWORD_SUMMARY_SOFTER" desc="A one-line summary at the top of the Page Info bubble (which shows when you click the security indicator) if user has reuse their google password on current website.">
+          Your password may be compromised
+        </message>
+      </if>  <!-- not use_titlecase -->
+      <if expr="use_titlecase">
+        <message name="IDS_PAGE_INFO_CHANGE_PASSWORD_SUMMARY" desc="In Title Case: A one-line summary at the top of the Page Info bubble (which shows when you click the security indicator) if user has reuse their google password on current website.">
+          This Site May Have Just Stolen Your Password
+        </message>
+        <message name="IDS_PAGE_INFO_CHANGE_PASSWORD_SUMMARY_SOFTER" desc="In Title Case: A one-line summary at the top of the Page Info bubble (which shows when you click the security indicator) if user has reuse their google password on current website.">
+          Your Password May Be Compromised
+        </message>
+      </if>  <!-- use_titlecase -->
       <if expr="_google_chrome">
         <message name="IDS_PAGE_INFO_CHANGE_PASSWORD_DETAILS" desc="A short paragraph explaining to the user that they has reuse their google password on current website.">
           You could lose access to your Google Account or experience identity theft. Chrome recommends changing your password now.
