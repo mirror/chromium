@@ -241,9 +241,6 @@ AutofillManager::AutofillManager(
   CountryNames::SetLocaleString(app_locale_);
   if (personal_data_ && client_)
     personal_data_->OnSyncServiceInitialized(client_->GetSyncService());
-
-  if (personal_data_ && driver)
-    personal_data_->SetURLRequestContextGetter(driver->GetURLRequestContext());
 }
 
 AutofillManager::~AutofillManager() {}
