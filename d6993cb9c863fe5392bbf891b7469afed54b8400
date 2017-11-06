@@ -105,6 +105,24 @@
       "revId": "d6993cb9c863fe5392bbf891b7469afed54b8400",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "91f195c0_5cccb12d",
+        "filename": "services/device/generic_sensor/platform_sensor.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 115,
+      "author": {
+        "id": 1182699
+      },
+      "writtenOn": "2017-11-06T14:10:18Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "f416415f_0f541143",
+      "revId": "d6993cb9c863fe5392bbf891b7469afed54b8400",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
