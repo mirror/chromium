@@ -244,8 +244,21 @@ suite('<history-list>', function() {
           assertEquals(
               'www.google.com',
               toolbar.$['main-toolbar'].getSearchField().getValue());
+
+          app.historyResult(
+              createHistoryInfo('www.google.com'), TEST_HISTORY_RESULTS);
+          return PolymerTest.flushTasks();
+        }).then(function() {
+          element.$.sharedMenu.get().close();
+          MockInteractions.tap(items[0].$['menu-button']);
+          assertTrue(element.$$('#menuMoreButton').hidden);
+
+          element.$.sharedMenu.get().close();
+          MockInteractions.tap(items[1].$['menu-button']);
+          assertFalse(element.$$('#menuMoreButton').hidden);
+
           done();
-        });
+		});
       });
 
       items = polymerSelectAll(element, 'history-item');
