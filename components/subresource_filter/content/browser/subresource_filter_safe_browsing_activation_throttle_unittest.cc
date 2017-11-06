@@ -162,22 +162,10 @@ const ActivationListTestData kActivationListTestData[] = {
      safe_browsing::ThreatPatternType::NONE,
      {}},
     {kActivationListSubresourceFilter,
-     ActivationList::ABUSIVE_ADS,
-     safe_browsing::SB_THREAT_TYPE_SUBRESOURCE_FILTER,
-     safe_browsing::ThreatPatternType::NONE,
-     {{{SBType::ABUSIVE, SBLevel::ENFORCE}}, base::KEEP_FIRST_OF_DUPES}},
-    {kActivationListSubresourceFilter,
      ActivationList::BETTER_ADS,
      safe_browsing::SB_THREAT_TYPE_SUBRESOURCE_FILTER,
      safe_browsing::ThreatPatternType::NONE,
      {{{SBType::BETTER_ADS, SBLevel::ENFORCE}}, base::KEEP_FIRST_OF_DUPES}},
-    {kActivationListSubresourceFilter,
-     ActivationList::ALL_ADS,
-     safe_browsing::SB_THREAT_TYPE_SUBRESOURCE_FILTER,
-     safe_browsing::ThreatPatternType::NONE,
-     {{{SBType::ABUSIVE, SBLevel::ENFORCE},
-       {SBType::BETTER_ADS, SBLevel::ENFORCE}},
-      base::KEEP_FIRST_OF_DUPES}},
 };
 
 }  //  namespace
