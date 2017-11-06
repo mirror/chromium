@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "1ba6c53d_129c506c",
+        "filename": "tools/mb/mb_config.pyl",
+        "patchSetId": 2
+      },
+      "lineNbr": 1568,
+      "author": {
+        "id": 1161379
+      },
+      "writtenOn": "2017-11-06T06:30:31Z",
+      "side": 1,
+      "message": "Can you use mixins for this?\nhttps://chromium.googlesource.com/chromium/src/+/57e1b8ab157e9bbe862b1dbebeee5bcf04756b37/tools/mb/docs/user_guide.md#The-config-file",
+      "revId": "b46718b94d1d87ecc7035ef0f018d5b34eb04565",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
