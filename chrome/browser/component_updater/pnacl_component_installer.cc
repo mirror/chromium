@@ -172,6 +172,7 @@ class PnaclComponentInstallerPolicy : public ComponentInstallerPolicy {
   update_client::CrxInstaller::Result OnCustomInstall(
       const base::DictionaryValue& manifest,
       const base::FilePath& install_dir) override;
+  void OnCustomUninstall() override;
   bool VerifyInstallation(const base::DictionaryValue& manifest,
                           const base::FilePath& install_dir) const override;
   void ComponentReady(const base::Version& version,
@@ -204,6 +205,8 @@ PnaclComponentInstallerPolicy::OnCustomInstall(
     const base::FilePath& install_dir) {
   return update_client::CrxInstaller::Result(0);  // Nothing custom here.
 }
+
+void PnaclComponentInstallerPolicy::OnCustomUninstall() {}
 
 bool PnaclComponentInstallerPolicy::VerifyInstallation(
     const base::DictionaryValue& manifest,
