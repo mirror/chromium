@@ -172,7 +172,7 @@ void CursorWindowController::SetDisplay(const display::Display& display) {
   // TODO(oshima): Do not updatethe composition cursor when crossing
   // display in unified desktop mode for now. crbug.com/517222.
   if (Shell::Get()->display_manager()->IsInUnifiedMode() &&
-      display.id() != display::DisplayManager::kUnifiedDisplayId) {
+      display.id() != display::kUnifiedDisplayId) {
     return;
   }
 

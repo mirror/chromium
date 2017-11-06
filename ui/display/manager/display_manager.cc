@@ -260,9 +260,6 @@ DisplayManager::BeginEndNotifier::~BeginEndNotifier() {
   }
 }
 
-// static
-int64_t DisplayManager::kUnifiedDisplayId = -10;
-
 DisplayManager::DisplayManager(std::unique_ptr<Screen> screen)
     : screen_(std::move(screen)),
       layout_store_(new DisplayLayoutStore),
@@ -1253,6 +1250,14 @@ void DisplayManager::ToggleDisplayScaleFactor() {
 
 #if defined(OS_CHROMEOS)
 void DisplayManager::SetSoftwareMirroring(bool enabled) {
+  // Move any displays marked for hardware mirroring to software mirroring.
+  if (enabled && !hardware_mirroring_display_id_list_.empty()) {
+    DisplayInfoList display_info_list;
+    for (int64_t id : hardware_mirroring_display_id_list_)
+      display_info_list.emplace_back(GetDisplayInfo(id));
+    hardware_mirroring_display_id_list_.clear();
+    CreateSoftwareMirroringDisplayInfo(&display_info_list);
+  }
   SetMultiDisplayMode(enabled ? MIRRORING
                               : current_default_multi_display_mode_);
 }
@@ -1438,8 +1443,7 @@ bool DisplayManager::ResetDisplayToDefaultMode(int64_t id) {
 
 void DisplayManager::ResetInternalDisplayZoom() {
   if (IsInUnifiedMode()) {
-    const ManagedDisplayInfo& display_info =
-        GetDisplayInfo(DisplayManager::kUnifiedDisplayId);
+    const ManagedDisplayInfo& display_info = GetDisplayInfo(kUnifiedDisplayId);
     const ManagedDisplayInfo::ManagedDisplayModeList& modes =
         display_info.display_modes();
     auto iter = std::find_if(
