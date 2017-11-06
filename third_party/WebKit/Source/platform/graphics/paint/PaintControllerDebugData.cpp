@@ -6,6 +6,8 @@
 
 #include "platform/graphics/paint/DrawingDisplayItem.h"
 
+#if DCHECK_IS_ON()
+
 namespace blink {
 
 class PaintController::DisplayItemListAsJSON {
@@ -15,7 +17,8 @@ class PaintController::DisplayItemListAsJSON {
   DisplayItemListAsJSON(const DisplayItemList&,
                         const CachedSubsequenceMap&,
                         const Vector<PaintChunk>&,
-                        DisplayItemList::JsonFlags);
+                        bool show_paint_records,
+                        bool for_new_display_item_list);
 
   String ToString() {
     return SubsequenceAsJSONArrayRecursive(0, list_.size())
@@ -41,18 +44,21 @@ class PaintController::DisplayItemListAsJSON {
   Vector<SubsequenceInfo>::const_iterator current_subsequence_;
   const Vector<PaintChunk>& chunks_;
   Vector<PaintChunk>::const_iterator current_chunk_;
-  DisplayItemList::JsonFlags flags_;
+  bool show_paint_records_;
+  bool for_new_display_item_list_;
 };
 
 PaintController::DisplayItemListAsJSON::DisplayItemListAsJSON(
     const DisplayItemList& list,
     const CachedSubsequenceMap& subsequence_map,
     const Vector<PaintChunk>& chunks,
-    DisplayItemList::JsonFlags flags)
+    bool show_paint_records,
+    bool for_new_display_item_list)
     : list_(list),
       chunks_(chunks),
       current_chunk_(chunks.begin()),
-      flags_(flags) {
+      show_paint_records_(show_paint_records),
+      for_new_display_item_list_(for_new_display_item_list) {
   for (const auto& item : subsequence_map) {
     subsequences_.push_back(
         SubsequenceInfo(item.key, item.value.start, item.value.end));
@@ -113,7 +119,8 @@ void PaintController::DisplayItemListAsJSON::AppendSubsequenceAsJSON(
   DCHECK(end_item > start_item);
 
   if (!RuntimeEnabledFeatures::SlimmingPaintV175Enabled()) {
-    list_.AppendSubsequenceAsJSON(start_item, end_item, flags_, json_array);
+    list_.AppendSubsequenceAsJSON(start_item, end_item, show_paint_records_,
+                                  json_array);
     return;
   }
 
@@ -127,18 +134,17 @@ void PaintController::DisplayItemListAsJSON::AppendSubsequenceAsJSON(
 
     String chunk_name = ClientName(chunk.id.client);
     if (chunk.id.type != DisplayItem::kUninitializedType) {
-#ifndef NDEBUG
       chunk_name.append(" type: ");
       chunk_name.append(DisplayItem::TypeAsDebugString(chunk.id.type));
-#else
-      chunk_name.append(String::Format(" type: %d", chunk.id.type));
-#endif
     }
     json_object->SetString("chunk", chunk_name);
 
     json_object->SetArray(
         "displayItems",
-        list_.SubsequenceAsJSON(chunk.begin_index, chunk.end_index, flags_));
+        list_.SubsequenceAsJSON(chunk.begin_index, chunk.end_index,
+                                show_paint_records_
+                                    ? DisplayItemList::kShowPaintRecords
+                                    : DisplayItemList::kDefault));
 
     json_array.PushObject(std::move(json_object));
     ++current_chunk_;
@@ -147,41 +153,34 @@ void PaintController::DisplayItemListAsJSON::AppendSubsequenceAsJSON(
 
 String PaintController::DisplayItemListAsJSON::ClientName(
     const DisplayItemClient& client) const {
-  bool show_client_debug_name = flags_ & DisplayItemList::kShowClientDebugName;
-#if DCHECK_IS_ON()
-  if (client.IsAlive())
-    show_client_debug_name = true;
-#endif
   String result = String::Format("client: %p", &client);
-  if (show_client_debug_name) {
-    result.append(' ');
+  result.append(' ');
+  if (for_new_display_item_list_) {
+    DCHECK(client.IsAlive());
     result.append(client.DebugName());
+  } else if (client.IsAlive() && !client.IsJustCreated()) {
+    result.append(client.DebugName());
+  } else {
+    result.append("dead");
   }
   return result;
 }
 
 void PaintController::ShowDebugDataInternal(bool show_paint_records) const {
-  DisplayItemList::JsonFlags flags =
-      show_paint_records ? DisplayItemList::JsonOptions::kShowPaintRecords
-                         : DisplayItemList::JsonOptions::kDefault;
-
   DLOG(INFO) << "current display item list: "
              << DisplayItemListAsJSON(
                     current_paint_artifact_.GetDisplayItemList(),
                     current_cached_subsequences_,
-                    current_paint_artifact_.PaintChunks(), flags)
+                    current_paint_artifact_.PaintChunks(), show_paint_records,
+                    false)
                     .ToString()
                     .Utf8()
                     .data();
 
-  // DebugName() and ClientCacheIsValid() can only be called on a live client,
-  // so only output it for new_display_item_list_, in which we are sure the
-  // clients are all alive.
   DLOG(INFO) << "new display item list: "
              << DisplayItemListAsJSON(
                     new_display_item_list_, new_cached_subsequences_,
-                    new_paint_chunks_.PaintChunks(),
-                    flags | DisplayItemList::kShowClientDebugName)
+                    new_paint_chunks_.PaintChunks(), show_paint_records, true)
                     .ToString()
                     .Utf8()
                     .data();
@@ -198,3 +197,5 @@ void PaintController::ShowDebugDataWithRecords() const {
 #endif
 
 }  // namespace blink
+
+#endif  // DCHECK_IS_ON()

@@ -8,10 +8,6 @@
 #include "platform/graphics/paint/DrawingDisplayItem.h"
 #include "platform/graphics/paint/PaintChunk.h"
 
-#ifndef NDEBUG
-#include "platform/wtf/text/WTFString.h"
-#endif
-
 namespace blink {
 
 DisplayItemList::Range<DisplayItemList::iterator>
@@ -26,55 +22,39 @@ DisplayItemList::ItemsInPaintChunk(const PaintChunk& paint_chunk) const {
                                begin() + paint_chunk.end_index);
 }
 
+#if DCHECK_IS_ON()
+
 std::unique_ptr<JSONArray> DisplayItemList::SubsequenceAsJSON(
     size_t begin_index,
     size_t end_index,
-    JsonFlags options) const {
+    JsonFlags flags) const {
   auto json_array = JSONArray::Create();
-  AppendSubsequenceAsJSON(begin_index, end_index, options, *json_array);
+  AppendSubsequenceAsJSON(begin_index, end_index, flags, *json_array);
   return json_array;
 }
 
 void DisplayItemList::AppendSubsequenceAsJSON(size_t begin_index,
                                               size_t end_index,
-                                              JsonFlags options,
+                                              JsonFlags flags,
                                               JSONArray& json_array) const {
   for (size_t i = begin_index; i < end_index; ++i) {
     std::unique_ptr<JSONObject> json = JSONObject::Create();
 
     const auto& display_item = (*this)[i];
-    if ((options & kSkipNonDrawings) && !display_item.IsDrawing())
+    if ((flags & kSkipNonDrawings) && !display_item.IsDrawing())
       continue;
 
     json->SetInteger("index", i);
 
-    bool show_client_debug_name = options & kShowClientDebugName;
-#if DCHECK_IS_ON()
-    if (display_item.HasValidClient()) {
-      if (display_item.Client().IsAlive())
-        show_client_debug_name = true;
-      else
-        json->SetBoolean("clientIsAlive", false);
-    }
-#endif
-
-#ifdef NDEBUG
-    // This is for NDEBUG only because DisplayItem::PropertiesAsJSON will output
-    // these information.
-    if (show_client_debug_name)
-      json->SetString("clientDebugName", display_item.Client().DebugName());
-
-    json->SetInteger("type", static_cast<int>(display_item.GetType()));
-    json->SetString("visualRect", display_item.VisualRect().ToString());
-#else
-    if (options & kShownOnlyDisplayItemTypes) {
+    if (flags & kShownOnlyDisplayItemTypes) {
       json->SetString("type",
                       DisplayItem::TypeAsDebugString(display_item.GetType()));
     } else {
       display_item.PropertiesAsJSON(*json);
     }
 
-    if ((options & kShowPaintRecords) && display_item.IsDrawing()) {
+#ifndef NDEBUG
+    if ((flags & kShowPaintRecords) && display_item.IsDrawing()) {
       const auto& item = static_cast<const DrawingDisplayItem&>(display_item);
       if (const auto* record = item.GetPaintRecord().get())
         json->SetArray("record", RecordAsJSON(*record));
@@ -84,5 +64,7 @@ void DisplayItemList::AppendSubsequenceAsJSON(size_t begin_index,
     json_array.PushObject(std::move(json));
   }
 }
+
+#endif  // DCHECK_IS_ON()
 
 }  // namespace blink

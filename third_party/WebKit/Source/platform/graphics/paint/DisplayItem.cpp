@@ -12,14 +12,14 @@ struct SameSizeAsDisplayItem {
   LayoutRect rect;
   LayoutUnit outset;
   int i;
-#ifndef NDEBUG
+#if DCHECK_IS_ON()
   WTF::String debug_string_;
 #endif
 };
 static_assert(sizeof(DisplayItem) == sizeof(SameSizeAsDisplayItem),
               "DisplayItem should stay small");
 
-#ifndef NDEBUG
+#if DCHECK_IS_ON()
 
 static WTF::String PaintPhaseAsDebugString(int paint_phase) {
   // Must be kept in sync with PaintPhase.

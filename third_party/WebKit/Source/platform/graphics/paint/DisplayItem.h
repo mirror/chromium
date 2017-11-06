@@ -13,7 +13,7 @@
 #include "platform/wtf/Assertions.h"
 #include "platform/wtf/Noncopyable.h"
 
-#ifndef NDEBUG
+#if DCHECK_IS_ON()
 #include "platform/json/JSONValues.h"
 #include "platform/wtf/text/WTFString.h"
 #endif
@@ -187,7 +187,7 @@ class PLATFORM_EXPORT DisplayItem {
         type_(type),
         derived_size_(derived_size),
         skipped_cache_(false)
-#ifndef NDEBUG
+#if DCHECK_IS_ON()
         ,
         client_debug_string_(client.DebugName())
 #endif
@@ -341,7 +341,7 @@ class PLATFORM_EXPORT DisplayItem {
 
   virtual bool DrawsContent() const { return false; }
 
-#ifndef NDEBUG
+#if DCHECK_IS_ON()
   static WTF::String TypeAsDebugString(DisplayItem::Type);
   const WTF::String ClientDebugString() const { return client_debug_string_; }
   void SetClientDebugString(const WTF::String& s) { client_debug_string_ = s; }
@@ -373,7 +373,7 @@ class PLATFORM_EXPORT DisplayItem {
   const unsigned derived_size_ : 8;  // size of the actual derived class
   unsigned skipped_cache_ : 1;
 
-#ifndef NDEBUG
+#if DCHECK_IS_ON()
   WTF::String client_debug_string_;
 #endif
 };
