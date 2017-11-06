@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "fa0632d7_327088ec",
+        "filename": "chrome/browser/notifications/notification_platform_bridge_win.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 88,
+      "author": {
+        "id": 1002500
+      },
+      "writtenOn": "2017-11-06T14:53:50Z",
+      "side": 0,
+      "message": "This function got moved, removed the TODO and added group and tag code at the bottom. Rest should not have been meaningfully changed.",
+      "range": {
+        "startLine": 88,
+        "startChar": 8,
+        "endLine": 88,
+        "endChar": 28
+      },
+      "revId": "edd14e0644b2580407ef5ddabb07af6c0c7a7e43",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
