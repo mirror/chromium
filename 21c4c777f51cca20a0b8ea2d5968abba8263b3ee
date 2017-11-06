@@ -22,6 +22,29 @@
       "revId": "21c4c777f51cca20a0b8ea2d5968abba8263b3ee",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b57e30b1_1eaa6bb9",
+        "filename": "chrome/browser/ui/views/location_bar/location_bar_view.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 903,
+      "author": {
+        "id": 1115907
+      },
+      "writtenOn": "2017-11-06T22:21:04Z",
+      "side": 1,
+      "message": "it seems like needs_activation shouldn\u0027t trigger a layout and a paint (if all that\u0027s needed is an ink drop change, that shouldn\u0027t affect layout and painting should happen correctly on its own).\n\nI would also think you don\u0027t need to expose FindBarIcon::IsActivated. Just tell it if it should be activated or not (plus animated or not), and if it already is in the right state do nothing.\n\nSo in my mind\u0027s eye this fn would look something like:\n\nbool visibility_changed \u003d RefreshFindBarIcon();\nif (visibility_changed) {\n  Layout();\n  SchedulePaint();\n}\n\nfind_bar_icon_-\u003eSetActive(find_bar_icon_-\u003evisible(), visibility_changed);",
+      "range": {
+        "startLine": 903,
+        "startChar": 32,
+        "endLine": 903,
+        "endChar": 57
+      },
+      "revId": "21c4c777f51cca20a0b8ea2d5968abba8263b3ee",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
