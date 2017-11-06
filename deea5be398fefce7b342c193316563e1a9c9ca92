@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "d281ca45_97e5e536",
+        "filename": "third_party/WebKit/Source/core/layout/ng/ng_length_utils.cc",
+        "patchSetId": 16
+      },
+      "lineNbr": 563,
+      "author": {
+        "id": 1250979
+      },
+      "writtenOn": "2017-11-06T13:47:48Z",
+      "side": 1,
+      "message": "TODO(karlo) instead of FIXME?",
+      "revId": "deea5be398fefce7b342c193316563e1a9c9ca92",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6c1aefd4_b5b12b8b",
+        "filename": "third_party/WebKit/Source/core/layout/ng/ng_length_utils.cc",
+        "patchSetId": 16
+      },
+      "lineNbr": 569,
+      "author": {
+        "id": 1250979
+      },
+      "writtenOn": "2017-11-06T13:47:48Z",
+      "side": 1,
+      "message": "I think we\u0027d get less code duplication, if you create an NGBoxStrut padding before this if-block, and just add in the intrinsic padding here in this block, and then have just one return statement, after this block.",
+      "revId": "deea5be398fefce7b342c193316563e1a9c9ca92",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
