@@ -1328,7 +1328,7 @@ class ActiveProfileObserverBridge : public AvatarMenuObserver,
                                            : kSupervisorAccountCircleIcon;
     [badgeIconView
         setImage:NSImageFromImageSkia(gfx::CreateVectorIcon(
-                     badgeIcon, badgeIconSize, gfx::kChromeIconGrey))];
+                     badgeIcon, badgeIconSize, gfx::kChromeIconGray))];
     [badgeIconWithCircle addSubview:badgeIconView];
 
     [profileCard addSubview:badgeIconWithCircle];
@@ -1608,7 +1608,7 @@ class ActiveProfileObserverBridge : public AvatarMenuObserver,
                                       IDS_PROFILES_PROFILE_SIGNOUT_BUTTON)
                             image:NSImageFromImageSkia(gfx::CreateVectorIcon(
                                       vector_icons::kLockIcon, icon_size,
-                                      gfx::kChromeIconGrey))
+                                      gfx::kChromeIconGray))
                            action:@selector(lockProfile:)];
     [container addSubview:lockButton];
     viewRect.origin.y = NSMaxY([lockButton frame]);
@@ -1618,7 +1618,7 @@ class ActiveProfileObserverBridge : public AvatarMenuObserver,
                        text:l10n_util::GetNSString(
                                 IDS_PROFILES_CLOSE_ALL_WINDOWS_BUTTON)
                       image:NSImageFromImageSkia(gfx::CreateVectorIcon(
-                                kCloseAllIcon, icon_size, gfx::kChromeIconGrey))
+                                kCloseAllIcon, icon_size, gfx::kChromeIconGray))
                      action:@selector(closeAllWindows:)];
     [container addSubview:closeAllWindowsButton];
     viewRect.origin.y = NSMaxY([closeAllWindowsButton frame]);
@@ -1631,7 +1631,7 @@ class ActiveProfileObserverBridge : public AvatarMenuObserver,
           : l10n_util::GetNSString(IDS_PROFILES_MANAGE_USERS_BUTTON);
   NSImage* icon = NSImageFromImageSkia(
       gfx::CreateVectorIcon(isGuestSession_ ? kCloseAllIcon : kSettingsIcon,
-                            icon_size, gfx::kChromeIconGrey));
+                            icon_size, gfx::kChromeIconGray));
   SEL action =
       isGuestSession_ ? @selector(exitGuest:) : @selector(showUserManager:);
   NSButton* manageUsersButton =
@@ -1650,7 +1650,7 @@ class ActiveProfileObserverBridge : public AvatarMenuObserver,
                                         IDS_PROFILES_GUEST_PROFILE_NAME)
                               image:NSImageFromImageSkia(gfx::CreateVectorIcon(
                                         kAccountCircleIcon, icon_size,
-                                        gfx::kChromeIconGrey))
+                                        gfx::kChromeIconGray))
                              action:@selector(switchToGuest:)];
       viewRect.origin.y = NSMaxY([guestProfileButton frame]);
       [container addSubview:guestProfileButton];

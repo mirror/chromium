@@ -226,7 +226,7 @@ void WebUsbDetector::OnDeviceAdded(scoped_refptr<device::UsbDevice> device) {
                   landing_page,
                   url_formatter::SchemeDisplay::OMIT_CRYPTOGRAPHIC)),
           gfx::Image(gfx::CreateVectorIcon(vector_icons::kUsbIcon, 64,
-                                           gfx::kChromeIconGrey)),
+                                           gfx::kChromeIconGray)),
           base::string16(), GURL(),
           message_center::NotifierId(
               message_center::NotifierId::SYSTEM_COMPONENT, kNotifierWebUsb),

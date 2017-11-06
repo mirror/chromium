@@ -347,7 +347,7 @@ class EditableProfilePhoto : public views::LabelButton {
       int offset = (kProfileBadgeSize - kSupervisedIconBadgeSize) / 2;
       canvas->Translate(badge_offset_vector + gfx::Vector2d(offset, offset));
       gfx::PaintVectorIcon(canvas, *icon, kSupervisedIconBadgeSize,
-                           gfx::kChromeIconGrey);
+                           gfx::kChromeIconGray);
     }
   }
 
@@ -1226,7 +1226,7 @@ views::View* ProfileChooserView::CreateOptionsView(bool display_lock,
       guest_profile_button_ = new BackgroundColorHoverButton(
           this, l10n_util::GetStringUTF16(IDS_GUEST_PROFILE_NAME),
           gfx::CreateVectorIcon(kAccountCircleIcon, kIconSize,
-                                gfx::kChromeIconGrey));
+                                gfx::kChromeIconGray));
       layout->StartRow(1, 0);
       layout->AddView(guest_profile_button_);
     }
@@ -1238,7 +1238,7 @@ views::View* ProfileChooserView::CreateOptionsView(bool display_lock,
       is_guest ? kCloseAllIcon : kSettingsIcon;
   users_button_ = new BackgroundColorHoverButton(
       this, text,
-      gfx::CreateVectorIcon(settings_icon, kIconSize, gfx::kChromeIconGrey));
+      gfx::CreateVectorIcon(settings_icon, kIconSize, gfx::kChromeIconGray));
 
   layout->StartRow(1, 0);
   layout->AddView(users_button_);
@@ -1247,13 +1247,13 @@ views::View* ProfileChooserView::CreateOptionsView(bool display_lock,
     lock_button_ = new BackgroundColorHoverButton(
         this, l10n_util::GetStringUTF16(IDS_PROFILES_PROFILE_SIGNOUT_BUTTON),
         gfx::CreateVectorIcon(vector_icons::kLockIcon, kIconSize,
-                              gfx::kChromeIconGrey));
+                              gfx::kChromeIconGray));
     layout->StartRow(1, 0);
     layout->AddView(lock_button_);
   } else if (!is_guest) {
     close_all_windows_button_ = new BackgroundColorHoverButton(
         this, l10n_util::GetStringUTF16(IDS_PROFILES_CLOSE_ALL_WINDOWS_BUTTON),
-        gfx::CreateVectorIcon(kCloseAllIcon, kIconSize, gfx::kChromeIconGrey));
+        gfx::CreateVectorIcon(kCloseAllIcon, kIconSize, gfx::kChromeIconGray));
     layout->StartRow(1, 0);
     layout->AddView(close_all_windows_button_);
   }
@@ -1344,7 +1344,7 @@ void ProfileChooserView::CreateAccountButton(views::GridLayout* layout,
   if (reauth_required) {
     const int kIconSize = 18;
     warning_default_image = gfx::CreateVectorIcon(
-        vector_icons::kWarningIcon, kIconSize, gfx::kChromeIconGrey);
+        vector_icons::kWarningIcon, kIconSize, gfx::kChromeIconGray);
     warning_button_width =
         kIconSize +
         provider->GetDistanceMetric(views::DISTANCE_RELATED_BUTTON_HORIZONTAL);

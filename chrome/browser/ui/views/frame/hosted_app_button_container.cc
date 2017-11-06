@@ -18,7 +18,7 @@ HostedAppButtonContainer::AppMenuButton::AppMenuButton(
     : views::MenuButton(base::string16(), this, false),
       browser_view_(browser_view) {
   SetInkDropMode(InkDropMode::ON);
-  SkColor color = use_light ? SK_ColorWHITE : gfx::kChromeIconGrey;
+  SkColor color = use_light ? SK_ColorWHITE : gfx::kChromeIconGray;
   SetImage(views::Button::STATE_NORMAL,
            gfx::CreateVectorIcon(kBrowserToolsIcon, color));
   set_ink_drop_base_color(color);

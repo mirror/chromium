@@ -340,7 +340,7 @@ TEST_F(ToolbarActionsBarBubbleViewsTest, TestCreateExtraViewIconOnly) {
   EXPECT_TRUE(gfx::test::AreImagesEqual(
       gfx::Image(static_cast<views::ImageView*>(extra_view.get())->GetImage()),
       gfx::Image(gfx::CreateVectorIcon(vector_icons::kBusinessIcon, kIconSize,
-                                       gfx::kChromeIconGrey))));
+                                       gfx::kChromeIconGray))));
   CloseBubble();
 }
 
@@ -416,7 +416,7 @@ TEST_F(ToolbarActionsBarBubbleViewsTest, TestCreateExtraViewImageAndText) {
       EXPECT_TRUE(gfx::test::AreImagesEqual(
           gfx::Image(static_cast<const views::ImageView*>(v)->GetImage()),
           gfx::Image(gfx::CreateVectorIcon(vector_icons::kBusinessIcon,
-                                           kIconSize, gfx::kChromeIconGrey))));
+                                           kIconSize, gfx::kChromeIconGray))));
     }
   }
 

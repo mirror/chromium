@@ -104,7 +104,7 @@ bool PasswordReuseModalWarningDialog::ShouldShowCloseButton() const {
 gfx::ImageSkia PasswordReuseModalWarningDialog::GetWindowIcon() {
   return show_softer_warning_
              ? gfx::CreateVectorIcon(kSecurityIcon, kIconSize,
-                                     gfx::kChromeIconGrey)
+                                     gfx::kChromeIconGray)
              : gfx::CreateVectorIcon(vector_icons::kWarningIcon, kIconSize,
                                      gfx::kGoogleRed700);
 }
