@@ -45,7 +45,8 @@ struct WeightedObservation;
 // computing weighted and non-weighted summary statistics.
 class NET_EXPORT_PRIVATE ObservationBuffer {
  public:
-  ObservationBuffer(double weight_multiplier_per_second,
+  ObservationBuffer(base::TickClock* tick_clock,
+                    double weight_multiplier_per_second,
                     double weight_multiplier_per_signal_level);
 
   ~ObservationBuffer();
@@ -78,8 +79,8 @@ class NET_EXPORT_PRIVATE ObservationBuffer {
       const std::vector<NetworkQualityObservationSource>&
           disallowed_observation_sources) const;
 
-  void SetTickClockForTesting(std::unique_ptr<base::TickClock> tick_clock) {
-    tick_clock_ = std::move(tick_clock);
+  void SetTickClockForTesting(base::TickClock* tick_clock) {
+    tick_clock_ = tick_clock;
   }
 
   // Computes percentiles separately for each host. Observations without
@@ -132,7 +133,7 @@ class NET_EXPORT_PRIVATE ObservationBuffer {
   // |weight_multiplier_per_signal_level_| ^ 3.
   const double weight_multiplier_per_signal_level_;
 
-  std::unique_ptr<base::TickClock> tick_clock_;
+  base::TickClock* tick_clock_;
 
   DISALLOW_COPY_AND_ASSIGN(ObservationBuffer);
 };

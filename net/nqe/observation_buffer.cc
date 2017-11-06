@@ -20,17 +20,19 @@ namespace nqe {
 
 namespace internal {
 
-ObservationBuffer::ObservationBuffer(double weight_multiplier_per_second,
+ObservationBuffer::ObservationBuffer(base::TickClock* tick_clock,
+                                     double weight_multiplier_per_second,
                                      double weight_multiplier_per_signal_level)
     : weight_multiplier_per_second_(weight_multiplier_per_second),
       weight_multiplier_per_signal_level_(weight_multiplier_per_signal_level),
-      tick_clock_(new base::DefaultTickClock()) {
+      tick_clock_(tick_clock) {
   static_assert(kMaximumObservationsBufferSize > 0U,
                 "Minimum size of observation buffer must be > 0");
   DCHECK_LE(0.0, weight_multiplier_per_second_);
   DCHECK_GE(1.0, weight_multiplier_per_second_);
   DCHECK_LE(0.0, weight_multiplier_per_signal_level_);
   DCHECK_GE(1.0, weight_multiplier_per_signal_level_);
+  DCHECK(tick_clock_);
 }
 
 ObservationBuffer::~ObservationBuffer() {}
