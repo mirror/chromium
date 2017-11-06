@@ -32,14 +32,14 @@ namespace resource_coordinator {
 //
 // These values are used in the TabManager.SessionRestore.SwitchToTab UMA.
 //
-// TODO(lpy): *switch to the new done signal (network and cpu quiescence) when
-// available.
-//
 // These values are written to logs.  New enum values can be added, but existing
 // enums must never be renumbered or deleted and reused.
 enum TabLoadingState {
   TAB_IS_NOT_LOADING = 0,
   TAB_IS_LOADING = 1,
+  // A tab is considered loaded when DidStopLoading is called from WebContents
+  // for now, we are in the progress to deprecate using it, and use
+  // PageAlmostIdle signal from resource coordinator instead.
   TAB_IS_LOADED = 2,
   TAB_LOADING_STATE_MAX,
 };
@@ -63,8 +63,8 @@ class TabManager::WebContentsData
   void WasShown() override;
   void WebContentsDestroyed() override;
 
-  // Idle signal received from GRC.
-  void NotifyAlmostIdle() {}
+  // Idle signal received from resource coordinator.
+  void NotifyAlmostIdle();
 
   // Returns true if the tab has been discarded to save memory.
   bool IsDiscarded();
@@ -155,6 +155,16 @@ class TabManager::WebContentsData
 
  private:
   // Needed to access tab_data_.
+  FRIEND_TEST_ALL_PREFIXES(TabManagerTest, NotifyTabIsLoaded);
+  FRIEND_TEST_ALL_PREFIXES(TabManagerTest, OnDelayedTabSelected);
+  FRIEND_TEST_ALL_PREFIXES(TabManagerTest, BackgroundTabLoadingMode);
+  FRIEND_TEST_ALL_PREFIXES(TabManagerTest, BackgroundTabsLoadingOrdering);
+  FRIEND_TEST_ALL_PREFIXES(TabManagerTest, PauseAndResumeBackgroundTabOpening);
+  FRIEND_TEST_ALL_PREFIXES(TabManagerTest, IsInBackgroundTabOpeningSession);
+  FRIEND_TEST_ALL_PREFIXES(TabManagerTest,
+                           SessionRestoreAfterBackgroundTabOpeningSession);
+  FRIEND_TEST_ALL_PREFIXES(TabManagerWithExperimentDisabledTest,
+                           IsInBackgroundTabOpeningSession);
   FRIEND_TEST_ALL_PREFIXES(TabManagerWebContentsDataTest, CopyState);
   FRIEND_TEST_ALL_PREFIXES(TabManagerWebContentsDataTest, TabLoadingState);
 
@@ -193,6 +203,8 @@ class TabManager::WebContentsData
     // True if the tab was created by session restore and initially foreground.
     bool is_restored_in_foreground;
   };
+
+  void NotifyTabIsLoaded();
 
   // Returns either the system's clock or the test clock. See |test_tick_clock_|
   // for more details.

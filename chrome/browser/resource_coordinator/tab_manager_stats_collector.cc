@@ -308,7 +308,7 @@ void TabManagerStatsCollector::OnDidStartMainFrameNavigation(
   foreground_contents_switched_to_times_.erase(contents);
 }
 
-void TabManagerStatsCollector::OnDidStopLoading(
+void TabManagerStatsCollector::NotifyTabIsLoaded(
     content::WebContents* contents) {
   if (!base::ContainsKey(foreground_contents_switched_to_times_, contents))
     return;
