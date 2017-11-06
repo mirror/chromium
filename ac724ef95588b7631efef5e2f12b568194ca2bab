@@ -36,6 +36,24 @@
     },
     {
       "key": {
+        "uuid": "74e8433d_b5931bc5",
+        "filename": "ios/net/cookies/system_cookie_store_unittest_template.h",
+        "patchSetId": 10
+      },
+      "lineNbr": 127,
+      "author": {
+        "id": 1148823
+      },
+      "writtenOn": "2017-11-06T19:14:46Z",
+      "side": 1,
+      "message": "Yes, this needed, if not ClearCookies Will be called - and we removed the condition from ClearCookies in a previous patch",
+      "parentUuid": "21160bce_43c126c0",
+      "revId": "ac724ef95588b7631efef5e2f12b568194ca2bab",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "6abbe520_31ae2d91",
         "filename": "ios/web/net/cookies/wk_http_system_cookie_store.mm",
         "patchSetId": 10
@@ -50,6 +68,24 @@
       "revId": "ac724ef95588b7631efef5e2f12b568194ca2bab",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4d62992d_87489270",
+        "filename": "ios/web/net/cookies/wk_http_system_cookie_store.mm",
+        "patchSetId": 10
+      },
+      "lineNbr": 11,
+      "author": {
+        "id": 1148823
+      },
+      "writtenOn": "2017-11-06T19:14:46Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "6abbe520_31ae2d91",
+      "revId": "ac724ef95588b7631efef5e2f12b568194ca2bab",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -73,6 +109,30 @@
       "revId": "ac724ef95588b7631efef5e2f12b568194ca2bab",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "fc4545ab_343d493e",
+        "filename": "ios/web/net/cookies/wk_http_system_cookie_store.mm",
+        "patchSetId": 10
+      },
+      "lineNbr": 120,
+      "author": {
+        "id": 1148823
+      },
+      "writtenOn": "2017-11-06T19:14:46Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "da7b80cb_9b40cf62",
+      "range": {
+        "startLine": 120,
+        "startChar": 35,
+        "endLine": 120,
+        "endChar": 50
+      },
+      "revId": "ac724ef95588b7631efef5e2f12b568194ca2bab",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
