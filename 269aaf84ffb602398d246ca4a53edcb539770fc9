@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "9a093ff4_3e4e7097",
+        "filename": "third_party/WebKit/Source/core/imagebitmap/ImageBitmap.cpp",
+        "patchSetId": 3
+      },
+      "lineNbr": 217,
+      "author": {
+        "id": 1115939
+      },
+      "writtenOn": "2017-11-06T20:41:29Z",
+      "side": 1,
+      "message": "\"we have to avoid premul code path\" -\u003e \"we have to avoid SkSurface code path, which only supports premul\".\n\nYou should also explain that this code path may result in a GPU readback if |input| is texture backed.  I\u0027m not even sure there is a way to trigger that condition (source is unpremul and accelerated)",
+      "range": {
+        "startLine": 217,
+        "startChar": 67,
+        "endLine": 217,
+        "endChar": 68
+      },
+      "revId": "269aaf84ffb602398d246ca4a53edcb539770fc9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
