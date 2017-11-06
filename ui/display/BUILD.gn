@@ -2,10 +2,11 @@
 # Use of this source code is governed by a BSD-style license that can be
 # found in the LICENSE file.
 
+import("//build/config/jumbo.gni")
 import("//build/config/ui.gni")
 import("//testing/test.gni")
 
-component("display") {
+jumbo_component("display") {
   sources = [
     "display.cc",
     "display.h",
@@ -75,7 +76,7 @@ component("display") {
   }
 }
 
-component("display_manager_test_api") {
+jumbo_component("display_manager_test_api") {
   testonly = true
   sources = [
     "test/display_manager_test_api.cc",
