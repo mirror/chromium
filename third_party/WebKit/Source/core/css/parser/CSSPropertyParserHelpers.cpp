@@ -22,7 +22,7 @@
 #include "core/css/parser/CSSParserContext.h"
 #include "core/css/parser/CSSParserFastPaths.h"
 #include "core/css/parser/CSSParserLocalContext.h"
-#include "core/css/properties/CSSPropertyAPI.h"
+#include "core/css/properties/CSSProperty.h"
 #include "core/css/properties/CSSPropertyBoxShadowUtils.h"
 #include "core/css/properties/CSSPropertyTransformUtils.h"
 #include "core/frame/UseCounter.h"
@@ -1658,7 +1658,7 @@ const CSSValue* ParseLonghandViaAPI(CSSPropertyID unresolved_property,
     return ConsumeIdent(range);
   }
 
-  const CSSPropertyAPI& api = CSSPropertyAPI::Get(property);
+  const CSSProperty& api = CSSProperty::Get(property);
   const CSSValue* result = api.ParseSingleValue(
       range, context,
       CSSParserLocalContext(isPropertyAlias(unresolved_property),
