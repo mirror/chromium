@@ -127,6 +127,38 @@ TEST_F(PlatformSensorFusionTest, SourceSensorAlreadyExists) {
   EXPECT_EQ(SensorType::LINEAR_ACCELERATION, fusion_sensor_->GetType());
 }
 
+TEST_F(PlatformSensorFusionTest, SourceSensorWorksSeparately) {
+  CreateAccelerometer();
+  scoped_refptr<PlatformSensor> accel =
+      provider_->GetSensor(SensorType::ACCELEROMETER);
+  EXPECT_TRUE(accel);
+  EXPECT_FALSE(accel->IsActiveForTesting());
+
+  auto client = base::MakeUnique<testing::NiceMock<FakePlatformSensorClient>>();
+  accel->AddClient(client.get());
+  accel->StartListening(client.get(), PlatformSensorConfiguration(10));
+  EXPECT_TRUE(accel->IsActiveForTesting());
+
+  CreateLinearAccelerationFusionSensor();
+  EXPECT_TRUE(fusion_sensor_);
+  EXPECT_EQ(SensorType::LINEAR_ACCELERATION, fusion_sensor_->GetType());
+  EXPECT_FALSE(fusion_sensor_->IsActiveForTesting());
+
+  fusion_sensor_->AddClient(client.get());
+  fusion_sensor_->StartListening(client.get(), PlatformSensorConfiguration(10));
+  EXPECT_TRUE(fusion_sensor_->IsActiveForTesting());
+
+  fusion_sensor_->StopListening(client.get(), PlatformSensorConfiguration(10));
+  EXPECT_FALSE(fusion_sensor_->IsActiveForTesting());
+
+  EXPECT_TRUE(accel->IsActiveForTesting());
+
+  accel->RemoveClient(client.get());
+  EXPECT_FALSE(accel->IsActiveForTesting());
+
+  fusion_sensor_->RemoveClient(client.get());
+}
+
 TEST_F(PlatformSensorFusionTest, SourceSensorNeedsToBeCreated) {
   EXPECT_FALSE(provider_->GetSensor(SensorType::ACCELEROMETER));
 
