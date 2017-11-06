@@ -28,7 +28,6 @@ class MediaEngagementContentsObserver : public content::WebContentsObserver {
                            const MediaPlayerId& media_player_id) override;
   void MediaStoppedPlaying(const MediaPlayerInfo& media_player_info,
                            const MediaPlayerId& media_player_id) override;
-  void DidUpdateAudioMutingState(bool muted) override;
   void MediaMutedStatusChanged(const MediaPlayerId& id, bool muted) override;
   void MediaResized(const gfx::Size& size, const MediaPlayerId& id) override;
 
@@ -83,18 +82,13 @@ class MediaEngagementContentsObserver : public content::WebContentsObserver {
     kPlayerRemoved,
   };
 
-  void OnSignificantMediaPlaybackTime();
-  bool AreConditionsMet() const;
-  void UpdateTimer();
+  void OnSignificantMediaPlaybackTime(const MediaPlayerId& id);
+  void UpdateTimer(const MediaPlayerId&);
 
-  void SetTimerForTest(std::unique_ptr<base::Timer> timer);
+  void SetTaskRunnerForTest(scoped_refptr<base::SequencedTaskRunner>);
 
   // |this| is owned by |service_|.
   MediaEngagementService* service_;
-
-  // Timer that will fire when the playback time reaches the minimum for
-  // significant media playback.
-  std::unique_ptr<base::Timer> playback_timer_;
 
   // Set of active players that can produce a significant playback. In other
   // words, whether this set is empty can be used to know if there is a
@@ -185,6 +179,13 @@ class MediaEngagementContentsObserver : public content::WebContentsObserver {
   // Stores the ids of the players that were audible. The boolean will be true
   // if the player was significant.
   std::map<MediaPlayerId, bool> audible_players_;
+
+  // Stores the ids of players and timers that will fire when the playback time
+  // reaches the minimum for significant media playback.
+  std::map<MediaPlayerId, std::unique_ptr<base::Timer>> player_timers_;
+
+  // The task runner to use when creating timers. It is used for testing.
+  scoped_refptr<base::SequencedTaskRunner> task_runner_;
 
   url::Origin committed_origin_;
 
