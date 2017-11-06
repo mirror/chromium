@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "098a3c46_053b0a58",
+        "filename": "build/cipd/android/android.ensure",
+        "patchSetId": 3
+      },
+      "lineNbr": 8,
+      "author": {
+        "id": 1181690
+      },
+      "writtenOn": "2017-11-06T18:26:46Z",
+      "side": 1,
+      "message": "The addition of cr0 is the only change here. It should address the stale CIPD cache issue that broke the bots previously.\n\nMore detail: I changed some of the packages during the last review but used the same version tag. Some of the bots had a cached version of those packages w/ the same version tag but a different hash, and I\u0027d removed that prior hash from the CIPD server to avoid conflicts. The bots attempted to use their cached version but were unable to find it. This adds a unique version tag in a way that should allow us to make future chrome-specific revisions to packages while keeping the original package version clear.",
+      "revId": "908bf2040b6c54b90a0e2a5b205ad43b2967115d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
