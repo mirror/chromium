@@ -23,9 +23,11 @@ import re
 import shutil
 import subprocess
 import sys
+import tempfile
 import time
 
 import cygprofile_utils
+import process_profiles
 import profile_android_startup
 
 
@@ -137,6 +139,31 @@ def _UnstashOutputDirectory(buildpath):
   shutil.move(stashpath, buildpath)
 
 
+def _EnsureOrderfileStartsWithAnchorSection(filename):
+  """Ensures that the orderfile starts with the right anchor symbol.
+
+  This changes the orderfile, if required.
+
+  Args:
+    filename: (str) Path to the orderfile.
+  """
+  anchor_section = '.text.dummy_function_to_anchor_text'
+  with open(filename, 'r') as f:
+    if f.readline().strip() == anchor_section:
+      return
+  try:
+    f = tempfile.NamedTemporaryFile(dir=os.path.dirname(filename), delete=False)
+    f.write(anchor_section + '\n')
+    with open(filename, 'r') as orderfile_file:
+      for line in orderfile_file:
+        f.write(line + '\n')
+    f.close()
+    os.rename(f.name, filename)
+  finally:
+    if os.path.exists(f.name):
+      os.remove(f.name)
+
+
 class StepRecorder(object):
   """Records steps and timings."""
 
@@ -229,19 +256,20 @@ class ClankCompiler(object):
     self._out_dir = out_dir
     self._step_recorder = step_recorder
     self._use_goma = use_goma
-
     lib_chrome_so_dir = 'lib.unstripped'
     self.lib_chrome_so = os.path.join(
         self._out_dir, 'Release', lib_chrome_so_dir, 'libchrome.so')
     self.chrome_apk = os.path.join(
         self._out_dir, 'Release', 'apks', 'Chrome.apk')
 
-  def Build(self, instrumented, target):
+  def Build(self, instrumented, lightweight_instrumentation, target):
     """Builds the provided ninja target with or without order_profiling on.
 
     Args:
-      instrumented: Whether we want to build an instrumented binary.
-      target: The name of the ninja target to build.
+      instrumented: (bool) Whether we want to build an instrumented binary.
+      lightweight_instrumentation: (bool) Whether to use the lightweight
+                                   instrumentation.
+      target: (str) The name of the ninja target to build.
     """
     self._step_recorder.BeginStep('Compile %s' % target)
 
@@ -259,8 +287,11 @@ class ClankCompiler(object):
         'use_goma=' + str(self._use_goma).lower(),
         'use_order_profiling=' + str(instrumented).lower(),
     ]
+    if lightweight_instrumentation:
+      args.append('use_lightweight_order_profiling=true')
     if self._goma_dir:
       args += ['goma_dir="%s"' % self._goma_dir]
+
     self._step_recorder.RunCommand(
         ['gn', 'gen', os.path.join(self._out_dir, 'Release'),
          '--args=' + ' '.join(args)])
@@ -269,27 +300,39 @@ class ClankCompiler(object):
         ['ninja', '-C', os.path.join(self._out_dir, 'Release'),
          '-j' + str(self._jobs), '-l' + str(self._max_load), target])
 
-  def CompileChromeApk(self, instrumented, force_relink=False):
+  def CompileChromeApk(self, instrumented, lightweight_instrumentation=False,
+                       force_relink=False):
     """Builds a Chrome.apk either with or without order_profiling on.
 
     Args:
-      instrumented: Whether we want to build an instrumented apk.
+      instrumented: (bool) Whether to build an instrumented apk.
+      lightweight_instrumentation: (bool) Whether to use the lightweight
+                                   instrumentation. Requires instrumented to be
+                                   true.
       force_relink: Whether libchromeview.so should be re-created.
     """
+    if lightweight_instrumentation:
+      assert instrumented
     if force_relink:
       self._step_recorder.RunCommand(['rm', '-rf', self.lib_chrome_so])
-    self.Build(instrumented, 'chrome_apk')
+    self.Build(instrumented, lightweight_instrumentation, 'chrome_apk')
 
-  def CompileLibchrome(self, instrumented, force_relink=False):
+  def CompileLibchrome(self, instrumented, lightweight_instrumentation=False,
+                       force_relink=False):
     """Builds a libchrome.so either with or without order_profiling on.
 
     Args:
-      instrumented: Whether we want to build an instrumented apk.
-      force_relink: Whether libchrome.so should be re-created.
+      instrumented: (bool) Whether to build an instrumented apk.
+      lightweight_instrumentation: (bool) Whether to use the lightweight
+                                   instrumentation. Requires instrumented to be
+                                   true.
+      force_relink: (bool) Whether libchrome.so should be re-created.
     """
+    if lightweight_instrumentation:
+      assert instrumented
     if force_relink:
       self._step_recorder.RunCommand(['rm', '-rf', self.lib_chrome_so])
-    self.Build(instrumented, 'libchrome')
+    self.Build(instrumented, lightweight_instrumentation, 'libchrome')
 
 
 class OrderfileUpdater(object):
@@ -445,12 +488,16 @@ class OrderfileGenerator(object):
 
   def _RunCygprofileUnitTests(self):
     """Builds, deploys and runs cygprofile_unittests."""
+    # There an no unittests (yet) for the lightweight instrumentation.
+    # TODO(lizeb): Fix this.
+    if self._options.lightweight_instrumentation:
+      return
     tools_compiler = ClankCompiler(
         os.path.dirname(constants.GetOutDirectory()),
         self._step_recorder, self._options.arch, self._options.jobs,
         self._options.max_load, self._options.use_goma, self._options.goma_dir)
-    tools_compiler.Build(instrumented=False, target='android_tools')
-    self._compiler.Build(instrumented=True, target='cygprofile_unittests')
+    tools_compiler.Build(False, False, target='android_tools')
+    self._compiler.Build(True, False, target='cygprofile_unittests')
 
     self._step_recorder.BeginStep('Deploy and run cygprofile_unittests')
     exit_code = self._profiler.RunCygprofileTests()
@@ -489,10 +536,17 @@ class OrderfileGenerator(object):
           self._compiler.chrome_apk,
           constants.PACKAGE_INFO['chrome'])
       self._step_recorder.BeginStep('Process cyglog')
-      with open(self._MERGED_CYGLOG_FILENAME, 'w') as merged_cyglog:
-        self._step_recorder.RunCommand([self._MERGE_TRACES_SCRIPT] + files,
-                                       constants.DIR_SOURCE_ROOT,
-                                       stdout=merged_cyglog)
+      if self._options.lightweight_instrumentation:
+        assert os.path.exists(self._compiler.lib_chrome_so)
+        offsets = process_profiles.DumpsToReachedSymbolOffsets(
+            files, self._compiler.lib_chrome_so)
+        with open(self._MERGED_CYGLOG_FILENAME, 'w') as f:
+          f.write('\n'.join(str(offset) for offset in offsets))
+      else:
+        with open(self._MERGED_CYGLOG_FILENAME, 'w') as merged_cyglog:
+          self._step_recorder.RunCommand([self._MERGE_TRACES_SCRIPT] + files,
+                                         constants.DIR_SOURCE_ROOT,
+                                         stdout=merged_cyglog)
     except CommandError:
       for f in files:
         self._SaveForDebugging(f)
@@ -502,12 +556,16 @@ class OrderfileGenerator(object):
       logging.getLogger().setLevel(logging.INFO)
 
     try:
-      self._step_recorder.RunCommand([self._CYGLOG_TO_ORDERFILE_SCRIPT,
-                                      self._MERGED_CYGLOG_FILENAME,
-                                      self._compiler.lib_chrome_so,
-                                      self._GetUnpatchedOrderfileFilename(),
-                                      '--target-arch=' + self._options.arch],
-                                     constants.DIR_SOURCE_ROOT)
+      command_args = [
+          '--target-arch=' + self._options.arch,
+          '--native-library=' + self._compiler.lib_chrome_so,
+          '--output=' + self._GetUnpatchedOrderfileFilename()]
+      if self._options.lightweight_instrumentation:
+        command_args.append('--reached-offsets=' + self._MERGED_CYGLOG_FILENAME)
+      else:
+        command_args.append('--merged-cyglog=' + self._MERGED_CYGLOG_FILENAME)
+      self._step_recorder.RunCommand(
+          [self._CYGLOG_TO_ORDERFILE_SCRIPT] + command_args)
     except CommandError:
       self._SaveForDebugging(self._MERGED_CYGLOG_FILENAME)
       self._SaveForDebuggingWithOverwrite(self._compiler.lib_chrome_so)
@@ -644,7 +702,10 @@ class OrderfileGenerator(object):
             self._options.max_load, self._options.use_goma,
             self._options.goma_dir)
         self._RunCygprofileUnitTests()
-        self._compiler.CompileChromeApk(True)
+        if self._options.lightweight_instrumentation:
+          _EnsureOrderfileStartsWithAnchorSection(self._GetPathToOrderfile())
+        self._compiler.CompileChromeApk(
+            True, self._options.lightweight_instrumentation)
         self._GenerateAndProcessProfile()
         self._MaybeArchiveOrderfile(self._GetUnpatchedOrderfileFilename())
         profile_uploaded = True
@@ -695,6 +756,9 @@ class OrderfileGenerator(object):
 
 def CreateOptionParser():
   parser = optparse.OptionParser()
+  parser.add_option(
+      '--lightweight-instrumentation', action='store_true', default=False,
+      help='Use the lightweight instrumentation path')
   parser.add_option(
       '--buildbot', action='store_true',
       help='If true, the script expects to be run on a buildbot')

@@ -180,6 +180,22 @@ def WriteReachedSymbolNames(filename, reached_symbols):
       f.write(s.name + '\n')
 
 
+def DumpsToReachedSymbolOffsets(dump_filenames, native_lib_filename):
+  """Merges a list of dumps, and returns reached symbol offsets.
+
+  Args:
+    dump_filenames: ([str]) List of dump filenames.
+    native_lib_filename: (str) Path to the native library.
+
+  Returns:
+    [int] list of reached symbol offsets.
+  """
+  dump = MergeDumps(dump_filenames)
+  offset_to_symbol_info = GetOffsetToSymbolArray(native_lib_filename)
+  reached_symbols = GetReachedSymbolsFromDump(dump, offset_to_symbol_info)
+  return [s.offset for s in reached_symbols]
+
+
 def CreateArgumentParser():
   """Returns an ArgumentParser."""
   parser = argparse.ArgumentParser(description='Outputs reached symbols')
@@ -191,6 +207,9 @@ def CreateArgumentParser():
                       'files with instrumentation dumps', required=True)
   parser.add_argument('--output', type=str, help='Output filename',
                       required=True)
+  parser.add_argument('--offsets-output', type=str,
+                      help='Output filename for the symbol offsets',
+                      required=False)
   return parser
 
 
@@ -208,6 +227,10 @@ def main():
   offset_to_symbol_info = GetOffsetToSymbolArray(instrumented_native_lib)
   logging.info('Matching symbols')
   reached_symbols = GetReachedSymbolsFromDump(dump, offset_to_symbol_info)
+  if args.offsets_output:
+    with open(args.offsets_output, 'w') as f:
+      for s in reached_symbols:
+        f.write('%d\n' % s.offset)
   logging.info('Reached Symbols = %d', len(reached_symbols))
   total_size = sum(s.size for s in reached_symbols)
   logging.info('Total reached size = %d', total_size)
