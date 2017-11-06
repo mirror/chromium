@@ -44,6 +44,7 @@ class AnswerCardWebContents : public AnswerCardContents,
   void DidFinishNavigation(
       content::NavigationHandle* navigation_handle) override;
   void DidStopLoading() override;
+  void DidFirstVisuallyNonEmptyPaint() override;
   void DidGetUserInteraction(const blink::WebInputEvent::Type type) override;
   void RenderViewCreated(content::RenderViewHost* host) override;
   void RenderViewDeleted(content::RenderViewHost* host) override;
@@ -53,6 +54,8 @@ class AnswerCardWebContents : public AnswerCardContents,
  private:
   void AttachToHost(content::RenderWidgetHost* host);
   void DetachFromHost();
+
+  void VisualStateUpdated(bool result);
 
   // Web view for the web contents managed by this class.
   const std::unique_ptr<views::WebView> web_view_;

@@ -1462,9 +1462,11 @@ int BrowserMainLoop::BrowserThreadsStarted() {
   if (is_mus) {
     base::CommandLine::ForCurrentProcess()->AppendSwitch(
         switches::kIsRunningInMash);
-    base::CommandLine::ForCurrentProcess()->AppendSwitch(
-        switches::kEnableSurfaceSynchronization);
+    // base::CommandLine::ForCurrentProcess()->AppendSwitch(
+    // switches::kEnableSurfaceSynchronization);
   }
+  base::CommandLine::ForCurrentProcess()->AppendSwitch(
+      switches::kEnableSurfaceSynchronization);
 #endif
 
   HistogramSynchronizer::GetInstance();

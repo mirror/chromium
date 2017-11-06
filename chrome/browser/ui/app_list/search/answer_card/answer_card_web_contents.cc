@@ -27,6 +27,8 @@
 #include "ui/views/controls/webview/webview.h"
 #include "ui/views/widget/widget.h"
 
+#include "content/public/browser/render_frame_host.h"
+
 namespace app_list {
 
 namespace {
@@ -248,7 +250,18 @@ void AnswerCardWebContents::DidFinishNavigation(
 }
 
 void AnswerCardWebContents::DidStopLoading() {
+  LOG(ERROR) << "*** did stop loading ***";
   delegate()->DidStopLoading(this);
+  web_contents_->GetMainFrame()->InsertVisualStateCallback(base::Bind(
+      &AnswerCardWebContents::VisualStateUpdated, base::Unretained(this)));
+}
+
+void AnswerCardWebContents::DidFirstVisuallyNonEmptyPaint() {
+  LOG(ERROR) << "did first visually non empty paint";
+}
+
+void AnswerCardWebContents::VisualStateUpdated(bool result) {
+  LOG(ERROR) << "*** visual state updated: " << result;
 }
 
 void AnswerCardWebContents::DidGetUserInteraction(
