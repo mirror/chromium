@@ -12,10 +12,17 @@
 #include "base/files/file_path.h"
 #include "base/memory/ref_counted.h"
 #include "base/strings/string_split.h"
+#include "media/base/media_export.h"
 
 namespace media {
 
 class DecoderBuffer;
+
+// Common test results.
+MEDIA_EXPORT const char kFailed[];
+MEDIA_EXPORT const char kEnded[];
+MEDIA_EXPORT const char kErrorEvent[];
+MEDIA_EXPORT const char kError[];
 
 // Returns a file path for a file in the media/test/data directory.
 base::FilePath GetTestDataFilePath(const std::string& name);
