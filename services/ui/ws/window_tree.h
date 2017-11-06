@@ -610,8 +610,11 @@ class WindowTree : public mojom::WindowTree,
   void WmConfineCursorToBounds(const gfx::Rect& bounds_in_pixles,
                                int64_t display_id) override;
   void WmSetCursorTouchVisible(bool enabled) override;
-  void OnWmCreatedTopLevelWindow(uint32_t change_id,
-                                 Id transport_window_id) override;
+  void OnWmCreatedTopLevelWindow(
+      uint32_t change_id,
+      Id transport_window_id,
+      ClientSpecificId requesting_client_id,
+      ClientSpecificId requesting_window_id) override;
   void OnAcceleratorAck(
       uint32_t event_id,
       mojom::EventResult result,

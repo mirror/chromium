@@ -226,9 +226,11 @@ TEST_F(WindowManagerStateTest, NullAccelerator) {
   WindowTree* target_tree = window_tree();
   TestChangeTracker* tracker = window_tree_client()->tracker();
   ASSERT_EQ(1u, tracker->changes()->size());
-  EXPECT_EQ(
-      "InputEvent window=" + kWindowManagerClientIdString + ",1 event_action=7",
-      ChangesToDescription1(*tracker->changes())[0]);
+  // We embed window_tree() in wm so the embed window is going to have
+  // FrameSinkId of (window_tree()->id(), 1). Since we are sending the msg
+  // to window_tree(), it's going to see (0, 1).
+  EXPECT_EQ("InputEvent window=0,1 event_action=7",
+            ChangesToDescription1(*tracker->changes())[0]);
 
   WindowTreeTestApi(target_tree).AckOldestEvent();
   EXPECT_FALSE(window_manager()->on_accelerator_called());
@@ -247,9 +249,11 @@ TEST_F(WindowManagerStateTest, PostTargetAccelerator) {
                              accelerator.get());
   TestChangeTracker* tracker = window_tree_client()->tracker();
   ASSERT_EQ(1u, tracker->changes()->size());
-  EXPECT_EQ(
-      "InputEvent window=" + kWindowManagerClientIdString + ",1 event_action=7",
-      ChangesToDescription1(*tracker->changes())[0]);
+  // We embed window_tree() in wm so the embed window is going to have
+  // FrameSinkId of (window_tree()->id(), 1). Since we are sending the msg
+  // to window_tree(), it's going to see (0, 1).
+  EXPECT_EQ("InputEvent window=0,1 event_action=7",
+            ChangesToDescription1(*tracker->changes())[0]);
 
   WindowTreeTestApi(window_tree()).AckOldestEvent();
   EXPECT_TRUE(window_manager()->on_accelerator_called());
@@ -400,9 +404,11 @@ TEST_F(WindowManagerStateTest, ClientHandlesEvent) {
                              accelerator.get());
   TestChangeTracker* tracker = window_tree_client()->tracker();
   ASSERT_EQ(1u, tracker->changes()->size());
-  EXPECT_EQ(
-      "InputEvent window=" + kWindowManagerClientIdString + ",1 event_action=7",
-      ChangesToDescription1(*tracker->changes())[0]);
+  // We embed window_tree() in wm so the embed window is going to have
+  // FrameSinkId of (window_tree()->id(), 1). Since we are sending the msg
+  // to window_tree(), it's going to see (0, 1).
+  EXPECT_EQ("InputEvent window=0,1 event_action=7",
+            ChangesToDescription1(*tracker->changes())[0]);
 
   EXPECT_TRUE(WindowManagerStateTestApi(window_manager_state())
                   .AckInFlightEvent(mojom::EventResult::HANDLED));
@@ -422,9 +428,11 @@ TEST_F(WindowManagerStateTest, AcceleratorDeleted) {
                              accelerator.get());
   TestChangeTracker* tracker = window_tree_client()->tracker();
   ASSERT_EQ(1u, tracker->changes()->size());
-  EXPECT_EQ(
-      "InputEvent window=" + kWindowManagerClientIdString + ",1 event_action=7",
-      ChangesToDescription1(*tracker->changes())[0]);
+  // We embed window_tree() in wm so the embed window is going to have
+  // FrameSinkId of (window_tree()->id(), 1). Since we are sending the msg
+  // to window_tree(), it's going to see (0, 1).
+  EXPECT_EQ("InputEvent window=0,1 event_action=7",
+            ChangesToDescription1(*tracker->changes())[0]);
 
   accelerator.reset();
   EXPECT_TRUE(WindowManagerStateTestApi(window_manager_state())
@@ -445,9 +453,11 @@ TEST_F(WindowManagerStateTest, EnqueuedAccelerators) {
                              accelerator.get());
   TestChangeTracker* tracker = window_tree_client()->tracker();
   ASSERT_EQ(1u, tracker->changes()->size());
-  EXPECT_EQ(
-      "InputEvent window=" + kWindowManagerClientIdString + ",1 event_action=7",
-      ChangesToDescription1(*tracker->changes())[0]);
+  // We embed window_tree() in wm so the embed window is going to have
+  // FrameSinkId of (window_tree()->id(), 1). Since we are sending the msg
+  // to window_tree(), it's going to see (0, 1).
+  EXPECT_EQ("InputEvent window=0,1 event_action=7",
+            ChangesToDescription1(*tracker->changes())[0]);
 
   tracker->changes()->clear();
   ui::KeyEvent key2(ui::ET_KEY_PRESSED, ui::VKEY_Y, ui::EF_CONTROL_DOWN);
@@ -463,9 +473,8 @@ TEST_F(WindowManagerStateTest, EnqueuedAccelerators) {
 
   WindowTreeTestApi(window_tree()).AckOldestEvent();
   ASSERT_EQ(1u, tracker->changes()->size());
-  EXPECT_EQ(
-      "InputEvent window=" + kWindowManagerClientIdString + ",1 event_action=7",
-      ChangesToDescription1(*tracker->changes())[0]);
+  EXPECT_EQ("InputEvent window=0,1 event_action=7",
+            ChangesToDescription1(*tracker->changes())[0]);
   EXPECT_TRUE(window_manager()->on_accelerator_called());
   EXPECT_EQ(accelerator->id(), window_manager()->on_accelerator_id());
 }
@@ -482,9 +491,11 @@ TEST_F(WindowManagerStateTest, DeleteTree) {
                              accelerator.get());
   TestChangeTracker* tracker = window_tree_client()->tracker();
   ASSERT_EQ(1u, tracker->changes()->size());
-  EXPECT_EQ(
-      "InputEvent window=" + kWindowManagerClientIdString + ",1 event_action=7",
-      ChangesToDescription1(*tracker->changes())[0]);
+  // We embed window_tree() in wm so the embed window is going to have
+  // FrameSinkId of (window_tree()->id(), 1). Since we are sending the msg
+  // to window_tree(), it's going to see (0, 1).
+  EXPECT_EQ("InputEvent window=0,1 event_action=7",
+            ChangesToDescription1(*tracker->changes())[0]);
 
   window_manager_state()->OnWillDestroyTree(tree());
   EXPECT_FALSE(window_manager()->on_accelerator_called());
@@ -511,7 +522,8 @@ TEST_F(WindowManagerStateTest, DeleteNonRootTree) {
   ASSERT_EQ(1u, tracker->changes()->size());
   // clients that created this window is receiving the event, so client_id part
   // would be reset to 0 before sending back to clients.
-  EXPECT_EQ("InputEvent window=0,1 event_action=7",
+  EXPECT_EQ("InputEvent window=0," + std::to_string(kEmbedTreeWindowId) +
+                " event_action=7",
             ChangesToDescription1(*tracker->changes())[0]);
   EXPECT_TRUE(wm_client()->tracker()->changes()->empty());
 
@@ -534,9 +546,11 @@ TEST_F(WindowManagerStateTest, DontSendQueuedEventsToADeadTree) {
   DispatchInputEventToWindow(target, EventLocationFromEvent(press, *display),
                              press, nullptr);
   ASSERT_EQ(1u, tracker->changes()->size());
-  EXPECT_EQ(
-      "InputEvent window=" + kWindowManagerClientIdString + ",1 event_action=1",
-      ChangesToDescription1(*tracker->changes())[0]);
+  // We embed window_tree() in wm so the embed window is going to have
+  // FrameSinkId of (window_tree()->id(), 1). Since we are sending the msg
+  // to window_tree(), it's going to see (0, 1).
+  EXPECT_EQ("InputEvent window=0,1 event_action=1",
+            ChangesToDescription1(*tracker->changes())[0]);
   tracker->changes()->clear();
   // The above is not setting TreeAwaitingInputAck.
 
@@ -563,9 +577,11 @@ TEST_F(WindowManagerStateTest, AckTimeout) {
                              key, accelerator.get());
   TestChangeTracker* tracker = window_tree_client()->tracker();
   ASSERT_EQ(1u, tracker->changes()->size());
-  EXPECT_EQ(
-      "InputEvent window=" + kWindowManagerClientIdString + ",1 event_action=7",
-      ChangesToDescription1(*tracker->changes())[0]);
+  // We embed window_tree() in wm so the embed window is going to have
+  // FrameSinkId of (window_tree()->id(), 1). Since we are sending the msg
+  // to window_tree(), it's going to see (0, 1).
+  EXPECT_EQ("InputEvent window=0,1 event_action=7",
+            ChangesToDescription1(*tracker->changes())[0]);
 
   OnEventAckTimeout(window()->id().client_id);
   EXPECT_TRUE(window_manager()->on_accelerator_called());
@@ -641,7 +657,8 @@ TEST_F(WindowManagerStateTest, InterceptingEmbedderReceivesEvents) {
     // Embed another tree in the embedded tree.
     const ClientWindowId nested_embed_window_id(embed_tree->id(), 23);
     embed_tree->NewWindow(nested_embed_window_id, ServerWindow::Properties());
-    ASSERT_TRUE(embed_tree->AddWindow(embed_window_id, nested_embed_window_id));
+    ASSERT_TRUE(embed_tree->AddWindow(embedder_window->frame_sink_id(),
+                                      nested_embed_window_id));
 
     WindowTree* nested_embed_tree = nullptr;
     TestWindowTreeClient* nested_embed_client_proxy = nullptr;
@@ -691,9 +708,11 @@ TEST_F(WindowManagerStateTest, PostAcceleratorForgotten) {
                              accelerator_key, accelerator.get());
   TestChangeTracker* tracker = window_tree_client()->tracker();
   ASSERT_EQ(1u, tracker->changes()->size());
-  EXPECT_EQ(
-      "InputEvent window=" + kWindowManagerClientIdString + ",1 event_action=7",
-      ChangesToDescription1(*tracker->changes())[0]);
+  // We embed window_tree() in wm so the embed window is going to have
+  // FrameSinkId of (window_tree()->id(), 1). Since we are sending the msg
+  // to window_tree(), it's going to see (0, 1).
+  EXPECT_EQ("InputEvent window=0,1 event_action=7",
+            ChangesToDescription1(*tracker->changes())[0]);
   tracker->changes()->clear();
   WindowTreeTestApi(window_tree()).AckLastEvent(mojom::EventResult::HANDLED);
   EXPECT_FALSE(window_manager()->on_accelerator_called());
@@ -706,9 +725,8 @@ TEST_F(WindowManagerStateTest, PostAcceleratorForgotten) {
       target, EventLocationFromEvent(non_accelerator_key, *display),
       non_accelerator_key, nullptr);
   ASSERT_EQ(1u, tracker->changes()->size());
-  EXPECT_EQ(
-      "InputEvent window=" + kWindowManagerClientIdString + ",1 event_action=7",
-      ChangesToDescription1(*tracker->changes())[0]);
+  EXPECT_EQ("InputEvent window=0,1 event_action=7",
+            ChangesToDescription1(*tracker->changes())[0]);
   WindowTreeTestApi(window_tree()).AckLastEvent(mojom::EventResult::UNHANDLED);
   EXPECT_FALSE(window_manager()->on_accelerator_called());
 }
