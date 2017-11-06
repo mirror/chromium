@@ -16,6 +16,24 @@
       "revId": "e6b3cbce32dc7a2f3bafb9376c469db9cd51ec91",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "b60c573a_c63047df",
+        "filename": "base/test/android/java_handler_thread_helpers.cc",
+        "patchSetId": 11
+      },
+      "lineNbr": 25,
+      "author": {
+        "id": 1002411
+      },
+      "writtenOn": "2017-11-06T17:08:48Z",
+      "side": 1,
+      "message": "Good point. Fixed the test to actually check for thread crashing with an exception, which let me find and fix a few (pre-existing) races in thread cleanup.",
+      "parentUuid": "43d4c6e5_8e0a6933",
+      "revId": "e6b3cbce32dc7a2f3bafb9376c469db9cd51ec91",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
