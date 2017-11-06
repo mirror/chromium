@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "71506338_856b7b9e",
+        "filename": "third_party/WebKit/LayoutTests/http/tests/security/xss-DENIED-xml-external-entity-expected.txt",
+        "patchSetId": 1
+      },
+      "lineNbr": 1,
+      "author": {
+        "id": 1002172
+      },
+      "writtenOn": "2017-11-06T07:22:43Z",
+      "side": 0,
+      "message": "is this message really fine to be removed?\nalso, I could not understand how libxml can affect this.",
+      "range": {
+        "startLine": 1,
+        "startChar": 0,
+        "endLine": 1,
+        "endChar": 7
+      },
+      "revId": "a42975d0c4941492c0ac49e8653b093731136648",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
