@@ -1,0 +1,146 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "678c74b6_de990c7d",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 3
+      },
+      "lineNbr": 11,
+      "author": {
+        "id": 1000101
+      },
+      "writtenOn": "2017-11-06T20:49:56Z",
+      "side": 1,
+      "message": "nit: align with start of previous line, here and other bullets.",
+      "revId": "90bc9d9d8695dd35f43ec05b83ae4357c3b960b9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a76fedc1_05c59ab1",
+        "filename": "ui/app_list/app_list_constants.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 221,
+      "author": {
+        "id": 1000101
+      },
+      "writtenOn": "2017-11-06T20:49:56Z",
+      "side": 1,
+      "message": "These are not constants related. Please find a better home for them. Maybe as static methods of AppListView, or create a new app_list_util.h/cc?",
+      "revId": "90bc9d9d8695dd35f43ec05b83ae4357c3b960b9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f5533a2a_b503156b",
+        "filename": "ui/app_list/views/app_list_view.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 1390,
+      "author": {
+        "id": 1000101
+      },
+      "writtenOn": "2017-11-06T20:49:56Z",
+      "side": 1,
+      "message": "nit: bool -\u003e const bool since you are here...",
+      "revId": "90bc9d9d8695dd35f43ec05b83ae4357c3b960b9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ba8eab60_9ec107ba",
+        "filename": "ui/app_list/views/app_list_view.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 192,
+      "author": {
+        "id": 1000101
+      },
+      "writtenOn": "2017-11-06T20:49:56Z",
+      "side": 1,
+      "message": "nit: event -\u003e events",
+      "range": {
+        "startLine": 192,
+        "startChar": 54,
+        "endLine": 192,
+        "endChar": 59
+      },
+      "revId": "90bc9d9d8695dd35f43ec05b83ae4357c3b960b9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ad0cad3c_0a745644",
+        "filename": "ui/app_list/views/folder_header_view.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 266,
+      "author": {
+        "id": 1000101
+      },
+      "writtenOn": "2017-11-06T20:49:56Z",
+      "side": 1,
+      "message": "Would this work in RTL? We might need to flip VKEY_LEFT/RIGHT under RTL.",
+      "revId": "90bc9d9d8695dd35f43ec05b83ae4357c3b960b9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f9f4b620_4ef65c3f",
+        "filename": "ui/app_list/views/search_box_view.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 883,
+      "author": {
+        "id": 1000101
+      },
+      "writtenOn": "2017-11-06T20:49:56Z",
+      "side": 1,
+      "message": "ditto, check whether this works on RTL.",
+      "revId": "90bc9d9d8695dd35f43ec05b83ae4357c3b960b9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "758b67fc_a2ef942f",
+        "filename": "ui/app_list/views/search_result_page_view.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 238,
+      "author": {
+        "id": 1000101
+      },
+      "writtenOn": "2017-11-06T20:49:56Z",
+      "side": 1,
+      "message": "nit: DCHECK_EQ",
+      "revId": "90bc9d9d8695dd35f43ec05b83ae4357c3b960b9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3a926881_1a30e21e",
+        "filename": "ui/app_list/views/search_result_tile_item_list_view.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 217,
+      "author": {
+        "id": 1000101
+      },
+      "writtenOn": "2017-11-06T20:49:56Z",
+      "side": 1,
+      "message": "nit: DCHECK_EQ",
+      "revId": "90bc9d9d8695dd35f43ec05b83ae4357c3b960b9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
