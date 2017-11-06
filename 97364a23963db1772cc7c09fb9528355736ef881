@@ -34,6 +34,29 @@
       "revId": "97364a23963db1772cc7c09fb9528355736ef881",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "103b25f3_6a614dbe",
+        "filename": "ui/compositor/property_change_reason.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 14,
+      "author": {
+        "id": 1000763
+      },
+      "writtenOn": "2017-11-06T21:46:19Z",
+      "side": 1,
+      "message": "Describing the first as SET is not particularly clear. How about names FROM_ANIMATION, NOT_FROM_ANIMATION?",
+      "range": {
+        "startLine": 14,
+        "startChar": 2,
+        "endLine": 14,
+        "endChar": 11
+      },
+      "revId": "97364a23963db1772cc7c09fb9528355736ef881",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
