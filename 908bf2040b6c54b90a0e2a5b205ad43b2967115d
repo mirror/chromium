@@ -16,6 +16,24 @@
       "revId": "908bf2040b6c54b90a0e2a5b205ad43b2967115d",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f5a97440_51d3331a",
+        "filename": "build/cipd/android/android.ensure",
+        "patchSetId": 3
+      },
+      "lineNbr": 8,
+      "author": {
+        "id": 1126674
+      },
+      "writtenOn": "2017-11-06T18:57:04Z",
+      "side": 1,
+      "message": "Changes sgtm, although might be good add a comment to this file saying that -cr0 is a workaround and not needed by future versions?\n\nAlso might be good to add an extra line between packages like is done in DEPS (to avoid merge conflicts)\n\nShould we make this file OWNERS: * like DEPS?",
+      "parentUuid": "098a3c46_053b0a58",
+      "revId": "908bf2040b6c54b90a0e2a5b205ad43b2967115d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
