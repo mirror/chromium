@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "ca589411_a33e09e7",
+        "filename": "third_party/WebKit/LayoutTests/external/wpt/worklets/resources/service-worker-interception-tests.js",
+        "patchSetId": 5
+      },
+      "lineNbr": 19,
+      "author": {
+        "id": 1115976
+      },
+      "writtenOn": "2017-11-06T22:45:03Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "8622d9e5_ac9b71b3",
+      "revId": "89d0afb4e69ac75cf45465ff97eb0fac6ad73efb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "7ada7e3b_b10fd2e7",
         "filename": "third_party/WebKit/LayoutTests/external/wpt/worklets/resources/service-worker-interception-tests.js",
         "patchSetId": 5
@@ -33,6 +51,24 @@
       "revId": "89d0afb4e69ac75cf45465ff97eb0fac6ad73efb",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ae4aecc1_d73b171f",
+        "filename": "third_party/WebKit/LayoutTests/external/wpt/worklets/resources/service-worker-interception-tests.js",
+        "patchSetId": 5
+      },
+      "lineNbr": 54,
+      "author": {
+        "id": 1115976
+      },
+      "writtenOn": "2017-11-06T22:45:03Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "7ada7e3b_b10fd2e7",
+      "revId": "89d0afb4e69ac75cf45465ff97eb0fac6ad73efb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
