@@ -506,9 +506,6 @@ enum class SnapshotViewOption {
       [self transitionContextContentForTabModel:tabModel];
   DCHECK(transitionContextContent);
 
-  ToolbarController* toolbarController =
-      [[self.delegate tabSwitcherTransitionToolbarOwner]
-          relinquishedToolbarController];
   Tab* selectedTab = [tabModel currentTab];
 
   NSInteger selectedTabIndex = [tabModel indexOfTab:selectedTab];
@@ -557,7 +554,8 @@ enum class SnapshotViewOption {
                                            toView:self.view];
 
   // Compute initial and final toolbar screenshot frames.
-  const CGRect initialToolbarFrame = toolbarController.view.frame;
+  const CGRect initialToolbarFrame =
+      [[self.delegate tabSwitcherTransitionToolbarOwner] toolbarFrame];
   CGRect initialToolbarScreenshotFrame = CGRectMake(
       0, 0, initialToolbarFrame.size.width, initialToolbarFrame.size.height);
 
@@ -587,7 +585,8 @@ enum class SnapshotViewOption {
   const CGSize tabScreenshotImageSize = tabScreenshotImageView.image.size;
 
   CGRect initialTabScreenshotFrame = CGRectZero;
-  const CGSize toolbarSize = toolbarController.view.bounds.size;
+  const CGSize toolbarSize =
+      [[self.delegate tabSwitcherTransitionToolbarOwner] toolbarFrame].size;
   CGSize initialTabTargetSize =
       CGSizeMake(initialTabFrame.size.width,
                  initialTabFrame.size.height - toolbarSize.height);
@@ -699,8 +698,6 @@ enum class SnapshotViewOption {
         [strongSelf setTransitionContext:nil];
       }
     }
-    [[[strongSelf delegate] tabSwitcherTransitionToolbarOwner]
-        reparentToolbarController];
     [[strongSelf view] setUserInteractionEnabled:YES];
     completion();
   };
