@@ -243,7 +243,8 @@ class CORE_EXPORT Editor final : public GarbageCollectedFinalized<Editor> {
                            FindOptions);
 
   const VisibleSelection& Mark() const;  // Mark, to be used as emacs uses it.
-  void SetMark(const VisibleSelection&);
+  bool GetMarkIsDirectional() const;
+  void SetMarkWithDirectional(const VisibleSelection&, bool);
 
   void ComputeAndSetTypingStyle(StylePropertySet*, InputEvent::InputType);
 
@@ -328,6 +329,7 @@ class CORE_EXPORT Editor final : public GarbageCollectedFinalized<Editor> {
   EditorParagraphSeparator default_paragraph_separator_;
   bool overwrite_mode_enabled_;
   Member<EditingStyle> typing_style_;
+  bool mark_is_directional_ = false;
 
   explicit Editor(LocalFrame&);
 
@@ -369,8 +371,14 @@ inline const VisibleSelection& Editor::Mark() const {
   return mark_;
 }
 
-inline void Editor::SetMark(const VisibleSelection& selection) {
+inline bool Editor::GetMarkIsDirectional() const {
+  return mark_is_directional_;
+}
+
+inline void Editor::SetMarkWithDirectional(const VisibleSelection& selection,
+                                           bool directional) {
   mark_ = selection;
+  mark_is_directional_ = directional;
 }
 
 inline bool Editor::MarkedTextMatchesAreHighlighted() const {
