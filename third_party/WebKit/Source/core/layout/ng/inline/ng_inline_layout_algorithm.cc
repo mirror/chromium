@@ -235,6 +235,7 @@ void NGInlineLayoutAlgorithm::PlaceItems(
   }
 
   if (line_box_.IsEmpty()) {
+    NOTREACHED();
     return;  // The line was empty.
   }
 
