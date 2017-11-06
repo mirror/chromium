@@ -141,6 +141,30 @@
     },
     {
       "key": {
+        "uuid": "794779bb_efec7ac7",
+        "filename": "chrome/android/webapk/shell_apk/src/org/chromium/webapk/shell_apk/HostBrowserLauncher.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 48,
+      "author": {
+        "id": 1117405
+      },
+      "writtenOn": "2017-11-06T14:50:12Z",
+      "side": 1,
+      "message": "Hi Peter, I guess you miss these comments? Agreed with Yaron, we need to keep the activity instance. Since this CL has been merged, could you please address it in a follow up CL? Thanks!",
+      "parentUuid": "a863b7e3_7b601f1b",
+      "range": {
+        "startLine": 48,
+        "startChar": 20,
+        "endLine": 48,
+        "endChar": 28
+      },
+      "revId": "69e1ab0431c28eefc7b0716ff6bb70dd80a3f4e2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "9b2f9f75_7698c221",
         "filename": "chrome/android/webapk/shell_apk/src/org/chromium/webapk/shell_apk/ShareActivity0.java",
         "patchSetId": 4
