@@ -928,8 +928,11 @@ class CONTENT_EXPORT RenderFrameImpl
   const RenderFrameImpl* GetLocalRoot() const;
 
   // Builds and sends DidCommitProvisionalLoad to the host.
-  void SendDidCommitProvisionalLoad(blink::WebLocalFrame* frame,
-                                    blink::WebHistoryCommitType commit_type);
+  void SendDidCommitProvisionalLoad(
+      blink::WebLocalFrame* frame,
+      blink::WebHistoryCommitType commit_type,
+      service_manager::mojom::InterfaceProviderRequest
+          remote_interface_provider_request);
 
   // Swaps the current frame into the frame tree, replacing the
   // RenderFrameProxy it is associated with.  Return value indicates whether

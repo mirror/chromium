@@ -3946,6 +3946,35 @@ void RenderFrameImpl::DidCommitProvisionalLoad(
     }
   }
 
+  service_manager::mojom::InterfaceProviderRequest
+      remote_interface_provider_request;
+  if (!navigation_state->WasWithinSameDocument()) {
+    // If we're navigating to a new document, bind |remote_interfaces_| to a new
+    // message pipe. The request end of the new InterfaceProvider interface will
+    // be sent over as part of DidCommitProvisionalLoad. After the RFHI receives
+    // the commit confirmation, it will immediately close the old message pipe
+    // to avoid GetInterface calls racing with navigation commit, and bind the
+    // request end of the message pipe created here.
+    service_manager::mojom::InterfaceProviderPtr interfaces_provider;
+    remote_interface_provider_request = mojo::MakeRequest(&interfaces_provider);
+
+    // Must initialize |remote_interfaces_| with a new working pipe *before*
+    // observers receive DidCommitProvisionalLoad, so they can already request
+    // remote interfaces, which will be serviced once the InterfaceProvider
+    // request is bound on the RenderFrameHostImpl side.
+    remote_interfaces_.Close();
+    remote_interfaces_.Bind(std::move(interfaces_provider));
+
+    // AudioIPCFactory may be null in tests.
+    if (auto* factory = AudioIPCFactory::get()) {
+      // TODO(https://crbug.com/668275): It is odd for one specific factory to
+      // be registered here. Clean up with the rest of the audio code.
+      factory->MaybeDeregisterRemoteFactory(GetRoutingID());
+      factory->MaybeRegisterRemoteFactory(GetRoutingID(),
+                                          GetRemoteInterfaces());
+    }
+  }
+
   for (auto& observer : render_view_->observers_)
     observer.DidCommitProvisionalLoad(frame_, is_new_navigation);
   for (auto& observer : observers_) {
@@ -3976,7 +4005,8 @@ void RenderFrameImpl::DidCommitProvisionalLoad(
   // new navigation.
   navigation_state->set_request_committed(true);
 
-  SendDidCommitProvisionalLoad(frame_, commit_type);
+  SendDidCommitProvisionalLoad(frame_, commit_type,
+                               std::move(remote_interface_provider_request));
 
   // Check whether we have new encoding name.
   UpdateEncoding(frame_, frame_->View()->PageEncoding().Utf8());
@@ -5089,7 +5119,9 @@ const RenderFrameImpl* RenderFrameImpl::GetLocalRoot() const {
 // Tell the embedding application that the URL of the active page has changed.
 void RenderFrameImpl::SendDidCommitProvisionalLoad(
     blink::WebLocalFrame* frame,
-    blink::WebHistoryCommitType commit_type) {
+    blink::WebHistoryCommitType commit_type,
+    service_manager::mojom::InterfaceProviderRequest
+        remote_interface_provider_request) {
   DCHECK_EQ(frame_, frame);
   WebDocumentLoader* document_loader = frame->GetDocumentLoader();
   DCHECK(document_loader);
@@ -5296,11 +5328,17 @@ void RenderFrameImpl::SendDidCommitProvisionalLoad(
     }
   }
 
+  // For accessing RenderFrameHost-exposed services, a new InterfaceProvider
+  // connection should be established exactly for non-same-document navigations.
+  DCHECK_EQ(!params->was_within_same_document,
+            remote_interface_provider_request.is_pending());
+
   // This invocation must precede any calls to allowScripts(), allowImages(), or
   // allowPlugins() for the new page. This ensures that when these functions
   // send ViewHostMsg_ContentBlocked messages, those arrive after the browser
   // process has already been informed of the provisional load committing.
-  GetFrameHost()->DidCommitProvisionalLoad(std::move(params));
+  GetFrameHost()->DidCommitProvisionalLoad(
+      std::move(params), std::move(remote_interface_provider_request));
 
   // If we end up reusing this WebRequest (for example, due to a #ref click),
   // we don't want the transition type to persist.  Just clear it.
