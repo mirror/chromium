@@ -4,23 +4,119 @@
 
 #include "base/message_loop/message_pump_android.h"
 
+#include <android/looper.h>
+#include <fcntl.h>
 #include <jni.h>
+#include <sys/eventfd.h>
+#include <sys/syscall.h>
+#include <sys/types.h>
+#include <unistd.h>
+#include <utility>
 
 #include "base/android/jni_android.h"
 #include "base/android/scoped_java_ref.h"
+#include "base/callback_helpers.h"
+#include "base/feature_list.h"
 #include "base/lazy_instance.h"
 #include "base/logging.h"
 #include "base/message_loop/message_loop.h"
 #include "base/run_loop.h"
+#include "base/trace_event/trace_event.h"
 #include "jni/SystemMessageHandler_jni.h"
+
+// Android stripped sys/timerfd.h out of their platform headers, so we have to
+// use syscall to make use of timerfd. Once the min API level is 20, we can
+// directly use timerfd.h.
+#if !defined(__NR_timerfd_create)
+#error "Unable to find syscall for __NR_timerfd_create"
+#endif
 
 using base::android::JavaParamRef;
 using base::android::ScopedJavaLocalRef;
 
 namespace base {
 
+namespace {
+
+// TODO(mthiesse): Replace this with a feature so that we can implement a kill
+// switch in case this causes problems, and a control group to measure the
+// performance impact. We can't simply use a feature as you usually would
+// because feature initialization happens well after the MessagePump is started
+// and cannot be moved earlier.
+static constexpr bool kUseNativeLooper = false;
+
+// See sys/timerfd.h
+int timerfd_create(int clockid, int flags) {
+  return syscall(__NR_timerfd_create, clockid, flags);
+}
+
+// See sys/timerfd.h
+int timerfd_settime(int ufc,
+                    int flags,
+                    const struct itimerspec* utmr,
+                    struct itimerspec* otmr) {
+  return syscall(__NR_timerfd_settime, ufc, flags, utmr, otmr);
+}
+
+static int nonDelayedLooperCallback(int fd, int events, void* data) {
+  DCHECK(events & ALOOPER_EVENT_INPUT);
+  MessagePumpForUI* pump = reinterpret_cast<MessagePumpForUI*>(data);
+  pump->OnNonDelayedCallback();
+  return 1;  // continue listening for events
+}
+
+static int delayedLooperCallback(int fd, int events, void* data) {
+  DCHECK(events & ALOOPER_EVENT_INPUT);
+  MessagePumpForUI* pump = reinterpret_cast<MessagePumpForUI*>(data);
+  pump->OnDelayedCallback();
+  return 1;  // continue listening for events
+}
+
+}  // namespace
+
+// Initialization is done in Start().
 MessagePumpForUI::MessagePumpForUI() = default;
-MessagePumpForUI::~MessagePumpForUI() = default;
+
+MessagePumpForUI::~MessagePumpForUI() {
+  if (!looper_)
+    return;
+  ALooper_removeFd(looper_, non_delayed_fd_);
+  ALooper_removeFd(looper_, delayed_fd_);
+  ALooper_release(looper_);
+  close(non_delayed_fd_);
+  close(delayed_fd_);
+}
+
+void MessagePumpForUI::OnDelayedCallback() {
+  if (ShouldAbort())
+    return;
+  delayed_scheduled_time_ = base::TimeTicks();
+  base::TimeTicks next_delayed_work_time;
+  delegate_->DoDelayedWork(&next_delayed_work_time);
+  if (!next_delayed_work_time.is_null())
+    ScheduleDelayedWork(next_delayed_work_time);
+}
+
+void MessagePumpForUI::OnNonDelayedCallback() {
+  if (!ShouldAbort())
+    delegate_->DoWork();
+
+  // No need to read from the fd (and clear it) if there are more tasks queued
+  // up.
+  if (--pending_tasks_ > 0)
+    return;
+  uint64_t value;
+  read(non_delayed_fd_, &value, sizeof(value));
+  // If we read a value > 1 (which should only ever be 2), it means we lost
+  // the race to clear the fd before a new task was posted. This is okay, we
+  // can just write (add) the value back.
+  if (--value > 0) {
+    DCHECK(value == 1);
+    write(non_delayed_fd_, &value, sizeof(value));
+  } else {
+    DoIdleWork();  // No more non-delayed tasks to run.
+  }
+}
 
 // This is called by the java SystemMessageHandler whenever the message queue
 // detects an idle state (as in, control returns to the looper and there are no
@@ -29,7 +125,14 @@ MessagePumpForUI::~MessagePumpForUI() = default;
 // implementation on other platforms.
 void MessagePumpForUI::DoIdleWork(JNIEnv* env,
                                   const JavaParamRef<jobject>& obj) {
+  DCHECK(!use_native_looper_);
+  DoIdleWork();
+}
+
+void MessagePumpForUI::DoIdleWork() {
   delegate_->DoIdleWork();
+  if (!idle_callback_.is_null())
+    base::ResetAndReturn(&idle_callback_).Run();
 }
 
 void MessagePumpForUI::DoRunLoopOnce(JNIEnv* env,
@@ -83,6 +186,10 @@ void MessagePumpForUI::Run(Delegate* delegate) {
 
 void MessagePumpForUI::Start(Delegate* delegate) {
   DCHECK(!quit_);
+
+  // TODO(mthiesse): Replace this with a Feature check.
+  use_native_looper_ = kUseNativeLooper;
+
   delegate_ = delegate;
   run_loop_ = std::make_unique<RunLoop>();
   // Since the RunLoop was just created above, BeforeRun should be guaranteed to
@@ -92,10 +199,27 @@ void MessagePumpForUI::Start(Delegate* delegate) {
 
   DCHECK(system_message_handler_obj_.is_null());
 
-  JNIEnv* env = base::android::AttachCurrentThread();
-  DCHECK(env);
-  system_message_handler_obj_.Reset(
-      Java_SystemMessageHandler_create(env, reinterpret_cast<jlong>(this)));
+  if (use_native_looper_) {
+    non_delayed_fd_ = eventfd(0, EFD_NONBLOCK | EFD_CLOEXEC);
+    delayed_fd_ = timerfd_create(CLOCK_MONOTONIC, 0);
+    int flags = fcntl(delayed_fd_, F_GETFL, 0);  // Is this necessary?
+    fcntl(delayed_fd_, F_SETFL, flags | O_NONBLOCK | O_CLOEXEC);
+    looper_ = ALooper_prepare(0);
+    CHECK(looper_);
+    // Add a reference to the looper so it isn't deleted on us.
+    ALooper_acquire(looper_);
+    ALooper_addFd(looper_, non_delayed_fd_, 0, ALOOPER_EVENT_INPUT,
+                  nonDelayedLooperCallback, reinterpret_cast<void*>(this));
+    ALooper_addFd(looper_, delayed_fd_, 0, ALOOPER_EVENT_INPUT,
+                  delayedLooperCallback, reinterpret_cast<void*>(this));
+  } else {
+    // Note that even when posted tasks are handled natively, the IdleHandler
+    // still has to live in java.
+    JNIEnv* env = base::android::AttachCurrentThread();
+    DCHECK(env);
+    system_message_handler_obj_.Reset(
+        Java_SystemMessageHandler_create(env, reinterpret_cast<jlong>(this)));
+  }
 }
 
 void MessagePumpForUI::Quit() {
@@ -116,14 +240,27 @@ void MessagePumpForUI::Quit() {
 }
 
 void MessagePumpForUI::ScheduleWork() {
+  TRACE_EVENT0("gpu", "MessagePumpForUI::ScheduleWork");
   if (quit_)
     return;
-  DCHECK(!system_message_handler_obj_.is_null());
+  if (use_native_looper_) {
+    // No need to write to the fd if the poll to our fd will already indicate
+    // we have work to do. So we only write on the 0->1 edge.
+    // In this way, we can avoid talking to the kernel unnecessarily, especially
+    // when under load and queueing up a lot of tasks.
+    if (pending_tasks_++ > 0)
+      return;
+    uint64_t value = 1;
+    write(non_delayed_fd_, &value, sizeof(value));
 
-  JNIEnv* env = base::android::AttachCurrentThread();
-  DCHECK(env);
+  } else {
+    DCHECK(!system_message_handler_obj_.is_null());
 
-  Java_SystemMessageHandler_scheduleWork(env, system_message_handler_obj_);
+    JNIEnv* env = base::android::AttachCurrentThread();
+    DCHECK(env);
+
+    Java_SystemMessageHandler_scheduleWork(env, system_message_handler_obj_);
+  }
 }
 
 void MessagePumpForUI::ScheduleDelayedWork(const TimeTicks& delayed_work_time) {
@@ -148,19 +285,40 @@ void MessagePumpForUI::ScheduleDelayedWork(const TimeTicks& delayed_work_time) {
       delayed_work_time >= delayed_scheduled_time_) {
     return;
   }
+  TRACE_EVENT0("gpu", "MessagePumpForUI::ScheduleDelayedWork");
   DCHECK(!delayed_work_time.is_null());
-  DCHECK(!system_message_handler_obj_.is_null());
-
-  JNIEnv* env = base::android::AttachCurrentThread();
-  DCHECK(env);
-
-  jlong millis =
-      (delayed_work_time - TimeTicks::Now()).InMillisecondsRoundedUp();
   delayed_scheduled_time_ = delayed_work_time;
-  // Note that we're truncating to milliseconds as required by the java side,
-  // even though delayed_work_time is microseconds resolution.
-  Java_SystemMessageHandler_scheduleDelayedWork(
-      env, system_message_handler_obj_, millis);
+  if (use_native_looper_) {
+    long micros = (delayed_work_time - TimeTicks::Now()).InMicroseconds();
+    struct itimerspec ts;
+    ts.it_interval.tv_sec = 0;  // Don't repeat.
+    ts.it_interval.tv_nsec = 0;
+    ts.it_value.tv_sec = micros / TimeTicks::kMicrosecondsPerSecond;
+    ts.it_value.tv_nsec = (micros % TimeTicks::kMicrosecondsPerSecond) *
+                          TimeTicks::kNanosecondsPerMicrosecond;
+    timerfd_settime(delayed_fd_, 0, &ts, nullptr);
+  } else {
+    DCHECK(!system_message_handler_obj_.is_null());
+
+    JNIEnv* env = base::android::AttachCurrentThread();
+    DCHECK(env);
+
+    jlong millis =
+        (delayed_work_time - TimeTicks::Now()).InMillisecondsRoundedUp();
+
+    // Note that we're truncating to milliseconds as required by the java side,
+    // even though delayed_work_time is microseconds resolution.
+    Java_SystemMessageHandler_scheduleDelayedWork(
+        env, system_message_handler_obj_, millis);
+  }
+}
+
+void MessagePumpForUI::SetIdleCallback(base::OnceClosure callback) {
+  if (use_native_looper_ && atomic_load(&pending_tasks_) == 0) {
+    std::move(callback).Run();
+    return;
+  }
+  idle_callback_ = std::move(callback);
 }
 
 }  // namespace base
