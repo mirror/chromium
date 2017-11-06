@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "62b3c0f7_8d150391",
+        "filename": "content/gpu/gpu_sandbox_hook_linux.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 308,
+      "author": {
+        "id": 1144624
+      },
+      "writtenOn": "2017-11-06T23:15:23Z",
+      "side": 1,
+      "message": "Can we avoid the static casts at all? The hooks are service_manager specific, so is the policy always BPFBasePolicy-derived?",
+      "range": {
+        "startLine": 308,
+        "startChar": 27,
+        "endLine": 308,
+        "endChar": 38
+      },
+      "revId": "94de7124d76b2403f47b8e278b15e1a78f56397b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
