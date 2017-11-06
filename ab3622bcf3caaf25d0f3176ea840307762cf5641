@@ -22,6 +22,30 @@
       "revId": "ab3622bcf3caaf25d0f3176ea840307762cf5641",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "46373851_71619ecb",
+        "filename": "gpu/command_buffer/service/gles2_cmd_decoder.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 12957,
+      "author": {
+        "id": 1148065
+      },
+      "writtenOn": "2017-11-06T18:05:01Z",
+      "side": 1,
+      "message": "We already reset them to 0 when we don\u0027t have an unpack buffer bound, because we handle the logic client-side in that case: https://cs.chromium.org/chromium/src/gpu/command_buffer/service/context_state.cc?sq\u003dpackage:chromium\u0026l\u003d604\n\nI\u0027ll add a comment to clarify.",
+      "parentUuid": "fade8227_57da4052",
+      "range": {
+        "startLine": 12957,
+        "startChar": 13,
+        "endLine": 12957,
+        "endChar": 28
+      },
+      "revId": "ab3622bcf3caaf25d0f3176ea840307762cf5641",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
