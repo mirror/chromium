@@ -24,7 +24,6 @@
 #include "ash/mus/window_properties.h"
 #include "ash/public/cpp/config.h"
 #include "ash/public/cpp/shelf_types.h"
-#include "ash/public/cpp/window_pin_type.h"
 #include "ash/public/cpp/window_properties.h"
 #include "ash/public/cpp/window_state_type.h"
 #include "ash/public/interfaces/window_actions.mojom.h"
@@ -103,9 +102,6 @@ WindowManager::WindowManager(service_manager::Connector* connector,
   property_converter_->RegisterPrimitiveProperty(
       kWindowStateTypeKey, mojom::kWindowStateType_Property,
       base::Bind(&ash::IsValidWindowStateType));
-  property_converter_->RegisterPrimitiveProperty(
-      kWindowPinTypeKey, ash::mojom::kWindowPinType_Property,
-      base::Bind(&ash::IsValidWindowPinType));
   property_converter_->RegisterStringProperty(
       kShelfIDKey, ui::mojom::WindowManager::kShelfID_Property);
 }
