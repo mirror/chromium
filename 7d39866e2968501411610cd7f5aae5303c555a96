@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "505ebe84_1dfc955e",
+        "filename": "tools/cygprofile/lightweight_cygprofile.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 119,
+      "author": {
+        "id": 1132034
+      },
+      "writtenOn": "2017-11-06T13:48:39Z",
+      "side": 1,
+      "message": "Thanks!\nDone.",
+      "parentUuid": "c3980039_cee3cf72",
+      "range": {
+        "startLine": 119,
+        "startChar": 5,
+        "endLine": 119,
+        "endChar": 11
+      },
+      "revId": "7d39866e2968501411610cd7f5aae5303c555a96",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "058357d2_36dab331",
         "filename": "tools/cygprofile/lightweight_cygprofile.cc",
         "patchSetId": 2
@@ -36,6 +60,30 @@
       "writtenOn": "2017-11-03T16:06:28Z",
       "side": 1,
       "message": "s/\u003e/\u003e\u003d/ for more pedantism?",
+      "range": {
+        "startLine": 128,
+        "startChar": 63,
+        "endLine": 128,
+        "endChar": 64
+      },
+      "revId": "7d39866e2968501411610cd7f5aae5303c555a96",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0a73e476_dd5966a3",
+        "filename": "tools/cygprofile/lightweight_cygprofile.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 128,
+      "author": {
+        "id": 1132034
+      },
+      "writtenOn": "2017-11-06T13:48:39Z",
+      "side": 1,
+      "message": "Per offline conversation, making the check strict is more brittle, as the sentinel empty function at the end of .text might be aliased with another empty method (though it should only be with a non-instrumented empty method, from which we should not get any call).",
+      "parentUuid": "058357d2_36dab331",
       "range": {
         "startLine": 128,
         "startChar": 63,
