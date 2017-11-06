@@ -1817,7 +1817,9 @@ void RenderViewImpl::ConvertViewportToWindowViaWidget(blink::WebRect* rect) {
 gfx::RectF RenderViewImpl::ElementBoundsInWindow(
     const blink::WebElement& element) {
   blink::WebRect bounding_box_in_window = element.BoundsInViewport();
+#if !defined(OS_ANDROID)
   ConvertViewportToWindowViaWidget(&bounding_box_in_window);
+#endif
   return gfx::RectF(bounding_box_in_window);
 }
 
