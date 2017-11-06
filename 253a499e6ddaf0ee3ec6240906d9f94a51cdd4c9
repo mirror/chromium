@@ -16,6 +16,24 @@
       "revId": "253a499e6ddaf0ee3ec6240906d9f94a51cdd4c9",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4a0a7c11_50fe9461",
+        "filename": "PRESUBMIT.py",
+        "patchSetId": 4
+      },
+      "lineNbr": 12,
+      "author": {
+        "id": 1111977
+      },
+      "writtenOn": "2017-11-06T19:36:24Z",
+      "side": 1,
+      "message": "I thought of doing that, but there\u0027s no os_remove in input_api. I\u0027ll send a depot_tools CL for that.",
+      "parentUuid": "546d5c99_bd7cdff7",
+      "revId": "253a499e6ddaf0ee3ec6240906d9f94a51cdd4c9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
