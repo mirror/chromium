@@ -6,14 +6,12 @@
 
 #include <utility>
 
-#include "net/spdy/chromium/spdy_session.h"
-
 namespace net {
 
 Http2PushPromiseIndex::Http2PushPromiseIndex() {}
 
 Http2PushPromiseIndex::~Http2PushPromiseIndex() {
-  DCHECK(unclaimed_pushed_streams_.empty());
+  DCHECK(entries_.empty());
 }
 
 base::WeakPtr<SpdySession> Http2PushPromiseIndex::Find(
@@ -21,67 +19,55 @@ base::WeakPtr<SpdySession> Http2PushPromiseIndex::Find(
     const GURL& url) const {
   DCHECK(!url.is_empty());
 
-  UnclaimedPushedStreamMap::const_iterator url_it =
-      unclaimed_pushed_streams_.find(url);
+  EntryMap::const_iterator it = entries_.find(url);
 
-  if (url_it == unclaimed_pushed_streams_.end()) {
+  if (it == entries_.end()) {
     return base::WeakPtr<SpdySession>();
   }
 
   DCHECK(url.SchemeIsCryptographic());
-  for (const auto& session : url_it->second) {
-    const SpdySessionKey& spdy_session_key = session->spdy_session_key();
-    if (spdy_session_key.proxy_server() != key.proxy_server() ||
-        spdy_session_key.privacy_mode() != key.privacy_mode()) {
-      continue;
+  for (const auto& entry : it->second) {
+    if (entry->Validate(key)) {
+      return entry->spdy_session();
     }
-    if (!session->VerifyDomainAuthentication(key.host_port_pair().host())) {
-      continue;
-    }
-    return session;
   }
 
   return base::WeakPtr<SpdySession>();
 }
 
-void Http2PushPromiseIndex::RegisterUnclaimedPushedStream(
-    const GURL& url,
-    base::WeakPtr<SpdySession> spdy_session) {
+void Http2PushPromiseIndex::Register(const GURL& url,
+                                     std::unique_ptr<Entry> entry) {
   DCHECK(!url.is_empty());
   DCHECK(url.SchemeIsCryptographic());
 
   // Use lower_bound() so that if key does not exists, then insertion can use
   // its return value as a hint.
-  UnclaimedPushedStreamMap::iterator url_it =
-      unclaimed_pushed_streams_.lower_bound(url);
-  if (url_it == unclaimed_pushed_streams_.end() || url_it->first != url) {
-    WeakSessionList list;
-    list.push_back(std::move(spdy_session));
-    UnclaimedPushedStreamMap::value_type value(url, std::move(list));
-    unclaimed_pushed_streams_.insert(url_it, std::move(value));
+  EntryMap::iterator url_it = entries_.lower_bound(url);
+  if (url_it != entries_.end() && url_it->first == url) {
+    url_it->second.push_back(std::move(entry));
     return;
   }
-  url_it->second.push_back(spdy_session);
+  EntryList list;
+  list.push_back(std::move(entry));
+  EntryMap::value_type value(url, std::move(list));
+  entries_.insert(url_it, std::move(value));
 }
 
-void Http2PushPromiseIndex::UnregisterUnclaimedPushedStream(
-    const GURL& url,
-    SpdySession* spdy_session) {
+void Http2PushPromiseIndex::Unregister(const GURL& url, const Entry& entry) {
   DCHECK(!url.is_empty());
   DCHECK(url.SchemeIsCryptographic());
 
-  UnclaimedPushedStreamMap::iterator url_it =
-      unclaimed_pushed_streams_.find(url);
-  if (url_it == unclaimed_pushed_streams_.end()) {
-    NOTREACHED();
+  EntryMap::iterator url_it = entries_.find(url);
+  if (url_it == entries_.end()) {
+    NOTREACHED() << "Only a previously registered entry can be unregistered.";
     return;
   }
-  for (WeakSessionList::iterator it = url_it->second.begin();
+  for (EntryList::iterator it = url_it->second.begin();
        it != url_it->second.end();) {
-    if (it->get() == spdy_session) {
+    if ((*it)->spdy_session().get() == entry.spdy_session().get()) {
       url_it->second.erase(it);
       if (url_it->second.empty()) {
-        unclaimed_pushed_streams_.erase(url_it);
+        entries_.erase(url_it);
       }
       return;
     }
