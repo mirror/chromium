@@ -1,0 +1,55 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "db1d17cc_98530427",
+        "filename": "base/time/time.h",
+        "patchSetId": 7
+      },
+      "lineNbr": 470,
+      "author": {
+        "id": 1174099
+      },
+      "writtenOn": "2017-11-06T23:25:13Z",
+      "side": 1,
+      "message": "It’s 1902 only if 32-bit. Otherwise, 1900. Since we only care about 64, you can just write 1900 here.",
+      "revId": "18902ec9e44466c484342e921f5f9bb8e003e2ae",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "fb9088d8_ae81f61b",
+        "filename": "base/time/time.h",
+        "patchSetId": 7
+      },
+      "lineNbr": 471,
+      "author": {
+        "id": 1174099
+      },
+      "writtenOn": "2017-11-06T23:25:13Z",
+      "side": 1,
+      "message": "Similarly, I think that this is 2037 (to cover the full year) if 32-bit, and what you have here if 64-bit. Since we only care about 64, what you have here is fine.",
+      "revId": "18902ec9e44466c484342e921f5f9bb8e003e2ae",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "08288015_bf0ef246",
+        "filename": "base/time/time_unittest.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 643,
+      "author": {
+        "id": 1174099
+      },
+      "writtenOn": "2017-11-06T23:25:13Z",
+      "side": 1,
+      "message": "But you wrote a test for this specifically, so maybe you know more than I do.",
+      "revId": "18902ec9e44466c484342e921f5f9bb8e003e2ae",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
