@@ -214,6 +214,30 @@
     },
     {
       "key": {
+        "uuid": "8aaba5fa_f28203e7",
+        "filename": "ui/latency/latency_tracker.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 104,
+      "author": {
+        "id": 1145109
+      },
+      "writtenOn": "2017-11-06T18:29:31Z",
+      "side": 1,
+      "message": "MojoUkmRecorder is not thread-safe, it binds to the thread its created on. With the patch above, the single instance in the Gpu process will be bound to the compositor thread. I\u0027m not sure we want that, and if we do its worth documenting somewhere. If its not too much plumbing, I would generally prefer to pass the instance to use here instead.",
+      "parentUuid": "da7b3fdb_7b272185",
+      "range": {
+        "startLine": 104,
+        "startChar": 35,
+        "endLine": 104,
+        "endChar": 58
+      },
+      "revId": "ae7e9553f06340ed1428a9aa86bcb12962eee1ac",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "3515422d_87a41d51",
         "filename": "ui/latency/latency_tracker.h",
         "patchSetId": 1
