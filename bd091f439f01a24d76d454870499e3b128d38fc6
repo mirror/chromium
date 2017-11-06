@@ -52,6 +52,24 @@
       "revId": "bd091f439f01a24d76d454870499e3b128d38fc6",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6742cd26_35ce56bf",
+        "filename": "ios/web/public/web_state/web_state_observer.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 119,
+      "author": {
+        "id": 1123009
+      },
+      "writtenOn": "2017-11-06T19:14:14Z",
+      "side": 1,
+      "message": "Sorry, I meant option #2 (single callback) is better.",
+      "parentUuid": "87d0b613_d09c5fc8",
+      "revId": "bd091f439f01a24d76d454870499e3b128d38fc6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
