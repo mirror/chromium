@@ -8,10 +8,7 @@
 #include <memory>
 
 #include "chrome/test/base/in_process_browser_test.h"
-
-namespace net {
-class MockCertVerifier;
-}  // namespace net
+#include "net/cert/mock_cert_verifier.h"
 
 // CertVerifierBrowserTest allows tests to force certificate
 // verification results for requests made with any profile's main
@@ -20,7 +17,6 @@ class MockCertVerifier;
 // CertVerifierBrowserTest::mock_cert_verifier().
 class CertVerifierBrowserTest : public InProcessBrowserTest {
  public:
-  CertVerifierBrowserTest();
   ~CertVerifierBrowserTest() override;
 
   // InProcessBrowserTest:
@@ -32,7 +28,7 @@ class CertVerifierBrowserTest : public InProcessBrowserTest {
   net::MockCertVerifier* mock_cert_verifier();
 
  private:
-  std::unique_ptr<net::MockCertVerifier> mock_cert_verifier_;
+  net::MockCertVerifierFactory mock_cert_verifier_factory_;
 };
 
 #endif  // CHROME_BROWSER_SSL_CERT_VERIFIER_BROWSER_TEST_H_

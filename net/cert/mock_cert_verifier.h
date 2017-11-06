@@ -8,7 +8,9 @@
 #include <list>
 #include <memory>
 
+#include "base/memory/ref_counted.h"
 #include "net/cert/cert_verifier.h"
+#include "net/cert/cert_verifier_factory.h"
 #include "net/cert/cert_verify_result.h"
 
 namespace net {
@@ -60,6 +62,25 @@ class MockCertVerifier : public CertVerifier {
 
   int default_result_;
   RuleList rules_;
+};
+
+class MockCertVerifierFactory : public CertVerifierFactory {
+ public:
+  // Creates a MockCertVerifierFactory. The created CertVerifiers may outlive
+  // the factory. All the created CertVerifiers will obey the same set of
+  // rules which can be specified on |mock_cert_verifier()|.
+  MockCertVerifierFactory();
+  ~MockCertVerifierFactory() override;
+
+  std::unique_ptr<CertVerifier> CreateCertVerifier() override;
+
+  MockCertVerifier* mock_cert_verifier() { return &mock_cert_verifier_->data; }
+
+ private:
+  // The base verifier that is actually used to do the verifications. The
+  // CertVerifier objects returned by CreateMockCertVerifier all hold a
+  // reference to it.
+  scoped_refptr<base::RefCountedData<MockCertVerifier>> mock_cert_verifier_;
 };
 
 }  // namespace net

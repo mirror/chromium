@@ -7,6 +7,7 @@
 #include <memory>
 #include <utility>
 
+#include "base/memory/ptr_util.h"
 #include "base/memory/ref_counted.h"
 #include "base/strings/pattern.h"
 #include "base/strings/string_util.h"
@@ -16,6 +17,33 @@
 #include "net/cert/x509_certificate.h"
 
 namespace net {
+
+namespace {
+
+// A CertVerifier that passes all requests to another verifier.
+class WrappedMockCertVerifier : public CertVerifier {
+ public:
+  explicit WrappedMockCertVerifier(
+      scoped_refptr<base::RefCountedData<MockCertVerifier>> wrapped_verifier)
+      : wrapped_verifier_(wrapped_verifier) {}
+  ~WrappedMockCertVerifier() override = default;
+
+  // CertVerifier implementation
+  int Verify(const RequestParams& params,
+             CRLSet* crl_set,
+             CertVerifyResult* verify_result,
+             const CompletionCallback& callback,
+             std::unique_ptr<Request>* out_req,
+             const NetLogWithSource& net_log) override {
+    return wrapped_verifier_->data.Verify(params, crl_set, verify_result,
+                                          callback, out_req, net_log);
+  }
+
+ private:
+  scoped_refptr<base::RefCountedData<MockCertVerifier>> wrapped_verifier_;
+};
+
+}  // namespace
 
 struct MockCertVerifier::Rule {
   Rule(scoped_refptr<X509Certificate> cert_arg,
@@ -75,6 +103,15 @@ void MockCertVerifier::AddResultForCertAndHost(
     const CertVerifyResult& verify_result,
     int rv) {
   rules_.push_back(Rule(std::move(cert), host_pattern, verify_result, rv));
+}
+
+MockCertVerifierFactory::MockCertVerifierFactory()
+    : mock_cert_verifier_(
+          base::MakeRefCounted<base::RefCountedData<MockCertVerifier>>()) {}
+MockCertVerifierFactory::~MockCertVerifierFactory() = default;
+
+std::unique_ptr<CertVerifier> MockCertVerifierFactory::CreateCertVerifier() {
+  return base::MakeUnique<WrappedMockCertVerifier>(mock_cert_verifier_);
 }
 
 }  // namespace net
