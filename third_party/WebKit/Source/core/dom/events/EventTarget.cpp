@@ -39,6 +39,7 @@
 #include "bindings/core/v8/event_listener_options_or_boolean.h"
 #include "core/dom/ExceptionCode.h"
 #include "core/dom/events/Event.h"
+#include "core/dom/events/EventTargetImpl.h"
 #include "core/editing/Editor.h"
 #include "core/events/EventUtil.h"
 #include "core/events/PointerEvent.h"
@@ -186,6 +187,10 @@ MessagePort* EventTarget::ToMessagePort() {
 
 ServiceWorker* EventTarget::ToServiceWorker() {
   return nullptr;
+}
+
+EventTarget* EventTarget::Create(ScriptState* script_state) {
+  return new EventTargetImpl(script_state);
 }
 
 inline LocalDOMWindow* EventTarget::ExecutingWindow() {
