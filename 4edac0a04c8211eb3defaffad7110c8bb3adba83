@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "ba8d14f2_c18723ac",
+        "filename": "third_party/WebKit/Source/core/inspector/browser_protocol.json",
+        "patchSetId": 4
+      },
+      "lineNbr": 451,
+      "author": {
+        "id": 1115999
+      },
+      "writtenOn": "2017-11-06T19:31:17Z",
+      "side": 1,
+      "message": "This confuses browser a great deal, as per our discussion offline, let\u0027s not add url here.",
+      "revId": "4edac0a04c8211eb3defaffad7110c8bb3adba83",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
