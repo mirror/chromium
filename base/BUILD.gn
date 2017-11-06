@@ -1283,7 +1283,6 @@ jumbo_component("base") {
       "sys_info_fuchsia.cc",
       "threading/platform_thread_fuchsia.cc",
       "time/time_conversion_posix.cc",
-      "time/time_exploded_posix.cc",
       "time/time_fuchsia.cc",
     ]
 
@@ -1514,6 +1513,7 @@ jumbo_component("base") {
       "mac/scoped_typeref.h",
       "power_monitor/power_monitor_device_source_mac.mm",
       "time/time_conversion_posix.cc",
+      "time/time_exploded_posix.cc",
       "time/time_mac.cc",
     ]
 
