@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "4d471f3b_457e3aa2",
+        "filename": "chrome/browser/media/media_engagement_browsertest.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 350,
+      "author": {
+        "id": 1115974
+      },
+      "writtenOn": "2017-11-06T13:23:59Z",
+      "side": 1,
+      "message": "This doesn\u0027t seem good. We should see if we could avoid rewarding silent audio tracks.",
+      "revId": "32f0bb6428c2f2e98bc6ac7b0e7a04c7389df3f8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "665964d8_0b020356",
+        "filename": "chrome/browser/media/media_engagement_contents_observer.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 324,
+      "author": {
+        "id": 1115974
+      },
+      "writtenOn": "2017-11-06T13:23:59Z",
+      "side": 1,
+      "message": "Isn\u0027t this changing how significant playback work? As in this would no longer record significant playback on a tab:\n\nPlayer_1 plays from 0...3 seconds\nPlayer_2 plays from 2...7 seconds\n\nI\u0027m not sure if that\u0027s a good or a bad thing but it might be better to avoid behaviour changes like this?",
+      "revId": "32f0bb6428c2f2e98bc6ac7b0e7a04c7389df3f8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
