@@ -22,6 +22,30 @@
       "revId": "b0a304d7190ce4e4feaf126837470cbc56912f67",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8faabdc9_8372e4f1",
+        "filename": "content/browser/webrtc/webrtc_internals.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 212,
+      "author": {
+        "id": 1246261
+      },
+      "writtenOn": "2017-11-06T12:55:20Z",
+      "side": 1,
+      "message": "At least for the enum classes in base/, which I imagine to be the most meticulously kept library in the codebase, the convention seems to be to use all-caps. Would you prefer me to change to that instead, perhaps?",
+      "parentUuid": "f1d4c84f_67674579",
+      "range": {
+        "startLine": 212,
+        "startChar": 4,
+        "endLine": 212,
+        "endChar": 16
+      },
+      "revId": "b0a304d7190ce4e4feaf126837470cbc56912f67",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
