@@ -34,6 +34,41 @@
       "revId": "de16dde22ee299d3cd629ce5de7e7f1584c54719",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "cee9251e_3447288b",
+        "filename": "third_party/WebKit/LayoutTests/fast/table/intrinsic-padding-when-cell-child-doesnt-layout.html",
+        "patchSetId": 2
+      },
+      "lineNbr": 18,
+      "author": {
+        "id": 1002809
+      },
+      "writtenOn": "2017-11-06T09:07:18Z",
+      "side": 1,
+      "message": "Ack\n\nCould you put that in a comment?",
+      "parentUuid": "7453e610_f8d46d53",
+      "revId": "de16dde22ee299d3cd629ce5de7e7f1584c54719",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "16da2653_d04234db",
+        "filename": "third_party/WebKit/Source/core/layout/LayoutTableRow.cpp",
+        "patchSetId": 2
+      },
+      "lineNbr": 199,
+      "author": {
+        "id": 1002809
+      },
+      "writtenOn": "2017-11-06T09:07:18Z",
+      "side": 1,
+      "message": "Could you add a comment mentioning why this is needed and only when CellChildrenNeedLayout()?",
+      "revId": "de16dde22ee299d3cd629ce5de7e7f1584c54719",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
