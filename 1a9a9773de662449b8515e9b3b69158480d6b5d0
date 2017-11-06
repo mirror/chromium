@@ -16,6 +16,24 @@
       "revId": "1a9a9773de662449b8515e9b3b69158480d6b5d0",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5deb422a_63f78258",
+        "filename": "components/viz/common/resources/resource_format_utils.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 211,
+      "author": {
+        "id": 1139801
+      },
+      "writtenOn": "2017-11-06T02:32:31Z",
+      "side": 1,
+      "message": "This function is moved from where you hinted. Did you refer to any else place ? \nhttps://chromium-review.googlesource.com/c/chromium/src/+/753002/2/cc/resources/resource_provider.cc",
+      "parentUuid": "317585d4_8ea32939",
+      "revId": "1a9a9773de662449b8515e9b3b69158480d6b5d0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
