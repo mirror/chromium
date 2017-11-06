@@ -107,6 +107,24 @@
     },
     {
       "key": {
+        "uuid": "54c294b2_90f407c2",
+        "filename": "content/browser/leveldb_wrapper_impl.cc",
+        "patchSetId": 12
+      },
+      "lineNbr": 413,
+      "author": {
+        "id": 1110029
+      },
+      "writtenOn": "2017-11-06T20:43:13Z",
+      "side": 1,
+      "message": "But you do want to unconditionally unload from KEYS_AND_VALUES to KEYS_ONLY as soon as a commit has happened? I just don\u0027t quite understand why it\u0027s not okay to drop values here, but it is okay after the first time a change is committed. Not to mention that (other than for tests) you\u0027re never actually using this method to switch from KEYS_AND_VALUES to KEYS_ONLY, only the other way around. So in production code you\u0027d never hit the case this if is trying to protect against. So this seems unnecessarily complicated in a way that only currently effects tests...\n\nAnyway, even if you do want to keep this test-only behavior, you still don\u0027t need the keys_only_map_ \u0026\u0026 !keys_only_map_-\u003eempty() checks, UnloadMapIfPossible deals with that part just fine, so you could at least simplify this to just a desired_load_state_ check.",
+      "parentUuid": "ddae3392_933d9b98",
+      "revId": "884fde685d7bc4dd3d8b5b2bffcb42939040b2ee",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "1dae8909_990fbb2e",
         "filename": "content/browser/leveldb_wrapper_impl.cc",
         "patchSetId": 12
