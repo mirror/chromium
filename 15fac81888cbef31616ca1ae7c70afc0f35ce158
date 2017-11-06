@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "a8772ee6_51370907",
+        "filename": "services/device/generic_sensor/fake_platform_sensor_and_provider.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 41,
+      "author": {
+        "id": 1182699
+      },
+      "writtenOn": "2017-11-06T14:22:38Z",
+      "side": 1,
+      "message": "Maybe rename it to MockPlatformSensorClient?\n\nObjects, whose behavior can configured dynamically or provide ways to configure logic, usually called mocks. Fakes are objects that have \u0027static\u0027 data / behavior, like FakePlatformSensor.",
+      "revId": "15fac81888cbef31616ca1ae7c70afc0f35ce158",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "cb9b3be1_e15941f6",
+        "filename": "services/device/generic_sensor/platform_sensor_fusion.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 118,
+      "author": {
+        "id": 1182699
+      },
+      "writtenOn": "2017-11-06T14:22:38Z",
+      "side": 1,
+      "message": "This might leave some of the sensors running on release builds, right?",
+      "revId": "15fac81888cbef31616ca1ae7c70afc0f35ce158",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
