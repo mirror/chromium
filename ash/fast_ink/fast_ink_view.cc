@@ -426,7 +426,13 @@ void FastInkView::UpdateSurface() {
   gpu::SyncToken sync_token;
   uint64_t fence_sync = gles2->InsertFenceSyncCHROMIUM();
   gles2->OrderingBarrierCHROMIUM();
-  gles2->GenUnverifiedSyncTokenCHROMIUM(fence_sync, sync_token.GetData());
+  // For mus and mash, the compositor isn't sharing the GPU channel with
+  // FastInkView, so it cannot consume unverified sync token generated here.
+  // We need generate verified sync token for mus and mash.
+  if (ash::Shell::GetAshConfig() == ash::Config::CLASSIC)
+    gles2->GenUnverifiedSyncTokenCHROMIUM(fence_sync, sync_token.GetData());
+  else
+    gles2->GenSyncTokenCHROMIUM(fence_sync, sync_token.GetData());
 
   viz::TransferableResource transferable_resource;
   transferable_resource.id = next_resource_id_++;
