@@ -349,10 +349,11 @@ void GraphicsContext::CompositeRecord(sk_sp<PaintRecord> record,
     return;
   DCHECK(canvas_);
 
+  SkRect source_bounds = src;
+#if 0
   PaintFlags flags;
   flags.setBlendMode(op);
   canvas_->save();
-  SkRect source_bounds = src;
   SkRect sk_bounds = dest;
   SkMatrix transform;
   transform.setRectToRect(source_bounds, sk_bounds, SkMatrix::kFill_ScaleToFit);
@@ -363,6 +364,17 @@ void GraphicsContext::CompositeRecord(sk_sp<PaintRecord> record,
   canvas_->saveLayer(&source_bounds, &flags);
   canvas_->restore();
   canvas_->restore();
+#else
+  SkPaint paint;
+  paint.setBlendMode(op);
+  SkISize dimensions =
+      SkISize::Make(SkScalarRoundToInt(source_bounds.width()),
+                    SkScalarRoundToInt(source_bounds.height()));
+  canvas_->drawImage(
+      SkImage::MakeFromPicture(ToSkPicture(record, source_bounds), dimensions,
+                               &transform, nullptr, SkImage::BitDepth::kU8, nullptr),
+      0, 0, &paint);
+#endif
 }
 
 namespace {
