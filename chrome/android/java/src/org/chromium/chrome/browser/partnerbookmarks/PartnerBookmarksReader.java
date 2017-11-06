@@ -10,8 +10,10 @@ import android.os.AsyncTask;
 
 import org.chromium.base.ContextUtils;
 import org.chromium.base.Log;
+import org.chromium.base.annotations.CalledByNative;
 import org.chromium.base.metrics.RecordHistogram;
 import org.chromium.chrome.browser.AppHooks;
+import org.chromium.chrome.browser.ntp.snippets.FaviconFetchResult;
 
 import java.util.HashSet;
 import java.util.LinkedHashMap;
@@ -38,6 +40,15 @@ public class PartnerBookmarksReader {
 
     /** The context (used to get a ContentResolver) */
     protected Context mContext;
+
+    /**
+     * A callback used to indicate success or failure of favicon fetching when retrieving favicons
+     * from cache or server.
+     */
+    public interface FaviconFetchedCallback {
+        @CalledByNative("FaviconFetchedCallback")
+        void onFaviconFetched(@FaviconFetchResult int result);
+    }
 
     /**
      * Creates the instance of the reader.
@@ -72,8 +83,15 @@ public class PartnerBookmarksReader {
      */
     private long onBookmarkPush(String url, String title, boolean isFolder, long parentId,
             byte[] favicon, byte[] touchicon) {
-        return nativeAddPartnerBookmark(mNativePartnerBookmarksReader, url, title,
-                isFolder, parentId, favicon, touchicon);
+        FaviconFetchedCallback callback = new FaviconFetchedCallback() {
+            @Override
+            public void onFaviconFetched(@FaviconFetchResult int result) {}
+        };
+        // TODO(thildebr): Enable fetching from server once we have a cache to store failed attempts
+        // to retrieve favicons so we don't retry too often.
+        return nativeAddPartnerBookmark(mNativePartnerBookmarksReader, url, title, isFolder,
+                parentId, favicon, touchicon, false /* fetchUncachedFaviconsFromServer */,
+                callback);
     }
 
     /** Notifies the reader is complete and partner bookmarks should be submitted to the shim. */
@@ -157,7 +175,9 @@ public class PartnerBookmarksReader {
                 return null;
             }
             if (rootBookmarksFolder.mEntries.size() != 1) {
-                Log.e(TAG, "ATTENTION: more than one top-level partner bookmarks, ignored");
+                Log.e(TAG,
+                        "ATTENTION: more than one top-level partner bookmarks, ignored "
+                                + rootBookmarksFolder.mEntries.size());
                 return null;
             }
 
@@ -254,9 +274,9 @@ public class PartnerBookmarksReader {
     private native long nativeInit();
     private native void nativeReset(long nativePartnerBookmarksReader);
     private native void nativeDestroy(long nativePartnerBookmarksReader);
-    private native long nativeAddPartnerBookmark(long nativePartnerBookmarksReader,
-            String url, String title, boolean isFolder, long parentId,
-            byte[] favicon, byte[] touchicon);
+    private native long nativeAddPartnerBookmark(long nativePartnerBookmarksReader, String url,
+            String title, boolean isFolder, long parentId, byte[] favicon, byte[] touchicon,
+            boolean fetchUncachedFaviconsFromServer, FaviconFetchedCallback callback);
     private native void nativePartnerBookmarksCreationComplete(long nativePartnerBookmarksReader);
     private static native void nativeDisablePartnerBookmarksEditing();
 }
