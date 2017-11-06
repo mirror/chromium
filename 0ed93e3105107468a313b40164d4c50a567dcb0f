@@ -142,6 +142,24 @@
     },
     {
       "key": {
+        "uuid": "cb0b2844_a1a8924b",
+        "filename": "chrome/browser/vr/ganesh_surface_provider.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 49,
+      "author": {
+        "id": 1117479
+      },
+      "writtenOn": "2017-11-06T20:34:17Z",
+      "side": 1,
+      "message": "To be clear though, when we draw a bunch of elements, aren\u0027t we needlessly repeating this binding?  Ie, don\u0027t we need to do it once, between when we\u0027re generating UI element textures, and when we render the UI from those textures?  If so, is your approach simply to \"undo\" the binding that the surface-\u003egetCanvas()-\u003eflush() call does, so that any subsequent execution is guaranteed to have the expected frame buffer?",
+      "parentUuid": "42a9219d_fab86f44",
+      "revId": "0ed93e3105107468a313b40164d4c50a567dcb0f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "5e7c5e69_b2833d1a",
         "filename": "chrome/browser/vr/ui.cc",
         "patchSetId": 6
