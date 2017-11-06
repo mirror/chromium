@@ -31,8 +31,12 @@
 using testing::_;
 using testing::A;
 using testing::An;
+using testing::ElementsAre;
 using testing::Eq;
+using testing::IsEmpty;
+using testing::Pointee;
 using testing::SaveArg;
+using testing::UnorderedElementsAre;
 
 namespace offline_pages {
 
@@ -41,6 +45,8 @@ using ArchiverResult = OfflinePageArchiver::ArchiverResult;
 namespace {
 const GURL kTestUrl("http://example.com");
 const GURL kTestUrl2("http://other.page.com");
+const GURL kTestUrlWithFragment("http://example.com#frag");
+const GURL kTestUrl2WithFragment("http://other.page.com#frag");
 const GURL kFileUrl("file:///foo");
 const ClientId kTestClientId1(kDefaultNamespace, "1234");
 const ClientId kTestClientId2(kDefaultNamespace, "5678");
@@ -477,6 +483,225 @@ TEST_F(OfflinePageModelTaskifiedTest, MarkPageAccessed) {
   EXPECT_EQ(1LL, accessed_page_ptr->access_count);
 }
 
+TEST_F(OfflinePageModelTaskifiedTest, GetAllPages) {
+  base::MockCallback<MultipleOfflinePageItemCallback> callback;
+  EXPECT_CALL(callback, Run(IsEmpty()));
+
+  model()->GetAllPages(callback.Get());
+  EXPECT_TRUE(model_task_queue()->HasRunningTask());
+
+  PumpLoop();
+}
+
+TEST_F(OfflinePageModelTaskifiedTest, GetPageByOfflineId) {
+  generator()->SetArchiveDirectory(temporary_dir_path());
+  generator()->SetNamespace(kDefaultNamespace);
+  generator()->SetUrl(kTestUrl);
+  OfflinePageItem page = generator()->CreateItemWithTempFile();
+  InsertPageIntoStore(page);
+
+  base::MockCallback<SingleOfflinePageItemCallback> callback;
+  EXPECT_CALL(callback, Run(Pointee(Eq(page))));
+
+  model()->GetPageByOfflineId(page.offline_id, callback.Get());
+  EXPECT_TRUE(model_task_queue()->HasRunningTask());
+
+  PumpLoop();
+}
+
+TEST_F(OfflinePageModelTaskifiedTest, GetPagesByFinalUrl) {
+  generator()->SetArchiveDirectory(temporary_dir_path());
+  generator()->SetUrl(kTestUrl);
+  OfflinePageItem page1 = generator()->CreateItemWithTempFile();
+  InsertPageIntoStore(page1);
+  generator()->SetUrl(kTestUrl2);
+  OfflinePageItem page2 = generator()->CreateItemWithTempFile();
+  InsertPageIntoStore(page2);
+
+  // Search by kTestUrl.
+  base::MockCallback<MultipleOfflinePageItemCallback> callback;
+  EXPECT_CALL(callback, Run(ElementsAre(page1)));
+  model()->GetPagesByURL(kTestUrl, URLSearchMode::SEARCH_BY_FINAL_URL_ONLY,
+                         callback.Get());
+  EXPECT_TRUE(model_task_queue()->HasRunningTask());
+  PumpLoop();
+
+  // Search by kTestUrl2.
+  EXPECT_CALL(callback, Run(ElementsAre(page2)));
+  model()->GetPagesByURL(kTestUrl2, URLSearchMode::SEARCH_BY_FINAL_URL_ONLY,
+                         callback.Get());
+  PumpLoop();
+
+  // Search by random url, which should return no pages.
+  EXPECT_CALL(callback, Run(IsEmpty()));
+  model()->GetPagesByURL(GURL("http://foo"),
+                         URLSearchMode::SEARCH_BY_FINAL_URL_ONLY,
+                         callback.Get());
+  EXPECT_TRUE(model_task_queue()->HasRunningTask());
+  PumpLoop();
+}
+
+TEST_F(OfflinePageModelTaskifiedTest, GetPagesByFinalUrlWithFragmentStripped) {
+  generator()->SetArchiveDirectory(temporary_dir_path());
+  generator()->SetUrl(kTestUrl);
+  OfflinePageItem page1 = generator()->CreateItemWithTempFile();
+  InsertPageIntoStore(page1);
+  generator()->SetUrl(kTestUrl2WithFragment);
+  OfflinePageItem page2 = generator()->CreateItemWithTempFile();
+  InsertPageIntoStore(page2);
+
+  // Search by kTestUrlWithFragment.
+  base::MockCallback<MultipleOfflinePageItemCallback> callback;
+  EXPECT_CALL(callback, Run(ElementsAre(page1)));
+  model()->GetPagesByURL(kTestUrlWithFragment,
+                         URLSearchMode::SEARCH_BY_FINAL_URL_ONLY,
+                         callback.Get());
+  EXPECT_TRUE(model_task_queue()->HasRunningTask());
+  PumpLoop();
+
+  // Search by kTestUrl2.
+  EXPECT_CALL(callback, Run(ElementsAre(page2)));
+  model()->GetPagesByURL(kTestUrl2, URLSearchMode::SEARCH_BY_FINAL_URL_ONLY,
+                         callback.Get());
+  EXPECT_TRUE(model_task_queue()->HasRunningTask());
+  PumpLoop();
+
+  // Search by kTestUrl2WithFragment.
+  EXPECT_CALL(callback, Run(ElementsAre(page2)));
+  model()->GetPagesByURL(kTestUrl2WithFragment,
+                         URLSearchMode::SEARCH_BY_FINAL_URL_ONLY,
+                         callback.Get());
+  EXPECT_TRUE(model_task_queue()->HasRunningTask());
+  PumpLoop();
+}
+
+TEST_F(OfflinePageModelTaskifiedTest, GetPagesByAllUrls) {
+  generator()->SetArchiveDirectory(temporary_dir_path());
+  generator()->SetUrl(kTestUrl);
+  generator()->SetOriginalUrl(kTestUrl2);
+  OfflinePageItem page1 = generator()->CreateItemWithTempFile();
+  InsertPageIntoStore(page1);
+  generator()->SetUrl(kTestUrl2);
+  generator()->SetOriginalUrl(GURL());
+  OfflinePageItem page2 = generator()->CreateItemWithTempFile();
+  InsertPageIntoStore(page2);
+
+  base::MockCallback<MultipleOfflinePageItemCallback> callback;
+  EXPECT_CALL(callback, Run(UnorderedElementsAre(page1, page2)));
+  model()->GetPagesByURL(kTestUrl2, URLSearchMode::SEARCH_BY_ALL_URLS,
+                         callback.Get());
+  PumpLoop();
+}
+
+TEST_F(OfflinePageModelTaskifiedTest, GetOfflineIdsForClientId) {
+  generator()->SetArchiveDirectory(temporary_dir_path());
+  generator()->SetNamespace(kTestClientId1.name_space);
+  generator()->SetId(kTestClientId1.id);
+  OfflinePageItem page1 = generator()->CreateItemWithTempFile();
+  OfflinePageItem page2 = generator()->CreateItemWithTempFile();
+  InsertPageIntoStore(page1);
+  InsertPageIntoStore(page2);
+
+  base::MockCallback<MultipleOfflineIdCallback> callback;
+  EXPECT_CALL(callback,
+              Run(UnorderedElementsAre(page1.offline_id, page2.offline_id)));
+
+  model()->GetOfflineIdsForClientId(kTestClientId1, callback.Get());
+  EXPECT_TRUE(model_task_queue()->HasRunningTask());
+
+  PumpLoop();
+}
+
+TEST_F(OfflinePageModelTaskifiedTest, GetPagesByClientIds) {
+  generator()->SetArchiveDirectory(temporary_dir_path());
+  generator()->SetNamespace(kTestClientId1.name_space);
+  generator()->SetId(kTestClientId1.id);
+  OfflinePageItem page1 = generator()->CreateItemWithTempFile();
+  OfflinePageItem page2 = generator()->CreateItemWithTempFile();
+  InsertPageIntoStore(page1);
+  InsertPageIntoStore(page2);
+
+  base::MockCallback<MultipleOfflinePageItemCallback> callback;
+  EXPECT_CALL(callback, Run(UnorderedElementsAre(page1, page2)));
+
+  model()->GetPagesByClientIds({kTestClientId1}, callback.Get());
+  EXPECT_TRUE(model_task_queue()->HasRunningTask());
+
+  PumpLoop();
+}
+
+TEST_F(OfflinePageModelTaskifiedTest, GetPagesByRequestOrigin) {
+  generator()->SetArchiveDirectory(temporary_dir_path());
+  generator()->SetRequestOrigin(kTestRequestOrigin);
+  OfflinePageItem page = generator()->CreateItemWithTempFile();
+  InsertPageIntoStore(page);
+
+  base::MockCallback<MultipleOfflinePageItemCallback> callback;
+  EXPECT_CALL(callback, Run(ElementsAre(page)));
+
+  model()->GetPagesByRequestOrigin(kTestRequestOrigin, callback.Get());
+  EXPECT_TRUE(model_task_queue()->HasRunningTask());
+
+  PumpLoop();
+}
+
+TEST_F(OfflinePageModelTaskifiedTest, GetPagesByNamespace) {
+  generator()->SetArchiveDirectory(temporary_dir_path());
+  generator()->SetNamespace(kDefaultNamespace);
+  OfflinePageItem page1 = generator()->CreateItemWithTempFile();
+  OfflinePageItem page2 = generator()->CreateItemWithTempFile();
+  InsertPageIntoStore(page1);
+  InsertPageIntoStore(page2);
+
+  base::MockCallback<MultipleOfflinePageItemCallback> callback;
+  EXPECT_CALL(callback, Run(UnorderedElementsAre(page1, page2)));
+
+  model()->GetPagesByNamespace(kDefaultNamespace, callback.Get());
+  EXPECT_TRUE(model_task_queue()->HasRunningTask());
+
+  PumpLoop();
+}
+
+TEST_F(OfflinePageModelTaskifiedTest, GetPagesRemovedOnCacheReset) {
+  generator()->SetArchiveDirectory(temporary_dir_path());
+  generator()->SetNamespace(kDefaultNamespace);
+  OfflinePageItem page1 = generator()->CreateItemWithTempFile();
+  OfflinePageItem page2 = generator()->CreateItemWithTempFile();
+  InsertPageIntoStore(page1);
+  InsertPageIntoStore(page2);
+  generator()->SetNamespace(kDownloadNamespace);
+  OfflinePageItem page3 = generator()->CreateItemWithTempFile();
+  InsertPageIntoStore(page3);
+
+  base::MockCallback<MultipleOfflinePageItemCallback> callback;
+  EXPECT_CALL(callback, Run(UnorderedElementsAre(page1, page2)));
+
+  model()->GetPagesRemovedOnCacheReset(callback.Get());
+  EXPECT_TRUE(model_task_queue()->HasRunningTask());
+
+  PumpLoop();
+}
+
+TEST_F(OfflinePageModelTaskifiedTest, GetPagesSupportedByDownloads) {
+  generator()->SetArchiveDirectory(temporary_dir_path());
+  generator()->SetNamespace(kDownloadNamespace);
+  OfflinePageItem page1 = generator()->CreateItemWithTempFile();
+  OfflinePageItem page2 = generator()->CreateItemWithTempFile();
+  InsertPageIntoStore(page1);
+  InsertPageIntoStore(page2);
+  generator()->SetNamespace(kDefaultNamespace);
+  OfflinePageItem page3 = generator()->CreateItemWithTempFile();
+  InsertPageIntoStore(page3);
+
+  base::MockCallback<MultipleOfflinePageItemCallback> callback;
+  EXPECT_CALL(callback, Run(UnorderedElementsAre(page1, page2)));
+
+  model()->GetPagesSupportedByDownloads(callback.Get());
+  EXPECT_TRUE(model_task_queue()->HasRunningTask());
+
+  PumpLoop();
+}
+
 // This test is affected by https://crbug.com/725685, which only affects windows
 // platform.
 #if defined(OS_WIN)
@@ -486,25 +711,17 @@ TEST_F(OfflinePageModelTaskifiedTest, MarkPageAccessed) {
 #define MAYBE_CheckPagesSavedInSeparateDirs CheckPagesSavedInSeparateDirs
 #endif
 TEST_F(OfflinePageModelTaskifiedTest, MAYBE_CheckPagesSavedInSeparateDirs) {
-  auto archiver = BuildArchiver(kTestUrl, ArchiverResult::SUCCESSFULLY_CREATED);
-  int64_t temporary_id;
-  int64_t persistent_id;
-
-  base::MockCallback<SavePageCallback> callback;
-  EXPECT_CALL(callback, Run(Eq(SavePageResult::SUCCESS), A<int64_t>()))
-      .Times(2)
-      .WillOnce(SaveArg<1>(&temporary_id))
-      .WillOnce(SaveArg<1>(&persistent_id));
-
   // Save a temporary page.
-  SavePageWithCallback(kTestUrl, kTestClientId1, GURL(), kEmptyRequestOrigin,
-                       std::move(archiver), callback.Get());
+  auto archiver = BuildArchiver(kTestUrl, ArchiverResult::SUCCESSFULLY_CREATED);
+  int64_t temporary_id = SavePageWithExpectedResult(
+      kTestUrl, kTestClientId1, GURL(), kEmptyRequestOrigin,
+      std::move(archiver), SavePageResult::SUCCESS);
 
   // Save a persistent page.
   archiver = BuildArchiver(kTestUrl2, ArchiverResult::SUCCESSFULLY_CREATED);
-  SavePageWithCallback(kTestUrl2, kTestUserRequestedClientId, GURL(),
-                       kEmptyRequestOrigin, std::move(archiver),
-                       callback.Get());
+  int64_t persistent_id = SavePageWithExpectedResult(
+      kTestUrl2, kTestUserRequestedClientId, GURL(), kEmptyRequestOrigin,
+      std::move(archiver), SavePageResult::SUCCESS);
 
   std::unique_ptr<OfflinePageItem> temporary_page =
       store_test_util()->GetPageByOfflineId(temporary_id);
