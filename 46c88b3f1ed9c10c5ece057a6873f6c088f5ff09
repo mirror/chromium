@@ -1,0 +1,44 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "0ccbedb7_9e759b56",
+        "filename": "chromeos/dbus/sms_client.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 70,
+      "author": {
+        "id": 1000191
+      },
+      "writtenOn": "2017-11-06T22:43:08Z",
+      "side": 1,
+      "message": "Can you use BindOnce here?",
+      "range": {
+        "startLine": 70,
+        "startChar": 27,
+        "endLine": 70,
+        "endChar": 31
+      },
+      "revId": "46c88b3f1ed9c10c5ece057a6873f6c088f5ff09",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "39e44b1d_dba19bd4",
+        "filename": "chromeos/dbus/sms_client.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 77,
+      "author": {
+        "id": 1000191
+      },
+      "writtenOn": "2017-11-06T22:43:08Z",
+      "side": 1,
+      "message": "s/As/Since/ ? But I\u0027m a little unclear about this comment. Why do we care that GetSMSProperties modifies |property_set|?",
+      "revId": "46c88b3f1ed9c10c5ece057a6873f6c088f5ff09",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
