@@ -1482,6 +1482,8 @@ split_static_library("browser") {
     "win/browser_util.h",
     "win/chrome_elf_init.cc",
     "win/chrome_elf_init.h",
+    "win/chrome_native_notification_util.cc",
+    "win/chrome_native_notification_util.h",
     "win/chrome_select_file_dialog_factory.cc",
     "win/chrome_select_file_dialog_factory.h",
     "win/enumerate_modules_model.cc",
@@ -1509,8 +1511,12 @@ split_static_library("browser") {
     "//build/config:precompiled_headers",
   ]
   defines = []
-  libs = []
-  ldflags = []
+  libs = [ "runtimeobject.lib" ]
+  ldflags = [
+    "/DELAYLOAD:api-ms-win-core-winrt-error-l1-1-0.dll",
+    "/DELAYLOAD:api-ms-win-core-winrt-l1-1-0.dll",
+    "/DELAYLOAD:api-ms-win-core-winrt-string-l1-1-0.dll",
+  ]
 
   allow_circular_includes_from = [ "//chrome/browser/ui" ]
 
