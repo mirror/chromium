@@ -1,0 +1,112 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "5b26fbac_267ed05b",
+        "filename": "third_party/WebKit/Source/core/dom/events/EventTarget.cpp",
+        "patchSetId": 5
+      },
+      "lineNbr": 194,
+      "author": {
+        "id": 1002507
+      },
+      "writtenOn": "2017-11-06T15:05:01Z",
+      "side": 1,
+      "message": "nit: Better to clarify \"performance reasons\".\ne.g. We don\u0027t want to increase the size of EventTarget because there are so many instances of EventTarget\u0027s subclasses (e.g. HTMLElement, etc.).\n# Please don\u0027t copy this literally.  You can write better explanations.  :)",
+      "revId": "11e5c7b8408bfafa870d0d41b56a87909f79bf5c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "26eeea5b_d963c002",
+        "filename": "third_party/WebKit/Source/core/dom/events/EventTarget.cpp",
+        "patchSetId": 5
+      },
+      "lineNbr": 195,
+      "author": {
+        "id": 1002507
+      },
+      "writtenOn": "2017-11-06T15:05:01Z",
+      "side": 1,
+      "message": "nit: s/implementedAs/ImplementedAs/",
+      "range": {
+        "startLine": 195,
+        "startChar": 3,
+        "endLine": 195,
+        "endChar": 16
+      },
+      "revId": "11e5c7b8408bfafa870d0d41b56a87909f79bf5c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "87f9b8e9_963b9cbb",
+        "filename": "third_party/WebKit/Source/core/dom/events/EventTarget.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 43,
+      "author": {
+        "id": 1002507
+      },
+      "writtenOn": "2017-11-06T15:05:01Z",
+      "side": 1,
+      "message": "nit: A forward declaration should be enough in .h file.",
+      "revId": "11e5c7b8408bfafa870d0d41b56a87909f79bf5c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "64ee6419_3e7fc8c3",
+        "filename": "third_party/WebKit/Source/core/dom/events/EventTargetImpl.cpp",
+        "patchSetId": 5
+      },
+      "lineNbr": 19,
+      "author": {
+        "id": 1002507
+      },
+      "writtenOn": "2017-11-06T15:05:01Z",
+      "side": 1,
+      "message": "I think that we can say:\n\n    using ContextLifecycleObserver::GetExecutionContext;\n\nin the class definition, and it\u0027s preferred.  Sorry if I\u0027m wrong.",
+      "revId": "11e5c7b8408bfafa870d0d41b56a87909f79bf5c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "13d7e340_5e83de07",
+        "filename": "third_party/WebKit/Source/core/dom/events/EventTargetImpl.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 20,
+      "author": {
+        "id": 1002507
+      },
+      "writtenOn": "2017-11-06T15:05:01Z",
+      "side": 1,
+      "message": "Blink\u0027s general pattern is:\n- private: constructor\n- public: Create() member function\n\nThis enforces us to always use \"new\" to instantiate the objects, i.e. always allocate objects in Oilpan heap.\n\nPublic constructor allows instantiation on stack.",
+      "revId": "11e5c7b8408bfafa870d0d41b56a87909f79bf5c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b3f8bf2c_56229ecb",
+        "filename": "third_party/WebKit/Source/core/dom/events/EventTargetImpl.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 21,
+      "author": {
+        "id": 1002507
+      },
+      "writtenOn": "2017-11-06T15:05:01Z",
+      "side": 1,
+      "message": "nit: \u003d default; is preferred.",
+      "revId": "11e5c7b8408bfafa870d0d41b56a87909f79bf5c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
