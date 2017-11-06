@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "d02adcce_03368007",
+        "filename": "chrome/browser/chromeos/printing/synced_printers_manager.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 205,
+      "author": {
+        "id": 1151689
+      },
+      "writtenOn": "2017-11-06T22:55:30Z",
+      "side": 1,
+      "message": "Can you change this to \"Recommended printer is malformed\" that\u0027ll make more sense if a user looks at the logs.",
+      "range": {
+        "startLine": 205,
+        "startChar": 16,
+        "endLine": 205,
+        "endChar": 71
+      },
+      "revId": "c57799e77bf84c69b8b6960c1aaac2ad13a6ddaf",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
