@@ -227,6 +227,30 @@
     },
     {
       "key": {
+        "uuid": "f696791f_8b68f6d2",
+        "filename": "services/ui/ws/window_server.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 138,
+      "author": {
+        "id": 1211635
+      },
+      "writtenOn": "2017-11-06T19:57:44Z",
+      "side": 1,
+      "message": "client_window_id is (embedded\u0027s client_id,1) on the server side, but when we send this id back to client side we reset the high bits so it\u0027s (0,1) when WTC receives it. The updated FrameSinkId for the embed window is (embedded\u0027s client_id,1).\nI\u0027m confused about why we don\u0027t need to reserve root_window_id (1 in this case)? If we don\u0027t do that, the next window the embedded client creates would have FrameSinkId(embedded\u0027s client_id,1), which is the same as the embed window?\nI moved root-\u003eUpdateFrameSinkId to WindowTree and got rid of kEmbedWindowId.",
+      "parentUuid": "729f89aa_8a34a6dd",
+      "range": {
+        "startLine": 138,
+        "startChar": 53,
+        "endLine": 138,
+        "endChar": 67
+      },
+      "revId": "3359f0d5eea0625c1520e731f4924859c91f8b9d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "d26212c1_e8004310",
         "filename": "services/ui/ws/window_tree.cc",
         "patchSetId": 6
