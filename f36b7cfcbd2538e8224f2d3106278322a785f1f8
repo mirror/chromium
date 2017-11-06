@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "05d65e33_c6753265",
+        "filename": "ui/aura/BUILD.gn",
+        "patchSetId": 3
+      },
+      "lineNbr": 194,
+      "author": {
+        "id": 1114374
+      },
+      "writtenOn": "2017-11-06T15:57:22Z",
+      "side": 1,
+      "message": "I do my best to never have any jumbo_excluded_sources since they will be \"easy way out\" magnets, but when we do have them, it\u0027s best to document exactly why, preferably with a link to a bug that explains and tracks the exception.",
+      "revId": "f36b7cfcbd2538e8224f2d3106278322a785f1f8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
