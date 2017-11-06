@@ -123,8 +123,14 @@ Polymer({
       this.showChangePassword = false;
     });
 
+    settings.ChangePasswordBrowserProxyImpl.getInstance()
+        .initializeChangePasswordHandler();
+    this.addWebUIListener('change-password-on-show', e => {
+      this.showChangePassword = true;
+    });
+
     if (settings.AndroidAppsBrowserProxyImpl) {
-      cr.addWebUIListener(
+      this.addWebUIListener(
           'android-apps-info-update', this.androidAppsInfoUpdate_.bind(this));
       settings.AndroidAppsBrowserProxyImpl.getInstance()
           .requestAndroidAppsInfo();
