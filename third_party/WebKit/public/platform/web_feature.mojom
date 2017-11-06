@@ -1747,6 +1747,9 @@ enum WebFeature {
   kGeolocationWatchPosition = 2215,
   kDataUriHasOctothorpe = 2216,
   kNetInfoSaveData = 2217,
+  kV8ErrorCaptureStackTrace = 2218,
+  kV8ErrorPrepareStackTrace = 2219,
+  kV8ErrorStackTraceLimit = 2220,
 
   // Add new features immediately above this line. Don't change assigned
   // numbers of any item, and don't reuse removed slots.
