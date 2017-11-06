@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "3a8cc087_4bc42864",
+        "filename": "ash/wm/overview/scoped_transform_overview_window.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 194,
+      "author": {
+        "id": 1228419
+      },
+      "writtenOn": "2017-11-06T21:25:18Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "70a9b656_b81ca37d",
+      "revId": "4e57eb2bd15c6828bf14f49a610a9ad0c365cf55",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "2413b887_e233aa6c",
         "filename": "chrome/browser/ui/views/frame/browser_non_client_frame_view_ash.cc",
         "patchSetId": 1
@@ -36,6 +54,24 @@
     },
     {
       "key": {
+        "uuid": "cc2da697_caec443e",
+        "filename": "chrome/browser/ui/views/frame/browser_non_client_frame_view_ash.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 185,
+      "author": {
+        "id": 1228419
+      },
+      "writtenOn": "2017-11-06T21:25:18Z",
+      "side": 1,
+      "message": "Added comments.",
+      "parentUuid": "2413b887_e233aa6c",
+      "revId": "4e57eb2bd15c6828bf14f49a610a9ad0c365cf55",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "edc4e5e7_22120b44",
         "filename": "chrome/browser/ui/views/frame/browser_non_client_frame_view_ash.h",
         "patchSetId": 1
@@ -47,6 +83,24 @@
       "writtenOn": "2017-11-02T17:32:29Z",
       "side": 1,
       "message": "why it has to be painted? I assume false is set in overview, and the frame can\u0027t be revealed in overview mdoe?",
+      "revId": "4e57eb2bd15c6828bf14f49a610a9ad0c365cf55",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "01c656bb_b8cb2ec9",
+        "filename": "chrome/browser/ui/views/frame/browser_non_client_frame_view_ash.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 132,
+      "author": {
+        "id": 1228419
+      },
+      "writtenOn": "2017-11-06T21:25:18Z",
+      "side": 1,
+      "message": "Changed the flag name and comments. What I want to express is that the flag is only useful to hide v1 apps header in overview mode.",
+      "parentUuid": "edc4e5e7_22120b44",
       "revId": "4e57eb2bd15c6828bf14f49a610a9ad0c365cf55",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
