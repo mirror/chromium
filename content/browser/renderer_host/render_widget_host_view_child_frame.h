@@ -322,6 +322,12 @@ class CONTENT_EXPORT RenderWidgetHostViewChildFrame
   std::unique_ptr<TouchSelectionControllerClientChildFrame>
       selection_controller_client_;
 
+  // True if there is currently a scroll sequence being bubbled to our parent
+  // and the child has sent an ack for the scroll begin indicating that it
+  // may consume scroll. This can happen with guest views because the viewport
+  // of the guest is added to the scroll chain.
+  bool bubbled_scroll_sequence_consumable_by_child_ = false;
+
   // Used to prevent bubbling of subsequent GestureScrollUpdates in a scroll
   // gesture if the child consumed the first GSU.
   // TODO(mcnee): This is only needed for |!wheel_scroll_latching_enabled()|
