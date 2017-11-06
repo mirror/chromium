@@ -16,6 +16,24 @@
       "revId": "ee18cf07ec66ee47865a3e82a3f9b0faefdbe3f7",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "03c181d7_94179497",
+        "filename": "ios/build/bots/chromium.mac/ios-simulator-full-configs.json",
+        "patchSetId": 9
+      },
+      "lineNbr": 3,
+      "author": {
+        "id": 1183785
+      },
+      "writtenOn": "2017-11-06T19:32:25Z",
+      "side": 1,
+      "message": "Sure, I\u0027ll fix it later.  It\u0027s 5x task amounts now,  let\u0027s see how swarming will take them first.",
+      "parentUuid": "ae97a1a8_5f95d653",
+      "revId": "ee18cf07ec66ee47865a3e82a3f9b0faefdbe3f7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
