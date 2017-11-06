@@ -396,8 +396,14 @@ std::unique_ptr<views::View> SaveCardBubbleViews::CreateRequestCvcView() {
 }
 
 void SaveCardBubbleViews::Init() {
+  SetPaintToLayer();
   SetLayoutManager(new views::BoxLayout(views::BoxLayout::kVertical));
   view_stack_ = new ViewStack();
+  // We want the ViewStack's layer to clip at the very edge of the bubble's
+  // layer instead of the ViewStack's bounds.
+  view_stack_->layer()->SetMasksToBounds(false);
+  view_stack_->layer()->SetMaskLayer(layer());
+
   view_stack_->SetBackground(views::CreateThemedSolidBackground(
       view_stack_, ui::NativeTheme::kColorId_BubbleBackground));
   view_stack_->Push(CreateMainContentView(), /*animate=*/false);
