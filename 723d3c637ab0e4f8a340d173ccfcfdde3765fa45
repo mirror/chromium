@@ -280,6 +280,30 @@
     },
     {
       "key": {
+        "uuid": "3e619d01_9eede353",
+        "filename": "ios/chrome/browser/ui/activity_services/canonical_url_getter.mm",
+        "patchSetId": 6
+      },
+      "lineNbr": 39,
+      "author": {
+        "id": 1144530
+      },
+      "writtenOn": "2017-11-06T10:22:03Z",
+      "side": 1,
+      "message": "I was thinking about net::IsCertStatusError, meaning that it is HTTPS, and  valid.\nNot sure it is needed.",
+      "parentUuid": "989121cc_3bdc0cc8",
+      "range": {
+        "startLine": 39,
+        "startChar": 7,
+        "endLine": 39,
+        "endChar": 32
+      },
+      "revId": "723d3c637ab0e4f8a340d173ccfcfdde3765fa45",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "b756edeb_63b18baf",
         "filename": "ios/chrome/browser/ui/activity_services/canonical_url_getter.mm",
         "patchSetId": 6
@@ -338,6 +362,30 @@
       "side": 1,
       "message": "Seems like a product question, but I don\u0027t want to block this CL while we determine answer. I prefer to document that we do not support them, and if necessary, add a follow up CL later.",
       "parentUuid": "6e409729_9ba00f0e",
+      "range": {
+        "startLine": 45,
+        "startChar": 44,
+        "endLine": 45,
+        "endChar": 62
+      },
+      "revId": "723d3c637ab0e4f8a340d173ccfcfdde3765fa45",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6a157673_0f95c353",
+        "filename": "ios/chrome/browser/ui/activity_services/canonical_url_getter.mm",
+        "patchSetId": 6
+      },
+      "lineNbr": 45,
+      "author": {
+        "id": 1144530
+      },
+      "writtenOn": "2017-11-06T10:22:03Z",
+      "side": 1,
+      "message": "OK. Can you add question to design doc?",
+      "parentUuid": "a4493d34_c46539e5",
       "range": {
         "startLine": 45,
         "startChar": 44,
@@ -443,6 +491,30 @@
     },
     {
       "key": {
+        "uuid": "59d18061_3ee04fa4",
+        "filename": "ios/chrome/browser/ui/activity_services/canonical_url_getter_delegate.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 15,
+      "author": {
+        "id": 1144530
+      },
+      "writtenOn": "2017-11-06T10:22:03Z",
+      "side": 1,
+      "message": "I cannot find the conversation in the design doc (some archived comments mention it, but there is no rational in them).\n\nIs it a Chrome wide architectural choice to now favor delegate over blocks?",
+      "parentUuid": "11ca5fda_bf2b18a6",
+      "range": {
+        "startLine": 15,
+        "startChar": 10,
+        "endLine": 15,
+        "endChar": 36
+      },
+      "revId": "723d3c637ab0e4f8a340d173ccfcfdde3765fa45",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "983252ff_4b304528",
         "filename": "ios/chrome/browser/ui/activity_services/canonical_url_getter_delegate.h",
         "patchSetId": 6
@@ -524,6 +596,30 @@
       "side": 1,
       "message": "Not sure I follow this comment? We only specified the prevention of downgrades, not upgrades.",
       "parentUuid": "82e678b5_89148404",
+      "range": {
+        "startLine": 154,
+        "startChar": 31,
+        "endLine": 154,
+        "endChar": 59
+      },
+      "revId": "723d3c637ab0e4f8a340d173ccfcfdde3765fa45",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3c4a1b64_990263f3",
+        "filename": "ios/chrome/browser/ui/activity_services/canonical_url_getter_unittest.mm",
+        "patchSetId": 6
+      },
+      "lineNbr": 154,
+      "author": {
+        "id": 1144530
+      },
+      "writtenOn": "2017-11-06T10:22:03Z",
+      "side": 1,
+      "message": "I guess this will be handled by security review.\nBut upgrading is actually more dangerous than downgrading, because if you visit\nhttp://notsecure.com, something can add a canonical to https://evil.com and make you share this link.\nNot in the scope of this review, so this can be discussed in security review.",
+      "parentUuid": "e6945b8a_5e4c0b2a",
       "range": {
         "startLine": 154,
         "startChar": 31,
