@@ -81,6 +81,30 @@
       "revId": "3a2a723131e99ee6be1058f75ce75fcc638470ba",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "31c147ad_2584f4b5",
+        "filename": "chrome/browser/thumbnails/thumbnail_browsertest.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 344,
+      "author": {
+        "id": 1176649
+      },
+      "writtenOn": "2017-11-06T16:42:55Z",
+      "side": 1,
+      "message": "From the more authoritative definition of uninteresting calls (https://g3doc.corp.google.com/third_party/gmock/g3doc/guide.md#uninteresting-calls): \"In gMock, if you are not interested in a method, just don\u0027t say anything about it\"\n\nAs soon as you reference one method, it becomes interesting. I\u0027d propose sticking to this because, otherwise, so many tests that do EXPET_CALL(foo(x)) would in addition need to check that the method doesn\u0027t get called with some other arguments. I don\u0027t see your test very different from this common scenario.\n\nBesides, it should be quick to verify that the test fails in the desired cases.",
+      "parentUuid": "3b82c79c_42e0b3c6",
+      "range": {
+        "startLine": 344,
+        "startChar": 16,
+        "endLine": 344,
+        "endChar": 0
+      },
+      "revId": "3a2a723131e99ee6be1058f75ce75fcc638470ba",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
