@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "811f2bb9_682cdce9",
+        "filename": "components/drive/job_scheduler.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 1148,
+      "author": {
+        "id": 1002888
+      },
+      "writtenOn": "2017-11-06T12:42:06Z",
+      "side": 1,
+      "message": "This will likely break drive jobs.  Unlike OnConnectionTypeChanged(), OnNetworkChanged() differentiates between \"constructive\" and \"destructive\" actions.  I imagine Drive Jobs are \"constructive\", so they should be run when |type| is not CONNETION_NONE.  Immediately prior to online signals, an offline signal is sent out to clear out stale state.  This means that by not checking |type| the drive jobs will be kicked off by this offline signal, at the same time DNS cache/jobs and socket connect jobs will be flushed/aborted...potentially terminating the drive jobs with ERR_NETWORK_CHANGED.\n\nPlease read the comment on OnNetworkChanged(), or the original design doc: https://docs.google.com/document/d/1ch22_dRHPQJ9QArFMmWl_UyVpl-EDXA0PdljGh2kDF0/edit?usp\u003dsharing",
+      "range": {
+        "startLine": 1148,
+        "startChar": 0,
+        "endLine": 1148,
+        "endChar": 36
+      },
+      "revId": "817fd56ec3e2dfec7f0f0b1eacd79b5455bf7e3c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
