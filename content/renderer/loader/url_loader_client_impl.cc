@@ -16,10 +16,12 @@ namespace content {
 URLLoaderClientImpl::URLLoaderClientImpl(
     int request_id,
     ResourceDispatcher* resource_dispatcher,
-    scoped_refptr<base::SingleThreadTaskRunner> task_runner)
+    scoped_refptr<base::SingleThreadTaskRunner> task_runner,
+    mojom::URLLoaderClientRequest url_loader_client_request)
     : request_id_(request_id),
       resource_dispatcher_(resource_dispatcher),
       task_runner_(std::move(task_runner)),
+      client_binding_(this, std::move(url_loader_client_request)),
       weak_factory_(this) {}
 
 URLLoaderClientImpl::~URLLoaderClientImpl() {
@@ -175,6 +177,12 @@ void URLLoaderClientImpl::OnStartLoadingResponseBody(
 
 void URLLoaderClientImpl::OnComplete(
     const ResourceRequestCompletionStatus& status) {
+  LOG(ERROR) << "URLLoaderClientImpl::OnComplete "
+                "URLLoaderClientImpl::OnComplete "
+                "URLLoaderClientImpl::OnComplete "
+                "URLLoaderClientImpl::OnComplete "
+                "URLLoaderClientImpl::OnComplete";
+
   if (!body_consumer_) {
     if (NeedsStoringMessage()) {
       StoreAndDispatch(ResourceMsg_RequestComplete(request_id_, status));

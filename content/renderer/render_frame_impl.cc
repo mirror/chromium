@@ -3087,8 +3087,10 @@ void RenderFrameImpl::CommitNavigation(
     const CommonNavigationParams& common_params,
     const RequestNavigationParams& request_params,
     mojo::ScopedDataPipeConsumerHandle body_data,
-    base::Optional<URLLoaderFactoryBundle> subresource_loader_factories) {
+    base::Optional<URLLoaderFactoryBundle> subresource_loader_factories,
+    mojom::URLLoaderClientRequest url_loader_client) {
   CHECK(IsBrowserSideNavigationEnabled());
+
   // If this was a renderer-initiated navigation (nav_entry_id == 0) from this
   // frame, but it was aborted, then ignore it.
   if (!browser_side_navigation_pending_ &&
@@ -3105,6 +3107,7 @@ void RenderFrameImpl::CommitNavigation(
       new StreamOverrideParameters());
   stream_override->stream_url = body_url;
   stream_override->consumer_handle = std::move(body_data);
+  stream_override->url_loader_client = std::move(url_loader_client);
   stream_override->response = head;
   stream_override->redirects = request_params.redirects;
   stream_override->redirect_responses = request_params.redirect_response;

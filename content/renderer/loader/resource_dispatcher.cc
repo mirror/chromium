@@ -626,7 +626,8 @@ int ResourceDispatcher::StartAsync(
     blink::WebURLRequest::LoadingIPCType ipc_type,
     mojom::URLLoaderFactory* url_loader_factory,
     std::vector<std::unique_ptr<URLLoaderThrottle>> throttles,
-    mojo::ScopedDataPipeConsumerHandle consumer_handle) {
+    mojo::ScopedDataPipeConsumerHandle consumer_handle,
+    mojom::URLLoaderClientRequest url_loader_client_request) {
   CheckSchemeForReferrerPolicy(*request);
 
   // Compute a unique request_id for this renderer process.
@@ -645,7 +646,9 @@ int ResourceDispatcher::StartAsync(
 
   if (consumer_handle.is_valid()) {
     pending_requests_[request_id]->url_loader_client =
-        std::make_unique<URLLoaderClientImpl>(request_id, this, task_runner);
+        std::make_unique<URLLoaderClientImpl>(
+            request_id, this, task_runner,
+            std::move(url_loader_client_request));
 
     task_runner->PostTask(
         FROM_HERE, base::BindOnce(&ResourceDispatcher::ContinueForNavigation,
@@ -658,8 +661,8 @@ int ResourceDispatcher::StartAsync(
   if (ipc_type == blink::WebURLRequest::LoadingIPCType::kMojo) {
     scoped_refptr<base::SingleThreadTaskRunner> task_runner =
         loading_task_runner ? loading_task_runner : thread_task_runner_;
-    std::unique_ptr<URLLoaderClientImpl> client(
-        new URLLoaderClientImpl(request_id, this, task_runner));
+    std::unique_ptr<URLLoaderClientImpl> client(new URLLoaderClientImpl(
+        request_id, this, task_runner, std::move(url_loader_client_request)));
 
     uint32_t options = mojom::kURLLoadOptionNone;
     // TODO(jam): use this flag for ResourceDispatcherHost code path once
