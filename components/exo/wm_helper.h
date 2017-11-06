@@ -5,13 +5,27 @@
 #ifndef COMPONENTS_EXO_WM_HELPER_H_
 #define COMPONENTS_EXO_WM_HELPER_H_
 
+#include "ash/host/window_tree_host_manager.h"
 #include "base/macros.h"
 #include "base/observer_list.h"
 #include "ui/aura/client/drag_drop_delegate.h"
 #include "ui/base/cursor/cursor.h"
+#include "ui/compositor/compositor_vsync_manager.h"
+
+namespace ash {
+class TabletModeObserver;
+}
 
 namespace aura {
 class Window;
+namespace client {
+class ClientClientObserver;
+class FocusChangeObserver;
+}
+}
+
+namespace wm {
+class ActivationChangeObserver;
 }
 
 namespace display {
@@ -24,65 +38,13 @@ class EventHandler;
 class DropTargetEvent;
 }
 
+namespace
+
 namespace exo {
 
 // A helper class for accessing WindowManager related features.
 class WMHelper : public aura::client::DragDropDelegate {
  public:
-  class ActivationObserver {
-   public:
-    virtual void OnWindowActivated(aura::Window* gained_active,
-                                   aura::Window* lost_active) = 0;
-
-   protected:
-    virtual ~ActivationObserver() {}
-  };
-
-  class FocusObserver {
-   public:
-    virtual void OnWindowFocused(aura::Window* gained_focus,
-                                 aura::Window* lost_focus) = 0;
-
-   protected:
-    virtual ~FocusObserver() {}
-  };
-
-  class CursorObserver {
-   public:
-    virtual void OnCursorVisibilityChanged(bool is_visible) {}
-    virtual void OnCursorSizeChanged(ui::CursorSize cursor_size) {}
-    virtual void OnCursorDisplayChanged(const display::Display& display) {}
-
-   protected:
-    virtual ~CursorObserver() {}
-  };
-
-  class TabletModeObserver {
-   public:
-    virtual void OnTabletModeStarted() = 0;
-    virtual void OnTabletModeEnding() = 0;
-    virtual void OnTabletModeEnded() = 0;
-
-   protected:
-    virtual ~TabletModeObserver() {}
-  };
-
-  class InputDeviceEventObserver {
-   public:
-    virtual void OnKeyboardDeviceConfigurationChanged() = 0;
-
-   protected:
-    virtual ~InputDeviceEventObserver() {}
-  };
-
-  class DisplayConfigurationObserver {
-   public:
-    virtual void OnDisplayConfigurationChanged() = 0;
-
-   protected:
-    virtual ~DisplayConfigurationObserver() {}
-  };
-
   class DragDropObserver {
    public:
     virtual void OnDragEntered(const ui::DropTargetEvent& event) = 0;
@@ -94,40 +56,32 @@ class WMHelper : public aura::client::DragDropDelegate {
     virtual ~DragDropObserver() {}
   };
 
-  class VSyncObserver {
-   public:
-    virtual void OnUpdateVSyncParameters(base::TimeTicks timebase,
-                                         base::TimeDelta interval) = 0;
-
-   protected:
-    virtual ~VSyncObserver() {}
-  };
-
   ~WMHelper() override;
 
   static void SetInstance(WMHelper* helper);
   static WMHelper* GetInstance();
   static bool HasInstance();
 
-  void AddActivationObserver(ActivationObserver* observer);
-  void RemoveActivationObserver(ActivationObserver* observer);
-  void AddFocusObserver(FocusObserver* observer);
-  void RemoveFocusObserver(FocusObserver* observer);
-  void AddCursorObserver(CursorObserver* observer);
-  void RemoveCursorObserver(CursorObserver* observer);
-  void AddTabletModeObserver(TabletModeObserver* observer);
-  void RemoveTabletModeObserver(TabletModeObserver* observer);
-  void AddInputDeviceEventObserver(InputDeviceEventObserver* observer);
-  void RemoveInputDeviceEventObserver(InputDeviceEventObserver* observer);
-  void AddDisplayConfigurationObserver(DisplayConfigurationObserver* observer);
+  void AddActivationObserver(wm::ActivationChangeObserver* observer);
+  void RemoveActivationObserver(wm::ActivationChangeObserver* observer);
+  void AddFocusObserver(aura::client::FocusChangeObserver* observer);
+  void RemoveFocusObserver(aura::client::FocusChangeObserver* observer);
+  void AddCursorObserver(aura::client::CursorClientObserver* observer);
+  void RemoveCursorObserver(aura::client::CursorClientObserver* observer);
+  void AddTabletModeObserver(ash::TabletModeObserver* observer);
+  void RemoveTabletModeObserver(ash::TabletModeObserver* observer);
+  void AddInputDeviceEventObserver(ui::InputDeviceEventObserver* observer);
+  void RemoveInputDeviceEventObserver(ui::InputDeviceEventObserver* observer);
+
+  void AddDisplayConfigurationObserver(ash::WindowTreeHostManager::Observer* observer);
   void RemoveDisplayConfigurationObserver(
-      DisplayConfigurationObserver* observer);
+      ash::WindowTreeHostManager::Observer* observer);
   void AddDragDropObserver(DragDropObserver* observer);
   void RemoveDragDropObserver(DragDropObserver* observer);
   void SetDragDropDelegate(aura::Window*);
   void ResetDragDropDelegate(aura::Window*);
-  void AddVSyncObserver(VSyncObserver* observer);
-  void RemoveVSyncObserver(VSyncObserver* observer);
+  void AddVSyncObserver(ui::CompositorVSyncManager::Observer* observer);
+  void RemoveVSyncObserver(ui::CompositorVSyncManager::Observer* observer);
 
   virtual const display::ManagedDisplayInfo& GetDisplayInfo(
       int64_t display_id) const = 0;

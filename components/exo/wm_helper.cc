@@ -37,36 +37,43 @@ bool WMHelper::HasInstance() {
   return !!g_instance;
 }
 
-void WMHelper::AddActivationObserver(ActivationObserver* observer) {
-  activation_observers_.AddObserver(observer);
-}
+void WMHelper::AddActivationObserver(wm::ActivationObserver* observer) {
+  ash::Shell::Get()->activation_client()->AddObserver(this);
 
-void WMHelper::RemoveActivationObserver(ActivationObserver* observer) {
-  activation_observers_.RemoveObserver(observer);
+
+void WMHelper::RemoveActivationObserver(wm::ActivationObserver* observer) {
+  ash::Shell::Get()->activation_client()->RemoveObserver(this);
 }
 
 void WMHelper::AddFocusObserver(FocusObserver* observer) {
-  focus_observers_.AddObserver(observer);
+  aura::client::GetFocusClient(primary_root)->AddObserver(this);
 }
 
 void WMHelper::RemoveFocusObserver(FocusObserver* observer) {
-  focus_observers_.RemoveObserver(observer);
+  aura::client::GetFocusClient(primary_root)->RemoveObserver(this);
 }
 
 void WMHelper::AddCursorObserver(CursorObserver* observer) {
-  cursor_observers_.AddObserver(observer);
+  // TODO(crbug.com/631103): Mushrome doesn't have a cursor manager yet.
+  if (ash::Shell::GetAshConfig() == ash::Config::CLASSIC)
+    ash::Shell::Get()->cursor_manager()->AddObserver(this);
+
+  ash::Shell::Get()->window_tree_host_manager()->AddObserver(this);
+  aura::Window* primary_root = ash::Shell::GetPrimaryRootWindow();
+  ui::InputDeviceManager::GetInstance()->AddObserver(this);
 }
 
 void WMHelper::RemoveCursorObserver(CursorObserver* observer) {
-  cursor_observers_.RemoveObserver(observer);
+  if (ash::Shell::GetAshConfig() == ash::Config::CLASSIC)
+    ash::Shell::Get()->cursor_manager()->RemoveObserver(this);
 }
 
 void WMHelper::AddTabletModeObserver(TabletModeObserver* observer) {
-  tablet_mode_observers_.AddObserver(observer);
+  ash::Shell::Get()->tablet_mode_controller()->AddObserver(this);
 }
 
 void WMHelper::RemoveTabletModeObserver(TabletModeObserver* observer) {
-  tablet_mode_observers_.RemoveObserver(observer);
+  ash::Shell::Get()->tablet_mode_controller()->RemoveObserver(this);
 }
 
 void WMHelper::AddInputDeviceEventObserver(InputDeviceEventObserver* observer) {
