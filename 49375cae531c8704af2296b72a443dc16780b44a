@@ -1,0 +1,55 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "17980239_66f57970",
+        "filename": "content/renderer/input/input_target_client_impl.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 29,
+      "author": {
+        "id": 1123071
+      },
+      "writtenOn": "2017-11-06T17:39:09Z",
+      "side": 1,
+      "message": "Can we change this to use make_unique instead..\n\nie:\nmojo::MakeStringBinding(std::make_unique\u003cInputTargetClientImpl\u003e(render_frame), std::move(request));",
+      "revId": "49375cae531c8704af2296b72a443dc16780b44a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c201071b_cf827b31",
+        "filename": "content/renderer/input/input_target_client_impl.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 29,
+      "author": {
+        "id": 1123071
+      },
+      "writtenOn": "2017-11-06T17:39:09Z",
+      "side": 1,
+      "message": "I don\u0027t think you require storing the binding.",
+      "revId": "49375cae531c8704af2296b72a443dc16780b44a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c4312c74_cb4a8de3",
+        "filename": "content/renderer/input/input_target_client_impl.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 32,
+      "author": {
+        "id": 1123071
+      },
+      "writtenOn": "2017-11-06T17:39:09Z",
+      "side": 1,
+      "message": "This comment should be updated; as this class is only main thread related.",
+      "revId": "49375cae531c8704af2296b72a443dc16780b44a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
