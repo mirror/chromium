@@ -60,6 +60,10 @@ void TabDialogsCocoa::HideHungRendererDialog() {
   [HungRendererController endForWebContents:web_contents_];
 }
 
+bool TabDialogsCocoa::IsShowingHungRendererDialogForTesting() {
+  return [HungRendererController isShowingForTesting];
+}
+
 void TabDialogsCocoa::ShowProfileSigninConfirmation(
     Browser* browser,
     Profile* profile,
