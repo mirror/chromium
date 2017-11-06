@@ -8,6 +8,9 @@
 
 namespace autofill {
 
+using UsernameDetectorCache =
+    std::map<blink::WebFormElement, blink::WebInputElement>;
+
 // Classifier for getting username field by analyzing HTML attribute values.
 // The algorithm looks for words that are likely to point to username field
 // (ex. "username", "loginid" etc.), in the attribute values.
@@ -19,6 +22,7 @@ namespace autofill {
 bool GetUsernameFieldBasedOnHtmlAttributes(
     const std::vector<blink::WebInputElement>& all_possible_usernames,
     const FormData& form_data,
-    blink::WebInputElement* username_element);
+    blink::WebInputElement* username_element,
+    UsernameDetectorCache* username_detector_cache);
 
 }  // namespace autofill
