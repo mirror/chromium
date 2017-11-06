@@ -1,0 +1,96 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "367b1568_5fe5ad85",
+        "filename": "chrome/browser/page_load_metrics/observers/OWNERS",
+        "patchSetId": 12
+      },
+      "lineNbr": 6,
+      "author": {
+        "id": 1103654
+      },
+      "writtenOn": "2017-11-06T15:53:47Z",
+      "side": 1,
+      "message": "Please use the file:// notation to reference an existing UKM OWNERS file, similar to:\n\nhttps://cs.chromium.org/chromium/src/tools/metrics/histograms/OWNERS?rcl\u003d4c05d3434708eb4e153b90c763f56fc76ee1400a\u0026l\u003d2",
+      "range": {
+        "startLine": 6,
+        "startChar": 44,
+        "endLine": 6,
+        "endChar": 0
+      },
+      "revId": "465af47713667957105f0493dbb74e278963fc7c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "507a6450_9633d35a",
+        "filename": "chrome/browser/page_load_metrics/observers/use_counter_page_load_metrics_observer.cc",
+        "patchSetId": 12
+      },
+      "lineNbr": 34,
+      "author": {
+        "id": 1103654
+      },
+      "writtenOn": "2017-11-06T15:53:47Z",
+      "side": 1,
+      "message": "Please define the type here explicitly so it\u0027s easier to reason about what line 47 does (i.e. casting from what?).",
+      "range": {
+        "startLine": 34,
+        "startChar": 12,
+        "endLine": 34,
+        "endChar": 19
+      },
+      "revId": "465af47713667957105f0493dbb74e278963fc7c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "99cf9e6a_c7f6364b",
+        "filename": "chrome/browser/page_load_metrics/observers/use_counter_page_load_metrics_observer.h",
+        "patchSetId": 12
+      },
+      "lineNbr": 21,
+      "author": {
+        "id": 1103654
+      },
+      "writtenOn": "2017-11-06T15:53:47Z",
+      "side": 1,
+      "message": "Suggest putting this class under page_load_metrics namespace (since it\u0027s under the directory) so that you can remove the page_load_metrics:: namespace prefixes below.",
+      "range": {
+        "startLine": 21,
+        "startChar": 6,
+        "endLine": 21,
+        "endChar": 39
+      },
+      "revId": "465af47713667957105f0493dbb74e278963fc7c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2110cded_5c31801c",
+        "filename": "chrome/browser/page_load_metrics/page_load_metrics_observer.h",
+        "patchSetId": 12
+      },
+      "lineNbr": 405,
+      "author": {
+        "id": 1103654
+      },
+      "writtenOn": "2017-11-06T15:53:47Z",
+      "side": 1,
+      "message": "This file is already in namespace page_load_metrics, so remove the prefix. Also, do the same for line 400 while you\u0027re here.",
+      "range": {
+        "startLine": 405,
+        "startChar": 29,
+        "endLine": 405,
+        "endChar": 30
+      },
+      "revId": "465af47713667957105f0493dbb74e278963fc7c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
