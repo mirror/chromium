@@ -47,6 +47,11 @@ interface HTMLIFrameElement : HTMLElement {
     [CEReactions, Reflect] attribute DOMString frameBorder;
     [CEReactions, Reflect, URL] attribute DOMString longDesc;
 
+    // Transfer Size Policy
+    [RuntimeEnabled=TransferSizePolicy, CEReactions, Reflect] attribute long transfersize;
+    [RuntimeEnabled=TransferSizePolicy] attribute EventHandler ontransferexceeded;
+
+
     [CEReactions, Reflect, TreatNullAs=EmptyString] attribute DOMString marginHeight;
     [CEReactions, Reflect, TreatNullAs=EmptyString] attribute DOMString marginWidth;
 

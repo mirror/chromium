@@ -90,7 +90,8 @@ HTMLFrameOwnerElement::HTMLFrameOwnerElement(const QualifiedName& tag_name,
       content_frame_(nullptr),
       embedded_content_view_(nullptr),
       sandbox_flags_(kSandboxNone),
-      did_load_non_empty_document_(false) {}
+      did_load_non_empty_document_(false),
+      transfer_size_kb_(-1) {}
 
 LayoutEmbeddedContent* HTMLFrameOwnerElement::GetLayoutEmbeddedContent() const {
   // HTMLObjectElement and HTMLEmbedElement may return arbitrary layoutObjects
@@ -175,7 +176,7 @@ void HTMLFrameOwnerElement::SetSandboxFlags(SandboxFlags flags) {
   // the subframe hasn't been created yet.
   if (ContentFrame()) {
     GetDocument().GetFrame()->Client()->DidChangeFramePolicy(
-        ContentFrame(), sandbox_flags_, container_policy_);
+        ContentFrame(), sandbox_flags_, container_policy_, transfer_size_kb_);
   }
 }
 
@@ -198,8 +199,17 @@ void HTMLFrameOwnerElement::UpdateContainerPolicy(Vector<String>* messages,
   // the subframe hasn't been created yet.
   if (ContentFrame()) {
     GetDocument().GetFrame()->Client()->DidChangeFramePolicy(
-        ContentFrame(), sandbox_flags_, container_policy_);
+        ContentFrame(), sandbox_flags_, container_policy_, transfer_size_kb_);
   }
+}
+
+void HTMLFrameOwnerElement::UpdateTransferSizePolicy(int transfer_size_kb) {
+  LOG(ERROR) << "UpdateTRansferSizePolicy to " << transfer_size_kb;
+  transfer_size_kb_ = transfer_size_kb;
+
+  // If ContentFrame() is null we keep going anyway... this is probably wrong.
+  GetDocument().GetFrame()->Client()->DidChangeFramePolicy(
+      ContentFrame(), sandbox_flags_, container_policy_, transfer_size_kb_);
 }
 
 void HTMLFrameOwnerElement::FrameOwnerPropertiesChanged() {

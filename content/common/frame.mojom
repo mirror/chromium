@@ -26,6 +26,8 @@ interface Frame {
   // paused or unpaused.
   Pause(bool rendering, bool loading, bool script) => ();
   Unpause() => ();
+
+  TransferSizeExceeded();
 };
 
 // See src/content/common/navigation_params.h

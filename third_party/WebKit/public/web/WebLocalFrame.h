@@ -815,6 +815,8 @@ class WebLocalFrame : public WebFrame {
 
   virtual WebPerformance Performance() const = 0;
 
+  virtual void TransferSizeExceeded() = 0;
+
   // Testing ------------------------------------------------------------------
 
   // Dumps the layer tree, used by the accelerated compositor, in

@@ -326,6 +326,7 @@ class CORE_EXPORT WebLocalFrameImpl final
                             WebString& clip_html) override;
 
   void AdvanceFocusInForm(WebFocusType) override;
+  void TransferSizeExceeded() override;
 
   void InitializeCoreFrame(Page&, FrameOwner*, const AtomicString& name);
   LocalFrame* GetFrame() const { return frame_.Get(); }

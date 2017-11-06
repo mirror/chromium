@@ -519,6 +519,7 @@ class CONTENT_EXPORT RenderFrameImpl
              bool script,
              PauseCallback callback) override;
   void Unpause(UnpauseCallback callback) override;
+  void TransferSizeExceeded() override;
 
   // mojom::FrameBindingsControl implementation:
   void AllowBindings(int32_t enabled_bindings_flags) override;
@@ -579,7 +580,8 @@ class CONTENT_EXPORT RenderFrameImpl
   void DidChangeFramePolicy(
       blink::WebFrame* child_frame,
       blink::WebSandboxFlags flags,
-      const blink::WebParsedFeaturePolicy& container_policy) override;
+      const blink::WebParsedFeaturePolicy& container_policy,
+      int transfer_size_kb) override;
   void DidSetFeaturePolicyHeader(
       const blink::WebParsedFeaturePolicy& parsed_header) override;
   void DidAddContentSecurityPolicies(

@@ -355,6 +355,9 @@ class CONTENT_EXPORT FrameTreeNode {
     return weak_ptr_factory_.GetWeakPtr();
   }
 
+  void SetTransferSize(int transfer_size_kb);
+  void NotifyNetworkBytesRead(int network_response_bytes_read);
+
  private:
   FRIEND_TEST_ALL_PREFIXES(SitePerProcessFeaturePolicyBrowserTest,
                            ContainerPolicyDynamic);
@@ -467,6 +470,17 @@ class CONTENT_EXPORT FrameTreeNode {
   // browser process activities to this node (when possible).  It is unrelated
   // to the core logic of FrameTreeNode.
   FrameTreeNodeBlameContext blame_context_;
+
+
+  // If this frame has a size policy set (which can only be set once), this
+  // member stores the remaining number of network bytes remaining before the
+  // frame is in violation.
+  base::Optional<int64_t> size_policy_bytes_remaining_;
+
+  // Points to the nearest ancestor frame with a size policy, if any. The raw
+  // pointer is safe given that for this frame to exist, its ancestors must as
+  // well.
+  FrameTreeNode* size_policy_ancestor_frame_;
 
   base::WeakPtrFactory<FrameTreeNode> weak_ptr_factory_;
 
