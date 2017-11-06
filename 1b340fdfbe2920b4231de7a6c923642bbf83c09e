@@ -215,6 +215,24 @@
     },
     {
       "key": {
+        "uuid": "5473373b_fe780a6a",
+        "filename": "build/secondary/third_party/crashpad/crashpad/tools/BUILD.gn",
+        "patchSetId": 1
+      },
+      "lineNbr": 11,
+      "author": {
+        "id": 1174099
+      },
+      "writtenOn": "2017-11-06T15:24:43Z",
+      "side": 1,
+      "message": "\u003e There\u0027s no way to do this via a config currently, and I think you\u0027d have to inline it into the targets. forward_variables_from() only works in templates, it\u0027s not what you want here.\n\u003e \n\u003e It\u0027s probably a reasonable enhancement request to change GN to make this work, though it comes up very rarely.\n\nBummer. Is there a mailing list for that, or should I file a bug?",
+      "parentUuid": "ba6499f6_9f1d2a12",
+      "revId": "1b340fdfbe2920b4231de7a6c923642bbf83c09e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "c9c5feb7_a6573239",
         "filename": "testing/buildbot/chromium.fyi.json",
         "patchSetId": 1

@@ -16,6 +16,24 @@
       "revId": "c722cec366394b893abf898f97f5dbb1dd27c95c",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a88cba7c_5dfa2b20",
+        "filename": "build/secondary/third_party/crashpad/crashpad/BUILD.gn",
+        "patchSetId": 5
+      },
+      "lineNbr": 11,
+      "author": {
+        "id": 1174099
+      },
+      "writtenOn": "2017-11-06T15:24:43Z",
+      "side": 1,
+      "message": "\u003e is this intentionally \"_tests\" rather than \"_unittests\"?\n\nMostly. Crashpad’s tests follow Google’s guidelines, which names the test executable xyz_test if it tests xyz. (engdoc/eng/doc/devguide/coding/testing/unit-test-howto.md) That’s why we have crashpad_util_test, crashpad_snapshot_test, etc. The _unittests suffix has been deprecated at Google for a very long time.\n\nI was thinking less about that when I wrote this and more just pluralizing when combining crashpad_util_test and crashpad_snapshot_test into crashpad_tests.\n\nGoogle style would be singular crashpad_test, but I guess Chrome never adopted that.\n\nI can change it to whatever you think is best. _unittests is prevalent in Chrome, but I see examples of both _tests (gl_tests, ipc_tests) and _test (cronet_test, trace_test) too.",
+      "parentUuid": "98254969_15a7ed80",
+      "revId": "c722cec366394b893abf898f97f5dbb1dd27c95c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
