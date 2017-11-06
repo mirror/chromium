@@ -237,6 +237,7 @@ void TestWindowManager::WmSetModalType(uint32_t window_id, ui::ModalType type) {
 void TestWindowManager::WmCreateTopLevelWindow(
     uint32_t change_id,
     ClientSpecificId requesting_client_id,
+    const std::string& remote_service_name,
     const std::unordered_map<std::string, std::vector<uint8_t>>& properties) {
   got_create_top_level_window_ = true;
   change_id_ = change_id;

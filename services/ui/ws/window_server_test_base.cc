@@ -187,10 +187,11 @@ void WindowServerTestBase::OnWmSetCanFocus(aura::Window* window,
 
 aura::Window* WindowServerTestBase::OnWmCreateTopLevelWindow(
     ui::mojom::WindowType window_type,
+    const std::string& remote_service_name,
     std::map<std::string, std::vector<uint8_t>>* properties) {
   return window_manager_delegate_
-             ? window_manager_delegate_->OnWmCreateTopLevelWindow(window_type,
-                                                                  properties)
+             ? window_manager_delegate_->OnWmCreateTopLevelWindow(
+                   window_type, remote_service_name, properties)
              : nullptr;
 }
 

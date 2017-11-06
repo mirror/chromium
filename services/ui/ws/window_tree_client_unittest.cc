@@ -505,6 +505,7 @@ class TestWindowTreeClient : public mojom::WindowTreeClient,
   void WmCreateTopLevelWindow(
       uint32_t change_id,
       ClientSpecificId requesting_client_id,
+      const std::string& remote_service_name,
       const std::unordered_map<std::string, std::vector<uint8_t>>& properties)
       override {
     NOTIMPLEMENTED();

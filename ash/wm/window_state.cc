@@ -336,6 +336,15 @@ void WindowState::SetWindowPositionManaged(bool managed) {
   window_->SetProperty(kWindowPositionManagedTypeKey, managed);
 }
 
+bool WindowState::GetCanConsumeSystemKeys() const {
+  return window_->GetProperty(kCanConsumeSystemKeysKey);
+}
+
+void WindowState::SetCanConsumeSystemKeys(bool can_consume_system_keys) {
+  base::AutoReset<bool> resetter(&ignore_property_change_, true);
+  window_->SetProperty(kCanConsumeSystemKeysKey, can_consume_system_keys);
+}
+
 void WindowState::set_bounds_changed_by_user(bool bounds_changed_by_user) {
   bounds_changed_by_user_ = bounds_changed_by_user;
   if (bounds_changed_by_user)
@@ -556,6 +565,14 @@ void WindowState::OnWindowPropertyChanged(aura::Window* window,
     if (!ignore_property_change_) {
       // This change came from somewhere else. Revert it.
       window->SetProperty(kWindowStateTypeKey, GetStateType());
+    }
+    return;
+  }
+  if (key == kCanConsumeSystemKeysKey) {
+    if (!ignore_property_change_) {
+      // This change came from somewhere else; it can only be set from other
+      // processes during startup where we perform security checks. Revert it.
+      window->SetProperty(kCanConsumeSystemKeysKey, static_cast<bool>(old));
     }
     return;
   }

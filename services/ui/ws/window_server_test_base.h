@@ -97,6 +97,7 @@ class WindowServerTestBase : public WindowServerServiceTestBase,
   void OnWmSetCanFocus(aura::Window* window, bool can_focus) override;
   aura::Window* OnWmCreateTopLevelWindow(
       ui::mojom::WindowType window_type,
+      const std::string& remote_service_name,
       std::map<std::string, std::vector<uint8_t>>* properties) override;
   void OnWmClientJankinessChanged(const std::set<aura::Window*>& client_windows,
                                   bool not_responding) override;
