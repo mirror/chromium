@@ -117,10 +117,15 @@ bool GLContextEGL::Initialize(GLSurface* compatible_surface,
     context_attributes.push_back(
         EGL_CONTEXT_OPENGL_RESET_NOTIFICATION_STRATEGY_EXT);
     context_attributes.push_back(EGL_LOSE_CONTEXT_ON_RESET_EXT);
+  } else if (GLSurfaceEGL::HasEGLExtension("EGL_KHR_create_context")) {
+    DVLOG(1) << "EGL_KHR_create_context supported.";
+    context_attributes.push_back(
+        EGL_CONTEXT_OPENGL_RESET_NOTIFICATION_STRATEGY_KHR);
+    context_attributes.push_back(EGL_LOSE_CONTEXT_ON_RESET_KHR);
   } else {
     // At some point we should require the presence of the robustness
     // extension and remove this code path.
-    DVLOG(1) << "EGL_EXT_create_context_robustness NOT supported.";
+    DVLOG(1) << "No EGL robustness extensions supported.";
   }
 
   if (!eglBindAPI(EGL_OPENGL_ES_API)) {
