@@ -1,0 +1,136 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "33409415_0c4a73b5",
+        "filename": "chrome/renderer/extensions/extension_localization_peer_unittest.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 157,
+      "author": {
+        "id": 1002172
+      },
+      "writtenOn": "2017-11-06T12:26:38Z",
+      "side": 1,
+      "message": "These are needed to make EXPECT* macros work. Just passing nullopt or nullptr do not allow the compiler to inference the argument types.",
+      "range": {
+        "startLine": 156,
+        "startChar": 0,
+        "endLine": 157,
+        "endChar": 60
+      },
+      "revId": "fc72c68c8ed81f05705bb0748b8c9a257668f234",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "17343b6a_6cf89ad5",
+        "filename": "content/public/common/resource_request_completion_status.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 39,
+      "author": {
+        "id": 1002172
+      },
+      "writtenOn": "2017-11-06T12:26:38Z",
+      "side": 1,
+      "message": "Reordered this for consistent orders in this class member and completion method arguments.",
+      "range": {
+        "startLine": 39,
+        "startChar": 0,
+        "endLine": 39,
+        "endChar": 55
+      },
+      "revId": "fc72c68c8ed81f05705bb0748b8c9a257668f234",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "4909af26_384424b3",
+        "filename": "content/renderer/loader/cors_url_loader.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 117,
+      "author": {
+        "id": 1002172
+      },
+      "writtenOn": "2017-11-06T12:26:38Z",
+      "side": 1,
+      "message": "will do in the next cl",
+      "range": {
+        "startLine": 117,
+        "startChar": 9,
+        "endLine": 117,
+        "endChar": 13
+      },
+      "revId": "fc72c68c8ed81f05705bb0748b8c9a257668f234",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "55e6e208_ae27c669",
+        "filename": "third_party/WebKit/Source/platform/loader/fetch/ResourceError.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 53,
+      "author": {
+        "id": 1002172
+      },
+      "writtenOn": "2017-11-06T12:26:38Z",
+      "side": 1,
+      "message": "Probably we may want to remove this to avoid including net_errors.h in platform headers.\nIt would be better to do equivalent things in implementation files.",
+      "range": {
+        "startLine": 50,
+        "startChar": 0,
+        "endLine": 53,
+        "endChar": 4
+      },
+      "revId": "fc72c68c8ed81f05705bb0748b8c9a257668f234",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "ceaa2364_bb0ea974",
+        "filename": "third_party/WebKit/public/platform/WebURLError.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 56,
+      "author": {
+        "id": 1002172
+      },
+      "writtenOn": "2017-11-06T12:26:38Z",
+      "side": 1,
+      "message": "yhirano: what do you think? I think you want to remove Domain from this class. So another option to have different ctors for net errors and cors errors each.",
+      "range": {
+        "startLine": 56,
+        "startChar": 7,
+        "endLine": 56,
+        "endChar": 11
+      },
+      "revId": "fc72c68c8ed81f05705bb0748b8c9a257668f234",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "dab45e58_d14871d0",
+        "filename": "third_party/WebKit/public/platform/WebURLError.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 72,
+      "author": {
+        "id": 1002172
+      },
+      "writtenOn": "2017-11-06T12:26:38Z",
+      "side": 1,
+      "message": "I will also add WebHttpHeaderMap to pass the error_response_headers. But let me hear yhirano\u0027s opinion on overall design beforehand.",
+      "revId": "fc72c68c8ed81f05705bb0748b8c9a257668f234",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    }
+  ]
+}

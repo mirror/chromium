@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "7f222a34_0e0bc5b9",
+        "filename": "third_party/WebKit/LayoutTests/TestExpectations",
+        "patchSetId": 6
+      },
+      "lineNbr": 612,
+      "author": {
+        "id": 1002172
+      },
+      "writtenOn": "2017-11-06T12:26:38Z",
+      "side": 0,
+      "message": "I\u0027m not sure why layout tests allowed us to ignore these 74 failed tests... Anyway they pass now.",
+      "range": {
+        "startLine": 612,
+        "startChar": 54,
+        "endLine": 612,
+        "endChar": 64
+      },
+      "revId": "fabe4627344b54ba15c920df8a68b75f706f45e0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    }
+  ]
+}
