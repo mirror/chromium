@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "a0f61638_74ae37b9",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/offlinepages/OfflinePageBridge.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 434,
+      "author": {
+        "id": 1161045
+      },
+      "writtenOn": "2017-11-06T23:25:21Z",
+      "side": 1,
+      "message": "I think this is what we need, but just curious why we need to rewrap the callback again? Because looks like it does not do extra thing.",
+      "range": {
+        "startLine": 427,
+        "startChar": 8,
+        "endLine": 434,
+        "endChar": 10
+      },
+      "revId": "0f33399aae010c2c1cc92219da5acea939322040",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
