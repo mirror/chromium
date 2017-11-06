@@ -42,6 +42,7 @@ class ChromeHttpUserAgentSettings;
 class ChromeNetworkDelegate;
 class ChromeURLRequestContextGetter;
 class ChromeExpectCTReporter;
+class CrossThreadNetworkContextParams;
 class ExtensionCookieNotifier;
 class HostContentSettingsMap;
 class ProtocolHandlerRegistry;
@@ -312,7 +313,8 @@ class ProfileIOData {
     // Used to configure the main URLRequestContext through the IOThread's
     // in-process network service.
     content::mojom::NetworkContextRequest main_network_context_request;
-    content::mojom::NetworkContextParamsPtr main_network_context_params;
+    std::unique_ptr<CrossThreadNetworkContextParams>
+        main_network_context_params;
 
     scoped_refptr<content_settings::CookieSettings> cookie_settings;
     scoped_refptr<HostContentSettingsMap> host_content_settings_map;

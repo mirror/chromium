@@ -35,6 +35,7 @@
 #include "net/base/network_change_notifier.h"
 #include "net/nqe/network_quality_estimator.h"
 
+class CrossThreadNetworkContextParams;
 class PrefProxyConfigTracker;
 class PrefService;
 class PrefRegistrySimple;
@@ -320,7 +321,7 @@ class IOThread : public content::BrowserThreadDelegate {
   // These are set on the UI thread, and then consumed during initialization on
   // the IO thread.
   content::mojom::NetworkContextRequest network_context_request_;
-  content::mojom::NetworkContextParamsPtr network_context_params_;
+  std::unique_ptr<CrossThreadNetworkContextParams> network_context_params_;
 
   // This is an instance of the default SSLConfigServiceManager for the current
   // platform and it gets SSL preferences from local_state object.

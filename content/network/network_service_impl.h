@@ -23,15 +23,13 @@ namespace net {
 class NetLog;
 class LoggingNetworkChangeObserver;
 class URLRequestContext;
-class URLRequestContextBuilder;
-#if defined(OS_ANDROID)
 class NetworkChangeNotifierFactoryAndroid;
-#endif
 }  // namespace net
 
 namespace content {
 
 class NetworkContext;
+class URLRequestContextBuilderMojo;
 
 class CONTENT_EXPORT NetworkServiceImpl : public service_manager::Service,
                                           public NetworkService {
@@ -49,7 +47,7 @@ class CONTENT_EXPORT NetworkServiceImpl : public service_manager::Service,
   std::unique_ptr<mojom::NetworkContext> CreateNetworkContextWithBuilder(
       content::mojom::NetworkContextRequest request,
       content::mojom::NetworkContextParamsPtr params,
-      std::unique_ptr<net::URLRequestContextBuilder> builder,
+      std::unique_ptr<URLRequestContextBuilderMojo> builder,
       net::URLRequestContext** url_request_context) override;
 
   static std::unique_ptr<NetworkServiceImpl> CreateForTesting();
