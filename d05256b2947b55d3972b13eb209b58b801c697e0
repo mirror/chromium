@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "fa906ff2_fb508635",
+        "filename": "ios/chrome/browser/ui/ntp/new_tab_page_header_view.mm",
+        "patchSetId": 3
+      },
+      "lineNbr": 236,
+      "author": {
+        "id": 1180589
+      },
+      "writtenOn": "2017-11-06T09:57:55Z",
+      "side": 1,
+      "message": "The NewTabPageHeaderView is only used on non-incognito, so it is always white. \nI cannot reference the background color of another existing view as it is the color of the background of one of its superview. So this view would need to be aware of its view hierarchy.",
+      "parentUuid": "98ef53dc_3d079ef5",
+      "range": {
+        "startLine": 236,
+        "startChar": 18,
+        "endLine": 236,
+        "endChar": 28
+      },
+      "revId": "d05256b2947b55d3972b13eb209b58b801c697e0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "951f033f_c26e300c",
         "filename": "ios/chrome/browser/ui/toolbar/toolbar_snapshot_providing.h",
         "patchSetId": 3
@@ -45,6 +69,30 @@
       "revId": "d05256b2947b55d3972b13eb209b58b801c697e0",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2dd34b10_7ab53a46",
+        "filename": "ios/chrome/browser/ui/toolbar/toolbar_snapshot_providing.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 20,
+      "author": {
+        "id": 1180589
+      },
+      "writtenOn": "2017-11-06T09:57:55Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "951f033f_c26e300c",
+      "range": {
+        "startLine": 20,
+        "startChar": 33,
+        "endLine": 20,
+        "endChar": 37
+      },
+      "revId": "d05256b2947b55d3972b13eb209b58b801c697e0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
