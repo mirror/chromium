@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "37d8abcd_783ff507",
+        "filename": "third_party/WebKit/Source/platform/wtf/RefPtr.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 30,
+      "author": {
+        "id": 1115916
+      },
+      "writtenOn": "2017-11-06T09:30:06Z",
+      "side": 1,
+      "message": "Would you replace WTF::AdoptRef with base::AdoptRef in a follow-up?",
+      "revId": "cebd16d95a2107e3ba58cfab41af57c85687c634",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
