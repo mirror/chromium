@@ -94,6 +94,30 @@
       "revId": "7ef44c9f58e9f10b36eba737c09448304307c824",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "00fb84f9_37a31669",
+        "filename": "chrome/browser/resource_coordinator/tab_manager.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 1187,
+      "author": {
+        "id": 1112850
+      },
+      "writtenOn": "2017-11-06T21:06:33Z",
+      "side": 1,
+      "message": "Are navigation throttles always created after |TabHelpers::AttachTabHelpers|? I think yes? (I assume we need to first attach tab and helpers, and then start navigation.)",
+      "parentUuid": "40d64601_bce30fe8",
+      "range": {
+        "startLine": 1184,
+        "startChar": 54,
+        "endLine": 1187,
+        "endChar": 46
+      },
+      "revId": "7ef44c9f58e9f10b36eba737c09448304307c824",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
