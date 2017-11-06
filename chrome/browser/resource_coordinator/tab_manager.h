@@ -294,6 +294,8 @@ class TabManager : public TabStripModelObserver,
   FRIEND_TEST_ALL_PREFIXES(TabManagerTest,
                            UrgentFastShutdownWithBeforeunloadHandler);
   FRIEND_TEST_ALL_PREFIXES(TabManagerTest, IsTabRestoredInForeground);
+  FRIEND_TEST_ALL_PREFIXES(TabManagerTest,
+                           IdleSignalPlumbingFromResourceCoordinator);
 
   // The time of the first purging after a renderer is backgrounded.
   // The initial value was chosen because most of users activate backgrounded

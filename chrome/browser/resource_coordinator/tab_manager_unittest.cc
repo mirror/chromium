@@ -39,6 +39,7 @@
 #include "content/public/test/mock_render_process_host.h"
 #include "content/public/test/web_contents_tester.h"
 #include "content/test/test_web_contents.h"
+#include "services/resource_coordinator/public/cpp/resource_coordinator_features.h"
 #include "testing/gtest/include/gtest/gtest.h"
 #include "url/gurl.h"
 
@@ -1296,6 +1297,62 @@ TEST_F(TabManagerTest, IsTabRestoredInForeground) {
   contents->WasHidden();
   tab_manager->OnWillRestoreTab(contents.get());
   EXPECT_FALSE(tab_manager->IsTabRestoredInForeground(contents.get()));
+}
+
+TEST_F(TabManagerTest, IdleSignalPlumbingFromResourceCoordinator) {
+  base::test::ScopedFeatureList scoped_feature_list;
+  scoped_feature_list.InitAndEnableFeature(features::kPageAlmostIdle);
+  EXPECT_TRUE(base::FeatureList::IsEnabled(features::kPageAlmostIdle));
+
+  TabManager* tab_manager = g_browser_process->GetTabManager();
+  tab_manager->ResetMemoryPressureListenerForTest();
+
+  EXPECT_EQ(TabManager::BackgroundTabLoadingMode::kStaggered,
+            tab_manager->background_tab_loading_mode_);
+
+  MaybeThrottleNavigations(tab_manager);
+  tab_manager->GetWebContentsData(contents1_.get())
+      ->DidStartNavigation(nav_handle1_.get());
+
+  EXPECT_TRUE(tab_manager->IsTabLoadingForTest(contents1_.get()));
+  EXPECT_FALSE(tab_manager->IsTabLoadingForTest(contents2_.get()));
+  EXPECT_FALSE(tab_manager->IsTabLoadingForTest(contents3_.get()));
+  EXPECT_FALSE(tab_manager->IsNavigationDelayedForTest(nav_handle1_.get()));
+  EXPECT_TRUE(tab_manager->IsNavigationDelayedForTest(nav_handle2_.get()));
+  EXPECT_TRUE(tab_manager->IsNavigationDelayedForTest(nav_handle3_.get()));
+
+  // Simulate tab 1 has finished loading through WebContentsObserver API.
+  // Since the page idle signal feature is enabled, this shouldn't start
+  // next loading.
+  tab_manager->GetWebContentsData(contents1_.get())->DidStopLoading();
+
+  // Tab 2 and Tab 3 are still pending because the DidStopLoading signal from
+  // WebContentsObserver is disabled.
+  EXPECT_FALSE(tab_manager->IsTabLoadingForTest(contents2_.get()));
+  EXPECT_FALSE(tab_manager->IsTabLoadingForTest(contents3_.get()));
+  EXPECT_TRUE(tab_manager->IsNavigationDelayedForTest(nav_handle2_.get()));
+  EXPECT_TRUE(tab_manager->IsNavigationDelayedForTest(nav_handle3_.get()));
+
+  // Simulate tab 1 has finished loading by receiving idle signal from resource
+  // coordinator. Since the page idle signal feature is enabled, this should
+  // start next loading.
+  tab_manager->GetWebContentsData(contents1_.get())->NotifyAlmostIdle();
+
+  // Tab 2 should start loading right away.
+  EXPECT_TRUE(tab_manager->IsTabLoadingForTest(contents2_.get()));
+  EXPECT_FALSE(tab_manager->IsNavigationDelayedForTest(nav_handle2_.get()));
+
+  // Tab 3 is still pending.
+  EXPECT_FALSE(tab_manager->IsTabLoadingForTest(contents3_.get()));
+  EXPECT_TRUE(tab_manager->IsNavigationDelayedForTest(nav_handle3_.get()));
+
+  // Simulate tab 2 has finished loading by receiving idle signal from resource
+  // coordinator.
+  tab_manager->GetWebContentsData(contents2_.get())->NotifyAlmostIdle();
+
+  // Tab 3 should start loading now in staggered loading mode.
+  EXPECT_TRUE(tab_manager->IsTabLoadingForTest(contents3_.get()));
+  EXPECT_FALSE(tab_manager->IsNavigationDelayedForTest(nav_handle3_.get()));
 }
 
 }  // namespace resource_coordinator
