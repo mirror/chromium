@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "2e3b435c_17e082df",
+        "filename": "headless/lib/virtual_time_browsertest.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 312,
+      "author": {
+        "id": 1116032
+      },
+      "writtenOn": "2017-11-06T21:39:58Z",
+      "side": 1,
+      "message": "Nit: \"302 Found\" (below too)",
+      "range": {
+        "startLine": 312,
+        "startChar": 23,
+        "endLine": 312,
+        "endChar": 28
+      },
+      "revId": "f9e7aa543feb98d058e8c2b68a1a7c91def1c11f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
