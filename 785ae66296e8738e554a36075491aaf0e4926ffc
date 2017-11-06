@@ -2,6 +2,29 @@
   "comments": [
     {
       "key": {
+        "uuid": "2ca73ddd_ade6e3ab",
+        "filename": "net/http/http_server_properties_impl.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 598,
+      "author": {
+        "id": 1116006
+      },
+      "writtenOn": "2017-11-06T19:46:58Z",
+      "side": 1,
+      "message": "nit: early return here to avoid extra indenting:\n\nif (it !\u003d end())\n  return it-\u003esecond;\n...",
+      "range": {
+        "startLine": 598,
+        "startChar": 42,
+        "endLine": 598,
+        "endChar": 0
+      },
+      "revId": "785ae66296e8738e554a36075491aaf0e4926ffc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "eee3e93a_6de2cb68",
         "filename": "net/http/http_server_properties_impl.cc",
         "patchSetId": 2
@@ -40,6 +63,29 @@
         "startLine": 605,
         "startChar": 52,
         "endLine": 605,
+        "endChar": 0
+      },
+      "revId": "785ae66296e8738e554a36075491aaf0e4926ffc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0636c9c3_33fc6450",
+        "filename": "net/http/http_server_properties_impl.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 619,
+      "author": {
+        "id": 1116006
+      },
+      "writtenOn": "2017-11-06T19:46:58Z",
+      "side": 1,
+      "message": "Instead of doing this, \u0027how \u0027bout doing what we do in other places where check for a canonical server. Namely, call the GetCanonicalHost() method. Something like:\n\n  url::SchemeHostPort server(\"https\", server_id.host(),\n                             server_id.port());\n  CanonicalHostMap::const_iterator canonical \u003d GetCanonicalHost(server);",
+      "range": {
+        "startLine": 619,
+        "startChar": 3,
+        "endLine": 619,
         "endChar": 0
       },
       "revId": "785ae66296e8738e554a36075491aaf0e4926ffc",
