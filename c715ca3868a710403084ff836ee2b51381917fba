@@ -1,0 +1,61 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "fa19b541_6cd03262",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 7
+      },
+      "lineNbr": 12,
+      "author": {
+        "id": 1000111
+      },
+      "writtenOn": "2017-11-06T21:20:37Z",
+      "side": 1,
+      "message": "This is true for browser, and renderer, right? The window-manager is the only exception?",
+      "range": {
+        "startLine": 12,
+        "startChar": 15,
+        "endLine": 12,
+        "endChar": 32
+      },
+      "revId": "c715ca3868a710403084ff836ee2b51381917fba",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "62140f59_1819796a",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 7
+      },
+      "lineNbr": 21,
+      "author": {
+        "id": 1000111
+      },
+      "writtenOn": "2017-11-06T21:20:37Z",
+      "side": 1,
+      "message": "nit: WindowPort is for the aura implementation of the client interface, and not something every client must have (e.g. the renderer does not use it). This could be rephrased to not mention it. For example:\n\n1. An embedded client creates a top level window by asking its WindowTree in NewTopLevelWindow(). The window-id provided in this call by the client is the same window-id used in its WindowTree. However, the associated ServerWindow is created by the window-manager, and so its frame-sink id used to include the window-manager\u0027s client id. This CL changes that, so that the FrameSinkId of the ServerWindow is generated using the client-id (and window-id) of the embedded client.",
+      "revId": "c715ca3868a710403084ff836ee2b51381917fba",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d00accec_3612e8d0",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 7
+      },
+      "lineNbr": 36,
+      "author": {
+        "id": 1000111
+      },
+      "writtenOn": "2017-11-06T21:20:37Z",
+      "side": 1,
+      "message": "I think the description for 2 is also fairly complex, and would be very difficult to follow for someone not closely familiar with this. It would be good to simplify this farther.",
+      "revId": "c715ca3868a710403084ff836ee2b51381917fba",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
