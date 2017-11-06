@@ -46,6 +46,30 @@
       "revId": "213072fe44d8f85b0793cb8bcb92c6c1f859dbd9",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "03d7a187_8c0bcebe",
+        "filename": "chrome/android/java/strings/android_chrome_strings.grd",
+        "patchSetId": 1
+      },
+      "lineNbr": 3047,
+      "author": {
+        "id": 1191013
+      },
+      "writtenOn": "2017-11-06T22:19:06Z",
+      "side": 1,
+      "message": "Done, you\u0027re CCed on the conversation. I updated the string with the recommendation.",
+      "parentUuid": "fec1b2a5_b1e27de7",
+      "range": {
+        "startLine": 3047,
+        "startChar": 20,
+        "endLine": 3047,
+        "endChar": 23
+      },
+      "revId": "213072fe44d8f85b0793cb8bcb92c6c1f859dbd9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
