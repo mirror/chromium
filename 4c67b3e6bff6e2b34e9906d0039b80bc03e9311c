@@ -55,6 +55,24 @@
     },
     {
       "key": {
+        "uuid": "3cae5b90_caa65581",
+        "filename": "chrome/install_static/install_details.h",
+        "patchSetId": 23
+      },
+      "lineNbr": 110,
+      "author": {
+        "id": 1228990
+      },
+      "writtenOn": "2017-11-06T18:41:13Z",
+      "side": 1,
+      "message": "I don\u0027t see any issue in returning const ref neither as this clsid won\u0027t be changed at all. Agreed that returning const ref is a better option then. Done.",
+      "parentUuid": "a04eab60_86d71198",
+      "revId": "4c67b3e6bff6e2b34e9906d0039b80bc03e9311c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "5e7c9c60_1e3ae98a",
         "filename": "chrome/install_static/install_modes_unittest.cc",
         "patchSetId": 23
