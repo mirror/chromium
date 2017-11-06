@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "141bc467_600975f6",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 1
+      },
+      "lineNbr": 11,
+      "author": {
+        "id": 1002481
+      },
+      "writtenOn": "2017-11-06T16:02:05Z",
+      "side": 1,
+      "message": "Please wrap these lines to 72 characters, as directed by \"git cl upload\".",
+      "revId": "d1d7f613de811bd3874d99af84a46af77fab2c0d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
