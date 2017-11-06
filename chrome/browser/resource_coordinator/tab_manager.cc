@@ -35,6 +35,7 @@
 #include "chrome/browser/resource_coordinator/background_tab_navigation_throttle.h"
 #include "chrome/browser/resource_coordinator/resource_coordinator_web_contents_observer.h"
 #include "chrome/browser/resource_coordinator/tab_manager_observer.h"
+#include "chrome/browser/resource_coordinator/tab_manager_resource_coordinator_signal_observer.h"
 #include "chrome/browser/resource_coordinator/tab_manager_stats_collector.h"
 #include "chrome/browser/resource_coordinator/tab_manager_web_contents_data.h"
 #include "chrome/browser/sessions/session_restore.h"
@@ -241,10 +242,15 @@ TabManager::TabManager()
 #endif
   browser_tab_strip_tracker_.Init();
   session_restore_observer_.reset(new TabManagerSessionRestoreObserver(this));
+  if (PageSignalReceiver::IsEnabled()) {
+    resource_coordinator_signal_observer_.reset(
+        new ResourceCoordinatorSignalObserver());
+  }
   stats_collector_.reset(new TabManagerStatsCollector());
 }
 
 TabManager::~TabManager() {
+  resource_coordinator_signal_observer_.reset();
   Stop();
 }
 
