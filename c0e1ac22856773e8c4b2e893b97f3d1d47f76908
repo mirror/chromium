@@ -73,6 +73,30 @@
     },
     {
       "key": {
+        "uuid": "18b2c000_4a32cac7",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/tabmodel/TabPersistentStore.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 826,
+      "author": {
+        "id": 1161045
+      },
+      "writtenOn": "2017-11-06T23:29:53Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "6dbf6b43_0224be21",
+      "range": {
+        "startLine": 819,
+        "startChar": 6,
+        "endLine": 826,
+        "endChar": 9
+      },
+      "revId": "c0e1ac22856773e8c4b2e893b97f3d1d47f76908",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "98cb47a1_b95b663f",
         "filename": "chrome/android/java/src/org/chromium/chrome/browser/tabmodel/TabPersistentStore.java",
         "patchSetId": 1
@@ -93,6 +117,30 @@
       "revId": "c0e1ac22856773e8c4b2e893b97f3d1d47f76908",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "edfdba79_f1d6a0f9",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/tabmodel/TabPersistentStore.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 1179,
+      "author": {
+        "id": 1161045
+      },
+      "writtenOn": "2017-11-06T23:29:53Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "98cb47a1_b95b663f",
+      "range": {
+        "startLine": 1179,
+        "startChar": 15,
+        "endLine": 1179,
+        "endChar": 19
+      },
+      "revId": "c0e1ac22856773e8c4b2e893b97f3d1d47f76908",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -119,6 +167,30 @@
     },
     {
       "key": {
+        "uuid": "8b21faae_15382fbf",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/tabmodel/TabPersistentStore.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 1180,
+      "author": {
+        "id": 1161045
+      },
+      "writtenOn": "2017-11-06T23:29:53Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "ce504e6a_4d28960d",
+      "range": {
+        "startLine": 1180,
+        "startChar": 28,
+        "endLine": 1180,
+        "endChar": 43
+      },
+      "revId": "c0e1ac22856773e8c4b2e893b97f3d1d47f76908",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "450a929e_369f4852",
         "filename": "chrome/android/java/src/org/chromium/chrome/browser/tabmodel/TabPersistentStore.java",
         "patchSetId": 1
@@ -139,6 +211,30 @@
       "revId": "c0e1ac22856773e8c4b2e893b97f3d1d47f76908",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "aeff2aaf_a05f036f",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/tabmodel/TabPersistentStore.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 1453,
+      "author": {
+        "id": 1161045
+      },
+      "writtenOn": "2017-11-06T23:29:53Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "450a929e_369f4852",
+      "range": {
+        "startLine": 1453,
+        "startChar": 19,
+        "endLine": 1453,
+        "endChar": 30
+      },
+      "revId": "c0e1ac22856773e8c4b2e893b97f3d1d47f76908",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
