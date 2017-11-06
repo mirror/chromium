@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "4eb03806_01abe864",
+        "filename": "components/arc/power/arc_power_bridge.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 174,
+      "author": {
+        "id": 1000042
+      },
+      "writtenOn": "2017-11-06T15:20:02Z",
+      "side": 1,
+      "message": "when i make FakePowerInstance move the mojom::PowerHostPtr that\u0027s passed to its Init method into a member and then remove this call, i get the same crash i was seeing before from the Bind call in OnInstanceReady:\n\n  [44413:44413:1106/065811.292497:11370805306360:FATAL:binding_state.cc(90)] Check failed: !router_.\n\nwas that what you were suggesting, or did i misunderstand? (i think i wouldn\u0027t expect this to work, since the current code is probably already letting the mojom::PowerHostPtr get destroyed as soon as it\u0027s passed to Init...)",
+      "parentUuid": "69c3ba56_93fb3ab7",
+      "range": {
+        "startLine": 174,
+        "startChar": 2,
+        "endLine": 174,
+        "endChar": 19
+      },
+      "revId": "3b7e427cbc6bc4d524d9c38c90f9e0f758af009c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "ef778d5f_f0565d8a",
         "filename": "components/arc/power/arc_power_bridge_unittest.cc",
         "patchSetId": 4
@@ -36,6 +60,30 @@
       "writtenOn": "2017-11-06T14:21:18Z",
       "side": 1,
       "message": "DestroyPowerInstance() is idempotent.",
+      "range": {
+        "startLine": 52,
+        "startChar": 4,
+        "endLine": 52,
+        "endChar": 24
+      },
+      "revId": "3b7e427cbc6bc4d524d9c38c90f9e0f758af009c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "43daedc9_f28b57d2",
+        "filename": "components/arc/power/arc_power_bridge_unittest.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 52,
+      "author": {
+        "id": 1000042
+      },
+      "writtenOn": "2017-11-06T15:20:02Z",
+      "side": 1,
+      "message": "thanks, i think i misread some code and incorrectly believed that SetInstance disallows passing a null pointer when it already has a null ptr.",
+      "parentUuid": "ef778d5f_f0565d8a",
       "range": {
         "startLine": 52,
         "startChar": 4,
@@ -192,6 +240,30 @@
     },
     {
       "key": {
+        "uuid": "56351137_f8302480",
+        "filename": "components/arc/test/fake_power_instance.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 16,
+      "author": {
+        "id": 1000042
+      },
+      "writtenOn": "2017-11-06T15:20:02Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "161ccfb4_dd1049d7",
+      "range": {
+        "startLine": 16,
+        "startChar": 9,
+        "endLine": 16,
+        "endChar": 19
+      },
+      "revId": "3b7e427cbc6bc4d524d9c38c90f9e0f758af009c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "85a3a758_2688056d",
         "filename": "components/arc/test/fake_power_instance.h",
         "patchSetId": 4
@@ -215,6 +287,30 @@
     },
     {
       "key": {
+        "uuid": "3a9da042_fb70897b",
+        "filename": "components/arc/test/fake_power_instance.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 24,
+      "author": {
+        "id": 1000042
+      },
+      "writtenOn": "2017-11-06T15:20:02Z",
+      "side": 1,
+      "message": "i find \"Take\" confusing here. method names usually describe what you\u0027re asking the class instance to do, but the caller (rather than the instance) would be the one taking the callback. i\u0027ll update the comment.",
+      "parentUuid": "85a3a758_2688056d",
+      "range": {
+        "startLine": 24,
+        "startChar": 18,
+        "endLine": 24,
+        "endChar": 21
+      },
+      "revId": "3b7e427cbc6bc4d524d9c38c90f9e0f758af009c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "b51498ef_894014e1",
         "filename": "services/device/public/cpp/test/test_wake_lock_provider.h",
         "patchSetId": 4
@@ -226,6 +322,30 @@
       "writtenOn": "2017-11-06T14:21:18Z",
       "side": 1,
       "message": "Can these be base::OnceClosure? That\u0027ll help the people doing the base::Closure migration. If they definitely cannot, can you explicitly make them base::RepeatingClosure?",
+      "range": {
+        "startLine": 28,
+        "startChar": 46,
+        "endLine": 28,
+        "endChar": 60
+      },
+      "revId": "3b7e427cbc6bc4d524d9c38c90f9e0f758af009c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0eb85bd3_55800e4d",
+        "filename": "services/device/public/cpp/test/test_wake_lock_provider.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 28,
+      "author": {
+        "id": 1000042
+      },
+      "writtenOn": "2017-11-06T15:20:02Z",
+      "side": 1,
+      "message": "i currently only assign base::Closures from base::RunLoop here. i\u0027d be happy with them being base::OnceClosures instead, but i assume i can\u0027t, so i\u0027ll change these to RepeatingClosure.",
+      "parentUuid": "b51498ef_894014e1",
       "range": {
         "startLine": 28,
         "startChar": 46,
