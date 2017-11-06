@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "e00fcb19_85427ec1",
+        "filename": "chrome/browser/chromeos/eol_notification.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 75,
+      "author": {
+        "id": 1002032
+      },
+      "writtenOn": "2017-11-06T23:26:06Z",
+      "side": 1,
+      "message": "We should still make sure that we close these notifications when the profile is destroyed. Right now this would cause a UAF if the notification is only interacted with after profile shutdown, which the message center allows for.",
+      "revId": "63c4efd655be8a6cfcbad4302630c6abce3c0520",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
