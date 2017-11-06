@@ -118,6 +118,30 @@
       "revId": "f00f74feef559540a7ff68a7da56200b86ba7eea",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "acb6f08b_61b1962f",
+        "filename": "ash/display/touch_calibrator_controller.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 26,
+      "author": {
+        "id": 1180289
+      },
+      "writtenOn": "2017-11-06T16:21:35Z",
+      "side": 1,
+      "message": "After implementing the InputDeviceEventObserver::OnDeviceListsComplete, how would I notify the observer in tests? Should I just base::RunLoop().RunUntilIdle();? Does the InputDeviceServer ever call OnDeviceListsComplete in test?",
+      "parentUuid": "f60de0a3_c9ab33ac",
+      "range": {
+        "startLine": 25,
+        "startChar": 2,
+        "endLine": 26,
+        "endChar": 52
+      },
+      "revId": "f00f74feef559540a7ff68a7da56200b86ba7eea",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
