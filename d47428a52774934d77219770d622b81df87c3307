@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "a42506ab_74493b30",
+        "filename": "ios/chrome/browser/ui/toolbar/public/toolbar_controller_base_feature+protected.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 6,
+      "author": {
+        "id": 1180589
+      },
+      "writtenOn": "2017-11-06T12:30:53Z",
+      "side": 1,
+      "message": "Done.\nIt is a variable declaration, not a function.\nThe idea to move this to a specific file is to avoid having people directly using it.",
+      "parentUuid": "b4247f02_d09b80c0",
+      "range": {
+        "startLine": 6,
+        "startChar": 8,
+        "endLine": 6,
+        "endChar": 89
+      },
+      "revId": "d47428a52774934d77219770d622b81df87c3307",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "8f4296b7_015e9f79",
         "filename": "ios/chrome/browser/ui/ui_util.mm",
         "patchSetId": 4
@@ -36,6 +60,30 @@
       "writtenOn": "2017-11-06T11:57:43Z",
       "side": 1,
       "message": "Feels like this should be a utility function exposed in toolbar/public, not in ui_utils. Then this file doesn\u0027t need to include anything from toolbar/.",
+      "range": {
+        "startLine": 65,
+        "startChar": 5,
+        "endLine": 65,
+        "endChar": 39
+      },
+      "revId": "d47428a52774934d77219770d622b81df87c3307",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "cadf1c6f_dee0140d",
+        "filename": "ios/chrome/browser/ui/ui_util.mm",
+        "patchSetId": 4
+      },
+      "lineNbr": 65,
+      "author": {
+        "id": 1180589
+      },
+      "writtenOn": "2017-11-06T12:30:53Z",
+      "side": 1,
+      "message": "I agree, but this function is using a function defined in this file (IsIPhoneX) and this file uses this function (just below in StatusBarHeight).\nI could use the allow_circular_includes in gn to split it but I prefer to avoid it if I can.\nWDYT?",
+      "parentUuid": "8f4296b7_015e9f79",
       "range": {
         "startLine": 65,
         "startChar": 5,
