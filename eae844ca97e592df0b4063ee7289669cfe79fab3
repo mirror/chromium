@@ -52,6 +52,24 @@
       "revId": "eae844ca97e592df0b4063ee7289669cfe79fab3",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "94201b8b_0dab48ea",
+        "filename": "components/autofill/core/browser/autofill_metrics.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 386,
+      "author": {
+        "id": 1209219
+      },
+      "writtenOn": "2017-11-06T15:03:53Z",
+      "side": 1,
+      "message": "Moved metrics change out of this CL, please review again.",
+      "parentUuid": "8c2a46cb_33578b43",
+      "revId": "eae844ca97e592df0b4063ee7289669cfe79fab3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
