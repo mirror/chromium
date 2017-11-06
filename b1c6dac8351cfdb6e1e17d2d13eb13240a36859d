@@ -16,6 +16,24 @@
       "revId": "b1c6dac8351cfdb6e1e17d2d13eb13240a36859d",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "04b20cab_91625573",
+        "filename": "components/test/run_all_unittests.cc",
+        "patchSetId": 14
+      },
+      "lineNbr": 17,
+      "author": {
+        "id": 1113941
+      },
+      "writtenOn": "2017-11-06T15:21:35Z",
+      "side": 1,
+      "message": "I had a similar opinion to Sylvain, but I now see that this is following the model set by content_unittests.",
+      "parentUuid": "454a2098_0705e5ca",
+      "revId": "b1c6dac8351cfdb6e1e17d2d13eb13240a36859d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
