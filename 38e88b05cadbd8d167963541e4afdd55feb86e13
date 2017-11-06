@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "133cb0c1_7082567d",
+        "filename": "net/url_request/url_request.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 134,
+      "author": {
+        "id": 1116006
+      },
+      "writtenOn": "2017-11-06T21:47:04Z",
+      "side": 1,
+      "message": "Is it possible to make this an int (or some such) instead of an enum, or does not that work for some reason?",
+      "range": {
+        "startLine": 134,
+        "startChar": 4,
+        "endLine": 134,
+        "endChar": 0
+      },
+      "revId": "38e88b05cadbd8d167963541e4afdd55feb86e13",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
