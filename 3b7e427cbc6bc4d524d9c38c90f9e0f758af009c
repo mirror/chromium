@@ -143,6 +143,31 @@
     },
     {
       "key": {
+        "uuid": "9a87cf6c_aaee435a",
+        "filename": "components/arc/test/fake_power_instance.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 16,
+      "author": {
+        "id": 1002808
+      },
+      "writtenOn": "2017-11-06T15:00:11Z",
+      "side": 1,
+      "message": "That is not true in general and it depends entirely on the type being moved. The moved-from object\u0027s state is well specified in the case of base::Callback:",
+      "parentUuid": "f02b83fd_f4b56ed8",
+      "range": {
+        "startLine": 16,
+        "startChar": 9,
+        "endLine": 16,
+        "endChar": 19
+      },
+      "tag": "mailMessageId\u003d\u003cCA+apAgFR4-Sb9hRGsgoBgues1B8+hYnsjRuE1Hpb__P\u003do6vPig@mail.gmail.com\u003e",
+      "revId": "3b7e427cbc6bc4d524d9c38c90f9e0f758af009c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "85a3a758_2688056d",
         "filename": "components/arc/test/fake_power_instance.h",
         "patchSetId": 4
