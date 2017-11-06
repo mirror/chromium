@@ -1,0 +1,55 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "6a80d475_1523ceb6",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/preferences/website/Website.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 303,
+      "author": {
+        "id": 1115974
+      },
+      "writtenOn": "2017-11-06T11:01:28Z",
+      "side": 1,
+      "message": "nit: FWIW, you could early return",
+      "revId": "f84e36ade1ad8ca2921af53faf290a24254625ab",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1d554c3c_b93d4a96",
+        "filename": "tools/metrics/actions/actions.xml",
+        "patchSetId": 3
+      },
+      "lineNbr": 16991,
+      "author": {
+        "id": 1115974
+      },
+      "writtenOn": "2017-11-06T11:01:28Z",
+      "side": 1,
+      "message": "We probably want to say from where this could be done.",
+      "revId": "f84e36ade1ad8ca2921af53faf290a24254625ab",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "09eb63b0_a96507e0",
+        "filename": "tools/metrics/actions/actions.xml",
+        "patchSetId": 3
+      },
+      "lineNbr": 17005,
+      "author": {
+        "id": 1115974
+      },
+      "writtenOn": "2017-11-06T11:01:28Z",
+      "side": 1,
+      "message": "Same above, giving more context would help.",
+      "revId": "f84e36ade1ad8ca2921af53faf290a24254625ab",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
