@@ -70,6 +70,30 @@
       "revId": "075e432ee576a869516163133a24a0852cb51b9e",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "0b744943_ba44d468",
+        "filename": "components/previews/content/previews_io_data_unittest.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 303,
+      "author": {
+        "id": 1124674
+      },
+      "writtenOn": "2017-11-06T21:39:34Z",
+      "side": 1,
+      "message": "You shouldn\u0027t need to have seperate configs.  You should be able to just add the enable/disable features block to your groups, and the same config will work with both versions of code (as long you keep group names that work).  But up to you based on how long you expect to continue running the trials.",
+      "parentUuid": "563a3a03_dce3dedc",
+      "range": {
+        "startLine": 303,
+        "startChar": 4,
+        "endLine": 303,
+        "endChar": 50
+      },
+      "revId": "075e432ee576a869516163133a24a0852cb51b9e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
