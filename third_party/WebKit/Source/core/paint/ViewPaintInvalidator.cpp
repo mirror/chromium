@@ -33,18 +33,23 @@ void ViewPaintInvalidator::InvalidateBackgroundIfNeeded() {
     return;
 
   const LayoutBox& background_box = ToLayoutBox(*background_object);
-  LayoutSize old_size = background_box.PreviousSize();
-  LayoutSize new_size = background_box.Size();
-  const auto& background_layers = view_.StyleRef().BackgroundLayers();
-  if ((old_size.Width() != new_size.Width() &&
-       LayoutBox::MustInvalidateFillLayersPaintOnWidthChange(
-           background_layers)) ||
-      (old_size.Height() != new_size.Height() &&
-       LayoutBox::MustInvalidateFillLayersPaintOnHeightChange(
-           background_layers))) {
-    view_.GetMutableForPainting().SetShouldDoFullPaintInvalidation(
-        PaintInvalidationReason::kBackground);
+  auto invalidation = BoxPaintInvalidator::BackgroundInvalidationType::kNone;
+
+  if (background_box.BackgroundChangedSinceLastPaintInvalidation()) {
+    invalidation = BoxPaintInvalidator::BackgroundInvalidationType::kFull;
+  } else {
+    LayoutSize old_size = background_box.PreviousSize();
+    LayoutSize new_size = background_box.Size();
+    const auto& layers = view_.StyleRef().BackgroundLayers();
+    if ((old_size.Width() != new_size.Width() &&
+         LayoutBox::MustInvalidateFillLayersPaintOnWidthChange(layers)) ||
+        (old_size.Height() != new_size.Height() &&
+         LayoutBox::MustInvalidateFillLayersPaintOnHeightChange(layers))) {
+      invalidation = BoxPaintInvalidator::BackgroundInvalidationType::kFull;
+    }
   }
+
+  BoxPaintInvalidator(view_, context_).InvalidateBackground(invalidation);
 }
 
 }  // namespace blink

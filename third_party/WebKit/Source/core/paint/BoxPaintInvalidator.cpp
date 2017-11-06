@@ -226,12 +226,19 @@ BoxPaintInvalidator::ComputeBackgroundInvalidation() {
   return BackgroundInvalidationType::kIncremental;
 }
 
-void BoxPaintInvalidator::InvalidateScrollingContentsBackground(
+void BoxPaintInvalidator::InvalidateBackground(
     BackgroundInvalidationType background_invalidation_type) {
-  if (!BackgroundPaintsOntoScrollingContentsLayer())
-    return;
   if (background_invalidation_type == BackgroundInvalidationType::kNone)
     return;
+
+  if (!BackgroundPaintsOntoScrollingContentsLayer()) {
+    if (background_invalidation_type == BackgroundInvalidationType::kFull) {
+      box_.GetMutableForPainting()
+          .SetShouldDoFullPaintInvalidationWithoutGeometryChange(
+              PaintInvalidationReason::kBackground);
+    }
+    return;
+  }
 
   PaintInvalidationReason reason;
   if (RuntimeEnabledFeatures::SlimmingPaintV175Enabled()) {
@@ -262,15 +269,7 @@ void BoxPaintInvalidator::InvalidateScrollingContentsBackground(
 }
 
 PaintInvalidationReason BoxPaintInvalidator::InvalidatePaint() {
-  BackgroundInvalidationType backgroundInvalidationType =
-      ComputeBackgroundInvalidation();
-  if (backgroundInvalidationType == BackgroundInvalidationType::kFull &&
-      !BackgroundPaintsOntoScrollingContentsLayer()) {
-    box_.GetMutableForPainting()
-        .SetShouldDoFullPaintInvalidationWithoutGeometryChange(
-            PaintInvalidationReason::kBackground);
-  }
-  InvalidateScrollingContentsBackground(backgroundInvalidationType);
+  InvalidateBackground(ComputeBackgroundInvalidation());
 
   PaintInvalidationReason reason = ComputePaintInvalidationReason();
   if (reason == PaintInvalidationReason::kIncremental) {
