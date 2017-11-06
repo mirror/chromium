@@ -143,6 +143,30 @@
     },
     {
       "key": {
+        "uuid": "29e11ab6_030f34a3",
+        "filename": "net/quic/chromium/quic_stream_factory_fuzzer.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 46,
+      "author": {
+        "id": 1116006
+      },
+      "writtenOn": "2017-11-06T18:46:12Z",
+      "side": 1,
+      "message": "Interesting point. I think that fuzzing the bits of the QUIC protocol itself are higher priority than the URL itself. But of course, the bits of the URL do impact what goes to the wire so there\u0027s some value to doing that. \n\nPerhaps a TODO?",
+      "parentUuid": "c371d6bd_bd2272bd",
+      "range": {
+        "startLine": 44,
+        "startChar": 0,
+        "endLine": 46,
+        "endChar": 54
+      },
+      "revId": "762303cb383d3f2f09854be40032950df34e0af0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "0f0d8925_d7282a0b",
         "filename": "net/quic/chromium/quic_stream_factory_fuzzer.cc",
         "patchSetId": 3
