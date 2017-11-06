@@ -97,6 +97,30 @@
     },
     {
       "key": {
+        "uuid": "5699ab71_80808439",
+        "filename": "third_party/WebKit/Source/controller/BlinkInitializer.cpp",
+        "patchSetId": 3
+      },
+      "lineNbr": 121,
+      "author": {
+        "id": 1115916
+      },
+      "writtenOn": "2017-11-06T00:50:42Z",
+      "side": 1,
+      "message": "dcheng@: Is it expected that the function registered to AddInterface is called on a different thread (from the thread that registered the function)?\n\nThis doesn\u0027t look nice since OomInterventionImpl may not be designed in a thread-safe manner.",
+      "parentUuid": "f23138f6_8831e1b5",
+      "range": {
+        "startLine": 121,
+        "startChar": 24,
+        "endLine": 121,
+        "endChar": 39
+      },
+      "revId": "27a5fa31c2e768793895e229143c6dcecb0ed318",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "9b8f7f13_51a36f97",
         "filename": "third_party/WebKit/Source/controller/OomInterventionImplTest.cpp",
         "patchSetId": 3
