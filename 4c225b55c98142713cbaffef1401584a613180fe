@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "524e0ab5_3ee0f25e",
+        "filename": "services/device/geolocation/public_ip_address_location_notifier.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 131,
+      "author": {
+        "id": 1182889
+      },
+      "writtenOn": "2017-11-06T13:11:08Z",
+      "side": 1,
+      "message": "This needs to be udpated.\n\nExcerpt from comment thread started by reillyg@ at https://chromium-review.googlesource.com/c/chromium/src/+/706743/31/services/device/geolocation/public_ip_address_location_notifier.cc#140 that explains what is missing:\n\n\"Basically, the issue with setting the right traffic annotation here is, there is no single setting/feature is defintively responsible for a given network location request made by this IP-geolocation service. Since multiuple clients could be using the service. So what to show for \"setting\"?\n\nI spoke with rhalavati@ earlier about this and he advised that the following behavior would be appropriate:\n\nIf one client has connected, use a PartialNetworkTraffficAnnotation supplied by them.\nIf more than one client has connected (ever), use a general PartialNetworkTrafficAnnotation. This one wouldn\u0027t have a setting.\nHowever I didn\u0027t actually do it! Will update with this.\n\nI suspect the right impl is for PublicIpAddressGeolocationProvider.CreateGeolocation to take the PartialNetworkTrafficAnnotationTag (and int32) as an argument.\"",
+      "revId": "4c225b55c98142713cbaffef1401584a613180fe",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
