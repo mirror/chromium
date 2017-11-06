@@ -39,6 +39,7 @@
 #include "content/public/test/mock_render_process_host.h"
 #include "content/public/test/web_contents_tester.h"
 #include "content/test/test_web_contents.h"
+#include "services/resource_coordinator/public/cpp/resource_coordinator_features.h"
 #include "testing/gtest/include/gtest/gtest.h"
 #include "url/gurl.h"
 
@@ -798,7 +799,7 @@ TEST_F(TabManagerTest, OnDidFinishNavigation) {
   EXPECT_FALSE(tab_manager->IsNavigationDelayedForTest(nav_handle2_.get()));
 }
 
-TEST_F(TabManagerTest, OnDidStopLoading) {
+TEST_F(TabManagerTest, OnTabIsLoaded) {
   TabManager* tab_manager = g_browser_process->GetTabManager();
   tab_manager->ResetMemoryPressureListenerForTest();
   MaybeThrottleNavigations(tab_manager);
@@ -810,7 +811,7 @@ TEST_F(TabManagerTest, OnDidStopLoading) {
   EXPECT_TRUE(tab_manager->IsNavigationDelayedForTest(nav_handle2_.get()));
 
   // Simulate tab 1 has finished loading.
-  tab_manager->GetWebContentsData(contents1_.get())->DidStopLoading();
+  tab_manager->GetWebContentsData(contents1_.get())->NotifyTabIsLoaded();
 
   // After tab 1 has finished loading, TabManager starts loading the next tab.
   EXPECT_FALSE(tab_manager->IsTabLoadingForTest(contents1_.get()));
@@ -868,14 +869,14 @@ TEST_F(TabManagerTest, OnDelayedTabSelected) {
   // (tab 2) because tab 3 is still loading.
   EXPECT_FALSE(tab_manager->IsTabLoadingForTest(contents2_.get()));
   EXPECT_TRUE(tab_manager->IsNavigationDelayedForTest(nav_handle2_.get()));
-  tab_manager->GetWebContentsData(contents1_.get())->DidStopLoading();
+  tab_manager->GetWebContentsData(contents1_.get())->NotifyTabIsLoaded();
   EXPECT_FALSE(tab_manager->IsTabLoadingForTest(contents1_.get()));
   EXPECT_FALSE(tab_manager->IsTabLoadingForTest(contents2_.get()));
   EXPECT_TRUE(tab_manager->IsNavigationDelayedForTest(nav_handle2_.get()));
 
   // Simulate tab 3 has finished loading. TabManager starts loading the next tab
   // (tab 2).
-  tab_manager->GetWebContentsData(contents3_.get())->DidStopLoading();
+  tab_manager->GetWebContentsData(contents3_.get())->NotifyTabIsLoaded();
   EXPECT_FALSE(tab_manager->IsTabLoadingForTest(contents3_.get()));
   EXPECT_TRUE(tab_manager->IsTabLoadingForTest(contents2_.get()));
   EXPECT_FALSE(tab_manager->IsNavigationDelayedForTest(nav_handle2_.get()));
@@ -958,7 +959,7 @@ TEST_F(TabManagerTest, BackgroundTabLoadingMode) {
   EXPECT_TRUE(tab_manager->IsNavigationDelayedForTest(nav_handle3_.get()));
 
   // Simulate tab 1 has finished loading.
-  tab_manager->GetWebContentsData(contents1_.get())->DidStopLoading();
+  tab_manager->GetWebContentsData(contents1_.get())->NotifyTabIsLoaded();
 
   // Tab 2 and 3 are still pending because of the paused loading mode.
   EXPECT_FALSE(tab_manager->IsTabLoadingForTest(contents2_.get()));
@@ -976,7 +977,7 @@ TEST_F(TabManagerTest, BackgroundTabLoadingMode) {
   EXPECT_FALSE(tab_manager->IsNavigationDelayedForTest(nav_handle2_.get()));
 
   // Simulate tab 2 has finished loading.
-  tab_manager->GetWebContentsData(contents2_.get())->DidStopLoading();
+  tab_manager->GetWebContentsData(contents2_.get())->NotifyTabIsLoaded();
 
   // Tab 3 should start loading now in staggered loading mode.
   EXPECT_TRUE(tab_manager->IsTabLoadingForTest(contents3_.get()));
@@ -1027,7 +1028,7 @@ TEST_F(TabManagerTest, BackgroundTabsLoadingOrdering) {
 
   // Simulate tab 1 has finished loading. Tab 3 should be loaded before tab 2,
   // because tab 2 is internal page.
-  tab_manager->GetWebContentsData(contents1_.get())->DidStopLoading();
+  tab_manager->GetWebContentsData(contents1_.get())->NotifyTabIsLoaded();
 
   EXPECT_FALSE(tab_manager->IsTabLoadingForTest(contents2_.get()));
   EXPECT_TRUE(tab_manager->IsTabLoadingForTest(contents3_.get()));
@@ -1065,7 +1066,7 @@ TEST_F(TabManagerTest, PauseAndResumeBackgroundTabOpening) {
 
   // Simulate tab 1 has finished loading, which was scheduled to load before
   // pausing.
-  tab_manager->GetWebContentsData(contents1_.get())->DidStopLoading();
+  tab_manager->GetWebContentsData(contents1_.get())->NotifyTabIsLoaded();
 
   // TabManager cannot enter BackgroundTabOpening session when it is in paused
   // mode.
@@ -1103,12 +1104,12 @@ TEST_F(TabManagerTest, IsInBackgroundTabOpeningSession) {
   EXPECT_TRUE(
       tab_manager->stats_collector()->is_in_background_tab_opening_session());
 
-  tab_manager->GetWebContentsData(contents1_.get())->DidStopLoading();
+  tab_manager->GetWebContentsData(contents1_.get())->NotifyTabIsLoaded();
   EXPECT_TRUE(tab_manager->IsInBackgroundTabOpeningSession());
   EXPECT_TRUE(
       tab_manager->stats_collector()->is_in_background_tab_opening_session());
 
-  tab_manager->GetWebContentsData(contents2_.get())->DidStopLoading();
+  tab_manager->GetWebContentsData(contents2_.get())->NotifyTabIsLoaded();
   EXPECT_TRUE(tab_manager->IsInBackgroundTabOpeningSession());
   EXPECT_TRUE(
       tab_manager->stats_collector()->is_in_background_tab_opening_session());
@@ -1121,7 +1122,7 @@ TEST_F(TabManagerTest, IsInBackgroundTabOpeningSession) {
   EXPECT_TRUE(
       tab_manager->stats_collector()->is_in_background_tab_opening_session());
 
-  tab_manager->GetWebContentsData(contents3_.get())->DidStopLoading();
+  tab_manager->GetWebContentsData(contents3_.get())->NotifyTabIsLoaded();
   EXPECT_FALSE(tab_manager->IsInBackgroundTabOpeningSession());
   EXPECT_FALSE(
       tab_manager->stats_collector()->is_in_background_tab_opening_session());
@@ -1155,7 +1156,7 @@ TEST_F(TabManagerWithExperimentDisabledTest, IsInBackgroundTabOpeningSession) {
   EXPECT_TRUE(
       tab_manager->stats_collector()->is_in_background_tab_opening_session());
 
-  tab_manager->GetWebContentsData(contents1_.get())->DidStopLoading();
+  tab_manager->GetWebContentsData(contents1_.get())->NotifyTabIsLoaded();
   EXPECT_FALSE(tab_manager->IsTabLoadingForTest(contents1_.get()));
   EXPECT_TRUE(tab_manager->IsTabLoadingForTest(contents2_.get()));
   EXPECT_TRUE(tab_manager->IsTabLoadingForTest(contents3_.get()));
@@ -1163,7 +1164,7 @@ TEST_F(TabManagerWithExperimentDisabledTest, IsInBackgroundTabOpeningSession) {
   EXPECT_TRUE(
       tab_manager->stats_collector()->is_in_background_tab_opening_session());
 
-  tab_manager->GetWebContentsData(contents2_.get())->DidStopLoading();
+  tab_manager->GetWebContentsData(contents2_.get())->NotifyTabIsLoaded();
   EXPECT_FALSE(tab_manager->IsTabLoadingForTest(contents1_.get()));
   EXPECT_FALSE(tab_manager->IsTabLoadingForTest(contents2_.get()));
   EXPECT_TRUE(tab_manager->IsTabLoadingForTest(contents3_.get()));
@@ -1179,7 +1180,7 @@ TEST_F(TabManagerWithExperimentDisabledTest, IsInBackgroundTabOpeningSession) {
   EXPECT_TRUE(
       tab_manager->stats_collector()->is_in_background_tab_opening_session());
 
-  tab_manager->GetWebContentsData(contents3_.get())->DidStopLoading();
+  tab_manager->GetWebContentsData(contents3_.get())->NotifyTabIsLoaded();
   EXPECT_FALSE(tab_manager->IsTabLoadingForTest(contents1_.get()));
   EXPECT_FALSE(tab_manager->IsTabLoadingForTest(contents2_.get()));
   EXPECT_FALSE(tab_manager->IsTabLoadingForTest(contents3_.get()));
@@ -1276,9 +1277,9 @@ TEST_F(TabManagerTest, SessionRestoreAfterBackgroundTabOpeningSession) {
 
   // The background tab opening session ends after existing tracked tabs have
   // finished loading.
-  tab_manager->GetWebContentsData(contents1_.get())->DidStopLoading();
-  tab_manager->GetWebContentsData(contents2_.get())->DidStopLoading();
-  tab_manager->GetWebContentsData(contents3_.get())->DidStopLoading();
+  tab_manager->GetWebContentsData(contents1_.get())->NotifyTabIsLoaded();
+  tab_manager->GetWebContentsData(contents2_.get())->NotifyTabIsLoaded();
+  tab_manager->GetWebContentsData(contents3_.get())->NotifyTabIsLoaded();
   EXPECT_FALSE(tab_manager->IsInBackgroundTabOpeningSession());
   EXPECT_FALSE(
       tab_manager->stats_collector()->is_in_background_tab_opening_session());
@@ -1296,6 +1297,62 @@ TEST_F(TabManagerTest, IsTabRestoredInForeground) {
   contents->WasHidden();
   tab_manager->OnWillRestoreTab(contents.get());
   EXPECT_FALSE(tab_manager->IsTabRestoredInForeground(contents.get()));
+}
+
+TEST_F(TabManagerTest, IdleSignalPlumbingFromResourceCoordinator) {
+  base::test::ScopedFeatureList scoped_feature_list;
+  scoped_feature_list.InitAndEnableFeature(features::kPageAlmostIdle);
+  EXPECT_TRUE(base::FeatureList::IsEnabled(features::kPageAlmostIdle));
+
+  TabManager* tab_manager = g_browser_process->GetTabManager();
+  tab_manager->ResetMemoryPressureListenerForTest();
+
+  EXPECT_EQ(TabManager::BackgroundTabLoadingMode::kStaggered,
+            tab_manager->background_tab_loading_mode_);
+
+  MaybeThrottleNavigations(tab_manager);
+  tab_manager->GetWebContentsData(contents1_.get())
+      ->DidStartNavigation(nav_handle1_.get());
+
+  EXPECT_TRUE(tab_manager->IsTabLoadingForTest(contents1_.get()));
+  EXPECT_FALSE(tab_manager->IsTabLoadingForTest(contents2_.get()));
+  EXPECT_FALSE(tab_manager->IsTabLoadingForTest(contents3_.get()));
+  EXPECT_FALSE(tab_manager->IsNavigationDelayedForTest(nav_handle1_.get()));
+  EXPECT_TRUE(tab_manager->IsNavigationDelayedForTest(nav_handle2_.get()));
+  EXPECT_TRUE(tab_manager->IsNavigationDelayedForTest(nav_handle3_.get()));
+
+  // Simulate tab 1 has finished loading through WebContentsObserver API.
+  // Since the page idle signal feature is enabled, this shouldn't start
+  // next loading.
+  tab_manager->GetWebContentsData(contents1_.get())->DidStopLoading();
+
+  // Tab 2 and Tab 3 are still pending because the DidStopLoading signal from
+  // WebContentsObserver is disabled.
+  EXPECT_FALSE(tab_manager->IsTabLoadingForTest(contents2_.get()));
+  EXPECT_FALSE(tab_manager->IsTabLoadingForTest(contents3_.get()));
+  EXPECT_TRUE(tab_manager->IsNavigationDelayedForTest(nav_handle2_.get()));
+  EXPECT_TRUE(tab_manager->IsNavigationDelayedForTest(nav_handle3_.get()));
+
+  // Simulate tab 1 has finished loading by receiving idle signal from resource
+  // coordinator. Since the page idle signal feature is enabled, this should
+  // start next loading.
+  tab_manager->GetWebContentsData(contents1_.get())->NotifyTabIsLoaded();
+
+  // Tab 2 should start loading right away.
+  EXPECT_TRUE(tab_manager->IsTabLoadingForTest(contents2_.get()));
+  EXPECT_FALSE(tab_manager->IsNavigationDelayedForTest(nav_handle2_.get()));
+
+  // Tab 3 is still pending.
+  EXPECT_FALSE(tab_manager->IsTabLoadingForTest(contents3_.get()));
+  EXPECT_TRUE(tab_manager->IsNavigationDelayedForTest(nav_handle3_.get()));
+
+  // Simulate tab 2 has finished loading by receiving idle signal from resource
+  // coordinator.
+  tab_manager->GetWebContentsData(contents2_.get())->NotifyTabIsLoaded();
+
+  // Tab 3 should start loading now in staggered loading mode.
+  EXPECT_TRUE(tab_manager->IsTabLoadingForTest(contents3_.get()));
+  EXPECT_FALSE(tab_manager->IsNavigationDelayedForTest(nav_handle3_.get()));
 }
 
 }  // namespace resource_coordinator

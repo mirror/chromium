@@ -61,7 +61,8 @@ void TabManager::PageSignalReceiver::NotifyPageAlmostIdle(
     return;
   auto* web_contents_data =
       TabManager::WebContentsData::FromWebContents(web_contents_iter->second);
-  web_contents_data->NotifyAlmostIdle();
+  // web_contents_data->NotifyAlmostIdle();
+  web_contents_data->NotifyTabIsLoaded();
 }
 
 void TabManager::PageSignalReceiver::SetExpectedTaskQueueingDuration(
