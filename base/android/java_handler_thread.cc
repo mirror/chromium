@@ -8,6 +8,7 @@
 
 #include "base/android/jni_android.h"
 #include "base/android/jni_string.h"
+#include "base/bind.h"
 #include "base/run_loop.h"
 #include "base/synchronization/waitable_event.h"
 #include "base/threading/thread_restrictions.h"
@@ -51,9 +52,11 @@ void JavaHandlerThread::Start() {
 }
 
 void JavaHandlerThread::Stop() {
+  task_runner()->PostTask(
+      FROM_HERE,
+      base::BindOnce(&JavaHandlerThread::StopOnThread, base::Unretained(this)));
   JNIEnv* env = base::android::AttachCurrentThread();
-  Java_JavaHandlerThread_stop(env, java_thread_,
-                              reinterpret_cast<intptr_t>(this));
+  Java_JavaHandlerThread_joinThread(env, java_thread_);
 }
 
 void JavaHandlerThread::InitializeThread(JNIEnv* env,
@@ -65,9 +68,17 @@ void JavaHandlerThread::InitializeThread(JNIEnv* env,
   reinterpret_cast<base::WaitableEvent*>(event)->Signal();
 }
 
-void JavaHandlerThread::StopThread(JNIEnv* env,
-                                   const JavaParamRef<jobject>& obj) {
+void JavaHandlerThread::StopOnThread() {
   StopMessageLoop();
+  static_cast<MessageLoopForUI*>(message_loop_)
+      ->SetIdleCallback(base::BindOnce(&JavaHandlerThread::QuitThreadSafely,
+                                       base::Unretained(this)));
+}
+
+void JavaHandlerThread::QuitThreadSafely() {
+  JNIEnv* env = base::android::AttachCurrentThread();
+  Java_JavaHandlerThread_quitThreadSafely(env, java_thread_,
+                                          reinterpret_cast<intptr_t>(this));
 }
 
 void JavaHandlerThread::OnLooperStopped(JNIEnv* env,
@@ -86,9 +97,7 @@ void JavaHandlerThread::StopMessageLoop() {
 }
 
 void JavaHandlerThread::StopMessageLoopForTesting() {
-  JNIEnv* env = base::android::AttachCurrentThread();
-  Java_JavaHandlerThread_stopOnThread(env, java_thread_,
-                                      reinterpret_cast<intptr_t>(this));
+  StopOnThread();
 }
 
 void JavaHandlerThread::JoinForTesting() {
