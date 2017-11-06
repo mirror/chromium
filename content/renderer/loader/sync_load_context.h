@@ -56,12 +56,15 @@ class SyncLoadContext : public RequestPeer {
   void OnDownloadedData(int len, int encoded_data_length) override;
   void OnReceivedData(std::unique_ptr<ReceivedData> data) override;
   void OnTransferSizeUpdated(int transfer_size_diff) override;
-  void OnCompletedRequest(int error_code,
-                          bool stale_copy_in_cache,
-                          const base::TimeTicks& completion_time,
-                          int64_t total_transfer_size,
-                          int64_t encoded_body_size,
-                          int64_t decoded_body_size) override;
+  void OnCompletedRequest(
+      int error_code,
+      base::Optional<network::mojom::CORSError> cors_error,
+      scoped_refptr<net::HttpResponseHeaders> error_response_headers,
+      bool stale_copy_in_cache,
+      const base::TimeTicks& completion_time,
+      int64_t total_transfer_size,
+      int64_t encoded_body_size,
+      int64_t decoded_body_size) override;
 
   // This raw pointer will remain valid for the lifetime of this object because
   // it remains on the stack until |event_| is signaled.

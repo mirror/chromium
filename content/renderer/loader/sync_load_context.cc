@@ -98,13 +98,21 @@ void SyncLoadContext::OnReceivedData(std::unique_ptr<ReceivedData> data) {
 
 void SyncLoadContext::OnTransferSizeUpdated(int transfer_size_diff) {}
 
-void SyncLoadContext::OnCompletedRequest(int error_code,
-                                         bool stale_copy_in_cache,
-                                         const base::TimeTicks& completion_time,
-                                         int64_t total_transfer_size,
-                                         int64_t encoded_body_size,
-                                         int64_t decoded_body_size) {
+void SyncLoadContext::OnCompletedRequest(
+    int error_code,
+    base::Optional<network::mojom::CORSError> cors_error,
+    scoped_refptr<net::HttpResponseHeaders> error_response_headers,
+    bool stale_copy_in_cache,
+    const base::TimeTicks& completion_time,
+    int64_t total_transfer_size,
+    int64_t encoded_body_size,
+    int64_t decoded_body_size) {
   response_->error_code = error_code;
+  response_->cors_error = cors_error;
+  // Update |headers| that was set at OnReceiveResponse() only when an error and
+  // |error_response_headers| are reported.
+  if (error_code && error_response_headers)
+    response_->headers = error_response_headers;
   response_->encoded_data_length = total_transfer_size;
   response_->encoded_body_length = encoded_body_size;
   event_->Signal();

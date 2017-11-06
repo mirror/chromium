@@ -352,9 +352,11 @@ class WebURLLoaderImplTest : public testing::Test {
 
   void DoCompleteRequest() {
     EXPECT_FALSE(client()->did_finish());
-    peer()->OnCompletedRequest(net::OK, false, base::TimeTicks(),
-                               strlen(kTestData), strlen(kTestData),
-                               strlen(kTestData));
+    peer()->OnCompletedRequest(
+        net::OK, base::nullopt /* cors_error */,
+        nullptr /* error_response_headers */, false /* stale_copy_in_cache */,
+        base::TimeTicks() /* completion_time */, strlen(kTestData),
+        strlen(kTestData), strlen(kTestData));
     EXPECT_TRUE(client()->did_finish());
     // There should be no error.
     EXPECT_EQ(net::OK, client()->error().reason);
@@ -363,9 +365,11 @@ class WebURLLoaderImplTest : public testing::Test {
 
   void DoFailRequest() {
     EXPECT_FALSE(client()->did_finish());
-    peer()->OnCompletedRequest(net::ERR_FAILED, false, base::TimeTicks(),
-                               strlen(kTestData), strlen(kTestData),
-                               strlen(kTestData));
+    peer()->OnCompletedRequest(
+        net::ERR_FAILED, base::nullopt /* cors_error */,
+        nullptr /* error_response_headers */, false /* stale_copy_in_cache */,
+        base::TimeTicks() /* completion_time */, strlen(kTestData),
+        strlen(kTestData), strlen(kTestData));
     EXPECT_FALSE(client()->did_finish());
     EXPECT_EQ(net::ERR_FAILED, client()->error().reason);
     EXPECT_EQ(blink::WebURLError::Domain::kNet, client()->error().domain);
@@ -591,9 +595,11 @@ TEST_F(WebURLLoaderImplTest, FtpDeleteOnReceiveMoreData) {
   // Directory listings are only parsed once the request completes, so this will
   // cancel in DoReceiveDataFtp, before the request finishes.
   client()->set_delete_on_receive_data();
-  peer()->OnCompletedRequest(net::OK, false, base::TimeTicks(),
-                             strlen(kTestData), strlen(kTestData),
-                             strlen(kTestData));
+  peer()->OnCompletedRequest(
+      net::OK, base::nullopt /* cors_error */,
+      nullptr /* error_response_headers */, false /* stale_copy_in_cache */,
+      base::TimeTicks() /* completion_time */, strlen(kTestData),
+      strlen(kTestData), strlen(kTestData));
   EXPECT_FALSE(client()->did_finish());
 }
 

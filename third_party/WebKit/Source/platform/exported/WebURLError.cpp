@@ -30,6 +30,7 @@
 
 #include "public/platform/WebURLError.h"
 
+#include "net/base/net_errors.h"
 #include "platform/loader/fetch/ResourceError.h"
 #include "platform/weborigin/KURL.h"
 
@@ -37,11 +38,19 @@ namespace blink {
 
 WebURLError::WebURLError(const WebURL& unreachable_url,
                          bool stale_copy_in_cache,
-                         int reason)
+                         int reason,
+                         base::Optional<network::mojom::CORSError> cors_error,
+                         int status_code)
     : domain(Domain::kNet),
       reason(reason),
+      cors_error(cors_error),
+      status_code(status_code),
       stale_copy_in_cache(stale_copy_in_cache),
-      unreachable_url(unreachable_url) {}
+      is_web_security_violation(cors_error),
+      unreachable_url(unreachable_url) {
+  // net::ERR_FAILED should be set for a valid |cors_error| report.
+  DCHECK(!cors_error || reason == net::ERR_FAILED);
+}
 
 WebURLError::WebURLError(const ResourceError& error) {
   *this = error;
@@ -53,6 +62,8 @@ WebURLError& WebURLError::operator=(const ResourceError& error) {
   } else {
     domain = error.GetDomain();
     reason = error.ErrorCode();
+    cors_error = error.CORSError();
+    status_code = error.StatusCode();
     unreachable_url = KURL(error.FailingURL());
     stale_copy_in_cache = error.StaleCopyInCache();
     is_web_security_violation = error.IsAccessCheck();
@@ -63,7 +74,8 @@ WebURLError& WebURLError::operator=(const ResourceError& error) {
 WebURLError::operator ResourceError() const {
   if (!reason)
     return ResourceError();
-  ResourceError resource_error(domain, reason, unreachable_url);
+  ResourceError resource_error(domain, reason, cors_error, status_code,
+                               unreachable_url);
   resource_error.SetStaleCopyInCache(stale_copy_in_cache);
   resource_error.SetIsAccessCheck(is_web_security_violation);
   return resource_error;
