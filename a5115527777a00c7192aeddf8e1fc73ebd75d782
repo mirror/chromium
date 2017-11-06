@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "c7d17b67_0c361252",
+        "filename": "tools/cygprofile/cyglog_to_orderfile.py",
+        "patchSetId": 1
+      },
+      "lineNbr": 250,
+      "author": {
+        "id": 1132034
+      },
+      "writtenOn": "2017-11-06T13:13:25Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "60758025_10d72e40",
+      "range": {
+        "startLine": 250,
+        "startChar": 15,
+        "endLine": 250,
+        "endChar": 33
+      },
+      "revId": "a5115527777a00c7192aeddf8e1fc73ebd75d782",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "046dc553_b1c3d9ec",
         "filename": "tools/cygprofile/cyglog_to_orderfile.py",
         "patchSetId": 1
@@ -48,6 +72,30 @@
     },
     {
       "key": {
+        "uuid": "09e40d10_1e642e91",
+        "filename": "tools/cygprofile/cyglog_to_orderfile.py",
+        "patchSetId": 1
+      },
+      "lineNbr": 266,
+      "author": {
+        "id": 1132034
+      },
+      "writtenOn": "2017-11-06T13:13:25Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "046dc553_b1c3d9ec",
+      "range": {
+        "startLine": 266,
+        "startChar": 23,
+        "endLine": 266,
+        "endChar": 40
+      },
+      "revId": "a5115527777a00c7192aeddf8e1fc73ebd75d782",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "56feaffe_71957412",
         "filename": "tools/cygprofile/orderfile_generator.py",
         "patchSetId": 1
@@ -59,6 +107,30 @@
       "writtenOn": "2017-11-02T18:18:21Z",
       "side": 1,
       "message": "I usually try to assign a different name to an asset that I modify in scripts. Here it is probably fine .. we are changing the orderfile, then after the next sync will have to re-download it, no big deal.\n\nIf after reading the above you see an problem, feel free to address it :) Otherwise I\u0027m OK disregarding this intuition of mine.",
+      "range": {
+        "startLine": 161,
+        "startChar": 4,
+        "endLine": 161,
+        "endChar": 31
+      },
+      "revId": "a5115527777a00c7192aeddf8e1fc73ebd75d782",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "43644d4d_ff83be74",
+        "filename": "tools/cygprofile/orderfile_generator.py",
+        "patchSetId": 1
+      },
+      "lineNbr": 161,
+      "author": {
+        "id": 1132034
+      },
+      "writtenOn": "2017-11-06T13:13:25Z",
+      "side": 1,
+      "message": "It\u0027s the general flow here, modify things in place. Not the best thing, but kept it this way for consistency.",
+      "parentUuid": "56feaffe_71957412",
       "range": {
         "startLine": 161,
         "startChar": 4,
@@ -94,6 +166,30 @@
     },
     {
       "key": {
+        "uuid": "0cfb295e_8d60e7b6",
+        "filename": "tools/cygprofile/orderfile_generator.py",
+        "patchSetId": 1
+      },
+      "lineNbr": 166,
+      "author": {
+        "id": 1132034
+      },
+      "writtenOn": "2017-11-06T13:13:25Z",
+      "side": 1,
+      "message": "Changed in the later revision.",
+      "parentUuid": "10385b02_5c9d2e58",
+      "range": {
+        "startLine": 166,
+        "startChar": 6,
+        "endLine": 166,
+        "endChar": 11
+      },
+      "revId": "a5115527777a00c7192aeddf8e1fc73ebd75d782",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "935887e5_d9e14bfa",
         "filename": "tools/cygprofile/orderfile_generator.py",
         "patchSetId": 1
@@ -105,6 +201,30 @@
       "writtenOn": "2017-11-02T18:18:21Z",
       "side": 1,
       "message": "default values in arguments are error-prone. I would prefer StepRecorder._lightweight_instrumentation and never modify it outside __init__ since I think it\u0027s unlikely that we would want to change the flag value at runtime.",
+      "range": {
+        "startLine": 305,
+        "startChar": 43,
+        "endLine": 305,
+        "endChar": 76
+      },
+      "revId": "a5115527777a00c7192aeddf8e1fc73ebd75d782",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b5c35f6c_05babcd4",
+        "filename": "tools/cygprofile/orderfile_generator.py",
+        "patchSetId": 1
+      },
+      "lineNbr": 305,
+      "author": {
+        "id": 1132034
+      },
+      "writtenOn": "2017-11-06T13:13:25Z",
+      "side": 1,
+      "message": "The same \"compiler\" object is used for both the instrumented and non-instrumented builds, and the first argument actually takes several values. Is it OK to keep it as is?",
+      "parentUuid": "935887e5_d9e14bfa",
       "range": {
         "startLine": 305,
         "startChar": 43,
@@ -163,6 +283,30 @@
     },
     {
       "key": {
+        "uuid": "a05a53d2_589efe2b",
+        "filename": "tools/cygprofile/orderfile_generator.py",
+        "patchSetId": 1
+      },
+      "lineNbr": 554,
+      "author": {
+        "id": 1132034
+      },
+      "writtenOn": "2017-11-06T13:13:25Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "f9db1524_7847b454",
+      "range": {
+        "startLine": 554,
+        "startChar": 6,
+        "endLine": 554,
+        "endChar": 13
+      },
+      "revId": "a5115527777a00c7192aeddf8e1fc73ebd75d782",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "db6296e0_71a52b31",
         "filename": "tools/cygprofile/process_profiles.py",
         "patchSetId": 1
@@ -186,6 +330,30 @@
     },
     {
       "key": {
+        "uuid": "830e0ad9_cab5477a",
+        "filename": "tools/cygprofile/process_profiles.py",
+        "patchSetId": 1
+      },
+      "lineNbr": 183,
+      "author": {
+        "id": 1132034
+      },
+      "writtenOn": "2017-11-06T13:13:25Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "db6296e0_71a52b31",
+      "range": {
+        "startLine": 183,
+        "startChar": 4,
+        "endLine": 183,
+        "endChar": 29
+      },
+      "revId": "a5115527777a00c7192aeddf8e1fc73ebd75d782",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "e5fdec8a_43587a16",
         "filename": "tools/cygprofile/process_profiles.py",
         "patchSetId": 1
@@ -197,6 +365,30 @@
       "writtenOn": "2017-11-02T18:18:21Z",
       "side": 1,
       "message": "any reason not to update MergeDumpsAndWriteSymbolOffsets() to be reusable here?",
+      "range": {
+        "startLine": 242,
+        "startChar": 4,
+        "endLine": 242,
+        "endChar": 29
+      },
+      "revId": "a5115527777a00c7192aeddf8e1fc73ebd75d782",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4ba38d33_555bcdb2",
+        "filename": "tools/cygprofile/process_profiles.py",
+        "patchSetId": 1
+      },
+      "lineNbr": 242,
+      "author": {
+        "id": 1132034
+      },
+      "writtenOn": "2017-11-06T13:13:25Z",
+      "side": 1,
+      "message": "More time, as the symbols need to be re-read from the native library.",
+      "parentUuid": "e5fdec8a_43587a16",
       "range": {
         "startLine": 242,
         "startChar": 4,
