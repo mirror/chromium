@@ -384,24 +384,28 @@ ServiceManagerContext::ServiceManagerContext() {
 
   // See the comments on wake_lock_context_host.h and ContentNfcDelegate.java
   // respectively for comments on those parameters.
-  device_info.factory =
-      base::Bind(&device::CreateDeviceService, device_blocking_task_runner,
-                 BrowserThread::GetTaskRunnerForThread(BrowserThread::IO),
-                 base::Bind(&WakeLockContextHost::GetNativeViewForContext),
-                 std::move(java_nfc_delegate));
+  device_info.factory = base::Bind(
+      &device::CreateDeviceService, device_blocking_task_runner,
+      BrowserThread::GetTaskRunnerForThread(BrowserThread::IO),
+      base::BindRepeating(&GetGeolocationRequestContextFromContentClient),
+      GetContentClient()->browser()->GetGeolocationApiKey(),
+      base::Bind(&WakeLockContextHost::GetNativeViewForContext),
+      std::move(java_nfc_delegate));
 #else
-  device_info.factory =
-      base::Bind(&device::CreateDeviceService, device_blocking_task_runner,
-                 BrowserThread::GetTaskRunnerForThread(BrowserThread::IO));
+  device_info.factory = base::Bind(
+      &device::CreateDeviceService, device_blocking_task_runner,
+      BrowserThread::GetTaskRunnerForThread(BrowserThread::IO),
+      base::BindRepeating(&GetGeolocationRequestContextFromContentClient),
+      GetContentClient()->browser()->GetGeolocationApiKey());
 #endif
   device_info.task_runner = base::ThreadTaskRunnerHandle::Get();
   packaged_services_connection_->AddEmbeddedService(device::mojom::kServiceName,
                                                     device_info);
 
-  // Pipe embedder-supplied API key through to GeolocationProvider.
-  // TODO(amoylan): Once GeolocationProvider hangs off DeviceService
-  // (https://crbug.com/709301), pass these via CreateDeviceService above
-  // instead.
+  // Pipe embedder-supplied API key & URL request context producer through to
+  // GeolocationProvider.
+  // TODO(amoylan): Remove these once GeolocationProvider hangs off
+  // DeviceService (https://crbug.com/709301).
   device::GeolocationProvider::SetRequestContextProducer(
       base::BindRepeating(&GetGeolocationRequestContextFromContentClient));
   device::GeolocationProvider::SetApiKey(
