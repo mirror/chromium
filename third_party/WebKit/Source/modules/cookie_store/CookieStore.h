@@ -37,6 +37,24 @@ class CookieStore final : public ScriptWrappable,
   ScriptPromise getAll(ScriptState*,
                        const CookieStoreGetOptions&,
                        ExceptionState&);
+  ScriptPromise getAll(ScriptState*,
+                       const String& name,
+                       const CookieStoreGetOptions&,
+                       ExceptionState&);
+  ScriptPromise get(ScriptState*,
+                    const CookieStoreGetOptions&,
+                    ExceptionState&);
+  ScriptPromise get(ScriptState*,
+                    const String& name,
+                    const CookieStoreGetOptions&,
+                    ExceptionState&);
+  ScriptPromise has(ScriptState*,
+                    const CookieStoreGetOptions&,
+                    ExceptionState&);
+  ScriptPromise has(ScriptState*,
+                    const String& name,
+                    const CookieStoreGetOptions&,
+                    ExceptionState&);
 
   ScriptPromise set(ScriptState*,
                     const CookieStoreSetOptions&,
@@ -46,6 +64,13 @@ class CookieStore final : public ScriptWrappable,
                     const String& value,
                     const CookieStoreSetOptions&,
                     ExceptionState&);
+  ScriptPromise deleteForBindings(ScriptState*,
+                                  const CookieStoreSetOptions&,
+                                  ExceptionState&);
+  ScriptPromise deleteForBindings(ScriptState*,
+                                  const String& name,
+                                  const CookieStoreSetOptions&,
+                                  ExceptionState&);
 
   void Trace(blink::Visitor* visitor) override {
     ScriptWrappable::Trace(visitor);

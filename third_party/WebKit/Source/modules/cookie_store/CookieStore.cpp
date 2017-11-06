@@ -28,14 +28,51 @@ namespace blink {
 namespace {
 
 network::mojom::blink::CookieManagerGetOptionsPtr ToBackendOptions(
-    const CookieStoreGetOptions& options) {
+    const WTF::String& name,
+    const CookieStoreGetOptions& options,
+    ExceptionState& exception_state) {
   auto backend_options = network::mojom::blink::CookieManagerGetOptions::New();
-  backend_options->name = g_empty_string;
-  backend_options->match_type =
-      network::mojom::blink::CookieMatchType::STARTS_WITH;
 
-  // TODO(crbug.com/729800): Implement, parse and validate options. Throw
-  //                         relevant exceptions on validation errors.
+  /*
+  if (options.hasURL()) {
+    KURL url = KURL(options.url());
+    if (!url.IsValid()) {
+      exception_state.ThrowTypeError("Invalid URL");
+      return nullptr;
+    }
+    backend_options->url = std::move(url);
+  }
+  */
+
+  backend_options->match_type = network::mojom::blink::CookieMatchType::EQUALS;
+
+  if (name.IsNull()) {
+    if (options.hasName()) {
+      backend_options->name = options.name();
+    } else {
+      // The filter options below will match any cookie name, unless
+      backend_options->match_type =
+          network::mojom::blink::CookieMatchType::STARTS_WITH;
+      backend_options->name = WTF::String("");
+    }
+  } else {
+    if (options.hasName()) {
+      exception_state.ThrowTypeError(
+          "Cookie name specified both as an argument and as an option");
+      return nullptr;
+    }
+    backend_options->name = name;
+  }
+  if (options.matchType() == "startsWith") {
+    backend_options->match_type =
+        network::mojom::blink::CookieMatchType::STARTS_WITH;
+  } else if (options.matchType() == "equals") {
+    // This check and assignment is necessary for the (very specific) case where
+    // no cookie name is specified, and matchType is set to "equals".
+    backend_options->match_type =
+        network::mojom::blink::CookieMatchType::EQUALS;
+  }
+
   return backend_options;
 }
 
@@ -43,27 +80,63 @@ network::mojom::blink::CanonicalCookiePtr ToCanonicalCookie(
     const KURL& cookie_url,
     const String& name,
     const String& value,
-    const CookieStoreSetOptions& options) {
+    const CookieStoreSetOptions& options,
+    ExceptionState& exception_state) {
   auto canonical_cookie = network::mojom::blink::CanonicalCookie::New();
 
-  DCHECK(!name.IsNull());
-  canonical_cookie->name = name;
+  if (name.IsNull()) {
+    if (!options.hasName()) {
+      exception_state.ThrowTypeError("Unspecified cookie name");
+      return nullptr;
+    }
+    canonical_cookie->name = options.name();
+  } else {
+    if (options.hasName()) {
+      exception_state.ThrowTypeError(
+          "Cookie name specified both as an argument and as an option");
+      return nullptr;
+    }
+    canonical_cookie->name = name;
+  }
 
-  DCHECK(!value.IsNull());
-  canonical_cookie->value = value;
+  if (value.IsNull()) {
+    if (!options.hasValue()) {
+      exception_state.ThrowTypeError("Unspecified cookie value");
+      return nullptr;
+    }
+    canonical_cookie->value = options.value();
+  } else {
+    if (options.hasValue()) {
+      exception_state.ThrowTypeError(
+          "Cookie value specified both as an argument and as an option");
+      return nullptr;
+    }
+    canonical_cookie->value = value;
+  }
 
-  // TODO(pwnall): What if expires isn't set?
   if (options.hasExpires())
     canonical_cookie->expiry = WTF::Time::FromJavaTime(options.expires());
+  // The expires option is not set in CookieStoreSetOptions for session cookies.
+  // This is represented by a null expiry field in CanonicalCookie.
 
-  // TODO(pwnall): Find correct value.
-  canonical_cookie->domain = cookie_url.Host();
-  canonical_cookie->path = String("/");
-  canonical_cookie->secure = false;
-  canonical_cookie->httponly = false;
+  if (options.hasDomain()) {
+    // TODO(pwnall): Checks and exception throwing.
+    canonical_cookie->domain = options.domain();
+  } else {
+    // TODO(pwnall): Correct value?
+    canonical_cookie->domain = cookie_url.Host();
+  }
 
-  // TODO(crbug.com/729800): Implement, parse and validate options. Throw
-  //                         relevant exceptions on validation errors.
+  if (options.hasPath()) {
+    canonical_cookie->path = options.path();
+  } else {
+    canonical_cookie->path = String("/");
+  }
+
+  // TODO(pwnall): Checks and exception throwing.
+  canonical_cookie->secure = options.secure();
+  canonical_cookie->httponly = options.httpOnly();
+
   return canonical_cookie;
 }
 
@@ -95,13 +168,21 @@ CookieStore* CookieStore::Create(
 ScriptPromise CookieStore::getAll(ScriptState* script_state,
                                   const CookieStoreGetOptions& options,
                                   ExceptionState& exception_state) {
+  return getAll(script_state, WTF::String(), options, exception_state);
+}
+
+ScriptPromise CookieStore::getAll(ScriptState* script_state,
+                                  const String& name,
+                                  const CookieStoreGetOptions& options,
+                                  ExceptionState& exception_state) {
   KURL cookie_url;
   KURL site_for_cookies;
   ExtractCookieURLs(script_state, cookie_url, site_for_cookies);
 
   network::mojom::blink::CookieManagerGetOptionsPtr backend_options =
-      ToBackendOptions(options);
-  DCHECK(!backend_options.is_null());
+      ToBackendOptions(name, options, exception_state);
+  if (backend_options.is_null())
+    return ScriptPromise();
 
   if (!backend_) {
     exception_state.ThrowDOMException(kInvalidStateError,
@@ -118,6 +199,41 @@ ScriptPromise CookieStore::getAll(ScriptState* script_state,
   return resolver->Promise();
 }
 
+ScriptPromise CookieStore::get(ScriptState* script_state,
+                               const CookieStoreGetOptions& options,
+                               ExceptionState& exception_state) {
+  return get(script_state, WTF::String(), options, exception_state);
+}
+
+ScriptPromise CookieStore::get(ScriptState* script_state,
+                               const String& name,
+                               const CookieStoreGetOptions& options,
+                               ExceptionState& exception_state) {
+  // TODO(pwnall): Implement in terms of getAll.
+  return ScriptPromise::CastUndefined(script_state);
+}
+
+ScriptPromise CookieStore::has(ScriptState* script_state,
+                               const CookieStoreGetOptions& options,
+                               ExceptionState& exception_state) {
+  return has(script_state, WTF::String(), options, exception_state);
+}
+
+ScriptPromise CookieStore::has(ScriptState* script_state,
+                               const String& name,
+                               const CookieStoreGetOptions& options,
+                               ExceptionState& exception_state) {
+  // TODO(pwnall): Implement in terms of getAll.
+  return ScriptPromise::CastUndefined(script_state);
+}
+
+ScriptPromise CookieStore::set(ScriptState* script_state,
+                               const CookieStoreSetOptions& options,
+                               ExceptionState& exception_state) {
+  return set(script_state, WTF::String(), WTF::String(), options,
+             exception_state);
+}
+
 ScriptPromise CookieStore::set(ScriptState* script_state,
                                const String& name,
                                const String& value,
@@ -128,8 +244,9 @@ ScriptPromise CookieStore::set(ScriptState* script_state,
   ExtractCookieURLs(script_state, cookie_url, site_for_cookies);
 
   network::mojom::blink::CanonicalCookiePtr canonical_cookie =
-      ToCanonicalCookie(cookie_url, name, value, options);
-  DCHECK(!canonical_cookie.is_null());
+      ToCanonicalCookie(cookie_url, name, value, options, exception_state);
+  if (canonical_cookie.is_null())
+    return ScriptPromise();
 
   if (!backend_) {
     exception_state.ThrowDOMException(kInvalidStateError,
@@ -144,6 +261,23 @@ ScriptPromise CookieStore::set(ScriptState* script_state,
                                       WrapPersistent(this),
                                       WrapPersistent(resolver))));
   return resolver->Promise();
+}
+
+ScriptPromise CookieStore::deleteForBindings(
+    ScriptState* script_state,
+    const CookieStoreSetOptions& options,
+    ExceptionState& exception_state) {
+  return deleteForBindings(script_state, WTF::String(), options,
+                           exception_state);
+}
+
+ScriptPromise CookieStore::deleteForBindings(
+    ScriptState* script_state,
+    const String& name,
+    const CookieStoreSetOptions& options,
+    ExceptionState& exception_state) {
+  // TODO(pwnall): Implement in terms of set.
+  return ScriptPromise::CastUndefined(script_state);
 }
 
 void CookieStore::ContextDestroyed(ExecutionContext* execution_context) {

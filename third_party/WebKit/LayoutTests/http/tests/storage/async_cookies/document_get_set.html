@@ -11,11 +11,11 @@ promise_test(async testCase => {
   const expiresAt = Date.now() + tenYears;
 
   await cookieStore.set('cookie-name', 'cookie-value', { expires: expiresAt });
-  const cookies = await cookieStore.getAll();
+  const cookie = await cookieStore.get();
 
   assert_equals(cookies.length, 1);
   assert_equals(cookies[0].name, 'cookie-name');
   assert_equals(cookies[0].value, 'cookie-value');
-}, 'cookieStore.getAll returns the cookie written by cookieStore.set');
+}, 'cookieStore.get returns the cookie written by cookieStore.set');
 
 </script>
