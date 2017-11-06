@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "696b55a4_dccd5097",
+        "filename": "chromecast/media/cma/backend/filter_group.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 122,
+      "author": {
+        "id": 1129958
+      },
+      "writtenOn": "2017-11-06T20:54:38Z",
+      "side": 1,
+      "message": "No longer initialized.",
+      "range": {
+        "startLine": 122,
+        "startChar": 2,
+        "endLine": 122,
+        "endChar": 21
+      },
+      "revId": "8195cf045691d7ec8d9862d2493739323cced389",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
