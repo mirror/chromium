@@ -36,7 +36,7 @@ class ProfileUpdateObserver;
   std::unique_ptr<ProfileUpdateObserver> profileObserver_;
 
   // The menu controller, if the menu is open.
-  BaseBubbleController* menuController_;
+  BOOL _isMenuOpened;
 }
 
 // The avatar button view.
@@ -57,12 +57,8 @@ class ProfileUpdateObserver;
                    fromAccessPoint:(signin_metrics::AccessPoint)accessPoint;
 
 // Called when the avatar bubble will close.
-- (void)bubbleWillClose:(NSNotification*)notif;
+- (void)bubbleIsClosing;
 
-@end
-
-@interface AvatarBaseController (ExposedForTesting)
-- (BaseBubbleController*)menuController;
 @end
 
 class ProfileUpdateObserver : public ProfileAttributesStorage::Observer,
