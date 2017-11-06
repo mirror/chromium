@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "353e56e1_e4e40ec9",
+        "filename": "third_party/WebKit/Source/modules/media_controls/MediaControlsImpl.cpp",
+        "patchSetId": 2
+      },
+      "lineNbr": 429,
+      "author": {
+        "id": 1212719
+      },
+      "writtenOn": "2017-11-06T16:20:40Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "468b4ca3_54266f5f",
+      "revId": "3e66b39021110ec114f3216c62756f8da2a1597f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "3415edce_9db6960c",
         "filename": "third_party/WebKit/Source/modules/media_controls/elements/MediaControlLoadingPanelElement.cpp",
         "patchSetId": 2
@@ -33,6 +51,24 @@
       "revId": "3e66b39021110ec114f3216c62756f8da2a1597f",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "17909e6c_4a248f4f",
+        "filename": "third_party/WebKit/Source/modules/media_controls/elements/MediaControlLoadingPanelElement.cpp",
+        "patchSetId": 2
+      },
+      "lineNbr": 47,
+      "author": {
+        "id": 1212719
+      },
+      "writtenOn": "2017-11-06T16:20:40Z",
+      "side": 1,
+      "message": "I have added a hook into RemovedFrom so when the element is removed from the DOM it will clean this up.",
+      "parentUuid": "3415edce_9db6960c",
+      "revId": "3e66b39021110ec114f3216c62756f8da2a1597f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -53,6 +89,24 @@
     },
     {
       "key": {
+        "uuid": "5438153e_652c7fa6",
+        "filename": "third_party/WebKit/Source/modules/media_controls/elements/MediaControlLoadingPanelElement.cpp",
+        "patchSetId": 2
+      },
+      "lineNbr": 201,
+      "author": {
+        "id": 1212719
+      },
+      "writtenOn": "2017-11-06T16:20:40Z",
+      "side": 1,
+      "message": "It\u0027s possible that the animation count here could be 0 if the metadata has loaded quickly.",
+      "parentUuid": "98c62a18_9cd4fcfe",
+      "revId": "3e66b39021110ec114f3216c62756f8da2a1597f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "0509f4e4_101bc80d",
         "filename": "third_party/WebKit/Source/modules/media_controls/elements/MediaControlLoadingPanelElement.cpp",
         "patchSetId": 2
@@ -67,6 +121,24 @@
       "revId": "3e66b39021110ec114f3216c62756f8da2a1597f",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d3b7903a_5700ed0d",
+        "filename": "third_party/WebKit/Source/modules/media_controls/elements/MediaControlLoadingPanelElement.cpp",
+        "patchSetId": 2
+      },
+      "lineNbr": 223,
+      "author": {
+        "id": 1212719
+      },
+      "writtenOn": "2017-11-06T16:20:40Z",
+      "side": 1,
+      "message": "This has the same problem as above.",
+      "parentUuid": "0509f4e4_101bc80d",
+      "revId": "3e66b39021110ec114f3216c62756f8da2a1597f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -87,6 +159,24 @@
     },
     {
       "key": {
+        "uuid": "83098dcc_6686d4a4",
+        "filename": "third_party/WebKit/Source/modules/media_controls/elements/MediaControlLoadingPanelElementTest.cpp",
+        "patchSetId": 2
+      },
+      "lineNbr": 33,
+      "author": {
+        "id": 1212719
+      },
+      "writtenOn": "2017-11-06T16:20:40Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "1b340dee_957a54a4",
+      "revId": "3e66b39021110ec114f3216c62756f8da2a1597f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "8b43f701_5e4439c3",
         "filename": "third_party/WebKit/Source/modules/media_controls/elements/MediaControlLoadingPanelElementTest.cpp",
         "patchSetId": 2
@@ -101,6 +191,24 @@
       "revId": "3e66b39021110ec114f3216c62756f8da2a1597f",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "faf4c00c_c4cd56ab",
+        "filename": "third_party/WebKit/Source/modules/media_controls/elements/MediaControlLoadingPanelElementTest.cpp",
+        "patchSetId": 2
+      },
+      "lineNbr": 72,
+      "author": {
+        "id": 1212719
+      },
+      "writtenOn": "2017-11-06T16:20:40Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "8b43f701_5e4439c3",
+      "revId": "3e66b39021110ec114f3216c62756f8da2a1597f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -121,6 +229,24 @@
     },
     {
       "key": {
+        "uuid": "9e47f42f_85dc3e44",
+        "filename": "third_party/WebKit/Source/modules/media_controls/elements/MediaControlLoadingPanelElementTest.cpp",
+        "patchSetId": 2
+      },
+      "lineNbr": 87,
+      "author": {
+        "id": 1212719
+      },
+      "writtenOn": "2017-11-06T16:20:40Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "15279aa6_b2dd88ec",
+      "revId": "3e66b39021110ec114f3216c62756f8da2a1597f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "ef8c83fc_20b8f5f1",
         "filename": "third_party/WebKit/Source/modules/media_controls/elements/MediaControlLoadingPanelElementTest.cpp",
         "patchSetId": 2
@@ -135,6 +261,24 @@
       "revId": "3e66b39021110ec114f3216c62756f8da2a1597f",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "189d01f0_fc7a360e",
+        "filename": "third_party/WebKit/Source/modules/media_controls/elements/MediaControlLoadingPanelElementTest.cpp",
+        "patchSetId": 2
+      },
+      "lineNbr": 224,
+      "author": {
+        "id": 1212719
+      },
+      "writtenOn": "2017-11-06T16:20:40Z",
+      "side": 1,
+      "message": "The ExpectState*() functions call either CheckIsHidden or CheckIsShown which checks that the shadow DOM is removed.",
+      "parentUuid": "ef8c83fc_20b8f5f1",
+      "revId": "3e66b39021110ec114f3216c62756f8da2a1597f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
