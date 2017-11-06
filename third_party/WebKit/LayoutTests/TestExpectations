@@ -557,9 +557,6 @@ crbug.com/714962 virtual/layout_ng_paint/fast/inline/inline-offsetLeft-relpos.ht
 ### Crash site: ng_inline_node.cc
 crbug.com/714962 virtual/layout_ng_paint/fast/inline/inline-box-adjust-position-crash.html [ Crash ]
 
-### Crash site: ng_line_height_metrics.cc(39)
-crbug.com/714962 virtual/layout_ng_paint/fast/inline/inline-box-append-child-crash.html [ Crash ]
-
 ### Image/text failures only on LayoutNGPaintFragments
 crbug.com/714962 virtual/layout_ng_paint/fast/inline/001.html [ Failure ]
 crbug.com/714962 virtual/layout_ng_paint/fast/inline/002.html [ Failure ]
