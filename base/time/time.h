@@ -460,6 +460,23 @@ class BASE_EXPORT Time : public time_internal::TimeBase<Time> {
   static constexpr int64_t kQPCOverflowThreshold = INT64_C(0x8637BD05AF7);
 #endif
 
+// kExplodedMinYear and kExplodedMaxYear define the platform-specific limits
+// for values passed to FromUTCExploded() and FromLocalExploded(). Those
+// functions will return false if passed values outside these limits.
+#if defined(OS_WIN)
+  static constexpr int kExplodedMinYear = 1601;
+  static constexpr int kExplodedMaxYear = 30827;
+#elif defined(OS_MACOSX) && !defined(OS_IOS)
+  static constexpr int kExplodedMinYear = 1901;
+  static constexpr int kExplodedMaxYear = std::numeric_limits<int32_t>::max();
+#elif defined(OS_POSIX) && !defined(OS_IOS) && !defined(__LP64__)
+  static constexpr int kExplodedMinYear = 1970;
+  static constexpr int kExplodedMaxYear = 2038;
+#else
+  static constexpr int kExplodedMinYear = std::numeric_limits<int32_t>::min();
+  static constexpr int kExplodedMaxYear = std::numeric_limits<int32_t>::max();
+#endif
+
   // Represents an exploded time that can be formatted nicely. This is kind of
   // like the Win32 SYSTEMTIME structure or the Unix "struct tm" with a few
   // additions and changes to prevent errors.
