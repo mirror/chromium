@@ -1,0 +1,96 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "e952f7bf_93a8e239",
+        "filename": "services/device/generic_sensor/platform_sensor.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 74,
+      "author": {
+        "id": 1113896
+      },
+      "writtenOn": "2017-11-06T20:50:46Z",
+      "side": 1,
+      "message": "I think this comment can fit on one line now.",
+      "range": {
+        "startLine": 73,
+        "startChar": 0,
+        "endLine": 74,
+        "endChar": 23
+      },
+      "revId": "2e2238de61578c0c7d577d1c81db74c7e8e16aa6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "38e3db5a_9e690e08",
+        "filename": "services/device/generic_sensor/platform_sensor.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 75,
+      "author": {
+        "id": 1113896
+      },
+      "writtenOn": "2017-11-06T20:50:46Z",
+      "side": 1,
+      "message": "Call this IsActiveForTesting() so that production clients don\u0027t start depending on this method since it would be an antipattern.",
+      "range": {
+        "startLine": 75,
+        "startChar": 7,
+        "endLine": 75,
+        "endChar": 16
+      },
+      "revId": "2e2238de61578c0c7d577d1c81db74c7e8e16aa6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0dbc7a77_47090db3",
+        "filename": "services/device/generic_sensor/platform_sensor.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 81,
+      "author": {
+        "id": 1113896
+      },
+      "writtenOn": "2017-11-06T20:50:46Z",
+      "side": 1,
+      "message": "Move these down next to UpdateSensorInternal().",
+      "range": {
+        "startLine": 79,
+        "startChar": 0,
+        "endLine": 81,
+        "endChar": 32
+      },
+      "revId": "2e2238de61578c0c7d577d1c81db74c7e8e16aa6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "339614a1_3c0af456",
+        "filename": "services/device/generic_sensor/platform_sensor_fusion.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 118,
+      "author": {
+        "id": 1113896
+      },
+      "writtenOn": "2017-11-06T20:50:46Z",
+      "side": 1,
+      "message": "Since this method is only ever negated when called it may improve readability to call it SourcesNotReady() and invert the condition.",
+      "range": {
+        "startLine": 118,
+        "startChar": 7,
+        "endLine": 118,
+        "endChar": 22
+      },
+      "revId": "2e2238de61578c0c7d577d1c81db74c7e8e16aa6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
