@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "a12d9135_ae0a1eb9",
+        "filename": "content/browser/dom_storage/local_storage_context_mojo_unittest.cc",
+        "patchSetId": 12
+      },
+      "lineNbr": 122,
+      "author": {
+        "id": 1125359
+      },
+      "writtenOn": "2017-11-06T20:17:59Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "0a5d85c9_3f30f591",
+      "revId": "884fde685d7bc4dd3d8b5b2bffcb42939040b2ee",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "bdb74e8e_d35de034",
         "filename": "content/browser/dom_storage/local_storage_context_mojo_unittest.cc",
         "patchSetId": 12
@@ -36,6 +54,24 @@
     },
     {
       "key": {
+        "uuid": "7c86d4a8_fe7b2684",
+        "filename": "content/browser/dom_storage/local_storage_context_mojo_unittest.cc",
+        "patchSetId": 12
+      },
+      "lineNbr": 966,
+      "author": {
+        "id": 1125359
+      },
+      "writtenOn": "2017-11-06T20:17:59Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "bdb74e8e_d35de034",
+      "revId": "884fde685d7bc4dd3d8b5b2bffcb42939040b2ee",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "6bd1c7f1_7be15ce3",
         "filename": "content/browser/leveldb_wrapper_impl.cc",
         "patchSetId": 12
@@ -47,6 +83,24 @@
       "writtenOn": "2017-11-03T16:25:38Z",
       "side": 1,
       "message": "I still don\u0027t understand why extra checks are needed here, and hwy this can\u0027t be a unguarded call to UnloadMapIfPossible? After a commit UnloadMapIfPossible is called unconditionally anyway, so why do we need extra checks here for the state of the various maps and desired load state?",
+      "revId": "884fde685d7bc4dd3d8b5b2bffcb42939040b2ee",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ddae3392_933d9b98",
+        "filename": "content/browser/leveldb_wrapper_impl.cc",
+        "patchSetId": 12
+      },
+      "lineNbr": 413,
+      "author": {
+        "id": 1125359
+      },
+      "writtenOn": "2017-11-06T20:17:59Z",
+      "side": 1,
+      "message": "I do not want to unload in case the cache mode is changed from KEYS_AND_VALUES to KEYS_ONLY. In this case unloading of map is possible\nUnloadMapIfPossible is a function called from multiple places which should unload if it\u0027s possible. While I want to unload here only if the map is completely useless, not to save memory.",
+      "parentUuid": "6bd1c7f1_7be15ce3",
       "revId": "884fde685d7bc4dd3d8b5b2bffcb42939040b2ee",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -70,6 +124,24 @@
     },
     {
       "key": {
+        "uuid": "b987a2ea_0d93d3bc",
+        "filename": "content/browser/leveldb_wrapper_impl.cc",
+        "patchSetId": 12
+      },
+      "lineNbr": 546,
+      "author": {
+        "id": 1125359
+      },
+      "writtenOn": "2017-11-06T20:17:59Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "1dae8909_990fbb2e",
+      "revId": "884fde685d7bc4dd3d8b5b2bffcb42939040b2ee",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "ef6ad056_f3833289",
         "filename": "content/browser/leveldb_wrapper_impl.cc",
         "patchSetId": 12
@@ -84,6 +156,24 @@
       "revId": "884fde685d7bc4dd3d8b5b2bffcb42939040b2ee",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "461dbe13_de954d0f",
+        "filename": "content/browser/leveldb_wrapper_impl.cc",
+        "patchSetId": 12
+      },
+      "lineNbr": 661,
+      "author": {
+        "id": 1125359
+      },
+      "writtenOn": "2017-11-06T20:17:59Z",
+      "side": 1,
+      "message": "Yes that\u0027s right. Moved it to CommitChanges().\nI had put this code here for the same reason i had the check for commit_batches_in_flight_. I just did not move this when I removed that check.",
+      "parentUuid": "ef6ad056_f3833289",
+      "revId": "884fde685d7bc4dd3d8b5b2bffcb42939040b2ee",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -104,6 +194,24 @@
     },
     {
       "key": {
+        "uuid": "82a5b333_8396d9c2",
+        "filename": "content/browser/leveldb_wrapper_impl.h",
+        "patchSetId": 12
+      },
+      "lineNbr": 74,
+      "author": {
+        "id": 1125359
+      },
+      "writtenOn": "2017-11-06T20:17:59Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "2443c9d9_62224474",
+      "revId": "884fde685d7bc4dd3d8b5b2bffcb42939040b2ee",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "2dc1547e_f75ae832",
         "filename": "content/browser/leveldb_wrapper_impl_unittest.cc",
         "patchSetId": 12
@@ -121,6 +229,24 @@
     },
     {
       "key": {
+        "uuid": "b0ba1f36_9905058b",
+        "filename": "content/browser/leveldb_wrapper_impl_unittest.cc",
+        "patchSetId": 12
+      },
+      "lineNbr": 255,
+      "author": {
+        "id": 1125359
+      },
+      "writtenOn": "2017-11-06T20:17:59Z",
+      "side": 1,
+      "message": "Made it enum sorry.",
+      "parentUuid": "2dc1547e_f75ae832",
+      "revId": "884fde685d7bc4dd3d8b5b2bffcb42939040b2ee",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "7f329ce9_3e6a8d7e",
         "filename": "content/browser/leveldb_wrapper_impl_unittest.cc",
         "patchSetId": 12
@@ -135,6 +261,24 @@
       "revId": "884fde685d7bc4dd3d8b5b2bffcb42939040b2ee",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "45d4da0f_053a1b0d",
+        "filename": "content/browser/leveldb_wrapper_impl_unittest.cc",
+        "patchSetId": 12
+      },
+      "lineNbr": 678,
+      "author": {
+        "id": 1125359
+      },
+      "writtenOn": "2017-11-06T20:17:59Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "7f329ce9_3e6a8d7e",
+      "revId": "884fde685d7bc4dd3d8b5b2bffcb42939040b2ee",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
