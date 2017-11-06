@@ -33,11 +33,7 @@ using content::WebContents;
 // The minimum space between the FindInPage window and the search result.
 static const int kMinFindWndDistanceFromSelection = 5;
 
-FindBarController::FindBarController(FindBar* find_bar)
-    : find_bar_(find_bar),
-      web_contents_(NULL),
-      last_reported_matchcount_(0) {
-}
+FindBarController::FindBarController(FindBar* find_bar) : find_bar_(find_bar) {}
 
 FindBarController::~FindBarController() {
   DCHECK(!web_contents_);
@@ -86,12 +82,8 @@ void FindBarController::EndFindSession(SelectionAction selection_action,
 }
 
 void FindBarController::FindBarVisibilityChanged() {
-  if (web_contents_) {
-    chrome::FindBrowserWithWebContents(web_contents_)
-        ->window()
-        ->GetLocationBar()
-        ->UpdateFindBarIconVisibility();
-  }
+  if (browser_)
+    browser_->window()->GetLocationBar()->UpdateFindBarIconVisibility();
 }
 
 void FindBarController::ChangeWebContents(WebContents* contents) {
@@ -106,9 +98,10 @@ void FindBarController::ChangeWebContents(WebContents* contents) {
   }
 
   web_contents_ = contents;
+  browser_ = web_contents_ ? chrome::FindBrowserWithWebContents(web_contents_)
+                           : nullptr;
   FindTabHelper* find_tab_helper =
-      web_contents_ ? FindTabHelper::FromWebContents(web_contents_)
-                    : NULL;
+      web_contents_ ? FindTabHelper::FromWebContents(web_contents_) : nullptr;
 
   // Hide any visible find window from the previous tab if a NULL tab contents
   // is passed in or if the find UI is not active in the new tab.
@@ -117,7 +110,7 @@ void FindBarController::ChangeWebContents(WebContents* contents) {
     find_bar_->Hide(false);
   }
 
-  if (!web_contents_)
+  if (!web_contents_ || !browser_)
     return;
 
   registrar_.Add(this,
