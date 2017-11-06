@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "4288867a_3323da78",
+        "filename": "third_party/WebKit/Source/build/scripts/core/css/css_properties.py",
+        "patchSetId": 13
+      },
+      "lineNbr": 62,
+      "author": {
+        "id": 1161824
+      },
+      "writtenOn": "2017-11-06T05:08:43Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "adcc472b_69e3c958",
+      "revId": "9f8e882ed37c2aaa744bb52232025463d24e99d0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "e0c1e4d7_c601280b",
         "filename": "third_party/WebKit/Source/build/scripts/core/style/templates/ComputedStyleInitialValues.h.tmpl",
         "patchSetId": 13
@@ -30,6 +48,24 @@
       "writtenOn": "2017-11-02T06:14:05Z",
       "side": 1,
       "message": "this results in #including a bunch of files that aren\u0027t required (only a forward declaration is needed) e.g. QuotesData, CSSTransitionData, RotateTransformOperation. This isn\u0027t any different from the way it was handled in ComputedStyleBase before, but now we\u0027re duplicating these includes, which may impact build times. is there a huge benefit in generating this file? I wonder if it would be better just hand written so these includes can be tweaked.",
+      "revId": "9f8e882ed37c2aaa744bb52232025463d24e99d0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1438c579_36420a69",
+        "filename": "third_party/WebKit/Source/build/scripts/core/style/templates/ComputedStyleInitialValues.h.tmpl",
+        "patchSetId": 13
+      },
+      "lineNbr": 13,
+      "author": {
+        "id": 1161824
+      },
+      "writtenOn": "2017-11-06T05:08:43Z",
+      "side": 1,
+      "message": "Hmm, I can also just generate forward declared, except for two cases which are typedefs. I\u0027ve manually excluded them from being forward declared in the Python, which I think is the least messy way to do this.\n\nI don\u0027t think we should hand write this class since the value returned by these functions is generated directly in some places inside ComputedStyleBase, and it would be really bad if the generated and non-generated values got out of sync.",
+      "parentUuid": "e0c1e4d7_c601280b",
       "revId": "9f8e882ed37c2aaa744bb52232025463d24e99d0",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -53,6 +89,24 @@
     },
     {
       "key": {
+        "uuid": "3e9374c4_aac6503c",
+        "filename": "third_party/WebKit/Source/build/scripts/core/style/templates/ComputedStyleInitialValues.h.tmpl",
+        "patchSetId": 13
+      },
+      "lineNbr": 34,
+      "author": {
+        "id": 1161824
+      },
+      "writtenOn": "2017-11-06T05:08:43Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "01fb025a_aeaa3f03",
+      "revId": "9f8e882ed37c2aaa744bb52232025463d24e99d0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "8078f42c_01f41f8a",
         "filename": "third_party/WebKit/Source/build/scripts/templates/fields/base.tmpl",
         "patchSetId": 13
@@ -67,6 +121,24 @@
       "revId": "9f8e882ed37c2aaa744bb52232025463d24e99d0",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e32b767a_fc00e625",
+        "filename": "third_party/WebKit/Source/build/scripts/templates/fields/base.tmpl",
+        "patchSetId": 13
+      },
+      "lineNbr": 23,
+      "author": {
+        "id": 1161824
+      },
+      "writtenOn": "2017-11-06T05:08:43Z",
+      "side": 1,
+      "message": "uh, I think it was leftover from me debugging something \u003e_\u003e. Removed.",
+      "parentUuid": "8078f42c_01f41f8a",
+      "revId": "9f8e882ed37c2aaa744bb52232025463d24e99d0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -87,6 +159,24 @@
     },
     {
       "key": {
+        "uuid": "e804b206_1d9993bb",
+        "filename": "third_party/WebKit/Source/core/layout/line/InlineBox.h",
+        "patchSetId": 13
+      },
+      "lineNbr": 356,
+      "author": {
+        "id": 1161824
+      },
+      "writtenOn": "2017-11-06T05:08:43Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "55013d7a_1567403a",
+      "revId": "9f8e882ed37c2aaa744bb52232025463d24e99d0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "f4711619_ba36e8ae",
         "filename": "third_party/WebKit/Source/core/style/ComputedStyleInitialValues.cpp",
         "patchSetId": 13
@@ -101,6 +191,24 @@
       "revId": "9f8e882ed37c2aaa744bb52232025463d24e99d0",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "08a5042d_dfdf0eb2",
+        "filename": "third_party/WebKit/Source/core/style/ComputedStyleInitialValues.cpp",
+        "patchSetId": 13
+      },
+      "lineNbr": 11,
+      "author": {
+        "id": 1161824
+      },
+      "writtenOn": "2017-11-06T05:08:43Z",
+      "side": 1,
+      "message": "It doesn\u0027t, I suppose. It was generated in the cpp of ComputedStyleBase, where most of the rest were in the header, so I kept it that way. ¯\\_(ツ)_/¯ Moved it to the header.",
+      "parentUuid": "f4711619_ba36e8ae",
+      "revId": "9f8e882ed37c2aaa744bb52232025463d24e99d0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }

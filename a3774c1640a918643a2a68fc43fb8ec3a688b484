@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "8d6da65f_57082fe0",
+        "filename": "third_party/WebKit/Source/build/scripts/core/css/properties/templates/CSSPropertyAPISubclass.h.tmpl",
+        "patchSetId": 13
+      },
+      "lineNbr": 49,
+      "author": {
+        "id": 1161824
+      },
+      "writtenOn": "2017-11-06T05:08:43Z",
+      "side": 0,
+      "message": "Unfortunately it is used here - state.Style() returns a ComputedStyle, so I can\u0027t delete the #include.",
+      "parentUuid": "08c44e02_59655483",
+      "revId": "a3774c1640a918643a2a68fc43fb8ec3a688b484",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "3dc84046_755530b7",
         "filename": "third_party/WebKit/Source/build/scripts/templates/StyleBuilderFunctions.cpp.tmpl",
         "patchSetId": 13
@@ -33,6 +51,24 @@
       "revId": "a3774c1640a918643a2a68fc43fb8ec3a688b484",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7d7f72fd_50de0ad5",
+        "filename": "third_party/WebKit/Source/build/scripts/templates/StyleBuilderFunctions.cpp.tmpl",
+        "patchSetId": 13
+      },
+      "lineNbr": 28,
+      "author": {
+        "id": 1161824
+      },
+      "writtenOn": "2017-11-06T05:08:43Z",
+      "side": 0,
+      "message": "Unfortunately it can\u0027t, since most of the set_value macros expand into something that uses ComputedStyle.",
+      "parentUuid": "3dc84046_755530b7",
+      "revId": "a3774c1640a918643a2a68fc43fb8ec3a688b484",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -53,6 +89,24 @@
     },
     {
       "key": {
+        "uuid": "baad8d2b_7c0debb4",
+        "filename": "third_party/WebKit/Source/core/animation/LengthPropertyFunctions.cpp",
+        "patchSetId": 13
+      },
+      "lineNbr": 91,
+      "author": {
+        "id": 1161824
+      },
+      "writtenOn": "2017-11-06T05:08:43Z",
+      "side": 0,
+      "message": "Ack",
+      "parentUuid": "fb140d71_c71a86e9",
+      "revId": "a3774c1640a918643a2a68fc43fb8ec3a688b484",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "081e0853_7dc4c1f3",
         "filename": "third_party/WebKit/Source/core/animation/LengthPropertyFunctions.cpp",
         "patchSetId": 13
@@ -67,6 +121,24 @@
       "revId": "a3774c1640a918643a2a68fc43fb8ec3a688b484",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3442c017_23153687",
+        "filename": "third_party/WebKit/Source/core/animation/LengthPropertyFunctions.cpp",
+        "patchSetId": 13
+      },
+      "lineNbr": 97,
+      "author": {
+        "id": 1161824
+      },
+      "writtenOn": "2017-11-06T05:08:43Z",
+      "side": 0,
+      "message": "hmm yeah I don\u0027t know. It\u0027s a bit of a PITA to put them on the APIs too, since the initial functions return different types :/ Something to think about outside of the scope of this CL I guess.",
+      "parentUuid": "081e0853_7dc4c1f3",
+      "revId": "a3774c1640a918643a2a68fc43fb8ec3a688b484",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
