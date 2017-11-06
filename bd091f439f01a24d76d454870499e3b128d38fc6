@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "a3e08ae4_9958bc6a",
+        "filename": "ios/web/public/web_state/web_state_observer.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 119,
+      "author": {
+        "id": 1133065
+      },
+      "writtenOn": "2017-11-06T17:52:21Z",
+      "side": 1,
+      "message": "Would it be useful to add a new PageLoadCompletionStatus for \"Cancelled\"?  That way we could consolidate both DidStopLoading callbacks.  It\u0027s a little unclear to me what the difference is between PageLoaded() and DidStopLoading() for non-cancelled navigations.",
+      "revId": "bd091f439f01a24d76d454870499e3b128d38fc6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
