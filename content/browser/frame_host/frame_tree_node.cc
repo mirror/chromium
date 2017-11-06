@@ -163,6 +163,7 @@ FrameTreeNode::FrameTreeNode(FrameTree* frame_tree,
       frame_owner_properties_(frame_owner_properties),
       loading_progress_(kLoadingProgressNotStarted),
       blame_context_(frame_tree_node_id_, parent),
+      size_policy_ancestor_frame_(nullptr),
       weak_ptr_factory_(this) {
   std::pair<FrameTreeNodeIdMap::iterator, bool> result =
       g_frame_tree_node_id_map.Get().insert(
@@ -170,6 +171,16 @@ FrameTreeNode::FrameTreeNode(FrameTree* frame_tree,
   CHECK(result.second);
 
   RecordUniqueNameSize(this);
+
+  // Find the nearest size-policy ancestor (if any).
+  FrameTreeNode* cur_parent_node = parent_;
+  while (cur_parent_node) {
+    if (cur_parent_node->size_policy_bytes_remaining_) {
+      size_policy_ancestor_frame_ = cur_parent_node;
+      break;
+    }
+    cur_parent_node = cur_parent_node->parent();
+  }
 
   // Note: this should always be done last in the constructor.
   blame_context_.Initialize();
@@ -640,6 +651,38 @@ void FrameTreeNode::ClearPaused() {
 
 bool FrameTreeNode::Paused() const {
   return pause_rendering_ || pause_loading_ || pause_script_;
+}
+
+void FrameTreeNode::SetTransferSize(int transfer_size_kb) {
+  if (transfer_size_kb >= 0) {
+    LOG(ERROR) << "Transfer size set to: " << transfer_size_kb * 1024;
+    size_policy_bytes_remaining_ =
+        base::Optional<int64_t>(transfer_size_kb * 1024);
+  }
+}
+
+void FrameTreeNode::NotifyNetworkBytesRead(int network_response_bytes_read) {
+  FrameTreeNode* cur_frame = this;
+
+  while (cur_frame) {
+    if (cur_frame->size_policy_bytes_remaining_) {
+      bool already_violated =
+          cur_frame->size_policy_bytes_remaining_.value() < 0;
+      cur_frame->size_policy_bytes_remaining_.value() -=
+          network_response_bytes_read;
+      if (!already_violated &&
+          cur_frame->size_policy_bytes_remaining_.value() < 0) {
+        // The frame has just violated its size policy. Pause the frame.
+        RenderFrameHostImpl* render_frame_host = current_frame_host();
+        if (render_frame_host) {
+          render_frame_host->TransferSizeExceeded();
+        }
+      }
+    }
+    // Rather than walk up the entire frame tree for each request, only visit
+    // the ancestor frames that have size policies on them (usually none).
+    cur_frame = cur_frame->size_policy_ancestor_frame_;
+  }
 }
 
 FrameTreeNode* FrameTreeNode::GetSibling(int relative_offset) const {

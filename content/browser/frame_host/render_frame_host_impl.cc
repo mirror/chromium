@@ -661,6 +661,10 @@ const base::UnguessableToken& RenderFrameHostImpl::GetOverlayRoutingToken() {
   return *overlay_routing_token_;
 }
 
+void RenderFrameHostImpl::TransferSizeExceeded() {
+  frame_->TransferSizeExceeded();
+}
+
 SiteInstanceImpl* RenderFrameHostImpl::GetSiteInstance() {
   return site_instance_.get();
 }
@@ -2268,7 +2272,10 @@ FrameTreeNode* RenderFrameHostImpl::FindAndVerifyChild(
 
 void RenderFrameHostImpl::OnDidChangeFramePolicy(
     int32_t frame_routing_id,
-    const FramePolicy& frame_policy) {
+    const FramePolicy& frame_policy,
+    int32_t transfer_size_kb) {
+  frame_tree_node_->SetTransferSize(transfer_size_kb);
+
   // Ensure that a frame can only update sandbox flags or feature policy for its
   // immediate children.  If this is not the case, the renderer is considered
   // malicious and is killed.

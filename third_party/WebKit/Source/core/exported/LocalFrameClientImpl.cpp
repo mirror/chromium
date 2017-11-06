@@ -931,12 +931,15 @@ void LocalFrameClientImpl::DidUpdateToUniqueOrigin() {
 void LocalFrameClientImpl::DidChangeFramePolicy(
     Frame* child_frame,
     SandboxFlags flags,
-    const WebParsedFeaturePolicy& container_policy) {
+    const WebParsedFeaturePolicy& container_policy,
+    int frame_size_kb) {
+  LOG(ERROR) << "DidChangeFramePolicy";
   if (!web_frame_->Client())
     return;
+  LOG(ERROR) << "DidChangeFramePolicy 2";
   web_frame_->Client()->DidChangeFramePolicy(
       WebFrame::FromFrame(child_frame), static_cast<WebSandboxFlags>(flags),
-      container_policy);
+      container_policy, frame_size_kb);
 }
 
 void LocalFrameClientImpl::DidSetFeaturePolicyHeader(

@@ -257,6 +257,7 @@
     "touchmove",
     "touchstart",
     "track",
+    "transferexceeded",
     "transitionend",
     "typechange",
     "unhandledrejection",
