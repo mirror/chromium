@@ -91,6 +91,11 @@ class __declspec(uuid("562072fe-3390-43b1-9e2c-dd4118f5ac79"))
   CONTENT_EXPORT void UpdateStep3FireEvents(bool is_subtree_creation);
 
   //
+  // IAccessible methods
+  //
+  CONTENT_EXPORT STDMETHODIMP get_accParent(IDispatch** parent) override;
+
+  //
   // IAccessible2 methods.
   //
   CONTENT_EXPORT STDMETHODIMP get_attributes(BSTR* attributes) override;

@@ -588,6 +588,38 @@ STDMETHODIMP BrowserAccessibilityComWin::setSelection(LONG selection_index,
   return S_OK;
 }
 
+STDMETHODIMP BrowserAccessibilityComWin::get_accParent(
+    IDispatch** disp_parent) {
+  WIN_ACCESSIBILITY_API_HISTOGRAM(UMA_API_GET_ACC_PARENT);
+  if (!owner())
+    return E_FAIL;
+  if (!disp_parent)
+    return E_INVALIDARG;
+  IAccessible* parent_obj =
+      ToBrowserAccessibilityComWin(owner()->PlatformGetParent());
+  if (parent_obj == NULL) {
+    // This happens if we're the root of the tree;
+    // return the IAccessible for the window.
+    parent_obj = owner()
+                     ->manager()
+                     ->ToBrowserAccessibilityManagerWin()
+                     ->GetParentIAccessible();
+    // |parent| can only be NULL if the manager was created before the parent
+    // IAccessible was known and it wasn't subsequently set before a client
+    // requested it. This has been fixed. |parent| may also be NULL during
+    // destruction. Possible cases where this could occur include tabs being
+    // dragged to a new window, etc.
+    if (!parent_obj) {
+      DVLOG(1) << "In Function: " << __func__
+               << ". Parent IAccessible interface is NULL. Returning failure";
+      return E_FAIL;
+    }
+  }
+  parent_obj->AddRef();
+  *disp_parent = parent_obj;
+  return S_OK;
+}
+
 STDMETHODIMP BrowserAccessibilityComWin::get_attributes(LONG offset,
                                                         LONG* start_offset,
                                                         LONG* end_offset,
