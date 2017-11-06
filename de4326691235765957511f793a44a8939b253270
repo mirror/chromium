@@ -1,0 +1,73 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "7b4ec977_8776eca8",
+        "filename": "third_party/WebKit/LayoutTests/fast/forms/text/input-appearance-autofill-value-after-suggested-value-with-placeholder.html",
+        "patchSetId": 3
+      },
+      "lineNbr": 5,
+      "author": {
+        "id": 1115933
+      },
+      "writtenOn": "2017-11-06T01:49:42Z",
+      "side": 1,
+      "message": "Remove this line. I had some extra code.",
+      "range": {
+        "startLine": 5,
+        "startChar": 9,
+        "endLine": 5,
+        "endChar": 16
+      },
+      "revId": "de4326691235765957511f793a44a8939b253270",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b9c139e4_5912a682",
+        "filename": "third_party/WebKit/LayoutTests/fast/forms/text/input-appearance-autofill-value-after-suggested-value-with-placeholder.html",
+        "patchSetId": 3
+      },
+      "lineNbr": 16,
+      "author": {
+        "id": 1115933
+      },
+      "writtenOn": "2017-11-06T01:49:42Z",
+      "side": 1,
+      "message": "I think we don\u0027t need this line too.",
+      "range": {
+        "startLine": 16,
+        "startChar": 21,
+        "endLine": 16,
+        "endChar": 25
+      },
+      "revId": "de4326691235765957511f793a44a8939b253270",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0fd664ff_21d6e8b6",
+        "filename": "third_party/WebKit/LayoutTests/fast/forms/text/input-appearance-autofill-value-after-suggested-value-with-placeholder.html",
+        "patchSetId": 3
+      },
+      "lineNbr": 22,
+      "author": {
+        "id": 1115933
+      },
+      "writtenOn": "2017-11-06T01:49:42Z",
+      "side": 1,
+      "message": "Remove. Ditto.",
+      "range": {
+        "startLine": 18,
+        "startChar": 1,
+        "endLine": 22,
+        "endChar": 7
+      },
+      "revId": "de4326691235765957511f793a44a8939b253270",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
