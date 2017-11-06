@@ -316,6 +316,7 @@ bool AnimationHost::TickAnimations(base::TimeTicks monotonic_time) {
 }
 
 void AnimationHost::TickScrollAnimations(base::TimeTicks monotonic_time) {
+  TRACE_EVENT0("cc", "AnimationHost::TickScrollAnimations");
   // TODO(majidvp) For now the logic simply assumes all AnimationWorklet
   // animations depend on scroll offset but this is inefficient. We need a more
   // fine-grained approach based on invalidating individual ScrollTimelines and
