@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "19939b8d_d8420f91",
+        "filename": "components/autofill/core/browser/autofill_metrics.cc",
+        "patchSetId": 10
+      },
+      "lineNbr": 385,
+      "author": {
+        "id": 1153419
+      },
+      "writtenOn": "2017-11-06T21:48:05Z",
+      "side": 1,
+      "message": "nit: The convention we try to enforce in chromium is TODO(crbug.com/XXXXX): ....",
+      "range": {
+        "startLine": 385,
+        "startChar": 10,
+        "endLine": 385,
+        "endChar": 16
+      },
+      "revId": "243cc47a7c7788ce15195736edf564b3b545d9b6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
