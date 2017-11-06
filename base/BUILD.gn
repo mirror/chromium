@@ -1267,7 +1267,6 @@ jumbo_component("base") {
       "sys_info_fuchsia.cc",
       "threading/platform_thread_fuchsia.cc",
       "time/time_conversion_posix.cc",
-      "time/time_exploded_posix.cc",
       "time/time_fuchsia.cc",
     ]
 
@@ -1648,10 +1647,12 @@ jumbo_component("base") {
     set_sources_assignment_filter(sources_assignment_filter)
   }
 
+  if (is_posix && !is_ios) {
+    sources += [ "time/time_exploded_posix.cc" ]
+  }
   if (is_posix && !is_fuchsia && !is_mac && !is_ios) {
     sources += [
       "time/time_conversion_posix.cc",
-      "time/time_exploded_posix.cc",
       "time/time_now_posix.cc",
     ]
   }
