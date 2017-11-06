@@ -258,7 +258,8 @@ int CloudPrintMockService_Main(SetExpectationsCallback set_expectations) {
                       mojo::edk::NamedPlatformHandle(startup_channel_name))))
               .release(),
           IPC::Channel::MODE_CLIENT, &listener,
-          service_process.io_task_runner());
+          service_process.io_task_runner(),
+          base::ThreadTaskRunnerHandle::Get());
 
   base::RunLoop().Run();
   if (!Mock::VerifyAndClearExpectations(&server))
@@ -288,6 +289,9 @@ class CloudPrintProxyPolicyStartupTest : public base::MultiProcessTest,
 
   scoped_refptr<base::SingleThreadTaskRunner> IOTaskRunner() {
     return BrowserThread::GetTaskRunnerForThread(BrowserThread::IO);
+  }
+  scoped_refptr<base::SingleThreadTaskRunner> ListenerTaskRunner() {
+    return base::ThreadTaskRunnerHandle::Get();
   }
   base::Process Launch(const std::string& name);
   void WaitForConnect(mojo::edk::PeerConnection* peer_connection);
@@ -422,7 +426,7 @@ base::Process CloudPrintProxyPolicyStartupTest::Launch(
               mojo::edk::TransportProtocol::kLegacy,
               mojo::edk::CreateServerHandle(startup_channel_handle_)))
           .release(),
-      IPC::Channel::MODE_SERVER, this, IOTaskRunner());
+      IPC::Channel::MODE_SERVER, this, IOTaskRunner(), ListenerTaskRunner());
 
   base::Process process = SpawnChild(name);
   EXPECT_TRUE(process.IsValid());
