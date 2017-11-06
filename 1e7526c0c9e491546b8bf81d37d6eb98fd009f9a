@@ -19,6 +19,63 @@
     },
     {
       "key": {
+        "uuid": "35637cfc_ad3b873d",
+        "filename": "components/consent_auditor/README.md",
+        "patchSetId": 6
+      },
+      "lineNbr": 3,
+      "author": {
+        "id": 1183839
+      },
+      "writtenOn": "2017-11-06T16:15:17Z",
+      "side": 1,
+      "message": "They don\u0027t seem to be static anymore",
+      "range": {
+        "startLine": 3,
+        "startChar": 46,
+        "endLine": 3,
+        "endChar": 62
+      },
+      "revId": "1e7526c0c9e491546b8bf81d37d6eb98fd009f9a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f95ce2a6_db7c7c50",
+        "filename": "components/consent_auditor/README.md",
+        "patchSetId": 6
+      },
+      "lineNbr": 9,
+      "author": {
+        "id": 1183839
+      },
+      "writtenOn": "2017-11-06T16:15:17Z",
+      "side": 1,
+      "message": "How would we access the consents a user has given? Do we need something like about:consents?",
+      "revId": "1e7526c0c9e491546b8bf81d37d6eb98fd009f9a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0679e04b_8fd740be",
+        "filename": "components/consent_auditor/README.md",
+        "patchSetId": 6
+      },
+      "lineNbr": 17,
+      "author": {
+        "id": 1183839
+      },
+      "writtenOn": "2017-11-06T16:15:17Z",
+      "side": 1,
+      "message": "Do we have consents for local features that are stored in syncable preferences?",
+      "revId": "1e7526c0c9e491546b8bf81d37d6eb98fd009f9a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "9305abe7_2daa66d0",
         "filename": "components/consent_auditor/consent_auditor.cc",
         "patchSetId": 6
@@ -59,6 +116,23 @@
     },
     {
       "key": {
+        "uuid": "651b62e9_e199fe61",
+        "filename": "components/consent_auditor/consent_auditor.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 42,
+      "author": {
+        "id": 1183839
+      },
+      "writtenOn": "2017-11-06T16:15:17Z",
+      "side": 1,
+      "message": "Why does this need a return value if it always returns true?",
+      "revId": "1e7526c0c9e491546b8bf81d37d6eb98fd009f9a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "3bb279ce_4fd3917b",
         "filename": "components/consent_auditor/consent_auditor.cc",
         "patchSetId": 6
@@ -93,6 +167,23 @@
     },
     {
       "key": {
+        "uuid": "ce90a6ce_68c30df7",
+        "filename": "components/consent_auditor/consent_auditor.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 56,
+      "author": {
+        "id": 1183839
+      },
+      "writtenOn": "2017-11-06T16:15:17Z",
+      "side": 1,
+      "message": "Should we also record a timestamp or Chrome version to make it easier to understand how entries could have been created?",
+      "revId": "1e7526c0c9e491546b8bf81d37d6eb98fd009f9a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "68de539f_d86bfec4",
         "filename": "components/consent_auditor/consent_auditor.h",
         "patchSetId": 6
@@ -116,6 +207,40 @@
     },
     {
       "key": {
+        "uuid": "16b44c53_ab98c7b7",
+        "filename": "components/consent_auditor/consent_auditor.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 38,
+      "author": {
+        "id": 1183839
+      },
+      "writtenOn": "2017-11-06T16:15:17Z",
+      "side": 1,
+      "message": "Should we record consent revocation as well? If yes, should there be an explicit flag whether this is a consent or a revocation?",
+      "revId": "1e7526c0c9e491546b8bf81d37d6eb98fd009f9a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c95f44b1_dc1dc27d",
+        "filename": "components/consent_auditor/consent_auditor.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 40,
+      "author": {
+        "id": 1183839
+      },
+      "writtenOn": "2017-11-06T16:15:17Z",
+      "side": 1,
+      "message": "Should we define some default strings for cases where no button text is available but it would still be interesting to know how the consent happens? e.g. \"toggle-on\" and \"toggle-off\", \"checkbox-on\", \"checkbox-off\"?",
+      "revId": "1e7526c0c9e491546b8bf81d37d6eb98fd009f9a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "7079794b_be0da805",
         "filename": "components/consent_auditor/consent_auditor_unittest.cc",
         "patchSetId": 6
@@ -133,6 +258,40 @@
         "endLine": 37,
         "endChar": 48
       },
+      "revId": "1e7526c0c9e491546b8bf81d37d6eb98fd009f9a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0c4aa6ac_fa2b6e78",
+        "filename": "components/consent_auditor/consent_auditor_unittest.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 61,
+      "author": {
+        "id": 1183839
+      },
+      "writtenOn": "2017-11-06T16:15:17Z",
+      "side": 1,
+      "message": "It shouldn\u0027t be necessary to cast to DictionaryValue because all methods are defined on Value now",
+      "revId": "1e7526c0c9e491546b8bf81d37d6eb98fd009f9a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5c7a3855_177d21cf",
+        "filename": "components/consent_auditor/consent_auditor_unittest.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 67,
+      "author": {
+        "id": 1183839
+      },
+      "writtenOn": "2017-11-06T16:15:17Z",
+      "side": 1,
+      "message": "I think the is_string asserts are redundant as GetString() has a CHECK(is_string()) anyway",
       "revId": "1e7526c0c9e491546b8bf81d37d6eb98fd009f9a",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
