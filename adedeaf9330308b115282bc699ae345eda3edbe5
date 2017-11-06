@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "38467850_c039d3a0",
+        "filename": "chrome/browser/chromeos/login/ui/webui_login_view.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 163,
+      "author": {
+        "id": 1121230
+      },
+      "writtenOn": "2017-11-06T11:38:40Z",
+      "side": 1,
+      "message": "question: Do we need to do the same thing for other accelerators? i.e. Do those accelerators need to work even if system tray is opened?",
+      "range": {
+        "startLine": 162,
+        "startChar": 13,
+        "endLine": 163,
+        "endChar": 76
+      },
+      "revId": "adedeaf9330308b115282bc699ae345eda3edbe5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
