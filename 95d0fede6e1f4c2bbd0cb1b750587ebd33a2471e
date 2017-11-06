@@ -169,6 +169,30 @@
     },
     {
       "key": {
+        "uuid": "5e1246c1_efeac43d",
+        "filename": "chrome/browser/DEPS",
+        "patchSetId": 2
+      },
+      "lineNbr": 147,
+      "author": {
+        "id": 1002532
+      },
+      "writtenOn": "2017-11-06T15:23:59Z",
+      "side": 1,
+      "message": "The purpose of this DEPS rule is that browser/ code doesn\u0027t link with WebKit. This was originally done because of the dll binary split on Windows. We did allow POD/enums to be included to avoid duplicating them between browser \u0026 renderer.\n \nThe reason it\u0027s ok to include mojoms is that we create 2 flavors of the interfaces: the \u0027chromium\u0027 ones that use STL types, and the \u0027WebKit\u0027 ones that use webkit strings, containers etc... When browser/ uses a mojom, that\u0027s by definition using types that are outside of WebKit so the issue of linking with WebKit is moot.",
+      "parentUuid": "11bddf49_9e13f78e",
+      "range": {
+        "startLine": 147,
+        "startChar": 15,
+        "endLine": 147,
+        "endChar": 63
+      },
+      "revId": "95d0fede6e1f4c2bbd0cb1b750587ebd33a2471e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "0ef6e895_1be4ea81",
         "filename": "chrome/browser/android/oom_intervention/oom_intervention_tab_helper.cc",
         "patchSetId": 2
