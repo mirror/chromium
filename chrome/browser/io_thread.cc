@@ -34,8 +34,8 @@
 #include "chrome/browser/browser_process.h"
 #include "chrome/browser/data_usage/tab_id_annotator.h"
 #include "chrome/browser/data_use_measurement/chrome_data_use_ascriber.h"
-#include "chrome/browser/net/chrome_mojo_proxy_resolver_factory.h"
 #include "chrome/browser/net/chrome_network_delegate.h"
+#include "chrome/browser/net/cross_thread_network_context_params.h"
 #include "chrome/browser/net/dns_probe_service.h"
 #include "chrome/browser/net/proxy_service_factory.h"
 #include "chrome/browser/net/sth_distributor_provider.h"
@@ -385,9 +385,12 @@ IOThread::IOThread(
 
   BrowserThread::SetIOThreadDelegate(this);
 
+  content::mojom::NetworkContextParamsPtr network_context_params;
   system_network_context_manager->SetUp(&network_context_request_,
-                                        &network_context_params_,
+                                        &network_context_params,
                                         &is_quic_allowed_on_init_);
+  network_context_params_ = std::make_unique<CrossThreadNetworkContextParams>(
+      std::move(network_context_params));
 }
 
 IOThread::~IOThread() {
@@ -730,24 +733,10 @@ bool IOThread::PacHttpsUrlStrippingEnabled() const {
 void IOThread::SetUpProxyConfigService(
     content::URLRequestContextBuilderMojo* builder,
     std::unique_ptr<net::ProxyConfigService> proxy_config_service) const {
-  const base::CommandLine& command_line =
-      *base::CommandLine::ForCurrentProcess();
-
-  // TODO(eroman): Figure out why this doesn't work in single-process mode.
-  // Should be possible now that a private isolate is used.
-  // http://crbug.com/474654
-  if (!command_line.HasSwitch(switches::kWinHttpProxyResolver)) {
-    if (command_line.HasSwitch(switches::kSingleProcess)) {
-      LOG(ERROR) << "Cannot use V8 Proxy resolver in single process mode.";
-    } else {
-      builder->SetMojoProxyResolverFactory(
-          ChromeMojoProxyResolverFactory::CreateWithStrongBinding());
 #if defined(OS_CHROMEOS)
-      builder->SetDhcpFetcherFactory(
-          base::MakeUnique<chromeos::DhcpProxyScriptFetcherFactoryChromeos>());
+  builder->SetDhcpFetcherFactory(
+      base::MakeUnique<chromeos::DhcpProxyScriptFetcherFactoryChromeos>());
 #endif
-    }
-  }
 
   builder->set_pac_quick_check_enabled(WpadQuickCheckEnabled());
   builder->set_pac_sanitize_url_policy(
@@ -824,7 +813,7 @@ void IOThread::ConstructSystemRequestContext() {
   globals_->system_network_context =
       globals_->network_service->CreateNetworkContextWithBuilder(
           std::move(network_context_request_),
-          std::move(network_context_params_), std::move(builder),
+          network_context_params_->ExtractParams(), std::move(builder),
           &globals_->system_request_context);
 
 #if defined(USE_NSS_CERTS)

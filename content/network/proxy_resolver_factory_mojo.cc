@@ -9,6 +9,7 @@
 
 #include "base/bind.h"
 #include "base/callback.h"
+#include "base/callback_helpers.h"
 #include "base/logging.h"
 #include "base/macros.h"
 #include "base/memory/ptr_util.h"
@@ -315,6 +316,9 @@ class ProxyResolverFactoryMojo::Job
     binding_.set_connection_error_handler(
         base::Bind(&ProxyResolverFactoryMojo::Job::OnConnectionError,
                    base::Unretained(this)));
+    on_delete_callback_runner_ = std::make_unique<base::ScopedClosureRunner>(
+        base::Bind(&ProxyResolverFactoryMojo::OnResolverDestroyed,
+                   factory_->weak_ptr_factory_.GetWeakPtr()));
   }
 
   void OnConnectionError() { ReportResult(net::ERR_PAC_SCRIPT_TERMINATED); }
@@ -372,6 +376,10 @@ int ProxyResolverFactoryMojo::CreateProxyResolver(
                              ? nullptr
                              : error_observer_factory_.Run()));
   return net::ERR_IO_PENDING;
+}
+
+void ProxyResolverFactoryMojo::OnResolverDestroyed() {
+  mojo_proxy_factory_->OnResolverDestroyed();
 }
 
 }  // namespace content
