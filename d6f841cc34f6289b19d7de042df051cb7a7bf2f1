@@ -1,0 +1,44 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "347eb2a9_db6501c3",
+        "filename": "chrome/browser/resources/md_history/history_list.html",
+        "patchSetId": 3
+      },
+      "lineNbr": 78,
+      "author": {
+        "id": 1002603
+      },
+      "writtenOn": "2017-11-06T04:28:48Z",
+      "side": 1,
+      "message": "Wrap this and indent 4 spaces here after this paren.",
+      "range": {
+        "startLine": 78,
+        "startChar": 45,
+        "endLine": 78,
+        "endChar": 46
+      },
+      "revId": "d6f841cc34f6289b19d7de042df051cb7a7bf2f1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b134e89e_c6aa0a7a",
+        "filename": "chrome/test/data/webui/md_history/history_list_test.js",
+        "patchSetId": 3
+      },
+      "lineNbr": 248,
+      "author": {
+        "id": 1002603
+      },
+      "writtenOn": "2017-11-06T04:28:48Z",
+      "side": 1,
+      "message": "I don\u0027t think this test will work right. Add\n\n        app.historyResult(\n            createHistoryInfo(\u0027www.google.com\u0027), TEST_HISTORY_RESULTS);\n\nto line 242.\n\nChange this to\n          element.$.sharedMenu.get().close();\n          MockInteractions.tap(items[0].$[\u0027menu-button\u0027]);\n          assertTrue(element.$$(\u0027#menuMoreButton\u0027).hidden);\n\n          element.$.sharedMenu.get().close();\n          MockInteractions.tap(items[1].$[\u0027menu-button\u0027]);\n          assertFalse(element.$$(\u0027#menuMoreButton\u0027).hidden);\n\nso that we get test coverage of different domains not being hidden.",
+      "revId": "d6f841cc34f6289b19d7de042df051cb7a7bf2f1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
