@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "ed19089f_2aad803f",
+        "filename": "third_party/WebKit/Source/core/editing/ime/InputMethodController.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 606,
+      "author": {
+        "id": 1002258
+      },
+      "writtenOn": "2017-11-06T07:06:34Z",
+      "side": 0,
+      "message": "nit: Please keep this as-is to make patch small.",
+      "revId": "51af90bc8f9ed49daa83872bb04a74cc89c8b842",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
