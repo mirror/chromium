@@ -125,9 +125,10 @@ base::string16 AutofillPaymentInstrument::GetSublabel() const {
 
 bool AutofillPaymentInstrument::IsValidForModifier(
     const std::vector<std::string>& method,
+    bool supported_networks_specified,
     const std::vector<std::string>& supported_networks,
-    const std::set<autofill::CreditCard::CardType>& supported_types,
-    bool supported_types_specified) const {
+    bool supported_types_specified,
+    const std::set<autofill::CreditCard::CardType>& supported_types) const {
   // This instrument only matches basic-card.
   if (std::find(method.begin(), method.end(), "basic-card") == method.end())
     return false;
@@ -143,8 +144,7 @@ bool AutofillPaymentInstrument::IsValidForModifier(
   // supported_types may contain CARD_TYPE_UNKNOWN because of the parsing
   // function so the local card only matches if it's because the website didn't
   // specify types (meaning they don't care).
-  if (is_supported_type &&
-      credit_card_.card_type() ==
+  if (credit_card_.card_type() ==
           autofill::CreditCard::CardType::CARD_TYPE_UNKNOWN &&
       supported_types_specified)
     return false;

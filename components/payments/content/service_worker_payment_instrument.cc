@@ -6,11 +6,36 @@
 
 #include "base/stl_util.h"
 #include "base/strings/utf_string_conversions.h"
+#include "components/payments/content/payment_request_converter.h"
 #include "content/public/browser/browser_context.h"
 #include "content/public/browser/payment_app_provider.h"
 #include "ui/gfx/image/image_skia.h"
 
 namespace payments {
+
+namespace {
+
+template <typename T>
+bool HaveSharedElements(const std::vector<T>& a, const std::vector<T>& b) {
+  for (const auto& e_of_a : a) {
+    for (const auto& e_of_b : b) {
+      if (e_of_a == e_of_b)
+        return true;
+    }
+  }
+  return false;
+}
+
+template <typename T>
+bool HaveSharedElements(const std::vector<T>& a, const std::set<T>& b) {
+  for (const auto& e : a) {
+    if (b.find(e) != b.end())
+      return true;
+  }
+  return false;
+}
+
+}  // namespace
 
 // Service worker payment app provides icon through bitmap, so set 0 as invalid
 // resource Id.
@@ -148,16 +173,67 @@ base::string16 ServiceWorkerPaymentInstrument::GetSublabel() const {
 
 bool ServiceWorkerPaymentInstrument::IsValidForModifier(
     const std::vector<std::string>& method,
+    bool supported_networks_specified,
     const std::vector<std::string>& supported_networks,
-    const std::set<autofill::CreditCard::CardType>& supported_types,
-    bool supported_types_specified) const {
+    bool supported_types_specified,
+    const std::set<autofill::CreditCard::CardType>& supported_types) const {
+  std::vector<std::string> supported_methods;
   for (const auto& modifier_supported_method : method) {
     if (base::ContainsValue(stored_payment_app_info_->enabled_methods,
                             modifier_supported_method)) {
-      return true;
+      supported_methods.emplace_back(modifier_supported_method);
     }
   }
-  return false;
+
+  if (supported_methods.empty()) {
+    return false;
+  }
+
+  // Compare capabilities if 'basic-card' is the only supported payment method.
+  if (supported_methods.size() == 1U && supported_methods[0] == "basic-card") {
+    // Return true if both card networks and types are not specified.
+    if (!supported_networks_specified && !supported_types_specified)
+      return true;
+
+    // Return false if no capabilities.
+    if (stored_payment_app_info_->capabilities.empty())
+      return false;
+
+    uint32_t i = 0;
+    for (; i < stored_payment_app_info_->capabilities.size(); i++) {
+      if (supported_networks_specified) {
+        std::vector<std::string> app_supported_networks;
+        for (const auto& network : stored_payment_app_info_->capabilities[i]
+                                       .supported_card_networks) {
+          app_supported_networks.emplace_back(GetBasicCardNetworkName(
+              static_cast<mojom::BasicCardNetwork>(network)));
+        }
+        if (!HaveSharedElements(app_supported_networks, supported_networks))
+          continue;
+      }
+
+      if (supported_types_specified) {
+        std::vector<autofill::CreditCard::CardType> app_supported_types;
+        for (const auto& type :
+             stored_payment_app_info_->capabilities[i].supported_card_types) {
+          app_supported_types.emplace_back(
+              GetBasicCardType(static_cast<mojom::BasicCardType>(type)));
+        }
+        if (!HaveSharedElements(app_supported_types, supported_types)) {
+          continue;
+        }
+      }
+
+      break;
+    }
+
+    // i >= stored_payment_app_info_->capabilities.size() indicates no matched
+    // capabilities.
+    if (i >= stored_payment_app_info_->capabilities.size())
+      return false;
+  }
+
+  return true;
 }
 
 const gfx::ImageSkia* ServiceWorkerPaymentInstrument::icon_image_skia() const {
