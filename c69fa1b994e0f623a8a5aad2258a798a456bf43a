@@ -1,0 +1,55 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "e9f2be2f_b87f69e9",
+        "filename": "chrome/browser/notifications/notification_template_builder.cc",
+        "patchSetId": 13
+      },
+      "lineNbr": 125,
+      "author": {
+        "id": 1002032
+      },
+      "writtenOn": "2017-11-06T14:53:05Z",
+      "side": 1,
+      "message": "Heh, please add this to the doc as well - this definitely breaks a series of use-cases, so we mustn\u0027t forget about it. Maybe even file a bug that blocks the launch issue to track it.",
+      "revId": "c69fa1b994e0f623a8a5aad2258a798a456bf43a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9bee4f7d_ea8adff3",
+        "filename": "chrome/browser/notifications/notification_template_builder.cc",
+        "patchSetId": 13
+      },
+      "lineNbr": 129,
+      "author": {
+        "id": 1002032
+      },
+      "writtenOn": "2017-11-06T14:53:05Z",
+      "side": 1,
+      "message": "nit: consider early return",
+      "revId": "c69fa1b994e0f623a8a5aad2258a798a456bf43a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "65391a2e_fb829539",
+        "filename": "chrome/browser/notifications/notification_template_builder_unittest.cc",
+        "patchSetId": 13
+      },
+      "lineNbr": 51,
+      "author": {
+        "id": 1002032
+      },
+      "writtenOn": "2017-11-06T14:53:05Z",
+      "side": 1,
+      "message": "nit: out of interest, why qualify the type?",
+      "revId": "c69fa1b994e0f623a8a5aad2258a798a456bf43a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
