@@ -2,6 +2,52 @@
   "comments": [
     {
       "key": {
+        "uuid": "455ace13_4fad0826",
+        "filename": "ios/chrome/browser/ui/browser_view_controller.mm",
+        "patchSetId": 7
+      },
+      "lineNbr": 175,
+      "author": {
+        "id": 1163361
+      },
+      "writtenOn": "2017-11-06T22:14:17Z",
+      "side": 1,
+      "message": "I suggest to rename to tools_menu_constants.h since these are not necessarily tied to the coordinator.",
+      "range": {
+        "startLine": 175,
+        "startChar": 42,
+        "endLine": 175,
+        "endChar": 74
+      },
+      "revId": "be11233f96436a2e0f8d2ffbb6df7124bfcbc08e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "abd45e94_da2f688b",
+        "filename": "ios/chrome/browser/ui/browser_view_controller.mm",
+        "patchSetId": 7
+      },
+      "lineNbr": 4280,
+      "author": {
+        "id": 1163361
+      },
+      "writtenOn": "2017-11-06T22:14:17Z",
+      "side": 1,
+      "message": "This parameter is not used at all in any of these methods. Is it necessary?",
+      "range": {
+        "startLine": 4280,
+        "startChar": 4,
+        "endLine": 4280,
+        "endChar": 38
+      },
+      "revId": "be11233f96436a2e0f8d2ffbb6df7124bfcbc08e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "71d8f005_b6254032",
         "filename": "ios/chrome/browser/ui/fullscreen/fullscreen_controller.mm",
         "patchSetId": 7
@@ -145,6 +191,144 @@
     },
     {
       "key": {
+        "uuid": "41adca2b_0609314c",
+        "filename": "ios/chrome/browser/ui/tools_menu/tools_menu_configuration_visibility_protocol.h",
+        "patchSetId": 7
+      },
+      "lineNbr": 12,
+      "author": {
+        "id": 1163361
+      },
+      "writtenOn": "2017-11-06T22:14:17Z",
+      "side": 1,
+      "message": "Could you make it more clear (disambiguate) between this and the ToolsMenuCoordinatorPresentationStateProtocol? At the surface, they look similar. I\u0027m thinking this one is about configuring the tools menu, and the other one is about getting the actual state. Is that correct?",
+      "range": {
+        "startLine": 12,
+        "startChar": 10,
+        "endLine": 12,
+        "endChar": 50
+      },
+      "revId": "be11233f96436a2e0f8d2ffbb6df7124bfcbc08e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "eaa4d98c_c26c3277",
+        "filename": "ios/chrome/browser/ui/tools_menu/tools_menu_configuration_visibility_protocol.h",
+        "patchSetId": 7
+      },
+      "lineNbr": 17,
+      "author": {
+        "id": 1163361
+      },
+      "writtenOn": "2017-11-06T22:14:17Z",
+      "side": 1,
+      "message": "Could this be made more like UIKit\u0027s UIView hidden property?\n@property(nonatomic, getter\u003disToolsMenuHidden) BOOL toolsMenuHidden;\n\nhttps://developer.apple.com/documentation/uikit/uiview/1622585-hidden?language\u003dobjc",
+      "range": {
+        "startLine": 16,
+        "startChar": 0,
+        "endLine": 17,
+        "endChar": 27
+      },
+      "revId": "be11233f96436a2e0f8d2ffbb6df7124bfcbc08e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "83c454af_01130f24",
+        "filename": "ios/chrome/browser/ui/tools_menu/tools_menu_coordinator.h",
+        "patchSetId": 7
+      },
+      "lineNbr": 31,
+      "author": {
+        "id": 1163361
+      },
+      "writtenOn": "2017-11-06T22:14:17Z",
+      "side": 1,
+      "message": "Is this already defined by the PresentationStateProtocol?",
+      "range": {
+        "startLine": 31,
+        "startChar": 36,
+        "endLine": 31,
+        "endChar": 54
+      },
+      "revId": "be11233f96436a2e0f8d2ffbb6df7124bfcbc08e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "31b02f3d_e71b5c41",
+        "filename": "ios/chrome/browser/ui/tools_menu/tools_menu_coordinator.mm",
+        "patchSetId": 7
+      },
+      "lineNbr": 74,
+      "author": {
+        "id": 1163361
+      },
+      "writtenOn": "2017-11-06T22:14:17Z",
+      "side": 1,
+      "message": "Use explicit casting.",
+      "range": {
+        "startLine": 73,
+        "startChar": 38,
+        "endLine": 74,
+        "endChar": 52
+      },
+      "revId": "be11233f96436a2e0f8d2ffbb6df7124bfcbc08e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "35187238_0ceaa3c2",
+        "filename": "ios/chrome/browser/ui/tools_menu/tools_menu_coordinator_constants.h",
+        "patchSetId": 7
+      },
+      "lineNbr": 24,
+      "author": {
+        "id": 1163361
+      },
+      "writtenOn": "2017-11-06T22:14:17Z",
+      "side": 1,
+      "message": "Is \u003cNSObject\u003e necessary here?",
+      "range": {
+        "startLine": 24,
+        "startChar": 56,
+        "endLine": 24,
+        "endChar": 64
+      },
+      "revId": "be11233f96436a2e0f8d2ffbb6df7124bfcbc08e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7477b22b_ef72b73a",
+        "filename": "ios/chrome/browser/ui/tools_menu/tools_menu_coordinator_constants.h",
+        "patchSetId": 7
+      },
+      "lineNbr": 27,
+      "author": {
+        "id": 1163361
+      },
+      "writtenOn": "2017-11-06T22:14:17Z",
+      "side": 1,
+      "message": "Extract to separate file.",
+      "range": {
+        "startLine": 21,
+        "startChar": 0,
+        "endLine": 27,
+        "endChar": 4
+      },
+      "revId": "be11233f96436a2e0f8d2ffbb6df7124bfcbc08e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "897829cc_fc43c6fd",
         "filename": "ios/chrome/browser/ui/tools_menu/tools_menu_coordinator_constants.h",
         "patchSetId": 7
@@ -156,6 +340,52 @@
       "writtenOn": "2017-11-06T21:04:10Z",
       "side": 1,
       "message": "Could you please move this out of the constants file into a separate file (Following the same folder, BUILD.gn recommendation of the other protocol file).",
+      "revId": "be11233f96436a2e0f8d2ffbb6df7124bfcbc08e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ed3336a9_a13232db",
+        "filename": "ios/chrome/browser/ui/tools_menu/tools_menu_coordinator_constants.h",
+        "patchSetId": 7
+      },
+      "lineNbr": 39,
+      "author": {
+        "id": 1163361
+      },
+      "writtenOn": "2017-11-06T22:14:17Z",
+      "side": 1,
+      "message": "Is there a way to structure this so that there are no optional methods?",
+      "range": {
+        "startLine": 39,
+        "startChar": 0,
+        "endLine": 39,
+        "endChar": 9
+      },
+      "revId": "be11233f96436a2e0f8d2ffbb6df7124bfcbc08e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f77d672f_9f85962d",
+        "filename": "ios/chrome/browser/ui/tools_menu/tools_menu_coordinator_constants.h",
+        "patchSetId": 7
+      },
+      "lineNbr": 54,
+      "author": {
+        "id": 1163361
+      },
+      "writtenOn": "2017-11-06T22:14:17Z",
+      "side": 1,
+      "message": "Prefer verb in front: \"isTabLoading\"",
+      "range": {
+        "startLine": 54,
+        "startChar": 8,
+        "endLine": 54,
+        "endChar": 43
+      },
       "revId": "be11233f96436a2e0f8d2ffbb6df7124bfcbc08e",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
