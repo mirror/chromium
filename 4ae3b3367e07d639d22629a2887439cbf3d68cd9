@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "fb30f40c_7610f70f",
+        "filename": "content/test/data/media/getusermedia-depth-capture.html",
+        "patchSetId": 1
+      },
+      "lineNbr": 35,
+      "author": {
+        "id": 1002301
+      },
+      "writtenOn": "2017-11-06T10:53:41Z",
+      "side": 1,
+      "message": "Right. I thought the code was just wrong at first, but it\u0027s probably right.",
+      "parentUuid": "b2934d97_4927d650",
+      "range": {
+        "startLine": 35,
+        "startChar": 0,
+        "endLine": 35,
+        "endChar": 7
+      },
+      "revId": "4ae3b3367e07d639d22629a2887439cbf3d68cd9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "2a15e1a6_7de7859b",
         "filename": "content/test/data/media/peerconnection-call.html",
         "patchSetId": 1
@@ -45,6 +69,30 @@
       "revId": "4ae3b3367e07d639d22629a2887439cbf3d68cd9",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "569ae803_8e1b4a24",
+        "filename": "content/test/data/media/peerconnection-call.html",
+        "patchSetId": 1
+      },
+      "lineNbr": 563,
+      "author": {
+        "id": 1002301
+      },
+      "writtenOn": "2017-11-06T10:53:41Z",
+      "side": 1,
+      "message": "Right, I just found it annoying the test assumes we have an internet interface up. I don\u0027t find it annoying enough to file a bug for though.",
+      "parentUuid": "2a15e1a6_7de7859b",
+      "range": {
+        "startLine": 563,
+        "startChar": 23,
+        "endLine": 563,
+        "endChar": 27
+      },
+      "revId": "4ae3b3367e07d639d22629a2887439cbf3d68cd9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
