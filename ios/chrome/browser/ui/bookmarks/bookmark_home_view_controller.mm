@@ -807,7 +807,7 @@ std::vector<GURL> GetUrlsToOpen(const std::vector<const BookmarkNode*>& nodes) {
 }
 
 - (void)bookmarkCollectionViewShowSignIn:(BookmarkCollectionView*)view {
-  [self.bookmarkPromoController showSignIn];
+  [self.bookmarkPromoController showSignInFromViewController:self];
 }
 
 - (void)bookmarkCollectionViewDismissPromo:(BookmarkCollectionView*)view {
