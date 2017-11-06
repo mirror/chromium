@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "0b59e49a_1da604af",
+        "filename": "third_party/WebKit/Source/platform/fonts/SymbolsIterator.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 77,
+      "author": {
+        "id": 1128431
+      },
+      "writtenOn": "2017-11-06T13:40:29Z",
+      "side": 1,
+      "message": "nit: Does this grew long enough to extract to an inline function? A separate patch is fine with me.",
+      "revId": "eff891454560f47526af1be8a9fd48cc19d1416f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
