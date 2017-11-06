@@ -1,0 +1,73 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "6ccf092d_a0bdea91",
+        "filename": "chrome/browser/ui/cocoa/find_bar/find_bar_bridge_unittest.mm",
+        "patchSetId": 6
+      },
+      "lineNbr": 26,
+      "author": {
+        "id": 1000763
+      },
+      "writtenOn": "2017-11-06T21:14:16Z",
+      "side": 1,
+      "message": "I\u0027m assuming thye null wouldn\u0027t cause problems. Alternatively you might use BrowserWithTestWindowTest as the base, which creates a Browser with a test BrowserWindow. That said, I\u0027m not sure what this test is mean for, so converting to BrowserWithTestWindowTest may not test what this test is intended to test.",
+      "range": {
+        "startLine": 26,
+        "startChar": 31,
+        "endLine": 26,
+        "endChar": 38
+      },
+      "revId": "e5ca0b7fe10c06705a77479d185fec9913bf50d3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6c21985c_55875ca7",
+        "filename": "chrome/browser/ui/find_bar/find_bar_controller.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 87,
+      "author": {
+        "id": 1000763
+      },
+      "writtenOn": "2017-11-06T21:14:16Z",
+      "side": 1,
+      "message": "BrowserWindow implementations own Browser. Are you sure this check is needed?",
+      "range": {
+        "startLine": 87,
+        "startChar": 2,
+        "endLine": 87,
+        "endChar": 13
+      },
+      "revId": "e5ca0b7fe10c06705a77479d185fec9913bf50d3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6dbb4ef3_104218c0",
+        "filename": "chrome/browser/ui/find_bar/find_bar_controller.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 45,
+      "author": {
+        "id": 1000763
+      },
+      "writtenOn": "2017-11-06T21:14:16Z",
+      "side": 1,
+      "message": "remove explicit.",
+      "range": {
+        "startLine": 45,
+        "startChar": 2,
+        "endLine": 45,
+        "endChar": 11
+      },
+      "revId": "e5ca0b7fe10c06705a77479d185fec9913bf50d3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
