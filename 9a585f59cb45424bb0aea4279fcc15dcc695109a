@@ -16,6 +16,24 @@
       "revId": "9a585f59cb45424bb0aea4279fcc15dcc695109a",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d56115f6_c4ba0014",
+        "filename": "ios/chrome/browser/tabs/tab.mm",
+        "patchSetId": 4
+      },
+      "lineNbr": 897,
+      "author": {
+        "id": 1123009
+      },
+      "writtenOn": "2017-11-06T21:20:28Z",
+      "side": 1,
+      "message": "Thanks for catching this. https://chromium-review.googlesource.com/#/c/chromium/src/+/755519",
+      "parentUuid": "1c164773_4cfba6f6",
+      "revId": "9a585f59cb45424bb0aea4279fcc15dcc695109a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
