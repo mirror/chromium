@@ -16,6 +16,24 @@
       "revId": "ec5082a297b964369a06a1b4b301493de435ae0b",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "91914e61_7394a83d",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 1
+      },
+      "lineNbr": 19,
+      "author": {
+        "id": 1250511
+      },
+      "writtenOn": "2017-11-06T16:07:56Z",
+      "side": 1,
+      "message": "There is https://crbug.com/653908 I could use (as in-fences are part of this native fence support effort). Otherwise, I could open a new bug just for the KMS in-fences. Which is preferred?\n\nConcering testing, I used ozone_demo. I will add a tag mentioning this in the commit message.",
+      "parentUuid": "11b2e5c2_f472af18",
+      "revId": "ec5082a297b964369a06a1b4b301493de435ae0b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
