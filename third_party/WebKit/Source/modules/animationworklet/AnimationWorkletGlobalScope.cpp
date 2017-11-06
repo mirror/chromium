@@ -118,6 +118,8 @@ std::unique_ptr<CompositorMutatorOutputState>
 AnimationWorkletGlobalScope::Mutate(
     const CompositorMutatorInputState& mutator_input) {
   DCHECK(IsContextThread());
+  TRACE_EVENT0(TRACE_DISABLED_BY_DEFAULT("animation-worklet"),
+               "AnimationWorkletGlobalScope::Mutate");
 
   // Clean any animator that is not updated
   ScopedAnimatorsSweeper sweeper(animators_);
