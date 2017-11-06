@@ -49,6 +49,30 @@
     },
     {
       "key": {
+        "uuid": "d6edf00e_edcfff0b",
+        "filename": "chrome/browser/page_load_metrics/observers/OWNERS",
+        "patchSetId": 12
+      },
+      "lineNbr": 6,
+      "author": {
+        "id": 1103654
+      },
+      "writtenOn": "2017-11-06T16:11:08Z",
+      "side": 1,
+      "message": "Okay, thanks for the context - and I agree about the privacy aspect here. So here\u0027s what I suggest: let\u0027s change the ukm.xml OWNERS file to explicitly list this list of people and reference that file from here. Also, add a comment to ukm.xml OWNERS file about the privacy aspect.",
+      "parentUuid": "8088fb83_d889995b",
+      "range": {
+        "startLine": 6,
+        "startChar": 44,
+        "endLine": 6,
+        "endChar": 0
+      },
+      "revId": "465af47713667957105f0493dbb74e278963fc7c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "507a6450_9633d35a",
         "filename": "chrome/browser/page_load_metrics/observers/use_counter_page_load_metrics_observer.cc",
         "patchSetId": 12
@@ -131,6 +155,30 @@
       "side": 1,
       "message": "I scanned through a few other observer classes in this directory, none of them is in the namespace of page_load_metrics. I think I should be consistent with the other observers here.",
       "parentUuid": "99cf9e6a_c7f6364b",
+      "range": {
+        "startLine": 21,
+        "startChar": 6,
+        "endLine": 21,
+        "endChar": 39
+      },
+      "revId": "465af47713667957105f0493dbb74e278963fc7c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "07f6ac5a_9e54865a",
+        "filename": "chrome/browser/page_load_metrics/observers/use_counter_page_load_metrics_observer.h",
+        "patchSetId": 12
+      },
+      "lineNbr": 21,
+      "author": {
+        "id": 1103654
+      },
+      "writtenOn": "2017-11-06T16:11:08Z",
+      "side": 1,
+      "message": "It seems like maybe they should be? Perhaps file a follow-up bug for that clean up?",
+      "parentUuid": "39a1215b_d159d7c9",
       "range": {
         "startLine": 21,
         "startChar": 6,
