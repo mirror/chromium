@@ -1761,6 +1761,8 @@ source_set("browser") {
       "webrtc/webrtc_internals_ui.cc",
       "webrtc/webrtc_internals_ui.h",
       "webrtc/webrtc_internals_ui_observer.h",
+      "webrtc/webrtc_rtc_event_log_manager.cc",
+      "webrtc/webrtc_rtc_event_log_manager.h",
     ]
 
     deps += [

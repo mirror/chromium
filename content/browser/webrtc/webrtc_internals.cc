@@ -89,7 +89,7 @@ WebRTCInternals::WebRTCInternals(int aggregate_updates_ms,
                                  bool should_block_power_saving)
     : selection_type_(SelectionType::kAudioDebugRecordings),
       audio_debug_recordings_(false),
-      event_log_recordings_(false),
+      event_log_recordings_(true),  // TODO(eladalon): !!! Undo
       num_open_connections_(0),
       should_block_power_saving_(should_block_power_saving),
       aggregate_updates_ms_(aggregate_updates_ms),
@@ -367,6 +367,7 @@ void WebRTCInternals::DisableEventLogRecordings() {
   event_log_recordings_ = false;
   // Tear down the dialog since the user has unchecked the event log checkbox.
   select_file_dialog_ = nullptr;
+
   for (RenderProcessHost::iterator i(
            content::RenderProcessHost::AllHostsIterator());
        !i.IsAtEnd(); i.Advance())
@@ -527,10 +528,9 @@ void WebRTCInternals::EnableEventLogRecordingsOnAllRenderProcessHosts() {
   DCHECK_CURRENTLY_ON(BrowserThread::UI);
 
   event_log_recordings_ = true;
-  for (RenderProcessHost::iterator i(
-           content::RenderProcessHost::AllHostsIterator());
-       !i.IsAtEnd(); i.Advance())
-    i.GetCurrentValue()->StartWebRTCEventLog(event_log_recordings_file_path_);
+  for (auto it = content::RenderProcessHost::AllHostsIterator(); !it.IsAtEnd(); it.Advance()) {
+    it.GetCurrentValue()->StartWebRTCEventLog(event_log_recordings_file_path_);
+  }
 }
 #endif
 

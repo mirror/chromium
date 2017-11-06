@@ -213,6 +213,11 @@ class CONTENT_EXPORT WebRTCInternals : public RenderProcessHostObserver,
     kAudioDebugRecordings
   } selection_type_;
 
+  enum class SelectionType {
+    RtcEventLogs,
+    AudioDebugRecordings
+  } selection_type_;
+
   // Diagnostic audio recording state.
   bool audio_debug_recordings_;
   base::FilePath audio_debug_recordings_file_path_;
