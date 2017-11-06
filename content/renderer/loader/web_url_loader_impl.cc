@@ -677,6 +677,9 @@ void WebURLLoaderImpl::Context::Start(const WebURLRequest& request,
     }
   }
 
+  mojom::URLLoaderClientRequest url_loader_client_request(
+      std::move(*stream_override_->url_loader_client_request.release()));
+
   RequestExtraData empty_extra_data;
   RequestExtraData* extra_data;
   if (request.GetExtraData())
@@ -704,7 +707,8 @@ void WebURLLoaderImpl::Context::Start(const WebURLRequest& request,
       false /* is_sync */,
       std::make_unique<WebURLLoaderImpl::RequestPeerImpl>(this),
       request.GetLoadingIPCType(), url_loader_factory_,
-      extra_data->TakeURLLoaderThrottles(), std::move(consumer_handle));
+      extra_data->TakeURLLoaderThrottles(), std::move(consumer_handle),
+      std::move(url_loader_client_request));
 
   if (defers_loading_ != NOT_DEFERRING)
     resource_dispatcher_->SetDefersLoading(request_id_, true);

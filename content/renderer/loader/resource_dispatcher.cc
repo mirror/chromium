@@ -626,7 +626,8 @@ int ResourceDispatcher::StartAsync(
     blink::WebURLRequest::LoadingIPCType ipc_type,
     mojom::URLLoaderFactory* url_loader_factory,
     std::vector<std::unique_ptr<URLLoaderThrottle>> throttles,
-    mojo::ScopedDataPipeConsumerHandle consumer_handle) {
+    mojo::ScopedDataPipeConsumerHandle consumer_handle,
+    mojom::URLLoaderClientRequest url_loader_client_request) {
   CheckSchemeForReferrerPolicy(*request);
 
   // Compute a unique request_id for this renderer process.
@@ -650,7 +651,8 @@ int ResourceDispatcher::StartAsync(
     task_runner->PostTask(
         FROM_HERE, base::BindOnce(&ResourceDispatcher::ContinueForNavigation,
                                   weak_factory_.GetWeakPtr(), request_id,
-                                  base::Passed(std::move(consumer_handle))));
+                                  base::Passed(std::move(consumer_handle)),
+                                  base::Passed(&url_loader_client_request)));
 
     return request_id;
   }
@@ -753,7 +755,8 @@ base::TimeTicks ResourceDispatcher::ConsumeIOTimestamp() {
 
 void ResourceDispatcher::ContinueForNavigation(
     int request_id,
-    mojo::ScopedDataPipeConsumerHandle consumer_handle) {
+    mojo::ScopedDataPipeConsumerHandle consumer_handle,
+    mojom::URLLoaderClientRequest url_loader_client_request) {
   PendingRequestInfo* request_info = GetPendingRequestInfo(request_id);
   if (!request_info)
     return;

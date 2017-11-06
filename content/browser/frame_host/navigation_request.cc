@@ -727,7 +727,8 @@ void NavigationRequest::OnResponseStarted(
     const GlobalRequestID& request_id,
     bool is_download,
     bool is_stream,
-    base::Optional<SubresourceLoaderParams> subresource_loader_params) {
+    base::Optional<SubresourceLoaderParams> subresource_loader_params,
+    mojom::URLLoaderClientRequest url_loader_client) {
   DCHECK(state_ == STARTED);
   DCHECK(response);
   TRACE_EVENT_ASYNC_STEP_INTO0("navigation", "NavigationRequest", this,
@@ -803,6 +804,8 @@ void NavigationRequest::OnResponseStarted(
   is_download_ = is_download;
 
   subresource_loader_params_ = std::move(subresource_loader_params);
+
+  url_loader_client_ = std::move(url_loader_client);
 
   // Since we've made the final pick for the RenderFrameHost above, the picked
   // RenderFrameHost's process should be considered "tainted" for future
@@ -1192,7 +1195,8 @@ void NavigationRequest::CommitNavigation() {
 
   render_frame_host->CommitNavigation(
       response_.get(), std::move(body_), std::move(handle_), common_params_,
-      request_params_, is_view_source_, std::move(subresource_loader_params_));
+      request_params_, is_view_source_, std::move(subresource_loader_params_),
+      std::move(url_loader_client_));
 
   frame_tree_node_->ResetNavigationRequest(true, true);
 }

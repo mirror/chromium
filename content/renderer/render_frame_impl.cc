@@ -728,6 +728,42 @@ std::vector<gfx::Size> ConvertToFaviconSizes(
 
 }  // namespace
 
+class URLLoadingCompletion : mojom::URLLoaderClient {
+ public:
+  URLLoadingCompletion(mojom::URLLoaderClientRequest request)
+      : client_binding_(this, std::move(request)) {}
+
+  void OnReceiveResponse(
+      const content::ResourceResponseHead& head,
+      const base::Optional<net::SSLInfo>& ssl_info,
+      mojom::DownloadedTempFilePtr downloaded_file) override {}
+
+  void OnReceiveRedirect(const net::RedirectInfo& redirect_info,
+                         const content::ResourceResponseHead& head) override {}
+
+  void OnDataDownloaded(int64_t data_length, int64_t encoded_length) override {}
+
+  void OnUploadProgress(int64_t current_position,
+                        int64_t total_size,
+                        OnUploadProgressCallback callback) override {}
+
+  void OnReceiveCachedMetadata(const std::vector<uint8_t>& data) override {}
+
+  void OnTransferSizeUpdated(int32_t transfer_size_diff) override {}
+
+  void OnStartLoadingResponseBody(
+      mojo::ScopedDataPipeConsumerHandle body) override {}
+
+  void OnComplete(const content::ResourceRequestCompletionStatus&
+                      completion_status) override {
+    LOG(ERROR) << "OnComplete OnComplete OnComplete OnComplete OnComplete "
+                  "OnComplete OnComplete OnComplete";
+  }
+
+ private:
+  mojo::Binding<mojom::URLLoaderClient> client_binding_;
+};
+
 class RenderFrameImpl::FrameURLLoaderFactory
     : public blink::WebURLLoaderFactory {
  public:
@@ -1303,6 +1339,7 @@ RenderFrameImpl::RenderFrameImpl(CreateParams params)
                                 base::Unretained(this))),
       devtools_frame_token_(
           blink::WebString::FromUTF8(params.devtools_frame_token.ToString())),
+      url_loading_completion_(nullptr),
       weak_factory_(this) {
   // The InterfaceProvider to access Mojo services exposed by the RFHI must be
   // provided at construction time. See: https://crbug.com/729021/.
@@ -3087,8 +3124,13 @@ void RenderFrameImpl::CommitNavigation(
     const CommonNavigationParams& common_params,
     const RequestNavigationParams& request_params,
     mojo::ScopedDataPipeConsumerHandle body_data,
-    base::Optional<URLLoaderFactoryBundle> subresource_loader_factories) {
+    base::Optional<URLLoaderFactoryBundle> subresource_loader_factories,
+    mojom::URLLoaderClientRequest url_loader_client) {
   CHECK(IsBrowserSideNavigationEnabled());
+
+  url_loading_completion_.reset(
+      new URLLoadingCompletion(std::move(url_loader_client)));
+
   // If this was a renderer-initiated navigation (nav_entry_id == 0) from this
   // frame, but it was aborted, then ignore it.
   if (!browser_side_navigation_pending_ &&

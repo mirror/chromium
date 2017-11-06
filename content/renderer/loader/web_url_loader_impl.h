@@ -42,6 +42,7 @@ struct CONTENT_EXPORT StreamOverrideParameters {
   std::vector<GURL> redirects;
   std::vector<ResourceResponseInfo> redirect_responses;
   std::vector<net::RedirectInfo> redirect_infos;
+  std::unique_ptr<mojom::URLLoaderClientRequest> url_loader_client_request;
 
   // The delta between the actual transfer size and the one reported by the
   // AsyncResourceLoader due to not having the ResourceResponse.

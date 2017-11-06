@@ -20,6 +20,7 @@
 #include "content/common/navigation_subresource_loader_params.h"
 #include "content/public/browser/navigation_throttle.h"
 #include "content/public/common/previews_state.h"
+#include "content/public/common/url_loader.mojom.h"
 #include "mojo/public/cpp/system/data_pipe.h"
 
 namespace content {
@@ -203,16 +204,17 @@ class CONTENT_EXPORT NavigationRequest : public NavigationURLLoaderDelegate {
   void OnRequestRedirected(
       const net::RedirectInfo& redirect_info,
       const scoped_refptr<ResourceResponse>& response) override;
-  void OnResponseStarted(const scoped_refptr<ResourceResponse>& response,
-                         std::unique_ptr<StreamHandle> body,
-                         mojo::ScopedDataPipeConsumerHandle consumer_handle,
-                         const SSLStatus& ssl_status,
-                         std::unique_ptr<NavigationData> navigation_data,
-                         const GlobalRequestID& request_id,
-                         bool is_download,
-                         bool is_stream,
-                         base::Optional<SubresourceLoaderParams>
-                             subresource_loader_params) override;
+  void OnResponseStarted(
+      const scoped_refptr<ResourceResponse>& response,
+      std::unique_ptr<StreamHandle> body,
+      mojo::ScopedDataPipeConsumerHandle consumer_handle,
+      const SSLStatus& ssl_status,
+      std::unique_ptr<NavigationData> navigation_data,
+      const GlobalRequestID& request_id,
+      bool is_download,
+      bool is_stream,
+      base::Optional<SubresourceLoaderParams> subresource_loader_params,
+      mojom::URLLoaderClientRequest url_loader_client) override;
   void OnRequestFailed(bool has_stale_copy_in_cache,
                        int net_error,
                        const base::Optional<net::SSLInfo>& ssl_info,
@@ -349,6 +351,8 @@ class CONTENT_EXPORT NavigationRequest : public NavigationURLLoaderDelegate {
   // Used in the network service world to pass the subressource loader params
   // to the renderer. Used by AppCache and ServiceWorker.
   base::Optional<SubresourceLoaderParams> subresource_loader_params_;
+
+  mojom::URLLoaderClientRequest url_loader_client_;
 
   base::WeakPtrFactory<NavigationRequest> weak_factory_;
 
