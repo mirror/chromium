@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "2a760534_6364f3fe",
+        "filename": "chrome/browser/vr/testapp/vr_test_context.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 197,
+      "author": {
+        "id": 1117479
+      },
+      "writtenOn": "2017-11-06T20:45:17Z",
+      "side": 1,
+      "message": "This is neat.  It\u0027s not perfect though, and in some orientations the reticle and arrow drift from each other.  That\u0027s fine, but I want to make sure you\u0027re aware of that.",
+      "revId": "28c9356759ee76b5dcf3b837c63ea7a899845841",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4d9dd986_aa68f892",
+        "filename": "chrome/browser/vr/testapp/vr_test_context.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 299,
+      "author": {
+        "id": 1117479
+      },
+      "writtenOn": "2017-11-06T20:45:17Z",
+      "side": 1,
+      "message": "Something in ToT looks to have converted out default window size to widescreen format.  I thought it was this CL, but it\u0027s not.  Have you seen the same thing?",
+      "revId": "28c9356759ee76b5dcf3b837c63ea7a899845841",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
