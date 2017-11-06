@@ -2037,7 +2037,8 @@ applicationCommandEndpoint:(id<ApplicationCommands>)applicationCommandEndpoint {
 
   // Position the toolbar next, either at the top of the browser view or
   // directly under the tabstrip.
-  CGRect toolbarFrame = [[_toolbarCoordinator view] frame];
+  [self addChildViewController:_toolbarCoordinator.webToolbarController];
+  CGRect toolbarFrame = [[_toolbarCoordinator.webToolbarController view] frame];
   toolbarFrame.origin = CGPointMake(0, minY);
   toolbarFrame.size.width = widthOfView;
   if (!IsSafeAreaCompatibleToolbarEnabled()) {
@@ -2052,6 +2053,7 @@ applicationCommandEndpoint:(id<ApplicationCommands>)applicationCommandEndpoint {
   [[self view] insertSubview:[_toolbarCoordinator view]
                 aboveSubview:infoBarContainerView];
   minY += CGRectGetHeight(toolbarFrame);
+  [_toolbarCoordinator.webToolbarController didMoveToParentViewController:self];
 
   // Account for the toolbar's drop shadow.  The toolbar overlaps with the web
   // content slightly.
@@ -2574,6 +2576,8 @@ bubblePresenterForFeature:(const base::Feature&)feature
   _isShutdown = YES;
   [self.tabStripCoordinator stop];
   self.tabStripCoordinator = nil;
+  [_toolbarCoordinator stop];
+  _toolbarCoordinator = nil;
   self.tabStripView = nil;
   _infoBarContainer = nil;
   _readingListMenuNotifier = nil;
@@ -4774,6 +4778,10 @@ bubblePresenterForFeature:(const base::Feature&)feature
     }
   } else {
     relinquishedToolbarController = [_toolbarCoordinator toolbarController];
+    [_toolbarCoordinator.webToolbarController
+        willMoveToParentViewController:nil];
+    [_toolbarCoordinator.webToolbarController.view removeFromSuperview];
+    [_toolbarCoordinator.webToolbarController removeFromParentViewController];
   }
   _isToolbarControllerRelinquished = (relinquishedToolbarController != nil);
   return relinquishedToolbarController;
