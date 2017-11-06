@@ -126,6 +126,30 @@
       "revId": "2f5d8d3628d601b0a07f809cfadf87e02a650c24",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0a2a774f_4f28f528",
+        "filename": "content/renderer/service_worker/web_service_worker_provider_impl.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 242,
+      "author": {
+        "id": 1125915
+      },
+      "writtenOn": "2017-11-06T08:04:11Z",
+      "side": 1,
+      "message": "Ahh, sorry I completely missed PostMessage. We still need to keep it. (but could we keep the pointer in WebSWProviderImpl?)",
+      "parentUuid": "1d98d5c9_597aa62a",
+      "range": {
+        "startLine": 242,
+        "startChar": 6,
+        "endLine": 242,
+        "endChar": 40
+      },
+      "revId": "2f5d8d3628d601b0a07f809cfadf87e02a650c24",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
