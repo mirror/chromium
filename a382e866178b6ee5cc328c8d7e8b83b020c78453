@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "cb04ec5b_9ad563b0",
+        "filename": "chrome/browser/component_updater/cros_component_installer.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 115,
+      "author": {
+        "id": 1178302
+      },
+      "writtenOn": "2017-11-06T21:25:45Z",
+      "side": 1,
+      "message": "I think in general, these dbus clients do not necessarily return valid result (true or false). On errors (dbus connect failure, etc.), it returns nullptr which is not a desired type:\n\nif (!bus_-\u003eConnect() || !bus_-\u003eSetUpAsyncOperations()) {\n    // In case of a failure, run the error callback with nullptr.\n    base::OnceClosure task \u003d base::BindOnce(\n        \u0026ObjectProxy::RunResponseOrErrorCallback, this, std::move(callback),\n        start_time, nullptr /* response */, nullptr /* error_response */);\n    bus_-\u003eGetOriginTaskRunner()-\u003ePostTask(FROM_HERE, std::move(task));\n\n    dbus_message_unref(request_message);\n    return;\n}\n\nThe prototype of RemoveComponent is following:\n\nvirtual void RemoveComponent(const std::string\u0026 name, DBusMethodCallback\u003cbool\u003e callback) \u003d 0;\n\nDBusMethodCallback is defined:\n\nusing DBusMethodCallback \u003d base::OnceCallback\u003cvoid(base::Optional\u003cResultType\u003e result)\u003e;",
+      "parentUuid": "580319d4_a56bde73",
+      "range": {
+        "startLine": 115,
+        "startChar": 49,
+        "endLine": 115,
+        "endChar": 53
+      },
+      "revId": "a382e866178b6ee5cc328c8d7e8b83b020c78453",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "949b9b75_4ac35382",
         "filename": "components/component_updater/component_installer.h",
         "patchSetId": 2
@@ -39,6 +63,24 @@
       "revId": "a382e866178b6ee5cc328c8d7e8b83b020c78453",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e35e08cd_1226242d",
+        "filename": "components/component_updater/component_installer.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 65,
+      "author": {
+        "id": 1178302
+      },
+      "writtenOn": "2017-11-06T21:25:45Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "949b9b75_4ac35382",
+      "revId": "a382e866178b6ee5cc328c8d7e8b83b020c78453",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
