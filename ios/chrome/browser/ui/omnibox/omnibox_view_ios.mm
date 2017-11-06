@@ -361,7 +361,6 @@ void OmniboxViewIOS::OnDidBeginEditing() {
   // Text attributes (e.g. text color) should not be shown while editing, so
   // strip them out by calling setText (as opposed to setAttributedText).
   [field_ setText:[field_ text]];
-  [field_ enableLeftViewButton:NO];
   OnBeforePossibleChange();
   // In the case where the user taps the fakebox on the Google landing page,
   // the WebToolbarController invokes OnSetFocus before calling
@@ -390,7 +389,6 @@ void OmniboxViewIOS::OnDidBeginEditing() {
 
 void OmniboxViewIOS::OnDidEndEditing() {
   CloseOmniboxPopup();
-  [field_ enableLeftViewButton:YES];
   model()->OnWillKillFocus();
   model()->OnKillFocus();
   if ([field_ isPreEditing])
@@ -782,7 +780,8 @@ bool OmniboxViewIOS::ShouldIgnoreUserInputDueToPendingVoiceSearch() {
 }
 
 void OmniboxViewIOS::SetLeftImage(int imageId) {
-  [field_ setPlaceholderImage:imageId];
+  // TODO: actually use the location bar isntead.
+  [(id)field_.get().superview setPlaceholderImage:imageId];
 }
 
 void OmniboxViewIOS::HideKeyboardAndEndEditing() {
