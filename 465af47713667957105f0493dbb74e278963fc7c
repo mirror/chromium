@@ -73,6 +73,30 @@
     },
     {
       "key": {
+        "uuid": "968ec281_cd9f72d5",
+        "filename": "chrome/browser/page_load_metrics/observers/OWNERS",
+        "patchSetId": 12
+      },
+      "lineNbr": 6,
+      "author": {
+        "id": 1221384
+      },
+      "writtenOn": "2017-11-06T16:44:11Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "d6edf00e_edcfff0b",
+      "range": {
+        "startLine": 6,
+        "startChar": 44,
+        "endLine": 6,
+        "endChar": 0
+      },
+      "revId": "465af47713667957105f0493dbb74e278963fc7c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "507a6450_9633d35a",
         "filename": "chrome/browser/page_load_metrics/observers/use_counter_page_load_metrics_observer.cc",
         "patchSetId": 12
@@ -188,6 +212,30 @@
       "revId": "465af47713667957105f0493dbb74e278963fc7c",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8de0cdb1_4f14f609",
+        "filename": "chrome/browser/page_load_metrics/observers/use_counter_page_load_metrics_observer.h",
+        "patchSetId": 12
+      },
+      "lineNbr": 21,
+      "author": {
+        "id": 1221384
+      },
+      "writtenOn": "2017-11-06T16:44:11Z",
+      "side": 1,
+      "message": "OK. bmcquade@ could you please verify if this will be the right thing to do here?\nThanks",
+      "parentUuid": "07f6ac5a_9e54865a",
+      "range": {
+        "startLine": 21,
+        "startChar": 6,
+        "endLine": 21,
+        "endChar": 39
+      },
+      "revId": "465af47713667957105f0493dbb74e278963fc7c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
