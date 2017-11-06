@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "85e91478_ddec79c5",
+        "filename": "third_party/WebKit/Source/core/html/forms/TextControlElement.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 997,
+      "author": {
+        "id": 1115933
+      },
+      "writtenOn": "2017-11-06T04:04:46Z",
+      "side": 1,
+      "message": "I don\u0027t think this is the correct fix. This CL isn\u0027t working for example when:\n1. Open html from crbug.com/780761\n2. Add autofill address with city\u003dSpringfield to profile\n3. Click city input to show autofill popup\n4. Hover mouse over Springfield suggestion\n5. Move mouse outside autofill popup\nExpected: city field doesn\u0027t have purple border\nActual: city field has purple border\n\nThe real problem is that we are conflating HTMLInputElement::is_placeholder_visible_ with two meanings.\n- TextControlElement::UpdatePlaceholderVisibility is using the \"is placeholder element (placeholder and suggestion) shown\" meaning\n- SelectorChecker::CheckPseudoClass is using the \"is placeholder (not suggestion) shown\" meaning\n\nHTMLInputElement::is_placeholder_visible_ should probably be used with the second meaning for SelectorChecker::CheckPseudoClass.\nI think we might need to add a new bool in TextControlElement for the first meaning.\nWhen we do that I think we might want to call UpdatePlaceholderVisibility() right after UpdatePlaceholderText() in TextControlElement::SetSuggestedValue.",
+      "range": {
+        "startLine": 997,
+        "startChar": 0,
+        "endLine": 997,
+        "endChar": 59
+      },
+      "revId": "9a365cf679e01571d9f5d44cc096a61dc1337262",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
