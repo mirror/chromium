@@ -73,6 +73,30 @@
     },
     {
       "key": {
+        "uuid": "2f26e531_f429a8f5",
+        "filename": "ios/chrome/browser/ui/activity_services/chrome_activity_item_source.mm",
+        "patchSetId": 5
+      },
+      "lineNbr": 64,
+      "author": {
+        "id": 1191445
+      },
+      "writtenOn": "2017-11-06T22:30:19Z",
+      "side": 1,
+      "message": "You\u0027re right; I must have misread the documentation. I dropped the copies.",
+      "parentUuid": "feadda57_40b36960",
+      "range": {
+        "startLine": 64,
+        "startChar": 21,
+        "endLine": 64,
+        "endChar": 25
+      },
+      "revId": "4b112eae94e35ff7df5e328e6dff75f671420f92",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "a15f97f1_3b775082",
         "filename": "ios/chrome/browser/ui/activity_services/share_to_data.h",
         "patchSetId": 5
