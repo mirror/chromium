@@ -24,8 +24,20 @@ bool ValidateEffects(const HeapVector<Member<KeyframeEffectReadOnly>>& effects,
     return false;
   }
 
+  if (!effects.at(0)->Target()) {
+    // TODO(crbug.com/781816): Allow using effects with no target.
+    error_string = "All effect targets must exist";
+    return false;
+  }
+
   Document& target_document = effects.at(0)->Target()->GetDocument();
   for (const auto& effect : effects) {
+    if (!effect->Target()) {
+      // TODO(crbug.com/781816): Allow using effects with no target.
+      error_string = "All effect targets must exist";
+      return false;
+    }
+
     if (effect->Target()->GetDocument() != target_document) {
       error_string = "All effects must target elements in the same document";
       return false;
