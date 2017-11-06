@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "8e72ca2b_31e6a54a",
+        "filename": "ios/chrome/browser/reading_list/reading_list_download_service.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 298,
+      "author": {
+        "id": 1144530
+      },
+      "writtenOn": "2017-11-06T10:05:18Z",
+      "side": 1,
+      "message": "I guess you need to change this.",
+      "range": {
+        "startLine": 298,
+        "startChar": 33,
+        "endLine": 298,
+        "endChar": 56
+      },
+      "revId": "eaf785e6f3bce3f92bfaceff506d93a831028079",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
