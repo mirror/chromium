@@ -20,7 +20,7 @@
 #include "platform/weborigin/Referrer.h"
 #include "platform/wtf/Forward.h"
 #include "platform/wtf/text/StringHash.h"
-#include "third_party/WebKit/common/blob/blob.mojom-blink.h"  // nogncheck
+#include "third_party/WebKit/common/blob/blob.mojom-shared.h"  // nogncheck
 #endif
 
 namespace blink {
