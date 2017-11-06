@@ -34,6 +34,24 @@
       "revId": "bd091f439f01a24d76d454870499e3b128d38fc6",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "87d0b613_d09c5fc8",
+        "filename": "ios/web/public/web_state/web_state_observer.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 119,
+      "author": {
+        "id": 1133065
+      },
+      "writtenOn": "2017-11-06T18:24:22Z",
+      "side": 1,
+      "message": "I\u0027m a little confused.  You said you like the first option better because it avoids code duplication, but it seems like option 2 would be the better option for that since both successful and unsuccessful loads would go through the same function?  I think that option 2 would be preferable for that same reason.\n\nI\u0027ll LGTM this CL since it\u0027s definitely an improvement over our old documentation.  We can follow up on this discussion on the bug.",
+      "parentUuid": "74e7aa2f_4ea5d715",
+      "revId": "bd091f439f01a24d76d454870499e3b128d38fc6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
