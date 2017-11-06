@@ -37,6 +37,24 @@
     },
     {
       "key": {
+        "uuid": "a04eab60_86d71198",
+        "filename": "chrome/install_static/install_details.h",
+        "patchSetId": 23
+      },
+      "lineNbr": 110,
+      "author": {
+        "id": 1178124
+      },
+      "writtenOn": "2017-11-06T08:46:07Z",
+      "side": 1,
+      "message": "same question as before: can this return a \"const CLSID\u0026\" rather than returning a copy? i don\u0027t think this would be a problem, and it would remove some extra copying.",
+      "parentUuid": "e5bded12_397d405e",
+      "revId": "4c67b3e6bff6e2b34e9906d0039b80bc03e9311c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "5e7c9c60_1e3ae98a",
         "filename": "chrome/install_static/install_modes_unittest.cc",
         "patchSetId": 23
