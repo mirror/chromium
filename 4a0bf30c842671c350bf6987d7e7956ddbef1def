@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "9c4db704_f4c8419e",
+        "filename": "third_party/WebKit/Source/core/dom/TreeScope.cpp",
+        "patchSetId": 12
+      },
+      "lineNbr": 217,
+      "author": {
+        "id": 1002681
+      },
+      "writtenOn": "2017-11-06T19:36:21Z",
+      "side": 1,
+      "message": "this should use point_copy (and the Scale+Move should be on point_copy), and you can rename point_copy to point_in_content. The Scale in RootLayerScrollingEnabled should then be on point_in_frame.",
+      "range": {
+        "startLine": 217,
+        "startChar": 26,
+        "endLine": 217,
+        "endChar": 40
+      },
+      "revId": "4a0bf30c842671c350bf6987d7e7956ddbef1def",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}

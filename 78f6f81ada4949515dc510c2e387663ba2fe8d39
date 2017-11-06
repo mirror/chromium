@@ -93,6 +93,30 @@
       "revId": "78f6f81ada4949515dc510c2e387663ba2fe8d39",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1f37a412_e661fdaf",
+        "filename": "third_party/WebKit/Source/core/dom/TreeScope.cpp",
+        "patchSetId": 10
+      },
+      "lineNbr": 213,
+      "author": {
+        "id": 1002681
+      },
+      "writtenOn": "2017-11-06T19:36:21Z",
+      "side": 1,
+      "message": "The current patch and fixing separately SGTM, thanks. (Though I\u0027ve suggested some cosmetic changes).\n\n\u003e Hmm, looks like modifying the point isn\u0027t a problem as we are not using it outside incase of return false\n\nIt\u0027s not a correctness issue right now but it is a potential problem in the future. The comment on the function says if it returns false, the point wont be modified. If future code were to use this function with that assumption it\u0027ll be broken. In general, it\u0027s easier to think about these kind of helpers if they don\u0027t destructively modify their arguments.",
+      "parentUuid": "72171510_8c6fca09",
+      "range": {
+        "startLine": 213,
+        "startChar": 10,
+        "endLine": 213,
+        "endChar": 59
+      },
+      "revId": "78f6f81ada4949515dc510c2e387663ba2fe8d39",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
