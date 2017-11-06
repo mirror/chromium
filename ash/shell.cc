@@ -17,6 +17,7 @@
 #include "ash/accessibility/accessibility_controller.h"
 #include "ash/accessibility/accessibility_delegate.h"
 #include "ash/app_list/app_list_delegate_impl.h"
+#include "ash/app_list/ash_app_list_controller.h"
 #include "ash/ash_constants.h"
 #include "ash/autoclick/autoclick_controller.h"
 #include "ash/cast_config_controller.h"
@@ -485,7 +486,7 @@ void Shell::UpdateCursorCompositingEnabled() {
 
 void Shell::SetCursorCompositingEnabled(bool enabled) {
   if (GetAshConfig() != Config::MASH) {
-    // TODO: needs to work in mash. http://crbug.com/705592.
+    // TODO(erg): needs to work in mash. http://crbug.com/705592.
     window_tree_host_manager_->cursor_window_controller()
         ->SetCursorCompositingEnabled(enabled);
     native_cursor_manager_->SetNativeCursorEnabled(!enabled);
@@ -758,6 +759,7 @@ Shell::~Shell() {
 
   // AppListDelegateImpl depends upon AppList.
   app_list_delegate_impl_.reset();
+  ash_app_list_controller_.reset();
 
   // These members access Shell in their destructors.
   wallpaper_controller_.reset();
@@ -982,6 +984,7 @@ void Shell::Init(const ShellInitParams& init_params) {
         display::Screen::GetScreen()->GetPrimaryDisplay());
   }
 
+  ash_app_list_controller_ = std::make_unique<AshAppListController>();
   accelerator_controller_ = shell_port_->CreateAcceleratorController();
   tablet_mode_controller_ = std::make_unique<TabletModeController>();
   shelf_controller_ = std::make_unique<ShelfController>();

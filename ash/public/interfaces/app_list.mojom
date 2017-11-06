@@ -1,0 +1,65 @@
+// Copyright 2017 The Chromium Authors. All rights reserved.
+// Use of this source code is governed by a BSD-style license that can be
+// found in the LICENSE file.
+
+module ash.mojom;
+
+enum AppListModelStatus {
+  STATUS_NORMAL,
+  STATUS_SYNCING,  // Syncing apps or installing synced apps.
+};
+
+// Do not change the order of these as they are used for metrics.
+enum AppListModelState {
+  STATE_APPS = 0,
+  STATE_SEARCH_RESULTS,
+  STATE_START,
+  STATE_CUSTOM_LAUNCHER_PAGE,
+  // Add new values here.
+
+  INVALID_STATE,
+  STATE_LAST = INVALID_STATE,
+};
+
+// The AppListModelController
+interface AppListController {
+  // Observers are immediately notified of the current app list states when added.
+  AddObserver(associated AppListObserver observer);
+
+  SetStatus(AppListModelStatus status);
+  SetState(AppListModelState state);
+  // SetStateFullscreen(AppListView::AppListState state); // TODO
+
+  //SetTabletMode(bool started);
+  //AddItem(AppListItem item);
+  //AddItemToFolder(AppListItem item, string folder_id);
+  //MergeItems(string target_item_id, string source_item_id) => (string target);
+  //MoveItemToFolder(AppListItem item, string folder_id);
+  // MoveItemToFolderAt(AppListItem item, string folder_id, syncer::StringOrdinal position) => (bool moved); // TODO
+  // SetItemPosition(AppListItem item, const syncer::StringOrdinal& new_position); // TODO
+  //SetItemName(AppListItem item, string name);
+  //SetItemNameAndShortName(AppListItem item, string name, string short_name);
+  //DeleteItem(string id);
+  //DeleteUninstalledItem(string id);
+
+  //SetFoldersEnabled(bool folders_enabled);
+  //SetCustomLauncherPageEnabled(bool enabled);
+
+  //set_custom_launcher_page_name(string name);
+  //PushCustomLauncherPageSubpage();
+  //PopCustomLauncherPageSubpage() => (bool popped);
+  //ClearCustomLauncherPageSubpages();
+
+  //SetSearchEngineIsGoogle(bool is_google);
+
+  //static std::vector<SearchResult*> FilterSearchResultsByDisplayType(
+  //    SearchResults* results,
+  //    SearchResult::DisplayType display_type,
+  //    size_t max_results); // TODO
+};
+
+// An AppListModel observer, used to cache a AppListModel.
+interface AppListObserver {
+  OnStatusSet(AppListModelStatus status);
+  OnStateSet(AppListModelState state);
+};

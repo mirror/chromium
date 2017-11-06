@@ -39,6 +39,9 @@ class APP_LIST_EXPORT AppListModelObserver {
   // Triggered when the search engine is changed to and from Google.
   virtual void OnSearchEngineIsGoogleChanged(bool is_google) {}
 
+  virtual void StatusSet(AppListModel::Status status) {}
+  virtual void StateSet(AppListModel::State state) {}
+
  protected:
   virtual ~AppListModelObserver() {}
 };

@@ -84,6 +84,7 @@ class AcceleratorController;
 class AccessibilityController;
 class AccessibilityDelegate;
 class AshDisplayController;
+class AshAppListController;
 class AppListDelegateImpl;
 class NativeCursorManagerAsh;
 class AshTouchTransformController;
@@ -685,6 +686,7 @@ class ASH_EXPORT Shell : public SessionObserver,
   std::unique_ptr<::wm::VisibilityController> visibility_controller_;
   std::unique_ptr<::wm::WindowModalityController> window_modality_controller_;
   std::unique_ptr<app_list::AppList> app_list_;
+  std::unique_ptr<AshAppListController> ash_app_list_controller_;
   std::unique_ptr<PrefService> local_state_;
   std::unique_ptr<views::corewm::TooltipController> tooltip_controller_;
   std::unique_ptr<PowerButtonController> power_button_controller_;

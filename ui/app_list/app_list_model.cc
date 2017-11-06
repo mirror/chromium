@@ -47,8 +47,10 @@ void AppListModel::SetStatus(Status status) {
     return;
 
   status_ = status;
-  for (auto& observer : observers_)
+  for (auto& observer : observers_) {
     observer.OnAppListModelStatusChanged();
+    observer.StatusSet(status);
+  }
 }
 
 void AppListModel::SetState(State state) {
@@ -59,8 +61,10 @@ void AppListModel::SetState(State state) {
 
   state_ = state;
 
-  for (auto& observer : observers_)
+  for (auto& observer : observers_) {
     observer.OnAppListModelStateChanged(old_state, state_);
+    observer.StateSet(state);
+  }
 }
 
 void AppListModel::SetStateFullscreen(AppListView::AppListState state) {

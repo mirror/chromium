@@ -22,6 +22,7 @@
           "ash::mojom::NoteTakingController",
           "ash::mojom::SessionController",
           "ash::mojom::ShelfController",
+          "ash::mojom::AshAppListController",
           "ash::mojom::ShutdownController",
           "ash::mojom::SystemTray",
           "ash::mojom::TabletModeController",
