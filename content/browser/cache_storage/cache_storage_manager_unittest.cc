@@ -1349,6 +1349,21 @@ TEST_P(CacheStorageManagerTestP, GetSizeThenCloseAllCaches) {
       CachePut(callback_cache_handle_.value(), GURL("http://example.com/baz")));
 }
 
+TEST_P(CacheStorageManagerTestP, GetSizeThenCloseAllCachesAfterDelete) {
+  // Tests that doomed caches are also deleted by GetSizeThenCloseAllCaches.
+  EXPECT_TRUE(Open(origin1_, "foo"));
+  EXPECT_TRUE(
+      CachePut(callback_cache_handle_.value(), GURL("http://example.com/foo")));
+
+  int64_t size_after_put = GetOriginUsage(origin1_);
+  EXPECT_LT(0, size_after_put);
+
+  EXPECT_TRUE(Delete(origin1_, "foo"));
+
+  EXPECT_EQ(size_after_put, GetSizeThenCloseAllCaches(origin1_));
+  EXPECT_EQ(0, GetOriginUsage(origin1_));
+}
+
 TEST_F(CacheStorageManagerTest, DeleteUnreferencedCacheDirectories) {
   // Create a referenced cache.
   EXPECT_TRUE(Open(origin1_, "foo"));
