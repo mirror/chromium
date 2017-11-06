@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "65412f28_4d12bec1",
+        "filename": "chrome/browser/notifications/notification_platform_bridge_win.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 287,
+      "author": {
+        "id": 1002032
+      },
+      "writtenOn": "2017-11-06T00:11:49Z",
+      "side": 1,
+      "message": "Please document why we do this. (The use of both properties, the limits imposed by the Action Center, why base::Hash() is fine, ..)",
+      "revId": "b7f08325e01e55c79310ac6d51b484bc8581d26d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
