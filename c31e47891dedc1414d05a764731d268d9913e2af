@@ -22,6 +22,30 @@
       "revId": "c31e47891dedc1414d05a764731d268d9913e2af",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "38998981_1037f383",
+        "filename": "gpu/command_buffer/service/gles2_cmd_decoder.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 19874,
+      "author": {
+        "id": 1148065
+      },
+      "writtenOn": "2017-11-06T19:32:17Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "8f0656fc_f5b127c6",
+      "range": {
+        "startLine": 19874,
+        "startChar": 22,
+        "endLine": 19874,
+        "endChar": 41
+      },
+      "revId": "c31e47891dedc1414d05a764731d268d9913e2af",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
