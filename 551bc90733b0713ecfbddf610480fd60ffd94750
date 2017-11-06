@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "8ac23e86_83871510",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/vr_shell/VrShellImpl.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 333,
+      "author": {
+        "id": 1002161
+      },
+      "writtenOn": "2017-11-06T20:56:51Z",
+      "side": 1,
+      "message": "Do we need mActivity.getWindowAndroid().hasPermission here? If not, perhaps we could rename this to canRequestAudioPermission so that other who is also interested in this could use the boolean directly.",
+      "revId": "551bc90733b0713ecfbddf610480fd60ffd94750",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2b46d964_778bb300",
+        "filename": "chrome/browser/vr/browser_ui_interface.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 38,
+      "author": {
+        "id": 1002161
+      },
+      "writtenOn": "2017-11-06T20:56:51Z",
+      "side": 1,
+      "message": "It doesn\u0027t look like anyone use this function? If so, please remove it.",
+      "revId": "551bc90733b0713ecfbddf610480fd60ffd94750",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
