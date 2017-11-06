@@ -34,6 +34,24 @@
       "revId": "7761f64552ed61aec5e6a75b20ff90be57ac7324",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "726d7539_b7489e83",
+        "filename": "third_party/WebKit/Source/core/workers/WorkletGlobalScope.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 45,
+      "author": {
+        "id": 1115976
+      },
+      "writtenOn": "2017-11-06T13:56:38Z",
+      "side": 1,
+      "message": "Hmm... I assumed that the referrer policy has been taken on the Document side, and this referrer policy hasn\u0027t been used. However, as kouhei@ pointed out, this has been used via Modulator::GetReferrerPolicy on the Worklet side and it has been passed to the Document side as FetchParameters. In the case, I\u0027m not sure why the tests could pass before this change. I\u0027ll investigate the reason before landing this CL.",
+      "parentUuid": "fe76e53a_ec40c40a",
+      "revId": "7761f64552ed61aec5e6a75b20ff90be57ac7324",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
