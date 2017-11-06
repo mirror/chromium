@@ -10,9 +10,11 @@
 #include <numeric>
 #include <set>
 
-#include "base/i18n/break_iterator.h"
 #include "base/i18n/case_conversion.h"
+#include "base/feature_list.h"
 #include "base/strings/string_util.h"
+#include "components/omnibox/browser/break_iterator_adapter.h"
+#include "components/omnibox/browser/omnibox_field_trial.h"
 #include "net/base/escape.h"
 
 namespace {
@@ -110,15 +112,25 @@ String16Vector String16VectorFromString16(
     WordStarts* word_starts) {
   if (word_starts)
     word_starts->clear();
-  base::i18n::BreakIterator iter(cleaned_uni_string,
-      break_on_space ? base::i18n::BreakIterator::BREAK_SPACE :
-          base::i18n::BreakIterator::BREAK_WORD);
+
+  base::i18n::BreakIterator::BreakType break_mode =
+      break_on_space ? base::i18n::BreakIterator::BREAK_SPACE
+                     : base::i18n::BreakIterator::BREAK_WORD;
+
+  static bool experiment_enabled =
+      base::FeatureList::IsEnabled(omnibox::kBreakWordsAtUnderscores);
+
+  std::unique_ptr<base::i18n::BreakIterator> iter(
+      experiment_enabled
+          ? new BreakIteratorAdapter(cleaned_uni_string, break_mode)
+          : new base::i18n::BreakIterator(cleaned_uni_string, break_mode));
+
   String16Vector words;
-  if (!iter.Init())
+  if (!iter->Init())
     return words;
-  while (iter.Advance()) {
-    if (break_on_space || iter.IsWord()) {
-      base::string16 word(iter.GetString());
+  while (iter->Advance()) {
+    if (break_on_space || iter->IsWord()) {
+      base::string16 word(iter->GetString());
       size_t initial_whitespace = 0;
       if (break_on_space) {
         base::string16 trimmed_word;
@@ -131,7 +143,7 @@ String16Vector String16VectorFromString16(
       words.push_back(word);
       if (!word_starts)
         continue;
-      size_t word_start = iter.prev() + initial_whitespace;
+      size_t word_start = iter->prev() + initial_whitespace;
       if (word_start < kMaxSignificantChars)
         word_starts->push_back(word_start);
     }

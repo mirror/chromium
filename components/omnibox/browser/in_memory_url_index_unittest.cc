@@ -8,7 +8,7 @@
 #include <algorithm>
 #include <fstream>
 #include <numeric>
-
+#include "base/logging.h"
 #include "base/auto_reset.h"
 #include "base/files/file_path.h"
 #include "base/files/file_util.h"
@@ -1300,54 +1300,61 @@ TEST_F(InMemoryURLIndexTest, CalculateWordStartsOffsets) {
     size_t cursor_position;
     const size_t expected_word_starts_offsets_size;
     const size_t expected_word_starts_offsets[3];
-  } test_cases[] = {
-    /* No punctuations, only cursor position change. */
-    { "ABCD", kInvalid, 1, {0, kInvalid, kInvalid} },
-    { "abcd", 0,        1, {0, kInvalid, kInvalid} },
-    { "AbcD", 1,        2, {0, 0, kInvalid} },
-    { "abcd", 4,        1, {0, kInvalid, kInvalid} },
+  } test_cases[] = {/* No punctuations, only cursor position change. */
+                    {"ABCD", kInvalid, 1, {0, kInvalid, kInvalid}},
+                    {"abcd", 0, 1, {0, kInvalid, kInvalid}},
+                    {"AbcD", 1, 2, {0, 0, kInvalid}},
+                    {"abcd", 4, 1, {0, kInvalid, kInvalid}},
 
-    /* Starting with punctuation. */
-    { ".abcd",  kInvalid, 1, {1, kInvalid, kInvalid} },
-    { ".abcd",  0,        1, {1, kInvalid, kInvalid} },
-    { "!abcd",  1,        2, {1, 0, kInvalid} },
-    { "::abcd", 1,        2, {1, 1, kInvalid} },
-    { ":abcd",  5,        1, {1, kInvalid, kInvalid} },
+                    /* Starting with punctuation. */
+                    {".abcd", kInvalid, 1, {1, kInvalid, kInvalid}},
+                    {".abcd", 0, 1, {1, kInvalid, kInvalid}},
+                    {"!abcd", 1, 2, {1, 0, kInvalid}},
+                    {"::abcd", 1, 2, {1, 1, kInvalid}},
+                    {":abcd", 5, 1, {1, kInvalid, kInvalid}},
 
-    /* Ending with punctuation. */
-    { "abcd://", kInvalid, 1, {0, kInvalid, kInvalid} },
-    { "ABCD://", 0,        1, {0, kInvalid, kInvalid} },
-    { "abcd://", 1,        2, {0, 0, kInvalid} },
-    { "abcd://", 4,        2, {0, 3, kInvalid} },
-    { "abcd://", 7,        1, {0, kInvalid, kInvalid} },
+                    /* Ending with punctuation. */
+                    {"abcd://", kInvalid, 1, {0, kInvalid, kInvalid}},
+                    {"ABCD://", 0, 1, {0, kInvalid, kInvalid}},
+                    {"abcd://", 1, 2, {0, 0, kInvalid}},
+                    {"abcd://", 4, 2, {0, 3, kInvalid}},
+                    {"abcd://", 7, 1, {0, kInvalid, kInvalid}},
 
-    /* Punctuation in the middle. */
-    { "ab.cd", kInvalid, 1, {0, kInvalid, kInvalid} },
-    { "ab.cd", 0,        1, {0, kInvalid, kInvalid} },
-    { "ab!cd", 1,        2, {0, 0, kInvalid} },
-    { "AB.cd", 2,        2, {0, 1, kInvalid} },
-    { "AB.cd", 3,        2, {0, 0, kInvalid} },
-    { "ab:cd", 5,        1, {0, kInvalid, kInvalid} },
+                    /* Punctuation in the middle. */
+                    {"ab.cd", kInvalid, 1, {0, kInvalid, kInvalid}},
+                    {"ab.cd", 0, 1, {0, kInvalid, kInvalid}},
+                    {"ab!cd", 1, 2, {0, 0, kInvalid}},
+                    {"AB.cd", 2, 2, {0, 1, kInvalid}},
+                    {"AB.cd", 3, 2, {0, 0, kInvalid}},
+                    {"ab:cd", 5, 1, {0, kInvalid, kInvalid}},
 
-    /* Hyphenation */
-    { "Ab-cd", kInvalid, 1, {0, kInvalid, kInvalid} },
-    { "ab-cd", 0,        1, {0, kInvalid, kInvalid} },
-    { "-abcd", 0,        1, {1, kInvalid, kInvalid} },
-    { "-abcd", 1,        2, {1, 0, kInvalid} },
-    { "abcd-", 2,        2, {0, 0, kInvalid} },
-    { "abcd-", 4,        2, {0, 1, kInvalid} },
-    { "ab-cd", 5,        1, {0, kInvalid, kInvalid} },
+                    /* Hyphenation */
+                    {"Ab-cd", kInvalid, 1, {0, kInvalid, kInvalid}},
+                    {"ab-cd", 0, 1, {0, kInvalid, kInvalid}},
+                    {"-abcd", 0, 1, {1, kInvalid, kInvalid}},
+                    {"-abcd", 1, 2, {1, 0, kInvalid}},
+                    {"abcd-", 2, 2, {0, 0, kInvalid}},
+                    {"abcd-", 4, 2, {0, 1, kInvalid}},
+                    {"ab-cd", 5, 1, {0, kInvalid, kInvalid}},
 
-    /* Whitespace */
-    { "Ab cd",  kInvalid, 2, {0, 0, kInvalid} },
-    { "ab cd",  0,        2, {0, 0, kInvalid} },
-    { " abcd",  0,        1, {0, kInvalid, kInvalid} },
-    { " abcd",  1,        1, {0, kInvalid, kInvalid} },
-    { "abcd ",  2,        2, {0, 0, kInvalid} },
-    { "abcd :", 4,        2, {0, 1, kInvalid} },
-    { "abcd :", 5,        2, {0, 1, kInvalid} },
-    { "abcd :", 2,        3, {0, 0, 1} }
-  };
+                    /* Underscore */
+                    {"Ab_cd", kInvalid, 1, {0, kInvalid, kInvalid}},
+                    {"ab_cd", 0, 1, {0, kInvalid, kInvalid}},
+                    {"_abcd", 0, 1, {1, kInvalid, kInvalid}},
+                    {"_abcd", 1, 2, {1, 0, kInvalid}},
+                    {"abcd_", 2, 2, {0, 0, kInvalid}},
+                    {"abcd_", 4, 2, {0, 1, kInvalid}},
+                    {"ab_cd", 5, 1, {0, kInvalid, kInvalid}},
+
+                    /* Whitespace */
+                    {"Ab cd", kInvalid, 2, {0, 0, kInvalid}},
+                    {"ab cd", 0, 2, {0, 0, kInvalid}},
+                    {" abcd", 0, 1, {0, kInvalid, kInvalid}},
+                    {" abcd", 1, 1, {0, kInvalid, kInvalid}},
+                    {"abcd ", 2, 2, {0, 0, kInvalid}},
+                    {"abcd :", 4, 2, {0, 1, kInvalid}},
+                    {"abcd :", 5, 2, {0, 1, kInvalid}},
+                    {"abcd :", 2, 3, {0, 0, 1}}};
 
   for (size_t i = 0; i < arraysize(test_cases); ++i) {
     SCOPED_TRACE(testing::Message()
