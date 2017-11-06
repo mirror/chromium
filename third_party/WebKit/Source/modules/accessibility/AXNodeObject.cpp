@@ -1416,7 +1416,12 @@ int AXNodeObject::SetSize() const {
 
 int AXNodeObject::AutoPosInSet() const {
   AXObject* parent = ParentObject();
-  if (!parent)
+
+  // Do not continue if the children will need updating soon, because
+  // the calculation requires all the siblings to remain stable.
+  if (!parent || parent->NeedsToUpdateChildren())
+    return 0;
+  if (parent->NeedsToUpdateChildren())
     return 0;
 
   int pos_in_set = 1;
@@ -1449,7 +1454,10 @@ int AXNodeObject::AutoPosInSet() const {
 
 int AXNodeObject::AutoSetSize() const {
   AXObject* parent = ParentObject();
-  if (!parent)
+
+  // Do not continue if the children will need updating soon, because
+  // the calculation requires all the siblings to remain stable.
+  if (!parent || parent->NeedsToUpdateChildren())
     return 0;
 
   int set_size = AutoPosInSet();
