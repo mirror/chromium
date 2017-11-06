@@ -41,7 +41,6 @@ import org.chromium.base.test.util.CommandLineFlags;
 import org.chromium.base.test.util.Restriction;
 import org.chromium.base.test.util.RetryOnFailure;
 import org.chromium.chrome.R;
-import org.chromium.chrome.browser.ChromeFeatureList;
 import org.chromium.chrome.browser.ChromeSwitches;
 import org.chromium.chrome.browser.IntentHandler;
 import org.chromium.chrome.browser.preferences.Pref;
@@ -58,7 +57,6 @@ import org.chromium.chrome.browser.widget.selection.SelectableItemViewHolder;
 import org.chromium.chrome.browser.widget.selection.SelectionDelegate.SelectionObserver;
 import org.chromium.chrome.test.ChromeActivityTestRule;
 import org.chromium.chrome.test.ChromeJUnit4ClassRunner;
-import org.chromium.chrome.test.util.browser.Features;
 import org.chromium.chrome.test.util.browser.signin.SigninTestUtil;
 import org.chromium.chrome.test.util.browser.sync.SyncTestUtil;
 import org.chromium.components.signin.ChromeSigninController;
@@ -271,7 +269,6 @@ public class HistoryActivityTest {
 
     @Test
     @SmallTest
-    @Features(@Features.Register(ChromeFeatureList.TABS_IN_CBD))
     public void testPrivacyDisclaimers_SignedInSyncedAndOtherForms() {
         ChromeSigninController signinController = ChromeSigninController.get();
         signinController.setSignedInAccountName("test@gmail.com");
