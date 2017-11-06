@@ -60,6 +60,12 @@ class CC_EXPORT TileDrawInfo {
     return resource_->size();
   }
 
+  viz::ResourceFormat resource_format() const {
+    DCHECK(mode_ == RESOURCE_MODE);
+    DCHECK(resource_);
+    return resource_->format();
+  }
+
   SkColor solid_color() const {
     DCHECK(mode_ == SOLID_COLOR_MODE);
     return solid_color_;

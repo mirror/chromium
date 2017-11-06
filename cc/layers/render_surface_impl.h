@@ -189,7 +189,8 @@ class CC_EXPORT RenderSurfaceImpl {
       const gfx::Transform& target_to_surface);
   void TileMaskLayer(viz::RenderPass* render_pass,
                      viz::SharedQuadState* shared_quad_state,
-                     const gfx::Rect& visible_layer_rect);
+                     const gfx::Rect& visible_layer_rect,
+                     AppendQuadsData* append_quads_data);
 
   LayerTreeImpl* layer_tree_impl_;
   uint64_t stable_id_;

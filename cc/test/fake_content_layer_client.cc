@@ -57,6 +57,17 @@ FakeContentLayerClient::PaintContentsToDisplayList(
     display_list->EndPaintOfUnpaired(ToEnclosingRect(draw_rect));
   }
 
+  for (RRectPaintVector::const_iterator it = draw_rrects_.begin();
+       it != draw_rrects_.end(); ++it) {
+    const SkRRect& rrect = it->first;
+    const PaintFlags& flags = it->second;
+
+    display_list->StartPaint();
+    display_list->push<DrawRRectOp>(rrect, flags);
+    display_list->EndPaintOfUnpaired(
+        ToEnclosingRect(gfx::SkRectToRectF(rrect.rect())));
+  }
+
   for (ImageVector::const_iterator it = draw_images_.begin();
        it != draw_images_.end(); ++it) {
     if (!it->transform.IsIdentity()) {

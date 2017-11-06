@@ -919,6 +919,7 @@ DrawResult LayerTreeHostImpl::CalculateRenderPasses(FrameData* frame) {
   int64_t checkerboarded_no_recording_content_area = 0;
   int64_t checkerboarded_needs_raster_content_area = 0;
   int64_t total_visible_area = 0;
+  int gpu_memory_in_bytes_saved_by_tiling_for_masks = 0;
   bool have_copy_request =
       active_tree()->property_trees()->effect_tree.HasCopyRequests();
   bool have_missing_animated_tiles = false;
@@ -978,6 +979,8 @@ DrawResult LayerTreeHostImpl::CalculateRenderPasses(FrameData* frame) {
 
       num_missing_tiles += append_quads_data.num_missing_tiles;
       num_incomplete_tiles += append_quads_data.num_incomplete_tiles;
+      gpu_memory_in_bytes_saved_by_tiling_for_masks +=
+          append_quads_data.gpu_memory_in_bytes_saved_by_tiling_for_masks;
       checkerboarded_no_recording_content_area +=
           append_quads_data.checkerboarded_no_recording_content_area;
       checkerboarded_needs_raster_content_area +=
@@ -1069,6 +1072,11 @@ DrawResult LayerTreeHostImpl::CalculateRenderPasses(FrameData* frame) {
         "Compositing.RenderPass.AppendQuadData."
         "CheckerboardedNeedRasterContentArea",
         checkerboarded_needs_raster_content_area);
+    UMA_HISTOGRAM_CUSTOM_COUNTS(
+        base::StringPrintf("Compositing.%s.GPUMemoryUsageSavedByTilingInKb",
+                           GetClientNameForMetrics()),
+        gpu_memory_in_bytes_saved_by_tiling_for_masks / 1024, 1,
+        kGPUMemoryForTilingsLargestBucketKb, kGPUMemoryForTilingsBucketCount);
   }
 
   TRACE_EVENT_END2("cc", "LayerTreeHostImpl::CalculateRenderPasses",
@@ -1125,9 +1133,38 @@ DrawResult LayerTreeHostImpl::PrepareToDraw(FrameData* frame) {
   if (input_handler_client_)
     input_handler_client_->ReconcileElasticOverscrollAndRootScroll();
 
+  bool ok = active_tree_->UpdateDrawProperties();
+  DCHECK(ok) << "UpdateDrawProperties failed during draw";
+
+  // This will cause NotifyTileStateChanged() to be called for any tiles that
+  // completed, which will add damage for visible tiles to the frame for them so
+  // they appear as part of the current frame being drawn.
+  tile_manager_.CheckForCompletedTasks();
+
+  frame->render_surface_list = &active_tree_->GetRenderSurfaceList();
+  frame->render_passes.clear();
+  frame->will_draw_layers.clear();
+  frame->has_no_damage = false;
+  frame->may_contain_video = false;
+
+  if (active_tree_->RootRenderSurface()) {
+    gfx::Rect device_viewport_damage_rect = viewport_damage_rect_;
+    viewport_damage_rect_ = gfx::Rect();
+
+    active_tree_->RootRenderSurface()->damage_tracker()->AddDamageNextUpdate(
+        device_viewport_damage_rect);
+  }
+
+  DrawResult draw_result = CalculateRenderPasses(frame);
+  if (draw_result != DRAW_SUCCESS) {
+    DCHECK(!resourceless_software_draw_);
+    return draw_result;
+  }
+
   if (const char* client_name = GetClientNameForMetrics()) {
     size_t total_memory_in_bytes = 0;
     size_t total_gpu_memory_for_tilings_in_bytes = 0;
+
     for (const PictureLayerImpl* layer : active_tree()->picture_layers()) {
       total_memory_in_bytes += layer->GetRasterSource()->GetMemoryUsage();
       total_gpu_memory_for_tilings_in_bytes += layer->GPUMemoryUsageInBytes();
@@ -1164,34 +1201,6 @@ DrawResult LayerTreeHostImpl::PrepareToDraw(FrameData* frame) {
           1, kGPUMemoryForTilingsLargestBucketKb,
           kGPUMemoryForTilingsBucketCount);
     }
-  }
-
-  bool ok = active_tree_->UpdateDrawProperties();
-  DCHECK(ok) << "UpdateDrawProperties failed during draw";
-
-  // This will cause NotifyTileStateChanged() to be called for any tiles that
-  // completed, which will add damage for visible tiles to the frame for them so
-  // they appear as part of the current frame being drawn.
-  tile_manager_.CheckForCompletedTasks();
-
-  frame->render_surface_list = &active_tree_->GetRenderSurfaceList();
-  frame->render_passes.clear();
-  frame->will_draw_layers.clear();
-  frame->has_no_damage = false;
-  frame->may_contain_video = false;
-
-  if (active_tree_->RootRenderSurface()) {
-    gfx::Rect device_viewport_damage_rect = viewport_damage_rect_;
-    viewport_damage_rect_ = gfx::Rect();
-
-    active_tree_->RootRenderSurface()->damage_tracker()->AddDamageNextUpdate(
-        device_viewport_damage_rect);
-  }
-
-  DrawResult draw_result = CalculateRenderPasses(frame);
-  if (draw_result != DRAW_SUCCESS) {
-    DCHECK(!resourceless_software_draw_);
-    return draw_result;
   }
 
   // If we return DRAW_SUCCESS, then we expect DrawLayers() to be called before

@@ -369,6 +369,8 @@ void PictureLayerImpl::AppendQuads(viz::RenderPass* render_pass,
   only_used_low_res_last_append_quads_ = true;
   gfx::Rect scaled_recorded_viewport = gfx::ScaleToEnclosingRect(
       raster_source_->RecordedViewport(), max_contents_scale);
+  int64_t texture_area = 0;
+  viz::ResourceFormat format = viz::ResourceFormat::RESOURCE_FORMAT_MAX;
   for (PictureLayerTilingSet::CoverageIterator iter(
            tilings_.get(), max_contents_scale,
            shared_quad_state->visible_quad_layer_rect, ideal_contents_scale_);
@@ -398,6 +400,14 @@ void PictureLayerImpl::AppendQuads(viz::RenderPass* render_pass,
       switch (draw_info.mode()) {
         case TileDrawInfo::RESOURCE_MODE: {
           gfx::RectF texture_rect = iter.texture_rect();
+          if (mask_type_ == Layer::LayerMaskType::MULTI_TEXTURE_MASK) {
+            if (format == viz::ResourceFormat::RESOURCE_FORMAT_MAX)
+              format = iter->draw_info().resource_format();
+
+            texture_area +=
+                static_cast<int64_t>(draw_info.resource_size().width() *
+                                     draw_info.resource_size().height());
+          }
 
           // The raster_contents_scale_ is the best scale that the layer is
           // trying to produce, even though it may not be ideal. Since that's
@@ -494,6 +504,14 @@ void PictureLayerImpl::AppendQuads(viz::RenderPass* render_pass,
         last_append_quads_tilings_.back() != iter.CurrentTiling()) {
       last_append_quads_tilings_.push_back(iter.CurrentTiling());
     }
+  }
+
+  gfx::SizeF raster_bounds = gfx::ScaleSize(
+      gfx::SizeF(raster_source_->GetSize()), raster_contents_scale_);
+  if (mask_type_ == Layer::LayerMaskType::MULTI_TEXTURE_MASK) {
+    append_quads_data->gpu_memory_in_bytes_saved_by_tiling_for_masks =
+        BitsPerPixel(format) / 8 *
+        (raster_bounds.width() * raster_bounds.height() - texture_area);
   }
 
   // Adjust shared_quad_state with the quad_offset, since we've adjusted each
