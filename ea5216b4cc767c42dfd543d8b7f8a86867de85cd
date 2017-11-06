@@ -34,6 +34,24 @@
       "revId": "ea5216b4cc767c42dfd543d8b7f8a86867de85cd",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7798c246_32686cdb",
+        "filename": "cc/resources/layer_tree_resource_provider.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 367,
+      "author": {
+        "id": 1000887
+      },
+      "writtenOn": "2017-11-06T22:36:08Z",
+      "side": 1,
+      "message": "Ok I\u0027m going to not report things in TransferableResource then, as those are just IDs and this class has no ownership/isn\u0027t keeping them alive directly (it kinda is until it calls release callback but yeah).",
+      "parentUuid": "06e0732f_be7cfb05",
+      "revId": "ea5216b4cc767c42dfd543d8b7f8a86867de85cd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
