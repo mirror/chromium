@@ -70,6 +70,30 @@
       "revId": "7227bd351fb4e04f639beb57f204df4c619ac591",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "566d784c_a7aae141",
+        "filename": "components/bookmarks/browser/bookmark_model.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 1031,
+      "author": {
+        "id": 1176649
+      },
+      "writtenOn": "2017-11-06T10:28:57Z",
+      "side": 1,
+      "message": "I think your point predates my patch in the sense that, even for bookmarks with regular icons, calling BookmarkNodeFaviconChanged() is mildly confusing, because the favicon might not have changed. BookmarkNodeFaviconChanged() specifically documents: \"Invoked when a favicon has been loaded or changed\".\n\nThe no-favicon case is often treated by the UI as use-default-favicon (or null favicon), so from that perspective I\u0027m leaning towards reusing the same function. One option would be to rename it to BookmarkNodeFaviconDataAvailable() or similar.\n\nI had a similar dilema in my previous patch (https://chromium-review.googlesource.com/650786) where I initially introduced dedicated functions in multiple layers, including the analogous of HistoryService::AddFaviconsChangedCallback(), and ended up reverting to function reuse as per my reviewers feedback.\n\nSo I\u0027m fine either way with a slight preference towards reusing the existing function. WDYT?",
+      "parentUuid": "23254684_05d6f59e",
+      "range": {
+        "startLine": 1030,
+        "startChar": 3,
+        "endLine": 1031,
+        "endChar": 24
+      },
+      "revId": "7227bd351fb4e04f639beb57f204df4c619ac591",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
