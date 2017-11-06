@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "c030ac8c_eb55ea55",
+        "filename": "gpu/command_buffer/service/gles2_cmd_decoder.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 3774,
+      "author": {
+        "id": 1001168
+      },
+      "writtenOn": "2017-11-06T19:41:03Z",
+      "side": 1,
+      "message": "Nit: is it possible to DLOG rather than LOG?",
+      "range": {
+        "startLine": 3774,
+        "startChar": 6,
+        "endLine": 3774,
+        "endChar": 9
+      },
+      "revId": "5f9084ffd03706208bca734f58cf24ea3b6d40dd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
