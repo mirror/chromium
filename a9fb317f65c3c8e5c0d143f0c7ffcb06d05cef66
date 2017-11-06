@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "6eab465e_68b7bcfa",
+        "filename": "chromeos/network/client_cert_resolver.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 195,
+      "author": {
+        "id": 1126309
+      },
+      "writtenOn": "2017-11-06T09:50:34Z",
+      "side": 1,
+      "message": "nit: Perhaps add a comment noting that IsCertificateHardwareBacked() should come before HasPrivateKey() for performance reasons?",
+      "revId": "a9fb317f65c3c8e5c0d143f0c7ffcb06d05cef66",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
