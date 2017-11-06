@@ -45,6 +45,29 @@
       "revId": "c68f6691de56357e9344713fd31a2293c05a061d",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8a745819_5790f68f",
+        "filename": "chrome/browser/ui/tab_dialogs.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 49,
+      "author": {
+        "id": 1000763
+      },
+      "writtenOn": "2017-11-06T21:32:57Z",
+      "side": 1,
+      "message": "I\u0027m not a fan of public ForTesting functions like this. In this case the function doesn\u0027t do any harm and isn\u0027t something that couldn\u0027t be used in real code. So, how about nuking \u0027ForTesting\u0027?",
+      "range": {
+        "startLine": 49,
+        "startChar": 15,
+        "endLine": 49,
+        "endChar": 52
+      },
+      "revId": "c68f6691de56357e9344713fd31a2293c05a061d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
