@@ -12,7 +12,6 @@
 #include "base/memory/ref_counted.h"
 #include "base/single_thread_task_runner.h"
 #include "base/synchronization/waitable_event.h"
-#include "base/threading/thread.h"
 #include "components/viz/common/gpu/context_provider.h"
 #include "gpu/ipc/client/gpu_channel_host.h"
 #include "services/ui/public/cpp/gpu/client_gpu_memory_buffer_manager.h"
@@ -59,15 +58,21 @@ class Gpu : public gpu::GpuChannelHostFactory,
  private:
   friend class GpuTest;
 
+  class EstablishRequest;
   using GpuPtrFactory = base::RepeatingCallback<mojom::GpuPtr(void)>;
+
   Gpu(GpuPtrFactory factory,
       scoped_refptr<base::SingleThreadTaskRunner> task_runner);
 
   scoped_refptr<gpu::GpuChannelHost> GetGpuChannel();
-  void OnEstablishedGpuChannel(int client_id,
-                               mojo::ScopedMessagePipeHandle channel_handle,
-                               const gpu::GPUInfo& gpu_info,
-                               const gpu::GpuFeatureInfo& gpu_feature_info);
+
+  // Sends a request to establish a gpu channel. If a request is currently
+  // pending this will do nothing.
+  void SendEstablishGpuChannelRequest();
+
+  // Handles results of request to establish a gpu channel in
+  // |pending_request_|.
+  void OnEstablishedGpuChannel();
 
   // gpu::GpuChannelHostFactory overrides:
   bool IsMainThread() override;
@@ -77,12 +82,11 @@ class Gpu : public gpu::GpuChannelHostFactory,
 
   scoped_refptr<base::SingleThreadTaskRunner> main_task_runner_;
   scoped_refptr<base::SingleThreadTaskRunner> io_task_runner_;
-  GpuPtrFactory factory_;
   base::WaitableEvent shutdown_event_;
-  std::unique_ptr<base::Thread> io_thread_;
   std::unique_ptr<ClientGpuMemoryBufferManager> gpu_memory_buffer_manager_;
 
-  ui::mojom::GpuPtr gpu_;
+  scoped_refptr<ui::mojom::ThreadSafeGpuPtr> gpu_ptr_;
+  scoped_refptr<EstablishRequest> pending_request_;
   scoped_refptr<gpu::GpuChannelHost> gpu_channel_;
   std::vector<gpu::GpuChannelEstablishedCallback> establish_callbacks_;
 
