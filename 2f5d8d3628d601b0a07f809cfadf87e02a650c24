@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "514bee04_ea37d119",
+        "filename": "content/renderer/service_worker/service_worker_dispatcher.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 126,
+      "author": {
+        "id": 1223459
+      },
+      "writtenOn": "2017-11-06T03:55:34Z",
+      "side": 1,
+      "message": "Why we need this |WorkerToProviderMap|? It seems never be used..",
+      "range": {
+        "startLine": 126,
+        "startChar": 8,
+        "endLine": 126,
+        "endChar": 27
+      },
+      "revId": "2f5d8d3628d601b0a07f809cfadf87e02a650c24",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
