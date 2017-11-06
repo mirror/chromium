@@ -72,6 +72,7 @@
 #include "platform/Histogram.h"
 #include "platform/graphics/CanvasHeuristicParameters.h"
 #include "platform/graphics/CanvasMetrics.h"
+#include "platform/graphics/CanvasSurfaceLayerBridge.h"
 #include "platform/graphics/GraphicsLayer.h"
 #include "platform/graphics/ImageBuffer.h"
 #include "platform/graphics/RecordingImageBufferSurface.h"
@@ -1503,13 +1504,11 @@ void HTMLCanvasElement::CreateLayer() {
     layer_tree_view =
         frame->GetPage()->GetChromeClient().GetWebLayerTreeView(frame);
     surface_layer_bridge_ =
-        WTF::MakeUnique<::blink::SurfaceLayerBridge>(layer_tree_view, this);
-    // Creates a placeholder layer first before Surface is created.
-    surface_layer_bridge_->CreateSolidColorLayer();
+        std::make_unique<CanvasSurfaceLayerBridge>(layer_tree_view, this);
   }
 }
 
-void HTMLCanvasElement::OnWebLayerReplaced() {
+void HTMLCanvasElement::OnWebLayerUpdated() {
   SetNeedsCompositingUpdate();
 }
 

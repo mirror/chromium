@@ -48,8 +48,8 @@
 #include "platform/graphics/GraphicsTypes3D.h"
 #include "platform/graphics/ImageBufferClient.h"
 #include "platform/graphics/OffscreenCanvasPlaceholder.h"
-#include "platform/graphics/SurfaceLayerBridge.h"
 #include "platform/heap/Handle.h"
+#include "public/platform/WebSurfaceLayerBridge.h"
 
 #define CanvasDefaultInterpolationQuality kInterpolationLow
 
@@ -199,8 +199,8 @@ class CORE_EXPORT HTMLCanvasElement final
   bool IsOpaque() const override;
   bool IsAccelerated() const override;
 
-  // SurfaceLayerBridgeObserver implementation
-  void OnWebLayerReplaced() override;
+  // WebSurfaceLayerBridgeObserver implementation
+  void OnWebLayerUpdated() override;
 
   // ImageBufferClient implementation
   void NotifySurfaceInvalid() override;
@@ -242,7 +242,7 @@ class CORE_EXPORT HTMLCanvasElement final
   String GetIdFromControl(const Element*);
 
   // For OffscreenCanvas that controls this html canvas element
-  ::blink::SurfaceLayerBridge* SurfaceLayerBridge() const {
+  WebSurfaceLayerBridge* SurfaceLayerBridge() const {
     return surface_layer_bridge_.get();
   }
   void CreateLayer();
@@ -335,7 +335,7 @@ class CORE_EXPORT HTMLCanvasElement final
   mutable scoped_refptr<Image> copied_image_;
 
   // Used for OffscreenCanvas that controls this HTML canvas element
-  std::unique_ptr<::blink::SurfaceLayerBridge> surface_layer_bridge_;
+  std::unique_ptr<WebSurfaceLayerBridge> surface_layer_bridge_;
 
   bool did_notify_listeners_for_current_frame_ = false;
 };

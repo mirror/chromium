@@ -37,7 +37,7 @@
 #include "services/service_manager/public/cpp/connect.h"
 #include "services/service_manager/public/cpp/interface_provider.h"
 #include "services/ui/public/cpp/gpu/context_provider_command_buffer.h"
-#include "third_party/WebKit/public/platform/WebSurfaceLayerBridge.h"
+#include "third_party/WebKit/public/platform/Platform.h"
 #include "third_party/WebKit/public/platform/WebVideoFrameSubmitter.h"
 #include "third_party/WebKit/public/web/WebKit.h"
 #include "third_party/WebKit/public/web/WebLocalFrame.h"
@@ -131,6 +131,29 @@ void PostMediaContextProviderToCallback(
 }  // namespace
 
 namespace content {
+
+class MediaPlayerSurfaceLayerBridge : public blink::WebSurfaceLayerBridge {
+ public:
+  static std::unique_ptr<blink::WebSurfaceLayerBridge> Create(
+      blink::WebSurfaceLayerBridgeObserver* observer) {
+    return base::WrapUnique(new MediaPlayerSurfaceLayerBridge(observer));
+  }
+
+  ~MediaPlayerSurfaceLayerBridge() override { observer_ = nullptr; }
+  blink::WebLayer* GetWebLayer() const override { return nullptr; }
+  const viz::FrameSinkId& GetFrameSinkId() const override {
+    return frame_sink_id_;
+  }
+
+ protected:
+  MediaPlayerSurfaceLayerBridge(blink::WebSurfaceLayerBridgeObserver* observer)
+      : observer_(observer),
+        frame_sink_id_(blink::Platform::Current()->GenerateFrameSinkId()) {}
+
+ private:
+  blink::WebSurfaceLayerBridgeObserver* observer_;
+  const viz::FrameSinkId frame_sink_id_;
+};
 
 MediaFactory::MediaFactory(
     RenderFrameImpl* render_frame,
@@ -300,7 +323,7 @@ blink::WebMediaPlayer* MediaFactory::CreateMediaPlayer(
           watch_time_recorder_provider_.get(),
           base::Bind(&MediaFactory::CreateVideoDecodeStatsRecorder,
                      base::Unretained(this)),
-          base::Bind(&blink::WebSurfaceLayerBridge::Create, layer_tree_view),
+          base::Bind(&MediaPlayerSurfaceLayerBridge::Create),
           base::BindRepeating(
               &PostMediaContextProviderToCallback,
               RenderThreadImpl::current()->GetCompositorMainThreadTaskRunner()),

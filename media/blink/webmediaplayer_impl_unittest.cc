@@ -1010,7 +1010,7 @@ TEST_F(WebMediaPlayerImplTest, OnWebLayerReplacedGetsWebLayerFromBridge) {
 
   EXPECT_CALL(*surface_layer_bridge_, GetWebLayer())
       .WillRepeatedly(Return(web_layer.get()));
-  wmpi_->OnWebLayerReplaced();
+  wmpi_->OnWebLayerUpdated();
 }
 
 TEST_F(WebMediaPlayerImplTest, PlaybackRateChangeMediaLogs) {

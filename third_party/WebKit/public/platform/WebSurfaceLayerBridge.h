@@ -18,16 +18,13 @@ namespace blink {
 // Listens for updates made on the WebLayer by the WebSurfaceLayerBridge.
 class BLINK_PLATFORM_EXPORT WebSurfaceLayerBridgeObserver {
  public:
-  virtual void OnWebLayerReplaced() = 0;
+  virtual void OnWebLayerUpdated() = 0;
 };
 
-// Maintains and exposes the SurfaceLayer.
+// A class bridging Web SurfaceLayer and its renderer user.
 class BLINK_PLATFORM_EXPORT WebSurfaceLayerBridge {
  public:
-  static std::unique_ptr<WebSurfaceLayerBridge> Create(
-      WebLayerTreeView*,
-      WebSurfaceLayerBridgeObserver*);
-  virtual ~WebSurfaceLayerBridge();
+  virtual ~WebSurfaceLayerBridge() {}
   virtual WebLayer* GetWebLayer() const = 0;
   virtual const viz::FrameSinkId& GetFrameSinkId() const = 0;
 };

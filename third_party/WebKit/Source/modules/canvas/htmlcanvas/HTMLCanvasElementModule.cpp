@@ -65,7 +65,7 @@ OffscreenCanvas* HTMLCanvasElementModule::TransferControlToOffscreenInternal(
   offscreen_canvas->SetPlaceholderCanvasId(canvas_id);
   canvas.RegisterPlaceholder(canvas_id);
 
-  SurfaceLayerBridge* bridge = canvas.SurfaceLayerBridge();
+  WebSurfaceLayerBridge* bridge = canvas.SurfaceLayerBridge();
   if (bridge) {
     offscreen_canvas->SetFrameSinkId(bridge->GetFrameSinkId().client_id(),
                                      bridge->GetFrameSinkId().sink_id());
