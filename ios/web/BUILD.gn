@@ -24,6 +24,7 @@ source_set("web") {
     "//ios/web/navigation:core",
     "//ios/web/net",
     "//ios/web/public",
+    "//ios/web/public/download",
     "//ios/web/web_state",
     "//ios/web/web_state:error_translation_util",
     "//ios/web/web_state:navigation_context",
@@ -31,6 +32,7 @@ source_set("web") {
     "//ios/web/web_state/ui",
     "//ios/web/web_state/ui:wk_web_view_configuration_provider",
     "//ios/web/webui",
+    "//net",
     "//net",
   ]
 
@@ -40,6 +42,7 @@ source_set("web") {
     ":navigation_resources",
     ":resources",
     "//base",
+    "//ios/web/download",
     "//ios/web/interstitials",
     "//ios/web/navigation",
     "//ios/web/net",
@@ -166,6 +169,7 @@ test("ios_web_unittests") {
     ":ios_web_web_state_unittests",
     ":ios_web_webui_unittests",
     "//ios/testing:http_server_bundle_data",
+    "//ios/web/download:download_unittests",
   ]
 
   assert_no_deps = ios_assert_no_deps
@@ -527,6 +531,7 @@ test("ios_web_inttests") {
     "//ios/testing:http_server_bundle_data",
     "//ios/testing:ios_test_support",
     "//ios/web:resources_grit",
+    "//ios/web/download:download_inttests",
     "//ios/web/navigation:core",
     "//ios/web/public/test",
     "//ios/web/public/test/fakes",
