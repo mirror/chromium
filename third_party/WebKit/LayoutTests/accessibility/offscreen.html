@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<script src="../resources/testharness.js"></script>
+<script src="../resources/testharnessreport.js"></script>
+
+<!-- Should NOT be offscreen as it is not outside of the screen bounds -->
+<a id="1" href="#" style="display:inline-block;position:absolute;width:0;height:0;top:2px;left:2px;"></a>
+
+<!-- Should NOT be offscreen as it is not outside of the screen bounds -->
+<br id="2">
+
+<!-- Should be offscreen as it is outside of the screen bounds -->
+<a id="3" href="#" style="display:inline-block;position:absolute;width:0;height:0;left:-99px;"></a>
+
+<p style="padding-top:9999px">
+<!-- Should be offscreen as it is outside of the screen bounds -->
+<a id="4" href="#">X</a>
+
+<script>
+function axElementById(id) {
+    return accessibilityController.accessibleElementById(id);
+}
+
+test(function(t) {
+    var ax = axElementById("1");
+    assert_equals(ax.isOffScreen, false);
+}, "A 0x0 element within the screen bounds is not offscreen");
+
+test(function(t) {
+    var ax = axElementById("2");
+    assert_equals(ax.isOffScreen, false);
+}, "A <br> within the screen bounds is not offscreen");
+
+test(function(t) {
+    var ax = axElementById("3");
+    assert_equals(ax.isOffScreen, true);
+}, "A 0x0 element to the left the screen bounds is offscreen");
+
+test(function(t) {
+    var ax = axElementById("4");
+    assert_equals(ax.isOffScreen, true);
+}, "A link scrolled off the bottom of the page is offscreen");
+</script>
