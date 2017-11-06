@@ -24,6 +24,8 @@ struct ButtonInfo;
 class Notification;
 }
 
+class NotificationImageRetainer;
+
 // Builds XML-based notification templates for displaying a given notification
 // in the Windows Action Center.
 //
@@ -37,6 +39,8 @@ class NotificationTemplateBuilder {
   // |notification_id| will be available when the user interacts with the toast.
   static std::unique_ptr<NotificationTemplateBuilder> Build(
       const std::string& notification_id,
+      NotificationImageRetainer* notification_image_retainer,
+      const std::string& profile_id,
       const message_center::Notification& notification);
 
   ~NotificationTemplateBuilder();
@@ -48,7 +52,9 @@ class NotificationTemplateBuilder {
   // The different types of text nodes to output.
   enum class TextType { NORMAL, ATTRIBUTION };
 
-  NotificationTemplateBuilder();
+  NotificationTemplateBuilder(
+      NotificationImageRetainer* notification_image_retainer,
+      const std::string& profile_id);
 
   // Formats the |origin| for display in the notification template.
   std::string FormatOrigin(const GURL& origin) const;
@@ -67,12 +73,15 @@ class NotificationTemplateBuilder {
   void StartBindingElement(const std::string& template_name);
   void EndBindingElement();
 
-  // Writes the <text> element with the given |id| and |content|. If
-  // |text_type| is ATTRIBUTION then |content| is treated as the source that the
-  // notification is attributed to.
-  void WriteTextElement(const std::string& id,
-                        const std::string& content,
-                        TextType text_type);
+  // Writes the <text> element with the given |content|. If |text_type| is
+  // ATTRIBUTION then |content| is treated as the source that the notification
+  // is attributed to.
+  void WriteTextElement(const std::string& content, TextType text_type);
+  // Writes the <image> element for the notification icon.
+  void WriteIconElement(const message_center::Notification& notification);
+  // Writes the <image> element for showing an image within the notification
+  // body.
+  void WriteImageElement(const message_center::Notification& notification);
 
   // Writes the <actions> element.
   void StartActionsElement();
@@ -81,12 +90,21 @@ class NotificationTemplateBuilder {
   // Writes the <audio silent="true"> element.
   void WriteAudioSilentElement();
 
-  // Fills in the details for the actions.
-  void AddActions(const std::vector<message_center::ButtonInfo>& buttons);
-  void WriteActionElement(const message_center::ButtonInfo& button, int index);
+  // Fills in the details for the actions (the buttons the notification
+  // contains).
+  void AddActions(const message_center::Notification& notification);
+  void WriteActionElement(const message_center::ButtonInfo& button,
+                          int index,
+                          const GURL& origin);
 
   // The XML writer to which the template will be written.
   std::unique_ptr<XmlWriter> xml_writer_;
+
+  // The image retainer. Weak, not owned by us.
+  NotificationImageRetainer* image_retainer_;
+
+  // The id of the profile the notification is intended for.
+  std::string profile_id_;
 
   DISALLOW_COPY_AND_ASSIGN(NotificationTemplateBuilder);
 };
