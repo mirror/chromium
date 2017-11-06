@@ -22,6 +22,30 @@
       "revId": "02e354010d136e154abd64ecb912bcc0490931b2",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "dad34a50_7a1b43a7",
+        "filename": "chrome/browser/thumbnails/thumbnail_tab_helper.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 171,
+      "author": {
+        "id": 1116059
+      },
+      "writtenOn": "2017-11-06T15:32:50Z",
+      "side": 1,
+      "message": "I\u0027m not sure this is a good point for capturing, it\u0027s probably a bit too early for most pages. The first paint can happen way before the page finishes loading, so a) we might get a mostly-empty screenshot, and b) it might have perf impact, since it\u0027ll happen while the load is still ongoing.\nLonger term, maybe \"page load finished + some delay\" might be a good trigger, but it\u0027s also kind of arbitrary... longer longer term, maybe we can just get rid of the thumbnails entirely. That would make life so much easier.",
+      "parentUuid": "2daa8930_9cb66554",
+      "range": {
+        "startLine": 171,
+        "startChar": 45,
+        "endLine": 171,
+        "endChar": 0
+      },
+      "revId": "02e354010d136e154abd64ecb912bcc0490931b2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
