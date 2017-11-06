@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "6f00f11b_8c507b14",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 2
+      },
+      "lineNbr": 11,
+      "author": {
+        "id": 1002888
+      },
+      "writtenOn": "2017-11-06T15:24:45Z",
+      "side": 1,
+      "message": "I don\u0027t think it will run when disconnected; I think that is prevented by the IsOffline() check in GetCurrentAcceptedPriority().  I think it will run when OnNetworkChange() receives the CONNECTION_NONE signal which is sent immediately prior to all online signals, but is meant to trigger \"destructive\" actions like flushing caches and pools and jobs.",
+      "revId": "71ae178b28935c6cb845473c72d201a61988c9aa",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
