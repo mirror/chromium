@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "b2b11a38_4928dab0",
+        "filename": "third_party/WebKit/LayoutTests/external/wpt/css/css-grid-1/alignment/grid-column-axis-alignment-positioned-items-001.html",
+        "patchSetId": 15
+      },
+      "lineNbr": 21,
+      "author": {
+        "id": 1115630
+      },
+      "writtenOn": "2017-11-06T22:37:24Z",
+      "side": 1,
+      "message": "umm, I disagree. I think the property we are testing in this case \"align-sef\" should be explicitly set on each team, showing that we are using the same value. Note that the other test cases use different values for the same property.",
+      "parentUuid": "b0ab03ca_76643797",
+      "revId": "9d187cc36fec0deddfe90911a7ed4df57f7fddcb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "46c571ac_dbb79490",
         "filename": "third_party/WebKit/LayoutTests/external/wpt/css/css-grid-1/alignment/grid-column-axis-alignment-positioned-items-001.html",
         "patchSetId": 15
@@ -30,6 +48,24 @@
       "writtenOn": "2017-11-03T17:41:00Z",
       "side": 1,
       "message": "There\u0027s a \"support/grid.css\" defining this stuff.\nActually the class name is \"onlyFirstRowOnlyFirstColumn\" for this case.\nThat would also allow you to remove the lines for the colors above.",
+      "revId": "9d187cc36fec0deddfe90911a7ed4df57f7fddcb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "25232652_9fb78bc8",
+        "filename": "third_party/WebKit/LayoutTests/external/wpt/css/css-grid-1/alignment/grid-column-axis-alignment-positioned-items-001.html",
+        "patchSetId": 15
+      },
+      "lineNbr": 31,
+      "author": {
+        "id": 1115630
+      },
+      "writtenOn": "2017-11-06T22:37:24Z",
+      "side": 1,
+      "message": "Since I want to add align-self in this class, I still need it.",
+      "parentUuid": "46c571ac_dbb79490",
       "revId": "9d187cc36fec0deddfe90911a7ed4df57f7fddcb",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -53,6 +89,24 @@
     },
     {
       "key": {
+        "uuid": "b7c4e639_3e18095e",
+        "filename": "third_party/WebKit/LayoutTests/external/wpt/css/css-grid-1/alignment/grid-self-alignment-non-static-positioned-items-002.html",
+        "patchSetId": 15
+      },
+      "lineNbr": 25,
+      "author": {
+        "id": 1115630
+      },
+      "writtenOn": "2017-11-06T22:37:24Z",
+      "side": 1,
+      "message": "Having the same class here makes easier to realize about the differences between the other test cases, where we add padding and border.",
+      "parentUuid": "ae6b4d04_e005a8c5",
+      "revId": "9d187cc36fec0deddfe90911a7ed4df57f7fddcb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "b6a5bd7b_df4d6c09",
         "filename": "third_party/WebKit/LayoutTests/external/wpt/css/css-grid-1/alignment/grid-self-alignment-non-static-positioned-items-003.html",
         "patchSetId": 15
@@ -64,6 +118,24 @@
       "writtenOn": "2017-11-03T17:41:00Z",
       "side": 1,
       "message": "Ditto.",
+      "revId": "9d187cc36fec0deddfe90911a7ed4df57f7fddcb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1a6838fd_9f3001cf",
+        "filename": "third_party/WebKit/LayoutTests/external/wpt/css/css-grid-1/alignment/grid-self-alignment-non-static-positioned-items-003.html",
+        "patchSetId": 15
+      },
+      "lineNbr": 25,
+      "author": {
+        "id": 1115630
+      },
+      "writtenOn": "2017-11-06T22:37:24Z",
+      "side": 1,
+      "message": "Already replied. Precisely, in this class we are adding border instead of margins.",
+      "parentUuid": "b6a5bd7b_df4d6c09",
       "revId": "9d187cc36fec0deddfe90911a7ed4df57f7fddcb",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -87,6 +159,24 @@
     },
     {
       "key": {
+        "uuid": "38335b10_52800aa0",
+        "filename": "third_party/WebKit/LayoutTests/external/wpt/css/css-grid-1/alignment/grid-self-alignment-non-static-positioned-items-005.html",
+        "patchSetId": 15
+      },
+      "lineNbr": 85,
+      "author": {
+        "id": 1115630
+      },
+      "writtenOn": "2017-11-06T22:37:24Z",
+      "side": 1,
+      "message": "About the br elements, I wanted the four cases to fit in the viewport width, so we need the br elements to ensure only 2 grids are rendered per line.\n\nAbout the element with the log id, I\u0027ll check it out.",
+      "parentUuid": "e9e4dcd2_09081b6f",
+      "revId": "9d187cc36fec0deddfe90911a7ed4df57f7fddcb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "82e3c6e5_670f5319",
         "filename": "third_party/WebKit/LayoutTests/external/wpt/css/css-grid-1/alignment/grid-self-alignment-non-static-positioned-items-009-expected.txt",
         "patchSetId": 15
@@ -98,6 +188,24 @@
       "writtenOn": "2017-11-03T17:41:00Z",
       "side": 1,
       "message": "I\u0027m fine with having this failing but this should be explained in the commit message.\nAlso it might be interesting to add a comment on the test itself pointing to the bug too.",
+      "revId": "9d187cc36fec0deddfe90911a7ed4df57f7fddcb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "fd6eca45_8b7ee8da",
+        "filename": "third_party/WebKit/LayoutTests/external/wpt/css/css-grid-1/alignment/grid-self-alignment-non-static-positioned-items-009-expected.txt",
+        "patchSetId": 15
+      },
+      "lineNbr": 2,
+      "author": {
+        "id": 1115630
+      },
+      "writtenOn": "2017-11-06T22:37:24Z",
+      "side": 1,
+      "message": "Yes, you\u0027re right. I\u0027ll proceed as you suggest.",
+      "parentUuid": "82e3c6e5_670f5319",
       "revId": "9d187cc36fec0deddfe90911a7ed4df57f7fddcb",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -121,6 +229,24 @@
     },
     {
       "key": {
+        "uuid": "c50af347_615e235d",
+        "filename": "third_party/WebKit/Source/core/layout/LayoutGrid.cpp",
+        "patchSetId": 15
+      },
+      "lineNbr": 2051,
+      "author": {
+        "id": 1115630
+      },
+      "writtenOn": "2017-11-06T22:37:24Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "2190cb02_ded04682",
+      "revId": "9d187cc36fec0deddfe90911a7ed4df57f7fddcb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "6265b48d_026b22ca",
         "filename": "third_party/WebKit/Source/core/layout/LayoutGrid.cpp",
         "patchSetId": 15
@@ -138,6 +264,24 @@
     },
     {
       "key": {
+        "uuid": "5440b9b9_0cd80ed4",
+        "filename": "third_party/WebKit/Source/core/layout/LayoutGrid.cpp",
+        "patchSetId": 15
+      },
+      "lineNbr": 2072,
+      "author": {
+        "id": 1115630
+      },
+      "writtenOn": "2017-11-06T22:37:24Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "6265b48d_026b22ca",
+      "revId": "9d187cc36fec0deddfe90911a7ed4df57f7fddcb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "f15842aa_33bd2869",
         "filename": "third_party/WebKit/Source/core/layout/LayoutGrid.cpp",
         "patchSetId": 15
@@ -149,6 +293,24 @@
       "writtenOn": "2017-11-03T17:41:00Z",
       "side": 1,
       "message": "I guess we still haven\u0027t investigated this further.",
+      "revId": "9d187cc36fec0deddfe90911a7ed4df57f7fddcb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9d0136b4_e6e25883",
+        "filename": "third_party/WebKit/Source/core/layout/LayoutGrid.cpp",
+        "patchSetId": 15
+      },
+      "lineNbr": 2143,
+      "author": {
+        "id": 1115630
+      },
+      "writtenOn": "2017-11-06T22:37:24Z",
+      "side": 1,
+      "message": "Umm, no, do you want me to do it as part of this CL ?",
+      "parentUuid": "f15842aa_33bd2869",
       "revId": "9d187cc36fec0deddfe90911a7ed4df57f7fddcb",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
