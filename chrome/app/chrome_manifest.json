@@ -19,8 +19,10 @@
         ]
       },
       "requires": {
+        "chrome_renderer": [ "chrome" ],
         "service_manager": [
-          "service_manager:all_users"
+          "service_manager:all_users",
+          "service_manager:instance_name"
         ]
       }
     }

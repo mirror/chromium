@@ -304,6 +304,13 @@ void MockRenderProcessHost::BindInterface(
     binder_overrides_[interface_name].Run(std::move(interface_pipe));
 }
 
+void MockRenderProcessHost::BindEmbedderInterface(
+    const std::string& interface_name,
+    mojo::ScopedMessagePipeHandle interface_pipe) {
+  if (embedder_binder_overrides_.count(interface_name) > 0)
+    embedder_binder_overrides_[interface_name].Run(std::move(interface_pipe));
+}
+
 const service_manager::Identity& MockRenderProcessHost::GetChildIdentity()
     const {
   return child_identity_;
@@ -441,6 +448,12 @@ void MockRenderProcessHost::OverrideBinderForTesting(
     const std::string& interface_name,
     const InterfaceBinder& binder) {
   binder_overrides_[interface_name] = binder;
+}
+
+void MockRenderProcessHost::OverrideEmbedderBinderForTesting(
+    const std::string& interface_name,
+    const InterfaceBinder& binder) {
+  embedder_binder_overrides_[interface_name] = binder;
 }
 
 void MockRenderProcessHost::OverrideRendererInterfaceForTesting(

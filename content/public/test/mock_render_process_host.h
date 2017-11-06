@@ -116,6 +116,9 @@ class MockRenderProcessHost : public RenderProcessHost {
   void ResumeDeferredNavigation(const GlobalRequestID& request_id) override;
   void BindInterface(const std::string& interface_name,
                      mojo::ScopedMessagePipeHandle interface_pipe) override;
+  void BindEmbedderInterface(
+      const std::string& interface_name,
+      mojo::ScopedMessagePipeHandle interface_pipe) override;
   const service_manager::Identity& GetChildIdentity() const override;
   std::unique_ptr<base::SharedPersistentMemoryAllocator> TakeMetricsAllocator()
       override;
@@ -168,6 +171,8 @@ class MockRenderProcessHost : public RenderProcessHost {
 
   void OverrideBinderForTesting(const std::string& interface_name,
                                 const InterfaceBinder& binder);
+  void OverrideEmbedderBinderForTesting(const std::string& interface_name,
+                                        const InterfaceBinder& binder);
 
   void OverrideRendererInterfaceForTesting(
       std::unique_ptr<mojo::AssociatedInterfacePtr<mojom::Renderer>>
@@ -202,6 +207,7 @@ class MockRenderProcessHost : public RenderProcessHost {
   std::unique_ptr<mojo::AssociatedInterfacePtr<mojom::Renderer>>
       renderer_interface_;
   std::map<std::string, InterfaceBinder> binder_overrides_;
+  std::map<std::string, InterfaceBinder> embedder_binder_overrides_;
   std::unique_ptr<resource_coordinator::ProcessResourceCoordinator>
       process_resource_coordinator_;
   service_manager::Identity child_identity_;
