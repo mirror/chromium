@@ -34,6 +34,24 @@
       "revId": "66e5881e60de5d905202275ce1f7edb804e6c786",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ca3c11eb_71bf7170",
+        "filename": "third_party/WebKit/Source/core/html/HTMLLinkElement.idl",
+        "patchSetId": 2
+      },
+      "lineNbr": 58,
+      "author": {
+        "id": 1223919
+      },
+      "writtenOn": "2017-11-06T08:19:32Z",
+      "side": 0,
+      "message": "Changing the link to https://w3c.github.io/ServiceWorker/#link-type-serviceworker per nhiroki\u0027s comment.",
+      "parentUuid": "0a481888_2020ca6a",
+      "revId": "66e5881e60de5d905202275ce1f7edb804e6c786",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }

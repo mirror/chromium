@@ -107,6 +107,24 @@
     },
     {
       "key": {
+        "uuid": "1a2213c8_38ba36e4",
+        "filename": "third_party/WebKit/Source/modules/serviceworkers/RegistrationOptions.idl",
+        "patchSetId": 2
+      },
+      "lineNbr": 8,
+      "author": {
+        "id": 1223919
+      },
+      "writtenOn": "2017-11-06T08:19:32Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "b2d75974_debd711c",
+      "revId": "9add4d8708333b2c9780460a53b65952f94fdda6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "b946df91_3ac0fd61",
         "filename": "third_party/WebKit/Source/modules/serviceworkers/ServiceWorkerContainer.h",
         "patchSetId": 2
