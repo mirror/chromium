@@ -48,6 +48,30 @@
     },
     {
       "key": {
+        "uuid": "0aea76c3_e9484b47",
+        "filename": "base/files/file_util_mac.mm",
+        "patchSetId": 2
+      },
+      "lineNbr": 41,
+      "author": {
+        "id": 1246430
+      },
+      "writtenOn": "2017-11-06T10:17:09Z",
+      "side": 1,
+      "message": "Yes, good catch :)",
+      "parentUuid": "85782d8d_c2e99b08",
+      "range": {
+        "startLine": 41,
+        "startChar": 10,
+        "endLine": 41,
+        "endChar": 17
+      },
+      "revId": "4f559e189aed9158143e8081c0a80f14e32f0ae9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "ff90a15c_72d0526e",
         "filename": "base/files/file_util_mac.mm",
         "patchSetId": 2
@@ -65,6 +89,24 @@
     },
     {
       "key": {
+        "uuid": "190bcb8e_7ae77075",
+        "filename": "base/files/file_util_mac.mm",
+        "patchSetId": 2
+      },
+      "lineNbr": 42,
+      "author": {
+        "id": 1246430
+      },
+      "writtenOn": "2017-11-06T10:17:09Z",
+      "side": 1,
+      "message": "I guess it shouldn\u0027t fail.\n\nThe previous lstat will fail if the destination file didn\u0027t exist yet, and this branch is only entered in that specific case (if the lstat had succeeded, file_info.st_mode would not be 0).\n\nChecking the stat call\u0027s return value after a successful copyfile is some extra protection in case we get EIO / EOVERFLOW (which could theoretically happen after a successful copyfile). I guess it\u0027s mostly safe to ignore those cases, but is that enough to stop checking the return value?",
+      "parentUuid": "ff90a15c_72d0526e",
+      "revId": "4f559e189aed9158143e8081c0a80f14e32f0ae9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "cfacfda1_95c9efc1",
         "filename": "base/files/file_util_mac.mm",
         "patchSetId": 2
@@ -76,6 +118,30 @@
       "writtenOn": "2017-10-31T20:47:52Z",
       "side": 1,
       "message": "Same question: shouldn\u0027t this be on |final_path|?",
+      "range": {
+        "startLine": 45,
+        "startChar": 10,
+        "endLine": 45,
+        "endChar": 17
+      },
+      "revId": "4f559e189aed9158143e8081c0a80f14e32f0ae9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "afecb278_69874e0b",
+        "filename": "base/files/file_util_mac.mm",
+        "patchSetId": 2
+      },
+      "lineNbr": 45,
+      "author": {
+        "id": 1246430
+      },
+      "writtenOn": "2017-11-06T10:17:09Z",
+      "side": 1,
+      "message": "It should.",
+      "parentUuid": "cfacfda1_95c9efc1",
       "range": {
         "startLine": 45,
         "startChar": 10,

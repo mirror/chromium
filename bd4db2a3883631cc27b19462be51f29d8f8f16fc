@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "22029f3a_f276f5df",
+        "filename": "base/files/file_util_mac.mm",
+        "patchSetId": 1
+      },
+      "lineNbr": 26,
+      "author": {
+        "id": 1246430
+      },
+      "writtenOn": "2017-11-06T10:17:09Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "527f7964_6a1a76a5",
+      "revId": "bd4db2a3883631cc27b19462be51f29d8f8f16fc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "afff1335_726cc0ea",
         "filename": "base/files/file_util_mac.mm",
         "patchSetId": 1
@@ -78,6 +96,30 @@
       "side": 1,
       "message": "\u003e \u003e Isn\u0027t this covered by COPYFILE_STAT, which is included in COPYFILE_ALL?\n\u003e \n\u003e It is, but we\u0027re restoring the permissions of the destination file, not the source file. This makes sure that if the destination file already exists, its permissions aren\u0027t changed by this operation.\n\nCan you expand the comment to say that we\u0027re explicitly undoing the COPYFILE_SECURTIY semantics of COPYFILE_CLONE?\n\nAlso, I\u0027m assuming that merely changing inode metadata doesn\u0027t count as a \"modification\" that would trigger the copy-on-write semantics of cloning. Did you test that though?\n\n\u003e \n\u003e \u003e But this wasn\u0027t necessary before with copyfile, so why is it now?\n\u003e \n\u003e Before we didn\u0027t copy permissions at all, only data. The destination file would get a standard create umask if it didn\u0027t exist yet. Cloning acts similar to COPYFILE_ALL in that it copies both data and metadata, including permissions.\n\nAh, it looks like we used to use COPYFILE_ALL but switched here: https://chromium.googlesource.com/chromium/src/+/94b9692d6e851e24df069d2bf2da256b9660766b so the behavior is important to preserve.",
       "parentUuid": "c456429e_806424bd",
+      "range": {
+        "startLine": 45,
+        "startChar": 5,
+        "endLine": 45,
+        "endChar": 24
+      },
+      "revId": "bd4db2a3883631cc27b19462be51f29d8f8f16fc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "92e1529f_b2df0acd",
+        "filename": "base/files/file_util_mac.mm",
+        "patchSetId": 1
+      },
+      "lineNbr": 45,
+      "author": {
+        "id": 1246430
+      },
+      "writtenOn": "2017-11-06T10:17:09Z",
+      "side": 1,
+      "message": "\u003e \u003e \u003e Isn\u0027t this covered by COPYFILE_STAT, which is included in COPYFILE_ALL?\n\u003e \u003e \n\u003e \u003e It is, but we\u0027re restoring the permissions of the destination file, not the source file. This makes sure that if the destination file already exists, its permissions aren\u0027t changed by this operation.\n\u003e \n\u003e Can you expand the comment to say that we\u0027re explicitly undoing the COPYFILE_SECURTIY semantics of COPYFILE_CLONE?\n\nOK.\n\n\u003e Also, I\u0027m assuming that merely changing inode metadata doesn\u0027t count as a \"modification\" that would trigger the copy-on-write semantics of cloning. Did you test that though?\n\nYes; since I haven\u0027t discovered how to determine if a certain file is using cloned content, I\u0027ve done this by cloning a big file and then changing file permissions, using df to see if this affects space used (it didn\u0027t).\n\n\u003e \n\u003e \u003e \n\u003e \u003e \u003e But this wasn\u0027t necessary before with copyfile, so why is it now?\n\u003e \u003e \n\u003e \u003e Before we didn\u0027t copy permissions at all, only data. The destination file would get a standard create umask if it didn\u0027t exist yet. Cloning acts similar to COPYFILE_ALL in that it copies both data and metadata, including permissions.\n\u003e \n\u003e Ah, it looks like we used to use COPYFILE_ALL but switched here: https://chromium.googlesource.com/chromium/src/+/94b9692d6e851e24df069d2bf2da256b9660766b so the behavior is important to preserve.\n\nAh, I didn\u0027t see this reasoning before, nice one. But since we now always set user write permissions on the destination file, doesn\u0027t that fix the same issue? Afterwards we should always be able to change the file we have created. And if the destination file already existed, we restore its permissions, and a successful copyfile already implies that we could write to it with the permissions it had.",
+      "parentUuid": "126f6609_e940519c",
       "range": {
         "startLine": 45,
         "startChar": 5,
