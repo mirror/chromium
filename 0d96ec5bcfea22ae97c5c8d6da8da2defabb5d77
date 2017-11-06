@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "d12caa07_0964338a",
+        "filename": "ios/web_view/internal/language/web_view_language_model_factory.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 56,
+      "author": {
+        "id": 1215199
+      },
+      "writtenOn": "2017-11-06T22:29:10Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "4a4fc401_c73e605e",
+      "range": {
+        "startLine": 56,
+        "startChar": 3,
+        "endLine": 56,
+        "endChar": 0
+      },
+      "revId": "0d96ec5bcfea22ae97c5c8d6da8da2defabb5d77",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "733d399f_d23b0965",
         "filename": "ios/web_view/internal/pref_names.cc",
         "patchSetId": 3
@@ -39,6 +63,24 @@
       "revId": "0d96ec5bcfea22ae97c5c8d6da8da2defabb5d77",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a6c199cc_2fdbb61f",
+        "filename": "ios/web_view/internal/pref_names.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 16,
+      "author": {
+        "id": 1215199
+      },
+      "writtenOn": "2017-11-06T22:29:10Z",
+      "side": 1,
+      "message": "I\u0027ve moved this into components now.\n\nI\u0027ll make a follow up patch that modifies the Content-based factory to also use the components preference, because I\u0027d prefer to keep this patch iOS-specific.",
+      "parentUuid": "733d399f_d23b0965",
+      "revId": "0d96ec5bcfea22ae97c5c8d6da8da2defabb5d77",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
