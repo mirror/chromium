@@ -95,6 +95,30 @@
     },
     {
       "key": {
+        "uuid": "3121be74_ae251cba",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/widget/bottomsheet/BottomSheet.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 568,
+      "author": {
+        "id": 1135279
+      },
+      "writtenOn": "2017-11-06T22:39:13Z",
+      "side": 1,
+      "message": "Do you mean a metrics class for this observer? I can definitely do that. Ripping out all the swipe logic in this patch is going to be challenging since swipe and Chrome Home logic are pretty intertwined.",
+      "parentUuid": "7e1c55da_d7c6b12e",
+      "range": {
+        "startLine": 568,
+        "startChar": 7,
+        "endLine": 568,
+        "endChar": 57
+      },
+      "revId": "36463790e84117b45d7f45e5878b919d603e5a37",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "06617ca1_e952ee2f",
         "filename": "chrome/android/java/src/org/chromium/chrome/browser/widget/bottomsheet/BottomSheet.java",
         "patchSetId": 1
@@ -106,6 +130,30 @@
       "writtenOn": "2017-11-06T21:18:40Z",
       "side": 1,
       "message": "Should we also check for TYPE_AUXILIARY_CONTENT so that the placeholder content is recorded here?",
+      "range": {
+        "startLine": 596,
+        "startChar": 65,
+        "endLine": 596,
+        "endChar": 88
+      },
+      "revId": "36463790e84117b45d7f45e5878b919d603e5a37",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c46fbc27_3b907ea0",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/widget/bottomsheet/BottomSheet.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 596,
+      "author": {
+        "id": 1135279
+      },
+      "writtenOn": "2017-11-06T22:39:13Z",
+      "side": 1,
+      "message": "I don\u0027t think so. If the user managed to do something that got something like suggestions to show, they probably intentionally opened the sheet.",
+      "parentUuid": "06617ca1_e952ee2f",
       "range": {
         "startLine": 596,
         "startChar": 65,
