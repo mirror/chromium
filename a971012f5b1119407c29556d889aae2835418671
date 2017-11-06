@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "5eb77e6a_d5c49811",
+        "filename": "chrome/renderer/chrome_content_renderer_client.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 681,
+      "author": {
+        "id": 1002532
+      },
+      "writtenOn": "2017-11-06T15:37:46Z",
+      "side": 1,
+      "message": "here and in the other usage, we should bind this once per process to avoid unnecessary IPCs. see https://chromium.googlesource.com/chromium/src/+/master/docs/security/mojo.md#Consider-the-cost-of-setting-up-message-pipes",
+      "revId": "a971012f5b1119407c29556d889aae2835418671",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e1d44b83_270083e6",
+        "filename": "content/public/common/webplugininfo.mojom",
+        "patchSetId": 8
+      },
+      "lineNbr": 10,
+      "author": {
+        "id": 1002532
+      },
+      "writtenOn": "2017-11-06T15:37:46Z",
+      "side": 1,
+      "message": "this doesn\u0027t appear to be used (and even it it did, generally test IPCs go into different files than the production ones)",
+      "revId": "a971012f5b1119407c29556d889aae2835418671",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
