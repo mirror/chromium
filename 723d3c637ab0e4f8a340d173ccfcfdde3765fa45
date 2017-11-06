@@ -210,6 +210,30 @@
     },
     {
       "key": {
+        "uuid": "45637232_7490b085",
+        "filename": "ios/chrome/browser/ui/activity_services/canonical_url_getter.mm",
+        "patchSetId": 6
+      },
+      "lineNbr": 31,
+      "author": {
+        "id": 1125535
+      },
+      "writtenOn": "2017-11-06T15:07:35Z",
+      "side": 1,
+      "message": "In this case, doe the GURL constructor already initializes canonicalURL to the same value as GURL::EmptyGURL() ? If so, we should just say \"GURL canonicalURL;\" without the assignment.",
+      "parentUuid": "b164d5bc_8138a4f6",
+      "range": {
+        "startLine": 31,
+        "startChar": 22,
+        "endLine": 31,
+        "endChar": 26
+      },
+      "revId": "723d3c637ab0e4f8a340d173ccfcfdde3765fa45",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "588886ce_2c6576bc",
         "filename": "ios/chrome/browser/ui/activity_services/canonical_url_getter.mm",
         "patchSetId": 6
