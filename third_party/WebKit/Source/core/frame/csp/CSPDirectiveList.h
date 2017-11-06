@@ -71,6 +71,10 @@ class CORE_EXPORT CSPDirectiveList
                  SecurityViolationReportingPolicy,
                  ContentSecurityPolicy::ExceptionStatus,
                  const String& script_content) const;
+  bool AllowWasmEval(ScriptState*,
+                     SecurityViolationReportingPolicy,
+                     ContentSecurityPolicy::ExceptionStatus,
+                     const String& script_content) const;
   bool AllowPluginType(const String& type,
                        const String& type_attribute,
                        const KURL&,
@@ -246,6 +250,7 @@ class CORE_EXPORT CSPDirectiveList
                            const String& content) const;
 
   bool CheckEval(SourceListDirective*) const;
+  bool CheckWasmEval(SourceListDirective*) const;
   bool CheckDynamic(SourceListDirective*) const;
   bool IsMatchingNoncePresent(SourceListDirective*, const String&) const;
   bool AreAllMatchingHashesPresent(SourceListDirective*,
@@ -270,6 +275,11 @@ class CORE_EXPORT CSPDirectiveList
                                    ScriptState*,
                                    ContentSecurityPolicy::ExceptionStatus,
                                    const String& script_content) const;
+  bool CheckWasmEvalAndReportViolation(SourceListDirective*,
+                                       const String& console_message,
+                                       ScriptState*,
+                                       ContentSecurityPolicy::ExceptionStatus,
+                                       const String& script_content) const;
   bool CheckInlineAndReportViolation(SourceListDirective*,
                                      const String& console_message,
                                      Element*,
