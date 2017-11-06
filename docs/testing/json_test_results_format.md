@@ -76,6 +76,8 @@ appear in each object is unimportant.
 | `seconds_since_epoch` | float | **Required.** The start time of the test run expressed as a floating-point offset in seconds from the UNIX epoch. |
 | `tests` | dict | **Required.** The actual trie of test results. Each directory or module component in the test name is a node in the trie, and the leaf contains the dict of per-test fields as described below. |
 | `version` | integer | **Required.** Version of the file format. Current version is 3. |
+| `artifact_types_info` | dict | **Optional. Required if any artifacts are present for any tests** Type information for artifacts in this json file. All artifacts with the same name must share the same data type. |
+| `artifact_permament_location` | string | **Optional.** The URI of the root location where the artifacts are stored. If present, any artifact locations are taken to be relative to this location. Currently only the ‘gs’ scheme is supported. |
 | `build_number` | string | **Optional.** If this test run was produced on a bot, this should be the build number of the run, e.g., "1234". |
 | `builder_name` | string | **Optional.** If this test run was produced on a bot, this should be the builder name of the bot, e.g., "Linux Tests". |
 | `chromium_revision` | string | **Optional.** The revision of the current Chromium checkout, if relevant, e.g. "356123". |
@@ -99,6 +101,7 @@ results for each invocation in the `actual` field.
 |-------------|-----------|-------------|
 |  `actual` | string | **Required.** An ordered space-separated list of the results the test actually produced. `FAIL PASS` means that a test was run twice, failed the first time, and then passed when it was retried. If a test produces multiple different results, then it was actually flaky during the run. |
 |  `expected` | string | **Required.** An unordered space-separated list of the result types expected for the test, e.g. `FAIL PASS` means that a test is expected to either pass or fail. A test that contains multiple values is expected to be flaky. |
+|  `artifacts` | dict | **Optional.** A list of lists of dictionaries that describe the artifacts. The i-th element in the list corresponds to artifacts of the i-th run of the test. Each dict in the list for a particular run of the test is an individual artifact. The dictionary has two keys: `name` and `location`. `name` specifies the name of the artifact. `location` specifies the relative path of the resource. If `artifact_permanent_location` is specified, then this location is relative to that path. Otherwise, it is assumed that this test file is in a known location by something processing this test file, and so the location is relative to a known directory. |
 |  `bugs` | string | **Optional.** A comma-separated list of URLs to bug database entries associated with each test. |
 |  `is_unexpected` | bool | **Optional.** If present and true, the failure was unexpected (a regression). If false (or if the key is not present at all), the failure was expected and will be ignored. |
 |  `time` | float | **Optional.** If present, the time it took in seconds to execute the first invocation of the test. |
