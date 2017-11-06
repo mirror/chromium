@@ -22,15 +22,12 @@
 #include "core/css/StyleRule.h"
 
 #include "core/css/CSSFontFaceRule.h"
-#include "core/css/CSSImportRule.h"
 #include "core/css/CSSKeyframesRule.h"
 #include "core/css/CSSMediaRule.h"
-#include "core/css/CSSNamespaceRule.h"
 #include "core/css/CSSPageRule.h"
 #include "core/css/CSSStyleRule.h"
 #include "core/css/CSSSupportsRule.h"
 #include "core/css/CSSViewportRule.h"
-#include "core/css/StyleRuleImport.h"
 #include "core/css/StyleRuleKeyframe.h"
 #include "core/css/StyleRuleNamespace.h"
 
@@ -39,6 +36,7 @@ namespace blink {
 struct SameSizeAsStyleRuleBase
     : public GarbageCollectedFinalized<SameSizeAsStyleRuleBase> {
   unsigned bitfields;
+  void* vtable;
 };
 
 static_assert(sizeof(StyleRuleBase) <= sizeof(SameSizeAsStyleRuleBase),
@@ -52,153 +50,10 @@ CSSRule* StyleRuleBase::CreateCSSOMWrapper(CSSRule* parent_rule) const {
   return CreateCSSOMWrapper(nullptr, parent_rule);
 }
 
-void StyleRuleBase::Trace(blink::Visitor* visitor) {
-  switch (GetType()) {
-    case kCharset:
-      ToStyleRuleCharset(this)->TraceAfterDispatch(visitor);
-      return;
-    case kStyle:
-      ToStyleRule(this)->TraceAfterDispatch(visitor);
-      return;
-    case kPage:
-      ToStyleRulePage(this)->TraceAfterDispatch(visitor);
-      return;
-    case kFontFace:
-      ToStyleRuleFontFace(this)->TraceAfterDispatch(visitor);
-      return;
-    case kMedia:
-      ToStyleRuleMedia(this)->TraceAfterDispatch(visitor);
-      return;
-    case kSupports:
-      ToStyleRuleSupports(this)->TraceAfterDispatch(visitor);
-      return;
-    case kImport:
-      ToStyleRuleImport(this)->TraceAfterDispatch(visitor);
-      return;
-    case kKeyframes:
-      ToStyleRuleKeyframes(this)->TraceAfterDispatch(visitor);
-      return;
-    case kKeyframe:
-      ToStyleRuleKeyframe(this)->TraceAfterDispatch(visitor);
-      return;
-    case kNamespace:
-      ToStyleRuleNamespace(this)->TraceAfterDispatch(visitor);
-      return;
-    case kViewport:
-      ToStyleRuleViewport(this)->TraceAfterDispatch(visitor);
-      return;
-  }
-  NOTREACHED();
-}
-
-void StyleRuleBase::FinalizeGarbageCollectedObject() {
-  switch (GetType()) {
-    case kCharset:
-      ToStyleRuleCharset(this)->~StyleRuleCharset();
-      return;
-    case kStyle:
-      ToStyleRule(this)->~StyleRule();
-      return;
-    case kPage:
-      ToStyleRulePage(this)->~StyleRulePage();
-      return;
-    case kFontFace:
-      ToStyleRuleFontFace(this)->~StyleRuleFontFace();
-      return;
-    case kMedia:
-      ToStyleRuleMedia(this)->~StyleRuleMedia();
-      return;
-    case kSupports:
-      ToStyleRuleSupports(this)->~StyleRuleSupports();
-      return;
-    case kImport:
-      ToStyleRuleImport(this)->~StyleRuleImport();
-      return;
-    case kKeyframes:
-      ToStyleRuleKeyframes(this)->~StyleRuleKeyframes();
-      return;
-    case kKeyframe:
-      ToStyleRuleKeyframe(this)->~StyleRuleKeyframe();
-      return;
-    case kNamespace:
-      ToStyleRuleNamespace(this)->~StyleRuleNamespace();
-      return;
-    case kViewport:
-      ToStyleRuleViewport(this)->~StyleRuleViewport();
-      return;
-  }
-  NOTREACHED();
-}
-
-StyleRuleBase* StyleRuleBase::Copy() const {
-  switch (GetType()) {
-    case kStyle:
-      return ToStyleRule(this)->Copy();
-    case kPage:
-      return ToStyleRulePage(this)->Copy();
-    case kFontFace:
-      return ToStyleRuleFontFace(this)->Copy();
-    case kMedia:
-      return ToStyleRuleMedia(this)->Copy();
-    case kSupports:
-      return ToStyleRuleSupports(this)->Copy();
-    case kImport:
-      // FIXME: Copy import rules.
-      NOTREACHED();
-      return nullptr;
-    case kKeyframes:
-      return ToStyleRuleKeyframes(this)->Copy();
-    case kViewport:
-      return ToStyleRuleViewport(this)->Copy();
-    case kNamespace:
-      return ToStyleRuleNamespace(this)->Copy();
-    case kCharset:
-    case kKeyframe:
-      NOTREACHED();
-      return nullptr;
-  }
-  NOTREACHED();
-  return nullptr;
-}
-
 CSSRule* StyleRuleBase::CreateCSSOMWrapper(CSSStyleSheet* parent_sheet,
                                            CSSRule* parent_rule) const {
-  CSSRule* rule = nullptr;
-  StyleRuleBase* self = const_cast<StyleRuleBase*>(this);
-  switch (GetType()) {
-    case kStyle:
-      rule = CSSStyleRule::Create(ToStyleRule(self), parent_sheet);
-      break;
-    case kPage:
-      rule = CSSPageRule::Create(ToStyleRulePage(self), parent_sheet);
-      break;
-    case kFontFace:
-      rule = CSSFontFaceRule::Create(ToStyleRuleFontFace(self), parent_sheet);
-      break;
-    case kMedia:
-      rule = CSSMediaRule::Create(ToStyleRuleMedia(self), parent_sheet);
-      break;
-    case kSupports:
-      rule = CSSSupportsRule::Create(ToStyleRuleSupports(self), parent_sheet);
-      break;
-    case kImport:
-      rule = CSSImportRule::Create(ToStyleRuleImport(self), parent_sheet);
-      break;
-    case kKeyframes:
-      rule = CSSKeyframesRule::Create(ToStyleRuleKeyframes(self), parent_sheet);
-      break;
-    case kNamespace:
-      rule = CSSNamespaceRule::Create(ToStyleRuleNamespace(self), parent_sheet);
-      break;
-    case kViewport:
-      rule = CSSViewportRule::Create(ToStyleRuleViewport(self), parent_sheet);
-      break;
-    case kKeyframe:
-    case kCharset:
-      NOTREACHED();
-      return nullptr;
-  }
-  if (parent_rule)
+  CSSRule* rule = CreateCSSOMWrapperInternal(parent_sheet);
+  if (parent_rule && rule)
     rule->SetParentRule(parent_rule);
   return rule;
 }
@@ -256,6 +111,12 @@ bool StyleRule::ShouldConsiderForMatchingRules(bool include_empty_rules) const {
          !properties_->IsEmpty();
 }
 
+void StyleRule::Trace(blink::Visitor* visitor) {
+  visitor->Trace(properties_);
+  visitor->Trace(lazy_property_parser_);
+  StyleRuleBase::Trace(visitor);
+}
+
 bool StyleRule::HasParsedProperties() const {
   // StyleRule should only have one of {lazy_property_parser_, properties_} set.
   DCHECK(lazy_property_parser_ || properties_);
@@ -263,10 +124,9 @@ bool StyleRule::HasParsedProperties() const {
   return !lazy_property_parser_;
 }
 
-void StyleRule::TraceAfterDispatch(blink::Visitor* visitor) {
-  visitor->Trace(properties_);
-  visitor->Trace(lazy_property_parser_);
-  StyleRuleBase::TraceAfterDispatch(visitor);
+CSSRule* StyleRule::CreateCSSOMWrapperInternal(
+    CSSStyleSheet* parent_sheet) const {
+  return CSSStyleRule::Create(const_cast<StyleRule*>(this), parent_sheet);
 }
 
 StyleRulePage::StyleRulePage(CSSSelectorList selector_list,
@@ -288,9 +148,14 @@ MutableStylePropertySet& StyleRulePage::MutableProperties() {
   return *ToMutableStylePropertySet(properties_.Get());
 }
 
-void StyleRulePage::TraceAfterDispatch(blink::Visitor* visitor) {
+void StyleRulePage::Trace(blink::Visitor* visitor) {
   visitor->Trace(properties_);
-  StyleRuleBase::TraceAfterDispatch(visitor);
+  StyleRuleBase::Trace(visitor);
+}
+
+CSSRule* StyleRulePage::CreateCSSOMWrapperInternal(
+    CSSStyleSheet* parent_sheet) const {
+  return CSSPageRule::Create(const_cast<StyleRulePage*>(this), parent_sheet);
 }
 
 StyleRuleFontFace::StyleRuleFontFace(StylePropertySet* properties)
@@ -308,9 +173,15 @@ MutableStylePropertySet& StyleRuleFontFace::MutableProperties() {
   return *ToMutableStylePropertySet(properties_);
 }
 
-void StyleRuleFontFace::TraceAfterDispatch(blink::Visitor* visitor) {
+void StyleRuleFontFace::Trace(blink::Visitor* visitor) {
   visitor->Trace(properties_);
-  StyleRuleBase::TraceAfterDispatch(visitor);
+  StyleRuleBase::Trace(visitor);
+}
+
+CSSRule* StyleRuleFontFace::CreateCSSOMWrapperInternal(
+    CSSStyleSheet* parent_sheet) const {
+  return CSSFontFaceRule::Create(const_cast<StyleRuleFontFace*>(this),
+                                 parent_sheet);
 }
 
 StyleRuleGroup::StyleRuleGroup(RuleType type,
@@ -333,9 +204,9 @@ void StyleRuleGroup::WrapperRemoveRule(unsigned index) {
   child_rules_.EraseAt(index);
 }
 
-void StyleRuleGroup::TraceAfterDispatch(blink::Visitor* visitor) {
+void StyleRuleGroup::Trace(blink::Visitor* visitor) {
   visitor->Trace(child_rules_);
-  StyleRuleBase::TraceAfterDispatch(visitor);
+  StyleRuleBase::Trace(visitor);
 }
 
 StyleRuleCondition::StyleRuleCondition(
@@ -363,6 +234,15 @@ StyleRuleMedia::StyleRuleMedia(const StyleRuleMedia& media_rule)
     media_queries_ = media_rule.media_queries_->Copy();
 }
 
+void StyleRuleMedia::Trace(blink::Visitor* visitor) {
+  StyleRuleCondition::Trace(visitor);
+}
+
+CSSRule* StyleRuleMedia::CreateCSSOMWrapperInternal(
+    CSSStyleSheet* parent_sheet) const {
+  return CSSMediaRule::Create(const_cast<StyleRuleMedia*>(this), parent_sheet);
+}
+
 StyleRuleSupports::StyleRuleSupports(
     const String& condition_text,
     bool condition_is_supported,
@@ -370,13 +250,15 @@ StyleRuleSupports::StyleRuleSupports(
     : StyleRuleCondition(kSupports, condition_text, adopt_rules),
       condition_is_supported_(condition_is_supported) {}
 
-void StyleRuleMedia::TraceAfterDispatch(blink::Visitor* visitor) {
-  StyleRuleCondition::TraceAfterDispatch(visitor);
-}
-
 StyleRuleSupports::StyleRuleSupports(const StyleRuleSupports& supports_rule)
     : StyleRuleCondition(supports_rule),
       condition_is_supported_(supports_rule.condition_is_supported_) {}
+
+CSSRule* StyleRuleSupports::CreateCSSOMWrapperInternal(
+    CSSStyleSheet* parent_sheet) const {
+  return CSSSupportsRule::Create(const_cast<StyleRuleSupports*>(this),
+                                 parent_sheet);
+}
 
 StyleRuleViewport::StyleRuleViewport(StylePropertySet* properties)
     : StyleRuleBase(kViewport), properties_(properties) {}
@@ -393,9 +275,15 @@ MutableStylePropertySet& StyleRuleViewport::MutableProperties() {
   return *ToMutableStylePropertySet(properties_);
 }
 
-void StyleRuleViewport::TraceAfterDispatch(blink::Visitor* visitor) {
+void StyleRuleViewport::Trace(blink::Visitor* visitor) {
   visitor->Trace(properties_);
-  StyleRuleBase::TraceAfterDispatch(visitor);
+  StyleRuleBase::Trace(visitor);
+}
+
+CSSRule* StyleRuleViewport::CreateCSSOMWrapperInternal(
+    CSSStyleSheet* parent_sheet) const {
+  return CSSViewportRule::Create(const_cast<StyleRuleViewport*>(this),
+                                 parent_sheet);
 }
 
 }  // namespace blink
