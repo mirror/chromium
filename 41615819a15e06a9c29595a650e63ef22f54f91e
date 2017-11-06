@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "92952889_f6551fea",
+        "filename": "chrome/browser/extensions/api/language_settings_private/language_settings_private_api.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 371,
+      "author": {
+        "id": 1234767
+      },
+      "writtenOn": "2017-11-06T04:02:38Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "b41c5cd9_2a80f562",
+      "revId": "41615819a15e06a9c29595a650e63ef22f54f91e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "452104cb_7739f4f8",
         "filename": "chrome/browser/extensions/api/language_settings_private/language_settings_private_api.cc",
         "patchSetId": 9
@@ -36,6 +54,24 @@
     },
     {
       "key": {
+        "uuid": "0a2b8ac3_3621380a",
+        "filename": "chrome/browser/extensions/api/language_settings_private/language_settings_private_api.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 379,
+      "author": {
+        "id": 1234767
+      },
+      "writtenOn": "2017-11-06T04:02:38Z",
+      "side": 1,
+      "message": "Good suggestion, I like your way better.",
+      "parentUuid": "452104cb_7739f4f8",
+      "revId": "41615819a15e06a9c29595a650e63ef22f54f91e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "e271ca35_3c1b474a",
         "filename": "chrome/browser/extensions/api/language_settings_private/language_settings_private_api.cc",
         "patchSetId": 9
@@ -47,6 +83,24 @@
       "writtenOn": "2017-11-03T14:46:13Z",
       "side": 1,
       "message": "nit: alluded to above - prefer specifying LAST and NONE types explicitly.  That way, introducing a new type results in a compile error.",
+      "revId": "41615819a15e06a9c29595a650e63ef22f54f91e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "06415f75_e746a5b7",
+        "filename": "chrome/browser/extensions/api/language_settings_private/language_settings_private_api.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 396,
+      "author": {
+        "id": 1234767
+      },
+      "writtenOn": "2017-11-06T04:02:38Z",
+      "side": 1,
+      "message": "I don\u0027t understand how having the LAST and NONE types explicit in the enum can lead to a compilation error.",
+      "parentUuid": "e271ca35_3c1b474a",
       "revId": "41615819a15e06a9c29595a650e63ef22f54f91e",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
