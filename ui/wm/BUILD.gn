@@ -2,10 +2,11 @@
 # Use of this source code is governed by a BSD-style license that can be
 # found in the LICENSE file.
 
+import("//build/config/jumbo.gni")
 import("//build/config/ui.gni")
 import("//testing/test.gni")
 
-component("wm") {
+jumbo_component("wm") {
   sources = [
     "core/accelerator_delegate.h",
     "core/accelerator_filter.cc",
@@ -58,6 +59,8 @@ component("wm") {
     "core/wm_state.cc",
     "core/wm_state.h",
   ]
+
+  jumbo_excluded_sources = [ "core/shadow_types.cc" ]
 
   configs += [ "//build/config:precompiled_headers" ]
   defines = [ "WM_CORE_IMPLEMENTATION" ]
