@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "3c660755_8c23e8d2",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 23
+      },
+      "lineNbr": 10,
+      "author": {
+        "id": 1245462
+      },
+      "writtenOn": "2017-11-06T12:18:28Z",
+      "side": 1,
+      "message": "Can I run this benchmark locally (x86 content_shell)? Would be cool! If yes, could you mention the command line that starts it here? I guess it will be something like:\n\n  src/tools/perf/run_benchmark run ......\n\nI understand I need the recorded webpages (leak_detection_000.wprgo) but I assume these will be downloaded on-the-fly when I start the test?\n\nI\u0027m asking because I\u0027m interested in running variants of this test to test if other web pages leak (I have some suspects).",
+      "range": {
+        "startLine": 10,
+        "startChar": 44,
+        "endLine": 10,
+        "endChar": 54
+      },
+      "revId": "b64de37e39677f18a9159ffed1eb81204d107a19",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
