@@ -2,6 +2,29 @@
   "comments": [
     {
       "key": {
+        "uuid": "388df9ed_38e1500c",
+        "filename": "chrome/browser/resources/settings/basic_page/basic_page.js",
+        "patchSetId": 7
+      },
+      "lineNbr": 128,
+      "author": {
+        "id": 1115893
+      },
+      "writtenOn": "2017-11-06T21:58:00Z",
+      "side": 1,
+      "message": "Nit (optional): You are not using the |e| parameter, so it can be omitted (use  \"() \u003d\u003e\" instead).",
+      "range": {
+        "startLine": 128,
+        "startChar": 53,
+        "endLine": 128,
+        "endChar": 54
+      },
+      "revId": "a940e28d3e7550ca94a7903cac2624c86cdb523e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "52558f27_1ac64a4c",
         "filename": "chrome/browser/safe_browsing/chrome_password_protection_service.cc",
         "patchSetId": 7
@@ -34,6 +57,57 @@
       "revId": "a940e28d3e7550ca94a7903cac2624c86cdb523e",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "95a3af82_0d7d1359",
+        "filename": "chrome/test/data/webui/settings/change_password_page_test.js",
+        "patchSetId": 7
+      },
+      "lineNbr": 30,
+      "author": {
+        "id": 1115893
+      },
+      "writtenOn": "2017-11-06T21:58:00Z",
+      "side": 1,
+      "message": "Nit: move changePasswordPage and browserProxy declarations within this scope, since they are only used here.",
+      "revId": "a940e28d3e7550ca94a7903cac2624c86cdb523e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9c36400d_5cec025b",
+        "filename": "chrome/test/data/webui/settings/change_password_page_test.js",
+        "patchSetId": 7
+      },
+      "lineNbr": 49,
+      "author": {
+        "id": 1115893
+      },
+      "writtenOn": "2017-11-06T21:58:00Z",
+      "side": 1,
+      "message": "s/var/let",
+      "revId": "a940e28d3e7550ca94a7903cac2624c86cdb523e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9f590974_0930efe0",
+        "filename": "chrome/test/data/webui/settings/settings_main_test.js",
+        "patchSetId": 7
+      },
+      "lineNbr": 285,
+      "author": {
+        "id": 1115893
+      },
+      "writtenOn": "2017-11-06T21:58:00Z",
+      "side": 1,
+      "message": "FYI, since you are not overriding ChangePasswordBrowserProxyImpl.instance_ with a test version of the proxy during test setup, the test is triggering the actual C++ handler. Perhaps that is fine, just mentioning it because cases like this often cause flakiness.\n\nAlternatively you could move the TestChangePasswordBrowserProxy definition to each own file and reuse it in this test to avoid talking to C++ during tests.",
+      "revId": "a940e28d3e7550ca94a7903cac2624c86cdb523e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
