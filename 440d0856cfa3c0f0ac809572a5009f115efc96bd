@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "54f80a42_6497f373",
+        "filename": "ios/chrome/browser/ui/browser_view_controller.mm",
+        "patchSetId": 5
+      },
+      "lineNbr": 2059,
+      "author": {
+        "id": 1115958
+      },
+      "writtenOn": "2017-11-06T13:54:38Z",
+      "side": 1,
+      "message": "I\u0027d suggest not mocking the WTC.",
+      "parentUuid": "d58fc4dc_ac8d46a9",
+      "revId": "440d0856cfa3c0f0ac809572a5009f115efc96bd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "b953beaa_26d7ff20",
         "filename": "ios/chrome/browser/ui/browser_view_controller_unittest.mm",
         "patchSetId": 5
@@ -30,6 +48,47 @@
       "writtenOn": "2017-11-04T01:13:01Z",
       "side": 1,
       "message": "Please ignore this and the commented code, when trying to use the mock test pass but OCMock asserts on dealloc... Will further look into this.\nAlso, the 2 commented tests Pass, forgot to uncomment before uploading this CL!",
+      "revId": "440d0856cfa3c0f0ac809572a5009f115efc96bd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6a95017e_f45c08e4",
+        "filename": "ios/chrome/browser/ui/browser_view_controller_unittest.mm",
+        "patchSetId": 5
+      },
+      "lineNbr": 211,
+      "author": {
+        "id": 1115958
+      },
+      "writtenOn": "2017-11-06T13:54:38Z",
+      "side": 1,
+      "message": "Why mock this at all? Is there any reason not to to use either an actual WTC instance or a UIViewController?\n\nGenerally speaking: don\u0027t use mocks if you don\u0027t have to. Use OCMock mostly for things like system-provided objects that you can\u0027t easily provide your own implementations of.",
+      "parentUuid": "b953beaa_26d7ff20",
+      "revId": "440d0856cfa3c0f0ac809572a5009f115efc96bd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0f31ab03_ea3559a0",
+        "filename": "ios/chrome/browser/ui/toolbar/toolbar_controller.mm",
+        "patchSetId": 5
+      },
+      "lineNbr": 156,
+      "author": {
+        "id": 1115958
+      },
+      "writtenOn": "2017-11-06T13:54:38Z",
+      "side": 1,
+      "message": "You shouldn\u0027t initialize the view of a view controller in the -init; you should override -loadView and move as much of the init logic to -viewDidLoad instead.",
+      "range": {
+        "startLine": 156,
+        "startChar": 9,
+        "endLine": 156,
+        "endChar": 13
+      },
       "revId": "440d0856cfa3c0f0ac809572a5009f115efc96bd",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
