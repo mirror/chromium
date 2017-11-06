@@ -52,6 +52,24 @@
       "revId": "310003de0be0d3663a64ada863cab96caf25207f",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "670080c0_f0d9b75f",
+        "filename": "third_party/WebKit/Source/core/editing/iterators/SimplifiedBackwardsTextIterator.cpp",
+        "patchSetId": 2
+      },
+      "lineNbr": 261,
+      "author": {
+        "id": 1002258
+      },
+      "writtenOn": "2017-11-06T09:42:59Z",
+      "side": 1,
+      "message": "Yes, I put TIBehavior to TITextState back[1] rather than passing\n|TIBehavior| as paramter of |TITextState::EmitText()|.\n\n[1] http://crrev.com/c/753275",
+      "parentUuid": "92875759_1290f194",
+      "revId": "310003de0be0d3663a64ada863cab96caf25207f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
