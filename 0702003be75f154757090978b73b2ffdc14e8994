@@ -377,6 +377,30 @@
       "revId": "0702003be75f154757090978b73b2ffdc14e8994",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e69f4808_28150a68",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/signin/SigninPromoController.java",
+        "patchSetId": 13
+      },
+      "lineNbr": 200,
+      "author": {
+        "id": 1001606
+      },
+      "writtenOn": "2017-11-06T14:18:29Z",
+      "side": 1,
+      "message": "Done!",
+      "parentUuid": "9b7f8777_4c84ca1c",
+      "range": {
+        "startLine": 200,
+        "startChar": 0,
+        "endLine": 200,
+        "endChar": 42
+      },
+      "revId": "0702003be75f154757090978b73b2ffdc14e8994",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
