@@ -395,8 +395,7 @@ bool AXLayoutObject::IsOffScreen() const {
       PixelSnappedIntRect(layout_object_->AbsoluteVisualRect());
   LocalFrameView* view = layout_object_->GetFrame()->View();
   IntRect view_rect = view->VisibleContentRect();
-  view_rect.Intersect(content_rect);
-  return view_rect.IsEmpty();
+  return !view_rect.Contains(content_rect);
 }
 
 bool AXLayoutObject::IsVisited() const {

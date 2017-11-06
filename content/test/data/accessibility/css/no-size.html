@@ -1,0 +1,7 @@
+<!--
+@BLINK-ALLOW:offscreen
+-->
+<!-- Should NOT be offscreen as it is not outside of the screen bounds -->
+<a href="#" style="display:inline-block;position:absolute;width:0;height:0;top:2px;left:2px;"></a>
+<!-- Should be offscreen as it is outside of the screen bounds -->
+<a href="#" style="display:inline-block;position:absolute;width:0;height:0;left:-99px;"></a>

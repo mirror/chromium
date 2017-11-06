@@ -168,6 +168,9 @@ void AXTree::UpdateData(const AXTreeData& new_data) {
 gfx::RectF AXTree::RelativeToTreeBounds(const AXNode* node,
                                         gfx::RectF bounds,
                                         bool* offscreen) const {
+  if (offscreen != nullptr)  // Initialize out param with default.
+    *offscreen = false;
+
   // If |bounds| is uninitialized, which is not the same as empty,
   // start with the node bounds.
   if (bounds.width() == 0 && bounds.height() == 0) {
@@ -217,18 +220,6 @@ gfx::RectF AXTree::RelativeToTreeBounds(const AXNode* node,
     gfx::RectF container_bounds = container->data().location;
     bounds.Offset(container_bounds.x(), container_bounds.y());
 
-    // If we don't have any size yet, take the size from this ancestor.
-    // The rationale is that it's not useful to the user for an object to
-    // have no width or height and it's probably a bug; it's better to
-    // reflect the bounds of the nearest ancestor rather than a 0x0 box.
-    // Tag this node as 'offscreen' because it has no true size, just a
-    // size inherited from the ancestor.
-    if (bounds.width() == 0 && bounds.height() == 0) {
-      bounds.set_size(container_bounds.size());
-      if (offscreen != nullptr)
-        *offscreen = true;
-    }
-
     int scroll_x = 0;
     int scroll_y = 0;
     if (container->data().GetIntAttribute(ui::AX_ATTR_SCROLL_X, &scroll_x) &&
@@ -239,6 +230,12 @@ gfx::RectF AXTree::RelativeToTreeBounds(const AXNode* node,
     // If this is the root web area, make sure we clip the node to fit.
     if (container->data().role == ui::AX_ROLE_ROOT_WEB_AREA) {
       gfx::RectF clipped = bounds;
+
+      // Use Contains() instead of Intersect() test as a 0x0 element can be
+      // contained within the screen bounds.
+      if (offscreen != nullptr && !container_bounds.Contains(bounds))
+        *offscreen |= true;
+
       clipped.Intersect(container_bounds);
       if (!clipped.IsEmpty()) {
         // We can simply clip it to the container.
@@ -262,8 +259,6 @@ gfx::RectF AXTree::RelativeToTreeBounds(const AXNode* node,
           bounds.set_y(0);
           bounds.set_height(1);
         }
-        if (offscreen != nullptr)
-          *offscreen |= true;
       }
     }
 
