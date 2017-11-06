@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "3470be6c_723fadf5",
+        "filename": "content/renderer/input/input_target_client_impl.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 29,
+      "author": {
+        "id": 1163594
+      },
+      "writtenOn": "2017-11-06T19:57:19Z",
+      "side": 1,
+      "message": "make_unique needs the constructor to be public. My constructor here is private.",
+      "parentUuid": "17980239_66f57970",
+      "revId": "49375cae531c8704af2296b72a443dc16780b44a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "c201071b_cf827b31",
         "filename": "content/renderer/input/input_target_client_impl.h",
         "patchSetId": 6
@@ -36,6 +54,24 @@
     },
     {
       "key": {
+        "uuid": "58dd8a0e_699caff6",
+        "filename": "content/renderer/input/input_target_client_impl.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 29,
+      "author": {
+        "id": 1163594
+      },
+      "writtenOn": "2017-11-06T19:57:19Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "c201071b_cf827b31",
+      "revId": "49375cae531c8704af2296b72a443dc16780b44a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "c4312c74_cb4a8de3",
         "filename": "content/renderer/input/input_target_client_impl.h",
         "patchSetId": 6
@@ -50,6 +86,24 @@
       "revId": "49375cae531c8704af2296b72a443dc16780b44a",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "730f49ac_2b2e0880",
+        "filename": "content/renderer/input/input_target_client_impl.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 32,
+      "author": {
+        "id": 1163594
+      },
+      "writtenOn": "2017-11-06T19:57:19Z",
+      "side": 1,
+      "message": "Removed",
+      "parentUuid": "c4312c74_cb4a8de3",
+      "revId": "49375cae531c8704af2296b72a443dc16780b44a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
