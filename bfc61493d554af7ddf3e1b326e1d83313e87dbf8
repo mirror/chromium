@@ -16,6 +16,24 @@
       "revId": "bfc61493d554af7ddf3e1b326e1d83313e87dbf8",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c65fa366_7f308a31",
+        "filename": "content/browser/frame_host/navigation_controller_impl.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 1388,
+      "author": {
+        "id": 1176649
+      },
+      "writtenOn": "2017-11-06T15:30:32Z",
+      "side": 1,
+      "message": "Subframe navigations are not interesting to my use-case, but if you think we should support them equally for consistency, let me know.\n\nWrt to RendererDidNavigateToNewPage, can you describe how that can be reproduced? I\u0027ll start with browser tests.",
+      "parentUuid": "5e80cc77_0587237a",
+      "revId": "bfc61493d554af7ddf3e1b326e1d83313e87dbf8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
