@@ -630,15 +630,29 @@ Press any key to continue exploring.
   <message name="IDS_FILE_BROWSER_CLOUD_IMPORT_TOOLTIP_NO_MEDIA" desc="Cloud import no-new-media-found tooltip. Shown after backup is completed and when a search for new files to backup produces no result.">
     All backed up!
   </message>
-  <message name="IDS_FILE_BROWSER_CLOUD_IMPORT_STATUS_INSUFFICIENT_SPACE" desc="Cloud import insufficient space status message.">
+  <message name="IDS_FILE_BROWSER_CLOUD_IMPORT_STATUS_INSUFFICIENT_CLOUD_SPACE" desc="Cloud import insufficient cloud space status message.">
     <ph name="FILE_COUNT">$1<ex>5</ex></ph> new photos found
     <ph name="LINE_BREAK1">&lt;br&gt;</ph>
-    Not enough space on device.
+    with a total size of <ph name="FILE_SIZE_BYTES">$2<ex>5</ex></ph> bytes.
     <ph name="LINE_BREAK2">&lt;br&gt;</ph>
-    Try selecting a few photos to start.
+    Only <ph name="DRIVE_SIZE_BYTES">$3<ex>5</ex></ph> bytes available in drive quota.
+    <ph name="LINE_BREAK3">&lt;br&gt;</ph>
+    Try selecting fewer photos to start.
   </message>
-  <message name="IDS_FILE_BROWSER_CLOUD_IMPORT_TOOLTIP_INSUFFICIENT_SPACE" desc="Cloud import insufficient space tooltip.">
-    Not enough space on device
+  <message name="IDS_FILE_BROWSER_CLOUD_IMPORT_TOOLTIP_INSUFFICIENT_CLOUD_SPACE" desc="Cloud import insufficient cloud space tooltip.">
+    Not enough drive quota available
+  </message>
+  <message name="IDS_FILE_BROWSER_CLOUD_IMPORT_STATUS_INSUFFICIENT_LOCAL_SPACE" desc="Cloud import insufficient local space status message.">
+    <ph name="FILE_COUNT">$1<ex>5</ex></ph> new photos found
+    <ph name="LINE_BREAK1">&lt;br&gt;</ph>
+    with a total size of <ph name="FILE_SIZE_BYTES">$2<ex>5</ex></ph> bytes.
+    <ph name="LINE_BREAK2">&lt;br&gt;</ph>
+    Only <ph name="DEVICE_SIZE_BYTES">$3<ex>5</ex></ph> bytes available on device.
+    <ph name="LINE_BREAK3">&lt;br&gt;</ph>
+    Try selecting fewer photos to start.
+  </message>
+  <message name="IDS_FILE_BROWSER_CLOUD_IMPORT_TOOLTIP_INSUFFICIENT_LOCAL_SPACE" desc="Cloud import insufficient local space tooltip.">
+    Not enough free space on device available
   </message>
   <message name="IDS_FILE_BROWSER_CLOUD_IMPORT_STATUS_READY" desc="Cloud import ready status message.">
     <ph name="FILE_COUNT">$1<ex>5</ex></ph> new photos found
