@@ -42,8 +42,9 @@ void ChromeOmniboxEditController::OnInputInProgress(bool in_progress) {
 bool ChromeOmniboxEditController::SwitchToTabWithURL(const std::string& url,
                                                      bool close_this) {
 #if !(defined(OS_ANDROID) || defined(OS_IOS))
+  content::WebContents* old_web_contents = GetWebContents();
   Profile* profile =
-      Profile::FromBrowserContext(GetWebContents()->GetBrowserContext());
+      Profile::FromBrowserContext(old_web_contents->GetBrowserContext());
   if (!profile)
     return false;
   for (auto* browser : *BrowserList::GetInstance()) {
@@ -52,8 +53,9 @@ bool ChromeOmniboxEditController::SwitchToTabWithURL(const std::string& url,
       for (int i = 0; i < browser->tab_strip_model()->count(); ++i) {
         content::WebContents* new_web_contents =
             browser->tab_strip_model()->GetWebContentsAt(i);
+        if (new_web_contents == old_web_contents)
+          continue;
         if (new_web_contents->GetLastCommittedURL() == url) {
-          content::WebContents* old_web_contents = GetWebContents();
           if (close_this) {
             old_web_contents->Close();
           } else {
