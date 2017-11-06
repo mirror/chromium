@@ -5,6 +5,7 @@
 #include "platform/graphics/HighContrastImageClassifier.h"
 
 #include "base/rand_util.h"
+#include "platform/graphics/highcontrast/highcontrast_classifier.h"
 #include "third_party/WebKit/Source/platform/geometry/IntRect.h"
 #include "third_party/skia/include/utils/SkNullCanvas.h"
 
@@ -40,6 +41,9 @@ float ColorDifference(const SkColor& color1, const SkColor4f& color2) {
 const int kPixelsToSample = 1000;
 const int kBlocksCount1D = 10;
 const int kMinImageSizeForClassification1D = 24;
+
+// Decision tree lower and upper thresholds for grayscale and color images.
+const float kDecisionTree[2][2] = {{0.8125, 1}, {0.014893, 0.018311}};
 
 }  // namespace
 
@@ -320,10 +324,17 @@ HighContrastClassification HighContrastImageClassifier::ClassifyImage(
     const std::vector<float>& features) {
   bool result = false;
 
-  // Shallow decision tree trained by C4.5.
-  if (features.size() >= 2) {
-    float threshold = (features[0] == 0) ? 0.8125 : 0.0166;
-    result = features[1] < threshold;
+  if (features.size() == 4) {
+    if (features[1] < kDecisionTree[static_cast<int>(features[0])][0]) {
+      result = true;
+    } else if (features[1] > kDecisionTree[static_cast<int>(features[0])][1]) {
+      result = false;
+    } else {
+      tfnative_model::FixedAllocations nn_temp;
+      float nn_out;
+      tfnative_model::Inference(&features[0], &nn_out, &nn_temp);
+      result = nn_out > 0;
+    }
   }
 
   return result ? HighContrastClassification::kApplyHighContrastFilter
