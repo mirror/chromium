@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "0398892e_8f8c3bed",
+        "filename": "components/optimization_guide/optimization_guide_service.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 50,
+      "author": {
+        "id": 1133190
+      },
+      "writtenOn": "2017-11-06T22:09:07Z",
+      "side": 1,
+      "message": "ProcessHints sounds good. have to get additional owners anyway so will do it in this CL.",
+      "parentUuid": "b3b73e82_d75099ea",
+      "range": {
+        "startLine": 50,
+        "startChar": 31,
+        "endLine": 50,
+        "endChar": 48
+      },
+      "revId": "cb7887ad79d0d7363d01ffbda68a1eb5086a9e9e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "5ef2e31b_67ccb8c3",
         "filename": "components/optimization_guide/optimization_guide_service.cc",
         "patchSetId": 6
@@ -45,6 +69,30 @@
       "revId": "cb7887ad79d0d7363d01ffbda68a1eb5086a9e9e",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c6e16658_584655ea",
+        "filename": "components/optimization_guide/optimization_guide_service.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 62,
+      "author": {
+        "id": 1133190
+      },
+      "writtenOn": "2017-11-06T22:09:07Z",
+      "side": 1,
+      "message": "renamed to ComponentInfo since it\u0027s coming from the component",
+      "parentUuid": "5ef2e31b_67ccb8c3",
+      "range": {
+        "startLine": 62,
+        "startChar": 7,
+        "endLine": 62,
+        "endChar": 27
+      },
+      "revId": "cb7887ad79d0d7363d01ffbda68a1eb5086a9e9e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -71,6 +119,30 @@
     },
     {
       "key": {
+        "uuid": "c815dfe5_eab3bcf2",
+        "filename": "components/optimization_guide/optimization_guide_service_unittest.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 117,
+      "author": {
+        "id": 1133190
+      },
+      "writtenOn": "2017-11-06T22:09:07Z",
+      "side": 1,
+      "message": "Done - prefixed these all with ProcessHints",
+      "parentUuid": "b72ebc01_33c37fbb",
+      "range": {
+        "startLine": 117,
+        "startChar": 37,
+        "endLine": 117,
+        "endChar": 58
+      },
+      "revId": "cb7887ad79d0d7363d01ffbda68a1eb5086a9e9e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "77cc2313_29a3f524",
         "filename": "components/optimization_guide/optimization_guide_service_unittest.cc",
         "patchSetId": 6
@@ -91,6 +163,30 @@
       "revId": "cb7887ad79d0d7363d01ffbda68a1eb5086a9e9e",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "21023f2d_11bc4b88",
+        "filename": "components/optimization_guide/optimization_guide_service_unittest.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 186,
+      "author": {
+        "id": 1133190
+      },
+      "writtenOn": "2017-11-06T22:09:07Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "77cc2313_29a3f524",
+      "range": {
+        "startLine": 186,
+        "startChar": 37,
+        "endLine": 186,
+        "endChar": 46
+      },
+      "revId": "cb7887ad79d0d7363d01ffbda68a1eb5086a9e9e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
