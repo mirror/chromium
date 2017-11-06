@@ -22,6 +22,30 @@
       "revId": "d9e3292b97bb39a39c65158e72fa4ca814ecd46f",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3226ba7c_57b7e08c",
+        "filename": "components/metrics/reporting_service.cc",
+        "patchSetId": 15
+      },
+      "lineNbr": 221,
+      "author": {
+        "id": 1243399
+      },
+      "writtenOn": "2017-11-06T23:34:06Z",
+      "side": 1,
+      "message": "That makes sense, for a server that has both http and https down, this would have caused it to reset every other attempt. Thanks for catching that, removed it now.",
+      "parentUuid": "c0a60a40_47c400e4",
+      "range": {
+        "startLine": 221,
+        "startChar": 46,
+        "endLine": 221,
+        "endChar": 76
+      },
+      "revId": "d9e3292b97bb39a39c65158e72fa4ca814ecd46f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }

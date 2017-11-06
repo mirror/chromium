@@ -70,6 +70,30 @@
       "revId": "c6fa00011a52adba13da9f33804705e627b3a18b",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3668d2ca_577bb492",
+        "filename": "components/metrics/reporting_service.cc",
+        "patchSetId": 13
+      },
+      "lineNbr": 204,
+      "author": {
+        "id": 1243399
+      },
+      "writtenOn": "2017-11-06T23:34:06Z",
+      "side": 1,
+      "message": "I see what you mean now. Moved the decision logic to UploadLog, and now I was able to remove the UploadLogToInsecureURL method from the log uploader. Thanks for the suggestion.",
+      "parentUuid": "6718389a_a72c1448",
+      "range": {
+        "startLine": 204,
+        "startChar": 6,
+        "endLine": 204,
+        "endChar": 32
+      },
+      "revId": "c6fa00011a52adba13da9f33804705e627b3a18b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
