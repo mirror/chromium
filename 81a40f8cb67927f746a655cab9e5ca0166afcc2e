@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "e42c1118_4ae0e97e",
+        "filename": "ios/web/public/download/download_controller.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 64,
+      "author": {
+        "id": 1123009
+      },
+      "writtenOn": "2017-11-06T16:41:28Z",
+      "side": 1,
+      "message": "Do you meed defining them in ios/web layer? I think it should be up to the embedder to define the storage type. For example one embedder may prefer to use NSKeyedArchiving and another one (like chrome) may prefer more cross platform solution.",
+      "parentUuid": "a58bbd2a_35fcc49a",
+      "range": {
+        "startLine": 64,
+        "startChar": 9,
+        "endLine": 64,
+        "endChar": 13
+      },
+      "revId": "81a40f8cb67927f746a655cab9e5ca0166afcc2e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "1d66f14f_000e7c0b",
         "filename": "ios/web/public/download/download_controller.h",
         "patchSetId": 3
@@ -36,6 +60,30 @@
       "writtenOn": "2017-11-06T09:34:00Z",
       "side": 1,
       "message": "I think ownership should be clearer. Instead I would recommend having the DownloadController own the DownloadTask and return a raw pointer here. Then if the code need to know whether the pointer becomes invalid, they can just implement the DownloadControllerObserver API.",
+      "range": {
+        "startLine": 96,
+        "startChar": 10,
+        "endLine": 96,
+        "endChar": 37
+      },
+      "revId": "81a40f8cb67927f746a655cab9e5ca0166afcc2e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "63f0510d_b3af064b",
+        "filename": "ios/web/public/download/download_controller.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 96,
+      "author": {
+        "id": 1123009
+      },
+      "writtenOn": "2017-11-06T16:41:28Z",
+      "side": 1,
+      "message": "I did not want DownloadController to own DownloadTask, because then the embedder will be responsible for explicitly removing the tasks. With current design if embedder ignores the download creation, those tasks will be deallocated automatically. If I change DownloadController to own  DownloadTask then every embedder will have to implement DownloadControllerObserver to remove the tasks, and that would be pretty inconvenient API (how an embedder would know that hey responsible for the cleanup?).\n\nWhy do you think DownloadController should own DownloadTask? What would be the advantage?\n\nI think I may agree that DownloadController may retain DownloadTask once DownloadTask::Start() is called, but then ownership model will become even more complicated.",
+      "parentUuid": "1d66f14f_000e7c0b",
       "range": {
         "startLine": 96,
         "startChar": 10,
@@ -65,6 +113,24 @@
     },
     {
       "key": {
+        "uuid": "cf8ae30e_101da3f6",
+        "filename": "ios/web/public/download/download_controller_observer.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 33,
+      "author": {
+        "id": 1123009
+      },
+      "writtenOn": "2017-11-06T16:41:28Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "bfb203fd_565af11a",
+      "revId": "81a40f8cb67927f746a655cab9e5ca0166afcc2e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "e2757ab2_968c710d",
         "filename": "ios/web/public/download/download_controller_observer.h",
         "patchSetId": 3
@@ -88,6 +154,30 @@
     },
     {
       "key": {
+        "uuid": "1b012d3a_fadee144",
+        "filename": "ios/web/public/download/download_controller_observer.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 44,
+      "author": {
+        "id": 1123009
+      },
+      "writtenOn": "2017-11-06T16:41:28Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "e2757ab2_968c710d",
+      "range": {
+        "startLine": 44,
+        "startChar": 17,
+        "endLine": 44,
+        "endChar": 26
+      },
+      "revId": "81a40f8cb67927f746a655cab9e5ca0166afcc2e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "5e23b18f_e9253590",
         "filename": "ios/web/public/download/download_controller_observer.h",
         "patchSetId": 3
@@ -99,6 +189,30 @@
       "writtenOn": "2017-11-06T09:34:00Z",
       "side": 1,
       "message": "Since the client is passed a scoped_refptr\u003c\u003e to the DownloadTask, it may have taken ownership. I think this is a design flaw. We should either prevent the client from taking ownership (by disallowing scoped_refptr use) or remove this method (or at least rename it OnDownloadCancelled, or something else).\n\nWhat I\u0027m trying to say is that we should not allow to share the ownership of the object and at the same time try to enforce single ownership by the DownloadController. IMO, the better way is to pass a raw pointer to DownloadTask, and say that DownloadTask is owned by DownloadController (maybe even changing ownership to use unique_ptr if possible).",
+      "range": {
+        "startLine": 46,
+        "startChar": 15,
+        "endLine": 46,
+        "endChar": 34
+      },
+      "revId": "81a40f8cb67927f746a655cab9e5ca0166afcc2e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1e717d21_22afffaf",
+        "filename": "ios/web/public/download/download_controller_observer.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 46,
+      "author": {
+        "id": 1123009
+      },
+      "writtenOn": "2017-11-06T16:41:28Z",
+      "side": 1,
+      "message": "I see your point. Yeah, there is not much value in having this callbacks, so I will be happy to remove it. Before I do that I want us to agree on ownership of DownloadTask to avoid extra churn.\n\nI was thinking about using unique_ptr. Unique ptr would require creating DownloadControllerDelegate (because I cant pass Unique ptr to multiple observers), but I would still need an observer to allow clients receive OnDownloadUpdated callback. So I had a choice between unique_ptr and Delegate+Observer vs. scoped_refptr and Observer. I decided to go with fewer interfaces for simplicity (though I see these 2 options more or less equal). Do you think unique_ptr and Delegate+Observer solution would be strictly better? Can you think of the reasons why unique_ptr and Delegate+Observer is better?",
+      "parentUuid": "5e23b18f_e9253590",
       "range": {
         "startLine": 46,
         "startChar": 15,
@@ -128,6 +242,24 @@
     },
     {
       "key": {
+        "uuid": "c8fe3a85_ad26527a",
+        "filename": "ios/web/public/download/download_task.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 9,
+      "author": {
+        "id": 1123009
+      },
+      "writtenOn": "2017-11-06T16:41:28Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "19b28d95_264ed847",
+      "revId": "81a40f8cb67927f746a655cab9e5ca0166afcc2e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "192589e7_a4e35d4b",
         "filename": "ios/web/public/download/download_task.h",
         "patchSetId": 3
@@ -142,6 +274,24 @@
       "revId": "81a40f8cb67927f746a655cab9e5ca0166afcc2e",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "962488c0_f7c4ddf0",
+        "filename": "ios/web/public/download/download_task.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 78,
+      "author": {
+        "id": 1123009
+      },
+      "writtenOn": "2017-11-06T16:41:28Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "192589e7_a4e35d4b",
+      "revId": "81a40f8cb67927f746a655cab9e5ca0166afcc2e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
