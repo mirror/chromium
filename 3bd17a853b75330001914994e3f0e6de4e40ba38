@@ -22,6 +22,30 @@
       "revId": "3bd17a853b75330001914994e3f0e6de4e40ba38",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c7b08521_7e9feae0",
+        "filename": "chrome/browser/resource_coordinator/background_tab_navigation_throttle.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 52,
+      "author": {
+        "id": 1001216
+      },
+      "writtenOn": "2017-11-06T23:46:29Z",
+      "side": 1,
+      "message": "\u003e Now doing another check in the throttle.\n\u003e \n\u003e +creis, can I assume throttles are always created after attaching tab helpers?\n\nAvi knows TabHelpers better than I do, but that sounds correct.  MaybeCreateThrottleFor is called for each navigation (when the NavigationHandle is created), which seems like it would be after calls to AttachTabHelpers (via WebContentsCreated, etc).\n\nHowever, is is the presence of any TabHelper really the right way to tell if a WebContents is a proper tab or not?  Again, I\u0027ll defer to Avi on whether this is the right approach, or if there\u0027s a better way.",
+      "parentUuid": "16aecc1c_c966e87b",
+      "range": {
+        "startLine": 47,
+        "startChar": 0,
+        "endLine": 52,
+        "endChar": 19
+      },
+      "revId": "3bd17a853b75330001914994e3f0e6de4e40ba38",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
