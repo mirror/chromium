@@ -2463,7 +2463,7 @@ void LayerTreeHostImpl::CreateResourceAndRasterBufferProvider(
   if (!compositor_context_provider) {
     *resource_pool =
         ResourcePool::Create(resource_provider_.get(), GetTaskRunner(),
-                             ResourceProvider::TEXTURE_HINT_DEFAULT,
+                             viz::RemotableResourceTextureHint::kDefault,
                              ResourcePool::kDefaultExpirationDelay,
                              settings_.disallow_non_exact_resource_reuse);
 
@@ -2479,7 +2479,7 @@ void LayerTreeHostImpl::CreateResourceAndRasterBufferProvider(
 
     *resource_pool =
         ResourcePool::Create(resource_provider_.get(), GetTaskRunner(),
-                             ResourceProvider::TEXTURE_HINT_FRAMEBUFFER,
+                             viz::RemotableResourceTextureHint::kFramebuffer,
                              ResourcePool::kDefaultExpirationDelay,
                              settings_.disallow_non_exact_resource_reuse);
 
@@ -2517,7 +2517,7 @@ void LayerTreeHostImpl::CreateResourceAndRasterBufferProvider(
 
   *resource_pool =
       ResourcePool::Create(resource_provider_.get(), GetTaskRunner(),
-                           ResourceProvider::TEXTURE_HINT_DEFAULT,
+                           viz::RemotableResourceTextureHint::kDefault,
                            ResourcePool::kDefaultExpirationDelay,
                            settings_.disallow_non_exact_resource_reuse);
 
@@ -4248,7 +4248,7 @@ void LayerTreeHostImpl::CreateUIResource(UIResourceId uid,
   }
 
   id = resource_provider_->CreateResource(
-      upload_size, ResourceProvider::TEXTURE_HINT_DEFAULT, format,
+      upload_size, viz::RemotableResourceTextureHint::kDefault, format,
       gfx::ColorSpace::CreateSRGB());
 
   if (!scaled) {

@@ -25,7 +25,7 @@ class CC_EXPORT ScopedResource : public Resource {
   virtual ~ScopedResource();
 
   void Allocate(const gfx::Size& size,
-                ResourceProvider::TextureHint hint,
+                viz::RemotableResourceTextureHint hint,
                 viz::ResourceFormat format,
                 const gfx::ColorSpace& color_space);
   void AllocateWithGpuMemoryBuffer(const gfx::Size& size,
@@ -34,12 +34,12 @@ class CC_EXPORT ScopedResource : public Resource {
                                    const gfx::ColorSpace& color_space);
   void Free();
 
-  ResourceProvider::TextureHint hint() const { return hint_; }
+  viz::RemotableResourceTextureHint hint() const { return hint_; }
 
  private:
   ResourceProvider* resource_provider_;
-  ResourceProvider::TextureHint hint_ =
-      ResourceProvider::TextureHint::TEXTURE_HINT_DEFAULT;
+  viz::RemotableResourceTextureHint hint_ =
+      viz::RemotableResourceTextureHint::kDefault;
 
 #if DCHECK_IS_ON()
   base::PlatformThreadId allocate_thread_id_;
