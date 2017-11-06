@@ -1,0 +1,124 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "1d66f14f_000e7c0b",
+        "filename": "ios/web/public/download/download_controller.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 96,
+      "author": {
+        "id": 1116027
+      },
+      "writtenOn": "2017-11-06T09:34:00Z",
+      "side": 1,
+      "message": "I think ownership should be clearer. Instead I would recommend having the DownloadController own the DownloadTask and return a raw pointer here. Then if the code need to know whether the pointer becomes invalid, they can just implement the DownloadControllerObserver API.",
+      "range": {
+        "startLine": 96,
+        "startChar": 10,
+        "endLine": 96,
+        "endChar": 37
+      },
+      "revId": "81a40f8cb67927f746a655cab9e5ca0166afcc2e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "bfb203fd_565af11a",
+        "filename": "ios/web/public/download/download_controller_observer.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 33,
+      "author": {
+        "id": 1116027
+      },
+      "writtenOn": "2017-11-06T09:34:00Z",
+      "side": 1,
+      "message": "I found that passing the observed object as the first parameter to observer methods is better as it allow to watch multiple objects more easily, so I would suggest changing those methods to the following:\n\n  virtual void OnDownloadCreated(\n      DownloadController* controller,\n      const WebState* web_state,\n      scoped_refptr\u003cDownloadTask\u003e task) {}\n\n  ...\n\nAdditionally, please name the parameters so that it is easier to 1. refer to them in comments, 2. easier to understand what they are.",
+      "revId": "81a40f8cb67927f746a655cab9e5ca0166afcc2e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e2757ab2_968c710d",
+        "filename": "ios/web/public/download/download_controller_observer.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 44,
+      "author": {
+        "id": 1116027
+      },
+      "writtenOn": "2017-11-06T09:34:00Z",
+      "side": 1,
+      "message": "download",
+      "range": {
+        "startLine": 44,
+        "startChar": 17,
+        "endLine": 44,
+        "endChar": 26
+      },
+      "revId": "81a40f8cb67927f746a655cab9e5ca0166afcc2e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5e23b18f_e9253590",
+        "filename": "ios/web/public/download/download_controller_observer.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 46,
+      "author": {
+        "id": 1116027
+      },
+      "writtenOn": "2017-11-06T09:34:00Z",
+      "side": 1,
+      "message": "Since the client is passed a scoped_refptr\u003c\u003e to the DownloadTask, it may have taken ownership. I think this is a design flaw. We should either prevent the client from taking ownership (by disallowing scoped_refptr use) or remove this method (or at least rename it OnDownloadCancelled, or something else).\n\nWhat I\u0027m trying to say is that we should not allow to share the ownership of the object and at the same time try to enforce single ownership by the DownloadController. IMO, the better way is to pass a raw pointer to DownloadTask, and say that DownloadTask is owned by DownloadController (maybe even changing ownership to use unique_ptr if possible).",
+      "range": {
+        "startLine": 46,
+        "startChar": 15,
+        "endLine": 46,
+        "endChar": 34
+      },
+      "revId": "81a40f8cb67927f746a655cab9e5ca0166afcc2e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "19b28d95_264ed847",
+        "filename": "ios/web/public/download/download_task.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 9,
+      "author": {
+        "id": 1116027
+      },
+      "writtenOn": "2017-11-06T09:34:00Z",
+      "side": 1,
+      "message": "nit: blank lines between #include from different sources (Objective-C, C standard, C++ standard).",
+      "revId": "81a40f8cb67927f746a655cab9e5ca0166afcc2e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "192589e7_a4e35d4b",
+        "filename": "ios/web/public/download/download_task.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 78,
+      "author": {
+        "id": 1116027
+      },
+      "writtenOn": "2017-11-06T09:34:00Z",
+      "side": 1,
+      "message": "DISALLOW_COPY_AND_ASSIGN(DownloadTask);",
+      "revId": "81a40f8cb67927f746a655cab9e5ca0166afcc2e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
