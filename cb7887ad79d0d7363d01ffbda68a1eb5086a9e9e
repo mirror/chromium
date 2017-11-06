@@ -1,0 +1,96 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "b3b73e82_d75099ea",
+        "filename": "components/optimization_guide/optimization_guide_service.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 50,
+      "author": {
+        "id": 1147716
+      },
+      "writtenOn": "2017-11-06T21:38:48Z",
+      "side": 1,
+      "message": "With notification model, we might consider renaming as just ReadHints or ProcessHints or ReadHintsAndNotify ???  We can defer potential renaming to later though.",
+      "range": {
+        "startLine": 50,
+        "startChar": 31,
+        "endLine": 50,
+        "endChar": 48
+      },
+      "revId": "cb7887ad79d0d7363d01ffbda68a1eb5086a9e9e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5ef2e31b_67ccb8c3",
+        "filename": "components/optimization_guide/optimization_guide_service.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 62,
+      "author": {
+        "id": 1147716
+      },
+      "writtenOn": "2017-11-06T21:38:48Z",
+      "side": 1,
+      "message": "Another renaming idea to ponder: unindexed_hints* \u003d\u003e hints_proto*",
+      "range": {
+        "startLine": 62,
+        "startChar": 7,
+        "endLine": 62,
+        "endChar": 27
+      },
+      "revId": "cb7887ad79d0d7363d01ffbda68a1eb5086a9e9e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b72ebc01_33c37fbb",
+        "filename": "components/optimization_guide/optimization_guide_service_unittest.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 117,
+      "author": {
+        "id": 1147716
+      },
+      "writtenOn": "2017-11-06T21:38:48Z",
+      "side": 1,
+      "message": "be nice to identify the target of the test (in case the service ends up doing more than only one thing) - eg, ReadHintsInvalidVersionIgnored ?",
+      "range": {
+        "startLine": 117,
+        "startChar": 37,
+        "endLine": 117,
+        "endChar": 58
+      },
+      "revId": "cb7887ad79d0d7363d01ffbda68a1eb5086a9e9e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "77cc2313_29a3f524",
+        "filename": "components/optimization_guide/optimization_guide_service_unittest.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 186,
+      "author": {
+        "id": 1147716
+      },
+      "writtenOn": "2017-11-06T21:38:48Z",
+      "side": 1,
+      "message": "ReadHintsIssuesNotification?",
+      "range": {
+        "startLine": 186,
+        "startChar": 37,
+        "endLine": 186,
+        "endChar": 46
+      },
+      "revId": "cb7887ad79d0d7363d01ffbda68a1eb5086a9e9e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
