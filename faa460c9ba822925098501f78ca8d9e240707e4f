@@ -1,0 +1,67 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "d25e31cb_b32059c8",
+        "filename": "services/device/generic_sensor/fake_platform_sensor_and_provider.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 46,
+      "author": {
+        "id": 1149144
+      },
+      "writtenOn": "2017-11-06T22:14:14Z",
+      "side": 1,
+      "message": "Add an empty line after the destructor.",
+      "revId": "faa460c9ba822925098501f78ca8d9e240707e4f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "cf5cc8aa_f9d727aa",
+        "filename": "services/device/generic_sensor/fake_platform_sensor_and_provider.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 47,
+      "author": {
+        "id": 1149144
+      },
+      "writtenOn": "2017-11-06T22:14:14Z",
+      "side": 1,
+      "message": "style nit:\n// PlatformSensor::Client:",
+      "range": {
+        "startLine": 47,
+        "startChar": 2,
+        "endLine": 47,
+        "endChar": 38
+      },
+      "revId": "faa460c9ba822925098501f78ca8d9e240707e4f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "367d8bc7_c0e34f8d",
+        "filename": "services/device/generic_sensor/platform_sensor_fusion.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 67,
+      "author": {
+        "id": 1149144
+      },
+      "writtenOn": "2017-11-06T22:14:14Z",
+      "side": 1,
+      "message": "Is it possible to add some code to guarantee this statement holds? If it is complicated, can add a TODO here and do it in a separate CL.",
+      "range": {
+        "startLine": 67,
+        "startChar": 2,
+        "endLine": 67,
+        "endChar": 72
+      },
+      "revId": "faa460c9ba822925098501f78ca8d9e240707e4f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
