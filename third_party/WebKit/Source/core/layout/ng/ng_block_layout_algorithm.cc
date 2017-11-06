@@ -810,7 +810,7 @@ bool NGBlockLayoutAlgorithm::HandleInflow(
   if (layout_result->Status() == NGLayoutResult::kSuccess) {
     DCHECK(layout_result->ExclusionSpace());
     exclusion_space_ =
-        WTF::MakeUnique<NGExclusionSpace>(*layout_result->ExclusionSpace());
+        std::make_unique<NGExclusionSpace>(*layout_result->ExclusionSpace());
   }
 
   // A line-box may have a list of floats which we add as children.
@@ -884,7 +884,7 @@ bool NGBlockLayoutAlgorithm::HandleInflow(
 
     DCHECK(layout_result->ExclusionSpace());
     exclusion_space_ =
-        WTF::MakeUnique<NGExclusionSpace>(*layout_result->ExclusionSpace());
+        std::make_unique<NGExclusionSpace>(*layout_result->ExclusionSpace());
   }
 
   // We must have an actual fragment at this stage.

@@ -2,14 +2,14 @@
 // Use of this source code is governed by a BSD-style license that can be
 // found in the LICENSE file.
 
-#ifndef PtrUtil_h
-#define PtrUtil_h
-
-#include "base/memory/ptr_util.h"
-#include "platform/wtf/TypeTraits.h"
+#ifndef THIRD_PARTY_WEBKIT_SOURCE_PLATFORM_WTF_PTRUTIL_H_
+#define THIRD_PARTY_WEBKIT_SOURCE_PLATFORM_WTF_PTRUTIL_H_
 
 #include <memory>
 #include <type_traits>
+
+#include "base/memory/ptr_util.h"
+#include "platform/wtf/TypeTraits.h"
 
 namespace WTF {
 
@@ -29,19 +29,8 @@ std::unique_ptr<T[]> WrapArrayUnique(T* ptr) {
   return std::unique_ptr<T[]>(ptr);
 }
 
-// TODO(crbug.com/755727): Inline all uses (even though this will lose the
-// static_assert).
-template <typename T, typename... Args>
-auto MakeUnique(Args&&... args)
-    -> decltype(std::make_unique<T>(std::forward<Args>(args)...)) {
-  static_assert(
-      !WTF::IsGarbageCollectedType<typename std::remove_extent<T>::type>::value,
-      "Garbage collected types should not be stored in std::unique_ptr!");
-  return std::make_unique<T>(std::forward<Args>(args)...);
-}
-
 }  // namespace WTF
 
 using WTF::WrapArrayUnique;
 
-#endif  // PtrUtil_h
+#endif  // THIRD_PARTY_WEBKIT_SOURCE_PLATFORM_WTF_PTRUTIL_H_

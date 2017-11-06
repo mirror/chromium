@@ -77,19 +77,19 @@ void HistoryItem::SetReferrer(const Referrer& referrer) {
 
 void HistoryItem::SetVisualViewportScrollOffset(const ScrollOffset& offset) {
   if (!view_state_)
-    view_state_ = WTF::MakeUnique<ViewState>();
+    view_state_ = std::make_unique<ViewState>();
   view_state_->visual_viewport_scroll_offset_ = offset;
 }
 
 void HistoryItem::SetScrollOffset(const ScrollOffset& offset) {
   if (!view_state_)
-    view_state_ = WTF::MakeUnique<ViewState>();
+    view_state_ = std::make_unique<ViewState>();
   view_state_->scroll_offset_ = offset;
 }
 
 void HistoryItem::SetPageScaleFactor(float scale_factor) {
   if (!view_state_)
-    view_state_ = WTF::MakeUnique<ViewState>();
+    view_state_ = std::make_unique<ViewState>();
   view_state_->page_scale_factor_ = scale_factor;
 }
 
