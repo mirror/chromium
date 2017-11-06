@@ -1,0 +1,96 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "d581ce38_b1897014",
+        "filename": "chrome/browser/signin/dice_browsertest.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 534,
+      "author": {
+        "id": 1115972
+      },
+      "writtenOn": "2017-11-06T17:09:10Z",
+      "side": 1,
+      "message": "s/DiceMigrationBrowserTest/DicePrepareMigrationBrowserTest",
+      "range": {
+        "startLine": 534,
+        "startChar": 6,
+        "endLine": 534,
+        "endChar": 30
+      },
+      "revId": "6f5679106365cc4e4f0047c0bd665b37b0984645",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3773efd1_388635df",
+        "filename": "components/signin/core/browser/profile_management_switches.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 105,
+      "author": {
+        "id": 1115972
+      },
+      "writtenOn": "2017-11-06T17:09:10Z",
+      "side": 1,
+      "message": "Nit: I think we should change this to kDiceForced or kDiceFull in a different  CL.",
+      "range": {
+        "startLine": 105,
+        "startChar": 46,
+        "endLine": 105,
+        "endChar": 51
+      },
+      "revId": "6f5679106365cc4e4f0047c0bd665b37b0984645",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "cbc97ce6_60029728",
+        "filename": "components/signin/core/browser/profile_management_switches.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 109,
+      "author": {
+        "id": 1115972
+      },
+      "writtenOn": "2017-11-06T17:09:10Z",
+      "side": 1,
+      "message": "I think having a list of ifs like this is risky - there is a possibility we will forget to add a new one to a method. Should we change it to something like:\nreturn method \u003e\u003d AccountConsistencyMethod::kDiceMigration;",
+      "range": {
+        "startLine": 109,
+        "startChar": 36,
+        "endLine": 109,
+        "endChar": 63
+      },
+      "revId": "6f5679106365cc4e4f0047c0bd665b37b0984645",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "86b5d5a6_6bd58b37",
+        "filename": "components/signin/core/browser/scoped_account_consistency.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 42,
+      "author": {
+        "id": 1115972
+      },
+      "writtenOn": "2017-11-06T17:09:10Z",
+      "side": 1,
+      "message": "Discussion: I think at some point we should probably remove \"Mirror\" from this list.",
+      "range": {
+        "startLine": 42,
+        "startChar": 35,
+        "endLine": 42,
+        "endChar": 42
+      },
+      "revId": "6f5679106365cc4e4f0047c0bd665b37b0984645",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
