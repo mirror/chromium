@@ -323,8 +323,8 @@ TEST_F(CoreAudioUtilWinTest, GetPreferredAudioParameters) {
     AudioParameters params;
     client = CoreAudioUtil::CreateDefaultClient(data[i], eConsole);
     EXPECT_TRUE(client.Get());
-    EXPECT_TRUE(SUCCEEDED(
-        CoreAudioUtil::GetPreferredAudioParameters(client.Get(), &params)));
+    EXPECT_TRUE(SUCCEEDED(CoreAudioUtil::GetPreferredAudioParameters(
+        client.Get(), data[i] == eRender, &params)));
     EXPECT_TRUE(params.IsValid());
   }
 }

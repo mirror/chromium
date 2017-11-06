@@ -127,8 +127,10 @@ class MEDIA_EXPORT CoreAudioUtil {
 
   // Create an IAudioClient instance for a specific device _or_ the default
   // device if |device_id| is empty.
-  static Microsoft::WRL::ComPtr<IAudioClient>
-  CreateClient(const std::string& device_id, EDataFlow data_flow, ERole role);
+  static Microsoft::WRL::ComPtr<IAudioClient> CreateClientByDeviceID(
+      const std::string& device_id,
+      EDataFlow data_flow,
+      ERole role);
 
   // Create an IAudioClient interface for an existing IMMDevice given by
   // |audio_device|. Flow direction and role is define by the |audio_device|.
@@ -175,6 +177,7 @@ class MEDIA_EXPORT CoreAudioUtil {
   // The acquired values should only be utilized for shared mode streamed since
   // there are no preferred settings for an exclusive mode stream.
   static HRESULT GetPreferredAudioParameters(IAudioClient* client,
+                                             bool is_output_device,
                                              AudioParameters* params);
   static HRESULT GetPreferredAudioParameters(const std::string& device_id,
                                              bool is_output_device,
