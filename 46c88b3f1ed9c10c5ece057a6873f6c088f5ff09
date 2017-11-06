@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "f05fb100_e7ff125e",
+        "filename": "chromeos/dbus/sms_client.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 70,
+      "author": {
+        "id": 1000212
+      },
+      "writtenOn": "2017-11-06T23:20:02Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "0ccbedb7_9e759b56",
+      "range": {
+        "startLine": 70,
+        "startChar": 27,
+        "endLine": 70,
+        "endChar": 31
+      },
+      "revId": "46c88b3f1ed9c10c5ece057a6873f6c088f5ff09",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "39e44b1d_dba19bd4",
         "filename": "chromeos/dbus/sms_client.cc",
         "patchSetId": 2
@@ -39,6 +63,24 @@
       "revId": "46c88b3f1ed9c10c5ece057a6873f6c088f5ff09",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8f58b1be_093832d3",
+        "filename": "chromeos/dbus/sms_client.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 77,
+      "author": {
+        "id": 1000212
+      },
+      "writtenOn": "2017-11-06T23:20:02Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "39e44b1d_dba19bd4",
+      "revId": "46c88b3f1ed9c10c5ece057a6873f6c088f5ff09",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
