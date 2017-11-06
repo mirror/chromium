@@ -64,9 +64,11 @@ class PaymentInstrument {
   // specifying |method| as a supported method of payment, false otherwise.
   virtual bool IsValidForModifier(
       const std::vector<std::string>& method,
+      bool supported_networks_specified,
       const std::vector<std::string>& supported_networks,
-      const std::set<autofill::CreditCard::CardType>& supported_types,
-      bool supported_types_specified) const = 0;
+      bool supported_types_specified,
+      const std::set<autofill::CreditCard::CardType>& supported_types)
+      const = 0;
 
   int icon_resource_id() const { return icon_resource_id_; }
   Type type() { return type_; }
