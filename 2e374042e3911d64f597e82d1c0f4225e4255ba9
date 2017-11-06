@@ -1,0 +1,67 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "df693319_a3f31665",
+        "filename": "third_party/WebKit/Source/platform/graphics/VideoFrameSubmitter.cpp",
+        "patchSetId": 24
+      },
+      "lineNbr": 27,
+      "author": {
+        "id": 1130490
+      },
+      "writtenOn": "2017-11-06T17:28:43Z",
+      "side": 1,
+      "message": "if the media factory is constructing this on the main thread, then initializing |binding_| during construction is going to get the wrong task runner, isn\u0027t it?\n\nfrom what i can tell, mojo bindings get the task runner here:\n\nhttps://cs.chromium.org/chromium/src/mojo/public/cpp/bindings/lib/binding_state.cc?rcl\u003d1500d1ca2245d1cede18195c33036ed963d7f9c0\u0026l\u003d93\n\nif |runner| is null, then it uses SequencedTaskRunnerHandle::Get().\n\ni don\u0027t see how that works with the thread checks when OnBeginFrame calls SubmitFrame, for example.  at some point earlier, we\u0027ve gotten (e.g.) StartRendering on the media thread, which should bind the checker there.\n\nseems like there has to be a mix of main and media thread calls, and something should be tripping a thread check.  i\u0027d very much like to understand this better.",
+      "revId": "2e374042e3911d64f597e82d1c0f4225e4255ba9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d383a573_58e20716",
+        "filename": "third_party/WebKit/Source/platform/graphics/VideoFrameSubmitter.h",
+        "patchSetId": 24
+      },
+      "lineNbr": 22,
+      "author": {
+        "id": 1130490
+      },
+      "writtenOn": "2017-11-06T17:28:43Z",
+      "side": 1,
+      "message": "not sure that this conveys what you\u0027re trying to say.  just about every class is created on some sequenced task runner.  :)\n\nis the intended meaning \"All calls into instances of this class, except construction, should occur from the same SingleThreadTaskRunner.\" ?\n\nsince this class has thread affinity, \"sequence\" isn\u0027t strong enough.\n\nmaybe move the comment @82 up here, in that case, to explain why it has thread affinity.",
+      "range": {
+        "startLine": 21,
+        "startChar": 40,
+        "endLine": 22,
+        "endChar": 22
+      },
+      "revId": "2e374042e3911d64f597e82d1c0f4225e4255ba9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "20686b7d_ca7e3acb",
+        "filename": "third_party/WebKit/Source/platform/graphics/VideoFrameSubmitter.h",
+        "patchSetId": 24
+      },
+      "lineNbr": 57,
+      "author": {
+        "id": 1130490
+      },
+      "writtenOn": "2017-11-06T17:28:43Z",
+      "side": 1,
+      "message": "not sure that i understand this one.  if the class is has thread affinity, then you can probably just delete the \"Run...sequence\" part of the comment.",
+      "range": {
+        "startLine": 57,
+        "startChar": 18,
+        "endLine": 57,
+        "endChar": 31
+      },
+      "revId": "2e374042e3911d64f597e82d1c0f4225e4255ba9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
