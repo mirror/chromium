@@ -2,6 +2,23 @@
   "comments": [
     {
       "key": {
+        "uuid": "5e175ab0_5398fe6a",
+        "filename": "chrome/browser/flag_descriptions.h",
+        "patchSetId": 9
+      },
+      "lineNbr": 300,
+      "author": {
+        "id": 1002691
+      },
+      "writtenOn": "2017-11-06T18:32:28Z",
+      "side": 1,
+      "message": "We should rename minimal since it actually profiles more stuff than anything else but \"all\".",
+      "revId": "2487da9589c9ee9d7452b778f38f2cc299fb228d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "4902f17c_3f69ae62",
         "filename": "chrome/browser/profiling_host/memlog_browsertest.cc",
         "patchSetId": 9
