@@ -33,10 +33,10 @@ class MediaEngagementContentsObserverTest
     SetContents(content::WebContentsTester::CreateTestWebContents(
         browser_context(), nullptr));
 
-    MediaEngagementService* service = MediaEngagementService::Get(profile());
-    ASSERT_TRUE(service);
+    service_ = MediaEngagementService::Get(profile());
+    ASSERT_TRUE(service_);
     contents_observer_ =
-        new MediaEngagementContentsObserver(web_contents(), service);
+        new MediaEngagementContentsObserver(web_contents(), service_);
 
     playback_timer_ = new base::MockTimer(true, false);
     contents_observer_->SetTimerForTest(base::WrapUnique(playback_timer_));
@@ -122,16 +122,17 @@ class MediaEngagementContentsObserverTest
   void ExpectScores(GURL url,
                     double expected_score,
                     int expected_visits,
-                    int expected_media_playbacks) {
-    EXPECT_EQ(contents_observer_->service_->GetEngagementScore(url),
-              expected_score);
-    EXPECT_EQ(contents_observer_->service_->GetScoreMapForTesting()[url],
-              expected_score);
+                    int expected_media_playbacks,
+                    int expected_audible_playbacks,
+                    int expected_significant_playbacks) {
+    EXPECT_EQ(service_->GetEngagementScore(url), expected_score);
+    EXPECT_EQ(service_->GetScoreMapForTesting()[url], expected_score);
 
-    MediaEngagementScore score =
-        contents_observer_->service_->CreateEngagementScore(url);
+    MediaEngagementScore score = service_->CreateEngagementScore(url);
     EXPECT_EQ(expected_visits, score.visits());
     EXPECT_EQ(expected_media_playbacks, score.media_playbacks());
+    EXPECT_EQ(expected_audible_playbacks, score.audible_playbacks());
+    EXPECT_EQ(expected_significant_playbacks, score.significant_playbacks());
   }
 
   void SetScores(GURL url, int visits, int media_playbacks) {
@@ -245,6 +246,8 @@ class MediaEngagementContentsObserverTest
  private:
   // contents_observer_ auto-destroys when WebContents is destroyed.
   MediaEngagementContentsObserver* contents_observer_;
+
+  MediaEngagementService* service_;
 
   base::test::ScopedFeatureList scoped_feature_list_;
 
@@ -501,7 +504,7 @@ TEST_F(MediaEngagementContentsObserverTest,
 
   SimulateSignificantAudioPlayer(0);
   EXPECT_TRUE(IsTimerRunning());
-};
+}
 
 TEST_F(MediaEngagementContentsObserverTest, TimerDoesNotRunIfEntryRecorded) {
   SimulateSignificantPlaybackRecorded();
@@ -523,16 +526,16 @@ TEST_F(MediaEngagementContentsObserverTest,
 TEST_F(MediaEngagementContentsObserverTest, InteractionsRecorded) {
   GURL url("https://www.example.com");
   GURL url2("https://www.example.org");
-  ExpectScores(url, 0.0, 0, 0);
+  ExpectScores(url, 0.0, 0, 0, 0, 0);
 
   Navigate(url);
   Navigate(url2);
-  ExpectScores(url, 0.0, 1, 0);
+  ExpectScores(url, 0.0, 1, 0, 0, 0);
 
   Navigate(url);
   SimulateAudible();
   SimulateSignificantPlaybackTime();
-  ExpectScores(url, 0.0, 2, 1);
+  ExpectScores(url, 0.0, 2, 1, 0, 0);
 }
 
 TEST_F(MediaEngagementContentsObserverTest,
@@ -667,7 +670,7 @@ TEST_F(MediaEngagementContentsObserverTest, RecordUkmMetricsOnDestroy) {
   EXPECT_FALSE(WasSignificantPlaybackRecorded());
   SimulateSignificantVideoPlayer(0);
   SimulateSignificantPlaybackTime();
-  ExpectScores(url, 6.0 / 7.0, 7, 6);
+  ExpectScores(url, 6.0 / 7.0, 7, 6, 0, 0);
   EXPECT_TRUE(WasSignificantPlaybackRecorded());
 
   SimulateDestroy();
@@ -681,7 +684,7 @@ TEST_F(MediaEngagementContentsObserverTest,
   Navigate(url);
 
   EXPECT_FALSE(WasSignificantPlaybackRecorded());
-  ExpectScores(url, 5.0 / 6.0, 6, 5);
+  ExpectScores(url, 5.0 / 6.0, 6, 5, 0, 0);
 
   SimulateDestroy();
   ExpectUkmEntry(url, 5, 7, 71, 0, true);
@@ -698,7 +701,7 @@ TEST_F(MediaEngagementContentsObserverTest, RecordUkmMetricsOnNavigate) {
   EXPECT_TRUE(WasSignificantPlaybackRecorded());
 
   Navigate(GURL("https://www.example.org"));
-  ExpectScores(url, 6.0 / 7.0, 7, 6);
+  ExpectScores(url, 6.0 / 7.0, 7, 6, 1, 0);
   ExpectUkmEntry(url, 6, 7, 86, 1, true);
 }
 
@@ -711,7 +714,7 @@ TEST_F(MediaEngagementContentsObserverTest,
   EXPECT_FALSE(WasSignificantPlaybackRecorded());
 
   Navigate(GURL("https://www.example.org"));
-  ExpectScores(url, 2 / 10.0, 10, 2);
+  ExpectScores(url, 2 / 10.0, 10, 2, 0, 0);
   ExpectUkmEntry(url, 2, 10, 20, 0, false);
 }
 
@@ -725,4 +728,69 @@ TEST_F(MediaEngagementContentsObserverTest, DoNotRecordMetricsOnInternalUrl) {
 
   SimulateDestroy();
   ExpectNoUkmEntry();
+}
+
+TEST_F(MediaEngagementContentsObserverTest, RecordAudiblePlayers_OnDestroy) {
+  GURL url("https://www.google.com");
+  Navigate(url);
+
+  // Start three audible players and three in-audible players and also create
+  // one twice.
+  SimulateSignificantAudioPlayer(0);
+  SimulateSignificantVideoPlayer(1);
+  SimulateSignificantVideoPlayer(2);
+  SimulateSignificantVideoPlayer(2);
+
+  // This one is video only.
+  SimulatePlaybackStarted(3, false, true);
+
+  // This one is muted.
+  SimulatePlaybackStarted(
+      content::WebContentsObserver::MediaPlayerInfo(true, true), 4, true);
+
+  // This one is stopped.
+  SimulatePlaybackStopped(5);
+
+  // Test that the scores were recorded, but not the audible scores.
+  SimulateSignificantPlaybackTime();
+  ExpectScores(url, 0, 1, 1, 0, 0);
+
+  // Test that when we destroy the audible players the scores are recorded.
+  SimulateDestroy();
+  ExpectScores(url, 0, 1, 1, 3, 0);
+}
+
+TEST_F(MediaEngagementContentsObserverTest, RecordAudiblePlayers_OnNavigate) {
+  GURL url("https://www.google.com");
+  Navigate(url);
+
+  // Start three audible players and three in-audible players and also create
+  // one twice.
+  SimulateSignificantAudioPlayer(0);
+  SimulateSignificantVideoPlayer(1);
+  SimulateSignificantVideoPlayer(2);
+  SimulateSignificantVideoPlayer(2);
+
+  // This one is video only.
+  SimulatePlaybackStarted(3, false, true);
+
+  SimulatePlaybackStarted(
+      content::WebContentsObserver::MediaPlayerInfo(true, true), 4, true);
+
+  // This one is stopped.
+  SimulatePlaybackStopped(5);
+
+  // Test that the scores were recorded, but not the audible scores.
+  SimulateSignificantPlaybackTime();
+  ExpectScores(url, 0, 1, 1, 0, 0);
+
+  // Navigate to a sub page and continue watching.
+  Navigate(GURL("https://www.google.com/test"));
+  SimulateSignificantAudioPlayer(6);
+  ExpectScores(url, 0, 1, 1, 0, 0);
+
+  // Test that when we navigate to a new origin the audible players the scores
+  // are recorded.
+  Navigate(GURL("https://www.google.co.uk"));
+  ExpectScores(url, 0, 1, 1, 4, 0);
 }
