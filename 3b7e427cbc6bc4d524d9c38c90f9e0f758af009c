@@ -119,6 +119,30 @@
     },
     {
       "key": {
+        "uuid": "f02b83fd_f4b56ed8",
+        "filename": "components/arc/test/fake_power_instance.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 16,
+      "author": {
+        "id": 1115919
+      },
+      "writtenOn": "2017-11-06T14:52:00Z",
+      "side": 1,
+      "message": "IIUC, std::move() leaves the object state \"valid but unknown\", so there is no guarantee that the field is reset.\nHere, we expecte |suspend_callback_| to be reset, rather than unknown, so swap() or ResetAndReturn looks better, I think?",
+      "parentUuid": "3c559c34_3d1729d3",
+      "range": {
+        "startLine": 16,
+        "startChar": 9,
+        "endLine": 16,
+        "endChar": 19
+      },
+      "revId": "3b7e427cbc6bc4d524d9c38c90f9e0f758af009c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "85a3a758_2688056d",
         "filename": "components/arc/test/fake_power_instance.h",
         "patchSetId": 4
