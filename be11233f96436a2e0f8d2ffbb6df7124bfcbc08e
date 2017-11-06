@@ -1,0 +1,164 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "71d8f005_b6254032",
+        "filename": "ios/chrome/browser/ui/fullscreen/fullscreen_controller.mm",
+        "patchSetId": 7
+      },
+      "lineNbr": 17,
+      "author": {
+        "id": 1165759
+      },
+      "writtenOn": "2017-11-06T21:04:10Z",
+      "side": 1,
+      "message": "I think importing the constants file should be enough :)",
+      "range": {
+        "startLine": 17,
+        "startChar": 42,
+        "endLine": 17,
+        "endChar": 64
+      },
+      "revId": "be11233f96436a2e0f8d2ffbb6df7124bfcbc08e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "39f2ef58_ccb1ef1d",
+        "filename": "ios/chrome/browser/ui/overscroll_actions/BUILD.gn",
+        "patchSetId": 7
+      },
+      "lineNbr": 30,
+      "author": {
+        "id": 1165759
+      },
+      "writtenOn": "2017-11-06T21:04:10Z",
+      "side": 1,
+      "message": "Once you move the constants file to tools_menu/public, it will be clear that there\u0027s no direct dependency on the tools_menu here. Only on the actual public interface.",
+      "revId": "be11233f96436a2e0f8d2ffbb6df7124bfcbc08e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "bc46292b_b87e2dbc",
+        "filename": "ios/chrome/browser/ui/overscroll_actions/overscroll_actions_controller.mm",
+        "patchSetId": 7
+      },
+      "lineNbr": 19,
+      "author": {
+        "id": 1165759
+      },
+      "writtenOn": "2017-11-06T21:04:10Z",
+      "side": 1,
+      "message": "Same thing, constants file should be enough.",
+      "revId": "be11233f96436a2e0f8d2ffbb6df7124bfcbc08e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f389ff08_d38f7491",
+        "filename": "ios/chrome/browser/ui/popup_menu/popup_menu_controller.mm",
+        "patchSetId": 7
+      },
+      "lineNbr": 152,
+      "author": {
+        "id": 1165759
+      },
+      "writtenOn": "2017-11-06T21:04:10Z",
+      "side": 1,
+      "message": "Should we also use ProceduralBlock here?",
+      "revId": "be11233f96436a2e0f8d2ffbb6df7124bfcbc08e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7480a561_c7cbefa4",
+        "filename": "ios/chrome/browser/ui/toolbar/toolbar_controller.h",
+        "patchSetId": 7
+      },
+      "lineNbr": 43,
+      "author": {
+        "id": 1165759
+      },
+      "writtenOn": "2017-11-06T21:04:10Z",
+      "side": 1,
+      "message": "I don\u0027t think we shouldn\u0027t expose this button. Whatever is using it should go through a delegate call. The next toolbar might not have a toolsMenuButton, so this will make it harder to replace the old toolbar and might create some nasty dependencies.",
+      "range": {
+        "startLine": 43,
+        "startChar": 10,
+        "endLine": 43,
+        "endChar": 19
+      },
+      "revId": "be11233f96436a2e0f8d2ffbb6df7124bfcbc08e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "bca63c3c_b8316fc2",
+        "filename": "ios/chrome/browser/ui/tools_menu/BUILD.gn",
+        "patchSetId": 7
+      },
+      "lineNbr": 17,
+      "author": {
+        "id": 1165759
+      },
+      "writtenOn": "2017-11-06T21:04:10Z",
+      "side": 1,
+      "message": "Think you missed the protocol file, but as the comment in the protocol header, we should move that into a separate folder thus it will be in a different BUILD.gn file and source_set",
+      "range": {
+        "startLine": 17,
+        "startChar": 42,
+        "endLine": 17,
+        "endChar": 0
+      },
+      "revId": "be11233f96436a2e0f8d2ffbb6df7124bfcbc08e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "25c2eaa2_eb884388",
+        "filename": "ios/chrome/browser/ui/tools_menu/tools_menu_configuration_visibility_protocol.h",
+        "patchSetId": 7
+      },
+      "lineNbr": 5,
+      "author": {
+        "id": 1165759
+      },
+      "writtenOn": "2017-11-06T21:04:10Z",
+      "side": 1,
+      "message": "Just to keep it similar across all boxes, could you please move this file inside a /public/ or /requirements/ folder. We can move the constant files as well, and they will have a separate BUILD.gn target, which will make it easier to import across the App without running into dependency cycles.",
+      "range": {
+        "startLine": 5,
+        "startChar": 8,
+        "endLine": 5,
+        "endChar": 88
+      },
+      "revId": "be11233f96436a2e0f8d2ffbb6df7124bfcbc08e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "897829cc_fc43c6fd",
+        "filename": "ios/chrome/browser/ui/tools_menu/tools_menu_coordinator_constants.h",
+        "patchSetId": 7
+      },
+      "lineNbr": 34,
+      "author": {
+        "id": 1165759
+      },
+      "writtenOn": "2017-11-06T21:04:10Z",
+      "side": 1,
+      "message": "Could you please move this out of the constants file into a separate file (Following the same folder, BUILD.gn recommendation of the other protocol file).",
+      "revId": "be11233f96436a2e0f8d2ffbb6df7124bfcbc08e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
