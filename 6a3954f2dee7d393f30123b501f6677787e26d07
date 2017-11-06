@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "ef8b24e3_e91e589a",
+        "filename": "cc/animation/scroll_timeline.h",
+        "patchSetId": 20
+      },
+      "lineNbr": 43,
+      "author": {
+        "id": 1212214
+      },
+      "writtenOn": "2017-11-06T15:30:54Z",
+      "side": 1,
+      "message": "So if we assume that blink will always properly update cc when the scroller is composited/non-composited (which is fair), then the situation where the scroller isn\u0027t in the scroll tree should actually return an unresolved time value I think:\n\nhttps://wicg.github.io/scroll-animations/#current-time-algorithm\n\n\"If scrollSource does not currently have a CSS layout box, or if its layout box is not a scroll container, return an unresolved time value.\"\n\nI\u0027ve switched the code to do just this, lmk if you think that\u0027s ok.",
+      "parentUuid": "31dbf6b5_e079237d",
+      "revId": "6a3954f2dee7d393f30123b501f6677787e26d07",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "aadc0372_faab796d",
         "filename": "third_party/WebKit/LayoutTests/virtual/threaded/fast/animationworklet/animation-worklet-scroll-timeline.html",
         "patchSetId": 20
@@ -33,6 +51,24 @@
       "revId": "6a3954f2dee7d393f30123b501f6677787e26d07",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "183f8818_27c287a9",
+        "filename": "third_party/WebKit/LayoutTests/virtual/threaded/fast/animationworklet/animation-worklet-scroll-timeline.html",
+        "patchSetId": 20
+      },
+      "lineNbr": 26,
+      "author": {
+        "id": 1212214
+      },
+      "writtenOn": "2017-11-06T15:30:54Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "aadc0372_faab796d",
+      "revId": "6a3954f2dee7d393f30123b501f6677787e26d07",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -53,6 +89,24 @@
     },
     {
       "key": {
+        "uuid": "22e23420_904633f8",
+        "filename": "third_party/WebKit/Source/core/animation/WorkletAnimationBase.h",
+        "patchSetId": 20
+      },
+      "lineNbr": 12,
+      "author": {
+        "id": 1212214
+      },
+      "writtenOn": "2017-11-06T15:30:54Z",
+      "side": 1,
+      "message": "Good spot; fixed.",
+      "parentUuid": "e87c16ba_f72ccc99",
+      "revId": "6a3954f2dee7d393f30123b501f6677787e26d07",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "fe132672_0e2aa053",
         "filename": "third_party/WebKit/Source/core/animation/WorkletAnimationController.cpp",
         "patchSetId": 20
@@ -67,6 +121,24 @@
       "revId": "6a3954f2dee7d393f30123b501f6677787e26d07",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e6283370_435c3525",
+        "filename": "third_party/WebKit/Source/core/animation/WorkletAnimationController.cpp",
+        "patchSetId": 20
+      },
+      "lineNbr": 53,
+      "author": {
+        "id": 1212214
+      },
+      "writtenOn": "2017-11-06T15:30:54Z",
+      "side": 1,
+      "message": "The message is for the proposed MVP (where we do compositor-only), so that developers get a notice when they set up an AnimationWorklet we cannot support.",
+      "parentUuid": "fe132672_0e2aa053",
+      "revId": "6a3954f2dee7d393f30123b501f6677787e26d07",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -90,6 +162,30 @@
       "revId": "6a3954f2dee7d393f30123b501f6677787e26d07",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2cb6fa64_7343d9ae",
+        "filename": "third_party/WebKit/Source/modules/animationworklet/WorkletAnimation.cpp",
+        "patchSetId": 20
+      },
+      "lineNbr": 53,
+      "author": {
+        "id": 1212214
+      },
+      "writtenOn": "2017-11-06T15:30:54Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "50a00de2_b4d6986f",
+      "range": {
+        "startLine": 53,
+        "startChar": 9,
+        "endLine": 53,
+        "endChar": 73
+      },
+      "revId": "6a3954f2dee7d393f30123b501f6677787e26d07",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
