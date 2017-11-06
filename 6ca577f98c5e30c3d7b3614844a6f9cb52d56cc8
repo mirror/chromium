@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "eb349797_2af3661b",
+        "filename": "ash/shelf/shelf_button.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 379,
+      "author": {
+        "id": 1000101
+      },
+      "writtenOn": "2017-11-06T23:56:08Z",
+      "side": 1,
+      "message": "Mention when it happens and make the warning more explicit.\ne.g.\n\n  // PointerReleasedOnButton deletes the ShelfButton when user drags\n  // a pinned running app from shelf.\n  shelf_view_-\u003ePointerReleasedOnButton(this, ShelfView::MOUSE, false);\n\n  // WARNING: we may have been deleted.",
+      "range": {
+        "startLine": 378,
+        "startChar": 0,
+        "endLine": 379,
+        "endChar": 58
+      },
+      "revId": "6ca577f98c5e30c3d7b3614844a6f9cb52d56cc8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
