@@ -48,6 +48,7 @@ import org.chromium.chrome.test.util.ApplicationTestUtils;
 import org.chromium.chrome.test.util.ChromeTabUtils;
 import org.chromium.chrome.test.util.MenuUtils;
 import org.chromium.chrome.test.util.NewTabPageTestUtils;
+import org.chromium.chrome.test.util.browser.Features;
 import org.chromium.content.browser.test.util.Criteria;
 import org.chromium.content.browser.test.util.CriteriaHelper;
 import org.chromium.content.browser.test.util.JavaScriptUtils;
@@ -173,6 +174,8 @@ public class ChromeActivityTestRule<T extends ChromeActivity> extends ActivityTe
      * after the JUnit4 migration
      */
     public void startActivityCompletely(Intent intent) {
+        Features.ensureCommandLineIsUpToDate();
+
         final CallbackHelper activityCallback = new CallbackHelper();
         final AtomicReference<T> activityRef = new AtomicReference<>();
         ActivityStateListener stateListener = new ActivityStateListener() {
