@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "f63656f7_15ec7c5d",
+        "filename": "chrome/browser/printing/pdf_to_emf_converter_browsertest.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 178,
+      "author": {
+        "id": 1001934
+      },
+      "writtenOn": "2017-11-06T19:28:25Z",
+      "side": 1,
+      "message": "It would be good to ASSERT_TRUE(foo_header) before dereferencing |foo_header|. Since GetEMFHeader() can return nullptr.",
+      "revId": "a6d313f6ce0b71545e9e6d0672058f153d378080",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
