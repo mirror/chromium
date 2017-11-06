@@ -12,7 +12,6 @@
 #include "base/version.h"
 #include "components/component_updater/configurator_impl.h"
 #include "components/update_client/activity_data_service.h"
-#include "components/update_client/out_of_process_patcher.h"
 #include "components/update_client/update_query_params.h"
 #include "ios/chrome/browser/application_context.h"
 #include "ios/chrome/browser/google/google_brand.h"
@@ -43,8 +42,7 @@ class IOSConfigurator : public update_client::Configurator {
   std::string ExtraRequestParams() const override;
   std::string GetDownloadPreference() const override;
   net::URLRequestContextGetter* RequestContext() const override;
-  scoped_refptr<update_client::OutOfProcessPatcher> CreateOutOfProcessPatcher()
-      const override;
+  service_manager::Connector* GetServiceManagerConnector() const override;
   bool EnabledDeltas() const override;
   bool EnabledComponentUpdates() const override;
   bool EnabledBackgroundDownloader() const override;
@@ -133,8 +131,8 @@ net::URLRequestContextGetter* IOSConfigurator::RequestContext() const {
   return configurator_impl_.RequestContext();
 }
 
-scoped_refptr<update_client::OutOfProcessPatcher>
-IOSConfigurator::CreateOutOfProcessPatcher() const {
+service_manager::Connector* IOSConfigurator::GetServiceManagerConnector()
+    const {
   return nullptr;
 }
 
