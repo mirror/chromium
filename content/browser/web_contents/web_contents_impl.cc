@@ -858,6 +858,7 @@ bool WebContentsImpl::OnMessageReceived(RenderFrameHostImpl* render_frame_host,
                         OnUpdatePageImportanceSignals)
     IPC_MESSAGE_HANDLER(FrameHostMsg_Find_Reply, OnFindReply)
     IPC_MESSAGE_HANDLER(FrameHostMsg_UpdateFaviconURL, OnUpdateFaviconURL)
+    IPC_MESSAGE_HANDLER(FrameHostMsg_UpdateAboutBlank, OnUpdateAboutBlank)
 #if BUILDFLAG(ENABLE_PLUGINS)
     IPC_MESSAGE_HANDLER(FrameHostMsg_PepperInstanceCreated,
                         OnPepperInstanceCreated)
@@ -4335,6 +4336,16 @@ void WebContentsImpl::OnUpdateFaviconURL(
 
   for (auto& observer : observers_)
     observer.DidUpdateFaviconURL(candidates);
+}
+
+void WebContentsImpl::OnUpdateAboutBlank(const GURL& url) {
+  // TODO(crbug.com/524208): A navigation via window.open("") ends up as an
+  // about:blank URL but doesn't have a last committed entry.
+  if (GetController().GetLastCommittedEntry()) {
+    CHECK(GetController().GetLastCommittedEntry()->GetURL().IsAboutBlank());
+    GetController().GetLastCommittedEntry()->SetVirtualURL(url);
+    DidChangeVisibleSecurityState();
+  }
 }
 
 void WebContentsImpl::SetIsOverlayContent(bool is_overlay_content) {
