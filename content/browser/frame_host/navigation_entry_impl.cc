@@ -7,6 +7,7 @@
 #include <stddef.h>
 
 #include <utility>
+#include "base/debug/stack_trace.h"
 
 #include "base/containers/queue.h"
 #include "base/i18n/rtl.h"
@@ -340,6 +341,8 @@ const GURL& NavigationEntryImpl::GetVirtualURL() const {
 }
 
 void NavigationEntryImpl::SetTitle(const base::string16& title) {
+  base::debug::StackTrace s;
+  LOG(ERROR) << "NavigationEntryImpl " << this << " ::SetTitle “" << base::UTF16ToUTF8(title) << "”\n" << s.ToString();
   title_ = title;
   cached_display_title_.clear();
 }
@@ -407,15 +410,20 @@ void NavigationEntryImpl::SetBindings(int bindings) {
 }
 
 const base::string16& NavigationEntryImpl::GetTitleForDisplay() const {
+  LOG(ERROR) << "NavigationEntryImpl " << this << " ::GetTitleForDisplay";
   // Most pages have real titles. Don't even bother caching anything if this is
   // the case.
-  if (!title_.empty())
+  if (!title_.empty()) {
+    LOG(ERROR) << " > have real title! " << base::UTF16ToUTF8(title_);
     return title_;
+  }
 
   // More complicated cases will use the URLs as the title. This result we will
   // cache since it's more complicated to compute.
-  if (!cached_display_title_.empty())
+  if (!cached_display_title_.empty()) {
+    LOG(ERROR) << " > have cached title! " << base::UTF16ToUTF8(cached_display_title_);
     return cached_display_title_;
+  }
 
   // Use the virtual URL first if any, and fall back on using the real URL.
   base::string16 title;
@@ -451,6 +459,7 @@ const base::string16& NavigationEntryImpl::GetTitleForDisplay() const {
   }
 
   gfx::ElideString(title, kMaxTitleChars, &cached_display_title_);
+  LOG(ERROR) << " > generated cached title! " << base::UTF16ToUTF8(cached_display_title_);
   return cached_display_title_;
 }
 
