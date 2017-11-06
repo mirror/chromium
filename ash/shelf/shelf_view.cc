@@ -565,6 +565,10 @@ bool ShelfView::IsDraggedView(const ShelfButton* view) const {
   return drag_view_ == view;
 }
 
+bool ShelfView::IsInCurrentViewModel(views::View* view) const {
+  return view_model_->GetIndexOfView(view) != -1;
+}
+
 void ShelfView::DestroyDragIconProxy() {
   drag_image_.reset();
   drag_image_offset_ = gfx::Vector2d(0, 0);
@@ -686,10 +690,11 @@ bool ShelfView::ShouldEventActivateButton(View* view, const ui::Event& event) {
 void ShelfView::PointerPressedOnButton(views::View* view,
                                        Pointer pointer,
                                        const ui::LocatedEvent& event) {
-  if (IsShowingMenu())
-    launcher_menu_runner_->Cancel();
   if (drag_view_)
     return;
+
+  if (IsShowingMenu())
+    launcher_menu_runner_->Cancel();
 
   int index = view_model_->GetIndexOfView(view);
   if (index == -1 || view_model_->view_size() <= 1)
