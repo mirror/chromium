@@ -76,9 +76,6 @@ void ChromeBrowserMainExtraPartsAsh::ServiceManagerConnectionStarted(
     converter->RegisterPrimitiveProperty(
         ash::kWindowStateTypeKey, ash::mojom::kWindowStateType_Property,
         base::Bind(&ash::IsValidWindowStateType));
-    converter->RegisterPrimitiveProperty(
-        ash::kWindowPinTypeKey, ash::mojom::kWindowPinType_Property,
-        base::Bind(&ash::IsValidWindowPinType));
     converter->RegisterStringProperty(
         ash::kShelfIDKey, ui::mojom::WindowManager::kShelfID_Property);
 

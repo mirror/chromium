@@ -85,19 +85,6 @@ WMEventType WMEventTypeFromShowState(ui::WindowShowState requested_show_state) {
   return WM_EVENT_NORMAL;
 }
 
-WMEventType WMEventTypeFromWindowPinType(ash::mojom::WindowPinType type) {
-  switch (type) {
-    case ash::mojom::WindowPinType::NONE:
-      return WM_EVENT_NORMAL;
-    case ash::mojom::WindowPinType::PINNED:
-      return WM_EVENT_PIN;
-    case ash::mojom::WindowPinType::TRUSTED_PINNED:
-      return WM_EVENT_TRUSTED_PIN;
-  }
-  NOTREACHED() << "No WMEvent defined for the window pin type:" << type;
-  return WM_EVENT_NORMAL;
-}
-
 }  // namespace
 
 WindowState::~WindowState() {
@@ -377,10 +364,6 @@ ui::WindowShowState WindowState::GetShowState() const {
   return window_->GetProperty(aura::client::kShowStateKey);
 }
 
-ash::mojom::WindowPinType WindowState::GetPinType() const {
-  return window_->GetProperty(kWindowPinTypeKey);
-}
-
 void WindowState::SetBoundsInScreen(const gfx::Rect& bounds_in_screen) {
   gfx::Rect bounds_in_parent = bounds_in_screen;
   ::wm::ConvertRectFromScreen(window_->parent(), &bounds_in_parent);
@@ -411,17 +394,6 @@ void WindowState::UpdateWindowPropertiesFromStateType() {
   if (GetStateType() != window_->GetProperty(kWindowStateTypeKey)) {
     base::AutoReset<bool> resetter(&ignore_property_change_, true);
     window_->SetProperty(kWindowStateTypeKey, GetStateType());
-  }
-
-  // sync up current window show state with PinType property.
-  ash::mojom::WindowPinType pin_type = ash::mojom::WindowPinType::NONE;
-  if (GetStateType() == mojom::WindowStateType::PINNED)
-    pin_type = ash::mojom::WindowPinType::PINNED;
-  else if (GetStateType() == mojom::WindowStateType::TRUSTED_PINNED)
-    pin_type = ash::mojom::WindowPinType::TRUSTED_PINNED;
-  if (pin_type != GetPinType()) {
-    base::AutoReset<bool> resetter(&ignore_property_change_, true);
-    window_->SetProperty(kWindowPinTypeKey, pin_type);
   }
 }
 
@@ -536,13 +508,6 @@ void WindowState::OnWindowPropertyChanged(aura::Window* window,
   if (key == aura::client::kImmersiveFullscreenKey) {
     in_immersive_fullscreen_ =
         window_->GetProperty(aura::client::kImmersiveFullscreenKey);
-    return;
-  }
-  if (key == kWindowPinTypeKey) {
-    if (!ignore_property_change_) {
-      WMEvent event(WMEventTypeFromWindowPinType(GetPinType()));
-      OnWMEvent(&event);
-    }
     return;
   }
   if (key == kWindowStateTypeKey) {

@@ -16,6 +16,7 @@
 #include "ash/wm/window_resizer.h"
 #include "ash/wm/window_state.h"
 #include "ash/wm/window_util.h"
+#include "ash/wm/wm_event.h"
 #include "base/logging.h"
 #include "base/macros.h"
 #include "base/memory/ptr_util.h"
@@ -171,6 +172,20 @@ Orientation SizeToOrientation(const gfx::Size& size) {
   DCHECK_NE(size.width(), size.height());
   return size.width() > size.height() ? Orientation::LANDSCAPE
                                       : Orientation::PORTRAIT;
+}
+
+ash::wm::WMEventType WMEventTypeFromWindowPinType(
+    ash::mojom::WindowPinType type) {
+  switch (type) {
+    case ash::mojom::WindowPinType::NONE:
+      return ash::wm::WM_EVENT_NORMAL;
+    case ash::mojom::WindowPinType::PINNED:
+      return ash::wm::WM_EVENT_PIN;
+    case ash::mojom::WindowPinType::TRUSTED_PINNED:
+      return ash::wm::WM_EVENT_TRUSTED_PIN;
+  }
+  NOTREACHED() << "No WMEvent defined for the window pin type:" << type;
+  return ash::wm::WM_EVENT_NORMAL;
 }
 
 }  // namespace
@@ -466,7 +481,10 @@ void ShellSurface::SetPinned(ash::mojom::WindowPinType type) {
   // Note: This will ask client to configure its surface even if pinned
   // state doesn't change.
   ScopedConfigure scoped_configure(this, true);
-  widget_->GetNativeWindow()->SetProperty(ash::kWindowPinTypeKey, type);
+  ash::wm::WMEvent event(WMEventTypeFromWindowPinType(type));
+  ash::wm::WindowState* window_state =
+      ash::wm::GetWindowState(widget_->GetNativeWindow());
+  window_state->OnWMEvent(&event);
 }
 
 void ShellSurface::SetSystemUiVisibility(bool autohide) {
