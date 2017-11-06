@@ -2,6 +2,57 @@
   "comments": [
     {
       "key": {
+        "uuid": "54a8c919_4c95da23",
+        "filename": "content/renderer/service_worker/service_worker_context_client.cc",
+        "patchSetId": 10
+      },
+      "lineNbr": 11,
+      "author": {
+        "id": 1000128
+      },
+      "writtenOn": "2017-11-06T17:51:25Z",
+      "side": 1,
+      "message": "what is this for?",
+      "revId": "44e56963bb4bea01848dfa07a58df26f4c8b7342",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "91461e50_83e4a5a7",
+        "filename": "content/renderer/service_worker/service_worker_context_client.cc",
+        "patchSetId": 10
+      },
+      "lineNbr": 820,
+      "author": {
+        "id": 1000128
+      },
+      "writtenOn": "2017-11-06T17:51:25Z",
+      "side": 1,
+      "message": "Is this meant to be TakeRegistrationForSWGlobalScope(), as GetOrCreate* seems removed in this patch?",
+      "revId": "44e56963bb4bea01848dfa07a58df26f4c8b7342",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d2cd88a1_0a31f1a5",
+        "filename": "content/renderer/service_worker/service_worker_context_client.cc",
+        "patchSetId": 10
+      },
+      "lineNbr": 824,
+      "author": {
+        "id": 1000128
+      },
+      "writtenOn": "2017-11-06T17:51:25Z",
+      "side": 1,
+      "message": "Is this dispatcher just the one we created in line 821? This prose make it sound like a different dispatcher, and that we\u0027re on the main thread.",
+      "revId": "44e56963bb4bea01848dfa07a58df26f4c8b7342",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "73b6ab06_03cab85a",
         "filename": "content/renderer/service_worker/service_worker_context_client.cc",
         "patchSetId": 10
@@ -42,6 +93,30 @@
     },
     {
       "key": {
+        "uuid": "001004bc_450f7987",
+        "filename": "content/renderer/service_worker/service_worker_dispatcher.h",
+        "patchSetId": 10
+      },
+      "lineNbr": 98,
+      "author": {
+        "id": 1000128
+      },
+      "writtenOn": "2017-11-06T17:51:25Z",
+      "side": 1,
+      "message": "I think scoped_refptr is right. We shouldn\u0027t do const ref for scoped_refptr in modern code:\nhttps://chromium.googlesource.com/chromium/src/+/master/styleguide/c++/c++.md#object-ownership-and-calling-conventions\n\nConventions for return values are similar: return raw pointers when the caller does not take ownership, and return smart pointers by value otherwise, potentially in conjunction with std::move().\n\nA great deal of Chromium code predates the above rules. In particular, some functions take ownership of params passed as T*, or take const scoped_refptr\u003cT\u003e\u0026 instead of T*, or return T* instead of scoped_refptr\u003cT\u003e (to avoid refcount churn pre-C++11). Try to clean up such code when you find it, or at least not make such usage any more widespread.",
+      "parentUuid": "182031eb_de8ebd8b",
+      "range": {
+        "startLine": 98,
+        "startChar": 2,
+        "endLine": 98,
+        "endChar": 33
+      },
+      "revId": "44e56963bb4bea01848dfa07a58df26f4c8b7342",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "699d899f_8c683045",
         "filename": "content/renderer/service_worker/service_worker_provider_context.cc",
         "patchSetId": 10
@@ -59,6 +134,24 @@
     },
     {
       "key": {
+        "uuid": "87aeac43_45e35543",
+        "filename": "content/renderer/service_worker/service_worker_provider_context.cc",
+        "patchSetId": 10
+      },
+      "lineNbr": 83,
+      "author": {
+        "id": 1000128
+      },
+      "writtenOn": "2017-11-06T17:51:25Z",
+      "side": 1,
+      "message": "Wouldn\u0027t we get id collisions?",
+      "parentUuid": "699d899f_8c683045",
+      "revId": "44e56963bb4bea01848dfa07a58df26f4c8b7342",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "1f760b3f_58b1e5e3",
         "filename": "content/renderer/service_worker/service_worker_provider_context.cc",
         "patchSetId": 10
@@ -70,6 +163,91 @@
       "writtenOn": "2017-11-06T07:27:46Z",
       "side": 1,
       "message": "Once we move |controllee_state_-\u003eregistrations_| to the member of SWProviderContext, we can replace these codes by SWProviderContext::GetOrCreateRegistartion().",
+      "revId": "44e56963bb4bea01848dfa07a58df26f4c8b7342",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ac9d8b84_e605983f",
+        "filename": "content/renderer/service_worker/service_worker_provider_context.cc",
+        "patchSetId": 10
+      },
+      "lineNbr": 193,
+      "author": {
+        "id": 1000128
+      },
+      "writtenOn": "2017-11-06T17:51:25Z",
+      "side": 1,
+      "message": "nit: I would just call these |installing|, |waiting|, |active| to parallel |state-\u003einstalling| and |info-\u003einstalling|, etc. \"ref\" kinda looks like \"reg\" too.",
+      "revId": "44e56963bb4bea01848dfa07a58df26f4c8b7342",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b07daca3_0fbab6bd",
+        "filename": "content/renderer/service_worker/service_worker_provider_context.cc",
+        "patchSetId": 10
+      },
+      "lineNbr": 284,
+      "author": {
+        "id": 1000128
+      },
+      "writtenOn": "2017-11-06T17:51:25Z",
+      "side": 1,
+      "message": "ditto about _ref",
+      "revId": "44e56963bb4bea01848dfa07a58df26f4c8b7342",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1a28fa08_301b4916",
+        "filename": "content/renderer/service_worker/web_service_worker_registration_impl.h",
+        "patchSetId": 10
+      },
+      "lineNbr": 224,
+      "author": {
+        "id": 1000128
+      },
+      "writtenOn": "2017-11-06T17:51:25Z",
+      "side": 1,
+      "message": "I don\u0027t think we need to talk about the key to track |this| here.\n\nOver there, we should probably say the key is /* registration_id */.",
+      "revId": "44e56963bb4bea01848dfa07a58df26f4c8b7342",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "461f53ab_360a0a5c",
+        "filename": "content/renderer/service_worker/web_service_worker_registration_impl.h",
+        "patchSetId": 10
+      },
+      "lineNbr": 281,
+      "author": {
+        "id": 1000128
+      },
+      "writtenOn": "2017-11-06T17:51:25Z",
+      "side": 1,
+      "message": "add space before parenthesis",
+      "revId": "44e56963bb4bea01848dfa07a58df26f4c8b7342",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "75bec350_9cdb2323",
+        "filename": "content/renderer/service_worker/web_service_worker_registration_impl.h",
+        "patchSetId": 10
+      },
+      "lineNbr": 283,
+      "author": {
+        "id": 1000128
+      },
+      "writtenOn": "2017-11-06T17:51:25Z",
+      "side": 1,
+      "message": "don\u0027t think we need \"always\"\n\n\"context\" -\u003e contexts\"",
       "revId": "44e56963bb4bea01848dfa07a58df26f4c8b7342",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
