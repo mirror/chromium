@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "02ae4d05_7c2837c2",
+        "filename": "third_party/WebKit/PRESUBMIT.py",
+        "patchSetId": 2
+      },
+      "lineNbr": 46,
+      "author": {
+        "id": 1001168
+      },
+      "writtenOn": "2017-11-06T19:16:18Z",
+      "side": 1,
+      "message": "It would be nice to combine this into the previous check if possible: otherwise, we run the presubmit across changed files in third_party/WebKit//public/ twice.",
+      "revId": "61051b106e805450a84c3da093de554287d8c8bb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
