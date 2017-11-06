@@ -364,26 +364,3 @@ TEST(NavigationTracker, UnknownStateForcesStartReceivesStop) {
   NavigationTracker tracker(&client, &browser_info, &dialog_manager);
   ASSERT_NO_FATAL_FAILURE(AssertPendingState(&tracker, "f", false));
 }
-
-TEST(NavigationTracker, OnSuccessfulNavigate) {
-  base::DictionaryValue params;
-  DeterminingLoadStateDevToolsClient client(
-      false, true, std::string(), &params);
-  BrowserInfo browser_info;
-  std::string version_string = "{\"Browser\": \"Chrome/44.0.2403.125\","
-                               " \"WebKit-Version\": \"537.36 (@199461)\"}";
-  ASSERT_TRUE(ParseBrowserInfo(version_string, &browser_info).IsOk());
-  JavaScriptDialogManager dialog_manager(&client, &browser_info);
-  NavigationTracker tracker(
-      &client, NavigationTracker::kNotLoading, &browser_info, &dialog_manager);
-  base::DictionaryValue result;
-  result.SetString("frameId", "f");
-  tracker.OnCommandSuccess(&client, "Page.navigate", result, Timeout());
-  ASSERT_NO_FATAL_FAILURE(AssertPendingState(&tracker, "f", true));
-  tracker.OnEvent(&client, "Page.loadEventFired", params);
-  ASSERT_NO_FATAL_FAILURE(AssertPendingState(&tracker, "f", true));
-  params.Clear();
-  params.SetString("frameId", "f");
-  tracker.OnEvent(&client, "Page.frameStoppedLoading", params);
-  ASSERT_NO_FATAL_FAILURE(AssertPendingState(&tracker, "f", false));
-}

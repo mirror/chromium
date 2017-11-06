@@ -400,53 +400,6 @@ Status NavigationTracker::OnEvent(DevToolsClient* client,
   return Status(kOk);
 }
 
-Status NavigationTracker::OnCommandSuccess(
-    DevToolsClient* client,
-    const std::string& method,
-    const base::DictionaryValue& result,
-    const Timeout& command_timeout) {
-  if ((method == "Page.navigate" || method == "Page.navigateToHistoryEntry") &&
-      loading_state_ != kLoading) {
-    // At this point the browser has initiated the navigation, but besides that,
-    // it is unknown what will happen.
-    //
-    // There are a few cases (perhaps more):
-    // 1 The RenderFrameHost has already queued FrameMsg_Navigate and loading
-    //   will start shortly.
-    // 2 The RenderFrameHost has already queued FrameMsg_Navigate and loading
-    //   will never start because it is just an in-page fragment navigation.
-    // 3 The RenderFrameHost is suspended and hasn't queued FrameMsg_Navigate
-    //   yet. This happens for cross-site navigations. The RenderFrameHost
-    //   will not queue FrameMsg_Navigate until it is ready to unload the
-    //   previous page (after running unload handlers and such).
-    // TODO(nasko): Revisit case 3, since now unload handlers are run in the
-    // background. http://crbug.com/323528.
-    //
-    // To determine whether a load is expected, do a round trip to the
-    // renderer to ask what the URL is.
-    // If case #1, by the time the command returns, the frame started to load
-    // event will also have been received, since the DevTools command will
-    // be queued behind FrameMsg_Navigate.
-    // If case #2, by the time the command returns, the navigation will
-    // have already happened, although no frame start/stop events will have
-    // been received.
-    // If case #3, the URL will be blank if the navigation hasn't been started
-    // yet. In that case, expect a load to happen in the future.
-    loading_state_ = kUnknown;
-    base::DictionaryValue params;
-    params.SetString("expression", "document.URL");
-    std::unique_ptr<base::DictionaryValue> result;
-    Status status = client_->SendCommandAndGetResultWithTimeout(
-        "Runtime.evaluate", params, &command_timeout, &result);
-    std::string url;
-    if (status.IsError() || !result->GetString("result.value", &url))
-      return MakeNavigationCheckFailedStatus(status);
-    if (loading_state_ == kUnknown && url.empty())
-      loading_state_ = kLoading;
-  }
-  return Status(kOk);
-}
-
 void NavigationTracker::ResetLoadingState(LoadingState loading_state) {
   loading_state_ = loading_state;
   pending_frame_set_.clear();

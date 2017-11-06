@@ -11,6 +11,7 @@
 
 #include "base/callback.h"
 #include "base/compiler_specific.h"
+#include "chrome/test/chromedriver/chrome/devtools_event_listener.h"
 #include "chrome/test/chromedriver/chrome/web_view.h"
 
 namespace base {
@@ -34,7 +35,7 @@ struct MouseEvent;
 class PageLoadStrategy;
 class Status;
 
-class WebViewImpl : public WebView {
+class WebViewImpl : public WebView, DevToolsEventListener {
  public:
   WebViewImpl(const std::string& id,
               const bool w3c_compliant,
@@ -143,9 +144,18 @@ class WebViewImpl : public WebView {
 
   Status InitProfileInternal();
   Status StopProfileInternal();
+  Status OnEvent(DevToolsClient* client,
+                 const std::string& method,
+                 const base::DictionaryValue& params) override;
+  Status OnCommandSuccess(DevToolsClient* client,
+                          const std::string& method,
+                          const base::DictionaryValue& result,
+                          const Timeout& command_timeout) override;
+  Status IsReadyForCommand(bool* is_ready);
 
   std::string id_;
   bool w3c_compliant_;
+  bool browser_stable_;
   const BrowserInfo* browser_info_;
   std::unique_ptr<DomTracker> dom_tracker_;
   std::unique_ptr<FrameTracker> frame_tracker_;

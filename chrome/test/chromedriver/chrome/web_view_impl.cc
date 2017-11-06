@@ -120,6 +120,7 @@ WebViewImpl::WebViewImpl(const std::string& id,
                          std::string page_load_strategy)
     : id_(id),
       w3c_compliant_(w3c_compliant),
+      browser_stable_(true),
       browser_info_(browser_info),
       dom_tracker_(new DomTracker(client.get())),
       frame_tracker_(new FrameTracker(client.get())),
@@ -136,7 +137,9 @@ WebViewImpl::WebViewImpl(const std::string& id,
           new NetworkConditionsOverrideManager(client.get())),
       heap_snapshot_taker_(new HeapSnapshotTaker(client.get())),
       debugger_(new DebuggerTracker(client.get())),
-      client_(client.release()) {}
+      client_(client.release()) {
+  client_->AddListener(this);
+}
 
 WebViewImpl::~WebViewImpl() {}
 
@@ -812,6 +815,33 @@ Status WebViewImpl::IsNotPendingNavigation(const std::string& frame_id,
     return Status(kUnexpectedAlertOpen);
 
   *is_not_pending = !is_pending;
+  return Status(kOk);
+}
+
+Status WebViewImpl::OnEvent(DevToolsClient* client,
+                            const std::string& method,
+                            const base::DictionaryValue& params) {
+  if (method == "Page.lifecycleEvent" || method == "Page.frameNavigated") {
+    browser_stable_ = true;
+  }
+  return Status(kOk);
+}
+
+Status WebViewImpl::OnCommandSuccess(DevToolsClient* client,
+                                     const std::string& method,
+                                     const base::DictionaryValue& result,
+                                     const Timeout& command_timeout) {
+  if (method == "Page.navigate" || method == "Page.navigateToHistoryEntry") {
+    browser_stable_ = false;
+    return client->HandleEventsUntil(
+        base::Bind(&WebViewImpl::IsReadyForCommand, base::Unretained(this)),
+        command_timeout);
+  }
+  return Status(kOk);
+}
+
+Status WebViewImpl::IsReadyForCommand(bool* is_ready) {
+  *is_ready = browser_stable_ || dialog_manager_->IsDialogOpen();
   return Status(kOk);
 }
 
