@@ -307,6 +307,9 @@ class LocationBarView : public LocationBar,
   // Returns true if the location icon text should be animated.
   bool ShouldAnimateLocationIconTextVisibilityChange() const;
 
+  // Returns true if the FindBarIcon is visible and needs to be activated.
+  bool ShouldActivateFindBarIcon() const;
+
   // LocationBar:
   GURL GetDestinationURL() const override;
   WindowOpenDisposition GetWindowOpenDisposition() const override;
