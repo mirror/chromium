@@ -40,6 +40,7 @@
 #import "ios/chrome/browser/ui/ntp/new_tab_page_controller.h"
 #import "ios/chrome/browser/ui/page_not_available_controller.h"
 #include "ios/chrome/browser/ui/toolbar/test_toolbar_model_ios.h"
+#include "ios/chrome/browser/ui/toolbar/toolbar_coordinator.h"
 #import "ios/chrome/browser/ui/toolbar/web_toolbar_controller.h"
 #include "ios/chrome/browser/ui/ui_util.h"
 #import "ios/chrome/browser/web/error_page_content.h"
@@ -135,6 +136,57 @@ using web::WebStateImpl;
 }
 @end
 
+// Fake WebToolbarController for testing.
+@interface TestWebToolbarController : UIViewController
+- (void)setTabCount:(NSInteger)tabCount;
+- (void)updateToolbarState;
+- (void)setShareButtonEnabled:(BOOL)enabled;
+- (id)toolsPopupController;
+- (BOOL)isOmniboxFirstResponder;
+- (BOOL)showingOmniboxPopup;
+- (void)selectedTabChanged;
+- (void)dismissToolsMenuPopup;
+- (void)cancelOmniboxEdit;
+@end
+
+@implementation TestWebToolbarController
+
+- (void)setTabCount:(NSInteger)tabCount {
+  return;
+}
+- (void)updateToolbarState {
+  return;
+}
+- (void)setShareButtonEnabled:(BOOL)enabled {
+  return;
+}
+
+- (id)toolsPopupController {
+  return nil;
+}
+
+- (BOOL)isOmniboxFirstResponder {
+  return NO;
+}
+
+- (BOOL)showingOmniboxPopup {
+  return NO;
+}
+
+- (void)selectedTabChanged {
+  return;
+}
+
+- (void)dismissToolsMenuPopup {
+  return;
+}
+
+- (void)cancelOmniboxEdit {
+  return;
+}
+
+@end
+
 #pragma mark -
 
 namespace {
@@ -207,16 +259,26 @@ class BrowserViewControllerTest : public BlockCleanupTest {
     // It will be owned (and destroyed) by the BVC.
     toolbarModelIOS_ = new TestToolbarModelIOS();
 
+    // Set ToolbarController mock.
+    id webToolbarViewController =
+        [OCMockObject niceMockForClass:[TestWebToolbarController class]];
+    //    [(WebToolbarController*)[webToolbarViewController stub]
+    //    setTabCount:1];
+    //    [(WebToolbarController*)[webToolbarViewController stub]
+    //    parentViewController];
+
+    webToolbarViewController_ = webToolbarViewController;
+
+    TestWebToolbarController* testWTC = [[TestWebToolbarController alloc] init];
+
+
     // Set up a stub dependency factory.
     id factory = [OCMockObject
         mockForClass:[BrowserViewControllerDependencyFactory class]];
     [[[factory stub] andReturnValue:OCMOCK_VALUE(toolbarModelIOS_)]
         newToolbarModelIOSWithDelegate:static_cast<ToolbarModelDelegateIOS*>(
                                            [OCMArg anyPointer])];
-    [[[factory stub] andReturn:nil]
-        newWebToolbarControllerWithDelegate:[OCMArg any]
-                                  urlLoader:[OCMArg any]
-                                 dispatcher:[OCMArg any]];
+
     [[[factory stub] andReturn:passKitViewController_]
         newPassKitViewControllerForPass:nil];
     [[[factory stub] andReturn:nil] showPassKitErrorInfoBarForManager:nil];
@@ -230,7 +292,14 @@ class BrowserViewControllerTest : public BlockCleanupTest {
                       browserState:chrome_browser_state_.get()
                  dependencyFactory:factory
         applicationCommandEndpoint:nil];
-
+    
+    //TestWebToolbarController* testWTC = [[TestWebToolbarController alloc] init];
+    //WebToolbarController* testWTC = [[WebToolbarController alloc] initWithDelegate:bvc_ urlLoader:bvc_ browserState:chrome_browser_state_.get() dispatcher:nil];
+    [[[factory stub] andReturn:testWTC]
+    newWebToolbarControllerWithDelegate:[OCMArg any]
+                              urlLoader:[OCMArg any]
+                             dispatcher:[OCMArg any]];
+    
     // Load TemplateURLService.
     TemplateURLService* template_url_service =
         ios::TemplateURLServiceFactory::GetForBrowserState(
@@ -261,6 +330,7 @@ class BrowserViewControllerTest : public BlockCleanupTest {
   TabModel* tabModel_;
   ToolbarModelIOS* toolbarModelIOS_;
   PKAddPassesViewController* passKitViewController_;
+  OCMockObject* webToolbarViewController_;
   OCMockObject* dependencyFactory_;
   BrowserViewController* bvc_;
   UIWindow* window_;
