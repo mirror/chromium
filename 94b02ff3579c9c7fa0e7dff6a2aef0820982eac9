@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "2cf8329d_40bdc52a",
+        "filename": "ui/webui/resources/cr_elements/chromeos/cr_picture/cr_camera.js",
+        "patchSetId": 2
+      },
+      "lineNbr": 89,
+      "author": {
+        "id": 1000191
+      },
+      "writtenOn": "2017-11-06T18:55:24Z",
+      "side": 1,
+      "message": "cameraCaptureInProgress_ should be explicitly declared and set to false in \u0027attached\u0027.",
+      "revId": "94b02ff3579c9c7fa0e7dff6a2aef0820982eac9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
