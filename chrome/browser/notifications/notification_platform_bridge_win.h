@@ -14,6 +14,7 @@
 #include "url/gurl.h"
 
 struct NotificationData;
+class NotificationTemplateBuilder;
 
 // Implementation of the NotificationPlatformBridge for Windows 10 Anniversary
 // Edition and beyond, delegating display of notifications to the Action Center.
@@ -38,6 +39,8 @@ class NotificationPlatformBridgeWin : public NotificationPlatformBridge {
   void SetReadyCallback(NotificationBridgeReadyCallback callback) override;
 
  private:
+  friend class NotificationPlatformBridgeWinTest;
+
   // Callbacks for toast events from Windows.
   HRESULT OnActivated(
       ABI::Windows::UI::Notifications::IToastNotification* notification,
@@ -45,6 +48,11 @@ class NotificationPlatformBridgeWin : public NotificationPlatformBridge {
   HRESULT OnDismissed(
       ABI::Windows::UI::Notifications::IToastNotification* notification,
       ABI::Windows::UI::Notifications::IToastDismissedEventArgs* args);
+
+  HRESULT GetToastNotification(
+      const message_center::Notification& notification,
+      const NotificationTemplateBuilder& notification_template_builder,
+      ABI::Windows::UI::Notifications::IToastNotification** toast_notification);
 
   // Returns a notification with properties |notification_id|, |profile_id|,
   // |origin_url| and |incognito| if found in notifications_. Returns nullptr if
