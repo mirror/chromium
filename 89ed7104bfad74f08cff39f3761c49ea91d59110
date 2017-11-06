@@ -22,6 +22,30 @@
       "revId": "89ed7104bfad74f08cff39f3761c49ea91d59110",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "99ad53bd_e23d3b17",
+        "filename": "third_party/WebKit/Source/modules/webaudio/AudioWorkletProcessor.cpp",
+        "patchSetId": 14
+      },
+      "lineNbr": 29,
+      "author": {
+        "id": 1115916
+      },
+      "writtenOn": "2017-11-06T01:45:36Z",
+      "side": 1,
+      "message": "Specifically, what DCHECK are you hitting?\n\nnhiroki@: Maybe do we need to replace ToWorkerGlobalScope() with ToWorkletOrWorkerGlobalScope()? Then we\u0027ll need to move a bunch of methods from WorkerGlobalScope to WorkletOrWorkerGlobalScope though (but I think this makes sense).",
+      "parentUuid": "fe941bea_c4cb80c1",
+      "range": {
+        "startLine": 29,
+        "startChar": 2,
+        "endLine": 29,
+        "endChar": 78
+      },
+      "revId": "89ed7104bfad74f08cff39f3761c49ea91d59110",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
