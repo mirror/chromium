@@ -22,6 +22,30 @@
       "revId": "f44f605af44c79b31b15cfcb08dddbebd9db6bed",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "baeb7c73_1542e6df",
+        "filename": "services/service_manager/public/cpp/standalone_service/standalone_service.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 52,
+      "author": {
+        "id": 1144624
+      },
+      "writtenOn": "2017-11-06T18:51:21Z",
+      "side": 1,
+      "message": "Cool, I was going to suggest that.",
+      "parentUuid": "bb541e14_9be75afa",
+      "range": {
+        "startLine": 52,
+        "startChar": 0,
+        "endLine": 52,
+        "endChar": 53
+      },
+      "revId": "f44f605af44c79b31b15cfcb08dddbebd9db6bed",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
