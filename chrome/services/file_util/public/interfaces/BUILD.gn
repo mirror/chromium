@@ -6,6 +6,7 @@ import("//mojo/public/tools/bindings/mojom.gni")
 
 mojom("interfaces") {
   sources = [
+    "safe_archive_analyzer.mojom",
     "zip_file_creator.mojom",
   ]
 
