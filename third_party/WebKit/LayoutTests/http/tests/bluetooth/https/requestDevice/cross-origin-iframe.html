@@ -9,7 +9,7 @@
     window.onmessage = messageEvent => test.step(() => {
       if (messageEvent.data === 'Ready') {
         let iframe = document.querySelector('iframe');
-        callWithKeyDown(() => {
+        callWithTrustedClick(() => {
           iframe.contentWindow.postMessage('Go', '*');
         });
       } else {
