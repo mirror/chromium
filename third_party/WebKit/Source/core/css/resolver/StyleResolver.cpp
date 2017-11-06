@@ -1774,10 +1774,16 @@ void StyleResolver::ApplyCustomProperties(StyleResolverState& state,
   // TODO(leviw): We need the proper bit for tracking whether we need to do
   // this work.
   ApplyMatchedProperties<kResolveVariables, kUpdateNeedsApplyPass>(
+      state, match_result.UserRules(), false, apply_inherited_only,
+      needs_apply_pass);
+  ApplyMatchedProperties<kResolveVariables, kUpdateNeedsApplyPass>(
       state, match_result.AuthorRules(), false, apply_inherited_only,
       needs_apply_pass);
   ApplyMatchedProperties<kResolveVariables, kCheckNeedsApplyPass>(
       state, match_result.AuthorRules(), true, apply_inherited_only,
+      needs_apply_pass);
+  ApplyMatchedProperties<kResolveVariables, kCheckNeedsApplyPass>(
+      state, match_result.UserRules(), true, apply_inherited_only,
       needs_apply_pass);
   if (apply_animations == kIncludeAnimations) {
     ApplyAnimatedCustomProperties(state);
@@ -1789,10 +1795,16 @@ void StyleResolver::ApplyCustomProperties(StyleResolverState& state,
     if (CacheCustomPropertiesForApplyAtRules(state,
                                              match_result.AuthorRules())) {
       ApplyMatchedProperties<kResolveVariables, kUpdateNeedsApplyPass>(
+          state, match_result.UserRules(), false, apply_inherited_only,
+          needs_apply_pass);
+      ApplyMatchedProperties<kResolveVariables, kUpdateNeedsApplyPass>(
           state, match_result.AuthorRules(), false, apply_inherited_only,
           needs_apply_pass);
       ApplyMatchedProperties<kResolveVariables, kCheckNeedsApplyPass>(
           state, match_result.AuthorRules(), true, apply_inherited_only,
+          needs_apply_pass);
+      ApplyMatchedProperties<kResolveVariables, kCheckNeedsApplyPass>(
+          state, match_result.UserRules(), true, apply_inherited_only,
           needs_apply_pass);
       if (apply_animations == kIncludeAnimations) {
         ApplyAnimatedCustomProperties(state);
