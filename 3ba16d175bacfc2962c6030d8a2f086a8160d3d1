@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "329795b8_28d05c2f",
+        "filename": "ash/public/interfaces/shelf_test_api.mojom",
+        "patchSetId": 1
+      },
+      "lineNbr": 12,
+      "author": {
+        "id": 1001118
+      },
+      "writtenOn": "2017-11-06T20:59:02Z",
+      "side": 1,
+      "message": "nit: explain the callback, ie. \"Forces a visibility update and then runs the callback.\"",
+      "revId": "3ba16d175bacfc2962c6030d8a2f086a8160d3d1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e61c9f5f_6592757a",
+        "filename": "ash/shelf/shelf_test_api.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 15,
+      "author": {
+        "id": 1001118
+      },
+      "writtenOn": "2017-11-06T20:59:02Z",
+      "side": 1,
+      "message": "nit: Used",
+      "revId": "3ba16d175bacfc2962c6030d8a2f086a8160d3d1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
