@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "c475d04d_062af426",
+        "filename": "chrome/browser/ui/browser_commands.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 1204,
+      "author": {
+        "id": 1002603
+      },
+      "writtenOn": "2017-11-06T07:21:03Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "b472fd0c_3229263b",
+      "revId": "8b004508ba14cd6bf5e58c4f169682dd0b78da1d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "2307004e_1e9ea653",
         "filename": "chrome/browser/ui/chrome_pages.cc",
         "patchSetId": 5
@@ -30,6 +48,24 @@
       "writtenOn": "2017-11-03T02:19:33Z",
       "side": 1,
       "message": "does this open in the hosted app? (is that weird?) how does NEW_FOREGROUND_TAB work in that case.",
+      "revId": "8b004508ba14cd6bf5e58c4f169682dd0b78da1d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "72960530_a6958508",
+        "filename": "chrome/browser/ui/chrome_pages.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 344,
+      "author": {
+        "id": 1002603
+      },
+      "writtenOn": "2017-11-06T07:21:03Z",
+      "side": 1,
+      "message": "It doesn\u0027t. NEW_FOREGROUND_TAB goes out to a browser.",
+      "parentUuid": "2307004e_1e9ea653",
       "revId": "8b004508ba14cd6bf5e58c4f169682dd0b78da1d",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -53,6 +89,24 @@
     },
     {
       "key": {
+        "uuid": "96e5fdac_80ecb03f",
+        "filename": "chrome/browser/ui/extensions/hosted_app_browsertest.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 378,
+      "author": {
+        "id": 1002603
+      },
+      "writtenOn": "2017-11-06T07:21:03Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "1b6abb07_088cbac9",
+      "revId": "8b004508ba14cd6bf5e58c4f169682dd0b78da1d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "a2671c2e_be8673cd",
         "filename": "chrome/browser/ui/extensions/hosted_app_browsertest.cc",
         "patchSetId": 5
@@ -67,6 +121,24 @@
       "revId": "8b004508ba14cd6bf5e58c4f169682dd0b78da1d",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b0136a2d_856a6295",
+        "filename": "chrome/browser/ui/extensions/hosted_app_browsertest.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 385,
+      "author": {
+        "id": 1002603
+      },
+      "writtenOn": "2017-11-06T07:21:03Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "a2671c2e_be8673cd",
+      "revId": "8b004508ba14cd6bf5e58c4f169682dd0b78da1d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -87,6 +159,24 @@
     },
     {
       "key": {
+        "uuid": "f0592a99_24ca0654",
+        "filename": "chrome/browser/ui/extensions/hosted_app_browsertest.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 390,
+      "author": {
+        "id": 1002603
+      },
+      "writtenOn": "2017-11-06T07:21:03Z",
+      "side": 1,
+      "message": "As discussed, checking the MIME type is fraught with peril for some reason.",
+      "parentUuid": "c8122651_820b545b",
+      "revId": "8b004508ba14cd6bf5e58c4f169682dd0b78da1d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "59088bd6_897de424",
         "filename": "chrome/browser/ui/extensions/hosted_app_browsertest.cc",
         "patchSetId": 5
@@ -98,6 +188,24 @@
       "writtenOn": "2017-11-03T02:19:33Z",
       "side": 1,
       "message": "why the curly?",
+      "revId": "8b004508ba14cd6bf5e58c4f169682dd0b78da1d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "65f03f03_665df18d",
+        "filename": "chrome/browser/ui/extensions/hosted_app_browsertest.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 397,
+      "author": {
+        "id": 1002603
+      },
+      "writtenOn": "2017-11-06T07:21:03Z",
+      "side": 1,
+      "message": "app_browser would become a dangling pointer after RunAllPendingInMessageLoop. I thought this would be a nice way to kill it. Added a comment to :418 too.",
+      "parentUuid": "59088bd6_897de424",
       "revId": "8b004508ba14cd6bf5e58c4f169682dd0b78da1d",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
