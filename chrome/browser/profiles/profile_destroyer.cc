@@ -12,6 +12,7 @@
 #include "base/threading/thread_task_runner_handle.h"
 #include "base/trace_event/trace_event.h"
 #include "build/build_config.h"
+#include "chrome/browser/media/router/presentation_receiver_window.h"
 #include "chrome/browser/profiles/profile.h"
 #include "content/public/browser/render_process_host.h"
 
@@ -60,10 +61,17 @@ void ProfileDestroyer::DestroyProfileWhenAppropriate(Profile* const profile) {
   // DCHECK'd above because we want to protect Release builds against this even
   // we need to identify if there are leaks when we run Debug builds.
   if (hosts.empty() || !profile->IsOffTheRecord()) {
-    if (profile->IsOffTheRecord())
-      profile->GetOriginalProfile()->DestroyOffTheRecordProfile();
-    else
+    if (profile->IsOffTheRecord()) {
+      // TODO(btolsch): This should be changed if presentations get their own
+      // profile type separate from off-the-record.
+      if (!media_router::PresentationReceiverWindow::
+              IsPresentationReceiverWindowProfile(profile))
+        profile->GetOriginalProfile()->DestroyOffTheRecordProfile();
+      else
+        media_router::PresentationReceiverWindow::DeleteProfile(profile);
+    } else {
       delete profile;
+    }
   } else {
     // The instance will destroy itself once all render process hosts referring
     // to it are properly terminated.
