@@ -130,7 +130,6 @@ class CONTENT_EXPORT StoragePartition {
   virtual void ClearDataForOrigin(uint32_t remove_mask,
                                   uint32_t quota_storage_remove_mask,
                                   const GURL& storage_origin,
-                                  net::URLRequestContextGetter* rq_context,
                                   const base::Closure& callback) = 0;
 
   // A callback type to check if a given origin matches a storage policy.
