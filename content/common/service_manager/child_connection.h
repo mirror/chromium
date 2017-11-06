@@ -45,6 +45,10 @@ class CONTENT_EXPORT ChildConnection {
   void BindInterface(const std::string& interface_name,
                      mojo::ScopedMessagePipeHandle interface_pipe);
 
+  void BindEmbedderInterface(const service_manager::Identity& identity,
+                             const std::string& interface_name,
+                             mojo::ScopedMessagePipeHandle interface_pipe);
+
   const service_manager::Identity& child_identity() const {
     return child_identity_;
   }

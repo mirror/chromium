@@ -196,7 +196,7 @@ void SpellcheckService::InitForRenderer(
   }
 
   spellcheck::mojom::SpellCheckerPtr spellchecker;
-  content::BindInterface(
+  content::BindEmbedderInterface(
       content::RenderProcessHost::FromRendererIdentity(renderer_identity),
       &spellchecker);
   spellchecker->Initialize(std::move(dictionaries), custom_words, enable);
@@ -275,7 +275,8 @@ void SpellcheckService::OnCustomDictionaryChanged(
                                            change.to_remove().end());
   while (!process_hosts.IsAtEnd()) {
     spellcheck::mojom::SpellCheckerPtr spellchecker;
-    content::BindInterface(process_hosts.GetCurrentValue(), &spellchecker);
+    content::BindEmbedderInterface(process_hosts.GetCurrentValue(),
+                                   &spellchecker);
     spellchecker->CustomDictionaryChanged(additions, deletions);
     process_hosts.Advance();
   }

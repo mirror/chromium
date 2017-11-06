@@ -23,6 +23,7 @@
 #include "android_webview/browser/tracing/aw_tracing_delegate.h"
 #include "android_webview/common/aw_descriptors.h"
 #include "android_webview/common/aw_switches.h"
+#include "android_webview/common/constants.mojom.h"
 #include "android_webview/common/crash_reporter/aw_microdump_crash_reporter.h"
 #include "android_webview/common/render_view_messages.h"
 #include "android_webview/common/url_constants.h"
@@ -530,6 +531,10 @@ AwContentBrowserClient::CreateThrottlesForNavigation(
 content::DevToolsManagerDelegate*
 AwContentBrowserClient::GetDevToolsManagerDelegate() {
   return new AwDevToolsManagerDelegate();
+}
+
+std::string AwContentBrowserClient::GetEmbedderRendererServiceName() {
+  return android_webview::mojom::kRendererServiceName;
 }
 
 std::unique_ptr<base::Value> AwContentBrowserClient::GetServiceManifestOverlay(

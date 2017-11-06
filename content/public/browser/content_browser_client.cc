@@ -17,6 +17,7 @@
 #include "content/public/browser/network_service_instance.h"
 #include "content/public/browser/vpn_service_proxy.h"
 #include "content/public/common/content_features.h"
+#include "content/public/common/service_names.mojom.h"
 #include "content/public/common/url_loader_throttle.h"
 #include "media/audio/audio_manager.h"
 #include "media/base/cdm_factory.h"

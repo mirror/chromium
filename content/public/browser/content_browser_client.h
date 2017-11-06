@@ -747,6 +747,12 @@ class CONTENT_EXPORT ContentBrowserClient {
       const std::string& interface_name,
       mojo::ScopedMessagePipeHandle* interface_pipe) {}
 
+  //
+  virtual void BindEmbedderInterface(
+      const service_manager::Identity& renderer_identity,
+      const std::string& interface_name,
+      mojo::ScopedMessagePipeHandle interface_pipe) {}
+
   using StaticServiceMap =
       std::map<std::string, service_manager::EmbeddedServiceInfo>;
 

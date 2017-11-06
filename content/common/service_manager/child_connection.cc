@@ -46,6 +46,16 @@ class ChildConnection::IOThreadContext
                        interface_name, base::Passed(&interface_pipe)));
   }
 
+  void BindEmbedderInterface(const service_manager::Identity& identity,
+                             const std::string& interface_name,
+                             mojo::ScopedMessagePipeHandle interface_pipe) {
+    io_task_runner_->PostTask(
+        FROM_HERE,
+        base::BindOnce(&IOThreadContext::BindEmbedderInterfaceOnIOThread, this,
+                       identity, interface_name,
+                       base::Passed(&interface_pipe)));
+  }
+
   void ShutDown() {
     if (!io_task_runner_)
       return;
@@ -58,6 +68,16 @@ class ChildConnection::IOThreadContext
                                mojo::ScopedMessagePipeHandle request_handle) {
     if (connector_) {
       connector_->BindInterface(child_identity_, interface_name,
+                                std::move(request_handle));
+    }
+  }
+
+  void BindEmbedderInterfaceOnIOThread(
+      const service_manager::Identity& identity,
+      const std::string& interface_name,
+      mojo::ScopedMessagePipeHandle request_handle) {
+    if (connector_) {
+      connector_->BindInterface(identity, interface_name,
                                 std::move(request_handle));
     }
   }
@@ -135,6 +155,14 @@ void ChildConnection::BindInterface(
     const std::string& interface_name,
     mojo::ScopedMessagePipeHandle interface_pipe) {
   context_->BindInterface(interface_name, std::move(interface_pipe));
+}
+
+void ChildConnection::BindEmbedderInterface(
+    const service_manager::Identity& identity,
+    const std::string& interface_name,
+    mojo::ScopedMessagePipeHandle interface_pipe) {
+  context_->BindEmbedderInterface(identity, interface_name,
+                                  std::move(interface_pipe));
 }
 
 void ChildConnection::SetProcessHandle(base::ProcessHandle handle) {

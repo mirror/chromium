@@ -7,6 +7,7 @@
 #include <vector>
 
 #include "android_webview/common/aw_switches.h"
+#include "android_webview/common/constants.mojom.h"
 #include "android_webview/common/render_view_messages.h"
 #include "android_webview/common/url_constants.h"
 #include "android_webview/grit/aw_resources.h"
@@ -72,6 +73,29 @@ namespace {
 constexpr char kThrottledErrorDescription[] =
     "Request throttled. Visit http://dev.chromium.org/throttling for more "
     "information.";
+
+class AwRendererService : public service_manager::Service {
+ public:
+  explicit AwRendererService(service_manager::BinderRegistry* registry)
+      : registry_(registry) {}
+  ~AwRendererService() override;
+
+  static std::unique_ptr<service_manager::Service> Create(
+      service_manager::BinderRegistry* registry);
+
+ private:
+  // service_manager::Service:
+  void OnBindInterface(const service_manager::BindSourceInfo& remote_info,
+                       const std::string& name,
+                       mojo::ScopedMessagePipeHandle handle) override {
+    registry_->TryBindInterface(name, &handle);
+  }
+
+  service_manager::BinderRegistry* registry_;
+
+  DISALLOW_COPY_AND_ASSIGN(AwRendererService);
+};
+
 }  // namespace
 
 AwContentRendererClient::AwContentRendererClient() {}
@@ -95,7 +119,7 @@ void AwContentRendererClient::RenderThreadStarted() {
 
 #if BUILDFLAG(ENABLE_SPELLCHECK)
   if (!spellcheck_) {
-    spellcheck_ = base::MakeUnique<SpellCheck>(this);
+    spellcheck_ = base::MakeUnique<SpellCheck>(&registry_, this);
     thread->AddObserver(spellcheck_.get());
   }
 #endif
@@ -368,6 +392,14 @@ bool AwContentRendererClient::ShouldUseMediaPlayerForURL(const GURL& url) {
     }
   }
   return false;
+}
+
+void AwContentRendererClient::RegisterServices(StaticServiceMap* services) {
+  service_manager::EmbeddedServiceInfo aw_renderer_service_info;
+  aw_renderer_service_info.factory =
+      base::Bind(&AwRendererService::Create, base::Unretained(&registry_));
+  services->emplace(android_webview::mojom::kRendererServiceName,
+                    aw_renderer_service_info);
 }
 
 void AwContentRendererClient::GetInterface(
