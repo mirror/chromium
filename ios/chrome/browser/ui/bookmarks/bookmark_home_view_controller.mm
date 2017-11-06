@@ -82,6 +82,10 @@ std::vector<GURL> GetUrlsToOpen(const std::vector<const BookmarkNode*>& nodes) {
 // The app bar for the bookmarks.
 @property(nonatomic, strong) MDCAppBar* appBar;
 
+// Set to YES when this view controller is just created and not yet been layed
+// out before.
+@property(nonatomic, assign) BOOL firstTimeLayout;
+
 @end
 
 @implementation BookmarkHomeViewController
@@ -113,6 +117,7 @@ std::vector<GURL> GetUrlsToOpen(const std::vector<const BookmarkNode*>& nodes) {
 @synthesize dispatcher = _dispatcher;
 @synthesize cachedContentPosition = _cachedContentPosition;
 @synthesize isReconstructingFromCache = _isReconstructingFromCache;
+@synthesize firstTimeLayout = _firstTimeLayout;
 
 #if !defined(__has_feature) || !__has_feature(objc_arc)
 #error "This file requires ARC support."
@@ -143,6 +148,8 @@ std::vector<GURL> GetUrlsToOpen(const std::vector<const BookmarkNode*>& nodes) {
         [[BookmarkPromoController alloc] initWithBrowserState:browserState
                                                      delegate:self
                                                    dispatcher:self.dispatcher];
+
+    _firstTimeLayout = YES;
   }
   return self;
 }
@@ -187,8 +194,13 @@ std::vector<GURL> GetUrlsToOpen(const std::vector<const BookmarkNode*>& nodes) {
       [self.bookmarksTableView
           setContentPosition:self.cachedContentPosition.floatValue];
       self.cachedContentPosition = nil;
+    } else if (self.firstTimeLayout) {
+      [self.bookmarksTableView.tableView
+          setContentOffset:CGPointMake(0, -self.bookmarksTableView.tableView
+                                               .contentInset.top)];
     }
   }
+  self.firstTimeLayout = NO;
 }
 
 #pragma mark - Public
