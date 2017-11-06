@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "d7849ed7_9f5bd30b",
+        "filename": "chrome/browser/resource_coordinator/tab_lifetime_observer_browsertest.cc",
+        "patchSetId": 12
+      },
+      "lineNbr": 196,
+      "author": {
+        "id": 1001187
+      },
+      "writtenOn": "2017-11-06T18:48:05Z",
+      "side": 1,
+      "message": "Total aside: curious if we maybe want a OS_DESKTOP and OS_MOBILE catch-all for these common patterns? Might be worth a chromium-dev thread :)",
+      "range": {
+        "startLine": 196,
+        "startChar": 19,
+        "endLine": 196,
+        "endChar": 30
+      },
+      "revId": "c3a54e7a58c30a5d82777f37a46f7660f61162df",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
