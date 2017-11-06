@@ -5,6 +5,7 @@
 #ifndef UI_VIEWS_TEST_VIEWS_INTERACTIVE_UI_TEST_BASE_H_
 #define UI_VIEWS_TEST_VIEWS_INTERACTIVE_UI_TEST_BASE_H_
 
+#include "base/test/test_discardable_memory_allocator.h"
 #include "ui/views/test/views_test_base.h"
 
 namespace views {
@@ -21,6 +22,8 @@ class ViewsInteractiveUITestBase : public ViewsTestBase {
   void SetUp() override;
 
  private:
+  base::TestDiscardableMemoryAllocator discardable_memory_allocator_;
+
   DISALLOW_COPY_AND_ASSIGN(ViewsInteractiveUITestBase);
 };
 
