@@ -451,6 +451,30 @@
       "revId": "3b7e427cbc6bc4d524d9c38c90f9e0f758af009c",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "db93224d_78407901",
+        "filename": "services/device/public/cpp/test/test_wake_lock_provider.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 28,
+      "author": {
+        "id": 1000042
+      },
+      "writtenOn": "2017-11-06T16:10:55Z",
+      "side": 1,
+      "message": "thanks! i\u0027ll try switching to this in a followup change",
+      "parentUuid": "10adf378_2eaa3b38",
+      "range": {
+        "startLine": 28,
+        "startChar": 46,
+        "endLine": 28,
+        "endChar": 60
+      },
+      "revId": "3b7e427cbc6bc4d524d9c38c90f9e0f758af009c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
