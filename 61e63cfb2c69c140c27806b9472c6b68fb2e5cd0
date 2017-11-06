@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "80e4e810_307db4cc",
+        "filename": "third_party/WebKit/Source/bindings/core/v8/custom/V8DocumentCustom.cpp",
+        "patchSetId": 7
+      },
+      "lineNbr": 68,
+      "author": {
+        "id": 1002507
+      },
+      "writtenOn": "2017-11-06T06:09:02Z",
+      "side": 1,
+      "message": "This message does not need to match the test message in Web-Platform Tests, and we can write any message technically.  Since this message is shown to web developers, I\u0027d recommend \"The document has no window associated.\" or something like that.",
+      "revId": "61e63cfb2c69c140c27806b9472c6b68fb2e5cd0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
