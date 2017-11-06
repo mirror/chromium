@@ -1,0 +1,119 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "69c3ba56_93fb3ab7",
+        "filename": "components/arc/power/arc_power_bridge.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 174,
+      "author": {
+        "id": 1003166
+      },
+      "writtenOn": "2017-11-06T14:21:18Z",
+      "side": 1,
+      "message": "Normally the binding closing is the event that causes this function to be called. But in the tests, |binding_| should be closed in L154, since you are deleting the |host_proxy| by virtue of not holding to its reference.\n\nMaybe just make the fake power instance hold to |host_proxy| and have it be naturally deleted in its destructor?",
+      "range": {
+        "startLine": 174,
+        "startChar": 2,
+        "endLine": 174,
+        "endChar": 19
+      },
+      "revId": "3b7e427cbc6bc4d524d9c38c90f9e0f758af009c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ef778d5f_f0565d8a",
+        "filename": "components/arc/power/arc_power_bridge_unittest.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 52,
+      "author": {
+        "id": 1003166
+      },
+      "writtenOn": "2017-11-06T14:21:18Z",
+      "side": 1,
+      "message": "DestroyPowerInstance() is idempotent.",
+      "range": {
+        "startLine": 52,
+        "startChar": 4,
+        "endLine": 52,
+        "endChar": 24
+      },
+      "revId": "3b7e427cbc6bc4d524d9c38c90f9e0f758af009c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4c6b1d8f_c5c56b1d",
+        "filename": "components/arc/test/fake_power_instance.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 16,
+      "author": {
+        "id": 1003166
+      },
+      "writtenOn": "2017-11-06T14:21:18Z",
+      "side": 1,
+      "message": "Can you instead do\n\n SuspendCallback callback;\n std::swap(callback, suspend_callback_);\n return callback;\n\n?",
+      "range": {
+        "startLine": 16,
+        "startChar": 9,
+        "endLine": 16,
+        "endChar": 19
+      },
+      "revId": "3b7e427cbc6bc4d524d9c38c90f9e0f758af009c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "85a3a758_2688056d",
+        "filename": "components/arc/test/fake_power_instance.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 24,
+      "author": {
+        "id": 1003166
+      },
+      "writtenOn": "2017-11-06T14:21:18Z",
+      "side": 1,
+      "message": "Maybe \"Take\"? That makes the move semantics clearer.",
+      "range": {
+        "startLine": 24,
+        "startChar": 18,
+        "endLine": 24,
+        "endChar": 21
+      },
+      "revId": "3b7e427cbc6bc4d524d9c38c90f9e0f758af009c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b51498ef_894014e1",
+        "filename": "services/device/public/cpp/test/test_wake_lock_provider.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 28,
+      "author": {
+        "id": 1003166
+      },
+      "writtenOn": "2017-11-06T14:21:18Z",
+      "side": 1,
+      "message": "Can these be base::OnceClosure? That\u0027ll help the people doing the base::Closure migration. If they definitely cannot, can you explicitly make them base::RepeatingClosure?",
+      "range": {
+        "startLine": 28,
+        "startChar": 46,
+        "endLine": 28,
+        "endChar": 60
+      },
+      "revId": "3b7e427cbc6bc4d524d9c38c90f9e0f758af009c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
