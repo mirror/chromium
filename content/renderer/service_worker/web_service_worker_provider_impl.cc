@@ -216,10 +216,6 @@ void WebServiceWorkerProviderImpl::SetController(
                                  should_notify_controller_change);
 }
 
-int WebServiceWorkerProviderImpl::provider_id() const {
-  return context_->provider_id();
-}
-
 void WebServiceWorkerProviderImpl::PostMessageToClient(
     blink::mojom::ServiceWorkerObjectInfoPtr source,
     const base::string16& message,
@@ -239,6 +235,19 @@ void WebServiceWorkerProviderImpl::PostMessageToClient(
   provider_client->DispatchMessageEvent(
       WebServiceWorkerImpl::CreateHandle(std::move(worker)),
       blink::WebString::FromUTF16(message), std::move(message_ports));
+}
+
+void WebServiceWorkerProviderImpl::CountFeature(uint32_t feature) {
+  blink::WebServiceWorkerProviderClient* provider_client =
+      GetDispatcher()->GetProviderClient(context_->provider_id());
+  // The document may have been destroyed so that |provider_client| is null.
+  if (!provider_client)
+    return;
+  provider_client->CountFeature(feature);
+}
+
+int WebServiceWorkerProviderImpl::provider_id() const {
+  return context_->provider_id();
 }
 
 void WebServiceWorkerProviderImpl::RemoveProviderClient() {

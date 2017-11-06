@@ -65,6 +65,9 @@ class CONTENT_EXPORT WebServiceWorkerProviderImpl
       blink::mojom::ServiceWorkerObjectInfoPtr source,
       const base::string16& message,
       std::vector<mojo::ScopedMessagePipeHandle> message_pipes);
+  // Counts the number of times that features of Blink are used on real web
+  // pages.
+  void CountFeature(uint32_t feature);
 
   int provider_id() const;
 

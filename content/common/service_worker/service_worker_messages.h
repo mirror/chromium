@@ -235,14 +235,6 @@ IPC_MESSAGE_CONTROL4(ServiceWorkerMsg_SetNavigationPreloadHeaderError,
                      blink::mojom::ServiceWorkerErrorType,
                      std::string /* message */)
 
-// Notifies a client that its controller used a feature, for UseCounter
-// purposes (browser->renderer). |feature| must be one of the values from
-// blink::UseCounter::Feature enum.
-IPC_MESSAGE_CONTROL3(ServiceWorkerMsg_CountFeature,
-                     int /* thread_id */,
-                     int /* provider_id */,
-                     uint32_t /* feature */)
-
 // Sent via EmbeddedWorker to dispatch events.
 IPC_MESSAGE_CONTROL1(ServiceWorkerMsg_DidSkipWaiting,
                      int /* request_id */)

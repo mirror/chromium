@@ -152,7 +152,6 @@ class ServiceWorkerProviderContextTest : public testing::Test {
 
   ThreadSafeSender* thread_safe_sender() { return sender_.get(); }
   IPC::TestSink* ipc_sink() { return &ipc_sink_; }
-  ServiceWorkerDispatcher* dispatcher() { return dispatcher_.get(); }
   const MockServiceWorkerRegistrationObjectHost&
   remote_registration_object_host() const {
     return remote_registration_object_host_;
@@ -180,7 +179,7 @@ TEST_F(ServiceWorkerProviderContextTest, CreateForController) {
   const int kProviderId = 10;
   auto provider_context = base::MakeRefCounted<ServiceWorkerProviderContext>(
       kProviderId, SERVICE_WORKER_PROVIDER_FOR_CONTROLLER, nullptr, nullptr,
-      dispatcher(), nullptr /* loader_factory_getter */);
+      nullptr /* loader_factory_getter */);
 
   // The passed references should be adopted and owned by the provider context.
   provider_context->SetRegistrationForServiceWorkerGlobalScope(
@@ -219,7 +218,7 @@ TEST_F(ServiceWorkerProviderContextTest, SetController) {
         mojo::MakeRequestAssociatedWithDedicatedPipe(&container_ptr);
     auto provider_context = base::MakeRefCounted<ServiceWorkerProviderContext>(
         kProviderId, SERVICE_WORKER_PROVIDER_FOR_WINDOW,
-        std::move(container_request), nullptr /* host_ptr_info */, dispatcher(),
+        std::move(container_request), nullptr /* host_ptr_info */,
         nullptr /* loader_factory_getter */);
 
     ipc_sink()->ClearMessages();
@@ -257,7 +256,7 @@ TEST_F(ServiceWorkerProviderContextTest, SetController) {
         mojo::MakeRequestAssociatedWithDedicatedPipe(&container_ptr);
     auto provider_context = base::MakeRefCounted<ServiceWorkerProviderContext>(
         kProviderId, SERVICE_WORKER_PROVIDER_FOR_WINDOW,
-        std::move(container_request), std::move(host_ptr_info), dispatcher(),
+        std::move(container_request), std::move(host_ptr_info),
         nullptr /* loader_factory_getter */);
     auto provider_impl = std::make_unique<WebServiceWorkerProviderImpl>(
         thread_safe_sender(), provider_context.get());
@@ -293,7 +292,7 @@ TEST_F(ServiceWorkerProviderContextTest, SetController_Null) {
       mojo::MakeRequestAssociatedWithDedicatedPipe(&container_ptr);
   auto provider_context = base::MakeRefCounted<ServiceWorkerProviderContext>(
       kProviderId, SERVICE_WORKER_PROVIDER_FOR_WINDOW,
-      std::move(container_request), std::move(host_ptr_info), dispatcher(),
+      std::move(container_request), std::move(host_ptr_info),
       nullptr /* loader_factory_getter */);
   auto provider_impl = std::make_unique<WebServiceWorkerProviderImpl>(
       thread_safe_sender(), provider_context.get());
@@ -325,7 +324,7 @@ TEST_F(ServiceWorkerProviderContextTest, PostMessageToClient) {
       mojo::MakeRequestAssociatedWithDedicatedPipe(&container_ptr);
   auto provider_context = base::MakeRefCounted<ServiceWorkerProviderContext>(
       kProviderId, SERVICE_WORKER_PROVIDER_FOR_WINDOW,
-      std::move(container_request), std::move(host_ptr_info), dispatcher(),
+      std::move(container_request), std::move(host_ptr_info),
       nullptr /* loader_factory_getter */);
   auto provider_impl = base::MakeUnique<WebServiceWorkerProviderImpl>(
       thread_safe_sender(), provider_context.get());
