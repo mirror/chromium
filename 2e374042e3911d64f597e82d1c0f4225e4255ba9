@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "22f6d0b2_287e8aaa",
+        "filename": "third_party/WebKit/Source/platform/graphics/VideoFrameSubmitter.cpp",
+        "patchSetId": 24
+      },
+      "lineNbr": 27,
+      "author": {
+        "id": 1215059
+      },
+      "writtenOn": "2017-11-06T23:02:09Z",
+      "side": 1,
+      "message": "We bind line 100 tho. So we are on the correct thread.",
+      "parentUuid": "df693319_a3f31665",
+      "revId": "2e374042e3911d64f597e82d1c0f4225e4255ba9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "d383a573_58e20716",
         "filename": "third_party/WebKit/Source/platform/graphics/VideoFrameSubmitter.h",
         "patchSetId": 24
@@ -42,6 +60,30 @@
     },
     {
       "key": {
+        "uuid": "2c847aec_8119e814",
+        "filename": "third_party/WebKit/Source/platform/graphics/VideoFrameSubmitter.h",
+        "patchSetId": 24
+      },
+      "lineNbr": 22,
+      "author": {
+        "id": 1215059
+      },
+      "writtenOn": "2017-11-06T23:02:09Z",
+      "side": 1,
+      "message": "Actually this was originally talking about how the mojo calls must be ran from a sequenced task runner, since I ran into that trouble while testing. And now that I look at it, it is outdated! (Since we no longer do mojo stuff on construction). \n\nLet me fix this..",
+      "parentUuid": "d383a573_58e20716",
+      "range": {
+        "startLine": 21,
+        "startChar": 40,
+        "endLine": 22,
+        "endChar": 22
+      },
+      "revId": "2e374042e3911d64f597e82d1c0f4225e4255ba9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "20686b7d_ca7e3acb",
         "filename": "third_party/WebKit/Source/platform/graphics/VideoFrameSubmitter.h",
         "patchSetId": 24
@@ -62,6 +104,30 @@
       "revId": "2e374042e3911d64f597e82d1c0f4225e4255ba9",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ece0d8ff_a81aa42d",
+        "filename": "third_party/WebKit/Source/platform/graphics/VideoFrameSubmitter.h",
+        "patchSetId": 24
+      },
+      "lineNbr": 57,
+      "author": {
+        "id": 1215059
+      },
+      "writtenOn": "2017-11-06T23:02:09Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "20686b7d_ca7e3acb",
+      "range": {
+        "startLine": 57,
+        "startChar": 18,
+        "endLine": 57,
+        "endChar": 31
+      },
+      "revId": "2e374042e3911d64f597e82d1c0f4225e4255ba9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
