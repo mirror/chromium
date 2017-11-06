@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "6d834e96_038a081e",
+        "filename": "third_party/WebKit/Source/core/html/ImageData.cpp",
+        "patchSetId": 7
+      },
+      "lineNbr": 404,
+      "author": {
+        "id": 1203794
+      },
+      "writtenOn": "2017-11-06T17:22:52Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "9c585e5d_d1327b5f",
+      "range": {
+        "startLine": 404,
+        "startChar": 2,
+        "endLine": 404,
+        "endChar": 12
+      },
+      "revId": "31fb3ae702a2ff5e2acf6a956d1c9e2da6067e53",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "fa2ab445_f5276ac5",
         "filename": "third_party/WebKit/Source/core/html/ImageData.cpp",
         "patchSetId": 7
@@ -36,6 +60,30 @@
       "writtenOn": "2017-11-06T15:47:12Z",
       "side": 1,
       "message": "This function does not need to be in class ImageData, or it could be a static. Pass cropt_rect as an arg.",
+      "range": {
+        "startLine": 726,
+        "startChar": 16,
+        "endLine": 726,
+        "endChar": 31
+      },
+      "revId": "31fb3ae702a2ff5e2acf6a956d1c9e2da6067e53",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0ac0b3d2_25bc1de3",
+        "filename": "third_party/WebKit/Source/core/html/ImageData.cpp",
+        "patchSetId": 7
+      },
+      "lineNbr": 726,
+      "author": {
+        "id": 1203794
+      },
+      "writtenOn": "2017-11-06T17:22:52Z",
+      "side": 1,
+      "message": "Moving out from the class requires passing the ImageData object. The functionality is the same type as SwapU16EndiannessForSkColorSpaceXform(). I moved it to private section,",
+      "parentUuid": "fa2ab445_f5276ac5",
       "range": {
         "startLine": 726,
         "startChar": 16,
