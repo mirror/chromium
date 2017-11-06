@@ -166,6 +166,30 @@
       "revId": "f00f74feef559540a7ff68a7da56200b86ba7eea",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "bcef07d4_c5f8bb76",
+        "filename": "ash/display/touch_calibrator_controller.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 26,
+      "author": {
+        "id": 1000763
+      },
+      "writtenOn": "2017-11-06T18:10:55Z",
+      "side": 1,
+      "message": "For --mus everything runs in the same process, so you should be able to set breakpoints on the UI service side to see if it\u0027s calling to the observers. I\u0027m not sure that the unittests really start the UI service, but you can verify that by setting a breakpoint in services/ui/service.cc\u0027s constructor/OnStart().\n\nOften times unit tests don\u0027t really need to test the UI service directly, they just want to simulate what happens when something becomes available. In that case it\u0027s better to have a test only api that triggers the observer to be called.",
+      "parentUuid": "6a2b410e_4af9a6b1",
+      "range": {
+        "startLine": 25,
+        "startChar": 2,
+        "endLine": 26,
+        "endChar": 52
+      },
+      "revId": "f00f74feef559540a7ff68a7da56200b86ba7eea",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
