@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "1c164773_4cfba6f6",
+        "filename": "ios/chrome/browser/tabs/tab.mm",
+        "patchSetId": 4
+      },
+      "lineNbr": 897,
+      "author": {
+        "id": 1191445
+      },
+      "writtenOn": "2017-11-06T21:04:20Z",
+      "side": 1,
+      "message": "This comment should be updated.",
+      "revId": "9a585f59cb45424bb0aea4279fcc15dcc695109a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
