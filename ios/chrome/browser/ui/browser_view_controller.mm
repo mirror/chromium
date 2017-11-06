@@ -2477,7 +2477,7 @@ bubblePresenterForFeature:(const base::Feature&)feature
   tab.dialogDelegate = self;
   tab.snapshotOverlayProvider = self;
   tab.passKitDialogProvider = self;
-  if (!base::FeatureList::IsEnabled(features::kNewFullscreen)) {
+  if (!base::FeatureList::IsEnabled(fullscreen::features::kNewFullscreen)) {
     tab.legacyFullscreenControllerDelegate = self;
   }
   if (!IsIPadIdiom()) {
@@ -2521,7 +2521,7 @@ bubblePresenterForFeature:(const base::Feature&)feature
   tab.dialogDelegate = nil;
   tab.snapshotOverlayProvider = nil;
   tab.passKitDialogProvider = nil;
-  if (!base::FeatureList::IsEnabled(features::kNewFullscreen)) {
+  if (!base::FeatureList::IsEnabled(fullscreen::features::kNewFullscreen)) {
     tab.legacyFullscreenControllerDelegate = nil;
   }
   if (!IsIPadIdiom()) {
