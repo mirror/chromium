@@ -528,6 +528,11 @@ void MessageLoopForUI::Start() {
 void MessageLoopForUI::Abort() {
   static_cast<MessagePumpForUI*>(pump_.get())->Abort();
 }
+
+void MessageLoopForUI::SetIdleCallback(base::OnceClosure callback) {
+  static_cast<MessagePumpForUI*>(pump_.get())
+      ->SetIdleCallback(std::move(callback));
+}
 #endif
 
 #if defined(OS_IOS)

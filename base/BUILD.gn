@@ -95,7 +95,10 @@ if (is_nacl_nonsfi) {
 
 if (is_android) {
   config("android_system_libs") {
-    libs = [ "log" ]  # Used by logging.cc.
+    libs = [
+      "android",
+      "log",  # Used by logging.cc.
+    ]
   }
 }
 
