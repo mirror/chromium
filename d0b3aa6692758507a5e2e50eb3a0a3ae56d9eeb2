@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "0d634c24_ae1a24a3",
+        "filename": "chromeos/dbus/sms_client.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 79,
+      "author": {
+        "id": 1000191
+      },
+      "writtenOn": "2017-11-06T23:45:19Z",
+      "side": 1,
+      "message": "GetSMSProperties calls:\nPropertySet::RegisterProperty(): This just calls Property::Init() which has no obvious side effects.\nPropertySet::GetAll(): This invokes a DBus method (kPropertiesInterface, kPropertiesGetAll) which will call OnGetAll() and invoke this, but that should never occur immediately, the callback should always be posted to a task on the same thread. It looks like we even do the right thing in the fake implementation: https://cs.chromium.org/chromium/src/chromeos/dbus/fake_sms_client.cc?q\u003dsms_client.cc\u0026dr\u0026l\u003d43\n\nSo, we should not need to post this, unless I missed something.",
+      "revId": "d0b3aa6692758507a5e2e50eb3a0a3ae56d9eeb2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
