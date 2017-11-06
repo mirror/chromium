@@ -3440,6 +3440,27 @@
             ]
         }
     ],
+    "SpeculativePreconnectValidation": [
+        {
+            "platforms": [
+                "win",
+                "mac",
+                "linux",
+                "android"
+            ],
+            "experiments": [
+                {
+                    "name": "Preconnect",
+                    "params": {
+                        "mode": "preconnect"
+                    },
+                    "enable_features": [
+                        "SpeculativePreconnect"
+                    ]
+                }
+            ]
+        }
+    ],
     "StabilityDebugging": [
         {
             "platforms": [
