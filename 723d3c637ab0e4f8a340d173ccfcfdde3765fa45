@@ -256,6 +256,30 @@
     },
     {
       "key": {
+        "uuid": "989121cc_3bdc0cc8",
+        "filename": "ios/chrome/browser/ui/activity_services/canonical_url_getter.mm",
+        "patchSetId": 6
+      },
+      "lineNbr": 39,
+      "author": {
+        "id": 1191445
+      },
+      "writtenOn": "2017-11-06T07:59:51Z",
+      "side": 1,
+      "message": "Are you referring to IsOriginSecure: https://cs.chromium.org/chromium/src/ios/web/public/origin_util.h?q\u003disoriginsecure\u0026dr\u003dCSs\u0026l\u003d18",
+      "parentUuid": "ad968b06_d6e381f5",
+      "range": {
+        "startLine": 39,
+        "startChar": 7,
+        "endLine": 39,
+        "endChar": 32
+      },
+      "revId": "723d3c637ab0e4f8a340d173ccfcfdde3765fa45",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "b756edeb_63b18baf",
         "filename": "ios/chrome/browser/ui/activity_services/canonical_url_getter.mm",
         "patchSetId": 6
@@ -290,6 +314,30 @@
       "writtenOn": "2017-11-03T08:58:01Z",
       "side": 1,
       "message": "It seems that we disallow relative canonical links.\nI know they are discouraged, but they are allowed by RFC. Should we handle them? Or document somewhere that we don\u0027t?",
+      "range": {
+        "startLine": 45,
+        "startChar": 44,
+        "endLine": 45,
+        "endChar": 62
+      },
+      "revId": "723d3c637ab0e4f8a340d173ccfcfdde3765fa45",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a4493d34_c46539e5",
+        "filename": "ios/chrome/browser/ui/activity_services/canonical_url_getter.mm",
+        "patchSetId": 6
+      },
+      "lineNbr": 45,
+      "author": {
+        "id": 1191445
+      },
+      "writtenOn": "2017-11-06T07:59:51Z",
+      "side": 1,
+      "message": "Seems like a product question, but I don\u0027t want to block this CL while we determine answer. I prefer to document that we do not support them, and if necessary, add a follow up CL later.",
+      "parentUuid": "6e409729_9ba00f0e",
       "range": {
         "startLine": 45,
         "startChar": 44,
@@ -371,6 +419,30 @@
     },
     {
       "key": {
+        "uuid": "11ca5fda_bf2b18a6",
+        "filename": "ios/chrome/browser/ui/activity_services/canonical_url_getter_delegate.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 15,
+      "author": {
+        "id": 1191445
+      },
+      "writtenOn": "2017-11-06T07:59:51Z",
+      "side": 1,
+      "message": "We had a conversation about this in the design doc. There are architectural reasons to prefer a delegate over a block, such as making it much harder to make layering violations and add implicit dependencies.",
+      "parentUuid": "6e80ad3b_246dfb26",
+      "range": {
+        "startLine": 15,
+        "startChar": 10,
+        "endLine": 15,
+        "endChar": 36
+      },
+      "revId": "723d3c637ab0e4f8a340d173ccfcfdde3765fa45",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "983252ff_4b304528",
         "filename": "ios/chrome/browser/ui/activity_services/canonical_url_getter_delegate.h",
         "patchSetId": 6
@@ -428,6 +500,30 @@
       "writtenOn": "2017-11-03T08:58:01Z",
       "side": 1,
       "message": "This is actually odd, because the http site is the one being possibly hacked.",
+      "range": {
+        "startLine": 154,
+        "startChar": 31,
+        "endLine": 154,
+        "endChar": 59
+      },
+      "revId": "723d3c637ab0e4f8a340d173ccfcfdde3765fa45",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e6945b8a_5e4c0b2a",
+        "filename": "ios/chrome/browser/ui/activity_services/canonical_url_getter_unittest.mm",
+        "patchSetId": 6
+      },
+      "lineNbr": 154,
+      "author": {
+        "id": 1191445
+      },
+      "writtenOn": "2017-11-06T07:59:51Z",
+      "side": 1,
+      "message": "Not sure I follow this comment? We only specified the prevention of downgrades, not upgrades.",
+      "parentUuid": "82e678b5_89148404",
       "range": {
         "startLine": 154,
         "startChar": 31,
