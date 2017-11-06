@@ -16,6 +16,24 @@
       "revId": "94b02ff3579c9c7fa0e7dff6a2aef0820982eac9",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "952cc807_fd49bd2d",
+        "filename": "ui/webui/resources/cr_elements/chromeos/cr_picture/cr_camera.js",
+        "patchSetId": 2
+      },
+      "lineNbr": 89,
+      "author": {
+        "id": 1000539
+      },
+      "writtenOn": "2017-11-06T19:55:07Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "2cf8329d_40bdc52a",
+      "revId": "94b02ff3579c9c7fa0e7dff6a2aef0820982eac9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
