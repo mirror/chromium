@@ -1958,6 +1958,18 @@ void BrowserTestClipboardScope::SetText(const std::string& text) {
   clipboard_writer.WriteText(base::ASCIIToUTF16(text));
 }
 
+void BrowserTestClipboardScope::GetText(std::string* result) {
+#if defined(OS_WIN)
+  if (!BrowserThread::CurrentlyOn(BrowserThread::IO)) {
+    RunTaskOnIOThreadAndWait(base::Bind(&BrowserTestClipboardScope::GetText,
+                                        base::Unretained(this), result));
+    return;
+  }
+#endif
+  ui::Clipboard::GetForCurrentThread()->ReadAsciiText(
+      ui::CLIPBOARD_TYPE_COPY_PASTE, result);
+}
+
 class FrameFocusedObserver::FrameTreeNodeObserverImpl
     : public FrameTreeNode::Observer {
  public:
