@@ -1,0 +1,96 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "152de130_5ffde840",
+        "filename": "media/blink/video_frame_compositor.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 138,
+      "author": {
+        "id": 1120879
+      },
+      "writtenOn": "2017-11-06T21:30:34Z",
+      "side": 1,
+      "message": "This is not what _Locked means to me.\n\nI interpret _Locked to mean that I must hold the correct lock when I call the method. I would expect the method to assert that the lock is held. (eg. https://cs.chromium.org/chromium/src/media/base/wall_clock_time_source.cc?l\u003d85)",
+      "range": {
+        "startLine": 138,
+        "startChar": 22,
+        "endLine": 138,
+        "endChar": 41
+      },
+      "revId": "e2af26250d69eeabd00ba09916d51d6d0db59903",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "671abb11_adaaafee",
+        "filename": "media/blink/video_frame_compositor.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 96,
+      "author": {
+        "id": 1120879
+      },
+      "writtenOn": "2017-11-06T21:30:34Z",
+      "side": 1,
+      "message": "This should probably document what a \u0027current frame\u0027 is exactly.",
+      "range": {
+        "startLine": 96,
+        "startChar": 28,
+        "endLine": 96,
+        "endChar": 50
+      },
+      "revId": "e2af26250d69eeabd00ba09916d51d6d0db59903",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c4a91227_762f090d",
+        "filename": "media/blink/video_frame_compositor_unittest.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 254,
+      "author": {
+        "id": 1120879
+      },
+      "writtenOn": "2017-11-06T21:30:34Z",
+      "side": 1,
+      "message": "I don\u0027t think it makes sense to continue testing this, given that this code path does not exist outside of this unittest. It should be split into separate tests for each method.\n\nThere may be a larger integration test we need to make sure that callers are using the methods correctly.",
+      "range": {
+        "startLine": 254,
+        "startChar": 33,
+        "endLine": 254,
+        "endChar": 64
+      },
+      "revId": "e2af26250d69eeabd00ba09916d51d6d0db59903",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3ab3abb7_7cc52339",
+        "filename": "media/blink/webmediaplayer_impl.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 2243,
+      "author": {
+        "id": 1120879
+      },
+      "writtenOn": "2017-11-06T21:30:34Z",
+      "side": 1,
+      "message": "This isn\u0027t quite enough to prove that it\u0027s safe, since it could still be destroyed on |vfc_task_runner_| before this task is executed. Some link between the lifetime of |vfc_task_runner_| and the lifetime of |compositor_| is required.",
+      "range": {
+        "startLine": 2243,
+        "startChar": 60,
+        "endLine": 2243,
+        "endChar": 72
+      },
+      "revId": "e2af26250d69eeabd00ba09916d51d6d0db59903",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
