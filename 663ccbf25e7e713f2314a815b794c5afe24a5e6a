@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "1efcd05f_5d4edd57",
+        "filename": "chrome/browser/profiling_host/chrome_browser_main_extra_parts_profiling.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 19,
+      "author": {
+        "id": 1002691
+      },
+      "writtenOn": "2017-11-06T17:17:17Z",
+      "side": 1,
+      "message": "Can you add a comment here about why this is disabled in these modes?",
+      "revId": "663ccbf25e7e713f2314a815b794c5afe24a5e6a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
