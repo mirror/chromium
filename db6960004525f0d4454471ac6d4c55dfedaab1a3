@@ -16,6 +16,24 @@
       "revId": "db6960004525f0d4454471ac6d4c55dfedaab1a3",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d1df3c54_97c7082b",
+        "filename": "testing/scripts/check_network_annotations.py",
+        "patchSetId": 24
+      },
+      "lineNbr": 29,
+      "author": {
+        "id": 1211034
+      },
+      "writtenOn": "2017-11-06T07:03:19Z",
+      "side": 1,
+      "message": "OK, reverted the code to original state, with just modified message.\nI will add a --full mode later to auditor when we really need separation of warnings and errors.",
+      "parentUuid": "53a0db5c_08455c0a",
+      "revId": "db6960004525f0d4454471ac6d4c55dfedaab1a3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
