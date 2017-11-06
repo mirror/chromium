@@ -280,6 +280,23 @@
       "revId": "d6a383995a0e74853b81b22405229fe54b6b3728",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "59334cdb_5e918140",
+        "filename": "components/viz/service/display/direct_renderer.cc",
+        "patchSetId": 12
+      },
+      "lineNbr": 662,
+      "author": {
+        "id": 1000887
+      },
+      "writtenOn": "2017-11-06T19:49:40Z",
+      "side": 0,
+      "message": "InitializeViewport call can stay here, it just needs the size of the texture, which it can get from the subclass?",
+      "revId": "d6a383995a0e74853b81b22405229fe54b6b3728",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }

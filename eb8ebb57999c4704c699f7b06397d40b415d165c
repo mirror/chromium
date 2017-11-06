@@ -1,0 +1,72 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "82861a84_9c59e730",
+        "filename": "components/viz/service/display/direct_renderer.cc",
+        "patchSetId": 12
+      },
+      "lineNbr": 600,
+      "author": {
+        "id": 1000887
+      },
+      "writtenOn": "2017-11-06T19:49:40Z",
+      "side": 1,
+      "message": "Why not using RenderPassTextureSize() still here?",
+      "revId": "eb8ebb57999c4704c699f7b06397d40b415d165c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7714c521_c464d05a",
+        "filename": "components/viz/service/display/direct_renderer.cc",
+        "patchSetId": 12
+      },
+      "lineNbr": 605,
+      "author": {
+        "id": 1000887
+      },
+      "writtenOn": "2017-11-06T19:49:40Z",
+      "side": 1,
+      "message": "I find \u0026\u0026 and || mixed into a single if statement to be very hard to follow. Would prefer to use a nested ifs/elses, or bool variables that combine pieces together and give them a name.",
+      "revId": "eb8ebb57999c4704c699f7b06397d40b415d165c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "982c51a6_1aeae168",
+        "filename": "components/viz/service/display/gl_renderer.cc",
+        "patchSetId": 12
+      },
+      "lineNbr": 2870,
+      "author": {
+        "id": 1000887
+      },
+      "writtenOn": "2017-11-06T19:49:40Z",
+      "side": 1,
+      "message": "DCHECK(a \u0026\u0026 b) can be written as DCHECK(a); DCHECK(b); and now we know which one failed when it happens.",
+      "revId": "eb8ebb57999c4704c699f7b06397d40b415d165c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d167e464_f12fb833",
+        "filename": "components/viz/service/display/gl_renderer.cc",
+        "patchSetId": 12
+      },
+      "lineNbr": 3612,
+      "author": {
+        "id": 1000887
+      },
+      "writtenOn": "2017-11-06T19:49:40Z",
+      "side": 1,
+      "message": "I still feel weird having this in the subclass but I\u0027m not really sure what to suggest..\n\nMaybe it\u0027s that the make_unique\u003c\u003e call above is there for historical reasons, and it could be in AllocateRenderPassResourceIfNeeded() instead. Then if that returned true, the base class could execute this line?",
+      "revId": "eb8ebb57999c4704c699f7b06397d40b415d165c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
