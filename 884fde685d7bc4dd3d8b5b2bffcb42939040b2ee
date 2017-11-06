@@ -125,6 +125,24 @@
     },
     {
       "key": {
+        "uuid": "d8538194_12b1ce75",
+        "filename": "content/browser/leveldb_wrapper_impl.cc",
+        "patchSetId": 12
+      },
+      "lineNbr": 413,
+      "author": {
+        "id": 1125359
+      },
+      "writtenOn": "2017-11-06T21:08:32Z",
+      "side": 1,
+      "message": "Okay it\u0027s true that we never use this function to get back to keys only mode right now. I just added a commit as consideration and removed the checks. If in future we add way to switch back to keys only, this can be changed.",
+      "parentUuid": "54c294b2_90f407c2",
+      "revId": "884fde685d7bc4dd3d8b5b2bffcb42939040b2ee",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "1dae8909_990fbb2e",
         "filename": "content/browser/leveldb_wrapper_impl.cc",
         "patchSetId": 12
