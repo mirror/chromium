@@ -1411,6 +1411,10 @@ void AutofillManager::FillOrPreviewDataModelForm(
     if (form_structure->field(i)->section() != autofill_field->section())
       continue;
 
+    if (form_structure->field(i)->only_fill_when_focused() &&
+        !form_structure->field(i)->SameFieldAs(field))
+      continue;
+
     DCHECK(form_structure->field(i)->SameFieldAs(result.fields[i]));
 
     const AutofillField* cached_field = form_structure->field(i);
