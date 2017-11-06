@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "afac447d_05bb2ce0",
+        "filename": "third_party/WebKit/Source/core/layout/ng/inline/ng_offset_mapping.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 230,
+      "author": {
+        "id": 1002258
+      },
+      "writtenOn": "2017-11-06T05:36:05Z",
+      "side": 1,
+      "message": "nit: s/auto/const auto/",
+      "revId": "4419bedfb7924b038302840d8654afdc2dd692cf",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
