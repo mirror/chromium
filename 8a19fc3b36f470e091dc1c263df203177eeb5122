@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "44a795f0_3279f2fc",
+        "filename": "content/browser/dom_storage/local_storage_context_mojo.cc",
+        "patchSetId": 16
+      },
+      "lineNbr": 185,
+      "author": {
+        "id": 1125359
+      },
+      "writtenOn": "2017-11-06T22:35:41Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "a22b9863_087b6f66",
+      "revId": "8a19fc3b36f470e091dc1c263df203177eeb5122",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "530f85f4_a5af8b7c",
         "filename": "content/common/leveldb_wrapper.mojom",
         "patchSetId": 16
@@ -30,6 +48,30 @@
       "writtenOn": "2017-11-06T22:15:54Z",
       "side": 1,
       "message": "mmmm I don\u0027t like this. It\u0027s making this service a localstorage-specific service, but what if other people want to use this wrapper as their database? I want to use it for session storage, which is similar, and probably wont\u0027 be a problem, but I don\u0027t like seeing nice generic implementations turn very specific to one user :( in a restrictive way",
+      "range": {
+        "startLine": 78,
+        "startChar": 0,
+        "endLine": 78,
+        "endChar": 56
+      },
+      "revId": "8a19fc3b36f470e091dc1c263df203177eeb5122",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "fdd8c793_ba356c32",
+        "filename": "content/common/leveldb_wrapper.mojom",
+        "patchSetId": 16
+      },
+      "lineNbr": 78,
+      "author": {
+        "id": 1125359
+      },
+      "writtenOn": "2017-11-06T22:35:41Z",
+      "side": 1,
+      "message": "Currently there is no use case for this wrapper that will use Get() function. This is the reason Chris had reviewed the CL and he seems fine with not having the Get functionality in the wrapper.\nIf you think we might need Get() for some other use case it can be added with little amount of work. I just didn\u0027t implement this because it adds more complexity to code that I have not thought of yet.\nMaybe let\u0027s discuss if we want to remove this or implement it in next cl?",
+      "parentUuid": "530f85f4_a5af8b7c",
       "range": {
         "startLine": 78,
         "startChar": 0,
