@@ -32,6 +32,7 @@
 #include "content/public/test/test_navigation_observer.h"
 #include "net/base/net_errors.h"
 #include "net/dns/dns_test_util.h"
+#include "net/dns/mock_host_resolver.h"
 #include "net/test/url_request/url_request_failed_job.h"
 #include "net/test/url_request/url_request_mock_http_job.h"
 #include "net/url_request/url_request_filter.h"
@@ -493,6 +494,8 @@ DnsProbeBrowserTest::~DnsProbeBrowserTest() {
 }
 
 void DnsProbeBrowserTest::SetUpOnMainThread() {
+  host_resolver()->AddRule("*", "127.0.0.1");
+  content::SetupCrossSiteRedirector(embedded_test_server());
   NetErrorTabHelper::set_state_for_testing(
       NetErrorTabHelper::TESTING_DEFAULT);
 
@@ -505,6 +508,7 @@ void DnsProbeBrowserTest::SetUpOnMainThread() {
                Unretained(helper_), g_browser_process->io_thread()));
 
   SetActiveBrowser(browser());
+  ASSERT_TRUE(embedded_test_server()->Start());
 }
 
 void DnsProbeBrowserTest::TearDownOnMainThread() {
@@ -888,7 +892,7 @@ IN_PROC_BROWSER_TEST_F(DnsProbeBrowserTest, NoProbeInSubframe) {
   SetCorrectionServiceBroken(false);
 
   NavigateToURL(browser(),
-                URLRequestMockHTTPJob::GetMockUrl("iframe_dns_error.html"));
+                embedded_test_server()->GetURL("/iframe_dns_error.html"));
 
   // By the time NavigateToURL returns, the browser will have seen the failed
   // provisional load.  If a probe was started (or considered but not run),

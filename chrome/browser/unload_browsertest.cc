@@ -29,6 +29,7 @@
 #include "content/public/browser/web_contents.h"
 #include "content/public/common/content_switches.h"
 #include "content/public/test/browser_test_utils.h"
+#include "net/dns/mock_host_resolver.h"
 #include "net/test/embedded_test_server/embedded_test_server.h"
 #include "net/test/url_request/url_request_mock_http_job.h"
 #include "net/url_request/url_request_test_util.h"
@@ -138,10 +139,16 @@ class UnloadTest : public InProcessBrowserTest {
 #if defined(OS_POSIX)
       DisableSIGTERMHandling();
 #endif
+      host_resolver()->AddRule("*", "127.0.0.1");
+      content::SetupCrossSiteRedirector(embedded_test_server());
+      ASSERT_TRUE(embedded_test_server()->Start());
     }
   }
 
   void SetUpOnMainThread() override {
+    host_resolver()->AddRule("*", "127.0.0.1");
+    content::SetupCrossSiteRedirector(embedded_test_server());
+    ASSERT_TRUE(embedded_test_server()->Start());
     BrowserThread::PostTask(
         BrowserThread::IO, FROM_HERE,
         base::Bind(&chrome_browser_net::SetUrlRequestMocksEnabled, true));
@@ -160,7 +167,7 @@ class UnloadTest : public InProcessBrowserTest {
   }
 
   void NavigateToNolistenersFileTwice() {
-    GURL url(net::URLRequestMockHTTPJob::GetMockUrl("title2.html"));
+    GURL url(embedded_test_server()->GetURL("/title2.html"));
     ui_test_utils::NavigateToURL(browser(), url);
     CheckTitle("Title Of Awesomeness");
     ui_test_utils::NavigateToURL(browser(), url);
@@ -171,7 +178,7 @@ class UnloadTest : public InProcessBrowserTest {
   // load is purposely async to test the case where the user loads another
   // page without waiting for the first load to complete.
   void NavigateToNolistenersFileTwiceAsync() {
-    GURL url(net::URLRequestMockHTTPJob::GetMockUrl("title2.html"));
+    GURL url(embedded_test_server()->GetURL("/title2.html"));
     ui_test_utils::NavigateToURLWithDisposition(
         browser(), url, WindowOpenDisposition::CURRENT_TAB, 0);
     ui_test_utils::NavigateToURL(browser(), url);
@@ -700,6 +707,12 @@ class FastUnloadTest : public UnloadTest {
   void SetUpCommandLine(base::CommandLine* command_line) override {
     UnloadTest::SetUpCommandLine(command_line);
     command_line->AppendSwitch(switches::kEnableFastUnload);
+  }
+
+  void SetUpOnMainThread() override {
+    BrowserThread::PostTask(
+        BrowserThread::IO, FROM_HERE,
+        base::Bind(&chrome_browser_net::SetUrlRequestMocksEnabled, true));
   }
 
   void SetUpInProcessBrowserTestFixture() override {
