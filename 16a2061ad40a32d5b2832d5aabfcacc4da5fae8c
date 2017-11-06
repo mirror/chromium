@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "f7b00494_eb8ae59b",
+        "filename": "chromeos/dbus/lorgnette_manager_client.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 141,
+      "author": {
+        "id": 1000191
+      },
+      "writtenOn": "2017-11-06T22:27:47Z",
+      "side": 1,
+      "message": "This makes my head hurt, and makes the meaning of data_.has_value() extremely unclear. Can we just use a single Optional and test the state of |data| passed to OnDataRead and do the right thing there?",
+      "revId": "16a2061ad40a32d5b2832d5aabfcacc4da5fae8c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
