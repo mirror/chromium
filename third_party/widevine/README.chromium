@@ -1,0 +1,10 @@
+Name: Google Widevine CDM
+URL: https://www.widevine.com/
+License: Custom License
+License File: cdm/LICENSE.txt
+Version: 0
+Security Critical: yes
+
+Description:
+This directory contains build files for integrating the Widevine CDM into
+Chrome. No third-party files are checked in here.

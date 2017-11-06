@@ -41,9 +41,6 @@ PRUNE_PATHS = set([
     # Apache 2.0 license. See crbug.com/140478
     os.path.join('third_party','bidichecker'),
 
-    # Build files only, not third-party code.
-    os.path.join('third_party','widevine'),
-
     # Only binaries, used during development.
     os.path.join('third_party','valgrind'),
 
@@ -307,6 +304,7 @@ KNOWN_NON_IOS_LIBRARIES = set([
     os.path.join('third_party', 'tcmalloc'),
     os.path.join('third_party', 'usb_ids'),
     os.path.join('third_party', 'v8-i18n'),
+    os.path.join('third_party', 'widevine'),
     os.path.join('third_party', 'wtl'),
     os.path.join('third_party', 'yara'),
     os.path.join('third_party', 'yasm'),
