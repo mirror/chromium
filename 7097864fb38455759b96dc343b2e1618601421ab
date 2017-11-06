@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "70bc89c0_48bb68f1",
+        "filename": "content/renderer/render_view_impl.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 1820,
+      "author": {
+        "id": 1002725
+      },
+      "writtenOn": "2017-11-06T22:15:33Z",
+      "side": 1,
+      "message": "we shouldn\u0027t have platform-specific behavior in render_view_impl.\n\nis autofill implementation on desktop (basically chromeos I think?) expecting DIP, but android implementation is expecting physical pixels? there\u0027s a TODO in RenderWidget::ConvertViewportToWindow that the conversion for desktop loses precision, so android\u0027s one is actually better. but that just means the desktop autofill implementation should be fixed instead, then remove this call altogether.",
+      "revId": "7097864fb38455759b96dc343b2e1618601421ab",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
