@@ -35,7 +35,7 @@ def check_property_parameters(property_to_check):
         assert not(property_to_check['interpolable']), \
             'Shorthand property (' + property_to_check['name'] + ') ' \
             'cannot be interpolable'
-    if property_to_check['api_class'] is not None:
+    if property_to_check['property_class'] is not None:
         if property_to_check['longhands']:
             assert 'parseSingleValue' not in property_to_check['api_methods'], \
                 'Shorthand property (' + property_to_check['name'] + ') ' \

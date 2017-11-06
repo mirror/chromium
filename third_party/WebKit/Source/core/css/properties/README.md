@@ -7,28 +7,28 @@ files containing functions commonly used by the property APIs.
 
 ## Overview
 
-CSSPropertyAPI is the base class which all property implementations are derived
+CSSProperty is the base class which all property implementations are derived
 from. It contains all the methods that can be called on a property API, and a
 default implementation for each. The .cpp implementation files for
-CSSPropertyAPI are split between the generated code (CSSPropertyAPI.cpp) and the
-hand written code (CSSPropertyAPIBaseCustom.cpp).
+CSSProperty are split between the generated code (CSSProperty.cpp) and the
+hand written code (CSSPropertyBaseCustom.cpp).
 
 The methods that are overriden from the base class by a property API depends on
 the functionality required by that property. Methods may have a working default
 implementation in the base class, or may assert that this default implementation
 is not reached.
 
-A derived CSS property API (CSSPropertyAPI<Property/GroupName\>) represents a
+A derived CSS property API (CSSProperty<Property/GroupName\>) represents a
 single CSS property or a group of CSS properties that share implementation logic.
 Property groups can be determined from [CSSProperties.json5](https://cs.chromium.org/chromium/src/third_party/WebKit/Source/core/css/CSSProperties.json5).
-Properties that are a part of a group define the group class name as 'api_class'
+Properties that are a part of a group define the group class name as 'property_class'
 here.
 
 Examples:
 
-*   A single property API: the `CSSPropertyAPILineHeight` class is used only by
+*   A single property API: the `CSSPropertyLineHeight` class is used only by
     the `line-height` property
-*   A group of properties that share logic: the `CSSPropertyAPIImageSource`
+*   A group of properties that share logic: the `CSSPropertyImageSource`
     class is shared by the `border-image-source` and
     `-webkit-mask-box-image-source` properties.
 
@@ -39,8 +39,6 @@ Examples:
 Shorthand properties only exist in the context of parsing and serialization.
 Therefore only a subset of methods may be implemented by shorthand properties,
 e.g. ParseShorthand.
-
-Shorthand property APIs are named like CSSShorthandPropertyAPI<ShorthandProperty\>
 
 ### Descriptors
 
@@ -64,15 +62,15 @@ are in this directory.
 ## How to add a new property API
 
 1.  Add a .cpp file to this directory named
-    `CSSPropertyAPI<Property/GroupName>.cpp`
+    `CSSProperty<Property/GroupName>.cpp`
 2.  Implement the property API in the .cpp file
-    1.  Add `#include "core/css/properties/CSSPropertyAPI<Property/GroupName>.h"`
+    1.  Add `#include "core/css/properties/CSSProperty<Property/GroupName>.h"`
         (this will be a generated file).
     2.  Implement the required methods on the API.
 3.  If logic is required by multiple property APIs you may need to create a new
     Utils file.
 4.  Add the new property to `core/css/CSSProperties.json5`. Ensure that you
-    include the 'api_class' flag and the 'api_methods' flag so that the API
+    include the 'property_class' flag and the 'api_methods' flag so that the API
     files are generated correctly (see
     [CSSProperties.json5](https://cs.chromium.org/chromium/src/third_party/WebKit/Source/core/css/CSSProperties.json5)
     for more details)
@@ -85,7 +83,7 @@ are in this directory.
         in the `css_properties` target's `outputs` parameter
 
 See [this example CL](https://codereview.chromium.org/2735093005), which
-converts the existing line-height property to use the CSSPropertyAPI design.
+converts the existing line-height property to use the CSSProperty design.
 This new line-height property API only implements the ParseSingleValue method,
 using
 [CSSPropertyFontUtils.cpp](https://cs.chromium.org/chromium/src/third_party/WebKit/Source/core/css/properties/CSSPropertyFontUtils.h)
