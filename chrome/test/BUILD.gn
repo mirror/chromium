@@ -3947,6 +3947,10 @@ test("unit_tests") {
     sources += [ "../browser/notifications/notification_platform_bridge_linux_unittest.cc" ]
   }
 
+  if (is_win && enable_native_notifications) {
+    sources += [ "../browser/notifications/notification_platform_bridge_win_unittest.cc" ]
+  }
+
   if (enable_desktop_in_product_help) {
     sources += [
       "../browser/feature_engagement/bookmark/bookmark_tracker_unittest.cc",
