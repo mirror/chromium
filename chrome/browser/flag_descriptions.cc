@@ -130,6 +130,14 @@ const char kForceColorProfileDescription[] =
     "Forces Chrome to use a specific color profile instead of the color "
     "of the window's current monitor, as specified by the operating system.";
 
+#if defined(OS_CHROMEOS)
+// TODO(mcasas): remove after https://crbug.com/771345.
+const char kUseMonitorColorSpaceName[] = "Use monitor color space";
+const char kUseMonitorColorSpaceDescription[] =
+    "Enables Chrome to use the  color space information provided by the monitor"
+    " instead of the default sRGB color space.";
+#endif
+
 const char kCompositedLayerBordersName[] = "Composited render layer borders";
 const char kCompositedLayerBordersDescription[] =
     "Renders a border around composited Render Layers to help debug and study "
