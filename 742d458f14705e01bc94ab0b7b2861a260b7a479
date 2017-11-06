@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "add6cd29_74fdccd4",
+        "filename": "chrome/browser/printing/pdf_to_emf_converter_browsertest.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 24,
+      "author": {
+        "id": 1002246
+      },
+      "writtenOn": "2017-11-06T18:34:52Z",
+      "side": 1,
+      "message": "Nice, shorter!",
+      "parentUuid": "1fa48664_5a922f42",
+      "revId": "742d458f14705e01bc94ab0b7b2861a260b7a479",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "65b09dce_543846be",
         "filename": "chrome/browser/printing/pdf_to_emf_converter_browsertest.cc",
         "patchSetId": 8
@@ -39,6 +57,30 @@
       "revId": "742d458f14705e01bc94ab0b7b2861a260b7a479",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3b602f34_68df1664",
+        "filename": "chrome/browser/printing/pdf_to_emf_converter_browsertest.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 65,
+      "author": {
+        "id": 1002246
+      },
+      "writtenOn": "2017-11-06T18:34:52Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "65b09dce_543846be",
+      "range": {
+        "startLine": 65,
+        "startChar": 31,
+        "endLine": 65,
+        "endChar": 52
+      },
+      "revId": "742d458f14705e01bc94ab0b7b2861a260b7a479",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -65,6 +107,30 @@
     },
     {
       "key": {
+        "uuid": "979892ea_ea0fa35e",
+        "filename": "chrome/browser/printing/pdf_to_emf_converter_browsertest.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 125,
+      "author": {
+        "id": 1002246
+      },
+      "writtenOn": "2017-11-06T18:34:52Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "7f807eff_de4cc2fe",
+      "range": {
+        "startLine": 125,
+        "startChar": 4,
+        "endLine": 125,
+        "endChar": 14
+      },
+      "revId": "742d458f14705e01bc94ab0b7b2861a260b7a479",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "6b318201_b3f570e3",
         "filename": "chrome/browser/printing/pdf_to_emf_converter_browsertest.cc",
         "patchSetId": 8
@@ -82,6 +148,24 @@
     },
     {
       "key": {
+        "uuid": "09ca84c4_5be30c7f",
+        "filename": "chrome/browser/printing/pdf_to_emf_converter_browsertest.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 129,
+      "author": {
+        "id": 1002246
+      },
+      "writtenOn": "2017-11-06T18:34:52Z",
+      "side": 1,
+      "message": "This was actually wrong. GetDataSize() returns the size including the header.\nNow comparing the real EMF header fields.\nSadly they vary as well from build to build :-(\nIt seems this test won\u0027t pass until the EMF generates consistent data.",
+      "parentUuid": "6b318201_b3f570e3",
+      "revId": "742d458f14705e01bc94ab0b7b2861a260b7a479",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "12f0d3a1_865a45e8",
         "filename": "content/browser/download/mhtml_generation_browsertest.cc",
         "patchSetId": 8
@@ -93,6 +177,24 @@
       "writtenOn": "2017-11-03T22:40:06Z",
       "side": 1,
       "message": "Is this change intentional?",
+      "revId": "742d458f14705e01bc94ab0b7b2861a260b7a479",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6f43c48f_5ad6f7cb",
+        "filename": "content/browser/download/mhtml_generation_browsertest.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 152,
+      "author": {
+        "id": 1002246
+      },
+      "writtenOn": "2017-11-06T18:34:52Z",
+      "side": 1,
+      "message": "Oops, removed.",
+      "parentUuid": "12f0d3a1_865a45e8",
       "revId": "742d458f14705e01bc94ab0b7b2861a260b7a479",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
