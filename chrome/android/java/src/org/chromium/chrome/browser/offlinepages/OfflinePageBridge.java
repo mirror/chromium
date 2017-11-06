@@ -407,7 +407,32 @@ public class OfflinePageBridge {
      */
     public void savePageLater(final String url, final ClientId clientId, boolean userRequested,
             OfflinePageOrigin origin) {
-        nativeSavePageLater(mNativeOfflinePageBridge, url, clientId.getNamespace(),
+        savePageLater(url, clientId, userRequested, origin, null);
+    }
+
+    /**
+     * Save the given URL as an offline page when the network becomes available with the given
+     * origin. Callback with status when done.
+     *
+     * @param url The given URL to save for later.
+     * @param clientId the clientId for the offline page to be saved later.
+     * @param userRequested Whether this request should be prioritized because the user explicitly
+     *                      requested it.
+     * @param origin The app that initiated the request.
+     * @param callback Callback for whether the URL is successfully added to queue. Non-zero number
+     *                 represents the ID of the request. 0 means failure.
+     */
+    public void savePageLater(final String url, final ClientId clientId, boolean userRequested,
+            OfflinePageOrigin origin, Callback<Integer> callback) {
+        Callback<Integer> wrapper = new Callback<Integer>() {
+            @Override
+            public void onResult(Integer i) {
+                if (callback != null) {
+                    callback.onResult(i);
+                }
+            }
+        };
+        nativeSavePageLater(mNativeOfflinePageBridge, wrapper, url, clientId.getNamespace(),
                 clientId.getId(), origin.encodeAsJsonString(), userRequested);
     }
 
@@ -723,7 +748,8 @@ public class OfflinePageBridge {
     private native void nativeSavePage(long nativeOfflinePageBridge, SavePageCallback callback,
             WebContents webContents, String clientNamespace, String clientId, String origin);
     private native void nativeSavePageLater(long nativeOfflinePageBridge, String url,
-            String clientNamespace, String clientId, String origin, boolean userRequested);
+            String clientNamespace, String clientId, String origin, boolean userRequested,
+            Callback<Integer> callback);
     private native String nativeGetOfflinePageHeaderForReload(
             long nativeOfflinePageBridge, WebContents webContents);
     private native boolean nativeIsShowingOfflinePreview(
