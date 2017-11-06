@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "7e6f0cf1_1dd17ac6",
+        "filename": "chromeos/dbus/dbus_clients_browser.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 94,
+      "author": {
+        "id": 1111144
+      },
+      "writtenOn": "2017-11-06T13:54:44Z",
+      "side": 1,
+      "message": "Yep, please do that in this CL.",
+      "parentUuid": "df9f3d36_0028dd4d",
+      "range": {
+        "startLine": 94,
+        "startChar": 0,
+        "endLine": 94,
+        "endChar": 58
+      },
+      "revId": "b3d006f1ea2999a6fb4dc5c5345e394c36ea9523",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "b8bea935_afb71ede",
         "filename": "chromeos/dbus/smb_provider_client.cc",
         "patchSetId": 3
@@ -36,6 +60,52 @@
       "writtenOn": "2017-11-02T08:04:28Z",
       "side": 1,
       "message": "Ideally we\u0027d be able to distinguish File/Samba IO error from a dbus error.\n\nThis really should not happen should it? It would be a coding error if the dbus message did not contain the correct fields. What do other implementations do when something like PopInt32 fails?",
+      "revId": "b3d006f1ea2999a6fb4dc5c5345e394c36ea9523",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "60a5abde_2c55f58e",
+        "filename": "chromeos/dbus/smb_provider_client.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 38,
+      "author": {
+        "id": 1111144
+      },
+      "writtenOn": "2017-11-06T13:54:44Z",
+      "side": 1,
+      "message": "I suggest to use protobufs. It\u0027s much less pain to change API in the future",
+      "range": {
+        "startLine": 38,
+        "startChar": 4,
+        "endLine": 38,
+        "endChar": 36
+      },
+      "revId": "b3d006f1ea2999a6fb4dc5c5345e394c36ea9523",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a6780b6e_914ac3b7",
+        "filename": "chromeos/dbus/smb_provider_client.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 49,
+      "author": {
+        "id": 1111144
+      },
+      "writtenOn": "2017-11-06T13:54:44Z",
+      "side": 1,
+      "message": "same here",
+      "range": {
+        "startLine": 49,
+        "startChar": 4,
+        "endLine": 49,
+        "endChar": 33
+      },
       "revId": "b3d006f1ea2999a6fb4dc5c5345e394c36ea9523",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -71,6 +141,29 @@
       "side": 1,
       "message": "We have an ERROR_DBUS_FAILURE for that case.",
       "parentUuid": "54d66d4b_f1db9744",
+      "revId": "b3d006f1ea2999a6fb4dc5c5345e394c36ea9523",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ad064dd7_29b279bb",
+        "filename": "chromeos/dbus/smb_provider_client.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 79,
+      "author": {
+        "id": 1111144
+      },
+      "writtenOn": "2017-11-06T13:54:44Z",
+      "side": 1,
+      "message": "same here",
+      "range": {
+        "startLine": 79,
+        "startChar": 2,
+        "endLine": 79,
+        "endChar": 38
+      },
       "revId": "b3d006f1ea2999a6fb4dc5c5345e394c36ea9523",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
