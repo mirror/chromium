@@ -1334,6 +1334,8 @@ static inline bool IsValidFirstLetterStyleProperty(CSSPropertyID id) {
   switch (id) {
     // Valid ::first-letter properties listed in spec:
     // http://www.w3.org/TR/css3-selectors/#application-in-css
+    case CSSPropertyAliasWebkitBackgroundClip:
+      NOTREACHED();
     case CSSPropertyBackgroundAttachment:
     case CSSPropertyBackgroundBlendMode:
     case CSSPropertyBackgroundClip:

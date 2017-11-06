@@ -2311,6 +2311,8 @@ const CSSValue* ComputedStyleCSSValueMapping::Get(
         list->Append(*CSSIdentifierValue::Create(curr_layer->Attachment()));
       return list;
     }
+    case CSSPropertyAliasWebkitBackgroundClip:
+      NOTREACHED();
     case CSSPropertyBackgroundClip:
     case CSSPropertyBackgroundOrigin:
     case CSSPropertyWebkitBackgroundOrigin:
