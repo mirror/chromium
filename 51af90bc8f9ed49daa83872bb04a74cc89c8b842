@@ -1,0 +1,106 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "c6b4664f_8ccdf3be",
+        "filename": "third_party/WebKit/Source/core/editing/SelectionModifier.cpp",
+        "patchSetId": 15
+      },
+      "lineNbr": 622,
+      "author": {
+        "id": 1144165
+      },
+      "writtenOn": "2017-11-06T23:45:13Z",
+      "side": 0,
+      "message": "The same SelectionModifier may have multiple calls of Modify() to it.\n\nIt seems that we should change these lines into updating the stored value of |is_directional_|.",
+      "revId": "51af90bc8f9ed49daa83872bb04a74cc89c8b842",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e95c46f2_bef28b38",
+        "filename": "third_party/WebKit/Source/core/editing/SelectionModifier.cpp",
+        "patchSetId": 15
+      },
+      "lineNbr": 662,
+      "author": {
+        "id": 1144165
+      },
+      "writtenOn": "2017-11-06T23:45:13Z",
+      "side": 0,
+      "message": "Ditto.",
+      "revId": "51af90bc8f9ed49daa83872bb04a74cc89c8b842",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "857aa7b5_e801bb4b",
+        "filename": "third_party/WebKit/Source/core/editing/SelectionModifier.cpp",
+        "patchSetId": 15
+      },
+      "lineNbr": 678,
+      "author": {
+        "id": 1144165
+      },
+      "writtenOn": "2017-11-06T23:45:13Z",
+      "side": 0,
+      "message": "Ditto.",
+      "revId": "51af90bc8f9ed49daa83872bb04a74cc89c8b842",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c3ce5ea0_ea6542d9",
+        "filename": "third_party/WebKit/Source/core/editing/SelectionModifier.cpp",
+        "patchSetId": 15
+      },
+      "lineNbr": 687,
+      "author": {
+        "id": 1144165
+      },
+      "writtenOn": "2017-11-06T23:45:13Z",
+      "side": 0,
+      "message": "Ditto.",
+      "revId": "51af90bc8f9ed49daa83872bb04a74cc89c8b842",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "df3fa46b_8d64c57a",
+        "filename": "third_party/WebKit/Source/core/editing/SelectionModifier.cpp",
+        "patchSetId": 15
+      },
+      "lineNbr": 787,
+      "author": {
+        "id": 1144165
+      },
+      "writtenOn": "2017-11-06T23:45:13Z",
+      "side": 0,
+      "message": "Ditto.",
+      "revId": "51af90bc8f9ed49daa83872bb04a74cc89c8b842",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "fccd0bd1_cd537d51",
+        "filename": "third_party/WebKit/Source/core/editing/SelectionModifier.cpp",
+        "patchSetId": 15
+      },
+      "lineNbr": 797,
+      "author": {
+        "id": 1144165
+      },
+      "writtenOn": "2017-11-06T23:45:13Z",
+      "side": 0,
+      "message": "Ditto.",
+      "revId": "51af90bc8f9ed49daa83872bb04a74cc89c8b842",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}

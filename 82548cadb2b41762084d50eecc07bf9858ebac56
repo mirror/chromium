@@ -1,0 +1,113 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "f24a7fe0_00d46616",
+        "filename": "third_party/WebKit/Source/core/editing/DOMSelection.cpp",
+        "patchSetId": 15
+      },
+      "lineNbr": 86,
+      "author": {
+        "id": 1144165
+      },
+      "writtenOn": "2017-11-06T23:45:13Z",
+      "side": 1,
+      "message": "nit: |is_directional| seems better.",
+      "range": {
+        "startLine": 86,
+        "startChar": 45,
+        "endLine": 86,
+        "endChar": 56
+      },
+      "revId": "82548cadb2b41762084d50eecc07bf9858ebac56",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "540946b9_5cb86249",
+        "filename": "third_party/WebKit/Source/core/editing/Editor.h",
+        "patchSetId": 15
+      },
+      "lineNbr": 247,
+      "author": {
+        "id": 1144165
+      },
+      "writtenOn": "2017-11-06T23:45:13Z",
+      "side": 1,
+      "message": "nit: |SetMarkWithDirectionality| seems better.",
+      "range": {
+        "startLine": 247,
+        "startChar": 7,
+        "endLine": 247,
+        "endChar": 29
+      },
+      "revId": "82548cadb2b41762084d50eecc07bf9858ebac56",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a6334567_ade39ca5",
+        "filename": "third_party/WebKit/Source/core/editing/FrameSelection.cpp",
+        "patchSetId": 15
+      },
+      "lineNbr": 375,
+      "author": {
+        "id": 1144165
+      },
+      "writtenOn": "2017-11-06T23:45:13Z",
+      "side": 1,
+      "message": "Hmm, interesting. Is it like that, we no longer need SelectionModifier to return a directionality any more?",
+      "range": {
+        "startLine": 371,
+        "startChar": 0,
+        "endLine": 375,
+        "endChar": 23
+      },
+      "revId": "82548cadb2b41762084d50eecc07bf9858ebac56",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1c3b1cd3_a66891ee",
+        "filename": "third_party/WebKit/Source/core/editing/FrameSelection.h",
+        "patchSetId": 15
+      },
+      "lineNbr": 274,
+      "author": {
+        "id": 1144165
+      },
+      "writtenOn": "2017-11-06T23:45:13Z",
+      "side": 1,
+      "message": "Sorry, I may be missing some context here. I thought it\u0027s binary.\n\nCould you elaborate on the three values?",
+      "range": {
+        "startLine": 271,
+        "startChar": 34,
+        "endLine": 274,
+        "endChar": 31
+      },
+      "revId": "82548cadb2b41762084d50eecc07bf9858ebac56",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "fe95348b_043e03fa",
+        "filename": "third_party/WebKit/Source/core/frame/WebLocalFrameImpl.cpp",
+        "patchSetId": 15
+      },
+      "lineNbr": 1207,
+      "author": {
+        "id": 1144165
+      },
+      "writtenOn": "2017-11-06T23:45:13Z",
+      "side": 1,
+      "message": "SetIsDirectional(false) here",
+      "revId": "82548cadb2b41762084d50eecc07bf9858ebac56",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}

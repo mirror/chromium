@@ -328,6 +328,30 @@
     },
     {
       "key": {
+        "uuid": "b7136697_4da445f3",
+        "filename": "third_party/WebKit/Source/core/editing/commands/TypingCommand.cpp",
+        "patchSetId": 12
+      },
+      "lineNbr": 798,
+      "author": {
+        "id": 1144165
+      },
+      "writtenOn": "2017-11-06T23:45:13Z",
+      "side": 1,
+      "message": "Good catch!\n\nSince directionality makes sense only for range selections, it seems that the SelectionModifier below doesn\u0027t actually need the directionality.\n\nIt would be cleaner if we have a SelectionModifier constructor that takes a caret selection without specifying directionality.",
+      "parentUuid": "ad1a18b8_b30ba00c",
+      "range": {
+        "startLine": 794,
+        "startChar": 2,
+        "endLine": 798,
+        "endChar": 3
+      },
+      "revId": "70fb290f90eec134e5fc6125fb564449a856c18e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "34c55bae_017d25d9",
         "filename": "third_party/WebKit/Source/core/editing/commands/TypingCommand.cpp",
         "patchSetId": 12
@@ -362,6 +386,30 @@
       "writtenOn": "2017-11-06T16:54:04Z",
       "side": 1,
       "message": "below selection_to_delete created from SelectionModifier which has a power of making directional to toggle will not be for range.",
+      "range": {
+        "startLine": 974,
+        "startChar": 1,
+        "endLine": 978,
+        "endChar": 3
+      },
+      "revId": "70fb290f90eec134e5fc6125fb564449a856c18e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9c5e5247_782f7835",
+        "filename": "third_party/WebKit/Source/core/editing/commands/TypingCommand.cpp",
+        "patchSetId": 12
+      },
+      "lineNbr": 978,
+      "author": {
+        "id": 1144165
+      },
+      "writtenOn": "2017-11-06T23:45:13Z",
+      "side": 1,
+      "message": "Ditto.",
+      "parentUuid": "9a1eba5a_f05af156",
       "range": {
         "startLine": 974,
         "startChar": 1,
