@@ -96,6 +96,30 @@
     },
     {
       "key": {
+        "uuid": "d8ac6573_13237743",
+        "filename": "net/http/http_server_properties_impl.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 599,
+      "author": {
+        "id": 1116006
+      },
+      "writtenOn": "2017-11-06T23:13:29Z",
+      "side": 1,
+      "message": "QUIC is only for secure URLs to HTTPS should be fine.",
+      "parentUuid": "9550cb41_68fc1bba",
+      "range": {
+        "startLine": 599,
+        "startChar": 79,
+        "endLine": 599,
+        "endChar": 0
+      },
+      "revId": "785ae66296e8738e554a36075491aaf0e4926ffc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "5a3115bd_6f1e345d",
         "filename": "net/http/http_server_properties_impl.cc",
         "patchSetId": 2
@@ -178,6 +202,30 @@
       "side": 1,
       "message": "Here I need some help with understanding. According to the code, GetCanonicalHost(...) searches in |canonical_host_to_origin_map_|, which is not the same map as |quic_server_info_map_|. I don\u0027t see |canonical_host_to_origin_map_| is populated when we set QUIC server info.",
       "parentUuid": "0636c9c3_33fc6450",
+      "range": {
+        "startLine": 619,
+        "startChar": 3,
+        "endLine": 619,
+        "endChar": 0
+      },
+      "revId": "785ae66296e8738e554a36075491aaf0e4926ffc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "efdc1f27_f46b991c",
+        "filename": "net/http/http_server_properties_impl.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 619,
+      "author": {
+        "id": 1116006
+      },
+      "writtenOn": "2017-11-06T23:13:29Z",
+      "side": 1,
+      "message": "Ah. Sorry. So with canonical suffixes, we don\u0027t want to have to search through an entire list of servers looking to see if we have an entry for one which has the same suffix as the current. So to avoid this problem, we have a map from \"canonical suffix\" to \"canonical servers\", e.g. \"googlevideo.com\" \u003d\u003e \"foo.googlevideo.com\". So if we look for \"bar.googlevideo.com\" and fail to find it, we can then look into canonical_host_to_origin_map_ and find \"foo.googlevideo.com\" which we can then use as the host in question.\n\nDoes that sound plausible?\n\n(If we\u0027re not populating that when we populate QuicServerInfo, like we do when we populate alt-svc, then we should probably do that too as part of this CL, I think)",
+      "parentUuid": "b4025abd_ba84cb85",
       "range": {
         "startLine": 619,
         "startChar": 3,
