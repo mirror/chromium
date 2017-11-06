@@ -126,7 +126,7 @@ AnimationWorkletGlobalScope::Mutate(
   ScriptState::Scope scope(script_state);
 
   std::unique_ptr<CompositorMutatorOutputState> result =
-      WTF::MakeUnique<CompositorMutatorOutputState>();
+      std::make_unique<CompositorMutatorOutputState>();
 
   for (const CompositorMutatorInputState::AnimationState& animation_input :
        mutator_input.animations) {

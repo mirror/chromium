@@ -19,7 +19,7 @@ void CopylessPasteServer::BindMojoRequest(
 
   // TODO(wychen): remove bindMojoRequest pattern, and make this a service
   // associated with frame lifetime.
-  mojo::MakeStrongBinding(WTF::MakeUnique<CopylessPasteServer>(*frame),
+  mojo::MakeStrongBinding(std::make_unique<CopylessPasteServer>(*frame),
                           std::move(request));
 }
 

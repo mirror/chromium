@@ -242,7 +242,7 @@ ScriptPromise CacheStorage::open(ScriptState* script_state,
 
   if (web_cache_storage_) {
     web_cache_storage_->DispatchOpen(
-        WTF::MakeUnique<WithCacheCallbacks>(cache_name, this, resolver),
+        std::make_unique<WithCacheCallbacks>(cache_name, this, resolver),
         cache_name);
   } else {
     resolver->Reject(CreateNoImplementationException());
@@ -261,7 +261,7 @@ ScriptPromise CacheStorage::has(ScriptState* script_state,
   const ScriptPromise promise = resolver->Promise();
 
   if (web_cache_storage_) {
-    web_cache_storage_->DispatchHas(WTF::MakeUnique<Callbacks>(resolver),
+    web_cache_storage_->DispatchHas(std::make_unique<Callbacks>(resolver),
                                     cache_name);
   } else {
     resolver->Reject(CreateNoImplementationException());
@@ -281,7 +281,7 @@ ScriptPromise CacheStorage::Delete(ScriptState* script_state,
 
   if (web_cache_storage_) {
     web_cache_storage_->DispatchDelete(
-        WTF::MakeUnique<DeleteCallbacks>(cache_name, this, resolver),
+        std::make_unique<DeleteCallbacks>(cache_name, this, resolver),
         cache_name);
   } else {
     resolver->Reject(CreateNoImplementationException());
@@ -299,7 +299,7 @@ ScriptPromise CacheStorage::keys(ScriptState* script_state,
   const ScriptPromise promise = resolver->Promise();
 
   if (web_cache_storage_)
-    web_cache_storage_->DispatchKeys(WTF::MakeUnique<KeysCallbacks>(resolver));
+    web_cache_storage_->DispatchKeys(std::make_unique<KeysCallbacks>(resolver));
   else
     resolver->Reject(CreateNoImplementationException());
 
@@ -337,11 +337,11 @@ ScriptPromise CacheStorage::MatchImpl(ScriptState* script_state,
     return promise;
   }
 
-  if (web_cache_storage_)
-    web_cache_storage_->DispatchMatch(WTF::MakeUnique<MatchCallbacks>(resolver),
-                                      web_request,
-                                      Cache::ToWebQueryParams(options));
-  else
+  if (web_cache_storage_) {
+    web_cache_storage_->DispatchMatch(
+        std::make_unique<MatchCallbacks>(resolver), web_request,
+        Cache::ToWebQueryParams(options));
+  } else
     resolver->Reject(CreateNoImplementationException());
 
   return promise;

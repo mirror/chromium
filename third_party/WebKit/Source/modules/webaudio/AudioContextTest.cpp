@@ -68,7 +68,7 @@ class AudioContextTestPlatform : public TestingPlatformSupport {
         break;
     }
 
-    return WTF::MakeUnique<MockWebAudioDeviceForAudioContext>(
+    return std::make_unique<MockWebAudioDeviceForAudioContext>(
         AudioHardwareSampleRate(), buffer_size);
   }
 

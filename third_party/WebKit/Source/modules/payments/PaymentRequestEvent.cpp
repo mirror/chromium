@@ -94,7 +94,7 @@ ScriptPromise PaymentRequestEvent::openWindow(ScriptState* script_state,
   context->ConsumeWindowInteraction();
 
   ServiceWorkerGlobalScopeClient::From(context)->OpenWindowForPaymentHandler(
-      parsed_url_to_open, WTF::MakeUnique<NavigateClientCallback>(resolver));
+      parsed_url_to_open, std::make_unique<NavigateClientCallback>(resolver));
   return promise;
 }
 
