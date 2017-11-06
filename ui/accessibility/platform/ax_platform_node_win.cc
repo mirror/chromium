@@ -3651,6 +3651,11 @@ int AXPlatformNodeWin::MSAAState() {
   if (GetData().role == AX_ROLE_LINK)
     msaa_state |= STATE_SYSTEM_LINKED;
 
+  // Special case for indeterminate progressbar.
+  if (GetData().role == AX_ROLE_PROGRESS_INDICATOR &&
+      !HasFloatAttribute(ui::AX_ATTR_VALUE_FOR_RANGE))
+    msaa_state |= STATE_SYSTEM_MIXED;
+
   return msaa_state;
 }
 
