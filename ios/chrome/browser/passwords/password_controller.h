@@ -17,7 +17,6 @@
 @protocol FormInputAccessoryViewProvider;
 @class NotifyUserAutoSigninViewController;
 @protocol PasswordFormFiller;
-@class PasswordGenerationAgent;
 @protocol PasswordsUiDelegate;
 @class UIViewController;
 

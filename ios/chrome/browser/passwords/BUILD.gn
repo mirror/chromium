@@ -34,8 +34,6 @@ source_set("passwords") {
     "password_controller.h",
     "password_controller.mm",
     "password_form_filler.h",
-    "password_generation_agent.h",
-    "password_generation_agent.mm",
     "password_generation_edit_view.h",
     "password_generation_edit_view.mm",
     "password_generation_offer_view.h",
@@ -122,7 +120,6 @@ source_set("unit_tests") {
     "password_controller_js_unittest.mm",
     "password_controller_off_the_record_unittest.mm",
     "password_controller_unittest.mm",
-    "password_generation_agent_unittest.mm",
   ]
   deps = [
     ":passwords",
