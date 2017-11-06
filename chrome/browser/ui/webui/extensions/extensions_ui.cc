@@ -327,6 +327,10 @@ content::WebUIDataSource* CreateMdExtensionsSource() {
 
 #if BUILDFLAG(OPTIMIZE_WEBUI)
   source->AddResourcePath("crisper.js", IDR_MD_EXTENSIONS_CRISPER_JS);
+  source->AddResourcePath("lazy_load.crisper.js",
+                          IDR_MD_EXTENSIONS_LAZY_LOAD_CRISPER_JS);
+  source->AddResourcePath("lazy_load.html",
+                          IDR_MD_EXTENSIONS_LAZY_LOAD_VULCANIZED_HTML);
   source->SetDefaultResource(IDR_MD_EXTENSIONS_VULCANIZED_HTML);
   source->UseGzip();
 #else
