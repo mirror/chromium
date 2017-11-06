@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "3238d961_51a7f26b",
+        "filename": "net/http/http_server_properties_impl.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 598,
+      "author": {
+        "id": 1143554
+      },
+      "writtenOn": "2017-11-06T22:07:29Z",
+      "side": 1,
+      "message": "Done. Looks better now.",
+      "parentUuid": "2ca73ddd_ade6e3ab",
+      "range": {
+        "startLine": 598,
+        "startChar": 42,
+        "endLine": 598,
+        "endChar": 0
+      },
+      "revId": "785ae66296e8738e554a36075491aaf0e4926ffc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "eee3e93a_6de2cb68",
         "filename": "net/http/http_server_properties_impl.cc",
         "patchSetId": 2
@@ -36,6 +60,30 @@
       "writtenOn": "2017-11-06T18:54:36Z",
       "side": 1,
       "message": "Canonical suffix only applies to HTTPS, how about check the scheme and return nullptr if scheme is HTTP?",
+      "range": {
+        "startLine": 599,
+        "startChar": 79,
+        "endLine": 599,
+        "endChar": 0
+      },
+      "revId": "785ae66296e8738e554a36075491aaf0e4926ffc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9550cb41_68fc1bba",
+        "filename": "net/http/http_server_properties_impl.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 599,
+      "author": {
+        "id": 1143554
+      },
+      "writtenOn": "2017-11-06T22:07:29Z",
+      "side": 1,
+      "message": "That would be good optimization but QuicServerId doesn\u0027t have a scheme associated with it. It looks that \"https\" is implied.",
+      "parentUuid": "eee3e93a_6de2cb68",
       "range": {
         "startLine": 599,
         "startChar": 79,
@@ -71,6 +119,30 @@
     },
     {
       "key": {
+        "uuid": "1dbd226b_36e5ba2f",
+        "filename": "net/http/http_server_properties_impl.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 605,
+      "author": {
+        "id": 1143554
+      },
+      "writtenOn": "2017-11-06T22:07:29Z",
+      "side": 1,
+      "message": "Thanks for spotting it. Yes, I meant MRU. Not even sure what RLU is :)",
+      "parentUuid": "5a3115bd_6f1e345d",
+      "range": {
+        "startLine": 605,
+        "startChar": 52,
+        "endLine": 605,
+        "endChar": 0
+      },
+      "revId": "785ae66296e8738e554a36075491aaf0e4926ffc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "0636c9c3_33fc6450",
         "filename": "net/http/http_server_properties_impl.cc",
         "patchSetId": 2
@@ -82,6 +154,30 @@
       "writtenOn": "2017-11-06T19:46:58Z",
       "side": 1,
       "message": "Instead of doing this, \u0027how \u0027bout doing what we do in other places where check for a canonical server. Namely, call the GetCanonicalHost() method. Something like:\n\n  url::SchemeHostPort server(\"https\", server_id.host(),\n                             server_id.port());\n  CanonicalHostMap::const_iterator canonical \u003d GetCanonicalHost(server);",
+      "range": {
+        "startLine": 619,
+        "startChar": 3,
+        "endLine": 619,
+        "endChar": 0
+      },
+      "revId": "785ae66296e8738e554a36075491aaf0e4926ffc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b4025abd_ba84cb85",
+        "filename": "net/http/http_server_properties_impl.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 619,
+      "author": {
+        "id": 1143554
+      },
+      "writtenOn": "2017-11-06T22:07:29Z",
+      "side": 1,
+      "message": "Here I need some help with understanding. According to the code, GetCanonicalHost(...) searches in |canonical_host_to_origin_map_|, which is not the same map as |quic_server_info_map_|. I don\u0027t see |canonical_host_to_origin_map_| is populated when we set QUIC server info.",
+      "parentUuid": "0636c9c3_33fc6450",
       "range": {
         "startLine": 619,
         "startChar": 3,
