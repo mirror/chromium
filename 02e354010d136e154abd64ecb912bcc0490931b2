@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "2daa8930_9cb66554",
+        "filename": "chrome/browser/thumbnails/thumbnail_tab_helper.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 171,
+      "author": {
+        "id": 1176649
+      },
+      "writtenOn": "2017-11-06T15:22:13Z",
+      "side": 1,
+      "message": "Unrelated to this CL, but I think it\u0027d be worth adding a TODO to explore starting a thumbnail capture here and only here, optionally with a small delay.",
+      "range": {
+        "startLine": 171,
+        "startChar": 45,
+        "endLine": 171,
+        "endChar": 0
+      },
+      "revId": "02e354010d136e154abd64ecb912bcc0490931b2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
