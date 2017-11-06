@@ -1,0 +1,106 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "d91d9209_d533e710",
+        "filename": "cc/paint/paint_op_buffer.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 103,
+      "author": {
+        "id": 1115895
+      },
+      "writtenOn": "2017-11-06T19:48:04Z",
+      "side": 1,
+      "message": "I think this needs to behave like the SerializeRecursive from GLES2Implementation, in that it inserts saves and restores around the draw record that you\u0027re inlining.\n\nThat GLES2Implementation code is suspiciously similar to this, except it has a different way of allocating more memory.  I don\u0027t like code duplication, but am not sure what to do about it here.  Templatizing a SerializeHelper/Recursive seems a bit \u003c_\u003c too.  What do you think?\n\nThe other missing piece here (but one that is also missing from GLES2Implementation) is that SetMatrix is incorrect when unfolding DrawRecords.  We need to do one of three things:\n(1) Save off the CTM locally when serializing whenever encountering a DrawRecord, and update all \"SetMatrix\" to concat that CTM on the client side, so that the service only gets the full \"SetMatrix\" and doesn\u0027t have to worry about this.\n(2) Add a bool to SaveOp that says \"I am a DrawRecord save, please remember my CTM\" and have the service side do the concat, just like PaintOpBuffer does recursively in Playback by storing the CTM locally.\n(3) We could revisit not serializing DrawRecordOps.  If we just serialized those directly, then the service side could recursively play them back, doing what playback does locally by saving off the CTM, at the expense of a more complicated service side.  One disadvantage (although maybe this is premature optimization) is that the client side must serialize PaintRecords in their entirety (so if a block runs out of space, then there\u0027s no way to just continue with where it was).",
+      "revId": "99b8eec6cc21ea94dcb43532a5bfe8fb3c70fd53",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a19a448d_c26e3e10",
+        "filename": "cc/paint/paint_op_buffer.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 1842,
+      "author": {
+        "id": 1115895
+      },
+      "writtenOn": "2017-11-06T19:48:04Z",
+      "side": 1,
+      "message": "This is a lot of duplication from PaintOp::Deserialize.  Do you think PaintOp::Deserialize should take an optional buffer to allocate into?  Should PaintOp::Deserialize *always* take a PaintOpBuffer and users always have to deserialize into a PaintOpBuffer?  What do you think?",
+      "revId": "99b8eec6cc21ea94dcb43532a5bfe8fb3c70fd53",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "047cac4f_8fa85601",
+        "filename": "cc/paint/paint_op_buffer.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 1849,
+      "author": {
+        "id": 1115895
+      },
+      "writtenOn": "2017-11-06T19:48:04Z",
+      "side": 1,
+      "message": "This is unrelated cleanup thinking, but I think AllocatePaintOp no longer needs to return skip, by the way, now that vmpstr made it so that all ops have statically determined sizes and no longer have dynamic memory between ops.  I think skip is just the round up to align of size(T) just as UpdateTypeAndSkip uses it.",
+      "revId": "99b8eec6cc21ea94dcb43532a5bfe8fb3c70fd53",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7cda1350_6d23481f",
+        "filename": "cc/paint/paint_op_buffer.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 1865,
+      "author": {
+        "id": 1115895
+      },
+      "writtenOn": "2017-11-06T19:48:04Z",
+      "side": 1,
+      "message": "Maybe I\u0027m confused, but I think it\u0027s more complicated than this. There\u0027s an initial scale of that the shader is at, but inside that PaintRecord there could be additional scales.  It kind of seems like we need to have an SkNoDrawCanvas in SerializeOptions.  GLES2Implementation already needs such a canvas for exactly this reason, so maybe we just always need a canvas on serialize and every non-draw op always serializes itself as a part of serialization?  It seems like maybe we could share some code out of there.",
+      "revId": "99b8eec6cc21ea94dcb43532a5bfe8fb3c70fd53",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8e652a3e_7586aa6e",
+        "filename": "cc/paint/paint_op_buffer_unittest.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 2200,
+      "author": {
+        "id": 1115895
+      },
+      "writtenOn": "2017-11-06T19:48:04Z",
+      "side": 1,
+      "message": "Can you update DeserializationFailures to additionally use the MakeFromMemory path?\n\nCan you also add paint record shaders to test_flags? (Maybe we need test_records as well.)",
+      "revId": "99b8eec6cc21ea94dcb43532a5bfe8fb3c70fd53",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9a797ba0_6c999ef0",
+        "filename": "cc/paint/paint_op_buffer_unittest.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 2218,
+      "author": {
+        "id": 1115895
+      },
+      "writtenOn": "2017-11-06T19:48:04Z",
+      "side": 1,
+      "message": "You may want to look at DrawRecordOp::Deserialize.  I would have expected any serialized DrawRecordOp to fail without changing that function.",
+      "revId": "99b8eec6cc21ea94dcb43532a5bfe8fb3c70fd53",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
