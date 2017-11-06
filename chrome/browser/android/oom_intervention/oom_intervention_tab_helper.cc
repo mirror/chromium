@@ -5,6 +5,7 @@
 #include "chrome/browser/android/oom_intervention/oom_intervention_tab_helper.h"
 
 #include "base/metrics/histogram_macros.h"
+#include "chrome/common/url_constants.h"
 #include "content/public/browser/navigation_handle.h"
 #include "content/public/browser/web_contents.h"
 
@@ -106,6 +107,12 @@ void OomInterventionTabHelper::DidStartNavigation(
   if (navigation_handle->IsSameDocument())
     return;
 
+  // Filter out navigation from pages rendered with platform specific
+  // widgets.
+  GURL last_url = web_contents()->GetLastCommittedURL();
+  if (last_url.SchemeIs(chrome::kChromeNativeScheme))
+    return;
+
   // Filter out background navigation.
   if (!IsLastVisibleWebContents(navigation_handle->GetWebContents())) {
     near_oom_detected_time_.reset();
@@ -125,8 +132,11 @@ void OomInterventionTabHelper::DidStartNavigation(
     // Monitoring but near-OOM hasn't been detected.
     RecordNearOomMonitoringEndReason(NearOomMonitoringEndReason::NAVIGATION);
   }
+}
 
-  StartMonitoringIfNeeded();
+void OomInterventionTabHelper::DocumentAvailableInMainFrame() {
+  if (IsLastVisibleWebContents(web_contents()))
+    StartMonitoringIfNeeded();
 }
 
 void OomInterventionTabHelper::WasShown() {
