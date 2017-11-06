@@ -1655,6 +1655,9 @@ jumbo_component("base") {
       "time/time_now_posix.cc",
     ]
   }
+  if (is_mac && !is_ios) {
+    sources += [ "time/time_exploded_posix.cc" ]
+  }
 
   if (is_posix && !is_mac && !is_ios && !is_android && !is_chromeos) {
     sources += [ "power_monitor/power_monitor_device_source_posix.cc" ]
