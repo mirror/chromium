@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "04f9e7dc_bc632f96",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 2
+      },
+      "lineNbr": 11,
+      "author": {
+        "id": 1000111
+      },
+      "writtenOn": "2017-11-06T15:44:42Z",
+      "side": 1,
+      "message": "Is it possible to write a test-case for the scenario and make sure the size is being set correctly?",
+      "revId": "c09ae503d7709ee002983eed632658fd14243bf3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "aba42455_48992559",
+        "filename": "ui/aura/mus/window_port_mus.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 552,
+      "author": {
+        "id": 1000111
+      },
+      "writtenOn": "2017-11-06T15:44:42Z",
+      "side": 1,
+      "message": "Should this just call GetOrAllocateLocalSurfaceId()?",
+      "revId": "c09ae503d7709ee002983eed632658fd14243bf3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
