@@ -17,11 +17,14 @@ import sys
 THIS_DIR = os.path.dirname(os.path.abspath(__file__))
 SRC_DIR = os.path.dirname(os.path.dirname(os.path.dirname(THIS_DIR)))
 
-# Current stable Windows NVIDIA Quadro P400 device/driver identifier.
+# Current stable Windows NVIDIA Quadro P400 device/driver/os identifiers.
 WIN_NVIDIA_QUADRO_P400_STABLE_DRIVER = '10de:1cb3-23.21.13.8792'
+WIN_NVIDIA_QUADRO_P400_STABLE_OS = 'Windows-2008ServerR2-SP1'
 
-# Current experimental Windows NVIDIA Quadro P400 device/driver identifier.
+# Current experimental Windows NVIDIA Quadro P400 device/driver/os
+# identifiers.
 WIN_NVIDIA_QUADRO_P400_EXPERIMENTAL_DRIVER = '10de:1cb3-23.21.13.8792'
+WIN_NVIDIA_QUADRO_P400_EXPERIMENTAL_OS = 'Windows-2008ServerR2-SP1'
 
 # Use this to match all drivers for the NVIDIA Quadro P400.
 NVIDIA_QUADRO_P400_ALL_DRIVERS = '10de:1cb3-*'
@@ -47,6 +50,9 @@ class Types(object):
   # RTTI. They're split off so that these specialized compiler options
   # apply only to these targets.
   DEQP = 'deqp'
+  # The experimental try servers are meant to test new driver versions
+  # and OS flavors.
+  EXPERIMENTAL = 'experimental'
 
 # The predicate functions receive a list of types as input and
 # determine whether the test should run on the given bot.
@@ -98,6 +104,10 @@ class Predicates(object):
   @staticmethod
   def DEQP(x):
     return Types.DEQP in x
+
+  @staticmethod
+  def EXPERIMENTAL(x):
+    return Types.EXPERIMENTAL in x
 
 # Most of the bots live in the Chrome-GPU pool as defined here (Google
 # employees only, sorry):
@@ -290,13 +300,19 @@ FYI_WATERFALL = {
       'swarming_dimensions': [
         {
           'gpu': WIN_NVIDIA_QUADRO_P400_EXPERIMENTAL_DRIVER,
-          'os': 'Windows-2008ServerR2-SP1',
+          'os': WIN_NVIDIA_QUADRO_P400_EXPERIMENTAL_OS,
           'pool': 'Chrome-GPU',
         },
       ],
       'build_config': 'Release',
       'swarming': True,
       'os_type': 'win',
+      'type': Types.EXPERIMENTAL,
+      'stable_config': {
+        'gpu': WIN_NVIDIA_QUADRO_P400_STABLE_DRIVER,
+        'os': WIN_NVIDIA_QUADRO_P400_STABLE_OS,
+        'pool': 'Chrome-GPU',
+      },
     },
     'Win10 Release (NVIDIA)': {
       'swarming_dimensions': [
@@ -1865,6 +1881,15 @@ TELEMETRY_GPU_INTEGRATION_TESTS = {
       },
     ],
   },
+  'noop_sleep': {
+    'tester_configs': [
+      {
+        # Force running the noop sleep test on the experimental configs.
+        'predicate': Predicates.EXPERIMENTAL,
+        'disabled_instrumentation_types': ['tsan'],
+      },
+    ],
+  },
   'pixel_test': {
     'target_name': 'pixel',
     'args': [
@@ -2458,6 +2483,20 @@ def tester_config_matches_tester(tester_name, tester_config, tc,
   return True
 
 def should_run_on_tester(tester_name, tester_config, test_config):
+  # Special case for experimental tester configs. Don't run tests by default
+  # if the experimental config matches the stable config.
+  if Types.EXPERIMENTAL in get_tester_type(tester_config):
+    # Special case for noop sleep test to ensure we have one test minimum.
+    if 'tester_configs' in test_config:
+      for tc in test_config['tester_configs']:
+        pred = tc.get('predicate', Predicates.DEFAULT)
+        if pred == Predicates.EXPERIMENTAL:
+          return True
+    stable_config = tester_config['stable_config']
+    experimental_config = tester_config['swarming_dimensions'][0]
+    if str(experimental_config) == str(stable_config):
+      return False
+
   # Check if this config is disabled on this tester
   if 'disabled_tester_configs' in test_config:
     for dtc in test_config['disabled_tester_configs']:
