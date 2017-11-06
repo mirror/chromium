@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "ae97a1a8_5f95d653",
+        "filename": "ios/build/bots/chromium.mac/ios-simulator-full-configs.json",
+        "patchSetId": 9
+      },
+      "lineNbr": 3,
+      "author": {
+        "id": 1147750
+      },
+      "writtenOn": "2017-11-06T19:07:06Z",
+      "side": 1,
+      "message": "Should we add something for 32-bit? I\u0027m happy to land this without it, then fix subsequently.",
+      "revId": "ee18cf07ec66ee47865a3e82a3f9b0faefdbe3f7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
