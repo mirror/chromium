@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "68c0e5d8_176c17b5",
+        "filename": "net/android/javatests/src/org/chromium/net/NetworkChangeNotifierTest.java",
+        "patchSetId": 10
+      },
+      "lineNbr": 969,
+      "author": {
+        "id": 1002888
+      },
+      "writtenOn": "2017-11-06T15:55:09Z",
+      "side": 1,
+      "message": "Yoland, if you look at the failing trybot, it\u0027s saying:\n\nMissingSizeAnnotationError: org.chromium.net.NetworkChangeNotifierTest#initializationError: Test method is missing required size annotation. Add one of: @LargeTest, @Manual, @FlakyTest, @DisabledTest, @MediumTest, @SmallTest, @IntegrationTest, @EnormousTest\n\nBut I have @MediumTest on on my test like the other tests in this file.  Any ideas why it\u0027s complaining?\nI can\u0027t seem to get it to fail locally when run with \"./out/Default/bin/run_content_shell_test_apk --fast-local-dev -f NetworkChangeNotifierTest\\*\"",
+      "range": {
+        "startLine": 969,
+        "startChar": 15,
+        "endLine": 969,
+        "endChar": 0
+      },
+      "revId": "04be4f85d14c86f1cf7149367ab072aef043bda4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
