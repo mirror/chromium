@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "8bc21ec2_9e270fb6",
+        "filename": "chrome/browser/ui/find_bar/find_bar_controller.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 102,
+      "author": {
+        "id": 1000763
+      },
+      "writtenOn": "2017-11-06T18:01:47Z",
+      "side": 1,
+      "message": "Please correct me if I\u0027m wrong, but doesn\u0027t the Browser create the FindBar[1]? Assuming I\u0027m correct why not have the constructor take the Browser?\n\n[1] https://cs.chromium.org/chromium/src/chrome/browser/ui/browser.cc?rcl\u003dbec0814edf747a09930741458d3b820426bd5037\u0026l\u003d585",
+      "range": {
+        "startLine": 101,
+        "startChar": 2,
+        "endLine": 102,
+        "endChar": 37
+      },
+      "revId": "47ce33411fdf412eaab15b3220376028ed9a9481",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
