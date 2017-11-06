@@ -13,6 +13,7 @@ import org.chromium.chrome.browser.ntp.RecentlyClosedBridge;
 import org.chromium.chrome.browser.partnercustomizations.HomepageManager;
 import org.chromium.chrome.browser.tab.Tab;
 import org.chromium.chrome.browser.tabmodel.TabCreatorManager.TabCreator;
+import org.chromium.chrome.browser.tabmodel.TabPersistentStore.TabPersistentStoreObserver;
 import org.chromium.chrome.browser.util.MathUtils;
 import org.chromium.content_public.browser.WebContents;
 
@@ -778,5 +779,13 @@ public class TabModelImpl extends TabModelJniBridge {
     @Override
     public boolean isPendingTabAdd() {
         return mIsPendingTabAdd;
+    }
+
+    /**
+     * Add a {@link TabPersistentStoreObserver} to {@link TabPersistentStore}.
+     * @param observer The observer to add.
+     */
+    public void addTabPersistentStoreObserver(TabPersistentStoreObserver observer) {
+        mTabSaver.addObserver(observer);
     }
 }
