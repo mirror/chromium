@@ -139,6 +139,24 @@
       "revId": "ce799ce036a1963cbffc8f1b0a22575869e62ac6",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "05d65a17_48e48634",
+        "filename": "services/metrics/public/cpp/mojo_ukm_recorder.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 47,
+      "author": {
+        "id": 1124674
+      },
+      "writtenOn": "2017-11-06T19:31:43Z",
+      "side": 1,
+      "message": "Generalizing the problem you have with in/out of process initialization a bit, I think it could be possible that ServiceManager would start two utility services in the same process and that could have overlapping lifetimes.  So I think just checking if it is already initialized is not sufficient, because then you would be relying on the other services delegate outliving you.\n\nMaybe the right interface for DUR is to distinguish 3 types of delegates, Primary (e.g UkmService), Secondary (e.g. MojoUkmRecorder), and Testing.  Calls would be forwarded to a single primary or a single secondary if none is set.  Each Testing delegate would also get a copy.  This way a Service could always manage it\u0027s own secondary, and when it uses UkmRecorder::Get, it can be assured that the call is delegated somewhere.\n\nThere is another thing that we need to be careful about, which is SourceId translation.  Currently, SourceIds created GetNewSourceId get translated when they go through a MojoService via ConvertSourceIdFromInstance.  (This doesn\u0027t happen for SourceIds translated from NavigationIds).  So currently if we change which MojoUkmRecorder is used we will also have seperate SourceIds.  This probably need to change make instance_id be tied to process instead of UkmRecorderInterfaces.",
+      "parentUuid": "404ef647_96c47e78",
+      "revId": "ce799ce036a1963cbffc8f1b0a22575869e62ac6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
