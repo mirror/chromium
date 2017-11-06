@@ -73,6 +73,30 @@
     },
     {
       "key": {
+        "uuid": "f23138f6_8831e1b5",
+        "filename": "third_party/WebKit/Source/controller/BlinkInitializer.cpp",
+        "patchSetId": 3
+      },
+      "lineNbr": 121,
+      "author": {
+        "id": 1115863
+      },
+      "writtenOn": "2017-11-06T00:45:03Z",
+      "side": 1,
+      "message": "I\u0027m not sure what do you want me to do? File a bug against AddInterface()? Without CrossThreadBind() I got a DCHECK failure in service_manager, which I can do nothing. Here is an example stack trace:\n\n[1:7:1106/093539.856596:FATAL:Functional.h(237)] Check failed: (thread_checker_).CalledOnValidThread(). \n#0 0x7f2acc8c2db7 base::debug::StackTrace::StackTrace()\n#1 0x7f2acc8eb0f1 logging::LogMessage::~LogMessage()\n#2 0x7f2ac8d7fee8 _ZNKR3WTF8FunctionIFvN4mojo16InterfaceRequestIN5blink5mojom5blink15OomInterventionEEEELNS_22FunctionThreadAffinityE1EE3RunES7_\n#3 0x7f2ac8d7fc62 blink::InterfaceRegistry::ForwardToInterfaceFactory\u003c\u003e()\n#4 0x7f2ac8d7fca9 _ZN4base8internal7InvokerINS0_9BindStateIPFvRKN3WTF8FunctionIFvN4mojo16InterfaceRequestIN5blink5mojom5blink15OomInterventionEEEELNS3_22FunctionThreadAffinityE1EEENS5_16ScopedHandleBaseINS5_17MessagePipeHandleEEEEJSE_EEEFvSJ_EE3RunEPNS0_13BindStateBaseEOSJ_\n#5 0x7f2acb57b4c6 _ZN15service_manager19BindCallbackAdapterIJEEEvRKN4base17RepeatingCallbackIFvN4mojo16ScopedHandleBaseINS3_17MessagePipeHandleEEEDpT_EEERKNSt3__112basic_stringIcNSD_11char_traitsIcEENSD_9allocatorIcEEEES6_S8_\n#6 0x7f2acb57b769 _ZN4base8internal7InvokerINS0_9BindStateIPFvRKNS_17RepeatingCallbackIFvN4mojo16ScopedHandleBaseINS4_17MessagePipeHandleEEEEEERKNSt3__112basic_stringIcNSC_11char_traitsIcEENSC_9allocatorIcEEEES7_EJS9_EEEFvSK_S7_EE3RunEPNS0_13BindStateBaseESK_OS7_\n#7 0x7f2acb57b6ff _ZN15service_manager21GenericCallbackBinderIJEE13BindInterfaceERKNSt3__112basic_stringIcNS2_11char_traitsIcEENS2_9allocatorIcEEEEN4mojo16ScopedHandleBaseINSB_17MessagePipeHandleEEE\n#8 0x7f2aca959f57 _ZN15service_manager22BinderRegistryWithArgsIJEE13BindInterfaceERKNSt3__112basic_stringIcNS2_11char_traitsIcEENS2_9allocatorIcEEEEN4mojo16ScopedHandleBaseINSB_17MessagePipeHandleEEE\n#9 0x7f2aca995ed5 content::SimpleConnectionFilter::OnBindInterface()\n#10 0x7f2acaa6045e content::ServiceManagerConnectionImpl::IOThreadContext::OnBindInterface()\n#11 0x7f2acd7c967d service_manager::ForwardingService::OnBindInterface()\n#12 0x7f2acd7ca4a5 service_manager::ServiceContext::OnBindInterface()",
+      "parentUuid": "2831f4a2_b829ef57",
+      "range": {
+        "startLine": 121,
+        "startChar": 24,
+        "endLine": 121,
+        "endChar": 39
+      },
+      "revId": "27a5fa31c2e768793895e229143c6dcecb0ed318",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "9b8f7f13_51a36f97",
         "filename": "third_party/WebKit/Source/controller/OomInterventionImplTest.cpp",
         "patchSetId": 3

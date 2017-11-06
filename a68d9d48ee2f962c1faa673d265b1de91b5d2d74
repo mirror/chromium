@@ -16,6 +16,24 @@
       "revId": "a68d9d48ee2f962c1faa673d265b1de91b5d2d74",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1e3fa5e1_60df84d7",
+        "filename": "third_party/WebKit/Source/controller/OomInterventionImpl.cpp",
+        "patchSetId": 4
+      },
+      "lineNbr": 18,
+      "author": {
+        "id": 1115863
+      },
+      "writtenOn": "2017-11-06T00:45:03Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "cde7fb71_3b01fcc4",
+      "revId": "a68d9d48ee2f962c1faa673d265b1de91b5d2d74",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }

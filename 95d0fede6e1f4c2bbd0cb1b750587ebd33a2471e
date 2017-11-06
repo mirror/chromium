@@ -121,6 +121,30 @@
     },
     {
       "key": {
+        "uuid": "f5504d42_ea50bdb4",
+        "filename": "chrome/browser/DEPS",
+        "patchSetId": 2
+      },
+      "lineNbr": 147,
+      "author": {
+        "id": 1115863
+      },
+      "writtenOn": "2017-11-06T00:45:03Z",
+      "side": 1,
+      "message": "I\u0027m not sure the current policy of what can and can\u0027t be allowed here but when I asked feedback on where to put the mojo interface, we decided to put it under third_party/WebKit in favor of avoiding redundant abstractions.\n\ndglazkov@, ojan@: Could you comment on this from Blink API owners perspective?\n\nI totally agree that we should clarify the rule here, but I\u0027d like to discuss the rule separately.",
+      "parentUuid": "13b94bd3_4f42bb91",
+      "range": {
+        "startLine": 147,
+        "startChar": 15,
+        "endLine": 147,
+        "endChar": 63
+      },
+      "revId": "95d0fede6e1f4c2bbd0cb1b750587ebd33a2471e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "0ef6e895_1be4ea81",
         "filename": "chrome/browser/android/oom_intervention/oom_intervention_tab_helper.cc",
         "patchSetId": 2
