@@ -236,6 +236,16 @@ void BluetoothDeviceAndroid::OnGattServicesDiscovered(
     const JavaParamRef<jobject>& jcaller) {
   device_uuids_.ReplaceServiceUUIDs(gatt_services_);
   SetGattServicesDiscoveryComplete(true);
+  // On Android, onServicesDiscovered indicates that discovery is complete.
+  // https://developer.android.com/reference/android/bluetooth/BluetoothGattCallback.html
+  // Method: onServicesDiscovered
+  for (auto const& service_pair : gatt_services_) {
+    BluetoothRemoteGattService* service = service_pair.second.get();
+    if (!service->IsDiscoveryComplete()) {
+      service->SetDiscoveryComplete(true);
+      adapter_->NotifyGattDiscoveryComplete(service);
+    }
+  }
   adapter_->NotifyGattServicesDiscovered(this);
   adapter_->NotifyDeviceChanged(this);
 }

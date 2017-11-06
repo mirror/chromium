@@ -1389,6 +1389,7 @@ TEST_F(BluetoothTest, GattServices_ObserversCalls) {
 
   EXPECT_EQ(1, observer.gatt_services_discovered_count());
   EXPECT_EQ(2, observer.gatt_service_added_count());
+  EXPECT_EQ(2, observer.gatt_discovery_complete_count());
 }
 #endif  // defined(OS_ANDROID) || defined(OS_WIN) || defined(OS_MACOSX)
 
