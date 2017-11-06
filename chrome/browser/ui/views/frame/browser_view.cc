@@ -2544,10 +2544,10 @@ void BrowserView::ShowAvatarBubbleFromAvatarButton(
     browser_->signin_view_controller()->ShowModalSignin(
         bubble_view_mode, browser_.get(), access_point);
   } else {
-    ProfileChooserView::ShowBubble(bubble_view_mode, manage_accounts_params,
-                                   access_point,
-                                   frame_->GetNewAvatarMenuButton(), browser(),
-                                   focus_first_profile_button);
+    ProfileChooserView::ShowBubble(
+        bubble_view_mode, manage_accounts_params, access_point,
+        frame_->GetNewAvatarMenuButton(), nullptr, gfx::Rect(), browser(),
+        focus_first_profile_button);
     ProfileMetrics::LogProfileOpenMethod(ProfileMetrics::ICON_AVATAR_BUBBLE);
   }
 #else

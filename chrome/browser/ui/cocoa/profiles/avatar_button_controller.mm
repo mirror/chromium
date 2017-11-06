@@ -322,14 +322,14 @@ const CGFloat kFrameColorDarkUpperBound = 0.33;
                     fromAccessPoint:accessPoint];
 
   AvatarButton* button = base::mac::ObjCCastStrict<AvatarButton>(button_);
-  [button setIsActive:[[menuController_ window] isVisible]];
+  [button setIsActive:self.isMenuOpened];
 }
 
-- (void)bubbleWillClose:(NSNotification*)notif {
+- (void)bubbleIsClosed {
   AvatarButton* button = base::mac::ObjCCastStrict<AvatarButton>(button_);
   [button setIsActive:NO];
   [self updateAvatarButtonAndLayoutParent:NO];
-  [super bubbleWillClose:notif];
+  [super bubbleIsClosed];
 }
 
 @end
