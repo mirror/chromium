@@ -1,0 +1,89 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "6b603572_eed85738",
+        "filename": "ui/compositor/layer_delegate.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 34,
+      "author": {
+        "id": 1000887
+      },
+      "writtenOn": "2017-11-06T19:27:12Z",
+      "side": 1,
+      "message": "I\u0027m not super sure threaded is the right name here. If thats used in the ui animation API/docs then ok, but there\u0027s no actual thread. Composited animation or compositor-driven animation or accelerated animation (\u003e_\u003e) are all possible alternatives.",
+      "revId": "42ba3daa1e539d4e32e1ef24507df45a202e60eb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e1b5f2fc_f7dacafe",
+        "filename": "ui/compositor/layer_delegate.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 39,
+      "author": {
+        "id": 1000887
+      },
+      "writtenOn": "2017-11-06T19:27:12Z",
+      "side": 1,
+      "message": "This feels like information that i\u0027d expect on the API where u create these animations and this could refer to that to see what are \"threaded\". But I am not finding that, if you know of any then maybe that\u0027d make sense?",
+      "revId": "42ba3daa1e539d4e32e1ef24507df45a202e60eb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6e67fd98_50628f0a",
+        "filename": "ui/compositor/layer_unittest.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 2316,
+      "author": {
+        "id": 1000887
+      },
+      "writtenOn": "2017-11-06T19:27:12Z",
+      "side": 1,
+      "message": "Isn\u0027t this the same as writing\n\nEXPECT_CALL(delegate,\n              OnLayerBoundsChanged(kTargetBounds, PropertyChangeReason::SET))\n\n?",
+      "revId": "42ba3daa1e539d4e32e1ef24507df45a202e60eb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "aaedc079_4398d287",
+        "filename": "ui/compositor/layer_unittest.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 2402,
+      "author": {
+        "id": 1000887
+      },
+      "writtenOn": "2017-11-06T19:27:12Z",
+      "side": 1,
+      "message": "This is the magic that makes it \"non-threaded\" right? Can you comment on here how/why that is the case? Is there anything this test can check to prove that this stays true?",
+      "revId": "42ba3daa1e539d4e32e1ef24507df45a202e60eb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "65a393f2_1f7da057",
+        "filename": "ui/compositor/layer_unittest.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 2515,
+      "author": {
+        "id": 1000887
+      },
+      "writtenOn": "2017-11-06T19:27:12Z",
+      "side": 1,
+      "message": "At the end of the animation, if the reason is ANIMATION, how does the client know to consider the window done animating?",
+      "revId": "42ba3daa1e539d4e32e1ef24507df45a202e60eb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
