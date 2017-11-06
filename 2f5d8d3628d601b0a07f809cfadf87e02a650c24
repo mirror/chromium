@@ -22,6 +22,110 @@
       "revId": "2f5d8d3628d601b0a07f809cfadf87e02a650c24",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "21a02b6c_498d5d47",
+        "filename": "content/renderer/service_worker/service_worker_dispatcher.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 126,
+      "author": {
+        "id": 1125915
+      },
+      "writtenOn": "2017-11-06T07:57:57Z",
+      "side": 1,
+      "message": "According to git blame, crrev.com/261533003 is the initial patch to introduce WorkerToProviderMap. I think we could remove that.",
+      "parentUuid": "514bee04_ea37d119",
+      "range": {
+        "startLine": 126,
+        "startChar": 8,
+        "endLine": 126,
+        "endChar": 27
+      },
+      "revId": "2f5d8d3628d601b0a07f809cfadf87e02a650c24",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "01ff5d93_111d8a08",
+        "filename": "content/renderer/service_worker/service_worker_provider_context.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 116,
+      "author": {
+        "id": 1125915
+      },
+      "writtenOn": "2017-11-06T07:57:57Z",
+      "side": 1,
+      "message": "nit:  \u003d default",
+      "range": {
+        "startLine": 116,
+        "startChar": 62,
+        "endLine": 116,
+        "endChar": 2
+      },
+      "revId": "2f5d8d3628d601b0a07f809cfadf87e02a650c24",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "149aed3e_d0670b2b",
+        "filename": "content/renderer/service_worker/service_worker_provider_context.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 298,
+      "author": {
+        "id": 1125915
+      },
+      "writtenOn": "2017-11-06T07:57:57Z",
+      "side": 1,
+      "message": "Can we have a unit test for CountFeature?",
+      "revId": "2f5d8d3628d601b0a07f809cfadf87e02a650c24",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9f3eb8e1_10b31360",
+        "filename": "content/renderer/service_worker/service_worker_provider_context.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 305,
+      "author": {
+        "id": 1125915
+      },
+      "writtenOn": "2017-11-06T07:57:57Z",
+      "side": 1,
+      "message": "nit: how about move this to the beginning of this function?",
+      "revId": "2f5d8d3628d601b0a07f809cfadf87e02a650c24",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1d98d5c9_597aa62a",
+        "filename": "content/renderer/service_worker/web_service_worker_provider_impl.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 242,
+      "author": {
+        "id": 1125915
+      },
+      "writtenOn": "2017-11-06T07:57:57Z",
+      "side": 1,
+      "message": "Could we finally remove GetProviderClient() from SWDispatcher, too?",
+      "range": {
+        "startLine": 242,
+        "startChar": 6,
+        "endLine": 242,
+        "endChar": 40
+      },
+      "revId": "2f5d8d3628d601b0a07f809cfadf87e02a650c24",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
