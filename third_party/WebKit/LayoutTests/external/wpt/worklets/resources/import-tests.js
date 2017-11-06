@@ -51,6 +51,14 @@ function runImportTests(worklet_type) {
     }, 'Importing a script which throws should still resolve the given ' +
        'promise.');
 
+    promise_test(() => {
+        const kScriptURL = 'resources/parse-error-worklet-script.js';
+        return worklet.addModule(kScriptURL).then(undefined_arg => {
+            assert_equals(undefined_arg, undefined,
+                          'Promise should resolve with no arguments.');
+        });
+    }, 'Importing a script with a parse error -- what to do?');
+
     promise_test(t => {
         const kScriptURL = 'non-existent-worklet-script.js';
         return promise_rejects(t, new DOMException('', 'AbortError'),
