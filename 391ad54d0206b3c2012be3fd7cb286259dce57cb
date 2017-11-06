@@ -131,6 +131,30 @@
     },
     {
       "key": {
+        "uuid": "b3bf26f7_73d87644",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/tab/Tab.java",
+        "patchSetId": 10
+      },
+      "lineNbr": 1454,
+      "author": {
+        "id": 1116074
+      },
+      "writtenOn": "2017-11-06T19:08:55Z",
+      "side": 1,
+      "message": "Yes, I feel like we should remove this, since onActivityAttachmentChanged is actually a more versatile signals that covers attachment itself as well.\n\nWe might want to still broadcast separately at this exact point. (Re ordering: The critical main use cases are all well tested. Although I don\u0027t think there is a reason for the exact ordering here, if things break, they should be visible through tests).",
+      "parentUuid": "ecadf4fb_53da27f1",
+      "range": {
+        "startLine": 1454,
+        "startChar": 21,
+        "endLine": 1454,
+        "endChar": 42
+      },
+      "revId": "391ad54d0206b3c2012be3fd7cb286259dce57cb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "c5d8a9f2_42007136",
         "filename": "chrome/android/java/src/org/chromium/chrome/browser/tab/TabObserver.java",
         "patchSetId": 10
