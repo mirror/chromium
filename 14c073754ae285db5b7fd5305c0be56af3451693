@@ -22,6 +22,30 @@
       "revId": "14c073754ae285db5b7fd5305c0be56af3451693",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f0c7c81c_d33b3cee",
+        "filename": "content/browser/webrtc/webrtc_internals.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 212,
+      "author": {
+        "id": 1246261
+      },
+      "writtenOn": "2017-11-06T15:35:18Z",
+      "side": 1,
+      "message": "1. That mentions enums, not enum-classes. With enums, name collision is possible. With enum-classes, it is not.\n2. The convention in base/ is UPPER_CASE, not kCamelCase. I prefer to follow the convention set there.\n(Please acknowledge if you\u0027re therefore fine with keeping it as-is.)",
+      "parentUuid": "5a967280_ffdb0a29",
+      "range": {
+        "startLine": 212,
+        "startChar": 4,
+        "endLine": 212,
+        "endChar": 18
+      },
+      "revId": "14c073754ae285db5b7fd5305c0be56af3451693",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
