@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "806917ba_03abf373",
+        "filename": "ios/build/bots/chromium.fyi/ios-simulator.json",
+        "patchSetId": 8
+      },
+      "lineNbr": 3,
+      "author": {
+        "id": 1183785
+      },
+      "writtenOn": "2017-11-06T18:24:21Z",
+      "side": 1,
+      "message": "Done.\n\nWe can tell the configuration file usage from the path.  If it\u0027s under ios/build/bots/chromium.fyi/, it is on FYI.",
+      "parentUuid": "279c0cf4_fd28db85",
+      "revId": "7fcb6539d90dd3ff80f6082f34c90660d19e8705",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "c755cc6e_b071d1ce",
         "filename": "ios/build/bots/chromium.fyi/ios-simulator.json",
         "patchSetId": 8
@@ -36,6 +54,24 @@
     },
     {
       "key": {
+        "uuid": "77dc10cb_d962a949",
+        "filename": "ios/build/bots/chromium.fyi/ios-simulator.json",
+        "patchSetId": 8
+      },
+      "lineNbr": 19,
+      "author": {
+        "id": 1183785
+      },
+      "writtenOn": "2017-11-06T18:24:21Z",
+      "side": 1,
+      "message": "Added them here as these configurations of common tests are not running anywhere,  but I guess not very necessary as well. I\u0027ll remove them.",
+      "parentUuid": "c755cc6e_b071d1ce",
+      "revId": "7fcb6539d90dd3ff80f6082f34c90660d19e8705",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "c95e27ce_d6d03546",
         "filename": "ios/build/bots/tests/eg_tests.json",
         "patchSetId": 8
@@ -47,6 +83,24 @@
       "writtenOn": "2017-11-04T00:54:30Z",
       "side": 1,
       "message": "What do you think about including the tests from eg_cq_tests.json in here? We probably want to run them on main. When something runs on the CQ it should also run on main. I see that your CL covers that.\n\nNevermind - it should be okay because we run ios-simulator on CQ and main? We just have to make sure to not include anything in both?\n\nCan we add the comment explaining what this file is for?",
+      "revId": "7fcb6539d90dd3ff80f6082f34c90660d19e8705",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "cfbd196c_b58a1e4d",
+        "filename": "ios/build/bots/tests/eg_tests.json",
+        "patchSetId": 8
+      },
+      "lineNbr": 2,
+      "author": {
+        "id": 1183785
+      },
+      "writtenOn": "2017-11-06T18:24:21Z",
+      "side": 1,
+      "message": "Yes they are running on main already ios-simulator.  I added one eg_cq_tests here to added coverage on iPad for them.",
+      "parentUuid": "c95e27ce_d6d03546",
       "revId": "7fcb6539d90dd3ff80f6082f34c90660d19e8705",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
