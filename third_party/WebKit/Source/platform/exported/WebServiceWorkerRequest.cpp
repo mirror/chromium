@@ -11,6 +11,7 @@
 #include "public/platform/WebHTTPHeaderVisitor.h"
 #include "public/platform/WebString.h"
 #include "public/platform/WebURLRequest.h"
+#include "third_party/WebKit/common/blob/blob.mojom-blink.h"
 
 namespace blink {
 
