@@ -16,6 +16,24 @@
       "revId": "d0b3aa6692758507a5e2e50eb3a0a3ae56d9eeb2",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a772e5dc_b9840ea9",
+        "filename": "chromeos/dbus/sms_client.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 79,
+      "author": {
+        "id": 1000212
+      },
+      "writtenOn": "2017-11-06T23:53:52Z",
+      "side": 1,
+      "message": "The reason I use PostTask here is that PropertySet (more specifically, PropertySet::NotifyPropertyChanged) doesn\u0027t explicitly provide a guarantee that it\u0027s safe to invoke PropertySet methods inside a PropertyChanged callback. Even it may be safe to do so in the current scenario, I feel unease about relying this implicit behavior.",
+      "parentUuid": "0d634c24_ae1a24a3",
+      "revId": "d0b3aa6692758507a5e2e50eb3a0a3ae56d9eeb2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
