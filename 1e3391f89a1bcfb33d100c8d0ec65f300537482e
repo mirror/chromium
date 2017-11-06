@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "1143b0ca_4e2ab5f9",
+        "filename": "chrome/browser/ui/views/frame/hosted_app_button_container.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 57,
+      "author": {
+        "id": 1000045
+      },
+      "writtenOn": "2017-11-06T15:16:44Z",
+      "side": 1,
+      "message": "Is this used?",
+      "revId": "1e3391f89a1bcfb33d100c8d0ec65f300537482e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
