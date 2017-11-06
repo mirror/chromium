@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "f2770ef5_7927d71b",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/feedback/FeedbackSource.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 40,
+      "author": {
+        "id": 1002237
+      },
+      "writtenOn": "2017-11-06T21:43:52Z",
+      "side": 1,
+      "message": "Question: Is this indent correct? The same happened in the FeedbackReporter interface, so maybe there\u0027s just a bug with clang-format when this is the last line? I\u0027m guessing you just ran clang-format anyway, so I would keep this patch as is if I were you. But maybe file a bug with clang-format?\n\nBug-filing guide: https://chromium.googlesource.com/chromium/src/+/lkcr/docs/clang_format.md#reporting-problems",
+      "range": {
+        "startLine": 40,
+        "startChar": 4,
+        "endLine": 40,
+        "endChar": 8
+      },
+      "revId": "ea46954d91582256baf1fca7ac00f741c6773000",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
