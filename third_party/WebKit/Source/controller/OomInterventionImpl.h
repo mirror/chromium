@@ -22,10 +22,6 @@ class CONTROLLER_EXPORT OomInterventionImpl
   OomInterventionImpl();
   ~OomInterventionImpl() override;
 
-  // mojom::OomIntervention implementations:
-  void OnNearOomDetected(OnNearOomDetectedCallback) override;
-  void OnInterventionDeclined(OnInterventionDeclinedCallback) override;
-
  private:
   std::unique_ptr<ScopedPagePauser> pauser_;
 };
