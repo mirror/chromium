@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "720ef9d6_cf029123",
+        "filename": "base/files/file_util_mac.mm",
+        "patchSetId": 3
+      },
+      "lineNbr": 39,
+      "author": {
+        "id": 1002691
+      },
+      "writtenOn": "2017-11-06T18:38:25Z",
+      "side": 1,
+      "message": "In the header it says \"|to_path| retains |from_path|\u0027s metadata\" which seems the opposite of this behavior of preserving the dest path\u0027s permissions. Or are permissions and metadata different things here? Either way, could this be clarified?",
+      "revId": "1ed8f8822472328f761a82adec1790a2fe7c84d9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
