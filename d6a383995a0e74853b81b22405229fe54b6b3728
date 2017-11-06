@@ -230,6 +230,24 @@
     },
     {
       "key": {
+        "uuid": "9914ec2d_0c192403",
+        "filename": "components/viz/service/display/direct_renderer.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 653,
+      "author": {
+        "id": 1139801
+      },
+      "writtenOn": "2017-11-06T02:28:14Z",
+      "side": 0,
+      "message": "Done",
+      "parentUuid": "3a45540b_ffaac41f",
+      "revId": "d6a383995a0e74853b81b22405229fe54b6b3728",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "baa779c8_6b807653",
         "filename": "components/viz/service/display/direct_renderer.cc",
         "patchSetId": 4
