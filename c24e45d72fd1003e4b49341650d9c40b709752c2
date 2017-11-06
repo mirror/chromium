@@ -16,6 +16,24 @@
       "revId": "c24e45d72fd1003e4b49341650d9c40b709752c2",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7b171bf2_eeaa452d",
+        "filename": "third_party/WebKit/Source/core/paint/compositing/CompositingLayerAssigner.cpp",
+        "patchSetId": 8
+      },
+      "lineNbr": 225,
+      "author": {
+        "id": 1210854
+      },
+      "writtenOn": "2017-11-06T17:34:04Z",
+      "side": 1,
+      "message": "I did not experiment with z-index, but I can believe that it might cause issues. In the absence of z-index then other siblings skipping the overlap tests did not cause issues. I\u0027ll experiment some more and see if other combinations can break it.",
+      "parentUuid": "0b9857aa_6391ade6",
+      "revId": "c24e45d72fd1003e4b49341650d9c40b709752c2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
