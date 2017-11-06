@@ -370,6 +370,24 @@ class CORE_EXPORT LocalFrameClient : public FrameClient {
 
   virtual void SetVirtualTimePauser(
       ScopedVirtualTimePauser virtual_time_pauser) {}
+
+  // PluginFrames --------------------------------------------------------------
+
+  // Creates a plugin frame for the given HTMLPluginElement. The plugin frame
+  // will render the contents in the given URL using external handlers. Returns
+  // true if successful.
+  virtual bool CreatePluginFrame(HTMLPlugInElement*,
+                                 const KURL&,
+                                 const String&) {
+    return false;
+  }
+
+  // Asks the controller for the plugin element for a wrapper object to provide
+  // custom scripting for the plugin.
+  virtual v8::Local<v8::Object> CreateV8ScriptableObject(HTMLPlugInElement*,
+                                                         v8::Isolate*) {
+    return v8::Local<v8::Object>();
+  }
 };
 
 }  // namespace blink

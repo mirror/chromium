@@ -210,6 +210,9 @@ class CORE_EXPORT Frame : public GarbageCollectedFinalized<Frame> {
   virtual void SetIsInert(bool) = 0;
   void UpdateInertIfPossible();
 
+  bool IsPluginFrame() const { return is_plugin_frame_; }
+  void SetIsPluginFrame() { is_plugin_frame_ = true; }
+
  protected:
   Frame(FrameClient*, Page&, FrameOwner*, WindowProxyManager*);
 
@@ -237,6 +240,10 @@ class CORE_EXPORT Frame : public GarbageCollectedFinalized<Frame> {
   const Member<WindowProxyManager> window_proxy_manager_;
   // TODO(sashab): Investigate if this can be represented with m_lifecycle.
   bool is_loading_;
+
+  // True when this frame is owned by a HTMLPluginElement and renders contents
+  // of an external handler.
+  bool is_plugin_frame_;
 };
 
 inline FrameClient* Frame::Client() const {

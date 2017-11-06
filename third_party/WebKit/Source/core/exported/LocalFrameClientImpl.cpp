@@ -46,6 +46,7 @@
 #include "core/exported/WebDocumentLoaderImpl.h"
 #include "core/exported/WebPluginContainerImpl.h"
 #include "core/exported/WebViewImpl.h"
+#include "core/frame/Frame.h"
 #include "core/frame/LocalFrameView.h"
 #include "core/frame/Settings.h"
 #include "core/frame/WebLocalFrameImpl.h"
@@ -89,6 +90,7 @@
 #include "public/web/WebAutofillClient.h"
 #include "public/web/WebDOMEvent.h"
 #include "public/web/WebDocument.h"
+#include "public/web/WebElement.h"
 #include "public/web/WebFormElement.h"
 #include "public/web/WebFrameClient.h"
 #include "public/web/WebNode.h"
@@ -1129,6 +1131,28 @@ void LocalFrameClientImpl::ScrollRectToVisibleInParentFrame(
 void LocalFrameClientImpl::SetVirtualTimePauser(
     ScopedVirtualTimePauser virtual_time_pauser) {
   virtual_time_pauser_ = std::move(virtual_time_pauser);
+}
+
+bool LocalFrameClientImpl::CreatePluginFrame(HTMLPlugInElement* owner,
+                                             const KURL& completed_url,
+                                             const String& mime_type) {
+  if (!web_frame_->Client()->CreatePluginController(owner, completed_url,
+                                                    mime_type)) {
+    return false;
+  }
+
+  if (auto* new_frame = web_frame_->CreateChildFrame("", owner)) {
+    new_frame->SetIsPluginFrame();
+    return true;
+  }
+
+  return false;
+}
+
+v8::Local<v8::Object> LocalFrameClientImpl::CreateV8ScriptableObject(
+    HTMLPlugInElement* owner,
+    v8::Isolate* isolate) {
+  return web_frame_->Client()->CreateV8ScriptableObject(owner, isolate);
 }
 
 }  // namespace blink

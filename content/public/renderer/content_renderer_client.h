@@ -37,6 +37,7 @@ namespace blink {
 class WebAudioDevice;
 class WebAudioLatencyHint;
 class WebClipboard;
+class WebElement;
 class WebFrame;
 class WebLocalFrame;
 class WebMIDIAccessor;
@@ -59,6 +60,13 @@ struct WebURLError;
 namespace media {
 class KeySystemProperties;
 }
+
+namespace v8 {
+class Isolate;
+template <class T>
+class Local;
+class Object;
+}  // namespace v8
 
 namespace content {
 class BrowserPluginDelegate;
@@ -95,6 +103,28 @@ class CONTENT_EXPORT ContentRendererClient {
       RenderFrame* render_frame,
       const blink::WebPluginParams& params,
       blink::WebPlugin** plugin);
+
+  // Creates a controller for the given plugin element. The controller will
+  // manage the frame owned by |plugin_element| to render the content in
+  // |completed_url|.
+  virtual bool CreatePluginController(const blink::WebElement& plugin_element,
+                                      const GURL& completed_url,
+                                      const std::string& mime_type);
+
+  // Returns true if navigation needs to be overwritten for |render_frame|. This
+  // is called before sending the load request after committing a navigation to
+  // check if the load request can be handled by the renderer. If successful,
+  // the frame will load a simple HTML page with <embed> tag whose 'src'
+  // attribute will be set to |url|. The load request for the resource will go
+  // the corresponding handlers of the mime-type in extension layer.
+  virtual bool OverrideNavigationForMimeHandlerView(RenderFrame* render_frame,
+                                                    const GURL& url);
+
+  // Returns a scriptable object which wraps the required API for
+  // |plugin_element|.
+  virtual v8::Local<v8::Object> CreateV8ScriptableObject(
+      const blink::WebElement& plugin_element,
+      v8::Isolate* isolate);
 
   // Creates a replacement plugin that is shown when the plugin at |file_path|
   // couldn't be loaded. This allows the embedder to show a custom placeholder.

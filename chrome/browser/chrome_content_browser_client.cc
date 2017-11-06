@@ -355,6 +355,7 @@
 #include "extensions/browser/guest_view/web_view/web_view_guest.h"
 #include "extensions/browser/guest_view/web_view/web_view_permission_helper.h"
 #include "extensions/browser/guest_view/web_view/web_view_renderer_state.h"
+#include "extensions/browser/mime_handler_view/mime_handler_view_manager_host.h"
 #include "extensions/common/constants.h"
 #include "extensions/common/extension.h"
 #include "extensions/common/extension_set.h"
@@ -3525,6 +3526,14 @@ void ChromeContentBrowserClient::InitWebContextInterfaces() {
 
   worker_interfaces_parameterized_->AddInterface(
       base::Bind(&BudgetServiceImpl::Create));
+
+#if BUILDFLAG(ENABLE_EXTENSIONS)
+  if (base::FeatureList::IsEnabled(
+          features::kPdfExtensionInOutOfProcessFrame)) {
+    frame_interfaces_parameterized_->AddInterface(
+        base::Bind(extensions::MimeHandlerViewManagerHost::CreateInterface));
+  }
+#endif
 }
 
 #if BUILDFLAG(ENABLE_WEBRTC)

@@ -2868,6 +2868,10 @@ const FeatureEntry kFeatureEntries[] = {
      flag_descriptions::kCrossProcessGuestViewIsolationName,
      flag_descriptions::kCrossProcessGuestViewIsolationDescription, kOsDesktop,
      FEATURE_VALUE_TYPE(features::kGuestViewCrossProcessFrames)},
+    {"pdf-extension-in-out-of-process-frame",
+     flag_descriptions::kPdfExtensionInOutOfProcessFrameName,
+     flag_descriptions::kPdfExtensionInOutOfProcessFrameDescription, kOsDesktop,
+     FEATURE_VALUE_TYPE(features::kPdfExtensionInOutOfProcessFrame)},
 #if !defined(OS_ANDROID)
     {"media-remoting", flag_descriptions::kMediaRemotingName,
      flag_descriptions::kMediaRemotingDescription, kOsDesktop,

@@ -118,6 +118,11 @@ const base::Feature kGamepadExtensions{"GamepadExtensions",
 const base::Feature kGuestViewCrossProcessFrames{
     "GuestViewCrossProcessFrames", base::FEATURE_ENABLED_BY_DEFAULT};
 
+// Will load the PDF extension inside a frame. This will avoid creating
+// BrowserPlugin or an inner WebContents.
+const base::Feature kPdfExtensionInOutOfProcessFrame{
+    "PdfExtensionInOutOfProcessFrame", base::FEATURE_DISABLED_BY_DEFAULT};
+
 // Enables BlinkGC heap compaction.
 const base::Feature kHeapCompaction{"HeapCompaction",
                                      base::FEATURE_DISABLED_BY_DEFAULT};

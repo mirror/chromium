@@ -59,7 +59,6 @@ namespace blink {
 using namespace HTMLNames;
 
 namespace {
-
 // Used for histograms, do not change the order.
 enum PluginRequestObjectResult {
   kPluginRequestObjectResultFailure = 0,
@@ -130,6 +129,9 @@ bool HTMLPlugInElement::RequestObjectInternal(
       url_.IsEmpty() ? KURL() : GetDocument().CompleteURL(url_);
   if (!AllowedToLoadObject(completed_url, service_type_))
     return false;
+
+  if (TryUsingExternalHandler())
+    return true;
 
   ObjectContentType object_type = GetObjectContentType();
   if (object_type == ObjectContentType::kFrame ||
@@ -351,7 +353,15 @@ v8::Local<v8::Object> HTMLPlugInElement::PluginWrapper() {
   // return the cached allocated Bindings::Instance. Not supporting this
   // edge-case is OK.
   v8::Isolate* isolate = V8PerIsolateData::MainThreadIsolate();
+
   if (plugin_wrapper_.IsEmpty()) {
+    if (ContentFrame() && ContentFrame()->IsPluginFrame()) {
+      plugin_wrapper_.Reset(
+          isolate, GetDocument().GetFrame()->Client()->CreateV8ScriptableObject(
+                       this, isolate));
+      return plugin_wrapper_.Get(isolate);
+    }
+
     PluginView* plugin;
 
     if (persisted_plugin_)
@@ -695,6 +705,14 @@ void HTMLPlugInElement::LazyReattachIfNeeded() {
     LazyReattachIfAttached();
     SetPersistedPlugin(nullptr);
   }
+}
+
+bool HTMLPlugInElement::TryUsingExternalHandler() {
+  if (ContentFrame())
+    ContentFrame()->Detach(FrameDetachType::kRemove);
+
+  return GetDocument().GetFrame()->Client()->CreatePluginFrame(
+      this, GetDocument().CompleteURL(url_), service_type_);
 }
 
 }  // namespace blink
