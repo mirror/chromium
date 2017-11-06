@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "f50bcb8b_3f3eb21c",
+        "filename": "third_party/WebKit/LayoutTests/fast/imagecapture/ImageCapture-creation-expected.txt",
+        "patchSetId": 7
+      },
+      "lineNbr": 3,
+      "author": {
+        "id": 1002823
+      },
+      "writtenOn": "2017-11-06T13:54:58Z",
+      "side": 1,
+      "message": "Bug 781772 filed.",
+      "parentUuid": "b5cf0b07_c558b674",
+      "range": {
+        "startLine": 3,
+        "startChar": 5,
+        "endLine": 3,
+        "endChar": 14
+      },
+      "revId": "03dc0139da158f18c7ac989659273ab6f8f59a0f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "e51bf25b_6d7be2d2",
         "filename": "third_party/WebKit/LayoutTests/fast/mediastream/MediaStreamTrack-applyConstraints-expected.txt",
         "patchSetId": 7
@@ -36,6 +60,30 @@
       "writtenOn": "2017-11-06T11:08:08Z",
       "side": 1,
       "message": "nit: Can you file a bug to have this test fixed?",
+      "range": {
+        "startLine": 4,
+        "startChar": 8,
+        "endLine": 4,
+        "endChar": 19
+      },
+      "revId": "03dc0139da158f18c7ac989659273ab6f8f59a0f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "23e77ead_0092f287",
+        "filename": "third_party/WebKit/LayoutTests/fast/mediastream/MediaStreamTrack-applyConstraints-expected.txt",
+        "patchSetId": 7
+      },
+      "lineNbr": 4,
+      "author": {
+        "id": 1002823
+      },
+      "writtenOn": "2017-11-06T13:54:58Z",
+      "side": 1,
+      "message": "crbug.com/781777 filed. It\u0027s a matter of finding a set of constraints that the mock devices satisfy. (Would be simpler with insertable fake devices.)",
+      "parentUuid": "e51bf25b_6d7be2d2",
       "range": {
         "startLine": 4,
         "startChar": 8,
@@ -71,6 +119,30 @@
     },
     {
       "key": {
+        "uuid": "991685fd_9b6b25f6",
+        "filename": "third_party/WebKit/LayoutTests/fast/mediastream/MediaStreamTrack-getConstraints-expected.txt",
+        "patchSetId": 7
+      },
+      "lineNbr": 4,
+      "author": {
+        "id": 1002823
+      },
+      "writtenOn": "2017-11-06T13:54:58Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "2c85979b_04bbf957",
+      "range": {
+        "startLine": 4,
+        "startChar": 8,
+        "endLine": 4,
+        "endChar": 9
+      },
+      "revId": "03dc0139da158f18c7ac989659273ab6f8f59a0f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "32f1df73_99c33c1c",
         "filename": "third_party/WebKit/LayoutTests/fast/mediastream/getusermedia-constraints-expected.txt",
         "patchSetId": 7
@@ -82,6 +154,30 @@
       "writtenOn": "2017-11-06T11:08:08Z",
       "side": 1,
       "message": "nit: Can you file a bug to fix this test? Things like valid_but_unsupported_1 were valid in the mock but are ignored by the real thing in content.",
+      "range": {
+        "startLine": 1,
+        "startChar": 83,
+        "endLine": 1,
+        "endChar": 0
+      },
+      "revId": "03dc0139da158f18c7ac989659273ab6f8f59a0f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e6dabc19_1bda604a",
+        "filename": "third_party/WebKit/LayoutTests/fast/mediastream/getusermedia-constraints-expected.txt",
+        "patchSetId": 7
+      },
+      "lineNbr": 1,
+      "author": {
+        "id": 1002823
+      },
+      "writtenOn": "2017-11-06T13:54:58Z",
+      "side": 1,
+      "message": "The two failures here are returning the wrong error name, and the tests were checking for a different wrong error name. This should be waiting for Florian\u0027s patch to return the right error.\n\nI created crbug.com/781774 and assigned it to orphis.\n\n(The console message is expected.)",
+      "parentUuid": "32f1df73_99c33c1c",
       "range": {
         "startLine": 1,
         "startChar": 83,
