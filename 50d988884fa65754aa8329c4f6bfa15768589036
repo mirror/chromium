@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "5145e51e_afd1fe8b",
+        "filename": "net/nqe/network_quality_estimator.cc",
+        "patchSetId": 14
+      },
+      "lineNbr": 1759,
+      "author": {
+        "id": 1166490
+      },
+      "writtenOn": "2017-11-06T22:18:12Z",
+      "side": 1,
+      "message": "I\u0027d move this to a constant (either at the top of the file or earlier in this method) and add a comment about why 50. If you don\u0027t want to make it a constant, find a good way to comment about why it is 50.",
+      "range": {
+        "startLine": 1759,
+        "startChar": 66,
+        "endLine": 1759,
+        "endChar": 68
+      },
+      "revId": "50d988884fa65754aa8329c4f6bfa15768589036",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e886b504_8d2f495b",
+        "filename": "net/nqe/network_quality_estimator_unittest.cc",
+        "patchSetId": 14
+      },
+      "lineNbr": 3399,
+      "author": {
+        "id": 1166490
+      },
+      "writtenOn": "2017-11-06T22:18:12Z",
+      "side": 1,
+      "message": "why 300?",
+      "range": {
+        "startLine": 3399,
+        "startChar": 25,
+        "endLine": 3399,
+        "endChar": 28
+      },
+      "revId": "50d988884fa65754aa8329c4f6bfa15768589036",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
