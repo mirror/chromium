@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "75ce6f0d_c697ce73",
+        "filename": "chrome/browser/flag_descriptions.h",
+        "patchSetId": 9
+      },
+      "lineNbr": 300,
+      "author": {
+        "id": 1000046
+      },
+      "writtenOn": "2017-11-06T22:49:12Z",
+      "side": 1,
+      "message": "Will do in a different CL.",
+      "parentUuid": "5e175ab0_5398fe6a",
+      "revId": "2487da9589c9ee9d7452b778f38f2cc299fb228d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "4902f17c_3f69ae62",
         "filename": "chrome/browser/profiling_host/memlog_browsertest.cc",
         "patchSetId": 9
@@ -36,6 +54,24 @@
     },
     {
       "key": {
+        "uuid": "cb989788_2b729cff",
+        "filename": "chrome/browser/profiling_host/memlog_browsertest.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 408,
+      "author": {
+        "id": 1000046
+      },
+      "writtenOn": "2017-11-06T22:49:12Z",
+      "side": 1,
+      "message": "srsly. :-/",
+      "parentUuid": "4902f17c_3f69ae62",
+      "revId": "2487da9589c9ee9d7452b778f38f2cc299fb228d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "42b99873_279edaed",
         "filename": "chrome/browser/profiling_host/profiling_process_host.cc",
         "patchSetId": 9
@@ -47,6 +83,24 @@
       "writtenOn": "2017-11-03T16:06:41Z",
       "side": 1,
       "message": "nit: Why not base::RangeDouble() \u003c .3333",
+      "revId": "2487da9589c9ee9d7452b778f38f2cc299fb228d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "49797f01_da331d37",
+        "filename": "chrome/browser/profiling_host/profiling_process_host.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 621,
+      "author": {
+        "id": 1000046
+      },
+      "writtenOn": "2017-11-06T22:49:12Z",
+      "side": 1,
+      "message": "seemed overkill to use a double for a really coarse grained sample like this? No real reason.",
+      "parentUuid": "42b99873_279edaed",
       "revId": "2487da9589c9ee9d7452b778f38f2cc299fb228d",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
