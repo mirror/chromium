@@ -71,6 +71,30 @@
     },
     {
       "key": {
+        "uuid": "9b9d7e8b_3a960c16",
+        "filename": "components/arc/test/fake_power_instance.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 16,
+      "author": {
+        "id": 1115919
+      },
+      "writtenOn": "2017-11-06T14:27:39Z",
+      "side": 1,
+      "message": "maybe base::ResetAndReturn(\u0026suspend_callback_) ?",
+      "parentUuid": "4c6b1d8f_c5c56b1d",
+      "range": {
+        "startLine": 16,
+        "startChar": 9,
+        "endLine": 16,
+        "endChar": 19
+      },
+      "revId": "3b7e427cbc6bc4d524d9c38c90f9e0f758af009c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "85a3a758_2688056d",
         "filename": "components/arc/test/fake_power_instance.h",
         "patchSetId": 4
