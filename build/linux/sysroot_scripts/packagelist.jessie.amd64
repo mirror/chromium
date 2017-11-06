@@ -69,6 +69,7 @@ http://ftp.us.debian.org/debian/pool/main/libn/libnss-db/libnss-db_2.2.3pre1-5+b
 http://ftp.us.debian.org/debian/pool/main/libp/libp11/libp11-2_0.2.8-5_amd64.deb
 http://ftp.us.debian.org/debian/pool/main/libp/libpthread-stubs/libpthread-stubs0-dev_0.3-4_amd64.deb
 http://ftp.us.debian.org/debian/pool/main/libs/libselinux/libselinux1_2.3-2_amd64.deb
+http://ftp.us.debian.org/debian/pool/main/libv/libva/libva-dev_1.8.3-2_amd64.deb
 http://ftp.us.debian.org/debian/pool/main/libx/libx11/libx11-6_1.6.2-3_amd64.deb
 http://ftp.us.debian.org/debian/pool/main/libx/libx11/libx11-dev_1.6.2-3_amd64.deb
 http://ftp.us.debian.org/debian/pool/main/libx/libx11/libx11-xcb1_1.6.2-3_amd64.deb
