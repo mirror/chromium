@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "beb359f5_97ab251a",
+        "filename": "content/renderer/media/media_factory.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 142,
+      "author": {
+        "id": 1130490
+      },
+      "writtenOn": "2017-11-06T21:09:33Z",
+      "side": 1,
+      "message": "why clear |observer_| here?",
+      "range": {
+        "startLine": 142,
+        "startChar": 46,
+        "endLine": 142,
+        "endChar": 66
+      },
+      "revId": "0ede1103b30023f879351bbb8d0c61792c78c702",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "966ba5e4_013453f8",
+        "filename": "content/renderer/media/media_factory.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 143,
+      "author": {
+        "id": 1130490
+      },
+      "writtenOn": "2017-11-06T21:09:33Z",
+      "side": 1,
+      "message": "this seems like a change in functionality.  didn\u0027t WebMediaPlayerImpl get a WebLayer before?",
+      "range": {
+        "startLine": 143,
+        "startChar": 57,
+        "endLine": 143,
+        "endChar": 64
+      },
+      "revId": "0ede1103b30023f879351bbb8d0c61792c78c702",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
