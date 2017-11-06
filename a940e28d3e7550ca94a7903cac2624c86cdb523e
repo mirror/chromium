@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "87cc9a3c_5fb0ac65",
+        "filename": "chrome/browser/resources/settings/basic_page/basic_page.js",
+        "patchSetId": 7
+      },
+      "lineNbr": 128,
+      "author": {
+        "id": 1144209
+      },
+      "writtenOn": "2017-11-06T22:28:17Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "388df9ed_38e1500c",
+      "range": {
+        "startLine": 128,
+        "startChar": 53,
+        "endLine": 128,
+        "endChar": 54
+      },
+      "revId": "a940e28d3e7550ca94a7903cac2624c86cdb523e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "52558f27_1ac64a4c",
         "filename": "chrome/browser/safe_browsing/chrome_password_protection_service.cc",
         "patchSetId": 7
@@ -77,6 +101,24 @@
     },
     {
       "key": {
+        "uuid": "15f2966c_a71765c7",
+        "filename": "chrome/test/data/webui/settings/change_password_page_test.js",
+        "patchSetId": 7
+      },
+      "lineNbr": 30,
+      "author": {
+        "id": 1144209
+      },
+      "writtenOn": "2017-11-06T22:28:17Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "95a3af82_0d7d1359",
+      "revId": "a940e28d3e7550ca94a7903cac2624c86cdb523e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "9c36400d_5cec025b",
         "filename": "chrome/test/data/webui/settings/change_password_page_test.js",
         "patchSetId": 7
@@ -94,6 +136,24 @@
     },
     {
       "key": {
+        "uuid": "c9b3074c_a4a1d7d9",
+        "filename": "chrome/test/data/webui/settings/change_password_page_test.js",
+        "patchSetId": 7
+      },
+      "lineNbr": 49,
+      "author": {
+        "id": 1144209
+      },
+      "writtenOn": "2017-11-06T22:28:17Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "9c36400d_5cec025b",
+      "revId": "a940e28d3e7550ca94a7903cac2624c86cdb523e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "9f590974_0930efe0",
         "filename": "chrome/test/data/webui/settings/settings_main_test.js",
         "patchSetId": 7
@@ -108,6 +168,24 @@
       "revId": "a940e28d3e7550ca94a7903cac2624c86cdb523e",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "cc5fe0f9_049655ba",
+        "filename": "chrome/test/data/webui/settings/settings_main_test.js",
+        "patchSetId": 7
+      },
+      "lineNbr": 285,
+      "author": {
+        "id": 1144209
+      },
+      "writtenOn": "2017-11-06T22:28:17Z",
+      "side": 1,
+      "message": "ACK. Thanks, good to know.\nFor now the ChangePasswordBrowserProxy logic upon attaching is fairly simple, and \"change-password-on-show\" call doesn\u0027t trigger any action of ChangePasswordBrowserProxy. If this behavior changes in the future, I\u0027ll move TestChangePasswordBrowserProxy out and use it in this test.",
+      "parentUuid": "9f590974_0930efe0",
+      "revId": "a940e28d3e7550ca94a7903cac2624c86cdb523e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
