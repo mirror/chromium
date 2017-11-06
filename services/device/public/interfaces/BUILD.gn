@@ -12,6 +12,7 @@ mojom("interfaces") {
     "nfc.mojom",
     "nfc_provider.mojom",
     "power_monitor.mojom",
+    "public_ip_address_geolocation_provider.mojom",
     "serial.mojom",
     "time_zone_monitor.mojom",
     "vibration_manager.mojom",
@@ -22,6 +23,7 @@ mojom("interfaces") {
 
   public_deps = [
     ":constants",
+    "//device/geolocation/public/interfaces",
   ]
 }
 
