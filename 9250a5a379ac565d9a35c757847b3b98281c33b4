@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "3f43f25d_b8a9be47",
+        "filename": "content/browser/frame_host/render_frame_host_manager_browsertest.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 1857,
+      "author": {
+        "id": 1001216
+      },
+      "writtenOn": "2017-11-06T04:00:37Z",
+      "side": 0,
+      "message": "Are we removing this because it isn\u0027t possible for debug URLs to commit anymore?  I wonder if there\u0027s some way to test that or help enforce it.  For example, maybe somewhere in RFHI::DidCommitProvisionalLoad we could (D)CHECK that !IsRendererDebugURL(validated_params.url)?\n\n(I\u0027m a bit worried that might not yet be the case for the ASAN methods, but hopefully we can fix that.  See my comment in RenderFrameImpl.)",
+      "revId": "9250a5a379ac565d9a35c757847b3b98281c33b4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}

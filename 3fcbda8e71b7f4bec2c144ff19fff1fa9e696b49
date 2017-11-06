@@ -1,0 +1,210 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "533b41d1_ed8c04cd",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 6
+      },
+      "lineNbr": 11,
+      "author": {
+        "id": 1001216
+      },
+      "writtenOn": "2017-11-06T04:00:37Z",
+      "side": 1,
+      "message": "Are we also trying to add an invariant that debug URLs do not commit?  Maybe it\u0027s worth mentioning that in the CL description as well.",
+      "revId": "3fcbda8e71b7f4bec2c144ff19fff1fa9e696b49",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4389fe65_b9a4faae",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 6
+      },
+      "lineNbr": 13,
+      "author": {
+        "id": 1001216
+      },
+      "writtenOn": "2017-11-06T04:00:37Z",
+      "side": 1,
+      "message": "Does this also fix 760732, or is more work needed there?",
+      "revId": "3fcbda8e71b7f4bec2c144ff19fff1fa9e696b49",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "355e6f5c_0bde98d8",
+        "filename": "content/browser/browser_url_handler_impl.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 15,
+      "author": {
+        "id": 1001216
+      },
+      "writtenOn": "2017-11-06T04:00:37Z",
+      "side": 1,
+      "message": "Not needed anymore?  (Same in several other files.)",
+      "revId": "3fcbda8e71b7f4bec2c144ff19fff1fa9e696b49",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c7c52164_a8ef339a",
+        "filename": "content/public/common/url_utils.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 45,
+      "author": {
+        "id": 1001216
+      },
+      "writtenOn": "2017-11-06T04:00:37Z",
+      "side": 1,
+      "message": "the",
+      "range": {
+        "startLine": 45,
+        "startChar": 48,
+        "endLine": 45,
+        "endChar": 52
+      },
+      "revId": "3fcbda8e71b7f4bec2c144ff19fff1fa9e696b49",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b4370d38_3873a884",
+        "filename": "content/public/common/url_utils.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 45,
+      "author": {
+        "id": 1001216
+      },
+      "writtenOn": "2017-11-06T04:00:37Z",
+      "side": 1,
+      "message": "not",
+      "range": {
+        "startLine": 45,
+        "startChar": 33,
+        "endLine": 45,
+        "endChar": 37
+      },
+      "revId": "3fcbda8e71b7f4bec2c144ff19fff1fa9e696b49",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e478158a_8e4730fc",
+        "filename": "content/public/test/navigation_simulator.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 830,
+      "author": {
+        "id": 1001216
+      },
+      "writtenOn": "2017-11-06T04:00:37Z",
+      "side": 1,
+      "message": "now",
+      "range": {
+        "startLine": 830,
+        "startChar": 21,
+        "endLine": 830,
+        "endChar": 25
+      },
+      "revId": "3fcbda8e71b7f4bec2c144ff19fff1fa9e696b49",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2bde833d_dc73a5f5",
+        "filename": "content/renderer/render_frame_impl.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 779,
+      "author": {
+        "id": 1001216
+      },
+      "writtenOn": "2017-11-06T04:00:37Z",
+      "side": 1,
+      "message": "Hmm, I think we might have a problem here, particularly if we\u0027re trying to ensure that debug URLs don\u0027t commit.\n\nI was a bit surprised to see how this works.  Apparently, chrome://crash (which is kChromeUICrashURL) gets handled in MaybeHandleDebugURL, but if it has a path appended, it\u0027s meant to fall through and be handled in this function.  This function can then handle it or not based on certain paths, and it might return false here or at the end if it doesn\u0027t find a match.\n\nI\u0027m still a bit confused, because it doesn\u0027t look like such URLs will return from IsRendererDebugURL in the browser process.  That means they could cause the same problems in PlzNav that we\u0027re trying to address in this CL.\n\nI wonder if we need to restructure this?  One straw man approach would be to return true for chrome://crash with arbitrary paths in IsRendererDebugURL, call MaybeTriggerAsanError at the beginning of MaybeHandleDebugURL instead of the end, and handle any other path following chrome://crash the way we would handle chrome://crash itself.\n\n(Guessing we\u0027d want to include a test for that, showing the old approach was broken in PlzNav?)",
+      "revId": "3fcbda8e71b7f4bec2c144ff19fff1fa9e696b49",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ef70000a_81282de8",
+        "filename": "content/renderer/render_frame_impl.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 6098,
+      "author": {
+        "id": 1001216
+      },
+      "writtenOn": "2017-11-06T04:00:37Z",
+      "side": 1,
+      "message": "navigation",
+      "range": {
+        "startLine": 6098,
+        "startChar": 5,
+        "endLine": 6098,
+        "endChar": 15
+      },
+      "revId": "3fcbda8e71b7f4bec2c144ff19fff1fa9e696b49",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "10f3b6f5_43b603da",
+        "filename": "content/renderer/render_frame_impl.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 6101,
+      "author": {
+        "id": 1001216
+      },
+      "writtenOn": "2017-11-06T04:00:37Z",
+      "side": 1,
+      "message": "the requested URL",
+      "range": {
+        "startLine": 6101,
+        "startChar": 51,
+        "endLine": 6101,
+        "endChar": 66
+      },
+      "revId": "3fcbda8e71b7f4bec2c144ff19fff1fa9e696b49",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9e1c63c8_33239969",
+        "filename": "content/renderer/render_frame_impl.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 6103,
+      "author": {
+        "id": 1001216
+      },
+      "writtenOn": "2017-11-06T04:00:37Z",
+      "side": 1,
+      "message": "I\u0027m curious why we need the !frame_-\u003eIsLoading() condition.  (And is this something the new Mojo interface will help us avoid, by letting us delete just the corresponding mojom::Navigation?)\n\nActually, I suppose this is related to what the desired behavior is.  When we navigate to a debug URL, are we intentionally leaving the debug URL in the omnibox until the user clears it?  I guess that\u0027s what we do today, so maybe that\u0027s ok?  Probably worth leaving a comment to that effect.  (It\u0027s reasonable to leave chrome://kill in the address bar above the sad tab, for example, since the user just typed it and this was the outcome.  It\u0027s possible to get the original URL back by hitting escape.)\n\nIf we had wanted to clear the omnibox, I\u0027d be worried about not sending the IPC in corner cases here, but I\u0027m guessing the DidStopLoading IPC doesn\u0027t update the address bar anyway.",
+      "range": {
+        "startLine": 6103,
+        "startChar": 31,
+        "endLine": 6103,
+        "endChar": 51
+      },
+      "revId": "3fcbda8e71b7f4bec2c144ff19fff1fa9e696b49",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
