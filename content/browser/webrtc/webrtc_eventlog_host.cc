@@ -27,6 +27,11 @@ namespace content {
 
 namespace {
 
+// TODO(eladalon): This blocks the new code path from executing until all
+// CLs associated with it have been landed. When that happens, it will be
+// removed.
+constexpr bool kRtcEventLoggingFromHostApplication = false;
+
 // In addition to the limit to the number of files given below, the size of the
 // files is also capped, see content/renderer/media/peer_connection_tracker.cc.
 #if defined(OS_ANDROID)
@@ -88,8 +93,7 @@ void WebRTCEventLogHost::PeerConnectionAdded(int peer_connection_local_id) {
                 peer_connection_local_id) ==
       active_peer_connection_local_ids_.end()) {
     active_peer_connection_local_ids_.push_back(peer_connection_local_id);
-    if (rtc_event_logging_enabled_ &&
-        ActivePeerConnectionsWithLogFiles().size() < kMaxNumberLogFiles) {
+    if (rtc_event_logging_enabled_) {
       StartEventLogForPeerConnection(peer_connection_local_id);
     }
   }
@@ -106,6 +110,9 @@ void WebRTCEventLogHost::PeerConnectionRemoved(int peer_connection_local_id) {
   RecordRtcEventLogRemoved(peer_connection_local_id);
 }
 
+// TODO(eladalon): By the time we remove kRtcEventLoggingFromHostApplication,
+// and use the new code, we should make sure that users of this interface still
+// get their logs written to the file they inteded it to reach.
 bool WebRTCEventLogHost::StartWebRTCEventLog(const base::FilePath& file_path) {
   DCHECK_CURRENTLY_ON(BrowserThread::UI);
   if (rtc_event_logging_enabled_)
@@ -147,14 +154,22 @@ WebRTCEventLogHost::ActivePeerConnectionsWithLogFiles() {
 
 void WebRTCEventLogHost::StartEventLogForPeerConnection(
     int peer_connection_local_id) {
-  if (ActivePeerConnectionsWithLogFiles().size() < kMaxNumberLogFiles) {
-    RecordRtcEventLogAdded(peer_connection_local_id);
-    base::PostTaskWithTraitsAndReplyWithResult(
-        FROM_HERE, {base::MayBlock(), base::TaskPriority::BACKGROUND},
-        base::Bind(&CreateEventLogFileForChildProcess, base_file_path_,
-                   render_process_id_, peer_connection_local_id),
-        base::Bind(&WebRTCEventLogHost::SendEventLogFileToRenderer,
-                   weak_ptr_factory_.GetWeakPtr(), peer_connection_local_id));
+  if (kRtcEventLoggingFromHostApplication) {
+    RenderProcessHost* rph = RenderProcessHost::FromID(render_process_id_);
+    if (rph) {
+      rph->Send(new PeerConnectionTracker_StartEventLogOutput(
+          peer_connection_local_id));
+    }
+  } else {
+    if (number_active_log_files_ < kMaxNumberLogFiles) {
+      ++number_active_log_files_;
+      base::PostTaskWithTraitsAndReplyWithResult(
+          FROM_HERE, {base::MayBlock(), base::TaskPriority::BACKGROUND},
+          base::Bind(&CreateEventLogFileForChildProcess, base_file_path_,
+                     render_process_id_, peer_connection_local_id),
+          base::Bind(&WebRTCEventLogHost::SendEventLogFileToRenderer,
+                     weak_ptr_factory_.GetWeakPtr(), peer_connection_local_id));
+    }
   }
 }
 
@@ -168,8 +183,8 @@ void WebRTCEventLogHost::SendEventLogFileToRenderer(
   }
   RenderProcessHost* rph = RenderProcessHost::FromID(render_process_id_);
   if (rph) {
-    rph->Send(new PeerConnectionTracker_StartEventLog(peer_connection_local_id,
-                                                      file_for_transit));
+    rph->Send(new PeerConnectionTracker_StartEventLogFile(
+        peer_connection_local_id, file_for_transit));
   } else {
     CHECK(RecordRtcEventLogRemoved(peer_connection_local_id));
     IPC::PlatformFileForTransitToFile(file_for_transit).Close();
