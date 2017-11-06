@@ -22,6 +22,30 @@
       "revId": "c0e1ac22856773e8c4b2e893b97f3d1d47f76908",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c78d37b7_b993c995",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/tabmodel/TabPersistentStore.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 826,
+      "author": {
+        "id": 1161045
+      },
+      "writtenOn": "2017-11-06T21:43:44Z",
+      "side": 1,
+      "message": "The problem is serializeTabModelSelector is a static function, we need to make the TabListMetadata class static to reuse that list but I feel it does not make sense to change that class to static.",
+      "parentUuid": "345b2e24_a5a9c94b",
+      "range": {
+        "startLine": 819,
+        "startChar": 6,
+        "endLine": 826,
+        "endChar": 9
+      },
+      "revId": "c0e1ac22856773e8c4b2e893b97f3d1d47f76908",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
