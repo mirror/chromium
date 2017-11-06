@@ -1,0 +1,140 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "468b4ca3_54266f5f",
+        "filename": "third_party/WebKit/Source/modules/media_controls/MediaControlsImpl.cpp",
+        "patchSetId": 2
+      },
+      "lineNbr": 429,
+      "author": {
+        "id": 1115974
+      },
+      "writtenOn": "2017-11-06T13:08:38Z",
+      "side": 1,
+      "message": "Should we check for \u003cvideo\u003e to save some memory?",
+      "revId": "3e66b39021110ec114f3216c62756f8da2a1597f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3415edce_9db6960c",
+        "filename": "third_party/WebKit/Source/modules/media_controls/elements/MediaControlLoadingPanelElement.cpp",
+        "patchSetId": 2
+      },
+      "lineNbr": 47,
+      "author": {
+        "id": 1115974
+      },
+      "writtenOn": "2017-11-06T13:08:38Z",
+      "side": 1,
+      "message": "We need to make sure this is always removed when the element is removed from the DOM. Otherwise, we will end up having a cycle, thus leaking the \u003cvideo\u003e because this element will have a strong reference on it.",
+      "revId": "3e66b39021110ec114f3216c62756f8da2a1597f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "98c62a18_9cd4fcfe",
+        "filename": "third_party/WebKit/Source/modules/media_controls/elements/MediaControlLoadingPanelElement.cpp",
+        "patchSetId": 2
+      },
+      "lineNbr": 201,
+      "author": {
+        "id": 1115974
+      },
+      "writtenOn": "2017-11-06T13:08:38Z",
+      "side": 1,
+      "message": "Should we DCHECK_GT(0, animationt_count_)?",
+      "revId": "3e66b39021110ec114f3216c62756f8da2a1597f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0509f4e4_101bc80d",
+        "filename": "third_party/WebKit/Source/modules/media_controls/elements/MediaControlLoadingPanelElement.cpp",
+        "patchSetId": 2
+      },
+      "lineNbr": 223,
+      "author": {
+        "id": 1115974
+      },
+      "writtenOn": "2017-11-06T13:08:38Z",
+      "side": 1,
+      "message": "Would it be correct to add an expectation on `animation_count_` value?",
+      "revId": "3e66b39021110ec114f3216c62756f8da2a1597f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1b340dee_957a54a4",
+        "filename": "third_party/WebKit/Source/modules/media_controls/elements/MediaControlLoadingPanelElementTest.cpp",
+        "patchSetId": 2
+      },
+      "lineNbr": 33,
+      "author": {
+        "id": 1115974
+      },
+      "writtenOn": "2017-11-06T13:08:38Z",
+      "side": 1,
+      "message": "nit: `ASSERT(media_controls);`?",
+      "revId": "3e66b39021110ec114f3216c62756f8da2a1597f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8b43f701_5e4439c3",
+        "filename": "third_party/WebKit/Source/modules/media_controls/elements/MediaControlLoadingPanelElementTest.cpp",
+        "patchSetId": 2
+      },
+      "lineNbr": 72,
+      "author": {
+        "id": 1115974
+      },
+      "writtenOn": "2017-11-06T13:08:38Z",
+      "side": 1,
+      "message": "Maybe add /* paused */ next to `false` so it\u0027s clearer what `false` is for here.",
+      "revId": "3e66b39021110ec114f3216c62756f8da2a1597f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "15279aa6_b2dd88ec",
+        "filename": "third_party/WebKit/Source/modules/media_controls/elements/MediaControlLoadingPanelElementTest.cpp",
+        "patchSetId": 2
+      },
+      "lineNbr": 87,
+      "author": {
+        "id": 1115974
+      },
+      "writtenOn": "2017-11-06T13:08:38Z",
+      "side": 1,
+      "message": "style: drop { }",
+      "revId": "3e66b39021110ec114f3216c62756f8da2a1597f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ef8c83fc_20b8f5f1",
+        "filename": "third_party/WebKit/Source/modules/media_controls/elements/MediaControlLoadingPanelElementTest.cpp",
+        "patchSetId": 2
+      },
+      "lineNbr": 224,
+      "author": {
+        "id": 1115974
+      },
+      "writtenOn": "2017-11-06T13:08:38Z",
+      "side": 1,
+      "message": "Should we have a check that verifies that the shadow dom is removed when the \u003cvideo\u003e is removed?",
+      "revId": "3e66b39021110ec114f3216c62756f8da2a1597f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
