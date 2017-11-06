@@ -37,6 +37,24 @@
     },
     {
       "key": {
+        "uuid": "2d6274ef_7ebf7b72",
+        "filename": "chrome/app/chromeos_strings.grdp",
+        "patchSetId": 2
+      },
+      "lineNbr": 636,
+      "author": {
+        "id": 1241182
+      },
+      "writtenOn": "2017-11-06T14:56:50Z",
+      "side": 1,
+      "message": "Basic request by Weifang was to add the size, so I did that - I\u0027m still waiting for final approval of the message draft.",
+      "parentUuid": "7856552c_93b8a25a",
+      "revId": "46b34fe6419c6346976e6b0d89114741a75ef50b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "18031d07_37c60fd6",
         "filename": "ui/file_manager/file_manager/foreground/js/import_controller.js",
         "patchSetId": 2
@@ -48,6 +66,30 @@
       "writtenOn": "2017-10-26T12:14:57Z",
       "side": 1,
       "message": "volume ?",
+      "range": {
+        "startLine": 462,
+        "startChar": 20,
+        "endLine": 462,
+        "endChar": 25
+      },
+      "revId": "46b34fe6419c6346976e6b0d89114741a75ef50b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "690e131f_5b4bad3c",
+        "filename": "ui/file_manager/file_manager/foreground/js/import_controller.js",
+        "patchSetId": 2
+      },
+      "lineNbr": 462,
+      "author": {
+        "id": 1241182
+      },
+      "writtenOn": "2017-11-06T14:56:50Z",
+      "side": 1,
+      "message": "Not relevant anymore because of the refactoring necessary to make the storage space available in error messages",
+      "parentUuid": "18031d07_37c60fd6",
       "range": {
         "startLine": 462,
         "startChar": 20,
@@ -80,6 +122,30 @@
       "revId": "46b34fe6419c6346976e6b0d89114741a75ef50b",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "147c0d32_955f4323",
+        "filename": "ui/file_manager/file_manager/foreground/js/import_controller.js",
+        "patchSetId": 2
+      },
+      "lineNbr": 867,
+      "author": {
+        "id": 1241182
+      },
+      "writtenOn": "2017-11-06T14:56:50Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "10bad198_dc06a065",
+      "range": {
+        "startLine": 861,
+        "startChar": 57,
+        "endLine": 867,
+        "endChar": 57
+      },
+      "revId": "46b34fe6419c6346976e6b0d89114741a75ef50b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -151,6 +217,30 @@
       "revId": "46b34fe6419c6346976e6b0d89114741a75ef50b",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f5cce753_7a83a60b",
+        "filename": "ui/file_manager/file_manager/foreground/js/import_controller.js",
+        "patchSetId": 2
+      },
+      "lineNbr": 1220,
+      "author": {
+        "id": 1241182
+      },
+      "writtenOn": "2017-11-06T14:56:50Z",
+      "side": 1,
+      "message": "I have added the assertion, as well as error handling in case there is still no stat (which will happen if Drive is mounted but no internet connection available - which resulted in an \"eternal\" scan because the UI never got updated).",
+      "parentUuid": "07f75edd_bb5a5fa2",
+      "range": {
+        "startLine": 1220,
+        "startChar": 8,
+        "endLine": 1220,
+        "endChar": 27
+      },
+      "revId": "46b34fe6419c6346976e6b0d89114741a75ef50b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
