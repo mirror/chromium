@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "a68d34a3_e20ae267",
+        "filename": "chromeos/network/client_cert_resolver.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 195,
+      "author": {
+        "id": 1000191
+      },
+      "writtenOn": "2017-11-06T22:31:28Z",
+      "side": 1,
+      "message": "Can we move the second sentence to HasPrivateKey in case it gets used again elsewhere? (I assume an audit of the existing code has been done).",
+      "revId": "1d30593e2fb58624b3b53d7d9f6e0ebbbd1f65f1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
