@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "aded0918_fd99a3b4",
+        "filename": "chrome/browser/vr/cpu_surface_provider.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 13,
+      "author": {
+        "id": 1213279
+      },
+      "writtenOn": "2017-11-06T20:10:13Z",
+      "side": 1,
+      "message": "It crashes because Skia expects a GLX context on Linux and the testapp uses an EGL context. Changed the code so that the testapp uses the CpuSurfaceProvider. The testapp should probably be refactored to use GLX too.",
+      "parentUuid": "5016b7f2_8d4c851e",
+      "revId": "0ed93e3105107468a313b40164d4c50a567dcb0f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "0460296e_4148f288",
         "filename": "chrome/browser/vr/ganesh_surface_provider.cc",
         "patchSetId": 6
@@ -36,6 +54,24 @@
     },
     {
       "key": {
+        "uuid": "5ca67fee_54a7bb78",
+        "filename": "chrome/browser/vr/ganesh_surface_provider.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 32,
+      "author": {
+        "id": 1213279
+      },
+      "writtenOn": "2017-11-06T20:10:13Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "0460296e_4148f288",
+      "revId": "0ed93e3105107468a313b40164d4c50a567dcb0f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "8f1b25e9_41738c6a",
         "filename": "chrome/browser/vr/ganesh_surface_provider.cc",
         "patchSetId": 6
@@ -47,6 +83,24 @@
       "writtenOn": "2017-10-31T15:43:37Z",
       "side": 1,
       "message": "Is it necessary to pull the texture ID on every flush?  Can it change after the surface is created?  Is this expensive to do?",
+      "revId": "0ed93e3105107468a313b40164d4c50a567dcb0f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b8b8d515_55e15375",
+        "filename": "chrome/browser/vr/ganesh_surface_provider.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 42,
+      "author": {
+        "id": 1213279
+      },
+      "writtenOn": "2017-11-06T20:10:13Z",
+      "side": 1,
+      "message": "IIUC those are basically just getters. I\u0027m not sure if it can change. However, you can pass any surface into this function. How would I get the ID if not from the surface?",
+      "parentUuid": "8f1b25e9_41738c6a",
       "revId": "0ed93e3105107468a313b40164d4c50a567dcb0f",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -70,6 +124,24 @@
     },
     {
       "key": {
+        "uuid": "42a9219d_fab86f44",
+        "filename": "chrome/browser/vr/ganesh_surface_provider.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 49,
+      "author": {
+        "id": 1213279
+      },
+      "writtenOn": "2017-11-06T20:10:13Z",
+      "side": 1,
+      "message": "Skia binds its own framebuffer. We have to restore the main frame buffer to draw our UI.",
+      "parentUuid": "7cf6559c_804d9003",
+      "revId": "0ed93e3105107468a313b40164d4c50a567dcb0f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "5e7c5e69_b2833d1a",
         "filename": "chrome/browser/vr/ui.cc",
         "patchSetId": 6
@@ -87,6 +159,24 @@
     },
     {
       "key": {
+        "uuid": "644133cb_93ae561f",
+        "filename": "chrome/browser/vr/ui.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 106,
+      "author": {
+        "id": 1213279
+      },
+      "writtenOn": "2017-11-06T20:10:13Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "5e7c5e69_b2833d1a",
+      "revId": "0ed93e3105107468a313b40164d4c50a567dcb0f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "c64326fc_868ebf48",
         "filename": "chrome/browser/vr/ui.h",
         "patchSetId": 6
@@ -101,6 +191,24 @@
       "revId": "0ed93e3105107468a313b40164d4c50a567dcb0f",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4987faaf_fd444dc9",
+        "filename": "chrome/browser/vr/ui.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 25,
+      "author": {
+        "id": 1213279
+      },
+      "writtenOn": "2017-11-06T20:10:13Z",
+      "side": 1,
+      "message": "Done. Weird that the formatter doesn\u0027t do this automatically.",
+      "parentUuid": "c64326fc_868ebf48",
+      "revId": "0ed93e3105107468a313b40164d4c50a567dcb0f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
