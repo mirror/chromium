@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "e94ce347_c08dec2c",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/widget/bottomsheet/BottomSheet.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 492,
+      "author": {
+        "id": 1122966
+      },
+      "writtenOn": "2017-11-06T21:18:40Z",
+      "side": 1,
+      "message": "I don\u0027t see any histograms that can record doubles (which is what I assume you want for dp/ms).",
+      "parentUuid": "2d0d245b_d5395953",
+      "range": {
+        "startLine": 492,
+        "startChar": 8,
+        "endLine": 492,
+        "endChar": 33
+      },
+      "revId": "36463790e84117b45d7f45e5878b919d603e5a37",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "c163ad76_335ba021",
         "filename": "chrome/android/java/src/org/chromium/chrome/browser/widget/bottomsheet/BottomSheet.java",
         "patchSetId": 1
@@ -41,6 +65,52 @@
         "startChar": 51,
         "endLine": 493,
         "endChar": 67
+      },
+      "revId": "36463790e84117b45d7f45e5878b919d603e5a37",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7e1c55da_d7c6b12e",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/widget/bottomsheet/BottomSheet.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 568,
+      "author": {
+        "id": 1122966
+      },
+      "writtenOn": "2017-11-06T21:18:40Z",
+      "side": 1,
+      "message": "Maybe it\u0027s time to have a separate class for swipe handling?",
+      "range": {
+        "startLine": 568,
+        "startChar": 7,
+        "endLine": 568,
+        "endChar": 57
+      },
+      "revId": "36463790e84117b45d7f45e5878b919d603e5a37",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "06617ca1_e952ee2f",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/widget/bottomsheet/BottomSheet.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 596,
+      "author": {
+        "id": 1122966
+      },
+      "writtenOn": "2017-11-06T21:18:40Z",
+      "side": 1,
+      "message": "Should we also check for TYPE_AUXILIARY_CONTENT so that the placeholder content is recorded here?",
+      "range": {
+        "startLine": 596,
+        "startChar": 65,
+        "endLine": 596,
+        "endChar": 88
       },
       "revId": "36463790e84117b45d7f45e5878b919d603e5a37",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
