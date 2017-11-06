@@ -312,6 +312,30 @@
     },
     {
       "key": {
+        "uuid": "52b90fc7_2aa5626f",
+        "filename": "components/arc/test/fake_power_instance.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 16,
+      "author": {
+        "id": 1115919
+      },
+      "writtenOn": "2017-11-06T15:59:17Z",
+      "side": 1,
+      "message": "Ken, great to know. Thank you for the info!",
+      "parentUuid": "56351137_f8302480",
+      "range": {
+        "startLine": 16,
+        "startChar": 9,
+        "endLine": 16,
+        "endChar": 19
+      },
+      "revId": "3b7e427cbc6bc4d524d9c38c90f9e0f758af009c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "85a3a758_2688056d",
         "filename": "components/arc/test/fake_power_instance.h",
         "patchSetId": 4
@@ -394,6 +418,30 @@
       "side": 1,
       "message": "i currently only assign base::Closures from base::RunLoop here. i\u0027d be happy with them being base::OnceClosures instead, but i assume i can\u0027t, so i\u0027ll change these to RepeatingClosure.",
       "parentUuid": "b51498ef_894014e1",
+      "range": {
+        "startLine": 28,
+        "startChar": 46,
+        "endLine": 28,
+        "endChar": 60
+      },
+      "revId": "3b7e427cbc6bc4d524d9c38c90f9e0f758af009c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "10adf378_2eaa3b38",
+        "filename": "services/device/public/cpp/test/test_wake_lock_provider.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 28,
+      "author": {
+        "id": 1115919
+      },
+      "writtenOn": "2017-11-06T15:59:17Z",
+      "side": 1,
+      "message": "FYI: base::Closure/RepeatingClosure can be automatically converted to OnceClosure.\nhttps://cs.chromium.org/chromium/src/base/callback.h?sq\u003dpackage:chromium\u0026dr\u003dCSs\u0026l\u003d39",
+      "parentUuid": "0eb85bd3_55800e4d",
       "range": {
         "startLine": 28,
         "startChar": 46,
