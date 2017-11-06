@@ -22,6 +22,30 @@
       "revId": "47ce33411fdf412eaab15b3220376028ed9a9481",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "cb7874f0_5b707908",
+        "filename": "chrome/browser/ui/find_bar/find_bar_controller.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 102,
+      "author": {
+        "id": 1161819
+      },
+      "writtenOn": "2017-11-06T19:07:30Z",
+      "side": 1,
+      "message": "You are, in fact, very much correct. I\u0027ve changed the code to pass in the Browser* to the constructor.",
+      "parentUuid": "8bc21ec2_9e270fb6",
+      "range": {
+        "startLine": 101,
+        "startChar": 2,
+        "endLine": 102,
+        "endChar": 37
+      },
+      "revId": "47ce33411fdf412eaab15b3220376028ed9a9481",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
