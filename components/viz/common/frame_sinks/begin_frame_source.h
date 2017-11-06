@@ -107,6 +107,7 @@ class VIZ_COMMON_EXPORT BeginFrameObserverBase : public BeginFrameObserver {
 class VIZ_COMMON_EXPORT BeginFrameSource {
  public:
   BeginFrameSource();
+  BeginFrameSource(uint16_t process_id);
   virtual ~BeginFrameSource();
 
   // Returns an identifier for this BeginFrameSource. Guaranteed unique within a
@@ -150,6 +151,7 @@ class VIZ_COMMON_EXPORT StubBeginFrameSource : public BeginFrameSource {
 // A frame source which ticks itself independently.
 class VIZ_COMMON_EXPORT SyntheticBeginFrameSource : public BeginFrameSource {
  public:
+  SyntheticBeginFrameSource(uint16_t process_id);
   ~SyntheticBeginFrameSource() override;
 
   virtual void OnUpdateVSyncParameters(base::TimeTicks timebase,
@@ -164,8 +166,8 @@ class VIZ_COMMON_EXPORT BackToBackBeginFrameSource
     : public SyntheticBeginFrameSource,
       public DelayBasedTimeSourceClient {
  public:
-  explicit BackToBackBeginFrameSource(
-      std::unique_ptr<DelayBasedTimeSource> time_source);
+  BackToBackBeginFrameSource(std::unique_ptr<DelayBasedTimeSource> time_source,
+                             uint16_t process_id = 0);
   ~BackToBackBeginFrameSource() override;
 
   // BeginFrameSource implementation.
@@ -198,8 +200,8 @@ class VIZ_COMMON_EXPORT DelayBasedBeginFrameSource
     : public SyntheticBeginFrameSource,
       public DelayBasedTimeSourceClient {
  public:
-  explicit DelayBasedBeginFrameSource(
-      std::unique_ptr<DelayBasedTimeSource> time_source);
+  DelayBasedBeginFrameSource(std::unique_ptr<DelayBasedTimeSource> time_source,
+                             uint16_t process_id = 0);
   ~DelayBasedBeginFrameSource() override;
 
   // BeginFrameSource implementation.
