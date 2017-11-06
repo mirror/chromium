@@ -30,6 +30,10 @@ static_library("browser") {
     "//mojo/common:common_base",
     "//net",
   ]
+
+  deps = [
+    "//components/autofill/content/common:common",
+  ]
 }
 
 source_set("unit_tests") {

@@ -19,15 +19,15 @@ namespace password_manager {
 // end. Items may be renamed but do not change the values. We rely on the enum
 // values in histograms.
 enum class BadMessageReason {
-  CPMD_BAD_ORIGIN_FORMS_PARSED = 1,
-  CPMD_BAD_ORIGIN_FORMS_RENDERED = 2,
-  CPMD_BAD_ORIGIN_FORM_SUBMITTED = 3,
-  CPMD_BAD_ORIGIN_FOCUSED_PASSWORD_FORM_FOUND = 4,
-  CPMD_BAD_ORIGIN_IN_PAGE_NAVIGATION = 5,
-  CPMD_BAD_ORIGIN_PASSWORD_NO_LONGER_GENERATED = 6,
-  CPMD_BAD_ORIGIN_PRESAVE_GENERATED_PASSWORD = 7,
-  CPMD_BAD_ORIGIN_SAVE_GENERATION_FIELD_DETECTED_BY_CLASSIFIER = 8,
-  CPMD_BAD_ORIGIN_SHOW_FALLBACK_FOR_SAVING = 9,
+  CPMD_BAD_ORIGIN_FORMS_PARSED = 1,                  // obsolete; no longer used
+  CPMD_BAD_ORIGIN_FORMS_RENDERED = 2,                // obsolete; no longer used
+  CPMD_BAD_ORIGIN_FORM_SUBMITTED = 3,                // obsolete; no longer used
+  CPMD_BAD_ORIGIN_FOCUSED_PASSWORD_FORM_FOUND = 4,   // obsolete; no longer used
+  CPMD_BAD_ORIGIN_IN_PAGE_NAVIGATION = 5,            // obsolete; no longer used
+  CPMD_BAD_ORIGIN_PASSWORD_NO_LONGER_GENERATED = 6,  // obsolete; no longer used
+  CPMD_BAD_ORIGIN_PRESAVE_GENERATED_PASSWORD = 7,    // obsolete; no longer used
+  CPMD_BAD_ORIGIN_SAVE_GENERATION_FIELD_DETECTED_BY_CLASSIFIER = 8,  // obsolete
+  CPMD_BAD_ORIGIN_SHOW_FALLBACK_FOR_SAVING = 9,  // obsolete; on longer used
 
   // Please add new elements here. The naming convention is abbreviated class
   // name (e.g. ContentPasswordManagerDriver becomes CPMD) plus a unique

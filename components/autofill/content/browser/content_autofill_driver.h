@@ -126,6 +126,10 @@ class ContentAutofillDriver : public AutofillDriver,
   void RemoveHandler(
       const content::RenderWidgetHost::KeyPressEventCallback& handler) override;
 
+  // Returns canonical (auth and params stripped) url for the document hosted
+  // by the |render_frame()| being wrapped.
+  GURL GetCanonicalOriginForDocument();
+
   // Weak ref to the RenderFrameHost the driver is associated with. Should
   // always be non-NULL and valid for lifetime of |this|.
   content::RenderFrameHost* const render_frame_host_;

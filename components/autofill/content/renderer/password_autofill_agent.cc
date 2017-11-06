@@ -23,6 +23,7 @@
 #include "base/strings/utf_string_conversions.h"
 #include "base/threading/thread_task_runner_handle.h"
 #include "build/build_config.h"
+#include "components/autofill/content/common/url_utils.h"
 #include "components/autofill/content/renderer/form_autofill_util.h"
 #include "components/autofill/content/renderer/password_form_conversion_utils.h"
 #include "components/autofill/content/renderer/renderer_save_password_progress_logger.h"
@@ -1576,7 +1577,14 @@ void PasswordAutofillAgent::SetLoggingState(bool active) {
 
 void PasswordAutofillAgent::AutofillUsernameAndPasswordDataReceived(
     const FormsPredictionsMap& predictions) {
-  form_predictions_.insert(predictions.begin(), predictions.end());
+  FormsPredictionsMap fixed_predictions;
+  for (const auto& it : predictions) {
+    FormData form_data(it.first);
+    form_data.origin = GetCanonicalOriginForDocument();
+    fixed_predictions[form_data] = it.second;
+  }
+
+  form_predictions_.insert(fixed_predictions.begin(), fixed_predictions.end());
 }
 
 void PasswordAutofillAgent::FindFocusedPasswordForm(
@@ -1896,6 +1904,11 @@ bool PasswordAutofillAgent::FillFormOnPasswordReceived(
       &username_element, &password_element, fill_data, exact_username_match,
       false /* set_selection */, field_value_and_properties_map,
       registration_callback, logger);
+}
+
+GURL PasswordAutofillAgent::GetCanonicalOriginForDocument() const {
+  GURL document_url = render_frame()->GetWebFrame()->GetDocument().Url();
+  return StripAuthAndParams(document_url);
 }
 
 const mojom::AutofillDriverPtr& PasswordAutofillAgent::GetAutofillDriver() {

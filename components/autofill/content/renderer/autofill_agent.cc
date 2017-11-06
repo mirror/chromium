@@ -6,7 +6,10 @@
 
 #include <stddef.h>
 
+#include <memory>
+#include <string>
 #include <tuple>
+#include <utility>
 
 #include "base/auto_reset.h"
 #include "base/bind.h"
@@ -22,6 +25,7 @@
 #include "base/threading/thread_task_runner_handle.h"
 #include "base/time/time.h"
 #include "build/build_config.h"
+#include "components/autofill/content/common/url_utils.h"
 #include "components/autofill/content/renderer/form_autofill_util.h"
 #include "components/autofill/content/renderer/password_autofill_agent.h"
 #include "components/autofill/content/renderer/password_generation_agent.h"
@@ -459,9 +463,12 @@ void AutofillAgent::DoAcceptDataListSuggestion(
 }
 
 // mojom::AutofillAgent:
-void AutofillAgent::FillForm(int32_t id, const FormData& form) {
+void AutofillAgent::FillForm(int32_t id, const FormData& untrusted_form) {
   if (id != autofill_query_id_ && id != kNoQueryId)
     return;
+
+  FormData form(untrusted_form);
+  form.origin = GetCanonicalOriginForDocument();
 
   was_query_node_autofilled_ = element_.IsAutofilled();
   form_util::FillForm(form, element_);
@@ -471,9 +478,12 @@ void AutofillAgent::FillForm(int32_t id, const FormData& form) {
   GetAutofillDriver()->DidFillAutofillFormData(form, base::TimeTicks::Now());
 }
 
-void AutofillAgent::PreviewForm(int32_t id, const FormData& form) {
+void AutofillAgent::PreviewForm(int32_t id, const FormData& untrusted_form) {
   if (id != autofill_query_id_)
     return;
+
+  FormData form(untrusted_form);
+  form.origin = GetCanonicalOriginForDocument();
 
   was_query_node_autofilled_ = element_.IsAutofilled();
   form_util::PreviewForm(form, element_);
@@ -778,6 +788,11 @@ void AutofillAgent::HidePopup() {
 
 bool AutofillAgent::IsUserGesture() const {
   return WebUserGestureIndicator::IsProcessingUserGesture();
+}
+
+GURL AutofillAgent::GetCanonicalOriginForDocument() const {
+  GURL document_url = render_frame()->GetWebFrame()->GetDocument().Url();
+  return StripAuthAndParams(document_url);
 }
 
 void AutofillAgent::DidAssociateFormControlsDynamically() {
