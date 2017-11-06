@@ -312,7 +312,7 @@ void EventPath::ShrinkForRelatedTarget(const Node& target) {
   }
 }
 
-void EventPath::AdjustForTouchEvent(TouchEvent& touch_event) {
+void EventPath::AdjustForTouchEvent(const TouchEvent& touch_event) {
   HeapVector<Member<TouchList>> adjusted_touches;
   HeapVector<Member<TouchList>> adjusted_target_touches;
   HeapVector<Member<TouchList>> adjusted_changed_touches;
