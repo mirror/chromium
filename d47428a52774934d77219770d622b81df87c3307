@@ -117,6 +117,30 @@
       "revId": "d47428a52774934d77219770d622b81df87c3307",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "de87a0ea_5c253f5d",
+        "filename": "ios/chrome/browser/ui/ui_util.mm",
+        "patchSetId": 4
+      },
+      "lineNbr": 65,
+      "author": {
+        "id": 1180589
+      },
+      "writtenOn": "2017-11-06T14:12:43Z",
+      "side": 1,
+      "message": "In my opinion it is still better than a circular include, but I agree.",
+      "parentUuid": "4cec2288_bd5c05ee",
+      "range": {
+        "startLine": 65,
+        "startChar": 5,
+        "endLine": 65,
+        "endChar": 39
+      },
+      "revId": "d47428a52774934d77219770d622b81df87c3307",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
