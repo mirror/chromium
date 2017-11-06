@@ -251,6 +251,24 @@
     },
     {
       "key": {
+        "uuid": "0c14a625_7f0ecb28",
+        "filename": "build/secondary/third_party/crashpad/crashpad/tools/BUILD.gn",
+        "patchSetId": 1
+      },
+      "lineNbr": 11,
+      "author": {
+        "id": 1174099
+      },
+      "writtenOn": "2017-11-06T17:49:03Z",
+      "side": 1,
+      "message": "\u003e There is a gn-dev@ mailing list for questions, but for this it\u0027s better to file a bug (crbug, component Build-Tools-GN).\n\nThanks. I filed https://crbug.com/781858.",
+      "parentUuid": "822ede64_da7d3c0d",
+      "revId": "1b340fdfbe2920b4231de7a6c923642bbf83c09e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "c9c5feb7_a6573239",
         "filename": "testing/buildbot/chromium.fyi.json",
         "patchSetId": 1
