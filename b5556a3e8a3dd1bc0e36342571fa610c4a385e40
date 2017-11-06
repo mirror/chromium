@@ -72,6 +72,30 @@
     },
     {
       "key": {
+        "uuid": "86f52a26_a0f757a0",
+        "filename": "tools/metrics/histograms/histograms.xml",
+        "patchSetId": 1
+      },
+      "lineNbr": 91644,
+      "author": {
+        "id": 1176654
+      },
+      "writtenOn": "2017-11-06T22:26:03Z",
+      "side": 1,
+      "message": "Done. Renamed metric to BindSuccess",
+      "parentUuid": "dbc2ecae_f2bdae01",
+      "range": {
+        "startLine": 91644,
+        "startChar": 56,
+        "endLine": 91644,
+        "endChar": 70
+      },
+      "revId": "b5556a3e8a3dd1bc0e36342571fa610c4a385e40",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "e7fbb25b_48b16c46",
         "filename": "tools/metrics/histograms/histograms.xml",
         "patchSetId": 1
@@ -83,6 +107,24 @@
       "writtenOn": "2017-11-03T17:45:35Z",
       "side": 1,
       "message": "Please mention when this is recorded. Is this once per startup? Periodicially? On a certain event?",
+      "revId": "b5556a3e8a3dd1bc0e36342571fa610c4a385e40",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f1417958_46a73a6d",
+        "filename": "tools/metrics/histograms/histograms.xml",
+        "patchSetId": 1
+      },
+      "lineNbr": 91648,
+      "author": {
+        "id": 1176654
+      },
+      "writtenOn": "2017-11-06T22:26:03Z",
+      "side": 1,
+      "message": "I clarified the description of the metric.\n\nThe metric is recorded each time that Chrome tries to bind to a WebAPK\u0027s WebAPK service. A WebAPK is an APK created as a result of tapping the \"Add-to-homescreen\" menu item if the web page meets certain conditions. Each WebAPK has its own WebAPK service. Chrome can theoretically bind to a given WebAPK\u0027s WebAPK service thousands of times in a Chrome session. The common case is that Chrome binds to a WebAPK service zero times per Chrome session.",
+      "parentUuid": "e7fbb25b_48b16c46",
       "revId": "b5556a3e8a3dd1bc0e36342571fa610c4a385e40",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
