@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "27b645e4_adbc891c",
+        "filename": "components/arc/common/intent_helper.mojom",
+        "patchSetId": 4
+      },
+      "lineNbr": 114,
+      "author": {
+        "id": 1000172
+      },
+      "writtenOn": "2017-11-06T02:22:52Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "b60f0fb0_aa8a6f23",
+      "range": {
+        "startLine": 114,
+        "startChar": 45,
+        "endLine": 114,
+        "endChar": 0
+      },
+      "revId": "01b4fffdb57b1541417b3631d04a8f84d1e645d8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "641d6f5f_bd8e469f",
         "filename": "components/arc/common/intent_helper.mojom",
         "patchSetId": 4
@@ -48,6 +72,30 @@
     },
     {
       "key": {
+        "uuid": "e826ad35_d13ad067",
+        "filename": "components/arc/common/intent_helper.mojom",
+        "patchSetId": 4
+      },
+      "lineNbr": 131,
+      "author": {
+        "id": 1000172
+      },
+      "writtenOn": "2017-11-06T02:22:52Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "641d6f5f_bd8e469f",
+      "range": {
+        "startLine": 131,
+        "startChar": 41,
+        "endLine": 131,
+        "endChar": 58
+      },
+      "revId": "01b4fffdb57b1541417b3631d04a8f84d1e645d8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "736b5f75_0095ddbe",
         "filename": "components/arc/intent_helper/arc_intent_helper_bridge.cc",
         "patchSetId": 4
@@ -59,6 +107,30 @@
       "writtenOn": "2017-11-02T12:35:22Z",
       "side": 1,
       "message": "Ideally you\u0027d use constants defined by the settings code to access these pages. I have no idea whether they exist though.\n\nNot a security concern though, so entirely up to you.",
+      "range": {
+        "startLine": 150,
+        "startChar": 17,
+        "endLine": 150,
+        "endChar": 22
+      },
+      "revId": "01b4fffdb57b1541417b3631d04a8f84d1e645d8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "d9034144_d8203f04",
+        "filename": "components/arc/intent_helper/arc_intent_helper_bridge.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 150,
+      "author": {
+        "id": 1000172
+      },
+      "writtenOn": "2017-11-06T02:22:52Z",
+      "side": 1,
+      "message": "These are defined, but in chrome/common/webui_url_constants.h which we cannot depend from components/arc/.\nIt probably implies that this portion of the intent handler code should stay under chrome/ rather than in component/,\nbut that\u0027ll be a large change. For now let me proceed as is. This change needs to be merged to m63; I don\u0027t want it to be too destructive.",
+      "parentUuid": "736b5f75_0095ddbe",
       "range": {
         "startLine": 150,
         "startChar": 17,
