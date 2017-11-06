@@ -132,9 +132,23 @@ class CORE_EXPORT ImageData final : public ScriptWrappable,
 
   DOMArrayBufferBase* BufferBase() const;
   CanvasColorParams GetCanvasColorParams();
+
+  // DataU8ColorType param specifies if the converted pixels in 8-8-8-8 pixel
+  // format should respect the "native" 32bit ARGB format of Skia's blitters.
+  // For example, if ImageDataInCanvasColorSettings() is called to fill an
+  // ImageBuffer, kRGBAColorType should be used. If the converted pixels are
+  // used to create an ImageBitmap, kN32ColorType should be used.
   bool ImageDataInCanvasColorSettings(CanvasColorSpace,
                                       CanvasPixelFormat,
-                                      std::unique_ptr<uint8_t[]>&);
+                                      std::unique_ptr<uint8_t[]>&,
+                                      DataU8ColorType);
+
+  void SetCropRect(const IntRect&);
+  IntRect GetCropRect();
+  void ResetCropRect();
+  bool IsCropped();
+  void SwizzleIfNeeded(DataU8ColorType);
+  int CroppedByteLength();
 
   // ImageBitmapSource implementation
   IntSize BitmapSourceSize() const override { return size_; }
@@ -165,6 +179,7 @@ class CORE_EXPORT ImageData final : public ScriptWrappable,
             const ImageDataColorSettings* = nullptr);
 
   IntSize size_;
+  IntRect crop_rect_;
   ImageDataColorSettings color_settings_;
   ImageDataArray data_union_;
   Member<DOMUint8ClampedArray> data_;
