@@ -34,13 +34,13 @@ class ProfileUpdateObserver;
   // Observer that listens for updates to the ProfileAttributesStorage as well
   // as AvatarButtonErrorController.
   std::unique_ptr<ProfileUpdateObserver> profileObserver_;
-
-  // The menu controller, if the menu is open.
-  BaseBubbleController* menuController_;
 }
 
 // The avatar button view.
 @property(readonly, nonatomic) NSButton* buttonView;
+
+// The menu controller, if the menu is open.
+@property(nonatomic, readonly, getter=isMenuOpened) BOOL menuOpened;
 
 // Designated initializer.
 - (id)initWithBrowser:(Browser*)browser;
@@ -56,13 +56,9 @@ class ProfileUpdateObserver;
                    withServiceType:(signin::GAIAServiceType)serviceType
                    fromAccessPoint:(signin_metrics::AccessPoint)accessPoint;
 
-// Called when the avatar bubble will close.
-- (void)bubbleWillClose:(NSNotification*)notif;
+// Called when the avatar bubble is closed.
+- (void)bubbleIsClosed;
 
-@end
-
-@interface AvatarBaseController (ExposedForTesting)
-- (BaseBubbleController*)menuController;
 @end
 
 class ProfileUpdateObserver : public ProfileAttributesStorage::Observer,
