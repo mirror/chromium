@@ -355,18 +355,29 @@ const char* ShelfButton::GetClassName() const {
 
 bool ShelfButton::OnMousePressed(const ui::MouseEvent& event) {
   Button::OnMousePressed(event);
+
+  // No need to scale up the app for mouse right click since the app can't be
+  // dragged through right button.
+  if (!(event.flags() & ui::EF_LEFT_MOUSE_BUTTON))
+    return true;
+
   shelf_view_->PointerPressedOnButton(this, ShelfView::MOUSE, event);
-  drag_timer_.Start(
-      FROM_HERE, base::TimeDelta::FromMilliseconds(kDragTimeThresholdMs),
-      base::Bind(&ShelfButton::OnTouchDragTimer, base::Unretained(this)));
+
+  if (shelf_view_->IsDraggedView(this)) {
+    drag_timer_.Start(
+        FROM_HERE, base::TimeDelta::FromMilliseconds(kDragTimeThresholdMs),
+        base::Bind(&ShelfButton::OnTouchDragTimer, base::Unretained(this)));
+  }
   return true;
 }
 
 void ShelfButton::OnMouseReleased(const ui::MouseEvent& event) {
   Button::OnMouseReleased(event);
-  shelf_view_->PointerReleasedOnButton(this, ShelfView::MOUSE, false);
   drag_timer_.Stop();
   ClearState(STATE_DRAGGING);
+  // PointerReleasedOnButton may cause the current ShelfButton be destroyed.
+  // Keeping it at the end of the function to avoid crash.
+  shelf_view_->PointerReleasedOnButton(this, ShelfView::MOUSE, false);
 }
 
 void ShelfButton::OnMouseCaptureLost() {
