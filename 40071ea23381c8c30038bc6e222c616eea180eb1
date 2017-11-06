@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "6fe7e08c_98dfab05",
+        "filename": "third_party/WebKit/Source/core/html/HTMLLinkElement.idl",
+        "patchSetId": 4
+      },
+      "lineNbr": 60,
+      "author": {
+        "id": 1000128
+      },
+      "writtenOn": "2017-11-06T16:49:18Z",
+      "side": 1,
+      "message": "This is kind of weird: updateViaCache attribute is controlled by the \"updateViaCache\" flag and scope is controlled by the \"LinkServiceWorker\" origin trial.\n\nIf we do make updateViaCache flag enabled by default, we wouldn\u0027t want to expose updateViaCache still.\n\nUnfortunately we can\u0027t mix origin trial and runtime enabled, I think.\n\nCould we just remove all the \"link\" support from this patch? Otherwise we could add a warning in RuntimeEnabledFeatures to not enable the updateViaCache flag before changing HTMLLinkElement.idl to somehow not be turned on when the flag is turned on.",
+      "revId": "40071ea23381c8c30038bc6e222c616eea180eb1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7c329cb7_9ace369f",
+        "filename": "third_party/WebKit/Source/platform/runtime_enabled_features.json5",
+        "patchSetId": 4
+      },
+      "lineNbr": 934,
+      "author": {
+        "id": 1000128
+      },
+      "writtenOn": "2017-11-06T16:49:18Z",
+      "side": 1,
+      "message": "// e.g., we could add a warning here to not turn status to \"default\" as it would expose the link attribute prematurely, but it seems more straightforward to just remove the Link stuff from this patch.",
+      "revId": "40071ea23381c8c30038bc6e222c616eea180eb1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
