@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "b26a2070_d3f99828",
+        "filename": "content/browser/network_service_restart_browsertest.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 47,
+      "author": {
+        "id": 1166494
+      },
+      "writtenOn": "2017-11-06T17:49:49Z",
+      "side": 1,
+      "message": "Done. Excluded this file from \"content/test/BUILD.gn\" on Android.\n\nI\u0027m not exactly sure about the config though, but my previous try failed on \"android_n5x_swarming_rel\" and I saw your comments in:\nhttps://cs.chromium.org/chromium/src/content/browser/storage_partition_impl_browsertest.cc?q\u003dstorage_partition_impl_browsertest\u0026sq\u003dpackage:chromium\u0026dr\u0026l\u003d84",
+      "parentUuid": "8dd1015a_168de0b8",
+      "range": {
+        "startLine": 47,
+        "startChar": 23,
+        "endLine": 47,
+        "endChar": 0
+      },
+      "revId": "53689576d191147b495fc734d69a3b2e5e61a426",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "d3d053e4_4455fdb0",
         "filename": "content/browser/network_service_restart_browsertest.cc",
         "patchSetId": 5
@@ -36,6 +60,30 @@
       "writtenOn": "2017-11-03T19:12:45Z",
       "side": 1,
       "message": "Typically, network contexts will be accessed through the storage partition.  The only thing I\u0027m aware of that may have its own is SafeBrowsing (Though the service process may also have its own).  The IOThread has its own as well, I suppose, but that one\u0027s a little magic.\n\nYou can get the storage partition in a content browsertest by:          content::BrowserContext::GetDefaultStoragePartition(\n    shell()-\u003eweb_contents()-\u003eGetBrowserContext())\n\nOr are you planning to work on storage partitions in another CL?  Note that we\u0027ll also need chrome browsertests for this that cover both the IOThread\u0027s NetworkContext and the storage partition NetworkContexts, though those definitely should be in another CL.",
+      "range": {
+        "startLine": 66,
+        "startChar": 45,
+        "endLine": 66,
+        "endChar": 65
+      },
+      "revId": "53689576d191147b495fc734d69a3b2e5e61a426",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "dc792d4d_9d6fac58",
+        "filename": "content/browser/network_service_restart_browsertest.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 66,
+      "author": {
+        "id": 1166494
+      },
+      "writtenOn": "2017-11-06T17:49:49Z",
+      "side": 1,
+      "message": "Thanks for the detailed explanation and code snippet! (And sorry for the confusion)\n\nYes I\u0027m planning to add more higher-level tests around IOThread and StoragePartition in upcoming CLs, which may require additional code to remain functional after crash.\nThis CL is primary testing against |content::GetNetworkService()| and it only ensures NetworkService will be available after crash. I want a test here because this API is indirectly used by StoragePartition and some other places (according to my code search).\n\nUpdated CL description to define the scope.",
+      "parentUuid": "d3d053e4_4455fdb0",
       "range": {
         "startLine": 66,
         "startChar": 45,
@@ -71,6 +119,30 @@
     },
     {
       "key": {
+        "uuid": "61586172_bc6e62fe",
+        "filename": "content/browser/network_service_restart_browsertest.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 78,
+      "author": {
+        "id": 1166494
+      },
+      "writtenOn": "2017-11-06T17:49:49Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "c5614c9a_bbce5bda",
+      "range": {
+        "startLine": 78,
+        "startChar": 9,
+        "endLine": 78,
+        "endChar": 27
+      },
+      "revId": "53689576d191147b495fc734d69a3b2e5e61a426",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "04489015_b62a3dfc",
         "filename": "content/browser/network_service_restart_browsertest.cc",
         "patchSetId": 5
@@ -82,6 +154,30 @@
       "writtenOn": "2017-11-03T19:12:45Z",
       "side": 1,
       "message": "Issue a request and make sure it works, both with the old context, and then with the new one?  See browsertests that use SimpleURLLoader.",
+      "range": {
+        "startLine": 81,
+        "startChar": 33,
+        "endLine": 81,
+        "endChar": 50
+      },
+      "revId": "53689576d191147b495fc734d69a3b2e5e61a426",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c3a68473_19a7c33d",
+        "filename": "content/browser/network_service_restart_browsertest.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 81,
+      "author": {
+        "id": 1166494
+      },
+      "writtenOn": "2017-11-06T17:49:49Z",
+      "side": 1,
+      "message": "Done. Replaced |FlushForTesting()| with |SimpleURLLoader| requests.",
+      "parentUuid": "04489015_b62a3dfc",
       "range": {
         "startLine": 81,
         "startChar": 33,
@@ -117,6 +213,30 @@
     },
     {
       "key": {
+        "uuid": "4d14ac50_04440e2c",
+        "filename": "content/public/browser/network_service_instance.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 23,
+      "author": {
+        "id": 1166494
+      },
+      "writtenOn": "2017-11-06T17:49:49Z",
+      "side": 1,
+      "message": "\"cl format\" decided to add a newline here. Removed to avoid confusion.",
+      "parentUuid": "968e6242_23ec4cbb",
+      "range": {
+        "startLine": 23,
+        "startChar": 11,
+        "endLine": 23,
+        "endChar": 61
+      },
+      "revId": "53689576d191147b495fc734d69a3b2e5e61a426",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "7ca5b3c7_5c7afa24",
         "filename": "content/public/test/network_service_test_helper.cc",
         "patchSetId": 5
@@ -137,6 +257,30 @@
       "revId": "53689576d191147b495fc734d69a3b2e5e61a426",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2bd682bd_27383f84",
+        "filename": "content/public/test/network_service_test_helper.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 34,
+      "author": {
+        "id": 1166494
+      },
+      "writtenOn": "2017-11-06T17:49:49Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "7ca5b3c7_5c7afa24",
+      "range": {
+        "startLine": 34,
+        "startChar": 17,
+        "endLine": 34,
+        "endChar": 18
+      },
+      "revId": "53689576d191147b495fc734d69a3b2e5e61a426",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
