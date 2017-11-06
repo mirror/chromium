@@ -247,6 +247,7 @@ bool TabSpecificContentSettings::IsContentBlocked(
       content_type == CONTENT_SETTINGS_TYPE_COOKIES ||
       content_type == CONTENT_SETTINGS_TYPE_POPUPS ||
       content_type == CONTENT_SETTINGS_TYPE_MIXEDSCRIPT ||
+      content_type == CONTENT_SETTINGS_TYPE_FRAMEBUST_BLOCK ||
       content_type == CONTENT_SETTINGS_TYPE_MEDIASTREAM_MIC ||
       content_type == CONTENT_SETTINGS_TYPE_MEDIASTREAM_CAMERA ||
       content_type == CONTENT_SETTINGS_TYPE_PPAPI_BROKER ||
@@ -322,14 +323,14 @@ void TabSpecificContentSettings::OnContentBlockedWithDetail(
   status.allowed = true;
 
 #if defined(OS_ANDROID)
-  if (type == CONTENT_SETTINGS_TYPE_POPUPS) {
+  if (type == CONTENT_SETTINGS_TYPE_POPUPS ||
+      type == CONTENT_SETTINGS_TYPE_FRAMEBUST_BLOCK) {
     // For Android we do not have a persistent button that will always be
-    // visible for blocked popups.  Instead we have info bars which could be
-    // dismissed.  Have to clear the blocked state so we properly notify the
-    // relevant pieces again.
+    // visible for blocked popups and blocked framebust. Instead we have info
+    // bars which could be dismissed. Have to clear the blocked state so we
+    // properly notify the relevant pieces again.
     status.blocked = false;
     status.blockage_indicated_to_user = false;
-  }
 #endif
 
   if (!status.blocked) {

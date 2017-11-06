@@ -16,6 +16,7 @@
 #include "chrome/browser/chrome_notification_types.h"
 #include "chrome/browser/content_settings/chrome_content_settings_utils.h"
 #include "chrome/browser/content_settings/cookie_settings_factory.h"
+#include "chrome/browser/content_settings/framebust_block_tab_helper.h"
 #include "chrome/browser/content_settings/host_content_settings_map_factory.h"
 #include "chrome/browser/content_settings/mixed_content_settings_tab_helper.h"
 #include "chrome/browser/content_settings/tab_specific_content_settings.h"
@@ -38,6 +39,7 @@
 #include "chrome/common/insecure_content_renderer.mojom.h"
 #include "chrome/common/pref_names.h"
 #include "chrome/common/render_messages.h"
+#include "chrome/grit/chromium_strings.h"
 #include "chrome/grit/generated_resources.h"
 #include "chrome/grit/theme_resources.h"
 #include "components/content_settings/core/browser/content_settings_utils.h"
@@ -65,6 +67,7 @@
 #include "ui/base/resource/resource_bundle.h"
 #include "ui/base/window_open_disposition.h"
 #include "ui/resources/grit/ui_resources.h"
+#include "ui/strings/grit/ui_strings.h"
 
 using base::UserMetricsAction;
 using content::WebContents;
@@ -153,6 +156,7 @@ void ContentSettingSimpleBubbleModel::SetTitle() {
       {CONTENT_SETTINGS_TYPE_POPUPS, IDS_BLOCKED_POPUPS_TITLE},
       {CONTENT_SETTINGS_TYPE_MIXEDSCRIPT,
        IDS_BLOCKED_DISPLAYING_INSECURE_CONTENT_TITLE},
+      {CONTENT_SETTINGS_TYPE_FRAMEBUST_BLOCK, IDS_REDIRECT_BLOCKED_MESSAGE},
       {CONTENT_SETTINGS_TYPE_PPAPI_BROKER, IDS_BLOCKED_PPAPI_BROKER_TITLE},
       {CONTENT_SETTINGS_TYPE_SOUND, IDS_BLOCKED_SOUND_TITLE},
   };
@@ -547,6 +551,119 @@ void ContentSettingPluginBubbleModel::RunPluginsOnPage() {
   set_custom_link_enabled(false);
   TabSpecificContentSettings::FromWebContents(web_contents())
       ->set_load_plugins_link_enabled(false);
+}
+
+// ContentSettingFramebustBlockModel -------------------------------------------
+
+class ContentSettingFramebustBlockModel
+    : public ContentSettingSimpleBubbleModel,
+      public FramebustBlockTabHelper::Observer {
+ public:
+  ContentSettingFramebustBlockModel(Delegate* delegate,
+                                    WebContents* web_contents,
+                                    Profile* profile);
+
+  ~ContentSettingFramebustBlockModel() override;
+
+  // FramebustBlockTabHelper::Observer:
+  void OnBlockedUrlAdded(const GURL& blocked_url) override;
+
+  // content::NotificationObserver:
+  void Observe(int type,
+               const content::NotificationSource& source,
+               const content::NotificationDetails& details) override;
+
+ private:
+  ListItem CreateListItem(const GURL& url);
+
+  void OnListItemClicked(int index, int event_flags) override;
+
+  FramebustBlockTabHelper::Observer* observer_ = nullptr;
+
+  DISALLOW_COPY_AND_ASSIGN(ContentSettingFramebustBlockModel);
+};
+
+ContentSettingFramebustBlockModel::ContentSettingFramebustBlockModel(
+    Delegate* delegate,
+    WebContents* web_contents,
+    Profile* profile)
+    : ContentSettingSimpleBubbleModel(delegate,
+                                      web_contents,
+                                      profile,
+                                      CONTENT_SETTINGS_TYPE_FRAMEBUST_BLOCK) {
+  // No "Manage" button.
+  set_manage_text_style(ContentSettingBubbleModel::ManageTextStyle::kNone);
+  set_done_button_text(l10n_util::GetStringUTF16(IDS_APP_OK));
+
+  if (!web_contents)
+    return;
+
+  auto* helper = FramebustBlockTabHelper::FromWebContents(web_contents);
+
+  // Build the blocked urls list.
+  for (const auto& blocked_url : helper->GetBlockedUrls())
+    AddListItem(CreateListItem(blocked_url));
+
+  helper->SetObserver(this);
+}
+
+ContentSettingFramebustBlockModel::~ContentSettingFramebustBlockModel() {
+  if (web_contents()) {
+    auto* helper = FramebustBlockTabHelper::FromWebContents(web_contents());
+    helper->ClearObserver();
+  }
+}
+
+void ContentSettingFramebustBlockModel::OnBlockedUrlAdded(
+    const GURL& blocked_url) {
+  AddListItem(CreateListItem(blocked_url));
+}
+
+void ContentSettingFramebustBlockModel::Observe(
+    int type,
+    const content::NotificationSource& source,
+    const content::NotificationDetails& details) {
+  ContentSettingSimpleBubbleModel::Observe(type, source, details);
+  if (type == content::NOTIFICATION_WEB_CONTENTS_DESTROYED)
+    FramebustBlockTabHelper::FromWebContents(web_contents())->ClearObserver();
+}
+
+ContentSettingBubbleModel::ListItem
+ContentSettingFramebustBlockModel::CreateListItem(const GURL& url) {
+  base::string16 title;
+  // Skip invalid URLS.
+  if (url.spec().empty())
+    title = l10n_util::GetStringUTF16(IDS_TAB_LOADING_TITLE);
+  else
+    title = base::UTF8ToUTF16(url.spec());
+
+  const bool use_md = ui::MaterialDesignController::IsSecondaryUiMaterial();
+  if (use_md) {
+    // Format the title to include the unicode single dot bullet code-point
+    // \u2022 and two spaces.
+    title = l10n_util::GetStringFUTF16(IDS_LIST_BULLET, title);
+  }
+
+  return ListItem(use_md
+                      ? gfx::Image()
+                      : ui::ResourceBundle::GetSharedInstance().GetImageNamed(
+                            IDR_DEFAULT_FAVICON),
+                  title, true, 0);
+}
+
+void ContentSettingFramebustBlockModel::OnListItemClicked(int index,
+                                                          int event_flags) {
+  if (!web_contents())
+    return;
+
+  const GURL& url = FramebustBlockTabHelper::FromWebContents(web_contents())
+                        ->GetBlockedUrls()[index];
+
+  // It is not necessary to clear the list of all its items as it will
+  // automatically happen when the navigation finishes.
+  web_contents()->GetController().LoadURL(
+      url, content::Referrer(), ui::PageTransition::PAGE_TRANSITION_LINK,
+      std::string());
 }
 
 // ContentSettingPopupBubbleModel ----------------------------------------------
@@ -1614,6 +1731,10 @@ ContentSettingBubbleModel*
   if (content_type == CONTENT_SETTINGS_TYPE_MIXEDSCRIPT) {
     return new ContentSettingMixedScriptBubbleModel(delegate, web_contents,
                                                     profile);
+  }
+  if (content_type == CONTENT_SETTINGS_TYPE_FRAMEBUST_BLOCK) {
+    return new ContentSettingFramebustBlockModel(delegate, web_contents,
+                                                 profile);
   }
   if (content_type == CONTENT_SETTINGS_TYPE_PROTOCOL_HANDLERS) {
     ProtocolHandlerRegistry* registry =

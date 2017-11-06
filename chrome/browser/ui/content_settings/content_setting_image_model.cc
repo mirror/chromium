@@ -17,6 +17,7 @@
 #include "chrome/browser/prerender/prerender_manager.h"
 #include "chrome/browser/profiles/profile.h"
 #include "chrome/common/chrome_features.h"
+#include "chrome/grit/chromium_strings.h"
 #include "chrome/grit/generated_resources.h"
 #include "components/content_settings/core/browser/host_content_settings_map.h"
 #include "components/vector_icons/vector_icons.h"
@@ -132,6 +133,8 @@ const ContentSettingsImageDetails kImageDetails[] = {
      IDS_BLOCKED_POPUPS_EXPLANATORY_TEXT, 0},
     {CONTENT_SETTINGS_TYPE_MIXEDSCRIPT, kMixedContentIcon,
      IDS_BLOCKED_DISPLAYING_INSECURE_CONTENT, 0, 0},
+    {CONTENT_SETTINGS_TYPE_FRAMEBUST_BLOCK, kBlockedRedirectIcon,
+     IDS_REDIRECT_BLOCKED_TOOLTIP, IDS_REDIRECT_BLOCKED_TITLE, 0},
     {CONTENT_SETTINGS_TYPE_PPAPI_BROKER, kExtensionIcon,
      IDS_BLOCKED_PPAPI_BROKER_MESSAGE, 0, IDS_ALLOWED_PPAPI_BROKER_MESSAGE},
     {CONTENT_SETTINGS_TYPE_SOUND, kTabAudioIcon, IDS_BLOCKED_SOUND_TITLE, 0, 0},
@@ -148,6 +151,7 @@ constexpr ContentSettingsType kContentTypeIconOrder[] = {
     CONTENT_SETTINGS_TYPE_POPUPS,
     CONTENT_SETTINGS_TYPE_GEOLOCATION,
     CONTENT_SETTINGS_TYPE_MIXEDSCRIPT,
+    CONTENT_SETTINGS_TYPE_FRAMEBUST_BLOCK,
     CONTENT_SETTINGS_TYPE_PROTOCOL_HANDLERS,
     CONTENT_SETTINGS_TYPE_MEDIASTREAM_CAMERA,  // Note: also handles mic.
     CONTENT_SETTINGS_TYPE_ADS,

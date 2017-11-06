@@ -309,6 +309,13 @@ void ContentSettingsRegistry::Init() {
            WebsiteSettingsRegistry::DESKTOP,
            ContentSettingsInfo::INHERIT_IF_LESS_PERMISSIVE);
 
+  Register(CONTENT_SETTINGS_TYPE_FRAMEBUST_BLOCK, "framebust-block",
+           CONTENT_SETTING_DEFAULT, WebsiteSettingsInfo::UNSYNCABLE,
+           WhitelistedSchemes(), ValidSettings(),
+           WebsiteSettingsInfo::TOP_LEVEL_ORIGIN_ONLY_SCOPE,
+           WebsiteSettingsRegistry::DESKTOP,
+           ContentSettingsInfo::INHERIT_IF_LESS_PERMISSIVE);
+
   Register(CONTENT_SETTINGS_TYPE_BLUETOOTH_GUARD, "bluetooth-guard",
            CONTENT_SETTING_ASK, WebsiteSettingsInfo::UNSYNCABLE,
            WhitelistedSchemes(),

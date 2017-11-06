@@ -9,6 +9,7 @@
 #include "base/strings/utf_string_conversions.h"
 #include "base/test/histogram_tester.h"
 #include "chrome/browser/content_settings/chrome_content_settings_utils.h"
+#include "chrome/browser/content_settings/framebust_block_tab_helper.h"
 #include "chrome/browser/content_settings/tab_specific_content_settings.h"
 #include "chrome/browser/ui/browser.h"
 #include "chrome/browser/ui/browser_content_setting_bubble_model_delegate.h"
@@ -283,4 +284,47 @@ IN_PROC_BROWSER_TEST_F(ContentSettingBubbleModelPopupTest,
         content_settings::POPUPS_ACTION_SELECTED_ALWAYS_ALLOW_POPUPS_FROM, 1);
 
   histograms.ExpectTotalCount("ContentSettings.Popups", 5);
+}
+
+class ContentSettingFramebustBlockBubbleModelTest
+    : public InProcessBrowserTest {
+ public:
+  content::WebContents* GetWebContents() {
+    return browser()->tab_strip_model()->GetActiveWebContents();
+  }
+
+  void WaitForNavigation() {
+    content::TestNavigationObserver observer(GetWebContents());
+    observer.Wait();
+  }
+
+  TabSpecificContentSettings* GetActiveTabSpecificContentSettings() {
+    return TabSpecificContentSettings::FromWebContents(GetWebContents());
+  }
+};
+
+// Tests that clicking an item in the list of blocked URLs trigger a navigation
+// to that URL.
+IN_PROC_BROWSER_TEST_F(ContentSettingFramebustBlockBubbleModelTest,
+                       AllowRedirection) {
+  const GURL blocked_url("chrome://settings");
+
+  // Signal that a blocked redirection happened.
+  FramebustBlockTabHelper::FromWebContents(GetWebContents())
+      ->AddBlockedUrl(blocked_url);
+  EXPECT_TRUE(GetActiveTabSpecificContentSettings()->IsContentBlocked(
+      CONTENT_SETTINGS_TYPE_FRAMEBUST_BLOCK));
+
+  // Simulate clicking on the blocked URL.
+  std::unique_ptr<ContentSettingBubbleModel> model(
+      ContentSettingBubbleModel::CreateContentSettingBubbleModel(
+          browser()->content_setting_bubble_model_delegate(), GetWebContents(),
+          browser()->profile(), CONTENT_SETTINGS_TYPE_FRAMEBUST_BLOCK));
+  model->OnListItemClicked(/* index = */ 0, ui::EF_LEFT_MOUSE_BUTTON);
+
+  WaitForNavigation();
+
+  EXPECT_FALSE(GetActiveTabSpecificContentSettings()->IsContentBlocked(
+      CONTENT_SETTINGS_TYPE_FRAMEBUST_BLOCK));
+  EXPECT_EQ(blocked_url, GetWebContents()->GetLastCommittedURL());
 }

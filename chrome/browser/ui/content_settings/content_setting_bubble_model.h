@@ -47,6 +47,7 @@ class RapporServiceImpl;
 //     ContentSettingMidiSysExBubbleModel          - midi sysex
 //     ContentSettingDomainListBubbleModel         - domain list (geolocation)
 //     ContentSettingPluginBubbleModel             - plugins
+//     ContentSettingFramebustBlockModel           - blocked framebusts
 //     ContentSettingSingleRadioGroup              - radio group
 //       ContentSettingCookiesBubbleModel            - cookies
 //       ContentSettingPopupBubbleModel              - popups
