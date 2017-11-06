@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "dfb7b4ea_615604d5",
+        "filename": "third_party/WebKit/LayoutTests/virtual/threaded/fast/animationworklet/worklet-animation-creation.html",
+        "patchSetId": 1
+      },
+      "lineNbr": 76,
+      "author": {
+        "id": 1212214
+      },
+      "writtenOn": "2017-11-06T18:02:50Z",
+      "side": 1,
+      "message": "Added test for each way around.",
+      "parentUuid": "2c6e1073_0e8c3352",
+      "range": {
+        "startLine": 76,
+        "startChar": 0,
+        "endLine": 76,
+        "endChar": 73
+      },
+      "revId": "7e6fb055230e6cafdf86f4078bd8a66bda3c4b8d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "af820251_b4e2b24c",
         "filename": "third_party/WebKit/Source/modules/animationworklet/WorkletAnimation.cpp",
         "patchSetId": 1
@@ -45,6 +69,30 @@
       "revId": "7e6fb055230e6cafdf86f4078bd8a66bda3c4b8d",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e919c8b4_e4edc919",
+        "filename": "third_party/WebKit/Source/modules/animationworklet/WorkletAnimation.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 27,
+      "author": {
+        "id": 1212214
+      },
+      "writtenOn": "2017-11-06T18:02:50Z",
+      "side": 1,
+      "message": "I did this already (look below), but it is cleaner to just loop twice. Fixed.",
+      "parentUuid": "af820251_b4e2b24c",
+      "range": {
+        "startLine": 27,
+        "startChar": 7,
+        "endLine": 27,
+        "endChar": 30
+      },
+      "revId": "7e6fb055230e6cafdf86f4078bd8a66bda3c4b8d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
