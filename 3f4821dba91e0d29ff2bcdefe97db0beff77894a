@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "d9d15d98_2105d7a7",
+        "filename": "third_party/libvpx/BUILD.gn",
+        "patchSetId": 1
+      },
+      "lineNbr": 53,
+      "author": {
+        "id": 1117029
+      },
+      "writtenOn": "2017-11-06T23:13:40Z",
+      "side": 1,
+      "message": "We don\u0027t actually put vpx_rtcd.h in target_gen_dir - they are created with each roll and checked in. I noticed this in libaom and removed it, I\u0027ll do a  follow up and see if it can be removed here too.",
+      "range": {
+        "startLine": 53,
+        "startChar": 0,
+        "endLine": 53,
+        "endChar": 41
+      },
+      "revId": "3f4821dba91e0d29ff2bcdefe97db0beff77894a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
