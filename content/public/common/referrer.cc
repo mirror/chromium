@@ -41,6 +41,8 @@ Referrer Referrer::SanitizeForRequest(const GURL& request,
   bool is_downgrade = sanitized_referrer.url.SchemeIsCryptographic() &&
                       !request.SchemeIsCryptographic();
 
+  LOG(ERROR) << "@@@ " << __func__ << " , is_downgrade = " << is_downgrade;
+
   switch (sanitized_referrer.policy) {
     case blink::kWebReferrerPolicyDefault:
       NOTREACHED();
