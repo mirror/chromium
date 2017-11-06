@@ -56,6 +56,9 @@ class KeywordExtensionsDelegate {
   virtual void DeleteSuggestion(const TemplateURL* template_url,
                                 const base::string16& suggestion_text);
 
+  // Called when the user enters keyword mode for an extension keyword.
+  virtual void OnKeywordEntered(const TemplateURL* template_url);
+
  private:
   DISALLOW_COPY_AND_ASSIGN(KeywordExtensionsDelegate);
 };

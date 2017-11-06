@@ -1,0 +1,10 @@
+{
+  "name": "chrome.extension.omnibox",
+  "version": "0.1",
+  "manifest_version": 2,
+  "description": "Test ability to delete omnibox extension suggestions that are marked as deletable.",
+  "background": {
+    "scripts": ["test.js"]
+  },
+  "omnibox": { "keyword": "kw" }
+}

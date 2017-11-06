@@ -1,0 +1,10 @@
+{
+  "name": "chrome.extension.omnibox",
+  "version": "0.1",
+  "manifest_version": 2,
+  "description": "Tests the chrome.omnibox API onKeywordEntered event.",
+  "background": {
+    "scripts": ["test.js"]
+  },
+  "omnibox": { "keyword": "kw" }
+}

@@ -439,6 +439,10 @@ class OmniboxEditModel {
   // the view.
   void SetFocusState(OmniboxFocusState state, OmniboxFocusChangeReason reason);
 
+  // When the user activates the extension keyword via a space or tab key, this
+  // calls into the keyword provider to handle the entered keyword event.
+  void HandleOnKeywordEntered();
+
   // NOTE: |client_| must outlive |omnibox_controller_|, as the latter has a
   // reference to the former.
   std::unique_ptr<OmniboxClient> client_;

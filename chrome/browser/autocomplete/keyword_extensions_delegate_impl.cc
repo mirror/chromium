@@ -55,6 +55,14 @@ void KeywordExtensionsDelegateImpl::DeleteSuggestion(
       base::UTF16ToUTF8(suggestion_text));
 }
 
+void KeywordExtensionsDelegateImpl::OnKeywordEntered(
+    const TemplateURL* template_url) {
+  extension_suggest_matches_.clear();
+  if (extensions::ExtensionOmniboxEventRouter::OnKeywordEntered(
+          profile_, template_url->GetExtensionId(), current_input_id_))
+    set_done(false);
+}
+
 void  KeywordExtensionsDelegateImpl::IncrementInputId() {
   current_input_id_ = ++global_input_uid_;
 }
@@ -80,8 +88,11 @@ bool KeywordExtensionsDelegateImpl::Start(
     std::string extension_id = template_url->GetExtensionId();
     if (extension_id != current_keyword_extension_id_)
       MaybeEndExtensionKeywordMode();
-    if (current_keyword_extension_id_.empty())
+    if (current_keyword_extension_id_.empty() && !remaining_input.empty()) {
+      // Only call OnInputStarted extension event listener if there is
+      // remaining input.
       EnterExtensionKeywordMode(extension_id);
+    }
   }
 
   extensions::ApplyDefaultSuggestionForExtensionKeyword(
@@ -95,6 +106,11 @@ bool KeywordExtensionsDelegateImpl::Start(
       matches()->push_back(extension_suggest_matches_[i]);
       matches()->back().relevance = matches()->front().relevance - (i + 1);
     }
+  } else if (remaining_input.empty() && input.want_asynchronous_matches()) {
+    // When there is no remaining input, the OnKeywordEntered extension event
+    // listener was called.
+    extension_suggest_last_input_ = input;
+    extension_suggest_matches_.clear();
   } else if (input.want_asynchronous_matches()) {
     extension_suggest_last_input_ = input;
     extension_suggest_matches_.clear();
@@ -177,6 +193,7 @@ void KeywordExtensionsDelegateImpl::Observe(
       if (!KeywordProvider::ExtractKeywordFromInput(input, model, &keyword,
                                                     &remaining_input))
         return;
+
       const TemplateURL* template_url =
           model->GetTemplateURLForKeyword(keyword);
 

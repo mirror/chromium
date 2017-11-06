@@ -770,6 +770,7 @@ bool OmniboxEditModel::AcceptKeyword(
   } else {
     view_->OnTemporaryTextMaybeChanged(user_text_, false, true);
   }
+  HandleOnKeywordEntered();
 
   base::RecordAction(base::UserMetricsAction("AcceptedKeywordHint"));
   UMA_HISTOGRAM_ENUMERATION(
@@ -1429,4 +1430,11 @@ void OmniboxEditModel::SetFocusState(OmniboxFocusState state,
     view_->ApplyCaretVisibility();
 
   client_->OnFocusChanged(focus_state_, reason);
+}
+
+void OmniboxEditModel::HandleOnKeywordEntered() {
+  KeywordProvider* kp =
+      omnibox_controller_->autocomplete_controller()->keyword_provider();
+  if (kp)
+    kp->OnKeywordEntered();
 }

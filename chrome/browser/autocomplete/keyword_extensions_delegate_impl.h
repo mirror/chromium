@@ -36,6 +36,7 @@ class KeywordExtensionsDelegateImpl : public KeywordExtensionsDelegate,
   // KeywordExtensionsDelegate:
   void DeleteSuggestion(const TemplateURL* template_url,
                         const base::string16& suggestion_text) override;
+  void OnKeywordEntered(const TemplateURL* template_url) override;
 
  private:
   // KeywordExtensionsDelegate:

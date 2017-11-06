@@ -60,6 +60,11 @@ class ExtensionOmniboxEventRouter {
       const std::string& input,
       WindowOpenDisposition disposition);
 
+  // The user has entered keyword mode for an omnibox extension keyword.
+  static bool OnKeywordEntered(Profile* profile,
+                               const std::string& extension_id,
+                               int suggest_id);
+
   // The user has cleared the keyword, or closed the omnibox popup. This is
   // sent at most once in a give input session, after any OnInputChanged events.
   static void OnInputCancelled(

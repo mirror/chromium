@@ -91,6 +91,9 @@ class KeywordProvider : public AutocompleteProvider {
                                         const base::string16& keyword,
                                         const AutocompleteInput& input);
 
+  // Called when the user enters keyword mode for an extension keyword.
+  void OnKeywordEntered();
+
   // AutocompleteProvider:
   void DeleteMatch(const AutocompleteMatch& match) override;
   void Start(const AutocompleteInput& input, bool minimal_changes) override;
@@ -158,6 +161,9 @@ class KeywordProvider : public AutocompleteProvider {
   static base::string16 CleanUserInputKeyword(
       const TemplateURLService* template_url_service,
       const base::string16& keyword);
+
+  // Checks if the extension, corresponding to the |template_url|, enabled.
+  bool IsExtensionForKeywordEnabled(const TemplateURL* template_url) const;
 
   AutocompleteProviderListener* listener_;
 
