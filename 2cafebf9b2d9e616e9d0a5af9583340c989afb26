@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "e0c5b5fe_d1043fbf",
+        "filename": "components/omnibox/browser/break_iterator_adapter.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 10,
+      "author": {
+        "id": 1103764
+      },
+      "writtenOn": "2017-11-06T08:47:11Z",
+      "side": 1,
+      "message": "I fixed to use constexpr. Thanks.",
+      "parentUuid": "679c7dcb_1f98654b",
+      "range": {
+        "startLine": 10,
+        "startChar": 0,
+        "endLine": 10,
+        "endChar": 5
+      },
+      "revId": "2cafebf9b2d9e616e9d0a5af9583340c989afb26",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "eab6b969_9e58eb9e",
         "filename": "components/omnibox/browser/break_iterator_adapter.cc",
         "patchSetId": 6
@@ -42,6 +66,24 @@
     },
     {
       "key": {
+        "uuid": "2e0d29a7_1db21cf9",
+        "filename": "components/omnibox/browser/break_iterator_adapter.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 19,
+      "author": {
+        "id": 1103764
+      },
+      "writtenOn": "2017-11-06T08:47:11Z",
+      "side": 1,
+      "message": "DCHECK(break_type \u003d\u003d BreakIterator::BREAK_WORD) added. Thanks.",
+      "parentUuid": "eab6b969_9e58eb9e",
+      "revId": "2cafebf9b2d9e616e9d0a5af9583340c989afb26",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "45756417_7248e3d2",
         "filename": "components/omnibox/browser/break_iterator_adapter.cc",
         "patchSetId": 6
@@ -53,6 +95,30 @@
       "writtenOn": "2017-10-27T19:26:11Z",
       "side": 1,
       "message": "next_pos perhaps would be clearer",
+      "range": {
+        "startLine": 76,
+        "startChar": 14,
+        "endLine": 76,
+        "endChar": 19
+      },
+      "revId": "2cafebf9b2d9e616e9d0a5af9583340c989afb26",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8bacf161_4bd89564",
+        "filename": "components/omnibox/browser/break_iterator_adapter.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 76,
+      "author": {
+        "id": 1103764
+      },
+      "writtenOn": "2017-11-06T08:47:11Z",
+      "side": 1,
+      "message": "Changed to \u0027next_pos\u0027. Thanks.",
+      "parentUuid": "45756417_7248e3d2",
       "range": {
         "startLine": 76,
         "startChar": 14,
@@ -112,6 +178,24 @@
       "side": 1,
       "message": "Given all that, I think HasWords would better be called\nHasUnderscoreWords\nditto with AdvancePosition to something like AdvanceInUnderscoreWords",
       "parentUuid": "cd90232f_530737d4",
+      "revId": "2cafebf9b2d9e616e9d0a5af9583340c989afb26",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "08c48c6c_00f7c32a",
+        "filename": "components/omnibox/browser/break_iterator_adapter.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 29,
+      "author": {
+        "id": 1103764
+      },
+      "writtenOn": "2017-11-06T08:47:11Z",
+      "side": 1,
+      "message": "I fixed it. Thanks.",
+      "parentUuid": "47d37ed2_06986303",
       "revId": "2cafebf9b2d9e616e9d0a5af9583340c989afb26",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
