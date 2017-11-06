@@ -40325,6 +40325,14 @@
       "expect_ct": true,
       "expect_ct_report_uri": "https://history.report-uri.io/r/default/ct/reportOnly"
     },
+    {
+        "name": "sirburton.com",
+        "mode": "force-https", "include_subdomains": true, "pins": "ncsccs",
+        "expect_staple": true, "include_subdomains_for_expect_staple": true,
+        "expect_staple_report_uri": "https://log.ncsccs.com/report/expectstaple",
+        "expect_ct": true,
+        "expect_ct_report_uri": "https://log.ncsccs.com/report/expectct"
+    },
     // END OF MANUAL CUSTOM ENTRIES
 
     // TODO(lgarron): hstspreload.org can't scan IPv6-only sites due to Google
