@@ -2,6 +2,40 @@
   "comments": [
     {
       "key": {
+        "uuid": "2db20350_cc7d9c36",
+        "filename": "content/common/service_worker/service_worker_container.mojom",
+        "patchSetId": 4
+      },
+      "lineNbr": 108,
+      "author": {
+        "id": 1000128
+      },
+      "writtenOn": "2017-11-06T17:25:12Z",
+      "side": 1,
+      "message": "\"its client\" -\u003e \"this service worker client\"\n\nDon\u0027t need to to say \"(browser-\u003erenderer)\".",
+      "revId": "2f5d8d3628d601b0a07f809cfadf87e02a650c24",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e0b8f56b_9da0e870",
+        "filename": "content/common/service_worker/service_worker_container.mojom",
+        "patchSetId": 4
+      },
+      "lineNbr": 109,
+      "author": {
+        "id": 1000128
+      },
+      "writtenOn": "2017-11-06T17:25:12Z",
+      "side": 1,
+      "message": "Can this change from uint32 to blink.mojom.WebFeature like SetController() uses?",
+      "revId": "2f5d8d3628d601b0a07f809cfadf87e02a650c24",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "514bee04_ea37d119",
         "filename": "content/renderer/service_worker/service_worker_dispatcher.h",
         "patchSetId": 4
@@ -100,6 +134,23 @@
       "writtenOn": "2017-11-06T07:57:57Z",
       "side": 1,
       "message": "nit: how about move this to the beginning of this function?",
+      "revId": "2f5d8d3628d601b0a07f809cfadf87e02a650c24",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7e0f2f63_16500dcb",
+        "filename": "content/renderer/service_worker/service_worker_provider_context.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 113,
+      "author": {
+        "id": 1000128
+      },
+      "writtenOn": "2017-11-06T17:25:12Z",
+      "side": 1,
+      "message": "Keep a comment about \"For service worker clients. Returns the feature usage of its controller.\"",
       "revId": "2f5d8d3628d601b0a07f809cfadf87e02a650c24",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
