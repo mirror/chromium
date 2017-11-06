@@ -80,6 +80,10 @@ int ChromeLayoutProvider::GetDistanceMetric(int metric) const {
       return 12;
     case DISTANCE_MODAL_DIALOG_WIDTH_CONTAINING_MULTILINE_TEXT:
       return 400;
+    case DISTANCE_SINGLE_HOVER_CONTENT_LIST_VERTICAL:
+      return 4;
+    case DISTANCE_MULTI_HOVER_CONTENT_LIST_VERTICAL:
+      return 8;
     default:
       return views::LayoutProvider::GetDistanceMetric(metric);
   }
