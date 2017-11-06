@@ -25,6 +25,40 @@
     },
     {
       "key": {
+        "uuid": "9b049a72_7d657948",
+        "filename": "media/blink/video_frame_compositor.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 239,
+      "author": {
+        "id": 1001250
+      },
+      "writtenOn": "2017-11-06T22:11:41Z",
+      "side": 1,
+      "message": "This takes the lock thrice, this code should lock once and hold the lock for the entirety of this call.",
+      "revId": "e2af26250d69eeabd00ba09916d51d6d0db59903",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f09e8c5d_dc5030e4",
+        "filename": "media/blink/video_frame_compositor.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 273,
+      "author": {
+        "id": 1001250
+      },
+      "writtenOn": "2017-11-06T22:11:41Z",
+      "side": 1,
+      "message": "Can we reuse this lock instead of having two?",
+      "revId": "e2af26250d69eeabd00ba09916d51d6d0db59903",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "671abb11_adaaafee",
         "filename": "media/blink/video_frame_compositor.h",
         "patchSetId": 6
