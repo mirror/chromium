@@ -16,6 +16,24 @@
       "revId": "1898ec6411682f74e7416a5f67c241b26adf4517",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8ae5479d_c8374395",
+        "filename": "content/renderer/media/rtc_peer_connection_handler.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 1931,
+      "author": {
+        "id": 1246261
+      },
+      "writtenOn": "2017-11-06T15:29:13Z",
+      "side": 1,
+      "message": "I\u0027ve moved this to its own CL (and changed it up a bit). I\u0027ll put that CL up for review when I see it\u0027s passed the trybots. So please forget this for the purpose of this CL (it\u0027s removed from the newest revision).",
+      "parentUuid": "d3340213_a9bed350",
+      "revId": "1898ec6411682f74e7416a5f67c241b26adf4517",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
