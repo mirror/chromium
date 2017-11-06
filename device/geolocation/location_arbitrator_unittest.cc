@@ -61,7 +61,7 @@ void SetPositionFix(FakeLocationProvider* provider,
   position.latitude = latitude;
   position.longitude = longitude;
   position.accuracy = accuracy;
-  position.timestamp = GetTimeNowForTest().ToDoubleT();
+  position.timestamp = GetTimeNowForTest();
   ASSERT_TRUE(ValidateGeoposition(position));
   provider->HandlePositionChanged(position);
 }

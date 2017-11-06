@@ -86,7 +86,15 @@ class GeolocationMock {
     this.geoposition_.altitudeAccuracy = altitudeAccuracy;
     this.geoposition_.heading = heading;
     this.geoposition_.speed = speed;
-    this.geoposition_.timestamp = new Date().getTime() / 1000;
+    this.geoposition_.timestamp = new mojo.common.mojom.Time();
+    // The new Date().getTime() returns the number of milliseconds since the
+    // UNIX epoch (1970-01-01 00::00:00 UTC), while the |internalValue| of the
+    // device.mojom.Geoposition represents the value of microseconds since the
+    // Windows FILETIME epoch (1601-01-01 00:00:00 UTC).
+    // The 11644473600000 is the offset in milliseconds between above 2 epoch.
+    // See more info in //base/time/time.h.
+    this.geoposition_.timestamp.internalValue =
+        (new Date().getTime() + 11644473600000)  * 1000;
     this.geoposition_.errorMessage = '';
     this.geoposition_.valid = true;
   }
@@ -99,6 +107,7 @@ class GeolocationMock {
   setGeolocationPositionUnavailableError(message) {
     this.geoposition_ = new device.mojom.Geoposition();
     this.geoposition_.valid = false;
+    this.geoposition_.timestamp = new mojo.common.mojom.Time();
     this.geoposition_.errorMessage = message;
     this.geoposition_.errorCode =
         device.mojom.Geoposition.ErrorCode.POSITION_UNAVAILABLE;
