@@ -313,11 +313,6 @@ ServerWindow* WindowTree::ProcessSetDisplayRoot(
   DCHECK(window_manager_state_);  // Only called for window manager.
   DVLOG(3) << "SetDisplayRoot client=" << id_
            << " global window_id=" << client_window_id.ToString();
-  if (display_manager()->GetDisplayById(display_to_create.id())) {
-    DVLOG(1) << "SetDisplayRoot called with existing display "
-             << display_to_create.id();
-    return nullptr;
-  }
 
   if (automatically_create_display_roots_) {
     DVLOG(1) << "SetDisplayRoot is only applicable when "
@@ -339,18 +334,25 @@ ServerWindow* WindowTree::ProcessSetDisplayRoot(
     return nullptr;
   }
 
-  if (!mirrors.empty()) {
-    NOTIMPLEMENTED() << "TODO(crbug.com/764472): Mus unified/mirroring modes.";
-    return nullptr;
+  Display* display = display_manager()->GetDisplayById(display_to_create.id());
+  if (!display) {
+    // Create the display if it doesn't already exist.
+    display = display_manager()->AddDisplayForWindowManager(
+        is_primary_display, display_to_create, viewport_metrics);
   }
 
-  Display* display = display_manager()->AddDisplayForWindowManager(
-      is_primary_display, display_to_create, viewport_metrics);
+  if (!mirrors.empty())
+    NOTIMPLEMENTED() << "TODO(crbug.com/764472): Mus unified/mirroring modes.";
+
   DCHECK(display);
   WindowManagerDisplayRoot* display_root =
       display->GetWindowManagerDisplayRootForUser(
           window_manager_state_->user_id());
   DCHECK(display_root);
+  ServerWindow* root = display_root->root();
+  // Remove any existing children of the root window.
+  while (!root->children().empty())
+    root->Remove(root->children()[0]);
   DCHECK(display_root->root()->children().empty());
 
   // NOTE: this doesn't resize the window in any way. We assume the client takes

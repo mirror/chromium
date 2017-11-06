@@ -1253,6 +1253,14 @@ void DisplayManager::ToggleDisplayScaleFactor() {
 
 #if defined(OS_CHROMEOS)
 void DisplayManager::SetSoftwareMirroring(bool enabled) {
+  // Move any displays marked for hardware mirroring to software mirroring.
+  if (enabled && !hardware_mirroring_display_id_list_.empty()) {
+    DisplayInfoList display_info_list;
+    for (int64_t id : hardware_mirroring_display_id_list_)
+      display_info_list.emplace_back(GetDisplayInfo(id));
+    hardware_mirroring_display_id_list_.clear();
+    CreateSoftwareMirroringDisplayInfo(&display_info_list);
+  }
   SetMultiDisplayMode(enabled ? MIRRORING
                               : current_default_multi_display_mode_);
 }
