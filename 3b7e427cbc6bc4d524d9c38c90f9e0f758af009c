@@ -49,6 +49,30 @@
     },
     {
       "key": {
+        "uuid": "6422c015_212f2b8e",
+        "filename": "components/arc/power/arc_power_bridge.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 174,
+      "author": {
+        "id": 1003166
+      },
+      "writtenOn": "2017-11-06T15:43:17Z",
+      "side": 1,
+      "message": "It looks like this is expected to be called in all the other Mojo code.",
+      "parentUuid": "4eb03806_01abe864",
+      "range": {
+        "startLine": 174,
+        "startChar": 2,
+        "endLine": 174,
+        "endChar": 19
+      },
+      "revId": "3b7e427cbc6bc4d524d9c38c90f9e0f758af009c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "ef778d5f_f0565d8a",
         "filename": "components/arc/power/arc_power_bridge_unittest.cc",
         "patchSetId": 4
