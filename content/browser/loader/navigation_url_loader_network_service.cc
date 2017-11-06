@@ -409,7 +409,12 @@ class NavigationURLLoaderNetworkService::URLLoaderRequestController
       const base::Optional<net::SSLInfo>& ssl_info,
       mojom::DownloadedTempFilePtr downloaded_file) override {
     received_response_ = true;
-    if (base::FeatureList::IsEnabled(features::kNetworkService)) {
+
+    mojom::URLLoaderClientRequest url_loader_client_request;
+
+    if (!base::FeatureList::IsEnabled(features::kNetworkService)) {
+      url_loader_client_request = response_loader_binding_.Unbind();
+    } else {
       // If the default loader (network) was used to handle the URL load request
       // we need to see if the handlers want to potentially create a new loader
       // for the response. e.g. AppCache.
@@ -428,7 +433,8 @@ class NavigationURLLoaderNetworkService::URLLoaderRequestController
     BrowserThread::PostTask(
         BrowserThread::UI, FROM_HERE,
         base::BindOnce(&NavigationURLLoaderNetworkService::OnReceiveResponse,
-                       owner_, response->DeepCopy(), ssl_info,
+                       owner_, std::move(url_loader_client_request),
+                       response->DeepCopy(), ssl_info,
                        base::Passed(&downloaded_file)));
   }
 
@@ -720,6 +726,7 @@ void NavigationURLLoaderNetworkService::InterceptNavigation(
 }
 
 void NavigationURLLoaderNetworkService::OnReceiveResponse(
+    mojom::URLLoaderClientRequest url_loader_client_request,
     scoped_refptr<ResourceResponse> response,
     const base::Optional<net::SSLInfo>& ssl_info,
     mojom::DownloadedTempFilePtr downloaded_file) {
@@ -730,6 +737,16 @@ void NavigationURLLoaderNetworkService::OnReceiveResponse(
     NavigationResourceHandler::GetSSLStatusForRequest(*ssl_info, &ssl_status_);
   response_ = std::move(response);
   ssl_info_ = ssl_info;
+
+  if (!base::FeatureList::IsEnabled(features::kNetworkService)) {
+    delegate_->OnResponseStarted(
+        std::move(url_loader_client_request), response_, nullptr,
+        mojo::ScopedDataPipeConsumerHandle(), ssl_status_,
+        std::unique_ptr<NavigationData>(),
+        GlobalRequestID(-1, g_next_request_id), IsDownload(),
+        false /* is_stream */,
+        request_controller_->TakeSubresourceLoaderParams());
+  }
 }
 
 void NavigationURLLoaderNetworkService::OnReceiveRedirect(
@@ -741,6 +758,7 @@ void NavigationURLLoaderNetworkService::OnReceiveRedirect(
 
 void NavigationURLLoaderNetworkService::OnStartLoadingResponseBody(
     mojo::ScopedDataPipeConsumerHandle body) {
+  DCHECK(base::FeatureList::IsEnabled(features::kNetworkService));
   DCHECK(response_);
 
   TRACE_EVENT_ASYNC_END2("navigation", "Navigation timeToResponseStarted", this,
@@ -751,9 +769,10 @@ void NavigationURLLoaderNetworkService::OnStartLoadingResponseBody(
   // delegate until PlzNavigate has shipped and we can be comfortable fully
   // switching to the data pipe.
   delegate_->OnResponseStarted(
-      response_, nullptr, std::move(body), ssl_status_,
-      std::unique_ptr<NavigationData>(), GlobalRequestID(-1, g_next_request_id),
-      IsDownload(), false /* is_stream */,
+      /* url_loader_client_request = */ nullptr, response_, nullptr,
+      std::move(body), ssl_status_, std::unique_ptr<NavigationData>(),
+      GlobalRequestID(-1, g_next_request_id), IsDownload(),
+      false /* is_stream */,
       request_controller_->TakeSubresourceLoaderParams());
 }
 
