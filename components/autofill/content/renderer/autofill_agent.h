@@ -5,7 +5,9 @@
 #ifndef COMPONENTS_AUTOFILL_CONTENT_RENDERER_AUTOFILL_AGENT_H_
 #define COMPONENTS_AUTOFILL_CONTENT_RENDERER_AUTOFILL_AGENT_H_
 
+#include <memory>
 #include <set>
+#include <utility>
 #include <vector>
 
 #include "base/compiler_specific.h"
@@ -232,6 +234,10 @@ class AutofillAgent : public content::RenderFrameObserver,
   // Returns true if the text field change is due to a user gesture. Can be
   // overriden in tests.
   virtual bool IsUserGesture() const;
+
+  // Returns canonical (auth and params stripped) url for the document hosted
+  // by the |render_frame()| being wrapped.
+  GURL GetCanonicalOriginForDocument() const;
 
   // Formerly cached forms for all frames, now only caches forms for the current
   // frame.
