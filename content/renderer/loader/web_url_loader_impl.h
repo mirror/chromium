@@ -38,6 +38,7 @@ struct CONTENT_EXPORT StreamOverrideParameters {
 
   GURL stream_url;
   mojo::ScopedDataPipeConsumerHandle consumer_handle;
+  mojom::URLLoaderClientRequest url_loader_client;
   ResourceResponseHead response;
   std::vector<GURL> redirects;
   std::vector<ResourceResponseInfo> redirect_responses;

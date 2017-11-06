@@ -13,6 +13,7 @@
 #include "content/common/content_export.h"
 #include "content/public/common/url_loader.mojom.h"
 #include "ipc/ipc_message.h"
+#include "mojo/public/cpp/bindings/binding.h"
 #include "mojo/public/cpp/system/data_pipe.h"
 
 namespace base {
@@ -33,7 +34,8 @@ class CONTENT_EXPORT URLLoaderClientImpl final : public mojom::URLLoaderClient {
  public:
   URLLoaderClientImpl(int request_id,
                       ResourceDispatcher* resource_dispatcher,
-                      scoped_refptr<base::SingleThreadTaskRunner> task_runner);
+                      scoped_refptr<base::SingleThreadTaskRunner> task_runner,
+                      mojom::URLLoaderClientRequest url_loader_client_request);
   ~URLLoaderClientImpl() override;
 
   // Sets |is_deferred_|. From now, the received messages are not dispatched
@@ -75,6 +77,7 @@ class CONTENT_EXPORT URLLoaderClientImpl final : public mojom::URLLoaderClient {
   int32_t accumulated_transfer_size_diff_during_deferred_ = 0;
   ResourceDispatcher* const resource_dispatcher_;
   scoped_refptr<base::SingleThreadTaskRunner> task_runner_;
+  mojo::Binding<mojom::URLLoaderClient> client_binding_;
   base::WeakPtrFactory<URLLoaderClientImpl> weak_factory_;
 };
 

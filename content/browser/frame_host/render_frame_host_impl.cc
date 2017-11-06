@@ -3229,7 +3229,7 @@ void RenderFrameHostImpl::NavigateToInterstitialURL(const GURL& data_url) {
   if (IsBrowserSideNavigationEnabled()) {
     CommitNavigation(nullptr, nullptr, mojo::ScopedDataPipeConsumerHandle(),
                      common_params, RequestNavigationParams(), false,
-                     base::nullopt);
+                     base::nullopt, nullptr);
   } else {
     Navigate(common_params, StartNavigationParams(), RequestNavigationParams());
   }
@@ -3380,7 +3380,8 @@ void RenderFrameHostImpl::CommitNavigation(
     const CommonNavigationParams& common_params,
     const RequestNavigationParams& request_params,
     bool is_view_source,
-    base::Optional<SubresourceLoaderParams> subresource_loader_params) {
+    base::Optional<SubresourceLoaderParams> subresource_loader_params,
+    mojom::URLLoaderClientRequest url_loader_client) {
   TRACE_EVENT2("navigation", "RenderFrameHostImpl::CommitNavigation",
                "frame_tree_node", frame_tree_node_->frame_tree_node_id(), "url",
                common_params.url.possibly_invalid_spec());
@@ -3402,7 +3403,8 @@ void RenderFrameHostImpl::CommitNavigation(
     GetNavigationControl()->CommitNavigation(
         ResourceResponseHead(), GURL(), common_params, request_params,
         mojo::ScopedDataPipeConsumerHandle(),
-        /*subresource_loader_factories=*/base::nullopt);
+        /*subresource_loader_factories=*/base::nullopt,
+        std::move(url_loader_client));
     return;
   }
 
@@ -3486,7 +3488,7 @@ void RenderFrameHostImpl::CommitNavigation(
 
   GetNavigationControl()->CommitNavigation(
       head, body_url, common_params, request_params, std::move(handle),
-      std::move(subresource_loader_factories));
+      std::move(subresource_loader_factories), std::move(url_loader_client));
 
   // If a network request was made, update the Previews state.
   if (IsURLHandledByNetworkStack(common_params.url) &&
