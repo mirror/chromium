@@ -218,6 +218,30 @@
     },
     {
       "key": {
+        "uuid": "2745570b_f6ef0a49",
+        "filename": "components/ntp_snippets/contextual/contextual_suggestion.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 31,
+      "author": {
+        "id": 1116059
+      },
+      "writtenOn": "2017-11-06T11:18:11Z",
+      "side": 1,
+      "message": "I don\u0027t think shared_ptr is worth the overhead/hassle. (We can\u0027t even use the standard shared_ptr, but instead Chrome\u0027s scoped_refptr which is intrusive...)\nMaking the copy more obvious seems better to me, e.g.\nstd::unique_ptr\u003cContextualSuggestion\u003e Clone() const;",
+      "parentUuid": "0bc79177_66629179",
+      "range": {
+        "startLine": 31,
+        "startChar": 52,
+        "endLine": 31,
+        "endChar": 0
+      },
+      "revId": "52c06cf230a54a997e2f78c3301b919161563578",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "15370df4_49db0b02",
         "filename": "components/ntp_snippets/contextual/timestamped_mru_cache.h",
         "patchSetId": 6
@@ -329,6 +353,24 @@
       "side": 1,
       "message": "My plan is to cache both contextual suggestions and their thumbnails with this, so different payload types are used\nBoth will have key GURL. Should I specialize for this type?\nCurrently, the thumbnails are cached persistently but not properly cleaned, also they are pretty short-lived and good for non-persistent caching, so this cache would resolve crbug.com/750006 in addition.",
       "parentUuid": "b24b48a9_42793310",
+      "revId": "52c06cf230a54a997e2f78c3301b919161563578",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f6cb65ad_ada62265",
+        "filename": "components/ntp_snippets/contextual/timestamped_mru_cache.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 19,
+      "author": {
+        "id": 1116059
+      },
+      "writtenOn": "2017-11-06T11:18:11Z",
+      "side": 1,
+      "message": "Ah, I didn\u0027t know there were plans to also use this for thumbnails. Then I don\u0027t feel strongly about specializing for KeyType\u003dGURL - if the whole thing will be a template anyway, there\u0027s less benefit in specializing (though I still wouldn\u0027t oppose it :).\n\nHaving no explicit persistent cache for the thumbnails SGTM - in most cases, the standard HTTP cache should handle that anyway.",
+      "parentUuid": "f72782ac_ae85398c",
       "revId": "52c06cf230a54a997e2f78c3301b919161563578",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true

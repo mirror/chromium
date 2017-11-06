@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "e3962dd6_d60988f8",
+        "filename": "components/ntp_snippets/contextual/contextual_content_suggestions_service.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 49,
+      "author": {
+        "id": 1116059
+      },
+      "writtenOn": "2017-11-06T11:18:11Z",
+      "side": 1,
+      "message": "nit: I think the optional can be auto-constructed when you pass it out, so probably you can just have a straight OContextualSuggestion::PtrVector here.",
+      "range": {
+        "startLine": 49,
+        "startChar": 42,
+        "endLine": 49,
+        "endChar": 0
+      },
+      "revId": "082c36e57b7885d09bd2fa6aaf552c4c5043ef33",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a0ca2bb4_ed25ea55",
+        "filename": "components/ntp_snippets/contextual/contextual_content_suggestions_service.h",
+        "patchSetId": 7
+      },
+      "lineNbr": 77,
+      "author": {
+        "id": 1116059
+      },
+      "writtenOn": "2017-11-06T11:18:11Z",
+      "side": 1,
+      "message": "nit: cached_suggestions_by_url_ or something like that?",
+      "range": {
+        "startLine": 77,
+        "startChar": 28,
+        "endLine": 77,
+        "endChar": 0
+      },
+      "revId": "082c36e57b7885d09bd2fa6aaf552c4c5043ef33",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
