@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "5aba9c9d_1458d4d7",
+        "filename": "content/browser/devtools/devtools_target_registry.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 43,
+      "author": {
+        "id": 1115999
+      },
+      "writtenOn": "2017-11-06T20:17:32Z",
+      "side": 1,
+      "message": "ThreadedResolver",
+      "revId": "4b4078fe078d124da23936e513f8e18536267fdb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2e5cff0d_0b01b357",
+        "filename": "content/browser/devtools/devtools_target_registry.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 53,
+      "author": {
+        "id": 1115999
+      },
+      "writtenOn": "2017-11-06T20:17:32Z",
+      "side": 1,
+      "message": "CreateResolver",
+      "revId": "4b4078fe078d124da23936e513f8e18536267fdb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
