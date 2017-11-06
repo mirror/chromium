@@ -11,6 +11,7 @@
 #include "base/memory/ref_counted.h"
 #include "base/optional.h"
 #include "content/common/content_export.h"
+#include "content/public/common/url_loader.mojom.h"
 #include "mojo/public/cpp/system/data_pipe.h"
 
 namespace net {
@@ -46,6 +47,7 @@ class CONTENT_EXPORT NavigationURLLoaderDelegate {
   // the renderer process if the navigated context is controlled by a request
   // interceptor like AppCache or ServiceWorker.
   virtual void OnResponseStarted(
+      mojom::URLLoaderClientRequest url_loader_client_request,
       const scoped_refptr<ResourceResponse>& response,
       std::unique_ptr<StreamHandle> body_stream,
       mojo::ScopedDataPipeConsumerHandle consumer_handle,
