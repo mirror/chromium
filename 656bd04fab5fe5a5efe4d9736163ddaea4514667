@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "40e2bf1a_5e7a12ab",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 2
+      },
+      "lineNbr": 9,
+      "author": {
+        "id": 1002808
+      },
+      "writtenOn": "2017-11-06T01:46:40Z",
+      "side": 1,
+      "message": "nit: This isn\u0027t really accurate - there is no typemapping between base;:Time and WTF::Time. Rather, let\u0027s say \"mojo.common.mojom.Time already has typemappings to both base::Time and WTF::Time. This type is preferred instead of using a double to represent time.\"",
+      "revId": "656bd04fab5fe5a5efe4d9736163ddaea4514667",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d869c5fa_809e4afd",
+        "filename": "device/geolocation/public/interfaces/BUILD.gn",
+        "patchSetId": 2
+      },
+      "lineNbr": 13,
+      "author": {
+        "id": 1002808
+      },
+      "writtenOn": "2017-11-06T01:46:40Z",
+      "side": 1,
+      "message": "nit: public_deps please (they mean the same thing for mojom targets, but please prefer to use public_deps by convention)",
+      "revId": "656bd04fab5fe5a5efe4d9736163ddaea4514667",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
