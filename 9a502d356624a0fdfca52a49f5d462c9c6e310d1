@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "ba2732a6_76e176f7",
+        "filename": "ui/events/event.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 1161,
+      "author": {
+        "id": 1123071
+      },
+      "writtenOn": "2017-11-06T06:12:08Z",
+      "side": 1,
+      "message": "please add braces here as per coding style.",
+      "range": {
+        "startLine": 1161,
+        "startChar": 15,
+        "endLine": 1161,
+        "endChar": 0
+      },
+      "revId": "9a502d356624a0fdfca52a49f5d462c9c6e310d1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
