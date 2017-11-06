@@ -85,8 +85,9 @@ void HardwareDisplayController::Disable() {
 void HardwareDisplayController::SchedulePageFlip(
     const OverlayPlaneList& plane_list,
     SwapCompletionOnceCallback callback) {
-  ActualSchedulePageFlip(plane_list, false /* test_only */,
-                         std::move(callback));
+  bool result = ActualSchedulePageFlip(plane_list, false /* test_only */,
+                                       std::move(callback));
+  CHECK(result) << "HardwareDisplayController::ActualSchedulePageFlip failed.";
 }
 
 bool HardwareDisplayController::TestPageFlip(
