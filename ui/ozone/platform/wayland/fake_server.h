@@ -117,6 +117,15 @@ class MockKeyboard : public ServerObject {
   DISALLOW_COPY_AND_ASSIGN(MockKeyboard);
 };
 
+class MockTouch : public ServerObject {
+ public:
+  MockTouch(wl_resource* resource);
+  ~MockTouch() override;
+
+ private:
+  DISALLOW_COPY_AND_ASSIGN(MockTouch);
+};
+
 struct GlobalDeleter {
   void operator()(wl_global* global);
 };
@@ -194,6 +203,7 @@ class MockSeat : public Global {
 
   std::unique_ptr<MockPointer> pointer;
   std::unique_ptr<MockKeyboard> keyboard;
+  std::unique_ptr<MockTouch> touch;
 
  private:
   DISALLOW_COPY_AND_ASSIGN(MockSeat);

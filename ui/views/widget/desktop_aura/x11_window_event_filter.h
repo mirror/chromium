@@ -31,7 +31,7 @@ class VIEWS_EXPORT X11WindowEventFilter : public WindowEventFilter {
  private:
   // WindowEventFilter override:
   void MaybeDispatchHostWindowDragMovement(int hittest,
-                                           ui::MouseEvent* event) override;
+                                           ui::Event* event) override;
   void LowerWindow() override;
 
   bool DispatchHostWindowDragMovement(int hittest,

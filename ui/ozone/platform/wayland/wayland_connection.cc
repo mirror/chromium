@@ -101,6 +101,15 @@ WaylandWindow* WaylandConnection::GetWindow(gfx::AcceleratedWidget widget) {
   return it == window_map_.end() ? nullptr : it->second;
 }
 
+WaylandWindow* WaylandConnection::GetCurrentFocusedWindow() {
+  for (auto entry : window_map_) {
+    WaylandWindow* window = entry.second;
+    if (window->has_pointer_or_touch_focus())
+      return window;
+  }
+  return nullptr;
+}
+
 void WaylandConnection::AddWindow(gfx::AcceleratedWidget widget,
                                   WaylandWindow* window) {
   window_map_[widget] = window;
@@ -256,6 +265,21 @@ void WaylandConnection::Capabilities(void* data,
     }
   } else if (connection->keyboard_) {
     connection->keyboard_.reset();
+  }
+  if (capabilities & WL_SEAT_CAPABILITY_TOUCH) {
+    if (!connection->touch_) {
+      wl_touch* touch = wl_seat_get_touch(connection->seat_.get());
+      if (!touch) {
+        LOG(ERROR) << "Failed to get wl_touch from seat";
+        return;
+      }
+      connection->touch_ = base::MakeUnique<WaylandTouch>(
+          touch, base::Bind(&WaylandConnection::DispatchUiEvent,
+                            base::Unretained(connection)));
+      connection->touch_->set_connection(connection);
+    }
+  } else if (connection->touch_) {
+    connection->touch_.reset();
   }
   connection->ScheduleFlush();
 }
