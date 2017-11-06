@@ -93,7 +93,7 @@ base::LazyInstance<StreamMixerInstance>::DestructorAtExit g_mixer_instance =
 
 }  // namespace
 
-float StreamMixer::VolumeInfo::GetEffectiveVolume() {
+float StreamMixer::VolumeInfo::GetTargetVolume() {
   return std::min(volume, limit);
 }
 
@@ -351,7 +351,7 @@ void StreamMixer::AddInput(std::unique_ptr<InputQueue> input) {
 
   auto type = input->content_type();
   if (input->primary()) {
-    input->SetContentTypeVolume(volume_info_[type].GetEffectiveVolume(),
+    input->SetContentTypeVolume(volume_info_[type].GetTargetVolume(),
                                 kUseDefaultFade);
   } else {
     input->SetContentTypeVolume(volume_info_[type].volume, kUseDefaultFade);
@@ -386,8 +386,6 @@ void StreamMixer::AddInput(std::unique_ptr<InputQueue> input) {
       if (!found_filter_group && default_filter_) {
         found_filter_group = true;
         input->set_filter_group(default_filter_);
-        LOG(INFO) << "Added input of type " << input->device_id() << " to "
-                  << default_filter_->name();
       }
 
       CHECK(found_filter_group)
@@ -667,11 +665,11 @@ void StreamMixer::RemoveLoopbackAudioObserver(
 void StreamMixer::SetVolume(AudioContentType type, float level) {
   RUN_ON_MIXER_THREAD(&StreamMixer::SetVolume, type, level);
   volume_info_[type].volume = level;
-  float effective_volume = volume_info_[type].GetEffectiveVolume();
+  float target_volume = volume_info_[type].GetTargetVolume();
   for (auto&& input : inputs_) {
     if (input->content_type() == type) {
       if (input->primary()) {
-        input->SetContentTypeVolume(effective_volume, kUseDefaultFade);
+        input->SetContentTypeVolume(target_volume, kUseDefaultFade);
       } else {
         // Volume limits don't apply to effects streams.
         input->SetContentTypeVolume(level, kUseDefaultFade);
@@ -695,7 +693,7 @@ void StreamMixer::SetOutputLimit(AudioContentType type, float limit) {
   LOG(INFO) << "Set volume limit for " << static_cast<int>(type) << " to "
             << limit;
   volume_info_[type].limit = limit;
-  float effective_volume = volume_info_[type].GetEffectiveVolume();
+  float target_volume = volume_info_[type].GetTargetVolume();
   int fade_ms = kUseDefaultFade;
   if (type == AudioContentType::kMedia) {
     if (limit >= 1.0f) {  // Unducking.
@@ -707,7 +705,7 @@ void StreamMixer::SetOutputLimit(AudioContentType type, float limit) {
   for (auto&& input : inputs_) {
     // Volume limits don't apply to effects streams.
     if (input->primary() && input->content_type() == type) {
-      input->SetContentTypeVolume(effective_volume, fade_ms);
+      input->SetContentTypeVolume(target_volume, fade_ms);
     }
   }
 }

@@ -62,7 +62,7 @@ class AudioSinkAndroidAudioTrackImpl : public AudioSinkAndroid {
   void SetPaused(bool paused) override;
   void SetStreamVolumeMultiplier(float multiplier) override;
   void SetLimiterVolumeMultiplier(float multiplier) override;
-  float EffectiveVolume() const override;
+  float TargetVolume() const override;
 
   // Getters
   int input_samples_per_second() const override;

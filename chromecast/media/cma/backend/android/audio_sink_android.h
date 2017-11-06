@@ -94,7 +94,7 @@ class AudioSinkAndroid {
 
   // Returns the volume multiplier of the stream, typically the product of
   // stream multiplier and limiter multiplier.
-  virtual float EffectiveVolume() const = 0;
+  virtual float TargetVolume() const = 0;
 
   // Getters
   virtual int input_samples_per_second() const = 0;

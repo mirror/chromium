@@ -371,7 +371,7 @@ void AudioSinkAndroidAudioTrackImpl::UpdateVolume() {
   DCHECK(feeder_task_runner_->BelongsToCurrentThread());
   Java_AudioSinkAudioTrackImpl_setVolume(base::android::AttachCurrentThread(),
                                          j_audio_sink_audiotrack_impl_,
-                                         EffectiveVolume());
+                                         TargetVolume());
 }
 
 void AudioSinkAndroidAudioTrackImpl::SetStreamVolumeMultiplier(
@@ -381,7 +381,7 @@ void AudioSinkAndroidAudioTrackImpl::SetStreamVolumeMultiplier(
   stream_volume_multiplier_ = std::max(0.0f, std::min(multiplier, 1.0f));
   LOG(INFO) << __func__ << "(" << this << "): device_id_=" << device_id_
             << " stream_multiplier=" << stream_volume_multiplier_
-            << " effective=" << EffectiveVolume();
+            << " effective=" << TargetVolume();
   UpdateVolume();
 }
 
@@ -392,11 +392,11 @@ void AudioSinkAndroidAudioTrackImpl::SetLimiterVolumeMultiplier(
   limiter_volume_multiplier_ = std::max(0.0f, std::min(multiplier, 1.0f));
   LOG(INFO) << __func__ << "(" << this << "): device_id_=" << device_id_
             << " limiter_multiplier=" << limiter_volume_multiplier_
-            << " effective=" << EffectiveVolume();
+            << " effective=" << TargetVolume();
   UpdateVolume();
 }
 
-float AudioSinkAndroidAudioTrackImpl::EffectiveVolume() const {
+float AudioSinkAndroidAudioTrackImpl::TargetVolume() const {
   return stream_volume_multiplier_ * limiter_volume_multiplier_;
 }
 
