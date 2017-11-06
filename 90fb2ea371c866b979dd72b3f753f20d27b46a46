@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "9097af17_1083c4b9",
+        "filename": "chrome/browser/extensions/bookmark_app_helper.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 740,
+      "author": {
+        "id": 1191013
+      },
+      "writtenOn": "2017-11-06T03:54:57Z",
+      "side": 1,
+      "message": "Thanks, but with Ben\u0027s request to only fire it if ExperimentalAppBanner flag is enabled, this line is no longer needed.",
+      "parentUuid": "af2f28bc_21b91b01",
+      "range": {
+        "startLine": 740,
+        "startChar": 2,
+        "endLine": 740,
+        "endChar": 68
+      },
+      "revId": "90fb2ea371c866b979dd72b3f753f20d27b46a46",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "4fbda700_8bcda8f7",
         "filename": "chrome/browser/extensions/bookmark_app_helper.cc",
         "patchSetId": 3
@@ -45,6 +69,30 @@
       "revId": "90fb2ea371c866b979dd72b3f753f20d27b46a46",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e97f123b_779a5708",
+        "filename": "chrome/browser/extensions/bookmark_app_helper.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 743,
+      "author": {
+        "id": 1191013
+      },
+      "writtenOn": "2017-11-06T03:54:57Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "4fbda700_8bcda8f7",
+      "range": {
+        "startLine": 743,
+        "startChar": 18,
+        "endLine": 743,
+        "endChar": 27
+      },
+      "revId": "90fb2ea371c866b979dd72b3f753f20d27b46a46",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
