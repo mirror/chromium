@@ -1,0 +1,90 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "dbe0ea36_dc8dadc6",
+        "filename": "content/test/DEPS",
+        "patchSetId": 4
+      },
+      "lineNbr": 30,
+      "author": {
+        "id": 1002246
+      },
+      "writtenOn": "2017-11-06T17:59:02Z",
+      "side": 1,
+      "message": "Nit: remove white space.",
+      "range": {
+        "startLine": 30,
+        "startChar": 0,
+        "endLine": 30,
+        "endChar": 1
+      },
+      "revId": "e90b9a8bdd8e266339ae37573ef2540127cf6485",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a027e0fb_706bd4b5",
+        "filename": "services/proxy_resolver/proxy_resolver_factory_impl_unittest.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 1,
+      "author": {
+        "id": 1002246
+      },
+      "writtenOn": "2017-11-06T17:59:02Z",
+      "side": 1,
+      "message": "I think these tests could benefit from using the TestConnectorFactory. You can create a  TestConnectorFactory instance and give it an instance of your service and then get a connector instance from it where Bind() calls are directly routed to your service. Instead of tracking refs to the service you could then track when the service is deleted (maybe by subclassing the proxy resolver service and having a wek ptr pointing to it).\nAnyway, this is just a suggestion and may not be doable, so feel free to ignore :-)",
+      "revId": "e90b9a8bdd8e266339ae37573ef2540127cf6485",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4f5fa52e_3bbeede6",
+        "filename": "services/proxy_resolver/proxy_resolver_service.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 19,
+      "author": {
+        "id": 1002246
+      },
+      "writtenOn": "2017-11-06T17:59:02Z",
+      "side": 1,
+      "message": "Not needed?",
+      "range": {
+        "startLine": 19,
+        "startChar": 6,
+        "endLine": 19,
+        "endChar": 30
+      },
+      "revId": "e90b9a8bdd8e266339ae37573ef2540127cf6485",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "dffd55bf_12cdcd24",
+        "filename": "services/proxy_resolver/proxy_resolver_service.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 43,
+      "author": {
+        "id": 1002246
+      },
+      "writtenOn": "2017-11-06T17:59:02Z",
+      "side": 1,
+      "message": "I wonder if it\u0027s better to have a single ProxyResolverFactoryImpl instance in the service or if it might be easier to have one per requests? (so then each ProxyResolverFactoryImpl instance would keep its ServiceContextRef and that would make this a bit simpler).\nWhat are the benefits of sharing a unique instance?",
+      "range": {
+        "startLine": 43,
+        "startChar": 27,
+        "endLine": 43,
+        "endChar": 50
+      },
+      "revId": "e90b9a8bdd8e266339ae37573ef2540127cf6485",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
