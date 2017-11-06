@@ -27,6 +27,7 @@ if (enable_extensions) {
       "manifest_parser.mojom",
       "mojo/app_window.mojom",
       "mojo/keep_alive.mojom",
+      "mojo/mime_handler_view.mojom",
     ]
 
     if (proprietary_codecs && enable_wifi_display) {

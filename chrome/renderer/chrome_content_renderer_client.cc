@@ -704,6 +704,50 @@ bool ChromeContentRendererClient::OverrideCreatePlugin(
   return true;
 }
 
+bool ChromeContentRendererClient::OverrideNavigationForMimeHandlerView(
+    content::RenderFrame* render_frame,
+    const GURL& url) {
+#if BUILDFLAG(ENABLE_EXTENSIONS) && BUILDFLAG(ENABLE_EXTENSIONS)
+  ChromeViewHostMsg_GetPluginInfo_Output output;
+  render_frame->Send(new ChromeViewHostMsg_GetPluginInfo(
+      render_frame->GetRoutingID(), url,
+      render_frame->GetWebFrame()->Top()->GetSecurityOrigin(), "", &output));
+  return ChromeExtensionsRendererClient::GetInstance()
+      ->OverrideNavigationForMimeHandlerView(render_frame, url,
+                                             output.actual_mime_type);
+#else
+  return false;
+#endif
+}
+
+bool ChromeContentRendererClient::CreatePluginController(
+    const blink::WebElement& plugin_element,
+    const GURL& completed_url,
+    const std::string& mime_type) {
+#if BUILDFLAG(ENABLE_EXTENSIONS)
+  ChromeViewHostMsg_GetPluginInfo_Output output;
+  blink::WebLocalFrame* parent_frame = plugin_element.GetDocument().GetFrame();
+  content::RenderFrame* render_frame =
+      content::RenderFrame::FromWebFrame(parent_frame);
+  render_frame->Send(new ChromeViewHostMsg_GetPluginInfo(
+      render_frame->GetRoutingID(), completed_url,
+      parent_frame->Top()->GetSecurityOrigin(), "", &output));
+  return ChromeExtensionsRendererClient::GetInstance()->CreatePluginController(
+      plugin_element, completed_url, output.actual_mime_type);
+#else
+  return false;
+#endif
+}
+
+v8::Local<v8::Object> ChromeContentRendererClient::CreateV8ScriptableObject(
+    const blink::WebElement& plugin_element,
+    v8::Isolate* isolate) {
+#if BUILDFLAG(ENABLE_EXTENSIONS)
+  return ChromeExtensionsRendererClient::GetInstance()
+      ->CreateV8ScriptableObject(plugin_element, isolate);
+#endif
+}
+
 WebPlugin* ChromeContentRendererClient::CreatePluginReplacement(
     content::RenderFrame* render_frame,
     const base::FilePath& plugin_path) {

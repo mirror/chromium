@@ -2810,6 +2810,35 @@ void RenderFrameImpl::BindToFrame(WebLocalFrame* web_frame) {
   frame_ = web_frame;
 }
 
+bool RenderFrameImpl::CreatePluginController(
+    const blink::WebElement& owner_element,
+    const blink::WebURL& completed_url,
+    const blink::WebString& mime_type) {
+#if BUILDFLAG(ENABLE_PLUGINS)
+  if (!base::FeatureList::IsEnabled(features::kPdfExtensionInOutOfProcessFrame))
+    return false;
+  return GetContentClient()->renderer()->CreatePluginController(
+      owner_element, completed_url, mime_type.Utf8());
+#else
+  return false;
+#endif
+}
+
+v8::Local<v8::Object> RenderFrameImpl::CreateV8ScriptableObject(
+    const blink::WebElement& owner_element,
+    v8::Isolate* isolate) {
+  CHECK(
+      base::FeatureList::IsEnabled(features::kPdfExtensionInOutOfProcessFrame));
+  CHECK_EQ(GetWebFrame(), owner_element.GetDocument().GetFrame());
+#if BUILDFLAG(ENABLE_PLUGINS)
+  // Add code
+  return GetContentClient()->renderer()->CreateV8ScriptableObject(owner_element,
+                                                                  isolate);
+#else
+  return v8::Local<v8::Object>();
+#endif
+}
+
 blink::WebPlugin* RenderFrameImpl::CreatePlugin(
     const WebPluginInfo& info,
     const blink::WebPluginParams& params,
@@ -6267,6 +6296,17 @@ void RenderFrameImpl::NavigateInternal(
       common_params.url, request_params);
 
   GetContentClient()->SetActiveURL(common_params.url);
+
+#if BUILDFLAG(ENABLE_PLUGINS)
+  if (base::FeatureList::IsEnabled(
+          features::kPdfExtensionInOutOfProcessFrame)) {
+    if (GetContentClient()->renderer()->OverrideNavigationForMimeHandlerView(
+            this, common_params.url)) {
+      Send(new FrameHostMsg_DidStopLoading(routing_id_));
+      return;
+    }
+  }
+#endif
 
   // If this frame is navigating cross-process, it may naively assume that this
   // is the first navigation in the frame, but this may not actually be the

@@ -129,7 +129,7 @@ Frame* FrameTree::ScopedChild(unsigned index) const {
   unsigned scoped_index = 0;
   for (Frame* child = FirstChild(); child;
        child = child->Tree().NextSibling()) {
-    if (child->Client()->InShadowTree())
+    if (child->Client()->InShadowTree() || child->IsPluginFrame())
       continue;
     if (scoped_index == index)
       return child;
@@ -142,7 +142,7 @@ Frame* FrameTree::ScopedChild(unsigned index) const {
 Frame* FrameTree::ScopedChild(const AtomicString& name) const {
   for (Frame* child = FirstChild(); child;
        child = child->Tree().NextSibling()) {
-    if (child->Client()->InShadowTree())
+    if (child->Client()->InShadowTree() || child->IsPluginFrame())
       continue;
     if (child->Tree().GetName() == name)
       return child;

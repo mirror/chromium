@@ -120,11 +120,15 @@ bool WebFrame::Swap(WebFrame* frame) {
     ToWebRemoteFrameImpl(frame)->InitializeCoreFrame(*page, owner, name);
   }
 
+  Frame* core_frame = ToCoreFrame(*frame);
+
   if (parent_ && old_frame->HasBeenActivated())
     ToCoreFrame(*frame)->UpdateUserActivationInFrameTree();
 
-  ToCoreFrame(*frame)->GetWindowProxyManager()->SetGlobalProxies(
-      global_proxies);
+  if (old_frame->IsPluginFrame())
+    core_frame->SetIsPluginFrame();
+
+  core_frame->GetWindowProxyManager()->SetGlobalProxies(global_proxies);
 
   parent_ = nullptr;
 

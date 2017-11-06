@@ -59,7 +59,6 @@ namespace blink {
 using namespace HTMLNames;
 
 namespace {
-
 // Used for histograms, do not change the order.
 enum PluginRequestObjectResult {
   kPluginRequestObjectResultFailure = 0,
@@ -130,6 +129,26 @@ bool HTMLPlugInElement::RequestObjectInternal(
       url_.IsEmpty() ? KURL() : GetDocument().CompleteURL(url_);
   if (!AllowedToLoadObject(completed_url, service_type_))
     return false;
+
+  if (GetDocument().GetFrame()->Client()->CreatePluginFrame(
+          this, GetDocument().CompleteURL(url_), service_type_)) {
+    // An external handler will manage a content frame inside this plugin. The
+    // content frame is a PluginFrame and will load an extension. We should also
+    // make sure that a new |plugin_wrapper_| is created.
+    ResetInstance();
+
+    if (ContentFrame()->IsRemoteFrame()) {
+      // When we start of with a remote ContentFrame and change one of the
+      // attributes, SetEmbeddedContentView(nullptr) is called. Given that we
+      // know an external handler will render the content and since the frame
+      // might not swap (if the ContentFame() is only navigated to another cross
+      // origin), we should set the EmbeddedContentView to the
+      // ContentFrame()->View().
+      SetEmbeddedContentView(ContentFrame()->View());
+    }
+
+    return true;
+  }
 
   ObjectContentType object_type = GetObjectContentType();
   if (object_type == ObjectContentType::kFrame ||
@@ -351,7 +370,15 @@ v8::Local<v8::Object> HTMLPlugInElement::PluginWrapper() {
   // return the cached allocated Bindings::Instance. Not supporting this
   // edge-case is OK.
   v8::Isolate* isolate = V8PerIsolateData::MainThreadIsolate();
+
   if (plugin_wrapper_.IsEmpty()) {
+    if (ContentFrame() && ContentFrame()->IsPluginFrame()) {
+      plugin_wrapper_.Reset(
+          isolate, GetDocument().GetFrame()->Client()->CreateV8ScriptableObject(
+                       this, isolate));
+      return plugin_wrapper_.Get(isolate);
+    }
+
     PluginView* plugin;
 
     if (persisted_plugin_)
