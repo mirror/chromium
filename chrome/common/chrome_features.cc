@@ -246,6 +246,15 @@ const base::Feature kGdiTextPrinting {"GdiTextPrinting",
                                       base::FEATURE_DISABLED_BY_DEFAULT};
 #endif
 
+// Controls whether the GeoLanguage system is enabled. GeoLanguage uses IP-based
+// coarse geolocation to provide an estimate (for use by other Chrome features
+// such as Translate) of the local/regional language(s) corresponding to the
+// device's location. If this feature is disabled, the GeoLanguage provider is
+// not initialized at startup, and clients calling it will receive an empty list
+// of languages.
+const base::Feature kGeoLanguage{"GeoLanguage",
+                                 base::FEATURE_DISABLED_BY_DEFAULT};
+
 #if defined (OS_CHROMEOS)
 // Enables or disables the Happiness Tracking System for the device.
 const base::Feature kHappinessTrackingSystem {

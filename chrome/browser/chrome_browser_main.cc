@@ -130,6 +130,7 @@
 #include "components/device_event_log/device_event_log.h"
 #include "components/flags_ui/pref_service_flags_storage.h"
 #include "components/google/core/browser/google_util.h"
+#include "components/language/content/browser/geo_language_provider.h"
 #include "components/language_usage_metrics/language_usage_metrics.h"
 #include "components/metrics/call_stack_profile_metrics_provider.h"
 #include "components/metrics/expired_histograms_checker.h"
@@ -1586,6 +1587,12 @@ int ChromeBrowserMainParts::PreMainMessageLoopRunImpl() {
   // Post-profile init ---------------------------------------------------------
 
   TranslateService::Initialize();
+
+  if (base::FeatureList::IsEnabled(features::kGeoLanguage)) {
+    // Start GeoLanguageProvider. Kicks off low-priority background start-up.
+    GeoLanguageProvider::GetInstance()->StartUp(
+        content::ServiceManagerConnection::GetForProcess()->GetConnector());
+  }
 
   // Needs to be done before PostProfileInit, since login manager on CrOS is
   // called inside PostProfileInit.
