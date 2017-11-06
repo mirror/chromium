@@ -84,6 +84,7 @@ class ReportingService {
 
   // Getters for MetricsLogUploader parameters.
   virtual std::string GetUploadUrl() const = 0;
+  virtual std::string GetInsecureUploadUrl() const = 0;
   virtual base::StringPiece upload_mime_type() const = 0;
   virtual MetricsLogUploader::MetricServiceType service_type() const = 0;
 
@@ -102,7 +103,7 @@ class ReportingService {
   void SendStagedLog();
 
   // Called after transmission completes (either successfully or with failure).
-  void OnLogUploadComplete(int response_code, int error_code);
+  void OnLogUploadComplete(int response_code, int error_code, bool was_https);
 
   // Used to interact with the embedder. Weak pointer; must outlive |this|
   // instance.
@@ -121,6 +122,10 @@ class ReportingService {
 
   // Whether there is a current log upload in progress.
   bool log_upload_in_progress_;
+
+  // If set, the next upload attempt will be over an HTTP connection (as
+  // oppposed to HTTPS)
+  bool try_next_upload_over_http_;
 
   // The scheduler for determining when uploads should happen.
   std::unique_ptr<MetricsUploadScheduler> upload_scheduler_;
