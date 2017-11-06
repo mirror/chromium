@@ -352,16 +352,13 @@ void GraphicsContext::CompositeRecord(sk_sp<PaintRecord> record,
   PaintFlags flags;
   flags.setBlendMode(op);
   canvas_->save();
-  SkRect source_bounds = src;
-  SkRect sk_bounds = dest;
-  SkMatrix transform;
-  transform.setRectToRect(source_bounds, sk_bounds, SkMatrix::kFill_ScaleToFit);
-  canvas_->concat(transform);
-  flags.setImageFilter(SkPictureImageFilter::MakeForLocalSpace(
-      ToSkPicture(record, source_bounds), source_bounds,
-      static_cast<SkFilterQuality>(ImageInterpolationQuality())));
-  canvas_->saveLayer(&source_bounds, &flags);
-  canvas_->restore();
+  canvas_->concat(
+      SkMatrix::MakeRectToRect(src, dest, SkMatrix::kFill_ScaleToFit));
+  canvas_->drawImage(PaintImageBuilder::WithDefault()
+                         .set_paint_record(record, RoundedIntRect(src),
+                                           PaintImage::GetNextContentId())
+                         .TakePaintImage(),
+                     0, 0, &flags);
   canvas_->restore();
 }
 
