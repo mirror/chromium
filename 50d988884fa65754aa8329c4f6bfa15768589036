@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "31e45ac3_0a5d6865",
+        "filename": "net/nqe/network_quality_estimator.cc",
+        "patchSetId": 14
+      },
+      "lineNbr": 1759,
+      "author": {
+        "id": 1127744
+      },
+      "writtenOn": "2017-11-06T23:19:43Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "5145e51e_afd1fe8b",
+      "range": {
+        "startLine": 1759,
+        "startChar": 66,
+        "endLine": 1759,
+        "endChar": 68
+      },
+      "revId": "50d988884fa65754aa8329c4f6bfa15768589036",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "e886b504_8d2f495b",
         "filename": "net/nqe/network_quality_estimator_unittest.cc",
         "patchSetId": 14
@@ -45,6 +69,30 @@
       "revId": "50d988884fa65754aa8329c4f6bfa15768589036",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "510c3683_1bdb3c94",
+        "filename": "net/nqe/network_quality_estimator_unittest.cc",
+        "patchSetId": 14
+      },
+      "lineNbr": 3399,
+      "author": {
+        "id": 1127744
+      },
+      "writtenOn": "2017-11-06T23:19:43Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "e886b504_8d2f495b",
+      "range": {
+        "startLine": 3399,
+        "startChar": 25,
+        "endLine": 3399,
+        "endChar": 28
+      },
+      "revId": "50d988884fa65754aa8329c4f6bfa15768589036",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
