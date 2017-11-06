@@ -374,6 +374,11 @@ class CONTENT_EXPORT RenderProcessHost : public IPC::Sender,
   // Resumes the renderer process.
   virtual void Resume() = 0;
 
+  // Overrides time and/or timezone in V8.
+  virtual void SetCurrentTimeOverride(
+      double time_millis,
+      const base::Optional<std::string>& timezone) = 0;
+
   // Acquires the |mojom::Renderer| interface to the render process. This is for
   // internal use only, and is only exposed here to support
   // MockRenderProcessHost usage in tests.

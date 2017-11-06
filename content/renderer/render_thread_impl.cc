@@ -142,6 +142,7 @@
 #include "content/renderer/worker_thread_registry.h"
 #include "device/gamepad/public/cpp/gamepads.h"
 #include "gin/public/debug.h"
+#include "gin/public/v8_platform.h"
 #include "gpu/GLES2/gl2extchromium.h"
 #include "gpu/command_buffer/client/shared_memory_limits.h"
 #include "gpu/config/gpu_switches.h"
@@ -1834,6 +1835,17 @@ void RenderThreadImpl::ProcessPurgeAndSuspend() {
           &RenderThreadImpl::RecordPurgeAndSuspendMemoryGrowthMetrics,
           base::Unretained(this), "90min", process_foregrounded_count_),
       base::TimeDelta::FromMinutes(90));
+}
+
+void RenderThreadImpl::SetCurrentTimeOverride(
+    double time_millis,
+    const base::Optional<std::string>& timezone) {
+  gin::V8Platform* platform = gin::V8Platform::Get();
+  DCHECK(platform);
+  base::Optional<double> time;
+  if (time_millis >= 0)
+    time = time_millis;
+  platform->SetCurrentTimeOverride(time_millis, timezone);
 }
 
 bool RenderThreadImpl::GetRendererMemoryMetrics(
