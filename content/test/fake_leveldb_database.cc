@@ -2,12 +2,12 @@
 // Use of this source code is governed by a BSD-style license that can be
 // found in the LICENSE file.
 
-#include "content/test/mock_leveldb_database.h"
-
+#include <content/test/fake_leveldb_database.h>
 #include <utility>
 
 #include "base/strings/string_piece.h"
 #include "base/strings/string_util.h"
+#include "components/leveldb/public/cpp/util.h"
 
 namespace content {
 
@@ -45,31 +45,37 @@ std::vector<uint8_t> successor(std::vector<uint8_t> data) {
 
 }  // namespace
 
-MockLevelDBDatabase::MockLevelDBDatabase(
+FakeLevelDBDatabase::FakeLevelDBDatabase(
     std::map<std::vector<uint8_t>, std::vector<uint8_t>>* mock_data)
     : mock_data_(*mock_data) {}
 
-void MockLevelDBDatabase::Put(const std::vector<uint8_t>& key,
+FakeLevelDBDatabase::~FakeLevelDBDatabase() {}
+
+void FakeLevelDBDatabase::Bind(leveldb::mojom::LevelDBDatabaseRequest request) {
+  bindings_.AddBinding(this, std::move(request));
+}
+
+void FakeLevelDBDatabase::Put(const std::vector<uint8_t>& key,
                               const std::vector<uint8_t>& value,
                               PutCallback callback) {
   mock_data_[key] = value;
   std::move(callback).Run(leveldb::mojom::DatabaseError::OK);
 }
 
-void MockLevelDBDatabase::Delete(const std::vector<uint8_t>& key,
+void FakeLevelDBDatabase::Delete(const std::vector<uint8_t>& key,
                                  DeleteCallback callback) {
   mock_data_.erase(key);
   std::move(callback).Run(leveldb::mojom::DatabaseError::OK);
 }
 
-void MockLevelDBDatabase::DeletePrefixed(const std::vector<uint8_t>& key_prefix,
+void FakeLevelDBDatabase::DeletePrefixed(const std::vector<uint8_t>& key_prefix,
                                          DeletePrefixedCallback callback) {
   mock_data_.erase(mock_data_.lower_bound(key_prefix),
                    mock_data_.lower_bound(successor(key_prefix)));
   std::move(callback).Run(leveldb::mojom::DatabaseError::OK);
 }
 
-void MockLevelDBDatabase::Write(
+void FakeLevelDBDatabase::Write(
     std::vector<leveldb::mojom::BatchedOperationPtr> operations,
     WriteCallback callback) {
   for (const auto& op : operations) {
@@ -84,12 +90,15 @@ void MockLevelDBDatabase::Write(
         mock_data_.erase(mock_data_.lower_bound(op->key),
                          mock_data_.lower_bound(successor(op->key)));
         break;
+      case leveldb::mojom::BatchOperationType::COPY_PREFIXED_KEY:
+        CopyPrefixedHelper(op->key, *op->value);
+        break;
     }
   }
   std::move(callback).Run(leveldb::mojom::DatabaseError::OK);
 }
 
-void MockLevelDBDatabase::Get(const std::vector<uint8_t>& key,
+void FakeLevelDBDatabase::Get(const std::vector<uint8_t>& key,
                               GetCallback callback) {
   if (mock_data_.find(key) != mock_data_.end()) {
     std::move(callback).Run(leveldb::mojom::DatabaseError::OK, mock_data_[key]);
@@ -99,7 +108,7 @@ void MockLevelDBDatabase::Get(const std::vector<uint8_t>& key,
   }
 }
 
-void MockLevelDBDatabase::GetPrefixed(const std::vector<uint8_t>& key_prefix,
+void FakeLevelDBDatabase::GetPrefixed(const std::vector<uint8_t>& key_prefix,
                                       GetPrefixedCallback callback) {
   std::vector<leveldb::mojom::KeyValuePtr> data;
   for (const auto& row : mock_data_) {
@@ -110,63 +119,97 @@ void MockLevelDBDatabase::GetPrefixed(const std::vector<uint8_t>& key_prefix,
   std::move(callback).Run(leveldb::mojom::DatabaseError::OK, std::move(data));
 }
 
-void MockLevelDBDatabase::GetSnapshot(GetSnapshotCallback callback) {
+void FakeLevelDBDatabase::CopyPrefixed(
+    const std::vector<uint8_t>& source_key_prefix,
+    const std::vector<uint8_t>& destination_key_prefix,
+    CopyPrefixedCallback callback) {
+  CopyPrefixedHelper(source_key_prefix, destination_key_prefix);
+  std::move(callback).Run(leveldb::mojom::DatabaseError::OK);
+}
+
+void FakeLevelDBDatabase::GetSnapshot(GetSnapshotCallback callback) {
   NOTREACHED();
 }
 
-void MockLevelDBDatabase::ReleaseSnapshot(
+void FakeLevelDBDatabase::ReleaseSnapshot(
     const base::UnguessableToken& snapshot) {
   NOTREACHED();
 }
 
-void MockLevelDBDatabase::GetFromSnapshot(
+void FakeLevelDBDatabase::GetFromSnapshot(
     const base::UnguessableToken& snapshot,
     const std::vector<uint8_t>& key,
     GetCallback callback) {
   NOTREACHED();
 }
 
-void MockLevelDBDatabase::NewIterator(NewIteratorCallback callback) {
+void FakeLevelDBDatabase::NewIterator(NewIteratorCallback callback) {
   NOTREACHED();
 }
 
-void MockLevelDBDatabase::NewIteratorFromSnapshot(
+void FakeLevelDBDatabase::NewIteratorFromSnapshot(
     const base::UnguessableToken& snapshot,
     NewIteratorFromSnapshotCallback callback) {
   NOTREACHED();
 }
 
-void MockLevelDBDatabase::ReleaseIterator(
+void FakeLevelDBDatabase::ReleaseIterator(
     const base::UnguessableToken& iterator) {
   NOTREACHED();
 }
 
-void MockLevelDBDatabase::IteratorSeekToFirst(
+void FakeLevelDBDatabase::IteratorSeekToFirst(
     const base::UnguessableToken& iterator,
     IteratorSeekToFirstCallback callback) {
   NOTREACHED();
 }
 
-void MockLevelDBDatabase::IteratorSeekToLast(
+void FakeLevelDBDatabase::IteratorSeekToLast(
     const base::UnguessableToken& iterator,
     IteratorSeekToLastCallback callback) {
   NOTREACHED();
 }
 
-void MockLevelDBDatabase::IteratorSeek(const base::UnguessableToken& iterator,
+void FakeLevelDBDatabase::IteratorSeek(const base::UnguessableToken& iterator,
                                        const std::vector<uint8_t>& target,
                                        IteratorSeekToLastCallback callback) {
   NOTREACHED();
 }
 
-void MockLevelDBDatabase::IteratorNext(const base::UnguessableToken& iterator,
+void FakeLevelDBDatabase::IteratorNext(const base::UnguessableToken& iterator,
                                        IteratorNextCallback callback) {
   NOTREACHED();
 }
 
-void MockLevelDBDatabase::IteratorPrev(const base::UnguessableToken& iterator,
+void FakeLevelDBDatabase::IteratorPrev(const base::UnguessableToken& iterator,
                                        IteratorPrevCallback callback) {
   NOTREACHED();
+}
+
+std::string VecToStr(const std::vector<uint8_t>& input) {
+  return leveldb::Uint8VectorToStdString(input);
+}
+
+void FakeLevelDBDatabase::CopyPrefixedHelper(
+    const std::vector<uint8_t>& source_key_prefix,
+    const std::vector<uint8_t>& destination_key_prefix) {
+  size_t source_key_prefix_size = source_key_prefix.size();
+  size_t destination_key_prefix_size = destination_key_prefix.size();
+  std::vector<std::pair<std::vector<uint8_t>, std::vector<uint8_t>>>
+      write_batch;
+  for (const auto& row : mock_data_) {
+    if (!StartsWith(row.first, source_key_prefix))
+      continue;
+    size_t excess_key = row.first.size() - source_key_prefix_size;
+    std::vector<uint8_t> new_key(destination_key_prefix_size + excess_key);
+    std::copy(destination_key_prefix.begin(), destination_key_prefix.end(),
+              new_key.begin());
+    std::copy(row.first.begin() + source_key_prefix_size, row.first.end(),
+              new_key.begin() + destination_key_prefix_size);
+    write_batch.emplace_back(std::move(new_key), row.second);
+  }
+
+  mock_data_.insert(write_batch.begin(), write_batch.end());
 }
 
 }  // namespace content
