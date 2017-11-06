@@ -151,6 +151,11 @@ class PasswordAutofillAgent : public content::RenderFrameObserver,
   // Called when the focused node has changed.
   void FocusedNodeHasChanged(const blink::WebNode& node);
 
+  std::unique_ptr<PasswordForm> GetPasswordFormFromWebForm(
+      const blink::WebFormElement& web_form);
+
+  std::unique_ptr<PasswordForm> GetPasswordFormFromUnownedInputElements();
+
   bool logging_state_active() const { return logging_state_active_; }
 
   // Determine whether the current frame is allowed to access the password
