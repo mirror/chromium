@@ -2,6 +2,29 @@
   "comments": [
     {
       "key": {
+        "uuid": "7105cb54_23ed1fb5",
+        "filename": "third_party/WebKit/Source/platform/scheduler/base/graceful_queue_shutdown_helper.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 32,
+      "author": {
+        "id": 1116032
+      },
+      "writtenOn": "2017-11-06T21:48:27Z",
+      "side": 1,
+      "message": "nit: this scope isn\u0027t really adding much here",
+      "range": {
+        "startLine": 32,
+        "startChar": 2,
+        "endLine": 32,
+        "endChar": 3
+      },
+      "revId": "c3d3e26e8e2ca92ec445c0d240691326f65b8256",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "48284546_f6aba446",
         "filename": "third_party/WebKit/Source/platform/scheduler/base/graceful_queue_shutdown_helper.h",
         "patchSetId": 1
@@ -13,6 +36,30 @@
       "writtenOn": "2017-11-02T17:28:39Z",
       "side": 1,
       "message": "Should this be internal? I note it\u0027s not exported so we can\u0027t use it outside the scheduler.\n\nIf not should OnTaskQueueManagerDeleted and TakeQueues be private / protected with TaskQueueManager being a friend?",
+      "range": {
+        "startLine": 23,
+        "startChar": 0,
+        "endLine": 23,
+        "endChar": 33
+      },
+      "revId": "c3d3e26e8e2ca92ec445c0d240691326f65b8256",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "05f4ff6a_37b879ed",
+        "filename": "third_party/WebKit/Source/platform/scheduler/base/graceful_queue_shutdown_helper.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 23,
+      "author": {
+        "id": 1116032
+      },
+      "writtenOn": "2017-11-06T21:48:27Z",
+      "side": 1,
+      "message": "Yeah seems like an internal class to me.",
+      "parentUuid": "48284546_f6aba446",
       "range": {
         "startLine": 23,
         "startChar": 0,
@@ -58,6 +105,29 @@
         "startChar": 23,
         "endLine": 75,
         "endChar": 28
+      },
+      "revId": "c3d3e26e8e2ca92ec445c0d240691326f65b8256",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4c7a1461_cb25c167",
+        "filename": "third_party/WebKit/Source/platform/scheduler/base/task_queue_manager.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 215,
+      "author": {
+        "id": 1116032
+      },
+      "writtenOn": "2017-11-06T21:48:27Z",
+      "side": 1,
+      "message": "This shouldn\u0027t be hacker_style anymore because of the side effect.",
+      "range": {
+        "startLine": 215,
+        "startChar": 9,
+        "endLine": 215,
+        "endChar": 33
       },
       "revId": "c3d3e26e8e2ca92ec445c0d240691326f65b8256",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
