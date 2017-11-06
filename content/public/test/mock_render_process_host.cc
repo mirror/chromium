@@ -348,6 +348,10 @@ void MockRenderProcessHost::PurgeAndSuspend() {}
 
 void MockRenderProcessHost::Resume() {}
 
+void MockRenderProcessHost::SetCurrentTimeOverride(
+    double time_millis,
+    const base::Optional<std::string>& timezone) {}
+
 mojom::Renderer* MockRenderProcessHost::GetRendererInterface() {
   if (!renderer_interface_) {
     renderer_interface_.reset(new mojom::RendererAssociatedPtr);
