@@ -16,6 +16,52 @@
       "revId": "1e3391f89a1bcfb33d100c8d0ec65f300537482e",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5aef9dbd_64402994",
+        "filename": "chrome/browser/ui/views/frame/hosted_app_button_container.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 60,
+      "author": {
+        "id": 1000763
+      },
+      "writtenOn": "2017-11-06T17:57:58Z",
+      "side": 1,
+      "message": "Please keep this in the member initializer.",
+      "range": {
+        "startLine": 60,
+        "startChar": 2,
+        "endLine": 60,
+        "endChar": 53
+      },
+      "revId": "1e3391f89a1bcfb33d100c8d0ec65f300537482e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "77157866_5a10a8a6",
+        "filename": "chrome/browser/ui/views/frame/hosted_app_button_container.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 70,
+      "author": {
+        "id": 1000763
+      },
+      "writtenOn": "2017-11-06T17:57:58Z",
+      "side": 1,
+      "message": "const.",
+      "range": {
+        "startLine": 69,
+        "startChar": 2,
+        "endLine": 70,
+        "endChar": 31
+      },
+      "revId": "1e3391f89a1bcfb33d100c8d0ec65f300537482e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
