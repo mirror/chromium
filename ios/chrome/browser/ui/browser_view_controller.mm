@@ -5354,10 +5354,12 @@ bubblePresenterForFeature:(const base::Feature&)feature
 
 - (void)showReauthenticateSignin {
   [self.dispatcher
-      showSignin:[[ShowSigninCommand alloc]
-                     initWithOperation:AUTHENTICATION_OPERATION_REAUTHENTICATE
-                           accessPoint:signin_metrics::AccessPoint::
-                                           ACCESS_POINT_UNKNOWN]];
+              showSignin:
+                  [[ShowSigninCommand alloc]
+                      initWithOperation:AUTHENTICATION_OPERATION_REAUTHENTICATE
+                            accessPoint:signin_metrics::AccessPoint::
+                                            ACCESS_POINT_UNKNOWN]
+      baseViewController:self];
 }
 
 - (void)showSyncSettings {
