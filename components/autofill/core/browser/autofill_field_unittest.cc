@@ -26,30 +26,27 @@ using base::UTF8ToUTF16;
 namespace autofill {
 namespace {
 
-const std::vector<const char*> NotNumericMonthsContentsNoPlaceholder()
-{
-  const std::vector<const char*> result = {
-    "Jan", "Feb", "Mar", "Apr", "May", "Jun",
-    "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"};
+const std::vector<const char*> NotNumericMonthsContentsNoPlaceholder() {
+  const std::vector<const char*> result = {"Jan", "Feb", "Mar", "Apr",
+                                           "May", "Jun", "Jul", "Aug",
+                                           "Sep", "Oct", "Nov", "Dec"};
   return result;
 }
 
-const std::vector<const char*> NotNumericMonthsContentsWithPlaceholder()
-{
-  const std::vector<const char*> result = {
-    "Select a Month",
-    "Jan",
-    "Feb",
-    "Mar",
-    "Apr",
-    "May",
-    "Jun",
-    "Jul",
-    "Aug",
-    "Sep",
-    "Oct",
-    "Nov",
-    "Dec"};
+const std::vector<const char*> NotNumericMonthsContentsWithPlaceholder() {
+  const std::vector<const char*> result = {"Select a Month",
+                                           "Jan",
+                                           "Feb",
+                                           "Mar",
+                                           "Apr",
+                                           "May",
+                                           "Jun",
+                                           "Jul",
+                                           "Aug",
+                                           "Sep",
+                                           "Oct",
+                                           "Nov",
+                                           "Dec"};
   return result;
 }
 
@@ -186,6 +183,26 @@ TEST_F(AutofillFieldTest, Type_CreditCardOverrideHtml_ServerPredicitons) {
   field.SetHtmlType(HTML_TYPE_NAME, HTML_MODE_NONE);
   field.set_overall_server_type(CREDIT_CARD_NUMBER);
   EXPECT_EQ(NAME_FULL, field.Type().GetStorableType());
+}
+
+// Tests that a server prediction of *_CITY_AND_NUMBER override html
+// "autocomplete=tel" prediction, which is always *_WHOLE_NUMBER
+TEST_F(AutofillFieldTest, Type_ServerPredictionOfCityAndNumber_OverrideHtml) {
+  AutofillField field;
+
+  field.SetHtmlType(HTML_TYPE_TEL, HTML_MODE_NONE);
+
+  field.set_overall_server_type(PHONE_HOME_CITY_AND_NUMBER);
+  EXPECT_EQ(PHONE_HOME_CITY_AND_NUMBER, field.Type().GetStorableType());
+
+  // Other phone number prediction does not override.
+  field.set_overall_server_type(PHONE_HOME_NUMBER);
+  EXPECT_EQ(PHONE_HOME_WHOLE_NUMBER, field.Type().GetStorableType());
+
+  // If html type not specified, we use server prediction.
+  field.SetHtmlType(HTML_TYPE_UNSPECIFIED, HTML_MODE_NONE);
+  field.set_overall_server_type(PHONE_HOME_CITY_AND_NUMBER);
+  EXPECT_EQ(PHONE_HOME_CITY_AND_NUMBER, field.Type().GetStorableType());
 }
 
 TEST_F(AutofillFieldTest, IsEmpty) {
@@ -552,8 +569,8 @@ TEST_F(AutofillFieldTest, FillSelectControlByValue) {
   for (size_t i = 0; i < field.option_contents.size(); ++i)
     field.option_contents[i] = base::SizeTToString16(i);
 
-  AutofillField::FillFormField(
-      field, ASCIIToUTF16("Meenie"), "en-US", "en-US", &field);
+  AutofillField::FillFormField(field, ASCIIToUTF16("Meenie"), "en-US", "en-US",
+                               &field);
   EXPECT_EQ(ASCIIToUTF16("Meenie"), field.value);
 }
 
@@ -569,8 +586,8 @@ TEST_F(AutofillFieldTest, FillSelectControlByContents) {
   for (size_t i = 0; i < field.option_values.size(); ++i)
     field.option_values[i] = base::SizeTToString16(i);
 
-  AutofillField::FillFormField(
-      field, ASCIIToUTF16("Miney"), "en-US", "en-US", &field);
+  AutofillField::FillFormField(field, ASCIIToUTF16("Miney"), "en-US", "en-US",
+                               &field);
   EXPECT_EQ(ASCIIToUTF16("2"), field.value);  // Corresponds to "Miney".
 }
 
@@ -761,8 +778,8 @@ TEST_F(AutofillFieldTest, FillSelectControlWithAbbreviatedMonthName) {
   test::CreateTestSelectField(kMonthsAbbreviated, &field);
   field.set_heuristic_type(CREDIT_CARD_EXP_MONTH);
 
-  AutofillField::FillFormField(
-      field, ASCIIToUTF16("04"), "en-US", "en-US", &field);
+  AutofillField::FillFormField(field, ASCIIToUTF16("04"), "en-US", "en-US",
+                               &field);
   EXPECT_EQ(ASCIIToUTF16("Apr"), field.value);
 }
 
@@ -775,8 +792,8 @@ TEST_F(AutofillFieldTest, FillSelectControlWithMonthName) {
   test::CreateTestSelectField(kMonthsFull, &field);
   field.set_heuristic_type(CREDIT_CARD_EXP_MONTH);
 
-  AutofillField::FillFormField(
-      field, ASCIIToUTF16("04"), "en-US", "en-US", &field);
+  AutofillField::FillFormField(field, ASCIIToUTF16("04"), "en-US", "en-US",
+                               &field);
   EXPECT_EQ(ASCIIToUTF16("April"), field.value);
 }
 
@@ -829,16 +846,16 @@ TEST_F(AutofillFieldTest, FillSelectControlWithMonthName_French) {
   test::CreateTestSelectField(kMonthsFrench, &field);
   field.set_heuristic_type(CREDIT_CARD_EXP_MONTH);
 
-  AutofillField::FillFormField(
-      field, ASCIIToUTF16("02"), "fr-FR", "fr-FR", &field);
+  AutofillField::FillFormField(field, ASCIIToUTF16("02"), "fr-FR", "fr-FR",
+                               &field);
   EXPECT_EQ(UTF8ToUTF16("FÉVR."), field.value);
 
-  AutofillField::FillFormField(
-      field, ASCIIToUTF16("01"), "fr-FR", "fr-FR", &field);
+  AutofillField::FillFormField(field, ASCIIToUTF16("01"), "fr-FR", "fr-FR",
+                               &field);
   EXPECT_EQ(UTF8ToUTF16("JANV"), field.value);
 
-  AutofillField::FillFormField(
-      field, ASCIIToUTF16("12"), "fr-FR", "fr-FR", &field);
+  AutofillField::FillFormField(field, ASCIIToUTF16("12"), "fr-FR", "fr-FR",
+                               &field);
   EXPECT_EQ(UTF8ToUTF16("décembre"), field.value);
 }
 
@@ -850,8 +867,8 @@ TEST_F(AutofillFieldTest, FillSelectControlWithNumericMonthSansLeadingZero) {
   test::CreateTestSelectField(kMonthsNumeric, &field);
   field.set_heuristic_type(CREDIT_CARD_EXP_MONTH);
 
-  AutofillField::FillFormField(
-      field, ASCIIToUTF16("04"), "en-US", "en-US", &field);
+  AutofillField::FillFormField(field, ASCIIToUTF16("04"), "en-US", "en-US",
+                               &field);
   EXPECT_EQ(ASCIIToUTF16("4"), field.value);
 }
 
@@ -862,8 +879,8 @@ TEST_F(AutofillFieldTest, FillSelectControlWithTwoDigitCreditCardYear) {
   test::CreateTestSelectField(kYears, &field);
   field.set_heuristic_type(CREDIT_CARD_EXP_2_DIGIT_YEAR);
 
-  AutofillField::FillFormField(
-      field, ASCIIToUTF16("2017"), "en-US", "en-US", &field);
+  AutofillField::FillFormField(field, ASCIIToUTF16("2017"), "en-US", "en-US",
+                               &field);
   EXPECT_EQ(ASCIIToUTF16("17"), field.value);
 }
 
@@ -875,32 +892,32 @@ TEST_F(AutofillFieldTest, FillSelectControlWithCreditCardType) {
   field.set_heuristic_type(CREDIT_CARD_TYPE);
 
   // Normal case:
-  AutofillField::FillFormField(
-      field, ASCIIToUTF16("Visa"), "en-US", "en-US", &field);
+  AutofillField::FillFormField(field, ASCIIToUTF16("Visa"), "en-US", "en-US",
+                               &field);
   EXPECT_EQ(ASCIIToUTF16("Visa"), field.value);
 
   // Filling should be able to handle intervening whitespace:
-  AutofillField::FillFormField(
-      field, ASCIIToUTF16("Master card"), "en-US", "en-US", &field);
+  AutofillField::FillFormField(field, ASCIIToUTF16("Master card"), "en-US",
+                               "en-US", &field);
   EXPECT_EQ(ASCIIToUTF16("Mastercard"), field.value);
 
   // Mastercard is sometimes shown as MasterCard or Master Card:
-  AutofillField::FillFormField(
-      field, ASCIIToUTF16("MasterCard"), "en-US", "en-US", &field);
+  AutofillField::FillFormField(field, ASCIIToUTF16("MasterCard"), "en-US",
+                               "en-US", &field);
   EXPECT_EQ(ASCIIToUTF16("Mastercard"), field.value);
 
-  AutofillField::FillFormField(
-      field, ASCIIToUTF16("Master Card"), "en-US", "en-US", &field);
+  AutofillField::FillFormField(field, ASCIIToUTF16("Master Card"), "en-US",
+                               "en-US", &field);
   EXPECT_EQ(ASCIIToUTF16("Mastercard"), field.value);
 
   // American Express is sometimes abbreviated as AmEx:
-  AutofillField::FillFormField(
-      field, ASCIIToUTF16("American Express"), "en-US", "en-US", &field);
+  AutofillField::FillFormField(field, ASCIIToUTF16("American Express"), "en-US",
+                               "en-US", &field);
   EXPECT_EQ(ASCIIToUTF16("AmEx"), field.value);
 
   // Case insensitivity:
-  AutofillField::FillFormField(
-      field, ASCIIToUTF16("Discover"), "en-US", "en-US", &field);
+  AutofillField::FillFormField(field, ASCIIToUTF16("Discover"), "en-US",
+                               "en-US", &field);
   EXPECT_EQ(ASCIIToUTF16("discover"), field.value);
 }
 
@@ -909,18 +926,18 @@ TEST_F(AutofillFieldTest, FillMonthControl) {
   field.form_control_type = "month";
 
   // Try a month with two digits.
-  AutofillField::FillFormField(
-      field, ASCIIToUTF16("12/2017"), "en-US", "en-US", &field);
+  AutofillField::FillFormField(field, ASCIIToUTF16("12/2017"), "en-US", "en-US",
+                               &field);
   EXPECT_EQ(ASCIIToUTF16("2017-12"), field.value);
 
   // Try a month with a leading zero.
-  AutofillField::FillFormField(
-      field, ASCIIToUTF16("03/2019"), "en-US", "en-US", &field);
+  AutofillField::FillFormField(field, ASCIIToUTF16("03/2019"), "en-US", "en-US",
+                               &field);
   EXPECT_EQ(ASCIIToUTF16("2019-03"), field.value);
 
   // Try a month without a leading zero.
-  AutofillField::FillFormField(
-      field, ASCIIToUTF16("4/2018"), "en-US", "en-US", &field);
+  AutofillField::FillFormField(field, ASCIIToUTF16("4/2018"), "en-US", "en-US",
+                               &field);
   EXPECT_EQ(ASCIIToUTF16("2018-04"), field.value);
 }
 
@@ -928,13 +945,15 @@ TEST_F(AutofillFieldTest, FillStreetAddressTextArea) {
   AutofillField field;
   field.form_control_type = "textarea";
 
-  base::string16 value = ASCIIToUTF16("123 Fake St.\n"
-                                      "Apt. 42");
+  base::string16 value = ASCIIToUTF16(
+      "123 Fake St.\n"
+      "Apt. 42");
   AutofillField::FillFormField(field, value, "en-US", "en-US", &field);
   EXPECT_EQ(value, field.value);
 
-  base::string16 ja_value = UTF8ToUTF16("桜丘町26-1\n"
-                                        "セルリアンタワー6階");
+  base::string16 ja_value = UTF8ToUTF16(
+      "桜丘町26-1\n"
+      "セルリアンタワー6階");
   AutofillField::FillFormField(field, ja_value, "ja-JP", "en-US", &field);
   EXPECT_EQ(ja_value, field.value);
 }
@@ -944,17 +963,16 @@ TEST_F(AutofillFieldTest, FillStreetAddressTextField) {
   field.form_control_type = "text";
   field.set_overall_server_type(ADDRESS_HOME_STREET_ADDRESS);
 
-  base::string16 value = ASCIIToUTF16("123 Fake St.\n"
-                                      "Apt. 42");
+  base::string16 value = ASCIIToUTF16(
+      "123 Fake St.\n"
+      "Apt. 42");
   AutofillField::FillFormField(field, value, "en-US", "en-US", &field);
   EXPECT_EQ(ASCIIToUTF16("123 Fake St., Apt. 42"), field.value);
 
   AutofillField::FillFormField(field,
                                UTF8ToUTF16("桜丘町26-1\n"
                                            "セルリアンタワー6階"),
-                               "ja-JP",
-                               "en-US",
-                               &field);
+                               "ja-JP", "en-US", &field);
   EXPECT_EQ(UTF8ToUTF16("桜丘町26-1セルリアンタワー6階"), field.value);
 }
 
@@ -962,11 +980,8 @@ TEST_F(AutofillFieldTest, FillCreditCardNumberWithoutSplits) {
   // Case 1: card number without any spilt.
   AutofillField cc_number_full;
   cc_number_full.set_heuristic_type(CREDIT_CARD_NUMBER);
-  AutofillField::FillFormField(cc_number_full,
-                               ASCIIToUTF16("4111111111111111"),
-                               "en-US",
-                               "en-US",
-                               &cc_number_full);
+  AutofillField::FillFormField(cc_number_full, ASCIIToUTF16("4111111111111111"),
+                               "en-US", "en-US", &cc_number_full);
 
   // Verify that full card-number shall get fill properly.
   EXPECT_EQ(ASCIIToUTF16("4111111111111111"), cc_number_full.value);
@@ -992,10 +1007,8 @@ TEST_F(AutofillFieldTest, FillCreditCardNumberWithEqualSizeSplits) {
 
     // Fill with a card-number; should fill just the card_number_part.
     AutofillField::FillFormField(cc_number_part,
-                                 ASCIIToUTF16(test.card_number_),
-                                 "en-US",
-                                 "en-US",
-                                 &cc_number_part);
+                                 ASCIIToUTF16(test.card_number_), "en-US",
+                                 "en-US", &cc_number_part);
 
     // Verify for expected results.
     EXPECT_EQ(ASCIIToUTF16(test.expected_results_[i]),
@@ -1006,11 +1019,8 @@ TEST_F(AutofillFieldTest, FillCreditCardNumberWithEqualSizeSplits) {
   // Verify that full card-number shall get fill properly as well.
   AutofillField cc_number_full;
   cc_number_full.set_heuristic_type(CREDIT_CARD_NUMBER);
-  AutofillField::FillFormField(cc_number_full,
-                               ASCIIToUTF16(test.card_number_),
-                               "en-US",
-                               "en-US",
-                               &cc_number_full);
+  AutofillField::FillFormField(cc_number_full, ASCIIToUTF16(test.card_number_),
+                               "en-US", "en-US", &cc_number_full);
 
   // Verify for expected results.
   EXPECT_EQ(ASCIIToUTF16(test.card_number_), cc_number_full.value);
@@ -1037,10 +1047,8 @@ TEST_F(AutofillFieldTest, FillCreditCardNumberWithUnequalSizeSplits) {
 
     // Fill with a card-number; should fill just the card_number_part.
     AutofillField::FillFormField(cc_number_part,
-                                 ASCIIToUTF16(test.card_number_),
-                                 "en-US",
-                                 "en-US",
-                                 &cc_number_part);
+                                 ASCIIToUTF16(test.card_number_), "en-US",
+                                 "en-US", &cc_number_part);
 
     // Verify for expected results.
     EXPECT_EQ(ASCIIToUTF16(test.expected_results_[i]),
@@ -1052,11 +1060,8 @@ TEST_F(AutofillFieldTest, FillCreditCardNumberWithUnequalSizeSplits) {
   // Verify that full card-number shall get fill properly as well.
   AutofillField cc_number_full;
   cc_number_full.set_heuristic_type(CREDIT_CARD_NUMBER);
-  AutofillField::FillFormField(cc_number_full,
-                               ASCIIToUTF16(test.card_number_),
-                               "en-US",
-                               "en-US",
-                               &cc_number_full);
+  AutofillField::FillFormField(cc_number_full, ASCIIToUTF16(test.card_number_),
+                               "en-US", "en-US", &cc_number_full);
 
   // Verify for expected results.
   EXPECT_EQ(ASCIIToUTF16(test.card_number_), cc_number_full.value);
