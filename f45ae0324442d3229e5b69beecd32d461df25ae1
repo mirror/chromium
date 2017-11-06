@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "1e8caf0f_fd982890",
+        "filename": "content/renderer/render_frame_impl_browsertest.cc",
+        "patchSetId": 22
+      },
+      "lineNbr": 823,
+      "author": {
+        "id": 1003152
+      },
+      "writtenOn": "2017-11-06T19:03:35Z",
+      "side": 1,
+      "message": "It seems strange that we fire RenderFrameObserver::DidCreateNewDocument *before* DidCommitProvisionalLoad.\n\nIf this is intended, which interface provider should be then returned if RenderFrame::GetRemoteInterfaces() is called from this?",
+      "revId": "f45ae0324442d3229e5b69beecd32d461df25ae1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}

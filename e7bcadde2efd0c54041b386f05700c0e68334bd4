@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "76046c65_5ccc512c",
+        "filename": "content/common/frame.mojom",
+        "patchSetId": 20
+      },
+      "lineNbr": 172,
+      "author": {
+        "id": 1003152
+      },
+      "writtenOn": "2017-11-06T19:03:35Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "72a6543e_f10a1ff9",
+      "range": {
+        "startLine": 171,
+        "startChar": 0,
+        "endLine": 172,
+        "endChar": 47
+      },
+      "revId": "e7bcadde2efd0c54041b386f05700c0e68334bd4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "846d21a7_62d4340e",
         "filename": "content/renderer/media/audio_ipc_factory.cc",
         "patchSetId": 20
@@ -72,6 +96,47 @@
     },
     {
       "key": {
+        "uuid": "b7da2d38_7bb2d5d9",
+        "filename": "content/renderer/media/audio_ipc_factory.cc",
+        "patchSetId": 20
+      },
+      "lineNbr": 93,
+      "author": {
+        "id": 1003152
+      },
+      "writtenOn": "2017-11-06T19:03:35Z",
+      "side": 1,
+      "message": "The error handler for the RendererAudioOutputStreamFactoryPtr requested for the previous document may:\n 1) ... not even fire if the RendererAudioOutputStreamFactory interface was successfully established before the new navigation started.\n 2) ... fire before DidCommitProvisionalLoad if the RendererAudioOutputStreamFactoryRequest is still queued on the RenderFrame\u0027s local InterfaceProviderPtr owned by |remote_interfaces_| when the latter was re-bound due to the new navigation.\n 3) ... fire after DCPL if the RendererAudioOutputStreamFactoryRequest was already sent to the browser side, so it is only dropped because the InterfaceProviderBinding is closed on the browser side.\n\nI updated the comment to reflect this.",
+      "parentUuid": "4a4cea1d_a7e5d144",
+      "range": {
+        "startLine": 86,
+        "startChar": 0,
+        "endLine": 93,
+        "endChar": 51
+      },
+      "revId": "e7bcadde2efd0c54041b386f05700c0e68334bd4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7cffb644_cbfc9d01",
+        "filename": "content/renderer/media/audio_ipc_factory.cc",
+        "patchSetId": 20
+      },
+      "lineNbr": 100,
+      "author": {
+        "id": 1003152
+      },
+      "writtenOn": "2017-11-06T19:03:35Z",
+      "side": 1,
+      "message": "Max, could this be simply MaybeDeregisterRemoteFactoryOnIOThread?\n\nMy understanding would be that the error handler will be fired on the IO thread already anyway? Otherwise this might fire too late and de-register the new factory after a commit.",
+      "revId": "e7bcadde2efd0c54041b386f05700c0e68334bd4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "2412fac3_cd15bcdd",
         "filename": "content/renderer/media/media_factory.cc",
         "patchSetId": 20
@@ -83,6 +148,24 @@
       "writtenOn": "2017-11-02T08:33:58Z",
       "side": 1,
       "message": "Can we use service_manager::InterfaceProvider with the forwarding callback? https://cs.chromium.org/chromium/src/services/service_manager/public/cpp/interface_provider.h?rcl\u003d20c6e5af9f784dbee661d6ddd32d3b0fc5d911fd\u0026l\u003d77",
+      "revId": "e7bcadde2efd0c54041b386f05700c0e68334bd4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "698fcf57_fe16f6e1",
+        "filename": "content/renderer/media/media_factory.cc",
+        "patchSetId": 20
+      },
+      "lineNbr": 140,
+      "author": {
+        "id": 1003152
+      },
+      "writtenOn": "2017-11-06T19:03:35Z",
+      "side": 1,
+      "message": "I am not sure I see the benefits of doing so. Could you please elaborate?",
+      "parentUuid": "2412fac3_cd15bcdd",
       "revId": "e7bcadde2efd0c54041b386f05700c0e68334bd4",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -124,6 +207,24 @@
     },
     {
       "key": {
+        "uuid": "2b22b594_7c6eacbd",
+        "filename": "content/renderer/render_frame_impl.cc",
+        "patchSetId": 20
+      },
+      "lineNbr": 3971,
+      "author": {
+        "id": 1003152
+      },
+      "writtenOn": "2017-11-06T19:03:35Z",
+      "side": 1,
+      "message": "I suppose making this a RenderFrameObserver would already be a step forward? For now, I added a TODO to fix this.",
+      "parentUuid": "32e2f26f_5265d89d",
+      "revId": "e7bcadde2efd0c54041b386f05700c0e68334bd4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "33809a0f_6b6df5e7",
         "filename": "content/renderer/render_frame_impl_browsertest.cc",
         "patchSetId": 20
@@ -144,6 +245,30 @@
       "revId": "e7bcadde2efd0c54041b386f05700c0e68334bd4",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "75348b79_116127a8",
+        "filename": "content/renderer/render_frame_impl_browsertest.cc",
+        "patchSetId": 20
+      },
+      "lineNbr": 811,
+      "author": {
+        "id": 1003152
+      },
+      "writtenOn": "2017-11-06T19:03:35Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "33809a0f_6b6df5e7",
+      "range": {
+        "startLine": 811,
+        "startChar": 40,
+        "endLine": 811,
+        "endChar": 64
+      },
+      "revId": "e7bcadde2efd0c54041b386f05700c0e68334bd4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -170,6 +295,30 @@
     },
     {
       "key": {
+        "uuid": "0b0a420c_2dac26c5",
+        "filename": "content/renderer/render_frame_impl_browsertest.cc",
+        "patchSetId": 20
+      },
+      "lineNbr": 838,
+      "author": {
+        "id": 1003152
+      },
+      "writtenOn": "2017-11-06T19:03:35Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "46b154da_a3c073de",
+      "range": {
+        "startLine": 838,
+        "startChar": 41,
+        "endLine": 838,
+        "endChar": 52
+      },
+      "revId": "e7bcadde2efd0c54041b386f05700c0e68334bd4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "55afb6cc_5ef4e223",
         "filename": "content/renderer/render_frame_impl_browsertest.cc",
         "patchSetId": 20
@@ -184,6 +333,24 @@
       "revId": "e7bcadde2efd0c54041b386f05700c0e68334bd4",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "de4810df_706ffb41",
+        "filename": "content/renderer/render_frame_impl_browsertest.cc",
+        "patchSetId": 20
+      },
+      "lineNbr": 854,
+      "author": {
+        "id": 1003152
+      },
+      "writtenOn": "2017-11-06T19:03:35Z",
+      "side": 1,
+      "message": "I replaced all RunUntilIdles with more civilized solutions.",
+      "parentUuid": "55afb6cc_5ef4e223",
+      "revId": "e7bcadde2efd0c54041b386f05700c0e68334bd4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
