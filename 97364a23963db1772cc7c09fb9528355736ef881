@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "1ca81133_02429348",
+        "filename": "ui/compositor/property_change_reason.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 14,
+      "author": {
+        "id": 1000111
+      },
+      "writtenOn": "2017-11-06T16:17:24Z",
+      "side": 1,
+      "message": "It looks like this would still use ANIMATION when the prop change for the last time during an animation? If that\u0027s the case, then wouldn\u0027t it be more useful to have a separate value for that? For example, SET, ANIMATION_IN_PROGRESS, ANIMATION_COMPLETE. Or, maybe just STILL_ANIMATING, NOT_ANIMATING?",
+      "revId": "97364a23963db1772cc7c09fb9528355736ef881",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
