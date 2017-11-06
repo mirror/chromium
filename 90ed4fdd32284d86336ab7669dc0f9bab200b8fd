@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "40efc779_4304baf4",
+        "filename": "ui/webui/resources/cr_elements/chromeos/cr_picture/cr_camera.js",
+        "patchSetId": 3
+      },
+      "lineNbr": 66,
+      "author": {
+        "id": 1000191
+      },
+      "writtenOn": "2017-11-06T20:02:18Z",
+      "side": 1,
+      "message": "Sorry I was unclear. Please also explicitly declare cameraCaptureInProgress_ with the following here:\n\n  /** @private {boolean} */\n  cameraCaptureInProgress_: false,",
+      "revId": "90ed4fdd32284d86336ab7669dc0f9bab200b8fd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
