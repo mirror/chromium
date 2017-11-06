@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "6e3ca129_9d881784",
+        "filename": "ui/ozone/platform/drm/gpu/drm_device.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 182,
+      "author": {
+        "id": 1250511
+      },
+      "writtenOn": "2017-11-06T16:04:19Z",
+      "side": 1,
+      "message": "Yes. We could introduce a WaitForRender(wait_task, fence, callback) or similar (abstract) method in HardwareDisplayPlaneManager, which will do the right thing based on whether this is atomic or legacy. I will update the patchset to work this way.",
+      "parentUuid": "6628b877_58cac1bf",
+      "revId": "a515ca15180d4fd5d2a1b74bd2b92e7a55d19c0c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "c5045a4c_f9476ca7",
         "filename": "ui/ozone/platform/drm/gpu/gbm_surfaceless.cc",
         "patchSetId": 2
@@ -53,6 +71,24 @@
     },
     {
       "key": {
+        "uuid": "cf2131ea_97f6ad88",
+        "filename": "ui/ozone/platform/drm/gpu/gbm_surfaceless.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 149,
+      "author": {
+        "id": 1250511
+      },
+      "writtenOn": "2017-11-06T16:04:19Z",
+      "side": 1,
+      "message": "I have purposefully taken a defensive stance with explicit fencing errors, essentially falling back to the \"legacy\" code paths in case of failure. The main reason is that I am not familiar with all the breadth of hardware/drivers that chromium needs to support, and whether there is need to work with possibly broken drivers.\n\nIf we don\u0027t care about such fallbacks, I am happy to use a more strict failure mode.",
+      "parentUuid": "8a89cf9e_03875588",
+      "revId": "a515ca15180d4fd5d2a1b74bd2b92e7a55d19c0c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "1e835014_a18e2017",
         "filename": "ui/ozone/platform/drm/gpu/gbm_surfaceless.cc",
         "patchSetId": 2
@@ -70,6 +106,24 @@
     },
     {
       "key": {
+        "uuid": "66c95d94_b13d73ec",
+        "filename": "ui/ozone/platform/drm/gpu/gbm_surfaceless.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 247,
+      "author": {
+        "id": 1250511
+      },
+      "writtenOn": "2017-11-06T16:04:19Z",
+      "side": 1,
+      "message": "Like in the eglDupNativeFenceFDANDROID, I have taken a defensive stance, allowing transparently falling back to legacy mode, but I am happy to move to a more strict failure mode if preferred.",
+      "parentUuid": "1e835014_a18e2017",
+      "revId": "a515ca15180d4fd5d2a1b74bd2b92e7a55d19c0c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "ad9f6f70_f8eba741",
         "filename": "ui/ozone/platform/drm/gpu/hardware_display_controller.cc",
         "patchSetId": 2
@@ -81,6 +135,30 @@
       "writtenOn": "2017-11-03T15:18:18Z",
       "side": 1,
       "message": "HANDLE_EINTR(dup(fd))",
+      "range": {
+        "startLine": 130,
+        "startChar": 51,
+        "endLine": 130,
+        "endChar": 54
+      },
+      "revId": "a515ca15180d4fd5d2a1b74bd2b92e7a55d19c0c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d9ebb3bb_5d8402db",
+        "filename": "ui/ozone/platform/drm/gpu/hardware_display_controller.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 130,
+      "author": {
+        "id": 1250511
+      },
+      "writtenOn": "2017-11-06T16:04:19Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "ad9f6f70_f8eba741",
       "range": {
         "startLine": 130,
         "startChar": 51,
@@ -116,6 +194,30 @@
     },
     {
       "key": {
+        "uuid": "86dc2e17_210fd1c4",
+        "filename": "ui/ozone/platform/drm/gpu/hardware_display_plane_manager_atomic.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 139,
+      "author": {
+        "id": 1250511
+      },
+      "writtenOn": "2017-11-06T16:04:19Z",
+      "side": 1,
+      "message": "I was misunderstanding the ownership semantics of IN_FENCE_FD and giving a dup() of the fence for each plane... no need for any of this. I will remove the dup()s in the updated patchset.",
+      "parentUuid": "88550ec2_5b292103",
+      "range": {
+        "startLine": 139,
+        "startChar": 6,
+        "endLine": 139,
+        "endChar": 16
+      },
+      "revId": "a515ca15180d4fd5d2a1b74bd2b92e7a55d19c0c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "7afbda80_c715ee56",
         "filename": "ui/ozone/platform/drm/gpu/hardware_display_plane_manager_atomic.cc",
         "patchSetId": 2
@@ -127,6 +229,30 @@
       "writtenOn": "2017-11-02T21:47:12Z",
       "side": 1,
       "message": "The API suggests that the fence is still owned by the caller, is this correct?\n\nIs this why the fence is dup-ed above and added back to the vector? It is unclear to me what the lifetime of the FDs is?\n\nWhy not just pass a ScopedFD into SetPlaneData() and have it deal with lifetime management?",
+      "range": {
+        "startLine": 147,
+        "startChar": 10,
+        "endLine": 147,
+        "endChar": 29
+      },
+      "revId": "a515ca15180d4fd5d2a1b74bd2b92e7a55d19c0c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4a0729c7_c1e519e0",
+        "filename": "ui/ozone/platform/drm/gpu/hardware_display_plane_manager_atomic.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 147,
+      "author": {
+        "id": 1250511
+      },
+      "writtenOn": "2017-11-06T16:04:19Z",
+      "side": 1,
+      "message": "The ownership of the fds stays with the plane_list, so the fds can be released at the appropriate times along with the other plane_list data.\n\nRegarding, dup()ing, as mentioned in my other reply, I was misunderstanding the ownership semantics of IN_FENCE_FD... no need for any of this.",
+      "parentUuid": "7afbda80_c715ee56",
       "range": {
         "startLine": 147,
         "startChar": 10,
