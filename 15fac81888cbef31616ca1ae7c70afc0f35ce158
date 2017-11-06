@@ -33,6 +33,70 @@
       "revId": "15fac81888cbef31616ca1ae7c70afc0f35ce158",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "fc7045ee_6bbcad9a",
+        "filename": "services/device/generic_sensor/platform_sensor_fusion.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 118,
+      "author": {
+        "id": 1113896
+      },
+      "writtenOn": "2017-11-06T16:41:30Z",
+      "side": 1,
+      "message": "We only call AddClient() if AllSourcesReady() returned true in AddSourceSensor().",
+      "parentUuid": "cb9b3be1_e15941f6",
+      "revId": "15fac81888cbef31616ca1ae7c70afc0f35ce158",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a7f91322_5e8d99ca",
+        "filename": "services/device/generic_sensor/platform_sensor_fusion_unittest.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 132,
+      "author": {
+        "id": 1113896
+      },
+      "writtenOn": "2017-11-06T16:41:30Z",
+      "side": 1,
+      "message": "Don\u0027t use auto here because the type is not obvious from the method being called.",
+      "range": {
+        "startLine": 132,
+        "startChar": 2,
+        "endLine": 132,
+        "endChar": 6
+      },
+      "revId": "15fac81888cbef31616ca1ae7c70afc0f35ce158",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5ced8a71_ac650311",
+        "filename": "services/device/generic_sensor/platform_sensor_fusion_unittest.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 151,
+      "author": {
+        "id": 1113896
+      },
+      "writtenOn": "2017-11-06T16:41:30Z",
+      "side": 1,
+      "message": "EXPECT_FALSE?",
+      "range": {
+        "startLine": 151,
+        "startChar": 2,
+        "endLine": 151,
+        "endChar": 13
+      },
+      "revId": "15fac81888cbef31616ca1ae7c70afc0f35ce158",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
