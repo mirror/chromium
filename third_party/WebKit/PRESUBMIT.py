@@ -10,7 +10,6 @@ for more details about the presubmit API built into gcl.
 
 import os
 import re
-import sys
 
 
 _EXCLUDED_PATHS = (
@@ -19,17 +18,19 @@ _EXCLUDED_PATHS = (
 )
 
 
+MOJO_INCLUDE_PATTERN = r'#include\s+.+\.mojom(.*)\.h[>"]'
+
+
 def _CheckForNonBlinkVariantMojomIncludes(input_api, output_api):
     def source_file_filter(path):
         return input_api.FilterSourceFile(path,
                                           black_list=[r'third_party/WebKit/common/'])
 
-    pattern = input_api.re.compile(r'#include\s+.+\.mojom(.*)\.h[>"]')
     errors = []
     for f in input_api.AffectedFiles(file_filter=source_file_filter):
         for line_num, line in f.ChangedContents():
-            m = pattern.match(line)
-            if m and m.group(1) != '-blink' and m.group(1) != '-shared':
+            match = input_api.re.compile(MOJO_INCLUDE_PATTERN).match(line)
+            if match and match.group(1) not in ('-blink', '-shared'):
                 errors.append('    %s:%d %s' % (
                     f.LocalPath(), line_num, line))
 
@@ -38,6 +39,28 @@ def _CheckForNonBlinkVariantMojomIncludes(input_api, output_api):
         results.append(output_api.PresubmitError(
             'Files that include non-Blink variant mojoms found. '
             'You must include .mojom-blink.h or .mojom-shared.h instead:',
+            errors))
+    return results
+
+
+def _CheckForBlinkPublicHeaderIncludes(input_api, output_api):
+    def source_file_filter(path):
+        return input_api.FilterSourceFile(path,
+                                          white_list=[r'third_party/WebKit/public/'])
+
+    errors = []
+    for f in input_api.AffectedFiles(file_filter=source_file_filter):
+        for line_num, line in f.ChangedContents():
+            match = input_api.re.compile(MOJO_INCLUDE_PATTERN).match(line)
+            if match and match.group(1) == '-blink':
+                errors.append('    %s:%d %s' % (
+                    f.LocalPath(), line_num, line))
+
+    results = []
+    if errors:
+        results.append(output_api.PresubmitError(
+            'Public blink headers using Blink variant mojoms found. '
+            'You must include .mojom-shared.h instead:',
             errors))
     return results
 
@@ -52,6 +75,7 @@ def _CommonChecks(input_api, output_api):
         input_api, output_api, excluded_paths=_EXCLUDED_PATHS,
         maxlen=800, license_header=license_header))
     results.extend(_CheckForNonBlinkVariantMojomIncludes(input_api, output_api))
+    results.extend(_CheckForBlinkPublicHeaderIncludes(input_api, output_api))
     return results
 
 
