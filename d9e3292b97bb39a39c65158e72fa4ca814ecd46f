@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "c0a60a40_47c400e4",
+        "filename": "components/metrics/reporting_service.cc",
+        "patchSetId": 15
+      },
+      "lineNbr": 221,
+      "author": {
+        "id": 1124674
+      },
+      "writtenOn": "2017-11-06T20:29:26Z",
+      "side": 1,
+      "message": "I don\u0027t think we can say the server is healthy here, actually, since we weren\u0027t actually able to contact it.  It is possible that we have both https configuration issues (or other net error) and the collector is overloaded, so we don\u0027t want to reset exponential backoff here.",
+      "range": {
+        "startLine": 221,
+        "startChar": 46,
+        "endLine": 221,
+        "endChar": 76
+      },
+      "revId": "d9e3292b97bb39a39c65158e72fa4ca814ecd46f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}

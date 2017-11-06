@@ -46,6 +46,30 @@
       "revId": "c6fa00011a52adba13da9f33804705e627b3a18b",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6718389a_a72c1448",
+        "filename": "components/metrics/reporting_service.cc",
+        "patchSetId": 13
+      },
+      "lineNbr": 204,
+      "author": {
+        "id": 1124674
+      },
+      "writtenOn": "2017-11-06T20:29:26Z",
+      "side": 1,
+      "message": "You should not need to pass additional parameters to LogUploader, since it is already receiving ReportingInfo as a parameter, so you have was_https as reporting_info.last_attempt_was_https and you can determine if it is a retry from reporting_info.attempt_count !\u003d 0.",
+      "parentUuid": "e7e32b46_28839cc1",
+      "range": {
+        "startLine": 204,
+        "startChar": 6,
+        "endLine": 204,
+        "endChar": 32
+      },
+      "revId": "c6fa00011a52adba13da9f33804705e627b3a18b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
