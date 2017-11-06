@@ -72,6 +72,30 @@
     },
     {
       "key": {
+        "uuid": "858cc7d9_38e8666a",
+        "filename": "components/cronet/ios/Cronet.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 38,
+      "author": {
+        "id": 1179923
+      },
+      "writtenOn": "2017-11-06T19:54:08Z",
+      "side": 1,
+      "message": "I changed the callback to take an NSURLSessionTaskMetrics object; I\u0027m not sure how well it will be possible to create this on Cronet side though, and it might be better to just pass in a bare array of NSURLSessionTaskTransactionMetrics object.\n\nI think which one of these is the better decision would be best made in the implementation CL, when more of the internal mechanism is clear.",
+      "parentUuid": "ab29ea2e_7442afc8",
+      "range": {
+        "startLine": 38,
+        "startChar": 35,
+        "endLine": 38,
+        "endChar": 79
+      },
+      "revId": "23845917f6ad741bc832047567e0ebce5d416d36",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "1e33f21e_71080f10",
         "filename": "components/cronet/ios/Cronet.h",
         "patchSetId": 2
