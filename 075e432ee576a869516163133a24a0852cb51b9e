@@ -46,6 +46,30 @@
       "revId": "075e432ee576a869516163133a24a0852cb51b9e",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "563a3a03_dce3dedc",
+        "filename": "components/previews/content/previews_io_data_unittest.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 303,
+      "author": {
+        "id": 1166490
+      },
+      "writtenOn": "2017-11-06T21:32:45Z",
+      "side": 1,
+      "message": "The new features we add, we add as Feature API. We\u0027ve avoided migration because we didn\u0027t want more config files for different versions.",
+      "parentUuid": "6bfa6918_4f92153d",
+      "range": {
+        "startLine": 303,
+        "startChar": 4,
+        "endLine": 303,
+        "endChar": 50
+      },
+      "revId": "075e432ee576a869516163133a24a0852cb51b9e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
