@@ -2,6 +2,7 @@
 # Use of this source code is governed by a BSD-style license that can be
 # found in the LICENSE file.
 
+import("//build/config/jumbo.gni")
 import("//build/config/linux/pangocairo/pangocairo.gni")
 import("//build/config/ui.gni")
 import("//device/vr/features/features.gni")
@@ -17,13 +18,13 @@ if (is_android) {
 # child dependencies of "gfx". Therefore, we separate it out here so multiple
 # targets can all have a dependency for header checking purposes without
 # creating circular dependencies.
-source_set("gfx_export") {
+jumbo_source_set("gfx_export") {
   sources = [
     "gfx_export.h",
   ]
 }
 
-component("geometry_skia") {
+jumbo_component("geometry_skia") {
   sources = [
     "skia_util.cc",
     "skia_util.h",
@@ -43,7 +44,7 @@ component("geometry_skia") {
   defines = [ "GFX_IMPLEMENTATION" ]
 }
 
-component("gfx") {
+jumbo_component("gfx") {
   sources = [
     "android/java_bitmap.cc",
     "android/java_bitmap.h",
@@ -400,7 +401,7 @@ component("gfx") {
   }
 }
 
-component("color_space") {
+jumbo_component("color_space") {
   sources = [
     "color_space.cc",
     "color_space.h",
@@ -433,7 +434,7 @@ component("color_space") {
 }
 
 # Depend on this to use half_float.h without pulling in all of gfx.
-source_set("half_float") {
+jumbo_source_set("half_float") {
   sources = [
     "half_float.h",
   ]
@@ -447,7 +448,7 @@ source_set("half_float") {
 }
 
 # Depend on this to use native_widget_types.h without pulling in all of gfx.
-source_set("native_widget_types") {
+jumbo_source_set("native_widget_types") {
   public = [
     "native_widget_types.h",
   ]
@@ -471,7 +472,7 @@ group("selection_bound") {
 
 # Depend on this to use selection_bound.h without pulling in all of gfx.
 # Cannot be a static_library in component builds due to exported functions
-source_set("selection_bound_sources") {
+jumbo_source_set("selection_bound_sources") {
   visibility = [ ":*" ]
 
   sources = [
@@ -489,7 +490,7 @@ source_set("selection_bound_sources") {
 }
 
 # Depend on this to use buffer_types.h without pulling in all of gfx.
-source_set("buffer_types") {
+jumbo_source_set("buffer_types") {
   sources = [
     "buffer_types.h",
   ]
@@ -514,7 +515,7 @@ group("memory_buffer") {
 }
 
 # Cannot be a static_library in component builds due to exported functions
-source_set("memory_buffer_sources") {
+jumbo_source_set("memory_buffer_sources") {
   visibility = [ ":*" ]  # Depend on through ":memory_buffer".
 
   # TODO(brettw) refactor this so these sources are in a coherent directory
@@ -575,7 +576,7 @@ source_set("memory_buffer_sources") {
 }
 
 # TODO(ccameron): This can be moved into a separate source_set.
-component("gfx_switches") {
+jumbo_component("gfx_switches") {
   sources = [
     "switches.cc",
     "switches.h",
