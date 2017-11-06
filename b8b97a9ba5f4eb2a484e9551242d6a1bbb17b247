@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "dbf33a43_764ead75",
+        "filename": "components/viz/service/display/gl_renderer_copier.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 709,
+      "author": {
+        "id": 1002076
+      },
+      "writtenOn": "2017-11-06T23:59:36Z",
+      "side": 1,
+      "message": "Done. Yeah, now that I took a 2nd look (after a week\u0027s vacation), I admit I had just thrown everything into the ctor. The sequence of steps should be clearer now, with the ctor just creating the buffer that all the readbacks will be deposited into.",
+      "parentUuid": "59fc1a7f_0c3457f0",
+      "revId": "b8b97a9ba5f4eb2a484e9551242d6a1bbb17b247",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "809a19a6_eb82967b",
         "filename": "components/viz/service/display/gl_renderer_copier.cc",
         "patchSetId": 3
@@ -30,6 +48,24 @@
       "writtenOn": "2017-10-30T20:23:29Z",
       "side": 1,
       "message": "I\u0027m not sure I understand all this take/create + cache/delete stuff.  It seems a little awkward to my eyes? It seems like it\u0027d be clearer to just have a CacheEntry to pass around which is either in the cache_ or just on the stack temporarily, and then you could create Optional scalers and converters on that cache entry as needed instead of needing to check for_source in all these helpers and they\u0027d all behave more consistently.\n\nThis is just a drive by function design side-eye.  Feel free to ignore this comment, as I don\u0027t think this patch makes this any different than what\u0027s been there beforehand.",
+      "revId": "b8b97a9ba5f4eb2a484e9551242d6a1bbb17b247",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "597a8c2a_0afe32f7",
+        "filename": "components/viz/service/display/gl_renderer_copier.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 828,
+      "author": {
+        "id": 1002076
+      },
+      "writtenOn": "2017-11-06T23:59:36Z",
+      "side": 1,
+      "message": "The problem being solved is that some requests will provide a \"source,\" which is a hint that GLRendererCopier should cache things and expect a stream of similarly-configured CopyOutputRequets to follow. When there is no source, we don\u0027t cache anything under the assumption it was a \"one-off\" CopyOutputRequest.\n\nI agree that, with this CL, it\u0027s starting to get a bit clunky. It was much simpler in the previous CLs. I\u0027ve filed crbug.com/781986 to revisit this. For now, I\u0027m way over-due on my work to move tab capture into VIZ; so, I\u0027d like to move forward and get that all done first (to unblock the --mus flag for everyone else on the Mus project).",
+      "parentUuid": "809a19a6_eb82967b",
       "revId": "b8b97a9ba5f4eb2a484e9551242d6a1bbb17b247",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
