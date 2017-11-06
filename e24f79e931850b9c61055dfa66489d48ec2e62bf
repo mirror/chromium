@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "6e13dc63_3ff5548c",
+        "filename": "gin/isolate_holder.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 75,
+      "author": {
+        "id": 1115916
+      },
+      "writtenOn": "2017-11-06T01:54:24Z",
+      "side": 1,
+      "message": "Instead of doing this, can you make sure that task_runner is never null here?",
+      "revId": "e24f79e931850b9c61055dfa66489d48ec2e62bf",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "35d46843_1c8245e3",
+        "filename": "gin/isolate_holder.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 93,
+      "author": {
+        "id": 1115916
+      },
+      "writtenOn": "2017-11-06T01:54:24Z",
+      "side": 1,
+      "message": "For this one, the call site is V8PerIsolateData\u0027s constructor. You can pass in task_runner-\u003eToSingleThreadTaskRunner() from V8PerIsolateData\u0027s constructor.",
+      "revId": "e24f79e931850b9c61055dfa66489d48ec2e62bf",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
