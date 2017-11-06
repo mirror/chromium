@@ -1,0 +1,44 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "580319d4_a56bde73",
+        "filename": "chrome/browser/component_updater/cros_component_installer.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 115,
+      "author": {
+        "id": 1116033
+      },
+      "writtenOn": "2017-11-06T19:37:10Z",
+      "side": 1,
+      "message": "What is the reason we prefer these base::Optional arguments?",
+      "range": {
+        "startLine": 115,
+        "startChar": 49,
+        "endLine": 115,
+        "endChar": 53
+      },
+      "revId": "a382e866178b6ee5cc328c8d7e8b83b020c78453",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "949b9b75_4ac35382",
+        "filename": "components/component_updater/component_installer.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 65,
+      "author": {
+        "id": 1116033
+      },
+      "writtenOn": "2017-11-06T19:37:10Z",
+      "side": 1,
+      "message": "Adding a non-pure method here does not fit the definition of the ComponentInstallerPolicy, which is 100% an abstract interface.",
+      "revId": "a382e866178b6ee5cc328c8d7e8b83b020c78453",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
