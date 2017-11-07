@@ -65,6 +65,23 @@
     },
     {
       "key": {
+        "uuid": "529bd322_14d7da91",
+        "filename": "chrome/browser/chromeos/samba_client/smb_provided_file_system.h",
+        "patchSetId": 10
+      },
+      "lineNbr": 33,
+      "author": {
+        "id": 1130105
+      },
+      "writtenOn": "2017-11-07T03:05:08Z",
+      "side": 1,
+      "message": "Let\u0027s make this smb_client and SmbFileSystem.\n\nSamba is a library name (which is an implementation detail). SMB (Server Message Block) is the protocol name.",
+      "revId": "b8d38dd3b8250e798ab0b9e79e349efc14e98b07",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "ab03f823_64701833",
         "filename": "chrome/browser/chromeos/samba_client/smb_provided_file_system.h",
         "patchSetId": 10
