@@ -1,0 +1,225 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "4b1a6102_00acf2aa",
+        "filename": "components/viz/host/host_frame_sink_manager.cc",
+        "patchSetId": 14
+      },
+      "lineNbr": 131,
+      "author": {
+        "id": 1115911
+      },
+      "writtenOn": "2017-11-07T19:57:07Z",
+      "side": 1,
+      "message": "call this iter",
+      "revId": "b883a266ddfc69ab813d2d5cee5819bdacff036b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "bd0bd59d_041d5d94",
+        "filename": "components/viz/host/host_frame_sink_manager.cc",
+        "patchSetId": 14
+      },
+      "lineNbr": 135,
+      "author": {
+        "id": 1115911
+      },
+      "writtenOn": "2017-11-07T19:57:07Z",
+      "side": 1,
+      "message": "const FrameSinkData\u0026 data \u003d iter-\u003esecond;\n\nif (data.client)\n  data.client-\u003eOnFrameTokenChanged(frame_token);\n\nthe client might be nullptr.",
+      "revId": "b883a266ddfc69ab813d2d5cee5819bdacff036b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0b23d48b_57c1cda9",
+        "filename": "components/viz/service/frame_sinks/frame_sink_manager_impl.h",
+        "patchSetId": 14
+      },
+      "lineNbr": 155,
+      "author": {
+        "id": 1115911
+      },
+      "writtenOn": "2017-11-07T19:57:07Z",
+      "side": 1,
+      "message": "Called when |frame_token| is changed on a submitted CompositorFrame. The other stuff happens in the browser and viz shouldn\u0027t know about it.",
+      "revId": "b883a266ddfc69ab813d2d5cee5819bdacff036b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a0fa7b7b_6af7bd24",
+        "filename": "content/browser/renderer_host/browser_compositor_view_mac.h",
+        "patchSetId": 14
+      },
+      "lineNbr": 32,
+      "author": {
+        "id": 1115911
+      },
+      "writtenOn": "2017-11-07T19:57:07Z",
+      "side": 1,
+      "message": "nit: OnFrameTokenChanged",
+      "revId": "b883a266ddfc69ab813d2d5cee5819bdacff036b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6e008da6_11f15ce6",
+        "filename": "content/browser/renderer_host/browser_compositor_view_mac.mm",
+        "patchSetId": 14
+      },
+      "lineNbr": 473,
+      "author": {
+        "id": 1115911
+      },
+      "writtenOn": "2017-11-07T19:57:07Z",
+      "side": 1,
+      "message": "nit: OnFrameTokenChanged",
+      "revId": "b883a266ddfc69ab813d2d5cee5819bdacff036b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ddaef578_dd4ea194",
+        "filename": "content/browser/renderer_host/render_widget_host_view_android.cc",
+        "patchSetId": 14
+      },
+      "lineNbr": 1214,
+      "author": {
+        "id": 1115911
+      },
+      "writtenOn": "2017-11-07T19:57:07Z",
+      "side": 1,
+      "message": "OnFrameTokenChanged",
+      "revId": "b883a266ddfc69ab813d2d5cee5819bdacff036b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "79442d04_130746cd",
+        "filename": "content/browser/renderer_host/render_widget_host_view_android.h",
+        "patchSetId": 14
+      },
+      "lineNbr": 241,
+      "author": {
+        "id": 1115911
+      },
+      "writtenOn": "2017-11-07T19:57:07Z",
+      "side": 1,
+      "message": "OnFrameTokenChanged",
+      "revId": "b883a266ddfc69ab813d2d5cee5819bdacff036b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d24b1765_dd248575",
+        "filename": "content/browser/renderer_host/render_widget_host_view_aura.h",
+        "patchSetId": 14
+      },
+      "lineNbr": 103,
+      "author": {
+        "id": 1115911
+      },
+      "writtenOn": "2017-11-07T19:57:07Z",
+      "side": 1,
+      "message": "Also call this OnFrameTokenChanged?",
+      "revId": "b883a266ddfc69ab813d2d5cee5819bdacff036b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3c714733_aa782361",
+        "filename": "content/browser/renderer_host/render_widget_host_view_mac.h",
+        "patchSetId": 14
+      },
+      "lineNbr": 498,
+      "author": {
+        "id": 1115911
+      },
+      "writtenOn": "2017-11-07T19:57:07Z",
+      "side": 1,
+      "message": "OnFrameTokenChanged",
+      "revId": "b883a266ddfc69ab813d2d5cee5819bdacff036b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3572b1de_d3bc3229",
+        "filename": "content/browser/renderer_host/render_widget_host_view_mac.mm",
+        "patchSetId": 14
+      },
+      "lineNbr": 408,
+      "author": {
+        "id": 1115911
+      },
+      "writtenOn": "2017-11-07T19:57:07Z",
+      "side": 1,
+      "message": "OnFrameTokenChanged",
+      "revId": "b883a266ddfc69ab813d2d5cee5819bdacff036b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0499bb98_005be579",
+        "filename": "services/viz/privileged/interfaces/compositing/frame_sink_manager.mojom",
+        "patchSetId": 14
+      },
+      "lineNbr": 113,
+      "author": {
+        "id": 1115911
+      },
+      "writtenOn": "2017-11-07T19:57:07Z",
+      "side": 1,
+      "message": "This isn\u0027t quite true. It sends to the client when a surface of the provided |frame_sink_id|\nactivates.",
+      "revId": "b883a266ddfc69ab813d2d5cee5819bdacff036b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "10f50c8e_20880f4e",
+        "filename": "ui/android/delegated_frame_host_android.cc",
+        "patchSetId": 14
+      },
+      "lineNbr": 222,
+      "author": {
+        "id": 1115911
+      },
+      "writtenOn": "2017-11-07T19:57:07Z",
+      "side": 1,
+      "message": "OnFrameTokenChanged",
+      "revId": "b883a266ddfc69ab813d2d5cee5819bdacff036b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e2b7420f_ee807d4c",
+        "filename": "ui/android/delegated_frame_host_android.h",
+        "patchSetId": 14
+      },
+      "lineNbr": 45,
+      "author": {
+        "id": 1115911
+      },
+      "writtenOn": "2017-11-07T19:57:07Z",
+      "side": 1,
+      "message": "OnFrameTokenChanged",
+      "revId": "b883a266ddfc69ab813d2d5cee5819bdacff036b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
