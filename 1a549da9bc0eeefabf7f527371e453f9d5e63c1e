@@ -16,6 +16,24 @@
       "revId": "1a549da9bc0eeefabf7f527371e453f9d5e63c1e",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "533b7dda_6439cb83",
+        "filename": "third_party/WebKit/public/platform/DEPS",
+        "patchSetId": 25
+      },
+      "lineNbr": 10,
+      "author": {
+        "id": 1215059
+      },
+      "writtenOn": "2017-11-07T01:51:10Z",
+      "side": 1,
+      "message": "Turns out we don\u0027t need it anyway.",
+      "parentUuid": "34790aec_9df67a1e",
+      "revId": "1a549da9bc0eeefabf7f527371e453f9d5e63c1e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
