@@ -93,6 +93,8 @@ void SupervisedUserNavigationObserver::OnRequestBlockedInternal(
   history::HistoryAddPageArgs add_page_args(
       url, timestamp, history::ContextIDForWebContents(web_contents()), 0, url,
       history::RedirectList(), ui::PAGE_TRANSITION_BLOCKED,
+      false, /* this corresponds with current code, yet true makes more
+                sense to me -- don't add blocked pages to history */
       history::SOURCE_BROWSED, false, true);
 
   // Add the entry to the history database.
