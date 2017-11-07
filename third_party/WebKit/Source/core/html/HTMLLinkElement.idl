@@ -28,13 +28,13 @@ interface HTMLLinkElement : HTMLElement {
     [Reflect, URL] attribute DOMString href;
     [CEReactions, Reflect, ReflectOnly=("anonymous","use-credentials"), ReflectEmpty="anonymous", ReflectInvalid="anonymous"] attribute DOMString? crossOrigin;
     [CEReactions, Reflect] attribute DOMString rel;
-    [CEReactions, PutForwards=value] readonly attribute DOMTokenList relList;
+    [PutForwards=value] readonly attribute DOMTokenList relList;
     [CEReactions, Reflect] attribute DOMString media;
     [CEReactions, Reflect] attribute DOMString hreflang;
     [CEReactions, Reflect] attribute DOMString type;
     [Reflect, ReflectOnly=("script","style","image","video", "audio", "track", "font", "fetch")] attribute DOMString as;
     [CEReactions, Reflect, ReflectOnly=("","no-referrer","origin","no-referrer-when-downgrade","origin-when-cross-origin","unsafe-url"), ReflectMissing="", ReflectInvalid=""] attribute DOMString referrerPolicy;
-    [CEReactions, PutForwards=value] readonly attribute DOMTokenList sizes;
+    [PutForwards=value] readonly attribute DOMTokenList sizes;
 
     // obsolete members
     // https://html.spec.whatwg.org/#HTMLLinkElement-partial
