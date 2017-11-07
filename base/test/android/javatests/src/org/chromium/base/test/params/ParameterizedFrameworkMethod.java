@@ -17,21 +17,21 @@ import java.util.List;
  * represents the parameters for this test method
  */
 public class ParameterizedFrameworkMethod extends FrameworkMethod {
-    private ParameterSet mParameterSet;
-    private String mName;
+    private final ParameterSet mParameterSet;
+    private final String mName;
 
     public ParameterizedFrameworkMethod(
             Method method, ParameterSet parameterSet, String classParameterSetName) {
         super(method);
         mParameterSet = parameterSet;
-        String postFix = "";
+        StringBuilder name = new StringBuilder(method.getName());
         if (classParameterSetName != null && !classParameterSetName.isEmpty()) {
-            postFix += "_" + classParameterSetName;
+            name.append("_" + classParameterSetName);
         }
         if (parameterSet != null && !parameterSet.getName().isEmpty()) {
-            postFix += "_" + parameterSet.getName();
+            name.append("_" + parameterSet.getName());
         }
-        mName = postFix.isEmpty() ? method.getName() : method.getName() + "_" + postFix;
+        mName = name.toString();
     }
 
     @Override
@@ -61,7 +61,7 @@ public class ParameterizedFrameworkMethod extends FrameworkMethod {
     public boolean equals(Object obj) {
         if (obj instanceof ParameterizedFrameworkMethod) {
             ParameterizedFrameworkMethod method = (ParameterizedFrameworkMethod) obj;
-            return super.equals(obj) && method.getParameterSet().equals(getParameterSet())
+            return super.equals(obj) && method.mParameterSet.equals(mParameterSet)
                     && method.getName().equals(getName());
         }
         return false;
@@ -76,8 +76,8 @@ public class ParameterizedFrameworkMethod extends FrameworkMethod {
         int result = 17;
         result = 31 * result + super.hashCode();
         result = 31 * result + getName().hashCode();
-        if (getParameterSet() != null) {
-            result = 31 * result + getParameterSet().hashCode();
+        if (mParameterSet != null) {
+            result = 31 * result + mParameterSet.hashCode();
         }
         return result;
     }

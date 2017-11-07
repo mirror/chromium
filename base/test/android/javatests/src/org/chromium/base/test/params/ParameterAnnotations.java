@@ -22,6 +22,24 @@ public class ParameterAnnotations {
         String value();
     }
 
+    @Retention(RetentionPolicy.RUNTIME)
+    @Target(ElementType.METHOD)
+    /**
+     * XXX: Add Javadoc
+     */
+    public @interface UseMethodParameterBefore {
+        String value();
+    }
+
+    @Retention(RetentionPolicy.RUNTIME)
+    @Target(ElementType.METHOD)
+    /**
+     * XXX: Add Javadoc
+     */
+    public @interface UseMethodParameterAfter {
+        String value();
+    }
+
     /**
      * Annotation for static field of a `List<ParameterSet>` for entire test class
      */
