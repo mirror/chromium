@@ -61,8 +61,8 @@ class UiElement : public cc::AnimationTarget {
 
   enum UpdatePhase {
     kDirty = 0,
-    kUpdatedAnimations,
     kUpdatedBindings,
+    kUpdatedAnimations,
     kUpdatedComputedOpacity,
     kUpdatedTexturesAndSizes,
     kUpdatedLayout,
@@ -223,8 +223,7 @@ class UiElement : public cc::AnimationTarget {
     return bindings_;
   }
 
-  // Return true if any bindings has updates.
-  bool UpdateBindings();
+  void UpdateBindings();
 
   gfx::Point3F GetCenter() const;
   gfx::Vector3dF GetNormal() const;
@@ -271,7 +270,7 @@ class UiElement : public cc::AnimationTarget {
 
   virtual gfx::Transform LocalTransform() const;
 
-  void UpdateComputedOpacityRecursive();
+  void UpdateComputedOpacity();
   void UpdateWorldSpaceTransformRecursive();
 
   std::vector<std::unique_ptr<UiElement>>& children() { return children_; }
@@ -302,6 +301,14 @@ class UiElement : public cc::AnimationTarget {
   // this is ignored (say for head-locked elements that draw in screen space),
   // then this function should return false.
   virtual bool IsWorldPositioned() const;
+
+  bool updated_bindings_this_frame() const {
+    return updated_bindings_this_frame_;
+  }
+
+  bool updated_visiblity_this_frame() const {
+    return updated_visibility_this_frame_;
+  }
 
   std::string DebugName() const;
 
@@ -349,6 +356,13 @@ class UiElement : public cc::AnimationTarget {
 
   // The computed opacity, incorporating opacity of parent objects.
   float computed_opacity_ = 1.0f;
+
+  // Returns true if the last call to UpdateBindings had any effect.
+  bool updated_bindings_this_frame_ = false;
+
+  // Return true if the last call to UpdateComputedOpacity had any effect on
+  // visibility.
+  bool updated_visibility_this_frame_ = false;
 
   // If anchoring is specified, the translation will be relative to the
   // specified edge(s) of the parent, rather than the center.  A parent object
