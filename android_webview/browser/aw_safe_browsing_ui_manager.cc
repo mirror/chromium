@@ -41,7 +41,7 @@ AwSafeBrowsingUIManager::AwSafeBrowsingUIManager(
   base::FilePath user_data_dir;
   bool result =
       PathService::Get(android_webview::DIR_SAFE_BROWSING, &user_data_dir);
-  DCHECK(result);
+  // This should be a dcheck
 
   url_request_context_getter_ =
       new safe_browsing::SafeBrowsingURLRequestContextGetter(

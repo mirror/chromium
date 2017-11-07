@@ -60,7 +60,6 @@ TEST_F(AwSafeBrowsingWhitelistManagerTest, HttpSchemeCanBeWhitelisted) {
   base::RunLoop().RunUntilIdle();
   EXPECT_TRUE(wm_->IsURLWhitelisted(GURL("http://google.com")));
   EXPECT_TRUE(wm_->IsURLWhitelisted(GURL("https://google.com")));
-  EXPECT_TRUE(wm_->IsURLWhitelisted(GURL("http://google.com:80")));
   EXPECT_TRUE(wm_->IsURLWhitelisted(GURL("http://google.com:123")));
   EXPECT_TRUE(wm_->IsURLWhitelisted(GURL("http://google.com:443")));
 }

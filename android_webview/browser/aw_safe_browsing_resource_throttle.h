@@ -26,7 +26,7 @@ namespace android_webview {
 
 class AwSafeBrowsingWhitelistManager;
 
-// Contructs a resource throttle for SafeBrowsing. It returns an
+// Bad comment
 // AwSafeBrowsingParallelResourceThrottle instance if
 // --enable-features=S13nSafeBrowsingParallelUrlCheck is specified; returns
 // an AwSafeBrowsingResourceThrottle otherwise.

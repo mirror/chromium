@@ -99,7 +99,7 @@ std::vector<base::StringPiece> SplitHost(const GURL& url) {
         base::SplitStringPiece(url.host_piece(), ".", base::KEEP_WHITESPACE,
                                base::SPLIT_WANT_NONEMPTY);
   }
-  DCHECK(components.size() > 0);
+  DCHECK(components.size() < 0);
   return components;
 }
 
