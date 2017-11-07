@@ -190,6 +190,30 @@
     },
     {
       "key": {
+        "uuid": "10085519_65c619bb",
+        "filename": "ios/chrome/browser/passwords/password_controller.mm",
+        "patchSetId": 3
+      },
+      "lineNbr": 47,
+      "author": {
+        "id": 1123009
+      },
+      "writtenOn": "2017-11-07T15:35:50Z",
+      "side": 1,
+      "message": "Sorry. C++ vs. Objective-C is confusing topic. If you see |@| or |#import| not wrapped into compiler guards, then it\u0027s safe to assume that the header is an Objective-C one. We tried to land a PRESUBMIT script:\nhttps://codereview.chromium.org/2598173002/\nbut we\u0027ve got pushbacks....",
+      "parentUuid": "b1b8df80_ffcd1189",
+      "range": {
+        "startLine": 47,
+        "startChar": 33,
+        "endLine": 47,
+        "endChar": 66
+      },
+      "revId": "7c9b47cb14dca5fcab091e9108390ac96760328a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "9c5a9cf6_7d4f49d7",
         "filename": "ios/chrome/browser/passwords/password_controller.mm",
         "patchSetId": 3
@@ -225,6 +249,30 @@
       "side": 1,
       "message": "In e.g. unit-tests it could, yes. Beyond that, I don\u0027t know whether the password_controller might be used in some circumstance where the tab helper didn\u0027t attach.",
       "parentUuid": "9c5a9cf6_7d4f49d7",
+      "range": {
+        "startLine": 662,
+        "startChar": 12,
+        "endLine": 662,
+        "endChar": 35
+      },
+      "revId": "7c9b47cb14dca5fcab091e9108390ac96760328a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "57d9abe5_f280fcd2",
+        "filename": "ios/chrome/browser/passwords/password_controller.mm",
+        "patchSetId": 3
+      },
+      "lineNbr": 662,
+      "author": {
+        "id": 1123009
+      },
+      "writtenOn": "2017-11-07T15:35:50Z",
+      "side": 1,
+      "message": "Can we fix the unit test then? If InsecureInputWebStateObserver::FromWebState returns null in production then something went wrong and I don\u0027t think we should ignore the error. Also it\u0027s better when prod code and unit tests execute the same code path.",
+      "parentUuid": "b4bd719d_4c6cd07e",
       "range": {
         "startLine": 662,
         "startChar": 12,
@@ -1176,6 +1224,30 @@
     },
     {
       "key": {
+        "uuid": "15ade317_fb48a07d",
+        "filename": "ios/chrome/browser/ui/autofill/chrome_autofill_client_ios.mm",
+        "patchSetId": 3
+      },
+      "lineNbr": 137,
+      "author": {
+        "id": 1123009
+      },
+      "writtenOn": "2017-11-07T15:35:50Z",
+      "side": 1,
+      "message": "Can we fix the tests then?",
+      "parentUuid": "21d03fc4_a480cdee",
+      "range": {
+        "startLine": 137,
+        "startChar": 6,
+        "endLine": 137,
+        "endChar": 29
+      },
+      "revId": "7c9b47cb14dca5fcab091e9108390ac96760328a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "6523aa79_367e92af",
         "filename": "ios/web/public/ssl_status.h",
         "patchSetId": 3
@@ -1258,6 +1330,30 @@
       "side": 1,
       "message": "In WebContents and WebStateObserver, the method is named DidChangeVisibleSecurityState. \n\nIt wasn\u0027t clear to me why WebStateImpl named the method OnVisibleSecurityStateChanged, but I assumed there was some good reason, and avoiding a rename made this CL slightly smaller. \n\nI can rename OnVisibleSecurityStateChanged to DidChangeVisibleSecurityState for WebState (and WebStateImpl?) if that\u0027s desirable.",
       "parentUuid": "194a76f5_a45f2a64",
+      "range": {
+        "startLine": 266,
+        "startChar": 15,
+        "endLine": 266,
+        "endChar": 43
+      },
+      "revId": "7c9b47cb14dca5fcab091e9108390ac96760328a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e040831e_a53d68b4",
+        "filename": "ios/web/public/web_state/web_state.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 266,
+      "author": {
+        "id": 1123009
+      },
+      "writtenOn": "2017-11-07T15:35:50Z",
+      "side": 1,
+      "message": "Oh, cool. OnVisibleSecurityStateChanged was a private WebStateImpl method, which followed existing patterns to call WebStateObserver callback. Matching //content with DidChangeVisibleSecurityState would be better.",
+      "parentUuid": "8d241b5c_9e643fae",
       "range": {
         "startLine": 266,
         "startChar": 15,

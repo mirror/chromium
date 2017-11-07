@@ -1,0 +1,44 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "dabd6810_d0996b9c",
+        "filename": "ios/chrome/browser/ssl/ios_security_state_tab_helper_unittest.mm",
+        "patchSetId": 4
+      },
+      "lineNbr": 20,
+      "author": {
+        "id": 1123009
+      },
+      "writtenOn": "2017-11-07T15:35:50Z",
+      "side": 1,
+      "message": "s/Ensure/Ensures\n\nSame comments for other places",
+      "range": {
+        "startLine": 20,
+        "startChar": 3,
+        "endLine": 20,
+        "endChar": 9
+      },
+      "revId": "e48d5b4fd05cebb1617d6ff3b74d0b7a7a63403a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0f89da1c_c6291cae",
+        "filename": "ios/web/public/ssl_status.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 16,
+      "author": {
+        "id": 1123009
+      },
+      "writtenOn": "2017-11-07T15:35:50Z",
+      "side": 1,
+      "message": "Sorry for missing this in the previous round. Now when we have non default copy constructor and assignment operator, could you please add unit tests for this class.",
+      "revId": "e48d5b4fd05cebb1617d6ff3b74d0b7a7a63403a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
