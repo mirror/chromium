@@ -1,0 +1,67 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "4a0218ff_486d7720",
+        "filename": "components/cronet/ios/Cronet.mm",
+        "patchSetId": 7
+      },
+      "lineNbr": 517,
+      "author": {
+        "id": 1002889
+      },
+      "writtenOn": "2017-11-07T18:12:47Z",
+      "side": 1,
+      "message": "How and why is this different from the one in cronet_metrics.h?",
+      "range": {
+        "startLine": 517,
+        "startChar": 0,
+        "endLine": 517,
+        "endChar": 17
+      },
+      "revId": "923313cbad6dd0072c04ed8fa1780850a7c57446",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2614845c_4abc746a",
+        "filename": "components/cronet/ios/test/cronet_metrics_test.mm",
+        "patchSetId": 7
+      },
+      "lineNbr": 11,
+      "author": {
+        "id": 1002889
+      },
+      "writtenOn": "2017-11-07T18:12:47Z",
+      "side": 1,
+      "message": "Should probably create a MetricsTest class derived from CronetTestBase.",
+      "revId": "923313cbad6dd0072c04ed8fa1780850a7c57446",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "35686c9d_a356bf5a",
+        "filename": "components/cronet/ios/test/cronet_metrics_test.mm",
+        "patchSetId": 7
+      },
+      "lineNbr": 14,
+      "author": {
+        "id": 1002889
+      },
+      "writtenOn": "2017-11-07T18:12:47Z",
+      "side": 1,
+      "message": "This can be rewritten as early return:\n\nif (!@available(iOS 10, *))\n  return;\n\nThis will avoid having entire method in the block.",
+      "range": {
+        "startLine": 14,
+        "startChar": 2,
+        "endLine": 14,
+        "endChar": 28
+      },
+      "revId": "923313cbad6dd0072c04ed8fa1780850a7c57446",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
