@@ -16,6 +16,52 @@
       "revId": "1ed8f8822472328f761a82adec1790a2fe7c84d9",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5220c397_3707e7a5",
+        "filename": "base/files/file_util_mac.mm",
+        "patchSetId": 3
+      },
+      "lineNbr": 41,
+      "author": {
+        "id": 1001934
+      },
+      "writtenOn": "2017-11-07T00:43:47Z",
+      "side": 1,
+      "message": "typo",
+      "range": {
+        "startLine": 41,
+        "startChar": 12,
+        "endLine": 41,
+        "endChar": 24
+      },
+      "revId": "1ed8f8822472328f761a82adec1790a2fe7c84d9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b264ba32_f487d448",
+        "filename": "base/files/file_util_unittest.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 1082,
+      "author": {
+        "id": 1001934
+      },
+      "writtenOn": "2017-11-07T00:43:47Z",
+      "side": 1,
+      "message": "We probably don\u0027t want to create world writable files.\n\nWe went from (no documentation, no tests) to (confusing-at-times documentation, some tests). I apologize for writing the confusing documentation. Given you are trying to optimize copying, let\u0027s just do the speed up and leave the file permissions alone.\n\nWhat would be helpful are:\n1) More tests to cover cases we are not currently testing.\n2) Better documentation in the header.",
+      "range": {
+        "startLine": 1082,
+        "startChar": 18,
+        "endLine": 1082,
+        "endChar": 22
+      },
+      "revId": "1ed8f8822472328f761a82adec1790a2fe7c84d9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
