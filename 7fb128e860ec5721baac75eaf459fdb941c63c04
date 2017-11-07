@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "a36e0839_c1081439",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 2
+      },
+      "lineNbr": 10,
+      "author": {
+        "id": 1111144
+      },
+      "writtenOn": "2017-11-07T17:11:26Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "e6f532c9_a1c4d279",
+      "range": {
+        "startLine": 10,
+        "startChar": 20,
+        "endLine": 10,
+        "endChar": 29
+      },
+      "revId": "7fb128e860ec5721baac75eaf459fdb941c63c04",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "07a4b577_d54e35ca",
         "filename": "tools/grit/grit/gather/policy_json.py",
         "patchSetId": 2
@@ -48,6 +72,30 @@
     },
     {
       "key": {
+        "uuid": "463a8b1c_e8b9ab9e",
+        "filename": "tools/grit/grit/gather/policy_json.py",
+        "patchSetId": 2
+      },
+      "lineNbr": 208,
+      "author": {
+        "id": 1111144
+      },
+      "writtenOn": "2017-11-07T17:11:26Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "07a4b577_d54e35ca",
+      "range": {
+        "startLine": 208,
+        "startChar": 54,
+        "endLine": 208,
+        "endChar": 59
+      },
+      "revId": "7fb128e860ec5721baac75eaf459fdb941c63c04",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "b04edb03_7f8550c5",
         "filename": "tools/grit/grit/gather/policy_json.py",
         "patchSetId": 2
@@ -59,6 +107,24 @@
       "writtenOn": "2017-11-07T15:54:53Z",
       "side": 1,
       "message": "Just checking - here, is |key| still \"policies\" ?",
+      "revId": "7fb128e860ec5721baac75eaf459fdb941c63c04",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2ead7960_cd8f59c3",
+        "filename": "tools/grit/grit/gather/policy_json.py",
+        "patchSetId": 2
+      },
+      "lineNbr": 214,
+      "author": {
+        "id": 1111144
+      },
+      "writtenOn": "2017-11-07T17:11:26Z",
+      "side": 1,
+      "message": "Yes, in the new format \u0027policies\u0027 is not translated.",
+      "parentUuid": "b04edb03_7f8550c5",
       "revId": "7fb128e860ec5721baac75eaf459fdb941c63c04",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
