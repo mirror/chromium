@@ -6,10 +6,6 @@
 #define UI_BASE_DRAGDROP_OS_EXCHANGE_DATA_PROVIDER_AURAX11_H_
 
 #include <stdint.h>
-#include <X11/Xlib.h>
-
-// Get rid of a macro from Xlib.h that conflicts with Aura's RootWindow class.
-#undef RootWindow
 
 #include <map>
 
@@ -23,6 +19,7 @@
 #include "ui/events/platform/platform_event_dispatcher.h"
 #include "ui/gfx/geometry/vector2d.h"
 #include "ui/gfx/image/image_skia.h"
+#include "ui/gfx/x/x11.h"
 #include "url/gurl.h"
 
 namespace ui {
