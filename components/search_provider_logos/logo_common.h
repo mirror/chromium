@@ -40,6 +40,11 @@ struct LogoMetadata {
   // clicked. If |animated_url| is not empty, |encoded_image| refers to a call
   // to action image.
   GURL animated_url;
+  // The URL to ping when the CTA image is clicked. May be empty.
+  GURL cta_log_url;
+  // The URL to ping when the main image is clicked (i.e. the animated image if
+  // there is one, or the only image otherwise). May be empty.
+  GURL log_url;
 
   // For use by LogoService ---------------------------------------------------
 

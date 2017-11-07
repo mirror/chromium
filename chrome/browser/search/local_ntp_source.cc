@@ -238,6 +238,8 @@ std::unique_ptr<base::DictionaryValue> ConvertLogoMetadataToDict(
   result->SetString("altText", meta.alt_text);
   result->SetString("mimeType", meta.mime_type);
   result->SetString("animatedUrl", meta.animated_url.spec());
+  result->SetString("logUrl", meta.log_url.spec());
+  result->SetString("ctaLogUrl", meta.cta_log_url.spec());
   return result;
 }
 

@@ -650,13 +650,14 @@ function init() {
       if (ddl === null) {
         // Got no ddl object at all, the feature is probably disabled. Just show
         // the logo.
-        showLogoOrDoodle(null, null, /*fromCache=*/true);
+        showLogoOrDoodle(/*fromCache=*/true);
         return;
       }
 
       // Got a (possibly empty) ddl object. Show logo or doodle.
-      showLogoOrDoodle(
-          ddl.image || null, ddl.metadata || null, /*fromCache=*/true);
+      targetDoodle.image = ddl.image || null;
+      targetDoodle.metadata = ddl.metadata || null;
+      showLogoOrDoodle(/*fromCache=*/true);
       // If we got a valid ddl object (from cache), load a fresh one.
       if (ddl.v !== null) {
         loadDoodle(ddl.v, function(ddl) {
@@ -787,6 +788,63 @@ var loadDoodle = function(v, onload) {
 };
 
 
+/** Handles the response of a doodle impression ping, i.e. stores the
+ * appropriate interactionLogUrl or updates the onClickUrl.
+ *
+ * @param {!Object} ddllog Response object from the ddllog ping.
+ * @param {!boolean} isAnimated
+ */
+var handleDdllogResponse = function(ddllog, isAnimated) {
+  if (ddllog && ddllog.interaction_log_url) {
+    var interactionLogUrl =
+        new URL(ddllog.interaction_log_url, configData.googleBaseUrl);
+    if (isAnimated) {
+      targetDoodle.animatedInteractionLogUrl = interactionLogUrl;
+    } else {
+      targetDoodle.staticInteractionLogUrl = interactionLogUrl;
+    }
+  } else if (ddllog && ddllog.target_url_params) {
+    // TODO check that this isn't a CTA?
+    if (targetDoodle.metadata && targetDoodle.metadata.onClickUrl) {
+      // TODO handle case when URL doesn't have params yet.
+      targetDoodle.metadata.onClickUrl += '&' + ddllog.target_url_params;
+    }
+  } else {
+    console.log('Invalid or missing ddllog response:');
+    console.log(ddllog);
+  }
+};
+
+
+/** Logs a doodle impression at the given logUrl, and handles the response via
+ * handleDdllogResponse.
+ *
+ * @param {!string} logUrl
+ * @param {!boolean} isAnimated
+ */
+var logDoodleImpression = function(logUrl, isAnimated) {
+  fetch(logUrl)
+      .then(function(response) {
+        return response.text();
+      })
+      .then(function(text) {
+        // Remove the optional XSS preamble.
+        var preamble = ')]}\'';
+        if (text.startsWith(preamble)) {
+          text = text.substr(preamble.length);
+        }
+        try {
+          var json = JSON.parse(text);
+        } catch (error) {
+          console.log('Failed to parse doodle impression response as JSON:');
+          console.log(error);
+          return;
+        }
+        handleDdllogResponse(json.ddllog, isAnimated);
+      });
+};
+
+
 /** Returns true if the doodle given by |image| and |metadata| is currently
  * visible. If |image| is null, returns true when the default logo is visible;
  * if non-null, checks that it matches the doodle that is currently visible.
@@ -809,25 +867,6 @@ var isDoodleCurrentlyVisible = function(image, metadata) {
 };
 
 
-var showLogoOrDoodle = function(image, metadata, fromCache) {
-  if (metadata !== null) {
-    applyDoodleMetadata(metadata);
-    $(IDS.LOGO_DOODLE_IMAGE).src = image;
-    $(IDS.LOGO_DOODLE).classList.add(CLASSES.SHOW_LOGO);
-
-    var isCta = !!metadata.animatedUrl;
-    var eventType = isCta ?
-        (fromCache ? LOG_TYPE.NTP_CTA_LOGO_SHOWN_FROM_CACHE :
-                     LOG_TYPE.NTP_CTA_LOGO_SHOWN_FRESH) :
-        (fromCache ? LOG_TYPE.NTP_STATIC_LOGO_SHOWN_FROM_CACHE :
-                     LOG_TYPE.NTP_STATIC_LOGO_SHOWN_FRESH);
-    ntpApiHandle.logEvent(eventType);
-  } else {
-    $(IDS.LOGO_DEFAULT).classList.add(CLASSES.SHOW_LOGO);
-  }
-};
-
-
 /** The image and metadata that should be shown, according to the latest fetch.
  * After a logo fades out, onDoodleFadeOutComplete fades in a logo according to
  * targetDoodle.
@@ -835,6 +874,38 @@ var showLogoOrDoodle = function(image, metadata, fromCache) {
 var targetDoodle = {
   image: null,
   metadata: null,
+  // The interaction log URLs may be filled with the response from the
+  // corresponding impression log URL.
+  staticInteractionLogUrl: null,
+  animatedInteractionLogUrl: null,
+};
+
+
+var showLogoOrDoodle = function(fromCache) {
+  if (targetDoodle.metadata !== null) {
+    applyDoodleMetadata(targetDoodle.metadata);
+    $(IDS.LOGO_DOODLE_IMAGE).src = targetDoodle.image;
+    $(IDS.LOGO_DOODLE).classList.add(CLASSES.SHOW_LOGO);
+
+    // Log the impression in Chrome metrics.
+    var isCta = !!targetDoodle.metadata.animatedUrl;
+    var eventType = isCta ?
+        (fromCache ? LOG_TYPE.NTP_CTA_LOGO_SHOWN_FROM_CACHE :
+                     LOG_TYPE.NTP_CTA_LOGO_SHOWN_FRESH) :
+        (fromCache ? LOG_TYPE.NTP_STATIC_LOGO_SHOWN_FROM_CACHE :
+                     LOG_TYPE.NTP_STATIC_LOGO_SHOWN_FRESH);
+    ntpApiHandle.logEvent(eventType);
+
+    // Ping the proper impression logging URL if it exists.
+    var logUrl =
+        isCta ? targetDoodle.metadata.ctaLogUrl : targetDoodle.metadata.logUrl;
+    if (logUrl) {
+      logDoodleImpression(logUrl, /*isAnimated=*/false);
+    }
+  } else {
+    // No doodle. Just show the default logo.
+    $(IDS.LOGO_DEFAULT).classList.add(CLASSES.SHOW_LOGO);
+  }
 };
 
 
@@ -882,6 +953,9 @@ var fadeToLogoOrDoodle = function(image, metadata) {
   // Set the target to use once the current logo/doodle has finished fading out.
   targetDoodle.image = image;
   targetDoodle.metadata = metadata;
+  // Also clear any interaction log URLs we might have.
+  targetDoodle.staticInteractionLogUrl = null;
+  targetDoodle.animatedInteractionLogUrl = null;
 
   // Start fading out the current logo or doodle. onDoodleFadeOutComplete will
   // apply the change when the fade-out finishes.
@@ -894,8 +968,7 @@ var onDoodleFadeOutComplete = function(e) {
   // Fade-out finished. Start fading in the appropriate logo.
   $(IDS.LOGO_DOODLE).classList.add(CLASSES.FADE);
   $(IDS.LOGO_DEFAULT).classList.add(CLASSES.FADE);
-  showLogoOrDoodle(
-      targetDoodle.image, targetDoodle.metadata, /*fromCache=*/false);
+  showLogoOrDoodle(/*fromCache=*/false);
 
   this.removeEventListener('transitionend', onDoodleFadeOutComplete);
 };
@@ -908,18 +981,54 @@ var applyDoodleMetadata = function(metadata) {
   logoDoodleImage.title = metadata.altText;
 
   if (metadata.animatedUrl) {
+    // Animated doodle. The CTA image is currently shown; on click, show the
+    // animated one.
     logoDoodleButton.onclick = function(e) {
-      ntpApiHandle.logEvent(LOG_TYPE.NTP_CTA_LOGO_CLICKED);
       e.preventDefault();
+
+      // Log the click in Chrome metrics.
+      ntpApiHandle.logEvent(LOG_TYPE.NTP_CTA_LOGO_CLICKED);
+
+      // Ping the static interaction_log_url if there is one.
+      if (targetDoodle.staticInteractionLogUrl) {
+        navigator.sendBeacon(targetDoodle.staticInteractionLogUrl);
+        targetDoodle.staticInteractionLogUrl = null;
+      }
+
+      // Once the animated image loads, ping the impression log URL.
+      if (metadata.logUrl) {
+        logoDoodleImage.onload = function() {
+          logDoodleImpression(metadata.logUrl, /*isAnimated=*/true);
+        };
+      }
       logoDoodleImage.src = metadata.animatedUrl;
+
+      // When the animated image is clicked, navigate to the target URL.
       logoDoodleButton.onclick = function() {
+        // Log the click in Chrome metrics.
         ntpApiHandle.logEvent(LOG_TYPE.NTP_ANIMATED_LOGO_CLICKED);
+
+        // Ping the animated interaction_log_url if there is one.
+        if (targetDoodle.animatedInteractionLogUrl) {
+          navigator.sendBeacon(targetDoodle.animatedInteractionLogUrl);
+          targetDoodle.animatedInteractionLogUrl = null;
+        }
+
         window.location = metadata.onClickUrl;
       };
     };
   } else {
+    // Static doodle. When it's clicked, navigate to the target URL.
     logoDoodleButton.onclick = function() {
+      // Log the click in Chrome metrics.
       ntpApiHandle.logEvent(LOG_TYPE.NTP_STATIC_LOGO_CLICKED);
+
+      // Ping the static interaction_log_url if there is one.
+      if (targetDoodle.staticInteractionLogUrl) {
+        navigator.sendBeacon(targetDoodle.staticInteractionLogUrl);
+        targetDoodle.staticInteractionLogUrl = null;
+      }
+
       window.location = metadata.onClickUrl;
     };
   }

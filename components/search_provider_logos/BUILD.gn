@@ -31,6 +31,7 @@ static_library("search_provider_logos") {
 
   deps = [
     "//components/data_use_measurement/core",
+    "//components/google/core/browser",
     "//components/image_fetcher/core",
     "//components/keyed_service/core",
     "//components/search_engines",
