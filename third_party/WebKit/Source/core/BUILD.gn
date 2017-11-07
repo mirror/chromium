@@ -822,6 +822,23 @@ css_properties("make_core_generated_css_property_names") {
   ]
 }
 
+code_generator("make_core_generated_atrule_names") {
+  script = "../build/scripts/core/css/parser/make_atrule_names.py"
+  json_inputs = [ "css/parser/AtRuleNames.json5" ]
+  templates = [
+    "../build/scripts/core/css/parser/templates/AtRuleDescriptors.cpp.tmpl",
+    "../build/scripts/core/css/parser/templates/AtRuleDescriptors.h.tmpl",
+  ]
+  outputs = [
+    "$blink_core_output_dir/css/parser/AtRuleDescriptors.cpp",
+    "$blink_core_output_dir/css/parser/AtRuleDescriptors.h",
+  ]
+  other_args = [
+    "--gperf",
+    gperf_exe,
+  ]
+}
+
 code_generator("make_core_generated_media_features") {
   script = "../build/scripts/core/css/make_media_features.py"
   json_inputs = [ "css/media_feature_names.json5" ]
@@ -1217,14 +1234,15 @@ action_foreach("make_core_generated_bison") {
 # All sources declared as outputs from these targets will be compiled into one
 # target.
 targets_generating_sources = [
+  ":make_core_generated_atrule_names",
   ":make_core_generated_bison",
-  ":make_core_generated_css_primitive_value_unit_trie",
   ":make_core_generated_computed_style_base",
-  ":make_core_generated_css_value_id_mappings",
-  ":make_core_generated_css_property_api_baseclass",
   ":make_core_generated_css_longhand_property_apis",
-  ":make_core_generated_css_shorthand_property_apis",
+  ":make_core_generated_css_primitive_value_unit_trie",
+  ":make_core_generated_css_property_api_baseclass",
   ":make_core_generated_css_property_names",
+  ":make_core_generated_css_shorthand_property_apis",
+  ":make_core_generated_css_value_id_mappings",
   ":make_core_generated_cssom_types",
   ":make_core_generated_event_factory",
   ":make_core_generated_event_names",

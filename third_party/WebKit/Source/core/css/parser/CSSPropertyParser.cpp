@@ -5,7 +5,6 @@
 #include "core/css/parser/CSSPropertyParser.h"
 
 #include "core/StylePropertyShorthand.h"
-#include "core/css/CSSFontFaceSrcValue.h"
 #include "core/css/CSSInheritedValue.h"
 #include "core/css/CSSInitialValue.h"
 #include "core/css/CSSPendingSubstitutionValue.h"
@@ -17,7 +16,6 @@
 #include "core/css/parser/CSSPropertyParserHelpers.h"
 #include "core/css/parser/CSSVariableParser.h"
 #include "core/css/properties/CSSPropertyAPI.h"
-#include "core/css/properties/CSSPropertyFontUtils.h"
 #include "platform/runtime_enabled_features.h"
 
 namespace blink {
@@ -52,8 +50,6 @@ bool CSSPropertyParser::ParseValue(
         (RuntimeEnabledFeatures::CSSViewportEnabled() ||
          IsUASheetBehavior(context->Mode())) &&
         parser.ParseViewportDescriptor(resolved_property, important);
-  } else if (rule_type == StyleRule::kFontFace) {
-    parse_success = parser.ParseFontFaceDescriptor(resolved_property);
   } else {
     parse_success = parser.ParseValueStart(unresolved_property, important);
   }
@@ -235,163 +231,6 @@ bool CSSPropertyParser::ConsumeCSSWideKeyword(CSSPropertyID unresolved_property,
                                 *parsed_properties_);
   }
   range_ = range_copy;
-  return true;
-}
-
-static CSSValue* ConsumeFontVariantList(CSSParserTokenRange& range) {
-  CSSValueList* values = CSSValueList::CreateCommaSeparated();
-  do {
-    if (range.Peek().Id() == CSSValueAll) {
-      // FIXME: CSSPropertyParser::ParseFontVariant() implements
-      // the old css3 draft:
-      // http://www.w3.org/TR/2002/WD-css3-webfonts-20020802/#font-variant
-      // 'all' is only allowed in @font-face and with no other values.
-      if (values->length())
-        return nullptr;
-      return ConsumeIdent(range);
-    }
-    CSSIdentifierValue* font_variant =
-        CSSPropertyFontUtils::ConsumeFontVariantCSS21(range);
-    if (font_variant)
-      values->Append(*font_variant);
-  } while (ConsumeCommaIncludingWhitespace(range));
-
-  if (values->length())
-    return values;
-
-  return nullptr;
-}
-
-static CSSIdentifierValue* ConsumeFontDisplay(CSSParserTokenRange& range) {
-  return ConsumeIdent<CSSValueAuto, CSSValueBlock, CSSValueSwap,
-                      CSSValueFallback, CSSValueOptional>(range);
-}
-
-static CSSValueList* ConsumeFontFaceUnicodeRange(CSSParserTokenRange& range) {
-  CSSValueList* values = CSSValueList::CreateCommaSeparated();
-
-  do {
-    const CSSParserToken& token = range.ConsumeIncludingWhitespace();
-    if (token.GetType() != kUnicodeRangeToken)
-      return nullptr;
-
-    UChar32 start = token.UnicodeRangeStart();
-    UChar32 end = token.UnicodeRangeEnd();
-    if (start > end)
-      return nullptr;
-    values->Append(*CSSUnicodeRangeValue::Create(start, end));
-  } while (ConsumeCommaIncludingWhitespace(range));
-
-  return values;
-}
-
-static CSSValue* ConsumeFontFaceSrcURI(CSSParserTokenRange& range,
-                                       const CSSParserContext* context) {
-  String url = ConsumeUrlAsStringView(range).ToString();
-  if (url.IsNull())
-    return nullptr;
-  CSSFontFaceSrcValue* uri_value(CSSFontFaceSrcValue::Create(
-      url, context->CompleteURL(url), context->GetReferrer(),
-      context->ShouldCheckContentSecurityPolicy()));
-
-  if (range.Peek().FunctionId() != CSSValueFormat)
-    return uri_value;
-
-  // FIXME: https://drafts.csswg.org/css-fonts says that format() contains a
-  // comma-separated list of strings, but CSSFontFaceSrcValue stores only one
-  // format. Allowing one format for now.
-  CSSParserTokenRange args = ConsumeFunction(range);
-  const CSSParserToken& arg = args.ConsumeIncludingWhitespace();
-  if ((arg.GetType() != kStringToken) || !args.AtEnd())
-    return nullptr;
-  uri_value->SetFormat(arg.Value().ToString());
-  return uri_value;
-}
-
-static CSSValue* ConsumeFontFaceSrcLocal(CSSParserTokenRange& range,
-                                         const CSSParserContext* context) {
-  CSSParserTokenRange args = ConsumeFunction(range);
-  ContentSecurityPolicyDisposition should_check_content_security_policy =
-      context->ShouldCheckContentSecurityPolicy();
-  if (args.Peek().GetType() == kStringToken) {
-    const CSSParserToken& arg = args.ConsumeIncludingWhitespace();
-    if (!args.AtEnd())
-      return nullptr;
-    return CSSFontFaceSrcValue::CreateLocal(
-        arg.Value().ToString(), should_check_content_security_policy);
-  }
-  if (args.Peek().GetType() == kIdentToken) {
-    String family_name = CSSPropertyFontUtils::ConcatenateFamilyName(args);
-    if (!args.AtEnd())
-      return nullptr;
-    return CSSFontFaceSrcValue::CreateLocal(
-        family_name, should_check_content_security_policy);
-  }
-  return nullptr;
-}
-
-static CSSValueList* ConsumeFontFaceSrc(CSSParserTokenRange& range,
-                                        const CSSParserContext* context) {
-  CSSValueList* values = CSSValueList::CreateCommaSeparated();
-
-  do {
-    const CSSParserToken& token = range.Peek();
-    CSSValue* parsed_value = nullptr;
-    if (token.FunctionId() == CSSValueLocal)
-      parsed_value = ConsumeFontFaceSrcLocal(range, context);
-    else
-      parsed_value = ConsumeFontFaceSrcURI(range, context);
-    if (!parsed_value)
-      return nullptr;
-    values->Append(*parsed_value);
-  } while (ConsumeCommaIncludingWhitespace(range));
-  return values;
-}
-
-bool CSSPropertyParser::ParseFontFaceDescriptor(CSSPropertyID prop_id) {
-  CSSValue* parsed_value = nullptr;
-  switch (prop_id) {
-    case CSSPropertyFontFamily:
-      if (CSSPropertyFontUtils::ConsumeGenericFamily(range_))
-        return false;
-      parsed_value = CSSPropertyFontUtils::ConsumeFamilyName(range_);
-      break;
-    case CSSPropertySrc:  // This is a list of urls or local references.
-      parsed_value = ConsumeFontFaceSrc(range_, context_);
-      break;
-    case CSSPropertyUnicodeRange:
-      parsed_value = ConsumeFontFaceUnicodeRange(range_);
-      break;
-    case CSSPropertyFontDisplay:
-      parsed_value = ConsumeFontDisplay(range_);
-      break;
-    case CSSPropertyFontStretch:
-      parsed_value = CSSPropertyFontUtils::ConsumeFontStretch(
-          range_, kCSSFontFaceRuleMode);
-      break;
-    case CSSPropertyFontStyle:
-      parsed_value =
-          CSSPropertyFontUtils::ConsumeFontStyle(range_, kCSSFontFaceRuleMode);
-      break;
-    case CSSPropertyFontVariant:
-      parsed_value = ConsumeFontVariantList(range_);
-      break;
-    case CSSPropertyFontWeight:
-      parsed_value =
-          CSSPropertyFontUtils::ConsumeFontWeight(range_, kCSSFontFaceRuleMode);
-      break;
-    case CSSPropertyFontFeatureSettings:
-      parsed_value = CSSPropertyFontUtils::ConsumeFontFeatureSettings(range_);
-      break;
-    default:
-      break;
-  }
-
-  if (!parsed_value || !range_.AtEnd())
-    return false;
-
-  AddProperty(prop_id, CSSPropertyInvalid, *parsed_value, false,
-              IsImplicitProperty::kNotImplicit, *parsed_properties_);
   return true;
 }
 
