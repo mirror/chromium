@@ -37,6 +37,24 @@
     },
     {
       "key": {
+        "uuid": "2bd4872a_40300e78",
+        "filename": "device/vr/openvr/openvr_device.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 29,
+      "author": {
+        "id": 1111944
+      },
+      "writtenOn": "2017-11-07T18:47:47Z",
+      "side": 1,
+      "message": "I don\u0027t have my Vive with my at the moment, so I can\u0027t verify, but I do recall that some APIs return down/left values as negative angles and some return them all as positive values with the direction implied by the fact that they are left/down respectively. I don\u0027t recall which variant WebVR\u0027s Mojo is expecting.\n\nIn any case, if that is the difference then the appropriate approach seems like it would be to not swap up/down here but instead only reverse the negation? (Again, can\u0027t verify at the moment since I don\u0027t have my Vive handy.)",
+      "parentUuid": "13fe29cd_9b6127a9",
+      "revId": "3c097fba7201baeb05a01574f37889066b1c9420",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "223bcc7c_3b4e7e53",
         "filename": "gpu/ipc/service/gpu_memory_buffer_factory_dxgi.cc",
         "patchSetId": 1
@@ -53,6 +71,52 @@
         "startChar": 78,
         "endLine": 82,
         "endChar": 79
+      },
+      "revId": "3c097fba7201baeb05a01574f37889066b1c9420",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "727eab12_beec6bd5",
+        "filename": "gpu/ipc/service/gpu_memory_buffer_factory_dxgi.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 82,
+      "author": {
+        "id": 1111944
+      },
+      "writtenOn": "2017-11-07T18:47:47Z",
+      "side": 1,
+      "message": "Would feel better if this was a constant (kBytesPerPixel) instead of just \"4\". Would feel even better still if this was derived from the dxgi_format, but that\u0027s overkill given that both currently supported formats have the same bpp.",
+      "range": {
+        "startLine": 82,
+        "startChar": 78,
+        "endLine": 82,
+        "endChar": 79
+      },
+      "revId": "3c097fba7201baeb05a01574f37889066b1c9420",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8ecc0e0e_ad26eab5",
+        "filename": "third_party/WebKit/Source/modules/vr/VRDisplay.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 721,
+      "author": {
+        "id": 1111944
+      },
+      "writtenOn": "2017-11-07T18:47:47Z",
+      "side": 1,
+      "message": "Should the creation of `mailbox` and `sync_token` be moved inside the else block below? They don\u0027t appear be used in the present_image_copy_ path. Same goes for `static_image`, now that I think about it.",
+      "range": {
+        "startLine": 721,
+        "startChar": 12,
+        "endLine": 721,
+        "endChar": 19
       },
       "revId": "3c097fba7201baeb05a01574f37889066b1c9420",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
