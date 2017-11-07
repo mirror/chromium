@@ -91,10 +91,12 @@ class AutofillClientIOS : public AutofillClient {
   bool IsAutofillSupported() override;
   void ExecuteCommand(int id) override;
 
+ protected:
+  web::WebState* web_state_;
+
  private:
   PrefService* pref_service_;
   PersonalDataManager* personal_data_manager_;
-  web::WebState* web_state_;
   __weak id<AutofillClientIOSBridge> bridge_;
   std::unique_ptr<IdentityProvider> identity_provider_;
   scoped_refptr<AutofillWebDataService> autofill_web_data_service_;
