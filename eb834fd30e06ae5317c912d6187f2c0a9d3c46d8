@@ -202,6 +202,30 @@
     },
     {
       "key": {
+        "uuid": "ffd99a01_ea0b1b06",
+        "filename": "chrome/browser/offline_pages/prefetch/prefetch_importer_impl.cc",
+        "patchSetId": 11
+      },
+      "lineNbr": 140,
+      "author": {
+        "id": 1134722
+      },
+      "writtenOn": "2017-11-07T21:59:06Z",
+      "side": 1,
+      "message": "SG for leaving the test for later but please add a TODO somewhere about it.",
+      "parentUuid": "61481355_f2332790",
+      "range": {
+        "startLine": 140,
+        "startChar": 26,
+        "endLine": 140,
+        "endChar": 61
+      },
+      "revId": "eb834fd30e06ae5317c912d6187f2c0a9d3c46d8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "8fd80676_ec8e5f19",
         "filename": "components/offline_pages/core/prefetch/import_cleanup_task.cc",
         "patchSetId": 11
@@ -246,6 +270,30 @@
       "revId": "eb834fd30e06ae5317c912d6187f2c0a9d3c46d8",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "78c45045_1e29a1f0",
+        "filename": "components/offline_pages/core/prefetch/import_cleanup_task.cc",
+        "patchSetId": 11
+      },
+      "lineNbr": 26,
+      "author": {
+        "id": 1134722
+      },
+      "writtenOn": "2017-11-07T21:59:06Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "bb77f487_81457088",
+      "range": {
+        "startLine": 24,
+        "startChar": 6,
+        "endLine": 26,
+        "endChar": 24
+      },
+      "revId": "eb834fd30e06ae5317c912d6187f2c0a9d3c46d8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -419,6 +467,24 @@
       "side": 1,
       "message": "Done",
       "parentUuid": "a410cc59_dbb225e6",
+      "revId": "eb834fd30e06ae5317c912d6187f2c0a9d3c46d8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "ac85edc8_16b94b5f",
+        "filename": "components/offline_pages/core/prefetch/import_cleanup_task_unittest.cc",
+        "patchSetId": 11
+      },
+      "lineNbr": 99,
+      "author": {
+        "id": 1134722
+      },
+      "writtenOn": "2017-11-07T21:59:06Z",
+      "side": 1,
+      "message": "Thanks also for added inline comments. They really help!",
+      "parentUuid": "402150a9_8f296479",
       "revId": "eb834fd30e06ae5317c912d6187f2c0a9d3c46d8",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": false
@@ -625,6 +691,24 @@
     },
     {
       "key": {
+        "uuid": "86b48f9b_b43f02a3",
+        "filename": "components/offline_pages/core/prefetch/prefetch_importer.h",
+        "patchSetId": 11
+      },
+      "lineNbr": 9,
+      "author": {
+        "id": 1134722
+      },
+      "writtenOn": "2017-11-07T21:59:06Z",
+      "side": 1,
+      "message": "(switching to) nit: I agree with not including cstdint because of the change in namespace.\nIf you feel strongly about not including I won\u0027t oppose but stdint.h is included in other files and it\u0027s where the actual definition of that type comes from.",
+      "parentUuid": "0a234ae6_f957796b",
+      "revId": "eb834fd30e06ae5317c912d6187f2c0a9d3c46d8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "b6b0564b_fdd0a05a",
         "filename": "components/offline_pages/core/prefetch/prefetch_importer.h",
         "patchSetId": 11
@@ -789,6 +873,30 @@
       "side": 1,
       "message": "I think it is not the archive itself is lost, but the importing process is not completed. Updated the comment to improve it.",
       "parentUuid": "cd5de34c_1a904649",
+      "range": {
+        "startLine": 184,
+        "startChar": 17,
+        "endLine": 184,
+        "endChar": 26
+      },
+      "revId": "eb834fd30e06ae5317c912d6187f2c0a9d3c46d8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "06bf03ba_aaa67936",
+        "filename": "components/offline_pages/core/prefetch/prefetch_types.h",
+        "patchSetId": 11
+      },
+      "lineNbr": 184,
+      "author": {
+        "id": 1134722
+      },
+      "writtenOn": "2017-11-07T21:59:06Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "493ab88e_a80b5538",
       "range": {
         "startLine": 184,
         "startChar": 17,

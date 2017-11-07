@@ -16,6 +16,75 @@
       "revId": "6ab416ae2b9c5fa30be8b9e86249224c6f346077",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0dbdcf33_71167930",
+        "filename": "components/offline_pages/core/prefetch/import_completed_task.cc",
+        "patchSetId": 14
+      },
+      "lineNbr": 73,
+      "author": {
+        "id": 1134722
+      },
+      "writtenOn": "2017-11-07T21:59:06Z",
+      "side": 1,
+      "message": "nit: just to check, the order of these calls is correct like this, right?",
+      "range": {
+        "startLine": 71,
+        "startChar": 0,
+        "endLine": 73,
+        "endChar": 55
+      },
+      "revId": "6ab416ae2b9c5fa30be8b9e86249224c6f346077",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "076562a1_b4887e92",
+        "filename": "components/offline_pages/core/prefetch/import_completed_task_unittest.cc",
+        "patchSetId": 14
+      },
+      "lineNbr": 16,
+      "author": {
+        "id": 1134722
+      },
+      "writtenOn": "2017-11-07T21:59:06Z",
+      "side": 1,
+      "message": "Thanks for lowering our tech debt! :)",
+      "range": {
+        "startLine": 16,
+        "startChar": 39,
+        "endLine": 16,
+        "endChar": 51
+      },
+      "revId": "6ab416ae2b9c5fa30be8b9e86249224c6f346077",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "e7bc3145_df8c6ec6",
+        "filename": "components/offline_pages/core/prefetch/import_completed_task_unittest.cc",
+        "patchSetId": 14
+      },
+      "lineNbr": 32,
+      "author": {
+        "id": 1134722
+      },
+      "writtenOn": "2017-11-07T21:59:06Z",
+      "side": 1,
+      "message": "nit: Could you also include `ExpectTaskCompletes(task)` calls here and in all following tests?",
+      "range": {
+        "startLine": 32,
+        "startChar": 2,
+        "endLine": 32,
+        "endChar": 21
+      },
+      "revId": "6ab416ae2b9c5fa30be8b9e86249224c6f346077",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
