@@ -48,6 +48,30 @@
     },
     {
       "key": {
+        "uuid": "066e2e1b_64852254",
+        "filename": "chrome/browser/ui/cocoa/DEPS",
+        "patchSetId": 12
+      },
+      "lineNbr": 20,
+      "author": {
+        "id": 1161750
+      },
+      "writtenOn": "2017-11-07T15:32:31Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "9afe9205_7d25b7bf",
+      "range": {
+        "startLine": 20,
+        "startChar": 13,
+        "endLine": 20,
+        "endChar": 20
+      },
+      "revId": "8c83c45cffc89e8491aff94071b54abba03038b2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "0da7471c_56dd9e68",
         "filename": "chrome/browser/ui/cocoa/profiles/avatar_base_controller.h",
         "patchSetId": 12
@@ -68,6 +92,30 @@
       "revId": "8c83c45cffc89e8491aff94071b54abba03038b2",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e792e6ae_9c566498",
+        "filename": "chrome/browser/ui/cocoa/profiles/avatar_base_controller.h",
+        "patchSetId": 12
+      },
+      "lineNbr": 60,
+      "author": {
+        "id": 1161750
+      },
+      "writtenOn": "2017-11-07T15:32:31Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "0da7471c_56dd9e68",
+      "range": {
+        "startLine": 60,
+        "startChar": 8,
+        "endLine": 60,
+        "endChar": 23
+      },
+      "revId": "8c83c45cffc89e8491aff94071b54abba03038b2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -94,6 +142,30 @@
     },
     {
       "key": {
+        "uuid": "e877bbe3_2e3d9c86",
+        "filename": "chrome/browser/ui/cocoa/profiles/avatar_base_controller.mm",
+        "patchSetId": 12
+      },
+      "lineNbr": 129,
+      "author": {
+        "id": 1161750
+      },
+      "writtenOn": "2017-11-07T15:32:31Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "beb1eba5_bc6c4cd7",
+      "range": {
+        "startLine": 129,
+        "startChar": 25,
+        "endLine": 129,
+        "endChar": 37
+      },
+      "revId": "8c83c45cffc89e8491aff94071b54abba03038b2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "16a51aed_0fd26b23",
         "filename": "chrome/browser/ui/cocoa/profiles/avatar_base_controller.mm",
         "patchSetId": 12
@@ -114,6 +186,30 @@
       "revId": "8c83c45cffc89e8491aff94071b54abba03038b2",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "cb441107_ba232d07",
+        "filename": "chrome/browser/ui/cocoa/profiles/avatar_base_controller.mm",
+        "patchSetId": 12
+      },
+      "lineNbr": 170,
+      "author": {
+        "id": 1161750
+      },
+      "writtenOn": "2017-11-07T15:32:31Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "16a51aed_0fd26b23",
+      "range": {
+        "startLine": 170,
+        "startChar": 27,
+        "endLine": 170,
+        "endChar": 43
+      },
+      "revId": "8c83c45cffc89e8491aff94071b54abba03038b2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -140,6 +236,30 @@
     },
     {
       "key": {
+        "uuid": "41dfc56f_604accf5",
+        "filename": "chrome/browser/ui/cocoa/profiles/avatar_base_controller.mm",
+        "patchSetId": 12
+      },
+      "lineNbr": 180,
+      "author": {
+        "id": 1161750
+      },
+      "writtenOn": "2017-11-07T15:32:31Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "17fe800a_f9b3eb68",
+      "range": {
+        "startLine": 180,
+        "startChar": 14,
+        "endLine": 180,
+        "endChar": 25
+      },
+      "revId": "8c83c45cffc89e8491aff94071b54abba03038b2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "e9af3178_579aaf9e",
         "filename": "chrome/browser/ui/cocoa/profiles/avatar_base_controller.mm",
         "patchSetId": 12
@@ -160,6 +280,30 @@
       "revId": "8c83c45cffc89e8491aff94071b54abba03038b2",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f1a369be_492a0977",
+        "filename": "chrome/browser/ui/cocoa/profiles/avatar_base_controller.mm",
+        "patchSetId": 12
+      },
+      "lineNbr": 185,
+      "author": {
+        "id": 1161750
+      },
+      "writtenOn": "2017-11-07T15:32:31Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "e9af3178_579aaf9e",
+      "range": {
+        "startLine": 185,
+        "startChar": 20,
+        "endLine": 185,
+        "endChar": 33
+      },
+      "revId": "8c83c45cffc89e8491aff94071b54abba03038b2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -186,6 +330,30 @@
     },
     {
       "key": {
+        "uuid": "999219c9_7131da59",
+        "filename": "chrome/browser/ui/cocoa/profiles/avatar_base_controller.mm",
+        "patchSetId": 12
+      },
+      "lineNbr": 216,
+      "author": {
+        "id": 1161750
+      },
+      "writtenOn": "2017-11-07T15:32:31Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "91cb5517_dd932a66",
+      "range": {
+        "startLine": 216,
+        "startChar": 60,
+        "endLine": 216,
+        "endChar": 72
+      },
+      "revId": "8c83c45cffc89e8491aff94071b54abba03038b2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "135a5b4e_671dbaa5",
         "filename": "chrome/browser/ui/cocoa/profiles/avatar_base_controller.mm",
         "patchSetId": 12
@@ -209,6 +377,30 @@
     },
     {
       "key": {
+        "uuid": "19fdb439_93b0047e",
+        "filename": "chrome/browser/ui/cocoa/profiles/avatar_base_controller.mm",
+        "patchSetId": 12
+      },
+      "lineNbr": 219,
+      "author": {
+        "id": 1161750
+      },
+      "writtenOn": "2017-11-07T15:32:31Z",
+      "side": 1,
+      "message": "OnWidgetDestroyed() is called before buttonClicked:",
+      "parentUuid": "135a5b4e_671dbaa5",
+      "range": {
+        "startLine": 219,
+        "startChar": 8,
+        "endLine": 219,
+        "endChar": 23
+      },
+      "revId": "8c83c45cffc89e8491aff94071b54abba03038b2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "aa9a37cb_1bd4f86d",
         "filename": "chrome/browser/ui/views/profiles/profile_chooser_view.h",
         "patchSetId": 12
@@ -220,6 +412,30 @@
       "writtenOn": "2017-11-07T10:30:41Z",
       "side": 1,
       "message": "It looks like |parent_window| and |anchor_rect| are only used on macOS. I think this should be documented - something along the lines:\n\"|parent_window| and |anchor_rect| are used to position the bubble on the parent window. Required only on macOS.",
+      "range": {
+        "startLine": 56,
+        "startChar": 11,
+        "endLine": 56,
+        "endChar": 21
+      },
+      "revId": "8c83c45cffc89e8491aff94071b54abba03038b2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "fee3cff8_3c0443a6",
+        "filename": "chrome/browser/ui/views/profiles/profile_chooser_view.h",
+        "patchSetId": 12
+      },
+      "lineNbr": 56,
+      "author": {
+        "id": 1161750
+      },
+      "writtenOn": "2017-11-07T15:32:31Z",
+      "side": 1,
+      "message": "It is required by macOS only because we can\u0027t get an anchor_view. But the implementation of ProfileChooserView doesn\u0027t require to use a parent_window on macOS. If at some points, we have access to an anchor_view, then we will use the anchor_view on macOS.",
+      "parentUuid": "aa9a37cb_1bd4f86d",
       "range": {
         "startLine": 56,
         "startChar": 11,
