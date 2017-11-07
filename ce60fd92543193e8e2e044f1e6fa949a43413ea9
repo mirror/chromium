@@ -16,6 +16,24 @@
       "revId": "ce60fd92543193e8e2e044f1e6fa949a43413ea9",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "46f82870_765a56f5",
+        "filename": "components/autofill/core/browser/autofill_field.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 617,
+      "author": {
+        "id": 1002376
+      },
+      "writtenOn": "2017-11-07T15:20:13Z",
+      "side": 1,
+      "message": "to clarify... the type values have sentinels for \"unknown\" so you don\u0027t need to use a nullptr check to see if a given value is set.",
+      "parentUuid": "2b0d5d52_d9aaf4b4",
+      "revId": "ce60fd92543193e8e2e044f1e6fa949a43413ea9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
