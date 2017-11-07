@@ -700,21 +700,34 @@ void ArcNetHostImpl::ScanCompleted(const chromeos::DeviceState* /*unused*/) {
   net_instance->ScanCompleted();
 }
 
-void ArcNetHostImpl::GetDefaultNetwork(GetDefaultNetworkCallback callback) {
-  const chromeos::NetworkState* default_network;
-
-  // Expose Chrome OS VPNs to Android, but if ARC VPN is active, only expose
-  // the underlying physical interface.
+const chromeos::NetworkState* ArcNetHostImpl::GetDefaultNetworkFromChrome() {
+  // If an Android VPN is connected, report the underlying physical
+  // connection only.  Never tell Android about its own VPN.
+  // If a Chrome OS VPN is connected, report the Chrome OS VPN as the
+  // default connection.
   if (arc_vpn_service_path_.empty()) {
-    default_network = GetStateHandler()->DefaultNetwork();
-  } else {
-    default_network = GetStateHandler()->FirstNetworkByType(
-        chromeos::NetworkTypePattern::NonVirtual());
+    return GetShillBackedNetwork(GetStateHandler()->DefaultNetwork());
   }
 
-  // Some network types are not backed by Shill; make sure to pass a Shill-
-  // backed network to ARC to ensure that it can use its network connection.
-  default_network = GetShillBackedNetwork(default_network);
+  // This is similar to ConnectedNetworkByType(NonVirtual()) but this
+  // implementation will skip unconnected networks, which sometimes show
+  // up in the list ahead of connected networks due to the logic around
+  // Ethernet prioritization.
+  chromeos::NetworkStateHandler::NetworkStateList state_list;
+  GetStateHandler()->GetNetworkListByType(
+      chromeos::NetworkTypePattern::NonVirtual(), true /* configured_only */,
+      true /* visible_only */, kGetNetworksListLimit, &state_list);
+  for (const auto network : state_list) {
+    if (network->IsConnectedState()) {
+      return GetShillBackedNetwork(network);
+    }
+  }
+
+  return nullptr;
+}
+
+void ArcNetHostImpl::GetDefaultNetwork(GetDefaultNetworkCallback callback) {
+  const chromeos::NetworkState* default_network = GetDefaultNetworkFromChrome();
 
   if (!default_network) {
     VLOG(1) << "GetDefaultNetwork: no default network";
@@ -746,20 +759,10 @@ void ArcNetHostImpl::DefaultNetworkSuccessCallback(
                                       TranslateONCConfiguration(&dictionary));
 }
 
-void ArcNetHostImpl::DefaultNetworkChanged(
-    const chromeos::NetworkState* network) {
-  // If an ARC VPN is connected, the default network will point to the
-  // ARC VPN but we cannot tell ARC about that.  ARC needs to continue
-  // believing that the current physical network is the default network.
-  // The medium term fix for this is go/arc-multinet which will report
-  // status for each interface separately.
-  if (!arc_vpn_service_path_.empty())
-    return;
+void ArcNetHostImpl::UpdateDefaultNetwork() {
+  const chromeos::NetworkState* default_net = GetDefaultNetworkFromChrome();
 
-  const chromeos::NetworkState* shill_backed_network =
-      GetShillBackedNetwork(network);
-
-  if (!shill_backed_network) {
+  if (!default_net) {
     VLOG(1) << "No default network";
     auto* net_instance = ARC_GET_INSTANCE_FOR_METHOD(arc_bridge_service_->net(),
                                                      DefaultNetworkChanged);
@@ -768,13 +771,19 @@ void ArcNetHostImpl::DefaultNetworkChanged(
     return;
   }
 
-  VLOG(1) << "New default network: " << shill_backed_network->path();
+  VLOG(1) << "New default network: " << default_net->path() << " ("
+          << default_net->type() << ")";
   std::string user_id_hash = chromeos::LoginState::Get()->primary_user_hash();
   GetManagedConfigurationHandler()->GetProperties(
-      user_id_hash, shill_backed_network->path(),
+      user_id_hash, default_net->path(),
       base::Bind(&ArcNetHostImpl::DefaultNetworkSuccessCallback,
                  weak_factory_.GetWeakPtr()),
       base::Bind(&DefaultNetworkFailureCallback));
+}
+
+void ArcNetHostImpl::DefaultNetworkChanged(
+    const chromeos::NetworkState* network) {
+  UpdateDefaultNetwork();
 }
 
 void ArcNetHostImpl::DeviceListChanged() {
@@ -961,6 +970,11 @@ void ArcNetHostImpl::DisconnectRequested(const std::string& service_path) {
 
 void ArcNetHostImpl::NetworkConnectionStateChanged(
     const chromeos::NetworkState* network) {
+  // DefaultNetworkChanged() won't be invoked if an ARC VPN is the default
+  // network and the underlying physical connection changed, so check for
+  // that condition here.
+  UpdateDefaultNetwork();
+
   const chromeos::NetworkState* shill_backed_network =
       GetShillBackedNetwork(network);
   if (!shill_backed_network)
