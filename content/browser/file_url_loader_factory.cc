@@ -18,6 +18,7 @@
 #include "base/strings/string_util.h"
 #include "base/strings/sys_string_conversions.h"
 #include "base/strings/utf_string_conversions.h"
+#include "base/task_scheduler/post_task.h"
 #include "base/time/time.h"
 #include "build/build_config.h"
 #include "content/public/browser/content_browser_client.h"
@@ -254,7 +255,19 @@ class FileURLLoader : public mojom::URLLoader {
     // bindings are alive - essentially until either the client gives up or all
     // file data has been sent to it.
     auto* file_url_loader = new FileURLLoader;
-    file_url_loader->Start(profile_path, request, std::move(loader),
+    file_url_loader->Start(profile_path, request, base::FilePath(),
+                           std::move(loader), std::move(client_info));
+  }
+
+  // Similar to above but uses |path| as an override for the actual file
+  // location. |request| is used for headers only.
+  static void CreateAndStartWithPathOverride(
+      const base::FilePath& path,
+      const ResourceRequest& request,
+      mojom::URLLoaderRequest loader,
+      mojom::URLLoaderClientPtrInfo client_info) {
+    auto* file_url_loader = new FileURLLoader;
+    file_url_loader->Start(base::FilePath(), request, path, std::move(loader),
                            std::move(client_info));
   }
 
@@ -271,6 +284,7 @@ class FileURLLoader : public mojom::URLLoader {
 
   void Start(const base::FilePath& profile_path,
              const ResourceRequest& request,
+             const base::FilePath& path_override,
              mojom::URLLoaderRequest loader,
              mojom::URLLoaderClientPtrInfo client_info) {
     ResourceResponseHead head;
@@ -284,7 +298,9 @@ class FileURLLoader : public mojom::URLLoader {
     client.Bind(std::move(client_info));
 
     base::FilePath path;
-    if (!net::FileURLToFilePath(request.url, &path)) {
+    if (!path_override.empty()) {
+      path = path_override;
+    } else if (!net::FileURLToFilePath(request.url, &path)) {
       client->OnComplete(ResourceRequestCompletionStatus(net::ERR_FAILED));
       return;
     }
@@ -293,6 +309,12 @@ class FileURLLoader : public mojom::URLLoader {
     if (!base::GetFileInfo(path, &info)) {
       client->OnComplete(
           ResourceRequestCompletionStatus(net::ERR_FILE_NOT_FOUND));
+      return;
+    }
+
+    if (!path_override.empty() && info.is_directory) {
+      // We don't support path overrides which reference directories, so bail.
+      client->OnComplete(ResourceRequestCompletionStatus(net::ERR_FAILED));
       return;
     }
 
@@ -322,7 +344,8 @@ class FileURLLoader : public mojom::URLLoader {
 
 #if defined(OS_WIN)
     base::FilePath shortcut_target;
-    if (base::LowerCaseEqualsASCII(path.Extension(), ".lnk") &&
+    if (path_override.empty() &&
+        base::LowerCaseEqualsASCII(path.Extension(), ".lnk") &&
         base::win::ResolveShortcut(path, &shortcut_target, nullptr)) {
       // Follow Windows shortcuts
       GURL new_url = net::FilePathToFileURL(shortcut_target);
@@ -342,7 +365,8 @@ class FileURLLoader : public mojom::URLLoader {
     }
 #endif  // defined(OS_WIN)
 
-    if (!GetContentClient()->browser()->IsFileAccessAllowed(
+    if (path_override.empty() &&
+        !GetContentClient()->browser()->IsFileAccessAllowed(
             path, base::MakeAbsoluteFilePath(path), profile_path)) {
       client->OnComplete(
           ResourceRequestCompletionStatus(net::ERR_ACCESS_DENIED));
@@ -488,8 +512,19 @@ FileURLLoaderFactory::FileURLLoaderFactory(
 
 FileURLLoaderFactory::~FileURLLoaderFactory() = default;
 
-void FileURLLoaderFactory::BindRequest(mojom::URLLoaderFactoryRequest loader) {
-  bindings_.AddBinding(this, std::move(loader));
+// static
+void FileURLLoaderFactory::CreateLoaderWithPathOverride(
+    const ResourceRequest& request,
+    const base::FilePath& path,
+    mojom::URLLoaderRequest loader,
+    mojom::URLLoaderClientPtr client) {
+  auto task_runner = base::CreateSequencedTaskRunnerWithTraits(
+      {base::MayBlock(), base::TaskPriority::BACKGROUND,
+       base::TaskShutdownBehavior::SKIP_ON_SHUTDOWN});
+  task_runner->PostTask(
+      FROM_HERE,
+      base::BindOnce(&FileURLLoader::CreateAndStartWithPathOverride, path,
+                     request, std::move(loader), client.PassInterface()));
 }
 
 void FileURLLoaderFactory::CreateLoaderAndStart(
@@ -516,7 +551,7 @@ void FileURLLoaderFactory::CreateLoaderAndStart(
 }
 
 void FileURLLoaderFactory::Clone(mojom::URLLoaderFactoryRequest loader) {
-  BindRequest(std::move(loader));
+  bindings_.AddBinding(this, std::move(loader));
 }
 
 }  // namespace content
