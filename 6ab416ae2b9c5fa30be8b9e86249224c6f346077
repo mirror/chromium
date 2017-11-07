@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "dab2205e_de8fecab",
+        "filename": "chrome/browser/offline_pages/prefetch/prefetch_importer_impl.cc",
+        "patchSetId": 14
+      },
+      "lineNbr": 111,
+      "author": {
+        "id": 1002700
+      },
+      "writtenOn": "2017-11-07T21:42:45Z",
+      "side": 1,
+      "message": "nit: put this at the top of the routine.",
+      "revId": "6ab416ae2b9c5fa30be8b9e86249224c6f346077",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
