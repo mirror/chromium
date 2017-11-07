@@ -1,12 +1,15 @@
-// Copyright 2014 The Chromium Authors. All rights reserved.
+// Copyright 2017 The Chromium Authors. All rights reserved.
 // Use of this source code is governed by a BSD-style license that can be
 // found in the LICENSE file.
 
-#ifndef ASH_WM_DEFAULT_STATE_H_
-#define ASH_WM_DEFAULT_STATE_H_
+#ifndef ASH_WM_CLIENT_CONTROLLED_STATE_H_
+#define ASH_WM_CLIENT_CONTROLLED_STATE_H_
 
+#include <memory>
+
+#include "ash/ash_export.h"
 #include "ash/wm/base_state.h"
-#include "ash/wm/window_state.h"
+#include "ash/wm/wm_event.h"
 #include "base/macros.h"
 #include "ui/display/display.h"
 #include "ui/gfx/geometry/rect.h"
@@ -17,20 +20,29 @@ enum class WindowStateType;
 }
 
 namespace wm {
-class SetBoundsEvent;
 
-// DefaultState implements Ash behavior without state machine.
-class DefaultState : public BaseState {
+// ClientControlledState implements a behavior of the window whose
+// window state is determined by the delegate.
+class ASH_EXPORT ClientControlledState : public BaseState {
  public:
-  explicit DefaultState(mojom::WindowStateType initial_state_type);
-  ~DefaultState() override;
+  class Delegate {
+   public:
+    virtual ~Delegate() = default;
+    virtual void SendWindowStateRequest(mojom::WindowStateType current_state,
+                                        mojom::WindowStateType next_state);
+    virtual void SendBoundsRequest(mojom::WindowStateType current_state,
+                                   const gfx::Rect& bounds) = 0;
+  };
+
+  ClientControlledState(std::unique_ptr<Delegate> delegate);
+  ~ClientControlledState() override;
 
   // WindowState::State overrides:
-  // void OnWMEvent(WindowState* window_state, const WMEvent* event) override;
-  mojom::WindowStateType GetType() const override;
   void AttachState(WindowState* window_state,
                    WindowState::State* previous_state) override;
   void DetachState(WindowState* window_state) override;
+
+  void set_bounds_locally(bool set) { set_bounds_locally_ = set; }
 
   // BaseState:
   void HandleCompoundEvents(WindowState* window_state,
@@ -44,41 +56,21 @@ class DefaultState : public BaseState {
   void HandleTransitionEvents(WindowState* window_state,
                               const WMEvent* event) override;
 
- private:
-  // Set the fullscreen/maximized bounds without animation.
-  static bool SetMaximizedOrFullscreenBounds(wm::WindowState* window_state);
-
-  static void SetBounds(WindowState* window_state,
-                        const SetBoundsEvent* bounds_event);
-
-  static void CenterWindow(WindowState* window_state);
-
   // Enters next state. This is used when the state moves from one to another
   // within the same desktop mode.
-  void EnterToNextState(wm::WindowState* window_state,
+  bool EnterToNextState(wm::WindowState* window_state,
                         mojom::WindowStateType next_state_type);
 
-  // Reenters the current state. This is called when migrating from
-  // previous desktop mode, and the window's state needs to re-construct the
-  // state/bounds for this state.
-  void ReenterToCurrentState(wm::WindowState* window_state,
-                             wm::WindowState::State* state_in_previous_mode);
-
+ private:
   // Animates to new window bounds based on the current and previous state type.
   void UpdateBoundsFromState(wm::WindowState* window_state,
                              mojom::WindowStateType old_state_type);
 
-  // The saved window state for the case that the state gets de-/activated.
-  gfx::Rect stored_bounds_;
-  gfx::Rect stored_restore_bounds_;
+  std::unique_ptr<Delegate> delegate_;
 
-  // The display state in which the mode got started.
-  display::Display stored_display_state_;
+  bool set_bounds_locally_ = false;
 
-  // The window state only gets remembered for DCHECK reasons.
-  WindowState* stored_window_state_;
-
-  DISALLOW_COPY_AND_ASSIGN(DefaultState);
+  DISALLOW_COPY_AND_ASSIGN(ClientControlledState);
 };
 
 }  // namespace wm

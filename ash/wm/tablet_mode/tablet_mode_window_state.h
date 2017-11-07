@@ -17,6 +17,7 @@ class TabletModeWindowManager;
 // states to minimized and maximized. If a window cannot be maximized it will be
 // set to normal. If a window cannot fill the entire workspace it will be
 // centered within the workspace.
+// TODO(oshima): Switch to use BaseState.
 class TabletModeWindowState : public wm::WindowState::State {
  public:
   // Called when the window position might need to be updated.
