@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "3353fd82_c1b4f8fe",
+        "filename": "services/device/generic_sensor/platform_sensor.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 74,
+      "author": {
+        "id": 1115688
+      },
+      "writtenOn": "2017-11-07T10:51:52Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "e952f7bf_93a8e239",
+      "range": {
+        "startLine": 73,
+        "startChar": 0,
+        "endLine": 74,
+        "endChar": 23
+      },
+      "revId": "2e2238de61578c0c7d577d1c81db74c7e8e16aa6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "38e3db5a_9e690e08",
         "filename": "services/device/generic_sensor/platform_sensor.h",
         "patchSetId": 2
@@ -45,6 +69,30 @@
       "revId": "2e2238de61578c0c7d577d1c81db74c7e8e16aa6",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6e8d1b14_c062e59e",
+        "filename": "services/device/generic_sensor/platform_sensor.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 75,
+      "author": {
+        "id": 1115688
+      },
+      "writtenOn": "2017-11-07T10:51:52Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "38e3db5a_9e690e08",
+      "range": {
+        "startLine": 75,
+        "startChar": 7,
+        "endLine": 75,
+        "endChar": 16
+      },
+      "revId": "2e2238de61578c0c7d577d1c81db74c7e8e16aa6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -71,6 +119,30 @@
     },
     {
       "key": {
+        "uuid": "6bfbb87b_9a691b94",
+        "filename": "services/device/generic_sensor/platform_sensor.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 81,
+      "author": {
+        "id": 1115688
+      },
+      "writtenOn": "2017-11-07T10:51:52Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "0dbc7a77_47090db3",
+      "range": {
+        "startLine": 79,
+        "startChar": 0,
+        "endLine": 81,
+        "endChar": 32
+      },
+      "revId": "2e2238de61578c0c7d577d1c81db74c7e8e16aa6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "339614a1_3c0af456",
         "filename": "services/device/generic_sensor/platform_sensor_fusion.cc",
         "patchSetId": 2
@@ -91,6 +163,30 @@
       "revId": "2e2238de61578c0c7d577d1c81db74c7e8e16aa6",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "097f69f9_1615bab7",
+        "filename": "services/device/generic_sensor/platform_sensor_fusion.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 118,
+      "author": {
+        "id": 1115688
+      },
+      "writtenOn": "2017-11-07T10:51:52Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "339614a1_3c0af456",
+      "range": {
+        "startLine": 118,
+        "startChar": 7,
+        "endLine": 118,
+        "endChar": 22
+      },
+      "revId": "2e2238de61578c0c7d577d1c81db74c7e8e16aa6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
