@@ -457,16 +457,22 @@ class BasePage {
 
   bool IsIncrementalMarking() const { return incremental_marking_; }
 
+  // Returns true if magic number is valid.
+  bool IsValid() const;
+
  private:
-  PageMemory* storage_;
-  BaseArena* arena_;
+  PageMemory* const storage_;
+  BaseArena* const arena_;
   BasePage* next_;
+
+  static const uint16_t kPageMagic = 0x4A9E;
+  uint16_t const magic_ = kPageMagic;
 
   // Track the sweeping state of a page. Set to false at the start of a sweep,
   // true  upon completion of lazy sweeping.
-  bool swept_;
+  bool swept_ : 1;
   // Track whether incremental marking is currently running.
-  bool incremental_marking_;
+  bool incremental_marking_ : 1;
   friend class BaseArena;
 };
 
@@ -1023,6 +1029,10 @@ NO_SANITIZE_ADDRESS inline void HeapObjectHeader::Unmark() {
   CheckHeader();
   DCHECK(IsMarked());
   encoded_ &= ~kHeaderMarkBitMask;
+}
+
+NO_SANITIZE_ADDRESS inline bool BasePage::IsValid() const {
+  return kPageMagic == magic_;
 }
 
 inline Address NormalPageArena::AllocateObject(size_t allocation_size,
