@@ -1,0 +1,73 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "d9ae651f_dd280e32",
+        "filename": "chrome/browser/vr/ganesh_surface_provider.cc",
+        "patchSetId": 10
+      },
+      "lineNbr": 23,
+      "author": {
+        "id": 1000770
+      },
+      "writtenOn": "2017-11-07T13:25:46Z",
+      "side": 1,
+      "message": "Using GrContext::MakeGL is now preferred. We\u0027ll eventually move the less typesafe Create factory.",
+      "range": {
+        "startLine": 23,
+        "startChar": 17,
+        "endLine": 23,
+        "endChar": 23
+      },
+      "revId": "072e7671f2052b57a5b4ea60561b9dfad85d2cbb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "85b439c1_8a53f1f8",
+        "filename": "chrome/browser/vr/ganesh_surface_provider.h",
+        "patchSetId": 10
+      },
+      "lineNbr": 26,
+      "author": {
+        "id": 1000770
+      },
+      "writtenOn": "2017-11-07T13:25:46Z",
+      "side": 1,
+      "message": "This gets retained by GrContext so you probably don\u0027t need this member var.",
+      "range": {
+        "startLine": 26,
+        "startChar": 29,
+        "endLine": 26,
+        "endChar": 42
+      },
+      "revId": "072e7671f2052b57a5b4ea60561b9dfad85d2cbb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d5719e17_ed49f496",
+        "filename": "skia/BUILD.gn",
+        "patchSetId": 10
+      },
+      "lineNbr": 429,
+      "author": {
+        "id": 1000770
+      },
+      "writtenOn": "2017-11-07T13:25:46Z",
+      "side": 1,
+      "message": "Including this means you can pass nullptr to GrContext::MakeGL as the sk_sp\u003cGrGLInterface\u003e parameter instead of explicitly calling GrGLCreateNativeInterface as MakeGL will construct it on your behalf when it sees nullptr.",
+      "range": {
+        "startLine": 429,
+        "startChar": 11,
+        "endLine": 429,
+        "endChar": 72
+      },
+      "revId": "072e7671f2052b57a5b4ea60561b9dfad85d2cbb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
