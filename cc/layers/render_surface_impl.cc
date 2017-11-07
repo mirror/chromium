@@ -429,7 +429,8 @@ void RenderSurfaceImpl::AppendQuads(DrawMode draw_mode,
                  "mask_layer_gpu_memory_usage",
                  mask_layer->GPUMemoryUsageInBytes());
     if (mask_layer->mask_type() == Layer::LayerMaskType::MULTI_TEXTURE_MASK) {
-      TileMaskLayer(render_pass, shared_quad_state, visible_layer_rect);
+      TileMaskLayer(render_pass, shared_quad_state, visible_layer_rect,
+                    append_quads_data);
       return;
     }
     gfx::SizeF mask_uv_size;
@@ -456,7 +457,8 @@ void RenderSurfaceImpl::AppendQuads(DrawMode draw_mode,
 
 void RenderSurfaceImpl::TileMaskLayer(viz::RenderPass* render_pass,
                                       viz::SharedQuadState* shared_quad_state,
-                                      const gfx::Rect& visible_layer_rect) {
+                                      const gfx::Rect& visible_layer_rect,
+                                      AppendQuadsData* append_quads_data) {
   DCHECK(MaskLayer());
   DCHECK(Filters().IsEmpty());
 
@@ -466,6 +468,8 @@ void RenderSurfaceImpl::TileMaskLayer(viz::RenderPass* render_pass,
   std::unique_ptr<viz::RenderPass> temp_render_pass = viz::RenderPass::Create();
   AppendQuadsData temp_append_quads_data;
   mask_layer->AppendQuads(temp_render_pass.get(), &temp_append_quads_data);
+  append_quads_data->gpu_memory_in_bytes_saved_by_tiling_for_masks =
+      temp_append_quads_data.gpu_memory_in_bytes_saved_by_tiling_for_masks;
 
   auto* temp_quad = temp_render_pass->quad_list.front();
   if (!temp_quad)
