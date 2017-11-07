@@ -182,6 +182,7 @@
 /swiftshader/
 /syzygy
 /syzygy/binaries
+/tensorflow/src
 /tsan/
 /ub-uiautomator/lib
 /usb_ids
