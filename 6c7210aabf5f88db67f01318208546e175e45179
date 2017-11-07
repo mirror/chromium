@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "1b93defe_9c0e7c0d",
+        "filename": "third_party/WebKit/Source/platform/graphics/paint/DisplayItem.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 338,
+      "author": {
+        "id": 1110037
+      },
+      "writtenOn": "2017-11-07T17:41:49Z",
+      "side": 1,
+      "message": "This is_tombstone_ refactor is a real change. Can you move it to a followup patch?",
+      "revId": "6c7210aabf5f88db67f01318208546e175e45179",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
