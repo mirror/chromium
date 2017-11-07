@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "afcf428d_eb263657",
+        "filename": "ios/chrome/browser/ui/bookmarks/bookmarks_new_generation_egtest.mm",
+        "patchSetId": 2
+      },
+      "lineNbr": 730,
+      "author": {
+        "id": 1116027
+      },
+      "writtenOn": "2017-11-07T09:10:24Z",
+      "side": 1,
+      "message": "It looks like this block returns a BOOL, i.e. has signature BOOL (^)(), while the ConditionBlock is defined as returning a bool, i.e. has signature bool (^)(). As BOOL !\u003d bool when targeting 32-bit architectures, this cause compilation failure.\n\nA simple fix would be to change this to have a conversion to bool using the !! trick (!! is a bool no-op but is defined to return bool in C++):\n\n  ConditionBlock condition \u003d ^{\n    return !![[UIPastboard generalPasteboard].string containsString:@\"www.a.fr\"];\n  };",
+      "revId": "a8a36b4589e7557ff3b731affef7b6a19d48706c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
