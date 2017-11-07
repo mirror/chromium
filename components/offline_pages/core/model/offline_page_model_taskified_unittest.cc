@@ -137,6 +137,9 @@ class OfflinePageModelTaskifiedTest
   bool observer_add_page_called() { return observer_add_page_called_; }
   const OfflinePageItem& last_added_page() { return last_added_page_; }
   bool observer_delete_page_called() { return observer_delete_page_called_; }
+  const OfflinePageModel::DeletedPageInfo& last_deleted_page_info() {
+    return last_deleted_page_info_;
+  }
 
  private:
   scoped_refptr<base::TestSimpleTaskRunner> task_runner_;
@@ -493,6 +496,74 @@ TEST_F(OfflinePageModelTaskifiedTest, GetAllPages) {
   PumpLoop();
 }
 
+// TODO(romax): remove these 'indicators for newly added tests' when migration
+// is done.
+// This test case is covered by DeletePageTaskTest::DeletePagesBy*.
+TEST_F(OfflinePageModelTaskifiedTest, DISABLED_DeletePageSuccessful) {}
+
+// This test case is covered by DeletePageTaskTest::DeletePagesByUrlPredicate.
+TEST_F(OfflinePageModelTaskifiedTest,
+       DISABLED_DeleteCachedPageByPredicateUserRequested) {}
+
+// This test case is renamed to DeletePagesByUrlPredicate.
+TEST_F(OfflinePageModelTaskifiedTest, DISABLED_DeleteCachedPageByPredicate) {}
+
+// This test case is covered by DeletePageTaskTest::DeletePagesBy*NotFound.
+TEST_F(OfflinePageModelTaskifiedTest, DISABLED_DeletePageNotFound) {}
+
+// This test case is covered by
+// DeletePageTaskTest::DeletePagesStoreFailureOnRemove.
+TEST_F(OfflinePageModelTaskifiedTest, DISABLED_DeletePageStoreFailureOnRemove) {
+}
+
+// This test case is covered by DeletePageTaskTest::DeletePagesBy*.
+TEST_F(OfflinePageModelImplTest, DeleteMultiplePages) {}
+
+// These newly added tests are testing the API instead of results, which
+// should be covered in DeletePagesTaskTest.
+TEST_F(OfflinePageModelTaskifiedTest, DeletePagesByOfflineId) {
+  generator()->SetArchiveDirectory(temporary_dir_path());
+  OfflinePageItem page = generator()->CreateItemWithTempFile();
+  InsertPageIntoStore(page);
+
+  base::MockCallback<DeletePageCallback> callback;
+  EXPECT_CALL(callback, Run(testing::A<DeletePageResult>()));
+  CheckTaskQueueIdle();
+
+  model()->DeletePagesByOfflineId({page.offline_id}, callback.Get());
+  EXPECT_TRUE(model_task_queue()->HasRunningTask());
+
+  PumpLoop();
+  EXPECT_TRUE(observer_delete_page_called());
+  EXPECT_EQ(last_deleted_page_info().offline_id, page.offline_id);
+  CheckTaskQueueIdle();
+}
+
+TEST_F(OfflinePageModelTaskifiedTest, DeletePagesByUrlPredicate) {
+  generator()->SetArchiveDirectory(temporary_dir_path());
+  generator()->SetNamespace(kDefaultNamespace);
+  generator()->SetUrl(kTestUrl);
+  OfflinePageItem page = generator()->CreateItemWithTempFile();
+  InsertPageIntoStore(page);
+
+  base::MockCallback<DeletePageCallback> callback;
+  EXPECT_CALL(callback, Run(testing::A<DeletePageResult>()));
+  CheckTaskQueueIdle();
+
+  UrlPredicate predicate =
+      base::Bind([](const OfflinePageItem& page,
+                    const GURL& url) -> bool { return url == page.url; },
+                 page);
+
+  model()->DeleteCachedPagesByURLPredicate(predicate, callback.Get());
+  EXPECT_TRUE(model_task_queue()->HasRunningTask());
+
+  PumpLoop();
+  EXPECT_TRUE(observer_delete_page_called());
+  EXPECT_EQ(last_deleted_page_info().offline_id, page.offline_id);
+  CheckTaskQueueIdle();
+}
+
 TEST_F(OfflinePageModelTaskifiedTest, GetPageByOfflineId) {
   generator()->SetArchiveDirectory(temporary_dir_path());
   generator()->SetNamespace(kDefaultNamespace);
@@ -643,6 +714,24 @@ TEST_F(OfflinePageModelTaskifiedTest, GetPagesByRequestOrigin) {
   EXPECT_TRUE(model_task_queue()->HasRunningTask());
 
   PumpLoop();
+}
+
+TEST_F(OfflinePageModelTaskifiedTest, DeletePagesByClientIds) {
+  generator()->SetArchiveDirectory(temporary_dir_path());
+  OfflinePageItem page = generator()->CreateItemWithTempFile();
+  InsertPageIntoStore(page);
+
+  base::MockCallback<DeletePageCallback> callback;
+  EXPECT_CALL(callback, Run(testing::A<DeletePageResult>()));
+  CheckTaskQueueIdle();
+
+  model()->DeletePagesByClientIds({page.client_id}, callback.Get());
+  EXPECT_TRUE(model_task_queue()->HasRunningTask());
+
+  PumpLoop();
+  EXPECT_TRUE(observer_delete_page_called());
+  EXPECT_EQ(last_deleted_page_info().client_id, page.client_id);
+  CheckTaskQueueIdle();
 }
 
 TEST_F(OfflinePageModelTaskifiedTest, GetPagesByNamespace) {
