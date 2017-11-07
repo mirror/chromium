@@ -144,6 +144,30 @@
     },
     {
       "key": {
+        "uuid": "7570ae2d_0113628e",
+        "filename": "third_party/WebKit/Source/platform/graphics/gpu/ImageLayerBridge.cpp",
+        "patchSetId": 4
+      },
+      "lineNbr": 97,
+      "author": {
+        "id": 1000887
+      },
+      "writtenOn": "2017-11-07T22:42:53Z",
+      "side": 1,
+      "message": "Ah, there is already MakeUnaccelerated() there.  I\u0027ll use that in the other case, and added MakeAccelerated for this.\n\nI made it DCHECK that IsTextureBacked()\u003d\u003dfalse, instead of |return this|, since the context could be wrong if it returned this, at least it wont be the context you passed in. At that point things are weird.",
+      "parentUuid": "5082a5a3_463f32ba",
+      "range": {
+        "startLine": 97,
+        "startChar": 6,
+        "endLine": 97,
+        "endChar": 21
+      },
+      "revId": "bca81b3aeef526691daa9eba1f1e292d648b60ec",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "2cfbbbbd_f5252dfe",
         "filename": "third_party/WebKit/Source/platform/graphics/gpu/ImageLayerBridge.cpp",
         "patchSetId": 4
