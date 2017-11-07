@@ -49,6 +49,30 @@
     },
     {
       "key": {
+        "uuid": "a289bba1_89635331",
+        "filename": "ios/chrome/browser/ui/toolbar/keyboard_assist/toolbar_keyboard_accessory_view.mm",
+        "patchSetId": 2
+      },
+      "lineNbr": 46,
+      "author": {
+        "id": 1180589
+      },
+      "writtenOn": "2017-11-07T16:09:16Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "18026570_873f8946",
+      "range": {
+        "startLine": 46,
+        "startChar": 9,
+        "endLine": 46,
+        "endChar": 25
+      },
+      "revId": "ee6fb2c4ced09a99fca1dc01f1142361289da20f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "4b48669e_268252d1",
         "filename": "ios/chrome/browser/ui/toolbar/keyboard_assist/toolbar_keyboard_accessory_view.mm",
         "patchSetId": 2
@@ -84,6 +108,30 @@
       "side": 1,
       "message": "...heh. Because I confused horizontal and vertical in my head :D (The value is correct. Renamed.)",
       "parentUuid": "4b48669e_268252d1",
+      "range": {
+        "startLine": 100,
+        "startChar": 55,
+        "endLine": 100,
+        "endChar": 72
+      },
+      "revId": "ee6fb2c4ced09a99fca1dc01f1142361289da20f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "162fd737_266cca1b",
+        "filename": "ios/chrome/browser/ui/toolbar/keyboard_assist/toolbar_keyboard_accessory_view.mm",
+        "patchSetId": 2
+      },
+      "lineNbr": 100,
+      "author": {
+        "id": 1180589
+      },
+      "writtenOn": "2017-11-07T16:09:16Z",
+      "side": 1,
+      "message": "This constraint changes the position of the button related to the keyboard :)",
+      "parentUuid": "f14e9879_9f67c223",
       "range": {
         "startLine": 100,
         "startChar": 55,
