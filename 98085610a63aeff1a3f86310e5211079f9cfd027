@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "2612088b_92b74562",
+        "filename": "third_party/WebKit/Source/modules/media_controls/MediaControlsImpl.cpp",
+        "patchSetId": 5
+      },
+      "lineNbr": 1180,
+      "author": {
+        "id": 1115974
+      },
+      "writtenOn": "2017-11-07T15:21:20Z",
+      "side": 1,
+      "message": "nit: to avoid confusion, I would recommend this to be called `was_finite_duration`, too easy to misread :)",
+      "revId": "98085610a63aeff1a3f86310e5211079f9cfd027",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}

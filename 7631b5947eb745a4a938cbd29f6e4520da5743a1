@@ -69,6 +69,24 @@
       "revId": "7631b5947eb745a4a938cbd29f6e4520da5743a1",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c61a06a7_0b038190",
+        "filename": "third_party/WebKit/Source/modules/media_controls/MediaControlsImpl.cpp",
+        "patchSetId": 4
+      },
+      "lineNbr": 1072,
+      "author": {
+        "id": 1115974
+      },
+      "writtenOn": "2017-11-07T15:21:20Z",
+      "side": 1,
+      "message": "I would like to check why it doesn\u0027t work as I don\u0027t think calling `OnControlsListUpdated()` is the right thing to do anyway (as we do not update the controlslist). Which test page did you use? Maybe you could add a unit test for this?",
+      "parentUuid": "9836aef9_3cf7d282",
+      "revId": "7631b5947eb745a4a938cbd29f6e4520da5743a1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
