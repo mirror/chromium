@@ -38,6 +38,7 @@ source_set("browser") {
     "//cc",
     "//cc/animation",
     "//cc/paint",
+    "//components/autofill/core/common",
     "//components/discardable_memory/common",
     "//components/discardable_memory/service",
     "//components/filesystem:lib",
