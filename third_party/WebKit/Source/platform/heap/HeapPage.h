@@ -890,7 +890,7 @@ NO_SANITIZE_ADDRESS inline bool HeapObjectHeader::IsValid() const {
 
 NO_SANITIZE_ADDRESS inline void HeapObjectHeader::CheckHeader() const {
 #if defined(ARCH_CPU_64_BITS)
-  DCHECK(IsValid());
+  CHECK(IsValid());
 #endif
 }
 
