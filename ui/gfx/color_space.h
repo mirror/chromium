@@ -206,6 +206,9 @@ class COLOR_SPACE_EXPORT ColorSpace {
   // For most formats, this is the RGB to YUV matrix.
   void GetTransferMatrix(SkMatrix44* matrix) const;
   void GetRangeAdjustMatrix(SkMatrix44* matrix) const;
+  SkMatrix44 GetGainMatrix() const;
+
+  void SetGain(float red_gain, float blue_gain, float green_gain);
 
  private:
   void SetCustomTransferFunction(const SkColorSpaceTransferFn& fn);
@@ -226,6 +229,9 @@ class COLOR_SPACE_EXPORT ColorSpace {
   // through G entries of the SkColorSpaceTransferFn structure in alphabetical
   // order.
   float custom_transfer_params_[7] = {0, 0, 0, 0, 0, 0, 0};
+
+  // Scaling applied after transfer function. Used to implement NightLight.
+  float gain_[3] = {1, 1, 1};
 
   // This is used to look up the ICCProfile from which this ColorSpace was
   // created, if possible.

@@ -279,6 +279,12 @@ void NightLightController::SetDelegateForTesting(
 }
 
 void NightLightController::RefreshLayersTemperature() {
+  // Probably want to call back into ui::DisplayManager and have it change the
+  // display::Display color space here. (not sure how this stuff works on cros
+  // -- dcastagna and mcasas are working on it) From there, the DisplayObserver
+  // notifications should pick everything (I think)
+  return;
+
   ApplyColorTemperatureToLayers(GetEnabled() ? GetColorTemperature() : 0.0f,
                                 animation_duration_ == AnimationDuration::kShort
                                     ? kManualAnimationDuration

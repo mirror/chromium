@@ -835,6 +835,9 @@ void ColorTransformInternal::AppendColorSpaceToColorSpaceTransform(
     // TODO(hubbe): shrink gamuts here (never stretch gamuts)
   }
 
+  steps_.push_back(std::make_unique<ColorTransformMatrix>(
+      Invert(gfx::Transform(src.GetGainMatrix()))));
+
   steps_.push_back(
       std::make_unique<ColorTransformMatrix>(GetRangeAdjustMatrix(src)));
 
@@ -885,6 +888,9 @@ void ColorTransformInternal::AppendColorSpaceToColorSpaceTransform(
 
   steps_.push_back(std::make_unique<ColorTransformMatrix>(
       Invert(GetRangeAdjustMatrix(dst))));
+
+  steps_.push_back(std::make_unique<ColorTransformMatrix>(
+      gfx::Transform(dst.GetGainMatrix())));
 }
 
 class SkiaColorTransform : public ColorTransformStep {

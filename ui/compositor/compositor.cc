@@ -364,6 +364,11 @@ void Compositor::SetScaleAndSize(float scale,
 void Compositor::SetDisplayColorSpace(const gfx::ColorSpace& color_space) {
   output_color_space_ = color_space;
   blending_color_space_ = output_color_space_.GetBlendingColorSpace();
+
+  // Hard-code this in for testing...
+  output_color_space_.SetGain(1, 0.5, 0.25);
+  blending_color_space_.SetGain(1, 0.5, 0.25);
+
   host_->SetRasterColorSpace(output_color_space_.GetRasterColorSpace());
   // Color space is reset when the output surface is lost, so this must also be
   // updated then.

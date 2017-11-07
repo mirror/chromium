@@ -51,6 +51,7 @@ ColorSpace::ColorSpace(const ColorSpace& other)
       range_(other.range_),
       icc_profile_id_(other.icc_profile_id_),
       icc_profile_sk_color_space_(other.icc_profile_sk_color_space_) {
+  memcpy(gain_, other.gain_, sizeof(gain_));
   if (transfer_ == TransferID::CUSTOM) {
     memcpy(custom_transfer_params_, other.custom_transfer_params_,
            sizeof(custom_transfer_params_));
@@ -103,6 +104,12 @@ ColorSpace ColorSpace::CreateCustom(const SkMatrix44& to_XYZD50,
   }
   result.SetCustomTransferFunction(fn);
   return result;
+}
+
+void ColorSpace::SetGain(float r, float g, float b) {
+  gain_[0] = r;
+  gain_[1] = g;
+  gain_[2] = b;
 }
 
 void ColorSpace::SetCustomTransferFunction(const SkColorSpaceTransferFn& fn) {
@@ -168,6 +175,9 @@ bool ColorSpace::operator==(const ColorSpace& other) const {
   if (primaries_ != other.primaries_ || transfer_ != other.transfer_ ||
       matrix_ != other.matrix_ || range_ != other.range_)
     return false;
+  if (memcmp(gain_, other.gain_, sizeof(gain_)))
+    return false;
+
   if (primaries_ == PrimaryID::CUSTOM) {
     if (memcmp(custom_primary_matrix_, other.custom_primary_matrix_,
                sizeof(custom_primary_matrix_))) {
@@ -379,6 +389,7 @@ std::string ColorSpace::ToString() const {
     PRINT_ENUM_CASE(RangeID, FULL)
     PRINT_ENUM_CASE(RangeID, DERIVED)
   }
+  ss << ", gain:(" << gain_[0] << "," << gain_[1] << "," << gain_[2] << ")";
   ss << ", icc_profile_id:" << icc_profile_id_;
   ss << "}";
   return ss.str();
@@ -392,19 +403,32 @@ ColorSpace ColorSpace::GetAsFullRangeRGB() const {
     return result;
   result.matrix_ = MatrixID::RGB;
   result.range_ = RangeID::FULL;
+  /*
+    for (size_t channel = 0; channel < 3; ++channel)
+      result.gain_[channel] = 1;
+  */
   return result;
 }
 
 ColorSpace ColorSpace::GetRasterColorSpace() const {
+  ColorSpace result = *this;
+
   // Rasterization can only be done into parametric color spaces.
   if (!IsParametric())
-    return GetParametricApproximation();
+    result = GetParametricApproximation();
+
+  // Rasterization doesn't handle gain.
+  for (size_t channel = 0; channel < 3; ++channel) {
+    result.gain_[channel] = 1;
+  }
+
   // Rasterization doesn't support more than 8 bit unorm values. If the output
   // space has an extended range, use Display P3 for the rasterization space,
   // to get a somewhat wider color gamut.
   if (HasExtendedSkTransferFn())
-    return CreateDisplayP3D65();
-  return *this;
+    result = CreateDisplayP3D65();
+
+  return result;
 }
 
 ColorSpace ColorSpace::GetBlendingColorSpace() const {
@@ -954,6 +978,12 @@ void ColorSpace::GetRangeAdjustMatrix(SkMatrix44* matrix) const {
       matrix->postTranslate(-16.0f/219.0f, -15.5f/224.0f, -15.5f/224.0f);
       break;
   }
+}
+
+SkMatrix44 ColorSpace::GetGainMatrix() const {
+  SkMatrix44 matrix;
+  matrix.setScale(gain_[0], gain_[1], gain_[2]);
+  return matrix;
 }
 
 std::ostream& operator<<(std::ostream& out, const ColorSpace& color_space) {

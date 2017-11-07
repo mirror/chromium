@@ -16,6 +16,7 @@ void ParamTraits<gfx::ColorSpace>::Write(base::Pickle* m,
   WriteParam(m, p.matrix_);
   WriteParam(m, p.range_);
   WriteParam(m, p.icc_profile_id_);
+  m->WriteBytes(reinterpret_cast<const char*>(p.gain_), sizeof(p.gain_));
   if (p.primaries_ == gfx::ColorSpace::PrimaryID::CUSTOM) {
     m->WriteBytes(reinterpret_cast<const char*>(p.custom_primary_matrix_),
                   sizeof(p.custom_primary_matrix_));
@@ -39,6 +40,12 @@ bool ParamTraits<gfx::ColorSpace>::Read(const base::Pickle* m,
     return false;
   if (!ReadParam(m, iter, &r->icc_profile_id_))
     return false;
+  {
+    const char* data = nullptr;
+    if (!iter->ReadBytes(&data, sizeof(r->gain_)))
+      return false;
+    memcpy(r->gain_, data, sizeof(r->gain_));
+  }
   if (r->primaries_ == gfx::ColorSpace::PrimaryID::CUSTOM) {
     const char* data = nullptr;
     if (!iter->ReadBytes(&data, sizeof(r->custom_primary_matrix_)))
