@@ -34,6 +34,24 @@
       "revId": "63c4efd655be8a6cfcbad4302630c6abce3c0520",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3906c544_3c053705",
+        "filename": "chrome/browser/chromeos/eol_notification.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 75,
+      "author": {
+        "id": 1002032
+      },
+      "writtenOn": "2017-11-07T19:44:49Z",
+      "side": 1,
+      "message": "We\u0027ve had quite a few Profile-related crashes in the past, so yes, this has been a problem. Maybe not for this particular notification, but we shouldn\u0027t start with an example of how not to do it.\n\nIMO the NotificationDisplayService should take on this responsibility and just close all transient notifications when it receives the KeyedService\u0027s Shutdown() call, since this is not limited to native notifications. I can add that if you don\u0027t want to.",
+      "parentUuid": "9d6f6ad4_ffc5727a",
+      "revId": "63c4efd655be8a6cfcbad4302630c6abce3c0520",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
