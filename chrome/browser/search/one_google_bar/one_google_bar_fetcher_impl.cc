@@ -174,7 +174,13 @@ GURL OneGoogleBarFetcherImpl::AuthenticatedURLFetcher::GetApiUrl() const {
   GURL api_url = google_base_url_.Resolve(api_url_override_.value_or(kApiPath));
 
   // Add the "hl=" parameter.
-  return net::AppendQueryParameter(api_url, "hl", application_locale_);
+  api_url = net::AppendQueryParameter(api_url, "hl", application_locale_);
+
+  // Add the "async=" parameter. We can't use net::AppendQueryParameter for
+  // this because we need the ":" to remain unescaped.
+  GURL::Replacements replacements;
+  replacements.SetQueryStr(api_url.query() + "&async=fixed:0");
+  return api_url.ReplaceComponents(replacements);
 }
 
 std::string
