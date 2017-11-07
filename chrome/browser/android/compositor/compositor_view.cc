@@ -27,6 +27,7 @@
 #include "chrome/browser/android/compositor/tab_content_manager.h"
 #include "content/public/browser/android/compositor.h"
 #include "content/public/browser/child_process_data.h"
+#include "content/public/browser/render_widget_host_view.h"
 #include "content/public/browser/web_contents.h"
 #include "content/public/common/process_type.h"
 #include "jni/CompositorView_jni.h"
@@ -176,6 +177,28 @@ void CompositorView::OnPhysicalBackingSizeChanged(
       content::WebContents::FromJavaWebContents(jweb_contents);
   gfx::Size size(width, height);
   web_contents->GetNativeView()->OnPhysicalBackingSizeChanged(size);
+}
+
+void CompositorView::SetTopControlsHeight(
+    JNIEnv* env,
+    const JavaParamRef<jobject>& obj,
+    const JavaParamRef<jobject>& jweb_contents,
+    jint height,
+    jboolean controls_resize_view) {
+  content::WebContents* web_contents =
+      content::WebContents::FromJavaWebContents(jweb_contents);
+  web_contents->GetRenderWidgetHostView()->SetTopControlsHeight(
+      height, controls_resize_view);
+}
+
+void CompositorView::SetBottomControlsHeight(
+    JNIEnv* env,
+    const JavaParamRef<jobject>& obj,
+    const JavaParamRef<jobject>& jweb_contents,
+    jint height) {
+  content::WebContents* web_contents =
+      content::WebContents::FromJavaWebContents(jweb_contents);
+  web_contents->GetRenderWidgetHostView()->SetBottomControlsHeight(height);
 }
 
 void CompositorView::SetLayoutBounds(JNIEnv* env,

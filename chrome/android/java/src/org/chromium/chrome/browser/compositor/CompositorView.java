@@ -281,6 +281,17 @@ public class CompositorView
         nativeOnPhysicalBackingSizeChanged(mNativeCompositorView, webContents, width, height);
     }
 
+    void setTopControlsHeight(WebContents webContents, int height, boolean controlsResizeView) {
+        float DipToPx = mWindowAndroid.getDisplay().getDipScale();
+        nativeSetTopControlsHeight(
+                mNativeCompositorView, webContents, (int) (height / DipToPx), controlsResizeView);
+    }
+
+    void setBottomControlsHeight(WebContents webContents, int height) {
+        float DipToPx = mWindowAndroid.getDisplay().getDipScale();
+        nativeSetBottomControlsHeight(mNativeCompositorView, webContents, (int) (height / DipToPx));
+    }
+
     @CalledByNative
     private void onCompositorLayout() {
         mRenderHost.onCompositorLayout();
@@ -415,6 +426,10 @@ public class CompositorView
             long nativeCompositorView, int format, int width, int height, Surface surface);
     private native void nativeOnPhysicalBackingSizeChanged(
             long nativeCompositorView, WebContents webContents, int width, int height);
+    private native void nativeSetTopControlsHeight(long nativeCompositorView,
+            WebContents webContents, int height, boolean controlsResizeView);
+    private native void nativeSetBottomControlsHeight(
+            long nativeCompositorView, WebContents webContents, int height);
     private native void nativeFinalizeLayers(long nativeCompositorView);
     private native void nativeSetNeedsComposite(long nativeCompositorView);
     private native void nativeSetLayoutBounds(long nativeCompositorView);
