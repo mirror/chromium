@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "6800c3e4_b296da18",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/omnibox/AutocompleteController.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 89,
+      "author": {
+        "id": 1144344
+      },
+      "writtenOn": "2017-11-07T18:21:11Z",
+      "side": 1,
+      "message": "I don\u0027t understand this part. If we want to fix StrictMode violation, we should move disk access off UI thread, right? This assertion does the opposite.\n\nDoes it make sense to launch getCachedOmniboxSuggestionsForZeroSuggest() in the thread pool? Since we have a onSuggestionsReceived callback, doing async work sounds natural.",
+      "range": {
+        "startLine": 89,
+        "startChar": 8,
+        "endLine": 89,
+        "endChar": 39
+      },
+      "revId": "b175614dd0d8b1a8e28ee2f89f12cde7c3258bc4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5c178a71_ab2e4e5f",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/omnibox/OmniboxSuggestion.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 259,
+      "author": {
+        "id": 1144344
+      },
+      "writtenOn": "2017-11-07T18:21:11Z",
+      "side": 1,
+      "message": "What if some users jump versions? That might be common for NBU. Then their shared pref would have residue entries until they clear the data. Honestly I don\u0027t know how many milestones we should keep the cleaning code. Probably until next flag day?",
+      "range": {
+        "startLine": 259,
+        "startChar": 25,
+        "endLine": 259,
+        "endChar": 44
+      },
+      "revId": "b175614dd0d8b1a8e28ee2f89f12cde7c3258bc4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
