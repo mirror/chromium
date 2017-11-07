@@ -30,17 +30,14 @@ AppBannerInfoBarAndroid::~AppBannerInfoBarAndroid() {
 
 base::android::ScopedJavaLocalRef<jobject>
 AppBannerInfoBarAndroid::CreateRenderInfoBar(JNIEnv* env) {
-  ConfirmInfoBarDelegate* app_banner_infobar_delegate = GetDelegate();
+  banners::AppBannerInfoBarDelegateAndroid* delegate = GetDelegate();
 
   base::android::ScopedJavaLocalRef<jstring> app_title =
-      base::android::ConvertUTF16ToJavaString(
-          env, app_banner_infobar_delegate->GetMessageText());
+      base::android::ConvertUTF16ToJavaString(env, delegate->GetMessageText());
 
   base::android::ScopedJavaLocalRef<jobject> java_bitmap;
-  if (!app_banner_infobar_delegate->GetIcon().IsEmpty()) {
-    java_bitmap = gfx::ConvertToJavaBitmap(
-        app_banner_infobar_delegate->GetIcon().ToSkBitmap());
-  }
+  if (!delegate->GetPrimaryIcon().drawsNothing())
+    java_bitmap = gfx::ConvertToJavaBitmap(&delegate->GetPrimaryIcon());
 
   base::android::ScopedJavaLocalRef<jobject> infobar;
   if (!japp_data_.is_null()) {
@@ -70,3 +67,7 @@ void AppBannerInfoBarAndroid::OnInstallStateChanged(int new_state) {
                                                      new_state);
 }
 
+banners::AppBannerInfoBarDelegateAndroid*
+AppBannerInfoBarAndroid::GetDelegate() {
+  return static_cast<banners::AppBannerInfoBarDelegateAndroid*>(delegate());
+}
