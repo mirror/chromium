@@ -22,7 +22,6 @@ class WebContents;
 // 1. PendingView: Offers the user the possibility of saving credentials.
 // 2. ManageView: Displays the current page's saved credentials.
 // 3. BlacklistedView: Informs the user that the current page is blacklisted.
-//
 class ManagePasswordsBubbleView : public LocationBarBubbleDelegateView,
                                   public views::StyledLabelListener {
  public:
@@ -34,6 +33,17 @@ class ManagePasswordsBubbleView : public LocationBarBubbleDelegateView,
                          DisplayReason reason);
 #endif
 
+  static LocationBarBubbleDelegateView* CreateBubble(
+      content::WebContents* web_contents,
+      views::View* anchor_view,
+      gfx::Point anchor_point,
+      DisplayReason reason);
+
+  // Remover function for child dialogs to call on their destruction to remove
+  // any globals pointing to them.
+  static void RemoveManagePasswordsDialog(
+      LocationBarBubbleDelegateView* bubble);
+
   // Closes the existing bubble.
   static void CloseCurrentBubble();
 
@@ -41,14 +51,19 @@ class ManagePasswordsBubbleView : public LocationBarBubbleDelegateView,
   static void ActivateBubble();
 
   // Returns a pointer to the bubble.
-  static ManagePasswordsBubbleView* manage_password_bubble() {
+  static LocationBarBubbleDelegateView* manage_password_bubble() {
     return manage_passwords_bubble_;
+  }
+
+  // Returns a pointer to the bubble's model.
+  static ManagePasswordsBubbleModel* manage_passwords_bubble_model() {
+    return manage_passwords_bubble_model_;
   }
 
   ManagePasswordsBubbleView(content::WebContents* web_contents,
                             views::View* anchor_view,
-                            const gfx::Point& anchor_point,
-                            DisplayReason reason);
+                            gfx::Point anchor_point,
+                            std::unique_ptr<ManagePasswordsBubbleModel> model);
 
   content::WebContents* web_contents() const;
 
@@ -62,7 +77,7 @@ class ManagePasswordsBubbleView : public LocationBarBubbleDelegateView,
   }
 #endif
 
-  ManagePasswordsBubbleModel* model() { return &model_; }
+  ManagePasswordsBubbleModel* model() { return model_.get(); }
 
  private:
   class AutoSigninView;
@@ -109,12 +124,13 @@ class ManagePasswordsBubbleView : public LocationBarBubbleDelegateView,
   // shown on the active browser window, so there is no case in which it will be
   // shown twice at the same time. The instance is owned by the Bubble and will
   // be deleted when the bubble closes.
-  static ManagePasswordsBubbleView* manage_passwords_bubble_;
+  static LocationBarBubbleDelegateView* manage_passwords_bubble_;
+  static ManagePasswordsBubbleModel* manage_passwords_bubble_model_;
 
   // The timeout in seconds for the auto sign-in toast.
   static int auto_signin_toast_timeout_;
 
-  ManagePasswordsBubbleModel model_;
+  std::unique_ptr<ManagePasswordsBubbleModel> model_;
 
   views::View* initially_focused_view_;
 
