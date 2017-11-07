@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "48d3a914_67bfe89c",
+        "filename": "chrome/browser/thumbnails/thumbnail_browsertest.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 372,
+      "author": {
+        "id": 1176649
+      },
+      "writtenOn": "2017-11-07T16:04:51Z",
+      "side": 1,
+      "message": "You seem to verify this in other tests, right? I\u0027m not sure it belongs here, and it may let you simplify the ON_CALL above by always returning true.\n\nIf you do this, you probably want to move the other EXPECT_CALLs here, so make sure nothing weird happens when you NavigateToURLWithDisposition().",
+      "range": {
+        "startLine": 372,
+        "startChar": 16,
+        "endLine": 372,
+        "endChar": 0
+      },
+      "revId": "bc5f0a5b4f0ea6adc0e094c7f244b90195c821ea",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c168e87b_2bd394f3",
+        "filename": "chrome/browser/thumbnails/thumbnail_browsertest.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 387,
+      "author": {
+        "id": 1176649
+      },
+      "writtenOn": "2017-11-07T16:04:51Z",
+      "side": 1,
+      "message": "Just double-checking: you need AtMost(1) because the test is otherwise flaky? We should restrict this technique to tests that absolutely need it. Same below.",
+      "range": {
+        "startLine": 387,
+        "startChar": 23,
+        "endLine": 387,
+        "endChar": 0
+      },
+      "revId": "bc5f0a5b4f0ea6adc0e094c7f244b90195c821ea",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
