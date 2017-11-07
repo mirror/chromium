@@ -3,14 +3,6 @@
 
 # Crashed tests that haven't been categorized.
 -ExtensionsA11yTestFixture.BASIC_EXTENSIONS_region
--WebViewTests/WebViewSurfaceSynchronizationTest.AutosizeBeforeNavigation/0
--WebViewTests/WebViewSurfaceSynchronizationTest.AutosizeBeforeNavigation/1
--WebViewTests/WebViewSurfaceSynchronizationTest.AutosizeRemoveAttributes/0
--WebViewTests/WebViewSurfaceSynchronizationTest.AutosizeRemoveAttributes/1
--WebViewTests/WebViewSurfaceSynchronizationTest.AutoSizeHeight/0
--WebViewTests/WebViewSurfaceSynchronizationTest.AutoSizeHeight/1
--WebViewTests/WebViewSurfaceSynchronizationTest.AutoSize/1
--WebViewTests/WebViewSurfaceSynchronizationTest.AutoSize/0
 
 # Timed out tests that haven't been categorized.
 -ActivityLogApiTest.TriggerEvent
@@ -1404,6 +1396,14 @@
 -WebViewTests/WebViewSpeechAPITest.SpeechRecognitionAPI_HasPermissionDeny/1
 -WebViewTests/WebViewSpeechAPITest.SpeechRecognitionAPI_NoPermission/0
 -WebViewTests/WebViewSpeechAPITest.SpeechRecognitionAPI_NoPermission/1
+-WebViewTests/WebViewSurfaceSynchronizationTest.AutosizeBeforeNavigation/0
+-WebViewTests/WebViewSurfaceSynchronizationTest.AutosizeBeforeNavigation/1
+-WebViewTests/WebViewSurfaceSynchronizationTest.AutosizeRemoveAttributes/0
+-WebViewTests/WebViewSurfaceSynchronizationTest.AutosizeRemoveAttributes/1
+-WebViewTests/WebViewSurfaceSynchronizationTest.AutoSizeHeight/0
+-WebViewTests/WebViewSurfaceSynchronizationTest.AutoSizeHeight/1
+-WebViewTests/WebViewSurfaceSynchronizationTest.AutoSize/1
+-WebViewTests/WebViewSurfaceSynchronizationTest.AutoSize/0
 -WebViewTests/WebViewTest.AcceptTouchEvents/0
 -WebViewTests/WebViewTest.AddRemoveWebView_AddRemoveWebView/0
 -WebViewTests/WebViewTest.AddRemoveWebView_AddRemoveWebView/1
