@@ -55,6 +55,24 @@
     },
     {
       "key": {
+        "uuid": "07f39a12_58bba818",
+        "filename": "device/vr/openvr/openvr_device.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 29,
+      "author": {
+        "id": 1189473
+      },
+      "writtenOn": "2017-11-07T22:18:36Z",
+      "side": 1,
+      "message": "I did try reversing the negation, which would require removal of the texture copy flip.  However, this also had the effect of swaping triangle winding order so I could only see backfaces...",
+      "parentUuid": "2bd4872a_40300e78",
+      "revId": "3c097fba7201baeb05a01574f37889066b1c9420",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "223bcc7c_3b4e7e53",
         "filename": "gpu/ipc/service/gpu_memory_buffer_factory_dxgi.cc",
         "patchSetId": 1
@@ -101,6 +119,30 @@
     },
     {
       "key": {
+        "uuid": "e5c11cb7_33239840",
+        "filename": "gpu/ipc/service/gpu_memory_buffer_factory_dxgi.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 82,
+      "author": {
+        "id": 1189473
+      },
+      "writtenOn": "2017-11-07T22:18:36Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "727eab12_beec6bd5",
+      "range": {
+        "startLine": 82,
+        "startChar": 78,
+        "endLine": 82,
+        "endChar": 79
+      },
+      "revId": "3c097fba7201baeb05a01574f37889066b1c9420",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "8ecc0e0e_ad26eab5",
         "filename": "third_party/WebKit/Source/modules/vr/VRDisplay.cpp",
         "patchSetId": 1
@@ -121,6 +163,30 @@
       "revId": "3c097fba7201baeb05a01574f37889066b1c9420",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "26c2c5c2_c622a355",
+        "filename": "third_party/WebKit/Source/modules/vr/VRDisplay.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 721,
+      "author": {
+        "id": 1189473
+      },
+      "writtenOn": "2017-11-07T22:18:36Z",
+      "side": 1,
+      "message": "Done\n\nstatic_image is used to EnsureMailbox, which is required.",
+      "parentUuid": "8ecc0e0e_ad26eab5",
+      "range": {
+        "startLine": 721,
+        "startChar": 12,
+        "endLine": 721,
+        "endChar": 19
+      },
+      "revId": "3c097fba7201baeb05a01574f37889066b1c9420",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -147,6 +213,30 @@
     },
     {
       "key": {
+        "uuid": "0b233aa5_0f6fcd72",
+        "filename": "third_party/WebKit/Source/modules/vr/VRDisplay.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 753,
+      "author": {
+        "id": 1189473
+      },
+      "writtenOn": "2017-11-07T22:18:36Z",
+      "side": 1,
+      "message": "I\u0027m passing the underlying handle over IPC:\ngpu_handle -\u003e platformHandle -\u003e mojo::ScopedHandle, which will clean up the handle.",
+      "parentUuid": "83eba760_11aaec74",
+      "range": {
+        "startLine": 753,
+        "startChar": 8,
+        "endLine": 753,
+        "endChar": 25
+      },
+      "revId": "3c097fba7201baeb05a01574f37889066b1c9420",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "02348af3_445f82b9",
         "filename": "third_party/WebKit/Source/modules/vr/VRDisplay.cpp",
         "patchSetId": 1
@@ -167,6 +257,30 @@
       "revId": "3c097fba7201baeb05a01574f37889066b1c9420",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6e893b84_cbd697a8",
+        "filename": "third_party/WebKit/Source/modules/vr/VRDisplay.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 759,
+      "author": {
+        "id": 1189473
+      },
+      "writtenOn": "2017-11-07T22:18:36Z",
+      "side": 1,
+      "message": "I could stick in an ifdef (OS_WIN), and NOTIMPLEMENTED for other platforms with external displays.",
+      "parentUuid": "02348af3_445f82b9",
+      "range": {
+        "startLine": 759,
+        "startChar": 47,
+        "endLine": 759,
+        "endChar": 66
+      },
+      "revId": "3c097fba7201baeb05a01574f37889066b1c9420",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -193,6 +307,30 @@
     },
     {
       "key": {
+        "uuid": "92f6a9b7_eca00f8a",
+        "filename": "third_party/WebKit/Source/modules/vr/VRDisplay.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 183,
+      "author": {
+        "id": 1189473
+      },
+      "writtenOn": "2017-11-07T22:18:36Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "98604fc2_c8250e50",
+      "range": {
+        "startLine": 183,
+        "startChar": 44,
+        "endLine": 183,
+        "endChar": 55
+      },
+      "revId": "3c097fba7201baeb05a01574f37889066b1c9420",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "03fad0b8_6dac7b8e",
         "filename": "third_party/WebKit/Source/modules/vr/VRDisplay.h",
         "patchSetId": 1
@@ -216,6 +354,30 @@
     },
     {
       "key": {
+        "uuid": "65349729_1364aa64",
+        "filename": "third_party/WebKit/Source/modules/vr/VRDisplay.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 222,
+      "author": {
+        "id": 1189473
+      },
+      "writtenOn": "2017-11-07T22:18:36Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "03fad0b8_6dac7b8e",
+      "range": {
+        "startLine": 222,
+        "startChar": 7,
+        "endLine": 222,
+        "endChar": 26
+      },
+      "revId": "3c097fba7201baeb05a01574f37889066b1c9420",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "ed6ff785_ae341fe4",
         "filename": "third_party/WebKit/Source/modules/vr/VRDisplayEvent.cpp",
         "patchSetId": 1
@@ -227,6 +389,30 @@
       "writtenOn": "2017-11-07T18:42:05Z",
       "side": 1,
       "message": "why this change? AFAIK the original version catches missing cases at compile time, while this one doesn\u0027t.",
+      "range": {
+        "startLine": 22,
+        "startChar": 4,
+        "endLine": 22,
+        "endChar": 11
+      },
+      "revId": "3c097fba7201baeb05a01574f37889066b1c9420",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "21f3511d_89b92e67",
+        "filename": "third_party/WebKit/Source/modules/vr/VRDisplayEvent.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 22,
+      "author": {
+        "id": 1189473
+      },
+      "writtenOn": "2017-11-07T22:18:36Z",
+      "side": 1,
+      "message": "There was a compiler warning/error at some point.",
+      "parentUuid": "ed6ff785_ae341fe4",
       "range": {
         "startLine": 22,
         "startChar": 4,
@@ -262,6 +448,30 @@
     },
     {
       "key": {
+        "uuid": "f8e05ae1_8b447b6e",
+        "filename": "third_party/WebKit/Source/platform/graphics/GpuMemoryBufferImageCopy.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 67,
+      "author": {
+        "id": 1189473
+      },
+      "writtenOn": "2017-11-07T22:18:36Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "e3960240_6ccceaf1",
+      "range": {
+        "startLine": 67,
+        "startChar": 9,
+        "endLine": 67,
+        "endChar": 18
+      },
+      "revId": "3c097fba7201baeb05a01574f37889066b1c9420",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "7da635fc_ad675fa6",
         "filename": "third_party/WebKit/Source/platform/graphics/GpuMemoryBufferImageCopy.cpp",
         "patchSetId": 1
@@ -273,6 +483,30 @@
       "writtenOn": "2017-11-07T18:42:05Z",
       "side": 1,
       "message": "This wait should be a no-op if the image was created on the same context. Try having the caller pass in its GLES2Interface*, and use kOrderingBarrier instead of a verified sync token which would save a sync IPC? In theory you could also skip the wait in that case, but keeping it may look cleaner.\n\nAlternatively, could you use AcceleratedStaticBitmapImage::CopyToTexture here to write to textureId directly?",
+      "range": {
+        "startLine": 91,
+        "startChar": 6,
+        "endLine": 91,
+        "endChar": 27
+      },
+      "revId": "3c097fba7201baeb05a01574f37889066b1c9420",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7688cd4d_a0498e62",
+        "filename": "third_party/WebKit/Source/platform/graphics/GpuMemoryBufferImageCopy.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 91,
+      "author": {
+        "id": 1189473
+      },
+      "writtenOn": "2017-11-07T22:18:36Z",
+      "side": 1,
+      "message": "I was using the WebGL context earlier, but thought a separate context was cleaner (and perhaps safer?).  I could change state on the webgl context, but then have to restore it, making webgl declare vrdisplay as a friend.\n\nAcceleratedStaticBitmapImage::CopyToTexture does not work - it is one of the many ways that ANGLE will reallocate textures instead of writing to our shared memory buffers.\n\nBrandon, is using the WebGL context safe/acceptable?",
+      "parentUuid": "7da635fc_ad675fa6",
       "range": {
         "startLine": 91,
         "startChar": 6,
@@ -308,6 +542,30 @@
     },
     {
       "key": {
+        "uuid": "46d870cc_1497bb1b",
+        "filename": "third_party/WebKit/Source/platform/graphics/GpuMemoryBufferImageCopy.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 112,
+      "author": {
+        "id": 1189473
+      },
+      "writtenOn": "2017-11-07T22:18:36Z",
+      "side": 1,
+      "message": "Negligible change, but if it is theoretically better performance, I\u0027ll keep it.",
+      "parentUuid": "9eb00a80_d232d1c5",
+      "range": {
+        "startLine": 112,
+        "startChar": 6,
+        "endLine": 112,
+        "endChar": 24
+      },
+      "revId": "3c097fba7201baeb05a01574f37889066b1c9420",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "5b86ff13_b6623aec",
         "filename": "third_party/WebKit/Source/platform/graphics/GpuMemoryBufferImageCopy.cpp",
         "patchSetId": 1
@@ -328,6 +586,30 @@
       "revId": "3c097fba7201baeb05a01574f37889066b1c9420",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e605f34a_eb5e41ab",
+        "filename": "third_party/WebKit/Source/platform/graphics/GpuMemoryBufferImageCopy.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 119,
+      "author": {
+        "id": 1189473
+      },
+      "writtenOn": "2017-11-07T22:18:36Z",
+      "side": 1,
+      "message": "I\u0027ll try the shallow flush.  I do want to tell the gpu process and ANGLE to actually write to the memory buffer so the reader can read it as quickly as possible.",
+      "parentUuid": "5b86ff13_b6623aec",
+      "range": {
+        "startLine": 119,
+        "startChar": 6,
+        "endLine": 119,
+        "endChar": 11
+      },
+      "revId": "3c097fba7201baeb05a01574f37889066b1c9420",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
