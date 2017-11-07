@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "c2b4f727_5a448e7a",
+        "filename": "components/page_info_strings.grdp",
+        "patchSetId": 1
+      },
+      "lineNbr": 164,
+      "author": {
+        "id": 1121739
+      },
+      "writtenOn": "2017-11-07T03:53:51Z",
+      "side": 1,
+      "message": "Nit: Wouldn\u0027t it make sense to put the parentheses around the CERTIFICATE_VALIDITY template here?",
+      "revId": "c4aba202d0607760212ba48288e044c869dc1ac3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
