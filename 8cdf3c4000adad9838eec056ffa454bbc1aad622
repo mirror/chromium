@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "3eaaf2f8_e5d0e4b1",
+        "filename": "ui/accessibility/ax_tree.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 171,
+      "author": {
+        "id": 1000678
+      },
+      "writtenOn": "2017-11-07T16:55:36Z",
+      "side": 1,
+      "message": "This isn\u0027t what I had in mind because we sometimes need to call\nRelativeToTreeBounds multiple times, as we walk up the frame\nhierarchy. Once we set |offscreen| to true it should stay that way.\n\nWe should be able to test that by having something offscreen\nrelative to the inner frame, but still \"onscreen\" relative to\nthe parent frame. It\u0027s still offscreen.",
+      "revId": "8cdf3c4000adad9838eec056ffa454bbc1aad622",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
