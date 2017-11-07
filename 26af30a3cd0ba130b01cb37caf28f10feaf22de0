@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "6bbb0e82_1c7e2a04",
+        "filename": "tools/metrics/histograms/histograms.xml",
+        "patchSetId": 1
+      },
+      "lineNbr": 59313,
+      "author": {
+        "id": 1126709
+      },
+      "writtenOn": "2017-11-07T22:01:45Z",
+      "side": 1,
+      "message": "Actually most of the \u003cowner\u003e tags in this file contain @google.com email addresses.  But I don\u0027t think it makes a difference either way.",
+      "parentUuid": "130adfe3_808419eb",
+      "range": {
+        "startLine": 59313,
+        "startChar": 9,
+        "endLine": 59313,
+        "endChar": 28
+      },
+      "revId": "26af30a3cd0ba130b01cb37caf28f10feaf22de0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "84295456_51e4df44",
         "filename": "tools/metrics/histograms/histograms.xml",
         "patchSetId": 1
@@ -48,6 +72,30 @@
     },
     {
       "key": {
+        "uuid": "1892ce82_1f528392",
+        "filename": "tools/metrics/histograms/histograms.xml",
+        "patchSetId": 1
+      },
+      "lineNbr": 59314,
+      "author": {
+        "id": 1126709
+      },
+      "writtenOn": "2017-11-07T22:01:45Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "84295456_51e4df44",
+      "range": {
+        "startLine": 59314,
+        "startChar": 51,
+        "endLine": 59314,
+        "endChar": 69
+      },
+      "revId": "26af30a3cd0ba130b01cb37caf28f10feaf22de0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "e6c0a23f_3873ada5",
         "filename": "tools/metrics/histograms/histograms.xml",
         "patchSetId": 1
@@ -59,6 +107,24 @@
       "writtenOn": "2017-10-26T16:13:01Z",
       "side": 1,
       "message": "Do we actually need to keep them? It\u0027s not like we care about any of the data in Platform.DetachableBase.ROUpdateMetric?",
+      "revId": "26af30a3cd0ba130b01cb37caf28f10feaf22de0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e5f84c44_d7c5a533",
+        "filename": "tools/metrics/histograms/histograms.xml",
+        "patchSetId": 1
+      },
+      "lineNbr": 59326,
+      "author": {
+        "id": 1126709
+      },
+      "writtenOn": "2017-11-07T22:01:45Z",
+      "side": 1,
+      "message": "isherman@ asked me to do this in CL:727780.",
+      "parentUuid": "e6c0a23f_3873ada5",
       "revId": "26af30a3cd0ba130b01cb37caf28f10feaf22de0",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
