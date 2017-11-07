@@ -43,6 +43,7 @@ class DisplayOutputSurface : public OutputSurface {
   bool SurfaceIsSuspendForRecycle() const override;
   bool HasExternalStencilTest() const override;
   void ApplyExternalStencil() override;
+  gpu::VulkanSurface* GetVulkanSurface() override;
 
  protected:
   OutputSurfaceClient* client() const { return client_; }
