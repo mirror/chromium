@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "78011225_79d4f01f",
+        "filename": "ash/display/display_move_window_controller.cc",
+        "patchSetId": 11
+      },
+      "lineNbr": 55,
+      "author": {
+        "id": 1147616
+      },
+      "writtenOn": "2017-11-07T20:03:10Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "3d7fc159_6c2f5efd",
+      "range": {
+        "startLine": 55,
+        "startChar": 34,
+        "endLine": 55,
+        "endChar": 46
+      },
+      "revId": "ce022b2e56adc5b2137666a50041e52dd01c4e07",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "12713759_c16c24f3",
         "filename": "ash/display/display_move_window_controller.cc",
         "patchSetId": 11
@@ -45,6 +69,30 @@
       "revId": "ce022b2e56adc5b2137666a50041e52dd01c4e07",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "43910416_0f4ce8e5",
+        "filename": "ash/display/display_move_window_controller.cc",
+        "patchSetId": 11
+      },
+      "lineNbr": 67,
+      "author": {
+        "id": 1147616
+      },
+      "writtenOn": "2017-11-07T20:03:10Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "12713759_c16c24f3",
+      "range": {
+        "startLine": 67,
+        "startChar": 4,
+        "endLine": 67,
+        "endChar": 37
+      },
+      "revId": "ce022b2e56adc5b2137666a50041e52dd01c4e07",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -71,6 +119,30 @@
     },
     {
       "key": {
+        "uuid": "e3408307_e69aa683",
+        "filename": "ash/display/display_move_window_controller.cc",
+        "patchSetId": 11
+      },
+      "lineNbr": 88,
+      "author": {
+        "id": 1147616
+      },
+      "writtenOn": "2017-11-07T20:03:10Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "1af4d096_79a92f6c",
+      "range": {
+        "startLine": 88,
+        "startChar": 22,
+        "endLine": 88,
+        "endChar": 23
+      },
+      "revId": "ce022b2e56adc5b2137666a50041e52dd01c4e07",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "2d6b549b_e828d5a9",
         "filename": "ash/display/display_move_window_controller.cc",
         "patchSetId": 11
@@ -94,6 +166,30 @@
     },
     {
       "key": {
+        "uuid": "8742aa6a_6ac4b802",
+        "filename": "ash/display/display_move_window_controller.cc",
+        "patchSetId": 11
+      },
+      "lineNbr": 106,
+      "author": {
+        "id": 1147616
+      },
+      "writtenOn": "2017-11-07T20:03:10Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "2d6b549b_e828d5a9",
+      "range": {
+        "startLine": 103,
+        "startChar": 0,
+        "endLine": 106,
+        "endChar": 15
+      },
+      "revId": "ce022b2e56adc5b2137666a50041e52dd01c4e07",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "dd0c589e_ef6a7115",
         "filename": "ash/display/display_move_window_controller.h",
         "patchSetId": 11
@@ -105,6 +201,30 @@
       "writtenOn": "2017-11-07T01:14:41Z",
       "side": 1,
       "message": "Looking at this class again, it doesn\u0027t have any state (and doesn\u0027t need one). So why make it a class at all? Why handle a lifetime of an object when that object has no state at all?\n\nMy suggestion is to replace all this overhead with a single enum and a single utility function HandleMoveWindowToDisplay();",
+      "range": {
+        "startLine": 21,
+        "startChar": 17,
+        "endLine": 21,
+        "endChar": 44
+      },
+      "revId": "ce022b2e56adc5b2137666a50041e52dd01c4e07",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "395943df_b2a8891f",
+        "filename": "ash/display/display_move_window_controller.h",
+        "patchSetId": 11
+      },
+      "lineNbr": 21,
+      "author": {
+        "id": 1147616
+      },
+      "writtenOn": "2017-11-07T20:03:10Z",
+      "side": 1,
+      "message": "Yes... I agree with you. Currently we don\u0027t need the class. Later we might as we need to deal with window-resizing-moving-back-restoring. But right now, I updated to expose a util function as you suggested.",
+      "parentUuid": "dd0c589e_ef6a7115",
       "range": {
         "startLine": 21,
         "startChar": 17,
@@ -140,6 +260,30 @@
     },
     {
       "key": {
+        "uuid": "393b5f3d_1d2fde84",
+        "filename": "ash/display/display_move_window_controller.h",
+        "patchSetId": 11
+      },
+      "lineNbr": 32,
+      "author": {
+        "id": 1147616
+      },
+      "writtenOn": "2017-11-07T20:03:10Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "b942e6e8_c084cf5f",
+      "range": {
+        "startLine": 32,
+        "startChar": 2,
+        "endLine": 32,
+        "endChar": 33
+      },
+      "revId": "ce022b2e56adc5b2137666a50041e52dd01c4e07",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "88664380_a758e7a4",
         "filename": "ash/display/display_move_window_controller.h",
         "patchSetId": 11
@@ -163,6 +307,30 @@
     },
     {
       "key": {
+        "uuid": "c630f98d_11069d5a",
+        "filename": "ash/display/display_move_window_controller.h",
+        "patchSetId": 11
+      },
+      "lineNbr": 64,
+      "author": {
+        "id": 1147616
+      },
+      "writtenOn": "2017-11-07T20:03:10Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "88664380_a758e7a4",
+      "range": {
+        "startLine": 40,
+        "startChar": 0,
+        "endLine": 64,
+        "endChar": 33
+      },
+      "revId": "ce022b2e56adc5b2137666a50041e52dd01c4e07",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "e31261ed_fc14b5a1",
         "filename": "chrome/browser/resources/chromeos/keyboard_overlay_data.js",
         "patchSetId": 11
@@ -174,6 +342,30 @@
       "writtenOn": "2017-11-07T01:14:41Z",
       "side": 1,
       "message": "Where is that set?\n\nYou need to declare string here: https://cs.chromium.org/chromium/src/chrome/app/chromeos_strings.grdp?q\u003dIDS_KEYBOARD_OVERLAY_PAGE_DOWN\u0026sq\u003dpackage:chromium\u0026l\u003d3698\n\nand register it here: https://cs.chromium.org/chromium/src/chrome/browser/ui/webui/chromeos/keyboard_overlay_ui.cc?q\u003dkeyboardOverlayPageDown\u0026sq\u003dpackage:chromium\u0026l\u003d223\n\nFor the value of the string, please refer to Olga to verify the appropriate wording.",
+      "range": {
+        "startLine": 4183,
+        "startChar": 26,
+        "endLine": 4183,
+        "endChar": 64
+      },
+      "revId": "ce022b2e56adc5b2137666a50041e52dd01c4e07",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "428e18db_b22e3e9f",
+        "filename": "chrome/browser/resources/chromeos/keyboard_overlay_data.js",
+        "patchSetId": 11
+      },
+      "lineNbr": 4183,
+      "author": {
+        "id": 1147616
+      },
+      "writtenOn": "2017-11-07T20:03:10Z",
+      "side": 1,
+      "message": "tks, no compile errors make me forget to add those.\n\nUpdated.",
+      "parentUuid": "e31261ed_fc14b5a1",
       "range": {
         "startLine": 4183,
         "startChar": 26,

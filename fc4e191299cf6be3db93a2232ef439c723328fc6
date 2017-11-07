@@ -120,6 +120,30 @@
     },
     {
       "key": {
+        "uuid": "e14cb185_c48e3108",
+        "filename": "ash/accelerators/accelerator_table.h",
+        "patchSetId": 7
+      },
+      "lineNbr": 101,
+      "author": {
+        "id": 1147616
+      },
+      "writtenOn": "2017-11-07T20:03:10Z",
+      "side": 1,
+      "message": "Per offline discussion. Updated to above and below.",
+      "parentUuid": "11a00b5a_3b09c9ae",
+      "range": {
+        "startLine": 101,
+        "startChar": 2,
+        "endLine": 101,
+        "endChar": 27
+      },
+      "revId": "fc4e191299cf6be3db93a2232ef439c723328fc6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "a360a584_58f96998",
         "filename": "ash/display/display_move_window_controller.cc",
         "patchSetId": 7
