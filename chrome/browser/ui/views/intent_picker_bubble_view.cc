@@ -171,11 +171,15 @@ void IntentPickerBubbleView::CloseBubble() {
 }
 
 bool IntentPickerBubbleView::Accept() {
+  DCHECK(web_contents());
   RunCallback(
       app_info_[selected_app_tag_].package_name,
       remember_selection_checkbox_->checked()
           ? arc::ArcNavigationThrottle::CloseReason::ARC_APP_PREFERRED_PRESSED
           : arc::ArcNavigationThrottle::CloseReason::ARC_APP_PRESSED);
+
+  // Close the current tab since the user wants to keep their navigation on ARC.
+  web_contents()->Close();
   return true;
 }
 
@@ -291,6 +295,7 @@ IntentPickerBubbleView::IntentPickerBubbleView(
     content::WebContents* web_contents,
     bool disable_stay_in_chrome)
     : LocationBarBubbleDelegateView(nullptr /* anchor_view */, web_contents),
+      content::WebContentsObserver(web_contents),
       intent_picker_cb_(intent_picker_cb),
       selected_app_tag_(0),
       scroll_view_(nullptr),
