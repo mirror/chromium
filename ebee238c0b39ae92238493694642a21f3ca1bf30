@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "36d92b8f_a1957324",
+        "filename": "tools/checklicenses/checklicenses.py",
+        "patchSetId": 4
+      },
+      "lineNbr": 664,
+      "author": {
+        "id": 1113991
+      },
+      "writtenOn": "2017-11-07T23:24:34Z",
+      "side": 1,
+      "message": "Adding the changes from crrev.com/c/598737.",
+      "range": {
+        "startLine": 660,
+        "startChar": 0,
+        "endLine": 664,
+        "endChar": 47
+      },
+      "revId": "ebee238c0b39ae92238493694642a21f3ca1bf30",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
