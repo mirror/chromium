@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "15844225_ac3f5534",
+        "filename": "docs/security/integer-semantics.md",
+        "patchSetId": 3
+      },
+      "lineNbr": 21,
+      "author": {
+        "id": 1144624
+      },
+      "writtenOn": "2017-11-07T22:09:39Z",
+      "side": 1,
+      "message": "Shouldn\u0027t this be ../../ since this is in docs/security ?",
+      "range": {
+        "startLine": 21,
+        "startChar": 15,
+        "endLine": 21,
+        "endChar": 17
+      },
+      "revId": "bdcd175257c7ea8b91df91f6a2a49f6606b2d9f5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
