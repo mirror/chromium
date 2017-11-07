@@ -3024,29 +3024,23 @@ void LayoutBlockFlow::AddChild(LayoutObject* new_child,
   // children as blocks.
   // So, if our children are currently inline and a block child has to be
   // inserted, we move all our inline children into anonymous block boxes.
-  bool child_is_block_level = !new_child->IsInline();
+  bool child_is_block_level =
+      !new_child->IsInline() && !new_child->IsFloatingOrOutOfFlowPositioned();
 
-  // ** LayoutNG **
-  // We want to use the block layout for out of flow positioned
-  // objects when they go in front of inline blocks or if they are just
-  // standalone objects.
-  // Example 1:
-  //   <div id="zero"><div id="oof"></div></div>
-  //   Legacy Layout: #oof is in inline context.
-  //   LayoutNG: #oof is in block context.
-  //
-  // Example 2:
-  //   <div id=container><oof></oof>Hello!</div>
-  //   Legacy Layout: oof is in inline context.
-  //   LayoutNG: oof is in block context.
-  //
-  // Example 3:
-  //   <div id=container>Hello!<oof></oof></div>
-  //   Legacy Layout: oof is in inline context.
-  //   LayoutNG: oof is in inline context.
-  bool layout_ng_enabled = RuntimeEnabledFeatures::LayoutNGEnabled();
-  if (new_child->IsFloatingOrOutOfFlowPositioned())
-    child_is_block_level = layout_ng_enabled && !FirstChild();
+  // TODO(kojii): We once forced all floats and OOF to create a block container
+  // in LayoutNG, which turned out to be not a great way, but completely turning
+  // this off breaks too much.
+  // When an OOF is an inline type, we need to disable this so that we can
+  // compute the inline static position.
+  // crbug.com/734554
+  bool layout_ng_hack_enabled = false;
+  if (RuntimeEnabledFeatures::LayoutNGEnabled() && !FirstChild() &&
+      (new_child->IsFloating() ||
+       (new_child->IsOutOfFlowPositioned() &&
+        !new_child->StyleRef().IsOriginalDisplayInlineType()))) {
+    layout_ng_hack_enabled = true;
+    child_is_block_level = true;
+  }
 
   if (ChildrenInline()) {
     if (child_is_block_level) {
@@ -3081,7 +3075,7 @@ void LayoutBlockFlow::AddChild(LayoutObject* new_child,
       LayoutBlockFlow* new_block = ToLayoutBlockFlow(CreateAnonymousBlock());
       LayoutBox::AddChild(new_block, before_child);
       // Reparent adjacent floating or out-of-flow siblings to the new box.
-      if (!layout_ng_enabled)
+      if (!layout_ng_hack_enabled)
         new_block->ReparentPrecedingFloatingOrOutOfFlowSiblings();
       new_block->AddChild(new_child);
       new_block->ReparentSubsequentFloatingOrOutOfFlowSiblings();
