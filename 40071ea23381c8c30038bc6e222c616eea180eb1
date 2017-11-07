@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "c349a755_210150eb",
+        "filename": "third_party/WebKit/Source/core/html/HTMLLinkElement.idl",
+        "patchSetId": 4
+      },
+      "lineNbr": 60,
+      "author": {
+        "id": 1223919
+      },
+      "writtenOn": "2017-11-07T05:18:49Z",
+      "side": 1,
+      "message": "Dropped the link support.",
+      "parentUuid": "6fe7e08c_98dfab05",
+      "revId": "40071ea23381c8c30038bc6e222c616eea180eb1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "7c329cb7_9ace369f",
         "filename": "third_party/WebKit/Source/platform/runtime_enabled_features.json5",
         "patchSetId": 4
@@ -33,6 +51,24 @@
       "revId": "40071ea23381c8c30038bc6e222c616eea180eb1",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "71353a62_09902b8f",
+        "filename": "third_party/WebKit/Source/platform/runtime_enabled_features.json5",
+        "patchSetId": 4
+      },
+      "lineNbr": 934,
+      "author": {
+        "id": 1223919
+      },
+      "writtenOn": "2017-11-07T05:18:49Z",
+      "side": 1,
+      "message": "Dropped the link support.",
+      "parentUuid": "7c329cb7_9ace369f",
+      "revId": "40071ea23381c8c30038bc6e222c616eea180eb1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
