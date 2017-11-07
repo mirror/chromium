@@ -37,6 +37,24 @@
     },
     {
       "key": {
+        "uuid": "7c34bb2c_cba65640",
+        "filename": "third_party/WebKit/Source/core/workers/WorkletModuleTreeClient.cpp",
+        "patchSetId": 3
+      },
+      "lineNbr": 39,
+      "author": {
+        "id": 1115924
+      },
+      "writtenOn": "2017-11-07T22:52:30Z",
+      "side": 1,
+      "message": "\u003e any errors happening before evaluation (e.g., network, parse, instantiation) should reject the promise.\n\nThanks, makes sense.\n\nJust after this CL, the promise will be rejected if the module script has an previous evaluation error (because it is already errored), but after https://chromium-review.googlesource.com/c/chromium/src/+/698467 the promise will be resolved for such a module script (because we will no longer check previous evaluation errors here).",
+      "parentUuid": "7f49ec83_e81c1491",
+      "revId": "cfeb541febb18c6e96e38fc1caf1b6d505000476",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "095a8c53_014e6c8a",
         "filename": "third_party/WebKit/Source/core/workers/WorkletModuleTreeClient.cpp",
         "patchSetId": 3
