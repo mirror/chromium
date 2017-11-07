@@ -6,6 +6,7 @@
 
 #include "ash/public/cpp/shell_window_ids.h"
 #include "ash/resources/vector_icons/vector_icons.h"
+#include "ash/screen_util.h"
 #include "ash/shell.h"
 #include "ash/strings/grit/ash_strings.h"
 #include "ash/wm/root_window_finder.h"
@@ -311,7 +312,8 @@ void SplitViewOverviewOverlay::SetIndicatorType(
         Shell::GetContainer(root_window, kShellWindowId_OverlayContainer));
     widget_->SetContentsView(overlay_view_);
   }
-  widget_->SetBounds(root_window->GetBoundsInScreen());
+  widget_->SetBounds(ScreenUtil::GetDisplayWorkAreaBoundsInParent(
+      root_window->GetChildById(kShellWindowId_OverlayContainer)));
   widget_->Show();
   overlay_view_->OnIndicatorTypeChanged(current_indicator_type_);
 }
