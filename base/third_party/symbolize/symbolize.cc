@@ -78,13 +78,13 @@ static int AssertFail() {
 
 #define SAFE_ASSERT(expr) ((expr) ? 0 : AssertFail())
 
-static SymbolizeCallback g_symbolize_callback = NULL;
+static SymbolizeCallback g_symbolize_callback = nullptr;
 void InstallSymbolizeCallback(SymbolizeCallback callback) {
   g_symbolize_callback = callback;
 }
 
 static SymbolizeOpenObjectFileCallback g_symbolize_open_object_file_callback =
-    NULL;
+    nullptr;
 void InstallSymbolizeOpenObjectFileCallback(
     SymbolizeOpenObjectFileCallback callback) {
   g_symbolize_open_object_file_callback = callback;
@@ -281,7 +281,7 @@ static ATTRIBUTE_NOINLINE bool
 FindSymbol(uint64_t pc, const int fd, char *out, int out_size,
            uint64_t symbol_offset, const ElfW(Shdr) *strtab,
            const ElfW(Shdr) *symtab) {
-  if (symtab == NULL) {
+  if (symtab == nullptr) {
     return false;
   }
   const int num_symbols = symtab->sh_size / symtab->sh_entsize;
@@ -315,7 +315,7 @@ FindSymbol(uint64_t pc, const int fd, char *out, int out_size,
           start_address <= pc && pc < end_address) {
         ssize_t len1 = ReadFromOffset(fd, out, out_size,
                                       strtab->sh_offset + symbol.st_name);
-        if (len1 <= 0 || memchr(out, '\0', out_size) == NULL) {
+        if (len1 <= 0 || memchr(out, '\0', out_size) == nullptr) {
           return false;
         }
         return true;  // Obtained the symbol name.
@@ -432,7 +432,7 @@ class LineReader {
       }
     }
     eol_ = FindLineFeed();
-    if (eol_ == NULL) {  // '\n' not found.  Malformed line.
+    if (eol_ == nullptr) {  // '\n' not found.  Malformed line.
       return false;
     }
     *eol_ = '\0';  // Replace '\n' with '\0'.
@@ -465,7 +465,7 @@ class LineReader {
   }
 
   bool HasCompleteLine() {
-    return !BufferIsEmpty() && FindLineFeed() != NULL;
+    return !BufferIsEmpty() && FindLineFeed() != nullptr;
   }
 
   const int fd_;
@@ -668,11 +668,11 @@ char *itoa_r(intptr_t i, char *buf, size_t sz, int base, size_t padding) {
   // Make sure we can write at least one NUL byte.
   size_t n = 1;
   if (n > sz)
-    return NULL;
+    return nullptr;
 
   if (base < 2 || base > 16) {
     buf[0] = '\000';
-    return NULL;
+    return nullptr;
   }
 
   char *start = buf;
@@ -687,7 +687,7 @@ char *itoa_r(intptr_t i, char *buf, size_t sz, int base, size_t padding) {
     // Make sure we can write the '-' character.
     if (++n > sz) {
       buf[0] = '\000';
-      return NULL;
+      return nullptr;
     }
     *start++ = '-';
   }
@@ -699,7 +699,7 @@ char *itoa_r(intptr_t i, char *buf, size_t sz, int base, size_t padding) {
     // Make sure there is still enough space left in our output buffer.
     if (++n > sz) {
       buf[0] = '\000';
-      return NULL;
+      return nullptr;
     }
 
     // Output the next digit.
