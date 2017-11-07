@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "c5382178_b4e5ff2f",
+        "filename": "third_party/WebKit/Source/core/dom/events/EventTarget.cpp",
+        "patchSetId": 5
+      },
+      "lineNbr": 194,
+      "author": {
+        "id": 1247388
+      },
+      "writtenOn": "2017-11-07T03:28:11Z",
+      "side": 1,
+      "message": "Is the current one OK?",
+      "parentUuid": "5b26fbac_267ed05b",
+      "revId": "11e5c7b8408bfafa870d0d41b56a87909f79bf5c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "26eeea5b_d963c002",
         "filename": "third_party/WebKit/Source/core/dom/events/EventTarget.cpp",
         "patchSetId": 5
@@ -42,6 +60,30 @@
     },
     {
       "key": {
+        "uuid": "d87594c6_20c63ad2",
+        "filename": "third_party/WebKit/Source/core/dom/events/EventTarget.cpp",
+        "patchSetId": 5
+      },
+      "lineNbr": 195,
+      "author": {
+        "id": 1247388
+      },
+      "writtenOn": "2017-11-07T03:28:11Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "26eeea5b_d963c002",
+      "range": {
+        "startLine": 195,
+        "startChar": 3,
+        "endLine": 195,
+        "endChar": 16
+      },
+      "revId": "11e5c7b8408bfafa870d0d41b56a87909f79bf5c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "87f9b8e9_963b9cbb",
         "filename": "third_party/WebKit/Source/core/dom/events/EventTarget.h",
         "patchSetId": 5
@@ -59,6 +101,24 @@
     },
     {
       "key": {
+        "uuid": "26cf2cb4_e4fb973b",
+        "filename": "third_party/WebKit/Source/core/dom/events/EventTarget.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 43,
+      "author": {
+        "id": 1247388
+      },
+      "writtenOn": "2017-11-07T03:28:11Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "87f9b8e9_963b9cbb",
+      "revId": "11e5c7b8408bfafa870d0d41b56a87909f79bf5c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "64ee6419_3e7fc8c3",
         "filename": "third_party/WebKit/Source/core/dom/events/EventTargetImpl.cpp",
         "patchSetId": 5
@@ -70,6 +130,24 @@
       "writtenOn": "2017-11-06T15:05:01Z",
       "side": 1,
       "message": "I think that we can say:\n\n    using ContextLifecycleObserver::GetExecutionContext;\n\nin the class definition, and it\u0027s preferred.  Sorry if I\u0027m wrong.",
+      "revId": "11e5c7b8408bfafa870d0d41b56a87909f79bf5c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e65b28da_86cc0718",
+        "filename": "third_party/WebKit/Source/core/dom/events/EventTargetImpl.cpp",
+        "patchSetId": 5
+      },
+      "lineNbr": 19,
+      "author": {
+        "id": 1247388
+      },
+      "writtenOn": "2017-11-07T03:28:11Z",
+      "side": 1,
+      "message": "I tried doing that but it\u0027s complaining that it doesn\u0027t override EventTarget\u0027s pure virtual GetExecutionContext and don\u0027t know how to get around that. Do you know how to?",
+      "parentUuid": "64ee6419_3e7fc8c3",
       "revId": "11e5c7b8408bfafa870d0d41b56a87909f79bf5c",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -93,6 +171,24 @@
     },
     {
       "key": {
+        "uuid": "5a0a9d6f_76aae73d",
+        "filename": "third_party/WebKit/Source/core/dom/events/EventTargetImpl.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 15,
+      "author": {
+        "id": 1247388
+      },
+      "writtenOn": "2017-11-07T03:28:11Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "45b0639e_e6a6dc77",
+      "revId": "11e5c7b8408bfafa870d0d41b56a87909f79bf5c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "13d7e340_5e83de07",
         "filename": "third_party/WebKit/Source/core/dom/events/EventTargetImpl.h",
         "patchSetId": 5
@@ -110,6 +206,23 @@
     },
     {
       "key": {
+        "uuid": "fa622a05_8828065e",
+        "filename": "third_party/WebKit/Source/core/dom/events/EventTargetImpl.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 20,
+      "author": {
+        "id": 1247388
+      },
+      "writtenOn": "2017-11-07T03:28:11Z",
+      "side": 1,
+      "message": "I see! Done.",
+      "revId": "11e5c7b8408bfafa870d0d41b56a87909f79bf5c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "b3f8bf2c_56229ecb",
         "filename": "third_party/WebKit/Source/core/dom/events/EventTargetImpl.h",
         "patchSetId": 5
@@ -124,6 +237,24 @@
       "revId": "11e5c7b8408bfafa870d0d41b56a87909f79bf5c",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b2afbb41_7daceb3b",
+        "filename": "third_party/WebKit/Source/core/dom/events/EventTargetImpl.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 21,
+      "author": {
+        "id": 1247388
+      },
+      "writtenOn": "2017-11-07T03:28:11Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "b3f8bf2c_56229ecb",
+      "revId": "11e5c7b8408bfafa870d0d41b56a87909f79bf5c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
