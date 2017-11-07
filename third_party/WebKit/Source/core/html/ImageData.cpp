@@ -577,10 +577,10 @@ DOMFloat32Array* ImageData::ConvertFloat16ArrayToFloat32Array(
   std::unique_ptr<SkColorSpaceXform> xform =
       SkColorSpaceXform::New(SkColorSpace::MakeSRGBLinear().get(),
                              SkColorSpace::MakeSRGBLinear().get());
-  xform->apply(SkColorSpaceXform::ColorFormat::kRGBA_F32_ColorFormat,
-               f32_array->Data(),
-               SkColorSpaceXform::ColorFormat::kRGBA_F16_ColorFormat, f16_array,
-               array_length, SkAlphaType::kUnpremul_SkAlphaType);
+  DCHECK(xform->apply(
+      SkColorSpaceXform::ColorFormat::kRGBA_F32_ColorFormat, f32_array->Data(),
+      SkColorSpaceXform::ColorFormat::kRGBA_F16_ColorFormat, f16_array,
+      array_length, SkAlphaType::kUnpremul_SkAlphaType));
   return f32_array;
 }
 
@@ -625,9 +625,9 @@ ImageData::ConvertPixelsFromCanvasPixelFormatToImageDataStorageFormat(
           f32_array = AllocateAndValidateFloat32Array(num_pixels * 4);
           if (!f32_array)
             return nullptr;
-          xform->apply(dst_color_format, f32_array->Data(), src_color_format,
-                       content.Data(), num_pixels,
-                       SkAlphaType::kUnpremul_SkAlphaType);
+          DCHECK(xform->apply(dst_color_format, f32_array->Data(),
+                              src_color_format, content.Data(), num_pixels,
+                              SkAlphaType::kUnpremul_SkAlphaType));
           return f32_array;
           break;
         default:
@@ -646,9 +646,9 @@ ImageData::ConvertPixelsFromCanvasPixelFormatToImageDataStorageFormat(
             return nullptr;
           dst_color_format =
               SkColorSpaceXform::ColorFormat::kRGBA_8888_ColorFormat;
-          xform->apply(dst_color_format, u8_array->Data(), src_color_format,
-                       content.Data(), num_pixels,
-                       SkAlphaType::kUnpremul_SkAlphaType);
+          DCHECK(xform->apply(dst_color_format, u8_array->Data(),
+                              src_color_format, content.Data(), num_pixels,
+                              SkAlphaType::kUnpremul_SkAlphaType));
           return u8_array;
           break;
         case kFloat32ArrayStorageFormat:
@@ -657,9 +657,9 @@ ImageData::ConvertPixelsFromCanvasPixelFormatToImageDataStorageFormat(
             return nullptr;
           dst_color_format =
               SkColorSpaceXform::ColorFormat::kRGBA_F32_ColorFormat;
-          xform->apply(dst_color_format, f32_array->Data(), src_color_format,
-                       content.Data(), num_pixels,
-                       SkAlphaType::kUnpremul_SkAlphaType);
+          DCHECK(xform->apply(dst_color_format, f32_array->Data(),
+                              src_color_format, content.Data(), num_pixels,
+                              SkAlphaType::kUnpremul_SkAlphaType));
           return f32_array;
           break;
         default:
