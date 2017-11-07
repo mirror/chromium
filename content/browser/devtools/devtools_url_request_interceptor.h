@@ -41,6 +41,8 @@ class DevToolsURLRequestInterceptor : public net::URLRequestInterceptor {
 
   using ContinueInterceptedRequestCallback =
       protocol::Network::Backend::ContinueInterceptedRequestCallback;
+  using GetResponseBodyForInterceptionCallback =
+      protocol::Network::Backend::GetResponseBodyForInterceptionCallback;
 
   struct Modifications {
     Modifications(base::Optional<net::Error> error_reason,
@@ -74,15 +76,26 @@ class DevToolsURLRequestInterceptor : public net::URLRequestInterceptor {
     bool mark_as_canceled;
   };
 
+  enum InterceptionStage {
+    REQUEST,
+    RESPONSE,
+    // Note: Both is not sent from front-end. It is used if both Request
+    // and HeadersReceived was found it upgrades it to Both.
+    BOTH,
+    DONT_INTERCEPT
+  };
+
   struct Pattern {
    public:
     Pattern();
     ~Pattern();
     Pattern(const Pattern& other);
     Pattern(const std::string& url_pattern,
-            base::flat_set<ResourceType> resource_types);
+            base::flat_set<ResourceType> resource_types,
+            protocol::Network::InterceptionStage interception_stage);
     const std::string url_pattern;
     const base::flat_set<ResourceType> resource_types;
+    InterceptionStage interception_stage;
   };
 
   struct InterceptedPage {
@@ -120,6 +133,9 @@ class DevToolsURLRequestInterceptor : public net::URLRequestInterceptor {
                                   std::string id);
 
   void JobFinished(const std::string& interception_id, bool is_navigation);
+  void GetResponseBody(
+      std::string interception_id,
+      std::unique_ptr<GetResponseBodyForInterceptionCallback> callback);
   void ContinueInterceptedRequest(
       std::string interception_id,
       std::unique_ptr<DevToolsURLRequestInterceptor::Modifications>
@@ -133,6 +149,9 @@ class DevToolsURLRequestInterceptor : public net::URLRequestInterceptor {
   void StopInterceptingRequests(const base::UnguessableToken& target_id);
 
  private:
+  static DevToolsURLRequestInterceptor::InterceptionStage ToInterceptorStage(
+      const protocol::Network::InterceptionStage& interceptor_stage);
+
   net::URLRequestJob* InnerMaybeInterceptRequest(
       net::URLRequest* request,
       net::NetworkDelegate* network_delegate);
