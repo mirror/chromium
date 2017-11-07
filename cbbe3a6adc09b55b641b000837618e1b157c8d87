@@ -167,6 +167,30 @@
     },
     {
       "key": {
+        "uuid": "b39b2bfe_c0befbc8",
+        "filename": "components/search_provider_logos/google_logo_api.cc",
+        "patchSetId": 12
+      },
+      "lineNbr": 69,
+      "author": {
+        "id": 1123275
+      },
+      "writtenOn": "2017-11-07T15:02:11Z",
+      "side": 1,
+      "message": "Thanks! will have a look. I\u0027ll go with leaving it in the URL because I\u0027m not familiar with side effects of where this valued might end up being compared.",
+      "parentUuid": "6ef3c753_281b7e8c",
+      "range": {
+        "startLine": 69,
+        "startChar": 45,
+        "endLine": 69,
+        "endChar": 0
+      },
+      "revId": "cbbe3a6adc09b55b641b000837618e1b157c8d87",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "16119479_af5cd6fe",
         "filename": "components/search_provider_logos/google_logo_api.cc",
         "patchSetId": 12
