@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "686d2d90_84d5dd2f",
+        "filename": "chrome/browser/profiling_host/background_profiling_triggers.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 118,
+      "author": {
+        "id": 1000046
+      },
+      "writtenOn": "2017-11-07T22:18:42Z",
+      "side": 1,
+      "message": "DCHECK(content::BrowserThread::CurrentlyOn(content::BrowserThread::UI));",
+      "range": {
+        "startLine": 118,
+        "startChar": 20,
+        "endLine": 118,
+        "endChar": 23
+      },
+      "revId": "7ea05993233ed8375f43bf94412d22cb8217f2c0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "bd3dea95_1cf5ce58",
+        "filename": "chrome/browser/profiling_host/background_profiling_triggers_unittest.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 88,
+      "author": {
+        "id": 1000046
+      },
+      "writtenOn": "2017-11-07T22:18:42Z",
+      "side": 1,
+      "message": "Don\u0027t change this please. It\u0027s gonna cause a conflict with my CL.",
+      "range": {
+        "startLine": 88,
+        "startChar": 0,
+        "endLine": 88,
+        "endChar": 61
+      },
+      "revId": "7ea05993233ed8375f43bf94412d22cb8217f2c0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
