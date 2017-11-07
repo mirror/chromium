@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "d7ad8955_ff9c5ac1",
+        "filename": "content/test/data/accessibility/html/bounds-inherits-expected-blink.txt",
+        "patchSetId": 7
+      },
+      "lineNbr": 3,
+      "author": {
+        "id": 1250213
+      },
+      "writtenOn": "2017-11-07T17:12:11Z",
+      "side": 0,
+      "message": "Dominic and I discussed having these be marked as \"offscreen\" as a way to flag to Select-to-Speak that the element is not important. We choose to use this existing flag rather than add a new one for simplicity, even though the node location is onscreen it\u0027s not visible for users so \u0027offscreen\u0027 felt acceptable. More is in crbug.com/773851. \n\nThis was motivated by having some way to mark these nodes as not visible which is critical to Gmail usability with select-to-speak.\n\nMaybe we could all discuss in person how to handle elements of 0 size.",
+      "range": {
+        "startLine": 3,
+        "startChar": 21,
+        "endLine": 3,
+        "endChar": 30
+      },
+      "revId": "a7e673232465eefd2ff47be8e058d7bf2b8f4698",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
