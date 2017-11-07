@@ -117,6 +117,7 @@ static const char* const kSwitchNames[] = {
     service_manager::switches::kGpuSandboxAllowSysVShm,
     service_manager::switches::kGpuSandboxFailuresFatal,
     switches::kDisableBreakpad,
+    switches::kDisableDirectComposition,
     switches::kDisableGpuRasterization,
     switches::kDisableGpuSandbox,
     switches::kDisableGLExtensions,
