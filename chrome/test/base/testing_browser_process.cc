@@ -27,6 +27,7 @@
 #include "components/prefs/pref_service.h"
 #include "components/subresource_filter/content/browser/content_ruleset_service.h"
 #include "content/public/browser/notification_service.h"
+#include "content/public/common/network_connection_tracker.h"
 #include "extensions/features/features.h"
 #include "media/media_features.h"
 #include "net/url_request/url_request_context_getter.h"
@@ -145,7 +146,7 @@ TestingBrowserProcess::system_network_context_manager() {
 
 content::NetworkConnectionTracker*
 TestingBrowserProcess::network_connection_tracker() {
-  return nullptr;
+  return network_connection_tracker_.get();
 }
 
 WatchDogThread* TestingBrowserProcess::watchdog_thread() {
@@ -433,6 +434,11 @@ TestingBrowserProcess::pref_service_factory() const {
 void TestingBrowserProcess::SetSystemRequestContext(
     net::URLRequestContextGetter* context_getter) {
   system_request_context_ = context_getter;
+}
+
+void TestingBrowserProcess::SetNetworkConnectionTracker(
+    std::unique_ptr<content::NetworkConnectionTracker> tracker) {
+  network_connection_tracker_ = std::move(tracker);
 }
 
 void TestingBrowserProcess::SetNotificationUIManager(

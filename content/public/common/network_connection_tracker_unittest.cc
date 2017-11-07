@@ -37,11 +37,13 @@ class TestNetworkConnectionObserver
   mojom::ConnectionType GetConnectionTypeSync() {
     mojom::ConnectionType type;
     base::RunLoop run_loop;
-    bool sync = tracker_->GetConnectionType(
-        &type,
-        base::Bind(&TestNetworkConnectionObserver::GetConnectionTypeCallback,
-                   &run_loop, &type));
-    if (!sync)
+    std::unique_ptr<NetworkConnectionTracker::GetConnectionTypeHandle> handle =
+        tracker_->GetConnectionType(
+            &type,
+            base::Bind(
+                &TestNetworkConnectionObserver::GetConnectionTypeCallback,
+                &run_loop, &type));
+    if (handle)
       run_loop.Run();
     return type;
   }
@@ -87,7 +89,8 @@ class ConnectionTypeGetter {
         connection_type_(mojom::ConnectionType::CONNECTION_UNKNOWN) {}
   ~ConnectionTypeGetter() {}
 
-  bool GetConnectionType() {
+  std::unique_ptr<NetworkConnectionTracker::GetConnectionTypeHandle>
+  GetConnectionType() {
     DCHECK_CALLED_ON_VALID_THREAD(thread_checker_);
     return tracker_->GetConnectionType(
         &connection_type_,
@@ -129,8 +132,8 @@ class NetworkConnectionTrackerTest : public testing::Test {
     network_service_ =
         NetworkService::Create(std::move(network_service_request),
                                /*netlog=*/nullptr);
-    tracker_ =
-        std::make_unique<NetworkConnectionTracker>(network_service_.get());
+    tracker_ = std::make_unique<NetworkConnectionTracker>();
+    tracker_->Initialize(network_service_.get());
     observer_ = std::make_unique<TestNetworkConnectionObserver>(tracker_.get());
   }
 
@@ -219,13 +222,18 @@ TEST_F(NetworkConnectionTrackerTest, GetConnectionType) {
       mojo::MakeRequest(&network_service_ptr);
   std::unique_ptr<NetworkService> network_service =
       NetworkService::Create(std::move(network_service_request), nullptr);
-  NetworkConnectionTracker tracker(network_service_ptr.get());
+  NetworkConnectionTracker tracker;
+  tracker.Initialize(network_service_ptr.get());
 
   ConnectionTypeGetter getter1(&tracker), getter2(&tracker);
   // These two GetConnectionType() will finish asynchonously because network
   // service is not yet set up.
-  EXPECT_FALSE(getter1.GetConnectionType());
-  EXPECT_FALSE(getter2.GetConnectionType());
+  std::unique_ptr<NetworkConnectionTracker::GetConnectionTypeHandle> handle1 =
+      getter1.GetConnectionType();
+  std::unique_ptr<NetworkConnectionTracker::GetConnectionTypeHandle> handle2 =
+      getter2.GetConnectionType();
+  EXPECT_NE(nullptr, handle1);
+  EXPECT_NE(nullptr, handle2);
 
   getter1.WaitForConnectionType(
       /*expected_connection_type=*/mojom::ConnectionType::CONNECTION_3G);
@@ -234,7 +242,7 @@ TEST_F(NetworkConnectionTrackerTest, GetConnectionType) {
 
   ConnectionTypeGetter getter3(&tracker);
   // This GetConnectionType() should finish synchronously.
-  EXPECT_TRUE(getter3.GetConnectionType());
+  EXPECT_EQ(nullptr, getter3.GetConnectionType());
   EXPECT_EQ(mojom::ConnectionType::CONNECTION_3G, getter3.connection_type());
 }
 
@@ -252,7 +260,7 @@ class NetworkGetConnectionTest : public NetworkConnectionTrackerTest {
     DCHECK(getter_thread_.task_runner()->RunsTasksInCurrentSequence());
     getter_ =
         std::make_unique<ConnectionTypeGetter>(network_connection_tracker());
-    EXPECT_FALSE(getter_->GetConnectionType());
+    handle_ = getter_->GetConnectionType();
   }
 
   void WaitForConnectionType(mojom::ConnectionType expected_connection_type) {
@@ -267,6 +275,7 @@ class NetworkGetConnectionTest : public NetworkConnectionTrackerTest {
 
   // Accessed on |getter_thread_|.
   std::unique_ptr<ConnectionTypeGetter> getter_;
+  std::unique_ptr<NetworkConnectionTracker::GetConnectionTypeHandle> handle_;
 
   DISALLOW_COPY_AND_ASSIGN(NetworkGetConnectionTest);
 };
