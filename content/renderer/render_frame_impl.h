@@ -1224,6 +1224,11 @@ class CONTENT_EXPORT RenderFrameImpl
     return custom_url_loader_factory_.get();
   }
 
+  // Used in DCHECKs.  Currently only checks whether the browser knows the
+  // origin of the frame (e.g. script execution is only allowed on an initial,
+  // empty document or *after* a commit).
+  bool CanExecuteJavaScript();
+
   // Stores the WebLocalFrame we are associated with.  This is null from the
   // constructor until BindToFrame() is called, and it is null after
   // FrameDetached() is called until destruction (which is asynchronous in the

@@ -34,6 +34,20 @@ CvoxBrailleDisplayManagerUnitTest.prototype = {
     /** @const */
     this.DISPLAY_ROW_SIZE = 1;
     this.DISPLAY_COLUMN_SIZE = 12;
+
+    // Override the |chrome| object to inject fake chrome.storage API.
+    var originalChrome = window.chrome;
+    window.chrome = {
+      __proto__: originalChrome,
+      storage: {
+        onChanged: new FakeChromeEvent(),
+        local: {
+          get: function(object, callback) {
+            callback({brailleWordWrap: false});
+          }
+        }
+      },
+    };
   },
 
   addFakeApi: function() {
@@ -162,19 +176,6 @@ FakeTranslatorManager.prototype = {
 
   getExpandingTranslator: function() {
     return this.translator;
-  }
-};
-
-var chrome = {};
-
-// Fake chrome.storage API.
-chrome.storage = {
-  onChanged: new FakeChromeEvent(),
-
-  local: {
-    get: function(object, callback) {
-      callback({brailleWordWrap: false});
-    }
   }
 };
 

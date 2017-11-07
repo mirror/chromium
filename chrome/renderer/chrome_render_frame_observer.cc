@@ -9,8 +9,10 @@
 
 #include <limits>
 #include <string>
+#include <utility>
 #include <vector>
 
+#include "base/bind.h"
 #include "base/command_line.h"
 #include "base/metrics/histogram_macros.h"
 #include "base/strings/string_number_conversions.h"
@@ -126,7 +128,8 @@ ChromeRenderFrameObserver::ChromeRenderFrameObserver(
     content::RenderFrame* render_frame)
     : content::RenderFrameObserver(render_frame),
       translate_helper_(nullptr),
-      phishing_classifier_(nullptr) {
+      phishing_classifier_(nullptr),
+      weak_factory_(this) {
   // Don't do anything else for subframes.
   if (!render_frame->IsMainFrame())
     return;
@@ -310,7 +313,7 @@ void ChromeRenderFrameObserver::SetClientSidePhishingDetection(
 #endif
 }
 
-void ChromeRenderFrameObserver::ExecuteWebUIJavaScript(
+void ChromeRenderFrameObserver::ExecuteWebUIJavaScriptForTesting(
     const base::string16& javascript) {
 #if !defined(OS_ANDROID)
   webui_javascript_.push_back(javascript);
@@ -360,12 +363,34 @@ void ChromeRenderFrameObserver::DidCommitProvisionalLoad(
 #if !defined(OS_ANDROID)
   if ((render_frame()->GetEnabledBindings() &
        content::BINDINGS_POLICY_WEB_UI)) {
-    for (const auto& script : webui_javascript_)
-      render_frame()->ExecuteJavaScript(script);
-    webui_javascript_.clear();
+    // Postpone ExecuteJavaScript to make sure it executes *after* the browser
+    // has been notified about the commit (i.e. after the browser is aware of
+    // the new origin the scripts should be able to access).
+    GURL document_url = render_frame()->GetWebFrame()->GetDocument().Url();
+    base::SequencedTaskRunnerHandle::Get()->PostTask(
+        FROM_HERE,
+        base::Bind(
+            &ChromeRenderFrameObserver::ExecuteAccumulatedWebUIJavascript,
+            weak_factory_.GetWeakPtr(), document_url));
   }
 #endif
 }
+
+#if !defined(OS_ANDROID)
+void ChromeRenderFrameObserver::ExecuteAccumulatedWebUIJavascript(
+    const GURL& expected_url) {
+  // Verify that the script runs in the same document as the one at the time
+  // when ExecuteAccumulatedWebUIJavascript task was created.
+  GURL document_url = render_frame()->GetWebFrame()->GetDocument().Url();
+  if (document_url != expected_url)
+    return;
+
+  // Execute the accumulated scripts.
+  for (const auto& script : webui_javascript_)
+    render_frame()->ExecuteJavaScript(script);
+  webui_javascript_.clear();
+}
+#endif
 
 void ChromeRenderFrameObserver::DidClearWindowObject() {
   const base::CommandLine& command_line =
