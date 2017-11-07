@@ -1,0 +1,73 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "253adf9f_898679c4",
+        "filename": "chrome/browser/resource_coordinator/tab_manager_unittest.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 1304,
+      "author": {
+        "id": 1112850
+      },
+      "writtenOn": "2017-11-07T20:31:13Z",
+      "side": 1,
+      "message": "nit: This is a little verbose. How about calling it |EnablePageAlmostIdleSignal|.",
+      "range": {
+        "startLine": 1304,
+        "startChar": 23,
+        "endLine": 1304,
+        "endChar": 64
+      },
+      "revId": "43a519a5f4c2f4a2be6e7e5e1fb528fda6cd3309",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8971b3e2_f2bac27a",
+        "filename": "chrome/browser/resource_coordinator/tab_manager_unittest.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 1332,
+      "author": {
+        "id": 1112850
+      },
+      "writtenOn": "2017-11-07T20:31:13Z",
+      "side": 1,
+      "message": "is disabled when PageAlmostIdle signal is enabled.",
+      "range": {
+        "startLine": 1332,
+        "startChar": 25,
+        "endLine": 1332,
+        "endChar": 36
+      },
+      "revId": "43a519a5f4c2f4a2be6e7e5e1fb528fda6cd3309",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7f72deca_79fa6e97",
+        "filename": "chrome/browser/resource_coordinator/tab_manager_web_contents_data.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 37,
+      "author": {
+        "id": 1112850
+      },
+      "writtenOn": "2017-11-07T20:31:13Z",
+      "side": 1,
+      "message": "nit: s/, we/. We/",
+      "range": {
+        "startLine": 37,
+        "startChar": 12,
+        "endLine": 37,
+        "endChar": 16
+      },
+      "revId": "43a519a5f4c2f4a2be6e7e5e1fb528fda6cd3309",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
