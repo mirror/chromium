@@ -67,6 +67,16 @@ cr.define('extensions', function() {
     },
 
     /**
+     * @return {boolean}
+     * @private
+     */
+    hasIncognitoIcon_: function() {
+      console.log(this.$.allow - incognito);
+      console.log(this.hasAttribute('incognito'));
+      return this.hasAttribute('incognito');
+    },
+
+    /**
      * Fires
      * @param {!CustomEvent} e
      * @private
