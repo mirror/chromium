@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "71133da2_0aa94725",
+        "filename": "ios/chrome/browser/ui/authentication/signin_promo_view_mediator.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 61,
+      "author": {
+        "id": 1115958
+      },
+      "writtenOn": "2017-11-07T10:16:07Z",
+      "side": 1,
+      "message": "Can we go wild and just call this a consumer?",
+      "range": {
+        "startLine": 61,
+        "startChar": 27,
+        "endLine": 61,
+        "endChar": 36
+      },
+      "revId": "dc7dfd01150231715b830bb06484cf42a0e39d0f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "fb7f825f_c71a214c",
+        "filename": "ios/chrome/browser/ui/authentication/signin_promo_view_mediator.mm",
+        "patchSetId": 5
+      },
+      "lineNbr": 21,
+      "author": {
+        "id": 1115958
+      },
+      "writtenOn": "2017-11-07T10:16:07Z",
+      "side": 1,
+      "message": "This probably isn\u0027t needed?",
+      "range": {
+        "startLine": 21,
+        "startChar": 40,
+        "endLine": 21,
+        "endChar": 60
+      },
+      "revId": "dc7dfd01150231715b830bb06484cf42a0e39d0f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
