@@ -6,6 +6,7 @@
 #define EXTENSIONS_BROWSER_API_DECLARATIVE_NET_REQUEST_RULESET_MATCHER_H_
 
 #include <memory>
+#include <string>
 
 #include "base/files/memory_mapped_file.h"
 #include "components/url_pattern_index/url_pattern_index.h"
@@ -25,6 +26,7 @@ namespace declarative_net_request {
 
 namespace flat {
 struct ExtensionIndexedRuleset;
+struct UrlRuleMetadata;
 }  // namespace flat
 
 // RulesetMatcher encapsulates the Declarative Net Request API ruleset
@@ -64,17 +66,30 @@ class RulesetMatcher {
                           url_pattern_index::flat::ElementType element_type,
                           bool is_third_party) const;
 
+  // Returns whether the network request as specified by the passed parameters
+  // should be redirected along with the |redirect_url|. |redirect_url| should
+  // not be null.
+  bool ShouldRedirectRequest(const GURL& url,
+                             const url::Origin& first_party_origin,
+                             url_pattern_index::flat::ElementType element_type,
+                             bool is_third_party,
+                             std::string* redirect_url) const;
+
  private:
   using UrlPatternIndexMatcher = url_pattern_index::UrlPatternIndexMatcher;
+  using ExtensionMetadataList =
+      flatbuffers::Vector<flatbuffers::Offset<flat::UrlRuleMetadata>>;
 
   explicit RulesetMatcher(std::unique_ptr<base::MemoryMappedFile> ruleset_file);
 
   // The memory mapped ruleset file.
   std::unique_ptr<base::MemoryMappedFile> ruleset_;
 
-  const flat::ExtensionIndexedRuleset* root_;
+  const flat::ExtensionIndexedRuleset* const root_;
   const UrlPatternIndexMatcher blacklist_matcher_;
   const UrlPatternIndexMatcher whitelist_matcher_;
+  const UrlPatternIndexMatcher redirect_matcher_;
+  const ExtensionMetadataList* const metadata_list_;
 
   DISALLOW_COPY_AND_ASSIGN(RulesetMatcher);
 };
