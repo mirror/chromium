@@ -34,6 +34,24 @@
       "revId": "253a499e6ddaf0ee3ec6240906d9f94a51cdd4c9",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4a791d12_3e7cea59",
+        "filename": "PRESUBMIT.py",
+        "patchSetId": 4
+      },
+      "lineNbr": 12,
+      "author": {
+        "id": 1111977
+      },
+      "writtenOn": "2017-11-07T08:52:25Z",
+      "side": 1,
+      "message": "For the record: https://chromium-review.googlesource.com/c/chromium/tools/depot_tools/+/755633",
+      "parentUuid": "4a0a7c11_50fe9461",
+      "revId": "253a499e6ddaf0ee3ec6240906d9f94a51cdd4c9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
