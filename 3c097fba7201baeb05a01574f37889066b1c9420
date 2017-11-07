@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "13fe29cd_9b6127a9",
+        "filename": "device/vr/openvr/openvr_device.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 29,
+      "author": {
+        "id": 1189473
+      },
+      "writtenOn": "2017-11-07T03:18:49Z",
+      "side": 1,
+      "message": "GVR and OpenVR disagree about projection matrix format, and swapping up/down seem to fix rendering.  I\u0027m not a big fan of this since I don\u0027t totally understand why.  Maybe related to directx/opengl disagreeing about projection/clip space?",
+      "revId": "3c097fba7201baeb05a01574f37889066b1c9420",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
