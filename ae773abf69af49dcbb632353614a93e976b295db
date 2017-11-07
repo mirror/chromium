@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "eba2722d_8c6c24a6",
+        "filename": "media/filters/vp9_parser.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 31,
+      "author": {
+        "id": 1001849
+      },
+      "writtenOn": "2017-11-07T05:26:26Z",
+      "side": 1,
+      "message": "No need to specify \"static\" for variables inside unnamed namespace.",
+      "revId": "ae773abf69af49dcbb632353614a93e976b295db",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8a0f92e8_9123879b",
+        "filename": "media/filters/vp9_parser.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 138,
+      "author": {
+        "id": 1001849
+      },
+      "writtenOn": "2017-11-07T05:26:26Z",
+      "side": 1,
+      "message": "size_t is always unsigned. Do we need this assert?\n\nhttps://stackoverflow.com/questions/1089176/is-size-t-always-unsigned",
+      "revId": "ae773abf69af49dcbb632353614a93e976b295db",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
