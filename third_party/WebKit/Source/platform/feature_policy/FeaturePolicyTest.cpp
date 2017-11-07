@@ -176,7 +176,7 @@ TEST_F(FeaturePolicyTest, PolicyParsedCorrectly) {
   // Old (to be deprecated) iframe allow syntax.
   messages.clear();
   parsed_policy =
-      ParseFeaturePolicy("vibrate badname fullscreen payment", nullptr,
+      ParseFeaturePolicy("vibrate badname fullscreen payment", origin_a_.get(),
                          origin_a_.get(), &messages, test_feature_name_map);
   // Expect 2 messages: one about deprecation warning, one about unrecognized
   // feature name.
@@ -200,8 +200,29 @@ TEST_F(FeaturePolicyTest, PolicyParsedCorrectly) {
 
   // Header policies with no optional origin lists.
   parsed_policy =
-      ParseFeaturePolicy("vibrate;fullscreen;payment", origin_a_.get(), nullptr,
-                         &messages, test_feature_name_map);
+      ParseFeaturePolicy("vibrate;fullscreen;payment", origin_a_.get(),
+                         origin_a_.get(), &messages, test_feature_name_map);
+  EXPECT_EQ(3UL, parsed_policy.size());
+  EXPECT_EQ(FeaturePolicyFeature::kVibrate, parsed_policy[0].feature);
+  EXPECT_FALSE(parsed_policy[0].matches_all_origins);
+  EXPECT_EQ(1UL, parsed_policy[0].origins.size());
+  EXPECT_TRUE(
+      parsed_policy[0].origins[0].IsSameOriginWith(expected_url_origin_a_));
+  EXPECT_EQ(FeaturePolicyFeature::kFullscreen, parsed_policy[1].feature);
+  EXPECT_FALSE(parsed_policy[1].matches_all_origins);
+  EXPECT_EQ(1UL, parsed_policy[1].origins.size());
+  EXPECT_TRUE(
+      parsed_policy[1].origins[0].IsSameOriginWith(expected_url_origin_a_));
+  EXPECT_EQ(FeaturePolicyFeature::kPayment, parsed_policy[2].feature);
+  EXPECT_FALSE(parsed_policy[2].matches_all_origins);
+  EXPECT_EQ(1UL, parsed_policy[2].origins.size());
+  EXPECT_TRUE(
+      parsed_policy[2].origins[0].IsSameOriginWith(expected_url_origin_a_));
+
+  // Header policies src origin = self origin
+  parsed_policy = ParseFeaturePolicy(
+      "vibrate 'self'; fullscreen; payment 'src'", origin_a_.get(),
+      origin_a_.get(), &messages, test_feature_name_map);
   EXPECT_EQ(3UL, parsed_policy.size());
   EXPECT_EQ(FeaturePolicyFeature::kVibrate, parsed_policy[0].feature);
   EXPECT_FALSE(parsed_policy[0].matches_all_origins);
