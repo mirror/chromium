@@ -34,6 +34,24 @@
       "revId": "908bf2040b6c54b90a0e2a5b205ad43b2967115d",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c8fd0acb_a6fe8dc7",
+        "filename": "build/cipd/android/android.ensure",
+        "patchSetId": 3
+      },
+      "lineNbr": 8,
+      "author": {
+        "id": 1181690
+      },
+      "writtenOn": "2017-11-07T17:21:55Z",
+      "side": 1,
+      "message": "It\u0027s ... sort of a workaround. It\u0027s also what we\u0027d have to do if we introduce changes to a package without revving the package\u0027s version, though, so it may continue to appear. Added a comment, though.\n\nMerge conflicts: sure.\n\nOWNERS: sure.",
+      "parentUuid": "f5a97440_51d3331a",
+      "revId": "908bf2040b6c54b90a0e2a5b205ad43b2967115d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
