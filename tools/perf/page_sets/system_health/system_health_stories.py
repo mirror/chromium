@@ -42,11 +42,11 @@ class SystemHealthBlankStorySet(story.StorySet):
         chrome_stories.BlankAboutBlankStory(self, take_memory_measurement))
 
 
-class DesktopHeapProfilingStorySet(story.StorySet):
+class HeapProfilingStorySet(story.StorySet):
   """Small story set containing loading stories and invoking memory dumps."""
-  def __init__(self):
-    super(DesktopHeapProfilingStorySet, self).__init__(
-        archive_data_file=('../data/system_health_desktop.json'),
+  def __init__(self, platform):
+    super(HeapProfilingStorySet, self).__init__(
+        archive_data_file=('../data/system_health_%s.json' % platform),
         cloud_storage_bucket=story.PARTNER_BUCKET)
     self.AddStory(
         loading_stories.LoadGoogleStory(self, take_memory_measurement=True))
@@ -54,6 +54,16 @@ class DesktopHeapProfilingStorySet(story.StorySet):
         loading_stories.LoadTwitterStory(self, take_memory_measurement=True))
     self.AddStory(
         loading_stories.LoadCnnStory(self, take_memory_measurement=True))
+
+
+class DesktopHeapProfilingStorySet(HeapProfilingStorySet):
+  def __init__(self):
+    super(DesktopHeapProfilingStorySet, self).__init__('desktop')
+
+
+class MobileHeapProfilingStorySet(HeapProfilingStorySet):
+  def __init__(self):
+    super(MobileHeapProfilingStorySet, self).__init__('mobile')
 
 
 class DesktopSystemHealthStorySet(SystemHealthStorySet):

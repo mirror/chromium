@@ -18,9 +18,6 @@ class _HeapProfilingBenchmark(perf_benchmark.PerfBenchmark):
   """Bechmark to measure heap profiling overhead."""
   BROWSER_OPTIONS = NotImplemented
 
-  page_set = page_sets.DesktopHeapProfilingStorySet
-  SUPPORTED_PLATFORMS = [story.expectations.ALL_DESKTOP]
-
   def CreateCoreTimelineBasedMeasurementOptions(self):
     cat_filter = chrome_trace_category_filter.ChromeTraceCategoryFilter(
         filter_string='-*,toplevel,rail,disabled-by-default-memory-infra')
@@ -48,25 +45,59 @@ class _HeapProfilingBenchmark(perf_benchmark.PerfBenchmark):
     return DefaultExpectations()
 
 
-class PseudoHeapProfilingBenchmark(_HeapProfilingBenchmark):
+class _HeapProfilingDesktopBenchmark(_HeapProfilingBenchmark):
+  SUPPORTED_PLATFORMS = [story.expectations.ALL_DESKTOP]
+  page_set = page_sets.DesktopHeapProfilingStorySet
+
+
+class _HeapProfilingMobileBenchmark(_HeapProfilingBenchmark):
+  SUPPORTED_PLATFORMS = [story.expectations.ALL_MOBILE]
+  page_set = page_sets.MobileHeapProfilingStorySet
+
+
+class PseudoHeapProfilingDesktopBenchmark(_HeapProfilingDesktopBenchmark):
   BROWSER_OPTIONS = ['--enable-heap-profiling']
 
   @classmethod
   def Name(cls):
-    return 'heap_profiling.pseudo'
+    return 'heap_profiling.desktop.pseudo'
 
 
-class NativeHeapProfilingBenchmark(_HeapProfilingBenchmark):
+class NativeHeapProfilingDesktopBenchmark(_HeapProfilingDesktopBenchmark):
   BROWSER_OPTIONS = ['--enable-heap-profiling=native']
 
   @classmethod
   def Name(cls):
-    return 'heap_profiling.native'
+    return 'heap_profiling.desktop.native'
 
 
-class DisabledHeapProfilingBenchmark(_HeapProfilingBenchmark):
+class DisabledHeapProfilingDesktopBenchmark(_HeapProfilingDesktopBenchmark):
   BROWSER_OPTIONS = []
 
   @classmethod
   def Name(cls):
-    return 'heap_profiling.disabled'
+    return 'heap_profiling.desktop.disabled'
+
+
+class PseudoHeapProfilingMobileBenchmark(_HeapProfilingMobileBenchmark):
+  BROWSER_OPTIONS = ['--enable-heap-profiling']
+
+  @classmethod
+  def Name(cls):
+    return 'heap_profiling.mobile.pseudo'
+
+
+class NativeHeapProfilingMobileBenchmark(_HeapProfilingMobileBenchmark):
+  BROWSER_OPTIONS = ['--enable-heap-profiling=native']
+
+  @classmethod
+  def Name(cls):
+    return 'heap_profiling.mobile.native'
+
+
+class DisabledHeapProfilingMobileBenchmark(_HeapProfilingMobileBenchmark):
+  BROWSER_OPTIONS = []
+
+  @classmethod
+  def Name(cls):
+    return 'heap_profiling.mobile.disabled'
