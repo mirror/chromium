@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "55c2addb_521d904c",
+        "filename": "third_party/WebKit/Source/core/dom/events/EventTargetImpl.h",
+        "patchSetId": 11
+      },
+      "lineNbr": 16,
+      "author": {
+        "id": 1123071
+      },
+      "writtenOn": "2017-11-07T15:05:35Z",
+      "side": 1,
+      "message": "This class could use some documentation as to why EventTargetImpl exists and why this isn\u0027t in the base class.\n\nie; needing to extend from EventTargetWithInlineData and provide an execution context.",
+      "revId": "fce134b3cbf5c28fa7162c824b41b5581b556ed1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
