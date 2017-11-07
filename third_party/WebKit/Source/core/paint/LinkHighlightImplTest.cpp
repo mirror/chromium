@@ -35,7 +35,6 @@
 #include "core/frame/WebLocalFrameImpl.h"
 #include "core/input/EventHandler.h"
 #include "core/page/Page.h"
-#include "core/page/TouchDisambiguation.h"
 #include "platform/geometry/IntRect.h"
 #include "platform/graphics/GraphicsLayer.h"
 #include "platform/testing/URLTestHelpers.h"
@@ -201,38 +200,6 @@ TEST(LinkHighlightImplTest, resetLayerTreeView) {
       web_view_impl->GetLinkHighlight(0)->CurrentGraphicsLayerForTesting();
   ASSERT_TRUE(highlight_layer);
   EXPECT_TRUE(highlight_layer->GetLinkHighlight(0));
-
-  Platform::Current()
-      ->GetURLLoaderMockFactory()
-      ->UnregisterAllURLsAndClearMemoryCache();
-}
-
-TEST(LinkHighlightImplTest, multipleHighlights) {
-  const std::string url = LinkRegisterMockedURLLoad();
-  FrameTestHelpers::WebViewHelper web_view_helper;
-  WebViewImpl* web_view_impl = web_view_helper.InitializeAndLoad(url);
-
-  int page_width = 640;
-  int page_height = 480;
-  web_view_impl->Resize(WebSize(page_width, page_height));
-  web_view_impl->UpdateAllLifecyclePhases();
-
-  WebGestureEvent touch_event;
-  touch_event.x = 50;
-  touch_event.y = 310;
-  touch_event.data.tap.width = 30;
-  touch_event.data.tap.height = 30;
-
-  Vector<IntRect> good_targets;
-  HeapVector<Member<Node>> highlight_nodes;
-  IntRect bounding_box(touch_event.x - touch_event.data.tap.width / 2,
-                       touch_event.y - touch_event.data.tap.height / 2,
-                       touch_event.data.tap.width, touch_event.data.tap.height);
-  FindGoodTouchTargets(bounding_box, web_view_impl->MainFrameImpl()->GetFrame(),
-                       good_targets, highlight_nodes);
-
-  web_view_impl->EnableTapHighlights(highlight_nodes);
-  EXPECT_EQ(2U, web_view_impl->NumLinkHighlights());
 
   Platform::Current()
       ->GetURLLoaderMockFactory()
