@@ -1760,7 +1760,6 @@ if (is_android) {
     if (is_android && is_component_build) {
       deps += [
         "//device/gamepad",
-        "//device/sensors",
         "//ui/events/devices",
       ]
     }
