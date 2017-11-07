@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "7f6698a3_efd9bacc",
+        "filename": "content/test/content_browser_test_test.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 100,
+      "author": {
+        "id": 1001934
+      },
+      "writtenOn": "2017-11-07T00:55:41Z",
+      "side": 1,
+      "message": "What do you think of #defining USE_EXTERNAL_SYMBOLIZER above and using that here?",
+      "revId": "1a93ef053141d61057aab57923ca9a556e7adbbd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
