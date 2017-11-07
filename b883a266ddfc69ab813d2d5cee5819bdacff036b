@@ -172,6 +172,23 @@
     },
     {
       "key": {
+        "uuid": "2122160c_7ebd58a5",
+        "filename": "services/ui/ws/server_window.h",
+        "patchSetId": 14
+      },
+      "lineNbr": 243,
+      "author": {
+        "id": 1115911
+      },
+      "writtenOn": "2017-11-07T20:06:02Z",
+      "side": 1,
+      "message": "Please implement this. I think you should basically do the same kind of plumbing as OnFirstSurfaceActivation.",
+      "revId": "b883a266ddfc69ab813d2d5cee5819bdacff036b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "0499bb98_005be579",
         "filename": "services/viz/privileged/interfaces/compositing/frame_sink_manager.mojom",
         "patchSetId": 14
