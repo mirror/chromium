@@ -592,6 +592,10 @@ class CONTENT_EXPORT RenderWidgetHostImpl
     return last_frame_metadata_;
   }
 
+  uint64_t last_auto_resize_request_number() const {
+    return last_auto_resize_request_number_;
+  }
+
   bool HasGestureStopped() override;
 
   // viz::mojom::CompositorFrameSink implementation.
@@ -755,7 +759,7 @@ class CONTENT_EXPORT RenderWidgetHostImpl
 
   // Called when there is a new auto resize (using a post to avoid a stack
   // which may get in recursive loops).
-  void DelayedAutoResized(uint64_t sequence_number);
+  void DelayedAutoResized();
 
   void WindowSnapshotReachedScreen(int snapshot_id);
 
