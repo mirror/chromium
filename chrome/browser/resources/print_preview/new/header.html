@@ -66,8 +66,16 @@
     </style>
     <h1 class="title">$i18n{title}</h1>
     <span class="summary"
-        aria-label="[[getSummaryLabel_(model, printInProgress_)]]"
-        inner-h-t-m-l="[[getSummary_(model, printInProgress_)]]">
+        aria-label="[[getSummaryLabel_(model.copies, model.destinationId,
+            model.duplex, model.pageRange, model.cloudPrintError,
+            model.privetExtensionError, model.invalidSettings,
+            model.printTicketInvalid, model.previewLoading,
+            model.previewFailed, printInProgress_)]]"
+        inner-h-t-m-l="[[getSummary_(model.copies, model.destinationId,
+            model.duplex, model.pageRange, model.cloudPrintError,
+            model.privetExtensionError, model.invalidSettings,
+            model.printTicketInvalid, model.previewLoading,
+            model.previewFailed, printInProgress_)]]">
     </span>
     <div id="button-strip">
       <button class="cancel" on-tap="onCancelButtonTap_">
