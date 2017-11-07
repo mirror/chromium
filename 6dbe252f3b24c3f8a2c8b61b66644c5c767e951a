@@ -168,6 +168,30 @@
       "revId": "6dbe252f3b24c3f8a2c8b61b66644c5c767e951a",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8d7e9a25_40f65b85",
+        "filename": "third_party/WebKit/public/web/WebHistoryItem.h",
+        "patchSetId": 11
+      },
+      "lineNbr": 124,
+      "author": {
+        "id": 1001168
+      },
+      "writtenOn": "2017-11-07T21:40:19Z",
+      "side": 1,
+      "message": "In that case, we typically prefix the getter with \"Get\" to avoid this collision, i.e. GetScrollAnchorData.",
+      "parentUuid": "4fb7805a_c4ba8268",
+      "range": {
+        "startLine": 124,
+        "startChar": 46,
+        "endLine": 124,
+        "endChar": 52
+      },
+      "revId": "6dbe252f3b24c3f8a2c8b61b66644c5c767e951a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
