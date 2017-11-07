@@ -70,6 +70,24 @@
       "revId": "5ed1aece396a2398fda2bfb4546f7c788083b33b",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "d37a1418_25c46f3c",
+        "filename": "chrome/browser/extensions/extension_service.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 486,
+      "author": {
+        "id": 1166720
+      },
+      "writtenOn": "2017-11-07T09:57:28Z",
+      "side": 1,
+      "message": "I\u0027ve investigated the sync logic, and found that even when a client receives sync data for component extension, it will be ignored due to the extension location check. So I think sync from server will not affect clients with the latest update. WDYT?\nhttps://cs.chromium.org/chromium/src/chrome/common/extensions/sync_helper.cc?dr\u0026q\u003dsync_helper.cc+is_syncable\u0026sq\u003dpackage:chromium\u0026l\u003d32\n\nExtensionSyncService::ApplySyncData also calls the method.\nhttps://cs.chromium.org/chromium/src/chrome/browser/extensions/extension_sync_service.cc?sq\u003dpackage:chromium\u0026l\u003d725\n\nThe extension object is the one based on the local registry.\nhttps://cs.chromium.org/chromium/src/chrome/browser/extensions/extension_sync_service.cc?q\u003dApplySyncData\u0026sq\u003dpackage:chromium\u0026l\u003d316\nSo if it\u0027s COMPONENT or EXTERNAL type, it won\u0027t be affected. Not sure if that local registry can also be wrong in some case.",
+      "parentUuid": "bb00fc7a_5e86155d",
+      "revId": "5ed1aece396a2398fda2bfb4546f7c788083b33b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
