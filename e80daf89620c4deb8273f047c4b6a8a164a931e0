@@ -33,6 +33,24 @@
       "revId": "e80daf89620c4deb8273f047c4b6a8a164a931e0",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4155a76e_230acd6e",
+        "filename": "chrome/renderer/plugins/chrome_plugin_placeholder.cc",
+        "patchSetId": 12
+      },
+      "lineNbr": 73,
+      "author": {
+        "id": 1001168
+      },
+      "writtenOn": "2017-11-07T05:20:26Z",
+      "side": 1,
+      "message": "Ah oops, I misread the renderer side. +1 to sharing (and this will resolve the binding set question I had).",
+      "parentUuid": "b76a726f_b07425da",
+      "revId": "e80daf89620c4deb8273f047c4b6a8a164a931e0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
