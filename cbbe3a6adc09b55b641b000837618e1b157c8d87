@@ -119,6 +119,30 @@
     },
     {
       "key": {
+        "uuid": "e3e7c08d_3175e456",
+        "filename": "components/search_provider_logos/google_logo_api.cc",
+        "patchSetId": 12
+      },
+      "lineNbr": 69,
+      "author": {
+        "id": 1123275
+      },
+      "writtenOn": "2017-11-07T11:12:39Z",
+      "side": 1,
+      "message": "Sorry missed your reply.\n\nThe issue would be about clearing the cache. It currently works by comparing the current url with the one saved in the logo metadata, and that happens on a file thread and would delete the file on disk. \nSo to make that work we would have to add whether it\u0027s a graybg logo in its metadata too. Would that be ok?",
+      "parentUuid": "b27af618_df62a864",
+      "range": {
+        "startLine": 69,
+        "startChar": 45,
+        "endLine": 69,
+        "endChar": 0
+      },
+      "revId": "cbbe3a6adc09b55b641b000837618e1b157c8d87",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "16119479_af5cd6fe",
         "filename": "components/search_provider_logos/google_logo_api.cc",
         "patchSetId": 12
