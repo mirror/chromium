@@ -29,6 +29,8 @@ class CC_EXPORT RasterBuffer {
       uint64_t new_content_id,
       const gfx::AxisTransform2d& transform,
       const RasterSource::PlaybackSettings& playback_settings) = 0;
+
+  virtual size_t NumBytes() const;
 };
 
 }  // namespace cc
