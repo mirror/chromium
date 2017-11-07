@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "f466cac8_7e6de38e",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/widget/thumbnail_cache_entry.proto",
+        "patchSetId": 1
+      },
+      "lineNbr": 13,
+      "author": {
+        "id": 1251197
+      },
+      "writtenOn": "2017-11-07T23:38:49Z",
+      "side": 1,
+      "message": "Instead of adding these optimize_for declarations everywhere, can you instead invoke the compiler to force lite? See http://google3/tools/proto/toolchains/BUILD?l\u003d27\u0026rcl\u003d162537967 for an example with --java_out\u003dlite",
+      "range": {
+        "startLine": 13,
+        "startChar": 35,
+        "endLine": 13,
+        "endChar": 0
+      },
+      "revId": "7f9a587992f9bbbb8ecb5d7f6494255f149b3615",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
