@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "a6580d12_75e7229f",
+        "filename": "chrome/browser/ui/views/device_chooser_content_view_unittest.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 96,
+      "author": {
+        "id": 1149144
+      },
+      "writtenOn": "2017-11-07T18:58:23Z",
+      "side": 1,
+      "message": "Does it make sense to combine these two functions into one, since we can use FakeBluetoothChooserController::IsPaired() to check if it is paired, so that we don\u0027t need to manually choose which function to call in the test code. This will make it convenient if we need to update the test code.",
+      "range": {
+        "startLine": 88,
+        "startChar": 0,
+        "endLine": 96,
+        "endChar": 3
+      },
+      "revId": "b42d151056d344bd9d6c1cf20bd6a6024863cf1c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}

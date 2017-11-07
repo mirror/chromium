@@ -244,6 +244,30 @@
     },
     {
       "key": {
+        "uuid": "408a5aa7_7cedfe9e",
+        "filename": "chrome/browser/ui/views/device_chooser_content_view_unittest.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 54,
+      "author": {
+        "id": 1149144
+      },
+      "writtenOn": "2017-11-07T18:58:23Z",
+      "side": 0,
+      "message": "I am not sure I agree. ASSERT_TRUE() is used to make sure the condition needs to hold in order that the following test code can run. And in general we shouldn\u0027t depend on the test crash to figure out it is because of the nullptr.\n\nFor example, many places in the chromium code base use ASSERT_TRUE:\nhttps://cs.chromium.org/chromium/src/base/values_unittest.cc?l\u003d787\nIn the above example, it would be rare to see the std::make_unique\u003cValue\u003e fail and |binary| is a nullptr, but if it does fail, it will be caught by the ASSERT_TRUE, not by test crash which needs further debugging.",
+      "parentUuid": "0dbae16e_96ca4a4e",
+      "range": {
+        "startLine": 54,
+        "startChar": 4,
+        "endLine": 54,
+        "endChar": 29
+      },
+      "revId": "370f85549f0791ea73c4dbd0aa0fdb1aac1ed340",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "81ff5f56_d0f990cd",
         "filename": "chrome/browser/ui/views/extensions/chooser_dialog_view_unittest.cc",
         "patchSetId": 3
