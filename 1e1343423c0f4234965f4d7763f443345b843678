@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "733a3e41_71366ec4",
+        "filename": "content/renderer/media/rtc_peer_connection_handler.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 1925,
+      "author": {
+        "id": 1126249
+      },
+      "writtenOn": "2017-11-07T10:22:29Z",
+      "side": 1,
+      "message": "The peer_connection_tracker_ tracks API calls and ice connection, ice gathering and signaling state changes. For the tracking of API calls, native_peer_connection_-\u003eClose() does not affect it.\n\nPer webrtc-pc spec[1], calling close should not affect events firing. native_peer_connection_-\u003eClose() does likely trigger these callbacks, so 1) tracking them would probably be a bug, and 2) the callbacks require jumping between threads, and so the state change effects would occur asynchronously.\n\nBecause of the asynchronicity of Close() callbacks, ice connection/ice gathering/signaling state changes occur later and it does not matter if we do UnregisterPeerConnection() before or after Close() in this function.\n\nDoing UnregisterPeerConnection() does have the implication that we will have unregistered by the time a state change occurs, if any, as a result of Close(), which was not always* the case prior to this CL. I still think this is the right approach because of 1) and because doing RTCPeerConnectionHandler::Stop() should take care of all the cleanup. This CL is doing the correct thing.\n\n*Prior to this CL we had a race whether or not unregister happened because there would be a race between garbage collection triggering the destructor doing Unregister and nulling the PCHandler and the asynchronous events.\n\n[1] https://w3c.github.io/webrtc-pc/#dom-rtcpeerconnection-close",
+      "range": {
+        "startLine": 1925,
+        "startChar": 2,
+        "endLine": 1925,
+        "endChar": 25
+      },
+      "revId": "1e1343423c0f4234965f4d7763f443345b843678",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "33b7d98d_60424ed2",
+        "filename": "content/renderer/media/rtc_peer_connection_handler.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 1929,
+      "author": {
+        "id": 1126249
+      },
+      "writtenOn": "2017-11-07T10:22:29Z",
+      "side": 1,
+      "message": "We should do peer_connection_tracker_ \u003d nullptr to protect tracking to occur after unregister.",
+      "range": {
+        "startLine": 1929,
+        "startChar": 30,
+        "endLine": 1929,
+        "endChar": 54
+      },
+      "revId": "1e1343423c0f4234965f4d7763f443345b843678",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
