@@ -39,6 +39,9 @@ BrowserURLLoaderThrottle::BrowserURLLoaderThrottle(
 BrowserURLLoaderThrottle::~BrowserURLLoaderThrottle() {
   if (deferred_)
     TRACE_EVENT_ASYNC_END0("safe_browsing", "Deferred", this);
+
+  if (!user_action_involved_)
+    LogNoUserActionResourceLoadingDelay(total_delay_);
 }
 
 void BrowserURLLoaderThrottle::WillStartRequest(
@@ -91,10 +94,8 @@ void BrowserURLLoaderThrottle::WillProcessResponse(
     return;
   }
 
-  if (pending_checks_ == 0) {
-    LogDelay(base::TimeDelta());
+  if (pending_checks_ == 0)
     return;
-  }
 
   DCHECK(!deferred_);
   deferred_ = true;
@@ -109,6 +110,10 @@ void BrowserURLLoaderThrottle::OnCompleteCheck(bool slow_check,
                                                bool showed_interstitial) {
   DCHECK(!blocked_);
 
+  user_action_involved_ = user_action_involved_ || showed_interstitial;
+  if (deferred_ && (!proceed || pending_checks_ == 0))
+    total_delay_ = base::TimeTicks::Now() - defer_start_time_;
+
   DCHECK_LT(0u, pending_checks_);
   pending_checks_--;
 
@@ -122,10 +127,8 @@ void BrowserURLLoaderThrottle::OnCompleteCheck(bool slow_check,
       delegate_->ResumeReadingBodyFromNet();
 
     if (pending_checks_ == 0 && deferred_) {
-      LogDelay(base::TimeTicks::Now() - defer_start_time_);
       deferred_ = false;
       TRACE_EVENT_ASYNC_END0("safe_browsing", "Deferred", this);
-
       delegate_->Resume();
     }
   } else {
