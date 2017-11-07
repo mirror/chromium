@@ -33,20 +33,17 @@ class CONTENT_EXPORT BackgroundFetchDelegateProxy {
     // Called when the given |request| has started fetching, after having been
     // assigned the |download_guid| by the download system.
     virtual void DidStartRequest(
-        const scoped_refptr<BackgroundFetchRequestInfo>& request,
-        const std::string& download_guid) = 0;
+        const scoped_refptr<BackgroundFetchRequestInfo>& request) = 0;
 
     // Called when the given |request| has an update, meaning that a total of
     // |bytes_downloaded| are now available for the response.
     virtual void DidUpdateRequest(
         const scoped_refptr<BackgroundFetchRequestInfo>& request,
-        const std::string& download_guid,
         uint64_t bytes_downloaded) = 0;
 
     // Called when the given |request| has been completed.
     virtual void DidCompleteRequest(
-        const scoped_refptr<BackgroundFetchRequestInfo>& request,
-        const std::string& download_guid) = 0;
+        const scoped_refptr<BackgroundFetchRequestInfo>& request) = 0;
 
     // Called when the user aborts a Background Fetch registration.
     virtual void AbortFromUser() = 0;
