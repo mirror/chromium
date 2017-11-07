@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "99391a51_4ba41b59",
+        "filename": "media/blink/video_frame_compositor.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 138,
+      "author": {
+        "id": 1150472
+      },
+      "writtenOn": "2017-11-07T01:46:55Z",
+      "side": 1,
+      "message": "You are completely right, I misused the naming convention.",
+      "parentUuid": "152de130_5ffde840",
+      "range": {
+        "startLine": 138,
+        "startChar": 22,
+        "endLine": 138,
+        "endChar": 41
+      },
+      "revId": "e2af26250d69eeabd00ba09916d51d6d0db59903",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "9b049a72_7d657948",
         "filename": "media/blink/video_frame_compositor.cc",
         "patchSetId": 6
@@ -36,6 +60,24 @@
       "writtenOn": "2017-11-06T22:11:41Z",
       "side": 1,
       "message": "This takes the lock thrice, this code should lock once and hold the lock for the entirety of this call.",
+      "revId": "e2af26250d69eeabd00ba09916d51d6d0db59903",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e03bb5be_8d0518e3",
+        "filename": "media/blink/video_frame_compositor.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 239,
+      "author": {
+        "id": 1150472
+      },
+      "writtenOn": "2017-11-07T01:46:55Z",
+      "side": 1,
+      "message": "GetCurrentFrame() doesn\u0027t acquire any locks. I miss-used the naming convention.",
+      "parentUuid": "9b049a72_7d657948",
       "revId": "e2af26250d69eeabd00ba09916d51d6d0db59903",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -59,6 +101,24 @@
     },
     {
       "key": {
+        "uuid": "69a5a89e_2bde43e4",
+        "filename": "media/blink/video_frame_compositor.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 273,
+      "author": {
+        "id": 1150472
+      },
+      "writtenOn": "2017-11-07T01:46:55Z",
+      "side": 1,
+      "message": "GetCurrentFrame() doesn\u0027t acquire any locks. If I re-use callback_lock_, WMPI will block on GetCurrentFrameOnAnyThread() when the |task_runner_| is in CallRender.",
+      "parentUuid": "f09e8c5d_dc5030e4",
+      "revId": "e2af26250d69eeabd00ba09916d51d6d0db59903",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "671abb11_adaaafee",
         "filename": "media/blink/video_frame_compositor.h",
         "patchSetId": 6
@@ -70,6 +130,30 @@
       "writtenOn": "2017-11-06T21:30:34Z",
       "side": 1,
       "message": "This should probably document what a \u0027current frame\u0027 is exactly.",
+      "range": {
+        "startLine": 96,
+        "startChar": 28,
+        "endLine": 96,
+        "endChar": 50
+      },
+      "revId": "e2af26250d69eeabd00ba09916d51d6d0db59903",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b162461f_4234543a",
+        "filename": "media/blink/video_frame_compositor.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 96,
+      "author": {
+        "id": 1150472
+      },
+      "writtenOn": "2017-11-07T01:46:55Z",
+      "side": 1,
+      "message": "Added some info.",
+      "parentUuid": "671abb11_adaaafee",
       "range": {
         "startLine": 96,
         "startChar": 28,
@@ -105,6 +189,30 @@
     },
     {
       "key": {
+        "uuid": "01d12a9d_dd29a5ba",
+        "filename": "media/blink/video_frame_compositor_unittest.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 254,
+      "author": {
+        "id": 1150472
+      },
+      "writtenOn": "2017-11-07T01:46:55Z",
+      "side": 1,
+      "message": "Simplified UT to make it more relevant to UpdateCurrentFrameIfStale().",
+      "parentUuid": "c4a91227_762f090d",
+      "range": {
+        "startLine": 254,
+        "startChar": 33,
+        "endLine": 254,
+        "endChar": 64
+      },
+      "revId": "e2af26250d69eeabd00ba09916d51d6d0db59903",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "3ab3abb7_7cc52339",
         "filename": "media/blink/webmediaplayer_impl.cc",
         "patchSetId": 6
@@ -116,6 +224,30 @@
       "writtenOn": "2017-11-06T21:30:34Z",
       "side": 1,
       "message": "This isn\u0027t quite enough to prove that it\u0027s safe, since it could still be destroyed on |vfc_task_runner_| before this task is executed. Some link between the lifetime of |vfc_task_runner_| and the lifetime of |compositor_| is required.",
+      "range": {
+        "startLine": 2243,
+        "startChar": 60,
+        "endLine": 2243,
+        "endChar": 72
+      },
+      "revId": "e2af26250d69eeabd00ba09916d51d6d0db59903",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "78ef8551_27ead2f7",
+        "filename": "media/blink/webmediaplayer_impl.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 2243,
+      "author": {
+        "id": 1150472
+      },
+      "writtenOn": "2017-11-07T01:46:55Z",
+      "side": 1,
+      "message": "Updated comment.",
+      "parentUuid": "3ab3abb7_7cc52339",
       "range": {
         "startLine": 2243,
         "startChar": 60,
