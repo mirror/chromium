@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "b0e34305_51b0ac1b",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/ntp/snippets/SnippetArticle.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 132,
+      "author": {
+        "id": 1122966
+      },
+      "writtenOn": "2017-11-07T16:16:59Z",
+      "side": 1,
+      "message": "Do we also need to reset the drawable on the ImageView that holds the thumbnail?",
+      "revId": "4e45e4748ab2699f0e92cb202b630a8c41d37da5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
