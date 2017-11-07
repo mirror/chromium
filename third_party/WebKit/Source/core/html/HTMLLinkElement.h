@@ -37,6 +37,7 @@
 #include "core/loader/LinkLoaderClient.h"
 #include "platform/WebTaskRunner.h"
 #include "platform/bindings/TraceWrapperMember.h"
+#include "public/platform/modules/serviceworker/service_worker_registration.mojom-shared.h"
 
 namespace blink {
 
@@ -150,6 +151,8 @@ class CORE_EXPORT HTMLLinkElement final : public HTMLElement,
   void DidSendLoadForLinkPrerender() override;
   void DidSendDOMContentLoadedForLinkPrerender() override;
   scoped_refptr<WebTaskRunner> GetLoadingTaskRunner() override;
+
+  void ParseUpdateViaCacheAttribute();
 
   Member<LinkResource> link_;
   Member<LinkLoader> link_loader_;
