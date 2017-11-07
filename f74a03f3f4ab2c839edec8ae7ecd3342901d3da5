@@ -1,0 +1,188 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "fafce600_12cebb48",
+        "filename": "services/shape_detection/detection_utils_win.h",
+        "patchSetId": 8
+      },
+      "lineNbr": 29,
+      "author": {
+        "id": 1113991
+      },
+      "writtenOn": "2017-11-07T16:46:11Z",
+      "side": 1,
+      "message": "s/A class/This template/\n\nAlso, you can reflow this to read like:\n// This template represents an asynchronous operation which returns a result\n// upon completion, internal async callback will be not called if the instance\n// is deleted. RuntimeType is Windows Runtime APIs that have a result.\n\n\nIf you\u0027re using Sublime, aside from clang-format, which is\nsweet, you could use a package such as Wrap-plus to reflow\nautomatically comments and such.",
+      "range": {
+        "startLine": 29,
+        "startChar": 2,
+        "endLine": 29,
+        "endChar": 10
+      },
+      "revId": "f74a03f3f4ab2c839edec8ae7ecd3342901d3da5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "65d8a915_1b1f5f11",
+        "filename": "services/shape_detection/detection_utils_win.h",
+        "patchSetId": 8
+      },
+      "lineNbr": 39,
+      "author": {
+        "id": 1113991
+      },
+      "writtenOn": "2017-11-07T16:46:11Z",
+      "side": 1,
+      "message": "s/async_op_ptr_/|async_op_ptr_|/",
+      "range": {
+        "startLine": 39,
+        "startChar": 26,
+        "endLine": 39,
+        "endChar": 39
+      },
+      "revId": "f74a03f3f4ab2c839edec8ae7ecd3342901d3da5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "00e8beeb_04614435",
+        "filename": "services/shape_detection/detection_utils_win.h",
+        "patchSetId": 8
+      },
+      "lineNbr": 44,
+      "author": {
+        "id": 1113991
+      },
+      "writtenOn": "2017-11-07T16:46:11Z",
+      "side": 1,
+      "message": "s/Create/Creates/\ns/a/an/\nReview grammar of the comments, and also observe these \nguidelines plz:\nhttps://google.github.io/styleguide/cppguide.html#Function_Comments",
+      "range": {
+        "startLine": 44,
+        "startChar": 12,
+        "endLine": 44,
+        "endChar": 13
+      },
+      "revId": "f74a03f3f4ab2c839edec8ae7ecd3342901d3da5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1b0eeafc_ba21e708",
+        "filename": "services/shape_detection/detection_utils_win.h",
+        "patchSetId": 8
+      },
+      "lineNbr": 91,
+      "author": {
+        "id": 1113991
+      },
+      "writtenOn": "2017-11-07T16:46:11Z",
+      "side": 1,
+      "message": "Remove this method and just call directly \n   weak_factory_.GetWeakPtr();\nin l.53 ?",
+      "range": {
+        "startLine": 88,
+        "startChar": 0,
+        "endLine": 91,
+        "endChar": 3
+      },
+      "revId": "f74a03f3f4ab2c839edec8ae7ecd3342901d3da5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "aa16b2ef_0f2d12bb",
+        "filename": "services/shape_detection/face_detection_impl_win.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 61,
+      "author": {
+        "id": 1113991
+      },
+      "writtenOn": "2017-11-07T16:46:11Z",
+      "side": 1,
+      "message": "I don\u0027t think this is an error, and the message doesn\u0027t\nadd much. Remove?",
+      "range": {
+        "startLine": 61,
+        "startChar": 0,
+        "endLine": 61,
+        "endChar": 73
+      },
+      "revId": "f74a03f3f4ab2c839edec8ae7ecd3342901d3da5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2fc1310b_8682fbbd",
+        "filename": "services/shape_detection/face_detection_impl_win.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 84,
+      "author": {
+        "id": 1113991
+      },
+      "writtenOn": "2017-11-07T16:46:11Z",
+      "side": 1,
+      "message": "Can\u0027t we just inspect |face_detector_| to see if the \nasynchronous creation has happened correctly? That way\nwe don\u0027t need a state variable nor holding on to\n|async_create_detector_ops_| (that, if needed, should\nhave been passed to the bound OnFaceDetectorCreated() \ncallback).",
+      "range": {
+        "startLine": 84,
+        "startChar": 0,
+        "endLine": 84,
+        "endChar": 26
+      },
+      "revId": "f74a03f3f4ab2c839edec8ae7ecd3342901d3da5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9f2c0c7e_2465e916",
+        "filename": "services/shape_detection/face_detection_impl_win.h",
+        "patchSetId": 8
+      },
+      "lineNbr": 43,
+      "author": {
+        "id": 1113991
+      },
+      "writtenOn": "2017-11-07T16:46:11Z",
+      "side": 1,
+      "message": "// mojom::FaceDetection implementation.",
+      "range": {
+        "startLine": 43,
+        "startChar": 5,
+        "endLine": 43,
+        "endChar": 25
+      },
+      "revId": "f74a03f3f4ab2c839edec8ae7ecd3342901d3da5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "27171183_6b6c5c81",
+        "filename": "services/shape_detection/face_detection_impl_win.h",
+        "patchSetId": 8
+      },
+      "lineNbr": 58,
+      "author": {
+        "id": 1113991
+      },
+      "writtenOn": "2017-11-07T16:46:11Z",
+      "side": 1,
+      "message": "Isn\u0027t this also  \n AsyncOperation\u003cFaceDetector\u003e::IAsyncOperationPtr\n?",
+      "range": {
+        "startLine": 58,
+        "startChar": 6,
+        "endLine": 58,
+        "endChar": 60
+      },
+      "revId": "f74a03f3f4ab2c839edec8ae7ecd3342901d3da5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
