@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "6d582c59_954e3c5a",
+        "filename": "third_party/WebKit/LayoutTests/external/wpt/navigation-timing/OWNERS",
+        "patchSetId": 4
+      },
+      "lineNbr": 1,
+      "author": {
+        "id": 1116050
+      },
+      "writtenOn": "2017-11-07T19:18:07Z",
+      "side": 1,
+      "message": "loading-dev",
+      "range": {
+        "startLine": 1,
+        "startChar": 8,
+        "endLine": 1,
+        "endChar": 44
+      },
+      "revId": "5057b2cb8b024bb6debb28d629f8752ec87ac097",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "73d59f4b_7e301145",
+        "filename": "third_party/WebKit/LayoutTests/external/wpt/resource-timing/OWNERS",
+        "patchSetId": 4
+      },
+      "lineNbr": 1,
+      "author": {
+        "id": 1116050
+      },
+      "writtenOn": "2017-11-07T19:18:07Z",
+      "side": 1,
+      "message": "loading-dev",
+      "range": {
+        "startLine": 1,
+        "startChar": 8,
+        "endLine": 1,
+        "endChar": 44
+      },
+      "revId": "5057b2cb8b024bb6debb28d629f8752ec87ac097",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
