@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "8aeee09e_869269d1",
+        "filename": "chrome/browser/ui/webui/welcome_win10_handler.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 71,
+      "author": {
+        "id": 1001118
+      },
+      "writtenOn": "2017-11-07T22:28:03Z",
+      "side": 0,
+      "message": "Hopefully folks will know to reconcile Sectioned* with *? (maybe keep |std::string histogram_suffix \u003d \"Sectioned\";|?)",
+      "revId": "5e48f901879796bf05fe124fdf82b45fe1d47bf2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
