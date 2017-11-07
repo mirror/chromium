@@ -178,6 +178,24 @@
     },
     {
       "key": {
+        "uuid": "a9e2b1c5_eae0918d",
+        "filename": "ios/chrome/browser/ui/overscroll_actions/BUILD.gn",
+        "patchSetId": 7
+      },
+      "lineNbr": 30,
+      "author": {
+        "id": 1192584
+      },
+      "writtenOn": "2017-11-07T19:49:04Z",
+      "side": 1,
+      "message": "Had a good chat in person, I\u0027ll set this up :-)",
+      "parentUuid": "e7931b38_4e8fe09a",
+      "revId": "be11233f96436a2e0f8d2ffbb6df7124bfcbc08e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "bc46292b_b87e2dbc",
         "filename": "ios/chrome/browser/ui/overscroll_actions/overscroll_actions_controller.mm",
         "patchSetId": 7
@@ -647,6 +665,30 @@
     },
     {
       "key": {
+        "uuid": "55999f7f_559e793e",
+        "filename": "ios/chrome/browser/ui/tools_menu/tools_menu_coordinator_constants.h",
+        "patchSetId": 7
+      },
+      "lineNbr": 27,
+      "author": {
+        "id": 1192584
+      },
+      "writtenOn": "2017-11-07T19:49:04Z",
+      "side": 1,
+      "message": "Chatted with Sergio, I\u0027ll do this thanks!",
+      "parentUuid": "6607068c_25479ecf",
+      "range": {
+        "startLine": 21,
+        "startChar": 0,
+        "endLine": 27,
+        "endChar": 4
+      },
+      "revId": "be11233f96436a2e0f8d2ffbb6df7124bfcbc08e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "897829cc_fc43c6fd",
         "filename": "ios/chrome/browser/ui/tools_menu/tools_menu_coordinator_constants.h",
         "patchSetId": 7
@@ -679,6 +721,24 @@
       "revId": "be11233f96436a2e0f8d2ffbb6df7124bfcbc08e",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "613c011b_1a10b6aa",
+        "filename": "ios/chrome/browser/ui/tools_menu/tools_menu_coordinator_constants.h",
+        "patchSetId": 7
+      },
+      "lineNbr": 34,
+      "author": {
+        "id": 1192584
+      },
+      "writtenOn": "2017-11-07T19:49:04Z",
+      "side": 1,
+      "message": "Chatted with Sergio, I\u0027ll do this, thanks!",
+      "parentUuid": "7d32b12f_3bec2ad9",
+      "revId": "be11233f96436a2e0f8d2ffbb6df7124bfcbc08e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
