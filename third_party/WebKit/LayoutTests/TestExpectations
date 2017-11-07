@@ -3814,3 +3814,6 @@ crbug.com/781171 [ Android ] external/wpt/css/css-timing/cubic-bezier-timing-fun
 crbug.com/781171 [ Android ] external/wpt/css/css-timing/frames-timing-functions-output.html [ Skip ]
 crbug.com/781171 [ Android ] external/wpt/css/css-timing/frames-timing-functions-syntax.html [ Skip ]
 crbug.com/781171 [ Android ] external/wpt/css/css-timing/step-timing-functions-output.html [ Skip ]
+
+# These tests should always fail because the modern media controls are not yet enabled
+crbug.com/761305 media/controls/modern/ [ Failure Timeout ]
