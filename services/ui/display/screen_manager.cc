@@ -27,4 +27,9 @@ ScreenManager* ScreenManager::GetInstance() {
   return instance_;
 }
 
+// static
+bool ScreenManager::HasInstance() {
+  return instance_ != nullptr;
+}
+
 }  // namespace display

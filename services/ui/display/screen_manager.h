@@ -26,6 +26,7 @@ class ScreenManager {
   // Creates a singleton ScreenManager instance.
   static std::unique_ptr<ScreenManager> Create();
   static ScreenManager* GetInstance();
+  static bool HasInstance();
 
   // Registers Mojo interfaces provided.
   virtual void AddInterfaces(

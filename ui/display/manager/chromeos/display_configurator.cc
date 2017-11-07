@@ -285,6 +285,10 @@ bool DisplayConfigurator::DisplayLayoutManagerImpl::GetDisplayLayout(
 
       for (size_t i = 0; i < states.size(); ++i) {
         const DisplayState* state = &states[i];
+        // Hardware mirroring cannot be used on the desktop-linux Chrome OS
+        // environment with fake displays; fallback to software mirroring.
+        if (state->display->type() == DISPLAY_CONNECTION_TYPE_UNKNOWN)
+          return false;
         (*requests)[i].mode = display_power[i] ? state->mirror_mode : NULL;
       }
       break;
