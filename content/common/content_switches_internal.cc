@@ -56,6 +56,10 @@ const base::Feature kProgressBarCompletionResourcesBeforeDOMContentLoaded {
     base::FEATURE_DISABLED_BY_DEFAULT};
 #endif
 
+const base::Feature kSavePreviousDocumentResources{
+    "save-previous-document-resource-until-onload",
+    base::FEATURE_DISABLED_BY_DEFAULT};
+
 #if defined(OS_WIN)
 
 base::string16 ToNativeString(base::StringPiece string) {
@@ -156,6 +160,10 @@ SavePreviousDocumentResources GetSavePreviousDocumentResources() {
   if (save_previous_document_resources == "onDOMContentLoaded")
     return SavePreviousDocumentResources::UNTIL_ON_DOM_CONTENT_LOADED;
   if (save_previous_document_resources == "onload")
+    return SavePreviousDocumentResources::UNTIL_ON_LOAD;
+  // The command line, which is set by the user, takes priority. Otherwise,
+  // fall back to the feature flag.
+  if (base::FeatureList::IsEnabled(kSavePreviousDocumentResources))
     return SavePreviousDocumentResources::UNTIL_ON_LOAD;
   return SavePreviousDocumentResources::NEVER;
 }
