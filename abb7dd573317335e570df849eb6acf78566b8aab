@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "c074213c_4e23c5e3",
+        "filename": "third_party/WebKit/LayoutTests/external/wpt/service-workers/service-worker/resources/interfaces-worker.sub.js",
+        "patchSetId": 10
+      },
+      "lineNbr": 38,
+      "author": {
+        "id": 1125915
+      },
+      "writtenOn": "2017-11-07T07:49:57Z",
+      "side": 1,
+      "message": "Is this intended change?",
+      "revId": "abb7dd573317335e570df849eb6acf78566b8aab",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
