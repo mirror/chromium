@@ -46,6 +46,7 @@ import org.chromium.android_webview.AwDevToolsServer;
 import org.chromium.android_webview.AwNetworkChangeNotifierRegistrationPolicy;
 import org.chromium.android_webview.AwQuotaManagerBridge;
 import org.chromium.android_webview.AwResource;
+import org.chromium.android_webview.AwSafeBrowsingConfigHelper;
 import org.chromium.android_webview.AwSettings;
 import org.chromium.android_webview.AwSwitches;
 import org.chromium.android_webview.HttpAuthDatabase;
@@ -442,6 +443,9 @@ public class WebViewChromiumFactoryProvider implements WebViewFactoryProvider {
                         TraceEvent.setATraceEnabled(enabled);
                     }
                 });
+
+        AwSafeBrowsingApiHandlerGoogle.setSafeBrowsingOptInPreferenceFetcher(
+                AwSafeBrowsingConfigHelper.getInstance());
 
         mStarted = true;
 
