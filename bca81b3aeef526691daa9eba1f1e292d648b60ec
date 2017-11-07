@@ -73,6 +73,30 @@
     },
     {
       "key": {
+        "uuid": "01978d18_f93ae0ab",
+        "filename": "third_party/WebKit/Source/platform/graphics/gpu/ImageLayerBridge.cpp",
+        "patchSetId": 4
+      },
+      "lineNbr": 87,
+      "author": {
+        "id": 1000887
+      },
+      "writtenOn": "2017-11-07T21:55:40Z",
+      "side": 1,
+      "message": "If the mode changes, the context/channel is lost in order to inform clients. So the \"because of\" is the other direction but the relationship exists.\n\nThey may be able to make a context again afterwards, but the compositing mode itself would be software if checked via Platform::IsGpuCompositingDisabled.",
+      "parentUuid": "e00c5225_75ab1c44",
+      "range": {
+        "startLine": 87,
+        "startChar": 26,
+        "endLine": 87,
+        "endChar": 35
+      },
+      "revId": "bca81b3aeef526691daa9eba1f1e292d648b60ec",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "5082a5a3_463f32ba",
         "filename": "third_party/WebKit/Source/platform/graphics/gpu/ImageLayerBridge.cpp",
         "patchSetId": 4
@@ -116,6 +140,30 @@
       "revId": "bca81b3aeef526691daa9eba1f1e292d648b60ec",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "79e82997_1d7ce32f",
+        "filename": "third_party/WebKit/Source/platform/graphics/gpu/ImageLayerBridge.cpp",
+        "patchSetId": 4
+      },
+      "lineNbr": 107,
+      "author": {
+        "id": 1000887
+      },
+      "writtenOn": "2017-11-07T21:55:40Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "2cfbbbbd_f5252dfe",
+      "range": {
+        "startLine": 107,
+        "startChar": 12,
+        "endLine": 107,
+        "endChar": 17
+      },
+      "revId": "bca81b3aeef526691daa9eba1f1e292d648b60ec",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
