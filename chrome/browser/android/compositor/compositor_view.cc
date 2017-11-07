@@ -27,7 +27,9 @@
 #include "chrome/browser/android/compositor/tab_content_manager.h"
 #include "content/public/browser/android/compositor.h"
 #include "content/public/browser/child_process_data.h"
+#include "content/public/browser/render_widget_host_view.h"
 #include "content/public/browser/web_contents.h"
+#include "content/public/browser/web_contents_observer.h"
 #include "content/public/common/process_type.h"
 #include "jni/CompositorView_jni.h"
 #include "third_party/skia/include/core/SkBitmap.h"
@@ -37,6 +39,68 @@
 #include "ui/gfx/android/java_bitmap.h"
 
 using base::android::JavaParamRef;
+using content::WebContents;
+
+namespace {
+
+class TopControlUpdater : public content::WebContentsObserver {
+ public:
+  TopControlUpdater(WebContents* web_contents, int height, bool shrink_size)
+      : WebContentsObserver(web_contents),
+        height_(height),
+        shrink_size_(shrink_size) {}
+  static void SetHeight(WebContents* web_contents,
+                        int height,
+                        bool shrink_size);
+  void RenderViewReady() override;
+
+ private:
+  int height_;
+  bool shrink_size_;
+};
+
+void TopControlUpdater::SetHeight(WebContents* web_contents,
+                                  int height,
+                                  bool shrink_size) {
+  auto* view = web_contents->GetRenderWidgetHostView();
+  if (view)
+    view->SetTopControlsHeight(height, shrink_size);
+  else
+    new TopControlUpdater(web_contents, height, shrink_size);
+}
+
+void TopControlUpdater::RenderViewReady() {
+  auto* view = web_contents()->GetRenderWidgetHostView();
+  view->SetTopControlsHeight(height_, shrink_size_);
+  delete this;
+}
+
+class BottomControlUpdater : public content::WebContentsObserver {
+ public:
+  BottomControlUpdater(WebContents* web_contents, int height)
+      : WebContentsObserver(web_contents), height_(height) {}
+  static void SetHeight(WebContents* web_contents, int height);
+  void RenderViewReady() override;
+
+ private:
+  int height_;
+};
+
+void BottomControlUpdater::SetHeight(WebContents* web_contents, int height) {
+  auto* view = web_contents->GetRenderWidgetHostView();
+  if (view)
+    view->SetBottomControlsHeight(height);
+  else
+    new BottomControlUpdater(web_contents, height);
+}
+
+void BottomControlUpdater::RenderViewReady() {
+  auto* view = web_contents()->GetRenderWidgetHostView();
+  view->SetBottomControlsHeight(height_);
+  delete this;
+}
+
+}  // namespace
 
 namespace android {
 
@@ -176,6 +240,27 @@ void CompositorView::OnPhysicalBackingSizeChanged(
       content::WebContents::FromJavaWebContents(jweb_contents);
   gfx::Size size(width, height);
   web_contents->GetNativeView()->OnPhysicalBackingSizeChanged(size);
+}
+
+void CompositorView::SetTopControlsHeight(
+    JNIEnv* env,
+    const JavaParamRef<jobject>& obj,
+    const JavaParamRef<jobject>& jweb_contents,
+    jint height,
+    jboolean controls_resize_view) {
+  content::WebContents* web_contents =
+      content::WebContents::FromJavaWebContents(jweb_contents);
+  TopControlUpdater::SetHeight(web_contents, height, controls_resize_view);
+}
+
+void CompositorView::SetBottomControlsHeight(
+    JNIEnv* env,
+    const JavaParamRef<jobject>& obj,
+    const JavaParamRef<jobject>& jweb_contents,
+    jint height) {
+  content::WebContents* web_contents =
+      content::WebContents::FromJavaWebContents(jweb_contents);
+  BottomControlUpdater::SetHeight(web_contents, height);
 }
 
 void CompositorView::SetLayoutBounds(JNIEnv* env,
