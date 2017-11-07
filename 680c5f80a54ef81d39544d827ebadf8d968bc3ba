@@ -1,0 +1,107 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "36868ce3_6ce2b742",
+        "filename": "chrome/browser/media/router/discovery/dial/dial_app_discovery_service.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 30,
+      "author": {
+        "id": 1150437
+      },
+      "writtenOn": "2017-11-07T19:28:05Z",
+      "side": 1,
+      "message": "nit: s/Compuate/Compute/ s/Netfix/Neflix/",
+      "range": {
+        "startLine": 30,
+        "startChar": 5,
+        "endLine": 30,
+        "endChar": 13
+      },
+      "revId": "680c5f80a54ef81d39544d827ebadf8d968bc3ba",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "bbccabfb_6c3ef58e",
+        "filename": "chrome/browser/media/router/discovery/dial/dial_app_discovery_service.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 102,
+      "author": {
+        "id": 1150437
+      },
+      "writtenOn": "2017-11-07T19:28:05Z",
+      "side": 1,
+      "message": "s/invalid/expired/ would be more correct I think.",
+      "range": {
+        "startLine": 102,
+        "startChar": 26,
+        "endLine": 102,
+        "endChar": 33
+      },
+      "revId": "680c5f80a54ef81d39544d827ebadf8d968bc3ba",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0843e4c2_89cdbaa8",
+        "filename": "chrome/browser/media/router/discovery/dial/dial_app_discovery_service.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 137,
+      "author": {
+        "id": 1150437
+      },
+      "writtenOn": "2017-11-07T19:28:05Z",
+      "side": 1,
+      "message": "So if we fill up the cache we just stop using it?  Or am I misunderstanding how it works?\n\nShouldn\u0027t we try to remove old entries or something?  Are there existing cache implementations that already do this?",
+      "revId": "680c5f80a54ef81d39544d827ebadf8d968bc3ba",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f3d3020b_429cef3b",
+        "filename": "chrome/browser/media/router/discovery/dial/dial_app_discovery_service.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 179,
+      "author": {
+        "id": 1150437
+      },
+      "writtenOn": "2017-11-07T19:28:05Z",
+      "side": 1,
+      "message": "I\u0027m not very familiar with C++ Time libraries and in this case it probably isn\u0027t a big deal either way as DIAL isn\u0027t critical, but isn\u0027t there something like TimeDelta that would fit better (in case of unexpected time changes etc).",
+      "revId": "680c5f80a54ef81d39544d827ebadf8d968bc3ba",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "cee4921f_b981987f",
+        "filename": "chrome/browser/media/router/discovery/dial/dial_app_info_fetcher.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 52,
+      "author": {
+        "id": 1150437
+      },
+      "writtenOn": "2017-11-07T19:28:05Z",
+      "side": 1,
+      "message": "s/Disovery/Discovery/",
+      "range": {
+        "startLine": 52,
+        "startChar": 38,
+        "endLine": 52,
+        "endChar": 46
+      },
+      "revId": "680c5f80a54ef81d39544d827ebadf8d968bc3ba",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
