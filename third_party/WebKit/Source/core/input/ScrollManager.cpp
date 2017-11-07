@@ -21,6 +21,7 @@
 #include "core/page/scrolling/OverscrollController.h"
 #include "core/page/scrolling/RootScrollerController.h"
 #include "core/page/scrolling/ScrollState.h"
+#include "core/page/scrolling/SnapCoordinator.h"
 #include "core/paint/PaintLayer.h"
 #include "platform/Histogram.h"
 #include "platform/wtf/PtrUtil.h"
@@ -51,6 +52,8 @@ void ScrollManager::ClearGestureScrollState() {
   scroll_gesture_handling_node_ = nullptr;
   previous_gesture_scrolled_element_ = nullptr;
   delta_consumed_for_scroll_sequence_ = false;
+  did_scroll_x_for_scroll_sequence_ = false;
+  did_scroll_y_for_scroll_sequence_ = false;
   current_scroll_chain_.clear();
 
   if (Page* page = frame_->GetPage()) {
@@ -448,6 +451,9 @@ WebInputEventResult ScrollManager::HandleGestureScrollUpdate(
   bool did_scroll_x = scroll_state->deltaX() != delta.Width();
   bool did_scroll_y = scroll_state->deltaY() != delta.Height();
 
+  did_scroll_x_for_scroll_sequence_ |= did_scroll_x;
+  did_scroll_y_for_scroll_sequence_ |= did_scroll_y;
+
   if ((!previous_gesture_scrolled_element_ ||
        !IsViewportScrollingElement(*previous_gesture_scrolled_element_)) &&
       GetPage())
@@ -482,6 +488,30 @@ WebInputEventResult ScrollManager::HandleGestureScrollEnd(
         delta_consumed_for_scroll_sequence_;
     ScrollState* scroll_state =
         ScrollState::Create(std::move(scroll_state_data));
+
+    if (previous_gesture_scrolled_element_) {
+      SnapCoordinator* snap_coordinator =
+          frame_->GetDocument()->GetSnapCoordinator();
+      LayoutBox* layout_box =
+          previous_gesture_scrolled_element_->GetLayoutBox();
+      if (snap_coordinator && layout_box) {
+        ScrollOffset snap_offset;
+        if (did_scroll_x_for_scroll_sequence_) {
+          if (did_scroll_y_for_scroll_sequence_) {
+            snap_offset =
+                snap_coordinator->GetSnapPosition(*layout_box, kSnapAxisBoth);
+          } else {
+            snap_offset =
+                snap_coordinator->GetSnapPosition(*layout_box, kSnapAxisX);
+          }
+        } else if (did_scroll_y_for_scroll_sequence_) {
+          snap_offset =
+              snap_coordinator->GetSnapPosition(*layout_box, kSnapAxisY);
+        }
+        layout_box->GetScrollableArea()->SetScrollOffset(snap_offset,
+                                                         kProgrammaticScroll);
+      }
+    }
     CustomizedScroll(*scroll_state);
   }
 
@@ -553,6 +583,8 @@ WebInputEventResult ScrollManager::HandleGestureScrollEvent(
     scroll_gesture_handling_node_ = event_target;
     previous_gesture_scrolled_element_ = nullptr;
     delta_consumed_for_scroll_sequence_ = false;
+    did_scroll_x_for_scroll_sequence_ = false;
+    did_scroll_y_for_scroll_sequence_ = false;
 
     if (!scrollbar)
       scrollbar = result.GetScrollbar();
