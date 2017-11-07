@@ -34,7 +34,7 @@ class CONTENT_EXPORT InterstitialPageNavigatorImpl : public Navigator {
       const base::TimeTicks& navigation_start) override;
   void DidNavigate(
       RenderFrameHostImpl* render_frame_host,
-      const FrameHostMsg_DidCommitProvisionalLoad_Params& input_params,
+      const mojom::DidCommitProvisionalLoadParams& input_params,
       std::unique_ptr<NavigationHandleImpl> navigation_handle) override;
 
   // Disables any further action when the interstitial page is preparing to

@@ -149,8 +149,6 @@ source_set("common_sources") {
     "file_chooser_file_info.h",
     "file_chooser_params.cc",
     "file_chooser_params.h",
-    "frame_navigate_params.cc",
-    "frame_navigate_params.h",
     "injection_test_mac.h",
     "injection_test_win.h",
     "input_event_ack_source.h",

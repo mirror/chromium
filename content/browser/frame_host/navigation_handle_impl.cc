@@ -463,24 +463,23 @@ NavigationHandleImpl::CallWillProcessResponseForTesting(
 }
 
 void NavigationHandleImpl::CallDidCommitNavigationForTesting(const GURL& url) {
-  FrameHostMsg_DidCommitProvisionalLoad_Params params;
+  auto params = mojom::DidCommitProvisionalLoadParams::New();
+  params->nav_entry_id = 1;
+  params->url = url;
+  params->referrer = content::Referrer();
+  params->transition = ui::PAGE_TRANSITION_TYPED;
+  params->redirects = std::vector<GURL>();
+  params->should_update_history = false;
+  params->searchable_form_url = GURL();
+  params->searchable_form_encoding = std::string();
+  params->did_create_new_entry = false;
+  params->gesture = NavigationGestureUser;
+  params->was_within_same_document = false;
+  params->method = "GET";
+  params->page_state = PageState::CreateFromURL(url);
+  params->contents_mime_type = std::string("text/html");
 
-  params.nav_entry_id = 1;
-  params.url = url;
-  params.referrer = content::Referrer();
-  params.transition = ui::PAGE_TRANSITION_TYPED;
-  params.redirects = std::vector<GURL>();
-  params.should_update_history = false;
-  params.searchable_form_url = GURL();
-  params.searchable_form_encoding = std::string();
-  params.did_create_new_entry = false;
-  params.gesture = NavigationGestureUser;
-  params.was_within_same_document = false;
-  params.method = "GET";
-  params.page_state = PageState::CreateFromURL(url);
-  params.contents_mime_type = std::string("text/html");
-
-  DidCommitNavigation(params, true, false, GURL(), NAVIGATION_TYPE_NEW_PAGE,
+  DidCommitNavigation(*params, true, false, GURL(), NAVIGATION_TYPE_NEW_PAGE,
                       render_frame_host_);
 }
 
@@ -788,7 +787,7 @@ void NavigationHandleImpl::ReadyToCommitNavigation(
 }
 
 void NavigationHandleImpl::DidCommitNavigation(
-    const FrameHostMsg_DidCommitProvisionalLoad_Params& params,
+    const mojom::DidCommitProvisionalLoadParams& params,
     bool navigation_entry_committed,
     bool did_replace_entry,
     const GURL& previous_url,

@@ -3,6 +3,23 @@
 # found in the LICENSE file.
 
 mojom = "//content/common/frame.mojom"
-public_headers = [ "//content/common/frame_messages_forward.h" ]
-traits_headers = [ "//content/common/frame_messages.h" ]
-type_mappings = [ "content.mojom.DidCommitProvisionalLoadParams=std::unique_ptr<::FrameHostMsg_DidCommitProvisionalLoad_Params>[move_only,nullable_is_same_type]" ]
+public_headers = [
+  "//third_party/WebKit/public/platform/WebInsecureRequestPolicy.h",
+  "//net/base/host_port_pair.h",
+  "//content/common/frame_message_enums.h",
+  "//ui/base/page_transition_types.h",
+  "//content/public/common/page_state.h",
+  "//content/common/navigation_gesture.h",
+]
+traits_headers = [
+  "//content/common/frame_messages.h",
+  "//content/common/view_messages.h",
+]
+type_mappings = [
+  "content.mojom.WebInsecureRequestPolicy=blink::WebInsecureRequestPolicy",
+  "content.mojom.HostPortPair=net::HostPortPair",
+  "content.mojom.UILoadMetricsReportType=FrameMsg_UILoadMetricsReportType::Value",
+  "content.mojom.PageTransition=ui::PageTransition",
+  "content.mojom.PageState=content::PageState",
+  "content.mojom.NavigationGesture=content::NavigationGesture",
+]

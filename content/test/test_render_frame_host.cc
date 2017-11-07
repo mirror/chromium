@@ -178,26 +178,26 @@ void TestRenderFrameHost::SimulateNavigationCommit(const GURL& url) {
   bool is_auto_subframe =
       GetParent() && !frame_tree_node()->has_committed_real_load();
 
-  FrameHostMsg_DidCommitProvisionalLoad_Params params;
-  params.nav_entry_id = 0;
-  params.url = url;
-  params.origin = url::Origin::Create(url);
+  auto params = mojom::DidCommitProvisionalLoadParams::New();
+  params->nav_entry_id = 0;
+  params->url = url;
+  params->origin = url::Origin::Create(url);
   if (!GetParent())
-    params.transition = ui::PAGE_TRANSITION_LINK;
+    params->transition = ui::PAGE_TRANSITION_LINK;
   else if (is_auto_subframe)
-    params.transition = ui::PAGE_TRANSITION_AUTO_SUBFRAME;
+    params->transition = ui::PAGE_TRANSITION_AUTO_SUBFRAME;
   else
-    params.transition = ui::PAGE_TRANSITION_MANUAL_SUBFRAME;
-  params.should_update_history = true;
-  params.did_create_new_entry = !is_auto_subframe;
-  params.gesture = NavigationGestureUser;
-  params.contents_mime_type = contents_mime_type_;
-  params.method = "GET";
-  params.http_status_code = 200;
-  params.socket_address.set_host("2001:db8::1");
-  params.socket_address.set_port(80);
-  params.history_list_was_cleared = simulate_history_list_was_cleared_;
-  params.original_request_url = url;
+    params->transition = ui::PAGE_TRANSITION_MANUAL_SUBFRAME;
+  params->should_update_history = true;
+  params->did_create_new_entry = !is_auto_subframe;
+  params->gesture = NavigationGestureUser;
+  params->contents_mime_type = contents_mime_type_;
+  params->method = "GET";
+  params->http_status_code = 200;
+  params->socket_address.set_host("2001:db8::1");
+  params->socket_address.set_port(80);
+  params->history_list_was_cleared = simulate_history_list_was_cleared_;
+  params->original_request_url = url;
 
   url::Replacements<char> replacements;
   replacements.ClearRef();
@@ -205,14 +205,15 @@ void TestRenderFrameHost::SimulateNavigationCommit(const GURL& url) {
   // This approach to determining whether a navigation is to be treated as
   // same document is not robust, as it will not handle pushState type
   // navigation. Do not use elsewhere!
-  params.was_within_same_document =
+  params->was_within_same_document =
       (GetLastCommittedURL().is_valid() && !last_commit_was_error_page_ &&
        url.ReplaceComponents(replacements) ==
            GetLastCommittedURL().ReplaceComponents(replacements));
 
-  params.page_state = PageState::CreateForTesting(url, false, nullptr, nullptr);
+  params->page_state =
+      PageState::CreateForTesting(url, false, nullptr, nullptr);
 
-  SendNavigateWithParams(&params);
+  SendNavigateWithParams(std::move(params));
 }
 
 void TestRenderFrameHost::SimulateNavigationError(const GURL& url,
@@ -250,17 +251,17 @@ void TestRenderFrameHost::SimulateNavigationErrorPageCommit() {
   GURL error_url = GURL(kUnreachableWebDataURL);
   OnDidStartProvisionalLoad(error_url, std::vector<GURL>(),
                             base::TimeTicks::Now());
-  FrameHostMsg_DidCommitProvisionalLoad_Params params;
-  params.nav_entry_id = 0;
-  params.did_create_new_entry = true;
-  params.url = navigation_handle()->GetURL();
-  params.transition = GetParent() ? ui::PAGE_TRANSITION_MANUAL_SUBFRAME
-                                  : ui::PAGE_TRANSITION_LINK;
-  params.was_within_same_document = false;
-  params.url_is_unreachable = true;
-  params.page_state = PageState::CreateForTesting(navigation_handle()->GetURL(),
-                                                  false, nullptr, nullptr);
-  SendNavigateWithParams(&params);
+  auto params = mojom::DidCommitProvisionalLoadParams::New();
+  params->nav_entry_id = 0;
+  params->did_create_new_entry = true;
+  params->url = navigation_handle()->GetURL();
+  params->transition = GetParent() ? ui::PAGE_TRANSITION_MANUAL_SUBFRAME
+                                   : ui::PAGE_TRANSITION_LINK;
+  params->was_within_same_document = false;
+  params->url_is_unreachable = true;
+  params->page_state = PageState::CreateForTesting(
+      navigation_handle()->GetURL(), false, nullptr, nullptr);
+  SendNavigateWithParams(std::move(params));
 }
 
 void TestRenderFrameHost::SimulateNavigationStop() {
@@ -367,26 +368,26 @@ void TestRenderFrameHost::SendNavigateWithParameters(
                             base::TimeTicks::Now());
   SimulateWillStartRequest(transition);
 
-  FrameHostMsg_DidCommitProvisionalLoad_Params params;
-  params.nav_entry_id = nav_entry_id;
-  params.url = url_copy;
-  params.transition = transition;
-  params.should_update_history = true;
-  params.did_create_new_entry = did_create_new_entry;
-  params.should_replace_current_entry = should_replace_entry;
-  params.gesture = NavigationGestureUser;
-  params.contents_mime_type = contents_mime_type_;
-  params.method = "GET";
-  params.http_status_code = response_code;
-  params.socket_address.set_host("2001:db8::1");
-  params.socket_address.set_port(80);
-  params.history_list_was_cleared = simulate_history_list_was_cleared_;
-  params.original_request_url = url_copy;
+  auto params = mojom::DidCommitProvisionalLoadParams::New();
+  params->nav_entry_id = nav_entry_id;
+  params->url = url_copy;
+  params->transition = transition;
+  params->should_update_history = true;
+  params->did_create_new_entry = did_create_new_entry;
+  params->should_replace_current_entry = should_replace_entry;
+  params->gesture = NavigationGestureUser;
+  params->contents_mime_type = contents_mime_type_;
+  params->method = "GET";
+  params->http_status_code = response_code;
+  params->socket_address.set_host("2001:db8::1");
+  params->socket_address.set_port(80);
+  params->history_list_was_cleared = simulate_history_list_was_cleared_;
+  params->original_request_url = url_copy;
 
   // Simulate Blink assigning an item and document sequence number to the
   // navigation.
-  params.item_sequence_number = base::Time::Now().ToDoubleT() * 1000000;
-  params.document_sequence_number = params.item_sequence_number + 1;
+  params->item_sequence_number = base::Time::Now().ToDoubleT() * 1000000;
+  params->document_sequence_number = params->item_sequence_number + 1;
 
   // When the user hits enter in the Omnibox without changing the URL, Blink
   // behaves similarly to a reload and does not change the item and document
@@ -401,8 +402,8 @@ void TestRenderFrameHost::SendNavigateWithParameters(
       FrameNavigationEntry* frame_entry =
           entry->GetFrameEntry(frame_tree_node());
       if (frame_entry) {
-        params.item_sequence_number = frame_entry->item_sequence_number();
-        params.document_sequence_number =
+        params->item_sequence_number = frame_entry->item_sequence_number();
+        params->document_sequence_number =
             frame_entry->document_sequence_number();
       }
     }
@@ -412,7 +413,7 @@ void TestRenderFrameHost::SendNavigateWithParameters(
   // check corner cases (like about:blank) should specify the origin param
   // manually.
   url::Origin origin = url::Origin::Create(url_copy);
-  params.origin = origin;
+  params->origin = origin;
 
   url::Replacements<char> replacements;
   replacements.ClearRef();
@@ -420,26 +421,24 @@ void TestRenderFrameHost::SendNavigateWithParameters(
   // This approach to determining whether a navigation is to be treated as
   // same document is not robust, as it will not handle pushState type
   // navigation. Do not use elsewhere!
-  params.was_within_same_document =
+  params->was_within_same_document =
       !ui::PageTransitionCoreTypeIs(transition, ui::PAGE_TRANSITION_RELOAD) &&
       !ui::PageTransitionCoreTypeIs(transition, ui::PAGE_TRANSITION_TYPED) &&
       (GetLastCommittedURL().is_valid() && !last_commit_was_error_page_ &&
        url_copy.ReplaceComponents(replacements) ==
            GetLastCommittedURL().ReplaceComponents(replacements));
 
-  params.page_state =
-      PageState::CreateForTestingWithSequenceNumbers(
-          url_copy, params.item_sequence_number,
-          params.document_sequence_number);
+  params->page_state = PageState::CreateForTestingWithSequenceNumbers(
+      url_copy, params->item_sequence_number, params->document_sequence_number);
 
   if (!callback.is_null())
-    callback.Run(&params);
+    callback.Run(params.get());
 
-  SendNavigateWithParams(&params);
+  SendNavigateWithParams(std::move(params));
 }
 
 void TestRenderFrameHost::SendNavigateWithParams(
-    FrameHostMsg_DidCommitProvisionalLoad_Params* params) {
+    mojom::DidCommitProvisionalLoadParamsPtr params) {
   if (navigation_handle()) {
     scoped_refptr<net::HttpResponseHeaders> response_headers =
         new net::HttpResponseHeaders(std::string());
@@ -447,9 +446,8 @@ void TestRenderFrameHost::SendNavigateWithParams(
         std::string("Content-Type: ") + contents_mime_type_);
     navigation_handle()->set_response_headers_for_testing(response_headers);
   }
-  DidCommitProvisionalLoad(
-      std::make_unique<FrameHostMsg_DidCommitProvisionalLoad_Params>(*params));
   last_commit_was_error_page_ = params->url_is_unreachable;
+  DidCommitProvisionalLoad(std::move(params));
 }
 
 void TestRenderFrameHost::SendRendererInitiatedNavigationRequest(

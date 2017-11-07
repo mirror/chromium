@@ -23,14 +23,16 @@
 #include "content/public/browser/navigation_type.h"
 #include "content/public/browser/reload_type.h"
 
-struct FrameHostMsg_DidCommitProvisionalLoad_Params;
-
 namespace content {
 class FrameTreeNode;
 class RenderFrameHostImpl;
 class NavigationEntryScreenshotManager;
 class SiteInstance;
 struct LoadCommittedDetails;
+
+namespace mojom {
+class DidCommitProvisionalLoadParams;
+}
 
 class CONTENT_EXPORT NavigationControllerImpl : public NavigationController {
  public:
@@ -131,12 +133,11 @@ class CONTENT_EXPORT NavigationControllerImpl : public NavigationController {
   //
   // In the case that nothing has changed, the details structure is undefined
   // and it will return false.
-  bool RendererDidNavigate(
-      RenderFrameHostImpl* rfh,
-      const FrameHostMsg_DidCommitProvisionalLoad_Params& params,
-      LoadCommittedDetails* details,
-      bool is_navigation_within_page,
-      NavigationHandleImpl* navigation_handle);
+  bool RendererDidNavigate(RenderFrameHostImpl* rfh,
+                           const mojom::DidCommitProvisionalLoadParams& params,
+                           LoadCommittedDetails* details,
+                           bool is_navigation_within_page,
+                           NavigationHandleImpl* navigation_handle);
 
   // Notifies us that we just became active. This is used by the WebContentsImpl
   // so that we know to load URLs that were pending as "lazy" loads.
@@ -257,7 +258,7 @@ class CONTENT_EXPORT NavigationControllerImpl : public NavigationController {
   // Classifies the given renderer navigation (see the NavigationType enum).
   NavigationType ClassifyNavigation(
       RenderFrameHostImpl* rfh,
-      const FrameHostMsg_DidCommitProvisionalLoad_Params& params) const;
+      const mojom::DidCommitProvisionalLoadParams& params) const;
 
   // Handlers for the different types of navigation types. They will actually
   // handle the navigations corresponding to the different NavClasses above.
@@ -275,28 +276,28 @@ class CONTENT_EXPORT NavigationControllerImpl : public NavigationController {
   // (e.g., for history.replaceState).
   void RendererDidNavigateToNewPage(
       RenderFrameHostImpl* rfh,
-      const FrameHostMsg_DidCommitProvisionalLoad_Params& params,
+      const mojom::DidCommitProvisionalLoadParams& params,
       bool is_same_document,
       bool replace_entry,
       NavigationHandleImpl* handle);
   void RendererDidNavigateToExistingPage(
       RenderFrameHostImpl* rfh,
-      const FrameHostMsg_DidCommitProvisionalLoad_Params& params,
+      const mojom::DidCommitProvisionalLoadParams& params,
       bool is_same_document,
       bool was_restored,
       NavigationHandleImpl* handle);
   void RendererDidNavigateToSamePage(
       RenderFrameHostImpl* rfh,
-      const FrameHostMsg_DidCommitProvisionalLoad_Params& params,
+      const mojom::DidCommitProvisionalLoadParams& params,
       NavigationHandleImpl* handle);
   void RendererDidNavigateNewSubframe(
       RenderFrameHostImpl* rfh,
-      const FrameHostMsg_DidCommitProvisionalLoad_Params& params,
+      const mojom::DidCommitProvisionalLoadParams& params,
       bool is_same_document,
       bool replace_entry);
   bool RendererDidNavigateAutoSubframe(
       RenderFrameHostImpl* rfh,
-      const FrameHostMsg_DidCommitProvisionalLoad_Params& params);
+      const mojom::DidCommitProvisionalLoadParams& params);
 
   // Actually issues the navigation held in pending_entry.
   void NavigateToPendingEntry(ReloadType reload_type);

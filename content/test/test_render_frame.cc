@@ -22,8 +22,7 @@ class MockFrameHost : public mojom::FrameHost {
   MockFrameHost() {}
   ~MockFrameHost() override = default;
 
-  std::unique_ptr<FrameHostMsg_DidCommitProvisionalLoad_Params>
-  TakeLastCommitParams() {
+  mojom::DidCommitProvisionalLoadParamsPtr TakeLastCommitParams() {
     return std::move(last_commit_params_);
   }
 
@@ -48,14 +47,12 @@ class MockFrameHost : public mojom::FrameHost {
   void IssueKeepAliveHandle(mojom::KeepAliveHandleRequest request) override {}
 
   void DidCommitProvisionalLoad(
-      std::unique_ptr<FrameHostMsg_DidCommitProvisionalLoad_Params> params)
-      override {
+      mojom::DidCommitProvisionalLoadParamsPtr params) override {
     last_commit_params_ = std::move(params);
   }
 
  private:
-  std::unique_ptr<FrameHostMsg_DidCommitProvisionalLoad_Params>
-      last_commit_params_;
+  mojom::DidCommitProvisionalLoadParamsPtr last_commit_params_;
 
   DISALLOW_COPY_AND_ASSIGN(MockFrameHost);
 };
@@ -136,7 +133,7 @@ blink::WebNavigationPolicy TestRenderFrame::DecidePolicyForNavigation(
   return RenderFrameImpl::DecidePolicyForNavigation(info);
 }
 
-std::unique_ptr<FrameHostMsg_DidCommitProvisionalLoad_Params>
+mojom::DidCommitProvisionalLoadParamsPtr
 TestRenderFrame::TakeLastCommitParams() {
   return mock_frame_host_->TakeLastCommitParams();
 }

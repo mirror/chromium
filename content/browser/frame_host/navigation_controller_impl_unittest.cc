@@ -860,17 +860,17 @@ TEST_F(NavigationControllerTest, LoadURL_SamePage_DifferentMethod) {
 
   controller.LoadURL(
       url1, Referrer(), ui::PAGE_TRANSITION_TYPED, std::string());
-  FrameHostMsg_DidCommitProvisionalLoad_Params params;
-  params.nav_entry_id = controller.GetPendingEntry()->GetUniqueID();
-  params.did_create_new_entry = true;
-  params.url = url1;
-  params.transition = ui::PAGE_TRANSITION_TYPED;
-  params.method = "POST";
-  params.post_id = 123;
-  params.page_state =
+  auto params = mojom::DidCommitProvisionalLoadParams::New();
+  params->nav_entry_id = controller.GetPendingEntry()->GetUniqueID();
+  params->did_create_new_entry = true;
+  params->url = url1;
+  params->transition = ui::PAGE_TRANSITION_TYPED;
+  params->method = "POST";
+  params->post_id = 123;
+  params->page_state =
       PageState::CreateForTesting(url1, false, nullptr, nullptr);
   main_test_rfh()->PrepareForCommit();
-  main_test_rfh()->SendNavigateWithParams(&params);
+  main_test_rfh()->SendNavigateWithParams(std::move(params));
 
   // The post data should be visible.
   NavigationEntry* entry = controller.GetVisibleEntry();
@@ -1500,7 +1500,7 @@ TEST_F(NavigationControllerTest, ReloadWithGuest) {
 #if !defined(OS_ANDROID)  // http://crbug.com/157428
 namespace {
 void SetOriginalURL(const GURL& url,
-                    FrameHostMsg_DidCommitProvisionalLoad_Params* params) {
+                    mojom::DidCommitProvisionalLoadParams* params) {
   params->original_request_url = url;
 }
 }
@@ -1620,7 +1620,7 @@ TEST_F(NavigationControllerTest, ResetEntryValuesAfterCommit) {
 
 namespace {
 void SetRedirects(const std::vector<GURL>& redirects,
-                  FrameHostMsg_DidCommitProvisionalLoad_Params* params) {
+                  mojom::DidCommitProvisionalLoadParams* params) {
   params->redirects = redirects;
 }
 }
@@ -1991,20 +1991,20 @@ TEST_F(NavigationControllerTest, Redirect) {
   EXPECT_EQ(0U, navigation_entry_changed_counter_);
   EXPECT_EQ(0U, navigation_list_pruned_counter_);
 
-  FrameHostMsg_DidCommitProvisionalLoad_Params params;
-  params.nav_entry_id = entry_id;
-  params.did_create_new_entry = true;
-  params.url = url2;
-  params.transition = ui::PAGE_TRANSITION_SERVER_REDIRECT;
-  params.redirects.push_back(GURL("http://foo1"));
-  params.redirects.push_back(GURL("http://foo2"));
-  params.should_update_history = false;
-  params.gesture = NavigationGestureAuto;
-  params.method = "GET";
-  params.page_state = PageState::CreateFromURL(url2);
+  auto params = mojom::DidCommitProvisionalLoadParams::New();
+  params->nav_entry_id = entry_id;
+  params->did_create_new_entry = true;
+  params->url = url2;
+  params->transition = ui::PAGE_TRANSITION_SERVER_REDIRECT;
+  params->redirects.push_back(GURL("http://foo1"));
+  params->redirects.push_back(GURL("http://foo2"));
+  params->should_update_history = false;
+  params->gesture = NavigationGestureAuto;
+  params->method = "GET";
+  params->page_state = PageState::CreateFromURL(url2);
 
   main_test_rfh()->PrepareForCommit();
-  main_test_rfh()->SendNavigateWithParams(&params);
+  main_test_rfh()->SendNavigateWithParams(params.Clone());
   EXPECT_EQ(1U, navigation_entry_committed_counter_);
   navigation_entry_committed_counter_ = 0;
 
@@ -2017,14 +2017,14 @@ TEST_F(NavigationControllerTest, Redirect) {
   EXPECT_EQ(controller.GetPendingEntryIndex(), -1);
   EXPECT_EQ(url1, controller.GetVisibleEntry()->GetURL());
 
-  params.nav_entry_id = entry_id;
-  params.did_create_new_entry = false;
+  params->nav_entry_id = entry_id;
+  params->did_create_new_entry = false;
 
   EXPECT_EQ(0U, navigation_entry_changed_counter_);
   EXPECT_EQ(0U, navigation_list_pruned_counter_);
   LoadCommittedDetailsObserver observer(contents());
   main_test_rfh()->PrepareForCommit();
-  main_test_rfh()->SendNavigateWithParams(&params);
+  main_test_rfh()->SendNavigateWithParams(std::move(params));
   EXPECT_EQ(1U, navigation_entry_committed_counter_);
   navigation_entry_committed_counter_ = 0;
 
@@ -2058,20 +2058,20 @@ TEST_F(NavigationControllerTest, PostThenRedirect) {
   EXPECT_EQ(0U, navigation_entry_changed_counter_);
   EXPECT_EQ(0U, navigation_list_pruned_counter_);
 
-  FrameHostMsg_DidCommitProvisionalLoad_Params params;
-  params.nav_entry_id = entry_id;
-  params.did_create_new_entry = true;
-  params.url = url2;
-  params.transition = ui::PAGE_TRANSITION_SERVER_REDIRECT;
-  params.redirects.push_back(GURL("http://foo1"));
-  params.redirects.push_back(GURL("http://foo2"));
-  params.should_update_history = false;
-  params.gesture = NavigationGestureAuto;
-  params.method = "POST";
-  params.page_state = PageState::CreateFromURL(url2);
+  auto params = mojom::DidCommitProvisionalLoadParams::New();
+  params->nav_entry_id = entry_id;
+  params->did_create_new_entry = true;
+  params->url = url2;
+  params->transition = ui::PAGE_TRANSITION_SERVER_REDIRECT;
+  params->redirects.push_back(GURL("http://foo1"));
+  params->redirects.push_back(GURL("http://foo2"));
+  params->should_update_history = false;
+  params->gesture = NavigationGestureAuto;
+  params->method = "POST";
+  params->page_state = PageState::CreateFromURL(url2);
 
   main_test_rfh()->PrepareForCommit();
-  main_test_rfh()->SendNavigateWithParams(&params);
+  main_test_rfh()->SendNavigateWithParams(params.Clone());
   EXPECT_EQ(1U, navigation_entry_committed_counter_);
   navigation_entry_committed_counter_ = 0;
 
@@ -2084,15 +2084,15 @@ TEST_F(NavigationControllerTest, PostThenRedirect) {
   EXPECT_EQ(controller.GetPendingEntryIndex(), -1);
   EXPECT_EQ(url1, controller.GetVisibleEntry()->GetURL());
 
-  params.nav_entry_id = entry_id;
-  params.did_create_new_entry = false;
-  params.method = "GET";
+  params->nav_entry_id = entry_id;
+  params->did_create_new_entry = false;
+  params->method = "GET";
 
   EXPECT_EQ(0U, navigation_entry_changed_counter_);
   EXPECT_EQ(0U, navigation_list_pruned_counter_);
   LoadCommittedDetailsObserver observer(contents());
   main_test_rfh()->PrepareForCommit();
-  main_test_rfh()->SendNavigateWithParams(&params);
+  main_test_rfh()->SendNavigateWithParams(std::move(params));
   EXPECT_EQ(1U, navigation_entry_committed_counter_);
   navigation_entry_committed_counter_ = 0;
 
@@ -2125,24 +2125,24 @@ TEST_F(NavigationControllerTest, ImmediateRedirect) {
   EXPECT_EQ(controller.GetPendingEntryIndex(), -1);
   EXPECT_EQ(url1, controller.GetVisibleEntry()->GetURL());
 
-  FrameHostMsg_DidCommitProvisionalLoad_Params params;
-  params.nav_entry_id = entry_id;
-  params.did_create_new_entry = true;
-  params.url = url2;
-  params.transition = ui::PAGE_TRANSITION_SERVER_REDIRECT;
-  params.redirects.push_back(GURL("http://foo1"));
-  params.redirects.push_back(GURL("http://foo2"));
-  params.should_update_history = false;
-  params.gesture = NavigationGestureAuto;
-  params.method = "GET";
-  params.page_state = PageState::CreateFromURL(url2);
+  auto params = mojom::DidCommitProvisionalLoadParams::New();
+  params->nav_entry_id = entry_id;
+  params->did_create_new_entry = true;
+  params->url = url2;
+  params->transition = ui::PAGE_TRANSITION_SERVER_REDIRECT;
+  params->redirects.push_back(GURL("http://foo1"));
+  params->redirects.push_back(GURL("http://foo2"));
+  params->should_update_history = false;
+  params->gesture = NavigationGestureAuto;
+  params->method = "GET";
+  params->page_state = PageState::CreateFromURL(url2);
 
   LoadCommittedDetailsObserver observer(contents());
 
   EXPECT_EQ(0U, navigation_entry_changed_counter_);
   EXPECT_EQ(0U, navigation_list_pruned_counter_);
   main_test_rfh()->PrepareForCommit();
-  main_test_rfh()->SendNavigateWithParams(&params);
+  main_test_rfh()->SendNavigateWithParams(std::move(params));
   EXPECT_EQ(1U, navigation_entry_committed_counter_);
   navigation_entry_committed_counter_ = 0;
 
@@ -2194,18 +2194,18 @@ TEST_F(NavigationControllerTest,
   EXPECT_NE(entry_id1, entry_id2);
 
   // ... and now the renderer sends a commit for the first navigation.
-  FrameHostMsg_DidCommitProvisionalLoad_Params params;
-  params.nav_entry_id = entry_id1;
-  params.intended_as_new_entry = true;
-  params.did_create_new_entry = false;
-  params.url = url1;
-  params.transition = ui::PAGE_TRANSITION_TYPED;
-  params.page_state = PageState::CreateFromURL(url1);
+  auto params = mojom::DidCommitProvisionalLoadParams::New();
+  params->nav_entry_id = entry_id1;
+  params->intended_as_new_entry = true;
+  params->did_create_new_entry = false;
+  params->url = url1;
+  params->transition = ui::PAGE_TRANSITION_TYPED;
+  params->page_state = PageState::CreateFromURL(url1);
 
   LoadCommittedDetailsObserver observer(contents());
 
   main_test_rfh()->PrepareForCommit();
-  main_test_rfh()->SendNavigateWithParams(&params);
+  main_test_rfh()->SendNavigateWithParams(std::move(params));
   EXPECT_EQ(NAVIGATION_TYPE_EXISTING_PAGE, observer.navigation_type());
 }
 
@@ -2230,20 +2230,20 @@ TEST_F(NavigationControllerTest, NewSubframe) {
       contents()->GetFrameTree()->root()->child_at(0)->current_frame_host());
   const GURL subframe_url("http://foo1/subframe");
   {
-    FrameHostMsg_DidCommitProvisionalLoad_Params params;
-    params.nav_entry_id = 0;
-    params.did_create_new_entry = false;
-    params.url = subframe_url;
-    params.transition = ui::PAGE_TRANSITION_AUTO_SUBFRAME;
-    params.should_update_history = false;
-    params.gesture = NavigationGestureUser;
-    params.method = "GET";
-    params.page_state = PageState::CreateFromURL(subframe_url);
+    auto params = mojom::DidCommitProvisionalLoadParams::New();
+    params->nav_entry_id = 0;
+    params->did_create_new_entry = false;
+    params->url = subframe_url;
+    params->transition = ui::PAGE_TRANSITION_AUTO_SUBFRAME;
+    params->should_update_history = false;
+    params->gesture = NavigationGestureUser;
+    params->method = "GET";
+    params->page_state = PageState::CreateFromURL(subframe_url);
 
     // Navigating should do nothing.
     subframe->SendRendererInitiatedNavigationRequest(subframe_url, false);
     subframe->PrepareForCommit();
-    subframe->SendNavigateWithParams(&params);
+    subframe->SendNavigateWithParams(std::move(params));
 
     // We notify of a PageState update here rather than during UpdateState for
     // auto subframe navigations.
@@ -2252,20 +2252,20 @@ TEST_F(NavigationControllerTest, NewSubframe) {
 
   // Now do a new navigation in the frame.
   const GURL url2("http://foo2");
-  FrameHostMsg_DidCommitProvisionalLoad_Params params;
-  params.nav_entry_id = 0;
-  params.did_create_new_entry = true;
-  params.url = url2;
-  params.transition = ui::PAGE_TRANSITION_MANUAL_SUBFRAME;
-  params.should_update_history = false;
-  params.gesture = NavigationGestureUser;
-  params.method = "GET";
-  params.page_state = PageState::CreateFromURL(url2);
+  auto params = mojom::DidCommitProvisionalLoadParams::New();
+  params->nav_entry_id = 0;
+  params->did_create_new_entry = true;
+  params->url = url2;
+  params->transition = ui::PAGE_TRANSITION_MANUAL_SUBFRAME;
+  params->should_update_history = false;
+  params->gesture = NavigationGestureUser;
+  params->method = "GET";
+  params->page_state = PageState::CreateFromURL(url2);
 
   LoadCommittedDetailsObserver observer(contents());
   subframe->SendRendererInitiatedNavigationRequest(url2, true);
   subframe->PrepareForCommit();
-  subframe->SendNavigateWithParams(&params);
+  subframe->SendNavigateWithParams(std::move(params));
   EXPECT_EQ(1U, navigation_entry_committed_counter_);
   navigation_entry_committed_counter_ = 0;
   EXPECT_EQ(url1, observer.previous_url());
@@ -2307,20 +2307,20 @@ TEST_F(NavigationControllerTest, AutoSubframe) {
       contents()->GetFrameTree()->root()->child_at(0)->current_frame_host());
   const GURL url2("http://foo/2");
   {
-    FrameHostMsg_DidCommitProvisionalLoad_Params params;
-    params.nav_entry_id = 0;
-    params.did_create_new_entry = false;
-    params.url = url2;
-    params.transition = ui::PAGE_TRANSITION_AUTO_SUBFRAME;
-    params.should_update_history = false;
-    params.gesture = NavigationGestureUser;
-    params.method = "GET";
-    params.page_state = PageState::CreateFromURL(url2);
+    auto params = mojom::DidCommitProvisionalLoadParams::New();
+    params->nav_entry_id = 0;
+    params->did_create_new_entry = false;
+    params->url = url2;
+    params->transition = ui::PAGE_TRANSITION_AUTO_SUBFRAME;
+    params->should_update_history = false;
+    params->gesture = NavigationGestureUser;
+    params->method = "GET";
+    params->page_state = PageState::CreateFromURL(url2);
 
     // Navigating should do nothing.
     subframe->SendRendererInitiatedNavigationRequest(url2, false);
     subframe->PrepareForCommit();
-    subframe->SendNavigateWithParams(&params);
+    subframe->SendNavigateWithParams(std::move(params));
 
     // We notify of a PageState update here rather than during UpdateState for
     // auto subframe navigations.
@@ -2352,20 +2352,20 @@ TEST_F(NavigationControllerTest, AutoSubframe) {
       contents()->GetFrameTree()->root()->child_at(1)->current_frame_host());
   const GURL url3("http://foo/3");
   {
-    FrameHostMsg_DidCommitProvisionalLoad_Params params;
-    params.nav_entry_id = 0;
-    params.did_create_new_entry = false;
-    params.url = url3;
-    params.transition = ui::PAGE_TRANSITION_AUTO_SUBFRAME;
-    params.should_update_history = false;
-    params.gesture = NavigationGestureUser;
-    params.method = "GET";
-    params.page_state = PageState::CreateFromURL(url3);
+    auto params = mojom::DidCommitProvisionalLoadParams::New();
+    params->nav_entry_id = 0;
+    params->did_create_new_entry = false;
+    params->url = url3;
+    params->transition = ui::PAGE_TRANSITION_AUTO_SUBFRAME;
+    params->should_update_history = false;
+    params->gesture = NavigationGestureUser;
+    params->method = "GET";
+    params->page_state = PageState::CreateFromURL(url3);
 
     // Navigating should do nothing.
     subframe2->SendRendererInitiatedNavigationRequest(url3, false);
     subframe2->PrepareForCommit();
-    subframe2->SendNavigateWithParams(&params);
+    subframe2->SendNavigateWithParams(std::move(params));
 
     // We notify of a PageState update here rather than during UpdateState for
     // auto subframe navigations.
@@ -2402,20 +2402,20 @@ TEST_F(NavigationControllerTest, AutoSubframe) {
                                             ->current_frame_host());
   const GURL url4("http://foo/4");
   {
-    FrameHostMsg_DidCommitProvisionalLoad_Params params;
-    params.nav_entry_id = 0;
-    params.did_create_new_entry = false;
-    params.url = url4;
-    params.transition = ui::PAGE_TRANSITION_AUTO_SUBFRAME;
-    params.should_update_history = false;
-    params.gesture = NavigationGestureUser;
-    params.method = "GET";
-    params.page_state = PageState::CreateFromURL(url4);
+    auto params = mojom::DidCommitProvisionalLoadParams::New();
+    params->nav_entry_id = 0;
+    params->did_create_new_entry = false;
+    params->url = url4;
+    params->transition = ui::PAGE_TRANSITION_AUTO_SUBFRAME;
+    params->should_update_history = false;
+    params->gesture = NavigationGestureUser;
+    params->method = "GET";
+    params->page_state = PageState::CreateFromURL(url4);
 
     // Navigating should do nothing.
     subframe3->SendRendererInitiatedNavigationRequest(url4, false);
     subframe3->PrepareForCommit();
-    subframe3->SendNavigateWithParams(&params);
+    subframe3->SendNavigateWithParams(std::move(params));
 
     // We notify of a PageState update here rather than during UpdateState for
     // auto subframe navigations.
@@ -2465,23 +2465,23 @@ TEST_F(NavigationControllerTest, BackSubframe) {
   int64_t document_sequence_number1 = GenerateSequenceNumber();
 
   {
-    FrameHostMsg_DidCommitProvisionalLoad_Params params;
-    params.nav_entry_id = 0;
-    params.did_create_new_entry = false;
-    params.url = subframe_url;
-    params.transition = ui::PAGE_TRANSITION_AUTO_SUBFRAME;
-    params.should_update_history = false;
-    params.gesture = NavigationGestureUser;
-    params.method = "GET";
-    params.page_state = PageState::CreateForTestingWithSequenceNumbers(
+    auto params = mojom::DidCommitProvisionalLoadParams::New();
+    params->nav_entry_id = 0;
+    params->did_create_new_entry = false;
+    params->url = subframe_url;
+    params->transition = ui::PAGE_TRANSITION_AUTO_SUBFRAME;
+    params->should_update_history = false;
+    params->gesture = NavigationGestureUser;
+    params->method = "GET";
+    params->page_state = PageState::CreateForTestingWithSequenceNumbers(
         subframe_url, item_sequence_number1, document_sequence_number1);
-    params.item_sequence_number = item_sequence_number1;
-    params.document_sequence_number = document_sequence_number1;
+    params->item_sequence_number = item_sequence_number1;
+    params->document_sequence_number = document_sequence_number1;
 
     // Navigating should do nothing.
     subframe->SendRendererInitiatedNavigationRequest(subframe_url, false);
     subframe->PrepareForCommit();
-    subframe->SendNavigateWithParams(&params);
+    subframe->SendNavigateWithParams(std::move(params));
 
     // We notify of a PageState update here rather than during UpdateState for
     // auto subframe navigations.
@@ -2492,23 +2492,23 @@ TEST_F(NavigationControllerTest, BackSubframe) {
   const GURL url2("http://foo2");
   int64_t item_sequence_number2 = GenerateSequenceNumber();
   int64_t document_sequence_number2 = GenerateSequenceNumber();
-  FrameHostMsg_DidCommitProvisionalLoad_Params params;
-  params.nav_entry_id = 0;
-  params.did_create_new_entry = true;
-  params.url = url2;
-  params.transition = ui::PAGE_TRANSITION_MANUAL_SUBFRAME;
-  params.should_update_history = false;
-  params.gesture = NavigationGestureUser;
-  params.method = "GET";
-  params.page_state = PageState::CreateForTestingWithSequenceNumbers(
+  auto params = mojom::DidCommitProvisionalLoadParams::New();
+  params->nav_entry_id = 0;
+  params->did_create_new_entry = true;
+  params->url = url2;
+  params->transition = ui::PAGE_TRANSITION_MANUAL_SUBFRAME;
+  params->should_update_history = false;
+  params->gesture = NavigationGestureUser;
+  params->method = "GET";
+  params->page_state = PageState::CreateForTestingWithSequenceNumbers(
       url2, item_sequence_number2, document_sequence_number2);
-  params.item_sequence_number = item_sequence_number2;
-  params.document_sequence_number = document_sequence_number2;
+  params->item_sequence_number = item_sequence_number2;
+  params->document_sequence_number = document_sequence_number2;
 
   // This should generate a new entry.
   subframe->SendRendererInitiatedNavigationRequest(url2, false);
   subframe->PrepareForCommit();
-  subframe->SendNavigateWithParams(&params);
+  subframe->SendNavigateWithParams(params.Clone());
   NavigationEntryImpl* entry2 = controller.GetLastCommittedEntry();
   EXPECT_EQ(1U, navigation_entry_committed_counter_);
   navigation_entry_committed_counter_ = 0;
@@ -2522,17 +2522,17 @@ TEST_F(NavigationControllerTest, BackSubframe) {
   const GURL url3("http://foo3");
   int64_t item_sequence_number3 = GenerateSequenceNumber();
   int64_t document_sequence_number3 = GenerateSequenceNumber();
-  params.nav_entry_id = 0;
-  params.did_create_new_entry = true;
-  params.url = url3;
-  params.transition = ui::PAGE_TRANSITION_MANUAL_SUBFRAME;
-  params.item_sequence_number = item_sequence_number3;
-  params.document_sequence_number = document_sequence_number3;
-  params.page_state = PageState::CreateForTestingWithSequenceNumbers(
-    url3, item_sequence_number3, document_sequence_number3);
+  params->nav_entry_id = 0;
+  params->did_create_new_entry = true;
+  params->url = url3;
+  params->transition = ui::PAGE_TRANSITION_MANUAL_SUBFRAME;
+  params->item_sequence_number = item_sequence_number3;
+  params->document_sequence_number = document_sequence_number3;
+  params->page_state = PageState::CreateForTestingWithSequenceNumbers(
+      url3, item_sequence_number3, document_sequence_number3);
   subframe->SendRendererInitiatedNavigationRequest(url3, false);
   subframe->PrepareForCommit();
-  subframe->SendNavigateWithParams(&params);
+  subframe->SendNavigateWithParams(params.Clone());
   EXPECT_EQ(1U, navigation_entry_committed_counter_);
   navigation_entry_committed_counter_ = 0;
   NavigationEntryImpl* entry3 = controller.GetLastCommittedEntry();
@@ -2545,16 +2545,16 @@ TEST_F(NavigationControllerTest, BackSubframe) {
 
   // Go back one.
   controller.GoBack();
-  params.nav_entry_id = entry2->GetUniqueID();
-  params.did_create_new_entry = false;
-  params.url = url2;
-  params.transition = ui::PAGE_TRANSITION_AUTO_SUBFRAME;
-  params.page_state = PageState::CreateForTestingWithSequenceNumbers(
-    url2, item_sequence_number2, document_sequence_number2);
-  params.item_sequence_number = item_sequence_number2;
-  params.document_sequence_number = document_sequence_number2;
+  params->nav_entry_id = entry2->GetUniqueID();
+  params->did_create_new_entry = false;
+  params->url = url2;
+  params->transition = ui::PAGE_TRANSITION_AUTO_SUBFRAME;
+  params->page_state = PageState::CreateForTestingWithSequenceNumbers(
+      url2, item_sequence_number2, document_sequence_number2);
+  params->item_sequence_number = item_sequence_number2;
+  params->document_sequence_number = document_sequence_number2;
   subframe->PrepareForCommit();
-  subframe->SendNavigateWithParams(&params);
+  subframe->SendNavigateWithParams(params.Clone());
   EXPECT_EQ(1U, navigation_entry_committed_counter_);
   navigation_entry_committed_counter_ = 0;
   EXPECT_EQ(entry2, controller.GetLastCommittedEntry());
@@ -2565,16 +2565,16 @@ TEST_F(NavigationControllerTest, BackSubframe) {
 
   // Go back one more.
   controller.GoBack();
-  params.nav_entry_id = entry1->GetUniqueID();
-  params.did_create_new_entry = false;
-  params.url = subframe_url;
-  params.transition = ui::PAGE_TRANSITION_AUTO_SUBFRAME;
-  params.page_state = PageState::CreateForTestingWithSequenceNumbers(
-    subframe_url, item_sequence_number1, document_sequence_number1);
-  params.item_sequence_number = item_sequence_number1;
-  params.document_sequence_number = document_sequence_number1;
+  params->nav_entry_id = entry1->GetUniqueID();
+  params->did_create_new_entry = false;
+  params->url = subframe_url;
+  params->transition = ui::PAGE_TRANSITION_AUTO_SUBFRAME;
+  params->page_state = PageState::CreateForTestingWithSequenceNumbers(
+      subframe_url, item_sequence_number1, document_sequence_number1);
+  params->item_sequence_number = item_sequence_number1;
+  params->document_sequence_number = document_sequence_number1;
   subframe->PrepareForCommit();
-  subframe->SendNavigateWithParams(&params);
+  subframe->SendNavigateWithParams(std::move(params));
   EXPECT_EQ(1U, navigation_entry_committed_counter_);
   navigation_entry_committed_counter_ = 0;
   EXPECT_EQ(entry1, controller.GetLastCommittedEntry());
@@ -2619,25 +2619,25 @@ TEST_F(NavigationControllerTest, SameDocument) {
 
   // Ensure main page navigation to same url respects the
   // was_within_same_document hint provided in the params.
-  FrameHostMsg_DidCommitProvisionalLoad_Params self_params;
-  self_params.nav_entry_id = 0;
-  self_params.did_create_new_entry = false;
-  self_params.url = url1;
-  self_params.transition = ui::PAGE_TRANSITION_LINK;
-  self_params.should_update_history = false;
-  self_params.gesture = NavigationGestureUser;
-  self_params.method = "GET";
-  self_params.item_sequence_number = GenerateSequenceNumber();
-  self_params.document_sequence_number = GenerateSequenceNumber();
-  self_params.page_state = PageState::CreateForTestingWithSequenceNumbers(
-      url1, self_params.item_sequence_number,
-      self_params.document_sequence_number);
-  self_params.was_within_same_document = true;
+  auto self_params = mojom::DidCommitProvisionalLoadParams::New();
+  self_params->nav_entry_id = 0;
+  self_params->did_create_new_entry = false;
+  self_params->url = url1;
+  self_params->transition = ui::PAGE_TRANSITION_LINK;
+  self_params->should_update_history = false;
+  self_params->gesture = NavigationGestureUser;
+  self_params->method = "GET";
+  self_params->item_sequence_number = GenerateSequenceNumber();
+  self_params->document_sequence_number = GenerateSequenceNumber();
+  self_params->page_state = PageState::CreateForTestingWithSequenceNumbers(
+      url1, self_params->item_sequence_number,
+      self_params->document_sequence_number);
+  self_params->was_within_same_document = true;
 
   LoadCommittedDetailsObserver observer(contents());
   main_test_rfh()->SendRendererInitiatedNavigationRequest(url1, false);
   main_test_rfh()->PrepareForCommit();
-  main_test_rfh()->SendNavigateWithParams(&self_params);
+  main_test_rfh()->SendNavigateWithParams(self_params.Clone());
   NavigationEntry* entry1 = controller.GetLastCommittedEntry();
   EXPECT_EQ(1U, navigation_entry_committed_counter_);
   navigation_entry_committed_counter_ = 0;
@@ -2647,22 +2647,22 @@ TEST_F(NavigationControllerTest, SameDocument) {
 
   // Fragment navigation to a new page.
   const GURL url2("http://foo#a");
-  FrameHostMsg_DidCommitProvisionalLoad_Params params;
-  params.nav_entry_id = 0;
-  params.did_create_new_entry = true;
-  params.url = url2;
-  params.transition = ui::PAGE_TRANSITION_LINK;
-  params.should_update_history = false;
-  params.gesture = NavigationGestureUser;
-  params.method = "GET";
-  params.item_sequence_number = GenerateSequenceNumber();
-  params.document_sequence_number = self_params.document_sequence_number;
-  params.page_state = PageState::CreateForTestingWithSequenceNumbers(
-      url2, params.item_sequence_number, params.document_sequence_number);
-  params.was_within_same_document = true;
+  auto params = mojom::DidCommitProvisionalLoadParams::New();
+  params->nav_entry_id = 0;
+  params->did_create_new_entry = true;
+  params->url = url2;
+  params->transition = ui::PAGE_TRANSITION_LINK;
+  params->should_update_history = false;
+  params->gesture = NavigationGestureUser;
+  params->method = "GET";
+  params->item_sequence_number = GenerateSequenceNumber();
+  params->document_sequence_number = self_params->document_sequence_number;
+  params->page_state = PageState::CreateForTestingWithSequenceNumbers(
+      url2, params->item_sequence_number, params->document_sequence_number);
+  params->was_within_same_document = true;
 
   // This should generate a new entry.
-  main_test_rfh()->SendNavigateWithParams(&params);
+  main_test_rfh()->SendNavigateWithParams(params.Clone());
   NavigationEntry* entry2 = controller.GetLastCommittedEntry();
   EXPECT_EQ(1U, navigation_entry_committed_counter_);
   navigation_entry_committed_counter_ = 0;
@@ -2671,57 +2671,56 @@ TEST_F(NavigationControllerTest, SameDocument) {
   EXPECT_EQ(2, controller.GetEntryCount());
 
   // Go back one.
-  FrameHostMsg_DidCommitProvisionalLoad_Params back_params(self_params);
+  auto back_params = self_params.Clone();
   controller.GoBack();
-  back_params.nav_entry_id = entry1->GetUniqueID();
-  back_params.did_create_new_entry = false;
-  main_test_rfh()->SendNavigateWithParams(&back_params);
+  back_params->nav_entry_id = entry1->GetUniqueID();
+  back_params->did_create_new_entry = false;
+  main_test_rfh()->SendNavigateWithParams(back_params.Clone());
   EXPECT_EQ(1U, navigation_entry_committed_counter_);
   navigation_entry_committed_counter_ = 0;
   EXPECT_TRUE(observer.is_same_document());
   EXPECT_EQ(2, controller.GetEntryCount());
   EXPECT_EQ(0, controller.GetCurrentEntryIndex());
-  EXPECT_EQ(back_params.url, controller.GetVisibleEntry()->GetURL());
+  EXPECT_EQ(back_params->url, controller.GetVisibleEntry()->GetURL());
 
   // Go forward.
-  FrameHostMsg_DidCommitProvisionalLoad_Params forward_params(params);
+  auto forward_params = self_params.Clone();
   controller.GoForward();
-  forward_params.nav_entry_id = entry2->GetUniqueID();
-  forward_params.did_create_new_entry = false;
-  main_test_rfh()->SendNavigateWithParams(&forward_params);
+  forward_params->nav_entry_id = entry2->GetUniqueID();
+  forward_params->did_create_new_entry = false;
+  main_test_rfh()->SendNavigateWithParams(forward_params.Clone());
   EXPECT_EQ(1U, navigation_entry_committed_counter_);
   navigation_entry_committed_counter_ = 0;
   EXPECT_TRUE(observer.is_same_document());
   EXPECT_EQ(2, controller.GetEntryCount());
   EXPECT_EQ(1, controller.GetCurrentEntryIndex());
-  EXPECT_EQ(forward_params.url,
-            controller.GetVisibleEntry()->GetURL());
+  EXPECT_EQ(forward_params->url, controller.GetVisibleEntry()->GetURL());
 
   // Now go back and forward again. This is to work around a bug where we would
   // compare the incoming URL with the last committed entry rather than the
   // one identified by an existing page ID. This would result in the second URL
   // losing the reference fragment when you navigate away from it and then back.
   controller.GoBack();
-  main_test_rfh()->SendNavigateWithParams(&back_params);
+  main_test_rfh()->SendNavigateWithParams(std::move(back_params));
   controller.GoForward();
-  main_test_rfh()->SendNavigateWithParams(&forward_params);
-  EXPECT_EQ(forward_params.url,
-            controller.GetVisibleEntry()->GetURL());
+  auto forward_url = forward_params->url;
+  main_test_rfh()->SendNavigateWithParams(std::move(forward_params));
+  EXPECT_EQ(forward_url, controller.GetVisibleEntry()->GetURL());
 
   // Finally, navigate to an unrelated URL to make sure same_document is not
   // sticky.
   const GURL url3("http://bar");
-  params.nav_entry_id = 0;
-  params.did_create_new_entry = true;
-  params.url = url3;
-  params.item_sequence_number = 0;
-  params.document_sequence_number = 0;
-  params.page_state = PageState::CreateFromURL(url3);
-  params.was_within_same_document = false;
+  params->nav_entry_id = 0;
+  params->did_create_new_entry = true;
+  params->url = url3;
+  params->item_sequence_number = 0;
+  params->document_sequence_number = 0;
+  params->page_state = PageState::CreateFromURL(url3);
+  params->was_within_same_document = false;
   navigation_entry_committed_counter_ = 0;
   main_test_rfh()->SendRendererInitiatedNavigationRequest(url3, false);
   main_test_rfh()->PrepareForCommit();
-  main_test_rfh()->SendNavigateWithParams(&params);
+  main_test_rfh()->SendNavigateWithParams(std::move(params));
   EXPECT_EQ(1U, navigation_entry_committed_counter_);
   navigation_entry_committed_counter_ = 0;
   EXPECT_FALSE(observer.is_same_document());
@@ -2740,20 +2739,20 @@ TEST_F(NavigationControllerTest, SameDocument_Replace) {
 
   // First navigation.
   const GURL url2("http://foo#a");
-  FrameHostMsg_DidCommitProvisionalLoad_Params params;
-  params.nav_entry_id = 0;
-  params.did_create_new_entry = false;
-  params.url = url2;
-  params.transition = ui::PAGE_TRANSITION_LINK;
-  params.should_update_history = false;
-  params.gesture = NavigationGestureUser;
-  params.method = "GET";
-  params.page_state = PageState::CreateFromURL(url2);
-  params.was_within_same_document = true;
+  auto params = mojom::DidCommitProvisionalLoadParams::New();
+  params->nav_entry_id = 0;
+  params->did_create_new_entry = false;
+  params->url = url2;
+  params->transition = ui::PAGE_TRANSITION_LINK;
+  params->should_update_history = false;
+  params->gesture = NavigationGestureUser;
+  params->method = "GET";
+  params->page_state = PageState::CreateFromURL(url2);
+  params->was_within_same_document = true;
 
   // This should NOT generate a new entry, nor prune the list.
   LoadCommittedDetailsObserver observer(contents());
-  main_test_rfh()->SendNavigateWithParams(&params);
+  main_test_rfh()->SendNavigateWithParams(std::move(params));
   EXPECT_EQ(1U, navigation_entry_committed_counter_);
   navigation_entry_committed_counter_ = 0;
   EXPECT_TRUE(observer.is_same_document());
@@ -2789,21 +2788,21 @@ TEST_F(NavigationControllerTest, ClientRedirectAfterInPageNavigation) {
   // Navigate within the page.
   {
     const GURL url("http://foo2/#a");
-    FrameHostMsg_DidCommitProvisionalLoad_Params params;
-    params.nav_entry_id = 0;
-    params.did_create_new_entry = false;
-    params.url = url;
-    params.transition = ui::PAGE_TRANSITION_LINK;
-    params.redirects.push_back(url);
-    params.should_update_history = true;
-    params.gesture = NavigationGestureUnknown;
-    params.method = "GET";
-    params.page_state = PageState::CreateFromURL(url);
-    params.was_within_same_document = true;
+    auto params = mojom::DidCommitProvisionalLoadParams::New();
+    params->nav_entry_id = 0;
+    params->did_create_new_entry = false;
+    params->url = url;
+    params->transition = ui::PAGE_TRANSITION_LINK;
+    params->redirects.push_back(url);
+    params->should_update_history = true;
+    params->gesture = NavigationGestureUnknown;
+    params->method = "GET";
+    params->page_state = PageState::CreateFromURL(url);
+    params->was_within_same_document = true;
 
     // This should NOT generate a new entry, nor prune the list.
     LoadCommittedDetailsObserver observer(contents());
-    main_test_rfh()->SendNavigateWithParams(&params);
+    main_test_rfh()->SendNavigateWithParams(std::move(params));
     EXPECT_EQ(1U, navigation_entry_committed_counter_);
     navigation_entry_committed_counter_ = 0;
     EXPECT_TRUE(observer.is_same_document());
@@ -2814,23 +2813,23 @@ TEST_F(NavigationControllerTest, ClientRedirectAfterInPageNavigation) {
   // Perform a client redirect to a new page.
   {
     const GURL url("http://foo3/");
-    FrameHostMsg_DidCommitProvisionalLoad_Params params;
-    params.nav_entry_id = 0;
-    params.did_create_new_entry = true;
-    params.url = url;
-    params.transition = ui::PAGE_TRANSITION_CLIENT_REDIRECT;
-    params.redirects.push_back(GURL("http://foo2/#a"));
-    params.redirects.push_back(url);
-    params.should_update_history = true;
-    params.gesture = NavigationGestureUnknown;
-    params.method = "GET";
-    params.page_state = PageState::CreateFromURL(url);
+    auto params = mojom::DidCommitProvisionalLoadParams::New();
+    params->nav_entry_id = 0;
+    params->did_create_new_entry = true;
+    params->url = url;
+    params->transition = ui::PAGE_TRANSITION_CLIENT_REDIRECT;
+    params->redirects.push_back(GURL("http://foo2/#a"));
+    params->redirects.push_back(url);
+    params->should_update_history = true;
+    params->gesture = NavigationGestureUnknown;
+    params->method = "GET";
+    params->page_state = PageState::CreateFromURL(url);
 
     // This SHOULD generate a new entry.
     LoadCommittedDetailsObserver observer(contents());
     main_test_rfh()->SendRendererInitiatedNavigationRequest(url, false);
     main_test_rfh()->PrepareForCommit();
-    main_test_rfh()->SendNavigateWithParams(&params);
+    main_test_rfh()->SendNavigateWithParams(std::move(params));
     EXPECT_EQ(1U, navigation_entry_committed_counter_);
     navigation_entry_committed_counter_ = 0;
     EXPECT_FALSE(observer.is_same_document());
@@ -2853,16 +2852,16 @@ TEST_F(NavigationControllerTest, ClientRedirectAfterInPageNavigation) {
 TEST_F(NavigationControllerTest, PushStateWithoutPreviousEntry)
 {
   ASSERT_FALSE(controller_impl().GetLastCommittedEntry());
-  FrameHostMsg_DidCommitProvisionalLoad_Params params;
+  auto params = mojom::DidCommitProvisionalLoadParams::New();
   GURL url("http://foo");
-  params.nav_entry_id = 0;
-  params.did_create_new_entry = true;
-  params.url = url;
-  params.page_state = PageState::CreateFromURL(url);
-  params.was_within_same_document = true;
+  params->nav_entry_id = 0;
+  params->did_create_new_entry = true;
+  params->url = url;
+  params->page_state = PageState::CreateFromURL(url);
+  params->was_within_same_document = true;
   main_test_rfh()->SendRendererInitiatedNavigationRequest(url, false);
   main_test_rfh()->PrepareForCommit();
-  contents()->GetMainFrame()->SendNavigateWithParams(&params);
+  contents()->GetMainFrame()->SendNavigateWithParams(std::move(params));
   // We pass if we don't crash.
 }
 
@@ -2964,19 +2963,19 @@ TEST_F(NavigationControllerTest, RestoreNavigate) {
   EXPECT_EQ(timestamp, our_controller.GetEntryAtIndex(0)->GetTimestamp());
 
   // Say we navigated to that entry.
-  FrameHostMsg_DidCommitProvisionalLoad_Params params;
-  params.nav_entry_id = our_controller.GetPendingEntry()->GetUniqueID();
-  params.did_create_new_entry = false;
-  params.url = url;
-  params.transition = ui::PAGE_TRANSITION_LINK;
-  params.should_update_history = false;
-  params.gesture = NavigationGestureUser;
-  params.method = "GET";
-  params.page_state = PageState::CreateFromURL(url);
+  auto params = mojom::DidCommitProvisionalLoadParams::New();
+  params->nav_entry_id = our_controller.GetPendingEntry()->GetUniqueID();
+  params->did_create_new_entry = false;
+  params->url = url;
+  params->transition = ui::PAGE_TRANSITION_LINK;
+  params->should_update_history = false;
+  params->gesture = NavigationGestureUser;
+  params->method = "GET";
+  params->page_state = PageState::CreateFromURL(url);
   TestRenderFrameHost* main_rfh =
       static_cast<TestRenderFrameHost*>(our_contents->GetMainFrame());
   main_rfh->PrepareForCommit();
-  main_rfh->SendNavigateWithParams(&params);
+  main_rfh->SendNavigateWithParams(std::move(params));
 
   // There should be no longer any pending entry and one committed one. This
   // means that we were able to locate the entry, assign its site instance, and
@@ -3044,19 +3043,19 @@ TEST_F(NavigationControllerTest, RestoreNavigateAfterFailure) {
                                                   fail_load_params));
 
   // Now the pending restored entry commits.
-  FrameHostMsg_DidCommitProvisionalLoad_Params params;
-  params.nav_entry_id = entry->GetUniqueID();
-  params.did_create_new_entry = false;
-  params.url = url;
-  params.transition = ui::PAGE_TRANSITION_LINK;
-  params.should_update_history = false;
-  params.gesture = NavigationGestureUser;
-  params.method = "GET";
-  params.page_state = PageState::CreateFromURL(url);
+  auto params = mojom::DidCommitProvisionalLoadParams::New();
+  params->nav_entry_id = entry->GetUniqueID();
+  params->did_create_new_entry = false;
+  params->url = url;
+  params->transition = ui::PAGE_TRANSITION_LINK;
+  params->should_update_history = false;
+  params->gesture = NavigationGestureUser;
+  params->method = "GET";
+  params->page_state = PageState::CreateFromURL(url);
   TestRenderFrameHost* main_rfh =
       static_cast<TestRenderFrameHost*>(our_contents->GetMainFrame());
   main_rfh->PrepareForCommit();
-  main_rfh->SendNavigateWithParams(&params);
+  main_rfh->SendNavigateWithParams(std::move(params));
 
   // There should be no pending entry and one committed one.
   EXPECT_EQ(1, our_controller.GetEntryCount());
@@ -3804,21 +3803,21 @@ TEST_F(NavigationControllerTest,
   EXPECT_EQ(0, rph->bad_msg_count());
 
   // Doing a replaceState to a cross-origin URL is thus allowed.
-  FrameHostMsg_DidCommitProvisionalLoad_Params params;
-  params.nav_entry_id = 1;
-  params.did_create_new_entry = false;
-  params.url = different_origin_url;
-  params.origin = file_origin;
-  params.transition = ui::PAGE_TRANSITION_LINK;
-  params.gesture = NavigationGestureUser;
-  params.page_state = PageState::CreateFromURL(different_origin_url);
-  params.was_within_same_document = true;
-  params.method = "GET";
-  params.post_id = -1;
+  auto params = mojom::DidCommitProvisionalLoadParams::New();
+  params->nav_entry_id = 1;
+  params->did_create_new_entry = false;
+  params->url = different_origin_url;
+  params->origin = file_origin;
+  params->transition = ui::PAGE_TRANSITION_LINK;
+  params->gesture = NavigationGestureUser;
+  params->page_state = PageState::CreateFromURL(different_origin_url);
+  params->was_within_same_document = true;
+  params->method = "GET";
+  params->post_id = -1;
   main_test_rfh()->SendRendererInitiatedNavigationRequest(different_origin_url,
                                                           false);
   main_test_rfh()->PrepareForCommit();
-  contents()->GetMainFrame()->SendNavigateWithParams(&params);
+  contents()->GetMainFrame()->SendNavigateWithParams(std::move(params));
 
   // At this point, we should still consider the current origin to be file://,
   // so that a file URL would still be a same-document navigation.  See
@@ -3863,18 +3862,18 @@ TEST_F(NavigationControllerTest, SameSubframe) {
   TestRenderFrameHost* subframe = static_cast<TestRenderFrameHost*>(
       contents()->GetFrameTree()->root()->child_at(0)->current_frame_host());
   const GURL subframe_url("http://www.google.com/#");
-  FrameHostMsg_DidCommitProvisionalLoad_Params params;
-  params.nav_entry_id = 0;
-  params.did_create_new_entry = false;
-  params.url = subframe_url;
-  params.transition = ui::PAGE_TRANSITION_AUTO_SUBFRAME;
-  params.should_update_history = false;
-  params.gesture = NavigationGestureAuto;
-  params.method = "GET";
-  params.page_state = PageState::CreateFromURL(subframe_url);
+  auto params = mojom::DidCommitProvisionalLoadParams::New();
+  params->nav_entry_id = 0;
+  params->did_create_new_entry = false;
+  params->url = subframe_url;
+  params->transition = ui::PAGE_TRANSITION_AUTO_SUBFRAME;
+  params->should_update_history = false;
+  params->gesture = NavigationGestureAuto;
+  params->method = "GET";
+  params->page_state = PageState::CreateFromURL(subframe_url);
   subframe->SendRendererInitiatedNavigationRequest(subframe_url, false);
   subframe->PrepareForCommit();
-  subframe->SendNavigateWithParams(&params);
+  subframe->SendNavigateWithParams(std::move(params));
 
   // Nothing should have changed.
   EXPECT_EQ(controller.GetEntryCount(), 1);
@@ -4038,20 +4037,20 @@ TEST_F(NavigationControllerTest, SubframeWhilePending) {
   TestRenderFrameHost* subframe = static_cast<TestRenderFrameHost*>(
       contents()->GetFrameTree()->root()->child_at(0)->current_frame_host());
   const GURL url1_sub("http://foo/subframe");
-  FrameHostMsg_DidCommitProvisionalLoad_Params params;
-  params.nav_entry_id = 0;
-  params.did_create_new_entry = false;
-  params.url = url1_sub;
-  params.transition = ui::PAGE_TRANSITION_AUTO_SUBFRAME;
-  params.should_update_history = false;
-  params.gesture = NavigationGestureAuto;
-  params.method = "GET";
-  params.page_state = PageState::CreateFromURL(url1_sub);
+  auto params = mojom::DidCommitProvisionalLoadParams::New();
+  params->nav_entry_id = 0;
+  params->did_create_new_entry = false;
+  params->url = url1_sub;
+  params->transition = ui::PAGE_TRANSITION_AUTO_SUBFRAME;
+  params->should_update_history = false;
+  params->gesture = NavigationGestureAuto;
+  params->method = "GET";
+  params->page_state = PageState::CreateFromURL(url1_sub);
 
   // This should return false meaning that nothing was actually updated.
   subframe->SendRendererInitiatedNavigationRequest(url1_sub, false);
   subframe->PrepareForCommit();
-  subframe->SendNavigateWithParams(&params);
+  subframe->SendNavigateWithParams(std::move(params));
 
   // The notification should have updated the last committed one, and not
   // the pending load.
@@ -4903,14 +4902,14 @@ TEST_F(NavigationControllerTest, PushStateUpdatesTitleAndFavicon) {
   controller().GetLastCommittedEntry()->GetFavicon() = favicon;
 
   // history.pushState() is called.
-  FrameHostMsg_DidCommitProvisionalLoad_Params params;
+  auto params = mojom::DidCommitProvisionalLoadParams::New();
   GURL kUrl2("http://foo#foo");
-  params.nav_entry_id = 0;
-  params.did_create_new_entry = true;
-  params.url = kUrl2;
-  params.page_state = PageState::CreateFromURL(kUrl2);
-  params.was_within_same_document = true;
-  main_test_rfh()->SendNavigateWithParams(&params);
+  params->nav_entry_id = 0;
+  params->did_create_new_entry = true;
+  params->url = kUrl2;
+  params->page_state = PageState::CreateFromURL(kUrl2);
+  params->was_within_same_document = true;
+  main_test_rfh()->SendNavigateWithParams(std::move(params));
 
   // The title should immediately be visible on the new NavigationEntry.
   base::string16 new_title =
@@ -4980,32 +4979,32 @@ TEST_F(NavigationControllerTest, PostThenReplaceStateThenReload) {
 
   // Submit a form.
   GURL url("http://foo");
-  FrameHostMsg_DidCommitProvisionalLoad_Params params;
-  params.nav_entry_id = 0;
-  params.did_create_new_entry = true;
-  params.url = url;
-  params.transition = ui::PAGE_TRANSITION_FORM_SUBMIT;
-  params.gesture = NavigationGestureUser;
-  params.page_state = PageState::CreateFromURL(url);
-  params.was_within_same_document = false;
-  params.method = "POST";
-  params.post_id = 2;
+  auto params = mojom::DidCommitProvisionalLoadParams::New();
+  params->nav_entry_id = 0;
+  params->did_create_new_entry = true;
+  params->url = url;
+  params->transition = ui::PAGE_TRANSITION_FORM_SUBMIT;
+  params->gesture = NavigationGestureUser;
+  params->page_state = PageState::CreateFromURL(url);
+  params->was_within_same_document = false;
+  params->method = "POST";
+  params->post_id = 2;
   main_test_rfh()->SendRendererInitiatedNavigationRequest(url, false);
   main_test_rfh()->PrepareForCommit();
-  contents()->GetMainFrame()->SendNavigateWithParams(&params);
+  contents()->GetMainFrame()->SendNavigateWithParams(params.Clone());
 
   // history.replaceState() is called.
   GURL replace_url("http://foo#foo");
-  params.nav_entry_id = 0;
-  params.did_create_new_entry = false;
-  params.url = replace_url;
-  params.transition = ui::PAGE_TRANSITION_LINK;
-  params.gesture = NavigationGestureUser;
-  params.page_state = PageState::CreateFromURL(replace_url);
-  params.was_within_same_document = true;
-  params.method = "GET";
-  params.post_id = -1;
-  contents()->GetMainFrame()->SendNavigateWithParams(&params);
+  params->nav_entry_id = 0;
+  params->did_create_new_entry = false;
+  params->url = replace_url;
+  params->transition = ui::PAGE_TRANSITION_LINK;
+  params->gesture = NavigationGestureUser;
+  params->page_state = PageState::CreateFromURL(replace_url);
+  params->was_within_same_document = true;
+  params->method = "GET";
+  params->post_id = -1;
+  contents()->GetMainFrame()->SendNavigateWithParams(std::move(params));
 
   // Now reload. replaceState overrides the POST, so we should not show a
   // repost warning dialog.
@@ -5017,24 +5016,24 @@ TEST_F(NavigationControllerTest, UnreachableURLGivesErrorPage) {
   GURL url("http://foo");
   controller().LoadURL(url, Referrer(), ui::PAGE_TRANSITION_TYPED,
                        std::string());
-  FrameHostMsg_DidCommitProvisionalLoad_Params params;
-  params.nav_entry_id = 0;
-  params.did_create_new_entry = true;
-  params.url = url;
-  params.transition = ui::PAGE_TRANSITION_LINK;
-  params.gesture = NavigationGestureUser;
-  params.page_state = PageState::CreateFromURL(url);
-  params.was_within_same_document = false;
-  params.method = "POST";
-  params.post_id = 2;
-  params.url_is_unreachable = true;
+  auto params = mojom::DidCommitProvisionalLoadParams::New();
+  params->nav_entry_id = 0;
+  params->did_create_new_entry = true;
+  params->url = url;
+  params->transition = ui::PAGE_TRANSITION_LINK;
+  params->gesture = NavigationGestureUser;
+  params->page_state = PageState::CreateFromURL(url);
+  params->was_within_same_document = false;
+  params->method = "POST";
+  params->post_id = 2;
+  params->url_is_unreachable = true;
 
   // Navigate to new page.
   {
     LoadCommittedDetailsObserver observer(contents());
     main_test_rfh()->SendRendererInitiatedNavigationRequest(url, false);
     main_test_rfh()->PrepareForCommit();
-    main_test_rfh()->SendNavigateWithParams(&params);
+    main_test_rfh()->SendNavigateWithParams(params.Clone());
     EXPECT_EQ(PAGE_TYPE_ERROR,
               controller_impl().GetLastCommittedEntry()->GetPageType());
     EXPECT_EQ(NAVIGATION_TYPE_NEW_PAGE, observer.navigation_type());
@@ -5042,11 +5041,11 @@ TEST_F(NavigationControllerTest, UnreachableURLGivesErrorPage) {
 
   // Navigate to existing page.
   {
-    params.did_create_new_entry = false;
+    params->did_create_new_entry = false;
     LoadCommittedDetailsObserver observer(contents());
     main_test_rfh()->SendRendererInitiatedNavigationRequest(url, false);
     main_test_rfh()->PrepareForCommit();
-    main_test_rfh()->SendNavigateWithParams(&params);
+    main_test_rfh()->SendNavigateWithParams(params.Clone());
     EXPECT_EQ(PAGE_TYPE_ERROR,
               controller_impl().GetLastCommittedEntry()->GetPageType());
     EXPECT_EQ(NAVIGATION_TYPE_EXISTING_PAGE, observer.navigation_type());
@@ -5057,24 +5056,24 @@ TEST_F(NavigationControllerTest, UnreachableURLGivesErrorPage) {
   // same-page transition.
   controller_impl().LoadURL(
       url, Referrer(), ui::PAGE_TRANSITION_TYPED, std::string());
-  params.nav_entry_id = controller_impl().GetPendingEntry()->GetUniqueID();
-  params.transition = ui::PAGE_TRANSITION_TYPED;
+  params->nav_entry_id = controller_impl().GetPendingEntry()->GetUniqueID();
+  params->transition = ui::PAGE_TRANSITION_TYPED;
   {
     LoadCommittedDetailsObserver observer(contents());
     main_test_rfh()->PrepareForCommit();
-    main_test_rfh()->SendNavigateWithParams(&params);
+    main_test_rfh()->SendNavigateWithParams(params.Clone());
     EXPECT_EQ(PAGE_TYPE_ERROR,
               controller_impl().GetLastCommittedEntry()->GetPageType());
     EXPECT_EQ(NAVIGATION_TYPE_SAME_PAGE, observer.navigation_type());
   }
 
   // Navigate without changing document.
-  params.url = GURL("http://foo#foo");
-  params.transition = ui::PAGE_TRANSITION_LINK;
-  params.was_within_same_document = true;
+  params->url = GURL("http://foo#foo");
+  params->transition = ui::PAGE_TRANSITION_LINK;
+  params->was_within_same_document = true;
   {
     LoadCommittedDetailsObserver observer(contents());
-    main_test_rfh()->SendNavigateWithParams(&params);
+    main_test_rfh()->SendNavigateWithParams(std::move(params));
     EXPECT_EQ(PAGE_TYPE_ERROR,
               controller_impl().GetLastCommittedEntry()->GetPageType());
     EXPECT_TRUE(observer.is_same_document());

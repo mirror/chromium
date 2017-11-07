@@ -537,7 +537,7 @@ bool NavigatorImpl::NavigateNewChildFrame(
 
 void NavigatorImpl::DidNavigate(
     RenderFrameHostImpl* render_frame_host,
-    const FrameHostMsg_DidCommitProvisionalLoad_Params& params,
+    const mojom::DidCommitProvisionalLoadParams& params,
     std::unique_ptr<NavigationHandleImpl> navigation_handle) {
   FrameTreeNode* frame_tree_node = render_frame_host->frame_tree_node();
   FrameTree* frame_tree = frame_tree_node->frame_tree();
@@ -1213,7 +1213,7 @@ void NavigatorImpl::RequestNavigation(
 
 void NavigatorImpl::RecordNavigationMetrics(
     const LoadCommittedDetails& details,
-    const FrameHostMsg_DidCommitProvisionalLoad_Params& params,
+    const mojom::DidCommitProvisionalLoadParams& params,
     SiteInstance* site_instance) {
   DCHECK(site_instance->HasProcess());
 

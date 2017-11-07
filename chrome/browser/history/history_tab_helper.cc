@@ -18,7 +18,6 @@
 #include "content/public/browser/navigation_handle.h"
 #include "content/public/browser/web_contents.h"
 #include "content/public/browser/web_contents_delegate.h"
-#include "content/public/common/frame_navigate_params.h"
 
 #if defined(OS_ANDROID)
 #include "chrome/browser/android/background_tab_manager.h"

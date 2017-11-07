@@ -374,7 +374,7 @@ void CreatePaymentManager(RenderFrameHostImpl* rfh,
 
 void NotifyResourceSchedulerOfNavigation(
     int render_process_id,
-    const FrameHostMsg_DidCommitProvisionalLoad_Params& params) {
+    const mojom::DidCommitProvisionalLoadParams& params) {
   // TODO(csharrison): This isn't quite right for OOPIF, as we *do* want to
   // propagate OnNavigate to the client associated with the OOPIF's RVH. This
   // should not result in show-stopping bugs, just poorer loading performance.
@@ -1497,8 +1497,7 @@ void RenderFrameHostImpl::OnDidFailLoadWithError(
 // Called when the renderer navigates.  For every frame loaded, we'll get this
 // notification containing parameters identifying the navigation.
 void RenderFrameHostImpl::DidCommitProvisionalLoad(
-    std::unique_ptr<FrameHostMsg_DidCommitProvisionalLoad_Params>
-        validated_params) {
+    mojom::DidCommitProvisionalLoadParamsPtr validated_params) {
   ScopedCommitStateResetter commit_state_resetter(this);
   RenderProcessHost* process = GetProcess();
 
@@ -4240,7 +4239,7 @@ void RenderFrameHostImpl::GetInterface(
 
 std::unique_ptr<NavigationHandleImpl>
 RenderFrameHostImpl::TakeNavigationHandleForCommit(
-    const FrameHostMsg_DidCommitProvisionalLoad_Params& params) {
+    const mojom::DidCommitProvisionalLoadParams& params) {
   bool is_browser_initiated = (params.nav_entry_id != 0);
 
   if (params.was_within_same_document) {

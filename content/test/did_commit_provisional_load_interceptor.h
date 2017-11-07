@@ -31,7 +31,7 @@ class DidCommitProvisionalLoadInterceptor : public WebContentsObserver {
   // dispatched to |render_frame_host|.
   virtual void WillDispatchDidCommitProvisionalLoad(
       RenderFrameHost* render_frame_host,
-      ::FrameHostMsg_DidCommitProvisionalLoad_Params* params) = 0;
+      mojom::DidCommitProvisionalLoadParams* params) = 0;
 
  private:
   class FrameAgent;
