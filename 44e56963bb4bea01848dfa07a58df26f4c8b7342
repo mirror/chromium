@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "a73bda67_cb9d6d5b",
+        "filename": "content/renderer/service_worker/service_worker_context_client.cc",
+        "patchSetId": 10
+      },
+      "lineNbr": 11,
+      "author": {
+        "id": 1161621
+      },
+      "writtenOn": "2017-11-07T03:18:14Z",
+      "side": 1,
+      "message": "Done. Removed. This was for using ALLOW_UNUSED_LOCAL before.",
+      "parentUuid": "54a8c919_4c95da23",
+      "revId": "44e56963bb4bea01848dfa07a58df26f4c8b7342",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "91461e50_83e4a5a7",
         "filename": "content/renderer/service_worker/service_worker_context_client.cc",
         "patchSetId": 10
@@ -33,6 +51,24 @@
       "revId": "44e56963bb4bea01848dfa07a58df26f4c8b7342",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "01abe8f9_488e8bce",
+        "filename": "content/renderer/service_worker/service_worker_context_client.cc",
+        "patchSetId": 10
+      },
+      "lineNbr": 820,
+      "author": {
+        "id": 1161621
+      },
+      "writtenOn": "2017-11-07T03:18:14Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "91461e50_83e4a5a7",
+      "revId": "44e56963bb4bea01848dfa07a58df26f4c8b7342",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -53,6 +89,24 @@
     },
     {
       "key": {
+        "uuid": "917f9d91_b3955f96",
+        "filename": "content/renderer/service_worker/service_worker_context_client.cc",
+        "patchSetId": 10
+      },
+      "lineNbr": 824,
+      "author": {
+        "id": 1161621
+      },
+      "writtenOn": "2017-11-07T03:18:14Z",
+      "side": 1,
+      "message": "Done. Yeah I copied this comment from old code, which I think it does not provide more helpful information now, TakeRegistrationForServiceWorkerGlobalScope() makes all clear. So removed this sentence.",
+      "parentUuid": "d2cd88a1_0a31f1a5",
+      "revId": "44e56963bb4bea01848dfa07a58df26f4c8b7342",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "73b6ab06_03cab85a",
         "filename": "content/renderer/service_worker/service_worker_context_client.cc",
         "patchSetId": 10
@@ -64,6 +118,24 @@
       "writtenOn": "2017-11-06T07:27:46Z",
       "side": 1,
       "message": "Sorry if I\u0027m missing something. \nHave you removed the code to keep the registration into map in the controller case? \nIn my understanding, currently we don\u0027t implement APIs to get other registrations, but it\u0027s not coming from the spec. I think we don\u0027t have to treat the registration object for service workers as special.",
+      "revId": "44e56963bb4bea01848dfa07a58df26f4c8b7342",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c3fca0ab_e819e581",
+        "filename": "content/renderer/service_worker/service_worker_context_client.cc",
+        "patchSetId": 10
+      },
+      "lineNbr": 826,
+      "author": {
+        "id": 1161621
+      },
+      "writtenOn": "2017-11-07T03:18:14Z",
+      "side": 1,
+      "message": "I read https://w3c.github.io/ServiceWorker/#execution-context trying to find more about SW registration object in SW execution context, seems ServiceWorkerGlobalScope#registration is the only one way to get a SW registration object. So, the old code ServiceWorkerDispatcher::GetOrCreateRegistrationForServiceWorkerGlobalScope (https://cs.chromium.org/chromium/src/content/renderer/service_worker/service_worker_dispatcher.cc?rcl\u003dcc22f53f9455428f8d6ad59633730e6d4e7b5273\u0026l\u003d166) managing multiple SW registration objects even on the SW thread dispatcher is somehow a waste? So I suppose explicitly announcing there is only one SW registration object in SW global scope would make things clearer. And, I think we can start to adapt once this situation changed in spec later.",
+      "parentUuid": "73b6ab06_03cab85a",
       "revId": "44e56963bb4bea01848dfa07a58df26f4c8b7342",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -114,6 +186,30 @@
       "revId": "44e56963bb4bea01848dfa07a58df26f4c8b7342",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "cf0cd507_993f235c",
+        "filename": "content/renderer/service_worker/service_worker_dispatcher.h",
+        "patchSetId": 10
+      },
+      "lineNbr": 98,
+      "author": {
+        "id": 1161621
+      },
+      "writtenOn": "2017-11-07T03:18:14Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "001004bc_450f7987",
+      "range": {
+        "startLine": 98,
+        "startChar": 2,
+        "endLine": 98,
+        "endChar": 33
+      },
+      "revId": "44e56963bb4bea01848dfa07a58df26f4c8b7342",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -186,6 +282,24 @@
     },
     {
       "key": {
+        "uuid": "c1a5f22b_92c4b8fa",
+        "filename": "content/renderer/service_worker/service_worker_provider_context.cc",
+        "patchSetId": 10
+      },
+      "lineNbr": 193,
+      "author": {
+        "id": 1161621
+      },
+      "writtenOn": "2017-11-07T03:18:14Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "ac9d8b84_e605983f",
+      "revId": "44e56963bb4bea01848dfa07a58df26f4c8b7342",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "b07daca3_0fbab6bd",
         "filename": "content/renderer/service_worker/service_worker_provider_context.cc",
         "patchSetId": 10
@@ -200,6 +314,24 @@
       "revId": "44e56963bb4bea01848dfa07a58df26f4c8b7342",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9221b974_ed2634a6",
+        "filename": "content/renderer/service_worker/service_worker_provider_context.cc",
+        "patchSetId": 10
+      },
+      "lineNbr": 284,
+      "author": {
+        "id": 1161621
+      },
+      "writtenOn": "2017-11-07T03:18:14Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "b07daca3_0fbab6bd",
+      "revId": "44e56963bb4bea01848dfa07a58df26f4c8b7342",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -220,6 +352,24 @@
     },
     {
       "key": {
+        "uuid": "0a7010b4_1d653834",
+        "filename": "content/renderer/service_worker/web_service_worker_registration_impl.h",
+        "patchSetId": 10
+      },
+      "lineNbr": 224,
+      "author": {
+        "id": 1161621
+      },
+      "writtenOn": "2017-11-07T03:18:14Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "1a28fa08_301b4916",
+      "revId": "44e56963bb4bea01848dfa07a58df26f4c8b7342",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "461f53ab_360a0a5c",
         "filename": "content/renderer/service_worker/web_service_worker_registration_impl.h",
         "patchSetId": 10
@@ -237,6 +387,24 @@
     },
     {
       "key": {
+        "uuid": "33b79191_7b6964e7",
+        "filename": "content/renderer/service_worker/web_service_worker_registration_impl.h",
+        "patchSetId": 10
+      },
+      "lineNbr": 281,
+      "author": {
+        "id": 1161621
+      },
+      "writtenOn": "2017-11-07T03:18:14Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "461f53ab_360a0a5c",
+      "revId": "44e56963bb4bea01848dfa07a58df26f4c8b7342",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "75bec350_9cdb2323",
         "filename": "content/renderer/service_worker/web_service_worker_registration_impl.h",
         "patchSetId": 10
@@ -251,6 +419,24 @@
       "revId": "44e56963bb4bea01848dfa07a58df26f4c8b7342",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "db15f090_e02dc226",
+        "filename": "content/renderer/service_worker/web_service_worker_registration_impl.h",
+        "patchSetId": 10
+      },
+      "lineNbr": 283,
+      "author": {
+        "id": 1161621
+      },
+      "writtenOn": "2017-11-07T03:18:14Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "75bec350_9cdb2323",
+      "revId": "44e56963bb4bea01848dfa07a58df26f4c8b7342",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
