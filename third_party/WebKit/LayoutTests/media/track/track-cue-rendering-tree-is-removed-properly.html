@@ -18,7 +18,11 @@ async_test(function(t) {
         video.textContent = "";
 
         // Text track should not be rendered anymore.
-        assert_throws(null, function() { textTrackDisplayElement(video); });
+        try {
+          textTrackDisplayElement(video);
+          assert_unreached("textTrackDisplayElement did not throw");
+        } catch (e) {
+        }
     });
 });
 </script>
