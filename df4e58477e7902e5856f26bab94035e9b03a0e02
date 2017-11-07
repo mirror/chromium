@@ -16,6 +16,24 @@
       "revId": "df4e58477e7902e5856f26bab94035e9b03a0e02",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "22282888_ca6d5ffc",
+        "filename": "third_party/WebKit/Source/platform/feature_policy/FeaturePolicy.cpp",
+        "patchSetId": 6
+      },
+      "lineNbr": 172,
+      "author": {
+        "id": 1221384
+      },
+      "writtenOn": "2017-11-07T20:56:53Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "8044f857_09fb5d30",
+      "revId": "df4e58477e7902e5856f26bab94035e9b03a0e02",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
