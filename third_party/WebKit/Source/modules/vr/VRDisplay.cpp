@@ -32,6 +32,7 @@
 #include "modules/vr/VRStageParameters.h"
 #include "modules/webgl/WebGLRenderingContextBase.h"
 #include "platform/Histogram.h"
+#include "platform/graphics/GpuMemoryBufferImageCopy.h"
 #include "platform/instrumentation/tracing/TraceEvent.h"
 #include "platform/wtf/AutoReset.h"
 #include "platform/wtf/Time.h"
@@ -39,6 +40,8 @@
 
 #include <array>
 #include "core/dom/ExecutionContext.h"
+
+#include "mojo/public/cpp/system/platform_handle.h"
 
 namespace blink {
 
@@ -506,17 +509,9 @@ ScriptPromise VRDisplay::exitPresent(ScriptState* script_state) {
 void VRDisplay::BeginPresent() {
   Document* doc = this->GetDocument();
   if (capabilities_->hasExternalDisplay()) {
-    ForceExitPresent();
-    DOMException* exception = DOMException::Create(
-        kInvalidStateError,
-        "VR Presentation not implemented for this VRDisplay.");
-    while (!pending_present_resolvers_.IsEmpty()) {
-      ScriptPromiseResolver* resolver = pending_present_resolvers_.TakeFirst();
-      resolver->Reject(exception);
-    }
-    ReportPresentationResult(
-        PresentationResult::kPresentationNotSupportedByDisplay);
-    return;
+    // Presenting with external displays has to make a copy of the image
+    // since the canvas may still be visible at the same time.
+    present_image_copy_ = true;
   } else {
     if (layer_.source().IsHTMLCanvasElement()) {
       // TODO(klausw,crbug.com/698923): suppress compositor updates
@@ -747,10 +742,33 @@ void VRDisplay::submitFrame() {
   pending_previous_frame_render_ = true;
   pending_submit_frame_ = true;
 
-  TRACE_EVENT_BEGIN0("gpu", "VRDisplay::SubmitFrame");
-  vr_presentation_provider_->SubmitFrame(
-      vr_frame_id_, gpu::MailboxHolder(mailbox, sync_token, GL_TEXTURE_2D));
-  TRACE_EVENT_END0("gpu", "VRDisplay::SubmitFrame");
+  if (present_image_copy_) {
+    TRACE_EVENT0("gpu", "VRDisplay::CopyImage");
+    if (!frame_copy_) {
+      frame_copy_ = std::make_unique<GpuMemoryBufferImageCopy>();
+    }
+    auto gpuMemoryBuffer = frame_copy_->CopyImage(previous_image_);
+
+    gfx::GpuMemoryBufferHandle gpu_handle =
+        CloneHandleForIPC(gpuMemoryBuffer->GetHandle());
+
+    MojoPlatformHandle platformHandle;
+    platformHandle.struct_size = sizeof(platformHandle);
+    platformHandle.value =
+        reinterpret_cast<uint64_t>(gpu_handle.handle.GetHandle());
+    platformHandle.type = MOJO_PLATFORM_HANDLE_TYPE_WINDOWS_HANDLE;
+    MojoHandle mojo_handle;
+    MojoResult result = MojoWrapPlatformHandle(&platformHandle, &mojo_handle);
+    if (result == MOJO_RESULT_OK) {
+      vr_presentation_provider_->SubmitFrameWithTextureHandle(
+          vr_frame_id_, mojo::ScopedHandle(mojo::Handle(mojo_handle)));
+    }
+  } else {
+    TRACE_EVENT_BEGIN0("gpu", "VRDisplay::SubmitFrame");
+    vr_presentation_provider_->SubmitFrame(
+        vr_frame_id_, gpu::MailboxHolder(mailbox, sync_token, GL_TEXTURE_2D));
+    TRACE_EVENT_END0("gpu", "VRDisplay::SubmitFrame");
+  }
 
   did_submit_this_frame_ = true;
   // Reset our frame id, since anything we'd want to do (resizing/etc) can
@@ -780,6 +798,8 @@ Document* VRDisplay::GetDocument() {
 }
 
 void VRDisplay::OnPresentChange() {
+  frame_copy_ = nullptr;
+
   DVLOG(1) << __FUNCTION__ << ": is_presenting_=" << is_presenting_;
   if (is_presenting_ && !is_valid_device_for_presenting_) {
     DVLOG(1) << __FUNCTION__ << ": device not valid, not sending event";
