@@ -1,0 +1,84 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "eae1a481_27c6972e",
+        "filename": "ui/app_list/views/app_list_view_unittest.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 338,
+      "author": {
+        "id": 1000101
+      },
+      "writtenOn": "2017-11-07T20:00:25Z",
+      "side": 1,
+      "message": "Use u8\"\" to guard that utf8 will be used.\n\nnit: personally prefer to use hex encoding instead.\n\nhttps://google.github.io/styleguide/cppguide.html#Non-ASCII_Characters",
+      "range": {
+        "startLine": 338,
+        "startChar": 37,
+        "endLine": 338,
+        "endChar": 45
+      },
+      "revId": "f0c7f2019fc8bbec62e9d1934bab835f209a828d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "91d60b81_a11d20de",
+        "filename": "ui/app_list/views/app_list_view_unittest.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 349,
+      "author": {
+        "id": 1000101
+      },
+      "writtenOn": "2017-11-07T20:00:25Z",
+      "side": 1,
+      "message": "nit: use a named local var for better readablity?\n\nconst ui::KeyboardCode backward_key \u003d text_rtl ? ui::VKEY_RIGHT : ui::VKEY_LEFT;\nconst ui::KeyboardCode forward_key \u003d text_rtl ? ui::VKEY_LEFT : ui::VKEY_RIGHT;",
+      "range": {
+        "startLine": 349,
+        "startChar": 21,
+        "endLine": 349,
+        "endChar": 62
+      },
+      "revId": "f0c7f2019fc8bbec62e9d1934bab835f209a828d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "862145f6_329a0324",
+        "filename": "ui/app_list/views/folder_header_view.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 267,
+      "author": {
+        "id": 1000101
+      },
+      "writtenOn": "2017-11-07T20:00:25Z",
+      "side": 1,
+      "message": "left/right is confusing to read. How about explicitly call out the |reverse| (or move direction)?\n\ne.g.\n\nconst bool reverse \u003d base::i18n::IsRTL() ?\n    key_event.key_code() \u003d\u003d ui::VKEY_LEFT :\n    key_event.key_code() \u003d\u003d ui::VKEY_RIGHT;\n\nif (folder_name_view_-\u003etext().empty())\n    GetFocusManager()-\u003eAdvanceFocus(reverse);\n\n...\n\nconst bool text_rtl \u003d ...;\nconst bool cursor_at_beginning \u003d ...;\n\nif (cursor_at_beginning \u0026\u0026 reverse) {\n  GetFocusManager()-\u003eAdvanceFocus(reverse);\n}\n\nif (!cursor_at_beginning \u0026\u0026 !reverse) {\n  GetFocusManager()-\u003eAdvanceFocus(!reverse);\n}",
+      "revId": "f0c7f2019fc8bbec62e9d1934bab835f209a828d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "77a9762b_b69b7e33",
+        "filename": "ui/app_list/views/search_box_view.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 887,
+      "author": {
+        "id": 1000101
+      },
+      "writtenOn": "2017-11-07T20:00:25Z",
+      "side": 1,
+      "message": "This looks similar to what we have in folder_header_view.cc. Can we extract a helper function and put it in app_list_util?\n\ne.g.\n// Process left/right key traversal for the given Textfield. Returns true\n// if focus is moved.\nbool ProcessLeftRightKeyTraversal(views::Textfield* textfield,\n                                  const ui::KeyEvent\u0026 key_event);",
+      "revId": "f0c7f2019fc8bbec62e9d1934bab835f209a828d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
