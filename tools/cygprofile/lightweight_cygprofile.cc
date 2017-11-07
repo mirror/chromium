@@ -2,17 +2,21 @@
 // Use of this source code is governed by a BSD-style license that can be
 // found in the LICENSE file.
 
+#include <sys/mman.h>
 #include <unistd.h>
 
 #include <atomic>
 #include <cstdio>
+#include <memory>
 #include <string>
 #include <thread>
 #include <vector>
 
 #include "base/files/file.h"
+#include "base/format_macros.h"
 #include "base/logging.h"
 #include "base/macros.h"
+#include "base/posix/eintr_wrapper.h"
 #include "base/strings/stringprintf.h"
 
 // These functions are here to, respectively:
@@ -69,18 +73,100 @@ class DelayedDumper {
     CHECK_LT(kStartOfText,
              reinterpret_cast<size_t>(&dummy_function_to_check_ordering));
 
-    std::thread([]() {
-      sleep(kDelayInSeconds);
+    std::thread([this]() {
+      int count = kDelayInSeconds * 2;
+      for (int i = 0; i < count; ++i) {
+        CollectResidency();
+        usleep(5e5);
+      }
       // As Dump() is called from the same thread, ensures that the
       // base functions called in the dumping code will not spuriously appear
       // in the profile.
       g_enabled_and_array.store(nullptr, std::memory_order_relaxed);
       Dump();
+      DumpResidency();
     })
         .detach();
   }
 
  private:
+  struct TimestampAndResidency {
+    uint64_t timestamp_nanos;
+    std::vector<unsigned char> residency;
+
+    TimestampAndResidency(uint64_t timestamp_nanos,
+                          std::vector<unsigned char> residency)
+        : timestamp_nanos(timestamp_nanos), residency(residency) {}
+  };
+  std::unique_ptr<std::vector<TimestampAndResidency>> residency_data_;
+
+  // Collects the current residency of the native library.
+  //
+  // The native library location is known from the anchor symbols, and mincore()
+  // is used to tell whether pages are resident in memory.
+  // This is not threadsafe.
+  void CollectResidency() {
+    // Initialization at first use, to avoid doing non-trivial work in a static
+    // constructor.
+    if (!residency_data_)
+      residency_data_ = std::make_unique<std::vector<TimestampAndResidency>>();
+
+    // Not using base::TimeTicks() to not call too many base:: symbol that would
+    // pollute the reached symbols dumps.
+    struct timespec ts;
+    if (HANDLE_EINTR(clock_gettime(CLOCK_MONOTONIC, &ts))) {
+      PLOG(ERROR) << "Cannot get the time.";
+      return;
+    }
+    uint64_t now = ts.tv_sec * 1e9 + ts.tv_nsec;
+
+    // Though executable code start has to be aligned on a page boundary, this
+    // is not necessarily the case for .text, as .plt typically precedes it.
+    // Align start and size to page boundaries.
+    size_t start_of_text_page = kStartOfText & ~(kPageSize - 1);
+    size_t text_size = kEndOfText - start_of_text_page;
+    size_t text_size_in_pages =
+        text_size / kPageSize + (text_size % kPageSize ? 1 : 0);
+    auto data = std::vector<unsigned char>(text_size_in_pages);
+    int err = HANDLE_EINTR(mincore(reinterpret_cast<void*>(start_of_text_page),
+                                   text_size_in_pages * kPageSize, &data[0]));
+    if (err) {
+      PLOG(ERROR) << "mincore() failed";
+      return;
+    }
+
+    residency_data_->emplace_back(now, std::move(data));
+  }
+
+  // Dumps the residency historical data to a file, and clears it.
+  //
+  // File format: <ns since Epoch> 0100011100111
+  // Where each 0 or 1 represents a single page of .text.
+  void DumpResidency() {
+    auto path = base::FilePath(base::StringPrintf(
+        "/data/local/tmp/chrome/residency-%d.txt", getpid()));
+    auto file = base::File(
+        path, base::File::FLAG_CREATE_ALWAYS | base::File::FLAG_WRITE);
+    if (!file.IsValid()) {
+      LOG(ERROR) << "Cannot open the file";
+      return;
+    }
+
+    for (const auto& data_point : *residency_data_) {
+      auto timestamp =
+          base::StringPrintf("%" PRIu64 " ", data_point.timestamp_nanos);
+      file.WriteAtCurrentPos(timestamp.c_str(), timestamp.size());
+
+      std::vector<char> dump;
+      dump.reserve(data_point.residency.size() + 1);
+      for (auto c : data_point.residency)
+        dump.push_back(c ? '1' : '0');
+      dump[dump.size() - 1] = '\n';
+      file.WriteAtCurrentPos(&dump[0], dump.size());
+    }
+    residency_data_ = nullptr;
+  }
+
   // Dumps the data to disk.
   static void Dump() {
     CHECK(!g_enabled_and_array.load(std::memory_order_relaxed));
@@ -108,6 +194,7 @@ class DelayedDumper {
   }
 
   static constexpr int kDelayInSeconds = 30;
+  static constexpr size_t kPageSize = 1 << 12;
 };
 
 // Static initializer on purpose. Will disable instrumentation after
