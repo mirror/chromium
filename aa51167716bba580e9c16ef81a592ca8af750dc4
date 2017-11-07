@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "f9a958fb_5ae3bfcd",
+        "filename": "chrome/browser/resources/print_preview/new/header.html",
+        "patchSetId": 5
+      },
+      "lineNbr": 69,
+      "author": {
+        "id": 1115893
+      },
+      "writtenOn": "2017-11-07T02:36:33Z",
+      "side": 1,
+      "message": "FYI, found two ways to avoid repeating a long list of dependencies twice.\n\n1) This is the one I suggested above with an intermediate computed property, a bit hacky, https://jsfiddle.net/c09yt54q/1/.\n2) With an observer (less hacky I think), see https://jsfiddle.net/vogs4z7x/1/.",
+      "parentUuid": "c02efd8d_f12d5a6e",
+      "revId": "aa51167716bba580e9c16ef81a592ca8af750dc4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "3a754929_360e1a90",
         "filename": "chrome/browser/resources/print_preview/new/layout_settings.html",
         "patchSetId": 5
