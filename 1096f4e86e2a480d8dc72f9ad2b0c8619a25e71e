@@ -1,0 +1,336 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "e428649e_b896bbd7",
+        "filename": "components/cronet/native/BUILD.gn",
+        "patchSetId": 35
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1002888
+      },
+      "writtenOn": "2017-11-07T14:20:46Z",
+      "side": 1,
+      "message": "Can we add comments to these build targets? e.g. explaining what the \"impl\" targets implement?",
+      "revId": "1096f4e86e2a480d8dc72f9ad2b0c8619a25e71e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0859a785_d42667d6",
+        "filename": "components/cronet/native/OWNERS",
+        "patchSetId": 35
+      },
+      "lineNbr": 2,
+      "author": {
+        "id": 1002888
+      },
+      "writtenOn": "2017-11-07T14:20:46Z",
+      "side": 1,
+      "message": "Is this the right set of owners for an API that\u0027s not used for IPC?",
+      "revId": "1096f4e86e2a480d8dc72f9ad2b0c8619a25e71e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "42d20fea_5cdc485b",
+        "filename": "components/cronet/native/cronet.mojom",
+        "patchSetId": 35
+      },
+      "lineNbr": 9,
+      "author": {
+        "id": 1002888
+      },
+      "writtenOn": "2017-11-07T14:20:46Z",
+      "side": 1,
+      "message": "What is Annotation used for?",
+      "range": {
+        "startLine": 9,
+        "startChar": 19,
+        "endLine": 9,
+        "endChar": 0
+      },
+      "revId": "1096f4e86e2a480d8dc72f9ad2b0c8619a25e71e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "24a3c994_3ac69366",
+        "filename": "components/cronet/native/cronet.mojom",
+        "patchSetId": 35
+      },
+      "lineNbr": 13,
+      "author": {
+        "id": 1002888
+      },
+      "writtenOn": "2017-11-07T14:20:46Z",
+      "side": 1,
+      "message": "What is the motivation for wrapping an array\u003cint8\u003e in a struct?  Do we anticipate converting between Buffers and PublicKeyPins data?",
+      "revId": "1096f4e86e2a480d8dc72f9ad2b0c8619a25e71e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ab7cfc56_dbfbd994",
+        "filename": "components/cronet/native/cronet.mojom",
+        "patchSetId": 35
+      },
+      "lineNbr": 17,
+      "author": {
+        "id": 1002888
+      },
+      "writtenOn": "2017-11-07T14:20:46Z",
+      "side": 1,
+      "message": "Can we add a comment explaining what the various members of Buffer mean and when they can be accessed/modified (e.g. not during a Read or Write operation)?",
+      "revId": "1096f4e86e2a480d8dc72f9ad2b0c8619a25e71e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ea8e5f3f_c8b96c99",
+        "filename": "components/cronet/native/cronet.mojom",
+        "patchSetId": 35
+      },
+      "lineNbr": 31,
+      "author": {
+        "id": 1002888
+      },
+      "writtenOn": "2017-11-07T14:20:46Z",
+      "side": 1,
+      "message": "Can we add a comment explaining what error_code is/means?",
+      "range": {
+        "startLine": 31,
+        "startChar": 39,
+        "endLine": 31,
+        "endChar": 0
+      },
+      "revId": "1096f4e86e2a480d8dc72f9ad2b0c8619a25e71e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a543f58b_791f89f0",
+        "filename": "components/cronet/native/cronet.mojom",
+        "patchSetId": 35
+      },
+      "lineNbr": 46,
+      "author": {
+        "id": 1002888
+      },
+      "writtenOn": "2017-11-07T14:20:46Z",
+      "side": 1,
+      "message": "where is CreateWithParams described?",
+      "range": {
+        "startLine": 46,
+        "startChar": 26,
+        "endLine": 46,
+        "endChar": 0
+      },
+      "revId": "1096f4e86e2a480d8dc72f9ad2b0c8619a25e71e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c1a8d7f2_6f654ade",
+        "filename": "components/cronet/native/cronet.mojom",
+        "patchSetId": 35
+      },
+      "lineNbr": 96,
+      "author": {
+        "id": 1002888
+      },
+      "writtenOn": "2017-11-07T14:20:46Z",
+      "side": 1,
+      "message": "Can we add a comment addressing what this struct is for and how it is used?",
+      "range": {
+        "startLine": 96,
+        "startChar": 27,
+        "endLine": 96,
+        "endChar": 0
+      },
+      "revId": "1096f4e86e2a480d8dc72f9ad2b0c8619a25e71e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a9fdd95c_0b6b4053",
+        "filename": "components/cronet/native/cronet.mojom",
+        "patchSetId": 35
+      },
+      "lineNbr": 104,
+      "author": {
+        "id": 1002888
+      },
+      "writtenOn": "2017-11-07T14:20:46Z",
+      "side": 1,
+      "message": "should this be an absolute path? or relative to what?",
+      "range": {
+        "startLine": 104,
+        "startChar": 74,
+        "endLine": 104,
+        "endChar": 0
+      },
+      "revId": "1096f4e86e2a480d8dc72f9ad2b0c8619a25e71e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b64768c3_ddf70e15",
+        "filename": "components/cronet/native/cronet.mojom",
+        "patchSetId": 35
+      },
+      "lineNbr": 113,
+      "author": {
+        "id": 1002888
+      },
+      "writtenOn": "2017-11-07T14:20:46Z",
+      "side": 1,
+      "message": "I\u0027m new to mojom, but how/where do we define and document default values for all these members?",
+      "range": {
+        "startLine": 113,
+        "startChar": 18,
+        "endLine": 113,
+        "endChar": 0
+      },
+      "revId": "1096f4e86e2a480d8dc72f9ad2b0c8619a25e71e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "03023e5b_0c6c475b",
+        "filename": "components/cronet/native/cronet.mojom",
+        "patchSetId": 35
+      },
+      "lineNbr": 159,
+      "author": {
+        "id": 1002888
+      },
+      "writtenOn": "2017-11-07T14:20:46Z",
+      "side": 1,
+      "message": "int64?",
+      "range": {
+        "startLine": 159,
+        "startChar": 25,
+        "endLine": 159,
+        "endChar": 0
+      },
+      "revId": "1096f4e86e2a480d8dc72f9ad2b0c8619a25e71e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "97334606_4d064895",
+        "filename": "components/cronet/native/cronet.mojom",
+        "patchSetId": 35
+      },
+      "lineNbr": 232,
+      "author": {
+        "id": 1002888
+      },
+      "writtenOn": "2017-11-07T14:20:46Z",
+      "side": 1,
+      "message": "Can we add comments to all classes, methods, and members here and below?",
+      "range": {
+        "startLine": 232,
+        "startChar": 29,
+        "endLine": 232,
+        "endChar": 0
+      },
+      "revId": "1096f4e86e2a480d8dc72f9ad2b0c8619a25e71e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b98298e2_26da9b3a",
+        "filename": "components/cronet/native/cronet.mojom_c.h",
+        "patchSetId": 35
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1002888
+      },
+      "writtenOn": "2017-11-07T14:20:46Z",
+      "side": 1,
+      "message": "Can we move all the generated files into another directory?  I have a slight preference for not checking them in, and generating them in some out/ directory (I think there are a few generated directories there now, e.g. the one for the C++ -\u003e Java enum generators).",
+      "revId": "1096f4e86e2a480d8dc72f9ad2b0c8619a25e71e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d855014f_740b111c",
+        "filename": "components/cronet/tools/generate_mojo_bindings.py",
+        "patchSetId": 35
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1002888
+      },
+      "writtenOn": "2017-11-07T14:20:46Z",
+      "side": 1,
+      "message": "How is this invoked?  Can it be automatically invoked by a BUILD.gn target?",
+      "revId": "1096f4e86e2a480d8dc72f9ad2b0c8619a25e71e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1d76ac81_62024800",
+        "filename": "components/cronet/tools/generators/cronet_bindings_generator.py",
+        "patchSetId": 35
+      },
+      "lineNbr": 37,
+      "author": {
+        "id": 1002888
+      },
+      "writtenOn": "2017-11-07T14:20:46Z",
+      "side": 1,
+      "message": "os.path.join(_GetDirAbove(\"components\"), \"mojo\", \"public\", \"tools\", \"bindings\")",
+      "range": {
+        "startLine": 37,
+        "startChar": 73,
+        "endLine": 37,
+        "endChar": 0
+      },
+      "revId": "1096f4e86e2a480d8dc72f9ad2b0c8619a25e71e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "301d906f_c76fc91f",
+        "filename": "components/cronet/tools/generators/cronet_c_generator.py",
+        "patchSetId": 35
+      },
+      "lineNbr": 5,
+      "author": {
+        "id": 1002888
+      },
+      "writtenOn": "2017-11-07T14:20:46Z",
+      "side": 1,
+      "message": "extra space",
+      "range": {
+        "startLine": 5,
+        "startChar": 22,
+        "endLine": 5,
+        "endChar": 23
+      },
+      "revId": "1096f4e86e2a480d8dc72f9ad2b0c8619a25e71e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
