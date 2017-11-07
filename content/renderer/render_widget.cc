@@ -768,9 +768,41 @@ void RenderWidget::OnResize(const ResizeParams& params) {
 
 void RenderWidget::OnSetLocalSurfaceIdForAutoResize(
     uint64_t sequence_number,
+    const gfx::Size& min_size,
+    const gfx::Size& max_size,
+    const content::ScreenInfo& screen_info,
     const viz::LocalSurfaceId& local_surface_id) {
   if (!auto_resize_mode_ || resize_or_repaint_ack_num_ != sequence_number)
     return;
+
+  bool screen_info_changed = screen_info_ != screen_info;
+
+  screen_info_ = screen_info;
+  physical_backing_size_ = gfx::ScaleToCeiledSize(size_, device_scale_factor_);
+  if (device_scale_factor_ != screen_info_.device_scale_factor) {
+    device_scale_factor_ = screen_info_.device_scale_factor;
+    OnDeviceScaleFactorChanged();
+  }
+
+  //WebSize visual_viewport_size;
+  //if (IsUseZoomForDSFEnabled()) {
+  //  visual_viewport_size = gfx::ScaleToCeiledSize(
+  //      size_,
+  //      GetOriginalDeviceScaleFactor());
+  //} else {
+  //  visual_viewport_size = visible_viewport_size_;
+  //}
+
+  //GetWebWidget()->ResizeVisualViewport(visual_viewport_size);
+  if (screen_info_changed) {
+    for (auto& observer : render_frame_proxies_)
+      observer.OnScreenInfoChanged(screen_info);
+
+    // Notify all BrowserPlugins of the updated ScreenInfo.
+    if (BrowserPluginManager::Get())
+      BrowserPluginManager::Get()->ScreenInfoChanged(screen_info);
+  }
+
   AutoResizeCompositor(local_surface_id);
 }
 

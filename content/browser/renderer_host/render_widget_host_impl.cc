@@ -2475,8 +2475,12 @@ void RenderWidgetHostImpl::DidAllocateLocalSurfaceIdForAutoResize(
 
   viz::LocalSurfaceId local_surface_id(view_->GetLocalSurfaceId());
   if (local_surface_id.is_valid()) {
+    ScreenInfo screen_info;
+    if (view_)
+      view_->GetScreenInfo(&screen_info);
     Send(new ViewMsg_SetLocalSurfaceIdForAutoResize(
-        routing_id_, sequence_number, local_surface_id));
+        routing_id_, sequence_number, min_size_for_auto_resize_,
+        max_size_for_auto_resize_, screen_info, local_surface_id));
   }
 }
 
