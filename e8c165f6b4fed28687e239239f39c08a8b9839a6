@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "82e90ce0_976cca99",
+        "filename": "third_party/WebKit/Source/modules/media_controls/MediaControlsImpl.cpp",
+        "patchSetId": 6
+      },
+      "lineNbr": 1194,
+      "author": {
+        "id": 1115974
+      },
+      "writtenOn": "2017-11-07T21:26:58Z",
+      "side": 1,
+      "message": "Probably move this at the beginning of the method.",
+      "revId": "e8c165f6b4fed28687e239239f39c08a8b9839a6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2bd2b0c5_becf878c",
+        "filename": "third_party/WebKit/Source/modules/media_controls/MediaControlsImpl.cpp",
+        "patchSetId": 6
+      },
+      "lineNbr": 1195,
+      "author": {
+        "id": 1115974
+      },
+      "writtenOn": "2017-11-07T21:26:58Z",
+      "side": 1,
+      "message": "style: there is a whitespace in here and you might need some wrapping.",
+      "revId": "e8c165f6b4fed28687e239239f39c08a8b9839a6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
