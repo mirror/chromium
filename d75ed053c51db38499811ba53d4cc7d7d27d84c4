@@ -1,0 +1,106 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "433ce49a_812f5cb8",
+        "filename": "ash/accessibility/accessibility_layer.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 23,
+      "author": {
+        "id": 1000678
+      },
+      "writtenOn": "2017-11-07T16:50:58Z",
+      "side": 1,
+      "message": "This feels like it belongs on a subclass.\n\nMaybe there should be a virtual method like GetInset() and\nthen some subclasses could return their shadow radius, but it\u0027d\nbe 0 by default.",
+      "revId": "d75ed053c51db38499811ba53d4cc7d7d27d84c4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b503645b_dfe86611",
+        "filename": "ash/accessibility/accessibility_layer.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 54,
+      "author": {
+        "id": 1000678
+      },
+      "writtenOn": "2017-11-07T16:50:58Z",
+      "side": 1,
+      "message": "This, and custom_color_, feel like they could belong on subclasses.",
+      "revId": "d75ed053c51db38499811ba53d4cc7d7d27d84c4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "29f67170_c727675d",
+        "filename": "ash/accessibility/accessibility_layer.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 83,
+      "author": {
+        "id": 1000678
+      },
+      "writtenOn": "2017-11-07T16:50:58Z",
+      "side": 1,
+      "message": "Maybe have a method NeedsToAnimate() that subclasses can override,\nthen skip this block of code if a subclass doesn\u0027t need animation.",
+      "revId": "d75ed053c51db38499811ba53d4cc7d7d27d84c4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3a182f72_4417246c",
+        "filename": "ash/accessibility/accessibility_layer.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 1,
+      "author": {
+        "id": 1000678
+      },
+      "writtenOn": "2017-11-07T16:50:58Z",
+      "side": 1,
+      "message": "Update to 2017 when creating a new file",
+      "revId": "d75ed053c51db38499811ba53d4cc7d7d27d84c4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "be48253a_1c04507b",
+        "filename": "ash/accessibility/accessibility_layer.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 40,
+      "author": {
+        "id": 1000678
+      },
+      "writtenOn": "2017-11-07T16:50:58Z",
+      "side": 1,
+      "message": "Let\u0027s describe the purpose: manages a global always-on-top layer\nused to highlight or annotate UI elements for accessibility.",
+      "revId": "d75ed053c51db38499811ba53d4cc7d7d27d84c4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d0b95287_b776b888",
+        "filename": "ash/accessibility/focus_ring_layer.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 38,
+      "author": {
+        "id": 1000678
+      },
+      "writtenOn": "2017-11-07T16:50:58Z",
+      "side": 1,
+      "message": "This looks duplicated now. I think it\u0027s better here.",
+      "revId": "d75ed053c51db38499811ba53d4cc7d7d27d84c4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
