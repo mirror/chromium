@@ -70,6 +70,24 @@
       "revId": "63c4efd655be8a6cfcbad4302630c6abce3c0520",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "05e2f917_626f098b",
+        "filename": "chrome/browser/chromeos/eol_notification.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 75,
+      "author": {
+        "id": 1115907
+      },
+      "writtenOn": "2017-11-07T20:30:31Z",
+      "side": 1,
+      "message": "On second thought, I\u0027m not sure I\u0027d endorse automatically removing all TRANSIENT notifications on profile shutdown because you could imagine a good number of them might be profile agnostic. The NDS forces them to pick a profile since it\u0027s profile-keyed, but notifications for things like low battery don\u0027t actually have anything to do with a particular profile. The only reason the EOL one does have a profile is because it happens to store a pref, but if, as a product decision, we made the notification un-suppressable, we\u0027d not need the profile pointer.\n\nThat said, we can continue this conversation tangentially to this CL.",
+      "parentUuid": "b5521e56_d5f5bda6",
+      "revId": "63c4efd655be8a6cfcbad4302630c6abce3c0520",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
