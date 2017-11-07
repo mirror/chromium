@@ -3103,8 +3103,10 @@ void HTMLMediaElement::TimeChanged() {
   // When the current playback position reaches the end of the media resource
   // when the direction of playback is forwards, then the user agent must follow
   // these steps:
-  if (!std::isnan(dur) && dur && now >= dur &&
-      GetDirectionOfPlayback() == kForward) {
+  if ((GetWebMediaPlayer() && GetWebMediaPlayer()->IsEnded() &&
+       std::isinf(dur)) ||
+      (!std::isnan(dur) && dur && now >= dur &&
+       GetDirectionOfPlayback() == kForward)) {
     // If the media element has a loop attribute specified
     if (Loop()) {
       //  then seek to the earliest possible position of the media resource and
