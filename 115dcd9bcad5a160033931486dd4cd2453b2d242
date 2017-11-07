@@ -1,0 +1,136 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "39c7ef83_e64948f8",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 3
+      },
+      "lineNbr": 9,
+      "author": {
+        "id": 1143639
+      },
+      "writtenOn": "2017-11-07T10:22:02Z",
+      "side": 1,
+      "message": "Respect the 72-column limit for the description.",
+      "range": {
+        "startLine": 9,
+        "startChar": 0,
+        "endLine": 9,
+        "endChar": 18
+      },
+      "revId": "115dcd9bcad5a160033931486dd4cd2453b2d242",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "860d167c_795f886e",
+        "filename": "content/browser/webrtc/webrtc_eventlog_host.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 85,
+      "author": {
+        "id": 1143639
+      },
+      "writtenOn": "2017-11-07T10:22:02Z",
+      "side": 1,
+      "message": "Remove this TODO since it is a question, not an actual  TODO.\nYou can replace with an informative comment (which this is not,  what exactly should be a DCHECK?) or with a valid TODO with a reference to a crbug.",
+      "range": {
+        "startLine": 85,
+        "startChar": 10,
+        "endLine": 85,
+        "endChar": 18
+      },
+      "revId": "115dcd9bcad5a160033931486dd4cd2453b2d242",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f2cfeeb4_2c34f054",
+        "filename": "content/browser/webrtc/webrtc_eventlog_host.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 166,
+      "author": {
+        "id": 1143639
+      },
+      "writtenOn": "2017-11-07T10:22:02Z",
+      "side": 1,
+      "message": "Remove CHECK. If this were hit, you would crash the whole browser.\nIf the method can return false here, handle it without crashing the browser, or make it return void and handle the failure in the method implementation.\n\nIf the method can\u0027t return false here, then just DCHECK the return value.\nIf the method must return true in all cases, then make it return void and put the DCHECK in the method\u0027s implementation.",
+      "range": {
+        "startLine": 166,
+        "startChar": 10,
+        "endLine": 166,
+        "endChar": 34
+      },
+      "revId": "115dcd9bcad5a160033931486dd4cd2453b2d242",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8bd92f35_4b0da991",
+        "filename": "content/browser/webrtc/webrtc_eventlog_host.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 174,
+      "author": {
+        "id": 1143639
+      },
+      "writtenOn": "2017-11-07T10:22:02Z",
+      "side": 1,
+      "message": "ditto",
+      "revId": "115dcd9bcad5a160033931486dd4cd2453b2d242",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6a0ead10_4c9e7ee0",
+        "filename": "content/browser/webrtc/webrtc_eventlog_host.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 190,
+      "author": {
+        "id": 1143639
+      },
+      "writtenOn": "2017-11-07T10:22:02Z",
+      "side": 1,
+      "message": "Based on how the return value for this method is handled at the call sites, it looks like it should return void.",
+      "range": {
+        "startLine": 190,
+        "startChar": 0,
+        "endLine": 190,
+        "endChar": 4
+      },
+      "revId": "115dcd9bcad5a160033931486dd4cd2453b2d242",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "56b700b5_204e2a42",
+        "filename": "content/browser/webrtc/webrtc_eventlog_host.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 68,
+      "author": {
+        "id": 1143639
+      },
+      "writtenOn": "2017-11-07T10:22:02Z",
+      "side": 1,
+      "message": "Consider renaming these methods to something like AddPeerConnectionToActiveSet() and RemovePeerConnectionFromActiveSet() or something along those lines.\nThe verb Record is a bit confusing since it suggests persistent recording of the occurrence of the event, while these methods are instead used to keep the set of PCs with active log files up to date.",
+      "range": {
+        "startLine": 68,
+        "startChar": 7,
+        "endLine": 68,
+        "endChar": 29
+      },
+      "revId": "115dcd9bcad5a160033931486dd4cd2453b2d242",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
