@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "ab01a43d_416452fb",
+        "filename": "WATCHLISTS",
+        "patchSetId": 1
+      },
+      "lineNbr": 32,
+      "author": {
+        "id": 1176654
+      },
+      "writtenOn": "2017-11-07T19:22:44Z",
+      "side": 0,
+      "message": "Nit: I don\u0027t think that your CL is moving AppBannerManagerTest.java and InstallerDelegateTest.java Should we keep the path?",
+      "revId": "9d4e17194fbae2839d269e0b625520eac09efa9b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
