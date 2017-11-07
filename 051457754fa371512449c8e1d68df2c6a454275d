@@ -46,6 +46,30 @@
       "revId": "051457754fa371512449c8e1d68df2c6a454275d",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "21159018_5414367a",
+        "filename": "base/allocator/partition_allocator/page_allocator.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 308,
+      "author": {
+        "id": 1002871
+      },
+      "writtenOn": "2017-11-07T09:42:15Z",
+      "side": 1,
+      "message": "A reduction of memory measured by uma for the cluster of releases where the kernel supports MADV_FREE and our sysroot defines it.",
+      "parentUuid": "00b81df7_aea70b89",
+      "range": {
+        "startLine": 300,
+        "startChar": 0,
+        "endLine": 308,
+        "endChar": 5
+      },
+      "revId": "051457754fa371512449c8e1d68df2c6a454275d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
