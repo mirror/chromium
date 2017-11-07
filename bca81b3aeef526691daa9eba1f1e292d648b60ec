@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "0d3d00c3_5d67f77d",
+        "filename": "third_party/WebKit/Source/platform/graphics/gpu/ImageLayerBridge.cpp",
+        "patchSetId": 4
+      },
+      "lineNbr": 87,
+      "author": {
+        "id": 1115939
+      },
+      "writtenOn": "2017-11-07T20:58:20Z",
+      "side": 1,
+      "message": "Instead of aborting we could do \"sk_image \u003d sk_image-\u003emakeNonTextureImage();\" in the code below that handles the !gpu_compositing case.",
+      "range": {
+        "startLine": 87,
+        "startChar": 26,
+        "endLine": 87,
+        "endChar": 35
+      },
+      "revId": "bca81b3aeef526691daa9eba1f1e292d648b60ec",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5082a5a3_463f32ba",
+        "filename": "third_party/WebKit/Source/platform/graphics/gpu/ImageLayerBridge.cpp",
+        "patchSetId": 4
+      },
+      "lineNbr": 97,
+      "author": {
+        "id": 1115939
+      },
+      "writtenOn": "2017-11-07T20:58:20Z",
+      "side": 1,
+      "message": "I think this code should be moved to an API similar to skia\u0027s SkImage::makeTextureImage.\nStaticBitmapImage would have something like this:\nvirtual scoped_refptr\u003cStaticBitmapImage\u003e MakeAccelerated() \u003d 0;\n\nOverload in AcceleratedStaticBitmapImage returns \u0027this\u0027.\nOverload in UnacceleratedStaticBitmapImage would have basically the code from this if block.\n\nThis could come in handy IMHO. WDYT?",
+      "range": {
+        "startLine": 97,
+        "startChar": 6,
+        "endLine": 97,
+        "endChar": 21
+      },
+      "revId": "bca81b3aeef526691daa9eba1f1e292d648b60ec",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
