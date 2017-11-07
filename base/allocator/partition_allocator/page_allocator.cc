@@ -325,22 +325,12 @@ void DiscardSystemPages(void* address, size_t length) {
 #if defined(OS_POSIX)
   int ret = -1;
 #if defined(OS_MACOSX)
-  // On macOS, MADV_FREE_REUSABLE has comparable behavior to MADV_FREE, but also
-  // marks the pages with the reusable bit, which allows both Activity Monitor
-  // and memory-infra to correctly track the pages.
+  // On macOS, MADV_FREE_REUSABLE has comparable behavior to Linux' MADV_FREE,
+  // but also marks the pages with the reusable bit, which allows both Activity
+  // Monitor and memory-infra to correctly track the pages.
   ret = madvise(address, length, MADV_FREE_REUSABLE);
 #else
-#if defined(MADV_FREE)
-  ret = madvise(address, length, MADV_FREE);
-  if (ret != 0 && errno == EINVAL) {
-    // MADV_FREE only works on Linux 4.5+. If the request failed, retry with the
-    // older MADV_DONTNEED. (Note that MADV_FREE being defined at compile time
-    // doesn't imply runtime support.)
-    ret = madvise(address, length, MADV_DONTNEED);
-  }
-#else
   ret = madvise(address, length, MADV_DONTNEED);
-#endif  // MADV_FREE
 #endif  // OS_MACOSX
 #else
   // On Windows discarded pages are not returned to the system immediately and
