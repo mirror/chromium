@@ -1363,10 +1363,8 @@ TEST_F(RenderViewImplTest, OnSetTextDirection) {
     const wchar_t* expected_result;
   } kTextDirection[] = {
       {blink::kWebTextDirectionRightToLeft,
-       L"\x000A"
        L"rtl,rtl"},
       {blink::kWebTextDirectionLeftToRight,
-       L"\x000A"
        L"ltr,ltr"},
   };
   for (size_t i = 0; i < arraysize(kTextDirection); ++i) {
