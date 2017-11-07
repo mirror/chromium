@@ -14,6 +14,7 @@
 #include "base/macros.h"
 #include "base/optional.h"
 #include "base/time/time.h"
+#include "content/common/content_export.h"
 #include "content/common/leveldb_wrapper.mojom.h"
 #include "mojo/public/cpp/bindings/binding_set.h"
 #include "mojo/public/cpp/bindings/interface_ptr_set.h"
@@ -70,12 +71,29 @@ class CONTENT_EXPORT LevelDBWrapperImpl : public mojom::LevelDBWrapper {
 
   void Bind(mojom::LevelDBWrapperRequest request);
 
+  // Settings are carried over from this object.
+  std::unique_ptr<LevelDBWrapperImpl> ForkToNewPrefix(
+      const std::string& new_prefix,
+      Delegate* delegate);
+
+  // Cancels all pending load tasks. Useful for emergency destructions. If the
+  // wrapper is unloaded (initialized() returns false), this will DROP all
+  // pending changes to the database, and any uninitialized wrappers created
+  // through |ForkToNewPrefix| will stay BROKEN an unresponsive.
+  void CancelAllPendingRequests();
+
+  bool initialized() { return map_state_ == MapLoadingState::LOADED; }
+
   bool empty() const { return bytes_used_ == 0; }
   size_t bytes_used() const { return bytes_used_; }
 
   bool has_pending_load_tasks() const {
     return !on_load_complete_tasks_.empty();
   }
+
+  bool has_changes_to_commit() const { return commit_batch_.get(); }
+
+  const std::vector<uint8_t>& prefix() { return prefix_; }
 
   // Commence aggressive flushing. This should be called early during startup,
   // before any localStorage writing. Currently scheduled writes will not be
@@ -133,22 +151,41 @@ class CONTENT_EXPORT LevelDBWrapperImpl : public mojom::LevelDBWrapper {
     base::TimeDelta ComputeDelayNeeded(
         const base::TimeDelta elapsed_time) const;
 
+    float rate() const { return rate_; }
+
    private:
     float rate_;
     float samples_;
     base::TimeDelta time_quantum_;
   };
 
+  // There can be only one fork operation per commit batch.
   struct CommitBatch {
     bool clear_all_first;
     std::set<std::vector<uint8_t>> changed_keys;
+    // Prefix copying is performed after applying all changes.
+    base::Optional<std::vector<uint8_t>> copy_to_prefix_;
 
     CommitBatch();
     ~CommitBatch();
   };
 
+  enum class MapLoadingState {
+    INVALID,
+    // Loading from the database connection.
+    LOADING_FROM_DATABASE,
+    // Loading from another LevelDBWrapperImpl that we have forked from.
+    LOADING_FROM_FORK,
+    LOADED
+  };
+
+  using LoadStateForForkCallback =
+      base::OnceCallback<void(bool database_enabled, const ValueMap&)>;
+  using ForkSourceEarlyDeathCallback =
+      base::OnceCallback<void(std::vector<uint8_t> source_prefix)>;
+
   void OnConnectionError();
-  void LoadMap(const base::Closure& completion_callback);
+  void LoadMap(base::OnceClosure completion_callback);
   void OnMapLoaded(leveldb::mojom::DatabaseError status,
                    std::vector<leveldb::mojom::KeyValuePtr> data);
   void OnGotMigrationData(std::unique_ptr<ValueMap> data);
@@ -159,13 +196,18 @@ class CONTENT_EXPORT LevelDBWrapperImpl : public mojom::LevelDBWrapper {
   void CommitChanges();
   void OnCommitComplete(leveldb::mojom::DatabaseError error);
 
+  void DoForkOperation(base::WeakPtr<LevelDBWrapperImpl> forked_wrapper);
+  void OnForkStateLoaded(bool database_enabled, const ValueMap& map);
+
   std::vector<uint8_t> prefix_;
   mojo::BindingSet<mojom::LevelDBWrapper> bindings_;
   mojo::AssociatedInterfacePtrSet<mojom::LevelDBObserver> observers_;
   Delegate* delegate_;
   leveldb::mojom::LevelDBDatabase* database_;
-  std::unique_ptr<ValueMap> map_;
-  std::vector<base::Closure> on_load_complete_tasks_;
+  MapLoadingState map_state_ = MapLoadingState::INVALID;
+  ValueMap map_;
+  std::vector<base::OnceClosure> on_load_complete_tasks_;
+  std::vector<ForkSourceEarlyDeathCallback> destruction_during_load_listeners_;
   size_t bytes_used_;
   size_t max_size_;
   base::TimeTicks start_time_;
@@ -174,6 +216,7 @@ class CONTENT_EXPORT LevelDBWrapperImpl : public mojom::LevelDBWrapper {
   RateLimiter commit_rate_limiter_;
   int commit_batches_in_flight_ = 0;
   std::unique_ptr<CommitBatch> commit_batch_;
+
   base::WeakPtrFactory<LevelDBWrapperImpl> weak_ptr_factory_;
 
   static bool s_aggressive_flushing_enabled_;
