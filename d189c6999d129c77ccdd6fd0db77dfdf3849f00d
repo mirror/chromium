@@ -1,0 +1,55 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "107c0e0e_b311cd98",
+        "filename": "build/android/gyp/process_resources.py",
+        "patchSetId": 1
+      },
+      "lineNbr": 373,
+      "author": {
+        "id": 1126674
+      },
+      "writtenOn": "2017-11-07T19:18:51Z",
+      "side": 1,
+      "message": "Should we also assert / check that rHK doesn\u0027t already exist?",
+      "revId": "d189c6999d129c77ccdd6fd0db77dfdf3849f00d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "594ee9ce_79fb3fa9",
+        "filename": "build/android/gyp/process_resources.py",
+        "patchSetId": 1
+      },
+      "lineNbr": 375,
+      "author": {
+        "id": 1126674
+      },
+      "writtenOn": "2017-11-07T19:18:51Z",
+      "side": 1,
+      "message": "Should we just assert len() \u003d\u003d 1 instead? Otherwise, add comment saying when it\u0027s okay to be 0",
+      "revId": "d189c6999d129c77ccdd6fd0db77dfdf3849f00d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "23d64721_b60c80e3",
+        "filename": "build/android/gyp/util/build_utils.py",
+        "patchSetId": 1
+      },
+      "lineNbr": 56,
+      "author": {
+        "id": 1126674
+      },
+      "writtenOn": "2017-11-07T19:18:51Z",
+      "side": 1,
+      "message": "I think you can just use: https://docs.python.org/2/library/shutil.html#shutil.move",
+      "revId": "d189c6999d129c77ccdd6fd0db77dfdf3849f00d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
