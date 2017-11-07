@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "abb19945_5ca4a1a7",
+        "filename": "ui/aura/mus/window_tree_client.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 180,
+      "author": {
+        "id": 1000763
+      },
+      "writtenOn": "2017-11-07T20:21:36Z",
+      "side": 1,
+      "message": "How about using base::Location instead?",
+      "range": {
+        "startLine": 180,
+        "startChar": 22,
+        "endLine": 180,
+        "endChar": 48
+      },
+      "revId": "a95adf517bf270b606613c84407c3a10ff2a8b7d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
