@@ -41,6 +41,7 @@ namespace {
 
 const char kProviderId[] = "mbflcebpggnecokmikipoihdbecnjfoj";
 const char kDisplayName[] = "Camera Pictures";
+const char kCustomProviderId[] = "custom_provider_id";
 
 // The dot in the file system ID is there in order to check that saving to
 // preferences works correctly. File System ID is used as a key in
@@ -210,6 +211,25 @@ class FileSystemProviderServiceTest : public testing::Test {
     fake_watcher_.entry_path = base::FilePath(FILE_PATH_LITERAL("/a/b/c"));
     fake_watcher_.recursive = true;
     fake_watcher_.last_tag = "hello-world";
+    called_default_factory = false;
+    called_custom_factory = false;
+  }
+
+  static bool called_default_factory;
+  static bool called_custom_factory;
+
+  static std::unique_ptr<ProvidedFileSystemInterface>
+  CreateDefaultFakeFileSystem(Profile* profile,
+                              const ProvidedFileSystemInfo& file_system_info) {
+    called_default_factory = true;
+    return base::MakeUnique<FakeProvidedFileSystem>(file_system_info);
+  }
+
+  static std::unique_ptr<ProvidedFileSystemInterface>
+  CreateCustomFakeFileSystem(Profile* profile,
+                             const ProvidedFileSystemInfo& file_system_info) {
+    called_custom_factory = true;
+    return base::MakeUnique<FakeProvidedFileSystem>(file_system_info);
   }
 
   content::TestBrowserThreadBundle thread_bundle_;
@@ -223,6 +243,33 @@ class FileSystemProviderServiceTest : public testing::Test {
   FakeRegistry* registry_;  // Owned by Service.
   Watcher fake_watcher_;
 };
+
+bool FileSystemProviderServiceTest::called_default_factory;
+bool FileSystemProviderServiceTest::called_custom_factory;
+
+TEST_F(FileSystemProviderServiceTest, RegisterFileSystemFactory) {
+  service_->RegisterFileSystemFactory(
+      kCustomProviderId,
+      base::Bind(&FileSystemProviderServiceTest::CreateCustomFakeFileSystem));
+  service_->SetFileSystemFactoryForTesting(
+      base::Bind(&FileSystemProviderServiceTest::CreateDefaultFakeFileSystem));
+
+  ASSERT_EQ(false, FileSystemProviderServiceTest::called_default_factory);
+
+  EXPECT_EQ(base::File::FILE_OK,
+            service_->MountFileSystem(
+                kProviderId, MountOptions(kFileSystemId, kDisplayName)));
+
+  ASSERT_EQ(true, FileSystemProviderServiceTest::called_default_factory);
+
+  ASSERT_EQ(false, FileSystemProviderServiceTest::called_custom_factory);
+
+  EXPECT_EQ(base::File::FILE_OK,
+            service_->MountFileSystem(
+                kCustomProviderId, MountOptions(kFileSystemId, kDisplayName)));
+
+  ASSERT_EQ(true, FileSystemProviderServiceTest::called_custom_factory);
+}
 
 TEST_F(FileSystemProviderServiceTest, MountFileSystem) {
   LoggingObserver observer;
