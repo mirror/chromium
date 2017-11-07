@@ -1711,11 +1711,17 @@ registerLoadRequestForURL:(const GURL&)requestURL
 
 - (void)loadNativeViewWithSuccess:(BOOL)loadSuccess
                 navigationContext:(web::NavigationContextImpl*)context {
-  _webStateImpl->OnNavigationStarted(context);
+  if (loadSuccess) {
+    // No DidStartNavigation callback for displaying error page.
+    _webStateImpl->OnNavigationStarted(context);
+  }
   const GURL currentURL([self currentURL]);
   [self didStartLoadingURL:currentURL];
   _loadPhase = web::PAGE_LOADED;
-  _webStateImpl->OnNavigationFinished(context);
+  if (loadSuccess) {
+    // No DidFinishNavigation callback for displaying error page.
+    _webStateImpl->OnNavigationFinished(context);
+  }
 
   // Perform post-load-finished updates.
   [self didFinishWithURL:currentURL loadSuccess:loadSuccess];
@@ -4524,10 +4530,13 @@ registerLoadRequestForURL:(const GURL&)requestURL
   } else {
     error = WKWebViewErrorWithSource(error, PROVISIONAL_LOAD);
 
-    if (web::IsWKWebViewSSLCertError(error))
+    if (web::IsWKWebViewSSLCertError(error)) {
       [self handleSSLCertError:error forNavigation:navigation];
-    else
+    } else {
       [self handleLoadError:error inMainFrame:YES forNavigation:navigation];
+      _webStateImpl->OnNavigationFinished(
+          [_navigationStates contextForNavigation:navigation]);
+    }
   }
 
   // This must be reset at the end, since code above may need information about
