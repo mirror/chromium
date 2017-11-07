@@ -46,6 +46,30 @@
       "revId": "fc71ffb3b200d3fa06367f288e57e94ceede5c9a",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5a0e31e7_7040c9ba",
+        "filename": "chrome/browser/resources/interventions_internals/index.js",
+        "patchSetId": 2
+      },
+      "lineNbr": 100,
+      "author": {
+        "id": 1166490
+      },
+      "writtenOn": "2017-11-07T22:18:52Z",
+      "side": 1,
+      "message": "It\u0027s not a standard, but :hover should always work on mobile. Since URL will never be clickable, this approach is pretty safe.",
+      "parentUuid": "b2132e93_2271d137",
+      "range": {
+        "startLine": 100,
+        "startChar": 73,
+        "endLine": 100,
+        "endChar": 80
+      },
+      "revId": "fc71ffb3b200d3fa06367f288e57e94ceede5c9a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
