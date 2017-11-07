@@ -349,6 +349,8 @@ Response PageHandler::Navigate(const std::string& url,
       gurl,
       Referrer(GURL(referrer.fromMaybe("")), blink::kWebReferrerPolicyDefault),
       type, std::string());
+  // TODO(pfeldman): use |host_->devtools_frame_token| for frame_id and
+  // |frame_tree_node->navigation_request->devtools_navigation_token()| for loader_id here.
   return Response::FallThrough();
 }
 

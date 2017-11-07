@@ -8,6 +8,8 @@
 #include <memory>
 #include <set>
 
+#include "base/unguessable_token.h"
+
 #include "WebFrame.h"
 #include "WebFrameLoadType.h"
 #include "WebHistoryItem.h"
@@ -193,7 +195,9 @@ class WebLocalFrame : public WebFrame {
                     WebFrameLoadType = WebFrameLoadType::kStandard,
                     const WebHistoryItem& = WebHistoryItem(),
                     WebHistoryLoadType = kWebHistoryDifferentDocumentLoad,
-                    bool is_client_redirect = false) = 0;
+                    bool is_client_redirect = false,
+                    const base::UnguessableToken& devtools_navigation_token =
+                        base::UnguessableToken()) = 0;
 
   // This method is short-hand for calling LoadData, where mime_type is
   // "text/html" and text_encoding is "UTF-8".
