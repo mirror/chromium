@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "31781d97_ada75a33",
+        "filename": "services/service_manager/sandbox/win/sandbox_win.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 763,
+      "author": {
+        "id": 1000763
+      },
+      "writtenOn": "2017-11-07T03:28:59Z",
+      "side": 1,
+      "message": "Would it make sense to disable this feature rather than adding a switch?",
+      "range": {
+        "startLine": 763,
+        "startChar": 10,
+        "endLine": 763,
+        "endChar": 59
+      },
+      "revId": "a26befe32c1aea1ce4e16cbcdd061b95114658cd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
