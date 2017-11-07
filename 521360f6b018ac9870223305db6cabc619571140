@@ -46,6 +46,30 @@
       "revId": "521360f6b018ac9870223305db6cabc619571140",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "34cdb9e7_3a83543f",
+        "filename": "net/cert/x509_certificate.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 96,
+      "author": {
+        "id": 1002844
+      },
+      "writtenOn": "2017-11-07T21:40:27Z",
+      "side": 0,
+      "message": "Ah, good point. It should be possible to add a test to x509_certificate_unittest by creating a test certificate with a impossible date (eg day 30 in February). We have a script that makes that pretty easy \n(net/data/parse_certificate_unittest/regenerate_pem_from_ascii.py)\nwhich takes an input like net/data/parse_certificate_unittest/subject_t61string.pem (except you\u0027d use a VALIDITY block instead of SUBJECT)\n\n...\n\nbut I\u0027d be happy to just do that in a separate CL.",
+      "parentUuid": "f56c5271_1b33afd0",
+      "range": {
+        "startLine": 96,
+        "startChar": 18,
+        "endLine": 96,
+        "endChar": 32
+      },
+      "revId": "521360f6b018ac9870223305db6cabc619571140",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
