@@ -16,6 +16,24 @@
       "revId": "63c4efd655be8a6cfcbad4302630c6abce3c0520",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9d6f6ad4_ffc5727a",
+        "filename": "chrome/browser/chromeos/eol_notification.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 75,
+      "author": {
+        "id": 1115907
+      },
+      "writtenOn": "2017-11-07T19:39:00Z",
+      "side": 1,
+      "message": "Is this actually a problem given that this is a cros-only notification? On Chrome OS, AFAIU you can only add users (profiles) or shut everything down and start over. UserSessionStateObserver has ActiveUserChanged and UserAddedToSession but no UserRemovedFromSession. (Plus, this restores the behavior that existed prior to me switching EolNotification to NotificationHandler.)\n\nGenerically speaking (i.e. on !cros), hasn\u0027t this always potentially been a problem with all message center notifications? If a notification delegate relies on a profile it would have to close the notification when the profile goes away. We could add functionality in the NativeNotificationDisplayService to close all (transient) notifications by profile when a profile is shutting down, but I don\u0027t think that it\u0027s actually a problem at the moment or should block this change.",
+      "parentUuid": "e00fcb19_85427ec1",
+      "revId": "63c4efd655be8a6cfcbad4302630c6abce3c0520",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
