@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "095a8c53_014e6c8a",
+        "filename": "third_party/WebKit/Source/core/workers/WorkletModuleTreeClient.cpp",
+        "patchSetId": 3
+      },
+      "lineNbr": 41,
+      "author": {
+        "id": 1115916
+      },
+      "writtenOn": "2017-11-07T03:57:44Z",
+      "side": 1,
+      "message": "a classes \u003d\u003e classes",
+      "revId": "cfeb541febb18c6e96e38fc1caf1b6d505000476",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "15826dde_cadc2b11",
+        "filename": "third_party/WebKit/Source/core/workers/WorkletModuleTreeClient.cpp",
+        "patchSetId": 3
+      },
+      "lineNbr": 53,
+      "author": {
+        "id": 1115916
+      },
+      "writtenOn": "2017-11-07T03:57:44Z",
+      "side": 1,
+      "message": "I\u0027m just curious but how is this change related to the change in V8ScriptRunner?",
+      "revId": "cfeb541febb18c6e96e38fc1caf1b6d505000476",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
