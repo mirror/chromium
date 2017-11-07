@@ -890,6 +890,7 @@ bool OutputRows(JPEGImageReader* reader, ImageFrame& buffer) {
   jpeg_decompress_struct* info = reader->Info();
   int width = info->output_width;
 
+  bool color_converison_successful = false;
   while (info->output_scanline < info->output_height) {
     // jpeg_read_scanlines will increase the scanline counter, so we
     // save the scanline before calling it.
@@ -905,8 +906,10 @@ bool OutputRows(JPEGImageReader* reader, ImageFrame& buffer) {
     SkColorSpaceXform* xform = reader->Decoder()->ColorTransform();
     if (xform) {
       ImageFrame::PixelData* row = buffer.GetAddr(0, y);
-      xform->apply(XformColorFormat(), row, XformColorFormat(), row, width,
-                   kOpaque_SkAlphaType);
+      color_converison_successful =
+          xform->apply(XformColorFormat(), row, XformColorFormat(), row, width,
+                       kOpaque_SkAlphaType);
+      DCHECK(color_converison_successful);
     }
   }
 
@@ -1003,6 +1006,7 @@ bool JPEGImageDecoder::OutputScanlines() {
   }
 
 #if defined(TURBO_JPEG_RGB_SWIZZLE)
+  bool color_converison_successful = false;
   if (turboSwizzled(info->out_color_space)) {
     while (info->output_scanline < info->output_height) {
       unsigned char* row = reinterpret_cast_ptr<unsigned char*>(
@@ -1012,8 +1016,10 @@ bool JPEGImageDecoder::OutputScanlines() {
 
       SkColorSpaceXform* xform = ColorTransform();
       if (xform) {
-        xform->apply(XformColorFormat(), row, XformColorFormat(), row,
-                     info->output_width, kOpaque_SkAlphaType);
+        color_converison_successful =
+            xform->apply(XformColorFormat(), row, XformColorFormat(), row,
+                         info->output_width, kOpaque_SkAlphaType);
+        DCHECK(color_converison_successful);
       }
     }
     buffer.SetPixelsChanged(true);
