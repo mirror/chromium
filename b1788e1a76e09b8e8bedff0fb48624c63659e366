@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "f28284ff_28948bae",
+        "filename": "media/gpu/vaapi_wrapper.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 221,
+      "author": {
+        "id": 1113991
+      },
+      "writtenOn": "2017-11-07T14:42:39Z",
+      "side": 1,
+      "message": "I wanted to make it clearer by turning it into a positive statement\n(as opposed to e.g. do X if not Y, which is harder to read).\nReverted.",
+      "parentUuid": "e0bf2331_d604c4c0",
+      "revId": "b1788e1a76e09b8e8bedff0fb48624c63659e366",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "db004a29_f044cb3f",
         "filename": "media/gpu/vaapi_wrapper.cc",
         "patchSetId": 3
@@ -33,6 +51,24 @@
       "revId": "b1788e1a76e09b8e8bedff0fb48624c63659e366",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8896921f_8d2272dd",
+        "filename": "media/gpu/vaapi_wrapper.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 223,
+      "author": {
+        "id": 1113991
+      },
+      "writtenOn": "2017-11-07T14:42:39Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "db004a29_f044cb3f",
+      "revId": "b1788e1a76e09b8e8bedff0fb48624c63659e366",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
