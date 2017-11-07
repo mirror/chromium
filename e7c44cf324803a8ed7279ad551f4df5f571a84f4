@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "2cf3c43e_2dc685a5",
+        "filename": "chrome/browser/vr/ui_scene_manager.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 850,
+      "author": {
+        "id": 1119159
+      },
+      "writtenOn": "2017-11-07T23:32:33Z",
+      "side": 1,
+      "message": "I don\u0027t understand why the visibility is true by default",
+      "range": {
+        "startLine": 850,
+        "startChar": 22,
+        "endLine": 850,
+        "endChar": 26
+      },
+      "revId": "e7c44cf324803a8ed7279ad551f4df5f571a84f4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
