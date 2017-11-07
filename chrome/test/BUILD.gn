@@ -4595,6 +4595,7 @@ test("unit_tests") {
     sources += [
       "../browser/media/webrtc/webrtc_log_uploader_unittest.cc",
       "../browser/media/webrtc/webrtc_log_util_unittest.cc",
+      "../browser/media/webrtc/webrtc_logs_directory_access_util_unittest.cc",
       "../browser/media/webrtc/webrtc_rtp_dump_handler_unittest.cc",
       "../browser/media/webrtc/webrtc_rtp_dump_writer_unittest.cc",
       "../renderer/media/chrome_webrtc_log_message_delegate_unittest.cc",
