@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "1ead7af8_522b9d3c",
+        "filename": "third_party/WebKit/Source/platform/graphics/Canvas2DLayerBridgeTest.cpp",
+        "patchSetId": 19
+      },
+      "lineNbr": 38,
+      "author": {
+        "id": 1244341
+      },
+      "writtenOn": "2017-11-07T23:36:12Z",
+      "side": 1,
+      "message": "This source-file include breaks jumbo builds, should you be including the header file instead? (My local build cycle-time is too large to answer this myself quickly...)",
+      "range": {
+        "startLine": 38,
+        "startChar": 1,
+        "endLine": 38,
+        "endChar": 8
+      },
+      "revId": "1559b27f89ed89733c3c38b5eb06e27259224bab",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
