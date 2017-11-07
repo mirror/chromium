@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "823f3008_bce51ee9",
+        "filename": "third_party/WebKit/Source/platform/feature_policy/FeaturePolicy.cpp",
+        "patchSetId": 3
+      },
+      "lineNbr": 113,
+      "author": {
+        "id": 1137849
+      },
+      "writtenOn": "2017-11-07T20:11:34Z",
+      "side": 1,
+      "message": "Typo?",
+      "revId": "7fe97649e0218340c7b1aef4786bc435e8a74686",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "63d03a72_8d4da640",
+        "filename": "third_party/WebKit/Source/platform/feature_policy/FeaturePolicyTest.cpp",
+        "patchSetId": 3
+      },
+      "lineNbr": 223,
+      "author": {
+        "id": 1137849
+      },
+      "writtenOn": "2017-11-07T20:11:34Z",
+      "side": 1,
+      "message": "I think that this test should be calling ParseFeaturePolicyHeader instead, since that\u0027s the code that was changed in this CL -- as it is, I believe that this test would pass both before and after the change.",
+      "revId": "7fe97649e0218340c7b1aef4786bc435e8a74686",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
