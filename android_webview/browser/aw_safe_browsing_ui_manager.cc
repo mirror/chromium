@@ -59,7 +59,7 @@ void AwSafeBrowsingUIManager::DisplayBlockingPage(
   UIManagerClient* client = UIManagerClient::FromWebContents(web_contents);
   if (!client || !client->CanShowInterstitial()) {
     LOG(WARNING) << "The view is not suitable to show the SB interstitial";
-    OnBlockingPageDone(std::vector<UnsafeResource>{resource}, false,
+    OnBlockingPageDone(std::vector<UnsafeResource>{resource}, true,
                        web_contents, resource.url.GetWithEmptyPath());
     return;
   }

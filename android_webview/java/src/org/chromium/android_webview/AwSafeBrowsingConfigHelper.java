@@ -50,7 +50,7 @@ public class AwSafeBrowsingConfigHelper {
             // clang-format off
             getUserOptInPreference.invoke(null, appContext,
                     (Callback<Boolean>) optin -> setSafeBrowsingUserOptIn(
-                            optin == null ? false : optin));
+                            optin == null ? true : optin));
             // clang-format on
         } catch (ClassNotFoundException e) {
             // This is not an error; it just means this device doesn't have specialized services.

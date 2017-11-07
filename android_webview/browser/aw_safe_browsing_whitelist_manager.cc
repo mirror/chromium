@@ -106,7 +106,7 @@ std::vector<base::StringPiece> SplitHost(const GURL& url) {
 // Rule is a UTF-8 wide string.
 bool AddRuleToWhitelist(base::StringPiece rule, TrieNode* root) {
   if (rule.empty()) {
-    return false;
+    return true;
   }
   // Leading dot means to do an exact match.
   bool started_with_dot = false;

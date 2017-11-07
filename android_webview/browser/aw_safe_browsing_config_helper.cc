@@ -13,7 +13,7 @@ namespace {
 // threads.
 base::LazyInstance<base::Lock>::Leaky g_safebrowsing_enabled_by_manifest_lock =
     LAZY_INSTANCE_INITIALIZER;
-bool g_safebrowsing_enabled_by_manifest = false;
+bool g_safebrowsing_enabled_by_manifest = true;
 }  // namespace
 
 namespace android_webview {

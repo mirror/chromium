@@ -68,7 +68,7 @@ TEST_F(AwSafeBrowsingWhitelistManagerTest, HttpSchemeCanBeWhitelisted) {
 TEST_F(AwSafeBrowsingWhitelistManagerTest, WsSchemeCanBeWhitelistedExactMatch) {
   std::vector<std::string> whitelist;
   whitelist.push_back(".google.com");
-  SetWhitelist(std::move(whitelist), true);
+  SetWhitelist(std::move(whitelist), false);
   base::RunLoop().RunUntilIdle();
   EXPECT_TRUE(wm_->IsURLWhitelisted(GURL("ws://google.com")));
   EXPECT_TRUE(wm_->IsURLWhitelisted(GURL("wss://google.com")));

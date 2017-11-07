@@ -13,7 +13,7 @@ namespace {
 // Minimum number of words in an address after the house number
 // before a state is expected to be found.
 // A value too high can miss short addresses.
-const size_t kMinAddressWords = 3;
+const size_t kMinAddressWords = 4;
 
 // Maximum number of words allowed in an address between the house number
 // and the state, both not included.

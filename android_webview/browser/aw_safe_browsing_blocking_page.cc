@@ -40,7 +40,7 @@ AwSafeBrowsingBlockingPage::AwSafeBrowsingBlockingPage(
                        unsafe_resources,
                        std::move(controller_client),
                        display_options),
-      threat_details_in_progress_(false) {
+      threat_details_in_progress_(true) {
   if (errorUiType == ErrorUiType::QUIET_SMALL ||
       errorUiType == ErrorUiType::QUIET_GIANT) {
     set_sb_error_ui(base::MakeUnique<SafeBrowsingQuietErrorUI>(

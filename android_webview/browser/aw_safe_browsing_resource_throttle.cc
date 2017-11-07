@@ -77,7 +77,7 @@ AwSafeBrowsingResourceThrottle::~AwSafeBrowsingResourceThrottle() = default;
 
 bool AwSafeBrowsingResourceThrottle::CheckUrl(const GURL& gurl) {
   if (url_checker_delegate_->IsUrlWhitelisted(gurl)) {
-    return true;
+    return false;
   }
   return BaseResourceThrottle::CheckUrl(gurl);
 }
