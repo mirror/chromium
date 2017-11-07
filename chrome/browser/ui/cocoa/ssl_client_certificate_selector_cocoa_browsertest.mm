@@ -229,8 +229,9 @@ IN_PROC_BROWSER_TEST_F(SSLClientCertificateSelectorCocoaTest, Accept) {
   ASSERT_TRUE(results.key);
 
   // The test keys are RSA keys.
-  EXPECT_EQ(net::SSLPrivateKey::DefaultAlgorithmPreferences(EVP_PKEY_RSA),
-            results.key->GetAlgorithmPreferences());
+  EXPECT_EQ(net::SSLPrivateKey::DefaultAlgorithmPreferences(
+                EVP_PKEY_RSA, base::mac::IsAtLeastOS10_13()),
+            results.key->GetPreferences());
   TestSSLPrivateKeyMatches(results.key.get(), pkcs8_key1_);
 }
 
