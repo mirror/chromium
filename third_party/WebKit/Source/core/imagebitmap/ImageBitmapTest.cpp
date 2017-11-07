@@ -358,9 +358,10 @@ TEST_F(ImageBitmapTest, MAYBE_ImageBitmapColorSpaceConversionHTMLImageElement) {
         SkColorSpaceXform::New(src_rgb_color_space.get(), color_space.get());
     std::unique_ptr<uint8_t[]> transformed_pixel(
         new uint8_t[image_info.bytesPerPixel()]());
-    color_space_xform->apply(color_format, transformed_pixel.get(),
-                             color_format32, src_pixel.get(), 1,
-                             SkAlphaType::kPremul_SkAlphaType);
+    bool color_converison_successful = color_space_xform->apply(
+        color_format, transformed_pixel.get(), color_format32, src_pixel.get(),
+        1, SkAlphaType::kPremul_SkAlphaType);
+    DCHECK(color_converison_successful);
 
     ColorCorrectionTestUtils::CompareColorCorrectedPixels(
         converted_pixel.get(), transformed_pixel.get(), 1,
@@ -480,9 +481,10 @@ TEST_F(ImageBitmapTest, MAYBE_ImageBitmapColorSpaceConversionImageBitmap) {
         SkColorSpaceXform::New(src_rgb_color_space.get(), color_space.get());
     std::unique_ptr<uint8_t[]> transformed_pixel(
         new uint8_t[image_info.bytesPerPixel()]());
-    color_space_xform->apply(color_format, transformed_pixel.get(),
-                             color_format32, src_pixel.get(), 1,
-                             SkAlphaType::kPremul_SkAlphaType);
+    bool color_converison_successful = color_space_xform->apply(
+        color_format, transformed_pixel.get(), color_format32, src_pixel.get(),
+        1, SkAlphaType::kPremul_SkAlphaType);
+    DCHECK(color_converison_successful);
 
     ColorCorrectionTestUtils::CompareColorCorrectedPixels(
         converted_pixel.get(), transformed_pixel.get(), 1,
@@ -596,9 +598,10 @@ TEST_F(ImageBitmapTest,
         SkColorSpaceXform::New(src_rgb_color_space.get(), color_space.get());
     std::unique_ptr<uint8_t[]> transformed_pixel(
         new uint8_t[image_info.bytesPerPixel()]());
-    color_space_xform->apply(color_format, transformed_pixel.get(),
-                             color_format32, src_pixel.get(), 1,
-                             SkAlphaType::kPremul_SkAlphaType);
+    bool color_converison_successful = color_space_xform->apply(
+        color_format, transformed_pixel.get(), color_format32, src_pixel.get(),
+        1, SkAlphaType::kPremul_SkAlphaType);
+    DCHECK(color_converison_successful);
 
     ColorCorrectionTestUtils::CompareColorCorrectedPixels(
         converted_pixel.get(), transformed_pixel.get(), 1,
@@ -691,10 +694,11 @@ TEST_F(ImageBitmapTest, ImageBitmapColorSpaceConversionImageData) {
         SkColorSpaceXform::New(src_rgb_color_space.get(), color_space.get());
     std::unique_ptr<uint8_t[]> transformed_pixel(
         new uint8_t[image_info.bytesPerPixel()]());
-    color_space_xform->apply(
+    bool color_converison_successful = color_space_xform->apply(
         color_format, transformed_pixel.get(),
         SkColorSpaceXform::ColorFormat::kRGBA_8888_ColorFormat, src_pixel.get(),
         1, kUnpremul_SkAlphaType);
+    DCHECK(color_converison_successful);
 
     ColorCorrectionTestUtils::CompareColorCorrectedPixels(
         converted_pixel.get(), transformed_pixel.get(), 1,

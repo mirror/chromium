@@ -65,10 +65,11 @@ TEST_F(ImageDataTest,
   std::unique_ptr<SkColorSpaceXform> xform =
       SkColorSpaceXform::New(SkColorSpace::MakeSRGBLinear().get(),
                              SkColorSpace::MakeSRGBLinear().get());
-  xform->apply(SkColorSpaceXform::ColorFormat::kRGBA_F16_ColorFormat,
-               f16_pixels,
-               SkColorSpaceXform::ColorFormat::kRGBA_8888_ColorFormat,
-               rgba32_pixels, 4, SkAlphaType::kUnpremul_SkAlphaType);
+  bool color_converison_successful = xform->apply(
+      SkColorSpaceXform::ColorFormat::kRGBA_F16_ColorFormat, f16_pixels,
+      SkColorSpaceXform::ColorFormat::kRGBA_8888_ColorFormat, rgba32_pixels, 4,
+      SkAlphaType::kUnpremul_SkAlphaType);
+  DCHECK(color_converison_successful);
 
   // Creating ArrayBufferContents objects. We need two buffers for RGBA32 data
   // because kRGBA8CanvasPixelFormat->kUint8ClampedArrayStorageFormat consumes

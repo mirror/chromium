@@ -33,6 +33,7 @@ TEST(CanvasColorParamsTest, MatchSkColorSpaceWithGfxColorSpace) {
       kSRGBCanvasColorSpace, kRec2020CanvasColorSpace, kP3CanvasColorSpace,
   };
 
+  bool color_converison_successful = false;
   for (int iter_color_space = 0; iter_color_space < 3; iter_color_space++) {
     CanvasColorParams color_params(canvas_color_spaces[iter_color_space],
                                    kF16CanvasPixelFormat, kNonOpaque);
@@ -55,14 +56,16 @@ TEST(CanvasColorParamsTest, MatchSkColorSpaceWithGfxColorSpace) {
             ? SkColorSpaceXform::ColorFormat::kRGBA_8888_ColorFormat
             : SkColorSpaceXform::ColorFormat::kRGBA_F16_ColorFormat;
 
-    color_space_xform_canvas->apply(
+    color_converison_successful = color_space_xform_canvas->apply(
         transformed_color_format, transformed_pixel_canvas.get(),
         SkColorSpaceXform::ColorFormat::kRGBA_8888_ColorFormat, src_pixel.get(),
         1, SkAlphaType::kPremul_SkAlphaType);
-    color_space_xform_media->apply(
+    DCHECK(color_converison_successful);
+    color_converison_successful = color_space_xform_media->apply(
         transformed_color_format, transformed_pixel_media.get(),
         SkColorSpaceXform::ColorFormat::kRGBA_8888_ColorFormat, src_pixel.get(),
         1, SkAlphaType::kPremul_SkAlphaType);
+    DCHECK(color_converison_successful);
 
     ColorCorrectionTestUtils::CompareColorCorrectedPixels(
         transformed_pixel_canvas.get(), transformed_pixel_media.get(), 1,
