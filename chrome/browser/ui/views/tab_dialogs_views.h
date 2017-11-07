@@ -30,7 +30,8 @@ class TabDialogsViews : public TabDialogs {
 
  private:
   content::WebContents* web_contents_;  // Weak. Owns this.
-
+  // Web contents for the last manage-passwords-bubble shown. Used to make sure
+  // the correct dialog is closed when hiding.
   DISALLOW_COPY_AND_ASSIGN(TabDialogsViews);
 };
 
