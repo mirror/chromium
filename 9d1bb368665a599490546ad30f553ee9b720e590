@@ -1,0 +1,44 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "04b61fe8_780f3d54",
+        "filename": "components/metrics/metrics_state_manager.h",
+        "patchSetId": 14
+      },
+      "lineNbr": 201,
+      "author": {
+        "id": 1103654
+      },
+      "writtenOn": "2017-11-07T22:49:36Z",
+      "side": 1,
+      "message": "Nit: We don\u0027t use two spaces between sentences in the rest of this file, so please switch to 1. Here and the comment below.",
+      "revId": "9d1bb368665a599490546ad30f553ee9b720e590",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5917d8e1_e7de1dd5",
+        "filename": "components/metrics/metrics_state_manager_unittest.cc",
+        "patchSetId": 14
+      },
+      "lineNbr": 257,
+      "author": {
+        "id": 1103654
+      },
+      "writtenOn": "2017-11-07T22:49:36Z",
+      "side": 1,
+      "message": "Nit: Revert this change?",
+      "range": {
+        "startLine": 257,
+        "startChar": 77,
+        "endLine": 257,
+        "endChar": 0
+      },
+      "revId": "9d1bb368665a599490546ad30f553ee9b720e590",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
