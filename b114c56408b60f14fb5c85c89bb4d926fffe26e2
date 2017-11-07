@@ -16,6 +16,24 @@
       "revId": "b114c56408b60f14fb5c85c89bb4d926fffe26e2",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e146a032_05cf6d7f",
+        "filename": "chrome/browser/ui/views/frame/browser_non_client_frame_view_ash.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 329,
+      "author": {
+        "id": 1228419
+      },
+      "writtenOn": "2017-11-07T00:03:29Z",
+      "side": 1,
+      "message": "I think here is a good place. Just like the special handling for browser_view()-\u003eIsTabStripVisible() below, for v1 app in overview mode, we only set the window property TopViewInset to 0. Not the GetTopInset() returned value.\n\nIf I handle in GetTopInset, set the return inset to 0, the header is not revealed because the The immversive mode controller will try to layout the header, but the GetTopInset return 0, so it will not updated. Please see the stack trace below:\n\n#1 0x5597a925c678 BrowserNonClientFrameViewAsh::GetTopInset() \u003e\u003e\u003e\u003e\u003e\u003e\u003e\u003e\u003e\u003e\u003e\u003e Cannot return 0.\n#2 0x5597a9088119 BrowserViewLayoutDelegateImpl::GetTopInsetInBrowserView()\n#3 0x5597a9088ddc BrowserViewLayout::UpdateTopContainerBounds()\n#4 0x5597a9088b71 BrowserViewLayout::Layout()\n#5 0x5597a8387f13 views::View::Layout()\n#6 0x5597a9086c6e BrowserView::Layout()\n#7 0x5597a8398baf views::NonClientView::Layout()\n#8 0x5597a8388052 views::View::Layout()\n#9 0x5597a9184537 ImmersiveModeControllerAsh::OnImmersiveRevealStarted()\n...",
+      "parentUuid": "de424ba2_d9114c90",
+      "revId": "b114c56408b60f14fb5c85c89bb4d926fffe26e2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
