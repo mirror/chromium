@@ -267,7 +267,7 @@ third_party/WebKit/Source/platform/scheduler/base/task_queue.h
 third_party/WebKit/Source/platform/text/TabSize.h
 third_party/WebKit/Source/platform/text/TextDirection.h
 third_party/WebKit/Source/platform/transforms/TransformOperation.h
-third_party/WebKit/public/platform/WebFeaturePolicyFeature.h
+third_party/WebKit/common/feature_policy/feature_policy_feature.h
 third_party/WebKit/public/platform/WebSourceLocation.h
 third_party/WebKit/public/platform/WebTouchInfo.h
 third_party/WebKit/public/platform/modules/media_capabilities/WebMediaCapabilitiesInfo.h
