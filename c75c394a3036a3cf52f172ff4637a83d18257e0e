@@ -22,6 +22,30 @@
       "revId": "c75c394a3036a3cf52f172ff4637a83d18257e0e",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d21f1586_53c39459",
+        "filename": "chrome/browser/android/bookmarks/partner_bookmarks_reader.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 79,
+      "author": {
+        "id": 1230128
+      },
+      "writtenOn": "2017-11-07T21:20:44Z",
+      "side": 0,
+      "message": "It\u0027s only ever called from a UI thread, so no need for the check any more.",
+      "parentUuid": "41252e8c_0d1bb2a8",
+      "range": {
+        "startLine": 79,
+        "startChar": 2,
+        "endLine": 79,
+        "endChar": 52
+      },
+      "revId": "c75c394a3036a3cf52f172ff4637a83d18257e0e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }

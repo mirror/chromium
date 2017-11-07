@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "c9811f4e_8ae5c1e9",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 2
+      },
+      "lineNbr": 18,
+      "author": {
+        "id": 1230128
+      },
+      "writtenOn": "2017-11-07T21:20:44Z",
+      "side": 1,
+      "message": "Yea, added it.",
+      "parentUuid": "7e1d8070_deb439bb",
+      "range": {
+        "startLine": 18,
+        "startChar": 4,
+        "endLine": 18,
+        "endChar": 10
+      },
+      "revId": "b4d8c6e5fad20a589a2d5f4ab1a8709cff53952d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "f91fae53_b2a94d8e",
         "filename": "chrome/android/java/src/org/chromium/chrome/browser/partnerbookmarks/PartnerBookmarksReader.java",
         "patchSetId": 2
@@ -45,6 +69,30 @@
       "revId": "b4d8c6e5fad20a589a2d5f4ab1a8709cff53952d",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "bb738885_f6acfb8b",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/partnerbookmarks/PartnerBookmarksReader.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 179,
+      "author": {
+        "id": 1230128
+      },
+      "writtenOn": "2017-11-07T21:20:44Z",
+      "side": 1,
+      "message": "Just made the comment what it was before instead, forgot this in there for debugging purposes.",
+      "parentUuid": "f91fae53_b2a94d8e",
+      "range": {
+        "startLine": 179,
+        "startChar": 25,
+        "endLine": 179,
+        "endChar": 86
+      },
+      "revId": "b4d8c6e5fad20a589a2d5f4ab1a8709cff53952d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }

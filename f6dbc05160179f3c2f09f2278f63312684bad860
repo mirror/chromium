@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "ddc0b95f_198faabe",
+        "filename": "chrome/browser/android/bookmarks/partner_bookmarks_reader.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 198,
+      "author": {
+        "id": 1230128
+      },
+      "writtenOn": "2017-11-07T21:20:44Z",
+      "side": 1,
+      "message": "It did, but I fixed it by adding an additional callback that allows the Java PartnerBookmarksReader to destroy the native object and submit the bookmarks to the shim only when there are no outstanding favicon fetches in progress which fixed the issues that this was \"necessary\" for.",
+      "parentUuid": "722d73ac_1087761d",
+      "range": {
+        "startLine": 198,
+        "startChar": 8,
+        "endLine": 198,
+        "endChar": 21
+      },
+      "revId": "f6dbc05160179f3c2f09f2278f63312684bad860",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "675f9581_75de048e",
         "filename": "chrome/browser/android/bookmarks/partner_bookmarks_reader.cc",
         "patchSetId": 3
@@ -45,6 +69,30 @@
       "revId": "f6dbc05160179f3c2f09f2278f63312684bad860",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "44497f1f_ac8da548",
+        "filename": "chrome/browser/android/bookmarks/partner_bookmarks_reader.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 227,
+      "author": {
+        "id": 1230128
+      },
+      "writtenOn": "2017-11-07T21:20:44Z",
+      "side": 1,
+      "message": "Calls to the LargeIconService only seem to be happy on the UI thread.",
+      "parentUuid": "675f9581_75de048e",
+      "range": {
+        "startLine": 227,
+        "startChar": 6,
+        "endLine": 227,
+        "endChar": 23
+      },
+      "revId": "f6dbc05160179f3c2f09f2278f63312684bad860",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -71,6 +119,30 @@
     },
     {
       "key": {
+        "uuid": "ecc9d175_a36ffd04",
+        "filename": "chrome/browser/android/bookmarks/partner_bookmarks_reader.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 247,
+      "author": {
+        "id": 1230128
+      },
+      "writtenOn": "2017-11-07T21:20:44Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "70e369a7_55aa60c5",
+      "range": {
+        "startLine": 247,
+        "startChar": 51,
+        "endLine": 247,
+        "endChar": 69
+      },
+      "revId": "f6dbc05160179f3c2f09f2278f63312684bad860",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "1c9d5125_85296fea",
         "filename": "chrome/browser/android/bookmarks/partner_bookmarks_reader.cc",
         "patchSetId": 3
@@ -91,6 +163,30 @@
       "revId": "f6dbc05160179f3c2f09f2278f63312684bad860",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "25a5b682_2ef8fe60",
+        "filename": "chrome/browser/android/bookmarks/partner_bookmarks_reader.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 308,
+      "author": {
+        "id": 1230128
+      },
+      "writtenOn": "2017-11-07T21:20:44Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "1c9d5125_85296fea",
+      "range": {
+        "startLine": 308,
+        "startChar": 19,
+        "endLine": 308,
+        "endChar": 46
+      },
+      "revId": "f6dbc05160179f3c2f09f2278f63312684bad860",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
