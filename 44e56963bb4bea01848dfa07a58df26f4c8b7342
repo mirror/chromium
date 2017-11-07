@@ -213,6 +213,30 @@
     },
     {
       "key": {
+        "uuid": "a5f3dbc5_db6d5a73",
+        "filename": "content/renderer/service_worker/service_worker_dispatcher.h",
+        "patchSetId": 10
+      },
+      "lineNbr": 98,
+      "author": {
+        "id": 1125915
+      },
+      "writtenOn": "2017-11-07T09:14:19Z",
+      "side": 1,
+      "message": "Ah, I see, thanks!:)",
+      "parentUuid": "cf0cd507_993f235c",
+      "range": {
+        "startLine": 98,
+        "startChar": 2,
+        "endLine": 98,
+        "endChar": 33
+      },
+      "revId": "44e56963bb4bea01848dfa07a58df26f4c8b7342",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "699d899f_8c683045",
         "filename": "content/renderer/service_worker/service_worker_provider_context.cc",
         "patchSetId": 10
@@ -242,6 +266,24 @@
       "side": 1,
       "message": "Wouldn\u0027t we get id collisions?",
       "parentUuid": "699d899f_8c683045",
+      "revId": "44e56963bb4bea01848dfa07a58df26f4c8b7342",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f41f718b_b8a14d9e",
+        "filename": "content/renderer/service_worker/service_worker_provider_context.cc",
+        "patchSetId": 10
+      },
+      "lineNbr": 83,
+      "author": {
+        "id": 1125915
+      },
+      "writtenOn": "2017-11-07T09:14:19Z",
+      "side": 1,
+      "message": "I don\u0027t think so because it\u0027s unique per provider. We used to create SWRegistrationHandle per registration per provider, so registration_id would be enough once we move the map to the provider context.",
+      "parentUuid": "87aeac43_45e35543",
       "revId": "44e56963bb4bea01848dfa07a58df26f4c8b7342",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true

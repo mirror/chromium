@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "3bc77177_dc238950",
+        "filename": "content/renderer/service_worker/web_service_worker_registration_impl.h",
+        "patchSetId": 12
+      },
+      "lineNbr": 286,
+      "author": {
+        "id": 1125915
+      },
+      "writtenOn": "2017-11-07T09:14:19Z",
+      "side": 1,
+      "message": "Something like |client_context_| would be clearer if we limit the usage to client\u0027s cases. \n\nHowever, I\u0027m still investigating if we can always dereference |context_| on the worker thread too. I\u0027m assuming that if we add weak_factory_.InvalidateWeakPtrs() in SWProviderContext::Destruct(), we might be able to use |context_| for workers (but not 100% sure).\nOnce we do that, a map for WebServiceWorkerImpl would also be in the |context_| for both of clients/workers.",
+      "range": {
+        "startLine": 286,
+        "startChar": 46,
+        "endLine": 286,
+        "endChar": 54
+      },
+      "revId": "54c33777f5e1358268fe91fb1b1ef7338c2057fb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
