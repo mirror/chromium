@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "ed72a96a_441be1cb",
+        "filename": "chrome/browser/vr/elements/button.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 26,
+      "author": {
+        "id": 1002161
+      },
+      "writtenOn": "2017-11-07T22:10:48Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "307d58a0_17fa4480",
+      "range": {
+        "startLine": 26,
+        "startChar": 32,
+        "endLine": 26,
+        "endChar": 41
+      },
+      "revId": "5f3557fccd9fa21dff0509fb1609cded88ff9b58",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "18c7330c_275dc6ff",
         "filename": "chrome/browser/vr/elements/button.h",
         "patchSetId": 1
@@ -39,6 +63,24 @@
       "revId": "5f3557fccd9fa21dff0509fb1609cded88ff9b58",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "58bb1d3f_8359aa5c",
+        "filename": "chrome/browser/vr/elements/button.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 27,
+      "author": {
+        "id": 1002161
+      },
+      "writtenOn": "2017-11-07T22:10:48Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "18c7330c_275dc6ff",
+      "revId": "5f3557fccd9fa21dff0509fb1609cded88ff9b58",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -95,6 +137,24 @@
     },
     {
       "key": {
+        "uuid": "cf838597_37ca11f6",
+        "filename": "chrome/browser/vr/ui_renderer_unittest.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 44,
+      "author": {
+        "id": 1002161
+      },
+      "writtenOn": "2017-11-07T22:10:48Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "a71515b6_3da73a81",
+      "revId": "5f3557fccd9fa21dff0509fb1609cded88ff9b58",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "cd7c4110_3a05583b",
         "filename": "chrome/browser/vr/ui_scene_manager.cc",
         "patchSetId": 1
@@ -106,6 +166,24 @@
       "writtenOn": "2017-11-01T20:21:35Z",
       "side": 1,
       "message": "If these are truly canonical button colors, then perhaps we should set up the bindings in the button constructor and rename the member on ColorScheme to something more generic.\n\nAlternatively, we might make a struct for button colors and the ColorScheme could own several. This fn could then take a pointer to, for example, \u0026ColorScheme::close_button_colors.\n\nMy preference is for the latter.",
+      "revId": "5f3557fccd9fa21dff0509fb1609cded88ff9b58",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3fb202f0_916975f9",
+        "filename": "chrome/browser/vr/ui_scene_manager.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 567,
+      "author": {
+        "id": 1002161
+      },
+      "writtenOn": "2017-11-07T22:10:48Z",
+      "side": 1,
+      "message": "Used a struct to make the code more concise. All the buttons that switched to new button element use the same color. But we will need to customize button colors in the future. So I didn\u0027t move the bindings to button\u0027s ctor.",
+      "parentUuid": "cd7c4110_3a05583b",
       "revId": "5f3557fccd9fa21dff0509fb1609cded88ff9b58",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
