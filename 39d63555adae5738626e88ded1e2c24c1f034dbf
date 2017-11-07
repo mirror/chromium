@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "c6682623_22756153",
+        "filename": "build/fuchsia/runner_common.py",
+        "patchSetId": 2
+      },
+      "lineNbr": 550,
+      "author": {
+        "id": 1144260
+      },
+      "writtenOn": "2017-11-07T18:27:33Z",
+      "side": 1,
+      "message": "Let\u0027s hope we don\u0027t have to host on non-x64!",
+      "revId": "39d63555adae5738626e88ded1e2c24c1f034dbf",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
