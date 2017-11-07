@@ -49,6 +49,30 @@
     },
     {
       "key": {
+        "uuid": "4960cde3_5ead5596",
+        "filename": "chrome/browser/chromeos/login/ui/webui_login_view.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 163,
+      "author": {
+        "id": 1121230
+      },
+      "writtenOn": "2017-11-07T03:51:45Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "62fe88e3_c4fc7072",
+      "range": {
+        "startLine": 162,
+        "startChar": 13,
+        "endLine": 163,
+        "endChar": 76
+      },
+      "revId": "adedeaf9330308b115282bc699ae345eda3edbe5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "7e7ea420_4fde5a06",
         "filename": "chrome/browser/chromeos/login/ui/webui_login_view.cc",
         "patchSetId": 1
@@ -60,6 +84,24 @@
       "writtenOn": "2017-11-06T18:31:40Z",
       "side": 1,
       "message": "Can we do\n\n  if (!GetWidget()-\u003eIsActive())\n     GetWidget()-\u003eActivate();\n\ninstead?",
+      "revId": "adedeaf9330308b115282bc699ae345eda3edbe5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4c9f7149_5552bee8",
+        "filename": "chrome/browser/chromeos/login/ui/webui_login_view.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 331,
+      "author": {
+        "id": 1121230
+      },
+      "writtenOn": "2017-11-07T03:51:45Z",
+      "side": 1,
+      "message": "This doesn\u0027t work as system tray is NOT active if it\u0027s opened by a click. This closes the system tray if the tray is active. But tray can be opened without making them active.",
+      "parentUuid": "7e7ea420_4fde5a06",
       "revId": "adedeaf9330308b115282bc699ae345eda3edbe5",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
