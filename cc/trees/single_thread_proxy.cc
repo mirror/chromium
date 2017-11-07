@@ -52,6 +52,7 @@ SingleThreadProxy::SingleThreadProxy(LayerTreeHost* layer_tree_host,
       layer_tree_frame_sink_lost_(true),
       frame_sink_bound_weak_factory_(this),
       weak_factory_(this) {
+  fprintf(stderr, "Constructor(): false\n");
   TRACE_EVENT0("cc", "SingleThreadProxy::SingleThreadProxy");
   DCHECK(task_runner_provider_);
   DCHECK(task_runner_provider_->IsMainThread());
@@ -116,6 +117,7 @@ void SingleThreadProxy::RequestNewLayerTreeFrameSink() {
   layer_tree_frame_sink_creation_callback_.Cancel();
   if (layer_tree_frame_sink_creation_requested_)
     return;
+  fprintf(stderr, "RequestNewLayerTreeFrameSink(): true\n");
   layer_tree_frame_sink_creation_requested_ = true;
   layer_tree_host_->RequestNewLayerTreeFrameSink();
 }
@@ -147,6 +149,7 @@ void SingleThreadProxy::SetLayerTreeFrameSink(
       scheduler_on_impl_thread_->DidCreateAndInitializeLayerTreeFrameSink();
     else if (!inside_synchronous_composite_)
       SetNeedsCommit();
+    fprintf(stderr, "SetLayerTreeFrameSink(): false\n");
     layer_tree_frame_sink_creation_requested_ = false;
     layer_tree_frame_sink_lost_ = false;
   } else {
