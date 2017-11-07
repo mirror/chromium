@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "6d1235f9_54a8c38b",
+        "filename": "content/test/fake_leveldb_database.h",
+        "patchSetId": 7
+      },
+      "lineNbr": 5,
+      "author": {
+        "id": 1110029
+      },
+      "writtenOn": "2017-11-07T00:04:18Z",
+      "side": 0,
+      "message": "could you move unrelated changes like this rename to a separate CL (which could then have a rationale for the change in its description)?",
+      "revId": "fbefdb0bac773bb088f7145e24c6e582e7415aad",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}

@@ -1,0 +1,61 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "dfb9072d_80bfee4b",
+        "filename": "components/leveldb/leveldb_database_impl.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 118,
+      "author": {
+        "id": 1110029
+      },
+      "writtenOn": "2017-11-07T00:04:18Z",
+      "side": 1,
+      "message": "nit: mojo::ReportBadMessage if no value is provided (rather than DCHECKing/crashing)? Or failing with INVALID_ARGUMENT, but at least not crashing.",
+      "revId": "9ff1943e01bbe950574c8b86fb85cc5ca87df3ae",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5b91ca0c_6e80923e",
+        "filename": "components/leveldb/leveldb_database_impl.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 359,
+      "author": {
+        "id": 1110029
+      },
+      "writtenOn": "2017-11-07T00:04:18Z",
+      "side": 1,
+      "message": "this seems wrong?  LevelDBDatabaseImpl::Write() just expects the changes to be added to the write batch, it doesn\u0027t expect the write batch to actually be written (after all, Write is only supposed to write the whole batch in one go, not do multiple underlying Writes).",
+      "revId": "9ff1943e01bbe950574c8b86fb85cc5ca87df3ae",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "fdfa80a3_2ed6812c",
+        "filename": "mojo/public/cpp/bindings/README.md",
+        "patchSetId": 7
+      },
+      "lineNbr": 373,
+      "author": {
+        "id": 1110029
+      },
+      "writtenOn": "2017-11-07T00:04:18Z",
+      "side": 1,
+      "message": "hmm?",
+      "range": {
+        "startLine": 373,
+        "startChar": 0,
+        "endLine": 373,
+        "endChar": 56
+      },
+      "revId": "9ff1943e01bbe950574c8b86fb85cc5ca87df3ae",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
