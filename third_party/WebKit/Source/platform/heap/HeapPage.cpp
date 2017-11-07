@@ -1562,6 +1562,7 @@ void NormalPage::PopulateObjectStartBitMap() {
   for (Address header_address = start; header_address < PayloadEnd();) {
     HeapObjectHeader* header =
         reinterpret_cast<HeapObjectHeader*>(header_address);
+    DCHECK(header->IsValidOrZapped());
     size_t object_offset = header_address - start;
     DCHECK(!(object_offset & kAllocationMask));
     size_t object_start_number = object_offset / kAllocationGranularity;
