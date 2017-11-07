@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "46fac065_d2b457c6",
+        "filename": "content/browser/renderer_host/delegated_frame_host.h",
+        "patchSetId": 15
+      },
+      "lineNbr": 139,
+      "author": {
+        "id": 1002169
+      },
+      "writtenOn": "2017-11-07T18:32:41Z",
+      "side": 1,
+      "message": "Are there sufficiently many calls to this function to justify the use of the optional param?",
+      "revId": "761037e0f04d231f8aba9b3c763d02c2e067c223",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "fc5251a4_80d456a6",
+        "filename": "content/browser/renderer_host/render_widget_host_view_base.h",
+        "patchSetId": 15
+      },
+      "lineNbr": 261,
+      "author": {
+        "id": 1002169
+      },
+      "writtenOn": "2017-11-07T18:32:41Z",
+      "side": 1,
+      "message": "Same question here. I\u0027m somewhat less of a fan of optional arguments on virtual functions.",
+      "revId": "761037e0f04d231f8aba9b3c763d02c2e067c223",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
