@@ -108,6 +108,8 @@ def _CheckForForbiddenChromiumCode(input_api, output_api):
     chromium_namespaces = ["base", "cc", "content", "gfx", "net", "ui"]
     chromium_forbidden_classes = ["GURL"]
     chromium_allowed_classes = [
+        "base::AdoptRef",
+        "base::WrapRefCounted",
         "base::make_span",
         "base::span",
         "gfx::ColorSpace",
