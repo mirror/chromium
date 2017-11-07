@@ -30,11 +30,17 @@ def EnsureEmptyDir(path):
     os.makedirs(path)
 
 
-def BuildForArch(arch):
-  Run('scripts/build-zircon.sh', '-t', arch)
+def BuildForArch(arch, target=None):
+  if target is  None:
+    out_dir = 'out/release-%s' % arch
+  else:
+    out_dir = 'out/release-%s-%s' % (arch, target)
+
+  Run('scripts/build-zircon.sh', '-t', target or arch)
   Run('packages/gn/gen.py', '--target_cpu=' + arch,
-      '--packages=packages/gn/sdk','--ignore-skia', '--release')
-  Run('buildtools/ninja', '-C', 'out/release-' + arch)
+      '--packages=packages/gn/sdk','--ignore-skia', '--release',
+      '--build-dir=' + out_dir)
+  Run('buildtools/ninja', '-C', out_dir)
 
 
 def main(args):
@@ -51,6 +57,7 @@ def main(args):
 
   BuildForArch('x86-64')
   BuildForArch('aarch64')
+  BuildForArch('aarch64', 'hikey960')
 
   tempdir = tempfile.mkdtemp()
   sdk_tar = os.path.join(tempdir, 'fuchsia-sdk.tgz')
