@@ -7319,6 +7319,7 @@ interface VRWebGLLayer : VRLayer
     getter antialias
     getter context
     getter depth
+    getter framebuffer
     getter framebufferHeight
     getter framebufferWidth
     getter multiview
