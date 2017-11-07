@@ -45,6 +45,30 @@
       "revId": "74f997e44c7fc6ecbb0c393a4f6c8cdabb27477a",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ff4237ba_3d6a37ba",
+        "filename": "services/proxy_resolver/proxy_resolver_service_unittest.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 8,
+      "author": {
+        "id": 1115968
+      },
+      "writtenOn": "2017-11-07T17:51:18Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "80a02651_1ea716fb",
+      "range": {
+        "startLine": 8,
+        "startChar": 10,
+        "endLine": 8,
+        "endChar": 16
+      },
+      "revId": "74f997e44c7fc6ecbb0c393a4f6c8cdabb27477a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
