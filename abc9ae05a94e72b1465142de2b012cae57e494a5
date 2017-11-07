@@ -1,0 +1,73 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "20fce3c9_383d7b6c",
+        "filename": "chrome/browser/vr/elements/ui_element.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 95,
+      "author": {
+        "id": 1002411
+      },
+      "writtenOn": "2017-11-07T17:26:16Z",
+      "side": 1,
+      "message": "Why not just reuse updated_visibility_this_frame_?",
+      "range": {
+        "startLine": 92,
+        "startChar": 2,
+        "endLine": 95,
+        "endChar": 46
+      },
+      "revId": "abc9ae05a94e72b1465142de2b012cae57e494a5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "93584d79_3b73f2a7",
+        "filename": "chrome/browser/vr/elements/ui_element.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 105,
+      "author": {
+        "id": 1002411
+      },
+      "writtenOn": "2017-11-07T17:26:16Z",
+      "side": 1,
+      "message": "updated_visibility_this_frame_?",
+      "range": {
+        "startLine": 105,
+        "startChar": 34,
+        "endLine": 105,
+        "endChar": 45
+      },
+      "revId": "abc9ae05a94e72b1465142de2b012cae57e494a5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c941cefd_4503f254",
+        "filename": "chrome/browser/vr/ui_scene.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 91,
+      "author": {
+        "id": 1002411
+      },
+      "writtenOn": "2017-11-07T17:26:16Z",
+      "side": 1,
+      "message": "This paren is in the wrong spot? Don\u0027t you want (DoBeginFrame || updated_bindings) \u0026\u0026 (IsVisible() || updated_visiblity)?",
+      "range": {
+        "startLine": 91,
+        "startChar": 10,
+        "endLine": 91,
+        "endChar": 11
+      },
+      "revId": "abc9ae05a94e72b1465142de2b012cae57e494a5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
