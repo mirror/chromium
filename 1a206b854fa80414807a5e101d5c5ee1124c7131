@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "08ce8c0e_31faef1d",
+        "filename": "chrome/browser/chromeos/login/ui/webui_login_view.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 375,
+      "author": {
+        "id": 1000101
+      },
+      "writtenOn": "2017-11-07T18:09:38Z",
+      "side": 1,
+      "message": "Think we should hide the system tray bubble when we hide system tray.\n\nSo maybe move this down to SystemTrayController::SetPrimaryTrayVisible?",
+      "revId": "1a206b854fa80414807a5e101d5c5ee1124c7131",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
