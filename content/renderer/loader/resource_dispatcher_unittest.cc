@@ -26,7 +26,6 @@
 #include "content/public/common/request_context_frame_type.h"
 #include "content/public/common/resource_request.h"
 #include "content/public/common/resource_request_body.h"
-#include "content/public/common/resource_request_completion_status.h"
 #include "content/public/common/resource_response.h"
 #include "content/public/common/service_worker_modes.h"
 #include "content/public/renderer/fixed_received_data.h"
@@ -38,6 +37,7 @@
 #include "net/base/request_priority.h"
 #include "net/http/http_response_headers.h"
 #include "net/traffic_annotation/network_traffic_annotation_test_helper.h"
+#include "services/network/public/cpp/resource_request_completion_status.h"
 #include "testing/gtest/include/gtest/gtest.h"
 #include "third_party/WebKit/public/platform/WebReferrerPolicy.h"
 #include "url/gurl.h"
@@ -193,7 +193,7 @@ class ResourceDispatcherTest : public testing::Test, public IPC::Sender {
   }
 
   void NotifyRequestComplete(int request_id, size_t total_size) {
-    ResourceRequestCompletionStatus request_complete_data;
+    network::ResourceRequestCompletionStatus request_complete_data;
     request_complete_data.error_code = net::OK;
     request_complete_data.exists_in_cache = false;
     request_complete_data.encoded_data_length = total_size;
@@ -426,8 +426,8 @@ class TestResourceDispatcherDelegate : public ResourceDispatcherDelegate {
     }
     void OnTransferSizeUpdated(int transfer_size_diff) override {}
 
-    void OnCompletedRequest(
-        const ResourceRequestCompletionStatus& completion_status) override {
+    void OnCompletedRequest(const network::ResourceRequestCompletionStatus&
+                                completion_status) override {
       original_peer_->OnReceivedResponse(response_info_);
       if (!data_.empty()) {
         original_peer_->OnReceivedData(

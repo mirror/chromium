@@ -208,7 +208,8 @@ class ResourceFetcherImpl::ClientImpl : public mojom::URLLoaderClient {
             base::Unretained(this)));
     ReadDataPipe();
   }
-  void OnComplete(const ResourceRequestCompletionStatus& status) override {
+  void OnComplete(
+      const network::ResourceRequestCompletionStatus& status) override {
     // When Cancel() sets |complete_|, OnComplete() may be called.
     if (completed_)
       return;

@@ -98,8 +98,8 @@ class SimpleURLLoaderImpl : public SimpleURLLoader,
   // net::OK, the pipe was closed and all data received was successfully
   // handled. This could indicate an error, concellation, or completion. To
   // determine which case this is, the size will also be compared to the size
-  // reported in ResourceRequestCompletionStatus(), if
-  // ResourceRequestCompletionStatus indicates a success.
+  // reported in network::ResourceRequestCompletionStatus(), if
+  // network::ResourceRequestCompletionStatus indicates a success.
   void OnBodyHandlerDone(net::Error error, int64_t received_body_size);
 
   // Finished the request with the provided error code, after freeing Mojo
@@ -116,7 +116,7 @@ class SimpleURLLoaderImpl : public SimpleURLLoader,
 
     bool request_completed = false;
     // The expected total size of the body, taken from
-    // ResourceRequestCompletionStatus.
+    // network::ResourceRequestCompletionStatus.
     int64_t expected_body_size = 0;
 
     bool body_started = false;
@@ -163,7 +163,8 @@ class SimpleURLLoaderImpl : public SimpleURLLoader,
                         OnUploadProgressCallback ack_callback) override;
   void OnStartLoadingResponseBody(
       mojo::ScopedDataPipeConsumerHandle body) override;
-  void OnComplete(const ResourceRequestCompletionStatus& status) override;
+  void OnComplete(
+      const network::ResourceRequestCompletionStatus& status) override;
 
   // Bound to the URLLoaderClient message pipe (|client_binding_|) via
   // set_connection_error_handler.
@@ -1039,7 +1040,7 @@ void SimpleURLLoaderImpl::OnStartLoadingResponseBody(
 }
 
 void SimpleURLLoaderImpl::OnComplete(
-    const ResourceRequestCompletionStatus& status) {
+    const network::ResourceRequestCompletionStatus& status) {
   DCHECK_CALLED_ON_VALID_SEQUENCE(sequence_checker_);
   // Request should not have been completed yet.
   DCHECK(!request_state_->finished);
@@ -1113,8 +1114,8 @@ void SimpleURLLoaderImpl::MaybeComplete() {
       request_state_->net_error = net::ERR_FAILED;
     } else {
       // The caller provided more data through the pipe than it reported in
-      // ResourceRequestCompletionStatus, so the URLLoader is violating the API
-      // contract. Just fail the request.
+      // network::ResourceRequestCompletionStatus, so the URLLoader is violating
+      // the API contract. Just fail the request.
       request_state_->net_error = net::ERR_UNEXPECTED;
     }
   }

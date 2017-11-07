@@ -38,13 +38,16 @@ namespace net {
 struct RedirectInfo;
 }
 
+namespace network {
+struct ResourceRequestCompletionStatus;
+}
+
 namespace content {
 class RequestPeer;
 class ResourceDispatcherDelegate;
 class ResourceSchedulingFilter;
 struct ResourceResponseInfo;
 struct ResourceRequest;
-struct ResourceRequestCompletionStatus;
 struct ResourceResponseHead;
 class SharedMemoryReceivedDataFactory;
 struct SiteIsolationResponseMetaData;
@@ -240,7 +243,7 @@ class CONTENT_EXPORT ResourceDispatcher : public IPC::Listener {
   void OnDownloadedData(int request_id, int data_len, int encoded_data_length);
   void OnRequestComplete(
       int request_id,
-      const ResourceRequestCompletionStatus& request_complete_data);
+      const network::ResourceRequestCompletionStatus& request_complete_data);
 
   // Dispatch the message to one of the message response handlers.
   void DispatchMessage(const IPC::Message& message);

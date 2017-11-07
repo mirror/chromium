@@ -12,7 +12,6 @@
 #include "content/browser/service_worker/service_worker_context_core.h"
 #include "content/browser/service_worker/service_worker_disk_cache.h"
 #include "content/browser/url_loader_factory_getter.h"
-#include "content/public/common/resource_request_completion_status.h"
 #include "content/public/common/url_loader_factory.mojom.h"
 #include "content/public/test/test_browser_thread_bundle.h"
 #include "content/public/test/test_url_loader_client.h"
@@ -23,6 +22,7 @@
 #include "net/traffic_annotation/network_traffic_annotation.h"
 #include "net/traffic_annotation/network_traffic_annotation_test_helper.h"
 #include "net/url_request/redirect_info.h"
+#include "services/network/public/cpp/resource_request_completion_status.h"
 #include "third_party/WebKit/public/platform/modules/serviceworker/service_worker_registration.mojom.h"
 
 namespace content {
@@ -110,7 +110,7 @@ class MockNetworkURLLoaderFactory final : public mojom::URLLoaderFactory {
     ASSERT_EQ(MOJO_RESULT_OK, result);
     client->OnStartLoadingResponseBody(std::move(data_pipe.consumer_handle));
 
-    ResourceRequestCompletionStatus status;
+    network::ResourceRequestCompletionStatus status;
     status.error_code = net::OK;
     client->OnComplete(status);
   }

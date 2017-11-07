@@ -124,7 +124,8 @@ class HeaderRewritingURLLoaderClient : public mojom::URLLoaderClient {
     url_loader_client_->OnStartLoadingResponseBody(std::move(body));
   }
 
-  void OnComplete(const ResourceRequestCompletionStatus& status) override {
+  void OnComplete(
+      const network::ResourceRequestCompletionStatus& status) override {
     DCHECK(url_loader_client_.is_bound());
     url_loader_client_->OnComplete(status);
   }
@@ -444,7 +445,7 @@ void ServiceWorkerSubresourceLoader::CommitCompleted(int error_code) {
   DCHECK_LT(status_, Status::kCompleted);
   DCHECK(url_loader_client_.is_bound());
   status_ = Status::kCompleted;
-  ResourceRequestCompletionStatus completion_status;
+  network::ResourceRequestCompletionStatus completion_status;
   completion_status.error_code = error_code;
   completion_status.completion_time = base::TimeTicks::Now();
   url_loader_client_->OnComplete(completion_status);
@@ -543,7 +544,7 @@ void ServiceWorkerSubresourceLoader::OnStartLoadingResponseBody(
 }
 
 void ServiceWorkerSubresourceLoader::OnComplete(
-    const ResourceRequestCompletionStatus& status) {
+    const network::ResourceRequestCompletionStatus& status) {
   DCHECK_EQ(Status::kSentHeader, status_);
   DCHECK(url_loader_client_.is_bound());
   status_ = Status::kCompleted;
