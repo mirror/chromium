@@ -19,6 +19,7 @@
 #include "base/files/file_util.h"
 #include "base/json/json_reader.h"
 #include "base/logging.h"
+#include "base/memory/ref_counted.h"
 #include "base/path_service.h"
 #include "base/stl_util.h"
 #include "base/strings/string_util.h"
@@ -375,11 +376,9 @@ void RegisterPepperFlashComponent(ComponentUpdateService* cus) {
     return;
 #endif  // defined(OS_CHROMEOS)
 
-  std::unique_ptr<ComponentInstallerPolicy> policy(
-      new FlashComponentInstallerPolicy);
-  // |cus| will take ownership of |installer| during installer->Register(cus).
-  ComponentInstaller* installer = new ComponentInstaller(std::move(policy));
-  installer->Register(cus, base::Closure());
+  auto installer = base::MakeRefCounted<ComponentInstaller>(
+      std::make_unique<FlashComponentInstallerPolicy>());
+  installer->Register(cus, base::OnceClosure());
 #endif  // defined(GOOGLE_CHROME_BUILD)
 }
 

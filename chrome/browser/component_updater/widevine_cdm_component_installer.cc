@@ -18,6 +18,7 @@
 #include "base/files/file_util.h"
 #include "base/logging.h"
 #include "base/macros.h"
+#include "base/memory/ref_counted.h"
 #include "base/native_library.h"
 #include "base/path_service.h"
 #include "base/strings/string16.h"
@@ -335,9 +336,9 @@ void WidevineCdmComponentInstallerPolicy::ComponentReady(
 
   base::PostTaskWithTraits(
       FROM_HERE, {base::MayBlock(), base::TaskPriority::BACKGROUND},
-      base::Bind(&WidevineCdmComponentInstallerPolicy::UpdateCdmAdapter,
-                 base::Unretained(this), version, path,
-                 base::Passed(&manifest)));
+      base::BindOnce(&WidevineCdmComponentInstallerPolicy::UpdateCdmAdapter,
+                     base::Unretained(this), version, path,
+                     base::Passed(&manifest)));
 }
 
 bool WidevineCdmComponentInstallerPolicy::VerifyInstallation(
@@ -450,10 +451,11 @@ void WidevineCdmComponentInstallerPolicy::UpdateCdmAdapter(
     }
   }
 
-  BrowserThread::PostTask(
-      content::BrowserThread::UI, FROM_HERE,
-      base::Bind(&RegisterWidevineCdmWithChrome, cdm_version,
-                 absolute_cdm_install_dir, base::Passed(&manifest)));
+  content::BrowserThread::GetTaskRunnerForThread(content::BrowserThread::UI)
+      ->PostTask(
+          FROM_HERE,
+          base::BindOnce(&RegisterWidevineCdmWithChrome, cdm_version,
+                         absolute_cdm_install_dir, base::Passed(&manifest)));
 }
 
 #endif  // defined(WIDEVINE_CDM_AVAILABLE) && defined(WIDEVINE_CDM_IS_COMPONENT)
@@ -464,11 +466,11 @@ void RegisterWidevineCdmComponent(ComponentUpdateService* cus) {
   PathService::Get(chrome::FILE_WIDEVINE_CDM_ADAPTER, &adapter_source_path);
   if (!base::PathExists(adapter_source_path))
     return;
-  std::unique_ptr<ComponentInstallerPolicy> policy(
-      new WidevineCdmComponentInstallerPolicy);
-  // |cus| will take ownership of |installer| during installer->Register(cus).
-  ComponentInstaller* installer = new ComponentInstaller(std::move(policy));
-  installer->Register(cus, base::Closure());
+
+  // |cus| takes ownership of |installer| through the CrxComponent instance.
+  auto installer = base::MakeRefCounted<ComponentInstaller>(
+      std::make_unique<WidevineCdmComponentInstallerPolicy>());
+  installer->Register(cus, base::OnceClosure());
 #endif  // defined(WIDEVINE_CDM_AVAILABLE) && defined(WIDEVINE_CDM_IS_COMPONENT)
 }
 

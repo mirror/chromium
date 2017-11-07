@@ -5,6 +5,8 @@
 #include "chrome/browser/component_updater/pnacl_component_installer.h"
 
 #include <stdint.h>
+
+#include <memory>
 #include <string>
 #include <vector>
 
@@ -19,6 +21,7 @@
 #include "base/json/json_file_value_serializer.h"
 #include "base/logging.h"
 #include "base/macros.h"
+#include "base/memory/ref_counted.h"
 #include "base/path_service.h"
 #include "base/strings/string_util.h"
 #include "base/task_scheduler/post_task.h"
@@ -250,10 +253,10 @@ std::vector<std::string> PnaclComponentInstallerPolicy::GetMimeTypes() const {
 }  // namespace
 
 void RegisterPnaclComponent(ComponentUpdateService* cus) {
-  // |cus| will take ownership of |installer| during installer->Register(cus).
-  ComponentInstaller* installer =
-      new ComponentInstaller(base::MakeUnique<PnaclComponentInstallerPolicy>());
-  installer->Register(cus, base::Closure());
+  // |cus| takes ownership of |installer| through the CrxComponent instance.
+  auto installer = base::MakeRefCounted<ComponentInstaller>(
+      std::make_unique<PnaclComponentInstallerPolicy>());
+  installer->Register(cus, base::OnceClosure());
 }
 
 }  // namespace component_updater
