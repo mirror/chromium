@@ -99,6 +99,8 @@ class CONTENT_EXPORT RenderWidgetHostViewAura
                            bool is_guest_view_hack,
                            bool enable_surface_synchronization,
                            bool is_mus_browser_plugin_guest);
+  // Process swap messages sent before |frame_token| in RenderWidgetHostImpl.
+  void ProcessFramesBeforeToken(uint32_t frame_token);
 
   // RenderWidgetHostView implementation.
   void InitAsChild(gfx::NativeView parent_view) override;
