@@ -11,6 +11,7 @@
 #include "third_party/skia/include/core/SkColor.h"
 #include "ui/app_list/app_list_export.h"
 #include "ui/base/resource/resource_bundle.h"
+#include "ui/events/event.h"
 #include "ui/gfx/animation/tween.h"
 #include "ui/gfx/shadow_value.h"
 
