@@ -94,7 +94,8 @@ const GURL OpenSiteSettingsForUrl(Browser* browser,
   OpenPageInfoBubble(browser);
   // Get site settings button.
   views::View* site_settings_button = GetView(
-      browser, PageInfoBubbleView::VIEW_ID_PAGE_INFO_LINK_SITE_SETTINGS);
+      browser,
+      PageInfoBubbleView::VIEW_ID_PAGE_INFO_LINK_OR_BUTTON_SITE_SETTINGS);
   base::test::ScopedFeatureList feature_list;
   if (enable_site_details)
     feature_list.InitAndEnableFeature(features::kSiteDetails);
