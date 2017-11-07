@@ -66,7 +66,8 @@ std::string DumpLayout(WebLocalFrame* frame,
                     frame, WebFrameContentDumper::kLayoutAsTextPrinting)
                     .Utf8();
     } else {
-      result += frame->GetDocument().ContentAsTextForTesting().Utf8();
+      const size_t max_length = 65536;
+      result += WebFrameContentDumper::DumpWebViewAsText(frame->View(), max_length).Utf8();
     }
     result += "\n";
   } else if (flags.dump_as_markup()) {
