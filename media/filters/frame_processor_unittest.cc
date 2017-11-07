@@ -1204,6 +1204,72 @@ TEST_P(FrameProcessorTest, TimestampOffsetNegativeDts) {
   }
 }
 
+TEST_P(FrameProcessorTest, LargeTimestampOffsetJumpForward) {
+  // Verifies that jumps forward in buffers emitted from the coded frame
+  // processing algorithm can create discontinuous buffered ranges if those
+  // jumps are large enough, in both kinds of AppendMode, and in both kinds of
+  // RangeApi.
+  InSequence s;
+  AddTestTracks(HAS_AUDIO);
+  frame_processor_->SetSequenceMode(use_sequence_mode_);
+
+  EXPECT_CALL(callbacks_, PossibleDurationIncrease(Milliseconds(10)));
+  EXPECT_TRUE(ProcessFrames("0K", ""));
+
+  SetTimestampOffset(Milliseconds(5000));
+
+  // Along with the new timestampOffset set above, this should cause a large
+  // jump forward in both PTS and DTS for both sequence and segments append
+  // modes.
+  if (use_sequence_mode_) {
+    EXPECT_CALL(callbacks_, PossibleDurationIncrease(Milliseconds(5010)));
+  } else {
+    EXPECT_CALL(callbacks_, PossibleDurationIncrease(Milliseconds(10010)));
+  }
+  EXPECT_TRUE(ProcessFrames("5000|100K", ""));
+  if (use_sequence_mode_) {
+    EXPECT_EQ(Milliseconds(0), timestamp_offset_);
+  } else {
+    EXPECT_EQ(Milliseconds(5000), timestamp_offset_);
+  }
+
+  if (range_api_ == ChunkDemuxerStream::RangeApi::kLegacyByDts) {
+    if (use_sequence_mode_) {
+      // BIG TODO: Note this was "{ [0,110) }" prior to product code change.
+      CheckExpectedRangesByTimestamp(
+          audio_.get(),
+          "{ [0,10) [100,110) }");  // BIG TODO needs product code change
+      CheckReadsThenReadStalls(audio_.get(), "0");
+      SeekStream(audio_.get(), Milliseconds(100));
+      CheckReadsThenReadStalls(audio_.get(), "5000");  // Util verifies PTS.
+    } else {
+      // BIG TODO verified...
+      CheckExpectedRangesByTimestamp(audio_.get(), "{ [0,10) [5100,5110) }");
+      CheckReadsThenReadStalls(audio_.get(), "0");
+      SeekStream(audio_.get(), Milliseconds(5100));
+      CheckReadsThenReadStalls(audio_.get(),
+                               "10000:5000");  // Util verifies PTS.
+    }
+  } else {
+    if (use_sequence_mode_) {
+      // BIG TODO: Note, the append, above, hit adjacency CHECK failure prior to
+      // product code change:
+      // FATAL:source_buffer_range_by_pts.cc(88)] Check failed: buffers_.empty()
+      // || CanAppendBuffersToEnd(new_buffers, new_buffers_group_start_pts)
+      CheckExpectedRangesByTimestamp(audio_.get(), "{ [0,10) [5000,5010) }");
+      CheckReadsThenReadStalls(audio_.get(), "0");
+      SeekStream(audio_.get(), Milliseconds(5000));
+      CheckReadsThenReadStalls(audio_.get(), "5000");
+    } else {
+      // BIG TODO verified...
+      CheckExpectedRangesByTimestamp(audio_.get(), "{ [0,10) [10000,10010) }");
+      CheckReadsThenReadStalls(audio_.get(), "0");
+      SeekStream(audio_.get(), Milliseconds(10000));
+      CheckReadsThenReadStalls(audio_.get(), "10000:5000");
+    }
+  }
+}
+
 INSTANTIATE_TEST_CASE_P(SequenceModeLegacyByDts,
                         FrameProcessorTest,
                         Values(FrameProcessorTestParams(
