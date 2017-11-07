@@ -366,6 +366,30 @@
     },
     {
       "key": {
+        "uuid": "e9497627_a90b0603",
+        "filename": "components/autofill/core/browser/autofill_manager_unittest.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 3558,
+      "author": {
+        "id": 1153419
+      },
+      "writtenOn": "2017-11-07T21:43:30Z",
+      "side": 1,
+      "message": "Interesting point of view! I see what you mean.\n\nFor Autofill what I generally do is set up some default constants that the tests use when they don\u0027t really care about the value. That way it\u0027s more clear what values are actually important when you read the test. For example:\n\nCreditCard expired_card(kCardHolderName, kCardNumber, kExpMonth, \"1999\");\n\nBut I see you point too. I don\u0027t have a strong opinion so let\u0027s leave it this way :)",
+      "parentUuid": "90f8db02_dd4f61d3",
+      "range": {
+        "startLine": 3557,
+        "startChar": 27,
+        "endLine": 3558,
+        "endChar": 43
+      },
+      "revId": "12b485c8a250f9f2f5f44ee2cfeb366f638308b1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "35fcb93e_a7a6680f",
         "filename": "components/autofill/core/browser/country_combobox_model_unittest.cc",
         "patchSetId": 1
@@ -472,6 +496,30 @@
       "side": 1,
       "message": "Unclear!  Looks like it was added 2 years ago in https://codereview.chromium.org/1432333002, with maybe a plan to update PersonalDataManager later (dunno if that happened).  It doesn\u0027t fail any tests when I remove it, so I\u0027ll do so.",
       "parentUuid": "0b20b2d1_27dc4a47",
+      "range": {
+        "startLine": 43,
+        "startChar": 2,
+        "endLine": 43,
+        "endChar": 59
+      },
+      "revId": "12b485c8a250f9f2f5f44ee2cfeb366f638308b1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "c4712e7a_c22f664f",
+        "filename": "components/autofill/core/browser/test_personal_data_manager.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 43,
+      "author": {
+        "id": 1153419
+      },
+      "writtenOn": "2017-11-07T21:43:30Z",
+      "side": 1,
+      "message": "perfect!",
+      "parentUuid": "e92a3218_0028b1ac",
       "range": {
         "startLine": 43,
         "startChar": 2,
