@@ -22,6 +22,30 @@
       "revId": "bd7691a5d6a290d3e4b88c7b44aecb2a13f5db11",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1e3ea86d_1cb40676",
+        "filename": "components/optimization_guide/optimization_guide_service_observer.h",
+        "patchSetId": 10
+      },
+      "lineNbr": 19,
+      "author": {
+        "id": 1133190
+      },
+      "writtenOn": "2017-11-07T18:54:48Z",
+      "side": 1,
+      "message": "as chatted offline, added proto namespace",
+      "parentUuid": "b8f55ce7_9a933b0e",
+      "range": {
+        "startLine": 19,
+        "startChar": 38,
+        "endLine": 19,
+        "endChar": 51
+      },
+      "revId": "bd7691a5d6a290d3e4b88c7b44aecb2a13f5db11",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
