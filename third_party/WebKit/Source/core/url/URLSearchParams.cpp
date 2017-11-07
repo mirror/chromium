@@ -82,14 +82,16 @@ URLSearchParams* URLSearchParams::Create(const Vector<Vector<String>>& init,
     }
     instance->AppendWithoutUpdate(pair[0], pair[1]);
   }
-  instance->RunUpdateSteps();
   return instance;
 }
 
-URLSearchParams::URLSearchParams(const String& query_string, DOMURL* url_object)
-    : url_object_(url_object) {
+URLSearchParams::URLSearchParams(const String& query_string,
+                                 DOMURL* url_object) {
   if (!query_string.IsEmpty())
     SetInput(query_string);
+  // Set |url_object_| here in order not to run its update steps in the previous
+  // step.
+  url_object_ = url_object;
 }
 
 URLSearchParams* URLSearchParams::Create(
@@ -100,7 +102,6 @@ URLSearchParams* URLSearchParams::Create(
     return instance;
   for (const auto& item : init)
     instance->AppendWithoutUpdate(item.first, item.second);
-  instance->RunUpdateSteps();
   return instance;
 }
 
