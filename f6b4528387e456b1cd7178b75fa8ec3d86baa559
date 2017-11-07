@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "6e255f23_06bb01ec",
+        "filename": "tools/perf/core/perf_data_generator.py",
+        "patchSetId": 2
+      },
+      "lineNbr": 137,
+      "author": {
+        "id": 1000093
+      },
+      "writtenOn": "2017-11-07T19:14:22Z",
+      "side": 1,
+      "message": "I\u0027m not sure this is needed here since it\u0027s already specified in the recipe in https://chromium-review.googlesource.com/c/chromium/tools/build/+/749742. Emily, do you know what this list is used for?",
+      "range": {
+        "startLine": 137,
+        "startChar": 48,
+        "endLine": 137,
+        "endChar": 63
+      },
+      "revId": "f6b4528387e456b1cd7178b75fa8ec3d86baa559",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
