@@ -381,8 +381,6 @@ const int kExternalFilesCleanupDelaySeconds = 60;
 - (void)startVoiceSearchInCurrentBVCWithOriginView:(UIView*)originView;
 // Dismisses the tab switcher UI without animation into the given model.
 - (void)dismissTabSwitcherWithoutAnimationInModel:(TabModel*)tabModel;
-// Dismisses |signinInteractionCoordinator|.
-- (void)dismissSigninInteractionCoordinator;
 // Called when the last incognito tab was closed.
 - (void)lastIncognitoTabClosed;
 // Called when the last regular tab was closed.
@@ -1478,15 +1476,11 @@ const int kExternalFilesCleanupDelaySeconds = 60;
 }
 
 - (void)showSignin:(ShowSigninCommand*)command {
-  if (command.operation == AUTHENTICATION_OPERATION_DISMISS) {
-    [self dismissSigninInteractionCoordinator];
-  } else {
-    [self showSigninWithOperation:command.operation
-                         identity:command.identity
-                      accessPoint:command.accessPoint
-                      promoAction:command.promoAction
-                         callback:command.callback];
-  }
+  [self showSigninWithOperation:command.operation
+                       identity:command.identity
+                    accessPoint:command.accessPoint
+                    promoAction:command.promoAction
+                       callback:command.callback];
 }
 
 - (void)showAddAccount {
@@ -2038,8 +2032,6 @@ const int kExternalFilesCleanupDelaySeconds = 60;
                     accessPoint:(signin_metrics::AccessPoint)accessPoint
                     promoAction:(signin_metrics::PromoAction)promoAction
                        callback:(ShowSigninCommandCompletionCallback)callback {
-  DCHECK_NE(AUTHENTICATION_OPERATION_DISMISS, operation);
-
   if (!self.signinInteractionCoordinator) {
     self.signinInteractionCoordinator = [[SigninInteractionCoordinator alloc]
         initWithBrowserState:_mainBrowserState
@@ -2047,10 +2039,6 @@ const int kExternalFilesCleanupDelaySeconds = 60;
   }
 
   switch (operation) {
-    case AUTHENTICATION_OPERATION_DISMISS:
-      // Special case handled above.
-      NOTREACHED();
-      break;
     case AUTHENTICATION_OPERATION_REAUTHENTICATE:
       [self.signinInteractionCoordinator
           reAuthenticateWithAccessPoint:accessPoint
@@ -2067,12 +2055,6 @@ const int kExternalFilesCleanupDelaySeconds = 60;
                         completion:callback];
       break;
   }
-}
-
-- (void)dismissSigninInteractionCoordinator {
-  // The SigninInteractionCoordinator must not be destroyed at this point, as
-  // it may dismiss the sign in UI in a future callback.
-  [self.signinInteractionCoordinator cancelAndDismiss];
 }
 
 - (void)closeSettingsAnimated:(BOOL)animated
@@ -2270,8 +2252,18 @@ const int kExternalFilesCleanupDelaySeconds = 60;
 
   // Cancel interaction with SSO.
   // First, cancel the signin interaction.
-  [self.signinInteractionCoordinator cancel];
+  [self.signinInteractionCoordinator cancelWithCompletion:^{
+    [self signinInteractionCoordinatorCanceledWithCompletion:completion
+                                              dismissOmnibox:dismissOmnibox];
+  }];
+}
 
+// Finishing to -[MainController
+// dismissModalDialogsWithCompletion:dismissOmnibox], when the sign-in
+// interraction coordinator is canceled.
+- (void)
+signinInteractionCoordinatorCanceledWithCompletion:(ProceduralBlock)completion
+                                    dismissOmnibox:(BOOL)dismissOmnibox {
   // Then, depending on what the SSO view controller is presented on, dismiss
   // it.
   ProceduralBlock completionWithBVC = ^{
@@ -2281,9 +2273,8 @@ const int kExternalFilesCleanupDelaySeconds = 60;
   };
   ProceduralBlock completionWithoutBVC = ^{
     // This will dismiss the SSO view controller.
-    [self dismissSigninInteractionCoordinator];
-    if (completion)
-      completion();
+    [self.signinInteractionCoordinator
+        cancelAndDismissWithCompletion:completion];
   };
 
   // As a top level rule, if the settings are showing, they need to be
