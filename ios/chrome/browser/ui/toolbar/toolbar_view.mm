@@ -57,8 +57,8 @@
   return hitView;
 }
 
-- (void)layoutSubviews {
-  [super layoutSubviews];
+- (void)setFrame:(CGRect)frame {
+  [super setFrame:frame];
   [delegate_ toolbarDidLayout];
 }
 
