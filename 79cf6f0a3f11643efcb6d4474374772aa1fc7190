@@ -1,0 +1,365 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "07afe631_4eaf996c",
+        "filename": "content/browser/webauth/cbor/cbor_writer.cc",
+        "patchSetId": 17
+      },
+      "lineNbr": 15,
+      "author": {
+        "id": 1003152
+      },
+      "writtenOn": "2017-11-07T20:51:33Z",
+      "side": 1,
+      "message": "Add \u0027u\u0027 suffix on all these to indicate unsigned.",
+      "revId": "79cf6f0a3f11643efcb6d4474374772aa1fc7190",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f4467306_0947fc86",
+        "filename": "content/browser/webauth/cbor/cbor_writer.cc",
+        "patchSetId": 17
+      },
+      "lineNbr": 32,
+      "author": {
+        "id": 1003152
+      },
+      "writtenOn": "2017-11-07T20:51:33Z",
+      "side": 1,
+      "message": "Let\u0027s make this an int or size_t, which is more conventional.\n\nIf you go with an int, we should probably have at least one unit test that passes a negative value. If you go with size_t, you\u0027ll have to base::checked_cast it to int.",
+      "range": {
+        "startLine": 32,
+        "startChar": 4,
+        "endLine": 32,
+        "endChar": 11
+      },
+      "revId": "79cf6f0a3f11643efcb6d4474374772aa1fc7190",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a06edb28_1299f1da",
+        "filename": "content/browser/webauth/cbor/cbor_writer.cc",
+        "patchSetId": 17
+      },
+      "lineNbr": 37,
+      "author": {
+        "id": 1003152
+      },
+      "writtenOn": "2017-11-07T20:51:33Z",
+      "side": 1,
+      "message": "nit: base::nullopt for readability.",
+      "range": {
+        "startLine": 37,
+        "startChar": 9,
+        "endLine": 37,
+        "endChar": 12
+      },
+      "revId": "79cf6f0a3f11643efcb6d4474374772aa1fc7190",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "509b23e5_1f0aa433",
+        "filename": "content/browser/webauth/cbor/cbor_writer.h",
+        "patchSetId": 17
+      },
+      "lineNbr": 17,
+      "author": {
+        "id": 1003152
+      },
+      "writtenOn": "2017-11-07T20:51:33Z",
+      "side": 1,
+      "message": "nit: Did we end up using this?",
+      "revId": "79cf6f0a3f11643efcb6d4474374772aa1fc7190",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "73a0ac00_18d9b170",
+        "filename": "content/browser/webauth/cbor/cbor_writer.h",
+        "patchSetId": 17
+      },
+      "lineNbr": 46,
+      "author": {
+        "id": 1003152
+      },
+      "writtenOn": "2017-11-07T20:51:33Z",
+      "side": 1,
+      "message": "nit: first by major type, then by key length, then by value in byte-wise lexical order",
+      "range": {
+        "startLine": 46,
+        "startChar": 41,
+        "endLine": 46,
+        "endChar": 43
+      },
+      "revId": "79cf6f0a3f11643efcb6d4474374772aa1fc7190",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "79ad05c3_d1121819",
+        "filename": "content/browser/webauth/cbor/cbor_writer.h",
+        "patchSetId": 17
+      },
+      "lineNbr": 66,
+      "author": {
+        "id": 1003152
+      },
+      "writtenOn": "2017-11-07T20:51:33Z",
+      "side": 1,
+      "message": "nit: Don\u0027t forget to update this type accordingly.",
+      "range": {
+        "startLine": 66,
+        "startChar": 10,
+        "endLine": 66,
+        "endChar": 17
+      },
+      "revId": "79cf6f0a3f11643efcb6d4474374772aa1fc7190",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "dbeace32_b5e0d4de",
+        "filename": "content/browser/webauth/cbor/cbor_writer.h",
+        "patchSetId": 17
+      },
+      "lineNbr": 66,
+      "author": {
+        "id": 1003152
+      },
+      "writtenOn": "2017-11-07T20:51:33Z",
+      "side": 1,
+      "message": "nit:\n\n// Default that should be sufficiently large for most use cases.\nkDefaultMaxNestingDepth",
+      "range": {
+        "startLine": 66,
+        "startChar": 18,
+        "endLine": 66,
+        "endChar": 34
+      },
+      "revId": "79cf6f0a3f11643efcb6d4474374772aa1fc7190",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9680515b_48b41b56",
+        "filename": "content/browser/webauth/cbor/cbor_writer.h",
+        "patchSetId": 17
+      },
+      "lineNbr": 73,
+      "author": {
+        "id": 1003152
+      },
+      "writtenOn": "2017-11-07T20:51:33Z",
+      "side": 1,
+      "message": "phrasing suggestion for brevity:\n\n// Returns the CBOR byte string representation of |node|, unless its nesting depth greater than |max_nesting_depth|, in which case returns an empty optional value.\n\n// The nesting depth of |node| is defined as the number of arrays/maps that have to be traversed to reach the most nested CBORValue contained in |node|. Primitive values and empty containers have a nesting depths of 0.",
+      "revId": "79cf6f0a3f11643efcb6d4474374772aa1fc7190",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5ba32759_37649808",
+        "filename": "content/browser/webauth/cbor/cbor_writer.h",
+        "patchSetId": 17
+      },
+      "lineNbr": 81,
+      "author": {
+        "id": 1003152
+      },
+      "writtenOn": "2017-11-07T20:51:33Z",
+      "side": 1,
+      "message": "nit: I would suggest removing this, as it should be more or less self-explanatory to the reader.",
+      "range": {
+        "startLine": 79,
+        "startChar": 53,
+        "endLine": 81,
+        "endChar": 63
+      },
+      "revId": "79cf6f0a3f11643efcb6d4474374772aa1fc7190",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4eb9a0b0_e6adb111",
+        "filename": "content/browser/webauth/cbor/cbor_writer_unittest.cc",
+        "patchSetId": 17
+      },
+      "lineNbr": 198,
+      "author": {
+        "id": 1003152
+      },
+      "writtenOn": "2017-11-07T20:51:33Z",
+      "side": 1,
+      "message": "nit: Technically, it has to parse. Maybe phrase it: since the CBOR decoder does not need to parse any nested CBOR value elements.",
+      "revId": "79cf6f0a3f11643efcb6d4474374772aa1fc7190",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "657a96b9_f2498a35",
+        "filename": "content/browser/webauth/cbor/cbor_writer_unittest.cc",
+        "patchSetId": 17
+      },
+      "lineNbr": 198,
+      "author": {
+        "id": 1003152
+      },
+      "writtenOn": "2017-11-07T20:51:33Z",
+      "side": 1,
+      "message": "pharsing nit: depth?",
+      "range": {
+        "startLine": 198,
+        "startChar": 3,
+        "endLine": 198,
+        "endChar": 13
+      },
+      "revId": "79cf6f0a3f11643efcb6d4474374772aa1fc7190",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2433da50_af08408e",
+        "filename": "content/browser/webauth/cbor/cbor_writer_unittest.cc",
+        "patchSetId": 17
+      },
+      "lineNbr": 201,
+      "author": {
+        "id": 1003152
+      },
+      "writtenOn": "2017-11-07T20:51:33Z",
+      "side": 1,
+      "message": "nit: Can we make all these const?",
+      "revId": "79cf6f0a3f11643efcb6d4474374772aa1fc7190",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "14d6983d_afdba414",
+        "filename": "content/browser/webauth/cbor/cbor_writer_unittest.cc",
+        "patchSetId": 17
+      },
+      "lineNbr": 210,
+      "author": {
+        "id": 1003152
+      },
+      "writtenOn": "2017-11-07T20:51:33Z",
+      "side": 1,
+      "message": "nit: The initializer list won\u0027t work because CBORValue is move-only, right?",
+      "range": {
+        "startLine": 210,
+        "startChar": 2,
+        "endLine": 210,
+        "endChar": 39
+      },
+      "revId": "79cf6f0a3f11643efcb6d4474374772aa1fc7190",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "fa75bf31_41e000a2",
+        "filename": "content/browser/webauth/cbor/cbor_writer_unittest.cc",
+        "patchSetId": 17
+      },
+      "lineNbr": 226,
+      "author": {
+        "id": 1003152
+      },
+      "writtenOn": "2017-11-07T20:51:33Z",
+      "side": 1,
+      "message": "nit: Let\u0027s make these comments as succinct as possible. The highlighted part I think should be rather obvious.",
+      "range": {
+        "startLine": 226,
+        "startChar": 3,
+        "endLine": 226,
+        "endChar": 31
+      },
+      "revId": "79cf6f0a3f11643efcb6d4474374772aa1fc7190",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "72ecc197_bda0a99a",
+        "filename": "content/browser/webauth/cbor/cbor_writer_unittest.cc",
+        "patchSetId": 17
+      },
+      "lineNbr": 231,
+      "author": {
+        "id": 1003152
+      },
+      "writtenOn": "2017-11-07T20:51:33Z",
+      "side": 1,
+      "message": "nit: NestedMaps",
+      "range": {
+        "startLine": 231,
+        "startChar": 21,
+        "endLine": 231,
+        "endChar": 39
+      },
+      "revId": "79cf6f0a3f11643efcb6d4474374772aa1fc7190",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "08c8bfd8_1fdf8cf4",
+        "filename": "content/browser/webauth/cbor/cbor_writer_unittest.cc",
+        "patchSetId": 17
+      },
+      "lineNbr": 242,
+      "author": {
+        "id": 1003152
+      },
+      "writtenOn": "2017-11-07T20:51:33Z",
+      "side": 1,
+      "message": "nit: ... structure with depth of 3.",
+      "range": {
+        "startLine": 242,
+        "startChar": 47,
+        "endLine": 242,
+        "endChar": 56
+      },
+      "revId": "79cf6f0a3f11643efcb6d4474374772aa1fc7190",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "aef7f3ec_b34add14",
+        "filename": "content/browser/webauth/cbor/cbor_writer_unittest.cc",
+        "patchSetId": 17
+      },
+      "lineNbr": 249,
+      "author": {
+        "id": 1003152
+      },
+      "writtenOn": "2017-11-07T20:51:33Z",
+      "side": 1,
+      "message": "nit: UnbalancedNestedContainers",
+      "range": {
+        "startLine": 249,
+        "startChar": 21,
+        "endLine": 249,
+        "endChar": 44
+      },
+      "revId": "79cf6f0a3f11643efcb6d4474374772aa1fc7190",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
