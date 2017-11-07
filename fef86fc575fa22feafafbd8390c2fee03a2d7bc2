@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "4906ae3c_dfeceadd",
+        "filename": "ash/wm/default_state.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 195,
+      "author": {
+        "id": 1001380
+      },
+      "writtenOn": "2017-11-07T23:24:25Z",
+      "side": 1,
+      "message": "I didn\u0027t change the order of the method body to make it easy to compare.\nI\u0027ll reorder methods in a separate CL.",
+      "revId": "fef86fc575fa22feafafbd8390c2fee03a2d7bc2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
