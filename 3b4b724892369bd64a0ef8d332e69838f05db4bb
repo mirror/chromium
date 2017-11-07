@@ -1,0 +1,175 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "8d50049b_d1a57b57",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 6
+      },
+      "lineNbr": 8,
+      "author": {
+        "id": 1001934
+      },
+      "writtenOn": "2017-11-07T15:49:21Z",
+      "side": 1,
+      "message": "nit: Usually there\u0027s a blank line after the summary in the first line.",
+      "revId": "3b4b724892369bd64a0ef8d332e69838f05db4bb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7c8ee3e7_7ff8e4b4",
+        "filename": "chrome/browser/chromeos/login/users/chrome_user_manager_impl.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 253,
+      "author": {
+        "id": 1001934
+      },
+      "writtenOn": "2017-11-07T15:49:21Z",
+      "side": 1,
+      "message": "Maybe add a GetMinimumVersionPolicyHandler() helper function in the anonymous namespace, so this and call below can be much shorter?\n\nif (GetMinimumVersionPolicyHandler())\n  GetMinimumVersionPolicyHandler()-\u003eAddObserver(this);",
+      "revId": "3b4b724892369bd64a0ef8d332e69838f05db4bb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "24a6a0bd_4cebc764",
+        "filename": "chrome/browser/chromeos/policy/browser_policy_connector_chromeos.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 208,
+      "author": {
+        "id": 1001934
+      },
+      "writtenOn": "2017-11-07T15:49:21Z",
+      "side": 1,
+      "message": "BTW, base::MakeUnique has been marked deprecated in favor of std::make_unique.",
+      "revId": "3b4b724892369bd64a0ef8d332e69838f05db4bb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e482f163_d638ae88",
+        "filename": "chrome/browser/chromeos/policy/minimum_version_policy_handler.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 1,
+      "author": {
+        "id": 1001934
+      },
+      "writtenOn": "2017-11-07T15:49:21Z",
+      "side": 1,
+      "message": "nit: no (c)",
+      "range": {
+        "startLine": 1,
+        "startChar": 13,
+        "endLine": 1,
+        "endChar": 17
+      },
+      "revId": "3b4b724892369bd64a0ef8d332e69838f05db4bb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "cb133a25_8a8ef320",
+        "filename": "chrome/browser/chromeos/policy/minimum_version_policy_handler.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 21,
+      "author": {
+        "id": 1001934
+      },
+      "writtenOn": "2017-11-07T15:49:21Z",
+      "side": 1,
+      "message": "Need a virtual destructor.",
+      "revId": "3b4b724892369bd64a0ef8d332e69838f05db4bb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c8c61346_882c59d9",
+        "filename": "chrome/browser/chromeos/policy/minimum_version_policy_handler.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 31,
+      "author": {
+        "id": 1001934
+      },
+      "writtenOn": "2017-11-07T15:49:21Z",
+      "side": 1,
+      "message": "const method.",
+      "revId": "3b4b724892369bd64a0ef8d332e69838f05db4bb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0a13112e_45efe650",
+        "filename": "chrome/browser/chromeos/policy/minimum_version_policy_handler.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 40,
+      "author": {
+        "id": 1001934
+      },
+      "writtenOn": "2017-11-07T15:49:21Z",
+      "side": 1,
+      "message": "Maybe say something about the ownership / lifetime of this pointer, as well as the fact that it is expected to actually never be nullptr? Also, instead of setting it to nullptr here, and then setting it again in the initialization list, just declare it as:\n\nchromeos::CrosSettings* const cros_settings_;",
+      "revId": "3b4b724892369bd64a0ef8d332e69838f05db4bb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "61a3baf1_e6302bf9",
+        "filename": "chrome/browser/media_galleries/gallery_watch_manager_unittest.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 62,
+      "author": {
+        "id": 1001934
+      },
+      "writtenOn": "2017-11-07T15:49:21Z",
+      "side": 1,
+      "message": "std::make_unique",
+      "range": {
+        "startLine": 62,
+        "startChar": 27,
+        "endLine": 62,
+        "endChar": 31
+      },
+      "revId": "3b4b724892369bd64a0ef8d332e69838f05db4bb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6720a818_589e6d9d",
+        "filename": "chrome/browser/media_galleries/gallery_watch_manager_unittest.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 110,
+      "author": {
+        "id": 1001934
+      },
+      "writtenOn": "2017-11-07T15:49:21Z",
+      "side": 1,
+      "message": "Which \"it\" is which? :) Same problem on line 105 above.",
+      "range": {
+        "startLine": 110,
+        "startChar": 15,
+        "endLine": 110,
+        "endChar": 32
+      },
+      "revId": "3b4b724892369bd64a0ef8d332e69838f05db4bb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
