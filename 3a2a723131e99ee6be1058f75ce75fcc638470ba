@@ -105,6 +105,30 @@
       "revId": "3a2a723131e99ee6be1058f75ce75fcc638470ba",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "cc7478d9_81357add",
+        "filename": "chrome/browser/thumbnails/thumbnail_browsertest.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 344,
+      "author": {
+        "id": 1116059
+      },
+      "writtenOn": "2017-11-07T09:47:40Z",
+      "side": 1,
+      "message": "Alright, fair enough. Verified that it does fail if a different call happens. Done.",
+      "parentUuid": "31c147ad_2584f4b5",
+      "range": {
+        "startLine": 344,
+        "startChar": 16,
+        "endLine": 344,
+        "endChar": 0
+      },
+      "revId": "3a2a723131e99ee6be1058f75ce75fcc638470ba",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
