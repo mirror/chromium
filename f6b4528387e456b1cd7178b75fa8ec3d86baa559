@@ -22,6 +22,30 @@
       "revId": "f6b4528387e456b1cd7178b75fa8ec3d86baa559",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "62d099d6_12ab0cbc",
+        "filename": "tools/perf/core/perf_data_generator.py",
+        "patchSetId": 2
+      },
+      "lineNbr": 137,
+      "author": {
+        "id": 1001921
+      },
+      "writtenOn": "2017-11-07T19:51:18Z",
+      "side": 1,
+      "message": "This is also my question, where is the preferred way to specify this, I think both ways would work.",
+      "parentUuid": "6e255f23_06bb01ec",
+      "range": {
+        "startLine": 137,
+        "startChar": 48,
+        "endLine": 137,
+        "endChar": 63
+      },
+      "revId": "f6b4528387e456b1cd7178b75fa8ec3d86baa559",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
