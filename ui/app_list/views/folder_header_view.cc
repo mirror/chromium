@@ -12,6 +12,7 @@
 #include "ui/app_list/app_list_features.h"
 #include "ui/app_list/app_list_folder_item.h"
 #include "ui/app_list/app_list_switches.h"
+#include "ui/app_list/app_list_util.h"
 #include "ui/app_list/views/app_list_folder_view.h"
 #include "ui/base/resource/resource_bundle.h"
 #include "ui/gfx/canvas.h"
@@ -253,6 +254,54 @@ void FolderHeaderView::ContentsChanged(views::Textfield* sender,
   UpdateFolderNameAccessibleName();
 
   Layout();
+}
+
+bool FolderHeaderView::HandleKeyEvent(views::Textfield* sender,
+                                      const ui::KeyEvent& key_event) {
+  if (!features::IsAppListFocusEnabled())
+    return false;
+
+  if (!CanProcessLeftRightKeyTraversal(key_event))
+    return false;
+
+  bool left_key = key_event.key_code() == ui::VKEY_LEFT;
+  if (folder_name_view_->text().empty()) {
+    GetFocusManager()->AdvanceFocus((base::i18n::IsRTL() && !left_key) ||
+                                    (!base::i18n::IsRTL() && left_key));
+    return true;
+  }
+
+  if (folder_name_view_->HasSelection())
+    return false;
+
+  if (folder_name_view_->GetCursorPosition() != 0 &&
+      folder_name_view_->GetCursorPosition() !=
+          folder_name_view_->text().length()) {
+    return false;
+  }
+
+  bool text_rtl =
+      folder_name_view_->GetTextDirection() == base::i18n::RIGHT_TO_LEFT;
+  bool cursor_at_left =
+      (folder_name_view_->GetCursorPosition() == 0 && !text_rtl) ||
+      (folder_name_view_->GetCursorPosition() != 0 && text_rtl);
+
+  if (cursor_at_left && left_key) {
+    // The cursor is at the left side of the |folder_name_view_| and there's no
+    // text selection, so advance focus to previous/next view if IsRTL() is
+    // false/true.
+    GetFocusManager()->AdvanceFocus(!base::i18n::IsRTL());
+    return true;
+  }
+
+  if (!cursor_at_left && !left_key) {
+    // The cursor is at the right side of the |folder_name_view_| and there's no
+    // text selection, so advance focus to next/previous view if IsRTL() is
+    // false/true.
+    GetFocusManager()->AdvanceFocus(base::i18n::IsRTL());
+    return true;
+  }
+  return false;
 }
 
 void FolderHeaderView::ButtonPressed(views::Button* sender,
