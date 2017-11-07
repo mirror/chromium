@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "af37ca05_faa44eb5",
+        "filename": "content/browser/download/download_item_impl.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 131,
+      "author": {
+        "id": 1116010
+      },
+      "writtenOn": "2017-11-07T20:16:53Z",
+      "side": 1,
+      "message": "Done. Added a function to map the enums to strings",
+      "parentUuid": "061f7418_20f079a2",
+      "range": {
+        "startLine": 125,
+        "startChar": 0,
+        "endLine": 131,
+        "endChar": 76
+      },
+      "revId": "c8f26180eefa55ee7dd36df49bbf14244d0b7c4d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "917e73e2_74cc454d",
         "filename": "content/browser/download/download_item_impl.cc",
         "patchSetId": 3
@@ -36,6 +60,30 @@
       "writtenOn": "2017-11-07T18:08:33Z",
       "side": 1,
       "message": "Are these URLs guaranteed to be properly escaped to not cause issues with the trace format string?",
+      "range": {
+        "startLine": 161,
+        "startChar": 55,
+        "endLine": 161,
+        "endChar": 68
+      },
+      "revId": "c8f26180eefa55ee7dd36df49bbf14244d0b7c4d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "843be5b2_e44c0758",
+        "filename": "content/browser/download/download_item_impl.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 161,
+      "author": {
+        "id": 1116010
+      },
+      "writtenOn": "2017-11-07T20:16:53Z",
+      "side": 1,
+      "message": "Yes",
+      "parentUuid": "917e73e2_74cc454d",
       "range": {
         "startLine": 161,
         "startChar": 55,
@@ -68,6 +116,30 @@
       "revId": "c8f26180eefa55ee7dd36df49bbf14244d0b7c4d",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "85192e47_c592c31e",
+        "filename": "content/public/browser/download_item.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 91,
+      "author": {
+        "id": 1116010
+      },
+      "writtenOn": "2017-11-07T20:16:53Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "224a4151_1aa68d82",
+      "range": {
+        "startLine": 87,
+        "startChar": 2,
+        "endLine": 91,
+        "endChar": 4
+      },
+      "revId": "c8f26180eefa55ee7dd36df49bbf14244d0b7c4d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
