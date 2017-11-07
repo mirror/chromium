@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "f8baaec7_75780c9f",
+        "filename": "ash/display/touch_calibrator_controller_unittest.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 67,
+      "author": {
+        "id": 1000191
+      },
+      "writtenOn": "2017-11-07T21:09:20Z",
+      "side": 1,
+      "message": "Pass |ctrl| by reference (const\u0026 where possible) to make it more clear that these are not output parameters.",
+      "revId": "f19031a4cc996da51b4cd112b9c8811c428547a0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
