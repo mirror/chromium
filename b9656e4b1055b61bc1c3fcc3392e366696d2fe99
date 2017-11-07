@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "eb1610fd_20187024",
+        "filename": "chrome/android/webapk/shell_apk/AndroidManifest.xml",
+        "patchSetId": 4
+      },
+      "lineNbr": 19,
+      "author": {
+        "id": 1002088
+      },
+      "writtenOn": "2017-11-07T16:35:00Z",
+      "side": 1,
+      "message": "do we actually need this one templatized? Or can we just leave this as \"@mipmap/app_icon\" and just templatize the splash screen icon?",
+      "range": {
+        "startLine": 19,
+        "startChar": 8,
+        "endLine": 19,
+        "endChar": 48
+      },
+      "revId": "b9656e4b1055b61bc1c3fcc3392e366696d2fe99",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
