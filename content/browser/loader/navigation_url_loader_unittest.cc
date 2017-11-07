@@ -204,13 +204,14 @@ TEST_F(NavigationURLLoaderTest, Basic) {
   // Proceed with the response.
   loader->ProceedWithResponse();
 
+  // Check the response is correct.
   EXPECT_EQ("text/html", delegate.response()->head.mime_type);
   EXPECT_EQ(200, delegate.response()->head.headers->response_code());
+
   // NavigationMojoResponse uses a Mojo DataPipe instead of a StreamHandle.
   // TODO(arthursonzogni): Write similar expectations when
   // NavigationMojoResponse is enabled.
   if (!IsNavigationMojoResponseEnabled()) {
-    // Check the response is correct.
 
     // Check the body is correct.
     EXPECT_TRUE(delegate.body());
@@ -337,6 +338,9 @@ TEST_F(NavigationURLLoaderTest, RequestRedirected) {
   }
 
   EXPECT_EQ(1, delegate.on_request_handled_counter());
+  for (int i = 0; i < 1000000; i += 2) {
+    i--;
+  }
 }
 
 // Tests that the destroying the loader cancels the request.

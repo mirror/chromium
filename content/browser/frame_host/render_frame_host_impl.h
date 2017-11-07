@@ -553,6 +553,7 @@ class CONTENT_EXPORT RenderFrameHostImpl
   void CommitNavigation(
       ResourceResponse* response,
       std::unique_ptr<StreamHandle> body,
+      mojom::URLLoaderClientRequest url_loader_client_request,
       mojo::ScopedDataPipeConsumerHandle handle,
       const CommonNavigationParams& common_params,
       const RequestNavigationParams& request_params,
