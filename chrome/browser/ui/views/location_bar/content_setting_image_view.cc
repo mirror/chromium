@@ -5,6 +5,7 @@
 #include "chrome/browser/ui/views/location_bar/content_setting_image_view.h"
 
 #include "base/strings/utf_string_conversions.h"
+#include "chrome/browser/profiles/profile.h"
 #include "chrome/browser/themes/theme_properties.h"
 #include "chrome/browser/ui/content_settings/content_setting_bubble_model.h"
 #include "chrome/browser/ui/content_settings/content_setting_image_model.h"
@@ -33,10 +34,12 @@ const int ContentSettingImageView::kAnimationDurationMS =
 
 ContentSettingImageView::ContentSettingImageView(
     std::unique_ptr<ContentSettingImageModel> image_model,
-    LocationBarView* parent,
+    views::View* parent,
+    Delegate* delegate,
     const gfx::FontList& font_list)
     : IconLabelBubbleView(font_list, false),
       parent_(parent),
+      delegate_(delegate),
       content_setting_image_model_(std::move(image_model)),
       slide_animator_(this),
       pause_animation_(false),
@@ -59,6 +62,7 @@ ContentSettingImageView::~ContentSettingImageView() {
 }
 
 void ContentSettingImageView::Update(content::WebContents* web_contents) {
+  web_contents = delegate_->GetWebContents();
   // Note: We explicitly want to call this even if |web_contents| is NULL, so we
   // get hidden properly while the user is editing the omnibox.
   content_setting_image_model_->UpdateFromWebContents(web_contents);
@@ -88,6 +92,11 @@ void ContentSettingImageView::Update(content::WebContents* web_contents) {
   }
 
   content_setting_image_model_->SetAnimationHasRun(web_contents);
+}
+
+void ContentSettingImageView::SetIconColor(SkColor color) {
+  icon_color_ = color;
+  UpdateImage();
 }
 
 const char* ContentSettingImageView::GetClassName() const {
@@ -164,16 +173,16 @@ bool ContentSettingImageView::ShowBubble(const ui::Event& event) {
     slide_animator_.Reset();
   }
 
-  content::WebContents* web_contents = parent_->GetWebContents();
+  content::WebContents* web_contents = delegate_->GetWebContents();
   if (web_contents && !bubble_view_) {
     views::View* anchor = this;
     if (ui::MaterialDesignController::IsSecondaryUiMaterial())
       anchor = parent_;
     bubble_view_ = new ContentSettingBubbleContents(
-                content_setting_image_model_->CreateBubbleModel(
-                    parent_->delegate()->GetContentSettingBubbleModelDelegate(),
-                    web_contents, parent_->profile()),
-                web_contents, anchor, views::BubbleBorder::TOP_RIGHT);
+        content_setting_image_model_->CreateBubbleModel(
+            delegate_->GetContentSettingBubbleModelDelegate(), web_contents,
+            Profile::FromBrowserContext(web_contents->GetBrowserContext())),
+        web_contents, anchor, views::BubbleBorder::TOP_RIGHT);
     views::Widget* bubble_widget =
         views::BubbleDialogDelegateView::CreateBubble(bubble_view_);
     bubble_widget->AddObserver(this);
@@ -195,6 +204,11 @@ bool ContentSettingImageView::ShowBubble(const ui::Event& event) {
 
 bool ContentSettingImageView::IsBubbleShowing() const {
   return bubble_view_ != nullptr;
+}
+
+SkColor ContentSettingImageView::GetInkDropBaseColor() const {
+  return icon_color_ ? icon_color_.value()
+                     : IconLabelBubbleView::GetInkDropBaseColor();
 }
 
 void ContentSettingImageView::AnimationEnded(const gfx::Animation* animation) {
@@ -243,7 +257,11 @@ void ContentSettingImageView::OnWidgetVisibilityChanged(views::Widget* widget,
 }
 
 void ContentSettingImageView::UpdateImage() {
-  SetImage(content_setting_image_model_->GetIcon(GetTextColor()).AsImageSkia());
+  SetImage(content_setting_image_model_
+               ->GetIcon(icon_color_ ? icon_color_.value()
+                                     : color_utils::DeriveDefaultIconColor(
+                                           GetTextColor()))
+               .AsImageSkia());
 }
 
 void ContentSettingImageView::AnimateIn() {
