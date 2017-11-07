@@ -71,6 +71,17 @@ IN_PROC_BROWSER_TEST_F(ContentBrowserTest, MANUAL_RendererCrash) {
   message_loop_runner->Run();
 }
 
+// Non-Windows sanitizer builds print a stack trace format designed for
+// consumption by an external symbolizer. Use this macro to control stack trace
+// test expectations.
+#if !defined(OS_WIN) &&                                       \
+    (defined(ADDRESS_SANITIZER) || defined(LEAK_SANITIZER) || \
+     defined(MEMORY_SANITIZER) || defined(THREAD_SANITIZER))
+#define USE_EXTERNAL_SYMBOLIZER 1
+#else
+#define USE_EXTERNAL_SYMBOLIZER 0
+#endif
+
 // Tests that browser tests print the callstack when a child process crashes.
 IN_PROC_BROWSER_TEST_F(ContentBrowserTest, RendererCrashCallStack) {
   base::ThreadRestrictions::ScopedAllowIO allow_io_for_temp_dir;
@@ -90,8 +101,7 @@ IN_PROC_BROWSER_TEST_F(ContentBrowserTest, RendererCrashCallStack) {
   // so the stack that the tests sees here looks like:
   // "#0 0x0000007ea911 (...content_browsertests+0x7ea910)"
   std::string crash_string =
-#if !defined(ADDRESS_SANITIZER) && !defined(LEAK_SANITIZER) && \
-    !defined(MEMORY_SANITIZER) && !defined(THREAD_SANITIZER)
+#if !USE_EXTERNAL_SYMBOLIZER
       "content::RenderFrameImpl::PrepareRenderViewForNavigation";
 #else
       "#0 ";
@@ -125,8 +135,7 @@ IN_PROC_BROWSER_TEST_F(ContentBrowserTest, BrowserCrashCallStack) {
   // so the stack that the test sees here looks like:
   // "#0 0x0000007ea911 (...content_browsertests+0x7ea910)"
   std::string crash_string =
-#if !defined(ADDRESS_SANITIZER) && !defined(LEAK_SANITIZER) && \
-    !defined(MEMORY_SANITIZER) && !defined(THREAD_SANITIZER)
+#if !USE_EXTERNAL_SYMBOLIZER
       "content::ContentBrowserTest_MANUAL_BrowserCrash_Test::"
       "RunTestOnMainThread";
 #else
