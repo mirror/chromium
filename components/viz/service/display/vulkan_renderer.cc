@@ -35,7 +35,7 @@ ResourceFormat VulkanRenderer::BackbufferFormat() const {
 }
 
 bool VulkanRenderer::BindFramebufferToTexture(
-    const cc::ScopedResource* resource) {
+    const RenderPassId render_pass_id) {
   NOTIMPLEMENTED();
   return false;
 }
