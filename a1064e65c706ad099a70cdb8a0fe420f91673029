@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "185576f0_dffc2cd4",
+        "filename": "third_party/WebKit/Source/core/animation/CSSPathInterpolationType.cpp",
+        "patchSetId": 2
+      },
+      "lineNbr": 89,
+      "author": {
+        "id": 1197444
+      },
+      "writtenOn": "2017-11-07T21:22:12Z",
+      "side": 1,
+      "message": "nit: maybe do: (nullptr, /* forceAbsolute */ true) or whatever the convention is for unnamed bools?",
+      "revId": "a1064e65c706ad099a70cdb8a0fe420f91673029",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
