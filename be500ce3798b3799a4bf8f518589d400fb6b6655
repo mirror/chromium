@@ -1,0 +1,72 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "e06df451_9daa7893",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/vr_shell/VrShellImpl.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 428,
+      "author": {
+        "id": 1002161
+      },
+      "writtenOn": "2017-11-07T16:53:19Z",
+      "side": 1,
+      "message": "nit: perhaps use mDelegate.hasAudioPermission() and make hasAudioPermission public in VrShellDelegate? VrShellImpl only created after VrShellDelegate is created. So it should be safe to use mDelegate directly.",
+      "revId": "be500ce3798b3799a4bf8f518589d400fb6b6655",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5854504b_08fe40bc",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/vr_shell/VrShellImpl.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 453,
+      "author": {
+        "id": 1002161
+      },
+      "writtenOn": "2017-11-07T16:53:19Z",
+      "side": 1,
+      "message": "nit: update comments.",
+      "revId": "be500ce3798b3799a4bf8f518589d400fb6b6655",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "69c03115_ddd32fee",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/vr_shell/VrShellImpl.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 474,
+      "author": {
+        "id": 1002161
+      },
+      "writtenOn": "2017-11-07T16:53:19Z",
+      "side": 1,
+      "message": "We probably also want to make sure that Omnibox get focus after exit VR. Otherwise, the permission request may look like was initiated by the web page in the current tab, which might confused user. It can be in a different CL of course.",
+      "revId": "be500ce3798b3799a4bf8f518589d400fb6b6655",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d42da74b_105de179",
+        "filename": "chrome/browser/android/vr_shell/vr_shell.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 657,
+      "author": {
+        "id": 1002161
+      },
+      "writtenOn": "2017-11-07T16:53:19Z",
+      "side": 1,
+      "message": "nit: you can probably move the following two lines to call site and remove this function? Similar to how we handle kUnhandledPageInfo.",
+      "revId": "be500ce3798b3799a4bf8f518589d400fb6b6655",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
