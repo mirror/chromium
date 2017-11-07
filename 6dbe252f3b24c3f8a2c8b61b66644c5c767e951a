@@ -1,0 +1,95 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "fb7ecf50_0d68e4d7",
+        "filename": "content/common/page_state_serialization.cc",
+        "patchSetId": 11
+      },
+      "lineNbr": 221,
+      "author": {
+        "id": 1001168
+      },
+      "writtenOn": "2017-11-07T16:56:34Z",
+      "side": 1,
+      "message": "Do we still need to increment the version number with Mojo-based serialization?",
+      "revId": "6dbe252f3b24c3f8a2c8b61b66644c5c767e951a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e93d9664_6468a473",
+        "filename": "third_party/WebKit/Source/core/frame/LocalFrameView.h",
+        "patchSetId": 11
+      },
+      "lineNbr": 286,
+      "author": {
+        "id": 1001168
+      },
+      "writtenOn": "2017-11-07T16:56:34Z",
+      "side": 1,
+      "message": "Nit: const ref here and elsewhere SerializedAnchor is passed",
+      "revId": "6dbe252f3b24c3f8a2c8b61b66644c5c767e951a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b1b881a1_7c16ff2e",
+        "filename": "third_party/WebKit/Source/core/layout/ScrollAnchor.h",
+        "patchSetId": 11
+      },
+      "lineNbr": 65,
+      "author": {
+        "id": 1001168
+      },
+      "writtenOn": "2017-11-07T16:56:34Z",
+      "side": 1,
+      "message": "Nit: const ref here and on line as well",
+      "revId": "6dbe252f3b24c3f8a2c8b61b66644c5c767e951a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "80009755_135e10df",
+        "filename": "third_party/WebKit/public/platform/WebScrollAnchorData.h",
+        "patchSetId": 11
+      },
+      "lineNbr": 44,
+      "author": {
+        "id": 1001168
+      },
+      "writtenOn": "2017-11-07T16:56:34Z",
+      "side": 1,
+      "message": "Nit: pass the non-POD args by const ref",
+      "revId": "6dbe252f3b24c3f8a2c8b61b66644c5c767e951a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b96d2e87_390c22c2",
+        "filename": "third_party/WebKit/public/web/WebHistoryItem.h",
+        "patchSetId": 11
+      },
+      "lineNbr": 124,
+      "author": {
+        "id": 1001168
+      },
+      "writtenOn": "2017-11-07T16:56:34Z",
+      "side": 1,
+      "message": "Nit: shouldn\u0027t need to specify \u0027struct\u0027 in C++.",
+      "range": {
+        "startLine": 124,
+        "startChar": 46,
+        "endLine": 124,
+        "endChar": 52
+      },
+      "revId": "6dbe252f3b24c3f8a2c8b61b66644c5c767e951a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
