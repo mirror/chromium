@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "7f49ec83_e81c1491",
+        "filename": "third_party/WebKit/Source/core/workers/WorkletModuleTreeClient.cpp",
+        "patchSetId": 3
+      },
+      "lineNbr": 39,
+      "author": {
+        "id": 1115976
+      },
+      "writtenOn": "2017-11-07T22:33:55Z",
+      "side": 1,
+      "message": "\u003e (Probably it\u0027s better to split this part of change into another CL and commit the bindings/ changes first)\n\nI\u0027d slightly prefer to include this change in this CL because this is necessary for running syntax error tests newly added for confirming the change in V8ScriptRunner. Without this change, the tests results in success in spite of syntax errors.\n\nAlthough there is unclear parts of the spec, I think at least this behavior is compatible with the current spec.\n\n\u003e According to https://drafts.css-houdini.org/worklets/#fetch-and-invoke-a-worklet-script,\n\u003e the promise is resolved for a script with a parse error, because\n\u003e https://html.spec.whatwg.org/multipage/webappapis.html#fetch-a-module-worker-script-tree\n\u003e returns a non-null module script (with its parse error set).\n\u003e So we might want to update the spec (the note here, or #fetch-and-invoke-a-worklet-script).\n\u003e \n\u003e What is the expected behavior for\n\u003e 1. A script with a parse error?\n\u003e 2. A script with an instantiation error?\n\u003e 3. A script with an evaluation error?\n\u003e \n\u003e The Note here:\n\u003e 1. reject the promise\n\u003e 2. not mentioned\n\u003e 3. report the exception and resolve the promise\n\u003e \n\u003e #fetch-and-invoke-a-worklet-script and the current implementation:\n\u003e 1. report the exception and resolve the promise\n\u003e 2. report the exception and resolve the promise\n\u003e 3. report the exception and resolve the promise\n\u003e \n\u003e The implementation after this patch set:\n\u003e 1. reject the promise\n\u003e 2. reject the promise\n\u003e 3. report the exception and resolve the promise\n\nThank you for summarizing the current/expected behavior! From my understanding, any errors happening before evaluation (e.g., network, parse, instantiation) should reject the promise. I\u0027ll file a spec issue for clarifying that.\n\nFYI: I filed a relevant spec issue to allow to reject the promise with a more specific exception:\nhttps://github.com/w3c/css-houdini-drafts/issues/509",
+      "parentUuid": "d40c86bb_21777690",
+      "revId": "cfeb541febb18c6e96e38fc1caf1b6d505000476",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "095a8c53_014e6c8a",
         "filename": "third_party/WebKit/Source/core/workers/WorkletModuleTreeClient.cpp",
         "patchSetId": 3
@@ -36,6 +54,24 @@
     },
     {
       "key": {
+        "uuid": "a628fe61_0e6c0bd0",
+        "filename": "third_party/WebKit/Source/core/workers/WorkletModuleTreeClient.cpp",
+        "patchSetId": 3
+      },
+      "lineNbr": 41,
+      "author": {
+        "id": 1115976
+      },
+      "writtenOn": "2017-11-07T22:33:55Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "095a8c53_014e6c8a",
+      "revId": "cfeb541febb18c6e96e38fc1caf1b6d505000476",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "15826dde_cadc2b11",
         "filename": "third_party/WebKit/Source/core/workers/WorkletModuleTreeClient.cpp",
         "patchSetId": 3
@@ -47,6 +83,24 @@
       "writtenOn": "2017-11-07T03:57:44Z",
       "side": 1,
       "message": "I\u0027m just curious but how is this change related to the change in V8ScriptRunner?",
+      "revId": "cfeb541febb18c6e96e38fc1caf1b6d505000476",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "01933352_facdbb1c",
+        "filename": "third_party/WebKit/Source/core/workers/WorkletModuleTreeClient.cpp",
+        "patchSetId": 3
+      },
+      "lineNbr": 53,
+      "author": {
+        "id": 1115976
+      },
+      "writtenOn": "2017-11-07T22:33:55Z",
+      "side": 1,
+      "message": "This is necessary for running syntax error tests newly added for confirming the change in V8ScriptRunner. Without this change, the tests results in success in spite of syntax errors.",
+      "parentUuid": "15826dde_cadc2b11",
       "revId": "cfeb541febb18c6e96e38fc1caf1b6d505000476",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
