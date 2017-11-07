@@ -106,7 +106,9 @@ class CONTENT_EXPORT ServiceWorkerProviderContext
 
   // For service worker clients. The controller for
   // ServiceWorkerContainer#controller.
-  ServiceWorkerHandleReference* controller();
+  int64_t GetControllerVersionId();
+
+  std::unique_ptr<ServiceWorkerHandleReference> TakeController();
 
   // S13nServiceWorker:
   // For service worker clients. Returns URLLoaderFactory for loading
