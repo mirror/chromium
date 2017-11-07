@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "b24615f9_99910154",
+        "filename": "chrome/browser/media/router/mojo/mock_mojo_media_router.h",
+        "patchSetId": 17
+      },
+      "lineNbr": 14,
+      "author": {
+        "id": 1190572
+      },
+      "writtenOn": "2017-11-07T23:57:58Z",
+      "side": 1,
+      "message": "MockMediaRouter is included in Clank tests, so we\u0027d need to include media_router.mojom etc. in Clank tests to do that.",
+      "parentUuid": "f7c264b8_d7cbddc6",
+      "revId": "9caa56cede70da778e9dc00acd4dae979a6c3b72",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "4cd42752_5e4b91af",
         "filename": "chrome/browser/media/router/mojo/wired_display_media_route_provider.cc",
         "patchSetId": 17
@@ -33,6 +51,24 @@
       "revId": "9caa56cede70da778e9dc00acd4dae979a6c3b72",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a515a7b0_112131cd",
+        "filename": "chrome/browser/media/router/mojo/wired_display_media_route_provider.cc",
+        "patchSetId": 17
+      },
+      "lineNbr": 25,
+      "author": {
+        "id": 1190572
+      },
+      "writtenOn": "2017-11-07T23:57:58Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "4cd42752_5e4b91af",
+      "revId": "9caa56cede70da778e9dc00acd4dae979a6c3b72",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -53,6 +89,24 @@
     },
     {
       "key": {
+        "uuid": "a6ca2248_042a6dd5",
+        "filename": "chrome/browser/media/router/mojo/wired_display_media_route_provider.cc",
+        "patchSetId": 17
+      },
+      "lineNbr": 93,
+      "author": {
+        "id": 1190572
+      },
+      "writtenOn": "2017-11-07T23:57:58Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "6b6d1494_60d5aae8",
+      "revId": "9caa56cede70da778e9dc00acd4dae979a6c3b72",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "9dbdfa78_522fbfc0",
         "filename": "chrome/browser/media/router/mojo/wired_display_media_route_provider.cc",
         "patchSetId": 17
@@ -67,6 +121,24 @@
       "revId": "9caa56cede70da778e9dc00acd4dae979a6c3b72",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "efbd6e08_7dbea57d",
+        "filename": "chrome/browser/media/router/mojo/wired_display_media_route_provider.cc",
+        "patchSetId": 17
+      },
+      "lineNbr": 123,
+      "author": {
+        "id": 1190572
+      },
+      "writtenOn": "2017-11-07T23:57:58Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "9dbdfa78_522fbfc0",
+      "revId": "9caa56cede70da778e9dc00acd4dae979a6c3b72",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -87,6 +159,24 @@
     },
     {
       "key": {
+        "uuid": "4ecef7cc_5d131e69",
+        "filename": "chrome/browser/media/router/mojo/wired_display_media_route_provider.cc",
+        "patchSetId": 17
+      },
+      "lineNbr": 261,
+      "author": {
+        "id": 1190572
+      },
+      "writtenOn": "2017-11-07T23:57:58Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "554dac65_2c078c72",
+      "revId": "9caa56cede70da778e9dc00acd4dae979a6c3b72",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "a00ba883_7412cc40",
         "filename": "chrome/browser/media/router/mojo/wired_display_media_route_provider.cc",
         "patchSetId": 17
@@ -101,6 +191,24 @@
       "revId": "9caa56cede70da778e9dc00acd4dae979a6c3b72",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b3826dab_88ba0129",
+        "filename": "chrome/browser/media/router/mojo/wired_display_media_route_provider.cc",
+        "patchSetId": 17
+      },
+      "lineNbr": 282,
+      "author": {
+        "id": 1190572
+      },
+      "writtenOn": "2017-11-07T23:57:58Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "a00ba883_7412cc40",
+      "revId": "9caa56cede70da778e9dc00acd4dae979a6c3b72",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -151,6 +259,24 @@
       "side": 1,
       "message": "//chrome/browser/api/system_display/system_display_apitest.cc and //chrome/browser/ui/window_sizer/window_sizer_common_unittest.cc both use a custom list of displays.",
       "parentUuid": "0baac228_2ef2f9bd",
+      "revId": "9caa56cede70da778e9dc00acd4dae979a6c3b72",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "bf96ab0a_837c8035",
+        "filename": "chrome/browser/media/router/mojo/wired_display_media_route_provider_unittest.cc",
+        "patchSetId": 17
+      },
+      "lineNbr": 50,
+      "author": {
+        "id": 1190572
+      },
+      "writtenOn": "2017-11-07T23:57:58Z",
+      "side": 1,
+      "message": "Thanks, added a TODO.",
+      "parentUuid": "2a89eaf0_b3b55bf9",
       "revId": "9caa56cede70da778e9dc00acd4dae979a6c3b72",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": false
