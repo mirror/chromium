@@ -140,6 +140,24 @@
       "revId": "d027b9943ed44add30187db1342108809693abdc",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "19efaa22_68511a73",
+        "filename": "tools/metrics/histograms/histograms.xml",
+        "patchSetId": 8
+      },
+      "lineNbr": 37501,
+      "author": {
+        "id": 1171114
+      },
+      "writtenOn": "2017-11-07T15:26:07Z",
+      "side": 1,
+      "message": "It\u0027s in a submenu, so I think it\u0027s very unlikely.",
+      "parentUuid": "58a719eb_f4a24367",
+      "revId": "d027b9943ed44add30187db1342108809693abdc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
