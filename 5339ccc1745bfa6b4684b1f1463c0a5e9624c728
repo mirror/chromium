@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "17a00cf0_26c4d531",
+        "filename": "tools/perf/contrib/heap_profiling/heap_profiling.py",
+        "patchSetId": 2
+      },
+      "lineNbr": 47,
+      "author": {
+        "id": 1123010
+      },
+      "writtenOn": "2017-11-07T17:17:19Z",
+      "side": 1,
+      "message": "I *think* this might not work. Some other places in the code might assume that SUPPORTED_PLATFORMS is an attribute of the class (i.e. it is available before instantiating the object) and may not read this correctly.\n\nTo be safe just move these to show explicitly below on each of the concrete subclasses.",
+      "revId": "5339ccc1745bfa6b4684b1f1463c0a5e9624c728",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "eac8ba20_931a813c",
+        "filename": "tools/perf/contrib/heap_profiling/heap_profiling.py",
+        "patchSetId": 2
+      },
+      "lineNbr": 80,
+      "author": {
+        "id": 1123010
+      },
+      "writtenOn": "2017-11-07T17:17:19Z",
+      "side": 1,
+      "message": "I think something like PROFILING_MODE \u003d \u0027pseudo\u0027 is better, so you don\u0027t need to repeat the full browser flags on each of the subclasses.",
+      "revId": "5339ccc1745bfa6b4684b1f1463c0a5e9624c728",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
