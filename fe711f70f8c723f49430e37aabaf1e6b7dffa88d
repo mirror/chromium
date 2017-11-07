@@ -1,0 +1,55 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "ac0e029f_ca4cfbd6",
+        "filename": "content/renderer/media/media_stream_video_capturer_source_unittest.cc",
+        "patchSetId": 10
+      },
+      "lineNbr": 354,
+      "author": {
+        "id": 1126249
+      },
+      "writtenOn": "2017-11-07T17:28:40Z",
+      "side": 1,
+      "message": "Can you see if it\u0027s possible to have a case of removing and adding while so that you have several requests in flight, that would likely fail if the implementation wasn\u0027t serialized?",
+      "revId": "fe711f70f8c723f49430e37aabaf1e6b7dffa88d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ad899399_b58398f7",
+        "filename": "content/renderer/media/media_stream_video_source.cc",
+        "patchSetId": 10
+      },
+      "lineNbr": 109,
+      "author": {
+        "id": 1126249
+      },
+      "writtenOn": "2017-11-07T17:28:40Z",
+      "side": 1,
+      "message": "Can you add a comment explaining that the process is serialized, because otherwise it looks broken that you\u0027re doing StopSource/FinalizeStopSource before the callback has been resolved.",
+      "revId": "fe711f70f8c723f49430e37aabaf1e6b7dffa88d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "94cb3b36_827fe5d6",
+        "filename": "content/renderer/media/media_stream_video_source.cc",
+        "patchSetId": 10
+      },
+      "lineNbr": 138,
+      "author": {
+        "id": 1126249
+      },
+      "writtenOn": "2017-11-07T17:28:40Z",
+      "side": 1,
+      "message": "Can you DCHECK that tracks_ is still empty, because it might not be if the implementation of opening and closing camera etc is not serialized.",
+      "revId": "fe711f70f8c723f49430e37aabaf1e6b7dffa88d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
