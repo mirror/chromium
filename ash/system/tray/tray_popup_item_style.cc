@@ -23,11 +23,11 @@ constexpr int kDisabledAlpha = 0x61;
 SkColor TrayPopupItemStyle::GetIconColor(ColorStyle color_style) {
   switch (color_style) {
     case ColorStyle::ACTIVE:
-      return gfx::kChromeIconGrey;
+      return gfx::kChromeIconGray;
     case ColorStyle::INACTIVE:
-      return SkColorSetA(gfx::kChromeIconGrey, kInactiveAlpha);
+      return SkColorSetA(gfx::kChromeIconGray, kInactiveAlpha);
     case ColorStyle::DISABLED:
-      return SkColorSetA(gfx::kChromeIconGrey, kDisabledAlpha);
+      return SkColorSetA(gfx::kChromeIconGray, kDisabledAlpha);
     case ColorStyle::CONNECTED:
       return gfx::kPlaceholderColor;
   }

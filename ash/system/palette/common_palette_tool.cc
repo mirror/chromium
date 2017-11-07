@@ -75,7 +75,7 @@ void CommonPaletteTool::OnViewClicked(views::View* sender) {
 
 views::View* CommonPaletteTool::CreateDefaultView(const base::string16& name) {
   gfx::ImageSkia icon =
-      CreateVectorIcon(GetPaletteIcon(), kMenuIconSize, gfx::kChromeIconGrey);
+      CreateVectorIcon(GetPaletteIcon(), kMenuIconSize, gfx::kChromeIconGray);
   highlight_view_ = new HoverHighlightView(this);
   highlight_view_->AddIconAndLabel(icon, name);
   return highlight_view_;
