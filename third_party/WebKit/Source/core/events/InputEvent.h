@@ -54,6 +54,7 @@ class InputEvent final : public UIEvent {
     kHistoryRedo,
     // Formatting.
     kFormatBold,
+    kFormatTypeFirst = kFormatBold,
     kFormatItalic,
     kFormatUnderline,
     kFormatStrikeThrough,
@@ -67,6 +68,7 @@ class InputEvent final : public UIEvent {
     kFormatOutdent,
     kFormatRemove,
     kFormatSetBlockTextDirection,
+    kFormatTypeLast = kFormatSetBlockTextDirection,
 
     // Add new input types immediately above this line.
     kNumberOfInputTypes,
@@ -96,6 +98,11 @@ class InputEvent final : public UIEvent {
                                  const String& data,
                                  EventIsComposing,
                                  const StaticRangeVector*);
+
+  static bool IsFormattingEventType(InputType type) {
+    return InputType::kFormatTypeFirst <= type &&
+           type <= InputType::kFormatTypeLast;
+  }
 
   String inputType() const;
   const String& data() const { return data_; }

@@ -939,9 +939,15 @@ void Editor::AppliedEditing(CompositeEditCommand* cmd) {
   const SelectionInDOMTree& new_selection = CorrectedSelectionAfterCommand(
       cmd->EndingSelection(), GetFrame().GetDocument());
 
+  const bool handle_visible =
+      GetFrameSelection().IsHandleVisible() &&
+      InputEvent::IsFormattingEventType(cmd->GetInputType());
   // Don't clear the typing style with this selection change. We do those things
   // elsewhere if necessary.
-  ChangeSelectionAfterCommand(new_selection, SetSelectionOptions());
+  ChangeSelectionAfterCommand(new_selection,
+                              SetSelectionOptions::Builder()
+                                  .SetShouldShowHandle(handle_visible)
+                                  .Build());
 
   if (!cmd->PreservesTypingStyle())
     ClearTypingStyle();
@@ -1486,7 +1492,6 @@ void Editor::ChangeSelectionAfterCommand(
   GetFrameSelection().SetSelection(
       new_selection,
       SetSelectionOptions::Builder(options)
-          .SetShouldShowHandle(GetFrameSelection().IsHandleVisible())
           .Build());
 
   // Some editing operations change the selection visually without affecting its
