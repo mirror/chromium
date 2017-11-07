@@ -401,6 +401,30 @@
     },
     {
       "key": {
+        "uuid": "7d8153d4_d741623d",
+        "filename": "chrome/browser/ui/cocoa/profiles/avatar_base_controller.mm",
+        "patchSetId": 12
+      },
+      "lineNbr": 219,
+      "author": {
+        "id": 1115972
+      },
+      "writtenOn": "2017-11-07T16:07:48Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "19fdb439_93b0047e",
+      "range": {
+        "startLine": 219,
+        "startChar": 8,
+        "endLine": 219,
+        "endChar": 23
+      },
+      "revId": "8c83c45cffc89e8491aff94071b54abba03038b2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "aa9a37cb_1bd4f86d",
         "filename": "chrome/browser/ui/views/profiles/profile_chooser_view.h",
         "patchSetId": 12
@@ -445,6 +469,30 @@
       "revId": "8c83c45cffc89e8491aff94071b54abba03038b2",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c9c937b8_0b191281",
+        "filename": "chrome/browser/ui/views/profiles/profile_chooser_view.h",
+        "patchSetId": 12
+      },
+      "lineNbr": 56,
+      "author": {
+        "id": 1115972
+      },
+      "writtenOn": "2017-11-07T16:07:48Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "fee3cff8_3c0443a6",
+      "range": {
+        "startLine": 56,
+        "startChar": 11,
+        "endLine": 56,
+        "endChar": 21
+      },
+      "revId": "8c83c45cffc89e8491aff94071b54abba03038b2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
