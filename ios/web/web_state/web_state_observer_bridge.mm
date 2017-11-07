@@ -175,20 +175,19 @@ void WebStateObserverBridge::FormActivityRegistered(
     web::WebState* web_state,
     const std::string& form_name,
     const std::string& field_name,
+    const std::string& field_type,
     const std::string& type,
     const std::string& value,
     bool input_missing) {
   DCHECK(!web_state_ || web_state_ == web_state);
-  SEL selector = @selector(webState:
-      didRegisterFormActivityWithFormNamed:
-                                 fieldName:
-                                      type:
-                                     value:
-                              inputMissing:);
+  SEL selector =
+      @selector(webState:didRegisterFormActivityWithFormNamed:fieldName
+                        :fieldType:type:value:inputMissing:);
   if ([observer_ respondsToSelector:selector]) {
     [observer_ webState:web_state
         didRegisterFormActivityWithFormNamed:form_name
                                    fieldName:field_name
+                                   fieldType:field_type
                                         type:type
                                        value:value
                                 inputMissing:input_missing];

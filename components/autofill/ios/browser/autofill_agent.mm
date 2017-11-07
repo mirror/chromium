@@ -521,6 +521,7 @@ void GetFormAndField(autofill::FormData* form,
 
 - (void)checkIfSuggestionsAvailableForForm:(NSString*)formName
                                      field:(NSString*)fieldName
+                                 fieldType:(NSString*)fieldType
                                       type:(NSString*)type
                                 typedValue:(NSString*)typedValue
                                   webState:(web::WebState*)webState
@@ -559,6 +560,7 @@ void GetFormAndField(autofill::FormData* form,
 
 - (void)retrieveSuggestionsForForm:(NSString*)formName
                              field:(NSString*)fieldName
+                         fieldType:(NSString*)fieldType
                               type:(NSString*)type
                         typedValue:(NSString*)typedValue
                           webState:(web::WebState*)webState
@@ -704,6 +706,7 @@ void GetFormAndField(autofill::FormData* form,
 - (void)webState:(web::WebState*)webState
     didRegisterFormActivityWithFormNamed:(const std::string&)formName
                                fieldName:(const std::string&)fieldName
+                               fieldType:(const std::string&)fieldType
                                     type:(const std::string&)type
                                    value:(const std::string&)value
                             inputMissing:(BOOL)inputMissing {

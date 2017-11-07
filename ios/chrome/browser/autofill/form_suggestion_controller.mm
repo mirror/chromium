@@ -159,11 +159,13 @@ AutofillSuggestionState::AutofillSuggestionState(const std::string& form_name,
 
 - (void)retrieveSuggestionsForFormNamed:(const std::string&)formName
                               fieldName:(const std::string&)fieldName
+                              fieldType:(const std::string&)fieldType
                                    type:(const std::string&)type
                                webState:(web::WebState*)webState {
   __weak FormSuggestionController* weakSelf = self;
   NSString* strongFormName = [base::SysUTF8ToNSString(formName) copy];
   NSString* strongFieldName = [base::SysUTF8ToNSString(fieldName) copy];
+  NSString* strongFieldType = [base::SysUTF8ToNSString(fieldType) copy];
   NSString* strongType = [base::SysUTF8ToNSString(type) copy];
   NSString* strongValue =
       [base::SysUTF8ToNSString(_suggestionState.get()->typed_value) copy];
@@ -186,6 +188,7 @@ AutofillSuggestionState::AutofillSuggestionState(const std::string& form_name,
               strongSelf->_suggestionProviders[i];
           [provider checkIfSuggestionsAvailableForForm:strongFormName
                                                  field:strongFieldName
+                                             fieldType:strongFieldType
                                                   type:strongType
                                             typedValue:strongValue
                                               webState:webState
@@ -213,6 +216,7 @@ AutofillSuggestionState::AutofillSuggestionState(const std::string& form_name,
         strongSelf->_suggestionProviders[providerIndex];
     [provider retrieveSuggestionsForForm:strongFormName
                                    field:strongFieldName
+                               fieldType:strongFieldType
                                     type:strongType
                               typedValue:strongValue
                                 webState:webState
@@ -317,18 +321,19 @@ AutofillSuggestionState::AutofillSuggestionState(const std::string& form_name,
 }
 
 - (void)
-    checkIfAccessoryViewIsAvailableForFormNamed:(const std::string&)formName
-                                      fieldName:(const std::string&)fieldName
-                                       webState:(web::WebState*)webState
-                              completionHandler:
-                                  (AccessoryViewAvailableCompletion)
-                                      completionHandler {
+checkIfAccessoryViewIsAvailableForFormNamed:(const std::string&)formName
+                                  fieldName:(const std::string&)fieldName
+                                  fieldType:(const std::string&)fieldType
+                                   webState:(web::WebState*)webState
+                          completionHandler:(AccessoryViewAvailableCompletion)
+                                                completionHandler {
   [self processPage:webState];
   completionHandler(YES);
 }
 
 - (void)retrieveAccessoryViewForFormNamed:(const std::string&)formName
                                 fieldName:(const std::string&)fieldName
+                                fieldType:(const std::string&)fieldType
                                     value:(const std::string&)value
                                      type:(const std::string&)type
                                  webState:(web::WebState*)webState
@@ -340,6 +345,7 @@ AutofillSuggestionState::AutofillSuggestionState(const std::string& form_name,
   accessoryViewUpdateBlock_ = [accessoryViewUpdateBlock copy];
   [self retrieveSuggestionsForFormNamed:formName
                               fieldName:fieldName
+                              fieldType:fieldType
                                    type:type
                                webState:webState];
 }

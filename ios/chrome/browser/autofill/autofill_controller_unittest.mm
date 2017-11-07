@@ -58,11 +58,13 @@
 
 - (void)retrieveSuggestionsForFormNamed:(const std::string&)formName
                               fieldName:(const std::string&)fieldName
+                              fieldType:(const std::string&)fieldType
                                    type:(const std::string&)type
                                webState:(web::WebState*)webState {
   self.suggestionRetrievalComplete = NO;
   [super retrieveSuggestionsForFormNamed:formName
                                fieldName:fieldName
+                               fieldType:fieldType
                                     type:type
                                 webState:webState];
 }

@@ -105,6 +105,7 @@ struct TestFormActivityInfo {
   WebState* web_state;
   std::string form_name;
   std::string field_name;
+  std::string field_type;
   std::string type;
   std::string value;
   bool input_missing;

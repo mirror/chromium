@@ -111,6 +111,7 @@ class WebStateImpl : public WebState, public NavigationManagerDelegate {
   // Called when form activity is registered.
   void OnFormActivityRegistered(const std::string& form_name,
                                 const std::string& field_name,
+                                const std::string& field_type,
                                 const std::string& type,
                                 const std::string& value,
                                 bool input_missing);

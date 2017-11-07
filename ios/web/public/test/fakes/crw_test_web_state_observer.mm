@@ -251,6 +251,7 @@ TestUpdateFaviconUrlCandidatesInfo::~TestUpdateFaviconUrlCandidatesInfo() =
 - (void)webState:(web::WebState*)webState
     didRegisterFormActivityWithFormNamed:(const std::string&)formName
                                fieldName:(const std::string&)fieldName
+                               fieldType:(const std::string&)fieldType
                                     type:(const std::string&)type
                                    value:(const std::string&)value
                             inputMissing:(BOOL)inputMissing {
@@ -258,6 +259,7 @@ TestUpdateFaviconUrlCandidatesInfo::~TestUpdateFaviconUrlCandidatesInfo() =
   _formActivityInfo->web_state = webState;
   _formActivityInfo->form_name = formName;
   _formActivityInfo->field_name = fieldName;
+  _formActivityInfo->field_type = fieldType;
   _formActivityInfo->type = type;
   _formActivityInfo->value = value;
   _formActivityInfo->input_missing = inputMissing;
