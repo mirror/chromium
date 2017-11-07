@@ -16,6 +16,24 @@
       "revId": "d0b20839b6827d2ce7a156baf9f480695932ea8b",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2546fe5d_96a38a18",
+        "filename": "content/shell/renderer/layout_test/layout_test_content_renderer_client.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 174,
+      "author": {
+        "id": 1143639
+      },
+      "writtenOn": "2017-11-07T15:38:40Z",
+      "side": 0,
+      "message": "The purpose of this CL is precisely to remove the mocking of MediaStreamCenter. By removing this, content::MediaStreamCenter will always be used as the WebMediaStreamCenter implementation.",
+      "parentUuid": "b353e92d_8bc2bab2",
+      "revId": "d0b20839b6827d2ce7a156baf9f480695932ea8b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
