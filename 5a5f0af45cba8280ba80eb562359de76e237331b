@@ -119,6 +119,30 @@
     },
     {
       "key": {
+        "uuid": "f1ad305b_fb51cc1c",
+        "filename": "components/search_provider_logos/google_logo_api.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 314,
+      "author": {
+        "id": 1116059
+      },
+      "writtenOn": "2017-11-07T17:13:46Z",
+      "side": 1,
+      "message": "Huh, okay. I never quite understood why we need two different fields in the first place, since only one of them will ever be used at a time, so... eh.",
+      "parentUuid": "09aaffb8_6f949003",
+      "range": {
+        "startLine": 314,
+        "startChar": 60,
+        "endLine": 314,
+        "endChar": 0
+      },
+      "revId": "5a5f0af45cba8280ba80eb562359de76e237331b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "c2ba618b_1945c67c",
         "filename": "components/search_provider_logos/logo_common.h",
         "patchSetId": 1

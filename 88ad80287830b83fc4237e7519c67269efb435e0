@@ -1,0 +1,73 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "35f60e61_59e83b1b",
+        "filename": "components/search_provider_logos/google_logo_api.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 300,
+      "author": {
+        "id": 1116059
+      },
+      "writtenOn": "2017-11-07T17:13:46Z",
+      "side": 1,
+      "message": "Hm, now if is_animated, but there isn\u0027t a large_image, then we\u0027d return an invalid doodle. Maybe also return nullptr if it\u0027s animated, but large_image doesn\u0027t exist?",
+      "range": {
+        "startLine": 300,
+        "startChar": 69,
+        "endLine": 300,
+        "endChar": 0
+      },
+      "revId": "88ad80287830b83fc4237e7519c67269efb435e0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "325193a0_39846bec",
+        "filename": "components/search_provider_logos/logo_cache.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 82,
+      "author": {
+        "id": 1116059
+      },
+      "writtenOn": "2017-11-07T17:13:46Z",
+      "side": 1,
+      "message": "Don\u0027t add a default case. Then we a new enum entry is added, but not handled here, it\u0027ll fail to compile.",
+      "range": {
+        "startLine": 82,
+        "startChar": 12,
+        "endLine": 82,
+        "endChar": 0
+      },
+      "revId": "88ad80287830b83fc4237e7519c67269efb435e0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8cb2a6c1_4beb5d84",
+        "filename": "components/search_provider_logos/logo_common.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 77,
+      "author": {
+        "id": 1116059
+      },
+      "writtenOn": "2017-11-07T17:13:46Z",
+      "side": 1,
+      "message": "...but now the initialization should be removed from the .cc :)",
+      "range": {
+        "startLine": 77,
+        "startChar": 41,
+        "endLine": 77,
+        "endChar": 0
+      },
+      "revId": "88ad80287830b83fc4237e7519c67269efb435e0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
