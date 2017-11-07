@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "5157eaf2_8c06cd7b",
+        "filename": "chrome/browser/ui/omnibox/chrome_omnibox_edit_controller.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 56,
+      "author": {
+        "id": 1105777
+      },
+      "writtenOn": "2017-11-07T22:18:17Z",
+      "side": 1,
+      "message": "I added my intention. Let me know if you\u0027d like to tweak it.",
+      "parentUuid": "6dd8f2d0_e2e4c09b",
+      "revId": "33263b0fcd1f0eb21e5841fa0cfbb0cd0bf64c94",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "8e3520ab_61132919",
         "filename": "chrome/browser/ui/omnibox/chrome_omnibox_edit_controller.cc",
         "patchSetId": 1
@@ -33,6 +51,24 @@
       "revId": "33263b0fcd1f0eb21e5841fa0cfbb0cd0bf64c94",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "630d0325_279716af",
+        "filename": "chrome/browser/ui/omnibox/chrome_omnibox_edit_controller.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 69,
+      "author": {
+        "id": 1105777
+      },
+      "writtenOn": "2017-11-07T22:18:17Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "8e3520ab_61132919",
+      "revId": "33263b0fcd1f0eb21e5841fa0cfbb0cd0bf64c94",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -59,6 +95,30 @@
     },
     {
       "key": {
+        "uuid": "13325803_31b4ee98",
+        "filename": "components/omnibox/browser/history_provider.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 115,
+      "author": {
+        "id": 1105777
+      },
+      "writtenOn": "2017-11-07T22:18:17Z",
+      "side": 1,
+      "message": "I can certainly do this if you really want, but given that the branch is uncommon, and calling it twice is even less common, maybe it\u0027s best to leave it? I could also do something like\n\nif (switch_tab_message.empty())",
+      "parentUuid": "6cd2b653_8008ff13",
+      "range": {
+        "startLine": 113,
+        "startChar": 0,
+        "endLine": 115,
+        "endChar": 35
+      },
+      "revId": "33263b0fcd1f0eb21e5841fa0cfbb0cd0bf64c94",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "2f74c158_8f67893a",
         "filename": "components/omnibox/browser/history_provider.cc",
         "patchSetId": 1
@@ -73,6 +133,24 @@
       "revId": "33263b0fcd1f0eb21e5841fa0cfbb0cd0bf64c94",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4fb31574_d7977a34",
+        "filename": "components/omnibox/browser/history_provider.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 116,
+      "author": {
+        "id": 1105777
+      },
+      "writtenOn": "2017-11-07T22:18:17Z",
+      "side": 1,
+      "message": "Will do.",
+      "parentUuid": "2f74c158_8f67893a",
+      "revId": "33263b0fcd1f0eb21e5841fa0cfbb0cd0bf64c94",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
