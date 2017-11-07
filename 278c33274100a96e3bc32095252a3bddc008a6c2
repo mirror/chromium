@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "070afd0e_d87fac9c",
+        "filename": "third_party/WebKit/Source/platform/graphics/paint/DisplayItem.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 367,
+      "author": {
+        "id": 1002481
+      },
+      "writtenOn": "2017-11-07T00:15:53Z",
+      "side": 1,
+      "message": "The compiler doesn\u0027t allow const fields with \"const\" uninitialized. It also doesn\u0027t allow mixed non-const enum and unsigned bit fields, so this is changed to unsigned.\n\nAnother choice might be to avoid the in-place constructor, but let ContiguousContainer::AppendByMoving() set is_tombstone_ to true, but this would make ContiguousContainer no longer generic.",
+      "revId": "278c33274100a96e3bc32095252a3bddc008a6c2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
