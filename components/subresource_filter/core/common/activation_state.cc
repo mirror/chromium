@@ -24,8 +24,24 @@ std::unique_ptr<base::trace_event::TracedValue> ActivationState::ToTracedValue()
   value->SetBoolean("generic_blocking_rules_disabled",
                     generic_blocking_rules_disabled);
   value->SetBoolean("measure_performance", measure_performance);
-  value->SetBoolean("enable_logging", enable_logging);
+
+  std::ostringstream policy;
+  policy << logging_policy;
+  value->SetString("logging_policy", policy.str());
   return value;
+}
+
+std::ostream& operator<<(std::ostream& os,
+                         ActivationState::LoggingPolicy policy) {
+  switch (policy) {
+    case ActivationState::LoggingPolicy::kNone:
+      os << "None";
+      break;
+    case ActivationState::LoggingPolicy::kBetterAds:
+      os << "BetterAds";
+      break;
+  };
+  return os;
 }
 
 }  // namespace subresource_filter

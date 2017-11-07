@@ -142,7 +142,8 @@ void ContentSubresourceFilterThrottleManager::DidFinishNavigation(
     if (filter) {
       statistics_ =
           base::MakeUnique<PageLoadStatistics>(filter->activation_state());
-      if (filter->activation_state().enable_logging) {
+      if (filter->activation_state().logging_policy ==
+          ActivationState::LoggingPolicy::kBetterAds) {
         DCHECK(filter->activation_state().activation_level !=
                ActivationLevel::DISABLED);
         frame_host->AddMessageToConsole(content::CONSOLE_MESSAGE_LEVEL_WARNING,

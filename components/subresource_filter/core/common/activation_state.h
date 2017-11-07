@@ -20,6 +20,15 @@ namespace subresource_filter {
 // Encompasses all details of whether/how subresource filtering should be
 // activated in a given frame in the frame hierarchy.
 struct ActivationState {
+  // Policy for console messages logged for disallowed subresource and subframe
+  // navigation loads.
+  enum class LoggingPolicy {
+    // Do not do any logging.
+    kNone,
+
+    // Do logging consistent with better ads standard violations.
+    kBetterAds,
+  };
   ActivationState() = default;
 
   explicit ActivationState(ActivationLevel activation_level)
@@ -33,7 +42,7 @@ struct ActivationState {
             generic_blocking_rules_disabled ==
                 rhs.generic_blocking_rules_disabled) &&
            measure_performance == rhs.measure_performance &&
-           enable_logging == rhs.enable_logging;
+           logging_policy == rhs.logging_policy;
   }
 
   bool operator!=(const ActivationState& rhs) const { return !operator==(rhs); }
@@ -63,8 +72,12 @@ struct ActivationState {
   bool measure_performance = false;
 
   // Whether or not to log messages in the devtools console.
-  bool enable_logging = false;
+  LoggingPolicy logging_policy = LoggingPolicy::kNone;
 };
+
+// For logging only.
+std::ostream& operator<<(std::ostream& os,
+                         ActivationState::LoggingPolicy policy);
 
 }  // namespace subresource_filter
 

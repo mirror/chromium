@@ -101,12 +101,13 @@ void ContentSubresourceFilterDriverFactory::NotifyPageActivationComputed(
       activation_options().performance_measurement_rate);
 
   // This bit keeps track of BAS enforcement-style logging, not warning logging.
-  state.enable_logging =
-      activation_options().activation_level == ActivationLevel::ENABLED &&
+  if (activation_options().activation_level == ActivationLevel::ENABLED &&
       !activation_options().should_suppress_notifications &&
       matched_configuration != Configuration::MakeForForcedActivation() &&
       base::FeatureList::IsEnabled(
-          kSafeBrowsingSubresourceFilterExperimentalUI);
+          kSafeBrowsingSubresourceFilterExperimentalUI)) {
+    state.logging_policy = ActivationState::LoggingPolicy::kBetterAds;
+  }
 
   if (warning &&
       activation_options().activation_level == ActivationLevel::ENABLED) {

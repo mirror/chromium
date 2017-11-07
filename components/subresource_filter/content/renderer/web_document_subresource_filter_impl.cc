@@ -131,7 +131,9 @@ void WebDocumentSubresourceFilterImpl::ReportDisallowedLoad() {
 }
 
 bool WebDocumentSubresourceFilterImpl::ShouldLogToConsole() {
-  return activation_state().enable_logging;
+  // Only log for better ads standard policy.
+  return activation_state().logging_policy ==
+         ActivationState::LoggingPolicy::kBetterAds;
 }
 
 WebLoadPolicy WebDocumentSubresourceFilterImpl::getLoadPolicyImpl(

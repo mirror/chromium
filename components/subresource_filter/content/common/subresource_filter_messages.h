@@ -18,13 +18,16 @@
 
 IPC_ENUM_TRAITS_MAX_VALUE(subresource_filter::ActivationLevel,
                           subresource_filter::ActivationLevel::LAST)
+IPC_ENUM_TRAITS_MAX_VALUE(
+    subresource_filter::ActivationState::LoggingPolicy,
+    subresource_filter::ActivationState::LoggingPolicy::kBetterAds)
 
 IPC_STRUCT_TRAITS_BEGIN(subresource_filter::ActivationState)
   IPC_STRUCT_TRAITS_MEMBER(activation_level)
   IPC_STRUCT_TRAITS_MEMBER(filtering_disabled_for_document)
   IPC_STRUCT_TRAITS_MEMBER(generic_blocking_rules_disabled)
   IPC_STRUCT_TRAITS_MEMBER(measure_performance)
-  IPC_STRUCT_TRAITS_MEMBER(enable_logging)
+  IPC_STRUCT_TRAITS_MEMBER(logging_policy)
 IPC_STRUCT_TRAITS_END()
 
 IPC_STRUCT_TRAITS_BEGIN(subresource_filter::DocumentLoadStatistics)

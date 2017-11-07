@@ -371,7 +371,7 @@ TEST_F(ActivationStateComputingThrottleSubFrameTest, DryRunIsPropagated) {
 TEST_F(ActivationStateComputingThrottleSubFrameTest,
        DryRunWithLoggingIsPropagated) {
   ActivationState page_state(ActivationLevel::DRYRUN);
-  page_state.enable_logging = true;
+  page_state.logging_policy = ActivationState::LoggingPolicy::kBetterAds;
   NavigateAndCommitMainFrameWithPageActivationState(
       GURL("http://example.test/"), page_state);
   EXPECT_EQ(ActivationLevel::DRYRUN, last_activation_state().activation_level);
@@ -385,7 +385,7 @@ TEST_F(ActivationStateComputingThrottleSubFrameTest,
 
   ActivationState state = last_activation_state();
   EXPECT_EQ(ActivationLevel::DRYRUN, state.activation_level);
-  EXPECT_TRUE(state.enable_logging);
+  EXPECT_EQ(ActivationState::LoggingPolicy::kBetterAds, state.logging_policy);
   EXPECT_FALSE(state.filtering_disabled_for_document);
   EXPECT_FALSE(state.generic_blocking_rules_disabled);
 }

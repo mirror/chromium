@@ -92,7 +92,8 @@ void SubframeNavigationFilteringThrottle::OnCalculatedLoadPolicy(
   total_defer_time_ += base::TimeTicks::Now() - last_defer_timestamp_;
 
   if (policy == LoadPolicy::DISALLOW) {
-    if (parent_frame_filter_->activation_state().enable_logging) {
+    if (parent_frame_filter_->activation_state().logging_policy ==
+        ActivationState::LoggingPolicy::kBetterAds) {
       std::ostringstream oss(kDisallowSubframeConsoleMessagePrefix);
       oss << navigation_handle()->GetURL();
       oss << kDisallowSubframeConsoleMessageSuffix;
