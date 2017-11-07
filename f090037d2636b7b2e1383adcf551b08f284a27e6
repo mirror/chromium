@@ -16,6 +16,24 @@
       "revId": "f090037d2636b7b2e1383adcf551b08f284a27e6",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e2b9a5df_6d6427e0",
+        "filename": "components/translate/core/browser/translate_prefs.cc",
+        "patchSetId": 10
+      },
+      "lineNbr": 286,
+      "author": {
+        "id": 1115913
+      },
+      "writtenOn": "2017-11-07T05:04:16Z",
+      "side": 1,
+      "message": "Oh, you just missed that, or is there a reason to use unordered_set?",
+      "parentUuid": "7c4a1bb9_14277208",
+      "revId": "f090037d2636b7b2e1383adcf551b08f284a27e6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
