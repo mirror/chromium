@@ -45,6 +45,14 @@ class CORE_EXPORT ThreadDebugger : public v8_inspector::V8InspectorClient,
   void AllAsyncTasksCanceled();
   void AsyncTaskStarted(void* task);
   void AsyncTaskFinished(void* task);
+
+  v8_inspector::V8Inspector::RemoteAsyncTaskId RemoteAsyncTaskScheduled(
+      const String& task_name,
+      const String& target_token);
+  void RemoteAsyncTaskStarted(const String& source_token,
+                              v8_inspector::V8Inspector::RemoteAsyncTaskId);
+  void RemoteAsyncTaskFinished(v8_inspector::V8Inspector::RemoteAsyncTaskId);
+
   unsigned PromiseRejected(v8::Local<v8::Context>,
                            const String& error_message,
                            v8::Local<v8::Value> exception,

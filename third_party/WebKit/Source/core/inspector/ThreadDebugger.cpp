@@ -102,6 +102,26 @@ void ThreadDebugger::AsyncTaskFinished(void* task) {
   v8_inspector_->asyncTaskFinished(task);
 }
 
+v8_inspector::V8Inspector::RemoteAsyncTaskId
+ThreadDebugger::RemoteAsyncTaskScheduled(const String& task_name,
+                                         const String& target_token) {
+  return v8_inspector_->remoteAsyncTaskScheduled(
+      ToV8InspectorStringView(task_name),
+      ToV8InspectorStringView(target_token));
+}
+
+void ThreadDebugger::RemoteAsyncTaskStarted(
+    const String& source_token,
+    v8_inspector::V8Inspector::RemoteAsyncTaskId task_id) {
+  v8_inspector_->remoteAsyncTaskStarted(ToV8InspectorStringView(source_token),
+                                        task_id);
+}
+
+void ThreadDebugger::RemoteAsyncTaskFinished(
+    v8_inspector::V8Inspector::RemoteAsyncTaskId task_id) {
+  v8_inspector_->remoteAsyncTaskFinished(task_id);
+}
+
 unsigned ThreadDebugger::PromiseRejected(
     v8::Local<v8::Context> context,
     const String& error_message,

@@ -9,6 +9,7 @@
 #include "core/dom/TaskRunnerHelper.h"
 #include "core/frame/Deprecation.h"
 #include "core/frame/WebLocalFrameImpl.h"
+#include "core/inspector/MainThreadDebugger.h"
 #include "core/loader/DocumentLoader.h"
 #include "core/loader/ThreadableLoadingContext.h"
 #include "core/loader/WorkerFetchContext.h"
@@ -75,15 +76,24 @@ void ThreadedMessagingProxyBase::Trace(blink::Visitor* visitor) {
 void ThreadedMessagingProxyBase::InitializeWorkerThread(
     std::unique_ptr<GlobalScopeCreationParams> global_scope_creation_params,
     const WTF::Optional<WorkerBackingThreadStartupData>& thread_startup_data,
-    const KURL& script_url) {
+    const KURL& script_url,
+    v8_inspector::V8Inspector::RemoteAsyncTaskId task_id) {
   DCHECK(IsParentContextThread());
 
   Document* document = ToDocument(GetExecutionContext());
 
+  String source_async_token;
+  if (task_id != v8_inspector::V8Inspector::kEmptyAsyncTaskId) {
+    source_async_token =
+        MainThreadDebugger::Instance()->AsyncToken(document->GetFrame());
+  }
+
   worker_thread_ = CreateWorkerThread();
   worker_thread_->Start(
       std::move(global_scope_creation_params), thread_startup_data,
-      GetWorkerInspectorProxy()->ShouldPauseOnWorkerStart(document),
+      std::make_unique<GlobalScopeInspectorCreationParams>(
+          GetWorkerInspectorProxy()->ShouldPauseOnWorkerStart(document),
+          task_id, source_async_token),
       GetParentFrameTaskRunners());
   WorkerThreadCreated();
   GetWorkerInspectorProxy()->WorkerThreadCreated(document, GetWorkerThread(),

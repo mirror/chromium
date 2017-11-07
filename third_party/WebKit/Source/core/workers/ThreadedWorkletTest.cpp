@@ -157,7 +157,8 @@ class ThreadedWorkletMessagingProxyForTest
             worker_clients, document->AddressSpace(),
             OriginTrialContext::GetTokens(document).get(),
             std::move(worker_settings), kV8CacheOptionsDefault),
-        WTF::nullopt, document->Url());
+        WTF::nullopt, document->Url(),
+        v8_inspector::V8Inspector::kEmptyAsyncTaskId);
   }
 
  private:

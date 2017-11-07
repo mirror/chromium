@@ -84,9 +84,14 @@ class CORE_EXPORT WorkerThreadDebugger final : public ThreadDebugger {
                          unsigned column_number,
                          v8_inspector::V8StackTrace*) override;
   void consoleClear(int context_group_id) override;
+  std::unique_ptr<v8_inspector::StringBuffer> asyncToken(
+      int context_group_id) override;
+
+  String AsyncToken(int context_group_id);
 
   int paused_context_group_id_;
   WTF::HashMap<int, WorkerThread*> worker_threads_;
+  WTF::HashMap<int, String> async_tokens_;
 };
 
 }  // namespace blink

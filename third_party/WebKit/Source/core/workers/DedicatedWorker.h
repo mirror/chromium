@@ -14,6 +14,7 @@
 #include "platform/bindings/ActiveScriptWrappable.h"
 #include "platform/wtf/Forward.h"
 #include "platform/wtf/RefPtr.h"
+#include "v8/include/v8-inspector.h"
 
 namespace blink {
 
@@ -76,7 +77,7 @@ class CORE_EXPORT DedicatedWorker final
 
   // Callbacks for |script_loader_|.
   void OnResponse();
-  void OnFinished();
+  void OnFinished(v8_inspector::V8Inspector::RemoteAsyncTaskId);
 
   // Implements EventTarget (via AbstractWorker -> EventTargetWithInlineData).
   const AtomicString& InterfaceName() const final;

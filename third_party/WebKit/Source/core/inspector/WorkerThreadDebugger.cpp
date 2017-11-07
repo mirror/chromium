@@ -107,6 +107,7 @@ void WorkerThreadDebugger::ContextWillBeDestroyed(
   int worker_context_group_id = ContextGroupId(worker_thread);
   DCHECK(worker_threads_.Contains(worker_context_group_id));
   worker_threads_.erase(worker_context_group_id);
+  async_tokens_.erase(worker_context_group_id);
   GetV8Inspector()->contextDestroyed(context);
 }
 
@@ -222,6 +223,21 @@ v8::MaybeLocal<v8::Value> WorkerThreadDebugger::memoryInfo(
     v8::Local<v8::Context>) {
   NOTREACHED();
   return v8::MaybeLocal<v8::Value>();
+}
+
+std::unique_ptr<v8_inspector::StringBuffer> WorkerThreadDebugger::asyncToken(
+    int context_group_id) {
+  return v8_inspector::StringBuffer::create(
+      ToV8InspectorStringView(AsyncToken(context_group_id)));
+}
+
+String WorkerThreadDebugger::AsyncToken(int context_group_id) {
+  auto it = async_tokens_.find(context_group_id);
+  if (it != async_tokens_.end())
+    return it->value;
+  String async_token = "dedicated:" + IdentifiersFactory::CreateIdentifier();
+  async_tokens_.insert(context_group_id, async_token);
+  return async_token;
 }
 
 }  // namespace blink
