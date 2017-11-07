@@ -2253,27 +2253,10 @@ void ChromeContentBrowserClient::AllowCertificateError(
     return;
   }
 
-  if (base::CommandLine::ForCurrentProcess()->HasSwitch(
-          switches::kCommittedInterstitials)) {
-    // We deny the request here in order to trigger the committed interstitials
-    // code path (committing certificate error pages as navigations) instead of
-    // the old code path.
-    callback.Run(content::CERTIFICATE_REQUEST_RESULT_TYPE_DENY);
-    return;
-  }
-
-  // Otherwise, display an SSL blocking page. The interstitial page takes
-  // ownership of ssl_blocking_page.
-
-  CertificateReportingService* cert_reporting_service =
-      CertificateReportingServiceFactory::GetForBrowserContext(
-          web_contents->GetBrowserContext());
-  std::unique_ptr<CertificateReportingServiceCertReporter> cert_reporter(
-      new CertificateReportingServiceCertReporter(cert_reporting_service));
-
-  SSLErrorHandler::HandleSSLError(
-      web_contents, cert_error, ssl_info, request_url, strict_enforcement,
-      expired_previous_decision, std::move(cert_reporter), callback);
+  // We deny the request here in order to trigger the committed interstitials
+  // code path (committing certificate error pages as navigations) instead of
+  // the old code path.
+  callback.Run(content::CERTIFICATE_REQUEST_RESULT_TYPE_DENY);
 }
 
 void ChromeContentBrowserClient::SelectClientCertificate(
