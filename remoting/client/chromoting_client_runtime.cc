@@ -84,6 +84,8 @@ ChromotingClientRuntime::~ChromotingClientRuntime() {
 void ChromotingClientRuntime::SetDelegate(
     ChromotingClientRuntime::Delegate* delegate) {
   delegate_ = delegate;
+
+  ResetLogWriterTokenGetter();
 }
 
 void ChromotingClientRuntime::CreateLogWriter() {
@@ -96,17 +98,17 @@ void ChromotingClientRuntime::CreateLogWriter() {
   log_writer_.reset(new TelemetryLogWriter(
       kTelemetryBaseUrl,
       base::MakeUnique<ChromiumUrlRequestFactory>(url_requester())));
-  log_writer_->SetAuthClosure(
-      base::Bind(&ChromotingClientRuntime::RequestAuthTokenForLogger,
-                 base::Unretained(this)));
 }
 
-void ChromotingClientRuntime::RequestAuthTokenForLogger() {
-  if (delegate_) {
-    delegate_->RequestAuthTokenForLogger();
-  } else {
-    DLOG(ERROR) << "ClientRuntime Delegate is null.";
+void ChromotingClientRuntime::ResetLogWriterTokenGetter() {
+  if (!network_task_runner()->BelongsToCurrentThread()) {
+    network_task_runner()->PostTask(
+        FROM_HERE,
+        base::Bind(&ChromotingClientRuntime::ResetLogWriterTokenGetter,
+                   base::Unretained(this)));
+    return;
   }
+  log_writer()->SetTokenGetter(delegate_->token_getter());
 }
 
 ChromotingEventLogWriter* ChromotingClientRuntime::log_writer() {

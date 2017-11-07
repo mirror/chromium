@@ -19,21 +19,26 @@ TelemetryLogWriter::TelemetryLogWriter(
     const std::string& telemetry_base_url,
     std::unique_ptr<UrlRequestFactory> request_factory)
     : telemetry_base_url_(telemetry_base_url),
-      request_factory_(std::move(request_factory)) {}
+      request_factory_(std::move(request_factory)),
+      weak_factory_(this) {}
 
 TelemetryLogWriter::~TelemetryLogWriter() {
   DCHECK(thread_checker_.CalledOnValidThread());
 }
 
-void TelemetryLogWriter::SetAuthToken(const std::string& auth_token) {
+void TelemetryLogWriter::SetTokenGetter(OAuthTokenGetter* token_getter) {
   DCHECK(thread_checker_.CalledOnValidThread());
-  auth_token_ = auth_token;
-  SendPendingEntries();
+  token_getter_ = token_getter;
 }
 
-void TelemetryLogWriter::SetAuthClosure(const base::Closure& closure) {
-  DCHECK(thread_checker_.CalledOnValidThread());
-  auth_closure_ = closure;
+void TelemetryLogWriter::RequestNewToken() {
+  if (is_token_fetching_) {
+    return;
+  }
+  auth_token_ = "";
+  is_token_fetching_ = true;
+  token_getter_->CallWithToken(base::Bind(&TelemetryLogWriter::OnTokenReceived,
+                                          weak_factory_.GetWeakPtr()));
 }
 
 void TelemetryLogWriter::Log(const ChromotingEvent& entry) {
@@ -45,6 +50,11 @@ void TelemetryLogWriter::Log(const ChromotingEvent& entry) {
 void TelemetryLogWriter::SendPendingEntries() {
   DCHECK(thread_checker_.CalledOnValidThread());
   if (request_ || pending_entries_.empty()) {
+    return;
+  }
+
+  if (token_getter_ && auth_token_.empty()) {
+    RequestNewToken();
     return;
   }
 
@@ -103,8 +113,8 @@ void TelemetryLogWriter::PostJsonToServer(const std::string& json) {
   VLOG(1) << "Posting log to telemetry server: " << json;
 
   request_->SetPostData("application/json", json);
-  request_->Start(
-      base::Bind(&TelemetryLogWriter::OnSendLogResult, base::Unretained(this)));
+  request_->Start(base::Bind(&TelemetryLogWriter::OnSendLogResult,
+                             weak_factory_.GetWeakPtr()));
 }
 
 void TelemetryLogWriter::OnSendLogResult(
@@ -129,15 +139,27 @@ void TelemetryLogWriter::OnSendLogResult(
             << " log(s) to telemetry server.";
   }
   sending_entries_.clear();
-  bool should_call_auth_closure =
-      result.status == net::HTTP_UNAUTHORIZED && !auth_closure_.is_null();
+  bool should_request_token =
+      result.status == net::HTTP_UNAUTHORIZED && token_getter_;
   request_.reset();  // This may also destroy the result.
-  if (should_call_auth_closure) {
+  if (should_request_token) {
     VLOG(1) << "Request is unauthorized. Trying to call the auth closure...";
-    auth_closure_.Run();
+    RequestNewToken();
   } else {
     SendPendingEntries();
   }
+}
+
+void TelemetryLogWriter::OnTokenReceived(OAuthTokenGetter::Status status,
+                                         const std::string& user_email,
+                                         const std::string& access_token) {
+  is_token_fetching_ = false;
+  if (status != OAuthTokenGetter::Status::SUCCESS) {
+    LOG(ERROR) << "Failed to request OAuth token. Status: " << status;
+    return;
+  }
+  auth_token_ = access_token;
+  SendPendingEntries();
 }
 
 }  // namespace remoting

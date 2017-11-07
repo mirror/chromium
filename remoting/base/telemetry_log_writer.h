@@ -10,10 +10,12 @@
 #include "base/callback.h"
 #include "base/containers/circular_deque.h"
 #include "base/macros.h"
+#include "base/memory/weak_ptr.h"
 #include "base/threading/thread_checker.h"
 #include "base/values.h"
 #include "remoting/base/chromoting_event.h"
 #include "remoting/base/chromoting_event_log_writer.h"
+#include "remoting/base/oauth_token_getter.h"
 #include "remoting/base/url_request.h"
 
 namespace remoting {
@@ -28,16 +30,9 @@ class TelemetryLogWriter : public ChromotingEventLogWriter {
   TelemetryLogWriter(const std::string& telemetry_base_url,
                      std::unique_ptr<UrlRequestFactory> request_factory);
 
-  // "Authorization:Bearer {TOKEN}" will be added if auth_token is not empty.
-  // After this function is called, the log writer will try to send out pending
-  // logs if the list is not empty.
-  void SetAuthToken(const std::string& auth_token) override;
+  void SetTokenGetter(OAuthTokenGetter* token_getter) override;
 
-  // The closure will be called when the request fails with unauthorized error
-  // code. The closure should call SetAuthToken to set the token.
-  // If the closure is not set, the log writer will try to resend the logs
-  // immediately.
-  void SetAuthClosure(const base::Closure& closure) override;
+  void RequestNewToken() override;
 
   // Push the log entry to the pending list and send out all the pending logs.
   void Log(const ChromotingEvent& entry) override;
@@ -48,12 +43,16 @@ class TelemetryLogWriter : public ChromotingEventLogWriter {
   void SendPendingEntries();
   void PostJsonToServer(const std::string& json);
   void OnSendLogResult(const remoting::UrlRequest::Result& result);
+  void OnTokenReceived(OAuthTokenGetter::Status status,
+                       const std::string& user_email,
+                       const std::string& access_token);
 
   base::ThreadChecker thread_checker_;
   std::string telemetry_base_url_;
   std::unique_ptr<UrlRequestFactory> request_factory_;
   std::string auth_token_;
-  base::Closure auth_closure_;
+  OAuthTokenGetter* token_getter_;
+  bool is_token_fetching_ = false;
   std::unique_ptr<UrlRequest> request_;
 
   // Entries to be sent.
@@ -62,6 +61,8 @@ class TelemetryLogWriter : public ChromotingEventLogWriter {
   // Entries being sent.
   // These will be pushed back to pending_entries if error occurs.
   base::circular_deque<ChromotingEvent> sending_entries_;
+
+  base::WeakPtrFactory<TelemetryLogWriter> weak_factory_;
 
   DISALLOW_COPY_AND_ASSIGN(TelemetryLogWriter);
 };
