@@ -2,6 +2,29 @@
   "comments": [
     {
       "key": {
+        "uuid": "a2ff8613_d1ce69c9",
+        "filename": "components/security_state/ios/ssl_status_input_event_data.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 20,
+      "author": {
+        "id": 1126726
+      },
+      "writtenOn": "2017-11-07T18:36:02Z",
+      "side": 1,
+      "message": "To simplify the layering, this could live in ios/chrome/browser/ssl instead of in the component. There\u0027s really no reason for it to be in the component (as opposed to the //content version, which is used by multiple content embedders to putting it in the component allows it to be reused by those embedders).\n\nIf you want to leave it here since it\u0027s already here, though, I\u0027m okay with that.",
+      "range": {
+        "startLine": 20,
+        "startChar": 6,
+        "endLine": 20,
+        "endChar": 29
+      },
+      "revId": "e48d5b4fd05cebb1617d6ff3b74d0b7a7a63403a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "dabd6810_d0996b9c",
         "filename": "ios/chrome/browser/ssl/ios_security_state_tab_helper_unittest.mm",
         "patchSetId": 4

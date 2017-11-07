@@ -1295,6 +1295,30 @@
     },
     {
       "key": {
+        "uuid": "ea809522_35bcf703",
+        "filename": "ios/web/public/ssl_status.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 18,
+      "author": {
+        "id": 1126726
+      },
+      "writtenOn": "2017-11-07T18:36:02Z",
+      "side": 1,
+      "message": "Yeah, the main thing is that SupportsUserData doesn\u0027t support cloning/copying, which we need because SSLStatuses are cloned as part of NavigationEntry cloning.",
+      "parentUuid": "ed4aaae7_a63627d8",
+      "range": {
+        "startLine": 18,
+        "startChar": 7,
+        "endLine": 18,
+        "endChar": 16
+      },
+      "revId": "7c9b47cb14dca5fcab091e9108390ac96760328a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "194a76f5_a45f2a64",
         "filename": "ios/web/public/web_state/web_state.h",
         "patchSetId": 3
