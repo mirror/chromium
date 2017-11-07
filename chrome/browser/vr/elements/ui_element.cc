@@ -95,7 +95,10 @@ bool UiElement::DoBeginFrame(const base::TimeTicks& time,
   bool updated = animation_player_.animations().size() > 0;
   animation_player_.Tick(time);
   last_frame_time_ = time;
-  return OnBeginFrame(time, look_at) || updated;
+  set_update_phase(kUpdatedAnimations);
+  bool begin_frame_updated = OnBeginFrame(time, look_at);
+  UpdateComputedOpacity();
+  return begin_frame_updated || (updated && IsVisible());
 }
 
 bool UiElement::OnBeginFrame(const base::TimeTicks& time,
@@ -270,12 +273,12 @@ void UiElement::AddBinding(std::unique_ptr<BindingBase> binding) {
 }
 
 bool UiElement::UpdateBindings() {
-  bool updated = false;
+  updated_bindings_this_frame_ = false;
   for (auto& binding : bindings_) {
     if (binding->Update())
-      updated = true;
+      updated_bindings_this_frame_ = true;
   }
-  return updated;
+  return updated_bindings_this_frame_;
 }
 
 gfx::Point3F UiElement::GetCenter() const {
@@ -385,17 +388,12 @@ void UiElement::LayOutChildren() {
   }
 }
 
-void UiElement::UpdateComputedOpacityRecursive() {
+void UiElement::UpdateComputedOpacity() {
   set_computed_opacity(opacity_);
   if (parent_) {
     set_computed_opacity(computed_opacity_ * parent_->computed_opacity());
   }
-
   set_update_phase(kUpdatedComputedOpacity);
-
-  for (auto& child : children_) {
-    child->UpdateComputedOpacityRecursive();
-  }
 }
 
 void UiElement::UpdateWorldSpaceTransformRecursive() {
