@@ -146,9 +146,12 @@ gpu::CollectInfoResult CollectDriverInfo(gpu::GPUInfo* gpu_info) {
       EGL_SURFACE_TYPE, EGL_PBUFFER_BIT,
       EGL_NONE};
   const EGLint kContextAttribs[] = {
+      EGL_CONTEXT_OPENGL_ROBUST_ACCESS_EXT,
+      EGL_TRUE,
       EGL_CONTEXT_OPENGL_RESET_NOTIFICATION_STRATEGY_EXT,
-          EGL_LOSE_CONTEXT_ON_RESET_EXT,
-      EGL_CONTEXT_CLIENT_VERSION, 2,
+      EGL_LOSE_CONTEXT_ON_RESET_EXT,
+      EGL_CONTEXT_CLIENT_VERSION,
+      2,
       EGL_NONE};
   const EGLint kSurfaceAttribs[] = {
       EGL_WIDTH, 1,
