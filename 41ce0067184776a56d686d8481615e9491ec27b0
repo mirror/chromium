@@ -22,6 +22,30 @@
       "revId": "41ce0067184776a56d686d8481615e9491ec27b0",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2e58be34_b5a11529",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 6
+      },
+      "lineNbr": 27,
+      "author": {
+        "id": 1249210
+      },
+      "writtenOn": "2017-11-07T15:19:13Z",
+      "side": 1,
+      "message": "Thanks, I filed https://bugs.chromium.org/p/chromium/issues/detail?id\u003d782237\n\nI put in some attributes that make sense to me coming from b/, but please have a look if that bug makes sense to you :)",
+      "parentUuid": "9dfcb349_aa4268e9",
+      "range": {
+        "startLine": 27,
+        "startChar": 0,
+        "endLine": 27,
+        "endChar": 4
+      },
+      "revId": "41ce0067184776a56d686d8481615e9491ec27b0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
