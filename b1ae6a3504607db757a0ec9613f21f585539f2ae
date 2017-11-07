@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "a0d53f87_dcf5085b",
+        "filename": "content/browser/devtools/devtools_url_interceptor_request_job.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 32,
+      "author": {
+        "id": 1148840
+      },
+      "writtenOn": "2017-11-07T23:46:07Z",
+      "side": 1,
+      "message": "I thought about it, but since it\u0027s so tightly coupled to the job it\u0027s easier to navigate in one file. In the future it\u0027ll be extremely easy to extract out, so for now lets keep it here.",
+      "parentUuid": "d5c65c6e_e3e116e2",
+      "range": {
+        "startLine": 32,
+        "startChar": 37,
+        "endLine": 32,
+        "endChar": 47
+      },
+      "revId": "b1ae6a3504607db757a0ec9613f21f585539f2ae",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "5c920ad8_67521116",
         "filename": "content/browser/devtools/devtools_url_interceptor_request_job.cc",
         "patchSetId": 4
@@ -39,6 +63,24 @@
       "revId": "b1ae6a3504607db757a0ec9613f21f585539f2ae",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8b92d849_b43a0247",
+        "filename": "content/browser/devtools/devtools_url_interceptor_request_job.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 305,
+      "author": {
+        "id": 1148840
+      },
+      "writtenOn": "2017-11-07T23:46:07Z",
+      "side": 1,
+      "message": "good catch!",
+      "parentUuid": "5c920ad8_67521116",
+      "revId": "b1ae6a3504607db757a0ec9613f21f585539f2ae",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -59,6 +101,24 @@
     },
     {
       "key": {
+        "uuid": "150333db_490a221d",
+        "filename": "content/browser/devtools/devtools_url_interceptor_request_job.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 317,
+      "author": {
+        "id": 1148840
+      },
+      "writtenOn": "2017-11-07T23:46:07Z",
+      "side": 1,
+      "message": "Moved into loop because trying to ensure we retain a reference the request is tricky since it may be cancelled between tasks.",
+      "parentUuid": "05be89a1_8eecfd08",
+      "revId": "b1ae6a3504607db757a0ec9613f21f585539f2ae",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "75201fee_ad1d19f9",
         "filename": "content/browser/devtools/devtools_url_interceptor_request_job.h",
         "patchSetId": 4
@@ -73,6 +133,24 @@
       "revId": "b1ae6a3504607db757a0ec9613f21f585539f2ae",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "03ae99a4_e6ddda3c",
+        "filename": "content/browser/devtools/devtools_url_interceptor_request_job.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 112,
+      "author": {
+        "id": 1148840
+      },
+      "writtenOn": "2017-11-07T23:46:07Z",
+      "side": 1,
+      "message": "In favor of not being inconsistent and not wanting to change all other occurrences I am going to keep it the same.",
+      "parentUuid": "75201fee_ad1d19f9",
+      "revId": "b1ae6a3504607db757a0ec9613f21f585539f2ae",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -93,6 +171,24 @@
     },
     {
       "key": {
+        "uuid": "5674cc70_4c856b23",
+        "filename": "content/browser/devtools/devtools_url_request_interceptor.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 132,
+      "author": {
+        "id": 1148840
+      },
+      "writtenOn": "2017-11-07T23:46:07Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "2dad33be_6e9a0053",
+      "revId": "b1ae6a3504607db757a0ec9613f21f585539f2ae",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "a4206ced_d1b10e91",
         "filename": "content/browser/devtools/devtools_url_request_interceptor.cc",
         "patchSetId": 4
@@ -110,6 +206,24 @@
     },
     {
       "key": {
+        "uuid": "efdf1e31_d1d1a337",
+        "filename": "content/browser/devtools/devtools_url_request_interceptor.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 270,
+      "author": {
+        "id": 1148840
+      },
+      "writtenOn": "2017-11-07T23:46:07Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "a4206ced_d1b10e91",
+      "revId": "b1ae6a3504607db757a0ec9613f21f585539f2ae",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "71cbf208_68cc1566",
         "filename": "content/browser/devtools/devtools_url_request_interceptor.h",
         "patchSetId": 4
@@ -124,6 +238,24 @@
       "revId": "b1ae6a3504607db757a0ec9613f21f585539f2ae",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b0e8d392_bdd573a6",
+        "filename": "content/browser/devtools/devtools_url_request_interceptor.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 96,
+      "author": {
+        "id": 1148840
+      },
+      "writtenOn": "2017-11-07T23:46:07Z",
+      "side": 1,
+      "message": "I discussed this with pfeldman@, since we don\u0027t need to check each one often, lets keep it as an enum for readability.",
+      "parentUuid": "71cbf208_68cc1566",
+      "revId": "b1ae6a3504607db757a0ec9613f21f585539f2ae",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -161,6 +293,24 @@
     },
     {
       "key": {
+        "uuid": "9bc21fb7_a5cee3b3",
+        "filename": "third_party/WebKit/LayoutTests/http/tests/inspector-protocol/network/request-interception-on-both-redirect-rewrite.js",
+        "patchSetId": 4
+      },
+      "lineNbr": 5,
+      "author": {
+        "id": 1148840
+      },
+      "writtenOn": "2017-11-07T23:46:07Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "011e5e72_47cc01d4",
+      "revId": "b1ae6a3504607db757a0ec9613f21f585539f2ae",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "e771a7e4_03f51509",
         "filename": "third_party/WebKit/LayoutTests/http/tests/inspector-protocol/network/request-interception-on-both-redirect-rewrite.js",
         "patchSetId": 4
@@ -175,6 +325,24 @@
       "revId": "b1ae6a3504607db757a0ec9613f21f585539f2ae",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d514f348_666330f3",
+        "filename": "third_party/WebKit/LayoutTests/http/tests/inspector-protocol/network/request-interception-on-both-redirect-rewrite.js",
+        "patchSetId": 4
+      },
+      "lineNbr": 70,
+      "author": {
+        "id": 1148840
+      },
+      "writtenOn": "2017-11-07T23:46:07Z",
+      "side": 1,
+      "message": "InterceptorHelper is not friendly to response interception... I tried to migrate it, but it\u0027s easier to just inline the stuff.",
+      "parentUuid": "e771a7e4_03f51509",
+      "revId": "b1ae6a3504607db757a0ec9613f21f585539f2ae",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -195,6 +363,24 @@
     },
     {
       "key": {
+        "uuid": "39bbf949_596b3363",
+        "filename": "third_party/WebKit/LayoutTests/http/tests/inspector-protocol/network/request-interception-on-both-redirect-rewrite.js",
+        "patchSetId": 4
+      },
+      "lineNbr": 120,
+      "author": {
+        "id": 1148840
+      },
+      "writtenOn": "2017-11-07T23:46:07Z",
+      "side": 1,
+      "message": "This shouldn\u0027t happen, I have a few network tests that have these requirements. This is also good protection against things like new devtools headers that might get inserted.",
+      "parentUuid": "52b63bc7_357b6434",
+      "revId": "b1ae6a3504607db757a0ec9613f21f585539f2ae",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "b4ccddfa_ad9a882a",
         "filename": "third_party/WebKit/LayoutTests/http/tests/inspector-protocol/network/request-interception-on-response.js",
         "patchSetId": 4
@@ -212,6 +398,24 @@
     },
     {
       "key": {
+        "uuid": "d37a7f86_0f6c53d8",
+        "filename": "third_party/WebKit/LayoutTests/http/tests/inspector-protocol/network/request-interception-on-response.js",
+        "patchSetId": 4
+      },
+      "lineNbr": 15,
+      "author": {
+        "id": 1148840
+      },
+      "writtenOn": "2017-11-07T23:46:07Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "b4ccddfa_ad9a882a",
+      "revId": "b1ae6a3504607db757a0ec9613f21f585539f2ae",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "a77f7aa0_285a0821",
         "filename": "third_party/WebKit/LayoutTests/http/tests/inspector-protocol/resources/interception-test.js",
         "patchSetId": 4
@@ -223,6 +427,24 @@
       "writtenOn": "2017-11-03T23:31:49Z",
       "side": 1,
       "message": "I don\u0027t think we use default parameters in JavaScript yet.",
+      "revId": "b1ae6a3504607db757a0ec9613f21f585539f2ae",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3e1f2575_c6adf3b7",
+        "filename": "third_party/WebKit/LayoutTests/http/tests/inspector-protocol/resources/interception-test.js",
+        "patchSetId": 4
+      },
+      "lineNbr": 51,
+      "author": {
+        "id": 1148840
+      },
+      "writtenOn": "2017-11-07T23:46:07Z",
+      "side": 1,
+      "message": "We don\u0027t... but dgozman@ said we are allowed to use tests as a playground for new features... meh... I can go either way.",
+      "parentUuid": "a77f7aa0_285a0821",
       "revId": "b1ae6a3504607db757a0ec9613f21f585539f2ae",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -246,6 +468,24 @@
     },
     {
       "key": {
+        "uuid": "dfbd0796_276e4168",
+        "filename": "third_party/WebKit/Source/core/inspector/browser_protocol.json",
+        "patchSetId": 4
+      },
+      "lineNbr": 1543,
+      "author": {
+        "id": 1148840
+      },
+      "writtenOn": "2017-11-07T23:46:07Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "a1c03349_5251f2c1",
+      "revId": "b1ae6a3504607db757a0ec9613f21f585539f2ae",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "48503643_a0fbb250",
         "filename": "third_party/WebKit/Source/core/inspector/browser_protocol.json",
         "patchSetId": 4
@@ -260,6 +500,24 @@
       "revId": "b1ae6a3504607db757a0ec9613f21f585539f2ae",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "56e0f884_1f477f00",
+        "filename": "third_party/WebKit/Source/core/inspector/browser_protocol.json",
+        "patchSetId": 4
+      },
+      "lineNbr": 1554,
+      "author": {
+        "id": 1148840
+      },
+      "writtenOn": "2017-11-07T23:46:07Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "48503643_a0fbb250",
+      "revId": "b1ae6a3504607db757a0ec9613f21f585539f2ae",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -295,6 +553,24 @@
       "revId": "b1ae6a3504607db757a0ec9613f21f585539f2ae",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "621f3d79_44456c0a",
+        "filename": "third_party/WebKit/Source/core/inspector/browser_protocol.json",
+        "patchSetId": 4
+      },
+      "lineNbr": 1942,
+      "author": {
+        "id": 1148840
+      },
+      "writtenOn": "2017-11-07T23:46:07Z",
+      "side": 1,
+      "message": "Yes it\u0027s unused, and yes now we are going to use getResponseBodyForInterception. The plan is to eventually consolidate RequestId and InterceptionId and we would remove getResponseBodyForInterception and use getResponseBody instead.",
+      "parentUuid": "4012d13d_7968ca05",
+      "revId": "b1ae6a3504607db757a0ec9613f21f585539f2ae",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
