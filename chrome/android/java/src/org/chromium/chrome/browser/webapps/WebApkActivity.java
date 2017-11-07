@@ -168,6 +168,12 @@ public class WebApkActivity extends WebappActivity {
     }
 
     @Override
+    public void postInflationStartup() {
+        super.postInflationStartup();
+        setTitle(mWebappInfo.shortName());
+    }
+
+    @Override
     public void onResumeWithNative() {
         super.onResumeWithNative();
 

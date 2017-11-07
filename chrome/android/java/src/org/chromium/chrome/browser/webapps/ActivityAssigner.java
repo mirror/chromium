@@ -62,7 +62,7 @@ public class ActivityAssigner {
     private static final String TAG = "ActivityAssigner";
 
     // Don't ever change this.  10 is enough for everyone.
-    static final int NUM_WEBAPP_ACTIVITIES = 10;
+    static final int NUM_WEBAPP_ACTIVITIES = 1;
 
     // A sanity check limit to ensure that we aren't reading an unreasonable number of preferences.
     // This number is different from above because the number of WebappActivities available may
