@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "3c702e6e_1688d1cf",
+        "filename": "media/blink/webmediaplayer_impl.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 913,
+      "author": {
+        "id": 1115974
+      },
+      "writtenOn": "2017-11-07T10:30:10Z",
+      "side": 1,
+      "message": "What about sending an \"ended\" signal like suggested by this comment?",
+      "revId": "5166ebfdf95d15080ff031e57acf6df12b9324b4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3580db61_08c64cbb",
+        "filename": "third_party/WebKit/Source/core/html/media/HTMLMediaElement.cpp",
+        "patchSetId": 4
+      },
+      "lineNbr": 3107,
+      "author": {
+        "id": 1115974
+      },
+      "writtenOn": "2017-11-07T10:30:10Z",
+      "side": 1,
+      "message": "This check seems a bit odd as it looks like we only care if a stream is ended when its duration is infinite.",
+      "revId": "5166ebfdf95d15080ff031e57acf6df12b9324b4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
