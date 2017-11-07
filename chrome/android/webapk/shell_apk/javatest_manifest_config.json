@@ -7,6 +7,8 @@
     "scope_url_path_type": "android:pathPrefix",
     "scope_url_path": "/"
   },
+  "app_icon_id": "app_icon",
+  "splash_screen_icon_id": "app_icon",
   "start_url": "https://pwa.rocks/",
   "display_mode": "standalone",
   "orientation": "portrait",
