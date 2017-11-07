@@ -249,6 +249,30 @@
     },
     {
       "key": {
+        "uuid": "a3f0ffe9_2b17c516",
+        "filename": "ios/web/public/download/download_controller_observer.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 46,
+      "author": {
+        "id": 1116027
+      },
+      "writtenOn": "2017-11-07T08:23:06Z",
+      "side": 1,
+      "message": "In general, I think an API with clear object ownership (unique_ptr) is better than one with shared ownership (scoped_refptr). The chromium documentation also agrees \"Reference-counted objects make it difficult to understand ownership (...). There is almost always another way to design your object hierarchy to avoid refcounting.\"\n\nInterface proposed in comment lgtm.\n\nhttps://www.chromium.org/developers/smart-pointer-guidelines",
+      "parentUuid": "0d3f31ac_d51e005c",
+      "range": {
+        "startLine": 46,
+        "startChar": 15,
+        "endLine": 46,
+        "endChar": 34
+      },
+      "revId": "81a40f8cb67927f746a655cab9e5ca0166afcc2e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "19b28d95_264ed847",
         "filename": "ios/web/public/download/download_task.h",
         "patchSetId": 3
