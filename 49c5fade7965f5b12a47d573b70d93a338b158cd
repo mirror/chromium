@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "1852d3a2_b73cc139",
+        "filename": "cr-buildbucket.cfg",
+        "patchSetId": 2
+      },
+      "lineNbr": 383,
+      "author": {
+        "id": 1002539
+      },
+      "writtenOn": "2017-11-07T02:40:50Z",
+      "side": 1,
+      "message": "unrelated: this looks wrong. CI acls shouldn\u0027t be kept in sync with tryserver stuff",
+      "range": {
+        "startLine": 383,
+        "startChar": 5,
+        "endLine": 383,
+        "endChar": 32
+      },
+      "revId": "49c5fade7965f5b12a47d573b70d93a338b158cd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
