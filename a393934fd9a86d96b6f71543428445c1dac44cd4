@@ -16,6 +16,24 @@
       "revId": "a393934fd9a86d96b6f71543428445c1dac44cd4",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6b99fea9_6c2e2d1a",
+        "filename": "device/bluetooth/bluetooth_device_unittest.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 1392,
+      "author": {
+        "id": 1108705
+      },
+      "writtenOn": "2017-11-07T00:57:00Z",
+      "side": 1,
+      "message": "Oh, this would have fired on other platforms by this point anyway, whoops.",
+      "parentUuid": "51ddb038_73841aa5",
+      "revId": "a393934fd9a86d96b6f71543428445c1dac44cd4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
