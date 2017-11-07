@@ -1,0 +1,72 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "f56cf39b_79223cfd",
+        "filename": "components/viz/service/display/gl_renderer_unittest.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 2622,
+      "author": {
+        "id": 1000887
+      },
+      "writtenOn": "2017-11-07T20:25:11Z",
+      "side": 1,
+      "message": "I don\u0027t think we use the ClearCountingContext here. We can just TestContextProvider::Create()?",
+      "revId": "6588ac75ab381a789b8d065124ea3405ea1a79aa",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "91f90344_1b9d19bd",
+        "filename": "components/viz/service/display/gl_renderer_unittest.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 2631,
+      "author": {
+        "id": 1000887
+      },
+      "writtenOn": "2017-11-07T20:25:11Z",
+      "side": 1,
+      "message": "use auto and std::make_unique pls",
+      "revId": "6588ac75ab381a789b8d065124ea3405ea1a79aa",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "25f3cadc_2fc9cb78",
+        "filename": "components/viz/service/display/gl_renderer_unittest.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 2664,
+      "author": {
+        "id": 1000887
+      },
+      "writtenOn": "2017-11-07T20:25:11Z",
+      "side": 1,
+      "message": "I think the damage flag here doesnt matter if it won\u0027t be in the frame, does it?",
+      "revId": "6588ac75ab381a789b8d065124ea3405ea1a79aa",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6f3331a4_b5d3f932",
+        "filename": "components/viz/service/display/gl_renderer_unittest.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 2677,
+      "author": {
+        "id": 1000887
+      },
+      "writtenOn": "2017-11-07T20:25:11Z",
+      "side": 1,
+      "message": "I was asking to move the code that sets the flag in another CL from in DecideRenderPassAllocationsForFrame() to UseRenderPass() where the texture gets allocated. Is it a bug if that happens? https://cs.chromium.org/chromium/src/components/viz/service/display/direct_renderer.cc?rcl\u003dc6fdf78313b462f20a27279e588820090b024b76\u0026l\u003d650\n\nIf not, can this test not be opinionated about DecideRenderPassAllocationsForFrame() making the call?\n\nAlso question. Where we do set that flag in direct renderer, is when the resource is not in the map at all, so it makes a new ScopedResource to put in the map. In that case the ScopedResource has a 0 id (https://cs.chromium.org/chromium/src/cc/resources/resource.h?rcl\u003dc6fdf78313b462f20a27279e588820090b024b76\u0026l\u003d19)\n\nSo then on the branching at UseRenderPass, it will go down the if (!id()) path (https://cs.chromium.org/chromium/src/components/viz/service/display/direct_renderer.cc?rcl\u003dc6fdf78313b462f20a27279e588820090b024b76\u0026l\u003d649) and not early out. What case does setting the bool in direct_renderer cover such that we\u0027d hit the 2nd branch there and need it to be true, in order to not early out?",
+      "revId": "6588ac75ab381a789b8d065124ea3405ea1a79aa",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
