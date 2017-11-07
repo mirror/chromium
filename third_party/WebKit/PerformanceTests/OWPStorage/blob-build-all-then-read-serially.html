@@ -1,20 +1,36 @@
 <!doctype html>
 <title>Blob Build All Then Read Serially</title>
+<body>
 <script src="../resources/runner.js"></script>
 <script src="resources/shared.js"></script>
 <script>
-let runnerParams = { size: 2, numBlobs: 200 };
-let test = {
-  description: 'Benchmark for creating blobs and then reading them serially.',
-  unit: 'ms',
-  iterationCount: 10,
-  tracingCategories: 'Blob',
-  traceEventsToMeasure: [
-    'BlobReader::ReadBytesItem', 'Registry::RegisterBlob',
-    'BlobRequest::ReadRawData', 'BlobRequest'
-  ],
-  path: 'resources/blob-build-all-then-read-serially-runner.html',
-  params: runnerParams
+// Test a variety of blob sizes to exercise the different transport mechanisms
+// of blob storage (ipc, shared memory, and file).
+// The number of blobs is meant to reduce noise, and is reduced to prevent
+// OOMs and super long runtimes.
+let allParams = [
+  { size: 2, numBlobs: 200 },
+  { size: 1024 * 1024, numBlobs: 100 },
+  { size: 40 * 1024 * 1024, numBlobs: 80 },
+  { size: 500 * 1024 * 1024, numBlobs: 10 }
+];
+
+for (let params in allParams) {
+  let test = {
+    description:
+        'Benchmark for creating ' + params.numBlobs + ' blobs of size ' +
+        params.size + ' bytes and then reading them serially.',
+    unit: 'ms',
+    iterationCount: 10,
+    tracingCategories: 'Blob',
+    traceEventsToMeasure: [
+      'BlobReader::ReadBytesItem', 'Registry::RegisterBlob',
+      'BlobRequest::ReadRawData', 'BlobRequest'
+    ],
+    path: 'resources/blob-build-all-then-read-serially-runner.html',
+    params: { size: params.size, numBlobs: params.numBlobs }
+  };
+  PerfTestRunner.measurePageLoadTimeAfterDoneMessage(test);
 }
-PerfTestRunner.measurePageLoadTimeAfterDoneMessage(test);
 </script>
+</body>
