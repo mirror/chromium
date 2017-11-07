@@ -523,6 +523,28 @@ TEST_F(ChromeExpectCTReporterWaitTest, SendReportFailure) {
   histograms.ExpectBucketCount(kSendHistogramName, true, 1);
 }
 
+// Test that if a report fails to send, the failure callback is called.
+TEST_F(ChromeExpectCTReporterWaitTest, SendReportFailureCallback) {
+  base::RunLoop run_loop;
+  ChromeExpectCTReporter reporter(context());
+  reporter.set_failure_callback(run_loop.QuitClosure());
+
+  net::SSLInfo ssl_info;
+  ssl_info.cert =
+      net::ImportCertFromFile(net::GetTestCertsDirectory(), "ok_cert.pem");
+  ssl_info.unverified_cert = net::ImportCertFromFile(
+      net::GetTestCertsDirectory(), "localhost_cert.pem");
+
+  net::HostPortPair host_port("example.test", 443);
+  GURL report_uri(
+      net::URLRequestFailedJob::GetMockHttpUrl(net::ERR_CONNECTION_FAILED));
+
+  SendReport(&reporter, host_port, report_uri, base::Time(), ssl_info);
+
+  // Wait to make sure the failure callback is called.
+  run_loop.Run();
+}
+
 // Test that a sent report has the right format.
 TEST_F(ChromeExpectCTReporterTest, SendReport) {
   base::HistogramTester histograms;
@@ -620,6 +642,50 @@ TEST_F(ChromeExpectCTReporterTest, SendReport) {
   histograms.ExpectTotalCount(kFailureHistogramName, 0);
   histograms.ExpectTotalCount(kSendHistogramName, 1);
   histograms.ExpectBucketCount(kSendHistogramName, true, 1);
+}
+
+// Test that the success callback is called when a report is successfully sent.
+TEST_F(ChromeExpectCTReporterTest, SendReportSuccessCallback) {
+  base::RunLoop run_loop;
+
+  net::TestURLRequestContext context;
+  ChromeExpectCTReporter reporter(&context);
+  reporter.set_success_callback(run_loop.QuitClosure());
+
+  net::SSLInfo ssl_info;
+  ssl_info.cert =
+      net::ImportCertFromFile(net::GetTestCertsDirectory(), "ok_cert.pem");
+  ssl_info.unverified_cert = net::ImportCertFromFile(
+      net::GetTestCertsDirectory(), "localhost_cert.pem");
+
+  base::Time now = base::Time::Now();
+
+  // The particular value of the log ID doesn't matter; it just has to be the
+  // correct length.
+  const unsigned char kTestLogId[] = {
+      0xdf, 0x1c, 0x2e, 0xc1, 0x15, 0x00, 0x94, 0x52, 0x47, 0xa9, 0x61,
+      0x68, 0x32, 0x5d, 0xdc, 0x5c, 0x79, 0x59, 0xe8, 0xf7, 0xc6, 0xd3,
+      0x88, 0xfc, 0x00, 0x2e, 0x0b, 0xbd, 0x3f, 0x74, 0xd7, 0x01};
+  const std::string log_id(reinterpret_cast<const char*>(kTestLogId),
+                           sizeof(kTestLogId));
+  MakeTestSCTAndStatus(net::ct::SignedCertificateTimestamp::SCT_EMBEDDED,
+                       log_id, "extensions1", "signature1", now,
+                       net::ct::SCT_STATUS_LOG_UNKNOWN,
+                       &ssl_info.signed_certificate_timestamps);
+
+  base::Time expiration;
+  ASSERT_TRUE(
+      base::Time::FromUTCExploded({2017, 1, 0, 1, 0, 0, 0, 0}, &expiration));
+
+  const GURL report_uri = test_server().GetURL("/report");
+
+  reporter.OnExpectCTFailed(net::HostPortPair::FromURL(report_uri), report_uri,
+                            expiration, ssl_info.cert.get(),
+                            ssl_info.unverified_cert.get(),
+                            ssl_info.signed_certificate_timestamps);
+
+  // Wait to check that the success callback is run.
+  run_loop.Run();
 }
 
 // Test that report preflight responses can contain whitespace.
