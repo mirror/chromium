@@ -14,6 +14,7 @@ import org.chromium.base.annotations.CalledByNative;
 import org.chromium.chrome.browser.ChromeActivity;
 import org.chromium.chrome.browser.ChromeVersionInfo;
 import org.chromium.chrome.browser.WebContentsFactory;
+import org.chromium.chrome.browser.compositor.CompositorViewHolder;
 import org.chromium.chrome.browser.contextualsearch.ContextualSearchManager;
 import org.chromium.chrome.browser.externalnav.ExternalNavigationHandler;
 import org.chromium.chrome.browser.tab.Tab;
@@ -260,7 +261,7 @@ public class OverlayPanelContent {
 
         mContentViewCore = createContentViewCore(mActivity);
 
-        ContentView cv = ContentView.createContentView(mActivity, mContentViewCore);
+        final ContentView cv = ContentView.createContentView(mActivity, mContentViewCore);
         if (mContentViewWidth != 0 || mContentViewHeight != 0) {
             int width = mContentViewWidth == 0 ? ContentView.DEFAULT_MEASURE_SPEC
                     : MeasureSpec.makeMeasureSpec(mContentViewWidth, MeasureSpec.EXACTLY);
@@ -350,8 +351,10 @@ public class OverlayPanelContent {
             onPhysicalBackingSizeChanged(mContentViewWidth, mContentViewHeight);
         }
 
-        mContentViewCore.setTopControlsHeight(mBarHeightPx, false);
-        mContentViewCore.setBottomControlsHeight(0);
+        CompositorViewHolder compositorView = mActivity.getCompositorViewHolder();
+        compositorView.setTopControlsHeight(panelWebContents, mBarHeightPx, false);
+        compositorView.setBottomControlsHeight(panelWebContents, 0);
+        panelWebContents.setSize(cv.getWidth(), cv.getHeight());
     }
 
     /**
@@ -496,9 +499,10 @@ public class OverlayPanelContent {
     }
 
     void onSizeChanged(int width, int height) {
-        if (mContentViewCore == null) return;
+        if (mContentViewCore == null || getWebContents() == null) return;
         mContentViewCore.onSizeChanged(width, height, mContentViewCore.getViewportWidthPix(),
                 mContentViewCore.getViewportHeightPix());
+        getWebContents().setSize(width, height);
     }
 
     void onPhysicalBackingSizeChanged(int width, int height) {
