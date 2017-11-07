@@ -97,6 +97,30 @@
     },
     {
       "key": {
+        "uuid": "13e3fc19_b46fd066",
+        "filename": "third_party/WebKit/Source/platform/graphics/gpu/ImageLayerBridge.cpp",
+        "patchSetId": 4
+      },
+      "lineNbr": 87,
+      "author": {
+        "id": 1000887
+      },
+      "writtenOn": "2017-11-07T21:58:11Z",
+      "side": 1,
+      "message": "See RenderThreadImpl::CompositingModeFallbackToSoftware() \n\nvoid RenderThreadImpl::CompositingModeFallbackToSoftware() {\n  if (gpu_channel_) {\n    // TODO(danakj): Tell all clients of the compositor. We should send a more\n    // scoped message than this.\n    gpu_channel_-\u003eDestroyChannel();\n    gpu_channel_ \u003d nullptr;\n  }\n\n  is_gpu_compositing_disabled_ \u003d true;\n}\n\nhttps://cs.chromium.org/chromium/src/content/renderer/render_thread_impl.cc?rcl\u003d42d0f7041865fcae71786bc0ab5df84fa1a07cfe\u0026l\u003d1985\n\nIf we address that TODO, then anyone who makes a context would need to observe the mode via another thing instead. For now its tied together, and probably will stay that way unless we find some perf problem.. or something.",
+      "parentUuid": "01978d18_f93ae0ab",
+      "range": {
+        "startLine": 87,
+        "startChar": 26,
+        "endLine": 87,
+        "endChar": 35
+      },
+      "revId": "bca81b3aeef526691daa9eba1f1e292d648b60ec",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "5082a5a3_463f32ba",
         "filename": "third_party/WebKit/Source/platform/graphics/gpu/ImageLayerBridge.cpp",
         "patchSetId": 4
