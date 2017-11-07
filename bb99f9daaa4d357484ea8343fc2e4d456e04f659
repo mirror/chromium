@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "1f589aa9_5cd281d0",
+        "filename": "chrome/android/webapk/shell_apk/BUILD.gn",
+        "patchSetId": 4
+      },
+      "lineNbr": 24,
+      "author": {
+        "id": 1126674
+      },
+      "writtenOn": "2017-11-07T19:45:03Z",
+      "side": 1,
+      "message": "I think you\u0027ll need to list the files for this to work out correctly.\n\nimport(\"//build/config/locales.gni\")\n\nforeach(_locale, locales) {\n  sources +\u003d [...]\n}",
+      "revId": "bb99f9daaa4d357484ea8343fc2e4d456e04f659",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
