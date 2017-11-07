@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "4b1d3879_64059952",
+        "filename": "chrome/browser/search/one_google_bar/one_google_bar_fetcher_impl.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 180,
+      "author": {
+        "id": 1150535
+      },
+      "writtenOn": "2017-11-07T18:01:39Z",
+      "side": 1,
+      "message": "Is there no way to let the server handle it properly?\n\nIf not, is there a reason you can\u0027t use:\n  return GURL(api_url.spec() + \"\u0026async\u003dfixed:0\");\n?",
+      "revId": "f1a26f96b56f7b11089755ccade6c886546ff953",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
