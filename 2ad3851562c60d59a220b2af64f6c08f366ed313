@@ -16,6 +16,24 @@
       "revId": "2ad3851562c60d59a220b2af64f6c08f366ed313",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "20bba268_1fbc1b25",
+        "filename": "chrome/browser/ui/webui/welcome_win10_handler.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 69,
+      "author": {
+        "id": 1137015
+      },
+      "writtenOn": "2017-11-07T23:38:08Z",
+      "side": 1,
+      "message": "\"Inline\" because the removed layout was called \"Sectioned\"",
+      "parentUuid": "a577b21f_f10cd623",
+      "revId": "2ad3851562c60d59a220b2af64f6c08f366ed313",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
