@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "a6fe5822_72973907",
+        "filename": "ash/accessibility/accessibility_layer.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 24,
+      "author": {
+        "id": 1250213
+      },
+      "writtenOn": "2017-11-07T21:36:31Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "1f9904f7_6f34374d",
+      "revId": "6f7d6fc7a72a1c2d1db7f2d2b81023cd5a32518c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "f746aec0_32514ebe",
         "filename": "ash/accessibility/accessibility_layer.cc",
         "patchSetId": 2
@@ -33,6 +51,24 @@
       "revId": "6f7d6fc7a72a1c2d1db7f2d2b81023cd5a32518c",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "28910f4f_4681e1d1",
+        "filename": "ash/accessibility/accessibility_layer.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 31,
+      "author": {
+        "id": 1250213
+      },
+      "writtenOn": "2017-11-07T21:36:31Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "f746aec0_32514ebe",
+      "revId": "6f7d6fc7a72a1c2d1db7f2d2b81023cd5a32518c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -53,6 +89,24 @@
     },
     {
       "key": {
+        "uuid": "2612ba6e_250b1273",
+        "filename": "ash/accessibility/accessibility_layer.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 45,
+      "author": {
+        "id": 1250213
+      },
+      "writtenOn": "2017-11-07T21:36:31Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "0fdcc0d2_2f0fc399",
+      "revId": "6f7d6fc7a72a1c2d1db7f2d2b81023cd5a32518c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "ef60116a_7dd2daf0",
         "filename": "ash/accessibility/accessibility_layer.cc",
         "patchSetId": 2
@@ -67,6 +121,24 @@
       "revId": "6f7d6fc7a72a1c2d1db7f2d2b81023cd5a32518c",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2a54b8ce_0a58f73e",
+        "filename": "ash/accessibility/accessibility_layer.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 54,
+      "author": {
+        "id": 1250213
+      },
+      "writtenOn": "2017-11-07T21:36:31Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "ef60116a_7dd2daf0",
+      "revId": "6f7d6fc7a72a1c2d1db7f2d2b81023cd5a32518c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -87,6 +159,24 @@
     },
     {
       "key": {
+        "uuid": "7ac45392_29b180bb",
+        "filename": "ash/accessibility/accessibility_layer.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 11,
+      "author": {
+        "id": 1250213
+      },
+      "writtenOn": "2017-11-07T21:36:31Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "2f2cc2a0_15c4d759",
+      "revId": "6f7d6fc7a72a1c2d1db7f2d2b81023cd5a32518c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "04dbfe74_e9e97349",
         "filename": "ash/accessibility/accessibility_layer.h",
         "patchSetId": 2
@@ -101,6 +191,24 @@
       "revId": "6f7d6fc7a72a1c2d1db7f2d2b81023cd5a32518c",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ee9ee7b7_c0da4bde",
+        "filename": "ash/accessibility/accessibility_layer.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 13,
+      "author": {
+        "id": 1250213
+      },
+      "writtenOn": "2017-11-07T21:36:31Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "04dbfe74_e9e97349",
+      "revId": "6f7d6fc7a72a1c2d1db7f2d2b81023cd5a32518c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -121,6 +229,24 @@
     },
     {
       "key": {
+        "uuid": "2c889d24_7f394aa9",
+        "filename": "ash/accessibility/accessibility_layer.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 66,
+      "author": {
+        "id": 1250213
+      },
+      "writtenOn": "2017-11-07T21:36:31Z",
+      "side": 1,
+      "message": "I think it needs to be protected, because /ash/accessibility/accessibility_focus_ring_layer.cc uses it.",
+      "parentUuid": "d811a630_2229b138",
+      "revId": "6f7d6fc7a72a1c2d1db7f2d2b81023cd5a32518c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "d70d19fd_62d8222e",
         "filename": "ash/accessibility/accessibility_layer.h",
         "patchSetId": 2
@@ -135,6 +261,24 @@
       "revId": "6f7d6fc7a72a1c2d1db7f2d2b81023cd5a32518c",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2b230cdc_476ea8ae",
+        "filename": "ash/accessibility/accessibility_layer.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 70,
+      "author": {
+        "id": 1250213
+      },
+      "writtenOn": "2017-11-07T21:36:31Z",
+      "side": 1,
+      "message": "I want to have it here as a default, and override it in focus_ring_layer. I\u0027ve tried to do it differently. (I haven\u0027t written C++ since college, please excuse any flailing.)",
+      "parentUuid": "d70d19fd_62d8222e",
+      "revId": "6f7d6fc7a72a1c2d1db7f2d2b81023cd5a32518c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -155,6 +299,24 @@
     },
     {
       "key": {
+        "uuid": "900d3e68_5e83a8f6",
+        "filename": "ash/accessibility/focus_ring_layer.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 22,
+      "author": {
+        "id": 1250213
+      },
+      "writtenOn": "2017-11-07T21:36:31Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "7982e137_650ebe18",
+      "revId": "6f7d6fc7a72a1c2d1db7f2d2b81023cd5a32518c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "ec75b1ea_45eefb30",
         "filename": "ash/accessibility/focus_ring_layer.h",
         "patchSetId": 2
@@ -169,6 +331,24 @@
       "revId": "6f7d6fc7a72a1c2d1db7f2d2b81023cd5a32518c",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "97842b56_50be82a6",
+        "filename": "ash/accessibility/focus_ring_layer.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 38,
+      "author": {
+        "id": 1250213
+      },
+      "writtenOn": "2017-11-07T21:36:31Z",
+      "side": 1,
+      "message": "Done, documented in parent class.",
+      "parentUuid": "ec75b1ea_45eefb30",
+      "revId": "6f7d6fc7a72a1c2d1db7f2d2b81023cd5a32518c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
