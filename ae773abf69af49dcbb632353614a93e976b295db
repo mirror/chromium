@@ -37,6 +37,24 @@
     },
     {
       "key": {
+        "uuid": "d34570d6_2bb6c575",
+        "filename": "media/filters/vp9_parser.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 31,
+      "author": {
+        "id": 1001849
+      },
+      "writtenOn": "2017-11-07T16:16:05Z",
+      "side": 1,
+      "message": "Are you just ack or forget to upload new patch to remove \"static\" ?",
+      "parentUuid": "8f3b40f0_b60c1969",
+      "revId": "ae773abf69af49dcbb632353614a93e976b295db",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "8a0f92e8_9123879b",
         "filename": "media/filters/vp9_parser.cc",
         "patchSetId": 6
@@ -66,6 +84,24 @@
       "side": 1,
       "message": "We don\u0027t, but the original ToT code read [1]:\n\nreturn std::min(std::max(static_cast\u003csize_t\u003e(0), q),\n                  arraysize(kDcQLookup) - 1);\n\nso, to make sure that the original condition was\nstill covered, I added this static_assert. Happy to fully\nremove, just instruct.\n\n\n[1] https://cs.chromium.org/chromium/src/media/filters/vp9_parser.cc?type\u003dcs\u0026q\u003dVp9Parser::GetContextRefreshCb\u0026sq\u003dpackage:chromium\u0026l\u003d510",
       "parentUuid": "8a0f92e8_9123879b",
+      "revId": "ae773abf69af49dcbb632353614a93e976b295db",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a144379c_fc54c0b9",
+        "filename": "media/filters/vp9_parser.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 138,
+      "author": {
+        "id": 1001849
+      },
+      "writtenOn": "2017-11-07T16:16:05Z",
+      "side": 1,
+      "message": "Please help remove it. Thanks.",
+      "parentUuid": "30989227_c04c5213",
       "revId": "ae773abf69af49dcbb632353614a93e976b295db",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
