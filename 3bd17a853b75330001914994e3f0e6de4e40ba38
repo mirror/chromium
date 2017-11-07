@@ -46,6 +46,30 @@
       "revId": "3bd17a853b75330001914994e3f0e6de4e40ba38",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ae2de6e4_a44c263f",
+        "filename": "chrome/browser/resource_coordinator/background_tab_navigation_throttle.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 52,
+      "author": {
+        "id": 1000023
+      },
+      "writtenOn": "2017-11-07T01:04:34Z",
+      "side": 1,
+      "message": "1. We make sure to have all the tab helpers in place before the first navigation. See Browser::WebContentsCreated for a comment explicitly to that effect.\n\n2. Yes, only tabs in browsers have TabHelpers::AttachTabHelpers called on them, and the TabUIHelper is only ever attached within that function. If this is deliberately done, then you can use it as a sign.",
+      "parentUuid": "c7b08521_7e9feae0",
+      "range": {
+        "startLine": 47,
+        "startChar": 0,
+        "endLine": 52,
+        "endChar": 19
+      },
+      "revId": "3bd17a853b75330001914994e3f0e6de4e40ba38",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
