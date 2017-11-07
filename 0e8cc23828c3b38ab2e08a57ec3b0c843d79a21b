@@ -178,6 +178,24 @@
     },
     {
       "key": {
+        "uuid": "fed79d19_68a7d031",
+        "filename": "third_party/WebKit/Source/modules/peerconnection/RTCRtpSynchronizationSource.cpp",
+        "patchSetId": 9
+      },
+      "lineNbr": 27,
+      "author": {
+        "id": 1126249
+      },
+      "writtenOn": "2017-11-07T15:32:12Z",
+      "side": 1,
+      "message": "Hmm, I wonder why VerifySynchronizationSources(left_tab_) twice in a row (with same tab) doesn\u0027t trigger it, I would imagine each call to be executed in a separate task execution cycle and thus invalidate the cache. Maybe not?\n\nAlternatively Promise.resolve().then(f) or setTimeout(f, 0) is a way to execute f() in a different task execution cycle.\n\nI\u0027m curious to why this wasn\u0027t hit, but I don\u0027t want to block the CL unless it\u0027s a bug where the cache doesn\u0027t clear, up to you if you want to improve the testing so this does hit.",
+      "parentUuid": "497ea630_9abfdcc8",
+      "revId": "0e8cc23828c3b38ab2e08a57ec3b0c843d79a21b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "7e8fd162_aaef61a1",
         "filename": "third_party/WebKit/Source/modules/peerconnection/RTCRtpSynchronizationSource.idl",
         "patchSetId": 9

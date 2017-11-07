@@ -1,0 +1,106 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "b53b1377_1bcb2b89",
+        "filename": "content/renderer/media/webrtc/rtc_rtp_source.cc",
+        "patchSetId": 16
+      },
+      "lineNbr": 38,
+      "author": {
+        "id": 1126249
+      },
+      "writtenOn": "2017-11-07T15:32:12Z",
+      "side": 1,
+      "message": "nit: The \"127 means silence\" comment would be nice here. Also \"... value is true for SSRCs once we match the spec.\"",
+      "revId": "f29bc84732a830a14aaeadb873f87ff36fae5473",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4e7a6f54_6958230b",
+        "filename": "content/renderer/media/webrtc/rtc_rtp_source.cc",
+        "patchSetId": 16
+      },
+      "lineNbr": 39,
+      "author": {
+        "id": 1126249
+      },
+      "writtenOn": "2017-11-07T15:32:12Z",
+      "side": 1,
+      "message": "I think RTCRtpSource needs to be consistent with itself, it shouldn\u0027t be possible to call AudioLevel() if HasAudioLevel() returns false without hitting a DCHECK. Since the blink layer now handles not having a value, if you address the other comments you can simply do \"return *source_.audio_level();\" here and it will crash for you if it doesn\u0027t have a value.",
+      "revId": "f29bc84732a830a14aaeadb873f87ff36fae5473",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "57ba3aa0_073af781",
+        "filename": "third_party/WebKit/Source/modules/peerconnection/RTCRtpSynchronizationSource.cpp",
+        "patchSetId": 16
+      },
+      "lineNbr": 20,
+      "author": {
+        "id": 1126249
+      },
+      "writtenOn": "2017-11-07T15:32:12Z",
+      "side": 1,
+      "message": "Don\u0027t make use of AudioLevel() if HasAudioLevel() returns false, change this to:\naudio_level_(webSource.HasAudioLevel() ? webSource.AudioLevel() : 0)\n\nNote: I think 0 makes more sense than a meaningful value like 127 since not having a value is handled correctly in this layer, and using 127 made me think it was being used when it isn\u0027t.",
+      "revId": "f29bc84732a830a14aaeadb873f87ff36fae5473",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f7d2f0e1_3cf58a6c",
+        "filename": "third_party/WebKit/Source/modules/peerconnection/RTCRtpSynchronizationSource.cpp",
+        "patchSetId": 16
+      },
+      "lineNbr": 29,
+      "author": {
+        "id": 1126249
+      },
+      "writtenOn": "2017-11-07T15:32:12Z",
+      "side": 1,
+      "message": "Same comment as in the constructor.",
+      "revId": "f29bc84732a830a14aaeadb873f87ff36fae5473",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6ee989ae_6db9cbf9",
+        "filename": "third_party/WebKit/Source/modules/peerconnection/RTCRtpSynchronizationSource.cpp",
+        "patchSetId": 16
+      },
+      "lineNbr": 47,
+      "author": {
+        "id": 1126249
+      },
+      "writtenOn": "2017-11-07T15:32:12Z",
+      "side": 1,
+      "message": "I don\u0027t know what the official guidelines are, and the generated code does default-initialize isNull to false at the moment, but unless this is stated somewhere, I think we should set it to false in this case just to be safe. Always set the output variable.\n\n(If they\u0027re only default-initializing to avoid a compiler warning and later get around it and stop giving it a default value, not setting it would lead to undefined behavior.)",
+      "revId": "f29bc84732a830a14aaeadb873f87ff36fae5473",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d119b1e0_cc2206a6",
+        "filename": "third_party/WebKit/Source/modules/peerconnection/RTCRtpSynchronizationSource.cpp",
+        "patchSetId": 16
+      },
+      "lineNbr": 51,
+      "author": {
+        "id": 1126249
+      },
+      "writtenOn": "2017-11-07T15:32:12Z",
+      "side": 1,
+      "message": "If isNull is true the return value is discarded, I think it makes more sense to return 0. Returning a meaningful value makes it seem like it is used.\n\nAlternatively just do this since audio_level_ is a uint8_t, addressing both of these comments:\n  receiver_-\u003eUpdateSourcesIfNeeded();\n  isNull \u003d !has_audio_level_;\n  return audio_level_;",
+      "revId": "f29bc84732a830a14aaeadb873f87ff36fae5473",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
