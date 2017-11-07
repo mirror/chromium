@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "4eea5a01_41576a4c",
+        "filename": "device/bluetooth/bluetooth_remote_gatt_service_win.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 168,
+      "author": {
+        "id": 1136314
+      },
+      "writtenOn": "2017-11-07T01:52:28Z",
+      "side": 1,
+      "message": "This would be a great place for \"auto\", we already have the type name in the MakeUnique call anyhow",
+      "range": {
+        "startLine": 168,
+        "startChar": 6,
+        "endLine": 168,
+        "endChar": 59
+      },
+      "revId": "bcceaf20915f7a28e22a9030dc897eae651dcf11",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
