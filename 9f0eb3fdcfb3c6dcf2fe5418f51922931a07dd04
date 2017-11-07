@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "bc06312d_3934b277",
+        "filename": "net/android/java/src/org/chromium/net/AndroidKeyStore.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 32,
+      "author": {
+        "id": 1135189
+      },
+      "writtenOn": "2017-11-07T17:12:27Z",
+      "side": 1,
+      "message": "nit: Seems grammar.",
+      "range": {
+        "startLine": 32,
+        "startChar": 7,
+        "endLine": 32,
+        "endChar": 16
+      },
+      "revId": "9f0eb3fdcfb3c6dcf2fe5418f51922931a07dd04",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
