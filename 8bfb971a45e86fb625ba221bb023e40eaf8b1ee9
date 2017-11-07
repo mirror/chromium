@@ -16,6 +16,24 @@
       "revId": "8bfb971a45e86fb625ba221bb023e40eaf8b1ee9",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3d78cd2f_4001c000",
+        "filename": "chrome/browser/ui/task_manager/task_manager_columns.cc",
+        "patchSetId": 11
+      },
+      "lineNbr": 89,
+      "author": {
+        "id": 1001385
+      },
+      "writtenOn": "2017-11-07T00:18:04Z",
+      "side": 1,
+      "message": "I believe it is on the generous side; sebmarchand@ has been doing some experiments repro\u0027ing high swap-thrashing on low-end devices and observed a peak hard fault rate of ~4Kilofaults/sec. \n\nHigh-end devices will have faster CPUs and more cores, and faster I/O, so although they\u0027re less likely to hit thrashing due to also having more RAM, I\u0027d expect them to hit a higher peak fault rate.",
+      "parentUuid": "ae184177_dfdad143",
+      "revId": "8bfb971a45e86fb625ba221bb023e40eaf8b1ee9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
