@@ -7,6 +7,7 @@
 #include "components/viz/common/quads/shared_bitmap.h"
 #include "components/viz/common/quads/texture_mailbox.h"
 #include "gpu/command_buffer/client/gles2_interface.h"
+#include "platform/graphics/AcceleratedStaticBitmapImage.h"
 #include "platform/graphics/ColorBehavior.h"
 #include "platform/graphics/GraphicsLayer.h"
 #include "platform/graphics/gpu/SharedGpuContext.h"
@@ -79,40 +80,93 @@ bool ImageLayerBridge::PrepareTextureMailbox(
 
   has_presented_since_last_set_image_ = true;
 
-  if (image_->IsTextureBacked()) {
-    image_->EnsureMailbox(kUnverifiedSyncToken);
-    *out_mailbox = viz::TextureMailbox(image_->GetMailbox(),
-                                       image_->GetSyncToken(), GL_TEXTURE_2D);
+  bool gpu_compositing = SharedGpuContext::IsGpuCompositingEnabled();
+  bool gpu_image = image_->IsTextureBacked();
+
+  // Expect software images for software compositing.
+  if (!gpu_compositing && gpu_image)
+    return false;
+
+  // If the texture comes from a software image then it does not need to be
+  // flipped.
+  layer_->SetFlipped(gpu_image);
+
+  scoped_refptr<StaticBitmapImage> image_for_compositor;
+
+  // Upload to a texture if the compositor is expecting one.
+  if (gpu_compositing && !image_->IsTextureBacked()) {
+    WeakPtr<WebGraphicsContext3DProviderWrapper> wrapper =
+        SharedGpuContext::ContextProviderWrapper();
+    if (!wrapper)
+      return false;  // Can happen if the context is lost.
+
+    GrContext* grcontext = wrapper->ContextProvider()->GetGrContext();
+    if (!grcontext)
+      return false;  // Can happen if the context is lost.
+
+    sk_sp<SkImage> software_image =
+        image_->PaintImageForCurrentFrame().GetSkImage();
+    if (!software_image)
+      return false;
+    // TODO(crbug.com/782383): This can return a SkColorSpace, which should be
+    // passed to the compositor.
+    sk_sp<SkImage> gpu_image =
+        software_image->makeTextureImage(grcontext, nullptr);
+    if (!gpu_image)
+      return false;
+
+    image_for_compositor = AcceleratedStaticBitmapImage::CreateFromSkImage(
+        std::move(gpu_image), std::move(wrapper));
+  } else if (!gpu_compositing && image_->IsTextureBacked()) {
+    sk_sp<SkImage> gpu_image = image_->PaintImageForCurrentFrame().GetSkImage();
+    if (!gpu_image)
+      return false;
+    sk_sp<SkImage> software_image = gpu_image->makeNonTextureImage();
+    if (!software_image)
+      return false;
+
+    image_for_compositor = StaticBitmapImage::Create(software_image);
+  } else {
+    image_for_compositor = image_;
+  }
+  DCHECK_EQ(image_for_compositor->IsTextureBacked(), gpu_compositing);
+
+  if (gpu_compositing) {
+    image_for_compositor->EnsureMailbox(kUnverifiedSyncToken);
+    *out_mailbox = viz::TextureMailbox(image_for_compositor->GetMailbox(),
+                                       image_for_compositor->GetSyncToken(),
+                                       GL_TEXTURE_2D);
     auto func = WTF::Bind(&ImageLayerBridge::MailboxReleasedGpu,
-                          WrapWeakPersistent(this), image_);
+                          WrapWeakPersistent(this), image_for_compositor);
     *out_release_callback = viz::SingleReleaseCallback::Create(
         ConvertToBaseCallback(std::move(func)));
   } else {
-    std::unique_ptr<viz::SharedBitmap> bitmap = CreateOrRecycleBitmap();
+    std::unique_ptr<viz::SharedBitmap> bitmap =
+        CreateOrRecycleBitmap(image_for_compositor->Size());
     if (!bitmap)
       return false;
 
-    sk_sp<SkImage> sk_image = image_->PaintImageForCurrentFrame().GetSkImage();
+    sk_sp<SkImage> sk_image =
+        image_for_compositor->PaintImageForCurrentFrame().GetSkImage();
     if (!sk_image)
       return false;
 
-    SkImageInfo dst_info = SkImageInfo::MakeN32Premul(image_->width(), 1);
-    size_t row_bytes = image_->width() * 4;
+    SkImageInfo dst_info =
+        SkImageInfo::MakeN32Premul(image_for_compositor->width(), 1);
+    size_t row_bytes = image_for_compositor->width() * 4;
 
-    // loop to flip Y
-    for (int row = 0; row < image_->height(); row++) {
-      if (!sk_image->readPixels(
-              dst_info,
-              bitmap->pixels() + row_bytes * (image_->height() - 1 - row),
-              row_bytes, 0, row))
+    // Copy from SkImage into |bitmap|, while flipping the Y axis.
+    for (int row = 0; row < image_for_compositor->height(); row++) {
+      if (!sk_image->readPixels(dst_info, bitmap->pixels(), row_bytes, 0, 0))
         return false;
     }
 
     *out_mailbox = viz::TextureMailbox(
-        bitmap.get(), gfx::Size(image_->width(), image_->height()));
+        bitmap.get(), gfx::Size(image_for_compositor->width(),
+                                image_for_compositor->height()));
     auto func = WTF::Bind(&ImageLayerBridge::MailboxReleasedSoftware,
                           WrapWeakPersistent(this), base::Passed(&bitmap),
-                          image_->Size());
+                          image_for_compositor->Size());
     *out_release_callback = viz::SingleReleaseCallback::Create(
         ConvertToBaseCallback(std::move(func)));
   }
@@ -124,20 +178,20 @@ bool ImageLayerBridge::PrepareTextureMailbox(
   return true;
 }
 
-std::unique_ptr<viz::SharedBitmap> ImageLayerBridge::CreateOrRecycleBitmap() {
-  auto it = std::remove_if(recycled_bitmaps_.begin(), recycled_bitmaps_.end(),
-                           [this](const RecycledBitmap& bitmap) {
-                             return bitmap.size != image_->Size();
-                           });
+std::unique_ptr<viz::SharedBitmap> ImageLayerBridge::CreateOrRecycleBitmap(
+    const IntSize& size) {
+  auto it = std::remove_if(
+      recycled_bitmaps_.begin(), recycled_bitmaps_.end(),
+      [&size](const RecycledBitmap& bitmap) { return bitmap.size != size; });
   recycled_bitmaps_.Shrink(it - recycled_bitmaps_.begin());
 
   if (!recycled_bitmaps_.IsEmpty()) {
     RecycledBitmap recycled = std::move(recycled_bitmaps_.back());
     recycled_bitmaps_.pop_back();
-    DCHECK(recycled.size == image_->Size());
+    DCHECK(recycled.size == size);
     return std::move(recycled.bitmap);
   }
-  return Platform::Current()->AllocateSharedBitmap(image_->Size());
+  return Platform::Current()->AllocateSharedBitmap(size);
 }
 
 void ImageLayerBridge::MailboxReleasedGpu(
