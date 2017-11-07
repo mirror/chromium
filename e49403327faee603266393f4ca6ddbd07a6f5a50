@@ -34,6 +34,24 @@
       "revId": "e49403327faee603266393f4ca6ddbd07a6f5a50",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d250bfcb_33b09b4e",
+        "filename": "content/public/common/common_param_traits_macros.h",
+        "patchSetId": 8
+      },
+      "lineNbr": 109,
+      "author": {
+        "id": 1002532
+      },
+      "writtenOn": "2017-11-07T05:17:36Z",
+      "side": 0,
+      "message": "ok. I\u0027m surprised this caused issues, but this is probably not a big point now since once we convert all usage to use mojom we can replace the native struct with a definition only in mojom.",
+      "parentUuid": "57d87a0a_f521f023",
+      "revId": "e49403327faee603266393f4ca6ddbd07a6f5a50",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }

@@ -16,6 +16,23 @@
       "revId": "e80daf89620c4deb8273f047c4b6a8a164a931e0",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b76a726f_b07425da",
+        "filename": "chrome/renderer/plugins/chrome_plugin_placeholder.cc",
+        "patchSetId": 12
+      },
+      "lineNbr": 73,
+      "author": {
+        "id": 1002532
+      },
+      "writtenOn": "2017-11-07T05:17:36Z",
+      "side": 1,
+      "message": "I meant that we\u0027d share this one pointer in all the renderer, i.e. this class would share the pointer from ChromeContentRendererClient. Otherwise this code still creates n +1 pipes when there are n place holder plugins.",
+      "revId": "e80daf89620c4deb8273f047c4b6a8a164a931e0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
