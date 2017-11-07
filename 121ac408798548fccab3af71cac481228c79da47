@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "3f2e3ae5_18d74025",
+        "filename": "ui/gl/gl_context_egl.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 120,
+      "author": {
+        "id": 1148065
+      },
+      "writtenOn": "2017-11-07T17:18:42Z",
+      "side": 1,
+      "message": "It looks like the enums values are the same, so maybe we can make GLSurfaceEGL::IsCreateContextRobustnessSupported() test either extension? In particular, IsCreateContextRobustnessSupported is used in other places, namely GLContextEGL::WasAllocatedUsingRobustnessExtension, which is then used to know whether or not we can/should call glGetGraphicsResetStatus, so that would need to be updated as well otherwise.",
+      "revId": "121ac408798548fccab3af71cac481228c79da47",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
