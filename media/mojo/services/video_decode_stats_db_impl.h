@@ -47,13 +47,9 @@ class MEDIA_MOJO_EXPORT VideoDecodeStatsDBImpl : public VideoDecodeStatsDB {
   // |dir| specifies where to store LevelDB files to disk. LevelDB generates a
   // handful of files, so its recommended to provide a dedicated directory to
   // keep them isolated.
-  // |allow_writes| determines whether DB write operations will be allowed. This
-  // is a temporary mechanism to disable writes in production until we've added
-  // the ability to clear the database via chrome://settings/clearBrowserData.
   VideoDecodeStatsDBImpl(
       std::unique_ptr<leveldb_proto::ProtoDatabase<DecodeStatsProto>> db,
-      const base::FilePath& dir,
-      bool allow_writes);
+      const base::FilePath& dir);
   ~VideoDecodeStatsDBImpl() override;
 
   // Implement VideoDecodeStatsDB.
@@ -62,6 +58,7 @@ class MEDIA_MOJO_EXPORT VideoDecodeStatsDBImpl : public VideoDecodeStatsDB {
                          const DecodeStatsEntry& entry) override;
   void GetDecodeStats(const VideoDescKey& key,
                       GetDecodeStatsCB callback) override;
+  void DestroyStats(base::OnceClosure callback) override;
 
  private:
   friend class VideoDecodeStatsDBTest;
@@ -92,9 +89,17 @@ class MEDIA_MOJO_EXPORT VideoDecodeStatsDBImpl : public VideoDecodeStatsDB {
       bool success,
       std::unique_ptr<DecodeStatsProto> capabilities_info_proto);
 
+  // Internal callback for ClearStats that logs |success| and runs |callback|
+  void OnDestroyedStats(base::OnceClosure callback, bool success);
+
   // Indicates whether initialization is completed. Does not indicate whether it
-  // was successful. Failed initialization is signaled by setting |db_| to null.
+  // was successful. Will be reset upon calling DestroyStats(). Failed
+  // initialization is signaled by setting |db_| to null.
   bool db_init_ = false;
+
+  // Tracks whether db_->Destroy() is in progress. Used to assert that
+  // Initialize() is not called until db destruction is complete.
+  bool db_destroy_pending_ = false;
 
   // ProtoDatabase instance. Set to nullptr if fatal database error is
   // encountered.
@@ -102,11 +107,6 @@ class MEDIA_MOJO_EXPORT VideoDecodeStatsDBImpl : public VideoDecodeStatsDB {
 
   // Directory where levelDB should store database files.
   base::FilePath db_dir_;
-
-  // Determines whether DB write operations will be allowed. This is a temporary
-  // mechanism to disable writes in production until we've added the ability to
-  // clear the database via chrome://settings/clearBrowserData.
-  bool allow_writes_;
 
   // Ensures all access to class members come on the same sequence. API calls
   // and callbacks should occur on the same sequence used during construction.

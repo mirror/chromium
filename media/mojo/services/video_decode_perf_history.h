@@ -61,17 +61,24 @@ class MEDIA_MOJO_EXPORT VideoDecodePerfHistory
                    GetPerfInfoCallback callback) override;
 
   // Save a record of the given performance stats for the described stream.
+  // Saving is generally fire-and-forget, but callback may be optionally
+  // for tests to know the save is complete.
   void SavePerfRecord(VideoCodecProfile profile,
                       const gfx::Size& natural_size,
                       int frame_rate,
                       uint32_t frames_decoded,
                       uint32_t frames_dropped,
-                      uint32_t frames_decoded_power_efficient);
+                      uint32_t frames_decoded_power_efficient,
+                      base::OnceClosure callback = base::OnceClosure());
+
+  // Clear all history from the underlying database. Run |callback| when
+  // complete.
+  void ClearHistory(base::OnceClosure callback);
 
  private:
   friend class VideoDecodePerfHistoryTest;
 
-  // Track the status of database lazily initialization.
+  // Track the status of database lazy initialization.
   enum InitStatus {
     UNINITIALIZED,
     PENDING,
@@ -89,7 +96,8 @@ class MEDIA_MOJO_EXPORT VideoDecodePerfHistory
   // this value.
   static constexpr double kMinPowerEfficientDecodedFramePercent = .50;
 
-  // Create and initialize the database.
+  // Create and initialize the database. Will return early if initialization is
+  // already PENDING.
   void InitDatabase();
 
   // Callback from |db_->Initialize()|.
@@ -110,6 +118,7 @@ class MEDIA_MOJO_EXPORT VideoDecodePerfHistory
   void OnGotStatsForSave(
       const VideoDecodeStatsDB::VideoDescKey& video_key,
       const VideoDecodeStatsDB::DecodeStatsEntry& new_stats,
+      base::OnceClosure callback,
       bool success,
       std::unique_ptr<VideoDecodeStatsDB::DecodeStatsEntry> past_stats);
 
@@ -118,6 +127,10 @@ class MEDIA_MOJO_EXPORT VideoDecodePerfHistory
   void ReportUkmMetrics(const VideoDecodeStatsDB::VideoDescKey& video_key,
                         const VideoDecodeStatsDB::DecodeStatsEntry& new_stats,
                         VideoDecodeStatsDB::DecodeStatsEntry* past_stats);
+
+  // Internal callback for ClearHistory(). Reinitializes the database and runs
+  // |callback|.
+  void OnClearedHistory(base::OnceClosure callback);
 
   // Factory for creating |db_|.
   std::unique_ptr<VideoDecodeStatsDBFactory> db_factory_;
