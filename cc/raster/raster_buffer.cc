@@ -12,4 +12,8 @@ RasterBuffer::RasterBuffer() {
 RasterBuffer::~RasterBuffer() {
 }
 
+size_t RasterBuffer::NumBytes() const {
+  return 0;
+}
+
 }  // namespace cc

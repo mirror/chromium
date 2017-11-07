@@ -248,7 +248,9 @@ class CC_EXPORT TileManager : CheckerImageTrackerClient {
     return has_scheduled_tile_tasks_;
   }
 
-  void OnRasterTaskCompleted(Tile::Id tile_id,
+  void OnRasterTaskCompleted(int source_frame_numner,
+                             size_t num_bytes,
+                             Tile::Id tile_id,
                              Resource* resource,
                              bool was_canceled);
 
@@ -433,6 +435,9 @@ class CC_EXPORT TileManager : CheckerImageTrackerClient {
   // Number of tiles with a checker-imaged resource or active raster tasks which
   // will create a checker-imaged resource.
   int num_of_tiles_with_checker_images_ = 0;
+
+  std::unordered_map<int, int> raster_tasks_;
+  std::unordered_map<int, size_t> raster_pixels_;
 
   // We need two WeakPtrFactory objects as the invalidation pattern of each is
   // different. The |task_set_finished_weak_ptr_factory_| is invalidated any

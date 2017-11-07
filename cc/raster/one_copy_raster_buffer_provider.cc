@@ -60,10 +60,14 @@ void OneCopyRasterBufferProvider::RasterBufferImpl::Playback(
     const gfx::AxisTransform2d& transform,
     const RasterSource::PlaybackSettings& playback_settings) {
   TRACE_EVENT0("cc", "OneCopyRasterBuffer::Playback");
-  client_->PlaybackAndCopyOnWorkerThread(
+  num_bytes_ = client_->PlaybackAndCopyOnWorkerThread(
       resource_, &lock_, sync_token_, raster_source, raster_full_rect,
       raster_dirty_rect, transform, playback_settings, previous_content_id_,
       new_content_id);
+}
+
+size_t OneCopyRasterBufferProvider::RasterBufferImpl::NumBytes() const {
+  return num_bytes_;
 }
 
 OneCopyRasterBufferProvider::OneCopyRasterBufferProvider(
@@ -199,7 +203,7 @@ void OneCopyRasterBufferProvider::Shutdown() {
   pending_raster_buffers_.clear();
 }
 
-void OneCopyRasterBufferProvider::PlaybackAndCopyOnWorkerThread(
+size_t OneCopyRasterBufferProvider::PlaybackAndCopyOnWorkerThread(
     const Resource* resource,
     ResourceProvider::ScopedWriteLockGL* resource_lock,
     const gpu::SyncToken& sync_token,
@@ -220,10 +224,11 @@ void OneCopyRasterBufferProvider::PlaybackAndCopyOnWorkerThread(
       raster_dirty_rect, transform, resource_lock->color_space_for_raster(),
       playback_settings, previous_content_id, new_content_id);
 
-  CopyOnWorkerThread(staging_buffer.get(), resource_lock, raster_source,
-                     raster_full_rect);
+  size_t num_bytes = CopyOnWorkerThread(staging_buffer.get(), resource_lock,
+                                        raster_source, raster_full_rect);
 
   staging_pool_.ReleaseStagingBuffer(std::move(staging_buffer));
+  return num_bytes;
 }
 
 void OneCopyRasterBufferProvider::WaitSyncToken(
@@ -298,7 +303,7 @@ void OneCopyRasterBufferProvider::PlaybackToStagingBuffer(
   }
 }
 
-void OneCopyRasterBufferProvider::CopyOnWorkerThread(
+size_t OneCopyRasterBufferProvider::CopyOnWorkerThread(
     StagingBuffer* staging_buffer,
     ResourceProvider::ScopedWriteLockGL* resource_lock,
     const RasterSource* raster_source,
@@ -355,6 +360,8 @@ void OneCopyRasterBufferProvider::CopyOnWorkerThread(
 #endif
   }
 
+  size_t num_bytes = 0;
+
   // Since compressed texture's cannot be pre-allocated we might have an
   // unallocated resource in which case we need to perform a full size copy.
   if (IsResourceFormatCompressed(resource_lock->format())) {
@@ -380,7 +387,9 @@ void OneCopyRasterBufferProvider::CopyOnWorkerThread(
 
       // Increment |bytes_scheduled_since_last_flush_| by the amount of memory
       // used for this copy operation.
-      bytes_scheduled_since_last_flush_ += rows_to_copy * bytes_per_row;
+      auto bytes = rows_to_copy * bytes_per_row;
+      bytes_scheduled_since_last_flush_ += bytes;
+      num_bytes += bytes;
 
       if (bytes_scheduled_since_last_flush_ >= max_bytes_per_copy_operation_) {
         gl->ShallowFlushCHROMIUM();
@@ -406,6 +415,7 @@ void OneCopyRasterBufferProvider::CopyOnWorkerThread(
   // to prevent extra wait sync token calls.
   if (!async_worker_context_enabled_)
     resource_lock->set_synchronized();
+  return num_bytes;
 }
 
 gfx::BufferUsage OneCopyRasterBufferProvider::StagingBufferUsage() const {
