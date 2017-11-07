@@ -58,7 +58,7 @@ void FrameCaptionButton::SetImage(CaptionButtonIcon icon,
                                   const gfx::VectorIcon& icon_definition) {
   gfx::ImageSkia new_icon_image = gfx::CreateVectorIcon(
       icon_definition,
-      use_light_images_ ? SK_ColorWHITE : gfx::kChromeIconGrey);
+      use_light_images_ ? SK_ColorWHITE : gfx::kChromeIconGray);
 
   // The early return is dependent on |animate| because callers use SetImage()
   // with ANIMATE_NO to progress the crossfade animation to the end.

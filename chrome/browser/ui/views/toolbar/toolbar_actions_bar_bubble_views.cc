@@ -64,7 +64,7 @@ views::View* ToolbarActionsBarBubbleViews::CreateExtraView() {
   if (extra_view_info->resource) {
     icon.reset(new views::ImageView);
     icon->SetImage(gfx::CreateVectorIcon(*extra_view_info->resource, kIconSize,
-                                         gfx::kChromeIconGrey));
+                                         gfx::kChromeIconGray));
   }
 
   std::unique_ptr<views::Label> label;

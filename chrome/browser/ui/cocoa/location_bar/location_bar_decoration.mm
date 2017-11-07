@@ -411,7 +411,7 @@ NSSize LocationBarDecoration::GetLabelSize(NSString* label,
 
 SkColor LocationBarDecoration::GetMaterialIconColor(
     bool location_bar_is_dark) const {
-  return location_bar_is_dark ? SK_ColorWHITE : gfx::kChromeIconGrey;
+  return location_bar_is_dark ? SK_ColorWHITE : gfx::kChromeIconGray;
 }
 
 void LocationBarDecoration::DrawDivider(NSView* control_view,

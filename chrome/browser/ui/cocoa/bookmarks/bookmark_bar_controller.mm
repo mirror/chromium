@@ -286,7 +286,7 @@ bool operator!=(const BookmarkBarLayout& lhs, const BookmarkBarLayout& rhs) {
 
     const int kIconSize = 16;
     defaultImage_.reset([NSImageFromImageSkia(gfx::CreateVectorIcon(
-        omnibox::kHttpIcon, kIconSize, gfx::kChromeIconGrey)) retain]);
+        omnibox::kHttpIcon, kIconSize, gfx::kChromeIconGray)) retain]);
     defaultImageIncognito_.reset([NSImageFromImageSkia(gfx::CreateVectorIcon(
         omnibox::kHttpIcon, kIconSize, SkColorSetA(SK_ColorWHITE, 0xCC)))
         retain]);
@@ -847,8 +847,8 @@ bool operator!=(const BookmarkBarLayout& lhs, const BookmarkBarLayout& rhs) {
 
 - (NSImage*)offTheSideButtonImage:(BOOL)forDarkMode {
   const int kIconSize = 8;
-  SkColor vectorIconColor = forDarkMode ? SkColorSetA(SK_ColorWHITE, 0xCC)
-                                        : gfx::kChromeIconGrey;
+  SkColor vectorIconColor =
+      forDarkMode ? SkColorSetA(SK_ColorWHITE, 0xCC) : gfx::kChromeIconGray;
   NSImage* image = NSImageFromImageSkia(
       gfx::CreateVectorIcon(kOverflowChevronIcon, kIconSize, vectorIconColor));
   if (cocoa_l10n_util::ShouldDoExperimentalRTLLayout())
