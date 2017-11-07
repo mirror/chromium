@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "ed389d34_256bd5f0",
+        "filename": "chrome/browser/ui/views/intent_picker_bubble_view_unittest.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 182,
+      "author": {
+        "id": 1000763
+      },
+      "writtenOn": "2017-11-07T20:02:00Z",
+      "side": 1,
+      "message": "It\u0027s worth a comment that CANCEL\u003dStayInChrome.",
+      "range": {
+        "startLine": 179,
+        "startChar": 43,
+        "endLine": 182,
+        "endChar": 67
+      },
+      "revId": "c3133f9d50ced5569fdc565ab4bd2ecd3dac077e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
