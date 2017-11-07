@@ -11,12 +11,7 @@
 // headers pollute so much of the namespace, this should only be included
 // when needed.
 
-extern "C" {
-#include <X11/extensions/Xrender.h>
-#include <X11/extensions/XShm.h>
-#include <X11/Xatom.h>
-#include <X11/Xlib.h>
-}
+#include "ui/gfx/x/x11.h"
 
 #include <memory>
 #include <unordered_map>
