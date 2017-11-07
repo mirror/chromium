@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "93f8b478_44ce2a5d",
+        "filename": "third_party/WebKit/Source/modules/mediastream/NavigatorUserMediaErrorCallback.idl",
+        "patchSetId": 7
+      },
+      "lineNbr": 30,
+      "author": {
+        "id": 1143639
+      },
+      "writtenOn": "2017-11-07T14:42:37Z",
+      "side": 1,
+      "message": "Remove \"neither\" since \"neither/and\" is grammatically incorrect.\nThe original \"both ... and ... are not\" is not recommended and my suggestion of \"neither ... nor ... are\"  is also incorrect.\n\nJust remove \"neither\", or rewrite as \"neither ... nor ... is an IDL type in the spec\".",
+      "revId": "2983ab85c76748a105d2f51ca23399fc858b40a6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
