@@ -621,18 +621,16 @@ public class SingleWebsitePreferences extends PreferenceFragment
     private void setUpLocationPreference(Preference preference) {
         ContentSetting permission = mSite.getGeolocationPermission();
         Object locationAllowed = getArguments().getSerializable(EXTRA_LOCATION);
-        if (shouldUseDSEGeolocationSetting()) {
-            String origin = mSite.getAddress().getOrigin();
-            mSite.setGeolocationInfo(new GeolocationInfo(origin, origin, false));
-            setUpListPreference(preference, ContentSetting.ALLOW);
-            updateLocationPreferenceForDSESetting(preference);
-        } else if (permission == null && locationAllowed != null) {
+        if (permission == null && locationAllowed != null) {
             String origin = mSite.getAddress().getOrigin();
             mSite.setGeolocationInfo(new GeolocationInfo(origin, origin, false));
             setUpListPreference(preference, (boolean) locationAllowed
                     ? ContentSetting.ALLOW : ContentSetting.BLOCK);
         } else {
             setUpListPreference(preference, permission);
+        }
+        if (arePermissionsControlledByDSE()) {
+            updateLocationPreferenceForDSESetting(preference);
         }
     }
 
@@ -687,8 +685,8 @@ public class SingleWebsitePreferences extends PreferenceFragment
      * current host. This will be the case when the host is the CCTLD (Country Code Top Level
      * Domain) of the DSE, and the DSE supports the X-Geo header.
      */
-    private boolean shouldUseDSEGeolocationSetting() {
-        return WebsitePreferenceBridge.shouldUseDSEGeolocationSetting(
+    private boolean arePermissionsControlledByDSE() {
+        return WebsitePreferenceBridge.arePermissionsControlledByDSE(
                 mSite.getAddress().getOrigin(), false);
     }
 
@@ -704,8 +702,6 @@ public class SingleWebsitePreferences extends PreferenceFragment
                 res.getString(R.string.website_settings_permissions_allow_dse),
                 res.getString(R.string.website_settings_permissions_block_dse),
         });
-        listPreference.setValueIndex(
-                WebsitePreferenceBridge.getDSEGeolocationSetting() ? 0 : 1);
     }
 
     private int getContentSettingsTypeFromPreferenceKey(String preferenceKey) {
