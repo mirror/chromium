@@ -299,7 +299,8 @@ void CollectInlinesInternal(
                             kObjectReplacementCharacter, nullptr, node);
 
     } else if (node->IsOutOfFlowPositioned()) {
-      builder->AppendOpaque(NGInlineItem::kOutOfFlowPositioned, nullptr, node);
+      builder->AppendOpaque(NGInlineItem::kOutOfFlowPositioned, node->Style(),
+                            node);
 
     } else if (node->IsAtomicInlineLevel()) {
       if (LayoutNGListItem::IsListMarker(node)) {
