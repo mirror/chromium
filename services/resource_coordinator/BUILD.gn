@@ -12,6 +12,8 @@ import("//services/service_manager/public/tools/test/service_test.gni")
 
 source_set("lib") {
   sources = [
+    "clock.cc",
+    "clock.h",
     "coordination_unit/coordination_unit_base.cc",
     "coordination_unit/coordination_unit_base.h",
     "coordination_unit/coordination_unit_introspector_impl.cc",
