@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "4aa998c0_9d4f6d61",
+        "filename": "ios/chrome/browser/ui/browser_view_controller.mm",
+        "patchSetId": 2
+      },
+      "lineNbr": 1509,
+      "author": {
+        "id": 1163361
+      },
+      "writtenOn": "2017-11-07T19:17:10Z",
+      "side": 1,
+      "message": "Not that I disagree with this approach. But it would be even better if we could identify the places that incorrectly call this more than necessary, and get them to behave properly.",
+      "range": {
+        "startLine": 1508,
+        "startChar": 5,
+        "endLine": 1509,
+        "endChar": 20
+      },
+      "revId": "c5ce0861c452514a2cbbfc50ab42eb127813bb5d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
