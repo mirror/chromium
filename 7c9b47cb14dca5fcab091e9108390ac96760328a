@@ -1,0 +1,624 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "4c941bb3_8349940b",
+        "filename": "ios/chrome/browser/autofill/BUILD.gn",
+        "patchSetId": 3
+      },
+      "lineNbr": 122,
+      "author": {
+        "id": 1123009
+      },
+      "writtenOn": "2017-11-07T00:15:06Z",
+      "side": 1,
+      "message": "nit: No need for :ios",
+      "range": {
+        "startLine": 122,
+        "startChar": 33,
+        "endLine": 122,
+        "endChar": 40
+      },
+      "revId": "7c9b47cb14dca5fcab091e9108390ac96760328a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "efd6652e_c0ef21c2",
+        "filename": "ios/chrome/browser/autofill/BUILD.gn",
+        "patchSetId": 3
+      },
+      "lineNbr": 126,
+      "author": {
+        "id": 1123009
+      },
+      "writtenOn": "2017-11-07T00:15:06Z",
+      "side": 1,
+      "message": "ditto",
+      "range": {
+        "startLine": 126,
+        "startChar": 26,
+        "endLine": 126,
+        "endChar": 33
+      },
+      "revId": "7c9b47cb14dca5fcab091e9108390ac96760328a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "acb4bcb5_edcaa742",
+        "filename": "ios/chrome/browser/passwords/BUILD.gn",
+        "patchSetId": 3
+      },
+      "lineNbr": 138,
+      "author": {
+        "id": 1123009
+      },
+      "writtenOn": "2017-11-07T00:15:06Z",
+      "side": 1,
+      "message": "ditto",
+      "range": {
+        "startLine": 138,
+        "startChar": 33,
+        "endLine": 138,
+        "endChar": 40
+      },
+      "revId": "7c9b47cb14dca5fcab091e9108390ac96760328a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f0615c37_0aad6559",
+        "filename": "ios/chrome/browser/passwords/password_controller.mm",
+        "patchSetId": 3
+      },
+      "lineNbr": 47,
+      "author": {
+        "id": 1123009
+      },
+      "writtenOn": "2017-11-07T00:15:06Z",
+      "side": 1,
+      "message": "nit: s/include/import",
+      "range": {
+        "startLine": 47,
+        "startChar": 33,
+        "endLine": 47,
+        "endChar": 66
+      },
+      "revId": "7c9b47cb14dca5fcab091e9108390ac96760328a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9c5a9cf6_7d4f49d7",
+        "filename": "ios/chrome/browser/passwords/password_controller.mm",
+        "patchSetId": 3
+      },
+      "lineNbr": 662,
+      "author": {
+        "id": 1123009
+      },
+      "writtenOn": "2017-11-07T00:15:06Z",
+      "side": 1,
+      "message": "Can this be null?",
+      "range": {
+        "startLine": 662,
+        "startChar": 12,
+        "endLine": 662,
+        "endChar": 35
+      },
+      "revId": "7c9b47cb14dca5fcab091e9108390ac96760328a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a98a21b0_8bdaf49f",
+        "filename": "ios/chrome/browser/passwords/password_controller_unittest.mm",
+        "patchSetId": 3
+      },
+      "lineNbr": 34,
+      "author": {
+        "id": 1123009
+      },
+      "writtenOn": "2017-11-07T00:15:06Z",
+      "side": 1,
+      "message": "nit: s/include/import",
+      "range": {
+        "startLine": 34,
+        "startChar": 33,
+        "endLine": 34,
+        "endChar": 66
+      },
+      "revId": "7c9b47cb14dca5fcab091e9108390ac96760328a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "39db3a4f_226f023a",
+        "filename": "ios/chrome/browser/ssl/BUILD.gn",
+        "patchSetId": 3
+      },
+      "lineNbr": 66,
+      "author": {
+        "id": 1123009
+      },
+      "writtenOn": "2017-11-07T00:15:06Z",
+      "side": 1,
+      "message": "nit: No need for :core",
+      "range": {
+        "startLine": 66,
+        "startChar": 33,
+        "endLine": 66,
+        "endChar": 42
+      },
+      "revId": "7c9b47cb14dca5fcab091e9108390ac96760328a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "18439fe0_4bcc2d1c",
+        "filename": "ios/chrome/browser/ssl/insecure_input_web_state_observer.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 11,
+      "author": {
+        "id": 1123009
+      },
+      "writtenOn": "2017-11-07T00:15:06Z",
+      "side": 1,
+      "message": "nit: s/import/include",
+      "range": {
+        "startLine": 11,
+        "startChar": 1,
+        "endLine": 11,
+        "endChar": 7
+      },
+      "revId": "7c9b47cb14dca5fcab091e9108390ac96760328a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "cdc64c95_2bc0b89f",
+        "filename": "ios/chrome/browser/ssl/insecure_input_web_state_observer.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 20,
+      "author": {
+        "id": 1123009
+      },
+      "writtenOn": "2017-11-07T00:15:06Z",
+      "side": 1,
+      "message": "The name should probably be InsecureInputTabHelper",
+      "revId": "7c9b47cb14dca5fcab091e9108390ac96760328a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c0ab651a_0a5d83a3",
+        "filename": "ios/chrome/browser/ssl/insecure_input_web_state_observer.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 26,
+      "author": {
+        "id": 1123009
+      },
+      "writtenOn": "2017-11-07T00:15:06Z",
+      "side": 1,
+      "message": "s/is called/should be called? This method is not called automatically. Also please document what this method does.",
+      "range": {
+        "startLine": 26,
+        "startChar": 20,
+        "endLine": 26,
+        "endChar": 26
+      },
+      "revId": "7c9b47cb14dca5fcab091e9108390ac96760328a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "92994086_6598ea88",
+        "filename": "ios/chrome/browser/ssl/insecure_input_web_state_observer.mm",
+        "patchSetId": 3
+      },
+      "lineNbr": 5,
+      "author": {
+        "id": 1123009
+      },
+      "writtenOn": "2017-11-07T00:15:06Z",
+      "side": 1,
+      "message": "nit: s/include/import",
+      "range": {
+        "startLine": 5,
+        "startChar": 1,
+        "endLine": 5,
+        "endChar": 8
+      },
+      "revId": "7c9b47cb14dca5fcab091e9108390ac96760328a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9b052f06_06f521bb",
+        "filename": "ios/chrome/browser/ssl/insecure_input_web_state_observer.mm",
+        "patchSetId": 3
+      },
+      "lineNbr": 11,
+      "author": {
+        "id": 1123009
+      },
+      "writtenOn": "2017-11-07T00:15:06Z",
+      "side": 1,
+      "message": "ditto",
+      "range": {
+        "startLine": 11,
+        "startChar": 18,
+        "endLine": 11,
+        "endChar": 24
+      },
+      "revId": "7c9b47cb14dca5fcab091e9108390ac96760328a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "996be783_55c98000",
+        "filename": "ios/chrome/browser/ssl/insecure_input_web_state_observer.mm",
+        "patchSetId": 3
+      },
+      "lineNbr": 12,
+      "author": {
+        "id": 1123009
+      },
+      "writtenOn": "2017-11-07T00:15:06Z",
+      "side": 1,
+      "message": "ditto",
+      "range": {
+        "startLine": 12,
+        "startChar": 25,
+        "endLine": 12,
+        "endChar": 43
+      },
+      "revId": "7c9b47cb14dca5fcab091e9108390ac96760328a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "76224adc_cdcced61",
+        "filename": "ios/chrome/browser/ssl/insecure_input_web_state_observer.mm",
+        "patchSetId": 3
+      },
+      "lineNbr": 14,
+      "author": {
+        "id": 1123009
+      },
+      "writtenOn": "2017-11-07T00:15:06Z",
+      "side": 1,
+      "message": "ditto",
+      "range": {
+        "startLine": 14,
+        "startChar": 35,
+        "endLine": 14,
+        "endChar": 44
+      },
+      "revId": "7c9b47cb14dca5fcab091e9108390ac96760328a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f076ca7f_3a61eb09",
+        "filename": "ios/chrome/browser/ssl/insecure_input_web_state_observer.mm",
+        "patchSetId": 3
+      },
+      "lineNbr": 15,
+      "author": {
+        "id": 1123009
+      },
+      "writtenOn": "2017-11-07T00:15:06Z",
+      "side": 1,
+      "message": "ditto",
+      "range": {
+        "startLine": 15,
+        "startChar": 35,
+        "endLine": 15,
+        "endChar": 54
+      },
+      "revId": "7c9b47cb14dca5fcab091e9108390ac96760328a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2f87f0fa_25c86aef",
+        "filename": "ios/chrome/browser/ssl/insecure_input_web_state_observer.mm",
+        "patchSetId": 3
+      },
+      "lineNbr": 35,
+      "author": {
+        "id": 1123009
+      },
+      "writtenOn": "2017-11-07T00:15:06Z",
+      "side": 1,
+      "message": "Is there a way to avoid casting?",
+      "range": {
+        "startLine": 35,
+        "startChar": 18,
+        "endLine": 35,
+        "endChar": 32
+      },
+      "revId": "7c9b47cb14dca5fcab091e9108390ac96760328a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b835363b_dffeab0a",
+        "filename": "ios/chrome/browser/ssl/ios_security_state_tab_helper_unittest.mm",
+        "patchSetId": 3
+      },
+      "lineNbr": 7,
+      "author": {
+        "id": 1123009
+      },
+      "writtenOn": "2017-11-07T00:15:06Z",
+      "side": 1,
+      "message": "nit: s/import/include\n\nBut I don\u0027t think you need this include at all",
+      "revId": "7c9b47cb14dca5fcab091e9108390ac96760328a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1d963a48_2ffa4e58",
+        "filename": "ios/chrome/browser/ssl/ios_security_state_tab_helper_unittest.mm",
+        "patchSetId": 3
+      },
+      "lineNbr": 8,
+      "author": {
+        "id": 1123009
+      },
+      "writtenOn": "2017-11-07T00:15:06Z",
+      "side": 1,
+      "message": "ditto",
+      "range": {
+        "startLine": 8,
+        "startChar": 9,
+        "endLine": 8,
+        "endChar": 19
+      },
+      "revId": "7c9b47cb14dca5fcab091e9108390ac96760328a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7d88d10c_800128d8",
+        "filename": "ios/chrome/browser/ssl/ios_security_state_tab_helper_unittest.mm",
+        "patchSetId": 3
+      },
+      "lineNbr": 12,
+      "author": {
+        "id": 1123009
+      },
+      "writtenOn": "2017-11-07T00:15:06Z",
+      "side": 1,
+      "message": "ditto",
+      "revId": "7c9b47cb14dca5fcab091e9108390ac96760328a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "376ec838_d98f9c2d",
+        "filename": "ios/chrome/browser/ssl/ios_security_state_tab_helper_unittest.mm",
+        "patchSetId": 3
+      },
+      "lineNbr": 19,
+      "author": {
+        "id": 1123009
+      },
+      "writtenOn": "2017-11-07T00:15:06Z",
+      "side": 1,
+      "message": "Please add comments for these tests.",
+      "revId": "7c9b47cb14dca5fcab091e9108390ac96760328a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7453a427_1f8801fa",
+        "filename": "ios/chrome/browser/ssl/ios_security_state_tab_helper_unittest.mm",
+        "patchSetId": 3
+      },
+      "lineNbr": 21,
+      "author": {
+        "id": 1123009
+      },
+      "writtenOn": "2017-11-07T00:15:06Z",
+      "side": 1,
+      "message": "LoadHtml(@\"\u003chtml\u003e\u003cbody\u003e\u003c/body\u003e\u003c/html\u003e\"), GURL(\"http://chromium.test\"))",
+      "range": {
+        "startLine": 21,
+        "startChar": 17,
+        "endLine": 21,
+        "endChar": 34
+      },
+      "revId": "7c9b47cb14dca5fcab091e9108390ac96760328a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "52b8ed11_30fb5534",
+        "filename": "ios/chrome/browser/ssl/ios_security_state_tab_helper_unittest.mm",
+        "patchSetId": 3
+      },
+      "lineNbr": 24,
+      "author": {
+        "id": 1123009
+      },
+      "writtenOn": "2017-11-07T00:15:06Z",
+      "side": 1,
+      "message": "Do you want to move repetitive code to IOSSecurityStateTabHelperTest constructor?",
+      "range": {
+        "startLine": 24,
+        "startChar": 29,
+        "endLine": 24,
+        "endChar": 46
+      },
+      "revId": "7c9b47cb14dca5fcab091e9108390ac96760328a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "11c518f8_18864dc2",
+        "filename": "ios/chrome/browser/ssl/ios_security_state_tab_helper_unittest.mm",
+        "patchSetId": 3
+      },
+      "lineNbr": 28,
+      "author": {
+        "id": 1123009
+      },
+      "writtenOn": "2017-11-07T00:15:06Z",
+      "side": 1,
+      "message": "nit: ASSERT_TRUE(insecure_input_observer)",
+      "range": {
+        "startLine": 28,
+        "startChar": 2,
+        "endLine": 28,
+        "endChar": 11
+      },
+      "revId": "7c9b47cb14dca5fcab091e9108390ac96760328a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "25770e81_d269a68e",
+        "filename": "ios/chrome/browser/ui/autofill/BUILD.gn",
+        "patchSetId": 3
+      },
+      "lineNbr": 34,
+      "author": {
+        "id": 1123009
+      },
+      "writtenOn": "2017-11-07T00:15:06Z",
+      "side": 1,
+      "message": "nit: No need for :ssl",
+      "range": {
+        "startLine": 34,
+        "startChar": 26,
+        "endLine": 34,
+        "endChar": 33
+      },
+      "revId": "7c9b47cb14dca5fcab091e9108390ac96760328a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1019b5ee_9475e98c",
+        "filename": "ios/chrome/browser/ui/autofill/chrome_autofill_client_ios.mm",
+        "patchSetId": 3
+      },
+      "lineNbr": 27,
+      "author": {
+        "id": 1123009
+      },
+      "writtenOn": "2017-11-07T00:15:06Z",
+      "side": 1,
+      "message": "s/include/import",
+      "range": {
+        "startLine": 27,
+        "startChar": 14,
+        "endLine": 27,
+        "endChar": 20
+      },
+      "revId": "7c9b47cb14dca5fcab091e9108390ac96760328a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1810cae2_4d713839",
+        "filename": "ios/chrome/browser/ui/autofill/chrome_autofill_client_ios.mm",
+        "patchSetId": 3
+      },
+      "lineNbr": 137,
+      "author": {
+        "id": 1123009
+      },
+      "writtenOn": "2017-11-07T00:15:06Z",
+      "side": 1,
+      "message": "Can this be null?",
+      "range": {
+        "startLine": 137,
+        "startChar": 6,
+        "endLine": 137,
+        "endChar": 29
+      },
+      "revId": "7c9b47cb14dca5fcab091e9108390ac96760328a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6523aa79_367e92af",
+        "filename": "ios/web/public/ssl_status.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 18,
+      "author": {
+        "id": 1123009
+      },
+      "writtenOn": "2017-11-07T00:15:06Z",
+      "side": 1,
+      "message": "Would it be better to subclass from SupportsUserData instead here and in //content?",
+      "range": {
+        "startLine": 18,
+        "startChar": 7,
+        "endLine": 18,
+        "endChar": 16
+      },
+      "revId": "7c9b47cb14dca5fcab091e9108390ac96760328a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "194a76f5_a45f2a64",
+        "filename": "ios/web/public/web_state/web_state.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 266,
+      "author": {
+        "id": 1123009
+      },
+      "writtenOn": "2017-11-07T00:15:06Z",
+      "side": 1,
+      "message": "WebContents does not have this method. Is it possible to avoid having it in WebState as well?",
+      "range": {
+        "startLine": 266,
+        "startChar": 15,
+        "endLine": 266,
+        "endChar": 43
+      },
+      "revId": "7c9b47cb14dca5fcab091e9108390ac96760328a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
