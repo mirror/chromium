@@ -107,13 +107,17 @@ class VIZ_COMMON_EXPORT BeginFrameObserverBase : public BeginFrameObserver {
 class VIZ_COMMON_EXPORT BeginFrameSource {
  public:
   BeginFrameSource();
+  explicit BeginFrameSource(uint16_t process_id);
   virtual ~BeginFrameSource();
 
   // Returns an identifier for this BeginFrameSource. Guaranteed unique within a
   // process, but not across processes. This is used to create BeginFrames that
   // originate at this source. Note that BeginFrameSources may pass on
   // BeginFrames created by other sources, with different IDs.
-  uint32_t source_id() const { return source_id_; }
+  uint32_t source_id() const {
+    DCHECK_NE(source_id_, 0u);
+    return source_id_;
+  }
 
   // BeginFrameObservers use DidFinishFrame to provide back pressure to a frame
   // source about frame processing (rather than toggling SetNeedsBeginFrames
@@ -150,6 +154,7 @@ class VIZ_COMMON_EXPORT StubBeginFrameSource : public BeginFrameSource {
 // A frame source which ticks itself independently.
 class VIZ_COMMON_EXPORT SyntheticBeginFrameSource : public BeginFrameSource {
  public:
+  explicit SyntheticBeginFrameSource(uint16_t process_id);
   ~SyntheticBeginFrameSource() override;
 
   virtual void OnUpdateVSyncParameters(base::TimeTicks timebase,
@@ -165,7 +170,8 @@ class VIZ_COMMON_EXPORT BackToBackBeginFrameSource
       public DelayBasedTimeSourceClient {
  public:
   explicit BackToBackBeginFrameSource(
-      std::unique_ptr<DelayBasedTimeSource> time_source);
+      std::unique_ptr<DelayBasedTimeSource> time_source,
+      uint16_t process_id = 0);
   ~BackToBackBeginFrameSource() override;
 
   // BeginFrameSource implementation.
@@ -199,7 +205,8 @@ class VIZ_COMMON_EXPORT DelayBasedBeginFrameSource
       public DelayBasedTimeSourceClient {
  public:
   explicit DelayBasedBeginFrameSource(
-      std::unique_ptr<DelayBasedTimeSource> time_source);
+      std::unique_ptr<DelayBasedTimeSource> time_source,
+      uint16_t process_id = 0);
   ~DelayBasedBeginFrameSource() override;
 
   // BeginFrameSource implementation.
@@ -243,6 +250,9 @@ class VIZ_COMMON_EXPORT ExternalBeginFrameSource : public BeginFrameSource {
  public:
   // Client lifetime must be preserved by owner past the lifetime of this class.
   explicit ExternalBeginFrameSource(ExternalBeginFrameSourceClient* client);
+  ExternalBeginFrameSource(ExternalBeginFrameSourceClient* client,
+                           uint16_t process_id);
+
   ~ExternalBeginFrameSource() override;
 
   // BeginFrameSource implementation.

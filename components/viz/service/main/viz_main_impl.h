@@ -78,7 +78,8 @@ class VizMainImpl : public gpu::GpuSandboxHelper, public mojom::VizMain {
   void CreateGpuService(mojom::GpuServiceRequest request,
                         mojom::GpuHostPtr gpu_host,
                         mojo::ScopedSharedBufferHandle activity_flags) override;
-  void CreateFrameSinkManager(mojom::FrameSinkManagerRequest request,
+  void CreateFrameSinkManager(uint16_t process_restart_id,
+                              mojom::FrameSinkManagerRequest request,
                               mojom::FrameSinkManagerClientPtr client) override;
 
   GpuServiceImpl* gpu_service() { return gpu_service_.get(); }
@@ -86,9 +87,11 @@ class VizMainImpl : public gpu::GpuSandboxHelper, public mojom::VizMain {
 
  private:
   void CreateFrameSinkManagerInternal(
+      uint16_t process_restart_id,
       mojom::FrameSinkManagerRequest request,
       mojom::FrameSinkManagerClientPtrInfo client_info);
   void CreateFrameSinkManagerOnCompositorThread(
+      uint16_t process_restart_id,
       mojom::FrameSinkManagerRequest request,
       mojom::FrameSinkManagerClientPtrInfo client_info);
 
@@ -119,6 +122,7 @@ class VizMainImpl : public gpu::GpuSandboxHelper, public mojom::VizMain {
 
   // If the gpu service is not yet ready then we stash pending MessagePipes in
   // these member variables.
+  uint16_t pending_process_restart_id_;
   mojom::FrameSinkManagerRequest pending_frame_sink_manager_request_;
   mojom::FrameSinkManagerClientPtrInfo pending_frame_sink_manager_client_info_;
 

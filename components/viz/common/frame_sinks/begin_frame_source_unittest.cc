@@ -349,7 +349,7 @@ class DelayBasedBeginFrameSourceTest : public ::testing::Test {
         new FakeDelayBasedTimeSource(now_src_.get(), task_runner_.get()));
     time_source->SetTimebaseAndInterval(
         base::TimeTicks(), base::TimeDelta::FromMicroseconds(10000));
-    source_.reset(new DelayBasedBeginFrameSource(std::move(time_source)));
+    source_.reset(new DelayBasedBeginFrameSource(0, std::move(time_source)));
     obs_.reset(new MockBeginFrameObserver);
   }
 

@@ -737,10 +737,12 @@ void GpuProcessHost::DestroyGpuMemoryBuffer(gfx::GpuMemoryBufferId id,
 }
 
 void GpuProcessHost::ConnectFrameSinkManager(
+    uint16_t process_restart_id,
     viz::mojom::FrameSinkManagerRequest request,
     viz::mojom::FrameSinkManagerClientPtr client) {
   TRACE_EVENT0("gpu", "GpuProcessHost::ConnectFrameSinkManager");
-  gpu_main_ptr_->CreateFrameSinkManager(std::move(request), std::move(client));
+  gpu_main_ptr_->CreateFrameSinkManager(process_restart_id, std::move(request),
+                                        std::move(client));
 }
 
 void GpuProcessHost::RequestGPUInfo(RequestGPUInfoCallback request_cb) {

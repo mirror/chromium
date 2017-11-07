@@ -187,6 +187,7 @@ void VizMainImpl::CreateGpuService(
 
   if (pending_frame_sink_manager_request_.is_pending()) {
     CreateFrameSinkManagerInternal(
+        pending_process_restart_id_,
         std::move(pending_frame_sink_manager_request_),
         std::move(pending_frame_sink_manager_client_info_));
   }
@@ -195,19 +196,23 @@ void VizMainImpl::CreateGpuService(
 }
 
 void VizMainImpl::CreateFrameSinkManager(
+    uint16_t process_restart_id,
     mojom::FrameSinkManagerRequest request,
     mojom::FrameSinkManagerClientPtr client) {
   DCHECK(compositor_thread_task_runner_);
   DCHECK(gpu_thread_task_runner_->BelongsToCurrentThread());
   if (!gpu_service_ || !gpu_service_->is_initialized()) {
+    pending_process_restart_id_ = process_restart_id;
     pending_frame_sink_manager_request_ = std::move(request);
     pending_frame_sink_manager_client_info_ = client.PassInterface();
     return;
   }
-  CreateFrameSinkManagerInternal(std::move(request), client.PassInterface());
+  CreateFrameSinkManagerInternal(process_restart_id, std::move(request),
+                                 client.PassInterface());
 }
 
 void VizMainImpl::CreateFrameSinkManagerInternal(
+    uint16_t process_restart_id,
     mojom::FrameSinkManagerRequest request,
     mojom::FrameSinkManagerClientPtrInfo client_info) {
   DCHECK(!gpu_command_service_);
@@ -221,11 +226,13 @@ void VizMainImpl::CreateFrameSinkManagerInternal(
   compositor_thread_task_runner_->PostTask(
       FROM_HERE,
       base::Bind(&VizMainImpl::CreateFrameSinkManagerOnCompositorThread,
-                 base::Unretained(this), base::Passed(std::move(request)),
+                 base::Unretained(this), process_restart_id,
+                 base::Passed(std::move(request)),
                  base::Passed(std::move(client_info))));
 }
 
 void VizMainImpl::CreateFrameSinkManagerOnCompositorThread(
+    uint16_t process_restart_id,
     mojom::FrameSinkManagerRequest request,
     mojom::FrameSinkManagerClientPtrInfo client_info) {
   DCHECK(!frame_sink_manager_);
@@ -233,7 +240,8 @@ void VizMainImpl::CreateFrameSinkManagerOnCompositorThread(
   client.Bind(std::move(client_info));
 
   display_provider_ = base::MakeUnique<GpuDisplayProvider>(
-      gpu_command_service_, gpu_service_->gpu_channel_manager());
+      process_restart_id, gpu_command_service_,
+      gpu_service_->gpu_channel_manager());
 
   frame_sink_manager_ = base::MakeUnique<FrameSinkManagerImpl>(
       SurfaceManager::LifetimeType::REFERENCES, display_provider_.get());

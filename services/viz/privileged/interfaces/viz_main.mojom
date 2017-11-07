@@ -11,10 +11,11 @@ import "services/viz/privileged/interfaces/gl/gpu_service.mojom";
 // This is the primordial interface used to (re)start the viz services.
 interface VizMain {
   CreateFrameSinkManager(
-    viz.mojom.FrameSinkManager& frame_sink_manager,
-    viz.mojom.FrameSinkManagerClient frame_sink_manager_client);
+    uint16 process_restart_id,
+    FrameSinkManager& frame_sink_manager,
+    FrameSinkManagerClient frame_sink_manager_client);
 
-  CreateGpuService(viz.mojom.GpuService& gpu_service,
-                   viz.mojom.GpuHost gpu_host,
+  CreateGpuService(GpuService& gpu_service,
+                   GpuHost gpu_host,
                    handle<shared_buffer>? activity_flags);
 };
