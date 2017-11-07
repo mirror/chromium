@@ -100,6 +100,23 @@
     },
     {
       "key": {
+        "uuid": "47c1ec3a_57d5ab06",
+        "filename": "third_party/WebKit/Source/core/loader/DocumentLoader.cpp",
+        "patchSetId": 5
+      },
+      "lineNbr": 123,
+      "author": {
+        "id": 1001216
+      },
+      "writtenOn": "2017-11-07T00:59:07Z",
+      "side": 1,
+      "message": "This is one place we seem to be creating the token in the renderer process.  Why is it needed?",
+      "revId": "7144bbc26e5dcfb582fabdf2c8e504b2725aac6d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "5cb49090_f4f9753d",
         "filename": "third_party/WebKit/Source/core/loader/DocumentLoader.h",
         "patchSetId": 5
