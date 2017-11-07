@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "ca88eb35_6f2b2fe8",
+        "filename": "tools/cygprofile/orderfile_generator_backend.py",
+        "patchSetId": 6
+      },
+      "lineNbr": 255,
+      "author": {
+        "id": 1000429
+      },
+      "writtenOn": "2017-11-07T14:29:53Z",
+      "side": 1,
+      "message": "nit: I think you wanted to assign them in the same order as they appear in arguments, but then this particular line is not ordered according to this good idea :)",
+      "range": {
+        "startLine": 255,
+        "startChar": 4,
+        "endLine": 255,
+        "endChar": 29
+      },
+      "revId": "f77a1b629ac7029ddb1cde5feb510837ed43155f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
