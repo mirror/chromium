@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "7e9087a1_83239f1e",
+        "filename": "media/cdm/cdm_adapter.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 1157,
+      "author": {
+        "id": 1003189
+      },
+      "writtenOn": "2017-11-07T00:29:35Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "b5f2f981_4e5ad5ba",
+      "revId": "5d5791d72614715db836e8576bc936ae0710d5ba",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "397839cf_9838bf3d",
         "filename": "media/cdm/ppapi/ppapi_cdm_adapter.cc",
         "patchSetId": 1
@@ -33,6 +51,24 @@
       "revId": "5d5791d72614715db836e8576bc936ae0710d5ba",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0f5420bc_feee83fa",
+        "filename": "media/cdm/ppapi/ppapi_cdm_adapter.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 1203,
+      "author": {
+        "id": 1003189
+      },
+      "writtenOn": "2017-11-07T00:29:35Z",
+      "side": 1,
+      "message": "This does fail below (if version !\u003d 0 or 1). So this is more of a comment for subsequent changes (pepper will be gone long before we ever get to that many versions).",
+      "parentUuid": "397839cf_9838bf3d",
+      "revId": "5d5791d72614715db836e8576bc936ae0710d5ba",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
