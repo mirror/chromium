@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "7d3b567d_c891d0ed",
+        "filename": "chrome/browser/component_updater/cros_component_installer.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 49,
+      "author": {
+        "id": 1117055
+      },
+      "writtenOn": "2017-11-07T18:18:42Z",
+      "side": 1,
+      "message": "FYI this line is failing a style check now, probably because you added that scoped_refptr in 79-80. You have to move its (empty) body into the .cc file",
+      "revId": "46b10ef8e4a1b2c81d9fbed709c61a334e4604d3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
