@@ -7,7 +7,7 @@ Sensors Mojo interfaces are defined in the `services/device/public/interfaces` s
 
 ## Web-exposed Interfaces
 
-### Generic Sensors
+### [Generic Sensors](https://www.w3.org/TR/generic-sensor/)
 
 The Generic Sensors API is implemented in `third_party/WebKit/Source/modules/sensor` and exposes the following sensor types as JavaScript objects:
 
@@ -27,7 +27,7 @@ The Generic Sensors API is implemented in `third_party/WebKit/Source/modules/sen
 [Magnetometer]: ../../../third_party/WebKit/Source/modules/sensor/Magnetometer.idl
 [RelativeOrientationSensor]: ../../../third_party/WebKit/Source/modules/sensor/RelativeOrientationSensor.idl
 
-### DeviceOrientation Events
+### [DeviceOrientation Events](https://www.w3.org/TR/orientation-event/)
 
 The DeviceOrientation Events API is implemented in `third_party/WebKit/Source/modules/device_orientation` and exposes two events based on the following sensors:
 
@@ -42,6 +42,15 @@ The DeviceOrientation Events API is implemented in `third_party/WebKit/Source/mo
 [DeviceMotionEvent]: ../../../third_party/WebKit/Source/modules/device_orientation/DeviceMotionEvent.idl
 [DeviceOrientationEvent]: ../../../third_party/WebKit/Source/modules/device_orientation/DeviceOrientationEvent.idl
 
+The content renderer layer is located in `content/renderer/device_sensors`.
+
+motion_data.* and orientation_data.* files have been moved from //device/sensors/ to //services/device/public/cpp/generic_sensor/.
+
+Testing:
+
+* Browser tests are located in `content/browser/device_sensors`.
+* Layout tests are located in `third_party/WebKit/LayoutTests/device_orientation`.
+* Web platform tests are located in `third_party/WebKit/LayoutTests/external/wpt/orientation-event` and are a mirror of the [web-platform-tests GitHub repository](https://github.com/w3c/web-platform-tests).
 
 ## Permissions
 
