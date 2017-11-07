@@ -43,8 +43,11 @@ class CORE_EXPORT DedicatedWorkerMessagingProxy
                               const String& source_code,
                               ReferrerPolicy,
                               v8_inspector::V8Inspector::RemoteAsyncTaskId);
-  void PostMessageToWorkerGlobalScope(scoped_refptr<SerializedScriptValue>,
-                                      Vector<MessagePortChannel>);
+  void PostMessageToWorkerGlobalScope(
+      scoped_refptr<SerializedScriptValue>,
+      Vector<MessagePortChannel>,
+      v8_inspector::V8Inspector::RemoteAsyncTaskId,
+      const String& debugger_id);
 
   // Implements ThreadedMessagingProxyBase.
   void WorkerThreadCreated() override;

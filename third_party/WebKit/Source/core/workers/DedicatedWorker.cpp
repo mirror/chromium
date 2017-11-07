@@ -75,8 +75,16 @@ void DedicatedWorker::postMessage(ScriptState* script_state,
       ExecutionContext::From(script_state), ports, exception_state);
   if (exception_state.HadException())
     return;
-  context_proxy_->PostMessageToWorkerGlobalScope(std::move(message),
-                                                 std::move(channels));
+  MainThreadDebugger* debugger = MainThreadDebugger::Instance();
+  v8_inspector::V8Inspector::RemoteAsyncTaskId task_id =
+      debugger->RemoteAsyncTaskScheduled("Worker.postMessage", String());
+  String debugger_id;
+  if (task_id != v8_inspector::V8Inspector::kEmptyAsyncTaskId) {
+    Document* document = ToDocument(GetExecutionContext());
+    debugger_id = debugger->DebuggerId(document->GetFrame());
+  }
+  context_proxy_->PostMessageToWorkerGlobalScope(
+      std::move(message), std::move(channels), task_id, debugger_id);
 }
 
 void DedicatedWorker::Start() {

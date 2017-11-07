@@ -39,6 +39,7 @@
 #include "platform/heap/Handle.h"
 #include "platform/wtf/RefPtr.h"
 #include "platform/wtf/WeakPtr.h"
+#include "v8/include/v8-inspector.h"
 
 namespace blink {
 
@@ -65,9 +66,12 @@ class CORE_EXPORT DedicatedWorkerObjectProxy : public ThreadedObjectProxyBase {
   void PostMessageToWorkerObject(scoped_refptr<SerializedScriptValue>,
                                  Vector<MessagePortChannel>);
   void ProcessUnhandledException(int exception_id, WorkerThread*);
-  void ProcessMessageFromWorkerObject(scoped_refptr<SerializedScriptValue>,
-                                      Vector<MessagePortChannel>,
-                                      WorkerThread*);
+  void ProcessMessageFromWorkerObject(
+      scoped_refptr<SerializedScriptValue>,
+      Vector<MessagePortChannel>,
+      WorkerThread*,
+      v8_inspector::V8Inspector::RemoteAsyncTaskId,
+      const String& debugger_id);
 
   // ThreadedObjectProxyBase overrides.
   void ReportException(const String& error_message,

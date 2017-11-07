@@ -45,6 +45,8 @@ ConnectToWorkerInterfaceProvider(Document* document,
 struct DedicatedWorkerMessagingProxy::QueuedTask {
   scoped_refptr<SerializedScriptValue> message;
   Vector<MessagePortChannel> channels;
+  v8_inspector::V8Inspector::RemoteAsyncTaskId task_id;
+  String debugger_id;
 };
 
 DedicatedWorkerMessagingProxy::DedicatedWorkerMessagingProxy(
@@ -96,7 +98,9 @@ void DedicatedWorkerMessagingProxy::StartWorkerGlobalScope(
 
 void DedicatedWorkerMessagingProxy::PostMessageToWorkerGlobalScope(
     scoped_refptr<SerializedScriptValue> message,
-    Vector<MessagePortChannel> channels) {
+    Vector<MessagePortChannel> channels,
+    v8_inspector::V8Inspector::RemoteAsyncTaskId task_id,
+    const String& debugger_id) {
   DCHECK(IsParentContextThread());
   if (AskedToTerminate())
     return;
@@ -106,12 +110,12 @@ void DedicatedWorkerMessagingProxy::PostMessageToWorkerGlobalScope(
         &DedicatedWorkerObjectProxy::ProcessMessageFromWorkerObject,
         CrossThreadUnretained(&WorkerObjectProxy()), std::move(message),
         WTF::Passed(std::move(channels)),
-        CrossThreadUnretained(GetWorkerThread()));
+        CrossThreadUnretained(GetWorkerThread()), task_id, debugger_id);
     TaskRunnerHelper::Get(TaskType::kPostedMessage, GetWorkerThread())
         ->PostTask(BLINK_FROM_HERE, std::move(task));
   } else {
-    queued_early_tasks_.push_back(
-        QueuedTask{std::move(message), std::move(channels)});
+    queued_early_tasks_.push_back(QueuedTask{
+        std::move(message), std::move(channels), task_id, debugger_id});
   }
 }
 
@@ -125,7 +129,8 @@ void DedicatedWorkerMessagingProxy::WorkerThreadCreated() {
         CrossThreadUnretained(&WorkerObjectProxy()),
         std::move(queued_task.message),
         WTF::Passed(std::move(queued_task.channels)),
-        CrossThreadUnretained(GetWorkerThread()));
+        CrossThreadUnretained(GetWorkerThread()), queued_task.task_id,
+        queued_task.debugger_id);
     TaskRunnerHelper::Get(TaskType::kPostedMessage, GetWorkerThread())
         ->PostTask(BLINK_FROM_HERE, std::move(task));
   }
