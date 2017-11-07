@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "d52831df_41cbdf5a",
+        "filename": "chrome/browser/permissions/permission_uma_util.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 736,
+      "author": {
+        "id": 1000602
+      },
+      "writtenOn": "2017-11-07T20:48:08Z",
+      "side": 0,
+      "message": "Hmm - could this one still be useful because some things are recorded in PermissionContexBase? DurableStoragePermissionContext will decide whether to grant or not based on a heuristic but is it still useful to record how often that happens?",
+      "revId": "8dfdd5c89b113097bbc34690f042cec6b4675363",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
