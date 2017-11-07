@@ -137,7 +137,7 @@ void ServiceWorkerDevToolsAgentHost::NavigationPreloadResponseReceived(
 
 void ServiceWorkerDevToolsAgentHost::NavigationPreloadCompleted(
     const std::string& request_id,
-    const ResourceRequestCompletionStatus& completion_status) {
+    const network::ResourceRequestCompletionStatus& completion_status) {
   for (auto* network : protocol::NetworkHandler::ForAgentHost(this))
     network->NavigationPreloadCompleted(request_id, completion_status);
 }

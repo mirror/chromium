@@ -189,7 +189,7 @@ class BlobURLLoader : public storage::MojoBlobReader::Delegate,
           status_code, nullptr, nullptr, 0, 0);
       client_->OnReceiveResponse(response, base::nullopt, nullptr);
     }
-    ResourceRequestCompletionStatus request_complete_data;
+    network::ResourceRequestCompletionStatus request_complete_data;
     // TODO(kinuko): We should probably set the error_code here,
     // while it makes existing tests fail. crbug.com/732750
     request_complete_data.completion_time = base::TimeTicks::Now();

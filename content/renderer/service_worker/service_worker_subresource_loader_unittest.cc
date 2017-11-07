@@ -61,7 +61,7 @@ class FakeNetworkURLLoaderFactory final : public mojom::URLLoaderFactory {
                                          MOJO_WRITE_DATA_FLAG_ALL_OR_NONE);
     client->OnStartLoadingResponseBody(std::move(data_pipe.consumer_handle));
 
-    ResourceRequestCompletionStatus status;
+    network::ResourceRequestCompletionStatus status;
     status.error_code = net::OK;
     client->OnComplete(status);
   }

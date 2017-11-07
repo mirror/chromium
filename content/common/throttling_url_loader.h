@@ -132,7 +132,8 @@ class CONTENT_EXPORT ThrottlingURLLoader : public mojom::URLLoaderClient {
   void OnTransferSizeUpdated(int32_t transfer_size_diff) override;
   void OnStartLoadingResponseBody(
       mojo::ScopedDataPipeConsumerHandle body) override;
-  void OnComplete(const ResourceRequestCompletionStatus& status) override;
+  void OnComplete(
+      const network::ResourceRequestCompletionStatus& status) override;
 
   void OnClientConnectionError();
 
