@@ -82,7 +82,8 @@ class OneTimeMessageHandler {
   void AddReceiver(ScriptContext* script_context,
                    const PortId& target_port_id,
                    v8::Local<v8::Object> sender,
-                   Event event);
+                   Event event,
+                   const std::string& event_name);
 
   // Delivers a message to the port, either the event listener or in response
   // to the sender, if one exists with the specified |target_port_id|. Returns

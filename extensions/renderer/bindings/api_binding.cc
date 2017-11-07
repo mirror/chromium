@@ -558,6 +558,7 @@ void APIBinding::HandleCall(const std::string& name,
                             const APISignature* signature,
                             const binding::RequestThread thread,
                             gin::Arguments* arguments) {
+  LOG(WARNING) << "Handling call: " << name;
   std::string error;
   v8::Isolate* isolate = arguments->isolate();
   v8::HandleScope handle_scope(isolate);
@@ -580,6 +581,7 @@ void APIBinding::HandleCall(const std::string& name,
   int old_request_id = request_handler_->last_sent_request_id();
   {
     v8::TryCatch try_catch(isolate);
+    LOG(WARNING) << "Running hooks, api name: " << api_name_;
     APIBindingHooks::RequestResult hooks_result = binding_hooks_->RunHooks(
         name, context, signature, &argument_list, *type_refs_);
 
