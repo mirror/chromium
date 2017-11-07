@@ -3193,6 +3193,25 @@
             ]
         }
     ],
+    "SavePreviousDocumentResources": [
+        {
+            "platforms": [
+                "android",
+                "chromeos",
+                "linux",
+                "mac",
+                "win"
+            ],
+            "experiments": [
+                {
+                    "name": "save-previous-document-resource-until-onload",
+                    "enable_features": [
+                        "save-previous-document-resource-until-onload"
+                    ]
+                }
+            ]
+        }
+    ],
     "SearchEnginePromo": [
         {
             "platforms": [
