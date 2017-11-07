@@ -22,6 +22,30 @@
       "revId": "cbbf2aa6416f8362a599fad0f41441bf35a04b45",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c679e581_686ff496",
+        "filename": "media/gpu/android/codec_image_group.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 73,
+      "author": {
+        "id": 1130490
+      },
+      "writtenOn": "2017-11-07T21:07:35Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "4c6a3a8a_2d4f1b76",
+      "range": {
+        "startLine": 73,
+        "startChar": 12,
+        "endLine": 73,
+        "endChar": 37
+      },
+      "revId": "cbbf2aa6416f8362a599fad0f41441bf35a04b45",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
