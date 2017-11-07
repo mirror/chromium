@@ -469,6 +469,7 @@ class SSLUITest : public InProcessBrowserTest {
     // Use process-per-site so that navigating to a same-site page in a
     // new tab will use the same process.
     command_line->AppendSwitch(switches::kProcessPerSite);
+    command_line->AppendSwitch(switches::kCommittedInterstitials);
   }
 
   void SetUpOnMainThread() override {
@@ -851,10 +852,6 @@ class SSLUITestHSTS : public SSLUITest {
 };
 
 class SSLUITestCommittedInterstitials : public SSLUITest {
- protected:
-  void SetUpCommandLine(base::CommandLine* command_line) override {
-    command_line->AppendSwitch(switches::kCommittedInterstitials);
-  }
 };
 
 // Visits a regular page over http.
