@@ -1201,6 +1201,8 @@ IPC_MESSAGE_ROUTED1(FrameHostMsg_EnforceInsecureRequestPolicy,
 IPC_MESSAGE_ROUTED1(FrameHostMsg_UpdateToUniqueOrigin,
                     bool /* is potentially trustworthy unique origin */)
 
+IPC_MESSAGE_ROUTED1(FrameHostMsg_UpdateAboutBlank, GURL)
+
 // Sent when the renderer changed the progress of a load.
 IPC_MESSAGE_ROUTED1(FrameHostMsg_DidChangeLoadProgress,
                     double /* load_progress */)

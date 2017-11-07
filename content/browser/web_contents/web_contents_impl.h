@@ -1130,6 +1130,7 @@ class CONTENT_EXPORT WebContentsImpl : public WebContents,
                                         SkColor color);
   void OnUpdatePageImportanceSignals(RenderFrameHostImpl* source,
                                      const PageImportanceSignals& signals);
+
 #if BUILDFLAG(ENABLE_PLUGINS)
   void OnPepperInstanceCreated(RenderFrameHostImpl* source,
                                int32_t pp_instance);
@@ -1160,6 +1161,8 @@ class CONTENT_EXPORT WebContentsImpl : public WebContents,
 #endif  // BUILDFLAG(ENABLE_PLUGINS)
   void OnUpdateFaviconURL(RenderFrameHostImpl* source,
                           const std::vector<FaviconURL>& candidates);
+  void OnUpdateAboutBlank(RenderFrameHostImpl* render_frame_host,
+                          const GURL& url);
   void OnFirstVisuallyNonEmptyPaint(RenderViewHostImpl* source);
   void OnShowValidationMessage(RenderViewHostImpl* source,
                                const gfx::Rect& anchor_in_root_view,

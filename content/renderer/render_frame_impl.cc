@@ -3543,6 +3543,10 @@ void RenderFrameImpl::DidUpdateToUniqueOrigin(
       routing_id_, is_potentially_trustworthy_unique_origin));
 }
 
+void RenderFrameImpl::DidUpdateAboutBlank(const blink::WebURL& url) {
+  Send(new FrameHostMsg_UpdateAboutBlank(routing_id_, url));
+}
+
 void RenderFrameImpl::DidChangeFramePolicy(
     blink::WebFrame* child_frame,
     blink::WebSandboxFlags flags,
