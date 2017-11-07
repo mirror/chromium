@@ -22,6 +22,30 @@
       "revId": "25b118af7fc12ee0105ad076fa998288e390f826",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e5da8852_e6e3a0db",
+        "filename": "chrome/browser/ui/views/intent_picker_bubble_view.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 153,
+      "author": {
+        "id": 1175549
+      },
+      "writtenOn": "2017-11-07T05:41:54Z",
+      "side": 1,
+      "message": "Getting rid of it, I will double check the rest of the *ForTesting methods on a follow up CL. Thanks for pointing this out Scott o/",
+      "parentUuid": "afa81400_2f58d37f",
+      "range": {
+        "startLine": 153,
+        "startChar": 24,
+        "endLine": 153,
+        "endChar": 48
+      },
+      "revId": "25b118af7fc12ee0105ad076fa998288e390f826",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
