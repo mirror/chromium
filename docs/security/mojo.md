@@ -5,7 +5,8 @@ abstractions can make it easier to write code that makes interprocess calls,
 but can also add significant complexity. Below are some recommendation from
 Mojo and IPC reviewers for best practices.
 
-For questions, concerns, or suggestions, reach out to <mojo@chromium.org>.
+For questions, concerns, or suggestions, reach out to
+<chromium-mojo@chromium.org>.
 
 > For legacy IPC, please see [security tips for IPC][security-tips-for-ipc].
 
@@ -21,11 +22,11 @@ that needs to be maintained in sync.
 
 ```c++
 interface TeleporterFactory {
-  Create(Location start, Location end) => (Teleporter);
+  Create(Location start, Location end) => (Teleporter teleporter);
 };
 
 interface Teleporter {
-  TeleportGoat(Goat) = ();
+  TeleportGoat(Goat goat) => ();
 };
 ```
 
@@ -39,9 +40,9 @@ interface Teleporter {
   // In addition, if untrustworthy processes can talk to trustworthy processes,
   // the Teleporter implementation will need to also handle the case where the
   // Location objects are not yet bound.
-  SetStart(Location);
-  SetEnd(Location);
-  TeleportGoat(Goat) = ();
+  SetStart(Location start);
+  SetEnd(Location end);
+  TeleportGoat(Goat goat) => ();
 };
 ```
 
@@ -58,13 +59,13 @@ struct TeleporterStats {
 };
 
 interface Teleporter {
-  TeleportAnimal(Animal) => ();
-  TeleportFungi(Fungi) => ();
-  TeleportGoat(Goat) = ();
-  TeleportPlant(Plant) => ();
+  TeleportAnimal(Animal animal) => ();
+  TeleportFungi(Fungi fungi) => ();
+  TeleportGoat(Goat goat) => ();
+  TeleportPlant(Plant plant) => ();
 
-  // TeleportStats is only non-null if success is true.
-  GetStats() => (bool success, TeleporterStats?);
+  // TeleportStats is only non-null on success.
+  GetStats() => (TeleporterStats? stats);
 };
 ```
 
@@ -75,13 +76,56 @@ interface Teleporter {
   // The intent of four optional arguments is unclear: can this call teleport
   // multiple objects of different types at once, or is the caller only
   // supposed to only pass one non-null argument per call?
-  Teleport(Animal?, Fungi?, Goat?, Plant?) => ();
+  Teleport(Animal? animal, Fungi? fungi, Goat? goat, Plant? plant) => ();
 
   // Does this return all stats if sucess is true? Or just the categories that
   // the teleporter already has stats for? The intent is uncertain, so wrapping
   // the disparate values into a result struct would be cleaner.
   GetStats() =>
-      (bool success, AnimalStats?, FungiStats?, PlantStats?, FungiStats?);
+      (bool success,
+       AnimalStats? animal_stats,
+       FungiStats? fungi_stats,
+       GoatStats? goat_stats,
+       PlantStats? plant_stats);
+};
+```
+
+Prefer parameters where consistency can be automatically validated; avoid
+parmeters that can be contradictory.
+
+**_Good_**
+
+```c++
+union StatsOrError {
+  TeleporterStats stats;
+  string error_message;
+};
+
+interface Teleporter {
+  // Returns stats on success or an error message on failure. The bindings
+  // validation verify that the result is exactly one of stats or an error
+  // message.
+  GetStatsOrError() => (StatsOrError stats_or_error);
+
+  // Whether stats is null conveys whether the GetStats() call failed. No
+  // additional bool is necessary.
+  GetStats() => (TeleporterStats? stats);
+};
+```
+
+**_Bad_**
+
+```c++
+interface Teleporter {
+  // On success, success should be true, stats non-null and error null.
+  // On failure, success should be false, stats null and error non-null.
+  // The validator does not enforce these invariants so any combination is
+  // allowed.
+  GetStatsOrError() => (bool success, TeleporterStats? stats, string? error);
+
+  // The value of success should be the value of whether stats is non-null, but
+  // validation does not enforce this invariant.
+  GetStats() => (bool success, TeleporterStats? stats);
 };
 ```
 
@@ -106,18 +150,17 @@ interface Teleporter {
   // not complete until the reply callback is invoked. The caller must NOT
   // release the sender side resources until the reply callback runs; releasing
   // the resources early will cause splinching.
-  TeleportAnimal(Animal) => ();
-  TeleportFungi(Fungi) => ();
+  TeleportAnimal(Animal animal) => ();
+  TeleportFungi(Fungi fungi) => ();
   // Goats require a specialized teleportation channel distinct from
   // TeleportAnimal to ensure goatiness isolation.
-  TeleportGoat(Goat) => ();
-  TeleportPlant(Plant) => ();
+  TeleportGoat(Goat goat) => ();
+  TeleportPlant(Plant plant) => ();
 
-  // Returns current teleportation stats. On failure (e.g. a teleportation
+  // Returns current teleporter stats. On failure (e.g. a teleportation
   // operation is currently in progress) success will be false and a null stats
   // object will be returned.
-  GetStats() =>
-      (bool success, TeleportationStats?);
+  GetStats() => (bool success, TeleporterStats? stats);
 };
 ```
 
