@@ -334,6 +334,30 @@
     },
     {
       "key": {
+        "uuid": "e09dd83e_229da1aa",
+        "filename": "net/http/http_server_properties_impl.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 619,
+      "author": {
+        "id": 1143554
+      },
+      "writtenOn": "2017-11-07T02:08:01Z",
+      "side": 1,
+      "message": "It helps but I have more questions :) E.g., let\u0027s say a Cronet client adds a QUIC hint for \"foo.googlevideo.com\" at app startup. This will result in a new entry in |canonical_host_to_origin_map_|: \"googlevideo.com\" \u003d\u003e \"foo.googlevideo.com\". At the same time, let\u0027s say there is server info persisted from the previous app launch for \"bar.googlevideo.com\". If we give the priority to \"foo.googlevideo.com\" then we will not be able to find the server info when the app connects for the first time to a different host with same canonical suffix (let\u0027s say \"baz.googlevideo.com). If we give the priority to \"bar.googlevideo.com\", we overwrite the client setting. Is it okay to do it? It may complicate the logic.\n\nBtw, when you are saying the main map, are you referring |alternative_service_map_|?",
+      "parentUuid": "00e72c42_f1a671ad",
+      "range": {
+        "startLine": 619,
+        "startChar": 3,
+        "endLine": 619,
+        "endChar": 0
+      },
+      "revId": "785ae66296e8738e554a36075491aaf0e4926ffc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "71ac8a88_d9a35a62",
         "filename": "net/http/http_server_properties_impl_unittest.cc",
         "patchSetId": 2
