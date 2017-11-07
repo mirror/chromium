@@ -3,6 +3,9 @@
 // found in the LICENSE file.
 
 #include "platform/graphics/compositing/CompositedLayerRasterInvalidator.h"
+#include <algorithm>
+#include <memory>
+#include <utility>
 
 #include "platform/graphics/paint/GeometryMapper.h"
 
@@ -222,7 +225,7 @@ void CompositedLayerRasterInvalidator::InvalidateRasterForOldChunk(
 
 RasterInvalidationTracking& CompositedLayerRasterInvalidator::EnsureTracking() {
   if (!tracking_info_)
-    tracking_info_ = WTF::MakeUnique<RasterInvalidationTrackingInfo>();
+    tracking_info_ = std::make_unique<RasterInvalidationTrackingInfo>();
   return tracking_info_->tracking;
 }
 
