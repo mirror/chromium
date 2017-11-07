@@ -22,6 +22,30 @@
       "revId": "fcae1f813994928e1795800eb68ea03eb0edf879",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a0a0d1f6_6f663a0c",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/signin/SigninPromoUtil.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 57,
+      "author": {
+        "id": 1209769
+      },
+      "writtenOn": "2017-11-07T12:49:24Z",
+      "side": 1,
+      "message": "Didn\u0027t know about objectEquals, thanks!\nBTW, it looks like support library added similar method in version 26.1.0: https://developer.android.com/reference/android/support/v4/util/ObjectsCompat.html. Does it make sense to use it instead of ApiCompatibilityUtils after we roll support library to a newer version?",
+      "parentUuid": "b5b1b7b4_ee5c4453",
+      "range": {
+        "startLine": 57,
+        "startChar": 12,
+        "endLine": 57,
+        "endChar": 32
+      },
+      "revId": "fcae1f813994928e1795800eb68ea03eb0edf879",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
