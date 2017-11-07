@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "a074b292_be8735f7",
+        "filename": "android_webview/javatests/src/org/chromium/android_webview/test/SafeBrowsingTest.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 1078,
+      "author": {
+        "id": 1167294
+      },
+      "writtenOn": "2017-11-07T03:17:12Z",
+      "side": 1,
+      "message": "FYI this should be OK as-is. It should not require Safe Browsing to be enabled or disabled.",
+      "range": {
+        "startLine": 1077,
+        "startChar": 4,
+        "endLine": 1078,
+        "endChar": 72
+      },
+      "revId": "89198c40261cd8e8021e71440817a2a07c59ea95",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    }
+  ]
+}
