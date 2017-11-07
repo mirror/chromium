@@ -87,7 +87,9 @@ ParsedFeaturePolicy ParseFeaturePolicyHeader(
     const String& policy,
     scoped_refptr<SecurityOrigin> origin,
     Vector<String>* messages) {
-  return ParseFeaturePolicy(policy, origin, nullptr, messages,
+  // In header policy, src origin does not exist:
+  //     src origin = self origin.
+  return ParseFeaturePolicy(policy, origin, origin, messages,
                             GetDefaultFeatureNameMap());
 }
 
@@ -108,6 +110,8 @@ ParsedFeaturePolicy ParseFeaturePolicy(
     Vector<String>* messages,
     const FeatureNameMap& feature_names,
     bool* old_syntax) {
+  DCHECK_NE(NULL, self_originl);
+  DCHECK_NE(NULL, src_origin);
   // Temporarily supporting old allow syntax:
   //     allow = "feature1 feature2 feature3 ... "
   // TODO(loonybear): depracate this old syntax in the future.
@@ -158,13 +162,10 @@ ParsedFeaturePolicy ParseFeaturePolicy(
       std::vector<url::Origin> origins;
       // If a policy entry has no (optional) values (e,g,
       // allow="feature_name1; feature_name2 value"), enable the feature for:
-      //     a. if header policy (i.e., src_origin does not exist), self_origin;
-      //     or
-      //     b. if allow attribute (i.e., src_origin exists), src_origin.
-      if (tokens.size() == 1) {
-        origins.push_back(src_origin ? src_origin->ToUrlOrigin()
-                                     : self_origin->ToUrlOrigin());
-      }
+      //     a. if header policy, src_origin = self_origin; or
+      //     b. if allow attribute, src_origin.
+      if (tokens.size() == 1)
+        origins.push_back(src_origin->ToUrlOrigin());
 
       for (size_t i = 1; i < tokens.size(); i++) {
         if (EqualIgnoringASCIICase(tokens[i], "'self'")) {
