@@ -1,0 +1,95 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "fd76ba13_e35457a2",
+        "filename": "content/browser/webauth/cbor/cbor_writer.cc",
+        "patchSetId": 16
+      },
+      "lineNbr": 32,
+      "author": {
+        "id": 1003152
+      },
+      "writtenOn": "2017-11-07T13:20:31Z",
+      "side": 1,
+      "message": "What do you think about optimizing away this entire function like so:\n\nbool CBORWriter::EncodeCBOR(const CBORValue\u0026 node, size_t max_nesting_level) {\n   if (!max_nesting_level)\n     return false;\n\n   // ...\n   return EncodeCBOR(..., max_nesting_level - 1);\n   // ...\n   return true;\n}",
+      "revId": "7deb25fb81bfec4c1c5cc9d10dc9c242c33fea60",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "322e257d_08e36ba6",
+        "filename": "content/browser/webauth/cbor/cbor_writer.cc",
+        "patchSetId": 16
+      },
+      "lineNbr": 82,
+      "author": {
+        "id": 1003152
+      },
+      "writtenOn": "2017-11-07T13:20:31Z",
+      "side": 1,
+      "message": "The return value is never used (but will be).",
+      "range": {
+        "startLine": 82,
+        "startChar": 0,
+        "endLine": 82,
+        "endChar": 4
+      },
+      "revId": "7deb25fb81bfec4c1c5cc9d10dc9c242c33fea60",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c8c6b8d3_c4f6f790",
+        "filename": "content/browser/webauth/cbor/cbor_writer_unittest.cc",
+        "patchSetId": 16
+      },
+      "lineNbr": 37,
+      "author": {
+        "id": 1003152
+      },
+      "writtenOn": "2017-11-07T13:20:31Z",
+      "side": 1,
+      "message": "Note that value() will crash the test if the resulting base::Optional does not have a value.\n\nTo avoid that, please add an ASSERT on has_value before each call to value:\n\nauto cbor \u003d CBORWrite::Write(...);\nASSERT_TRUE(cbor.has_value());\nEXPECT_THAT(cbor.value(), ...);",
+      "revId": "7deb25fb81bfec4c1c5cc9d10dc9c242c33fea60",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "14c34329_5a36a618",
+        "filename": "content/browser/webauth/cbor/cbor_writer_unittest.cc",
+        "patchSetId": 16
+      },
+      "lineNbr": 195,
+      "author": {
+        "id": 1003152
+      },
+      "writtenOn": "2017-11-07T13:20:31Z",
+      "side": 1,
+      "message": "To catch off-by-one errors, it would be good to explicitly have tests for calling Write() with |max_nesting_level| being 0 and/or 1 for each of the primitive types (either here in grouped into one test, or by adding the corresponding line to each data type specific test above).\n\nIt would also be good to test exact nesting depths using the N-1/N approach described below for non-nested containers and single empty containers: [1], [], {\"1\":1},  {}.",
+      "revId": "7deb25fb81bfec4c1c5cc9d10dc9c242c33fea60",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "44fbb9c9_841c366c",
+        "filename": "content/browser/webauth/cbor/cbor_writer_unittest.cc",
+        "patchSetId": 16
+      },
+      "lineNbr": 196,
+      "author": {
+        "id": 1003152
+      },
+      "writtenOn": "2017-11-07T13:20:31Z",
+      "side": 1,
+      "message": "To make sure these tests catch off-by-one errors, it would be good to have them all structured like this:\n\nEXPECT_TRUE(Write(n-deep stuff, N).has_value())\nEXPECT_FALSE(Write(n-deep stuff, N-1).has_value())",
+      "revId": "7deb25fb81bfec4c1c5cc9d10dc9c242c33fea60",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
