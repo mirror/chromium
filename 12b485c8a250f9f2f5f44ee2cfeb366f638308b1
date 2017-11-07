@@ -390,6 +390,30 @@
     },
     {
       "key": {
+        "uuid": "4a3ac862_75bf62fd",
+        "filename": "components/autofill/core/browser/autofill_manager_unittest.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 3558,
+      "author": {
+        "id": 1171614
+      },
+      "writtenOn": "2017-11-07T22:59:59Z",
+      "side": 1,
+      "message": "Cool, I\u0027ll leave it be for now.\n\nFor the record, I agree, but in a lot of these cases it asserts \"Suggestion \u003d ****4321\" so hiding kCardNumber isn\u0027t ideal.\n\nWould be nice to hide the ones that we don\u0027t care about though...looks like this is another file where the credit card numbers don\u0027t pass Luhn checks. ;)",
+      "parentUuid": "e9497627_a90b0603",
+      "range": {
+        "startLine": 3557,
+        "startChar": 27,
+        "endLine": 3558,
+        "endChar": 43
+      },
+      "revId": "12b485c8a250f9f2f5f44ee2cfeb366f638308b1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "35fcb93e_a7a6680f",
         "filename": "components/autofill/core/browser/country_combobox_model_unittest.cc",
         "patchSetId": 1
