@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "ed4035bc_709a832e",
+        "filename": "cr-buildbucket.cfg",
+        "patchSetId": 1
+      },
+      "lineNbr": 393,
+      "author": {
+        "id": 1002539
+      },
+      "writtenOn": "2017-11-07T02:36:26Z",
+      "side": 1,
+      "message": "add here\n\nproperties_j: \"$kitchen:{\\\"git_auth\\\": true, \\\"devshell\\\": true}\"\n\nit will actually enable usage of the service account for git and gsutil\n\nWithout this, it will be used only for LUCI stuff (like cipd, isolate, swarming.py and so on).",
+      "range": {
+        "startLine": 393,
+        "startChar": 6,
+        "endLine": 393,
+        "endChar": 14
+      },
+      "revId": "a390f912d22cc2eb6fc898209661d2df68a19fdf",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
