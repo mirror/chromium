@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "c42dd3bd_9d05a813",
+        "filename": "ui/message_center/mojo/notification_struct_traits.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 17,
+      "author": {
+        "id": 1115907
+      },
+      "writtenOn": "2017-11-07T18:49:52Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "24895f00_d1003b29",
+      "revId": "5bad2825f78cc0888735cbfb459c7a61a5cc6612",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "6012a686_e5a1afdd",
         "filename": "ui/message_center/mojo/notification_struct_traits.h",
         "patchSetId": 5
@@ -30,6 +48,24 @@
       "writtenOn": "2017-11-07T01:47:55Z",
       "side": 1,
       "message": "Did you mean to leave this?",
+      "revId": "5bad2825f78cc0888735cbfb459c7a61a5cc6612",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "997f2003_6ba97b9f",
+        "filename": "ui/message_center/mojo/notification_struct_traits.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 78,
+      "author": {
+        "id": 1115907
+      },
+      "writtenOn": "2017-11-07T18:49:52Z",
+      "side": 1,
+      "message": "oops, removed.",
+      "parentUuid": "6012a686_e5a1afdd",
       "revId": "5bad2825f78cc0888735cbfb459c7a61a5cc6612",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
