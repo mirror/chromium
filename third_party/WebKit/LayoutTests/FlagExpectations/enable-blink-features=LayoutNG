@@ -8460,3 +8460,6 @@ crbug.com/591099 webexposed/element-instance-property-listing.html [ Pass Timeou
 crbug.com/591099 webexposed/global-interface-listing-dedicated-worker.html [ Pass Timeout ]
 crbug.com/591099 webexposed/global-interface-listing-shared-worker.html [ Pass Timeout ]
 crbug.com/591099 webexposed/global-interface-listing.html [ Pass Timeout ]
+crbug.com/591099 external/wpt/css/CSS2/positioning/absolute-replaced-height-001.xht [ Failure ]
+crbug.com/591099 fast/block/float/float-on-line-obeys-container-padding.html [ Failure ]
+crbug.com/591099 fast/overflow/overflow-visible-should-ignore-scroll.html [ Failure ]
