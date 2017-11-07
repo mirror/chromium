@@ -16,8 +16,8 @@ import org.chromium.base.VisibleForTesting;
 import org.chromium.chrome.browser.download.DownloadNotificationService.Observer;
 import org.chromium.components.offline_items_collection.ContentId;
 
-import java.util.ArrayList;
 import java.util.HashSet;
+import java.util.Iterator;
 import java.util.Set;
 
 import javax.annotation.Nullable;
@@ -43,8 +43,8 @@ public class SystemDownloadNotifier implements DownloadNotifier, Observer {
     @Nullable
     private DownloadNotificationService mBoundService;
     private Set<String> mActiveDownloads = new HashSet<String>();
-    private ArrayList<PendingNotificationInfo> mPendingNotifications =
-            new ArrayList<PendingNotificationInfo>();
+    private Set<PendingNotificationInfo> mPendingNotifications =
+            new HashSet<PendingNotificationInfo>();
 
     private boolean mIsServiceBound;
 
@@ -116,9 +116,10 @@ public class SystemDownloadNotifier implements DownloadNotifier, Observer {
     @VisibleForTesting
     void handlePendingNotifications() {
         if (mPendingNotifications.isEmpty()) return;
-        for (int i = 0; i < mPendingNotifications.size(); i++) {
-            updateDownloadNotification(
-                    mPendingNotifications.get(i), i == mPendingNotifications.size() - 1);
+        Iterator<PendingNotificationInfo> iter = mPendingNotifications.iterator();
+        while (iter.hasNext()) {
+            // Get the next PendingNotification, set autoRelease to be true for the last element.
+            updateDownloadNotification(iter.next(), !iter.hasNext());
         }
         mPendingNotifications.clear();
     }
@@ -256,6 +257,14 @@ public class SystemDownloadNotifier implements DownloadNotifier, Observer {
         startAndBindToServiceIfNeeded();
 
         if (mBoundService == null) {
+            // Remove old entry with matching ContentId from pending notifications.
+            for (PendingNotificationInfo pendingNotification : mPendingNotifications) {
+                if (pendingNotification.downloadInfo.getContentId().equals(
+                            notificationInfo.downloadInfo.getContentId())) {
+                    mPendingNotifications.remove(pendingNotification);
+                    break;
+                }
+            }
             mPendingNotifications.add(notificationInfo);
             return;
         }
