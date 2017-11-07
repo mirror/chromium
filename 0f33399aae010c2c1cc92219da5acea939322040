@@ -22,6 +22,23 @@
       "revId": "0f33399aae010c2c1cc92219da5acea939322040",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "fa54c38d_58041966",
+        "filename": "chrome/browser/offline_pages/android/offline_page_bridge.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 550,
+      "author": {
+        "id": 1002700
+      },
+      "writtenOn": "2017-11-07T21:41:15Z",
+      "side": 1,
+      "message": "I think we\u0027ll want to run this in a PostTask, because otherwise there will be non-obvious ordering of code (callback runs before the rest of its stack frame finishes).",
+      "revId": "0f33399aae010c2c1cc92219da5acea939322040",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
