@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "8174750d_c044b93a",
+        "filename": "tools/cygprofile/lightweight_cygprofile.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 101,
+      "author": {
+        "id": 1154589
+      },
+      "writtenOn": "2017-11-07T15:16:06Z",
+      "side": 1,
+      "message": "Nit: members after methods? I expect to be able to scroll down below the methods to see residency_data_\u0027s declaration.",
+      "range": {
+        "startLine": 101,
+        "startChar": 1,
+        "endLine": 101,
+        "endChar": 2
+      },
+      "revId": "1e84faf5a1ee38075e78228a318503f817172150",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
