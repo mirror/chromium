@@ -4,7 +4,12 @@
 
 #include "chrome/browser/vr/test/ui_pixel_test.h"
 
+#include "base/command_line.h"
+#include "base/files/file_util.h"
+#include "base/json/json_reader.h"
+#include "base/md5.h"
 #include "base/memory/ptr_util.h"
+#include "base/values.h"
 #include "build/build_config.h"
 #include "chrome/browser/vr/browser_ui_interface.h"
 #include "chrome/browser/vr/model/model.h"
@@ -14,6 +19,7 @@
 #include "chrome/browser/vr/ui_input_manager.h"
 #include "chrome/browser/vr/ui_renderer.h"
 #include "chrome/browser/vr/ui_scene.h"
+#include "testing/gtest/include/gtest/gtest.h"
 #include "third_party/WebKit/public/platform/WebGestureEvent.h"
 #include "third_party/skia/include/core/SkImageEncoder.h"
 #include "third_party/skia/include/core/SkStream.h"
@@ -31,6 +37,22 @@ void UiPixelTest::SetUp() {
 // TODO(crbug/771794): Test temporarily disabled on Windows because it crashes
 // on trybots. Fix before enabling Windows support.
 #ifndef OS_WIN
+  base::CommandLine* cmd_line = base::CommandLine::ForCurrentProcess();
+  ASSERT_TRUE(cmd_line->HasSwitch(kOutputDirSwitch))
+      << "Test must be passed the image output directory with --"
+      << kOutputDirSwitch;
+  image_output_directory_ = cmd_line->GetSwitchValuePath(kOutputDirSwitch);
+
+  // TODO(bsheedy): Load in list of known good hashes
+  ASSERT_TRUE(cmd_line->HasSwitch(kGoldenHashesFileSwitch))
+      << "Test must be passed the golden hashes file with --"
+      << kGoldenHashesFileSwitch;
+  auto golden_path = cmd_line->GetSwitchValuePath(kGoldenHashesFileSwitch);
+  std::string golden_data;
+  ASSERT_TRUE(base::ReadFileToString(golden_path, &golden_data));
+  golden_hashes_ =
+      base::DictionaryValue::From(base::JSONReader::Read(golden_data));
+
   gl_test_environment_ =
       base::MakeUnique<GlTestEnvironment>(frame_buffer_size_);
 
@@ -137,6 +159,31 @@ std::unique_ptr<SkBitmap> UiPixelTest::SaveCurrentFrameBufferToSkBitmap() {
   }
 
   return bitmap;
+}
+
+std::unique_ptr<base::MD5Digest> UiPixelTest::CalculateMd5FromSkBitmap(
+    const SkBitmap& bitmap) {
+  auto digest = std::make_unique<base::MD5Digest>();
+  base::MD5Sum(bitmap.getPixels(), bitmap.computeByteSize(), digest.get());
+  return digest;
+}
+
+void UiPixelTest::CaptureAndCompareFrameBufferToGolden() {
+  auto bitmap = SaveCurrentFrameBufferToSkBitmap();
+  auto digest = CalculateMd5FromSkBitmap(*bitmap);
+
+  std::string test_name =
+      ::testing::UnitTest::GetInstance()->current_test_info()->name();
+  std::string filename =
+      test_name + "__" + base::MD5DigestToBase16(*digest) + ".png";
+  SaveSkBitmapToPng(*bitmap, image_output_directory_.Append(filename).value());
+
+  // Get the list of golden hashes for this test
+  auto* test_hash_dict = golden_hashes_->FindKey(test_name);
+  ASSERT_NE(test_hash_dict, nullptr)
+      << "No golden hashes provided for this test";
+  ASSERT_NE(test_hash_dict->FindKey(base::MD5DigestToBase16(*digest)), nullptr)
+      << "Generated image hash not contained in list of golden hashes";
 }
 
 bool UiPixelTest::SaveSkBitmapToPng(const SkBitmap& bitmap,
