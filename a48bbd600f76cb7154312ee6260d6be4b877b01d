@@ -16,6 +16,24 @@
       "revId": "a48bbd600f76cb7154312ee6260d6be4b877b01d",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "54f36f40_50c213db",
+        "filename": "chrome/browser/notifications/notification_common.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 37,
+      "author": {
+        "id": 1002032
+      },
+      "writtenOn": "2017-11-07T21:13:46Z",
+      "side": 1,
+      "message": "This is not (yet) used for UMA, we might in the future.",
+      "parentUuid": "dd8e1a3e_1179e9c8",
+      "revId": "a48bbd600f76cb7154312ee6260d6be4b877b01d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
