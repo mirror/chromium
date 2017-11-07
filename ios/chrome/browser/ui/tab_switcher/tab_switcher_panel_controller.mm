@@ -62,7 +62,7 @@ void FillVectorWithHashesUsingDistantSession(
 - (instancetype)initWithModel:(TabSwitcherModel*)model
      forDistantSessionWithTag:(std::string const&)sessionTag
                  browserState:(ios::ChromeBrowserState*)browserState
-                    presenter:(id<SyncPresenter>)presenter
+                    presenter:(id<SigninPresenter, SyncPresenter>)presenter
                    dispatcher:
                        (id<ApplicationCommands, BrowserCommands>)dispatcher {
   self = [super init];
@@ -84,7 +84,7 @@ void FillVectorWithHashesUsingDistantSession(
         forLocalSessionOfType:(TabSwitcherSessionType)sessionType
                     withCache:(TabSwitcherCache*)cache
                  browserState:(ios::ChromeBrowserState*)browserState
-                    presenter:(id<SyncPresenter>)presenter
+                    presenter:(id<SigninPresenter, SyncPresenter>)presenter
                    dispatcher:
                        (id<ApplicationCommands, BrowserCommands>)dispatcher {
   self = [super init];
