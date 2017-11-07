@@ -1,0 +1,72 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "fca67486_ac482b54",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 5
+      },
+      "lineNbr": 7,
+      "author": {
+        "id": 1002258
+      },
+      "writtenOn": "2017-11-07T09:42:11Z",
+      "side": 1,
+      "message": "%s/Node.innerText/Element::innerText/",
+      "revId": "92799c0aa2e3d0139f0b55e7bbc36c65abf2944d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8bc68412_8152eabb",
+        "filename": "third_party/WebKit/Source/core/exported/WebFrameContentDumper.cpp",
+        "patchSetId": 5
+      },
+      "lineNbr": 60,
+      "author": {
+        "id": 1002258
+      },
+      "writtenOn": "2017-11-07T09:42:11Z",
+      "side": 1,
+      "message": "nit: s/{/final {/",
+      "revId": "92799c0aa2e3d0139f0b55e7bbc36c65abf2944d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d0dec3bc_de70b3f5",
+        "filename": "third_party/WebKit/Source/core/exported/WebFrameContentDumper.cpp",
+        "patchSetId": 5
+      },
+      "lineNbr": 135,
+      "author": {
+        "id": 1002258
+      },
+      "writtenOn": "2017-11-07T09:42:11Z",
+      "side": 1,
+      "message": "nit: we don\u0027t need to have {}.",
+      "revId": "92799c0aa2e3d0139f0b55e7bbc36c65abf2944d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "cb5161ef_d6386e14",
+        "filename": "third_party/WebKit/Source/core/exported/WebFrameContentDumper.cpp",
+        "patchSetId": 5
+      },
+      "lineNbr": 152,
+      "author": {
+        "id": 1002258
+      },
+      "writtenOn": "2017-11-07T09:42:11Z",
+      "side": 1,
+      "message": "nit: Please add\nDISALLOW_COPY_AND_ASSIGN(TextDumper);",
+      "revId": "92799c0aa2e3d0139f0b55e7bbc36c65abf2944d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
