@@ -16,6 +16,24 @@
       "revId": "3954905f033145b6f0d67098d5bfd59def62e27f",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "82fe51e8_4fd82c72",
+        "filename": "DEPS",
+        "patchSetId": 4
+      },
+      "lineNbr": 1130,
+      "author": {
+        "id": 1148599
+      },
+      "writtenOn": "2017-11-07T23:09:09Z",
+      "side": 1,
+      "message": "AFAIK, the above script is responsible for checking out things like adb, runtime dependencies of telemetry. This entry is responsible for downloading dependencies for each benchmark, which is mainly the wpr files.\n\nI don\u0027t know enough about telemetry to tell you if they should be separate or not. I think combining would be great :)",
+      "parentUuid": "50dd81cb_ebdeec23",
+      "revId": "3954905f033145b6f0d67098d5bfd59def62e27f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
