@@ -16,6 +16,24 @@
       "revId": "cb0eacd4c83642736cf45a020643bf40118bea52",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3a3b3a12_e131da2e",
+        "filename": "tools/perf/chromium.perf.fyi.extras.json",
+        "patchSetId": 1
+      },
+      "lineNbr": 32,
+      "author": {
+        "id": 1149089
+      },
+      "writtenOn": "2017-11-07T12:14:11Z",
+      "side": 1,
+      "message": "https://crbug.com/782205",
+      "parentUuid": "7511cf8c_8834a562",
+      "revId": "cb0eacd4c83642736cf45a020643bf40118bea52",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
