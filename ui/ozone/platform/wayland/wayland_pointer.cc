@@ -14,6 +14,15 @@
 
 namespace ui {
 
+namespace {
+
+bool VerifyFlagsAfterMasking(int flags, int original_flags, int modifiers) {
+  flags &= ~modifiers;
+  return flags == original_flags;
+}
+
+}  // namespace
+
 WaylandPointer::WaylandPointer(wl_pointer* pointer,
                                const EventDispatchCallback& callback)
     : obj_(pointer), callback_(callback) {
@@ -141,6 +150,16 @@ void WaylandPointer::Axis(void* data,
   event.set_location_f(pointer->location_);
   event.set_root_location_f(pointer->location_);
   pointer->callback_.Run(&event);
+}
+
+void WaylandPointer::OnModifiersUpdated(int modifiers) {
+  // Remove old modifiers from flags and then update them with new modifiers.
+  flags_ &= ~modifiers_;
+  modifiers_ = modifiers;
+
+  int old_flags = flags_;
+  flags_ |= modifiers_;
+  DCHECK(VerifyFlagsAfterMasking(flags_, old_flags, modifiers_));
 }
 
 }  // namespace ui
