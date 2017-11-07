@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "d8573378_c434dfdd",
+        "filename": "ash/accessibility/accessibility_layer.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 23,
+      "author": {
+        "id": 1250213
+      },
+      "writtenOn": "2017-11-07T18:05:30Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "433ce49a_812f5cb8",
+      "revId": "d75ed053c51db38499811ba53d4cc7d7d27d84c4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "b503645b_dfe86611",
         "filename": "ash/accessibility/accessibility_layer.cc",
         "patchSetId": 1
@@ -36,6 +54,24 @@
     },
     {
       "key": {
+        "uuid": "0a801b87_82d1006c",
+        "filename": "ash/accessibility/accessibility_layer.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 54,
+      "author": {
+        "id": 1250213
+      },
+      "writtenOn": "2017-11-07T18:05:30Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "b503645b_dfe86611",
+      "revId": "d75ed053c51db38499811ba53d4cc7d7d27d84c4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "29f67170_c727675d",
         "filename": "ash/accessibility/accessibility_layer.cc",
         "patchSetId": 1
@@ -47,6 +83,24 @@
       "writtenOn": "2017-11-07T16:50:58Z",
       "side": 1,
       "message": "Maybe have a method NeedsToAnimate() that subclasses can override,\nthen skip this block of code if a subclass doesn\u0027t need animation.",
+      "revId": "d75ed053c51db38499811ba53d4cc7d7d27d84c4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "248d61ec_2374ca8e",
+        "filename": "ash/accessibility/accessibility_layer.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 83,
+      "author": {
+        "id": 1250213
+      },
+      "writtenOn": "2017-11-07T18:05:30Z",
+      "side": 1,
+      "message": "Maybe I\u0027ll re-use CanAnimate for that?",
+      "parentUuid": "29f67170_c727675d",
       "revId": "d75ed053c51db38499811ba53d4cc7d7d27d84c4",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -70,6 +124,24 @@
     },
     {
       "key": {
+        "uuid": "30841091_263187a5",
+        "filename": "ash/accessibility/accessibility_layer.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 1,
+      "author": {
+        "id": 1250213
+      },
+      "writtenOn": "2017-11-07T18:05:30Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "3a182f72_4417246c",
+      "revId": "d75ed053c51db38499811ba53d4cc7d7d27d84c4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "be48253a_1c04507b",
         "filename": "ash/accessibility/accessibility_layer.h",
         "patchSetId": 1
@@ -87,6 +159,24 @@
     },
     {
       "key": {
+        "uuid": "e5cb4ffa_3dd81889",
+        "filename": "ash/accessibility/accessibility_layer.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 40,
+      "author": {
+        "id": 1250213
+      },
+      "writtenOn": "2017-11-07T18:05:30Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "be48253a_1c04507b",
+      "revId": "d75ed053c51db38499811ba53d4cc7d7d27d84c4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "d0b95287_b776b888",
         "filename": "ash/accessibility/focus_ring_layer.h",
         "patchSetId": 1
@@ -101,6 +191,24 @@
       "revId": "d75ed053c51db38499811ba53d4cc7d7d27d84c4",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "40d6db92_623ab2fe",
+        "filename": "ash/accessibility/focus_ring_layer.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 38,
+      "author": {
+        "id": 1250213
+      },
+      "writtenOn": "2017-11-07T18:05:30Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "d0b95287_b776b888",
+      "revId": "d75ed053c51db38499811ba53d4cc7d7d27d84c4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
