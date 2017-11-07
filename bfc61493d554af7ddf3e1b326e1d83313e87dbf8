@@ -34,6 +34,24 @@
       "revId": "bfc61493d554af7ddf3e1b326e1d83313e87dbf8",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ccec371d_0adf0e07",
+        "filename": "content/browser/frame_host/navigation_controller_impl.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 1388,
+      "author": {
+        "id": 1001216
+      },
+      "writtenOn": "2017-11-07T01:08:54Z",
+      "side": 1,
+      "message": "Cross-process location.replace and client redirects will go through RendererDidNavigateToNewPage with replace_entry.\n\nSame process location.replace and client redirects will as well, as soon as I get https://chromium-review.googlesource.com/c/chromium/src/+/567683 landed.  (I\u0027m actively trying to do that this week.)",
+      "parentUuid": "c65fa366_7f308a31",
+      "revId": "bfc61493d554af7ddf3e1b326e1d83313e87dbf8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
