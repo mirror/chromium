@@ -2,6 +2,74 @@
   "comments": [
     {
       "key": {
+        "uuid": "34213ff5_6fb32702",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 5
+      },
+      "lineNbr": 7,
+      "author": {
+        "id": 1115903
+      },
+      "writtenOn": "2017-11-07T06:52:58Z",
+      "side": 1,
+      "message": "We usually make the first sentence in the commit message start with \"verb\".\n\ne.g. \"Make EventTarget Subclassable \u0026 Constructable\"",
+      "revId": "11e5c7b8408bfafa870d0d41b56a87909f79bf5c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "fdeb7fc8_c0de7d2a",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 5
+      },
+      "lineNbr": 9,
+      "author": {
+        "id": 1115903
+      },
+      "writtenOn": "2017-11-07T06:52:58Z",
+      "side": 1,
+      "message": "Nit: Looks there is a trailing whitespace, which you might want to remove.",
+      "revId": "11e5c7b8408bfafa870d0d41b56a87909f79bf5c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8b85693a_72b02f12",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 5
+      },
+      "lineNbr": 11,
+      "author": {
+        "id": 1115903
+      },
+      "writtenOn": "2017-11-07T06:52:58Z",
+      "side": 1,
+      "message": "ditto",
+      "revId": "11e5c7b8408bfafa870d0d41b56a87909f79bf5c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "46a878f9_6c9affc2",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 5
+      },
+      "lineNbr": 24,
+      "author": {
+        "id": 1115903
+      },
+      "writtenOn": "2017-11-07T06:52:58Z",
+      "side": 1,
+      "message": "ditto",
+      "revId": "11e5c7b8408bfafa870d0d41b56a87909f79bf5c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "5b26fbac_267ed05b",
         "filename": "third_party/WebKit/Source/core/dom/events/EventTarget.cpp",
         "patchSetId": 5
