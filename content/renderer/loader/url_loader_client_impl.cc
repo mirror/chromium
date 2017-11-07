@@ -174,7 +174,7 @@ void URLLoaderClientImpl::OnStartLoadingResponseBody(
 }
 
 void URLLoaderClientImpl::OnComplete(
-    const ResourceRequestCompletionStatus& status) {
+    const network::ResourceRequestCompletionStatus& status) {
   if (!body_consumer_) {
     if (NeedsStoringMessage()) {
       StoreAndDispatch(ResourceMsg_RequestComplete(request_id_, status));
