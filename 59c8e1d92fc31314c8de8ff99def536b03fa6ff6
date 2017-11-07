@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "46f9e8ae_1cbcaebe",
+        "filename": "chrome/browser/resources/md_extensions/toggle_row.html",
+        "patchSetId": 1
+      },
+      "lineNbr": 39,
+      "author": {
+        "id": 1172795
+      },
+      "writtenOn": "2017-11-07T19:38:47Z",
+      "side": 1,
+      "message": "The :has selector doesn\u0027t seem to work. I may need to follow up with you with regards to a workaround.",
+      "range": {
+        "startLine": 39,
+        "startChar": 12,
+        "endLine": 39,
+        "endChar": 15
+      },
+      "revId": "59c8e1d92fc31314c8de8ff99def536b03fa6ff6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "094a39a5_d62e9557",
+        "filename": "chrome/browser/resources/md_extensions/toggle_row.html",
+        "patchSetId": 1
+      },
+      "lineNbr": 53,
+      "author": {
+        "id": 1172795
+      },
+      "writtenOn": "2017-11-07T19:38:47Z",
+      "side": 1,
+      "message": "For some reason, this method is not being called. I need to look into this more.",
+      "range": {
+        "startLine": 53,
+        "startChar": 34,
+        "endLine": 53,
+        "endChar": 51
+      },
+      "revId": "59c8e1d92fc31314c8de8ff99def536b03fa6ff6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
