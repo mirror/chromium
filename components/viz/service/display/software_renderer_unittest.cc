@@ -449,5 +449,48 @@ TEST_F(SoftwareRendererTest, PartialSwap) {
   EXPECT_EQ(gfx::RectF(2, 2, 3, 3), device->clip_rect_at_end());
 }
 
+TEST_F(SoftwareRendererTest, RenderPassAllocationsWithDamageFlag) {
+  InitializeRenderer(std::make_unique<SoftwareOutputDevice>());
+  RenderPassList list;
+
+  gfx::Size viewport_size(1, 1);
+  RenderPass* pass1 =
+      cc::AddRenderPass(&list, 1, gfx::Rect(viewport_size), gfx::Transform(),
+                        cc::FilterOperations());
+  RenderPass* pass2 =
+      cc::AddRenderPass(&list, 2, gfx::Rect(viewport_size), gfx::Transform(),
+                        cc::FilterOperations());
+
+  // Case 1: for the first frame, damage flags should be all true.
+  renderer()->DecideRenderPassAllocationsForFrame(list);
+  EXPECT_EQ(true, pass1->has_damage_from_contributing_content);
+  EXPECT_EQ(true, pass2->has_damage_from_contributing_content);
+
+  // Case 2: simulate render pass 2 has no damage.
+  pass1->has_damage_from_contributing_content = true;
+  pass2->has_damage_from_contributing_content = false;
+  renderer()->DecideRenderPassAllocationsForFrame(list);
+  EXPECT_EQ(true, pass1->has_damage_from_contributing_content);
+  EXPECT_EQ(false, pass2->has_damage_from_contributing_content);
+
+  // Case 3: simulate render pass 2 is not in the frame, so the texture
+  // for pass 2 should be deleted and the damage flag should be true.
+  pass1->has_damage_from_contributing_content = true;
+  pass2->has_damage_from_contributing_content = false;
+  pass2->id = 3;
+  renderer()->DecideRenderPassAllocationsForFrame(list);
+  EXPECT_EQ(true, pass1->has_damage_from_contributing_content);
+  EXPECT_EQ(true, pass2->has_damage_from_contributing_content);
+
+  // Case 4: simulate adding render pass 2 back, we should set the damage flag
+  // true.
+  pass1->has_damage_from_contributing_content = true;
+  pass2->has_damage_from_contributing_content = false;
+  pass2->id = 2;
+  renderer()->DecideRenderPassAllocationsForFrame(list);
+  EXPECT_EQ(true, pass1->has_damage_from_contributing_content);
+  EXPECT_EQ(true, pass2->has_damage_from_contributing_content);
+}
+
 }  // namespace
 }  // namespace viz

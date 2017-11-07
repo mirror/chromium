@@ -2618,5 +2618,66 @@ TEST_F(GLRendererSwapWithBoundsTest, NonEmpty) {
   RunTest(content_bounds);
 }
 
+TEST_F(GLRendererTest, RenderPassAllocationsWithDamageFlag) {
+  std::unique_ptr<ClearCountingContext> context_owned(new ClearCountingContext);
+  auto provider = cc::TestContextProvider::Create(std::move(context_owned));
+  provider->BindToCurrentThread();
+
+  cc::FakeOutputSurfaceClient output_surface_client;
+  std::unique_ptr<OutputSurface> output_surface(
+      cc::FakeOutputSurface::Create3d(std::move(provider)));
+  output_surface->BindToClient(&output_surface_client);
+
+  std::unique_ptr<SharedBitmapManager> shared_bitmap_manager(
+      new cc::TestSharedBitmapManager());
+  std::unique_ptr<cc::DisplayResourceProvider> resource_provider =
+      cc::FakeResourceProvider::CreateDisplayResourceProvider(
+          output_surface->context_provider(), shared_bitmap_manager.get());
+
+  RendererSettings settings;
+  FakeRendererGL renderer(&settings, output_surface.get(),
+                          resource_provider.get());
+  renderer.Initialize();
+  renderer.SetVisible(true);
+
+  gfx::Size viewport_size(1, 1);
+  RenderPass* pass1 = cc::AddRenderPass(
+      &render_passes_in_draw_order_, 1, gfx::Rect(viewport_size),
+      gfx::Transform(), cc::FilterOperations());
+  RenderPass* pass2 = cc::AddRenderPass(
+      &render_passes_in_draw_order_, 2, gfx::Rect(viewport_size),
+      gfx::Transform(), cc::FilterOperations());
+
+  // Case 1: for the first frame, damage flags should be all true.
+  renderer.DecideRenderPassAllocationsForFrame(render_passes_in_draw_order_);
+  EXPECT_EQ(true, pass1->has_damage_from_contributing_content);
+  EXPECT_EQ(true, pass2->has_damage_from_contributing_content);
+
+  // Case 2: simulate render pass 2 has no damage.
+  pass1->has_damage_from_contributing_content = true;
+  pass2->has_damage_from_contributing_content = false;
+  renderer.DecideRenderPassAllocationsForFrame(render_passes_in_draw_order_);
+  EXPECT_EQ(true, pass1->has_damage_from_contributing_content);
+  EXPECT_EQ(false, pass2->has_damage_from_contributing_content);
+
+  // Case 3: simulate render pass 2 is not in the frame, so the texture
+  // for pass 2 should be deleted and the damage flag should be true.
+  pass1->has_damage_from_contributing_content = true;
+  pass2->has_damage_from_contributing_content = false;
+  pass2->id = 3;
+  renderer.DecideRenderPassAllocationsForFrame(render_passes_in_draw_order_);
+  EXPECT_EQ(true, pass1->has_damage_from_contributing_content);
+  EXPECT_EQ(true, pass2->has_damage_from_contributing_content);
+
+  // Case 4: simulate adding render pass 2 back, we should set the damage flag
+  // true.
+  pass1->has_damage_from_contributing_content = true;
+  pass2->has_damage_from_contributing_content = false;
+  pass2->id = 2;
+  renderer.DecideRenderPassAllocationsForFrame(render_passes_in_draw_order_);
+  EXPECT_EQ(true, pass1->has_damage_from_contributing_content);
+  EXPECT_EQ(true, pass2->has_damage_from_contributing_content);
+}
+
 }  // namespace
 }  // namespace viz
