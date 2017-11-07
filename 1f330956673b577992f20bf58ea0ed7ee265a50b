@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "0d5f60a6_11b1f096",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 8
+      },
+      "lineNbr": 13,
+      "author": {
+        "id": 1120879
+      },
+      "writtenOn": "2017-11-07T20:00:20Z",
+      "side": 1,
+      "message": "Rationale is still needed here. Here is an example of a CL description that would be acceptable:\n\n[media] Move test result message constants to test_data_util\n\nCentralizing these constants is preparatory work for changing their values (see bug).\n\nBug: 592067\nChange-Id: Ifa9f4c5a943fc0b46c45bde18a4fef16faf2b175",
+      "range": {
+        "startLine": 7,
+        "startChar": 0,
+        "endLine": 13,
+        "endChar": 52
+      },
+      "revId": "1f330956673b577992f20bf58ea0ed7ee265a50b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
