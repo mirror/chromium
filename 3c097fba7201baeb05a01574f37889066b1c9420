@@ -16,6 +16,254 @@
       "revId": "3c097fba7201baeb05a01574f37889066b1c9420",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c1ae06e1_4f313fdb",
+        "filename": "device/vr/openvr/openvr_device.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 29,
+      "author": {
+        "id": 1187745
+      },
+      "writtenOn": "2017-11-07T18:42:05Z",
+      "side": 1,
+      "message": "This may actually be an issue with the current GVR render path. In my new AHardwareBuffer-based path, I need to add a Y flip in the copy to GVR\u0027s output buffer, and it\u0027s possible that your version would also work for that, and the current version is doing it wrong.\n\nShould we add an implementation flags struct to device properties for use in VRDisplay? Instead of device-specific conditionals, we could have a \"needs Y flip\" flag. transport_method\u003dTEXTURE_HANDLE, and details about required synchronization.",
+      "parentUuid": "13fe29cd_9b6127a9",
+      "revId": "3c097fba7201baeb05a01574f37889066b1c9420",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "223bcc7c_3b4e7e53",
+        "filename": "gpu/ipc/service/gpu_memory_buffer_factory_dxgi.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 82,
+      "author": {
+        "id": 1187745
+      },
+      "writtenOn": "2017-11-07T18:42:05Z",
+      "side": 1,
+      "message": "kBytesPerPixel?",
+      "range": {
+        "startLine": 82,
+        "startChar": 78,
+        "endLine": 82,
+        "endChar": 79
+      },
+      "revId": "3c097fba7201baeb05a01574f37889066b1c9420",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "83eba760_11aaec74",
+        "filename": "third_party/WebKit/Source/modules/vr/VRDisplay.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 753,
+      "author": {
+        "id": 1187745
+      },
+      "writtenOn": "2017-11-07T18:42:05Z",
+      "side": 1,
+      "message": "This looks like a leak since you\u0027re never passing this cloned handle to IPC - the usual assumption would be that IPC takes ownership and then closes it.\n\nI think it would be cleaner to add a GetPlatformHandle method to GpuMemoryBuffer and then call CloneHandleForIPC on that.",
+      "range": {
+        "startLine": 753,
+        "startChar": 8,
+        "endLine": 753,
+        "endChar": 25
+      },
+      "revId": "3c097fba7201baeb05a01574f37889066b1c9420",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "02348af3_445f82b9",
+        "filename": "third_party/WebKit/Source/modules/vr/VRDisplay.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 759,
+      "author": {
+        "id": 1187745
+      },
+      "writtenOn": "2017-11-07T18:42:05Z",
+      "side": 1,
+      "message": "This conditional seems a bit confused, present_image_copy_ is true for all external displays which isn\u0027t entirely equivalent with being on a Windows platform.",
+      "range": {
+        "startLine": 759,
+        "startChar": 47,
+        "endLine": 759,
+        "endChar": 66
+      },
+      "revId": "3c097fba7201baeb05a01574f37889066b1c9420",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "98604fc2_c8250e50",
+        "filename": "third_party/WebKit/Source/modules/vr/VRDisplay.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 183,
+      "author": {
+        "id": 1187745
+      },
+      "writtenOn": "2017-11-07T18:42:05Z",
+      "side": 1,
+      "message": "frame_copier_? Looks like this is the copying method as opposed to storage for the image copy.",
+      "range": {
+        "startLine": 183,
+        "startChar": 44,
+        "endLine": 183,
+        "endChar": 55
+      },
+      "revId": "3c097fba7201baeb05a01574f37889066b1c9420",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "03fad0b8_6dac7b8e",
+        "filename": "third_party/WebKit/Source/modules/vr/VRDisplay.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 222,
+      "author": {
+        "id": 1187745
+      },
+      "writtenOn": "2017-11-07T18:42:05Z",
+      "side": 1,
+      "message": "present_image_needs_copy_ to make it clearer that this member is a boolean as opposed to an actual stored copy?",
+      "range": {
+        "startLine": 222,
+        "startChar": 7,
+        "endLine": 222,
+        "endChar": 26
+      },
+      "revId": "3c097fba7201baeb05a01574f37889066b1c9420",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ed6ff785_ae341fe4",
+        "filename": "third_party/WebKit/Source/modules/vr/VRDisplayEvent.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 22,
+      "author": {
+        "id": 1187745
+      },
+      "writtenOn": "2017-11-07T18:42:05Z",
+      "side": 1,
+      "message": "why this change? AFAIK the original version catches missing cases at compile time, while this one doesn\u0027t.",
+      "range": {
+        "startLine": 22,
+        "startChar": 4,
+        "endLine": 22,
+        "endChar": 11
+      },
+      "revId": "3c097fba7201baeb05a01574f37889066b1c9420",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e3960240_6ccceaf1",
+        "filename": "third_party/WebKit/Source/platform/graphics/GpuMemoryBufferImageCopy.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 67,
+      "author": {
+        "id": 1187745
+      },
+      "writtenOn": "2017-11-07T18:42:05Z",
+      "side": 1,
+      "message": "dest_texture_id for consistency with source_texture_id?",
+      "range": {
+        "startLine": 67,
+        "startChar": 9,
+        "endLine": 67,
+        "endChar": 18
+      },
+      "revId": "3c097fba7201baeb05a01574f37889066b1c9420",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7da635fc_ad675fa6",
+        "filename": "third_party/WebKit/Source/platform/graphics/GpuMemoryBufferImageCopy.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 91,
+      "author": {
+        "id": 1187745
+      },
+      "writtenOn": "2017-11-07T18:42:05Z",
+      "side": 1,
+      "message": "This wait should be a no-op if the image was created on the same context. Try having the caller pass in its GLES2Interface*, and use kOrderingBarrier instead of a verified sync token which would save a sync IPC? In theory you could also skip the wait in that case, but keeping it may look cleaner.\n\nAlternatively, could you use AcceleratedStaticBitmapImage::CopyToTexture here to write to textureId directly?",
+      "range": {
+        "startLine": 91,
+        "startChar": 6,
+        "endLine": 91,
+        "endChar": 27
+      },
+      "revId": "3c097fba7201baeb05a01574f37889066b1c9420",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9eb00a80_d232d1c5",
+        "filename": "third_party/WebKit/Source/platform/graphics/GpuMemoryBufferImageCopy.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 112,
+      "author": {
+        "id": 1187745
+      },
+      "writtenOn": "2017-11-07T18:42:05Z",
+      "side": 1,
+      "message": "On mobile GPUs, deleting the framebuffer right after writing tended to block until drawing operations were complete. Not sure if that\u0027s an issue on desktop GPUs, but it may be more efficient to keep some of these resources as members with destruction deferred until they are next used.",
+      "range": {
+        "startLine": 112,
+        "startChar": 6,
+        "endLine": 112,
+        "endChar": 24
+      },
+      "revId": "3c097fba7201baeb05a01574f37889066b1c9420",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5b86ff13_b6623aec",
+        "filename": "third_party/WebKit/Source/platform/graphics/GpuMemoryBufferImageCopy.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 119,
+      "author": {
+        "id": 1187745
+      },
+      "writtenOn": "2017-11-07T18:42:05Z",
+      "side": 1,
+      "message": "Is this really necessary? Try a gl-\u003eShallowFlushCHROMIUM() instead. Arguably this should be done by the caller when it\u0027s done with all drawing commands for the frame.",
+      "range": {
+        "startLine": 119,
+        "startChar": 6,
+        "endLine": 119,
+        "endChar": 11
+      },
+      "revId": "3c097fba7201baeb05a01574f37889066b1c9420",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
