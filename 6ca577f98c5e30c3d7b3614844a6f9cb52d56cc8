@@ -22,6 +22,30 @@
       "revId": "6ca577f98c5e30c3d7b3614844a6f9cb52d56cc8",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7ca4fe4e_58065e19",
+        "filename": "ash/shelf/shelf_button.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 379,
+      "author": {
+        "id": 1202846
+      },
+      "writtenOn": "2017-11-07T19:04:46Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "eb349797_2af3661b",
+      "range": {
+        "startLine": 378,
+        "startChar": 0,
+        "endLine": 379,
+        "endChar": 58
+      },
+      "revId": "6ca577f98c5e30c3d7b3614844a6f9cb52d56cc8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
