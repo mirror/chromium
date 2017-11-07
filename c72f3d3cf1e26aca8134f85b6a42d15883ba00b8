@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "ad9be70d_bbfff537",
+        "filename": "chrome/browser/component_updater/chrome_component_updater_configurator.cc",
+        "patchSetId": 17
+      },
+      "lineNbr": 164,
+      "author": {
+        "id": 1002246
+      },
+      "writtenOn": "2017-11-07T19:16:48Z",
+      "side": 1,
+      "message": "We can have one, this should always be called on the UI thread.",
+      "parentUuid": "31e44117_ec497fa3",
+      "range": {
+        "startLine": 164,
+        "startChar": 11,
+        "endLine": 164,
+        "endChar": 0
+      },
+      "revId": "c72f3d3cf1e26aca8134f85b6a42d15883ba00b8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "a6833176_cf9fb470",
         "filename": "components/patch_service/DEPS",
         "patchSetId": 17
@@ -48,6 +72,30 @@
     },
     {
       "key": {
+        "uuid": "3e73ca86_56252e06",
+        "filename": "components/patch_service/DEPS",
+        "patchSetId": 17
+      },
+      "lineNbr": 3,
+      "author": {
+        "id": 1002246
+      },
+      "writtenOn": "2017-11-07T19:16:48Z",
+      "side": 1,
+      "message": "Yes, components/patch_service/public/cpp/patch.cc includes components/update_client/component_patcher_operation.h.\nBut +components/filesystem isn\u0027t needed.",
+      "parentUuid": "a6833176_cf9fb470",
+      "range": {
+        "startLine": 3,
+        "startChar": 30,
+        "endLine": 3,
+        "endChar": 0
+      },
+      "revId": "c72f3d3cf1e26aca8134f85b6a42d15883ba00b8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "0518d455_9aa80c3f",
         "filename": "components/update_client/configurator.h",
         "patchSetId": 17
@@ -68,6 +116,30 @@
       "revId": "c72f3d3cf1e26aca8134f85b6a42d15883ba00b8",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "bce36769_6a87e43a",
+        "filename": "components/update_client/configurator.h",
+        "patchSetId": 17
+      },
+      "lineNbr": 104,
+      "author": {
+        "id": 1002246
+      },
+      "writtenOn": "2017-11-07T19:16:48Z",
+      "side": 1,
+      "message": "Good idea, done.",
+      "parentUuid": "0518d455_9aa80c3f",
+      "range": {
+        "startLine": 104,
+        "startChar": 77,
+        "endLine": 104,
+        "endChar": 0
+      },
+      "revId": "c72f3d3cf1e26aca8134f85b6a42d15883ba00b8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
