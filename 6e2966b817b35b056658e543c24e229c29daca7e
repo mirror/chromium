@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "1cd06972_03bdf7c8",
+        "filename": "third_party/WebKit/Source/platform/heap/HeapPage.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 468,
+      "author": {
+        "id": 1115916
+      },
+      "writtenOn": "2017-11-07T08:38:38Z",
+      "side": 1,
+      "message": "Can we use a dynamically generated magic value? See how HeapPage::GetMagic() is implemented.",
+      "revId": "6e2966b817b35b056658e543c24e229c29daca7e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
