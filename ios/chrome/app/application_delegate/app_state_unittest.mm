@@ -23,9 +23,11 @@
 #import "ios/chrome/app/main_application_delegate.h"
 #import "ios/chrome/app/startup/content_suggestions_scheduler_notifications.h"
 #import "ios/chrome/browser/app_startup_parameters.h"
+#include "ios/chrome/browser/browser_state/test_chrome_browser_state.h"
 #include "ios/chrome/browser/chrome_url_constants.h"
 #import "ios/chrome/browser/device_sharing/device_sharing_manager.h"
 #import "ios/chrome/browser/geolocation/omnibox_geolocation_config.h"
+#include "ios/chrome/browser/ntp_snippets/ios_chrome_content_suggestions_service_factory.h"
 #import "ios/chrome/browser/tabs/tab_model.h"
 #import "ios/chrome/browser/ui/browser_view_controller.h"
 #import "ios/chrome/browser/ui/commands/browser_commands.h"
@@ -33,6 +35,7 @@
 #import "ios/chrome/browser/ui/safe_mode/safe_mode_coordinator.h"
 #import "ios/chrome/browser/ui/settings/settings_navigation_controller.h"
 #import "ios/chrome/test/base/scoped_block_swizzler.h"
+#include "ios/chrome/test/block_cleanup_test.h"
 #include "ios/chrome/test/ios_chrome_scoped_testing_chrome_browser_provider.h"
 #include "ios/public/provider/chrome/browser/distribution/app_distribution_provider.h"
 #include "ios/public/provider/chrome/browser/test_chrome_browser_provider.h"
@@ -40,7 +43,6 @@
 #import "ios/testing/ocmock_complex_type_helper.h"
 #include "ios/web/net/request_tracker_impl.h"
 #include "ios/web/public/test/test_web_thread_bundle.h"
-#include "testing/platform_test.h"
 #import "third_party/ocmock/OCMock/OCMock.h"
 #include "third_party/ocmock/gtest_support.h"
 
@@ -111,7 +113,7 @@ class FakeChromeBrowserProvider : public ios::TestChromeBrowserProvider {
 
 }  // namespace
 
-class AppStateTest : public PlatformTest {
+class AppStateTest : public BlockCleanupTest {
  protected:
   AppStateTest() {
     browser_launcher_mock_ =
@@ -123,6 +125,15 @@ class AppStateTest : public PlatformTest {
     window_ = [OCMockObject mockForClass:[UIWindow class]];
     browser_view_information_ =
         [OCMockObject mockForProtocol:@protocol(BrowserViewInformation)];
+  }
+
+  void SetUp() override {
+    BlockCleanupTest::SetUp();
+    TestChromeBrowserState::Builder test_cbs_builder;
+    test_cbs_builder.AddTestingFactory(
+        IOSChromeContentSuggestionsServiceFactory::GetInstance(),
+        IOSChromeContentSuggestionsServiceFactory::GetDefaultFactory());
+    browser_state_ = test_cbs_builder.Build();
   }
 
   void initializeIncognitoBlocker(UIWindow* window) {
@@ -157,7 +168,7 @@ class AppStateTest : public PlatformTest {
 
   void stubNullBrowserState(id BVC) {
     [[[BVC stub] andDo:^(NSInvocation* invocation) {
-      ios::ChromeBrowserState* browserState = nullptr;
+      ios::ChromeBrowserState* browserState = browser_state_.get();
       [invocation setReturnValue:&browserState];
     }] browserState];
   }
@@ -270,10 +281,12 @@ class AppStateTest : public PlatformTest {
   id getApplicationDelegateMock() { return main_application_delegate_; }
   id getWindowMock() { return window_; }
   id getBrowserViewInformationMock() { return browser_view_information_; }
+  ios::ChromeBrowserState* getBrowserState() { return browser_state_.get(); }
 
   BOOL metricsMediatorHasBeenCalled() { return metrics_mediator_called_; }
 
  private:
+  web::TestWebThreadBundle thread_bundle_;
   AppState* app_state_;
   id browser_launcher_mock_;
   id startup_information_mock_;
@@ -287,6 +300,7 @@ class AppStateTest : public PlatformTest {
   std::unique_ptr<ScopedBlockSwizzler> handle_startup_swizzler_;
   std::unique_ptr<ScopedBlockSwizzler> metrics_mediator_swizzler_;
   __block BOOL metrics_mediator_called_;
+  std::unique_ptr<TestChromeBrowserState> browser_state_;
 };
 
 // TODO(crbug.com/585700): remove this.
@@ -737,7 +751,7 @@ TEST_F(AppStateTest, applicationWillEnterForeground) {
 
   id contentSuggestionsNotifier =
       OCMClassMock([ContentSuggestionsSchedulerNotifications class]);
-  OCMExpect([contentSuggestionsNotifier notifyForeground:nullptr]);
+  OCMExpect([contentSuggestionsNotifier notifyForeground:getBrowserState()]);
 
   stubNullCurrentBrowserState(browserViewInformation);
 
