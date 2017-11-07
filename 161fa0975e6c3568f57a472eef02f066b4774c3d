@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "c6f51c35_479e76a4",
+        "filename": "third_party/WebKit/Source/platform/image-decoders/jpeg/JPEGImageDecoder.cpp",
+        "patchSetId": 6
+      },
+      "lineNbr": 909,
+      "author": {
+        "id": 1203794
+      },
+      "writtenOn": "2017-11-07T21:14:58Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "b8566274_e5858358",
+      "range": {
+        "startLine": 909,
+        "startChar": 6,
+        "endLine": 909,
+        "endChar": 33
+      },
+      "revId": "161fa0975e6c3568f57a472eef02f066b4774c3d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "52a46520_f5999b52",
         "filename": "third_party/WebKit/Source/platform/image-decoders/jpeg/JPEGImageDecoder.cpp",
         "patchSetId": 6
@@ -48,6 +72,30 @@
     },
     {
       "key": {
+        "uuid": "bcb07d6c_21f1ac0a",
+        "filename": "third_party/WebKit/Source/platform/image-decoders/jpeg/JPEGImageDecoder.cpp",
+        "patchSetId": 6
+      },
+      "lineNbr": 1019,
+      "author": {
+        "id": 1203794
+      },
+      "writtenOn": "2017-11-07T21:14:58Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "52a46520_f5999b52",
+      "range": {
+        "startLine": 1019,
+        "startChar": 8,
+        "endLine": 1019,
+        "endChar": 35
+      },
+      "revId": "161fa0975e6c3568f57a472eef02f066b4774c3d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "843da143_6bb35eb3",
         "filename": "third_party/WebKit/Source/platform/image-decoders/webp/WEBPImageDecoder.cpp",
         "patchSetId": 6
@@ -68,6 +116,30 @@
       "revId": "161fa0975e6c3568f57a472eef02f066b4774c3d",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8b21829c_12768cd4",
+        "filename": "third_party/WebKit/Source/platform/image-decoders/webp/WEBPImageDecoder.cpp",
+        "patchSetId": 6
+      },
+      "lineNbr": 359,
+      "author": {
+        "id": 1203794
+      },
+      "writtenOn": "2017-11-07T21:14:58Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "843da143_6bb35eb3",
+      "range": {
+        "startLine": 359,
+        "startChar": 6,
+        "endLine": 359,
+        "endChar": 33
+      },
+      "revId": "161fa0975e6c3568f57a472eef02f066b4774c3d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
