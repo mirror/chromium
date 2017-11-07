@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "60d2e39e_99cd0427",
+        "filename": "chrome/browser/chromeos/login/users/wallpaper/wallpaper_manager.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 937,
+      "author": {
+        "id": 1118421
+      },
+      "writtenOn": "2017-11-07T18:42:22Z",
+      "side": 1,
+      "message": "As a temporary fix, it\u0027s probably fine. But the logic seems a bit weird. Maybe it\u0027s simpler to do:\nif (user_manager::UserManager::Get()-\u003eIsUserLoggedIn())\n  ShowSigninWallpaper();\nelse\n  ShowUserWallpaper(last_selected_user_);",
+      "revId": "1d91ebf0669de14fd1bee6770ef684a2342d24d4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
