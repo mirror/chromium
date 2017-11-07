@@ -13,6 +13,7 @@
 #include "base/command_line.h"
 #include "base/logging.h"
 #include "base/macros.h"
+#include "base/metrics/histogram_macros.h"
 #include "base/strings/stringprintf.h"
 #include "base/strings/utf_string_conversions.h"
 #include "base/win/scoped_co_mem.h"
@@ -37,6 +38,16 @@ const GUID kCommunicationsSessionId = {
 namespace {
 
 enum { KSAUDIO_SPEAKER_UNSUPPORTED = 0 };
+
+enum ErrorType {
+  CREATE_DEVICE = 0,
+  CREATE_CLIENT = 1,
+  GET_MIX_FORMAT = 2,
+  GET_DEVICE_PERIOD = 3,
+};
+
+const char* const kUMAOutputStreamHistograms[] = {
+    "DeviceError", "ClientError", "MixFormatError", "DevicePeriodError"};
 
 // Converts Microsoft's channel configuration to ChannelLayout.
 // This mapping is not perfect but the best we can do given the current
@@ -141,11 +152,6 @@ std::string GetDeviceID(IMMDevice* device) {
   return device_id;
 }
 
-bool IsDefaultDeviceId(const std::string& device_id) {
-  return device_id.empty() ||
-         device_id == AudioDeviceDescription::kDefaultDeviceId;
-}
-
 bool IsDeviceActive(IMMDevice* device) {
   DWORD state = DEVICE_STATE_DISABLED;
   return SUCCEEDED(device->GetState(&state)) && (state & DEVICE_STATE_ACTIVE);
@@ -175,7 +181,7 @@ HRESULT GetDeviceFriendlyNameInternal(IMMDevice* device,
   return hr;
 }
 
-ComPtr<IMMDeviceEnumerator> CreateDeviceEnumeratorInternal(
+std::pair<ComPtr<IMMDeviceEnumerator>, HRESULT> CreateDeviceEnumeratorInternal(
     bool allow_reinitialize) {
   ComPtr<IMMDeviceEnumerator> device_enumerator;
   HRESULT hr = ::CoCreateInstance(__uuidof(MMDeviceEnumerator), NULL,
@@ -194,7 +200,55 @@ ComPtr<IMMDeviceEnumerator> CreateDeviceEnumeratorInternal(
                               IID_PPV_ARGS(&device_enumerator));
     }
   }
-  return device_enumerator;
+  return {device_enumerator, hr};
+}
+
+std::pair<ComPtr<IMMDevice>, HRESULT> CreateDeviceInternal(
+    const std::string& device_id,
+    EDataFlow data_flow,
+    ERole role) {
+  ComPtr<IMMDevice> endpoint_device;
+
+  // Create the IMMDeviceEnumerator interface.
+  std::pair<ComPtr<IMMDeviceEnumerator>, HRESULT> device_enum(
+      CreateDeviceEnumeratorInternal(true));
+  if (!device_enum.first.Get())
+    return {endpoint_device, device_enum.second};
+
+  // Retrieve an audio device specified by device_id or a default device
+  // specified by data-flow direction and role.
+  HRESULT hr;
+  if (AudioDeviceDescription::IsDefaultDevice(device_id))
+    hr = device_enum.first->GetDefaultAudioEndpoint(
+        data_flow, role, endpoint_device.GetAddressOf());
+  else
+    hr = device_enum.first->GetDevice(base::UTF8ToUTF16(device_id).c_str(),
+                                      endpoint_device.GetAddressOf());
+
+  if (FAILED(hr)) {
+    DVLOG(1) << "Create Device failed: " << std::hex << hr;
+    return {endpoint_device, hr};
+  }
+
+  // Verify that the audio endpoint device is active, i.e., that the audio
+  // adapter that connects to the endpoint device is present and enabled.
+  if (!IsDeviceActive(endpoint_device.Get())) {
+    DVLOG(1) << "Selected endpoint device is not active";
+    endpoint_device.Reset();
+    hr = E_FAIL;
+  }
+  return {endpoint_device, hr};
+}
+
+std::pair<ComPtr<IAudioClient>, HRESULT> CreateClientInternal(
+    IMMDevice* audio_device) {
+  // Creates and activates an IAudioClient COM object given the selected
+  // endpoint device.
+  ComPtr<IAudioClient> audio_client;
+  HRESULT hr = audio_device->Activate(
+      __uuidof(IAudioClient), CLSCTX_INPROC_SERVER, NULL, &audio_client);
+  DVLOG_IF(1, FAILED(hr)) << "IMMDevice::Activate: " << std::hex << hr;
+  return {audio_client, hr};
 }
 
 ChannelLayout GetChannelLayout(const WAVEFORMATPCMEX& mix_format) {
@@ -224,20 +278,20 @@ ChannelLayout GetChannelLayout(const WAVEFORMATPCMEX& mix_format) {
   return channel_layout;
 }
 
-ComPtr<IMMDevice> CreateDeviceInternal(const std::string& device_id,
-                                       bool is_output_device) {
+std::pair<ComPtr<IMMDevice>, HRESULT> CreateDeviceByID(
+    const std::string& device_id,
+    bool is_output_device) {
   EDataFlow data_flow = is_output_device ? eRender : eCapture;
-  if (device_id == AudioDeviceDescription::kDefaultDeviceId) {
-    return CoreAudioUtil::CreateDefaultDevice(data_flow, eConsole);
-  } else if (device_id == AudioDeviceDescription::kLoopbackInputDeviceId ||
-             device_id == AudioDeviceDescription::kLoopbackWithMuteDeviceId) {
+  if (device_id == AudioDeviceDescription::kDefaultDeviceId)
+    return CreateDeviceInternal("", data_flow, eConsole);
+  else if (device_id == AudioDeviceDescription::kLoopbackInputDeviceId ||
+           device_id == AudioDeviceDescription::kLoopbackWithMuteDeviceId) {
     DCHECK(!is_output_device);
-    return CoreAudioUtil::CreateDefaultDevice(eRender, eConsole);
-  } else if (device_id == AudioDeviceDescription::kCommunicationsDeviceId) {
-    return CoreAudioUtil::CreateDefaultDevice(data_flow, eCommunications);
-  } else {
-    return CoreAudioUtil::CreateDevice(device_id);
-  }
+    return CreateDeviceInternal("", eRender, eConsole);
+  } else if (device_id == AudioDeviceDescription::kCommunicationsDeviceId)
+    return CreateDeviceInternal("", data_flow, eCommunications);
+
+  return CreateDeviceInternal(device_id, EDataFlow(), ERole());
 }
 
 bool IsSupportedInternal() {
@@ -261,9 +315,9 @@ bool IsSupportedInternal() {
   // all devices to guarantee Core Audio support. To be 100%, we also verify
   // that it is possible to a create the IMMDeviceEnumerator interface. If
   // this works as well we should be home free.
-  ComPtr<IMMDeviceEnumerator> device_enumerator =
+  std::pair<ComPtr<IMMDeviceEnumerator>, HRESULT> device_enumerator =
       CreateDeviceEnumeratorInternal(false);
-  if (!device_enumerator) {
+  if (!device_enumerator.first) {
     LOG(ERROR)
         << "Failed to create Core Audio device enumerator on thread with ID "
         << GetCurrentThreadId();
@@ -271,6 +325,14 @@ bool IsSupportedInternal() {
   }
 
   return true;
+}
+
+void LogUMA(ErrorType err, HRESULT hr, bool is_output_device) {
+  if (is_output_device)
+    UMA_HISTOGRAM_SPARSE_SLOWLY(
+        base::StringPrintf("Media.AudioOutputStreamProxy.Win.%s",
+                           kUMAOutputStreamHistograms[err]),
+        hr);
 }
 }  // namespace
 
@@ -317,70 +379,12 @@ int CoreAudioUtil::NumberOfActiveDevices(EDataFlow data_flow) {
 }
 
 ComPtr<IMMDeviceEnumerator> CoreAudioUtil::CreateDeviceEnumerator() {
-  return CreateDeviceEnumeratorInternal(true);
-}
-
-ComPtr<IMMDevice> CoreAudioUtil::CreateDefaultDevice(EDataFlow data_flow,
-                                                     ERole role) {
-  ComPtr<IMMDevice> endpoint_device;
-
-  // Create the IMMDeviceEnumerator interface.
-  ComPtr<IMMDeviceEnumerator> device_enumerator = CreateDeviceEnumerator();
-  if (!device_enumerator.Get())
-    return endpoint_device;
-
-  // Retrieve the default audio endpoint for the specified data-flow
-  // direction and role.
-  HRESULT hr = device_enumerator->GetDefaultAudioEndpoint(
-      data_flow, role, endpoint_device.GetAddressOf());
-
-  if (FAILED(hr)) {
-    DVLOG(1) << "IMMDeviceEnumerator::GetDefaultAudioEndpoint: "
-             << std::hex << hr;
-    return endpoint_device;
-  }
-
-  // Verify that the audio endpoint device is active, i.e., that the audio
-  // adapter that connects to the endpoint device is present and enabled.
-  if (!IsDeviceActive(endpoint_device.Get())) {
-    DVLOG(1) << "Selected endpoint device is not active";
-    endpoint_device.Reset();
-  }
-  return endpoint_device;
+  return CreateDeviceEnumeratorInternal(true).first;
 }
 
 std::string CoreAudioUtil::GetDefaultOutputDeviceID() {
   ComPtr<IMMDevice> device(CreateDefaultDevice(eRender, eConsole));
   return device.Get() ? GetDeviceID(device.Get()) : std::string();
-}
-
-ComPtr<IMMDevice> CoreAudioUtil::CreateDevice(const std::string& device_id) {
-  ComPtr<IMMDevice> endpoint_device;
-
-  // Create the IMMDeviceEnumerator interface.
-  ComPtr<IMMDeviceEnumerator> device_enumerator = CreateDeviceEnumerator();
-  if (!device_enumerator.Get())
-    return endpoint_device;
-
-  // Retrieve an audio device specified by an endpoint device-identification
-  // string.
-  HRESULT hr = device_enumerator->GetDevice(
-      base::UTF8ToUTF16(device_id).c_str(), endpoint_device.GetAddressOf());
-  DVLOG_IF(1, FAILED(hr)) << "IMMDeviceEnumerator::GetDevice: "
-                          << std::hex << hr;
-
-  if (FAILED(hr)) {
-    DVLOG(1) << "IMMDeviceEnumerator::GetDevice: " << std::hex << hr;
-    return endpoint_device;
-  }
-
-  // Verify that the audio endpoint device is active, i.e., that the audio
-  // adapter that connects to the endpoint device is present and enabled.
-  if (!IsDeviceActive(endpoint_device.Get())) {
-    DVLOG(1) << "Selected endpoint device is not active";
-    endpoint_device.Reset();
-  }
-  return endpoint_device;
 }
 
 HRESULT CoreAudioUtil::GetDeviceName(IMMDevice* device, AudioDeviceName* name) {
@@ -461,12 +465,8 @@ std::string CoreAudioUtil::GetMatchingOutputDeviceID(
   if (input_device_id == AudioDeviceDescription::kCommunicationsDeviceId)
     return AudioDeviceDescription::kCommunicationsDeviceId;
 
-  ComPtr<IMMDevice> input_device;
-  if (IsDefaultDeviceId(input_device_id)) {
-    input_device = CreateDefaultDevice(eCapture, eConsole);
-  } else {
-    input_device = CreateDevice(input_device_id);
-  }
+  ComPtr<IMMDevice> input_device(
+      CreateDeviceInternal(input_device_id, eCapture, eConsole).first);
 
   if (!input_device.Get())
     return std::string();
@@ -514,17 +514,6 @@ std::string CoreAudioUtil::GetFriendlyName(const std::string& device_id) {
   return device_name.device_name;
 }
 
-bool CoreAudioUtil::DeviceIsDefault(EDataFlow flow,
-                                    ERole role,
-                                    const std::string& device_id) {
-  ComPtr<IMMDevice> device = CreateDefaultDevice(flow, role);
-  if (!device.Get())
-    return false;
-
-  std::string str_default(GetDeviceID(device.Get()));
-  return device_id.compare(str_default) == 0;
-}
-
 EDataFlow CoreAudioUtil::GetDataFlow(IMMDevice* device) {
   ComPtr<IMMEndpoint> endpoint;
   HRESULT hr = device->QueryInterface(endpoint.GetAddressOf());
@@ -542,36 +531,25 @@ EDataFlow CoreAudioUtil::GetDataFlow(IMMDevice* device) {
   return data_flow;
 }
 
-ComPtr<IAudioClient> CoreAudioUtil::CreateClient(IMMDevice* audio_device) {
-  // Creates and activates an IAudioClient COM object given the selected
-  // endpoint device.
-  ComPtr<IAudioClient> audio_client;
-  HRESULT hr = audio_device->Activate(__uuidof(IAudioClient),
-                                      CLSCTX_INPROC_SERVER,
-                                      NULL,
-                                      &audio_client);
-  DVLOG_IF(1, FAILED(hr)) << "IMMDevice::Activate: " << std::hex << hr;
-  return audio_client;
+ComPtr<IMMDevice> CoreAudioUtil::CreateDefaultDevice(EDataFlow data_flow,
+                                                     ERole role) {
+  return CreateDeviceInternal("", data_flow, role).first;
 }
 
-ComPtr<IAudioClient> CoreAudioUtil::CreateDefaultClient(EDataFlow data_flow,
-                                                        ERole role) {
-  ComPtr<IMMDevice> default_device(CreateDefaultDevice(data_flow, role));
-  return (default_device.Get() ? CreateClient(default_device.Get())
-                               : ComPtr<IAudioClient>());
+ComPtr<IMMDevice> CoreAudioUtil::CreateDevice(const std::string& device_id) {
+  return CreateDeviceInternal(device_id, EDataFlow(), ERole()).first;
 }
 
 ComPtr<IAudioClient> CoreAudioUtil::CreateClient(const std::string& device_id,
                                                  EDataFlow data_flow,
                                                  ERole role) {
-  if (IsDefaultDeviceId(device_id))
-    return CreateDefaultClient(data_flow, role);
+  std::pair<ComPtr<IMMDevice>, HRESULT> device(
+      CreateDeviceInternal(device_id, data_flow, role));
 
-  ComPtr<IMMDevice> device(CreateDevice(device_id));
-  if (!device.Get())
+  if (!device.first.Get())
     return ComPtr<IAudioClient>();
 
-  return CreateClient(device.Get());
+  return CreateClientInternal(device.first.Get()).first;
 }
 
 HRESULT CoreAudioUtil::GetSharedModeMixFormat(
@@ -676,17 +654,22 @@ HRESULT CoreAudioUtil::GetDevicePeriod(IAudioClient* client,
   return hr;
 }
 
-HRESULT CoreAudioUtil::GetPreferredAudioParameters(
-    IAudioClient* client, AudioParameters* params) {
+HRESULT CoreAudioUtil::GetPreferredAudioParameters(IAudioClient* client,
+                                                   bool is_output_device,
+                                                   AudioParameters* params) {
   WAVEFORMATPCMEX mix_format;
   HRESULT hr = GetSharedModeMixFormat(client, &mix_format);
-  if (FAILED(hr))
+  if (FAILED(hr)) {
+    LogUMA(GET_MIX_FORMAT, hr, is_output_device);
     return hr;
+  }
 
   REFERENCE_TIME default_period = 0;
   hr = GetDevicePeriod(client, AUDCLNT_SHAREMODE_SHARED, &default_period);
-  if (FAILED(hr))
+  if (FAILED(hr)) {
+    LogUMA(GET_DEVICE_PERIOD, hr, is_output_device);
     return hr;
+  }
 
   ChannelLayout channel_layout = GetChannelLayout(mix_format);
 
@@ -724,21 +707,22 @@ HRESULT CoreAudioUtil::GetPreferredAudioParameters(
 HRESULT CoreAudioUtil::GetPreferredAudioParameters(const std::string& device_id,
                                                    bool is_output_device,
                                                    AudioParameters* params) {
-  ComPtr<IMMDevice> device = CreateDeviceInternal(device_id, is_output_device);
-  if (!device.Get()) {
-    // Map NULL-pointer to new error code which can be different from the
-    // actual error code. The exact value is not important here.
-    return AUDCLNT_E_DEVICE_INVALIDATED;
+  std::pair<ComPtr<IMMDevice>, HRESULT> device(
+      CreateDeviceByID(device_id, is_output_device));
+  if (!device.first.Get()) {
+    LogUMA(CREATE_DEVICE, device.second, is_output_device);
+    return device.second;
   }
 
-  ComPtr<IAudioClient> client(CreateClient(device.Get()));
-  if (!client.Get()) {
-    // Map NULL-pointer to new error code which can be different from the
-    // actual error code. The exact value is not important here.
-    return AUDCLNT_E_ENDPOINT_CREATE_FAILED;
+  std::pair<ComPtr<IAudioClient>, HRESULT> client(
+      CreateClientInternal(device.first.Get()));
+  if (!client.first.Get()) {
+    LogUMA(CREATE_CLIENT, client.second, is_output_device);
+    return client.second;
   }
 
-  HRESULT hr = GetPreferredAudioParameters(client.Get(), params);
+  HRESULT hr =
+      GetPreferredAudioParameters(client.first.Get(), is_output_device, params);
   if (FAILED(hr) || is_output_device || !params->IsValid())
     return hr;
 

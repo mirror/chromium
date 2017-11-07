@@ -198,45 +198,14 @@ TEST_F(CoreAudioUtilWinTest, GetFriendlyName) {
   EXPECT_EQ(friendly_name, device_name.device_name);
 }
 
-TEST_F(CoreAudioUtilWinTest, DeviceIsDefault) {
-  ABORT_AUDIO_TEST_IF_NOT(DevicesAvailable());
-
-  // Verify that the default render device is correctly identified as a
-  // default device.
-  ComPtr<IMMDevice> audio_device =
-      CoreAudioUtil::CreateDefaultDevice(eRender, eConsole);
-  AudioDeviceName name;
-  EXPECT_TRUE(
-      SUCCEEDED(CoreAudioUtil::GetDeviceName(audio_device.Get(), &name)));
-  const std::string id = name.unique_id;
-  EXPECT_TRUE(CoreAudioUtil::DeviceIsDefault(eRender, eConsole, id));
-  EXPECT_FALSE(CoreAudioUtil::DeviceIsDefault(eCapture, eConsole, id));
-}
-
-TEST_F(CoreAudioUtilWinTest, CreateDefaultClient) {
-  ABORT_AUDIO_TEST_IF_NOT(DevicesAvailable());
-
-  EDataFlow data[] = {eRender, eCapture};
-
-  for (size_t i = 0; i < arraysize(data); ++i) {
-    ComPtr<IAudioClient> client;
-    client = CoreAudioUtil::CreateDefaultClient(data[i], eConsole);
-    EXPECT_TRUE(client.Get());
-  }
-}
-
 TEST_F(CoreAudioUtilWinTest, CreateClient) {
   ABORT_AUDIO_TEST_IF_NOT(DevicesAvailable());
 
   EDataFlow data[] = {eRender, eCapture};
 
   for (size_t i = 0; i < arraysize(data); ++i) {
-    ComPtr<IMMDevice> device;
-    ComPtr<IAudioClient> client;
-    device = CoreAudioUtil::CreateDefaultDevice(data[i], eConsole);
-    EXPECT_TRUE(device.Get());
-    EXPECT_EQ(data[i], CoreAudioUtil::GetDataFlow(device.Get()));
-    client = CoreAudioUtil::CreateClient(device.Get());
+    ComPtr<IAudioClient> client =
+        CoreAudioUtil::CreateClient("", data[i], eConsole);
     EXPECT_TRUE(client.Get());
   }
 }
@@ -244,11 +213,8 @@ TEST_F(CoreAudioUtilWinTest, CreateClient) {
 TEST_F(CoreAudioUtilWinTest, GetSharedModeMixFormat) {
   ABORT_AUDIO_TEST_IF_NOT(DevicesAvailable());
 
-  ComPtr<IMMDevice> device;
-  ComPtr<IAudioClient> client;
-  device = CoreAudioUtil::CreateDefaultDevice(eRender, eConsole);
-  EXPECT_TRUE(device.Get());
-  client = CoreAudioUtil::CreateClient(device.Get());
+  ComPtr<IAudioClient> client =
+      CoreAudioUtil::CreateClient("", eRender, eConsole);
   EXPECT_TRUE(client.Get());
 
   // Perform a simple sanity test of the aquired format structure.
@@ -299,7 +265,7 @@ TEST_F(CoreAudioUtilWinTest, GetDevicePeriod) {
     ComPtr<IAudioClient> client;
     REFERENCE_TIME shared_time_period = 0;
     REFERENCE_TIME exclusive_time_period = 0;
-    client = CoreAudioUtil::CreateDefaultClient(data[i], eConsole);
+    client = CoreAudioUtil::CreateClient("", data[i], eConsole);
     EXPECT_TRUE(client.Get());
     EXPECT_TRUE(SUCCEEDED(CoreAudioUtil::GetDevicePeriod(
         client.Get(), AUDCLNT_SHAREMODE_SHARED, &shared_time_period)));
@@ -321,10 +287,10 @@ TEST_F(CoreAudioUtilWinTest, GetPreferredAudioParameters) {
   for (size_t i = 0; i < arraysize(data); ++i) {
     ComPtr<IAudioClient> client;
     AudioParameters params;
-    client = CoreAudioUtil::CreateDefaultClient(data[i], eConsole);
+    client = CoreAudioUtil::CreateClient("", data[i], eConsole);
     EXPECT_TRUE(client.Get());
-    EXPECT_TRUE(SUCCEEDED(
-        CoreAudioUtil::GetPreferredAudioParameters(client.Get(), &params)));
+    EXPECT_TRUE(SUCCEEDED(CoreAudioUtil::GetPreferredAudioParameters(
+        client.Get(), data[i] == eRender, &params)));
     EXPECT_TRUE(params.IsValid());
   }
 }
@@ -333,7 +299,7 @@ TEST_F(CoreAudioUtilWinTest, SharedModeInitialize) {
   ABORT_AUDIO_TEST_IF_NOT(DevicesAvailable());
 
   ComPtr<IAudioClient> client;
-  client = CoreAudioUtil::CreateDefaultClient(eRender, eConsole);
+  client = CoreAudioUtil::CreateClient("", eRender, eConsole);
   EXPECT_TRUE(client.Get());
 
   WAVEFORMATPCMEX format;
@@ -354,7 +320,7 @@ TEST_F(CoreAudioUtilWinTest, SharedModeInitialize) {
   EXPECT_EQ(hr, AUDCLNT_E_ALREADY_INITIALIZED);
 
   // Verify that it is possible to reinitialize the client after releasing it.
-  client = CoreAudioUtil::CreateDefaultClient(eRender, eConsole);
+  client = CoreAudioUtil::CreateClient("", eRender, eConsole);
   EXPECT_TRUE(client.Get());
   hr = CoreAudioUtil::SharedModeInitialize(client.Get(), &format, NULL,
                                            &endpoint_buffer_size, NULL);
@@ -364,7 +330,7 @@ TEST_F(CoreAudioUtilWinTest, SharedModeInitialize) {
   // Use a non-supported format and verify that initialization fails.
   // A simple way to emulate an invalid format is to use the shared-mode
   // mixing format and modify the preferred sample.
-  client = CoreAudioUtil::CreateDefaultClient(eRender, eConsole);
+  client = CoreAudioUtil::CreateClient("", eRender, eConsole);
   EXPECT_TRUE(client.Get());
   format.Format.nSamplesPerSec = format.Format.nSamplesPerSec + 1;
   EXPECT_FALSE(CoreAudioUtil::IsFormatSupported(
@@ -379,7 +345,7 @@ TEST_F(CoreAudioUtilWinTest, SharedModeInitialize) {
   // to be processed by the client (not verified here).
   // The event handle should be in the nonsignaled state.
   base::win::ScopedHandle event_handle(::CreateEvent(NULL, TRUE, FALSE, NULL));
-  client = CoreAudioUtil::CreateDefaultClient(eRender, eConsole);
+  client = CoreAudioUtil::CreateClient("", eRender, eConsole);
   EXPECT_TRUE(client.Get());
   EXPECT_TRUE(
       SUCCEEDED(CoreAudioUtil::GetSharedModeMixFormat(client.Get(), &format)));
@@ -404,7 +370,7 @@ TEST_F(CoreAudioUtilWinTest, CreateRenderAndCaptureClients) {
     ComPtr<IAudioRenderClient> render_client;
     ComPtr<IAudioCaptureClient> capture_client;
 
-    client = CoreAudioUtil::CreateDefaultClient(data[i], eConsole);
+    client = CoreAudioUtil::CreateClient("", data[i], eConsole);
     EXPECT_TRUE(client.Get());
     EXPECT_TRUE(SUCCEEDED(
         CoreAudioUtil::GetSharedModeMixFormat(client.Get(), &format)));
@@ -441,7 +407,7 @@ TEST_F(CoreAudioUtilWinTest, FillRenderEndpointBufferWithSilence) {
 
   // Create default clients using the default mixing format for shared mode.
   ComPtr<IAudioClient> client(
-      CoreAudioUtil::CreateDefaultClient(eRender, eConsole));
+      CoreAudioUtil::CreateClient("", eRender, eConsole));
   EXPECT_TRUE(client.Get());
 
   WAVEFORMATPCMEX format;
