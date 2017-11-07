@@ -22,6 +22,30 @@
       "revId": "ac8cba89df92237bc0987090d0f567c4bb793336",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "aa95df36_c8e36b1f",
+        "filename": "build/fuchsia/runner_common.py",
+        "patchSetId": 1
+      },
+      "lineNbr": 538,
+      "author": {
+        "id": 1113499
+      },
+      "writtenOn": "2017-11-07T18:33:13Z",
+      "side": 1,
+      "message": "Done.\n\nThe MAC address needs to be packaged as a part of the \"device\" argument. It would be awkward to fix up existing elements of the list because we are using it as an append-only container elsewhere in the code.",
+      "parentUuid": "a95ee910_bc34e27b",
+      "range": {
+        "startLine": 538,
+        "startChar": 36,
+        "endLine": 538,
+        "endChar": 70
+      },
+      "revId": "ac8cba89df92237bc0987090d0f567c4bb793336",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
