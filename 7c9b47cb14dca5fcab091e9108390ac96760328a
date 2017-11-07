@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "9184db92_cddd5cef",
+        "filename": "ios/chrome/browser/autofill/BUILD.gn",
+        "patchSetId": 3
+      },
+      "lineNbr": 122,
+      "author": {
+        "id": 1166820
+      },
+      "writtenOn": "2017-11-07T03:41:44Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "4c941bb3_8349940b",
+      "range": {
+        "startLine": 122,
+        "startChar": 33,
+        "endLine": 122,
+        "endChar": 40
+      },
+      "revId": "7c9b47cb14dca5fcab091e9108390ac96760328a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "efd6652e_c0ef21c2",
         "filename": "ios/chrome/browser/autofill/BUILD.gn",
         "patchSetId": 3
@@ -45,6 +69,30 @@
       "revId": "7c9b47cb14dca5fcab091e9108390ac96760328a",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "895cc951_afd13521",
+        "filename": "ios/chrome/browser/autofill/BUILD.gn",
+        "patchSetId": 3
+      },
+      "lineNbr": 126,
+      "author": {
+        "id": 1166820
+      },
+      "writtenOn": "2017-11-07T03:41:44Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "efd6652e_c0ef21c2",
+      "range": {
+        "startLine": 126,
+        "startChar": 26,
+        "endLine": 126,
+        "endChar": 33
+      },
+      "revId": "7c9b47cb14dca5fcab091e9108390ac96760328a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -71,6 +119,30 @@
     },
     {
       "key": {
+        "uuid": "890e4300_08150187",
+        "filename": "ios/chrome/browser/passwords/BUILD.gn",
+        "patchSetId": 3
+      },
+      "lineNbr": 138,
+      "author": {
+        "id": 1166820
+      },
+      "writtenOn": "2017-11-07T03:41:44Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "acb4bcb5_edcaa742",
+      "range": {
+        "startLine": 138,
+        "startChar": 33,
+        "endLine": 138,
+        "endChar": 40
+      },
+      "revId": "7c9b47cb14dca5fcab091e9108390ac96760328a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "f0615c37_0aad6559",
         "filename": "ios/chrome/browser/passwords/password_controller.mm",
         "patchSetId": 3
@@ -94,6 +166,30 @@
     },
     {
       "key": {
+        "uuid": "b1b8df80_ffcd1189",
+        "filename": "ios/chrome/browser/passwords/password_controller.mm",
+        "patchSetId": 3
+      },
+      "lineNbr": 47,
+      "author": {
+        "id": 1166820
+      },
+      "writtenOn": "2017-11-07T03:41:44Z",
+      "side": 1,
+      "message": "Done.\n\nIs there a way that \u0027git cl format\u0027 or \u0027git cl lint\u0027 could warn on this one? https://github.com/google/styleguide/blob/gh-pages/objcguide.md explains at a high level the rule, but determining whether a given target is Objective C++ or C++ seems like a good job for a tool? Our code currently seems to use both include and import in some cases (e.g. when including web_state_user_data.h)",
+      "parentUuid": "f0615c37_0aad6559",
+      "range": {
+        "startLine": 47,
+        "startChar": 33,
+        "endLine": 47,
+        "endChar": 66
+      },
+      "revId": "7c9b47cb14dca5fcab091e9108390ac96760328a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "9c5a9cf6_7d4f49d7",
         "filename": "ios/chrome/browser/passwords/password_controller.mm",
         "patchSetId": 3
@@ -105,6 +201,30 @@
       "writtenOn": "2017-11-07T00:15:06Z",
       "side": 1,
       "message": "Can this be null?",
+      "range": {
+        "startLine": 662,
+        "startChar": 12,
+        "endLine": 662,
+        "endChar": 35
+      },
+      "revId": "7c9b47cb14dca5fcab091e9108390ac96760328a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b4bd719d_4c6cd07e",
+        "filename": "ios/chrome/browser/passwords/password_controller.mm",
+        "patchSetId": 3
+      },
+      "lineNbr": 662,
+      "author": {
+        "id": 1166820
+      },
+      "writtenOn": "2017-11-07T03:41:44Z",
+      "side": 1,
+      "message": "In e.g. unit-tests it could, yes. Beyond that, I don\u0027t know whether the password_controller might be used in some circumstance where the tab helper didn\u0027t attach.",
+      "parentUuid": "9c5a9cf6_7d4f49d7",
       "range": {
         "startLine": 662,
         "startChar": 12,
@@ -140,6 +260,30 @@
     },
     {
       "key": {
+        "uuid": "099cca3f_9a6aff85",
+        "filename": "ios/chrome/browser/passwords/password_controller_unittest.mm",
+        "patchSetId": 3
+      },
+      "lineNbr": 34,
+      "author": {
+        "id": 1166820
+      },
+      "writtenOn": "2017-11-07T03:41:44Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "a98a21b0_8bdaf49f",
+      "range": {
+        "startLine": 34,
+        "startChar": 33,
+        "endLine": 34,
+        "endChar": 66
+      },
+      "revId": "7c9b47cb14dca5fcab091e9108390ac96760328a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "39db3a4f_226f023a",
         "filename": "ios/chrome/browser/ssl/BUILD.gn",
         "patchSetId": 3
@@ -160,6 +304,30 @@
       "revId": "7c9b47cb14dca5fcab091e9108390ac96760328a",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "20f9eecc_ecbfd27a",
+        "filename": "ios/chrome/browser/ssl/BUILD.gn",
+        "patchSetId": 3
+      },
+      "lineNbr": 66,
+      "author": {
+        "id": 1166820
+      },
+      "writtenOn": "2017-11-07T03:41:44Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "39db3a4f_226f023a",
+      "range": {
+        "startLine": 66,
+        "startChar": 33,
+        "endLine": 66,
+        "endChar": 42
+      },
+      "revId": "7c9b47cb14dca5fcab091e9108390ac96760328a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -186,6 +354,30 @@
     },
     {
       "key": {
+        "uuid": "87794fbc_dafdf7d4",
+        "filename": "ios/chrome/browser/ssl/insecure_input_web_state_observer.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 11,
+      "author": {
+        "id": 1166820
+      },
+      "writtenOn": "2017-11-07T03:41:44Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "18439fe0_4bcc2d1c",
+      "range": {
+        "startLine": 11,
+        "startChar": 1,
+        "endLine": 11,
+        "endChar": 7
+      },
+      "revId": "7c9b47cb14dca5fcab091e9108390ac96760328a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "cdc64c95_2bc0b89f",
         "filename": "ios/chrome/browser/ssl/insecure_input_web_state_observer.h",
         "patchSetId": 3
@@ -203,6 +395,24 @@
     },
     {
       "key": {
+        "uuid": "23399700_2e156440",
+        "filename": "ios/chrome/browser/ssl/insecure_input_web_state_observer.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 20,
+      "author": {
+        "id": 1166820
+      },
+      "writtenOn": "2017-11-07T03:41:44Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "cdc64c95_2bc0b89f",
+      "revId": "7c9b47cb14dca5fcab091e9108390ac96760328a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "c0ab651a_0a5d83a3",
         "filename": "ios/chrome/browser/ssl/insecure_input_web_state_observer.h",
         "patchSetId": 3
@@ -214,6 +424,30 @@
       "writtenOn": "2017-11-07T00:15:06Z",
       "side": 1,
       "message": "s/is called/should be called? This method is not called automatically. Also please document what this method does.",
+      "range": {
+        "startLine": 26,
+        "startChar": 20,
+        "endLine": 26,
+        "endChar": 26
+      },
+      "revId": "7c9b47cb14dca5fcab091e9108390ac96760328a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "204817a5_f01a7ecb",
+        "filename": "ios/chrome/browser/ssl/insecure_input_web_state_observer.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 26,
+      "author": {
+        "id": 1166820
+      },
+      "writtenOn": "2017-11-07T03:41:44Z",
+      "side": 1,
+      "message": "I\u0027ve changed from \"is called\" to \"should be called\". I\u0027m not sure what \"is not called automatically\" means; this class itself calls it when the event is raised.\n\nIn terms of documenting what the method /does/, I believe the class comment covers it; I\u0027m reluctant to reiterate it on each of the three methods.",
+      "parentUuid": "c0ab651a_0a5d83a3",
       "range": {
         "startLine": 26,
         "startChar": 20,
@@ -249,6 +483,30 @@
     },
     {
       "key": {
+        "uuid": "5112de92_bc356703",
+        "filename": "ios/chrome/browser/ssl/insecure_input_web_state_observer.mm",
+        "patchSetId": 3
+      },
+      "lineNbr": 5,
+      "author": {
+        "id": 1166820
+      },
+      "writtenOn": "2017-11-07T03:41:44Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "92994086_6598ea88",
+      "range": {
+        "startLine": 5,
+        "startChar": 1,
+        "endLine": 5,
+        "endChar": 8
+      },
+      "revId": "7c9b47cb14dca5fcab091e9108390ac96760328a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "9b052f06_06f521bb",
         "filename": "ios/chrome/browser/ssl/insecure_input_web_state_observer.mm",
         "patchSetId": 3
@@ -269,6 +527,30 @@
       "revId": "7c9b47cb14dca5fcab091e9108390ac96760328a",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "36f81211_07c1603e",
+        "filename": "ios/chrome/browser/ssl/insecure_input_web_state_observer.mm",
+        "patchSetId": 3
+      },
+      "lineNbr": 11,
+      "author": {
+        "id": 1166820
+      },
+      "writtenOn": "2017-11-07T03:41:44Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "9b052f06_06f521bb",
+      "range": {
+        "startLine": 11,
+        "startChar": 18,
+        "endLine": 11,
+        "endChar": 24
+      },
+      "revId": "7c9b47cb14dca5fcab091e9108390ac96760328a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -295,6 +577,30 @@
     },
     {
       "key": {
+        "uuid": "06a1c938_8e755094",
+        "filename": "ios/chrome/browser/ssl/insecure_input_web_state_observer.mm",
+        "patchSetId": 3
+      },
+      "lineNbr": 12,
+      "author": {
+        "id": 1166820
+      },
+      "writtenOn": "2017-11-07T03:41:44Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "996be783_55c98000",
+      "range": {
+        "startLine": 12,
+        "startChar": 25,
+        "endLine": 12,
+        "endChar": 43
+      },
+      "revId": "7c9b47cb14dca5fcab091e9108390ac96760328a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "76224adc_cdcced61",
         "filename": "ios/chrome/browser/ssl/insecure_input_web_state_observer.mm",
         "patchSetId": 3
@@ -315,6 +621,30 @@
       "revId": "7c9b47cb14dca5fcab091e9108390ac96760328a",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d662ee73_518072c4",
+        "filename": "ios/chrome/browser/ssl/insecure_input_web_state_observer.mm",
+        "patchSetId": 3
+      },
+      "lineNbr": 14,
+      "author": {
+        "id": 1166820
+      },
+      "writtenOn": "2017-11-07T03:41:44Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "76224adc_cdcced61",
+      "range": {
+        "startLine": 14,
+        "startChar": 35,
+        "endLine": 14,
+        "endChar": 44
+      },
+      "revId": "7c9b47cb14dca5fcab091e9108390ac96760328a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -341,6 +671,30 @@
     },
     {
       "key": {
+        "uuid": "23857c62_62c7c95b",
+        "filename": "ios/chrome/browser/ssl/insecure_input_web_state_observer.mm",
+        "patchSetId": 3
+      },
+      "lineNbr": 15,
+      "author": {
+        "id": 1166820
+      },
+      "writtenOn": "2017-11-07T03:41:44Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "f076ca7f_3a61eb09",
+      "range": {
+        "startLine": 15,
+        "startChar": 35,
+        "endLine": 15,
+        "endChar": 54
+      },
+      "revId": "7c9b47cb14dca5fcab091e9108390ac96760328a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "2f87f0fa_25c86aef",
         "filename": "ios/chrome/browser/ssl/insecure_input_web_state_observer.mm",
         "patchSetId": 3
@@ -352,6 +706,30 @@
       "writtenOn": "2017-11-07T00:15:06Z",
       "side": 1,
       "message": "Is there a way to avoid casting?",
+      "range": {
+        "startLine": 35,
+        "startChar": 18,
+        "endLine": 35,
+        "endChar": 32
+      },
+      "revId": "7c9b47cb14dca5fcab091e9108390ac96760328a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f91d302d_0b93bd3c",
+        "filename": "ios/chrome/browser/ssl/insecure_input_web_state_observer.mm",
+        "patchSetId": 3
+      },
+      "lineNbr": 35,
+      "author": {
+        "id": 1166820
+      },
+      "writtenOn": "2017-11-07T03:41:44Z",
+      "side": 1,
+      "message": "Not via any mechanism I\u0027m aware of (this matches /content).\n\nThe point of the design is that web\u0027s SSLStatus holds a generic SSLUserData object and it\u0027s not meant to care what\u0027s in it. The embedder (Chrome) uses it to store a SSLStatusInputEventData. A different embedder could choose to store something else.",
+      "parentUuid": "2f87f0fa_25c86aef",
       "range": {
         "startLine": 35,
         "startChar": 18,
@@ -381,6 +759,24 @@
     },
     {
       "key": {
+        "uuid": "e939238c_ceb1a00c",
+        "filename": "ios/chrome/browser/ssl/ios_security_state_tab_helper_unittest.mm",
+        "patchSetId": 3
+      },
+      "lineNbr": 7,
+      "author": {
+        "id": 1166820
+      },
+      "writtenOn": "2017-11-07T03:41:44Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "b835363b_dffeab0a",
+      "revId": "7c9b47cb14dca5fcab091e9108390ac96760328a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "1d963a48_2ffa4e58",
         "filename": "ios/chrome/browser/ssl/ios_security_state_tab_helper_unittest.mm",
         "patchSetId": 3
@@ -404,6 +800,30 @@
     },
     {
       "key": {
+        "uuid": "3189e28b_2f981a1a",
+        "filename": "ios/chrome/browser/ssl/ios_security_state_tab_helper_unittest.mm",
+        "patchSetId": 3
+      },
+      "lineNbr": 8,
+      "author": {
+        "id": 1166820
+      },
+      "writtenOn": "2017-11-07T03:41:44Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "1d963a48_2ffa4e58",
+      "range": {
+        "startLine": 8,
+        "startChar": 9,
+        "endLine": 8,
+        "endChar": 19
+      },
+      "revId": "7c9b47cb14dca5fcab091e9108390ac96760328a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "7d88d10c_800128d8",
         "filename": "ios/chrome/browser/ssl/ios_security_state_tab_helper_unittest.mm",
         "patchSetId": 3
@@ -421,6 +841,24 @@
     },
     {
       "key": {
+        "uuid": "7c55b31b_6cf12301",
+        "filename": "ios/chrome/browser/ssl/ios_security_state_tab_helper_unittest.mm",
+        "patchSetId": 3
+      },
+      "lineNbr": 12,
+      "author": {
+        "id": 1166820
+      },
+      "writtenOn": "2017-11-07T03:41:44Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "7d88d10c_800128d8",
+      "revId": "7c9b47cb14dca5fcab091e9108390ac96760328a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "376ec838_d98f9c2d",
         "filename": "ios/chrome/browser/ssl/ios_security_state_tab_helper_unittest.mm",
         "patchSetId": 3
@@ -435,6 +873,24 @@
       "revId": "7c9b47cb14dca5fcab091e9108390ac96760328a",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ed7fe6be_73f40030",
+        "filename": "ios/chrome/browser/ssl/ios_security_state_tab_helper_unittest.mm",
+        "patchSetId": 3
+      },
+      "lineNbr": 19,
+      "author": {
+        "id": 1166820
+      },
+      "writtenOn": "2017-11-07T03:41:44Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "376ec838_d98f9c2d",
+      "revId": "7c9b47cb14dca5fcab091e9108390ac96760328a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -461,6 +917,30 @@
     },
     {
       "key": {
+        "uuid": "3647f1e6_8e28cfd0",
+        "filename": "ios/chrome/browser/ssl/ios_security_state_tab_helper_unittest.mm",
+        "patchSetId": 3
+      },
+      "lineNbr": 21,
+      "author": {
+        "id": 1166820
+      },
+      "writtenOn": "2017-11-07T03:41:44Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "7453a427_1f8801fa",
+      "range": {
+        "startLine": 21,
+        "startChar": 17,
+        "endLine": 21,
+        "endChar": 34
+      },
+      "revId": "7c9b47cb14dca5fcab091e9108390ac96760328a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "52b8ed11_30fb5534",
         "filename": "ios/chrome/browser/ssl/ios_security_state_tab_helper_unittest.mm",
         "patchSetId": 3
@@ -472,6 +952,30 @@
       "writtenOn": "2017-11-07T00:15:06Z",
       "side": 1,
       "message": "Do you want to move repetitive code to IOSSecurityStateTabHelperTest constructor?",
+      "range": {
+        "startLine": 24,
+        "startChar": 29,
+        "endLine": 24,
+        "endChar": 46
+      },
+      "revId": "7c9b47cb14dca5fcab091e9108390ac96760328a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "653b8e08_af7cdd47",
+        "filename": "ios/chrome/browser/ssl/ios_security_state_tab_helper_unittest.mm",
+        "patchSetId": 3
+      },
+      "lineNbr": 24,
+      "author": {
+        "id": 1166820
+      },
+      "writtenOn": "2017-11-07T03:41:44Z",
+      "side": 1,
+      "message": "I\u0027ll clean this up.",
+      "parentUuid": "52b8ed11_30fb5534",
       "range": {
         "startLine": 24,
         "startChar": 29,
@@ -507,6 +1011,30 @@
     },
     {
       "key": {
+        "uuid": "09ce47f7_942d3b1a",
+        "filename": "ios/chrome/browser/ssl/ios_security_state_tab_helper_unittest.mm",
+        "patchSetId": 3
+      },
+      "lineNbr": 28,
+      "author": {
+        "id": 1166820
+      },
+      "writtenOn": "2017-11-07T03:41:44Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "11c518f8_18864dc2",
+      "range": {
+        "startLine": 28,
+        "startChar": 2,
+        "endLine": 28,
+        "endChar": 11
+      },
+      "revId": "7c9b47cb14dca5fcab091e9108390ac96760328a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "25770e81_d269a68e",
         "filename": "ios/chrome/browser/ui/autofill/BUILD.gn",
         "patchSetId": 3
@@ -527,6 +1055,30 @@
       "revId": "7c9b47cb14dca5fcab091e9108390ac96760328a",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3eda2db2_53dd94c7",
+        "filename": "ios/chrome/browser/ui/autofill/BUILD.gn",
+        "patchSetId": 3
+      },
+      "lineNbr": 34,
+      "author": {
+        "id": 1166820
+      },
+      "writtenOn": "2017-11-07T03:41:44Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "25770e81_d269a68e",
+      "range": {
+        "startLine": 34,
+        "startChar": 26,
+        "endLine": 34,
+        "endChar": 33
+      },
+      "revId": "7c9b47cb14dca5fcab091e9108390ac96760328a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -553,6 +1105,30 @@
     },
     {
       "key": {
+        "uuid": "a81bd24f_fb5ac951",
+        "filename": "ios/chrome/browser/ui/autofill/chrome_autofill_client_ios.mm",
+        "patchSetId": 3
+      },
+      "lineNbr": 27,
+      "author": {
+        "id": 1166820
+      },
+      "writtenOn": "2017-11-07T03:41:44Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "1019b5ee_9475e98c",
+      "range": {
+        "startLine": 27,
+        "startChar": 14,
+        "endLine": 27,
+        "endChar": 20
+      },
+      "revId": "7c9b47cb14dca5fcab091e9108390ac96760328a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "1810cae2_4d713839",
         "filename": "ios/chrome/browser/ui/autofill/chrome_autofill_client_ios.mm",
         "patchSetId": 3
@@ -564,6 +1140,30 @@
       "writtenOn": "2017-11-07T00:15:06Z",
       "side": 1,
       "message": "Can this be null?",
+      "range": {
+        "startLine": 137,
+        "startChar": 6,
+        "endLine": 137,
+        "endChar": 29
+      },
+      "revId": "7c9b47cb14dca5fcab091e9108390ac96760328a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "21d03fc4_a480cdee",
+        "filename": "ios/chrome/browser/ui/autofill/chrome_autofill_client_ios.mm",
+        "patchSetId": 3
+      },
+      "lineNbr": 137,
+      "author": {
+        "id": 1166820
+      },
+      "writtenOn": "2017-11-07T03:41:44Z",
+      "side": 1,
+      "message": "As with the Password autofill case, yes, it could be in the case of unittests, or if this component could ever be used in a situation where the tab helper wasn\u0027t attached.",
+      "parentUuid": "1810cae2_4d713839",
       "range": {
         "startLine": 137,
         "startChar": 6,
@@ -599,6 +1199,30 @@
     },
     {
       "key": {
+        "uuid": "ed4aaae7_a63627d8",
+        "filename": "ios/web/public/ssl_status.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 18,
+      "author": {
+        "id": 1166820
+      },
+      "writtenOn": "2017-11-07T03:41:44Z",
+      "side": 1,
+      "message": "estark knows more about this than me, but I believe the key thing we need to support is a Clone method. In this situation, we also only need one userdata object.",
+      "parentUuid": "6523aa79_367e92af",
+      "range": {
+        "startLine": 18,
+        "startChar": 7,
+        "endLine": 18,
+        "endChar": 16
+      },
+      "revId": "7c9b47cb14dca5fcab091e9108390ac96760328a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "194a76f5_a45f2a64",
         "filename": "ios/web/public/web_state/web_state.h",
         "patchSetId": 3
@@ -610,6 +1234,30 @@
       "writtenOn": "2017-11-07T00:15:06Z",
       "side": 1,
       "message": "WebContents does not have this method. Is it possible to avoid having it in WebState as well?",
+      "range": {
+        "startLine": 266,
+        "startChar": 15,
+        "endLine": 266,
+        "endChar": 43
+      },
+      "revId": "7c9b47cb14dca5fcab091e9108390ac96760328a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8d241b5c_9e643fae",
+        "filename": "ios/web/public/web_state/web_state.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 266,
+      "author": {
+        "id": 1166820
+      },
+      "writtenOn": "2017-11-07T03:41:44Z",
+      "side": 1,
+      "message": "In WebContents and WebStateObserver, the method is named DidChangeVisibleSecurityState. \n\nIt wasn\u0027t clear to me why WebStateImpl named the method OnVisibleSecurityStateChanged, but I assumed there was some good reason, and avoiding a rename made this CL slightly smaller. \n\nI can rename OnVisibleSecurityStateChanged to DidChangeVisibleSecurityState for WebState (and WebStateImpl?) if that\u0027s desirable.",
+      "parentUuid": "194a76f5_a45f2a64",
       "range": {
         "startLine": 266,
         "startChar": 15,
