@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "34790aec_9df67a1e",
+        "filename": "third_party/WebKit/public/platform/DEPS",
+        "patchSetId": 25
+      },
+      "lineNbr": 10,
+      "author": {
+        "id": 1200434
+      },
+      "writtenOn": "2017-11-07T01:36:59Z",
+      "side": 1,
+      "message": "Can you use https://cs.chromium.org/chromium/src/third_party/WebKit/Source/platform/wtf/WeakPtr.h instead?",
+      "revId": "1a549da9bc0eeefabf7f527371e453f9d5e63c1e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
