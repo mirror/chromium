@@ -1,0 +1,78 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "f6dd40f9_bf2547d9",
+        "filename": "gpu/command_buffer/service/scheduler.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 134,
+      "author": {
+        "id": 1128437
+      },
+      "writtenOn": "2017-11-07T03:30:44Z",
+      "side": 1,
+      "message": "nit: Scheduler* const",
+      "revId": "dea014b616d39bb3276ba9b017f5e9a512da9a5e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "dc651332_dd75ec1d",
+        "filename": "gpu/command_buffer/service/scheduler.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 233,
+      "author": {
+        "id": 1128437
+      },
+      "writtenOn": "2017-11-07T03:30:44Z",
+      "side": 1,
+      "message": "This GetSequence call will cause a double lock. You can work around this by storing the release sequence with each wait fence. You won\u0027t need the GetSequenceId method either. The only method Sequence calls on Scheduler should be TryScheduleSequence which assumes the lock is acquired.",
+      "range": {
+        "startLine": 233,
+        "startChar": 47,
+        "endLine": 233,
+        "endChar": 58
+      },
+      "revId": "dea014b616d39bb3276ba9b017f5e9a512da9a5e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0c7891b5_bc9c1e95",
+        "filename": "gpu/command_buffer/service/scheduler_unittest.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 303,
+      "author": {
+        "id": 1128437
+      },
+      "writtenOn": "2017-11-07T03:30:44Z",
+      "side": 1,
+      "message": "Please add a test for ensuring that priority returns to default priority on the release sequence once the waiting sequence is destroyed.",
+      "revId": "dea014b616d39bb3276ba9b017f5e9a512da9a5e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "29629859_4419fca0",
+        "filename": "gpu/command_buffer/service/scheduler_unittest.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 331,
+      "author": {
+        "id": 1128437
+      },
+      "writtenOn": "2017-11-07T03:30:44Z",
+      "side": 1,
+      "message": "Can you test that propagation beyond one level works? Say 3 depends on 2 depends on 1. And maybe one tests with cycles too? The cycles can exist in the sync token dependencies graph but they\u0027ll be resolved as the order numbers are processed.",
+      "revId": "dea014b616d39bb3276ba9b017f5e9a512da9a5e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
