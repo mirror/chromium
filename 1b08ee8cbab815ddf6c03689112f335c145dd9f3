@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "bdb5f1bd_d1cbea72",
+        "filename": "ui/accessibility/platform/atk_util_auralinux_gtk3.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 20,
+      "author": {
+        "id": 1000678
+      },
+      "writtenOn": "2017-11-07T16:20:43Z",
+      "side": 1,
+      "message": "Would UnSetVar be better?",
+      "revId": "1b08ee8cbab815ddf6c03689112f335c145dd9f3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
