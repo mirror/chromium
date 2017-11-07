@@ -155,8 +155,14 @@ ImageData* OffscreenCanvasRenderingContext2D::ToImageData(
     SkImageInfo image_info =
         SkImageInfo::Make(this->Width(), this->Height(), kRGBA_8888_SkColorType,
                           kUnpremul_SkAlphaType);
-    snapshot->PaintImageForCurrentFrame().GetSkImage()->readPixels(
+    sk_sp<SkImage> sk_image =
+        snapshot->PaintImageForCurrentFrame().GetSkImage();
+    bool read_pixels_successful = sk_image->readPixels(
         image_info, image_data->data()->Data(), image_info.minRowBytes(), 0, 0);
+    DCHECK(read_pixels_successful || sk_image->bounds().isEmpty() ||
+           image_info.isEmpty());
+    if (!read_pixels_successful)
+      return nullptr;
   }
   return image_data;
 }

@@ -64,8 +64,13 @@ void OffscreenCanvasResourceProvider::SetTransferableResourceToSharedBitmap(
   // TODO(xlai): Optimize to avoid copying pixels. See crbug.com/651456.
   // However, in the case when |image| is texture backed, this function call
   // does a GPU readback which is required.
-  image->PaintImageForCurrentFrame().GetSkImage()->readPixels(
-      image_info, pixels, image_info.minRowBytes(), 0, 0);
+  sk_sp<SkImage> sk_image = image->PaintImageForCurrentFrame().GetSkImage();
+  bool read_pixels_successful =
+      sk_image->readPixels(image_info, pixels, image_info.minRowBytes(), 0, 0);
+  DCHECK(read_pixels_successful || sk_image->bounds().isEmpty() ||
+         image_info.isEmpty());
+  if (!read_pixels_successful)
+    return;
   resource.mailbox_holder.mailbox = frame_resource->shared_bitmap_->id();
   resource.mailbox_holder.texture_target = 0;
   resource.is_software = true;
@@ -111,8 +116,11 @@ void OffscreenCanvasResourceProvider::SetTransferableResourceToSharedGPUContext(
   unsigned byte_length = dst_buffer->ByteLength();
   scoped_refptr<Uint8Array> dst_pixels =
       Uint8Array::Create(std::move(dst_buffer), 0, byte_length);
-  image->PaintImageForCurrentFrame().GetSkImage()->readPixels(
-      info, dst_pixels->Data(), info.minRowBytes(), 0, 0);
+  sk_sp<SkImage> sk_image = image->PaintImageForCurrentFrame().GetSkImage();
+  bool read_pixels_successful =
+      sk_image->readPixels(info, dst_pixels->Data(), info.minRowBytes(), 0, 0);
+  DCHECK(read_pixels_successful || sk_image->bounds().isEmpty() ||
+         info.isEmpty());
   DCHECK(frame_resource->context_provider_wrapper_.get() ==
              context_provider_wrapper.get() ||
          !frame_resource->context_provider_wrapper_);
