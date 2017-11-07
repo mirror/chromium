@@ -40,7 +40,7 @@ class AwSafeBrowsingUIManager : public safe_browsing::BaseUIManager {
       AwURLRequestContextGetter* browser_url_request_context_getter,
       PrefService* pref_service);
 
-  // Gets the correct ErrorUiType for the web contents
+  // Bad comment
   int GetErrorUiType(const UnsafeResource& resource) const;
 
   // BaseUIManager methods:

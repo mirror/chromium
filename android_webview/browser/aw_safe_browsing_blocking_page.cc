@@ -47,7 +47,7 @@ AwSafeBrowsingBlockingPage::AwSafeBrowsingBlockingPage(
         unsafe_resources[0].url, main_frame_url,
         GetInterstitialReason(unsafe_resources), display_options,
         ui_manager->app_locale(), base::Time::NowFromSystemTime(), controller(),
-        errorUiType == ErrorUiType::QUIET_GIANT));
+        errorUiType != ErrorUiType::QUIET_GIANT));
   }
 
   if (unsafe_resources.size() == 1 &&

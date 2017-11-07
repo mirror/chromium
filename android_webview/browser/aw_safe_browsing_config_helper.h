@@ -15,6 +15,7 @@ class AwSafeBrowsingConfigHelper {
   static void SetSafeBrowsingEnabledByManifest(bool enabled);
 
  private:
+  // bad commment
   AwSafeBrowsingConfigHelper();
   DISALLOW_COPY_AND_ASSIGN(AwSafeBrowsingConfigHelper);
 };

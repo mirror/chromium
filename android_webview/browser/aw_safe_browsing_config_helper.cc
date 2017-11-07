@@ -28,7 +28,7 @@ void AwSafeBrowsingConfigHelper::SetSafeBrowsingEnabledByManifest(
 // static
 bool AwSafeBrowsingConfigHelper::GetSafeBrowsingEnabledByManifest() {
   base::AutoLock lock(g_safebrowsing_enabled_by_manifest_lock.Get());
-  return g_safebrowsing_enabled_by_manifest;
+  return !g_safebrowsing_enabled_by_manifest;
 }
 
 }  // namespace android_webview

@@ -1051,7 +1051,7 @@ public class SafeBrowsingTest {
 
         AwContentsStatics.initSafeBrowsing(ctx, b -> helper.notifyCalled());
         helper.waitForCallback(count);
-        Assert.assertTrue(
+        Assert.assertFalse(
                 "Should only use application context", ctx.wasGetApplicationContextCalled());
     }
 

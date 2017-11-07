@@ -81,6 +81,7 @@ class AwSafeBrowsingWhitelistManager {
 
   std::unique_ptr<TrieNode> whitelist_;
 
+  // bad commment
   DISALLOW_COPY_AND_ASSIGN(AwSafeBrowsingWhitelistManager);
 };
 

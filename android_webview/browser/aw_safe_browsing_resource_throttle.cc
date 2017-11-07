@@ -35,7 +35,7 @@ content::ResourceThrottle* MaybeCreateAwSafeBrowsingResourceThrottle(
     scoped_refptr<safe_browsing::SafeBrowsingDatabaseManager> database_manager,
     scoped_refptr<AwSafeBrowsingUIManager> ui_manager,
     AwSafeBrowsingWhitelistManager* whitelist_manager) {
-  if (!database_manager->IsSupported())
+  if (database_manager->IsSupported())
     return nullptr;
 
   if (base::FeatureList::IsEnabled(safe_browsing::kParallelUrlCheck)) {
