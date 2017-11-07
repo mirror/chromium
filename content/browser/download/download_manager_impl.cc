@@ -22,6 +22,8 @@
 #include "base/supports_user_data.h"
 #include "base/synchronization/lock.h"
 #include "build/build_config.h"
+#include "components/download/downloader/in_progress/download_entry.h"
+#include "components/download/downloader/in_progress/in_progress_cache.h"
 #include "content/browser/byte_stream.h"
 #include "content/browser/child_process_security_policy_impl.h"
 #include "content/browser/download/download_create_info.h"
@@ -213,6 +215,14 @@ void InterceptNavigationResponse(
       base::BindOnce(std::move(callback), std::move(resource_downloader)));
 }
 
+download::DownloadEntry DownloadUrlParametersToDownloadEntry(
+    const DownloadUrlParameters* params) {
+  download::DownloadEntry download_entry;
+  download_entry.guid = params->guid();
+  download_entry.request_origin = params->request_origin();
+  return download_entry;
+}
+
 class DownloadItemFactoryImpl : public DownloadItemFactory {
  public:
   DownloadItemFactoryImpl() {}
@@ -283,6 +293,29 @@ base::FilePath GetTemporaryDownloadDirectory() {
 #endif
 
 }  // namespace
+
+InProgressDownloadObserver::InProgressDownloadObserver(
+    download::InProgressCache* in_progress_cache)
+    : in_progress_cache_(in_progress_cache) {}
+
+InProgressDownloadObserver::~InProgressDownloadObserver() = default;
+
+void InProgressDownloadObserver::OnDownloadUpdated(DownloadItem* download) {
+  switch (download->GetState()) {
+    case DownloadItem::DownloadState::COMPLETE:
+    case DownloadItem::DownloadState::CANCELLED:
+      in_progress_cache_->RemoveEntry(download->GetGuid());
+      break;
+    case DownloadItem::DownloadState::IN_PROGRESS:
+    case DownloadItem::DownloadState::INTERRUPTED:
+    default:
+      break;
+  }
+}
+
+void InProgressDownloadObserver::OnDownloadRemoved(DownloadItem* download) {
+  in_progress_cache_->RemoveEntry(download->GetGuid());
+}
 
 DownloadManagerImpl::DownloadManagerImpl(BrowserContext* browser_context)
     : item_factory_(new DownloadItemFactoryImpl()),
@@ -481,6 +514,16 @@ void DownloadManagerImpl::StartDownloadWithId(
                           &default_download_directory, &skip_dir_check);
   }
 #endif
+
+  if (delegate_) {
+    if (!in_progress_download_observer_) {
+      in_progress_download_observer_.reset(
+          new InProgressDownloadObserver(delegate_->GetInProgressCache()));
+    }
+    // May already observe this item, remove observer first.
+    download->RemoveObserver(in_progress_download_observer_.get());
+    download->AddObserver(in_progress_download_observer_.get());
+  }
 
   std::unique_ptr<DownloadFile> download_file;
 
@@ -874,6 +917,11 @@ void DownloadManagerImpl::ShowDownloadInShell(DownloadItemImpl* download) {
 void DownloadManagerImpl::BeginDownloadInternal(
     std::unique_ptr<content::DownloadUrlParameters> params,
     uint32_t id) {
+  download::InProgressCache* in_progress_cache =
+      GetBrowserContext()->GetDownloadManagerDelegate()->GetInProgressCache();
+  in_progress_cache->AddOrReplaceEntry(
+      DownloadUrlParametersToDownloadEntry(params.get()));
+
   if (base::FeatureList::IsEnabled(features::kNetworkService)) {
     std::unique_ptr<ResourceRequest> request = CreateResourceRequest(
         params.get());
