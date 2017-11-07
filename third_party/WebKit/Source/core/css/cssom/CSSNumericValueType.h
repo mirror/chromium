@@ -32,6 +32,8 @@ class CSSNumericValueType {
 
   explicit CSSNumericValueType(CSSPrimitiveValue::UnitType);
 
+  static CSSNumericValueType NegateEntries(CSSNumericValueType);
+
   int& Entry(BaseType type) {
     DCHECK_LT(type, BaseType::kNumBaseTypes);
     return entries_[static_cast<unsigned>(type)];
