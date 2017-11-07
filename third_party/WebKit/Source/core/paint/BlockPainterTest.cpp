@@ -54,7 +54,8 @@ TEST_P(BlockPainterTest, ScrollHitTestProperties) {
   // The container's scroll hit test.
   const auto& scroll_hit_test_chunk = RootPaintController().PaintChunks()[2];
   EXPECT_EQ(&container, &scroll_hit_test_chunk.id.client);
-  EXPECT_EQ(kScrollHitTestType, scroll_hit_test_chunk.id.type);
+  EXPECT_EQ(static_cast<PaintChunk::Type>(kScrollHitTestType),
+            scroll_hit_test_chunk.id.type);
   // The scrolled contents.
   const auto& contents_chunk = RootPaintController().PaintChunks()[3];
   EXPECT_EQ(&container, &contents_chunk.id.client);
@@ -128,7 +129,8 @@ TEST_P(BlockPainterTest, FrameScrollHitTestProperties) {
   EXPECT_EQ(GetLayoutView().Layer(), &root_chunk.id.client);
   const auto& scroll_hit_test_chunk = RootPaintController().PaintChunks()[1];
   EXPECT_EQ(&GetLayoutView(), &scroll_hit_test_chunk.id.client);
-  EXPECT_EQ(kScrollHitTestType, scroll_hit_test_chunk.id.type);
+  EXPECT_EQ(static_cast<PaintChunk::Type>(kScrollHitTestType),
+            scroll_hit_test_chunk.id.type);
   // The scrolled contents.
   const auto& contents_chunk = RootPaintController().PaintChunks()[2];
   EXPECT_EQ(ToLayoutBoxModelObject(html).Layer(), &contents_chunk.id.client);
