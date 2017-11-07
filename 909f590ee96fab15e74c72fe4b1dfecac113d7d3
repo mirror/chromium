@@ -50,6 +50,24 @@
       "revId": "909f590ee96fab15e74c72fe4b1dfecac113d7d3",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2fce2b10_ecad9b85",
+        "filename": "ui/ozone/demo/gl_renderer.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 58,
+      "author": {
+        "id": 1117479
+      },
+      "writtenOn": "2017-11-07T16:25:57Z",
+      "side": 1,
+      "message": "This isn\u0027t a fix; it\u0027s simply how the VR testapp lets itself run on Linux.  I\u0027m calling it out in case it could, in some way, be the source of our input issues.",
+      "parentUuid": "459bb651_1153d44b",
+      "revId": "909f590ee96fab15e74c72fe4b1dfecac113d7d3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
