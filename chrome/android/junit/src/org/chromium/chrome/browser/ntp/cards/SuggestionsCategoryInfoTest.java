@@ -8,12 +8,18 @@ import static org.hamcrest.CoreMatchers.is;
 import static org.hamcrest.CoreMatchers.nullValue;
 import static org.junit.Assert.assertThat;
 
+import org.junit.Rule;
 import org.junit.Test;
+import org.junit.rules.TestRule;
 import org.junit.runner.RunWith;
 import org.robolectric.annotation.Config;
 
+import org.chromium.chrome.browser.ChromeFeatureList;
 import org.chromium.chrome.browser.ntp.ContextMenuManager;
 import org.chromium.chrome.browser.ntp.snippets.KnownCategories;
+import org.chromium.chrome.test.util.browser.Features;
+import org.chromium.chrome.test.util.browser.Features.DisableFeatures;
+import org.chromium.chrome.test.util.browser.Features.EnableFeatures;
 import org.chromium.chrome.test.util.browser.suggestions.ContentSuggestionsTestUtils.CategoryInfoBuilder;
 import org.chromium.testing.local.LocalRobolectricTestRunner;
 
@@ -22,9 +28,16 @@ import org.chromium.testing.local.LocalRobolectricTestRunner;
  */
 @RunWith(LocalRobolectricTestRunner.class)
 @Config(manifest = Config.NONE)
+@DisableFeatures(ChromeFeatureList.CHROME_HOME)
 public class SuggestionsCategoryInfoTest {
+    @Rule
+    public TestRule mRule = new Features.JUnitProcessor();
+
     @Test
-    public void testDownloadContextMenu() {
+    @EnableFeatures(
+            {ChromeFeatureList.CHROME_HOME, ChromeFeatureList.CHROME_HOME_DESTROY_SUGGESTIONS})
+    public void
+    testDownloadContextMenu() {
         SuggestionsCategoryInfo categoryInfo =
                 new CategoryInfoBuilder(KnownCategories.DOWNLOADS).build();
         assertThat(
@@ -42,7 +55,11 @@ public class SuggestionsCategoryInfoTest {
     }
 
     @Test
-    public void testRecentTabContextMenu() {
+    @EnableFeatures(ChromeFeatureList.ALLOW_READER_FOR_ACCESSIBILITY)
+    @DisableFeatures(
+            {ChromeFeatureList.ANDROID_PAY_INTEGRATION_V1, ChromeFeatureList.ANDROID_PAYMENT_APPS})
+    public void
+    testRecentTabContextMenu() {
         SuggestionsCategoryInfo categoryInfo =
                 new CategoryInfoBuilder(KnownCategories.RECENT_TABS).build();
         assertThat(
