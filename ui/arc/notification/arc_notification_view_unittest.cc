@@ -122,6 +122,14 @@ class TestMessageCenterController
     NOTREACHED();
   }
 
+  void ClickOnNotificationButtonWithReply(
+      const std::string& notification_id,
+      int button_index,
+      const base::string16& reply) override {
+    // For this test, this method should not be invoked.
+    NOTREACHED();
+  }
+
   void ClickOnSettingsButton(const std::string& notification_id) override {
     // For this test, this method should not be invoked.
     NOTREACHED();
