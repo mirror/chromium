@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "a867ef61_2bd83929",
+        "filename": "components/autofill/core/browser/autofill_field.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 624,
+      "author": {
+        "id": 1002376
+      },
+      "writtenOn": "2017-11-07T20:26:10Z",
+      "side": 1,
+      "message": "put braces around the \u0027then\u0027 statement if either the condition or the statement is multi-line",
+      "revId": "480aeeb1f7baa79b8cd8212fe507946684064bc0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
