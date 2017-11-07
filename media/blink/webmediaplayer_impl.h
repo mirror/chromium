@@ -430,6 +430,8 @@ class MEDIA_BLINK_EXPORT WebMediaPlayerImpl
   // Returns true if the player's source is streaming.
   bool IsStreaming() const;
 
+  bool IsEnded() const override;
+
   // Return whether |pipeline_metadata_| is compatible with an overlay. This
   // is intended for android.
   bool DoesOverlaySupportMetadata() const;

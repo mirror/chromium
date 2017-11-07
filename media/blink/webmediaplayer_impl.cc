@@ -1450,6 +1450,11 @@ void WebMediaPlayerImpl::OnEnded() {
   if (!pipeline_controller_.IsStable())
     return;
 
+  if (std::isinf(Duration()) && chunk_demuxer_) {
+    chunk_demuxer_->UpdateDuration(GetCurrentTimeInternal());
+    client_->DurationChanged();
+  }
+
   ended_ = true;
   client_->TimeChanged();
 
@@ -2637,6 +2642,10 @@ bool WebMediaPlayerImpl::IsHidden() const {
 
 bool WebMediaPlayerImpl::IsStreaming() const {
   return data_source_ && data_source_->IsStreaming();
+}
+
+bool WebMediaPlayerImpl::IsEnded() const {
+  return ended_;
 }
 
 bool WebMediaPlayerImpl::DoesOverlaySupportMetadata() const {
