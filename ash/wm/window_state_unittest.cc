@@ -6,6 +6,7 @@
 
 #include <utility>
 
+#include "ash/public/cpp/window_properties.h"
 #include "ash/test/ash_test_base.h"
 #include "ash/wm/window_state.h"
 #include "ash/wm/window_state_util.h"
@@ -456,6 +457,22 @@ TEST_F(WindowStateTest, FullscreenMinimizedSwitching) {
   // return to the state before minimizing and fullscreen.
   ash::wm::ToggleFullScreen(window_state, nullptr);
   ASSERT_TRUE(window_state->IsMaximized());
+}
+
+TEST_F(WindowStateTest, GetCanConsumeSystemKeys) {
+  std::unique_ptr<aura::Window> window(
+      CreateTestWindowInShellWithBounds(gfx::Rect(100, 100, 100, 100)));
+  WindowState* window_state = GetWindowState(window.get());
+
+  // Incoming window property directly should be ignored since it might be
+  // synced from a different process.
+  window->SetProperty(kCanConsumeSystemKeysKey, true);
+  EXPECT_FALSE(window_state->GetCanConsumeSystemKeys());
+
+  // Setting the window property via our state accessor should work since it is
+  // in process.
+  window_state->SetCanConsumeSystemKeys(true);
+  EXPECT_TRUE(window_state->GetCanConsumeSystemKeys());
 }
 
 // TODO(skuhne): Add more unit test to verify the correctness for the restore
