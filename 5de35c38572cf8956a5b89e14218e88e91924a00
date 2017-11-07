@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "adc79830_e75e99fc",
+        "filename": "third_party/WebKit/LayoutTests/fast/forms/text/input-appearance-autofill-value-after-suggested-value-with-placeholder.html",
+        "patchSetId": 4
+      },
+      "lineNbr": 2,
+      "author": {
+        "id": 1115933
+      },
+      "writtenOn": "2017-11-07T07:26:14Z",
+      "side": 1,
+      "message": "nit: This is a Reference Test so I don\u0027t think you need this.",
+      "range": {
+        "startLine": 2,
+        "startChar": 11,
+        "endLine": 2,
+        "endChar": 37
+      },
+      "revId": "5de35c38572cf8956a5b89e14218e88e91924a00",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
