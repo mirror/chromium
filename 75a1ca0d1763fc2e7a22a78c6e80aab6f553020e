@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "012b4173_f8f778b7",
+        "filename": "chrome/browser/metrics/process_memory_metrics_emitter.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 66,
+      "author": {
+        "id": 1221484
+      },
+      "writtenOn": "2017-11-07T23:39:58Z",
+      "side": 1,
+      "message": "nit: Can you add a short comment explaining why we are logging GPU metrics here (because GPU proc is running in browser)?",
+      "range": {
+        "startLine": 66,
+        "startChar": 12,
+        "endLine": 66,
+        "endChar": 23
+      },
+      "revId": "75a1ca0d1763fc2e7a22a78c6e80aab6f553020e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
