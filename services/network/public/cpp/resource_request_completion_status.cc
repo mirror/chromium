@@ -2,11 +2,11 @@
 // Use of this source code is governed by a BSD-style license that can be
 // found in the LICENSE file.
 
-#include "content/public/common/resource_request_completion_status.h"
+#include "services/network/public/cpp/resource_request_completion_status.h"
 
 #include "net/base/net_errors.h"
 
-namespace content {
+namespace network {
 
 ResourceRequestCompletionStatus::ResourceRequestCompletionStatus() = default;
 ResourceRequestCompletionStatus::ResourceRequestCompletionStatus(
@@ -34,4 +34,4 @@ bool ResourceRequestCompletionStatus::operator==(
          cors_error == rhs.cors_error;
 }
 
-}  // namespace content
+}  // namespace network

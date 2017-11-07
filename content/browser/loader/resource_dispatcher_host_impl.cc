@@ -91,7 +91,6 @@
 #include "content/public/common/origin_util.h"
 #include "content/public/common/resource_request.h"
 #include "content/public/common/resource_request_body.h"
-#include "content/public/common/resource_request_completion_status.h"
 #include "ipc/ipc_message_macros.h"
 #include "ipc/ipc_message_start.h"
 #include "net/base/auth.h"
@@ -115,6 +114,7 @@
 #include "net/url_request/url_request_context_getter.h"
 #include "net/url_request/url_request_job_factory.h"
 #include "ppapi/features/features.h"
+#include "services/network/public/cpp/resource_request_completion_status.h"
 #include "storage/browser/blob/blob_data_handle.h"
 #include "storage/browser/blob/blob_storage_context.h"
 #include "storage/browser/blob/blob_url_request_job_factory.h"
@@ -211,7 +211,7 @@ void AbortRequestBeforeItStarts(
     sync_result_handler.Run(&result);
   } else {
     // Tell the renderer that this request was disallowed.
-    ResourceRequestCompletionStatus request_complete_data;
+    network::ResourceRequestCompletionStatus request_complete_data;
     request_complete_data.error_code = net::ERR_ABORTED;
     request_complete_data.exists_in_cache = false;
     // No security info needed, connection not established.

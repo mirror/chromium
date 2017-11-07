@@ -575,6 +575,7 @@ if (!is_android) {
       "//net",
       "//net:net_resources",
       "//net:test_support",
+      "//services/network/public/cpp:cpp",
       "//skia",
       "//testing/gmock",
       "//testing/gtest",

@@ -114,7 +114,7 @@ void CORSURLLoader::OnReceiveResponse(
             blink::WebHTTPHeaderMap(response_head.headers.get()),
             fetch_credentials_mode_, security_origin_);
     if (cors_error) {
-      HandleComplete(ResourceRequestCompletionStatus(*cors_error));
+      HandleComplete(network::ResourceRequestCompletionStatus(*cors_error));
       return;
     }
   }
@@ -179,7 +179,8 @@ void CORSURLLoader::OnStartLoadingResponseBody(
   forwarding_client_->OnStartLoadingResponseBody(std::move(body));
 }
 
-void CORSURLLoader::OnComplete(const ResourceRequestCompletionStatus& status) {
+void CORSURLLoader::OnComplete(
+    const network::ResourceRequestCompletionStatus& status) {
   DCHECK(network_loader_);
   DCHECK(forwarding_client_);
   DCHECK(!is_waiting_follow_redirect_call_);
@@ -196,7 +197,7 @@ void CORSURLLoader::OnUpstreamConnectionError() {
 }
 
 void CORSURLLoader::HandleComplete(
-    const ResourceRequestCompletionStatus& status) {
+    const network::ResourceRequestCompletionStatus& status) {
   forwarding_client_->OnComplete(status);
   forwarding_client_.reset();
 

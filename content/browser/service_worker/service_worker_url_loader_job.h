@@ -155,7 +155,8 @@ class CONTENT_EXPORT ServiceWorkerURLLoaderJob : public mojom::URLLoader,
   void OnTransferSizeUpdated(int32_t transfer_size_diff) override;
   void OnStartLoadingResponseBody(
       mojo::ScopedDataPipeConsumerHandle body) override;
-  void OnComplete(const ResourceRequestCompletionStatus& status) override;
+  void OnComplete(
+      const network::ResourceRequestCompletionStatus& status) override;
 
   ResponseType response_type_ = ResponseType::NOT_DETERMINED;
   LoaderCallback loader_callback_;
