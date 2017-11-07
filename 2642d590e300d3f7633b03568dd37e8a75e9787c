@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "4a284549_d65cdba5",
+        "filename": "chromecast/browser/android/apk/AndroidManifest.xml.jinja2",
+        "patchSetId": 1
+      },
+      "lineNbr": 29,
+      "author": {
+        "id": 1160944
+      },
+      "writtenOn": "2017-11-07T22:26:26Z",
+      "side": 1,
+      "message": "Ditto my comment on the internal CL. I would prefer we first use a buildflag to set this, rather than hard-code it for all platforms before we know if there are any adverse consequences on some.",
+      "range": {
+        "startLine": 29,
+        "startChar": 37,
+        "endLine": 29,
+        "endChar": 42
+      },
+      "revId": "2642d590e300d3f7633b03568dd37e8a75e9787c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ec6c2189_840952d3",
+        "filename": "chromecast/browser/android/apk/src/org/chromium/chromecast/shell/CastWebContentsActivity.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 201,
+      "author": {
+        "id": 1160944
+      },
+      "writtenOn": "2017-11-07T22:26:26Z",
+      "side": 1,
+      "message": "This should actually go in onPause(). From https://developer.android.com/reference/android/media/AudioManager.html#setStreamMute(int, boolean)\n\n\"For a better user experience, applications MUST unmute a muted stream in onPause() and mute is [sic] again in onResume() if appropriate.\"",
+      "range": {
+        "startLine": 201,
+        "startChar": 8,
+        "endLine": 201,
+        "endChar": 36
+      },
+      "revId": "2642d590e300d3f7633b03568dd37e8a75e9787c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
