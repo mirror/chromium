@@ -1,0 +1,55 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "6e5e545f_c9a8cd82",
+        "filename": "net/cert/cert_verifier_factory.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 18,
+      "author": {
+        "id": 1000193
+      },
+      "writtenOn": "2017-11-07T14:57:16Z",
+      "side": 1,
+      "message": "Do we actually need this abstraction here? Could you speak more if there are plans to switch to using the *Factory?\n\nI ask, because it looks like the only concrete bit is the Mock*, right?",
+      "revId": "920c32e3c692264acfe64793a84eab7469445627",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a28ed751_c8dd9d48",
+        "filename": "net/cert/mock_cert_verifier.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 24,
+      "author": {
+        "id": 1000193
+      },
+      "writtenOn": "2017-11-07T14:57:16Z",
+      "side": 1,
+      "message": "I\u0027m not clear as to why this interface - for example, why can\u0027t you just use the mock_cert_verifier_ passed in?",
+      "revId": "920c32e3c692264acfe64793a84eab7469445627",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a49e0f45_1ae0b078",
+        "filename": "net/cert/mock_cert_verifier.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 110,
+      "author": {
+        "id": 1000193
+      },
+      "writtenOn": "2017-11-07T14:57:16Z",
+      "side": 1,
+      "message": "Apologies for it being early, but why the RefCountedData wrapping? That\u0027s not entirely obvious?\n\nIs it because you\u0027re trying to have the factory provide multiple distinct CertVerifiers (via CreateCertVerifier) that all share the same underlying MockCertVerifier? If so, can you speak more to the design choices there - and perhaps document more?",
+      "revId": "920c32e3c692264acfe64793a84eab7469445627",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
