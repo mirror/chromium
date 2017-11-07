@@ -1034,6 +1034,9 @@ bool GpuProcessHost::LaunchGpuProcess() {
 #endif
 
   cmd_line->AppendSwitchASCII(switches::kProcessType, switches::kGpuProcess);
+  if (browser_command_line.HasSwitch(switches::kDisableDirectComposition)) {
+    cmd_line->AppendSwitch(switches::kDisableDirectComposition);
+  }
 
   BrowserChildProcessHostImpl::CopyFeatureAndFieldTrialFlags(cmd_line.get());
 
