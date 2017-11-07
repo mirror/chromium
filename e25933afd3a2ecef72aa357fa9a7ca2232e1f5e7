@@ -1,0 +1,55 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "57f07aea_e3fe2615",
+        "filename": "chrome/utility/media_router/dial_app_info_parser_impl.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 61,
+      "author": {
+        "id": 1150437
+      },
+      "writtenOn": "2017-11-07T18:57:42Z",
+      "side": 1,
+      "message": "Why do we need to set parsing error to NONE twice? (here and on line 52 above)",
+      "revId": "e25933afd3a2ecef72aa357fa9a7ca2232e1f5e7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "83c12004_455c500d",
+        "filename": "chrome/utility/media_router/dial_app_info_parser_impl.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 64,
+      "author": {
+        "id": 1150437
+      },
+      "writtenOn": "2017-11-07T18:57:42Z",
+      "side": 1,
+      "message": "Does the xml reader give out any more information about where it failed?  Might be useful if trying to debug bad dial xml etc. (but perhaps we do that rarely enough it doesn\u0027t matter)",
+      "revId": "e25933afd3a2ecef72aa357fa9a7ca2232e1f5e7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "55ce676e_63b03a2d",
+        "filename": "chrome/utility/media_router/dial_app_info_parser_impl.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 112,
+      "author": {
+        "id": 1150437
+      },
+      "writtenOn": "2017-11-07T18:57:42Z",
+      "side": 1,
+      "message": "Would it be useful to include what the out-\u003estate actually was somewhere?",
+      "revId": "e25933afd3a2ecef72aa357fa9a7ca2232e1f5e7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
