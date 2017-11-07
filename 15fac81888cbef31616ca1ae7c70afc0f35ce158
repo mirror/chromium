@@ -37,6 +37,24 @@
     },
     {
       "key": {
+        "uuid": "4efffb1c_11bf80b8",
+        "filename": "services/device/generic_sensor/fake_platform_sensor_and_provider.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 41,
+      "author": {
+        "id": 1182699
+      },
+      "writtenOn": "2017-11-07T07:43:38Z",
+      "side": 1,
+      "message": "If class has mockable methods, I would call it mock, explicitly states how it must be used in unit tests.",
+      "parentUuid": "2ad95184_d770d87c",
+      "revId": "15fac81888cbef31616ca1ae7c70afc0f35ce158",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "cb9b3be1_e15941f6",
         "filename": "services/device/generic_sensor/platform_sensor_fusion.cc",
         "patchSetId": 1
