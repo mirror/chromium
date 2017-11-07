@@ -37061,6 +37061,7 @@ Called by update_use_counter_css.py.-->
 <enum name="SoftwareReporterExperimentError">
   <int value="1" label="Bad tag"/>
   <int value="2" label="Bad parameters"/>
+  <int value="3" label="Missing parameters"/>
 </enum>
 
 <enum name="SoftwareReporterIPCDisconnected">
