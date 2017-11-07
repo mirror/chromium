@@ -636,15 +636,25 @@ int ExtensionWebRequestEventRouter::OnBeforeRequest(
 
   // Handle Declarative Net Request API rules. This gets preference over the Web
   // Request and Declarative Web Request APIs. Only checking the rules in the
-  // OnBeforeRequest stage works, since the blocking rules currently only depend
-  // on the request url, initiator and resource type, which should stay the same
-  // during the diffierent network request stages. A redirect should cause
-  // another OnBeforeRequest call.
+  // OnBeforeRequest stage works, since the rules currently only depend on the
+  // request url, initiator and resource type, which should stay the same during
+  // the diffierent network request stages. A redirect should cause another
+  // OnBeforeRequest call.
   // |extension_info_map| is null for system level requests.
-  if (extension_info_map &&
-      extension_info_map->GetRulesetManager()->ShouldBlockRequest(
-          *request, is_incognito_context)) {
-    return net::ERR_BLOCKED_BY_CLIENT;
+  if (extension_info_map) {
+    // Give priority to blocking rules over redirect rules.
+    if (extension_info_map->GetRulesetManager()->ShouldBlockRequest(
+            *request, is_incognito_context)) {
+      return net::ERR_BLOCKED_BY_CLIENT;
+    }
+
+    std::string redirect_url;
+    if (extension_info_map->GetRulesetManager()->ShouldRedirectRequest(
+            *request, is_incognito_context, &redirect_url)) {
+      *new_url = GURL(redirect_url);
+      DCHECK(new_url->is_valid());
+      return net::OK;
+    }
   }
 
   // Whether to initialized |blocked_requests_|.
