@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "97a45c8d_c884e2d4",
+        "filename": "tools/perf/contrib/vr_benchmarks/vr_benchmarks.py",
+        "patchSetId": 2
+      },
+      "lineNbr": 31,
+      "author": {
+        "id": 1144349
+      },
+      "writtenOn": "2017-11-07T22:39:39Z",
+      "side": 1,
+      "message": "nit: and?",
+      "range": {
+        "startLine": 31,
+        "startChar": 42,
+        "endLine": 31,
+        "endChar": 44
+      },
+      "revId": "f93d10e593956a075c4dee04fbc3c18ebb782643",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
