@@ -48,16 +48,21 @@ class DisplayOutputSurface : public OutputSurface {
   OutputSurfaceClient* client() const { return client_; }
 
   // Called when a swap completion is signaled from ImageTransportSurface.
-  virtual void DidReceiveSwapBuffersAck(gfx::SwapResult result);
+  virtual void DidReceiveSwapBuffersAck(gfx::SwapResult result, uint32_t count);
 
  private:
   // Called when a swap completion is signaled from ImageTransportSurface.
   void OnGpuSwapBuffersCompleted(
       const std::vector<ui::LatencyInfo>& latency_info,
       gfx::SwapResult result,
+      uint32_t count,
       const gpu::GpuProcessHostedCALayerTreeParamsMac* params_mac);
   void OnVSyncParametersUpdated(base::TimeTicks timebase,
                                 base::TimeDelta interval);
+  void OnPresentation(uint32_t count,
+                      base::TimeTicks timestamp,
+                      base::TimeDelta refresh,
+                      uint32_t flags);
 
   OutputSurfaceClient* client_ = nullptr;
   SyntheticBeginFrameSource* const synthetic_begin_frame_source_;

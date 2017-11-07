@@ -396,7 +396,7 @@ bool Display::DrawAndSwap() {
   return true;
 }
 
-void Display::DidReceiveSwapBuffersAck() {
+void Display::DidReceiveSwapBuffersAck(uint32_t count) {
   // TODO(penghuang): Remove it when we can get accurate presentation time from
   // GPU for every SwapBuffers. https://crbug.com/776877
   if (!active_presented_callbacks_.empty() ||
@@ -419,8 +419,10 @@ void Display::DidReceiveTextureInUseResponses(
     renderer_->DidReceiveTextureInUseResponses(responses);
 }
 
-void Display::DidUpdateVSyncParameters(base::TimeTicks timebase,
-                                       base::TimeDelta interval) {
+void Display::DidPresentation(uint32_t count,
+                              base::TimeTicks timebase,
+                              base::TimeDelta interval,
+                              uint32_t flags) {
   // TODO(penghuang): Remove it when we can get accurate presentation time from
   // GPU for every SwapBuffers. https://crbug.com/776877
   base::TimeTicks previous_timebase =
