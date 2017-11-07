@@ -8,6 +8,7 @@
 #include <stddef.h>
 #include <map>
 #include <memory>
+#include <string>
 
 #include "base/macros.h"
 #include "base/sequence_checker.h"
@@ -53,6 +54,12 @@ class RulesetManager {
   // Returns whether the given |request| should be blocked.
   bool ShouldBlockRequest(const net::URLRequest& request,
                           bool is_incognito_context) const;
+
+  // Returns whether the given |request| should be redirected along with the
+  // |redirect_url|. |redirect_url| should not be null.
+  bool ShouldRedirectRequest(const net::URLRequest& request,
+                             bool is_incognito_context,
+                             std::string* redirect_url) const;
 
   // Returns the number of RulesetMatcher currently being managed.
   size_t GetMatcherCountForTest() const { return rules_map_.size(); }
