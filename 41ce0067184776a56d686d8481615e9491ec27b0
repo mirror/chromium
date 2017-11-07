@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "9dfcb349_aa4268e9",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 6
+      },
+      "lineNbr": 27,
+      "author": {
+        "id": 1001606
+      },
+      "writtenOn": "2017-11-07T15:15:04Z",
+      "side": 1,
+      "message": "Can you file a bug a crbug.com/new for this and reference the ID here? If we are going to migrate existing protos over the course of multiple CLs, it\u0027s good to be able to group them.",
+      "range": {
+        "startLine": 27,
+        "startChar": 0,
+        "endLine": 27,
+        "endChar": 4
+      },
+      "revId": "41ce0067184776a56d686d8481615e9491ec27b0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
