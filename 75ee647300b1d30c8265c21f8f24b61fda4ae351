@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "9d3959ff_288a3513",
+        "filename": "third_party/WebKit/Source/modules/fetch/BytesConsumerTestUtil.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 136,
+      "author": {
+        "id": 1002340
+      },
+      "writtenOn": "2017-11-07T09:41:02Z",
+      "side": 1,
+      "message": "Should be \"errored\" (3 Rs, not 4).",
+      "range": {
+        "startLine": 136,
+        "startChar": 9,
+        "endLine": 136,
+        "endChar": 21
+      },
+      "revId": "75ee647300b1d30c8265c21f8f24b61fda4ae351",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
