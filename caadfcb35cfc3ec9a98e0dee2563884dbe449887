@@ -1,0 +1,89 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "fd750138_b201ba9f",
+        "filename": "third_party/WebKit/Source/devtools/front_end/console/ConsoleView.js",
+        "patchSetId": 12
+      },
+      "lineNbr": 242,
+      "author": {
+        "id": 1115999
+      },
+      "writtenOn": "2017-11-07T21:06:10Z",
+      "side": 1,
+      "message": "We would normally prefer guard expressions with returns to else branches.",
+      "revId": "caadfcb35cfc3ec9a98e0dee2563884dbe449887",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d30bdd86_11de0a30",
+        "filename": "third_party/WebKit/Source/devtools/front_end/console/ConsoleView.js",
+        "patchSetId": 12
+      },
+      "lineNbr": 543,
+      "author": {
+        "id": 1115999
+      },
+      "writtenOn": "2017-11-07T21:06:10Z",
+      "side": 1,
+      "message": "This should be _shouldBeHiddenCache so that they were visible by default.",
+      "revId": "caadfcb35cfc3ec9a98e0dee2563884dbe449887",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a4a504ed_64d06a9a",
+        "filename": "third_party/WebKit/Source/devtools/front_end/console/ConsoleView.js",
+        "patchSetId": 12
+      },
+      "lineNbr": 741,
+      "author": {
+        "id": 1115999
+      },
+      "writtenOn": "2017-11-07T21:06:10Z",
+      "side": 1,
+      "message": "How can i be \u003e viewMessage.length ?",
+      "revId": "caadfcb35cfc3ec9a98e0dee2563884dbe449887",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7c589732_471126fc",
+        "filename": "third_party/WebKit/Source/devtools/front_end/console/ConsoleView.js",
+        "patchSetId": 12
+      },
+      "lineNbr": 820,
+      "author": {
+        "id": 1115999
+      },
+      "writtenOn": "2017-11-07T21:06:10Z",
+      "side": 1,
+      "message": "Why do you need this?",
+      "revId": "caadfcb35cfc3ec9a98e0dee2563884dbe449887",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8c976f1a_52d6daad",
+        "filename": "third_party/WebKit/Source/devtools/front_end/console/ConsoleView.js",
+        "patchSetId": 12
+      },
+      "lineNbr": 831,
+      "author": {
+        "id": 1115999
+      },
+      "writtenOn": "2017-11-07T21:06:10Z",
+      "side": 1,
+      "message": "Why do you need this?",
+      "revId": "caadfcb35cfc3ec9a98e0dee2563884dbe449887",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
