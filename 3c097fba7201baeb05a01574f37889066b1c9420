@@ -519,6 +519,30 @@
     },
     {
       "key": {
+        "uuid": "f4db4924_371a4dda",
+        "filename": "third_party/WebKit/Source/platform/graphics/GpuMemoryBufferImageCopy.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 91,
+      "author": {
+        "id": 1111944
+      },
+      "writtenOn": "2017-11-07T22:23:38Z",
+      "side": 1,
+      "message": "As long as you restore the state properly it should be OK. As far as that goes you can `static_cast` the WebGL context to a `DrawingBuffer::Client*` and that\u0027ll give you access to all the restore functions without needing to make yourself a friend of the class.",
+      "parentUuid": "7688cd4d_a0498e62",
+      "range": {
+        "startLine": 91,
+        "startChar": 6,
+        "endLine": 91,
+        "endChar": 27
+      },
+      "revId": "3c097fba7201baeb05a01574f37889066b1c9420",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "9eb00a80_d232d1c5",
         "filename": "third_party/WebKit/Source/platform/graphics/GpuMemoryBufferImageCopy.cpp",
         "patchSetId": 1
