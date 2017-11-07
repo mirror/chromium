@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "8044f857_09fb5d30",
+        "filename": "third_party/WebKit/Source/platform/feature_policy/FeaturePolicy.cpp",
+        "patchSetId": 6
+      },
+      "lineNbr": 172,
+      "author": {
+        "id": 1137849
+      },
+      "writtenOn": "2017-11-07T20:49:40Z",
+      "side": 1,
+      "message": "nit: This would be faster the other way around, because then the EqualIgnoringASCIICase function won\u0027t be called if src_origin is nullptr.",
+      "revId": "df4e58477e7902e5856f26bab94035e9b03a0e02",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
