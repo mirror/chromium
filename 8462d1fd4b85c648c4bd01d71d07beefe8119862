@@ -1,0 +1,73 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "891f2ee4_7990eba2",
+        "filename": "ui/views/controls/tree/tree_view.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 745,
+      "author": {
+        "id": 1151884
+      },
+      "writtenOn": "2017-11-07T21:43:39Z",
+      "side": 1,
+      "message": "I patched this in and the bug I fixed recurs... I think we should avoid regressing that. However, if you just keep GetBackgroundBoundsForNode here instead I don\u0027t see any problems. I know it\u0027s weird, but until GetBoundsForNode is fixed Windows needs to keep finding its way into GetForegroundBoundsForNode.",
+      "range": {
+        "startLine": 745,
+        "startChar": 22,
+        "endLine": 745,
+        "endChar": 38
+      },
+      "revId": "8462d1fd4b85c648c4bd01d71d07beefe8119862",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6256be19_20d95775",
+        "filename": "ui/views/controls/tree/tree_view.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 938,
+      "author": {
+        "id": 1151884
+      },
+      "writtenOn": "2017-11-07T21:43:39Z",
+      "side": 1,
+      "message": "nit: const int",
+      "range": {
+        "startLine": 938,
+        "startChar": 6,
+        "endLine": 938,
+        "endChar": 12
+      },
+      "revId": "8462d1fd4b85c648c4bd01d71d07beefe8119862",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b1f7d2ef_979399aa",
+        "filename": "ui/views/controls/tree/tree_view.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 940,
+      "author": {
+        "id": 1151884
+      },
+      "writtenOn": "2017-11-07T21:43:39Z",
+      "side": 1,
+      "message": "Constrain the ternary to the difference between the two statements. So something like:\ntext_left \u003d ShouldDrawIconForNode() ? text_offset_ : kArrowRegionSize;\nwidth \u003d text_left + node-\u003etext_width() + kTextHorizontalPadding * 2;",
+      "range": {
+        "startLine": 940,
+        "startChar": 12,
+        "endLine": 940,
+        "endChar": 25
+      },
+      "revId": "8462d1fd4b85c648c4bd01d71d07beefe8119862",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
