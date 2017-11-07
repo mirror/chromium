@@ -50,6 +50,12 @@ Polymer({
     thirdPartyVpnProviders: Array,
 
     /**
+     * List of Arc VPN providers.
+     * @type {!Array<!chrome.networkingPrivate.ArcVPNProperties>|undefined}
+     */
+    arcVpnProviders: Array,
+
+    /**
      * Interface for networkingPrivate calls, passed from internet_page.
      * @type {!NetworkingPrivate}
      */
@@ -82,6 +88,17 @@ Polymer({
         return {};
       },
     },
+
+    /**
+     * Dictionary of lists of network states for Arc VPNs.
+     * @private {!Object<!Array<!CrOnc.NetworkStateProperties>>}
+     */
+    arcVpn_: {
+      type: Object,
+      value: function() {
+        return {};
+      }
+    }
   },
 
   observers: ['deviceStateChanged_(networkingPrivate, deviceState)'],
@@ -124,6 +141,7 @@ Polymer({
     // Clear any stale data.
     this.networkStateList_ = [];
     this.thirdPartyVpns_ = {};
+    this.arcVpn_ = {};
     // Request the list of networks and start scanning if necessary.
     this.getNetworkStateList_();
     this.updateScanning_();
@@ -237,10 +255,11 @@ Polymer({
       return;
     }
 
-    // For VPNs, separate out third party VPNs.
+    // For VPNs, separate out third party VPNs and Arc VPN.
     if (this.deviceState.Type == CrOnc.Type.VPN) {
       var builtinNetworkStates = [];
       var thirdPartyVpns = {};
+      var arcVpn = {};
       for (var i = 0; i < networkStates.length; ++i) {
         var state = networkStates[i];
         var providerType = state.VPN && state.VPN.ThirdPartyVPN &&
@@ -248,12 +267,19 @@ Polymer({
         if (providerType) {
           thirdPartyVpns[providerType] = thirdPartyVpns[providerType] || [];
           thirdPartyVpns[providerType].push(state);
+        } else if (state.VPN && state.VPN.Type == 'ARCVPN') {
+          var arcProviderName = state.VPN.Host;
+          if (state.ConnectionState != CrOnc.ConnectionState.CONNECTED)
+            continue;
+          arcVpn[arcProviderName] = arcVpn[arcProviderName] || [];
+          arcVpn[arcProviderName].push(state);
         } else {
           builtinNetworkStates.push(state);
         }
       }
       networkStates = builtinNetworkStates;
       this.thirdPartyVpns_ = thirdPartyVpns;
+      this.arcVpn_ = arcVpn;
     }
 
     this.networkStateList_ = networkStates;
@@ -328,6 +354,10 @@ Polymer({
     return this.i18n('internetAddThirdPartyVPN', vpnState.ProviderName);
   },
 
+  getAddArcVpnAllyString_: function(arcVpn) {
+    return this.i18n('internetAddArcVPNProvider', arcVpn.ProviderName);
+  },
+
   /**
    * @param {!chrome.networkingPrivate.GlobalPolicy} globalPolicy
    * @return {boolean}
@@ -371,6 +401,11 @@ Polymer({
   onAddThirdPartyVpnTap_: function(event) {
     var provider = event.model.item;
     chrome.send('addNetwork', [CrOnc.Type.VPN, provider.ExtensionID]);
+  },
+
+  onAddArcVpnTap_: function(event) {
+    var provider = event.model.item;
+    chrome.send('addNetwork', [CrOnc.Type.VPN, provider.AppId]);
   },
 
   /**
@@ -424,6 +459,15 @@ Polymer({
    */
   haveThirdPartyVpnNetwork_: function(thirdPartyVpns, vpnState) {
     var list = this.getThirdPartyVpnNetworks_(thirdPartyVpns, vpnState);
+    return !!list.length;
+  },
+
+  getArcVpnNetwork_: function(arcVpn, arcVpnProvider) {
+    return arcVpn[arcVpnProvider.PackageName] || [];
+  },
+
+  haveArcVpnNetwork_: function(arcVpn, arcVpnProvider) {
+    var list = this.getArcVpnNetwork_(arcVpn, arcVpnProvider);
     return !!list.length;
   },
 
