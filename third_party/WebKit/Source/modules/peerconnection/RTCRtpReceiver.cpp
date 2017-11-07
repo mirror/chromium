@@ -8,7 +8,7 @@
 #include "platform/wtf/text/WTFString.h"
 #include "public/platform/WebMediaStream.h"
 #include "public/platform/WebMediaStreamTrack.h"
-#include "public/platform/WebRTCRtpContributingSource.h"
+#include "public/platform/WebRTCRtpSource.h"
 
 namespace blink {
 
@@ -35,6 +35,12 @@ const HeapVector<Member<RTCRtpContributingSource>>&
 RTCRtpReceiver::getContributingSources() {
   UpdateSourcesIfNeeded();
   return contributing_sources_;
+}
+
+const HeapVector<Member<RTCRtpSynchronizationSource>>&
+RTCRtpReceiver::getSynchronizationSources() {
+  UpdateSourcesIfNeeded();
+  return synchronization_sources_;
 }
 
 const WebRTCRtpReceiver& RTCRtpReceiver::web_receiver() const {
@@ -67,30 +73,41 @@ bool RTCRtpReceiver::StateMatchesWebReceiver() const {
 #endif  // DCHECK_IS_ON()
 
 void RTCRtpReceiver::UpdateSourcesIfNeeded() {
-  if (!contributing_sources_needs_updating_)
+  if (!sources_need_updating_)
     return;
   contributing_sources_.clear();
-  for (const std::unique_ptr<WebRTCRtpContributingSource>&
-           web_contributing_source : receiver_->GetSources()) {
-    if (web_contributing_source->SourceType() ==
-        WebRTCRtpContributingSourceType::SSRC) {
-      // TODO(hbos): When |getSynchronizationSources| is added to get SSRC
-      // sources don't ignore SSRCs here.
-      continue;
-    }
-    DCHECK_EQ(web_contributing_source->SourceType(),
-              WebRTCRtpContributingSourceType::CSRC);
-    auto it = contributing_sources_by_source_id_.find(
-        web_contributing_source->Source());
-    if (it == contributing_sources_by_source_id_.end()) {
-      RTCRtpContributingSource* contributing_source =
-          new RTCRtpContributingSource(this, *web_contributing_source);
-      contributing_sources_by_source_id_.insert(contributing_source->source(),
-                                                contributing_source);
-      contributing_sources_.push_back(contributing_source);
-    } else {
-      it->value->UpdateMembers(*web_contributing_source);
-      contributing_sources_.push_back(it->value);
+  synchronization_sources_.clear();
+  for (const std::unique_ptr<WebRTCRtpSource>& web_source :
+       receiver_->GetSources()) {
+    switch (web_source->SourceType()) {
+      case WebRTCRtpSourceType::SSRC: {
+        auto it =
+            synchronization_sources_by_source_id_.find(web_source->Source());
+        if (it == synchronization_sources_by_source_id_.end()) {
+          RTCRtpSynchronizationSource* synchronization_source =
+              new RTCRtpSynchronizationSource(this, *web_source);
+          synchronization_sources_by_source_id_.insert(
+              synchronization_source->source(), synchronization_source);
+          synchronization_sources_.push_back(synchronization_source);
+        } else {
+          it->value->UpdateMembers(*web_source);
+          synchronization_sources_.push_back(it->value);
+        }
+        break;
+      }
+      case WebRTCRtpSourceType::CSRC:
+        auto it = contributing_sources_by_source_id_.find(web_source->Source());
+        if (it == contributing_sources_by_source_id_.end()) {
+          RTCRtpContributingSource* contributing_source =
+              new RTCRtpContributingSource(this, *web_source);
+          contributing_sources_by_source_id_.insert(
+              contributing_source->source(), contributing_source);
+          contributing_sources_.push_back(contributing_source);
+        } else {
+          it->value->UpdateMembers(*web_source);
+          contributing_sources_.push_back(it->value);
+        }
+        break;
     }
   }
   // Clear the flag and schedule a microtask to reset it to true. This makes
@@ -98,14 +115,13 @@ void RTCRtpReceiver::UpdateSourcesIfNeeded() {
   // represent a snapshot and can be compared reliably in .js code, no risk of
   // being updated due to an RTP packet arriving. E.g.
   // "source.timestamp == source.timestamp" will always be true.
-  contributing_sources_needs_updating_ = false;
-  Microtask::EnqueueMicrotask(
-      WTF::Bind(&RTCRtpReceiver::SetContributingSourcesNeedsUpdating,
-                WrapWeakPersistent(this)));
+  sources_need_updating_ = false;
+  Microtask::EnqueueMicrotask(WTF::Bind(&RTCRtpReceiver::SetSourcesNeedUpdating,
+                                        WrapWeakPersistent(this)));
 }
 
-void RTCRtpReceiver::SetContributingSourcesNeedsUpdating() {
-  contributing_sources_needs_updating_ = true;
+void RTCRtpReceiver::SetSourcesNeedUpdating() {
+  sources_need_updating_ = true;
 }
 
 void RTCRtpReceiver::Trace(blink::Visitor* visitor) {
@@ -113,6 +129,8 @@ void RTCRtpReceiver::Trace(blink::Visitor* visitor) {
   visitor->Trace(streams_);
   visitor->Trace(contributing_sources_by_source_id_);
   visitor->Trace(contributing_sources_);
+  visitor->Trace(synchronization_sources_by_source_id_);
+  visitor->Trace(synchronization_sources_);
   ScriptWrappable::Trace(visitor);
 }
 

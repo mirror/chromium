@@ -44,6 +44,12 @@ class WebRtcRtpBrowserTest : public WebRtcTestBase {
     return event_it != track_events.end() ? &(*event_it) : nullptr;
   }
 
+  void VerifySynchronizationSources(content::WebContents* tab) const {
+    std::string javascript = "verifySynchronizationSources()";
+    EXPECT_EQ("ok-synchronization-sources-verified",
+              ExecuteJavascript(javascript, tab));
+  }
+
   content::WebContents* left_tab_;
   content::WebContents* right_tab_;
 };
@@ -76,6 +82,25 @@ IN_PROC_BROWSER_TEST_F(WebRtcRtpBrowserTest, GetReceivers) {
 
   VerifyRtpReceivers(left_tab_, 2);
   VerifyRtpReceivers(right_tab_, 6);
+}
+
+IN_PROC_BROWSER_TEST_F(WebRtcRtpBrowserTest, GetSynchronizationSources) {
+  StartServerAndOpenTabs();
+
+  SetupPeerconnectionWithoutLocalStream(left_tab_);
+  CreateAndAddStreams(left_tab_, 2);
+
+  SetupPeerconnectionWithoutLocalStream(right_tab_);
+  CreateAndAddStreams(right_tab_, 1);
+
+  NegotiateCall(left_tab_, right_tab_);
+  StartDetectingVideo(left_tab_, "remote-view");
+  StartDetectingVideo(right_tab_, "remote-view");
+  WaitForVideoToPlay(left_tab_);
+  WaitForVideoToPlay(right_tab_);
+
+  VerifySynchronizationSources(left_tab_);
+  VerifySynchronizationSources(right_tab_);
 }
 
 IN_PROC_BROWSER_TEST_F(WebRtcRtpBrowserTest, AddAndRemoveTracksWithoutStream) {
