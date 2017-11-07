@@ -87,6 +87,24 @@
       "revId": "7631b5947eb745a4a938cbd29f6e4520da5743a1",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "005ecc78_a0863f3b",
+        "filename": "third_party/WebKit/Source/modules/media_controls/MediaControlsImpl.cpp",
+        "patchSetId": 4
+      },
+      "lineNbr": 1072,
+      "author": {
+        "id": 1215059
+      },
+      "writtenOn": "2017-11-07T20:20:05Z",
+      "side": 1,
+      "message": "Discussed offline. Narrowed it down to these calls instead.",
+      "parentUuid": "c61a06a7_0b038190",
+      "revId": "7631b5947eb745a4a938cbd29f6e4520da5743a1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
