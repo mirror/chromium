@@ -45,6 +45,29 @@
       "revId": "bca81b3aeef526691daa9eba1f1e292d648b60ec",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2cfbbbbd_f5252dfe",
+        "filename": "third_party/WebKit/Source/platform/graphics/gpu/ImageLayerBridge.cpp",
+        "patchSetId": 4
+      },
+      "lineNbr": 107,
+      "author": {
+        "id": 1115939
+      },
+      "writtenOn": "2017-11-07T21:08:40Z",
+      "side": 1,
+      "message": "I just created a bug for this. Please reference crbug.com/782383 in this comment. FWIW, we can\u0027t fix it now (in this CL, as a drive-by) because there\u0027s quite a lot of tests that need to be written for this.",
+      "range": {
+        "startLine": 107,
+        "startChar": 12,
+        "endLine": 107,
+        "endChar": 17
+      },
+      "revId": "bca81b3aeef526691daa9eba1f1e292d648b60ec",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
