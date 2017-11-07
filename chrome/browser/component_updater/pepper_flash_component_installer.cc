@@ -250,6 +250,7 @@ class FlashComponentInstallerPolicy : public ComponentInstallerPolicy {
   update_client::CrxInstaller::Result OnCustomInstall(
       const base::DictionaryValue& manifest,
       const base::FilePath& install_dir) override;
+  void OnCustomUninstall() override;
   bool VerifyInstallation(const base::DictionaryValue& manifest,
                           const base::FilePath& install_dir) const override;
   void ComponentReady(const base::Version& version,
@@ -300,6 +301,8 @@ FlashComponentInstallerPolicy::OnCustomInstall(
 #endif  // defined(OS_LINUX)
   return update_client::CrxInstaller::Result(update_client::InstallError::NONE);
 }
+
+void FlashComponentInstallerPolicy::OnCustomUninstall() {}
 
 void FlashComponentInstallerPolicy::ComponentReady(
     const base::Version& version,

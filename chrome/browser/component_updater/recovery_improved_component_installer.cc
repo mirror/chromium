@@ -44,6 +44,8 @@ RecoveryImprovedInstallerPolicy::OnCustomInstall(
   return update_client::CrxInstaller::Result(0);
 }
 
+void RecoveryImprovedInstallerPolicy::OnCustomUninstall() {}
+
 void RecoveryImprovedInstallerPolicy::ComponentReady(
     const base::Version& version,
     const base::FilePath& install_dir,
