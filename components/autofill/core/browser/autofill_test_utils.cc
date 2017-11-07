@@ -352,6 +352,25 @@ CreditCard GetRandomCreditCard(CreditCard::RecordType record_type) {
 }
 
 void SetProfileInfo(AutofillProfile* profile,
+                    const char* first_name,
+                    const char* middle_name,
+                    const char* last_name,
+                    const char* email,
+                    const char* company,
+                    const char* address1,
+                    const char* address2,
+                    const char* dependent_locality,
+                    const char* city,
+                    const char* state,
+                    const char* zipcode,
+                    const char* country,
+                    const char* phone) {
+  check_and_set(profile, ADDRESS_HOME_DEPENDENT_LOCALITY, dependent_locality);
+  SetProfileInfo(firstname, middlename, lastname, email, company, address1,
+                 address2, city, state, zipcode, country, phone);
+}
+
+void SetProfileInfo(AutofillProfile* profile,
     const char* first_name, const char* middle_name,
     const char* last_name, const char* email, const char* company,
     const char* address1, const char* address2, const char* city,
