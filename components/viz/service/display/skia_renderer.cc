@@ -214,7 +214,9 @@ void SkiaRenderer::BindFramebufferToOutputSurface() {
   }
 }
 
-bool SkiaRenderer::BindFramebufferToTexture(const cc::ScopedResource* texture) {
+bool SkiaRenderer::BindFramebufferToTexture(const RenderPassId render_pass_id) {
+  cc::ScopedResource* texture = render_pass_textures_[render_pass_id].get();
+  DCHECK(texture);
   DCHECK(texture->id());
 
   // Explicitly release lock, otherwise we can crash when try to lock
@@ -705,6 +707,67 @@ sk_sp<SkShader> SkiaRenderer::GetBackgroundFilterShader(
   // TODO(weiliangc): properly implement background filters. (crbug.com/644851)
   NOTIMPLEMENTED();
   return nullptr;
+}
+
+void SkiaRenderer::UpdateRenderPassTextures(
+    const RenderPassList& render_passes_in_draw_order,
+    const base::flat_map<RenderPassId, RenderPassRequirements>&
+        render_passes_in_frame) {
+  std::vector<RenderPassId> passes_to_delete;
+  for (const auto& pair : render_pass_textures_) {
+    auto it = render_passes_in_frame.find(pair.first);
+    if (it == render_passes_in_frame.end()) {
+      passes_to_delete.push_back(pair.first);
+      continue;
+    }
+
+    gfx::Size required_size = it->second.size;
+    cc::ResourceProvider::TextureHint required_hint = it->second.hint;
+    cc::ScopedResource* texture = pair.second.get();
+    DCHECK(texture);
+
+    bool size_appropriate = texture->size().width() >= required_size.width() &&
+                            texture->size().height() >= required_size.height();
+    bool hint_appropriate = (texture->hint() & required_hint) == required_hint;
+    if (texture->id() && (!size_appropriate || !hint_appropriate))
+      texture->Free();
+  }
+
+  // Delete RenderPass textures from the previous frame that will not be used
+  // again.
+  for (size_t i = 0; i < passes_to_delete.size(); ++i)
+    render_pass_textures_.erase(passes_to_delete[i]);
+}
+
+bool SkiaRenderer::AllocateRenderPassResourceIfNeeded(
+    const RenderPassId render_pass_id,
+    const gfx::Size& enlarged_size,
+    cc::ResourceProvider::TextureHint texturehint) {
+  auto& resource = render_pass_textures_[render_pass_id];
+  if (!resource) {
+    resource = std::make_unique<cc::ScopedResource>(resource_provider_);
+    resource->Allocate(enlarged_size, texturehint, BackbufferFormat(),
+                       current_frame()->current_render_pass->color_space);
+    return true;
+  } else if (!resource->id()) {
+    resource->Allocate(enlarged_size, texturehint, BackbufferFormat(),
+                       current_frame()->current_render_pass->color_space);
+    return true;
+  }
+  return false;
+}
+
+const gfx::Size& SkiaRenderer::GetRenderPassTextureSize(
+    const RenderPassId render_pass_id) {
+  cc::ScopedResource* texture = render_pass_textures_[render_pass_id].get();
+  DCHECK(texture);
+  return texture->size();
+}
+
+bool SkiaRenderer::HasAllocatedResourcesForTesting(
+    RenderPassId render_pass_id) const {
+  auto iter = render_pass_textures_.find(render_pass_id);
+  return iter != render_pass_textures_.end() && iter->second->id();
 }
 
 }  // namespace viz

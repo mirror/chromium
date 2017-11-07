@@ -673,7 +673,9 @@ static sk_sp<SkImage> ApplyImageFilter(
     const gfx::RectF& dst_rect,
     const gfx::Vector2dF& scale,
     sk_sp<SkImageFilter> filter,
-    const cc::DisplayResourceProvider::ScopedReadLockGL& source_texture_lock,
+    GLuint texture_id,
+    GLenum target,
+    const gfx::Size& size,
     SkIPoint* offset,
     SkIRect* subset,
     bool flip_texture,
@@ -682,8 +684,7 @@ static sk_sp<SkImage> ApplyImageFilter(
     return nullptr;
 
   sk_sp<SkImage> src_image = WrapTexture(
-      source_texture_lock.texture_id(), source_texture_lock.target(),
-      source_texture_lock.size(), use_gr_context->context(), flip_texture);
+      texture_id, target, size, use_gr_context->context(), flip_texture);
 
   if (!src_image) {
     TRACE_EVENT_INSTANT0("cc",
@@ -1312,7 +1313,9 @@ bool GLRenderer::UpdateRPDQWithSkiaFilters(
         params->filter_image = ApplyImageFilter(
             ScopedUseGrContext::Create(this), src_rect, params->dst_rect,
             quad->filters_scale, std::move(filter),
-            prefilter_contents_texture_lock, &offset, &subset,
+            prefilter_contents_texture_lock.texture_id(),
+            prefilter_contents_texture_lock.target(),
+            prefilter_contents_texture_lock.size(), &offset, &subset,
             params->flip_texture, quad->filters_origin);
         if (!params->filter_image)
           return false;
@@ -2861,7 +2864,9 @@ void GLRenderer::BindFramebufferToOutputSurface() {
   }
 }
 
-bool GLRenderer::BindFramebufferToTexture(const cc::ScopedResource* texture) {
+bool GLRenderer::BindFramebufferToTexture(const RenderPassId render_pass_id) {
+  cc::ScopedResource* texture = render_pass_textures_[render_pass_id].get();
+  DCHECK(texture);
   DCHECK(texture->id());
 
   // Explicitly release lock, otherwise we can crash when try to lock
@@ -3559,6 +3564,67 @@ void GLRenderer::ProcessOverdrawFeedback(std::vector<int>* overdraw,
       TRACE_DISABLED_BY_DEFAULT("cc.debug.overdraw"), "GPU Overdraw",
       (std::accumulate(overdraw->begin(), overdraw->end(), 0) * 100) /
           max_result);
+}
+
+void GLRenderer::UpdateRenderPassTextures(
+    const RenderPassList& render_passes_in_draw_order,
+    const base::flat_map<RenderPassId, RenderPassRequirements>&
+        render_passes_in_frame) {
+  std::vector<RenderPassId> passes_to_delete;
+  for (const auto& pair : render_pass_textures_) {
+    auto it = render_passes_in_frame.find(pair.first);
+    if (it == render_passes_in_frame.end()) {
+      passes_to_delete.push_back(pair.first);
+      continue;
+    }
+
+    gfx::Size required_size = it->second.size;
+    cc::ResourceProvider::TextureHint required_hint = it->second.hint;
+    cc::ScopedResource* texture = pair.second.get();
+    DCHECK(texture);
+
+    bool size_appropriate = texture->size().width() >= required_size.width() &&
+                            texture->size().height() >= required_size.height();
+    bool hint_appropriate = (texture->hint() & required_hint) == required_hint;
+    if (texture->id() && (!size_appropriate || !hint_appropriate))
+      texture->Free();
+  }
+
+  // Delete RenderPass textures from the previous frame that will not be used
+  // again.
+  for (size_t i = 0; i < passes_to_delete.size(); ++i)
+    render_pass_textures_.erase(passes_to_delete[i]);
+}
+
+bool GLRenderer::AllocateRenderPassResourceIfNeeded(
+    const RenderPassId render_pass_id,
+    const gfx::Size& enlarged_size,
+    cc::ResourceProvider::TextureHint texturehint) {
+  auto& resource = render_pass_textures_[render_pass_id];
+  if (!resource) {
+    resource = std::make_unique<cc::ScopedResource>(resource_provider_);
+    resource->Allocate(enlarged_size, texturehint, BackbufferFormat(),
+                       current_frame()->current_render_pass->color_space);
+    return true;
+  } else if (!resource->id()) {
+    resource->Allocate(enlarged_size, texturehint, BackbufferFormat(),
+                       current_frame()->current_render_pass->color_space);
+    return true;
+  }
+  return false;
+}
+
+const gfx::Size& GLRenderer::GetRenderPassTextureSize(
+    const RenderPassId render_pass_id) {
+  cc::ScopedResource* texture = render_pass_textures_[render_pass_id].get();
+  DCHECK(texture);
+  return texture->size();
+}
+
+bool GLRenderer::HasAllocatedResourcesForTesting(
+    RenderPassId render_pass_id) const {
+  auto iter = render_pass_textures_.find(render_pass_id);
+  return iter != render_pass_textures_.end() && iter->second->id();
 }
 
 }  // namespace viz
