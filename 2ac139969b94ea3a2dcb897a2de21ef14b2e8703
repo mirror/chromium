@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "8cd094f8_3faa76f1",
+        "filename": "ash/system/network/vpn_list.cc",
+        "patchSetId": 20
+      },
+      "lineNbr": 38,
+      "author": {
+        "id": 1001168
+      },
+      "writtenOn": "2017-11-07T17:17:56Z",
+      "side": 1,
+      "message": "Nit: please pass base::Time by value (it\u0027s designed to be cheap to pass by value)",
+      "revId": "2ac139969b94ea3a2dcb897a2de21ef14b2e8703",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1a708ae1_3431c9a5",
+        "filename": "chrome/browser/ui/ash/vpn_list_forwarder.cc",
+        "patchSetId": 20
+      },
+      "lineNbr": 51,
+      "author": {
+        "id": 1001168
+      },
+      "writtenOn": "2017-11-07T17:17:56Z",
+      "side": 1,
+      "message": "Is it possible to write a typemap [1] for this?\n\n[1] https://chromium.googlesource.com/chromium/src/+/master/mojo/public/cpp/bindings#type-mapping",
+      "revId": "2ac139969b94ea3a2dcb897a2de21ef14b2e8703",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
