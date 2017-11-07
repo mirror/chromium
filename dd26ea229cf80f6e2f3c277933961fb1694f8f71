@@ -1,0 +1,159 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "f0b1c5f5_3f99252d",
+        "filename": "ios/web/public/ssl_status_unittest.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 5,
+      "author": {
+        "id": 1123009
+      },
+      "writtenOn": "2017-11-07T22:30:51Z",
+      "side": 1,
+      "message": "nit: s/import/include",
+      "range": {
+        "startLine": 5,
+        "startChar": 9,
+        "endLine": 5,
+        "endChar": 12
+      },
+      "revId": "dd26ea229cf80f6e2f3c277933961fb1694f8f71",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7a4cfefa_17749399",
+        "filename": "ios/web/public/ssl_status_unittest.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 20,
+      "author": {
+        "id": 1123009
+      },
+      "writtenOn": "2017-11-07T22:30:51Z",
+      "side": 1,
+      "message": "nit: |explicit TrivialUserData(int value) : value_(value) {}|",
+      "revId": "dd26ea229cf80f6e2f3c277933961fb1694f8f71",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f1f8b8c8_e881d8a0",
+        "filename": "ios/web/public/ssl_status_unittest.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 23,
+      "author": {
+        "id": 1123009
+      },
+      "writtenOn": "2017-11-07T22:30:51Z",
+      "side": 1,
+      "message": "nit: value() or GetValue()",
+      "range": {
+        "startLine": 23,
+        "startChar": 6,
+        "endLine": 23,
+        "endChar": 11
+      },
+      "revId": "dd26ea229cf80f6e2f3c277933961fb1694f8f71",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "cdb34c27_966c452f",
+        "filename": "ios/web/public/ssl_status_unittest.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 27,
+      "author": {
+        "id": 1123009
+      },
+      "writtenOn": "2017-11-07T22:30:51Z",
+      "side": 1,
+      "message": "No need for ;",
+      "range": {
+        "startLine": 27,
+        "startChar": 4,
+        "endLine": 27,
+        "endChar": 0
+      },
+      "revId": "dd26ea229cf80f6e2f3c277933961fb1694f8f71",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ca3850e1_d73a19d2",
+        "filename": "ios/web/public/web_state/web_state.h",
+        "patchSetId": 7
+      },
+      "lineNbr": 265,
+      "author": {
+        "id": 1123009
+      },
+      "writtenOn": "2017-11-07T22:30:51Z",
+      "side": 1,
+      "message": "Could you please document what this method does. I\u0027m not sure if the comments should document when this method is called (thought it\u0027s not a big deal).",
+      "range": {
+        "startLine": 265,
+        "startChar": 18,
+        "endLine": 265,
+        "endChar": 25
+      },
+      "revId": "dd26ea229cf80f6e2f3c277933961fb1694f8f71",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "933d4cd0_10d3889b",
+        "filename": "ios/web/web_state/web_state_impl.h",
+        "patchSetId": 7
+      },
+      "lineNbr": 87,
+      "author": {
+        "id": 1123009
+      },
+      "writtenOn": "2017-11-07T22:30:51Z",
+      "side": 1,
+      "message": "No need to repeat the comments for overridden methods.",
+      "range": {
+        "startLine": 87,
+        "startChar": 37,
+        "endLine": 87,
+        "endChar": 38
+      },
+      "revId": "dd26ea229cf80f6e2f3c277933961fb1694f8f71",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "624ecc70_4db5a03d",
+        "filename": "ios/web/web_state/web_state_impl.h",
+        "patchSetId": 7
+      },
+      "lineNbr": 88,
+      "author": {
+        "id": 1123009
+      },
+      "writtenOn": "2017-11-07T22:30:51Z",
+      "side": 1,
+      "message": "Please move this method to \"// WebState:\" section, where the rest of overridden methods are located. Same goes for implementation file.",
+      "range": {
+        "startLine": 88,
+        "startChar": 7,
+        "endLine": 88,
+        "endChar": 36
+      },
+      "revId": "dd26ea229cf80f6e2f3c277933961fb1694f8f71",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
