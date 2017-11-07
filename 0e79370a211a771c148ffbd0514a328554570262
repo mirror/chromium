@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "1106a551_48183f25",
+        "filename": "build/protoc_java.py",
+        "patchSetId": 8
+      },
+      "lineNbr": 36,
+      "author": {
+        "id": 1126674
+      },
+      "writtenOn": "2017-11-07T16:06:28Z",
+      "side": 1,
+      "message": "nit: make this: action\u003d\u0027store_true\u0027, and then pass it only when we want it enabled.",
+      "revId": "0e79370a211a771c148ffbd0514a328554570262",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "df5a50b0_d6a9cb24",
+        "filename": "build/protoc_java.py",
+        "patchSetId": 8
+      },
+      "lineNbr": 51,
+      "author": {
+        "id": 1126674
+      },
+      "writtenOn": "2017-11-07T16:06:28Z",
+      "side": 1,
+      "message": "Would it be worth adding an check here that \u0027LITE_RUNTIME\u0027 in open(proto_path).read()?",
+      "revId": "0e79370a211a771c148ffbd0514a328554570262",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
