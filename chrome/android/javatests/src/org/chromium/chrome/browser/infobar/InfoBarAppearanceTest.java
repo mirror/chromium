@@ -9,7 +9,10 @@ import android.support.test.filters.MediumTest;
 import org.junit.Before;
 import org.junit.Rule;
 import org.junit.Test;
+import org.junit.rules.TestRule;
+import org.junit.runner.Description;
 import org.junit.runner.RunWith;
+import org.junit.runners.model.Statement;
 
 import org.chromium.base.ThreadUtils;
 import org.chromium.base.test.util.CallbackHelper;
@@ -17,6 +20,7 @@ import org.chromium.base.test.util.CommandLineFlags;
 import org.chromium.base.test.util.Feature;
 import org.chromium.chrome.R;
 import org.chromium.chrome.browser.ChromeActivity;
+import org.chromium.chrome.browser.ChromeFeatureList;
 import org.chromium.chrome.browser.ChromeSwitches;
 import org.chromium.chrome.browser.interventions.FramebustBlockMessageDelegate;
 import org.chromium.chrome.browser.tab.Tab;
@@ -24,6 +28,9 @@ import org.chromium.chrome.browser.test.ScreenShooter;
 import org.chromium.chrome.test.ChromeActivityTestRule;
 import org.chromium.chrome.test.ChromeJUnit4ClassRunner;
 import org.chromium.chrome.test.util.InfoBarTestAnimationListener;
+import org.chromium.chrome.test.util.browser.Features;
+import org.chromium.chrome.test.util.browser.Features.DisableFeatures;
+import org.chromium.chrome.test.util.browser.Features.EnableFeatures;
 
 import java.util.concurrent.TimeoutException;
 
@@ -32,18 +39,26 @@ import java.util.concurrent.TimeoutException;
  */
 // clang-format off
 @RunWith(ChromeJUnit4ClassRunner.class)
-@CommandLineFlags.Add({ChromeSwitches.DISABLE_FIRST_RUN_EXPERIENCE,
-        ChromeActivityTestRule.DISABLE_NETWORK_PREDICTION_FLAG})
+@CommandLineFlags.Add(ChromeSwitches.DISABLE_FIRST_RUN_EXPERIENCE)
+@DisableFeatures("NetworkPrediction")
 @ScreenShooter.Directory("InfoBars")
 public class InfoBarAppearanceTest {
     // clang-format on
+
+    @Rule
+    public TestRule mFeatureRule = new Features.InstrumentationProcessor();
 
     @Rule
     public ChromeActivityTestRule<ChromeActivity> mActivityTestRule =
             new ChromeActivityTestRule<>(ChromeActivity.class);
 
     @Rule
-    public ScreenShooter mScreenShooter = new ScreenShooter();
+    public ScreenShooter mScreenShooter = new ScreenShooter() {
+        @Override
+        public Statement apply(Statement base, Description description) {
+            return super.apply(base, description);
+        }
+    };
 
     private InfoBarTestAnimationListener mListener;
     private Tab mTab;
@@ -95,6 +110,7 @@ public class InfoBarAppearanceTest {
     @Test
     @MediumTest
     @Feature({"InfoBars", "Catalogue"})
+    @EnableFeatures(ChromeFeatureList.CHROME_HOME)
     public void testOomInfoBar() throws TimeoutException, InterruptedException {
         ThreadUtils.runOnUiThreadBlocking(
                 () -> mTab.getInfoBarContainer().addInfoBarForTesting(new NearOomInfoBar()));
