@@ -45,6 +45,52 @@
       "revId": "4f1b62a727227be19581e42af9ffc69c7183056e",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5e21f7a1_49fb1ed3",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/partnerbookmarks/PartnerBookmarksReader.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 127,
+      "author": {
+        "id": 1144344
+      },
+      "writtenOn": "2017-11-07T23:05:56Z",
+      "side": 1,
+      "message": "PartnerBookmarksShim also calls this, right? The caller there needs renaming as well.",
+      "range": {
+        "startLine": 127,
+        "startChar": 19,
+        "endLine": 127,
+        "endChar": 27
+      },
+      "revId": "4f1b62a727227be19581e42af9ffc69c7183056e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4bdf7320_df4ce8c5",
+        "filename": "chrome/browser/android/bookmarks/partner_bookmarks_reader.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 319,
+      "author": {
+        "id": 1144344
+      },
+      "writtenOn": "2017-11-07T23:05:56Z",
+      "side": 1,
+      "message": "nit: space",
+      "range": {
+        "startLine": 319,
+        "startChar": 46,
+        "endLine": 319,
+        "endChar": 66
+      },
+      "revId": "4f1b62a727227be19581e42af9ffc69c7183056e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
