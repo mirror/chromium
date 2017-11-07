@@ -37,6 +37,24 @@
     },
     {
       "key": {
+        "uuid": "30d1cf85_e7bc0a11",
+        "filename": "chrome/browser/resources/md_extensions/manager.js",
+        "patchSetId": 18
+      },
+      "lineNbr": 147,
+      "author": {
+        "id": 1115745
+      },
+      "writtenOn": "2017-11-07T20:29:11Z",
+      "side": 1,
+      "message": "Fair points, and I don\u0027t feel strongly, so if this is your preference, I\u0027m fine with it. :)",
+      "parentUuid": "54ae299f_5fa6448a",
+      "revId": "f171d53f41f7eb1e509d6471d7e189b424999664",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "489a3746_8ee0075d",
         "filename": "chrome/test/data/webui/extensions/extension_manager_unit_test.js",
         "patchSetId": 18

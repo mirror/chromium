@@ -37,6 +37,24 @@
     },
     {
       "key": {
+        "uuid": "316172ef_2f1e2b63",
+        "filename": "chrome/browser/resources/md_extensions/load_error.js",
+        "patchSetId": 17
+      },
+      "lineNbr": 45,
+      "author": {
+        "id": 1115745
+      },
+      "writtenOn": "2017-11-07T20:29:11Z",
+      "side": 1,
+      "message": "Hmm... what about a \"trying\"-type placeholder?  It just seems very strange to me to have a load error dialog (essentially something that handles load errors) fire a load error itself, and causes some additional routing through manager.",
+      "parentUuid": "5208ec63_898b9bf8",
+      "revId": "2909db982666cd57936c9ea669d6f468a8f1eedf",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "b4f3dfa6_864756b3",
         "filename": "chrome/browser/resources/md_extensions/manager.js",
         "patchSetId": 17
