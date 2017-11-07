@@ -2,8 +2,8 @@
 // Use of this source code is governed by a BSD-style license that can be
 // found in the LICENSE file.
 
-#ifndef BASE_ALLOCATOR_PARTITION_ALLOCATOR_PARTITION_ALLOC_H
-#define BASE_ALLOCATOR_PARTITION_ALLOCATOR_PARTITION_ALLOC_H
+#ifndef BASE_ALLOCATOR_PARTITION_ALLOCATOR_PARTITION_ALLOC_H_
+#define BASE_ALLOCATOR_PARTITION_ALLOCATOR_PARTITION_ALLOC_H_
 
 // DESCRIPTION
 // partitionAlloc() / PartitionAllocGeneric() and PartitionFree() /
@@ -643,7 +643,25 @@ ALWAYS_INLINE uint16_t PartitionBucketSlots(const PartitionBucket* bucket) {
                                bucket->slot_size);
 }
 
-ALWAYS_INLINE size_t* PartitionPageGetRawSizePtr(PartitionPage* page) {
+ALWAYS_INLINE const size_t* PartitionPageGetRawSizePtr(
+    const PartitionPage* page) {
+  // KEEP IN SYNC with PartitionPageGetWritableRawSizePtr() below.
+  // For single-slot buckets which span more than one partition page, we
+  // have some spare metadata space to store the raw allocation size. We
+  // can use this to report better statistics.
+  const PartitionBucket* bucket = page->bucket;
+  if (bucket->slot_size <= kMaxSystemPagesPerSlotSpan * kSystemPageSize)
+    return nullptr;
+
+  DCHECK((bucket->slot_size % kSystemPageSize) == 0);
+  DCHECK(PartitionBucketIsDirectMapped(bucket) ||
+         PartitionBucketSlots(bucket) == 1);
+  page++;
+  return reinterpret_cast<const size_t*>(&page->freelist_head);
+}
+
+ALWAYS_INLINE size_t* PartitionPageGetWritableRawSizePtr(PartitionPage* page) {
+  // KEEP IN SYNC with PartitionPageGetRawSizePtr() above.
   // For single-slot buckets which span more than one partition page, we
   // have some spare metadata space to store the raw allocation size. We
   // can use this to report better statistics.
@@ -658,8 +676,8 @@ ALWAYS_INLINE size_t* PartitionPageGetRawSizePtr(PartitionPage* page) {
   return reinterpret_cast<size_t*>(&page->freelist_head);
 }
 
-ALWAYS_INLINE size_t PartitionPageGetRawSize(PartitionPage* page) {
-  size_t* raw_size_ptr = PartitionPageGetRawSizePtr(page);
+ALWAYS_INLINE size_t PartitionPageGetRawSize(const PartitionPage* page) {
+  const size_t* raw_size_ptr = PartitionPageGetRawSizePtr(page);
   if (UNLIKELY(raw_size_ptr != nullptr))
     return *raw_size_ptr;
   return 0;
@@ -945,4 +963,4 @@ BASE_EXPORT PartitionPage* GetSentinelPageForTesting();
 
 }  // namespace base
 
-#endif  // BASE_ALLOCATOR_PARTITION_ALLOCATOR_PARTITION_ALLOC_H
+#endif  // BASE_ALLOCATOR_PARTITION_ALLOCATOR_PARTITION_ALLOC_H_
