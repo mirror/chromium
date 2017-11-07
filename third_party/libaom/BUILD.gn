@@ -5,6 +5,7 @@
 import("//build/buildflag_header.gni")
 import("//build/config/arm.gni")
 import("//build/config/android/config.gni")
+import("//build/config/gclient_args.gni")
 import("//build/config/sanitizers/sanitizers.gni")
 import("//third_party/libaom/options.gni")
 import("//third_party/libaom/libaom_srcs.gni")
@@ -15,7 +16,7 @@ buildflag_header("av1_features") {
 
   flags = [
     # Allow source code to conditionally include AV1 support.
-    "USE_AV1=$use_av1",
+    "USE_AV1=$checkout_libaom",
   ]
 }
 
