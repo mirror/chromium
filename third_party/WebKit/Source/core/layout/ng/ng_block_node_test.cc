@@ -119,7 +119,7 @@ TEST_F(NGBlockNodeForTest, ChildFloatWithSpaces) {
   EXPECT_EQ(child2, nullptr);
 }
 
-TEST_F(NGBlockNodeForTest, ChildOofBeforeInline) {
+TEST_F(NGBlockNodeForTest, DISABLED_ChildOofBeforeInline) {
   SetBodyInnerHTML(R"HTML(
     <!DOCTYPE html>
     <style>
