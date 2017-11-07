@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "51070104_a8a72467",
+        "filename": "chrome/browser/chromeos/file_system_provider/service_unittest.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 187,
+      "author": {
+        "id": 1130105
+      },
+      "writtenOn": "2017-11-07T02:32:18Z",
+      "side": 1,
+      "message": "These can be protected.",
+      "revId": "1942bd9e034bbf0a0d48e0dddbe2478e33e3d426",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c8261a4d_cc085ac3",
+        "filename": "chrome/browser/chromeos/file_system_provider/service_unittest.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 232,
+      "author": {
+        "id": 1130105
+      },
+      "writtenOn": "2017-11-07T02:32:18Z",
+      "side": 1,
+      "message": "called_default_factory",
+      "revId": "1942bd9e034bbf0a0d48e0dddbe2478e33e3d426",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
