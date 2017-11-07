@@ -5,8 +5,6 @@
 #include "ui/base/cursor/cursor_loader_x11.h"
 
 #include <float.h>
-#include <X11/cursorfont.h>
-#include <X11/Xlib.h>
 
 #include "base/logging.h"
 #include "build/build_config.h"
@@ -183,33 +181,33 @@ static const struct {
   const char* fallback_name;
   int fallback_shape;
 } kCursorFallbacks[] = {
-    { "pointer",     "hand",            XC_hand2 },
-    { "progress",    "left_ptr_watch",  XC_watch },
-    { "wait",        nullptr,           XC_watch },
-    { "cell",        nullptr,           XC_plus },
-    { "all-scroll",  nullptr,           XC_fleur},
-    { "crosshair",   nullptr,           XC_cross },
-    { "text",        nullptr,           XC_xterm },
-    { "not-allowed", "crossed_circle",  None },
-    { "grabbing",    nullptr,           XC_hand2 },
-    { "col-resize",  nullptr,           XC_sb_h_double_arrow },
-    { "row-resize",  nullptr,           XC_sb_v_double_arrow},
-    { "n-resize",    nullptr,           XC_top_side},
-    { "e-resize",    nullptr,           XC_right_side},
-    { "s-resize",    nullptr,           XC_bottom_side},
-    { "w-resize",    nullptr,           XC_left_side},
-    { "ne-resize",   nullptr,           XC_top_right_corner},
-    { "nw-resize",   nullptr,           XC_top_left_corner},
-    { "se-resize",   nullptr,           XC_bottom_right_corner},
-    { "sw-resize",   nullptr,           XC_bottom_left_corner},
-    { "ew-resize",   nullptr,           XC_sb_h_double_arrow},
-    { "ns-resize",   nullptr,           XC_sb_v_double_arrow},
-    { "nesw-resize", "fd_double_arrow", None},
-    { "nwse-resize", "bd_double_arrow", None},
-    { "dnd-none",    "grabbing",        XC_hand2 },
-    { "dnd-move",    "grabbing",        XC_hand2 },
-    { "dnd-copy",    "grabbing",        XC_hand2 },
-    { "dnd-link",    "grabbing",        XC_hand2 },
+    {"pointer", "hand", XC_hand2},
+    {"progress", "left_ptr_watch", XC_watch},
+    {"wait", nullptr, XC_watch},
+    {"cell", nullptr, XC_plus},
+    {"all-scroll", nullptr, XC_fleur},
+    {"crosshair", nullptr, XC_cross},
+    {"text", nullptr, XC_xterm},
+    {"not-allowed", "crossed_circle", X11::None},
+    {"grabbing", nullptr, XC_hand2},
+    {"col-resize", nullptr, XC_sb_h_double_arrow},
+    {"row-resize", nullptr, XC_sb_v_double_arrow},
+    {"n-resize", nullptr, XC_top_side},
+    {"e-resize", nullptr, XC_right_side},
+    {"s-resize", nullptr, XC_bottom_side},
+    {"w-resize", nullptr, XC_left_side},
+    {"ne-resize", nullptr, XC_top_right_corner},
+    {"nw-resize", nullptr, XC_top_left_corner},
+    {"se-resize", nullptr, XC_bottom_right_corner},
+    {"sw-resize", nullptr, XC_bottom_left_corner},
+    {"ew-resize", nullptr, XC_sb_h_double_arrow},
+    {"ns-resize", nullptr, XC_sb_v_double_arrow},
+    {"nesw-resize", "fd_double_arrow", X11::None},
+    {"nwse-resize", "bd_double_arrow", X11::None},
+    {"dnd-none", "grabbing", XC_hand2},
+    {"dnd-move", "grabbing", XC_hand2},
+    {"dnd-copy", "grabbing", XC_hand2},
+    {"dnd-link", "grabbing", XC_hand2},
 };
 
 }  // namespace
@@ -326,18 +324,18 @@ bool CursorLoaderX11::IsImageCursor(gfx::NativeCursor native_cursor) {
 
   // First try to load the cursor directly.
   ::Cursor cursor = XcursorLibraryLoadCursor(display_, css_name);
-  if (cursor == None) {
+  if (cursor == X11::None) {
     // Try a similar cursor supplied by the native cursor theme.
     for (const auto& mapping : kCursorFallbacks) {
       if (strcmp(mapping.css_name, css_name) == 0) {
         if (mapping.fallback_name)
           cursor = XcursorLibraryLoadCursor(display_, mapping.fallback_name);
-        if (cursor == None && mapping.fallback_shape)
+        if (cursor == X11::None && mapping.fallback_shape)
           cursor = XCreateFontCursor(display_, mapping.fallback_shape);
       }
     }
   }
-  if (cursor != None) {
+  if (cursor != X11::None) {
     font_cursors_[id] = cursor;
     return cursor;
   }
