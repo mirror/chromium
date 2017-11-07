@@ -16,6 +16,24 @@
       "revId": "a1064e65c706ad099a70cdb8a0fe420f91673029",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "039935f5_34c17e73",
+        "filename": "third_party/WebKit/Source/core/animation/CSSPathInterpolationType.cpp",
+        "patchSetId": 2
+      },
+      "lineNbr": 89,
+      "author": {
+        "id": 1003011
+      },
+      "writtenOn": "2017-11-07T23:31:48Z",
+      "side": 1,
+      "message": "used an enum instead of bool",
+      "parentUuid": "185576f0_dffc2cd4",
+      "revId": "a1064e65c706ad099a70cdb8a0fe420f91673029",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
