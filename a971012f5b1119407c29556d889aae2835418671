@@ -2,6 +2,52 @@
   "comments": [
     {
       "key": {
+        "uuid": "ee074358_f18a9bde",
+        "filename": "chrome/browser/plugins/chrome_content_browser_client_plugins_part.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 45,
+      "author": {
+        "id": 1116026
+      },
+      "writtenOn": "2017-11-07T00:25:50Z",
+      "side": 1,
+      "message": "auto plugin_info_filter \u003d base::MakeRefCounted\u003cPluginInfoMessageFilter\u003e(...)",
+      "range": {
+        "startLine": 45,
+        "startChar": 6,
+        "endLine": 45,
+        "endChar": 9
+      },
+      "revId": "a971012f5b1119407c29556d889aae2835418671",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4a6269ab_55095002",
+        "filename": "chrome/browser/plugins/chrome_content_browser_client_plugins_part.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 49,
+      "author": {
+        "id": 1116026
+      },
+      "writtenOn": "2017-11-07T00:25:50Z",
+      "side": 1,
+      "message": "std::move(plugin_info_filter)",
+      "range": {
+        "startLine": 49,
+        "startChar": 17,
+        "endLine": 49,
+        "endChar": 34
+      },
+      "revId": "a971012f5b1119407c29556d889aae2835418671",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "5eb77e6a_d5c49811",
         "filename": "chrome/renderer/chrome_content_renderer_client.cc",
         "patchSetId": 8

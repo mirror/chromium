@@ -1,0 +1,147 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "df215086_5dadc18f",
+        "filename": "chrome/browser/plugins/plugin_info_message_filter.cc",
+        "patchSetId": 10
+      },
+      "lineNbr": 211,
+      "author": {
+        "id": 1116026
+      },
+      "writtenOn": "2017-11-07T00:25:50Z",
+      "side": 1,
+      "message": "I suspect some compilers may not like this if !BUILDFLAG(ENABLE_LIBRARY_CDMS). It\u0027s probably safer to move the #if outside the message map block, returning false in the #else.",
+      "revId": "8bc28f534d2938fc093ab6e71093a9c22fa47314",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f008d403_3930b23f",
+        "filename": "chrome/browser/plugins/plugin_info_message_filter.h",
+        "patchSetId": 10
+      },
+      "lineNbr": 128,
+      "author": {
+        "id": 1116026
+      },
+      "writtenOn": "2017-11-07T00:25:50Z",
+      "side": 1,
+      "message": "Is this necessary? Implementing the mojo interface usually pulls the callback types into the right places.",
+      "range": {
+        "startLine": 128,
+        "startChar": 8,
+        "endLine": 128,
+        "endChar": 29
+      },
+      "revId": "8bc28f534d2938fc093ab6e71093a9c22fa47314",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d1404a65_ee9f2e96",
+        "filename": "chrome/browser/plugins/plugin_info_message_filter.h",
+        "patchSetId": 10
+      },
+      "lineNbr": 139,
+      "author": {
+        "id": 1116026
+      },
+      "writtenOn": "2017-11-07T00:25:50Z",
+      "side": 1,
+      "message": "While the mojo interface is fixed, these implementation details should take the callback by value and move it into the next call.",
+      "range": {
+        "startLine": 139,
+        "startChar": 21,
+        "endLine": 139,
+        "endChar": 50
+      },
+      "revId": "8bc28f534d2938fc093ab6e71093a9c22fa47314",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2b62b6c6_40a88803",
+        "filename": "chrome/common/plugin.mojom",
+        "patchSetId": 10
+      },
+      "lineNbr": 40,
+      "author": {
+        "id": 1116026
+      },
+      "writtenOn": "2017-11-07T00:25:50Z",
+      "side": 1,
+      "message": "Remove extra blank line.",
+      "revId": "8bc28f534d2938fc093ab6e71093a9c22fa47314",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b9d7ee5e_d991a282",
+        "filename": "chrome/common/plugin.mojom",
+        "patchSetId": 10
+      },
+      "lineNbr": 73,
+      "author": {
+        "id": 1116026
+      },
+      "writtenOn": "2017-11-07T00:25:50Z",
+      "side": 1,
+      "message": "Copy-paste the comment from the old IPC.",
+      "revId": "8bc28f534d2938fc093ab6e71093a9c22fa47314",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5bfb2318_cf31caa6",
+        "filename": "chrome/renderer/chrome_content_renderer_client.h",
+        "patchSetId": 10
+      },
+      "lineNbr": 234,
+      "author": {
+        "id": 1116026
+      },
+      "writtenOn": "2017-11-07T00:25:50Z",
+      "side": 1,
+      "message": "How about plugin_info?",
+      "range": {
+        "startLine": 234,
+        "startChar": 42,
+        "endLine": 234,
+        "endChar": 48
+      },
+      "revId": "8bc28f534d2938fc093ab6e71093a9c22fa47314",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5024eab6_ed952ce3",
+        "filename": "chrome/renderer/chrome_content_renderer_client.h",
+        "patchSetId": 10
+      },
+      "lineNbr": 234,
+      "author": {
+        "id": 1116026
+      },
+      "writtenOn": "2017-11-07T00:25:50Z",
+      "side": 1,
+      "message": "const chrome::mojom::PluginInfo\u0026",
+      "range": {
+        "startLine": 234,
+        "startChar": 12,
+        "endLine": 234,
+        "endChar": 41
+      },
+      "revId": "8bc28f534d2938fc093ab6e71093a9c22fa47314",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
