@@ -1,0 +1,55 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "88f86c37_79bd6ede",
+        "filename": "ios/chrome/browser/passwords/password_controller.mm",
+        "patchSetId": 2
+      },
+      "lineNbr": 656,
+      "author": {
+        "id": 1116027
+      },
+      "writtenOn": "2017-11-07T09:24:06Z",
+      "side": 1,
+      "message": "This mean that the following condition in AttachTabHelpers will always be false, should we also clean corresponding code:\n\n  if (id\u003cFormInputAccessoryViewProvider\u003e\n          password_controller_form_input_accessory_view_provider \u003d\n              PasswordTabHelper::FromWebState(web_state)\n                  -\u003eGetAccessoryViewProvider()) {\n\nBTW, it looks like the -accessoryViewProvider is only used for to implement that method. So maybe we should just remove it then or do you intent to resurrect this later?",
+      "revId": "c18ba945141fe32b060010b543ad6db3c96b5384",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a2614e96_95721e0a",
+        "filename": "ios/chrome/browser/passwords/password_controller.mm",
+        "patchSetId": 2
+      },
+      "lineNbr": 983,
+      "author": {
+        "id": 1116027
+      },
+      "writtenOn": "2017-11-07T09:24:06Z",
+      "side": 1,
+      "message": "Can we remove this method and instead change the callers to just use nullptr?",
+      "revId": "c18ba945141fe32b060010b543ad6db3c96b5384",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "07d52ec0_b3df5447",
+        "filename": "ios/chrome/browser/passwords/password_controller.mm",
+        "patchSetId": 2
+      },
+      "lineNbr": 984,
+      "author": {
+        "id": 1116027
+      },
+      "writtenOn": "2017-11-07T09:24:06Z",
+      "side": 1,
+      "message": "PasswordGenerationManager is a C++ class, so this should be nullptr, not nil:\n\n  return nullptr;\n\nBut see comment above about inlining the value and removing this method (there are only a few call sites).",
+      "revId": "c18ba945141fe32b060010b543ad6db3c96b5384",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
