@@ -1,0 +1,55 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "2c75262e_2c78c4f4",
+        "filename": "ui/gfx/render_text.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 237,
+      "author": {
+        "id": 1001118
+      },
+      "writtenOn": "2017-11-07T23:14:03Z",
+      "side": 1,
+      "message": "nit: remove blank line",
+      "revId": "2d1b9654dee69f457e227f463a751068b1c0dcce",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8d5b2600_ad8497c1",
+        "filename": "ui/gfx/render_text.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 238,
+      "author": {
+        "id": 1001118
+      },
+      "writtenOn": "2017-11-07T23:14:03Z",
+      "side": 1,
+      "message": "Please add a basic unit test for this functionality.",
+      "revId": "2d1b9654dee69f457e227f463a751068b1c0dcce",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3583a2c8_eb74b345",
+        "filename": "ui/views/controls/textfield/textfield.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 220,
+      "author": {
+        "id": 1001118
+      },
+      "writtenOn": "2017-11-07T23:14:03Z",
+      "side": 1,
+      "message": "optional nit: remove \u0027the\u0027 to make this a one-liner",
+      "revId": "2d1b9654dee69f457e227f463a751068b1c0dcce",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
