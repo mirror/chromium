@@ -65,9 +65,54 @@ void WebSecurityPolicy::AddOriginAccessWhitelistEntry(
     const WebString& destination_protocol,
     const WebString& destination_host,
     bool allow_destination_subdomains) {
+  LOG(WARNING) << "@#$ WebSecurityPolicy::AddOriginAccessWhitelistEntry ('"
+               << source_origin.GetString().Ascii() << "', '"
+               << destination_protocol.Ascii() << "', '"
+               << destination_host.Ascii() << "', '"
+               << std::string(allow_destination_subdomains ? "include_subdomain"
+                                                           : "no_subdomain")
+               << "')";
   SecurityPolicy::AddOriginAccessWhitelistEntry(
       *SecurityOrigin::Create(source_origin), destination_protocol,
       destination_host, allow_destination_subdomains);
+}
+
+void WebSecurityPolicy::AddOriginAccessWhitelistExceptionEntry(
+    const WebURL& source_origin,
+    const WebString& destination_protocol,
+    const WebString& destination_host,
+    bool allow_destination_subdomains,
+    bool blacklist) {
+  LOG(WARNING)
+      << "@#$-- WebSecurityPolicy::AddOriginAccessWhitelistExceptionEntry ('"
+      << source_origin.GetString().Ascii() << "', '"
+      << destination_protocol.Ascii() << "', '" << destination_host.Ascii()
+      << "', '"
+      << std::string(allow_destination_subdomains ? "include_subdomain"
+                                                  : "no_subdomain")
+      << "', '" << std::string(blacklist ? "blacklist" : "whitelist") << "')";
+  SecurityPolicy::AddOriginAccessWhitelistExceptionEntry(
+      *SecurityOrigin::Create(source_origin), destination_protocol,
+      destination_host, allow_destination_subdomains, blacklist);
+}
+
+void WebSecurityPolicy::RemoveOriginAccessWhitelistExceptionEntry(
+    const WebURL& source_origin,
+    const WebString& destination_protocol,
+    const WebString& destination_host,
+    bool allow_destination_subdomains,
+    bool blacklist) {
+  LOG(WARNING)
+      << "@#$-- WebSecurityPolicy::RemoveOriginAccessWhitelistExceptionEntry ('"
+      << source_origin.GetString().Ascii() << "', '"
+      << destination_protocol.Ascii() << "', '" << destination_host.Ascii()
+      << "', '"
+      << std::string(allow_destination_subdomains ? "include_subdomain"
+                                                  : "no_subdomain")
+      << "', '" << std::string(blacklist ? "blacklist" : "whitelist") << "')";
+  SecurityPolicy::AddOriginAccessWhitelistExceptionEntry(
+      *SecurityOrigin::Create(source_origin), destination_protocol,
+      destination_host, allow_destination_subdomains, blacklist);
 }
 
 void WebSecurityPolicy::RemoveOriginAccessWhitelistEntry(

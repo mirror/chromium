@@ -446,6 +446,7 @@ void ExtensionService::Init() {
   DCHECK(!is_ready());  // Can't redo init.
   DCHECK_EQ(registry_->enabled_extensions().size(), 0u);
 
+  CheckManagementPolicy();
   component_loader_->LoadAll();
   bool load_saved_extensions = true;
   bool load_command_line_extensions = extensions_enabled_;
