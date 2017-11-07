@@ -190,6 +190,30 @@
     },
     {
       "key": {
+        "uuid": "d315e5da_f149a2f1",
+        "filename": "chrome/browser/ssl/ssl_error_navigation_throttle.cc",
+        "patchSetId": 17
+      },
+      "lineNbr": 43,
+      "author": {
+        "id": 1121739
+      },
+      "writtenOn": "2017-11-07T22:23:21Z",
+      "side": 1,
+      "message": "Looks like I need to do this anyhow!",
+      "parentUuid": "77ebd977_45749b10",
+      "range": {
+        "startLine": 43,
+        "startChar": 12,
+        "endLine": 43,
+        "endChar": 30
+      },
+      "revId": "5963250578cb213126d94e50c15d31191a5b1e7c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "57aa8bff_995bb3c3",
         "filename": "chrome/browser/ssl/ssl_error_navigation_throttle.cc",
         "patchSetId": 17
