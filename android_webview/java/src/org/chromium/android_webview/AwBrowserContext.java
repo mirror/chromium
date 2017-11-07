@@ -73,7 +73,7 @@ public class AwBrowserContext {
     @SuppressWarnings("unchecked")
     private void initSafeBrowsingApiHandler() {
         final String safeBrowsingApiHandler =
-                "com.android.webview.chromium.AwSafeBrowsingApiHandler";
+                "com.android.webview.chromium.AwSafeBrowsingApiHandlerGoogle";
 
         // Try to get a specialized service bridge.
         try {
