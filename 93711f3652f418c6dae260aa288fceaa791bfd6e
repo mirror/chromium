@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "ed178e5c_f18d29e0",
+        "filename": "chrome/browser/vr/elements/ui_element.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 101,
+      "author": {
+        "id": 1002411
+      },
+      "writtenOn": "2017-11-07T15:18:45Z",
+      "side": 1,
+      "message": "I think we can probably || the whole thing with IsVisible(). Is there ever a case where this element could require the scene to be redrawn while invisible? I can\u0027t think of one.",
+      "range": {
+        "startLine": 101,
+        "startChar": 9,
+        "endLine": 101,
+        "endChar": 57
+      },
+      "revId": "93711f3652f418c6dae260aa288fceaa791bfd6e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
