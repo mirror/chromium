@@ -30,12 +30,13 @@ typedef int64_t FaviconID;
 // A Java counterpart will be generated for this enum.
 // GENERATED_JAVA_ENUM_PACKAGE: org.chromium.chrome.browser.favicon
 enum class IconType {
-  kInvalid = 0,
-  kFavicon = 1 << 0,
-  kTouchIcon = 1 << 1,
-  kTouchPrecomposedIcon = 1 << 2,
-  kWebManifestIcon = 1 << 3,
-  kMax = kWebManifestIcon
+  kInvalid,
+  kFavicon,
+  kTouchIcon,
+  kTouchPrecomposedIcon,
+  kWebManifestIcon,
+  kMax = kWebManifestIcon,
+  kCount
 };
 
 using IconTypeSet = base::flat_set<IconType>;
@@ -164,10 +165,6 @@ enum class GoogleFaviconServerRequestStatus {
   // Insert new values here.
   COUNT
 };
-
-// Returns a value corresponding to the UMA enum values for FaviconType in
-// histograms/enums.xml.
-int GetUmaFaviconType(IconType icon_type);
 
 }  // namespace favicon_base
 

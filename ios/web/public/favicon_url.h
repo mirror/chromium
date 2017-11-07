@@ -17,12 +17,11 @@ struct FaviconURL {
   // The icon type in a page. The definition must be same as
   // favicon_base::IconType.
   enum class IconType {
-    kInvalid = 0,
-    kFavicon = 1 << 0,
-    kTouchIcon = 1 << 1,
-    kTouchPrecomposedIcon = 1 << 2,
-    kWebManifestIcon = 1 << 3,
-    kMax = kWebManifestIcon
+    kInvalid,
+    kFavicon,
+    kTouchIcon,
+    kTouchPrecomposedIcon,
+    kWebManifestIcon,
   };
 
   FaviconURL();
