@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "ce5d1119_92642c58",
+        "filename": "components/autofill/core/browser/address_validation_util.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 99,
+      "author": {
+        "id": 1153419
+      },
+      "writtenOn": "2017-11-07T22:06:45Z",
+      "side": 1,
+      "message": "Could you use base::i18n::ToUpper()? It takes a string16 so you should apply it before the UTF16ToUTF8.\n\nBut it should support international stuff better :)",
+      "range": {
+        "startLine": 99,
+        "startChar": 31,
+        "endLine": 99,
+        "endChar": 43
+      },
+      "revId": "56d5dde1dda6949aef0e5aad0078fefb78561340",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
