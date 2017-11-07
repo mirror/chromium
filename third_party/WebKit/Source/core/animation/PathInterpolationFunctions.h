@@ -24,9 +24,10 @@ class PathInterpolationFunctions {
                         const InterpolationType&,
                         const InterpolationValue&);
 
-  static InterpolationValue ConvertValue(const SVGPathByteStream&);
+  static InterpolationValue ConvertValue(const SVGPathByteStream&,
+                                         bool forceAbsolute);
 
-  static InterpolationValue ConvertValue(const StylePath*);
+  static InterpolationValue ConvertValue(const StylePath*, bool forceAbsolute);
 
   static InterpolationValue MaybeConvertNeutral(
       const InterpolationValue& underlying,

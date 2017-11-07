@@ -86,7 +86,7 @@ InterpolationValue CSSPathInterpolationType::MaybeConvertNeutral(
 InterpolationValue CSSPathInterpolationType::MaybeConvertInitial(
     const StyleResolverState&,
     ConversionCheckers&) const {
-  return PathInterpolationFunctions::ConvertValue(nullptr);
+  return PathInterpolationFunctions::ConvertValue(nullptr, true);
 }
 
 class InheritedPathChecker : public CSSInterpolationType::CSSConversionChecker {
@@ -121,7 +121,7 @@ InterpolationValue CSSPathInterpolationType::MaybeConvertInherit(
   conversion_checkers.push_back(InheritedPathChecker::Create(
       CssProperty(), GetPath(CssProperty(), *state.ParentStyle())));
   return PathInterpolationFunctions::ConvertValue(
-      GetPath(CssProperty(), *state.ParentStyle()));
+      GetPath(CssProperty(), *state.ParentStyle()), true);
 }
 
 InterpolationValue CSSPathInterpolationType::MaybeConvertValue(
@@ -132,14 +132,14 @@ InterpolationValue CSSPathInterpolationType::MaybeConvertValue(
     return nullptr;
   }
   return PathInterpolationFunctions::ConvertValue(
-      cssvalue::ToCSSPathValue(value).ByteStream());
+      cssvalue::ToCSSPathValue(value).ByteStream(), true);
 }
 
 InterpolationValue
 CSSPathInterpolationType::MaybeConvertStandardPropertyUnderlyingValue(
     const ComputedStyle& style) const {
-  return PathInterpolationFunctions::ConvertValue(
-      GetPath(CssProperty(), style));
+  return PathInterpolationFunctions::ConvertValue(GetPath(CssProperty(), style),
+                                                  true);
 }
 
 PairwiseInterpolationValue CSSPathInterpolationType::MaybeMergeSingles(
