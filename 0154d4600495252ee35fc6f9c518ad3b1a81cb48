@@ -48,6 +48,54 @@
     },
     {
       "key": {
+        "uuid": "af85e0d8_053f1af3",
+        "filename": "chrome/utility/importer/firefox_importer.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 351,
+      "author": {
+        "id": 1135394
+      },
+      "writtenOn": "2017-11-07T12:15:29Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "a6cd358e_bebe7cad",
+      "range": {
+        "startLine": 351,
+        "startChar": 64,
+        "endLine": 351,
+        "endChar": 0
+      },
+      "revId": "0154d4600495252ee35fc6f9c518ad3b1a81cb48",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "85c6d6ce_f785034f",
+        "filename": "chrome/utility/importer/firefox_importer.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 351,
+      "author": {
+        "id": 1135394
+      },
+      "writtenOn": "2017-11-07T12:15:29Z",
+      "side": 1,
+      "message": "Good point!",
+      "parentUuid": "58bee64a_0950d791",
+      "range": {
+        "startLine": 351,
+        "startChar": 0,
+        "endLine": 351,
+        "endChar": 64
+      },
+      "revId": "0154d4600495252ee35fc6f9c518ad3b1a81cb48",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "74da07ad_dd9bd02e",
         "filename": "chrome/utility/importer/firefox_importer.cc",
         "patchSetId": 4
@@ -71,6 +119,30 @@
     },
     {
       "key": {
+        "uuid": "87684fd9_522068e3",
+        "filename": "chrome/utility/importer/firefox_importer.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 379,
+      "author": {
+        "id": 1135394
+      },
+      "writtenOn": "2017-11-07T12:15:29Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "74da07ad_dd9bd02e",
+      "range": {
+        "startLine": 379,
+        "startChar": 31,
+        "endLine": 379,
+        "endChar": 74
+      },
+      "revId": "0154d4600495252ee35fc6f9c518ad3b1a81cb48",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "51f5abb3_50e4a2be",
         "filename": "tools/metrics/histograms/histograms.xml",
         "patchSetId": 4
@@ -91,6 +163,30 @@
       "revId": "0154d4600495252ee35fc6f9c518ad3b1a81cb48",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b8b5e561_5472631f",
+        "filename": "tools/metrics/histograms/histograms.xml",
+        "patchSetId": 4
+      },
+      "lineNbr": 25137,
+      "author": {
+        "id": 1135394
+      },
+      "writtenOn": "2017-11-07T12:15:29Z",
+      "side": 1,
+      "message": "I think the owner of issue, vabr@chromium.org, is the right person for the owner of these histograms if vabr don\u0027t mind.",
+      "parentUuid": "51f5abb3_50e4a2be",
+      "range": {
+        "startLine": 25137,
+        "startChar": 33,
+        "endLine": 25137,
+        "endChar": 0
+      },
+      "revId": "0154d4600495252ee35fc6f9c518ad3b1a81cb48",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
