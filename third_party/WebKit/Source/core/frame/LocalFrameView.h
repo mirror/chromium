@@ -978,7 +978,6 @@ class CORE_EXPORT LocalFrameView final
   void UpdateStyleAndLayoutIfNeededRecursive();
   void PrePaint();
   void PaintTree();
-  void PaintGraphicsLayerRecursively(GraphicsLayer*);
 
   void UpdateStyleAndLayoutIfNeededRecursiveInternal();
 
