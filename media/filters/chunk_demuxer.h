@@ -309,6 +309,10 @@ class MEDIA_EXPORT ChunkDemuxer : public Demuxer {
   // |duration|.
   void SetDuration(double duration);
 
+  // Sets |duration_| to |new_duration|, sets |user_specified_duration_| to -1
+  // and notifies |host_|.
+  void UpdateDuration(base::TimeDelta new_duration);
+
   // Returns true if the source buffer associated with |id| is currently parsing
   // a media segment, or false otherwise.
   bool IsParsingMediaSegment(const std::string& id);
@@ -390,10 +394,6 @@ class MEDIA_EXPORT ChunkDemuxer : public Demuxer {
   // Decreases |duration_| if the buffered region is less than |duration_| when
   // EndOfStream() is called.
   void DecreaseDurationIfNecessary();
-
-  // Sets |duration_| to |new_duration|, sets |user_specified_duration_| to -1
-  // and notifies |host_|.
-  void UpdateDuration(base::TimeDelta new_duration);
 
   // Returns the ranges representing the buffered data in the demuxer.
   Ranges<base::TimeDelta> GetBufferedRanges_Locked() const;
