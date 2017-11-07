@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "794cd7fb_bb350366",
+        "filename": "components/autofill/core/browser/autofill_field.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 624,
+      "author": {
+        "id": 1002376
+      },
+      "writtenOn": "2017-11-07T19:40:23Z",
+      "side": 0,
+      "message": "does it work to just do the comparison with overall server type here?\n\ni.e., replace return... with\n\n  if (html_type_ \u003d\u003d HTML_TYPE_TEL \u0026\u0026\n      overall_server_type_ \u003d\u003d PHONE_HOME_CITY_AND_NUMBER) {\n    return AutofillType(PHONE_HOME_CITY_AND_NUMBER);\n  }\n  return AutofillType(html_type_, html_mode_);",
+      "revId": "8535de60c5047263328ed2c9d6e82aef69661a69",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
