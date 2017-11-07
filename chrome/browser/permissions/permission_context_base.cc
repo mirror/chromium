@@ -226,6 +226,7 @@ PermissionResult PermissionContextBase::GetPermissionStatus(
     content::RenderFrameHost* render_frame_host,
     const GURL& requesting_origin,
     const GURL& embedding_origin) const {
+  DCHECK(requesting_origin.is_valid() && embedding_origin.is_valid());
   // If the permission has been disabled through Finch, block all requests.
   if (IsPermissionKillSwitchOn()) {
     return PermissionResult(CONTENT_SETTING_BLOCK,
