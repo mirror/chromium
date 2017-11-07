@@ -52,6 +52,24 @@
       "revId": "f090037d2636b7b2e1383adcf551b08f284a27e6",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "a4b7c73b_9715de81",
+        "filename": "components/translate/core/browser/translate_prefs.cc",
+        "patchSetId": 10
+      },
+      "lineNbr": 286,
+      "author": {
+        "id": 1115913
+      },
+      "writtenOn": "2017-11-07T06:11:46Z",
+      "side": 1,
+      "message": "OK, thanks!",
+      "parentUuid": "a3df912a_42f1dd98",
+      "revId": "f090037d2636b7b2e1383adcf551b08f284a27e6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }

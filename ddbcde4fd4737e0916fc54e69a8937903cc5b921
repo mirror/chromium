@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "b64b2465_05024eb4",
+        "filename": "components/translate/core/browser/translate_prefs.cc",
+        "patchSetId": 12
+      },
+      "lineNbr": 8,
+      "author": {
+        "id": 1115913
+      },
+      "writtenOn": "2017-11-07T06:11:46Z",
+      "side": 1,
+      "message": "Remove this (I\u0027m fine with removing this later after this CL is committed)",
+      "revId": "ddbcde4fd4737e0916fc54e69a8937903cc5b921",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
