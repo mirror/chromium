@@ -85,6 +85,24 @@
       "revId": "6588ac75ab381a789b8d065124ea3405ea1a79aa",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5dfdaba8_850ed554",
+        "filename": "components/viz/service/display/gl_renderer_unittest.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 2677,
+      "author": {
+        "id": 1000887
+      },
+      "writtenOn": "2017-11-07T23:25:30Z",
+      "side": 1,
+      "message": "I see, thanks!\n\nI found https://codereview.chromium.org/2203033005/diff/40001/cc/output/gl_renderer.cc?context\u003d10\u0026column_width\u003d80\u0026tab_spaces\u003d8 where that line was added. It used to be part of the ~ScopedUseGrContext destructor, which made it much more clear why it was being called. I had no idea why it would be in the middle of DrawRenderPassDrawQuad.\n\nI see three bugs in the current implementation:\n- The 2nd UseRenderPass call will not happen if the function early outs, which could leave the wrong frame buffer bound for the next quad in the render pass.\n- The UseRenderPass call can also early out if ComputeScissorRectForRenderPass().IsEmpty() in which case the wrong framebuffer would be bound for the next quad in the render pass.\n- There\u0027s another UseRenderPass call when doing copy requests, which could also early out and then leave the wrong thing bound for future work.\n\nI think the right thing is to not ever early out in this case cuz the use-case is different, in which case we don\u0027t need to set the flag on the renderpass when we alloc the texture. I\u0027ll write something quick.",
+      "parentUuid": "8369d808_19d95a2b",
+      "revId": "6588ac75ab381a789b8d065124ea3405ea1a79aa",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
