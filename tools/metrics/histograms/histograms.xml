@@ -32205,12 +32205,87 @@ http://cs/file:chrome/histograms.xml - but prefer this file for new entries.
   </summary>
 </histogram>
 
+<histogram
+    name="Media.AudioOutputStreamProxy.GetPreferredOutputStreamParametersWin.CreateClientResult"
+    enum="Hresult">
+  <owner>marinaciocea@chromium.org</owner>
+  <summary>
+    Return values for creating and activating an IAudioClient in
+    AudioManagerWin::GetPreferredOutputStreamParameters on Windows.
+
+    This histogram is part of the histogram group tracking failure reasons that
+    lead to fake stream creation reported in
+    Media.AudioOutputStreamProxy.StreamFormat. Check
+    Media.AudioOutputStreamProxy.StreamFormat summary for more details.
+  </summary>
+</histogram>
+
+<histogram
+    name="Media.AudioOutputStreamProxy.GetPreferredOutputStreamParametersWin.CreateDeviceResult"
+    enum="Hresult">
+  <owner>marinaciocea@chromium.org</owner>
+  <summary>
+    Return values for creating an IMMDevice endpoint in
+    AudioManagerWin::GetPreferredOutputStreamParameters on Windows.
+
+    This histogram is part of the histogram group tracking failure reasons that
+    lead to fake stream creation reported in
+    Media.AudioOutputStreamProxy.StreamFormat. Check
+    Media.AudioOutputStreamProxy.StreamFormat summary for more details.
+  </summary>
+</histogram>
+
+<histogram
+    name="Media.AudioOutputStreamProxy.GetPreferredOutputStreamParametersWin.GetDevicePeriodResult"
+    enum="Hresult">
+  <owner>marinaciocea@chromium.org</owner>
+  <summary>
+    Return values for IAudioClient::GetDevicePeriod() in
+    AudioManagerWin::GetPreferredOutputStreamParameters on Windows.
+
+    This histogram is part of the histogram group tracking failure reasons that
+    lead to fake stream creation reported in
+    Media.AudioOutputStreamProxy.StreamFormat. Check
+    Media.AudioOutputStreamProxy.StreamFormat summary for more details.
+  </summary>
+</histogram>
+
+<histogram
+    name="Media.AudioOutputStreamProxy.GetPreferredOutputStreamParametersWin.GetMixFormatResult"
+    enum="Hresult">
+  <owner>marinaciocea@chromium.org</owner>
+  <summary>
+    Return values for IAudioClient::GetMixFormat() in
+    AudioManagerWin::GetPreferredOutputStreamParameters on Windows.
+
+    This histogram is part of the histogram group tracking failure reasons that
+    lead to fake stream creation reported in
+    Media.AudioOutputStreamProxy.StreamFormat. Check
+    Media.AudioOutputStreamProxy.StreamFormat summary for more details.
+  </summary>
+</histogram>
+
 <histogram name="Media.AudioOutputStreamProxy.StreamFormat"
     enum="AudioOutputProxyStreamFormat">
   <owner>olka@chromium.org</owner>
   <summary>
     Records format used by AudioManager to create audio output stream proxy. If
-    a fake stream is created it results in muted audio playback.
+    a fake stream is created it results in muted audio playback. The failure
+    reasons that can lead to fake stream creation are tracked with the following
+    histograms:
+    Media.AudioOutputStreamProxy.GetPreferredOutputStreamParametersWin.CreateDeviceResult
+    Media.AudioOutputStreamProxy.GetPreferredOutputStreamParametersWin.CreateClientResult
+    Media.AudioOutputStreamProxy.GetPreferredOutputStreamParametersWin.GetMixFormatResult
+    Media.AudioOutputStreamProxy.GetPreferredOutputStreamParametersWin.GetDevicePeriodResult
+
+    Data in Media.AudioOutputStreamProxy.StreamFormat is broken down as follows:
+    |CreateDeviceFailReason1%|...|CreateDeviceFailReasonN%|CreateDeviceSuccess%|
+    CreateDeviceSuccess% is further broken down into:
+    |CreateClientFailReason1%|...|CreateClientFailReasonN%|CreateClientSuccess%|
+    CreateClientSuccess% is further broken down into:
+    |GetMixModeFailReason1%|...|GetMixModeFailReasonN%|GetMixModeSuccess%|
+    GetMixModeSuccess% is further broken down into:
+    |GetMixModeSuccess%|...|GetDevicePeriodFailReasonN%|GetDevicePeriodSuccess%|
   </summary>
 </histogram>
 
