@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "0742e394_3960b6d3",
+        "filename": "chrome/browser/ui/views/location_bar/find_bar_icon.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 18,
+      "author": {
+        "id": 1161819
+      },
+      "writtenOn": "2017-11-07T16:50:55Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "8d9cb62e_1a95eb03",
+      "range": {
+        "startLine": 18,
+        "startChar": 35,
+        "endLine": 18,
+        "endChar": 42
+      },
+      "revId": "21c4c777f51cca20a0b8ea2d5968abba8263b3ee",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "b57e30b1_1eaa6bb9",
         "filename": "chrome/browser/ui/views/location_bar/location_bar_view.cc",
         "patchSetId": 5
@@ -45,6 +69,30 @@
       "revId": "21c4c777f51cca20a0b8ea2d5968abba8263b3ee",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6a4cb27c_ee8239f7",
+        "filename": "chrome/browser/ui/views/location_bar/location_bar_view.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 903,
+      "author": {
+        "id": 1161819
+      },
+      "writtenOn": "2017-11-07T16:50:55Z",
+      "side": 1,
+      "message": "It\u0027s good to get that confirmation. I had suspected that to be the case, but wasn\u0027t completely certain. The code looked like that was the case.\n\nDone.",
+      "parentUuid": "b57e30b1_1eaa6bb9",
+      "range": {
+        "startLine": 903,
+        "startChar": 32,
+        "endLine": 903,
+        "endChar": 57
+      },
+      "revId": "21c4c777f51cca20a0b8ea2d5968abba8263b3ee",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
