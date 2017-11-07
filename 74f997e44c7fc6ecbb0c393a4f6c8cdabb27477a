@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "6853063a_a9f0622e",
+        "filename": "services/proxy_resolver/proxy_resolver_service_unittest.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 1,
+      "author": {
+        "id": 1002246
+      },
+      "writtenOn": "2017-11-07T17:47:40Z",
+      "side": 1,
+      "message": "Nit: 2017",
+      "range": {
+        "startLine": 1,
+        "startChar": 13,
+        "endLine": 1,
+        "endChar": 17
+      },
+      "revId": "74f997e44c7fc6ecbb0c393a4f6c8cdabb27477a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "80a02651_1ea716fb",
+        "filename": "services/proxy_resolver/proxy_resolver_service_unittest.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 8,
+      "author": {
+        "id": 1002246
+      },
+      "writtenOn": "2017-11-07T17:47:40Z",
+      "side": 1,
+      "message": "Unneeded?",
+      "range": {
+        "startLine": 8,
+        "startChar": 10,
+        "endLine": 8,
+        "endChar": 16
+      },
+      "revId": "74f997e44c7fc6ecbb0c393a4f6c8cdabb27477a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
