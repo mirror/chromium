@@ -214,6 +214,24 @@
     },
     {
       "key": {
+        "uuid": "3e3aba5d_9d762b03",
+        "filename": "chrome/browser/chromeos/login/users/wallpaper/wallpaper_manager.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 976,
+      "author": {
+        "id": 1179965
+      },
+      "writtenOn": "2017-11-07T23:24:18Z",
+      "side": 1,
+      "message": "The concern I have about the combination is that these functions will be converted to mojo calls soon, and the mojo call will not only send the account_id, but also will use user_manager::FindUser(account_id) to get other user information that //ash doesn\u0027t have access to, and send them altogether. FindUser(SignInAccountId()) will return a null pointer, so it can\u0027t be distinguished with real fake users that we really want to ignore. Although we could always do a special check for (IsSignInAccount()), this check will still have to remain in Chrome somewhere, before sending the mojo calls. So it will make things more complicated in the future..\n\nThat being said, I will combine them if any of the above plans change.",
+      "parentUuid": "93509acf_e65847fa",
+      "revId": "f4fbc01323400ce21bec967ec76ed5529bc86d03",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "be4bf23c_83ba0010",
         "filename": "chrome/browser/chromeos/login/users/wallpaper/wallpaper_manager.cc",
         "patchSetId": 9
