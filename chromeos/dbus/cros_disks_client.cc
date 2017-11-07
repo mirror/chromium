@@ -141,7 +141,7 @@ class CrosDisksClientImpl : public CrosDisksClient {
 
   // CrosDisksClient override.
   void EnumerateAutoMountableDevices(
-      const EnumerateAutoMountableDevicesCallback& callback,
+      const EnumerateDevicesCallback& callback,
       const base::Closure& error_callback) override {
     dbus::MethodCall method_call(cros_disks::kCrosDisksInterface,
                                  cros_disks::kEnumerateAutoMountableDevices);
@@ -150,6 +150,16 @@ class CrosDisksClientImpl : public CrosDisksClient {
         base::BindOnce(&CrosDisksClientImpl::OnEnumerateAutoMountableDevices,
                        weak_ptr_factory_.GetWeakPtr(), callback,
                        error_callback));
+  }
+
+  void EnumerateDevices(const EnumerateDevicesCallback& callback,
+                        const base::Closure& error_callback) override {
+    dbus::MethodCall method_call(cros_disks::kCrosDisksInterface,
+                                 cros_disks::kEnumerateDevices);
+    proxy_->CallMethod(&method_call, dbus::ObjectProxy::TIMEOUT_USE_DEFAULT,
+                       base::BindOnce(&CrosDisksClientImpl::OnEnumerateDevices,
+                                      weak_ptr_factory_.GetWeakPtr(), callback,
+                                      error_callback));
   }
 
   // CrosDisksClient override.
@@ -333,10 +343,28 @@ class CrosDisksClientImpl : public CrosDisksClient {
 
   // Handles the result of EnumerateAutoMountableDevices and calls |callback| or
   // |error_callback|.
-  void OnEnumerateAutoMountableDevices(
-      const EnumerateAutoMountableDevicesCallback& callback,
-      const base::Closure& error_callback,
-      dbus::Response* response) {
+  void OnEnumerateAutoMountableDevices(const EnumerateDevicesCallback& callback,
+                                       const base::Closure& error_callback,
+                                       dbus::Response* response) {
+    if (!response) {
+      error_callback.Run();
+      return;
+    }
+    dbus::MessageReader reader(response);
+    std::vector<std::string> device_paths;
+    if (!reader.PopArrayOfStrings(&device_paths)) {
+      LOG(ERROR) << "Invalid response: " << response->ToString();
+      error_callback.Run();
+      return;
+    }
+    callback.Run(device_paths);
+  }
+
+  // Handles the result of EnumerateDevices and calls |callback| or
+  // |error_callback|.
+  void OnEnumerateDevices(const EnumerateDevicesCallback& callback,
+                          const base::Closure& error_callback,
+                          dbus::Response* response) {
     if (!response) {
       error_callback.Run();
       return;

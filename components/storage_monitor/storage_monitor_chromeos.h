@@ -86,7 +86,6 @@ class StorageMonitorCros : public StorageMonitor,
 
   // Mapping of relevant mount points and their corresponding mount devices.
   MountMap mount_map_;
-
   std::unique_ptr<device::MediaTransferProtocolManager>
       media_transfer_protocol_manager_;
   std::unique_ptr<MediaTransferProtocolDeviceObserverChromeOS>

@@ -76,6 +76,24 @@ bool GetDeviceInfo(const DiskMountManager::MountPointInfo& mount_info,
   return true;
 }
 
+// Returns true if the requested device is valid, else false. On success, fills
+// in |info|.
+bool GetFixedStorageInfo(const DiskMountManager::Disk& disk,
+                         StorageInfo* info) {
+  DCHECK(info);
+
+  std::string unique_id = MakeDeviceUniqueId(disk);
+  if (unique_id.empty())
+    return false;
+
+  *info = StorageInfo(
+      StorageInfo::MakeDeviceId(StorageInfo::FIXED_MASS_STORAGE, unique_id),
+      disk.mount_path(), base::UTF8ToUTF16(disk.device_label()),
+      base::UTF8ToUTF16(disk.vendor_name()),
+      base::UTF8ToUTF16(disk.product_name()), disk.total_size_in_bytes());
+  return true;
+}
+
 }  // namespace
 
 StorageMonitorCros::StorageMonitorCros()
@@ -137,7 +155,28 @@ void StorageMonitorCros::CheckExistingMountPoints() {
 }
 
 void StorageMonitorCros::OnDiskEvent(DiskMountManager::DiskEvent event,
-                                     const DiskMountManager::Disk* disk) {}
+                                     const DiskMountManager::Disk* disk) {
+  DCHECK_CURRENTLY_ON(content::BrowserThread::UI);
+  // Removable devices are handled in OnMountEvent.
+  if (disk->on_removable_device())
+    return;
+
+  StorageInfo info;
+  GetFixedStorageInfo(*disk, &info);
+  if (event == DiskMountManager::DiskEvent::DISK_ADDED) {
+    if (!disk->is_mounted())
+      return;
+
+    if (base::ContainsKey(mount_map_, disk->mount_path()))
+      return;
+
+    mount_map_.insert(std::make_pair(disk->mount_path(), info));
+    receiver()->ProcessAttach(info);
+  } else if (event == DiskMountManager::DiskEvent::DISK_REMOVED) {
+    mount_map_.erase(info.device_id());
+    receiver()->ProcessDetach(info.device_id());
+  }
+}
 
 void StorageMonitorCros::OnDeviceEvent(DiskMountManager::DeviceEvent event,
                                        const std::string& device_path) {}
@@ -151,11 +190,14 @@ void StorageMonitorCros::OnMountEvent(
   // Ignore mount points that are not devices.
   if (mount_info.mount_type != chromeos::MOUNT_TYPE_DEVICE)
     return;
+
   // Ignore errors.
   if (error_code != chromeos::MOUNT_ERROR_NONE)
     return;
-  if (mount_info.mount_condition != chromeos::disks::MOUNT_CONDITION_NONE)
+
+  if (mount_info.mount_condition != chromeos::disks::MOUNT_CONDITION_NONE) {
     return;
+  }
 
   switch (event) {
     case DiskMountManager::MOUNTING: {
