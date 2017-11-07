@@ -124,6 +124,10 @@ vars = {
   # the commit queue can handle CLs rolling libprotobuf-mutator
   # and whatever else without interference from each other.
   'libprotobuf-mutator': '52af4b0f6f55f9d8836acb605e902db49eb8e6b4',
+  # Three lines of non-changing comments so that
+  # the commit queue can handle CLs rolling libprotobuf-mutator
+  # and whatever else without interference from each other.
+  'tensorflow_revision': '48c54eee17b35ebc15e274e36632eccb76072f7d',
 }
 
 # Only these hosts are allowed for dependencies in this DEPS file.
@@ -553,6 +557,11 @@ deps = {
 
   'src/third_party/swiftshader':
     Var('swiftshader_git') + '/SwiftShader.git' + '@' +  Var('swiftshader_revision'),
+
+  'src/third_party/tensorflow/src': {
+    'url': Var('chromium_git') + '/external/github.com/tensorflow/tensorflow.git' + '@' + Var('tensorflow_revision'),
+    'condition': 'checkout_linux',
+  },
 
   'src/third_party/ub-uiautomator/lib': {
       'url': Var('chromium_git') + '/chromium/third_party/ub-uiautomator.git' + '@' + '00270549ce3161ae72ceb24712618ea28b4f9434',
