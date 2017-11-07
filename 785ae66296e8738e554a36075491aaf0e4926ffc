@@ -358,6 +358,30 @@
     },
     {
       "key": {
+        "uuid": "49a1bdbb_e402a450",
+        "filename": "net/http/http_server_properties_impl.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 619,
+      "author": {
+        "id": 1116006
+      },
+      "writtenOn": "2017-11-07T05:09:54Z",
+      "side": 1,
+      "message": "Your question is a fair one. Thanks for asking!\n\nTo date, canonical_host_to_origin_map_ was only used for alt-svc, but *I* think it makes sense to be used for server info as well, though we\u0027ve not ever done that before, so there may well be corner cases to work out.\n\nIn the case of chrome, the server infos and alt-svc are both persisted together so if we have alt-svc for foo, we\u0027ll have server info for foo, so we should be safe.\n\nFor cronet, if the app is saving server properties, then it should not need addQuicHint because it has both the alt-svc and the server info saved to properties. If the app is not saving properties, then it won\u0027t have server infos at all.\n\nBut if an app is doing both addQuicHint for a canonical server *and* saving server properties to disk, that could break. We should consider talking to the cronet apps which make use of canonical servers and see if they also use addQuicHint. Do you know if addQuicHint happens before or after server configs are loaded from disk?",
+      "parentUuid": "e09dd83e_229da1aa",
+      "range": {
+        "startLine": 619,
+        "startChar": 3,
+        "endLine": 619,
+        "endChar": 0
+      },
+      "revId": "785ae66296e8738e554a36075491aaf0e4926ffc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "71ac8a88_d9a35a62",
         "filename": "net/http/http_server_properties_impl_unittest.cc",
         "patchSetId": 2
