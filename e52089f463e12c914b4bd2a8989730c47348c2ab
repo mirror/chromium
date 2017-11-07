@@ -2,6 +2,40 @@
   "comments": [
     {
       "key": {
+        "uuid": "52621964_9b0d256a",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 2
+      },
+      "lineNbr": 7,
+      "author": {
+        "id": 1163599
+      },
+      "writtenOn": "2017-11-07T21:24:37Z",
+      "side": 1,
+      "message": "nit: \"Forms: Encode uploaded file names using HTML character entities.\"",
+      "revId": "e52089f463e12c914b4bd2a8989730c47348c2ab",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "56a47ac2_d197359a",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 2
+      },
+      "lineNbr": 10,
+      "author": {
+        "id": 1163599
+      },
+      "writtenOn": "2017-11-07T21:24:37Z",
+      "side": 1,
+      "message": "Bug: 661819\n\n(only use the bug number, not the URL)",
+      "revId": "e52089f463e12c914b4bd2a8989730c47348c2ab",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "8cb7816a_2957cb09",
         "filename": "third_party/WebKit/Source/platform/network/FormDataEncoder.cpp",
         "patchSetId": 2
@@ -13,6 +47,24 @@
       "writtenOn": "2017-11-07T20:15:21Z",
       "side": 1,
       "message": "Can you please find the relevant standard for this and add a comment above referencing it? (reminder: we prefer the Editor\u0027s Draft version of standards)",
+      "revId": "e52089f463e12c914b4bd2a8989730c47348c2ab",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4680e6cf_3e193512",
+        "filename": "third_party/WebKit/Source/platform/network/FormDataEncoder.cpp",
+        "patchSetId": 2
+      },
+      "lineNbr": 168,
+      "author": {
+        "id": 1163599
+      },
+      "writtenOn": "2017-11-07T21:24:37Z",
+      "side": 1,
+      "message": "The relevant standard appears to be https://tools.ietf.org/html/rfc7578#section-5.1 and doesn\u0027t seem to suggest the solution here. We should definitely document the basis for the decision here. If we\u0027re deviating from standards, we should probably follow the I2S process.",
+      "parentUuid": "8cb7816a_2957cb09",
       "revId": "e52089f463e12c914b4bd2a8989730c47348c2ab",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
