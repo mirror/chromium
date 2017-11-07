@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "a95ee910_bc34e27b",
+        "filename": "build/fuchsia/runner_common.py",
+        "patchSetId": 1
+      },
+      "lineNbr": 538,
+      "author": {
+        "id": 1144260
+      },
+      "writtenOn": "2017-11-07T18:16:21Z",
+      "side": 1,
+      "message": "nit; maybe factor this out (or set device \u003d \u0027virtio-net-pci\u0027 here, and then append to qemu_command after the if/else.",
+      "range": {
+        "startLine": 538,
+        "startChar": 36,
+        "endLine": 538,
+        "endChar": 70
+      },
+      "revId": "ac8cba89df92237bc0987090d0f567c4bb793336",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
