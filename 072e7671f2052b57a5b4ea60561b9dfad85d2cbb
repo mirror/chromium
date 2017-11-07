@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "8f05dbc0_15bcd227",
+        "filename": "chrome/browser/vr/ganesh_surface_provider.cc",
+        "patchSetId": 10
+      },
+      "lineNbr": 23,
+      "author": {
+        "id": 1213279
+      },
+      "writtenOn": "2017-11-07T16:00:33Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "d9ae651f_dd280e32",
+      "range": {
+        "startLine": 23,
+        "startChar": 17,
+        "endLine": 23,
+        "endChar": 23
+      },
+      "revId": "072e7671f2052b57a5b4ea60561b9dfad85d2cbb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "85b439c1_8a53f1f8",
         "filename": "chrome/browser/vr/ganesh_surface_provider.h",
         "patchSetId": 10
@@ -48,6 +72,30 @@
     },
     {
       "key": {
+        "uuid": "07783cc7_cca8c2fb",
+        "filename": "chrome/browser/vr/ganesh_surface_provider.h",
+        "patchSetId": 10
+      },
+      "lineNbr": 26,
+      "author": {
+        "id": 1213279
+      },
+      "writtenOn": "2017-11-07T16:00:33Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "85b439c1_8a53f1f8",
+      "range": {
+        "startLine": 26,
+        "startChar": 29,
+        "endLine": 26,
+        "endChar": 42
+      },
+      "revId": "072e7671f2052b57a5b4ea60561b9dfad85d2cbb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "d5719e17_ed49f496",
         "filename": "skia/BUILD.gn",
         "patchSetId": 10
@@ -68,6 +116,30 @@
       "revId": "072e7671f2052b57a5b4ea60561b9dfad85d2cbb",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2654aaa8_e498cf4e",
+        "filename": "skia/BUILD.gn",
+        "patchSetId": 10
+      },
+      "lineNbr": 429,
+      "author": {
+        "id": 1213279
+      },
+      "writtenOn": "2017-11-07T16:00:33Z",
+      "side": 1,
+      "message": "Neat! Done.",
+      "parentUuid": "d5719e17_ed49f496",
+      "range": {
+        "startLine": 429,
+        "startChar": 11,
+        "endLine": 429,
+        "endChar": 72
+      },
+      "revId": "072e7671f2052b57a5b4ea60561b9dfad85d2cbb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
