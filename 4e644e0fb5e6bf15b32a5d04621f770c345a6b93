@@ -1,0 +1,106 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "47042487_c5d91a21",
+        "filename": "components/viz/service/frame_sinks/video_detector.cc",
+        "patchSetId": 38
+      },
+      "lineNbr": 91,
+      "author": {
+        "id": 1146978
+      },
+      "writtenOn": "2017-11-07T20:31:25Z",
+      "side": 1,
+      "message": "I think the only thing you ever use FrameSinkManagerImpl for is to get SurfaceManager. Would it make more sense to pass that in?",
+      "revId": "4e644e0fb5e6bf15b32a5d04621f770c345a6b93",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b238f3c2_813b920b",
+        "filename": "components/viz/service/frame_sinks/video_detector.cc",
+        "patchSetId": 38
+      },
+      "lineNbr": 135,
+      "author": {
+        "id": 1146978
+      },
+      "writtenOn": "2017-11-07T20:31:25Z",
+      "side": 1,
+      "message": "It seems unfortunate having to do three different map lookups (valid FrameSinkId, get ClientInfo and then get Surface) each time a surface gets drawn. I guess hooking into RegisterFrameSinkId() wouldn\u0027t work with your early exit when there are no observers though, so I\u0027m not sure it\u0027s super actionable.",
+      "revId": "4e644e0fb5e6bf15b32a5d04621f770c345a6b93",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9502e377_6f4c6fa9",
+        "filename": "components/viz/service/frame_sinks/video_detector.h",
+        "patchSetId": 38
+      },
+      "lineNbr": 91,
+      "author": {
+        "id": 1146978
+      },
+      "writtenOn": "2017-11-07T20:31:25Z",
+      "side": 1,
+      "message": "base:unordered_map?",
+      "revId": "4e644e0fb5e6bf15b32a5d04621f770c345a6b93",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "457eecd4_b3d2d457",
+        "filename": "components/viz/service/frame_sinks/video_detector_unittest.cc",
+        "patchSetId": 38
+      },
+      "lineNbr": 93,
+      "author": {
+        "id": 1146978
+      },
+      "writtenOn": "2017-11-07T20:31:25Z",
+      "side": 1,
+      "message": "I didn\u0027t realize TickClock already existed, very cool.",
+      "revId": "4e644e0fb5e6bf15b32a5d04621f770c345a6b93",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "bab0a50d_a1f5389e",
+        "filename": "components/viz/service/frame_sinks/video_detector_unittest.cc",
+        "patchSetId": 38
+      },
+      "lineNbr": 168,
+      "author": {
+        "id": 1146978
+      },
+      "writtenOn": "2017-11-07T20:31:25Z",
+      "side": 1,
+      "message": "Is it possible to hit this condition (it\u0027s the same as the exit condition in loop).",
+      "revId": "4e644e0fb5e6bf15b32a5d04621f770c345a6b93",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1c23771a_d051e897",
+        "filename": "components/viz/service/frame_sinks/video_detector_unittest.cc",
+        "patchSetId": 38
+      },
+      "lineNbr": 314,
+      "author": {
+        "id": 1146978
+      },
+      "writtenOn": "2017-11-07T20:31:25Z",
+      "side": 1,
+      "message": "nit: Declare d in the loop?",
+      "revId": "4e644e0fb5e6bf15b32a5d04621f770c345a6b93",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
