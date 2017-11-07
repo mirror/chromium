@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "cdb3b015_d01823d7",
+        "filename": "tools/perf/contrib/heap_profiling/heap_profiling.py",
+        "patchSetId": 3
+      },
+      "lineNbr": 18,
+      "author": {
+        "id": 1123010
+      },
+      "writtenOn": "2017-11-07T20:42:31Z",
+      "side": 1,
+      "message": "nit: should be two blank lines here",
+      "revId": "30d44959f1cff96bb86ed2bc9a93cbfd698f3227",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c59f4fd5_765cfb11",
+        "filename": "tools/perf/contrib/heap_profiling/heap_profiling.py",
+        "patchSetId": 3
+      },
+      "lineNbr": 98,
+      "author": {
+        "id": 1123010
+      },
+      "writtenOn": "2017-11-07T20:42:31Z",
+      "side": 1,
+      "message": "nit: call this \u0027disabled\u0027",
+      "revId": "30d44959f1cff96bb86ed2bc9a93cbfd698f3227",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
