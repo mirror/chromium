@@ -1115,6 +1115,11 @@ void DisplayManager::SetUnifiedDesktopMatrix(
   SetDefaultMultiDisplayModeForCurrentDisplays(UNIFIED);
 }
 
+const UnifiedDesktopLayoutMatrix&
+DisplayManager::GetCurrentUnifiedDesktopMatrix() const {
+  return current_matrix_;
+}
+
 const Display* DisplayManager::GetPrimaryMirroringDisplayForUnifiedDesktop()
     const {
   if (!IsInUnifiedMode())
