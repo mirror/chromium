@@ -128,6 +128,24 @@
       "revId": "7fb128e860ec5721baac75eaf459fdb941c63c04",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "737a731d_cfec0ea4",
+        "filename": "tools/grit/grit/gather/policy_json.py",
+        "patchSetId": 2
+      },
+      "lineNbr": 214,
+      "author": {
+        "id": 1001934
+      },
+      "writtenOn": "2017-11-07T17:26:14Z",
+      "side": 1,
+      "message": "So I guess this is really a critique of the previous CL. Maybe this was already discussed, so this may be just a repeated concern.\n\nIs it safe to assume |key| can only be \"items\" and \"policies\" ? If yes, can we structure the code as follows, so there is an assert to enforce this assumption?\n\nif key \u003d\u003d \u0027items\u0027:\n  # handle key here\n  continue\n\nassert key \u003d\u003d \u0027policies\u0027\nif all(not ...):\n  # handle old policies here\n  continue\n\n# handle new policies.",
+      "parentUuid": "2ead7960_cd8f59c3",
+      "revId": "7fb128e860ec5721baac75eaf459fdb941c63c04",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
