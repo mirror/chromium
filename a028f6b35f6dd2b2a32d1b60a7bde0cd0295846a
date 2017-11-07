@@ -1,0 +1,142 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "818cef49_3fb4a36a",
+        "filename": "components/cronet/ios/Cronet.h",
+        "patchSetId": 7
+      },
+      "lineNbr": 40,
+      "author": {
+        "id": 1002889
+      },
+      "writtenOn": "2017-11-07T18:26:57Z",
+      "side": 1,
+      "message": "Does it need to be marked as GRPC_SUPPORT_EXPORT?",
+      "range": {
+        "startLine": 40,
+        "startChar": 11,
+        "endLine": 40,
+        "endChar": 32
+      },
+      "revId": "a028f6b35f6dd2b2a32d1b60a7bde0cd0295846a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1a04a9cd_01912137",
+        "filename": "components/cronet/ios/Cronet.h",
+        "patchSetId": 7
+      },
+      "lineNbr": 42,
+      "author": {
+        "id": 1002889
+      },
+      "writtenOn": "2017-11-07T18:26:57Z",
+      "side": 1,
+      "message": "Andrei will correct me if I\u0027m wrong, but usually ObjC API spells out parameters like this:\n\n- (void)didFinishCollectingMetrics:(NSURLSessionTaskMetrics*)metrics forTask:(NSURLSessionTask*)task;",
+      "range": {
+        "startLine": 41,
+        "startChar": 0,
+        "endLine": 42,
+        "endChar": 60
+      },
+      "revId": "a028f6b35f6dd2b2a32d1b60a7bde0cd0295846a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e20aaec2_7bd16f97",
+        "filename": "components/cronet/ios/test/cronet_metrics_test.mm",
+        "patchSetId": 7
+      },
+      "lineNbr": 18,
+      "author": {
+        "id": 1002889
+      },
+      "writtenOn": "2017-11-07T18:26:57Z",
+      "side": 1,
+      "message": "Hrm, this signature does NOT match the one in Cronet.h, why does it compile?",
+      "range": {
+        "startLine": 18,
+        "startChar": 8,
+        "endLine": 18,
+        "endChar": 34
+      },
+      "revId": "a028f6b35f6dd2b2a32d1b60a7bde0cd0295846a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "64d6684a_6e345b8e",
+        "filename": "components/cronet/ios/test/cronet_metrics_test.mm",
+        "patchSetId": 7
+      },
+      "lineNbr": 26,
+      "author": {
+        "id": 1002889
+      },
+      "writtenOn": "2017-11-07T18:26:57Z",
+      "side": 1,
+      "message": "Inherit from CronetTestBase.",
+      "range": {
+        "startLine": 26,
+        "startChar": 20,
+        "endLine": 26,
+        "endChar": 26
+      },
+      "revId": "a028f6b35f6dd2b2a32d1b60a7bde0cd0295846a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "bdf1d4fe_38b335f2",
+        "filename": "components/cronet/ios/test/cronet_metrics_test.mm",
+        "patchSetId": 7
+      },
+      "lineNbr": 31,
+      "author": {
+        "id": 1002889
+      },
+      "writtenOn": "2017-11-07T18:26:57Z",
+      "side": 1,
+      "message": "Shouldn\u0027t need it with CronetTestBase.",
+      "range": {
+        "startLine": 31,
+        "startChar": 37,
+        "endLine": 31,
+        "endChar": 38
+      },
+      "revId": "a028f6b35f6dd2b2a32d1b60a7bde0cd0295846a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0c1a045d_2dd8c0ec",
+        "filename": "components/cronet/ios/test/cronet_metrics_test.mm",
+        "patchSetId": 7
+      },
+      "lineNbr": 38,
+      "author": {
+        "id": 1002889
+      },
+      "writtenOn": "2017-11-07T18:26:57Z",
+      "side": 1,
+      "message": "Do early return instead.",
+      "range": {
+        "startLine": 38,
+        "startChar": 5,
+        "endLine": 38,
+        "endChar": 6
+      },
+      "revId": "a028f6b35f6dd2b2a32d1b60a7bde0cd0295846a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
