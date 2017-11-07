@@ -164,6 +164,24 @@
       "revId": "7fb128e860ec5721baac75eaf459fdb941c63c04",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "317d0e1f_92408778",
+        "filename": "tools/grit/grit/gather/policy_json.py",
+        "patchSetId": 2
+      },
+      "lineNbr": 214,
+      "author": {
+        "id": 1001934
+      },
+      "writtenOn": "2017-11-07T18:59:12Z",
+      "side": 1,
+      "message": "Got it. Thanks for the explanation.",
+      "parentUuid": "cc90764d_bf8a95a0",
+      "revId": "7fb128e860ec5721baac75eaf459fdb941c63c04",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
