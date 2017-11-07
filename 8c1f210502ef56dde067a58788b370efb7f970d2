@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "9b46bbec_d66501f5",
+        "filename": "third_party/WebKit/Source/core/dom/events/EventTargetImpl.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 23,
+      "author": {
+        "id": 1002507
+      },
+      "writtenOn": "2017-11-07T04:11:41Z",
+      "side": 1,
+      "message": "nit: Create (\u003d a factory function) is preferred to be placed before the destructor.\nhttps://google.github.io/styleguide/cppguide.html#Declaration_Order",
+      "revId": "8c1f210502ef56dde067a58788b370efb7f970d2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
