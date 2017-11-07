@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "982f476d_5de2170a",
+        "filename": "components/search_provider_logos/google_logo_api.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 292,
+      "author": {
+        "id": 1150535
+      },
+      "writtenOn": "2017-11-07T16:29:40Z",
+      "side": 1,
+      "message": "\u003e What about mobile, where INTERACTIVE isn\u0027t directly supported? Do we need to do anything different here?\n\nI don\u0027t think so. Nothing below this point distinguishes SIMPLE and INTERACTIVE.",
+      "parentUuid": "2e832555_7529a27e",
+      "range": {
+        "startLine": 292,
+        "startChar": 50,
+        "endLine": 292,
+        "endChar": 0
+      },
+      "revId": "5a5f0af45cba8280ba80eb562359de76e237331b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "5f6fe7d1_2312c2fa",
         "filename": "components/search_provider_logos/google_logo_api.cc",
         "patchSetId": 1
@@ -71,6 +95,30 @@
     },
     {
       "key": {
+        "uuid": "09aaffb8_6f949003",
+        "filename": "components/search_provider_logos/google_logo_api.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 314,
+      "author": {
+        "id": 1150535
+      },
+      "writtenOn": "2017-11-07T16:29:40Z",
+      "side": 1,
+      "message": "\u003e Is it necessary/desirable to just always get both?\n\u003e If so, the comment above is now kinda inaccurate.\n\nHere, we use cta_data_uri if available, or data_uri if not. I\u0027ve updated the comment.\n\nFor reasons I don\u0027t quite understand, Doodle 2 (Happy Halloween) has a cta_data_uri, and Doodle 4 (Pony Express) has a data_uri, and I don\u0027t see any better way to handle that.",
+      "parentUuid": "f1453553_6ccdcbbf",
+      "range": {
+        "startLine": 314,
+        "startChar": 60,
+        "endLine": 314,
+        "endChar": 0
+      },
+      "revId": "5a5f0af45cba8280ba80eb562359de76e237331b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "c2ba618b_1945c67c",
         "filename": "components/search_provider_logos/logo_common.h",
         "patchSetId": 1
@@ -91,6 +139,30 @@
       "revId": "5a5f0af45cba8280ba80eb562359de76e237331b",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a032e88f_7425ad9a",
+        "filename": "components/search_provider_logos/logo_common.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 40,
+      "author": {
+        "id": 1150535
+      },
+      "writtenOn": "2017-11-07T16:29:40Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "c2ba618b_1945c67c",
+      "range": {
+        "startLine": 40,
+        "startChar": 35,
+        "endLine": 40,
+        "endChar": 0
+      },
+      "revId": "5a5f0af45cba8280ba80eb562359de76e237331b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -117,6 +189,30 @@
     },
     {
       "key": {
+        "uuid": "5b4d52a1_be174252",
+        "filename": "components/search_provider_logos/logo_common.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 43,
+      "author": {
+        "id": 1150535
+      },
+      "writtenOn": "2017-11-07T16:29:40Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "de892ba6_3db6d92d",
+      "range": {
+        "startLine": 43,
+        "startChar": 27,
+        "endLine": 43,
+        "endChar": 0
+      },
+      "revId": "5a5f0af45cba8280ba80eb562359de76e237331b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "62fd33b5_853182f2",
         "filename": "components/search_provider_logos/logo_common.h",
         "patchSetId": 1
@@ -140,6 +236,30 @@
     },
     {
       "key": {
+        "uuid": "a171ea2a_a106b664",
+        "filename": "components/search_provider_logos/logo_common.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 53,
+      "author": {
+        "id": 1150535
+      },
+      "writtenOn": "2017-11-07T16:29:40Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "62fd33b5_853182f2",
+      "range": {
+        "startLine": 53,
+        "startChar": 27,
+        "endLine": 53,
+        "endChar": 0
+      },
+      "revId": "5a5f0af45cba8280ba80eb562359de76e237331b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "aac2de6b_7f833fad",
         "filename": "components/search_provider_logos/logo_common.h",
         "patchSetId": 1
@@ -160,6 +280,30 @@
       "revId": "5a5f0af45cba8280ba80eb562359de76e237331b",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ac9b5aa4_2d826197",
+        "filename": "components/search_provider_logos/logo_common.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 75,
+      "author": {
+        "id": 1150535
+      },
+      "writtenOn": "2017-11-07T16:29:40Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "aac2de6b_7f833fad",
+      "range": {
+        "startLine": 75,
+        "startChar": 33,
+        "endLine": 75,
+        "endChar": 0
+      },
+      "revId": "5a5f0af45cba8280ba80eb562359de76e237331b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
