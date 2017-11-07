@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "eb44a90b_2831838e",
+        "filename": "base/allocator/partition_allocator/page_allocator.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 308,
+      "author": {
+        "id": 1002871
+      },
+      "writtenOn": "2017-11-07T01:08:13Z",
+      "side": 1,
+      "message": "I\u0027d nuke this block entirely. MADV_FREE has weird delayed semantics. See crbug.com/755284 .\nI\u0027d expect a uma bump down on newer kernels if we kill these lines.\nUnless there is something else I\u0027m missing?",
+      "range": {
+        "startLine": 300,
+        "startChar": 0,
+        "endLine": 308,
+        "endChar": 5
+      },
+      "revId": "051457754fa371512449c8e1d68df2c6a454275d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
