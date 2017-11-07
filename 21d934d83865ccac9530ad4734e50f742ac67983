@@ -119,6 +119,24 @@
     },
     {
       "key": {
+        "uuid": "c4360bc5_0f90c882",
+        "filename": "content/renderer/webgraphicscontext3d_provider_impl.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 77,
+      "author": {
+        "id": 1000887
+      },
+      "writtenOn": "2017-11-07T22:14:43Z",
+      "side": 1,
+      "message": "provider_ is not nulled, neither is gl_helper_.",
+      "parentUuid": "2af16909_08145973",
+      "revId": "21d934d83865ccac9530ad4734e50f742ac67983",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "fd99729f_5d36757a",
         "filename": "third_party/WebKit/Source/core/html/HTMLCanvasElement.cpp",
         "patchSetId": 5
