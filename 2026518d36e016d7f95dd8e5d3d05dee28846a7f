@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "50b2aa6c_0a769e8a",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 4
+      },
+      "lineNbr": 9,
+      "author": {
+        "id": 1211408
+      },
+      "writtenOn": "2017-11-07T00:12:50Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "53dc5ef0_53bd190a",
+      "range": {
+        "startLine": 9,
+        "startChar": 70,
+        "endLine": 9,
+        "endChar": 0
+      },
+      "revId": "2026518d36e016d7f95dd8e5d3d05dee28846a7f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "2a9e3658_89e11ba8",
         "filename": "content/browser/accessibility/browser_accessibility_com_win.h",
         "patchSetId": 4
@@ -45,6 +69,30 @@
       "revId": "2026518d36e016d7f95dd8e5d3d05dee28846a7f",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "edc7e2f9_3f9ec401",
+        "filename": "content/browser/accessibility/browser_accessibility_com_win.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 96,
+      "author": {
+        "id": 1211408
+      },
+      "writtenOn": "2017-11-07T00:12:50Z",
+      "side": 1,
+      "message": "The right place was to fix in BrowserAccessibility::GetParent() so that it fixes for all platforms.",
+      "parentUuid": "2a9e3658_89e11ba8",
+      "range": {
+        "startLine": 96,
+        "startChar": 17,
+        "endLine": 96,
+        "endChar": 29
+      },
+      "revId": "2026518d36e016d7f95dd8e5d3d05dee28846a7f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
