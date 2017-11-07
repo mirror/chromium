@@ -1337,7 +1337,7 @@ applicationCommandEndpoint:(id<ApplicationCommands>)applicationCommandEndpoint {
   if (base::FeatureList::IsEnabled(kSafeAreaCompatibleToolbar)) {
     // TODO(crbug.com/778236): Check if this call can be removed once the
     // Toolbar is a contained ViewController.
-    [_toolbarCoordinator.toolbarController viewSafeAreaInsetsDidChange];
+    [_toolbarCoordinator.toolbarViewController viewSafeAreaInsetsDidChange];
     [_toolbarCoordinator adjustToolbarHeight];
   }
 }
@@ -1945,10 +1945,11 @@ applicationCommandEndpoint:(id<ApplicationCommands>)applicationCommandEndpoint {
   [_toolbarCoordinator adjustToolbarHeight];
 
   [NSLayoutConstraint activateConstraints:@[
-    [[_toolbarCoordinator view].leadingAnchor
+    [_toolbarCoordinator.toolbarViewController.view.leadingAnchor
         constraintEqualToAnchor:[self view].leadingAnchor],
-    [[_toolbarCoordinator view].topAnchor constraintEqualToAnchor:topAnchor],
-    [[_toolbarCoordinator view].trailingAnchor
+    [_toolbarCoordinator.toolbarViewController.view.topAnchor
+        constraintEqualToAnchor:topAnchor],
+    [_toolbarCoordinator.toolbarViewController.view.trailingAnchor
         constraintEqualToAnchor:[self view].trailingAnchor],
   ]];
   [[self view] layoutIfNeeded];
@@ -2041,11 +2042,12 @@ applicationCommandEndpoint:(id<ApplicationCommands>)applicationCommandEndpoint {
 
   // Position the toolbar next, either at the top of the browser view or
   // directly under the tabstrip.
-  CGRect toolbarFrame = [[_toolbarCoordinator view] frame];
+  [self addChildViewController:_toolbarCoordinator.toolbarViewController];
+  CGRect toolbarFrame = _toolbarCoordinator.toolbarViewController.view.frame;
   toolbarFrame.origin = CGPointMake(0, minY);
   toolbarFrame.size.width = widthOfView;
   if (!base::FeatureList::IsEnabled(kSafeAreaCompatibleToolbar)) {
-    [[_toolbarCoordinator view] setFrame:toolbarFrame];
+    [_toolbarCoordinator.toolbarViewController.view setFrame:toolbarFrame];
   }
 
   // Place the infobar container above the content area.
@@ -2053,9 +2055,11 @@ applicationCommandEndpoint:(id<ApplicationCommands>)applicationCommandEndpoint {
   [self.view insertSubview:infoBarContainerView aboveSubview:_contentArea];
 
   // Place the toolbar controller above the infobar container.
-  [[self view] insertSubview:[_toolbarCoordinator view]
+  [[self view] insertSubview:_toolbarCoordinator.toolbarViewController.view
                 aboveSubview:infoBarContainerView];
   minY += CGRectGetHeight(toolbarFrame);
+  [_toolbarCoordinator.toolbarViewController
+      didMoveToParentViewController:self];
 
   // Account for the toolbar's drop shadow.  The toolbar overlaps with the web
   // content slightly.
@@ -2161,7 +2165,7 @@ applicationCommandEndpoint:(id<ApplicationCommands>)applicationCommandEndpoint {
                     ![_toolbarCoordinator isOmniboxFirstResponder] &&
                     ![_toolbarCoordinator showingOmniboxPopup];
     }
-    [[_toolbarCoordinator view] setHidden:hideToolbar];
+    [_toolbarCoordinator.toolbarViewController.view setHidden:hideToolbar];
   }
 }
 
@@ -2578,6 +2582,8 @@ bubblePresenterForFeature:(const base::Feature&)feature
   _isShutdown = YES;
   [self.tabStripCoordinator stop];
   self.tabStripCoordinator = nil;
+  [_toolbarCoordinator stop];
+  _toolbarCoordinator = nil;
   self.tabStripView = nil;
   _infoBarContainer = nil;
   _readingListMenuNotifier = nil;
@@ -3090,9 +3096,10 @@ bubblePresenterForFeature:(const base::Feature&)feature
     return results;
 
   if (!IsIPadIdiom()) {
-    if ([_toolbarCoordinator view]) {
+    if (_toolbarCoordinator.toolbarViewController.view) {
       [results addObject:[HeaderDefinition
-                             definitionWithView:[_toolbarCoordinator view]
+                             definitionWithView:_toolbarCoordinator
+                                                    .toolbarViewController.view
                                 headerBehaviour:Hideable
                                heightAdjustment:0.0
                                           inset:0.0]];
@@ -3104,9 +3111,10 @@ bubblePresenterForFeature:(const base::Feature&)feature
                                              heightAdjustment:0.0
                                                         inset:0.0]];
     }
-    if ([_toolbarCoordinator view]) {
+    if (_toolbarCoordinator.toolbarViewController.view) {
       [results addObject:[HeaderDefinition
-                             definitionWithView:[_toolbarCoordinator view]
+                             definitionWithView:_toolbarCoordinator
+                                                    .toolbarViewController.view
                                 headerBehaviour:Hideable
                                heightAdjustment:0.0
                                           inset:0.0]];
@@ -3339,11 +3347,12 @@ bubblePresenterForFeature:(const base::Feature&)feature
 }
 
 - (UIView*)headerView {
-  return [_toolbarCoordinator view];
+  return _toolbarCoordinator.toolbarViewController.view;
 }
 
 - (UIView*)toolbarSnapshotView {
-  return [[_toolbarCoordinator view] snapshotViewAfterScreenUpdates:NO];
+  return [_toolbarCoordinator.toolbarViewController.view
+      snapshotViewAfterScreenUpdates:NO];
 }
 
 - (CGFloat)overscrollActionsControllerHeaderInset:
@@ -4775,7 +4784,7 @@ bubblePresenterForFeature:(const base::Feature&)feature
     return nil;
 
   ToolbarController* relinquishedToolbarController = nil;
-  if ([_toolbarCoordinator view].hidden) {
+  if (_toolbarCoordinator.toolbarViewController.view.hidden) {
     Tab* currentTab = [_model currentTab];
     if (currentTab.webState &&
         UrlHasChromeScheme(currentTab.webState->GetLastCommittedURL())) {
@@ -4788,7 +4797,11 @@ bubblePresenterForFeature:(const base::Feature&)feature
       }
     }
   } else {
-    relinquishedToolbarController = [_toolbarCoordinator toolbarController];
+    relinquishedToolbarController = _toolbarCoordinator.webToolbarController;
+    [_toolbarCoordinator.toolbarViewController
+        willMoveToParentViewController:nil];
+    [_toolbarCoordinator.toolbarViewController.view removeFromSuperview];
+    [_toolbarCoordinator.toolbarViewController removeFromParentViewController];
   }
   _isToolbarControllerRelinquished = (relinquishedToolbarController != nil);
   return relinquishedToolbarController;
@@ -4796,18 +4809,19 @@ bubblePresenterForFeature:(const base::Feature&)feature
 
 - (void)reparentToolbarController {
   if (_isToolbarControllerRelinquished) {
-    if ([[_toolbarCoordinator view] isDescendantOfView:self.view]) {
+    if ([_toolbarCoordinator.toolbarViewController.view
+            isDescendantOfView:self.view]) {
       // A native content controller's toolbar has been relinquished.
       [_relinquishedToolbarOwner reparentToolbarController];
       _relinquishedToolbarOwner = nil;
     } else if ([_findBarController isFindInPageShown]) {
-      [self.view insertSubview:[_toolbarCoordinator view]
+      [self.view insertSubview:_toolbarCoordinator.toolbarViewController.view
                   belowSubview:[_findBarController view]];
       if (base::FeatureList::IsEnabled(kSafeAreaCompatibleToolbar)) {
         [self addConstraintsToToolbar];
       }
     } else {
-      [self.view addSubview:[_toolbarCoordinator view]];
+      [self.view addSubview:_toolbarCoordinator.toolbarViewController.view];
       if (base::FeatureList::IsEnabled(kSafeAreaCompatibleToolbar)) {
         [self addConstraintsToToolbar];
       }
@@ -4817,12 +4831,12 @@ bubblePresenterForFeature:(const base::Feature&)feature
 }
 
 - (CGRect)toolbarFrame {
-  return [_toolbarCoordinator view].frame;
+  return _toolbarCoordinator.toolbarViewController.view.frame;
 }
 
 - (id<ToolbarSnapshotProviding>)toolbarSnapshotProvider {
   id<ToolbarSnapshotProviding> toolbarSnapshotProvider = nil;
-  if ([_toolbarCoordinator view].hidden) {
+  if (_toolbarCoordinator.toolbarViewController.view.hidden) {
     Tab* currentTab = [_model currentTab];
     if (currentTab.webState &&
         UrlHasChromeScheme(currentTab.webState->GetLastCommittedURL())) {
@@ -5069,7 +5083,7 @@ bubblePresenterForFeature:(const base::Feature&)feature
   BOOL seenInfoBarContainer = NO;
   BOOL seenContentArea = NO;
   for (UIView* view in views.subviews) {
-    if (view == [_toolbarCoordinator view])
+    if (view == _toolbarCoordinator.toolbarViewController.view)
       seenToolbar = YES;
     else if (view == _infoBarContainer->view())
       seenInfoBarContainer = YES;
