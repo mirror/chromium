@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "b081a521_2bde82be",
+        "filename": "chrome/browser/resources/settings/printing_page/cups_add_printer_dialog.html",
+        "patchSetId": 3
+      },
+      "lineNbr": 64,
+      "author": {
+        "id": 1003321
+      },
+      "writtenOn": "2017-11-07T20:18:33Z",
+      "side": 1,
+      "message": "When the dialog opens, is |selectedPrinter| already set? If not, since it starts undefined when the dialog is created, I think that this button will still not be disabled until discovery is complete.",
+      "revId": "791d6a638cadb215e1c43a52f0b3524ed0409fb3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
