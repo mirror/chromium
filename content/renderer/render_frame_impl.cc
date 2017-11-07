@@ -43,7 +43,7 @@
 #include "content/common/accessibility_messages.h"
 #include "content/common/associated_interface_provider_impl.h"
 #include "content/common/associated_interfaces.mojom.h"
-#include "content/common/clipboard_messages.h"
+#include "content/common/clipboard.mojom.h"
 #include "content/common/content_constants_internal.h"
 #include "content/common/content_security_policy/csp_context.h"
 #include "content/common/content_security_policy_header.h"
@@ -2070,8 +2070,10 @@ void RenderFrameImpl::OnCopyToFindPboard() {
   // than the |OnCopy()| case.
   if (frame_->HasSelection()) {
     base::string16 selection = frame_->SelectionAsText().Utf16();
-    RenderThread::Get()->Send(
-        new ClipboardHostMsg_FindPboardWriteStringAsync(selection));
+    mojom::ClipboardHostPtr clipboard;
+    RenderThread::Get()->GetConnector()->BindInterface(
+        mojom::kBrowserServiceName, &clipboard);
+    clipboard->FindPboardWriteStringAsync(selection);
   }
 }
 #endif
