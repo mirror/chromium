@@ -19,6 +19,23 @@
     },
     {
       "key": {
+        "uuid": "eaa75e3c_141437a9",
+        "filename": "content/browser/background_fetch/background_fetch_context.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 60,
+      "author": {
+        "id": 1187649
+      },
+      "writtenOn": "2017-11-07T11:58:55Z",
+      "side": 1,
+      "message": "Is it normal to use |pipes| in function comments for things that are not named parameters / ret values of the function?\n\n(Also is the word \u0027registration\u0027 necessary here? are they really called \u0027bg fetch registration developer ids\u0027? fair enough if so)",
+      "revId": "7619736076f57411b6f3356c33c89fb65cee64fd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "9ae05362_29e83665",
         "filename": "content/browser/background_fetch/background_fetch_request_manager.h",
         "patchSetId": 2
