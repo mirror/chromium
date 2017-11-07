@@ -1,0 +1,44 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "c02efd8d_f12d5a6e",
+        "filename": "chrome/browser/resources/print_preview/new/header.html",
+        "patchSetId": 5
+      },
+      "lineNbr": 69,
+      "author": {
+        "id": 1115893
+      },
+      "writtenOn": "2017-11-07T01:30:17Z",
+      "side": 1,
+      "message": "I am wondering if there is a less verbose way to express the same dependencies. How about using a computed Polymer property? See https://www.polymer-project.org/1.0/docs/devguide/observers#define-a-computed-property.\n\n1) Create a computed Polymer property |summaryDeps_|, which would depend on all properties listed here.\n2) Change the HTML code to use getSummaryLabel_(summaryDeps_) and getSummary_(summaryDeps_)\n\nThis way we would not need to repeat the deps twice.",
+      "revId": "aa51167716bba580e9c16ef81a592ca8af750dc4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3a754929_360e1a90",
+        "filename": "chrome/browser/resources/print_preview/new/layout_settings.html",
+        "patchSetId": 5
+      },
+      "lineNbr": 18,
+      "author": {
+        "id": 1115893
+      },
+      "writtenOn": "2017-11-07T01:30:17Z",
+      "side": 1,
+      "message": "Is this supposed to be the ID of another element?",
+      "range": {
+        "startLine": 18,
+        "startChar": 29,
+        "endLine": 18,
+        "endChar": 41
+      },
+      "revId": "aa51167716bba580e9c16ef81a592ca8af750dc4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
