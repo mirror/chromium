@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "3766ddcf_adbca75b",
+        "filename": "base/time/time.h",
+        "patchSetId": 7
+      },
+      "lineNbr": 465,
+      "author": {
+        "id": 1103654
+      },
+      "writtenOn": "2017-11-07T17:45:13Z",
+      "side": 1,
+      "message": "Good point - done. Changed semantics so both years are inclusive with corresponding comment. (Updated the constants and the code using these.)",
+      "parentUuid": "3e8316e7_d30488a3",
+      "revId": "18902ec9e44466c484342e921f5f9bb8e003e2ae",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "db1d17cc_98530427",
         "filename": "base/time/time.h",
         "patchSetId": 7
@@ -30,6 +48,24 @@
       "writtenOn": "2017-11-06T23:25:13Z",
       "side": 1,
       "message": "It’s 1902 only if 32-bit. Otherwise, 1900. Since we only care about 64, you can just write 1900 here.",
+      "revId": "18902ec9e44466c484342e921f5f9bb8e003e2ae",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9e4c7acf_1677cf15",
+        "filename": "base/time/time.h",
+        "patchSetId": 7
+      },
+      "lineNbr": 470,
+      "author": {
+        "id": 1103654
+      },
+      "writtenOn": "2017-11-07T17:45:13Z",
+      "side": 1,
+      "message": "Empirically, the minimum that works is 1901/12/13 (with a specific timestamp within it). So this is setting 1902 as the min year that\u0027s the first where all dates within are supported. Expanded the comment above.\n\n(And yeah, that was the purpose of the test - as well as to have something in base tests that detects when behavior of this changes - which didn\u0027t exist before.)",
+      "parentUuid": "db1d17cc_98530427",
       "revId": "18902ec9e44466c484342e921f5f9bb8e003e2ae",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -53,6 +89,24 @@
     },
     {
       "key": {
+        "uuid": "74e54f6f_ff00276f",
+        "filename": "base/time/time.h",
+        "patchSetId": 7
+      },
+      "lineNbr": 471,
+      "author": {
+        "id": 1103654
+      },
+      "writtenOn": "2017-11-07T17:45:13Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "fb9088d8_ae81f61b",
+      "revId": "18902ec9e44466c484342e921f5f9bb8e003e2ae",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "08288015_bf0ef246",
         "filename": "base/time/time_unittest.cc",
         "patchSetId": 7
@@ -64,6 +118,24 @@
       "writtenOn": "2017-11-06T23:25:13Z",
       "side": 1,
       "message": "But you wrote a test for this specifically, so maybe you know more than I do.",
+      "revId": "18902ec9e44466c484342e921f5f9bb8e003e2ae",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "fc9eb2f8_c876b966",
+        "filename": "base/time/time_unittest.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 643,
+      "author": {
+        "id": 1103654
+      },
+      "writtenOn": "2017-11-07T17:45:13Z",
+      "side": 1,
+      "message": "See my reply on the other comment.",
+      "parentUuid": "08288015_bf0ef246",
       "revId": "18902ec9e44466c484342e921f5f9bb8e003e2ae",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true

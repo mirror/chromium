@@ -22,6 +22,30 @@
       "revId": "521360f6b018ac9870223305db6cabc619571140",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f56c5271_1b33afd0",
+        "filename": "net/cert/x509_certificate.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 96,
+      "author": {
+        "id": 1103654
+      },
+      "writtenOn": "2017-11-07T17:45:13Z",
+      "side": 0,
+      "message": "Restored it for consistency with cookie_util.cc.\n\nHowever it doesn\u0027t seem there\u0027s any test covering it - so I do wonder whether it\u0027s necessary. Would be good to have a test case for it. Any suggestions?",
+      "parentUuid": "e2942733_621a06ad",
+      "range": {
+        "startLine": 96,
+        "startChar": 18,
+        "endLine": 96,
+        "endChar": 32
+      },
+      "revId": "521360f6b018ac9870223305db6cabc619571140",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
