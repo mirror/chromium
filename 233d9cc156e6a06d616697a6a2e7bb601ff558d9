@@ -1,0 +1,274 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "d86c7daa_54e3b4e2",
+        "filename": "ios/chrome/browser/ui/browser_view_controller.mm",
+        "patchSetId": 8
+      },
+      "lineNbr": 4220,
+      "author": {
+        "id": 1163361
+      },
+      "writtenOn": "2017-11-07T22:23:21Z",
+      "side": 1,
+      "message": "This section is #pragma marked as BrowserCommands. This should be moved to another #pragma mark or separated somehow.",
+      "revId": "233d9cc156e6a06d616697a6a2e7bb601ff558d9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f477a48d_aef62959",
+        "filename": "ios/chrome/browser/ui/commands/browser_commands.h",
+        "patchSetId": 8
+      },
+      "lineNbr": 16,
+      "author": {
+        "id": 1163361
+      },
+      "writtenOn": "2017-11-07T22:23:21Z",
+      "side": 1,
+      "message": "tools_menu_commands.h?",
+      "range": {
+        "startLine": 16,
+        "startChar": 46,
+        "endLine": 16,
+        "endChar": 51
+      },
+      "revId": "233d9cc156e6a06d616697a6a2e7bb601ff558d9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c1ac60a3_0d1dc917",
+        "filename": "ios/chrome/browser/ui/commands/tools_popup_commands.h",
+        "patchSetId": 8
+      },
+      "lineNbr": 10,
+      "author": {
+        "id": 1163361
+      },
+      "writtenOn": "2017-11-07T22:23:21Z",
+      "side": 1,
+      "message": "nit: comment.",
+      "range": {
+        "startLine": 10,
+        "startChar": 10,
+        "endLine": 10,
+        "endChar": 28
+      },
+      "revId": "233d9cc156e6a06d616697a6a2e7bb601ff558d9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "fc904d8c_b3b2b128",
+        "filename": "ios/chrome/browser/ui/popup_menu/popup_menu_controller.mm",
+        "patchSetId": 8
+      },
+      "lineNbr": 187,
+      "author": {
+        "id": 1163361
+      },
+      "writtenOn": "2017-11-07T22:23:21Z",
+      "side": 1,
+      "message": "Use ProceduralBlock",
+      "range": {
+        "startLine": 187,
+        "startChar": 28,
+        "endLine": 187,
+        "endChar": 42
+      },
+      "revId": "233d9cc156e6a06d616697a6a2e7bb601ff558d9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ee393270_b941f1a0",
+        "filename": "ios/chrome/browser/ui/stack_view/stack_view_controller.mm",
+        "patchSetId": 8
+      },
+      "lineNbr": 2760,
+      "author": {
+        "id": 1163361
+      },
+      "writtenOn": "2017-11-07T22:23:21Z",
+      "side": 1,
+      "message": "This should not be under BrowserCommands #pragma mark.",
+      "range": {
+        "startLine": 2759,
+        "startChar": 0,
+        "endLine": 2760,
+        "endChar": 40
+      },
+      "revId": "233d9cc156e6a06d616697a6a2e7bb601ff558d9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "dce717a2_a17d75d9",
+        "filename": "ios/chrome/browser/ui/stack_view/stack_view_controller_private.h",
+        "patchSetId": 8
+      },
+      "lineNbr": 11,
+      "author": {
+        "id": 1163361
+      },
+      "writtenOn": "2017-11-07T22:23:21Z",
+      "side": 1,
+      "message": "ToolsMenuCoordinator?",
+      "range": {
+        "startLine": 11,
+        "startChar": 26,
+        "endLine": 11,
+        "endChar": 47
+      },
+      "revId": "233d9cc156e6a06d616697a6a2e7bb601ff558d9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0d482df0_5b29731b",
+        "filename": "ios/chrome/browser/ui/toolbar/toolbar_controller.mm",
+        "patchSetId": 8
+      },
+      "lineNbr": 84,
+      "author": {
+        "id": 1163361
+      },
+      "writtenOn": "2017-11-07T22:23:21Z",
+      "side": 1,
+      "message": "Perhaps this could be __weak?",
+      "range": {
+        "startLine": 84,
+        "startChar": 0,
+        "endLine": 84,
+        "endChar": 76
+      },
+      "revId": "233d9cc156e6a06d616697a6a2e7bb601ff558d9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "fd7b4849_1db32c3b",
+        "filename": "ios/chrome/browser/ui/tools_menu/tools_menu_constants.h",
+        "patchSetId": 8
+      },
+      "lineNbr": 29,
+      "author": {
+        "id": 1163361
+      },
+      "writtenOn": "2017-11-07T22:23:21Z",
+      "side": 1,
+      "message": "Extract each protocol to their own header.",
+      "range": {
+        "startLine": 21,
+        "startChar": 0,
+        "endLine": 29,
+        "endChar": 4
+      },
+      "revId": "233d9cc156e6a06d616697a6a2e7bb601ff558d9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e4ce48fa_9e4092bb",
+        "filename": "ios/chrome/browser/ui/tools_menu/tools_menu_coordinator.mm",
+        "patchSetId": 8
+      },
+      "lineNbr": 56,
+      "author": {
+        "id": 1163361
+      },
+      "writtenOn": "2017-11-07T22:23:21Z",
+      "side": 1,
+      "message": "Pls group ToolsPopupCommands into a single section with #pragma mark.",
+      "range": {
+        "startLine": 44,
+        "startChar": 0,
+        "endLine": 56,
+        "endChar": 1
+      },
+      "revId": "233d9cc156e6a06d616697a6a2e7bb601ff558d9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e2378a33_d67b2d65",
+        "filename": "ios/chrome/browser/ui/tools_menu/tools_menu_coordinator.mm",
+        "patchSetId": 8
+      },
+      "lineNbr": 60,
+      "author": {
+        "id": 1163361
+      },
+      "writtenOn": "2017-11-07T22:23:21Z",
+      "side": 1,
+      "message": "This class already has a dispatcher. Why does a dispatcher need to be a parameter of this instance method?",
+      "range": {
+        "startLine": 60,
+        "startChar": 33,
+        "endLine": 60,
+        "endChar": 74
+      },
+      "revId": "233d9cc156e6a06d616697a6a2e7bb601ff558d9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0f24b274_d9b6916c",
+        "filename": "ios/chrome/browser/ui/tools_menu/tools_menu_coordinator.mm",
+        "patchSetId": 8
+      },
+      "lineNbr": 133,
+      "author": {
+        "id": 1163361
+      },
+      "writtenOn": "2017-11-07T22:23:21Z",
+      "side": 1,
+      "message": "I don\u0027t think the payload is used on the other end. It is better not to send this coordinator as a payload. Who knows what the other side will do with it.",
+      "range": {
+        "startLine": 131,
+        "startChar": 2,
+        "endLine": 133,
+        "endChar": 31
+      },
+      "revId": "233d9cc156e6a06d616697a6a2e7bb601ff558d9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6a0e510d_bd54647c",
+        "filename": "ios/chrome/browser/ui/tools_menu/tools_popup_controller.h",
+        "patchSetId": 8
+      },
+      "lineNbr": 35,
+      "author": {
+        "id": 1163361
+      },
+      "writtenOn": "2017-11-07T22:23:21Z",
+      "side": 1,
+      "message": "ProceduralBlock.",
+      "range": {
+        "startLine": 35,
+        "startChar": 33,
+        "endLine": 35,
+        "endChar": 47
+      },
+      "revId": "233d9cc156e6a06d616697a6a2e7bb601ff558d9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
