@@ -1,0 +1,141 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "3b0145cf_0c762415",
+        "filename": "services/device/geolocation/public_ip_address_location_notifier.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 132,
+      "author": {
+        "id": 1182889
+      },
+      "writtenOn": "2017-11-07T05:05:01Z",
+      "side": 1,
+      "message": "Add a comment summarizing the logic:\nif 1 client, use their tag, else use generic tag",
+      "revId": "92f629e1c18f634d3307a7d81ceb865819417b2f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "36f3388b_125c186b",
+        "filename": "services/device/geolocation/public_ip_address_location_notifier.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 133,
+      "author": {
+        "id": 1182889
+      },
+      "writtenOn": "2017-11-07T05:05:01Z",
+      "side": 1,
+      "message": "I don\u0027t think we want to store this in a unique_ptr, they are cheap to copy objects, let\u0027s just copy them around\n\nSo may just const partial_traffic_annotation \u003d .size() \u003d\u003d 1 ? foo : bar;",
+      "range": {
+        "startLine": 133,
+        "startChar": 7,
+        "endLine": 133,
+        "endChar": 17
+      },
+      "revId": "92f629e1c18f634d3307a7d81ceb865819417b2f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3269b20f_f3d8c016",
+        "filename": "services/device/geolocation/public_ip_address_location_notifier.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 141,
+      "author": {
+        "id": 1182889
+      },
+      "writtenOn": "2017-11-07T05:05:01Z",
+      "side": 1,
+      "message": "I think this will store address of element of the set in unique_ptr which will then get deleted! Should be fixed by not using unique_ptr anyway, just copy these things around?",
+      "range": {
+        "startLine": 141,
+        "startChar": 8,
+        "endLine": 141,
+        "endChar": 61
+      },
+      "revId": "92f629e1c18f634d3307a7d81ceb865819417b2f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a95f3426_31224749",
+        "filename": "services/device/geolocation/public_ip_address_location_notifier.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 166,
+      "author": {
+        "id": 1182889
+      },
+      "writtenOn": "2017-11-07T05:05:01Z",
+      "side": 1,
+      "message": "We should add a basic test of the \"if size() \u003d\u003d 1\" logic. Probably the same TestURLFetcher techqniues already in the unittest file will work, assuming we can get our hands on the annotation tag that way?",
+      "revId": "92f629e1c18f634d3307a7d81ceb865819417b2f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "780cbbaf_40939018",
+        "filename": "services/device/geolocation/public_ip_address_location_notifier.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 176,
+      "author": {
+        "id": 1182889
+      },
+      "writtenOn": "2017-11-07T05:05:01Z",
+      "side": 1,
+      "message": "HEre we should have a DCHECK that iter !\u003d end() too, since it should definitely be found.\n\nAnd document in the comment in the header that is required that the tag has previously been added using AddClientPartialNetworkTrafficAnnotation, and that this remove function should be called only once per client.",
+      "revId": "92f629e1c18f634d3307a7d81ceb865819417b2f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "815074b0_cd98d675",
+        "filename": "services/device/geolocation/public_ip_address_location_notifier.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 60,
+      "author": {
+        "id": 1182889
+      },
+      "writtenOn": "2017-11-07T05:05:01Z",
+      "side": 1,
+      "message": "I think these are cheap to copy, just pass by value?",
+      "revId": "92f629e1c18f634d3307a7d81ceb865819417b2f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "eb1009b1_683cbc25",
+        "filename": "services/device/geolocation/public_ip_address_location_notifier.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 115,
+      "author": {
+        "id": 1182889
+      },
+      "writtenOn": "2017-11-07T05:05:01Z",
+      "side": 1,
+      "message": "AnnotationTagComparer not Hasher",
+      "range": {
+        "startLine": 115,
+        "startChar": 9,
+        "endLine": 115,
+        "endChar": 28
+      },
+      "revId": "92f629e1c18f634d3307a7d81ceb865819417b2f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}

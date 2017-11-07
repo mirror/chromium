@@ -16,6 +16,24 @@
       "revId": "4c225b55c98142713cbaffef1401584a613180fe",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c281e499_3a9dffe4",
+        "filename": "services/device/geolocation/public_ip_address_location_notifier.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 131,
+      "author": {
+        "id": 1182889
+      },
+      "writtenOn": "2017-11-07T05:05:01Z",
+      "side": 1,
+      "message": "Here is our plan to address it:\nhttps://docs.google.com/document/d/1-xbp92q1EGSb52XL_i9fGsofabRpJEk9UusgD6tUzRs/edit#",
+      "parentUuid": "524e0ab5_3ee0f25e",
+      "revId": "4c225b55c98142713cbaffef1401584a613180fe",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
