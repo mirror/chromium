@@ -53,6 +53,13 @@ def MakeDirectory(dir_path):
     pass
 
 
+def Rename(src_path, dst_path):
+  if not os.path.exists(src_path):
+    raise Exception("src_path doesn't exist:" + src_path)
+  MakeDirectory(os.path.dirname(dst_path))
+  os.rename(src_path, dst_path)
+
+
 def DeleteDirectory(dir_path):
   if os.path.exists(dir_path):
     shutil.rmtree(dir_path)
