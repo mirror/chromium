@@ -55,6 +55,24 @@
     },
     {
       "key": {
+        "uuid": "b02a87fd_0e806636",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/vr_shell/VrShellImpl.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 333,
+      "author": {
+        "id": 1119159
+      },
+      "writtenOn": "2017-11-07T21:13:03Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "d250d83e_62e9870f",
+      "revId": "551bc90733b0713ecfbddf610480fd60ffd94750",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "2b46d964_778bb300",
         "filename": "chrome/browser/vr/browser_ui_interface.h",
         "patchSetId": 1
