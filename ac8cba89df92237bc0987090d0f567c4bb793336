@@ -46,6 +46,30 @@
       "revId": "ac8cba89df92237bc0987090d0f567c4bb793336",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "1bd05d80_2a6c6111",
+        "filename": "build/fuchsia/runner_common.py",
+        "patchSetId": 1
+      },
+      "lineNbr": 538,
+      "author": {
+        "id": 1144260
+      },
+      "writtenOn": "2017-11-07T18:37:21Z",
+      "side": 1,
+      "message": "Oh, I just meant:\n\nif arm:\n  qemu_command.extend(...)\n  device \u003d \u0027virtio-net-pci\u0027\nelse:\n  qemu_command.extend(...)\n  device \u003d \u0027e1000\u0027\nqemu_command.extend([\u0027-device\u0027, \u0027%s,netdev\u003dnet0,mac\u003d52:54...\u0027 % device])\n\nBut the current version is fine too.",
+      "parentUuid": "aa95df36_c8e36b1f",
+      "range": {
+        "startLine": 538,
+        "startChar": 36,
+        "endLine": 538,
+        "endChar": 70
+      },
+      "revId": "ac8cba89df92237bc0987090d0f567c4bb793336",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
