@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "b4f3dfa6_864756b3",
+        "filename": "chrome/browser/resources/md_extensions/manager.js",
+        "patchSetId": 17
+      },
+      "lineNbr": 170,
+      "author": {
+        "id": 1214259
+      },
+      "writtenOn": "2017-11-07T09:56:29Z",
+      "side": 1,
+      "message": "Does this actually apply the font to something? From the doc it seems to just force load the font to be available, and then return a Promise. Not sure if this functionally does anything if we don\u0027t utilize the Promise.",
+      "revId": "2909db982666cd57936c9ea669d6f468a8f1eedf",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "15478981_82afdcfb",
+        "filename": "chrome/browser/resources/md_extensions/service.js",
+        "patchSetId": 17
+      },
+      "lineNbr": 109,
+      "author": {
+        "id": 1214259
+      },
+      "writtenOn": "2017-11-07T09:56:29Z",
+      "side": 1,
+      "message": "Thought I might share - I looked up whether a \u0027return\u0027 is necessary here, and found some good points advocating for having a return even though it\u0027s not strictly required: https://stackoverflow.com/questions/32536049/do-i-need-to-return-after-early-resolve-reject",
+      "revId": "2909db982666cd57936c9ea669d6f468a8f1eedf",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
