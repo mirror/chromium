@@ -173,6 +173,52 @@ bool RulesetManager::ShouldBlockRequest(const net::URLRequest& request,
   return false;
 }
 
+bool RulesetManager::ShouldRedirectRequest(const net::URLRequest& request,
+                                           bool is_incognito_context,
+                                           std::string* redirect_url) const {
+  DCHECK_CALLED_ON_VALID_SEQUENCE(sequence_checker_);
+
+  // Return early if DNR is not enabled.
+  if (!IsAPIAvailable())
+    return false;
+
+  SCOPED_UMA_HISTOGRAM_TIMER(
+      "Extensions.DeclarativeNetRequest.ShouldRedirectRequestTime."
+      "AllExtensions");
+  const GURL& url = request.url();
+
+  // Redirecting WebSocket handshake request is prohibited.
+  if (url.SchemeIsWSOrWSS())
+    return false;
+
+  const url::Origin first_party_origin =
+      request.initiator().value_or(url::Origin());
+  const flat_rule::ElementType element_type = GetElementType(request);
+  const bool is_third_party = IsThirdPartyRequest(url, first_party_origin);
+
+  base::Time winning_extension_install_time = base::Time::Min();
+
+  // TODO(crbug.com/696822): Alternatively, maintain |rules_map_| sorted from
+  // most to least recently installed extensions, to prevent redundant ruleset
+  // evaluation.
+  for (const auto& pair : rules_map_) {
+    base::Time extension_install_time = info_map_->GetInstallTime(pair.first);
+    // Give priority to more recently installed extension.
+    const bool evaluate_ruleset =
+        extension_install_time > winning_extension_install_time &&
+        (!is_incognito_context || info_map_->IsIncognitoEnabled(pair.first));
+
+    // TODO(crbug.com/777714): Check host permissions etc.
+    if (evaluate_ruleset && pair.second->ShouldRedirectRequest(
+                                url, first_party_origin, element_type,
+                                is_third_party, redirect_url)) {
+      winning_extension_install_time = extension_install_time;
+    }
+  }
+
+  return winning_extension_install_time != base::Time::Min();
+}
+
 void RulesetManager::SetObserverForTest(TestObserver* observer) {
   DCHECK_CALLED_ON_VALID_SEQUENCE(sequence_checker_);
   test_observer_ = observer;
