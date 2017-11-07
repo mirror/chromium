@@ -1,0 +1,112 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "98df5bfe_a8d5a27b",
+        "filename": "components/viz/service/display/direct_renderer.cc",
+        "patchSetId": 18
+      },
+      "lineNbr": 616,
+      "author": {
+        "id": 1000887
+      },
+      "writtenOn": "2017-11-07T21:16:37Z",
+      "side": 1,
+      "message": "I\u0027m actually not sure this needs to exist at all, I asked about it in https://chromium-review.googlesource.com/c/chromium/src/+/757027",
+      "range": {
+        "startLine": 616,
+        "startChar": 25,
+        "endLine": 616,
+        "endChar": 26
+      },
+      "revId": "33718b858616a327da3954d26a32c508cfd19c65",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "96087dbd_f0403755",
+        "filename": "components/viz/service/display/direct_renderer.h",
+        "patchSetId": 18
+      },
+      "lineNbr": 166,
+      "author": {
+        "id": 1000887
+      },
+      "writtenOn": "2017-11-07T21:16:37Z",
+      "side": 1,
+      "message": "did you mean a const\u0026?",
+      "revId": "33718b858616a327da3954d26a32c508cfd19c65",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "17343f88_074732ff",
+        "filename": "components/viz/service/display/direct_renderer.h",
+        "patchSetId": 18
+      },
+      "lineNbr": 170,
+      "author": {
+        "id": 1000887
+      },
+      "writtenOn": "2017-11-07T21:16:37Z",
+      "side": 1,
+      "message": "did you mean a const\u0026?",
+      "revId": "33718b858616a327da3954d26a32c508cfd19c65",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c5e15b51_6b882bf9",
+        "filename": "components/viz/service/display/direct_renderer.h",
+        "patchSetId": 18
+      },
+      "lineNbr": 172,
+      "author": {
+        "id": 1000887
+      },
+      "writtenOn": "2017-11-07T21:16:37Z",
+      "side": 1,
+      "message": "did u mean a const\u0026?",
+      "revId": "33718b858616a327da3954d26a32c508cfd19c65",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d2e83b7c_443134b2",
+        "filename": "components/viz/service/display/gl_renderer.cc",
+        "patchSetId": 18
+      },
+      "lineNbr": 3575,
+      "author": {
+        "id": 1000887
+      },
+      "writtenOn": "2017-11-07T21:16:37Z",
+      "side": 1,
+      "message": "nit: in_frame_it ? we\u0027re iterating something already so clarifying what this is could help",
+      "revId": "33718b858616a327da3954d26a32c508cfd19c65",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "25e2be93_ff5d213d",
+        "filename": "components/viz/service/display/gl_renderer.cc",
+        "patchSetId": 18
+      },
+      "lineNbr": 3604,
+      "author": {
+        "id": 1000887
+      },
+      "writtenOn": "2017-11-07T21:16:37Z",
+      "side": 1,
+      "message": "nit: This function could be a bit shorter, like:\n\nif (resource \u0026\u0026 resource-\u003eid())\n  return false;\nif (!resource)\n  resource \u003d std::make...\nresource-\u003eAllocate(...)\nreturn true;",
+      "revId": "33718b858616a327da3954d26a32c508cfd19c65",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
