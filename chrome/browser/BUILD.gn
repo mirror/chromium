@@ -3974,6 +3974,8 @@ split_static_library("browser") {
       "media/webrtc/webrtc_log_util.h",
       "media/webrtc/webrtc_logging_handler_host.cc",
       "media/webrtc/webrtc_logging_handler_host.h",
+      "media/webrtc/webrtc_logs_directory_access_util.cc",
+      "media/webrtc/webrtc_logs_directory_access_util.h",
       "media/webrtc/webrtc_rtp_dump_handler.cc",
       "media/webrtc/webrtc_rtp_dump_handler.h",
       "media/webrtc/webrtc_rtp_dump_writer.cc",
