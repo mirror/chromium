@@ -16,6 +16,24 @@
       "revId": "b46718b94d1d87ecc7035ef0f018d5b34eb04565",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a78dd82e_8a20b9db",
+        "filename": "tools/mb/mb_config.pyl",
+        "patchSetId": 2
+      },
+      "lineNbr": 1568,
+      "author": {
+        "id": 1003232
+      },
+      "writtenOn": "2017-11-07T02:12:21Z",
+      "side": 1,
+      "message": "the list on line 1569 *are* the mixins; every bot must have one config, and a config is usually one or more mixins.\n\nthis is correct.\n\nunless I\u0027m misunderstanding something?",
+      "parentUuid": "1ba6c53d_129c506c",
+      "revId": "b46718b94d1d87ecc7035ef0f018d5b34eb04565",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
