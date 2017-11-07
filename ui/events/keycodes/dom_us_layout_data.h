@@ -238,7 +238,7 @@ const struct NonPrintableCodeEntry {
     {DomCode::SELECT_TASK, DomKey::APP_SWITCH},
     {DomCode::SHIFT_LEFT, DomKey::SHIFT},
     {DomCode::SHIFT_RIGHT, DomKey::SHIFT},
-    {DomCode::SPEECH_INPUT_TOGGLE, DomKey::SPEECH_INPUT_TOGGLE},
+    {DomCode::VOICE_COMMAND, DomKey::SPEECH_INPUT_TOGGLE},
     {DomCode::SPELL_CHECK, DomKey::SPELL_CHECK},
     {DomCode::SUPER, DomKey::SUPER},
     {DomCode::TAB, DomKey::TAB},
@@ -397,6 +397,9 @@ const struct DomKeyToKeyboardCodeEntry {
     {DomKey::MEDIA_REWIND, VKEY_OEM_103},
 #endif
     {DomKey::ZOOM_TOGGLE, VKEY_ZOOM},
+#if defined(OS_CHROMEOS)
+    {DomKey::SPEECH_INPUT_TOGGLE, VKEY_VOICE_COMMAND},
+#endif
 };
 
 // This table, used by DomCodeToUsLayoutKeyboardCode() and
@@ -593,6 +596,9 @@ const struct DomCodeToKeyboardCodeEntry {
     // DomCode::EJECT                              0x0C00B8 Eject
     {DomCode::MEDIA_PLAY_PAUSE,
      VKEY_MEDIA_PLAY_PAUSE},                    // 0x0C00CD MediaPlayPause
+#if defined(OS_CHROMEOS)
+    {DomCode::VOICE_COMMAND, VKEY_VOICE_COMMAND},  // 0x0C00CF VoiceCommand
+#endif
     {DomCode::MEDIA_SELECT,
      VKEY_MEDIA_LAUNCH_MEDIA_SELECT},           // 0x0C0183 MediaSelect
     {DomCode::LAUNCH_MAIL,
