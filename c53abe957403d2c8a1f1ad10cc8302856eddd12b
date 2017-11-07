@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "c01a8e83_1e8dc4a0",
+        "filename": "chrome/browser/browsing_data/chrome_browsing_data_remover_delegate.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 687,
+      "author": {
+        "id": 1129179
+      },
+      "writtenOn": "2017-11-07T00:35:27Z",
+      "side": 1,
+      "message": "SGTM - added TODO - should get to it in the follow up CL that adds UMK/UMA",
+      "parentUuid": "38f08fbf_799ef3eb",
+      "revId": "c53abe957403d2c8a1f1ad10cc8302856eddd12b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "af35a451_7fa40520",
         "filename": "media/mojo/services/video_decode_stats_db.h",
         "patchSetId": 1
@@ -30,6 +48,24 @@
       "writtenOn": "2017-11-03T02:08:21Z",
       "side": 1,
       "message": "You claim DO NOT here, but happily buffer pending calls. Should there be DCHECKs instead?",
+      "revId": "c53abe957403d2c8a1f1ad10cc8302856eddd12b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "63dc0326_5ecf6f22",
+        "filename": "media/mojo/services/video_decode_stats_db.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 65,
+      "author": {
+        "id": 1129179
+      },
+      "writtenOn": "2017-11-07T00:35:27Z",
+      "side": 1,
+      "message": "The buffering of pending calls happens one layer up from the DB in VideoDecodePerfHistory. The DB itself will DCHECK(IsInitialized()) which will fail between DestroyStats() (which resets init flags) and a new call to Initialize() (done by VideoDecodePerfHistory in response to DestroyStats() callback.",
+      "parentUuid": "af35a451_7fa40520",
       "revId": "c53abe957403d2c8a1f1ad10cc8302856eddd12b",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -50,6 +86,24 @@
       "revId": "c53abe957403d2c8a1f1ad10cc8302856eddd12b",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0f7bf165_ba2b1b52",
+        "filename": "media/mojo/services/video_decode_stats_db_unittest.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 109,
+      "author": {
+        "id": 1129179
+      },
+      "writtenOn": "2017-11-07T00:35:27Z",
+      "side": 1,
+      "message": "Done - new browser test.",
+      "parentUuid": "bf91bbe4_634d5b03",
+      "revId": "c53abe957403d2c8a1f1ad10cc8302856eddd12b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
