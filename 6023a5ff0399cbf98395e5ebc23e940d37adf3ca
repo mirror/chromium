@@ -84,6 +84,24 @@
     },
     {
       "key": {
+        "uuid": "ddd73c99_3e3232fe",
+        "filename": "components/optimization_guide/DEPS",
+        "patchSetId": 8
+      },
+      "lineNbr": 2,
+      "author": {
+        "id": 1113941
+      },
+      "writtenOn": "2017-11-07T13:17:35Z",
+      "side": 1,
+      "message": "To the main point:\n\n- Components can use //content directly (i.e., without layering) if they\u0027re not targeting iOS. It looks like this feature is used by the component updater, and the component updater in turn is used on iOS. If you include this feature as-is in the build on iOS (either intentionally or unintentionally), GN will choke on the //content dependency. However, currently it looks like you\u0027re adding the dependencies from component updater to the new component at the //chrome level.\n\n- FWIW, it looks like the //content dependency would be fairly trivial to remove here: instead of sending a notification you could have observers. Notifications are actually discouraged as an anti-pattern in Chromium, so this would be a good design change anyway. Of course, I don\u0027t know if the plan is to have this feature grow broader //content dependencies (e.g., on WebContents).\n\nTo the question about non-layered components being a thing:\n\n- The motivation for a feature being in //components is that it\u0027s used by multiple embedders. This can equally well be multiple //content-based embedders as e.g. //chrome and //ios. So for example, a feature that\u0027s used by both Chrome and Android WebView.\n\n- That said, if your feature is really only targeting non-iOS Chrome, there\u0027s little reason for it to be in //components instead of //chrome. I don\u0027t know whether this applies to the features being discussed here.",
+      "parentUuid": "de36345b_f7769023",
+      "revId": "6023a5ff0399cbf98395e5ebc23e940d37adf3ca",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "8fd73d7d_8737c224",
         "filename": "components/optimization_guide/optimization_guide_service.cc",
         "patchSetId": 8
