@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "1330e312_cda0be27",
+        "filename": "content/browser/frame_host/navigation_handle_impl.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 694,
+      "author": {
+        "id": 1001500
+      },
+      "writtenOn": "2017-11-07T23:18:01Z",
+      "side": 1,
+      "message": "nit: Single line if statements don\u0027t need {}.",
+      "revId": "abfa6080910f8c0af3664bde329fc8fd467bfa15",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
