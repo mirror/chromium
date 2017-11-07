@@ -104,6 +104,24 @@
       "revId": "41615819a15e06a9c29595a650e63ef22f54f91e",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a1794baa_3e263e76",
+        "filename": "chrome/browser/extensions/api/language_settings_private/language_settings_private_api.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 396,
+      "author": {
+        "id": 1234767
+      },
+      "writtenOn": "2017-11-07T00:11:31Z",
+      "side": 1,
+      "message": "I got what you mean. Good suggestion, I didn\u0027t know that having a case not handled results in a compilation error.\nIt\u0027s changed now.",
+      "parentUuid": "06415f75_e746a5b7",
+      "revId": "41615819a15e06a9c29595a650e63ef22f54f91e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
