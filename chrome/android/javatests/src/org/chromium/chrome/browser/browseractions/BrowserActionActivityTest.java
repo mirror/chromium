@@ -169,7 +169,9 @@ public class BrowserActionActivityTest {
     @Test
     @SmallTest
     public void testMenuShownCorrectly() throws Exception {
-        startBrowserActionActivity(mTestPage);
+        BrowserActionActivity activity = startBrowserActionActivity(mTestPage);
+        String sourcePackageName = InstrumentationRegistry.getTargetContext().getPackageName();
+        Assert.assertEquals(sourcePackageName, activity.mCreatorPackageName);
 
         // Menu should be shown before native finish loading.
         mOnBrowserActionsMenuShownCallback.waitForCallback(0);
