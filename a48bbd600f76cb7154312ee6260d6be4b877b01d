@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "dd8e1a3e_1179e9c8",
+        "filename": "chrome/browser/notifications/notification_common.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 37,
+      "author": {
+        "id": 1000045
+      },
+      "writtenOn": "2017-11-07T20:54:13Z",
+      "side": 1,
+      "message": "drive-by: Can the enum be renumbered? If not, it might be nice to comment why (UMA?) and/or leave a comment for EOL \u003d 3 so we know what it was.",
+      "revId": "a48bbd600f76cb7154312ee6260d6be4b877b01d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
