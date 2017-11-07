@@ -37,7 +37,6 @@ Console.ConsoleViewport = class {
    */
   constructor(provider) {
     this.element = createElement('div');
-    this.element.style.overflow = 'auto';
     this._topGapElement = this.element.createChild('div');
     this._topGapElement.style.height = '0px';
     this._topGapElement.style.color = 'transparent';

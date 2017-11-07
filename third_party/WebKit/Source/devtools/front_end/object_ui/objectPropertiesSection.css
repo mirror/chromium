@@ -34,6 +34,10 @@
     text-overflow: clip;
 }
 
+.object-properties-section .editable-div {
+    overflow: hidden;
+}
+
 .object-properties-section li.editing {
     margin-left: 10px;
     text-overflow: clip;
@@ -50,4 +54,15 @@
 .object-properties-section-root-element {
     display: flex;
     flex-direction: row;
+}
+
+.object-properties-section .name,
+.object-properties-section .value {
+    overflow: hidden;
+    text-overflow: ellipsis;
+    max-width: 100%;
+}
+
+.object-properties-section .name {
+    max-width: calc(100% - 13px);
 }
