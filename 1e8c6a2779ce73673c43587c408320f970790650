@@ -1,0 +1,106 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "d6665b4a_ceae918f",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 5
+      },
+      "lineNbr": 7,
+      "author": {
+        "id": 1000246
+      },
+      "writtenOn": "2017-11-07T16:40:55Z",
+      "side": 1,
+      "message": "nit: remove to",
+      "revId": "1e8c6a2779ce73673c43587c408320f970790650",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8d59d14b_d82e5bef",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 5
+      },
+      "lineNbr": 9,
+      "author": {
+        "id": 1000246
+      },
+      "writtenOn": "2017-11-07T16:40:55Z",
+      "side": 1,
+      "message": "nit: remove to.",
+      "revId": "1e8c6a2779ce73673c43587c408320f970790650",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "15e2947c_4d4b5861",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 5
+      },
+      "lineNbr": 21,
+      "author": {
+        "id": 1000246
+      },
+      "writtenOn": "2017-11-07T16:40:55Z",
+      "side": 1,
+      "message": "Is there a bug for ozone/wayland? It would be good to have one.",
+      "revId": "1e8c6a2779ce73673c43587c408320f970790650",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8920756f_a08a21fc",
+        "filename": "ui/ozone/platform/wayland/wayland_keyboard.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 47,
+      "author": {
+        "id": 1000246
+      },
+      "writtenOn": "2017-11-07T16:40:55Z",
+      "side": 1,
+      "message": "Observation that does not require action: it seems to me that there should be a standard class that one could inherit from that would provide stubs for this. I\u0027ve written nearly exactly the same code several times. I have started a discussion about that.",
+      "revId": "1e8c6a2779ce73673c43587c408320f970790650",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "82851e67_6ca3a3d1",
+        "filename": "ui/ozone/platform/wayland/wayland_pointer.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 37,
+      "author": {
+        "id": 1000246
+      },
+      "writtenOn": "2017-11-07T16:40:55Z",
+      "side": 1,
+      "message": "you need to remove yourself from the observer list here in the destructor yes? Or else the observer may file on a class that doesn\u0027t exist.",
+      "revId": "1e8c6a2779ce73673c43587c408320f970790650",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4bc8873a_bcc9af6d",
+        "filename": "ui/ozone/platform/wayland/wayland_pointer.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 58,
+      "author": {
+        "id": 1000246
+      },
+      "writtenOn": "2017-11-07T16:40:55Z",
+      "side": 1,
+      "message": "It seems sort of heavy-weight to use an observer pattern to update an int. You could just call \"GetModifier\"?  :-)",
+      "revId": "1e8c6a2779ce73673c43587c408320f970790650",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
