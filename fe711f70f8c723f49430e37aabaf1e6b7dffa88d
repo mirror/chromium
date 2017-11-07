@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "878ff91d_a8fad7e9",
+        "filename": "content/renderer/media/media_stream_video_capturer_source_unittest.cc",
+        "patchSetId": 10
+      },
+      "lineNbr": 354,
+      "author": {
+        "id": 1143639
+      },
+      "writtenOn": "2017-11-07T18:51:25Z",
+      "side": 1,
+      "message": "The browser test does exactly that.\nAt the MSVS level such a test is less useful because adding a track to a source that has stopped must fail, and this CL does not change that.\nThe issue is when two MSVS share an underlying implementation (e.g. video capture from the same camera) and there are removes and adds with several requests in flight.\nThe JavaScript browser tests covers that scenario.",
+      "parentUuid": "ac0e029f_ca4cfbd6",
+      "revId": "fe711f70f8c723f49430e37aabaf1e6b7dffa88d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "ad899399_b58398f7",
         "filename": "content/renderer/media/media_stream_video_source.cc",
         "patchSetId": 10
@@ -36,6 +54,24 @@
     },
     {
       "key": {
+        "uuid": "3d74588a_c57ccb4e",
+        "filename": "content/renderer/media/media_stream_video_source.cc",
+        "patchSetId": 10
+      },
+      "lineNbr": 109,
+      "author": {
+        "id": 1143639
+      },
+      "writtenOn": "2017-11-07T18:51:25Z",
+      "side": 1,
+      "message": "Expanded the comment explaining that using StopForRestart allows the client to implement serialization on an upper layer (tested in practice with the browser test).",
+      "parentUuid": "ad899399_b58398f7",
+      "revId": "fe711f70f8c723f49430e37aabaf1e6b7dffa88d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "94cb3b36_827fe5d6",
         "filename": "content/renderer/media/media_stream_video_source.cc",
         "patchSetId": 10
@@ -47,6 +83,24 @@
       "writtenOn": "2017-11-07T17:28:40Z",
       "side": 1,
       "message": "Can you DCHECK that tracks_ is still empty, because it might not be if the implementation of opening and closing camera etc is not serialized.",
+      "revId": "fe711f70f8c723f49430e37aabaf1e6b7dffa88d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "39918743_22a93295",
+        "filename": "content/renderer/media/media_stream_video_source.cc",
+        "patchSetId": 10
+      },
+      "lineNbr": 138,
+      "author": {
+        "id": 1143639
+      },
+      "writtenOn": "2017-11-07T18:51:25Z",
+      "side": 1,
+      "message": "Done.",
+      "parentUuid": "94cb3b36_827fe5d6",
       "revId": "fe711f70f8c723f49430e37aabaf1e6b7dffa88d",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
