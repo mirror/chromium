@@ -93,6 +93,30 @@
       "revId": "5cee889ee9806d3040ae037b7e08563a87e8ddd2",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "89b21cbb_d3aaf58c",
+        "filename": "ui/events/blink/web_input_event.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 339,
+      "author": {
+        "id": 1109584
+      },
+      "writtenOn": "2017-11-07T23:12:53Z",
+      "side": 1,
+      "message": "1) I don\u0027t think that ui::Event will add EF_IS_REPEAT on events which we don\u0027t care about. It already exits early for released.\n\n2) This \u0027should\u0027 be safe to move to KeyEvent::IsRepeated, though I\u0027d recommend just having it an OS_WIN block like here. I am not aware of other platforms that send that matching bit, but I could be mistaken, and something might break.",
+      "parentUuid": "daa8c56e_32d7bb5c",
+      "range": {
+        "startLine": 339,
+        "startChar": 54,
+        "endLine": 339,
+        "endChar": 67
+      },
+      "revId": "5cee889ee9806d3040ae037b7e08563a87e8ddd2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
