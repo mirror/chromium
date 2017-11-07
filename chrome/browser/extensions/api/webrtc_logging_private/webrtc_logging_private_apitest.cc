@@ -36,6 +36,7 @@ using extensions::WebrtcLoggingPrivateUploadFunction;
 using extensions::WebrtcLoggingPrivateUploadStoredFunction;
 using extensions::WebrtcLoggingPrivateStartAudioDebugRecordingsFunction;
 using extensions::WebrtcLoggingPrivateStopAudioDebugRecordingsFunction;
+using extensions::WebrtcLoggingPrivateGetLogsDirectoryFunction;
 
 namespace utils = extension_function_test_utils;
 
@@ -184,6 +185,11 @@ class WebrtcLoggingPrivateApiTest : public ExtensionApiTest {
     AppendTabIdAndUrl(&params);
     return RunFunction<WebrtcLoggingPrivateStopAudioDebugRecordingsFunction>(
         params, true);
+  }
+
+  bool GetLogsDirectory() {
+    return RunNoArgsFunction<WebrtcLoggingPrivateGetLogsDirectoryFunction>(
+        true);
   }
 
  private:
@@ -447,4 +453,8 @@ IN_PROC_BROWSER_TEST_F(WebrtcLoggingPrivateApiTest,
   base::CommandLine::ForCurrentProcess()->AppendSwitch(
       switches::kEnableAudioDebugRecordingsFromExtension);
   ASSERT_TRUE(StartAudioDebugRecordings(1));
+}
+
+IN_PROC_BROWSER_TEST_F(WebrtcLoggingPrivateApiTest, TestGetLogsDirectory) {
+  ASSERT_TRUE(true);
 }

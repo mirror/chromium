@@ -49,6 +49,7 @@ namespace StartWebRtcEventLogging =
     api::webrtc_logging_private::StartWebRtcEventLogging;
 namespace StopWebRtcEventLogging =
     api::webrtc_logging_private::StopWebRtcEventLogging;
+namespace GetLogsDirectory = api::webrtc_logging_private::GetLogsDirectory;
 
 namespace {
 std::string HashIdWithOrigin(const std::string& security_origin,
@@ -520,6 +521,44 @@ bool WebrtcLoggingPrivateStopWebRtcEventLoggingFunction::RunAsync() {
                  this));
 
   return true;
+}
+
+bool WebrtcLoggingPrivateGetLogsDirectoryFunction::RunAsync() {
+  // Unlike other functions in this API, this function can run with the
+  // extension's render frame process, since it is the caller's render that
+  // should be granted access to the logs directory.
+  content::RenderProcessHost* host = render_frame_host()->GetProcess();
+
+  scoped_refptr<WebRtcLoggingHandlerHost> webrtc_logging_handler_host(
+      base::UserDataAdapter<WebRtcLoggingHandlerHost>::Get(
+          host, WebRtcLoggingHandlerHost::kWebRtcLoggingHandlerHostKey));
+  if (!webrtc_logging_handler_host.get())
+    return false;
+
+  webrtc_logging_handler_host->GetLogsDirectory(
+      base::Bind(&WebrtcLoggingPrivateGetLogsDirectoryFunction::FireCallback,
+                 this),
+      base::Bind(
+          &WebrtcLoggingPrivateGetLogsDirectoryFunction::FireErrorCallback,
+          this));
+  return true;
+}
+
+void WebrtcLoggingPrivateGetLogsDirectoryFunction::FireCallback(
+    const std::string& filesystem_id,
+    const std::string& base_name) {
+  DCHECK_CURRENTLY_ON(content::BrowserThread::UI);
+  std::unique_ptr<base::DictionaryValue> dict(new base::DictionaryValue());
+  dict->SetString("fileSystemId", filesystem_id);
+  dict->SetString("baseName", base_name);
+  Respond(OneArgument(std::move(dict)));
+}
+
+void WebrtcLoggingPrivateGetLogsDirectoryFunction::FireErrorCallback(
+    const std::string& error_message) {
+  DCHECK_CURRENTLY_ON(content::BrowserThread::UI);
+  SetError(error_message);
+  SendResponse(false);
 }
 
 }  // namespace extensions
