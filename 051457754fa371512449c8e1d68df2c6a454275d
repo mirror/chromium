@@ -22,6 +22,30 @@
       "revId": "051457754fa371512449c8e1d68df2c6a454275d",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "00b81df7_aea70b89",
+        "filename": "base/allocator/partition_allocator/page_allocator.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 308,
+      "author": {
+        "id": 1001040
+      },
+      "writtenOn": "2017-11-07T01:29:25Z",
+      "side": 1,
+      "message": "What do you mean by an \"UMA bump down\"?",
+      "parentUuid": "eb44a90b_2831838e",
+      "range": {
+        "startLine": 300,
+        "startChar": 0,
+        "endLine": 308,
+        "endChar": 5
+      },
+      "revId": "051457754fa371512449c8e1d68df2c6a454275d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
