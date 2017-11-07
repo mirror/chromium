@@ -2,6 +2,29 @@
   "comments": [
     {
       "key": {
+        "uuid": "38765f05_9a6176cb",
+        "filename": "chrome/browser/profiling_host/background_profiling_triggers.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 110,
+      "author": {
+        "id": 1000046
+      },
+      "writtenOn": "2017-11-07T22:26:19Z",
+      "side": 1,
+      "message": "This is also unsafe and needs to be moved to the UI thread since |timer_.Start()| was first called on the UI thread.\n\nHowever, why are we using a timer? Why not just PostDelayedTask?",
+      "range": {
+        "startLine": 110,
+        "startChar": 9,
+        "endLine": 110,
+        "endChar": 14
+      },
+      "revId": "7ea05993233ed8375f43bf94412d22cb8217f2c0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "686d2d90_84d5dd2f",
         "filename": "chrome/browser/profiling_host/background_profiling_triggers.cc",
         "patchSetId": 1
