@@ -2,6 +2,23 @@
   "comments": [
     {
       "key": {
+        "uuid": "d40c86bb_21777690",
+        "filename": "third_party/WebKit/Source/core/workers/WorkletModuleTreeClient.cpp",
+        "patchSetId": 3
+      },
+      "lineNbr": 39,
+      "author": {
+        "id": 1115924
+      },
+      "writtenOn": "2017-11-07T21:59:49Z",
+      "side": 1,
+      "message": "(Probably it\u0027s better to split this part of change into another CL and commit the bindings/ changes first)\n\nAccording to https://drafts.css-houdini.org/worklets/#fetch-and-invoke-a-worklet-script,\nthe promise is resolved for a script with a parse error, because\nhttps://html.spec.whatwg.org/multipage/webappapis.html#fetch-a-module-worker-script-tree\nreturns a non-null module script (with its parse error set).\nSo we might want to update the spec (the note here, or #fetch-and-invoke-a-worklet-script).\n\nWhat is the expected behavior for\n1. A script with a parse error?\n2. A script with an instantiation error?\n3. A script with an evaluation error?\n\nThe Note here:\n1. reject the promise\n2. not mentioned\n3. report the exception and resolve the promise\n\n#fetch-and-invoke-a-worklet-script and the current implementation:\n1. report the exception and resolve the promise\n2. report the exception and resolve the promise\n3. report the exception and resolve the promise\n\nThe implementation after this patch set:\n1. reject the promise\n2. reject the promise\n3. report the exception and resolve the promise",
+      "revId": "cfeb541febb18c6e96e38fc1caf1b6d505000476",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "095a8c53_014e6c8a",
         "filename": "third_party/WebKit/Source/core/workers/WorkletModuleTreeClient.cpp",
         "patchSetId": 3
