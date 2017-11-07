@@ -42,6 +42,24 @@
     },
     {
       "key": {
+        "uuid": "de36345b_f7769023",
+        "filename": "components/optimization_guide/DEPS",
+        "patchSetId": 8
+      },
+      "lineNbr": 2,
+      "author": {
+        "id": 1166490
+      },
+      "writtenOn": "2017-11-07T00:41:22Z",
+      "side": 1,
+      "message": "AFAIK, layered components split content/ away from net/ and base/ to support iOS. This component is specifically not layered as it will only ever be used on non-iOS.\n\nWhat is not clear to me at a broad level is if non-layered components are really a thing that should exist or whether the code should just be in src/chrome.\n\nAs it stands, we are in a transitional period where previews and data reduction proxy are being flattened as neither of them will ever need to support iOS, and it is not clear how best to go about this.\n\nOne proposal, is to move this to optimization_guide/content, but I am not aware of what is the right thing to do.\n\nblundell@, could you lend some guidance on the best approach?",
+      "parentUuid": "604d1dfb_1e8aa432",
+      "revId": "6023a5ff0399cbf98395e5ebc23e940d37adf3ca",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "8fd73d7d_8737c224",
         "filename": "components/optimization_guide/optimization_guide_service.cc",
         "patchSetId": 8
