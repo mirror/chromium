@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "6f17d2c3_663ebc4f",
+        "filename": "media/blink/webmediaplayer_impl.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 913,
+      "author": {
+        "id": 1129179
+      },
+      "writtenOn": "2017-11-07T19:27:38Z",
+      "side": 1,
+      "message": "I don\u0027t think the TODO reflects the latest state of things. It used to be that ended \u003d (currentTime \u003e\u003d duration), and that was problematic. But we\u0027ve since added an additional ended_ flag for the case where the pipeline knows we\u0027ve played everything but currentTime never quite reaches duration. So today we have a hybrid approach that works well AFAIK. \n\nIIRC Dale may have tried taking this further in the past (relying entirely on the ended_ signal) and found it ends up violating the spec in other ways? He\u0027ll remember better than me. \n\nIf I\u0027ve got the story straight, we should probably delete this TODO.",
+      "parentUuid": "3c702e6e_1688d1cf",
+      "revId": "5166ebfdf95d15080ff031e57acf6df12b9324b4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "3580db61_08c64cbb",
         "filename": "third_party/WebKit/Source/core/html/media/HTMLMediaElement.cpp",
         "patchSetId": 4

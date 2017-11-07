@@ -1,0 +1,96 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "6a3e9628_35b956c1",
+        "filename": "media/blink/webmediaplayer_impl.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 1456,
+      "author": {
+        "id": 1129179
+      },
+      "writtenOn": "2017-11-07T19:27:38Z",
+      "side": 1,
+      "message": "I think my previous comments added confusion. This is not needed. \n\nIt is not possible to end in this method while duration \u003d\u003d infinity. This is where I think you can simply write:\n\nDCHECK(!std::isinf(Duration());\n\nWhich will document the expectation and catch anything I\u0027ve missed.",
+      "range": {
+        "startLine": 1453,
+        "startChar": 2,
+        "endLine": 1456,
+        "endChar": 3
+      },
+      "revId": "46047a5c6dc209b77596c95eaa2e39524f9a6ec3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "447b227a_db16ee7d",
+        "filename": "media/filters/chunk_demuxer.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 314,
+      "author": {
+        "id": 1129179
+      },
+      "writtenOn": "2017-11-07T19:27:38Z",
+      "side": 1,
+      "message": "This can stay private. ChunkDemuxer already manages its duration updates internally, including infinity -\u003e whatever the final duration ends up being.",
+      "range": {
+        "startLine": 314,
+        "startChar": 7,
+        "endLine": 314,
+        "endChar": 21
+      },
+      "revId": "46047a5c6dc209b77596c95eaa2e39524f9a6ec3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "cd2a1d8e_d074319b",
+        "filename": "third_party/WebKit/Source/core/html/media/HTMLMediaElement.cpp",
+        "patchSetId": 6
+      },
+      "lineNbr": 3106,
+      "author": {
+        "id": 1129179
+      },
+      "writtenOn": "2017-11-07T19:27:38Z",
+      "side": 1,
+      "message": "Remove extra parens",
+      "range": {
+        "startLine": 3106,
+        "startChar": 6,
+        "endLine": 3106,
+        "endChar": 7
+      },
+      "revId": "46047a5c6dc209b77596c95eaa2e39524f9a6ec3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9a491052_7883a40d",
+        "filename": "third_party/WebKit/public/platform/WebMediaPlayer.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 157,
+      "author": {
+        "id": 1129179
+      },
+      "writtenOn": "2017-11-07T19:27:38Z",
+      "side": 1,
+      "message": "This can be removed since we don\u0027t need to call it in HTMLMediaElement",
+      "range": {
+        "startLine": 157,
+        "startChar": 15,
+        "endLine": 157,
+        "endChar": 22
+      },
+      "revId": "46047a5c6dc209b77596c95eaa2e39524f9a6ec3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
