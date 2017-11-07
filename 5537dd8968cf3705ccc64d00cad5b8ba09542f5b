@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "69b72510_791dcaf2",
+        "filename": "ui/gfx/render_text.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 498,
+      "author": {
+        "id": 1179965
+      },
+      "writtenOn": "2017-11-07T23:00:06Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "eeb8ed9e_0bfbe35d",
+      "revId": "5537dd8968cf3705ccc64d00cad5b8ba09542f5b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "0731700c_202f460b",
         "filename": "ui/gfx/render_text.h",
         "patchSetId": 4
@@ -33,6 +51,24 @@
       "revId": "5537dd8968cf3705ccc64d00cad5b8ba09542f5b",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ddee7ff2_72060a98",
+        "filename": "ui/gfx/render_text.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 842,
+      "author": {
+        "id": 1179965
+      },
+      "writtenOn": "2017-11-07T23:00:06Z",
+      "side": 1,
+      "message": "Done. These are not pixels, but I\u0027m not sure if it\u0027s dips. I can only tell that it has the same unit with glyph_width_for_test_ or the return type of https://cs.chromium.org/chromium/src/ui/gfx/skia_util.cc?type\u003dcs\u0026l\u003d152",
+      "parentUuid": "0731700c_202f460b",
+      "revId": "5537dd8968cf3705ccc64d00cad5b8ba09542f5b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -53,6 +89,24 @@
     },
     {
       "key": {
+        "uuid": "0a10e7fc_ae6eef44",
+        "filename": "ui/gfx/render_text_harfbuzz.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 1643,
+      "author": {
+        "id": 1179965
+      },
+      "writtenOn": "2017-11-07T23:00:06Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "79df68c4_0cd1eda5",
+      "revId": "5537dd8968cf3705ccc64d00cad5b8ba09542f5b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "db188a98_ebfc459b",
         "filename": "ui/views/controls/textfield/textfield.h",
         "patchSetId": 4
@@ -67,6 +121,24 @@
       "revId": "5537dd8968cf3705ccc64d00cad5b8ba09542f5b",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "535c8835_f2ebe159",
+        "filename": "ui/views/controls/textfield/textfield.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 58,
+      "author": {
+        "id": 1179965
+      },
+      "writtenOn": "2017-11-07T23:00:06Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "db188a98_ebfc459b",
+      "revId": "5537dd8968cf3705ccc64d00cad5b8ba09542f5b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -87,6 +159,24 @@
     },
     {
       "key": {
+        "uuid": "18606dc2_037403c1",
+        "filename": "ui/views/controls/textfield/textfield.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 220,
+      "author": {
+        "id": 1179965
+      },
+      "writtenOn": "2017-11-07T23:00:06Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "a7b0b552_4a7e3d58",
+      "revId": "5537dd8968cf3705ccc64d00cad5b8ba09542f5b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "339c327b_48a1c9be",
         "filename": "ui/views/controls/textfield/textfield.h",
         "patchSetId": 4
@@ -104,6 +194,24 @@
     },
     {
       "key": {
+        "uuid": "7016ebfe_6175d6c9",
+        "filename": "ui/views/controls/textfield/textfield.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 222,
+      "author": {
+        "id": 1179965
+      },
+      "writtenOn": "2017-11-07T23:00:06Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "339c327b_48a1c9be",
+      "revId": "5537dd8968cf3705ccc64d00cad5b8ba09542f5b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "1b6c6830_e0ddb9a0",
         "filename": "ui/views/controls/textfield/textfield.h",
         "patchSetId": 4
@@ -118,6 +226,24 @@
       "revId": "5537dd8968cf3705ccc64d00cad5b8ba09542f5b",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "88f62955_b26b8756",
+        "filename": "ui/views/controls/textfield/textfield.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 493,
+      "author": {
+        "id": 1179965
+      },
+      "writtenOn": "2017-11-07T23:00:06Z",
+      "side": 1,
+      "message": "Done. Thanks!",
+      "parentUuid": "1b6c6830_e0ddb9a0",
+      "revId": "5537dd8968cf3705ccc64d00cad5b8ba09542f5b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
