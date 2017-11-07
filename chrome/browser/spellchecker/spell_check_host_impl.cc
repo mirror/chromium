@@ -26,6 +26,7 @@ SpellCheckHostImpl::~SpellCheckHostImpl() = default;
 void SpellCheckHostImpl::Create(
     spellcheck::mojom::SpellCheckHostRequest request,
     const service_manager::BindSourceInfo& source_info) {
+  LOG(ERROR) << "+++++++++++++++ SpellCheckHostImpl::Create()";
   mojo::MakeStrongBinding(
       base::MakeUnique<SpellCheckHostImpl>(source_info.identity),
       std::move(request));

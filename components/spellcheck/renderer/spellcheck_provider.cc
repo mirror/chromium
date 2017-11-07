@@ -84,6 +84,8 @@ void SpellCheckProvider::RequestTextChecking(
   last_results_.Assign(blink::WebVector<blink::WebTextCheckingResult>());
   last_identifier_ = text_check_completions_.Add(completion);
 
+  LOG(ERROR) << ":::::::::::::::::: SpellCheckProvider::RequestTextChecking";
+
 #if BUILDFLAG(USE_BROWSER_SPELLCHECKER)
   // TODO(crbug.com/714480): convert the RequestTextCheck IPC to mojo.
   // Text check (unified request for grammar and spell check) is only

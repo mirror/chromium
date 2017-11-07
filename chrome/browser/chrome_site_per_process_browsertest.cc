@@ -612,6 +612,7 @@ class TestSpellCheckMessageFilter : public content::BrowserMessageFilter,
 
 #if BUILDFLAG(USE_BROWSER_SPELLCHECKER)
   void HandleMessage(int, int, const base::string16& text) {
+    LOG(ERROR) << "::::::::::::: TestSpellCheckMessageFilter::HandleMessage";
     content::BrowserThread::PostTask(
         content::BrowserThread::UI, FROM_HERE,
         base::BindOnce(&TestSpellCheckMessageFilter::HandleMessageOnUIThread,

@@ -135,6 +135,10 @@ class AwContentBrowserClient : public content::ContentBrowserClient {
   CreateThrottlesForNavigation(
       content::NavigationHandle* navigation_handle) override;
   content::DevToolsManagerDelegate* GetDevToolsManagerDelegate() override;
+  void BindEmbedderInterface(
+      const service_manager::Identity& renderer_identity,
+      const std::string& interface_name,
+      mojo::ScopedMessagePipeHandle interface_pipe) override;
   std::unique_ptr<base::Value> GetServiceManifestOverlay(
       base::StringPiece name) override;
   void BindInterfaceRequestFromFrame(
