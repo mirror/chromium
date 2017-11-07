@@ -16,6 +16,24 @@
       "revId": "1b08ee8cbab815ddf6c03689112f335c145dd9f3",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2f845a2f_04ef2507",
+        "filename": "ui/accessibility/platform/atk_util_auralinux_gtk3.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 20,
+      "author": {
+        "id": 1250986
+      },
+      "writtenOn": "2017-11-07T17:10:44Z",
+      "side": 1,
+      "message": "\u003e Would UnSetVar be better?\n\nYes, and it looks it makes more sense checking the atk-bridge code.",
+      "parentUuid": "bdb5f1bd_d1cbea72",
+      "revId": "1b08ee8cbab815ddf6c03689112f335c145dd9f3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
