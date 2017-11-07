@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "14807a64_f9530fd4",
+        "filename": "components/viz/service/display/gl_renderer.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 1135,
+      "author": {
+        "id": 1000887
+      },
+      "writtenOn": "2017-11-07T23:36:26Z",
+      "side": 1,
+      "message": "I restored this comment from https://codereview.chromium.org/2203033005",
+      "revId": "c564b0437b64a4b5ca7a62bf04391bcdf66654a0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
