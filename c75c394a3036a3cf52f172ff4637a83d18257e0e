@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "41252e8c_0d1bb2a8",
+        "filename": "chrome/browser/android/bookmarks/partner_bookmarks_reader.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 79,
+      "author": {
+        "id": 1144344
+      },
+      "writtenOn": "2017-11-07T01:39:55Z",
+      "side": 0,
+      "message": "Did you remove this branch because it is never called from a UI thread?",
+      "range": {
+        "startLine": 79,
+        "startChar": 2,
+        "endLine": 79,
+        "endChar": 52
+      },
+      "revId": "c75c394a3036a3cf52f172ff4637a83d18257e0e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}

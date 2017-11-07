@@ -2,6 +2,29 @@
   "comments": [
     {
       "key": {
+        "uuid": "722d73ac_1087761d",
+        "filename": "chrome/browser/android/bookmarks/partner_bookmarks_reader.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 198,
+      "author": {
+        "id": 1144344
+      },
+      "writtenOn": "2017-11-07T01:39:55Z",
+      "side": 1,
+      "message": "Does this make AddPartnerBookmark() a blocking call waiting for favicon service over the network? Given the user-visible latency, it might be better to offload these to another asynchronous task.",
+      "range": {
+        "startLine": 198,
+        "startChar": 8,
+        "endLine": 198,
+        "endChar": 21
+      },
+      "revId": "f6dbc05160179f3c2f09f2278f63312684bad860",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "675f9581_75de048e",
         "filename": "chrome/browser/android/bookmarks/partner_bookmarks_reader.cc",
         "patchSetId": 3
@@ -41,6 +64,29 @@
         "startChar": 51,
         "endLine": 247,
         "endChar": 69
+      },
+      "revId": "f6dbc05160179f3c2f09f2278f63312684bad860",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1c9d5125_85296fea",
+        "filename": "chrome/browser/android/bookmarks/partner_bookmarks_reader.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 308,
+      "author": {
+        "id": 1144344
+      },
+      "writtenOn": "2017-11-07T01:39:55Z",
+      "side": 1,
+      "message": "may_page_url_be_private",
+      "range": {
+        "startLine": 308,
+        "startChar": 19,
+        "endLine": 308,
+        "endChar": 46
       },
       "revId": "f6dbc05160179f3c2f09f2278f63312684bad860",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
