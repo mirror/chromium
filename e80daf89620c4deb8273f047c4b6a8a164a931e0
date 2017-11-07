@@ -51,6 +51,24 @@
       "revId": "e80daf89620c4deb8273f047c4b6a8a164a931e0",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "127f427f_d8aa01f8",
+        "filename": "chrome/renderer/plugins/chrome_plugin_placeholder.cc",
+        "patchSetId": 12
+      },
+      "lineNbr": 73,
+      "author": {
+        "id": 1210615
+      },
+      "writtenOn": "2017-11-07T22:49:42Z",
+      "side": 1,
+      "message": "OK. Do we make the interface pointer a lazy-initialized static in ChromeContentRendererClient? Or do we downcast \ndynamic_cast\u003cChromeContentRendererClient\u003e(content::GetContentClient()-\u003erenderer()) and access a lazy-initialized member? What\u0027s the done thing here?",
+      "parentUuid": "4155a76e_230acd6e",
+      "revId": "e80daf89620c4deb8273f047c4b6a8a164a931e0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
