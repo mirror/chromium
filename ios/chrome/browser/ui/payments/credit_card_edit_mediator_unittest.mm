@@ -152,7 +152,7 @@ TEST_F(PaymentRequestCreditCardEditMediatorTest, TestFieldsWhenEdit) {
     EXPECT_TRUE([field isKindOfClass:[EditorField class]]);
     editor_field = base::mac::ObjCCastStrict<EditorField>(field);
     EXPECT_TRUE([editor_field.value
-        isEqualToString:base::SysUTF8ToNSString(profiles()[0]->guid())]);
+        isEqualToString:base::SysUTF8ToNSString(profiles()[0].guid())]);
 
     field = fields[4];
     EXPECT_TRUE([field isKindOfClass:[EditorField class]]);
@@ -168,7 +168,7 @@ TEST_F(PaymentRequestCreditCardEditMediatorTest, TestFieldsWhenEdit) {
   [[consumer expect] setEditorFields:[OCMArg checkWithBlock:check_block]];
 
   autofill::CreditCard card = autofill::test::GetCreditCard();
-  card.set_billing_address_id(profiles()[0]->guid());
+  card.set_billing_address_id(profiles()[0].guid());
   CreditCardEditMediator* mediator =
       [[CreditCardEditMediator alloc] initWithPaymentRequest:payment_request()
                                                   creditCard:&card];
@@ -188,7 +188,7 @@ TEST_F(PaymentRequestCreditCardEditMediatorTest, TestFieldsWhenEditServerCard) {
     EXPECT_TRUE([field isKindOfClass:[EditorField class]]);
     EditorField* editor_field = base::mac::ObjCCastStrict<EditorField>(field);
     EXPECT_TRUE([editor_field.value
-        isEqualToString:base::SysUTF8ToNSString(profiles()[0]->guid())]);
+        isEqualToString:base::SysUTF8ToNSString(profiles()[0].guid())]);
 
     return YES;
   };
@@ -199,7 +199,7 @@ TEST_F(PaymentRequestCreditCardEditMediatorTest, TestFieldsWhenEditServerCard) {
   [[consumer expect] setEditorFields:[OCMArg checkWithBlock:check_block]];
 
   autofill::CreditCard card = autofill::test::GetMaskedServerCard();
-  card.set_billing_address_id(profiles()[0]->guid());
+  card.set_billing_address_id(profiles()[0].guid());
   CreditCardEditMediator* mediator =
       [[CreditCardEditMediator alloc] initWithPaymentRequest:payment_request()
                                                   creditCard:&card];
@@ -296,7 +296,7 @@ TEST_F(PaymentRequestCreditCardEditMediatorTest, Title) {
   EXPECT_TRUE([mediator.title
       isEqualToString:l10n_util::GetNSString(IDS_PAYMENTS_ADD_CARD_LABEL)]);
 
-  const autofill::AutofillProfile& billing_address = *profiles()[0];
+  const autofill::AutofillProfile& billing_address = profiles()[0];
 
   // Complete card, to title should prompt to edit the card.
   autofill::CreditCard credit_card = autofill::test::GetCreditCard();

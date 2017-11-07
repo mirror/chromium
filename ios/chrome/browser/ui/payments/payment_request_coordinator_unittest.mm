@@ -163,14 +163,14 @@ TEST_F(PaymentRequestCoordinatorTest, DidSelectShippingAddress) {
                 onSelector:selector
       callBlockExpectation:^(PaymentRequestCoordinator* callerCoordinator,
                              const autofill::AutofillProfile& shippingAddress) {
-        EXPECT_EQ(*profiles().back(), shippingAddress);
+        EXPECT_EQ(profiles().back(), shippingAddress);
         EXPECT_EQ(coordinator, callerCoordinator);
       }];
   [coordinator setDelegate:delegate_mock];
 
   // Call the ShippingAddressSelectionCoordinator delegate method.
   [coordinator shippingAddressSelectionCoordinator:nil
-                          didSelectShippingAddress:profiles().back().get()];
+                          didSelectShippingAddress:profiles().back()];
 }
 
 // Tests that calling the ShippingOptionSelectionCoordinator delegate method

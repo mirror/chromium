@@ -99,7 +99,7 @@ TEST_F(PaymentRequestFullCardRequesterTest, PresentAndDismiss) {
       autofill::AutofillDriverIOS::FromWebState(web_state())
           ->autofill_manager();
   FakeResultDelegate* fake_result_delegate = new FakeResultDelegate;
-  full_card_requester.GetFullCard(*credit_cards()[0], autofill_manager,
+  full_card_requester.GetFullCard(credit_cards()[0], autofill_manager,
                                   fake_result_delegate->GetWeakPtr());
 
   // Spin the run loop to trigger the animation.
