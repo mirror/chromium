@@ -1,0 +1,73 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "7684430c_bb41b794",
+        "filename": "chrome/browser/ui/views/location_bar/find_bar_icon.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 16,
+      "author": {
+        "id": 1115907
+      },
+      "writtenOn": "2017-11-07T18:02:30Z",
+      "side": 1,
+      "message": "nit: curlies",
+      "range": {
+        "startLine": 16,
+        "startChar": 4,
+        "endLine": 16,
+        "endChar": 10
+      },
+      "revId": "4dcb8914ec6c88adf104373c390e4035296d2cc8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8c4caa06_e57a09c6",
+        "filename": "chrome/browser/ui/views/location_bar/find_bar_icon.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 18,
+      "author": {
+        "id": 1115907
+      },
+      "writtenOn": "2017-11-07T18:02:30Z",
+      "side": 1,
+      "message": "nit: I\u0027d write this as:\n\nif (should_animate)\n  AnimateInkDrop(activate ? ...);\nelse\n  DCHECK(activate);\n  SnapToActivated();",
+      "range": {
+        "startLine": 18,
+        "startChar": 24,
+        "endLine": 18,
+        "endChar": 25
+      },
+      "revId": "4dcb8914ec6c88adf104373c390e4035296d2cc8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b80ebb34_af82698e",
+        "filename": "chrome/browser/ui/views/location_bar/location_bar_view.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 767,
+      "author": {
+        "id": 1115907
+      },
+      "writtenOn": "2017-11-07T18:02:30Z",
+      "side": 1,
+      "message": "when might the browser window be null? tests? might be good to add a comment",
+      "range": {
+        "startLine": 767,
+        "startChar": 26,
+        "endLine": 767,
+        "endChar": 44
+      },
+      "revId": "4dcb8914ec6c88adf104373c390e4035296d2cc8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
