@@ -33,8 +33,9 @@ TEST(CBORWriterTest, TestWriteUint) {
   };
 
   for (const UintTestCase& test_case : kUintTestCases) {
-    std::vector<uint8_t> cbor = CBORWriter::Write(CBORValue(test_case.value));
-    EXPECT_THAT(cbor, testing::ElementsAreArray(test_case.cbor));
+    auto cbor = CBORWriter::Write(CBORValue(test_case.value));
+    ASSERT_TRUE(cbor.has_value());
+    EXPECT_THAT(cbor.value(), testing::ElementsAreArray(test_case.cbor));
   }
 }
 
@@ -50,8 +51,9 @@ TEST(CBORWriterTest, TestWriteBytes) {
   };
 
   for (const BytesTestCase& test_case : kBytesTestCases) {
-    std::vector<uint8_t> cbor = CBORWriter::Write(CBORValue(test_case.bytes));
-    EXPECT_THAT(cbor, testing::ElementsAreArray(test_case.cbor));
+    auto cbor = CBORWriter::Write(CBORValue(test_case.bytes));
+    ASSERT_TRUE(cbor.has_value());
+    EXPECT_THAT(cbor.value(), testing::ElementsAreArray(test_case.cbor));
   }
 }
 
@@ -71,8 +73,9 @@ TEST(CBORWriterTest, TestWriteString) {
       {"\xf0\x90\x85\x91", base::StringPiece("\x64\xf0\x90\x85\x91")}};
 
   for (const StringTestCase& test_case : kStringTestCases) {
-    std::vector<uint8_t> cbor = CBORWriter::Write(CBORValue(test_case.string));
-    EXPECT_THAT(cbor, testing::ElementsAreArray(test_case.cbor));
+    auto cbor = CBORWriter::Write(CBORValue(test_case.string));
+    ASSERT_TRUE(cbor.has_value());
+    EXPECT_THAT(cbor.value(), testing::ElementsAreArray(test_case.cbor));
   }
 }
 
@@ -89,9 +92,11 @@ TEST(CBORWriterTest, TestWriteArray) {
   for (int i = 1; i <= 25; i++) {
     array.push_back(CBORValue(i));
   }
-  std::vector<uint8_t> cbor = CBORWriter::Write(CBORValue(array));
-  EXPECT_THAT(cbor, testing::ElementsAreArray(kArrayTestCaseCbor,
-                                              arraysize(kArrayTestCaseCbor)));
+  auto cbor = CBORWriter::Write(CBORValue(array));
+  ASSERT_TRUE(cbor.has_value());
+  EXPECT_THAT(cbor.value(),
+              testing::ElementsAreArray(kArrayTestCaseCbor,
+                                        arraysize(kArrayTestCaseCbor)));
 }
 
 TEST(CBORWriterTest, TestWriteMapWithMapValue) {
@@ -128,9 +133,10 @@ TEST(CBORWriterTest, TestWriteMapWithMapValue) {
   // The empty string is shorter than all others, so should appear first in the
   // serialisation.
   map[""] = CBORValue(".");
-  std::vector<uint8_t> cbor = CBORWriter::Write(CBORValue(map));
-  EXPECT_THAT(cbor, testing::ElementsAreArray(kMapTestCaseCbor,
-                                              arraysize(kMapTestCaseCbor)));
+  auto cbor = CBORWriter::Write(CBORValue(map));
+  ASSERT_TRUE(cbor.has_value());
+  EXPECT_THAT(cbor.value(), testing::ElementsAreArray(
+                                kMapTestCaseCbor, arraysize(kMapTestCaseCbor)));
 }
 
 TEST(CBORWriterTest, TestWriteMapWithArray) {
@@ -152,8 +158,9 @@ TEST(CBORWriterTest, TestWriteMapWithArray) {
   array.push_back(CBORValue(2));
   array.push_back(CBORValue(3));
   map["b"] = CBORValue(array);
-  std::vector<uint8_t> cbor = CBORWriter::Write(CBORValue(map));
-  EXPECT_THAT(cbor,
+  auto cbor = CBORWriter::Write(CBORValue(map));
+  ASSERT_TRUE(cbor.has_value());
+  EXPECT_THAT(cbor.value(),
               testing::ElementsAreArray(kMapArrayTestCaseCbor,
                                         arraysize(kMapArrayTestCaseCbor)));
 }
@@ -180,9 +187,114 @@ TEST(CBORWriterTest, TestWriteNestedMap) {
   nested_map["c"] = CBORValue(2);
   nested_map["d"] = CBORValue(3);
   map["b"] = CBORValue(nested_map);
-  std::vector<uint8_t> cbor = CBORWriter::Write(CBORValue(map));
-  EXPECT_THAT(cbor, testing::ElementsAreArray(kNestedMapTestCase,
-                                              arraysize(kNestedMapTestCase)));
+  auto cbor = CBORWriter::Write(CBORValue(map));
+  ASSERT_TRUE(cbor.has_value());
+  EXPECT_THAT(cbor.value(),
+              testing::ElementsAreArray(kNestedMapTestCase,
+                                        arraysize(kNestedMapTestCase)));
+}
+
+// For major type 0, 2, 3, empty CBOR array, and empty CBOR map, the nesting
+// layer size is expected to be 0 since CBOR encoder does not have to parse any
+// "[" or "{" characters to traverse all CBOR value elements.
+TEST(CBORWriterTest, TestWriteSingleLayer) {
+  CBORValue simple_uint = CBORValue(1);
+  CBORValue simple_string = CBORValue("a");
+  std::vector<uint8_t> byte_data = {0x01, 0x02, 0x03, 0x04};
+  CBORValue simple_bytestring = CBORValue(byte_data);
+  CBORValue::ArrayValue empty_array;
+  CBORValue::ArrayValue single_layer_array;
+  single_layer_array.push_back(CBORValue(2));
+  CBORValue::MapValue empty_map;
+  CBORValue::MapValue single_layer_map;
+  single_layer_map["b"] = CBORValue(3);
+
+  EXPECT_TRUE(CBORWriter::Write(simple_uint, 0).has_value());
+  EXPECT_TRUE(CBORWriter::Write(simple_string, 0).has_value());
+  EXPECT_TRUE(CBORWriter::Write(simple_bytestring, 0).has_value());
+
+  EXPECT_TRUE(CBORWriter::Write(CBORValue(empty_array), 0).has_value());
+  EXPECT_TRUE(CBORWriter::Write(CBORValue(empty_map), 0).has_value());
+
+  EXPECT_FALSE(CBORWriter::Write(CBORValue(single_layer_array), 0).has_value());
+  EXPECT_TRUE(CBORWriter::Write(CBORValue(single_layer_array), 1).has_value());
+
+  EXPECT_FALSE(CBORWriter::Write(CBORValue(single_layer_map), 0).has_value());
+  EXPECT_TRUE(CBORWriter::Write(CBORValue(single_layer_map), 1).has_value());
+}
+
+// Testing Write() function for major type 5 CBOR structure with
+// nested CBOR map. The structure of CBOR tested is shown below.
+//     {"a": 1,
+//      "b": {"c": 2,
+//            "d": 3}}
+TEST(CBORWriterTest, TestWriteMultiLayer) {
+  CBORValue::MapValue cbor_map;
+  cbor_map["a"] = CBORValue(1);
+  CBORValue::MapValue nested_map;
+  nested_map["c"] = CBORValue(2);
+  nested_map["d"] = CBORValue(3);
+  cbor_map["b"] = CBORValue(nested_map);
+  EXPECT_TRUE(CBORWriter::Write(CBORValue(cbor_map), 2).has_value());
+  EXPECT_FALSE(CBORWriter::Write(CBORValue(cbor_map), 1).has_value());
+}
+
+// Testing Write() function for following CBOR structure.
+//     [1,
+//      2,
+//      3,
+//      {"a": 1,
+//       "b": {"c": 2,
+//             "d": 3}}]
+TEST(CBORWriterTest, TestWriteUnbalancedCBOR) {
+  CBORValue::ArrayValue cbor_array;
+  CBORValue::MapValue cbor_map;
+  CBORValue::MapValue nested_map;
+
+  cbor_map["a"] = CBORValue(1);
+  nested_map["c"] = CBORValue(2);
+  nested_map["d"] = CBORValue(3);
+  cbor_map["b"] = CBORValue(nested_map);
+  cbor_array.push_back(CBORValue(1));
+  cbor_array.push_back(CBORValue(2));
+  cbor_array.push_back(CBORValue(3));
+  cbor_array.push_back(CBORValue(cbor_map));
+
+  EXPECT_TRUE(CBORWriter::Write(CBORValue(cbor_array), 3).has_value());
+  EXPECT_FALSE(CBORWriter::Write(CBORValue(cbor_array), 2).has_value());
+}
+
+// Testing Write() function for following CBOR structure.
+//     {"a": 1,
+//      "b": {"c": 2,
+//            "d": 3
+//            "h": { "e": 4,
+//                   "f": 5,
+//                   "g": [6, 7, [8]]}}}
+// Since above CBOR contains 5 nesting levels. Thus, Write() is expected to
+// return empty optional object when maximum nesting layer size is set to 4.
+TEST(CBORWriterTest, TestWriteOverlyNestedCBOR) {
+  CBORValue::MapValue map;
+  CBORValue::MapValue nested_map;
+  CBORValue::MapValue inner_nested_map;
+  CBORValue::ArrayValue inner_array;
+  CBORValue::ArrayValue array;
+
+  map["a"] = CBORValue(1);
+  nested_map["c"] = CBORValue(2);
+  nested_map["d"] = CBORValue(3);
+  inner_nested_map["e"] = CBORValue(4);
+  inner_nested_map["f"] = CBORValue(5);
+  inner_array.push_back(CBORValue(6));
+  array.push_back(CBORValue(6));
+  array.push_back(CBORValue(7));
+  array.push_back(CBORValue(inner_array));
+  inner_nested_map["g"] = CBORValue(array);
+  nested_map["h"] = CBORValue(inner_nested_map);
+  map["b"] = CBORValue(nested_map);
+
+  EXPECT_TRUE(CBORWriter::Write(CBORValue(map), 5).has_value());
+  EXPECT_FALSE(CBORWriter::Write(CBORValue(map), 4).has_value());
 }
 
 }  // namespace content
