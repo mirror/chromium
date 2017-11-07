@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "7d49d7b4_d610543a",
+        "filename": "device/bluetooth/bluetooth_remote_gatt_service_win.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 175,
+      "author": {
+        "id": 1133035
+      },
+      "writtenOn": "2017-11-07T00:29:58Z",
+      "side": 1,
+      "message": "Curious why this is not done after the characteristic discovers its descriptors.",
+      "revId": "33f79e158e4fda6370b4d3b8d56af3eb1336856c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
