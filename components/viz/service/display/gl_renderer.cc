@@ -1124,11 +1124,22 @@ void GLRenderer::DrawRenderPassQuadInternal(
       params->quad->shared_quad_state->quad_to_target_transform;
   if (!InitializeRPDQParameters(params))
     return;
+
   UpdateRPDQShadersForBlending(params);
-  if (!UpdateRPDQWithSkiaFilters(params))
-    return;
-  UseRenderPass(current_frame()->current_render_pass);
+  bool can_draw = UpdateRPDQWithSkiaFilters(params);
+  // The above calls use ScopedUseGrContext which can change the bound
+  // framebuffer, so we need to restore it for the current RenderPass. Passes
+  // |force_bind| as true to ensure that the framebuffer is restored and not
+  // optimized away, since we are already drawing to the framebuffer.
+  UseRenderPass(current_frame()->current_render_pass, /*force_bind=*/true);
+  // As part of restoring the framebuffer, we call SetViewport directly, rather
+  // than through PrepareSurfaceForPass. PrepareSurfaceForPass also clears the
+  // surface, which is not desired when restoring.
   SetViewport();
+
+  if (!can_draw)
+    return;
+
   UpdateRPDQTexturesForSampling(params);
   UpdateRPDQBlendMode(params);
   ChooseRPDQProgram(params);

@@ -141,7 +141,12 @@ class VIZ_SERVICE_EXPORT DirectRenderer {
       bool use_render_pass_scissor);
   void DrawRenderPassAndExecuteCopyRequests(RenderPass* render_pass);
   void DrawRenderPass(const RenderPass* render_pass);
-  bool UseRenderPass(const RenderPass* render_pass);
+  // Returns false if it detects that it does not need to draw the render pass,
+  // in which case it does not have any side effect.
+  // Set |force_bind| to true if you want to ensure the RenderPass will backing
+  // will be bound as the draw target, and that this function will always return
+  // true.
+  bool UseRenderPass(const RenderPass* render_pass, bool force_bind);
 
   void DoDrawPolygon(const DrawPolygon& poly,
                      const gfx::Rect& render_pass_scissor,
