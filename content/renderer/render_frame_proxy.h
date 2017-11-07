@@ -26,6 +26,7 @@
 namespace blink {
 struct WebRect;
 struct WebRemoteScrollProperties;
+struct FramePolicy;
 }
 
 namespace viz {
@@ -41,7 +42,6 @@ class RenderViewImpl;
 class RenderWidget;
 struct ContentSecurityPolicyHeader;
 struct FrameOwnerProperties;
-struct FramePolicy;
 struct FrameReplicationState;
 
 #if defined(USE_AURA)
@@ -211,7 +211,7 @@ class CONTENT_EXPORT RenderFrameProxy : public IPC::Listener,
   void OnUpdateOpener(int opener_routing_id);
   void OnViewChanged(const viz::FrameSinkId& frame_sink_id);
   void OnDidStopLoading();
-  void OnDidUpdateFramePolicy(const FramePolicy& frame_policy);
+  void OnDidUpdateFramePolicy(const blink::FramePolicy& frame_policy);
   void OnDispatchLoad();
   void OnCollapse(bool collapsed);
   void OnDidUpdateName(const std::string& name, const std::string& unique_name);
