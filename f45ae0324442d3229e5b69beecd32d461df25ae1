@@ -36,6 +36,52 @@
     },
     {
       "key": {
+        "uuid": "e8fb9094_a0a5411e",
+        "filename": "content/renderer/render_frame_impl_browsertest.cc",
+        "patchSetId": 22
+      },
+      "lineNbr": 654,
+      "author": {
+        "id": 1001500
+      },
+      "writtenOn": "2017-11-07T19:32:44Z",
+      "side": 1,
+      "message": "nit: Let\u0027s add callback to the name of the variable, since having binder_.Run() reads a bit strange.",
+      "range": {
+        "startLine": 654,
+        "startChar": 17,
+        "endLine": 654,
+        "endChar": 24
+      },
+      "revId": "f45ae0324442d3229e5b69beecd32d461df25ae1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d4c9ccf4_ec6f266a",
+        "filename": "content/renderer/render_frame_impl_browsertest.cc",
+        "patchSetId": 22
+      },
+      "lineNbr": 662,
+      "author": {
+        "id": 1001500
+      },
+      "writtenOn": "2017-11-07T19:32:44Z",
+      "side": 1,
+      "message": "nit: Do we need the extra Test prefix? It is already an impl for a TestInterface : )",
+      "range": {
+        "startLine": 662,
+        "startChar": 6,
+        "endLine": 662,
+        "endChar": 10
+      },
+      "revId": "f45ae0324442d3229e5b69beecd32d461df25ae1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "1e8caf0f_fd982890",
         "filename": "content/renderer/render_frame_impl_browsertest.cc",
         "patchSetId": 22
@@ -47,6 +93,87 @@
       "writtenOn": "2017-11-06T19:03:35Z",
       "side": 1,
       "message": "It seems strange that we fire RenderFrameObserver::DidCreateNewDocument *before* DidCommitProvisionalLoad.\n\nIf this is intended, which interface provider should be then returned if RenderFrame::GetRemoteInterfaces() is called from this?",
+      "revId": "f45ae0324442d3229e5b69beecd32d461df25ae1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0b365230_a4751b3e",
+        "filename": "content/renderer/render_frame_impl_browsertest.cc",
+        "patchSetId": 22
+      },
+      "lineNbr": 823,
+      "author": {
+        "id": 1001500
+      },
+      "writtenOn": "2017-11-07T19:32:44Z",
+      "side": 1,
+      "message": "This is a good question. I don\u0027t know how easy it is to change the ordering of events without breaking things. In my naive view of the world we can\u0027t get a new document without committing to it, which means it should be commit, new doc, new doc element.\nIf we can\u0027t change the ordering, the safe thing to do is use the new interface, right? Since it will be the one associated with the new document that we will create as part of the commit. I\u0027d lean on dcheng@ for more context on whether we can change things here.",
+      "parentUuid": "1e8caf0f_fd982890",
+      "revId": "f45ae0324442d3229e5b69beecd32d461df25ae1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "cfe7bbfb_e00508c7",
+        "filename": "content/renderer/render_frame_impl_browsertest.cc",
+        "patchSetId": 22
+      },
+      "lineNbr": 824,
+      "author": {
+        "id": 1001500
+      },
+      "writtenOn": "2017-11-07T19:32:44Z",
+      "side": 1,
+      "message": "Shouldn\u0027t we expect to see a commit of the first_committed_url_ too?",
+      "revId": "f45ae0324442d3229e5b69beecd32d461df25ae1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "739a2ea5_347ecb68",
+        "filename": "content/renderer/render_frame_impl_browsertest.cc",
+        "patchSetId": 22
+      },
+      "lineNbr": 853,
+      "author": {
+        "id": 1001500
+      },
+      "writtenOn": "2017-11-07T19:32:44Z",
+      "side": 1,
+      "message": "Do we need to keep this as a member variable? It doesn\u0027t seem to be used at all outside of OnFrameCreated, so it looks more like a local variable.",
+      "range": {
+        "startLine": 853,
+        "startChar": 54,
+        "endLine": 853,
+        "endChar": 74
+      },
+      "revId": "f45ae0324442d3229e5b69beecd32d461df25ae1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2723a12b_43ff07e8",
+        "filename": "content/renderer/render_frame_impl_browsertest.cc",
+        "patchSetId": 22
+      },
+      "lineNbr": 913,
+      "author": {
+        "id": 1001500
+      },
+      "writtenOn": "2017-11-07T19:32:44Z",
+      "side": 1,
+      "message": "url::kAboutBlankURL?",
+      "range": {
+        "startLine": 913,
+        "startChar": 22,
+        "endLine": 913,
+        "endChar": 35
+      },
       "revId": "f45ae0324442d3229e5b69beecd32d461df25ae1",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
