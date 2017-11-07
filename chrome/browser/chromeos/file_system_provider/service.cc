@@ -41,6 +41,7 @@ std::unique_ptr<ProvidedFileSystemInterface> CreateProvidedFileSystem(
     Profile* profile,
     const ProvidedFileSystemInfo& file_system_info) {
   DCHECK(profile);
+
   return base::MakeUnique<ThrottledFileSystem>(
       base::MakeUnique<ProvidedFileSystem>(profile, file_system_info));
 }
