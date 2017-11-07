@@ -1,0 +1,67 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "09c3fc07_630c98fc",
+        "filename": "third_party/webrtc_overrides/rtc_base/logging.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 93,
+      "author": {
+        "id": 1002285
+      },
+      "writtenOn": "2017-11-07T07:38:43Z",
+      "side": 1,
+      "message": "Please put a name (your) here instead, and the bug ref in the text.",
+      "range": {
+        "startLine": 93,
+        "startChar": 8,
+        "endLine": 93,
+        "endChar": 28
+      },
+      "revId": "09b47f1bf2d58db7fb9a93907d5569e58ff94e87",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "70233da7_93f7a14e",
+        "filename": "third_party/webrtc_overrides/rtc_base/logging.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 93,
+      "author": {
+        "id": 1002285
+      },
+      "writtenOn": "2017-11-07T07:38:43Z",
+      "side": 1,
+      "message": "Nit: When",
+      "range": {
+        "startLine": 93,
+        "startChar": 31,
+        "endLine": 93,
+        "endChar": 35
+      },
+      "revId": "09b47f1bf2d58db7fb9a93907d5569e58ff94e87",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6ab9de49_76a4b3f0",
+        "filename": "third_party/webrtc_overrides/rtc_base/logging.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 97,
+      "author": {
+        "id": 1002285
+      },
+      "writtenOn": "2017-11-07T07:38:43Z",
+      "side": 1,
+      "message": "Maybe define them to their corresponding LOG_ macro? Removes duplicated code, and is easier to review. You could also change the above to RTC_LOG_ and have this section define LOG_ to corresponding RTC_LOG_.",
+      "revId": "09b47f1bf2d58db7fb9a93907d5569e58ff94e87",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
