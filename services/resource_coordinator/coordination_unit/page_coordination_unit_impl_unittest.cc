@@ -5,6 +5,7 @@
 #include "services/resource_coordinator/coordination_unit/page_coordination_unit_impl.h"
 #include "base/run_loop.h"
 #include "base/test/simple_test_tick_clock.h"
+#include "services/resource_coordinator/clock.h"
 #include "services/resource_coordinator/coordination_unit/coordination_unit_test_harness.h"
 #include "services/resource_coordinator/coordination_unit/frame_coordination_unit_impl.h"
 #include "services/resource_coordinator/coordination_unit/mock_coordination_unit_graphs.h"
@@ -18,7 +19,29 @@ namespace resource_coordinator {
 
 namespace {
 
-class PageCoordinationUnitImplTest : public CoordinationUnitTestHarness {};
+class PageCoordinationUnitImplTest : public CoordinationUnitTestHarness {
+ public:
+  void SetUp() override {
+    ResourceCoordinatorClock::SetClockForTesting(
+        std::make_unique<base::SimpleTestTickClock>());
+    clock_ = static_cast<base::SimpleTestTickClock*>(
+        ResourceCoordinatorClock::GetClockForTesting());
+
+    // Sets a valid starting time.
+    clock_->SetNowTicks(base::TimeTicks::Now());
+  }
+
+  void TearDown() override {
+    clock_ = nullptr;
+    ResourceCoordinatorClock::ResetClockForTesting();
+  }
+
+ protected:
+  void AdvanceClock(base::TimeDelta delta) { clock_->Advance(delta); }
+
+ private:
+  base::SimpleTestTickClock* clock_ = nullptr;
+};
 
 }  // namespace
 
@@ -129,48 +152,36 @@ TEST_F(PageCoordinationUnitImplTest,
 
 TEST_F(PageCoordinationUnitImplTest, TimeSinceLastVisibilityChange) {
   MockSinglePageInSingleProcessCoordinationUnitGraph cu_graph;
-  base::SimpleTestTickClock* clock = new base::SimpleTestTickClock();
-  cu_graph.page->SetClockForTest(
-      std::unique_ptr<base::SimpleTestTickClock>(clock));
 
   cu_graph.page->SetVisibility(true);
   EXPECT_TRUE(cu_graph.page->IsVisible());
-  clock->Advance(base::TimeDelta::FromSeconds(42));
+  AdvanceClock(base::TimeDelta::FromSeconds(42));
   EXPECT_EQ(base::TimeDelta::FromSeconds(42),
             cu_graph.page->TimeSinceLastVisibilityChange());
 
   cu_graph.page->SetVisibility(false);
-  clock->Advance(base::TimeDelta::FromSeconds(23));
+  AdvanceClock(base::TimeDelta::FromSeconds(23));
   EXPECT_EQ(base::TimeDelta::FromSeconds(23),
             cu_graph.page->TimeSinceLastVisibilityChange());
   EXPECT_FALSE(cu_graph.page->IsVisible());
-  // The clock is owned and destructed by the page cu.
-  clock = nullptr;
 }
 
 TEST_F(PageCoordinationUnitImplTest, TimeSinceLastNavigation) {
   MockSinglePageInSingleProcessCoordinationUnitGraph cu_graph;
-  base::SimpleTestTickClock* clock = new base::SimpleTestTickClock();
-  // Sets a valid starting time.
-  clock->SetNowTicks(base::TimeTicks::Now());
-  cu_graph.page->SetClockForTest(
-      std::unique_ptr<base::SimpleTestTickClock>(clock));
   // Before any commit events, timedelta should be 0.
   EXPECT_TRUE(cu_graph.page->TimeSinceLastNavigation().is_zero());
 
   // 1st navigation.
   cu_graph.page->OnMainFrameNavigationCommitted();
-  clock->Advance(base::TimeDelta::FromSeconds(11));
+  AdvanceClock(base::TimeDelta::FromSeconds(11));
   EXPECT_EQ(base::TimeDelta::FromSeconds(11),
             cu_graph.page->TimeSinceLastNavigation());
 
   // 2nd navigation.
   cu_graph.page->OnMainFrameNavigationCommitted();
-  clock->Advance(base::TimeDelta::FromSeconds(17));
+  AdvanceClock(base::TimeDelta::FromSeconds(17));
   EXPECT_EQ(base::TimeDelta::FromSeconds(17),
             cu_graph.page->TimeSinceLastNavigation());
-  // The clock is owned and destructed by the page cu.
-  clock = nullptr;
 }
 
 }  // namespace resource_coordinator
