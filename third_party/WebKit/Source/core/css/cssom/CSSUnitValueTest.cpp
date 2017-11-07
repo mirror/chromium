@@ -180,4 +180,31 @@ TEST(CSSUnitValueTest, QuarterMillimeterToOtherUnit) {
       kEpsilon);
 }
 
+TEST(CSSUnitValueTest, TypeInitializesCorrectly) {
+  using UnitType = CSSPrimitiveValue::UnitType;
+  using BaseType = CSSNumericValueType::BaseType;
+
+  const std::map<UnitType, BaseType> test_cases = {
+      {UnitType::kPixels, BaseType::kLength},
+      {UnitType::kSeconds, BaseType::kTime},
+      {UnitType::kDegrees, BaseType::kAngle},
+      {UnitType::kHertz, BaseType::kFrequency},
+      {UnitType::kDotsPerInch, BaseType::kResolution},
+      {UnitType::kPercentage, BaseType::kPercent},
+  };
+
+  for (const auto& test : test_cases) {
+    const CSSUnitValue* value = CSSUnitValue::Create(0, test.first);
+    const auto& type = value->Type();
+    for (unsigned i = 0; i < CSSNumericValueType::kNumBaseTypes; i++) {
+      const auto base_type = static_cast<CSSNumericValueType::BaseType>(i);
+      EXPECT_FALSE(type.HasPercentHint());
+      if (base_type == test.second)
+        EXPECT_EQ(type.Entry(base_type), 1);
+      else
+        EXPECT_EQ(type.Entry(base_type), 0);
+    }
+  }
+}
+
 }  // namespace blink
