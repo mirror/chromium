@@ -7,7 +7,7 @@
 
 #include "StyleBuilderFunctions.h"
 #include "core/css/CSSPropertyValue.h"
-#include "core/css/properties/CSSPropertyAPI.h"
+#include "core/css/properties/CSSProperty.h"
 #include "core/css/resolver/StyleResolverState.h"
 #include "core/style/ComputedStyle.h"
 
@@ -26,14 +26,14 @@ void StyleBuilder::ApplyProperty(CSSPropertyID property,
         if property.should_declare_functions or property.use_handlers_for %}
     {% set used_property = properties_by_id[property.use_handlers_for] or property %}
     {% set used_property_id = used_property.property_id %}
-    {% if used_property.use_api_in_stylebuilder %}
+    {% if used_property.use_property_class_in_stylebuilder %}
     case {{property.property_id}}:
       if (isInitial)
-        Get{{used_property_id}}API().ApplyInitial(state);
+        Get{{used_property_id}}().ApplyInitial(state);
       else if (isInherit)
-        Get{{used_property_id}}API().ApplyInherit(state);
+        Get{{used_property_id}}().ApplyInherit(state);
       else
-        Get{{used_property_id}}API().ApplyValue(state, value);
+        Get{{used_property_id}}().ApplyValue(state, value);
       return;
       {% else %}
     case {{property.property_id}}:
@@ -57,7 +57,7 @@ void StyleBuilder::ApplyProperty(CSSPropertyID property,
     {% endfor %}
     {
       CSSPropertyID resolvedProperty =
-          CSSPropertyAPI::Get(property)
+          CSSProperty::Get(property)
               .ResolveDirectionAwareProperty(state.Style()->Direction(),
                                              state.Style()->GetWritingMode());
       DCHECK_NE(resolvedProperty, property);
