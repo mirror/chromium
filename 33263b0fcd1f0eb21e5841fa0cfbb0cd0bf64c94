@@ -1,0 +1,78 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "6dd8f2d0_e2e4c09b",
+        "filename": "chrome/browser/ui/omnibox/chrome_omnibox_edit_controller.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 56,
+      "author": {
+        "id": 1001310
+      },
+      "writtenOn": "2017-11-07T20:33:25Z",
+      "side": 1,
+      "message": "Please comment on the intention.\n// If the user selected the current tab, don\u0027t do anything, close the dropdown, and leave focus in the omnibox.\n?\n(is that what happens?)",
+      "revId": "33263b0fcd1f0eb21e5841fa0cfbb0cd0bf64c94",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8e3520ab_61132919",
+        "filename": "chrome/browser/ui/omnibox/chrome_omnibox_edit_controller.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 69,
+      "author": {
+        "id": 1001310
+      },
+      "writtenOn": "2017-11-07T20:33:25Z",
+      "side": 1,
+      "message": "Shouldn\u0027t need this guard anymore.",
+      "revId": "33263b0fcd1f0eb21e5841fa0cfbb0cd0bf64c94",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6cd2b653_8008ff13",
+        "filename": "components/omnibox/browser/history_provider.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 115,
+      "author": {
+        "id": 1001310
+      },
+      "writtenOn": "2017-11-07T20:33:25Z",
+      "side": 1,
+      "message": "nit: pull out of for () loop.",
+      "range": {
+        "startLine": 113,
+        "startChar": 0,
+        "endLine": 115,
+        "endChar": 35
+      },
+      "revId": "33263b0fcd1f0eb21e5841fa0cfbb0cd0bf64c94",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2f74c158_8f67893a",
+        "filename": "components/omnibox/browser/history_provider.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 116,
+      "author": {
+        "id": 1001310
+      },
+      "writtenOn": "2017-11-07T20:33:25Z",
+      "side": 1,
+      "message": "Thought of this now:\nFor pages with no title, displaying \"Switching to tab - \" looks odd.  You might want a different message for those.\nAdd to TODO list?",
+      "revId": "33263b0fcd1f0eb21e5841fa0cfbb0cd0bf64c94",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
