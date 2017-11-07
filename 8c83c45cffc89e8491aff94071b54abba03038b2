@@ -1,0 +1,234 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "bbdf1383_edf73ad5",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 12
+      },
+      "lineNbr": 7,
+      "author": {
+        "id": 1115972
+      },
+      "writtenOn": "2017-11-07T10:30:41Z",
+      "side": 1,
+      "message": "Let\u0027s change the title to something line:\n\"[signin][Mac] Move profile chooser menu to MacViews.\"",
+      "range": {
+        "startLine": 7,
+        "startChar": 6,
+        "endLine": 7,
+        "endChar": 24
+      },
+      "revId": "8c83c45cffc89e8491aff94071b54abba03038b2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9afe9205_7d25b7bf",
+        "filename": "chrome/browser/ui/cocoa/DEPS",
+        "patchSetId": 12
+      },
+      "lineNbr": 20,
+      "author": {
+        "id": 1115972
+      },
+      "writtenOn": "2017-11-07T10:30:41Z",
+      "side": 1,
+      "message": "Let\u0027s add a comment here explaining why this exception is needed. Something like:\n\" Allow access to the views implementation of the profile chooser view from the cocoa avatar button. This is required as the avatar button opens the profile chooser view. \"",
+      "range": {
+        "startLine": 20,
+        "startChar": 13,
+        "endLine": 20,
+        "endChar": 20
+      },
+      "revId": "8c83c45cffc89e8491aff94071b54abba03038b2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0da7471c_56dd9e68",
+        "filename": "chrome/browser/ui/cocoa/profiles/avatar_base_controller.h",
+        "patchSetId": 12
+      },
+      "lineNbr": 60,
+      "author": {
+        "id": 1115972
+      },
+      "writtenOn": "2017-11-07T10:30:41Z",
+      "side": 1,
+      "message": "For callback, I think the naming would be more closed to mac if we use:\n* menuWillClose;\n* menuDidClose;",
+      "range": {
+        "startLine": 60,
+        "startChar": 8,
+        "endLine": 60,
+        "endChar": 23
+      },
+      "revId": "8c83c45cffc89e8491aff94071b54abba03038b2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "beb1eba5_bc6c4cd7",
+        "filename": "chrome/browser/ui/cocoa/profiles/avatar_base_controller.mm",
+        "patchSetId": 12
+      },
+      "lineNbr": 129,
+      "author": {
+        "id": 1115972
+      },
+      "writtenOn": "2017-11-07T10:30:41Z",
+      "side": 1,
+      "message": "Use Objective-C convention for naming of the variable here:\ns/menu_opened_/menuOpened_;",
+      "range": {
+        "startLine": 129,
+        "startChar": 25,
+        "endLine": 129,
+        "endChar": 37
+      },
+      "revId": "8c83c45cffc89e8491aff94071b54abba03038b2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "16a51aed_0fd26b23",
+        "filename": "chrome/browser/ui/cocoa/profiles/avatar_base_controller.mm",
+        "patchSetId": 12
+      },
+      "lineNbr": 170,
+      "author": {
+        "id": 1115972
+      },
+      "writtenOn": "2017-11-07T10:30:41Z",
+      "side": 1,
+      "message": "This is an Objective-C class, so it should use the Objective-C naming conventions: camelCase instead of _ for variable names (see nits below):\ns/bubble_view_mode/bubbleViewMode",
+      "range": {
+        "startLine": 170,
+        "startChar": 27,
+        "endLine": 170,
+        "endChar": 43
+      },
+      "revId": "8c83c45cffc89e8491aff94071b54abba03038b2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "17fe800a_f9b3eb68",
+        "filename": "chrome/browser/ui/cocoa/profiles/avatar_base_controller.mm",
+        "patchSetId": 12
+      },
+      "lineNbr": 180,
+      "author": {
+        "id": 1115972
+      },
+      "writtenOn": "2017-11-07T10:30:41Z",
+      "side": 1,
+      "message": "s/anchor_rect/anchorRect",
+      "range": {
+        "startLine": 180,
+        "startChar": 14,
+        "endLine": 180,
+        "endChar": 25
+      },
+      "revId": "8c83c45cffc89e8491aff94071b54abba03038b2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e9af3178_579aaf9e",
+        "filename": "chrome/browser/ui/cocoa/profiles/avatar_base_controller.mm",
+        "patchSetId": 12
+      },
+      "lineNbr": 185,
+      "author": {
+        "id": 1115972
+      },
+      "writtenOn": "2017-11-07T10:30:41Z",
+      "side": 1,
+      "message": "s/anchor_window/anchorWindow",
+      "range": {
+        "startLine": 185,
+        "startChar": 20,
+        "endLine": 185,
+        "endChar": 33
+      },
+      "revId": "8c83c45cffc89e8491aff94071b54abba03038b2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "91cb5517_dd932a66",
+        "filename": "chrome/browser/ui/cocoa/profiles/avatar_base_controller.mm",
+        "patchSetId": 12
+      },
+      "lineNbr": 216,
+      "author": {
+        "id": 1115972
+      },
+      "writtenOn": "2017-11-07T10:30:41Z",
+      "side": 1,
+      "message": "s/menu_opened_/menuOpened_",
+      "range": {
+        "startLine": 216,
+        "startChar": 60,
+        "endLine": 216,
+        "endChar": 72
+      },
+      "revId": "8c83c45cffc89e8491aff94071b54abba03038b2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "135a5b4e_671dbaa5",
+        "filename": "chrome/browser/ui/cocoa/profiles/avatar_base_controller.mm",
+        "patchSetId": 12
+      },
+      "lineNbr": 219,
+      "author": {
+        "id": 1115972
+      },
+      "writtenOn": "2017-11-07T10:30:41Z",
+      "side": 1,
+      "message": "Is this performSelector still needed if observes OnWidgetDestroyed(Widget* widget) and calls bubbleDidClose from there - see https://cs.chromium.org/chromium/src/ui/views/widget/widget_observer.h?rcl\u003d5dc7f079057fdc338b39c73654cbf2a4b7ab0f6c\u0026l\u003d37",
+      "range": {
+        "startLine": 219,
+        "startChar": 8,
+        "endLine": 219,
+        "endChar": 23
+      },
+      "revId": "8c83c45cffc89e8491aff94071b54abba03038b2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "aa9a37cb_1bd4f86d",
+        "filename": "chrome/browser/ui/views/profiles/profile_chooser_view.h",
+        "patchSetId": 12
+      },
+      "lineNbr": 56,
+      "author": {
+        "id": 1115972
+      },
+      "writtenOn": "2017-11-07T10:30:41Z",
+      "side": 1,
+      "message": "It looks like |parent_window| and |anchor_rect| are only used on macOS. I think this should be documented - something along the lines:\n\"|parent_window| and |anchor_rect| are used to position the bubble on the parent window. Required only on macOS.",
+      "range": {
+        "startLine": 56,
+        "startChar": 11,
+        "endLine": 56,
+        "endChar": 21
+      },
+      "revId": "8c83c45cffc89e8491aff94071b54abba03038b2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
