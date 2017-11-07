@@ -227,15 +227,8 @@ void DirectRenderer::DecideRenderPassAllocationsForFrame(
 
   for (auto& pass : render_passes_in_draw_order) {
     auto& resource = render_pass_textures_[pass->id];
-    if (!resource) {
+    if (!resource)
       resource = std::make_unique<cc::ScopedResource>(resource_provider_);
-
-      // |has_damage_from_contributing_content| is used to determine if previous
-      // contents can be reused when caching render pass and as a result needs
-      // to be true when a new resource is created to ensure that it is updated
-      // and not assumed to already contain correct contents.
-      pass->has_damage_from_contributing_content = true;
-    }
   }
 }
 
@@ -516,7 +509,7 @@ void DirectRenderer::DrawRenderPassAndExecuteCopyRequests(
     // to restore the correct framebuffer between readbacks. (Even if it did
     // not, a Mac-specific bug requires this workaround: http://crbug.com/99393)
     if (!first_request)
-      UseRenderPass(render_pass);
+      UseRenderPass(render_pass, /*force_bind=*/true);
     CopyDrawnRenderPass(std::move(copy_request));
     first_request = false;
   }
@@ -524,7 +517,7 @@ void DirectRenderer::DrawRenderPassAndExecuteCopyRequests(
 
 void DirectRenderer::DrawRenderPass(const RenderPass* render_pass) {
   TRACE_EVENT0("cc", "DirectRenderer::DrawRenderPass");
-  if (!UseRenderPass(render_pass))
+  if (!UseRenderPass(render_pass, /*force_bind=*/false))
     return;
 
   const gfx::Rect surface_rect_in_draw_space = OutputSurfaceRectInDrawSpace();
@@ -624,7 +617,8 @@ void DirectRenderer::DrawRenderPass(const RenderPass* render_pass) {
     GenerateMipmap();
 }
 
-bool DirectRenderer::UseRenderPass(const RenderPass* render_pass) {
+bool DirectRenderer::UseRenderPass(const RenderPass* render_pass,
+                                   bool force_bind) {
   current_frame()->current_render_pass = render_pass;
   current_frame()->current_texture = nullptr;
   if (render_pass == current_frame()->root_render_pass) {
@@ -646,15 +640,20 @@ bool DirectRenderer::UseRenderPass(const RenderPass* render_pass) {
   gfx::Size size = RenderPassTextureSize(render_pass);
   size.Enlarge(enlarge_pass_texture_amount_.width(),
                enlarge_pass_texture_amount_.height());
+
+  bool texture_has_damage = render_pass->has_damage_from_contributing_content;
   if (!texture->id()) {
     texture->Allocate(size, RenderPassTextureHint(render_pass),
                       BackbufferFormat(),
                       current_frame()->current_render_pass->color_space);
-  } else if (render_pass->cache_render_pass &&
-             !render_pass->has_damage_from_contributing_content) {
-    return false;
-  } else if (current_frame()->ComputeScissorRectForRenderPass().IsEmpty()) {
-    return false;
+    texture_has_damage = true;
+  }
+
+  if (!force_bind) {
+    if (render_pass->cache_render_pass && !texture_has_damage)
+      return false;
+    if (current_frame()->ComputeScissorRectForRenderPass().IsEmpty())
+      return false;
   }
   DCHECK(texture->id());
 
