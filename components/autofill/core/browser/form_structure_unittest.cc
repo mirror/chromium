@@ -32,18 +32,12 @@ namespace autofill {
 namespace content {
 
 std::ostream& operator<<(std::ostream& os, const FormData& form) {
-  os << base::UTF16ToUTF8(form.name)
-     << " "
-     << form.origin.spec()
-     << " "
-     << form.action.spec()
-     << " ";
+  os << base::UTF16ToUTF8(form.name) << " " << form.origin.spec() << " "
+     << form.action.spec() << " ";
 
-  for (std::vector<FormFieldData>::const_iterator iter =
-           form.fields.begin();
+  for (std::vector<FormFieldData>::const_iterator iter = form.fields.begin();
        iter != form.fields.end(); ++iter) {
-    os << *iter
-       << " ";
+    os << *iter << " ";
   }
 
   return os;
@@ -63,9 +57,7 @@ class FormStructureTest : public testing::Test {
   }
 
  protected:
-  void DisableAutofillMetadataFieldTrial() {
-    field_trial_list_.reset();
-  }
+  void DisableAutofillMetadataFieldTrial() { field_trial_list_.reset(); }
 
  private:
   void EnableAutofillMetadataFieldTrial() {
@@ -434,7 +426,7 @@ TEST_F(FormStructureTest, HeuristicsContactInfo) {
   EXPECT_EQ(EMAIL_ADDRESS, form_structure->field(2)->heuristic_type());
   // Phone.
   EXPECT_EQ(PHONE_HOME_WHOLE_NUMBER,
-      form_structure->field(3)->heuristic_type());
+            form_structure->field(3)->heuristic_type());
   // Phone extension.
   EXPECT_EQ(PHONE_HOME_EXTENSION, form_structure->field(4)->heuristic_type());
   // Address.
@@ -1259,7 +1251,7 @@ TEST_F(FormStructureTest, HeuristicsSample8) {
   EXPECT_EQ(ADDRESS_HOME_COUNTRY, form_structure->field(7)->heuristic_type());
   // Phone.
   EXPECT_EQ(PHONE_HOME_WHOLE_NUMBER,
-      form_structure->field(8)->heuristic_type());
+            form_structure->field(8)->heuristic_type());
   // Submit.
   EXPECT_EQ(UNKNOWN_TYPE, form_structure->field(9)->heuristic_type());
 }
@@ -1380,7 +1372,7 @@ TEST_F(FormStructureTest, HeuristicsLabelsOnly) {
   EXPECT_EQ(EMAIL_ADDRESS, form_structure->field(2)->heuristic_type());
   // Phone.
   EXPECT_EQ(PHONE_HOME_WHOLE_NUMBER,
-      form_structure->field(3)->heuristic_type());
+            form_structure->field(3)->heuristic_type());
   // Address.
   EXPECT_EQ(ADDRESS_HOME_LINE1, form_structure->field(4)->heuristic_type());
   // Address Line 2.
@@ -1808,11 +1800,9 @@ TEST_F(FormStructureTest, ThreePartPhoneNumber) {
   // Area code.
   EXPECT_EQ(PHONE_HOME_CITY_CODE, form_structure->field(0)->heuristic_type());
   // Phone number suffix.
-  EXPECT_EQ(PHONE_HOME_NUMBER,
-            form_structure->field(1)->heuristic_type());
+  EXPECT_EQ(PHONE_HOME_NUMBER, form_structure->field(1)->heuristic_type());
   // Phone number suffix.
-  EXPECT_EQ(PHONE_HOME_NUMBER,
-            form_structure->field(2)->heuristic_type());
+  EXPECT_EQ(PHONE_HOME_NUMBER, form_structure->field(2)->heuristic_type());
   // Phone extension.
   EXPECT_EQ(PHONE_HOME_EXTENSION, form_structure->field(3)->heuristic_type());
 }
@@ -3300,8 +3290,9 @@ TEST_F(FormStructureTest, CheckMultipleTypes) {
 
   // Match last field as both address home line 1 and 2.
   possible_field_types[3].insert(ADDRESS_HOME_LINE2);
-  form_structure->field(form_structure->field_count() - 1)->set_possible_types(
-      possible_field_types[form_structure->field_count() - 1]);
+  form_structure->field(form_structure->field_count() - 1)
+      ->set_possible_types(
+          possible_field_types[form_structure->field_count() - 1]);
 
   // Adjust the expected upload proto.
   test::FillUploadField(upload.add_field(), 509334676U, "address", "text",
@@ -3319,8 +3310,9 @@ TEST_F(FormStructureTest, CheckMultipleTypes) {
   possible_field_types[3].clear();
   possible_field_types[3].insert(ADDRESS_HOME_LINE1);
   possible_field_types[3].insert(COMPANY_NAME);
-  form_structure->field(form_structure->field_count() - 1)->set_possible_types(
-      possible_field_types[form_structure->field_count() - 1]);
+  form_structure->field(form_structure->field_count() - 1)
+      ->set_possible_types(
+          possible_field_types[form_structure->field_count() - 1]);
 
   // Adjust the expected upload proto.
   upload.mutable_field(5)->set_autofill_type(60);
@@ -4130,10 +4122,12 @@ TEST_F(FormStructureTest, ParseQueryResponse_FillFirstWholePhoneNumberOnly) {
 
   field.label = ASCIIToUTF16("Home Phone");
   field.name = ASCIIToUTF16("homePhoneNumber");
+  field.is_focusable = true;
   form.fields.push_back(field);
 
   field.label = ASCIIToUTF16("Cell Phone");
   field.name = ASCIIToUTF16("cellPhoneNumber");
+  field.is_focusable = true;
   form.fields.push_back(field);
 
   AutofillQueryResponseContents response;
@@ -4216,22 +4210,27 @@ TEST_F(FormStructureTest,
 
   field.label = ASCIIToUTF16("Country");
   field.name = ASCIIToUTF16("phoneCountry");
+  field.is_focusable = true;
   form.fields.push_back(field);
 
   field.label = ASCIIToUTF16("Area");
   field.name = ASCIIToUTF16("areaCode");
+  field.is_focusable = true;
   form.fields.push_back(field);
 
   field.label = ASCIIToUTF16("Number");
   field.name = ASCIIToUTF16("number");
+  field.is_focusable = true;
   form.fields.push_back(field);
 
   field.label = ASCIIToUTF16("Second Number");
   field.name = ASCIIToUTF16("phoneNumber");
+  field.is_focusable = true;
   form.fields.push_back(field);
 
   field.label = ASCIIToUTF16("Area Code Out Of Nowhere");
   field.name = ASCIIToUTF16("strangeAreaCode");
+  field.is_focusable = true;
   form.fields.push_back(field);
 
   AutofillQueryResponseContents response;
@@ -4335,23 +4334,28 @@ TEST_F(FormStructureTest,
 
   field.label = ASCIIToUTF16("Country");
   field.name = ASCIIToUTF16("phoneCountry");
+  field.is_focusable = true;
   form.fields.push_back(field);
 
   field.label = ASCIIToUTF16("Area");
   field.name = ASCIIToUTF16("areaCode");
+  field.is_focusable = true;
   form.fields.push_back(field);
 
   // Winning phone number fields as it is the first complete number field.
   field.label = ASCIIToUTF16("Phone Number");
   field.name = ASCIIToUTF16("phoneNumber");
+  field.is_focusable = true;
   form.fields.push_back(field);
 
   field.label = ASCIIToUTF16("Number");
   field.name = ASCIIToUTF16("number");
+  field.is_focusable = true;
   form.fields.push_back(field);
 
   field.label = ASCIIToUTF16("Area Code Out Of Nowhere");
   field.name = ASCIIToUTF16("strangeAreaCode");
+  field.is_focusable = true;
   form.fields.push_back(field);
 
   AutofillQueryResponseContents response;
@@ -4457,18 +4461,22 @@ TEST_F(
   // area code + number makes a valid fill, without a country code
   field.label = ASCIIToUTF16("Area");
   field.name = ASCIIToUTF16("areaCode");
+  field.is_focusable = true;
   form.fields.push_back(field);
 
   field.label = ASCIIToUTF16("Number");
   field.name = ASCIIToUTF16("number");
+  field.is_focusable = true;
   form.fields.push_back(field);
 
   field.label = ASCIIToUTF16("Phone Number");
   field.name = ASCIIToUTF16("phoneNumber");
+  field.is_focusable = true;
   form.fields.push_back(field);
 
   field.label = ASCIIToUTF16("Area Code Out Of Nowhere");
   field.name = ASCIIToUTF16("strangeAreaCode");
+  field.is_focusable = true;
   form.fields.push_back(field);
 
   AutofillQueryResponseContents response;
@@ -4562,18 +4570,22 @@ TEST_F(FormStructureTest, ParseQueryResponse_WillLeaveExtentionUnfilled) {
 
   field.label = ASCIIToUTF16("Country Code");
   field.name = ASCIIToUTF16("countryCode");
+  field.is_focusable = true;
   form.fields.push_back(field);
 
   field.label = ASCIIToUTF16("Area");
   field.name = ASCIIToUTF16("areaCode");
+  field.is_focusable = true;
   form.fields.push_back(field);
 
   field.label = ASCIIToUTF16("Number");
   field.name = ASCIIToUTF16("number");
+  field.is_focusable = true;
   form.fields.push_back(field);
 
   field.label = ASCIIToUTF16("Ext.");
   field.name = ASCIIToUTF16("extention");
+  field.is_focusable = true;
   form.fields.push_back(field);
 
   AutofillQueryResponseContents response;
@@ -4669,14 +4681,17 @@ TEST_F(FormStructureTest,
 
   field.label = ASCIIToUTF16("Country Code");
   field.name = ASCIIToUTF16("countryCode");
+  field.is_focusable = true;
   form.fields.push_back(field);
 
   field.label = ASCIIToUTF16("Area");
   field.name = ASCIIToUTF16("areaCode");
+  field.is_focusable = true;
   form.fields.push_back(field);
 
   field.label = ASCIIToUTF16("AdditionalArea");
   field.name = ASCIIToUTF16("additionalAreaCode");
+  field.is_focusable = true;
   form.fields.push_back(field);
 
   AutofillQueryResponseContents response;
@@ -4767,10 +4782,12 @@ TEST_F(FormStructureTest,
 
   field.label = ASCIIToUTF16("Country Code");
   field.name = ASCIIToUTF16("countryCode");
+  field.is_focusable = true;
   form.fields.push_back(field);
 
   field.label = ASCIIToUTF16("Number");
   field.name = ASCIIToUTF16("phoneNumber");
+  field.is_focusable = true;
   form.fields.push_back(field);
 
   field.label = ASCIIToUTF16("Full Name");
@@ -4786,10 +4803,12 @@ TEST_F(FormStructureTest,
 
   field.label = ASCIIToUTF16("Phone Country Code");
   field.name = ASCIIToUTF16("bCountryCode");
+  field.is_focusable = true;
   form.fields.push_back(field);
 
   field.label = ASCIIToUTF16("PhoneNumber");
   field.name = ASCIIToUTF16("bPhoneNumber");
+  field.is_focusable = true;
   form.fields.push_back(field);
 
   AutofillQueryResponseContents response;
@@ -4887,6 +4906,93 @@ TEST_F(FormStructureTest,
     EXPECT_EQ(PHONE_HOME_CITY_AND_NUMBER,
               forms[0]->field(7)->overall_server_type());
     EXPECT_FALSE(forms[0]->field(7)->only_fill_when_focused());
+  }
+}
+
+TEST_F(FormStructureTest,
+       ParseQueryResponse_SkipHiddenFieldsInPhoneNumberRationalization) {
+  FormData form;
+  form.origin = GURL("http://foo.com");
+  FormFieldData field;
+  field.form_control_type = "text";
+  field.max_length = 10000;
+
+  field.label = ASCIIToUTF16("Full Name");
+  field.name = ASCIIToUTF16("fullName");
+  form.fields.push_back(field);
+
+  field.label = ASCIIToUTF16("Address");
+  field.name = ASCIIToUTF16("address");
+  form.fields.push_back(field);
+
+  field.label = ASCIIToUTF16("");
+  field.name = ASCIIToUTF16("phoneNumberMask");
+  field.is_focusable = false;
+  form.fields.push_back(field);
+
+  // This should be considered as the first number in the form since
+  // previous one is not focusable.
+  field.label = ASCIIToUTF16("PhoneNumber");
+  field.name = ASCIIToUTF16("bPhoneNumber");
+  field.is_focusable = true;
+  form.fields.push_back(field);
+
+  AutofillQueryResponseContents response;
+  response.add_field()->set_overall_type_prediction(NAME_FULL);
+  response.add_field()->set_overall_type_prediction(
+      ADDRESS_HOME_STREET_ADDRESS);
+  response.add_field()->set_overall_type_prediction(PHONE_HOME_CITY_AND_NUMBER);
+  response.add_field()->set_overall_type_prediction(PHONE_HOME_CITY_AND_NUMBER);
+
+  std::string response_string;
+  ASSERT_TRUE(response.SerializeToString(&response_string));
+
+  // Verify phone number in different section still gets autofilled.
+  {
+    base::test::ScopedFeatureList feature_list;
+    feature_list.InitAndEnableFeature(
+        autofill::kAutofillRationalizeFieldTypePredictions);
+
+    FormStructure form_structure(form);
+    std::vector<FormStructure*> forms;
+    forms.push_back(&form_structure);
+    FormStructure::ParseQueryResponse(response_string, forms);
+    ASSERT_EQ(1U, forms.size());
+    ASSERT_EQ(4U, forms[0]->field_count());
+    EXPECT_EQ(NAME_FULL, forms[0]->field(0)->overall_server_type());
+    EXPECT_EQ(ADDRESS_HOME_STREET_ADDRESS,
+              forms[0]->field(1)->overall_server_type());
+
+    EXPECT_EQ(PHONE_HOME_CITY_AND_NUMBER,
+              forms[0]->field(2)->overall_server_type());
+    EXPECT_TRUE(forms[0]->field(2)->only_fill_when_focused());
+    EXPECT_EQ(PHONE_HOME_CITY_AND_NUMBER,
+              forms[0]->field(3)->overall_server_type());
+    EXPECT_FALSE(forms[0]->field(3)->only_fill_when_focused());
+  }
+
+  // Sanity check that the enable/disabled works. Same output as when the
+  // feature is on.
+  {
+    base::test::ScopedFeatureList feature_list;
+    feature_list.InitAndDisableFeature(
+        autofill::kAutofillRationalizeFieldTypePredictions);
+
+    FormStructure form_structure(form);
+    std::vector<FormStructure*> forms;
+    forms.push_back(&form_structure);
+    FormStructure::ParseQueryResponse(response_string, forms);
+
+    EXPECT_EQ(NAME_FULL, forms[0]->field(0)->overall_server_type());
+    EXPECT_EQ(ADDRESS_HOME_STREET_ADDRESS,
+              forms[0]->field(1)->overall_server_type());
+
+    EXPECT_EQ(PHONE_HOME_CITY_AND_NUMBER,
+              forms[0]->field(2)->overall_server_type());
+    EXPECT_FALSE(forms[0]->field(2)->only_fill_when_focused());
+    EXPECT_EQ(PHONE_HOME_CITY_AND_NUMBER,
+              forms[0]->field(3)->overall_server_type());
+    EXPECT_FALSE(forms[0]->field(3)->only_fill_when_focused());
   }
 }
 
