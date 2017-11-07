@@ -1419,18 +1419,18 @@ void AutofillManager::FillOrPreviewDataModelForm(
     if (field_group_type == NO_GROUP)
       continue;
 
+    // Don't fill expired cards expiration date.
+    if (IsCreditCardExpirationType(cached_field->Type().GetStorableType()) &&
+        static_cast<const CreditCard*>(&data_model)
+            ->IsExpired(AutofillClock::Now())) {
+      continue;
+    }
+
     base::string16 value =
         data_model.GetInfo(cached_field->Type(), app_locale_);
-    if (is_credit_card && cached_field->Type().GetStorableType() ==
-                              CREDIT_CARD_VERIFICATION_CODE) {
+    if (cached_field->Type().GetStorableType() ==
+        CREDIT_CARD_VERIFICATION_CODE) {
       value = cvc;
-    } else if (is_credit_card &&
-               IsCreditCardExpirationType(
-                   cached_field->Type().GetStorableType()) &&
-               static_cast<const CreditCard*>(&data_model)
-                   ->IsExpired(AutofillClock::Now())) {
-      // Don't fill expired cards expiration date.
-      value = base::string16();
     }
 
     // Must match ForEachMatchingFormField() in form_autofill_util.cc.
