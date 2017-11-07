@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "48eeb8cc_9a651418",
+        "filename": "base/android/java/src/org/chromium/base/JavaHandlerThread.java",
+        "patchSetId": 12
+      },
+      "lineNbr": 121,
+      "author": {
+        "id": 1109505
+      },
+      "writtenOn": "2017-11-07T15:15:26Z",
+      "side": 1,
+      "message": "Not sure what you mean by invoke thread cleanup here, but I don\u0027t think it\u0027s safe for this to be used in production code and it needs to have lots of test-only warnings on it :)\n\nIn production we always need to call the original uncaught exception handler (the framework\u0027s) after anything we do, and that handler kills the entire process after it\u0027s done letting ActivityManager dump it, so there\u0027s no cleanup possible. It\u0027s important to call the framework\u0027s because that\u0027s what generates crash reports from the field :)",
+      "revId": "9dca08eba6513ffd7ab498dd30d552338fbf6d40",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "c22b6dea_7c51bcae",
+        "filename": "base/test/android/java_handler_thread_helpers.cc",
+        "patchSetId": 12
+      },
+      "lineNbr": 28,
+      "author": {
+        "id": 1109505
+      },
+      "writtenOn": "2017-11-07T15:15:26Z",
+      "side": 1,
+      "message": "Not sure i\u0027m following this right, but the event here is going to be signalled *before* the exception is thrown (since it\u0027s not thrown until we return to the VM immediately afterward).. the test waits for the event and then assumes the uncaught exception will already have happened, which seems like a race? Am I missing something there?",
+      "revId": "9dca08eba6513ffd7ab498dd30d552338fbf6d40",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    }
+  ]
+}
