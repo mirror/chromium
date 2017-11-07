@@ -123,11 +123,10 @@ void UpdateProcessTypeToGpuBroker() {
 }
 
 bool UpdateProcessTypeAndEnableSandbox(
-    std::unique_ptr<Policy> (*broker_sandboxer_allocator)()) {
-  DCHECK(broker_sandboxer_allocator);
+    std::unique_ptr<Policy> broker_sandbox_policy) {
   UpdateProcessTypeToGpuBroker();
   return service_manager::SandboxSeccompBPF::StartSandboxWithExternalPolicy(
-      broker_sandboxer_allocator(), base::ScopedFD());
+      std::move(broker_sandbox_policy), base::ScopedFD());
 }
 
 void AddArmMaliGpuWhitelist(std::vector<BrokerFilePermission>* permissions) {
@@ -196,7 +195,7 @@ void AddArmGpuWhitelist(std::vector<BrokerFilePermission>* permissions) {
 // that should be whitelisted by the broker process, in addition to
 // the basic ones.
 std::unique_ptr<BrokerProcess> InitGpuBrokerProcess(
-    std::unique_ptr<Policy> (*broker_sandboxer_allocator)(),
+    std::unique_ptr<Policy> broker_sandbox_policy,
     const std::vector<BrokerFilePermission>& permissions_extra,
     bool accelerated_video_decode_enabled) {
   static const char kDriRcPath[] = "/etc/drirc";
@@ -245,13 +244,14 @@ std::unique_ptr<BrokerProcess> InitGpuBrokerProcess(
       service_manager::BPFBasePolicy::GetFSDeniedErrno(), permissions);
   // The initialization callback will perform generic initialization and then
   // call broker_sandboxer_callback.
-  CHECK(result->Init(base::Bind(&UpdateProcessTypeAndEnableSandbox,
-                                broker_sandboxer_allocator)));
+  CHECK(
+      result->Init(base::Bind(&UpdateProcessTypeAndEnableSandbox,
+                              base::Passed(std::move(broker_sandbox_policy)))));
 
   return result;
 }
 
-bool GpuPreSandboxHook(sandbox::bpf_dsl::Policy* policy,
+bool GpuPreSandboxHook(service_manager::BPFBasePolicy* policy,
                        service_manager::SandboxSeccompBPF::Options options) {
   // Warm up resources needed by the policy we're about to enable and
   // eventually start a broker process.
@@ -261,12 +261,9 @@ bool GpuPreSandboxHook(sandbox::bpf_dsl::Policy* policy,
 
   // Create a new broker process with no extra files in whitelist.
   service_manager::SandboxLinux::GetInstance()->set_broker_process(
-      InitGpuBrokerProcess(
-          []() -> std::unique_ptr<Policy> {
-            return std::make_unique<service_manager::GpuBrokerProcessPolicy>();
-          },
-          std::vector<BrokerFilePermission>(),
-          options.accelerated_video_decode_enabled));
+      InitGpuBrokerProcess(policy->GetBrokerSandboxPolicy(),
+                           std::vector<BrokerFilePermission>(),
+                           options.accelerated_video_decode_enabled));
 
   if (IsArchitectureX86_64() || IsArchitectureI386()) {
     // Accelerated video dlopen()'s some shared objects
@@ -299,7 +296,7 @@ bool GpuPreSandboxHook(sandbox::bpf_dsl::Policy* policy,
 }
 
 bool CrosArmGpuPreSandboxHook(
-    sandbox::bpf_dsl::Policy* policy,
+    service_manager::BPFBasePolicy* policy,
     service_manager::SandboxSeccompBPF::Options options) {
   DCHECK(IsChromeOS() && IsArchitectureArm());
 
@@ -307,12 +304,8 @@ bool CrosArmGpuPreSandboxHook(
   std::vector<BrokerFilePermission> permissions;
   AddArmGpuWhitelist(&permissions);
   service_manager::SandboxLinux::GetInstance()->set_broker_process(
-      InitGpuBrokerProcess(
-          []() -> std::unique_ptr<Policy> {
-            return std::make_unique<
-                service_manager::CrosArmGpuBrokerProcessPolicy>();
-          },
-          permissions, options.accelerated_video_decode_enabled));
+      InitGpuBrokerProcess(policy->GetBrokerSandboxPolicy(), permissions,
+                           options.accelerated_video_decode_enabled));
 
   const int dlopen_flag = RTLD_NOW | RTLD_GLOBAL | RTLD_NODELETE;
 
@@ -328,7 +321,7 @@ bool CrosArmGpuPreSandboxHook(
 }
 
 bool CrosAmdGpuPreSandboxHook(
-    sandbox::bpf_dsl::Policy* policy,
+    service_manager::BPFBasePolicy* policy,
     service_manager::SandboxSeccompBPF::Options options) {
   DCHECK(IsChromeOS());
 
@@ -337,12 +330,8 @@ bool CrosAmdGpuPreSandboxHook(
   AddAmdGpuWhitelist(&permissions);
 
   service_manager::SandboxLinux::GetInstance()->set_broker_process(
-      InitGpuBrokerProcess(
-          []() -> std::unique_ptr<Policy> {
-            return std::make_unique<
-                service_manager::CrosAmdGpuBrokerProcessPolicy>();
-          },
-          permissions, options.accelerated_video_decode_enabled));
+      InitGpuBrokerProcess(policy->GetBrokerSandboxPolicy(), permissions,
+                           options.accelerated_video_decode_enabled));
 
   const int dlopen_flag = RTLD_NOW | RTLD_GLOBAL | RTLD_NODELETE;
 
