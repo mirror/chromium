@@ -1,0 +1,55 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "468cbd5d_7329391f",
+        "filename": "chrome/browser/resources/md_extensions/error_page.js",
+        "patchSetId": 3
+      },
+      "lineNbr": 84,
+      "author": {
+        "id": 1115893
+      },
+      "writtenOn": "2017-11-07T00:01:40Z",
+      "side": 1,
+      "message": "Nit (optional): Polymer data bindings do not fire unless the deps, which is |data| in this case, become non-undefined. Wondering if this assert() adds much value here. Perhaps remove?",
+      "revId": "4357aab638ec5453294ed2b75c986bfb750aa0a2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2d71d13c_3d7e061b",
+        "filename": "chrome/browser/resources/md_extensions/error_page.js",
+        "patchSetId": 3
+      },
+      "lineNbr": 93,
+      "author": {
+        "id": 1115893
+      },
+      "writtenOn": "2017-11-07T00:01:40Z",
+      "side": 1,
+      "message": "Nit: Perhaps adding a comment as follows would make more clear the intention here\n// Augmenting error with |expanded| intentionally, to use it in the HTML binding.",
+      "revId": "4357aab638ec5453294ed2b75c986bfb750aa0a2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4b70d9e8_84147094",
+        "filename": "chrome/browser/resources/md_extensions/error_page.js",
+        "patchSetId": 3
+      },
+      "lineNbr": 304,
+      "author": {
+        "id": 1115893
+      },
+      "writtenOn": "2017-11-07T00:01:40Z",
+      "side": 1,
+      "message": "Since we are already iterating over items, let\u0027s drop the call to indexOf above.",
+      "revId": "4357aab638ec5453294ed2b75c986bfb750aa0a2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
