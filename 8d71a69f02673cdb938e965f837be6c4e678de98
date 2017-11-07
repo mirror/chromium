@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "6d49fec1_4aacd79d",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 11
+      },
+      "lineNbr": 7,
+      "author": {
+        "id": 1228980
+      },
+      "writtenOn": "2017-11-07T02:03:09Z",
+      "side": 1,
+      "message": "I actually prefer the term \"mini-container\" in the broader context. \"mini-instance\" doesn\u0027t tell me anything. \"instance\" basically means a \"single thing\". It doesn\u0027t provide much descriptive power. But when I hear \"container\" I know what we\u0027re talking about. I think we should settle on the nomenclature now before writing much more code/comments.\n\nLuis and Yusuke, what name do you prefer? Mini-instance, mini-container, or something else?",
+      "parentUuid": "2bae6acf_e2c00f5f",
+      "revId": "8d71a69f02673cdb938e965f837be6c4e678de98",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "e2355ae3_5f7f98ca",
         "filename": "chrome/browser/chromeos/arc/arc_play_store_enabled_preference_handler.cc",
         "patchSetId": 11
