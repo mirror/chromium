@@ -1,0 +1,101 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "386bd3a1_19898cff",
+        "filename": "ui/base/cursor/cursor_loader_x11.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 184,
+      "author": {
+        "id": 1244341
+      },
+      "writtenOn": "2017-11-07T18:51:56Z",
+      "side": 1,
+      "message": "This reformatting looks worse, but I guess that\u0027s what git cl format produced. *shrug*",
+      "revId": "168324c4a6ae89aeb535bb02619d8c92d65dbfb1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "35afb4c3_dccad78f",
+        "filename": "ui/gfx/x/x11.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 9,
+      "author": {
+        "id": 1244341
+      },
+      "writtenOn": "2017-11-07T18:51:56Z",
+      "side": 1,
+      "message": "I think it\u0027s worth adding a comment about jumbo here, since jumbo has an order of magnitude more problems with X11 headers.",
+      "revId": "168324c4a6ae89aeb535bb02619d8c92d65dbfb1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5a36db11_fb4acbe1",
+        "filename": "ui/gfx/x/x11.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 11,
+      "author": {
+        "id": 1244341
+      },
+      "writtenOn": "2017-11-07T18:51:56Z",
+      "side": 1,
+      "message": "nitpick: add newline after header guard define?",
+      "range": {
+        "startLine": 11,
+        "startChar": 1,
+        "endLine": 11,
+        "endChar": 7
+      },
+      "revId": "168324c4a6ae89aeb535bb02619d8c92d65dbfb1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7b542d2d_56f5caeb",
+        "filename": "ui/gfx/x/x11.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 15,
+      "author": {
+        "id": 1244341
+      },
+      "writtenOn": "2017-11-07T18:51:56Z",
+      "side": 1,
+      "message": "Maybe worth expanding/updating this comment, since it\u0027s undef\u0027ed in this file below?",
+      "range": {
+        "startLine": 15,
+        "startChar": 53,
+        "endLine": 15,
+        "endChar": 57
+      },
+      "revId": "168324c4a6ae89aeb535bb02619d8c92d65dbfb1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "fa18afd0_20785331",
+        "filename": "ui/gfx/x/x11.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 62,
+      "author": {
+        "id": 1244341
+      },
+      "writtenOn": "2017-11-07T18:51:56Z",
+      "side": 1,
+      "message": "Stray line?  Or will it be added back in a later patchset?",
+      "revId": "168324c4a6ae89aeb535bb02619d8c92d65dbfb1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
