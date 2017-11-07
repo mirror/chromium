@@ -44,6 +44,7 @@
 #include "platform/wtf/allocator/Partitions.h"
 #include "platform/wtf/text/StringView.h"
 #include "platform/wtf/typed_arrays/ArrayBufferContents.h"
+#include "public/web/WebSerializedScriptValue.h"
 #include "v8/include/v8.h"
 
 namespace blink {
@@ -59,9 +60,10 @@ class WebBlobInfo;
 typedef HashMap<String, scoped_refptr<BlobDataHandle>> BlobDataHandleMap;
 typedef Vector<WebBlobInfo> WebBlobInfoArray;
 
-class CORE_EXPORT SerializedScriptValue
-    : public ThreadSafeRefCounted<SerializedScriptValue> {
+class CORE_EXPORT SerializedScriptValue : public WebSerializedScriptValue {
  public:
+  REQUIRE_ADOPTION_FOR_REFCOUNTED_TYPE();
+
   using ArrayBufferContentsArray = Vector<WTF::ArrayBufferContents, 1>;
   using ImageBitmapContentsArray = Vector<scoped_refptr<StaticBitmapImage>, 1>;
   using TransferredWasmModulesArray =
@@ -145,6 +147,7 @@ class CORE_EXPORT SerializedScriptValue
 
   static scoped_refptr<SerializedScriptValue> NullValue();
 
+  WebString ToString() const override;
   String ToWireString() const;
   void ToWireBytes(Vector<char>&) const;
 
@@ -160,7 +163,7 @@ class CORE_EXPORT SerializedScriptValue
     const WebBlobInfoArray* blob_info = nullptr;
     bool read_wasm_from_stream = false;
   };
-  v8::Local<v8::Value> Deserialize(v8::Isolate* isolate) {
+  v8::Local<v8::Value> Deserialize(v8::Isolate* isolate) override {
     return Deserialize(isolate, DeserializeOptions());
   }
   v8::Local<v8::Value> Deserialize(v8::Isolate*, const DeserializeOptions&);

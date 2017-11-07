@@ -164,12 +164,13 @@ void WebHistoryItem::SetScrollRestorationType(
       static_cast<HistoryScrollRestorationType>(type));
 }
 
-WebSerializedScriptValue WebHistoryItem::StateObject() const {
-  return WebSerializedScriptValue(private_->StateObject());
+scoped_refptr<WebSerializedScriptValue> WebHistoryItem::StateObject() const {
+  return private_->StateObject();
 }
 
-void WebHistoryItem::SetStateObject(const WebSerializedScriptValue& object) {
-  private_->SetStateObject(object);
+void WebHistoryItem::SetStateObject(
+    scoped_refptr<WebSerializedScriptValue> object) {
+  private_->SetStateObject(object->AsSerializedScriptValue());
 }
 
 WebString WebHistoryItem::HttpContentType() const {

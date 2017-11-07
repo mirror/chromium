@@ -37,57 +37,38 @@
 
 namespace blink {
 
-WebSerializedScriptValue WebSerializedScriptValue::FromString(
+// static
+scoped_refptr<WebSerializedScriptValue> WebSerializedScriptValue::FromString(
     const WebString& s) {
   return SerializedScriptValue::Create(s);
 }
 
-WebSerializedScriptValue WebSerializedScriptValue::Serialize(
+// static
+scoped_refptr<WebSerializedScriptValue> WebSerializedScriptValue::Serialize(
     v8::Isolate* isolate,
     v8::Local<v8::Value> value) {
   DummyExceptionStateForTesting exception_state;
-  WebSerializedScriptValue serialized_value = SerializedScriptValue::Serialize(
-      isolate, value, SerializedScriptValue::SerializeOptions(),
-      exception_state);
+  scoped_refptr<WebSerializedScriptValue> serialized_value =
+      SerializedScriptValue::Serialize(
+          isolate, value, SerializedScriptValue::SerializeOptions(),
+          exception_state);
   if (exception_state.HadException())
     return CreateInvalid();
   return serialized_value;
 }
 
-WebSerializedScriptValue WebSerializedScriptValue::CreateInvalid() {
+// static
+scoped_refptr<WebSerializedScriptValue>
+WebSerializedScriptValue::CreateInvalid() {
   return SerializedScriptValue::Create();
 }
 
-void WebSerializedScriptValue::Reset() {
-  private_.Reset();
-}
+WebSerializedScriptValue::WebSerializedScriptValue() {}
+WebSerializedScriptValue::~WebSerializedScriptValue() {}
 
-void WebSerializedScriptValue::Assign(const WebSerializedScriptValue& other) {
-  private_ = other.private_;
-}
-
-WebString WebSerializedScriptValue::ToString() const {
-  return private_->ToWireString();
-}
-
-v8::Local<v8::Value> WebSerializedScriptValue::Deserialize(
-    v8::Isolate* isolate) {
-  return private_->Deserialize(isolate);
-}
-
-WebSerializedScriptValue::WebSerializedScriptValue(
-    scoped_refptr<SerializedScriptValue> value)
-    : private_(std::move(value)) {}
-
-WebSerializedScriptValue& WebSerializedScriptValue::operator=(
-    scoped_refptr<SerializedScriptValue> value) {
-  private_ = std::move(value);
-  return *this;
-}
-
-WebSerializedScriptValue::operator scoped_refptr<SerializedScriptValue>()
-    const {
-  return private_.Get();
+scoped_refptr<SerializedScriptValue>
+WebSerializedScriptValue::AsSerializedScriptValue() {
+  return static_cast<SerializedScriptValue*>(this);
 }
 
 }  // namespace blink

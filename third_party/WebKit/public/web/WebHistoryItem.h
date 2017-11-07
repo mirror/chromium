@@ -106,8 +106,8 @@ class WebHistoryItem {
   BLINK_EXPORT WebHistoryScrollRestorationType ScrollRestorationType() const;
   BLINK_EXPORT void SetScrollRestorationType(WebHistoryScrollRestorationType);
 
-  BLINK_EXPORT WebSerializedScriptValue StateObject() const;
-  BLINK_EXPORT void SetStateObject(const WebSerializedScriptValue&);
+  BLINK_EXPORT scoped_refptr<WebSerializedScriptValue> StateObject() const;
+  BLINK_EXPORT void SetStateObject(scoped_refptr<WebSerializedScriptValue>);
 
   BLINK_EXPORT WebString HttpContentType() const;
   BLINK_EXPORT void SetHTTPContentType(const WebString&);

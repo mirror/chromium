@@ -343,13 +343,13 @@ void LoadablePluginPlaceholder::DidFinishIconRepositionForTestingCallback() {
   element.SetAttribute("placeholderReady", "true");
 
   base::Value value("placeholderReady");
-  blink::WebSerializedScriptValue message_data =
+  scoped_refptr<blink::WebSerializedScriptValue> message_data =
       blink::WebSerializedScriptValue::Serialize(
           blink::MainThreadIsolate(),
           content::V8ValueConverter::Create()->ToV8Value(
               &value,
               element.GetDocument().GetFrame()->MainWorldScriptContext()));
-  blink::WebDOMMessageEvent msg_event(message_data);
+  blink::WebDOMMessageEvent msg_event(std::move(message_data));
 
   plugin()->Container()->EnqueueMessageEvent(msg_event);
 }

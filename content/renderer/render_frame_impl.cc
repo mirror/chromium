@@ -2472,7 +2472,7 @@ void RenderFrameImpl::OnPostMessageEvent(
       source_frame = source_proxy->web_frame();
   }
 
-  WebSerializedScriptValue serialized_script_value;
+  scoped_refptr<WebSerializedScriptValue> serialized_script_value;
   if (params.is_data_raw_string) {
     v8::Isolate* isolate = blink::MainThreadIsolate();
     v8::HandleScope handle_scope(isolate);
@@ -2499,9 +2499,10 @@ void RenderFrameImpl::OnPostMessageEvent(
         WebString::FromUTF16(params.target_origin));
   }
 
-  WebDOMMessageEvent msg_event(
-      serialized_script_value, WebString::FromUTF16(params.source_origin),
-      source_frame, frame_->GetDocument(), std::move(params.message_ports));
+  WebDOMMessageEvent msg_event(std::move(serialized_script_value),
+                               WebString::FromUTF16(params.source_origin),
+                               source_frame, frame_->GetDocument(),
+                               std::move(params.message_ports));
   frame_->DispatchMessageEventWithOriginCheck(target_origin, msg_event);
 }
 

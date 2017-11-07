@@ -285,6 +285,10 @@ scoped_refptr<SerializedScriptValue> SerializedScriptValue::NullValue() {
   return Create(reinterpret_cast<const char*>(kNullData), sizeof(kNullData));
 }
 
+WebString SerializedScriptValue::ToString() const {
+  return ToWireString();
+}
+
 String SerializedScriptValue::ToWireString() const {
   // Add the padding '\0', but don't put it in |m_dataBuffer|.
   // This requires direct use of uninitialized strings, though.

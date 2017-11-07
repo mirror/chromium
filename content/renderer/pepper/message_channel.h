@@ -120,7 +120,7 @@ class MessageChannel :
   // Post a message to the onmessage handler for this channel's instance
   // synchronously.  This is used by PostMessageToJavaScript.
   void PostMessageToJavaScriptImpl(
-      const blink::WebSerializedScriptValue& message_data);
+      scoped_refptr<blink::WebSerializedScriptValue> message_data);
 
   PluginObject* GetPluginObject(v8::Isolate* isolate);
 
@@ -164,7 +164,8 @@ class MessageChannel :
   };
 
   // This queue stores values being posted to JavaScript.
-  base::circular_deque<blink::WebSerializedScriptValue> js_message_queue_;
+  base::circular_deque<scoped_refptr<blink::WebSerializedScriptValue>>
+      js_message_queue_;
   MessageQueueState js_message_queue_state_;
 
   // True if there is already a posted task to drain the JS message queue.
