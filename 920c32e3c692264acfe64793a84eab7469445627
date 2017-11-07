@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "4502dc1a_997c8c0f",
+        "filename": "net/cert/cert_verifier_factory.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 18,
+      "author": {
+        "id": 1002844
+      },
+      "writtenOn": "2017-11-07T22:51:38Z",
+      "side": 1,
+      "message": "right, this is only so that profile_io_data.cc doesn\u0027t need to directly depend on MockCertVerifierFactory. Maybe it should be called CertVerifierFactoryForTesting? (I also considered having SetCertVerifierFactoryForTesting take a base::Callback, but since it stores that into a global it would create a static initializer)",
+      "parentUuid": "6e5e545f_c9a8cd82",
+      "revId": "920c32e3c692264acfe64793a84eab7469445627",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "a28ed751_c8dd9d48",
         "filename": "net/cert/mock_cert_verifier.cc",
         "patchSetId": 3
@@ -36,6 +54,24 @@
     },
     {
       "key": {
+        "uuid": "78933b47_a24e07c1",
+        "filename": "net/cert/mock_cert_verifier.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 24,
+      "author": {
+        "id": 1002844
+      },
+      "writtenOn": "2017-11-07T22:51:38Z",
+      "side": 1,
+      "message": "Not sure if I understand the question, but I think this is addressed by the next comment.",
+      "parentUuid": "a28ed751_c8dd9d48",
+      "revId": "920c32e3c692264acfe64793a84eab7469445627",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "a49e0f45_1ae0b078",
         "filename": "net/cert/mock_cert_verifier.cc",
         "patchSetId": 3
@@ -47,6 +83,24 @@
       "writtenOn": "2017-11-07T14:57:16Z",
       "side": 1,
       "message": "Apologies for it being early, but why the RefCountedData wrapping? That\u0027s not entirely obvious?\n\nIs it because you\u0027re trying to have the factory provide multiple distinct CertVerifiers (via CreateCertVerifier) that all share the same underlying MockCertVerifier? If so, can you speak more to the design choices there - and perhaps document more?",
+      "revId": "920c32e3c692264acfe64793a84eab7469445627",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7611d75e_706ac684",
+        "filename": "net/cert/mock_cert_verifier.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 110,
+      "author": {
+        "id": 1002844
+      },
+      "writtenOn": "2017-11-07T22:51:38Z",
+      "side": 1,
+      "message": "Yes, in order to remove the URLRequestBuilder set_shared_cert_verifier, each profile needs its own CertVerifier instance. This design allows each profile to own its kCertVerifier, but they all use the same rules from the refcounted wrapped MockCertVerifier. (Refcounted so that if the MockCertVerifierFactory is destroyed before one of the profiles it doesn\u0027t cause problems.)\n\nOther thoughts I had:\n* Have each test inject a MockCertVerifier just for a specific profile. Couldn\u0027t see a reasonable way to do this.\n\n* Have the factory create a truly separate MockCertVerifier for each profile, and have some like MockCertVerifier::ForProfile() function the tests could use. Seems more tractable, could maybe set something on the Profile (which is a SupportsUserData), but it\u0027d involve some weird plumbing stuff around since the CertVerifier is created in ProfileIOData on the IO thread. Would also require more heavily modifying all the tests that use MockCertVerifier.\n\nRegarding documentation: the MockCertVerifierFactory in the header file does have a few comments about this. Were those insufficient?",
+      "parentUuid": "a49e0f45_1ae0b078",
       "revId": "920c32e3c692264acfe64793a84eab7469445627",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
