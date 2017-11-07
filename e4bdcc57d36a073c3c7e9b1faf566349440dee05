@@ -1,0 +1,67 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "a2c0ffb5_751f4246",
+        "filename": "ui/base/dragdrop/os_exchange_data_provider_aurax11.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 9,
+      "author": {
+        "id": 1114374
+      },
+      "writtenOn": "2017-11-07T16:46:22Z",
+      "side": 1,
+      "message": "Remove empty line",
+      "revId": "e4bdcc57d36a073c3c7e9b1faf566349440dee05",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "14c33fbf_cbf0fb2d",
+        "filename": "ui/base/x/x11_util_internal.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 12,
+      "author": {
+        "id": 1114374
+      },
+      "writtenOn": "2017-11-07T16:46:22Z",
+      "side": 1,
+      "message": "Remove comment?",
+      "range": {
+        "startLine": 10,
+        "startChar": 19,
+        "endLine": 12,
+        "endChar": 15
+      },
+      "revId": "e4bdcc57d36a073c3c7e9b1faf566349440dee05",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6665acff_24c4479a",
+        "filename": "ui/base/x/x11_util_internal.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 14,
+      "author": {
+        "id": 1114374
+      },
+      "writtenOn": "2017-11-07T16:46:22Z",
+      "side": 1,
+      "message": "Move the header down to the rest.",
+      "range": {
+        "startLine": 14,
+        "startChar": 10,
+        "endLine": 14,
+        "endChar": 25
+      },
+      "revId": "e4bdcc57d36a073c3c7e9b1faf566349440dee05",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
