@@ -28,6 +28,8 @@
 #include "components/signin/core/browser/profile_management_switches.h"
 #include "components/signin/core/browser/signin_features.h"
 #include "components/signin/core/browser/signin_header_helper.h"
+#include "components/user_manager/user_manager.h"
+#include "components/user_manager/user_type.h"
 #include "content/public/browser/browser_thread.h"
 #include "content/public/browser/resource_request_info.h"
 #include "content/public/browser/web_contents.h"
@@ -377,11 +379,18 @@ void FixAccountConsistencyRequestHeader(net::URLRequest* request,
     return;
   }
 
+  bool account_consistency_required_by_profile =
+      user_manager::UserManager::Get()->GetPrimaryUser()->GetType() ==
+      user_manager::USER_TYPE_CHILD;
+
   int profile_mode_mask = PROFILE_MODE_DEFAULT;
   if (io_data->incognito_availibility()->GetValue() ==
           IncognitoModePrefs::DISABLED ||
       IncognitoModePrefs::ArePlatformParentalControlsEnabled()) {
     profile_mode_mask |= PROFILE_MODE_INCOGNITO_DISABLED;
+  }
+  if (account_consistency_required_by_profile) {
+    profile_mode_mask |= PROFILE_MODE_ADD_ACCOUNT_DISABLED;
   }
 
   std::string account_id = io_data->google_services_account_id()->GetValue();
@@ -401,9 +410,9 @@ void FixAccountConsistencyRequestHeader(net::URLRequest* request,
     DiceURLRequestUserData::AttachToRequest(request);
 
   // Mirror header:
-  AppendOrRemoveMirrorRequestHeader(request, redirect_url, account_id,
-                                    io_data->GetCookieSettings(),
-                                    profile_mode_mask);
+  AppendOrRemoveMirrorRequestHeader(
+      request, redirect_url, account_id, io_data->GetCookieSettings(),
+      account_consistency_required_by_profile, profile_mode_mask);
 }
 
 void ProcessAccountConsistencyResponseHeaders(net::URLRequest* request,
