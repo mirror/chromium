@@ -146,6 +146,24 @@
       "revId": "7fb128e860ec5721baac75eaf459fdb941c63c04",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "cc90764d_bf8a95a0",
+        "filename": "tools/grit/grit/gather/policy_json.py",
+        "patchSetId": 2
+      },
+      "lineNbr": 214,
+      "author": {
+        "id": 1111144
+      },
+      "writtenOn": "2017-11-07T17:51:28Z",
+      "side": 1,
+      "message": "Not, that is not true. The real thing is it could contain a lot of keys. But the ones which contains translatable pieces are only \u0027items\u0027 and \u0027policies\u0027 (\u0027policies\u0027 only in the old format). So we always translate \u0027items\u0027. And translate \u0027policies\u0027 if it is the old format. All the other cases are handled in :214",
+      "parentUuid": "737a731d_cfec0ea4",
+      "revId": "7fb128e860ec5721baac75eaf459fdb941c63c04",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
