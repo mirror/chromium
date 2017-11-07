@@ -151,6 +151,30 @@
     },
     {
       "key": {
+        "uuid": "c57f9c24_71093330",
+        "filename": "third_party/WebKit/Source/modules/encryptedmedia/NavigatorRequestMediaKeySystemAccess.cpp",
+        "patchSetId": 3
+      },
+      "lineNbr": 210,
+      "author": {
+        "id": 1002182
+      },
+      "writtenOn": "2017-11-07T03:45:38Z",
+      "side": 1,
+      "message": "I agree with you. I am doing this in this CL only for historical reasons.\n\nThere are two types of prefs in the render process: WebPref and RendererPref. You can see them side by side here:\n\nhttps://cs.chromium.org/chromium/src/content/renderer/render_view_impl.cc?rcl\u003d1a39e48a6d42a6fdbd6304b492dd90e28ac49a59\u0026l\u003d1400\n\nBack when I added this the encrypted_media_enabled pref, since we check it in Blink, I added it as a WebPref, which by convention, uses the prefix \"webkit\". So the name is:\n\nconst char kWebKitEncryptedMediaEnabled[] \u003d\n    \"webkit.webprefs.encrypted_media_enabled\";\n\nTo do this properly, I should migrate this into a non-webkit pref. I haven\u0027t done a pref migration before so I am not sure how to do it properly, but I can look into it.\n\nOr, to make sure I land this in M64, I can map \"webkit.webprefs.encrypted_media_enabled\" into a RendererPref for now, and add a TODO to do the actual pref migration later. WDYT?",
+      "parentUuid": "51f1df2d_d1c22605",
+      "range": {
+        "startLine": 210,
+        "startChar": 34,
+        "endLine": 210,
+        "endChar": 58
+      },
+      "revId": "86763d9887cae7f1bce135a16e3141f847f8295e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "13efc686_7a5b8c39",
         "filename": "third_party/WebKit/Source/platform/EncryptedMediaRequest.h",
         "patchSetId": 3
