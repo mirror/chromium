@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "654ebd5a_3721ec18",
+        "filename": "ios/chrome/test/earl_grey/BUILD.gn",
+        "patchSetId": 4
+      },
+      "lineNbr": 115,
+      "author": {
+        "id": 1212314
+      },
+      "writtenOn": "2017-11-07T03:26:16Z",
+      "side": 1,
+      "message": "wondering if we need ios_chrome_bookmarks_egtests_deps_group here?",
+      "revId": "c12e25fefd5fb798f7d620b6576b7454ca9c2471",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
