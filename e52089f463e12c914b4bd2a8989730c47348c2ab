@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "1a1f6f9a_b205df44",
+        "filename": "third_party/WebKit/Source/platform/network/FormDataEncoder.cpp",
+        "patchSetId": 2
+      },
+      "lineNbr": 169,
+      "author": {
+        "id": 1115899
+      },
+      "writtenOn": "2017-11-07T17:30:31Z",
+      "side": 1,
+      "message": "Seems reasonable to me but please allow Josh to comment before landing.",
+      "revId": "e52089f463e12c914b4bd2a8989730c47348c2ab",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
