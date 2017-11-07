@@ -40,7 +40,7 @@ class TestPrefetchDispatcher : public PrefetchDispatcher {
           success_downloads) override;
   void DownloadCompleted(
       const PrefetchDownloadResult& download_result) override;
-  void ImportCompleted(int64_t offline_id, bool success) override;
+  void ArchiveImported(int64_t offline_id, bool success) override;
 
   std::string latest_name_space;
   std::vector<PrefetchURL> latest_prefetch_urls;
