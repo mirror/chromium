@@ -34,6 +34,7 @@
 #import "ios/chrome/browser/ui/ntp/recent_tabs/views/signed_in_sync_off_view.h"
 #import "ios/chrome/browser/ui/ntp/recent_tabs/views/signed_in_sync_on_no_sessions_view.h"
 #import "ios/chrome/browser/ui/settings/sync_utils/sync_presenter.h"
+#import "ios/chrome/browser/ui/signin_interaction/public/signin_presenter.h"
 #import "ios/chrome/browser/ui/tab_switcher/tab_switcher_cache.h"
 #import "ios/chrome/browser/ui/tab_switcher/tab_switcher_header_view.h"
 #import "ios/chrome/browser/ui/tab_switcher/tab_switcher_model.h"
@@ -89,7 +90,8 @@ enum class SnapshotViewOption {
 
 }  // namespace
 
-@interface TabSwitcherController ()<SyncPresenter,
+@interface TabSwitcherController ()<SigninPresenter,
+                                    SyncPresenter,
                                     TabSwitcherModelDelegate,
                                     TabSwitcherViewDelegate,
                                     TabSwitcherHeaderViewDelegate,
@@ -1226,6 +1228,12 @@ enum class SnapshotViewOption {
 
 - (void)showSyncPassphraseSettings {
   [self.dispatcher showSyncPassphraseSettingsFromViewController:self];
+}
+
+#pragma mark - SigninPresenter
+
+- (void)showSignin:(ShowSigninCommand*)command {
+  [self.dispatcher showSignin:command];
 }
 
 @end
