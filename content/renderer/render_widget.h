@@ -528,6 +528,9 @@ class CONTENT_EXPORT RenderWidget
   virtual void OnResize(const ResizeParams& params);
   void OnSetLocalSurfaceIdForAutoResize(
       uint64_t sequence_number,
+      const gfx::Size& min_size,
+      const gfx::Size& max_size,
+      const content::ScreenInfo& screen_info,
       const viz::LocalSurfaceId& local_surface_id);
   void OnEnableDeviceEmulation(const blink::WebDeviceEmulationParams& params);
   void OnDisableDeviceEmulation();

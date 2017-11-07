@@ -1558,6 +1558,17 @@ void RenderWidgetHostViewAura::OnPaint(const ui::PaintContext& context) {
 void RenderWidgetHostViewAura::OnDeviceScaleFactorChanged(
     float old_device_scale_factor,
     float new_device_scale_factor) {
+  device_scale_factor_ = new_device_scale_factor;
+  if (host_->auto_resize_enabled()) {
+    viz::LocalSurfaceId old_lsid(window_->GetLocalSurfaceId());
+    window_->AllocateLocalSurfaceId();
+    host_->DidAllocateLocalSurfaceIdForAutoResize(
+        host_->last_auto_resize_request_number());
+    if (delegated_frame_host_)
+      delegated_frame_host_->WasResized();
+    return;
+  }
+
   if (!window_->GetRootWindow())
     return;
 
@@ -1565,7 +1576,6 @@ void RenderWidgetHostViewAura::OnDeviceScaleFactorChanged(
   if (delegated_frame_host_)
     delegated_frame_host_->WasResized();
 
-  device_scale_factor_ = new_device_scale_factor;
   const display::Display display =
       display::Screen::GetScreen()->GetDisplayNearestWindow(window_);
   DCHECK_EQ(new_device_scale_factor, display.device_scale_factor());
