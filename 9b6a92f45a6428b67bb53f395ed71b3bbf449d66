@@ -1,0 +1,208 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "846d8e18_0b246cec",
+        "filename": "media/audio/win/core_audio_util_win.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 208,
+      "author": {
+        "id": 1153409
+      },
+      "writtenOn": "2017-11-07T14:02:26Z",
+      "side": 1,
+      "message": "Why don\u0027t we log these steps as separate histograms?",
+      "revId": "9b6a92f45a6428b67bb53f395ed71b3bbf449d66",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3b62d5e5_d935daed",
+        "filename": "media/audio/win/core_audio_util_win.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 235,
+      "author": {
+        "id": 1153409
+      },
+      "writtenOn": "2017-11-07T14:02:26Z",
+      "side": 1,
+      "message": "Move the comment to the function level.",
+      "revId": "9b6a92f45a6428b67bb53f395ed71b3bbf449d66",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1304c761_766ccd91",
+        "filename": "media/audio/win/core_audio_util_win.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 274,
+      "author": {
+        "id": 1153409
+      },
+      "writtenOn": "2017-11-07T14:02:26Z",
+      "side": 1,
+      "message": "Move it below, to where it\u0027s used.",
+      "revId": "9b6a92f45a6428b67bb53f395ed71b3bbf449d66",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d48f95a0_810caa87",
+        "filename": "media/audio/win/core_audio_util_win.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 275,
+      "author": {
+        "id": 1153409
+      },
+      "writtenOn": "2017-11-07T14:02:26Z",
+      "side": 1,
+      "message": "Could you file a bug to introduce AudioDeviceDescription::IsLoopbackDevice() and address it later?",
+      "revId": "9b6a92f45a6428b67bb53f395ed71b3bbf449d66",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6decbe45_52980101",
+        "filename": "media/audio/win/core_audio_util_win.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 279,
+      "author": {
+        "id": 1153409
+      },
+      "writtenOn": "2017-11-07T14:02:26Z",
+      "side": 1,
+      "message": "\u0027else\u0027 is not needed",
+      "revId": "9b6a92f45a6428b67bb53f395ed71b3bbf449d66",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7b66ba7d_0de399be",
+        "filename": "media/audio/win/core_audio_util_win.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 311,
+      "author": {
+        "id": 1153409
+      },
+      "writtenOn": "2017-11-07T14:02:26Z",
+      "side": 1,
+      "message": "Log HRESULT as well",
+      "revId": "9b6a92f45a6428b67bb53f395ed71b3bbf449d66",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "efb257de_aea4c803",
+        "filename": "media/audio/win/core_audio_util_win.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 318,
+      "author": {
+        "id": 1153409
+      },
+      "writtenOn": "2017-11-07T14:02:26Z",
+      "side": 1,
+      "message": "GetPreferredParamsStep\n(not \"Fail\" any more)",
+      "revId": "9b6a92f45a6428b67bb53f395ed71b3bbf449d66",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2c0ee2f8_f7dc5c3d",
+        "filename": "media/audio/win/core_audio_util_win.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 319,
+      "author": {
+        "id": 1153409
+      },
+      "writtenOn": "2017-11-07T14:02:26Z",
+      "side": 1,
+      "message": "PREFERRED_PARAM_... (prefix)",
+      "revId": "9b6a92f45a6428b67bb53f395ed71b3bbf449d66",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f74ef21c_17034040",
+        "filename": "media/audio/win/core_audio_util_win.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 325,
+      "author": {
+        "id": 1153409
+      },
+      "writtenOn": "2017-11-07T14:02:26Z",
+      "side": 1,
+      "message": "not \u0027err\" any more",
+      "revId": "9b6a92f45a6428b67bb53f395ed71b3bbf449d66",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a2977a10_c5c0b674",
+        "filename": "media/audio/win/core_audio_util_win.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 328,
+      "author": {
+        "id": 1153409
+      },
+      "writtenOn": "2017-11-07T14:02:26Z",
+      "side": 1,
+      "message": "if (!is_output_device)\n  return;\n\n(Common style in Chrome to reduce nesting level)",
+      "revId": "9b6a92f45a6428b67bb53f395ed71b3bbf449d66",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5434aa14_079b7cf9",
+        "filename": "media/audio/win/core_audio_util_win.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 569,
+      "author": {
+        "id": 1153409
+      },
+      "writtenOn": "2017-11-07T14:02:26Z",
+      "side": 1,
+      "message": "We can probably move the check into CreateClientInternal()? (otherwise, we need to add a DCHECK there anyways)",
+      "revId": "9b6a92f45a6428b67bb53f395ed71b3bbf449d66",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e50cd846_09237e2c",
+        "filename": "media/audio/win/core_audio_util_win.h",
+        "patchSetId": 7
+      },
+      "lineNbr": 114,
+      "author": {
+        "id": 1153409
+      },
+      "writtenOn": "2017-11-07T14:02:26Z",
+      "side": 1,
+      "message": "Just \"if AudioDeviceInfo::IsDefaultDevice() is true\" instead?",
+      "revId": "9b6a92f45a6428b67bb53f395ed71b3bbf449d66",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
