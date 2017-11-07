@@ -1,0 +1,24 @@
+{
+  "tests": {
+    "blink_perf.canvas": {
+      "createImageBitmapFromImageData.html": {
+        "artifacts": [
+          [
+            {
+              "name": "screenshot",
+              "location": "98ea6e4f216f2fb4b69fff9b3a44842c38686ca685f3f55dc48c5d3fb1107be4"
+            }
+          ]
+        ],
+        "expected": "PASS",
+        "actual": "PASS",
+        "is_unexpected": false
+      }
+    }
+  },
+  "version": 3,
+  "artifact_permanent_location": "gs://chromium-test-artifacts/sha256",
+  "artifact_type_info": {
+    "screenshot": "text/plain"
+  }
+}

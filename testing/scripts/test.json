@@ -1,0 +1,23 @@
+{
+  "tests": {
+    "blink_perf.canvas": {
+      "createImageBitmapFromImageData.html": {
+        "artifacts": [
+          [
+            {
+              "name": "screenshot",
+              "location": "test"
+            }
+          ]
+        ],
+        "expected": "PASS",
+        "actual": "PASS",
+        "is_unexpected": false
+      }
+    }
+  },
+  "version": 3,
+  "artifact_type_info": {
+    "screenshot": "text/plain"
+  }
+}
