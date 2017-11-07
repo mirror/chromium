@@ -125,6 +125,16 @@ void HostFrameSinkManager::CreateCompositorFrameSink(
       frame_sink_id, std::move(request), std::move(client));
 }
 
+void HostFrameSinkManager::OnFrameTokenChanged(const FrameSinkId& frame_sink_id,
+                                               uint32_t frame_token) {
+  DCHECK(frame_sink_id.is_valid());
+  auto data = frame_sink_data_map_.find(frame_sink_id);
+  if (data == frame_sink_data_map_.end())
+    return;
+
+  data->second.client->OnFrameTokenChanged(frame_token);
+}
+
 void HostFrameSinkManager::RegisterFrameSinkHierarchy(
     const FrameSinkId& parent_frame_sink_id,
     const FrameSinkId& child_frame_sink_id) {
