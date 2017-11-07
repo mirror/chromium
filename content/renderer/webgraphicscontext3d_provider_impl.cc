@@ -4,6 +4,7 @@
 
 #include "content/renderer/webgraphicscontext3d_provider_impl.h"
 
+#include "components/viz/common/gl_helper.h"
 #include "gpu/command_buffer/client/context_support.h"
 #include "services/ui/public/cpp/gpu/context_provider_command_buffer.h"
 
@@ -42,6 +43,14 @@ const gpu::Capabilities& WebGraphicsContext3DProviderImpl::GetCapabilities()
 const gpu::GpuFeatureInfo& WebGraphicsContext3DProviderImpl::GetGpuFeatureInfo()
     const {
   return provider_->GetGpuFeatureInfo();
+}
+
+viz::GLHelper* WebGraphicsContext3DProviderImpl::GetGLHelper() {
+  if (!gl_helper_) {
+    gl_helper_ = std::make_unique<viz::GLHelper>(provider_->ContextGL(),
+                                                 provider_->ContextSupport());
+  }
+  return gl_helper_.get();
 }
 
 bool WebGraphicsContext3DProviderImpl::IsSoftwareRendering() const {
