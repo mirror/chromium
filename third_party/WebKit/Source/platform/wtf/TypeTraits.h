@@ -46,55 +46,24 @@ enum WeakHandlingFlag {
   kWeakHandlingInCollections
 };
 
-template <typename T, typename From>
-class IsAssignable {
-  typedef char YesType;
-  struct NoType {
-    char padding[8];
-  };
-
-  template <typename T2,
-            typename From2,
-            typename = decltype(std::declval<T2&>() = std::declval<From2>())>
-  static YesType CheckAssignability(int);
-  template <typename T2, typename From2>
-  static NoType CheckAssignability(...);
-
- public:
-  static const bool value =
-      sizeof(CheckAssignability<T, From>(0)) == sizeof(YesType);
-};
-
 template <typename T>
 struct IsCopyAssignable {
-  static_assert(!std::is_reference<T>::value, "T must not be a reference.");
-  static const bool value = IsAssignable<T, const T&>::value;
+  static const bool value = std::is_copy_assignable<T>::value;
 };
 
 template <typename T>
 struct IsMoveAssignable {
-  static_assert(!std::is_reference<T>::value, "T must not be a reference.");
-  static const bool value = IsAssignable<T, T&&>::value;
+  static const bool value = std::is_move_assignable<T>::value;
 };
 
 template <typename T>
 struct IsTriviallyCopyAssignable {
-  static const bool value =
-      __has_trivial_assign(T) && IsCopyAssignable<T>::value;
+  static const bool value = std::is_trivially_copy_assignable<T>::value;
 };
 
 template <typename T>
 struct IsTriviallyMoveAssignable {
-  // TODO(yutak): This isn't really correct, because __has_trivial_assign
-  // appears to look only at copy assignment.  However,
-  // std::is_trivially_move_assignable isn't available at this moment, and
-  // there isn't a good way to write that ourselves.
-  //
-  // Here we use IsTriviallyCopyAssignable as a conservative approximation: if T
-  // is trivially copy assignable, T is trivially move assignable, too. This
-  // definition misses a case where T is trivially move-only assignable, but
-  // such cases should be rare.
-  static const bool value = IsTriviallyCopyAssignable<T>::value;
+  static const bool value = std::is_trivially_move_assignable<T>::value;
 };
 
 template <typename T>
