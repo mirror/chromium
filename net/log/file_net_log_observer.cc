@@ -45,7 +45,7 @@ scoped_refptr<base::SequencedTaskRunner> CreateFileTaskRunner() {
 // failure.
 base::ScopedFILE OpenFileForWrite(const base::FilePath& path) {
   base::ScopedFILE result(base::OpenFile(path, "wb"));
-  LOG_IF(ERROR, !result) << "Failed opening: " << path.value();
+  PLOG_IF(ERROR, !result) << "Failed opening: " << path.value();
   return result;
 }
 

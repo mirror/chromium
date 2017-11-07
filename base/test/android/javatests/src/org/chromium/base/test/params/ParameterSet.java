@@ -94,7 +94,7 @@ public class ParameterSet {
         return mName;
     }
 
-    List<Object> getValues() {
+    public List<Object> getValues() {
         return mValues;
     }
 
