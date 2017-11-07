@@ -226,14 +226,39 @@ PermissionResult PermissionContextBase::GetPermissionStatus(
     content::RenderFrameHost* render_frame_host,
     const GURL& requesting_origin,
     const GURL& embedding_origin) const {
+  LOG(ERROR) << "CHANDRA :: PermissionContextBase::GetPermissionStatus "
+               "requesting_origin = "
+            << requesting_origin;
+  LOG(ERROR) << "CHANDRA :: PermissionContextBase::GetPermissionStatus "
+               "embedding_origin = "
+            << embedding_origin;
+  if (requesting_origin.is_empty()) {
+    LOG(ERROR) << "CHANDRA :: PermissionContextBase::GetPermissionStatus "
+                 "requesting_origin EMPTY ";
+  }
+  if (embedding_origin.is_empty()) {
+    LOG(ERROR) << "CHANDRA :: PermissionContextBase::GetPermissionStatus "
+                 "embedding_origin EMPTY ";
+  }
+  if (!requesting_origin.is_valid()) {
+    LOG(ERROR) << "CHANDRA :: PermissionContextBase::GetPermissionStatus "
+                 "requesting_origin NOT VALID ";
+  }
+  if (!embedding_origin.is_valid()) {
+    LOG(ERROR) << "CHANDRA :: PermissionContextBase::GetPermissionStatus "
+                 "embedding_origin NOT VALID ";
+  }
+  DCHECK(requesting_origin.is_valid() && embedding_origin.is_valid());
   // If the permission has been disabled through Finch, block all requests.
   if (IsPermissionKillSwitchOn()) {
+    LOG(ERROR) << "CHANDRA :: PermissionContextBase::GetPermissionStatus 1";
     return PermissionResult(CONTENT_SETTING_BLOCK,
                             PermissionStatusSource::KILL_SWITCH);
   }
 
   if (IsRestrictedToSecureOrigins()) {
     if (!content::IsOriginSecure(requesting_origin)) {
+      LOG(ERROR) << "CHANDRA :: PermissionContextBase::GetPermissionStatus 2";
       return PermissionResult(CONTENT_SETTING_BLOCK,
                               PermissionStatusSource::INSECURE_ORIGIN);
     }
@@ -245,6 +270,7 @@ PermissionResult PermissionContextBase::GetPermissionStatus(
     // are currently exempt from checking the embedder chain. crbug.com/530507.
     if (!requesting_origin.SchemeIs(extensions::kExtensionScheme) &&
         !content::IsOriginSecure(embedding_origin)) {
+      LOG(ERROR) << "CHANDRA :: PermissionContextBase::GetPermissionStatus 3";
       return PermissionResult(CONTENT_SETTING_BLOCK,
                               PermissionStatusSource::INSECURE_ORIGIN);
     }
@@ -254,6 +280,7 @@ PermissionResult PermissionContextBase::GetPermissionStatus(
   // can only do this when a RenderFrameHost has been provided.
   if (render_frame_host &&
       !PermissionAllowedByFeaturePolicy(render_frame_host)) {
+    LOG(ERROR) << "CHANDRA :: PermissionContextBase::GetPermissionStatus 4";
     return PermissionResult(CONTENT_SETTING_BLOCK,
                             PermissionStatusSource::FEATURE_POLICY);
   }
@@ -266,9 +293,11 @@ PermissionResult PermissionContextBase::GetPermissionStatus(
             ->GetEmbargoResult(requesting_origin, content_settings_type_);
     DCHECK(result.content_setting == CONTENT_SETTING_ASK ||
            result.content_setting == CONTENT_SETTING_BLOCK);
+    LOG(ERROR) << "CHANDRA :: PermissionContextBase::GetPermissionStatus 5";
     return result;
   }
 
+  LOG(ERROR) << "CHANDRA :: PermissionContextBase::GetPermissionStatus 6";
   return PermissionResult(content_setting, PermissionStatusSource::UNSPECIFIED);
 }
 
