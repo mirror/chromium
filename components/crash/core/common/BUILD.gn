@@ -16,6 +16,7 @@ static_library("crash_keys") {
   visibility = [ ":*" ]
 
   sources = [
+    "crash_key.h",
     "crash_keys.cc",
     "crash_keys.h",
   ]
@@ -23,6 +24,16 @@ static_library("crash_keys") {
   deps = [
     "//base",
   ]
+
+  if (is_mac || is_win) {
+    deps += [ "//third_party/crashpad/crashpad/client" ]
+  } else {
+    include_dirs = [ "//third_party/breakpad/breakpad/src/" ]
+
+    sources += [ "crash_key.cc" ]
+
+    deps += [ "//third_party/breakpad:client" ]
+  }
 }
 
 if (is_mac || is_ios) {

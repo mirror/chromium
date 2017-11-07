@@ -50,6 +50,7 @@
 #include "components/component_updater/component_updater_paths.h"
 #include "components/content_settings/core/common/content_settings_pattern.h"
 #include "components/crash/content/app/crash_reporter_client.h"
+#include "components/crash/core/common/crash_key.h"
 #include "components/nacl/common/features.h"
 #include "components/version_info/version_info.h"
 #include "content/public/common/content_client.h"
@@ -931,6 +932,10 @@ void ChromeMainDelegate::PreSandboxStartup() {
   // After all the platform Breakpads have been initialized, store the command
   // line for crash reporting.
   crash_keys::SetCrashKeysFromCommandLine(command_line);
+
+  // TODO(rsesek): Remove test crash key.
+  static crash_reporter::CrashKeyString<8> test_crash_key("crash-keys-2");
+  test_crash_key.Set("success!");
 }
 
 void ChromeMainDelegate::SandboxInitialized(const std::string& process_type) {
