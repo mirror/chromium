@@ -2,6 +2,29 @@
   "comments": [
     {
       "key": {
+        "uuid": "7753f5be_3027b479",
+        "filename": "content/renderer/media_capture_from_element/canvas_capture_handler.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 164,
+      "author": {
+        "id": 1115939
+      },
+      "writtenOn": "2017-11-07T21:41:28Z",
+      "side": 1,
+      "message": "This condition makes me sad because Unpremul almost never happens. Only case I can think of is if the source canvas has a WebGL context created with the option {premultipliedAlpha \u003d false;}\nIn the case where the image is opaque (alpha \u003d 255 everywhere), there is no difference between premul and unpremul, so you could catch more cases with this fast path by checking for:\n\n... \u0026\u0026 (pixmap.alphaType() \u003d\u003d kUnpremul_SkAlphaType || image-\u003eisOpaque())",
+      "range": {
+        "startLine": 164,
+        "startChar": 28,
+        "endLine": 164,
+        "endChar": 49
+      },
+      "revId": "21d934d83865ccac9530ad4734e50f742ac67983",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "01092647_8dbbc263",
         "filename": "content/renderer/webgraphicscontext3d_provider_impl.cc",
         "patchSetId": 5
@@ -30,6 +53,52 @@
       "writtenOn": "2017-11-07T20:43:24Z",
       "side": 1,
       "message": "no need to do this, the whole provider will need to be deleted. best not to create UAF possibilities, IMO. normally a lost context does not mean it is deleted. Only in ImageTransportFactory is that a thing that happens, elsewhere code often cleans up textures and stuff (needlessly) on the dead context to avoid writing different shutdown paths. I\u0027d prefer if GLTHelper is consistent with the rest of this class.",
+      "revId": "21d934d83865ccac9530ad4734e50f742ac67983",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "fd99729f_5d36757a",
+        "filename": "third_party/WebKit/Source/core/html/HTMLCanvasElement.cpp",
+        "patchSetId": 5
+      },
+      "lineNbr": 586,
+      "author": {
+        "id": 1115939
+      },
+      "writtenOn": "2017-11-07T21:41:28Z",
+      "side": 1,
+      "message": "You can remove this code. bitmap_image is not even being used!  I did some digging, and it turns out you don\u0027t have to worry about mailboxing textures that come from a WebGL context.  The above call to GetSourceImageForCanvas always returns resources that are in the shared context. The mailboxing is handled deeper in DrawingBuffer::CopyToPlatformTexture",
+      "range": {
+        "startLine": 586,
+        "startChar": 4,
+        "endLine": 586,
+        "endChar": 16
+      },
+      "revId": "21d934d83865ccac9530ad4734e50f742ac67983",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d366c337_46006116",
+        "filename": "third_party/WebKit/Source/platform/graphics/UnacceleratedStaticBitmapImage.cpp",
+        "patchSetId": 5
+      },
+      "lineNbr": 41,
+      "author": {
+        "id": 1115939
+      },
+      "writtenOn": "2017-11-07T21:41:28Z",
+      "side": 1,
+      "message": "I think this method is not needed.",
+      "range": {
+        "startLine": 41,
+        "startChar": 51,
+        "endLine": 41,
+        "endChar": 66
+      },
       "revId": "21d934d83865ccac9530ad4734e50f742ac67983",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
