@@ -2148,6 +2148,9 @@ void RenderFrameImpl::OnJavaScriptExecuteRequest(
     const base::string16& jscript,
     int id,
     bool notify_result) {
+  DCHECK(CanExecuteJavaScript())
+      << "Not safe to execute script before commit: " << jscript;
+
   TRACE_EVENT_INSTANT0("test_tracing", "OnJavaScriptExecuteRequest",
                        TRACE_EVENT_SCOPE_THREAD);
 
@@ -2163,6 +2166,9 @@ void RenderFrameImpl::OnJavaScriptExecuteRequestForTests(
     int id,
     bool notify_result,
     bool has_user_gesture) {
+  DCHECK(CanExecuteJavaScript())
+      << jscript << "Not safe to execute script before commit: " << jscript;
+
   TRACE_EVENT_INSTANT0("test_tracing", "OnJavaScriptExecuteRequestForTests",
                        TRACE_EVENT_SCOPE_THREAD);
 
@@ -2182,6 +2188,9 @@ void RenderFrameImpl::OnJavaScriptExecuteRequestInIsolatedWorld(
     int id,
     bool notify_result,
     int world_id) {
+  DCHECK(CanExecuteJavaScript())
+      << jscript << "Not safe to execute script before commit: " << jscript;
+
   TRACE_EVENT_INSTANT0("test_tracing",
                        "OnJavaScriptExecuteRequestInIsolatedWorld",
                        TRACE_EVENT_SCOPE_THREAD);
@@ -4429,6 +4438,29 @@ void RenderFrameImpl::ShowContextMenu(const blink::WebContextMenuData& data) {
 
 void RenderFrameImpl::ShowDeferredContextMenu(const ContextMenuParams& params) {
   Send(new FrameHostMsg_ContextMenu(routing_id_, params));
+}
+
+bool RenderFrameImpl::CanExecuteJavaScript() {
+  // Okay to execute scripts in the initial, empty document
+  // (this is for example done by chromeos::ShowLoginWizard).
+  bool is_initial_empty_document = GetWebFrame()->GetDocument().Url().IsEmpty();
+  if (is_initial_empty_document)
+    return true;
+
+  // Okay to execute scripts once the browser was notified about the origin that
+  // got committed in the frame.
+  DocumentState* document_state =
+      DocumentState::FromDocumentLoader(GetWebFrame()->GetDocumentLoader());
+  NavigationStateImpl* navigation_state =
+      static_cast<NavigationStateImpl*>(document_state->navigation_state());
+  if (navigation_state->request_committed())
+    return true;
+
+  // No javascript should execute before the browser is notified about the
+  // commit via SendDidCommitProvisionalLoad - otherwise, the browser might
+  // think the page is still at the previous origin, and therefore might reject
+  // requests for capabilities (like localStorage) bound to the new origin.
+  return false;
 }
 
 void RenderFrameImpl::SaveImageFromDataURL(const blink::WebString& data_url) {

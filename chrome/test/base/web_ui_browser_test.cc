@@ -462,6 +462,13 @@ bool WebUIBrowserTest::RunJavascriptUsingHandler(
 
   bool result = true;
 
+  // At this point |error_messages_| can contain error messages from previously
+  // executed scripts (e.g. from "preloaded" javascript libraries - note that
+  // PreloadJavaScript doesn't wait for actual script execution to happen).
+  // Clearing the error messages here helps to limit error detection to only the
+  // script executed below.
+  error_messages_.Get().clear();
+
   for (size_t i = 0; i < libraries.size(); ++i)
     test_handler_->PreloadJavaScript(libraries[i], preload_host);
 
@@ -472,6 +479,7 @@ bool WebUIBrowserTest::RunJavascriptUsingHandler(
   else
     test_handler_->RunJavaScript(content);
 
+  // TODO(https://crbug.com/780589): Detect errors from preloaded libraries.
   if (error_messages_.Get().size() > 0) {
     LOG(ERROR) << "CONDITION FAILURE: encountered javascript console error(s):";
     for (const auto& msg : error_messages_.Get()) {
@@ -480,7 +488,6 @@ bool WebUIBrowserTest::RunJavascriptUsingHandler(
     LOG(ERROR) << "JS call assumed failed, because JS console error(s) found.";
 
     result = false;
-    error_messages_.Get().clear();
   }
   return result;
 }

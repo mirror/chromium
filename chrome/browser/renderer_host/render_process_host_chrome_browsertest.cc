@@ -102,7 +102,8 @@ class ChromeRenderProcessHostTest : public ExtensionBrowserTest {
   base::Process ShowSingletonTab(const GURL& page) {
     chrome::ShowSingletonTab(browser(), page);
     WebContents* wc = browser()->tab_strip_model()->GetActiveWebContents();
-    CHECK(wc->GetURL() == page);
+    CHECK(content::WaitForLoadStop(wc));
+    CHECK(wc->GetLastCommittedURL() == page);
 
     WaitForLauncherThread();
     WaitForMessageProcessing(wc);
