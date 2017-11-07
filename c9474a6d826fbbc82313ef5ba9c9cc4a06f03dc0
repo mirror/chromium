@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "7b68eac8_3e05e8fe",
+        "filename": "base/debug/stack_trace_posix.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 782,
+      "author": {
+        "id": 1160859
+      },
+      "writtenOn": "2017-11-07T22:04:36Z",
+      "side": 1,
+      "message": "this too?",
+      "range": {
+        "startLine": 782,
+        "startChar": 41,
+        "endLine": 782,
+        "endChar": 45
+      },
+      "revId": "c9474a6d826fbbc82313ef5ba9c9cc4a06f03dc0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
