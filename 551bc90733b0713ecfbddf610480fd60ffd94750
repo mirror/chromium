@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "3e9ad59a_b6f89c3d",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/vr_shell/VrShellImpl.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 333,
+      "author": {
+        "id": 1119159
+      },
+      "writtenOn": "2017-11-07T16:30:37Z",
+      "side": 1,
+      "message": "From the AndroidPermissionDelegate.java\n\"A permission can be requested in the following states:\n 1.) Default un-granted state, permission can be requested\n 2.) Permission previously requested but denied by the user, but the user did not select\n     \"Never ask again\".\"\nSo canRequestPermission can return false when the permission is granted.",
+      "parentUuid": "8ac23e86_83871510",
+      "revId": "551bc90733b0713ecfbddf610480fd60ffd94750",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "2b46d964_778bb300",
         "filename": "chrome/browser/vr/browser_ui_interface.h",
         "patchSetId": 1
@@ -33,6 +51,24 @@
       "revId": "551bc90733b0713ecfbddf610480fd60ffd94750",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "cf5d594f_9c8001a3",
+        "filename": "chrome/browser/vr/browser_ui_interface.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 38,
+      "author": {
+        "id": 1119159
+      },
+      "writtenOn": "2017-11-07T16:30:37Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "2b46d964_778bb300",
+      "revId": "551bc90733b0713ecfbddf610480fd60ffd94750",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
