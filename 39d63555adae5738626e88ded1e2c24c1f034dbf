@@ -16,6 +16,24 @@
       "revId": "39d63555adae5738626e88ded1e2c24c1f034dbf",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a8df5c9f_86b865d7",
+        "filename": "build/fuchsia/runner_common.py",
+        "patchSetId": 2
+      },
+      "lineNbr": 550,
+      "author": {
+        "id": 1113499
+      },
+      "writtenOn": "2017-11-07T18:34:42Z",
+      "side": 1,
+      "message": "Agreed, but IMO consistency across both arch paths is a good thing. :)",
+      "parentUuid": "c6682623_22756153",
+      "revId": "39d63555adae5738626e88ded1e2c24c1f034dbf",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
