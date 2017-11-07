@@ -9,6 +9,7 @@
 #include "base/logging.h"
 #include "base/memory/ptr_util.h"
 #include "base/stl_util.h"
+#include "base/strings/string_util.h"
 #include "base/strings/utf_string_conversions.h"
 #include "components/autofill/core/browser/address_i18n.h"
 #include "components/autofill/core/browser/country_data.h"
@@ -93,8 +94,8 @@ void InitializeAddressFromProfile(const AutofillProfile& profile,
       base::UTF16ToUTF8(profile.GetRawInfo(ADDRESS_HOME_COUNTRY));
   address->administrative_area =
       base::UTF16ToUTF8(profile.GetRawInfo(ADDRESS_HOME_STATE));
-  address->postal_code =
-      base::UTF16ToUTF8(profile.GetRawInfo(ADDRESS_HOME_ZIP));
+  address->postal_code = base::ToUpperASCII(
+      base::UTF16ToUTF8(profile.GetRawInfo(ADDRESS_HOME_ZIP)));
 }
 
 void SetEmptyValidityIfEmpty(AutofillProfile* profile) {
