@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "5287fb4b_ccca86cf",
+        "filename": "content/browser/frame_host/navigation_controller_impl_unittest.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 2007,
+      "author": {
+        "id": 1003152
+      },
+      "writtenOn": "2017-11-07T15:24:06Z",
+      "side": 1,
+      "message": "This is already ugly, but will be impossible once the InterfaceProviderRequest is added to DidCommitProvisionalLoadParams.\n\nWhat alternative do you prefer?\n -- Keeping InterfaceProviderRequest as a second argument of FrameHost::DidCommitProvisionalLoad, not moving it into Params.\n -- Introducing a helper method for this (and 2 more) tests to construct a new instance on the fly?",
+      "range": {
+        "startLine": 2007,
+        "startChar": 49,
+        "endLine": 2007,
+        "endChar": 54
+      },
+      "revId": "cb233e10b397a26a5a13e23dc19b3c389d2b4889",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
