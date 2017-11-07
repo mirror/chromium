@@ -158,7 +158,7 @@ void MessageCenterImpl::SetVisibility(Visibility visibility) {
   DCHECK(!iterating_);
   visible_ = (visibility == VISIBILITY_MESSAGE_CENTER);
 
-  if (visible_ && !locked_) {
+  if (visible_) {
     std::set<std::string> updated_ids;
     notification_list_->SetNotificationsShown(blockers_, &updated_ids);
     notification_cache_.RecountUnread();
@@ -200,11 +200,6 @@ bool MessageCenterImpl::HasPopupNotifications() const {
 bool MessageCenterImpl::IsQuietMode() const {
   DCHECK_CALLED_ON_VALID_THREAD(thread_checker_);
   return notification_list_->quiet_mode();
-}
-
-bool MessageCenterImpl::IsLockedState() const {
-  DCHECK_CALLED_ON_VALID_THREAD(thread_checker_);
-  return locked_;
 }
 
 message_center::Notification* MessageCenterImpl::FindVisibleNotificationById(
@@ -604,15 +599,6 @@ void MessageCenterImpl::SetQuietMode(bool in_quiet_mode) {
       observer.OnQuietModeChanged(in_quiet_mode);
   }
   quiet_mode_timer_.reset();
-}
-
-void MessageCenterImpl::SetLockedState(bool locked) {
-  DCHECK_CALLED_ON_VALID_THREAD(thread_checker_);
-  if (locked != locked_) {
-    locked_ = locked;
-    for (auto& observer : observer_list_)
-      observer.OnLockedStateChanged(locked);
-  }
 }
 
 void MessageCenterImpl::EnterQuietModeWithExpire(

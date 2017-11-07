@@ -43,10 +43,6 @@ bool FakeMessageCenter::IsQuietMode() const {
   return false;
 }
 
-bool FakeMessageCenter::IsLockedState() const {
-  return false;
-}
-
 message_center::Notification* FakeMessageCenter::FindVisibleNotificationById(
     const std::string& id) {
   for (auto* notification : GetVisibleNotifications()) {
@@ -113,8 +109,6 @@ void FakeMessageCenter::DisplayedNotification(const std::string& id,
                                               const DisplaySource source) {}
 
 void FakeMessageCenter::SetQuietMode(bool in_quiet_mode) {}
-
-void FakeMessageCenter::SetLockedState(bool locked) {}
 
 void FakeMessageCenter::EnterQuietModeWithExpire(
     const base::TimeDelta& expires_in) {

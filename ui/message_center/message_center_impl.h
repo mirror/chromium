@@ -49,7 +49,6 @@ class MESSAGE_CENTER_EXPORT MessageCenterImpl
   size_t UnreadNotificationCount() const override;
   bool HasPopupNotifications() const override;
   bool IsQuietMode() const override;
-  bool IsLockedState() const override;
   message_center::Notification* FindVisibleNotificationById(
       const std::string& id) override;
   const NotificationList::Notifications& GetVisibleNotifications() override;
@@ -77,7 +76,6 @@ class MESSAGE_CENTER_EXPORT MessageCenterImpl
   void DisplayedNotification(const std::string& id,
                              const DisplaySource source) override;
   void SetQuietMode(bool in_quiet_mode) override;
-  void SetLockedState(bool locked) override;
   void EnterQuietModeWithExpire(const base::TimeDelta& expires_in) override;
   void RestartPopupTimers() override;
   void PausePopupTimers() override;
@@ -123,7 +121,6 @@ class MESSAGE_CENTER_EXPORT MessageCenterImpl
   std::vector<NotificationBlocker*> blockers_;
   std::unique_ptr<ChangeQueue> notification_change_queue_;
 
-  bool locked_ = false;
   bool visible_ = false;
 
   // modified by ScopedNotificationsIterationLock.
