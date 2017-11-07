@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "add0a280_e34d46a8",
+        "filename": "third_party/WebKit/Source/controller/BlinkInitializer.cpp",
+        "patchSetId": 8
+      },
+      "lineNbr": 125,
+      "author": {
+        "id": 1001168
+      },
+      "writtenOn": "2017-11-07T02:28:43Z",
+      "side": 1,
+      "message": "Just to confirm, I discussed this with bashi@ offline and confirmed that this is running on the main thread now (i was confused and thought this was still running on the IO thread). This is fine, but I think it\u0027s something we\u0027ll need to consider for future Mojofication (and making it hard to accidentally get this wrong). I\u0027ll file a followup bug to see if there\u0027s something we should improve in this area.",
+      "revId": "2b17e8a9aac33efd6ab5150feef7f9d60065cd74",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
