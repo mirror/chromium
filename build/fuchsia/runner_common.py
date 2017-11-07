@@ -519,7 +519,6 @@ def RunFuchsia(bootfs_data, use_device, kernel_path, dry_run,
         # testserver running on the host.
         '-netdev', 'user,id=net0,net=%s,dhcpstart=%s,host=%s' %
             (GUEST_NET, GUEST_IP_ADDRESS, HOST_IP_ADDRESS),
-        '-device', 'e1000,netdev=net0,mac=52:54:00:63:5e:7b',
 
         # Use stdio for the guest OS only; don't attach the QEMU interactive
         # monitor.
@@ -536,12 +535,14 @@ def RunFuchsia(bootfs_data, use_device, kernel_path, dry_run,
       qemu_command.extend([
           '-machine','virt',
           '-cpu', 'cortex-a53',
+          '-device', 'virtio-net-pci,netdev=net0,mac=52:54:00:63:5e:7b',
       ])
     else:
       qemu_command.extend([
           '-enable-kvm',
           '-machine', 'q35',
           '-cpu', 'host,migratable=no',
+          '-device', 'e1000,netdev=net0,mac=52:54:00:63:5e:7b',
       ])
 
     if test_launcher_summary_output:
