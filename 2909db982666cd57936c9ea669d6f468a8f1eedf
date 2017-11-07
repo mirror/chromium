@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "0dc259f5_8a8a2d52",
+        "filename": "chrome/browser/resources/md_extensions/manager.js",
+        "patchSetId": 17
+      },
+      "lineNbr": 170,
+      "author": {
+        "id": 1115893
+      },
+      "writtenOn": "2017-11-07T18:16:28Z",
+      "side": 1,
+      "message": "This was introduced at https://chromium-review.googlesource.com/c/chromium/src/+/752545 and fixes https://bugs.chromium.org/p/chromium/issues/detail?id\u003d781055. I am moving it here, since the file where this was residing (extensions.js) is removed in this CL.",
+      "parentUuid": "b4f3dfa6_864756b3",
+      "revId": "2909db982666cd57936c9ea669d6f468a8f1eedf",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "15478981_82afdcfb",
         "filename": "chrome/browser/resources/md_extensions/service.js",
         "patchSetId": 17
@@ -33,6 +51,24 @@
       "revId": "2909db982666cd57936c9ea669d6f468a8f1eedf",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8d3b9a36_a9ca1dc3",
+        "filename": "chrome/browser/resources/md_extensions/service.js",
+        "patchSetId": 17
+      },
+      "lineNbr": 109,
+      "author": {
+        "id": 1115893
+      },
+      "writtenOn": "2017-11-07T18:16:28Z",
+      "side": 1,
+      "message": "Done. Added missing return.",
+      "parentUuid": "15478981_82afdcfb",
+      "revId": "2909db982666cd57936c9ea669d6f468a8f1eedf",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
