@@ -350,6 +350,7 @@
 #include "components/guest_view/browser/guest_view_base.h"
 #include "components/guest_view/browser/guest_view_manager.h"
 #include "extensions/browser/extension_navigation_throttle.h"
+#include "extensions/browser/extension_protocols.h"
 #include "extensions/browser/extension_registry.h"
 #include "extensions/browser/extension_util.h"
 #include "extensions/browser/guest_view/web_view/web_view_guest.h"
@@ -3590,6 +3591,29 @@ ChromeContentBrowserClient::CreateURLLoaderThrottles(
     result.push_back(std::move(safe_browsing_throttle));
 
   return result;
+}
+
+void ChromeContentBrowserClient::RegisterNonNetworkNavigationURLLoaderFactories(
+    content::RenderFrameHost* frame_host,
+    NonNetworkURLLoaderFactoryMap* factories) {
+#if BUILDFLAG(ENABLE_EXTENSIONS)
+  factories->emplace(
+      extensions::kExtensionScheme,
+      extensions::CreateExtensionNavigationURLLoaderFactory(frame_host));
+#endif
+}
+
+void ChromeContentBrowserClient::
+    RegisterNonNetworkSubresourceURLLoaderFactories(
+        content::RenderFrameHost* frame_host,
+        const GURL& frame_url,
+        NonNetworkURLLoaderFactoryMap* factories) {
+#if BUILDFLAG(ENABLE_EXTENSIONS)
+  auto factory = extensions::MaybeCreateExtensionSubresourceURLLoaderFactory(
+      frame_host, frame_url);
+  if (factory)
+    factories->emplace(extensions::kExtensionScheme, std::move(factory));
+#endif
 }
 
 // Static; handles rewriting Web UI URLs.
