@@ -44,6 +44,11 @@
 #include "extensions/browser/guest_view/web_view/web_view_renderer_state.h"
 #endif  // defined(OS_ANDROID)
 
+#if defined(OS_CHROMEOS)
+#include "components/user_manager/user_manager.h"
+#include "components/user_manager/user_type.h"
+#endif
+
 namespace signin {
 
 namespace {
@@ -377,11 +382,26 @@ void FixAccountConsistencyRequestHeader(net::URLRequest* request,
     return;
   }
 
+  bool account_consistency_required_by_profile = false;
+#if defined(OS_CHROMEOS)
+  // Child accounts on Chrome OS require account consistency.
+  user_manager::UserManager* user_manager = user_manager::UserManager::Get();
+  DCHECK(user_manager->GetPrimaryUser());
+  account_consistency_required_by_profile =
+      user_manager->GetPrimaryUser()->GetType() ==
+      user_manager::USER_TYPE_CHILD;
+#endif
+
   int profile_mode_mask = PROFILE_MODE_DEFAULT;
   if (io_data->incognito_availibility()->GetValue() ==
           IncognitoModePrefs::DISABLED ||
       IncognitoModePrefs::ArePlatformParentalControlsEnabled()) {
     profile_mode_mask |= PROFILE_MODE_INCOGNITO_DISABLED;
+  }
+  if (account_consistency_required_by_profile) {
+    // Can't switch or add accounts.
+    profile_mode_mask |= PROFILE_MODE_ADD_ACCOUNT_DISABLED |
+                         PROFILE_MODE_SWITCH_ACCOUNT_DISABLED;
   }
 
   std::string account_id = io_data->google_services_account_id()->GetValue();
@@ -401,9 +421,9 @@ void FixAccountConsistencyRequestHeader(net::URLRequest* request,
     DiceURLRequestUserData::AttachToRequest(request);
 
   // Mirror header:
-  AppendOrRemoveMirrorRequestHeader(request, redirect_url, account_id,
-                                    io_data->GetCookieSettings(),
-                                    profile_mode_mask);
+  AppendOrRemoveMirrorRequestHeader(
+      request, redirect_url, account_id, io_data->GetCookieSettings(),
+      account_consistency_required_by_profile, profile_mode_mask);
 }
 
 void ProcessAccountConsistencyResponseHeaders(net::URLRequest* request,
