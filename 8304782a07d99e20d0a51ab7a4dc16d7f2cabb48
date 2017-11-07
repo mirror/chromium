@@ -1,0 +1,96 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "1d094337_7c7523c7",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 5
+      },
+      "lineNbr": 17,
+      "author": {
+        "id": 1160859
+      },
+      "writtenOn": "2017-11-07T23:42:26Z",
+      "side": 1,
+      "message": "nit: not",
+      "range": {
+        "startLine": 17,
+        "startChar": 45,
+        "endLine": 17,
+        "endChar": 47
+      },
+      "revId": "8304782a07d99e20d0a51ab7a4dc16d7f2cabb48",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9e0e60e3_f0528718",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 5
+      },
+      "lineNbr": 17,
+      "author": {
+        "id": 1160859
+      },
+      "writtenOn": "2017-11-07T23:42:26Z",
+      "side": 1,
+      "message": "nit: nit",
+      "range": {
+        "startLine": 17,
+        "startChar": 56,
+        "endLine": 17,
+        "endChar": 61
+      },
+      "revId": "8304782a07d99e20d0a51ab7a4dc16d7f2cabb48",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7ccca054_a884ca36",
+        "filename": "content/test/content_browser_test_test.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 52,
+      "author": {
+        "id": 1160859
+      },
+      "writtenOn": "2017-11-07T23:42:26Z",
+      "side": 1,
+      "message": "don\u0027t think you need the explicit for this constructor now.",
+      "range": {
+        "startLine": 52,
+        "startChar": 2,
+        "endLine": 52,
+        "endChar": 10
+      },
+      "revId": "8304782a07d99e20d0a51ab7a4dc16d7f2cabb48",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "be616ce5_5b4284ed",
+        "filename": "content/test/content_browser_test_test.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 72,
+      "author": {
+        "id": 1160859
+      },
+      "writtenOn": "2017-11-07T23:42:26Z",
+      "side": 1,
+      "message": "does this need a LAZY_INSTANCE_INITIALIZER",
+      "range": {
+        "startLine": 72,
+        "startChar": 64,
+        "endLine": 72,
+        "endChar": 65
+      },
+      "revId": "8304782a07d99e20d0a51ab7a4dc16d7f2cabb48",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
