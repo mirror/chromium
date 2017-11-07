@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "3386d841_674ca2e6",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 2
+      },
+      "lineNbr": 19,
+      "author": {
+        "id": 1150437
+      },
+      "writtenOn": "2017-11-07T18:33:56Z",
+      "side": 1,
+      "message": "I don\u0027t see this in the change, how do we make sure it\u0027s invoked?",
+      "range": {
+        "startLine": 17,
+        "startChar": 47,
+        "endLine": 19,
+        "endChar": 18
+      },
+      "revId": "d682a583fc43ec14aedd0568a4131961ddab0838",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8c18fa81_4ef69a83",
+        "filename": "chrome/browser/media/router/discovery/mdns/cast_media_sink_service_impl.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 305,
+      "author": {
+        "id": 1150437
+      },
+      "writtenOn": "2017-11-07T18:33:56Z",
+      "side": 1,
+      "message": "So with this change any task that is submitted as part of this one will now be rejected?  Does some kind of error get logged in that case, or would it be a silent rejection?",
+      "range": {
+        "startLine": 305,
+        "startChar": 36,
+        "endLine": 305,
+        "endChar": 0
+      },
+      "revId": "d682a583fc43ec14aedd0568a4131961ddab0838",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
