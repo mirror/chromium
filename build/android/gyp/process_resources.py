@@ -12,12 +12,14 @@ This will crunch images and generate v14 compatible resources
 
 import codecs
 import collections
+import fnmatch
 import optparse
 import os
 import re
 import shutil
 import sys
 import xml.etree.ElementTree
+import zipfile
 
 import generate_v14_compatible_resources
 
@@ -106,6 +108,8 @@ def _ParseArgs(args):
       '--all-resources-zip-out',
       help='Path for output of all resources. This includes resources in '
       'dependencies.')
+  parser.add_option('--support-zh-hk', action='store_true',
+                    help='Use zh-rTW resources for zh-rHK.')
 
   parser.add_option('--stamp', help='File to touch on success')
 
@@ -345,7 +349,7 @@ def ZipResources(resource_dirs, zip_path):
   build_utils.DoZip(files_to_zip.iteritems(), zip_path)
 
 
-def CombineZips(zip_files, output_path):
+def CombineZips(zip_files, output_path, support_zh_hk):
   # When packaging resources, if the top-level directories in the zip file are
   # of the form 0, 1, ..., then each subdirectory will be passed to aapt as a
   # resources directory. While some resources just clobber others (image files,
@@ -354,7 +358,39 @@ def CombineZips(zip_files, output_path):
   def path_transform(name, src_zip):
     return '%d/%s' % (zip_files.index(src_zip), name)
 
-  build_utils.MergeZips(output_path, zip_files, path_transform=path_transform)
+  # We don't currently support zh-HK on Chrome for Android, but on the
+  # native side we resolve zh-HK resources to zh-TW. This logic is
+  # duplicated here by just copying the zh-TW res folders to zh-HK.
+  # See https://crbug.com/780847.
+  with build_utils.TempDir() as temp_dir:
+    if support_zh_hk:
+      _DuplicateZhResources(zip_files, temp_dir)
+    build_utils.MergeZips(output_path, zip_files, path_transform=path_transform)
+
+
+def _DuplicateZhResources(zip_files, temp_dir):
+  for f in zip_files:
+    # We use zh-HK resources if they exist (some third party deps have them),
+    # otherwise we use zh-TW resources for zh-HK (if we have zh-TW resources).
+    # Some resource zips don't contain zh-TW resources (ex. resource zips that
+    # only contain api specific resources).
+    if _ZipContains(f, '*zh-rHK*') or not _ZipContains(f, '*zh-rTW*'):
+      continue
+    tw_extracted = build_utils.ExtractAll(f, path=temp_dir, pattern='*zh-rTW*')
+    assert len(tw_extracted) == 1, (
+        'Found duplicate locale resources: ' + tw_extracted)
+    tw_extracted = tw_extracted[0] if tw_extracted else None
+    if tw_extracted:
+      hk_path = tw_extracted.replace('TW', 'HK')
+      build_utils.Rename(tw_extracted, hk_path)
+      hk_zip = os.path.join(temp_dir, os.path.basename(f) +  '.hk.zip')
+      build_utils.DoZip([hk_path], hk_zip, base_dir=temp_dir)
+      zip_files.append(hk_zip)
+
+
+def _ZipContains(path, pattern):
+  with zipfile.ZipFile(path, 'r') as z:
+    return any(fnmatch.fnmatch(f, pattern) for f in z.namelist())
 
 
 def _ExtractPackageFromManifest(manifest_path):
@@ -500,7 +536,7 @@ def _OnStaleMd5(options):
 
     if options.all_resources_zip_out:
       CombineZips([options.resource_zip_out] + dep_zips,
-                  options.all_resources_zip_out)
+                  options.all_resources_zip_out, options.support_zh_hk)
 
     if options.srcjar_out:
       build_utils.ZipDir(options.srcjar_out, srcjar_dir)
@@ -533,6 +569,8 @@ def main(args):
     options.shared_resources,
     options.v14_skip,
   ]
+  if options.support_zh_hk:
+    input_strings.append('support_zh_hk')
 
   input_paths = [
     options.aapt_path,
