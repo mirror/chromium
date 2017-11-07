@@ -413,11 +413,22 @@ namespace networking.onc {
     DOMString? ProviderName;
   };
 
+  dictionary ArcVPNProperties {
+    // Unique app id for launching the app.
+    DOMString AppID;
+    // Unique android package name of the Arc VPN provider.
+    DOMString PackageName;
+    // The VPN provider name.
+    DOMString ProviderName;
+    // Last launch time of the Arc VPN provider.
+    long LastLaunchTime;
+  };
+
   // Network type dictionary types.
 
   [noinline_doc] dictionary CellularProperties {
     // Whether the cellular network should be connected automatically (when
-    // in range). 
+    // in range).
     boolean? AutoConnect;
     // The cellular network activation type.
     DOMString? ActivationType;
