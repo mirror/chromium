@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "09284c5e_1f77422e",
+        "filename": "chrome/browser/resources/interventions_internals/index.js",
+        "patchSetId": 2
+      },
+      "lineNbr": 100,
+      "author": {
+        "id": 1127744
+      },
+      "writtenOn": "2017-11-07T22:14:53Z",
+      "side": 1,
+      "message": "Does tooltip work on Android?",
+      "range": {
+        "startLine": 100,
+        "startChar": 73,
+        "endLine": 100,
+        "endChar": 80
+      },
+      "revId": "fc71ffb3b200d3fa06367f288e57e94ceede5c9a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
