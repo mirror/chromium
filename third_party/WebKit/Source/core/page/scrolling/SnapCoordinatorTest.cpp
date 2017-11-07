@@ -74,6 +74,38 @@ class SnapCoordinatorTest
     return 0U;
   }
 
+  void SetUpSingleSnapArea() {
+    SetHTML(R"HTML(
+      <style>
+      #scroller {
+        width: 140px;
+        height: 120px;
+        padding: 0px;
+        scroll-snap-type: both mandatory;
+        scroll-padding: 10px;
+        overflow: scroll;
+      }
+      #container {
+        margin: 0px;
+        padding: 0px;
+        width: 500px;
+      }
+      #area {
+        margin: 200px;
+        width: 100px;
+        height: 100px;
+        scroll-snap-margin: 8px;
+      }
+      </style>
+      <div id="scroller">
+        <div id="container">
+          <div id="area"></div>
+        </div>
+      </div>
+      )HTML");
+    GetDocument().UpdateStyleAndLayout();
+  }
+
   std::unique_ptr<DummyPageHolder> page_holder_;
 };
 
@@ -264,6 +296,84 @@ TEST_P(SnapCoordinatorTest,
   // should capture snap points defined on it as opposed to layout view.
   Element& body = *GetDocument().body();
   EXPECT_EQ(2U, SizeOfSnapAreas(body));
+}
+
+TEST_P(SnapCoordinatorTest, StartAlignmentCalculation) {
+  SetUpSingleSnapArea();
+  Element* snap_element = GetDocument().getElementById("area");
+  snap_element->setAttribute(styleAttr, "scroll-snap-align: start;");
+  GetDocument().UpdateStyleAndLayout();
+  Element* scroller = GetDocument().getElementById("scroller");
+  SnapCoordinator* snap_coordinator = GetDocument().GetSnapCoordinator();
+  SnapContainerData container =
+      snap_coordinator->GetSnapContainerData(scroller->GetLayoutBox());
+  ASSERT_EQ(ScrollSnapType(false, kSnapAxisBoth, SnapStrictness::kMandatory),
+            container.scroll_snap_type);
+  ASSERT_EQ(360, container.scrollable_x);
+  ASSERT_EQ(380, container.scrollable_y);
+  ASSERT_EQ(1U, container.snap_area_list.size());
+  SnapAreaData area = container.snap_area_list[0];
+  ASSERT_EQ(182, area.snap_start_x);
+  ASSERT_EQ(182, area.snap_start_y);
+  ASSERT_EQ(182, area.snap_end_x);
+  ASSERT_EQ(182, area.snap_end_y);
+  ASSERT_EQ(70, area.visible_start_x);
+  ASSERT_EQ(90, area.visible_start_y);
+  ASSERT_EQ(290, area.visible_end_x);
+  ASSERT_EQ(290, area.visible_end_y);
+  ASSERT_EQ(false, area.must_snap);
+}
+
+TEST_P(SnapCoordinatorTest, CenterAlignmentCalculation) {
+  SetUpSingleSnapArea();
+  Element* snap_element = GetDocument().getElementById("area");
+  snap_element->setAttribute(styleAttr, "scroll-snap-align: center;");
+  GetDocument().UpdateStyleAndLayout();
+  Element* scroller = GetDocument().getElementById("scroller");
+  SnapCoordinator* snap_coordinator = GetDocument().GetSnapCoordinator();
+  SnapContainerData container =
+      snap_coordinator->GetSnapContainerData(scroller->GetLayoutBox());
+  ASSERT_EQ(ScrollSnapType(false, kSnapAxisBoth, SnapStrictness::kMandatory),
+            container.scroll_snap_type);
+  ASSERT_EQ(360, container.scrollable_x);
+  ASSERT_EQ(380, container.scrollable_y);
+  ASSERT_EQ(1U, container.snap_area_list.size());
+  SnapAreaData area = container.snap_area_list[0];
+  ASSERT_EQ(180, area.snap_start_x);
+  ASSERT_EQ(190, area.snap_start_y);
+  ASSERT_EQ(180, area.snap_end_x);
+  ASSERT_EQ(190, area.snap_end_y);
+  ASSERT_EQ(70, area.visible_start_x);
+  ASSERT_EQ(90, area.visible_start_y);
+  ASSERT_EQ(290, area.visible_end_x);
+  ASSERT_EQ(290, area.visible_end_y);
+  ASSERT_EQ(false, area.must_snap);
+}
+
+TEST_P(SnapCoordinatorTest, EndAlignmentCalculation) {
+  SetUpSingleSnapArea();
+  Element* snap_element = GetDocument().getElementById("area");
+  snap_element->setAttribute(styleAttr, "scroll-snap-align: end;");
+  GetDocument().UpdateStyleAndLayout();
+  Element* scroller = GetDocument().getElementById("scroller");
+  SnapCoordinator* snap_coordinator = GetDocument().GetSnapCoordinator();
+  SnapContainerData container =
+      snap_coordinator->GetSnapContainerData(scroller->GetLayoutBox());
+  ASSERT_EQ(ScrollSnapType(false, kSnapAxisBoth, SnapStrictness::kMandatory),
+            container.scroll_snap_type);
+  ASSERT_EQ(360, container.scrollable_x);
+  ASSERT_EQ(380, container.scrollable_y);
+  ASSERT_EQ(1U, container.snap_area_list.size());
+  SnapAreaData area = container.snap_area_list[0];
+  ASSERT_EQ(178, area.snap_start_x);
+  ASSERT_EQ(198, area.snap_start_y);
+  ASSERT_EQ(178, area.snap_end_x);
+  ASSERT_EQ(198, area.snap_end_y);
+  ASSERT_EQ(70, area.visible_start_x);
+  ASSERT_EQ(90, area.visible_start_y);
+  ASSERT_EQ(290, area.visible_end_x);
+  ASSERT_EQ(290, area.visible_end_y);
+  ASSERT_EQ(false, area.must_snap);
 }
 
 }  // namespace
