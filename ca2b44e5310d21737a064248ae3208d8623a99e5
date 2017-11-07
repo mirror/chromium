@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "b55bd61e_8ca83e77",
+        "filename": "third_party/WebKit/Source/modules/cachestorage/CacheStorageError.cpp",
+        "patchSetId": 8
+      },
+      "lineNbr": 10,
+      "author": {
+        "id": 1115916
+      },
+      "writtenOn": "2017-11-07T01:23:50Z",
+      "side": 1,
+      "message": "Shall we use .mojom-blink.h?\n\nThe same comment for other files in this CL.",
+      "revId": "ca2b44e5310d21737a064248ae3208d8623a99e5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
