@@ -1,0 +1,73 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "067f3cd8_c2a1a41f",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/metrics/WebApkUma.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 72,
+      "author": {
+        "id": 1002410
+      },
+      "writtenOn": "2017-11-07T22:56:56Z",
+      "side": 1,
+      "message": "nit: I\u0027d name this \"COUNT\" rather than \"MAX\", as \"max\" is more typically used as an alias for the last member of an enum, whereas \"count\" is more typically used to count the number of elements in an enum.",
+      "range": {
+        "startLine": 72,
+        "startChar": 40,
+        "endLine": 72,
+        "endChar": 43
+      },
+      "revId": "0fc36d2aa44e62df36abbccf3d38557c7904e052",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a564eec5_c8146141",
+        "filename": "tools/metrics/histograms/enums.xml",
+        "patchSetId": 5
+      },
+      "lineNbr": 41782,
+      "author": {
+        "id": 1002410
+      },
+      "writtenOn": "2017-11-07T22:56:56Z",
+      "side": 1,
+      "message": "Optional: I\u0027d write these using regular sentence casing, i.e. \"Other\", \"Location\", etc.",
+      "range": {
+        "startLine": 41782,
+        "startChar": 24,
+        "endLine": 41782,
+        "endChar": 29
+      },
+      "revId": "0fc36d2aa44e62df36abbccf3d38557c7904e052",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d0cf5161_b8158153",
+        "filename": "tools/metrics/histograms/histograms.xml",
+        "patchSetId": 5
+      },
+      "lineNbr": 91932,
+      "author": {
+        "id": 1002410
+      },
+      "writtenOn": "2017-11-07T22:56:56Z",
+      "side": 1,
+      "message": "The name for this histogram is \"DoublePrompt\", but the description doesn\u0027t really mention any doubled prompts.  Could you please clarify in the description what the connection is?",
+      "range": {
+        "startLine": 91931,
+        "startChar": 0,
+        "endLine": 91932,
+        "endChar": 68
+      },
+      "revId": "0fc36d2aa44e62df36abbccf3d38557c7904e052",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
