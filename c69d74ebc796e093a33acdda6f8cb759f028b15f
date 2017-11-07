@@ -1,0 +1,96 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "ffbacb40_3e3ef4e4",
+        "filename": "chrome/browser/chromeos/file_system_provider/service_unittest.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 218,
+      "author": {
+        "id": 1002249
+      },
+      "writtenOn": "2017-11-07T06:36:57Z",
+      "side": 1,
+      "message": "No need for statics. See comment below.",
+      "range": {
+        "startLine": 218,
+        "startChar": 8,
+        "endLine": 218,
+        "endChar": 9
+      },
+      "revId": "c69d74ebc796e093a33acdda6f8cb759f028b15f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "28151e1f_2aa2386f",
+        "filename": "chrome/browser/chromeos/file_system_provider/service_unittest.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 257,
+      "author": {
+        "id": 1002249
+      },
+      "writtenOn": "2017-11-07T06:36:57Z",
+      "side": 1,
+      "message": "This works, but we can do cleaner.\n\nRegisterFileSystemFactory(\n  kCustom...,\n  base::Bind(\u0026FileSystemProviderServiceTest::CreateCustomFakeFileSystem, base::Unretained(this))",
+      "range": {
+        "startLine": 257,
+        "startChar": 19,
+        "endLine": 257,
+        "endChar": 48
+      },
+      "revId": "c69d74ebc796e093a33acdda6f8cb759f028b15f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "25c8227d_65c30f2a",
+        "filename": "chrome/browser/chromeos/file_system_provider/service_unittest.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 263,
+      "author": {
+        "id": 1002249
+      },
+      "writtenOn": "2017-11-07T06:36:57Z",
+      "side": 1,
+      "message": "EXPECT_TRUE. Asserts should be only used if it doesn\u0027t make sense to continue the test (eg. it would crash).",
+      "range": {
+        "startLine": 263,
+        "startChar": 2,
+        "endLine": 263,
+        "endChar": 16
+      },
+      "revId": "c69d74ebc796e093a33acdda6f8cb759f028b15f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "d09d4d8f_872edbf0",
+        "filename": "chrome/browser/chromeos/file_system_provider/service_unittest.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 265,
+      "author": {
+        "id": 1002249
+      },
+      "writtenOn": "2017-11-07T06:36:57Z",
+      "side": 1,
+      "message": "Same here and in other places.",
+      "range": {
+        "startLine": 265,
+        "startChar": 2,
+        "endLine": 265,
+        "endChar": 11
+      },
+      "revId": "c69d74ebc796e093a33acdda6f8cb759f028b15f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    }
+  ]
+}
