@@ -169,6 +169,30 @@
     },
     {
       "key": {
+        "uuid": "1a5fe46c_8696d91b",
+        "filename": "third_party/WebKit/Source/controller/BlinkInitializer.cpp",
+        "patchSetId": 3
+      },
+      "lineNbr": 121,
+      "author": {
+        "id": 1115863
+      },
+      "writtenOn": "2017-11-07T02:34:15Z",
+      "side": 1,
+      "message": "Just to clarify: I added CHECK(IsMainThread()) locally and confirmed that this function is running on the main thread.",
+      "parentUuid": "dc735dcc_e0f05eaa",
+      "range": {
+        "startLine": 121,
+        "startChar": 24,
+        "endLine": 121,
+        "endChar": 39
+      },
+      "revId": "27a5fa31c2e768793895e229143c6dcecb0ed318",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "9b8f7f13_51a36f97",
         "filename": "third_party/WebKit/Source/controller/OomInterventionImplTest.cpp",
         "patchSetId": 3

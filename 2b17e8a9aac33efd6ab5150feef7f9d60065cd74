@@ -16,6 +16,24 @@
       "revId": "2b17e8a9aac33efd6ab5150feef7f9d60065cd74",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "63ca51a3_ddd09445",
+        "filename": "third_party/WebKit/Source/controller/BlinkInitializer.cpp",
+        "patchSetId": 8
+      },
+      "lineNbr": 125,
+      "author": {
+        "id": 1115863
+      },
+      "writtenOn": "2017-11-07T02:34:15Z",
+      "side": 1,
+      "message": "Thanks for taking time and sorry for the confusion. Yes, this is running on the main thread now. In PS#3, I used WTF::Bind() and it was running on the IO thread.",
+      "parentUuid": "add0a280_e34d46a8",
+      "revId": "2b17e8a9aac33efd6ab5150feef7f9d60065cd74",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
