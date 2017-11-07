@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "b481b568_321d5ce9",
+        "filename": "chrome/browser/ui/app_list/arc/arc_vpn_provider_manager.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 88,
+      "author": {
+        "id": 1146976
+      },
+      "writtenOn": "2017-11-07T17:42:27Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "d96440ff_61923304",
+      "range": {
+        "startLine": 88,
+        "startChar": 33,
+        "endLine": 88,
+        "endChar": 45
+      },
+      "revId": "04afe19897a331fb5d400be935c5e9968c073e21",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "f9364ae8_cd09af5b",
         "filename": "chrome/browser/ui/app_list/arc/arc_vpn_provider_manager.h",
         "patchSetId": 9
@@ -39,6 +63,24 @@
       "revId": "04afe19897a331fb5d400be935c5e9968c073e21",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a6d21791_cc9022f6",
+        "filename": "chrome/browser/ui/app_list/arc/arc_vpn_provider_manager.h",
+        "patchSetId": 9
+      },
+      "lineNbr": 26,
+      "author": {
+        "id": 1146976
+      },
+      "writtenOn": "2017-11-07T17:42:27Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "f9364ae8_cd09af5b",
+      "revId": "04afe19897a331fb5d400be935c5e9968c073e21",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
