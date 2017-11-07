@@ -37,6 +37,24 @@
     },
     {
       "key": {
+        "uuid": "9bb84b70_e49bb46d",
+        "filename": "chrome/browser/resources/print_preview/new/header.html",
+        "patchSetId": 5
+      },
+      "lineNbr": 69,
+      "author": {
+        "id": 1182404
+      },
+      "writtenOn": "2017-11-07T03:06:44Z",
+      "side": 1,
+      "message": "Added 2 different computed properties, to allow print button to also be disabled when appropriate.",
+      "parentUuid": "f9a958fb_5ae3bfcd",
+      "revId": "aa51167716bba580e9c16ef81a592ca8af750dc4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "3a754929_360e1a90",
         "filename": "chrome/browser/resources/print_preview/new/layout_settings.html",
         "patchSetId": 5
@@ -57,6 +75,30 @@
       "revId": "aa51167716bba580e9c16ef81a592ca8af750dc4",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "01292b14_492b95b6",
+        "filename": "chrome/browser/resources/print_preview/new/layout_settings.html",
+        "patchSetId": 5
+      },
+      "lineNbr": 18,
+      "author": {
+        "id": 1182404
+      },
+      "writtenOn": "2017-11-07T03:06:44Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "3a754929_360e1a90",
+      "range": {
+        "startLine": 18,
+        "startChar": 29,
+        "endLine": 18,
+        "endChar": 41
+      },
+      "revId": "aa51167716bba580e9c16ef81a592ca8af750dc4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
