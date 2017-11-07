@@ -1418,6 +1418,8 @@ source_set("chromeos") {
     "reset/metrics.h",
     "resource_reporter/resource_reporter.cc",
     "resource_reporter/resource_reporter.h",
+    "samba_client/samba_file_system.cc",
+    "samba_client/samba_file_system.h",
     "session_length_limiter.cc",
     "session_length_limiter.h",
     "set_time_dialog.cc",
