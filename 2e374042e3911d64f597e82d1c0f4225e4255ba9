@@ -37,6 +37,24 @@
     },
     {
       "key": {
+        "uuid": "a3179190_6ba38ef5",
+        "filename": "third_party/WebKit/Source/platform/graphics/VideoFrameSubmitter.cpp",
+        "patchSetId": 24
+      },
+      "lineNbr": 27,
+      "author": {
+        "id": 1130490
+      },
+      "writtenOn": "2017-11-07T21:24:13Z",
+      "side": 1,
+      "message": "oh, i think that i misread the constructors in Binding.  the one you\u0027re using doesn\u0027t remember the thread.  thanks for explaining!",
+      "parentUuid": "22f6d0b2_287e8aaa",
+      "revId": "2e374042e3911d64f597e82d1c0f4225e4255ba9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "d383a573_58e20716",
         "filename": "third_party/WebKit/Source/platform/graphics/VideoFrameSubmitter.h",
         "patchSetId": 24
