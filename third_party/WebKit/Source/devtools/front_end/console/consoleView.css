@@ -58,6 +58,7 @@
     flex: 1 1;
     padding: 2px 0;
     overflow-y: auto;
+    overflow-x: hidden;
     word-wrap: break-word;
     -webkit-user-select: text;
     transform: translateZ(0);
@@ -316,6 +317,8 @@
     white-space: normal;
     word-wrap: break-word;
     font-style: italic;
+    overflow: hidden;
+    text-overflow: ellipsis;
 }
 
 .console-object-preview .name {
@@ -384,6 +387,7 @@
     vertical-align: baseline;
     color: inherit;
     display: inline-block;
+    max-width: 100%;
 }
 
 .console-message-stack-trace-toggle {
