@@ -52,6 +52,24 @@
       "revId": "7761f64552ed61aec5e6a75b20ff90be57ac7324",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "653357c7_1b26404d",
+        "filename": "third_party/WebKit/Source/core/workers/WorkletGlobalScope.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 45,
+      "author": {
+        "id": 1115976
+      },
+      "writtenOn": "2017-11-07T05:25:38Z",
+      "side": 1,
+      "message": "I might understand what happens. ModulatorImpl::GetReferrerPolicy() is never called for worklets in ModuleScriptLoader::Fetch() because ModuleScriptFetchRequest.GetReferrer() is null[1]. [2] says,\n\n  \"Referrer is set only for internal module script fetch algorithms triggered from ModuleTreeLinker to fetch descendant module scripts.\"\n\nTherefore, the default ReferrerPolicy is passed from the Worklet to the Document. The policy is eventually overridden maybe by FrameFetchContext::GetReferrerPolicy() in BaseFetchContext::AddAdditionalRequestHeaders()[3]. This is the owner Document\u0027s referrer policy, so the current impl can pass the tests.\n\n[1] https://chromium.googlesource.com/chromium/src/+/4c9259938599dbc41ba3d965876e35c59f483476/third_party/WebKit/Source/core/loader/modulescript/ModuleScriptLoader.cpp#137\n[2] https://chromium.googlesource.com/chromium/src/+/4c9259938599dbc41ba3d965876e35c59f483476/third_party/WebKit/Source/core/loader/modulescript/ModuleScriptFetchRequest.h#34\n[3] https://chromium.googlesource.com/chromium/src/+/46b158a614a705f542576bc4da4c9e45cca1e0e6/third_party/WebKit/Source/core/loader/BaseFetchContext.cpp#24",
+      "parentUuid": "726d7539_b7489e83",
+      "revId": "7761f64552ed61aec5e6a75b20ff90be57ac7324",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
