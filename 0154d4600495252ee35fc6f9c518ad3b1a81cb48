@@ -1,0 +1,96 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "a6cd358e_bebe7cad",
+        "filename": "chrome/utility/importer/firefox_importer.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 351,
+      "author": {
+        "id": 1002410
+      },
+      "writtenOn": "2017-11-07T02:23:21Z",
+      "side": 1,
+      "message": "Please name this something more like \"Import.IncludesPasswords.Firefox\".",
+      "range": {
+        "startLine": 351,
+        "startChar": 64,
+        "endLine": 351,
+        "endChar": 0
+      },
+      "revId": "0154d4600495252ee35fc6f9c518ad3b1a81cb48",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "58bee64a_0950d791",
+        "filename": "chrome/utility/importer/firefox_importer.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 351,
+      "author": {
+        "id": 1002410
+      },
+      "writtenOn": "2017-11-07T02:23:21Z",
+      "side": 1,
+      "message": "Let\u0027s record a false case as well, so that it\u0027s clear how often the user is choosing to import passwords vs. not.  Without a baseline, it\u0027s hard to interpret just the \"true\" counts.",
+      "range": {
+        "startLine": 351,
+        "startChar": 0,
+        "endLine": 351,
+        "endChar": 64
+      },
+      "revId": "0154d4600495252ee35fc6f9c518ad3b1a81cb48",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "74da07ad_dd9bd02e",
+        "filename": "chrome/utility/importer/firefox_importer.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 379,
+      "author": {
+        "id": 1002410
+      },
+      "writtenOn": "2017-11-07T02:23:21Z",
+      "side": 1,
+      "message": "Please similarly adjust this name.",
+      "range": {
+        "startLine": 379,
+        "startChar": 31,
+        "endLine": 379,
+        "endChar": 74
+      },
+      "revId": "0154d4600495252ee35fc6f9c518ad3b1a81cb48",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "51f5abb3_50e4a2be",
+        "filename": "tools/metrics/histograms/histograms.xml",
+        "patchSetId": 4
+      },
+      "lineNbr": 25137,
+      "author": {
+        "id": 1002410
+      },
+      "writtenOn": "2017-11-07T02:23:21Z",
+      "side": 1,
+      "message": "Is there a Chromium project member who could be listed as an additional owner for this histogram?  The owner is a contact point for questions about the histogram.  I hope that you choose to continue contributing to Chromium \u003d), but just in case you decide to move on to other projects, it would be good to list an additional point of contact.  (Ditto for the other histogram.)",
+      "range": {
+        "startLine": 25137,
+        "startChar": 33,
+        "endLine": 25137,
+        "endChar": 0
+      },
+      "revId": "0154d4600495252ee35fc6f9c518ad3b1a81cb48",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
