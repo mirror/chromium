@@ -92,14 +92,19 @@ void BackgroundProfilingTriggers::OnReceivedMemoryDump(
           proc->os_dump->private_footprint_kb > kRendererProcessMallocTriggerKb;
     }
 
-    if (trigger_report)
+    if (trigger_report) {
       TriggerMemoryReportForProcess(proc->pid);
+    }
   }
 }
 
 void BackgroundProfilingTriggers::TriggerMemoryReportForProcess(
     base::ProcessId pid) {
-  host_->RequestProcessReport(pid, "MEMLOG_BACKGROUND_TRIGGER");
+  content::BrowserThread::GetTaskRunnerForThread(content::BrowserThread::UI)
+      ->PostTask(FROM_HERE,
+                 base::BindOnce(&BackgroundProfilingTriggers::
+                                    TriggerMemoryReportForProcessOnUIThread,
+                                weak_ptr_factory_.GetWeakPtr(), pid));
 
   // Reset the timer to avoid uploading too many reports.
   timer_.Start(
@@ -107,6 +112,11 @@ void BackgroundProfilingTriggers::TriggerMemoryReportForProcess(
       base::TimeDelta::FromHours(kSecondReportRepeatingCheckMemoryDelayInHours),
       base::Bind(&BackgroundProfilingTriggers::PerformMemoryUsageChecks,
                  weak_ptr_factory_.GetWeakPtr()));
+}
+
+void BackgroundProfilingTriggers::TriggerMemoryReportForProcessOnUIThread(
+    base::ProcessId pid) {
+  host_->RequestProcessReport(pid, "MEMLOG_BACKGROUND_TRIGGER");
 }
 
 }  // namespace profiling

@@ -85,7 +85,7 @@ GlobalMemoryDumpPtr GetLargeMemoryDump() {
 
 }  // namespace.
 
-TEST(BackgroungProfilingTriggersTest, OnReceivedMemoryDump) {
+TEST(BackgroundProfilingTriggersTest, OnReceivedMemoryDump) {
   TestBackgroundProfilingTriggers triggers;
 
   // Validate triggers for browser processes only.
