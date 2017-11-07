@@ -22,6 +22,30 @@
       "revId": "a26befe32c1aea1ce4e16cbcdd061b95114658cd",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "01ad3798_209098b6",
+        "filename": "services/service_manager/sandbox/win/sandbox_win.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 763,
+      "author": {
+        "id": 1001187
+      },
+      "writtenOn": "2017-11-07T14:40:51Z",
+      "side": 1,
+      "message": "The switch will also be affecting functionality in the chrome_elf and the browser process, independent of this feature. The feature is actually a small part of the entire \"third party blocking\" logic, so we wanted to be able to disable it independently in case it behaves badly on some systems.",
+      "parentUuid": "31781d97_ada75a33",
+      "range": {
+        "startLine": 763,
+        "startChar": 10,
+        "endLine": 763,
+        "endChar": 59
+      },
+      "revId": "a26befe32c1aea1ce4e16cbcdd061b95114658cd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
