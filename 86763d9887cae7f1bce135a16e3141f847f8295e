@@ -2,6 +2,63 @@
   "comments": [
     {
       "key": {
+        "uuid": "c0fa7902_1de0aecc",
+        "filename": "media/blink/key_system_config_selector.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 871,
+      "author": {
+        "id": 1000158
+      },
+      "writtenOn": "2017-11-07T01:00:32Z",
+      "side": 1,
+      "message": "Unrelated: I wonder if there is value in providing this string rather than just kUnsupportedKeySystemOrConfigMessage. Non-ASCII Key Systems _are_ unsupported. And it\u0027s unlikely anyone is ever going to provide one.",
+      "range": {
+        "startLine": 871,
+        "startChar": 25,
+        "endLine": 871,
+        "endChar": 62
+      },
+      "revId": "86763d9887cae7f1bce135a16e3141f847f8295e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9b3c4657_ebeca87b",
+        "filename": "media/blink/key_system_config_selector.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 887,
+      "author": {
+        "id": 1000158
+      },
+      "writtenOn": "2017-11-07T01:00:32Z",
+      "side": 1,
+      "message": "If you check the bool first, it will almost always short-circuit the string comparison.",
+      "revId": "86763d9887cae7f1bce135a16e3141f847f8295e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1f8d14cc_a194d9f5",
+        "filename": "media/blink/key_system_config_selector.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 48,
+      "author": {
+        "id": 1000158
+      },
+      "writtenOn": "2017-11-07T01:00:32Z",
+      "side": 1,
+      "message": "It\u0027s strange to pass a bool for the whole feature here, but I understand why.\n\nHowever, maybe this should be passed to the constructor (like MediaPermission is).",
+      "revId": "86763d9887cae7f1bce135a16e3141f847f8295e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "d2a82da7_6fc62db2",
         "filename": "media/blink/key_system_config_selector_unittest.cc",
         "patchSetId": 3
@@ -42,6 +99,69 @@
         "endLine": 404,
         "endChar": 10
       },
+      "revId": "86763d9887cae7f1bce135a16e3141f847f8295e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "09a16233_137c78c9",
+        "filename": "media/blink/key_system_config_selector_unittest.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 404,
+      "author": {
+        "id": 1000158
+      },
+      "writtenOn": "2017-11-07T01:00:32Z",
+      "side": 1,
+      "message": "This is pushing another configuration onto the same object, which shouldn\u0027t be necessary.\n\nHowever, it would be better just to separate these two tests into _ClearKey and _Supported tests.",
+      "range": {
+        "startLine": 404,
+        "startChar": 2,
+        "endLine": 404,
+        "endChar": 10
+      },
+      "revId": "86763d9887cae7f1bce135a16e3141f847f8295e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "51f1df2d_d1c22605",
+        "filename": "third_party/WebKit/Source/modules/encryptedmedia/NavigatorRequestMediaKeySystemAccess.cpp",
+        "patchSetId": 3
+      },
+      "lineNbr": 210,
+      "author": {
+        "id": 1000158
+      },
+      "writtenOn": "2017-11-07T01:00:32Z",
+      "side": 1,
+      "message": "It looks like the setting is tracked in a Blink pref, but it is really a Chrome content setting, which makes more sense on the Chromium side. Is there a reason it is a Blink pref or was this just required because of where the logic had been?\n\nIf there is not a reason, ISTM that we should just get the setting value in WebEncryptedMediaClientImpl, where it is used. It seems like MediaFactory::EncryptedMediaClient(), which creates the WebEncryptedMediaClientImpl should be able to get to the content settings. Alternatively, this setting could be exposed via MediaPermission, which is already provided to WebEncryptedMediaClientImpl.",
+      "range": {
+        "startLine": 210,
+        "startChar": 34,
+        "endLine": 210,
+        "endChar": 58
+      },
+      "revId": "86763d9887cae7f1bce135a16e3141f847f8295e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "13efc686_7a5b8c39",
+        "filename": "third_party/WebKit/Source/platform/EncryptedMediaRequest.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 29,
+      "author": {
+        "id": 1000158
+      },
+      "writtenOn": "2017-11-07T01:00:32Z",
+      "side": 1,
+      "message": "It seems weird to be passing a content setting from Blink to Chromium in a request object. See above.",
       "revId": "86763d9887cae7f1bce135a16e3141f847f8295e",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
