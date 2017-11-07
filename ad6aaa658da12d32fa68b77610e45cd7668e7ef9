@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "5c484b1c_476ee343",
+        "filename": "chrome/android/javatests/src/org/chromium/chrome/browser/infobar/InfoBarAppearanceTest.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 49,
+      "author": {
+        "id": 1123275
+      },
+      "writtenOn": "2017-11-07T15:16:48Z",
+      "side": 1,
+      "message": "TODO revert unnecessary changes here",
+      "range": {
+        "startLine": 49,
+        "startChar": 11,
+        "endLine": 49,
+        "endChar": 19
+      },
+      "revId": "ad6aaa658da12d32fa68b77610e45cd7668e7ef9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
