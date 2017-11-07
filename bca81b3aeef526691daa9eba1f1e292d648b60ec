@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "1087c2bb_07cad91f",
+        "filename": "third_party/WebKit/Source/platform/graphics/gpu/ImageLayerBridge.cpp",
+        "patchSetId": 4
+      },
+      "lineNbr": 87,
+      "author": {
+        "id": 1000887
+      },
+      "writtenOn": "2017-11-07T21:09:34Z",
+      "side": 1,
+      "message": "Is this a state that is more than transient and would resolve shortly anyway? It\u0027s less code if we don\u0027t do anything for it. But if it\u0027s that we can have gpu resources forever while compositor isn\u0027t using gpu (ie the image generator isnt checking) then we\u0027d need to handle it..",
+      "parentUuid": "0d3d00c3_5d67f77d",
+      "range": {
+        "startLine": 87,
+        "startChar": 26,
+        "endLine": 87,
+        "endChar": 35
+      },
+      "revId": "bca81b3aeef526691daa9eba1f1e292d648b60ec",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "5082a5a3_463f32ba",
         "filename": "third_party/WebKit/Source/platform/graphics/gpu/ImageLayerBridge.cpp",
         "patchSetId": 4
