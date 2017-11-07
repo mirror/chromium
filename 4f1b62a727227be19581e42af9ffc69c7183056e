@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "a871d1f3_f02c51f8",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/partnerbookmarks/PartnerBookmarksReader.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 56,
+      "author": {
+        "id": 1144344
+      },
+      "writtenOn": "2017-11-07T21:50:09Z",
+      "side": 1,
+      "message": "Do we need the URL to be passed back so that we can track which one failed?",
+      "range": {
+        "startLine": 56,
+        "startChar": 13,
+        "endLine": 56,
+        "endChar": 29
+      },
+      "revId": "4f1b62a727227be19581e42af9ffc69c7183056e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ef67930f_aa7b823c",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/partnerbookmarks/PartnerBookmarksReader.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 112,
+      "author": {
+        "id": 1144344
+      },
+      "writtenOn": "2017-11-07T21:50:09Z",
+      "side": 1,
+      "message": "false?",
+      "range": {
+        "startLine": 112,
+        "startChar": 46,
+        "endLine": 112,
+        "endChar": 50
+      },
+      "revId": "4f1b62a727227be19581e42af9ffc69c7183056e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
