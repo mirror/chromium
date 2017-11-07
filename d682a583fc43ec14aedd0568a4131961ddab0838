@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "762b5a3c_8b705952",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 2
+      },
+      "lineNbr": 19,
+      "author": {
+        "id": 1212411
+      },
+      "writtenOn": "2017-11-07T23:19:52Z",
+      "side": 1,
+      "message": "Sorry for the confusion, it is not straightforward. Post task to do\n\nCastSocketService::RemoveSocket(). It removes std::unique_ptr\u003cCastSocket\u003e from |sockets_| and returns the unique_ptr. Return value is ignored, unique_ptr is released and invokes CastSocketImpl::~CastSocketImpl().",
+      "parentUuid": "3386d841_674ca2e6",
+      "range": {
+        "startLine": 17,
+        "startChar": 47,
+        "endLine": 19,
+        "endChar": 18
+      },
+      "revId": "d682a583fc43ec14aedd0568a4131961ddab0838",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "8c18fa81_4ef69a83",
         "filename": "chrome/browser/media/router/discovery/mdns/cast_media_sink_service_impl.cc",
         "patchSetId": 2
@@ -36,6 +60,30 @@
       "writtenOn": "2017-11-07T18:33:56Z",
       "side": 1,
       "message": "So with this change any task that is submitted as part of this one will now be rejected?  Does some kind of error get logged in that case, or would it be a silent rejection?",
+      "range": {
+        "startLine": 305,
+        "startChar": 36,
+        "endLine": 305,
+        "endChar": 0
+      },
+      "revId": "d682a583fc43ec14aedd0568a4131961ddab0838",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3a4f6203_0957a755",
+        "filename": "chrome/browser/media/router/discovery/mdns/cast_media_sink_service_impl.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 305,
+      "author": {
+        "id": 1212411
+      },
+      "writtenOn": "2017-11-07T23:19:52Z",
+      "side": 1,
+      "message": "(I am not an expert on task runner...) it seems wont affect tasks posted inside CastSocketService::RemoveSocket(). Just affect when CastSocketService::RemoveSocket() will be executed.\n\nReading the comments for sequenced task runner, current task can post 1. a nestable task; 2. a non nestable task. \n\nFor 1. nestable task, after posting, execution of current task (e.g. CastMediaSinkServiceImpl::OnError() function and other functions) can be suspended, and nestable task (CastSocketService::RemoveSocket) might be executed before current task finishes.\n\ncurrent task (part 1)\nnestable task\ncurrent task (part 2)\n\nFor 2. non nestable task, after posting, execution of current task cannot be suspended. Non nestable task must be executed after current task.\n\ncurrent task\nnestable task",
+      "parentUuid": "8c18fa81_4ef69a83",
       "range": {
         "startLine": 305,
         "startChar": 36,
