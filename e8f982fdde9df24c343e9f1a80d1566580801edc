@@ -1,0 +1,153 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "f3a82c50_2f77b601",
+        "filename": "chrome/browser/feature_engagement/feature_tracker.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 106,
+      "author": {
+        "id": 1002237
+      },
+      "writtenOn": "2017-11-07T22:54:16Z",
+      "side": 1,
+      "message": "Is this timestamp since epoch on all platforms?",
+      "range": {
+        "startLine": 106,
+        "startChar": 41,
+        "endLine": 106,
+        "endChar": 59
+      },
+      "revId": "e8f982fdde9df24c343e9f1a80d1566580801edc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a2e524be_df330c92",
+        "filename": "chrome/browser/feature_engagement/feature_tracker.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 114,
+      "author": {
+        "id": 1002237
+      },
+      "writtenOn": "2017-11-07T22:54:16Z",
+      "side": 1,
+      "message": "Should this be a const?",
+      "revId": "e8f982fdde9df24c343e9f1a80d1566580801edc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "46c610e5_e630528a",
+        "filename": "chrome/browser/feature_engagement/feature_tracker.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 69,
+      "author": {
+        "id": 1002237
+      },
+      "writtenOn": "2017-11-07T22:54:16Z",
+      "side": 1,
+      "message": "Technically, this would typically be when the configuration was sent for review? Or if the timestamp is changed just before submit, I guess it\u0027s at the time of the submit. But locally, it\u0027s not necessarily the same timestamp as when the feature was enabled, which would be whenever we\u0027re read a new config and restarted chrome.",
+      "range": {
+        "startLine": 69,
+        "startChar": 30,
+        "endLine": 69,
+        "endChar": 61
+      },
+      "revId": "e8f982fdde9df24c343e9f1a80d1566580801edc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "07eb4237_d696951a",
+        "filename": "chrome/browser/feature_engagement/feature_tracker_unittest.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 265,
+      "author": {
+        "id": 1002237
+      },
+      "writtenOn": "2017-11-07T22:54:16Z",
+      "side": 1,
+      "message": "Nit: first run sentinel",
+      "range": {
+        "startLine": 265,
+        "startChar": 57,
+        "endLine": 265,
+        "endChar": 71
+      },
+      "revId": "e8f982fdde9df24c343e9f1a80d1566580801edc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5d8a6efb_5a8502c9",
+        "filename": "chrome/browser/feature_engagement/feature_tracker_unittest.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 268,
+      "author": {
+        "id": 1002237
+      },
+      "writtenOn": "2017-11-07T22:54:16Z",
+      "side": 1,
+      "message": "Nit: first run sentinel",
+      "range": {
+        "startLine": 268,
+        "startChar": 35,
+        "endLine": 268,
+        "endChar": 49
+      },
+      "revId": "e8f982fdde9df24c343e9f1a80d1566580801edc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "de928f0b_5fc6420d",
+        "filename": "chrome/browser/feature_engagement/feature_tracker_unittest.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 275,
+      "author": {
+        "id": 1002237
+      },
+      "writtenOn": "2017-11-07T22:54:16Z",
+      "side": 1,
+      "message": "So, this seems to be setting the timestamp of the first run sentinel creation as the chrome variations configuration. The sentinel creation time would be unique per user. How is this supposed to be set on the server side?",
+      "revId": "e8f982fdde9df24c343e9f1a80d1566580801edc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "256c715a_b0f54f7d",
+        "filename": "chrome/browser/feature_engagement/feature_tracker_unittest.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 292,
+      "author": {
+        "id": 1002237
+      },
+      "writtenOn": "2017-11-07T22:54:16Z",
+      "side": 1,
+      "message": "Isn\u0027t this setting this data in the chrome variations configuration? How is this related to the first run sentinel?",
+      "range": {
+        "startLine": 292,
+        "startChar": 2,
+        "endLine": 292,
+        "endChar": 54
+      },
+      "revId": "e8f982fdde9df24c343e9f1a80d1566580801edc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
