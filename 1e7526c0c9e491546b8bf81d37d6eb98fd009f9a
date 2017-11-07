@@ -184,6 +184,24 @@
     },
     {
       "key": {
+        "uuid": "a6a126b6_b70a65e2",
+        "filename": "components/consent_auditor/consent_auditor.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 56,
+      "author": {
+        "id": 1183839
+      },
+      "writtenOn": "2017-11-07T09:42:04Z",
+      "side": 1,
+      "message": "I think if we want to use this to decide whether to reconsent a user, we need either string+language or chrome version, probably both to identify incorrect strings? Otherwise it will be difficult to identify users that changed their device language after consent.",
+      "parentUuid": "ce90a6ce_68c30df7",
+      "revId": "1e7526c0c9e491546b8bf81d37d6eb98fd009f9a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "68de539f_d86bfec4",
         "filename": "components/consent_auditor/consent_auditor.h",
         "patchSetId": 6
