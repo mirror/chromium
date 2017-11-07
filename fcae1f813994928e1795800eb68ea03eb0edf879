@@ -46,6 +46,30 @@
       "revId": "fcae1f813994928e1795800eb68ea03eb0edf879",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "a30868da_f5d24c17",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/signin/SigninPromoUtil.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 57,
+      "author": {
+        "id": 1116043
+      },
+      "writtenOn": "2017-11-07T16:03:13Z",
+      "side": 1,
+      "message": "Definitely.  We should try to remove as much from ApiCompatibilityUtils and use the SupportLibrary instead.  At one time, WebView didn\u0027t use the support library so we couldn\u0027t depend on it except for in chrome/ but I don\u0027t believe that is the case anymore.",
+      "parentUuid": "a0a0d1f6_6f663a0c",
+      "range": {
+        "startLine": 57,
+        "startChar": 12,
+        "endLine": 57,
+        "endChar": 32
+      },
+      "revId": "fcae1f813994928e1795800eb68ea03eb0edf879",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
