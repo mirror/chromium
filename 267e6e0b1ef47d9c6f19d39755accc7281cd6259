@@ -1,0 +1,96 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "a1a6f88a_5ad7233d",
+        "filename": "chrome/browser/chromeos/certificate_provider/certificate_info.h",
+        "patchSetId": 18
+      },
+      "lineNbr": 27,
+      "author": {
+        "id": 1126309
+      },
+      "writtenOn": "2017-11-07T13:05:23Z",
+      "side": 1,
+      "message": "nit: Please add a comment describing the format of this field (it can be unclear what this uint16_t actually means).",
+      "range": {
+        "startLine": 27,
+        "startChar": 14,
+        "endLine": 27,
+        "endChar": 22
+      },
+      "revId": "267e6e0b1ef47d9c6f19d39755accc7281cd6259",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "bebe586a_2e616827",
+        "filename": "chrome/browser/chromeos/certificate_provider/certificate_provider_service.h",
+        "patchSetId": 18
+      },
+      "lineNbr": 88,
+      "author": {
+        "id": 1126309
+      },
+      "writtenOn": "2017-11-07T13:05:23Z",
+      "side": 1,
+      "message": "nit: Please document the format of this argument.",
+      "range": {
+        "startLine": 88,
+        "startChar": 8,
+        "endLine": 88,
+        "endChar": 26
+      },
+      "revId": "267e6e0b1ef47d9c6f19d39755accc7281cd6259",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8fa3db07_eda24ed4",
+        "filename": "chrome/browser/chromeos/certificate_provider/certificate_provider_service.h",
+        "patchSetId": 18
+      },
+      "lineNbr": 189,
+      "author": {
+        "id": 1126309
+      },
+      "writtenOn": "2017-11-07T13:05:23Z",
+      "side": 1,
+      "message": "nit: Please document the format of this argument.",
+      "range": {
+        "startLine": 189,
+        "startChar": 6,
+        "endLine": 189,
+        "endChar": 25
+      },
+      "revId": "267e6e0b1ef47d9c6f19d39755accc7281cd6259",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8322d3ff_99df2f15",
+        "filename": "net/ssl/ssl_private_key.h",
+        "patchSetId": 18
+      },
+      "lineNbr": 40,
+      "author": {
+        "id": 1126309
+      },
+      "writtenOn": "2017-11-07T13:05:23Z",
+      "side": 1,
+      "message": "I\u0027m not an OWNER of this code, but, just as an idea, maybe the GetAlgorithmPreferences() name would be a bit clearer?\n(and, if you decide to do this, the same for DefaultPreferences().)",
+      "range": {
+        "startLine": 40,
+        "startChar": 32,
+        "endLine": 40,
+        "endChar": 46
+      },
+      "revId": "267e6e0b1ef47d9c6f19d39755accc7281cd6259",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
