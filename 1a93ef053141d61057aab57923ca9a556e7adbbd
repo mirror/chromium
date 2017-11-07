@@ -16,6 +16,24 @@
       "revId": "1a93ef053141d61057aab57923ca9a556e7adbbd",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b4df134d_db95cf74",
+        "filename": "content/test/content_browser_test_test.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 100,
+      "author": {
+        "id": 1003006
+      },
+      "writtenOn": "2017-11-07T02:17:35Z",
+      "side": 1,
+      "message": "Sounds like a great idea.",
+      "parentUuid": "7f6698a3_efd9bacc",
+      "revId": "1a93ef053141d61057aab57923ca9a556e7adbbd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
