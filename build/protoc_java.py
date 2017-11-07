@@ -33,6 +33,7 @@ def main(argv):
       help="Path to output directory for java files.")
   parser.add_option("--srcjar", help="Path to output srcjar.")
   parser.add_option("--stamp", help="File to touch on success.")
+  parser.add_option("--nano", help="Whether to generate nano protos.")
   options, args = parser.parse_args(argv)
 
   build_utils.CheckOptions(options, parser, ['protoc', 'proto_path'])
@@ -41,10 +42,14 @@ def main(argv):
     return 1
 
   with build_utils.TempDir() as temp_dir:
-    # Specify arguments to the generator.
-    generator_args = ['optional_field_style=reftypes',
-                      'store_unknown_fields=true']
-    out_arg = '--javanano_out=' + ','.join(generator_args) + ':' + temp_dir
+    if options.nano == "true":
+      # Specify arguments to the generator.
+      generator_args = ['optional_field_style=reftypes',
+                        'store_unknown_fields=true']
+      out_arg = '--javanano_out=' + ','.join(generator_args) + ':' + temp_dir
+    else:
+      generator_args = []
+      out_arg = '--java_out=' + ','.join(generator_args) + ':' + temp_dir
     # Generate Java files using protoc.
     build_utils.CheckOutput(
         [options.protoc, '--proto_path', options.proto_path, out_arg]
