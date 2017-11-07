@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "ece9a074_2e153297",
+        "filename": "third_party/WebKit/LayoutTests/FlagExpectations/enable-slimming-paint-v2",
+        "patchSetId": 5
+      },
+      "lineNbr": 1365,
+      "author": {
+        "id": 1002481
+      },
+      "writtenOn": "2017-11-07T06:13:59Z",
+      "side": 1,
+      "message": "Rebaseline for SPv2 in this CL?\nDoes SPv175 produce correct result with or without text failure? If it\u0027s the same situation as SPv2, rebaseline in this CL?",
+      "parentUuid": "9c5fd467_05e166d0",
+      "revId": "a9307ff3de5a8811a5d016bd4039aa2d49bbf10f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "24ed9ca3_36298212",
         "filename": "third_party/WebKit/LayoutTests/FlagExpectations/enable-slimming-paint-v2",
         "patchSetId": 5
@@ -30,6 +48,30 @@
       "writtenOn": "2017-10-28T01:02:16Z",
       "side": 1,
       "message": "Besides text failure, I also looked at the rendered result. It did introduce difference from SPv1 too.\nPreviously clip-path wouldn\u0027t force descendants to inherit the current in-flow clip, with this CL now they do. This is of the same nature as what we did with CSS filter and mask: https://cs.chromium.org/chromium/src/third_party/WebKit/Source/core/paint/PaintPropertyTreeBuilder.cpp?rcl\u003db2f8374043f52c891a6927b28b00a1b4dcc02249\u0026l\u003d713\n\nThe two tests are currently text-only, but IMO we should fix SPv1 to match with new behavior.",
+      "range": {
+        "startLine": 1366,
+        "startChar": 61,
+        "endLine": 1366,
+        "endChar": 62
+      },
+      "revId": "a9307ff3de5a8811a5d016bd4039aa2d49bbf10f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f56c1811_c9bd2d74",
+        "filename": "third_party/WebKit/LayoutTests/FlagExpectations/enable-slimming-paint-v2",
+        "patchSetId": 5
+      },
+      "lineNbr": 1366,
+      "author": {
+        "id": 1002481
+      },
+      "writtenOn": "2017-11-07T06:13:59Z",
+      "side": 1,
+      "message": "Ditto.",
+      "parentUuid": "24ed9ca3_36298212",
       "range": {
         "startLine": 1366,
         "startChar": 61,
