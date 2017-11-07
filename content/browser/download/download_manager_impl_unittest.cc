@@ -169,10 +169,12 @@ class MockDownloadItemFactory
       const std::string& mime_type,
       std::unique_ptr<DownloadRequestHandleInterface> request_handle,
       const net::NetLogWithSource& net_log) override;
+  void SetHasObserverCalls(bool observer_calls);
 
  private:
   std::map<uint32_t, MockDownloadItemImpl*> items_;
   DownloadItemImplDelegate item_delegate_;
+  bool has_observer_calls_;
 
   DISALLOW_COPY_AND_ASSIGN(MockDownloadItemFactory);
 };
@@ -260,6 +262,12 @@ DownloadItemImpl* MockDownloadItemFactory::CreateActiveItem(
   // the download.
   EXPECT_CALL(*result, MockStart(_, _));
 
+  // In the StartDownload case, expect the remove/add observer calls.
+  if (has_observer_calls_) {
+    EXPECT_CALL(*result, RemoveObserver(_));
+    EXPECT_CALL(*result, AddObserver(_));
+  }
+
   return result;
 }
 
@@ -280,6 +288,10 @@ DownloadItemImpl* MockDownloadItemFactory::CreateSavePageItem(
   items_[download_id] = result;
 
   return result;
+}
+
+void MockDownloadItemFactory::SetHasObserverCalls(bool has_observer_calls) {
+  has_observer_calls_ = has_observer_calls;
 }
 
 class MockDownloadFileFactory
@@ -509,6 +521,10 @@ class DownloadManagerTest : public testing::Test {
             base::Unretained(this)));
   }
 
+  void SetHasObserverCalls(bool has_observer_calls) {
+    mock_download_item_factory_->SetHasObserverCalls(has_observer_calls);
+  }
+
  protected:
   // Key test variable; we'll keep it available to sub-classes.
   std::unique_ptr<DownloadManagerImpl> download_manager_;
@@ -537,6 +553,8 @@ class DownloadManagerTest : public testing::Test {
 
 // Confirm the appropriate invocations occur when you start a download.
 TEST_F(DownloadManagerTest, StartDownload) {
+  SetHasObserverCalls(true);
+
   std::unique_ptr<DownloadCreateInfo> info(new DownloadCreateInfo);
   std::unique_ptr<ByteStreamReader> stream(new MockByteStreamReader);
   uint32_t local_id(5);  // Random value
@@ -566,6 +584,8 @@ TEST_F(DownloadManagerTest, StartDownload) {
   download_manager_->StartDownload(std::move(info), std::move(input_stream),
                                    DownloadUrlParameters::OnStartedCallback());
   EXPECT_TRUE(download_manager_->GetDownload(local_id));
+
+  SetHasObserverCalls(false);
 }
 
 // Confirm that calling DetermineDownloadTarget behaves properly if the delegate
