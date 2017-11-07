@@ -37,6 +37,24 @@
     },
     {
       "key": {
+        "uuid": "f06ae33c_10756a25",
+        "filename": "components/viz/service/frame_sinks/frame_sink_manager_impl.h",
+        "patchSetId": 35
+      },
+      "lineNbr": 219,
+      "author": {
+        "id": 1174470
+      },
+      "writtenOn": "2017-11-07T19:41:40Z",
+      "side": 1,
+      "message": "If there is no observer (non-chromeos), nothing is done and no memory is allocated.",
+      "parentUuid": "94ebb2e2_4cb611e9",
+      "revId": "3c5e4585f60201e0284ee7d7d54a58a14522fefe",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "386630ce_e3619fc1",
         "filename": "services/ui/ws/video_detector_impl.h",
         "patchSetId": 35
@@ -60,6 +78,30 @@
     },
     {
       "key": {
+        "uuid": "8eafce71_c18f93ac",
+        "filename": "services/ui/ws/video_detector_impl.h",
+        "patchSetId": 35
+      },
+      "lineNbr": 25,
+      "author": {
+        "id": 1174470
+      },
+      "writtenOn": "2017-11-07T19:41:40Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "386630ce_e3619fc1",
+      "range": {
+        "startLine": 25,
+        "startChar": 2,
+        "endLine": 25,
+        "endChar": 19
+      },
+      "revId": "3c5e4585f60201e0284ee7d7d54a58a14522fefe",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "fa50436d_1485fc01",
         "filename": "services/ui/ws/video_detector_impl.h",
         "patchSetId": 35
@@ -80,6 +122,30 @@
       "revId": "3c5e4585f60201e0284ee7d7d54a58a14522fefe",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "fd16f84a_66b53c89",
+        "filename": "services/ui/ws/video_detector_impl.h",
+        "patchSetId": 35
+      },
+      "lineNbr": 36,
+      "author": {
+        "id": 1174470
+      },
+      "writtenOn": "2017-11-07T19:41:40Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "fa50436d_1485fc01",
+      "range": {
+        "startLine": 36,
+        "startChar": 0,
+        "endLine": 36,
+        "endChar": 2
+      },
+      "revId": "3c5e4585f60201e0284ee7d7d54a58a14522fefe",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }

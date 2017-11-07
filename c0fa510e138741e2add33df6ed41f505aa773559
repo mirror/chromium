@@ -36,6 +36,24 @@
     },
     {
       "key": {
+        "uuid": "aea0c469_31dbe8eb",
+        "filename": "components/viz/service/frame_sinks/video_detector.cc",
+        "patchSetId": 33
+      },
+      "lineNbr": 22,
+      "author": {
+        "id": 1174470
+      },
+      "writtenOn": "2017-11-07T19:41:40Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "9af46f49_18975e4d",
+      "revId": "c0fa510e138741e2add33df6ed41f505aa773559",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "143d0941_227e9eb6",
         "filename": "components/viz/service/frame_sinks/video_detector.cc",
         "patchSetId": 33
@@ -59,6 +77,30 @@
     },
     {
       "key": {
+        "uuid": "ccb09961_a89df518",
+        "filename": "components/viz/service/frame_sinks/video_detector.cc",
+        "patchSetId": 33
+      },
+      "lineNbr": 42,
+      "author": {
+        "id": 1174470
+      },
+      "writtenOn": "2017-11-07T19:41:40Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "143d0941_227e9eb6",
+      "range": {
+        "startLine": 42,
+        "startChar": 16,
+        "endLine": 42,
+        "endChar": 65
+      },
+      "revId": "c0fa510e138741e2add33df6ed41f505aa773559",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "975af7e5_46bd1bc2",
         "filename": "components/viz/service/frame_sinks/video_detector.cc",
         "patchSetId": 33
@@ -73,6 +115,24 @@
       "revId": "c0fa510e138741e2add33df6ed41f505aa773559",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "92b04789_9de32d41",
+        "filename": "components/viz/service/frame_sinks/video_detector.cc",
+        "patchSetId": 33
+      },
+      "lineNbr": 63,
+      "author": {
+        "id": 1174470
+      },
+      "writtenOn": "2017-11-07T19:41:40Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "975af7e5_46bd1bc2",
+      "revId": "c0fa510e138741e2add33df6ed41f505aa773559",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -93,6 +153,24 @@
     },
     {
       "key": {
+        "uuid": "9a54b437_0dc8ce2c",
+        "filename": "components/viz/service/frame_sinks/video_detector.cc",
+        "patchSetId": 33
+      },
+      "lineNbr": 134,
+      "author": {
+        "id": 1174470
+      },
+      "writtenOn": "2017-11-07T19:41:40Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "b25dab4d_932b3341",
+      "revId": "c0fa510e138741e2add33df6ed41f505aa773559",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "47d95ac1_855aa140",
         "filename": "components/viz/service/frame_sinks/video_detector.h",
         "patchSetId": 33
@@ -107,6 +185,24 @@
       "revId": "c0fa510e138741e2add33df6ed41f505aa773559",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "574ff77b_4882c48a",
+        "filename": "components/viz/service/frame_sinks/video_detector.h",
+        "patchSetId": 33
+      },
+      "lineNbr": 45,
+      "author": {
+        "id": 1174470
+      },
+      "writtenOn": "2017-11-07T19:41:40Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "47d95ac1_855aa140",
+      "revId": "c0fa510e138741e2add33df6ed41f505aa773559",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -127,6 +223,24 @@
     },
     {
       "key": {
+        "uuid": "deaa662e_c4a72579",
+        "filename": "components/viz/service/frame_sinks/video_detector.h",
+        "patchSetId": 33
+      },
+      "lineNbr": 63,
+      "author": {
+        "id": 1174470
+      },
+      "writtenOn": "2017-11-07T19:41:40Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "40fa1d91_c69ff467",
+      "revId": "c0fa510e138741e2add33df6ed41f505aa773559",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "a751f502_ba72291b",
         "filename": "components/viz/service/frame_sinks/video_detector.h",
         "patchSetId": 33
@@ -141,6 +255,24 @@
       "revId": "c0fa510e138741e2add33df6ed41f505aa773559",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a16962aa_0599cfa2",
+        "filename": "components/viz/service/frame_sinks/video_detector.h",
+        "patchSetId": 33
+      },
+      "lineNbr": 71,
+      "author": {
+        "id": 1174470
+      },
+      "writtenOn": "2017-11-07T19:41:40Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "a751f502_ba72291b",
+      "revId": "c0fa510e138741e2add33df6ed41f505aa773559",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -161,6 +293,24 @@
     },
     {
       "key": {
+        "uuid": "7843247d_584c64dc",
+        "filename": "components/viz/service/frame_sinks/video_detector.h",
+        "patchSetId": 33
+      },
+      "lineNbr": 97,
+      "author": {
+        "id": 1174470
+      },
+      "writtenOn": "2017-11-07T19:41:40Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "41e51c8b_5828d2e4",
+      "revId": "c0fa510e138741e2add33df6ed41f505aa773559",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "90b35e68_50a89a32",
         "filename": "components/viz/service/frame_sinks/video_detector.h",
         "patchSetId": 33
@@ -175,6 +325,24 @@
       "revId": "c0fa510e138741e2add33df6ed41f505aa773559",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2a1f749f_3e71d0e2",
+        "filename": "components/viz/service/frame_sinks/video_detector.h",
+        "patchSetId": 33
+      },
+      "lineNbr": 98,
+      "author": {
+        "id": 1174470
+      },
+      "writtenOn": "2017-11-07T19:41:40Z",
+      "side": 1,
+      "message": "Oops... Now FrameSinkManagerImpl notifies VideoDetector when a FrameSinkId destroyed so it can destroy the entry in the map.",
+      "parentUuid": "90b35e68_50a89a32",
+      "revId": "c0fa510e138741e2add33df6ed41f505aa773559",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -201,6 +369,30 @@
     },
     {
       "key": {
+        "uuid": "07663da4_8dd136bd",
+        "filename": "components/viz/service/frame_sinks/video_detector_unittest.cc",
+        "patchSetId": 33
+      },
+      "lineNbr": 1,
+      "author": {
+        "id": 1174470
+      },
+      "writtenOn": "2017-11-07T19:41:40Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "22b19f72_63ce11fc",
+      "range": {
+        "startLine": 1,
+        "startChar": 13,
+        "endLine": 1,
+        "endChar": 16
+      },
+      "revId": "c0fa510e138741e2add33df6ed41f505aa773559",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "42d0217f_ff6c86f9",
         "filename": "components/viz/service/frame_sinks/video_detector_unittest.cc",
         "patchSetId": 33
@@ -215,6 +407,24 @@
       "revId": "c0fa510e138741e2add33df6ed41f505aa773559",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6923d06f_bba0fd23",
+        "filename": "components/viz/service/frame_sinks/video_detector_unittest.cc",
+        "patchSetId": 33
+      },
+      "lineNbr": 28,
+      "author": {
+        "id": 1174470
+      },
+      "writtenOn": "2017-11-07T19:41:40Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "42d0217f_ff6c86f9",
+      "revId": "c0fa510e138741e2add33df6ed41f505aa773559",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -235,6 +445,24 @@
     },
     {
       "key": {
+        "uuid": "03bb167d_9e0ba295",
+        "filename": "components/viz/service/frame_sinks/video_detector_unittest.cc",
+        "patchSetId": 33
+      },
+      "lineNbr": 74,
+      "author": {
+        "id": 1174470
+      },
+      "writtenOn": "2017-11-07T19:41:40Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "07a9eb6c_4e592174",
+      "revId": "c0fa510e138741e2add33df6ed41f505aa773559",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "50c9829f_ef1048ff",
         "filename": "components/viz/service/frame_sinks/video_detector_unittest.cc",
         "patchSetId": 33
@@ -249,6 +477,24 @@
       "revId": "c0fa510e138741e2add33df6ed41f505aa773559",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5dbcbf91_2806084c",
+        "filename": "components/viz/service/frame_sinks/video_detector_unittest.cc",
+        "patchSetId": 33
+      },
+      "lineNbr": 92,
+      "author": {
+        "id": 1174470
+      },
+      "writtenOn": "2017-11-07T19:41:40Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "50c9829f_ef1048ff",
+      "revId": "c0fa510e138741e2add33df6ed41f505aa773559",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -269,6 +515,24 @@
     },
     {
       "key": {
+        "uuid": "111bdbb7_283c08f2",
+        "filename": "components/viz/service/frame_sinks/video_detector_unittest.cc",
+        "patchSetId": 33
+      },
+      "lineNbr": 178,
+      "author": {
+        "id": 1174470
+      },
+      "writtenOn": "2017-11-07T19:41:40Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "c73aef0b_e471bd31",
+      "revId": "c0fa510e138741e2add33df6ed41f505aa773559",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "883ec180_601d8460",
         "filename": "components/viz/service/frame_sinks/video_detector_unittest.cc",
         "patchSetId": 33
@@ -283,6 +547,24 @@
       "revId": "c0fa510e138741e2add33df6ed41f505aa773559",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9bff69cf_468c4b65",
+        "filename": "components/viz/service/frame_sinks/video_detector_unittest.cc",
+        "patchSetId": 33
+      },
+      "lineNbr": 190,
+      "author": {
+        "id": 1174470
+      },
+      "writtenOn": "2017-11-07T19:41:40Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "883ec180_601d8460",
+      "revId": "c0fa510e138741e2add33df6ed41f505aa773559",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -303,6 +585,24 @@
     },
     {
       "key": {
+        "uuid": "eb0a6d1f_42a8c67f",
+        "filename": "components/viz/service/frame_sinks/video_detector_unittest.cc",
+        "patchSetId": 33
+      },
+      "lineNbr": 219,
+      "author": {
+        "id": 1174470
+      },
+      "writtenOn": "2017-11-07T19:41:40Z",
+      "side": 1,
+      "message": "OK, I updated the test. There is one client but now I test both small width and small height.",
+      "parentUuid": "455be823_a6a60694",
+      "revId": "c0fa510e138741e2add33df6ed41f505aa773559",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "75acf122_1344128b",
         "filename": "components/viz/service/frame_sinks/video_detector_unittest.cc",
         "patchSetId": 33
@@ -317,6 +617,24 @@
       "revId": "c0fa510e138741e2add33df6ed41f505aa773559",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9a616cb1_fe04fd11",
+        "filename": "components/viz/service/frame_sinks/video_detector_unittest.cc",
+        "patchSetId": 33
+      },
+      "lineNbr": 294,
+      "author": {
+        "id": 1174470
+      },
+      "writtenOn": "2017-11-07T19:41:40Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "75acf122_1344128b",
+      "revId": "c0fa510e138741e2add33df6ed41f505aa773559",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
