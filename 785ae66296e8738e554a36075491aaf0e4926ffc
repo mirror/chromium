@@ -382,6 +382,30 @@
     },
     {
       "key": {
+        "uuid": "131e8391_65d41dcd",
+        "filename": "net/http/http_server_properties_impl.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 619,
+      "author": {
+        "id": 1143554
+      },
+      "writtenOn": "2017-11-07T17:00:20Z",
+      "side": 1,
+      "message": "I know an app that might use addQuicHint and persist server info. My understanding is that,from the client point of view, these options should not be mutually exclusive \"addQuicHint\" is useful when the persistent cache is empty (e.g. at first time app launch) or doesn\u0027t contain the host of interest (e.g. because of capacity limitation). On the other hand, server properties provide data necessary for 0-RTT.\n\nWe always handle addQuicHint first. The properties are actually read by a separate file thread but the result will be queued on the network thread.",
+      "parentUuid": "49a1bdbb_e402a450",
+      "range": {
+        "startLine": 619,
+        "startChar": 3,
+        "endLine": 619,
+        "endChar": 0
+      },
+      "revId": "785ae66296e8738e554a36075491aaf0e4926ffc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "71ac8a88_d9a35a62",
         "filename": "net/http/http_server_properties_impl_unittest.cc",
         "patchSetId": 2
