@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "3384d323_510db00b",
+        "filename": "ash/display/cursor_window_controller.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 77,
+      "author": {
+        "id": 1199459
+      },
+      "writtenOn": "2017-11-07T19:38:36Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "ce7ed5d9_f33ae12a",
+      "revId": "7f2b789571b0b65a25d3ad2716b620acc4c2e59f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "ad636e9e_7950097f",
         "filename": "ash/display/cursor_window_controller.h",
         "patchSetId": 2
@@ -36,6 +54,24 @@
     },
     {
       "key": {
+        "uuid": "b69edd98_ba9ad3af",
+        "filename": "ash/display/cursor_window_controller.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 78,
+      "author": {
+        "id": 1199459
+      },
+      "writtenOn": "2017-11-07T19:38:36Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "ad636e9e_7950097f",
+      "revId": "7f2b789571b0b65a25d3ad2716b620acc4c2e59f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "a8cdaebc_4740b4aa",
         "filename": "ash/display/cursor_window_controller.h",
         "patchSetId": 2
@@ -47,6 +83,24 @@
       "writtenOn": "2017-11-07T18:43:42Z",
       "side": 1,
       "message": "how about force_cursor_compositing_for_test_?\n\nbut instead of adding test-only code, can you make the tests just put ash into a state where you get the behavior you want (e.g. set a pref or configure DisplayManager appropriately)? that improves test coverage.",
+      "revId": "7f2b789571b0b65a25d3ad2716b620acc4c2e59f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8a879167_eea4b8c6",
+        "filename": "ash/display/cursor_window_controller.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 81,
+      "author": {
+        "id": 1199459
+      },
+      "writtenOn": "2017-11-07T19:38:36Z",
+      "side": 1,
+      "message": "Ok, setting a real pref would be better, thx.",
+      "parentUuid": "a8cdaebc_4740b4aa",
       "revId": "7f2b789571b0b65a25d3ad2716b620acc4c2e59f",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -70,6 +124,24 @@
     },
     {
       "key": {
+        "uuid": "8fe0827e_c45f3312",
+        "filename": "ash/display/display_manager_unittest.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 3448,
+      "author": {
+        "id": 1199459
+      },
+      "writtenOn": "2017-11-07T19:38:36Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "7f7a039c_19d3ed23",
+      "revId": "7f2b789571b0b65a25d3ad2716b620acc4c2e59f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "21a13184_0fe62c8c",
         "filename": "ui/display/display_switches.cc",
         "patchSetId": 2
@@ -84,6 +156,24 @@
       "revId": "7f2b789571b0b65a25d3ad2716b620acc4c2e59f",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1d2f67b4_78d69f96",
+        "filename": "ui/display/display_switches.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 17,
+      "author": {
+        "id": 1199459
+      },
+      "writtenOn": "2017-11-07T19:38:36Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "21a13184_0fe62c8c",
+      "revId": "7f2b789571b0b65a25d3ad2716b620acc4c2e59f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -104,6 +194,24 @@
     },
     {
       "key": {
+        "uuid": "b18ca074_0f92bfae",
+        "filename": "ui/display/display_switches.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 17,
+      "author": {
+        "id": 1199459
+      },
+      "writtenOn": "2017-11-07T19:38:36Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "4dfd92fa_fad59019",
+      "revId": "7f2b789571b0b65a25d3ad2716b620acc4c2e59f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "12a46c80_5e532bf6",
         "filename": "ui/display/manager/display_manager.cc",
         "patchSetId": 2
@@ -118,6 +226,24 @@
       "revId": "7f2b789571b0b65a25d3ad2716b620acc4c2e59f",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5477dcec_a36146b0",
+        "filename": "ui/display/manager/display_manager.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 1118,
+      "author": {
+        "id": 1199459
+      },
+      "writtenOn": "2017-11-07T19:38:36Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "12a46c80_5e532bf6",
+      "revId": "7f2b789571b0b65a25d3ad2716b620acc4c2e59f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -138,6 +264,24 @@
     },
     {
       "key": {
+        "uuid": "45b6827f_5b7bbdef",
+        "filename": "ui/display/manager/display_manager.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 1382,
+      "author": {
+        "id": 1199459
+      },
+      "writtenOn": "2017-11-07T19:38:36Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "8c40b0a9_6f3a4613",
+      "revId": "7f2b789571b0b65a25d3ad2716b620acc4c2e59f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "43ebf1f3_dced204a",
         "filename": "ui/display/manager/display_manager.h",
         "patchSetId": 2
@@ -152,6 +296,24 @@
       "revId": "7f2b789571b0b65a25d3ad2716b620acc4c2e59f",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ebae541b_e1b039de",
+        "filename": "ui/display/manager/display_manager.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 414,
+      "author": {
+        "id": 1199459
+      },
+      "writtenOn": "2017-11-07T19:38:36Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "43ebf1f3_dced204a",
+      "revId": "7f2b789571b0b65a25d3ad2716b620acc4c2e59f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
