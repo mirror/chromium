@@ -73,6 +73,30 @@
     },
     {
       "key": {
+        "uuid": "436d1bf6_2c9b2d1b",
+        "filename": "components/metrics/metrics_state_manager.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 94,
+      "author": {
+        "id": 1001310
+      },
+      "writtenOn": "2017-11-07T22:39:08Z",
+      "side": 1,
+      "message": "I ended up doing 1(a) (implemented--just not sent out--before I saw your reply), partially because they share so much plumbing that it was easier this way and partially because I could tell you were busy and didn\u0027t want to iterate on too many code reviews with you for something as relatively minor as this.",
+      "parentUuid": "5d3067b6_19f7caf4",
+      "range": {
+        "startLine": 94,
+        "startChar": 8,
+        "endLine": 94,
+        "endChar": 42
+      },
+      "revId": "560a366538c0caf0ae589ce72d012eb37aa57159",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "4b415fb3_36abcd95",
         "filename": "components/metrics/metrics_state_manager.cc",
         "patchSetId": 9
