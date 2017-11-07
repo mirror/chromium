@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "7e1d8070_deb439bb",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 2
+      },
+      "lineNbr": 18,
+      "author": {
+        "id": 1144344
+      },
+      "writtenOn": "2017-11-07T00:09:41Z",
+      "side": 1,
+      "message": "Is 780042 closer?",
+      "range": {
+        "startLine": 18,
+        "startChar": 4,
+        "endLine": 18,
+        "endChar": 10
+      },
+      "revId": "b4d8c6e5fad20a589a2d5f4ab1a8709cff53952d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f91fae53_b2a94d8e",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/partnerbookmarks/PartnerBookmarksReader.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 179,
+      "author": {
+        "id": 1144344
+      },
+      "writtenOn": "2017-11-07T00:09:41Z",
+      "side": 1,
+      "message": "Maybe \"ATTENTION: got %d top-level partner bookmarks while expecting one. Ignored.\"",
+      "range": {
+        "startLine": 179,
+        "startChar": 25,
+        "endLine": 179,
+        "endChar": 86
+      },
+      "revId": "b4d8c6e5fad20a589a2d5f4ab1a8709cff53952d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}

@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "675f9581_75de048e",
+        "filename": "chrome/browser/android/bookmarks/partner_bookmarks_reader.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 227,
+      "author": {
+        "id": 1144344
+      },
+      "writtenOn": "2017-11-07T00:09:41Z",
+      "side": 1,
+      "message": "Why do we need to run GetFaviconImpl on UI thread? Just curious.",
+      "range": {
+        "startLine": 227,
+        "startChar": 6,
+        "endLine": 227,
+        "endChar": 23
+      },
+      "revId": "f6dbc05160179f3c2f09f2278f63312684bad860",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "70e369a7_55aa60c5",
+        "filename": "chrome/browser/android/bookmarks/partner_bookmarks_reader.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 247,
+      "author": {
+        "id": 1144344
+      },
+      "writtenOn": "2017-11-07T00:09:41Z",
+      "side": 1,
+      "message": "GetLargeIconService?",
+      "range": {
+        "startLine": 247,
+        "startChar": 51,
+        "endLine": 247,
+        "endChar": 69
+      },
+      "revId": "f6dbc05160179f3c2f09f2278f63312684bad860",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
