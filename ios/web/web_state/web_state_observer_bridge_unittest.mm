@@ -232,15 +232,17 @@ TEST_F(WebStateObserverBridgeTest, FormActivityRegistered) {
 
   std::string kTestFormName("form-name");
   std::string kTestFieldName("field-name");
+  std::string kTestFieldType("field-type");
   std::string kTestTypeType("type");
   std::string kTestValue("value");
   bridge_->FormActivityRegistered(&test_web_state_, kTestFormName,
-                                  kTestFieldName, kTestTypeType, kTestValue,
-                                  true);
+                                  kTestFieldName, kTestFieldType, kTestTypeType,
+                                  kTestValue, true);
   ASSERT_TRUE([observer_ formActivityInfo]);
   EXPECT_EQ(&test_web_state_, [observer_ formActivityInfo]->web_state);
   EXPECT_EQ(kTestFormName, [observer_ formActivityInfo]->form_name);
   EXPECT_EQ(kTestFieldName, [observer_ formActivityInfo]->field_name);
+  EXPECT_EQ(kTestFieldType, [observer_ formActivityInfo]->field_type);
   EXPECT_EQ(kTestTypeType, [observer_ formActivityInfo]->type);
   EXPECT_EQ(kTestValue, [observer_ formActivityInfo]->value);
   EXPECT_TRUE([observer_ formActivityInfo]->input_missing);

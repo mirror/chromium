@@ -146,11 +146,12 @@ class WebStateObserver {
                                  const std::string& form_name,
                                  bool user_initiated) {}
 
-  // Called when the user is typing on a form field, with |error| indicating if
-  // there is any error when parsing the form field information.
+  // Called when the user is typing on a form field, with |input_missing|
+  // indicating if there is any error when parsing the form field information.
   virtual void FormActivityRegistered(WebState* web_state,
                                       const std::string& form_name,
                                       const std::string& field_name,
+                                      const std::string& field_type,
                                       const std::string& type,
                                       const std::string& value,
                                       bool input_missing) {}

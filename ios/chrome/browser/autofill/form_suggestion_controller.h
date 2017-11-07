@@ -39,6 +39,7 @@ class WebState;
 // form, requests them, and updates the view accordingly.
 - (void)retrieveSuggestionsForFormNamed:(const std::string&)formName
                               fieldName:(const std::string&)fieldName
+                              fieldType:(const std::string&)fieldType
                                    type:(const std::string&)type
                                webState:(web::WebState*)webState;
 

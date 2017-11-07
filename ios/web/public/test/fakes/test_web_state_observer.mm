@@ -157,6 +157,7 @@ void TestWebStateObserver::DocumentSubmitted(WebState* web_state,
 void TestWebStateObserver::FormActivityRegistered(WebState* web_state,
                                                   const std::string& form_name,
                                                   const std::string& field_name,
+                                                  const std::string& field_type,
                                                   const std::string& type,
                                                   const std::string& value,
                                                   bool input_missing) {
@@ -165,6 +166,7 @@ void TestWebStateObserver::FormActivityRegistered(WebState* web_state,
   form_activity_info_->web_state = web_state;
   form_activity_info_->form_name = form_name;
   form_activity_info_->field_name = field_name;
+  form_activity_info_->field_type = field_type;
   form_activity_info_->type = type;
   form_activity_info_->value = value;
   form_activity_info_->input_missing = input_missing;

@@ -183,6 +183,7 @@ bool ComputeFramesOfKeyboardParts(UIView* inputAccessoryView,
 // Asynchronously retrieves an accessory view from |_providers|.
 - (void)retrieveAccessoryViewForForm:(const std::string&)formName
                                field:(const std::string&)fieldName
+                           fieldType:(const std::string&)fieldType
                                value:(const std::string&)value
                                 type:(const std::string&)type
                             webState:(web::WebState*)webState;
@@ -487,6 +488,7 @@ bool ComputeFramesOfKeyboardParts(UIView* inputAccessoryView,
 - (void)webState:(web::WebState*)webState
     didRegisterFormActivityWithFormNamed:(const std::string&)formName
                                fieldName:(const std::string&)fieldName
+                               fieldType:(const std::string&)fieldType
                                     type:(const std::string&)type
                                    value:(const std::string&)value
                             inputMissing:(BOOL)inputMissing {
@@ -504,6 +506,7 @@ bool ComputeFramesOfKeyboardParts(UIView* inputAccessoryView,
 
   [self retrieveAccessoryViewForForm:formName
                                field:fieldName
+                           fieldType:fieldType
                                value:value
                                 type:type
                             webState:webState];
@@ -526,12 +529,14 @@ bool ComputeFramesOfKeyboardParts(UIView* inputAccessoryView,
 
 - (void)retrieveAccessoryViewForForm:(const std::string&)formName
                                field:(const std::string&)fieldName
+                           fieldType:(const std::string&)fieldType
                                value:(const std::string&)value
                                 type:(const std::string&)type
                             webState:(web::WebState*)webState {
   __weak FormInputAccessoryViewController* weakSelf = self;
   std::string strongFormName = formName;
   std::string strongFieldName = fieldName;
+  std::string strongFieldType = fieldType;
   std::string strongValue = value;
   std::string strongType = type;
 
@@ -552,6 +557,7 @@ bool ComputeFramesOfKeyboardParts(UIView* inputAccessoryView,
               strongSelf->_providers[i];
           [provider checkIfAccessoryViewIsAvailableForFormNamed:strongFormName
                                                       fieldName:strongFieldName
+                                                      fieldType:strongFieldType
                                                        webState:webState
                                               completionHandler:completion];
         };
@@ -587,6 +593,7 @@ bool ComputeFramesOfKeyboardParts(UIView* inputAccessoryView,
         [strongSelf->_currentProvider
             retrieveAccessoryViewForFormNamed:strongFormName
                                     fieldName:strongFieldName
+                                    fieldType:strongFieldType
                                         value:strongValue
                                          type:strongType
                                      webState:webState

@@ -2491,18 +2491,20 @@ registerLoadRequestForURL:(const GURL&)requestURL
                           context:(NSDictionary*)context {
   std::string formName;
   std::string fieldName;
+  std::string fieldType;
   std::string type;
   std::string value;
   bool inputMissing = false;
   if (!message->GetString("formName", &formName) ||
       !message->GetString("fieldName", &fieldName) ||
+      !message->GetString("fieldType", &fieldType) ||
       !message->GetString("type", &type) ||
       !message->GetString("value", &value)) {
     inputMissing = true;
   }
 
-  _webStateImpl->OnFormActivityRegistered(formName, fieldName, type, value,
-                                          inputMissing);
+  _webStateImpl->OnFormActivityRegistered(formName, fieldName, fieldType, type,
+                                          value, inputMissing);
   return YES;
 }
 

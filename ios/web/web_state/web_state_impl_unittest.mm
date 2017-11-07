@@ -323,15 +323,18 @@ TEST_F(WebStateImplTest, ObserverTest) {
 
   // Test that FormActivityRegistered() is called.
   ASSERT_FALSE(observer->form_activity_info());
-  std::string kTestFieldName("field-name");
-  std::string kTestTypeType("type");
-  std::string kTestValue("value");
+  const std::string kTestFieldName("field-name");
+  const std::string kTestFieldType("field-type");
+  const std::string kTestTypeType("type");
+  const std::string kTestValue("value");
   web_state_->OnFormActivityRegistered(kTestFormName, kTestFieldName,
-                                       kTestTypeType, kTestValue, true);
+                                       kTestFieldType, kTestTypeType,
+                                       kTestValue, true);
   ASSERT_TRUE(observer->form_activity_info());
   EXPECT_EQ(web_state_.get(), observer->form_activity_info()->web_state);
   EXPECT_EQ(kTestFormName, observer->form_activity_info()->form_name);
   EXPECT_EQ(kTestFieldName, observer->form_activity_info()->field_name);
+  EXPECT_EQ(kTestTypeType, observer->form_activity_info()->field_type);
   EXPECT_EQ(kTestTypeType, observer->form_activity_info()->type);
   EXPECT_EQ(kTestValue, observer->form_activity_info()->value);
   EXPECT_TRUE(observer->form_activity_info()->input_missing);

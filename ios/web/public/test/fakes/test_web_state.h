@@ -110,6 +110,7 @@ class TestWebState : public WebState {
   void OnRenderProcessGone();
   void OnFormActivity(const std::string& form_name,
                       const std::string& field_name,
+                      const std::string& field_type,
                       const std::string& type,
                       const std::string& value,
                       bool input_missing);

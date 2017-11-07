@@ -80,6 +80,7 @@
 
 - (void)checkIfSuggestionsAvailableForForm:(NSString*)formName
                                      field:(NSString*)fieldName
+                                 fieldType:(NSString*)fieldType
                                       type:(NSString*)type
                                 typedValue:(NSString*)typedValue
                                   webState:(web::WebState*)webState
@@ -91,6 +92,7 @@
 
 - (void)retrieveSuggestionsForForm:(NSString*)formName
                              field:(NSString*)fieldName
+                         fieldType:(NSString*)fieldType
                               type:(NSString*)type
                         typedValue:(NSString*)typedValue
                           webState:(web::WebState*)webState
@@ -286,6 +288,7 @@ TEST_F(FormSuggestionControllerTest,
   [accessory_controller_ webState:web_state()
       didRegisterFormActivityWithFormNamed:"form"
                                  fieldName:"field"
+                                 fieldType:"text"
                                       type:"type"
                                      value:"value"
                               inputMissing:false];
@@ -302,6 +305,7 @@ TEST_F(FormSuggestionControllerTest, FormActivityBlurShouldBeIgnored) {
   [accessory_controller_ webState:web_state()
       didRegisterFormActivityWithFormNamed:"form"
                                  fieldName:"field"
+                                 fieldType:"text"
                                       type:"blur"  // blur!
                                      value:"value"
                               inputMissing:false];
@@ -317,6 +321,7 @@ TEST_F(FormSuggestionControllerTest,
   [accessory_controller_ webState:web_state()
       didRegisterFormActivityWithFormNamed:"form"
                                  fieldName:"field"
+                                 fieldType:"text"
                                       type:"type"
                                      value:"value"
                               inputMissing:false];
@@ -343,6 +348,7 @@ TEST_F(FormSuggestionControllerTest,
   [accessory_controller_ webState:web_state()
       didRegisterFormActivityWithFormNamed:"form"
                                  fieldName:"field"
+                                 fieldType:"text"
                                       type:"type"
                                      value:"value"
                               inputMissing:false];
@@ -390,6 +396,7 @@ TEST_F(FormSuggestionControllerTest,
   [accessory_controller_ webState:web_state()
       didRegisterFormActivityWithFormNamed:"form"
                                  fieldName:"field"
+                                 fieldType:"text"
                                       type:"type"
                                      value:"value"
                               inputMissing:false];
@@ -427,6 +434,7 @@ TEST_F(FormSuggestionControllerTest, SelectingSuggestionShouldNotifyDelegate) {
   [accessory_controller_ webState:web_state()
       didRegisterFormActivityWithFormNamed:"form"
                                  fieldName:"field"
+                                 fieldType:"text"
                                       type:"type"
                                      value:"value"
                               inputMissing:false];

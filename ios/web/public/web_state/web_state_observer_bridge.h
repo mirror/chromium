@@ -69,6 +69,7 @@
 - (void)webState:(web::WebState*)webState
     didRegisterFormActivityWithFormNamed:(const std::string&)formName
                                fieldName:(const std::string&)fieldName
+                               fieldType:(const std::string&)fieldType
                                     type:(const std::string&)type
                                    value:(const std::string&)value
                             inputMissing:(BOOL)inputMissing;
@@ -144,6 +145,7 @@ class WebStateObserverBridge : public web::WebStateObserver {
   void FormActivityRegistered(web::WebState* web_state,
                               const std::string& form_name,
                               const std::string& field_name,
+                              const std::string& field_type,
                               const std::string& type,
                               const std::string& value,
                               bool input_missing) override;
