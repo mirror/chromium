@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "e9cc8cb9_da7f91c8",
+        "filename": "chrome/browser/notifications/notification_template_builder.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 201,
+      "author": {
+        "id": 1138489
+      },
+      "writtenOn": "2017-11-07T17:52:01Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "9a1d76df_4b5b040d",
+      "revId": "16807a0612412f53a0d836a7e692b1d0029ab40f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "5d562882_1ec66949",
         "filename": "chrome/browser/notifications/notification_template_builder.cc",
         "patchSetId": 3
@@ -33,6 +51,24 @@
       "revId": "16807a0612412f53a0d836a7e692b1d0029ab40f",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1e8a2526_7868de61",
+        "filename": "chrome/browser/notifications/notification_template_builder.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 214,
+      "author": {
+        "id": 1138489
+      },
+      "writtenOn": "2017-11-07T17:52:01Z",
+      "side": 1,
+      "message": "I removed the option to disable site\u0027s notifications directly, but left option \"Go to Chrome notification settings\". I think \"Go to site settings for \u003corigin\u003e\" is a bit imprecise as Chrome doesn\u0027t have per-site settings page.",
+      "parentUuid": "5d562882_1ec66949",
+      "revId": "16807a0612412f53a0d836a7e692b1d0029ab40f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -53,6 +89,24 @@
     },
     {
       "key": {
+        "uuid": "0f73e1d1_3b5678db",
+        "filename": "chrome/browser/notifications/notification_template_builder.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 84,
+      "author": {
+        "id": 1138489
+      },
+      "writtenOn": "2017-11-07T17:52:01Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "10b27bf3_e1072519",
+      "revId": "16807a0612412f53a0d836a7e692b1d0029ab40f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "8f577c8a_e6e88c52",
         "filename": "chrome/browser/notifications/notification_template_builder.h",
         "patchSetId": 3
@@ -70,6 +124,24 @@
     },
     {
       "key": {
+        "uuid": "bc034356_0acfcf68",
+        "filename": "chrome/browser/notifications/notification_template_builder.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 87,
+      "author": {
+        "id": 1138489
+      },
+      "writtenOn": "2017-11-07T17:52:01Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "8f577c8a_e6e88c52",
+      "revId": "16807a0612412f53a0d836a7e692b1d0029ab40f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "0e46fc9d_49cf6965",
         "filename": "chrome/browser/notifications/notification_template_builder_unittest.cc",
         "patchSetId": 3
@@ -84,6 +156,24 @@
       "revId": "16807a0612412f53a0d836a7e692b1d0029ab40f",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e246dae8_07aa05be",
+        "filename": "chrome/browser/notifications/notification_template_builder_unittest.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 135,
+      "author": {
+        "id": 1138489
+      },
+      "writtenOn": "2017-11-07T17:52:01Z",
+      "side": 1,
+      "message": "That\u0027s an excellent point. Done.",
+      "parentUuid": "0e46fc9d_49cf6965",
+      "revId": "16807a0612412f53a0d836a7e692b1d0029ab40f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
