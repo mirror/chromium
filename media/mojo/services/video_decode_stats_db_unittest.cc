@@ -42,8 +42,7 @@ class VideoDecodeStatsDBImplTest : public ::testing::Test {
     // verifying the callback argument.
     stats_db_ = std::make_unique<VideoDecodeStatsDBImpl>(
         std::unique_ptr<FakeDB<DecodeStatsProto>>(fake_db_),
-        base::FilePath(FILE_PATH_LITERAL("/fake/path")),
-        true /* allow_writes */);
+        base::FilePath(FILE_PATH_LITERAL("/fake/path")));
     stats_db_->Initialize(base::BindOnce(
         &VideoDecodeStatsDBImplTest::OnInitialize, base::Unretained(this)));
   }
@@ -64,6 +63,8 @@ class VideoDecodeStatsDBImplTest : public ::testing::Test {
 
   MOCK_METHOD2(MockGetDecodeStatsCb,
                void(bool success, VideoDecodeStatsDB::DecodeStatsEntry* entry));
+
+  MOCK_METHOD0(MockDestroyStatsCb, void());
 
   void AppendInfoCallback(base::Closure callback, bool success) {
     ASSERT_TRUE(success);
@@ -96,18 +97,18 @@ TEST_F(VideoDecodeStatsDBImplTest, ReadExpectingNothing) {
   EXPECT_CALL(*this, OnInitialize(true));
   fake_db_->InitCallback(true);
 
-  VideoDescKey entry(VP9PROFILE_PROFILE3, gfx::Size(1024, 768), 60);
+  VideoDescKey key(VP9PROFILE_PROFILE3, gfx::Size(1024, 768), 60);
 
   // Database is empty. Expect null entry.
   EXPECT_CALL(*this, MockGetDecodeStatsCb(true, nullptr));
   stats_db_->GetDecodeStats(
-      entry, base::BindOnce(&VideoDecodeStatsDBImplTest::GetDecodeStatsCb,
-                            base::Unretained(this)));
+      key, base::BindOnce(&VideoDecodeStatsDBImplTest::GetDecodeStatsCb,
+                          base::Unretained(this)));
 
   fake_db_->GetCallback(true);
 }
 
-TEST_F(VideoDecodeStatsDBImplTest, WriteAndRead) {
+TEST_F(VideoDecodeStatsDBImplTest, WriteReadAndDestroy) {
   EXPECT_CALL(*this, OnInitialize(true));
   fake_db_->InitCallback(true);
 
@@ -134,6 +135,26 @@ TEST_F(VideoDecodeStatsDBImplTest, WriteAndRead) {
   stats_db_->GetDecodeStats(
       key, base::BindOnce(&VideoDecodeStatsDBImplTest::GetDecodeStatsCb,
                           base::Unretained(this)));
+  fake_db_->GetCallback(true);
+
+  // Destructively clear all stats from the DB.
+  stats_db_->DestroyStats(base::BindOnce(
+      &VideoDecodeStatsDBImplTest::MockDestroyStatsCb, base::Unretained(this)));
+  fake_db_->DestroyCallback(true);
+
+  // Re-initialize the DB (required) and attempt to re-read previously written
+  // stats.
+  EXPECT_CALL(*this, OnInitialize(true));
+  stats_db_->Initialize(base::BindOnce(
+      &VideoDecodeStatsDBImplTest::OnInitialize, base::Unretained(this)));
+  fake_db_->InitCallback(true);
+
+  // Database is now empty. Expect null entry.
+  EXPECT_CALL(*this, MockGetDecodeStatsCb(true, nullptr));
+  stats_db_->GetDecodeStats(
+      key, base::BindOnce(&VideoDecodeStatsDBImplTest::GetDecodeStatsCb,
+                          base::Unretained(this)));
+
   fake_db_->GetCallback(true);
 }
 

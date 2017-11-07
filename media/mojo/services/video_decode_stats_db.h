@@ -44,7 +44,9 @@ class MEDIA_MOJO_EXPORT VideoDecodeStatsDB {
   virtual ~VideoDecodeStatsDB() = default;
 
   // Run asynchronous initialization of database. Initialization must complete
-  // before calling other APIs. |init_cb| must not be a null callback.
+  // before calling other APIs. Initialization must be RE-RUN after calling
+  // DestroyStats() and receiving its completion callback. |init_cb| must not be
+  // a null callback.
   virtual void Initialize(base::OnceCallback<void(bool)> init_cb) = 0;
 
   // Appends `stats` to existing entry associated with `key`. Will create a new
@@ -61,6 +63,11 @@ class MEDIA_MOJO_EXPORT VideoDecodeStatsDB {
       base::OnceCallback<void(bool, std::unique_ptr<DecodeStatsEntry>)>;
   virtual void GetDecodeStats(const VideoDescKey& key,
                               GetDecodeStatsCB callback) = 0;
+
+  // Clear all statistics by DESTROYING the underlying the database.
+  // DO NOT use the database until |callback| is run. When finished, users must
+  // RE-RUN Initialize() before performing further I/O.
+  virtual void DestroyStats(base::OnceClosure callback) = 0;
 };
 
 // Factory interface to create a DB instance.
