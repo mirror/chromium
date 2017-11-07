@@ -19,6 +19,41 @@
     },
     {
       "key": {
+        "uuid": "fc5df3dd_72525a7a",
+        "filename": "components/viz/service/frame_sinks/video_detector.cc",
+        "patchSetId": 38
+      },
+      "lineNbr": 91,
+      "author": {
+        "id": 1174470
+      },
+      "writtenOn": "2017-11-07T21:55:55Z",
+      "side": 1,
+      "message": "I think in the long term valid FrameSinkIds will be kept in FrameSinkManagerImpl? Currently they\u0027re in SurfaceManager only because of SurfaceSequences.",
+      "parentUuid": "47042487_c5d91a21",
+      "revId": "4e644e0fb5e6bf15b32a5d04621f770c345a6b93",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e5d6949a_65c75ba6",
+        "filename": "components/viz/service/frame_sinks/video_detector.cc",
+        "patchSetId": 38
+      },
+      "lineNbr": 96,
+      "author": {
+        "id": 1174470
+      },
+      "writtenOn": "2017-11-07T21:55:55Z",
+      "side": 1,
+      "message": "kylechar, maybe we can also avoid doing this unless we have an observer? What do you think? Is it worth it?",
+      "revId": "4e644e0fb5e6bf15b32a5d04621f770c345a6b93",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "b238f3c2_813b920b",
         "filename": "components/viz/service/frame_sinks/video_detector.cc",
         "patchSetId": 38
@@ -30,6 +65,24 @@
       "writtenOn": "2017-11-07T20:31:25Z",
       "side": 1,
       "message": "It seems unfortunate having to do three different map lookups (valid FrameSinkId, get ClientInfo and then get Surface) each time a surface gets drawn. I guess hooking into RegisterFrameSinkId() wouldn\u0027t work with your early exit when there are no observers though, so I\u0027m not sure it\u0027s super actionable.",
+      "revId": "4e644e0fb5e6bf15b32a5d04621f770c345a6b93",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "dd4b065c_85ce50d7",
+        "filename": "components/viz/service/frame_sinks/video_detector.cc",
+        "patchSetId": 38
+      },
+      "lineNbr": 135,
+      "author": {
+        "id": 1174470
+      },
+      "writtenOn": "2017-11-07T21:55:55Z",
+      "side": 1,
+      "message": "Shouldn\u0027t SurfaceObserver methods get Surface* instead of SurfaceId (except for those that refer to deleted surfaces)? That can remove one map lookup. I can make the check for FrameSinkId validity a DCHECK, but I think it might happen in real life. I think it is possible that a child destroys its FrameSink but the parent is still embedding the child\u0027s Surface and OnSurfaceWillBeDrawn is called.",
+      "parentUuid": "b238f3c2_813b920b",
       "revId": "4e644e0fb5e6bf15b32a5d04621f770c345a6b93",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -50,6 +103,24 @@
       "revId": "4e644e0fb5e6bf15b32a5d04621f770c345a6b93",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "80dca6e3_4a9b6a7c",
+        "filename": "components/viz/service/frame_sinks/video_detector.h",
+        "patchSetId": 38
+      },
+      "lineNbr": 91,
+      "author": {
+        "id": 1174470
+      },
+      "writtenOn": "2017-11-07T21:55:55Z",
+      "side": 1,
+      "message": "base::flat_map? Done.",
+      "parentUuid": "9502e377_6f4c6fa9",
+      "revId": "4e644e0fb5e6bf15b32a5d04621f770c345a6b93",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -87,6 +158,24 @@
     },
     {
       "key": {
+        "uuid": "4e3fb3c0_7620fdb2",
+        "filename": "components/viz/service/frame_sinks/video_detector_unittest.cc",
+        "patchSetId": 38
+      },
+      "lineNbr": 168,
+      "author": {
+        "id": 1174470
+      },
+      "writtenOn": "2017-11-07T21:55:55Z",
+      "side": 1,
+      "message": "Oops. Fixed.",
+      "parentUuid": "bab0a50d_a1f5389e",
+      "revId": "4e644e0fb5e6bf15b32a5d04621f770c345a6b93",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "1c23771a_d051e897",
         "filename": "components/viz/service/frame_sinks/video_detector_unittest.cc",
         "patchSetId": 38
@@ -101,6 +190,24 @@
       "revId": "4e644e0fb5e6bf15b32a5d04621f770c345a6b93",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8bdecac6_9b868f51",
+        "filename": "components/viz/service/frame_sinks/video_detector_unittest.cc",
+        "patchSetId": 38
+      },
+      "lineNbr": 314,
+      "author": {
+        "id": 1174470
+      },
+      "writtenOn": "2017-11-07T21:55:55Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "1c23771a_d051e897",
+      "revId": "4e644e0fb5e6bf15b32a5d04621f770c345a6b93",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
