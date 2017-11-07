@@ -1128,8 +1128,7 @@ bool ExtensionWebRequestEventRouter::DispatchEvent(
   const content::ResourceRequestInfo* info =
       content::ResourceRequestInfo::ForRequest(request);
   if (content::IsBrowserSideNavigationEnabled() && info &&
-      IsResourceTypeFrame(info->GetResourceType())) {
-    DCHECK(navigation_ui_data);
+      IsResourceTypeFrame(info->GetResourceType()) && navigation_ui_data) {
     event_details->SetFrameData(navigation_ui_data->frame_data());
     DispatchEventToListeners(browser_context, extension_info_map,
                              std::move(listeners_to_dispatch),
