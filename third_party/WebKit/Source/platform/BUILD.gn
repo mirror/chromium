@@ -1239,6 +1239,8 @@ jumbo_component("platform") {
     "mojo/CommonCustomTypesStructTraits.h",
     "mojo/FetchAPIRequestStructTraits.cpp",
     "mojo/MojoHelper.h",
+    "network/ServerTimingHeader.cpp",
+    "network/ServerTimingHeader.h",
     "peerconnection/RTCAnswerOptionsPlatform.h",
     "peerconnection/RTCOfferOptionsPlatform.h",
     "peerconnection/RTCSessionDescriptionRequest.h",
