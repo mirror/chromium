@@ -25,6 +25,7 @@
 #include "content/browser/devtools/protocol/devtools_download_manager_delegate.h"
 #include "content/browser/devtools/protocol/devtools_download_manager_helper.h"
 #include "content/browser/devtools/protocol/emulation_handler.h"
+#include "content/browser/frame_host/navigation_request.h"
 #include "content/browser/renderer_host/render_widget_host_impl.h"
 #include "content/browser/renderer_host/render_widget_host_view_base.h"
 #include "content/browser/web_contents/web_contents_impl.h"
@@ -304,18 +305,21 @@ Response PageHandler::Reload(Maybe<bool> bypassCache,
   }
 }
 
-Response PageHandler::Navigate(const std::string& url,
-                               Maybe<std::string> referrer,
-                               Maybe<std::string> maybe_transition_type,
-                               Page::FrameId* frame_id,
-                               Network::LoaderId* loader_id) {
+void PageHandler::Navigate(const std::string& url,
+                           Maybe<std::string> referrer,
+                           Maybe<std::string> maybe_transition_type,
+                           std::unique_ptr<NavigateCallback> callback) {
   GURL gurl(url);
-  if (!gurl.is_valid())
-    return Response::Error("Cannot navigate to invalid URL");
+  if (!gurl.is_valid()) {
+    callback->sendFailure(Response::Error("Cannot navigate to invalid URL"));
+    return;
+  }
 
   WebContentsImpl* web_contents = GetWebContents();
-  if (!web_contents)
-    return Response::InternalError();
+  if (!web_contents) {
+    callback->sendFailure(Response::InternalError());
+    return;
+  }
 
   ui::PageTransition type;
   std::string transition_type =
@@ -349,7 +353,21 @@ Response PageHandler::Navigate(const std::string& url,
       gurl,
       Referrer(GURL(referrer.fromMaybe("")), blink::kWebReferrerPolicyDefault),
       type, std::string());
-  return Response::FallThrough();
+  navigate_callback_ = std::move(callback);
+}
+
+void PageHandler::NavigationCommitted(NavigationRequest* navigation_request) {
+  if (!navigate_callback_)
+    return;
+  WebContentsImpl* web_contents = GetWebContents();
+  if (!web_contents) {
+    navigate_callback_->sendFailure(Response::InternalError());
+    return;
+  }
+  std::string frame_id =
+      web_contents->GetMainFrame()->GetDevToolsFrameToken().ToString();
+  navigate_callback_->sendSuccess(frame_id);
+  navigate_callback_.reset();
 }
 
 static const char* TransitionTypeName(ui::PageTransition type) {

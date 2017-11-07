@@ -354,8 +354,7 @@
                     { "name": "transitionType", "$ref": "TransitionType", "optional": true, "description": "Intended transition type." }
                 ],
                 "returns": [
-                    { "name": "frameId", "$ref": "FrameId", "description": "Frame id that will be navigated." },
-                    { "name": "loaderId", "$ref": "Network.LoaderId", "experimental": true, "description": "Loader id that will be used during navigation." }
+                    { "name": "frameId", "$ref": "FrameId", "description": "Frame id that will be navigated." }
                 ],
                 "description": "Navigates current page to the given URL."
             },

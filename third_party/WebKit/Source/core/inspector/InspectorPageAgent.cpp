@@ -594,19 +594,6 @@ Response InspectorPageAgent::reload(
   return Response::OK();
 }
 
-Response InspectorPageAgent::navigate(const String& url,
-                                      Maybe<String> referrer,
-                                      Maybe<String> transitionType,
-                                      String* out_frame_id,
-                                      String* loader_id) {
-  LocalFrame* frame = inspected_frames_->Root();
-  DocumentLoader* loader = frame->Loader().GetDocumentLoader();
-
-  *out_frame_id = IdentifiersFactory::FrameId(frame);
-  *loader_id = IdentifiersFactory::LoaderId(loader);
-  return Response::OK();
-}
-
 Response InspectorPageAgent::stopLoading() {
   return Response::OK();
 }
