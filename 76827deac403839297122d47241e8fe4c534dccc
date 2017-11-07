@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "87aea6c8_381a3add",
+        "filename": "third_party/libaom/options.gni",
+        "patchSetId": 3
+      },
+      "lineNbr": 6,
+      "author": {
+        "id": 1003232
+      },
+      "writtenOn": "2017-11-07T23:48:06Z",
+      "side": 1,
+      "message": "I think you\u0027ll want to add after line 6:\n\nassert(!enable_av1_decoder || checkout_libaom)\n\nin order to ensure that someone isn\u0027t trying to enable the feature without the library being pulled in.",
+      "revId": "76827deac403839297122d47241e8fe4c534dccc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
