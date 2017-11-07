@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "10aeb59c_7a86d5fb",
+        "filename": "components/safe_browsing/base_resource_throttle.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 350,
+      "author": {
+        "id": 1104639
+      },
+      "writtenOn": "2017-11-07T23:06:12Z",
+      "side": 1,
+      "message": "Varun: This is the only change that could affect SB2.Delay.\nI believe it is a bug without this line, consider the following sequence on Android:\n1) A SB check is started in parallel with starting request;\n2) A redirect happens, we defer the request, and also enter the DEFERRED_UNCHECKED_REDIRECT state. At this point, we set defer_start_time_ to, let\u0027s say, T1.\n3) When the SB check for (1) is done, we report SB2.Delay (Now_1 - T1).\n4) We get into this method ResumeRequest() to start a new SB check for the redirect. The original code doesn\u0027t update defer_start_time_ here.\n5) When the SB check for (4) is done, we report another SB2.Delay (Now_2 - T1). Because part of that duration has been reported in (3), I think it is incorrect. We never \"accumulate\" delay like this in all other cases for SB2.Delay.\n\nWDYT? Thanks!",
+      "revId": "d50a98a267a2cd336e6b4ca39b7a5d3f57f052e0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
