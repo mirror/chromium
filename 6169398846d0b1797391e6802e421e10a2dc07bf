@@ -1,0 +1,90 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "0c051f6a_31094f14",
+        "filename": "build/secondary/third_party/crashpad/crashpad/handler/BUILD.gn",
+        "patchSetId": 4
+      },
+      "lineNbr": 94,
+      "author": {
+        "id": 1174099
+      },
+      "writtenOn": "2017-11-07T15:17:42Z",
+      "side": 1,
+      "message": "Since the comment on line 88 doesn’t have a trailing dot, it leaves someone wondering whether the . is meant to be part of the path, or if it’s just a period at the end of the sentence.",
+      "range": {
+        "startLine": 94,
+        "startChar": 88,
+        "endLine": 94,
+        "endChar": 89
+      },
+      "revId": "6169398846d0b1797391e6802e421e10a2dc07bf",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5fa712a9_617d8d18",
+        "filename": "content/shell/BUILD.gn",
+        "patchSetId": 4
+      },
+      "lineNbr": 643,
+      "author": {
+        "id": 1174099
+      },
+      "writtenOn": "2017-11-07T15:17:42Z",
+      "side": 1,
+      "message": "What is the point of this being public?",
+      "range": {
+        "startLine": 643,
+        "startChar": 4,
+        "endLine": 643,
+        "endChar": 10
+      },
+      "revId": "6169398846d0b1797391e6802e421e10a2dc07bf",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3fe272d5_033fdfd0",
+        "filename": "content/shell/app/shell_main_delegate.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 66,
+      "author": {
+        "id": 1174099
+      },
+      "writtenOn": "2017-11-07T15:17:42Z",
+      "side": 1,
+      "message": "Why can’t the build files be adjusted so that nogncheck isn’t needed?",
+      "range": {
+        "startLine": 66,
+        "startChar": 52,
+        "endLine": 66,
+        "endChar": 64
+      },
+      "revId": "6169398846d0b1797391e6802e421e10a2dc07bf",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d3d0b042_98a86d72",
+        "filename": "content/shell/tools/breakpad_integration_test.py",
+        "patchSetId": 4
+      },
+      "lineNbr": 49,
+      "author": {
+        "id": 1174099
+      },
+      "writtenOn": "2017-11-07T15:17:42Z",
+      "side": 1,
+      "message": "We discourage making assumptions about the internal structure of the Crashpad database. This will break things in the future. It makes it really hard for us to change the database.\n\nThe recommendation here is to interact with the database only via crashpad_database_util.\n\nThis bit us in a really bad way in the past, when Catapult was reaching in and futzing with things without going through an approved interface or telling anyone what they were doing.",
+      "revId": "6169398846d0b1797391e6802e421e10a2dc07bf",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
