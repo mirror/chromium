@@ -72,6 +72,24 @@
     },
     {
       "key": {
+        "uuid": "409c381a_64cf8c8c",
+        "filename": "ios/chrome/browser/ui/browser_view_controller_unittest.mm",
+        "patchSetId": 5
+      },
+      "lineNbr": 211,
+      "author": {
+        "id": 1165759
+      },
+      "writtenOn": "2017-11-07T03:15:41Z",
+      "side": 1,
+      "message": "In this case trying to init a WTC instance fails because we need the BVC toolbarModel to be loaded when initing the WTC. So I\u0027d need to mock BVC (which we don\u0027t want to do), or mock some sort of delegate for this to work. \n\nA UIViewController is not good either since there\u0027s a lot of calls to specific WTC methods. I\u0027ve created a FakeWTC that returns nil to these calls.",
+      "parentUuid": "6a95017e_f45c08e4",
+      "revId": "440d0856cfa3c0f0ac809572a5009f115efc96bd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "0f31ab03_ea3559a0",
         "filename": "ios/chrome/browser/ui/toolbar/toolbar_controller.mm",
         "patchSetId": 5
@@ -83,6 +101,30 @@
       "writtenOn": "2017-11-06T13:54:38Z",
       "side": 1,
       "message": "You shouldn\u0027t initialize the view of a view controller in the -init; you should override -loadView and move as much of the init logic to -viewDidLoad instead.",
+      "range": {
+        "startLine": 156,
+        "startChar": 9,
+        "endLine": 156,
+        "endChar": 13
+      },
+      "revId": "440d0856cfa3c0f0ac809572a5009f115efc96bd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6c7d0a64_62300c3c",
+        "filename": "ios/chrome/browser/ui/toolbar/toolbar_controller.mm",
+        "patchSetId": 5
+      },
+      "lineNbr": 156,
+      "author": {
+        "id": 1165759
+      },
+      "writtenOn": "2017-11-07T03:15:41Z",
+      "side": 1,
+      "message": "Agree! As I mentioned on the CL message I was planning on doing exactly that on a follow up CL, but I\u0027m not really sure its needed right now.\n\nWhen I tried moving the logic into loadView and viewDidLoad, there were some UI issues we want to take care of, and I think it overall makes everything more prone to errors or bugs.\n\nOn the other hand when we leave this as is, everything should work (and from what I\u0027ve seen, it does work) as intended. Since we are planning on initing a new VC instead of this one, I think there\u0027s probably no need to keep tinkering with this VC that much. If we land this change we can already init a different Toolbar VC and use that instead. And in the case we decide that the completely new ToolbarVC is not going to work, we can then move the init code. WDYT?",
+      "parentUuid": "0f31ab03_ea3559a0",
       "range": {
         "startLine": 156,
         "startChar": 9,
