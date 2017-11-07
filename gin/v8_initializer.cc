@@ -230,6 +230,11 @@ void V8Initializer::LoadV8Snapshot() {
   if (g_mapped_snapshot)
     return;
 
+  if (V8_LOAD_SUCCESS ==
+      MapOpenedFile(GetOpenedFile(kV8ContextSnapshotFileName),
+                    &g_mapped_snapshot))
+    return;
+
   LoadV8FileResult result = MapOpenedFile(GetOpenedFile(kSnapshotFileName),
                                           &g_mapped_snapshot);
   // V8 can't start up without the source of the natives, but it can
@@ -336,19 +341,27 @@ void V8Initializer::Initialize(IsolateHolder::ScriptMode mode,
     v8::V8::SetFlagsFromString(flag, sizeof(flag) - 1);
   }
 
+  v8::StartupData snapshot{};
 #if defined(V8_USE_EXTERNAL_STARTUP_DATA)
   v8::StartupData natives;
   natives.data = reinterpret_cast<const char*>(g_mapped_natives->data());
   natives.raw_size = static_cast<int>(g_mapped_natives->length());
   v8::V8::SetNativesDataBlob(&natives);
 
-  if (g_mapped_snapshot) {
-    v8::StartupData snapshot;
+  if (g_mapped_snapshot && !snapshot.data) {
     snapshot.data = reinterpret_cast<const char*>(g_mapped_snapshot->data());
     snapshot.raw_size = static_cast<int>(g_mapped_snapshot->length());
-    v8::V8::SetSnapshotDataBlob(&snapshot);
   }
 #endif  // V8_USE_EXTERNAL_STARTUP_DATA
+  if (g_mapped_v8_context_snapshot) {
+    snapshot.data =
+        reinterpret_cast<const char*>(g_mapped_v8_context_snapshot->data());
+    snapshot.raw_size =
+        static_cast<int>(g_mapped_v8_context_snapshot->length());
+  }
+  if (snapshot.data) {
+    v8::V8::SetSnapshotDataBlob(&snapshot);
+  }
 
   v8::V8::SetEntropySource(&GenerateEntropy);
   v8::V8::Initialize();
