@@ -4,6 +4,7 @@
 
 #include "content/renderer/webgraphicscontext3d_provider_impl.h"
 
+#include "components/viz/common/gl_helper.h"
 #include "gpu/command_buffer/client/context_support.h"
 #include "services/ui/public/cpp/gpu/context_provider_command_buffer.h"
 
@@ -44,6 +45,14 @@ const gpu::GpuFeatureInfo& WebGraphicsContext3DProviderImpl::GetGpuFeatureInfo()
   return provider_->GetGpuFeatureInfo();
 }
 
+viz::GLHelper* WebGraphicsContext3DProviderImpl::GetGLHelper() {
+  if (!gl_helper_) {
+    gl_helper_.reset(
+        new viz::GLHelper(provider_->ContextGL(), provider_->ContextSupport()));
+  }
+  return gl_helper_.get();
+}
+
 bool WebGraphicsContext3DProviderImpl::IsSoftwareRendering() const {
   return software_rendering_;
 }
@@ -65,6 +74,7 @@ void WebGraphicsContext3DProviderImpl::SignalQuery(
 }
 
 void WebGraphicsContext3DProviderImpl::OnContextLost() {
+  gl_helper_.reset();
   if (!context_lost_callback_.is_null())
     context_lost_callback_.Run();
 }
