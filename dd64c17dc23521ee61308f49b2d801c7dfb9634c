@@ -1,0 +1,106 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "6a50c7d7_6a041b0f",
+        "filename": "ash/display/touch_calibrator_controller.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 69,
+      "author": {
+        "id": 1000191
+      },
+      "writtenOn": "2017-11-07T17:52:53Z",
+      "side": 1,
+      "message": "nit: local not needed.",
+      "revId": "dd64c17dc23521ee61308f49b2d801c7dfb9634c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "51eb5fbb_9ba6d5d8",
+        "filename": "ash/display/touch_calibrator_controller.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 255,
+      "author": {
+        "id": 1000191
+      },
+      "writtenOn": "2017-11-07T17:52:53Z",
+      "side": 1,
+      "message": "no else after return",
+      "revId": "dd64c17dc23521ee61308f49b2d801c7dfb9634c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "40352178_68c63d8f",
+        "filename": "ash/display/touch_calibrator_controller.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 305,
+      "author": {
+        "id": 1000191
+      },
+      "writtenOn": "2017-11-07T17:52:53Z",
+      "side": 1,
+      "message": "nit: local not needed",
+      "revId": "dd64c17dc23521ee61308f49b2d801c7dfb9634c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "29314f5b_2953d11c",
+        "filename": "ash/display/touch_calibrator_controller.h",
+        "patchSetId": 8
+      },
+      "lineNbr": 90,
+      "author": {
+        "id": 1000191
+      },
+      "writtenOn": "2017-11-07T17:52:53Z",
+      "side": 1,
+      "message": "Do we need all of these, or can we add a public \u0027for_test\u0027 accessor, or maybe just friend TouchCalibratorControllerTest and add a helper method in the test class that the tests can use?",
+      "revId": "dd64c17dc23521ee61308f49b2d801c7dfb9634c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0b32219f_5b76760d",
+        "filename": "ash/display/touch_calibrator_controller_unittest.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 31,
+      "author": {
+        "id": 1000191
+      },
+      "writtenOn": "2017-11-07T17:52:53Z",
+      "side": 1,
+      "message": "nit: blank line here and before closing brace",
+      "revId": "dd64c17dc23521ee61308f49b2d801c7dfb9634c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f1d11e80_dc36fb2b",
+        "filename": "chrome/browser/extensions/display_info_provider_chromeos.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 463,
+      "author": {
+        "id": 1000191
+      },
+      "writtenOn": "2017-11-07T17:52:53Z",
+      "side": 1,
+      "message": "These should be kept simple and not shown to users since they are not translated, e.g. \"No external touch device present.\" A developer investigating an error can grep the code for the string to get more context.",
+      "revId": "dd64c17dc23521ee61308f49b2d801c7dfb9634c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
