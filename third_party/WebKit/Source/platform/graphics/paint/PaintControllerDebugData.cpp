@@ -138,7 +138,7 @@ void PaintController::DisplayItemListAsJSON::AppendSubsequenceAsJSON(
             DisplayItemList::ClientDebugName(chunk.id.client, flags_)
                 .Utf8()
                 .data(),
-            DisplayItem::TypeAsDebugString(chunk.id.type).Ascii().data()));
+            PaintChunk::TypeAsDebugString(chunk.id.type).Ascii().data()));
     json_object->SetArray(
         "displayItems",
         list_.SubsequenceAsJSON(chunk.begin_index, chunk.end_index, flags_));
