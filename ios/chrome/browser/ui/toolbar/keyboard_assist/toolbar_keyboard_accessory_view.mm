@@ -37,15 +37,13 @@
 
 - (instancetype)initWithButtons:(NSArray<NSString*>*)buttonTitles
                        delegate:(id<ToolbarAssistiveKeyboardDelegate>)delegate {
-  const CGFloat kViewHeight = 44.0;
-  CGFloat width = [[UIScreen mainScreen] bounds].size.width;
-  // TODO(crbug.com/734512): Have the creator of the view define the size.
-  CGRect frame = CGRectMake(0.0, 0.0, width, kViewHeight);
-
-  self = [super initWithFrame:frame inputViewStyle:UIInputViewStyleKeyboard];
+  self =
+      [super initWithFrame:CGRectZero inputViewStyle:UIInputViewStyleKeyboard];
   if (self) {
     _buttonTitles = buttonTitles;
     _delegate = delegate;
+    self.translatesAutoresizingMaskIntoConstraints = NO;
+    self.allowsSelfSizing = YES;
     [self addSubviews];
   }
   return self;
@@ -97,10 +95,16 @@
         constraintEqualToAnchor:layoutGuide.trailingAnchor
                        constant:-kHorizontalMargin],
     [searchStackView.trailingAnchor
-        constraintLessThanOrEqualToAnchor:shortcutStackView.leadingAnchor]
+        constraintLessThanOrEqualToAnchor:shortcutStackView.leadingAnchor],
+    [searchStackView.topAnchor constraintEqualToAnchor:layoutGuide.topAnchor
+                                              constant:kHorizontalMargin],
+    [searchStackView.bottomAnchor
+        constraintEqualToAnchor:layoutGuide.bottomAnchor],
+    [shortcutStackView.topAnchor constraintEqualToAnchor:layoutGuide.topAnchor
+                                                constant:kHorizontalMargin],
+    [shortcutStackView.bottomAnchor
+        constraintEqualToAnchor:layoutGuide.bottomAnchor],
   ]];
-  AddSameCenterYConstraint(searchStackView, self);
-  AddSameCenterYConstraint(shortcutStackView, self);
 }
 
 - (UIView*)shortcutButtonWithTitle:(NSString*)title {
