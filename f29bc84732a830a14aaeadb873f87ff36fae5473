@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "1bcbc7b9_4d59079d",
+        "filename": "content/renderer/media/webrtc/rtc_rtp_source.cc",
+        "patchSetId": 16
+      },
+      "lineNbr": 38,
+      "author": {
+        "id": 1182820
+      },
+      "writtenOn": "2017-11-07T23:12:20Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "b53b1377_1bcb2b89",
+      "revId": "f29bc84732a830a14aaeadb873f87ff36fae5473",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "4e7a6f54_6958230b",
         "filename": "content/renderer/media/webrtc/rtc_rtp_source.cc",
         "patchSetId": 16
@@ -33,6 +51,24 @@
       "revId": "f29bc84732a830a14aaeadb873f87ff36fae5473",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7f57664c_a1041b2d",
+        "filename": "content/renderer/media/webrtc/rtc_rtp_source.cc",
+        "patchSetId": 16
+      },
+      "lineNbr": 39,
+      "author": {
+        "id": 1182820
+      },
+      "writtenOn": "2017-11-07T23:12:20Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "4e7a6f54_6958230b",
+      "revId": "f29bc84732a830a14aaeadb873f87ff36fae5473",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -53,6 +89,24 @@
     },
     {
       "key": {
+        "uuid": "3c87851e_053eeb31",
+        "filename": "third_party/WebKit/Source/modules/peerconnection/RTCRtpSynchronizationSource.cpp",
+        "patchSetId": 16
+      },
+      "lineNbr": 20,
+      "author": {
+        "id": 1182820
+      },
+      "writtenOn": "2017-11-07T23:12:20Z",
+      "side": 1,
+      "message": "I agree about 127, I was confusing myself :)",
+      "parentUuid": "57ba3aa0_073af781",
+      "revId": "f29bc84732a830a14aaeadb873f87ff36fae5473",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "f7d2f0e1_3cf58a6c",
         "filename": "third_party/WebKit/Source/modules/peerconnection/RTCRtpSynchronizationSource.cpp",
         "patchSetId": 16
@@ -67,6 +121,24 @@
       "revId": "f29bc84732a830a14aaeadb873f87ff36fae5473",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1670de12_dfcb7e80",
+        "filename": "third_party/WebKit/Source/modules/peerconnection/RTCRtpSynchronizationSource.cpp",
+        "patchSetId": 16
+      },
+      "lineNbr": 29,
+      "author": {
+        "id": 1182820
+      },
+      "writtenOn": "2017-11-07T23:12:20Z",
+      "side": 1,
+      "message": "I used value_or in RtpSource so that I could do the check in just one place, but I will do it here if you think it is clearer.",
+      "parentUuid": "f7d2f0e1_3cf58a6c",
+      "revId": "f29bc84732a830a14aaeadb873f87ff36fae5473",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -87,6 +159,24 @@
     },
     {
       "key": {
+        "uuid": "f0528042_28088567",
+        "filename": "third_party/WebKit/Source/modules/peerconnection/RTCRtpSynchronizationSource.cpp",
+        "patchSetId": 16
+      },
+      "lineNbr": 47,
+      "author": {
+        "id": 1182820
+      },
+      "writtenOn": "2017-11-07T23:12:20Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "6ee989ae_6db9cbf9",
+      "revId": "f29bc84732a830a14aaeadb873f87ff36fae5473",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "d119b1e0_cc2206a6",
         "filename": "third_party/WebKit/Source/modules/peerconnection/RTCRtpSynchronizationSource.cpp",
         "patchSetId": 16
@@ -101,6 +191,24 @@
       "revId": "f29bc84732a830a14aaeadb873f87ff36fae5473",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5830d45a_a3a06c8e",
+        "filename": "third_party/WebKit/Source/modules/peerconnection/RTCRtpSynchronizationSource.cpp",
+        "patchSetId": 16
+      },
+      "lineNbr": 51,
+      "author": {
+        "id": 1182820
+      },
+      "writtenOn": "2017-11-07T23:12:20Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "d119b1e0_cc2206a6",
+      "revId": "f29bc84732a830a14aaeadb873f87ff36fae5473",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
