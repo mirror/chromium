@@ -14,8 +14,14 @@ namespace message_center {
 namespace {
 
 base::TimeDelta GetTimeoutForNotification(Notification* notification) {
+#if defined(OS_CHROMEOS)
+  // In Chrome OS, web notifications are not given longer display time,
+  // as it has a notification center.
+  if (notification->priority() > DEFAULT_PRIORITY) {
+#else
   if (notification->notifier_id().type == NotifierId::WEB_PAGE ||
       notification->priority() > DEFAULT_PRIORITY) {
+#endif
     return base::TimeDelta::FromSeconds(kAutocloseHighPriorityDelaySeconds);
   }
   return base::TimeDelta::FromSeconds(kAutocloseDefaultDelaySeconds);
