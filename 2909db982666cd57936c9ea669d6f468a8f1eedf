@@ -55,6 +55,24 @@
     },
     {
       "key": {
+        "uuid": "9e9fc867_fd90e53d",
+        "filename": "chrome/browser/resources/md_extensions/load_error.js",
+        "patchSetId": 17
+      },
+      "lineNbr": 45,
+      "author": {
+        "id": 1115893
+      },
+      "writtenOn": "2017-11-07T23:30:45Z",
+      "side": 1,
+      "message": "Done, without adding a new string/placeholder though. After experimenting again with this UI I don\u0027t think the intermediate \"trying\" placeholder is necessary. What I had not realized in my first attempt, was that after clicking \"retry\" a file-chooser dialog pops up. User has to click again on that dialog to actually \"retry\", so it is clear that something is happening.",
+      "parentUuid": "316172ef_2f1e2b63",
+      "revId": "2909db982666cd57936c9ea669d6f468a8f1eedf",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "b4f3dfa6_864756b3",
         "filename": "chrome/browser/resources/md_extensions/manager.js",
         "patchSetId": 17

@@ -55,6 +55,24 @@
     },
     {
       "key": {
+        "uuid": "70ffd4c4_d29ff8c6",
+        "filename": "chrome/browser/resources/md_extensions/manager.js",
+        "patchSetId": 18
+      },
+      "lineNbr": 147,
+      "author": {
+        "id": 1115893
+      },
+      "writtenOn": "2017-11-07T23:30:45Z",
+      "side": 1,
+      "message": "Thanks!",
+      "parentUuid": "30d1cf85_e7bc0a11",
+      "revId": "f171d53f41f7eb1e509d6471d7e189b424999664",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "489a3746_8ee0075d",
         "filename": "chrome/test/data/webui/extensions/extension_manager_unit_test.js",
         "patchSetId": 18
@@ -72,6 +90,24 @@
     },
     {
       "key": {
+        "uuid": "48df86ac_6fcb293b",
+        "filename": "chrome/test/data/webui/extensions/extension_manager_unit_test.js",
+        "patchSetId": 18
+      },
+      "lineNbr": 69,
+      "author": {
+        "id": 1115893
+      },
+      "writtenOn": "2017-11-07T23:30:45Z",
+      "side": 1,
+      "message": "Yes. This is not intended to be change detection. It ensures that the assertions within all the test() methods are happening after certain calls to developerPrivate API has happened, and therefore after the DOM has had a chance to be updated.",
+      "parentUuid": "489a3746_8ee0075d",
+      "revId": "f171d53f41f7eb1e509d6471d7e189b424999664",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "f81afc73_5505b978",
         "filename": "chrome/test/data/webui/extensions/extension_manager_unit_test.js",
         "patchSetId": 18
@@ -83,6 +119,24 @@
       "writtenOn": "2017-11-07T19:56:56Z",
       "side": 1,
       "message": "These are all copy-paste, right?",
+      "revId": "f171d53f41f7eb1e509d6471d7e189b424999664",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "33634d9f_fc9eb9c2",
+        "filename": "chrome/test/data/webui/extensions/extension_manager_unit_test.js",
+        "patchSetId": 18
+      },
+      "lineNbr": 91,
+      "author": {
+        "id": 1115893
+      },
+      "writtenOn": "2017-11-07T23:30:45Z",
+      "side": 1,
+      "message": "This is mostly copy-paste. I changed the way installed extensions are simulated, using simulateExtensionInstall(). Before, when these tests resided within Service, the test fixture was a subclass of CrExtensionsBrowserTestWithInstalledExtension and was relying on actual calls to chrome.developerPrivate to provide test data. The current test does  not talk to chrome.developerPrivate, instead it talks to TestService defined near the top of this file.",
+      "parentUuid": "f81afc73_5505b978",
       "revId": "f171d53f41f7eb1e509d6471d7e189b424999664",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
