@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "afa81400_2f58d37f",
+        "filename": "chrome/browser/ui/views/intent_picker_bubble_view.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 153,
+      "author": {
+        "id": 1000763
+      },
+      "writtenOn": "2017-11-07T03:31:49Z",
+      "side": 1,
+      "message": "As you\u0027re friending the test why do you need to add this too?",
+      "range": {
+        "startLine": 153,
+        "startChar": 24,
+        "endLine": 153,
+        "endChar": 48
+      },
+      "revId": "25b118af7fc12ee0105ad076fa998288e390f826",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
