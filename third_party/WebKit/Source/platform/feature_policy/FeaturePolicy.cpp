@@ -87,7 +87,7 @@ ParsedFeaturePolicy ParseFeaturePolicyHeader(
     const String& policy,
     scoped_refptr<SecurityOrigin> origin,
     Vector<String>* messages) {
-  return ParseFeaturePolicy(policy, origin, nullptr, messages,
+  return ParseFeaturePolicy(policy, origin, origin, messages,
                             GetDefaultFeatureNameMap());
 }
 
