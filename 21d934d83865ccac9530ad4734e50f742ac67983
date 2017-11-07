@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "c3fc5db6_19455f61",
+        "filename": "content/renderer/media_capture_from_element/canvas_capture_handler.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 164,
+      "author": {
+        "id": 1123894
+      },
+      "writtenOn": "2017-11-07T22:12:25Z",
+      "side": 1,
+      "message": "Thanks for the pointer. I changed it here and l.248.",
+      "parentUuid": "7753f5be_3027b479",
+      "range": {
+        "startLine": 164,
+        "startChar": 28,
+        "endLine": 164,
+        "endChar": 49
+      },
+      "revId": "21d934d83865ccac9530ad4734e50f742ac67983",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "01092647_8dbbc263",
         "filename": "content/renderer/webgraphicscontext3d_provider_impl.cc",
         "patchSetId": 5
@@ -42,6 +66,24 @@
     },
     {
       "key": {
+        "uuid": "653b6085_a4fbdbb3",
+        "filename": "content/renderer/webgraphicscontext3d_provider_impl.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 50,
+      "author": {
+        "id": 1123894
+      },
+      "writtenOn": "2017-11-07T22:12:25Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "01092647_8dbbc263",
+      "revId": "21d934d83865ccac9530ad4734e50f742ac67983",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "3a37d77e_6c8bf88a",
         "filename": "content/renderer/webgraphicscontext3d_provider_impl.cc",
         "patchSetId": 5
@@ -53,6 +95,24 @@
       "writtenOn": "2017-11-07T20:43:24Z",
       "side": 1,
       "message": "no need to do this, the whole provider will need to be deleted. best not to create UAF possibilities, IMO. normally a lost context does not mean it is deleted. Only in ImageTransportFactory is that a thing that happens, elsewhere code often cleans up textures and stuff (needlessly) on the dead context to avoid writing different shutdown paths. I\u0027d prefer if GLTHelper is consistent with the rest of this class.",
+      "revId": "21d934d83865ccac9530ad4734e50f742ac67983",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2af16909_08145973",
+        "filename": "content/renderer/webgraphicscontext3d_provider_impl.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 77,
+      "author": {
+        "id": 1123894
+      },
+      "writtenOn": "2017-11-07T22:12:25Z",
+      "side": 1,
+      "message": "Removed it. I am not sure what do you mean by making GLHelper consistent with the rest. This class looks mostly like a container for |provider_|.",
+      "parentUuid": "3a37d77e_6c8bf88a",
       "revId": "21d934d83865ccac9530ad4734e50f742ac67983",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -82,6 +142,30 @@
     },
     {
       "key": {
+        "uuid": "a941ffd5_3ea0a538",
+        "filename": "third_party/WebKit/Source/core/html/HTMLCanvasElement.cpp",
+        "patchSetId": 5
+      },
+      "lineNbr": 586,
+      "author": {
+        "id": 1123894
+      },
+      "writtenOn": "2017-11-07T22:12:25Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "fd99729f_5d36757a",
+      "range": {
+        "startLine": 586,
+        "startChar": 4,
+        "endLine": 586,
+        "endChar": 16
+      },
+      "revId": "21d934d83865ccac9530ad4734e50f742ac67983",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "d366c337_46006116",
         "filename": "third_party/WebKit/Source/platform/graphics/UnacceleratedStaticBitmapImage.cpp",
         "patchSetId": 5
@@ -93,6 +177,30 @@
       "writtenOn": "2017-11-07T21:41:28Z",
       "side": 1,
       "message": "I think this method is not needed.",
+      "range": {
+        "startLine": 41,
+        "startChar": 51,
+        "endLine": 41,
+        "endChar": 66
+      },
+      "revId": "21d934d83865ccac9530ad4734e50f742ac67983",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "cd52b10e_9512012d",
+        "filename": "third_party/WebKit/Source/platform/graphics/UnacceleratedStaticBitmapImage.cpp",
+        "patchSetId": 5
+      },
+      "lineNbr": 41,
+      "author": {
+        "id": 1123894
+      },
+      "writtenOn": "2017-11-07T22:12:25Z",
+      "side": 1,
+      "message": "Not any more. Done.",
+      "parentUuid": "d366c337_46006116",
       "range": {
         "startLine": 41,
         "startChar": 51,
@@ -119,6 +227,24 @@
       "revId": "21d934d83865ccac9530ad4734e50f742ac67983",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c9fc728d_022feea7",
+        "filename": "third_party/WebKit/public/platform/WebGraphicsContext3DProvider.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 62,
+      "author": {
+        "id": 1123894
+      },
+      "writtenOn": "2017-11-07T22:12:25Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "a3e84806_0bd4995a",
+      "revId": "21d934d83865ccac9530ad4734e50f742ac67983",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
