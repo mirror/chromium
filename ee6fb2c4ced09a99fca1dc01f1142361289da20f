@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "18026570_873f8946",
+        "filename": "ios/chrome/browser/ui/toolbar/keyboard_assist/toolbar_keyboard_accessory_view.mm",
+        "patchSetId": 2
+      },
+      "lineNbr": 46,
+      "author": {
+        "id": 1139250
+      },
+      "writtenOn": "2017-11-07T16:05:34Z",
+      "side": 1,
+      "message": "Yes. It doesn\u0027t size correctly without it.",
+      "parentUuid": "8a2779df_e5f8e77c",
+      "range": {
+        "startLine": 46,
+        "startChar": 9,
+        "endLine": 46,
+        "endChar": 25
+      },
+      "revId": "ee6fb2c4ced09a99fca1dc01f1142361289da20f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "4b48669e_268252d1",
         "filename": "ios/chrome/browser/ui/toolbar/keyboard_assist/toolbar_keyboard_accessory_view.mm",
         "patchSetId": 2
@@ -36,6 +60,30 @@
       "writtenOn": "2017-11-07T15:57:54Z",
       "side": 1,
       "message": "Why are you using a horizontalMargin between two vertical anchor? Is it a problem with the naming?",
+      "range": {
+        "startLine": 100,
+        "startChar": 55,
+        "endLine": 100,
+        "endChar": 72
+      },
+      "revId": "ee6fb2c4ced09a99fca1dc01f1142361289da20f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f14e9879_9f67c223",
+        "filename": "ios/chrome/browser/ui/toolbar/keyboard_assist/toolbar_keyboard_accessory_view.mm",
+        "patchSetId": 2
+      },
+      "lineNbr": 100,
+      "author": {
+        "id": 1139250
+      },
+      "writtenOn": "2017-11-07T16:05:34Z",
+      "side": 1,
+      "message": "...heh. Because I confused horizontal and vertical in my head :D (The value is correct. Renamed.)",
+      "parentUuid": "4b48669e_268252d1",
       "range": {
         "startLine": 100,
         "startChar": 55,
