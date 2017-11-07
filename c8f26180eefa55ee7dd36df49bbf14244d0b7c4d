@@ -1,0 +1,73 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "061f7418_20f079a2",
+        "filename": "content/browser/download/download_item_impl.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 131,
+      "author": {
+        "id": 1107754
+      },
+      "writtenOn": "2017-11-07T18:08:33Z",
+      "side": 1,
+      "message": "Should these be a map or some list of pairs so we can validate that we always have the correct string for the enum?  Also do we have a way to prevent crashes when adding new types?  Should the enums have a _MAX or _COUNT entry at the end and we add a unit test or compile time assert that validates this list is as long as that enum value?",
+      "range": {
+        "startLine": 125,
+        "startChar": 0,
+        "endLine": 131,
+        "endChar": 76
+      },
+      "revId": "c8f26180eefa55ee7dd36df49bbf14244d0b7c4d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "917e73e2_74cc454d",
+        "filename": "content/browser/download/download_item_impl.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 161,
+      "author": {
+        "id": 1107754
+      },
+      "writtenOn": "2017-11-07T18:08:33Z",
+      "side": 1,
+      "message": "Are these URLs guaranteed to be properly escaped to not cause issues with the trace format string?",
+      "range": {
+        "startLine": 161,
+        "startChar": 55,
+        "endLine": 161,
+        "endChar": 68
+      },
+      "revId": "c8f26180eefa55ee7dd36df49bbf14244d0b7c4d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "224a4151_1aa68d82",
+        "filename": "content/public/browser/download_item.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 91,
+      "author": {
+        "id": 1107754
+      },
+      "writtenOn": "2017-11-07T18:08:33Z",
+      "side": 1,
+      "message": "Can you add some comments to this?  Just looking at this file by itself I\u0027m not 100% clear what this is used for/if these types are comprehensive/etc.",
+      "range": {
+        "startLine": 87,
+        "startChar": 2,
+        "endLine": 91,
+        "endChar": 4
+      },
+      "revId": "c8f26180eefa55ee7dd36df49bbf14244d0b7c4d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
