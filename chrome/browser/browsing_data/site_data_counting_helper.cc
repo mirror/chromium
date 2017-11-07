@@ -37,6 +37,7 @@ SiteDataCountingHelper::SiteDataCountingHelper(
 SiteDataCountingHelper::~SiteDataCountingHelper() {}
 
 void SiteDataCountingHelper::CountAndDestroySelfWhenFinished() {
+  LOG(ERROR) << "START";
   content::StoragePartition* partition =
       content::BrowserContext::GetDefaultStoragePartition(profile_);
 
@@ -122,6 +123,8 @@ void SiteDataCountingHelper::GetOriginsFromHostContentSettignsMap(
       origins.insert(url);
     }
   }
+  if (origins.size())
+    LOG(ERROR) << "hcsm (" << type << "):" << origins.size();
   Done(std::vector<GURL>(origins.begin(), origins.end()));
 }
 
@@ -154,6 +157,8 @@ void SiteDataCountingHelper::GetCookiesCallback(
       origins.push_back(url);
     }
   }
+  if (origins.size())
+    LOG(ERROR) << "cookies: " << origins.size();
   BrowserThread::PostTask(BrowserThread::UI, FROM_HERE,
                           base::BindOnce(&SiteDataCountingHelper::Done,
                                          base::Unretained(this), origins));
@@ -164,6 +169,8 @@ void SiteDataCountingHelper::GetQuotaOriginsCallback(
     storage::StorageType type) {
   DCHECK_CURRENTLY_ON(BrowserThread::IO);
   std::vector<GURL> origins(origin_set.begin(), origin_set.end());
+  if (origins.size())
+    LOG(ERROR) << "quota: " << origins.size();
   BrowserThread::PostTask(BrowserThread::UI, FROM_HERE,
                           base::BindOnce(&SiteDataCountingHelper::Done,
                                          base::Unretained(this), origins));
@@ -179,6 +186,8 @@ void SiteDataCountingHelper::GetLocalStorageUsageInfoCallback(
       origins.push_back(info.origin);
     }
   }
+  if (origins.size())
+    LOG(ERROR) << "local storage: " << origins.size();
   Done(origins);
 }
 
@@ -190,8 +199,11 @@ void SiteDataCountingHelper::GetSessionStorageUsageInfoCallback(
     // Session storage doesn't know about creation time.
     if (!policy || !policy->IsStorageProtected(info.origin)) {
       origins.push_back(info.origin);
+      LOG(ERROR) << info.origin;
     }
   }
+  if (origins.size())
+    LOG(ERROR) << "session storage: " << origins.size();
   Done(origins);
 }
 
@@ -201,6 +213,8 @@ void SiteDataCountingHelper::SitesWithFlashDataCallback(
   for (const std::string& site : sites) {
     origins.push_back(GURL(site));
   }
+  if (origins.size())
+    LOG(ERROR) << "flash: " << origins.size();
   Done(origins);
 }
 
@@ -223,6 +237,8 @@ void SiteDataCountingHelper::GetChannelIDsCallback(
       origins.push_back(GURL("https://" + channel_id.server_identifier()));
     }
   }
+  if (origins.size())
+    LOG(ERROR) << "channel ids: " << origins.size();
   BrowserThread::PostTask(BrowserThread::UI, FROM_HERE,
                           base::BindOnce(&SiteDataCountingHelper::Done,
                                          base::Unretained(this), origins));
@@ -237,6 +253,9 @@ void SiteDataCountingHelper::Done(const std::vector<GURL>& origins) {
   }
   if (--tasks_ > 0)
     return;
+  LOG(ERROR) << "DONE: " << unique_origins_.size();
+  for (auto& origin : unique_origins_)
+    LOG(ERROR) << origin;
   base::ThreadTaskRunnerHandle::Get()->PostTask(
       FROM_HERE, base::BindOnce(completion_callback_, unique_origins_.size()));
   base::ThreadTaskRunnerHandle::Get()->DeleteSoon(FROM_HERE, this);
