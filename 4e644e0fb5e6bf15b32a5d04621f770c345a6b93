@@ -89,6 +89,24 @@
     },
     {
       "key": {
+        "uuid": "83ba8c85_83269922",
+        "filename": "components/viz/service/frame_sinks/video_detector.cc",
+        "patchSetId": 38
+      },
+      "lineNbr": 135,
+      "author": {
+        "id": 1174470
+      },
+      "writtenOn": "2017-11-07T22:08:00Z",
+      "side": 1,
+      "message": "Another idea. Surface has a weak pointer to CFSS. Maybe I can check if that\u0027s not null instead of looking up whether the FrameSinkId is valid? WDYT?",
+      "parentUuid": "dd4b065c_85ce50d7",
+      "revId": "4e644e0fb5e6bf15b32a5d04621f770c345a6b93",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "9502e377_6f4c6fa9",
         "filename": "components/viz/service/frame_sinks/video_detector.h",
         "patchSetId": 38
