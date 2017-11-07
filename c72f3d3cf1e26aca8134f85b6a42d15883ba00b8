@@ -1,0 +1,73 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "31e44117_ec497fa3",
+        "filename": "chrome/browser/component_updater/chrome_component_updater_configurator.cc",
+        "patchSetId": 17
+      },
+      "lineNbr": 164,
+      "author": {
+        "id": 1116066
+      },
+      "writtenOn": "2017-11-07T18:11:21Z",
+      "side": 1,
+      "message": "There is a check that we are on the UI thread in the extension configurator, do we need it here, too? (If not, why do we need it in the extensions case?)",
+      "range": {
+        "startLine": 164,
+        "startChar": 11,
+        "endLine": 164,
+        "endChar": 0
+      },
+      "revId": "c72f3d3cf1e26aca8134f85b6a42d15883ba00b8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a6833176_cf9fb470",
+        "filename": "components/patch_service/DEPS",
+        "patchSetId": 17
+      },
+      "lineNbr": 3,
+      "author": {
+        "id": 1116066
+      },
+      "writtenOn": "2017-11-07T18:11:21Z",
+      "side": 1,
+      "message": "Is this DEP necessary?",
+      "range": {
+        "startLine": 3,
+        "startChar": 30,
+        "endLine": 3,
+        "endChar": 0
+      },
+      "revId": "c72f3d3cf1e26aca8134f85b6a42d15883ba00b8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0518d455_9aa80c3f",
+        "filename": "components/update_client/configurator.h",
+        "patchSetId": 17
+      },
+      "lineNbr": 104,
+      "author": {
+        "id": 1116066
+      },
+      "writtenOn": "2017-11-07T18:11:21Z",
+      "side": 1,
+      "message": "IIUC all call sites have to clone this; let\u0027s just have it return a unique_ptr directly.",
+      "range": {
+        "startLine": 104,
+        "startChar": 77,
+        "endLine": 104,
+        "endChar": 0
+      },
+      "revId": "c72f3d3cf1e26aca8134f85b6a42d15883ba00b8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
