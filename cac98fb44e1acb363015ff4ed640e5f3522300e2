@@ -65,6 +65,30 @@
     },
     {
       "key": {
+        "uuid": "0baeff8e_990064ba",
+        "filename": "ui/ozone/platform/wayland/wayland_touch.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 148,
+      "author": {
+        "id": 1001794
+      },
+      "writtenOn": "2017-11-07T20:31:48Z",
+      "side": 1,
+      "message": "Actually, I\u0027m confused again.\n\nEach event is dispatched, stored, and sent again in Frame(). You only need one or the other :)\n\nIf Cancel() should hide prior events in the same frame, then dispatch in Frame(). If not it will be simpler to do it immediately in Down/Motion/Up and have Farm() do nothing. ui::Events do not have the concept of the end of frame.",
+      "parentUuid": "89b567b9_a65b282b",
+      "range": {
+        "startLine": 148,
+        "startChar": 0,
+        "endLine": 148,
+        "endChar": 40
+      },
+      "revId": "cac98fb44e1acb363015ff4ed640e5f3522300e2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "d70790fd_80cc8466",
         "filename": "ui/ozone/platform/wayland/wayland_touch.h",
         "patchSetId": 1
