@@ -1,0 +1,55 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "a1fdb80c_eadaee8d",
+        "filename": "chrome/browser/resources/md_extensions/manager.js",
+        "patchSetId": 18
+      },
+      "lineNbr": 147,
+      "author": {
+        "id": 1115745
+      },
+      "writtenOn": "2017-11-07T19:56:56Z",
+      "side": 1,
+      "message": "I\u0027d slightly prefer that we be able to use DOM-style events rather than extension API events for manager in order to avoid adding additional dependencies on the API and also to be able to leverage regular web testing tools.  How would you feel about having service fire these events when it received them, and then adding listeners for \u0027profile-state-changed\u0027 and such here?",
+      "revId": "f171d53f41f7eb1e509d6471d7e189b424999664",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "489a3746_8ee0075d",
+        "filename": "chrome/test/data/webui/extensions/extension_manager_unit_test.js",
+        "patchSetId": 18
+      },
+      "lineNbr": 69,
+      "author": {
+        "id": 1115745
+      },
+      "writtenOn": "2017-11-07T19:56:56Z",
+      "side": 1,
+      "message": "Is this worth testing?  It seems like this is more just change-detection rather than behavior validation.  Should we either remove it, or instead test that the results are correct in the manager?",
+      "revId": "f171d53f41f7eb1e509d6471d7e189b424999664",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f81afc73_5505b978",
+        "filename": "chrome/test/data/webui/extensions/extension_manager_unit_test.js",
+        "patchSetId": 18
+      },
+      "lineNbr": 91,
+      "author": {
+        "id": 1115745
+      },
+      "writtenOn": "2017-11-07T19:56:56Z",
+      "side": 1,
+      "message": "These are all copy-paste, right?",
+      "revId": "f171d53f41f7eb1e509d6471d7e189b424999664",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}

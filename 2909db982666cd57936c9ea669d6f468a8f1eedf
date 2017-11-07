@@ -2,6 +2,23 @@
   "comments": [
     {
       "key": {
+        "uuid": "edc91638_e42d00ff",
+        "filename": "chrome/browser/resources/md_extensions/load_error.js",
+        "patchSetId": 17
+      },
+      "lineNbr": 45,
+      "author": {
+        "id": 1115745
+      },
+      "writtenOn": "2017-11-07T19:56:56Z",
+      "side": 1,
+      "message": "Rather than have this catch an error, and then fire an event that the manager listens, and then have the manager re-show this, could we have the catch() update the error?\n\nSomething like:\n\nonRetryTap_: function() {\n  this.delegate.retryLoadUnpacked(this.loadError.retryGuid).then(() \u003d\u003e {\n    // The retry succeeded; our work here is done.\n    this.close();\n  }).catch(loadError \u003d\u003e {\n    // The retry failed; update the dialog.\n    this.loadError \u003d loadError;\n  });\n},\n\nWDYT?  Seems it\u0027d be simpler and more contained, and would prevent the \"dialog close -\u003e dialog open\" flicker that would happen otherwise.",
+      "revId": "2909db982666cd57936c9ea669d6f468a8f1eedf",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "b4f3dfa6_864756b3",
         "filename": "chrome/browser/resources/md_extensions/manager.js",
         "patchSetId": 17
