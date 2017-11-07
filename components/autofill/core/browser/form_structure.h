@@ -155,21 +155,6 @@ class FormStructure {
   // specifies a section for at least one field.
   void ParseFieldTypesFromAutocompleteAttributes();
 
-  // Determines whether |type| and |field| match.
-  typedef base::Callback<bool(ServerFieldType type,
-                              const AutofillField& field)>
-      InputFieldComparator;
-
-  // Fills in |fields_| that match |types| (via |matches|) with info from
-  // |get_info|. Uses |address_language_code| to determine line separators when
-  // collapsing street address lines into a single-line input text field.
-  bool FillFields(
-      const std::vector<ServerFieldType>& types,
-      const InputFieldComparator& matches,
-      const base::Callback<base::string16(const AutofillType&)>& get_info,
-      const std::string& address_language_code,
-      const std::string& app_locale);
-
   // Returns the values that can be filled into the form structure for the
   // given type. For example, there's no way to fill in a value of "The Moon"
   // into ADDRESS_HOME_STATE if the form only has a
