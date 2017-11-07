@@ -36,6 +36,24 @@
     },
     {
       "key": {
+        "uuid": "f4c37ef5_303abb87",
+        "filename": "components/content_settings/core/browser/content_settings_registry.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 137,
+      "author": {
+        "id": 1183839
+      },
+      "writtenOn": "2017-11-07T08:59:27Z",
+      "side": 1,
+      "message": "\"images\" is enabled by default, so the inheritance permission doesn\u0027t affect it. \nI will change it to INHERIT_IN_INCOGNITO as it is more clear and change the test, so that allow-by-default settings must be inheritable",
+      "parentUuid": "0a0edf82_425bec56",
+      "revId": "fb3e4c781398ce3fd041e3656e246c197faabc68",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "ccaaa4b9_f792f736",
         "filename": "components/content_settings/core/browser/content_settings_registry.cc",
         "patchSetId": 4
@@ -50,6 +68,24 @@
       "revId": "fb3e4c781398ce3fd041e3656e246c197faabc68",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e2472b0a_fefced70",
+        "filename": "components/content_settings/core/browser/content_settings_registry.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 189,
+      "author": {
+        "id": 1183839
+      },
+      "writtenOn": "2017-11-07T08:59:27Z",
+      "side": 1,
+      "message": "I think notifications aren\u0027t allowed in incognito mode at all? \nDecidePermission still implements extra logic for this https://cs.chromium.org/chromium/src/chrome/browser/notifications/notification_permission_context.cc?q\u003dNotificationPermissionContext::DecidePermission\u0026sq\u003dpackage:chromium\u0026dr\u003dCSs\u0026l\u003d227",
+      "parentUuid": "ccaaa4b9_f792f736",
+      "revId": "fb3e4c781398ce3fd041e3656e246c197faabc68",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -70,6 +106,24 @@
     },
     {
       "key": {
+        "uuid": "821efa91_d09165eb",
+        "filename": "components/content_settings/core/browser/content_settings_registry.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 258,
+      "author": {
+        "id": 1183839
+      },
+      "writtenOn": "2017-11-07T08:59:27Z",
+      "side": 1,
+      "message": "This setting is probably irrelevant for incognito mode anyway as storage is deleted when the session ends, I will enable inheritance.",
+      "parentUuid": "1978caee_513384fa",
+      "revId": "fb3e4c781398ce3fd041e3656e246c197faabc68",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "1266ac66_e246ddb8",
         "filename": "components/content_settings/core/browser/content_settings_registry.cc",
         "patchSetId": 4
@@ -84,6 +138,24 @@
       "revId": "fb3e4c781398ce3fd041e3656e246c197faabc68",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0bacc55b_d5c077b9",
+        "filename": "components/content_settings/core/browser/content_settings_registry.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 267,
+      "author": {
+        "id": 1183839
+      },
+      "writtenOn": "2017-11-07T08:59:27Z",
+      "side": 1,
+      "message": "yes, it is allow by default",
+      "parentUuid": "1266ac66_e246ddb8",
+      "revId": "fb3e4c781398ce3fd041e3656e246c197faabc68",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -104,6 +176,24 @@
     },
     {
       "key": {
+        "uuid": "53028f01_42f45d0e",
+        "filename": "components/content_settings/core/browser/content_settings_registry.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 275,
+      "author": {
+        "id": 1183839
+      },
+      "writtenOn": "2017-11-07T08:59:27Z",
+      "side": 1,
+      "message": "yes, it is allow by default",
+      "parentUuid": "c61148d4_b6d3fb2f",
+      "revId": "fb3e4c781398ce3fd041e3656e246c197faabc68",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "98334380_1845634a",
         "filename": "components/content_settings/core/browser/content_settings_registry.cc",
         "patchSetId": 4
@@ -118,6 +208,24 @@
       "revId": "fb3e4c781398ce3fd041e3656e246c197faabc68",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "fdd7d9b4_c7a01d40",
+        "filename": "components/content_settings/core/browser/content_settings_registry.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 283,
+      "author": {
+        "id": 1183839
+      },
+      "writtenOn": "2017-11-07T08:59:27Z",
+      "side": 1,
+      "message": "yes, it is allow by default",
+      "parentUuid": "98334380_1845634a",
+      "revId": "fb3e4c781398ce3fd041e3656e246c197faabc68",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
