@@ -17,6 +17,9 @@ const int kPopupBorderThickness = 1;
 const int kPopupBorderThickness = 0;
 #endif
 
+// The maximum amount of rows before popup becomes scrollable.
+const size_t kPopupMaxVisibleRows = 10;
+
 }  // namespace autofill
 
 #endif  // CHROME_BROWSER_UI_AUTOFILL_POPUP_CONSTANTS_H_

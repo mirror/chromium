@@ -91,15 +91,20 @@ AutofillPopupLayoutModel::AutofillPopupLayoutModel(
 AutofillPopupLayoutModel::~AutofillPopupLayoutModel() {}
 
 #if !defined(OS_ANDROID)
-int AutofillPopupLayoutModel::GetDesiredPopupHeight() const {
+int AutofillPopupLayoutModel::GetDesiredPopupHeight(size_t max_rows) const {
   std::vector<autofill::Suggestion> suggestions = delegate_->GetSuggestions();
-  int popup_height = 2 * kPopupBorderThickness;
+  int popup_height = max_rows < suggestions.size() ? kPopupBorderThickness
+                                                   : 2 * kPopupBorderThickness;
 
-  for (size_t i = 0; i < suggestions.size(); ++i) {
+  for (size_t i = 0; i < std::min(max_rows, suggestions.size()); ++i) {
     popup_height += GetRowHeightFromId(suggestions[i].frontend_id);
   }
 
   return popup_height;
+}
+
+int AutofillPopupLayoutModel::GetDesiredPopupContentsHeight() const {
+  return GetDesiredPopupHeight(SIZE_MAX);
 }
 
 int AutofillPopupLayoutModel::GetDesiredPopupWidth() const {
@@ -144,11 +149,13 @@ int AutofillPopupLayoutModel::GetAvailableWidthForRow(int row,
 
 void AutofillPopupLayoutModel::UpdatePopupBounds() {
   int popup_width = GetDesiredPopupWidth();
-  int popup_height = GetDesiredPopupHeight();
+  int popup_height = GetDesiredPopupHeight(kPopupMaxVisibleRows);
 
   popup_bounds_ = view_common_.CalculatePopupBounds(
       popup_width, popup_height, RoundedElementBounds(),
       delegate_->container_view(), delegate_->IsRTL());
+  popup_contents_size_ =
+      gfx::Size(popup_bounds_.width(), GetDesiredPopupContentsHeight());
 }
 
 const gfx::FontList& AutofillPopupLayoutModel::GetValueFontListForRow(

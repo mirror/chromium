@@ -257,6 +257,10 @@ gfx::Rect PasswordGenerationPopupControllerImpl::popup_bounds() const {
   return popup_bounds_;
 }
 
+gfx::Size PasswordGenerationPopupControllerImpl::popup_contents_size() const {
+  return popup_bounds_.size();
+}
+
 const gfx::RectF& PasswordGenerationPopupControllerImpl::element_bounds()
     const {
   return controller_common_.element_bounds;

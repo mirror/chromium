@@ -129,7 +129,7 @@ void AutofillPopupBaseView::DoUpdateBoundsAndRedrawPopup() {
   // |bounds| is in screen space and we want the bounds relative to the parent
   // view. Since the parent is the scroll container, this will always be at
   // position 0, 0 with dimensions specified by |bounds|.
-  SetSize(bounds.size());
+  SetSize(delegate_->popup_contents_size());
 
   // Compute the space available for the popup. It's the space between its top
   // and the bottom of its parent view, minus some margin space.

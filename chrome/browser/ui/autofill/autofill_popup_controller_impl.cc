@@ -288,6 +288,10 @@ gfx::Rect AutofillPopupControllerImpl::popup_bounds() const {
   return layout_model_.popup_bounds();
 }
 
+gfx::Size AutofillPopupControllerImpl::popup_contents_size() const {
+  return layout_model_.popup_contents_size();
+}
+
 gfx::NativeView AutofillPopupControllerImpl::container_view() {
   return controller_common_.container_view;
 }

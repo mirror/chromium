@@ -96,6 +96,7 @@ class PasswordGenerationPopupControllerImpl
   int GetMinimumWidth() override;
   gfx::NativeView container_view() override;
   gfx::Rect popup_bounds() const override;
+  gfx::Size popup_contents_size() const override;
   const gfx::RectF& element_bounds() const override;
   bool IsRTL() const override;
   const std::vector<autofill::Suggestion> GetSuggestions() override;

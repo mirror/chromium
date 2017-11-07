@@ -14,6 +14,7 @@ namespace gfx {
 class Point;
 class Rect;
 class RectF;
+class Size;
 }
 
 namespace autofill {
@@ -45,6 +46,10 @@ class AutofillPopupViewDelegate {
 
   // The actual bounds of the popup.
   virtual gfx::Rect popup_bounds() const = 0;
+
+  // Size of the popup contents. May be bigger than popup bounds, in which case
+  // popup will be scrollable.
+  virtual gfx::Size popup_contents_size() const = 0;
 
   // The view that the form field element sits in.
   virtual gfx::NativeView container_view() = 0;

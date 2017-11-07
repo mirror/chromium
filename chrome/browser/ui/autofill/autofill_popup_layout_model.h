@@ -51,7 +51,12 @@ class AutofillPopupLayoutModel {
 
 #if !defined(OS_ANDROID)
   // Calculates the desired height of the popup based on its contents.
-  int GetDesiredPopupHeight() const;
+  // |max_rows| indicates how many rows can be displayed in the popup before it
+  // becomes scrollable.
+  int GetDesiredPopupHeight(size_t max_rows) const;
+
+  // Calculates the desired height of the popup contents.
+  int GetDesiredPopupContentsHeight() const;
 
   // Calculates the desired width of the popup based on its contents.
   int GetDesiredPopupWidth() const;
@@ -86,6 +91,8 @@ class AutofillPopupLayoutModel {
   int LineFromY(int y) const;
 
   const gfx::Rect popup_bounds() const { return popup_bounds_; }
+
+  const gfx::Size popup_contents_size() const { return popup_contents_size_; }
 
   // Returns the bounds of the item at |index| in the popup, relative to
   // the top left of the popup.
@@ -144,6 +151,8 @@ class AutofillPopupLayoutModel {
   AutofillPopupViewDelegate* delegate_;  // Weak reference.
 
   const bool is_credit_card_popup_;
+
+  gfx::Size popup_contents_size_;
 
   DISALLOW_COPY_AND_ASSIGN(AutofillPopupLayoutModel);
 };
