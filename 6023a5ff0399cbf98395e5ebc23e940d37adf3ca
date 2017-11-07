@@ -1,0 +1,291 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "fa3f1ec9_ea6cb429",
+        "filename": "chrome/browser/component_updater/optimization_hints_component_installer_unittest.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 42,
+      "author": {
+        "id": 1116033
+      },
+      "writtenOn": "2017-11-07T00:32:40Z",
+      "side": 1,
+      "message": "we can use std::make_unique now.",
+      "range": {
+        "startLine": 42,
+        "startChar": 14,
+        "endLine": 42,
+        "endChar": 24
+      },
+      "revId": "6023a5ff0399cbf98395e5ebc23e940d37adf3ca",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "604d1dfb_1e8aa432",
+        "filename": "components/optimization_guide/DEPS",
+        "patchSetId": 8
+      },
+      "lineNbr": 2,
+      "author": {
+        "id": 1116033
+      },
+      "writtenOn": "2017-11-07T00:32:40Z",
+      "side": 1,
+      "message": "This dependency might not be ok. I know that components can depend on other components but they can\u0027t depend on content, unless they are layered components. Suffice it to say, we avoid this kind of dependencies in the component updater related code.\n\nI don\u0027t know layering in Chrome well enough, and I\u0027d be happy to stand corrected.",
+      "revId": "6023a5ff0399cbf98395e5ebc23e940d37adf3ca",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8fd73d7d_8737c224",
+        "filename": "components/optimization_guide/optimization_guide_service.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 14,
+      "author": {
+        "id": 1116033
+      },
+      "writtenOn": "2017-11-07T00:32:40Z",
+      "side": 1,
+      "message": "this dependency might not be ok.",
+      "range": {
+        "startLine": 14,
+        "startChar": 10,
+        "endLine": 14,
+        "endChar": 17
+      },
+      "revId": "6023a5ff0399cbf98395e5ebc23e940d37adf3ca",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "78888f9b_65b439d2",
+        "filename": "components/optimization_guide/optimization_guide_service.h",
+        "patchSetId": 8
+      },
+      "lineNbr": 40,
+      "author": {
+        "id": 1116033
+      },
+      "writtenOn": "2017-11-07T00:32:40Z",
+      "side": 1,
+      "message": "explicit.\nalso, most likely, the intention was to pass a ref to const scoped_refptr",
+      "range": {
+        "startLine": 40,
+        "startChar": 56,
+        "endLine": 40,
+        "endChar": 77
+      },
+      "revId": "6023a5ff0399cbf98395e5ebc23e940d37adf3ca",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "cec652ec_3f1b8595",
+        "filename": "components/optimization_guide/optimization_guide_service.h",
+        "patchSetId": 8
+      },
+      "lineNbr": 52,
+      "author": {
+        "id": 1116033
+      },
+      "writtenOn": "2017-11-07T00:32:40Z",
+      "side": 1,
+      "message": "const ref?",
+      "range": {
+        "startLine": 52,
+        "startChar": 56,
+        "endLine": 52,
+        "endChar": 57
+      },
+      "revId": "6023a5ff0399cbf98395e5ebc23e940d37adf3ca",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5640c85a_662aa138",
+        "filename": "components/optimization_guide/optimization_guide_service_unittest.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 31,
+      "author": {
+        "id": 1116033
+      },
+      "writtenOn": "2017-11-07T00:32:40Z",
+      "side": 1,
+      "message": "explicit",
+      "range": {
+        "startLine": 31,
+        "startChar": 2,
+        "endLine": 31,
+        "endChar": 26
+      },
+      "revId": "6023a5ff0399cbf98395e5ebc23e940d37adf3ca",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "75740402_4d83282b",
+        "filename": "components/optimization_guide/optimization_guide_service_unittest.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 51,
+      "author": {
+        "id": 1116033
+      },
+      "writtenOn": "2017-11-07T00:32:40Z",
+      "side": 1,
+      "message": "const member function?",
+      "range": {
+        "startLine": 51,
+        "startChar": 31,
+        "endLine": 51,
+        "endChar": 33
+      },
+      "revId": "6023a5ff0399cbf98395e5ebc23e940d37adf3ca",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ed989155_8b13024c",
+        "filename": "components/optimization_guide/optimization_guide_service_unittest.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 53,
+      "author": {
+        "id": 1116033
+      },
+      "writtenOn": "2017-11-07T00:32:40Z",
+      "side": 1,
+      "message": "const member function?",
+      "range": {
+        "startLine": 53,
+        "startChar": 41,
+        "endLine": 53,
+        "endChar": 43
+      },
+      "revId": "6023a5ff0399cbf98395e5ebc23e940d37adf3ca",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6a7b4a2a_906ad0eb",
+        "filename": "components/optimization_guide/optimization_guide_service_unittest.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 73,
+      "author": {
+        "id": 1116033
+      },
+      "writtenOn": "2017-11-07T00:32:40Z",
+      "side": 1,
+      "message": "can use make_unique",
+      "range": {
+        "startLine": 73,
+        "startChar": 40,
+        "endLine": 73,
+        "endChar": 50
+      },
+      "revId": "6023a5ff0399cbf98395e5ebc23e940d37adf3ca",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "389ea9bf_dfdf83bf",
+        "filename": "components/optimization_guide/optimization_guide_service_unittest.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 86,
+      "author": {
+        "id": 1116033
+      },
+      "writtenOn": "2017-11-07T00:32:40Z",
+      "side": 1,
+      "message": "could pass the parameters by ref to const type instead of value.",
+      "range": {
+        "startLine": 86,
+        "startChar": 18,
+        "endLine": 86,
+        "endChar": 19
+      },
+      "revId": "6023a5ff0399cbf98395e5ebc23e940d37adf3ca",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d29eb496_f51633e1",
+        "filename": "components/optimization_guide/optimization_guide_service_unittest.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 91,
+      "author": {
+        "id": 1116033
+      },
+      "writtenOn": "2017-11-07T00:32:40Z",
+      "side": 1,
+      "message": "pass by ref to const",
+      "range": {
+        "startLine": 91,
+        "startChar": 40,
+        "endLine": 91,
+        "endChar": 48
+      },
+      "revId": "6023a5ff0399cbf98395e5ebc23e940d37adf3ca",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "317494ce_7b04ec88",
+        "filename": "components/optimization_guide/optimization_guide_service_unittest.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 99,
+      "author": {
+        "id": 1116033
+      },
+      "writtenOn": "2017-11-07T00:32:40Z",
+      "side": 1,
+      "message": "this accessor and possibly other member functions in this class can be declared const.",
+      "revId": "6023a5ff0399cbf98395e5ebc23e940d37adf3ca",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f38073d8_5b416360",
+        "filename": "components/optimization_guide/optimization_guide_service_unittest.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 129,
+      "author": {
+        "id": 1116033
+      },
+      "writtenOn": "2017-11-07T00:32:40Z",
+      "side": 1,
+      "message": "const base::FilePath?\n\nAlso, in the tests below, some of the local variables can be declared const.",
+      "range": {
+        "startLine": 129,
+        "startChar": 17,
+        "endLine": 129,
+        "endChar": 26
+      },
+      "revId": "6023a5ff0399cbf98395e5ebc23e940d37adf3ca",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
