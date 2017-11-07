@@ -299,13 +299,11 @@ void PaintController::ProcessNewItem(DisplayItem& display_item) {
                                            new_display_item_indices_by_client_,
                                            new_display_item_list_);
   if (index != kNotFound) {
-#ifndef NDEBUG
     ShowDebugData();
     DLOG(INFO) << "DisplayItem " << display_item.AsDebugString()
                << " has duplicated id with previous "
                << new_display_item_list_[index].AsDebugString()
                << " (index=" << index << ")";
-#endif
     NOTREACHED();
   }
   AddItemToIndexIfNeeded(display_item, new_display_item_list_.size() - 1,
@@ -387,7 +385,7 @@ size_t PaintController::FindMatchingItemFromIndex(
   const Vector<size_t>& indices = it->value;
   for (size_t index : indices) {
     const DisplayItem& existing_item = list[index];
-    if (!existing_item.HasValidClient())
+    if (existing_item.IsTombstone())
       continue;
     DCHECK(existing_item.Client() == id.client);
     if (id == existing_item.GetId())
@@ -426,10 +424,10 @@ size_t PaintController::FindCachedItem(const DisplayItem::Id& id) {
     // We encounter an item that has already been copied which indicates we
     // can't do sequential matching.
     const DisplayItem& item = current_paint_artifact_.GetDisplayItemList()[i];
-    if (!item.HasValidClient())
+    if (item.IsTombstone())
       break;
     if (id == item.GetId()) {
-#ifndef NDEBUG
+#if DCHECK_IS_ON()
       ++num_sequential_matches_;
 #endif
       return i;
@@ -444,7 +442,7 @@ size_t PaintController::FindCachedItem(const DisplayItem::Id& id) {
       FindMatchingItemFromIndex(id, out_of_order_item_indices_,
                                 current_paint_artifact_.GetDisplayItemList());
   if (found_index != kNotFound) {
-#ifndef NDEBUG
+#if DCHECK_IS_ON()
     ++num_out_of_order_matches_;
 #endif
     return found_index;
@@ -459,25 +457,23 @@ size_t PaintController::FindOutOfOrderCachedItemForward(
   for (size_t i = next_item_to_index_;
        i < current_paint_artifact_.GetDisplayItemList().size(); ++i) {
     const DisplayItem& item = current_paint_artifact_.GetDisplayItemList()[i];
-    if (!item.HasValidClient()) {
-      // This item has been copied in a cached subsequence.
+    if (item.IsTombstone())
       continue;
-    }
     if (id == item.GetId()) {
-#ifndef NDEBUG
+#if DCHECK_IS_ON()
       ++num_sequential_matches_;
 #endif
       return i;
     }
     if (item.IsCacheable()) {
-#ifndef NDEBUG
+#if DCHECK_IS_ON()
       ++num_indexed_items_;
 #endif
       AddItemToIndexIfNeeded(item, i, out_of_order_item_indices_);
     }
   }
 
-#ifndef NDEBUG
+#if DCHECK_IS_ON()
   ShowDebugData();
   LOG(ERROR) << id.client.DebugName() << ":"
              << DisplayItem::TypeAsDebugString(id.type);
@@ -528,9 +524,9 @@ void PaintController::CopyCachedSubsequence(size_t begin_index,
   for (size_t current_index = begin_index; current_index < end_index;
        ++current_index) {
     cached_item = &current_paint_artifact_.GetDisplayItemList()[current_index];
-    DCHECK(cached_item->HasValidClient());
+    DCHECK(!cached_item->IsTombstone());
     // TODO(chrishtr); remove this hack once crbug.com/712660 is resolved.
-    if (!cached_item->HasValidClient())
+    if (cached_item->IsTombstone())
       continue;
 #if DCHECK_IS_ON()
     DCHECK(cached_item->Client().IsAlive());
@@ -662,7 +658,7 @@ void PaintController::CommitNewDisplayItems() {
   // We'll allocate the initial buffer when we start the next paint.
   new_display_item_list_ = DisplayItemList(0);
 
-#ifndef NDEBUG
+#if DCHECK_IS_ON()
   num_sequential_matches_ = 0;
   num_out_of_order_matches_ = 0;
   num_indexed_items_ = 0;
@@ -827,7 +823,7 @@ void PaintController::GenerateRasterInvalidationsComparingChunks(
         current_paint_artifact_.GetDisplayItemList()[old_index];
     const DisplayItemClient* client_to_invalidate_old_visual_rect = nullptr;
 
-    if (!old_item.HasValidClient()) {
+    if (old_item.IsTombstone()) {
       // old_item has been moved into new_display_item_list_ as a cached item.
       size_t moved_to_index = items_moved_into_new_list_[old_index];
       if (new_display_item_list_[moved_to_index].DrawsContent()) {
@@ -1008,12 +1004,12 @@ void PaintController::ShowUnderInvalidationError(
     const DisplayItem& new_item,
     const DisplayItem* old_item) const {
   LOG(ERROR) << under_invalidation_message_prefix_ << " " << reason;
-#ifndef NDEBUG
+#if DCHECK_IS_ON()
   LOG(ERROR) << "New display item: " << new_item.AsDebugString();
   LOG(ERROR) << "Old display item: "
              << (old_item ? old_item->AsDebugString() : "None");
 #else
-  LOG(ERROR) << "Run debug build to get more details.";
+  LOG(ERROR) << "Run a build with DCHECK on to get more details.";
 #endif
   LOG(ERROR) << "See http://crbug.com/619103.";
 
@@ -1051,10 +1047,10 @@ void PaintController::ShowSequenceUnderInvalidationError(
     int end) {
   LOG(ERROR) << under_invalidation_message_prefix_ << " " << reason;
   LOG(ERROR) << "Subsequence client: " << client.DebugName();
-#ifndef NDEBUG
+#if DCHECK_IS_ON()
   ShowDebugData();
 #else
-  LOG(ERROR) << "Run debug build to get more details.";
+  LOG(ERROR) << "Run a build with DCHECK on to get more details.";
 #endif
   LOG(ERROR) << "See http://crbug.com/619103.";
 }
