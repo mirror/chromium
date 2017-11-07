@@ -1,0 +1,17 @@
+<!doctype html>
+<meta charset="utf-8">
+<title>Async Cookes: cookieStore.get() sees cookieStore.set() cookie</title>
+<script src="../../resources/testharness.js"></script>
+<script src="../../resources/testharnessreport.js"></script>
+<script>
+'use strict';
+
+promise_test(async testCase => {
+  await cookieStore.set('cookie-name', 'cookie-value');
+  const cookie = await cookieStore.get();
+
+  assert_equals(cookie.name, 'cookie-name');
+  assert_equals(cookie.value, 'cookie-value');
+}, 'cookieStore.get returns the cookie written by cookieStore.set');
+
+</script>

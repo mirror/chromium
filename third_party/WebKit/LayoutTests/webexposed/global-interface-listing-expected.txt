@@ -1043,7 +1043,10 @@ interface ConvolverNode : AudioNode
 interface CookieStore
     attribute @@toStringTag
     method constructor
+    method delete
+    method get
     method getAll
+    method has
     method set
 interface CountQueuingStrategy
     method constructor
@@ -9471,4 +9474,3 @@ interface webkitURL
 PASS successfullyParsed is true
 
 TEST COMPLETE
-
