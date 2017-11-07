@@ -37,15 +37,13 @@
 
 - (instancetype)initWithButtons:(NSArray<NSString*>*)buttonTitles
                        delegate:(id<ToolbarAssistiveKeyboardDelegate>)delegate {
-  const CGFloat kViewHeight = 44.0;
-  CGFloat width = [[UIScreen mainScreen] bounds].size.width;
-  // TODO(crbug.com/734512): Have the creator of the view define the size.
-  CGRect frame = CGRectMake(0.0, 0.0, width, kViewHeight);
-
-  self = [super initWithFrame:frame inputViewStyle:UIInputViewStyleKeyboard];
+  self =
+      [super initWithFrame:CGRectZero inputViewStyle:UIInputViewStyleKeyboard];
   if (self) {
     _buttonTitles = buttonTitles;
     _delegate = delegate;
+    self.translatesAutoresizingMaskIntoConstraints = NO;
+    self.allowsSelfSizing = YES;
     [self addSubviews];
   }
   return self;
@@ -59,7 +57,7 @@
   const CGFloat kButtonHeight = 34.0;
   const CGFloat kBetweenShortcutButtonSpacing = 5.0;
   const CGFloat kBetweenSearchButtonSpacing = 12.0;
-  const CGFloat kHorizontalMargin = 10.0;
+  const CGFloat kMargin = 10.0;
 
   // Create and add stackview filled with the shortcut buttons.
   UIStackView* shortcutStackView = [[UIStackView alloc] init];
@@ -92,15 +90,21 @@
   [NSLayoutConstraint activateConstraints:@[
     [searchStackView.leadingAnchor
         constraintEqualToAnchor:layoutGuide.leadingAnchor
-                       constant:kHorizontalMargin],
+                       constant:kMargin],
     [shortcutStackView.trailingAnchor
         constraintEqualToAnchor:layoutGuide.trailingAnchor
-                       constant:-kHorizontalMargin],
+                       constant:-kMargin],
     [searchStackView.trailingAnchor
-        constraintLessThanOrEqualToAnchor:shortcutStackView.leadingAnchor]
+        constraintLessThanOrEqualToAnchor:shortcutStackView.leadingAnchor],
+    [searchStackView.topAnchor constraintEqualToAnchor:layoutGuide.topAnchor
+                                              constant:kMargin],
+    [searchStackView.bottomAnchor
+        constraintEqualToAnchor:layoutGuide.bottomAnchor],
+    [shortcutStackView.topAnchor constraintEqualToAnchor:layoutGuide.topAnchor
+                                                constant:kMargin],
+    [shortcutStackView.bottomAnchor
+        constraintEqualToAnchor:layoutGuide.bottomAnchor],
   ]];
-  AddSameCenterYConstraint(searchStackView, self);
-  AddSameCenterYConstraint(shortcutStackView, self);
 }
 
 - (UIView*)shortcutButtonWithTitle:(NSString*)title {
