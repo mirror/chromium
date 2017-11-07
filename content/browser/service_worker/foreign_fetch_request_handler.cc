@@ -31,8 +31,6 @@ namespace content {
 
 namespace {
 
-int kUserDataKey;  // Only address is used.
-
 class ForeignFetchRequestInterceptor : public net::URLRequestInterceptor {
  public:
   explicit ForeignFetchRequestInterceptor(ResourceContext* resource_context)
@@ -135,13 +133,13 @@ void ForeignFetchRequestHandler::InitializeHandler(
           context_wrapper, blob_storage_context->AsWeakPtr(), request_mode,
           credentials_mode, redirect_mode, integrity, keepalive, resource_type,
           request_context_type, frame_type, body, timeout));
-  request->SetUserData(&kUserDataKey, std::move(handler));
+  request->SetUserData(&user_data_key_, std::move(handler));
 }
 
 ForeignFetchRequestHandler* ForeignFetchRequestHandler::GetHandler(
     net::URLRequest* request) {
   return static_cast<ForeignFetchRequestHandler*>(
-      request->GetUserData(&kUserDataKey));
+      request->GetUserData(&user_data_key_));
 }
 
 std::unique_ptr<net::URLRequestInterceptor>

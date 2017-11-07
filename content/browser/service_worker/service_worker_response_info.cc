@@ -10,21 +10,15 @@
 
 namespace content {
 
-namespace {
-
-int kUserDataKey;  // Only address is used, value is not important.
-
-}  // namespace
-
 // static
 ServiceWorkerResponseInfo* ServiceWorkerResponseInfo::ForRequest(
     net::URLRequest* request,
     bool create) {
   ServiceWorkerResponseInfo* info = static_cast<ServiceWorkerResponseInfo*>(
-      request->GetUserData(&kUserDataKey));
+      request->GetUserData(&user_data_key_));
   if (!info && create) {
     info = new ServiceWorkerResponseInfo();
-    request->SetUserData(&kUserDataKey, base::WrapUnique(info));
+    request->SetUserData(&user_data_key_, base::WrapUnique(info));
   }
   return info;
 }

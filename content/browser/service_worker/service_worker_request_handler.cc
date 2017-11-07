@@ -36,8 +36,6 @@ namespace content {
 
 namespace {
 
-int kUserDataKey;  // Key value is not important.
-
 class ServiceWorkerRequestInterceptor
     : public net::URLRequestInterceptor {
  public:
@@ -109,7 +107,7 @@ void ServiceWorkerRequestHandler::InitializeForNavigation(
           frame_type, blob_storage_context->AsWeakPtr(), body,
           skip_service_worker));
   if (handler)
-    request->SetUserData(&kUserDataKey, std::move(handler));
+    request->SetUserData(&user_data_key_, std::move(handler));
 
   // Transfer ownership to the ServiceWorkerNavigationHandleCore.
   // In the case of a successful navigation, the SWProviderHost will be
@@ -214,14 +212,14 @@ void ServiceWorkerRequestHandler::InitializeHandler(
           resource_type, request_context_type, frame_type,
           blob_storage_context->AsWeakPtr(), body, skip_service_worker));
   if (handler)
-    request->SetUserData(&kUserDataKey, std::move(handler));
+    request->SetUserData(&user_data_key_, std::move(handler));
 }
 
 // static
 ServiceWorkerRequestHandler* ServiceWorkerRequestHandler::GetHandler(
     const net::URLRequest* request) {
   return static_cast<ServiceWorkerRequestHandler*>(
-      request->GetUserData(&kUserDataKey));
+      request->GetUserData(&user_data_key_));
 }
 
 // static
