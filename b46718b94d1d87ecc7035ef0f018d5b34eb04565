@@ -52,6 +52,24 @@
       "revId": "b46718b94d1d87ecc7035ef0f018d5b34eb04565",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "99d56a91_7355d4c9",
+        "filename": "tools/mb/mb_config.pyl",
+        "patchSetId": 2
+      },
+      "lineNbr": 1568,
+      "author": {
+        "id": 1003232
+      },
+      "writtenOn": "2017-11-07T02:42:17Z",
+      "side": 1,
+      "message": "I\u0027m not quite sure what you\u0027re asking. You can certainly create one mixin called \u0027release_bot_x86_minimal_symbols_disable_nacl\u0027 that has the other four mixins as sub-mixins.\n\nBut MB won\u0027t automatically split up a name into existing mixins, though I have long kinda wanted that :).",
+      "parentUuid": "067aae38_78e02ce6",
+      "revId": "b46718b94d1d87ecc7035ef0f018d5b34eb04565",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
