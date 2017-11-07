@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "394a2c01_a5b6d669",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/preferences/privacy/ClearBrowsingDataPreferencesTab.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 56,
+      "author": {
+        "id": 1183839
+      },
+      "writtenOn": "2017-11-07T09:21:18Z",
+      "side": 1,
+      "message": "Can we start with just a single option? That reduced the number of strings that are translated until the UI is finalized.",
+      "revId": "34fc7fcb50363143a7d3a2ad383f305e48dc9bd8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
