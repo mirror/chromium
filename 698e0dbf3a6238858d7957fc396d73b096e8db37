@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "381e0e09_7b92ee60",
+        "filename": "content/browser/loader/navigation_url_loader_network_service.cc",
+        "patchSetId": 20
+      },
+      "lineNbr": 171,
+      "author": {
+        "id": 1115881
+      },
+      "writtenOn": "2017-11-07T17:10:42Z",
+      "side": 1,
+      "message": "Eventually, what we want to do is no longer call BeginNavigationRequest but use the same Mojo path as subresource requests to reach the ResourceDispatcherHost. This is because the goal of this work is also to prepare for the network service. In a network service world, ResourceDispatcherHost no longer exists, so we should try to avoid making calls to it directly from the navigation code. It might not make sense to do this in this particular CL, but this is something we should really keep in mind.",
+      "revId": "698e0dbf3a6238858d7957fc396d73b096e8db37",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
