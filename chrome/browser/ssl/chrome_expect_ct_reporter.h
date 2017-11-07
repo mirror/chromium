@@ -46,6 +46,12 @@ class ChromeExpectCTReporter
   void OnResponseStarted(net::URLRequest* request, int net_error) override;
   void OnReadCompleted(net::URLRequest* request, int bytes_read) override;
 
+  // Sets a callback that will be called when a report is sent successfully.
+  void set_success_callback(const base::Closure& success_callback);
+
+  // Sets a callback that will be called when a report fails to send.
+  void set_failure_callback(const base::Closure& failure_callback);
+
  private:
   // Used to keep track of in-flight CORS preflight requests. When |request|
   // completes successfully and the CORS check passes, |serialized_report| will
@@ -82,9 +88,18 @@ class ChromeExpectCTReporter
   void SendPreflight(const GURL& report_uri,
                      const std::string& serialized_report);
 
+  // When a report fails to send, this method records an UMA histogram and calls
+  // |failure_callback_|.
+  void OnReportFailure(const GURL& report_uri,
+                       int net_error,
+                       int http_response_code);
+
   std::unique_ptr<net::ReportSender> report_sender_;
 
   net::URLRequestContext* request_context_;
+
+  base::Closure success_callback_;
+  base::Closure failure_callback_;
 
   // The CORS preflight requests, with corresponding report information, that
   // are currently in-flight. Entries in this map are deleted when the
