@@ -1,0 +1,73 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "12d83bed_9bacb48a",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 2
+      },
+      "lineNbr": 17,
+      "author": {
+        "id": 1002410
+      },
+      "writtenOn": "2017-11-07T23:49:01Z",
+      "side": 1,
+      "message": "Please link to the CLs that added these metrics.  Also, it\u0027s best practice to have a metrics team reviewer review those CLs – not sure whether that happened in this case.",
+      "range": {
+        "startLine": 7,
+        "startChar": 0,
+        "endLine": 17,
+        "endChar": 35
+      },
+      "revId": "dc2a36904ed719df9d7a29fef68670d2ebb14d67",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f9db134c_0f68f4eb",
+        "filename": "tools/metrics/histograms/histograms.xml",
+        "patchSetId": 2
+      },
+      "lineNbr": 59797,
+      "author": {
+        "id": 1002410
+      },
+      "writtenOn": "2017-11-07T23:49:01Z",
+      "side": 1,
+      "message": "Please document when this is recorded, i.e. what duration each entry measures.",
+      "range": {
+        "startLine": 59796,
+        "startChar": 0,
+        "endLine": 59797,
+        "endChar": 36
+      },
+      "revId": "dc2a36904ed719df9d7a29fef68670d2ebb14d67",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "480e8a04_a8cc9e04",
+        "filename": "tools/metrics/histograms/histograms.xml",
+        "patchSetId": 2
+      },
+      "lineNbr": 59811,
+      "author": {
+        "id": 1002410
+      },
+      "writtenOn": "2017-11-07T23:49:01Z",
+      "side": 1,
+      "message": "Are these actually obsolete, in that data was previously recorded to them?  If they were simply typos, and no data was ever recorded to these names, it\u0027s fine to simply rename the entires in histograms.xml.  OTOH if the histograms actually were renamed at some point on the ChromeOS side, then marking these as \u003cobsolete\u003e is appropriate.",
+      "range": {
+        "startLine": 59809,
+        "startChar": 0,
+        "endLine": 59811,
+        "endChar": 13
+      },
+      "revId": "dc2a36904ed719df9d7a29fef68670d2ebb14d67",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
