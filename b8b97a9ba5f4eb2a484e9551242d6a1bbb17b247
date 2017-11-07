@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "2b853128_ae7e0911",
+        "filename": "components/viz/service/display/gl_renderer_copier.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 129,
+      "author": {
+        "id": 1002076
+      },
+      "writtenOn": "2017-11-07T21:12:03Z",
+      "side": 1,
+      "message": "It doesn\u0027t. There is no mojo interface for I420_PLANES, intentionally. A CopyOutputRequest originating from outside of VIZ cannot be requesting I420_PLANES (there is no struct traits mapping for that).\n\nNote that, if we ever do add mojo support for this, we\u0027d have to make a copy into shared memory for transport across processes. That could still be done on the same task runner, in struct traits, and then the copy passed around to other threads/processes. (However, see my reply to dcheng@ regarding why I think we will never want to do this.)",
+      "parentUuid": "fbc2f19e_2bbeb52e",
+      "revId": "b8b97a9ba5f4eb2a484e9551242d6a1bbb17b247",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "aac32965_86e6680e",
         "filename": "components/viz/service/display/gl_renderer_copier.cc",
         "patchSetId": 3
@@ -36,6 +54,24 @@
     },
     {
       "key": {
+        "uuid": "29c2eded_67150861",
+        "filename": "components/viz/service/display/gl_renderer_copier.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 130,
+      "author": {
+        "id": 1002076
+      },
+      "writtenOn": "2017-11-07T21:12:03Z",
+      "side": 1,
+      "message": "Done. Added comment to CopyOutputResult::Format, where the I420_PLANES enum value is declared and documented.",
+      "parentUuid": "aac32965_86e6680e",
+      "revId": "b8b97a9ba5f4eb2a484e9551242d6a1bbb17b247",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "7a92b58d_b2cb2c49",
         "filename": "components/viz/service/display/gl_renderer_copier.cc",
         "patchSetId": 3
@@ -47,6 +83,24 @@
       "writtenOn": "2017-11-07T15:55:03Z",
       "side": 1,
       "message": "Why does this one need to check framebuffer_texture?",
+      "revId": "b8b97a9ba5f4eb2a484e9551242d6a1bbb17b247",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ed180987_97315ad1",
+        "filename": "components/viz/service/display/gl_renderer_copier.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 134,
+      "author": {
+        "id": 1002076
+      },
+      "writtenOn": "2017-11-07T21:12:03Z",
+      "side": 1,
+      "message": "Added code comment here to explain:\n\n      // I420 readback always requires a source texture. If a\n      // |framebuffer_texture| was not provided (or scaling was requested), a\n      // texture must first be rendered from the currently-bound framebuffer.",
+      "parentUuid": "7a92b58d_b2cb2c49",
       "revId": "b8b97a9ba5f4eb2a484e9551242d6a1bbb17b247",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -70,6 +124,24 @@
     },
     {
       "key": {
+        "uuid": "d482394a_3c620c7c",
+        "filename": "components/viz/service/display/gl_renderer_copier.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 518,
+      "author": {
+        "id": 1002076
+      },
+      "writtenOn": "2017-11-07T21:12:03Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "c8998fa7_a9dab6a4",
+      "revId": "b8b97a9ba5f4eb2a484e9551242d6a1bbb17b247",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "38beda74_d6e2997b",
         "filename": "components/viz/service/display/gl_renderer_copier.cc",
         "patchSetId": 3
@@ -84,6 +156,24 @@
       "revId": "b8b97a9ba5f4eb2a484e9551242d6a1bbb17b247",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "13746b8a_88530fde",
+        "filename": "components/viz/service/display/gl_renderer_copier.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 522,
+      "author": {
+        "id": 1002076
+      },
+      "writtenOn": "2017-11-07T21:12:03Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "38beda74_d6e2997b",
+      "revId": "b8b97a9ba5f4eb2a484e9551242d6a1bbb17b247",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {

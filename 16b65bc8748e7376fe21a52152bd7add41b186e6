@@ -16,6 +16,24 @@
       "revId": "16b65bc8748e7376fe21a52152bd7add41b186e6",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "30aecca2_0f17d8c8",
+        "filename": "services/viz/public/cpp/compositing/copy_output_result_struct_traits.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 122,
+      "author": {
+        "id": 1002076
+      },
+      "writtenOn": "2017-11-07T21:12:03Z",
+      "side": 1,
+      "message": "And, if we ever decide to provide I420_PLANES results to clients in other processes, it just means adding a little extra struct traits impl. However, I don\u0027t want to encourage that, since using I420 image format implies a video use case (usually), and I wouldn\u0027t want people re-inventing the wheel for that.",
+      "parentUuid": "6ffa8a51_66f5e265",
+      "revId": "16b65bc8748e7376fe21a52152bd7add41b186e6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
