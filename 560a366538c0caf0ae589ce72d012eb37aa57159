@@ -49,6 +49,30 @@
     },
     {
       "key": {
+        "uuid": "5d3067b6_19f7caf4",
+        "filename": "components/metrics/metrics_state_manager.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 94,
+      "author": {
+        "id": 1103654
+      },
+      "writtenOn": "2017-11-07T20:58:44Z",
+      "side": 1,
+      "message": "Sorry for the long delay on replying. Still trying to catch up with all the things in my inbox.\n\nThanks for checking this - in my previous comment I was thinking the client_id would be preserved via the system profile serialization, but you\u0027re right that it isn\u0027t - since it\u0027s at the higher level proto.\n\nEither 1a or 1b sounds fine to me. 1b does seem a bit safer to separate the two effects - so if you\u0027re happy to do it that way, sgtm!",
+      "parentUuid": "66ca74f8_7632a184",
+      "range": {
+        "startLine": 94,
+        "startChar": 8,
+        "endLine": 94,
+        "endChar": 42
+      },
+      "revId": "560a366538c0caf0ae589ce72d012eb37aa57159",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "4b415fb3_36abcd95",
         "filename": "components/metrics/metrics_state_manager.cc",
         "patchSetId": 9
