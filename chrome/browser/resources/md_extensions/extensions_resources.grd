@@ -78,6 +78,10 @@
                  file="kiosk_dialog.js"
                  type="chrome_html" />
     </if>
+      <structure name="IDR_MD_EXTENSIONS_LAZY_LOAD_HTML"
+                 preprocess="true"
+                 file="lazy_load.html"
+                 type="chrome_html" />
       <structure name="IDR_MD_EXTENSIONS_MANAGER_HTML"
                  file="manager.html"
                  type="chrome_html"

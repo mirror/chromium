@@ -7,10 +7,19 @@ unpak_folder = "extensions_resources.unpak"
 
 optimize_webui("build") {
   host = "extensions"
-  html_in_files = [ "extensions.html" ]
-  html_out_files = [ "vulcanized.html" ]
+  html_in_files = [
+    "extensions.html",
+    "lazy_load.html",
+  ]
+  html_out_files = [
+    "vulcanized.html",
+    "lazy_load.vulcanized.html",
+  ]
   input = rebase_path("$target_gen_dir/$unpak_folder", root_build_dir)
-  js_out_files = [ "crisper.js" ]
+  js_out_files = [
+    "crisper.js",
+    "lazy_load.crisper.js",
+  ]
 
   deps = [
     ":unpak",
