@@ -12,6 +12,7 @@ TestGpuHost::TestGpuHost() = default;
 TestGpuHost::~TestGpuHost() = default;
 
 void TestGpuHost::CreateFrameSinkManager(
+    uint16_t process_restart_id,
     viz::mojom::FrameSinkManagerRequest request,
     viz::mojom::FrameSinkManagerClientPtr client) {
   frame_sink_manager_ = base::MakeUnique<viz::TestFrameSinkManagerImpl>();
