@@ -46,6 +46,30 @@
       "revId": "b64de37e39677f18a9159ffed1eb81204d107a19",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "e297dcca_febc720d",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 23
+      },
+      "lineNbr": 10,
+      "author": {
+        "id": 1245462
+      },
+      "writtenOn": "2017-11-07T16:03:28Z",
+      "side": 1,
+      "message": "Thanks! I reported crbug.com/782198 for my suspect.\n\nI cherry-picked PS24 locally. It hits a CHECK(i::FLAG_expose_gc) during V8\u0027s GC:\n\n  /bepo/trunk/src$ tools/perf/run_benchmark run memory.leak_detection --use-live-sites --browser\u003dexact --browser-executable\u003d/bepo/trunk/src/out/Default/chrome\n\nCrashes with:\n  ********************************************************************************\n  Standard output:\n  ********************************************************************************\n\t\n\tDevTools listening on ws://127.0.0.1:39427/devtools/browser/97de0893-2dcf-4105-a44b-715680b3353f\n\t[10033:10061:1107/145600.857230:ERROR:service_manager.cc(158)] Connection InterfaceProviderSpec prevented service: content_browser from binding interface: resource_coordinator::mojom::PageSignalGenerator exposed by: resource_coordinator\n\tATTENTION: default value of option force_s3tc_enable overridden by environment.\n\t[10091:10091:1107/145600.922606:ERROR:gpu_info.cc(103)] No active GPU found, returning primary GPU.\n\t[10033:10033:1107/145601.139236:ERROR:navigation_entry_screenshot_manager.cc(135)] Invalid entry with unique id: 1\n\t\n\t#\n\t# Fatal error in ../../v8/src/api.cc, line 8624\n\t# Check failed: i::FLAG_expose_gc.\n\t#\n\t#0 0x558d08099dfe base::debug::StackTrace::StackTrace()\n\t#1 0x558d0aace755 gin::(anonymous namespace)::PrintStackTrace()\n\t#2 0x558d0a82f32c V8_Fatal()\n\t#3 0x558d0780b4a5 v8::Isolate::RequestGarbageCollectionForTesting()\n\t#4 0x558d0d1d113b blink::V8GCController::CollectAllGarbageForTesting()\n\t#5 0x558d0b547ebd blink::BlinkLeakDetector::CollectGarbage()\n\t#6 0x558d06ea0036 blink::protocol::Memory::DispatcherImpl::prepareForLeakDetection()\n\t#7 0x558d06e9fae3 blink::protocol::Memory::DispatcherImpl::dispatch()\n\t#8 0x558d06ec32f0 blink::protocol::UberDispatcher::dispatch()\n\t#9 0x558d0b2698df blink::InspectorSession::DispatchProtocolMessage()\n\t#10 0x558d0adf7a63 blink::WebDevToolsAgentImpl::DispatchMessageFromFrontend()\n\t#11 0x558d0adf78d7 blink::WebDevToolsAgentImpl::DispatchOnInspectorBackend()\n\t#12 0x558d0c37b3a1 content::DevToolsAgent::OnDispatchOnInspectorBackend()\n\t#13 0x558d0c37b151 _ZN3IPC8MessageTI48DevToolsAgentMsg_DispatchOnInspectorBackend_MetaNSt3__15tupleIJiiNS2_12basic_stringIcNS2_11char_traitsIcEENS2_9allocatorIcEEEES9_EEEvE8DispatchIN7content13DevToolsAgentESE_vMSE_FviiRKS9_SG_EEEbPKNS_7MessageEPT_PT0_PT1_T2_\n\t#14 0x558d0c37a82e content::DevToolsAgent::OnMessageReceived()\n\t#15 0x558d0c1b9863 content::RenderFrameImpl::OnMessageReceived()\n\t#16 0x558d0c9bab14 IPC::MessageRouter::RouteMessage()\n\t#17 0x558d0c9baa4f IPC::MessageRouter::OnMessageReceived()\n\t#18 0x558d0a80bf11 content::ChildThreadImpl::OnMessageReceived()\n\t#19 0x558d08cefca5 IPC::ChannelProxy::Context::OnDispatchMessage()\n\t#20 0x558d08cf26e2 _ZN4base8internal7InvokerINS0_9BindStateIMN3IPC12ChannelProxy7ContextEFvRKNS3_7MessageEEJ13scoped_refptrIS5_ES6_EEEFvvEE3RunEPNS0_13BindStateBaseE\n\t#21 0x558d0809bbb0 base::debug::TaskAnnotator::RunTask()\n\t#22 0x558d07b2326b blink::scheduler::TaskQueueManager::ProcessTaskFromWorkQueue()\n\t#23 0x558d07b2134b blink::scheduler::TaskQueueManager::DoWork()\n\t#24 0x558d07b34ab5 _ZN4base8internal7InvokerINS0_9BindStateIMN5blink9scheduler16TaskQueueManagerEFvbEJNS_7WeakPtrIS5_EEbEEEFvvEE3RunEPNS0_13BindStateBaseE\n\t#25 0x558d0809bbb0 base::debug::TaskAnnotator::RunTask()\n\t#26 0x558d080cd63c base::MessageLoop::RunTask()\n\t#27 0x558d080cda15 base::MessageLoop::DeferOrRunPendingTask()\n\t#28 0x558d080cdca6 base::MessageLoop::DoWork()\n\t#29 0x558d080ce920 base::MessagePumpDefault::Run()\n\t#30 0x558d080cceee base::MessageLoop::Run()\n\t#31 0x558d08103564 base::RunLoop::Run()\n\t#32 0x558d0c234151 content::RendererMain()\n\t#33 0x558d07c8a264 content::RunZygote()\n\t#34 0x558d07c8ab6f content::RunNamedProcessTypeMain()\n\t#35 0x558d07c8b63c content::ContentMainRunnerImpl::Run()\n\t#36 0x558d07c97f63 service_manager::Main()\n\t#37 0x558d07c89f02 content::ContentMain()\n\t#38 0x558d059c292c ChromeMain\n\t#39 0x7fc95fff4830 __libc_start_main\n\t#40 0x558d059c2780 \u003cunknown\u003e\n********************************************************************************",
+      "parentUuid": "48e991c2_c4bff66a",
+      "range": {
+        "startLine": 10,
+        "startChar": 44,
+        "endLine": 10,
+        "endChar": 54
+      },
+      "revId": "b64de37e39677f18a9159ffed1eb81204d107a19",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
