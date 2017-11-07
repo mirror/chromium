@@ -38,6 +38,8 @@ IntSize UnacceleratedStaticBitmapImage::Size() const {
   return IntSize(paint_image_.width(), paint_image_.height());
 }
 
+void UnacceleratedStaticBitmapImage::EnsureMailbox(MailboxSyncMode) {}
+
 bool UnacceleratedStaticBitmapImage::IsPremultiplied() const {
   return paint_image_.GetSkImage()->alphaType() ==
          SkAlphaType::kPremul_SkAlphaType;

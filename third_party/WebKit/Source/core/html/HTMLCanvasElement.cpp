@@ -579,11 +579,15 @@ void HTMLCanvasElement::NotifyListenersCanvasChanged() {
         FloatSize());
     if (status != kNormalSourceImageStatus)
       return;
-    sk_sp<SkImage> image =
+    sk_sp<SkImage> sk_image =
         source_image->PaintImageForCurrentFrame().GetSkImage();
+    scoped_refptr<StaticBitmapImage> bitmap_image = StaticBitmapImage::Create(
+        sk_image, source_image->ContextProviderWrapper());
+    bitmap_image->EnsureMailbox(kVerifiedSyncToken);
     for (CanvasDrawListener* listener : listeners_) {
       if (listener->NeedsNewFrame()) {
-        listener->SendNewFrame(image);
+        listener->SendNewFrame(sk_image,
+                               source_image->ContextProviderWrapper());
       }
     }
   }

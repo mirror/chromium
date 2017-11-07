@@ -191,8 +191,8 @@ TEST_P(CanvasCaptureHandlerTest, GetFormatsStartAndStop) {
   canvas_capture_handler_->SendNewFrame(
       GenerateTestImage(testing::get<0>(GetParam()),
                         testing::get<1>(GetParam()),
-                        testing::get<2>(GetParam()))
-          .get());
+                        testing::get<2>(GetParam())),
+      nullptr);
   run_loop.Run();
 
   source->StopCapture();
@@ -213,11 +213,12 @@ TEST_P(CanvasCaptureHandlerTest, VerifyFrame) {
   EXPECT_CALL(*this, DoOnRunning(true)).Times(1);
   media::VideoCaptureParams params;
   source->StartCapture(
-      params, base::Bind(&CanvasCaptureHandlerTest::OnVerifyDeliveredFrame,
-                         base::Unretained(this), opaque_frame, width, height),
+      params,
+      base::Bind(&CanvasCaptureHandlerTest::OnVerifyDeliveredFrame,
+                 base::Unretained(this), opaque_frame, width, height),
       base::Bind(&CanvasCaptureHandlerTest::OnRunning, base::Unretained(this)));
   canvas_capture_handler_->SendNewFrame(
-      GenerateTestImage(opaque_frame, width, height).get());
+      GenerateTestImage(opaque_frame, width, height), nullptr);
   run_loop.RunUntilIdle();
 }
 
