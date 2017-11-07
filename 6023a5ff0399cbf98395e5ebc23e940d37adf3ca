@@ -102,6 +102,24 @@
     },
     {
       "key": {
+        "uuid": "bd8349fc_efb96305",
+        "filename": "components/optimization_guide/DEPS",
+        "patchSetId": 8
+      },
+      "lineNbr": 2,
+      "author": {
+        "id": 1133190
+      },
+      "writtenOn": "2017-11-07T18:03:36Z",
+      "side": 1,
+      "message": "Thanks for the detailed explanation! \n\nI ended up removing the //content dependency in favor of an ObserverList (didn\u0027t know about the antipattern and that class). This component should not be growing broader //content dependencies.\n\nThe main reason this is in //components rather than in //chrome is because its initial consumer is //components/previews. As ryansturm@ mentioned above, previews is going through a transitional phase to being flattened, so the location of the dependency may change at some point.",
+      "parentUuid": "ddd73c99_3e3232fe",
+      "revId": "6023a5ff0399cbf98395e5ebc23e940d37adf3ca",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "8fd73d7d_8737c224",
         "filename": "components/optimization_guide/optimization_guide_service.cc",
         "patchSetId": 8
@@ -146,6 +164,30 @@
       "revId": "6023a5ff0399cbf98395e5ebc23e940d37adf3ca",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "baa7fe0f_54dccebc",
+        "filename": "components/optimization_guide/optimization_guide_service.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 14,
+      "author": {
+        "id": 1133190
+      },
+      "writtenOn": "2017-11-07T18:03:36Z",
+      "side": 1,
+      "message": "removed in favor of an observer list",
+      "parentUuid": "1f7f5cd0_a1f61906",
+      "range": {
+        "startLine": 14,
+        "startChar": 10,
+        "endLine": 14,
+        "endChar": 17
+      },
+      "revId": "6023a5ff0399cbf98395e5ebc23e940d37adf3ca",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
