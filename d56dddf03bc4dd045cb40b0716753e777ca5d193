@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "a309f607_3304f99b",
+        "filename": "third_party/WebKit/Source/core/paint/BoxPaintInvalidator.cpp",
+        "patchSetId": 6
+      },
+      "lineNbr": 237,
+      "author": {
+        "id": 1116039
+      },
+      "writtenOn": "2017-11-07T22:57:32Z",
+      "side": 1,
+      "message": "I deliberately separated this path in http://crrev.com/497601, not just because it\u0027s for the non-SCL path, but because setting the needs-invalidation bits on the LayoutObject is a different thing from actually issuing the invalidation.  Unfortunately we use the verb \"invalidate\" for both of these which causes a lot of confusion.  I think we should try not to have a method that does invalidation-issuing in the SCL case but only needs-invalidation-bit-setting in the non-SCL case.",
+      "range": {
+        "startLine": 237,
+        "startChar": 11,
+        "endLine": 237,
+        "endChar": 64
+      },
+      "revId": "d56dddf03bc4dd045cb40b0716753e777ca5d193",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
