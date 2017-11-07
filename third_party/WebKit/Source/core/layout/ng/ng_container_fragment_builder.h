@@ -117,6 +117,14 @@ class CORE_EXPORT NGContainerFragmentBuilder : public NGBaseFragmentBuilder {
   struct NGOutOfFlowPositionedCandidate {
     NGOutOfFlowPositionedDescendant descendant;
     NGLogicalOffset child_offset;  // Logical offset of child's top left vertex.
+    bool child_offset_is_rtl;
+    NGOutOfFlowPositionedCandidate(
+        NGOutOfFlowPositionedDescendant descendant_arg,
+        NGLogicalOffset child_offset_arg,
+        bool child_offset_is_rtl_arg = false)
+        : descendant(descendant_arg),
+          child_offset(child_offset_arg),
+          child_offset_is_rtl(child_offset_is_rtl_arg) {}
   };
 
   NGContainerFragmentBuilder(scoped_refptr<const ComputedStyle>,
