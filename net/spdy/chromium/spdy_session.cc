@@ -1330,6 +1330,30 @@ size_t SpdySession::DumpMemoryStats(StreamSocket::SocketMemoryStats* stats,
          SpdyEstimateMemoryUsage(priority_dependency_state_);
 }
 
+SpdySession::UnclaimedPushedStreamContainer::PushPromise::PushPromise(
+    SpdySession* spdy_session)
+    : spdy_session_(spdy_session->GetWeakPtr()) {}
+
+SpdySession::UnclaimedPushedStreamContainer::PushPromise::~PushPromise() {
+  // SpdySession must remove all entries from Http2PushPromiseIndex before it is
+  // destroyed.
+  DCHECK(spdy_session_);
+}
+
+bool SpdySession::UnclaimedPushedStreamContainer::PushPromise::Validate(
+    const SpdySessionKey& key) const {
+  return spdy_session_->spdy_session_key().proxy_server() ==
+             key.proxy_server() &&
+         spdy_session_->spdy_session_key().privacy_mode() ==
+             key.privacy_mode() &&
+         spdy_session_->VerifyDomainAuthentication(key.host_port_pair().host());
+}
+
+base::WeakPtr<SpdySession>
+SpdySession::UnclaimedPushedStreamContainer::PushPromise::spdy_session() const {
+  return spdy_session_;
+}
+
 SpdySession::UnclaimedPushedStreamContainer::UnclaimedPushedStreamContainer(
     SpdySession* spdy_session)
     : spdy_session_(spdy_session) {}
@@ -1351,8 +1375,8 @@ SpdySession::UnclaimedPushedStreamContainer::erase(const_iterator it) {
   DCHECK(it != end());
   // Only allow cross-origin push for secure resources.
   if (it->first.SchemeIsCryptographic()) {
-    spdy_session_->pool_->push_promise_index()->UnregisterUnclaimedPushedStream(
-        it->first, spdy_session_);
+    spdy_session_->pool_->push_promise_index()->Unregister(
+        it->first, PushPromise(spdy_session_));
   }
   return streams_.erase(it);
 }
@@ -1371,8 +1395,8 @@ bool SpdySession::UnclaimedPushedStreamContainer::insert(
   }
   // Only allow cross-origin push for https resources.
   if (url.SchemeIsCryptographic()) {
-    spdy_session_->pool_->push_promise_index()->RegisterUnclaimedPushedStream(
-        url, spdy_session_->GetWeakPtr());
+    spdy_session_->pool_->push_promise_index()->Register(
+        url, std::make_unique<PushPromise>(spdy_session_));
   }
   return true;
 }
