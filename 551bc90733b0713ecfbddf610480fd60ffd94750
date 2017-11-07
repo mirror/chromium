@@ -37,6 +37,24 @@
     },
     {
       "key": {
+        "uuid": "d250d83e_62e9870f",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/vr_shell/VrShellImpl.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 333,
+      "author": {
+        "id": 1002161
+      },
+      "writtenOn": "2017-11-07T17:14:59Z",
+      "side": 1,
+      "message": "I see. Thanks for explain. This is probably bikeshedding, but perhaps we can rename to hasOrCanRequestAudioPermission along with the variable name in model. It would be easier to understand the logic in visibility binding for voice search button. voice input is kind of misleading as we don\u0027t really have voice input, we only have voice search.",
+      "parentUuid": "3e9ad59a_b6f89c3d",
+      "revId": "551bc90733b0713ecfbddf610480fd60ffd94750",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "2b46d964_778bb300",
         "filename": "chrome/browser/vr/browser_ui_interface.h",
         "patchSetId": 1

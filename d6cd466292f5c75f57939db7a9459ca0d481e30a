@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "422a6ce2_b06c3678",
+        "filename": "chrome/browser/vr/ui_scene_manager.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 568,
+      "author": {
+        "id": 1002161
+      },
+      "writtenOn": "2017-11-07T17:14:59Z",
+      "side": 0,
+      "message": "Do you mind to add a unittest for this? Similar to this VoiceSearchHiddenInIncognito test here: https://cs.chromium.org/chromium/src/chrome/browser/vr/ui_scene_manager_unittest.cc?rcl\u003d5fd05af65fb997c010b8eaea7d5e95d194a80c96\u0026l\u003d228",
+      "revId": "d6cd466292f5c75f57939db7a9459ca0d481e30a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
