@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "b66fbe2e_acab8bd9",
+        "filename": "content/browser/background_fetch/background_fetch_context.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 75,
+      "author": {
+        "id": 1204345
+      },
+      "writtenOn": "2017-11-07T13:07:43Z",
+      "side": 1,
+      "message": "That\u0027s really easy to do, since the ServiceImpl has the origin but drops it before calling this.\n\nPlease take a look at the unit tests I added for this.",
+      "parentUuid": "e8135940_06e46472",
+      "revId": "7619736076f57411b6f3356c33c89fb65cee64fd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "eaa75e3c_141437a9",
         "filename": "content/browser/background_fetch/background_fetch_context.h",
         "patchSetId": 2
@@ -36,6 +54,24 @@
     },
     {
       "key": {
+        "uuid": "1a262bc3_50e5194b",
+        "filename": "content/browser/background_fetch/background_fetch_context.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 60,
+      "author": {
+        "id": 1204345
+      },
+      "writtenOn": "2017-11-07T13:07:43Z",
+      "side": 1,
+      "message": "I think it helps mark it out as a concept (and searching for |developer_id| elsewhere in the file shows how it\u0027s used). I think on balance I\u0027ll keep it although I agree it\u0027s a little odd. (Maybe it should have been opaquely-typed rather than a string).\n\nThe developer ID does belong to the BackgroundFetch Registration, so again I think it should stay but I could be swayed if it\u0027s really annoying.",
+      "parentUuid": "eaa75e3c_141437a9",
+      "revId": "7619736076f57411b6f3356c33c89fb65cee64fd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "9ae05362_29e83665",
         "filename": "content/browser/background_fetch/background_fetch_request_manager.h",
         "patchSetId": 2
@@ -50,6 +86,24 @@
       "revId": "7619736076f57411b6f3356c33c89fb65cee64fd",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "83721bce_858a597c",
+        "filename": "content/browser/background_fetch/background_fetch_request_manager.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 10,
+      "author": {
+        "id": 1204345
+      },
+      "writtenOn": "2017-11-07T13:07:43Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "9ae05362_29e83665",
+      "revId": "7619736076f57411b6f3356c33c89fb65cee64fd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
