@@ -35,11 +35,28 @@
       :host ::slotted(*) {
         flex: 1;
       }
+
+      :host:has(cr-tooltip-icon) ::slotted(*) {
+        flex: none;
+      }
+
+      cr-tooltip-icon {
+        -webkit-margin-start: 20px;
+        display: inline;
+        flex: 1;
+      }
     </style>
     <label id="label" on-click="onLabelTap_">
       <input id="native" type="checkbox" checked="[[checked]]"
           on-change="onNativeChange_" on-click="onNativeClick_">
       <slot></slot>
+      <template is="dom-if" if="[[hasIncognitoIcon_]]">
+        <cr-tooltip-icon
+            icon-class="cr:error-outline"
+            tooltip-text="$i18n{incognitoInfoWarning}"
+            on-click="onIconClick_">
+        </cr-tooltip-icon>
+      </template>
       <cr-toggle id="crToggle" checked="{{checked}}"
           on-change="onCrToggleChange_"></cr-toggle>
     </label>

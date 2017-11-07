@@ -314,14 +314,9 @@
             <template is="dom-if" if="[[data.incognitoAccess.isEnabled]]">
               <extensions-toggle-row id="allow-incognito"
                   checked="[[data.incognitoAccess.isActive]]"
-                  on-change="onAllowIncognitoChange_">
+                  on-change="onAllowIncognitoChange_" incognito>
                 <span>
                   $i18n{itemAllowIncognito}
-                  <cr-tooltip-icon
-                      icon-class="cr:error-outline"
-                      tooltip-text="$i18n{incognitoInfoWarning}"
-                      on-click="onIconClick_">
-                  </cr-tooltip-icon>
                 </span>
               </extensions-toggle-row>
             </template>
