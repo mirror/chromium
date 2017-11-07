@@ -1060,6 +1060,7 @@ void FeatureInfo::InitializeFeatures() {
     feature_flags_.chromium_image_ycbcr_420v = true;
   }
 #endif
+  feature_flags_.chromium_image_ycbcr_420v = true;
 
   if (gl::HasExtension(extensions, "GL_APPLE_ycbcr_422")) {
     AddExtensionString("GL_CHROMIUM_ycbcr_422_image");
