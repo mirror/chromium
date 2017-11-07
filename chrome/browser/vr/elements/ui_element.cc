@@ -89,13 +89,22 @@ bool UiElement::PrepareToDraw() {
 
 bool UiElement::DoBeginFrame(const base::TimeTicks& time,
                              const gfx::Vector3dF& look_at) {
+  // We intentionally grab the stale value from last frame. If there's a change
+  // in visibility due to this function, we want still want to indicate
+  // dirtiness.
+  bool was_visible = computed_opacity_ > 0.0f;
   // TODO(mthiesse): This is overly cautious. We may have animations but not
   // trigger any updates, so we should refine this logic and have
   // AnimationPlayer::Tick return a boolean.
-  bool updated = animation_player_.animations().size() > 0;
+  bool animations_updated = animation_player_.animations().size() > 0;
   animation_player_.Tick(time);
   last_frame_time_ = time;
-  return OnBeginFrame(time, look_at) || updated;
+  set_update_phase(kUpdatedAnimations);
+  bool begin_frame_updated = OnBeginFrame(time, look_at);
+  UpdateComputedOpacity();
+  bool was_visible_at_any_point = was_visible || IsVisible();
+  return (begin_frame_updated || animations_updated) &&
+         was_visible_at_any_point;
 }
 
 bool UiElement::OnBeginFrame(const base::TimeTicks& time,
@@ -270,12 +279,12 @@ void UiElement::AddBinding(std::unique_ptr<BindingBase> binding) {
 }
 
 bool UiElement::UpdateBindings() {
-  bool updated = false;
+  updated_bindings_this_frame_ = false;
   for (auto& binding : bindings_) {
     if (binding->Update())
-      updated = true;
+      updated_bindings_this_frame_ = true;
   }
-  return updated;
+  return updated_bindings_this_frame_;
 }
 
 gfx::Point3F UiElement::GetCenter() const {
@@ -385,17 +394,14 @@ void UiElement::LayOutChildren() {
   }
 }
 
-void UiElement::UpdateComputedOpacityRecursive() {
+void UiElement::UpdateComputedOpacity() {
+  bool was_visible = computed_opacity_ > 0.0f;
   set_computed_opacity(opacity_);
   if (parent_) {
     set_computed_opacity(computed_opacity_ * parent_->computed_opacity());
   }
-
   set_update_phase(kUpdatedComputedOpacity);
-
-  for (auto& child : children_) {
-    child->UpdateComputedOpacityRecursive();
-  }
+  updated_visibility_this_frame_ = IsVisible() != was_visible;
 }
 
 void UiElement::UpdateWorldSpaceTransformRecursive() {
