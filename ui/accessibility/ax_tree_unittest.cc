@@ -928,7 +928,7 @@ TEST(AXTreeTest, GetBoundsWithScrolling) {
   EXPECT_EQ("(115, 70) size (50 x 5)", GetBoundsAsString(tree, 3));
 }
 
-TEST(AXTreeTest, GetBoundsEmptyBoundsInheritsFromParent) {
+TEST(AXTreeTest, GetBoundsEmptyBounds) {
   AXTreeUpdate tree_update;
   tree_update.root_id = 1;
   tree_update.nodes.resize(3);
@@ -944,10 +944,10 @@ TEST(AXTreeTest, GetBoundsEmptyBoundsInheritsFromParent) {
   AXTree tree(tree_update);
   EXPECT_EQ("(0, 0) size (800 x 600)", GetBoundsAsString(tree, 1));
   EXPECT_EQ("(300, 200) size (100 x 100)", GetBoundsAsString(tree, 2));
-  EXPECT_EQ("(300, 200) size (100 x 100)", GetBoundsAsString(tree, 3));
+  EXPECT_EQ("(300, 200) size (0 x 0)", GetBoundsAsString(tree, 3));
   EXPECT_FALSE(IsNodeOffscreen(tree, 1));
   EXPECT_FALSE(IsNodeOffscreen(tree, 2));
-  EXPECT_TRUE(IsNodeOffscreen(tree, 3));
+  EXPECT_FALSE(IsNodeOffscreen(tree, 3));
 }
 
 TEST(AXTreeTest, GetBoundsCropsChildToRoot) {
