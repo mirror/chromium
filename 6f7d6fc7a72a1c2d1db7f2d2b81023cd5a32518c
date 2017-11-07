@@ -1,0 +1,174 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "1f9904f7_6f34374d",
+        "filename": "ash/accessibility/accessibility_layer.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 24,
+      "author": {
+        "id": 1000045
+      },
+      "writtenOn": "2017-11-07T20:34:42Z",
+      "side": 1,
+      "message": "Can delegate_ be null? If so, document. If not, DCHECK it. Also, sometimes you test with if (delegate_) -- it should be always or never.",
+      "revId": "6f7d6fc7a72a1c2d1db7f2d2b81023cd5a32518c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f746aec0_32514ebe",
+        "filename": "ash/accessibility/accessibility_layer.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 31,
+      "author": {
+        "id": 1000045
+      },
+      "writtenOn": "2017-11-07T20:34:42Z",
+      "side": 1,
+      "message": "nit: DCHECK root_window (since it isn\u0027t dereferenced in this function it\u0027s not trivial to tell if it\u0027s allowed to be null)",
+      "revId": "6f7d6fc7a72a1c2d1db7f2d2b81023cd5a32518c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0fdcc0d2_2f0fc399",
+        "filename": "ash/accessibility/accessibility_layer.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 45,
+      "author": {
+        "id": 1000045
+      },
+      "writtenOn": "2017-11-07T20:34:42Z",
+      "side": 1,
+      "message": "nit: layer_",
+      "revId": "6f7d6fc7a72a1c2d1db7f2d2b81023cd5a32518c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ef60116a_7dd2daf0",
+        "filename": "ash/accessibility/accessibility_layer.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 54,
+      "author": {
+        "id": 1000045
+      },
+      "writtenOn": "2017-11-07T20:34:42Z",
+      "side": 1,
+      "message": "std::make_unique",
+      "revId": "6f7d6fc7a72a1c2d1db7f2d2b81023cd5a32518c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2f2cc2a0_15c4d759",
+        "filename": "ash/accessibility/accessibility_layer.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 11,
+      "author": {
+        "id": 1000045
+      },
+      "writtenOn": "2017-11-07T20:34:42Z",
+      "side": 1,
+      "message": "not needed?",
+      "revId": "6f7d6fc7a72a1c2d1db7f2d2b81023cd5a32518c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "04dbfe74_e9e97349",
+        "filename": "ash/accessibility/accessibility_layer.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 13,
+      "author": {
+        "id": 1000045
+      },
+      "writtenOn": "2017-11-07T20:34:42Z",
+      "side": 1,
+      "message": "not needed?",
+      "revId": "6f7d6fc7a72a1c2d1db7f2d2b81023cd5a32518c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d811a630_2229b138",
+        "filename": "ash/accessibility/accessibility_layer.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 66,
+      "author": {
+        "id": 1000045
+      },
+      "writtenOn": "2017-11-07T20:34:42Z",
+      "side": 1,
+      "message": "Can this be private?",
+      "revId": "6f7d6fc7a72a1c2d1db7f2d2b81023cd5a32518c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d70d19fd_62d8222e",
+        "filename": "ash/accessibility/accessibility_layer.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 70,
+      "author": {
+        "id": 1000045
+      },
+      "writtenOn": "2017-11-07T20:34:42Z",
+      "side": 1,
+      "message": "The subclass shadows this. Either declare it virtual (hopefully pure virtual) or give it a different name.",
+      "revId": "6f7d6fc7a72a1c2d1db7f2d2b81023cd5a32518c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7982e137_650ebe18",
+        "filename": "ash/accessibility/focus_ring_layer.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 22,
+      "author": {
+        "id": 1000045
+      },
+      "writtenOn": "2017-11-07T20:34:42Z",
+      "side": 1,
+      "message": "Is this needed in the follow-up CL? If it\u0027s going to stay empty, remove it.",
+      "revId": "6f7d6fc7a72a1c2d1db7f2d2b81023cd5a32518c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ec75b1ea_45eefb30",
+        "filename": "ash/accessibility/focus_ring_layer.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 38,
+      "author": {
+        "id": 1000045
+      },
+      "writtenOn": "2017-11-07T20:34:42Z",
+      "side": 1,
+      "message": "nit: Document, inset for what? In pixels or DIPs?",
+      "revId": "6f7d6fc7a72a1c2d1db7f2d2b81023cd5a32518c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
