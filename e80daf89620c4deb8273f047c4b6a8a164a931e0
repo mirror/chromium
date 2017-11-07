@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "6fb59a2e_2bd07eb3",
+        "filename": "chrome/browser/plugins/plugin_info_message_filter.h",
+        "patchSetId": 12
+      },
+      "lineNbr": 183,
+      "author": {
+        "id": 1001168
+      },
+      "writtenOn": "2017-11-07T04:54:44Z",
+      "side": 1,
+      "message": "Does this need to be an associated binding set? It seems like the browser side creates a new one per-process, and each renderer should only connect once.",
+      "revId": "e80daf89620c4deb8273f047c4b6a8a164a931e0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
