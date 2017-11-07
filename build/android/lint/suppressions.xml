@@ -126,6 +126,7 @@ Still reading?
   </issue>
   <issue id="IconLauncherShape" severity="Error">
     <ignore regexp="chromecast/internal"/>
+    <ignore regexp="chrome/android/webapk/shell_apk/res/mipmap-mdpi/ic_launcher_background.png"/>
   </issue>
   <issue id="IconLocation">
     <ignore regexp="chromecast/internal"/>
@@ -326,6 +327,10 @@ Still reading?
     <!-- 2 resources used by android webview glue layer, could be refactored -->
     <ignore regexp="android_webview/java/res/drawable-hdpi/ic_play_circle_outline_black_48dp.png"/>
     <ignore regexp="R.string.private_browsing_warning"/>
+    <!-- 3 resources used by WebAPKs that supporting Android adaptive icons only -->
+    <ignore regexp="chrome/android/webapk/shell_apk/res/mipmap-mdpi/ic_launcher_background.png"/>
+    <ignore regexp="chrome/android/webapk/shell_apk/res/mipmap-mdpi/ic_launcher_foreground.png"/>
+    <ignore regexp="chrome/android/webapk/shell_apk/res/mipmap-anydpi-v26/ic_launcher.xml"/>
   </issue>
   <issue id="UseCompoundDrawables">
     <!-- Upscaling 24dp to 48dp doesn't work as expected with a TextView compound drawable. -->
