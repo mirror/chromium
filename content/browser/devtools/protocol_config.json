@@ -57,7 +57,7 @@
             },
             {
                 "domain": "Runtime",
-                "include_types": ["StackTrace", "CallFrame"],
+                "include_types": ["StackTrace", "RemoteStackTrace", "CallFrame"],
                 "include_events": [],
                 "include": []
             },
