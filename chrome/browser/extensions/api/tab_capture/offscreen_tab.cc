@@ -5,6 +5,7 @@
 #include "chrome/browser/extensions/api/tab_capture/offscreen_tab.h"
 
 #include <algorithm>
+#include <utility>
 #include <vector>
 
 #include "base/bind.h"
@@ -13,6 +14,7 @@
 #include "base/memory/ptr_util.h"
 #include "base/stl_util.h"
 #include "chrome/browser/extensions/api/tab_capture/tab_capture_registry.h"
+#include "chrome/browser/media/router/presentation_navigation_policy.h"
 #include "chrome/browser/media/router/receiver_presentation_service_delegate_impl.h"  // nogncheck
 #include "chrome/browser/profiles/profile.h"
 #include "chrome/browser/ui/web_contents_sizer.h"
@@ -97,34 +99,6 @@ void OffscreenTabsOwner::DestroyTab(OffscreenTab* tab) {
   }
 }
 
-// Navigation policy for presentations, where top-level navigations are not
-// allowed.
-class OffscreenTab::PresentationNavigationPolicy
-    : public OffscreenTab::NavigationPolicy {
- public:
-  PresentationNavigationPolicy() : first_navigation_started_(false) {}
-  ~PresentationNavigationPolicy() override = default;
-
- private:
-  // OffscreenTab::NavigationPolicy overrides
-  bool DidStartNavigation(content::NavigationHandle* navigation_handle) final {
-    // We only care about top-level navigations that are cross-document.
-    if (!navigation_handle->IsInMainFrame() ||
-        navigation_handle->IsSameDocument()) {
-      return true;
-    }
-
-    // The initial navigation had already begun.
-    if (first_navigation_started_)
-      return false;
-
-    first_navigation_started_ = true;
-    return true;
-  }
-
-  bool first_navigation_started_;
-};
-
 OffscreenTab::OffscreenTab(OffscreenTabsOwner* owner)
     : owner_(owner),
       profile_(Profile::FromBrowserContext(
@@ -132,7 +106,8 @@ OffscreenTab::OffscreenTab(OffscreenTabsOwner* owner)
                    ->CreateOffTheRecordProfile()),
       capture_poll_timer_(false, false),
       content_capture_was_detected_(false),
-      navigation_policy_(new NavigationPolicy) {
+      navigation_policy_(
+          std::make_unique<media_router::DefaultNavigationPolicy>()) {
   DCHECK(profile_);
   g_offscreen_profiles.Get().push_back(profile_.get());
 }
@@ -188,7 +163,8 @@ void OffscreenTab::Start(const GURL& start_url,
     // Presentations are not allowed to perform top-level navigations after
     // initial load.  This is enforced through sandboxing flags, but we also
     // enforce it here.
-    navigation_policy_.reset(new PresentationNavigationPolicy);
+    navigation_policy_ =
+        std::make_unique<media_router::PresentationNavigationPolicy>();
   }
 
   // Navigate to the initial URL.
@@ -409,20 +385,11 @@ void OffscreenTab::DidShowFullscreenWidget() {
 void OffscreenTab::DidStartNavigation(
     content::NavigationHandle* navigation_handle) {
   DCHECK(offscreen_tab_web_contents_.get());
-  if (!navigation_policy_->DidStartNavigation(navigation_handle)) {
+  if (!navigation_policy_->AllowNavigation(navigation_handle)) {
     DVLOG(2) << "Closing because NavigationPolicy disallowed "
              << "StartNavigation to " << navigation_handle->GetURL().spec();
     Close();
   }
-}
-
-// Default navigation policy.
-OffscreenTab::NavigationPolicy::NavigationPolicy() = default;
-OffscreenTab::NavigationPolicy::~NavigationPolicy() = default;
-
-bool OffscreenTab::NavigationPolicy::DidStartNavigation(
-    content::NavigationHandle* navigation_handle) {
-  return true;
 }
 
 void OffscreenTab::DieIfContentCaptureEnded() {
