@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "6ffa8a51_66f5e265",
+        "filename": "services/viz/public/cpp/compositing/copy_output_result_struct_traits.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 122,
+      "author": {
+        "id": 1001168
+      },
+      "writtenOn": "2017-11-07T16:25:04Z",
+      "side": 1,
+      "message": "As it currently stands, this is unreachable, since EnumTraits doesn\u0027t actually map this value. At the same time, I guess this is needed to suppress a clang warning... so maybe it\u0027s fine (and it\u0027s more resistant to a hypothetical time in the future where we only use the mojo enum).",
+      "revId": "16b65bc8748e7376fe21a52152bd7add41b186e6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
