@@ -41,7 +41,7 @@ namespace {
 // None of these globals are ever freed nor closed.
 base::MemoryMappedFile* g_mapped_natives = nullptr;
 base::MemoryMappedFile* g_mapped_snapshot = nullptr;
-base::MemoryMappedFile* g_mapped_v8_context_snapshot = nullptr;
+bool g_use_v8_context_snapshot = false;
 
 const char kV8ContextSnapshotFileName[] = "v8_context_snapshot.bin";
 
@@ -379,11 +379,11 @@ void V8Initializer::GetV8ExternalSnapshotData(const char** natives_data_out,
 
 // static
 void V8Initializer::LoadV8ContextSnapshot() {
-  if (g_mapped_v8_context_snapshot)
+  if (g_mapped_snapshot && g_use_v8_context_snapshot)
     return;
 
-  MapOpenedFile(GetOpenedFile(kV8ContextSnapshotFileName),
-                &g_mapped_v8_context_snapshot);
+  g_use_v8_context_snapshot = true;
+  MapOpenedFile(GetOpenedFile(kV8ContextSnapshotFileName), &g_mapped_snapshot);
 
   // TODO(peria): Check if the snapshot file is loaded successfully.
 }
@@ -392,7 +392,7 @@ void V8Initializer::LoadV8ContextSnapshot() {
 void V8Initializer::LoadV8ContextSnapshotFromFD(base::PlatformFile snapshot_pf,
                                                 int64_t snapshot_offset,
                                                 int64_t snapshot_size) {
-  if (g_mapped_v8_context_snapshot)
+  if (g_mapped_snapshot && g_use_v8_context_snapshot)
     return;
   CHECK_NE(base::kInvalidPlatformFile, snapshot_pf);
 
@@ -403,15 +403,17 @@ void V8Initializer::LoadV8ContextSnapshotFromFD(base::PlatformFile snapshot_pf,
     snapshot_region.size = snapshot_size;
   }
 
-  if (MapV8File(snapshot_pf, snapshot_region, &g_mapped_v8_context_snapshot)) {
+  if (MapV8File(snapshot_pf, snapshot_region, &g_mapped_snapshot)) {
     g_opened_files.Get()[kV8ContextSnapshotFileName] =
         std::make_pair(snapshot_pf, snapshot_region);
+    g_use_v8_context_snapshot = true;
   }
 }
 
 // static
 void V8Initializer::GetV8ContextSnapshotData(v8::StartupData* snapshot) {
-  GetMappedFileData(g_mapped_v8_context_snapshot, snapshot);
+  DCHECK(g_use_v8_context_snapshot);
+  GetMappedFileData(g_mapped_snapshot, snapshot);
 }
 
 }  // namespace gin
