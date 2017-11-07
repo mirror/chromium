@@ -1,0 +1,67 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "30d1e9d7_b360c753",
+        "filename": "chrome/browser/component_updater/optimization_hints_component_installer.cc",
+        "patchSetId": 11
+      },
+      "lineNbr": 141,
+      "author": {
+        "id": 1116033
+      },
+      "writtenOn": "2017-11-07T23:59:53Z",
+      "side": 1,
+      "message": "Since you are working on this code, PTAL and refactor like we did it here: at https://chromium-review.googlesource.com/c/chromium/src/+/756366\n\nIt is a CL which we landed today.",
+      "range": {
+        "startLine": 141,
+        "startChar": 2,
+        "endLine": 141,
+        "endChar": 3
+      },
+      "revId": "9b692d9fc935eb7e57fe68639d4ac15c21ad8847",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "75346f38_80d1992b",
+        "filename": "components/optimization_guide/optimization_guide_service.cc",
+        "patchSetId": 11
+      },
+      "lineNbr": 52,
+      "author": {
+        "id": 1116033
+      },
+      "writtenOn": "2017-11-07T23:59:53Z",
+      "side": 1,
+      "message": "Can we BindOnce instead of Bind, here and below?",
+      "revId": "9b692d9fc935eb7e57fe68639d4ac15c21ad8847",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7b002716_a4e4f422",
+        "filename": "components/optimization_guide/optimization_guide_service_observer.h",
+        "patchSetId": 11
+      },
+      "lineNbr": 19,
+      "author": {
+        "id": 1116033
+      },
+      "writtenOn": "2017-11-07T23:59:53Z",
+      "side": 1,
+      "message": "Should this be an abstract method?",
+      "range": {
+        "startLine": 19,
+        "startChar": 67,
+        "endLine": 19,
+        "endChar": 68
+      },
+      "revId": "9b692d9fc935eb7e57fe68639d4ac15c21ad8847",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
