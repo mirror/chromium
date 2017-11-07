@@ -1,0 +1,73 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "c70c2e37_20de6b48",
+        "filename": "chrome/browser/profile_resetter/profile_resetter_test_base.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 66,
+      "author": {
+        "id": 1002737
+      },
+      "writtenOn": "2017-11-07T14:29:39Z",
+      "side": 1,
+      "message": "std::make_unique",
+      "range": {
+        "startLine": 66,
+        "startChar": 15,
+        "endLine": 66,
+        "endChar": 25
+      },
+      "revId": "8efff4a2ccaf90a323b0ffd960dad2728297f3bf",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f0e64293_34b7cc42",
+        "filename": "chrome/browser/profile_resetter/profile_resetter_test_base.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 68,
+      "author": {
+        "id": 1002737
+      },
+      "writtenOn": "2017-11-07T14:29:39Z",
+      "side": 1,
+      "message": "std::make_unique",
+      "range": {
+        "startLine": 68,
+        "startChar": 6,
+        "endLine": 68,
+        "endChar": 76
+      },
+      "revId": "8efff4a2ccaf90a323b0ffd960dad2728297f3bf",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "25a89525_bd6ba3e2",
+        "filename": "chrome/browser/profile_resetter/profile_resetter_unittest.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 151,
+      "author": {
+        "id": 1002737
+      },
+      "writtenOn": "2017-11-07T14:29:39Z",
+      "side": 1,
+      "message": "\u0026CreateTemplateURLServiceForTesting",
+      "range": {
+        "startLine": 151,
+        "startChar": 17,
+        "endLine": 151,
+        "endChar": 51
+      },
+      "revId": "8efff4a2ccaf90a323b0ffd960dad2728297f3bf",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
