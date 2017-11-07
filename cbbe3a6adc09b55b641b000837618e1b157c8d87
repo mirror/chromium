@@ -143,6 +143,30 @@
     },
     {
       "key": {
+        "uuid": "6ef3c753_281b7e8c",
+        "filename": "components/search_provider_logos/google_logo_api.cc",
+        "patchSetId": 12
+      },
+      "lineNbr": 69,
+      "author": {
+        "id": 1116059
+      },
+      "writtenOn": "2017-11-07T12:30:43Z",
+      "side": 1,
+      "message": "Ah, right :-/\nArguably it\u0027s still cleaner to have the flag explicitly in the metadata, rather than implicitly baked into the URL, but this does make the case less clear. I\u0027ll leave it to you, both options are okay with me.\nIf you stay with the current solution, I\u0027d suggest looking at the implementation of net::AppendOrReplaceQueryParameter. Essentially we need that minus the escaping.",
+      "parentUuid": "e3e7c08d_3175e456",
+      "range": {
+        "startLine": 69,
+        "startChar": 45,
+        "endLine": 69,
+        "endChar": 0
+      },
+      "revId": "cbbe3a6adc09b55b641b000837618e1b157c8d87",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "16119479_af5cd6fe",
         "filename": "components/search_provider_logos/google_logo_api.cc",
         "patchSetId": 12
