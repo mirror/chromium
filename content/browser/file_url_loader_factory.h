@@ -10,6 +10,7 @@
 #include "base/memory/ref_counted.h"
 #include "base/sequenced_task_runner.h"
 #include "content/common/content_export.h"
+#include "content/public/browser/file_url_loader.h"
 #include "content/public/common/url_loader_factory.mojom.h"
 #include "mojo/public/cpp/bindings/binding_set.h"
 
@@ -25,7 +26,10 @@ class CONTENT_EXPORT FileURLLoaderFactory : public mojom::URLLoaderFactory {
                        scoped_refptr<base::SequencedTaskRunner> task_runner);
   ~FileURLLoaderFactory() override;
 
-  void BindRequest(mojom::URLLoaderFactoryRequest loader);
+  static void CreateLoaderWithPathOverride(const ResourceRequest& request,
+                                           const base::FilePath& path,
+                                           mojom::URLLoaderRequest loader,
+                                           mojom::URLLoaderClientPtr client);
 
  private:
   // mojom::URLLoaderFactory:
