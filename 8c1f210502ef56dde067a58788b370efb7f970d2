@@ -16,6 +16,24 @@
       "revId": "8c1f210502ef56dde067a58788b370efb7f970d2",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "595571a7_0d353549",
+        "filename": "third_party/WebKit/Source/core/dom/events/EventTargetImpl.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 23,
+      "author": {
+        "id": 1247388
+      },
+      "writtenOn": "2017-11-07T07:59:29Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "9b46bbec_d66501f5",
+      "revId": "8c1f210502ef56dde067a58788b370efb7f970d2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }

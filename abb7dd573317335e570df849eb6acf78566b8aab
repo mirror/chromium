@@ -16,6 +16,24 @@
       "revId": "abb7dd573317335e570df849eb6acf78566b8aab",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "be233fd5_db8a039f",
+        "filename": "third_party/WebKit/LayoutTests/external/wpt/service-workers/service-worker/resources/interfaces-worker.sub.js",
+        "patchSetId": 10
+      },
+      "lineNbr": 38,
+      "author": {
+        "id": 1247388
+      },
+      "writtenOn": "2017-11-07T07:59:29Z",
+      "side": 1,
+      "message": "Whoops didn\u0027t mean to change this. Removed the change :D",
+      "parentUuid": "c074213c_4e23c5e3",
+      "revId": "abb7dd573317335e570df849eb6acf78566b8aab",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
