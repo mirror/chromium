@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "688581fb_1429659f",
+        "filename": "content/common/page_state.mojom",
+        "patchSetId": 10
+      },
+      "lineNbr": 32,
+      "author": {
+        "id": 1189064
+      },
+      "writtenOn": "2017-11-07T20:36:03Z",
+      "side": 1,
+      "message": "It\u0027s not defined explicitly in any single spot, which is why we have this comment. Instead, it\u0027s the maximum value of x in the set of all [MinVersion\u003dx] declarations in the file. To avoid having to go through all such declarations, we have a comment that you can update when bumping the version number.",
+      "parentUuid": "142bc61e_101585a7",
+      "revId": "97663072285173731608b708325fdea3c0aaaef9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "34f6e332_4740f637",
         "filename": "content/common/page_state_serialization.h",
         "patchSetId": 10
@@ -36,6 +54,24 @@
     },
     {
       "key": {
+        "uuid": "6e7ab701_c3e1bd57",
+        "filename": "content/common/page_state_serialization.h",
+        "patchSetId": 10
+      },
+      "lineNbr": 50,
+      "author": {
+        "id": 1189064
+      },
+      "writtenOn": "2017-11-07T20:36:03Z",
+      "side": 1,
+      "message": "The current organization is by type, but I can group the scroll anchor fields together. Done.",
+      "parentUuid": "34f6e332_4740f637",
+      "revId": "97663072285173731608b708325fdea3c0aaaef9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "758e26bf_c74eeab4",
         "filename": "content/common/page_state_serialization_unittest.cc",
         "patchSetId": 10
@@ -50,6 +86,24 @@
       "revId": "97663072285173731608b708325fdea3c0aaaef9",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e08225d9_b68059fe",
+        "filename": "content/common/page_state_serialization_unittest.cc",
+        "patchSetId": 10
+      },
+      "lineNbr": 667,
+      "author": {
+        "id": 1189064
+      },
+      "writtenOn": "2017-11-07T20:36:03Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "758e26bf_c74eeab4",
+      "revId": "97663072285173731608b708325fdea3c0aaaef9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
