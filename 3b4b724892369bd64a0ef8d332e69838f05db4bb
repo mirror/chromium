@@ -150,6 +150,29 @@
     },
     {
       "key": {
+        "uuid": "03658383_8a1ec889",
+        "filename": "chrome/browser/media_galleries/gallery_watch_manager_unittest.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 109,
+      "author": {
+        "id": 1162075
+      },
+      "writtenOn": "2017-11-07T16:32:43Z",
+      "side": 1,
+      "message": "nit: TestUserManager",
+      "range": {
+        "startLine": 109,
+        "startChar": 11,
+        "endLine": 109,
+        "endChar": 25
+      },
+      "revId": "3b4b724892369bd64a0ef8d332e69838f05db4bb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "6720a818_589e6d9d",
         "filename": "chrome/browser/media_galleries/gallery_watch_manager_unittest.cc",
         "patchSetId": 6
