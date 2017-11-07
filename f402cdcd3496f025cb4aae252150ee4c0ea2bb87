@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "d589e2c1_d13eff0d",
+        "filename": "content/renderer/service_worker/service_worker_provider_context.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 47,
+      "author": {
+        "id": 1161621
+      },
+      "writtenOn": "2017-11-07T23:59:56Z",
+      "side": 1,
+      "message": "Another option is to plumb into Blink to get the whole ServiceWorkerHandleReference instance via blink::WebServiceWorkerProviderClient at any time we want to get some information of the controller sw object. But for now I suppose just keeping a version id here is enough?",
+      "range": {
+        "startLine": 47,
+        "startChar": 2,
+        "endLine": 47,
+        "endChar": 79
+      },
+      "revId": "f402cdcd3496f025cb4aae252150ee4c0ea2bb87",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
