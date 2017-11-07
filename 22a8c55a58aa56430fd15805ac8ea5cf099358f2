@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "cd223077_dc3de153",
+        "filename": "third_party/WebKit/Source/modules/mediastream/NavigatorUserMediaErrorCallback.idl",
+        "patchSetId": 6
+      },
+      "lineNbr": 30,
+      "author": {
+        "id": 1143639
+      },
+      "writtenOn": "2017-11-07T09:37:25Z",
+      "side": 1,
+      "message": "nit: \"both X and Y are not\" -\u003e \"neither X nor Y are\"",
+      "range": {
+        "startLine": 30,
+        "startChar": 3,
+        "endLine": 30,
+        "endChar": 7
+      },
+      "revId": "22a8c55a58aa56430fd15805ac8ea5cf099358f2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
