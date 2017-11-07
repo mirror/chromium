@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "d2a82da7_6fc62db2",
+        "filename": "media/blink/key_system_config_selector_unittest.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 89,
+      "author": {
+        "id": 1003189
+      },
+      "writtenOn": "2017-11-07T00:53:19Z",
+      "side": 1,
+      "message": "To avoid this being defined yet again, can you use IsClearKey() in key_system_names.h instead?",
+      "range": {
+        "startLine": 89,
+        "startChar": 50,
+        "endLine": 89,
+        "endChar": 59
+      },
+      "revId": "86763d9887cae7f1bce135a16e3141f847f8295e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7a847784_459e4d44",
+        "filename": "media/blink/key_system_config_selector_unittest.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 404,
+      "author": {
+        "id": 1003189
+      },
+      "writtenOn": "2017-11-07T00:53:19Z",
+      "side": 1,
+      "message": "It doesn\u0027t look like |configs_| is reset. Although they\u0027re the same, this should probably be split into 2 tests so that a change above doesn\u0027t break this part.",
+      "range": {
+        "startLine": 404,
+        "startChar": 2,
+        "endLine": 404,
+        "endChar": 10
+      },
+      "revId": "86763d9887cae7f1bce135a16e3141f847f8295e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
