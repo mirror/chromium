@@ -347,6 +347,30 @@
       "revId": "115dcd9bcad5a160033931486dd4cd2453b2d242",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "136e675a_a23a8dfa",
+        "filename": "content/browser/webrtc/webrtc_eventlog_host.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 68,
+      "author": {
+        "id": 1143639
+      },
+      "writtenOn": "2017-11-07T15:02:19Z",
+      "side": 1,
+      "message": "Ack. By active set I meant what you said, but it was indeed too long :)",
+      "parentUuid": "9cc5fe9a_6763d9f3",
+      "range": {
+        "startLine": 68,
+        "startChar": 7,
+        "endLine": 68,
+        "endChar": 29
+      },
+      "revId": "115dcd9bcad5a160033931486dd4cd2453b2d242",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
