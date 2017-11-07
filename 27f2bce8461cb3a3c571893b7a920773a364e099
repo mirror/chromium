@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "de012d05_0ad03557",
+        "filename": "media/base/android/media_codec_bridge_impl_unittest.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 178,
+      "author": {
+        "id": 1130490
+      },
+      "writtenOn": "2017-11-07T20:53:01Z",
+      "side": 1,
+      "message": "nit: no trailing _ for local vars, here and elsewhere.",
+      "range": {
+        "startLine": 178,
+        "startChar": 7,
+        "endLine": 178,
+        "endChar": 16
+      },
+      "revId": "27f2bce8461cb3a3c571893b7a920773a364e099",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
