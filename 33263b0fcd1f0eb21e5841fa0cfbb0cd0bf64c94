@@ -119,6 +119,30 @@
     },
     {
       "key": {
+        "uuid": "44aff460_7bdec90b",
+        "filename": "components/omnibox/browser/history_provider.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 115,
+      "author": {
+        "id": 1001310
+      },
+      "writtenOn": "2017-11-07T22:37:25Z",
+      "side": 1,
+      "message": "\u003e I can certainly do this if you really want, but given that the branch is uncommon, and calling it twice is even less common, maybe it\u0027s best to leave it? I could also do something like\n\u003e \n\u003e if (switch_tab_message.empty())\n\nGood point about frequency of the if statement being triggered.  Leaving it as-is is fine.",
+      "parentUuid": "13325803_31b4ee98",
+      "range": {
+        "startLine": 113,
+        "startChar": 0,
+        "endLine": 115,
+        "endChar": 35
+      },
+      "revId": "33263b0fcd1f0eb21e5841fa0cfbb0cd0bf64c94",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "2f74c158_8f67893a",
         "filename": "components/omnibox/browser/history_provider.cc",
         "patchSetId": 1
