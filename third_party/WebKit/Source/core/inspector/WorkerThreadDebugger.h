@@ -54,6 +54,7 @@ class CORE_EXPORT WorkerThreadDebugger final : public ThreadDebugger {
   void ContextCreated(WorkerThread*, v8::Local<v8::Context>);
   void ContextWillBeDestroyed(WorkerThread*, v8::Local<v8::Context>);
   void ExceptionThrown(WorkerThread*, ErrorEvent*);
+  String DebuggerId(WorkerThread*);
 
  private:
   int ContextGroupId(ExecutionContext*) override;

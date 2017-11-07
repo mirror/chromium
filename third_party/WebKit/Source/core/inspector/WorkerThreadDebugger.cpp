@@ -137,6 +137,11 @@ void WorkerThreadDebugger::ExceptionThrown(WorkerThread* worker_thread,
   }
 }
 
+String WorkerThreadDebugger::DebuggerId(WorkerThread* worker_thread) {
+  int worker_context_group_id = ContextGroupId(worker_thread);
+  return DebuggerId(worker_context_group_id);
+}
+
 int WorkerThreadDebugger::ContextGroupId(ExecutionContext* context) {
   return ContextGroupId(ToWorkerOrWorkletGlobalScope(context)->GetThread());
 }

@@ -35,6 +35,7 @@
 #include "bindings/core/v8/serialization/SerializedScriptValue.h"
 #include "core/dom/ExecutionContext.h"
 #include "core/frame/csp/ContentSecurityPolicy.h"
+#include "core/inspector/WorkerThreadDebugger.h"
 #include "core/origin_trials/OriginTrialContext.h"
 #include "core/workers/DedicatedWorkerObjectProxy.h"
 #include "core/workers/DedicatedWorkerThread.h"
@@ -66,8 +67,16 @@ void DedicatedWorkerGlobalScope::postMessage(
       ExecutionContext::From(script_state), ports, exception_state);
   if (exception_state.HadException())
     return;
-  WorkerObjectProxy().PostMessageToWorkerObject(std::move(message),
-                                                std::move(channels));
+  WorkerThreadDebugger* debugger =
+      WorkerThreadDebugger::From(script_state->GetIsolate());
+  v8_inspector::V8Inspector::RemoteAsyncTaskId task_id =
+      debugger->RemoteAsyncTaskScheduled("postMessage", String());
+  String debugger_id;
+  if (task_id != v8_inspector::V8Inspector::kEmptyAsyncTaskId) {
+    debugger_id = debugger->DebuggerId(GetThread());
+  }
+  WorkerObjectProxy().PostMessageToWorkerObject(
+      std::move(message), std::move(channels), task_id, debugger_id);
 }
 
 DedicatedWorkerObjectProxy& DedicatedWorkerGlobalScope::WorkerObjectProxy()
