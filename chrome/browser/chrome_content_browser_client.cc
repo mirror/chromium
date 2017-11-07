@@ -133,6 +133,7 @@
 #include "chrome/grit/browser_resources.h"
 #include "chrome/grit/generated_resources.h"
 #include "chrome/installer/util/google_update_settings.h"
+#include "chrome/services/file_util/public/interfaces/constants.mojom.h"
 #include "components/autofill/content/browser/content_autofill_driver_factory.h"
 #include "components/autofill/core/common/autofill_switches.h"
 #include "components/browsing_data/core/browsing_data_utils.h"
@@ -272,7 +273,6 @@
 #include "chrome/browser/ui/browser_dialogs.h"
 #include "chrome/browser/ui/browser_finder.h"
 #include "chrome/browser/ui/views/ash/chrome_browser_main_extra_parts_ash.h"
-#include "chrome/services/file_util/public/interfaces/constants.mojom.h"
 #include "chromeos/chromeos_constants.h"
 #include "chromeos/chromeos_switches.h"
 #include "components/user_manager/user_manager.h"
@@ -3130,10 +3130,8 @@ void ChromeContentBrowserClient::RegisterOutOfProcessServices(
       l10n_util::GetStringUTF16(IDS_UTILITY_PROCESS_UTILITY_WIN_NAME);
 #endif
 
-#if defined(OS_CHROMEOS)
   (*services)[chrome::mojom::kFileUtilServiceName] =
       l10n_util::GetStringUTF16(IDS_UTILITY_PROCESS_FILE_UTILITY_NAME);
-#endif
 
 #if BUILDFLAG(ENABLE_MUS)
   if (base::CommandLine::ForCurrentProcess()->HasSwitch(switches::kMash))
