@@ -34,6 +34,24 @@
       "revId": "b46718b94d1d87ecc7035ef0f018d5b34eb04565",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "067aae38_78e02ce6",
+        "filename": "tools/mb/mb_config.pyl",
+        "patchSetId": 2
+      },
+      "lineNbr": 1568,
+      "author": {
+        "id": 1116017
+      },
+      "writtenOn": "2017-11-07T02:38:44Z",
+      "side": 1,
+      "message": "I guess he wanted to write something like the following?\n[\u0027release_bot_x86_minimal_symbols_disable_nacl\u0027, \u0027no_clang\u0027]\n\nCan I write so? Does this work?",
+      "parentUuid": "a78dd82e_8a20b9db",
+      "revId": "b46718b94d1d87ecc7035ef0f018d5b34eb04565",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
