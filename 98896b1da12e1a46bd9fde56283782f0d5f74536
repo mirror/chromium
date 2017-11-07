@@ -1,0 +1,96 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "2e828dcd_b3961806",
+        "filename": "chrome/browser/apps/guest_view/web_view_browsertest.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 3978,
+      "author": {
+        "id": 1212389
+      },
+      "writtenOn": "2017-11-07T16:09:03Z",
+      "side": 1,
+      "message": "nit: It seems to me we have a similar test class elsewhere (though perhaps I\u0027m mis-remembering?). If so, we should coalesce these at some point in the future.",
+      "range": {
+        "startLine": 3978,
+        "startChar": 6,
+        "endLine": 3978,
+        "endChar": 25
+      },
+      "revId": "98896b1da12e1a46bd9fde56283782f0d5f74536",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2ba55044_25f660bc",
+        "filename": "chrome/browser/apps/guest_view/web_view_browsertest.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 3981,
+      "author": {
+        "id": 1212389
+      },
+      "writtenOn": "2017-11-07T16:09:03Z",
+      "side": 1,
+      "message": "\u0027explicit\u0027 not needed here.",
+      "range": {
+        "startLine": 3981,
+        "startChar": 2,
+        "endLine": 3981,
+        "endChar": 10
+      },
+      "revId": "98896b1da12e1a46bd9fde56283782f0d5f74536",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a987987c_313f2c3c",
+        "filename": "chrome/browser/apps/guest_view/web_view_browsertest.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 4042,
+      "author": {
+        "id": 1212389
+      },
+      "writtenOn": "2017-11-07T16:09:03Z",
+      "side": 1,
+      "message": "comment: Can we use RWHVB::TransformPointToViewCoordSpace() here? Perhaps not as I don\u0027t know if RWHVCF implements this or not. If not, we should do that some day (though I don\u0027t expect you to do it as part of this CL).",
+      "range": {
+        "startLine": 4042,
+        "startChar": 12,
+        "endLine": 4042,
+        "endChar": 13
+      },
+      "revId": "98896b1da12e1a46bd9fde56283782f0d5f74536",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "744c1850_6992e5af",
+        "filename": "chrome/browser/apps/guest_view/web_view_browsertest.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 4061,
+      "author": {
+        "id": 1212389
+      },
+      "writtenOn": "2017-11-07T16:09:03Z",
+      "side": 1,
+      "message": "Use TransformPointToRootCoordSpace()?",
+      "range": {
+        "startLine": 4061,
+        "startChar": 2,
+        "endLine": 4061,
+        "endChar": 14
+      },
+      "revId": "98896b1da12e1a46bd9fde56283782f0d5f74536",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
