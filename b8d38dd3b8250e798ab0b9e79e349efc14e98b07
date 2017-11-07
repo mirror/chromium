@@ -65,6 +65,30 @@
     },
     {
       "key": {
+        "uuid": "be51bc30_758fb554",
+        "filename": "chrome/browser/chromeos/file_system_provider/service.cc",
+        "patchSetId": 10
+      },
+      "lineNbr": 47,
+      "author": {
+        "id": 1247036
+      },
+      "writtenOn": "2017-11-07T04:02:29Z",
+      "side": 1,
+      "message": "Changes to service.cc have been removed from this CL and will happen elsewhere",
+      "parentUuid": "f9fbfa5d_342d8bf2",
+      "range": {
+        "startLine": 47,
+        "startChar": 25,
+        "endLine": 47,
+        "endChar": 34
+      },
+      "revId": "b8d38dd3b8250e798ab0b9e79e349efc14e98b07",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "529bd322_14d7da91",
         "filename": "chrome/browser/chromeos/samba_client/smb_provided_file_system.h",
         "patchSetId": 10
@@ -82,6 +106,24 @@
     },
     {
       "key": {
+        "uuid": "b12e639a_e84232d3",
+        "filename": "chrome/browser/chromeos/samba_client/smb_provided_file_system.h",
+        "patchSetId": 10
+      },
+      "lineNbr": 33,
+      "author": {
+        "id": 1247036
+      },
+      "writtenOn": "2017-11-07T04:02:29Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "529bd322_14d7da91",
+      "revId": "b8d38dd3b8250e798ab0b9e79e349efc14e98b07",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "ab03f823_64701833",
         "filename": "chrome/browser/chromeos/samba_client/smb_provided_file_system.h",
         "patchSetId": 10
@@ -93,6 +135,30 @@
       "writtenOn": "2017-11-02T08:02:44Z",
       "side": 1,
       "message": "I think we can make the name shorter - SambaFileSystem. WDYT?",
+      "range": {
+        "startLine": 39,
+        "startChar": 6,
+        "endLine": 39,
+        "endChar": 27
+      },
+      "revId": "b8d38dd3b8250e798ab0b9e79e349efc14e98b07",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "b923e7ab_465236b9",
+        "filename": "chrome/browser/chromeos/samba_client/smb_provided_file_system.h",
+        "patchSetId": 10
+      },
+      "lineNbr": 39,
+      "author": {
+        "id": 1247036
+      },
+      "writtenOn": "2017-11-07T04:02:29Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "ab03f823_64701833",
       "range": {
         "startLine": 39,
         "startChar": 6,
