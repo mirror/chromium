@@ -86,6 +86,16 @@ public class ContentChildProcessServiceDelegate implements ChildProcessServiceDe
             sharedRelros = null;
         }
     }
+    
+    @Override
+    public void preloadNativeLibrary(Context hostContext) {
+        try {
+            LibraryLoader libraryLoader = LibraryLoader.get(mLibraryProcessType);
+            libraryLoader.preloadNow(hostContext);
+        } catch (ProcessInitException e) {
+            Log.w(TAG, "Failed to preload native library", e);
+        }
+    }
 
     @Override
     public boolean loadNativeLibrary(Context hostContext) {
