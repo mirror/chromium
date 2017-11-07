@@ -1,0 +1,234 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "26c2b358_9075dd4c",
+        "filename": "content/common/frame_messages.h",
+        "patchSetId": 11
+      },
+      "lineNbr": 1467,
+      "author": {
+        "id": 1118209
+      },
+      "writtenOn": "2017-11-07T23:35:42Z",
+      "side": 1,
+      "message": "How is subtree_throttled used?  Does it mean that an ancestor of this frame was throttled, so all descendants should be as well?  So replicating that would matter in a case like A(B(C)), where B is throttled, and we would want C to also be throttled even if it\u0027s visible within B?  Might be good to explain this in the comment.",
+      "range": {
+        "startLine": 1467,
+        "startChar": 0,
+        "endLine": 1467,
+        "endChar": 47
+      },
+      "revId": "af6e0eaa104a700b3b860e870d916f0b856cec20",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "16191c8f_cc450e9d",
+        "filename": "content/common/frame_messages.h",
+        "patchSetId": 11
+      },
+      "lineNbr": 1469,
+      "author": {
+        "id": 1118209
+      },
+      "writtenOn": "2017-11-07T23:35:42Z",
+      "side": 1,
+      "message": "nit: is_throttled, subtree_throttled",
+      "range": {
+        "startLine": 1469,
+        "startChar": 28,
+        "endLine": 1469,
+        "endChar": 39
+      },
+      "revId": "af6e0eaa104a700b3b860e870d916f0b856cec20",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "da20885f_c73fdb63",
+        "filename": "third_party/WebKit/LayoutTests/http/tests/dom/raf-throttling-out-of-view-cross-origin-page.html",
+        "patchSetId": 11
+      },
+      "lineNbr": 14,
+      "author": {
+        "id": 1118209
+      },
+      "writtenOn": "2017-11-07T23:35:42Z",
+      "side": 1,
+      "message": "I think http layout tests are already served from this origin by default, so this won\u0027t actually be cross-origin.  I think this can be \"http://localhost:8000\" instead, which will use OOPIFs on our bots.  Alternatively, if this test only makes sense for OOPIFs, we could also use something like \"http://foo.oopif.test:8000\", which will always use OOPIFs no matter what.\n\n(I wasn\u0027t sure, so I double-checked that RemoteFrameView::AttachToLayout was never getting hit with 127.0.0.1:8000, but it was with localhost:8000).",
+      "range": {
+        "startLine": 14,
+        "startChar": 48,
+        "endLine": 14,
+        "endChar": 69
+      },
+      "revId": "af6e0eaa104a700b3b860e870d916f0b856cec20",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1c19255b_98c06ef6",
+        "filename": "third_party/WebKit/LayoutTests/http/tests/dom/raf-throttling-out-of-view-cross-origin-page.html",
+        "patchSetId": 11
+      },
+      "lineNbr": 27,
+      "author": {
+        "id": 1118209
+      },
+      "writtenOn": "2017-11-07T23:35:42Z",
+      "side": 1,
+      "message": "That comment seems to be stale?",
+      "range": {
+        "startLine": 26,
+        "startChar": 73,
+        "endLine": 27,
+        "endChar": 11
+      },
+      "revId": "af6e0eaa104a700b3b860e870d916f0b856cec20",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "36fab43a_00ec384f",
+        "filename": "third_party/WebKit/LayoutTests/http/tests/dom/raf-throttling-out-of-view-cross-origin-page.html",
+        "patchSetId": 11
+      },
+      "lineNbr": 42,
+      "author": {
+        "id": 1118209
+      },
+      "writtenOn": "2017-11-07T23:35:42Z",
+      "side": 1,
+      "message": "Just curious, no need for any changes - since the iframe is hidden via CSS from the very start, how could we end up serving any animation frames for it before it becomes throttled?  Is this the window between when the OOPIF\u0027s LocalFrameView gets created and when the UpdateRenderThrottlingStatus arrives?",
+      "range": {
+        "startLine": 41,
+        "startChar": 7,
+        "endLine": 42,
+        "endChar": 16
+      },
+      "revId": "af6e0eaa104a700b3b860e870d916f0b856cec20",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "eb3775e6_b7bbad23",
+        "filename": "third_party/WebKit/LayoutTests/http/tests/dom/raf-throttling-out-of-view-cross-origin-page.html",
+        "patchSetId": 11
+      },
+      "lineNbr": 42,
+      "author": {
+        "id": 1118209
+      },
+      "writtenOn": "2017-11-07T23:35:42Z",
+      "side": 1,
+      "message": "Stale comment",
+      "range": {
+        "startLine": 42,
+        "startChar": 63,
+        "endLine": 42,
+        "endChar": 77
+      },
+      "revId": "af6e0eaa104a700b3b860e870d916f0b856cec20",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1c28ea21_c1d110a8",
+        "filename": "third_party/WebKit/Source/core/frame/LocalFrameView.cpp",
+        "patchSetId": 11
+      },
+      "lineNbr": 3194,
+      "author": {
+        "id": 1118209
+      },
+      "writtenOn": "2017-11-07T23:35:42Z",
+      "side": 1,
+      "message": "What makes the check below execute only for OOPIFs and local frame roots?  It only seems to check for IsMainFrame(), and it\u0027s hard to tell how ShouldThrottleRendering() restricts it.\n\nAnd a related question.  ShouldThrottleRendering() calls CanThrottleRendering(), which calls IsCrossOriginSubframe(), which looks a little suspicious to me, because it checks the frame\u0027s origin against the top frame\u0027s origin.  Does that mean that with A(B(A)), the innermost frame can\u0027t be throttled?  Even if B is throttled?  What about a case like A(B(C(B))), should the innermost B frame be allowed to be throttled if C is throttled?",
+      "range": {
+        "startLine": 3194,
+        "startChar": 5,
+        "endLine": 3194,
+        "endChar": 28
+      },
+      "revId": "af6e0eaa104a700b3b860e870d916f0b856cec20",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c52c4c8a_f9dd809f",
+        "filename": "third_party/WebKit/Source/core/frame/LocalFrameView.cpp",
+        "patchSetId": 11
+      },
+      "lineNbr": 5245,
+      "author": {
+        "id": 1118209
+      },
+      "writtenOn": "2017-11-07T23:35:42Z",
+      "side": 1,
+      "message": "Would this cause a problem if we have A(B(C)), and B becomes hidden within A, with C still visible within B?  That should notify B\u0027s process that B\u0027s LocalFrameView is now hidden, which should in turn notify C\u0027s process that C\u0027s LocalFrameView is also hidden (due to subtree_hidden).  IIUC, the latter would normally happen here?  But currently it seems that it won\u0027t, as ForAllChildLocalFrameViews only updates child LocalFrameViews and skips RemoteFrameViews.",
+      "range": {
+        "startLine": 5245,
+        "startChar": 4,
+        "endLine": 5245,
+        "endChar": 30
+      },
+      "revId": "af6e0eaa104a700b3b860e870d916f0b856cec20",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "333c1f26_3c900d37",
+        "filename": "third_party/WebKit/Source/core/frame/RemoteFrameView.h",
+        "patchSetId": 11
+      },
+      "lineNbr": 81,
+      "author": {
+        "id": 1118209
+      },
+      "writtenOn": "2017-11-07T23:35:42Z",
+      "side": 1,
+      "message": "General comment, not necessarily for this CL -- these fields, as well as most of the logic in places like CanThrottleRendering() or SetupRenderThrottling(), are duplicated between LocalFrameView and RemoteFrameView.  For similar cases with LocalFrame/RemoteFrame, we just moved the logic into one common place in Frame, but it doesn\u0027t seem like there\u0027s precedent for doing it with FrameView.  I wonder if there\u0027s a reason for that?",
+      "range": {
+        "startLine": 80,
+        "startChar": 0,
+        "endLine": 81,
+        "endChar": 38
+      },
+      "revId": "af6e0eaa104a700b3b860e870d916f0b856cec20",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "80ee4649_ab153d5f",
+        "filename": "third_party/WebKit/public/web/WebRemoteFrameClient.h",
+        "patchSetId": 11
+      },
+      "lineNbr": 50,
+      "author": {
+        "id": 1118209
+      },
+      "writtenOn": "2017-11-07T23:35:42Z",
+      "side": 1,
+      "message": "nit: is_throttled, subtree_throttled, here and in similar places elsewhere",
+      "range": {
+        "startLine": 50,
+        "startChar": 49,
+        "endLine": 50,
+        "endChar": 60
+      },
+      "revId": "af6e0eaa104a700b3b860e870d916f0b856cec20",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
