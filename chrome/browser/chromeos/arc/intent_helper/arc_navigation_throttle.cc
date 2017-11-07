@@ -218,10 +218,12 @@ void ArcNavigationThrottle::OnAppCandidatesReceived(
     std::vector<mojom::IntentHandlerInfoPtr> handlers) {
   if (FoundPreferredOrVerifiedArcApp(std::move(handlers))) {
     content::WebContents* tab = navigation_handle()->GetWebContents();
-    if (tab && tab->GetController().IsInitialNavigation())
+    if (tab && (tab->GetController().IsInitialNavigation() ||
+                !tab->GetController().CanGoBack())) {
       tab->Close();
-    else
+    } else {
       CancelDeferredNavigation(content::NavigationThrottle::CANCEL_AND_IGNORE);
+    }
   } else {
     Resume();
   }
