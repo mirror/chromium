@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "0cc7db68_c75d5b11",
+        "filename": "ash/display/touch_calibrator_controller.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 69,
+      "author": {
+        "id": 1180289
+      },
+      "writtenOn": "2017-11-07T20:42:45Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "6a50c7d7_6a041b0f",
+      "revId": "dd64c17dc23521ee61308f49b2d801c7dfb9634c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "51eb5fbb_9ba6d5d8",
         "filename": "ash/display/touch_calibrator_controller.cc",
         "patchSetId": 8
@@ -33,6 +51,24 @@
       "revId": "dd64c17dc23521ee61308f49b2d801c7dfb9634c",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6112d88b_05a9f8c0",
+        "filename": "ash/display/touch_calibrator_controller.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 255,
+      "author": {
+        "id": 1180289
+      },
+      "writtenOn": "2017-11-07T20:42:45Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "51eb5fbb_9ba6d5d8",
+      "revId": "dd64c17dc23521ee61308f49b2d801c7dfb9634c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -53,6 +89,24 @@
     },
     {
       "key": {
+        "uuid": "f644ccbf_f397a8e0",
+        "filename": "ash/display/touch_calibrator_controller.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 305,
+      "author": {
+        "id": 1180289
+      },
+      "writtenOn": "2017-11-07T20:42:45Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "40352178_68c63d8f",
+      "revId": "dd64c17dc23521ee61308f49b2d801c7dfb9634c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "29314f5b_2953d11c",
         "filename": "ash/display/touch_calibrator_controller.h",
         "patchSetId": 8
@@ -67,6 +121,24 @@
       "revId": "dd64c17dc23521ee61308f49b2d801c7dfb9634c",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3f6c9f4e_33ed53ca",
+        "filename": "ash/display/touch_calibrator_controller.h",
+        "patchSetId": 8
+      },
+      "lineNbr": 90,
+      "author": {
+        "id": 1180289
+      },
+      "writtenOn": "2017-11-07T20:42:45Z",
+      "side": 1,
+      "message": "Cleaned up most of this with the help of helper methods in test.",
+      "parentUuid": "29314f5b_2953d11c",
+      "revId": "dd64c17dc23521ee61308f49b2d801c7dfb9634c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -87,6 +159,24 @@
     },
     {
       "key": {
+        "uuid": "75f09c02_88342791",
+        "filename": "ash/display/touch_calibrator_controller_unittest.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 31,
+      "author": {
+        "id": 1180289
+      },
+      "writtenOn": "2017-11-07T20:42:45Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "0b32219f_5b76760d",
+      "revId": "dd64c17dc23521ee61308f49b2d801c7dfb9634c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "f1d11e80_dc36fb2b",
         "filename": "chrome/browser/extensions/display_info_provider_chromeos.cc",
         "patchSetId": 8
@@ -101,6 +191,24 @@
       "revId": "dd64c17dc23521ee61308f49b2d801c7dfb9634c",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9bd5a7c2_64a64b22",
+        "filename": "chrome/browser/extensions/display_info_provider_chromeos.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 463,
+      "author": {
+        "id": 1180289
+      },
+      "writtenOn": "2017-11-07T20:42:45Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "f1d11e80_dc36fb2b",
+      "revId": "dd64c17dc23521ee61308f49b2d801c7dfb9634c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
