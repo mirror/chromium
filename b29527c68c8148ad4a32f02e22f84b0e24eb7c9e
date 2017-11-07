@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "dac6acb1_76876775",
+        "filename": "chrome/browser/chromeos/smb_client/smb_file_system.h",
+        "patchSetId": 16
+      },
+      "lineNbr": 39,
+      "author": {
+        "id": 1002249
+      },
+      "writtenOn": "2017-11-07T07:03:18Z",
+      "side": 1,
+      "message": "If this is only for unit tests, then shouldn\u0027t be compiled into production code. Can we move to a separate file and compile only for tests?",
+      "range": {
+        "startLine": 39,
+        "startChar": 6,
+        "endLine": 39,
+        "endChar": 19
+      },
+      "revId": "b29527c68c8148ad4a32f02e22f84b0e24eb7c9e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    }
+  ]
+}
