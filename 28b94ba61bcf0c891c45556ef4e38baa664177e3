@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "f4ec557f_b2015c1f",
+        "filename": "chrome/browser/media/router/discovery/dial/dial_media_sink_service_impl.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 93,
+      "author": {
+        "id": 1150437
+      },
+      "writtenOn": "2017-11-07T21:27:46Z",
+      "side": 1,
+      "message": "If the map already contains the app name, doesn\u0027t that mean that a fetch is already in progress?\n\nOr in other words, how do we prevent multiple fetches happening within a short duration? (it may already be in the logic elsewhere, I\u0027m only looking at the new additions).",
+      "revId": "28b94ba61bcf0c891c45556ef4e38baa664177e3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
