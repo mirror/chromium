@@ -160,7 +160,10 @@ public class ToolbarProgressBar extends ClipDrawableProgressBar {
                     mAnimatingView.update(progress * width);
                 }
 
-                if (getProgress() == mTargetProgress) {
+                boolean throttleComplete =
+                        mProgressThrottleListener.mThrottledProgressTarget >= 1.f;
+
+                if (getProgress() == mTargetProgress && throttleComplete) {
                     if (!mIsStarted) postOnAnimationDelayed(mHideRunnable, mHidingDelayMs);
                     mProgressAnimator.end();
                     return;
