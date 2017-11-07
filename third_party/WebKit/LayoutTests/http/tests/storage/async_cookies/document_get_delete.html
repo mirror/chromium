@@ -1,0 +1,16 @@
+<!doctype html>
+<meta charset="utf-8">
+<title>Async Cookes: cookieStore.delete() impacts cookieStore.get()</title>
+<script src="../../resources/testharness.js"></script>
+<script src="../../resources/testharnessreport.js"></script>
+<script>
+'use strict';
+
+promise_test(async testCase => {
+  await cookieStore.set('cookie-name', 'cookie-value');
+  await cookieStore.delete('cookie-name');
+  const cookie = await cookieStore.get();
+  assert_equals(cookie, null);
+}, 'cookieStore.get returns null for a cookie deleted by cookieStore.delete');
+
+</script>
