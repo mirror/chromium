@@ -1,0 +1,89 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "f15dba18_f7784bf0",
+        "filename": "third_party/WebKit/Source/core/css/cssom/CSSMathInvert.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 21,
+      "author": {
+        "id": 1161824
+      },
+      "writtenOn": "2017-11-07T06:34:52Z",
+      "side": 1,
+      "message": "Shouldn\u0027t this be TODO(crbug.com/776173): ?",
+      "revId": "735e7f377e293ad23b79d49b2e5fca12886b311c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "28d8eb03_9a5b9677",
+        "filename": "third_party/WebKit/Source/core/css/cssom/CSSNumericValueType.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 40,
+      "author": {
+        "id": 1161824
+      },
+      "writtenOn": "2017-11-07T06:34:52Z",
+      "side": 1,
+      "message": "I think it would be clearer to implement these as \"Set\" and \"Get\" type functions, right now, especially given that they\u0027re public, the naming is pretty vague...",
+      "revId": "735e7f377e293ad23b79d49b2e5fca12886b311c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "59b27033_ce7b0aec",
+        "filename": "third_party/WebKit/Source/core/css/cssom/CSSNumericValueType.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 51,
+      "author": {
+        "id": 1161824
+      },
+      "writtenOn": "2017-11-07T06:34:52Z",
+      "side": 1,
+      "message": "Are the values ever anything other than 0 and 1 (or is that just in this CL)? If they\u0027re not, you can use a BitVector: https://cs.chromium.org/chromium/src/third_party/WebKit/Source/platform/wtf/BitVector.h",
+      "revId": "735e7f377e293ad23b79d49b2e5fca12886b311c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3de85264_e05892a3",
+        "filename": "third_party/WebKit/Source/core/css/cssom/CSSUnitValueTest.cpp",
+        "patchSetId": 2
+      },
+      "lineNbr": 183,
+      "author": {
+        "id": 1161824
+      },
+      "writtenOn": "2017-11-07T06:34:52Z",
+      "side": 1,
+      "message": "You should probably use TEST_P for this instead of rolling your own parameterisation. https://github.com/google/googletest/blob/master/googletest/docs/AdvancedGuide.md#how-to-write-value-parameterized-tests",
+      "revId": "735e7f377e293ad23b79d49b2e5fca12886b311c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "dc56c673_184699f4",
+        "filename": "third_party/WebKit/Source/core/css/cssom/CSSUnitValueTest.cpp",
+        "patchSetId": 2
+      },
+      "lineNbr": 205,
+      "author": {
+        "id": 1161824
+      },
+      "writtenOn": "2017-11-07T06:34:52Z",
+      "side": 1,
+      "message": "If this is the only usage of Entry(), you can use FRIEND_TEST to expose Entry() only to the tests:\nhttps://github.com/google/googletest/blob/master/googletest/docs/AdvancedGuide.md#private-class-members",
+      "revId": "735e7f377e293ad23b79d49b2e5fca12886b311c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
