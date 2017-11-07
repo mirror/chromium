@@ -31,15 +31,15 @@ class SigninViewController {
   virtual ~SigninViewController();
 
   // Returns true if the signin flow should be shown as tab-modal for |mode|.
-  static bool ShouldShowModalSigninForMode(profiles::BubbleViewMode mode);
+  static bool ShouldShowSigninForMode(profiles::BubbleViewMode mode);
 
-  // Shows the signin flow as a tab modal dialog attached to |browser|'s active
-  // web contents.
+  // Shows the signin attached to |browser|'s active web contents.
   // |access_point| indicates the access point used to open the Gaia sign in
   // page.
-  void ShowModalSignin(profiles::BubbleViewMode mode,
-                       Browser* browser,
-                       signin_metrics::AccessPoint access_point);
+  void ShowSignin(profiles::BubbleViewMode mode,
+                  Browser* browser,
+                  signin_metrics::AccessPoint access_point);
+
   void ShowModalSyncConfirmationDialog(Browser* browser);
   void ShowModalSigninErrorDialog(Browser* browser);
 
@@ -63,6 +63,18 @@ class SigninViewController {
 
  private:
   friend class login_ui_test_utils::SigninViewControllerTestUtil;
+
+  // Shows the signin flow as a tab modal dialog attached to |browser|'s active
+  // web contents.
+  // |access_point| indicates the access point used to open the Gaia sign in
+  // page.
+  void ShowModalSigninDialog(profiles::BubbleViewMode mode,
+                             Browser* browser,
+                             signin_metrics::AccessPoint access_point);
+
+  // Shows the DICE-specific sign-in flow: opens a Gaia sign-in webpage in a new
+  // tab attached to |browser|.
+  void ShowDiceSigninTab(Browser* browser);
 
   // Returns the web contents of the modal dialog.
   content::WebContents* GetModalDialogWebContentsForTesting();
