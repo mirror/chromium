@@ -259,7 +259,9 @@ class CORE_EXPORT WebLocalFrameImpl final
             WebFrameLoadType = WebFrameLoadType::kStandard,
             const WebHistoryItem& = WebHistoryItem(),
             WebHistoryLoadType = kWebHistoryDifferentDocumentLoad,
-            bool is_client_redirect = false) override;
+            bool is_client_redirect = false,
+            const base::UnguessableToken& devtools_navigation_token =
+                base::UnguessableToken()) override;
   void LoadData(const WebData&,
                 const WebString& mime_type,
                 const WebString& text_encoding,

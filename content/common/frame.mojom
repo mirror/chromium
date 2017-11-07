@@ -41,12 +41,18 @@ interface FrameNavigationControl {
   // that case |subresource_loader_factories| may also be provided by the
   // browser as a a means for the renderer to load subresources where
   // applicable.
+  //
+  // For automation driver-initiated navigations over the devtools protocol,
+  // |devtools_navigation_token| is used to tag the navigation. This navigation
+  // token lands on the DocumentLoader instance. This way subsequent Blink-level
+  // frame lifecycle events can be associated this navigation.
   CommitNavigation(URLResponseHead head,
                    url.mojom.Url body_url,
                    CommonNavigationParams common_params,
                    RequestNavigationParams request_params,
                    handle<data_pipe_consumer>? body_data,
-                   URLLoaderFactoryBundle? subresource_loader_factories);
+                   URLLoaderFactoryBundle? subresource_loader_factories,
+                   mojo.common.mojom.UnguessableToken devtools_navigation_token);
 };
 
 // Implemented by the frame (e.g. renderer processes).

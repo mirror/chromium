@@ -1985,11 +1985,13 @@ WebURLRequest WebLocalFrameImpl::RequestForReload(
   return WrappedResourceRequest(request);
 }
 
-void WebLocalFrameImpl::Load(const WebURLRequest& request,
-                             WebFrameLoadType web_frame_load_type,
-                             const WebHistoryItem& item,
-                             WebHistoryLoadType web_history_load_type,
-                             bool is_client_redirect) {
+void WebLocalFrameImpl::Load(
+    const WebURLRequest& request,
+    WebFrameLoadType web_frame_load_type,
+    const WebHistoryItem& item,
+    WebHistoryLoadType web_history_load_type,
+    bool is_client_redirect,
+    const base::UnguessableToken& devtools_navigation_token) {
   DCHECK(GetFrame());
   DCHECK(!request.IsNull());
   const ResourceRequest& resource_request = request.ToResourceRequest();
@@ -2004,6 +2006,7 @@ void WebLocalFrameImpl::Load(const WebURLRequest& request,
     text_finder_->ClearActiveFindMatch();
 
   FrameLoadRequest frame_request = FrameLoadRequest(nullptr, resource_request);
+  frame_request.SetDevToolsNavigationToken(devtools_navigation_token);
   if (is_client_redirect)
     frame_request.SetClientRedirect(ClientRedirectPolicy::kClientRedirect);
   HistoryItem* history_item = item;
