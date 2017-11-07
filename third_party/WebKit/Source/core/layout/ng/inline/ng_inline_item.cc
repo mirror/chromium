@@ -41,6 +41,13 @@ static bool IsEmptyItem(NGInlineItem::NGInlineItemType type,
       return false;
   }
 
+  if (type == NGInlineItem::kOutOfFlowPositioned) {
+    DCHECK(style);
+
+    if (style->IsOriginalDisplayInlineType())
+      return false;
+  }
+
   return true;
 }
 

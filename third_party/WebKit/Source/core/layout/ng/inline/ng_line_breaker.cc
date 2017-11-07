@@ -117,9 +117,9 @@ bool NGLineBreaker::NextLine(const NGLayoutOpportunity& opportunity,
         node_.GetLayoutBlockFlow()->ShouldTruncateOverflowingText()) {
       TruncateOverflowingText(line_info);
     }
-
-    ComputeLineLocation(line_info);
   }
+
+  ComputeLineLocation(line_info);
 
   return true;
 }
