@@ -41,6 +41,8 @@ class AutofillAddressValidationTest : public testing::Test,
             new TestdataSource(true, file_path.AsUTF8Unsafe())),
         std::unique_ptr<Storage>(new NullStorage), this);
     validator_->LoadRules("CA");
+    // Brazil has rules for locality/dependent locality fields.
+    validator_->LoadRules("BR");
   }
 
   AutofillProfile::ValidityState ValidateAddressTest(AutofillProfile* profile) {
@@ -74,6 +76,13 @@ TEST_F(AutofillAddressValidationTest, ValidateFullValidProfile) {
             profile.GetValidityState(ADDRESS_HOME_COUNTRY));
   EXPECT_EQ(AutofillProfile::VALID,
             profile.GetValidityState(ADDRESS_HOME_STATE));
+  // For Canada, there is no rule and data to validate the city.
+  EXPECT_EQ(AutofillProfile::VALID,
+            profile.GetValidityState(ADDRESS_HOME_CITY));
+  // Canada doesn't have a dependent locality. It's not filled, and yet the
+  // profile is valid.
+  EXPECT_EQ(AutofillProfile::EMPTY,
+            profile.GetValidityState(ADDRESS_HOME_DEPENDENT_LOCALITY));
   EXPECT_EQ(AutofillProfile::VALID, profile.GetValidityState(ADDRESS_HOME_ZIP));
 }
 
@@ -89,6 +98,10 @@ TEST_F(AutofillAddressValidationTest, ValidateFullProfile_CountryCodeNotExist) {
   EXPECT_EQ(AutofillProfile::UNVALIDATED,
             profile.GetValidityState(ADDRESS_HOME_STATE));
   EXPECT_EQ(AutofillProfile::UNVALIDATED,
+            profile.GetValidityState(ADDRESS_HOME_CITY));
+  EXPECT_EQ(AutofillProfile::EMPTY,
+            profile.GetValidityState(ADDRESS_HOME_DEPENDENT_LOCALITY));
+  EXPECT_EQ(AutofillProfile::UNVALIDATED,
             profile.GetValidityState(ADDRESS_HOME_ZIP));
 }
 
@@ -102,6 +115,10 @@ TEST_F(AutofillAddressValidationTest, ValidateFullProfile_EmptyCountryCode) {
             profile.GetValidityState(ADDRESS_HOME_COUNTRY));
   EXPECT_EQ(AutofillProfile::UNVALIDATED,
             profile.GetValidityState(ADDRESS_HOME_STATE));
+  EXPECT_EQ(AutofillProfile::UNVALIDATED,
+            profile.GetValidityState(ADDRESS_HOME_CITY));
+  EXPECT_EQ(AutofillProfile::EMPTY,
+            profile.GetValidityState(ADDRESS_HOME_DEPENDENT_LOCALITY));
   EXPECT_EQ(AutofillProfile::UNVALIDATED,
             profile.GetValidityState(ADDRESS_HOME_ZIP));
 }
@@ -117,6 +134,10 @@ TEST_F(AutofillAddressValidationTest, ValidateFullProfile_RuleNotLoaded) {
   EXPECT_EQ(AutofillProfile::UNVALIDATED,
             profile.GetValidityState(ADDRESS_HOME_STATE));
   EXPECT_EQ(AutofillProfile::UNVALIDATED,
+            profile.GetValidityState(ADDRESS_HOME_CITY));
+  EXPECT_EQ(AutofillProfile::EMPTY,
+            profile.GetValidityState(ADDRESS_HOME_DEPENDENT_LOCALITY));
+  EXPECT_EQ(AutofillProfile::UNVALIDATED,
             profile.GetValidityState(ADDRESS_HOME_ZIP));
 }
 
@@ -130,6 +151,10 @@ TEST_F(AutofillAddressValidationTest, ValidateAddress_AdminAreaNotExists) {
             profile.GetValidityState(ADDRESS_HOME_COUNTRY));
   EXPECT_EQ(AutofillProfile::INVALID,
             profile.GetValidityState(ADDRESS_HOME_STATE));
+  EXPECT_EQ(AutofillProfile::VALID,
+            profile.GetValidityState(ADDRESS_HOME_CITY));
+  EXPECT_EQ(AutofillProfile::EMPTY,
+            profile.GetValidityState(ADDRESS_HOME_DEPENDENT_LOCALITY));
   EXPECT_EQ(AutofillProfile::VALID, profile.GetValidityState(ADDRESS_HOME_ZIP));
 }
 
@@ -142,6 +167,10 @@ TEST_F(AutofillAddressValidationTest, ValidateAddress_EmptyAdminArea) {
             profile.GetValidityState(ADDRESS_HOME_COUNTRY));
   EXPECT_EQ(AutofillProfile::EMPTY,
             profile.GetValidityState(ADDRESS_HOME_STATE));
+  EXPECT_EQ(AutofillProfile::VALID,
+            profile.GetValidityState(ADDRESS_HOME_CITY));
+  EXPECT_EQ(AutofillProfile::EMPTY,
+            profile.GetValidityState(ADDRESS_HOME_DEPENDENT_LOCALITY));
   EXPECT_EQ(AutofillProfile::VALID, profile.GetValidityState(ADDRESS_HOME_ZIP));
 }
 
@@ -155,6 +184,10 @@ TEST_F(AutofillAddressValidationTest, ValidateAddress_AdminAreaFullName) {
             profile.GetValidityState(ADDRESS_HOME_COUNTRY));
   EXPECT_EQ(AutofillProfile::VALID,
             profile.GetValidityState(ADDRESS_HOME_STATE));
+  EXPECT_EQ(AutofillProfile::VALID,
+            profile.GetValidityState(ADDRESS_HOME_CITY));
+  EXPECT_EQ(AutofillProfile::EMPTY,
+            profile.GetValidityState(ADDRESS_HOME_DEPENDENT_LOCALITY));
   EXPECT_EQ(AutofillProfile::VALID, profile.GetValidityState(ADDRESS_HOME_ZIP));
 }
 
@@ -168,6 +201,10 @@ TEST_F(AutofillAddressValidationTest, ValidateAddress_AdminAreaSmallCode) {
             profile.GetValidityState(ADDRESS_HOME_COUNTRY));
   EXPECT_EQ(AutofillProfile::VALID,
             profile.GetValidityState(ADDRESS_HOME_STATE));
+  EXPECT_EQ(AutofillProfile::VALID,
+            profile.GetValidityState(ADDRESS_HOME_CITY));
+  EXPECT_EQ(AutofillProfile::EMPTY,
+            profile.GetValidityState(ADDRESS_HOME_DEPENDENT_LOCALITY));
   EXPECT_EQ(AutofillProfile::VALID, profile.GetValidityState(ADDRESS_HOME_ZIP));
 }
 
@@ -181,6 +218,10 @@ TEST_F(AutofillAddressValidationTest, ValidateAddress_AdminAreaSpecialLetter) {
             profile.GetValidityState(ADDRESS_HOME_COUNTRY));
   EXPECT_EQ(AutofillProfile::VALID,
             profile.GetValidityState(ADDRESS_HOME_STATE));
+  EXPECT_EQ(AutofillProfile::VALID,
+            profile.GetValidityState(ADDRESS_HOME_CITY));
+  EXPECT_EQ(AutofillProfile::EMPTY,
+            profile.GetValidityState(ADDRESS_HOME_DEPENDENT_LOCALITY));
   EXPECT_EQ(AutofillProfile::VALID, profile.GetValidityState(ADDRESS_HOME_ZIP));
 }
 
@@ -196,6 +237,10 @@ TEST_F(AutofillAddressValidationTest, ValidateAddress_ValidZipNoSpace) {
             profile.GetValidityState(ADDRESS_HOME_COUNTRY));
   EXPECT_EQ(AutofillProfile::VALID,
             profile.GetValidityState(ADDRESS_HOME_STATE));
+  EXPECT_EQ(AutofillProfile::VALID,
+            profile.GetValidityState(ADDRESS_HOME_CITY));
+  EXPECT_EQ(AutofillProfile::EMPTY,
+            profile.GetValidityState(ADDRESS_HOME_DEPENDENT_LOCALITY));
   EXPECT_EQ(AutofillProfile::VALID, profile.GetValidityState(ADDRESS_HOME_ZIP));
 }
 
@@ -209,6 +254,10 @@ TEST_F(AutofillAddressValidationTest, ValidateAddress_InvalidZip) {
             profile.GetValidityState(ADDRESS_HOME_COUNTRY));
   EXPECT_EQ(AutofillProfile::VALID,
             profile.GetValidityState(ADDRESS_HOME_STATE));
+  EXPECT_EQ(AutofillProfile::VALID,
+            profile.GetValidityState(ADDRESS_HOME_CITY));
+  EXPECT_EQ(AutofillProfile::EMPTY,
+            profile.GetValidityState(ADDRESS_HOME_DEPENDENT_LOCALITY));
   EXPECT_EQ(AutofillProfile::INVALID,
             profile.GetValidityState(ADDRESS_HOME_ZIP));
 }
@@ -222,20 +271,47 @@ TEST_F(AutofillAddressValidationTest, ValidateAddress_EmptyZip) {
             profile.GetValidityState(ADDRESS_HOME_COUNTRY));
   EXPECT_EQ(AutofillProfile::VALID,
             profile.GetValidityState(ADDRESS_HOME_STATE));
+  EXPECT_EQ(AutofillProfile::VALID,
+            profile.GetValidityState(ADDRESS_HOME_CITY));
+  EXPECT_EQ(AutofillProfile::EMPTY,
+            profile.GetValidityState(ADDRESS_HOME_DEPENDENT_LOCALITY));
   EXPECT_EQ(AutofillProfile::EMPTY, profile.GetValidityState(ADDRESS_HOME_ZIP));
 }
 
-TEST_F(AutofillAddressValidationTest,
-       ValidateFullProfile_EmptyCountryCodeAreaAndZip) {
+TEST_F(AutofillAddressValidationTest, ValidateAddress_EmptyCity) {
+  // Although there is no rule/data to validate the city (aka locality) field,
+  // the field is required for Canada. Therefore, a profile without a city field
+  // would be an invalid profile.
+  AutofillProfile profile(autofill::test::GetFullValidProfile());
+  profile.SetRawInfo(ADDRESS_HOME_CITY, base::UTF8ToUTF16(""));
+
+  EXPECT_EQ(AutofillProfile::INVALID, ValidateAddressTest(&profile));
+  EXPECT_EQ(AutofillProfile::VALID,
+            profile.GetValidityState(ADDRESS_HOME_COUNTRY));
+  EXPECT_EQ(AutofillProfile::VALID,
+            profile.GetValidityState(ADDRESS_HOME_STATE));
+  EXPECT_EQ(AutofillProfile::EMPTY,
+            profile.GetValidityState(ADDRESS_HOME_CITY));
+  EXPECT_EQ(AutofillProfile::EMPTY,
+            profile.GetValidityState(ADDRESS_HOME_DEPENDENT_LOCALITY));
+  EXPECT_EQ(AutofillProfile::VALID, profile.GetValidityState(ADDRESS_HOME_ZIP));
+}
+
+TEST_F(AutofillAddressValidationTest, ValidateFullProfile_EmptyFields) {
   AutofillProfile profile(autofill::test::GetFullValidProfile());
   profile.SetRawInfo(ADDRESS_HOME_COUNTRY, base::UTF8ToUTF16(""));
   profile.SetRawInfo(ADDRESS_HOME_STATE, base::UTF8ToUTF16(""));
+  profile.SetRawInfo(ADDRESS_HOME_CITY, base::UTF8ToUTF16(""));
   profile.SetRawInfo(ADDRESS_HOME_ZIP, base::UTF8ToUTF16(""));
   EXPECT_EQ(AutofillProfile::INVALID, ValidateAddressTest(&profile));
   EXPECT_EQ(AutofillProfile::EMPTY,
             profile.GetValidityState(ADDRESS_HOME_COUNTRY));
   EXPECT_EQ(AutofillProfile::EMPTY,
             profile.GetValidityState(ADDRESS_HOME_STATE));
+  EXPECT_EQ(AutofillProfile::EMPTY,
+            profile.GetValidityState(ADDRESS_HOME_CITY));
+  EXPECT_EQ(AutofillProfile::EMPTY,
+            profile.GetValidityState(ADDRESS_HOME_DEPENDENT_LOCALITY));
   EXPECT_EQ(AutofillProfile::EMPTY, profile.GetValidityState(ADDRESS_HOME_ZIP));
 }
 
