@@ -98,6 +98,7 @@ class ArcNetHostImpl : public KeyedService,
   void OnInstanceClosed() override;
 
  private:
+  void UpdateDefaultNetwork();
   void DefaultNetworkSuccessCallback(const std::string& service_path,
                                      const base::DictionaryValue& dictionary);
 
