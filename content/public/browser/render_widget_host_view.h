@@ -76,6 +76,14 @@ class CONTENT_EXPORT RenderWidgetHostView {
   // Sets a flag that indicates if it is in virtual reality mode.
   virtual void SetIsInVR(bool is_in_vr) = 0;
 
+  // Sets the height of top browser controls and the flag indicating that,
+  // when true, Blink's viewport size should be shrunk by the height of
+  // browser controls.
+  virtual void SetTopControlsHeight(int height, bool controls_resize_view) = 0;
+
+  // Sets the height of bottom browser controls.
+  virtual void SetBottomControlsHeight(int height) = 0;
+
   // Coordinate points received from a renderer process need to be transformed
   // to the top-level frame's coordinate space. For coordinates received from
   // the top-level frame's renderer this is a no-op as they are already
