@@ -508,6 +508,7 @@ public class ChromeTabbedActivity
         @LaunchIntentDispatcher.Action
         int action = maybeDispatchExplicitMainViewIntent(
                 intent, sExplicitMainViewIntentDispatchedOnNewIntent);
+        BrowserActionsService.recordTabOpenedNotificationClicked(intent);
         if (action != LaunchIntentDispatcher.Action.CONTINUE) {
             // Change our position in the activity stack to make sure back button sends user
             // to the activity that started the custom tab.
