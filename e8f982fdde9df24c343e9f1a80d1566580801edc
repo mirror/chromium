@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "4f2cd4de_4b53efcc",
+        "filename": "chrome/browser/feature_engagement/feature_tracker.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 106,
+      "author": {
+        "id": 1223632
+      },
+      "writtenOn": "2017-11-07T23:40:07Z",
+      "side": 1,
+      "message": "yes I believe so:\nhttps://cs.chromium.org/chromium/src/base/files/file.h?type\u003dcs\u0026q\u003dcreation_time+file:file.h\u0026sq\u003dpackage:chromium\u0026l\u003d146",
+      "parentUuid": "f3a82c50_2f77b601",
+      "range": {
+        "startLine": 106,
+        "startChar": 41,
+        "endLine": 106,
+        "endChar": 59
+      },
+      "revId": "e8f982fdde9df24c343e9f1a80d1566580801edc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "a2e524be_df330c92",
         "filename": "chrome/browser/feature_engagement/feature_tracker.cc",
         "patchSetId": 5
@@ -39,6 +63,24 @@
       "revId": "e8f982fdde9df24c343e9f1a80d1566580801edc",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f08937d6_2d5538fa",
+        "filename": "chrome/browser/feature_engagement/feature_tracker.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 114,
+      "author": {
+        "id": 1223632
+      },
+      "writtenOn": "2017-11-07T23:40:07Z",
+      "side": 1,
+      "message": "changed this to using base time delta",
+      "parentUuid": "a2e524be_df330c92",
+      "revId": "e8f982fdde9df24c343e9f1a80d1566580801edc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -65,6 +107,30 @@
     },
     {
       "key": {
+        "uuid": "be00dc17_a08d3113",
+        "filename": "chrome/browser/feature_engagement/feature_tracker.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 69,
+      "author": {
+        "id": 1223632
+      },
+      "writtenOn": "2017-11-07T23:40:07Z",
+      "side": 1,
+      "message": "I reworded the comment, please tell me if it needs to be reworded more!",
+      "parentUuid": "46c610e5_e630528a",
+      "range": {
+        "startLine": 69,
+        "startChar": 30,
+        "endLine": 69,
+        "endChar": 61
+      },
+      "revId": "e8f982fdde9df24c343e9f1a80d1566580801edc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "07eb4237_d696951a",
         "filename": "chrome/browser/feature_engagement/feature_tracker_unittest.cc",
         "patchSetId": 5
@@ -85,6 +151,30 @@
       "revId": "e8f982fdde9df24c343e9f1a80d1566580801edc",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "daa0bf88_f1c32b8f",
+        "filename": "chrome/browser/feature_engagement/feature_tracker_unittest.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 265,
+      "author": {
+        "id": 1223632
+      },
+      "writtenOn": "2017-11-07T23:40:07Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "07eb4237_d696951a",
+      "range": {
+        "startLine": 265,
+        "startChar": 57,
+        "endLine": 265,
+        "endChar": 71
+      },
+      "revId": "e8f982fdde9df24c343e9f1a80d1566580801edc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -111,6 +201,30 @@
     },
     {
       "key": {
+        "uuid": "34d5063d_7a589145",
+        "filename": "chrome/browser/feature_engagement/feature_tracker_unittest.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 268,
+      "author": {
+        "id": 1223632
+      },
+      "writtenOn": "2017-11-07T23:40:07Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "5d8a6efb_5a8502c9",
+      "range": {
+        "startLine": 268,
+        "startChar": 35,
+        "endLine": 268,
+        "endChar": 49
+      },
+      "revId": "e8f982fdde9df24c343e9f1a80d1566580801edc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "de928f0b_5fc6420d",
         "filename": "chrome/browser/feature_engagement/feature_tracker_unittest.cc",
         "patchSetId": 5
@@ -125,6 +239,24 @@
       "revId": "e8f982fdde9df24c343e9f1a80d1566580801edc",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1d06ba2d_7bbebacf",
+        "filename": "chrome/browser/feature_engagement/feature_tracker_unittest.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 275,
+      "author": {
+        "id": 1223632
+      },
+      "writtenOn": "2017-11-07T23:40:07Z",
+      "side": 1,
+      "message": "This sets the Chrome variations configuration to the first sentinel creation time actually. For this test, because I wanted it to be a new user, to ensure that, I set the date_released_in_seconds parameter in the field trial params to the same time as the first run sentinel creation time.",
+      "parentUuid": "de928f0b_5fc6420d",
+      "revId": "e8f982fdde9df24c343e9f1a80d1566580801edc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -148,6 +280,30 @@
       "revId": "e8f982fdde9df24c343e9f1a80d1566580801edc",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ea7eb3cc_4f8f3e2c",
+        "filename": "chrome/browser/feature_engagement/feature_tracker_unittest.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 292,
+      "author": {
+        "id": 1223632
+      },
+      "writtenOn": "2017-11-07T23:40:07Z",
+      "side": 1,
+      "message": "I changed this test to be more reflective that if the experiment was created more than 24 hours after the first run sentintel creation time, the user will not be considered new.",
+      "parentUuid": "256c715a_b0f54f7d",
+      "range": {
+        "startLine": 292,
+        "startChar": 2,
+        "endLine": 292,
+        "endChar": 54
+      },
+      "revId": "e8f982fdde9df24c343e9f1a80d1566580801edc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
