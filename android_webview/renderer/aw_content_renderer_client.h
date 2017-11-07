@@ -15,6 +15,7 @@
 #include "components/spellcheck/spellcheck_build_features.h"
 #include "components/web_restrictions/interfaces/web_restrictions.mojom.h"
 #include "content/public/renderer/content_renderer_client.h"
+#include "services/service_manager/public/cpp/binder_registry.h"
 #include "services/service_manager/public/cpp/local_interface_provider.h"
 
 #if BUILDFLAG(ENABLE_SPELLCHECK)
@@ -67,6 +68,7 @@ class AwContentRendererClient : public content::ContentRendererClient,
                         blink::WebNavigationPolicy default_policy,
                         bool is_redirect) override;
   bool ShouldUseMediaPlayerForURL(const GURL& url) override;
+  void RegisterServices(StaticServiceMap* services) override;
 
  private:
   // service_manager::LocalInterfaceProvider:
@@ -85,6 +87,8 @@ class AwContentRendererClient : public content::ContentRendererClient,
 #if BUILDFLAG(ENABLE_SPELLCHECK)
   std::unique_ptr<SpellCheck> spellcheck_;
 #endif
+
+  service_manager::BinderRegistry registry_;
 
   DISALLOW_COPY_AND_ASSIGN(AwContentRendererClient);
 };

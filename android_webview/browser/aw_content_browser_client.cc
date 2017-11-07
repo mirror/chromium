@@ -532,6 +532,11 @@ AwContentBrowserClient::GetDevToolsManagerDelegate() {
   return new AwDevToolsManagerDelegate();
 }
 
+void AwContentBrowserClient::BindEmbedderInterface(
+    const service_manager::Identity& renderer_identity,
+    const std::string& interface_name,
+    mojo::ScopedMessagePipeHandle interface_pipe) {}
+
 std::unique_ptr<base::Value> AwContentBrowserClient::GetServiceManifestOverlay(
     base::StringPiece name) {
   int id = -1;
