@@ -27,6 +27,12 @@ enum class WindowStateType;
 
 // Alphabetical sort.
 
+// If true, will send system keys to the window for dispatch. This can only be
+// set by content_browser windows, see WindowState::OnWindowPropertyChanged()
+// for enforcement.
+ASH_PUBLIC_EXPORT extern const aura::WindowProperty<bool>* const
+    kCanConsumeSystemKeysKey;
+
 // If true (and the window is a panel), it's attached to its shelf item.
 ASH_PUBLIC_EXPORT extern const aura::WindowProperty<bool>* const
     kPanelAttachedKey;

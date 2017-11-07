@@ -1572,8 +1572,8 @@ void WindowTree::NewTopLevelWindow(
 
   display_root->window_manager_state()
       ->window_tree()
-      ->window_manager_internal_->WmCreateTopLevelWindow(wm_change_id, id_,
-                                                         transport_properties);
+      ->window_manager_internal_->WmCreateTopLevelWindow(
+          wm_change_id, id_, name(), transport_properties);
 }
 
 void WindowTree::DeleteWindow(uint32_t change_id, Id transport_window_id) {

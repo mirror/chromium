@@ -184,6 +184,7 @@ class AURA_EXPORT WindowManagerDelegate {
   // property_utils.h) to configure the type on the newly created window.
   virtual Window* OnWmCreateTopLevelWindow(
       ui::mojom::WindowType window_type,
+      const std::string& remote_service_name,
       std::map<std::string, std::vector<uint8_t>>* properties) = 0;
 
   // Called when a Mus client's jankiness changes. |windows| is the set of
