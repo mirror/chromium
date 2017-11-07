@@ -58,19 +58,14 @@ class PaymentRequestUnitTestBase {
   TestChromeBrowserState* browser_state() {
     return chrome_browser_state_.get();
   }
-  const std::vector<std::unique_ptr<autofill::AutofillProfile>>& profiles()
-      const {
-    return profiles_;
+  const std::vector<autofill::AutofillProfile*>& profiles() const {
+    return personal_data_manager_.GetProfiles();
   }
-  const std::vector<std::unique_ptr<autofill::CreditCard>>& credit_cards()
-      const {
-    return cards_;
+  const std::vector<autofill::CreditCard*>& credit_cards() const {
+    return personal_data_manager_.GetCreditCards();
   }
 
  private:
-  std::vector<std::unique_ptr<autofill::AutofillProfile>> profiles_;
-  std::vector<std::unique_ptr<autofill::CreditCard>> cards_;
-
   web::TestWebThreadBundle web_thread_bundle_;
   web::TestWebState web_state_;
   std::unique_ptr<PrefService> pref_service_;
