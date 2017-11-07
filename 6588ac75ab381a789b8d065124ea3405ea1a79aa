@@ -67,6 +67,24 @@
       "revId": "6588ac75ab381a789b8d065124ea3405ea1a79aa",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8369d808_19d95a2b",
+        "filename": "components/viz/service/display/gl_renderer_unittest.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 2677,
+      "author": {
+        "id": 1228419
+      },
+      "writtenOn": "2017-11-07T22:38:34Z",
+      "side": 1,
+      "message": "It would work to move pass-\u003ehas_damage_from_contributing_content \u003d true; in the branch if (!id()), but since the render_pass is constant in UseRenderPass(const RenderPass* render_pass), we can not modify it unless we remove the const.\n\nWe can discuss how to write the test, basically for any new texture, we need to set the flag to true.\n\nThe original bug is that, there are two passes to call UseRenderPass() [1,2].\nIn DrawRenderPass, it first call this by checking if (!UseRenderPass(render_pass)) [1], this is the first time, if the !texture_id, we create one. If the flag is not set after creating new texture, when we the second time call UseRenderPass in gl_renderer to Draw the content [2], at the second time, texture_id !\u003d 0, and hits second branch without binding the render pass to frame buffer. Down the code path some place triggers error of \"Source and destination textures of the draw are the same.\"\n\n[1] https://cs.chromium.org/chromium/src/components/viz/service/display/direct_renderer.cc?l\u003d527\u0026rcl\u003da92a232a5b1616c352ef3c332242d7422daa9916\n[2] https://cs.chromium.org/chromium/src/components/viz/service/display/gl_renderer.cc?l\u003d1130\u0026rcl\u003da92a232a5b1616c352ef3c332242d7422daa9916",
+      "parentUuid": "6f3331a4_b5d3f932",
+      "revId": "6588ac75ab381a789b8d065124ea3405ea1a79aa",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
