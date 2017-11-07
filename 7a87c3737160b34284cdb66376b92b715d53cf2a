@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "fcfc90af_e22b301a",
+        "filename": "chrome/browser/chromeos/file_system_provider/service_unittest.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 262,
+      "author": {
+        "id": 1002249
+      },
+      "writtenOn": "2017-11-07T07:01:32Z",
+      "side": 1,
+      "message": "nit: EXPECT_EQ(true -\u003e EXPECT_TRUE.\nSame for false. Here and in other places.",
+      "range": {
+        "startLine": 262,
+        "startChar": 2,
+        "endLine": 262,
+        "endChar": 16
+      },
+      "revId": "7a87c3737160b34284cdb66376b92b715d53cf2a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    }
+  ]
+}
