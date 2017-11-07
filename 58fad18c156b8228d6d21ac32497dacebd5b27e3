@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "ad2b2e4d_148fae77",
+        "filename": "chrome/browser/ui/views/collected_cookies_views.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 544,
+      "author": {
+        "id": 1000763
+      },
+      "writtenOn": "2017-11-07T20:18:27Z",
+      "side": 1,
+      "message": "The default is visible.",
+      "range": {
+        "startLine": 544,
+        "startChar": 4,
+        "endLine": 544,
+        "endChar": 30
+      },
+      "revId": "58fad18c156b8228d6d21ac32497dacebd5b27e3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f4b9b2e6_1a04c844",
+        "filename": "ui/views/view.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 518,
+      "author": {
+        "id": 1000763
+      },
+      "writtenOn": "2017-11-07T20:18:27Z",
+      "side": 1,
+      "message": "I actually experimented with doing this, and couldn\u0027t get myself happy. So, please don\u0027t add this. See https://chromium-review.googlesource.com/c/chromium/src/+/671030 if you\u0027re curious.",
+      "range": {
+        "startLine": 518,
+        "startChar": 2,
+        "endLine": 518,
+        "endChar": 63
+      },
+      "revId": "58fad18c156b8228d6d21ac32497dacebd5b27e3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
