@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "925a2436_90f570a1",
+        "filename": "components/viz/service/frame_sinks/compositor_frame_sink_support.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 234,
+      "author": {
+        "id": 1158749
+      },
+      "writtenOn": "2017-11-07T18:56:58Z",
+      "side": 1,
+      "message": "Thanks, done.",
+      "parentUuid": "a9326c28_75eccb05",
+      "revId": "fe136f5b8bc47f642089b5dcfdfd612112bd394e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "3abc33c4_000fe745",
         "filename": "components/viz/service/frame_sinks/frame_sink_manager_impl.cc",
         "patchSetId": 8
@@ -33,6 +51,24 @@
       "revId": "fe136f5b8bc47f642089b5dcfdfd612112bd394e",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f033590f_35f7db14",
+        "filename": "components/viz/service/frame_sinks/frame_sink_manager_impl.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 387,
+      "author": {
+        "id": 1158749
+      },
+      "writtenOn": "2017-11-07T18:56:58Z",
+      "side": 1,
+      "message": "good call! updated.",
+      "parentUuid": "3abc33c4_000fe745",
+      "revId": "fe136f5b8bc47f642089b5dcfdfd612112bd394e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
