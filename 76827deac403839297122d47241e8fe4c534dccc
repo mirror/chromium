@@ -16,6 +16,24 @@
       "revId": "76827deac403839297122d47241e8fe4c534dccc",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b04948ee_45b782ff",
+        "filename": "third_party/libaom/options.gni",
+        "patchSetId": 3
+      },
+      "lineNbr": 6,
+      "author": {
+        "id": 1117029
+      },
+      "writtenOn": "2017-11-07T23:59:02Z",
+      "side": 1,
+      "message": "I \"simplified\" it to \u003d\u003d but then realized that missed the case of \"check out the code but don\u0027t build av1\"",
+      "parentUuid": "87aea6c8_381a3add",
+      "revId": "76827deac403839297122d47241e8fe4c534dccc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
