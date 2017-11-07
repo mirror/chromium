@@ -126,6 +126,7 @@ Still reading?
   </issue>
   <issue id="IconLauncherShape" severity="Error">
     <ignore regexp="chromecast/internal"/>
+    <ignore regexp="chrome/android/webapk/shell_apk/res/mipmap-mdpi/ic_launcher_background.png"/>
   </issue>
   <issue id="IconLocation">
     <ignore regexp="chromecast/internal"/>
@@ -366,6 +367,5 @@ Still reading?
   </issue>
   <issue id="IconLauncherFormat" severity="ignore">
     <!-- TODO(crbug.com/739746): Remove after lint version has been updated. -->
-    <ignore regexp="remoting/android/java/res/mipmap-anydpi-v26/ic_launcher.xml"/>
   </issue>
 </lint>
