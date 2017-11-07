@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "bb6f3751_68cab940",
+        "filename": "chrome/browser/android/oom_intervention/oom_intervention_tab_helper.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 67,
+      "author": {
+        "id": 1001606
+      },
+      "writtenOn": "2017-11-07T10:20:40Z",
+      "side": 1,
+      "message": "Nit: I wouldn\u0027t add explicit values if you don\u0027t need them.",
+      "range": {
+        "startLine": 67,
+        "startChar": 17,
+        "endLine": 67,
+        "endChar": 21
+      },
+      "revId": "4c9144b0a94626e367897e3e410f6fd0381e32e5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
