@@ -70,6 +70,24 @@
       "revId": "b46718b94d1d87ecc7035ef0f018d5b34eb04565",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ad1ac82c_58dbcfce",
+        "filename": "tools/mb/mb_config.pyl",
+        "patchSetId": 2
+      },
+      "lineNbr": 1568,
+      "author": {
+        "id": 1151126
+      },
+      "writtenOn": "2017-11-07T02:58:41Z",
+      "side": 1,
+      "message": "I asked to do following.\n\n\u0027configs\u0027: {\n  \u0027release_bot_x86_minimal_symbols_disable_nacl_no_clang\u0027: [\n    \u0027release_bot_x86_minimal_symbols_disable_nacl\u0027\n  ] # Or \n  \u0027release_bot_x86_minimal_symbols_disable_nacl_no_clang\u0027: [\n    \u0027release_bot_x86_minimal_symbols\u0027, \u0027disable_nacl\u0027\n  ]\n}\n\n\u0027mixins\u0027: {\n \u0027release_bot_x86_minimal_symbols\u0027: {\n   \u0027mixins\u0027:  [\u0027release_bot\u0027, \u0027x86\u0027, \u0027minimal_symbols\u0027]\n  },\n  \u0027release_bot_x86_minimal_symbols_disable_nacl\u0027: {\n   \u0027mixins\u0027: [\u0027release_bot_x86_minimal_symbols\u0027, \u0027disable_nacl\u0027]\n  }\n}\n\n\nWhat we want to do is inheritance of config set here,\nto keep our bots use \u0027base config\u0027 + \u0027goma specific config\u0027 even \u0027base config\u0027 changed without our notice.",
+      "parentUuid": "99d56a91_7355d4c9",
+      "revId": "b46718b94d1d87ecc7035ef0f018d5b34eb04565",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
