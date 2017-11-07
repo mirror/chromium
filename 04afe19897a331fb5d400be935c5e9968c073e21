@@ -1,0 +1,44 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "d96440ff_61923304",
+        "filename": "chrome/browser/ui/app_list/arc/arc_vpn_provider_manager.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 88,
+      "author": {
+        "id": 1001168
+      },
+      "writtenOn": "2017-11-07T17:24:01Z",
+      "side": 1,
+      "message": "Nit: package_names",
+      "range": {
+        "startLine": 88,
+        "startChar": 33,
+        "endLine": 88,
+        "endChar": 45
+      },
+      "revId": "04afe19897a331fb5d400be935c5e9968c073e21",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f9364ae8_cd09af5b",
+        "filename": "chrome/browser/ui/app_list/arc/arc_vpn_provider_manager.h",
+        "patchSetId": 9
+      },
+      "lineNbr": 26,
+      "author": {
+        "id": 1001168
+      },
+      "writtenOn": "2017-11-07T17:24:01Z",
+      "side": 1,
+      "message": "Nit: pass base::Time by value",
+      "revId": "04afe19897a331fb5d400be935c5e9968c073e21",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
