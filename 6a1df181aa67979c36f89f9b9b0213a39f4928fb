@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "e4b6d36d_42fd7749",
+        "filename": "ios/chrome/browser/ui/bookmarks/bookmark_home_view_controller.mm",
+        "patchSetId": 3
+      },
+      "lineNbr": 198,
+      "author": {
+        "id": 1116027
+      },
+      "writtenOn": "2017-11-07T09:15:00Z",
+      "side": 1,
+      "message": "Can\u0027t you do this in -viewDidAppear and avoid using an extra flag? The method -viewDidAppear will only be called once.",
+      "revId": "6a1df181aa67979c36f89f9b9b0213a39f4928fb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
