@@ -52,6 +52,24 @@
       "revId": "63c4efd655be8a6cfcbad4302630c6abce3c0520",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b5521e56_d5f5bda6",
+        "filename": "chrome/browser/chromeos/eol_notification.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 75,
+      "author": {
+        "id": 1115907
+      },
+      "writtenOn": "2017-11-07T19:58:28Z",
+      "side": 1,
+      "message": "\u003e We\u0027ve had quite a few Profile-related crashes in the past, so yes, this has been a problem. Maybe not for this particular notification, but we shouldn\u0027t start with an example of how not to do it.\n\nI mean, in this case it\u0027s difficult to test if it\u0027s even working properly since there\u0027s no such thing as profile logout without process shutdown. (You could write a test but it would be exercising code paths that don\u0027t exist in production, which seems unappealing.)\n\n\u003e IMO the NotificationDisplayService should take on this responsibility and just close all transient notifications when it receives the KeyedService\u0027s Shutdown() call, since this is not limited to native notifications. I can add that if you don\u0027t want to.\n\nSure, NDS base class makes sense (I got mixed up with the Native NDS since that one can handle both native and MC notifications --- perhaps it can be folded into the base class?), although I\u0027d rather wait until there was an instance where the code was actually going to be used (and testable) rather than adding it in advance.",
+      "parentUuid": "3906c544_3c053705",
+      "revId": "63c4efd655be8a6cfcbad4302630c6abce3c0520",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
