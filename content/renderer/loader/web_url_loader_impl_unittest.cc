@@ -352,9 +352,11 @@ class WebURLLoaderImplTest : public testing::Test {
 
   void DoCompleteRequest() {
     EXPECT_FALSE(client()->did_finish());
-    peer()->OnCompletedRequest(net::OK, false, base::TimeTicks(),
-                               strlen(kTestData), strlen(kTestData),
-                               strlen(kTestData));
+    ResourceRequestCompletionStatus completion_status(net::OK);
+    completion_status.encoded_data_length = arraysize(kTestData);
+    completion_status.encoded_body_length = arraysize(kTestData);
+    completion_status.decoded_body_length = arraysize(kTestData);
+    peer()->OnCompletedRequest(completion_status);
     EXPECT_TRUE(client()->did_finish());
     // There should be no error.
     EXPECT_EQ(net::OK, client()->error().reason());
@@ -363,9 +365,11 @@ class WebURLLoaderImplTest : public testing::Test {
 
   void DoFailRequest() {
     EXPECT_FALSE(client()->did_finish());
-    peer()->OnCompletedRequest(net::ERR_FAILED, false, base::TimeTicks(),
-                               strlen(kTestData), strlen(kTestData),
-                               strlen(kTestData));
+    ResourceRequestCompletionStatus completion_status(net::ERR_FAILED);
+    completion_status.encoded_data_length = arraysize(kTestData);
+    completion_status.encoded_body_length = arraysize(kTestData);
+    completion_status.decoded_body_length = arraysize(kTestData);
+    peer()->OnCompletedRequest(completion_status);
     EXPECT_FALSE(client()->did_finish());
     EXPECT_EQ(net::ERR_FAILED, client()->error().reason());
     EXPECT_EQ(blink::WebURLError::Domain::kNet, client()->error().domain());
@@ -591,9 +595,12 @@ TEST_F(WebURLLoaderImplTest, FtpDeleteOnReceiveMoreData) {
   // Directory listings are only parsed once the request completes, so this will
   // cancel in DoReceiveDataFtp, before the request finishes.
   client()->set_delete_on_receive_data();
-  peer()->OnCompletedRequest(net::OK, false, base::TimeTicks(),
-                             strlen(kTestData), strlen(kTestData),
-                             strlen(kTestData));
+
+  ResourceRequestCompletionStatus completion_status(net::OK);
+  completion_status.encoded_data_length = arraysize(kTestData);
+  completion_status.encoded_body_length = arraysize(kTestData);
+  completion_status.decoded_body_length = arraysize(kTestData);
+  peer()->OnCompletedRequest(completion_status);
   EXPECT_FALSE(client()->did_finish());
 }
 
