@@ -26,7 +26,29 @@ namespace blink {
 struct PLATFORM_EXPORT PaintChunk {
   DISALLOW_NEW_EXCEPT_PLACEMENT_NEW();
 
-  using Id = DisplayItem::Id;
+  enum Type {
+    // All DisplayItem::Type values are also accepted by PaintChunk::Id.
+    kLayerChunk = DisplayItem::kTypeLast + 1,
+    kLayerChunkAfterNegativeZOrderChildren,
+    kLayerChunkMask,
+    kTypeLast = kLayerChunkMask
+  };
+
+#if DCHECK_IS_ON()
+  static String TypeAsDebugString(Type);
+#endif
+
+  struct Id {
+    DISALLOW_NEW_EXCEPT_PLACEMENT_NEW();
+    Id(const DisplayItemClient& client, Type type)
+        : client(client), type(type) {}
+    Id(const DisplayItemClient& client, DisplayItem::Type type)
+        : Id(client, static_cast<Type>(type)) {}
+    Id(const DisplayItem::Id& id) : Id(id.client, id.type) {}
+
+    const DisplayItemClient& client;
+    const Type type;
+  };
 
   enum Cacheable {
     kCacheable,
@@ -58,18 +80,7 @@ struct PLATFORM_EXPORT PaintChunk {
     return old.is_cacheable && Matches(old.id);
   }
 
-  bool Matches(const Id& other_id) const {
-    if (!is_cacheable || id != other_id)
-      return false;
-#if DCHECK_IS_ON()
-    DCHECK(id.client.IsAlive());
-#endif
-    // A chunk whose client is just created should not match any cached chunk,
-    // even if it's id equals the old chunk's id (which may happen if this
-    // chunk's client is just created at the same address of the old chunk's
-    // deleted client).
-    return !client_is_just_created;
-  }
+  inline bool Matches(const Id& other_id) const;
 
   // Index of the first drawing in this chunk.
   size_t begin_index;
@@ -118,6 +129,14 @@ struct PLATFORM_EXPORT PaintChunk {
   String ToString() const;
 };
 
+inline bool operator==(const PaintChunk::Id& a, const PaintChunk::Id& b) {
+  return a.client == b.client && a.type == b.type;
+}
+
+inline bool operator!=(const PaintChunk::Id& a, const PaintChunk::Id& b) {
+  return !(a == b);
+}
+
 inline bool operator==(const PaintChunk& a, const PaintChunk& b) {
   return a.begin_index == b.begin_index && a.end_index == b.end_index &&
          a.id == b.id && a.properties == b.properties && a.bounds == b.bounds &&
@@ -128,6 +147,19 @@ inline bool operator==(const PaintChunk& a, const PaintChunk& b) {
 
 inline bool operator!=(const PaintChunk& a, const PaintChunk& b) {
   return !(a == b);
+}
+
+inline bool PaintChunk::Matches(const Id& other_id) const {
+  if (!is_cacheable || id != other_id)
+    return false;
+#if DCHECK_IS_ON()
+  DCHECK(id.client.IsAlive());
+#endif
+  // A chunk whose client is just created should not match any cached chunk,
+  // even if it's id equals the old chunk's id (which may happen if this
+  // chunk's client is just created at the same address of the old chunk's
+  // deleted client).
+  return !client_is_just_created;
 }
 
 inline bool ChunkLessThanIndex(const PaintChunk& chunk, size_t index) {

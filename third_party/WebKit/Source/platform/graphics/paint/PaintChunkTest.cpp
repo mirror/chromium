@@ -10,6 +10,22 @@
 
 namespace blink {
 
+#if DCHECK_IS_ON()
+TEST(PaintChunkTest, DebugStringsExist) {
+  for (int type = 0; type <= PaintChunk::kTypeLast; type++) {
+    String debug_string =
+        PaintChunk::TypeAsDebugString(static_cast<PaintChunk::Type>(type));
+    EXPECT_FALSE(debug_string.IsEmpty());
+    if (type <= DisplayItem::kTypeLast) {
+      EXPECT_EQ(
+          DisplayItem::TypeAsDebugString(static_cast<DisplayItem::Type>(type)),
+          debug_string);
+    }
+    EXPECT_NE("Unknown", debug_string);
+  }
+}
+#endif  // DCHECK_IS_ON()
+
 TEST(PaintChunkTest, matchesSame) {
   PaintChunkProperties properties;
   FakeDisplayItemClient client;
