@@ -22,6 +22,30 @@
       "revId": "1522bcf44af6e1f706ac320bec7daf42e531547e",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "164f6339_b7aae04a",
+        "filename": "chrome/browser/metrics/out_of_memory_reporter.h",
+        "patchSetId": 11
+      },
+      "lineNbr": 24,
+      "author": {
+        "id": 1142059
+      },
+      "writtenOn": "2017-11-07T14:54:36Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "cd21c135_dbfda766",
+      "range": {
+        "startLine": 24,
+        "startChar": 22,
+        "endLine": 24,
+        "endChar": 28
+      },
+      "revId": "1522bcf44af6e1f706ac320bec7daf42e531547e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
