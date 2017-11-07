@@ -2,6 +2,91 @@
   "comments": [
     {
       "key": {
+        "uuid": "fbc2f19e_2bbeb52e",
+        "filename": "components/viz/service/display/gl_renderer_copier.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 129,
+      "author": {
+        "id": 1000887
+      },
+      "writtenOn": "2017-11-07T15:55:03Z",
+      "side": 1,
+      "message": "How does this account for requests sent over mojo?",
+      "revId": "b8b97a9ba5f4eb2a484e9551242d6a1bbb17b247",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "aac32965_86e6680e",
+        "filename": "components/viz/service/display/gl_renderer_copier.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 130,
+      "author": {
+        "id": 1000887
+      },
+      "writtenOn": "2017-11-07T15:55:03Z",
+      "side": 1,
+      "message": "DCHECK(!request-\u003eSends...()) ? We don\u0027t want to actually hit this. And document this requirement on the CopyOutputRequest API?",
+      "revId": "b8b97a9ba5f4eb2a484e9551242d6a1bbb17b247",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7a92b58d_b2cb2c49",
+        "filename": "components/viz/service/display/gl_renderer_copier.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 134,
+      "author": {
+        "id": 1000887
+      },
+      "writtenOn": "2017-11-07T15:55:03Z",
+      "side": 1,
+      "message": "Why does this one need to check framebuffer_texture?",
+      "revId": "b8b97a9ba5f4eb2a484e9551242d6a1bbb17b247",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c8998fa7_a9dab6a4",
+        "filename": "components/viz/service/display/gl_renderer_copier.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 518,
+      "author": {
+        "id": 1000887
+      },
+      "writtenOn": "2017-11-07T15:55:03Z",
+      "side": 1,
+      "message": "nit: for (int i \u003d 0; i \u003c num_rows; ++i)",
+      "revId": "b8b97a9ba5f4eb2a484e9551242d6a1bbb17b247",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "38beda74_d6e2997b",
+        "filename": "components/viz/service/display/gl_renderer_copier.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 522,
+      "author": {
+        "id": 1000887
+      },
+      "writtenOn": "2017-11-07T15:55:03Z",
+      "side": 1,
+      "message": "then this goes, less loc yay",
+      "revId": "b8b97a9ba5f4eb2a484e9551242d6a1bbb17b247",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "59fc1a7f_0c3457f0",
         "filename": "components/viz/service/display/gl_renderer_copier.cc",
         "patchSetId": 3
