@@ -42,6 +42,7 @@
 #import "chrome/browser/ui/cocoa/toolbar/toolbar_controller.h"
 #include "chrome/browser/ui/content_settings/content_setting_bubble_model.h"
 #include "chrome/browser/ui/content_settings/content_setting_image_model.h"
+#include "chrome/browser/ui/extensions/extension_name.h"
 #include "chrome/browser/ui/passwords/manage_passwords_ui_controller.h"
 #include "chrome/browser/ui/tabs/tab_strip_model.h"
 #include "chrome/common/pref_names.h"
@@ -592,7 +593,8 @@ void LocationBarViewMac::UpdatePageInfoText() {
   if (type == PageInfoVerboseType::kEVCert) {
     label = GetToolbarModel()->GetEVCertName();
   } else if (type == PageInfoVerboseType::kExtension) {
-    label = GetExtensionName(GetToolbarModel()->GetURL(), GetWebContents());
+    label = extensions::GetExtensionName(GetToolbarModel()->GetURL(),
+                                         GetWebContents());
   } else if (type == PageInfoVerboseType::kChrome) {
     label = l10n_util::GetStringUTF16(IDS_SHORT_PRODUCT_NAME);
   } else if (type == PageInfoVerboseType::kSecurity &&

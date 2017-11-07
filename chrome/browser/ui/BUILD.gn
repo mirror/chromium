@@ -3435,6 +3435,8 @@ split_static_library("ui") {
       "extensions/extension_message_bubble_bridge.h",
       "extensions/extension_message_bubble_factory.cc",
       "extensions/extension_message_bubble_factory.h",
+      "extensions/extension_name.cc",
+      "extensions/extension_name.h",
       "extensions/hosted_app_browser_controller.cc",
       "extensions/hosted_app_browser_controller.h",
       "extensions/hosted_app_menu_model.cc",
