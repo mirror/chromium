@@ -12,6 +12,7 @@
 #include <vector>
 
 #include "base/strings/string_piece.h"
+#include "components/autofill/content/renderer/html_based_username_detector.h"
 #include "components/autofill/core/common/password_form.h"
 #include "components/autofill/core/common/password_form_field_prediction_map.h"
 #include "third_party/WebKit/public/platform/WebString.h"
@@ -55,14 +56,16 @@ typedef std::map<
 std::unique_ptr<PasswordForm> CreatePasswordFormFromWebForm(
     const blink::WebFormElement& form,
     const FieldValueAndPropertiesMaskMap* nonscript_modified_values,
-    const FormsPredictionsMap* form_predictions);
+    const FormsPredictionsMap* form_predictions,
+    UsernameDetectorCache* username_detector_cache);
 
 // Same as CreatePasswordFormFromWebForm() but for input elements that are not
 // enclosed in <form> element.
 std::unique_ptr<PasswordForm> CreatePasswordFormFromUnownedInputElements(
     const blink::WebLocalFrame& frame,
     const FieldValueAndPropertiesMaskMap* nonscript_modified_values,
-    const FormsPredictionsMap* form_predictions);
+    const FormsPredictionsMap* form_predictions,
+    UsernameDetectorCache* username_detector_cache);
 
 // Checks in a case-insensitive way if the autocomplete attribute for the given
 // |element| is present and has the specified |value_in_lowercase|.
