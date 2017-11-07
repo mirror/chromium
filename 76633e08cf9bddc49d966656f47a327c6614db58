@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "2c8a1939_1c0e61e1",
+        "filename": "chrome/browser/ui/webui/welcome_win10_ui.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 80,
+      "author": {
+        "id": 1001606
+      },
+      "writtenOn": "2017-11-07T10:13:22Z",
+      "side": 1,
+      "message": "I think these should be at top level so they can be put into the read-only section? Otherwise this is treated as an initialize-once variable that happens to be constant.",
+      "range": {
+        "startLine": 80,
+        "startChar": 2,
+        "endLine": 80,
+        "endChar": 34
+      },
+      "revId": "76633e08cf9bddc49d966656f47a327c6614db58",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
