@@ -16,6 +16,24 @@
       "revId": "c12e25fefd5fb798f7d620b6576b7454ca9c2471",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c8d24e63_1cb2641d",
+        "filename": "ios/chrome/test/earl_grey/BUILD.gn",
+        "patchSetId": 4
+      },
+      "lineNbr": 115,
+      "author": {
+        "id": 1183785
+      },
+      "writtenOn": "2017-11-07T18:36:09Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "654ebd5a_3721ec18",
+      "revId": "c12e25fefd5fb798f7d620b6576b7454ca9c2471",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
