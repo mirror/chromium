@@ -19,6 +19,7 @@ class FakeHostFrameSinkClient : public HostFrameSinkClient {
 
   // HostFrameSinkClient implementation.
   void OnFirstSurfaceActivation(const SurfaceInfo& surface_info) override {}
+  void OnFrameTokenChanged(uint32_t frame_token) override {}
 
  private:
   DISALLOW_COPY_AND_ASSIGN(FakeHostFrameSinkClient);

@@ -405,6 +405,10 @@ viz::LocalSurfaceId RenderWidgetHostViewMac::GetLocalSurfaceId() const {
   return local_surface_id_;
 }
 
+void RenderWidgetHostViewMac::UpdateFrameToken(uint32_t frame_token) {
+  render_widget_host_->DidProcessFrame(frame_token);
+}
+
 ////////////////////////////////////////////////////////////////////////////////
 // AcceleratedWidgetMacNSView, public:
 

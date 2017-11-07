@@ -152,6 +152,11 @@ class VIZ_SERVICE_EXPORT FrameSinkManagerImpl : public SurfaceObserver,
   // This method is virtual so the implementation can be modified in unit tests.
   virtual uint64_t GetActiveFrameIndex(const SurfaceId& surface_id);
 
+  // When |frame_token| is changed during SubmitCompositorFrame call, this
+  // method is called to process swap messages received before this frame.
+  void OnFrameTokenChanged(const FrameSinkId& frame_sink_id,
+                           uint32_t frame_token);
+
  private:
   friend class cc::test::SurfaceSynchronizationTest;
 

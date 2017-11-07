@@ -469,6 +469,10 @@ bool BrowserCompositorMac::IsAutoResizeEnabled() const {
   return false;
 }
 
+void BrowserCompositorMac::UpdateFrameToken(uint32_t frame_token) {
+  client_->UpdateFrameToken(frame_token);
+}
+
 ui::Compositor* BrowserCompositorMac::CompositorForTesting() const {
   if (recyclable_compositor_)
     return recyclable_compositor_->compositor();
