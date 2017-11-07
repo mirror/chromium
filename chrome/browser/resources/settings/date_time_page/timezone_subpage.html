@@ -1,0 +1,67 @@
+<link rel="import" href="chrome://resources/html/polymer.html">
+
+<!--
+
+<link rel="import" href="chrome://resources/cr_elements/cr_action_menu/cr_action_menu.html">
+<link rel="import" href="chrome://resources/cr_elements/cr_toast/cr_toast.html">
+<link rel="import" href="chrome://resources/cr_elements/icons.html">
+<link rel="import" href="chrome://resources/html/assert.html">
+<link rel="import" href="chrome://resources/html/cr/ui/focus_without_ink.html">
+<link rel="import" href="chrome://resources/html/i18n_behavior.html">
+<link rel="import" href="chrome://resources/polymer/v1_0/iron-a11y-keys-behavior/iron-a11y-keys-behavior.html">
+<link rel="import" href="chrome://resources/polymer/v1_0/iron-list/iron-list.html">
+<link rel="import" href="chrome://resources/polymer/v1_0/paper-icon-button/paper-icon-button-light.html">
+<link rel="import" href="../controls/settings_toggle_button.html">
+<link rel="import" href="../controls/extension_controlled_indicator.html">
+<link rel="import" href="../global_scroll_target_behavior.html">
+<link rel="import" href="../prefs/prefs.html">
+<link rel="import" href="../settings_shared_css.html">
+<link rel="import" href="password_edit_dialog.html">
+<link rel="import" href="passwords_shared_css.html">
+<link rel="import" href="password_list_item.html">
+-->
+
+<dom-module id="timezone-subpage">
+  <template>
+    <style include="settings-shared">
+      .block {
+        display: block;
+      }
+    </style>
+    <div class="settings-box block first">
+      <settings-radio-group id="timeZoneRadioGroup"
+          pref="{{prefs.settings.resolve_timezone_by_geolocation_method}}">
+        <controlled-radio-button name="[[timezoneAutodetectMethodValues_.IP_ONLY]]"
+            pref="[[prefs.settings.resolve_timezone_by_geolocation_method]]"
+            label="setTimeZoneAutomaticallyDefault"
+            no-extension-indicator>
+            <!-- label="$i18n{setTimeZoneAutomaticallyDefault}" -->
+        </controlled-radio-button>
+        <controlled-radio-button name="[[timezoneAutodetectMethodValues_.SEND_WIFI_ACCESS_POINTS]]"
+            pref="[[prefs.settings.resolve_timezone_by_geolocation_method]]"
+            label="setTimeZoneAutomaticallyWithWiFiAccessPointsData"
+            no-extension-indicator>
+            <!-- label="$i18n{setTimeZoneAutomaticallyWithWiFiAccessPointsData}" -->
+        </controlled-radio-button>
+        <controlled-radio-button name="[[timezoneAutodetectMethodValues_.SEND_ALL_LOCATION_INFO]]"
+            pref="[[prefs.settings.resolve_timezone_by_geolocation_method]]"
+            label="setTimeZoneAutomaticallyWithAllLocationInfo"
+            no-extension-indicator>
+            <!-- label="$i18n{setTimeZoneAutomaticallyWithAllLocationInfo}" -->
+        </controlled-radio-button>
+        <controlled-radio-button name="[[timezoneAutodetectMethodValues_.DISABLED]]"
+            pref="[[prefs.settings.resolve_timezone_by_geolocation_method]]"
+            label="setTimeZoneAutomaticallyDisabled"
+            no-extension-indicator>
+            <!-- label="$i18n{setTimeZoneAutomaticallyDisabled}" -->
+        </controlled-radio-button>
+      </settings-radio-group>
+    </div>
+    <div class="settings-box block">
+      <timezone-selector prefs="{{prefs}}"
+          time-zone-auto-detect="[[timeZoneAutoDetect]]">
+      </timezone-selector>
+    </div>
+  </template>
+  <script src="timezone_subpage.js"></script>
+</dom-module>

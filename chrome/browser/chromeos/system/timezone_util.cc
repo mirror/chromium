@@ -337,5 +337,11 @@ void SetTimezoneFromUI(Profile* profile, const std::string& timezone_id) {
   NOTREACHED();
 }
 
+bool FineGrainedTimeZoneDetectionEnabled() {
+  return !base::CommandLine::ForCurrentProcess()->HasSwitch(
+      switches::kDisableFineGrainedTimeZoneDetection);
+}
+
+
 }  // namespace system
 }  // namespace chromeos
