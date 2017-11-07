@@ -9,6 +9,8 @@ source_set("lib") {
   sources = [
     "file_util_service.cc",
     "file_util_service.h",
+    "safe_archive_analyzer.cc",
+    "safe_archive_analyzer.h",
     "zip_file_creator.cc",
     "zip_file_creator.h",
   ]
