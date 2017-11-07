@@ -67,6 +67,10 @@ bool WaylandConnection::Initialize() {
     return false;
   }
 
+  if (keyboard_ && pointer_) {
+    keyboard_->AddObserver(pointer_.get());
+  }
+
   return true;
 }
 

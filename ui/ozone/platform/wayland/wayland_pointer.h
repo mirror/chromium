@@ -7,11 +7,12 @@
 
 #include "ui/events/ozone/evdev/event_dispatch_callback.h"
 #include "ui/gfx/geometry/point_f.h"
+#include "ui/ozone/platform/wayland/wayland_keyboard.h"
 #include "ui/ozone/platform/wayland/wayland_object.h"
 
 namespace ui {
 
-class WaylandPointer {
+class WaylandPointer : public WaylandKeyboard::ModifiersObserver {
  public:
   WaylandPointer(wl_pointer* pointer, const EventDispatchCallback& callback);
   virtual ~WaylandPointer();
@@ -45,10 +46,16 @@ class WaylandPointer {
                    uint32_t axis,
                    wl_fixed_t value);
 
+  // WaylandKeyboard::ModifiersObserver overrides:
+  void OnModifiersUpdated(int modifiers) override;
+
   wl::Object<wl_pointer> obj_;
   EventDispatchCallback callback_;
   gfx::PointF location_;
   int flags_ = 0;
+
+  // Keeps track of current modifiers.
+  int modifiers_ = 0;
 };
 
 }  // namespace ui

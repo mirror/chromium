@@ -5,6 +5,7 @@
 #ifndef UI_OZONE_PLATFORM_WAYLAND_WAYLAND_KEYBOARD_H_
 #define UI_OZONE_PLATFORM_WAYLAND_WAYLAND_KEYBOARD_H_
 
+#include "base/observer_list.h"
 #include "ui/events/ozone/evdev/event_dispatch_callback.h"
 #include "ui/ozone/platform/wayland/wayland_object.h"
 
@@ -12,8 +13,18 @@ namespace ui {
 
 class WaylandKeyboard {
  public:
+  class ModifiersObserver {
+   public:
+    // Notifies observers about updated keyboard modifiers.
+    virtual void OnModifiersUpdated(int modifiers) = 0;
+  };
+
   WaylandKeyboard(wl_keyboard* keyboard, const EventDispatchCallback& callback);
   virtual ~WaylandKeyboard();
+
+  void AddObserver(ModifiersObserver* observer);
+  void RemoveObserver(ModifiersObserver* observer);
+  void NotifyModifiersUpdated();
 
  private:
   // wl_keyboard_listener
@@ -52,6 +63,8 @@ class WaylandKeyboard {
   wl::Object<wl_keyboard> obj_;
   EventDispatchCallback callback_;
   uint8_t modifiers_ = 0;
+
+  base::ObserverList<ModifiersObserver> observers_;
 };
 
 }  // namespace ui

@@ -44,6 +44,19 @@ WaylandKeyboard::WaylandKeyboard(wl_keyboard* keyboard,
 
 WaylandKeyboard::~WaylandKeyboard() {}
 
+void WaylandKeyboard::AddObserver(ModifiersObserver* observer) {
+  observers_.AddObserver(observer);
+}
+
+void WaylandKeyboard::RemoveObserver(ModifiersObserver* observer) {
+  observers_.RemoveObserver(observer);
+}
+
+void WaylandKeyboard::NotifyModifiersUpdated() {
+  for (ModifiersObserver& observer : observers_)
+    observer.OnModifiersUpdated(modifiers_);
+}
+
 void WaylandKeyboard::Keymap(void* data,
                              wl_keyboard* obj,
                              uint32_t format,
@@ -125,6 +138,8 @@ void WaylandKeyboard::Modifiers(void* data,
   keyboard->modifiers_ =
       engine->UpdateModifiers(mods_depressed, mods_latched, mods_locked, group);
 
+  // Update modifiers of other Wayland objects as well.
+  keyboard->NotifyModifiersUpdated();
 #endif
 }
 
