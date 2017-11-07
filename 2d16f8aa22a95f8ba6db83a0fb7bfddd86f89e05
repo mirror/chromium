@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "2fb7773e_0c8014ac",
+        "filename": "media/audio/win/core_audio_util_win.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 42,
+      "author": {
+        "id": 1247905
+      },
+      "writtenOn": "2017-11-07T12:04:00Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "9ec2741f_4dcc5ec3",
+      "revId": "2d16f8aa22a95f8ba6db83a0fb7bfddd86f89e05",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "35d9b70b_0d7b2097",
         "filename": "media/audio/win/core_audio_util_win.cc",
         "patchSetId": 4
@@ -33,6 +51,24 @@
       "revId": "2d16f8aa22a95f8ba6db83a0fb7bfddd86f89e05",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8b8e36cf_81b93524",
+        "filename": "media/audio/win/core_audio_util_win.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 49,
+      "author": {
+        "id": 1247905
+      },
+      "writtenOn": "2017-11-07T12:04:00Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "35d9b70b_0d7b2097",
+      "revId": "2d16f8aa22a95f8ba6db83a0fb7bfddd86f89e05",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -59,6 +95,30 @@
     },
     {
       "key": {
+        "uuid": "83b552d3_5aa8c761",
+        "filename": "media/audio/win/core_audio_util_win.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 294,
+      "author": {
+        "id": 1247905
+      },
+      "writtenOn": "2017-11-07T12:04:00Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "229bf3f3_5b3c70d7",
+      "range": {
+        "startLine": 284,
+        "startChar": 0,
+        "endLine": 294,
+        "endChar": 63
+      },
+      "revId": "2d16f8aa22a95f8ba6db83a0fb7bfddd86f89e05",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "0e87bd09_3e92eadf",
         "filename": "media/audio/win/core_audio_util_win.cc",
         "patchSetId": 4
@@ -73,6 +133,24 @@
       "revId": "2d16f8aa22a95f8ba6db83a0fb7bfddd86f89e05",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "18454912_f5783bb5",
+        "filename": "media/audio/win/core_audio_util_win.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 330,
+      "author": {
+        "id": 1247905
+      },
+      "writtenOn": "2017-11-07T12:04:00Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "0e87bd09_3e92eadf",
+      "revId": "2d16f8aa22a95f8ba6db83a0fb7bfddd86f89e05",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -93,6 +171,24 @@
     },
     {
       "key": {
+        "uuid": "1e238630_543df8ff",
+        "filename": "media/audio/win/core_audio_util_win.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 334,
+      "author": {
+        "id": 1247905
+      },
+      "writtenOn": "2017-11-07T12:04:00Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "dbfa5a7d_e641d361",
+      "revId": "2d16f8aa22a95f8ba6db83a0fb7bfddd86f89e05",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "dd8711bb_a8e8cf15",
         "filename": "media/audio/win/core_audio_util_win.h",
         "patchSetId": 4
@@ -107,6 +203,24 @@
       "revId": "2d16f8aa22a95f8ba6db83a0fb7bfddd86f89e05",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "35ef70bb_6fa1ff76",
+        "filename": "media/audio/win/core_audio_util_win.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 114,
+      "author": {
+        "id": 1247905
+      },
+      "writtenOn": "2017-11-07T12:04:00Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "dd8711bb_a8e8cf15",
+      "revId": "2d16f8aa22a95f8ba6db83a0fb7bfddd86f89e05",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
