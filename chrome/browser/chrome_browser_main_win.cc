@@ -4,10 +4,11 @@
 
 #include "chrome/browser/chrome_browser_main_win.h"
 
+#include <windows.h>
+
 #include <shellapi.h>
 #include <stddef.h>
 #include <stdint.h>
-#include <windows.h>
 
 #include <algorithm>
 #include <memory>
@@ -33,7 +34,9 @@
 #include "base/version.h"
 #include "base/win/pe_image.h"
 #include "base/win/registry.h"
+#include "base/win/scoped_winrt_initializer.h"
 #include "base/win/win_util.h"
+#include "base/win/windows_version.h"
 #include "base/win/wrapped_window_proc.h"
 #include "chrome/browser/browser_process.h"
 #include "chrome/browser/conflicts/enumerate_input_method_editors_win.h"
@@ -61,6 +64,7 @@
 #include "chrome/common/conflicts/module_watcher_win.h"
 #include "chrome/common/crash_keys.h"
 #include "chrome/common/env_vars.h"
+#include "chrome/common/features.h"
 #include "chrome/grit/chromium_strings.h"
 #include "chrome/grit/generated_resources.h"
 #include "chrome/install_static/install_details.h"
@@ -393,6 +397,30 @@ void MaybePostSettingsResetPrompt() {
   }
 }
 
+// Initializes the Windows Runtime and registers the winrt objects.
+void PrepareForNativeNotification(
+    std::unique_ptr<base::win::WinrtObjectRegister>* winrt_object_register) {
+  base::win::ScopedWinrtInitializer scoped_winrt_initializer;
+  if (!scoped_winrt_initializer.Succeeded())
+    return;
+
+  winrt_object_register->reset(new base::win::WinrtObjectRegister());
+  (*winrt_object_register)->Run();
+}
+
+// Starts a thread to prepare for Windows 10 native notification features.
+void StartNativeNotificationThread(
+    std::unique_ptr<base::win::WinrtObjectRegister>* winrt_object_register) {
+  DCHECK_CURRENTLY_ON(content::BrowserThread::UI);
+
+  base::Thread notification_thread("Native Notification Thread");
+  notification_thread.init_com_with_mta(true);
+  notification_thread.Start();
+  notification_thread.task_runner()->PostTask(
+      FROM_HERE, base::Bind(&PrepareForNativeNotification,
+                            base::Unretained(winrt_object_register)));
+}
+
 }  // namespace
 
 int DoUninstallTasks(bool chrome_still_running) {
@@ -491,6 +519,24 @@ void ChromeBrowserMainPartsWin::ShowMissingLocaleMessageBox() {
                  base::ASCIIToUTF16(chrome_browser::kMissingLocaleDataMessage),
                  base::ASCIIToUTF16(chrome_browser::kMissingLocaleDataTitle),
                  MB_OK | MB_ICONERROR | MB_TOPMOST);
+}
+
+void ChromeBrowserMainPartsWin::PreMainMessageLoopRun() {
+  // #if BUILDFLAG(ENABLE_NATIVE_NOTIFICATIONS)
+  // Post a task to the main thread to trigger creation of a new thread, which
+  // is used to prepare for Windows 10 native notification features.
+  // The task is delay-posted to minimize the impact on startup time.
+  if (base::win::GetVersion() >= base::win::VERSION_WIN10_RS1 &&
+      base::FeatureList::IsEnabled(features::kNativeNotifications)) {
+    ChromeBrowserMainParts::PreMainMessageLoopRun();
+
+    content::BrowserThread::PostDelayedTask(
+        content::BrowserThread::UI, FROM_HERE,
+        base::Bind(&StartNativeNotificationThread,
+                   base::Unretained(&notification_winrt_object_register_)),
+        base::TimeDelta::FromSeconds(2));
+  }
+  // #endif  // BUILDFLAG(ENABLE_NATIVE_NOTIFICATIONS)
 }
 
 void ChromeBrowserMainPartsWin::PostProfileInit() {

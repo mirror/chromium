@@ -48,8 +48,12 @@ if (is_win) {
       "ndfapi.lib",  # Used by browser/net/net_error_diagnostics_dialog_win.h
       "pdh.lib",  # Used by browser/private_working_set_snapshot.h
       "msi.lib",  # Used by browser/conflicts/msi_util_win.h
+      "runtimeobject.lib",  # Used by chrome/browser/win/chrome_native_notification_util.h
     ]
     ldflags = [
+      "/DELAYLOAD:api-ms-win-core-winrt-error-l1-1-0.dll",
+      "/DELAYLOAD:api-ms-win-core-winrt-l1-1-0.dll",
+      "/DELAYLOAD:api-ms-win-core-winrt-string-l1-1-0.dll",
       "/DELAYLOAD:ndfapi.dll",
       "/DELAYLOAD:pdh.dll",  # The task manager is rarely used.
     ]
@@ -1484,6 +1488,8 @@ split_static_library("browser") {
     "win/browser_util.h",
     "win/chrome_elf_init.cc",
     "win/chrome_elf_init.h",
+    "win/chrome_native_notification_util.cc",
+    "win/chrome_native_notification_util.h",
     "win/chrome_select_file_dialog_factory.cc",
     "win/chrome_select_file_dialog_factory.h",
     "win/enumerate_modules_model.cc",
