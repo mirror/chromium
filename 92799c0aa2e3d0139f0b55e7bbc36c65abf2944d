@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "997a5a65_52bc1f1a",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 5
+      },
+      "lineNbr": 7,
+      "author": {
+        "id": 1144165
+      },
+      "writtenOn": "2017-11-07T17:56:12Z",
+      "side": 1,
+      "message": "I\u0027m following https://developer.mozilla.org/en-US/docs/Web/API/Node/innerText.",
+      "parentUuid": "fca67486_ac482b54",
+      "revId": "92799c0aa2e3d0139f0b55e7bbc36c65abf2944d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "8bc68412_8152eabb",
         "filename": "third_party/WebKit/Source/core/exported/WebFrameContentDumper.cpp",
         "patchSetId": 5
@@ -33,6 +51,24 @@
       "revId": "92799c0aa2e3d0139f0b55e7bbc36c65abf2944d",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7f83d84e_c6bb87b5",
+        "filename": "third_party/WebKit/Source/core/exported/WebFrameContentDumper.cpp",
+        "patchSetId": 5
+      },
+      "lineNbr": 60,
+      "author": {
+        "id": 1144165
+      },
+      "writtenOn": "2017-11-07T17:56:12Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "8bc68412_8152eabb",
+      "revId": "92799c0aa2e3d0139f0b55e7bbc36c65abf2944d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -53,6 +89,24 @@
     },
     {
       "key": {
+        "uuid": "c75c0c04_d596c742",
+        "filename": "third_party/WebKit/Source/core/exported/WebFrameContentDumper.cpp",
+        "patchSetId": 5
+      },
+      "lineNbr": 135,
+      "author": {
+        "id": 1144165
+      },
+      "writtenOn": "2017-11-07T17:56:12Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "d0dec3bc_de70b3f5",
+      "revId": "92799c0aa2e3d0139f0b55e7bbc36c65abf2944d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "cb5161ef_d6386e14",
         "filename": "third_party/WebKit/Source/core/exported/WebFrameContentDumper.cpp",
         "patchSetId": 5
@@ -67,6 +121,24 @@
       "revId": "92799c0aa2e3d0139f0b55e7bbc36c65abf2944d",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "04516d9a_625497dd",
+        "filename": "third_party/WebKit/Source/core/exported/WebFrameContentDumper.cpp",
+        "patchSetId": 5
+      },
+      "lineNbr": 152,
+      "author": {
+        "id": 1144165
+      },
+      "writtenOn": "2017-11-07T17:56:12Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "cb5161ef_d6386e14",
+      "revId": "92799c0aa2e3d0139f0b55e7bbc36c65abf2944d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
