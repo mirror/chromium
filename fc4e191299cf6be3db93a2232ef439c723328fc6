@@ -96,6 +96,30 @@
     },
     {
       "key": {
+        "uuid": "11a00b5a_3b09c9ae",
+        "filename": "ash/accelerators/accelerator_table.h",
+        "patchSetId": 7
+      },
+      "lineNbr": 101,
+      "author": {
+        "id": 1125479
+      },
+      "writtenOn": "2017-11-07T01:14:41Z",
+      "side": 1,
+      "message": "Olga has nothing to do with how we name our constants in code. ;) It\u0027s not something that the user sees.\n\nI don\u0027t have a strong opinion on this, but display above sounds better than display up.",
+      "parentUuid": "30c9ec88_0156c03b",
+      "range": {
+        "startLine": 101,
+        "startChar": 2,
+        "endLine": 101,
+        "endChar": 27
+      },
+      "revId": "fc4e191299cf6be3db93a2232ef439c723328fc6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "a360a584_58f96998",
         "filename": "ash/display/display_move_window_controller.cc",
         "patchSetId": 7
@@ -351,6 +375,30 @@
       "revId": "fc4e191299cf6be3db93a2232ef439c723328fc6",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3d6aeb7b_e191ca6d",
+        "filename": "ash/display/display_move_window_controller.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 230,
+      "author": {
+        "id": 1125479
+      },
+      "writtenOn": "2017-11-07T01:14:41Z",
+      "side": 1,
+      "message": "Thanks!",
+      "parentUuid": "29f88fbf_9dd3f362",
+      "range": {
+        "startLine": 230,
+        "startChar": 0,
+        "endLine": 230,
+        "endChar": 1
+      },
+      "revId": "fc4e191299cf6be3db93a2232ef439c723328fc6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {

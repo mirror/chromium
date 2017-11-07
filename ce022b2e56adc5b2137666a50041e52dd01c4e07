@@ -1,0 +1,188 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "3d7fc159_6c2f5efd",
+        "filename": "ash/display/display_move_window_controller.cc",
+        "patchSetId": 11
+      },
+      "lineNbr": 55,
+      "author": {
+        "id": 1125479
+      },
+      "writtenOn": "2017-11-07T01:14:41Z",
+      "side": 1,
+      "message": "Add a comment to explain what this array is. Also, it might be better if called next_display_by_type (because it\u0027s really used as a map, mapping from movement type to candidate next display).",
+      "range": {
+        "startLine": 55,
+        "startChar": 34,
+        "endLine": 55,
+        "endChar": 46
+      },
+      "revId": "ce022b2e56adc5b2137666a50041e52dd01c4e07",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "12713759_c16c24f3",
+        "filename": "ash/display/display_move_window_controller.cc",
+        "patchSetId": 11
+      },
+      "lineNbr": 67,
+      "author": {
+        "id": 1125479
+      },
+      "writtenOn": "2017-11-07T01:14:41Z",
+      "side": 1,
+      "message": "When you declare the enum here in the cc file, make it a c-style enum (i.e. enum DisplayCandidateType { ... };) This way, you\u0027t have to do the task, and instead of this |idx|, you can declare it as const DisplayCandidateType candidate_type \u003d ....;\n\nThis becomes more readable.",
+      "range": {
+        "startLine": 67,
+        "startChar": 4,
+        "endLine": 67,
+        "endChar": 37
+      },
+      "revId": "ce022b2e56adc5b2137666a50041e52dd01c4e07",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1af4d096_79a92f6c",
+        "filename": "ash/display/display_move_window_controller.cc",
+        "patchSetId": 11
+      },
+      "lineNbr": 88,
+      "author": {
+        "id": 1125479
+      },
+      "writtenOn": "2017-11-07T01:14:41Z",
+      "side": 1,
+      "message": "Instead of 0 and 1 (which is not readable), use kInMovementDir, ..etc.",
+      "range": {
+        "startLine": 88,
+        "startChar": 22,
+        "endLine": 88,
+        "endChar": 23
+      },
+      "revId": "ce022b2e56adc5b2137666a50041e52dd01c4e07",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2d6b549b_e828d5a9",
+        "filename": "ash/display/display_move_window_controller.cc",
+        "patchSetId": 11
+      },
+      "lineNbr": 106,
+      "author": {
+        "id": 1125479
+      },
+      "writtenOn": "2017-11-07T01:14:41Z",
+      "side": 1,
+      "message": "Let\u0027s decrease this indentation here and above. Cache what you need at the top:\n\nconst gfx::Rect\u0026 candidate_bounds \u003d candidate_display.bounds();\nconst gfx::Rect\u0026 origin_bounds \u003d origin_display.bounds();\n\nUse them to get width() / height().",
+      "range": {
+        "startLine": 103,
+        "startChar": 0,
+        "endLine": 106,
+        "endChar": 15
+      },
+      "revId": "ce022b2e56adc5b2137666a50041e52dd01c4e07",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "dd0c589e_ef6a7115",
+        "filename": "ash/display/display_move_window_controller.h",
+        "patchSetId": 11
+      },
+      "lineNbr": 21,
+      "author": {
+        "id": 1125479
+      },
+      "writtenOn": "2017-11-07T01:14:41Z",
+      "side": 1,
+      "message": "Looking at this class again, it doesn\u0027t have any state (and doesn\u0027t need one). So why make it a class at all? Why handle a lifetime of an object when that object has no state at all?\n\nMy suggestion is to replace all this overhead with a single enum and a single utility function HandleMoveWindowToDisplay();",
+      "range": {
+        "startLine": 21,
+        "startChar": 17,
+        "endLine": 21,
+        "endChar": 44
+      },
+      "revId": "ce022b2e56adc5b2137666a50041e52dd01c4e07",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b942e6e8_c084cf5f",
+        "filename": "ash/display/display_move_window_controller.h",
+        "patchSetId": 11
+      },
+      "lineNbr": 32,
+      "author": {
+        "id": 1125479
+      },
+      "writtenOn": "2017-11-07T01:14:41Z",
+      "side": 1,
+      "message": "This belongs to the cc file, there\u0027s no need to keep it here.",
+      "range": {
+        "startLine": 32,
+        "startChar": 2,
+        "endLine": 32,
+        "endChar": 33
+      },
+      "revId": "ce022b2e56adc5b2137666a50041e52dd01c4e07",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "88664380_a758e7a4",
+        "filename": "ash/display/display_move_window_controller.h",
+        "patchSetId": 11
+      },
+      "lineNbr": 64,
+      "author": {
+        "id": 1125479
+      },
+      "writtenOn": "2017-11-07T01:14:41Z",
+      "side": 1,
+      "message": "If a function doesn\u0027t need to access member variables, then move it doesn\u0027t need to be a member function. It should be moved to the cc file in the anonymous namespace.",
+      "range": {
+        "startLine": 40,
+        "startChar": 0,
+        "endLine": 64,
+        "endChar": 33
+      },
+      "revId": "ce022b2e56adc5b2137666a50041e52dd01c4e07",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e31261ed_fc14b5a1",
+        "filename": "chrome/browser/resources/chromeos/keyboard_overlay_data.js",
+        "patchSetId": 11
+      },
+      "lineNbr": 4183,
+      "author": {
+        "id": 1125479
+      },
+      "writtenOn": "2017-11-07T01:14:41Z",
+      "side": 1,
+      "message": "Where is that set?\n\nYou need to declare string here: https://cs.chromium.org/chromium/src/chrome/app/chromeos_strings.grdp?q\u003dIDS_KEYBOARD_OVERLAY_PAGE_DOWN\u0026sq\u003dpackage:chromium\u0026l\u003d3698\n\nand register it here: https://cs.chromium.org/chromium/src/chrome/browser/ui/webui/chromeos/keyboard_overlay_ui.cc?q\u003dkeyboardOverlayPageDown\u0026sq\u003dpackage:chromium\u0026l\u003d223\n\nFor the value of the string, please refer to Olga to verify the appropriate wording.",
+      "range": {
+        "startLine": 4183,
+        "startChar": 26,
+        "endLine": 4183,
+        "endChar": 64
+      },
+      "revId": "ce022b2e56adc5b2137666a50041e52dd01c4e07",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
