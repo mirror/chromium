@@ -515,7 +515,7 @@ public class DownloadNotificationServiceTest
     @Test
     @SmallTest
     @Feature({"Download"})
-    public void testServiceWillNotStopOnInterruptedDownload() throws Exception {
+    public voi() throws Exception {
         // On versions of Android that use a foreground service, the service will currently die with
         // the notifications.
         if (DownloadNotificationService.useForegroundService()) return;
