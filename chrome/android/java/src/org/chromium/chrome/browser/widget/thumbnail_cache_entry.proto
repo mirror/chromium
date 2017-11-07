@@ -10,6 +10,7 @@ syntax = "proto2";
 package org.chromium.chrome.browser.widget;
 
 option java_package = "org.chromium.chrome.browser.widget";
+option optimize_for = LITE_RUNTIME;
 
 message ContentId {
   // Required.
