@@ -9,15 +9,17 @@
 #include <vector>
 
 #include "base/macros.h"
+#include "chrome/browser/ui/passwords/manage_passwords_bubble_model.h"
+#include "chrome/browser/ui/views/location_bar/location_bar_bubble_delegate_view.h"
 #include "components/autofill/core/common/password_form.h"
+#include "ui/views/controls/button/button.h"
 #include "ui/views/view.h"
 
 namespace views {
+class GridLayout;
 class Textfield;
 class Label;
 }  // namespace views
-
-class ManagePasswordsBubbleModel;
 
 // Standalone functions for creating username and password views.
 std::unique_ptr<views::Label> CreateUsernameLabel(
@@ -28,30 +30,55 @@ std::unique_ptr<views::Label> CreatePasswordLabel(
 std::unique_ptr<views::Textfield> CreateUsernameEditable(
     const autofill::PasswordForm& form);
 
-// A custom view of individual credentials. The view is represented as a table
-// where each row can offer the user the ability to undo a deletion action.
-class ManagePasswordItemsView : public views::View {
+// A dialog for managing stored password and federated login information for a
+// specific site. A user can remove managed credentials for the site via this
+// dialog.
+class ManagePasswordItemsView : public LocationBarBubbleDelegateView,
+                                public views::ButtonListener {
  public:
-  ManagePasswordItemsView(
-      ManagePasswordsBubbleModel* manage_passwords_bubble_model,
-      const std::vector<autofill::PasswordForm>* password_forms);
-
- private:
-  class PasswordFormRow;
-
+  ManagePasswordItemsView(content::WebContents* web_contents,
+                          views::View* anchor_view,
+                          std::unique_ptr<ManagePasswordsBubbleModel> model);
   ~ManagePasswordItemsView() override;
 
-  void AddRows();
-  void NotifyPasswordFormStatusChanged(
-      const autofill::PasswordForm& password_form, bool deleted);
+ private:
+  class PasswordRow : public views::ButtonListener {
+   public:
+    PasswordRow(ManagePasswordItemsView* parent,
+                const autofill::PasswordForm* password_form);
 
-  // Changes the views according to the state of |password_forms_rows_|.
-  void Refresh();
+    void AddToLayout(views::GridLayout* layout);
 
-  std::vector<std::unique_ptr<PasswordFormRow>> password_forms_rows_;
-  ManagePasswordsBubbleModel* model_;
+   private:
+    void AddUndoRow(views::GridLayout* layout);
+    void AddPasswordRow(views::GridLayout* layout);
 
-  DISALLOW_COPY_AND_ASSIGN(ManagePasswordItemsView);
+    // views::ButtonListener:
+    void ButtonPressed(views::Button* sender, const ui::Event& event) override;
+
+    ManagePasswordItemsView* const parent_;
+    const autofill::PasswordForm* const password_form_;
+    bool deleted_ = false;
+  };
+
+  void NotifyPasswordFormAction(
+      const autofill::PasswordForm& password_form,
+      ManagePasswordsBubbleModel::PasswordAction action);
+  void RecreateLayout();
+
+  // LocationBarBubbleDelegateView:
+  base::string16 GetWindowTitle() const override;
+  View* CreateExtraView() override;
+  int GetDialogButtons() const override;
+  bool ShouldShowCloseButton() const override;
+  gfx::Size CalculatePreferredSize() const override;
+
+  // views::ButtonListener:
+  void ButtonPressed(views::Button* sender, const ui::Event& event) override;
+
+  std::unique_ptr<ManagePasswordsBubbleModel> model_;
+  std::unique_ptr<WebContentMouseHandler> mouse_handler_;
+  std::vector<PasswordRow> password_rows_;
 };
 
 #endif  // CHROME_BROWSER_UI_VIEWS_PASSWORDS_MANAGE_PASSWORD_ITEMS_VIEW_H_

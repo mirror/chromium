@@ -75,10 +75,11 @@ void TabDialogsViews::ShowManagePasswordsBubble(bool user_action) {
 }
 
 void TabDialogsViews::HideManagePasswordsBubble() {
-  if (!ManagePasswordsBubbleView::manage_password_bubble())
+  ManagePasswordsBubbleModel* model =
+      ManagePasswordsBubbleView::manage_passwords_bubble_model();
+  if (!model)
     return;
-  content::WebContents* bubble_web_contents =
-      ManagePasswordsBubbleView::manage_password_bubble()->web_contents();
-  if (web_contents_ == bubble_web_contents)
+  if (model->GetWebContents() == web_contents_) {
     ManagePasswordsBubbleView::CloseCurrentBubble();
+  }
 }

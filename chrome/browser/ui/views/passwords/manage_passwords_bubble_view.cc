@@ -438,8 +438,8 @@ void ManagePasswordsBubbleView::AutoSigninView::OnTimer() {
 // ManagePasswordsBubbleView::PendingView -------------------------------------
 
 // A view offering the user the ability to save credentials. Contains a
-// single ManagePasswordItemsView, along with a "Save Passwords" button,
-// a "Never" button.
+// username and password field, along with a "Save Passwords" button and a
+// "Never" button.
 class ManagePasswordsBubbleView::PendingView : public views::View,
                                                public views::ButtonListener {
  public:
@@ -631,96 +631,6 @@ void ManagePasswordsBubbleView::PendingView::
   parent_->model()->OnCredentialEdited(new_username, new_password);
 }
 
-// ManagePasswordsBubbleView::ManageView --------------------------------------
-
-// A view offering the user a list of their currently saved credentials
-// for the current page, along with a "Manage passwords" link and a
-// "Done" button.
-class ManagePasswordsBubbleView::ManageView : public views::View,
-                                              public views::ButtonListener,
-                                              public views::LinkListener {
- public:
-  explicit ManageView(ManagePasswordsBubbleView* parent);
-  ~ManageView() override;
-
- private:
-  // views::ButtonListener:
-  void ButtonPressed(views::Button* sender, const ui::Event& event) override;
-
-  // views::LinkListener:
-  void LinkClicked(views::Link* source, int event_flags) override;
-
-  ManagePasswordsBubbleView* parent_;
-
-  views::Link* manage_link_;
-  views::Button* done_button_;
-
-  DISALLOW_COPY_AND_ASSIGN(ManageView);
-};
-
-ManagePasswordsBubbleView::ManageView::ManageView(
-    ManagePasswordsBubbleView* parent)
-    : parent_(parent) {
-  views::GridLayout* layout = views::GridLayout::CreateAndInstall(this);
-  layout->set_minimum_size(gfx::Size(kDesiredBubbleWidth, 0));
-  BuildColumnSet(layout, SINGLE_VIEW_COLUMN_SET);
-  layout->StartRow(0, SINGLE_VIEW_COLUMN_SET);
-
-  // If we have a list of passwords to store for the current site, display
-  // them to the user for management. Otherwise, render a "No passwords for
-  // this site" message.
-  if (!parent_->model()->local_credentials().empty()) {
-    ManagePasswordItemsView* item = new ManagePasswordItemsView(
-        parent_->model(), &parent_->model()->local_credentials());
-    layout->AddView(item);
-  } else {
-    views::Label* empty_label = new views::Label(
-        l10n_util::GetStringUTF16(IDS_MANAGE_PASSWORDS_NO_PASSWORDS),
-        CONTEXT_DEPRECATED_SMALL);
-    empty_label->SetMultiLine(true);
-    empty_label->SetHorizontalAlignment(gfx::ALIGN_LEFT);
-    layout->AddView(empty_label);
-  }
-
-  // Then add the "manage passwords" link and "Done" button.
-  manage_link_ = new views::Link(parent_->model()->manage_link());
-  manage_link_->SetHorizontalAlignment(gfx::ALIGN_LEFT);
-  manage_link_->SetUnderline(false);
-  manage_link_->set_listener(this);
-
-  done_button_ = views::MdTextButton::CreateSecondaryUiButton(
-      this, l10n_util::GetStringUTF16(IDS_DONE));
-
-  ChromeLayoutProvider* layout_provider = ChromeLayoutProvider::Get();
-  layout->AddPaddingRow(
-      0, layout_provider->GetDistanceMetric(
-             views::DISTANCE_DIALOG_CONTENT_MARGIN_BOTTOM_CONTROL));
-  BuildColumnSet(layout, LINK_BUTTON_COLUMN_SET);
-  layout->StartRow(0, LINK_BUTTON_COLUMN_SET);
-  layout->AddView(manage_link_);
-  layout->AddView(done_button_);
-
-  parent_->set_initially_focused_view(done_button_);
-}
-
-ManagePasswordsBubbleView::ManageView::~ManageView() {
-}
-
-void ManagePasswordsBubbleView::ManageView::ButtonPressed(
-    views::Button* sender,
-    const ui::Event& event) {
-  DCHECK(sender == done_button_);
-  parent_->model()->OnDoneClicked();
-  parent_->CloseBubble();
-}
-
-void ManagePasswordsBubbleView::ManageView::LinkClicked(views::Link* source,
-                                                        int event_flags) {
-  DCHECK_EQ(source, manage_link_);
-  parent_->model()->OnManageLinkClicked();
-  parent_->CloseBubble();
-}
-
 // ManagePasswordsBubbleView::SaveConfirmationView ----------------------------
 
 // A view confirming to the user that a password was saved and offering a link
@@ -858,7 +768,7 @@ void ManagePasswordsBubbleView::SignInPromoView::ButtonPressed(
 // ManagePasswordsBubbleView::UpdatePendingView -------------------------------
 
 // A view offering the user the ability to update credentials. Contains a
-// single ManagePasswordItemsView (in case of one credentials) or
+// single credential row (in case of one credentials) or
 // CredentialsSelectionView otherwise, along with a "Update Passwords" button
 // and a rejection button.
 class ManagePasswordsBubbleView::UpdatePendingView
@@ -952,11 +862,23 @@ gfx::Size ManagePasswordsBubbleView::UpdatePendingView::CalculatePreferredSize()
 // ManagePasswordsBubbleView --------------------------------------------------
 
 // static
-ManagePasswordsBubbleView* ManagePasswordsBubbleView::manage_passwords_bubble_ =
-    NULL;
+LocationBarBubbleDelegateView*
+    ManagePasswordsBubbleView::manage_passwords_bubble_ = nullptr;
+
+// static
+ManagePasswordsBubbleModel*
+    ManagePasswordsBubbleView::manage_passwords_bubble_model_ = nullptr;
 
 #if !defined(OS_MACOSX) || BUILDFLAG(MAC_VIEWS_BROWSER)
 // static
+void ManagePasswordsBubbleView::RemoveManagePasswordsDialog(
+    LocationBarBubbleDelegateView* bubble) {
+  if (manage_passwords_bubble_ == bubble) {
+    manage_passwords_bubble_ = nullptr;
+    manage_passwords_bubble_model_ = nullptr;
+  }
+}
+
 void ManagePasswordsBubbleView::ShowBubble(
     content::WebContents* web_contents,
     DisplayReason reason) {
@@ -977,15 +899,32 @@ void ManagePasswordsBubbleView::ShowBubble(
           browser_view->GetLocationBarView()->manage_passwords_icon_view();
     }
   }
-  new ManagePasswordsBubbleView(web_contents, anchor_view, gfx::Point(),
-                                reason);
-  DCHECK(manage_passwords_bubble_);
+  auto model = std::make_unique<ManagePasswordsBubbleModel>(
+      PasswordsModelDelegateFromWebContents(web_contents),
+      reason == AUTOMATIC ? ManagePasswordsBubbleModel::AUTOMATIC
+                          : ManagePasswordsBubbleModel::USER_ACTION);
+
+  manage_passwords_bubble_model_ = model.get();
+
+  LocationBarBubbleDelegateView* view;
+  if (model->state() == password_manager::ui::MANAGE_STATE) {
+    view = new ManagePasswordItemsView(web_contents, anchor_view,
+                                       std::move(model));
+  } else {
+    // TODO(crbug.com/654115): Get rid of the one-bubble-for-everything
+    // BubbleView.
+    view = new ManagePasswordsBubbleView(web_contents, anchor_view,
+                                         std::move(model));
+  }
+
+  manage_passwords_bubble_ = view;
 
   if (is_fullscreen)
     manage_passwords_bubble_->set_parent_window(web_contents->GetNativeView());
 
   views::Widget* manage_passwords_bubble_widget =
       views::BubbleDialogDelegateView::CreateBubble(manage_passwords_bubble_);
+
   if (anchor_view) {
     manage_passwords_bubble_widget->AddObserver(
         browser_view->GetLocationBarView()->manage_passwords_icon_view());
@@ -999,12 +938,14 @@ void ManagePasswordsBubbleView::ShowBubble(
 
   manage_passwords_bubble_->ShowForReason(reason);
 }
+
 #endif  // !defined(OS_MACOSX) || BUILDFLAG(MAC_VIEWS_BROWSER)
 
 // static
 void ManagePasswordsBubbleView::CloseCurrentBubble() {
-  if (manage_passwords_bubble_)
-    manage_passwords_bubble_->CloseBubble();
+  if (manage_passwords_bubble_) {
+    manage_passwords_bubble_->GetWidget()->Close();
+  }
 }
 
 // static
@@ -1015,29 +956,24 @@ void ManagePasswordsBubbleView::ActivateBubble() {
 }
 
 content::WebContents* ManagePasswordsBubbleView::web_contents() const {
-  return model_.GetWebContents();
+  return model_->GetWebContents();
 }
 
 ManagePasswordsBubbleView::ManagePasswordsBubbleView(
     content::WebContents* web_contents,
     views::View* anchor_view,
-    const gfx::Point& anchor_point,
-    DisplayReason reason)
-    : LocationBarBubbleDelegateView(anchor_view, anchor_point, web_contents),
-      model_(PasswordsModelDelegateFromWebContents(web_contents),
-             reason == AUTOMATIC ? ManagePasswordsBubbleModel::AUTOMATIC
-                                 : ManagePasswordsBubbleModel::USER_ACTION),
+    std::unique_ptr<ManagePasswordsBubbleModel> model)
+    : LocationBarBubbleDelegateView(anchor_view, gfx::Point(), web_contents),
+      model_(std::move(model)),
       initially_focused_view_(nullptr) {
   set_margins(
       ChromeLayoutProvider::Get()->GetInsetsMetric(views::INSETS_DIALOG));
   mouse_handler_.reset(new WebContentMouseHandler(this, this->web_contents()));
-  manage_passwords_bubble_ = this;
   chrome::RecordDialogCreation(chrome::DialogIdentifier::MANAGE_PASSWORDS);
 }
 
 ManagePasswordsBubbleView::~ManagePasswordsBubbleView() {
-  if (manage_passwords_bubble_ == this)
-    manage_passwords_bubble_ = nullptr;
+  RemoveManagePasswordsDialog(this);
 }
 
 int ManagePasswordsBubbleView::GetDialogButtons() const {
@@ -1071,21 +1007,21 @@ void ManagePasswordsBubbleView::AddedToWidget() {
 void ManagePasswordsBubbleView::UpdateTitleText(
     views::StyledLabel* title_view) {
   title_view->SetText(GetWindowTitle());
-  if (!model_.title_brand_link_range().is_empty())
-    title_view->AddStyleRange(model_.title_brand_link_range(), GetLinkStyle());
+  if (!model_->title_brand_link_range().is_empty())
+    title_view->AddStyleRange(model_->title_brand_link_range(), GetLinkStyle());
 }
 
 base::string16 ManagePasswordsBubbleView::GetWindowTitle() const {
-  return model_.title();
+  return model_->title();
 }
 
 bool ManagePasswordsBubbleView::ShouldShowWindowTitle() const {
-  return !model_.title().empty();
+  return !model_->title().empty();
 }
 
 gfx::ImageSkia ManagePasswordsBubbleView::GetWindowIcon() {
 #if defined(OS_WIN)
-  if (model_.state() == password_manager::ui::CHROME_DESKTOP_IOS_PROMO_STATE) {
+  if (model_->state() == password_manager::ui::CHROME_DESKTOP_IOS_PROMO_STATE) {
     return desktop_ios_promotion::GetPromoImage(
         GetNativeTheme()->GetSystemColor(
             ui::NativeTheme::kColorId_TextfieldDefaultColor));
@@ -1095,21 +1031,23 @@ gfx::ImageSkia ManagePasswordsBubbleView::GetWindowIcon() {
 }
 
 bool ManagePasswordsBubbleView::ShouldShowWindowIcon() const {
-  return model_.state() == password_manager::ui::CHROME_DESKTOP_IOS_PROMO_STATE;
+  return model_->state() ==
+         password_manager::ui::CHROME_DESKTOP_IOS_PROMO_STATE;
 }
 
 bool ManagePasswordsBubbleView::ShouldShowCloseButton() const {
-  return model_.state() == password_manager::ui::PENDING_PASSWORD_STATE ||
-         model_.state() == password_manager::ui::CHROME_SIGN_IN_PROMO_STATE ||
-         model_.state() == password_manager::ui::CHROME_DESKTOP_IOS_PROMO_STATE;
+  return model_->state() == password_manager::ui::PENDING_PASSWORD_STATE ||
+         model_->state() == password_manager::ui::CHROME_SIGN_IN_PROMO_STATE ||
+         model_->state() ==
+             password_manager::ui::CHROME_DESKTOP_IOS_PROMO_STATE;
 }
 
 void ManagePasswordsBubbleView::StyledLabelLinkClicked(
     views::StyledLabel* label,
     const gfx::Range& range,
     int event_flags) {
-  DCHECK_EQ(model_.title_brand_link_range(), range);
-  model_.OnBrandLinkClicked();
+  DCHECK_EQ(model_->title_brand_link_range(), range);
+  model_->OnBrandLinkClicked();
 }
 
 void ManagePasswordsBubbleView::Refresh() {
@@ -1121,7 +1059,7 @@ void ManagePasswordsBubbleView::Refresh() {
   GetWidget()->UpdateWindowIcon();
   UpdateTitleText(
       static_cast<views::StyledLabel*>(GetBubbleFrameView()->title()));
-  if (model_.state() == password_manager::ui::CHROME_DESKTOP_IOS_PROMO_STATE) {
+  if (model_->state() == password_manager::ui::CHROME_DESKTOP_IOS_PROMO_STATE) {
     // Update the height and keep the existing width.
     gfx::Rect bubble_bounds = GetWidget()->GetWindowBoundsInScreen();
     bubble_bounds.set_height(
@@ -1133,26 +1071,27 @@ void ManagePasswordsBubbleView::Refresh() {
 }
 
 void ManagePasswordsBubbleView::CreateChild() {
-  if (model_.state() == password_manager::ui::PENDING_PASSWORD_STATE) {
+  if (model_->state() == password_manager::ui::PENDING_PASSWORD_STATE) {
     AddChildView(new PendingView(this));
-  } else if (model_.state() ==
+  } else if (model_->state() ==
              password_manager::ui::PENDING_PASSWORD_UPDATE_STATE) {
     AddChildView(new UpdatePendingView(this));
-  } else if (model_.state() == password_manager::ui::CONFIRMATION_STATE) {
+  } else if (model_->state() == password_manager::ui::CONFIRMATION_STATE) {
     AddChildView(new SaveConfirmationView(this));
-  } else if (model_.state() == password_manager::ui::AUTO_SIGNIN_STATE) {
+  } else if (model_->state() == password_manager::ui::AUTO_SIGNIN_STATE) {
     AddChildView(new AutoSigninView(this));
-  } else if (model_.state() ==
+  } else if (model_->state() ==
              password_manager::ui::CHROME_SIGN_IN_PROMO_STATE) {
     AddChildView(new SignInPromoView(this));
 #if defined(OS_WIN)
-  } else if (model_.state() ==
+  } else if (model_->state() ==
              password_manager::ui::CHROME_DESKTOP_IOS_PROMO_STATE) {
     AddChildView(new DesktopIOSPromotionBubbleView(
-        model_.GetProfile(),
+        model_->GetProfile(),
         desktop_ios_promotion::PromotionEntryPoint::SAVE_PASSWORD_BUBBLE));
 #endif
   } else {
-    AddChildView(new ManageView(this));
+    // This model state should be handled by separate dialogs.
+    NOTREACHED();
   }
 }
