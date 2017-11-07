@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "e0bf2331_d604c4c0",
+        "filename": "media/gpu/vaapi_wrapper.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 221,
+      "author": {
+        "id": 1001027
+      },
+      "writtenOn": "2017-11-07T12:02:43Z",
+      "side": 1,
+      "message": "Nit: Perhaps we could keep something similar to the previous comment instead please?\n\n\"\n// When chrome runs on linux with chromeos\u003d1, do not log error message\n// without VAAPI libraries.\n\"",
+      "revId": "b1788e1a76e09b8e8bedff0fb48624c63659e366",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "db004a29_f044cb3f",
+        "filename": "media/gpu/vaapi_wrapper.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 223,
+      "author": {
+        "id": 1001027
+      },
+      "writtenOn": "2017-11-07T12:02:43Z",
+      "side": 1,
+      "message": "Nit: perhaps LOG_IF() ?",
+      "revId": "b1788e1a76e09b8e8bedff0fb48624c63659e366",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
