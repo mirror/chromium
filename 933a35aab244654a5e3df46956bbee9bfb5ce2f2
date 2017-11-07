@@ -16,6 +16,23 @@
       "revId": "933a35aab244654a5e3df46956bbee9bfb5ce2f2",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4e86a684_158c1d0b",
+        "filename": "content/browser/gpu/gpu_process_host.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 120,
+      "author": {
+        "id": 1128437
+      },
+      "writtenOn": "2017-11-07T22:51:04Z",
+      "side": 1,
+      "message": "nit: Can you also add the kEnableDirectComposition flag to this list?",
+      "revId": "933a35aab244654a5e3df46956bbee9bfb5ce2f2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
