@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "9ea35b6e_86121db1",
+        "filename": "media/blink/video_frame_compositor.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 137,
+      "author": {
+        "id": 1001250
+      },
+      "writtenOn": "2017-11-07T17:25:01Z",
+      "side": 1,
+      "message": "Why not leave the post to update if stale here too?",
+      "revId": "9f0328ceb86db032988381bdcc25c58704bd7182",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
