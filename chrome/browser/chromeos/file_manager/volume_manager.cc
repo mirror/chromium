@@ -535,8 +535,8 @@ void VolumeManager::OnDiskEvent(
     const chromeos::disks::DiskMountManager::Disk* disk) {
   DCHECK_CURRENTLY_ON(content::BrowserThread::UI);
 
-  // Disregard hidden devices.
-  if (disk->is_hidden())
+  // Disregard hidden and fixed devices.
+  if (disk->is_hidden() || !disk->on_removable_device())
     return;
 
   switch (event) {

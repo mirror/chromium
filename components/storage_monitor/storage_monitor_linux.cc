@@ -394,6 +394,7 @@ void StorageMonitorLinux::UpdateMtab(const MountPointDeviceMap& new_mtab) {
 
     const StorageInfo& mount_info =
         mount_info_map_.find(mount_point)->second.storage_info;
+
     DCHECK(StorageInfo::IsRemovableDevice(mount_info.device_id()));
     receiver()->ProcessAttach(mount_info);
   }

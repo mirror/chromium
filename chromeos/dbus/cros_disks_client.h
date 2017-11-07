@@ -261,10 +261,10 @@ struct CHROMEOS_EXPORT MountEntry {
 // by callbacks.
 class CHROMEOS_EXPORT CrosDisksClient : public DBusClient {
  public:
-  // A callback to handle the result of EnumerateAutoMountableDevices.
-  // The argument is the enumerated device paths.
+  // A callback to handle the result of EnumerateAutoMountableDevices /
+  // EnumerateDevices. The argument is the enumerated device paths.
   typedef base::Callback<void(const std::vector<std::string>& device_paths)>
-      EnumerateAutoMountableDevicesCallback;
+      EnumerateDevicesCallback;
 
   // A callback to handle the result of EnumerateMountEntries.
   // The argument is the enumerated mount entries.
@@ -329,8 +329,13 @@ class CHROMEOS_EXPORT CrosDisksClient : public DBusClient {
   // Calls EnumerateAutoMountableDevices method.  |callback| is called after the
   // method call succeeds, otherwise, |error_callback| is called.
   virtual void EnumerateAutoMountableDevices(
-      const EnumerateAutoMountableDevicesCallback& callback,
+      const EnumerateDevicesCallback& callback,
       const base::Closure& error_callback) = 0;
+
+  // Calls EnumerateDevices method.  |callback| is called after the
+  // method call succeeds, otherwise, |error_callback| is called.
+  virtual void EnumerateDevices(const EnumerateDevicesCallback& callback,
+                                const base::Closure& error_callback) = 0;
 
   // Calls EnumerateMountEntries.  |callback| is called after the
   // method call succeeds, otherwise, |error_callback| is called.
