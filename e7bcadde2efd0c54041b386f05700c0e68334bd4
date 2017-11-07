@@ -137,6 +137,24 @@
     },
     {
       "key": {
+        "uuid": "bb0a7e61_ae87a4e2",
+        "filename": "content/renderer/media/audio_ipc_factory.cc",
+        "patchSetId": 20
+      },
+      "lineNbr": 100,
+      "author": {
+        "id": 1201454
+      },
+      "writtenOn": "2017-11-07T08:26:59Z",
+      "side": 1,
+      "message": "Ah, right you are.",
+      "parentUuid": "7cffb644_cbfc9d01",
+      "revId": "e7bcadde2efd0c54041b386f05700c0e68334bd4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "2412fac3_cd15bcdd",
         "filename": "content/renderer/media/media_factory.cc",
         "patchSetId": 20
@@ -219,6 +237,24 @@
       "side": 1,
       "message": "I suppose making this a RenderFrameObserver would already be a step forward? For now, I added a TODO to fix this.",
       "parentUuid": "32e2f26f_5265d89d",
+      "revId": "e7bcadde2efd0c54041b386f05700c0e68334bd4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "f853d4ef_b790d483",
+        "filename": "content/renderer/render_frame_impl.cc",
+        "patchSetId": 20
+      },
+      "lineNbr": 3971,
+      "author": {
+        "id": 1201454
+      },
+      "writtenOn": "2017-11-07T08:26:59Z",
+      "side": 1,
+      "message": "Making it an RFO might make sense, TODO LGTM.",
+      "parentUuid": "2b22b594_7c6eacbd",
       "revId": "e7bcadde2efd0c54041b386f05700c0e68334bd4",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": false

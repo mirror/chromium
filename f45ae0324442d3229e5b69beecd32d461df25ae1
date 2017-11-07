@@ -2,6 +2,40 @@
   "comments": [
     {
       "key": {
+        "uuid": "554bbb21_994ad557",
+        "filename": "content/renderer/media/audio_ipc_factory.cc",
+        "patchSetId": 22
+      },
+      "lineNbr": 91,
+      "author": {
+        "id": 1201454
+      },
+      "writtenOn": "2017-11-07T08:26:59Z",
+      "side": 1,
+      "message": "Doesn\u0027t look like you\u0027re actually creating a factory ptr and putting it in the map now? Changes to this function (except for changing MaybeDeregisterRemoteFactory -\u003e MaybeDeregisterRemoteFactoryOnIOThread) should be unnecessary now that you deregister explicitly in RenderFrameImpl.",
+      "revId": "f45ae0324442d3229e5b69beecd32d461df25ae1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e0d688b5_59b46062",
+        "filename": "content/renderer/media/audio_ipc_factory.cc",
+        "patchSetId": 22
+      },
+      "lineNbr": 105,
+      "author": {
+        "id": 1201454
+      },
+      "writtenOn": "2017-11-07T08:26:59Z",
+      "side": 1,
+      "message": "Looks like this one was left by accident.",
+      "revId": "f45ae0324442d3229e5b69beecd32d461df25ae1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "1e8caf0f_fd982890",
         "filename": "content/renderer/render_frame_impl_browsertest.cc",
         "patchSetId": 22
