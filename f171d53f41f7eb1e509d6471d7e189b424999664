@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "54ae299f_5fa6448a",
+        "filename": "chrome/browser/resources/md_extensions/manager.js",
+        "patchSetId": 18
+      },
+      "lineNbr": 147,
+      "author": {
+        "id": 1115893
+      },
+      "writtenOn": "2017-11-07T20:20:54Z",
+      "side": 1,
+      "message": "Service is not an HTMLElement, so in order to fire its own events it would have to either\n\n1) inherit from cr.ui.EventTarget, see [1] or,\n2) contain a service.eventTarget member variable\n\nI was trying to avoid that, since it just seems it is adding an additional level of indirection (C++ event fired -\u003e Service handles C++ event -\u003e Service re-fires DOM event -\u003e Manager handles DOM event) and additional JS code to be executed.\n\nAlso DOM events seem more heavy-weight than necessary for Service-\u003eManager communication. DOM events have bubbling/capturing/preventDefault/stopPropagation mechanisms which only make sense when propagating events within a DOM tree.\n\n\u003e in order to avoid adding additional dependencies on the API\n\nDo you mean avoid additional methods on the API like getXXXTarget()? Personally I don\u0027t mind the extra method, especially since a FakeChromeEvent implementation already exists (see [2]) and I am already leveraging this during tests.\n\n[1] https://cs.chromium.org/chromium/src/ui/webui/resources/js/cr/event_target.js\n[2] https://cs.chromium.org/chromium/src/chrome/test/data/webui/fake_chrome_event.js",
+      "parentUuid": "a1fdb80c_eadaee8d",
+      "revId": "f171d53f41f7eb1e509d6471d7e189b424999664",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "489a3746_8ee0075d",
         "filename": "chrome/test/data/webui/extensions/extension_manager_unit_test.js",
         "patchSetId": 18

@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "5208ec63_898b9bf8",
+        "filename": "chrome/browser/resources/md_extensions/load_error.js",
+        "patchSetId": 17
+      },
+      "lineNbr": 45,
+      "author": {
+        "id": 1115893
+      },
+      "writtenOn": "2017-11-07T20:20:54Z",
+      "side": 1,
+      "message": "When I played with this UI, I found that the \"flicker\" is actually signaling to the user that something happened and the same error occurred.\n\nClicking on \"retry\" without closing and re-opening the dialog seemed confusing as if nothing happened. I can re-examine and potentially post a video of the UX problem I am describing.",
+      "parentUuid": "edc91638_e42d00ff",
+      "revId": "2909db982666cd57936c9ea669d6f468a8f1eedf",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "b4f3dfa6_864756b3",
         "filename": "chrome/browser/resources/md_extensions/manager.js",
         "patchSetId": 17
