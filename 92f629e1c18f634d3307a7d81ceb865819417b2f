@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "41b21eb6_ce7e597c",
+        "filename": "services/device/geolocation/public_ip_address_location_notifier.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 132,
+      "author": {
+        "id": 1176036
+      },
+      "writtenOn": "2017-11-07T05:34:09Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "3b0145cf_0c762415",
+      "revId": "92f629e1c18f634d3307a7d81ceb865819417b2f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "36f3388b_125c186b",
         "filename": "services/device/geolocation/public_ip_address_location_notifier.cc",
         "patchSetId": 3
@@ -42,6 +60,30 @@
     },
     {
       "key": {
+        "uuid": "fc899efa_26e67e91",
+        "filename": "services/device/geolocation/public_ip_address_location_notifier.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 133,
+      "author": {
+        "id": 1176036
+      },
+      "writtenOn": "2017-11-07T05:34:09Z",
+      "side": 1,
+      "message": "the copy constructor is deleted",
+      "parentUuid": "36f3388b_125c186b",
+      "range": {
+        "startLine": 133,
+        "startChar": 7,
+        "endLine": 133,
+        "endChar": 17
+      },
+      "revId": "92f629e1c18f634d3307a7d81ceb865819417b2f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "3269b20f_f3d8c016",
         "filename": "services/device/geolocation/public_ip_address_location_notifier.cc",
         "patchSetId": 3
@@ -62,6 +104,30 @@
       "revId": "92f629e1c18f634d3307a7d81ceb865819417b2f",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "246139f4_50d8dcac",
+        "filename": "services/device/geolocation/public_ip_address_location_notifier.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 141,
+      "author": {
+        "id": 1176036
+      },
+      "writtenOn": "2017-11-07T05:34:09Z",
+      "side": 1,
+      "message": "a local test the value is not deleted, not sure if it is always the case",
+      "parentUuid": "3269b20f_f3d8c016",
+      "range": {
+        "startLine": 141,
+        "startChar": 8,
+        "endLine": 141,
+        "endChar": 61
+      },
+      "revId": "92f629e1c18f634d3307a7d81ceb865819417b2f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -117,6 +183,24 @@
     },
     {
       "key": {
+        "uuid": "52bce1ff_2691a912",
+        "filename": "services/device/geolocation/public_ip_address_location_notifier.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 176,
+      "author": {
+        "id": 1176036
+      },
+      "writtenOn": "2017-11-07T05:34:09Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "780cbbaf_40939018",
+      "revId": "92f629e1c18f634d3307a7d81ceb865819417b2f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "815074b0_cd98d675",
         "filename": "services/device/geolocation/public_ip_address_location_notifier.h",
         "patchSetId": 3
@@ -131,6 +215,24 @@
       "revId": "92f629e1c18f634d3307a7d81ceb865819417b2f",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9a8ff491_7484416b",
+        "filename": "services/device/geolocation/public_ip_address_location_notifier.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 60,
+      "author": {
+        "id": 1176036
+      },
+      "writtenOn": "2017-11-07T05:34:09Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "815074b0_cd98d675",
+      "revId": "92f629e1c18f634d3307a7d81ceb865819417b2f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -154,6 +256,30 @@
       "revId": "92f629e1c18f634d3307a7d81ceb865819417b2f",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "316aaee0_f814636e",
+        "filename": "services/device/geolocation/public_ip_address_location_notifier.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 115,
+      "author": {
+        "id": 1176036
+      },
+      "writtenOn": "2017-11-07T05:34:09Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "eb1009b1_683cbc25",
+      "range": {
+        "startLine": 115,
+        "startChar": 9,
+        "endLine": 115,
+        "endChar": 28
+      },
+      "revId": "92f629e1c18f634d3307a7d81ceb865819417b2f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }

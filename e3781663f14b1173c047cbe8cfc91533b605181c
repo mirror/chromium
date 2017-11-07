@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "18479a82_ffe145cb",
+        "filename": "services/device/geolocation/public_ip_address_location_notifier.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 142,
+      "author": {
+        "id": 1176036
+      },
+      "writtenOn": "2017-11-07T05:34:09Z",
+      "side": 1,
+      "message": "+rhalavati@ is it safe to pass a derefed unique_ptr here?",
+      "revId": "e3781663f14b1173c047cbe8cfc91533b605181c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
