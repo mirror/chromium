@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "e1a4d9e5_14df898b",
+        "filename": "services/device/generic_sensor/README.md",
+        "patchSetId": 5
+      },
+      "lineNbr": 51,
+      "author": {
+        "id": 1149144
+      },
+      "writtenOn": "2017-11-07T23:15:55Z",
+      "side": 1,
+      "message": "I copied the content from //https://cs.chromium.org/chromium/src/device/sensors/README.md to here.\n\nI fixed the line length and make it consistent within this file.\n\nDone.",
+      "parentUuid": "a4b97dea_e52a47ad",
+      "revId": "486502884976ddbb1370c53ddde7bb1c61d49e0f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "cc2a1e41_c6052467",
         "filename": "services/device/public/cpp/generic_sensor/BUILD.gn",
         "patchSetId": 5
@@ -36,6 +54,24 @@
     },
     {
       "key": {
+        "uuid": "d7d22eff_fea19dec",
+        "filename": "services/device/public/cpp/generic_sensor/BUILD.gn",
+        "patchSetId": 5
+      },
+      "lineNbr": 15,
+      "author": {
+        "id": 1149144
+      },
+      "writtenOn": "2017-11-07T23:15:55Z",
+      "side": 1,
+      "message": "No, replaced \"full\" with \"generic_sensor\".\n\nDone.",
+      "parentUuid": "cc2a1e41_c6052467",
+      "revId": "486502884976ddbb1370c53ddde7bb1c61d49e0f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "17f8e5eb_da5c1884",
         "filename": "services/device/public/cpp/generic_sensor/motion_data.h",
         "patchSetId": 5
@@ -47,6 +83,24 @@
       "writtenOn": "2017-11-03T19:14:10Z",
       "side": 1,
       "message": "For completeness sake, could you please add to the description that motion_data.* and orientation_data.* files have been moved from device/sensors/.. to services/device/public..?\n(strictly speaking this is patch is not only about deletion)",
+      "revId": "486502884976ddbb1370c53ddde7bb1c61d49e0f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5928e845_96206b2f",
+        "filename": "services/device/public/cpp/generic_sensor/motion_data.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 5,
+      "author": {
+        "id": 1149144
+      },
+      "writtenOn": "2017-11-07T23:15:55Z",
+      "side": 1,
+      "message": "Added description at:\n//services/device/generic_sensor/README.md\nto document that.\n\nDone.",
+      "parentUuid": "17f8e5eb_da5c1884",
       "revId": "486502884976ddbb1370c53ddde7bb1c61d49e0f",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true

@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "53a8dbc8_d4d4987f",
+        "filename": "content/shell/BUILD.gn",
+        "patchSetId": 5
+      },
+      "lineNbr": 251,
+      "author": {
+        "id": 1149144
+      },
+      "writtenOn": "2017-11-07T23:15:55Z",
+      "side": 0,
+      "message": "Yes, I think the content_shell doesn\u0027t depend on sensors anymore.",
+      "parentUuid": "dfe20a7b_e58ed13b",
+      "revId": "5814e9f72db71eccce938f8ee67756ce960a2c11",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "ee8085d1_e43d3c82",
         "filename": "content/shell/android/BUILD.gn",
         "patchSetId": 5
@@ -30,6 +48,24 @@
       "writtenOn": "2017-11-03T19:14:10Z",
       "side": 0,
       "message": "Do we have equivalent javatests on the generic sensors side?",
+      "revId": "5814e9f72db71eccce938f8ee67756ce960a2c11",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2014ee31_c865c84b",
+        "filename": "content/shell/android/BUILD.gn",
+        "patchSetId": 5
+      },
+      "lineNbr": 205,
+      "author": {
+        "id": 1149144
+      },
+      "writtenOn": "2017-11-07T23:15:55Z",
+      "side": 0,
+      "message": "The //device/sensors javatests mostly test the sensor manager and sensor fallback and the generic sensor has similar test coverage at:\n//services/device/generic_sensor/android/junit/src/org/chromium/device/sensors/PlatformSensorAndProviderTest.java\n//content/browser/device_sensors/device_sensor_browsertest.cc\n//services/device/generic_sensor/platform_sensor_fusion_unittest.cc",
+      "parentUuid": "ee8085d1_e43d3c82",
       "revId": "5814e9f72db71eccce938f8ee67756ce960a2c11",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -53,6 +89,24 @@
     },
     {
       "key": {
+        "uuid": "7374b4ec_50154777",
+        "filename": "content/shell/test_runner/test_runner_for_specific_view.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 31,
+      "author": {
+        "id": 1149144
+      },
+      "writtenOn": "2017-11-07T23:15:55Z",
+      "side": 0,
+      "message": "It looks like these includes are not used by this source file.",
+      "parentUuid": "780df888_8524ec03",
+      "revId": "5814e9f72db71eccce938f8ee67756ce960a2c11",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "d0a60385_a5700a2f",
         "filename": "content/test/BUILD.gn",
         "patchSetId": 5
@@ -64,6 +118,24 @@
       "writtenOn": "2017-11-03T19:14:10Z",
       "side": 0,
       "message": "do we actually have any sensors tests in content_unittests now?",
+      "revId": "5814e9f72db71eccce938f8ee67756ce960a2c11",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4400b40f_202c6c10",
+        "filename": "content/test/BUILD.gn",
+        "patchSetId": 5
+      },
+      "lineNbr": 1650,
+      "author": {
+        "id": 1149144
+      },
+      "writtenOn": "2017-11-07T23:15:55Z",
+      "side": 0,
+      "message": "We have device_motion_event_pump_unittest.cc and device_orientation_event_pump_unittest.cc content unittests.",
+      "parentUuid": "d0a60385_a5700a2f",
       "revId": "5814e9f72db71eccce938f8ee67756ce960a2c11",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -87,6 +159,24 @@
     },
     {
       "key": {
+        "uuid": "6fd224ed_121fe799",
+        "filename": "device/BUILD.gn",
+        "patchSetId": 5
+      },
+      "lineNbr": 71,
+      "author": {
+        "id": 1149144
+      },
+      "writtenOn": "2017-11-07T23:15:55Z",
+      "side": 0,
+      "message": "We have:\n//services/device/generic_sensor/platform_sensor_provider_unittest_android.cc\n//services/device/generic_sensor/android/junit/src/org/chromium/device/sensors/PlatformSensorAndProviderTest.java\nAnd many unit tests in the //services/device/generic_sensor are for all platforms including Android.",
+      "parentUuid": "42b329a5_caa330b6",
+      "revId": "5814e9f72db71eccce938f8ee67756ce960a2c11",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "fc94df0e_4ce8ea38",
         "filename": "device/sensors/android/javatests/src/org/chromium/device/sensors/DeviceSensorsTest.java",
         "patchSetId": 5
@@ -98,6 +188,24 @@
       "writtenOn": "2017-11-03T19:14:10Z",
       "side": 0,
       "message": "do we have some equivalent tests in generic sensors?",
+      "revId": "5814e9f72db71eccce938f8ee67756ce960a2c11",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a2b20b38_86f009de",
+        "filename": "device/sensors/android/javatests/src/org/chromium/device/sensors/DeviceSensorsTest.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 29,
+      "author": {
+        "id": 1149144
+      },
+      "writtenOn": "2017-11-07T23:15:55Z",
+      "side": 0,
+      "message": "Yes, this test mostly tests the sensor manager and sensor fallback and the generic sensor has similar test coverage at:\n//services/device/generic_sensor/android/junit/src/org/chromium/device/sensors/PlatformSensorAndProviderTest.java\n//content/browser/device_sensors/device_sensor_browsertest.cc\n//services/device/generic_sensor/platform_sensor_fusion_unittest.cc",
+      "parentUuid": "fc94df0e_4ce8ea38",
       "revId": "5814e9f72db71eccce938f8ee67756ce960a2c11",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
