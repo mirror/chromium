@@ -1,0 +1,303 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "0b64b605_f83dbdeb",
+        "filename": "docs/network_traffic_annotations.md",
+        "patchSetId": 8
+      },
+      "lineNbr": 11,
+      "author": {
+        "id": 1118331
+      },
+      "writtenOn": "2017-11-07T23:38:44Z",
+      "side": 1,
+      "message": "-s",
+      "range": {
+        "startLine": 11,
+        "startChar": 38,
+        "endLine": 11,
+        "endChar": 39
+      },
+      "revId": "0730707a47936a5d49d309ab8e3a3dacd5bd5a3f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "467ccaef_f04efc43",
+        "filename": "docs/network_traffic_annotations.md",
+        "patchSetId": 8
+      },
+      "lineNbr": 13,
+      "author": {
+        "id": 1118331
+      },
+      "writtenOn": "2017-11-07T23:38:44Z",
+      "side": 1,
+      "message": "s/communication/request\n\nI changed \"requests\" to \"communication\" in your design doc. My intention was to say that the singular is \"request\", but instead of plural \"requests\", \"communication\" is clearer and sounds better, and is more understandable to non-technical readers too (although that doesn\u0027t matter as much here).",
+      "range": {
+        "startLine": 13,
+        "startChar": 41,
+        "endLine": 13,
+        "endChar": 54
+      },
+      "revId": "0730707a47936a5d49d309ab8e3a3dacd5bd5a3f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "059be47b_a7d7ba83",
+        "filename": "docs/network_traffic_annotations.md",
+        "patchSetId": 8
+      },
+      "lineNbr": 14,
+      "author": {
+        "id": 1118331
+      },
+      "writtenOn": "2017-11-07T23:38:44Z",
+      "side": 1,
+      "message": "As above: in the request",
+      "range": {
+        "startLine": 14,
+        "startChar": 32,
+        "endLine": 14,
+        "endChar": 49
+      },
+      "revId": "0730707a47936a5d49d309ab8e3a3dacd5bd5a3f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c98091b1_f0eb4136",
+        "filename": "docs/network_traffic_annotations.md",
+        "patchSetId": 8
+      },
+      "lineNbr": 16,
+      "author": {
+        "id": 1118331
+      },
+      "writtenOn": "2017-11-07T23:38:44Z",
+      "side": 1,
+      "message": "nit: drop the qualifier :)",
+      "range": {
+        "startLine": 16,
+        "startChar": 54,
+        "endLine": 16,
+        "endChar": 63
+      },
+      "revId": "0730707a47936a5d49d309ab8e3a3dacd5bd5a3f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "be8aeafa_78f101f1",
+        "filename": "docs/network_traffic_annotations.md",
+        "patchSetId": 8
+      },
+      "lineNbr": 21,
+      "author": {
+        "id": 1118331
+      },
+      "writtenOn": "2017-11-07T23:38:44Z",
+      "side": 1,
+      "message": "requests",
+      "range": {
+        "startLine": 21,
+        "startChar": 49,
+        "endLine": 21,
+        "endChar": 63
+      },
+      "revId": "0730707a47936a5d49d309ab8e3a3dacd5bd5a3f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "60a564a1_e3d0f09a",
+        "filename": "docs/network_traffic_annotations.md",
+        "patchSetId": 8
+      },
+      "lineNbr": 22,
+      "author": {
+        "id": 1118331
+      },
+      "writtenOn": "2017-11-07T23:38:44Z",
+      "side": 1,
+      "message": "v\n \nin order to provide the intended transparency,",
+      "range": {
+        "startLine": 22,
+        "startChar": 39,
+        "endLine": 22,
+        "endChar": 40
+      },
+      "revId": "0730707a47936a5d49d309ab8e3a3dacd5bd5a3f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9b10d704_3c55e7ea",
+        "filename": "docs/network_traffic_annotations.md",
+        "patchSetId": 8
+      },
+      "lineNbr": 28,
+      "author": {
+        "id": 1118331
+      },
+      "writtenOn": "2017-11-07T23:38:44Z",
+      "side": 1,
+      "message": "-s",
+      "range": {
+        "startLine": 28,
+        "startChar": 48,
+        "endLine": 28,
+        "endChar": 49
+      },
+      "revId": "0730707a47936a5d49d309ab8e3a3dacd5bd5a3f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9a1b154a_0a663f03",
+        "filename": "docs/network_traffic_annotations.md",
+        "patchSetId": 8
+      },
+      "lineNbr": 32,
+      "author": {
+        "id": 1118331
+      },
+      "writtenOn": "2017-11-07T23:38:44Z",
+      "side": 1,
+      "message": "request :)",
+      "range": {
+        "startLine": 32,
+        "startChar": 0,
+        "endLine": 32,
+        "endChar": 13
+      },
+      "revId": "0730707a47936a5d49d309ab8e3a3dacd5bd5a3f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "01c4164c_80d134a2",
+        "filename": "docs/network_traffic_annotations.md",
+        "patchSetId": 8
+      },
+      "lineNbr": 33,
+      "author": {
+        "id": 1118331
+      },
+      "writtenOn": "2017-11-07T23:38:44Z",
+      "side": 1,
+      "message": "request",
+      "range": {
+        "startLine": 33,
+        "startChar": 9,
+        "endLine": 33,
+        "endChar": 22
+      },
+      "revId": "0730707a47936a5d49d309ab8e3a3dacd5bd5a3f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "17cb705f_6e886bbf",
+        "filename": "docs/network_traffic_annotations.md",
+        "patchSetId": 8
+      },
+      "lineNbr": 42,
+      "author": {
+        "id": 1118331
+      },
+      "writtenOn": "2017-11-07T23:38:44Z",
+      "side": 1,
+      "message": "I don\u0027t understand this phrasing.\n\n\"sending data through socket\" or something such? I.e., which one is the main noun?",
+      "range": {
+        "startLine": 42,
+        "startChar": 51,
+        "endLine": 42,
+        "endChar": 67
+      },
+      "revId": "0730707a47936a5d49d309ab8e3a3dacd5bd5a3f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "65a073ab_ae696dbe",
+        "filename": "docs/network_traffic_annotations.md",
+        "patchSetId": 8
+      },
+      "lineNbr": 50,
+      "author": {
+        "id": 1118331
+      },
+      "writtenOn": "2017-11-07T23:38:44Z",
+      "side": 1,
+      "message": "This enum is difficult to read, because it misses the word \"where\" somewhere.\n\nChose the best code site ..., such as the site where:\n1. The origin is stated ...\n3. The controls are enforced ...\n3. The data is sepcified.",
+      "range": {
+        "startLine": 50,
+        "startChar": 2,
+        "endLine": 50,
+        "endChar": 4
+      },
+      "revId": "0730707a47936a5d49d309ab8e3a3dacd5bd5a3f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "42d825f0_11af948d",
+        "filename": "docs/network_traffic_annotations.md",
+        "patchSetId": 8
+      },
+      "lineNbr": 54,
+      "author": {
+        "id": 1118331
+      },
+      "writtenOn": "2017-11-07T23:38:44Z",
+      "side": 1,
+      "message": "is sent is\nOR\nare sent are\n\n(I think data is considered singular, although I don\u0027t agree with that)",
+      "range": {
+        "startLine": 54,
+        "startChar": 19,
+        "endLine": 54,
+        "endChar": 30
+      },
+      "revId": "0730707a47936a5d49d309ab8e3a3dacd5bd5a3f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "fd0997d8_1b14aacf",
+        "filename": "docs/network_traffic_annotations.md",
+        "patchSetId": 8
+      },
+      "lineNbr": 55,
+      "author": {
+        "id": 1118331
+      },
+      "writtenOn": "2017-11-07T23:38:44Z",
+      "side": 1,
+      "message": "Already mentioned in the paragraph above.",
+      "range": {
+        "startLine": 55,
+        "startChar": 0,
+        "endLine": 55,
+        "endChar": 76
+      },
+      "revId": "0730707a47936a5d49d309ab8e3a3dacd5bd5a3f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
