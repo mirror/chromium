@@ -286,3 +286,27 @@ function checkButtonNotHasClass(button, className) {
 function checkControlsClassName(videoElement, className) {
   assert_equals(window.internals.shadowRoot(videoElement).firstChild.className, className);
 }
+
+function mediaControlsOverlayPlayButton(videoElement) {
+  return mediaControlsButton(videoElement, 'overlay-play-button');
+}
+
+function mediaControlsOverlayPlayButtonInternal(videoElement) {
+  var controlID = '-internal-media-controls-overlay-play-button-internal';
+  var element = mediaControlsElement(
+      window.internals.shadowRoot(
+          mediaControlsOverlayPlayButton(videoElement)).firstChild, controlID);
+  if (!element)
+    throw 'Failed to find the internal overlay play button';
+  return element;
+}
+
+function doubleTapAtCoordinates(x, y, timeout) {
+  timeout = timeout || 100;
+
+  eventSender.gestureTap(x, y);
+
+  setTimeout(() => {
+    eventSender.gestureTap(x, y);
+  }, timeout);
+}

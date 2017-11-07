@@ -725,6 +725,9 @@ class CORE_EXPORT HTMLMediaElement
   friend class MediaControlsOrientationLockDelegateTest;
   friend class MediaControlsRotateToFullscreenDelegateTest;
 
+  // Accesses PlayInternal to skip user gesture check.
+  friend class MediaControlOverlayPlayButtonElement;
+
   Member<AutoplayPolicy> autoplay_policy_;
 
   WebRemotePlaybackClient* remote_playback_client_;
