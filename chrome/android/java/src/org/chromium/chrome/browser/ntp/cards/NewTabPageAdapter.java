@@ -362,6 +362,14 @@ public class NewTabPageAdapter extends Adapter<NewTabPageViewHolder> implements 
         mRoot.dismissItem(position, itemRemovedCallback);
     }
 
+    /**
+     * XXX
+     * @param n
+     */
+    public void dropAllButFirstNArticleThumbnails(int n) {
+        mSections.dropAllButFirstNArticleThumbnails(n);
+    }
+
     private boolean hasAllBeenDismissed() {
         if (mSigninPromo.isVisible()) return false;
 

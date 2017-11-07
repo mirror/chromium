@@ -263,6 +263,17 @@ public class SectionList
         }
     }
 
+    /**
+     * XXX
+     * @param n
+     */
+    public void dropAllButFirstNArticleThumbnails(int n) {
+        SuggestionsSection articles = mSections.get(KnownCategories.ARTICLES);
+        if (articles == null) return;
+
+        articles.dropAllButFirstNThumbnails(n);
+    }
+
     /** Returns a string showing the categories of all the contained sections. */
     private String getCategoriesForDebugging() {
         StringBuilder sb = new StringBuilder();
