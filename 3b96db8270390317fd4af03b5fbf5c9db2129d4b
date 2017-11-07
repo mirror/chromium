@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "407f6137_ca8c0dff",
+        "filename": "third_party/WebKit/Source/core/layout/LayoutListItem.cpp",
+        "patchSetId": 2
+      },
+      "lineNbr": 141,
+      "author": {
+        "id": 1230334
+      },
+      "writtenOn": "2017-11-07T04:13:03Z",
+      "side": 1,
+      "message": "Here generates line-break, such as flex, grid, table... Maybe we could make them which is LayoutBlock not LayoutBlockFlow apply the design as we did to overflow?",
+      "revId": "3b96db8270390317fd4af03b5fbf5c9db2129d4b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
