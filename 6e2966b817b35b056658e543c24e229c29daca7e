@@ -16,6 +16,24 @@
       "revId": "6e2966b817b35b056658e543c24e229c29daca7e",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "962dd30d_442bb80a",
+        "filename": "third_party/WebKit/Source/platform/heap/HeapPage.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 468,
+      "author": {
+        "id": 1115933
+      },
+      "writtenOn": "2017-11-07T08:49:22Z",
+      "side": 1,
+      "message": "The check is only active on debug builds so I opted for the static value.\n\nOn a side note I just realized I screwed up in r466556 and HeapObjectHeader::CheckHeader() is using a DCHECK right now. I am going to fix it.",
+      "parentUuid": "1cd06972_03bdf7c8",
+      "revId": "6e2966b817b35b056658e543c24e229c29daca7e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
