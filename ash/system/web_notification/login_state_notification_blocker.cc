@@ -23,6 +23,12 @@ LoginStateNotificationBlocker::~LoginStateNotificationBlocker() {
   Shell::Get()->session_controller()->RemoveObserver(this);
 }
 
+bool LoginStateNotificationBlocker::ShouldShowNotification(
+    const message_center::Notification& notification) const {
+  return Shell::Get()->session_controller()->GetSessionState() ==
+         SessionState::ACTIVE;
+}
+
 bool LoginStateNotificationBlocker::ShouldShowNotificationAsPopup(
     const message_center::Notification& notification) const {
   if (ash::system_notifier::ShouldAlwaysShowPopups(notification.notifier_id()))
