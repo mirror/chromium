@@ -49,9 +49,10 @@ void MockWebUserMediaClient::RequestUserMedia(
   WebUserMediaRequest request = stream_request;
 
   if (request.OwnerDocument().IsNull() || !request.OwnerDocument().GetFrame()) {
-    delegate_->PostTask(
-        base::Bind(&WebUserMediaRequest::RequestFailed,
-                   base::Owned(new WebUserMediaRequest(request)), WebString()));
+    delegate_->PostTask(base::Bind(
+        &WebUserMediaRequest::RequestFailed,
+        base::Owned(new WebUserMediaRequest(request)),
+        blink::WebUserMediaRequest::Error::kNotSupported, WebString()));
     return;
   }
 
