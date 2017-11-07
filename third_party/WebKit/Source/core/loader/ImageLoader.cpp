@@ -393,6 +393,8 @@ void ImageLoader::DoUpdateFromElement(BypassMainWorldBehavior bypass_behavior,
     if (update_behavior == kUpdateForcedReload) {
       resource_request.SetCacheMode(mojom::FetchCacheMode::kBypassCache);
       resource_request.SetPreviewsState(WebURLRequest::kPreviewsNoTransform);
+    } else if (update_behavior == kUpdateWithNoPreviews) {
+      resource_request.SetPreviewsState(WebURLRequest::kPreviewsNoTransform);
     }
 
     if (referrer_policy != kReferrerPolicyDefault) {
@@ -408,7 +410,8 @@ void ImageLoader::DoUpdateFromElement(BypassMainWorldBehavior bypass_behavior,
     ConfigureRequest(params, bypass_behavior, *element_,
                      document.GetClientHintsPreferences());
 
-    if (update_behavior != kUpdateForcedReload && document.GetFrame())
+    if (update_behavior != kUpdateForcedReload &&
+        update_behavior != kUpdateWithNoPreviews && document.GetFrame())
       document.GetFrame()->MaybeAllowImagePlaceholder(params);
 
     new_image_content = ImageResourceContent::Fetch(params, document.Fetcher());

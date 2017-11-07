@@ -100,6 +100,18 @@ HTMLImageElement::HTMLImageElement(Document& document, bool created_by_parser)
       is_fallback_image_(false),
       referrer_policy_(kReferrerPolicyDefault) {
   SetHasCustomStyleCallbacks();
+
+  visibility_observer_ = new ElementVisibilityObserver(
+      this,
+      WTF::Bind(&HTMLImageElement::OnImageVisible, WrapWeakPersistent(this)));
+  visibility_observer_->Start();
+}
+
+void HTMLImageElement::OnImageVisible(bool visible) {
+  if (!visible)
+    return;
+  GetImageLoader().UpdateFromElement(ImageLoader::kUpdateWithNoPreviews,
+                                     referrer_policy_);
 }
 
 HTMLImageElement* HTMLImageElement::Create(Document& document) {
@@ -118,6 +130,7 @@ void HTMLImageElement::Trace(blink::Visitor* visitor) {
   visitor->Trace(listener_);
   visitor->Trace(form_);
   visitor->Trace(source_);
+  visitor->Trace(visibility_observer_);
   HTMLElement::Trace(visitor);
 }
 
