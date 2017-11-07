@@ -61,7 +61,7 @@ void NotificationControlButtonsView::ShowCloseButton(bool show) {
     close_button_->set_owned_by_client();
     close_button_->SetImage(views::Button::STATE_NORMAL,
                             gfx::CreateVectorIcon(kNotificationCloseButtonIcon,
-                                                  gfx::kChromeIconGrey));
+                                                  gfx::kChromeIconGray));
     close_button_->SetAccessibleName(l10n_util::GetStringUTF16(
         IDS_MESSAGE_CENTER_CLOSE_NOTIFICATION_BUTTON_ACCESSIBLE_NAME));
     close_button_->SetTooltipText(l10n_util::GetStringUTF16(
@@ -85,7 +85,7 @@ void NotificationControlButtonsView::ShowSettingsButton(bool show) {
     settings_button_->SetImage(
         views::Button::STATE_NORMAL,
         gfx::CreateVectorIcon(kNotificationSettingsButtonIcon,
-                              gfx::kChromeIconGrey));
+                              gfx::kChromeIconGray));
     settings_button_->SetAccessibleName(l10n_util::GetStringUTF16(
         IDS_MESSAGE_NOTIFICATION_SETTINGS_BUTTON_ACCESSIBLE_NAME));
     settings_button_->SetTooltipText(l10n_util::GetStringUTF16(

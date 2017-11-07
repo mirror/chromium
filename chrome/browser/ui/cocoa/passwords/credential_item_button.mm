@@ -137,7 +137,7 @@ constexpr CGFloat kHorizontalPaddingBetweenAvatarAndLabel = 10;
   iconController_.reset([[AutofillTooltipController alloc]
       initWithArrowLocation:info_bubble::kTopTrailing]);
   NSImage* image = gfx::NSImageFromImageSkia(gfx::CreateVectorIcon(
-      vector_icons::kInfoOutlineIcon, gfx::kChromeIconGrey));
+      vector_icons::kInfoOutlineIcon, gfx::kChromeIconGray));
   [iconController_ setImage:image];
   [iconController_ setMessage:tooltip];
   [self addSubview:[iconController_ view]];

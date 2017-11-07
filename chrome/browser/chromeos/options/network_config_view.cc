@@ -297,7 +297,7 @@ ControlledSettingIndicatorView::ControlledSettingIndicatorView(
   // Disable |image_view_| so mouse events propagate to the parent.
   image_view_->SetEnabled(false);
   image_view_->SetImage(gfx::CreateVectorIcon(vector_icons::kBusinessIcon, 16,
-                                              gfx::kChromeIconGrey));
+                                              gfx::kChromeIconGray));
   image_view_->SetTooltipText(
       l10n_util::GetStringUTF16(IDS_CONTROLLED_SETTING_POLICY));
   AddChildView(image_view_);

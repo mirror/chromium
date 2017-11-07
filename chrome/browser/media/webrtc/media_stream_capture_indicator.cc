@@ -450,6 +450,6 @@ void MediaStreamCaptureIndicator::GetStatusTrayIconInfo(
   }
 
   *tool_tip = l10n_util::GetStringUTF16(message_id);
-  *image = gfx::CreateVectorIcon(*icon, 16, gfx::kChromeIconGrey);
+  *image = gfx::CreateVectorIcon(*icon, 16, gfx::kChromeIconGray);
 #endif  // !defined(OS_ANDROID)
 }

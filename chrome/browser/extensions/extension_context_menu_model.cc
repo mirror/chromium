@@ -322,7 +322,7 @@ void ExtensionContextMenuModel::InitMenu(const Extension* extension,
       int uninstall_index = GetIndexOfCommandId(UNINSTALL);
       SetIcon(uninstall_index,
               gfx::Image(gfx::CreateVectorIcon(vector_icons::kBusinessIcon, 16,
-                                               gfx::kChromeIconGrey)));
+                                               gfx::kChromeIconGray)));
     }
   }
 

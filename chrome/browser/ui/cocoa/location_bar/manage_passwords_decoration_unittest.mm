@@ -110,7 +110,7 @@ TEST_P(ManagePasswordsDecorationStateTest, TestState) {
                 GetParam().image == IDR_SAVE_PASSWORD_INACTIVE);
     const int kIconSize = 16;
     expected_image = NSImageFromImageSkia(
-        gfx::CreateVectorIcon(kKeyIcon, kIconSize, gfx::kChromeIconGrey));
+        gfx::CreateVectorIcon(kKeyIcon, kIconSize, gfx::kChromeIconGray));
   }
   EXPECT_TRUE(ImagesEqual(expected_image, decoration()->GetImage()));
   EXPECT_NSEQ(GetParam().toolTip

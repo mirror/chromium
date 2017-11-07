@@ -561,7 +561,7 @@ SkColor LocationBarViewMac::GetLocationBarIconColor() const {
 
   if (security_level == security_state::NONE ||
       security_level == security_state::HTTP_SHOW_WARNING) {
-    return gfx::kChromeIconGrey;
+    return gfx::kChromeIconGray;
   }
 
   NSColor* srgb_color =

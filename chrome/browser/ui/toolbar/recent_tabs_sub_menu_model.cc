@@ -132,7 +132,7 @@ int CommandIdToWindowVectorIndex(int command_id) {
 
 #if !defined(OS_MACOSX)
 gfx::Image CreateFavicon(const gfx::VectorIcon& icon) {
-  return gfx::Image(gfx::CreateVectorIcon(icon, 16, gfx::kChromeIconGrey));
+  return gfx::Image(gfx::CreateVectorIcon(icon, 16, gfx::kChromeIconGray));
 }
 #endif
 

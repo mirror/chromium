@@ -59,7 +59,7 @@ SkColor GetAuraColor(NativeTheme::ColorId color_id,
   // Dialogs:
   static const SkColor kDialogBackgroundColor = SK_ColorWHITE;
   // Buttons:
-  static const SkColor kButtonEnabledColor = gfx::kChromeIconGrey;
+  static const SkColor kButtonEnabledColor = gfx::kChromeIconGray;
   static const SkColor kProminentButtonColor = gfx::kGoogleBlue500;
   static const SkColor kProminentButtonTextColor = SK_ColorWHITE;
   static const SkColor kBlueButtonTextColor = SK_ColorWHITE;

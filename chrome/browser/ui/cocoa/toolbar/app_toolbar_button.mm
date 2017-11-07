@@ -101,7 +101,7 @@ constexpr NSTimeInterval kAnimationDelay = 1.5;
   return themeIsDark ? SK_ColorWHITE
                      : (provider && provider->ShouldIncreaseContrast()
                             ? SK_ColorBLACK
-                            : gfx::kChromeIconGrey);
+                            : gfx::kChromeIconGray);
 }
 
 - (void)updateAnimatedIconColor {
