@@ -25,7 +25,10 @@ class CONTENT_EXPORT FileURLLoaderFactory : public mojom::URLLoaderFactory {
                        scoped_refptr<base::SequencedTaskRunner> task_runner);
   ~FileURLLoaderFactory() override;
 
-  void BindRequest(mojom::URLLoaderFactoryRequest loader);
+  static void CreateLoaderWithPathOverride(const ResourceRequest& request,
+                                           const base::FilePath& path,
+                                           mojom::URLLoaderRequest loader,
+                                           mojom::URLLoaderClientPtr client);
 
  private:
   // mojom::URLLoaderFactory:
