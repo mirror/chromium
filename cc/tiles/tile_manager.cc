@@ -145,8 +145,10 @@ class RasterTaskImpl : public TileTask {
     // Here calling state().IsCanceled() is thread-safe, because this task is
     // already concluded as FINISHED or CANCELLED and no longer will be worked
     // upon by task graph runner.
+    size_t num_bytes = raster_buffer_->NumBytes();
     raster_buffer_ = nullptr;
-    tile_manager_->OnRasterTaskCompleted(tile_id_, resource_,
+    tile_manager_->OnRasterTaskCompleted(source_frame_number_, num_bytes,
+                                         tile_id_, resource_,
                                          state().IsCanceled());
   }
 
@@ -790,6 +792,7 @@ TileManager::PrioritizedWorkToSchedule TileManager::AssignGpuMemoryToTiles() {
       tile->raster_task_ =
           CreateRasterTask(prioritized_tile, client_->GetRasterColorSpace(),
                            &work_to_schedule.checker_image_decode_queue);
+      raster_tasks_[tile->source_frame_number()]++;
     }
 
     memory_usage += memory_required_by_tile_to_be_scheduled;
@@ -1224,10 +1227,23 @@ void TileManager::ResetSignalsForTesting() {
   signals_.reset();
 }
 
-void TileManager::OnRasterTaskCompleted(
-    Tile::Id tile_id,
-    Resource* resource,
-    bool was_canceled) {
+void TileManager::OnRasterTaskCompleted(int source_frame_number,
+                                        size_t num_bytes,
+                                        Tile::Id tile_id,
+                                        Resource* resource,
+                                        bool was_canceled) {
+  DCHECK_GT(raster_tasks_[source_frame_number], 0);
+  raster_tasks_[source_frame_number]--;
+  raster_pixels_[source_frame_number] += num_bytes;
+  if (raster_tasks_[source_frame_number] == 0) {
+    auto stats = base::MakeUnique<base::trace_event::TracedValue>();
+    stats->SetInteger("source_frame_number", source_frame_number);
+    stats->SetInteger("rastered_bytes", raster_pixels_[source_frame_number]);
+    TRACE_EVENT_INSTANT1("cc", "TileManager::OnRasterTaskCompleted",
+                         TRACE_EVENT_SCOPE_THREAD, "stats", std::move(stats));
+    raster_tasks_.erase(source_frame_number);
+    raster_pixels_.erase(source_frame_number);
+  }
   auto found = tiles_.find(tile_id);
   Tile* tile = nullptr;
   bool raster_task_was_scheduled_with_checker_images = false;

@@ -49,7 +49,7 @@ class CC_EXPORT OneCopyRasterBufferProvider : public RasterBufferProvider {
   void Shutdown() override;
 
   // Playback raster source and copy result into |resource|.
-  void PlaybackAndCopyOnWorkerThread(
+  size_t PlaybackAndCopyOnWorkerThread(
       const Resource* resource,
       ResourceProvider::ScopedWriteLockGL* resource_lock,
       const gpu::SyncToken& sync_token,
@@ -78,6 +78,7 @@ class CC_EXPORT OneCopyRasterBufferProvider : public RasterBufferProvider {
         uint64_t new_content_id,
         const gfx::AxisTransform2d& transform,
         const RasterSource::PlaybackSettings& playback_settings) override;
+    size_t NumBytes() const override;
 
     void set_sync_token(const gpu::SyncToken& sync_token) {
       sync_token_ = sync_token;
@@ -88,6 +89,7 @@ class CC_EXPORT OneCopyRasterBufferProvider : public RasterBufferProvider {
     const Resource* resource_;
     ResourceProvider::ScopedWriteLockGL lock_;
     uint64_t previous_content_id_;
+    size_t num_bytes_ = 0;
 
     gpu::SyncToken sync_token_;
 
@@ -106,10 +108,10 @@ class CC_EXPORT OneCopyRasterBufferProvider : public RasterBufferProvider {
       const RasterSource::PlaybackSettings& playback_settings,
       uint64_t previous_content_id,
       uint64_t new_content_id);
-  void CopyOnWorkerThread(StagingBuffer* staging_buffer,
-                          ResourceProvider::ScopedWriteLockGL* resource_lock,
-                          const RasterSource* raster_source,
-                          const gfx::Rect& rect_to_copy);
+  size_t CopyOnWorkerThread(StagingBuffer* staging_buffer,
+                            ResourceProvider::ScopedWriteLockGL* resource_lock,
+                            const RasterSource* raster_source,
+                            const gfx::Rect& rect_to_copy);
   gfx::BufferUsage StagingBufferUsage() const;
 
   viz::ContextProvider* const compositor_context_provider_;
