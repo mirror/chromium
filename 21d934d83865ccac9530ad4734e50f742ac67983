@@ -1,0 +1,55 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "01092647_8dbbc263",
+        "filename": "content/renderer/webgraphicscontext3d_provider_impl.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 50,
+      "author": {
+        "id": 1000887
+      },
+      "writtenOn": "2017-11-07T20:43:24Z",
+      "side": 1,
+      "message": "std::make_unique pls",
+      "revId": "21d934d83865ccac9530ad4734e50f742ac67983",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3a37d77e_6c8bf88a",
+        "filename": "content/renderer/webgraphicscontext3d_provider_impl.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 77,
+      "author": {
+        "id": 1000887
+      },
+      "writtenOn": "2017-11-07T20:43:24Z",
+      "side": 1,
+      "message": "no need to do this, the whole provider will need to be deleted. best not to create UAF possibilities, IMO. normally a lost context does not mean it is deleted. Only in ImageTransportFactory is that a thing that happens, elsewhere code often cleans up textures and stuff (needlessly) on the dead context to avoid writing different shutdown paths. I\u0027d prefer if GLTHelper is consistent with the rest of this class.",
+      "revId": "21d934d83865ccac9530ad4734e50f742ac67983",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a3e84806_0bd4995a",
+        "filename": "third_party/WebKit/public/platform/WebGraphicsContext3DProvider.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 62,
+      "author": {
+        "id": 1000887
+      },
+      "writtenOn": "2017-11-07T20:43:24Z",
+      "side": 1,
+      "message": "Document that this can\u0027t return null (unlike GetGrContext which can if the context was lost before it\u0027s called), cuz this isn\u0027t a method that has an equivalent on ContextProvider makes documentation here more important - tho rly the rest could use it :)",
+      "revId": "21d934d83865ccac9530ad4734e50f742ac67983",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
