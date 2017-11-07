@@ -42,8 +42,7 @@ namespace {
 
 // Returns true if the value was successfully set, meaning |value| was found in
 // the list of select options in |field|.
-bool SetSelectControlValue(const base::string16& value,
-                           FormFieldData* field) {
+bool SetSelectControlValue(const base::string16& value, FormFieldData* field) {
   l10n::CaseInsensitiveCompare compare;
 
   DCHECK_EQ(field->option_values.size(), field->option_contents.size());
@@ -97,9 +96,9 @@ bool SetSelectControlValueTokenMatch(const base::string16& value,
   l10n::CaseInsensitiveCompare compare;
 
   for (size_t i = 0; i < field->option_values.size(); ++i) {
-    tokenized = base::SplitString(
-        field->option_values[i], base::kWhitespaceASCIIAs16,
-        base::TRIM_WHITESPACE, base::SPLIT_WANT_NONEMPTY);
+    tokenized =
+        base::SplitString(field->option_values[i], base::kWhitespaceASCIIAs16,
+                          base::TRIM_WHITESPACE, base::SPLIT_WANT_NONEMPTY);
     if (std::find_if(tokenized.begin(), tokenized.end(),
                      [&compare, value](base::string16& rhs) {
                        return compare.StringsEqual(value, rhs);
@@ -108,9 +107,9 @@ bool SetSelectControlValueTokenMatch(const base::string16& value,
       return true;
     }
 
-    tokenized = base::SplitString(
-        field->option_contents[i], base::kWhitespaceASCIIAs16,
-        base::TRIM_WHITESPACE, base::SPLIT_WANT_NONEMPTY);
+    tokenized =
+        base::SplitString(field->option_contents[i], base::kWhitespaceASCIIAs16,
+                          base::TRIM_WHITESPACE, base::SPLIT_WANT_NONEMPTY);
     if (std::find_if(tokenized.begin(), tokenized.end(),
                      [&compare, value](base::string16& rhs) {
                        return compare.StringsEqual(value, rhs);
@@ -124,8 +123,7 @@ bool SetSelectControlValueTokenMatch(const base::string16& value,
 }
 
 // Try to fill a numeric |value| into the given |field|.
-bool FillNumericSelectControl(int value,
-                              FormFieldData* field) {
+bool FillNumericSelectControl(int value, FormFieldData* field) {
   DCHECK_EQ(field->option_values.size(), field->option_contents.size());
   for (size_t i = 0; i < field->option_values.size(); ++i) {
     int option;
@@ -139,8 +137,7 @@ bool FillNumericSelectControl(int value,
   return false;
 }
 
-bool FillStateSelectControl(const base::string16& value,
-                            FormFieldData* field) {
+bool FillStateSelectControl(const base::string16& value, FormFieldData* field) {
   base::string16 full;
   base::string16 abbreviation;
   state_names::GetNameAndAbbreviation(value, &full, &abbreviation);
@@ -163,7 +160,7 @@ bool FillStateSelectControl(const base::string16& value,
 
   // Then try an inexact match of the abbreviation name.
   return !abbreviation.empty() &&
-      SetSelectControlValueTokenMatch(abbreviation, field);
+         SetSelectControlValueTokenMatch(abbreviation, field);
 }
 
 bool FillCountrySelectControl(const base::string16& value,
@@ -265,8 +262,7 @@ bool FillExpirationMonthSelectControl(const base::string16& value,
 }
 
 // Returns true if the last two digits in |year| match those in |str|.
-bool LastTwoDigitsMatch(const base::string16& year,
-                        const base::string16& str) {
+bool LastTwoDigitsMatch(const base::string16& year, const base::string16& str) {
   int year_int;
   int str_int;
   if (!StringToInt(year, &year_int) || !StringToInt(str, &str_int))
@@ -277,8 +273,7 @@ bool LastTwoDigitsMatch(const base::string16& year,
 
 // Try to fill a year |value| into the given |field| by comparing the last two
 // digits of the year to the field's options.
-bool FillYearSelectControl(const base::string16& value,
-                           FormFieldData* field) {
+bool FillYearSelectControl(const base::string16& value, FormFieldData* field) {
   if (value.size() != 2U && value.size() != 4U)
     return false;
 
@@ -415,9 +410,9 @@ void FillStreetAddress(const base::string16& value,
 
   AddressData address_data;
   address_data.language_code = address_language_code;
-  address_data.address_line = base::SplitString(
-      base::UTF16ToUTF8(value), "\n",
-      base::TRIM_WHITESPACE, base::SPLIT_WANT_ALL);
+  address_data.address_line =
+      base::SplitString(base::UTF16ToUTF8(value), "\n", base::TRIM_WHITESPACE,
+                        base::SPLIT_WANT_ALL);
   std::string line;
   GetStreetAddressLinesAsSingleLine(address_data, &line);
   field->value = base::UTF8ToUTF16(line);
@@ -470,7 +465,7 @@ void FillExpirationYearInput(base::string16 value,
 // Uses the |field|'s max_length attribute to determine if the |value| needs to
 // be truncated. |value| should be a date formatted as either MM/YY or MM/YYYY.
 // If it isn't, the field doesn't get filled.
-bool FillExpirationDateInput(const base::string16 &value,
+bool FillExpirationDateInput(const base::string16& value,
                              FormFieldData* field) {
   const base::string16 kSeparator = ASCIIToUTF16("/");
   // Autofill formats a combined date as month/year.
@@ -617,11 +612,16 @@ void AutofillField::SetTypeTo(ServerFieldType type) {
 }
 
 AutofillType AutofillField::Type() const {
+  AutofillType html_type = AutofillType(UNKNOWN_TYPE);
+  bool html_type_set = false;
+  AutofillType server_type = AutofillType(NO_SERVER_DATA);
+  bool server_type_set = false;
   // Use the html type specified by the website unless it is unrecognized and
   // autofill predicts a credit card type.
   if (html_type_ != HTML_TYPE_UNSPECIFIED &&
       !(html_type_ == HTML_TYPE_UNRECOGNIZED && IsCreditCardPrediction())) {
-    return AutofillType(html_type_, html_mode_);
+    html_type = AutofillType(html_type_, html_mode_);
+    html_type_set = true;
   }
 
   if (overall_server_type_ != NO_SERVER_DATA) {
@@ -642,9 +642,23 @@ AutofillType AutofillField::Type() const {
         // See http://crbug.com/469007
         !(AutofillType(overall_server_type_).group() == PASSWORD_FIELD &&
           heuristic_type_ == CREDIT_CARD_VERIFICATION_CODE);
-    if (believe_server)
-      return AutofillType(overall_server_type_);
+    if (believe_server) {
+      server_type = AutofillType(overall_server_type_);
+      server_type_set = true;
+    }
   }
+
+  // If server says it's a field without country code, we override html
+  // prediction(autocomplete=tel leads to whole number prediction).
+  if (html_type.GetStorableType() == PHONE_HOME_WHOLE_NUMBER &&
+      server_type.GetStorableType() == PHONE_HOME_CITY_AND_NUMBER) {
+    return server_type;
+  }
+
+  if (html_type_set)
+    return html_type;
+  if (server_type_set)
+    return server_type;
 
   return AutofillType(heuristic_type_);
 }
@@ -775,9 +789,8 @@ int AutofillField::FindShortestSubstringMatchInSelect(
                           : field->option_contents[i];
     if (searcher.Search(option_value, nullptr, nullptr) ||
         searcher.Search(option_content, nullptr, nullptr)) {
-      if (best_match == -1 ||
-          field->option_values[best_match].size() >
-              field->option_values[i].size()) {
+      if (best_match == -1 || field->option_values[best_match].size() >
+                                  field->option_values[i].size()) {
         best_match = i;
       }
     }
