@@ -34,6 +34,24 @@
       "revId": "16a2061ad40a32d5b2832d5aabfcacc4da5fae8c",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0ed087e7_9535e398",
+        "filename": "chromeos/dbus/lorgnette_manager_client.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 141,
+      "author": {
+        "id": 1000191
+      },
+      "writtenOn": "2017-11-07T18:15:19Z",
+      "side": 1,
+      "message": "I\u0027m mixed about the typedef; it does make the code easier to read, but it also obscures a kind of important implementaiton detail.\n\nFor the alternative approach, I don\u0027t think we would need (or want) a tri-state enum, just a \u0027data read\u0027 boolean. We can still use data_.has_value() for success/fail (once the data is read).\n\nbool data_read_ \u003d false;\nbase::Optional\u003cstd::string\u003e data_;\n\nOnReadData(base::Optional\u003cstd::string\u003e data) {\n  DCHECK_EQ(!data_read_);\n  data_read_ \u003d true;\n  data_ \u003d std::move(data);\n  MaybeCompleted();\n}\n\nMaybeCompleted() {\n  if (!data_read_ || callback_.is_null())\n    return;\n  std::move(callback_).Run(std::move(data_));\n}\n\nI think that would be more readable. Optional\u003c\u003e is great for wrapping success/fail with a result argument, but when it\u0027s layered  like this the meaning becomes obscured. Using a separate \u0027data read\u0027 boolean reduces that confusion.",
+      "parentUuid": "9705a61f_0ed9658c",
+      "revId": "16a2061ad40a32d5b2832d5aabfcacc4da5fae8c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
