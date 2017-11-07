@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "5505cafa_e342a8a7",
+        "filename": "third_party/WebKit/Source/devtools/front_end/ui/tabbedPane.css",
+        "patchSetId": 2
+      },
+      "lineNbr": 119,
+      "author": {
+        "id": 1115861
+      },
+      "writtenOn": "2017-11-07T23:53:48Z",
+      "side": 1,
+      "message": "Redundant selector.",
+      "revId": "e31639ff859114241d5ade5886507b4214a776a8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "85a9c08c_e9320cec",
+        "filename": "third_party/WebKit/Source/devtools/front_end/ui/tabbedPane.css",
+        "patchSetId": 2
+      },
+      "lineNbr": 121,
+      "author": {
+        "id": 1115861
+      },
+      "writtenOn": "2017-11-07T23:53:48Z",
+      "side": 1,
+      "message": "perhaps drop .selected from the selector.",
+      "revId": "e31639ff859114241d5ade5886507b4214a776a8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
