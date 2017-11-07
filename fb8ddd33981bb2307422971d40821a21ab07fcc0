@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "2c82a2c1_aef15444",
+        "filename": "third_party/WebKit/Source/core/loader/FrameFetchContext.cpp",
+        "patchSetId": 15
+      },
+      "lineNbr": 854,
+      "author": {
+        "id": 1115881
+      },
+      "writtenOn": "2017-11-07T15:00:10Z",
+      "side": 1,
+      "message": "nit: \"loading a new document...\"",
+      "revId": "fb8ddd33981bb2307422971d40821a21ab07fcc0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3efecdb2_6e5db114",
+        "filename": "third_party/WebKit/Source/core/loader/FrameFetchContext.cpp",
+        "patchSetId": 15
+      },
+      "lineNbr": 856,
+      "author": {
+        "id": 1115881
+      },
+      "writtenOn": "2017-11-07T15:00:10Z",
+      "side": 1,
+      "message": "nit: could you be more precise on where it is set otherwise?",
+      "revId": "fb8ddd33981bb2307422971d40821a21ab07fcc0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
