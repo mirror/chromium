@@ -858,6 +858,23 @@
     },
     {
       "key": {
+        "uuid": "3a98a00f_ff712868",
+        "filename": "content/browser/webauth/fido_attestation_statement.cc",
+        "patchSetId": 10
+      },
+      "lineNbr": 47,
+      "author": {
+        "id": 1002270
+      },
+      "writtenOn": "2017-11-07T21:47:40Z",
+      "side": 1,
+      "message": "We have a utility function for this sort of thing: https://commondatastorage.googleapis.com/chromium-boringssl-docs/bytestring.h.html#CBS_get_any_asn1_element\n\n(CBS, being a C API, can be a little funky. Feel free to land as-is and point me at this code later.)",
+      "revId": "b5944e3d273f971142693d47e8714ebe7d3c6f57",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "a61e5f13_eed1b019",
         "filename": "content/browser/webauth/fido_attestation_statement.cc",
         "patchSetId": 10
