@@ -184,6 +184,7 @@ bool NativeRendererMessagingService::ContextHasMessagePort(
     const PortId& port_id) {
   if (one_time_message_handler_.HasPort(script_context, port_id))
     return true;
+  v8::HandleScope handle_scope(script_context->isolate());
   MessagingPerContextData* data =
       GetPerContextData(script_context->v8_context(), false);
   return data && base::ContainsKey(data->ports, port_id);
@@ -198,11 +199,15 @@ void NativeRendererMessagingService::DispatchOnConnectToListeners(
     const ExtensionMsg_ExternalConnectionInfo& info,
     const std::string& tls_channel_id,
     const std::string& event_name) {
+  LOG(WARNING) << "Dispatching on connect to listeners";
   v8::Isolate* isolate = script_context->isolate();
   v8::HandleScope handle_scope(isolate);
   v8::Local<v8::Context> v8_context = script_context->v8_context();
+  v8::Context::Scope context_scope(v8_context);
 
+  LOG(WARNING) << "Pre make";
   gin::DataObjectBuilder sender_builder(isolate);
+  LOG(WARNING) << "Make";
   if (!info.source_id.empty())
     sender_builder.Set("id", info.source_id);
   if (!info.source_url.is_empty())

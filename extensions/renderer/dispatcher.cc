@@ -206,7 +206,7 @@ Dispatcher::Dispatcher(std::unique_ptr<DispatcherDelegate> delegate)
     // outlive the bindings system.
     auto system = std::make_unique<NativeExtensionBindingsSystem>(
         std::move(ipc_message_sender));
-    delegate_->InitializeBindingsSystem(this, system->api_system());
+    delegate_->InitializeBindingsSystem(this, system.get());
     bindings_system_ = std::move(system);
   } else {
     bindings_system_ = std::make_unique<JsExtensionBindingsSystem>(
@@ -724,14 +724,12 @@ std::vector<std::pair<const char*, int>> Dispatcher::GetJsResources() {
       {"displaySource", IDR_DISPLAY_SOURCE_CUSTOM_BINDINGS_JS},
       {"contextMenus", IDR_CONTEXT_MENUS_CUSTOM_BINDINGS_JS},
       {"contextMenusHandlers", IDR_CONTEXT_MENUS_HANDLERS_JS},
-      {"extension", IDR_EXTENSION_CUSTOM_BINDINGS_JS},
       {"i18n", IDR_I18N_CUSTOM_BINDINGS_JS},
       {"mimeHandlerPrivate", IDR_MIME_HANDLER_PRIVATE_CUSTOM_BINDINGS_JS},
       {"extensions/common/api/mime_handler.mojom", IDR_MIME_HANDLER_MOJOM_JS},
       {"mojoPrivate", IDR_MOJO_PRIVATE_CUSTOM_BINDINGS_JS},
       {"permissions", IDR_PERMISSIONS_CUSTOM_BINDINGS_JS},
       {"printerProvider", IDR_PRINTER_PROVIDER_CUSTOM_BINDINGS_JS},
-      {"runtime", IDR_RUNTIME_CUSTOM_BINDINGS_JS},
       {"webViewRequest", IDR_WEB_VIEW_REQUEST_CUSTOM_BINDINGS_JS},
 
       // Platform app sources that are not API-specific..
@@ -743,6 +741,8 @@ std::vector<std::pair<const char*, int>> Dispatcher::GetJsResources() {
     resources.emplace_back(kEventBindings, IDR_EVENT_BINDINGS_JS);
     resources.emplace_back("lastError", IDR_LAST_ERROR_JS);
     resources.emplace_back("sendRequest", IDR_SEND_REQUEST_JS);
+    resources.emplace_back("extension", IDR_EXTENSION_CUSTOM_BINDINGS_JS);
+    resources.emplace_back("runtime", IDR_RUNTIME_CUSTOM_BINDINGS_JS);
 
     // Custom types sources.
     resources.emplace_back("StorageArea", IDR_STORAGE_AREA_JS);
