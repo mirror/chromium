@@ -42,6 +42,7 @@ public interface ChildProcessServiceDelegate {
      * service stops.
      */
     boolean loadNativeLibrary(Context hostContext);
+    void preloadNativeLibrary(Context hostContext);
 
     /**
      * Should return a map that associatesfile descriptors' IDs to keys.

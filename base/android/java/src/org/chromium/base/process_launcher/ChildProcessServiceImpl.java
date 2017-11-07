@@ -28,6 +28,8 @@ import java.util.concurrent.Semaphore;
 
 import javax.annotation.concurrent.GuardedBy;
 
+import org.chromium.base.TraceEvent;
+
 /**
  * This class implements all of the functionality for {@link ChildProcessService} which owns an
  * object of {@link ChildProcessServiceImpl}.
@@ -90,6 +92,7 @@ public class ChildProcessServiceImpl {
         // NOTE: Implement any IChildProcessService methods here.
         @Override
         public boolean bindToCaller() {
+        try (TraceEvent te = TraceEvent.scoped("IChildProcessService.bindToCaller")) {
             assert mBindToCallerCheck;
             assert mServiceBound;
             synchronized (mBinderLock) {
@@ -103,11 +106,12 @@ public class ChildProcessServiceImpl {
                 }
             }
             return true;
-        }
+        }}
 
         @Override
         public void setupConnection(Bundle args, ICallbackInt pidCallback, List<IBinder> callbacks)
                 throws RemoteException {
+        try (TraceEvent te = TraceEvent.scoped("IChildProcessService.setupConnection")) {
             assert mServiceBound;
             synchronized (mBinderLock) {
                 if (mBindToCallerCheck && mBoundCallingPid == 0) {
@@ -119,7 +123,7 @@ public class ChildProcessServiceImpl {
 
             pidCallback.call(Process.myPid());
             processConnectionBundle(args, callbacks);
-        }
+        }}
 
         @Override
         public void crashIntentionallyForTesting() {
@@ -144,6 +148,7 @@ public class ChildProcessServiceImpl {
 
     // The ClassLoader for the host context.
     private ClassLoader mHostClassLoader;
+    private Context mHostContext;
 
     /**
      * Loads Chrome's native libraries and initializes a ChildProcessServiceImpl.
@@ -152,7 +157,9 @@ public class ChildProcessServiceImpl {
      */
     @SuppressFBWarnings("ST_WRITE_TO_STATIC_FROM_INSTANCE_METHOD") // For sCreateCalled check.
     public void create(final Context context, final Context hostContext) {
+    try (TraceEvent te = TraceEvent.scoped("ChildProcessServiceImpl.create")) {
         mHostClassLoader = hostContext.getClassLoader();
+        mHostContext = hostContext;
         Log.i(TAG, "Creating new ChildProcessService pid=%d", Process.myPid());
         if (sCreateCalled) {
             throw new RuntimeException("Illegal child process reuse.");
@@ -168,6 +175,7 @@ public class ChildProcessServiceImpl {
             @Override
             @SuppressFBWarnings("DM_EXIT")
             public void run() {
+            try (TraceEvent te = TraceEvent.scoped("ChildProcessServiceImpl:MainThread")) {
                 try {
                     // CommandLine must be initialized before everything else.
                     synchronized (mMainThread) {
@@ -233,13 +241,14 @@ public class ChildProcessServiceImpl {
                 } catch (InterruptedException e) {
                     Log.w(TAG, "%s startup failed: %s", MAIN_THREAD_NAME, e);
                 }
-            }
+            }}
         }, MAIN_THREAD_NAME);
         mMainThread.start();
-    }
+    }}
 
     @SuppressFBWarnings("DM_EXIT")
     public void destroy() {
+    try (TraceEvent te = TraceEvent.scoped("ChildProcessServiceImpl.destroy")) {
         Log.i(TAG, "Destroying ChildProcessService pid=%d", Process.myPid());
         if (mActivitySemaphore.tryAcquire()) {
             // TODO(crbug.com/457406): This is a bit hacky, but there is no known better solution
@@ -261,7 +270,7 @@ public class ChildProcessServiceImpl {
             }
         }
         mDelegate.onDestroy();
-    }
+    }}
 
     /*
      * Returns the communication channel to the service. Note that even if multiple clients were to
@@ -275,14 +284,16 @@ public class ChildProcessServiceImpl {
      * @return the binder used by the client to setup the connection.
      */
     public IBinder bind(Intent intent, int authorizedCallerUid) {
+    try (TraceEvent te = TraceEvent.scoped("ChildProcessServiceImpl.bind")) {
         assert !mServiceBound;
         mAuthorizedCallerUid = authorizedCallerUid;
         mBindToCallerCheck =
                 intent.getBooleanExtra(ChildProcessConstants.EXTRA_BIND_TO_CALLER, false);
         mServiceBound = true;
         mDelegate.onServiceBound(intent);
+        mDelegate.preloadNativeLibrary(mHostContext);
         return mBinder;
-    }
+    }}
 
     private void processConnectionBundle(Bundle bundle, List<IBinder> clientInterfaces) {
         // Required to unparcel FileDescriptorInfo.
