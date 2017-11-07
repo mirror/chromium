@@ -367,6 +367,10 @@ class LegacyInputRouterImplTest : public testing::Test {
         InputHostMsg_SetTouchAction(0, touch_action));
   }
 
+  void SetTouchActionFromMain(cc::TouchAction touch_action) {
+    input_router_->OnSetTouchAction(touch_action);
+  }
+
   void OnSetWhiteListedTouchAction(cc::TouchAction white_listed_touch_action,
                                    uint32_t unique_touch_event_id,
                                    InputEventAckState ack_result) {
@@ -1065,6 +1069,7 @@ TEST_F(LegacyInputRouterImplTest, TouchTypesIgnoringAck) {
 }
 
 TEST_F(LegacyInputRouterImplTest, GestureTypesIgnoringAck) {
+  SetTouchActionFromMain(cc::kTouchActionAuto);
   // We test every gesture type, ensuring that the stream of gestures is valid.
   const WebInputEvent::Type eventTypes[] = {
       WebInputEvent::kGestureTapDown,     WebInputEvent::kGestureShowPress,
@@ -1110,6 +1115,7 @@ TEST_F(LegacyInputRouterImplTest, GestureTypesIgnoringAck) {
 }
 
 TEST_F(LegacyInputRouterImplTest, MouseTypesIgnoringAck) {
+  SetTouchActionFromMain(cc::kTouchActionAuto);
   int start_type = static_cast<int>(WebInputEvent::kMouseDown);
   int end_type = static_cast<int>(WebInputEvent::kContextMenu);
   ASSERT_LT(start_type, end_type);
@@ -1139,6 +1145,7 @@ TEST_F(LegacyInputRouterImplTest, MouseTypesIgnoringAck) {
 // Guard against breaking changes to the list of ignored event ack types in
 // |WebInputEventTraits::ShouldBlockEventStream|.
 TEST_F(LegacyInputRouterImplTest, RequiredEventAckTypes) {
+  SetTouchActionFromMain(cc::kTouchActionAuto);
   const WebInputEvent::Type kRequiredEventAckTypes[] = {
       WebInputEvent::kMouseMove,
       WebInputEvent::kMouseWheel,
@@ -1159,6 +1166,7 @@ TEST_F(LegacyInputRouterImplTest, RequiredEventAckTypes) {
 }
 
 TEST_F(LegacyInputRouterImplTest, GestureTypesIgnoringAckInterleaved) {
+  SetTouchActionFromMain(cc::kTouchActionAuto);
   // Interleave a few events that do and do not ignore acks. All gesture events
   // should be dispatched immediately, but the acks will be blocked on blocking
   // events.
@@ -1230,6 +1238,7 @@ TEST_F(LegacyInputRouterImplTest, GestureTypesIgnoringAckInterleaved) {
 // Test that GestureShowPress events don't get out of order due to
 // ignoring their acks.
 TEST_F(LegacyInputRouterImplTest, GestureShowPressIsInOrder) {
+  SetTouchActionFromMain(cc::kTouchActionAuto);
   SimulateGestureEvent(WebInputEvent::kGestureScrollBegin,
                        blink::kWebGestureDeviceTouchscreen);
   SendScrollBeginAckIfNeeded(INPUT_EVENT_ACK_STATE_CONSUMED);
@@ -1401,6 +1410,7 @@ TEST_F(LegacyInputRouterImplTest,
 // first touch event for a touch sequence reaches the renderer.
 TEST_F(LegacyInputRouterImplTest, TouchActionResetBeforeEventReachesRenderer) {
   OnHasTouchEventHandlers(true);
+  SetTouchActionFromMain(cc::kTouchActionAuto);
 
   // Sequence 1.
   PressTouchPoint(1, 1);
@@ -1438,6 +1448,7 @@ TEST_F(LegacyInputRouterImplTest, TouchActionResetBeforeEventReachesRenderer) {
   SendTouchEventACK(WebInputEvent::kTouchEnd, INPUT_EVENT_ACK_STATE_CONSUMED,
                     touch_release_event_id1);
 
+  SetTouchActionFromMain(cc::kTouchActionAuto);
   // Ensure touch action has been set to auto, as a new touch sequence has
   // started.
   SendTouchEventACK(WebInputEvent::kTouchStart, INPUT_EVENT_ACK_STATE_CONSUMED,
@@ -1544,6 +1555,7 @@ TEST_F(LegacyInputRouterImplTest, TouchActionResetWhenTouchHandlerRemoved) {
   // Sequence without a touch handler. Note that in this case, the view may not
   // necessarily forward touches to the router (as no touch handler exists).
   OnHasTouchEventHandlers(false);
+  SetTouchActionFromMain(cc::kTouchActionAuto);
 
   // Ensure touch action has been set to auto, as the touch handler has been
   // removed.
@@ -1559,6 +1571,7 @@ TEST_F(LegacyInputRouterImplTest, TouchActionResetWhenTouchHandlerRemoved) {
 // Tests that async touch-moves are ack'd from the browser side.
 TEST_F(LegacyInputRouterImplTest, AsyncTouchMoveAckedImmediately) {
   OnHasTouchEventHandlers(true);
+  SetTouchActionFromMain(cc::kTouchActionAuto);
 
   PressTouchPoint(1, 1);
   uint32_t touch_press_event_id = SendTouchEvent();
@@ -2188,6 +2201,7 @@ TEST_F(LegacyInputRouterImplScaleGestureEventTest, GestureScrollUpdate) {
 }
 
 TEST_F(LegacyInputRouterImplScaleGestureEventTest, GestureScrollBegin) {
+  SetTouchActionFromMain(cc::kTouchActionAuto);
   SimulateGestureEvent(SyntheticWebGestureEventBuilder::BuildScrollBegin(
       10.f, 20.f, blink::kWebGestureDeviceTouchscreen));
   const WebGestureEvent* sent_event = GetSentWebInputEvent<WebGestureEvent>();
