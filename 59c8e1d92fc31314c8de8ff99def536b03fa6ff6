@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "2cb74e64_88c7db93",
+        "filename": "chrome/browser/resources/md_extensions/toggle_row.html",
+        "patchSetId": 1
+      },
+      "lineNbr": 39,
+      "author": {
+        "id": 1115893
+      },
+      "writtenOn": "2017-11-07T19:49:38Z",
+      "side": 1,
+      "message": "I am not aware of a :has() selector.",
+      "parentUuid": "46f9e8ae_1cbcaebe",
+      "range": {
+        "startLine": 39,
+        "startChar": 12,
+        "endLine": 39,
+        "endChar": 15
+      },
+      "revId": "59c8e1d92fc31314c8de8ff99def536b03fa6ff6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "094a39a5_d62e9557",
         "filename": "chrome/browser/resources/md_extensions/toggle_row.html",
         "patchSetId": 1
@@ -36,6 +60,30 @@
       "writtenOn": "2017-11-07T19:38:47Z",
       "side": 1,
       "message": "For some reason, this method is not being called. I need to look into this more.",
+      "range": {
+        "startLine": 53,
+        "startChar": 34,
+        "endLine": 53,
+        "endChar": 51
+      },
+      "revId": "59c8e1d92fc31314c8de8ff99def536b03fa6ff6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "fa90c9b8_2ba0466a",
+        "filename": "chrome/browser/resources/md_extensions/toggle_row.html",
+        "patchSetId": 1
+      },
+      "lineNbr": 53,
+      "author": {
+        "id": 1115893
+      },
+      "writtenOn": "2017-11-07T19:49:38Z",
+      "side": 1,
+      "message": "hasIncognitoIcon_ is a method, not a boolean property, so you would need hasIncognitoIcon_() for this to be called.\n\nStill though, I am not sure if this is the best direction to address this bug. Can we not achieve the correct tab ordering by keep passing the cr-tooltip-icon via the \u003cslot\u003e and adjusting the tabindex as necessary, see [1]?\n\nhttps://developer.mozilla.org/en-US/docs/Web/HTML/Global_attributes/tabindex",
+      "parentUuid": "094a39a5_d62e9557",
       "range": {
         "startLine": 53,
         "startChar": 34,
