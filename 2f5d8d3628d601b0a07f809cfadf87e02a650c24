@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "c1712b46_8105a998",
+        "filename": "content/common/service_worker/service_worker_container.mojom",
+        "patchSetId": 4
+      },
+      "lineNbr": 108,
+      "author": {
+        "id": 1223459
+      },
+      "writtenOn": "2017-11-07T08:53:46Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "2db20350_cc7d9c36",
+      "revId": "2f5d8d3628d601b0a07f809cfadf87e02a650c24",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "e0b8f56b_9da0e870",
         "filename": "content/common/service_worker/service_worker_container.mojom",
         "patchSetId": 4
@@ -33,6 +51,24 @@
       "revId": "2f5d8d3628d601b0a07f809cfadf87e02a650c24",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "09ea4c13_3ba8d40a",
+        "filename": "content/common/service_worker/service_worker_container.mojom",
+        "patchSetId": 4
+      },
+      "lineNbr": 109,
+      "author": {
+        "id": 1223459
+      },
+      "writtenOn": "2017-11-07T08:53:46Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "e0b8f56b_9da0e870",
+      "revId": "2f5d8d3628d601b0a07f809cfadf87e02a650c24",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -83,6 +119,30 @@
     },
     {
       "key": {
+        "uuid": "cdaf95b5_fe1d0cd8",
+        "filename": "content/renderer/service_worker/service_worker_dispatcher.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 126,
+      "author": {
+        "id": 1223459
+      },
+      "writtenOn": "2017-11-07T08:53:46Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "21a02b6c_498d5d47",
+      "range": {
+        "startLine": 126,
+        "startChar": 8,
+        "endLine": 126,
+        "endChar": 27
+      },
+      "revId": "2f5d8d3628d601b0a07f809cfadf87e02a650c24",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "01ff5d93_111d8a08",
         "filename": "content/renderer/service_worker/service_worker_provider_context.cc",
         "patchSetId": 4
@@ -106,6 +166,30 @@
     },
     {
       "key": {
+        "uuid": "b08a0313_297bb091",
+        "filename": "content/renderer/service_worker/service_worker_provider_context.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 116,
+      "author": {
+        "id": 1223459
+      },
+      "writtenOn": "2017-11-07T08:53:46Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "01ff5d93_111d8a08",
+      "range": {
+        "startLine": 116,
+        "startChar": 62,
+        "endLine": 116,
+        "endChar": 2
+      },
+      "revId": "2f5d8d3628d601b0a07f809cfadf87e02a650c24",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "149aed3e_d0670b2b",
         "filename": "content/renderer/service_worker/service_worker_provider_context.cc",
         "patchSetId": 4
@@ -120,6 +204,24 @@
       "revId": "2f5d8d3628d601b0a07f809cfadf87e02a650c24",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "86bce574_9394b275",
+        "filename": "content/renderer/service_worker/service_worker_provider_context.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 298,
+      "author": {
+        "id": 1223459
+      },
+      "writtenOn": "2017-11-07T08:53:46Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "149aed3e_d0670b2b",
+      "revId": "2f5d8d3628d601b0a07f809cfadf87e02a650c24",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -140,6 +242,24 @@
     },
     {
       "key": {
+        "uuid": "938ecaf7_28d3b50d",
+        "filename": "content/renderer/service_worker/service_worker_provider_context.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 305,
+      "author": {
+        "id": 1223459
+      },
+      "writtenOn": "2017-11-07T08:53:46Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "9f3eb8e1_10b31360",
+      "revId": "2f5d8d3628d601b0a07f809cfadf87e02a650c24",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "7e0f2f63_16500dcb",
         "filename": "content/renderer/service_worker/service_worker_provider_context.h",
         "patchSetId": 4
@@ -154,6 +274,24 @@
       "revId": "2f5d8d3628d601b0a07f809cfadf87e02a650c24",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "edaed47b_54b64fa1",
+        "filename": "content/renderer/service_worker/service_worker_provider_context.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 113,
+      "author": {
+        "id": 1223459
+      },
+      "writtenOn": "2017-11-07T08:53:46Z",
+      "side": 1,
+      "message": "Done, nice reminding, thanks.",
+      "parentUuid": "7e0f2f63_16500dcb",
+      "revId": "2f5d8d3628d601b0a07f809cfadf87e02a650c24",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -192,6 +330,30 @@
       "side": 1,
       "message": "Ahh, sorry I completely missed PostMessage. We still need to keep it. (but could we keep the pointer in WebSWProviderImpl?)",
       "parentUuid": "1d98d5c9_597aa62a",
+      "range": {
+        "startLine": 242,
+        "startChar": 6,
+        "endLine": 242,
+        "endChar": 40
+      },
+      "revId": "2f5d8d3628d601b0a07f809cfadf87e02a650c24",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "06679e3a_158a159a",
+        "filename": "content/renderer/service_worker/web_service_worker_provider_impl.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 242,
+      "author": {
+        "id": 1223459
+      },
+      "writtenOn": "2017-11-07T08:53:46Z",
+      "side": 1,
+      "message": "Thanks, we cannot ensure the lifetime of the pointer if keep it in WebSWProviderImpl, please see the comments in https://chromium-review.googlesource.com/c/chromium/src/+/648659/6/content/child/service_worker/web_service_worker_provider_impl.cc#214",
+      "parentUuid": "0a2a774f_4f28f528",
       "range": {
         "startLine": 242,
         "startChar": 6,

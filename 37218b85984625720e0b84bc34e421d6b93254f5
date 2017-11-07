@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "86b4377f_ee0699a6",
+        "filename": "content/renderer/service_worker/service_worker_dispatcher_unittest.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 21,
+      "author": {
+        "id": 1223459
+      },
+      "writtenOn": "2017-11-07T08:53:46Z",
+      "side": 0,
+      "message": "delete this line",
+      "range": {
+        "startLine": 21,
+        "startChar": 67,
+        "endLine": 21,
+        "endChar": 97
+      },
+      "revId": "37218b85984625720e0b84bc34e421d6b93254f5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
