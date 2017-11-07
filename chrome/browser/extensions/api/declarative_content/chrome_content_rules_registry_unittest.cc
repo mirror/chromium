@@ -14,7 +14,6 @@
 #include "chrome/test/base/testing_profile.h"
 #include "content/public/browser/navigation_handle.h"
 #include "content/public/browser/web_contents.h"
-#include "content/public/common/frame_navigate_params.h"
 #include "content/public/test/test_web_contents_factory.h"
 #include "extensions/common/extension.h"
 #include "testing/gtest/include/gtest/gtest.h"

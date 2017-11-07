@@ -5175,8 +5175,7 @@ void RenderFrameImpl::SendDidCommitProvisionalLoad(
     high_media_engagement_origin_ = url::Origin();
   }
 
-  std::unique_ptr<FrameHostMsg_DidCommitProvisionalLoad_Params> params =
-      std::make_unique<FrameHostMsg_DidCommitProvisionalLoad_Params>();
+  auto params = mojom::DidCommitProvisionalLoadParams::New();
   params->http_status_code = response.HttpStatusCode();
   params->url_is_unreachable = document_loader->HasUnreachableURL();
   params->method = "GET";

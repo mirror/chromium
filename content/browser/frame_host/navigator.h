@@ -15,7 +15,6 @@
 #include "ui/base/window_open_disposition.h"
 
 class GURL;
-struct FrameHostMsg_DidCommitProvisionalLoad_Params;
 struct FrameHostMsg_DidFailProvisionalLoadWithError_Params;
 
 namespace base {
@@ -31,6 +30,10 @@ class RenderFrameHostImpl;
 class ResourceRequestBody;
 struct BeginNavigationParams;
 struct CommonNavigationParams;
+
+namespace mojom {
+class DidCommitProvisionalLoadParams;
+}
 
 // Implementations of this interface are responsible for performing navigations
 // in a node of the FrameTree. Its lifetime is bound to all FrameTreeNode
@@ -77,7 +80,7 @@ class CONTENT_EXPORT Navigator : public base::RefCounted<Navigator> {
   // not attempt to access the RenderFrameHost's NavigationsHandle.
   virtual void DidNavigate(
       RenderFrameHostImpl* render_frame_host,
-      const FrameHostMsg_DidCommitProvisionalLoad_Params& params,
+      const mojom::DidCommitProvisionalLoadParams& params,
       std::unique_ptr<NavigationHandleImpl> navigation_handle) {}
 
   // Called by the NavigationController to cause the Navigator to navigate

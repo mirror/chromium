@@ -35,8 +35,6 @@ namespace net {
 class SSLInfo;
 }  // namespace net
 
-struct FrameHostMsg_DidCommitProvisionalLoad_Params;
-
 namespace content {
 
 class AppCacheNavigationHandle;
@@ -46,6 +44,10 @@ class NavigatorDelegate;
 class ResourceRequestBody;
 class ServiceWorkerContextWrapper;
 class ServiceWorkerNavigationHandle;
+
+namespace mojom {
+class DidCommitProvisionalLoadParams;
+}
 
 // This class keeps track of a single navigation. It is created upon receipt of
 // a DidStartProvisionalLoad IPC in a RenderFrameHost. The RenderFrameHost owns
@@ -346,13 +348,12 @@ class CONTENT_EXPORT NavigationHandleImpl : public NavigationHandle {
   // NavigationEntry is current.
   // |did_replace_entry| is true if the committed entry has replaced the
   // existing one. A non-user initiated redirect causes such replacement.
-  void DidCommitNavigation(
-      const FrameHostMsg_DidCommitProvisionalLoad_Params& params,
-      bool navigation_entry_committed,
-      bool did_replace_entry,
-      const GURL& previous_url,
-      NavigationType navigation_type,
-      RenderFrameHostImpl* render_frame_host);
+  void DidCommitNavigation(const mojom::DidCommitProvisionalLoadParams& params,
+                           bool navigation_entry_committed,
+                           bool did_replace_entry,
+                           const GURL& previous_url,
+                           NavigationType navigation_type,
+                           RenderFrameHostImpl* render_frame_host);
 
   // Called during commit. Takes ownership of the embedder's NavigationData
   // instance. This NavigationData may have been cloned prior to being added

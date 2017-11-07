@@ -418,37 +418,37 @@ void NavigationSimulator::Commit() {
   RenderFrameHostImpl* previous_rfh =
       render_frame_host_->frame_tree_node()->current_frame_host();
 
-  FrameHostMsg_DidCommitProvisionalLoad_Params params;
-  params.nav_entry_id = handle_->pending_nav_entry_id();
-  params.url = navigation_url_;
-  params.origin = url::Origin::Create(navigation_url_);
-  params.referrer = referrer_;
-  params.transition = transition_;
-  params.should_update_history = true;
-  params.did_create_new_entry =
+  auto params = mojom::DidCommitProvisionalLoadParams::New();
+  params->nav_entry_id = handle_->pending_nav_entry_id();
+  params->url = navigation_url_;
+  params->origin = url::Origin::Create(navigation_url_);
+  params->referrer = referrer_;
+  params->transition = transition_;
+  params->should_update_history = true;
+  params->did_create_new_entry =
       !ui::PageTransitionCoreTypeIs(transition_,
                                     ui::PAGE_TRANSITION_AUTO_SUBFRAME) &&
       reload_type_ == ReloadType::NONE;
-  params.gesture =
+  params->gesture =
       has_user_gesture_ ? NavigationGestureUser : NavigationGestureAuto;
-  params.contents_mime_type = "text/html";
-  params.method = "GET";
-  params.http_status_code = 200;
-  params.socket_address = socket_address_;
-  params.history_list_was_cleared = false;
-  params.original_request_url = navigation_url_;
-  params.was_within_same_document = same_document_;
+  params->contents_mime_type = "text/html";
+  params->method = "GET";
+  params->http_status_code = 200;
+  params->socket_address = socket_address_;
+  params->history_list_was_cleared = false;
+  params->original_request_url = navigation_url_;
+  params->was_within_same_document = same_document_;
 
   // Simulate Blink assigning an item and document sequence number to the
   // navigation.
-  params.item_sequence_number = base::Time::Now().ToDoubleT() * 1000000;
-  params.document_sequence_number = params.item_sequence_number + 1;
+  params->item_sequence_number = base::Time::Now().ToDoubleT() * 1000000;
+  params->document_sequence_number = params->item_sequence_number + 1;
 
-  params.page_state = PageState::CreateForTestingWithSequenceNumbers(
-      navigation_url_, params.item_sequence_number,
-      params.document_sequence_number);
+  params->page_state = PageState::CreateForTestingWithSequenceNumbers(
+      navigation_url_, params->item_sequence_number,
+      params->document_sequence_number);
 
-  render_frame_host_->SendNavigateWithParams(&params);
+  render_frame_host_->SendNavigateWithParams(std::move(params));
 
   // Simulate the UnloadACK in the old RenderFrameHost if it was swapped out at
   // commit time.
@@ -542,28 +542,28 @@ void NavigationSimulator::CommitErrorPage() {
   render_frame_host_->OnMessageReceived(FrameHostMsg_DidStartProvisionalLoad(
       render_frame_host_->GetRoutingID(), error_url, std::vector<GURL>(),
       base::TimeTicks::Now()));
-  FrameHostMsg_DidCommitProvisionalLoad_Params params;
-  params.nav_entry_id = handle_->pending_nav_entry_id();
-  params.did_create_new_entry =
+  auto params = mojom::DidCommitProvisionalLoadParams::New();
+  params->nav_entry_id = handle_->pending_nav_entry_id();
+  params->did_create_new_entry =
       !ui::PageTransitionCoreTypeIs(transition_,
                                     ui::PAGE_TRANSITION_AUTO_SUBFRAME) &&
       reload_type_ == ReloadType::NONE;
-  params.url = navigation_url_;
-  params.referrer = referrer_;
-  params.transition = transition_;
-  params.was_within_same_document = false;
-  params.url_is_unreachable = true;
+  params->url = navigation_url_;
+  params->referrer = referrer_;
+  params->transition = transition_;
+  params->was_within_same_document = false;
+  params->url_is_unreachable = true;
 
   // Simulate Blink assigning an item and document sequence number to the
   // navigation.
-  params.item_sequence_number = base::Time::Now().ToDoubleT() * 1000000;
-  params.document_sequence_number = params.item_sequence_number + 1;
+  params->item_sequence_number = base::Time::Now().ToDoubleT() * 1000000;
+  params->document_sequence_number = params->item_sequence_number + 1;
 
-  params.page_state = PageState::CreateForTestingWithSequenceNumbers(
-      navigation_url_, params.item_sequence_number,
-      params.document_sequence_number);
+  params->page_state = PageState::CreateForTestingWithSequenceNumbers(
+      navigation_url_, params->item_sequence_number,
+      params->document_sequence_number);
 
-  render_frame_host_->SendNavigateWithParams(&params);
+  render_frame_host_->SendNavigateWithParams(std::move(params));
 
   // Simulate the UnloadACK in the old RenderFrameHost if it was swapped out at
   // commit time.
@@ -590,27 +590,27 @@ void NavigationSimulator::CommitSameDocument() {
   render_frame_host_->OnMessageReceived(
       FrameHostMsg_DidStartLoading(render_frame_host_->GetRoutingID(), false));
 
-  FrameHostMsg_DidCommitProvisionalLoad_Params params;
-  params.nav_entry_id = 0;
-  params.url = navigation_url_;
-  params.origin = url::Origin::Create(navigation_url_);
-  params.referrer = referrer_;
-  params.transition = transition_;
-  params.should_update_history = true;
-  params.did_create_new_entry = false;
-  params.gesture =
+  auto params = mojom::DidCommitProvisionalLoadParams::New();
+  params->nav_entry_id = 0;
+  params->url = navigation_url_;
+  params->origin = url::Origin::Create(navigation_url_);
+  params->referrer = referrer_;
+  params->transition = transition_;
+  params->should_update_history = true;
+  params->did_create_new_entry = false;
+  params->gesture =
       has_user_gesture_ ? NavigationGestureUser : NavigationGestureAuto;
-  params.contents_mime_type = "text/html";
-  params.method = "GET";
-  params.http_status_code = 200;
-  params.socket_address = socket_address_;
-  params.history_list_was_cleared = false;
-  params.original_request_url = navigation_url_;
-  params.was_within_same_document = true;
-  params.page_state =
+  params->contents_mime_type = "text/html";
+  params->method = "GET";
+  params->http_status_code = 200;
+  params->socket_address = socket_address_;
+  params->history_list_was_cleared = false;
+  params->original_request_url = navigation_url_;
+  params->was_within_same_document = true;
+  params->page_state =
       PageState::CreateForTesting(navigation_url_, false, nullptr, nullptr);
 
-  render_frame_host_->SendNavigateWithParams(&params);
+  render_frame_host_->SendNavigateWithParams(std::move(params));
 
   state_ = FINISHED;
 

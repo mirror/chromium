@@ -5,6 +5,7 @@
 #include "chrome/browser/plugins/pdf_iframe_navigation_throttle.h"
 
 #include "base/feature_list.h"
+#include "base/strings/stringprintf.h"
 #include "chrome/common/chrome_content_client.h"
 #include "chrome/common/chrome_features.h"
 #include "chrome/common/pdf_uma.h"

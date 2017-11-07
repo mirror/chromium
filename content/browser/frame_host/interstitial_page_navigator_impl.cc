@@ -53,7 +53,7 @@ void InterstitialPageNavigatorImpl::DidStartProvisionalLoad(
 
 void InterstitialPageNavigatorImpl::DidNavigate(
     RenderFrameHostImpl* render_frame_host,
-    const FrameHostMsg_DidCommitProvisionalLoad_Params& input_params,
+    const mojom::DidCommitProvisionalLoadParams& input_params,
     std::unique_ptr<NavigationHandleImpl> navigation_handle) {
   // Do not proceed if the interstitial itself has been disabled.
   if (!enabled_)

@@ -83,7 +83,6 @@ using content::BrowserThread;
 
 namespace content {
 struct LoadCommittedDetails;
-struct FrameNavigateParams;
 }
 
 namespace {

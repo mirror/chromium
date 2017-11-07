@@ -502,7 +502,7 @@ void InterstitialPageImpl::RenderViewTerminated(
 
 void InterstitialPageImpl::DidNavigate(
     RenderViewHost* render_view_host,
-    const FrameHostMsg_DidCommitProvisionalLoad_Params& params) {
+    const mojom::DidCommitProvisionalLoadParams& params) {
   // A fast user could have navigated away from the page that triggered the
   // interstitial while the interstitial was loading, that would have disabled
   // us. In that case we can dismiss ourselves.

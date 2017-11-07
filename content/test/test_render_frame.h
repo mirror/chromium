@@ -54,8 +54,7 @@ class TestRenderFrame : public RenderFrameImpl {
   blink::WebNavigationPolicy DecidePolicyForNavigation(
       const blink::WebFrameClient::NavigationPolicyInfo& info) override;
 
-  std::unique_ptr<FrameHostMsg_DidCommitProvisionalLoad_Params>
-  TakeLastCommitParams();
+  mojom::DidCommitProvisionalLoadParamsPtr TakeLastCommitParams();
 
  private:
   explicit TestRenderFrame(RenderFrameImpl::CreateParams params);

@@ -39,11 +39,12 @@
 
 namespace content {
 
-void InitNavigateParams(FrameHostMsg_DidCommitProvisionalLoad_Params* params,
-                        int nav_entry_id,
-                        bool did_create_new_entry,
-                        const GURL& url,
-                        ui::PageTransition transition) {
+mojom::DidCommitProvisionalLoadParamsPtr InitNavigateParams(
+    int nav_entry_id,
+    bool did_create_new_entry,
+    const GURL& url,
+    ui::PageTransition transition) {
+  auto params = mojom::DidCommitProvisionalLoadParams::New();
   params->nav_entry_id = nav_entry_id;
   params->url = url;
   params->origin = url::Origin::Create(url);
@@ -58,6 +59,7 @@ void InitNavigateParams(FrameHostMsg_DidCommitProvisionalLoad_Params* params,
   params->was_within_same_document = false;
   params->method = "GET";
   params->page_state = PageState::CreateFromURL(url);
+  return params;
 }
 
 TestRenderWidgetHostView::TestRenderWidgetHostView(RenderWidgetHost* rwh)

@@ -798,7 +798,7 @@ bool NavigationControllerImpl::PendingEntryMatchesHandle(
 
 bool NavigationControllerImpl::RendererDidNavigate(
     RenderFrameHostImpl* rfh,
-    const FrameHostMsg_DidCommitProvisionalLoad_Params& params,
+    const mojom::DidCommitProvisionalLoadParams& params,
     LoadCommittedDetails* details,
     bool is_navigation_within_page,
     NavigationHandleImpl* navigation_handle) {
@@ -978,7 +978,7 @@ bool NavigationControllerImpl::RendererDidNavigate(
 
 NavigationType NavigationControllerImpl::ClassifyNavigation(
     RenderFrameHostImpl* rfh,
-    const FrameHostMsg_DidCommitProvisionalLoad_Params& params) const {
+    const mojom::DidCommitProvisionalLoadParams& params) const {
   if (params.did_create_new_entry) {
     // A new entry. We may or may not have a pending entry for the page, and
     // this may or may not be the main frame.
@@ -1098,7 +1098,7 @@ NavigationType NavigationControllerImpl::ClassifyNavigation(
 
 void NavigationControllerImpl::RendererDidNavigateToNewPage(
     RenderFrameHostImpl* rfh,
-    const FrameHostMsg_DidCommitProvisionalLoad_Params& params,
+    const mojom::DidCommitProvisionalLoadParams& params,
     bool is_same_document,
     bool replace_entry,
     NavigationHandleImpl* handle) {
@@ -1248,7 +1248,7 @@ void NavigationControllerImpl::RendererDidNavigateToNewPage(
 
 void NavigationControllerImpl::RendererDidNavigateToExistingPage(
     RenderFrameHostImpl* rfh,
-    const FrameHostMsg_DidCommitProvisionalLoad_Params& params,
+    const mojom::DidCommitProvisionalLoadParams& params,
     bool is_same_document,
     bool was_restored,
     NavigationHandleImpl* handle) {
@@ -1411,7 +1411,7 @@ void NavigationControllerImpl::RendererDidNavigateToExistingPage(
 
 void NavigationControllerImpl::RendererDidNavigateToSamePage(
     RenderFrameHostImpl* rfh,
-    const FrameHostMsg_DidCommitProvisionalLoad_Params& params,
+    const mojom::DidCommitProvisionalLoadParams& params,
     NavigationHandleImpl* handle) {
   // This classification says that we have a pending entry that's the same as
   // the last committed entry. This entry is guaranteed to exist by
@@ -1461,7 +1461,7 @@ void NavigationControllerImpl::RendererDidNavigateToSamePage(
 
 void NavigationControllerImpl::RendererDidNavigateNewSubframe(
     RenderFrameHostImpl* rfh,
-    const FrameHostMsg_DidCommitProvisionalLoad_Params& params,
+    const mojom::DidCommitProvisionalLoadParams& params,
     bool is_same_document,
     bool replace_entry) {
   DCHECK(ui::PageTransitionCoreTypeIs(params.transition,
@@ -1496,7 +1496,7 @@ void NavigationControllerImpl::RendererDidNavigateNewSubframe(
 
 bool NavigationControllerImpl::RendererDidNavigateAutoSubframe(
     RenderFrameHostImpl* rfh,
-    const FrameHostMsg_DidCommitProvisionalLoad_Params& params) {
+    const mojom::DidCommitProvisionalLoadParams& params) {
   DCHECK(ui::PageTransitionCoreTypeIs(params.transition,
                                       ui::PAGE_TRANSITION_AUTO_SUBFRAME));
 

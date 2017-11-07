@@ -1185,9 +1185,8 @@ TEST_F(NavigatorTestWithBrowserSideNavigation,
 }
 
 namespace {
-void SetWithinSameDocument(
-    const GURL& url,
-    FrameHostMsg_DidCommitProvisionalLoad_Params* params) {
+void SetWithinSameDocument(const GURL& url,
+                           mojom::DidCommitProvisionalLoadParams* params) {
   params->was_within_same_document = true;
   params->url = url;
   params->origin = url::Origin::Create(url);
@@ -1196,7 +1195,7 @@ void SetWithinSameDocument(
 
 // A renderer process might try and claim that a cross site navigation was
 // within the same document by setting was_within_same_document = true in
-// FrameHostMsg_DidCommitProvisionalLoad_Params. Such case should be detected on
+// mojom::DidCommitProvisionalLoadParams. Such case should be detected on
 // the browser side and the renderer process should be killed.
 TEST_F(NavigatorTestWithBrowserSideNavigation, CrossSiteClaimWithinPage) {
   const GURL kUrl1("http://www.chromium.org/");
@@ -1340,10 +1339,9 @@ TEST_F(NavigatorTestWithBrowserSideNavigation, FeaturePolicyNewChild) {
   TestRenderFrameHost* subframe_rfh =
       contents()->GetMainFrame()->AppendChild("child");
   // Simulate the navigation triggered by inserting a child frame into a page.
-  FrameHostMsg_DidCommitProvisionalLoad_Params params;
-  InitNavigateParams(&params, 1, false, kUrl2,
-                     ui::PAGE_TRANSITION_AUTO_SUBFRAME);
-  subframe_rfh->SendNavigateWithParams(&params);
+  auto params =
+      InitNavigateParams(1, false, kUrl2, ui::PAGE_TRANSITION_AUTO_SUBFRAME);
+  subframe_rfh->SendNavigateWithParams(std::move(params));
 
   FeaturePolicy* subframe_feature_policy = subframe_rfh->feature_policy();
   ASSERT_TRUE(subframe_feature_policy);

@@ -151,10 +151,9 @@ class TestInterstitialPage : public InterstitialPageImpl {
   void TestDidNavigate(int nav_entry_id,
                        bool did_create_new_entry,
                        const GURL& url) {
-    FrameHostMsg_DidCommitProvisionalLoad_Params params;
-    InitNavigateParams(&params, nav_entry_id, did_create_new_entry,
-                       url, ui::PAGE_TRANSITION_TYPED);
-    DidNavigate(GetMainFrame()->GetRenderViewHost(), params);
+    auto params = InitNavigateParams(nav_entry_id, did_create_new_entry, url,
+                                     ui::PAGE_TRANSITION_TYPED);
+    DidNavigate(GetMainFrame()->GetRenderViewHost(), *params);
   }
 
   void TestRenderViewTerminated(base::TerminationStatus status,
@@ -369,11 +368,10 @@ TEST_F(WebContentsImplTest, UpdateTitle) {
   cont.LoadURL(GURL(url::kAboutBlankURL), Referrer(), ui::PAGE_TRANSITION_TYPED,
                std::string());
 
-  FrameHostMsg_DidCommitProvisionalLoad_Params params;
-  InitNavigateParams(&params, 0, true, GURL(url::kAboutBlankURL),
-                     ui::PAGE_TRANSITION_TYPED);
+  auto params = InitNavigateParams(0, true, GURL(url::kAboutBlankURL),
+                                   ui::PAGE_TRANSITION_TYPED);
 
-  main_test_rfh()->SendNavigateWithParams(&params);
+  main_test_rfh()->SendNavigateWithParams(std::move(params));
 
   EXPECT_TRUE(contents()->IsWaitingForResponse());
   contents()->UpdateTitle(main_test_rfh(),
@@ -443,15 +441,14 @@ TEST_F(WebContentsImplTest, DirectNavigationToViewSourceWebUI) {
   EXPECT_TRUE(process()->sink().GetFirstMessageMatching(
       FrameMsg_EnableViewSourceMode::ID));
 
-  FrameHostMsg_DidCommitProvisionalLoad_Params params;
-  InitNavigateParams(&params, entry_id, true, kRewrittenURL,
-                     ui::PAGE_TRANSITION_TYPED);
+  auto params = InitNavigateParams(entry_id, true, kRewrittenURL,
+                                   ui::PAGE_TRANSITION_TYPED);
   main_test_rfh()->PrepareForCommit();
   main_test_rfh()->OnMessageReceived(
       FrameHostMsg_DidStartProvisionalLoad(1, kRewrittenURL,
                                            std::vector<GURL>(),
                                            base::TimeTicks::Now()));
-  main_test_rfh()->SendNavigateWithParams(&params);
+  main_test_rfh()->SendNavigateWithParams(std::move(params));
 
   // This is the virtual URL.
   EXPECT_EQ(base::ASCIIToUTF16("view-source:chrome://blah"),
@@ -1355,7 +1352,7 @@ TEST_F(WebContentsImplTest, CrossSiteNavigationNotPreemptedByFrame) {
 }
 
 namespace {
-void SetAsNonUserGesture(FrameHostMsg_DidCommitProvisionalLoad_Params* params) {
+void SetAsNonUserGesture(mojom::DidCommitProvisionalLoadParams* params) {
   params->gesture = NavigationGestureAuto;
 }
 }

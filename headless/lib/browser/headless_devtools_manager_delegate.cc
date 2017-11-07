@@ -10,6 +10,7 @@
 #include "base/base64.h"
 #include "base/command_line.h"
 #include "base/json/json_writer.h"
+#include "base/strings/stringprintf.h"
 #include "build/build_config.h"
 #include "cc/base/switches.h"
 #include "components/viz/common/frame_sinks/begin_frame_args.h"

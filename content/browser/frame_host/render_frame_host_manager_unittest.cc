@@ -1180,19 +1180,19 @@ TEST_F(RenderFrameHostManagerTest, PageDoesBackAndReload) {
             contents()->GetPendingMainFrame()->GetRenderViewHost());
 
   // Before that RFH has committed, the evil page reloads itself.
-  FrameHostMsg_DidCommitProvisionalLoad_Params params;
-  params.nav_entry_id = 0;
-  params.did_create_new_entry = false;
-  params.url = kUrl2;
-  params.transition = ui::PAGE_TRANSITION_CLIENT_REDIRECT;
-  params.should_update_history = false;
-  params.gesture = NavigationGestureAuto;
-  params.was_within_same_document = false;
-  params.method = "GET";
-  params.page_state = PageState::CreateFromURL(kUrl2);
+  auto params = mojom::DidCommitProvisionalLoadParams::New();
+  params->nav_entry_id = 0;
+  params->did_create_new_entry = false;
+  params->url = kUrl2;
+  params->transition = ui::PAGE_TRANSITION_CLIENT_REDIRECT;
+  params->should_update_history = false;
+  params->gesture = NavigationGestureAuto;
+  params->was_within_same_document = false;
+  params->method = "GET";
+  params->page_state = PageState::CreateFromURL(kUrl2);
 
   evil_rfh->SimulateNavigationStart(kUrl2);
-  evil_rfh->SendNavigateWithParams(&params);
+  evil_rfh->SendNavigateWithParams(params.Clone());
   evil_rfh->SimulateNavigationStop();
 
   // That should NOT have cancelled the pending RFH, because the reload did
@@ -1215,9 +1215,9 @@ TEST_F(RenderFrameHostManagerTest, PageDoesBackAndReload) {
   EXPECT_EQ(kUrl2, entry->GetURL());
 
   // Now do the same but as a user gesture.
-  params.gesture = NavigationGestureUser;
+  params->gesture = NavigationGestureUser;
   evil_rfh->SimulateNavigationStart(kUrl2);
-  evil_rfh->SendNavigateWithParams(&params);
+  evil_rfh->SendNavigateWithParams(std::move(params));
   evil_rfh->SimulateNavigationStop();
 
   // User navigation should have cancelled the pending RFH.
@@ -2775,15 +2775,15 @@ TEST_F(RenderFrameHostManagerTest, CanCommitOrigin) {
       kUrlBar, Referrer(), ui::PAGE_TRANSITION_TYPED, std::string());
   main_test_rfh()->PrepareForCommit();
 
-  FrameHostMsg_DidCommitProvisionalLoad_Params params;
-  params.nav_entry_id = 0;
-  params.did_create_new_entry = false;
-  params.transition = ui::PAGE_TRANSITION_LINK;
-  params.should_update_history = false;
-  params.gesture = NavigationGestureAuto;
-  params.was_within_same_document = false;
-  params.method = "GET";
-  params.page_state = PageState::CreateFromURL(kUrlBar);
+  auto params = mojom::DidCommitProvisionalLoadParams::New();
+  params->nav_entry_id = 0;
+  params->did_create_new_entry = false;
+  params->transition = ui::PAGE_TRANSITION_LINK;
+  params->should_update_history = false;
+  params->gesture = NavigationGestureAuto;
+  params->was_within_same_document = false;
+  params->method = "GET";
+  params->page_state = PageState::CreateFromURL(kUrlBar);
 
   struct TestCase {
     const char* const url;
@@ -2809,14 +2809,14 @@ TEST_F(RenderFrameHostManagerTest, CanCommitOrigin) {
   };
 
   for (const auto& test_case : cases) {
-    params.url = GURL(test_case.url);
-    params.origin = url::Origin::Create(GURL(test_case.origin));
+    params->url = GURL(test_case.url);
+    params->origin = url::Origin::Create(GURL(test_case.origin));
 
     int expected_bad_msg_count = process()->bad_msg_count();
     if (test_case.mismatch)
       expected_bad_msg_count++;
 
-    main_test_rfh()->SendNavigateWithParams(&params);
+    main_test_rfh()->SendNavigateWithParams(std::move(params));
 
     EXPECT_EQ(expected_bad_msg_count, process()->bad_msg_count())
       << " url:" << test_case.url
@@ -3085,18 +3085,18 @@ TEST_F(RenderFrameHostManagerTestWithSiteIsolation,
   // Check that the flag for the parent's proxy to the child is reset
   // when the child navigates.
   main_test_rfh()->GetProcess()->sink().ClearMessages();
-  FrameHostMsg_DidCommitProvisionalLoad_Params commit_params;
-  commit_params.nav_entry_id = 0;
-  commit_params.did_create_new_entry = false;
-  commit_params.url = kUrl3;
-  commit_params.transition = ui::PAGE_TRANSITION_AUTO_SUBFRAME;
-  commit_params.should_update_history = false;
-  commit_params.gesture = NavigationGestureAuto;
-  commit_params.was_within_same_document = false;
-  commit_params.method = "GET";
-  commit_params.page_state = PageState::CreateFromURL(kUrl3);
-  commit_params.insecure_request_policy = blink::kLeaveInsecureRequestsAlone;
-  child_host->SendNavigateWithParams(&commit_params);
+  auto commit_params = mojom::DidCommitProvisionalLoadParams::New();
+  commit_params->nav_entry_id = 0;
+  commit_params->did_create_new_entry = false;
+  commit_params->url = kUrl3;
+  commit_params->transition = ui::PAGE_TRANSITION_AUTO_SUBFRAME;
+  commit_params->should_update_history = false;
+  commit_params->gesture = NavigationGestureAuto;
+  commit_params->was_within_same_document = false;
+  commit_params->method = "GET";
+  commit_params->page_state = PageState::CreateFromURL(kUrl3);
+  commit_params->insecure_request_policy = blink::kLeaveInsecureRequestsAlone;
+  child_host->SendNavigateWithParams(std::move(commit_params));
   EXPECT_NO_FATAL_FAILURE(CheckInsecureRequestPolicyIPC(
       main_test_rfh(), blink::kLeaveInsecureRequestsAlone,
       proxy_to_parent->GetRoutingID()));
