@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "22fe94fd_06a24ac7",
+        "filename": "chrome/browser/ssl/ssl_error_navigation_throttle_unittest.cc",
+        "patchSetId": 25
+      },
+      "lineNbr": 137,
+      "author": {
+        "id": 1121739
+      },
+      "writtenOn": "2017-11-07T03:48:59Z",
+      "side": 1,
+      "message": "nasko@: I modeled CallWillFailRequestForTesting() on similar methods, which reset complete_callback so that the deferred cancellation is never recorded.\n\nWhat do you think of exposing set_complete_callback_for_testing() in NavigationHandle() itself?\nIf that\u0027s not good, do you know a way I can check for the deferred cancellation result in this test? I can\u0027t find a parallel example in another file. :-/\n\n[1] https://cs.chromium.org/chromium/src/content/browser/frame_host/navigation_handle_impl.cc?l\u003d424\u0026rcl\u003d4d95029f8eeb98144483e383293a27f91534e73d\n[2] https://cs.chromium.org/chromium/src/content/browser/frame_host/navigation_handle_impl.h?l\u003d390\u0026rcl\u003d4d95029f8eeb98144483e383293a27f91534e73d",
+      "revId": "ca428bd3a35faec3d7ff89eebc276241205231ad",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
