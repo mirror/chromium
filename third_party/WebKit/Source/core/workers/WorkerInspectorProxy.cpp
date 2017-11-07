@@ -179,4 +179,12 @@ void WorkerInspectorProxy::Trace(blink::Visitor* visitor) {
   visitor->Trace(execution_context_);
 }
 
+GlobalScopeInspectorCreationParams::GlobalScopeInspectorCreationParams(
+    WorkerInspectorProxy::PauseOnWorkerStart pause_on_start,
+    const v8_inspector::V8Inspector::RemoteAsyncTaskId task_id,
+    const String& source_debugger_id)
+    : pause_on_start(pause_on_start),
+      task_id(task_id),
+      source_debugger_id(source_debugger_id) {}
+
 }  // namespace blink

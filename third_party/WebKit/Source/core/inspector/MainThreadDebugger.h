@@ -80,6 +80,7 @@ class CORE_EXPORT MainThreadDebugger final : public ThreadDebugger {
   void ContextCreated(ScriptState*, LocalFrame*, SecurityOrigin*);
   void ContextWillBeDestroyed(ScriptState*);
   void ExceptionThrown(ExecutionContext*, ErrorEvent*);
+  String DebuggerId(LocalFrame*);
 
  private:
   void ReportConsoleMessage(ExecutionContext*,
@@ -112,6 +113,8 @@ class CORE_EXPORT MainThreadDebugger final : public ThreadDebugger {
                                        v8::Local<v8::Object>) override;
   v8::MaybeLocal<v8::Value> memoryInfo(v8::Isolate*,
                                        v8::Local<v8::Context>) override;
+  std::unique_ptr<v8_inspector::StringBuffer> uniqueDebuggerId(
+      int context_group_id) override;
 
   static void QuerySelectorCallback(const v8::FunctionCallbackInfo<v8::Value>&);
   static void QuerySelectorAllCallback(

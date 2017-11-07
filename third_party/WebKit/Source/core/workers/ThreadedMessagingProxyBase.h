@@ -15,6 +15,7 @@
 #include "platform/heap/SelfKeepAlive.h"
 #include "platform/wtf/Forward.h"
 #include "platform/wtf/Optional.h"
+#include "v8/include/v8-inspector.h"
 
 namespace blink {
 
@@ -71,7 +72,8 @@ class CORE_EXPORT ThreadedMessagingProxyBase
   void InitializeWorkerThread(
       std::unique_ptr<GlobalScopeCreationParams>,
       const WTF::Optional<WorkerBackingThreadStartupData>&,
-      const KURL& script_url);
+      const KURL& script_url,
+      v8_inspector::V8Inspector::RemoteAsyncTaskId);
   virtual void WorkerThreadCreated();
 
   ThreadableLoadingContext* CreateThreadableLoadingContext() const;

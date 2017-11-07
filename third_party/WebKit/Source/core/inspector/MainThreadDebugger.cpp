@@ -336,6 +336,19 @@ v8::MaybeLocal<v8::Value> MainThreadDebugger::memoryInfo(
   return ToV8(MemoryInfo::Create(), context->Global(), isolate);
 }
 
+String MainThreadDebugger::DebuggerId(LocalFrame* frame) {
+  return frame ? IdentifiersFactory::FrameId(frame) : String();
+}
+
+std::unique_ptr<v8_inspector::StringBuffer>
+MainThreadDebugger::uniqueDebuggerId(int context_group_id) {
+  LocalFrame* frame = WeakIdentifierMap<LocalFrame>::Lookup(context_group_id);
+  String token = DebuggerId(frame);
+  if (token.IsEmpty())
+    return nullptr;
+  return v8_inspector::StringBuffer::create(ToV8InspectorStringView(token));
+}
+
 void MainThreadDebugger::installAdditionalCommandLineAPI(
     v8::Local<v8::Context> context,
     v8::Local<v8::Object> object) {

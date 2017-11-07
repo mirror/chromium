@@ -138,7 +138,7 @@ class DedicatedWorkerMessagingProxyForTest
         WorkerBackingThreadStartupData(
             WorkerBackingThreadStartupData::HeapLimitMode::kDefault,
             WorkerBackingThreadStartupData::AtomicsWaitMode::kAllow),
-        script_url);
+        script_url, v8_inspector::V8Inspector::kEmptyAsyncTaskId);
   }
 
   DedicatedWorkerThreadForTest* GetDedicatedWorkerThread() {

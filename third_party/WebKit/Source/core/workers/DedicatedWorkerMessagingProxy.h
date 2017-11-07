@@ -15,6 +15,7 @@
 #include "platform/wtf/Noncopyable.h"
 #include "platform/wtf/Optional.h"
 #include "platform/wtf/RefPtr.h"
+#include "v8/include/v8-inspector.h"
 
 namespace blink {
 
@@ -40,7 +41,8 @@ class CORE_EXPORT DedicatedWorkerMessagingProxy
   void StartWorkerGlobalScope(const KURL& script_url,
                               const String& user_agent,
                               const String& source_code,
-                              ReferrerPolicy);
+                              ReferrerPolicy,
+                              v8_inspector::V8Inspector::RemoteAsyncTaskId);
   void PostMessageToWorkerGlobalScope(scoped_refptr<SerializedScriptValue>,
                                       Vector<MessagePortChannel>);
 

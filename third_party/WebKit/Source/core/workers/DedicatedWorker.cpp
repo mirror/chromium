@@ -13,6 +13,7 @@
 #include "core/events/MessageEvent.h"
 #include "core/frame/UseCounter.h"
 #include "core/frame/WebLocalFrameImpl.h"
+#include "core/inspector/MainThreadDebugger.h"
 #include "core/probe/CoreProbes.h"
 #include "core/workers/DedicatedWorkerMessagingProxy.h"
 #include "core/workers/WorkerClients.h"
@@ -89,13 +90,16 @@ void DedicatedWorker::Start() {
     fetch_credentials_mode = network::mojom::FetchCredentialsMode::kInclude;
   }
 
+  v8_inspector::V8Inspector::RemoteAsyncTaskId task_id =
+      MainThreadDebugger::Instance()->RemoteAsyncTaskScheduled("Worker Created",
+                                                               String());
   script_loader_ = WorkerScriptLoader::Create();
   script_loader_->LoadAsynchronously(
       *GetExecutionContext(), script_url_, WebURLRequest::kRequestContextWorker,
       fetch_request_mode, fetch_credentials_mode,
       GetExecutionContext()->GetSecurityContext().AddressSpace(),
       WTF::Bind(&DedicatedWorker::OnResponse, WrapPersistent(this)),
-      WTF::Bind(&DedicatedWorker::OnFinished, WrapPersistent(this)));
+      WTF::Bind(&DedicatedWorker::OnFinished, WrapPersistent(this), task_id));
 }
 
 void DedicatedWorker::terminate() {
@@ -140,7 +144,8 @@ void DedicatedWorker::OnResponse() {
                                   script_loader_->Identifier());
 }
 
-void DedicatedWorker::OnFinished() {
+void DedicatedWorker::OnFinished(
+    v8_inspector::V8Inspector::RemoteAsyncTaskId task_id) {
   DCHECK(IsMainThread());
   if (script_loader_->Canceled()) {
     // Do nothing.
@@ -155,7 +160,7 @@ void DedicatedWorker::OnFinished() {
     }
     context_proxy_->StartWorkerGlobalScope(
         script_loader_->Url(), GetExecutionContext()->UserAgent(),
-        script_loader_->SourceText(), referrer_policy);
+        script_loader_->SourceText(), referrer_policy, task_id);
     probe::scriptImported(GetExecutionContext(), script_loader_->Identifier(),
                           script_loader_->SourceText());
   }

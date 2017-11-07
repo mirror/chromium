@@ -10,6 +10,7 @@
 #include "platform/heap/Handle.h"
 #include "platform/wtf/Forward.h"
 #include "platform/wtf/HashMap.h"
+#include "v8/include/v8-inspector.h"
 
 namespace blink {
 
@@ -71,6 +72,23 @@ class CORE_EXPORT WorkerInspectorProxy final
   HashMap<int, PageInspector*> page_inspectors_;
   String url_;
   String inspector_id_;
+};
+
+struct CORE_EXPORT GlobalScopeInspectorCreationParams final {
+  WTF_MAKE_NONCOPYABLE(GlobalScopeInspectorCreationParams);
+  USING_FAST_MALLOC(GlobalScopeInspectorCreationParams);
+
+ public:
+  GlobalScopeInspectorCreationParams(
+      WorkerInspectorProxy::PauseOnWorkerStart pause_on_start,
+      const v8_inspector::V8Inspector::RemoteAsyncTaskId =
+          v8_inspector::V8Inspector::kEmptyAsyncTaskId,
+      const String& source_debugger_id = String());
+  ~GlobalScopeInspectorCreationParams() = default;
+
+  WorkerInspectorProxy::PauseOnWorkerStart pause_on_start;
+  v8_inspector::V8Inspector::RemoteAsyncTaskId task_id;
+  String source_debugger_id;
 };
 
 }  // namespace blink
