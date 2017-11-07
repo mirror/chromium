@@ -475,6 +475,24 @@
     },
     {
       "key": {
+        "uuid": "0d51f6fa_8de15279",
+        "filename": "third_party/WebKit/Source/modules/cachestorage/CacheStorageError.cpp",
+        "patchSetId": 6
+      },
+      "lineNbr": 34,
+      "author": {
+        "id": 1001349
+      },
+      "writtenOn": "2017-11-07T17:42:42Z",
+      "side": 1,
+      "message": "Ah, that\u0027s fine.",
+      "parentUuid": "9b3850f8_9aac3aa8",
+      "revId": "8321beddee46533db7369e96a02f2d7f1a6d7771",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "b8d48c2f_6622796f",
         "filename": "third_party/WebKit/Source/modules/cachestorage/CacheTest.cpp",
         "patchSetId": 6
@@ -680,6 +698,24 @@
     },
     {
       "key": {
+        "uuid": "350ce243_8eeb6863",
+        "filename": "third_party/WebKit/public/platform/modules/serviceworker/service_worker_cache_storage.mojom",
+        "patchSetId": 6
+      },
+      "lineNbr": 10,
+      "author": {
+        "id": 1001349
+      },
+      "writtenOn": "2017-11-07T17:42:42Z",
+      "side": 1,
+      "message": "sgtm",
+      "parentUuid": "24e82634_976ae6cd",
+      "revId": "8321beddee46533db7369e96a02f2d7f1a6d7771",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "dd8e924a_c3841309",
         "filename": "third_party/WebKit/public/platform/modules/serviceworker/service_worker_cache_storage.mojom",
         "patchSetId": 6
@@ -709,6 +745,24 @@
       "side": 1,
       "message": "I was going to remove it, but added a TODO because UMA still shows a \"7\"\u0027s in the ServiceWorkerCache.InitBackendResult results, and I want to verify that it\u0027s coming from old versions of Chrome.",
       "parentUuid": "dd8e924a_c3841309",
+      "revId": "8321beddee46533db7369e96a02f2d7f1a6d7771",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "bb4bd209_76de9aa9",
+        "filename": "third_party/WebKit/public/platform/modules/serviceworker/service_worker_cache_storage.mojom",
+        "patchSetId": 6
+      },
+      "lineNbr": 18,
+      "author": {
+        "id": 1001349
+      },
+      "writtenOn": "2017-11-07T17:42:42Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "7e697929_2aa19d9f",
       "revId": "8321beddee46533db7369e96a02f2d7f1a6d7771",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": false
