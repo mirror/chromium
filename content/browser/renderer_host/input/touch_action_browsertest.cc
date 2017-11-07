@@ -31,6 +31,7 @@
 #include "content/public/test/test_utils.h"
 #include "content/shell/browser/shell.h"
 #include "third_party/WebKit/public/platform/WebInputEvent.h"
+#include "ui/events/event_switches.h"
 #include "ui/latency/latency_info.h"
 
 using blink::WebInputEvent;
@@ -66,6 +67,67 @@ const char kTouchActionDataURL[] =
     "  document.title='ready';"
     "</script>";
 
+const char kTouchActionNoJankURL[] =
+    "data:text/html;charset=utf-8,"
+    "<!DOCTYPE html>"
+    "<meta name='viewport' content='width=device-width'/>"
+    "<style>"
+    "html, body {"
+    "  margin: 0;"
+    "}"
+    ".box {"
+    "  position: absolute;"
+    "  top: 2px;"
+    "  left: 2px;"
+    "  height: 96px;"
+    "  width: 96px;"
+    "  border: 2px solid blue;"
+    "}"
+    ".spacer { height: 10000px; }"
+    ".ta-pany { touch-action: pan-y; }"
+    "</style>"
+    "<div class='box ta-pany'></div>"
+    "<div class=spacer></div>"
+    "<script>"
+    "  document.addEventListener('DOMContentLoaded', function() {});"
+    "  document.title='ready';"
+    "</script>";
+/*
+const char kTouchActionJankURL[] =
+    "data:text/html;charset=utf-8,"
+    "<!DOCTYPE html>"
+    "<meta name='viewport' content='width=device-width'/>"
+    "<style>"
+    "html, body {"
+    "  margin: 0;"
+    "}"
+    ".box {"
+    "  height: 96px;"
+    "  width: 96px;"
+    "  border: 2px solid blue;"
+    "}"
+    ".position1 {"
+    "  position: absolute;"
+    "  top: 2px;"
+    "  left: 2px;"
+    "}"
+    ".spacer { height: 10000px; }"
+    ".ta-pany { touch-action: pan-y; }"
+    "</style>"
+    "<div class='box position1 ta-pany'></div>"
+    "<div class=spacer></div>"
+    "<script>"
+    "  document.title='ready';"
+    "  document.addEventListener('DOMContentLoaded', function() {});"
+    "  requestAnimationFrame(function() {"
+    "    requestAnimationFrame(function() {"
+    "      var jankAmount = 2000;"
+    "      var end = (new Date()).getTime() + jankAmount;"
+    "      while ((new Date()).getTime() < end) ;"
+    "    });"
+    "  });"
+    "</script>";
+*/
 }  // namespace
 
 namespace content {
@@ -87,8 +149,8 @@ class TouchActionBrowserTest : public ContentBrowserTest {
   }
 
  protected:
-  void LoadURL() {
-    const GURL data_url(kTouchActionDataURL);
+  void LoadURL(const char* touch_action_url) {
+    const GURL data_url(touch_action_url);
     NavigateToURL(shell(), data_url);
 
     RenderWidgetHostImpl* host = GetWidgetHost();
@@ -106,13 +168,15 @@ class TouchActionBrowserTest : public ContentBrowserTest {
     frame_watcher.WaitFrames(1);
   }
 
+  base::Optional<cc::TouchAction> GetAllowedTouchAction() {
+    return GetWidgetHost()->input_router()->AllowedTouchAction();
+  }
+
   // ContentBrowserTest:
   void SetUpCommandLine(base::CommandLine* cmd) override {
     cmd->AppendSwitchASCII(switches::kTouchEventFeatureDetection,
                            switches::kTouchEventFeatureDetectionEnabled);
-    // TODO(rbyers): Remove this switch once touch-action ships.
-    // http://crbug.com/241964
-    cmd->AppendSwitch(switches::kEnableExperimentalWebPlatformFeatures);
+    cmd->AppendSwitch(switches::kCompositorTouchAction);
   }
 
   int ExecuteScriptAndExtractInt(const std::string& script) {
@@ -131,12 +195,13 @@ class TouchActionBrowserTest : public ContentBrowserTest {
   // it didn't scroll at all.
   bool DoTouchScroll(const gfx::Point& point,
                      const gfx::Vector2d& distance,
-                     bool wait_until_scrolled) {
+                     bool wait_until_scrolled,
+                     int expected_scroll_height) {
     EXPECT_EQ(0, GetScrollTop());
 
     int scrollHeight = ExecuteScriptAndExtractInt(
         "document.documentElement.scrollHeight");
-    EXPECT_EQ(10200, scrollHeight);
+    EXPECT_EQ(expected_scroll_height, scrollHeight);
 
     FrameWatcher frame_watcher(shell()->web_contents());
 
@@ -190,9 +255,10 @@ class TouchActionBrowserTest : public ContentBrowserTest {
 // Verify the test infrastructure works - we can touch-scroll the page and get a
 // touchcancel as expected.
 IN_PROC_BROWSER_TEST_F(TouchActionBrowserTest, DISABLED_DefaultAuto) {
-  LoadURL();
+  LoadURL(kTouchActionDataURL);
 
-  bool scrolled = DoTouchScroll(gfx::Point(50, 50), gfx::Vector2d(0, 45), true);
+  bool scrolled =
+      DoTouchScroll(gfx::Point(50, 50), gfx::Vector2d(0, 45), true, 10200);
   EXPECT_TRUE(scrolled);
 
   EXPECT_EQ(1, ExecuteScriptAndExtractInt("eventCounts.touchstart"));
@@ -210,10 +276,10 @@ IN_PROC_BROWSER_TEST_F(TouchActionBrowserTest, DISABLED_DefaultAuto) {
 #define MAYBE_TouchActionNone TouchActionNone
 #endif
 IN_PROC_BROWSER_TEST_F(TouchActionBrowserTest, MAYBE_TouchActionNone) {
-  LoadURL();
+  LoadURL(kTouchActionDataURL);
 
   bool scrolled =
-      DoTouchScroll(gfx::Point(50, 150), gfx::Vector2d(0, 45), false);
+      DoTouchScroll(gfx::Point(50, 150), gfx::Vector2d(0, 45), false, 10200);
   EXPECT_FALSE(scrolled);
 
   EXPECT_EQ(1, ExecuteScriptAndExtractInt("eventCounts.touchstart"));
@@ -222,4 +288,28 @@ IN_PROC_BROWSER_TEST_F(TouchActionBrowserTest, MAYBE_TouchActionNone) {
   EXPECT_EQ(0, ExecuteScriptAndExtractInt("eventCounts.touchcancel"));
 }
 
+IN_PROC_BROWSER_TEST_F(TouchActionBrowserTest, PanYAllowedMainThreadFree) {
+  LoadURL(kTouchActionNoJankURL);
+
+  bool scrolled_y =
+      DoTouchScroll(gfx::Point(50, 50), gfx::Vector2d(0, 45), false, 10000);
+  EXPECT_TRUE(scrolled_y);
+}
+
+IN_PROC_BROWSER_TEST_F(TouchActionBrowserTest, PanXNotAllowedMainThreadFree) {
+  LoadURL(kTouchActionNoJankURL);
+
+  bool scrolled_x =
+      DoTouchScroll(gfx::Point(50, 50), gfx::Vector2d(45, 0), false, 10000);
+  EXPECT_FALSE(scrolled_x);
+}
+/*
+IN_PROC_BROWSER_TEST_F(TouchActionBrowserTest, PanYAllowedMainThreadJank) {
+  LoadURL(kTouchActionJankURL);
+
+  bool scrolled_y =
+      DoTouchScroll(gfx::Point(50, 50), gfx::Vector2d(0, 45), false, 10000);
+  EXPECT_TRUE(scrolled_y);
+}
+*/
 }  // namespace content
