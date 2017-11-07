@@ -196,6 +196,24 @@
     },
     {
       "key": {
+        "uuid": "5ef24d26_51a372f0",
+        "filename": "chrome/browser/chromeos/system/timezone_resolver_manager.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 238,
+      "author": {
+        "id": 1003168
+      },
+      "writtenOn": "2017-11-07T00:36:56Z",
+      "side": 1,
+      "message": "I reverted this change, because for UI changes we need to insert if() statement in the middle. (Thus rebase of my next CL failed here.) So let\u0027s postpone styling of this method to the next CL.",
+      "parentUuid": "f3923833_640d0ebf",
+      "revId": "cc8e7873169bceda1284def2959c85439994396e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "047503ad_04f51c1b",
         "filename": "chrome/common/pref_names.cc",
         "patchSetId": 4
