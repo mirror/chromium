@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "9b13c47d_e44786d2",
+        "filename": "chrome/browser/extensions/api/tab_capture/offscreen_tab.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 208,
+      "author": {
+        "id": 1215804
+      },
+      "writtenOn": "2017-11-07T17:58:41Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "02029bf7_690928c8",
+      "range": {
+        "startLine": 207,
+        "startChar": 0,
+        "endLine": 208,
+        "endChar": 77
+      },
+      "revId": "fdff4829c550ffe2d3ca3527d29ef24f88755743",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "ead55a40_5c3783e4",
         "filename": "chrome/browser/media/router/presentation_receiver_window.cc",
         "patchSetId": 3
@@ -45,6 +69,30 @@
       "revId": "fdff4829c550ffe2d3ca3527d29ef24f88755743",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c7dadb51_fc5abcdc",
+        "filename": "chrome/browser/media/router/presentation_receiver_window.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 90,
+      "author": {
+        "id": 1215804
+      },
+      "writtenOn": "2017-11-07T17:58:41Z",
+      "side": 1,
+      "message": "That makes sense.  Done.  Should it also be a DCHECK in offscreen_tab.cc? https://cs.chromium.org/chromium/src/chrome/browser/extensions/api/tab_capture/offscreen_tab.cc?type\u003dcs\u0026q\u003dpresentation_receiver\u0026sq\u003dpackage:chromium\u0026l\u003d185",
+      "parentUuid": "ead55a40_5c3783e4",
+      "range": {
+        "startLine": 89,
+        "startChar": 0,
+        "endLine": 90,
+        "endChar": 60
+      },
+      "revId": "fdff4829c550ffe2d3ca3527d29ef24f88755743",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -71,6 +119,30 @@
     },
     {
       "key": {
+        "uuid": "a6f196e6_d1ef5b62",
+        "filename": "chrome/browser/media/router/presentation_receiver_window.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 98,
+      "author": {
+        "id": 1215804
+      },
+      "writtenOn": "2017-11-07T17:58:41Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "fd040fef_b76973da",
+      "range": {
+        "startLine": 98,
+        "startChar": 2,
+        "endLine": 98,
+        "endChar": 32
+      },
+      "revId": "fdff4829c550ffe2d3ca3527d29ef24f88755743",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "7ff6dc24_d34ce73d",
         "filename": "chrome/browser/media/router/presentation_receiver_window.cc",
         "patchSetId": 3
@@ -91,6 +163,30 @@
       "revId": "fdff4829c550ffe2d3ca3527d29ef24f88755743",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6004b769_3c74215a",
+        "filename": "chrome/browser/media/router/presentation_receiver_window.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 101,
+      "author": {
+        "id": 1215804
+      },
+      "writtenOn": "2017-11-07T17:58:41Z",
+      "side": 1,
+      "message": "This is being controlled by |bounds| in the constructor, which will be set according to which display the user chooses.",
+      "parentUuid": "7ff6dc24_d34ce73d",
+      "range": {
+        "startLine": 99,
+        "startChar": 0,
+        "endLine": 101,
+        "endChar": 38
+      },
+      "revId": "fdff4829c550ffe2d3ca3527d29ef24f88755743",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -117,6 +213,30 @@
     },
     {
       "key": {
+        "uuid": "5eda78b9_1c6cb6ff",
+        "filename": "chrome/browser/media/router/presentation_receiver_window.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 48,
+      "author": {
+        "id": 1215804
+      },
+      "writtenOn": "2017-11-07T17:58:41Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "f8a36939_47f6787b",
+      "range": {
+        "startLine": 48,
+        "startChar": 0,
+        "endLine": 48,
+        "endChar": 38
+      },
+      "revId": "fdff4829c550ffe2d3ca3527d29ef24f88755743",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "a8536cfc_1938d89f",
         "filename": "chrome/browser/profiles/profile_destroyer.cc",
         "patchSetId": 3
@@ -128,6 +248,30 @@
       "writtenOn": "2017-11-06T22:15:36Z",
       "side": 1,
       "message": "mfoltz should look at this, as he had to do quite a dance to fix the profile issue w.r.t. offscreen tabs.\n\nAlso, should the code change be in ~Browser() instead, like it is for offscreen tab profiles?\n See: https://cs.chromium.org/chromium/src/chrome/browser/ui/browser.cc?rcl\u003dfbefdb0bac773bb088f7145e24c6e582e7415aad\u0026l\u003d542",
+      "range": {
+        "startLine": 64,
+        "startChar": 0,
+        "endLine": 64,
+        "endChar": 36
+      },
+      "revId": "fdff4829c550ffe2d3ca3527d29ef24f88755743",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1ee7bcd1_fcae4478",
+        "filename": "chrome/browser/profiles/profile_destroyer.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 64,
+      "author": {
+        "id": 1215804
+      },
+      "writtenOn": "2017-11-07T17:58:41Z",
+      "side": 1,
+      "message": "mfoltz and anthonyvd can chime in, but I think it makes sense here.  Because we are using a Browser and not just a WebContents, the situation is slightly different from offscreen tabs.  Although we are deleting all uses of the profile in ~Browser, I\u0027m not sure we can simply write \"delete profile\" there, so I was leaning towards reusing the ProfileDestroyer logic.",
+      "parentUuid": "a8536cfc_1938d89f",
       "range": {
         "startLine": 64,
         "startChar": 0,
