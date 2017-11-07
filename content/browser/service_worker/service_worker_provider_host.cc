@@ -567,11 +567,18 @@ void ServiceWorkerProviderHost::PostMessageToClient(
 void ServiceWorkerProviderHost::CountFeature(uint32_t feature) {
   if (!dispatcher_host_)
     return;
-
   // CountFeature message should be sent only for controllees.
   DCHECK(IsProviderForClient());
-  Send(new ServiceWorkerMsg_CountFeature(render_thread_id_, provider_id(),
-                                         feature));
+
+  blink::mojom::WebFeature use_counter_feature =
+      static_cast<blink::mojom::WebFeature>(feature);
+  // The given feature number can be bigger than the max number of WebFeature
+  // because the feature may have been removed in a merge, or side-by-side
+  // versions of the browser are being used and this version does not yet have
+  // the feature.
+  if (use_counter_feature >= blink::mojom::WebFeature::kNumberOfFeatures)
+    return;
+  container_->CountFeature(use_counter_feature);
 }
 
 void ServiceWorkerProviderHost::AddScopedProcessReferenceToPattern(

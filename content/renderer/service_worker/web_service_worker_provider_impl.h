@@ -15,6 +15,7 @@
 #include "third_party/WebKit/public/platform/modules/serviceworker/WebServiceWorkerProvider.h"
 #include "third_party/WebKit/public/platform/modules/serviceworker/service_worker_error_type.mojom.h"
 #include "third_party/WebKit/public/platform/modules/serviceworker/service_worker_registration.mojom.h"
+#include "third_party/WebKit/public/platform/web_feature.mojom.h"
 
 namespace blink {
 class WebURL;
@@ -57,7 +58,7 @@ class CONTENT_EXPORT WebServiceWorkerProviderImpl
   // Sets the ServiceWorkerContainer#controller for this provider. It's not
   // used when this WebServiceWorkerProvider is for a service worker context.
   void SetController(blink::mojom::ServiceWorkerObjectInfoPtr info,
-                     const std::set<uint32_t>& features,
+                     const std::set<blink::mojom::WebFeature>& features,
                      bool should_notify_controller_change);
   // Posts a message to the ServiceWorkerContainer for this provider.
   // Corresponds to Client#postMessage().
@@ -65,6 +66,9 @@ class CONTENT_EXPORT WebServiceWorkerProviderImpl
       blink::mojom::ServiceWorkerObjectInfoPtr source,
       const base::string16& message,
       std::vector<mojo::ScopedMessagePipeHandle> message_pipes);
+  // Counts the number of times that features of Blink are used on real web
+  // pages.
+  void CountFeature(blink::mojom::WebFeature feature);
 
   int provider_id() const;
 

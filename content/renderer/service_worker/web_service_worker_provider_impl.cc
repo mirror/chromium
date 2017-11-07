@@ -198,7 +198,7 @@ bool WebServiceWorkerProviderImpl::ValidateScopeAndScriptURL(
 
 void WebServiceWorkerProviderImpl::SetController(
     blink::mojom::ServiceWorkerObjectInfoPtr info,
-    const std::set<uint32_t>& features,
+    const std::set<blink::mojom::WebFeature>& features,
     bool should_notify_controller_change) {
   blink::WebServiceWorkerProviderClient* provider_client =
       GetDispatcher()->GetProviderClient(context_->provider_id());
@@ -210,14 +210,10 @@ void WebServiceWorkerProviderImpl::SetController(
       GetDispatcher()->GetOrCreateServiceWorker(
           ServiceWorkerHandleReference::Create(std::move(info),
                                                thread_safe_sender_.get()));
-  for (uint32_t feature : features)
+  for (blink::mojom::WebFeature feature : features)
     provider_client->CountFeature(feature);
   provider_client->SetController(WebServiceWorkerImpl::CreateHandle(controller),
                                  should_notify_controller_change);
-}
-
-int WebServiceWorkerProviderImpl::provider_id() const {
-  return context_->provider_id();
 }
 
 void WebServiceWorkerProviderImpl::PostMessageToClient(
@@ -239,6 +235,20 @@ void WebServiceWorkerProviderImpl::PostMessageToClient(
   provider_client->DispatchMessageEvent(
       WebServiceWorkerImpl::CreateHandle(std::move(worker)),
       blink::WebString::FromUTF16(message), std::move(message_ports));
+}
+
+void WebServiceWorkerProviderImpl::CountFeature(
+    blink::mojom::WebFeature feature) {
+  blink::WebServiceWorkerProviderClient* provider_client =
+      GetDispatcher()->GetProviderClient(context_->provider_id());
+  // The document may have been destroyed so that |provider_client| is null.
+  if (!provider_client)
+    return;
+  provider_client->CountFeature(feature);
+}
+
+int WebServiceWorkerProviderImpl::provider_id() const {
+  return context_->provider_id();
 }
 
 void WebServiceWorkerProviderImpl::RemoveProviderClient() {
