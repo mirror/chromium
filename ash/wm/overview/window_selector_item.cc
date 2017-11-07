@@ -178,8 +178,15 @@ class ShieldButton : public views::Button {
         case ui::ET_GESTURE_SCROLL_UPDATE:
           listener()->HandleDragEvent(location);
           break;
-        case ui::ET_GESTURE_END:
+        case ui::ET_SCROLL_FLING_START:
+        case ui::ET_GESTURE_SCROLL_END:
           listener()->HandleReleaseEvent(location);
+          break;
+        case ui::ET_GESTURE_TAP:
+          listener()->ActivateWindow();
+          break;
+        case ui::ET_GESTURE_END:
+          listener()->ResetGesture();
           break;
         default:
           break;
@@ -624,6 +631,14 @@ void WindowSelectorItem::HandleReleaseEvent(
 
 void WindowSelectorItem::HandleDragEvent(const gfx::Point& location_in_screen) {
   window_selector_->Drag(this, location_in_screen);
+}
+
+void WindowSelectorItem::ActivateWindow() {
+  window_selector_->ActivateWindow(this);
+}
+
+void WindowSelectorItem::ResetGesture() {
+  window_selector_->ResetGesture(this);
 }
 
 gfx::Rect WindowSelectorItem::GetTargetBoundsInScreen() const {
