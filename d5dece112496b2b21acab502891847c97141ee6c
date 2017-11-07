@@ -1,0 +1,89 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "db77dbe3_4ba23977",
+        "filename": "content/browser/file_url_loader_factory.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 317,
+      "author": {
+        "id": 1002532
+      },
+      "writtenOn": "2017-11-07T23:37:36Z",
+      "side": 1,
+      "message": "nit: NOTREACHED so that we get test failures if anything does this accidentally?",
+      "revId": "d5dece112496b2b21acab502891847c97141ee6c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "eb1a9576_8e6b466b",
+        "filename": "content/browser/file_url_loader_factory.h",
+        "patchSetId": 8
+      },
+      "lineNbr": 28,
+      "author": {
+        "id": 1002532
+      },
+      "writtenOn": "2017-11-07T23:37:36Z",
+      "side": 1,
+      "message": "nit: please document",
+      "revId": "d5dece112496b2b21acab502891847c97141ee6c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5142b7c6_615ab890",
+        "filename": "content/public/browser/file_backed_url_loader.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 11,
+      "author": {
+        "id": 1002532
+      },
+      "writtenOn": "2017-11-07T23:37:36Z",
+      "side": 1,
+      "message": "nit: generally we put methods like this directly in the content/browser/file_url_loader_factory.cc file and skip the content/public/browser forwarding cc file",
+      "revId": "d5dece112496b2b21acab502891847c97141ee6c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0aae6cda_4f4dc84e",
+        "filename": "content/public/browser/file_backed_url_loader.h",
+        "patchSetId": 8
+      },
+      "lineNbr": 21,
+      "author": {
+        "id": 1002532
+      },
+      "writtenOn": "2017-11-07T23:37:36Z",
+      "side": 1,
+      "message": "(per chat) let\u0027s have caller create a resourcerequest, if possible, with the file and then we can avoid the override stuff\n\nsuper nit: almost all usage of content_export is before the return parameter (i.e. 50 vs 4 for voids).",
+      "revId": "d5dece112496b2b21acab502891847c97141ee6c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9fd677c8_fe48508d",
+        "filename": "extensions/browser/extension_protocols.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 672,
+      "author": {
+        "id": 1002532
+      },
+      "writtenOn": "2017-11-07T23:37:36Z",
+      "side": 1,
+      "message": "I\u0027m a bit worried that the calling code in RenderFrameHostImpl might end up calling here with an empty GURL() and then this code would give it the loader without checking.\n\nCan MaybeCreateExtensionSubresourceURLLoaderFactory CHECK that the url is not empty?",
+      "revId": "d5dece112496b2b21acab502891847c97141ee6c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
