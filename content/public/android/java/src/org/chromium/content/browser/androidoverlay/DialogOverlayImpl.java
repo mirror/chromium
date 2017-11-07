@@ -113,7 +113,7 @@ public class DialogOverlayImpl implements AndroidOverlay, DialogOverlayCore.Host
         // that the client calls it.
 
         // Allow surfaceDestroyed to proceed, if it's waiting.
-        mHoppingHost.onCleanup();
+        mHoppingHost.onClose();
 
         // Notify |mDialogCore| that it has been released.  This might not be called if it notifies
         // us that it's been destroyed.  We still might send it in that case if the client closes
@@ -198,7 +198,9 @@ public class DialogOverlayImpl implements AndroidOverlay, DialogOverlayCore.Host
 
         // Also clear out |mDialogCore| to prevent us from sending useless messages to it.  Note
         // that we might have already sent useless messages to it, and it should be robust against
-        // that sort of thing.
+        // that sort of thing.  Note that this guarantees that we won't post DSCore.release() in
+        // response to close(), but that's okay.  We wouldn't have any gurantee when it runs anyway.
+        // It would definitely run after onSurfaceDestroyed, though.  So, DSCore needs to handle it.
         cleanup();
 
         // Note that we don't notify |mReleasedRunnable| yet, though we could.  We wait for the
@@ -208,13 +210,13 @@ public class DialogOverlayImpl implements AndroidOverlay, DialogOverlayCore.Host
     // DialogOverlayCore.Host impl.
     // Due to threading issues, |mHoppingHost| doesn't forward this.
     @Override
-    public void waitForCleanup() {
+    public void waitForClose() {
         assert false : "Not reached";
     }
 
     // DialogOverlayCore.Host impl
     @Override
-    public void enforceCleanup() {
+    public void enforceClose() {
         // Pretend that the client closed us, even if they didn't.  It's okay if this is called more
         // than once.  The client might have already called it, or might call it later.
         close();
