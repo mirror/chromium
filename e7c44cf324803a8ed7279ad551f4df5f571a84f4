@@ -22,6 +22,30 @@
       "revId": "e7c44cf324803a8ed7279ad551f4df5f571a84f4",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "00d8a3ab_2a2ec3b6",
+        "filename": "chrome/browser/vr/ui_scene_manager.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 850,
+      "author": {
+        "id": 1000537
+      },
+      "writtenOn": "2017-11-07T23:34:39Z",
+      "side": 1,
+      "message": "Its visibility is now inherited from the backplane (I\u0027ve moved the visibility binding to the parent).",
+      "parentUuid": "2cf3c43e_2dc685a5",
+      "range": {
+        "startLine": 850,
+        "startChar": 22,
+        "endLine": 850,
+        "endChar": 26
+      },
+      "revId": "e7c44cf324803a8ed7279ad551f4df5f571a84f4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
