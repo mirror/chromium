@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "32ec9e87_e6b2b34e",
+        "filename": "ios/chrome/browser/ui/activity_services/canonical_url_getter.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 18,
+      "author": {
+        "id": 1191445
+      },
+      "writtenOn": "2017-11-07T22:34:18Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "82c5f78a_d1c482a6",
+      "range": {
+        "startLine": 18,
+        "startChar": 11,
+        "endLine": 18,
+        "endChar": 29
+      },
+      "revId": "723d3c637ab0e4f8a340d173ccfcfdde3765fa45",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "d16ea9b8_a9c903bf",
         "filename": "ios/chrome/browser/ui/activity_services/canonical_url_getter.h",
         "patchSetId": 6
@@ -72,6 +96,30 @@
     },
     {
       "key": {
+        "uuid": "7b618ba7_1ced8f0c",
+        "filename": "ios/chrome/browser/ui/activity_services/canonical_url_getter.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 20,
+      "author": {
+        "id": 1191445
+      },
+      "writtenOn": "2017-11-07T22:34:18Z",
+      "side": 1,
+      "message": "Got rid of delegate.",
+      "parentUuid": "0e6f0ee1_3ec67ac6",
+      "range": {
+        "startLine": 20,
+        "startChar": 22,
+        "endLine": 20,
+        "endChar": 38
+      },
+      "revId": "723d3c637ab0e4f8a340d173ccfcfdde3765fa45",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "8153cbf4_e7edef9b",
         "filename": "ios/chrome/browser/ui/activity_services/canonical_url_getter.h",
         "patchSetId": 6
@@ -92,6 +140,30 @@
       "revId": "723d3c637ab0e4f8a340d173ccfcfdde3765fa45",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "eb89f14d_a9bd3c66",
+        "filename": "ios/chrome/browser/ui/activity_services/canonical_url_getter.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 21,
+      "author": {
+        "id": 1191445
+      },
+      "writtenOn": "2017-11-07T22:34:18Z",
+      "side": 1,
+      "message": "Got rid of delegate.",
+      "parentUuid": "8153cbf4_e7edef9b",
+      "range": {
+        "startLine": 20,
+        "startChar": 71,
+        "endLine": 21,
+        "endChar": 6
+      },
+      "revId": "723d3c637ab0e4f8a340d173ccfcfdde3765fa45",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -118,6 +190,30 @@
     },
     {
       "key": {
+        "uuid": "33c03dbe_d5252ebb",
+        "filename": "ios/chrome/browser/ui/activity_services/canonical_url_getter.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 27,
+      "author": {
+        "id": 1191445
+      },
+      "writtenOn": "2017-11-07T22:34:18Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "2a477008_ab6e5215",
+      "range": {
+        "startLine": 26,
+        "startChar": 50,
+        "endLine": 27,
+        "endChar": 13
+      },
+      "revId": "723d3c637ab0e4f8a340d173ccfcfdde3765fa45",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "99b53277_82172d36",
         "filename": "ios/chrome/browser/ui/activity_services/canonical_url_getter.mm",
         "patchSetId": 6
@@ -138,6 +234,30 @@
       "revId": "723d3c637ab0e4f8a340d173ccfcfdde3765fa45",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1dd5bb8a_20bd623c",
+        "filename": "ios/chrome/browser/ui/activity_services/canonical_url_getter.mm",
+        "patchSetId": 6
+      },
+      "lineNbr": 21,
+      "author": {
+        "id": 1191445
+      },
+      "writtenOn": "2017-11-07T22:34:18Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "99b53277_82172d36",
+      "range": {
+        "startLine": 21,
+        "startChar": 9,
+        "endLine": 21,
+        "endChar": 17
+      },
+      "revId": "723d3c637ab0e4f8a340d173ccfcfdde3765fa45",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -164,6 +284,30 @@
     },
     {
       "key": {
+        "uuid": "a81c6dc6_33cf523b",
+        "filename": "ios/chrome/browser/ui/activity_services/canonical_url_getter.mm",
+        "patchSetId": 6
+      },
+      "lineNbr": 23,
+      "author": {
+        "id": 1191445
+      },
+      "writtenOn": "2017-11-07T22:34:18Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "cde3cc82_b7f9f0a5",
+      "range": {
+        "startLine": 23,
+        "startChar": 0,
+        "endLine": 23,
+        "endChar": 1
+      },
+      "revId": "723d3c637ab0e4f8a340d173ccfcfdde3765fa45",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "cda80a72_83f2f005",
         "filename": "ios/chrome/browser/ui/activity_services/canonical_url_getter.mm",
         "patchSetId": 6
@@ -184,6 +328,30 @@
       "revId": "723d3c637ab0e4f8a340d173ccfcfdde3765fa45",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "073ff651_72e49a3b",
+        "filename": "ios/chrome/browser/ui/activity_services/canonical_url_getter.mm",
+        "patchSetId": 6
+      },
+      "lineNbr": 30,
+      "author": {
+        "id": 1191445
+      },
+      "writtenOn": "2017-11-07T22:34:18Z",
+      "side": 1,
+      "message": "Moved to anonymous namespace c++ function. It should still stay abstracted since metrics will be collected from there.",
+      "parentUuid": "cda80a72_83f2f005",
+      "range": {
+        "startLine": 30,
+        "startChar": 8,
+        "endLine": 30,
+        "endChar": 21
+      },
+      "revId": "723d3c637ab0e4f8a340d173ccfcfdde3765fa45",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -234,6 +402,30 @@
     },
     {
       "key": {
+        "uuid": "a7f34ec7_db103679",
+        "filename": "ios/chrome/browser/ui/activity_services/canonical_url_getter.mm",
+        "patchSetId": 6
+      },
+      "lineNbr": 31,
+      "author": {
+        "id": 1191445
+      },
+      "writtenOn": "2017-11-07T22:34:18Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "45637232_7490b085",
+      "range": {
+        "startLine": 31,
+        "startChar": 22,
+        "endLine": 31,
+        "endChar": 26
+      },
+      "revId": "723d3c637ab0e4f8a340d173ccfcfdde3765fa45",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "588886ce_2c6576bc",
         "filename": "ios/chrome/browser/ui/activity_services/canonical_url_getter.mm",
         "patchSetId": 6
@@ -254,6 +446,30 @@
       "revId": "723d3c637ab0e4f8a340d173ccfcfdde3765fa45",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "87597e44_f4d5a295",
+        "filename": "ios/chrome/browser/ui/activity_services/canonical_url_getter.mm",
+        "patchSetId": 6
+      },
+      "lineNbr": 35,
+      "author": {
+        "id": 1191445
+      },
+      "writtenOn": "2017-11-07T22:34:18Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "588886ce_2c6576bc",
+      "range": {
+        "startLine": 35,
+        "startChar": 50,
+        "endLine": 35,
+        "endChar": 54
+      },
+      "revId": "723d3c637ab0e4f8a340d173ccfcfdde3765fa45",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -328,6 +544,30 @@
     },
     {
       "key": {
+        "uuid": "72345f5c_4b75c1d6",
+        "filename": "ios/chrome/browser/ui/activity_services/canonical_url_getter.mm",
+        "patchSetId": 6
+      },
+      "lineNbr": 39,
+      "author": {
+        "id": 1191445
+      },
+      "writtenOn": "2017-11-07T22:34:18Z",
+      "side": 1,
+      "message": "Verified that this is sufficient.",
+      "parentUuid": "3e619d01_9eede353",
+      "range": {
+        "startLine": 39,
+        "startChar": 7,
+        "endLine": 39,
+        "endChar": 32
+      },
+      "revId": "723d3c637ab0e4f8a340d173ccfcfdde3765fa45",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "b756edeb_63b18baf",
         "filename": "ios/chrome/browser/ui/activity_services/canonical_url_getter.mm",
         "patchSetId": 6
@@ -348,6 +588,30 @@
       "revId": "723d3c637ab0e4f8a340d173ccfcfdde3765fa45",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a9466a2c_25c6ccc9",
+        "filename": "ios/chrome/browser/ui/activity_services/canonical_url_getter.mm",
+        "patchSetId": 6
+      },
+      "lineNbr": 43,
+      "author": {
+        "id": 1191445
+      },
+      "writtenOn": "2017-11-07T22:34:18Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "b756edeb_63b18baf",
+      "range": {
+        "startLine": 43,
+        "startChar": 52,
+        "endLine": 43,
+        "endChar": 56
+      },
+      "revId": "723d3c637ab0e4f8a340d173ccfcfdde3765fa45",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -422,6 +686,30 @@
     },
     {
       "key": {
+        "uuid": "d4fcf6bb_84eb5950",
+        "filename": "ios/chrome/browser/ui/activity_services/canonical_url_getter.mm",
+        "patchSetId": 6
+      },
+      "lineNbr": 45,
+      "author": {
+        "id": 1191445
+      },
+      "writtenOn": "2017-11-07T22:34:18Z",
+      "side": 1,
+      "message": "Added",
+      "parentUuid": "6a157673_0f95c353",
+      "range": {
+        "startLine": 45,
+        "startChar": 44,
+        "endLine": 45,
+        "endChar": 62
+      },
+      "revId": "723d3c637ab0e4f8a340d173ccfcfdde3765fa45",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "5b1181d5_ad070bd0",
         "filename": "ios/chrome/browser/ui/activity_services/canonical_url_getter.mm",
         "patchSetId": 6
@@ -445,6 +733,30 @@
     },
     {
       "key": {
+        "uuid": "63a45cf5_44121f21",
+        "filename": "ios/chrome/browser/ui/activity_services/canonical_url_getter.mm",
+        "patchSetId": 6
+      },
+      "lineNbr": 50,
+      "author": {
+        "id": 1191445
+      },
+      "writtenOn": "2017-11-07T22:34:18Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "5b1181d5_ad070bd0",
+      "range": {
+        "startLine": 50,
+        "startChar": 21,
+        "endLine": 50,
+        "endChar": 25
+      },
+      "revId": "723d3c637ab0e4f8a340d173ccfcfdde3765fa45",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "43918882_66066a5a",
         "filename": "ios/chrome/browser/ui/activity_services/canonical_url_getter.mm",
         "patchSetId": 6
@@ -465,6 +777,30 @@
       "revId": "723d3c637ab0e4f8a340d173ccfcfdde3765fa45",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "bb21d338_9720718d",
+        "filename": "ios/chrome/browser/ui/activity_services/canonical_url_getter.mm",
+        "patchSetId": 6
+      },
+      "lineNbr": 52,
+      "author": {
+        "id": 1191445
+      },
+      "writtenOn": "2017-11-07T22:34:18Z",
+      "side": 1,
+      "message": "Got rid of delegate and objc class, so no more weakSelf.",
+      "parentUuid": "43918882_66066a5a",
+      "range": {
+        "startLine": 52,
+        "startChar": 5,
+        "endLine": 52,
+        "endChar": 14
+      },
+      "revId": "723d3c637ab0e4f8a340d173ccfcfdde3765fa45",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -539,6 +875,30 @@
     },
     {
       "key": {
+        "uuid": "cf482db9_4b28976a",
+        "filename": "ios/chrome/browser/ui/activity_services/canonical_url_getter_delegate.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 15,
+      "author": {
+        "id": 1191445
+      },
+      "writtenOn": "2017-11-07T22:34:18Z",
+      "side": 1,
+      "message": "Ended up switching to use a completion handler because memory management of the getter added more complexity than the delegate was worth.",
+      "parentUuid": "59d18061_3ee04fa4",
+      "range": {
+        "startLine": 15,
+        "startChar": 10,
+        "endLine": 15,
+        "endChar": 36
+      },
+      "revId": "723d3c637ab0e4f8a340d173ccfcfdde3765fa45",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "983252ff_4b304528",
         "filename": "ios/chrome/browser/ui/activity_services/canonical_url_getter_delegate.h",
         "patchSetId": 6
@@ -562,6 +922,30 @@
     },
     {
       "key": {
+        "uuid": "ebb602c2_39701e59",
+        "filename": "ios/chrome/browser/ui/activity_services/canonical_url_getter_delegate.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 19,
+      "author": {
+        "id": 1191445
+      },
+      "writtenOn": "2017-11-07T22:34:18Z",
+      "side": 1,
+      "message": "Got rid of delegate.",
+      "parentUuid": "983252ff_4b304528",
+      "range": {
+        "startLine": 17,
+        "startChar": 3,
+        "endLine": 19,
+        "endChar": 55
+      },
+      "revId": "723d3c637ab0e4f8a340d173ccfcfdde3765fa45",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "ea688997_2659a03f",
         "filename": "ios/chrome/browser/ui/activity_services/canonical_url_getter_unittest.mm",
         "patchSetId": 6
@@ -582,6 +966,30 @@
       "revId": "723d3c637ab0e4f8a340d173ccfcfdde3765fa45",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "46e76215_ea23b1fd",
+        "filename": "ios/chrome/browser/ui/activity_services/canonical_url_getter_unittest.mm",
+        "patchSetId": 6
+      },
+      "lineNbr": 39,
+      "author": {
+        "id": 1191445
+      },
+      "writtenOn": "2017-11-07T22:34:18Z",
+      "side": 1,
+      "message": "Unit tests rewritten so mock object no longer needed.",
+      "parentUuid": "ea688997_2659a03f",
+      "range": {
+        "startLine": 39,
+        "startChar": 4,
+        "endLine": 39,
+        "endChar": 31
+      },
+      "revId": "723d3c637ab0e4f8a340d173ccfcfdde3765fa45",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -677,6 +1085,30 @@
       "revId": "723d3c637ab0e4f8a340d173ccfcfdde3765fa45",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f92bdd16_fd24f302",
+        "filename": "ios/chrome/browser/ui/activity_services/canonical_url_getter_unittest.mm",
+        "patchSetId": 6
+      },
+      "lineNbr": 154,
+      "author": {
+        "id": 1191445
+      },
+      "writtenOn": "2017-11-07T22:34:18Z",
+      "side": 1,
+      "message": "Decided to only share canonical url when visible url is https.",
+      "parentUuid": "fd8eaf37_00cfdbdf",
+      "range": {
+        "startLine": 154,
+        "startChar": 31,
+        "endLine": 154,
+        "endChar": 59
+      },
+      "revId": "723d3c637ab0e4f8a340d173ccfcfdde3765fa45",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
