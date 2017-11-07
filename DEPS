@@ -1117,6 +1117,16 @@ hooks = [
                 'src/third_party/catapult/telemetry/bin/fetch_telemetry_binary_dependencies',
     ],
   },
+	#
+  # Download Telemetry's benchmark binary dependencies via conditionals
+  {
+    'name': 'checkout_telemetry_benchmark_binary_dependencies',
+    'condition': 'checkout_telemetry_dependencies',
+    'pattern': '.',
+    'action': [ 'python',
+                'src/tools/perf/fetch_telemetry_binary_dependencies',
+    ],
+  },
 
   # Download Telemetry's binary dependencies
   # TODO(crbug.com/780967) - remove this once the bots are setting the
