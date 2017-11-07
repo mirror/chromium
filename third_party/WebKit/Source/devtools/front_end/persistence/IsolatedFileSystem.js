@@ -101,7 +101,7 @@ Persistence.IsolatedFileSystem = class {
     }
 
     /**
-     * @param {!FileError} error
+     * @param {!DOMError} error
      */
     function errorHandler(error) {
       var errorMessage = Persistence.IsolatedFileSystem.errorMessage(error);
@@ -259,30 +259,22 @@ Persistence.IsolatedFileSystem = class {
 
   /**
    * @param {string} path
+   * @return {!Promise}
    */
   deleteFile(path) {
-    this._domFileSystem.root.getFile(path, undefined, fileEntryLoaded.bind(this), errorHandler.bind(this));
+    var folderPath = this._path;
+    var fulfill;
+    var promise = new Promise(x => fulfill = x);
+    this._domFileSystem.root.getFile(
+        path, undefined, fileEntry => fileEntry.remove(fulfill, errorHandler), errorHandler);
+    return promise;
 
     /**
-     * @param {!FileEntry} fileEntry
-     * @this {Persistence.IsolatedFileSystem}
-     */
-    function fileEntryLoaded(fileEntry) {
-      fileEntry.remove(fileEntryRemoved, errorHandler.bind(this));
-    }
-
-    function fileEntryRemoved() {
-    }
-
-    /**
-     * @param {!FileError} error
-     * @this {Persistence.IsolatedFileSystem}
-     * @suppress {checkTypes}
-     * TODO(jsbell): Update externs replacing FileError with DOMException. https://crbug.com/496901
+     * @param {!DOMError} error
      */
     function errorHandler(error) {
       var errorMessage = Persistence.IsolatedFileSystem.errorMessage(error);
-      console.error(errorMessage + ' when deleting file \'' + (this._path + '/' + path) + '\'');
+      console.error(errorMessage + ' when deleting file \'' + (folderPath + '/' + path) + '\'');
     }
   }
 

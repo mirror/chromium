@@ -802,12 +802,7 @@ Gonzales.Node = function() {
   this.content;
 };
 
-/**
- * @type {string}
- * @see http://heycam.github.io/webidl/#es-DOMException-prototype-object
- * TODO(jsbell): DOMException should be a subclass of Error.
- */
-DOMException.prototype.message;
+// TODO(jsbell): DOMException should be a subclass of Error.
 /** @type {number} */
 DOMException.ABORT_ERR;
 
