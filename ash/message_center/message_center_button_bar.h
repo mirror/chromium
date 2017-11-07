@@ -57,6 +57,8 @@ class MessageCenterButtonBar : public views::View,
 
   // Sometimes we shouldn't see the back arrow (not in settings).
   void SetBackArrowVisible(bool visible);
+  void InitFadeAnimation();
+  void SetBackArrowOpacity(double back_arrow_opacity);
 
   // Update the label of the title.
   void SetTitle(const base::string16& title);
