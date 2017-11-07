@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "2b0d5d52_d9aaf4b4",
+        "filename": "components/autofill/core/browser/autofill_field.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 617,
+      "author": {
+        "id": 1002376
+      },
+      "writtenOn": "2017-11-07T15:12:50Z",
+      "side": 1,
+      "message": "these can just be values, don\u0027t allocate them on the heap (i.e., no make_unique)",
+      "revId": "ce60fd92543193e8e2e044f1e6fa949a43413ea9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
