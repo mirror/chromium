@@ -1,0 +1,73 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "8ab545ae_3b6750d5",
+        "filename": "services/resource_coordinator/memory_instrumentation/graph_processor.cc",
+        "patchSetId": 11
+      },
+      "lineNbr": 322,
+      "author": {
+        "id": 1002871
+      },
+      "writtenOn": "2017-11-07T15:50:45Z",
+      "side": 1,
+      "message": "is this the column name, like \"size\" etc or what?\nWould be nice to add some comment that added some real examples. will make everything easer to read and reason about.",
+      "range": {
+        "startLine": 322,
+        "startChar": 9,
+        "endLine": 322,
+        "endChar": 13
+      },
+      "revId": "49466cbb08845cea39915cca169ca4ff0651382c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b206b79c_4157f6ee",
+        "filename": "services/resource_coordinator/memory_instrumentation/graph_processor.cc",
+        "patchSetId": 11
+      },
+      "lineNbr": 323,
+      "author": {
+        "id": 1002871
+      },
+      "writtenOn": "2017-11-07T15:50:45Z",
+      "side": 1,
+      "message": "I find easier to read the early out version of this, avoids nesting:\nif (it \u003d\u003d end)\n  continue;\nDCHECK...\n...\nfirst\u003dfalse",
+      "range": {
+        "startLine": 323,
+        "startChar": 3,
+        "endLine": 323,
+        "endChar": 45
+      },
+      "revId": "49466cbb08845cea39915cca169ca4ff0651382c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e072658f_e0eb934f",
+        "filename": "services/resource_coordinator/memory_instrumentation/graph_processor.cc",
+        "patchSetId": 11
+      },
+      "lineNbr": 324,
+      "author": {
+        "id": 1002871
+      },
+      "writtenOn": "2017-11-07T15:50:45Z",
+      "side": 1,
+      "message": "just a bit lost here, why the first item shouldn\u0027t have an unit?",
+      "range": {
+        "startLine": 324,
+        "startChar": 6,
+        "endLine": 324,
+        "endChar": 63
+      },
+      "revId": "49466cbb08845cea39915cca169ca4ff0651382c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
