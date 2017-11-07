@@ -101,7 +101,7 @@ void WebRtcEventLogHandler::DoStartWebRtcEventLogging(
 
   base::FilePath prefix_path =
       GetWebRtcEventLogPrefixPath(log_directory, ++current_rtc_event_log_id_);
-  if (!host->StartWebRTCEventLog(prefix_path)) {
+  if (!host->StartLocalRtcEventLogging(prefix_path)) {
     error_callback.Run("RTC event logging already in progress");
     return;
   }
@@ -115,6 +115,7 @@ void WebRtcEventLogHandler::DoStartWebRtcEventLogging(
   const bool is_manual_stop = false;
   BrowserThread::PostDelayedTask(
       BrowserThread::UI, FROM_HERE,
+      // TODO(eladalon): !!! Local?
       base::BindOnce(&WebRtcEventLogHandler::DoStopWebRtcEventLogging, this,
                      is_manual_stop, current_rtc_event_log_id_, callback,
                      error_callback, log_directory),
@@ -150,7 +151,7 @@ void WebRtcEventLogHandler::DoStopWebRtcEventLogging(
     return;
   }
 
-  if (!host->StopWebRTCEventLog()) {
+  if (!host->StopLocalRtcEventLogging()) {
     error_callback.Run("No RTC event logging in progress");
     return;
   }

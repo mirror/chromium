@@ -63,12 +63,12 @@ class WebRtcEventlogHostTest : public testing::Test {
     ASSERT_TRUE(base::CreateTemporaryFile(&base_file_));
     EXPECT_TRUE(base::DeleteFile(base_file_, false));
     EXPECT_FALSE(base::PathExists(base_file_));
-    EXPECT_TRUE(event_log_host_.StartWebRTCEventLog(base_file_));
+    EXPECT_TRUE(event_log_host_.StartLocalRtcEventLogging(base_file_));
     RunAllTasksUntilIdle();
   }
 
   void StopLogging() {
-    EXPECT_TRUE(event_log_host_.StopWebRTCEventLog());
+    EXPECT_TRUE(event_log_host_.StopLocalRtcEventLogging());
     RunAllTasksUntilIdle();
   }
 
@@ -120,7 +120,7 @@ class WebRtcEventlogHostTest : public testing::Test {
   }
 };
 
-// This test calls StartWebRTCEventLog() and StopWebRTCEventLog() without having
+// This test calls StartLocalRtcEventLogging() and StopLocalRtcEventLogging() without having
 // added any PeerConnections. It is expected that no IPC messages will be sent.
 TEST_F(WebRtcEventlogHostTest, NoPeerConnectionTest) {
   mock_render_process_host_->sink().ClearMessages();
@@ -134,7 +134,7 @@ TEST_F(WebRtcEventlogHostTest, NoPeerConnectionTest) {
   EXPECT_EQ(size_t(0), mock_render_process_host_->sink().message_count());
 }
 
-// This test calls StartWebRTCEventLog() and StopWebRTCEventLog() after adding a
+// This test calls StartLocalRtcEventLogging() and StopLocalRtcEventLogging() after adding a
 // single PeerConnection. It is expected that one IPC message will be sent for
 // each of the Start and Stop calls, and that a logfile is created.
 TEST_F(WebRtcEventlogHostTest, OnePeerConnectionTest) {
@@ -168,7 +168,7 @@ TEST_F(WebRtcEventlogHostTest, OnePeerConnectionTest) {
   EXPECT_TRUE(base::DeleteFile(expected_file, false));
 }
 
-// This test calls StartWebRTCEventLog() and StopWebRTCEventLog() after adding
+// This test calls StartLocalRtcEventLogging() and StopLocalRtcEventLogging() after adding
 // two PeerConnections. It is expected that two IPC messages will be sent for
 // each of the Start and Stop calls, and that a file is created for both
 // PeerConnections.
@@ -224,7 +224,7 @@ TEST_F(WebRtcEventlogHostTest, TwoPeerConnectionsTest) {
   EXPECT_TRUE(base::DeleteFile(expected_file2, false));
 }
 
-// This test calls StartWebRTCEventLog() and StopWebRTCEventLog() after adding
+// This test calls StartLocalRtcEventLogging() and StopLocalRtcEventLogging() after adding
 // more PeerConnections than the maximum allowed. It is expected that only the
 // maximum allowed number of IPC messages and log files will be opened, but we
 // expect the number of stop IPC messages to be equal to the actual number of
@@ -293,7 +293,7 @@ TEST_F(WebRtcEventlogHostTest, ExceedMaxPeerConnectionsTest) {
   }
 }
 
-// This test calls StartWebRTCEventLog() and StopWebRTCEventLog() after first
+// This test calls StartLocalRtcEventLogging() and StopLocalRtcEventLogging() after first
 // adding and then removing a single PeerConnection. It is expected that no IPC
 // message will be sent.
 TEST_F(WebRtcEventlogHostTest, AddRemovePeerConnectionTest) {
