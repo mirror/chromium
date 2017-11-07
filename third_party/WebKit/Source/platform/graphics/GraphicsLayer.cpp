@@ -279,10 +279,37 @@ IntRect GraphicsLayer::InterestRect() {
   return previous_interest_rect_;
 }
 
+void GraphicsLayer::PaintRecursively() {
+#if DCHECK_IS_ON()
+  if (VLOG_IS_ON(2)) {
+    LayerTreeFlags flags = VLOG_IS_ON(3) ? 0xffffffff : kOutputAsLayerTree;
+    DVLOG(2) << GetLayerTreeAsTextForTesting(flags).Utf8().data();
+  }
+#endif
+
+  PaintRecursivelyInternal();
+}
+
+void GraphicsLayer::PaintRecursivelyInternal() {
+  if (DrawsContent())
+    Paint(nullptr);
+
+  if (MaskLayer())
+    MaskLayer()->PaintRecursivelyInternal();
+  if (ContentsClippingMaskLayer())
+    ContentsClippingMaskLayer()->PaintRecursivelyInternal();
+
+  for (auto* child : Children())
+    child->PaintRecursivelyInternal();
+}
+
 void GraphicsLayer::Paint(const IntRect* interest_rect,
                           GraphicsContext::DisabledMode disabled_mode) {
   if (!PaintWithoutCommit(interest_rect, disabled_mode))
     return;
+
+  DVLOG(2) << "Painted GraphicsLayer: " << DebugName()
+           << " interest_rect=" << InterestRect().ToString();
 
   GetPaintController().CommitNewDisplayItems();
 
@@ -1357,7 +1384,7 @@ bool ScopedSetNeedsDisplayInRectForTrackingOnly::s_enabled_ = false;
 
 }  // namespace blink
 
-#ifndef NDEBUG
+#if DCHECK_IS_ON()
 void showGraphicsLayerTree(const blink::GraphicsLayer* layer) {
   if (!layer) {
     LOG(INFO) << "Cannot showGraphicsLayerTree for (nil).";
