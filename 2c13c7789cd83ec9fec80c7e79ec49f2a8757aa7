@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "ebbfe503_db579ab7",
+        "filename": "media/audio/win/core_audio_util_win.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 270,
+      "author": {
+        "id": 1153409
+      },
+      "writtenOn": "2017-11-07T10:16:11Z",
+      "side": 1,
+      "message": "So you return null pointer and OK HRESULT here?",
+      "revId": "2c13c7789cd83ec9fec80c7e79ec49f2a8757aa7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}

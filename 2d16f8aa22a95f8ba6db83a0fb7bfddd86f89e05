@@ -1,0 +1,112 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "9ec2741f_4dcc5ec3",
+        "filename": "media/audio/win/core_audio_util_win.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 42,
+      "author": {
+        "id": 1153409
+      },
+      "writtenOn": "2017-11-07T10:16:11Z",
+      "side": 1,
+      "message": "More descriptive name is needed (PreferredParametersStage? - keep in mind - I\u0027m bad at naming), and a common prefix (STAGE_...?) will help reading as well.",
+      "revId": "2d16f8aa22a95f8ba6db83a0fb7bfddd86f89e05",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "35d9b70b_0d7b2097",
+        "filename": "media/audio/win/core_audio_util_win.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 49,
+      "author": {
+        "id": 1153409
+      },
+      "writtenOn": "2017-11-07T10:16:11Z",
+      "side": 1,
+      "message": "I\u0027m not even sure this will pass UMA review, but if it does and if you wish to keep it, it should be clearly documented that order of elements here is bound to enum above, and none of them should be changed.\n\nI would avoid this approach overall though, since it\u0027s easier to screw up UMA this way in the future. Good old switch() is much safer since it\u0027s much more explicit.\nFor example, it\u0027s really hard to spot a misprint in a UMA name here.",
+      "revId": "2d16f8aa22a95f8ba6db83a0fb7bfddd86f89e05",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "229bf3f3_5b3c70d7",
+        "filename": "media/audio/win/core_audio_util_win.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 294,
+      "author": {
+        "id": 1153409
+      },
+      "writtenOn": "2017-11-07T10:16:11Z",
+      "side": 1,
+      "message": "We need to simplify this",
+      "range": {
+        "startLine": 284,
+        "startChar": 0,
+        "endLine": 294,
+        "endChar": 63
+      },
+      "revId": "2d16f8aa22a95f8ba6db83a0fb7bfddd86f89e05",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0e87bd09_3e92eadf",
+        "filename": "media/audio/win/core_audio_util_win.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 330,
+      "author": {
+        "id": 1153409
+      },
+      "writtenOn": "2017-11-07T10:16:11Z",
+      "side": 1,
+      "message": "More descriptive name is required (LogPreferredParametersUmaResult?) And documentation",
+      "revId": "2d16f8aa22a95f8ba6db83a0fb7bfddd86f89e05",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "dbfa5a7d_e641d361",
+        "filename": "media/audio/win/core_audio_util_win.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 334,
+      "author": {
+        "id": 1153409
+      },
+      "writtenOn": "2017-11-07T10:16:11Z",
+      "side": 1,
+      "message": "What if you are out range?",
+      "revId": "2d16f8aa22a95f8ba6db83a0fb7bfddd86f89e05",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "dd8711bb_a8e8cf15",
+        "filename": "media/audio/win/core_audio_util_win.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 114,
+      "author": {
+        "id": 1153409
+      },
+      "writtenOn": "2017-11-07T10:16:11Z",
+      "side": 1,
+      "message": "\"|device_id| is empty\" - what if it\u0027s a default device id?",
+      "revId": "2d16f8aa22a95f8ba6db83a0fb7bfddd86f89e05",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
