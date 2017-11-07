@@ -1,0 +1,123 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "eeb8ed9e_0bfbe35d",
+        "filename": "ui/gfx/render_text.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 498,
+      "author": {
+        "id": 1001118
+      },
+      "writtenOn": "2017-11-07T16:30:04Z",
+      "side": 1,
+      "message": "nit: Move these up, just below set_clip_to_display_rect, and make them one-liners (rewritten with new name):\nint glyph_spacing() const { return glyph_spacing_; }\nvoid set_glyph_spacing(int spacing) { glyph_spacing_ \u003d spacing; }",
+      "revId": "5537dd8968cf3705ccc64d00cad5b8ba09542f5b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0731700c_202f460b",
+        "filename": "ui/gfx/render_text.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 842,
+      "author": {
+        "id": 1001118
+      },
+      "writtenOn": "2017-11-07T16:30:04Z",
+      "side": 1,
+      "message": "Rename this to glyph_spacing_ and add a comment: \"Extra spacing placed between glyphs; used for obscured text styling.\" Bonus points if you can determine whether these are dips or pixels and note that in the comment, keeping it a one-liner.",
+      "revId": "5537dd8968cf3705ccc64d00cad5b8ba09542f5b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "79df68c4_0cd1eda5",
+        "filename": "ui/gfx/render_text_harfbuzz.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 1643,
+      "author": {
+        "id": 1001118
+      },
+      "writtenOn": "2017-11-07T16:30:04Z",
+      "side": 1,
+      "message": "nit: before this loop DCHECK(obscured() || glyph_spacing() \u003d\u003d 0);",
+      "revId": "5537dd8968cf3705ccc64d00cad5b8ba09542f5b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "db188a98_ebfc459b",
+        "filename": "ui/views/controls/textfield/textfield.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 58,
+      "author": {
+        "id": 1001118
+      },
+      "writtenOn": "2017-11-07T16:30:04Z",
+      "side": 1,
+      "message": "nit: \"the Default\"",
+      "revId": "5537dd8968cf3705ccc64d00cad5b8ba09542f5b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a7b0b552_4a7e3d58",
+        "filename": "ui/views/controls/textfield/textfield.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 220,
+      "author": {
+        "id": 1001118
+      },
+      "writtenOn": "2017-11-07T16:30:04Z",
+      "side": 1,
+      "message": "Match the language from my suggested RenderText documentation:\n\"// Set the extra spacing placed between glyphs; used for obscured text styling.\"",
+      "revId": "5537dd8968cf3705ccc64d00cad5b8ba09542f5b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "339c327b_48a1c9be",
+        "filename": "ui/views/controls/textfield/textfield.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 222,
+      "author": {
+        "id": 1001118
+      },
+      "writtenOn": "2017-11-07T16:30:04Z",
+      "side": 1,
+      "message": "SetGlyphSpacing",
+      "revId": "5537dd8968cf3705ccc64d00cad5b8ba09542f5b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1b6c6830_e0ddb9a0",
+        "filename": "ui/views/controls/textfield/textfield.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 493,
+      "author": {
+        "id": 1001118
+      },
+      "writtenOn": "2017-11-07T16:30:04Z",
+      "side": 1,
+      "message": "grammar nit: \"The font used for the placeholder text. If this value is null, the placeholder text uses the same font list as the underlying RenderText.\"",
+      "revId": "5537dd8968cf3705ccc64d00cad5b8ba09542f5b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
