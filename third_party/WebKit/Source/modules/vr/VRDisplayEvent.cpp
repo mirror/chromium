@@ -19,10 +19,10 @@ String VRDisplayEventReasonToString(
       return "mounted";
     case device::mojom::blink::VRDisplayEventReason::UNMOUNTED:
       return "unmounted";
+    default:
+      NOTREACHED();
+      return "";
   }
-
-  NOTREACHED();
-  return "";
 }
 
 }  // namespace
