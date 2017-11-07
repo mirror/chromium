@@ -36,6 +36,7 @@ source_set("tests") {
   sources = [
     "proxy_resolver_factory_impl_unittest.cc",
     "proxy_resolver_impl_unittest.cc",
+    "proxy_resolver_service_unittest.cc",
   ]
 
   deps = [
