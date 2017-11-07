@@ -16,6 +16,24 @@
       "revId": "e7b20f8510c1e241b1d34bee35e11282713ec0e7",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8ba60a6e_17aadd3b",
+        "filename": "chrome/browser/ui/startup/startup_features.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1137015
+      },
+      "writtenOn": "2017-11-07T21:27:51Z",
+      "side": 0,
+      "message": "Done.\n\nI was thinking about reusing it very soon. But I\u0027ll just recreate it if I need it.",
+      "parentUuid": "e17e560d_53123425",
+      "revId": "e7b20f8510c1e241b1d34bee35e11282713ec0e7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
