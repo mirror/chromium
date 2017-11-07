@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "cf13d2a0_d98ec7e8",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 3
+      },
+      "lineNbr": 9,
+      "author": {
+        "id": 1246261
+      },
+      "writtenOn": "2017-11-07T13:31:39Z",
+      "side": 1,
+      "message": "Done.\nI\u0027ve not heard about this limit before.\n1. Is there an equivalent for the WebRTC repo?\n2. Do you happen to know why 72, of all values?",
+      "parentUuid": "39c7ef83_e64948f8",
+      "range": {
+        "startLine": 9,
+        "startChar": 0,
+        "endLine": 9,
+        "endChar": 18
+      },
+      "revId": "115dcd9bcad5a160033931486dd4cd2453b2d242",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "860d167c_795f886e",
         "filename": "content/browser/webrtc/webrtc_eventlog_host.cc",
         "patchSetId": 3
@@ -48,6 +72,30 @@
     },
     {
       "key": {
+        "uuid": "12c46ac7_2a802803",
+        "filename": "content/browser/webrtc/webrtc_eventlog_host.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 85,
+      "author": {
+        "id": 1246261
+      },
+      "writtenOn": "2017-11-07T13:31:39Z",
+      "side": 1,
+      "message": "I\u0027ll remove it. But, FYI, I think it might be good to change the if(find) to a DCHECK(find()\u003d\u003dend), I just don\u0027t have the time to make sure it wouldn\u0027t be an error at the moment. So the TODO implicitly meant \"check if it\u0027s a good idea, do so if yes, or remove the TODO if not.\"",
+      "parentUuid": "860d167c_795f886e",
+      "range": {
+        "startLine": 85,
+        "startChar": 10,
+        "endLine": 85,
+        "endChar": 18
+      },
+      "revId": "115dcd9bcad5a160033931486dd4cd2453b2d242",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "f2cfeeb4_2c34f054",
         "filename": "content/browser/webrtc/webrtc_eventlog_host.cc",
         "patchSetId": 3
@@ -59,6 +107,30 @@
       "writtenOn": "2017-11-07T10:22:02Z",
       "side": 1,
       "message": "Remove CHECK. If this were hit, you would crash the whole browser.\nIf the method can return false here, handle it without crashing the browser, or make it return void and handle the failure in the method implementation.\n\nIf the method can\u0027t return false here, then just DCHECK the return value.\nIf the method must return true in all cases, then make it return void and put the DCHECK in the method\u0027s implementation.",
+      "range": {
+        "startLine": 166,
+        "startChar": 10,
+        "endLine": 166,
+        "endChar": 34
+      },
+      "revId": "115dcd9bcad5a160033931486dd4cd2453b2d242",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "11bdf340_c298cc3f",
+        "filename": "content/browser/webrtc/webrtc_eventlog_host.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 166,
+      "author": {
+        "id": 1246261
+      },
+      "writtenOn": "2017-11-07T13:31:39Z",
+      "side": 1,
+      "message": "I intend to crash the browser, because I don\u0027t think this case can ever happen. I\u0027m okay with DCHECKing instead though (although it would require less sightly code, because I\u0027ll have to get separate lines for the function and the DCHECK).\n\nNot all calls to RtcEventLogRemoved are the same.\n* In the destructor, we don\u0027t know if a given file has a log file associated.\n* When failing to open a file, we definitely know that it should have had an associated entry in the container.",
+      "parentUuid": "f2cfeeb4_2c34f054",
       "range": {
         "startLine": 166,
         "startChar": 10,
@@ -111,6 +183,30 @@
     },
     {
       "key": {
+        "uuid": "9499d900_33528b6f",
+        "filename": "content/browser/webrtc/webrtc_eventlog_host.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 190,
+      "author": {
+        "id": 1246261
+      },
+      "writtenOn": "2017-11-07T13:31:39Z",
+      "side": 1,
+      "message": "Please note that not all call sites CHECK on this. Therefore, it should return a value - only the caller knows if he expected this to definitely remove something, or if he intended to mean \"if you have a log for this, remove it.\"",
+      "parentUuid": "6a0ead10_4c9e7ee0",
+      "range": {
+        "startLine": 190,
+        "startChar": 0,
+        "endLine": 190,
+        "endChar": 4
+      },
+      "revId": "115dcd9bcad5a160033931486dd4cd2453b2d242",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "56b700b5_204e2a42",
         "filename": "content/browser/webrtc/webrtc_eventlog_host.h",
         "patchSetId": 3
@@ -131,6 +227,30 @@
       "revId": "115dcd9bcad5a160033931486dd4cd2453b2d242",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4b6d07c7_24b7c950",
+        "filename": "content/browser/webrtc/webrtc_eventlog_host.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 68,
+      "author": {
+        "id": 1246261
+      },
+      "writtenOn": "2017-11-07T13:31:39Z",
+      "side": 1,
+      "message": "I\u0027ll go with RtcEventLogAdded / RtcEventLogRemoved.",
+      "parentUuid": "56b700b5_204e2a42",
+      "range": {
+        "startLine": 68,
+        "startChar": 7,
+        "endLine": 68,
+        "endChar": 29
+      },
+      "revId": "115dcd9bcad5a160033931486dd4cd2453b2d242",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
