@@ -571,6 +571,30 @@
     },
     {
       "key": {
+        "uuid": "fe34ab1c_0bc89892",
+        "filename": "ios/chrome/browser/ui/tools_menu/tools_menu_coordinator.mm",
+        "patchSetId": 7
+      },
+      "lineNbr": 74,
+      "author": {
+        "id": 1163361
+      },
+      "writtenOn": "2017-11-07T21:43:22Z",
+      "side": 1,
+      "message": "See this example:\nhttps://cs.chromium.org/chromium/src/ios/chrome/browser/ui/browser_view_controller.mm?type\u003dcs\u0026q\u003dstatic_cast+file:ios/chrome/browser/ui/\u0026sq\u003dpackage:chromium\u0026l\u003d1093",
+      "parentUuid": "92c09f4a_114bbfa1",
+      "range": {
+        "startLine": 73,
+        "startChar": 38,
+        "endLine": 74,
+        "endChar": 52
+      },
+      "revId": "be11233f96436a2e0f8d2ffbb6df7124bfcbc08e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "35187238_0ceaa3c2",
         "filename": "ios/chrome/browser/ui/tools_menu/tools_menu_coordinator_constants.h",
         "patchSetId": 7
@@ -606,6 +630,30 @@
       "side": 1,
       "message": "It is necessary to get the NSObject protocol methods, such as respondsToSelector: etc.",
       "parentUuid": "35187238_0ceaa3c2",
+      "range": {
+        "startLine": 24,
+        "startChar": 56,
+        "endLine": 24,
+        "endChar": 64
+      },
+      "revId": "be11233f96436a2e0f8d2ffbb6df7124bfcbc08e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "feabdaa5_dbe639eb",
+        "filename": "ios/chrome/browser/ui/tools_menu/tools_menu_coordinator_constants.h",
+        "patchSetId": 7
+      },
+      "lineNbr": 24,
+      "author": {
+        "id": 1163361
+      },
+      "writtenOn": "2017-11-07T21:43:22Z",
+      "side": 1,
+      "message": "You don\u0027t have optional methods here so I don\u0027t think you need it.",
+      "parentUuid": "5c7fc0a7_70c18e4b",
       "range": {
         "startLine": 24,
         "startChar": 56,
