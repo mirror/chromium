@@ -5,7 +5,11 @@
 #ifndef COMPONENTS_DATA_REDUCTION_PROXY_CORE_BROWSER_NETWORK_PROPERTIES_MANAGER_H_
 #define COMPONENTS_DATA_REDUCTION_PROXY_CORE_BROWSER_NETWORK_PROPERTIES_MANAGER_H_
 
+#include <string>
+
 #include "base/macros.h"
+#include "base/memory/ref_counted.h"
+#include "base/single_thread_task_runner.h"
 #include "components/data_reduction_proxy/proto/network_properties.pb.h"
 
 namespace data_reduction_proxy {
@@ -13,7 +17,9 @@ namespace data_reduction_proxy {
 // Stores the properties of a single network.
 class NetworkPropertiesManager {
  public:
-  NetworkPropertiesManager();
+  NetworkPropertiesManager(
+      scoped_refptr<base::SingleThreadTaskRunner> ui_task_runner,
+      scoped_refptr<base::SingleThreadTaskRunner> io_task_runner);
 
   ~NetworkPropertiesManager();
 
@@ -52,6 +58,12 @@ class NetworkPropertiesManager {
                                   bool warmup_url_probe_failed);
 
  private:
+  scoped_refptr<base::SingleThreadTaskRunner> ui_task_runner_;
+  scoped_refptr<base::SingleThreadTaskRunner> io_task_runner_;
+
+  // |path_| is the location of the network quality estimator prefs.
+  const std::string path_;
+
   // State of the proxies on the current network.
   NetworkProperties network_properties_;
 

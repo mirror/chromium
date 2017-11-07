@@ -5,14 +5,20 @@
 #include "components/data_reduction_proxy/core/browser/network_properties_manager.h"
 
 #include "base/macros.h"
+#include "base/threading/thread_task_runner_handle.h"
 #include "testing/gtest/include/gtest/gtest.h"
+
+#include "base/memory/ref_counted.h"
+#include "base/message_loop/message_loop.h"
 
 namespace data_reduction_proxy {
 
 namespace {
 
 TEST(NetworkPropertyTest, TestSetterGetterCaptivePortal) {
-  NetworkPropertiesManager network_properties_manager;
+  base::MessageLoopForIO loop;
+  NetworkPropertiesManager network_properties_manager(
+      base::ThreadTaskRunnerHandle::Get(), base::ThreadTaskRunnerHandle::Get());
 
   EXPECT_TRUE(network_properties_manager.IsInsecureProxyAllowed());
   EXPECT_TRUE(network_properties_manager.IsSecureProxyAllowed());
@@ -35,7 +41,9 @@ TEST(NetworkPropertyTest, TestSetterGetterCaptivePortal) {
 }
 
 TEST(NetworkPropertyTest, TestSetterGetterDisallowedByCarrier) {
-  NetworkPropertiesManager network_properties_manager;
+  base::MessageLoopForIO loop;
+  NetworkPropertiesManager network_properties_manager(
+      base::ThreadTaskRunnerHandle::Get(), base::ThreadTaskRunnerHandle::Get());
 
   EXPECT_TRUE(network_properties_manager.IsInsecureProxyAllowed());
   EXPECT_TRUE(network_properties_manager.IsSecureProxyAllowed());
@@ -58,7 +66,9 @@ TEST(NetworkPropertyTest, TestSetterGetterDisallowedByCarrier) {
 }
 
 TEST(NetworkPropertyTest, TestWarmupURLFailedOnSecureProxy) {
-  NetworkPropertiesManager network_properties_manager;
+  base::MessageLoopForIO loop;
+  NetworkPropertiesManager network_properties_manager(
+      base::ThreadTaskRunnerHandle::Get(), base::ThreadTaskRunnerHandle::Get());
 
   EXPECT_TRUE(network_properties_manager.IsInsecureProxyAllowed());
   EXPECT_TRUE(network_properties_manager.IsSecureProxyAllowed());
@@ -81,7 +91,9 @@ TEST(NetworkPropertyTest, TestWarmupURLFailedOnSecureProxy) {
 }
 
 TEST(NetworkPropertyTest, TestWarmupURLFailedOnInSecureProxy) {
-  NetworkPropertiesManager network_properties_manager;
+  base::MessageLoopForIO loop;
+  NetworkPropertiesManager network_properties_manager(
+      base::ThreadTaskRunnerHandle::Get(), base::ThreadTaskRunnerHandle::Get());
 
   EXPECT_TRUE(network_properties_manager.IsInsecureProxyAllowed());
   EXPECT_TRUE(network_properties_manager.IsSecureProxyAllowed());
