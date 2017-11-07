@@ -34,6 +34,24 @@
       "revId": "a48bbd600f76cb7154312ee6260d6be4b877b01d",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c9ee616c_2550727d",
+        "filename": "chrome/browser/notifications/notification_common.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 37,
+      "author": {
+        "id": 1115907
+      },
+      "writtenOn": "2017-11-07T22:20:17Z",
+      "side": 1,
+      "message": "oops, good catch. This was on oversight.",
+      "parentUuid": "54f36f40_50c213db",
+      "revId": "a48bbd600f76cb7154312ee6260d6be4b877b01d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
