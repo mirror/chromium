@@ -1,0 +1,165 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "2e832555_7529a27e",
+        "filename": "components/search_provider_logos/google_logo_api.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 292,
+      "author": {
+        "id": 1116059
+      },
+      "writtenOn": "2017-11-07T09:46:46Z",
+      "side": 1,
+      "message": "What about mobile, where INTERACTIVE isn\u0027t directly supported? Do we need to do anything different here?",
+      "range": {
+        "startLine": 292,
+        "startChar": 50,
+        "endLine": 292,
+        "endChar": 0
+      },
+      "revId": "5a5f0af45cba8280ba80eb562359de76e237331b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5f6fe7d1_2312c2fa",
+        "filename": "components/search_provider_logos/google_logo_api.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 296,
+      "author": {
+        "id": 1116059
+      },
+      "writtenOn": "2017-11-07T09:46:46Z",
+      "side": 1,
+      "message": "Hm, this effectively changes the API, also for third parties. But since we haven\u0027t published any spec for it, I guess that\u0027s fine.",
+      "range": {
+        "startLine": 296,
+        "startChar": 71,
+        "endLine": 296,
+        "endChar": 0
+      },
+      "revId": "5a5f0af45cba8280ba80eb562359de76e237331b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "f1453553_6ccdcbbf",
+        "filename": "components/search_provider_logos/google_logo_api.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 314,
+      "author": {
+        "id": 1116059
+      },
+      "writtenOn": "2017-11-07T09:46:46Z",
+      "side": 1,
+      "message": "Is it necessary/desirable to just always get both?\nIf so, the comment above is now kinda inaccurate.",
+      "range": {
+        "startLine": 314,
+        "startChar": 60,
+        "endLine": 314,
+        "endChar": 0
+      },
+      "revId": "5a5f0af45cba8280ba80eb562359de76e237331b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c2ba618b_1945c67c",
+        "filename": "components/search_provider_logos/logo_common.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 40,
+      "author": {
+        "id": 1116059
+      },
+      "writtenOn": "2017-11-07T09:46:46Z",
+      "side": 1,
+      "message": "I think the LogoCache class also needs updating, so this value will be properly serialized and persisted.\nMaybe also worth a comment above the struct, since this is easy to miss?",
+      "range": {
+        "startLine": 40,
+        "startChar": 35,
+        "endLine": 40,
+        "endChar": 0
+      },
+      "revId": "5a5f0af45cba8280ba80eb562359de76e237331b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "de892ba6_3db6d92d",
+        "filename": "components/search_provider_logos/logo_common.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 43,
+      "author": {
+        "id": 1116059
+      },
+      "writtenOn": "2017-11-07T09:46:46Z",
+      "side": 1,
+      "message": "I think on mobile it\u0027ll still be used?",
+      "range": {
+        "startLine": 43,
+        "startChar": 27,
+        "endLine": 43,
+        "endChar": 0
+      },
+      "revId": "5a5f0af45cba8280ba80eb562359de76e237331b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "62fd33b5_853182f2",
+        "filename": "components/search_provider_logos/logo_common.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 53,
+      "author": {
+        "id": 1116059
+      },
+      "writtenOn": "2017-11-07T09:46:46Z",
+      "side": 1,
+      "message": "We could still use it as a title for the iframe?",
+      "range": {
+        "startLine": 53,
+        "startChar": 27,
+        "endLine": 53,
+        "endChar": 0
+      },
+      "revId": "5a5f0af45cba8280ba80eb562359de76e237331b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "aac2de6b_7f833fad",
+        "filename": "components/search_provider_logos/logo_common.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 75,
+      "author": {
+        "id": 1116059
+      },
+      "writtenOn": "2017-11-07T09:46:46Z",
+      "side": 1,
+      "message": "Since you use inline initialization above, would be best to be consistent and also do it here.",
+      "range": {
+        "startLine": 75,
+        "startChar": 33,
+        "endLine": 75,
+        "endChar": 0
+      },
+      "revId": "5a5f0af45cba8280ba80eb562359de76e237331b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
