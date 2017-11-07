@@ -67,7 +67,7 @@ SkColor StarDecoration::GetMaterialIconColor(bool location_bar_is_dark) const {
   if (location_bar_is_dark) {
     return starred_ ? gfx::kGoogleBlue300 : SkColorSetA(SK_ColorWHITE, 0xCC);
   }
-  return starred_ ? gfx::kGoogleBlue500 : gfx::kChromeIconGrey;
+  return starred_ ? gfx::kGoogleBlue500 : gfx::kChromeIconGray;
 }
 
 const gfx::VectorIcon* StarDecoration::GetMaterialVectorIcon() const {

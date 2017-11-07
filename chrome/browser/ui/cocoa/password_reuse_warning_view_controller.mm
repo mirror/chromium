@@ -120,7 +120,7 @@ constexpr CGFloat kBaselineAdjust = 1;
   [titleField_ setFrameOrigin:NSMakePoint(textLeftPadding, dialogHeight)];
   dialogHeight += NSHeight([titleField_ frame]);
 
-  SkColor iconColor = isSoftWarning ? gfx::kChromeIconGrey : gfx::kGoogleRed700;
+  SkColor iconColor = isSoftWarning ? gfx::kChromeIconGray : gfx::kGoogleRed700;
   const gfx::VectorIcon& icon =
       isSoftWarning ? kSecurityIcon : vector_icons::kWarningIcon;
   iconView_.reset([ImageViewUtils

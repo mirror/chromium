@@ -87,7 +87,7 @@ TreeView::TreeView()
 #endif
   if (kUseMdIcons) {
     closed_icon_ = open_icon_ =
-        gfx::CreateVectorIcon(vector_icons::kFolderIcon, gfx::kChromeIconGrey);
+        gfx::CreateVectorIcon(vector_icons::kFolderIcon, gfx::kChromeIconGray);
   } else {
     // TODO(ellyjones): if the pre-Harmony codepath goes away, merge
     // closed_icon_ and open_icon_.

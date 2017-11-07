@@ -73,7 +73,7 @@ SadTabView::SadTabView(content::WebContents* web_contents,
   views::ImageView* image = new views::ImageView();
 
   image->SetImage(
-      gfx::CreateVectorIcon(kCrashedTabIcon, 48, gfx::kChromeIconGrey));
+      gfx::CreateVectorIcon(kCrashedTabIcon, 48, gfx::kChromeIconGray));
 
   const int unrelated_vertical_spacing_large = provider->GetDistanceMetric(
       DISTANCE_UNRELATED_CONTROL_VERTICAL_LARGE);

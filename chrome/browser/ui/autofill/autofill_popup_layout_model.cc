@@ -216,7 +216,7 @@ gfx::ImageSkia AutofillPopupLayoutModel::GetIconImage(size_t index) const {
   // same as security indicator icons in location bar.
   if (icon_str == base::ASCIIToUTF16("httpWarning")) {
     return gfx::CreateVectorIcon(toolbar::kHttpIcon, kIconSize,
-                                 gfx::kChromeIconGrey);
+                                 gfx::kChromeIconGray);
   }
   if (icon_str == base::ASCIIToUTF16("httpsInvalid")) {
     return gfx::CreateVectorIcon(toolbar::kHttpsInvalidIcon, kIconSize,

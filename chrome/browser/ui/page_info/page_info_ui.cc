@@ -460,7 +460,7 @@ int PageInfoUI::GetConnectionIconID(PageInfo::SiteConnectionStatus status) {
 #else  // !defined(OS_ANDROID)
 // static
 const gfx::ImageSkia PageInfoUI::GetCertificateIcon() {
-  return gfx::CreateVectorIcon(kCertificateIcon, 16, gfx::kChromeIconGrey);
+  return gfx::CreateVectorIcon(kCertificateIcon, 16, gfx::kChromeIconGray);
 }
 #endif
 

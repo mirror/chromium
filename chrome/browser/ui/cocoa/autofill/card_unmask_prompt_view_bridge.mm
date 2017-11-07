@@ -505,7 +505,7 @@ void CardUnmaskPromptViewBridge::PerformClose() {
   [storageTooltip_
       setImage:gfx::NSImageFromImageSkia(gfx::CreateVectorIcon(
                    vector_icons::kInfoOutlineIcon, autofill::kInfoIconSize,
-                   gfx::kChromeIconGrey))];
+                   gfx::kChromeIconGray))];
   [storageTooltip_
       setMessage:base::SysUTF16ToNSString(l10n_util::GetStringUTF16(
                      IDS_AUTOFILL_CARD_UNMASK_PROMPT_STORAGE_TOOLTIP))];

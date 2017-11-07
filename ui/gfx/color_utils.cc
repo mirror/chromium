@@ -338,9 +338,9 @@ bool IsInvertedColorScheme() {
 SkColor DeriveDefaultIconColor(SkColor text_color) {
   // Lighten a dark color but leave it fully opaque.
   if (IsDark(text_color)) {
-    // For black text, this comes out to kChromeIconGrey.
+    // For black text, this comes out to kChromeIconGray.
     return color_utils::AlphaBlend(SK_ColorWHITE, text_color,
-                                   SkColorGetR(gfx::kChromeIconGrey));
+                                   SkColorGetR(gfx::kChromeIconGray));
   }
   // For a light color, just reduce opacity.
   return SkColorSetA(text_color,

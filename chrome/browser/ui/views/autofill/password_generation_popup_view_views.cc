@@ -98,7 +98,7 @@ class PasswordGenerationPopupViewViews::PasswordBox : public views::View {
 
     views::ImageView* key_image = new views::ImageView();
     key_image->SetImage(
-        gfx::CreateVectorIcon(kKeyIcon, 16, gfx::kChromeIconGrey));
+        gfx::CreateVectorIcon(kKeyIcon, 16, gfx::kChromeIconGray));
     AddChildView(key_image);
 
     PasswordTextBox* password_text_box = new PasswordTextBox();

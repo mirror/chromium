@@ -64,7 +64,7 @@ MediaRouterAction::~MediaRouterAction() {
 // static
 SkColor MediaRouterAction::GetIconColor(const gfx::VectorIcon& icon_id) {
   if (&icon_id == &vector_icons::kMediaRouterIdleIcon)
-    return gfx::kChromeIconGrey;
+    return gfx::kChromeIconGray;
   else if (&icon_id == &vector_icons::kMediaRouterActiveIcon)
     return gfx::kGoogleBlue500;
   else if (&icon_id == &vector_icons::kMediaRouterWarningIcon)

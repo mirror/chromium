@@ -13,7 +13,7 @@ namespace gfx {
 // as a visual flag for misbehaving code.
 constexpr SkColor kPlaceholderColor = SK_ColorRED;
 
-const SkColor kChromeIconGrey = SkColorSetRGB(0x5A, 0x5A, 0x5A);
+const SkColor kChromeIconGray = SkColorSetRGB(0x5A, 0x5A, 0x5A);
 
 // The number refers to the shade of darkness. Each color in the MD
 // palette ranges from 100-900.

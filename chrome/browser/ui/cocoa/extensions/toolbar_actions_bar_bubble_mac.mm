@@ -208,7 +208,7 @@ CGFloat kMinWidth = 320.0;
     if (extra_view_info->resource) {
       NSImage* image =
           gfx::Image(gfx::CreateVectorIcon(*extra_view_info->resource, 16,
-                                           gfx::kChromeIconGrey))
+                                           gfx::kChromeIconGray))
               .ToNSImage();
       NSRect frame = NSMakeRect(0, 0, image.size.width, image.size.height);
       iconView_ = [[[NSImageView alloc] initWithFrame:frame] autorelease];

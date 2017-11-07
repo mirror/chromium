@@ -121,7 +121,7 @@ const int kListBadgeIconOffsetX = 6;
 const int kListBadgeIconOffsetY = 6;
 const int kTileIconSize = 48;
 
-const SkColor kIconColor = gfx::kChromeIconGrey;
+const SkColor kIconColor = gfx::kChromeIconGray;
 
 // The drag and drop app icon should get scaled by this factor.
 const float kDragDropAppIconScale = 1.2f;

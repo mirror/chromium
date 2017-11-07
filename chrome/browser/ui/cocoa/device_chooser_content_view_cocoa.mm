@@ -148,7 +148,7 @@ base::scoped_nsobject<NSTextField> CreateLabel(NSString* text) {
     NSImage* image = nullptr;
     if (isConnected) {
       image = gfx::NSImageFromImageSkia(gfx::CreateVectorIcon(
-          vector_icons::kBluetoothConnectedIcon, gfx::kChromeIconGrey));
+          vector_icons::kBluetoothConnectedIcon, gfx::kChromeIconGray));
     } else if (level != -1) {
       DCHECK_GE(level, 0);
       DCHECK_LT(level, base::checked_cast<NSInteger>(
@@ -858,7 +858,7 @@ void ChooserContentViewController::UpdateTableView() {
         [[self tableRowViewImage:rowIndex]
             setImage:gfx::NSImageFromImageSkia(gfx::CreateVectorIcon(
                          vector_icons::kBluetoothConnectedIcon,
-                         isSelected ? SK_ColorWHITE : gfx::kChromeIconGrey))];
+                         isSelected ? SK_ColorWHITE : gfx::kChromeIconGray))];
       } else {
         int signalStrengthLevel =
             chooserController_->GetSignalStrengthLevel(rowIndex);

@@ -94,7 +94,7 @@ NSColor* HelpLinkColor() {
 
     keyIcon_.reset([[NSImageView alloc] initWithFrame:NSZeroRect]);
     NSImage* keyImage = NSImageFromImageSkia(
-        gfx::CreateVectorIcon(kKeyIcon, 16, gfx::kChromeIconGrey));
+        gfx::CreateVectorIcon(kKeyIcon, 16, gfx::kChromeIconGray));
 
     [keyIcon_ setImage:keyImage];
     [passwordSection_ addSubview:keyIcon_];

@@ -349,7 +349,7 @@ NSImage* OmniboxPopupViewMac::ImageForMatch(
     const AutocompleteMatch& match) const {
   bool is_dark_mode = [matrix_ hasDarkTheme];
   const SkColor vector_icon_color =
-      is_dark_mode ? SkColorSetA(SK_ColorWHITE, 0xCC) : gfx::kChromeIconGrey;
+      is_dark_mode ? SkColorSetA(SK_ColorWHITE, 0xCC) : gfx::kChromeIconGray;
   return model_->GetMatchIcon(match, vector_icon_color).ToNSImage();
 }
 

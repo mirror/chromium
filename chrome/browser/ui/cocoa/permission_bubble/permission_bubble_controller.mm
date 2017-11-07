@@ -354,7 +354,7 @@ const NSSize kPermissionIconSize = {18, 18};
       [[NSImageView alloc] initWithFrame:NSZeroRect]);
   [permissionIcon
       setImage:NSImageFromImageSkia(gfx::CreateVectorIcon(
-                   request->GetIconId(), 18, gfx::kChromeIconGrey))];
+                   request->GetIconId(), 18, gfx::kChromeIconGray))];
   [permissionIcon setFrameSize:kPermissionIconSize];
   ui::a11y_util::HideImageFromAccessibilityOrder(permissionIcon);
   [permissionView addSubview:permissionIcon];
