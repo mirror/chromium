@@ -2499,4 +2499,8 @@ const char kPrefetchUsageMixedCount[] = "offline_pages.prefetch_mixed_count";
 // will be wiped.
 const char kMediaEngagementSchemaVersion[] = "media.engagement.schema_version";
 
+// A list of URLs (for U2F) or domains (for webauthn) that directly receive the
+// attestation certificate from a Security Key.
+const char kSecurityKeyDirectAttestation[] = "securitykey.direct_attestation";
+
 }  // namespace prefs

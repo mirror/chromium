@@ -11848,6 +11848,7 @@ uploading your change for review.  These are checked by presubmit scripts.
   <int value="393" label="NtlmV2Enabled"/>
   <int value="394" label="MinimumRequiredChromeVersion"/>
   <int value="395" label="PromptForDownloadLocation"/>
+  <int value="396" label="SecurityKeyDirectAttestation"/>
 </enum>
 
 <enum name="EnterprisePolicyInvalidations">

@@ -146,7 +146,7 @@
 #   persistent IDs for all fields (but not for groups!) are needed. These are
 #   specified by the 'id' keys of each policy. NEVER CHANGE EXISTING IDs,
 #   because doing so would break the deployed wire format!
-#   For your editing convenience: highest ID currently used: 395
+#   For your editing convenience: highest ID currently used: 396
 #   And don't forget to also update the EnterprisePolicies enum of
 #   histograms.xml (run 'python tools/metrics/histograms/update_policies.py').
 #
@@ -4678,6 +4678,26 @@
       If you disable this setting, whenever the user performs an action which would provoke a file selection dialog (like importing bookmarks, uploading files, saving links, etc.) a message is displayed instead and the user is assumed to have clicked Cancel on the file selection dialog.
 
       If this setting is not set, users can open file selection dialogs as normal.''',
+    },
+    {
+      'name': 'SecurityKeyDirectAttestation',
+      'type': 'list',
+      'schema': {
+        'type': 'array',
+        'items': { 'type': 'string' },
+      },
+      'supported_on': ['chrome.*:64-', 'chrome_os:64-'],
+      'features': {
+        'dynamic_refresh': True,
+        'per_profile': True,
+      },
+      'example_value': ['https://example.com'],
+      'id': 396,
+      'caption': '''URLs/domains for direct Security Key attestation''',
+      'tags': [],
+      'desc': '''Specifies URLs and domains for which attestation certificates from Security Keys are sent directly to the site during registration. Otherwise, attestation certificates are either sent via the <ph name="PRODUCT_NAME">Google Chrome</ph> Privacy CA, or are replaced with random certificates.
+
+      URLs (like https://example.com/some/path) will only match as U2F appIDs. Domains (like example.com) only match as webauthn RP IDs. Thus, to cover both U2F and webauthn APIs for a given site, both the appID URL and domain would need to be listed.''',
     },
     {
       'name': 'GCFUserDataDir',

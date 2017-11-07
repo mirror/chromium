@@ -7,11 +7,19 @@
 #include <stddef.h>
 
 #include "base/memory/ptr_util.h"
+#include "chrome/browser/profiles/profile.h"
+#include "chrome/common/pref_names.h"
+#include "components/pref_registry/pref_registry_syncable.h"
+#include "components/prefs/pref_service.h"
 #include "extensions/common/error_utils.h"
 #include "net/base/registry_controlled_domains/registry_controlled_domain.h"
 
 namespace extensions {
 namespace api {
+
+void CryptotokenRegisterPrefs(user_prefs::PrefRegistrySyncable* registry) {
+  registry->RegisterListPref(prefs::kSecurityKeyDirectAttestation);
+}
 
 const char kGoogleDotCom[] = "google.com";
 const char* kGoogleGstaticAppIds[] = {
@@ -79,6 +87,21 @@ CryptotokenPrivateCanOriginAssertAppIdFunction::Run() {
   }
   return RespondNow(OneArgument(base::MakeUnique<base::Value>(false)));
 }
+
+// TODO(agl/mab): remove special casing for individual attestation in
+// Javascript in favour of an enterprise policy, which can be accessed like
+// this:
+//   Profile* const profile = Profile::FromBrowserContext(browser_context());
+//   const PrefService* const prefs = profile->GetPrefs();
+//   const base::ListValue* const direct_attestation =
+//       prefs->GetList(prefs::kSecurityKeyDirectAttestation);
+//
+//   for (size_t i = 0; i < direct_attestation->GetSize(); i++) {
+//     std::string value;
+//     if (!direct_attestation->GetString(i, &value)) {
+//       continue;
+//     }
+//   }
 
 }  // namespace api
 }  // namespace extensions
