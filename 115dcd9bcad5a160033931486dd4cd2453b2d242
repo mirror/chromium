@@ -167,6 +167,30 @@
     },
     {
       "key": {
+        "uuid": "617bb8ef_5205c985",
+        "filename": "content/browser/webrtc/webrtc_eventlog_host.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 166,
+      "author": {
+        "id": 1246261
+      },
+      "writtenOn": "2017-11-07T14:41:18Z",
+      "side": 1,
+      "message": "I agree this is not a security issue, but given that it can never happen, I hoped I could enjoy CHECK\u0027s succinctness.",
+      "parentUuid": "8798c9d2_244d1a93",
+      "range": {
+        "startLine": 166,
+        "startChar": 10,
+        "endLine": 166,
+        "endChar": 34
+      },
+      "revId": "115dcd9bcad5a160033931486dd4cd2453b2d242",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "8bd92f35_4b0da991",
         "filename": "content/browser/webrtc/webrtc_eventlog_host.cc",
         "patchSetId": 3
@@ -290,6 +314,30 @@
       "side": 1,
       "message": "I would prefer a name that emphasizes that this is specifically for maintaining the active set up to date rather than a more general handler, but this is acceptable.",
       "parentUuid": "4b6d07c7_24b7c950",
+      "range": {
+        "startLine": 68,
+        "startChar": 7,
+        "endLine": 68,
+        "endChar": 29
+      },
+      "revId": "115dcd9bcad5a160033931486dd4cd2453b2d242",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "9cc5fe9a_6763d9f3",
+        "filename": "content/browser/webrtc/webrtc_eventlog_host.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 68,
+      "author": {
+        "id": 1246261
+      },
+      "writtenOn": "2017-11-07T14:41:18Z",
+      "side": 1,
+      "message": "This is not really maintaining the active set, but the subset of the active peers set that has associated log files. I can\u0027t think of anything to reflect that, that would not be too much of a mouthful. So, given that it\u0027s acceptable for you, I\u0027ll keep that.",
+      "parentUuid": "aea78d19_7ab6ef10",
       "range": {
         "startLine": 68,
         "startChar": 7,
