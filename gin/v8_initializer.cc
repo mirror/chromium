@@ -230,6 +230,12 @@ void V8Initializer::LoadV8Snapshot() {
   if (g_mapped_snapshot)
     return;
 
+#if defined(USE_V8_CONTEXT_SNAPSHOT)
+  if (V8_LOAD_SUCCESS == MapOpenedFile(GetOpenedFile(kV8ContextSnapshotFileName),
+                                       &g_mapped_snapshot))
+    return;
+#endif
+
   LoadV8FileResult result = MapOpenedFile(GetOpenedFile(kSnapshotFileName),
                                           &g_mapped_snapshot);
   // V8 can't start up without the source of the natives, but it can
