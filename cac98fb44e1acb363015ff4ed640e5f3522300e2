@@ -1,0 +1,90 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "7e8bf7ec_583da98f",
+        "filename": "ui/ozone/platform/wayland/wayland_touch.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 64,
+      "author": {
+        "id": 1001794
+      },
+      "writtenOn": "2017-11-07T20:24:38Z",
+      "side": 1,
+      "message": "If a DCHECK fires it should generally be due to a bug in chrome, not some other service. Probably better to log a warning and drop the event.",
+      "revId": "cac98fb44e1acb363015ff4ed640e5f3522300e2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "27112b67_66d9082d",
+        "filename": "ui/ozone/platform/wayland/wayland_touch.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 71,
+      "author": {
+        "id": 1001794
+      },
+      "writtenOn": "2017-11-07T20:24:38Z",
+      "side": 1,
+      "message": "Why does this need to be saved?\n\nI think you should be able to do\n\nTouchEvent touch_event(type, location, time_stamp, pointer_details);\ntouch-\u003ecallback_.Run(event);",
+      "range": {
+        "startLine": 71,
+        "startChar": 30,
+        "endLine": 71,
+        "endChar": 35
+      },
+      "revId": "cac98fb44e1acb363015ff4ed640e5f3522300e2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "89b567b9_a65b282b",
+        "filename": "ui/ozone/platform/wayland/wayland_touch.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 148,
+      "author": {
+        "id": 1001794
+      },
+      "writtenOn": "2017-11-07T20:24:38Z",
+      "side": 1,
+      "message": "Ah, I see, that\u0027s why it was saved. You don\u0027t need it; touch points that do not move don\u0027t need another event (until they do move).",
+      "range": {
+        "startLine": 148,
+        "startChar": 0,
+        "endLine": 148,
+        "endChar": 40
+      },
+      "revId": "cac98fb44e1acb363015ff4ed640e5f3522300e2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d70790fd_80cc8466",
+        "filename": "ui/ozone/platform/wayland/wayland_touch.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 38,
+      "author": {
+        "id": 1001794
+      },
+      "writtenOn": "2017-11-07T20:24:38Z",
+      "side": 1,
+      "message": "flat_map?\n\nSee guidelines in base/containers/README.md. Probably not unordered_map; the user doesn\u0027t have many fingers.",
+      "range": {
+        "startLine": 38,
+        "startChar": 22,
+        "endLine": 38,
+        "endChar": 25
+      },
+      "revId": "cac98fb44e1acb363015ff4ed640e5f3522300e2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
