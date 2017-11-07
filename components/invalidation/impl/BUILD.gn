@@ -223,6 +223,7 @@ if (is_android) {
     sources = [
       "$proto_path/serialized_invalidation.proto",
     ]
+    generate_nano = true
   }
   android_library("javatests") {
     testonly = true
