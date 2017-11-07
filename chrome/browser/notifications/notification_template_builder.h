@@ -39,6 +39,8 @@ class NotificationTemplateBuilder {
       const std::string& notification_id,
       const message_center::Notification& notification);
 
+  static void OverrideContextMenuLabelForTesting(const char* label);
+
   ~NotificationTemplateBuilder();
 
   // Gets the XML template that was created by this builder.
@@ -51,7 +53,7 @@ class NotificationTemplateBuilder {
   NotificationTemplateBuilder();
 
   // Formats the |origin| for display in the notification template.
-  std::string FormatOrigin(const GURL& origin) const;
+  base::string16 FormatOrigin(const GURL& origin) const;
 
   // Writes the <toast> element with the |notification_id| as the launch string.
   // Also closes the |xml_writer_| for writing as the toast is now complete.
@@ -84,6 +86,14 @@ class NotificationTemplateBuilder {
   // Fills in the details for the actions.
   void AddActions(const std::vector<message_center::ButtonInfo>& buttons);
   void WriteActionElement(const message_center::ButtonInfo& button, int index);
+
+  // Adds context menu actions to the notification sent by |origin|.
+  void AddContextMenu();
+  void WriteContextMenuElement(const std::string& content,
+                               const std::string& arguments);
+
+  // Label to override context menu items in tests.
+  static std::unique_ptr<std::string> context_menu_label_override_;
 
   // The XML writer to which the template will be written.
   std::unique_ptr<XmlWriter> xml_writer_;

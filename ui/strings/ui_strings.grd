@@ -675,6 +675,11 @@ need to be translated for each locale.-->
           Survey
         </message>
       </if>
+      <if expr="is_win">
+        <message name="IDS_MESSAGE_NOTIFICATION_SETTINGS_CONTEXT_MENU_ITEM_NAME" desc="The name of the button in Windows Notification Center which leads to Chrome notification settings.">
+          Go to <ph name="SHORT_PRODUCT_NAME">$1<ex>Chrome</ex></ph> notification settings
+        </message>
+      </if>
 
       <!-- App list -->
       <message name="IDS_SUGGESTED_APPS_INDICATOR" desc="Indicator text in the launcher on top of suggested apps.">
