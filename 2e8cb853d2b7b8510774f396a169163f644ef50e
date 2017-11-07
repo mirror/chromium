@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "549469d3_2ea5b898",
+        "filename": "components/sync/model_impl/processor_entity_tracker.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 190,
+      "author": {
+        "id": 1115991
+      },
+      "writtenOn": "2017-11-07T18:58:10Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "f03278fd_c2b829fa",
+      "range": {
+        "startLine": 190,
+        "startChar": 27,
+        "endLine": 190,
+        "endChar": 32
+      },
+      "revId": "2e8cb853d2b7b8510774f396a169163f644ef50e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "c24a08a6_f27ae6c8",
         "filename": "components/sync/model_impl/processor_entity_tracker.cc",
         "patchSetId": 2
@@ -39,6 +63,24 @@
       "revId": "2e8cb853d2b7b8510774f396a169163f644ef50e",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "66a54ca8_9798c093",
+        "filename": "components/sync/model_impl/processor_entity_tracker.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 192,
+      "author": {
+        "id": 1115991
+      },
+      "writtenOn": "2017-11-07T18:58:10Z",
+      "side": 1,
+      "message": "You are correct, this is an issue. \n\nI\u0027m against persisting commit_request_sequence_number_. I think the right behavior is to always commit tombstone to server. I experimented with Chrome and found out that directory based implementation has the same problem, it discards tombstone for item that doesn\u0027t have server id. Because I don\u0027t know how server will react to committing tombstone I\u0027ve decided to write a big TODO with explanation and investigate server behavior separately.\n\nPS: I found unused function while experimenting with it.",
+      "parentUuid": "c24a08a6_f27ae6c8",
+      "revId": "2e8cb853d2b7b8510774f396a169163f644ef50e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -59,6 +101,24 @@
     },
     {
       "key": {
+        "uuid": "e4afde88_6873217d",
+        "filename": "components/sync/model_impl/shared_model_type_processor.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 288,
+      "author": {
+        "id": 1115991
+      },
+      "writtenOn": "2017-11-07T18:58:10Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "b4828fad_1696f192",
+      "revId": "2e8cb853d2b7b8510774f396a169163f644ef50e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "550137cf_2907a428",
         "filename": "components/sync/model_impl/shared_model_type_processor.cc",
         "patchSetId": 2
@@ -73,6 +133,24 @@
       "revId": "2e8cb853d2b7b8510774f396a169163f644ef50e",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "559cab33_4fc7e4fc",
+        "filename": "components/sync/model_impl/shared_model_type_processor.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 290,
+      "author": {
+        "id": 1115991
+      },
+      "writtenOn": "2017-11-07T18:58:10Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "550137cf_2907a428",
+      "revId": "2e8cb853d2b7b8510774f396a169163f644ef50e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
