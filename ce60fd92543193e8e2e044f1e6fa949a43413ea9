@@ -34,6 +34,24 @@
       "revId": "ce60fd92543193e8e2e044f1e6fa949a43413ea9",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "451564c9_809a1131",
+        "filename": "components/autofill/core/browser/autofill_field.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 617,
+      "author": {
+        "id": 1209219
+      },
+      "writtenOn": "2017-11-07T16:22:42Z",
+      "side": 1,
+      "message": "I agree, make_unique is not necessary here. \n\nBut when you say \"unknown\" you meant AutofillType(UNKNOWN_TYPE)? It is used by CreditCard override as one of the possible return value. If I simply have html_type\u003dAutofillType(UNKNOWN_TYPE), AutofillFieldTest.Type_CreditCardOverrideHtml_Heuristics will fail. I added an extra bool to indicate whether they are set or not.",
+      "parentUuid": "46f82870_765a56f5",
+      "revId": "ce60fd92543193e8e2e044f1e6fa949a43413ea9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
