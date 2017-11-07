@@ -2,6 +2,23 @@
   "comments": [
     {
       "key": {
+        "uuid": "dafc06c2_03a57f9c",
+        "filename": "tools/perf/contrib/heap_profiling/heap_profiling.py",
+        "patchSetId": 1
+      },
+      "lineNbr": 48,
+      "author": {
+        "id": 1123010
+      },
+      "writtenOn": "2017-11-07T14:34:47Z",
+      "side": 1,
+      "message": "I think it should be possible to avoid these two intermediate abstract classes by making _HeapProfilingBenchmark generic enough. Ideally you should be able to just write, e.g.:\n\nclass PseudoHeapProfilingDesktopBenchmark(_HeapProfilingBenchmark):\n  PROFILING_MODE \u003d \u0027pseudo\u0027\n  PLATFORM \u003d \u0027desktop\u0027\n  SUPPORTED_PLATFORMS \u003d [story.expectations.ALL_DESKTOP]\n\n  @classmethod\n  def Name(cls):\n    return \u0027heap_profiling.desktop.pseudo\u0027\n\nAnd so on for each of the combinations.\n\nFor some inspiration, you can look at:\nhttps://cs.chromium.org/chromium/src/tools/perf/benchmarks/system_health.py?q\u003d_MemorySystemHealthBenchmark\u0026l\u003d90",
+      "revId": "c28d770b78e6a9056d107a18e275d862af927cd1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "70a9986d_ea479bce",
         "filename": "tools/perf/page_sets/system_health/system_health_stories.py",
         "patchSetId": 1
@@ -13,6 +30,47 @@
       "writtenOn": "2017-11-07T14:20:19Z",
       "side": 1,
       "message": "actually can you move these 3 classes to contrib/heap_profiling/? This file is for system health code only",
+      "revId": "c28d770b78e6a9056d107a18e275d862af927cd1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "35785e62_3034767c",
+        "filename": "tools/perf/page_sets/system_health/system_health_stories.py",
+        "patchSetId": 1
+      },
+      "lineNbr": 44,
+      "author": {
+        "id": 1123010
+      },
+      "writtenOn": "2017-11-07T14:34:47Z",
+      "side": 1,
+      "message": "I originally told Greg to put them here, but yeah, moving to contrib sgtm too",
+      "parentUuid": "70a9986d_ea479bce",
+      "revId": "c28d770b78e6a9056d107a18e275d862af927cd1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9db96c42_88f6deb4",
+        "filename": "tools/perf/page_sets/system_health/system_health_stories.py",
+        "patchSetId": 1
+      },
+      "lineNbr": 59,
+      "author": {
+        "id": 1123010
+      },
+      "writtenOn": "2017-11-07T14:34:47Z",
+      "side": 1,
+      "message": "I think you don\u0027t need these extra classes, just call HeapProfilingStorySet(\u0027mobile\u0027) or HeapProfilingStorySet(\u0027desktop\u0027) when needed.",
+      "range": {
+        "startLine": 59,
+        "startChar": 6,
+        "endLine": 59,
+        "endChar": 34
+      },
       "revId": "c28d770b78e6a9056d107a18e275d862af927cd1",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
