@@ -331,6 +331,10 @@ void TranslatePrefs::RearrangeLanguage(
 
     case kNone:
       return;
+
+    default:
+      NOTREACHED();
+      return;
   }
 
   // All cases can be achieved with a single rotation.
