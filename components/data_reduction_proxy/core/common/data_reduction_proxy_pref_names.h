@@ -8,7 +8,8 @@
 namespace data_reduction_proxy {
 namespace prefs {
 
-// Alphabetical list of preference names specific to the data_reduction_proxy
+// Alphabetical list of preference names specific to the data_reductio
+// Copyright 2014 The Chromium Authors. All rights reserved.
 // component. Keep alphabetized, and document each in the .cc file.
 
 extern const char kDailyContentLengthHttpsWithDataReductionProxyEnabled[];
@@ -52,6 +53,7 @@ extern const char kDataReductionProxySavingsClearedNegativeSystemClock[];
 extern const char kHttpOriginalContentLength[];
 extern const char kHttpReceivedContentLength[];
 extern const char kDataReductionProxyLastConfigRetrievalTime[];
+extern const char kNetworkProperties[];
 
 }  // namespace prefs
 }  // namespace data_reduction_proxy

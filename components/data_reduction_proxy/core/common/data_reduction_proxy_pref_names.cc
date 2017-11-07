@@ -209,5 +209,7 @@ const char kHttpOriginalContentLength[] = "http_original_content_length";
 const char kDataReductionProxyLastConfigRetrievalTime[] =
     "data_reduction.last_config_retrieval_time";
 
+const char kNetworkProperties[] = "data_reduction.network_properties";
+
 }  // namespace prefs
 }  // namespace data_reduction_proxy

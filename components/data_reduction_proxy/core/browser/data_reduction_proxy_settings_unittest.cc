@@ -14,6 +14,7 @@
 #include "base/md5.h"
 #include "base/message_loop/message_loop.h"
 #include "base/metrics/field_trial.h"
+
 #include "base/metrics/histogram_samples.h"
 #include "base/test/histogram_tester.h"
 #include "base/test/mock_entropy_provider.h"
@@ -24,6 +25,7 @@
 #include "components/data_reduction_proxy/core/browser/data_reduction_proxy_config_test_utils.h"
 #include "components/data_reduction_proxy/core/browser/data_reduction_proxy_settings_test_utils.h"
 #include "components/data_reduction_proxy/core/browser/data_reduction_proxy_test_utils.h"
+#include "components/data_reduction_proxy/core/browser/network_properties_manager.h"
 #include "components/data_reduction_proxy/core/common/data_reduction_proxy_params.h"
 #include "components/data_reduction_proxy/core/common/data_reduction_proxy_params_test_utils.h"
 #include "components/data_reduction_proxy/core/common/data_reduction_proxy_pref_names.h"
@@ -63,6 +65,13 @@ class DataReductionProxySettingsTest
 
 TEST_F(DataReductionProxySettingsTest, TestIsProxyEnabledOrManaged) {
   InitPrefMembers();
+
+  // base::MessageLoopForIO loop;
+  NetworkPropertiesManager network_properties_manager(
+      test_context_->task_runner(), test_context_->task_runner());
+  test_context_->config()->SetNetworkPropertiesManagerForTesting(
+      &network_properties_manager);
+
   // The proxy is disabled initially.
   test_context_->config()->UpdateConfigForTesting(false, true, true);
 
@@ -82,6 +91,13 @@ TEST_F(DataReductionProxySettingsTest, TestIsProxyEnabledOrManaged) {
 
 TEST_F(DataReductionProxySettingsTest, TestCanUseDataReductionProxy) {
   InitPrefMembers();
+
+  // base::MessageLoopForIO loop;
+  NetworkPropertiesManager network_properties_manager(
+      test_context_->task_runner(), test_context_->task_runner());
+  test_context_->config()->SetNetworkPropertiesManagerForTesting(
+      &network_properties_manager);
+
   // The proxy is disabled initially.
   test_context_->config()->UpdateConfigForTesting(false, true, true);
 
@@ -248,6 +264,11 @@ TEST(DataReductionProxySettingsStandaloneTest, TestOnProxyEnabledPrefChange) {
           .SkipSettingsInitialization()
           .Build();
 
+  NetworkPropertiesManager network_properties_manager(
+      drp_test_context->task_runner(), drp_test_context->task_runner());
+  drp_test_context->config()->SetNetworkPropertiesManagerForTesting(
+      &network_properties_manager);
+
   // The proxy is enabled initially.
   drp_test_context->config()->UpdateConfigForTesting(true, true, true);
   drp_test_context->InitSettings();
@@ -269,6 +290,12 @@ TEST_F(DataReductionProxySettingsTest, TestMaybeActivateDataReductionProxy) {
   // Initialize the pref member in |settings_| without the usual callback
   // so it won't trigger MaybeActivateDataReductionProxy when the pref value
   // is set.
+  // base::MessageLoopForIO loop;
+  NetworkPropertiesManager network_properties_manager(
+      test_context_->task_runner(), test_context_->task_runner());
+  test_context_->config()->SetNetworkPropertiesManagerForTesting(
+      &network_properties_manager);
+
   settings_->spdy_proxy_auth_enabled_.Init(
       test_context_->GetDataReductionProxyEnabledPrefName(),
       settings_->GetOriginalProfilePrefs());

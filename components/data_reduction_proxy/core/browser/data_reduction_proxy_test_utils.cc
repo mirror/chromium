@@ -256,7 +256,7 @@ TestDataReductionProxyIOData::TestDataReductionProxyIOData(
     std::unique_ptr<DataReductionProxyConfigurator> configurator,
     net::NetLog* net_log,
     bool enabled)
-    : DataReductionProxyIOData(),
+    : DataReductionProxyIOData(task_runner, task_runner),
       service_set_(false),
       pingback_reporting_fraction_(0.0f),
       test_request_options_(request_options.get()) {

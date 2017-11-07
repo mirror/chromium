@@ -24,6 +24,7 @@
 #include "components/data_reduction_proxy/core/browser/data_reduction_proxy_network_delegate.h"
 #include "components/data_reduction_proxy/core/browser/data_reduction_proxy_service.h"
 #include "components/data_reduction_proxy/core/browser/data_reduction_proxy_settings.h"
+#include "components/data_reduction_proxy/core/browser/network_properties_manager.h"
 #include "components/data_reduction_proxy/core/common/data_reduction_proxy_event_creator.h"
 #include "components/data_reduction_proxy/core/common/data_reduction_proxy_event_storage_delegate.h"
 #include "components/data_reduction_proxy/core/common/data_reduction_proxy_params.h"
@@ -133,6 +134,7 @@ DataReductionProxyIOData::DataReductionProxyIOData(
         io_task_runner, net_log, std::move(params), configurator_.get(),
         event_creator_.get()));
   }
+  // maybe pass as part of ctor.
 
   // It is safe to use base::Unretained here, since it gets executed
   // synchronously on the IO thread, and |this| outlives the caller (since the
@@ -157,13 +159,24 @@ DataReductionProxyIOData::DataReductionProxyIOData(
   proxy_delegate_.reset(new DataReductionProxyDelegate(
       config_.get(), configurator_.get(), event_creator_.get(),
       bypass_stats_.get(), net_log_));
+  network_properties_manager_.reset(
+      new NetworkPropertiesManager(ui_task_runner_, io_task_runner_));
 }
 
-DataReductionProxyIOData::DataReductionProxyIOData()
+DataReductionProxyIOData::DataReductionProxyIOData(
+    scoped_refptr<base::SingleThreadTaskRunner> ui_task_runner,
+    scoped_refptr<base::SingleThreadTaskRunner> io_task_runner)
     : client_(Client::UNKNOWN),
       net_log_(nullptr),
+      io_task_runner_(io_task_runner),
+      ui_task_runner_(ui_task_runner),
       url_request_context_getter_(nullptr),
-      weak_factory_(this) {}
+      weak_factory_(this) {
+  DCHECK(ui_task_runner_);
+  DCHECK(io_task_runner_);
+  network_properties_manager_.reset(
+      new NetworkPropertiesManager(ui_task_runner_, io_task_runner_));
+}
 
 DataReductionProxyIOData::~DataReductionProxyIOData() {
   // Guaranteed to be destroyed on IO thread if the IO thread is still
@@ -195,8 +208,12 @@ void DataReductionProxyIOData::SetDataReductionProxyService(
 
 void DataReductionProxyIOData::InitializeOnIOThread() {
   DCHECK(io_task_runner_->BelongsToCurrentThread());
+  DCHECK(network_properties_manager_);
+
   config_->InitializeOnIOThread(basic_url_request_context_getter_.get(),
-                                url_request_context_getter_);
+                                url_request_context_getter_,
+                                network_properties_manager_.get());
+  // config_->SetNetworkPropertiesManager(network_properties_manager_.get());
   bypass_stats_->InitializeOnIOThread();
   proxy_delegate_->InitializeOnIOThread(this);
   if (config_client_.get())
@@ -417,5 +434,16 @@ void DataReductionProxyIOData::SetPreviewsDecider(
   DCHECK(previews_decider);
   previews_decider_ = previews_decider;
 }
+/*
+void DataReductionProxyIOData::SetNetworkPropertiesManager(
+    NetworkPropertiesManager* manager) {
+  LOG(WARNING) << "xxx SetNetworkPropertyPrefManager cp0";
+  DCHECK(io_task_runner_->BelongsToCurrentThread());
+
+//    manager->InitOnUIThread(ui_task_runner_);
+ // manager->InitOnIOThread(io_task_runner_);
+  config_->SetNetworkPropertiesManager(manager);
+}
+*/
 
 }  // namespace data_reduction_proxy

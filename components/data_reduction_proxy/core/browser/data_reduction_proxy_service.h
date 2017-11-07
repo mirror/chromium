@@ -42,6 +42,7 @@ class DataReductionProxyIOData;
 class DataReductionProxyPingbackClient;
 class DataReductionProxyServiceObserver;
 class DataReductionProxySettings;
+class NetworkPropertiesManager;
 
 // Contains and initializes all Data Reduction Proxy objects that have a
 // lifetime based on the UI thread.

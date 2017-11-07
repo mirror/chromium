@@ -48,6 +48,7 @@ class DataReductionProxyConfigServiceClient;
 class DataReductionProxyConfigurator;
 class DataReductionProxyEventCreator;
 class DataReductionProxyService;
+class NetworkPropertiesManager;
 
 // Contains and initializes all Data Reduction Proxy objects that operate on
 // the IO thread.
@@ -216,6 +217,8 @@ class DataReductionProxyIOData : public DataReductionProxyEventStorageDelegate {
   // The Client type of this build.
   Client client() const { return client_; }
 
+  // void SetNetworkPropertiesManager(NetworkPropertiesManager* manager);
+
  private:
   friend class TestDataReductionProxyIOData;
   FRIEND_TEST_ALL_PREFIXES(DataReductionProxyIODataTest, TestConstruction);
@@ -223,7 +226,9 @@ class DataReductionProxyIOData : public DataReductionProxyEventStorageDelegate {
                            TestResetBadProxyListOnDisableDataSaver);
 
   // Used for testing.
-  DataReductionProxyIOData();
+  DataReductionProxyIOData(
+      scoped_refptr<base::SingleThreadTaskRunner> ui_task_runner,
+      scoped_refptr<base::SingleThreadTaskRunner> io_task_runner);
 
   // Initializes the weak pointer to |this| on the IO thread. It must be done
   // on the IO thread, since it is used for posting tasks from the UI thread
@@ -307,6 +312,8 @@ class DataReductionProxyIOData : public DataReductionProxyEventStorageDelegate {
 
   // The production channel of this build.
   const std::string channel_;
+
+  std::unique_ptr<NetworkPropertiesManager> network_properties_manager_;
 
   base::WeakPtrFactory<DataReductionProxyIOData> weak_factory_;
 

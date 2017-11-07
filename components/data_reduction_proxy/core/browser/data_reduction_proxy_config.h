@@ -18,7 +18,6 @@
 #include "base/memory/weak_ptr.h"
 #include "base/threading/thread_checker.h"
 #include "base/time/time.h"
-#include "components/data_reduction_proxy/core/browser/network_properties_manager.h"
 #include "components/data_reduction_proxy/core/browser/secure_proxy_checker.h"
 #include "components/data_reduction_proxy/core/common/data_reduction_proxy_server.h"
 #include "components/previews/core/previews_experiments.h"
@@ -48,6 +47,7 @@ namespace data_reduction_proxy {
 class DataReductionProxyConfigValues;
 class DataReductionProxyConfigurator;
 class DataReductionProxyEventCreator;
+class NetworkPropertiesManager;
 class SecureProxyChecker;
 class WarmupURLFetcher;
 struct DataReductionProxyTypeInfo;
@@ -110,7 +110,8 @@ class DataReductionProxyConfig
   void InitializeOnIOThread(const scoped_refptr<net::URLRequestContextGetter>&
                                 basic_url_request_context_getter,
                             const scoped_refptr<net::URLRequestContextGetter>&
-                                url_request_context_getter);
+                                url_request_context_getter,
+                            NetworkPropertiesManager* manager);
 
   // Sets the proxy configs, enabling or disabling the proxy according to
   // the value of |enabled|. If |restricted| is true, only enable the fallback
@@ -206,6 +207,10 @@ class DataReductionProxyConfig
   bool insecure_proxies_allowed() const;
 
   std::vector<DataReductionProxyServer> GetProxiesForHttp() const;
+
+  // void SetNetworkPropertiesManager(NetworkPropertiesManager* manager);
+
+  void SetNetworkPropertiesManagerForTesting(NetworkPropertiesManager* manager);
 
  protected:
   // Should be called when there is a change in the status of the availability
@@ -340,7 +345,7 @@ class DataReductionProxyConfig
   // The current connection type.
   net::NetworkChangeNotifier::ConnectionType connection_type_;
 
-  NetworkPropertiesManager network_properties_manager_;
+  NetworkPropertiesManager* network_properties_manager_;
 
   base::WeakPtrFactory<DataReductionProxyConfig> weak_factory_;
 

@@ -16,11 +16,13 @@
 #include "base/task_runner_util.h"
 #include "base/time/time.h"
 #include "components/data_reduction_proxy/core/browser/data_reduction_proxy_compression_stats.h"
+#include "components/data_reduction_proxy/core/browser/data_reduction_proxy_config.h"
 #include "components/data_reduction_proxy/core/browser/data_reduction_proxy_io_data.h"
 #include "components/data_reduction_proxy/core/browser/data_reduction_proxy_pingback_client.h"
 #include "components/data_reduction_proxy/core/browser/data_reduction_proxy_service_observer.h"
 #include "components/data_reduction_proxy/core/browser/data_reduction_proxy_settings.h"
 #include "components/data_reduction_proxy/core/browser/data_store.h"
+#include "components/data_reduction_proxy/core/browser/network_properties_manager.h"
 #include "components/data_reduction_proxy/core/common/data_reduction_proxy_event_store.h"
 #include "components/data_reduction_proxy/core/common/data_reduction_proxy_features.h"
 #include "components/data_reduction_proxy/core/common/data_reduction_proxy_params.h"
@@ -73,6 +75,12 @@ void DataReductionProxyService::SetIOData(
   initialized_ = true;
   for (DataReductionProxyServiceObserver& observer : observer_list_)
     observer.OnServiceInitialized();
+  /*
+  io_task_runner_->PostTask(
+      FROM_HERE,
+      base::Bind(&DataReductionProxyIOData::SetNetworkPropertiesManager,
+                 io_data_, network_properties_manager_.get()));
+                 */
 
   ReadPersistedClientConfig();
 }
@@ -191,9 +199,16 @@ void DataReductionProxyService::SetStringPref(const std::string& pref_path,
 void DataReductionProxyService::SetProxyPrefs(bool enabled, bool at_startup) {
   DCHECK_CALLED_ON_VALID_SEQUENCE(sequence_checker_);
   if (io_task_runner_->BelongsToCurrentThread()) {
+    //  io_data_->SetNetworkPropertiesManager(network_properties_manager_.get());
     io_data_->SetProxyPrefs(enabled, at_startup);
     return;
   }
+  /*
+  io_task_runner_->PostTask(
+      FROM_HERE,
+      base::Bind(&DataReductionProxyIOData::SetNetworkPropertiesManager,
+                 io_data_, network_properties_manager_.get()));
+                 */
   io_task_runner_->PostTask(
       FROM_HERE, base::Bind(&DataReductionProxyIOData::SetProxyPrefs, io_data_,
                             enabled, at_startup));
