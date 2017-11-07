@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "edb3f425_ae252c63",
+        "filename": "content/browser/cache_storage/cache_storage_manager_unittest.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 1362,
+      "author": {
+        "id": 1116284
+      },
+      "writtenOn": "2017-11-07T16:36:18Z",
+      "side": 1,
+      "message": "Can you hold onto the handle in this method so that it\u0027s obvious that the cache is doomed but not yet deleted?",
+      "revId": "b927dbd868395c80e1ff60ce5507d71bbf47e092",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
