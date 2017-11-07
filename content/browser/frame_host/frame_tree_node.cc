@@ -373,8 +373,7 @@ void FrameTreeNode::SetPendingFramePolicy(FramePolicy frame_policy) {
 
   if (parent()) {
     // Subframes should always inherit their parent's sandbox flags.
-    pending_frame_policy_.sandbox_flags |=
-        parent()->effective_frame_policy().sandbox_flags;
+    pending_frame_policy_.sandbox_flags |= parent()->active_sandbox_flags();
     // This is only applied on subframes; container policy is not mutable on
     // main frame.
     pending_frame_policy_.container_policy = frame_policy.container_policy;
@@ -436,6 +435,7 @@ bool FrameTreeNode::CommitPendingFramePolicy() {
   if (did_change_container_policy)
     replication_state_.frame_policy.container_policy =
         pending_frame_policy_.container_policy;
+  replication_state_.active_sandbox_flags = pending_frame_policy_.sandbox_flags;
   return did_change_flags || did_change_container_policy;
 }
 
@@ -639,6 +639,14 @@ FrameTreeNode* FrameTreeNode::GetSibling(int relative_offset) const {
 
   NOTREACHED() << "FrameTreeNode not found in its parent's children.";
   return nullptr;
+}
+
+void FrameTreeNode::UpdateActiveSandboxFlags(
+    blink::WebSandboxFlags sandbox_flags) {
+  // TODO(iclelland): Kill the renderer if sandbox flags is not a subset of the
+  // currently effective sandbox flags from the frame. https://crbug.com/740556
+  replication_state_.active_sandbox_flags =
+      sandbox_flags | effective_frame_policy().sandbox_flags;
 }
 
 }  // namespace content
