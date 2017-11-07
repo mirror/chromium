@@ -95,6 +95,24 @@
     },
     {
       "key": {
+        "uuid": "c619d9bc_4c3bd035",
+        "filename": "chrome/browser/resources/welcome/dice_welcome/welcome.js",
+        "patchSetId": 8
+      },
+      "lineNbr": 9,
+      "author": {
+        "id": 1214259
+      },
+      "writtenOn": "2017-11-07T09:23:06Z",
+      "side": 1,
+      "message": "I intentionally didn\u0027t make any changes to the newly copied files in this CL, so code changes from the original files would be easier to see in subsequent CLs.",
+      "parentUuid": "59280bad_80350d1a",
+      "revId": "6cc46a8af85fc9360008edfb614e4cf45ff2e04d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "fbc95377_51c64476",
         "filename": "chrome/browser/resources/welcome/dice_welcome/welcome.js",
         "patchSetId": 8
@@ -106,6 +124,24 @@
       "writtenOn": "2017-11-03T18:34:38Z",
       "side": 1,
       "message": "I suggest moving the contents of welcome.html to a Polymer top-level app.html, so that you can use normal Polymer syntax to attach listeners (on-click, on-tap etc).",
+      "revId": "6cc46a8af85fc9360008edfb614e4cf45ff2e04d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1457c5dc_79b2a34f",
+        "filename": "chrome/browser/resources/welcome/dice_welcome/welcome.js",
+        "patchSetId": 8
+      },
+      "lineNbr": 18,
+      "author": {
+        "id": 1214259
+      },
+      "writtenOn": "2017-11-07T09:23:06Z",
+      "side": 1,
+      "message": "See above regarding straight-up copies of the original file. \n\nBut also, given how minimal and straight forward the welcome-page is, is the overhead of loading in Polymer and initializing a Polymer custom element worth it?",
+      "parentUuid": "fbc95377_51c64476",
       "revId": "6cc46a8af85fc9360008edfb614e4cf45ff2e04d",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -126,6 +162,24 @@
       "revId": "6cc46a8af85fc9360008edfb614e4cf45ff2e04d",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "49b394ad_daef6b5d",
+        "filename": "chrome/browser/ui/webui/welcome_ui.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 70,
+      "author": {
+        "id": 1214259
+      },
+      "writtenOn": "2017-11-07T09:23:06Z",
+      "side": 1,
+      "message": "I\u0027m just copying these files to a new \"fork\" in this CL, but the contents within all these files are expected to be updated in later CLs to match new mocks. I thought this would be easier to see what changed in later reviews (as opposed to the diff showing an entirely newly added file mixed with copied code and new changes all together).",
+      "parentUuid": "ffc40b23_c18efca4",
+      "revId": "6cc46a8af85fc9360008edfb614e4cf45ff2e04d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
