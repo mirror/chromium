@@ -165,15 +165,15 @@
             <template is="dom-repeat" items="[[entries_]]">
               <div class="item-container">
                 <div class$="error-item
-                    [[computeErrorClass_(selectedError_, item)]]">
+                    [[computeErrorClass_(item, selectedEntry_)]]">
                   <div actionable class=" start" on-tap="onErrorItemAction_"
                       on-keydown="onErrorItemAction_" tabindex="0">
                     <iron-icon icon$="[[computeErrorIcon_(item)]]"></iron-icon>
                     <div class="error-message">[[item.message]]</div>
-                    <cr-expand-button hidden="[[!computeIsRuntimeError_(item)]]"
-                        expanded="{{item.expanded}}"
+                    <div class$="cr-icon [[iconName_(index, selectedEntry_)]]"
+                        hidden="[[!computeIsRuntimeError_(item)]]"
                         tab-index="-1">
-                    </cr-expand-button>
+                    </div>
                   </div>
                   <div class="separator"></div>
                   <button is="paper-icon-button-light" class="icon-delete-gray"
@@ -182,7 +182,7 @@
                   </button>
                 </div>
                 <template is="dom-if" if="[[computeIsRuntimeError_(item)]]">
-                  <iron-collapse opened="[[item.expanded]]">
+                  <iron-collapse opened="[[isOpened_(index, selectedEntry_)]]">
                     <div id="devtools-controls">
                       <div id="stack-trace-heading">
                         $i18n{stackTrace}
