@@ -16,6 +16,24 @@
       "revId": "7b3a1f872804de760e4958a0e18973eaad250407",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5facf48c_e07505f6",
+        "filename": "tools/perf/contrib/vr_benchmarks/OWNERS",
+        "patchSetId": 2
+      },
+      "lineNbr": 1,
+      "author": {
+        "id": 1213279
+      },
+      "writtenOn": "2017-11-07T22:31:50Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "c61e6d20_bd2a045b",
+      "revId": "7b3a1f872804de760e4958a0e18973eaad250407",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
