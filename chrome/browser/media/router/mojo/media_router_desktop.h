@@ -54,6 +54,7 @@ class MediaRouterDesktop : public MediaRouterMojoImpl {
   friend class MediaRouterDesktopTest;
   friend class MediaRouterDesktopTestTest;
   friend class MediaRouterFactory;
+  FRIEND_TEST_ALL_PREFIXES(MediaRouterDesktopTest, EnableMdnsAfterEachRegister);
   FRIEND_TEST_ALL_PREFIXES(MediaRouterDesktopTest, TestProvideSinks);
 
   enum class FirewallCheck {
