@@ -1,0 +1,157 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "ce7ed5d9_f33ae12a",
+        "filename": "ash/display/cursor_window_controller.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 77,
+      "author": {
+        "id": 1000042
+      },
+      "writtenOn": "2017-11-07T18:43:42Z",
+      "side": 1,
+      "message": "nit: mind moving this down?\n\n  aura::Window* container_;\n\n  // The current cursor-compositing state.\n  bool is_cursor_compositing_enabled_ \u003d false;\n\n  // If true, cursor compositing will be always enabled. (For test only)\n  bool is_cursor_compositing_enabled_for_test_ \u003d false;",
+      "revId": "7f2b789571b0b65a25d3ad2716b620acc4c2e59f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ad636e9e_7950097f",
+        "filename": "ash/display/cursor_window_controller.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 78,
+      "author": {
+        "id": 1000042
+      },
+      "writtenOn": "2017-11-07T18:43:42Z",
+      "side": 1,
+      "message": "it feels odd to initialize some POD members in the header while initializing others in the .cc file. would you mind initializing them all here instead?",
+      "revId": "7f2b789571b0b65a25d3ad2716b620acc4c2e59f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a8cdaebc_4740b4aa",
+        "filename": "ash/display/cursor_window_controller.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 81,
+      "author": {
+        "id": 1000042
+      },
+      "writtenOn": "2017-11-07T18:43:42Z",
+      "side": 1,
+      "message": "how about force_cursor_compositing_for_test_?\n\nbut instead of adding test-only code, can you make the tests just put ash into a state where you get the behavior you want (e.g. set a pref or configure DisplayManager appropriately)? that improves test coverage.",
+      "revId": "7f2b789571b0b65a25d3ad2716b620acc4c2e59f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7f7a039c_19d3ed23",
+        "filename": "ash/display/display_manager_unittest.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 3448,
+      "author": {
+        "id": 1000042
+      },
+      "writtenOn": "2017-11-07T18:43:42Z",
+      "side": 1,
+      "message": "avoiding SetUp when possible is recommended: https://github.com/google/googletest/blob/master/googletest/docs/FAQ.md#should-i-use-the-constructordestructor-of-the-test-fixture-or-the-set-uptear-down-function\n\ncan you instead call AppendSwitch in the c\u0027tor and remove SetUp from this class?",
+      "revId": "7f2b789571b0b65a25d3ad2716b620acc4c2e59f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "21a13184_0fe62c8c",
+        "filename": "ui/display/display_switches.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 17,
+      "author": {
+        "id": 1000042
+      },
+      "writtenOn": "2017-11-07T18:43:42Z",
+      "side": 1,
+      "message": "nit: keep sorted",
+      "revId": "7f2b789571b0b65a25d3ad2716b620acc4c2e59f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4dfd92fa_fad59019",
+        "filename": "ui/display/display_switches.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 17,
+      "author": {
+        "id": 1000042
+      },
+      "writtenOn": "2017-11-07T18:43:42Z",
+      "side": 1,
+      "message": "nit: like the comment says, please keep this list sorted :-)",
+      "revId": "7f2b789571b0b65a25d3ad2716b620acc4c2e59f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "12a46c80_5e532bf6",
+        "filename": "ui/display/manager/display_manager.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 1118,
+      "author": {
+        "id": 1000042
+      },
+      "writtenOn": "2017-11-07T18:43:42Z",
+      "side": 1,
+      "message": "nit: i\u0027d recommend combining these:\n\n  if ((is... \u0026\u0026 ...) ||\n      (!is... \u0026\u0026 ...))\n    return;",
+      "revId": "7f2b789571b0b65a25d3ad2716b620acc4c2e59f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8c40b0a9_6f3a4613",
+        "filename": "ui/display/manager/display_manager.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 1382,
+      "author": {
+        "id": 1000042
+      },
+      "writtenOn": "2017-11-07T18:43:42Z",
+      "side": 1,
+      "message": "same here",
+      "revId": "7f2b789571b0b65a25d3ad2716b620acc4c2e59f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "43ebf1f3_dced204a",
+        "filename": "ui/display/manager/display_manager.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 414,
+      "author": {
+        "id": 1000042
+      },
+      "writtenOn": "2017-11-07T18:43:42Z",
+      "side": 1,
+      "message": "please move this up near the other getters/setters just after the c\u0027tor and d\u0027tor. (i don\u0027t know why touch_device_manager() is down here either; it should probably be moved up too.)",
+      "revId": "7f2b789571b0b65a25d3ad2716b620acc4c2e59f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
