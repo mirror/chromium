@@ -16,6 +16,24 @@
       "revId": "16a2061ad40a32d5b2832d5aabfcacc4da5fae8c",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9705a61f_0ed9658c",
+        "filename": "chromeos/dbus/lorgnette_manager_client.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 141,
+      "author": {
+        "id": 1115919
+      },
+      "writtenOn": "2017-11-07T13:17:21Z",
+      "side": 1,
+      "message": "Logically, base::Optional\u003cstd::string\u003e part represents the result of scan data read, nullopt on error, or std::string on success.\nThe outer base::Optional\u003c\u003e means, if nullopt the data is not yet ready (in reading), otherwise the data read is completed.\n\nBecause we have to wait D-Bus method call completion, too, done everything in OnDataRead() looks not possible because Wait() may not be called yet.\n\nDoes \"using ScanResult\" in the latest PS work for you?\nOr alternatively, introducing tri-state enum may work?\n\nenum class State {\n  PENDING,\n  FAIL,\n  SUCCESS,\n};\n\nState state_ \u003d State::PENDING;\nbase::Optional\u003cstd::string\u003e data_;  // available iff state_ is SUCCESS, otherwise nullopt.\n\nOnReadData(base::Optional\u003cstd::string\u003e data) {\n  DCHECK_EQ(state_, State::PENDING);\n  state_ \u003d data.has_value() ? State::SUCCESS : State::FAIL;\n  data_ \u003d std::move(data);\n  MaybeCompleted();\n}\n\nMaybeCompleted() {\n  if (state_ \u003d\u003d State::PENDING || callback_.is_null())\n    return;\n  std::move(callback_).Run(std::move(data_));\n}\n\nThough, it may look older C++. WDYT?",
+      "parentUuid": "f7b00494_eb8ae59b",
+      "revId": "16a2061ad40a32d5b2832d5aabfcacc4da5fae8c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
