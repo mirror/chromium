@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "ea9a1679_04c40218",
+        "filename": "ios/chrome/browser/ui/bookmarks/cells/bookmark_table_cell.mm",
+        "patchSetId": 3
+      },
+      "lineNbr": 242,
+      "author": {
+        "id": 1116027
+      },
+      "writtenOn": "2017-11-07T09:01:05Z",
+      "side": 1,
+      "message": "I don\u0027t understand why you used this convoluted way to create a NSString that is the copy of another string. Why not just assign \"self.titleText.text\"? Or if you really need a copy, why not just use -copy method?",
+      "range": {
+        "startLine": 242,
+        "startChar": 6,
+        "endLine": 242,
+        "endChar": 60
+      },
+      "revId": "a0195952f094f271a69b4aab2fdf1a0fc935cc58",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
