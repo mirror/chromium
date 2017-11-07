@@ -777,7 +777,7 @@ static void ClearBannerData(JNIEnv* env,
       CONTENT_SETTINGS_TYPE_APP_BANNER, std::string(), nullptr);
 }
 
-static jboolean ShouldUseDSEGeolocationSetting(
+static jboolean ArePermissionsControlledByDSE(
     JNIEnv* env,
     const JavaParamRef<jclass>& clazz,
     const JavaParamRef<jstring>& jorigin,
@@ -786,25 +786,8 @@ static jboolean ShouldUseDSEGeolocationSetting(
       SearchPermissionsService::Factory::GetForBrowserContext(
           GetActiveUserProfile(is_incognito));
   return search_helper &&
-         search_helper->UseDSEGeolocationSetting(
+         search_helper->ArePermissionsControlledByDSE(
              url::Origin::Create(GURL(ConvertJavaStringToUTF8(env, jorigin))));
-}
-
-static jboolean GetDSEGeolocationSetting(JNIEnv* env,
-                                         const JavaParamRef<jclass>& clazz) {
-  SearchPermissionsService* search_helper =
-      SearchPermissionsService::Factory::GetForBrowserContext(
-          GetActiveUserProfile(false /* is_incognito */));
-  return search_helper->GetDSEGeolocationSetting();
-}
-
-static void SetDSEGeolocationSetting(JNIEnv* env,
-                                     const JavaParamRef<jclass>& clazz,
-                                     jboolean setting) {
-  SearchPermissionsService* search_helper =
-      SearchPermissionsService::Factory::GetForBrowserContext(
-          GetActiveUserProfile(false /* is_incognito */));
-  return search_helper->SetDSEGeolocationSetting(setting);
 }
 
 static jboolean GetAdBlockingActivated(JNIEnv* env,
