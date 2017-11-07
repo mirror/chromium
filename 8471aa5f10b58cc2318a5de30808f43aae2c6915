@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "f951af6e_122cc2aa",
+        "filename": "content/browser/accessibility/browser_accessibility.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 932,
+      "author": {
+        "id": 1214309
+      },
+      "writtenOn": "2017-11-07T00:36:30Z",
+      "side": 1,
+      "message": "Nit:  I think the code is easier to read if you avoid nesting:\n\n\n  auto* parent \u003d PlatformGetParent();\n  if (parent)\n     return parent-\u003eGetNativeViewAccessible();\n  \n  if (!manager_)\n     return nullptr;\n\n  BrowserAccessibilityDelegate* delegate \u003d\n          manager_-\u003eGetDelegateFromRootManager();\n  if (!delegate)\n     return nullptr;\n\n  return delegate-\u003eAccessibilityGetNativeViewAccessible();",
+      "range": {
+        "startLine": 932,
+        "startChar": 2,
+        "endLine": 932,
+        "endChar": 9
+      },
+      "revId": "8471aa5f10b58cc2318a5de30808f43aae2c6915",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
