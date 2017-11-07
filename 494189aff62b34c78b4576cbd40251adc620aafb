@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "439b3de9_a6809497",
+        "filename": "chrome/browser/chromeos/smb_client/smb_file_system.h",
+        "patchSetId": 17
+      },
+      "lineNbr": 37,
+      "author": {
+        "id": 1170239
+      },
+      "writtenOn": "2017-11-07T07:33:30Z",
+      "side": 1,
+      "message": "How about adding some description about what Smb means?",
+      "range": {
+        "startLine": 37,
+        "startChar": 7,
+        "endLine": 37,
+        "endChar": 15
+      },
+      "revId": "494189aff62b34c78b4576cbd40251adc620aafb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
