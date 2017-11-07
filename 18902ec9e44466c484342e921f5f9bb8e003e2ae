@@ -2,6 +2,23 @@
   "comments": [
     {
       "key": {
+        "uuid": "3e8316e7_d30488a3",
+        "filename": "base/time/time.h",
+        "patchSetId": 7
+      },
+      "lineNbr": 465,
+      "author": {
+        "id": 1002844
+      },
+      "writtenOn": "2017-11-07T00:05:03Z",
+      "side": 1,
+      "message": "Similar to Marks comment, might be good to define the range more clearly, like is kExplodedMinYear guaranteed to cover the full year? Should the comment warn that kExplodedMaxYear does not cover the full year? (otherwise the places that use it are a bit magic still with needing to know to use \u003e\u003d with max or \u003c with min).",
+      "revId": "18902ec9e44466c484342e921f5f9bb8e003e2ae",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "db1d17cc_98530427",
         "filename": "base/time/time.h",
         "patchSetId": 7
