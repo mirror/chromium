@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "2e43c2cc_1e6d0e4b",
+        "filename": "components/viz/service/display/direct_renderer.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 620,
+      "author": {
+        "id": 1115895
+      },
+      "writtenOn": "2017-11-07T23:51:58Z",
+      "side": 1,
+      "message": "I think this fixes the bug, but I\u0027m not sure that this extra parameter makes the code more readable.\n\nCan this be split into \"bool CanSkipRenderPass() const\" and \"void UseRenderPass(const RenderPass* render_pass)\"?  UseRenderPass itself never returns false except when skipping, and so the only callers that care about the return value are the only ones asking if it can be skipped.",
+      "revId": "ef778b0a98314c4778f8cf89f93c807b402514ff",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
