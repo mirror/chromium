@@ -28,10 +28,14 @@
 #include "net/dns/mock_host_resolver.h"
 #include "net/test/embedded_test_server/embedded_test_server.h"
 #include "net/test/embedded_test_server/http_request.h"
+#include "testing/gmock/include/gmock/gmock.h"
 
 namespace content {
 
 namespace {
+
+using testing::HasSubstr;
+using testing::Not;
 
 // Implementation of ContentBrowserClient that overrides
 // OverridePageVisibilityState() and allows consumers to set a value.
@@ -870,6 +874,62 @@ IN_PROC_BROWSER_TEST_F(
   std::string second_part_received;
   EXPECT_TRUE(dom_message_queue.WaitForMessage(&second_part_received));
   EXPECT_EQ("\"Second part received\"", second_part_received);
+}
+
+// Regression test for https://crbug.com/648608. An attacker could trivially
+// bypass SameSite=Strict protections by navigating a new window twice.
+IN_PROC_BROWSER_TEST_F(RenderFrameHostImplBrowserTest,
+                       CookieSameSiteStrictOpenNewNamedWindowTwice) {
+  // 1) Add cookies for 'a.com', one of them with the "SameSite=Strict" option.
+  BrowserContext* context = shell()->web_contents()->GetBrowserContext();
+  GURL a_url("http://a.com");
+  EXPECT_TRUE(SetCookie(context, a_url, "A=A; SameSite=Strict;"));
+  EXPECT_TRUE(SetCookie(context, a_url, "B=B"));
+
+  // 2) Navigate to malicious.com.
+  EXPECT_TRUE(NavigateToURL(shell(), embedded_test_server()->GetURL(
+                                         "malicious.com", "/title1.html")));
+
+  // 2.1) malicious.com opens a new window to 'http://a.com/echoall'.
+  GURL echoall_url = embedded_test_server()->GetURL("a.com", "/echoall");
+  std::string script = base::StringPrintf("window.open('%s', 'named_frame');",
+                                          echoall_url.spec().c_str());
+  {
+    TestNavigationObserver new_tab_observer(shell()->web_contents(), 1);
+    new_tab_observer.StartWatchingNewWebContents();
+    EXPECT_TRUE(ExecuteScript(shell(), script));
+    new_tab_observer.Wait();
+    ASSERT_EQ(2u, Shell::windows().size());
+    Shell* new_shell = Shell::windows()[1];
+    EXPECT_TRUE(WaitForLoadStop(new_shell->web_contents()));
+
+    // Only the cookie without "SameSite=Strict" should be sent.
+    std::string html_content;
+    EXPECT_TRUE(ExecuteScriptAndExtractString(
+        new_shell, "domAutomationController.send(document.body.textContent)",
+        &html_content));
+    EXPECT_THAT(html_content.c_str(), Not(HasSubstr("Cookie: A=A")));
+    EXPECT_THAT(html_content.c_str(), HasSubstr("Cookie: B=B"));
+  }
+
+  // 2.2) Same as in 2.1). The difference is that the new tab will be reused.
+  {
+    Shell* new_shell = Shell::windows()[1];
+    TestNavigationObserver new_tab_observer(new_shell->web_contents(), 1);
+    EXPECT_TRUE(ExecuteScript(shell(), script));
+    new_tab_observer.Wait();
+    ASSERT_EQ(2u, Shell::windows().size());
+    EXPECT_TRUE(WaitForLoadStop(new_shell->web_contents()));
+
+    // Only the cookie without "SameSite=Strict" should be sent.
+    std::string html_content;
+    EXPECT_TRUE(ExecuteScriptAndExtractString(
+        new_shell, "domAutomationController.send(document.body.textContent)",
+        &html_content));
+
+    EXPECT_THAT(html_content.c_str(), Not(HasSubstr("Cookie: A=A")));
+    EXPECT_THAT(html_content.c_str(), HasSubstr("Cookie: B=B"));
+  }
 }
 
 }  // namespace content

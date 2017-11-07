@@ -160,3 +160,6 @@
 # completion. With the network service this will be equivalent to a network
 # service process crash.
 -ResourceDispatcherHostBrowserTest.SyncXMLHttpRequest_Cancelled
+
+# Untriaged.
+-RenderFrameHostImplBrowserTest.CookieSameSiteStrictOpenNewNamedWindowTwice

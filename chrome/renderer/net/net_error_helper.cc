@@ -351,6 +351,8 @@ void NetErrorHelper::LoadPageFromCache(const GURL& page_url) {
 
   blink::WebURLRequest request(page_url);
   request.SetCacheMode(blink::mojom::FetchCacheMode::kOnlyIfCached);
+  request.SetRequestorOrigin(
+      blink::WebSecurityOrigin::Create(web_frame->GetDocument().Url()));
   web_frame->LoadRequest(request);
 }
 
