@@ -38,6 +38,7 @@ Ui::Ui(UiBrowserInterface* browser,
       ui_initial_state.web_vr_autopresentation_expected;
   model_->experimental_features_enabled =
       base::FeatureList::IsEnabled(features::kExperimentalVRFeatures);
+  model_->voice_input_enabled = ui_initial_state.voice_input_enabled;
 }
 
 Ui::~Ui() = default;

@@ -565,7 +565,8 @@ void UiSceneManager::CreateVoiceSearchUiGroup(Model* model) {
   element->AddBinding(base::MakeUnique<Binding<bool>>(
       base::Bind(
           [](Model* m) {
-            return !m->incognito && m->experimental_features_enabled;
+            return !m->incognito && m->voice_input_enabled &&
+                   m->experimental_features_enabled;
           },
           base::Unretained(model)),
       base::Bind([](UiElement* e, const bool& v) { e->SetVisible(v); },
