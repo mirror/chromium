@@ -91,6 +91,9 @@ using content::NavigationEntry;
 using content::NavigationController;
 using content::WebContents;
 
+#include "chrome/browser/extensions/api/networking_private/networking_private_credentials_getter.h"
+#include "chrome/services/wifi_util_win/public/interfaces/wifi_credentials_getter.mojom.h"
+
 namespace chrome {
 
 ///////////////////////////////////////////////////////////////////////////////
@@ -262,6 +265,11 @@ void BrowserCommandController::ExtensionStateChanged() {
 ////////////////////////////////////////////////////////////////////////////////
 // BrowserCommandController, CommandUpdaterDelegate implementation:
 
+void CredentialsDone(const std::string& key_data, const std::string& error) {
+  LOG(ERROR) << "** JAY ** CredentialsDone error=" << error
+             << " data=" << key_data;
+}
+
 void BrowserCommandController::ExecuteCommandWithDisposition(
     int id,
     WindowOpenDisposition disposition) {
@@ -296,9 +304,15 @@ void BrowserCommandController::ExecuteCommandWithDisposition(
       window()->HideNewBackShortcutBubble();
       GoForward(browser_, disposition);
       break;
-    case IDC_RELOAD:
-      Reload(browser_, disposition);
+    case IDC_RELOAD: {
+      // Reload(browser_, disposition);
+      std::unique_ptr<extensions::NetworkingPrivateCredentialsGetter> getter(
+          extensions::NetworkingPrivateCredentialsGetter::Create());
+      getter->Start("chrome://hello", "public_key",
+                    base::Bind(&CredentialsDone));
+
       break;
+    }
     case IDC_RELOAD_CLEARING_CACHE:
       ClearCache(browser_);
       // FALL THROUGH

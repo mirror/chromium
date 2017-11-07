@@ -32,6 +32,7 @@
 #include "printing/features/features.h"
 #include "services/service_manager/embedder/embedded_service_info.h"
 #include "services/service_manager/public/cpp/binder_registry.h"
+#include "services/service_manager/sandbox/switches.h"
 #include "ui/base/ui_features.h"
 
 #if !defined(OS_ANDROID)
@@ -53,6 +54,8 @@
 #if defined(OS_WIN)
 #include "chrome/services/util_win/public/interfaces/constants.mojom.h"
 #include "chrome/services/util_win/util_win_service.h"
+#include "chrome/services/wifi_util_win/public/interfaces/constants.mojom.h"
+#include "chrome/services/wifi_util_win/wifi_util_win_service.h"
 #endif
 
 #if BUILDFLAG(ENABLE_EXTENSIONS)
@@ -225,9 +228,11 @@ void ChromeContentUtilityClient::UtilityThreadStarted() {
   extensions::utility_handler::UtilityThreadStarted();
 #endif
 
+#if defined(OS_WIN)
   base::CommandLine* command_line = base::CommandLine::ForCurrentProcess();
-  if (command_line->HasSwitch(switches::kUtilityProcessRunningElevated))
-    utility_process_running_elevated_ = true;
+  utility_process_running_elevated_ = command_line->HasSwitch(
+      service_manager::switches::kNoSandboxAndElevatedPrivileges);
+#endif
 
   content::ServiceManagerConnection* connection =
       content::ChildThread::Get()->GetServiceManagerConnection();
@@ -283,6 +288,7 @@ bool ChromeContentUtilityClient::OnMessageReceived(
 
 void ChromeContentUtilityClient::RegisterServices(
     ChromeContentUtilityClient::StaticServiceMap* services) {
+  LOG(ERROR) << "** JAY ** ChromeContentUtilityClient::RegisterServices";
 #if BUILDFLAG(ENABLE_PRINTING)
   service_manager::EmbeddedServiceInfo pdf_compositor_info;
   pdf_compositor_info.factory =
@@ -303,6 +309,17 @@ void ChromeContentUtilityClient::RegisterServices(
   profiling_info.factory =
       base::Bind(&profiling::ProfilingService::CreateService);
   services->emplace(profiling::mojom::kServiceName, profiling_info);
+
+#if defined(OS_WIN)
+  {
+    service_manager::EmbeddedServiceInfo service_info;
+    service_info.factory =
+        base::Bind(&chrome::WifiUtilWinService::CreateService);
+    services->emplace(chrome::mojom::kWifiUtilWinServiceName, service_info);
+    LOG(ERROR) << "** JAY ** REGISTERED "
+               << chrome::mojom::kWifiUtilWinServiceName;
+  }
+#endif
 
 #if !defined(OS_ANDROID)
   service_manager::EmbeddedServiceInfo proxy_resolver_info;

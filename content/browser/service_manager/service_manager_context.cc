@@ -381,6 +381,8 @@ ServiceManagerContext::ServiceManagerContext() {
     }
     for (const auto& manifest :
          GetContentClient()->browser()->GetExtraServiceManifests()) {
+      LOG(ERROR) << "** JAY ** ServiceContext registering service: "
+                 << manifest.name;
       manifest_provider->AddServiceManifest(manifest.name,
                                             manifest.resource_id);
     }
