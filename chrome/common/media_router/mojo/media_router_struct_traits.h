@@ -386,6 +386,10 @@ struct StructTraits<media_router::mojom::MediaRouteDataView,
     return route.media_route_id();
   }
 
+  static std::string presentation_id(const media_router::MediaRoute& route) {
+    return route.presentation_id();
+  }
+
   static base::Optional<std::string> media_source(
       const media_router::MediaRoute& route) {
     // TODO(imcheng): If we ever convert from Mojo to C++ outside of unit tests,
