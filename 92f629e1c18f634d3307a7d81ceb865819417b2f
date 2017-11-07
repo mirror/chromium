@@ -82,6 +82,24 @@
     },
     {
       "key": {
+        "uuid": "e765d8b9_74bc9d92",
+        "filename": "services/device/geolocation/public_ip_address_location_notifier.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 166,
+      "author": {
+        "id": 1182889
+      },
+      "writtenOn": "2017-11-07T05:13:32Z",
+      "side": 1,
+      "message": "Hmm TestURLFetcher doesn\u0027t currently seem to have that.\n\nWhen you add Ramin for a look at this part of CL, let\u0027s ask him to advise. I suspect perhaps TestURLFetcher ought to be extended to support querying the traffic annotation passed in to the URLFetcher::Create method.",
+      "parentUuid": "a95f3426_31224749",
+      "revId": "92f629e1c18f634d3307a7d81ceb865819417b2f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "780cbbaf_40939018",
         "filename": "services/device/geolocation/public_ip_address_location_notifier.cc",
         "patchSetId": 3
