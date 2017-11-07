@@ -16,6 +16,24 @@
       "revId": "c4aba202d0607760212ba48288e044c869dc1ac3",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4cc92c03_ef7c3c54",
+        "filename": "components/page_info_strings.grdp",
+        "patchSetId": 1
+      },
+      "lineNbr": 164,
+      "author": {
+        "id": 1160861
+      },
+      "writtenOn": "2017-11-07T04:13:29Z",
+      "side": 1,
+      "message": "Yes, it would (actually, same with the Cookies parenthesised string too). I don\u0027t think we can do that though because we need to change the colour of the string including the parens (the \u0027(Valid)\u0027 part is a lighter grey than the rest of the string), so we need the index of the range we get back from formatting it to include the parentheses as well.",
+      "parentUuid": "c2b4f727_5a448e7a",
+      "revId": "c4aba202d0607760212ba48288e044c869dc1ac3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
