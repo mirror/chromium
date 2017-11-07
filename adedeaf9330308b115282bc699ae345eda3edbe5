@@ -105,6 +105,24 @@
       "revId": "adedeaf9330308b115282bc699ae345eda3edbe5",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a93ab53f_95af2418",
+        "filename": "chrome/browser/chromeos/login/ui/webui_login_view.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 331,
+      "author": {
+        "id": 1121230
+      },
+      "writtenOn": "2017-11-07T03:54:25Z",
+      "side": 1,
+      "message": "I\u0027ve moved the close bubble logic to SetStatusAreaVisible.",
+      "parentUuid": "4c9f7149_5552bee8",
+      "revId": "adedeaf9330308b115282bc699ae345eda3edbe5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
