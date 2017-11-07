@@ -74,7 +74,9 @@ namespace {
 int g_browser_process_pid;
 
 void DumpStackTraceSignalHandler(int signal) {
-  if (g_browser_process_pid == base::GetCurrentProcId()) {
+  if (!base::CommandLine::ForCurrentProcess()->HasSwitch(
+          switches::kDisableStackTraceOnOnSignal) &&
+      g_browser_process_pid == base::GetCurrentProcId()) {
     std::string message("BrowserTestBase received signal: ");
     message += strsignal(signal);
     message += ". Backtrace:\n";
