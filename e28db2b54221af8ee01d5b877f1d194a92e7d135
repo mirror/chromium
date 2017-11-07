@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "b5cd9757_2057a8a9",
+        "filename": "build/linux/sysroot_scripts/install-sysroot.py",
+        "patchSetId": 3
+      },
+      "lineNbr": 168,
+      "author": {
+        "id": 1113991
+      },
+      "writtenOn": "2017-11-07T22:25:41Z",
+      "side": 1,
+      "message": "I\u0027m not sure if this woulnd\u0027t be changing, perhaps\nwrongly, the Linux non-CrOs builds.",
+      "range": {
+        "startLine": 168,
+        "startChar": 0,
+        "endLine": 168,
+        "endChar": 40
+      },
+      "revId": "e28db2b54221af8ee01d5b877f1d194a92e7d135",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
