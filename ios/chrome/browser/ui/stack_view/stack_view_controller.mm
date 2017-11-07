@@ -54,7 +54,7 @@
 #import "ios/chrome/browser/ui/toolbar/toolbar_owner.h"
 #import "ios/chrome/browser/ui/toolbar/toolbar_utils.h"
 #import "ios/chrome/browser/ui/tools_menu/tools_menu_configuration.h"
-#import "ios/chrome/browser/ui/tools_menu/tools_menu_view_item.h"
+#import "ios/chrome/browser/ui/tools_menu/tools_menu_coordinator.h"
 #import "ios/chrome/browser/ui/ui_util.h"
 #import "ios/chrome/browser/ui/uikit_ui_util.h"
 #import "ios/chrome/common/material_timing.h"
@@ -201,7 +201,7 @@ NSString* const kDummyToolbarBackgroundViewAnimationKey =
 
 @end
 
-@interface StackViewController (Private)
+@interface StackViewController ()<ToolsMenuCoordinatorConfigurationProvider>
 
 // Clears the internal state of the object. Should only be called when the
 // object is not being shown. After this method is called, a call to
@@ -390,8 +390,7 @@ NSString* const kDummyToolbarBackgroundViewAnimationKey =
 // Returns the card corresponding to |view|. This is not an efficient lookup,
 // so this should *not* be called frequently.
 - (StackCard*)cardForView:(CardView*)view;
-// Shows the tools menu popup.
-- (void)showToolsMenuPopup;
+
 // All local tab state is cleared, and |currentlyClosingAllTabs_| is set to
 // |NO|.
 - (void)allModelTabsHaveClosed:(NSNotification*)notify;
@@ -513,6 +512,7 @@ NSString* const kDummyToolbarBackgroundViewAnimationKey =
 @synthesize transitionToolbarFrame = _transitionToolbarFrame;
 @synthesize transitionToolbarOwner = _transitionToolbarOwner;
 @synthesize transitionWasCancelled = _transitionWasCancelled;
+@synthesize toolsMenuCoordinator = _toolsMenuCoordinator;
 
 - (instancetype)initWithMainCardSet:(CardSet*)mainCardSet
                          otrCardSet:(CardSet*)otrCardSet
@@ -547,6 +547,11 @@ NSString* const kDummyToolbarBackgroundViewAnimationKey =
                               forProtocol:@protocol(BrowserCommands)];
     [_dispatcher startDispatchingToTarget:applicationCommandEndpoint
                               forProtocol:@protocol(ApplicationCommands)];
+
+    _toolsMenuCoordinator =
+        [[ToolsMenuCoordinator alloc] initWithBaseViewController:self];
+    _toolsMenuCoordinator.dispatcher = _dispatcher;
+    _toolsMenuCoordinator.configurationProvider = self;
   }
   return self;
 }
@@ -748,6 +753,7 @@ NSString* const kDummyToolbarBackgroundViewAnimationKey =
 
   _toolbarController =
       [[StackViewToolbarController alloc] initWithDispatcher:self.dispatcher];
+  self.toolsMenuCoordinator.presentationProvider = _toolbarController;
   CGRect toolbarFrame = [self.view bounds];
   toolbarFrame.origin.y = CGRectGetMinY([[_toolbarController view] frame]);
   toolbarFrame.size.height = CGRectGetHeight([[_toolbarController view] frame]);
@@ -860,8 +866,7 @@ NSString* const kDummyToolbarBackgroundViewAnimationKey =
     _isActive = NO;
     [self clearInternalState];
   }
-  [_toolbarController dismissToolsMenuPopup];
-
+  [self.dispatcher dismissToolsMenu];
   [super viewDidDisappear:animated];
 }
 
@@ -929,9 +934,7 @@ NSString* const kDummyToolbarBackgroundViewAnimationKey =
   }
 
   [self updateToolbarAppearanceWithAnimation:YES];
-
-  [_toolbarController dismissToolsMenuPopup];
-
+  [self.dispatcher dismissToolsMenu];
   [self refreshCardDisplayWithAnimation:YES];
 
   // Animate the update of the card tabs.
@@ -2169,8 +2172,8 @@ NSString* const kDummyToolbarBackgroundViewAnimationKey =
 
 - (BOOL)gestureRecognizer:(UIGestureRecognizer*)recognizer
        shouldReceiveTouch:(UITouch*)touch {
-  // Don't swallow any touches while the tools popup menu is open.
-  if ([_toolbarController toolsPopupController])
+  // Don't swallow any touches while the tools menu is open.
+  if ([self.toolsMenuCoordinator isShowingToolsMenu])
     return NO;
 
   if ((recognizer == _pinchRecognizer) ||
@@ -2753,7 +2756,8 @@ NSString* const kDummyToolbarBackgroundViewAnimationKey =
 
 #pragma mark - BrowserCommands
 
-- (void)showToolsMenu {
+- (ToolsMenuConfiguration*)menuConfigurationForToolsMenuCoordinator:
+    (ToolsMenuCoordinator*)coordinator {
   ToolsMenuConfiguration* configuration =
       [[ToolsMenuConfiguration alloc] initWithDisplayView:[self view]
                                        baseViewController:self];
@@ -2765,7 +2769,7 @@ NSString* const kDummyToolbarBackgroundViewAnimationKey =
     [configuration setNoOpenedTabs:YES];
   if (_activeCardSet == _otrCardSet)
     [configuration setInIncognito:YES];
-  [_toolbarController showToolsMenuPopupWithConfiguration:configuration];
+  return configuration;
 }
 
 - (void)openNewTab:(OpenNewTabCommand*)command {
