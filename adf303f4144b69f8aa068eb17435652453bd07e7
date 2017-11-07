@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "3aea5d01_6723837b",
+        "filename": "chrome/utility/importer/firefox_importer.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 107,
+      "author": {
+        "id": 1002410
+      },
+      "writtenOn": "2017-11-07T22:59:04Z",
+      "side": 1,
+      "message": "I don\u0027t think this is guaranteed to generate a strict boolean value, i.e. 0 or 1.  Please change this to either\n\n  !!(items \u0026 importer::PASSWORDS)\n\nor\n\n  (items \u0026 importer::PASSWORDS) !\u003d 0",
+      "range": {
+        "startLine": 107,
+        "startChar": 24,
+        "endLine": 107,
+        "endChar": 51
+      },
+      "revId": "adf303f4144b69f8aa068eb17435652453bd07e7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
