@@ -16,6 +16,24 @@
       "revId": "9d4e17194fbae2839d269e0b625520eac09efa9b",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "95437514_a721d953",
+        "filename": "WATCHLISTS",
+        "patchSetId": 1
+      },
+      "lineNbr": 32,
+      "author": {
+        "id": 1186534
+      },
+      "writtenOn": "2017-11-07T22:57:25Z",
+      "side": 0,
+      "message": "This path is retained in the banners section below.",
+      "parentUuid": "ab01a43d_416452fb",
+      "revId": "9d4e17194fbae2839d269e0b625520eac09efa9b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
