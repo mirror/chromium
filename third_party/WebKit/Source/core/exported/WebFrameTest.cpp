@@ -997,8 +997,9 @@ TEST_P(ParameterizedWebFrameTest, DispatchMessageEventWithOriginCheck) {
   WebSecurityOrigin correct_origin(
       WebSecurityOrigin::Create(ToKURL(base_url_)));
   WebDocument document = web_view_helper.LocalMainFrame()->GetDocument();
-  WebSerializedScriptValue data(WebSerializedScriptValue::CreateInvalid());
-  WebDOMMessageEvent message(data, "http://origin.com");
+  scoped_refptr<WebSerializedScriptValue> data =
+      WebSerializedScriptValue::CreateInvalid();
+  WebDOMMessageEvent message(std::move(data), "http://origin.com");
   web_view_helper.WebView()
       ->MainFrameImpl()
       ->DispatchMessageEventWithOriginCheck(correct_origin, message);

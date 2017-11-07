@@ -236,8 +236,8 @@ void ServiceWorkerGlobalScopeProxy::DispatchExtendableMessageEvent(
     WebVector<MessagePortChannel> channels,
     const WebServiceWorkerClientInfo& client) {
   DCHECK(WorkerGlobalScope()->IsContextThread());
-  WebSerializedScriptValue value =
-      WebSerializedScriptValue::FromString(message);
+  scoped_refptr<SerializedScriptValue> value =
+      SerializedScriptValue::Create(message);
   MessagePortArray* ports =
       MessagePort::EntanglePorts(*worker_global_scope_, std::move(channels));
   String origin;
@@ -263,8 +263,8 @@ void ServiceWorkerGlobalScopeProxy::DispatchExtendableMessageEvent(
     WebVector<MessagePortChannel> channels,
     std::unique_ptr<WebServiceWorker::Handle> handle) {
   DCHECK(WorkerGlobalScope()->IsContextThread());
-  WebSerializedScriptValue value =
-      WebSerializedScriptValue::FromString(message);
+  scoped_refptr<SerializedScriptValue> value =
+      SerializedScriptValue::Create(message);
   MessagePortArray* ports =
       MessagePort::EntanglePorts(*worker_global_scope_, std::move(channels));
   String origin;

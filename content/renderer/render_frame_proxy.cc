@@ -577,7 +577,7 @@ void RenderFrameProxy::ForwardPostMessage(
 
   FrameMsg_PostMessage_Params params;
   params.is_data_raw_string = false;
-  params.data = event.Data().ToString().Utf16();
+  params.data = event.Data()->ToString().Utf16();
   params.source_origin = event.Origin().Utf16();
   if (!target_origin.IsNull())
     params.target_origin = target_origin.ToString().Utf16();

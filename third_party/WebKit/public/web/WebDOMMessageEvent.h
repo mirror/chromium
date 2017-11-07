@@ -50,14 +50,14 @@ class WebFrame;
 class WebDOMMessageEvent : public WebDOMEvent {
  public:
   BLINK_EXPORT WebDOMMessageEvent(
-      const WebSerializedScriptValue& message_data,
+      scoped_refptr<WebSerializedScriptValue> message_data,
       const WebString& origin = WebString(),
       const WebFrame* source_frame = nullptr,
       const WebDocument& target_document = WebDocument(),
       WebVector<MessagePortChannel> ports = WebVector<MessagePortChannel>());
   WebDOMMessageEvent() {}
 
-  BLINK_EXPORT WebSerializedScriptValue Data() const;
+  BLINK_EXPORT scoped_refptr<WebSerializedScriptValue> Data() const;
   BLINK_EXPORT WebString Origin() const;
 
   BLINK_EXPORT WebVector<MessagePortChannel> ReleaseChannels();
