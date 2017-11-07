@@ -1256,4 +1256,13 @@ public class AutocompleteEditTextTest {
         mInputConnection.getTextBeforeCursor(1, 0);
         assertFalse(mAutocomplete.isCursorVisible());
     }
+
+    @Test
+    @Features(@Features.Register(
+            value = ChromeFeatureList.SPANNABLE_INLINE_AUTOCOMPLETE, enabled = true))
+    public void testBlacklistWithSpannableModel() {
+        mAutocomplete.setKeyboardPackageName("jp.co.sharp.android.iwnn");
+        assertFalse(mAutocomplete.shouldAutocomplete());
+    }
+
 }
