@@ -204,6 +204,9 @@ bool TestBrowserWindow::IsVisibleOnAllWorkspaces() const {
   return false;
 }
 
+void TestBrowserWindow::UpdateCustomFrameButtons() const {
+}
+
 // TestBrowserWindowOwner -----------------------------------------------------
 
 TestBrowserWindowOwner::TestBrowserWindowOwner(TestBrowserWindow* window)
