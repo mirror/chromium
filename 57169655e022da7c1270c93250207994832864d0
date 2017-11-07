@@ -1,0 +1,119 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "94c293af_e79e38b0",
+        "filename": "chrome/browser/apps/guest_view/web_view_browsertest.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 2325,
+      "author": {
+        "id": 1212389
+      },
+      "writtenOn": "2017-11-07T15:39:52Z",
+      "side": 1,
+      "message": "nit: \"context\" -\u003e \"quick\"",
+      "range": {
+        "startLine": 2325,
+        "startChar": 30,
+        "endLine": 2325,
+        "endChar": 37
+      },
+      "revId": "57169655e022da7c1270c93250207994832864d0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c8e51ee9_d705415d",
+        "filename": "chrome/browser/apps/guest_view/web_view_interactive_browsertest.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 1540,
+      "author": {
+        "id": 1212389
+      },
+      "writtenOn": "2017-11-07T15:39:52Z",
+      "side": 1,
+      "message": "Did you mean to keep this version of the test after you replaced it in web_view_browsertests.cc? I think it\u0027s redundant given the other test.\n\nIf you did mean to keep it, then it should use the same routed touch event as input, and check that the quick menu is showing.",
+      "range": {
+        "startLine": 1540,
+        "startChar": 0,
+        "endLine": 1540,
+        "endChar": 22
+      },
+      "revId": "57169655e022da7c1270c93250207994832864d0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9b3b96b0_e93f2adc",
+        "filename": "chrome/browser/guest_view/web_view/chrome_web_view_guest_delegate.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 44,
+      "author": {
+        "id": 1212389
+      },
+      "writtenOn": "2017-11-07T15:39:52Z",
+      "side": 1,
+      "message": "I think I had this logic wrong in my experimental patch ... the || should be \u0026\u0026 so that short-circuit eval prevents us from trying to dereference a null RenderWidgetHostView*.",
+      "range": {
+        "startLine": 44,
+        "startChar": 55,
+        "endLine": 44,
+        "endChar": 56
+      },
+      "revId": "57169655e022da7c1270c93250207994832864d0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c9c8de42_4d2f0288",
+        "filename": "content/public/test/browser_test_utils.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 148,
+      "author": {
+        "id": 1212389
+      },
+      "writtenOn": "2017-11-07T15:39:52Z",
+      "side": 1,
+      "message": "I\u0027m guessing the values of x,y are in root-view coordinates? Perhaps we should make this explicit in the comment describing the function.",
+      "range": {
+        "startLine": 148,
+        "startChar": 36,
+        "endLine": 148,
+        "endChar": 37
+      },
+      "revId": "57169655e022da7c1270c93250207994832864d0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d7305415_5a082f3c",
+        "filename": "extensions/browser/guest_view/web_view/web_view_guest.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 42,
+      "author": {
+        "id": 1212389
+      },
+      "writtenOn": "2017-11-07T15:39:52Z",
+      "side": 1,
+      "message": "Is this still needed?",
+      "range": {
+        "startLine": 42,
+        "startChar": 32,
+        "endLine": 42,
+        "endChar": 51
+      },
+      "revId": "57169655e022da7c1270c93250207994832864d0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
