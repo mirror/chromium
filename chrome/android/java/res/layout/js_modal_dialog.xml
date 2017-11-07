@@ -42,6 +42,7 @@
         android:layout_gravity="start"
         android:layout_marginTop="16dp"
         android:textAppearance="?android:attr/textAppearanceSmall"
-        android:text="@string/suppress_js_modal_dialogs" />
+        android:text="@string/suppress_js_modal_dialogs"
+        android:visibility="gone" />
 
 </LinearLayout>

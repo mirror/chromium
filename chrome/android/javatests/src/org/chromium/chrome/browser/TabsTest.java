@@ -6,7 +6,6 @@ package org.chromium.chrome.browser;
 
 import static org.chromium.base.test.util.Restriction.RESTRICTION_TYPE_NON_LOW_END_DEVICE;
 
-import android.content.DialogInterface;
 import android.content.pm.ActivityInfo;
 import android.graphics.Point;
 import android.os.Debug;
@@ -49,6 +48,7 @@ import org.chromium.chrome.browser.compositor.layouts.eventfilter.ScrollDirectio
 import org.chromium.chrome.browser.compositor.layouts.phone.StackLayout;
 import org.chromium.chrome.browser.compositor.layouts.phone.stack.Stack;
 import org.chromium.chrome.browser.compositor.layouts.phone.stack.StackTab;
+import org.chromium.chrome.browser.modaldialog.ModalDialog;
 import org.chromium.chrome.browser.tab.EmptyTabObserver;
 import org.chromium.chrome.browser.tab.Tab;
 import org.chromium.chrome.browser.tabmodel.EmptyTabModelObserver;
@@ -228,8 +228,7 @@ public class TabsTest {
             }
         });
 
-        ThreadUtils.runOnUiThreadBlocking(
-                () -> dialog.get().onClick(null, DialogInterface.BUTTON_POSITIVE));
+        ThreadUtils.runOnUiThreadBlocking(() -> dialog.get().onClick(ModalDialog.BUTTON_POSITIVE));
 
         dialog.set(null);
 
