@@ -48,6 +48,30 @@
     },
     {
       "key": {
+        "uuid": "cbadcb25_e5b12b26",
+        "filename": "components/cronet/ios/Cronet.h",
+        "patchSetId": 7
+      },
+      "lineNbr": 42,
+      "author": {
+        "id": 1002889
+      },
+      "writtenOn": "2017-11-07T18:45:33Z",
+      "side": 1,
+      "message": "The system API is this. Would it make sense to model Cronet similarly? \n\n- (void)URLSession:(NSURLSession *)session \n              task:(NSURLSessionTask *)task \ndidFinishCollectingMetrics:(NSURLSessionTaskMetrics *)metrics;",
+      "parentUuid": "1a04a9cd_01912137",
+      "range": {
+        "startLine": 41,
+        "startChar": 0,
+        "endLine": 42,
+        "endChar": 60
+      },
+      "revId": "a028f6b35f6dd2b2a32d1b60a7bde0cd0295846a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "e20aaec2_7bd16f97",
         "filename": "components/cronet/ios/test/cronet_metrics_test.mm",
         "patchSetId": 7
