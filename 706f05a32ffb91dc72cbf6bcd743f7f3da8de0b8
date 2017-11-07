@@ -2,6 +2,23 @@
   "comments": [
     {
       "key": {
+        "uuid": "bcb8b171_23259608",
+        "filename": "chrome/browser/component_updater/sw_reporter_installer_win.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 284,
+      "author": {
+        "id": 1115445
+      },
+      "writtenOn": "2017-11-07T21:41:14Z",
+      "side": 1,
+      "message": "This seems like it might be worth logging a UMA error with ReportExperimentError in this case",
+      "revId": "706f05a32ffb91dc72cbf6bcd743f7f3da8de0b8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "dbce8ab1_412f24c3",
         "filename": "chrome/browser/component_updater/sw_reporter_installer_win.cc",
         "patchSetId": 8
@@ -13,6 +30,57 @@
       "writtenOn": "2017-11-06T22:05:55Z",
       "side": 1,
       "message": "Nit: \"result\" isn\u0027t needed here because the meaning of the parameter is obvious from the type.",
+      "revId": "706f05a32ffb91dc72cbf6bcd743f7f3da8de0b8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "278608f2_d1d2ffd4",
+        "filename": "chrome/browser/component_updater/sw_reporter_installer_win_unittest.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 97,
+      "author": {
+        "id": 1115445
+      },
+      "writtenOn": "2017-11-07T21:41:14Z",
+      "side": 1,
+      "message": "I wonder if we should just be checking for the presence of this flag, instead of the exact size",
+      "revId": "706f05a32ffb91dc72cbf6bcd743f7f3da8de0b8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f0e6f606_9f643ba3",
+        "filename": "chrome/browser/safe_browsing/chrome_cleaner/chrome_cleaner_runner_win.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 126,
+      "author": {
+        "id": 1115445
+      },
+      "writtenOn": "2017-11-07T21:41:14Z",
+      "side": 1,
+      "message": "I think this should probably be moved to a different cl since it isn\u0027t directly required for the functionality this cl wants to add",
+      "revId": "706f05a32ffb91dc72cbf6bcd743f7f3da8de0b8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ac82756d_4368bf8f",
+        "filename": "chrome/browser/safe_browsing/chrome_cleaner/reporter_runner_browsertest_win.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 158,
+      "author": {
+        "id": 1115445
+      },
+      "writtenOn": "2017-11-07T21:41:14Z",
+      "side": 1,
+      "message": "I think this was just for testing",
       "revId": "706f05a32ffb91dc72cbf6bcd743f7f3da8de0b8",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -104,6 +172,121 @@
     },
     {
       "key": {
+        "uuid": "973ca750_317725d6",
+        "filename": "chrome/browser/safe_browsing/chrome_cleaner/reporter_runner_win.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 647,
+      "author": {
+        "id": 1115445
+      },
+      "writtenOn": "2017-11-07T21:41:14Z",
+      "side": 1,
+      "message": "That check (or something like it) is required to prevent us from accidentally writing a time in the future and no longer running the reporter",
+      "parentUuid": "bf673d4a_4047bcc2",
+      "revId": "706f05a32ffb91dc72cbf6bcd743f7f3da8de0b8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "40a08e90_e936c254",
+        "filename": "chrome/browser/safe_browsing/chrome_cleaner/reporter_runner_win.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 716,
+      "author": {
+        "id": 1115445
+      },
+      "writtenOn": "2017-11-07T21:41:14Z",
+      "side": 1,
+      "message": "This will result in NotifySequenceDone getting called with SwReporterInvocationResult::kInterrupted (in the deconstructor), shouldn\u0027t it get called with kFailed? Would it make sense to merge this with the case where the container is empty, then notify can be called with the right value (and maybe it always makes sense to clear invocations_currently_running_ to be empty at that point)",
+      "range": {
+        "startLine": 716,
+        "startChar": 39,
+        "endLine": 716,
+        "endChar": 77
+      },
+      "revId": "706f05a32ffb91dc72cbf6bcd743f7f3da8de0b8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2d33db2e_bba088d3",
+        "filename": "chrome/browser/safe_browsing/chrome_cleaner/reporter_runner_win.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 716,
+      "author": {
+        "id": 1115445
+      },
+      "writtenOn": "2017-11-07T21:41:14Z",
+      "side": 1,
+      "message": "Why pass the version here? The queue is empty so wouldn\u0027t that be like version empty?",
+      "revId": "706f05a32ffb91dc72cbf6bcd743f7f3da8de0b8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "402308db_a4d221a3",
+        "filename": "chrome/browser/safe_browsing/chrome_cleaner/reporter_runner_win.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 743,
+      "author": {
+        "id": 1115445
+      },
+      "writtenOn": "2017-11-07T21:41:14Z",
+      "side": 1,
+      "message": "I think this is to late to call this, since line 716 will have created a new ExitCodeToInvocationResult",
+      "revId": "706f05a32ffb91dc72cbf6bcd743f7f3da8de0b8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "dc198bda_45873165",
+        "filename": "chrome/browser/safe_browsing/chrome_cleaner/reporter_runner_win.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 795,
+      "author": {
+        "id": 1115445
+      },
+      "writtenOn": "2017-11-07T21:41:14Z",
+      "side": 1,
+      "message": "nit: Invocations -\u003e Invocation",
+      "range": {
+        "startLine": 795,
+        "startChar": 7,
+        "endLine": 795,
+        "endChar": 34
+      },
+      "revId": "706f05a32ffb91dc72cbf6bcd743f7f3da8de0b8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6a35ca07_835dfdb9",
+        "filename": "chrome/browser/safe_browsing/chrome_cleaner/reporter_runner_win.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 812,
+      "author": {
+        "id": 1115445
+      },
+      "writtenOn": "2017-11-07T21:41:14Z",
+      "side": 1,
+      "message": "Can the cached contains ever be empty? Or should we dcheck on it?",
+      "revId": "706f05a32ffb91dc72cbf6bcd743f7f3da8de0b8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "b1a1de93_bc1d3ee9",
         "filename": "chrome/browser/safe_browsing/chrome_cleaner/reporter_runner_win.cc",
         "patchSetId": 8
@@ -121,6 +304,40 @@
     },
     {
       "key": {
+        "uuid": "21cb4528_ba2c08fe",
+        "filename": "chrome/browser/safe_browsing/chrome_cleaner/reporter_runner_win.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 909,
+      "author": {
+        "id": 1115445
+      },
+      "writtenOn": "2017-11-07T21:41:14Z",
+      "side": 1,
+      "message": "nit: I think was just for testing",
+      "revId": "706f05a32ffb91dc72cbf6bcd743f7f3da8de0b8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "369ef89a_cd83794a",
+        "filename": "chrome/browser/safe_browsing/chrome_cleaner/reporter_runner_win.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 912,
+      "author": {
+        "id": 1115445
+      },
+      "writtenOn": "2017-11-07T21:41:14Z",
+      "side": 1,
+      "message": "Since these are trivial fall-through cases, you don\u0027t need this comment",
+      "revId": "706f05a32ffb91dc72cbf6bcd743f7f3da8de0b8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "a86e7d2d_767f500d",
         "filename": "chrome/browser/safe_browsing/chrome_cleaner/reporter_runner_win.cc",
         "patchSetId": 8
@@ -132,6 +349,23 @@
       "writtenOn": "2017-11-06T22:05:55Z",
       "side": 1,
       "message": "Nit: since \"queue\" is a common type name, should call this \"invocation_queue\" or something.",
+      "revId": "706f05a32ffb91dc72cbf6bcd743f7f3da8de0b8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "fed08fd2_310b114f",
+        "filename": "chrome/browser/safe_browsing/chrome_cleaner/reporter_runner_win.h",
+        "patchSetId": 8
+      },
+      "lineNbr": 33,
+      "author": {
+        "id": 1115445
+      },
+      "writtenOn": "2017-11-07T21:41:14Z",
+      "side": 1,
+      "message": "Partially unrelated, we don\u0027t really need to track this anymore since we got rid of the times when the reporter could run daily",
       "revId": "706f05a32ffb91dc72cbf6bcd743f7f3da8de0b8",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -166,6 +400,23 @@
       "writtenOn": "2017-11-06T22:05:55Z",
       "side": 1,
       "message": "Nit: extra \"they\"",
+      "revId": "706f05a32ffb91dc72cbf6bcd743f7f3da8de0b8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8f7a66be_b68b0482",
+        "filename": "chrome/browser/safe_browsing/chrome_cleaner/reporter_runner_win.h",
+        "patchSetId": 8
+      },
+      "lineNbr": 55,
+      "author": {
+        "id": 1115445
+      },
+      "writtenOn": "2017-11-07T21:41:14Z",
+      "side": 1,
+      "message": "The last two sentences seem to be saying the same thing, maybe drop the second last sentence and just have the last one, \"Logs will not be uploaded from the reporter, even if the user has opted into SBER2, and cleaner logs will not be uploaded",
       "revId": "706f05a32ffb91dc72cbf6bcd743f7f3da8de0b8",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -274,6 +525,40 @@
     },
     {
       "key": {
+        "uuid": "561c2685_4f7a1fb4",
+        "filename": "chrome/browser/safe_browsing/chrome_cleaner/reporter_runner_win.h",
+        "patchSetId": 8
+      },
+      "lineNbr": 132,
+      "author": {
+        "id": 1115445
+      },
+      "writtenOn": "2017-11-07T21:41:14Z",
+      "side": 1,
+      "message": "nit: I think this should end with \u003d",
+      "revId": "706f05a32ffb91dc72cbf6bcd743f7f3da8de0b8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c5c633a4_eac2ff80",
+        "filename": "chrome/browser/safe_browsing/chrome_cleaner/reporter_runner_win.h",
+        "patchSetId": 8
+      },
+      "lineNbr": 140,
+      "author": {
+        "id": 1115445
+      },
+      "writtenOn": "2017-11-07T21:41:14Z",
+      "side": 1,
+      "message": "Should we split this into two different enums, reporter failed to start and reporter returned an error",
+      "revId": "706f05a32ffb91dc72cbf6bcd743f7f3da8de0b8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "cc574ad5_c87fded4",
         "filename": "chrome/browser/safe_browsing/chrome_cleaner/reporter_runner_win.h",
         "patchSetId": 8
@@ -308,6 +593,29 @@
     },
     {
       "key": {
+        "uuid": "caf3229a_d3553879",
+        "filename": "chrome/browser/safe_browsing/chrome_cleaner/reporter_runner_win.h",
+        "patchSetId": 8
+      },
+      "lineNbr": 155,
+      "author": {
+        "id": 1115445
+      },
+      "writtenOn": "2017-11-07T21:41:14Z",
+      "side": 1,
+      "message": "As discussed offline, maybe worth changing this too Queue, so it is clear this isn\u0027t the same as the container functions on line 173 \u0026 174",
+      "range": {
+        "startLine": 155,
+        "startChar": 8,
+        "endLine": 155,
+        "endChar": 17
+      },
+      "revId": "706f05a32ffb91dc72cbf6bcd743f7f3da8de0b8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "d02b4111_621866ac",
         "filename": "chrome/browser/safe_browsing/chrome_cleaner/reporter_runner_win.h",
         "patchSetId": 8
@@ -336,6 +644,23 @@
       "writtenOn": "2017-11-06T22:05:55Z",
       "side": 1,
       "message": "Can you name this mutable_container()?",
+      "revId": "706f05a32ffb91dc72cbf6bcd743f7f3da8de0b8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1544f260_600379bc",
+        "filename": "chrome/browser/safe_browsing/chrome_cleaner/reporter_runner_win.h",
+        "patchSetId": 8
+      },
+      "lineNbr": 194,
+      "author": {
+        "id": 1115445
+      },
+      "writtenOn": "2017-11-07T21:41:14Z",
+      "side": 1,
+      "message": "nit: remove, version is no longer passed in",
       "revId": "706f05a32ffb91dc72cbf6bcd743f7f3da8de0b8",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
