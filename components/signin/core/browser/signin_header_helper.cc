@@ -131,9 +131,12 @@ void AppendOrRemoveMirrorRequestHeader(
     const GURL& redirect_url,
     const std::string& account_id,
     const content_settings::CookieSettings* cookie_settings,
+    bool account_consistency_required,
     int profile_mode_mask) {
   const GURL& url = redirect_url.is_empty() ? request->url() : redirect_url;
   ChromeConnectedHeaderHelper chrome_connected_helper;
+  chrome_connected_helper.SetAccountConsistencyRequired(
+      account_consistency_required);
   std::string chrome_connected_header_value;
   if (chrome_connected_helper.ShouldBuildRequestHeader(url, cookie_settings)) {
     chrome_connected_header_value = chrome_connected_helper.BuildRequestHeader(

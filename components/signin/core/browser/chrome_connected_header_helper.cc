@@ -90,6 +90,11 @@ ManageAccountsParams ChromeConnectedHeaderHelper::BuildManageAccountsParams(
   return params;
 }
 
+void ChromeConnectedHeaderHelper::SetAccountConsistencyRequired(
+    bool account_consistency_required) {
+  account_consistency_required_ = account_consistency_required;
+}
+
 bool ChromeConnectedHeaderHelper::IsUrlEligibleToIncludeGaiaId(
     const GURL& url,
     bool is_header_request) {
@@ -118,6 +123,10 @@ bool ChromeConnectedHeaderHelper::IsDriveOrigin(const GURL& url) {
   return url == kGoogleDriveURL || url == kGoogleDocsURL;
 }
 
+bool ChromeConnectedHeaderHelper::ShouldRequestAccountConsistency() {
+  return IsAccountConsistencyMirrorEnabled() || account_consistency_required_;
+}
+
 bool ChromeConnectedHeaderHelper::IsUrlEligibleForRequestHeader(
     const GURL& url) {
   // Only set the header for Drive and Gaia always, and other Google properties
@@ -131,16 +140,14 @@ bool ChromeConnectedHeaderHelper::IsUrlEligibleForRequestHeader(
     return false;
 
   GURL origin(url.GetOrigin());
-  bool is_enable_account_consistency = IsAccountConsistencyMirrorEnabled();
-  bool is_google_url = is_enable_account_consistency &&
-                       (google_util::IsGoogleDomainUrl(
+  bool is_google_url = (google_util::IsGoogleDomainUrl(
                             url, google_util::ALLOW_SUBDOMAIN,
                             google_util::DISALLOW_NON_STANDARD_PORTS) ||
                         google_util::IsYoutubeDomainUrl(
                             url, google_util::ALLOW_SUBDOMAIN,
                             google_util::DISALLOW_NON_STANDARD_PORTS));
-  return is_google_url || IsDriveOrigin(origin) ||
-         gaia::IsGaiaSignonRealm(origin);
+  return (ShouldRequestAccountConsistency() && is_google_url) ||
+         IsDriveOrigin(origin) || gaia::IsGaiaSignonRealm(origin);
 }
 
 std::string ChromeConnectedHeaderHelper::BuildRequestHeader(
@@ -160,9 +167,9 @@ std::string ChromeConnectedHeaderHelper::BuildRequestHeader(
   parts.push_back(
       base::StringPrintf("%s=%s", kProfileModeAttrName,
                          base::IntToString(profile_mode_mask).c_str()));
-  parts.push_back(base::StringPrintf(
-      "%s=%s", kEnableAccountConsistencyAttrName,
-      IsAccountConsistencyMirrorEnabled() ? "true" : "false"));
+  parts.push_back(
+      base::StringPrintf("%s=%s", kEnableAccountConsistencyAttrName,
+                         ShouldRequestAccountConsistency() ? "true" : "false"));
 
   return base::JoinString(parts, is_header_request ? "," : ":");
 }

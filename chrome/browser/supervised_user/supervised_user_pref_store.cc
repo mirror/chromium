@@ -31,34 +31,38 @@ struct SupervisedUserSettingsPrefMappingEntry {
 };
 
 SupervisedUserSettingsPrefMappingEntry kSupervisedUserSettingsPrefMapping[] = {
-  {
-    supervised_users::kApprovedExtensions,
-    prefs::kSupervisedUserApprovedExtensions,
-  },
-  {
-    supervised_users::kContentPackDefaultFilteringBehavior,
-    prefs::kDefaultSupervisedUserFilteringBehavior,
-  },
-  {
-    supervised_users::kContentPackManualBehaviorHosts,
-    prefs::kSupervisedUserManualHosts,
-  },
-  {
-    supervised_users::kContentPackManualBehaviorURLs,
-    prefs::kSupervisedUserManualURLs,
-  },
-  {
-    supervised_users::kForceSafeSearch, prefs::kForceGoogleSafeSearch,
-  },
-  {
-    supervised_users::kSafeSitesEnabled, prefs::kSupervisedUserSafeSites,
-  },
-  {
-    supervised_users::kSigninAllowed, prefs::kSigninAllowed,
-  },
-  {
-    supervised_users::kUserName, prefs::kProfileName,
-  },
+    {
+        supervised_users::kApprovedExtensions,
+        prefs::kSupervisedUserApprovedExtensions,
+    },
+    {
+        supervised_users::kContentPackDefaultFilteringBehavior,
+        prefs::kDefaultSupervisedUserFilteringBehavior,
+    },
+    {
+        supervised_users::kContentPackManualBehaviorHosts,
+        prefs::kSupervisedUserManualHosts,
+    },
+    {
+        supervised_users::kContentPackManualBehaviorURLs,
+        prefs::kSupervisedUserManualURLs,
+    },
+    {
+        supervised_users::kForceSafeSearch, prefs::kForceGoogleSafeSearch,
+    },
+    {
+        supervised_users::kSafeSitesEnabled, prefs::kSupervisedUserSafeSites,
+    },
+    {
+        supervised_users::kSigninAllowed, prefs::kSigninAllowed,
+    },
+    {
+        supervised_users::kUserName, prefs::kProfileName,
+    },
+    {
+        supervised_users::kAccountConsistencyRequired,
+        prefs::kAccountConsistencyRequired,
+    },
 };
 
 }  // namespace
@@ -122,6 +126,7 @@ void SupervisedUserPrefStore::OnNewSettingsAvailable(
                        safe_search_util::YOUTUBE_RESTRICT_MODERATE);
     prefs_->SetBoolean(prefs::kHideWebStoreIcon, true);
     prefs_->SetBoolean(prefs::kSigninAllowed, false);
+    prefs_->SetBoolean(prefs::kAccountConsistencyRequired, false);
     prefs_->SetBoolean(ntp_snippets::prefs::kEnableSnippets, false);
 
     // Copy supervised user settings to prefs.

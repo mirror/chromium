@@ -62,7 +62,7 @@ class SigninHeaderHelperTest : public testing::Test {
         url_request_context_.CreateRequest(url, net::DEFAULT_PRIORITY, nullptr,
                                            TRAFFIC_ANNOTATION_FOR_TESTS);
     AppendOrRemoveMirrorRequestHeader(url_request.get(), GURL(), account_id,
-                                      cookie_settings_.get(),
+                                      cookie_settings_.get(), false,
                                       PROFILE_MODE_DEFAULT);
     AppendOrRemoveDiceRequestHeader(url_request.get(), GURL(), account_id,
                                     sync_enabled_, sync_has_auth_error_,
@@ -402,7 +402,7 @@ TEST_F(SigninHeaderHelperTest, TestMirrorHeaderEligibleRedirectURL) {
       url_request_context_.CreateRequest(url, net::DEFAULT_PRIORITY, nullptr,
                                          TRAFFIC_ANNOTATION_FOR_TESTS);
   AppendOrRemoveMirrorRequestHeader(url_request.get(), redirect_url, account_id,
-                                    cookie_settings_.get(),
+                                    cookie_settings_.get(), false,
                                     PROFILE_MODE_DEFAULT);
   EXPECT_TRUE(
       url_request->extra_request_headers().HasHeader(kChromeConnectedHeader));
@@ -419,7 +419,7 @@ TEST_F(SigninHeaderHelperTest, TestMirrorHeaderNonEligibleRedirectURL) {
       url_request_context_.CreateRequest(url, net::DEFAULT_PRIORITY, nullptr,
                                          TRAFFIC_ANNOTATION_FOR_TESTS);
   AppendOrRemoveMirrorRequestHeader(url_request.get(), redirect_url, account_id,
-                                    cookie_settings_.get(),
+                                    cookie_settings_.get(), false,
                                     PROFILE_MODE_DEFAULT);
   EXPECT_FALSE(
       url_request->extra_request_headers().HasHeader(kChromeConnectedHeader));
@@ -439,7 +439,7 @@ TEST_F(SigninHeaderHelperTest, TestIgnoreMirrorHeaderNonEligibleURLs) {
   url_request->SetExtraRequestHeaderByName(kChromeConnectedHeader, fake_header,
                                            false);
   AppendOrRemoveMirrorRequestHeader(url_request.get(), redirect_url, account_id,
-                                    cookie_settings_.get(),
+                                    cookie_settings_.get(), false,
                                     PROFILE_MODE_DEFAULT);
   std::string header;
   EXPECT_TRUE(url_request->extra_request_headers().GetHeader(
