@@ -16,6 +16,24 @@
       "revId": "f1a26f96b56f7b11089755ccade6c886546ff953",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "80991c0b_a7331997",
+        "filename": "chrome/browser/search/one_google_bar/one_google_bar_fetcher_impl.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 180,
+      "author": {
+        "id": 1116059
+      },
+      "writtenOn": "2017-11-07T18:05:11Z",
+      "side": 1,
+      "message": "I guess I could add a Chrome version check on the server by inspecting the user agent, but that doesn\u0027t seem better. Or what did you have in mind?\n\nSimple string-appending would fail if the URL had a #ref. Which I don\u0027t think it can have here, but it still seems cleaner to do things \"properly\".",
+      "parentUuid": "4b1d3879_64059952",
+      "revId": "f1a26f96b56f7b11089755ccade6c886546ff953",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
