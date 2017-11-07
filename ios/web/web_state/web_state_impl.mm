@@ -182,7 +182,7 @@ void WebStateImpl::OnTitleChanged() {
     observer.TitleWasSet(this);
 }
 
-void WebStateImpl::OnVisibleSecurityStateChange() {
+void WebStateImpl::DidChangeVisibleSecurityState() {
   for (auto& observer : observers_)
     observer.DidChangeVisibleSecurityState(this);
 }
@@ -350,14 +350,6 @@ bool WebStateImpl::IsShowingWebInterstitial() const {
 
 WebInterstitial* WebStateImpl::GetWebInterstitial() const {
   return interstitial_;
-}
-
-void WebStateImpl::OnPasswordInputShownOnHttp() {
-  [web_controller_ didShowPasswordInputOnHTTP];
-}
-
-void WebStateImpl::OnCreditCardInputShownOnHttp() {
-  [web_controller_ didShowCreditCardInputOnHTTP];
 }
 
 net::HttpResponseHeaders* WebStateImpl::GetHttpResponseHeaders() const {
