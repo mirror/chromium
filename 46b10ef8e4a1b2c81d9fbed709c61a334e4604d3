@@ -16,6 +16,24 @@
       "revId": "46b10ef8e4a1b2c81d9fbed709c61a334e4604d3",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "57fd1f08_5d709ed1",
+        "filename": "chrome/browser/component_updater/cros_component_installer.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 49,
+      "author": {
+        "id": 1178302
+      },
+      "writtenOn": "2017-11-07T19:03:14Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "7d3b567d_c891d0ed",
+      "revId": "46b10ef8e4a1b2c81d9fbed709c61a334e4604d3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
