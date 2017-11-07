@@ -283,6 +283,10 @@ const char kDisableSoftwareRasterizer[]     = "disable-software-rasterizer";
 // Disables the Web Speech API.
 const char kDisableSpeechAPI[]              = "disable-speech-api";
 
+// Disables printing the stack trace during browsertests when the test crashes
+// or hangs.
+const char kDisableStackTraceOnOnSignal[]   = "disable-stack-trace-on-signal";
+
 // Disable multithreaded GPU compositing of web content.
 const char kDisableThreadedCompositing[]     = "disable-threaded-compositing";
 
