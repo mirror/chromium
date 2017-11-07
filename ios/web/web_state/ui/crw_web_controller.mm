@@ -493,7 +493,7 @@ NSError* WKWebViewErrorWithSource(NSError* error, WKWebViewErrorSource source) {
 // a web page the document has actually changed), or after the load request has
 // been registered for a non-document-changing URL change. Updates internal
 // state not specific to web pages.
-- (void)didStartLoadingURL:(const GURL&)URL;
+- (void)didStartLoading;
 // Returns YES if the URL looks like it is one CRWWebController can show.
 + (BOOL)webControllerCanShow:(const GURL&)url;
 // Returns a lazily created CRWTouchTrackingRecognizer.
@@ -1715,7 +1715,8 @@ registerLoadRequestForURL:(const GURL&)requestURL
                 navigationContext:(web::NavigationContextImpl*)context {
   _webStateImpl->OnNavigationStarted(context);
   const GURL currentURL([self currentURL]);
-  [self didStartLoadingURL:currentURL];
+  [self didStartLoading];
+  self.navigationManagerImpl->CommitPendingItem();
   _loadPhase = web::PAGE_LOADED;
   _webStateImpl->OnNavigationFinished(context);
 
@@ -1923,7 +1924,8 @@ registerLoadRequestForURL:(const GURL&)requestURL
                        transition:ui::PageTransition::PAGE_TRANSITION_RELOAD
            sameDocumentNavigation:NO];
     _webStateImpl->OnNavigationStarted(navigationContext.get());
-    [self didStartLoadingURL:url];
+    [self didStartLoading];
+    self.navigationManagerImpl->CommitPendingItem();
     [self.nativeController reload];
     _webStateImpl->OnNavigationFinished(navigationContext.get());
     [self loadCompleteWithSuccess:YES forNavigation:nil];
@@ -2748,7 +2750,8 @@ registerLoadRequestForURL:(const GURL&)requestURL
   // push/replaceState.
   [self resetDocumentSpecificState];
 
-  [self didStartLoadingURL:currentURL];
+  [self didStartLoading];
+  self.navigationManagerImpl->CommitPendingItem();
 }
 
 - (void)resetDocumentSpecificState {
@@ -2756,14 +2759,12 @@ registerLoadRequestForURL:(const GURL&)requestURL
   _clickInProgress = NO;
 }
 
-- (void)didStartLoadingURL:(const GURL&)URL {
+- (void)didStartLoading {
   _loadPhase = web::PAGE_LOADING;
   _displayStateOnStartLoading = self.pageDisplayState;
 
   self.userInteractionRegistered = NO;
   _pageHasZoomed = NO;
-
-  self.navigationManagerImpl->CommitPendingItem();
 }
 
 - (void)wasShown {
@@ -5094,7 +5095,8 @@ registerLoadRequestForURL:(const GURL&)requestURL
       navigationContext = [self contextForPendingNavigationWithURL:newURL];
     DCHECK(navigationContext->IsSameDocument());
     _webStateImpl->OnNavigationStarted(navigationContext);
-    [self didStartLoadingURL:_documentURL];
+    [self didStartLoading];
+    self.navigationManagerImpl->CommitPendingItem();
     _webStateImpl->OnNavigationFinished(navigationContext);
 
     [self updateSSLStatusForCurrentNavigationItem];
