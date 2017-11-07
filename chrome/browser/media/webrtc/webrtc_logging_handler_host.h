@@ -18,6 +18,7 @@
 #include "build/build_config.h"
 #include "chrome/browser/media/webrtc/rtp_dump_type.h"
 #include "chrome/browser/media/webrtc/webrtc_event_log_handler.h"
+#include "chrome/browser/media/webrtc/webrtc_logs_directory_access_util.h"
 #include "chrome/browser/media/webrtc/webrtc_rtp_dump_handler.h"
 #include "chrome/browser/media/webrtc/webrtc_text_log_handler.h"
 #include "content/public/browser/browser_message_filter.h"
@@ -49,6 +50,8 @@ class WebRtcLoggingHandlerHost : public content::BrowserMessageFilter {
   typedef base::Callback<void(bool, const std::string&)> GenericDoneCallback;
   typedef base::Callback<void(bool, const std::string&, const std::string&)>
       UploadDoneCallback;
+  typedef base::Callback<void(const std::string&, const std::string&)>
+      LogsDirectoryCallback;
 
   // Key used to attach the handler to the RenderProcessHost.
   static const char kWebRtcLoggingHandlerHostKey[];
@@ -136,6 +139,11 @@ class WebRtcLoggingHandlerHost : public content::BrowserMessageFilter {
   void StopWebRtcEventLogging(
       const WebRtcEventLogHandler::RecordingDoneCallback& callback,
       const WebRtcEventLogHandler::RecordingErrorCallback& error_callback);
+
+  // Grants the render process access to the 'WebRTC Logs' directory, and
+  // invokes |callback| with the ids necesarry to create a DirectoryEntry
+  // object.
+  void GetLogsDirectory(const LogsDirectoryCallback& callback);
 
  private:
   friend class content::BrowserThread;

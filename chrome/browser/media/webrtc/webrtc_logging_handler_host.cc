@@ -17,6 +17,7 @@
 #include "chrome/browser/browser_process.h"
 #include "chrome/browser/media/webrtc/webrtc_log_list.h"
 #include "chrome/browser/media/webrtc/webrtc_log_uploader.h"
+#include "chrome/browser/media/webrtc/webrtc_logs_directory_access_util.h"
 #include "chrome/browser/media/webrtc/webrtc_rtp_dump_handler.h"
 #include "chrome/browser/profiles/profile.h"
 #include "chrome/common/chrome_switches.h"
@@ -24,6 +25,7 @@
 #include "content/public/browser/browser_thread.h"
 #include "content/public/browser/content_browser_client.h"
 #include "content/public/browser/render_process_host.h"
+#include "extensions/browser/granted_file_entry.h"
 
 using content::BrowserThread;
 
@@ -261,6 +263,18 @@ void WebRtcLoggingHandlerHost::StopWebRtcEventLogging(
     const WebRtcEventLogHandler::RecordingErrorCallback& error_callback) {
   DCHECK_CURRENTLY_ON(BrowserThread::UI);
   event_log_handler_->StopWebRtcEventLogging(callback, error_callback);
+}
+
+void WebRtcLoggingHandlerHost::GetLogsDirectory(
+    const LogsDirectoryCallback& callback) {
+  DCHECK_CURRENTLY_ON(BrowserThread::UI);
+  extensions::GrantedFileEntry entry =
+      webrtc_logs_directory_access_util::GetLogsDirectoryEntry(
+          profile_, render_process_id_);
+
+  BrowserThread::PostTask(
+      BrowserThread::UI, FROM_HERE,
+      base::BindOnce(callback, entry.filesystem_id, entry.registered_name));
 }
 
 void WebRtcLoggingHandlerHost::OnRtpPacket(
