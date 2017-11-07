@@ -248,6 +248,8 @@ class PLATFORM_EXPORT HeapObjectHeader {
 
   // Returns true if magic number is valid.
   bool IsValid() const;
+  // Returns true if magic number is valid or zapped.
+  bool IsValidOrZapped() const;
 
   static const uint32_t kZappedMagic = 0xDEAD4321;
 
@@ -459,6 +461,7 @@ class BasePage {
   PageMemory* storage_;
   BaseArena* arena_;
   BasePage* next_;
+  uint16_t const magic_;
 
   // Track the sweeping state of a page. Set to false at the start of a sweep,
   // true  upon completion of lazy sweeping.
@@ -883,6 +886,14 @@ NO_SANITIZE_ADDRESS inline size_t HeapObjectHeader::size() const {
 NO_SANITIZE_ADDRESS inline bool HeapObjectHeader::IsValid() const {
 #if defined(ARCH_CPU_64_BITS)
   return GetMagic() == magic_;
+#else
+  return true;
+#endif
+}
+
+NO_SANITIZE_ADDRESS inline bool HeapObjectHeader::IsValidOrZapped() const {
+#if defined(ARCH_CPU_64_BITS)
+  return IsValid() || kZappedMagic == magic_;
 #else
   return true;
 #endif
