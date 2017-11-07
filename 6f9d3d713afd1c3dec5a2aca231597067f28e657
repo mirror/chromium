@@ -1,0 +1,55 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "5db4654b_6a59794e",
+        "filename": "ash/shelf/shelf_button.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 36,
+      "author": {
+        "id": 1001118
+      },
+      "writtenOn": "2017-11-07T20:23:36Z",
+      "side": 1,
+      "message": "Remove this comment.",
+      "revId": "6f9d3d713afd1c3dec5a2aca231597067f28e657",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a3dcef49_04061c1d",
+        "filename": "chrome/browser/ui/ash/launcher/browser_shortcut_launcher_item_controller.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 130,
+      "author": {
+        "id": 1001118
+      },
+      "writtenOn": "2017-11-07T20:23:36Z",
+      "side": 1,
+      "message": "nit: indentation?",
+      "revId": "6f9d3d713afd1c3dec5a2aca231597067f28e657",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c7a994b7_54886f74",
+        "filename": "chrome/browser/ui/ash/launcher/chrome_launcher_controller.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 1057,
+      "author": {
+        "id": 1001118
+      },
+      "writtenOn": "2017-11-07T20:23:36Z",
+      "side": 1,
+      "message": "optional nit: change to a for each loop",
+      "revId": "6f9d3d713afd1c3dec5a2aca231597067f28e657",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
