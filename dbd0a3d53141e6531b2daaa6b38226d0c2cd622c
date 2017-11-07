@@ -1,0 +1,96 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "f14f4313_dbad28af",
+        "filename": "docs/security/integer-semantics.md",
+        "patchSetId": 1
+      },
+      "lineNbr": 21,
+      "author": {
+        "id": 1144624
+      },
+      "writtenOn": "2017-11-07T21:55:20Z",
+      "side": 1,
+      "message": "Can this be made relative? (No idea if that works in Gerrit/Gitiles markdown)",
+      "range": {
+        "startLine": 21,
+        "startChar": 15,
+        "endLine": 21,
+        "endChar": 70
+      },
+      "revId": "dbd0a3d53141e6531b2daaa6b38226d0c2cd622c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a7c68bfc_41617441",
+        "filename": "docs/security/integer-semantics.md",
+        "patchSetId": 1
+      },
+      "lineNbr": 25,
+      "author": {
+        "id": 1144624
+      },
+      "writtenOn": "2017-11-07T21:55:20Z",
+      "side": 1,
+      "message": "nit: trailing space",
+      "range": {
+        "startLine": 25,
+        "startChar": 30,
+        "endLine": 25,
+        "endChar": 31
+      },
+      "revId": "dbd0a3d53141e6531b2daaa6b38226d0c2cd622c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e0df6b2a_f2ab7a29",
+        "filename": "docs/security/integer-semantics.md",
+        "patchSetId": 1
+      },
+      "lineNbr": 27,
+      "author": {
+        "id": 1144624
+      },
+      "writtenOn": "2017-11-07T21:55:20Z",
+      "side": 1,
+      "message": "The random mention of communicants doesn\u0027t really flow here.",
+      "range": {
+        "startLine": 27,
+        "startChar": 18,
+        "endLine": 27,
+        "endChar": 37
+      },
+      "revId": "dbd0a3d53141e6531b2daaa6b38226d0c2cd622c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6b31f7d5_00fc4871",
+        "filename": "docs/security/integer-semantics.md",
+        "patchSetId": 1
+      },
+      "lineNbr": 52,
+      "author": {
+        "id": 1144624
+      },
+      "writtenOn": "2017-11-07T21:55:20Z",
+      "side": 1,
+      "message": "Redundant",
+      "range": {
+        "startLine": 52,
+        "startChar": 56,
+        "endLine": 52,
+        "endChar": 60
+      },
+      "revId": "dbd0a3d53141e6531b2daaa6b38226d0c2cd622c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
