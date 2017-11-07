@@ -113,12 +113,13 @@ NGContainerFragmentBuilder::AddOutOfFlowChildCandidate(
     Optional<TextDirection> direction) {
   DCHECK(child);
 
-  oof_positioned_candidates_.push_back(NGOutOfFlowPositionedCandidate{
+  bool child_offset_is_rtl = direction ? IsRtl(*direction) : false;
+  oof_positioned_candidates_.push_back(NGOutOfFlowPositionedCandidate(
       NGOutOfFlowPositionedDescendant{
           child, NGStaticPosition::Create(WritingMode(),
                                           direction ? *direction : Direction(),
                                           NGPhysicalOffset())},
-      child_offset});
+      child_offset, child_offset_is_rtl));
 
   child.SaveStaticOffsetForLegacy(child_offset);
   return *this;
@@ -141,8 +142,10 @@ void NGContainerFragmentBuilder::GetAndClearOutOfFlowDescendantCandidates(
   NGPhysicalSize builder_physical_size{Size().ConvertToPhysical(WritingMode())};
 
   for (NGOutOfFlowPositionedCandidate& candidate : oof_positioned_candidates_) {
+    TextDirection direction =
+        candidate.child_offset_is_rtl ? TextDirection::kRtl : Direction();
     NGPhysicalOffset child_offset = candidate.child_offset.ConvertToPhysical(
-        WritingMode(), Direction(), builder_physical_size, NGPhysicalSize());
+        WritingMode(), direction, builder_physical_size, NGPhysicalSize());
 
     NGStaticPosition builder_relative_position;
     builder_relative_position.type = candidate.descendant.static_position.type;
