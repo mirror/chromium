@@ -89,6 +89,24 @@
     },
     {
       "key": {
+        "uuid": "7b85313b_e13390ca",
+        "filename": "third_party/WebKit/Source/core/layout/LayoutBlock.cpp",
+        "patchSetId": 2
+      },
+      "lineNbr": 1251,
+      "author": {
+        "id": 1002258
+      },
+      "writtenOn": "2017-11-08T01:49:29Z",
+      "side": 1,
+      "message": "TL;DR: We should change all hit test code path.\n\nSorry for late response. I missed this one.\nAnd sorry for confusion, the statement is meaningless.\n\nTo avoid layering violation, Hit Test should be independent from\nselection. Ad-hoc logic and better UX should be in SelectionController.",
+      "parentUuid": "aa4dab40_69f8a03c",
+      "revId": "6b44582ce4116bafa3f00d5ee37d1ffbdb73497a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "34570912_cb630c09",
         "filename": "third_party/WebKit/Source/core/layout/LayoutBlock.cpp",
         "patchSetId": 2
