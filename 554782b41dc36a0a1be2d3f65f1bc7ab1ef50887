@@ -1,0 +1,135 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "6e36fbdf_ec5bdaff",
+        "filename": "chrome/browser/extensions/api/webrtc_logging_private/webrtc_logging_private_api.cc",
+        "patchSetId": 17
+      },
+      "lineNbr": 528,
+      "author": {
+        "id": 1115745
+      },
+      "writtenOn": "2017-11-08T17:08:10Z",
+      "side": 1,
+      "message": "nit: renderer?  process?  Probably not \"render\"",
+      "range": {
+        "startLine": 528,
+        "startChar": 64,
+        "endLine": 528,
+        "endChar": 70
+      },
+      "revId": "554782b41dc36a0a1be2d3f65f1bc7ab1ef50887",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a691531b_bffd2a6a",
+        "filename": "chrome/browser/extensions/api/webrtc_logging_private/webrtc_logging_private_api.cc",
+        "patchSetId": 17
+      },
+      "lineNbr": 536,
+      "author": {
+        "id": 1115745
+      },
+      "writtenOn": "2017-11-08T17:08:10Z",
+      "side": 1,
+      "message": "Should we set an error in this case?",
+      "revId": "554782b41dc36a0a1be2d3f65f1bc7ab1ef50887",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c91eaa3b_f0ff8ab3",
+        "filename": "chrome/browser/extensions/api/webrtc_logging_private/webrtc_logging_private_apitest.cc",
+        "patchSetId": 17
+      },
+      "lineNbr": 459,
+      "author": {
+        "id": 1115745
+      },
+      "writtenOn": "2017-11-08T17:08:10Z",
+      "side": 1,
+      "message": "Note: we do need a real test, but you mentioned that was forthcoming.",
+      "revId": "554782b41dc36a0a1be2d3f65f1bc7ab1ef50887",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e1fbe45a_24245afa",
+        "filename": "chrome/browser/extensions/api/webrtc_logging_private/webrtc_logging_private_browsertest.cc",
+        "patchSetId": 17
+      },
+      "lineNbr": 7,
+      "author": {
+        "id": 1115745
+      },
+      "writtenOn": "2017-11-08T17:08:10Z",
+      "side": 1,
+      "message": "using WebrtcLoggingPrivateApiBrowserTest \u003d\n    extensions::PlatformAppBrowserTest;",
+      "revId": "554782b41dc36a0a1be2d3f65f1bc7ab1ef50887",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c6396999_a45ad459",
+        "filename": "chrome/renderer/resources/extensions/webrtc_logging_private_custom_bindings.js",
+        "patchSetId": 17
+      },
+      "lineNbr": 18,
+      "author": {
+        "id": 1115745
+      },
+      "writtenOn": "2017-11-08T17:08:10Z",
+      "side": 1,
+      "message": "All methods in this API are privileged, so we shouldn\u0027t need to check context type here - it should only be created in a privileged context.",
+      "revId": "554782b41dc36a0a1be2d3f65f1bc7ab1ef50887",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "698bd753_5f159a82",
+        "filename": "chrome/test/data/extensions/api_test/webrtc_logging_private/get_logs_directory/test.js",
+        "patchSetId": 17
+      },
+      "lineNbr": 6,
+      "author": {
+        "id": 1115745
+      },
+      "writtenOn": "2017-11-08T17:08:10Z",
+      "side": 1,
+      "message": "nit: no space",
+      "range": {
+        "startLine": 6,
+        "startChar": 53,
+        "endLine": 6,
+        "endChar": 54
+      },
+      "revId": "554782b41dc36a0a1be2d3f65f1bc7ab1ef50887",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "06ec286d_d1792b38",
+        "filename": "chrome/test/data/extensions/api_test/webrtc_logging_private/get_logs_directory/test.js",
+        "patchSetId": 17
+      },
+      "lineNbr": 8,
+      "author": {
+        "id": 1115745
+      },
+      "writtenOn": "2017-11-08T17:08:10Z",
+      "side": 1,
+      "message": "nit: assertEq(expected, actual)",
+      "revId": "554782b41dc36a0a1be2d3f65f1bc7ab1ef50887",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
