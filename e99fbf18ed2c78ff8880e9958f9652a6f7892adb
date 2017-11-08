@@ -1,0 +1,95 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "7615b50d_a3d87fd6",
+        "filename": "media/gpu/vaapi_jpeg_encode_accelerator.cc",
+        "patchSetId": 19
+      },
+      "lineNbr": 8,
+      "author": {
+        "id": 1001027
+      },
+      "writtenOn": "2017-11-08T03:48:29Z",
+      "side": 1,
+      "message": "Is this include needed?",
+      "revId": "e99fbf18ed2c78ff8880e9958f9652a6f7892adb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0b2d43df_cfbc8b92",
+        "filename": "media/gpu/vaapi_jpeg_encode_accelerator.cc",
+        "patchSetId": 19
+      },
+      "lineNbr": 22,
+      "author": {
+        "id": 1001027
+      },
+      "writtenOn": "2017-11-08T03:48:29Z",
+      "side": 1,
+      "message": "Is this include needed?",
+      "revId": "e99fbf18ed2c78ff8880e9958f9652a6f7892adb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d45a3506_e2c49829",
+        "filename": "media/gpu/vaapi_jpeg_encode_accelerator.cc",
+        "patchSetId": 19
+      },
+      "lineNbr": 263,
+      "author": {
+        "id": 1001027
+      },
+      "writtenOn": "2017-11-08T03:48:29Z",
+      "side": 1,
+      "message": "Nit: would std::move() work here?",
+      "range": {
+        "startLine": 263,
+        "startChar": 38,
+        "endLine": 263,
+        "endChar": 49
+      },
+      "revId": "e99fbf18ed2c78ff8880e9958f9652a6f7892adb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "55893344_3e6d51d5",
+        "filename": "media/gpu/vaapi_jpeg_encode_accelerator.h",
+        "patchSetId": 19
+      },
+      "lineNbr": 58,
+      "author": {
+        "id": 1001027
+      },
+      "writtenOn": "2017-11-08T03:48:29Z",
+      "side": 1,
+      "message": "DISALLOW_COPY_AND_ASSIGN() perhaps?",
+      "revId": "e99fbf18ed2c78ff8880e9958f9652a6f7892adb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "36880416_898d7aeb",
+        "filename": "media/gpu/vaapi_wrapper.cc",
+        "patchSetId": 19
+      },
+      "lineNbr": 116,
+      "author": {
+        "id": 1001027
+      },
+      "writtenOn": "2017-11-08T03:48:29Z",
+      "side": 1,
+      "message": "Nit: please add a comment that this does not apply to JPEG (only to video). We could also s/kEncodeVAConfigAttribs/kVideoEncodeVAConfigAttribs/",
+      "revId": "e99fbf18ed2c78ff8880e9958f9652a6f7892adb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
