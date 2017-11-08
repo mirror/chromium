@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "f1384d00_519f8fe3",
+        "filename": "chrome/browser/ui/content_settings/content_setting_image_model.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 575,
+      "author": {
+        "id": 1002603
+      },
+      "writtenOn": "2017-11-08T03:44:38Z",
+      "side": 0,
+      "message": "FYI, this is pushed up to ContentSettingImageView.",
+      "revId": "79192d839d1d12f88da63662234b1627f3708158",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
