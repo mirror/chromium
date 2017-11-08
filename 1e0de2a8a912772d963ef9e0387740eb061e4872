@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "f91fcf9b_3ea32609",
+        "filename": "ios/chrome/browser/ssl/ios_ssl_error_handler.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 52,
+      "author": {
+        "id": 1123009
+      },
+      "writtenOn": "2017-11-08T23:35:19Z",
+      "side": 1,
+      "message": "Sorry, sent prematurely. I was going to ask if there is a way to follow the same naming patterns as StartHandlingError for private methods.",
+      "parentUuid": "1d38b38e_38e5be91",
+      "range": {
+        "startLine": 52,
+        "startChar": 15,
+        "endLine": 52,
+        "endChar": 0
+      },
+      "revId": "1e0de2a8a912772d963ef9e0387740eb061e4872",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "12e5987c_9cf2c5ef",
         "filename": "ios/chrome/browser/ssl/ios_ssl_error_handler.h",
         "patchSetId": 1
