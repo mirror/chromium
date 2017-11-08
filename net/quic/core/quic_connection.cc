@@ -2349,8 +2349,8 @@ QuicByteCount QuicConnection::GetLimitedMaxPacketSize(
   return max_packet_size;
 }
 
-void QuicConnection::SendProbingPacket(QuicByteCount packet_size) {
-  if (writer_->IsWriteBlocked()) {
+void QuicConnection::SendProbingPacket(QuicPacketWriter* probing_writer) {
+  if (probing_writer->IsWriteBlocked()) {
     QUIC_BUG << "Write Blocked when send probing";
     visitor_->OnWriteBlocked();
     return;
@@ -2361,8 +2361,10 @@ void QuicConnection::SendProbingPacket(QuicByteCount packet_size) {
   std::unique_ptr<QuicEncryptedPacket> probing_packet(
       packet_generator_.SerializeConnectivityProbingPacket());
 
-  WriteResult result = writer_->WritePacket(
-      probing_packet->data(), probing_packet->length(), self_address().host(),
+  // TODO(zhongyi): switch writer. Figure out self_address().host().
+  QuicSocketAddress new_self_address;
+  WriteResult result = probing_writer->WritePacket(
+      probing_packet->data(), probing_packet->length(), new_self_address.host(),
       peer_address(), per_packet_options_);
 
   if (result.status == WRITE_STATUS_ERROR) {
@@ -2374,7 +2376,7 @@ void QuicConnection::SendProbingPacket(QuicByteCount packet_size) {
 
   if (result.status == WRITE_STATUS_BLOCKED) {
     visitor_->OnWriteBlocked();
-    if (writer_->IsWriteBlockedDataBuffered()) {
+    if (probing_writer->IsWriteBlockedDataBuffered()) {
       QUIC_BUG << "Write probing packet blocked";
       return;
     }
