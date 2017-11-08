@@ -431,6 +431,10 @@ void ApplyFontsFromMap(const ScriptFontFamilyMap& map,
 
 void ApplyBlinkSettings(const base::CommandLine& command_line,
                         WebSettings* settings) {
+  if (base::FeatureList::IsEnabled(features::kLazyImageLoading)) {
+    settings->SetFromStrings("fetchImagePlaceholders", "true");
+  }
+
   if (!command_line.HasSwitch(switches::kBlinkSettings))
     return;
 

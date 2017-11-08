@@ -27,6 +27,7 @@
 #include "core/frame/EmbeddedContentView.h"
 #include "core/frame/FrameOwner.h"
 #include "core/html/HTMLElement.h"
+#include "core/loader/FrameLoaderTypes.h"
 #include "platform/feature_policy/FeaturePolicy.h"
 #include "platform/heap/Handle.h"
 #include "platform/scroll/ScrollTypes.h"
@@ -35,10 +36,13 @@
 
 namespace blink {
 
+class ElementVisibilityObserver;
 class ExceptionState;
 class Frame;
 class LayoutEmbeddedContent;
+class LocalFrame;
 class PluginView;
+class ResourceRequest;
 
 class CORE_EXPORT HTMLFrameOwnerElement : public HTMLElement,
                                           public FrameOwner {
@@ -166,12 +170,20 @@ class CORE_EXPORT HTMLFrameOwnerElement : public HTMLElement,
     return kReferrerPolicyDefault;
   }
 
+  void LoadFrameWhenVisible(LocalFrame*,
+                            const ResourceRequest&,
+                            FrameLoadType,
+                            bool is_visible);
+
   Member<Frame> content_frame_;
   Member<EmbeddedContentView> embedded_content_view_;
   SandboxFlags sandbox_flags_;
   bool did_load_non_empty_document_;
 
   ParsedFeaturePolicy container_policy_;
+
+  Member<ElementVisibilityObserver> visibility_observer_;
+  KURL old_url_;
 };
 
 DEFINE_ELEMENT_TYPE_CASTS(HTMLFrameOwnerElement, IsFrameOwnerElement());
