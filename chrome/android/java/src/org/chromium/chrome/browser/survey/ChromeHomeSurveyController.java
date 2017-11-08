@@ -6,12 +6,13 @@ package org.chromium.chrome.browser.survey;
 
 import android.content.Context;
 import android.content.SharedPreferences;
+import android.os.AsyncTask;
 import android.support.annotation.VisibleForTesting;
 import android.text.TextUtils;
 
 import org.chromium.base.CommandLine;
 import org.chromium.base.ContextUtils;
-import org.chromium.base.StrictModeContext;
+import org.chromium.base.ThreadUtils;
 import org.chromium.base.metrics.RecordUserAction;
 import org.chromium.chrome.R;
 import org.chromium.chrome.browser.ChromeSwitches;
@@ -30,6 +31,9 @@ import org.chromium.components.variations.VariationsAssociatedData;
 import org.chromium.content_public.browser.WebContents;
 import org.chromium.content_public.browser.WebContentsObserver;
 
+import java.util.Calendar;
+import java.util.Random;
+
 /**
  * Class that controls if and when to show surveys related to the Chrome Home experiment.
  */
@@ -39,13 +43,16 @@ public class ChromeHomeSurveyController {
     public static final String PARAM_NAME = "survey_override_site_id";
 
     private static final String TRIAL_NAME = "ChromeHome";
+    private static final String MAX_NUMBER = "MaxNumber";
 
     static final long ONE_WEEK_IN_MILLIS = 604800000L;
     static final String SURVEY_INFOBAR_DISMISSED_KEY = "chrome_home_survey_info_bar_dismissed";
+    static final String CORRESPONDING_DAY_OF_YEAR = "chrome_home_survey_user_tag";
 
     private TabModelSelector mTabModelSelector;
 
-    private ChromeHomeSurveyController() {
+    @VisibleForTesting
+    ChromeHomeSurveyController() {
         // Empty constructor.
     }
 
@@ -56,12 +63,11 @@ public class ChromeHomeSurveyController {
      *                         shown.
      */
     public static void initialize(Context context, TabModelSelector tabModelSelector) {
-        new ChromeHomeSurveyController().startDownload(context, tabModelSelector);
+        new FilterForSurveyTask(new ChromeHomeSurveyController(), context, tabModelSelector)
+                .executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);
     }
 
     private void startDownload(Context context, TabModelSelector tabModelSelector) {
-        if (!doesUserQualifyForSurvey()) return;
-
         mTabModelSelector = tabModelSelector;
 
         SurveyController surveyController = SurveyController.getInstance();
@@ -131,10 +137,7 @@ public class ChromeHomeSurveyController {
     }
 
     private boolean isUMAEnabled() {
-        try (StrictModeContext unused = StrictModeContext.allowDiskReads()) {
-            return PrivacyPreferencesManager.getInstance()
-                    .isUsageAndCrashReportingPermittedByUser();
-        }
+        return PrivacyPreferencesManager.getInstance().isUsageAndCrashReportingPermittedByUser();
     }
 
     private void showSurveyInfoBar(WebContents webContents, String siteId) {
@@ -146,20 +149,16 @@ public class ChromeHomeSurveyController {
 
     @VisibleForTesting
     boolean hasInfoBarBeenDisplayed() {
-        try (StrictModeContext unused = StrictModeContext.allowDiskReads()) {
-            SharedPreferences sharedPreferences = ContextUtils.getAppSharedPreferences();
-            return sharedPreferences.getBoolean(SURVEY_INFO_BAR_DISPLAYED_KEY, false);
-        }
+        SharedPreferences sharedPreferences = ContextUtils.getAppSharedPreferences();
+        return sharedPreferences.getBoolean(SURVEY_INFO_BAR_DISPLAYED_KEY, false);
     }
 
     @VisibleForTesting
     boolean wasChromeHomeEnabledForMinimumOneWeek() {
-        try (StrictModeContext unused = StrictModeContext.allowDiskReads()) {
-            SharedPreferences sharedPreferences = ContextUtils.getAppSharedPreferences();
-            long earliestLoggedDate = sharedPreferences.getLong(
-                    ChromePreferenceManager.CHROME_HOME_SHARED_PREFERENCES_KEY, Long.MAX_VALUE);
-            if (System.currentTimeMillis() - earliestLoggedDate >= ONE_WEEK_IN_MILLIS) return true;
-        }
+        SharedPreferences sharedPreferences = ContextUtils.getAppSharedPreferences();
+        long earliestLoggedDate = sharedPreferences.getLong(
+                ChromePreferenceManager.CHROME_HOME_SHARED_PREFERENCES_KEY, Long.MAX_VALUE);
+        if (System.currentTimeMillis() - earliestLoggedDate >= ONE_WEEK_IN_MILLIS) return true;
         return false;
     }
 
@@ -171,6 +170,37 @@ public class ChromeHomeSurveyController {
     @VisibleForTesting
     public static ChromeHomeSurveyController createChromeHomeSurveyControllerForTests() {
         return new ChromeHomeSurveyController();
+    }
+
+    @VisibleForTesting
+    boolean daysMatchUp() {
+        int dayOfTheYear = getDayOfYear();
+        if (dayOfTheYear == 366) return false;
+        SharedPreferences sharedPreferences = ContextUtils.getAppSharedPreferences();
+        int day = sharedPreferences.getInt(CORRESPONDING_DAY_OF_YEAR, -1);
+        if (day == -1) {
+            day = getRandomNumberUpTo(365);
+            sharedPreferences.edit().putInt(CORRESPONDING_DAY_OF_YEAR, day).apply();
+        }
+        return dayOfTheYear == day;
+    }
+
+    private boolean isEligibleForDownload() {
+        String number = VariationsAssociatedData.getVariationParamValue(TRIAL_NAME, MAX_NUMBER);
+        if (number == null) return false;
+        int maxNumber = Integer.parseInt(number);
+        return getRandomNumberUpTo(maxNumber) == 1;
+    }
+
+    @VisibleForTesting
+    int getRandomNumberUpTo(int max) {
+        return new Random().nextInt(max) + 1;
+    }
+
+    @VisibleForTesting
+    int getDayOfYear() {
+        ThreadUtils.assertOnBackgroundThread();
+        return Calendar.getInstance().get(Calendar.DAY_OF_YEAR);
     }
 
     /**
@@ -196,5 +226,29 @@ public class ChromeHomeSurveyController {
                         R.string.chrome_home_survey_prompt);
             }
         };
+    }
+
+    static class FilterForSurveyTask extends AsyncTask<Void, Void, Boolean> {
+        final ChromeHomeSurveyController mController;
+        final Context mContext;
+        final TabModelSelector mSelector;
+
+        public FilterForSurveyTask(ChromeHomeSurveyController controller, Context context,
+                TabModelSelector tabModelSelector) {
+            mController = controller;
+            mContext = context;
+            mSelector = tabModelSelector;
+        }
+
+        @Override
+        protected Boolean doInBackground(Void... params) {
+            return mController.daysMatchUp() && mController.isEligibleForDownload()
+                    && mController.doesUserQualifyForSurvey();
+        }
+
+        @Override
+        protected void onPostExecute(Boolean result) {
+            if (result) mController.startDownload(mContext, mSelector);
+        }
     }
 }
