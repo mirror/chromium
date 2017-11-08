@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<meta charset="utf-8">
+<title>Service WorkerRegistration from a removed iframe</title>
+<script src="/resources/testharness.js"></script>
+<script src="/resources/testharnessreport.js"></script>
+<script src="resources/test-helpers.sub.js"></script>
+<script>
+promise_test(t => {
+    const url = 'resources/blank.html';
+    const scope_for_iframe = 'removed-registration'
+    const scope_for_main = 'resources/' + scope_for_iframe;
+    const script = 'resources/empty-worker.js';
+    let frame;
+
+    return service_worker_unregister(t, scope_for_main)
+      .then(() => {
+          return with_iframe(url);
+        })
+      .then(f => {
+          frame = f;
+          return navigator.serviceWorker.register(script,
+                                                  {scope: scope_for_main});
+        })
+      .then(r => {
+          add_completion_callback(() => { r.unregister(); });
+          return wait_for_state(t, r.installing, 'activated');
+        })
+      .then(() => {
+          return frame.contentWindow.navigator.serviceWorker.getRegistration(
+            scope_for_iframe);
+        })
+      .then(r => {
+          frame.remove();
+          assert_equals(r.installing, null);
+          assert_equals(r.waiting, null);
+          assert_equals(r.active.state, 'activated');
+          assert_equals(r.scope, normalizeURL(scope_for_main));
+          r.onupdatefound = () => { /* empty */ };
+          return Promise.all([
+              promise_rejects(t, 'InvalidStateError', r.unregister()),
+              promise_rejects(t, 'InvalidStateError', r.update())]);
+        })
+  }, 'accessing a ServiceWorkerRegistration from a removed iframe');
+</script>
