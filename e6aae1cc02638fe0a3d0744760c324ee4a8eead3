@@ -158,6 +158,24 @@
       "revId": "e6aae1cc02638fe0a3d0744760c324ee4a8eead3",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "41108ccb_fff5a82e",
+        "filename": "chrome/browser/extensions/bookmark_app_navigation_throttle.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 212,
+      "author": {
+        "id": 1133035
+      },
+      "writtenOn": "2017-11-08T00:34:44Z",
+      "side": 1,
+      "message": "\u003e Ah, OK. Origin !\u003d PWA scope though, so this could result in not opening in another app\u0027s window. Interestingly it won\u0027t stop same-origin, out-of-pwa-scope but no other app isntalled navigations opening in the browser which feels kind of inconsistent.\n\u003e \n\nWhat do you think of the new behavior which sort of matches Android:\n\n1. If in a regular tab -\u003e don\u0027t redirect same origin navigations (Android uses host instead).\n2. If in an app tab -\u003e don\u0027t redirect same scope navigations (out of scope navigations will be redirected; this matches Android).\n\n\u003e BTW this function is getting really long which makes it hard to follow. I\u0027d suggest something like:\n\u003e \n\u003e auto this_app, target_app;\n\u003e \n\u003e if (this_app \u003d\u003d target_app)\n\u003e   // do nothing, navigation to the same app or no app to no app\n\u003e else if (target_app)\n\u003e   // open in target app window\n\u003e else if (this_app)\n\u003e   // open in browser tab.\n\u003e \n\u003e With anything substantial (e.g. open in target app window) in a sub function.\n\nThanks for the suggestion! Done.",
+      "parentUuid": "138cc307_6b96b227",
+      "revId": "e6aae1cc02638fe0a3d0744760c324ee4a8eead3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
