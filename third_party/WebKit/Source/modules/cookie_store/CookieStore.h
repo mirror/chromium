@@ -37,6 +37,24 @@ class CookieStore final : public ScriptWrappable,
   ScriptPromise getAll(ScriptState*,
                        const CookieStoreGetOptions&,
                        ExceptionState&);
+  ScriptPromise getAll(ScriptState*,
+                       const String& name,
+                       const CookieStoreGetOptions&,
+                       ExceptionState&);
+  ScriptPromise get(ScriptState*,
+                    const CookieStoreGetOptions&,
+                    ExceptionState&);
+  ScriptPromise get(ScriptState*,
+                    const String& name,
+                    const CookieStoreGetOptions&,
+                    ExceptionState&);
+  ScriptPromise has(ScriptState*,
+                    const CookieStoreGetOptions&,
+                    ExceptionState&);
+  ScriptPromise has(ScriptState*,
+                    const String& name,
+                    const CookieStoreGetOptions&,
+                    ExceptionState&);
 
   ScriptPromise set(ScriptState*,
                     const CookieStoreSetOptions&,
@@ -46,6 +64,13 @@ class CookieStore final : public ScriptWrappable,
                     const String& value,
                     const CookieStoreSetOptions&,
                     ExceptionState&);
+  ScriptPromise deleteForBindings(ScriptState*,
+                                  const CookieStoreSetOptions&,
+                                  ExceptionState&);
+  ScriptPromise deleteForBindings(ScriptState*,
+                                  const String& name,
+                                  const CookieStoreSetOptions&,
+                                  ExceptionState&);
 
   void Trace(blink::Visitor* visitor) override {
     ScriptWrappable::Trace(visitor);
@@ -59,9 +84,39 @@ class CookieStore final : public ScriptWrappable,
   CookieStore(ExecutionContext*,
               network::mojom::blink::RestrictedCookieManagerPtr backend);
 
-  void OnGetAllForUrlResult(
+  ScriptPromise DoRead(ScriptState*,
+                       const String& name,
+                       const CookieStoreGetOptions&,
+                       void (CookieStore::*backend_result_converter)(
+                           ScriptPromiseResolver*,
+                           Vector<network::mojom::blink::CanonicalCookiePtr>),
+                       ExceptionState&);
+
+  // Converts the result of a RestrictedCookieManager::GetAllForUrl mojo call to
+  // the promise result expected by CookieStore.getAll.
+  void GetAllForUrlToGetAllResult(
       ScriptPromiseResolver*,
       Vector<network::mojom::blink::CanonicalCookiePtr> backend_result);
+
+  // Converts the result of a RestrictedCookieManager::GetAllForUrl mojo call to
+  // the promise result expected by CookieStore.get.
+  void GetAllForUrlToGetResult(
+      ScriptPromiseResolver*,
+      Vector<network::mojom::blink::CanonicalCookiePtr> backend_result);
+
+  // Converts the result of a RestrictedCookieManager::GetAllForUrl mojo call to
+  // the promise result expected by CookieStore.has.
+  void GetAllForUrlToHasResult(
+      ScriptPromiseResolver*,
+      Vector<network::mojom::blink::CanonicalCookiePtr> backend_result);
+
+  ScriptPromise DoWrite(ScriptState*,
+                        const String& name,
+                        const String& value,
+                        const CookieStoreSetOptions&,
+                        bool is_deletion,
+                        ExceptionState&);
+
   void OnSetCanonicalCookieResult(ScriptPromiseResolver*, bool backend_result);
 
   network::mojom::blink::RestrictedCookieManagerPtr backend_;
