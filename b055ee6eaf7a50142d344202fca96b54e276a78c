@@ -69,6 +69,30 @@
       "revId": "b055ee6eaf7a50142d344202fca96b54e276a78c",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "0d057e3c_546f4ae3",
+        "filename": "chrome/browser/thumbnails/thumbnail_tab_helper.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 119,
+      "author": {
+        "id": 1176649
+      },
+      "writtenOn": "2017-11-08T14:06:49Z",
+      "side": 1,
+      "message": "How about introducing yet another boolean, has_changed_rvh_since_navigation_start_? It feels like reusing this bool is racy or at least brittle.",
+      "parentUuid": "4b6b1bc1_e4d3476d",
+      "range": {
+        "startLine": 119,
+        "startChar": 46,
+        "endLine": 119,
+        "endChar": 0
+      },
+      "revId": "b055ee6eaf7a50142d344202fca96b54e276a78c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
