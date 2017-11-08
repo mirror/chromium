@@ -273,6 +273,16 @@ class ExtensionsBrowserClient {
   // Returns the locale used by the application.
   virtual std::string GetApplicationLocale() = 0;
 
+  // Returns whether |extension_id| is currently enabled.
+  // This will only return a valid answer for installed extensions (regardless
+  // of whether it is currently loaded or not) under the provided |context|.
+  // Loaded extensions return true if they are currently loaded or terminated.
+  // Unloaded extensions will return true if they are not blocked, disabled,
+  // blacklisted or uninstalled (for external extensions). For browser without
+  // extension system, this function always returns false.
+  virtual bool IsExtensionEnabled(const std::string& extension_id,
+                                  content::BrowserContext* context) const;
+
   // Returns the single instance of |this|.
   static ExtensionsBrowserClient* Get();
 
