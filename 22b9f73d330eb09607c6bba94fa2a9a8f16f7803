@@ -16,6 +16,40 @@
       "revId": "22b9f73d330eb09607c6bba94fa2a9a8f16f7803",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ba2fc29e_ce96c506",
+        "filename": "third_party/WebKit/Source/core/loader/FrameLoader.cpp",
+        "patchSetId": 12
+      },
+      "lineNbr": 384,
+      "author": {
+        "id": 1115004
+      },
+      "writtenOn": "2017-11-08T03:04:50Z",
+      "side": 1,
+      "message": "Not directly relevant to this path since you\u0027re just adding it next to SaveScrollState, but this is not a reliable place to save state. Unload events don\u0027t fire in a bunch of scenarios, particularly on mobile.\n\nYou should instead do this in the place where we fire visibilitychange events with a value of \"hidden\".\n\nI don\u0027t think you need to do that in this patch, but a TODO is probably a good idea.",
+      "revId": "22b9f73d330eb09607c6bba94fa2a9a8f16f7803",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1dcd3f94_d133ad93",
+        "filename": "third_party/WebKit/Source/core/loader/FrameLoader.cpp",
+        "patchSetId": 12
+      },
+      "lineNbr": 1180,
+      "author": {
+        "id": 1115004
+      },
+      "writtenOn": "2017-11-08T03:04:50Z",
+      "side": 1,
+      "message": "Should this also have a TODO to try this in more places during page load and abort if any one of them succeeded? Unlike the offset based scrolling, we can try earlier and later in the page load for a higher chance of success.",
+      "revId": "22b9f73d330eb09607c6bba94fa2a9a8f16f7803",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
