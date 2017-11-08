@@ -37,6 +37,24 @@
     },
     {
       "key": {
+        "uuid": "078866ee_ff744fd0",
+        "filename": "net/cert/cert_verifier_factory.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 18,
+      "author": {
+        "id": 1000193
+      },
+      "writtenOn": "2017-11-08T16:21:50Z",
+      "side": 1,
+      "message": "So, I\u0027m not sure how concerned I\u0027d be if profile_io_data depends on MockCertVerifierFactory - profile_io_data already has a conceptual dependency on *ForTesting() being an interface exposed for testing purposes, so if we\u0027re worried about conceptual layering separation, it\u0027s no big deal.\n\nThe only separation it gets us is that it lets us keep MockCertVerifierFactory in the net_unittests target, but that doesn\u0027t seem like a significant win / I\u0027m not sure what problems that would solve.\n\nI wasn\u0027t sure if you were planning a future change to introduce more *Factory instances, or have more dependencies on *Factory, which is why I was trying to understand.\n\nIt seems like an alternative design, with both fewer changes and fewer abstractions, would be to still have g_cert_verifier_for_testing, and have profile_io_data.cc handle wrapping that with a WrappedCertVerifier() to ensure that it\u0027s kept alive for the duration of the profiles. You\u0027d still be able to remove the *Builder bits, which I think is a great cleanup, but you\u0027d cut back on the interfaces.\n\nThat approach, however, doesn\u0027t work out well if you\u0027re planning to make more bits dependent on a *Factory, but I couldn\u0027t quite see how such a thing might work for profile_io_data, so I didn\u0027t think that was the case (and wanted to confirm)\n\nThat is, concrete suggestions:\n- ProfileIOData::SetCertVerifierForTesting() stays the same\n- ProfileIOData::Init() does something like:\n    if (g_cert_verifier_for_testing) {\n      builder-\u003eSetCertVerifier(WrapSharedCertVerifier(g_cert_verifier_for_testing));\n    } else {\n- WrapSharedCertVerifier is just kept within profile_io_data.cc as an implementation detail there\n- URLRequestContextBuilder gets the cleanups\n\n\nHowever, I\u0027m probably overlooking a reason why that may not work, but it may be simpler :)",
+      "parentUuid": "4502dc1a_997c8c0f",
+      "revId": "920c32e3c692264acfe64793a84eab7469445627",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "a28ed751_c8dd9d48",
         "filename": "net/cert/mock_cert_verifier.cc",
         "patchSetId": 3
