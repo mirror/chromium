@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "a2978151_ab51c012",
+        "filename": "tools/binary_size/libsupersize/linker_map_parser.py",
+        "patchSetId": 1
+      },
+      "lineNbr": 256,
+      "author": {
+        "id": 1001928
+      },
+      "writtenOn": "2017-11-08T22:30:44Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "42b8a4c4_047e319b",
+      "range": {
+        "startLine": 256,
+        "startChar": 6,
+        "endLine": 256,
+        "endChar": 11
+      },
+      "revId": "058a1d2629f7f63fe21a88c6970c37915d24bde5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "2661538c_698c5b19",
         "filename": "tools/binary_size/libsupersize/linker_map_parser.py",
         "patchSetId": 1
@@ -39,6 +63,24 @@
       "revId": "058a1d2629f7f63fe21a88c6970c37915d24bde5",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3a58a594_a75566b4",
+        "filename": "tools/binary_size/libsupersize/linker_map_parser.py",
+        "patchSetId": 1
+      },
+      "lineNbr": 304,
+      "author": {
+        "id": 1001928
+      },
+      "writtenOn": "2017-11-08T22:30:44Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "2661538c_698c5b19",
+      "revId": "058a1d2629f7f63fe21a88c6970c37915d24bde5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
