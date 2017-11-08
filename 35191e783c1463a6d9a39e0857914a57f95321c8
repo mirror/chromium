@@ -57,6 +57,24 @@
       "revId": "35191e783c1463a6d9a39e0857914a57f95321c8",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7ac2c872_3e20384a",
+        "filename": "chrome/renderer/chrome_content_renderer_client.cc",
+        "patchSetId": 13
+      },
+      "lineNbr": 742,
+      "author": {
+        "id": 1002532
+      },
+      "writtenOn": "2017-11-08T01:24:20Z",
+      "side": 1,
+      "message": "maybe it\u0027s personal taste, but I find the other way with checking if it\u0027s bound easier to read (and shorter)",
+      "parentUuid": "698dc050_10c42188",
+      "revId": "35191e783c1463a6d9a39e0857914a57f95321c8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
