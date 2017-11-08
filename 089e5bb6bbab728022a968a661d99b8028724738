@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "7f75412b_24e223be",
+        "filename": "tools/clang/scripts/update.py",
+        "patchSetId": 1
+      },
+      "lineNbr": 823,
+      "author": {
+        "id": 1002927
+      },
+      "writtenOn": "2017-11-08T18:24:49Z",
+      "side": 1,
+      "message": "Dropping the target_arch part of the filename makes me a little nervous. Could we end up copying over too much here?\n\nAlso, do we need to update package.py (looks like maybe not?)",
+      "revId": "089e5bb6bbab728022a968a661d99b8028724738",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
