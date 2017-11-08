@@ -73,6 +73,24 @@
     },
     {
       "key": {
+        "uuid": "1d8b2525_a03578aa",
+        "filename": "chrome/browser/resources/vr_daydream_resources.grd",
+        "patchSetId": 2
+      },
+      "lineNbr": 7,
+      "author": {
+        "id": 1000537
+      },
+      "writtenOn": "2017-11-08T01:34:46Z",
+      "side": 1,
+      "message": "Thanks, that makes sense.",
+      "parentUuid": "5056a7e2_50ebdfe7",
+      "revId": "5918d2348a271a19f0bf9d6fc67bf002825cb373",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "1929210d_822a2812",
         "filename": "chrome/browser/vr/BUILD.gn",
         "patchSetId": 2
