@@ -37,6 +37,24 @@
     },
     {
       "key": {
+        "uuid": "53921031_4427be12",
+        "filename": "third_party/WebKit/Source/core/page/FocusController.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 1075,
+      "author": {
+        "id": 1000098
+      },
+      "writtenOn": "2017-11-08T17:12:19Z",
+      "side": 1,
+      "message": "You can think of \u0027const int x \u003d 50\u0027 as \u0027#define x 50\u0027 in the function scope -\nit declares that \u0027x\u0027 always evaluates to 50, which means to compilers that\nassigning it to register or some memory location is redundant.",
+      "parentUuid": "58096f51_e6a14fe0",
+      "revId": "0c5bd980da840951e79fffdcd41936ed26bbd4b6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "62a73799_1944b174",
         "filename": "third_party/WebKit/Source/core/page/FocusController.cpp",
         "patchSetId": 1
