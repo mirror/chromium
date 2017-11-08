@@ -1,0 +1,44 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "7461c0d7_6449176b",
+        "filename": "third_party/WebKit/Source/core/html/HTMLCanvasElement.cpp",
+        "patchSetId": 3
+      },
+      "lineNbr": 706,
+      "author": {
+        "id": 1134723
+      },
+      "writtenOn": "2017-11-08T19:41:37Z",
+      "side": 1,
+      "message": "if readPixels is supposed to fail if the bounds are empty or if there\u0027s no image_info, couldn\u0027t you check those before calling it and not call it at all?",
+      "revId": "c9290b0e04018425fcb3a44380327dafea52fcb4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "97fcaad8_a54a552c",
+        "filename": "third_party/WebKit/Source/core/html/HTMLCanvasElement.cpp",
+        "patchSetId": 3
+      },
+      "lineNbr": 709,
+      "author": {
+        "id": 1134723
+      },
+      "writtenOn": "2017-11-08T19:41:37Z",
+      "side": 1,
+      "message": "you are changing behavior here, right? Is that ok?",
+      "range": {
+        "startLine": 709,
+        "startChar": 17,
+        "endLine": 709,
+        "endChar": 24
+      },
+      "revId": "c9290b0e04018425fcb3a44380327dafea52fcb4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
