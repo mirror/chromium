@@ -4,8 +4,26 @@
 
 import("//third_party/protobuf/proto_library.gni")
 
+source_set("tensorflow") {
+  visibility = [ "//components/learning:*" ]
+
+  deps = [
+    ":core_protos",
+    "//third_party/protobuf:protobuf_lite",
+  ]
+
+  public_deps = []
+
+  sources = []
+
+  defines = []
+}
+
 proto_library("example_proto") {
-  visibility = [ "//components/machine_intelligence:*" ]
+  visibility = [
+    ":*",
+    "//components/machine_intelligence:*",
+  ]
 
   sources = [
     "src/tensorflow/core/example/example.proto",
@@ -13,6 +31,55 @@ proto_library("example_proto") {
   ]
 
   deps = [
+    "//third_party/protobuf:protobuf_lite",
+  ]
+
+  proto_in_dir = "src"
+  proto_out_dir = "third_party/tensorflow"
+}
+
+proto_library("core_protos") {
+  visibility = [ ":*" ]
+
+  sources = [
+    "src/tensorflow/core/framework/allocation_description.proto",
+    "src/tensorflow/core/framework/attr_value.proto",
+    "src/tensorflow/core/framework/cost_graph.proto",
+    "src/tensorflow/core/framework/device_attributes.proto",
+    "src/tensorflow/core/framework/function.proto",
+    "src/tensorflow/core/framework/graph.proto",
+    "src/tensorflow/core/framework/graph_transfer_info.proto",
+    "src/tensorflow/core/framework/kernel_def.proto",
+    "src/tensorflow/core/framework/log_memory.proto",
+    "src/tensorflow/core/framework/node_def.proto",
+    "src/tensorflow/core/framework/op_def.proto",
+    "src/tensorflow/core/framework/reader_base.proto",
+    "src/tensorflow/core/framework/remote_fused_graph_execute_info.proto",
+    "src/tensorflow/core/framework/resource_handle.proto",
+    "src/tensorflow/core/framework/step_stats.proto",
+    "src/tensorflow/core/framework/summary.proto",
+    "src/tensorflow/core/framework/tensor.proto",
+    "src/tensorflow/core/framework/tensor_description.proto",
+    "src/tensorflow/core/framework/tensor_shape.proto",
+    "src/tensorflow/core/framework/tensor_slice.proto",
+    "src/tensorflow/core/framework/types.proto",
+    "src/tensorflow/core/framework/variable.proto",
+    "src/tensorflow/core/framework/versions.proto",
+    "src/tensorflow/core/lib/core/error_codes.proto",
+    "src/tensorflow/core/protobuf/config.proto",
+    "src/tensorflow/core/protobuf/cluster.proto",
+    "src/tensorflow/core/protobuf/debug.proto",
+    "src/tensorflow/core/protobuf/device_properties.proto",
+    "src/tensorflow/core/protobuf/queue_runner.proto",
+    "src/tensorflow/core/protobuf/rewriter_config.proto",
+    "src/tensorflow/core/protobuf/tensor_bundle.proto",
+    "src/tensorflow/core/protobuf/saver.proto",
+    "src/tensorflow/core/util/memmapped_file_system.proto",
+    "src/tensorflow/core/util/saved_tensor_slice.proto",
+  ]
+
+  deps = [
+    ":example_proto",
     "//third_party/protobuf:protobuf_lite",
   ]
 
