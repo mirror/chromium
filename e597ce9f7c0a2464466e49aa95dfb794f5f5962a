@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "f8abcb3e_a24a622f",
+        "filename": "third_party/WebKit/Source/platform/blob/BlobBytesProviderTest.cpp",
+        "patchSetId": 2
+      },
+      "lineNbr": 5,
+      "author": {
+        "id": 1237531
+      },
+      "writtenOn": "2017-11-08T01:37:33Z",
+      "side": 1,
+      "message": "These should go after the first #include, the\n#include \"platform/blob/BlobBytesProvider.h\"\nline, as per https://google.github.io/styleguide/cppguide.html#Names_and_Order_of_Includes\n\nAlso put a blank line after that line, to separate the related header from the C++ library includes. Thus:\n\n----\n#include \"platform/blob/BlobBytesProvider.h\"\n\n#include \u003calgorithm\u003e\n#include \u003cmemory\u003e\n#include \u003cutility\u003e\n\n#include \"base/files/file.h\"\netc\n----\n\nDitto for CompositedlayerRasterInvalidator.cpp and FetchParameters.cpp.",
+      "revId": "e597ce9f7c0a2464466e49aa95dfb794f5f5962a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
