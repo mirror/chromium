@@ -19,11 +19,12 @@ import android.graphics.drawable.Drawable;
 import android.net.Uri;
 import android.os.Build;
 import android.os.Handler;
+import android.os.Process;
 import android.os.StrictMode;
-import android.os.SystemClock;
 import android.support.annotation.CallSuper;
 import android.support.v7.app.AlertDialog;
 import android.util.DisplayMetrics;
+import android.util.Log;
 import android.util.Pair;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -175,6 +176,10 @@ import java.util.Set;
 import java.util.concurrent.TimeUnit;
 
 import javax.annotation.Nullable;
+
+import android.view.LayoutInflater;
+import org.chromium.base.ThreadUtils;
+import android.widget.FrameLayout;
 
 /**
  * A {@link AsyncInitializationActivity} that builds and manages a {@link CompositorViewHolder}
@@ -331,6 +336,7 @@ public abstract class ChromeActivity extends AsyncInitializationActivity
     @SuppressLint("NewApi")
     @Override
     public void postInflationStartup() {
+        try (TraceEvent _ = TraceEvent.scoped("ChromeActivity.postInflationStartup")) {
         super.postInflationStartup();
 
         Intent intent = getIntent();
@@ -368,6 +374,16 @@ public abstract class ChromeActivity extends AsyncInitializationActivity
         // Make the activity listen to policy change events
         CombinedPolicyProvider.get().addPolicyChangeListener(this);
         mDidAddPolicyChangeListener = true;
+    }}
+
+    protected void completePostInflationStartup() {
+        try (TraceEvent _ = TraceEvent.scoped("ChromeActivity.completePostInflationStartup")) {
+
+        waitContentViewHierarchyInflated();
+        setContentViewHierarchy(mContentViewHierarchy);
+        mContentViewHierarchy = null;
+
+        onContentViewSet();
 
         // Set up the animation placeholder to be the SurfaceView. This disables the
         // SurfaceView's 'hole' clipping during animations that are notified to the window.
@@ -404,7 +420,7 @@ public abstract class ChromeActivity extends AsyncInitializationActivity
             mBottomSheetContentController.init(mBottomSheet, mTabModelSelector, this);
         }
         ((BottomContainer) findViewById(R.id.bottom_container)).initialize(mFullscreenManager);
-    }
+    }}
 
     @Override
     protected View getViewToBeDrawnBeforeInitializingNative() {
@@ -413,6 +429,9 @@ public abstract class ChromeActivity extends AsyncInitializationActivity
                 : super.getViewToBeDrawnBeforeInitializingNative();
     }
 
+    private ViewGroup mContentViewHierarchy;
+    private Object mContentViewHierarchyLock = new Object();
+
     /**
      * This function builds the {@link CompositorViewHolder}.  Subclasses *must* call
      * super.setContentView() before using {@link #getTabModelSelector()} or
@@ -420,60 +439,120 @@ public abstract class ChromeActivity extends AsyncInitializationActivity
      */
     @Override
     protected final void setContentView() {
-        final long begin = SystemClock.elapsedRealtime();
-        TraceEvent.begin("onCreate->setContentView()");
+        try (TraceEvent te = TraceEvent.scoped("ChromeActivity.setContentView")) {
 
         enableHardwareAcceleration();
         setLowEndTheme();
-        int controlContainerLayoutId = getControlContainerLayoutId();
+
         WarmupManager warmupManager = WarmupManager.getInstance();
-        if (warmupManager.hasViewHierarchyWithToolbar(controlContainerLayoutId)) {
+        if (warmupManager.hasViewHierarchyWithToolbar(getControlContainerLayoutId())) {
             View placeHolderView = new View(this);
             setContentView(placeHolderView);
             ViewGroup contentParent = (ViewGroup) placeHolderView.getParent();
             warmupManager.transferViewHierarchyTo(contentParent);
             contentParent.removeView(placeHolderView);
+            onContentViewSet();
         } else {
             warmupManager.clearViewHierarchy();
 
-            // Allow disk access for the content view and toolbar container setup.
-            // On certain android devices this setup sequence results in disk writes outside
-            // of our control, so we have to disable StrictMode to work. See crbug.com/639352.
-            StrictMode.ThreadPolicy oldPolicy = StrictMode.allowThreadDiskWrites();
-            try {
-                setContentView(R.layout.main);
-                if (controlContainerLayoutId != NO_CONTROL_CONTAINER) {
-                    ViewStub toolbarContainerStub =
-                            ((ViewStub) findViewById(R.id.control_container_stub));
-
-                    toolbarContainerStub.setLayoutResource(controlContainerLayoutId);
-                    toolbarContainerStub.inflate();
+            ThreadUtils.postOnUiThread(new Runnable() {
+                @Override
+                public void run() {
+                    startContentViewHierarchyInflation();
                 }
+            });
+        }
+    }}
 
-                // It cannot be assumed that the result of toolbarContainerStub.inflate() will be
-                // the control container since it may be wrapped in another view.
-                ControlContainer controlContainer =
-                        (ControlContainer) findViewById(R.id.control_container);
-
-                // Inflate the correct toolbar layout for the device.
-                int toolbarLayoutId = getToolbarLayoutId();
-                if (toolbarLayoutId != NO_TOOLBAR_LAYOUT && controlContainer != null) {
-                    controlContainer.initWithToolbar(toolbarLayoutId);
+    private void startContentViewHierarchyInflation() {
+        new Thread() {
+            @Override
+            public void run() {
+                Process.setThreadPriority(Process.THREAD_PRIORITY_BACKGROUND);
+                try {
+                    synchronized (mContentViewHierarchyLock) {
+                        mContentViewHierarchy = inflateContentViewHierarchy();
+                        mContentViewHierarchyLock.notify();
+                    }
                 }
-
-                // Get a handle to the bottom sheet if using the bottom control container.
-                if (controlContainerLayoutId == R.layout.bottom_control_container) {
-                    View coordinator = findViewById(R.id.coordinator);
-                    mBottomSheet = (BottomSheet) findViewById(R.id.bottom_sheet);
-                    mBottomSheet.init(coordinator, controlContainer.getView(), this);
+                catch (Exception e) {
+                    Log.e("ChromeActivity", "Inflation on BG thread FAILED!", e);
                 }
-            } finally {
-                StrictMode.setThreadPolicy(oldPolicy);
+            }
+        }.start();
+    }
+
+    private void waitContentViewHierarchyInflated() {
+        synchronized (mContentViewHierarchyLock) {
+            while (mContentViewHierarchy == null) {
+                try {
+                    mContentViewHierarchyLock.wait();
+                } catch (InterruptedException e) {
+                  // noop
+                }
             }
         }
-        TraceEvent.end("onCreate->setContentView()");
-        mInflateInitialLayoutDurationMs = SystemClock.elapsedRealtime() - begin;
+    }
 
+    private void setContentViewHierarchy(ViewGroup viewHierarchy) {
+        View placeHolderView = new View(this);
+        setContentView(placeHolderView);
+        ViewGroup contentParent = (ViewGroup) placeHolderView.getParent();
+        while (viewHierarchy.getChildCount() > 0) {
+            View currentChild = viewHierarchy.getChildAt(0);
+            viewHierarchy.removeView(currentChild);
+            contentParent.addView(currentChild);
+        }
+        contentParent.removeView(placeHolderView);
+    }
+
+    private ViewGroup inflateContentViewHierarchy() {
+        try (TraceEvent te = TraceEvent.scoped("ChromeActivity.inflateContentView")) {
+
+        int controlContainerLayoutId = getControlContainerLayoutId();
+
+        // Allow disk access for the content view and toolbar container setup.
+        // On certain android devices this setup sequence results in disk writes outside
+        // of our control, so we have to disable StrictMode to work. See crbug.com/639352.
+        StrictMode.ThreadPolicy oldPolicy = StrictMode.allowThreadDiskWrites();
+        try {
+            ViewGroup contentView = new FrameLayout(this);
+            LayoutInflater.from(this).inflate(R.layout.main, contentView);
+
+            if (controlContainerLayoutId != NO_CONTROL_CONTAINER) {
+                ViewStub toolbarContainerStub =
+                        ((ViewStub) contentView.findViewById(R.id.control_container_stub));
+
+                toolbarContainerStub.setLayoutResource(controlContainerLayoutId);
+                View container = toolbarContainerStub.inflate();
+            }
+
+            // It cannot be assumed that the result of toolbarContainerStub.inflate() will be
+            // the control container since it may be wrapped in another view.
+            ControlContainer controlContainer =
+                    (ControlContainer) contentView.findViewById(R.id.control_container);
+
+            // Inflate the correct toolbar layout for the device.
+            int toolbarLayoutId = getToolbarLayoutId();
+            if (toolbarLayoutId != NO_TOOLBAR_LAYOUT && controlContainer != null) {
+                controlContainer.initWithToolbar(toolbarLayoutId);
+            }
+
+            // Get a handle to the bottom sheet if using the bottom control container.
+            if (controlContainerLayoutId == R.layout.bottom_control_container) {
+                View coordinator = contentView.findViewById(R.id.coordinator);
+                mBottomSheet = (BottomSheet) contentView.findViewById(R.id.bottom_sheet);
+                mBottomSheet.init(coordinator, controlContainer.getView(), this);
+            }
+
+            return contentView;
+        } finally {
+            StrictMode.setThreadPolicy(oldPolicy);
+        }
+    }}
+
+    private void onContentViewSet() {
+        try (TraceEvent te = TraceEvent.scoped("ChromeActivity.onContentViewSet")) {
         // Set the status bar color to black by default. This is an optimization for
         // Chrome not to draw under status and navigation bars when we use the default
         // black status bar
@@ -491,7 +570,7 @@ public abstract class ChromeActivity extends AsyncInitializationActivity
         // non-content displaying things such as the OSK.
         mInsetObserverView = InsetObserverView.create(this);
         rootView.addView(mInsetObserverView, 0);
-    }
+    }}
 
     @Override
     public boolean shouldStartGpuProcess() {
@@ -751,17 +830,20 @@ public abstract class ChromeActivity extends AsyncInitializationActivity
 
     @Override
     public void initializeState() {
+        try (TraceEvent _ = TraceEvent.scoped("ChromeActivity.initializeState")) {
         super.initializeState();
 
         IntentHandler.setTestIntentsEnabled(
                 CommandLine.getInstance().hasSwitch(ContentSwitches.ENABLE_TEST_INTENTS));
         mIntentHandler = new IntentHandler(createIntentHandlerDelegate(), getPackageName());
-    }
+    }}
 
     @Override
     public void initializeCompositor() {
         TraceEvent.begin("ChromeActivity:CompositorInitialization");
         super.initializeCompositor();
+
+        completePostInflationStartup();
 
         setTabContentManager(new TabContentManager(this, getContentOffsetProvider(),
                 DeviceClassManager.enableSnapshots()));
@@ -1227,6 +1309,7 @@ public abstract class ChromeActivity extends AsyncInitializationActivity
 
     @Override
     public void finishNativeInitialization() {
+        try (TraceEvent _ = TraceEvent.scoped("ChromeActivity.finishNativeInitialization")) {
         mNativeInitialized = true;
         OfflineContentAggregatorNotificationBridgeUiFactory.instance();
         maybeRemoveWindowBackground();
@@ -1237,7 +1320,7 @@ public abstract class ChromeActivity extends AsyncInitializationActivity
         }
         VrShellDelegate.onNativeLibraryAvailable();
         super.finishNativeInitialization();
-    }
+    }}
 
     /**
      * Called when the accessibility status of this device changes.  This might be triggered by
@@ -1563,6 +1646,9 @@ public abstract class ChromeActivity extends AsyncInitializationActivity
      * null if the Tab does not exist or the system is not initialized.
      */
     public Tab getActivityTab() {
+        if (!mTabModelsInitialized) {
+            return null;
+        }
         return TabModelUtils.getCurrentTab(getCurrentTabModel());
     }
 
