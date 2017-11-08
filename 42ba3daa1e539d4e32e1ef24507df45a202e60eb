@@ -37,6 +37,24 @@
     },
     {
       "key": {
+        "uuid": "1b65eecb_e5ffe4fa",
+        "filename": "ui/compositor/layer_delegate.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 34,
+      "author": {
+        "id": 1002110
+      },
+      "writtenOn": "2017-11-08T20:55:25Z",
+      "side": 1,
+      "message": "Yes, that\u0027s right.",
+      "parentUuid": "95294252_f47ce595",
+      "revId": "42ba3daa1e539d4e32e1ef24507df45a202e60eb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "e1b5f2fc_f7dacafe",
         "filename": "ui/compositor/layer_delegate.h",
         "patchSetId": 5
