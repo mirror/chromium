@@ -1,0 +1,55 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "536f35d5_084e9586",
+        "filename": "third_party/WebKit/LayoutTests/http/tests/devtools/components/parsed-url-expected.txt",
+        "patchSetId": 2
+      },
+      "lineNbr": 251,
+      "author": {
+        "id": 1113672
+      },
+      "writtenOn": "2017-11-08T02:41:13Z",
+      "side": 1,
+      "message": "why is this \u0027html\u0027 here? shouldn\u0027t it be \u0027html%20hello\u0027?",
+      "revId": "68c4cf51ae450faad911c3a5f5fdaba58bc76e2b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2918f4b8_11307d19",
+        "filename": "third_party/WebKit/LayoutTests/http/tests/devtools/components/parsed-url-expected.txt",
+        "patchSetId": 2
+      },
+      "lineNbr": 254,
+      "author": {
+        "id": 1113672
+      },
+      "writtenOn": "2017-11-08T02:41:13Z",
+      "side": 1,
+      "message": "I\u0027d expect the extension to be \u0027html%20\u0027 here (or \u0027html \u0027)",
+      "revId": "68c4cf51ae450faad911c3a5f5fdaba58bc76e2b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9eedec7a_bcdb87d7",
+        "filename": "third_party/WebKit/LayoutTests/http/tests/devtools/components/parsed-url-expected.txt",
+        "patchSetId": 2
+      },
+      "lineNbr": 268,
+      "author": {
+        "id": 1113672
+      },
+      "writtenOn": "2017-11-08T02:41:13Z",
+      "side": 1,
+      "message": "this is not a url, is it?",
+      "revId": "68c4cf51ae450faad911c3a5f5fdaba58bc76e2b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
