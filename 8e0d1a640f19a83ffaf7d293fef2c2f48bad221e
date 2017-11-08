@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "f909e37d_c2b5bdcb",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/webapps/WebApkActivity.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 175,
+      "author": {
+        "id": 1176654
+      },
+      "writtenOn": "2017-11-08T15:09:55Z",
+      "side": 1,
+      "message": "Nit: \"speaks\" -\u003e \"speak\"",
+      "revId": "8e0d1a640f19a83ffaf7d293fef2c2f48bad221e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
