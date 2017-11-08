@@ -232,8 +232,8 @@ void AppListViewDelegate::OpenSearchResult(app_list::SearchResult* result,
                                            int event_flags) {
   if (auto_launch)
     base::RecordAction(base::UserMetricsAction("AppList_AutoLaunched"));
-
-  RecordHistogram(model_->tablet_mode(), model_->state_fullscreen());
+  if (result->display_type() != app_list::SearchResult::DISPLAY_RECOMMENDATION)
+    RecordHistogram(model_->tablet_mode(), model_->state_fullscreen());
 
   search_controller_->OpenResult(result, event_flags);
 }
