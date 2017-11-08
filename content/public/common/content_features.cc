@@ -132,7 +132,7 @@ const base::Feature kLazyParseCSS{"LazyParseCSS",
 
 // Use Mojo IPC for resource loading.
 const base::Feature kLoadingWithMojo{"LoadingWithMojo",
-                                     base::FEATURE_ENABLED_BY_DEFAULT};
+                                     base::FEATURE_DISABLED_BY_DEFAULT};
 
 // Enables the memory coordinator.
 // WARNING:
