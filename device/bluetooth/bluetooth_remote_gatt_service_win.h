@@ -68,8 +68,8 @@ class DEVICE_BLUETOOTH_EXPORT BluetoothRemoteGattServiceWin
       PBTH_LE_GATT_CHARACTERISTIC characteristics,
       uint16_t num);
 
-  // Sends GattDiscoveryCompleteForService notification if necessary.
-  void NotifyGattDiscoveryCompleteForServiceIfNecessary();
+  // Sends GattServiceRemoved notification if necessary.
+  void NotifyGattServiceRemovedIfNecessary();
 
   // Checks if the characteristic with |uuid| and |attribute_handle| has already
   // been discovered as included characteristic.
@@ -111,9 +111,9 @@ class DEVICE_BLUETOOTH_EXPORT BluetoothRemoteGattServiceWin
   // BluetoothRemoteGattCharacteristicWin instance.
   std::set<std::string> discovery_completed_included_charateristics_;
 
-  // Flag indicates if discovery complete notification has been send out to
+  // Flag indicates if service removed notification has been send out to
   // avoid duplicate notification.
-  bool discovery_complete_notified_;
+  bool gatt_service_removed_notified_;
 
   base::WeakPtrFactory<BluetoothRemoteGattServiceWin> weak_ptr_factory_;
   DISALLOW_COPY_AND_ASSIGN(BluetoothRemoteGattServiceWin);

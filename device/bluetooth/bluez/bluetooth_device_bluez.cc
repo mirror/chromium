@@ -776,7 +776,7 @@ void BluetoothDeviceBlueZ::GattServiceRemoved(
   gatt_services_.erase(iter);
 
   DCHECK(adapter());
-  discovery_complete_notified_.erase(service);
+  gatt_service_removed_notified_.erase(service);
   adapter()->NotifyGattServiceRemoved(service);
 }
 
@@ -807,10 +807,10 @@ void BluetoothDeviceBlueZ::UpdateGattServices(
       return;
     }
 
-    // Notify of GATT discovery complete if we haven't before.
-    auto notified_pair = discovery_complete_notified_.insert(service);
+    // Notify of GATT service removed if we haven't before.
+    auto notified_pair = gatt_service_removed_notified_.insert(service);
     if (notified_pair.second) {
-      adapter()->NotifyGattDiscoveryComplete(service);
+      adapter()->NotifyGattServiceRemoved(service);
     }
   }
 }

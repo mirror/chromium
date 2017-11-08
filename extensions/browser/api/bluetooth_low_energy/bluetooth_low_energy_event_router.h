@@ -275,9 +275,6 @@ class BluetoothLowEnergyEventRouter
   void GattServiceRemoved(device::BluetoothAdapter* adapter,
                           device::BluetoothDevice* device,
                           device::BluetoothRemoteGattService* service) override;
-  void GattDiscoveryCompleteForService(
-      device::BluetoothAdapter* adapter,
-      device::BluetoothRemoteGattService* service) override;
   void DeviceAddressChanged(device::BluetoothAdapter* adapter,
                             device::BluetoothDevice* device,
                             const std::string& old_address) override;
