@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "7ebef21a_b73ffd5a",
+        "filename": "chrome/browser/ui/translate/translate_bubble_test_utils.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 8,
+      "author": {
+        "id": 1215199
+      },
+      "writtenOn": "2017-11-08T06:30:20Z",
+      "side": 1,
+      "message": "I can\u0027t do this (at least, not without leaking implementation) as string16 is a typedef not a class/struct.",
+      "parentUuid": "e6b63f4a_dd4fb35a",
+      "revId": "dd84aeca4ba2752eada9890687f6145f21ca55ac",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "01b86737_8b8163c3",
         "filename": "chrome/browser/ui/views/translate/translate_bubble_test_utils_views.cc",
         "patchSetId": 2
@@ -33,6 +51,24 @@
       "revId": "dd84aeca4ba2752eada9890687f6145f21ca55ac",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "978d5b65_b0aa0cf0",
+        "filename": "chrome/browser/ui/views/translate/translate_bubble_test_utils_views.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 37,
+      "author": {
+        "id": 1215199
+      },
+      "writtenOn": "2017-11-08T06:30:20Z",
+      "side": 1,
+      "message": "Done.",
+      "parentUuid": "01b86737_8b8163c3",
+      "revId": "dd84aeca4ba2752eada9890687f6145f21ca55ac",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -53,6 +89,24 @@
     },
     {
       "key": {
+        "uuid": "6d351074_cc01f7dd",
+        "filename": "chrome/browser/ui/views/translate/translate_bubble_test_utils_views.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 56,
+      "author": {
+        "id": 1215199
+      },
+      "writtenOn": "2017-11-08T06:30:20Z",
+      "side": 1,
+      "message": "Done.",
+      "parentUuid": "dba3cd05_39c35479",
+      "revId": "dd84aeca4ba2752eada9890687f6145f21ca55ac",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "a9a93829_af4f7d26",
         "filename": "chrome/browser/ui/views/translate/translate_bubble_view.h",
         "patchSetId": 2
@@ -67,6 +121,24 @@
       "revId": "dd84aeca4ba2752eada9890687f6145f21ca55ac",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "99dd9936_3ae7252d",
+        "filename": "chrome/browser/ui/views/translate/translate_bubble_view.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 13,
+      "author": {
+        "id": 1215199
+      },
+      "writtenOn": "2017-11-08T06:30:20Z",
+      "side": 1,
+      "message": "As above.",
+      "parentUuid": "a9a93829_af4f7d26",
+      "revId": "dd84aeca4ba2752eada9890687f6145f21ca55ac",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -101,6 +173,24 @@
       "revId": "dd84aeca4ba2752eada9890687f6145f21ca55ac",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "dfaa6779_bf3aa202",
+        "filename": "chrome/browser/ui/views/translate/translate_language_browsertest.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 155,
+      "author": {
+        "id": 1215199
+      },
+      "writtenOn": "2017-11-08T06:30:20Z",
+      "side": 1,
+      "message": "Done - was just copying above function.",
+      "parentUuid": "d92fd845_8469c33a",
+      "revId": "dd84aeca4ba2752eada9890687f6145f21ca55ac",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
