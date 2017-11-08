@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "20c9d254_19b90cf7",
+        "filename": "chrome/browser/notifications/notification_template_builder.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 121,
+      "author": {
+        "id": 1138489
+      },
+      "writtenOn": "2017-11-08T14:05:57Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "ea32f2d0_188afbdc",
+      "revId": "98a29b427fa6674e4ce49d761b6f98ec86fb113e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "3edfb645_00b40fec",
         "filename": "chrome/browser/notifications/notification_template_builder.cc",
         "patchSetId": 4
@@ -53,6 +71,24 @@
     },
     {
       "key": {
+        "uuid": "555b8339_f413498b",
+        "filename": "chrome/browser/notifications/notification_template_builder.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 217,
+      "author": {
+        "id": 1138489
+      },
+      "writtenOn": "2017-11-08T14:05:57Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "dfb1ab1b_366a9a7f",
+      "revId": "98a29b427fa6674e4ce49d761b6f98ec86fb113e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "51c7b4b2_e2094675",
         "filename": "chrome/browser/notifications/notification_template_builder.h",
         "patchSetId": 4
@@ -67,6 +103,24 @@
       "revId": "98a29b427fa6674e4ce49d761b6f98ec86fb113e",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7dd25aff_fb806f1f",
+        "filename": "chrome/browser/notifications/notification_template_builder.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 96,
+      "author": {
+        "id": 1138489
+      },
+      "writtenOn": "2017-11-08T14:05:57Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "51c7b4b2_e2094675",
+      "revId": "98a29b427fa6674e4ce49d761b6f98ec86fb113e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -87,6 +141,24 @@
     },
     {
       "key": {
+        "uuid": "d94b2136_d9c162d3",
+        "filename": "chrome/browser/notifications/notification_template_builder_unittest.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 303,
+      "author": {
+        "id": 1138489
+      },
+      "writtenOn": "2017-11-08T14:05:57Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "cf606612_c44e377f",
+      "revId": "98a29b427fa6674e4ce49d761b6f98ec86fb113e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "ca406c33_04184ef4",
         "filename": "ui/strings/ui_strings.grd",
         "patchSetId": 4
@@ -101,6 +173,24 @@
       "revId": "98a29b427fa6674e4ce49d761b6f98ec86fb113e",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c4821c31_3100ee05",
+        "filename": "ui/strings/ui_strings.grd",
+        "patchSetId": 4
+      },
+      "lineNbr": 680,
+      "author": {
+        "id": 1138489
+      },
+      "writtenOn": "2017-11-08T14:05:57Z",
+      "side": 1,
+      "message": "I\u0027m not sure here. settings_strings.grdp seems to contain only strings that appear on chrome://settings page, while ui_strings.grd already contains messages used for displaying notifications. \"Notification settings\" floating text for the cogwheel, which appears on Chrome notifications now and leads to the settings page, is also here (lines 661-663), so it feels that my \"go to Chrome notification settings\" message belongs in this file with similar messages. WDYT?",
+      "parentUuid": "ca406c33_04184ef4",
+      "revId": "98a29b427fa6674e4ce49d761b6f98ec86fb113e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
