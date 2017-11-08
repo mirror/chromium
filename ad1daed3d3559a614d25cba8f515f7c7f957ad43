@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "125c4db2_ee256d92",
+        "filename": "ui/gfx/x/x11.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 1,
+      "author": {
+        "id": 1000763
+      },
+      "writtenOn": "2017-11-08T17:03:28Z",
+      "side": 1,
+      "message": "no (c) (see chromium style guide)",
+      "range": {
+        "startLine": 1,
+        "startChar": 13,
+        "endLine": 1,
+        "endChar": 16
+      },
+      "revId": "ad1daed3d3559a614d25cba8f515f7c7f957ad43",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
