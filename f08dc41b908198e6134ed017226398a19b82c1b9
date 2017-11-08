@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "94ca5992_caa506b4",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/compositor/bottombar/contextualsearch/ContextualSearchPanelMetrics.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 90,
+      "author": {
+        "id": 1107894
+      },
+      "writtenOn": "2017-11-08T05:04:23Z",
+      "side": 1,
+      "message": "Great idea, done.",
+      "parentUuid": "869b68cb_28804e31",
+      "range": {
+        "startLine": 90,
+        "startChar": 17,
+        "endLine": 90,
+        "endChar": 36
+      },
+      "revId": "f08dc41b908198e6134ed017226398a19b82c1b9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "020e8a4c_00a0bee8",
         "filename": "chrome/android/java/src/org/chromium/chrome/browser/contextualsearch/ContextualSearchUma.java",
         "patchSetId": 2
@@ -45,6 +69,30 @@
       "revId": "f08dc41b908198e6134ed017226398a19b82c1b9",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "240c8184_49e1a351",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/contextualsearch/ContextualSearchUma.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 759,
+      "author": {
+        "id": 1107894
+      },
+      "writtenOn": "2017-11-08T05:04:23Z",
+      "side": 1,
+      "message": "Yes, using the simpler medium times histogram should work.  Thanks!\nDone.",
+      "parentUuid": "020e8a4c_00a0bee8",
+      "range": {
+        "startLine": 757,
+        "startChar": 12,
+        "endLine": 759,
+        "endChar": 33
+      },
+      "revId": "f08dc41b908198e6134ed017226398a19b82c1b9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
