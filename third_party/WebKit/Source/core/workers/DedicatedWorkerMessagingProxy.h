@@ -44,7 +44,8 @@ class CORE_EXPORT DedicatedWorkerMessagingProxy
                               ReferrerPolicy,
                               std::unique_ptr<RemoteAsyncTaskToken>);
   void PostMessageToWorkerGlobalScope(scoped_refptr<SerializedScriptValue>,
-                                      Vector<MessagePortChannel>);
+                                      Vector<MessagePortChannel>,
+                                      std::unique_ptr<RemoteAsyncTaskToken>);
 
   // Implements ThreadedMessagingProxyBase.
   void WorkerThreadCreated() override;

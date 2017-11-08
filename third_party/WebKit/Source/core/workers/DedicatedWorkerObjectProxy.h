@@ -39,6 +39,7 @@
 #include "platform/heap/Handle.h"
 #include "platform/wtf/RefPtr.h"
 #include "platform/wtf/WeakPtr.h"
+#include "v8/include/v8-inspector.h"
 
 namespace blink {
 
@@ -48,6 +49,7 @@ class ThreadedMessagingProxyBase;
 class WorkerGlobalScope;
 class WorkerOrWorkletGlobalScope;
 class WorkerThread;
+struct RemoteAsyncTaskToken;
 
 // A proxy class to talk to a DedicatedWorker object on the main thread via the
 // DedicatedWorkerMessagingProxy from a worker thread. See class comments on
@@ -67,7 +69,8 @@ class CORE_EXPORT DedicatedWorkerObjectProxy : public ThreadedObjectProxyBase {
   void ProcessUnhandledException(int exception_id, WorkerThread*);
   void ProcessMessageFromWorkerObject(scoped_refptr<SerializedScriptValue>,
                                       Vector<MessagePortChannel>,
-                                      WorkerThread*);
+                                      WorkerThread*,
+                                      std::unique_ptr<RemoteAsyncTaskToken>);
 
   // ThreadedObjectProxyBase overrides.
   void ReportException(const String& error_message,
