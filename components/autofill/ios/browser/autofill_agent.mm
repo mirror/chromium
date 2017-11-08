@@ -56,6 +56,9 @@ typedef void (^FetchFormsCompletionHandler)(BOOL, const FormDataVector&);
 
 // Gets the first form and field specified by |fieldName| from |forms|,
 // modifying the returned field so that input elements are also handled.
+// As an exception, if the first element named |fieldName| is not focusable and
+// another element with same name name is focusable, returns the first focusable
+// element named |fieldName|.
 void GetFormAndField(autofill::FormData* form,
                      autofill::FormFieldData* field,
                      const FormDataVector& forms,
@@ -65,7 +68,7 @@ void GetFormAndField(autofill::FormData* form,
   *form = forms[0];
   const base::string16 fieldName16 = base::UTF8ToUTF16(fieldName);
   for (const auto& currentField : form->fields) {
-    if (currentField.name == fieldName16) {
+    if (currentField.name == fieldName16 && currentField.is_focusable) {
       *field = currentField;
       break;
     }
