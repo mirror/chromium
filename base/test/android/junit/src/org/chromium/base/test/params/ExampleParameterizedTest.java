@@ -4,16 +4,18 @@
 
 package org.chromium.base.test.params;
 
+import static org.chromium.base.test.params.ParameterAnnotations.MethodParameter;
+import static org.chromium.base.test.params.ParameterAnnotations.UseMethodParameter;
+import static org.chromium.base.test.params.ParameterAnnotations.UseParameterGenerator;
+
 import org.junit.Assert;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 
 import org.chromium.base.test.params.ParameterAnnotations.ClassParameter;
-import org.chromium.base.test.params.ParameterAnnotations.MethodParameter;
-import org.chromium.base.test.params.ParameterAnnotations.UseMethodParameter;
 import org.chromium.base.test.params.ParameterAnnotations.UseRunnerDelegate;
 
-import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
 /**
@@ -23,31 +25,31 @@ import java.util.List;
 @UseRunnerDelegate(BlockJUnit4RunnerDelegate.class)
 public class ExampleParameterizedTest {
     @ClassParameter
-    private static List<ParameterSet> sClassParams = new ArrayList<>();
-
-    static {
-        sClassParams.add(new ParameterSet().value("hello", "world").name("HelloWorld"));
-        sClassParams.add(new ParameterSet().value("Xxxx", "Yyyy").name("XxxxYyyy"));
-        sClassParams.add(new ParameterSet().value("aa", "yy").name("AaYy"));
-    }
+    private static List<ParameterSet> sClassParams =
+            Arrays.asList(new ParameterSet().value("hello", "world").name("HelloWorld"),
+                    new ParameterSet().value("Xxxx", "Yyyy").name("XxxxYyyy"),
+                    new ParameterSet().value("aa", "yy").name("AaYy"));
 
     @MethodParameter("A")
-    private static List<ParameterSet> sMethodParamA = new ArrayList<>();
-
-    static {
-        sMethodParamA.add(new ParameterSet().value(1, 2).name("OneTwo"));
-        sMethodParamA.add(new ParameterSet().value(2, 3).name("TwoThree"));
-        sMethodParamA.add(new ParameterSet().value(3, 4).name("ThreeFour"));
-    }
+    private static List<ParameterSet> sMethodParamA =
+            Arrays.asList(new ParameterSet().value(1, 2).name("OneTwo"),
+                    new ParameterSet().value(2, 3).name("TwoThree"),
+                    new ParameterSet().value(3, 4).name("ThreeFour"));
 
     @MethodParameter("B")
-    private static List<ParameterSet> sMethodParamB = new ArrayList<>();
+    private static List<ParameterSet> sMethodParamB =
+            Arrays.asList(new ParameterSet().value("a", "b").name("Ab"),
+                    new ParameterSet().value("b", "c").name("Bc"),
+                    new ParameterSet().value("c", "d").name("Cd"),
+                    new ParameterSet().value("d", "e").name("De"));
 
-    static {
-        sMethodParamB.add(new ParameterSet().value("a", "b").name("Ab"));
-        sMethodParamB.add(new ParameterSet().value("b", "c").name("Bc"));
-        sMethodParamB.add(new ParameterSet().value("c", "d").name("Cd"));
-        sMethodParamB.add(new ParameterSet().value("d", "e").name("De"));
+    private static class MethodParamsC implements ParameterGenerator {
+        @Override
+        public List<ParameterSet> getParams() {
+            return Arrays.asList(new ParameterSet().value(1, 2).name("OneTwo"),
+                    new ParameterSet().value(2, 3).name("TwoThree"),
+                    new ParameterSet().value(3, 4).name("ThreeFour"));
+        }
     }
 
     private String mStringA;
@@ -73,6 +75,12 @@ public class ExampleParameterizedTest {
     @Test
     @UseMethodParameter("B")
     public void testWithOnlyB(String a, String b) {
-        Assert.assertTrue(a != b);
+        Assert.assertTrue(!a.equals(b));
+    }
+
+    @Test
+    @UseParameterGenerator(MethodParamsC.class)
+    public void testWithOnlyC(int intA, int intB) {
+        Assert.assertTrue(intA + 1 == intB);
     }
 }

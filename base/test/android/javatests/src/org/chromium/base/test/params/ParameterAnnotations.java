@@ -20,6 +20,17 @@ public class ParameterAnnotations {
     @Target(ElementType.METHOD)
     public @interface UseMethodParameter {
         String value();
+
+        Class<? extends ParameterGenerator> generator() default ParameterGenerator.class;
+    }
+
+    /**
+     * Annotation for test methods to indicate associated {@link ParameterGenerator}.
+     */
+    @Retention(RetentionPolicy.RUNTIME)
+    @Target(ElementType.METHOD)
+    public @interface UseParameterGenerator {
+        Class<? extends ParameterGenerator> value();
     }
 
     /**
