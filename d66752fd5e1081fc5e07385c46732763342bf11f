@@ -73,6 +73,24 @@
     },
     {
       "key": {
+        "uuid": "13916665_67c7ca0c",
+        "filename": "docs/testing/json_test_results_format.md",
+        "patchSetId": 6
+      },
+      "lineNbr": 47,
+      "author": {
+        "id": 1128941
+      },
+      "writtenOn": "2017-11-08T00:56:44Z",
+      "side": 1,
+      "message": "One reason was extensibility (I was hoping type would be stored in this structure but that was vetoed in favor of storing it somewhere later in the file) and the other was having the data more easily map to an actual schema. There isn\u0027t a reason to put the name of the artifact in the key (we don\u0027t need O(1) name lookups) and doing so doesn\u0027t easily map to a (for example) protobuf definition of this data.",
+      "parentUuid": "68635537_55193193",
+      "revId": "d66752fd5e1081fc5e07385c46732763342bf11f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "a83ba1fa_ed36459c",
         "filename": "docs/testing/json_test_results_format.md",
         "patchSetId": 6
