@@ -858,10 +858,10 @@ bool TabStripModelImpl::IsContextMenuCommandEnabled(
     case CommandToggleSiteMuted: {
       std::vector<int> indices = GetIndicesForCommand(context_index);
       for (size_t i = 0; i < indices.size(); ++i) {
-        if (!chrome::CanToggleAudioMute(GetWebContentsAt(indices[i])))
-          return false;
+        if (chrome::CanToggleAudioMute(GetWebContentsAt(indices[i])))
+          return true;
       }
-      return true;
+      return false;
     }
 
     case CommandBookmarkAllTabs:

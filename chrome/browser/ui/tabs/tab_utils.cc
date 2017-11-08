@@ -21,6 +21,7 @@
 #include "chrome/grit/generated_resources.h"
 #include "components/content_settings/core/browser/host_content_settings_map.h"
 #include "content/public/browser/web_contents.h"
+#include "content/public/common/url_constants.h"
 #include "ui/base/l10n/l10n_util.h"
 #include "ui/base/material_design/material_design_controller.h"
 #include "ui/base/theme_provider.h"
@@ -336,6 +337,10 @@ bool AreExperimentalMuteControlsEnabled() {
 }
 
 bool CanToggleAudioMute(content::WebContents* contents) {
+  // chrome:// URLs can't be muted.
+  if (contents->GetLastCommittedURL().SchemeIs(content::kChromeUIScheme))
+    return false;
+
   switch (GetTabAlertStateForContents(contents)) {
     case TabAlertState::NONE:
     case TabAlertState::AUDIO_PLAYING:
@@ -381,8 +386,16 @@ TabMutedResult SetTabAudioMuted(content::WebContents* contents,
     return TabMutedResult::FAIL_NOT_ENABLED;
   }
 
-  if (!chrome::CanToggleAudioMute(contents))
-    return TabMutedResult::FAIL_TABCAPTURE;
+  if (!chrome::CanToggleAudioMute(contents)) {
+    // If we're just unmuting a chrome:// URL tab that had been muted because
+    // the previous website on the tab was muted via content settings, then we
+    // will allow the unmute. Otherwise, return since we can't toggle mute.
+    if (!contents->GetLastCommittedURL().SchemeIs(content::kChromeUIScheme) ||
+        mute ||
+        GetTabAudioMutedReason(contents) != TabMutedReason::CONTENT_SETTING) {
+      return TabMutedResult::FAIL_TABCAPTURE;
+    }
+  }
 
   contents->SetAudioMuted(mute);
 
@@ -455,11 +468,19 @@ bool IsSiteMuted(const TabStripModel& tab_strip, const int index) {
 
 bool AreAllSitesMuted(const TabStripModel& tab_strip,
                       const std::vector<int>& indices) {
+  // We don't want chrome:// URL tabs to affect the return value of this
+  // function unless ALL of the selected tabs are chrome:// URL tabs, in which
+  // case we will return false.
+  bool all_sites_chrome_scheme = true;
   for (int tab_index : indices) {
-    if (!IsSiteMuted(tab_strip, tab_index))
-      return false;
+    content::WebContents* contents = tab_strip.GetWebContentsAt(tab_index);
+    if (!contents->GetLastCommittedURL().SchemeIs(content::kChromeUIScheme)) {
+      all_sites_chrome_scheme = false;
+      if (!IsSiteMuted(tab_strip, tab_index))
+        return false;
+    }
   }
-  return true;
+  return !all_sites_chrome_scheme;
 }
 
 }  // namespace chrome
