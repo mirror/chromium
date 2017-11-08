@@ -22,6 +22,327 @@
       "revId": "4e7a846e44c52c5b5a040264a58ceb07c426d796",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e8c49f31_ddedad5b",
+        "filename": "components/arc/common/usb_host.mojom",
+        "patchSetId": 7
+      },
+      "lineNbr": 4,
+      "author": {
+        "id": 1003166
+      },
+      "writtenOn": "2017-11-08T14:50:19Z",
+      "side": 1,
+      "message": "// Next MinVersion: 1",
+      "revId": "4e7a846e44c52c5b5a040264a58ceb07c426d796",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "00704a94_ec10abd6",
+        "filename": "components/arc/common/usb_host.mojom",
+        "patchSetId": 7
+      },
+      "lineNbr": 9,
+      "author": {
+        "id": 1003166
+      },
+      "writtenOn": "2017-11-08T14:50:19Z",
+      "side": 1,
+      "message": "// Next method ID: 4",
+      "revId": "4e7a846e44c52c5b5a040264a58ceb07c426d796",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "013684c4_eb05d995",
+        "filename": "components/arc/common/usb_host.mojom",
+        "patchSetId": 7
+      },
+      "lineNbr": 16,
+      "author": {
+        "id": 1003166
+      },
+      "writtenOn": "2017-11-08T14:50:19Z",
+      "side": 1,
+      "message": "Can you add more comments to illustrate a sample session? Why is it that RequestPermission asks for a package name, but OpenDevice does not? Permission checking and resource allocation should be atomic from an interface standpoint.",
+      "range": {
+        "startLine": 14,
+        "startChar": 0,
+        "endLine": 16,
+        "endChar": 27
+      },
+      "revId": "4e7a846e44c52c5b5a040264a58ceb07c426d796",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "da929fcc_b8e807fc",
+        "filename": "components/arc/common/usb_host.mojom",
+        "patchSetId": 7
+      },
+      "lineNbr": 18,
+      "author": {
+        "id": 1003166
+      },
+      "writtenOn": "2017-11-08T14:50:19Z",
+      "side": 1,
+      "message": "// Next method ID: 4",
+      "revId": "4e7a846e44c52c5b5a040264a58ceb07c426d796",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9526ade9_d85c237f",
+        "filename": "components/arc/usb/usb_host_bridge.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 56,
+      "author": {
+        "id": 1003166
+      },
+      "writtenOn": "2017-11-08T14:50:19Z",
+      "side": 1,
+      "message": "This is probably overkill since it doesn\u0027t even save you one line.",
+      "range": {
+        "startLine": 56,
+        "startChar": 20,
+        "endLine": 56,
+        "endChar": 33
+      },
+      "revId": "4e7a846e44c52c5b5a040264a58ceb07c426d796",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "636647fd_c2b54a4c",
+        "filename": "components/arc/usb/usb_host_bridge.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 92,
+      "author": {
+        "id": 1003166
+      },
+      "writtenOn": "2017-11-08T14:50:19Z",
+      "side": 1,
+      "message": "Why are you DCHECK()ing in L70 and just gracefully softly here?",
+      "range": {
+        "startLine": 92,
+        "startChar": 7,
+        "endLine": 92,
+        "endChar": 14
+      },
+      "revId": "4e7a846e44c52c5b5a040264a58ceb07c426d796",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "85406522_e5bc4810",
+        "filename": "components/arc/usb/usb_host_bridge.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 135,
+      "author": {
+        "id": 1003166
+      },
+      "writtenOn": "2017-11-08T14:50:19Z",
+      "side": 1,
+      "message": "Seems like this can be in the anonymous namespace, since you\u0027 re not using any members.",
+      "range": {
+        "startLine": 135,
+        "startChar": 20,
+        "endLine": 135,
+        "endChar": 34
+      },
+      "revId": "4e7a846e44c52c5b5a040264a58ceb07c426d796",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "926a9221_7d942a2d",
+        "filename": "components/arc/usb/usb_host_bridge.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 152,
+      "author": {
+        "id": 1003166
+      },
+      "writtenOn": "2017-11-08T14:50:19Z",
+      "side": 1,
+      "message": "This, too, can be in the anonymous namespace.",
+      "revId": "4e7a846e44c52c5b5a040264a58ceb07c426d796",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3aa50202_70f618c4",
+        "filename": "components/arc/usb/usb_host_bridge.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 186,
+      "author": {
+        "id": 1003166
+      },
+      "writtenOn": "2017-11-08T14:50:19Z",
+      "side": 1,
+      "message": "Please convert all base::Bind to base::BindOnce: the latter is implicitly convertible to the former, and you\u0027ll save the folks who are performing the migration some time.",
+      "range": {
+        "startLine": 186,
+        "startChar": 12,
+        "endLine": 186,
+        "endChar": 16
+      },
+      "revId": "4e7a846e44c52c5b5a040264a58ceb07c426d796",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1d607898_1397aeab",
+        "filename": "components/arc/usb/usb_host_bridge.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 189,
+      "author": {
+        "id": 1003166
+      },
+      "writtenOn": "2017-11-08T14:50:19Z",
+      "side": 1,
+      "message": "This second std::move will fail.\n\nYou\u0027ll need to use this pattern: https://chromium.googlesource.com/chromium/src/+/refs/changes/25/683225/7/chrome/browser/chromeos/arc/bluetooth/arc_bluetooth_bridge.cc#1346",
+      "range": {
+        "startLine": 189,
+        "startChar": 30,
+        "endLine": 189,
+        "endChar": 49
+      },
+      "revId": "4e7a846e44c52c5b5a040264a58ceb07c426d796",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "45141b17_f8e6eafb",
+        "filename": "components/arc/usb/usb_host_bridge.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 193,
+      "author": {
+        "id": 1003166
+      },
+      "writtenOn": "2017-11-08T14:50:19Z",
+      "side": 1,
+      "message": "nit: use the guard clause pattern:\n\n if (!allowed)\n   return;",
+      "range": {
+        "startLine": 193,
+        "startChar": 2,
+        "endLine": 193,
+        "endChar": 16
+      },
+      "revId": "4e7a846e44c52c5b5a040264a58ceb07c426d796",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "81a5a812_e738fdde",
+        "filename": "components/arc/usb/usb_host_bridge.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 204,
+      "author": {
+        "id": 1003166
+      },
+      "writtenOn": "2017-11-08T14:50:19Z",
+      "side": 1,
+      "message": "I think you can also move this to the anonymous namespace if you pass in a callback:\n\n  service-\u003eGetDevices(base::BindOnce(\u0026OnGetDevicesComplete,\n                                     base::BindRepeating(\u0026UsbHostBridge::OnDeviceChecked,\n                                                         weak_factory_.GetWeakPtr()));\n\nand then here do\n\n  device-\u003eCheckUsbAccess(base::BindOnce(callback, device.get()-\u003eguid()));",
+      "range": {
+        "startLine": 204,
+        "startChar": 20,
+        "endLine": 204,
+        "endChar": 40
+      },
+      "revId": "4e7a846e44c52c5b5a040264a58ceb07c426d796",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "bdb8fb6f_e9928c7d",
+        "filename": "components/arc/usb/usb_host_bridge.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 233,
+      "author": {
+        "id": 1003166
+      },
+      "writtenOn": "2017-11-08T14:50:19Z",
+      "side": 1,
+      "message": "Can you add a link to the documentation where the \u0027\u003d\u0027 and \u0027?\u0027 are mentioned?",
+      "range": {
+        "startLine": 233,
+        "startChar": 4,
+        "endLine": 233,
+        "endChar": 50
+      },
+      "revId": "4e7a846e44c52c5b5a040264a58ceb07c426d796",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ba1e32b8_50a4e2ac",
+        "filename": "components/arc/usb/usb_host_bridge.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 252,
+      "author": {
+        "id": 1003166
+      },
+      "writtenOn": "2017-11-08T14:50:19Z",
+      "side": 1,
+      "message": "These comments are unnecessary since they go out of sync with the interface pretty quickly.",
+      "range": {
+        "startLine": 250,
+        "startChar": 0,
+        "endLine": 252,
+        "endChar": 15
+      },
+      "revId": "4e7a846e44c52c5b5a040264a58ceb07c426d796",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ba6e6d3a_5f4ca6b5",
+        "filename": "components/arc/usb/usb_host_bridge.h",
+        "patchSetId": 7
+      },
+      "lineNbr": 49,
+      "author": {
+        "id": 1003166
+      },
+      "writtenOn": "2017-11-08T14:50:19Z",
+      "side": 1,
+      "message": "// mojom::UsbHost overrides:\n\n(and don\u0027 t add newlines between the overriden methods). Same below, for consistency with other files in components/arc.",
+      "range": {
+        "startLine": 48,
+        "startChar": 0,
+        "endLine": 49,
+        "endChar": 0
+      },
+      "revId": "4e7a846e44c52c5b5a040264a58ceb07c426d796",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
