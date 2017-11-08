@@ -46,6 +46,7 @@ ConnectToWorkerInterfaceProvider(Document* document,
 struct DedicatedWorkerMessagingProxy::QueuedTask {
   scoped_refptr<SerializedScriptValue> message;
   Vector<MessagePortChannel> channels;
+  std::unique_ptr<RemoteAsyncTaskToken> async_token;
 };
 
 DedicatedWorkerMessagingProxy::DedicatedWorkerMessagingProxy(
@@ -97,7 +98,8 @@ void DedicatedWorkerMessagingProxy::StartWorkerGlobalScope(
 
 void DedicatedWorkerMessagingProxy::PostMessageToWorkerGlobalScope(
     scoped_refptr<SerializedScriptValue> message,
-    Vector<MessagePortChannel> channels) {
+    Vector<MessagePortChannel> channels,
+    std::unique_ptr<RemoteAsyncTaskToken> async_token) {
   DCHECK(IsParentContextThread());
   if (AskedToTerminate())
     return;
@@ -107,13 +109,14 @@ void DedicatedWorkerMessagingProxy::PostMessageToWorkerGlobalScope(
         &DedicatedWorkerObjectProxy::ProcessMessageFromWorkerObject,
         CrossThreadUnretained(&WorkerObjectProxy()), std::move(message),
         WTF::Passed(std::move(channels)),
-        CrossThreadUnretained(GetWorkerThread()));
+        CrossThreadUnretained(GetWorkerThread()),
+        WTF::Passed(std::move(async_token)));
     GetWorkerThread()
         ->GetTaskRunner(TaskType::kPostedMessage)
         ->PostTask(BLINK_FROM_HERE, std::move(task));
   } else {
-    queued_early_tasks_.push_back(
-        QueuedTask{std::move(message), std::move(channels)});
+    queued_early_tasks_.push_back(QueuedTask{
+        std::move(message), std::move(channels), std::move(async_token)});
   }
 }
 
@@ -127,7 +130,8 @@ void DedicatedWorkerMessagingProxy::WorkerThreadCreated() {
         CrossThreadUnretained(&WorkerObjectProxy()),
         std::move(queued_task.message),
         WTF::Passed(std::move(queued_task.channels)),
-        CrossThreadUnretained(GetWorkerThread()));
+        CrossThreadUnretained(GetWorkerThread()),
+        WTF::Passed(std::move(queued_task.async_token)));
     GetWorkerThread()
         ->GetTaskRunner(TaskType::kPostedMessage)
         ->PostTask(BLINK_FROM_HERE, std::move(task));

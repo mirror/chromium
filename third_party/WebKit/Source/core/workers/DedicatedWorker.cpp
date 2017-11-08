@@ -75,8 +75,12 @@ void DedicatedWorker::postMessage(ScriptState* script_state,
       ExecutionContext::From(script_state), ports, exception_state);
   if (exception_state.HadException())
     return;
-  context_proxy_->PostMessageToWorkerGlobalScope(std::move(message),
-                                                 std::move(channels));
+  Document* document = ToDocument(GetExecutionContext());
+  std::unique_ptr<RemoteAsyncTaskToken> async_token =
+      MainThreadDebugger::Instance()->RemoteAsyncTaskScheduled(
+          document->GetFrame(), "Worker.postMessage", String());
+  context_proxy_->PostMessageToWorkerGlobalScope(
+      std::move(message), std::move(channels), std::move(async_token));
 }
 
 void DedicatedWorker::Start() {
