@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "edd45bcf_671d473e",
+        "filename": "components/viz/service/display/direct_renderer.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 619,
+      "author": {
+        "id": 1000887
+      },
+      "writtenOn": "2017-11-08T23:14:15Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "f4c54ba7_8ef56b08",
+      "revId": "35f75571f18c92b9ea1de0b45d56b0e273da14f8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "7bc97ca4_44fd7e74",
         "filename": "components/viz/service/display/direct_renderer.h",
         "patchSetId": 5
@@ -30,6 +48,24 @@
       "writtenOn": "2017-11-08T22:07:55Z",
       "side": 1,
       "message": "\u003c_\u003c",
+      "revId": "35f75571f18c92b9ea1de0b45d56b0e273da14f8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d624614b_60c5a7ef",
+        "filename": "components/viz/service/display/direct_renderer.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 144,
+      "author": {
+        "id": 1000887
+      },
+      "writtenOn": "2017-11-08T23:14:15Z",
+      "side": 1,
+      "message": "Already fixed this one hehe :) The problem of git stashing and starting over \u003e\u003c",
+      "parentUuid": "7bc97ca4_44fd7e74",
       "revId": "35f75571f18c92b9ea1de0b45d56b0e273da14f8",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
