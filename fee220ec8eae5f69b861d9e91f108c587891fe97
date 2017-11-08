@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "f194dfeb_65a84736",
+        "filename": "chrome/browser/ui/views/collected_cookies_views.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 187,
+      "author": {
+        "id": 1151884
+      },
+      "writtenOn": "2017-11-08T20:14:49Z",
+      "side": 1,
+      "message": "Delete \"this is a bit icky.\" It is, but you don\u0027t need to editorialize here.",
+      "range": {
+        "startLine": 187,
+        "startChar": 11,
+        "endLine": 187,
+        "endChar": 29
+      },
+      "revId": "fee220ec8eae5f69b861d9e91f108c587891fe97",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "aed2c2d8_a2653e8c",
+        "filename": "chrome/browser/ui/views/collected_cookies_views.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 193,
+      "author": {
+        "id": 1151884
+      },
+      "writtenOn": "2017-11-08T20:14:49Z",
+      "side": 1,
+      "message": "Use the 4-value constructor with left() and right(). And at that point it\u0027ll probably be easier to read if it\u0027s pulled into a local variable.",
+      "range": {
+        "startLine": 193,
+        "startChar": 28,
+        "endLine": 193,
+        "endChar": 32
+      },
+      "revId": "fee220ec8eae5f69b861d9e91f108c587891fe97",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
