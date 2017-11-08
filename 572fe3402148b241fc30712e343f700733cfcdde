@@ -37,6 +37,24 @@
     },
     {
       "key": {
+        "uuid": "00bf41a5_95f25206",
+        "filename": "chrome/browser/profiles/profile_io_data.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 184,
+      "author": {
+        "id": 1000193
+      },
+      "writtenOn": "2017-11-08T22:29:37Z",
+      "side": 1,
+      "message": "Yeah, the current approach sets the verifier before the IOThread is constructed, thus do it on the main thread.\n\nYou\u0027re absolutely correct that the AddResult* interfaces do so from the main thread, but affect the IO thread. The only threading protections we have there are, well, hoping no one has started making requests yet. Given the limited use to testing, I haven\u0027t been too concerned with it, but we can revisit that thread safety.\n\nRegarding unsetting it, the current tests try to do it post IOThread teardown, and I don\u0027t think we\u0027d want to change that sequencing. As a result, the weakening of the lifetime contract doesn\u0027t buy us much - it was mostly as a way of decoupling the assumptions being made (and saving needing to capture the g_cert_verifier_for_testing as a local member). Hence it being a nit.",
+      "parentUuid": "6a7aa74e_669b5186",
+      "revId": "572fe3402148b241fc30712e343f700733cfcdde",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "172fc9f9_d9fe1038",
         "filename": "chrome/browser/profiles/profile_io_data.cc",
         "patchSetId": 5
