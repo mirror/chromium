@@ -13,6 +13,7 @@
 #include "ui/gfx/geometry/rect.h"
 #include "ui/gfx/geometry/rect_f.h"
 #include "ui/gfx/geometry/scroll_offset.h"
+#include "ui/gfx/geometry/vector3d_f.h"
 
 namespace IPC {
 
@@ -167,6 +168,29 @@ bool ParamTraits<gfx::Vector2dF>::Read(const base::Pickle* m,
 
 void ParamTraits<gfx::Vector2dF>::Log(const gfx::Vector2dF& v, std::string* l) {
   l->append(base::StringPrintf("(%f, %f)", v.x(), v.y()));
+}
+
+void ParamTraits<gfx::Vector3dF>::Write(base::Pickle* m,
+                                        const gfx::Vector3dF& p) {
+  float values[3] = {p.x(), p.y(), p.z()};
+  m->WriteBytes(&values, sizeof(float) * 3);
+}
+
+bool ParamTraits<gfx::Vector3dF>::Read(const base::Pickle* m,
+                                       base::PickleIterator* iter,
+                                       gfx::Vector3dF* r) {
+  const char* char_values;
+  if (!iter->ReadBytes(&char_values, sizeof(float) * 3))
+    return false;
+  const float* values = reinterpret_cast<const float*>(char_values);
+  r->set_x(values[0]);
+  r->set_y(values[1]);
+  r->set_z(values[2]);
+  return true;
+}
+
+void ParamTraits<gfx::Vector3dF>::Log(const gfx::Vector3dF& v, std::string* l) {
+  l->append(base::StringPrintf("(%f, %f, %f)", v.x(), v.y(), v.z()));
 }
 
 void ParamTraits<gfx::Rect>::Write(base::Pickle* m, const gfx::Rect& p) {

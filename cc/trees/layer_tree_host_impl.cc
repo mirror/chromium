@@ -783,6 +783,7 @@ static void AppendQuadsToFillScreen(
   // (make it smarter about generating quads to fill unoccluded areas).
 
   gfx::Rect root_target_rect = root_render_surface->content_rect();
+  const gfx::Vector3dF color_scales(1.f, 1.f, 1.f);
   float opacity = 1.f;
   int sorting_context_id = 0;
   bool are_contents_opaque = SkColorGetA(screen_background_color) == 0xFF;
@@ -790,8 +791,8 @@ static void AppendQuadsToFillScreen(
       target_render_pass->CreateAndAppendSharedQuadState();
   shared_quad_state->SetAll(gfx::Transform(), root_target_rect,
                             root_target_rect, root_target_rect, false,
-                            are_contents_opaque, opacity, SkBlendMode::kSrcOver,
-                            sorting_context_id);
+                            are_contents_opaque, color_scales, opacity,
+                            SkBlendMode::kSrcOver, sorting_context_id);
 
   for (Region::Iterator fill_rects(fill_region); fill_rects.has_rect();
        fill_rects.next()) {

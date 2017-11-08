@@ -16,6 +16,7 @@
 #include "cc/layers/layer_sticky_position_constraint.h"
 #include "third_party/skia/include/core/SkBlendMode.h"
 #include "ui/gfx/geometry/point3_f.h"
+#include "ui/gfx/geometry/vector3d_f.h"
 #include "ui/gfx/transform.h"
 
 namespace viz {
@@ -45,6 +46,7 @@ struct CC_EXPORT LayerImplTestProperties {
   bool opacity_can_animate;
   bool subtree_has_copy_request;
   int sorting_context_id;
+  gfx::Vector3dF color_scales;
   float opacity;
   FilterOperations filters;
   FilterOperations background_filters;

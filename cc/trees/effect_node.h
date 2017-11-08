@@ -10,6 +10,7 @@
 #include "third_party/skia/include/core/SkBlendMode.h"
 #include "ui/gfx/geometry/point_f.h"
 #include "ui/gfx/geometry/size_f.h"
+#include "ui/gfx/geometry/vector3d_f.h"
 
 namespace base {
 namespace trace_event {
@@ -34,6 +35,8 @@ struct CC_EXPORT EffectNode {
   // details such as RenderSurface and RenderPass ids, and should not
   // be assumed to have semantic meaning.
   uint64_t stable_id;
+
+  gfx::Vector3dF color_scales;
 
   float opacity;
   float screen_space_opacity;

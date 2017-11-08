@@ -46,6 +46,18 @@ struct StructTraits<viz::mojom::SharedQuadStateDataView, OptSharedQuadState> {
     return input.sqs->are_contents_opaque;
   }
 
+  static float color_scale_red(const OptSharedQuadState& input) {
+    return input.sqs->color_scales.x();
+  }
+
+  static float color_scale_green(const OptSharedQuadState& input) {
+    return input.sqs->color_scales.y();
+  }
+
+  static float color_scale_blue(const OptSharedQuadState& input) {
+    return input.sqs->color_scales.z();
+  }
+
   static float opacity(const OptSharedQuadState& input) {
     return input.sqs->opacity;
   }
@@ -87,6 +99,18 @@ struct StructTraits<viz::mojom::SharedQuadStateDataView, viz::SharedQuadState> {
     return sqs.are_contents_opaque;
   }
 
+  static float color_scale_red(const viz::SharedQuadState& sqs) {
+    return sqs.color_scales.x();
+  }
+
+  static float color_scale_green(const viz::SharedQuadState& sqs) {
+    return sqs.color_scales.y();
+  }
+
+  static float color_scale_blue(const viz::SharedQuadState& sqs) {
+    return sqs.color_scales.z();
+  }
+
   static float opacity(const viz::SharedQuadState& sqs) { return sqs.opacity; }
 
   static uint32_t blend_mode(const viz::SharedQuadState& sqs) {
@@ -108,6 +132,9 @@ struct StructTraits<viz::mojom::SharedQuadStateDataView, viz::SharedQuadState> {
 
     out->is_clipped = data.is_clipped();
     out->are_contents_opaque = data.are_contents_opaque();
+    out->color_scales =
+        gfx::Vector3dF(data.color_scale_red(), data.color_scale_green(),
+                       data.color_scale_blue());
     out->opacity = data.opacity();
     if (data.blend_mode() > static_cast<int>(SkBlendMode::kLastMode))
       return false;

@@ -286,12 +286,13 @@ class SurfaceAggregatorTest : public testing::Test {
     gfx::Rect clip_rect(primary_surface_rect);
     bool is_clipped = false;
     bool are_contents_opaque = false;
+    const gfx::Vector3dF color_scales(1.f, 1.f, 1.f);
     SkBlendMode blend_mode = SkBlendMode::kSrcOver;
 
     auto* shared_quad_state = pass->CreateAndAppendSharedQuadState();
-    shared_quad_state->SetAll(layer_to_target_transform, layer_bounds,
-                              visible_layer_rect, clip_rect, is_clipped,
-                              are_contents_opaque, opacity, blend_mode, 0);
+    shared_quad_state->SetAll(
+        layer_to_target_transform, layer_bounds, visible_layer_rect, clip_rect,
+        is_clipped, are_contents_opaque, color_scales, opacity, blend_mode, 0);
 
     SurfaceDrawQuad* surface_quad =
         pass->CreateAndAppendDrawQuad<SurfaceDrawQuad>();
@@ -307,9 +308,9 @@ class SurfaceAggregatorTest : public testing::Test {
   static void AddRenderPassQuad(RenderPass* pass, RenderPassId render_pass_id) {
     gfx::Rect output_rect = gfx::Rect(0, 0, 5, 5);
     auto* shared_state = pass->CreateAndAppendSharedQuadState();
-    shared_state->SetAll(gfx::Transform(), output_rect, output_rect,
-                         output_rect, false, false, 1, SkBlendMode::kSrcOver,
-                         0);
+    shared_state->SetAll(
+        gfx::Transform(), output_rect, output_rect, output_rect, false, false,
+        gfx::Vector3dF(1.f, 1.f, 1.f), 1, SkBlendMode::kSrcOver, 0);
     auto* quad = pass->CreateAndAppendDrawQuad<RenderPassDrawQuad>();
     quad->SetNew(shared_state, output_rect, output_rect, render_pass_id, 0,
                  gfx::RectF(), gfx::Size(), gfx::Vector2dF(), gfx::PointF(),
@@ -1398,13 +1399,14 @@ void AddSolidColorQuadWithBlendMode(const gfx::Size& size,
   bool is_clipped = false;
   SkColor color = SK_ColorGREEN;
   bool are_contents_opaque = SkColorGetA(color) == 0xFF;
+  const gfx::Vector3dF color_scales(1.f, 1.f, 1.f);
   float opacity = 1.f;
 
   bool force_anti_aliasing_off = false;
   auto* sqs = pass->CreateAndAppendSharedQuadState();
   sqs->SetAll(layer_to_target_transform, layer_rect, visible_layer_rect,
-              clip_rect, is_clipped, are_contents_opaque, opacity, blend_mode,
-              0);
+              clip_rect, is_clipped, are_contents_opaque, color_scales, opacity,
+              blend_mode, 0);
 
   auto* color_quad = pass->CreateAndAppendDrawQuad<SolidColorDrawQuad>();
   color_quad->SetNew(pass->shared_quad_state_list.back(), visible_layer_rect,

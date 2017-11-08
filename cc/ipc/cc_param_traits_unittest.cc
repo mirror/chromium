@@ -86,6 +86,7 @@ class CCParamTraitsTest : public testing::Test {
     EXPECT_EQ(a->visible_quad_layer_rect, b->visible_quad_layer_rect);
     EXPECT_EQ(a->clip_rect, b->clip_rect);
     EXPECT_EQ(a->is_clipped, b->is_clipped);
+    EXPECT_EQ(a->color_scales, b->color_scales);
     EXPECT_EQ(a->opacity, b->opacity);
     EXPECT_EQ(a->blend_mode, b->blend_mode);
     EXPECT_EQ(a->sorting_context_id, b->sorting_context_id);
@@ -256,6 +257,9 @@ TEST_F(CCParamTraitsTest, AllQuads) {
   gfx::PointF arbitrary_pointf1(31.4f, 15.9f);
   gfx::PointF arbitrary_pointf2(26.5f, -35.8f);
   gfx::Vector2dF arbitrary_vector2df2(-8.3f, 0.47f);
+  gfx::Vector3dF arbitrary_vector3df1(1.f, 0.7f, 1.f);
+  gfx::Vector3dF arbitrary_vector3df2(1.f, 0.3f, 0.2f);
+  gfx::Vector3dF arbitrary_vector3df3(0.5f, 0.2f, 0.9f);
   float arbitrary_float1 = 0.7f;
   float arbitrary_float2 = 0.3f;
   float arbitrary_float3 = 0.9f;
@@ -319,8 +323,8 @@ TEST_F(CCParamTraitsTest, AllQuads) {
   SharedQuadState* shared_state1_in = pass_in->CreateAndAppendSharedQuadState();
   shared_state1_in->SetAll(arbitrary_matrix1, arbitrary_rect1, arbitrary_rect1,
                            arbitrary_rect2, arbitrary_bool1, arbitrary_bool2,
-                           arbitrary_float1, arbitrary_blend_mode1,
-                           arbitrary_context_id1);
+                           arbitrary_vector3df1, arbitrary_float1,
+                           arbitrary_blend_mode1, arbitrary_context_id1);
 
   std::unique_ptr<RenderPass> pass_cmp = RenderPass::Create();
   pass_cmp->SetAll(root_id, arbitrary_rect1, arbitrary_rect2, arbitrary_matrix1,
@@ -342,8 +346,8 @@ TEST_F(CCParamTraitsTest, AllQuads) {
   SharedQuadState* shared_state2_in = pass_in->CreateAndAppendSharedQuadState();
   shared_state2_in->SetAll(arbitrary_matrix2, arbitrary_rect2, arbitrary_rect2,
                            arbitrary_rect3, arbitrary_bool1, arbitrary_bool1,
-                           arbitrary_float2, arbitrary_blend_mode2,
-                           arbitrary_context_id2);
+                           arbitrary_vector3df2, arbitrary_float2,
+                           arbitrary_blend_mode2, arbitrary_context_id2);
   SharedQuadState* shared_state2_cmp =
       pass_cmp->CreateAndAppendSharedQuadState();
   *shared_state2_cmp = *shared_state2_in;
@@ -361,8 +365,8 @@ TEST_F(CCParamTraitsTest, AllQuads) {
   SharedQuadState* shared_state3_in = pass_in->CreateAndAppendSharedQuadState();
   shared_state3_in->SetAll(arbitrary_matrix1, arbitrary_rect3, arbitrary_rect3,
                            arbitrary_rect1, arbitrary_bool1, arbitrary_bool2,
-                           arbitrary_float3, arbitrary_blend_mode3,
-                           arbitrary_context_id3);
+                           arbitrary_vector3df3, arbitrary_float3,
+                           arbitrary_blend_mode3, arbitrary_context_id3);
   SharedQuadState* shared_state3_cmp =
       pass_cmp->CreateAndAppendSharedQuadState();
   *shared_state3_cmp = *shared_state3_in;
@@ -499,9 +503,9 @@ TEST_F(CCParamTraitsTest, UnusedSharedQuadStates) {
 
   // The first SharedQuadState is used.
   SharedQuadState* shared_state1_in = pass_in->CreateAndAppendSharedQuadState();
-  shared_state1_in->SetAll(gfx::Transform(), gfx::Rect(1, 1), gfx::Rect(),
-                           gfx::Rect(), false, true, 1.f, SkBlendMode::kSrcOver,
-                           0);
+  shared_state1_in->SetAll(
+      gfx::Transform(), gfx::Rect(1, 1), gfx::Rect(), gfx::Rect(), false, true,
+      gfx::Vector3dF(1.f, 1.f, 1.f), 1.f, SkBlendMode::kSrcOver, 0);
 
   auto* quad1 = pass_in->CreateAndAppendDrawQuad<SolidColorDrawQuad>();
   quad1->SetAll(shared_state1_in, gfx::Rect(10, 10), gfx::Rect(10, 10), false,
@@ -509,20 +513,20 @@ TEST_F(CCParamTraitsTest, UnusedSharedQuadStates) {
 
   // The second and third SharedQuadStates are not used.
   SharedQuadState* shared_state2_in = pass_in->CreateAndAppendSharedQuadState();
-  shared_state2_in->SetAll(gfx::Transform(), gfx::Rect(2, 2), gfx::Rect(),
-                           gfx::Rect(), false, true, 1.f, SkBlendMode::kSrcOver,
-                           0);
+  shared_state2_in->SetAll(
+      gfx::Transform(), gfx::Rect(2, 2), gfx::Rect(), gfx::Rect(), false, true,
+      gfx::Vector3dF(1.f, 1.f, 1.f), 1.f, SkBlendMode::kSrcOver, 0);
 
   SharedQuadState* shared_state3_in = pass_in->CreateAndAppendSharedQuadState();
-  shared_state3_in->SetAll(gfx::Transform(), gfx::Rect(3, 3), gfx::Rect(),
-                           gfx::Rect(), false, true, 1.f, SkBlendMode::kSrcOver,
-                           0);
+  shared_state3_in->SetAll(
+      gfx::Transform(), gfx::Rect(3, 3), gfx::Rect(), gfx::Rect(), false, true,
+      gfx::Vector3dF(1.f, 1.f, 1.f), 1.f, SkBlendMode::kSrcOver, 0);
 
   // The fourth SharedQuadState is used.
   SharedQuadState* shared_state4_in = pass_in->CreateAndAppendSharedQuadState();
-  shared_state4_in->SetAll(gfx::Transform(), gfx::Rect(4, 4), gfx::Rect(),
-                           gfx::Rect(), false, true, 1.f, SkBlendMode::kSrcOver,
-                           0);
+  shared_state4_in->SetAll(
+      gfx::Transform(), gfx::Rect(4, 4), gfx::Rect(), gfx::Rect(), false, true,
+      gfx::Vector3dF(1.f, 1.f, 1.f), 1.f, SkBlendMode::kSrcOver, 0);
 
   auto* quad2 = pass_in->CreateAndAppendDrawQuad<SolidColorDrawQuad>();
   quad2->SetAll(shared_state4_in, gfx::Rect(10, 10), gfx::Rect(10, 10), false,
@@ -530,9 +534,9 @@ TEST_F(CCParamTraitsTest, UnusedSharedQuadStates) {
 
   // The fifth is not used again.
   SharedQuadState* shared_state5_in = pass_in->CreateAndAppendSharedQuadState();
-  shared_state5_in->SetAll(gfx::Transform(), gfx::Rect(5, 5), gfx::Rect(),
-                           gfx::Rect(), false, true, 1.f, SkBlendMode::kSrcOver,
-                           0);
+  shared_state5_in->SetAll(
+      gfx::Transform(), gfx::Rect(5, 5), gfx::Rect(), gfx::Rect(), false, true,
+      gfx::Vector3dF(1.f, 1.f, 1.f), 1.f, SkBlendMode::kSrcOver, 0);
 
   // 5 SharedQuadStates go in.
   ASSERT_EQ(5u, pass_in->shared_quad_state_list.size());
