@@ -93,6 +93,30 @@
       "revId": "0ad88b01efbac5ab0db5424d7ecc8b068fdd6a09",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "67b5b7e3_597fad1d",
+        "filename": "chrome/browser/notifications/notification_template_builder.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 216,
+      "author": {
+        "id": 1002500
+      },
+      "writtenOn": "2017-11-08T16:49:21Z",
+      "side": 1,
+      "message": "Yeah, my nit is very minor.",
+      "parentUuid": "08c54979_3089db3e",
+      "range": {
+        "startLine": 216,
+        "startChar": 2,
+        "endLine": 216,
+        "endChar": 25
+      },
+      "revId": "0ad88b01efbac5ab0db5424d7ecc8b068fdd6a09",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
