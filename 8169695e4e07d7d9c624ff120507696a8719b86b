@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "446c6bde_88e95e29",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 1
+      },
+      "lineNbr": 13,
+      "author": {
+        "id": 1001385
+      },
+      "writtenOn": "2017-11-08T18:52:20Z",
+      "side": 1,
+      "message": "nit: Can you update the description to explain the specific changes you\u0027re making here? It looks like you\u0027re adding two deps on sub-components, so it isn\u0027t immediately clear how that resolves a dependency cycle. :)",
+      "range": {
+        "startLine": 9,
+        "startChar": 0,
+        "endLine": 13,
+        "endChar": 33
+      },
+      "revId": "8169695e4e07d7d9c624ff120507696a8719b86b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
