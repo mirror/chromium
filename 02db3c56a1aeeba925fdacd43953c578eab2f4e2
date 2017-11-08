@@ -107,6 +107,24 @@
     },
     {
       "key": {
+        "uuid": "894037cd_a6c3257b",
+        "filename": "ui/compositor/compositor.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 551,
+      "author": {
+        "id": 1000887
+      },
+      "writtenOn": "2017-11-08T22:28:19Z",
+      "side": 1,
+      "message": "Err, I said my thing backward. It would be in an else block for if !widget_valid.\n\nIe it becomes LTH-requested-a-sink-when-we-had-no-widget.\nThen SetAcceleratedWidget does the request instead.",
+      "parentUuid": "0b3715f3_07357d06",
+      "revId": "02db3c56a1aeeba925fdacd43953c578eab2f4e2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "8f42508d_bc9d8f21",
         "filename": "ui/compositor/compositor.cc",
         "patchSetId": 7
