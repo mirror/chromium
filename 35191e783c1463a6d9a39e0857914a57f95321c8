@@ -117,6 +117,24 @@
       "revId": "35191e783c1463a6d9a39e0857914a57f95321c8",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1a85a021_6f52137c",
+        "filename": "chrome/renderer/chrome_content_renderer_client.cc",
+        "patchSetId": 13
+      },
+      "lineNbr": 742,
+      "author": {
+        "id": 1002532
+      },
+      "writtenOn": "2017-11-08T01:49:36Z",
+      "side": 1,
+      "message": "That would be even more verbose, which is one of the things that I found unnecessary :)\n\nAnyways, as I mentioned this is personal taste, so I defer to Nicholas as he\u0027s the author.",
+      "parentUuid": "74478910_ede74b6b",
+      "revId": "35191e783c1463a6d9a39e0857914a57f95321c8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
