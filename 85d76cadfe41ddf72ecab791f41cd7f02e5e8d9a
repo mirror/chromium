@@ -1,0 +1,73 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "0950406a_ec98d2fb",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 9
+      },
+      "lineNbr": 36,
+      "author": {
+        "id": 1118209
+      },
+      "writtenOn": "2017-11-08T22:43:04Z",
+      "side": 1,
+      "message": "nit: don\u0027t forget to update this, since you don\u0027t need the DEPS change anymore.  \n\nFWIW, https://www.chromium.org/developers/testing/threadsanitizer-tsan-v2 also instructs to always pass --no-sandbox when running tests with TSan, so it\u0027s not that surprising that you\u0027d get weird behavior without it. :)",
+      "range": {
+        "startLine": 28,
+        "startChar": 0,
+        "endLine": 36,
+        "endChar": 0
+      },
+      "revId": "85d76cadfe41ddf72ecab791f41cd7f02e5e8d9a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f9d216bb_d480cbc0",
+        "filename": "content/test/content_browser_test_test.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 20,
+      "author": {
+        "id": 1118209
+      },
+      "writtenOn": "2017-11-08T22:43:04Z",
+      "side": 1,
+      "message": "nit: probably not needed anymore",
+      "range": {
+        "startLine": 20,
+        "startChar": 0,
+        "endLine": 20,
+        "endChar": 64
+      },
+      "revId": "85d76cadfe41ddf72ecab791f41cd7f02e5e8d9a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "bc40bb29_8915708e",
+        "filename": "content/test/content_browser_test_test.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 84,
+      "author": {
+        "id": 1118209
+      },
+      "writtenOn": "2017-11-08T22:43:04Z",
+      "side": 1,
+      "message": "switches::kNoSandbox (the TSAN bot seems to agree)",
+      "range": {
+        "startLine": 84,
+        "startChar": 24,
+        "endLine": 84,
+        "endChar": 34
+      },
+      "revId": "85d76cadfe41ddf72ecab791f41cd7f02e5e8d9a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
