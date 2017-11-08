@@ -45,17 +45,37 @@ class CONTENT_EXPORT NetworkConnectionTracker
     DISALLOW_COPY_AND_ASSIGN(NetworkConnectionObserver);
   };
 
-  explicit NetworkConnectionTracker(mojom::NetworkService* network_service);
+  class CONTENT_EXPORT GetConnectionTypeHandle {
+   public:
+    GetConnectionTypeHandle(ConnectionTypeCallback callback);
+    ~GetConnectionTypeHandle();
+    ConnectionTypeCallback WeakCallback();
+
+   private:
+    void RunCallback(mojom::ConnectionType type);
+    ConnectionTypeCallback callback_;
+    base::WeakPtrFactory<GetConnectionTypeHandle> weak_ptr_factory_;
+
+    DISALLOW_COPY_AND_ASSIGN(GetConnectionTypeHandle);
+  };
+
+  NetworkConnectionTracker();
 
   ~NetworkConnectionTracker() override;
 
-  // If connection type can be retrieved synchronously, returns true and |type|
-  // will contain the current connection type; Otherwise, returns false, in
-  // which case, |callback| will be called on the calling thread when connection
-  // type is ready. This method is thread safe. Please also refer to
+  // Initializes the tracker to request notifications from |network_service|.
+  void Initialize(mojom::NetworkService* network_service);
+
+  // If connection type can be retrieved synchronously, returns nullptr and
+  // |type| will contain the current connection type; Otherwise, returns a
+  // GetConnectionTypeHandle, in which case, |callback| will be called on the
+  // calling thread when connection type is ready and the handle is alive.
+  // |callback| will not be invoked if the returned handle is gone.
+  // This method is thread safe. Please also refer to
   // net::NetworkChangeNotifier::GetConnectionType() for documentation.
-  bool GetConnectionType(mojom::ConnectionType* type,
-                         ConnectionTypeCallback callback);
+  virtual std::unique_ptr<NetworkConnectionTracker::GetConnectionTypeHandle>
+  GetConnectionType(mojom::ConnectionType* type,
+                    ConnectionTypeCallback callback);
 
   // Returns true if |type| is a cellular connection.
   // Returns false if |type| is CONNECTION_UNKNOWN, and thus, depending on the
@@ -74,13 +94,14 @@ class CONTENT_EXPORT NetworkConnectionTracker
   // All observers must be unregistred before |this| is destroyed.
   void RemoveNetworkConnectionObserver(NetworkConnectionObserver* observer);
 
- private:
-  FRIEND_TEST_ALL_PREFIXES(NetworkGetConnectionTest,
-                           GetConnectionTypeOnDifferentThread);
-  // NetworkChangeManagerClient implementation:
+ protected:
+  // NetworkChangeManagerClient implementation. Protected for testing.
   void OnInitialConnectionType(mojom::ConnectionType type) override;
   void OnNetworkChanged(mojom::ConnectionType type) override;
 
+ private:
+  FRIEND_TEST_ALL_PREFIXES(NetworkGetConnectionTest,
+                           GetConnectionTypeOnDifferentThread);
   // The task runner that |this| lives on.
   scoped_refptr<base::SequencedTaskRunner> task_runner_;
 

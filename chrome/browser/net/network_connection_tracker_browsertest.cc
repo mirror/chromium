@@ -43,9 +43,10 @@ class TestNetworkConnectionObserver
   // NetworkConnectionObserver implementation:
   void OnConnectionChanged(mojom::ConnectionType type) override {
     mojom::ConnectionType queried_type;
-    bool sync = tracker_->GetConnectionType(
-        &queried_type, base::BindOnce([](mojom::ConnectionType type) {}));
-    EXPECT_TRUE(sync);
+    std::unique_ptr<NetworkConnectionTracker::GetConnectionTypeHandle> async =
+        tracker_->GetConnectionType(
+            &queried_type, base::BindOnce([](mojom::ConnectionType type) {}));
+    EXPECT_FALSE(async);
     EXPECT_EQ(type, queried_type);
 
     num_notifications_++;
