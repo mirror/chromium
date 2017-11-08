@@ -184,6 +184,10 @@
     "label": "//tools/battor_agent:battor_agent_unittests",
     "type": "console_test_launcher",
   },
+  "blah_unittests": {
+    "label": "//blah:blah_unittests",
+    "type": "console_test_launcher",
+  },
   "blink_heap_unittests": {
     "label": "//third_party/WebKit/Source/platform/heap:blink_heap_unittests",
     "type": "console_test_launcher",

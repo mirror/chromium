@@ -35,6 +35,12 @@
         "swarming": {
           "can_use_on_swarming_builders": true
         },
+        "test": "blah_unittests"
+      },
+      {
+        "swarming": {
+          "can_use_on_swarming_builders": true
+        },
         "test": "boringssl_crypto_tests"
       },
       {
