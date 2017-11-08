@@ -1,0 +1,67 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "39d61c50_c409d806",
+        "filename": "third_party/WebKit/Source/bindings/scripts/web_idl/ecma_script_types.py",
+        "patchSetId": 21
+      },
+      "lineNbr": 22,
+      "author": {
+        "id": 1002507
+      },
+      "writtenOn": "2017-11-08T08:20:16Z",
+      "side": 1,
+      "message": "nit: Not only this point but also here and there, it\u0027s good to remember that Python supports \"mutable list\" and \"immutable tuple\".  If it\u0027s expected to be immutable, then tuple is preferred.  Also set vs frozenset.",
+      "range": {
+        "startLine": 22,
+        "startChar": 33,
+        "endLine": 22,
+        "endChar": 41
+      },
+      "revId": "98c023c5095d8a81a92e4ac34110a05551866ada",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "84b2f532_70b8f297",
+        "filename": "third_party/WebKit/Source/bindings/scripts/web_idl/idl_definition_builder.py",
+        "patchSetId": 21
+      },
+      "lineNbr": 44,
+      "author": {
+        "id": 1002507
+      },
+      "writtenOn": "2017-11-08T08:20:16Z",
+      "side": 1,
+      "message": "I like generators in Python, but |create| doesn\u0027t remind me of a generator.  What about \"idl_definitions_from_node\" for example?  Like items(), plural form reminds us of a generator because it\u0027s expected to return multiple objects.  In other words, generators look like lists, so a name that looks like a list is good.",
+      "range": {
+        "startLine": 44,
+        "startChar": 8,
+        "endLine": 44,
+        "endChar": 14
+      },
+      "revId": "98c023c5095d8a81a92e4ac34110a05551866ada",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e0128a35_8d598245",
+        "filename": "third_party/WebKit/Source/bindings/scripts/web_idl/idl_types.py",
+        "patchSetId": 21
+      },
+      "lineNbr": 321,
+      "author": {
+        "id": 1002507
+      },
+      "writtenOn": "2017-11-08T08:20:16Z",
+      "side": 1,
+      "message": "Again, could you elaborate \"why\" we need this class?  Non-author people need explanations.\n\nReading the current comment, it\u0027s not trivial that\n\n- TypeReference is out of scope of Web IDL types (or TypeReference doesn\u0027t have a good correspondence in Web IDL types).\n- TypeReference is used only in Phase 1, and will be resolved in Phase 2.\n- TypeReference is necessary because identifiers are used before they get defined.  Even there is no forward declaration.\n\nAs I wrote in the previous comment, an example would help readers understand the third point.",
+      "revId": "98c023c5095d8a81a92e4ac34110a05551866ada",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}

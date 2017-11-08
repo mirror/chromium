@@ -154,6 +154,24 @@
     },
     {
       "key": {
+        "uuid": "24691c0d_81edab2c",
+        "filename": "third_party/WebKit/Source/bindings/scripts/web_idl/collection.py",
+        "patchSetId": 18
+      },
+      "lineNbr": 163,
+      "author": {
+        "id": 1002507
+      },
+      "writtenOn": "2017-11-08T08:20:16Z",
+      "side": 1,
+      "message": "I learnt a bit about pickling, and understand that nested classes are not supported by pickle (\u003c Python 3.4).  Then, we need to workaround such a restriction.  It doesn\u0027t justify that it\u0027s okay to expose Metadata publicly.\n\na) We can make Metadata private at least.\nb) We can change the name to CollectionMetadata for example.\n\nCombining a) and b), we can name this _CollectionMetadata for example.  Top-level \"Metadata\" is not good.",
+      "parentUuid": "5e4e01ed_f1aa36b4",
+      "revId": "c8ac2ac5d8e15ac8292d6400983e1dd8b36d6a1f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "48af0db7_9b5caacc",
         "filename": "third_party/WebKit/Source/bindings/scripts/web_idl/collector.py",
         "patchSetId": 18
@@ -429,6 +447,24 @@
       "side": 1,
       "message": "All IDL types, except for \"symbol\" and \"Error\".\nInterface types (not \"Interface\") are included in TypeReference.",
       "parentUuid": "74be05b0_bc1c65d0",
+      "revId": "c8ac2ac5d8e15ac8292d6400983e1dd8b36d6a1f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "c37bae35_c6a110be",
+        "filename": "third_party/WebKit/Source/bindings/scripts/web_idl/idl_types.py",
+        "patchSetId": 18
+      },
+      "lineNbr": 13,
+      "author": {
+        "id": 1002507
+      },
+      "writtenOn": "2017-11-08T08:20:16Z",
+      "side": 1,
+      "message": "It\u0027s still not clear to me.\n\nIf you meant:\n\n    https://heycam.github.io/webidl/#idl-types\n    2.12. Types\n\nthen, I\u0027d recommend to include the link into the comment.\n\nAnyway, it\u0027s not clear.  Collection holds interfaces (instances of Interface class), then why Interface is not TypeBase?  Is it guaranteed that TypeReference is always used?\n\nFirst of all, TypeBase is a public class in this module.  Then, it should provide a clear definition and purpose, i.e. a clear role.  I like the idea to have this kind of base class, however, if it\u0027s not yet clear why we need this or what role this class must play, then I\u0027d recommend to postpone introducing this class.\n\nAgain, \"this class corresponds to IDL types\" doesn\u0027t make sense because it doesn\u0027t explain \"why we need it?\" nor \"what role this class plays?\".  Maybe, this isn\u0027t matured yet.",
+      "parentUuid": "3f49eb77_f579b3e3",
       "revId": "c8ac2ac5d8e15ac8292d6400983e1dd8b36d6a1f",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": false
