@@ -10,6 +10,7 @@
 #include <sys/wait.h>
 #include <unistd.h>
 
+#include "base/debug/activity_tracker.h"
 #include "base/files/file_util.h"
 #include "base/files/scoped_file.h"
 #include "base/logging.h"
@@ -144,6 +145,7 @@ static bool IsChildDead(pid_t child) {
     NOTREACHED();
   } else if (result > 0) {
     // The child has died.
+    Process(child).Exited(WEXITSTATUS(status));
     return true;
   }
 
