@@ -1,0 +1,140 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "191e186f_47da3d4c",
+        "filename": "chrome/renderer/net/net_error_helper.cc",
+        "patchSetId": 16
+      },
+      "lineNbr": 354,
+      "author": {
+        "id": 1115881
+      },
+      "writtenOn": "2017-11-08T16:26:51Z",
+      "side": 1,
+      "message": "This might not be correct. You should check with net error pages folks, but this is likely the function that requires a stale version from cache of a failed navigation. I don\u0027t think we should set the initiator to the current document in that case, in particular since the document url is probably that of the error page (a data url).",
+      "revId": "8118a91467a77969e70f7c508110897f1f18178c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "816300ea_cc22c4e4",
+        "filename": "content/browser/loader/resource_dispatcher_host_browsertest.cc",
+        "patchSetId": 16
+      },
+      "lineNbr": 945,
+      "author": {
+        "id": 1115881
+      },
+      "writtenOn": "2017-11-08T16:26:51Z",
+      "side": 1,
+      "message": "I think at least this one should still be true for the main resource request. Maybe the one above as well? If so, we should keep checking them or check they are false if not true.",
+      "revId": "8118a91467a77969e70f7c508110897f1f18178c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "296f6502_edb78727",
+        "filename": "content/browser/loader/resource_dispatcher_host_browsertest.cc",
+        "patchSetId": 16
+      },
+      "lineNbr": 996,
+      "author": {
+        "id": 1115881
+      },
+      "writtenOn": "2017-11-08T16:26:51Z",
+      "side": 1,
+      "message": "nit:s/are/is",
+      "revId": "8118a91467a77969e70f7c508110897f1f18178c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1f40bae8_a9037db0",
+        "filename": "content/browser/loader/resource_dispatcher_host_browsertest.cc",
+        "patchSetId": 16
+      },
+      "lineNbr": 1078,
+      "author": {
+        "id": 1115881
+      },
+      "writtenOn": "2017-11-08T16:26:51Z",
+      "side": 1,
+      "message": "nit: \"initiated outside of a document, so there is no initiator.\"? Same in the two instances below.",
+      "revId": "8118a91467a77969e70f7c508110897f1f18178c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f9d92b70_78b31159",
+        "filename": "content/browser/loader/resource_dispatcher_host_impl.cc",
+        "patchSetId": 16
+      },
+      "lineNbr": 1252,
+      "author": {
+        "id": 1115881
+      },
+      "writtenOn": "2017-11-08T16:26:51Z",
+      "side": 1,
+      "message": "nit: s/ones/one",
+      "revId": "8118a91467a77969e70f7c508110897f1f18178c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9e3a11fa_c45609dd",
+        "filename": "content/browser/loader/resource_dispatcher_host_impl.cc",
+        "patchSetId": 16
+      },
+      "lineNbr": 1254,
+      "author": {
+        "id": 1115881
+      },
+      "writtenOn": "2017-11-08T16:26:51Z",
+      "side": 1,
+      "message": "When do we hit this case for subframes? History navigations?",
+      "revId": "8118a91467a77969e70f7c508110897f1f18178c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "27139394_77636807",
+        "filename": "content/renderer/render_frame_impl.cc",
+        "patchSetId": 16
+      },
+      "lineNbr": 6668,
+      "author": {
+        "id": 1115881
+      },
+      "writtenOn": "2017-11-08T16:26:51Z",
+      "side": 1,
+      "message": "nit: add . at the end of the sentence.",
+      "revId": "8118a91467a77969e70f7c508110897f1f18178c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9f80e22f_31445e24",
+        "filename": "third_party/WebKit/Source/core/loader/NavigationScheduler.cpp",
+        "patchSetId": 16
+      },
+      "lineNbr": 271,
+      "author": {
+        "id": 1115881
+      },
+      "writtenOn": "2017-11-08T16:26:51Z",
+      "side": 1,
+      "message": "Are we sure that this will still be valid when the navigation is finally scheduled?",
+      "revId": "8118a91467a77969e70f7c508110897f1f18178c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}

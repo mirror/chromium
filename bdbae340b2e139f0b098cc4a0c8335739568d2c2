@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "854714e1_d900d300",
+        "filename": "third_party/WebKit/Source/core/page/CreateWindow.cpp",
+        "patchSetId": 16
+      },
+      "lineNbr": 440,
+      "author": {
+        "id": 1115881
+      },
+      "writtenOn": "2017-11-08T16:26:51Z",
+      "side": 0,
+      "message": "Wouldn\u0027t it make sense to leave this in? If I read correctly, this when we create a new window from JavaScript. Wouldn\u0027t we have an initiator in that case?",
+      "revId": "bdbae340b2e139f0b098cc4a0c8335739568d2c2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
