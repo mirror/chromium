@@ -10,6 +10,7 @@
 
 #include "ash/accessibility/accessibility_cursor_ring_layer.h"
 #include "ash/accessibility/accessibility_focus_ring_layer.h"
+#include "ash/accessibility/accessibility_highlight_layer.h"
 #include "ash/ash_export.h"
 #include "base/macros.h"
 #include "base/memory/singleton.h"
@@ -50,6 +51,12 @@ class ASH_EXPORT AccessibilityFocusRingController
   void SetCaretRing(const gfx::Point& location);
   void HideCaretRing();
 
+  // Draw a highlight at the given rect, in global screen coordinates.
+  // This looks similar to selecting a region with the cursor, except
+  // it is drawn in the foreground rather than behind a text layer.
+  void SetHighlight(const std::vector<gfx::Rect>& rects, SkColor color);
+  void HideHighlight();
+
   // Don't fade in / out, for testing.
   void SetNoFadeForTesting();
 
@@ -80,6 +87,7 @@ class ASH_EXPORT AccessibilityFocusRingController
   void OnAnimationStep(base::TimeTicks timestamp) override;
 
   void UpdateFocusRingsFromFocusRects();
+  void UpdateHighlightFromHighlightRects();
 
   void AnimateFocusRings(base::TimeTicks timestamp);
   void AnimateCursorRing(base::TimeTicks timestamp);
@@ -120,6 +128,10 @@ class ASH_EXPORT AccessibilityFocusRingController
   LayerAnimationInfo caret_animation_info_;
   gfx::Point caret_location_;
   std::unique_ptr<AccessibilityCursorRingLayer> caret_layer_;
+
+  std::vector<gfx::Rect> highlight_rects_;
+  std::unique_ptr<AccessibilityHighlightLayer> highlight_layer_;
+  SkColor highlight_color_;
 
   friend struct base::DefaultSingletonTraits<AccessibilityFocusRingController>;
 
