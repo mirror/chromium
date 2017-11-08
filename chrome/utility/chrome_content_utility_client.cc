@@ -54,6 +54,8 @@
 #if defined(OS_WIN)
 #include "chrome/services/util_win/public/interfaces/constants.mojom.h"
 #include "chrome/services/util_win/util_win_service.h"
+#include "chrome/services/wifi_util_win/public/interfaces/constants.mojom.h"
+#include "chrome/services/wifi_util_win/wifi_util_win_service.h"
 #endif
 
 #if BUILDFLAG(ENABLE_EXTENSIONS)
@@ -306,6 +308,15 @@ void ChromeContentUtilityClient::RegisterServices(
   profiling_info.factory =
       base::Bind(&profiling::ProfilingService::CreateService);
   services->emplace(profiling::mojom::kServiceName, profiling_info);
+
+#if defined(OS_WIN)
+  {
+    service_manager::EmbeddedServiceInfo service_info;
+    service_info.factory =
+        base::Bind(&chrome::WifiUtilWinService::CreateService);
+    services->emplace(chrome::mojom::kWifiUtilWinServiceName, service_info);
+  }
+#endif
 
 #if !defined(OS_ANDROID)
   service_manager::EmbeddedServiceInfo proxy_resolver_info;
