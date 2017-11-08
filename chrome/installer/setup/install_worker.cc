@@ -7,9 +7,11 @@
 
 #include "chrome/installer/setup/install_worker.h"
 
-#include <windows.h>  // NOLINT
+#include <windows.h>
+
 #include <atlsecurity.h>
 #include <oaidl.h>
+#include <objbase.h>
 #include <shlobj.h>
 #include <stddef.h>
 #include <stdint.h>
@@ -163,6 +165,33 @@ void AddFirewallRulesWorkItems(const InstallerState& installer_state,
                  dist,
                  installer_state.target_path().Append(kChromeExe),
                  is_new_install));
+}
+
+// Adds work items to |list| to register a COM server with the OS, which is used
+// to handle the Windows toast notifications.
+void AddNativeNotificationWorkItems(const InstallerState& installer_state,
+                                    WorkItemList* list) {
+  // CLSID has a string format of "{xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx}".
+  // It has 39 characters including '\0' in the end.
+  const int kCLSIDSize = 39;
+  wchar_t toast_activator_clsid[kCLSIDSize];
+  if (::StringFromGUID2(install_static::GetToastActivatorClsid(),
+                        toast_activator_clsid,
+                        arraysize(toast_activator_clsid)) != kCLSIDSize) {
+    LOG(DFATAL) << "Applying StringFromGUID2() to toast activator CLSID failed";
+    return;
+  }
+
+  HKEY root = installer_state.root_key();
+  base::string16 toast_activator_key(L"Software\\Classes\\CLSID\\");
+  toast_activator_key.append(toast_activator_clsid).append(L"\\LocalServer32");
+
+  list->AddCreateRegKeyWorkItem(root, toast_activator_key,
+                                WorkItem::kWow64Default);
+
+  list->AddSetRegValueWorkItem(
+      root, toast_activator_key, WorkItem::kWow64Default, L"",
+      installer_state.target_path().Append(kChromeExe).value(), true);
 }
 
 // This is called when an MSI installation is run. It may be that a user is
@@ -743,6 +772,8 @@ void AddInstallWorkItems(const InstallationState& original_state,
                         install_list);
   AddFirewallRulesWorkItems(installer_state, dist, current_version == nullptr,
                             install_list);
+
+  AddNativeNotificationWorkItems(installer_state, install_list);
 
   InstallUtil::AddUpdateDowngradeVersionItem(installer_state.system_install(),
                                              current_version, new_version, dist,
