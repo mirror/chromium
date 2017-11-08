@@ -22,6 +22,30 @@
       "revId": "3075ed6b4b79d6746572c1a2c8bf1bb152f48ac7",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4f0e57d1_02312359",
+        "filename": "chromecast/browser/android/apk/AndroidManifest.xml.jinja2",
+        "patchSetId": 4
+      },
+      "lineNbr": 37,
+      "author": {
+        "id": 1242380
+      },
+      "writtenOn": "2017-11-08T21:43:53Z",
+      "side": 1,
+      "message": "Good question. Don\u0027t know how that ended up here. I\u0027ll remove it and make sure it doesn\u0027t break anything.",
+      "parentUuid": "2903193f_46cd22f5",
+      "range": {
+        "startLine": 34,
+        "startChar": 12,
+        "endLine": 37,
+        "endChar": 28
+      },
+      "revId": "3075ed6b4b79d6746572c1a2c8bf1bb152f48ac7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
