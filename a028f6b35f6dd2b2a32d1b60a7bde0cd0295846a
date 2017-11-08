@@ -48,6 +48,54 @@
     },
     {
       "key": {
+        "uuid": "e32f268b_eb3e4724",
+        "filename": "components/cronet/ios/Cronet.h",
+        "patchSetId": 7
+      },
+      "lineNbr": 40,
+      "author": {
+        "id": 1179923
+      },
+      "writtenOn": "2017-11-08T14:13:22Z",
+      "side": 1,
+      "message": "I\u0027m not sure.  It doesn\u0027t have any sort of error without it (which the CronetMetrics class does).",
+      "parentUuid": "818cef49_3fb4a36a",
+      "range": {
+        "startLine": 40,
+        "startChar": 11,
+        "endLine": 40,
+        "endChar": 32
+      },
+      "revId": "a028f6b35f6dd2b2a32d1b60a7bde0cd0295846a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "782c4e89_518e47c8",
+        "filename": "components/cronet/ios/Cronet.h",
+        "patchSetId": 7
+      },
+      "lineNbr": 40,
+      "author": {
+        "id": 1179923
+      },
+      "writtenOn": "2017-11-08T14:13:22Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "1ac2b1bf_81acca84",
+      "range": {
+        "startLine": 40,
+        "startChar": 0,
+        "endLine": 40,
+        "endChar": 32
+      },
+      "revId": "a028f6b35f6dd2b2a32d1b60a7bde0cd0295846a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "1a04a9cd_01912137",
         "filename": "components/cronet/ios/Cronet.h",
         "patchSetId": 7
@@ -119,6 +167,30 @@
     },
     {
       "key": {
+        "uuid": "89c8da73_f35a8b34",
+        "filename": "components/cronet/ios/Cronet.h",
+        "patchSetId": 7
+      },
+      "lineNbr": 42,
+      "author": {
+        "id": 1179923
+      },
+      "writtenOn": "2017-11-08T14:13:22Z",
+      "side": 1,
+      "message": "I\u0027m going to mirror the system API for now, but it can change depending on the demands on the implementation.",
+      "parentUuid": "54cd6665_a4535493",
+      "range": {
+        "startLine": 41,
+        "startChar": 0,
+        "endLine": 42,
+        "endChar": 60
+      },
+      "revId": "a028f6b35f6dd2b2a32d1b60a7bde0cd0295846a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "28360a48_51eb153b",
         "filename": "components/cronet/ios/Cronet.h",
         "patchSetId": 7
@@ -139,6 +211,30 @@
       "revId": "a028f6b35f6dd2b2a32d1b60a7bde0cd0295846a",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "735abff4_4125fe51",
+        "filename": "components/cronet/ios/Cronet.h",
+        "patchSetId": 7
+      },
+      "lineNbr": 210,
+      "author": {
+        "id": 1179923
+      },
+      "writtenOn": "2017-11-08T14:13:22Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "28360a48_51eb153b",
+      "range": {
+        "startLine": 208,
+        "startChar": 0,
+        "endLine": 210,
+        "endChar": 54
+      },
+      "revId": "a028f6b35f6dd2b2a32d1b60a7bde0cd0295846a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -165,6 +261,30 @@
     },
     {
       "key": {
+        "uuid": "91394323_ad1e5e26",
+        "filename": "components/cronet/ios/test/cronet_metrics_test.mm",
+        "patchSetId": 7
+      },
+      "lineNbr": 17,
+      "author": {
+        "id": 1179923
+      },
+      "writtenOn": "2017-11-08T14:13:22Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "3c86c0dd_6d0206da",
+      "range": {
+        "startLine": 17,
+        "startChar": 0,
+        "endLine": 17,
+        "endChar": 37
+      },
+      "revId": "a028f6b35f6dd2b2a32d1b60a7bde0cd0295846a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "e20aaec2_7bd16f97",
         "filename": "components/cronet/ios/test/cronet_metrics_test.mm",
         "patchSetId": 7
@@ -185,6 +305,30 @@
       "revId": "a028f6b35f6dd2b2a32d1b60a7bde0cd0295846a",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "37c45d90_f0185841",
+        "filename": "components/cronet/ios/test/cronet_metrics_test.mm",
+        "patchSetId": 7
+      },
+      "lineNbr": 18,
+      "author": {
+        "id": 1179923
+      },
+      "writtenOn": "2017-11-08T14:13:22Z",
+      "side": 1,
+      "message": "That\u0027s a good question.  I\u0027ve fixed the signature for now, but it would be nice if a more robust check could be put in place to make sure they match.",
+      "parentUuid": "e20aaec2_7bd16f97",
+      "range": {
+        "startLine": 18,
+        "startChar": 8,
+        "endLine": 18,
+        "endChar": 34
+      },
+      "revId": "a028f6b35f6dd2b2a32d1b60a7bde0cd0295846a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -211,6 +355,30 @@
     },
     {
       "key": {
+        "uuid": "46af8846_a93370da",
+        "filename": "components/cronet/ios/test/cronet_metrics_test.mm",
+        "patchSetId": 7
+      },
+      "lineNbr": 26,
+      "author": {
+        "id": 1179923
+      },
+      "writtenOn": "2017-11-08T14:13:22Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "64d6684a_6e345b8e",
+      "range": {
+        "startLine": 26,
+        "startChar": 20,
+        "endLine": 26,
+        "endChar": 26
+      },
+      "revId": "a028f6b35f6dd2b2a32d1b60a7bde0cd0295846a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "bdf1d4fe_38b335f2",
         "filename": "components/cronet/ios/test/cronet_metrics_test.mm",
         "patchSetId": 7
@@ -234,6 +402,30 @@
     },
     {
       "key": {
+        "uuid": "02f23840_95cbacb5",
+        "filename": "components/cronet/ios/test/cronet_metrics_test.mm",
+        "patchSetId": 7
+      },
+      "lineNbr": 31,
+      "author": {
+        "id": 1179923
+      },
+      "writtenOn": "2017-11-08T14:13:22Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "bdf1d4fe_38b335f2",
+      "range": {
+        "startLine": 31,
+        "startChar": 37,
+        "endLine": 31,
+        "endChar": 38
+      },
+      "revId": "a028f6b35f6dd2b2a32d1b60a7bde0cd0295846a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "0c1a045d_2dd8c0ec",
         "filename": "components/cronet/ios/test/cronet_metrics_test.mm",
         "patchSetId": 7
@@ -254,6 +446,30 @@
       "revId": "a028f6b35f6dd2b2a32d1b60a7bde0cd0295846a",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3ae107e8_f94b891c",
+        "filename": "components/cronet/ios/test/cronet_metrics_test.mm",
+        "patchSetId": 7
+      },
+      "lineNbr": 38,
+      "author": {
+        "id": 1179923
+      },
+      "writtenOn": "2017-11-08T14:13:22Z",
+      "side": 1,
+      "message": "Using an early return doesn\u0027t help - see my comment on the first CL.",
+      "parentUuid": "0c1a045d_2dd8c0ec",
+      "range": {
+        "startLine": 38,
+        "startChar": 5,
+        "endLine": 38,
+        "endChar": 6
+      },
+      "revId": "a028f6b35f6dd2b2a32d1b60a7bde0cd0295846a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
