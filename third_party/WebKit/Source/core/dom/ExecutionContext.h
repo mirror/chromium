@@ -104,7 +104,7 @@ class CORE_EXPORT ExecutionContext : public ContextLifecycleNotifier,
 
   virtual bool IsContextThread() const { return true; }
 
-  SecurityOrigin* GetSecurityOrigin();
+  const SecurityOrigin* GetSecurityOrigin();
   ContentSecurityPolicy* GetContentSecurityPolicy();
   virtual const KURL& Url() const = 0;
   virtual const KURL& BaseURL() const = 0;
@@ -115,7 +115,7 @@ class CORE_EXPORT ExecutionContext : public ContextLifecycleNotifier,
 
   // Do not use except for BlobRegistry::RegisterPublicBlobURL() and its
   // related methods.
-  SecurityOrigin* GetMutableSecurityOrigin();
+  const SecurityOrigin* GetMutableSecurityOrigin();
 
   // Gets the DOMTimerCoordinator which maintains the "active timer
   // list" of tasks created by setTimeout and setInterval. The

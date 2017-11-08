@@ -84,7 +84,7 @@ class OriginTrialContextTest : public ::testing::Test,
 
   void UpdateSecurityOrigin(const String& origin) {
     KURL page_url(origin);
-    scoped_refptr<SecurityOrigin> page_origin =
+    scoped_refptr<const SecurityOrigin> page_origin =
         SecurityOrigin::Create(page_url);
     execution_context_->SetSecurityOrigin(page_origin);
     execution_context_->SetIsSecureContext(SecurityOrigin::IsSecure(page_url));

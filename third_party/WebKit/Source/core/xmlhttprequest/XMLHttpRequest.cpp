@@ -292,7 +292,7 @@ XMLHttpRequest::XMLHttpRequest(
     ExecutionContext* context,
     v8::Isolate* isolate,
     bool is_isolated_world,
-    scoped_refptr<SecurityOrigin> isolated_world_security_origin)
+    scoped_refptr<const SecurityOrigin> isolated_world_security_origin)
     : PausableObject(context),
       timeout_milliseconds_(0),
       state_(kUnsent),
@@ -330,7 +330,7 @@ Document* XMLHttpRequest::GetDocument() const {
   return ToDocument(GetExecutionContext());
 }
 
-SecurityOrigin* XMLHttpRequest::GetSecurityOrigin() const {
+const SecurityOrigin* XMLHttpRequest::GetSecurityOrigin() const {
   // When this is modified, also update InitResponseDocument().
   return isolated_world_security_origin_
              ? isolated_world_security_origin_.get()

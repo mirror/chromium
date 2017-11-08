@@ -148,7 +148,7 @@ void LocalWindowProxy::Initialize() {
   V8ContextSnapshot::InstallRuntimeEnabledFeatures(context,
                                                    GetFrame()->GetDocument());
 
-  SecurityOrigin* origin = nullptr;
+  const SecurityOrigin* origin = nullptr;
   if (world_->IsMainWorld()) {
     // ActivityLogger for main world is updated within updateDocumentInternal().
     UpdateDocumentInternal();
@@ -323,7 +323,7 @@ void LocalWindowProxy::UpdateActivityLogger() {
                                     : KURL()));
 }
 
-void LocalWindowProxy::SetSecurityToken(SecurityOrigin* origin) {
+void LocalWindowProxy::SetSecurityToken(const SecurityOrigin* origin) {
   // The security token is a fast path optimization for cross-context v8 checks.
   // If two contexts have the same token, then the SecurityOrigins can access
   // each other. Otherwise, v8 will fall back to a full CanAccess() check.
@@ -366,7 +366,7 @@ void LocalWindowProxy::SetSecurityToken(SecurityOrigin* origin) {
   }
 
   if (world_->IsIsolatedWorld()) {
-    SecurityOrigin* frame_security_origin =
+    const SecurityOrigin* frame_security_origin =
         GetFrame()->GetDocument()->GetSecurityOrigin();
     String frame_security_token = frame_security_origin->ToString();
     // We need to check the return value of domainWasSetInDOM() on the
@@ -516,7 +516,7 @@ void LocalWindowProxy::NamedItemRemoved(HTMLDocument* document,
       .ToChecked();
 }
 
-void LocalWindowProxy::UpdateSecurityOrigin(SecurityOrigin* origin) {
+void LocalWindowProxy::UpdateSecurityOrigin(const SecurityOrigin* origin) {
   // For an uninitialized window proxy, there's nothing we need to update. The
   // update is done when the window proxy gets initialized later.
   if (lifecycle_ == Lifecycle::kContextIsUninitialized ||

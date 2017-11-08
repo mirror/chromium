@@ -53,7 +53,7 @@ const int kMaxAllowedPort = 65535;
 
 static URLSecurityOriginMap* g_url_origin_map = nullptr;
 
-static SecurityOrigin* GetOriginFromMap(const KURL& url) {
+static const SecurityOrigin* GetOriginFromMap(const KURL& url) {
   if (g_url_origin_map)
     return g_url_origin_map->GetOrigin(url);
   return nullptr;
@@ -178,8 +178,8 @@ SecurityOrigin::SecurityOrigin(const SecurityOrigin* other)
       is_unique_origin_potentially_trustworthy_(
           other->is_unique_origin_potentially_trustworthy_) {}
 
-scoped_refptr<SecurityOrigin> SecurityOrigin::Create(const KURL& url) {
-  if (scoped_refptr<SecurityOrigin> origin = GetOriginFromMap(url))
+scoped_refptr<const SecurityOrigin> SecurityOrigin::Create(const KURL& url) {
+  if (scoped_refptr<const SecurityOrigin> origin = GetOriginFromMap(url))
     return origin;
 
   if (ShouldTreatAsUniqueOrigin(url))
@@ -191,13 +191,14 @@ scoped_refptr<SecurityOrigin> SecurityOrigin::Create(const KURL& url) {
   return base::AdoptRef(new SecurityOrigin(url));
 }
 
-scoped_refptr<SecurityOrigin> SecurityOrigin::CreateUnique() {
-  scoped_refptr<SecurityOrigin> origin = base::AdoptRef(new SecurityOrigin());
+scoped_refptr<const SecurityOrigin> SecurityOrigin::CreateUnique() {
+  scoped_refptr<const SecurityOrigin> origin =
+      base::AdoptRef(new SecurityOrigin());
   DCHECK(origin->IsUnique());
   return origin;
 }
 
-scoped_refptr<SecurityOrigin> SecurityOrigin::CreateFromUrlOrigin(
+scoped_refptr<const SecurityOrigin> SecurityOrigin::CreateFromUrlOrigin(
     const url::Origin& origin) {
   if (origin.unique())
     return CreateUnique();
@@ -223,7 +224,7 @@ url::Origin SecurityOrigin::ToUrlOrigin() const {
                        .as_string());
 }
 
-scoped_refptr<SecurityOrigin> SecurityOrigin::IsolatedCopy() const {
+scoped_refptr<const SecurityOrigin> SecurityOrigin::IsolatedCopy() const {
   return base::AdoptRef(new SecurityOrigin(this));
 }
 
@@ -319,7 +320,8 @@ bool SecurityOrigin::CanRequest(const KURL& url) const {
   if (IsUnique())
     return false;
 
-  scoped_refptr<SecurityOrigin> target_origin = SecurityOrigin::Create(url);
+  scoped_refptr<const SecurityOrigin> target_origin =
+      SecurityOrigin::Create(url);
 
   if (target_origin->IsUnique())
     return false;
@@ -530,14 +532,13 @@ void SecurityOrigin::BuildRawString(StringBuilder& builder,
   }
 }
 
-scoped_refptr<SecurityOrigin> SecurityOrigin::CreateFromString(
+scoped_refptr<const SecurityOrigin> SecurityOrigin::CreateFromString(
     const String& origin_string) {
   return SecurityOrigin::Create(KURL(NullURL(), origin_string));
 }
 
-scoped_refptr<SecurityOrigin> SecurityOrigin::Create(const String& protocol,
-                                                     const String& host,
-                                                     int port) {
+scoped_refptr<const SecurityOrigin>
+SecurityOrigin::Create(const String& protocol, const String& host, int port) {
   if (port < 0 || port > kMaxAllowedPort)
     return CreateUnique();
 
@@ -547,11 +548,12 @@ scoped_refptr<SecurityOrigin> SecurityOrigin::Create(const String& protocol,
   return Create(KURL(NullURL(), protocol + "://" + host + port_part + "/"));
 }
 
-scoped_refptr<SecurityOrigin> SecurityOrigin::Create(const String& protocol,
-                                                     const String& host,
-                                                     int port,
-                                                     const String& suborigin) {
-  scoped_refptr<SecurityOrigin> origin = Create(protocol, host, port);
+scoped_refptr<const SecurityOrigin> SecurityOrigin::Create(
+    const String& protocol,
+    const String& host,
+    int port,
+    const String& suborigin) {
+  scoped_refptr<const SecurityOrigin> origin = Create(protocol, host, port);
   if (!suborigin.IsEmpty())
     origin->suborigin_.SetName(suborigin);
   return origin;
@@ -596,13 +598,13 @@ bool SecurityOrigin::HasSuboriginAndShouldAllowCredentialsFor(
           Suborigin::SuboriginPolicyOptions::kUnsafeCredentials))
     return false;
 
-  scoped_refptr<SecurityOrigin> other = SecurityOrigin::Create(url);
+  scoped_refptr<const SecurityOrigin> other = SecurityOrigin::Create(url);
   return IsSameSchemeHostPort(other.get());
 }
 
 bool SecurityOrigin::AreSameSchemeHostPort(const KURL& a, const KURL& b) {
-  scoped_refptr<SecurityOrigin> origin_a = SecurityOrigin::Create(a);
-  scoped_refptr<SecurityOrigin> origin_b = SecurityOrigin::Create(b);
+  scoped_refptr<const SecurityOrigin> origin_a = SecurityOrigin::Create(a);
+  scoped_refptr<const SecurityOrigin> origin_b = SecurityOrigin::Create(b);
   return origin_b->IsSameSchemeHostPort(origin_a.get());
 }
 

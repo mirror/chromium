@@ -325,8 +325,8 @@ class FrameFetchContextModifyRequestTest : public FrameFetchContextTest {
     document->GetFrame()->SetOwner(iframe);
   }
 
-  scoped_refptr<SecurityOrigin> example_origin;
-  scoped_refptr<SecurityOrigin> secure_origin;
+  scoped_refptr<const SecurityOrigin> example_origin;
+  scoped_refptr<const SecurityOrigin> secure_origin;
 };
 
 TEST_F(FrameFetchContextModifyRequestTest, UpgradeInsecureResourceRequests) {
@@ -1224,7 +1224,7 @@ TEST_F(FrameFetchContextTest, AddConsoleMessageWhenDetached) {
 }
 
 TEST_F(FrameFetchContextTest, GetSecurityOriginWhenDetached) {
-  scoped_refptr<SecurityOrigin> origin =
+  scoped_refptr<const SecurityOrigin> origin =
       SecurityOrigin::Create(KURL(NullURL(), "https://www.example.com"));
   document->SetSecurityOrigin(origin);
 
@@ -1271,7 +1271,8 @@ TEST_F(FrameFetchContextTest,
   KURL url(NullURL(), "https://www.example.com/hoge/fuga");
   ResourceRequest request(url);
   KURL document_url(NullURL(), "https://www2.example.com/foo/bar");
-  scoped_refptr<SecurityOrigin> origin = SecurityOrigin::Create(document_url);
+  scoped_refptr<const SecurityOrigin> origin =
+      SecurityOrigin::Create(document_url);
 
   document->SetSecurityOrigin(origin);
   document->SetURL(document_url);
