@@ -120,6 +120,30 @@
     },
     {
       "key": {
+        "uuid": "e8e9c644_46fb3fdc",
+        "filename": "components/data_reduction_proxy/core/browser/data_reduction_proxy_prefs.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 174,
+      "author": {
+        "id": 1127744
+      },
+      "writtenOn": "2017-11-08T23:52:13Z",
+      "side": 1,
+      "message": "Done in pref_names.cc",
+      "parentUuid": "ee4dd503_f2fa9f8e",
+      "range": {
+        "startLine": 174,
+        "startChar": 12,
+        "endLine": 174,
+        "endChar": 34
+      },
+      "revId": "7ba2971930f1aaf7c5164e10651f18e6a1197c6f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "67de7910_671d48d5",
         "filename": "components/data_reduction_proxy/core/browser/network_properties_manager.cc",
         "patchSetId": 5
@@ -179,6 +203,30 @@
       "side": 1,
       "message": "It\u0027s hard to wrap my head around this design with only a partial implementation here, but after initial construction, will the NetworkProperties be modified on both threads or just the IO thread?\n\nIf it\u0027ll only be modified on the IO thread, then could you just read and copy the pref DictionaryValue in the ctor on the UI thread, own the copy in this class on the IO thread, and post updates to the UI thread as they happen, writing the updates to the prefs on the UI thread that way?",
       "parentUuid": "e139abd4_fee0657b",
+      "range": {
+        "startLine": 12,
+        "startChar": 3,
+        "endLine": 13,
+        "endChar": 63
+      },
+      "revId": "7ba2971930f1aaf7c5164e10651f18e6a1197c6f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6e078244_c6d38545",
+        "filename": "components/data_reduction_proxy/core/browser/network_properties_manager.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 13,
+      "author": {
+        "id": 1127744
+      },
+      "writtenOn": "2017-11-08T23:52:13Z",
+      "side": 1,
+      "message": "\u003e If it\u0027ll only be modified on the IO thread, then could you just read and copy the pref DictionaryValue in the ctor on the UI thread, own the copy in this class on the IO thread, and post updates to the UI thread as they happen, writing the updates to the prefs on the UI thread that way?\n\nThat\u0027s the plan except that we do not need to maintain two different copies. But, the high level summary is correct. The consumers of this class (primarily d_r_p_config.cc) would interact with this class on the IO thread: possibly changing the properties of the current network (e.g., when warm up URL succeeds or fails), and reading the properties of the current network (at startup, or on connection change).\n\nInternally, this class will post tasks to UI thread to persist that data on the disk.",
+      "parentUuid": "9e599045_445e4ebf",
       "range": {
         "startLine": 12,
         "startChar": 3,
@@ -259,6 +307,30 @@
       "revId": "7ba2971930f1aaf7c5164e10651f18e6a1197c6f",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "fbdca200_0231a2c0",
+        "filename": "components/data_reduction_proxy/core/browser/network_properties_manager.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 66,
+      "author": {
+        "id": 1127744
+      },
+      "writtenOn": "2017-11-08T23:52:13Z",
+      "side": 1,
+      "message": "I have removed the |path_| for now in this CL.",
+      "parentUuid": "303c6b40_5b3faae7",
+      "range": {
+        "startLine": 66,
+        "startChar": 2,
+        "endLine": 66,
+        "endChar": 25
+      },
+      "revId": "7ba2971930f1aaf7c5164e10651f18e6a1197c6f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
