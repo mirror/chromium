@@ -88,6 +88,24 @@
       "revId": "22de40fb6d6990a74025863b884120cfc3582f4d",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8a14df99_f2d95760",
+        "filename": "chrome/browser/ui/app_list/search/extension_app_result.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 68,
+      "author": {
+        "id": 1189880
+      },
+      "writtenOn": "2017-11-08T21:06:00Z",
+      "side": 1,
+      "message": "Ok. I\u0027ll talk to calamity@ and omrillio@ about this and about recording the \"AppList_Search\" user action when a suggested app is clicked.",
+      "parentUuid": "eefa619e_3e295fd6",
+      "revId": "22de40fb6d6990a74025863b884120cfc3582f4d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
