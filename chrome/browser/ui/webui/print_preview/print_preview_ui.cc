@@ -5,7 +5,7 @@
 #include "chrome/browser/ui/webui/print_preview/print_preview_ui.h"
 
 #include <map>
-#include <memory>
+#include <string>
 #include <utility>
 #include <vector>
 
@@ -513,9 +513,10 @@ int PrintPreviewUI::GetAvailableDraftPageCount() const {
       id_);
 }
 
-void PrintPreviewUI::SetInitiatorTitle(
-    const base::string16& job_title) {
+void PrintPreviewUI::SetInitiatorTitleAndURL(const base::string16& job_title,
+                                             const GURL& url) {
   initiator_title_ = job_title;
+  initiator_url_ = url;
 }
 
 // static
