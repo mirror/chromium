@@ -16,6 +16,24 @@
       "revId": "ca428bd3a35faec3d7ff89eebc276241205231ad",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "fd8cdb2b_d7d63447",
+        "filename": "chrome/browser/ssl/ssl_error_navigation_throttle_unittest.cc",
+        "patchSetId": 25
+      },
+      "lineNbr": 137,
+      "author": {
+        "id": 1001500
+      },
+      "writtenOn": "2017-11-08T22:53:29Z",
+      "side": 1,
+      "message": "I\u0027m not sure what cancellation result you are interested in. The error code? If yes, then isn\u0027t that available through NavigationHandle?",
+      "parentUuid": "22fe94fd_06a24ac7",
+      "revId": "ca428bd3a35faec3d7ff89eebc276241205231ad",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
