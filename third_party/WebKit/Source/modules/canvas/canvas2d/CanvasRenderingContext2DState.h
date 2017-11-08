@@ -82,6 +82,7 @@ class CanvasRenderingContext2DState final
 
   void SetFont(const Font&, FontSelector*);
   const Font& GetFont() const;
+  void ResetFont();
   bool HasRealizedFont() const { return realized_font_; }
   void SetUnparsedFont(const String& font) { unparsed_font_ = font; }
   const String& UnparsedFont() const { return unparsed_font_; }

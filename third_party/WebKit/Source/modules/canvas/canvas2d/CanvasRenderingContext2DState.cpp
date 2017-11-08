@@ -251,6 +251,11 @@ void CanvasRenderingContext2DState::ClipPath(
     has_complex_clip_ = true;
 }
 
+void CanvasRenderingContext2DState::ResetFont() {
+  SetUnparsedFont(defaultFont);
+  realized_font_ = false;
+}
+
 void CanvasRenderingContext2DState::SetFont(const Font& font,
                                             FontSelector* selector) {
   font_ = font;
