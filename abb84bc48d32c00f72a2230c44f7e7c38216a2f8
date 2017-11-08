@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "927c2d20_4c5e86db",
+        "filename": "services/resource_coordinator/clock.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 6,
+      "author": {
+        "id": 1112850
+      },
+      "writtenOn": "2017-11-08T18:02:10Z",
+      "side": 1,
+      "message": "nit: should this file be called resource_coordinator_clock.h given the class name?",
+      "revId": "abb84bc48d32c00f72a2230c44f7e7c38216a2f8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c18917ef_56055106",
+        "filename": "services/resource_coordinator/clock.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 19,
+      "author": {
+        "id": 1112850
+      },
+      "writtenOn": "2017-11-08T18:02:10Z",
+      "side": 1,
+      "message": "Some comments needed for why we need this.",
+      "revId": "abb84bc48d32c00f72a2230c44f7e7c38216a2f8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
