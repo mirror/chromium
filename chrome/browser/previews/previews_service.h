@@ -16,6 +16,10 @@ namespace base {
 class FilePath;
 }
 
+namespace optimization_guide {
+class OptimizationGuideService;
+}
+
 namespace previews {
 class PreviewsIOData;
 class PreviewsUIService;
@@ -33,6 +37,7 @@ class PreviewsService : public KeyedService {
   // |profile_path| is the path to user data on disc.
   void Initialize(
       previews::PreviewsIOData* previews_io_data,
+      optimization_guide::OptimizationGuideService* optimization_guide_service,
       const scoped_refptr<base::SingleThreadTaskRunner>& io_task_runner,
       const base::FilePath& profile_path);
 
