@@ -144,6 +144,24 @@
     },
     {
       "key": {
+        "uuid": "e77b7734_c711a5fd",
+        "filename": "chrome/test/data/webui/extensions/extension_manager_unit_test.js",
+        "patchSetId": 18
+      },
+      "lineNbr": 69,
+      "author": {
+        "id": 1115745
+      },
+      "writtenOn": "2017-11-08T21:29:19Z",
+      "side": 1,
+      "message": "But the contract that we validate shouldn\u0027t, IMO, include \"The JS should call these methods exactly at init\".  Rather, it should validate \"the JS should respond to these signals in these ways\".\n\nLet\u0027s take a more concrete example: here, we validate that the manager calls getItemStateChangedTarget() on init.  If the manager doesn\u0027t call it for any reason, then this test fails (times out).  If we move item state observation to a new class (say, an ExtensionItemList that maintains itself and simply provides an opaque list to the manager), then this fails, even though the change is legitimate.  Additionally, if we add some other init step to the manager (let\u0027s say getFooConfiguration()), this test would *not* fail immediately, because these four methods would be called, but the expectations in the test would potentially be invalid and the test could flake.\n\nMy suggested solution to those would be to\na) have a test that checks that mutating item state results in the UI being updated.  With this, we don\u0027t need to validate that manager calls getItemStateChangedTarget(), because we don\u0027t actually care - what we care about is that the UI is updated when the backend is updated.  The fact that currently this happens through the item state changed event is an implementation detail that we shouldn\u0027t need to test or preserve, whereas the UI updating to reflect that change is a functional piece of the application that we *do* need to test and preserve.\nb) have an onReady() type promise exposed on the manager which is resolved when it has done its initialization.  I think it\u0027s far more likely that people will know to update when the onReady promise is resolved (since it\u0027s presumably right next to all the other initialization code) rather than updating a unittest\u0027s set up method - especially if that test doesn\u0027t fail (as might be the case).  This way, we make the \"wait for initialization\" step more resilient by both avoiding breaking changes when some implementation detail changes and also accounting for changes that might have otherwise slipped through.",
+      "parentUuid": "595962f0_1a79d94f",
+      "revId": "f171d53f41f7eb1e509d6471d7e189b424999664",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "f81afc73_5505b978",
         "filename": "chrome/test/data/webui/extensions/extension_manager_unit_test.js",
         "patchSetId": 18
@@ -209,6 +227,24 @@
       "side": 1,
       "message": "\u003e we have no end-to-end tests with real installed extensions that we try to manipulate.\n\nextensions_manager_tests.js still contains tests that contact chrome.developerPrivate. Same holds for other tests that extend CrExtensionsManagerTestWithMultipleExtensionTypesInstalled and CrExtensionsBrowserTestWithInstalledExtension, so we still have some end-to-end tests.\n\nHaving said that (also see my other comment about C++/JS testing separation), I\u0027d prefer having C++ unit tests like https://cs.chromium.org/search/?q\u003d_unittest.cc+file:%5Esrc/chrome/browser/ui/webui/settings/+package:%5Echromium$\u0026type\u003dcs, to test the C++ side of things, instead of relying on chrome/test/data/webui/* tests to do that.\n\nIn my ideal world there are:\n1) JS unit tests (do not talk to C++ at all)\n2) C++ unit tests (do not talk to JS at all)\n3) end-to-end tests (both sides talk to each other).\n\nEven though end-to-end tests can catch a certain class of errors not caught by the other two, they are harder to author and maintain. Examples scenarios that come to mind from Settings that are fairly hard to simulate in an end-to-end test: logged-in, multiple profiles, guest mode, detected corrupt profile, detected malware etc. Those are much easier to simulate in unit tests.\n\nIn my past experience with WebUI, developers are more likely to write unit tests than end-to-end tests, especially when writing unit tests is made fairly easy (like providing canonical ways of mocking, e.g TestBrowserProxy).",
       "parentUuid": "1cc174d4_f94ae0b6",
+      "revId": "f171d53f41f7eb1e509d6471d7e189b424999664",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "24efcfee_7498035c",
+        "filename": "chrome/test/data/webui/extensions/extension_manager_unit_test.js",
+        "patchSetId": 18
+      },
+      "lineNbr": 91,
+      "author": {
+        "id": 1115745
+      },
+      "writtenOn": "2017-11-08T21:29:19Z",
+      "side": 1,
+      "message": "Agreed on all points! :)\n\nI was just worried that we were moving away from the ideal world in which we have both unit and end-to-end tests.  I think both are important (though I wholeheartedly agree that unit tests should be the default).",
+      "parentUuid": "1020bec1_c9b48216",
       "revId": "f171d53f41f7eb1e509d6471d7e189b424999664",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": false
