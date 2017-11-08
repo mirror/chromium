@@ -34,6 +34,24 @@
       "revId": "7745e5469b6c5f1cfb23785e606cf32f181ede61",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "74721dd8_6a3b7289",
+        "filename": "base/time/time.h",
+        "patchSetId": 14
+      },
+      "lineNbr": 478,
+      "author": {
+        "id": 1174099
+      },
+      "writtenOn": "2017-11-08T22:37:43Z",
+      "side": 1,
+      "message": "\u003e Sure. Done.\n\nMissed a “git cl upload” or equivalent? Patch set 14 is still current, and it says 1970.",
+      "parentUuid": "3948e7b3_c122960d",
+      "revId": "7745e5469b6c5f1cfb23785e606cf32f181ede61",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
