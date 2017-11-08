@@ -1,0 +1,89 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "6cb45a61_c443cd08",
+        "filename": "ash/accelerators/accelerator_controller.cc",
+        "patchSetId": 13
+      },
+      "lineNbr": 265,
+      "author": {
+        "id": 1000191
+      },
+      "writtenOn": "2017-11-08T21:33:53Z",
+      "side": 1,
+      "message": "Set a DisplayMoveWindowDirection local instead and call HandleMoveWindowToDisplay(direction) once below.",
+      "revId": "aeb28297e96fa4e36a83ae58c4a2a3372c566675",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "fe3d380a_fdf2188d",
+        "filename": "ash/display/display_move_window_util.cc",
+        "patchSetId": 13
+      },
+      "lineNbr": 118,
+      "author": {
+        "id": 1000191
+      },
+      "writtenOn": "2017-11-08T21:33:53Z",
+      "side": 1,
+      "message": "Indexing an array by an enum is confusing. Maybe at some point if we have more than 2 entries we can consider another approach, but for now I would eliminate the enum and just have two explicit variables, next_movement_display and next_cycled_display. You can use a local\u0026 instead of next_display_by_type[candidate_type], e.g. display::Display\u0026 next_display \u003d candidate_space \u003e\u003d 0 ? next_movement_display : next_cycled_display;",
+      "revId": "aeb28297e96fa4e36a83ae58c4a2a3372c566675",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d0193714_c0ef16bb",
+        "filename": "ash/display/display_move_window_util.cc",
+        "patchSetId": 13
+      },
+      "lineNbr": 135,
+      "author": {
+        "id": 1000191
+      },
+      "writtenOn": "2017-11-08T21:33:53Z",
+      "side": 1,
+      "message": "nit: invert the if and continue",
+      "revId": "aeb28297e96fa4e36a83ae58c4a2a3372c566675",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "bc3f99d4_4b552124",
+        "filename": "chrome/app/chromeos_strings.grdp",
+        "patchSetId": 13
+      },
+      "lineNbr": 3383,
+      "author": {
+        "id": 1000191
+      },
+      "writtenOn": "2017-11-08T21:33:53Z",
+      "side": 1,
+      "message": "\"Warp window up\"? Maybe confer with UX or a PM, \"Window to above display\" is not particularly meaningful.",
+      "revId": "aeb28297e96fa4e36a83ae58c4a2a3372c566675",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2ef88250_5ff38a3c",
+        "filename": "chrome/browser/resources/chromeos/keyboard_overlay.css",
+        "patchSetId": 13
+      },
+      "lineNbr": 195,
+      "author": {
+        "id": 1000191
+      },
+      "writtenOn": "2017-11-08T21:33:53Z",
+      "side": 1,
+      "message": "This seems iffy for lower res displays, is it readable?",
+      "revId": "aeb28297e96fa4e36a83ae58c4a2a3372c566675",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
