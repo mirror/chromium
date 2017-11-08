@@ -1,0 +1,61 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "a1ad211d_7f83eb6b",
+        "filename": "third_party/WebKit/LayoutTests/external/wpt/mediacapture-streams/MediaStream-default-feature-policy.https.html",
+        "patchSetId": 11
+      },
+      "lineNbr": 40,
+      "author": {
+        "id": 1126249
+      },
+      "writtenOn": "2017-11-08T10:10:41Z",
+      "side": 1,
+      "message": "I believe the spec says what exception to throw, but not the contents of the error message, is this true?\nIf the test tests a Chrome-specific error message, other browsers running WPT could fail even though they\u0027re spec-compliant.",
+      "range": {
+        "startLine": 40,
+        "startChar": 24,
+        "endLine": 40,
+        "endChar": 108
+      },
+      "revId": "e7a0401e2cfb59597e581ce9841aa400160f8a45",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "37b97706_e0fbfd42",
+        "filename": "third_party/WebKit/LayoutTests/virtual/feature-policy-permissions/external/wpt/mediacapture-streams/GUM-impossible-constraint.https-expected.txt",
+        "patchSetId": 11
+      },
+      "lineNbr": 3,
+      "author": {
+        "id": 1126249
+      },
+      "writtenOn": "2017-11-08T10:10:41Z",
+      "side": 1,
+      "message": "When all tests of a file PASS I think you\u0027re supposed to remove the -expected.txt file, did git cl upload checks not say to do this?",
+      "revId": "e7a0401e2cfb59597e581ce9841aa400160f8a45",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c21bbfb5_efdfe935",
+        "filename": "third_party/WebKit/Source/modules/mediastream/UserMediaRequest.cpp",
+        "patchSetId": 11
+      },
+      "lineNbr": 530,
+      "author": {
+        "id": 1126249
+      },
+      "writtenOn": "2017-11-08T10:10:41Z",
+      "side": 1,
+      "message": "Is there any point to surfacing a this level of detail error enum to this layer if it\u0027s only converted to an exception?\n\nI\u0027m thinking: If we use a more generic DOMException enum type we could use the same enum for this failing as any other operation failing, and perhaps DCHECK here that it is one of the expected types.\n\nA finer-grained error type is useful for debugging, but we have that at user_media_processor.cc translating from one enum to the next. This new enum is only used be translated into an exception, we can skip that intermediate step if it\u0027s just surfacing an implementation detail to be discarded here.",
+      "revId": "e7a0401e2cfb59597e581ce9841aa400160f8a45",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
