@@ -72,6 +72,30 @@
     },
     {
       "key": {
+        "uuid": "001109fb_d40a0dec",
+        "filename": "components/offline_items_collection/core/offline_content_aggregator.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 244,
+      "author": {
+        "id": 1107754
+      },
+      "writtenOn": "2017-11-08T22:20:13Z",
+      "side": 1,
+      "message": "If a provider is added after observers have been notified, it should look like an \"OnItemsAdded\" call to the observers.  That\u0027s how it\u0027s expected to work, but I\u0027m ok adjusting the expectations if people want to change it!",
+      "parentUuid": "5e8fffae_e69be78e",
+      "range": {
+        "startLine": 239,
+        "startChar": 0,
+        "endLine": 244,
+        "endChar": 3
+      },
+      "revId": "61b6d9c3ecc53a6ce932ee2fbf9ae9c09263ce19",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "fd54f50d_3172d7b5",
         "filename": "components/offline_items_collection/core/offline_content_aggregator_unittest.cc",
         "patchSetId": 3
