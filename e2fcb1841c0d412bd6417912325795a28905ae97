@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "f85a2a4c_eea49acf",
+        "filename": "chrome/installer/setup/install_worker.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 10,
+      "author": {
+        "id": 1228990
+      },
+      "writtenOn": "2017-11-08T06:43:18Z",
+      "side": 1,
+      "message": "Yes, it can and it\u0027s now removed. Done.",
+      "parentUuid": "255c6159_9314f2d2",
+      "range": {
+        "startLine": 10,
+        "startChar": 21,
+        "endLine": 10,
+        "endChar": 31
+      },
+      "revId": "e2fcb1841c0d412bd6417912325795a28905ae97",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "1ca766c0_0c37d2a9",
         "filename": "chrome/installer/setup/install_worker.cc",
         "patchSetId": 9
@@ -48,6 +72,30 @@
     },
     {
       "key": {
+        "uuid": "107623a3_05369d99",
+        "filename": "chrome/installer/setup/install_worker.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 176,
+      "author": {
+        "id": 1228990
+      },
+      "writtenOn": "2017-11-08T06:43:18Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "1ca766c0_0c37d2a9",
+      "range": {
+        "startLine": 176,
+        "startChar": 32,
+        "endLine": 176,
+        "endChar": 40
+      },
+      "revId": "e2fcb1841c0d412bd6417912325795a28905ae97",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "ebadc833_9b2a6596",
         "filename": "chrome/installer/setup/install_worker.cc",
         "patchSetId": 9
@@ -59,6 +107,30 @@
       "writtenOn": "2017-11-07T11:31:11Z",
       "side": 1,
       "message": "see my comment about defensiveness below. i think it applies here as well since we\u0027re mutating state on the machine. i\u0027d *really* like to avoid the error handling, but i think the cost of it is too high. it really, really should never fail, but if it does we don\u0027t want to spew junk in the registry.",
+      "range": {
+        "startLine": 177,
+        "startChar": 4,
+        "endLine": 177,
+        "endChar": 19
+      },
+      "revId": "e2fcb1841c0d412bd6417912325795a28905ae97",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7e142db2_77fc4604",
+        "filename": "chrome/installer/setup/install_worker.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 177,
+      "author": {
+        "id": 1228990
+      },
+      "writtenOn": "2017-11-08T06:43:18Z",
+      "side": 1,
+      "message": "I agree we should check the return value here. Done.",
+      "parentUuid": "ebadc833_9b2a6596",
       "range": {
         "startLine": 177,
         "startChar": 4,
@@ -94,6 +166,30 @@
     },
     {
       "key": {
+        "uuid": "aa55a40a_78ab31a4",
+        "filename": "chrome/installer/setup/uninstall.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 643,
+      "author": {
+        "id": 1228990
+      },
+      "writtenOn": "2017-11-08T06:43:18Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "426eafb6_13f218db",
+      "range": {
+        "startLine": 643,
+        "startChar": 12,
+        "endLine": 643,
+        "endChar": 34
+      },
+      "revId": "e2fcb1841c0d412bd6417912325795a28905ae97",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "98371ffd_64e5f01a",
         "filename": "chrome/installer/setup/uninstall.cc",
         "patchSetId": 9
@@ -117,6 +213,30 @@
     },
     {
       "key": {
+        "uuid": "7cf59383_332daf11",
+        "filename": "chrome/installer/setup/uninstall.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 645,
+      "author": {
+        "id": 1228990
+      },
+      "writtenOn": "2017-11-08T06:43:18Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "98371ffd_64e5f01a",
+      "range": {
+        "startLine": 645,
+        "startChar": 4,
+        "endLine": 645,
+        "endChar": 19
+      },
+      "revId": "e2fcb1841c0d412bd6417912325795a28905ae97",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "377c5857_7c7a3f92",
         "filename": "chrome/installer/setup/uninstall.cc",
         "patchSetId": 9
@@ -128,6 +248,30 @@
       "writtenOn": "2017-11-07T11:31:11Z",
       "side": 1,
       "message": "it looks like this deletes the LocalServer32 subkey and leaves behind the clsid key. shouldn\u0027t this last \"append\" be removed so that the clsid key is deleted?",
+      "range": {
+        "startLine": 648,
+        "startChar": 51,
+        "endLine": 648,
+        "endChar": 78
+      },
+      "revId": "e2fcb1841c0d412bd6417912325795a28905ae97",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a53683cc_f298d650",
+        "filename": "chrome/installer/setup/uninstall.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 648,
+      "author": {
+        "id": 1228990
+      },
+      "writtenOn": "2017-11-08T06:43:18Z",
+      "side": 1,
+      "message": "You are right. The last \"append\" should be removed. Done.",
+      "parentUuid": "377c5857_7c7a3f92",
       "range": {
         "startLine": 648,
         "startChar": 51,
