@@ -14,6 +14,7 @@ class Origin;
 }
 
 namespace content {
+class RenderFrameHost;
 class RenderProcessHost;
 
 // Bind an interface request |interface_pipe| for |interface_name| received from
@@ -22,6 +23,12 @@ void BindWorkerInterface(const std::string& interface_name,
                          mojo::ScopedMessagePipeHandle interface_pipe,
                          RenderProcessHost* host,
                          const url::Origin& origin);
+
+// Try binding an interface request |interface_pipe| for |interface_name|
+// received from |frame|.
+bool TryBindFrameInterface(const std::string& interface_name,
+                           mojo::ScopedMessagePipeHandle* interface_pipe,
+                           RenderFrameHost* frame);
 
 }  // namespace content
 
