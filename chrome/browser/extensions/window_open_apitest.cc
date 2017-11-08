@@ -9,6 +9,8 @@
 #include "base/test/histogram_tester.h"
 #include "build/build_config.h"
 #include "chrome/browser/extensions/extension_apitest.h"
+#include "chrome/browser/extensions/window_controller.h"
+#include "chrome/browser/extensions/window_controller_list.h"
 #include "chrome/browser/profiles/profile.h"
 #include "chrome/browser/ui/browser.h"
 #include "chrome/browser/ui/browser_finder.h"
@@ -37,10 +39,21 @@
 #include "net/dns/mock_host_resolver.h"
 #include "net/test/embedded_test_server/embedded_test_server.h"
 #include "testing/gtest/include/gtest/gtest.h"
+#include "ui/base/base_window.h"
+
+#if defined(OS_CHROMEOS)
+#include "ash/public/cpp/window_properties.h"
+#include "ash/public/interfaces/window_pin_type.mojom.h"
+#include "ui/aura/window.h"
+#endif
 
 using content::OpenURLParams;
 using content::Referrer;
 using content::WebContents;
+
+namespace aura {
+class Window;
+}
 
 class WindowOpenApiTest : public ExtensionApiTest {
   void SetUpOnMainThread() override {
@@ -369,3 +382,64 @@ IN_PROC_BROWSER_TEST_F(ExtensionBrowserTest,
     EXPECT_EQ("HOWDIE!!!", result);
   }
 }
+
+#if defined(OS_CHROMEOS)
+IN_PROC_BROWSER_TEST_F(WindowOpenApiTest, OpenLockedFullscreenWindow) {
+  ASSERT_TRUE(RunExtensionTestWithArg("locked_fullscreen/with_permission",
+                                      "openLockedFullscreenWindow"))
+      << message_;
+
+  // Make sure the newly created window is "trusted pinned" (which means that
+  // it's in locked fullscreen mode).
+  extensions::WindowController* controller = nullptr;
+  for (auto* iter :
+       extensions::WindowControllerList::GetInstance()->windows()) {
+    if (iter->window()->IsActive()) {
+      controller = iter;
+      break;
+    }
+  }
+  ASSERT_TRUE(controller);
+  aura::Window* window = controller->window()->GetNativeWindow();
+  ash::mojom::WindowPinType type = window->GetProperty(ash::kWindowPinTypeKey);
+  ASSERT_EQ(ash::mojom::WindowPinType::TRUSTED_PINNED, type);
+}
+
+IN_PROC_BROWSER_TEST_F(WindowOpenApiTest, UpdateWindowToLockedFullscreen) {
+  ASSERT_TRUE(RunExtensionTestWithArg("locked_fullscreen/with_permission",
+                                      "updateWindowToLockedFullscreen"))
+      << message_;
+
+  // Make sure the current window is put into the "trusted pinned" state.
+  extensions::WindowController* controller = nullptr;
+  for (auto* iter :
+       extensions::WindowControllerList::GetInstance()->windows()) {
+    if (iter->window()->IsActive()) {
+      controller = iter;
+      break;
+    }
+  }
+  ASSERT_TRUE(controller);
+  aura::Window* window = controller->window()->GetNativeWindow();
+  ash::mojom::WindowPinType type = window->GetProperty(ash::kWindowPinTypeKey);
+  ASSERT_EQ(ash::mojom::WindowPinType::TRUSTED_PINNED, type);
+}
+
+IN_PROC_BROWSER_TEST_F(WindowOpenApiTest,
+                       OpenLockedFullscreenWindowWithoutPermission) {
+  ASSERT_TRUE(RunExtensionTestWithArg("locked_fullscreen/without_permission",
+                                      "openLockedFullscreenWindow"))
+      << message_;
+}
+#endif
+
+#if !defined(OS_CHROMEOS)
+// Creating a locked fullscreen window on non Chrome OS platforms should always
+// fail since the API is available only on Chrome OS.
+IN_PROC_BROWSER_TEST_F(WindowOpenApiTest,
+                       OpenLockedFullscreenWindowNonChromeOS) {
+  ASSERT_TRUE(RunExtensionTestIgnoreManifestWarnings(
+      "locked_fullscreen/with_permission"))
+      << message_;
+}
+#endif
