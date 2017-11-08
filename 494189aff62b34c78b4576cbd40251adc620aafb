@@ -22,6 +22,30 @@
       "revId": "494189aff62b34c78b4576cbd40251adc620aafb",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f1fdde31_cd63e2a9",
+        "filename": "chrome/browser/chromeos/smb_client/smb_file_system.h",
+        "patchSetId": 17
+      },
+      "lineNbr": 37,
+      "author": {
+        "id": 1247036
+      },
+      "writtenOn": "2017-11-08T00:41:05Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "439b3de9_a6809497",
+      "range": {
+        "startLine": 37,
+        "startChar": 7,
+        "endLine": 37,
+        "endChar": 15
+      },
+      "revId": "494189aff62b34c78b4576cbd40251adc620aafb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
