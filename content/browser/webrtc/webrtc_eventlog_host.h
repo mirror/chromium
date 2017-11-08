@@ -22,15 +22,17 @@ class CONTENT_EXPORT WebRTCEventLogHost {
   explicit WebRTCEventLogHost(int render_process_id);
   ~WebRTCEventLogHost();
 
-  // Starts an RTC event log for all current and future PeerConnections on the
-  // render process. A base file_path can be supplied, which will be extended to
-  // include several identifiers to ensure uniqueness. If a recording was
-  // already in progress, this call will return false and have no other effect.
-  bool StartWebRTCEventLog(const base::FilePath& file_path);
+  // Starts RTC event logging to local files for all current and future
+  // PeerConnections on the render process. A base file_path must be supplied,
+  // which will be extended to include several identifiers to ensure uniqueness.
+  // If a local RTC event logging was already in progress, this call will return
+  // false and have no other effect.
+  bool StartLocalRtcEventLogging(const base::FilePath& base_path);
 
-  // Stops recording an RTC event log for each PeerConnection on the render
-  // process. If no recording was in progress, this call will return false.
-  bool StopWebRTCEventLog();
+  // Stops recording of RTC event logs into local files for each PeerConnection
+  // on the render process. If local RTC event logging wasn't in progress,
+  // this call will return false.
+  bool StopLocalRtcEventLogging();
 
   // This function should be used to notify the WebRTCEventLogHost object that a
   // PeerConnection was created in the corresponding render process.
