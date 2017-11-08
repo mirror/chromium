@@ -34283,6 +34283,12 @@ http://cs/file:chrome/histograms.xml - but prefer this file for new entries.
   </summary>
 </histogram>
 
+<histogram name="Media.VAApi.VaapiWrapperError" enum="BooleanError">
+  <owner>mcasas@chromium.org</owner>
+  <owner>posciak@chromium.org</owner>
+  <summary>This boolean tracks if VaapiWrapper encountered an error.</summary>
+</histogram>
+
 <histogram name="Media.VAJDA.DecoderFailure" enum="VAJDADecoderFailure">
   <owner>kcwu@chromium.org</owner>
   <summary>
