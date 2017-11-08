@@ -39,15 +39,16 @@ cr.define('settings_people_page', function() {
         var bg = peoplePage.$$('#profile-icon').style.backgroundImage;
         assertTrue(bg.includes(browserProxy.fakeProfileInfo.iconUrl));
 
+        var iconDataUrl = 'data:image/png;base64,cached++';
         cr.webUIListenerCallback(
           'profile-info-changed',
-          {name: 'pushedName', iconUrl: 'http://pushed-url/'});
+          {name: 'pushedName', iconUrl: iconDataUrl});
 
         Polymer.dom.flush();
         assertEquals('pushedName',
                      peoplePage.$$('#profile-name').textContent.trim());
         var newBg = peoplePage.$$('#profile-icon').style.backgroundImage;
-        assertTrue(newBg.includes('http://pushed-url/'));
+        assertTrue(newBg.includes(iconDataUrl));
       });
     });
 
