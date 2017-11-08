@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "da3ca4b2_2ccaad89",
+        "filename": "chrome/browser/extensions/chrome_extensions_browser_client.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 475,
+      "author": {
+        "id": 1238209
+      },
+      "writtenOn": "2017-11-08T19:24:49Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "4a7b7c3c_dee0ba11",
+      "revId": "fc1ca4e3b562d90a75e1cdc53156ea40c6ea1c88",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "376185e1_a0fc6b84",
         "filename": "chrome/browser/extensions/chrome_extensions_browser_client.cc",
         "patchSetId": 3
@@ -36,6 +54,24 @@
     },
     {
       "key": {
+        "uuid": "50b195af_e84a8d55",
+        "filename": "chrome/browser/extensions/chrome_extensions_browser_client.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 477,
+      "author": {
+        "id": 1238209
+      },
+      "writtenOn": "2017-11-08T19:24:49Z",
+      "side": 1,
+      "message": "Just to be safe in case extension service is not available (say, in the test environment).",
+      "parentUuid": "376185e1_a0fc6b84",
+      "revId": "fc1ca4e3b562d90a75e1cdc53156ea40c6ea1c88",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "09456355_5ec3d7cc",
         "filename": "extensions/browser/extensions_browser_client.h",
         "patchSetId": 3
@@ -50,6 +86,24 @@
       "revId": "fc1ca4e3b562d90a75e1cdc53156ea40c6ea1c88",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4ee10471_d3fa8014",
+        "filename": "extensions/browser/extensions_browser_client.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 282,
+      "author": {
+        "id": 1238209
+      },
+      "writtenOn": "2017-11-08T19:24:49Z",
+      "side": 1,
+      "message": "I don\u0027t know for sure :). My understanding is that Chrome for mobile devices don\u0027t support extensions. I\u0027ll change the comment to avoid this assumption about extension system.",
+      "parentUuid": "09456355_5ec3d7cc",
+      "revId": "fc1ca4e3b562d90a75e1cdc53156ea40c6ea1c88",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
