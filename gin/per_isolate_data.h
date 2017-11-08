@@ -14,6 +14,7 @@
 #include "gin/public/isolate_holder.h"
 #include "gin/public/v8_idle_task_runner.h"
 #include "gin/public/wrapper_info.h"
+#include "gin/v8_taskrunner.h"
 #include "v8/include/v8.h"
 
 namespace base {
@@ -73,12 +74,7 @@ class GIN_EXPORT PerIsolateData {
 
   v8::Isolate* isolate() { return isolate_; }
   v8::ArrayBuffer::Allocator* allocator() { return allocator_; }
-  base::SingleThreadTaskRunner* task_runner() { return task_runner_.get(); }
-  V8IdleTaskRunner* idle_task_runner() {
-    return idle_task_runner_.get();
-  }
-
-  IsolateHolder::AccessMode access_mode() const { return access_mode_; }
+  std::shared_ptr<V8ForegroundTaskRunner> task_runner() { return task_runner_; }
 
  private:
   typedef std::map<
@@ -94,13 +90,11 @@ class GIN_EXPORT PerIsolateData {
   // owned by the IsolateHolder, which also owns the PerIsolateData.
   v8::Isolate* isolate_;
   v8::ArrayBuffer::Allocator* allocator_;
-  IsolateHolder::AccessMode access_mode_;
   ObjectTemplateMap object_templates_;
   FunctionTemplateMap function_templates_;
   IndexedPropertyInterceptorMap indexed_interceptors_;
   NamedPropertyInterceptorMap named_interceptors_;
-  scoped_refptr<base::SingleThreadTaskRunner> task_runner_;
-  std::unique_ptr<V8IdleTaskRunner> idle_task_runner_;
+  std::shared_ptr<V8ForegroundTaskRunner> task_runner_;
 
   DISALLOW_COPY_AND_ASSIGN(PerIsolateData);
 };
