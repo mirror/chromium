@@ -16,6 +16,24 @@
       "revId": "8b155ee50d1d1e2ca1b6b91a8d36e9723ef19e20",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a942faf1_11fb220d",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 3
+      },
+      "lineNbr": 7,
+      "author": {
+        "id": 1127641
+      },
+      "writtenOn": "2017-11-08T00:07:50Z",
+      "side": 1,
+      "message": "From the style guide[1], \"Prefer to capitalize acronyms as single words (i.e. StartRpc(), not StartRPC()).\"\n\nIf you think this should be UI I can change it, but I prefer Ui as it feels more consistent.\n\n1: https://google.github.io/styleguide/cppguide.html#Function_Names",
+      "parentUuid": "e0cdb9b9_b1a282ad",
+      "revId": "8b155ee50d1d1e2ca1b6b91a8d36e9723ef19e20",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
