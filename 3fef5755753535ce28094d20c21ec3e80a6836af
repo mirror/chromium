@@ -42,6 +42,30 @@
     },
     {
       "key": {
+        "uuid": "ad04e5e7_4e144fad",
+        "filename": "chrome/browser/history/history_browsertest.cc",
+        "patchSetId": 11
+      },
+      "lineNbr": 507,
+      "author": {
+        "id": 1001216
+      },
+      "writtenOn": "2017-11-08T19:50:19Z",
+      "side": 1,
+      "message": "Heh, good point.  Fixed both this and the other calls in this file.",
+      "parentUuid": "bb8dfe77_97433386",
+      "range": {
+        "startLine": 507,
+        "startChar": 66,
+        "endLine": 507,
+        "endChar": 75
+      },
+      "revId": "3fef5755753535ce28094d20c21ec3e80a6836af",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "84edbcbe_52d820fd",
         "filename": "chrome/browser/translate/translate_browsertest.cc",
         "patchSetId": 11
@@ -77,6 +101,24 @@
     },
     {
       "key": {
+        "uuid": "5eba7465_214afe6f",
+        "filename": "chrome/browser/translate/translate_browsertest.cc",
+        "patchSetId": 11
+      },
+      "lineNbr": 294,
+      "author": {
+        "id": 1001216
+      },
+      "writtenOn": "2017-11-08T19:50:19Z",
+      "side": 1,
+      "message": "Thanks-- I filed https://crbug.com/781879 to track this.  Given the discussion there (and that the bug already exists on Android), I\u0027ll plan to proceed with this test disabled for now.",
+      "parentUuid": "29df7817_f4d87d9b",
+      "revId": "3fef5755753535ce28094d20c21ec3e80a6836af",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "a17e246d_707498fa",
         "filename": "content/browser/frame_host/navigation_controller_impl_browsertest.cc",
         "patchSetId": 11
@@ -88,6 +130,30 @@
       "writtenOn": "2017-11-03T00:41:32Z",
       "side": 1,
       "message": "Just curious - this isn\u0027t simulating a location.replace or client redirect, so why does it still end up changing the navigation type?  Because navigating to the same URL sets ReplacesCurrentHistoryItem(), so that also matches the new condition for setting did_create_new_entry?",
+      "range": {
+        "startLine": 1009,
+        "startChar": 4,
+        "endLine": 1009,
+        "endChar": 40
+      },
+      "revId": "3fef5755753535ce28094d20c21ec3e80a6836af",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "daee535c_ca2ac641",
+        "filename": "content/browser/frame_host/navigation_controller_impl_browsertest.cc",
+        "patchSetId": 11
+      },
+      "lineNbr": 1009,
+      "author": {
+        "id": 1001216
+      },
+      "writtenOn": "2017-11-08T19:50:19Z",
+      "side": 1,
+      "message": "\u003e Just curious - this isn\u0027t simulating a location.replace or client redirect, so why does it still end up changing the navigation type?  Because navigating to the same URL sets ReplacesCurrentHistoryItem(), so that also matches the new condition for setting did_create_new_entry?\n\nRight-- document_loader-\u003eReplacesCurrentHistoryItem() is true in this case.  I think it\u0027s probably ok to classify it as new with replacement.",
+      "parentUuid": "a17e246d_707498fa",
       "range": {
         "startLine": 1009,
         "startChar": 4,
@@ -192,6 +258,30 @@
     },
     {
       "key": {
+        "uuid": "b1133408_f7fedc06",
+        "filename": "content/browser/frame_host/navigation_controller_impl_unittest.cc",
+        "patchSetId": 11
+      },
+      "lineNbr": 2746,
+      "author": {
+        "id": 1001216
+      },
+      "writtenOn": "2017-11-08T19:50:19Z",
+      "side": 1,
+      "message": "\u003e In the SendDidCommitProvisionalLoad params.did_create_new_entry assignment, the new case explicitly skips the was_within_same_document case (line 5145).  Since location.replace should be an inert commit, shouldn\u0027t did_create_new_entry be false here and in ClientRedirectAfterInPageNavigation on line 2796 below, to be consistent with what SendDidCommitProvisionalLoad would assign in this case?\n\nYes, good point!  I\u0027d missed the same-document aspect of this.  (I was under the impression location.replace would always be cross-document.)  I\u0027ve added a browser test for this and confirmed it, so I\u0027ve put this value back.\n\nSame in ClientRedirectAfterInPageNavigation below.",
+      "parentUuid": "55a5f5f4_7e0fc740",
+      "range": {
+        "startLine": 2746,
+        "startChar": 0,
+        "endLine": 2746,
+        "endChar": 37
+      },
+      "revId": "3fef5755753535ce28094d20c21ec3e80a6836af",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "5de1f5aa_96360cac",
         "filename": "content/renderer/render_frame_impl.cc",
         "patchSetId": 11
@@ -215,6 +305,30 @@
     },
     {
       "key": {
+        "uuid": "af6f80af_f36eba1f",
+        "filename": "content/renderer/render_frame_impl.cc",
+        "patchSetId": 11
+      },
+      "lineNbr": 5136,
+      "author": {
+        "id": 1001216
+      },
+      "writtenOn": "2017-11-08T19:50:19Z",
+      "side": 1,
+      "message": "\u003e Is it ok to not check that the commit is inert below?  I suppose this shouldn\u0027t ever affect the other commit types (kWebBackForwardCommit, kWebInitialCommitInChildFrame)?\n\nIt should be equivalent since back/forward and the initial child commit shouldn\u0027t set should_replace_current_entry, but you\u0027re right that it would be clearer if we added that condition as well.  Done.",
+      "parentUuid": "5de1f5aa_96360cac",
+      "range": {
+        "startLine": 5136,
+        "startChar": 16,
+        "endLine": 5136,
+        "endChar": 23
+      },
+      "revId": "3fef5755753535ce28094d20c21ec3e80a6836af",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "e7b6a7de_be817d0e",
         "filename": "content/renderer/render_frame_impl.cc",
         "patchSetId": 11
@@ -226,6 +340,30 @@
       "writtenOn": "2017-11-03T00:41:32Z",
       "side": 1,
       "message": "So this means that this won\u0027t apply to a location.replace(\"#foo\"), but we don\u0027t care about that case as it doesn\u0027t replace all subframes, right?",
+      "range": {
+        "startLine": 5145,
+        "startChar": 7,
+        "endLine": 5145,
+        "endChar": 40
+      },
+      "revId": "3fef5755753535ce28094d20c21ec3e80a6836af",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c2b3ec93_4913851c",
+        "filename": "content/renderer/render_frame_impl.cc",
+        "patchSetId": 11
+      },
+      "lineNbr": 5145,
+      "author": {
+        "id": 1001216
+      },
+      "writtenOn": "2017-11-08T19:50:19Z",
+      "side": 1,
+      "message": "\u003e So this means that this won\u0027t apply to a location.replace(\"#foo\"), but we don\u0027t care about that case as it doesn\u0027t replace all subframes, right?\n\nHa, I didn\u0027t think that would be same-document, but it is!  Still, we do the right thing-- we want it to be considered EXISTING_PAGE since we\u0027re on the same document (preserving SiteInstance, subframes, etc).  I\u0027ve added a test for it.",
+      "parentUuid": "e7b6a7de_be817d0e",
       "range": {
         "startLine": 5145,
         "startChar": 7,
