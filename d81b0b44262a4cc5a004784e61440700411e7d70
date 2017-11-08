@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "798d27c3_37911431",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 1
+      },
+      "lineNbr": 9,
+      "author": {
+        "id": 1176519
+      },
+      "writtenOn": "2017-11-08T14:25:54Z",
+      "side": 1,
+      "message": "this is redundant with the first line. Can you instead explain why this is done?",
+      "revId": "d81b0b44262a4cc5a004784e61440700411e7d70",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
