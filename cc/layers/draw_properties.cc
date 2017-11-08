@@ -7,7 +7,8 @@
 namespace cc {
 
 DrawProperties::DrawProperties()
-    : opacity(0.f),
+    : color_scales(1.f, 1.f, 1.f),
+      opacity(0.f),
       screen_space_transform_is_animating(false),
       is_clipped(false) {}
 

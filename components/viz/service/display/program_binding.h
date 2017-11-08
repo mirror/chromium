@@ -77,17 +77,19 @@ class VIZ_SERVICE_EXPORT ProgramKey {
   ~ProgramKey();
 
   static ProgramKey DebugBorder();
-  static ProgramKey SolidColor(AAMode aa_mode);
+  static ProgramKey SolidColor(AAMode aa_mode, bool has_color_scales);
   static ProgramKey Tile(TexCoordPrecision precision,
                          SamplerType sampler,
                          AAMode aa_mode,
                          SwizzleMode swizzle_mode,
-                         bool is_opaque);
+                         bool is_opaque,
+                         bool has_color_scales);
   static ProgramKey Texture(TexCoordPrecision precision,
                             SamplerType sampler,
                             PremultipliedAlphaMode premultiplied_alpha,
                             bool has_background_color,
-                            bool has_tex_clamp_rect);
+                            bool has_tex_clamp_rect,
+                            bool has_color_scales);
 
   // TODO(ccameron): Merge |mask_for_background| into MaskMode.
   static ProgramKey RenderPass(TexCoordPrecision precision,
@@ -96,12 +98,15 @@ class VIZ_SERVICE_EXPORT ProgramKey {
                                AAMode aa_mode,
                                MaskMode mask_mode,
                                bool mask_for_background,
-                               bool has_color_matrix);
-  static ProgramKey VideoStream(TexCoordPrecision precision);
+                               bool has_color_matrix,
+                               bool has_color_scales);
+  static ProgramKey VideoStream(TexCoordPrecision precision,
+                                bool has_color_scales);
   static ProgramKey YUVVideo(TexCoordPrecision precision,
                              SamplerType sampler,
                              YUVAlphaTextureMode yuv_alpha_texture_mode,
-                             UVTextureMode uv_texture_mode);
+                             UVTextureMode uv_texture_mode,
+                             bool has_color_scales);
 
   bool operator==(const ProgramKey& other) const;
   bool operator!=(const ProgramKey& other) const;
@@ -134,6 +139,8 @@ class VIZ_SERVICE_EXPORT ProgramKey {
   const gfx::ColorTransform* color_transform_ = nullptr;
 
   bool has_tex_clamp_rect_ = false;
+
+  bool has_color_scales_ = false;
 };
 
 struct ProgramKeyHash {
@@ -153,7 +160,8 @@ struct ProgramKeyHash {
            (static_cast<size_t>(key.yuv_alpha_texture_mode_) << 24) ^
            (static_cast<size_t>(key.uv_texture_mode_) << 25) ^
            (static_cast<size_t>(key.color_conversion_mode_) << 26) ^
-           (static_cast<size_t>(key.has_tex_clamp_rect_) << 28);
+           (static_cast<size_t>(key.has_tex_clamp_rect_) << 28) ^
+           (static_cast<size_t>(key.has_color_scales_) << 29);
   }
 };
 
@@ -174,6 +182,7 @@ class VIZ_SERVICE_EXPORT Program : public ProgramBindingBase {
     fragment_shader_.mask_for_background_ = key.mask_for_background_;
     fragment_shader_.color_conversion_mode_ = key.color_conversion_mode_;
     fragment_shader_.color_transform_ = key.color_transform_;
+    fragment_shader_.has_color_scales_ = key.has_color_scales_;
 
     switch (key.type_) {
       case PROGRAM_TYPE_DEBUG_BORDER:
@@ -295,6 +304,9 @@ class VIZ_SERVICE_EXPORT Program : public ProgramBindingBase {
   }
   int uv_clamp_rect_location() const {
     return fragment_shader_.uv_clamp_rect_location_;
+  }
+  int color_scales_location() const {
+    return fragment_shader_.color_scales_location_;
   }
 
  private:

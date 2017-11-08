@@ -22,6 +22,7 @@ class Size;
 class SizeF;
 class Vector2d;
 class Vector2dF;
+class Vector3dF;
 }  // namespace gfx
 
 namespace IPC {
@@ -89,6 +90,16 @@ struct GFX_IPC_GEOMETRY_EXPORT ParamTraits<gfx::Vector2d> {
 template <>
 struct GFX_IPC_GEOMETRY_EXPORT ParamTraits<gfx::Vector2dF> {
   typedef gfx::Vector2dF param_type;
+  static void Write(base::Pickle* m, const param_type& p);
+  static bool Read(const base::Pickle* m,
+                   base::PickleIterator* iter,
+                   param_type* r);
+  static void Log(const param_type& p, std::string* l);
+};
+
+template <>
+struct GFX_IPC_GEOMETRY_EXPORT ParamTraits<gfx::Vector3dF> {
+  typedef gfx::Vector3dF param_type;
   static void Write(base::Pickle* m, const param_type& p);
   static bool Read(const base::Pickle* m,
                    base::PickleIterator* iter,
