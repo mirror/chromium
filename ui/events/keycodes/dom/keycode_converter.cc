@@ -82,8 +82,11 @@ int KeycodeConverter::InvalidNativeKeycode() {
 DomCode KeycodeConverter::NativeKeycodeToDomCode(int native_keycode) {
   for (size_t i = 0; i < kKeycodeMapEntries; ++i) {
     if (usb_keycode_map[i].native_keycode == native_keycode) {
-      if (usb_keycode_map[i].code != NULL)
+      if (usb_keycode_map[i].code != NULL) {
+        LOG(ERROR) << "NativeToDom: native = " << std::hex << native_keycode
+                   << ", dom = " << std::hex << usb_keycode_map[i].usb_keycode;
         return static_cast<DomCode>(usb_keycode_map[i].usb_keycode);
+      }
       break;
     }
   }

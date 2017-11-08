@@ -3197,6 +3197,7 @@ class WaylandKeyboardDelegate
 #if defined(OS_CHROMEOS)
   // Send the named keyboard layout to the client.
   void SendNamedLayout(const std::string& layout_name) {
+    LOG(ERROR) << "SendNamedLayout: name = " << layout_name;
     std::string layout_id, layout_variant;
     ui::XkbKeyboardLayoutEngine::ParseLayoutName(layout_name, &layout_id,
                                                  &layout_variant);
@@ -3211,12 +3212,16 @@ class WaylandKeyboardDelegate
 
   // Send the keyboard layout named by XKB rules to the client.
   void SendLayout(const xkb_rule_names* names) {
+    LOG(ERROR) << "SendLayout: model=\"" << names->model << "\", layout:\""
+               << names->layout << "\", variant:\"" << names->variant;
+
     xkb_keymap_.reset(xkb_keymap_new_from_names(xkb_context_.get(), names,
                                                 XKB_KEYMAP_COMPILE_NO_FLAGS));
     xkb_state_.reset(xkb_state_new(xkb_keymap_.get()));
     std::unique_ptr<char, base::FreeDeleter> keymap_string(
         xkb_keymap_get_as_string(xkb_keymap_.get(), XKB_KEYMAP_FORMAT_TEXT_V1));
     DCHECK(keymap_string.get());
+    LOG(ERROR) << "SendLayout: actual = \"" << keymap_string.get() << "\"";
     size_t keymap_size = strlen(keymap_string.get()) + 1;
     base::SharedMemory shared_keymap;
     bool rv = shared_keymap.CreateAndMapAnonymous(keymap_size);

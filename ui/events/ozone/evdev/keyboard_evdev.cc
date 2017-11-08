@@ -76,6 +76,9 @@ void KeyboardEvdev::OnKeyChange(unsigned int key,
                                 bool suppress_auto_repeat,
                                 base::TimeTicks timestamp,
                                 int device_id) {
+  LOG(ERROR) << "Raw OnKeyChange: key = " << key << ", down = " << down
+             << ", timestamp = " << timestamp;
+
   if (key > KEY_MAX)
     return;
 
@@ -242,6 +245,11 @@ void KeyboardEvdev::DispatchKey(unsigned int key,
   KeyEvent event(down ? ET_KEY_PRESSED : ET_KEY_RELEASED, key_code, dom_code,
                  modifiers_->GetModifierFlags(), dom_key, timestamp);
   event.set_source_device_id(device_id);
+
+  LOG(ERROR) << "KeyboardEvDev: DispatchKey: dom_code = "
+             << event.GetCodeString()
+             << ", code_string = " << event.GetCodeString();
+
   callback_.Run(&event);
 }
 
