@@ -22,6 +22,30 @@
       "revId": "50870cbbe8763f2601fd898147aafa3ef3338c51",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0e808f14_d0387416",
+        "filename": "components/signin/core/browser/account_reconcilor.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 112,
+      "author": {
+        "id": 1001438
+      },
+      "writtenOn": "2017-11-08T15:08:46Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "18065cc3_b0006db5",
+      "range": {
+        "startLine": 112,
+        "startChar": 32,
+        "endLine": 112,
+        "endChar": 60
+      },
+      "revId": "50870cbbe8763f2601fd898147aafa3ef3338c51",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
