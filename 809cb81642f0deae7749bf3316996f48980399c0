@@ -1,0 +1,73 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "be6649a5_591f86eb",
+        "filename": "chrome/browser/ui/cocoa/constrained_window/constrained_window_sheet_info.mm",
+        "patchSetId": 1
+      },
+      "lineNbr": 58,
+      "author": {
+        "id": 1144624
+      },
+      "writtenOn": "2017-11-08T19:49:33Z",
+      "side": 1,
+      "message": "According to the Bug: this repros on 10.12 and 10.13. What about 10.9-10.11 ?",
+      "range": {
+        "startLine": 58,
+        "startChar": 59,
+        "endLine": 58,
+        "endChar": 66
+      },
+      "revId": "809cb81642f0deae7749bf3316996f48980399c0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a3d877ed_e0ed8e01",
+        "filename": "chrome/browser/ui/cocoa/constrained_window/constrained_window_sheet_info.mm",
+        "patchSetId": 1
+      },
+      "lineNbr": 80,
+      "author": {
+        "id": 1144624
+      },
+      "writtenOn": "2017-11-08T19:49:33Z",
+      "side": 1,
+      "message": "This file doesn\u0027t use dot notation generally and this seems more verbose than just using square brackets. Generally prefer to be consistent with the local style of the file.",
+      "range": {
+        "startLine": 80,
+        "startChar": 24,
+        "endLine": 80,
+        "endChar": 30
+      },
+      "revId": "809cb81642f0deae7749bf3316996f48980399c0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "21208c8c_4a45dcfe",
+        "filename": "chrome/browser/ui/cocoa/constrained_window/constrained_window_sheet_info.mm",
+        "patchSetId": 1
+      },
+      "lineNbr": 84,
+      "author": {
+        "id": 1144624
+      },
+      "writtenOn": "2017-11-08T19:49:33Z",
+      "side": 1,
+      "message": "This is already ordered now. Is front right? Or should this just make key?",
+      "range": {
+        "startLine": 84,
+        "startChar": 25,
+        "endLine": 84,
+        "endChar": 35
+      },
+      "revId": "809cb81642f0deae7749bf3316996f48980399c0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
