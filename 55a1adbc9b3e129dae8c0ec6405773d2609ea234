@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "95081263_0c8c381c",
+        "filename": "ios/chrome/browser/metrics/tab_usage_recorder_egtest.mm",
+        "patchSetId": 4
+      },
+      "lineNbr": 458,
+      "author": {
+        "id": 1144530
+      },
+      "writtenOn": "2017-11-08T16:25:59Z",
+      "side": 1,
+      "message": "add comment (letting page load start).",
+      "range": {
+        "startLine": 458,
+        "startChar": 19,
+        "endLine": 458,
+        "endChar": 42
+      },
+      "revId": "55a1adbc9b3e129dae8c0ec6405773d2609ea234",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
