@@ -37,6 +37,24 @@
     },
     {
       "key": {
+        "uuid": "198caee8_25d489e9",
+        "filename": "docs/testing/json_test_results_format.md",
+        "patchSetId": 6
+      },
+      "lineNbr": 47,
+      "author": {
+        "id": 1128435
+      },
+      "writtenOn": "2017-11-08T00:24:45Z",
+      "side": 1,
+      "message": "The rationale for  \"name\": \"screenshot\", \"location\": \"/screenshots/page.png\" is it make it easy to add more fields in the future.",
+      "parentUuid": "6e504475_8deab1c3",
+      "revId": "d66752fd5e1081fc5e07385c46732763342bf11f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "a83ba1fa_ed36459c",
         "filename": "docs/testing/json_test_results_format.md",
         "patchSetId": 6
