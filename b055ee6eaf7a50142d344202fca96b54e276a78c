@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "f3a0bb90_326ce2c8",
+        "filename": "chrome/browser/thumbnails/thumbnail_tab_helper.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 94,
+      "author": {
+        "id": 1176649
+      },
+      "writtenOn": "2017-11-08T13:12:13Z",
+      "side": 1,
+      "message": "+1\n\nYou also have RenderViewCreated(), but it seems like visibility changes don\u0027t have the counterpart (could be easy to add, but choose your battles).",
+      "range": {
+        "startLine": 94,
+        "startChar": 20,
+        "endLine": 94,
+        "endChar": 0
+      },
+      "revId": "b055ee6eaf7a50142d344202fca96b54e276a78c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "40b5e7e5_2ddf9556",
+        "filename": "chrome/browser/thumbnails/thumbnail_tab_helper.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 119,
+      "author": {
+        "id": 1176649
+      },
+      "writtenOn": "2017-11-08T13:12:13Z",
+      "side": 1,
+      "message": "Is the second needed or even meaningful?",
+      "range": {
+        "startLine": 119,
+        "startChar": 46,
+        "endLine": 119,
+        "endChar": 0
+      },
+      "revId": "b055ee6eaf7a50142d344202fca96b54e276a78c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
