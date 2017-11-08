@@ -37,6 +37,24 @@
     },
     {
       "key": {
+        "uuid": "aeac35ef_efe50560",
+        "filename": "components/viz/service/frame_sinks/video_detector.cc",
+        "patchSetId": 38
+      },
+      "lineNbr": 91,
+      "author": {
+        "id": 1146978
+      },
+      "writtenOn": "2017-11-08T15:44:38Z",
+      "side": 1,
+      "message": "Maybe in the long term (eg. that change might never happen). For now only SurfaceManager is required, right?",
+      "parentUuid": "fc5df3dd_72525a7a",
+      "revId": "4e644e0fb5e6bf15b32a5d04621f770c345a6b93",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "e5d6949a_65c75ba6",
         "filename": "components/viz/service/frame_sinks/video_detector.cc",
         "patchSetId": 38
@@ -48,6 +66,41 @@
       "writtenOn": "2017-11-07T21:55:55Z",
       "side": 1,
       "message": "kylechar, maybe we can also avoid doing this unless we have an observer? What do you think? Is it worth it?",
+      "revId": "4e644e0fb5e6bf15b32a5d04621f770c345a6b93",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ce78d9cc_acb08f47",
+        "filename": "components/viz/service/frame_sinks/video_detector.cc",
+        "patchSetId": 38
+      },
+      "lineNbr": 96,
+      "author": {
+        "id": 1146978
+      },
+      "writtenOn": "2017-11-08T15:44:38Z",
+      "side": 1,
+      "message": "The \"do we have any observers\" check is just a proxy check for \"are we running Chrome OS\", right? Like, it will always be true on Chrome SO (modulo some tests) and always false elsewhere? Not creating VideoDetector on other operating systems would remove the need to check if we have observers and let you hook into RegisterFrameSinkId / InvalidateFrameSinkId to create ClientInfo (which would remove the need to lookup IsFrameSinkIdValid).",
+      "parentUuid": "e5d6949a_65c75ba6",
+      "revId": "4e644e0fb5e6bf15b32a5d04621f770c345a6b93",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f1b1e653_40416c4c",
+        "filename": "components/viz/service/frame_sinks/video_detector.cc",
+        "patchSetId": 38
+      },
+      "lineNbr": 99,
+      "author": {
+        "id": 1146978
+      },
+      "writtenOn": "2017-11-08T15:44:38Z",
+      "side": 1,
+      "message": "I just realize you\u0027re not removing this as a SurfaceObserver.",
       "revId": "4e644e0fb5e6bf15b32a5d04621f770c345a6b93",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -101,6 +154,24 @@
       "side": 1,
       "message": "Another idea. Surface has a weak pointer to CFSS. Maybe I can check if that\u0027s not null instead of looking up whether the FrameSinkId is valid? WDYT?",
       "parentUuid": "dd4b065c_85ce50d7",
+      "revId": "4e644e0fb5e6bf15b32a5d04621f770c345a6b93",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "41eaacfc_8edc4952",
+        "filename": "components/viz/service/frame_sinks/video_detector.cc",
+        "patchSetId": 38
+      },
+      "lineNbr": 135,
+      "author": {
+        "id": 1146978
+      },
+      "writtenOn": "2017-11-08T15:44:38Z",
+      "side": 1,
+      "message": "CFSS destruction isn\u0027t necessarily aligned in FrameSinkId validity today. Passing in a Surface* is interesting, not sure if there are any problems with it but maybe...",
+      "parentUuid": "83ba8c85_83269922",
       "revId": "4e644e0fb5e6bf15b32a5d04621f770c345a6b93",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
