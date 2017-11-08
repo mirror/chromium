@@ -15,6 +15,9 @@
         {"exists": "forbidden"},
     "HKEY_LOCAL_MACHINE\\Software\\Classes\\$CHROME_SHORT_NAME": {
       "exists": "forbidden"
+    },
+    "HKEY_LOCAL_MACHINE\\$CHROME_TOAST_ACTIVATOR_KEY": {
+      "exists": "forbidden"
     }
   }
 }

@@ -14,6 +14,9 @@
     },
     "HKEY_CURRENT_USER\\Software\\Classes\\$CHROME_SHORT_NAME_BETA$USER_SPECIFIC_REGISTRY_SUFFIX": {
       "exists": "forbidden"
+    },
+    "HKEY_CURRENT_USER\\$CHROME_TOAST_ACTIVATOR_KEY_BETA": {
+      "exists": "forbidden"
     }
   }
 }
