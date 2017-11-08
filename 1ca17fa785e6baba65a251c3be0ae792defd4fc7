@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "4df36ae4_c08bf359",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/ChromeTabbedActivity.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 973,
+      "author": {
+        "id": 1122966
+      },
+      "writtenOn": "2017-11-08T22:39:43Z",
+      "side": 1,
+      "message": "optional nit: We should consider returning early (maybe with the bottomSheet.isSheetOpen() check) to help prevent regressions in the future.",
+      "revId": "1ca17fa785e6baba65a251c3be0ae792defd4fc7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
