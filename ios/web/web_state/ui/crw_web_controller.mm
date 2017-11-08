@@ -1711,11 +1711,17 @@ registerLoadRequestForURL:(const GURL&)requestURL
 
 - (void)loadNativeViewWithSuccess:(BOOL)loadSuccess
                 navigationContext:(web::NavigationContextImpl*)context {
-  _webStateImpl->OnNavigationStarted(context);
+  if (loadSuccess) {
+    // No DidStartNavigation callback for displaying error page.
+    _webStateImpl->OnNavigationStarted(context);
+  }
   const GURL currentURL([self currentURL]);
   [self didStartLoadingURL:currentURL];
   _loadPhase = web::PAGE_LOADED;
-  _webStateImpl->OnNavigationFinished(context);
+  if (loadSuccess) {
+    // No DidFinishNavigation callback for displaying error page.
+    _webStateImpl->OnNavigationFinished(context);
+  }
 
   // Perform post-load-finished updates.
   [self didFinishWithURL:currentURL loadSuccess:loadSuccess];
@@ -2969,6 +2975,10 @@ registerLoadRequestForURL:(const GURL&)requestURL
       [_navigationStates contextForNavigation:navigation];
   navigationContext->SetError(error);
 
+  bool isProvisionallyFailed =
+      [_navigationStates stateForNavigation:navigation] ==
+      web::WKNavigationState::PROVISIONALY_FAILED;
+
   // Handles Frame Load Interrupted errors from WebView.
   if ([error.domain isEqual:base::SysUTF8ToNSString(web::kWebKitErrorDomain)] &&
       error.code == web::kWebKitErrorFrameLoadInterruptedByPolicyChange) {
@@ -3012,6 +3022,9 @@ registerLoadRequestForURL:(const GURL&)requestURL
     [self loadCompleteWithSuccess:NO forNavigation:navigation];
     [self loadErrorInNativeView:wrapperError
               navigationContext:navigationContext];
+    if (isProvisionallyFailed) {
+      _webStateImpl->OnNavigationFinished(navigationContext);
+    }
     return;
   }
 
@@ -3024,6 +3037,9 @@ registerLoadRequestForURL:(const GURL&)requestURL
 
   [self loadCompleteWithSuccess:NO forNavigation:navigation];
   [self loadErrorInNativeView:error navigationContext:navigationContext];
+  if (isProvisionallyFailed) {
+    _webStateImpl->OnNavigationFinished(navigationContext);
+  }
 }
 
 - (void)handleCancelledError:(NSError*)error {
@@ -4524,10 +4540,11 @@ registerLoadRequestForURL:(const GURL&)requestURL
   } else {
     error = WKWebViewErrorWithSource(error, PROVISIONAL_LOAD);
 
-    if (web::IsWKWebViewSSLCertError(error))
+    if (web::IsWKWebViewSSLCertError(error)) {
       [self handleSSLCertError:error forNavigation:navigation];
-    else
+    } else {
       [self handleLoadError:error inMainFrame:YES forNavigation:navigation];
+    }
   }
 
   // This must be reset at the end, since code above may need information about
