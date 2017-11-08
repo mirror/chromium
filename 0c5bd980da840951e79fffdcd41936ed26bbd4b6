@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "58096f51_e6a14fe0",
+        "filename": "third_party/WebKit/Source/core/page/FocusController.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 1075,
+      "author": {
+        "id": 1121234
+      },
+      "writtenOn": "2017-11-08T17:06:10Z",
+      "side": 1,
+      "message": "@kochi - I thought with static prefix, variable is constructed only once and will be reusing every function call. But with const prefix alone, it will recreate the variable every time whenever function is getting called. Please correct me if I am wrong.",
+      "parentUuid": "acd33fc6_b998a0cd",
+      "revId": "0c5bd980da840951e79fffdcd41936ed26bbd4b6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "62a73799_1944b174",
         "filename": "third_party/WebKit/Source/core/page/FocusController.cpp",
         "patchSetId": 1
