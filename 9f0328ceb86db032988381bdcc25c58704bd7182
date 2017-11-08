@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "67756da2_09dba378",
+        "filename": "media/blink/video_frame_compositor.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 137,
+      "author": {
+        "id": 1150472
+      },
+      "writtenOn": "2017-11-08T00:53:32Z",
+      "side": 1,
+      "message": "I don\u0027t have a strong argument/preference for/against. I prefer calling the update from WMPI because, when looking at GetCurrentFrameFromCompositor, it is clear that we update after getting the frame. It is also easier to defend the thread safety of the use of base::Unretained from inside WMPI (because its usage is very context specific).",
+      "parentUuid": "9ea35b6e_86121db1",
+      "revId": "9f0328ceb86db032988381bdcc25c58704bd7182",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "9dd3fe4e_a137e08f",
         "filename": "media/blink/video_frame_compositor.h",
         "patchSetId": 8
@@ -39,6 +57,30 @@
       "revId": "9f0328ceb86db032988381bdcc25c58704bd7182",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "70477e51_fe685ee7",
+        "filename": "media/blink/video_frame_compositor.h",
+        "patchSetId": 8
+      },
+      "lineNbr": 199,
+      "author": {
+        "id": 1150472
+      },
+      "writtenOn": "2017-11-08T00:53:32Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "9dd3fe4e_a137e08f",
+      "range": {
+        "startLine": 198,
+        "startChar": 52,
+        "endLine": 199,
+        "endChar": 36
+      },
+      "revId": "9f0328ceb86db032988381bdcc25c58704bd7182",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
