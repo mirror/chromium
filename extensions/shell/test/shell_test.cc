@@ -12,6 +12,7 @@
 #include "base/path_service.h"
 #include "base/run_loop.h"
 #include "build/build_config.h"
+#include "content/public/browser/render_process_host.h"
 #include "content/public/common/content_switches.h"
 #include "extensions/browser/extension_system.h"
 #include "extensions/shell/browser/desktop_controller.h"
@@ -58,6 +59,12 @@ void AppShellTest::PreRunTestOnMainThread() {
 }
 
 void AppShellTest::PostRunTestOnMainThread() {
+  for (content::RenderProcessHost::iterator i(
+           content::RenderProcessHost::AllHostsIterator());
+       !i.IsAtEnd(); i.Advance()) {
+    i.GetCurrentValue()->FastShutdownIfPossible();
+  }
+
   // Clean up the app window.
   DesktopController::instance()->CloseAppWindows();
 }

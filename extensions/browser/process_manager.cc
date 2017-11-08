@@ -565,6 +565,8 @@ void ProcessManager::CancelSuspend(const Extension* extension) {
 }
 
 void ProcessManager::CloseBackgroundHosts() {
+  CHECK(all_extension_frames_.empty());
+
   // Delete from a copy because deletion of the ExtensionHosts will trigger
   // callbacks to modify the |background_hosts_| set.
   ExtensionHostSet hosts_copy = background_hosts_;
