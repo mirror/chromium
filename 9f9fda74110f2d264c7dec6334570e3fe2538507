@@ -46,6 +46,30 @@
       "revId": "9f9fda74110f2d264c7dec6334570e3fe2538507",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "9c239f9c_05e2f8a4",
+        "filename": "ios/chrome/browser/ui/toolbar/toolbar_controller.mm",
+        "patchSetId": 4
+      },
+      "lineNbr": 344,
+      "author": {
+        "id": 1115958
+      },
+      "writtenOn": "2017-11-08T14:26:30Z",
+      "side": 1,
+      "message": "I try and think about leading/trailing and left/right as different coordinate spaces. Edge insets may need to be in either one, depending on how they will be used -- for example, insets for a flippable UI element are in leading/trailing space, but the safe area insets are for the absolute coordinates of the hardware. Because the UIEdgeInsets data structure is left/right, the only way to handle it is to always assume it\u0027s in the absolute coordinate space and convert out when assigning to leading/trailing values (and that means you need to convert into left/right when assigning from leading/trailing into a UIEdgeInsets).",
+      "parentUuid": "704843d7_dad28da6",
+      "range": {
+        "startLine": 344,
+        "startChar": 67,
+        "endLine": 344,
+        "endChar": 71
+      },
+      "revId": "9f9fda74110f2d264c7dec6334570e3fe2538507",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
