@@ -1,0 +1,95 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "6d9d9b43_9851c090",
+        "filename": "chrome/browser/process_singleton_browsertest.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 94,
+      "author": {
+        "id": 1001934
+      },
+      "writtenOn": "2017-11-08T00:19:43Z",
+      "side": 1,
+      "message": "FYI, just nullptr will make GTest happy.",
+      "range": {
+        "startLine": 94,
+        "startChar": 14,
+        "endLine": 94,
+        "endChar": 53
+      },
+      "revId": "4cbcffcf43ed70ac784d458380b4fb914db6b88b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4e9c3235_c3801e62",
+        "filename": "chrome/browser/process_singleton_browsertest.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 118,
+      "author": {
+        "id": 1001934
+      },
+      "writtenOn": "2017-11-08T00:19:43Z",
+      "side": 1,
+      "message": "Does this need to be initialized in the ctor?",
+      "revId": "4cbcffcf43ed70ac784d458380b4fb914db6b88b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6605ad87_b3b0ffb9",
+        "filename": "chrome/browser/process_singleton_browsertest.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 215,
+      "author": {
+        "id": 1001934
+      },
+      "writtenOn": "2017-11-08T00:19:43Z",
+      "side": 1,
+      "message": "Update?",
+      "revId": "4cbcffcf43ed70ac784d458380b4fb914db6b88b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5a3b1d70_faa2e0da",
+        "filename": "chrome/browser/process_singleton_browsertest.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 224,
+      "author": {
+        "id": 1001934
+      },
+      "writtenOn": "2017-11-08T00:19:43Z",
+      "side": 1,
+      "message": "std::make_unique?",
+      "revId": "4cbcffcf43ed70ac784d458380b4fb914db6b88b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e5f0cde8_1f6ba943",
+        "filename": "chrome/browser/process_singleton_browsertest.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 226,
+      "author": {
+        "id": 1001934
+      },
+      "writtenOn": "2017-11-08T00:19:43Z",
+      "side": 1,
+      "message": "And base::MakeRefCounted?",
+      "revId": "4cbcffcf43ed70ac784d458380b4fb914db6b88b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
