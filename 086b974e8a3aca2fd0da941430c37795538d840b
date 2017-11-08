@@ -1,0 +1,89 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "e7ce80da_f4f81cd9",
+        "filename": "content/browser/loader/navigation_url_loader_impl_core.cc",
+        "patchSetId": 21
+      },
+      "lineNbr": 59,
+      "author": {
+        "id": 1115881
+      },
+      "writtenOn": "2017-11-08T15:39:00Z",
+      "side": 1,
+      "message": "Can you add a comment precising which arguments the nullptrs are? eg. nullptr /* foo */",
+      "revId": "086b974e8a3aca2fd0da941430c37795538d840b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c707e113_d14940c8",
+        "filename": "content/browser/loader/navigation_url_loader_network_service.cc",
+        "patchSetId": 21
+      },
+      "lineNbr": 143,
+      "author": {
+        "id": 1115881
+      },
+      "writtenOn": "2017-11-08T15:39:00Z",
+      "side": 1,
+      "message": "I\u0027m thinking we shouldn\u0027t redo a Start function. Let\u0027s merge it with the existing one and aim to have them converge as much as possible.",
+      "revId": "086b974e8a3aca2fd0da941430c37795538d840b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c8e65e3e_6bd8f467",
+        "filename": "content/browser/loader/navigation_url_loader_network_service.cc",
+        "patchSetId": 21
+      },
+      "lineNbr": 170,
+      "author": {
+        "id": 1115881
+      },
+      "writtenOn": "2017-11-08T15:39:00Z",
+      "side": 1,
+      "message": "Can you add a TODO to not call RDH::BeginNavigationRequest but use a URLLoader factory? Thanks!",
+      "revId": "086b974e8a3aca2fd0da941430c37795538d840b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5ad54892_0b179813",
+        "filename": "content/browser/loader/navigation_url_loader_network_service.cc",
+        "patchSetId": 21
+      },
+      "lineNbr": 180,
+      "author": {
+        "id": 1115881
+      },
+      "writtenOn": "2017-11-08T15:39:00Z",
+      "side": 1,
+      "message": "How about calling this OnRequestCanceled? I\u0027m thinking it\u0027s possible to reach this in cases where BeginNavigationRequests decides not to proceed and not just from CancelRequestsForContext. On top of that, since the action to take is to inform the request was cancelled, I don\u0027t think the ForContext part adds much.",
+      "revId": "086b974e8a3aca2fd0da941430c37795538d840b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "273706bd_f0e5d396",
+        "filename": "content/browser/loader/navigation_url_loader_network_service.cc",
+        "patchSetId": 21
+      },
+      "lineNbr": 554,
+      "author": {
+        "id": 1115881
+      },
+      "writtenOn": "2017-11-08T15:39:00Z",
+      "side": 1,
+      "message": "Why can\u0027t this be done in this CL?",
+      "revId": "086b974e8a3aca2fd0da941430c37795538d840b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
