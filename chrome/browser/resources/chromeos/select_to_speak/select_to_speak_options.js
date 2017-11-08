@@ -23,6 +23,7 @@ SelectToSpeakOptionsPage.prototype = {
     this.syncSelectControlToPref_('voice', 'voice');
     this.syncSelectControlToPref_('rate', 'rate');
     this.syncCheckboxControlToPref_('wordHighlight', 'wordHighlight');
+    this.syncSelectControlToPref_('highlightColor', 'highlightColor');
   },
 
   /**
