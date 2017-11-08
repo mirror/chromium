@@ -210,6 +210,24 @@
       "revId": "87f0fb87e85e6b6f23f6ff467558bafdb59fe06e",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "88d43836_9b2c4e81",
+        "filename": "ui/display/manager/display_manager.cc",
+        "patchSetId": 14
+      },
+      "lineNbr": 1241,
+      "author": {
+        "id": 1146978
+      },
+      "writtenOn": "2017-11-08T19:55:28Z",
+      "side": 1,
+      "message": "chromeos::IsRunningAsSystemCompositor() is the canonical check for device/desktop, so use that when necessary.\n\nHow does the fallback to software mirroring work on a real device? I\u0027ve never looked into that.",
+      "parentUuid": "cf67bda0_00e7cb3c",
+      "revId": "87f0fb87e85e6b6f23f6ff467558bafdb59fe06e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
