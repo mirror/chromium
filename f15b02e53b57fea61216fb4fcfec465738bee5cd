@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "d9bda440_6985c7f9",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 5
+      },
+      "lineNbr": 7,
+      "author": {
+        "id": 1125479
+      },
+      "writtenOn": "2017-11-08T18:36:17Z",
+      "side": 1,
+      "message": "Just CL number 3.\n\nI should have added Unified Desktop: as I did in the previous 2 CLs: https://bugs.chromium.org/p/chromium/issues/detail?id\u003d752767\u0026desc\u003d2#c35\n\nAdded.",
+      "parentUuid": "ac1247b2_91d35748",
+      "revId": "f15b02e53b57fea61216fb4fcfec465738bee5cd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "1b87a1c3_ff9a1a49",
         "filename": "chrome/browser/extensions/display_info_provider_chromeos.cc",
         "patchSetId": 5
@@ -33,6 +51,24 @@
       "revId": "f15b02e53b57fea61216fb4fcfec465738bee5cd",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1595a786_76b2086f",
+        "filename": "chrome/browser/extensions/display_info_provider_chromeos.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 45,
+      "author": {
+        "id": 1125479
+      },
+      "writtenOn": "2017-11-08T18:36:17Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "1b87a1c3_ff9a1a49",
+      "revId": "f15b02e53b57fea61216fb4fcfec465738bee5cd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -53,6 +89,24 @@
     },
     {
       "key": {
+        "uuid": "e81ce200_c3bd3e34",
+        "filename": "chrome/browser/extensions/display_info_provider_chromeos.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 593,
+      "author": {
+        "id": 1125479
+      },
+      "writtenOn": "2017-11-08T18:36:17Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "c6f88944_ad86dba8",
+      "revId": "f15b02e53b57fea61216fb4fcfec465738bee5cd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "281b3b0d_757bfd62",
         "filename": "chrome/browser/extensions/display_info_provider_chromeos.cc",
         "patchSetId": 5
@@ -67,6 +121,24 @@
       "revId": "f15b02e53b57fea61216fb4fcfec465738bee5cd",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "bca420fd_c6bf20a1",
+        "filename": "chrome/browser/extensions/display_info_provider_chromeos.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 615,
+      "author": {
+        "id": 1125479
+      },
+      "writtenOn": "2017-11-08T18:36:17Z",
+      "side": 1,
+      "message": "Yes, done.\n\nI also kept the LOG(ERROR) because these are still very important to see in feedback reports.",
+      "parentUuid": "281b3b0d_757bfd62",
+      "revId": "f15b02e53b57fea61216fb4fcfec465738bee5cd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -87,6 +159,24 @@
     },
     {
       "key": {
+        "uuid": "83a479bf_b9b27891",
+        "filename": "chrome/browser/extensions/display_info_provider_chromeos.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 742,
+      "author": {
+        "id": 1125479
+      },
+      "writtenOn": "2017-11-08T18:36:17Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "19e3f0e0_da700411",
+      "revId": "f15b02e53b57fea61216fb4fcfec465738bee5cd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "3f851c3f_d8bbed76",
         "filename": "chrome/browser/extensions/display_info_provider_chromeos.cc",
         "patchSetId": 5
@@ -101,6 +191,24 @@
       "revId": "f15b02e53b57fea61216fb4fcfec465738bee5cd",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4e29f7f8_10604dbc",
+        "filename": "chrome/browser/extensions/display_info_provider_chromeos.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 755,
+      "author": {
+        "id": 1125479
+      },
+      "writtenOn": "2017-11-08T18:36:17Z",
+      "side": 1,
+      "message": "A display layout is a combination of its `parent` and its `position` relative to its parent. Valid positions being {left, right, top, bottom}. In the display matrix example you gave:\n\n1 \u003c- 2 \u003c- 3\n^\n|\n4 \u003c- 5 \u003c- 6\n\n4 is parented to 1 with position \u003d\u003d bottom. If we parent 4 to 3, what would the position be given that they\u0027re neither in the same row or column?",
+      "parentUuid": "3f851c3f_d8bbed76",
+      "revId": "f15b02e53b57fea61216fb4fcfec465738bee5cd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
