@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "0855b544_68bae04d",
+        "filename": "chrome/browser/vr/pose_util.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 28,
+      "author": {
+        "id": 1002411
+      },
+      "writtenOn": "2017-11-08T15:23:20Z",
+      "side": 1,
+      "message": "This is probably fine as implemented, but it would be good if we could somehow combine the two angle deltas. I think right now we\u0027ll get variable reprojection distance depending on how much you changed both angles before one trips the threshold.",
+      "range": {
+        "startLine": 28,
+        "startChar": 5,
+        "endLine": 28,
+        "endChar": 29
+      },
+      "revId": "029161dc5f5ac560dfa9bdedebc86b9ce87842ba",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
