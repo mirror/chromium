@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "8946b4e3_9543beff",
+        "filename": "chrome/browser/component_updater/optimization_hints_component_installer.cc",
+        "patchSetId": 11
+      },
+      "lineNbr": 141,
+      "author": {
+        "id": 1133190
+      },
+      "writtenOn": "2017-11-08T00:33:20Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "30d1e9d7_b360c753",
+      "range": {
+        "startLine": 141,
+        "startChar": 2,
+        "endLine": 141,
+        "endChar": 3
+      },
+      "revId": "9b692d9fc935eb7e57fe68639d4ac15c21ad8847",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "75346f38_80d1992b",
         "filename": "components/optimization_guide/optimization_guide_service.cc",
         "patchSetId": 11
@@ -39,6 +63,24 @@
       "revId": "9b692d9fc935eb7e57fe68639d4ac15c21ad8847",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f9f5e461_bc47cf52",
+        "filename": "components/optimization_guide/optimization_guide_service.cc",
+        "patchSetId": 11
+      },
+      "lineNbr": 52,
+      "author": {
+        "id": 1133190
+      },
+      "writtenOn": "2017-11-08T00:33:20Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "75346f38_80d1992b",
+      "revId": "9b692d9fc935eb7e57fe68639d4ac15c21ad8847",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -65,6 +107,30 @@
     },
     {
       "key": {
+        "uuid": "9053378a_a19f19e8",
+        "filename": "components/optimization_guide/optimization_guide_service_observer.h",
+        "patchSetId": 11
+      },
+      "lineNbr": 19,
+      "author": {
+        "id": 1133190
+      },
+      "writtenOn": "2017-11-08T00:33:20Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "7b002716_a4e4f422",
+      "range": {
+        "startLine": 19,
+        "startChar": 67,
+        "endLine": 19,
+        "endChar": 68
+      },
+      "revId": "9b692d9fc935eb7e57fe68639d4ac15c21ad8847",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "3f437a8a_b96670f6",
         "filename": "components/optimization_guide/optimization_guide_service_unittest.cc",
         "patchSetId": 11
@@ -79,6 +145,24 @@
       "revId": "9b692d9fc935eb7e57fe68639d4ac15c21ad8847",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c6473add_93910403",
+        "filename": "components/optimization_guide/optimization_guide_service_unittest.cc",
+        "patchSetId": 11
+      },
+      "lineNbr": 92,
+      "author": {
+        "id": 1133190
+      },
+      "writtenOn": "2017-11-08T00:33:20Z",
+      "side": 1,
+      "message": "Thanks for the suggestion! Most of the tests verify that the notification doesn\u0027t run so we actually need to have it run all the way until idle. I\u0027ll keep the suggestion in mind for future tests.",
+      "parentUuid": "3f437a8a_b96670f6",
+      "revId": "9b692d9fc935eb7e57fe68639d4ac15c21ad8847",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
