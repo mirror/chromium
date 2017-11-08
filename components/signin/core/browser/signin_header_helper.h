@@ -28,8 +28,10 @@ enum ProfileMode {
   PROFILE_MODE_DEFAULT = 0,
   // Incognito mode disabled by enterprise policy or by parental controls.
   PROFILE_MODE_INCOGNITO_DISABLED = 1 << 0,
-  // Adding account disabled in the Android-for-EDU mode.
-  PROFILE_MODE_ADD_ACCOUNT_DISABLED = 1 << 1
+  // Adding account disabled in the Android-for-EDU mode and for child accounts.
+  PROFILE_MODE_ADD_ACCOUNT_DISABLED = 1 << 1,
+  // Switching account disabled for child accounts.
+  PROFILE_MODE_SWITCH_ACCOUNT_DISABLED = 1 << 2
 };
 
 extern const char kChromeConnectedHeader[];
@@ -167,6 +169,7 @@ void AppendOrRemoveMirrorRequestHeader(
     const GURL& redirect_url,
     const std::string& account_id,
     const content_settings::CookieSettings* cookie_settings,
+    bool account_consistency_required_by_profile,
     int profile_mode_mask);
 
 // Adds the Dice to all Gaia requests from a connected profile, with the

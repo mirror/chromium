@@ -135,6 +135,7 @@ static_library("browser") {
       "signin_status_metrics_provider.cc",
       "signin_status_metrics_provider_delegate.cc",
     ]
+    deps += [ "//components/user_manager" ]
   }
 
   if (!enable_dice_support) {
