@@ -111,6 +111,14 @@ namespace {
 
 static bool g_modify_layout_tree_structure_any_state = false;
 
+bool ShouldUseNewLayout(const ComputedStyle& style) {
+  if (RuntimeEnabledFeatures::LayoutNGEnabled())
+    return false;
+  // TODO(layout-dev): Remove user-modify style check once editing handles
+  // LayoutNG.
+  return style.UserModify() == EUserModify::kReadOnly;
+}
+
 }  // namespace
 
 #if DCHECK_IS_ON()
@@ -195,11 +203,11 @@ LayoutObject* LayoutObject::CreateObject(Element* element,
     case EDisplay::kBlock:
     case EDisplay::kFlowRoot:
     case EDisplay::kInlineBlock:
-      if (RuntimeEnabledFeatures::LayoutNGEnabled())
+      if (ShouldUseNewLayout(style))
         return new LayoutNGBlockFlow(element);
       return new LayoutBlockFlow(element);
     case EDisplay::kListItem:
-      if (RuntimeEnabledFeatures::LayoutNGEnabled())
+      if (ShouldUseNewLayout(style))
         return new LayoutNGListItem(element);
       return new LayoutListItem(element);
     case EDisplay::kTable:
