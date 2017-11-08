@@ -16,6 +16,24 @@
       "revId": "6c041332c2935b80294a5095b5a609b4f5b88e54",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2ea94995_fbcf77f4",
+        "filename": "ui/events/ozone/evdev/libgestures_glue/gesture_property_provider.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 47,
+      "author": {
+        "id": 1001794
+      },
+      "writtenOn": "2017-11-08T20:28:50Z",
+      "side": 1,
+      "message": "Why? I\u0027m not sure what purpose doing everything in one place really serves.\n\nI\u0027m mostly scared of things that are never initialized at all, and for that it\u0027s pretty clear that initializing at the declaration is safest. So I prefer to do that anywhere it\u0027s possible, as it\u0027s one less thing to check in each ctor initializer list to make sure we\u0027ve got everything.\n\nI\u0027d almost prefer putting things in both places but I think that\u0027s probably more confusing than it\u0027s worth if there\u0027s just one constructor.",
+      "parentUuid": "894de454_59302e35",
+      "revId": "6c041332c2935b80294a5095b5a609b4f5b88e54",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
