@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "2903193f_46cd22f5",
+        "filename": "chromecast/browser/android/apk/AndroidManifest.xml.jinja2",
+        "patchSetId": 4
+      },
+      "lineNbr": 37,
+      "author": {
+        "id": 1160944
+      },
+      "writtenOn": "2017-11-08T21:32:57Z",
+      "side": 1,
+      "message": "Why did you add this?",
+      "range": {
+        "startLine": 34,
+        "startChar": 12,
+        "endLine": 37,
+        "endChar": 28
+      },
+      "revId": "3075ed6b4b79d6746572c1a2c8bf1bb152f48ac7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
