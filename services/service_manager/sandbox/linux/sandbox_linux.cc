@@ -40,6 +40,9 @@
 #include "sandbox/linux/services/thread_helpers.h"
 #include "sandbox/linux/services/yama.h"
 #include "sandbox/linux/suid/client/setuid_sandbox_client.h"
+#include "sandbox/linux/syscall_broker/broker_process.h"
+#include "sandbox/sandbox_features.h"
+#include "services/service_manager/embedder/set_process_title.h"
 #include "services/service_manager/sandbox/linux/sandbox_seccomp_bpf_linux.h"
 #include "services/service_manager/sandbox/sandbox.h"
 #include "services/service_manager/sandbox/sandbox_type.h"
@@ -50,6 +53,8 @@
 #endif
 
 using sandbox::Yama;
+
+namespace service_manager {
 
 namespace {
 
@@ -98,9 +103,29 @@ base::ScopedFD OpenProc(int proc_fd) {
   return base::ScopedFD(ret_proc_fd);
 }
 
-}  // namespace
+void UpdateProcessTypeToBroker() {
+  base::CommandLine::StringVector exec =
+      base::CommandLine::ForCurrentProcess()->GetArgs();
+  base::CommandLine::Reset();
+  base::CommandLine::Init(0, nullptr);
+  base::CommandLine::ForCurrentProcess()->InitFromArgv(exec);
+  base::CommandLine::ForCurrentProcess()->AppendSwitchASCII(
+      switches::kProcessType, "gpu-broker");
 
-namespace service_manager {
+  // Update the process title. The argv was already cached by the call to
+  // SetProcessTitleFromCommandLine in content_main_runner.cc, so we can pass
+  // NULL here (we don't have the original argv at this point).
+  service_manager::SetProcessTitleFromCommandLine(nullptr);
+}
+
+bool UpdateProcessTypeAndEnableSandbox(
+    service_manager::BPFBasePolicy* client_sandbox_policy) {
+  UpdateProcessTypeToBroker();
+  return service_manager::SandboxSeccompBPF::StartSandboxWithExternalPolicy(
+      client_sandbox_policy->GetBrokerSandboxPolicy(), base::ScopedFD());
+}
+
+}  // namespace
 
 SandboxLinux::SandboxLinux()
     : proc_fd_(-1),
@@ -264,19 +289,36 @@ sandbox::SetuidSandboxClient* SandboxLinux::setuid_sandbox_client() const {
 // For seccomp-bpf, we use the SandboxSeccompBPF class.
 bool SandboxLinux::StartSeccompBPF(service_manager::SandboxType sandbox_type,
                                    SandboxSeccompBPF::PreSandboxHook hook,
-                                   const SandboxSeccompBPF::Options& opts) {
+                                   const SandboxSeccompBPF::Options& options) {
   CHECK(!seccomp_bpf_started_);
   CHECK(pre_initialized_);
+#if BUILDFLAG(USE_SECCOMP_BPF)
   if (!seccomp_bpf_supported())
     return false;
 
-  if (!SandboxSeccompBPF::StartSandbox(sandbox_type, OpenProc(proc_fd_),
-                                       std::move(hook), opts)) {
-    return false;
+  if (IsUnsandboxedSandboxType(sandbox_type) ||
+      !SandboxSeccompBPF::IsSeccompBPFDesired() ||
+      !SandboxSeccompBPF::SupportsSandbox()) {
+    return true;
   }
+
+  // If the kernel supports the sandbox, and if the command line says we
+  // should enable it, enable it or die.
+  std::unique_ptr<BPFBasePolicy> policy =
+      SandboxSeccompBPF::PolicyForSandboxType(sandbox_type, options);
+
+  if (hook)
+    CHECK(std::move(hook).Run(policy.get(), options));
+
+  SandboxSeccompBPF::StartSandboxWithExternalPolicy(std::move(policy),
+                                                    OpenProc(proc_fd_));
+  SandboxSeccompBPF::RunSandboxSanityChecks(sandbox_type, options);
   seccomp_bpf_started_ = true;
   LogSandboxStarted("seccomp-bpf");
   return true;
+#else
+  return false;
+#endif
 }
 
 bool SandboxLinux::InitializeSandbox(SandboxType sandbox_type,
@@ -441,6 +483,26 @@ bool SandboxLinux::LimitAddressSpace(
   return false;
 #endif  // !defined(ADDRESS_SANITIZER) && !defined(MEMORY_SANITIZER) &&
         // !defined(THREAD_SANITIZER)
+}
+
+// Start a broker process to handle open() inside the sandbox.
+// |client_sandbox_policy| is the policy the untrusted client is
+// running, but which can allocate a suitable sandbox policy for
+// the broker process itself via its GetBrokerSandboxPolicy() method.
+// |permissions| is a list of file permissions that should be
+// whitelisted by the broker process.
+void SandboxLinux::StartBrokerProcess(
+    BPFBasePolicy* client_sandbox_policy,
+    std::vector<sandbox::syscall_broker::BrokerFilePermission> permissions) {
+  // Leaked at shutdown, so use bare |new|.
+  broker_process_ = new sandbox::syscall_broker::BrokerProcess(
+      service_manager::BPFBasePolicy::GetFSDeniedErrno(), permissions);
+
+  // The initialization callback will perform generic initialization and then
+  // call broker_sandboxer_callback.
+  CHECK(broker_process_->Init(
+      base::Bind(&UpdateProcessTypeAndEnableSandbox,
+                 base::Unretained(client_sandbox_policy))));
 }
 
 bool SandboxLinux::HasOpenDirectories() const {
