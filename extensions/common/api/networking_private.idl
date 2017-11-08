@@ -498,6 +498,13 @@ namespace networkingPrivate {
     DOMString? ProviderName;
   };
 
+  dictionary ArcVPNProperties {
+    DOMString AppID;
+    DOMString PackageName;
+    DOMString ProviderName;
+    long LastLaunchTime;
+  };
+
   // Network type dictionary types.
 
   dictionary CellularProperties {
