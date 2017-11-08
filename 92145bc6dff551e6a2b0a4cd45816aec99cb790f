@@ -16,6 +16,24 @@
       "revId": "92145bc6dff551e6a2b0a4cd45816aec99cb790f",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "46e60dd9_25c5af04",
+        "filename": "net/spdy/chromium/spdy_session_unittest.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 6270,
+      "author": {
+        "id": 1116491
+      },
+      "writtenOn": "2017-11-08T23:53:01Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "2540d3c6_57d3aabf",
+      "revId": "92145bc6dff551e6a2b0a4cd45816aec99cb790f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
