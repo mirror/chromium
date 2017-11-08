@@ -66,7 +66,7 @@ class PLATFORM_EXPORT DisplayItem {
   //                             <BaseCategory>,
   //                             <baseCategory>)
   //   to define methods to convert types between the categories.
-  enum Type {
+  enum Type : int {
     kDrawingFirst,
     kDrawingPaintPhaseFirst = kDrawingFirst,
     kDrawingPaintPhaseLast = kDrawingFirst + kPaintPhaseMax,

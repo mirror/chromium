@@ -131,9 +131,9 @@ const EffectPaintPropertyNode* e0() {
   return EffectPaintPropertyNode::Root();
 }
 
-PaintChunk::Id DefaultId() {
+DisplayItem::Id DefaultId() {
   DEFINE_STATIC_LOCAL(FakeDisplayItemClient, fake_client, ());
-  return PaintChunk::Id(fake_client, DisplayItem::kDrawingFirst);
+  return DisplayItem::Id(fake_client, DisplayItem::kDrawingFirst);
 }
 
 struct TestChunks {
