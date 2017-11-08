@@ -605,6 +605,13 @@ function update(modifiers, normModifiers) {
     if (shortcutId) {
       classes.push('is-shortcut');
       classes.push('keyboard-overlay-shortcut-key-background');
+
+      // Apply a smaller font size to the below shortcuts to fit them in the key
+      // overlay.
+      if (shortcutId == 'keyboardOverlayMoveWindowToAboveDisplay' ||
+          shortcutId == 'keyboardOverlayMoveWindowToBelowDisplay') {
+        classes.push('smaller-font-size');
+      }
     }
 
     var key = $(keyId(identifier, i));
