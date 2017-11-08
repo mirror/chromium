@@ -1,0 +1,44 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "3ca37033_186a459e",
+        "filename": "base/mac/sdk_forward_declarations.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 209,
+      "author": {
+        "id": 1002092
+      },
+      "writtenOn": "2017-11-08T23:08:17Z",
+      "side": 1,
+      "message": "is the second argument meant to be \"enum\"? (i.e. NSFontWeight ).. which is an enum float?? wth\n\nWe maybe also want to expose\n\ntypedef CGFloat NSFontWeight NS_TYPED_EXTENSIBLE_ENUM;\nAPPKIT_EXTERN const NSFontWeight NSFontWeightRegular NS_AVAILABLE_MAC(10_11);\n\n\nbut is this needed at all, since we always link using the 10.12 SDK now?\n\nI.e. this should only be needed if SDK 10.9 or 10.10 was the only thing available at compile time, but I don\u0027t think we support that any more.",
+      "revId": "55678ab92f9aca4da53f04a6f7e115c369b36d28",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "119b5bf6_0c9634a6",
+        "filename": "chrome/browser/ui/cocoa/task_manager_mac.mm",
+        "patchSetId": 1
+      },
+      "lineNbr": 256,
+      "author": {
+        "id": 1002092
+      },
+      "writtenOn": "2017-11-08T23:08:17Z",
+      "side": 1,
+      "message": "I think anything that needed the forward dec would also be failing on being unable to find NSFontWeightRegular",
+      "range": {
+        "startLine": 256,
+        "startChar": 51,
+        "endLine": 256,
+        "endChar": 70
+      },
+      "revId": "55678ab92f9aca4da53f04a6f7e115c369b36d28",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
