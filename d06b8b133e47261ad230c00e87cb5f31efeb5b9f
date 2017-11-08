@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "02b6088e_305074c1",
+        "filename": "tools/mb/mb.py",
+        "patchSetId": 2
+      },
+      "lineNbr": 1345,
+      "author": {
+        "id": 1181690
+      },
+      "writtenOn": "2017-11-08T00:42:02Z",
+      "side": 1,
+      "message": "super nit: 2 space indent here \u0026 below.",
+      "revId": "d06b8b133e47261ad230c00e87cb5f31efeb5b9f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
