@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "b2b48eee_90d00565",
+        "filename": "base/allocator/partition_allocator/page_allocator.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 327,
+      "author": {
+        "id": 1001040
+      },
+      "writtenOn": "2017-11-08T21:08:22Z",
+      "side": 1,
+      "message": "This isn\u0027t the right fix for this bug. I introduced the bug in https://chromium-review.googlesource.com/c/chromium/src/+/754038, and I\u0027ll fix it right away.",
+      "revId": "fa5124521a6fda1d137b4df88658628fa6fce81a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
