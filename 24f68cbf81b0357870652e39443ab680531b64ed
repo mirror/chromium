@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "5cd6f607_5d3d66b7",
+        "filename": "chrome/app/google_chrome_strings.grd",
+        "patchSetId": 3
+      },
+      "lineNbr": 753,
+      "author": {
+        "id": 1115893
+      },
+      "writtenOn": "2017-11-08T18:10:39Z",
+      "side": 1,
+      "message": "Are those strings going to be used in Settings WebUI only? If so, they should reside in one of the following 3 files,\n\nsettings_chromium_strings.grdp\nsettings_google_chrome_strings.grdp\nsettings_strings.grdp\n\ninstead of the generic generated_resources.grd, chromium_strings.grd and google_chrome_strings.grd.",
+      "revId": "24f68cbf81b0357870652e39443ab680531b64ed",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
