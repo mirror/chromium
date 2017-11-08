@@ -28,9 +28,10 @@ PerIsolateData::PerIsolateData(
     scoped_refptr<base::SingleThreadTaskRunner> task_runner)
     : isolate_(isolate),
       allocator_(allocator),
-      access_mode_(access_mode),
-      task_runner_(
-          task_runner ? task_runner : base::ThreadTaskRunnerHandle::Get()) {
+      task_runner_(std::make_shared<V8ForegroundTaskRunner>(
+          isolate,
+          access_mode,
+          task_runner ? task_runner : base::ThreadTaskRunnerHandle::Get())) {
   isolate_->SetData(kEmbedderNativeGin, this);
 }
 
@@ -120,7 +121,7 @@ NamedPropertyInterceptor* PerIsolateData::GetNamedPropertyInterceptor(
 
 void PerIsolateData::EnableIdleTasks(
     std::unique_ptr<V8IdleTaskRunner> idle_task_runner) {
-  idle_task_runner_ = std::move(idle_task_runner);
+  task_runner_->EnableIdleTasks(std::move(idle_task_runner));
 }
 
 }  // namespace gin
