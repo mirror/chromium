@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "0d968cc6_c284704a",
+        "filename": "chrome/test/base/js2gtest.js",
+        "patchSetId": 3
+      },
+      "lineNbr": 397,
+      "author": {
+        "id": 1001934
+      },
+      "writtenOn": "2017-11-08T17:56:48Z",
+      "side": 1,
+      "message": "Let\u0027s add a new var:\n\nvar hasSwitches \u003d switches \u0026\u0026 switches.length;\n\nThen the if-statement loses a layer of parens and fits on 1 line again:\n\nif ((!hasSwitches \u0026\u0026 !featureList) || typedefCppFixture \u003d\u003d \u0027V8UnitTest\u0027)\n\nAnd you can reuse |hasSwitches| on line 420.",
+      "revId": "f6a6296f885a500e88f949c6ea10d4e15dd593f3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f386f564_3fe0398d",
+        "filename": "chrome/test/base/js2gtest.js",
+        "patchSetId": 3
+      },
+      "lineNbr": 433,
+      "author": {
+        "id": 1001934
+      },
+      "writtenOn": "2017-11-08T17:56:48Z",
+      "side": 1,
+      "message": "And reuse |featureList|.",
+      "revId": "f6a6296f885a500e88f949c6ea10d4e15dd593f3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
