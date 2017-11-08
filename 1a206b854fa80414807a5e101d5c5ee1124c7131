@@ -16,6 +16,24 @@
       "revId": "1a206b854fa80414807a5e101d5c5ee1124c7131",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ff745567_8db8a4cf",
+        "filename": "chrome/browser/chromeos/login/ui/webui_login_view.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 375,
+      "author": {
+        "id": 1121230
+      },
+      "writtenOn": "2017-11-08T03:06:23Z",
+      "side": 1,
+      "message": "I agree. As far as I searched, the method seems to be used only by WebuiLoginView. It should be safe to move there. I\u0027ll move the logic there.",
+      "parentUuid": "08ce8c0e_31faef1d",
+      "revId": "1a206b854fa80414807a5e101d5c5ee1124c7131",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
