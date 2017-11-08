@@ -10,7 +10,7 @@
 namespace metadata {
 
 IPCDataSource::IPCDataSource(
-    extensions::mojom::MediaDataSourcePtr media_data_source,
+    chrome::mojom::MediaDataSourcePtr media_data_source,
     int64_t total_size)
     : media_data_source_(std::move(media_data_source)),
       total_size_(total_size),

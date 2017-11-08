@@ -19,9 +19,11 @@
 #include "base/task_scheduler/post_task.h"
 #include "base/task_scheduler/task_traits.h"
 #include "base/threading/thread_restrictions.h"
-#include "chrome/browser/media_galleries/fileapi/safe_audio_video_checker.h"
+#include "chrome/services/media_util/public/cpp/safe_audio_video_checker.h"
 #include "content/public/browser/browser_thread.h"
+#include "content/public/common/service_manager_connection.h"
 #include "net/base/mime_util.h"
+#include "services/service_manager/public/cpp/connector.h"
 #include "third_party/WebKit/common/mime_util/mime_util.h"
 
 namespace {
@@ -75,11 +77,16 @@ void SupportedAudioVideoChecker::StartPreWriteValidation(
   DCHECK(callback_.is_null());
   callback_ = result_callback;
 
+  std::unique_ptr<service_manager::Connector> connector =
+      content::ServiceManagerConnection::GetForProcess()
+          ->GetConnector()
+          ->Clone();
+
   base::PostTaskWithTraitsAndReplyWithResult(
       FROM_HERE, {base::MayBlock(), base::TaskPriority::USER_VISIBLE},
       base::BindOnce(&OpenBlocking, path_),
       base::BindOnce(&SupportedAudioVideoChecker::OnFileOpen,
-                     weak_factory_.GetWeakPtr()));
+                     weak_factory_.GetWeakPtr(), base::Passed(&connector)));
 }
 
 SupportedAudioVideoChecker::SupportedAudioVideoChecker(
@@ -88,13 +95,16 @@ SupportedAudioVideoChecker::SupportedAudioVideoChecker(
       weak_factory_(this) {
 }
 
-void SupportedAudioVideoChecker::OnFileOpen(base::File file) {
+void SupportedAudioVideoChecker::OnFileOpen(
+    std::unique_ptr<service_manager::Connector> connector,
+    base::File file) {
   DCHECK_CURRENTLY_ON(content::BrowserThread::IO);
   if (!file.IsValid()) {
     callback_.Run(base::File::FILE_ERROR_SECURITY);
     return;
   }
 
-  safe_checker_ = new SafeAudioVideoChecker(std::move(file), callback_);
+  safe_checker_ = new SafeAudioVideoChecker(std::move(file), callback_,
+                                            std::move(connector));
   safe_checker_->Start();
 }

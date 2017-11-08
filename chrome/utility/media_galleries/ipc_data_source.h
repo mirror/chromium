@@ -11,7 +11,7 @@
 
 #include "base/memory/ref_counted.h"
 #include "base/threading/thread_checker.h"
-#include "chrome/common/extensions/media_parser.mojom.h"
+#include "chrome/services/media_util/public/interfaces/media_parser.mojom.h"
 #include "media/base/data_source.h"
 
 namespace base {
@@ -27,7 +27,7 @@ namespace metadata {
 class IPCDataSource : public media::DataSource {
  public:
   // May only be called on the utility thread.
-  IPCDataSource(extensions::mojom::MediaDataSourcePtr media_data_source,
+  IPCDataSource(chrome::mojom::MediaDataSourcePtr media_data_source,
                 int64_t total_size);
   ~IPCDataSource() override;
 
@@ -53,7 +53,7 @@ class IPCDataSource : public media::DataSource {
                 const ReadCB& callback,
                 const std::vector<uint8_t>& data);
 
-  extensions::mojom::MediaDataSourcePtr media_data_source_;
+  chrome::mojom::MediaDataSourcePtr media_data_source_;
   const int64_t total_size_;
 
   scoped_refptr<base::TaskRunner> utility_task_runner_;
