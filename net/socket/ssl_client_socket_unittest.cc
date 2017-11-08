@@ -22,6 +22,7 @@
 #include "base/threading/thread_task_runner_handle.h"
 #include "base/time/time.h"
 #include "base/values.h"
+#include "build/build_config.h"
 #include "crypto/rsa_private_key.h"
 #include "net/base/address_list.h"
 #include "net/base/io_buffer.h"
@@ -1347,16 +1348,7 @@ TEST_F(SSLClientSocketTest, ConnectBadValidity) {
   int rv;
   ASSERT_TRUE(CreateAndConnectSSLClientSocket(ssl_config, &rv));
 
-#if defined(OS_WIN)
-  EXPECT_THAT(rv, IsError(ERR_SSL_SERVER_CERT_BAD_FORMAT));
-  EXPECT_FALSE(IsCertificateError(rv));
-#elif defined(OS_ANDROID)
-  // Android date handling behavior can vary depending on the platform.
-  EXPECT_THAT(rv, AnyOf(IsError(ERR_SSL_SERVER_CERT_BAD_FORMAT),
-                        IsError(ERR_CERT_DATE_INVALID)));
-#else  // !(defined(OS_WIN) || defined(OS_ANDROID))
   EXPECT_THAT(rv, IsError(ERR_CERT_DATE_INVALID));
-#endif
 }
 
 // Attempt to connect to a page which requests a client certificate. It should

@@ -24,10 +24,8 @@
 #include "base/os_compat_nacl.h"
 #endif
 
-// Ensure the Mac build does not include this module. Instead, non-POSIX
-// implementation is used to support Time::Exploded.
 #if defined(OS_MACOSX)
-#error "This implementation is for POSIX platforms other than Mac."
+static_assert(sizeof(time_t) >= 8, "Y2038 problem!");
 #endif
 
 namespace {
@@ -294,7 +292,9 @@ bool Time::FromExploded(bool is_local, const Exploded& exploded, Time* time) {
     *time = converted_time;
     return true;
   }
-
+  printf("TEMP DEBUG %d/%d/%d, %d/%d/%d\n", exploded.year, exploded.month,
+         exploded.day_of_month, to_exploded.year, to_exploded.month,
+         to_exploded.day_of_month);
   *time = Time(0);
   return false;
 }
