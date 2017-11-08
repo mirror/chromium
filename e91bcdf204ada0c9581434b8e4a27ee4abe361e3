@@ -1,0 +1,55 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "34577e69_e005ba81",
+        "filename": "chrome/browser/ui/views/passwords/manage_passwords_bubble_view.cc",
+        "patchSetId": 10
+      },
+      "lineNbr": 930,
+      "author": {
+        "id": 1002092
+      },
+      "writtenOn": "2017-11-08T00:43:09Z",
+      "side": 1,
+      "message": "can this return the ManagePasswordsBubbleView* ? Usually it\u0027s good to restrict access to globals outside of a translation unit to testing files.\n\nAnd globals really may be a trap here -- I think it\u0027s easily possible to have two browser windows, each with a site that has popped a bubble. I have a strong preference to renaming the static accessor function to manage_passwords_bubble_model_for_testing or similar.",
+      "revId": "e91bcdf204ada0c9581434b8e4a27ee4abe361e3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6d74c732_b862e4ff",
+        "filename": "chrome/browser/ui/views/passwords/manage_passwords_bubble_view.h",
+        "patchSetId": 10
+      },
+      "lineNbr": 58,
+      "author": {
+        "id": 1002092
+      },
+      "writtenOn": "2017-11-08T00:43:09Z",
+      "side": 1,
+      "message": "this should be manage_passwords_bubble_model_for_testing() -- see below",
+      "revId": "e91bcdf204ada0c9581434b8e4a27ee4abe361e3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b9499727_f4a9ec65",
+        "filename": "chrome/browser/ui/views/passwords/manage_passwords_bubble_view.h",
+        "patchSetId": 10
+      },
+      "lineNbr": 127,
+      "author": {
+        "id": 1002092
+      },
+      "writtenOn": "2017-11-08T00:43:09Z",
+      "side": 1,
+      "message": "is the second static necessary? Updating two raw/weak pointers might be more fragile than simply having a helper function that does `return manage_passwords_bubble_ ? manage_passwords_bubble_-\u003emodel() : nullptr;`",
+      "revId": "e91bcdf204ada0c9581434b8e4a27ee4abe361e3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
