@@ -22,6 +22,30 @@
       "revId": "b42d151056d344bd9d6c1cf20bd6a6024863cf1c",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b8222653_a444f6cd",
+        "filename": "chrome/browser/ui/views/device_chooser_content_view_unittest.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 96,
+      "author": {
+        "id": 1151884
+      },
+      "writtenOn": "2017-11-08T01:48:51Z",
+      "side": 1,
+      "message": "I think in this case it would make the tests harder to read, since I\u0027m usually using the Paired version in contrast to the Unpaired version. That\u0027s not a strong opinion though, so if you disagree I\u0027ll change it.",
+      "parentUuid": "a6580d12_75e7229f",
+      "range": {
+        "startLine": 88,
+        "startChar": 0,
+        "endLine": 96,
+        "endChar": 3
+      },
+      "revId": "b42d151056d344bd9d6c1cf20bd6a6024863cf1c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }

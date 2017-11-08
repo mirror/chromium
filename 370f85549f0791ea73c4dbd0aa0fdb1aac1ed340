@@ -268,6 +268,30 @@
     },
     {
       "key": {
+        "uuid": "5a1f4e3e_f07dadb7",
+        "filename": "chrome/browser/ui/views/device_chooser_content_view_unittest.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 54,
+      "author": {
+        "id": 1151884
+      },
+      "writtenOn": "2017-11-08T01:48:51Z",
+      "side": 0,
+      "message": "I thought about it more and decided you\u0027re right, we should test that the ctor is doing its job initializing the controls. So this is done (using EXPECT_NE(nullptr)).\n\nAs a side-note, I think the example you linked is a bad one; we really should not need to test the result of library functions like make_unique.",
+      "parentUuid": "408a5aa7_7cedfe9e",
+      "range": {
+        "startLine": 54,
+        "startChar": 4,
+        "endLine": 54,
+        "endChar": 29
+      },
+      "revId": "370f85549f0791ea73c4dbd0aa0fdb1aac1ed340",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "81ff5f56_d0f990cd",
         "filename": "chrome/browser/ui/views/extensions/chooser_dialog_view_unittest.cc",
         "patchSetId": 3
