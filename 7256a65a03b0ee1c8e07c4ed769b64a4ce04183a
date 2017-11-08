@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "2d30058e_01b65707",
+        "filename": "chrome/browser/ui/send_mouse_move_uitest_win.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 34,
+      "author": {
+        "id": 1178124
+      },
+      "writtenOn": "2017-11-08T19:59:45Z",
+      "side": 1,
+      "message": "Moving the mouse without waiting for the notification is fine anywhere onscreen as far as I can tell. When I wrote SendMouseMoveUITest.DISABLED_Fullscreen, I\u0027m pretty sure I found that notifications didn\u0027t arrive if the test didn\u0027t have a window under each point. Lemme try again to be sure that\u0027s true...\n...\n...Indeed, if I skip the fullscreen, the test produces:\n\n[16252:11016:1108/205738.102:ERROR:ui_controls_internal_win.cc(248)] Timed out waiting for mouse move event. The test will now continue, but may fail.\n\nFor each move. So I think the comment is accurate.",
+      "parentUuid": "1d90da58_7602d41c",
+      "range": {
+        "startLine": 32,
+        "startChar": 21,
+        "endLine": 34,
+        "endChar": 21
+      },
+      "revId": "7256a65a03b0ee1c8e07c4ed769b64a4ce04183a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "b15bd35a_08fac30a",
         "filename": "ui/base/test/ui_controls_internal_win.cc",
         "patchSetId": 6
@@ -45,6 +69,30 @@
       "revId": "7256a65a03b0ee1c8e07c4ed769b64a4ce04183a",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "710216f8_e599bf00",
+        "filename": "ui/base/test/ui_controls_internal_win.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 107,
+      "author": {
+        "id": 1178124
+      },
+      "writtenOn": "2017-11-08T19:59:45Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "b15bd35a_08fac30a",
+      "range": {
+        "startLine": 107,
+        "startChar": 2,
+        "endLine": 107,
+        "endChar": 12
+      },
+      "revId": "7256a65a03b0ee1c8e07c4ed769b64a4ce04183a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
