@@ -211,6 +211,24 @@
       "revId": "6169398846d0b1797391e6802e421e10a2dc07bf",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "a196a545_7be0bfd5",
+        "filename": "content/shell/tools/breakpad_integration_test.py",
+        "patchSetId": 4
+      },
+      "lineNbr": 49,
+      "author": {
+        "id": 1174099
+      },
+      "writtenOn": "2017-11-08T22:48:27Z",
+      "side": 1,
+      "message": "\u003e That\u0027s fair. I give you two bugs: https://bugs.chromium.org/p/chromium/issues/detail?id\u003d782923 for the test, and https://bugs.chromium.org/p/crashpad/issues/detail?id\u003d207 for the tool.\n\nApproved!\n\n(no rubber-stamp or wax seal emoji, how odd.)",
+      "parentUuid": "66dbeb61_3f9e0eef",
+      "revId": "6169398846d0b1797391e6802e421e10a2dc07bf",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
