@@ -108,10 +108,11 @@ void ShowCreateChromeAppShortcutsDialog(
     const extensions::Extension* app,
     const base::Callback<void(bool /* created */)>& close_callback);
 
-// Callback type used with the ShowBookmarkAppDialog() method. The boolean
-// parameter is true when the user accepts the dialog. The WebApplicationInfo
-// parameter contains the WebApplicationInfo as edited by the user.
-using ShowBookmarkAppDialogCallback =
+// Callback used to indicate whether a user has accepted the installation of a
+// web app. The boolean parameter is true when the user accepts the dialog. The
+// WebApplicationInfo parameter contains the information about the app,
+// possibly modified by the user.
+using AppInstallationAcceptanceCallback =
     base::OnceCallback<void(bool, const WebApplicationInfo&)>;
 
 // Shows the Bookmark App bubble.
@@ -121,7 +122,14 @@ using ShowBookmarkAppDialogCallback =
 // |web_app_info| is the WebApplicationInfo being converted into an app.
 void ShowBookmarkAppDialog(gfx::NativeWindow parent_window,
                            const WebApplicationInfo& web_app_info,
-                           ShowBookmarkAppDialogCallback callback);
+                           AppInstallationAcceptanceCallback callback);
+
+// Shows the PWA installation confirmation bubble.
+//
+// |web_app_info| is the WebApplicationInfo to be installed.
+void ShowPWAInstallDialog(gfx::NativeWindow parent_window,
+                          const WebApplicationInfo& web_app_info,
+                          AppInstallationAcceptanceCallback callback);
 
 // Shows a color chooser that reports to the given WebContents.
 content::ColorChooser* ShowColorChooser(content::WebContents* web_contents,
@@ -258,6 +266,7 @@ enum class DialogIdentifier {
   WEB_SHARE_TARGET_PICKER = 78,
   ZOOM = 79,
   LOCK_SCREEN_NOTE_APP_TOAST = 80,
+  PWA_CONFIRMATION = 81,
   MAX_VALUE
 };
 
