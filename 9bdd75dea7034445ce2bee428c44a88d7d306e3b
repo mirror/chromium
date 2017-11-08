@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "ebb0a947_d67646f6",
+        "filename": "chrome/android/webapk/shell_apk/AndroidManifest.xml",
+        "patchSetId": 7
+      },
+      "lineNbr": 67,
+      "author": {
+        "id": 1002088
+      },
+      "writtenOn": "2017-11-08T15:12:36Z",
+      "side": 1,
+      "message": "don\u0027t we still need this to be templatized?",
+      "range": {
+        "startLine": 67,
+        "startChar": 8,
+        "endLine": 67,
+        "endChar": 109
+      },
+      "revId": "9bdd75dea7034445ce2bee428c44a88d7d306e3b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
