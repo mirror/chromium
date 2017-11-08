@@ -4698,6 +4698,37 @@ uploading your change for review.  These are checked by presubmit scripts.
   <int value="22" label="Profile image"/>
 </enum>
 
+<enum name="ChromePDFViewerAnnotationType">
+  <int value="0" label="Unknown annotation type"/>
+  <int value="1" label="Text annotation"/>
+  <int value="2" label="Link annotation"/>
+  <int value="3" label="FreeText annotation"/>
+  <int value="4" label="Line annotation"/>
+  <int value="5" label="Square annotation"/>
+  <int value="6" label="Circle annotation"/>
+  <int value="7" label="Polygon annotation"/>
+  <int value="8" label="Polyline annotation"/>
+  <int value="9" label="Highlight annotation"/>
+  <int value="10" label="Underline annotation"/>
+  <int value="11" label="Squiggly annotation"/>
+  <int value="12" label="StrikeOut annotation"/>
+  <int value="13" label="Stamp annotation"/>
+  <int value="14" label="Caret annotation"/>
+  <int value="15" label="Ink annotation"/>
+  <int value="16" label="Popup annotation"/>
+  <int value="17" label="FileAttachment annotation"/>
+  <int value="18" label="Sound annotation"/>
+  <int value="19" label="Movie annotation"/>
+  <int value="20" label="Widget annotation"/>
+  <int value="21" label="Screen annotation"/>
+  <int value="22" label="PrinterMark annotation"/>
+  <int value="23" label="TrapNet annotation"/>
+  <int value="24" label="Watermark annotation"/>
+  <int value="25" label="3D annotation"/>
+  <int value="26" label="RichMedia annotation"/>
+  <int value="27" label="XFAWidget annotation"/>
+</enum>
+
 <enum name="ChromePDFViewerLoadStatus">
   <int value="0" label="Loaded a full-page PDF with Chrome PDF Viewer"/>
   <int value="1" label="Loaded an embedded PDF with Chrome PDF Viewer"/>

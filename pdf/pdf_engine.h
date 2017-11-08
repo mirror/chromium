@@ -14,6 +14,7 @@
 #endif
 
 #include <memory>
+#include <set>
 #include <string>
 #include <vector>
 
@@ -83,6 +84,19 @@ class PDFEngine {
     FormType form_type = FormType::kNone;
   };
 
+  struct PageFeatures {
+    PageFeatures();
+    PageFeatures(const PageFeatures& other);
+    ~PageFeatures();
+    bool IsInitialized() const;
+
+    // 0-based page index in the document. -1 when uninitialized.
+    int index = -1;
+
+    // Vector of annotation types in page.
+    std::vector<int> annotation_types;
+  };
+
   // The interface that's provided to the rendering engine.
   class Client {
    public:
@@ -128,6 +142,10 @@ class PDFEngine {
 
     // Updates the index of the currently selected search item.
     virtual void NotifySelectedFindResultChanged(int current_find_index) = 0;
+
+    // Notifies a page became visible.
+    virtual void NotifyPageBecameVisible(
+        const PDFEngine::PageFeatures& page_features) = 0;
 
     // Prompts the user for a password to open this document. The callback is
     // called when the password is retrieved.
