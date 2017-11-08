@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "50542871_0eef777b",
+        "filename": "components/consent_auditor/consent_auditor.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 32,
+      "author": {
+        "id": 1183839
+      },
+      "writtenOn": "2017-11-08T13:51:24Z",
+      "side": 1,
+      "message": "I\u0027m not sure if it would be cleaner to pass the product_version from the factory? \nThat way we also don\u0027t need the set_product_version_for_testing method?",
+      "revId": "d83c16ba7e7b342863ec4ae4d38921db4f2c6171",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e40f36b2_d300b038",
+        "filename": "components/consent_auditor/consent_auditor.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 57,
+      "author": {
+        "id": 1183839
+      },
+      "writtenOn": "2017-11-08T13:51:24Z",
+      "side": 1,
+      "message": "std::make_unique is allowed now :) https://crbug.com/755727\n\nBut I think with the new api you can do the following:\n\nbase::DictionaryValue record;\nrecord.setKey(kLocalBla, base::Value(description_text));\nconsents-\u003esetKey(feature, std::move(record));\n\n(comment above base::Value https://cs.chromium.org/chromium/src/base/values.h)",
+      "revId": "d83c16ba7e7b342863ec4ae4d38921db4f2c6171",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}

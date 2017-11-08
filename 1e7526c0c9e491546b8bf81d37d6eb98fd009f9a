@@ -394,6 +394,24 @@
     },
     {
       "key": {
+        "uuid": "1d2a345c_f53b8d0e",
+        "filename": "components/consent_auditor/consent_auditor.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 56,
+      "author": {
+        "id": 1183839
+      },
+      "writtenOn": "2017-11-08T13:51:24Z",
+      "side": 1,
+      "message": "Ok, great. If we know that the German UMA string in Chrome 99 was incorrect, I think it would be easier to check if a user consented to a German string in this version than to actually ship this string with future Chrome versions? \nMaybe we should add a static recordConsent() helper function in chrome/browser that is responsible to supply all the parameters that are not available in content/?",
+      "parentUuid": "75ff186c_1beb471d",
+      "revId": "1e7526c0c9e491546b8bf81d37d6eb98fd009f9a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "68de539f_d86bfec4",
         "filename": "components/consent_auditor/consent_auditor.h",
         "patchSetId": 6
@@ -669,6 +687,24 @@
       "side": 1,
       "message": "Done. I would argue that ASSERTing it explicitly results in cleaner test failures, but sure, let\u0027s simplify.",
       "parentUuid": "5c7a3855_177d21cf",
+      "revId": "1e7526c0c9e491546b8bf81d37d6eb98fd009f9a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "a49d65b2_96e491ec",
+        "filename": "components/consent_auditor/consent_auditor_unittest.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 67,
+      "author": {
+        "id": 1183839
+      },
+      "writtenOn": "2017-11-08T13:51:24Z",
+      "side": 1,
+      "message": "I think it is more clean because with \"confirmation \u0026\u0026 confirmation-\u003eis_string()\", you don\u0027t know which case failed. By only asserting not-null, you know what exactly happened.",
+      "parentUuid": "6477858e_cc57afea",
       "revId": "1e7526c0c9e491546b8bf81d37d6eb98fd009f9a",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": false
