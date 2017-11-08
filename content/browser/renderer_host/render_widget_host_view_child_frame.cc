@@ -172,6 +172,14 @@ void RenderWidgetHostViewChildFrame::SetFrameConnectorDelegate(
 #endif
 }
 
+#if defined(USE_AURA)
+void RenderWidgetHostViewChildFrame::SetFrameSinkId(
+    const viz::FrameSinkId& frame_sink_id) {
+  if (IsUsingMus())
+    frame_sink_id_ = frame_sink_id;
+}
+#endif  // defined(USE_AURA)
+
 void RenderWidgetHostViewChildFrame::OnManagerWillDestroy(
     TouchSelectionControllerClientManager* manager) {
   // We get the manager via the observer callback instead of through the

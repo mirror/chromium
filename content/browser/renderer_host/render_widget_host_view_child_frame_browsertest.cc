@@ -7,6 +7,7 @@
 #include "components/viz/common/surfaces/surface_id.h"
 #include "components/viz/common/surfaces/surface_sequence.h"
 #include "content/browser/frame_host/frame_tree_node.h"
+#include "content/browser/renderer_host/render_widget_host_view_child_frame.h"
 #include "content/browser/web_contents/web_contents_impl.h"
 #include "content/common/frame_messages.h"
 #include "content/common/view_messages.h"
@@ -22,6 +23,20 @@
 #include "net/dns/mock_host_resolver.h"
 #include "net/test/embedded_test_server/embedded_test_server.h"
 #include "ui/gfx/geometry/size.h"
+
+#if defined(USE_AURA)
+#include "ui/aura/env.h"
+#endif
+
+namespace {
+bool IsUsingMus() {
+#if defined(USE_AURA)
+  return aura::Env::GetInstance()->mode() == aura::Env::Mode::MUS;
+#else
+  return false;
+#endif
+}
+}  // namespace
 
 namespace content {
 
@@ -44,6 +59,28 @@ class RenderWidgetHostViewChildFrameTest : public ContentBrowserTest {
     ExecuteScriptAndGetValue(render_frame_host, "window.screen.width")
         ->GetAsInteger(&width);
     EXPECT_EQ(expected_screen_width_, width);
+  }
+
+  // Tests that the FrameSinkId of each child frame has been updated by the
+  // RenderFrameProxy.
+  void CheckFrameSinkId(RenderFrameHost* render_frame_host) {
+    RenderWidgetHostViewBase* child_view =
+        static_cast<RenderFrameHostImpl*>(render_frame_host)
+            ->GetRenderWidgetHost()
+            ->GetView();
+    // Only interested in updated FrameSinkIds on child frames.
+    if (!child_view || !child_view->IsRenderWidgetHostViewChildFrame())
+      return;
+
+    // The FrameSinkID will be replaced while the test blocks for navigation.
+    // Ensure that we received one from the RenderFrameProxy, as it should
+    // differ from the information stored in the child's RenderWidgetHost.
+    EXPECT_NE(base::checked_cast<uint32_t>(
+                  child_view->GetRenderWidgetHost()->GetProcess()->GetID()),
+              child_view->GetFrameSinkId().client_id());
+    EXPECT_NE(base::checked_cast<uint32_t>(
+                  child_view->GetRenderWidgetHost()->GetRoutingID()),
+              child_view->GetFrameSinkId().sink_id());
   }
 
   void set_expected_screen_width(int width) { expected_screen_width_ = width; }
@@ -116,6 +153,30 @@ IN_PROC_BROWSER_TEST_F(RenderWidgetHostViewChildFrameTest,
   // The child frame's RenderWidgetHostView should now use the auto-resize value
   // for its visible viewport.
   EXPECT_EQ(gfx::Size(75, 75), rwhv->GetVisibleViewportSize());
+}
+
+// Tests that while in mus, the child frame receives an updated FrameSinkId
+// representing the frame sink used by the RenderFrameProxy
+IN_PROC_BROWSER_TEST_F(RenderWidgetHostViewChildFrameTest, ChildFrameSinkId) {
+  // Only in mus do we expect a RenderFrameProxy to provide the FrameSinkId.
+  if (!IsUsingMus())
+    return;
+
+  GURL main_url(embedded_test_server()->GetURL("/site_per_process_main.html"));
+  NavigateToURL(shell(), main_url);
+
+  FrameTreeNode* root = static_cast<WebContentsImpl*>(shell()->web_contents())
+                            ->GetFrameTree()
+                            ->root();
+
+  // Load cross-site page into iframe.
+  GURL cross_site_url(
+      embedded_test_server()->GetURL("foo.com", "/title2.html"));
+  NavigateFrameToURL(root->child_at(0), cross_site_url);
+
+  shell()->web_contents()->ForEachFrame(
+      base::Bind(&RenderWidgetHostViewChildFrameTest::CheckFrameSinkId,
+                 base::Unretained(this)));
 }
 
 // A class to filter RequireSequence and SatisfySequence messages sent from
