@@ -106,7 +106,7 @@ class CORE_EXPORT WebLocalFrameImpl final
                                     const WebScriptSource* sources,
                                     unsigned num_sources) override;
   void SetIsolatedWorldSecurityOrigin(int world_id,
-                                      const WebSecurityOrigin&) override;
+                                      const WebMutableSecurityOrigin&) override;
   void SetIsolatedWorldContentSecurityPolicy(int world_id,
                                              const WebString&) override;
   void SetIsolatedWorldHumanReadableName(int world_id,
