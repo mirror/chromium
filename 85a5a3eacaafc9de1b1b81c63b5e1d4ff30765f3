@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "7bbc511b_b5596eb0",
+        "filename": "ui/message_center/popup_timers_controller.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 24,
+      "author": {
+        "id": 1002032
+      },
+      "writtenOn": "2017-11-08T10:13:00Z",
+      "side": 1,
+      "message": "Up to you: you could consider writing it as follows, to keep the branch intact:\n\n\n  // Web Notifications are given a longer on-screen time on non-Chrome OS\n  // platforms as there is no notification center to dismiss them to.\n#if defined(OS_CHROMEOS)\n  constexpr bool use_high_priority_delay \u003d\n      notification-\u003epriority() \u003e DEFAULT_PRIORITY;\n#else\n  constexpr bool use_high_priority_delay \u003d\n      notification-\u003epriority() \u003e DEFAULT_PRIORITY ||\n      notification-\u003enotifier_id().type \u003d\u003d NotifierId::WEB_PAGE;\n#endif\n\n  if (use_high_priority_delay)\n    return ..;\n\n  return ..;",
+      "revId": "85a5a3eacaafc9de1b1b81c63b5e1d4ff30765f3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
