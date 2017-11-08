@@ -16,6 +16,24 @@
       "revId": "df3da67334d6eb6c4db6d2c2414eec4799869f6e",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "10b29a69_3bebf66f",
+        "filename": "testing/buildbot/gn_isolate_map.pyl",
+        "patchSetId": 1
+      },
+      "lineNbr": 319,
+      "author": {
+        "id": 1003232
+      },
+      "writtenOn": "2017-11-08T03:24:11Z",
+      "side": 1,
+      "message": "For dumb reasons related to the way `gn analyze` works, this is needed (and is right).",
+      "parentUuid": "5e66ed4f_5cb056ed",
+      "revId": "df3da67334d6eb6c4db6d2c2414eec4799869f6e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
