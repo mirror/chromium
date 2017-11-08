@@ -93,7 +93,7 @@ Document* XSLTProcessor::CreateDocumentFromSource(
 
     if (old_document) {
       DocumentXSLT::From(*result).SetTransformSourceDocument(old_document);
-      result->UpdateSecurityOrigin(old_document->GetSecurityOrigin());
+      result->UpdateSecurityOriginFromExecutionContext(*old_document);
       result->SetCookieURL(old_document->CookieURL());
       result->EnforceSandboxFlags(old_document->GetSandboxFlags());
 
