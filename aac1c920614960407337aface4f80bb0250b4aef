@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "6ed52a5e_51fb0957",
+        "filename": "tools/perf/page_sets/media_cases.py",
+        "patchSetId": 4
+      },
+      "lineNbr": 89,
+      "author": {
+        "id": 1002455
+      },
+      "writtenOn": "2017-11-08T18:58:06Z",
+      "side": 1,
+      "message": "aside: I\u0027m uncertain here, but if we perhaps never want to subclass further any of _BeginningToEndPlayPage, _SeekPage, _BackgroundPlaybackPage, or _MSEPage, might we remove this arg and just use self inside their __init__\u0027s? (If we ever might want to subclass it, would \u0027self\u0027 here break it? And would \u0027self\u0027 here work otherwise?) Probably best to leave this as-is (\"page_set\" in the __init__); just thought there might be a way to reduce the repetition in the page list construction, below...",
+      "range": {
+        "startLine": 89,
+        "startChar": 26,
+        "endLine": 89,
+        "endChar": 34
+      },
+      "revId": "aac1c920614960407337aface4f80bb0250b4aef",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "19d6921b_9d1b8c2b",
+        "filename": "tools/perf/page_sets/media_cases.py",
+        "patchSetId": 4
+      },
+      "lineNbr": 315,
+      "author": {
+        "id": 1002455
+      },
+      "writtenOn": "2017-11-08T18:58:06Z",
+      "side": 1,
+      "message": "nit: Given the apparent grouping by page type done in this CL, why is this _BeginningToEndPlayPage not moved to the group of those, above?",
+      "range": {
+        "startLine": 315,
+        "startChar": 8,
+        "endLine": 315,
+        "endChar": 31
+      },
+      "revId": "aac1c920614960407337aface4f80bb0250b4aef",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
