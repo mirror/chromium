@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "abe74915_42f91607",
+        "filename": "ui/gfx/render_text_unittest.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 4950,
+      "author": {
+        "id": 1179965
+      },
+      "writtenOn": "2017-11-08T18:51:31Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "3e2f73e5_a765b25a",
+      "revId": "d64840781a09a4e6a3a68720ff45a249fb129534",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "fc7d5b43_582822b1",
         "filename": "ui/gfx/render_text_unittest.cc",
         "patchSetId": 6
@@ -30,6 +48,24 @@
       "writtenOn": "2017-11-08T03:28:04Z",
       "side": 1,
       "message": "nit: This static cast should not be needed, please remove it.",
+      "revId": "d64840781a09a4e6a3a68720ff45a249fb129534",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d1c9b7e7_3503d4f5",
+        "filename": "ui/gfx/render_text_unittest.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 4956,
+      "author": {
+        "id": 1179965
+      },
+      "writtenOn": "2017-11-08T18:51:31Z",
+      "side": 1,
+      "message": "I tried but since seuss.length() is size_t, it seems the cast is still needed here?",
+      "parentUuid": "fc7d5b43_582822b1",
       "revId": "d64840781a09a4e6a3a68720ff45a249fb129534",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -50,6 +86,24 @@
       "revId": "d64840781a09a4e6a3a68720ff45a249fb129534",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e5cef7ca_19cceac1",
+        "filename": "ui/gfx/render_text_unittest.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 4957,
+      "author": {
+        "id": 1179965
+      },
+      "writtenOn": "2017-11-08T18:51:31Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "f1fcb537_e9c4f589",
+      "revId": "d64840781a09a4e6a3a68720ff45a249fb129534",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
