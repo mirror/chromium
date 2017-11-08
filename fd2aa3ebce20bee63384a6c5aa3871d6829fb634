@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "e1fe864b_ed8172e0",
+        "filename": "third_party/WebKit/Source/devtools/front_end/object_ui/objectPropertiesSection.css",
+        "patchSetId": 2
+      },
+      "lineNbr": 67,
+      "author": {
+        "id": 1230559
+      },
+      "writtenOn": "2017-11-08T01:42:24Z",
+      "side": 1,
+      "message": "The name of the property comes between the \u0027\u003e\u0027 expand triangle and the \u0027:\u0027 character.  18px is the combined width of these two extra elements.",
+      "range": {
+        "startLine": 67,
+        "startChar": 27,
+        "endLine": 67,
+        "endChar": 31
+      },
+      "revId": "fd2aa3ebce20bee63384a6c5aa3871d6829fb634",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
