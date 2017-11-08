@@ -23,6 +23,7 @@
 #include "content/common/service_worker/embedded_worker_settings.h"
 #include "content/common/service_worker/embedded_worker_start_params.h"
 #include "content/common/service_worker/service_worker_types.h"
+#include "content/common/service_worker/service_worker_utils.h"
 #include "content/public/browser/browser_thread.h"
 #include "content/public/browser/content_browser_client.h"
 #include "content/public/browser/render_process_host.h"
@@ -682,6 +683,16 @@ void EmbeddedWorkerInstance::OnStartWorkerMessageSent(
   starting_phase_ = is_script_streaming ? SCRIPT_STREAMING : SENT_START_WORKER;
   for (auto& observer : listener_list_)
     observer.OnStartWorkerMessageSent();
+}
+
+void EmbeddedWorkerInstance::RequestTermination() {
+  DCHECK(ServiceWorkerUtils::IsServicificationEnabled());
+  DCHECK(status() == EmbeddedWorkerStatus::RUNNING ||
+         status() == EmbeddedWorkerStatus::STOPPING);
+  if (status() == EmbeddedWorkerStatus::STOPPING)
+    return;
+  for (auto& listener : listener_list_)
+    listener.OnTerminationRequested();
 }
 
 void EmbeddedWorkerInstance::OnReadyForInspection() {
