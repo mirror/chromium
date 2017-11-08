@@ -1,0 +1,152 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "b5c86614_d2866747",
+        "filename": "services/shape_detection/detection_utils_win.h",
+        "patchSetId": 10
+      },
+      "lineNbr": 37,
+      "author": {
+        "id": 1178124
+      },
+      "writtenOn": "2017-11-08T10:00:40Z",
+      "side": 1,
+      "message": "i had something more like this in mind:\n  // A callback run when the asynchronous operation completes. The callback is\n  // run with the IAsyncOperation that completed on success, or with an empty\n  // pointer in case of failure.\n\nor something along those lines.",
+      "revId": "2fc5e6c9059a481dd7be82246caabbc14d2ca963",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "199241b7_f1c4ceed",
+        "filename": "services/shape_detection/detection_utils_win.h",
+        "patchSetId": 10
+      },
+      "lineNbr": 48,
+      "author": {
+        "id": 1178124
+      },
+      "writtenOn": "2017-11-08T10:00:40Z",
+      "side": 1,
+      "message": "nit:\n#include \"base/memory/ptr_util.h\"\n  auto instance \u003d base::WrapUnique(new AsyncOperation\u003cRuntimeType\u003e(...));",
+      "revId": "2fc5e6c9059a481dd7be82246caabbc14d2ca963",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "66956534_0b46fcee",
+        "filename": "services/shape_detection/detection_utils_win.h",
+        "patchSetId": 10
+      },
+      "lineNbr": 100,
+      "author": {
+        "id": 1178124
+      },
+      "writtenOn": "2017-11-08T10:00:40Z",
+      "side": 1,
+      "message": "nit: remove blank line",
+      "revId": "2fc5e6c9059a481dd7be82246caabbc14d2ca963",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4e8cdc8f_930a7ef4",
+        "filename": "services/shape_detection/face_detection_impl_win.cc",
+        "patchSetId": 10
+      },
+      "lineNbr": 63,
+      "author": {
+        "id": 1178124
+      },
+      "writtenOn": "2017-11-08T10:00:40Z",
+      "side": 1,
+      "message": "auto impl \u003d base::WrapUnique(new ...);",
+      "revId": "2fc5e6c9059a481dd7be82246caabbc14d2ca963",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "26df5065_116f24c5",
+        "filename": "services/shape_detection/face_detection_impl_win.cc",
+        "patchSetId": 10
+      },
+      "lineNbr": 82,
+      "author": {
+        "id": 1178124
+      },
+      "writtenOn": "2017-11-08T10:00:40Z",
+      "side": 1,
+      "message": "nit: remove these extra braces",
+      "range": {
+        "startLine": 82,
+        "startChar": 42,
+        "endLine": 82,
+        "endChar": 44
+      },
+      "revId": "2fc5e6c9059a481dd7be82246caabbc14d2ca963",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "fea55784_01ccc44e",
+        "filename": "services/shape_detection/face_detection_impl_win.cc",
+        "patchSetId": 10
+      },
+      "lineNbr": 123,
+      "author": {
+        "id": 1178124
+      },
+      "writtenOn": "2017-11-08T10:00:40Z",
+      "side": 1,
+      "message": "it\u0027ll be interesting to see how this shapes up once it\u0027s fully implemented. i\u0027m not sure that AsyncOperationStatus/async_status_ is really useful. as it is now, async_create_detector_ops_ gives an indication of whether or not FaceDetectionImplWin is waiting on an async operation. will there eventually be other async operations? are there potentially many \"waiting on foo\" states?\n\ni\u0027m not suggesting making a change right now, just planting a seed so that as you continue working on this, perhaps you\u0027ll find that AsyncOperationStatus isn\u0027t the right fit to please all users of AsyncOperation\u003c\u003e.",
+      "revId": "2fc5e6c9059a481dd7be82246caabbc14d2ca963",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "307ae4ee_512918d8",
+        "filename": "services/shape_detection/face_detection_impl_win.cc",
+        "patchSetId": 10
+      },
+      "lineNbr": 136,
+      "author": {
+        "id": 1178124
+      },
+      "writtenOn": "2017-11-08T10:00:40Z",
+      "side": 1,
+      "message": "run callback_for_testing_ here as well? maybe give it a bool for succeeded/failed so that the test can respond appropriately?",
+      "revId": "2fc5e6c9059a481dd7be82246caabbc14d2ca963",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c36d0bc4_9434a3ba",
+        "filename": "services/shape_detection/face_detection_impl_win.cc",
+        "patchSetId": 10
+      },
+      "lineNbr": 140,
+      "author": {
+        "id": 1178124
+      },
+      "writtenOn": "2017-11-08T10:00:40Z",
+      "side": 1,
+      "message": "kOperating",
+      "range": {
+        "startLine": 140,
+        "startChar": 36,
+        "endLine": 140,
+        "endChar": 51
+      },
+      "revId": "2fc5e6c9059a481dd7be82246caabbc14d2ca963",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
