@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "ab5f3c4e_9b36e9f7",
+        "filename": "ios/chrome/browser/ui/dialogs/java_script_dialog_presenter_impl.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 37,
+      "author": {
+        "id": 1123009
+      },
+      "writtenOn": "2017-11-08T23:40:39Z",
+      "side": 1,
+      "message": "From Unit testing best practices: \"Test code using real APIs - don’t define back doors only for tests.\" http://go/unit-test-practices#public-apis\n\nIf we can\u0027t test this class via public API, then it\u0027s better not to write any unit tests. Unit tests are great for 2 things: preventing regressions during the refactoring and validating the design. Tests which test private implementation or build backdoors are not helpful with those 2 things.\n\n\"Tab\" unit tests are good example of tests which never catch any regressions, failed to validate Tab design and constantly require maintenance during the refactoring.",
+      "range": {
+        "startLine": 37,
+        "startChar": 19,
+        "endLine": 37,
+        "endChar": 42
+      },
+      "revId": "cc22241727261bfcee6aa5b372f84d9a667eb265",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
