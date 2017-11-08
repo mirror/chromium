@@ -596,8 +596,12 @@ gpu::ContextResult GLES2DecoderPassthroughImpl::Initialize(
         gl::GetRequestableGLExtensionsFromCurrentContext());
 
     static constexpr const char* kRequiredFunctionalityExtensions[] = {
-        "GL_CHROMIUM_bind_uniform_location", "GL_CHROMIUM_sync_query",
-        "GL_EXT_debug_marker", "GL_NV_fence",
+        "GL_ANGLE_translated_shader_source",
+        "GL_CHROMIUM_bind_uniform_location",
+        "GL_CHROMIUM_sync_query",
+        "GL_EXT_debug_marker",
+        "GL_NV_fence",
+        "GL_OES_vertex_array_object",
     };
     RequestExtensions(api(), requestable_extensions,
                       kRequiredFunctionalityExtensions,
@@ -613,7 +617,6 @@ gpu::ContextResult GLES2DecoderPassthroughImpl::Initialize(
           "GL_ANGLE_pack_reverse_row_order",
           "GL_ANGLE_texture_compression_dxt3",
           "GL_ANGLE_texture_compression_dxt5",
-          "GL_ANGLE_translated_shader_source",
           "GL_CHROMIUM_framebuffer_mixed_samples",
           "GL_CHROMIUM_path_rendering",
           "GL_EXT_blend_minmax",
@@ -637,7 +640,6 @@ gpu::ContextResult GLES2DecoderPassthroughImpl::Initialize(
           "GL_OES_fbo_render_mipmap",
           "GL_OES_packed_depth_stencil",
           "GL_OES_rgb8_rgba8",
-          "GL_OES_vertex_array_object",
       };
       RequestExtensions(api(), requestable_extensions,
                         kOptionalFunctionalityExtensions,
@@ -653,17 +655,17 @@ gpu::ContextResult GLES2DecoderPassthroughImpl::Initialize(
   feature_info_->Initialize(attrib_helper.context_type, DisallowedFeatures());
 
   // Check for required extensions
-  // TODO(geofflang): verify
-  // feature_info_->feature_flags().angle_robust_resource_initialization and
-  // api()->glIsEnabledFn(GL_ROBUST_RESOURCE_INITIALIZATION_ANGLE)
-  if (!feature_info_->feature_flags().angle_robust_client_memory ||
-      !feature_info_->feature_flags().chromium_bind_generates_resource ||
-      !feature_info_->feature_flags().chromium_copy_texture ||
-      !feature_info_->feature_flags().angle_client_arrays ||
+  if (!features().angle_robust_client_memory ||
+      !features().chromium_bind_generates_resource ||
+      !features().chromium_copy_texture || !features().angle_client_arrays ||
       api()->glIsEnabledFn(GL_CLIENT_ARRAYS_ANGLE) != GL_FALSE ||
-      feature_info_->feature_flags().angle_webgl_compatibility !=
+      features().angle_webgl_compatibility !=
           IsWebGLContextType(attrib_helper.context_type) ||
-      !feature_info_->feature_flags().angle_request_extension) {
+      !features().angle_robust_resource_initialization ||
+      !api()->glIsEnabledFn(GL_ROBUST_RESOURCE_INITIALIZATION_ANGLE) ||
+      !features().angle_request_extension ||
+      !features().native_vertex_array_object || !features().ext_debug_marker ||
+      !features().angle_translated_shader_source) {
     Destroy(true);
     LOG(ERROR) << "ContextResult::kFatalFailure: "
                   "missing required extension";

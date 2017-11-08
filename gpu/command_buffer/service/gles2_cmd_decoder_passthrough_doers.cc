@@ -3093,6 +3093,7 @@ error::Error GLES2DecoderPassthroughImpl::DoSetDisjointValueSyncCHROMIUM(
 error::Error GLES2DecoderPassthroughImpl::DoInsertEventMarkerEXT(
     GLsizei length,
     const char* marker) {
+  DCHECK(features().ext_debug_marker);
   api()->glInsertEventMarkerEXTFn(length, marker);
   return error::kNoError;
 }
@@ -3100,11 +3101,13 @@ error::Error GLES2DecoderPassthroughImpl::DoInsertEventMarkerEXT(
 error::Error GLES2DecoderPassthroughImpl::DoPushGroupMarkerEXT(
     GLsizei length,
     const char* marker) {
+  DCHECK(features().ext_debug_marker);
   api()->glPushGroupMarkerEXTFn(length, marker);
   return error::kNoError;
 }
 
 error::Error GLES2DecoderPassthroughImpl::DoPopGroupMarkerEXT() {
+  DCHECK(features().ext_debug_marker);
   api()->glPopGroupMarkerEXTFn();
   return error::kNoError;
 }
@@ -3112,6 +3115,7 @@ error::Error GLES2DecoderPassthroughImpl::DoPopGroupMarkerEXT() {
 error::Error GLES2DecoderPassthroughImpl::DoGenVertexArraysOES(
     GLsizei n,
     volatile GLuint* arrays) {
+  DCHECK(features().native_vertex_array_object);
   return GenHelper(n, arrays, &vertex_array_id_map_,
                    [this](GLsizei n, GLuint* arrays) {
                      api()->glGenVertexArraysOESFn(n, arrays);
@@ -3121,6 +3125,7 @@ error::Error GLES2DecoderPassthroughImpl::DoGenVertexArraysOES(
 error::Error GLES2DecoderPassthroughImpl::DoDeleteVertexArraysOES(
     GLsizei n,
     const volatile GLuint* arrays) {
+  DCHECK(features().native_vertex_array_object);
   return DeleteHelper(n, arrays, &vertex_array_id_map_,
                       [this](GLsizei n, GLuint* arrays) {
                         api()->glDeleteVertexArraysOESFn(n, arrays);
@@ -3129,12 +3134,14 @@ error::Error GLES2DecoderPassthroughImpl::DoDeleteVertexArraysOES(
 
 error::Error GLES2DecoderPassthroughImpl::DoIsVertexArrayOES(GLuint array,
                                                              uint32_t* result) {
+  DCHECK(features().native_vertex_array_object);
   *result = api()->glIsVertexArrayOESFn(
       GetVertexArrayServiceID(array, &vertex_array_id_map_));
   return error::kNoError;
 }
 
 error::Error GLES2DecoderPassthroughImpl::DoBindVertexArrayOES(GLuint array) {
+  DCHECK(features().native_vertex_array_object);
   api()->glBindVertexArrayOESFn(
       GetVertexArrayServiceID(array, &vertex_array_id_map_));
   return error::kNoError;
@@ -3740,6 +3747,7 @@ error::Error GLES2DecoderPassthroughImpl::DoGetUniformsES3CHROMIUM(
 error::Error GLES2DecoderPassthroughImpl::DoGetTranslatedShaderSourceANGLE(
     GLuint shader,
     std::string* source) {
+  DCHECK(features().angle_translated_shader_source);
   FlushErrors();
   GLuint service_id = GetShaderServiceID(shader, resources_);
   GLint translated_source_length = 0;

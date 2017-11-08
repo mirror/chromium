@@ -821,9 +821,9 @@ void FeatureInfo::InitializeFeatures() {
   // On desktop, all devices support BGRA render buffers (note that on desktop
   // BGRA internal formats are converted to RGBA in the API implementation).
   // For ES, there is no extension that exposes BGRA renderbuffers, however
-  // Angle does support these.
+  // Angle does support these when exposing GL_EXT_texture_format_BGRA8888.
   bool enable_render_buffer_bgra =
-      gl_version_info_->is_angle || !gl_version_info_->is_es;
+      (gl_version_info_->is_angle && has_ext_bgra) || !gl_version_info_->is_es;
 
   if (enable_render_buffer_bgra) {
     feature_flags_.ext_render_buffer_format_bgra8888 = true;
