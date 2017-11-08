@@ -703,6 +703,24 @@
     },
     {
       "key": {
+        "uuid": "182e75b2_aebaa80f",
+        "filename": "chrome/browser/ui/cocoa/profiles/avatar_base_controller.mm",
+        "patchSetId": 15
+      },
+      "lineNbr": 219,
+      "author": {
+        "id": 1002092
+      },
+      "writtenOn": "2017-11-08T23:29:56Z",
+      "side": 1,
+      "message": "\u003e My goal is to keep the current behavior:\n\u003e  + click on the button (mouse down and then mouse up)\n\u003e     \u003d\u003e the menu opens\n\u003e  + click a second time on the button (mouse down and then mouse up)\n\u003e     \u003d\u003e the menu closes\n\u003e \n\u003e On the second click, OnWidgetDestroying() is called, and then -[AvatarBaseController buttonClicked:] is called.\n\u003e My issue is to make sure that on the second mouse click, the menu is not opened a second time.\n\nIn the second case, I think the *current* Cocoa profile switcher already has the issue I described.\n\nIf the menu is showing and you click the button again, the menu only stays dismissed if you click \"quickly\". Like, less than 100ms. If you hold the mouse down for longer than that, the menu comes back when you release.\n\nI don\u0027t think delaying by a single runloop iteration is really going to fix this - it\u0027s just a weird workaround that adds complexity and doesn\u0027t really address the issue.",
+      "parentUuid": "aa49789f_14d0ec26",
+      "revId": "b7452963e270cd41a6a807cbe21fdc5557201b95",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "d95ea1ad_158c99db",
         "filename": "chrome/browser/ui/cocoa/profiles/avatar_button_controller.mm",
         "patchSetId": 15
@@ -802,6 +820,24 @@
       "side": 1,
       "message": "This is going to be a bit complicated to have both working at the same time. If you really want me to do that, I guess I will need more time.",
       "parentUuid": "18a55677_57fd8469",
+      "revId": "b7452963e270cd41a6a807cbe21fdc5557201b95",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2e11f0db_b98580b1",
+        "filename": "chrome/browser/ui/cocoa/profiles/profile_chooser_controller.h",
+        "patchSetId": 15
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1002092
+      },
+      "writtenOn": "2017-11-08T23:29:56Z",
+      "side": 1,
+      "message": "\u003e This is going to be a bit complicated to have both working at the same time. If you really want me to do that, I guess I will need more time.\n\nA runtime switch/FeatureList (and optional chrome://flag) is what we\u0027ve done for all other UI we\u0027ve switched, or are switching from Cocoa to Views. E.g. chrome://flags/#mac-views-task-manager, `base::Feature kCocoaPermissionBubbles`, chrome://flags/#enable-macviews-credit-card-dialogs, chrome://flags/#mac-views-native-app-windows .\n\nIs there something about this surface that makes it more complicated? You might find that it is simpler than you expect if you follow the patterns used by those, or translate bubble, or others that are grouped behind chrome://flags/#secondary-ui-md or chrome://flags/#show-all-dialogs-with-views-toolkit . \n\nIf you have an email lg-tm from launch approval, then this is OK to land. But at this stage I think you need a backup plan in case you don\u0027t get that.",
+      "parentUuid": "96a93a96_066c9227",
       "revId": "b7452963e270cd41a6a807cbe21fdc5557201b95",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
