@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "f6e88f52_c2a52081",
+        "filename": "third_party/WebKit/Source/bindings/scripts/web_idl/__init__.py",
+        "patchSetId": 18
+      },
+      "lineNbr": 5,
+      "author": {
+        "id": 1001470
+      },
+      "writtenOn": "2017-11-08T02:49:27Z",
+      "side": 1,
+      "message": "No, we don\u0027t need it. The next phase, we need Collection.\ndone.",
+      "parentUuid": "23ead4a4_b0d484ad",
+      "revId": "c8ac2ac5d8e15ac8292d6400983e1dd8b36d6a1f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "203168d1_22241047",
         "filename": "third_party/WebKit/Source/bindings/scripts/web_idl/collection.py",
         "patchSetId": 18
@@ -42,6 +60,30 @@
     },
     {
       "key": {
+        "uuid": "663f3e10_c1c52f30",
+        "filename": "third_party/WebKit/Source/bindings/scripts/web_idl/collection.py",
+        "patchSetId": 18
+      },
+      "lineNbr": 36,
+      "author": {
+        "id": 1001470
+      },
+      "writtenOn": "2017-11-08T02:49:27Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "203168d1_22241047",
+      "range": {
+        "startLine": 36,
+        "startChar": 46,
+        "endLine": 36,
+        "endChar": 85
+      },
+      "revId": "c8ac2ac5d8e15ac8292d6400983e1dd8b36d6a1f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "54372a64_d444c051",
         "filename": "third_party/WebKit/Source/bindings/scripts/web_idl/collection.py",
         "patchSetId": 18
@@ -59,6 +101,24 @@
     },
     {
       "key": {
+        "uuid": "d9fd7f87_ab8361d6",
+        "filename": "third_party/WebKit/Source/bindings/scripts/web_idl/collection.py",
+        "patchSetId": 18
+      },
+      "lineNbr": 99,
+      "author": {
+        "id": 1001470
+      },
+      "writtenOn": "2017-11-08T02:49:27Z",
+      "side": 1,
+      "message": "Ah, right. I merge find_partial_foobar().",
+      "parentUuid": "54372a64_d444c051",
+      "revId": "c8ac2ac5d8e15ac8292d6400983e1dd8b36d6a1f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "ed06dbb7_650d79bd",
         "filename": "third_party/WebKit/Source/bindings/scripts/web_idl/collection.py",
         "patchSetId": 18
@@ -70,6 +130,24 @@
       "writtenOn": "2017-10-30T08:22:44Z",
       "side": 1,
       "message": "Do we want to expose Metadata to public?\n\nI think that it\u0027s better to define this class inside Collection as a nested class.  I like the way of |find_filepath| because it hides its implementation details, e.g. how the data are stored.",
+      "revId": "c8ac2ac5d8e15ac8292d6400983e1dd8b36d6a1f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5e4e01ed_f1aa36b4",
+        "filename": "third_party/WebKit/Source/bindings/scripts/web_idl/collection.py",
+        "patchSetId": 18
+      },
+      "lineNbr": 163,
+      "author": {
+        "id": 1001470
+      },
+      "writtenOn": "2017-11-08T02:49:27Z",
+      "side": 1,
+      "message": "It is needed to be public for serialization (visible from pickle).",
+      "parentUuid": "ed06dbb7_650d79bd",
       "revId": "c8ac2ac5d8e15ac8292d6400983e1dd8b36d6a1f",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -122,6 +200,54 @@
     },
     {
       "key": {
+        "uuid": "35ffeb33_a5e03d34",
+        "filename": "third_party/WebKit/Source/bindings/scripts/web_idl/collector.py",
+        "patchSetId": 18
+      },
+      "lineNbr": 26,
+      "author": {
+        "id": 1001470
+      },
+      "writtenOn": "2017-11-08T02:49:27Z",
+      "side": 1,
+      "message": "It was to make Collector flexible, but I think it reduces usability.\nMoved it to a member.",
+      "parentUuid": "8aa2c198_3aa990f9",
+      "range": {
+        "startLine": 26,
+        "startChar": 40,
+        "endLine": 26,
+        "endChar": 80
+      },
+      "revId": "c8ac2ac5d8e15ac8292d6400983e1dd8b36d6a1f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "1337a28d_f002f7c5",
+        "filename": "third_party/WebKit/Source/bindings/scripts/web_idl/collector.py",
+        "patchSetId": 18
+      },
+      "lineNbr": 26,
+      "author": {
+        "id": 1001470
+      },
+      "writtenOn": "2017-11-08T02:49:27Z",
+      "side": 1,
+      "message": "SG. done.",
+      "parentUuid": "48af0db7_9b5caacc",
+      "range": {
+        "startLine": 26,
+        "startChar": 8,
+        "endLine": 26,
+        "endChar": 22
+      },
+      "revId": "c8ac2ac5d8e15ac8292d6400983e1dd8b36d6a1f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "77e1a993_22a6ddb3",
         "filename": "third_party/WebKit/Source/bindings/scripts/web_idl/collector.py",
         "patchSetId": 18
@@ -136,6 +262,24 @@
       "revId": "c8ac2ac5d8e15ac8292d6400983e1dd8b36d6a1f",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a04969c6_41f66bcd",
+        "filename": "third_party/WebKit/Source/bindings/scripts/web_idl/collector.py",
+        "patchSetId": 18
+      },
+      "lineNbr": 37,
+      "author": {
+        "id": 1001470
+      },
+      "writtenOn": "2017-11-08T02:49:27Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "77e1a993_22a6ddb3",
+      "revId": "c8ac2ac5d8e15ac8292d6400983e1dd8b36d6a1f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -162,6 +306,30 @@
     },
     {
       "key": {
+        "uuid": "f4c60215_2b5c2850",
+        "filename": "third_party/WebKit/Source/bindings/scripts/web_idl/collector.py",
+        "patchSetId": 18
+      },
+      "lineNbr": 45,
+      "author": {
+        "id": 1001470
+      },
+      "writtenOn": "2017-11-08T02:49:27Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "85acb8a8_c602c518",
+      "range": {
+        "startLine": 45,
+        "startChar": 8,
+        "endLine": 45,
+        "endChar": 16
+      },
+      "revId": "c8ac2ac5d8e15ac8292d6400983e1dd8b36d6a1f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "fe020ed2_48fe846a",
         "filename": "third_party/WebKit/Source/bindings/scripts/web_idl/collector.py",
         "patchSetId": 18
@@ -176,6 +344,24 @@
       "revId": "c8ac2ac5d8e15ac8292d6400983e1dd8b36d6a1f",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "bc6b95ca_42b162c2",
+        "filename": "third_party/WebKit/Source/bindings/scripts/web_idl/collector.py",
+        "patchSetId": 18
+      },
+      "lineNbr": 53,
+      "author": {
+        "id": 1001470
+      },
+      "writtenOn": "2017-11-08T02:49:27Z",
+      "side": 1,
+      "message": "SG.\nDone with yield.",
+      "parentUuid": "fe020ed2_48fe846a",
+      "revId": "c8ac2ac5d8e15ac8292d6400983e1dd8b36d6a1f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -196,6 +382,24 @@
     },
     {
       "key": {
+        "uuid": "fdbb38ce_6c57a65d",
+        "filename": "third_party/WebKit/Source/bindings/scripts/web_idl/constant.py",
+        "patchSetId": 18
+      },
+      "lineNbr": 10,
+      "author": {
+        "id": 1001470
+      },
+      "writtenOn": "2017-11-08T02:49:27Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "b7eba338_7bd53636",
+      "revId": "c8ac2ac5d8e15ac8292d6400983e1dd8b36d6a1f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "74be05b0_bc1c65d0",
         "filename": "third_party/WebKit/Source/bindings/scripts/web_idl/idl_types.py",
         "patchSetId": 18
@@ -210,6 +414,24 @@
       "revId": "c8ac2ac5d8e15ac8292d6400983e1dd8b36d6a1f",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3f49eb77_f579b3e3",
+        "filename": "third_party/WebKit/Source/bindings/scripts/web_idl/idl_types.py",
+        "patchSetId": 18
+      },
+      "lineNbr": 13,
+      "author": {
+        "id": 1001470
+      },
+      "writtenOn": "2017-11-08T02:49:27Z",
+      "side": 1,
+      "message": "All IDL types, except for \"symbol\" and \"Error\".\nInterface types (not \"Interface\") are included in TypeReference.",
+      "parentUuid": "74be05b0_bc1c65d0",
+      "revId": "c8ac2ac5d8e15ac8292d6400983e1dd8b36d6a1f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -230,6 +452,24 @@
     },
     {
       "key": {
+        "uuid": "fd3e1482_913d5505",
+        "filename": "third_party/WebKit/Source/bindings/scripts/web_idl/idl_types.py",
+        "patchSetId": 18
+      },
+      "lineNbr": 145,
+      "author": {
+        "id": 1001470
+      },
+      "writtenOn": "2017-11-08T02:49:27Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "17cc51b0_be56b96c",
+      "revId": "c8ac2ac5d8e15ac8292d6400983e1dd8b36d6a1f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "05ff951c_874e1111",
         "filename": "third_party/WebKit/Source/bindings/scripts/web_idl/idl_types.py",
         "patchSetId": 18
@@ -244,6 +484,24 @@
       "revId": "c8ac2ac5d8e15ac8292d6400983e1dd8b36d6a1f",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6c795765_54910bdd",
+        "filename": "third_party/WebKit/Source/bindings/scripts/web_idl/idl_types.py",
+        "patchSetId": 18
+      },
+      "lineNbr": 147,
+      "author": {
+        "id": 1001470
+      },
+      "writtenOn": "2017-11-08T02:49:27Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "05ff951c_874e1111",
+      "revId": "c8ac2ac5d8e15ac8292d6400983e1dd8b36d6a1f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -264,6 +522,24 @@
     },
     {
       "key": {
+        "uuid": "592e797e_315672f7",
+        "filename": "third_party/WebKit/Source/bindings/scripts/web_idl/operation.py",
+        "patchSetId": 18
+      },
+      "lineNbr": 8,
+      "author": {
+        "id": 1001470
+      },
+      "writtenOn": "2017-11-08T02:49:27Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "f8d08172_3ba213f1",
+      "revId": "c8ac2ac5d8e15ac8292d6400983e1dd8b36d6a1f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "7cd94dd8_4cade891",
         "filename": "third_party/WebKit/Source/bindings/scripts/web_idl/out_spec_types.py",
         "patchSetId": 18
@@ -278,6 +554,24 @@
       "revId": "c8ac2ac5d8e15ac8292d6400983e1dd8b36d6a1f",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a25a2b58_62e38985",
+        "filename": "third_party/WebKit/Source/bindings/scripts/web_idl/out_spec_types.py",
+        "patchSetId": 18
+      },
+      "lineNbr": 10,
+      "author": {
+        "id": 1001470
+      },
+      "writtenOn": "2017-11-08T02:49:27Z",
+      "side": 1,
+      "message": "Makes sense. done.",
+      "parentUuid": "7cd94dd8_4cade891",
+      "revId": "c8ac2ac5d8e15ac8292d6400983e1dd8b36d6a1f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -298,6 +592,24 @@
     },
     {
       "key": {
+        "uuid": "e741752b_95b07d59",
+        "filename": "third_party/WebKit/Source/bindings/scripts/web_idl/typedef.py",
+        "patchSetId": 18
+      },
+      "lineNbr": 17,
+      "author": {
+        "id": 1001470
+      },
+      "writtenOn": "2017-11-08T02:49:27Z",
+      "side": 1,
+      "message": "Yes, it is different.\nIf __eq__() is not implemented, \u003d\u003d compares their \u0027address\u0027es, and it means to check both operands need to point the same instance.\n\nBut anyway, we have no use cases in this CL, so I drop this method.",
+      "parentUuid": "5918256c_05eac6f2",
+      "revId": "c8ac2ac5d8e15ac8292d6400983e1dd8b36d6a1f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "6c6e8e48_b76b5345",
         "filename": "third_party/WebKit/Source/bindings/scripts/web_idl/web_idl_builder.py",
         "patchSetId": 18
@@ -312,6 +624,24 @@
       "revId": "c8ac2ac5d8e15ac8292d6400983e1dd8b36d6a1f",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7da40c21_9231774c",
+        "filename": "third_party/WebKit/Source/bindings/scripts/web_idl/web_idl_builder.py",
+        "patchSetId": 18
+      },
+      "lineNbr": 41,
+      "author": {
+        "id": 1001470
+      },
+      "writtenOn": "2017-11-08T02:49:27Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "6c6e8e48_b76b5345",
+      "revId": "c8ac2ac5d8e15ac8292d6400983e1dd8b36d6a1f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
