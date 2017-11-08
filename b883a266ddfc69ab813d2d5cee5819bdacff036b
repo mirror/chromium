@@ -189,6 +189,24 @@
     },
     {
       "key": {
+        "uuid": "a4d7ebbd_8b6e8789",
+        "filename": "services/ui/ws/server_window.h",
+        "patchSetId": 14
+      },
+      "lineNbr": 243,
+      "author": {
+        "id": 1115911
+      },
+      "writtenOn": "2017-11-08T21:59:03Z",
+      "side": 1,
+      "message": "You can do this in a separate CL.",
+      "parentUuid": "2122160c_7ebd58a5",
+      "revId": "b883a266ddfc69ab813d2d5cee5819bdacff036b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "0499bb98_005be579",
         "filename": "services/viz/privileged/interfaces/compositing/frame_sink_manager.mojom",
         "patchSetId": 14
@@ -217,6 +235,24 @@
       "writtenOn": "2017-11-08T21:51:40Z",
       "side": 1,
       "message": "Is FrameSinkManagerClient the best place for this? With mus-ws, the mus-ws will have the FrameSinkManagerClient. But, from what I understand, we would still want the FrameToken to reach the browser. Wouldn\u0027t it be easier to send this FrameToken over CompositorFrameSinkClient to the embedder instead? That way, it would always reach the browser, regardless of whether browser is the viz-host or not.",
+      "revId": "b883a266ddfc69ab813d2d5cee5819bdacff036b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d51678d5_1b3a75dd",
+        "filename": "services/viz/privileged/interfaces/compositing/frame_sink_manager.mojom",
+        "patchSetId": 14
+      },
+      "lineNbr": 114,
+      "author": {
+        "id": 1115911
+      },
+      "writtenOn": "2017-11-08T21:59:03Z",
+      "side": 1,
+      "message": "That depends on what you want to do. If we go through CompositorFrameSinkClient you end up deep in layer compositor code (potentially on the compositor thread). Do we want to do to the parent or to the host? CompositorFrameSinkClient doesn\u0027t seem like the right place to do this to me.",
+      "parentUuid": "35e4c352_9a6a7eab",
       "revId": "b883a266ddfc69ab813d2d5cee5819bdacff036b",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
