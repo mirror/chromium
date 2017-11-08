@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "5e66ed4f_5cb056ed",
+        "filename": "testing/buildbot/gn_isolate_map.pyl",
+        "patchSetId": 1
+      },
+      "lineNbr": 319,
+      "author": {
+        "id": 1148599
+      },
+      "writtenOn": "2017-11-08T02:58:45Z",
+      "side": 1,
+      "message": "Why is this here? I didn\u0027t think this needed to be here, but maybe I\u0027m wrong. Dirk would know better",
+      "revId": "df3da67334d6eb6c4db6d2c2414eec4799869f6e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
