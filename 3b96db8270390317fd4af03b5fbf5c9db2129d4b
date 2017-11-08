@@ -16,6 +16,24 @@
       "revId": "3b96db8270390317fd4af03b5fbf5c9db2129d4b",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "012c1577_0d0d6a23",
+        "filename": "third_party/WebKit/Source/core/layout/LayoutListItem.cpp",
+        "patchSetId": 2
+      },
+      "lineNbr": 141,
+      "author": {
+        "id": 1128431
+      },
+      "writtenOn": "2017-11-08T14:32:08Z",
+      "side": 1,
+      "message": "huh...happen to know why we want to generate a line break here?\n\nGenerating a line break for IsWritingModeRoot() looks also wrong. Don\u0027t know what other cases (!IsLayoutBlockFlow()) wants to cover...what would happen we just return curr_child here?",
+      "parentUuid": "407f6137_ca8c0dff",
+      "revId": "3b96db8270390317fd4af03b5fbf5c9db2129d4b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
