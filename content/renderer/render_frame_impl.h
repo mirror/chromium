@@ -565,7 +565,6 @@ class CONTENT_EXPORT RenderFrameImpl
   void DidChangeOpener(blink::WebFrame* frame) override;
   void FrameDetached(DetachType type) override;
   void FrameFocused() override;
-  void WillCommitProvisionalLoad() override;
   void DidChangeName(const blink::WebString& name) override;
   void DidEnforceInsecureRequestPolicy(
       blink::WebInsecureRequestPolicy policy) override;
@@ -1255,6 +1254,11 @@ class CONTENT_EXPORT RenderFrameImpl
   mojom::URLLoaderFactory* custom_url_loader_factory() {
     return custom_url_loader_factory_.get();
   }
+
+  // Used in DCHECKs.  Currently only checks whether the browser knows the
+  // origin of the frame (e.g. script execution is only allowed on an initial,
+  // empty document or *after* a commit).
+  bool CanExecuteJavaScript();
 
   // Stores the WebLocalFrame we are associated with.  This is null from the
   // constructor until BindToFrame() is called, and it is null after
