@@ -36,6 +36,7 @@ import server
 from webelement import WebElement
 import webserver
 
+
 _TEST_DATA_DIR = os.path.join(chrome_paths.GetTestData(), 'chromedriver')
 
 if util.IsLinux():
@@ -992,7 +993,8 @@ class ChromeDriverTest(ChromeDriverBaseTestWithWebServer):
   def testPendingConsoleLog(self):
     new_logs = [""]
     def GetPendingLogs(driver):
-      new_logs[0] = driver.GetLog('browser')
+      response = driver.GetLog('browser')
+      new_logs[0] = [x for x in response if x['source'] == 'console-api']
       return new_logs[0]
 
     self._driver.Load(self.GetHttpUrlForFile(
@@ -1000,8 +1002,8 @@ class ChromeDriverTest(ChromeDriverBaseTestWithWebServer):
     logs = self._driver.GetLog('browser')
     self.assertEqual('console-api', logs[0]['source'])
     self.assertTrue('InitialError' in logs[0]['message'])
-
     self.WaitForCondition(lambda: len(GetPendingLogs(self._driver)) > 0 , 11)
+
     self.assertEqual('console-api', new_logs[0][0]['source'])
     self.assertTrue('RepeatedError' in new_logs[0][0]['message'])
 
