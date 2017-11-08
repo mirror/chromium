@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "3c25d45c_e99ee8ee",
+        "filename": "device/geolocation/location_arbitrator.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 194,
+      "author": {
+        "id": 1177311
+      },
+      "writtenOn": "2017-11-08T14:58:57Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "d9b87306_2c62b289",
+      "range": {
+        "startLine": 193,
+        "startChar": 13,
+        "endLine": 194,
+        "endChar": 44
+      },
+      "revId": "f69e0b63ed061f870e26447fbd9e6565939d05e8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "205dcf1c_ba531571",
         "filename": "device/geolocation/public/interfaces/geoposition.mojom",
         "patchSetId": 4
@@ -45,6 +69,30 @@
       "revId": "f69e0b63ed061f870e26447fbd9e6565939d05e8",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ac1b8772_055b2740",
+        "filename": "device/geolocation/public/interfaces/geoposition.mojom",
+        "patchSetId": 4
+      },
+      "lineNbr": 51,
+      "author": {
+        "id": 1177311
+      },
+      "writtenOn": "2017-11-08T14:58:57Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "205dcf1c_ba531571",
+      "range": {
+        "startLine": 51,
+        "startChar": 44,
+        "endLine": 51,
+        "endChar": 68
+      },
+      "revId": "f69e0b63ed061f870e26447fbd9e6565939d05e8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -71,6 +119,30 @@
     },
     {
       "key": {
+        "uuid": "77edf6a3_321a3960",
+        "filename": "third_party/WebKit/LayoutTests/geolocation-api/resources/geolocation-mock.js",
+        "patchSetId": 4
+      },
+      "lineNbr": 91,
+      "author": {
+        "id": 1177311
+      },
+      "writtenOn": "2017-11-08T14:58:57Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "22954608_337a8059",
+      "range": {
+        "startLine": 91,
+        "startChar": 52,
+        "endLine": 91,
+        "endChar": 55
+      },
+      "revId": "f69e0b63ed061f870e26447fbd9e6565939d05e8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "e133f810_e1f30a2c",
         "filename": "third_party/WebKit/LayoutTests/geolocation-api/resources/geolocation-mock.js",
         "patchSetId": 4
@@ -82,6 +154,30 @@
       "writtenOn": "2017-11-06T15:58:17Z",
       "side": 1,
       "message": "Wouldn\u0027t this only apply to Windows systems?\n\nAlso, consider making this a calculated constant, e.g.:\n\nconst windowsEpoch \u003d new Date(YYYY, MM, DD, 0, 0, 0, 0);\nconst posixEpoch \u003d new Date(ZZZZ, NN, EE, 0, 0, 0, 0);\nconst epochDeltaInMs \u003d posixEpoch.getTime() - windowsEpoch.getTime();",
+      "range": {
+        "startLine": 97,
+        "startChar": 9,
+        "endLine": 97,
+        "endChar": 46
+      },
+      "revId": "f69e0b63ed061f870e26447fbd9e6565939d05e8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4318994a_f03d0652",
+        "filename": "third_party/WebKit/LayoutTests/geolocation-api/resources/geolocation-mock.js",
+        "patchSetId": 4
+      },
+      "lineNbr": 97,
+      "author": {
+        "id": 1177311
+      },
+      "writtenOn": "2017-11-08T14:58:57Z",
+      "side": 1,
+      "message": "It is not only for Windows. The base::Time\u0027s value starts from Windows FILETIME epoch in all platforms.\n\ncalculated constant added. Done.",
+      "parentUuid": "e133f810_e1f30a2c",
       "range": {
         "startLine": 97,
         "startChar": 9,
