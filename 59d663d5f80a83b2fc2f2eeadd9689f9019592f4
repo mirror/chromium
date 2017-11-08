@@ -1,0 +1,73 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "89132500_3181f5eb",
+        "filename": "third_party/WebKit/Source/core/page/SpatialNavigationTest.cpp",
+        "patchSetId": 2
+      },
+      "lineNbr": 21,
+      "author": {
+        "id": 1245462
+      },
+      "writtenOn": "2017-11-08T17:48:40Z",
+      "side": 1,
+      "message": "I think it is better to inherit from PageTestBase. Then we get GetFrame() and GetDocument() for free.",
+      "range": {
+        "startLine": 21,
+        "startChar": 37,
+        "endLine": 21,
+        "endChar": 52
+      },
+      "revId": "59d663d5f80a83b2fc2f2eeadd9689f9019592f4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f06d4f39_0b26dba9",
+        "filename": "third_party/WebKit/Source/core/page/SpatialNavigationTest.cpp",
+        "patchSetId": 2
+      },
+      "lineNbr": 78,
+      "author": {
+        "id": 1245462
+      },
+      "writtenOn": "2017-11-08T17:48:40Z",
+      "side": 1,
+      "message": "Same as next comment.",
+      "range": {
+        "startLine": 75,
+        "startChar": 0,
+        "endLine": 78,
+        "endChar": 65
+      },
+      "revId": "59d663d5f80a83b2fc2f2eeadd9689f9019592f4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7b17ffe2_2c847c08",
+        "filename": "third_party/WebKit/Source/core/page/SpatialNavigationTest.cpp",
+        "patchSetId": 2
+      },
+      "lineNbr": 121,
+      "author": {
+        "id": 1245462
+      },
+      "writtenOn": "2017-11-08T17:48:40Z",
+      "side": 1,
+      "message": "WebElementTest also inherits PageTestBase. WebElementTest has a helper InsertHTML.\n\nIf we move WebElementTest::InsertHTML() to PageTestBase we could use InsertHTML() here to save 2 lines of code.",
+      "range": {
+        "startLine": 118,
+        "startChar": 0,
+        "endLine": 121,
+        "endChar": 65
+      },
+      "revId": "59d663d5f80a83b2fc2f2eeadd9689f9019592f4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
