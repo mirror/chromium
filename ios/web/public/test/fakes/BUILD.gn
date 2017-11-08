@@ -34,6 +34,8 @@ source_set("fakes") {
     "test_native_content.mm",
     "test_native_content_provider.h",
     "test_native_content_provider.mm",
+    "test_navigation_context.h",
+    "test_navigation_context.mm",
     "test_navigation_manager.h",
     "test_navigation_manager.mm",
     "test_web_client.h",
