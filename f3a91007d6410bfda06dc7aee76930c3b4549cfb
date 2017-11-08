@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "f09c29fc_d68271de",
+        "filename": "components/history/core/browser/top_sites_cache.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 49,
+      "author": {
+        "id": 1116027
+      },
+      "writtenOn": "2017-11-08T14:42:35Z",
+      "side": 1,
+      "message": "nit: maybe use std::move() to avoid another copy\n\n  images_ \u003d std::move(images_to_keep);",
+      "revId": "f3a91007d6410bfda06dc7aee76930c3b4549cfb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
