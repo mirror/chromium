@@ -16,6 +16,24 @@
       "revId": "93ee45b9f0b1a31c4519e44af3923be2f9dbc401",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b5d005f2_48d70849",
+        "filename": "ios/web/web_state/js/resources/common.js",
+        "patchSetId": 3
+      },
+      "lineNbr": 83,
+      "author": {
+        "id": 1144530
+      },
+      "writtenOn": "2017-11-08T14:19:58Z",
+      "side": 1,
+      "message": "Technically they should not as they are applied to different objects (forms and fields).\nChanged anyway for clarity.",
+      "parentUuid": "c7ed8655_5e4440e6",
+      "revId": "93ee45b9f0b1a31c4519e44af3923be2f9dbc401",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
