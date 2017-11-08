@@ -2,6 +2,188 @@
   "comments": [
     {
       "key": {
+        "uuid": "4f2aa7c0_5429202c",
+        "filename": "chrome/browser/ui/views/passwords/manage_password_items_view.cc",
+        "patchSetId": 10
+      },
+      "lineNbr": 47,
+      "author": {
+        "id": 1002092
+      },
+      "writtenOn": "2017-11-08T03:23:16Z",
+      "side": 1,
+      "message": "float?",
+      "revId": "e91bcdf204ada0c9581434b8e4a27ee4abe361e3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7a6aaecd_d009a252",
+        "filename": "chrome/browser/ui/views/passwords/manage_password_items_view.cc",
+        "patchSetId": 10
+      },
+      "lineNbr": 72,
+      "author": {
+        "id": 1002092
+      },
+      "writtenOn": "2017-11-08T03:23:16Z",
+      "side": 1,
+      "message": "move constants to top of section",
+      "revId": "e91bcdf204ada0c9581434b8e4a27ee4abe361e3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e48ad82f_b25e1c72",
+        "filename": "chrome/browser/ui/views/passwords/manage_password_items_view.cc",
+        "patchSetId": 10
+      },
+      "lineNbr": 77,
+      "author": {
+        "id": 1002092
+      },
+      "writtenOn": "2017-11-08T03:23:16Z",
+      "side": 1,
+      "message": "const base::string16\u0026",
+      "revId": "e91bcdf204ada0c9581434b8e4a27ee4abe361e3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6130dc80_7d6861c2",
+        "filename": "chrome/browser/ui/views/passwords/manage_password_items_view.cc",
+        "patchSetId": 10
+      },
+      "lineNbr": 79,
+      "author": {
+        "id": 1002092
+      },
+      "writtenOn": "2017-11-08T03:23:16Z",
+      "side": 1,
+      "message": "std::unique_ptr\u003cviews::ImageButton\u003e button \u003d\n    base::WrapUnique(views::CreateVectorImageButton(listener));",
+      "revId": "e91bcdf204ada0c9581434b8e4a27ee4abe361e3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b5ca4037_078405ad",
+        "filename": "chrome/browser/ui/views/passwords/manage_password_items_view.cc",
+        "patchSetId": 10
+      },
+      "lineNbr": 90,
+      "author": {
+        "id": 1002092
+      },
+      "writtenOn": "2017-11-08T03:23:16Z",
+      "side": 1,
+      "message": "const base::string16\u0026",
+      "revId": "e91bcdf204ada0c9581434b8e4a27ee4abe361e3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "de6939f2_327a1770",
+        "filename": "chrome/browser/ui/views/passwords/manage_password_items_view.cc",
+        "patchSetId": 10
+      },
+      "lineNbr": 158,
+      "author": {
+        "id": 1002092
+      },
+      "writtenOn": "2017-11-08T03:23:16Z",
+      "side": 1,
+      "message": "std::make_unique? I think everything is transitioning now",
+      "range": {
+        "startLine": 158,
+        "startChar": 39,
+        "endLine": 158,
+        "endChar": 55
+      },
+      "revId": "e91bcdf204ada0c9581434b8e4a27ee4abe361e3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8cc46ef2_920e8891",
+        "filename": "chrome/browser/ui/views/passwords/manage_password_items_view.cc",
+        "patchSetId": 10
+      },
+      "lineNbr": 206,
+      "author": {
+        "id": 1002092
+      },
+      "writtenOn": "2017-11-08T03:23:16Z",
+      "side": 1,
+      "message": "hmmmm - this raises new lifetime implications. I wonder if this is responsible for (or fixes) http://crbug.com/751940. |mouse_handler_| has a views::EventMonitor which does stuff in its destructor. that used to be called via reset() in CloseBubble(). Now it\u0027s being left to the BubbleDialogDelegate destructor.",
+      "revId": "e91bcdf204ada0c9581434b8e4a27ee4abe361e3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a8a03e14_7bbbdf72",
+        "filename": "chrome/browser/ui/views/passwords/manage_password_items_view.h",
+        "patchSetId": 10
+      },
+      "lineNbr": 41,
+      "author": {
+        "id": 1002092
+      },
+      "writtenOn": "2017-11-08T03:23:16Z",
+      "side": 1,
+      "message": "nit: cont gfx::Point\u0026",
+      "range": {
+        "startLine": 41,
+        "startChar": 26,
+        "endLine": 41,
+        "endChar": 49
+      },
+      "revId": "e91bcdf204ada0c9581434b8e4a27ee4abe361e3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "48bf5269_6f3c4fe0",
+        "filename": "chrome/browser/ui/views/passwords/manage_password_items_view.h",
+        "patchSetId": 10
+      },
+      "lineNbr": 63,
+      "author": {
+        "id": 1002092
+      },
+      "writtenOn": "2017-11-08T03:23:16Z",
+      "side": 1,
+      "message": "nit: DISALLOW_COPY_AND_ASSIGN\n\nI would also just forward declare this class here, and define\n\nclass ManagePasswordItemsView::PasswordRow : public views::ButtonListener {\n\nin the .cc file.",
+      "revId": "e91bcdf204ada0c9581434b8e4a27ee4abe361e3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f8c0db3c_f5730124",
+        "filename": "chrome/browser/ui/views/passwords/manage_password_items_view.h",
+        "patchSetId": 10
+      },
+      "lineNbr": 83,
+      "author": {
+        "id": 1002092
+      },
+      "writtenOn": "2017-11-08T03:23:16Z",
+      "side": 1,
+      "message": "nit: DISALLOW_COPY_AND_ASSIGN",
+      "revId": "e91bcdf204ada0c9581434b8e4a27ee4abe361e3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "34577e69_e005ba81",
         "filename": "chrome/browser/ui/views/passwords/manage_passwords_bubble_view.cc",
         "patchSetId": 10
@@ -72,6 +254,24 @@
     },
     {
       "key": {
+        "uuid": "778b111f_ee24bce9",
+        "filename": "chrome/browser/ui/views/passwords/manage_passwords_bubble_view.h",
+        "patchSetId": 10
+      },
+      "lineNbr": 58,
+      "author": {
+        "id": 1002092
+      },
+      "writtenOn": "2017-11-08T03:23:16Z",
+      "side": 1,
+      "message": "\u003e No, this is global for model-\u003eGetWebContents() used from tab_dialog_views (eew),\n\nwill this CL is *also* causing it be used in new ways. If there\u0027s a plan to remove dependency on the global, we shouldn\u0027t be adding more.\n\nI guess I can live with the existing uses, but please don\u0027t make TabDialogsViewsMac::ShowManagePasswordsBubble() rely on it more heavily.\n\n\u003e model() doesn\u0027t exist on LocationBarBubbleDelegateView() which is what you get from manage_passwords_bubble_model() after this change.\n\nCan we add a simple subclass of LocationBarBubbleDelegateView* that just manages the passwords bubble global? It can have a virtual GetModel, or even host the model if that\u0027s the common amongst all passwords dialogs.\n\nI don\u0027t like instances having to call RemoveManagePasswordsDialog(..) in their destructor -- that\u0027s really fragile.",
+      "parentUuid": "a54e5817_5acd5d35",
+      "revId": "e91bcdf204ada0c9581434b8e4a27ee4abe361e3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "b9499727_f4a9ec65",
         "filename": "chrome/browser/ui/views/passwords/manage_passwords_bubble_view.h",
         "patchSetId": 10
@@ -118,6 +318,24 @@
       "writtenOn": "2017-11-08T00:58:38Z",
       "side": 1,
       "message": "tapted@: Do you think this check is always equivalent to if the present bubble is the same as the one we created? If so ShowBubble can return the dialog and we can check if ManagePasswordsBubbleView::manage_passwords_bubble_model() \u003d\u003d dialog_we_created_already_.\n\nDoes that make sense?",
+      "revId": "e91bcdf204ada0c9581434b8e4a27ee4abe361e3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0fc41ec3_4f494c5a",
+        "filename": "chrome/browser/ui/views/tab_dialogs_views.cc",
+        "patchSetId": 10
+      },
+      "lineNbr": 82,
+      "author": {
+        "id": 1002092
+      },
+      "writtenOn": "2017-11-08T03:23:16Z",
+      "side": 1,
+      "message": "\u003e tapted@: Do you think this check is always equivalent to if the present bubble is the same as the one we created? If so ShowBubble can return the dialog and we can check if ManagePasswordsBubbleView::manage_passwords_bubble_model() \u003d\u003d dialog_we_created_already_.\n\u003e \n\u003e Does that make sense?\n\nIt probably is -- there is a TabDialogs instance per WebContents. If anything, the ManagePasswordsBubbleModel* model should be stored on the TabDialogs instance, but that raises other lifetime issues and falls into ~beyond the scope of this CL..\n\nI think creating a common base that encapsulates this global is the right approach to move forward on this without proliferating the globals usage.\n\ne.g.\n\nclass ManagePasswordsBubbleBase : public LocationBarBubbleDelegateView {\n public:\n  static ManagePasswordsBubbleBase* current_bubble();\n\n  ManagePasswordsBubbleBase(.., .., ..) // updates current_bubble_;\n  virtual ~ManagePasswordsBubbleBase();\n\n  virtual bool IsForWebContents(WebContents*) \u003d 0;  // or GetModel()\n\n private\n  static ManagePasswordsBubbleBase* current_bubble_;\n\n  DISALLOW..\n};\n\n\nor even\n\nclass ManagePasswordsBubbleBase : public LocationBarBubbleDelegateView {\n public:\n  static ManagePasswordsBubbleBase* current_bubble();\n\n  ManagePasswordsBubbleBase(WebContents*, .., .., ..) // updates current_bubble_, creates |model_|\n  virtual ~ManagePasswordsBubbleBase();\n\n protected: \n  ManagePasswordsBubbleModel* model() { return model_; }\n\n private:\n  ManagePasswordsBubbleModel model_;  // not unique ptr.\n\n  static ManagePasswordsBubbleBase* current_bubble_;\n\n  DISALLOW..\n};\n\n\n  class ManagePasswordsBubbleView : public ManagePasswordsBubbleBase ...;\n  class ManagePasswordItemsView : public ManagePasswordsBubbleBase ...;",
+      "parentUuid": "461342c8_f0b87c7a",
       "revId": "e91bcdf204ada0c9581434b8e4a27ee4abe361e3",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
