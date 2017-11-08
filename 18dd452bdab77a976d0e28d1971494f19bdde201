@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "9c4f8e24_e6b655e8",
+        "filename": "ios/chrome/browser/ui/activity_services/activity_service_legacy_coordinator.mm",
+        "patchSetId": 4
+      },
+      "lineNbr": 92,
+      "author": {
+        "id": 1125535
+      },
+      "writtenOn": "2017-11-08T20:55:56Z",
+      "side": 1,
+      "message": "You should have this forward declared inside @interface ActivityServiceLegacyCoordinator. That\u0027s where this comment belongs as well.",
+      "range": {
+        "startLine": 92,
+        "startChar": 0,
+        "endLine": 92,
+        "endChar": 52
+      },
+      "revId": "18dd452bdab77a976d0e28d1971494f19bdde201",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
