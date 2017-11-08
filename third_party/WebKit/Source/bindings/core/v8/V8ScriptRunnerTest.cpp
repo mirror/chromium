@@ -68,11 +68,12 @@ class V8ScriptRunnerTest : public ::testing::Test {
   }
 
   void SetEmptyResource() {
-    resource_ = ScriptResource::CreateForTest(NullURL(), UTF8Encoding());
+    resource_ =
+        ScriptResource::CreateForTest(NullURL(), UTF8Encoding(), nullptr);
   }
 
   void SetResource() {
-    resource_ = ScriptResource::CreateForTest(Url(), UTF8Encoding());
+    resource_ = ScriptResource::CreateForTest(Url(), UTF8Encoding(), nullptr);
   }
 
   CachedMetadataHandler* CacheHandler() { return resource_->CacheHandler(); }
@@ -106,8 +107,8 @@ TEST_F(V8ScriptRunnerTest, parseOption) {
   EXPECT_FALSE(
       CacheHandler()->GetCachedMetadata(TagForCodeCache(CacheHandler())));
   // The cached data is associated with the encoding.
-  ScriptResource* another_resource =
-      ScriptResource::CreateForTest(Url(), UTF16LittleEndianEncoding());
+  ScriptResource* another_resource = ScriptResource::CreateForTest(
+      Url(), UTF16LittleEndianEncoding(), nullptr);
   EXPECT_FALSE(CacheHandler()->GetCachedMetadata(
       TagForParserCache(another_resource->CacheHandler())));
 }
@@ -124,8 +125,8 @@ TEST_F(V8ScriptRunnerTest, codeOption) {
   EXPECT_TRUE(
       CacheHandler()->GetCachedMetadata(TagForCodeCache(CacheHandler())));
   // The cached data is associated with the encoding.
-  ScriptResource* another_resource =
-      ScriptResource::CreateForTest(Url(), UTF16LittleEndianEncoding());
+  ScriptResource* another_resource = ScriptResource::CreateForTest(
+      Url(), UTF16LittleEndianEncoding(), nullptr);
   EXPECT_FALSE(CacheHandler()->GetCachedMetadata(
       TagForCodeCache(another_resource->CacheHandler())));
 }

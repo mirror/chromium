@@ -211,21 +211,7 @@ class CORE_EXPORT DocumentThreadableLoader final : public ThreadableLoader,
   //   general fashion (crbug.com/640291).
   RawResource* GetResource() const { return resource_.Get(); }
   void ClearResource() { SetResource(nullptr); }
-  void SetResource(RawResource* new_resource) {
-    if (new_resource == resource_)
-      return;
-
-    if (RawResource* old_resource = resource_.Release()) {
-      checker_.WillRemoveClient();
-      old_resource->RemoveClient(this);
-    }
-
-    if (new_resource) {
-      resource_ = new_resource;
-      checker_.WillAddClient();
-      resource_->AddClient(this);
-    }
-  }
+  void SetResource(RawResource* new_resource);
   Member<RawResource> resource_;
   // End of ResourceOwner re-implementation, see above.
 
