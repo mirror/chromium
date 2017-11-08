@@ -7,6 +7,7 @@
 #include <string>
 
 #include "base/command_line.h"
+#include "base/lazy_instance.h"
 #include "base/location.h"
 #include "base/process/launch.h"
 #include "base/single_thread_task_runner.h"
@@ -26,6 +27,7 @@
 #include "content/public/test/test_utils.h"
 #include "content/shell/browser/shell.h"
 #include "content/shell/common/shell_switches.h"
+#include "services/service_manager/sandbox/switches.h"
 #include "testing/gtest/include/gtest/gtest.h"
 
 namespace content {
@@ -47,12 +49,17 @@ IN_PROC_BROWSER_TEST_F(ContentBrowserTest, MANUAL_ShouldntRun) {
 
 class CrashObserver : public RenderProcessHostObserver {
  public:
-  explicit CrashObserver(const base::Closure& quit_closure)
-      : quit_closure_(quit_closure) {}
+  CrashObserver() = default;
+
+  void SetQuitClosure(const base::Closure& quit_closure) {
+    quit_closure_ = quit_closure;
+  }
+
   void RenderProcessExited(RenderProcessHost* host,
                            base::TerminationStatus status,
                            int exit_code) override {
     ASSERT_TRUE(status == base::TERMINATION_STATUS_PROCESS_CRASHED ||
+                status == base::TERMINATION_STATUS_PROCESS_WAS_KILLED ||
                 status == base::TERMINATION_STATUS_ABNORMAL_TERMINATION);
     quit_closure_.Run();
   }
@@ -61,15 +68,29 @@ class CrashObserver : public RenderProcessHostObserver {
   base::Closure quit_closure_;
 };
 
+// Global and leaky to avoid use-after-return during shutdown.
+static base::LazyInstance<CrashObserver>::Leaky g_crash_observer =
+    LAZY_INSTANCE_INITIALIZER;
+
 IN_PROC_BROWSER_TEST_F(ContentBrowserTest, MANUAL_RendererCrash) {
   scoped_refptr<MessageLoopRunner> message_loop_runner = new MessageLoopRunner;
-  CrashObserver crash_observer(message_loop_runner->QuitClosure());
+  g_crash_observer.Get().SetQuitClosure(message_loop_runner->QuitClosure());
   shell()->web_contents()->GetMainFrame()->GetProcess()->AddObserver(
-      &crash_observer);
+      &g_crash_observer.Get());
 
   NavigateToURL(shell(), GURL("chrome:crash"));
   message_loop_runner->Run();
 }
+
+// Non-Windows sanitizer builds do not symbolize stack traces internally, so use
+// this macro to avoid looking for symbols from the stack trace.
+#if !defined(OS_WIN) &&                                       \
+    (defined(ADDRESS_SANITIZER) || defined(LEAK_SANITIZER) || \
+     defined(MEMORY_SANITIZER) || defined(THREAD_SANITIZER))
+#define USE_EXTERNAL_SYMBOLIZER 1
+#else
+#define USE_EXTERNAL_SYMBOLIZER 0
+#endif
 
 // Tests that browser tests print the callstack when a child process crashes.
 IN_PROC_BROWSER_TEST_F(ContentBrowserTest, RendererCrashCallStack) {
@@ -83,6 +104,12 @@ IN_PROC_BROWSER_TEST_F(ContentBrowserTest, RendererCrashCallStack) {
   new_test.AppendSwitch(kRunManualTestsFlag);
   new_test.AppendSwitch(kSingleProcessTestsFlag);
 
+#if defined(THREAD_SANITIZER)
+  // TSan appears to not be able to report intentional crashes from sandboxed
+  // renderer processes.
+  new_test.AppendSwitch(switches::kNoSandbox);
+#endif
+
   std::string output;
   base::GetAppOutputAndError(new_test, &output);
 
@@ -90,8 +117,7 @@ IN_PROC_BROWSER_TEST_F(ContentBrowserTest, RendererCrashCallStack) {
   // so the stack that the tests sees here looks like:
   // "#0 0x0000007ea911 (...content_browsertests+0x7ea910)"
   std::string crash_string =
-#if !defined(ADDRESS_SANITIZER) && !defined(LEAK_SANITIZER) && \
-    !defined(MEMORY_SANITIZER) && !defined(THREAD_SANITIZER)
+#if !USE_EXTERNAL_SYMBOLIZER
       "content::RenderFrameImpl::PrepareRenderViewForNavigation";
 #else
       "#0 ";
@@ -125,8 +151,7 @@ IN_PROC_BROWSER_TEST_F(ContentBrowserTest, BrowserCrashCallStack) {
   // so the stack that the test sees here looks like:
   // "#0 0x0000007ea911 (...content_browsertests+0x7ea910)"
   std::string crash_string =
-#if !defined(ADDRESS_SANITIZER) && !defined(LEAK_SANITIZER) && \
-    !defined(MEMORY_SANITIZER) && !defined(THREAD_SANITIZER)
+#if !USE_EXTERNAL_SYMBOLIZER
       "content::ContentBrowserTest_MANUAL_BrowserCrash_Test::"
       "RunTestOnMainThread";
 #else
