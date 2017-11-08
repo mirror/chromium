@@ -55,19 +55,14 @@ class CORE_EXPORT ScriptResourceClient : public ResourceClient {
 class CORE_EXPORT ScriptResource final : public TextResource {
  public:
   using ClientType = ScriptResourceClient;
-  static ScriptResource* Fetch(FetchParameters&, ResourceFetcher*);
+  static ScriptResource* Fetch(FetchParameters&,
+                               ResourceFetcher*,
+                               ResourceClient*);
 
   // Public for testing
-  static ScriptResource* CreateForTest(const KURL& url,
-                                       const WTF::TextEncoding& encoding) {
-    ResourceRequest request(url);
-    request.SetFetchCredentialsMode(
-        network::mojom::FetchCredentialsMode::kOmit);
-    ResourceLoaderOptions options;
-    TextResourceDecoderOptions decoder_options(
-        TextResourceDecoderOptions::kPlainTextContent, encoding);
-    return new ScriptResource(request, options, decoder_options);
-  }
+  static ScriptResource* CreateForTest(const KURL&,
+                                       const WTF::TextEncoding&,
+                                       ResourceClient*);
 
   ~ScriptResource() override;
 

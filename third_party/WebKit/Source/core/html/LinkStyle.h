@@ -79,7 +79,8 @@ class LinkStyle final : public LinkResource, ResourceOwner<StyleSheetResource> {
   void AddPendingSheet(PendingSheetType);
   void RemovePendingSheet();
 
-  void SetCrossOriginStylesheetStatus(CSSStyleSheet*);
+  void SetCrossOriginStylesheetStatus(CSSStyleSheet*,
+                                      const CSSStyleSheetResource*);
   void SetFetchFollowingCORS() {
     DCHECK(!fetch_following_cors_);
     fetch_following_cors_ = true;

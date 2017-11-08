@@ -244,6 +244,10 @@ class PLATFORM_EXPORT FetchContext
     return Platform::Current()->CurrentThread()->GetWebTaskRunner();
   }
 
+  virtual scoped_refptr<WebTaskRunner> GetHighPriorityCacheHitTaskRunner() {
+    return GetLoadingTaskRunner();
+  }
+
   // Called when the underlying context is detached. Note that some
   // FetchContexts continue working after detached (e.g., for fetch() operations
   // with "keepalive" specified).

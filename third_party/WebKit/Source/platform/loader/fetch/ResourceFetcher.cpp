@@ -642,6 +642,22 @@ ResourceFetcher::PrepareRequestResult ResourceFetcher::PrepareRequest(
 
 Resource* ResourceFetcher::RequestResource(
     FetchParameters& params,
+    ResourceClient* client,
+    const ResourceFactory& factory,
+    const SubstituteData& substitute_data) {
+  Resource* resource = RequestResource(params, factory, substitute_data);
+  if (resource && client) {
+    scoped_refptr<WebTaskRunner> task_runner =
+        factory.GetType() == Resource::kScript
+            ? Context().GetHighPriorityCacheHitTaskRunner()
+            : Context().GetLoadingTaskRunner();
+    resource->AddClient(client, task_runner.get());
+  }
+  return resource;
+}
+
+Resource* ResourceFetcher::RequestResource(
+    FetchParameters& params,
     const ResourceFactory& factory,
     const SubstituteData& substitute_data) {
   unsigned long identifier = CreateUniqueIdentifier();

@@ -118,6 +118,10 @@ class ModuleScriptLoaderTestModulator final : public DummyModulator {
   }
 
   ResourceFetcher* Fetcher() const { return fetcher_.Get(); }
+  scoped_refptr<scheduler::FakeWebTaskRunner> GetLoadingTaskRunner() {
+    return static_cast<scheduler::FakeWebTaskRunner*>(
+        Fetcher()->Context().GetLoadingTaskRunner().get());
+  }
 
   void Trace(blink::Visitor*) override;
 
@@ -196,7 +200,7 @@ void ModuleScriptLoaderTest::InitializeForWorklet() {
   global_scope_->SetModuleResponsesMapProxyForTesting(
       WorkletModuleResponsesMapProxy::Create(
           new WorkletModuleResponsesMap(modulator_->Fetcher()),
-          GetDocument().GetTaskRunner(TaskType::kUnspecedLoading),
+          modulator_->GetLoadingTaskRunner(),
           global_scope_->GetTaskRunner(TaskType::kUnspecedLoading)));
 }
 
@@ -216,7 +220,7 @@ TEST_F(ModuleScriptLoaderTest, FetchDataURL) {
 
   EXPECT_FALSE(client->WasNotifyFinished())
       << "ModuleScriptLoader should finish asynchronously.";
-  platform_->RunUntilIdle();
+  modulator_->GetLoadingTaskRunner()->RunUntilIdle();
 
   EXPECT_TRUE(client->WasNotifyFinished());
   ASSERT_TRUE(client->GetModuleScript());
@@ -230,6 +234,7 @@ TEST_F(ModuleScriptLoaderTest, FetchDataURL_OnWorklet) {
 
   EXPECT_FALSE(client1->WasNotifyFinished())
       << "ModuleScriptLoader should finish asynchronously.";
+  modulator_->GetLoadingTaskRunner()->RunUntilIdle();
   platform_->RunUntilIdle();
 
   EXPECT_TRUE(client1->WasNotifyFinished());
@@ -243,6 +248,7 @@ TEST_F(ModuleScriptLoaderTest, FetchDataURL_OnWorklet) {
 
   EXPECT_FALSE(client2->WasNotifyFinished())
       << "ModuleScriptLoader should finish asynchronously.";
+  modulator_->GetLoadingTaskRunner()->RunUntilIdle();
   platform_->RunUntilIdle();
 
   EXPECT_TRUE(client2->WasNotifyFinished());
@@ -267,7 +273,7 @@ TEST_F(ModuleScriptLoaderTest, InvalidSpecifier) {
 
   EXPECT_FALSE(client->WasNotifyFinished())
       << "ModuleScriptLoader should finish asynchronously.";
-  platform_->RunUntilIdle();
+  modulator_->GetLoadingTaskRunner()->RunUntilIdle();
 
   EXPECT_TRUE(client->WasNotifyFinished());
   ASSERT_TRUE(client->GetModuleScript());
@@ -281,6 +287,7 @@ TEST_F(ModuleScriptLoaderTest, InvalidSpecifier_OnWorklet) {
 
   EXPECT_FALSE(client->WasNotifyFinished())
       << "ModuleScriptLoader should finish asynchronously.";
+  modulator_->GetLoadingTaskRunner()->RunUntilIdle();
   platform_->RunUntilIdle();
 
   EXPECT_TRUE(client->WasNotifyFinished());
@@ -315,6 +322,7 @@ TEST_F(ModuleScriptLoaderTest, FetchInvalidURL_OnWorklet) {
 
   EXPECT_FALSE(client->WasNotifyFinished())
       << "ModuleScriptLoader should finish asynchronously.";
+  modulator_->GetLoadingTaskRunner()->RunUntilIdle();
   platform_->RunUntilIdle();
 
   EXPECT_TRUE(client->WasNotifyFinished());
@@ -357,6 +365,7 @@ TEST_F(ModuleScriptLoaderTest, FetchURL_OnWorklet) {
   // Advance until WorkletModuleScriptFetcher finishes looking up a cache in
   // WorkletModuleResponsesMap and issues a fetch request so that
   // ServeAsynchronousRequests() can serve for the pending request.
+  modulator_->GetLoadingTaskRunner()->RunUntilIdle();
   platform_->RunUntilIdle();
   platform_->GetURLLoaderMockFactory()->ServeAsynchronousRequests();
 

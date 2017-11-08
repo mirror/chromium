@@ -107,8 +107,10 @@ class CORE_EXPORT CSSFontFaceSrcValue : public CSSValue {
     USING_GARBAGE_COLLECTED_MIXIN(FontResourceHelper);
 
    public:
-    static FontResourceHelper* Create(FontResource* resource) {
-      return new FontResourceHelper(resource);
+    static FontResourceHelper* Create(FetchParameters& params,
+                                      ResourceFetcher* fetcher) {
+      FontResourceHelper* helper = new FontResourceHelper(params, fetcher);
+      return helper->GetResource() ? helper : nullptr;
     }
 
     virtual void Trace(blink::Visitor* visitor) {
@@ -116,7 +118,9 @@ class CORE_EXPORT CSSFontFaceSrcValue : public CSSValue {
     }
 
    private:
-    FontResourceHelper(FontResource* resource) { SetResource(resource); }
+    FontResourceHelper(FetchParameters& params, ResourceFetcher* fetcher) {
+      SetResource(FontResource::Fetch(params, fetcher, this));
+    }
 
     String DebugName() const override {
       return "CSSFontFaceSrcValue::FontResourceHelper";

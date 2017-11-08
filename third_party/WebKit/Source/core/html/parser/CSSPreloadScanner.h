@@ -105,7 +105,7 @@ class CORE_EXPORT CSSPreloaderResourceClient
   USING_GARBAGE_COLLECTED_MIXIN(CSSPreloaderResourceClient);
 
  public:
-  CSSPreloaderResourceClient(Resource*, HTMLResourcePreloader*);
+  CSSPreloaderResourceClient(HTMLResourcePreloader*);
   ~CSSPreloaderResourceClient() override;
   void SetCSSStyleSheet(const String& href,
                         const KURL& base_url,
@@ -114,6 +114,8 @@ class CORE_EXPORT CSSPreloaderResourceClient
                         const CSSStyleSheetResource*) override;
   void DidAppendFirstData(const CSSStyleSheetResource*) override;
   String DebugName() const override { return "CSSPreloaderResourceClient"; }
+
+  void SetResource(Resource*);
 
   void Trace(blink::Visitor*) override;
 

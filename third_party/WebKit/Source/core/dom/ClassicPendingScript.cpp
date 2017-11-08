@@ -44,21 +44,21 @@ ClassicPendingScript* ClassicPendingScript::Fetch(
   // Step 2. Set request's client to settings object. [spec text]
   //
   // Note: |element_document| corresponds to the settings object.
-  ScriptResource* resource =
-      ScriptResource::Fetch(params, element_document.Fetcher());
-  if (!resource)
+  pending_script->SetResource(ScriptResource::Fetch(
+      params, element_document.Fetcher(), pending_script));
+  if (!pending_script->GetResource())
     return nullptr;
-  pending_script->SetResource(resource);
   pending_script->CheckState();
   return pending_script;
 }
 
 ClassicPendingScript* ClassicPendingScript::CreateExternalForTest(
-    ScriptElementBase* element,
-    ScriptResource* resource) {
-  DCHECK(resource);
+    ScriptElementBase* element) {
   ClassicPendingScript* pending_script = new ClassicPendingScript(
       element, TextPosition(), ScriptFetchOptions(), true /* is_external */);
+  ScriptResource* resource = ScriptResource::CreateForTest(
+      KURL("http://example.com/"), UTF8Encoding(), pending_script);
+  resource->SetStatus(ResourceStatus::kPending);
   pending_script->SetResource(resource);
   pending_script->CheckState();
   return pending_script;
@@ -109,7 +109,7 @@ void ClassicPendingScript::Prefinalize() {
 
 void ClassicPendingScript::DisposeInternal() {
   MemoryCoordinator::Instance().UnregisterClient(this);
-  SetResource(nullptr);
+  ClearResource();
   integrity_failure_ = false;
   CancelStreaming();
 }

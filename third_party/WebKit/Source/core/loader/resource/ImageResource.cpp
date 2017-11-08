@@ -159,7 +159,8 @@ class ImageResource::ImageResourceFactory : public NonTextResourceFactory {
 };
 
 ImageResource* ImageResource::Fetch(FetchParameters& params,
-                                    ResourceFetcher* fetcher) {
+                                    ResourceFetcher* fetcher,
+                                    ResourceClient* client) {
   if (params.GetResourceRequest().GetRequestContext() ==
       WebURLRequest::kRequestContextUnspecified) {
     params.SetRequestContext(WebURLRequest::kRequestContextImage);
@@ -183,7 +184,7 @@ ImageResource* ImageResource::Fetch(FetchParameters& params,
   }
 
   return ToImageResource(
-      fetcher->RequestResource(params, ImageResourceFactory(params)));
+      fetcher->RequestResource(params, client, ImageResourceFactory(params)));
 }
 
 bool ImageResource::CanReuse(const FetchParameters& params) const {

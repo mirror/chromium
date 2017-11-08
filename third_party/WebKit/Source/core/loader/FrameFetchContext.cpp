@@ -298,6 +298,13 @@ scoped_refptr<WebTaskRunner> FrameFetchContext::GetLoadingTaskRunner() {
   return GetFrame()->GetTaskRunner(TaskType::kNetworking);
 }
 
+scoped_refptr<WebTaskRunner>
+FrameFetchContext::GetHighPriorityCacheHitTaskRunner() {
+  if (IsDetached())
+    return FetchContext::GetHighPriorityCacheHitTaskRunner();
+  return GetFrame()->GetTaskRunner(TaskType::kNetworkingControl);
+}
+
 WebFrameScheduler* FrameFetchContext::GetFrameScheduler() {
   if (IsDetached())
     return nullptr;

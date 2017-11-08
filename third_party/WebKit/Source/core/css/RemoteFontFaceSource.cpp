@@ -46,7 +46,9 @@ RemoteFontFaceSource::RemoteFontFaceSource(CSSFontFace* css_font_face,
   }
 
   // Note: this may call notifyFinished() and clear font_.
-  font_->AddClient(this);
+  font_->AddClient(this, font_selector_->GetExecutionContext()
+                             ->GetTaskRunner(TaskType::kUnspecedLoading)
+                             .get());
 }
 
 RemoteFontFaceSource::~RemoteFontFaceSource() {}

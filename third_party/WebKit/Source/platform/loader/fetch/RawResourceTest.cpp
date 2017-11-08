@@ -132,7 +132,9 @@ class AddingClient final : public GarbageCollectedFinalized<AddingClient>,
         ->LoadingTaskRunner()
         ->PostTask(BLINK_FROM_HERE, WTF::Bind(&AddingClient::RemoveClient,
                                               WrapPersistent(this)));
-    resource->AddClient(dummy_client_);
+    resource->AddClient(
+        dummy_client_,
+        Platform::Current()->CurrentThread()->GetWebTaskRunner());
   }
   String DebugName() const override { return "AddingClient"; }
 
@@ -162,7 +164,8 @@ TEST_F(RawResourceTest, AddClientDuringCallback) {
   Persistent<DummyClient> dummy_client = new DummyClient();
   Persistent<AddingClient> adding_client =
       new AddingClient(dummy_client.Get(), raw);
-  raw->AddClient(adding_client);
+  raw->AddClient(adding_client,
+                 Platform::Current()->CurrentThread()->GetWebTaskRunner());
   platform_->RunUntilIdle();
   raw->RemoveClient(adding_client);
   EXPECT_FALSE(dummy_client->Called());
@@ -207,8 +210,10 @@ TEST_F(RawResourceTest, RemoveClientDuringCallback) {
   Persistent<DummyClient> dummy_client = new DummyClient();
   Persistent<RemovingClient> removing_client =
       new RemovingClient(dummy_client.Get());
-  raw->AddClient(dummy_client);
-  raw->AddClient(removing_client);
+  raw->AddClient(dummy_client,
+                 Platform::Current()->CurrentThread()->GetWebTaskRunner());
+  raw->AddClient(removing_client,
+                 Platform::Current()->CurrentThread()->GetWebTaskRunner());
   platform_->RunUntilIdle();
   EXPECT_FALSE(raw->IsAlive());
 }

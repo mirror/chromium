@@ -64,7 +64,10 @@ class TreeScope;
 //
 // <event> -> SVG...Element -> SVGElementProxy(0..N) -> SVGResourceClient(0..N)
 //
-class SVGElementProxy : public GarbageCollectedFinalized<SVGElementProxy> {
+class SVGElementProxy : public GarbageCollectedFinalized<SVGElementProxy>,
+                        public DocumentResourceClient {
+  USING_GARBAGE_COLLECTED_MIXIN(SVGElementProxy);
+
  public:
   // Create a proxy to an element in the same document. (See also
   // SVGURLReferenceResolver and the definition of 'local url'.)
@@ -92,6 +95,10 @@ class SVGElementProxy : public GarbageCollectedFinalized<SVGElementProxy> {
   void ContentChanged(TreeScope&);
 
   const AtomicString& Id() const { return id_; }
+
+  // DocumentResourceClient overrides:
+  void NotifyFinished(Resource*) override;
+  String DebugName() const override { return "SVGElementProxy"; }
 
   virtual void Trace(blink::Visitor*);
 

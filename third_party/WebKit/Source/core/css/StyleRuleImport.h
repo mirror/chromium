@@ -108,7 +108,6 @@ class StyleRuleImport : public StyleRuleBase {
   scoped_refptr<MediaQuerySet> media_queries_;
   Member<StyleSheetContents> style_sheet_;
   Member<CSSStyleSheetResource> resource_;
-  bool loading_;
 };
 
 DEFINE_STYLE_RULE_TYPE_CASTS(Import);
