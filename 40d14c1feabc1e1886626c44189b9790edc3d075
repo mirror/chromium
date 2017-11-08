@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "880843a6_54343d10",
+        "filename": "third_party/WebKit/Source/modules/gamepad/GamepadEvent.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 34,
+      "author": {
+        "id": 1125304
+      },
+      "writtenOn": "2017-11-08T20:59:18Z",
+      "side": 1,
+      "message": "I don\u0027t think this is correct. This logic effectively takes \"now\" and converts\nit from one clock to another.\n\nWhat needs to happen is to convert \"gamepad event time\" to time ticks clock *if necessary*.\nThe gamepad event time is available in gamepad.timestamp_ [1].\n\nI actually don\u0027t know what is the underlying clock for gamepad.timestamp_\ntime values. bajones@ seems to be the expert in Chromium gamepad implementation and may be \nable shed some light here.\n\nBut I highly suspect that the base clock for provided timestamp is platform specific\nin which case we may need to do different things for different platform. Here are the\nbroad possibilities:\n\n1) gamepad.timestamp_ is sourced from the same clock as base::TimeTicks \u003d\u003e no clock conversion  is needed. Just turn it directly into base::TimeTicks. This is best case :)\n\n2) gamepad.timestamp_ is sourced from different clock \u003d\u003e clock conversion is needed. Depending\non the source clock this may be just an offset or scale + offset. \n\n3) gamepad.timestamp_ is sourced from different clock and accurate conversion is not possible.\n   \u003d\u003e In such a case we usually just ignore the OS timestamp and create our own timestamp\n    by using base::TimeTicks::Now(). This is similar to what you are doing now. But if \n    (1) or (2) is possible I prefer to do them first as it provides a more accurate\n    timestamp value.\n\n\nDepending on your investigation and perhaps bajones@ recommendation we will decide which\nis these approaches (if any) is best for each and every platform.\n\n[1]https://codesearch.chromium.org/chromium/src/third_party/WebKit/Source/modules/gamepad/Gamepad.h?type\u003dcs\u0026l\u003d94",
+      "range": {
+        "startLine": 34,
+        "startChar": 4,
+        "endLine": 34,
+        "endChar": 66
+      },
+      "revId": "40d14c1feabc1e1886626c44189b9790edc3d075",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
