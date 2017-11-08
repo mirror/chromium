@@ -1,0 +1,101 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "2413987d_92b8cc8d",
+        "filename": "chrome/browser/resources/md_extensions/error_page.html",
+        "patchSetId": 3
+      },
+      "lineNbr": 4,
+      "author": {
+        "id": 1115893
+      },
+      "writtenOn": "2017-11-08T02:01:11Z",
+      "side": 1,
+      "message": "Can we remove this now?",
+      "revId": "f083ce6d6fad0022b7ba9b8020b743854e905749",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "96d6fe88_a270707b",
+        "filename": "chrome/browser/resources/md_extensions/error_page.html",
+        "patchSetId": 3
+      },
+      "lineNbr": 175,
+      "author": {
+        "id": 1115893
+      },
+      "writtenOn": "2017-11-08T02:01:11Z",
+      "side": 1,
+      "message": "Now that there is no longer a cr-expand-button, I don\u0027t think this has any effect. The native attribute is called tabindex (not tab-index) and div\u0027s are not tabbable by default anyway.",
+      "revId": "f083ce6d6fad0022b7ba9b8020b743854e905749",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "fa4a22f3_f7a63273",
+        "filename": "chrome/browser/resources/md_extensions/error_page.js",
+        "patchSetId": 3
+      },
+      "lineNbr": 82,
+      "author": {
+        "id": 1115893
+      },
+      "writtenOn": "2017-11-08T02:01:11Z",
+      "side": 1,
+      "message": "Nit (optional): Maybe rename to getSelectedError(), or use the getter syntax similar to https://cs.chromium.org/chromium/src/chrome/browser/resources/md_extensions/options_dialog.js?q\u003doptions_dialog.js\u0026sq\u003dpackage:chromium\u0026dr\u0026l\u003d28, such that you can refer to this without the need for the \"()\".",
+      "revId": "f083ce6d6fad0022b7ba9b8020b743854e905749",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "27ac6ad3_4ea330e4",
+        "filename": "chrome/browser/resources/md_extensions/error_page.js",
+        "patchSetId": 3
+      },
+      "lineNbr": 270,
+      "author": {
+        "id": 1115893
+      },
+      "writtenOn": "2017-11-08T02:01:11Z",
+      "side": 1,
+      "message": "s/Number/number",
+      "range": {
+        "startLine": 270,
+        "startChar": 15,
+        "endLine": 270,
+        "endChar": 21
+      },
+      "revId": "f083ce6d6fad0022b7ba9b8020b743854e905749",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "38ed7bd6_7994cb6c",
+        "filename": "chrome/browser/resources/md_extensions/error_page.js",
+        "patchSetId": 3
+      },
+      "lineNbr": 286,
+      "author": {
+        "id": 1115893
+      },
+      "writtenOn": "2017-11-08T02:01:11Z",
+      "side": 1,
+      "message": "Same here. Similar to how we use boolean instead of Boolean etc.",
+      "range": {
+        "startLine": 286,
+        "startChar": 15,
+        "endLine": 286,
+        "endChar": 21
+      },
+      "revId": "f083ce6d6fad0022b7ba9b8020b743854e905749",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
