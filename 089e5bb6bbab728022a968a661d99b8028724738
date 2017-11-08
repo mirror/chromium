@@ -34,6 +34,24 @@
       "revId": "089e5bb6bbab728022a968a661d99b8028724738",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "df9c24f5_164a6236",
+        "filename": "tools/clang/scripts/update.py",
+        "patchSetId": 1
+      },
+      "lineNbr": 823,
+      "author": {
+        "id": 1002927
+      },
+      "writtenOn": "2017-11-08T18:35:12Z",
+      "side": 1,
+      "message": "I double checked, and it looks like you\u0027re adding exactly the right files:\n\n$ wget https://commondatastorage.googleapis.com/chromium-browser-clang/Linux_x64/clang-317263-2.tgz\n$ wget https://commondatastorage.googleapis.com/chromium-browser-clang/Linux_x64/clang-317263-3.tgz\n$ diff -u \u003c(tar ztf clang-317263-2.tgz) \u003c(tar ztf clang-317263-3.tgz)\n--- /dev/fd/63\t2017-11-08 10:31:26.936139450 -0800\n+++ /dev/fd/62\t2017-11-08 10:31:26.936139450 -0800\n@@ -137,6 +137,7 @@\n lib/clang/6.0.0/lib/linux/libclang_rt.asan_cxx-x86_64.a\n lib/clang/6.0.0/lib/linux/libclang_rt.profile-i386.a\n lib/clang/6.0.0/lib/linux/libclang_rt.ubsan_minimal-x86_64.a\n+lib/clang/6.0.0/lib/linux/libclang_rt.ubsan_standalone-i686-android.so\n lib/clang/6.0.0/lib/linux/libclang_rt.ubsan_standalone-x86_64.so\n lib/clang/6.0.0/lib/linux/libclang_rt.asan-preinit-i386.a\n lib/clang/6.0.0/lib/linux/libclang_rt.fuzzer_no_main-x86_64.a\n@@ -154,7 +155,9 @@\n lib/clang/6.0.0/lib/linux/libclang_rt.asan-x86_64.so\n lib/clang/6.0.0/lib/linux/libclang_rt.ubsan_standalone-x86_64.a\n lib/clang/6.0.0/lib/linux/libclang_rt.asan-x86_64.a.syms\n+lib/clang/6.0.0/lib/linux/libclang_rt.ubsan_standalone-arm-android.so\n lib/clang/6.0.0/lib/linux/libclang_rt.msan-x86_64.a.syms\n+lib/clang/6.0.0/lib/linux/libclang_rt.ubsan_standalone-aarch64-android.so\n lib/clang/6.0.0/lib/linux/libclang_rt.ubsan_standalone-x86_64.a.syms\n lib/clang/6.0.0/lib/linux/libclang_rt.asan-x86_64.a\n lib/clang/6.0.0/lib/linux/libclang_rt.asan-i386.a\n\n$ ls -l clang-317263-*.tgz\n-rw-r----- 1 hwennborg eng 67350226 Nov  3 01:06 clang-317263-2.tgz\n-rw-r----- 1 hwennborg eng 68035149 Nov  8 09:56 clang-317263-3.tgz\n\nLooks like 669 KB growth which seems fine.",
+      "parentUuid": "9e705622_48c044c5",
+      "revId": "089e5bb6bbab728022a968a661d99b8028724738",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
