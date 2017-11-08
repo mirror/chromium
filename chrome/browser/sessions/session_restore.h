@@ -116,6 +116,9 @@ class SessionRestore {
   // Is called when session restore is going to restore a tab.
   static void OnWillRestoreTab(content::WebContents* web_contents);
 
+  // Get called when session restore is going to load |num_of_tabs| tabs.
+  static void OnWillRestoreNumOfTabs(size_t num_of_tabs);
+
  private:
   friend class SessionRestoreImpl;
   FRIEND_TEST_ALL_PREFIXES(SessionRestoreObserverTest, SingleSessionRestore);
