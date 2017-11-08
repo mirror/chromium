@@ -22,6 +22,30 @@
       "revId": "7f0df3ed1a9e4f6b901cbe81af9263b1e814f478",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "aa3409a3_a157b434",
+        "filename": "ios/chrome/browser/ui/stack_view/stack_view_controller.mm",
+        "patchSetId": 2
+      },
+      "lineNbr": 509,
+      "author": {
+        "id": 1000119
+      },
+      "writtenOn": "2017-11-08T20:43:16Z",
+      "side": 1,
+      "message": "This is a good suggestion, I\u0027ll take a look at this.  For this first CL, I wanted to keep the changes as small as possible, so that it\u0027s easy to look at the code and see that all we\u0027re doing is allowing setOtrTabModel to be called more often than before.",
+      "parentUuid": "e06f4f37_d8cade1e",
+      "range": {
+        "startLine": 505,
+        "startChar": 2,
+        "endLine": 509,
+        "endChar": 27
+      },
+      "revId": "7f0df3ed1a9e4f6b901cbe81af9263b1e814f478",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
