@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "d68799f3_efb73f0f",
+        "filename": "chrome/browser/resources/local_ntp/local_ntp.css",
+        "patchSetId": 3
+      },
+      "lineNbr": 170,
+      "author": {
+        "id": 1150535
+      },
+      "writtenOn": "2017-11-08T15:56:11Z",
+      "side": 1,
+      "message": "\u003e Where does this exact number come from? Does it have any particular significance?\n\nIt puts the doodle flush with the top of the fakebox. I guess we really need to talk to the doodles team about how much space they want there.",
+      "parentUuid": "fcce4101_21cfc09e",
+      "range": {
+        "startLine": 170,
+        "startChar": 16,
+        "endLine": 170,
+        "endChar": 0
+      },
+      "revId": "b757f1f81f5289aa5f5463b1e996101251622d3a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "8a0643ed_e293269d",
         "filename": "chrome/browser/resources/local_ntp/local_ntp.js",
         "patchSetId": 3
