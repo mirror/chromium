@@ -32,15 +32,39 @@ static const int32_t kConnectionTypeInvalid = -1;
 
 }  // namespace
 
-NetworkConnectionTracker::NetworkConnectionTracker(
-    mojom::NetworkService* network_service)
+NetworkConnectionTracker::GetConnectionTypeHandle::GetConnectionTypeHandle(
+    ConnectionTypeCallback callback)
+    : callback_(std::move(callback)), weak_ptr_factory_(this) {}
+
+NetworkConnectionTracker::GetConnectionTypeHandle::~GetConnectionTypeHandle() {}
+
+NetworkConnectionTracker::ConnectionTypeCallback
+NetworkConnectionTracker::GetConnectionTypeHandle::WeakCallback() {
+  return base::BindOnce(
+      &NetworkConnectionTracker::GetConnectionTypeHandle::RunCallback,
+      weak_ptr_factory_.GetWeakPtr());
+}
+
+void NetworkConnectionTracker::GetConnectionTypeHandle::RunCallback(
+    mojom::ConnectionType type) {
+  std::move(callback_).Run(type);
+}
+
+NetworkConnectionTracker::NetworkConnectionTracker()
     : task_runner_(base::ThreadTaskRunnerHandle::Get()),
       connection_type_(kConnectionTypeInvalid),
       network_change_observer_list_(
           new base::ObserverListThreadSafe<NetworkConnectionObserver>(
               base::ObserverListBase<
                   NetworkConnectionObserver>::NOTIFY_EXISTING_ONLY)),
-      binding_(this) {
+      binding_(this) {}
+
+NetworkConnectionTracker::~NetworkConnectionTracker() {
+  network_change_observer_list_->AssertEmpty();
+}
+
+void NetworkConnectionTracker::Initialize(
+    mojom::NetworkService* network_service) {
   DCHECK(network_service);
   // Get NetworkChangeManagerPtr.
   mojom::NetworkChangeManagerPtr manager_ptr;
@@ -55,20 +79,16 @@ NetworkConnectionTracker::NetworkConnectionTracker(
   manager_ptr->RequestNotifications(std::move(client_ptr));
 }
 
-NetworkConnectionTracker::~NetworkConnectionTracker() {
-  network_change_observer_list_->AssertEmpty();
-}
-
-bool NetworkConnectionTracker::GetConnectionType(
-    mojom::ConnectionType* type,
-    ConnectionTypeCallback callback) {
+std::unique_ptr<NetworkConnectionTracker::GetConnectionTypeHandle>
+NetworkConnectionTracker::GetConnectionType(mojom::ConnectionType* type,
+                                            ConnectionTypeCallback callback) {
   // |connection_type_| is initialized when NetworkService starts up. In most
   // cases, it won't be kConnectionTypeInvalid and code will return early.
   base::subtle::Atomic32 type_value =
       base::subtle::NoBarrier_Load(&connection_type_);
   if (type_value != kConnectionTypeInvalid) {
     *type = static_cast<mojom::ConnectionType>(type_value);
-    return true;
+    return nullptr;
   }
   base::AutoLock lock(lock_);
   // Check again after getting the lock, and return early if
@@ -76,16 +96,17 @@ bool NetworkConnectionTracker::GetConnectionType(
   type_value = base::subtle::NoBarrier_Load(&connection_type_);
   if (type_value != kConnectionTypeInvalid) {
     *type = static_cast<mojom::ConnectionType>(type_value);
-    return true;
+    return nullptr;
   }
+  auto handle = std::make_unique<GetConnectionTypeHandle>(std::move(callback));
   if (!task_runner_->RunsTasksInCurrentSequence()) {
     connection_type_callbacks_.push_back(base::BindOnce(
         &OnGetConnectionType, base::ThreadTaskRunnerHandle::Get(),
-        std::move(callback)));
+        handle->WeakCallback()));
   } else {
-    connection_type_callbacks_.push_back(std::move(callback));
+    connection_type_callbacks_.push_back(handle->WeakCallback());
   }
-  return false;
+  return handle;
 }
 
 // static

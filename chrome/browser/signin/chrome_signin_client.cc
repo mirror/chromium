@@ -71,7 +71,8 @@ ChromeSigninClient::ChromeSigninClient(
       signin_error_controller_(signin_error_controller) {
   signin_error_controller_->AddObserver(this);
 #if !defined(OS_CHROMEOS)
-  net::NetworkChangeNotifier::AddNetworkChangeObserver(this);
+  g_browser_process->network_connection_tracker()->AddNetworkConnectionObserver(
+      this);
 #else
   // UserManager may not exist in unit_tests.
   if (!user_manager::UserManager::IsInitialized())
@@ -103,11 +104,9 @@ ChromeSigninClient::ChromeSigninClient(
 
 ChromeSigninClient::~ChromeSigninClient() {
   signin_error_controller_->RemoveObserver(this);
-}
-
-void ChromeSigninClient::Shutdown() {
 #if !defined(OS_CHROMEOS)
-  net::NetworkChangeNotifier::RemoveNetworkChangeObserver(this);
+  g_browser_process->network_connection_tracker()
+      ->RemoveNetworkConnectionObserver(this);
 #endif
 }
 
@@ -378,9 +377,9 @@ void ChromeSigninClient::OnGetTokenFailure(
 }
 
 #if !defined(OS_CHROMEOS)
-void ChromeSigninClient::OnNetworkChanged(
-    net::NetworkChangeNotifier::ConnectionType type) {
-  if (type >= net::NetworkChangeNotifier::ConnectionType::CONNECTION_NONE)
+void ChromeSigninClient::OnConnectionChanged(
+    content::mojom::ConnectionType type) {
+  if (type == content::mojom::ConnectionType::CONNECTION_NONE)
     return;
 
   for (const base::Closure& callback : delayed_callbacks_)
@@ -398,7 +397,19 @@ void ChromeSigninClient::DelayNetworkCall(const base::Closure& callback) {
   return;
 #else
   // Don't bother if we don't have any kind of network connection.
-  if (net::NetworkChangeNotifier::IsOffline()) {
+  content::mojom::ConnectionType type;
+  std::unique_ptr<content::NetworkConnectionTracker::GetConnectionTypeHandle>
+      handle =
+          g_browser_process->network_connection_tracker()->GetConnectionType(
+              &type, base::BindOnce(&ChromeSigninClient::OnConnectionChanged,
+                                    base::Unretained(this)));
+  if (handle) {
+    // Connection type cannot be retrieved synchronously so delay the callback.
+    get_connection_type_handle_ = std::move(handle);
+    delayed_callbacks_.push_back(callback);
+    return;
+  }
+  if (type == content::mojom::ConnectionType::CONNECTION_NONE) {
     delayed_callbacks_.push_back(callback);
   } else {
     callback.Run();
