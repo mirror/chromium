@@ -37,6 +37,24 @@
     },
     {
       "key": {
+        "uuid": "3e191fe3_63462943",
+        "filename": "components/viz/service/display/direct_renderer.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 620,
+      "author": {
+        "id": 1115895
+      },
+      "writtenOn": "2017-11-08T18:15:54Z",
+      "side": 1,
+      "message": "I was imagining CanSkipRenderPass would check texture-\u003eid() and if it didn\u0027t exist, then it would return false and then UseRenderPass would do the allocation?\n\nIs it not possible to make a CanSkipRenderPass() const function?",
+      "parentUuid": "d3ce0698_fd0cdcb5",
+      "revId": "ef778b0a98314c4778f8cf89f93c807b402514ff",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "388863e1_54f9909f",
         "filename": "components/viz/service/display/direct_renderer.cc",
         "patchSetId": 3
