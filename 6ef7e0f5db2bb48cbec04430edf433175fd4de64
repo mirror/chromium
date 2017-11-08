@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "fd514317_c843f079",
+        "filename": "tools/gn/setup.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 134,
+      "author": {
+        "id": 1003232
+      },
+      "writtenOn": "2017-11-08T20:05:58Z",
+      "side": 1,
+      "message": "I don\u0027t think I quite understand the situation you\u0027re trying to avoid (or work around). I feel like these two paragraphs contradict each other, and so maybe we just need to work on the wording.\n\nCan you give a specific example (or examples, if there are different cases)? Maybe we should add some tests to illustrate them?",
+      "revId": "6ef7e0f5db2bb48cbec04430edf433175fd4de64",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
