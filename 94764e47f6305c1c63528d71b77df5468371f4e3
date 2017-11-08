@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "b70df054_9dcb8db3",
+        "filename": "ui/app_list/app_list_util.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 42,
+      "author": {
+        "id": 1000101
+      },
+      "writtenOn": "2017-11-08T21:32:37Z",
+      "side": 1,
+      "message": "nit: const bool, here and other bools at L61-62",
+      "revId": "94764e47f6305c1c63528d71b77df5468371f4e3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
