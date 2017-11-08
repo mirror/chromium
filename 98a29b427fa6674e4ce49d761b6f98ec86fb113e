@@ -191,6 +191,24 @@
       "revId": "98a29b427fa6674e4ce49d761b6f98ec86fb113e",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "99a8b19a_164473ad",
+        "filename": "ui/strings/ui_strings.grd",
+        "patchSetId": 4
+      },
+      "lineNbr": 680,
+      "author": {
+        "id": 1002032
+      },
+      "writtenOn": "2017-11-08T14:12:00Z",
+      "side": 1,
+      "message": "ui_strings.grd is in the wrong layer: the code that uses it lives in //chrome, which depends on //ui (that therefore has no knowledge of //chrome). The settings cog is implemented in //ui/message_center/, which is why those strings are there.\n\nMaybe //chrome/app/chromium_strings.grd?",
+      "parentUuid": "c4821c31_3100ee05",
+      "revId": "98a29b427fa6674e4ce49d761b6f98ec86fb113e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
