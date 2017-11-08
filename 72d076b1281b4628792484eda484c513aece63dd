@@ -2,6 +2,131 @@
   "comments": [
     {
       "key": {
+        "uuid": "17aca544_06a4fc73",
+        "filename": "third_party/WebKit/LayoutTests/webauth/idl.html",
+        "patchSetId": 3
+      },
+      "lineNbr": 34,
+      "author": {
+        "id": 1003152
+      },
+      "writtenOn": "2017-11-08T17:11:32Z",
+      "side": 1,
+      "message": "nit: Don\u0027t we have |userHandle| here as well?  Or am I looking at the wrong version of the spec again?",
+      "revId": "72d076b1281b4628792484eda484c513aece63dd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a371ca7b_3139d73b",
+        "filename": "third_party/WebKit/LayoutTests/webauth/idl.html",
+        "patchSetId": 3
+      },
+      "lineNbr": 73,
+      "author": {
+        "id": 1003152
+      },
+      "writtenOn": "2017-11-08T17:11:32Z",
+      "side": 1,
+      "message": "nit: Same question about |requireUserVerification|?",
+      "revId": "72d076b1281b4628792484eda484c513aece63dd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1ba21cf0_3f812b9c",
+        "filename": "third_party/WebKit/LayoutTests/webauth/idl.html",
+        "patchSetId": 3
+      },
+      "lineNbr": 90,
+      "author": {
+        "id": 1003152
+      },
+      "writtenOn": "2017-11-08T17:11:32Z",
+      "side": 1,
+      "message": "s//hashAlgorithm/",
+      "range": {
+        "startLine": 90,
+        "startChar": 33,
+        "endLine": 90,
+        "endChar": 40
+      },
+      "revId": "72d076b1281b4628792484eda484c513aece63dd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "080ec009_b88f5c35",
+        "filename": "third_party/WebKit/Source/modules/credentialmanager/CredentialsContainer.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 43,
+      "author": {
+        "id": 1003152
+      },
+      "writtenOn": "2017-11-08T17:11:32Z",
+      "side": 1,
+      "message": "nit: Let\u0027s make this static, or even move it to the cpp file into an unnamed namespace.",
+      "revId": "72d076b1281b4628792484eda484c513aece63dd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "504b0322_e620da11",
+        "filename": "third_party/WebKit/Source/modules/credentialmanager/PublicKeyCredentialEntity.idl",
+        "patchSetId": 3
+      },
+      "lineNbr": 8,
+      "author": {
+        "id": 1003152
+      },
+      "writtenOn": "2017-11-08T17:11:32Z",
+      "side": 1,
+      "message": "I think this is now marked as required, so we can check it here instead of in hasRequiredEntityParameters().",
+      "revId": "72d076b1281b4628792484eda484c513aece63dd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "84d71135_3c78927b",
+        "filename": "third_party/WebKit/Source/modules/credentialmanager/PublicKeyCredentialUserEntity.idl",
+        "patchSetId": 3
+      },
+      "lineNbr": 8,
+      "author": {
+        "id": 1003152
+      },
+      "writtenOn": "2017-11-08T17:11:32Z",
+      "side": 1,
+      "message": "Same here, both of these are now required, so we can probably get rid of that? Or maybe I\u0027m missing something completely.",
+      "revId": "72d076b1281b4628792484eda484c513aece63dd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ec9c7890_8b62520c",
+        "filename": "third_party/WebKit/Source/modules/credentialmanager/WebAuthenticationClient.cpp",
+        "patchSetId": 3
+      },
+      "lineNbr": 151,
+      "author": {
+        "id": 1003152
+      },
+      "writtenOn": "2017-11-08T17:11:32Z",
+      "side": 1,
+      "message": "nit: Isn\u0027t |id| optional?",
+      "revId": "72d076b1281b4628792484eda484c513aece63dd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "b5a7417c_bacc8521",
         "filename": "third_party/WebKit/public/platform/modules/webauth/authenticator.mojom",
         "patchSetId": 3
@@ -31,6 +156,64 @@
       "side": 1,
       "message": "No, I don\u0027t think there\u0027s any real reason. I can change that.",
       "parentUuid": "b5a7417c_bacc8521",
+      "revId": "72d076b1281b4628792484eda484c513aece63dd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "bf9443eb_420459eb",
+        "filename": "third_party/WebKit/public/platform/modules/webauth/authenticator.mojom",
+        "patchSetId": 3
+      },
+      "lineNbr": 57,
+      "author": {
+        "id": 1003152
+      },
+      "writtenOn": "2017-11-08T17:11:32Z",
+      "side": 1,
+      "message": "Hang on, isn\u0027t this a domain string (instead of an origin)? See: https://w3c.github.io/webauthn/#rp-id",
+      "parentUuid": "af0dd397_fd9dbcc7",
+      "revId": "72d076b1281b4628792484eda484c513aece63dd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2ae5e1d2_7c928671",
+        "filename": "third_party/WebKit/public/platform/modules/webauth/authenticator.mojom",
+        "patchSetId": 3
+      },
+      "lineNbr": 82,
+      "author": {
+        "id": 1003152
+      },
+      "writtenOn": "2017-11-08T17:11:32Z",
+      "side": 1,
+      "message": "nit: Do we want to make this required?",
+      "range": {
+        "startLine": 82,
+        "startChar": 8,
+        "endLine": 82,
+        "endChar": 9
+      },
+      "revId": "72d076b1281b4628792484eda484c513aece63dd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a7795ce6_96d4e641",
+        "filename": "third_party/WebKit/public/platform/modules/webauth/authenticator.mojom",
+        "patchSetId": 3
+      },
+      "lineNbr": 102,
+      "author": {
+        "id": 1003152
+      },
+      "writtenOn": "2017-11-08T17:11:32Z",
+      "side": 1,
+      "message": "nit: public_key_[credential_]parameters",
       "revId": "72d076b1281b4628792484eda484c513aece63dd",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
