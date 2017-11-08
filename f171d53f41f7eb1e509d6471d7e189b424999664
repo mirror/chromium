@@ -162,6 +162,24 @@
     },
     {
       "key": {
+        "uuid": "c2ba09a8_fd6a485f",
+        "filename": "chrome/test/data/webui/extensions/extension_manager_unit_test.js",
+        "patchSetId": 18
+      },
+      "lineNbr": 69,
+      "author": {
+        "id": 1115893
+      },
+      "writtenOn": "2017-11-08T22:00:16Z",
+      "side": 1,
+      "message": "Agreed. Removed whenCalled(\u0027getItemStateChangedTarget\u0027) and whenCalled(\u0027getProfileStateChangedTarget\u0027). I agree these are not useful to check, and in fact these methods simply return a reference (both in tests and in prod), they are not actually talking to C++ themselves.\n\n\u003e a) have a test that checks that mutating item state results in the UI being updated.\n\n\u0027UpdateItemData\u0027 test already does this, and would break if for some reason the listeners are not registered.\n\n\u003e b) have an onReady() type promise exposed on the manager which is resolved when it has done its initialization. \n\nOk. I\u0027ll explore this in a separate CL. Having said that, exposing a Promise would only work for initialization. Testing interaction like \"user clicks button-\u003e request to backend sent -\u003eresponse received-\u003e DOM updated\", is more feasible with the whenCalled() pattern than with a Promise exposed from the prod code.",
+      "parentUuid": "e77b7734_c711a5fd",
+      "revId": "f171d53f41f7eb1e509d6471d7e189b424999664",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "f81afc73_5505b978",
         "filename": "chrome/test/data/webui/extensions/extension_manager_unit_test.js",
         "patchSetId": 18
