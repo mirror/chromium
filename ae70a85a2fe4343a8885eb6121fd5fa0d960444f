@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "2c9c0705_f17300dd",
+        "filename": "chrome/browser/ui/views/page_info/page_info_bubble_view.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 153,
+      "author": {
+        "id": 1160861
+      },
+      "writtenOn": "2017-11-08T02:23:03Z",
+      "side": 1,
+      "message": "Ohhh, I think this showed up in the diff because I rebased between this and the last patchset. If you diff against Base I think it won\u0027t show up any more (i.e. this was added in a different patch).",
+      "parentUuid": "d2cf98ff_d8208dc8",
+      "revId": "ae70a85a2fe4343a8885eb6121fd5fa0d960444f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "e2c2cf2a_4b79d0d1",
         "filename": "chrome/browser/ui/views/page_info/page_info_bubble_view.cc",
         "patchSetId": 3
@@ -33,6 +51,24 @@
       "revId": "ae70a85a2fe4343a8885eb6121fd5fa0d960444f",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6c71e46c_324192d1",
+        "filename": "chrome/browser/ui/views/page_info/page_info_bubble_view.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 687,
+      "author": {
+        "id": 1160861
+      },
+      "writtenOn": "2017-11-08T02:23:03Z",
+      "side": 1,
+      "message": "See above comment :)",
+      "parentUuid": "e2c2cf2a_4b79d0d1",
+      "revId": "ae70a85a2fe4343a8885eb6121fd5fa0d960444f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
