@@ -1,0 +1,106 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "ac1247b2_91d35748",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 5
+      },
+      "lineNbr": 7,
+      "author": {
+        "id": 1115745
+      },
+      "writtenOn": "2017-11-08T16:20:10Z",
+      "side": 1,
+      "message": "nit: What does CL_3 refer to?",
+      "revId": "f15b02e53b57fea61216fb4fcfec465738bee5cd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1b87a1c3_ff9a1a49",
+        "filename": "chrome/browser/extensions/display_info_provider_chromeos.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 45,
+      "author": {
+        "id": 1115745
+      },
+      "writtenOn": "2017-11-08T16:20:10Z",
+      "side": 1,
+      "message": "nit: add a comment explaining this?",
+      "revId": "f15b02e53b57fea61216fb4fcfec465738bee5cd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c6f88944_ad86dba8",
+        "filename": "chrome/browser/extensions/display_info_provider_chromeos.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 593,
+      "author": {
+        "id": 1115745
+      },
+      "writtenOn": "2017-11-08T16:20:10Z",
+      "side": 1,
+      "message": "nit: maybe just insert() here.  No reason to emplace() with a type that will be copied.  I don\u0027t think it would necessarily hurt anything, but it\u0027s a bit odd.",
+      "revId": "f15b02e53b57fea61216fb4fcfec465738bee5cd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "281b3b0d_757bfd62",
+        "filename": "chrome/browser/extensions/display_info_provider_chromeos.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 615,
+      "author": {
+        "id": 1115745
+      },
+      "writtenOn": "2017-11-08T16:20:10Z",
+      "side": 1,
+      "message": "Should this error be surfaced to the extension instead?",
+      "revId": "f15b02e53b57fea61216fb4fcfec465738bee5cd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "19e3f0e0_da700411",
+        "filename": "chrome/browser/extensions/display_info_provider_chromeos.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 742,
+      "author": {
+        "id": 1115745
+      },
+      "writtenOn": "2017-11-08T16:20:10Z",
+      "side": 1,
+      "message": "nit: it\u0027s not clear to me what type this returns from the callsite; can we avoid auto in this case?",
+      "revId": "f15b02e53b57fea61216fb4fcfec465738bee5cd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3f851c3f_d8bbed76",
+        "filename": "chrome/browser/extensions/display_info_provider_chromeos.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 755,
+      "author": {
+        "id": 1115745
+      },
+      "writtenOn": "2017-11-08T16:20:10Z",
+      "side": 1,
+      "message": "to confirm, if we have:\n1  2  3\n4  5  6\n\nThe parent display of 4 is 1, and the parent display of 5 is 4?  That seems a bit odd (I would expect 4 to be parented by 3, or 5 to be parented by 2) - but I don\u0027t really know the display code, so just double-checking that this was your intent.",
+      "revId": "f15b02e53b57fea61216fb4fcfec465738bee5cd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
