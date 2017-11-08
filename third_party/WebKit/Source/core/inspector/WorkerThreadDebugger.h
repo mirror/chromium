@@ -54,6 +54,10 @@ class CORE_EXPORT WorkerThreadDebugger final : public ThreadDebugger {
   void ContextCreated(WorkerThread*, v8::Local<v8::Context>);
   void ContextWillBeDestroyed(WorkerThread*, v8::Local<v8::Context>);
   void ExceptionThrown(WorkerThread*, ErrorEvent*);
+  std::unique_ptr<RemoteAsyncTaskToken> RemoteAsyncTaskScheduled(
+      WorkerThread*,
+      const String& task_name,
+      const String& target_debugger_id);
 
  private:
   int ContextGroupId(ExecutionContext*) override;

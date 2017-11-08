@@ -136,6 +136,21 @@ void WorkerThreadDebugger::ExceptionThrown(WorkerThread* worker_thread,
   }
 }
 
+std::unique_ptr<RemoteAsyncTaskToken>
+WorkerThreadDebugger::RemoteAsyncTaskScheduled(
+    WorkerThread* worker_thread,
+    const String& task_name,
+    const String& target_debugger_id) {
+  std::unique_ptr<v8_inspector::StringBuffer> buffer =
+      GetV8Inspector()->debuggerId(ContextGroupId(worker_thread));
+  String debugger_id = ToCoreString(buffer->string());
+  v8_inspector::V8Inspector::RemoteAsyncTaskId task_id =
+      ThreadDebugger::RemoteAsyncTaskScheduled(task_name, target_debugger_id);
+  if (task_id == v8_inspector::V8Inspector::kEmptyAsyncTaskId)
+    return nullptr;
+  return std::make_unique<RemoteAsyncTaskToken>(task_id, debugger_id);
+}
+
 int WorkerThreadDebugger::ContextGroupId(ExecutionContext* context) {
   return ContextGroupId(ToWorkerOrWorkletGlobalScope(context)->GetThread());
 }

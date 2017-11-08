@@ -10,7 +10,7 @@
 #include "core/events/ErrorEvent.h"
 #include "core/events/MessageEvent.h"
 #include "core/frame/csp/ContentSecurityPolicy.h"
-#include "core/inspector/ThreadDebugger.h"
+#include "core/inspector/MainThreadDebugger.h"
 #include "core/origin_trials/OriginTrialContext.h"
 #include "core/workers/DedicatedWorker.h"
 #include "core/workers/DedicatedWorkerObjectProxy.h"
@@ -146,15 +146,18 @@ bool DedicatedWorkerMessagingProxy::HasPendingActivity() const {
 
 void DedicatedWorkerMessagingProxy::PostMessageToWorkerObject(
     scoped_refptr<SerializedScriptValue> message,
-    Vector<MessagePortChannel> channels) {
+    Vector<MessagePortChannel> channels,
+    std::unique_ptr<RemoteAsyncTaskToken> async_token) {
   DCHECK(IsParentContextThread());
   if (!worker_object_ || AskedToTerminate())
     return;
 
   MessagePortArray* ports =
       MessagePort::EntanglePorts(*GetExecutionContext(), std::move(channels));
+  MainThreadDebugger::Instance()->RemoteAsyncTaskStarted(async_token.get());
   worker_object_->DispatchEvent(
       MessageEvent::Create(ports, std::move(message)));
+  MainThreadDebugger::Instance()->RemoteAsyncTaskFinished(async_token.get());
 }
 
 void DedicatedWorkerMessagingProxy::DispatchErrorEvent(

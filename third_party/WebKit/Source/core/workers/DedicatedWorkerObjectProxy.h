@@ -65,7 +65,8 @@ class CORE_EXPORT DedicatedWorkerObjectProxy : public ThreadedObjectProxyBase {
   ~DedicatedWorkerObjectProxy() override;
 
   void PostMessageToWorkerObject(scoped_refptr<SerializedScriptValue>,
-                                 Vector<MessagePortChannel>);
+                                 Vector<MessagePortChannel>,
+                                 std::unique_ptr<RemoteAsyncTaskToken>);
   void ProcessUnhandledException(int exception_id, WorkerThread*);
   void ProcessMessageFromWorkerObject(scoped_refptr<SerializedScriptValue>,
                                       Vector<MessagePortChannel>,
