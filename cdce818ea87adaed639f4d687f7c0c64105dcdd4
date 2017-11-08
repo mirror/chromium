@@ -118,6 +118,47 @@
       "revId": "cdce818ea87adaed639f4d687f7c0c64105dcdd4",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "39f5f843_cb2c0437",
+        "filename": "build/mac/find_sdk.py",
+        "patchSetId": 1
+      },
+      "lineNbr": 57,
+      "author": {
+        "id": 1003211
+      },
+      "writtenOn": "2017-11-08T21:05:55Z",
+      "side": 1,
+      "message": "Here\u0027s how the bots find Xcode installations:\nhttps://chromium.googlesource.com/chromium/src/+/3bd9445ece655f70b3a14ce7fb69ee31c0779de1/ios/build/bots/scripts/find_xcode.py#126\n\nIf it starts with \"Xcode\" we check for Contents/Developer/usr/bin/xcodebuild under that path. Ends with \".app\" might even be better, though costlier since it\u0027ll check more directories; starts with \"Xcode\" suffices for Xcode.app, Xcode-beta.app, and all the Xcode installations we have on the bots (which sometimes have the version in their names, like Xcode-8.app).",
+      "parentUuid": "ccfc4b0b_ee20b93f",
+      "range": {
+        "startLine": 57,
+        "startChar": 32,
+        "endLine": 57,
+        "endChar": 63
+      },
+      "revId": "cdce818ea87adaed639f4d687f7c0c64105dcdd4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8ee0fa8c_744f794b",
+        "filename": "build/mac/find_sdk.py",
+        "patchSetId": 1
+      },
+      "lineNbr": 58,
+      "author": {
+        "id": 1003211
+      },
+      "writtenOn": "2017-11-08T21:05:55Z",
+      "side": 1,
+      "message": "Shouldn\u0027t really raise \"Exception\", it makes this uncatchable (since try/except Exception is always too broad). Why not define a custom exception subclass?",
+      "revId": "cdce818ea87adaed639f4d687f7c0c64105dcdd4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
