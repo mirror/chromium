@@ -10,6 +10,7 @@
 #include <sys/wait.h>
 #include <unistd.h>
 
+#include "base/debug/activity_tracker.h"
 #include "base/files/file_util.h"
 #include "base/files/scoped_file.h"
 #include "base/logging.h"
@@ -137,13 +138,15 @@ namespace {
 
 // Return true if the given child is dead. This will also reap the process.
 // Doesn't block.
-static bool IsChildDead(pid_t child) {
-  const pid_t result = HANDLE_EINTR(waitpid(child, NULL, WNOHANG));
+static bool IsChildDead(pid_t child, int* exit_code = nullptr) {
+  int status;
+  const pid_t result = HANDLE_EINTR(waitpid(child, &status, WNOHANG));
   if (result == -1) {
     DPLOG(ERROR) << "waitpid(" << child << ")";
     NOTREACHED();
   } else if (result > 0) {
     // The child has died.
+    Process(child).Exited(WEXITSTATUS(status));
     return true;
   }
 
