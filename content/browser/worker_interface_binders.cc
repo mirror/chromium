@@ -7,6 +7,8 @@
 #include <utility>
 
 #include "base/bind.h"
+#include "content/browser/background_fetch/background_fetch_service_impl.h"
+#include "content/browser/dedicated_worker/dedicated_worker_host.h"
 #include "content/browser/payments/payment_manager.h"
 #include "content/browser/permissions/permission_service_context.h"
 #include "content/browser/renderer_host/render_process_host_impl.h"
@@ -15,7 +17,10 @@
 #include "content/public/browser/browser_context.h"
 #include "content/public/browser/browser_thread.h"
 #include "content/public/browser/content_browser_client.h"
+#include "content/public/browser/render_frame_host.h"
 #include "content/public/browser/render_process_host.h"
+#include "services/device/public/interfaces/constants.mojom.h"
+#include "services/device/public/interfaces/vibration_manager.mojom.h"
 #include "services/service_manager/public/cpp/binder_registry.h"
 #include "services/service_manager/public/cpp/connector.h"
 #include "services/shape_detection/public/interfaces/barcodedetection.mojom.h"
@@ -48,6 +53,16 @@ class WorkerInterfaceBinders {
         host, origin, interface_name, std::move(interface_pipe));
   }
 
+  // Try binding an interface request |interface_pipe| for |interface_name|
+  // received from |frame|.
+  bool TryBindInterface(const std::string& interface_name,
+                        mojo::ScopedMessagePipeHandle* interface_pipe,
+                        RenderFrameHost* frame) {
+    return parameterized_binder_registry_.TryBindInterface(
+        interface_name, interface_pipe, frame->GetProcess(),
+        frame->GetLastCommittedOrigin());
+  }
+
  private:
   void InitializeParameterizedBinderRegistry();
 
@@ -78,6 +93,9 @@ void WorkerInterfaceBinders::InitializeParameterizedBinderRegistry() {
       base::Bind(&ForwardRequest<shape_detection::mojom::TextDetection>,
                  shape_detection::mojom::kServiceName));
   parameterized_binder_registry_.AddInterface(
+      base::Bind(&ForwardRequest<device::mojom::VibrationManager>,
+                 device::mojom::kServiceName));
+  parameterized_binder_registry_.AddInterface(
       base::Bind([](blink::mojom::WebSocketRequest request,
                     RenderProcessHost* host, const url::Origin& origin) {
         WebSocketManager::CreateWebSocket(host->GetID(), MSG_ROUTING_NONE,
@@ -97,6 +115,13 @@ void WorkerInterfaceBinders::InitializeParameterizedBinderRegistry() {
             ->permission_service_context()
             .CreateService(std::move(request));
       }));
+  parameterized_binder_registry_.AddInterface(
+      base::Bind(&CreateDedicatedWorkerHostFactory));
+}
+
+WorkerInterfaceBinders& GetWorkerInterfaceBinders() {
+  CR_DEFINE_STATIC_LOCAL(WorkerInterfaceBinders, binders, ());
+  return binders;
 }
 
 }  // namespace
@@ -107,9 +132,17 @@ void BindWorkerInterface(const std::string& interface_name,
                          const url::Origin& origin) {
   DCHECK_CURRENTLY_ON(BrowserThread::UI);
 
-  CR_DEFINE_STATIC_LOCAL(WorkerInterfaceBinders, binders, ());
-  binders.BindInterface(interface_name, std::move(interface_pipe), host,
-                        origin);
+  GetWorkerInterfaceBinders().BindInterface(
+      interface_name, std::move(interface_pipe), host, origin);
+}
+
+bool TryBindFrameInterface(const std::string& interface_name,
+                           mojo::ScopedMessagePipeHandle* interface_pipe,
+                           RenderFrameHost* frame) {
+  DCHECK_CURRENTLY_ON(BrowserThread::UI);
+
+  return GetWorkerInterfaceBinders().TryBindInterface(interface_name,
+                                                      interface_pipe, frame);
 }
 
 }  // namespace content
