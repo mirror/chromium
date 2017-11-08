@@ -332,6 +332,10 @@ class DISPLAY_MANAGER_EXPORT DisplayManager
   // current mode to Unified Desktop.
   void SetUnifiedDesktopMatrix(const UnifiedDesktopLayoutMatrix& matrix);
 
+  // Returns the current matrix that is currently applied or will be applied
+  // when unified desktop is enabled.
+  const UnifiedDesktopLayoutMatrix& GetCurrentUnifiedDesktopMatrix() const;
+
   // In Unified Desktop mode, we consider the first mirroring display to be the
   // primary. It's also the top-left display in the layout matrix, and it's
   // where the shelf is placed.
