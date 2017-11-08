@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "fe55dfbe_6e9a0fa6",
+        "filename": "content/renderer/device_sensors/device_sensor_event_pump.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 120,
+      "author": {
+        "id": 1116054
+      },
+      "writtenOn": "2017-11-08T23:29:16Z",
+      "side": 0,
+      "message": "nit: does this still apply, or was this removed intentionally?",
+      "revId": "8535de60c5047263328ed2c9d6e82aef69661a69",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ac5d1f16_12e95450",
+        "filename": "services/device/generic_sensor/sensor_provider_impl.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 31,
+      "author": {
+        "id": 1116054
+      },
+      "writtenOn": "2017-11-08T23:29:16Z",
+      "side": 0,
+      "message": "Wondering why this PostTask was necessary.. so IIUC in new implementation the callback will still be async and go via mojo IPC?",
+      "revId": "8535de60c5047263328ed2c9d6e82aef69661a69",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
