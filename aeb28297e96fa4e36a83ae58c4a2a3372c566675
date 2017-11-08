@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "1201335e_cc6c0ec1",
+        "filename": "ash/accelerators/accelerator_controller.cc",
+        "patchSetId": 13
+      },
+      "lineNbr": 265,
+      "author": {
+        "id": 1147616
+      },
+      "writtenOn": "2017-11-08T22:48:31Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "6cb45a61_c443cd08",
+      "revId": "aeb28297e96fa4e36a83ae58c4a2a3372c566675",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "fe3d380a_fdf2188d",
         "filename": "ash/display/display_move_window_util.cc",
         "patchSetId": 13
@@ -30,6 +48,24 @@
       "writtenOn": "2017-11-08T21:33:53Z",
       "side": 1,
       "message": "Indexing an array by an enum is confusing. Maybe at some point if we have more than 2 entries we can consider another approach, but for now I would eliminate the enum and just have two explicit variables, next_movement_display and next_cycled_display. You can use a local\u0026 instead of next_display_by_type[candidate_type], e.g. display::Display\u0026 next_display \u003d candidate_space \u003e\u003d 0 ? next_movement_display : next_cycled_display;",
+      "revId": "aeb28297e96fa4e36a83ae58c4a2a3372c566675",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2281ced9_384605cb",
+        "filename": "ash/display/display_move_window_util.cc",
+        "patchSetId": 13
+      },
+      "lineNbr": 118,
+      "author": {
+        "id": 1147616
+      },
+      "writtenOn": "2017-11-08T22:48:31Z",
+      "side": 1,
+      "message": "done, thanks for the suggestion.",
+      "parentUuid": "fe3d380a_fdf2188d",
       "revId": "aeb28297e96fa4e36a83ae58c4a2a3372c566675",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -53,6 +89,24 @@
     },
     {
       "key": {
+        "uuid": "e4aaf322_3f85ee9c",
+        "filename": "ash/display/display_move_window_util.cc",
+        "patchSetId": 13
+      },
+      "lineNbr": 135,
+      "author": {
+        "id": 1147616
+      },
+      "writtenOn": "2017-11-08T22:48:31Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "d0193714_c0ef16bb",
+      "revId": "aeb28297e96fa4e36a83ae58c4a2a3372c566675",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "bc3f99d4_4b552124",
         "filename": "chrome/app/chromeos_strings.grdp",
         "patchSetId": 13
@@ -70,6 +124,24 @@
     },
     {
       "key": {
+        "uuid": "52fa4d9e_7e3d8277",
+        "filename": "chrome/app/chromeos_strings.grdp",
+        "patchSetId": 13
+      },
+      "lineNbr": 3383,
+      "author": {
+        "id": 1147616
+      },
+      "writtenOn": "2017-11-08T22:48:31Z",
+      "side": 1,
+      "message": "I already consulted with PM (Olga). This description is limited to the keyboard shortcut helper. See the other reply.",
+      "parentUuid": "bc3f99d4_4b552124",
+      "revId": "aeb28297e96fa4e36a83ae58c4a2a3372c566675",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "2ef88250_5ff38a3c",
         "filename": "chrome/browser/resources/chromeos/keyboard_overlay.css",
         "patchSetId": 13
@@ -81,6 +153,24 @@
       "writtenOn": "2017-11-08T21:33:53Z",
       "side": 1,
       "message": "This seems iffy for lower res displays, is it readable?",
+      "revId": "aeb28297e96fa4e36a83ae58c4a2a3372c566675",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f8e1af93_97f13dc3",
+        "filename": "chrome/browser/resources/chromeos/keyboard_overlay.css",
+        "patchSetId": 13
+      },
+      "lineNbr": 195,
+      "author": {
+        "id": 1147616
+      },
+      "writtenOn": "2017-11-08T22:48:31Z",
+      "side": 1,
+      "message": "For normal res display on elm：https://screenshot.googleplex.com/rz31PSkdhg6\nFor lower res displays, like 960*540 I tested on elm: https://screenshot.googleplex.com/aN4aQfmy8zT\nIt will still exceed the key space.\n\nIt is an existing issue, see these: https://screenshot.googleplex.com/bNUJrvipSZH\n\nIt is a common problem, especially for those having a narrow key overlay and not-trivial description.\n\nThe basic fact is this keyboard shortcut helper is going to be killed on M65. So this change only exists for one milestone. https://bugs.chromium.org/p/chromium/issues/detail?id\u003d755448\n\nThe only solution I could think of is to reduce the words of description. PM is also fine with \"window up/down/left/right\" description for one milestone, which is super concise description. What do you recommend here?",
+      "parentUuid": "2ef88250_5ff38a3c",
       "revId": "aeb28297e96fa4e36a83ae58c4a2a3372c566675",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
