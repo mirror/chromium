@@ -2109,6 +2109,10 @@ bool RenderProcessHostImpl::IsKeepAliveRefCountDisabled() {
   return is_keep_alive_ref_count_disabled_;
 }
 
+base::TimeDelta RenderProcessHostImpl::GetKeepaliveRequestTimeout() const {
+  return keepalive_request_timeout_;
+}
+
 void RenderProcessHostImpl::PurgeAndSuspend() {
   GetRendererInterface()->ProcessPurgeAndSuspend();
 }
