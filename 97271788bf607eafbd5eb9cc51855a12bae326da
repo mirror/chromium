@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "1d2b001e_e4613306",
+        "filename": "ash/accessibility/accessibility_layer.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 10,
+      "author": {
+        "id": 1250213
+      },
+      "writtenOn": "2017-11-08T01:08:50Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "5999519f_c0db91a4",
+      "revId": "97271788bf607eafbd5eb9cc51855a12bae326da",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "3f99bba6_64884b72",
         "filename": "ash/accessibility/accessibility_layer.h",
         "patchSetId": 3
@@ -36,6 +54,24 @@
     },
     {
       "key": {
+        "uuid": "2cf7de9d_66549d8e",
+        "filename": "ash/accessibility/accessibility_layer.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 34,
+      "author": {
+        "id": 1250213
+      },
+      "writtenOn": "2017-11-08T01:08:50Z",
+      "side": 1,
+      "message": "Ok, I\u0027ve done that and removed the destructor from accessibility_layer.cc.",
+      "parentUuid": "3f99bba6_64884b72",
+      "revId": "97271788bf607eafbd5eb9cc51855a12bae326da",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "35519ac7_f5b9f03b",
         "filename": "ash/accessibility/focus_ring_layer.h",
         "patchSetId": 3
@@ -50,6 +86,24 @@
       "revId": "97271788bf607eafbd5eb9cc51855a12bae326da",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9e555f44_fd9a8185",
+        "filename": "ash/accessibility/focus_ring_layer.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 31,
+      "author": {
+        "id": 1250213
+      },
+      "writtenOn": "2017-11-08T01:08:50Z",
+      "side": 1,
+      "message": "Done.\n\nI moved GetInset into Private here and in accessibility_layer.h.",
+      "parentUuid": "35519ac7_f5b9f03b",
+      "revId": "97271788bf607eafbd5eb9cc51855a12bae326da",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }

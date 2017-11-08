@@ -300,6 +300,24 @@
     },
     {
       "key": {
+        "uuid": "d11c5b2d_59f3fb65",
+        "filename": "ash/accessibility/accessibility_layer.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 70,
+      "author": {
+        "id": 1250213
+      },
+      "writtenOn": "2017-11-08T01:08:50Z",
+      "side": 1,
+      "message": "I don\u0027t know if it will change dynamically -- I guess that\u0027s possible. I think I prefer not to have it as a parameter to the constructor or to Set() because then the calling class does not need to know the value of the inset, which should just be handled by the layer.\n\ntl;dr: optional #1 done.",
+      "parentUuid": "236c9225_5a97159a",
+      "revId": "6f7d6fc7a72a1c2d1db7f2d2b81023cd5a32518c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "7982e137_650ebe18",
         "filename": "ash/accessibility/focus_ring_layer.h",
         "patchSetId": 2
