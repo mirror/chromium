@@ -186,23 +186,6 @@
 
 #pragma mark - ToolbarOwner
 
-- (ToolbarController*)relinquishedToolbarController {
-  ToolbarController* relinquishedToolbarController = nil;
-  if ([[_toolbarController view] isDescendantOfView:self]) {
-    // Only relinquish the toolbar controller if it's in the hierarchy.
-    relinquishedToolbarController = _toolbarController;
-  }
-  return relinquishedToolbarController;
-}
-
-- (void)reparentToolbarController {
-  DCHECK(![[_toolbarController view] isDescendantOfView:self]);
-  [self addSubview:[_toolbarController view]];
-  if (base::FeatureList::IsEnabled(kSafeAreaCompatibleToolbar)) {
-    [self addConstraintsToToolbar];
-  }
-}
-
 - (CGRect)toolbarFrame {
   return _toolbarController.view.frame;
 }
