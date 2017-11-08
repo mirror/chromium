@@ -10,6 +10,7 @@
 
 #include "ipc/ipc_message_macros.h"
 #include "ui/gfx/buffer_types.h"
+#include "ui/gfx/gpu_fence_handle.h"
 #include "ui/gfx/gpu_memory_buffer.h"
 #include "ui/gfx/ipc/gfx_ipc_export.h"
 #include "ui/gfx/selection_bound.h"
@@ -31,7 +32,9 @@ IPC_ENUM_TRAITS_MAX_VALUE(gfx::GpuMemoryBufferType,
 
 IPC_ENUM_TRAITS_MAX_VALUE(gfx::SwapResult, gfx::SwapResult::SWAP_RESULT_LAST)
 
-IPC_ENUM_TRAITS_MAX_VALUE(gfx::SelectionBound::Type, gfx::SelectionBound::LAST);
+IPC_ENUM_TRAITS_MAX_VALUE(gfx::SelectionBound::Type, gfx::SelectionBound::LAST)
+
+IPC_ENUM_TRAITS_MAX_VALUE(gfx::GpuFenceHandleType, gfx::GpuFenceHandleType::LAST)
 
 IPC_STRUCT_TRAITS_BEGIN(gfx::GpuMemoryBufferHandle)
   IPC_STRUCT_TRAITS_MEMBER(id)
@@ -63,6 +66,11 @@ IPC_STRUCT_TRAITS_BEGIN(gfx::NativePixmapHandle)
   IPC_STRUCT_TRAITS_MEMBER(planes)
 IPC_STRUCT_TRAITS_END()
 #endif
+
+IPC_STRUCT_TRAITS_BEGIN(gfx::GpuFenceHandle)
+  IPC_STRUCT_TRAITS_MEMBER(type)
+  IPC_STRUCT_TRAITS_MEMBER(native_fd)
+IPC_STRUCT_TRAITS_END()
 
 #undef IPC_MESSAGE_EXPORT
 #define IPC_MESSAGE_EXPORT

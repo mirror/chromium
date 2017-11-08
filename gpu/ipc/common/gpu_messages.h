@@ -258,4 +258,15 @@ IPC_SYNC_MESSAGE_ROUTED2_1(GpuCommandBufferMsg_CreateStreamTexture,
 // Start or stop VSync sygnal production on GPU side (Windows only).
 IPC_MESSAGE_ROUTED1(GpuCommandBufferMsg_SetNeedsVSync, bool /* needs_vsync */)
 
+// Insert a GpuFence based on the provided handle
+IPC_MESSAGE_ROUTED1(GpuCommandBufferMsg_InsertGpuFence, gfx::GpuFenceHandle);
+
+// Create a new GpuFence and send a response containing the handle.
+IPC_MESSAGE_ROUTED1(GpuCommandBufferMsg_CreateGpuFence, uint32_t /* create_id */);
+
+// Response to CreateGpuFence
+IPC_MESSAGE_ROUTED2(GpuCommandBufferMsg_CreateGpuFenceComplete,
+                    uint32_t /* create_id */,
+                    gfx::GpuFenceHandle);
+
 #endif  // GPU_IPC_COMMON_GPU_MESSAGES_H_
