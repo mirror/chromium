@@ -72,7 +72,7 @@ class PLATFORM_EXPORT PaintController {
   // These methods are called during painting.u
 
   // Provide a new set of paint chunk properties to apply to recorded display
-  // items, for Slimming Paint v2.
+  // items, for Slimming Paint v175+.
   void UpdateCurrentPaintChunkProperties(const PaintChunk::Id*,
                                          const PaintChunkProperties&);
 
