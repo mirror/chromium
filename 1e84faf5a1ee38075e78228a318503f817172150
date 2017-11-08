@@ -2,6 +2,29 @@
   "comments": [
     {
       "key": {
+        "uuid": "58b3447f_bbc59f3b",
+        "filename": "tools/cygprofile/lightweight_cygprofile.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 80,
+      "author": {
+        "id": 1000429
+      },
+      "writtenOn": "2017-11-08T12:57:01Z",
+      "side": 1,
+      "message": "kDelayInSeconds * kMicrosecondsInSecond / count?",
+      "range": {
+        "startLine": 80,
+        "startChar": 15,
+        "endLine": 80,
+        "endChar": 18
+      },
+      "revId": "1e84faf5a1ee38075e78228a318503f817172150",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "8174750d_c044b93a",
         "filename": "tools/cygprofile/lightweight_cygprofile.cc",
         "patchSetId": 1
@@ -18,6 +41,29 @@
         "startChar": 1,
         "endLine": 101,
         "endChar": 2
+      },
+      "revId": "1e84faf5a1ee38075e78228a318503f817172150",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "53458996_6e4b9aa8",
+        "filename": "tools/cygprofile/lightweight_cygprofile.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 121,
+      "author": {
+        "id": 1000429
+      },
+      "writtenOn": "2017-11-08T12:57:01Z",
+      "side": 1,
+      "message": "trip to double and then back to int again, loosing precision?",
+      "range": {
+        "startLine": 121,
+        "startChar": 19,
+        "endLine": 121,
+        "endChar": 47
       },
       "revId": "1e84faf5a1ee38075e78228a318503f817172150",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
