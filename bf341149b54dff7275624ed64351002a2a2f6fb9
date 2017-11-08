@@ -55,6 +55,24 @@
     },
     {
       "key": {
+        "uuid": "44c78344_2d963f90",
+        "filename": "ios/chrome/browser/ui/toolbar/web_toolbar_controller.mm",
+        "patchSetId": 12
+      },
+      "lineNbr": 2455,
+      "author": {
+        "id": 1180589
+      },
+      "writtenOn": "2017-11-08T13:59:57Z",
+      "side": 1,
+      "message": "Can you try to see if you are still hitting it if you enable the #toolbar-snapshot-animation in chrome://flags?",
+      "parentUuid": "2fb087dd_7fbd93f2",
+      "revId": "bf341149b54dff7275624ed64351002a2a2f6fb9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "d478730f_5b2c4519",
         "filename": "ios/chrome/browser/ui/toolbar/web_toolbar_controller.mm",
         "patchSetId": 12
