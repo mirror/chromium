@@ -2,6 +2,29 @@
   "comments": [
     {
       "key": {
+        "uuid": "c2094a4a_d6fc0cde",
+        "filename": "chrome/browser/plugins/plugin_info_message_filter.h",
+        "patchSetId": 13
+      },
+      "lineNbr": 183,
+      "author": {
+        "id": 1001168
+      },
+      "writtenOn": "2017-11-08T01:19:11Z",
+      "side": 1,
+      "message": "Now that this is static on the renderer-side, can this be an AssociatingBinding to make it clear that it\u0027s 1:1 relationship?",
+      "range": {
+        "startLine": 183,
+        "startChar": 8,
+        "endLine": 183,
+        "endChar": 28
+      },
+      "revId": "35191e783c1463a6d9a39e0857914a57f95321c8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "e2d06910_1417b8cf",
         "filename": "chrome/renderer/chrome_content_renderer_client.cc",
         "patchSetId": 13
@@ -13,6 +36,24 @@
       "writtenOn": "2017-11-08T00:57:08Z",
       "side": 1,
       "message": "why do we need this wrapper class instead of having the static hold the interfaceptr directly?",
+      "revId": "35191e783c1463a6d9a39e0857914a57f95321c8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "698dc050_10c42188",
+        "filename": "chrome/renderer/chrome_content_renderer_client.cc",
+        "patchSetId": 13
+      },
+      "lineNbr": 742,
+      "author": {
+        "id": 1001168
+      },
+      "writtenOn": "2017-11-08T01:19:11Z",
+      "side": 1,
+      "message": "By doing it this way, the code doesn\u0027t need to check if the interfaceptr is unbound and then bind--there\u0027s just one check that the static is constructed.",
+      "parentUuid": "e2d06910_1417b8cf",
       "revId": "35191e783c1463a6d9a39e0857914a57f95321c8",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
