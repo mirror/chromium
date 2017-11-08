@@ -141,8 +141,7 @@ scoped_refptr<AutofillWebDataService> AutofillClientIOS::GetDatabase() {
   return autofill_web_data_service_;
 }
 
-void AutofillClientIOS::DidInteractWithNonsecureCreditCardInput(
-    content::RenderFrameHost* rfh) {
+void AutofillClientIOS::DidInteractWithNonsecureCreditCardInput() {
   web_state_->OnCreditCardInputShownOnHttp();
 }
 
