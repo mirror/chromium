@@ -70,6 +70,30 @@
       "revId": "3f263bcc5985a31115d3e390f35989fa6099144e",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b4c7b318_11d6548a",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/toolbar/ToolbarManager.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 337,
+      "author": {
+        "id": 1116043
+      },
+      "writtenOn": "2017-11-08T21:17:47Z",
+      "side": 1,
+      "message": "Ah, would it make sense to override onReparentingFinished and have this logic there instead?\n\nonShown might be called before onUrlUpdated so it could be undoing the work there?\n\nsetReadyForBitmapCapture was to prevent unnecessary bitmap capturing while the initial page is loading, so this could tweak that behavior slightly where onReparentingFinished would be less likely to change that.",
+      "parentUuid": "e365da5b_b8e404e2",
+      "range": {
+        "startLine": 335,
+        "startChar": 12,
+        "endLine": 337,
+        "endChar": 13
+      },
+      "revId": "3f263bcc5985a31115d3e390f35989fa6099144e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
