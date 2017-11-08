@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "155b4536_a0ee1d92",
+        "filename": "components/payments/content/payment_request_spec.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 233,
+      "author": {
+        "id": 1002114
+      },
+      "writtenOn": "2017-11-08T19:27:17Z",
+      "side": 1,
+      "message": "Out of curiosity, is this change a no-op?",
+      "range": {
+        "startLine": 229,
+        "startChar": 0,
+        "endLine": 233,
+        "endChar": 48
+      },
+      "revId": "ad0465424511714531f5df8759b2c680ff422635",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
