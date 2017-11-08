@@ -25,6 +25,47 @@
     },
     {
       "key": {
+        "uuid": "5a0fd54f_a6111ed2",
+        "filename": "ash/accessibility/accessibility_focus_ring_controller.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 46,
+      "author": {
+        "id": 1000678
+      },
+      "writtenOn": "2017-11-08T21:07:03Z",
+      "side": 1,
+      "message": "If the only use of this API is via accessibilityPrivate, maybe\nspecifying the color should be mandatory in the API, and we don\u0027t\nneed a hard-coded default here.\n\nNote that caret and cursor rings are all done in C++ code so their\nonly color is defined here in C++. Focus is a bit of both; there\u0027s\na default color in C++ for some features, but also a way to override it.\n\nI\u0027m thinking that for the highlight making it mandatory to specify it\nwould be simplest and reduce duplication. Seems like a nice thing to\nmake a user preference in select-to-speak.",
+      "parentUuid": "7bc2ec12_5a5478c0",
+      "range": {
+        "startLine": 46,
+        "startChar": 13,
+        "endLine": 46,
+        "endChar": 23
+      },
+      "revId": "5e226628cbe772b407307fc7cef58bbc59cc91ba",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ea0443c6_fc646f2b",
+        "filename": "ash/accessibility/accessibility_focus_ring_controller.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 54,
+      "author": {
+        "id": 1000678
+      },
+      "writtenOn": "2017-11-08T21:07:03Z",
+      "side": 1,
+      "message": "We use the word \"highlight\" to describe all of these features too,\nsometimes - how about saying \"kind of like selecting text\"?",
+      "revId": "5e226628cbe772b407307fc7cef58bbc59cc91ba",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "41dd1ac2_8b49c1c2",
         "filename": "ash/accessibility/accessibility_focus_ring_controller.h",
         "patchSetId": 3
@@ -42,6 +83,81 @@
         "endLine": 55,
         "endChar": 16
       },
+      "revId": "5e226628cbe772b407307fc7cef58bbc59cc91ba",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "badbd944_3510b68a",
+        "filename": "ash/accessibility/accessibility_focus_ring_controller.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 55,
+      "author": {
+        "id": 1000678
+      },
+      "writtenOn": "2017-11-08T21:07:03Z",
+      "side": 1,
+      "message": "Yeah, just get rid of the TODO if there\u0027s no immediate plan for it.",
+      "parentUuid": "41dd1ac2_8b49c1c2",
+      "range": {
+        "startLine": 55,
+        "startChar": 6,
+        "endLine": 55,
+        "endChar": 16
+      },
+      "revId": "5e226628cbe772b407307fc7cef58bbc59cc91ba",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ebf969a7_74fd649c",
+        "filename": "ash/accessibility/accessibility_highlight_layer.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 43,
+      "author": {
+        "id": 1000678
+      },
+      "writtenOn": "2017-11-08T21:07:03Z",
+      "side": 1,
+      "message": "Should be unnecessary, this is the default.",
+      "revId": "5e226628cbe772b407307fc7cef58bbc59cc91ba",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "29005a7c_274e977e",
+        "filename": "ash/accessibility/accessibility_highlight_layer.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 45,
+      "author": {
+        "id": 1000678
+      },
+      "writtenOn": "2017-11-08T21:07:03Z",
+      "side": 1,
+      "message": "I think Union (from ui/gfx/geometry/rect.h) should do what you want.\nI think it\u0027s already smart enough to do nothing if you pass it an empty\nrect, so you don\u0027t even need to special-case the first rect. Just union\neach one with the current union.",
+      "revId": "5e226628cbe772b407307fc7cef58bbc59cc91ba",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f059e385_e0c91586",
+        "filename": "chrome/browser/resources/chromeos/select_to_speak/select_to_speak.js",
+        "patchSetId": 3
+      },
+      "lineNbr": 725,
+      "author": {
+        "id": 1000678
+      },
+      "writtenOn": "2017-11-08T21:07:03Z",
+      "side": 1,
+      "message": "nit: shwon -\u003e shown",
       "revId": "5e226628cbe772b407307fc7cef58bbc59cc91ba",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
