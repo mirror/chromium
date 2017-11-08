@@ -389,6 +389,24 @@
     },
     {
       "key": {
+        "uuid": "23140e63_4f449d96",
+        "filename": "content/browser/webauth/attestation_data.cc",
+        "patchSetId": 10
+      },
+      "lineNbr": 47,
+      "author": {
+        "id": 1003152
+      },
+      "writtenOn": "2017-11-08T20:50:18Z",
+      "side": 1,
+      "message": "What alternatives do we have for surfacing errors?\n\nThinking more about this, using CHECKs seems reasonable only as long as we can rely on some other piece of *Chrome* code enforcing those invariants (without crashing the browser).",
+      "parentUuid": "d1847030_ff71f491",
+      "revId": "b5944e3d273f971142693d47e8714ebe7d3c6f57",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "e464d828_d3835341",
         "filename": "content/browser/webauth/attestation_data.cc",
         "patchSetId": 10
@@ -1346,6 +1364,30 @@
       "revId": "b5944e3d273f971142693d47e8714ebe7d3c6f57",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9caa7dbe_622de7bd",
+        "filename": "content/browser/webauth/authenticator_impl.cc",
+        "patchSetId": 10
+      },
+      "lineNbr": 35,
+      "author": {
+        "id": 1003152
+      },
+      "writtenOn": "2017-11-08T20:50:18Z",
+      "side": 1,
+      "message": "Got it.",
+      "parentUuid": "c6edb48d_257149e1",
+      "range": {
+        "startLine": 35,
+        "startChar": 4,
+        "endLine": 35,
+        "endChar": 35
+      },
+      "revId": "b5944e3d273f971142693d47e8714ebe7d3c6f57",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {

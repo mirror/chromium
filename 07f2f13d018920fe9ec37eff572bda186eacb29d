@@ -1,0 +1,95 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "4bfa8234_b88e1175",
+        "filename": "content/browser/webauth/authenticator_utils.cc",
+        "patchSetId": 11
+      },
+      "lineNbr": 10,
+      "author": {
+        "id": 1003152
+      },
+      "writtenOn": "2017-11-08T20:50:18Z",
+      "side": 1,
+      "message": "nit: We should probably take in_values by const\u0026 -- cannot reuse the buffer in any case, so let\u0027s avoid needing to call std::move at each call site.",
+      "revId": "07f2f13d018920fe9ec37eff572bda186eacb29d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "473b98bd_9f8be0be",
+        "filename": "content/browser/webauth/authenticator_utils.cc",
+        "patchSetId": 11
+      },
+      "lineNbr": 17,
+      "author": {
+        "id": 1003152
+      },
+      "writtenOn": "2017-11-08T20:50:18Z",
+      "side": 1,
+      "message": "Need to do this in two steps to prevent this check incorrectly succeeding if adding |pos| and |length| results in an overflow:\n\nCHECK_LE(pos, source.size());\nCHECK_LE(length, source.size() - pos);",
+      "revId": "07f2f13d018920fe9ec37eff572bda186eacb29d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "683f0f92_fb6b2793",
+        "filename": "content/browser/webauth/authenticator_utils.cc",
+        "patchSetId": 11
+      },
+      "lineNbr": 18,
+      "author": {
+        "id": 1003152
+      },
+      "writtenOn": "2017-11-08T20:50:18Z",
+      "side": 1,
+      "message": "nit: source.begin() + pos, source.begin() + pos + length",
+      "revId": "07f2f13d018920fe9ec37eff572bda186eacb29d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "16b22142_18f95859",
+        "filename": "content/browser/webauth/authenticator_utils.h",
+        "patchSetId": 11
+      },
+      "lineNbr": 30,
+      "author": {
+        "id": 1003152
+      },
+      "writtenOn": "2017-11-08T20:50:18Z",
+      "side": 1,
+      "message": "nit: Instead of this line, please just describe the second a couple of lines below and mention that it will CHECK to avoid out-of-bound reads.",
+      "revId": "07f2f13d018920fe9ec37eff572bda186eacb29d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e5b90d97_d3210e4f",
+        "filename": "content/browser/webauth/authenticator_utils.h",
+        "patchSetId": 11
+      },
+      "lineNbr": 32,
+      "author": {
+        "id": 1003152
+      },
+      "writtenOn": "2017-11-08T20:50:18Z",
+      "side": 1,
+      "message": "Uhm, I am stupid, sorry. Of course this should be *slice*, but if you have a naming idea that makes the call sites clearer, I\u0027d be very happy with that.",
+      "range": {
+        "startLine": 32,
+        "startChar": 21,
+        "endLine": 32,
+        "endChar": 27
+      },
+      "revId": "07f2f13d018920fe9ec37eff572bda186eacb29d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
