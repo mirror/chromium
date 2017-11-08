@@ -23,9 +23,7 @@ void ProcessDiceHeaderObserverImpl::WillStartRefreshTokenFetch(
   if (!web_contents())
     return;
 
-  Profile* profile =
-      Profile::FromBrowserContext(web_contents()->GetBrowserContext());
-  if (!signin::IsDiceEnabledForProfile(profile->GetPrefs()))
+  if (!signin::IsDicePrepareMigrationEnabled())
     return;
 
   DiceTabHelper* tab_helper = DiceTabHelper::FromWebContents(web_contents());
@@ -46,7 +44,7 @@ void ProcessDiceHeaderObserverImpl::DidFinishRefreshTokenFetch(
   DCHECK(browser);
   Profile* profile = browser->profile();
   DCHECK(profile);
-  if (!signin::IsDiceEnabledForProfile(profile->GetPrefs()))
+  if (!signin::IsDicePrepareMigrationEnabled())
     return;
 
   SigninManager* signin_manager = SigninManagerFactory::GetForProfile(profile);
