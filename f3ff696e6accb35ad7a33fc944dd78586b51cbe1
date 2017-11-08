@@ -16,6 +16,24 @@
       "revId": "f3ff696e6accb35ad7a33fc944dd78586b51cbe1",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a04d325e_edb31690",
+        "filename": "third_party/WebKit/Source/bindings/scripts/v8_interface.py",
+        "patchSetId": 3
+      },
+      "lineNbr": 421,
+      "author": {
+        "id": 1001470
+      },
+      "writtenOn": "2017-11-08T15:21:51Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "79bb49ed_ecbf50f5",
+      "revId": "f3ff696e6accb35ad7a33fc944dd78586b51cbe1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
