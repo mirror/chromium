@@ -1,0 +1,73 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "2ca3964d_92d49114",
+        "filename": "components/autofill/content/renderer/password_autofill_agent.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 742,
+      "author": {
+        "id": 1128440
+      },
+      "writtenOn": "2017-11-08T16:48:19Z",
+      "side": 1,
+      "message": "Please move this call before username_element.SetAutofilled(true) and add comment that this call should be before SetAutofilled, since calling SetAutofilled might cause destroying frame (if js processing events and destroying frame).",
+      "range": {
+        "startLine": 742,
+        "startChar": 1,
+        "endLine": 742,
+        "endChar": 66
+      },
+      "revId": "c4df82f237c2481894c26f2f489a8675ae6cf1e7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "63d73937_e7772fd1",
+        "filename": "components/autofill/content/renderer/password_autofill_agent.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 742,
+      "author": {
+        "id": 1128440
+      },
+      "writtenOn": "2017-11-08T16:48:19Z",
+      "side": 1,
+      "message": "Probably you need to check on nullptr. You need to check whether |password_generation_agent_| might be empty in tests.",
+      "range": {
+        "startLine": 742,
+        "startChar": 2,
+        "endLine": 742,
+        "endChar": 29
+      },
+      "revId": "c4df82f237c2481894c26f2f489a8675ae6cf1e7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5e01e952_1105a7ef",
+        "filename": "components/autofill/content/renderer/password_autofill_agent.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 1824,
+      "author": {
+        "id": 1128440
+      },
+      "writtenOn": "2017-11-08T16:48:19Z",
+      "side": 1,
+      "message": "Ditto as with other call",
+      "range": {
+        "startLine": 1824,
+        "startChar": 1,
+        "endLine": 1824,
+        "endChar": 67
+      },
+      "revId": "c4df82f237c2481894c26f2f489a8675ae6cf1e7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
