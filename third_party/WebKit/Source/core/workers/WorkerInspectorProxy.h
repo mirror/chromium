@@ -16,6 +16,7 @@ namespace blink {
 class ExecutionContext;
 class KURL;
 class WorkerThread;
+struct RemoteAsyncTaskToken;
 
 // A proxy for talking to the worker inspector on the worker thread.
 // All of these methods should be called on the main thread.
@@ -71,6 +72,22 @@ class CORE_EXPORT WorkerInspectorProxy final
   HashMap<int, PageInspector*> page_inspectors_;
   String url_;
   String inspector_id_;
+};
+
+struct CORE_EXPORT GlobalScopeInspectorCreationParams final {
+  WTF_MAKE_NONCOPYABLE(GlobalScopeInspectorCreationParams);
+  USING_FAST_MALLOC(GlobalScopeInspectorCreationParams);
+
+ public:
+  GlobalScopeInspectorCreationParams(
+      WorkerInspectorProxy::PauseOnWorkerStart pause_on_start);
+  GlobalScopeInspectorCreationParams(
+      WorkerInspectorProxy::PauseOnWorkerStart pause_on_start,
+      std::unique_ptr<RemoteAsyncTaskToken>);
+  ~GlobalScopeInspectorCreationParams();
+
+  WorkerInspectorProxy::PauseOnWorkerStart pause_on_start;
+  std::unique_ptr<RemoteAsyncTaskToken> async_token;
 };
 
 }  // namespace blink

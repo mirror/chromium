@@ -102,6 +102,27 @@ void ThreadDebugger::AsyncTaskFinished(void* task) {
   v8_inspector_->asyncTaskFinished(task);
 }
 
+v8_inspector::V8Inspector::RemoteAsyncTaskId
+ThreadDebugger::RemoteAsyncTaskScheduled(const String& task_name,
+                                         const String& target_debugger_id) {
+  return v8_inspector_->remoteAsyncTaskScheduled(
+      ToV8InspectorStringView(task_name),
+      ToV8InspectorStringView(target_debugger_id));
+}
+
+void ThreadDebugger::RemoteAsyncTaskStarted(RemoteAsyncTaskToken* token) {
+  if (!token)
+    return;
+  v8_inspector_->remoteAsyncTaskStarted(
+      ToV8InspectorStringView(token->source_debugger_id), token->task_id);
+}
+
+void ThreadDebugger::RemoteAsyncTaskFinished(RemoteAsyncTaskToken* token) {
+  if (!token)
+    return;
+  v8_inspector_->remoteAsyncTaskFinished(token->task_id);
+}
+
 unsigned ThreadDebugger::PromiseRejected(
     v8::Local<v8::Context> context,
     const String& error_message,
@@ -489,5 +510,12 @@ void ThreadDebugger::OnTimer(TimerBase* timer) {
     }
   }
 }
+
+RemoteAsyncTaskToken::RemoteAsyncTaskToken(
+    v8_inspector::V8Inspector::RemoteAsyncTaskId task_id,
+    const String& source_debugger_id)
+    : task_id(task_id), source_debugger_id(source_debugger_id) {}
+
+RemoteAsyncTaskToken::~RemoteAsyncTaskToken() {}
 
 }  // namespace blink

@@ -223,5 +223,4 @@ v8::MaybeLocal<v8::Value> WorkerThreadDebugger::memoryInfo(
   NOTREACHED();
   return v8::MaybeLocal<v8::Value>();
 }
-
 }  // namespace blink

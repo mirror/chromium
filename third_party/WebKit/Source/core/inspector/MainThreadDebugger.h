@@ -80,6 +80,10 @@ class CORE_EXPORT MainThreadDebugger final : public ThreadDebugger {
   void ContextCreated(ScriptState*, LocalFrame*, SecurityOrigin*);
   void ContextWillBeDestroyed(ScriptState*);
   void ExceptionThrown(ExecutionContext*, ErrorEvent*);
+  std::unique_ptr<RemoteAsyncTaskToken> RemoteAsyncTaskScheduled(
+      LocalFrame*,
+      const String& task_name,
+      const String& target_debugger_id);
 
  private:
   void ReportConsoleMessage(ExecutionContext*,

@@ -21,6 +21,7 @@ namespace blink {
 
 class ExecutionContext;
 class SourceLocation;
+struct RemoteAsyncTaskToken;
 
 // TODO(dgozman): rename this to ThreadInspector (and subclasses).
 class CORE_EXPORT ThreadDebugger : public v8_inspector::V8InspectorClient,
@@ -45,6 +46,7 @@ class CORE_EXPORT ThreadDebugger : public v8_inspector::V8InspectorClient,
   void AllAsyncTasksCanceled();
   void AsyncTaskStarted(void* task);
   void AsyncTaskFinished(void* task);
+
   unsigned PromiseRejected(v8::Local<v8::Context>,
                            const String& error_message,
                            v8::Local<v8::Value> exception,
@@ -52,7 +54,14 @@ class CORE_EXPORT ThreadDebugger : public v8_inspector::V8InspectorClient,
   void PromiseRejectionRevoked(v8::Local<v8::Context>,
                                unsigned promise_rejection_id);
 
+  void RemoteAsyncTaskStarted(RemoteAsyncTaskToken*);
+  void RemoteAsyncTaskFinished(RemoteAsyncTaskToken*);
+
  protected:
+  v8_inspector::V8Inspector::RemoteAsyncTaskId RemoteAsyncTaskScheduled(
+      const String& task_name,
+      const String& target_debugger_id);
+
   virtual int ContextGroupId(ExecutionContext*) = 0;
   virtual void ReportConsoleMessage(ExecutionContext*,
                                     MessageSource,
@@ -110,6 +119,19 @@ class CORE_EXPORT ThreadDebugger : public v8_inspector::V8InspectorClient,
   Vector<v8_inspector::V8InspectorClient::TimerCallback> timer_callbacks_;
   Vector<void*> timer_data_;
   std::unique_ptr<UserGestureIndicator> user_gesture_indicator_;
+};
+
+struct CORE_EXPORT RemoteAsyncTaskToken {
+  WTF_MAKE_NONCOPYABLE(RemoteAsyncTaskToken);
+  USING_FAST_MALLOC(RemoteAsyncTaskToken);
+
+ public:
+  RemoteAsyncTaskToken(v8_inspector::V8Inspector::RemoteAsyncTaskId,
+                       const String& source_debugger_id);
+  ~RemoteAsyncTaskToken();
+
+  v8_inspector::V8Inspector::RemoteAsyncTaskId task_id;
+  String source_debugger_id;
 };
 
 }  // namespace blink

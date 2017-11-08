@@ -10,6 +10,7 @@
 #include "core/events/ErrorEvent.h"
 #include "core/events/MessageEvent.h"
 #include "core/frame/csp/ContentSecurityPolicy.h"
+#include "core/inspector/ThreadDebugger.h"
 #include "core/origin_trials/OriginTrialContext.h"
 #include "core/workers/DedicatedWorker.h"
 #include "core/workers/DedicatedWorkerObjectProxy.h"
@@ -63,7 +64,8 @@ void DedicatedWorkerMessagingProxy::StartWorkerGlobalScope(
     const KURL& script_url,
     const String& user_agent,
     const String& source_code,
-    ReferrerPolicy referrer_policy) {
+    ReferrerPolicy referrer_policy,
+    std::unique_ptr<RemoteAsyncTaskToken> async_token) {
   DCHECK(IsParentContextThread());
   if (AskedToTerminate()) {
     // Worker.terminate() could be called from JS before the thread was
@@ -90,7 +92,7 @@ void DedicatedWorkerMessagingProxy::StartWorkerGlobalScope(
 
   InitializeWorkerThread(std::move(global_scope_creation_params),
                          CreateBackingThreadStartupData(ToIsolate(document)),
-                         script_url);
+                         script_url, std::move(async_token));
 }
 
 void DedicatedWorkerMessagingProxy::PostMessageToWorkerGlobalScope(

@@ -8,6 +8,7 @@
 #include "core/inspector/IdentifiersFactory.h"
 #include "core/inspector/InspectorTraceEvents.h"
 #include "core/inspector/InspectorWorkerAgent.h"
+#include "core/inspector/ThreadDebugger.h"
 #include "core/inspector/WorkerInspectorController.h"
 #include "core/probe/CoreProbes.h"
 #include "core/workers/WorkerGlobalScope.h"
@@ -178,5 +179,16 @@ void WorkerInspectorProxy::WriteTimelineStartedEvent(
 void WorkerInspectorProxy::Trace(blink::Visitor* visitor) {
   visitor->Trace(execution_context_);
 }
+
+GlobalScopeInspectorCreationParams::GlobalScopeInspectorCreationParams(
+    WorkerInspectorProxy::PauseOnWorkerStart pause_on_start,
+    std::unique_ptr<RemoteAsyncTaskToken> async_token)
+    : pause_on_start(pause_on_start), async_token(std::move(async_token)) {}
+
+GlobalScopeInspectorCreationParams::GlobalScopeInspectorCreationParams(
+    WorkerInspectorProxy::PauseOnWorkerStart pause_on_start)
+    : pause_on_start(pause_on_start) {}
+
+GlobalScopeInspectorCreationParams::~GlobalScopeInspectorCreationParams() {}
 
 }  // namespace blink
