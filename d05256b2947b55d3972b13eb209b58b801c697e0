@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "c9291004_e4cd018b",
+        "filename": "ios/chrome/browser/ui/browser_view_controller.mm",
+        "patchSetId": 2
+      },
+      "lineNbr": 4758,
+      "author": {
+        "id": 1165759
+      },
+      "writtenOn": "2017-11-08T02:59:30Z",
+      "side": 0,
+      "message": "Drive by, this is awesome. I was just about to send you an email to change this to use UIViewController instead, but if this can land it will make the BVC/ToolbarCoordinator interface much cleaner.",
+      "range": {
+        "startLine": 4758,
+        "startChar": 3,
+        "endLine": 4758,
+        "endChar": 20
+      },
+      "revId": "d05256b2947b55d3972b13eb209b58b801c697e0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
