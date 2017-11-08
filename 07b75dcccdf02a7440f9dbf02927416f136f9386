@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "b3877657_7af1a28e",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/ntp/cards/SignInPromo.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 370,
+      "author": {
+        "id": 1209769
+      },
+      "writtenOn": "2017-11-08T12:05:30Z",
+      "side": 1,
+      "message": "Does it make sense to have two separate functions? mSigninPromoController.detach() doesn\u0027t do anything if tracker isn\u0027t attached.",
+      "range": {
+        "startLine": 370,
+        "startChar": 21,
+        "endLine": 370,
+        "endChar": 48
+      },
+      "revId": "07b75dcccdf02a7440f9dbf02927416f136f9386",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
