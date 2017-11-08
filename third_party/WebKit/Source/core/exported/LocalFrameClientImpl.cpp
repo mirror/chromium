@@ -408,11 +408,6 @@ void LocalFrameClientImpl::DispatchDidNavigateWithinPage(
   virtual_time_pauser_.PauseVirtualTime(false);
 }
 
-void LocalFrameClientImpl::DispatchWillCommitProvisionalLoad() {
-  if (web_frame_->Client())
-    web_frame_->Client()->WillCommitProvisionalLoad();
-}
-
 void LocalFrameClientImpl::DispatchDidStartProvisionalLoad(
     DocumentLoader* loader,
     ResourceRequest& request) {
