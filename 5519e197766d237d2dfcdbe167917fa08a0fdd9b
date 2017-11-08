@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "6ad916ae_c04ed0ef",
+        "filename": "ios/chrome/browser/ntp_snippets/ios_chrome_content_suggestions_service_factory.h",
+        "patchSetId": 8
+      },
+      "lineNbr": 34,
+      "author": {
+        "id": 1116027
+      },
+      "writtenOn": "2017-11-08T14:32:49Z",
+      "side": 1,
+      "message": "This CL is large and bit hard to review.\n\nIt looks like this (and changes to ios_chrome_content_suggestions_service_factory.mm) can be extracted to a separate simpler CL. Can you do so?",
+      "revId": "5519e197766d237d2dfcdbe167917fa08a0fdd9b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "50e2f21c_15b3dd23",
+        "filename": "ios/chrome/browser/ui/settings/accounts_collection_egtest.mm",
+        "patchSetId": 8
+      },
+      "lineNbr": 82,
+      "author": {
+        "id": 1116027
+      },
+      "writtenOn": "2017-11-08T14:32:49Z",
+      "side": 1,
+      "message": "Will this work if the flag is not enabled? If yes, can we extract this a to a separate CL. If not, can we put this behind a check for the flag and extract to a separate CL?",
+      "revId": "5519e197766d237d2dfcdbe167917fa08a0fdd9b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
