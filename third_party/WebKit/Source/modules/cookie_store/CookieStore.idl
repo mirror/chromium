@@ -10,11 +10,30 @@
 ] interface CookieStore {
   // https://github.com/WICG/async-cookies-api/blob/gh-pages/explainer.md#reading
   [CallWith=ScriptState, RaisesException] Promise<CookieList?> getAll(
+      DOMString name, optional CookieStoreGetOptions options);
+  [CallWith=ScriptState, RaisesException] Promise<CookieList?> getAll(
+      optional CookieStoreGetOptions options);
+  [CallWith=ScriptState, RaisesException] Promise<CookieListItem?> get(
+      DOMString name, optional CookieStoreGetOptions options);
+  [CallWith=ScriptState, RaisesException] Promise<CookieListItem?> get(
+      optional CookieStoreGetOptions options);
+  [CallWith=ScriptState, RaisesException] Promise<boolean> has(
+      DOMString name, optional CookieStoreGetOptions options);
+  [CallWith=ScriptState, RaisesException] Promise<boolean> has(
       optional CookieStoreGetOptions options);
 
   // https://github.com/WICG/async-cookies-api/blob/gh-pages/explainer.md#writing
   [CallWith=ScriptState, RaisesException] Promise<void> set(
       DOMString name, DOMString value, optional CookieStoreSetOptions options);
+  [CallWith=ScriptState, RaisesException] Promise<void> set(
+      CookieStoreSetOptions options);
 
-  // TODO(crbug.com/729800): Implement the other operations in the spec.
+  [
+    CallWith=ScriptState, ImplementedAs=deleteForBindings, RaisesException
+  ] Promise<void> delete(
+      DOMString name, optional CookieStoreSetOptions options);
+  [
+    CallWith=ScriptState, ImplementedAs=deleteForBindings, RaisesException
+  ] Promise<void> delete(
+      CookieStoreSetOptions options);
 };
