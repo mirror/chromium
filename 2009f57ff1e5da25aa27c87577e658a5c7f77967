@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "a3c8277d_0363577e",
+        "filename": "build/config/ios/codesign.py",
+        "patchSetId": 4
+      },
+      "lineNbr": 337,
+      "author": {
+        "id": 1144530
+      },
+      "writtenOn": "2017-11-08T13:46:06Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "11f86039_6430befc",
+      "range": {
+        "startLine": 337,
+        "startChar": 11,
+        "endLine": 337,
+        "endChar": 43
+      },
+      "revId": "2009f57ff1e5da25aa27c87577e658a5c7f77967",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "b573ae6d_62a56d53",
         "filename": "build/config/ios/codesign.py",
         "patchSetId": 4
@@ -45,6 +69,30 @@
       "revId": "2009f57ff1e5da25aa27c87577e658a5c7f77967",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d501d656_c15baedf",
+        "filename": "build/config/ios/codesign.py",
+        "patchSetId": 4
+      },
+      "lineNbr": 417,
+      "author": {
+        "id": 1144530
+      },
+      "writtenOn": "2017-11-08T13:46:06Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "b573ae6d_62a56d53",
+      "range": {
+        "startLine": 417,
+        "startChar": 4,
+        "endLine": 417,
+        "endChar": 38
+      },
+      "revId": "2009f57ff1e5da25aa27c87577e658a5c7f77967",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -88,6 +136,48 @@
     },
     {
       "key": {
+        "uuid": "2a824b12_ae96a18c",
+        "filename": "build/config/ios/codesign.py",
+        "patchSetId": 4
+      },
+      "lineNbr": 427,
+      "author": {
+        "id": 1144530
+      },
+      "writtenOn": "2017-11-08T13:46:06Z",
+      "side": 1,
+      "message": "discussed offline, keeping the current behavior.",
+      "parentUuid": "c172622a_1d709f78",
+      "revId": "2009f57ff1e5da25aa27c87577e658a5c7f77967",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "5575b1a1_16653c76",
+        "filename": "build/config/ios/codesign.py",
+        "patchSetId": 4
+      },
+      "lineNbr": 427,
+      "author": {
+        "id": 1144530
+      },
+      "writtenOn": "2017-11-08T13:46:06Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "f54b832b_16ea4cad",
+      "range": {
+        "startLine": 427,
+        "startChar": 11,
+        "endLine": 427,
+        "endChar": 47
+      },
+      "revId": "2009f57ff1e5da25aa27c87577e658a5c7f77967",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "cee6a281_86b23aa6",
         "filename": "build/config/ios/rules.gni",
         "patchSetId": 4
@@ -108,6 +198,30 @@
       "revId": "2009f57ff1e5da25aa27c87577e658a5c7f77967",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e434fbb8_cd74ab95",
+        "filename": "build/config/ios/rules.gni",
+        "patchSetId": 4
+      },
+      "lineNbr": 173,
+      "author": {
+        "id": 1144530
+      },
+      "writtenOn": "2017-11-08T13:46:06Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "cee6a281_86b23aa6",
+      "range": {
+        "startLine": 173,
+        "startChar": 9,
+        "endLine": 173,
+        "endChar": 17
+      },
+      "revId": "2009f57ff1e5da25aa27c87577e658a5c7f77967",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -134,6 +248,30 @@
     },
     {
       "key": {
+        "uuid": "b404dc93_7c540517",
+        "filename": "build/config/ios/rules.gni",
+        "patchSetId": 4
+      },
+      "lineNbr": 178,
+      "author": {
+        "id": 1144530
+      },
+      "writtenOn": "2017-11-08T13:46:06Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "ee41d573_2227943d",
+      "range": {
+        "startLine": 178,
+        "startChar": 9,
+        "endLine": 178,
+        "endChar": 17
+      },
+      "revId": "2009f57ff1e5da25aa27c87577e658a5c7f77967",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "2d3a31a5_96e00e00",
         "filename": "build/config/ios/rules.gni",
         "patchSetId": 4
@@ -157,6 +295,30 @@
     },
     {
       "key": {
+        "uuid": "8f7da10d_7cd7295f",
+        "filename": "build/config/ios/rules.gni",
+        "patchSetId": 4
+      },
+      "lineNbr": 244,
+      "author": {
+        "id": 1144530
+      },
+      "writtenOn": "2017-11-08T13:46:06Z",
+      "side": 1,
+      "message": "Done first part.\nFor the one line definition, the other variable don\u0027t use it, so keeping the current syntax for consistency.",
+      "parentUuid": "2d3a31a5_96e00e00",
+      "range": {
+        "startLine": 244,
+        "startChar": 2,
+        "endLine": 244,
+        "endChar": 35
+      },
+      "revId": "2009f57ff1e5da25aa27c87577e658a5c7f77967",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "ddf8a209_139fead5",
         "filename": "build/config/ios/rules.gni",
         "patchSetId": 4
@@ -171,6 +333,24 @@
       "revId": "2009f57ff1e5da25aa27c87577e658a5c7f77967",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c9a8c829_2ed64c31",
+        "filename": "build/config/ios/rules.gni",
+        "patchSetId": 4
+      },
+      "lineNbr": 1460,
+      "author": {
+        "id": 1144530
+      },
+      "writtenOn": "2017-11-08T13:46:06Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "ddf8a209_139fead5",
+      "revId": "2009f57ff1e5da25aa27c87577e658a5c7f77967",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
