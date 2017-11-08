@@ -52,6 +52,8 @@ class BrowserTestBase : public testing::Test {
     return test_host_resolver_->host_resolver();
   }
 
+  static bool IsNetworkInitialized();
+
  protected:
   // We need these special methods because SetUp is the bottom of the stack
   // that winds up calling your test method, so it is not always an option

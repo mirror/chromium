@@ -58,6 +58,7 @@
 #include "content/public/browser/web_contents.h"
 #include "content/public/browser/web_contents_observer.h"
 #include "content/public/common/resource_request_body.h"
+#include "content/public/test/browser_test_base.h"
 #include "content/public/test/browser_test_utils.h"
 #include "content/public/test/download_test_observer.h"
 #include "content/public/test/test_navigation_observer.h"
@@ -172,6 +173,7 @@ bool GetCurrentTabTitle(const Browser* browser, base::string16* title) {
 }
 
 void NavigateToURL(chrome::NavigateParams* params) {
+  CHECK(content::BrowserTestBase::IsNetworkInitialized());
   chrome::Navigate(params);
   content::WaitForLoadStop(params->target_contents);
 }
@@ -214,7 +216,7 @@ void NavigateToURLWithDispositionBlockUntilNavigationsComplete(
   content::WindowedNotificationObserver tab_added_observer(
       chrome::NOTIFICATION_TAB_ADDED,
       content::NotificationService::AllSources());
-
+  CHECK(content::BrowserTestBase::IsNetworkInitialized());
   browser->OpenURL(OpenURLParams(
       url, Referrer(), disposition, ui::PAGE_TRANSITION_TYPED, false));
   if (browser_test_flags & BROWSER_TEST_WAIT_FOR_BROWSER)

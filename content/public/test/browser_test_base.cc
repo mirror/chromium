@@ -65,6 +65,8 @@
 namespace content {
 namespace {
 
+bool g_network_initialized;
+
 #if defined(OS_POSIX) && !defined(OS_FUCHSIA)
 // On SIGSEGV or SIGTERM (sent by the runner on timeouts), dump a stack trace
 // (to make debugging easier) and also exit with a known error code (so that
@@ -103,6 +105,10 @@ void TraceStopTracingComplete(const base::Closure& quit,
 }  // namespace
 
 extern int BrowserMain(const MainFunctionParams&);
+
+bool BrowserTestBase::IsNetworkInitialized() {
+  return g_network_initialized;
+}
 
 BrowserTestBase::BrowserTestBase()
     : field_trial_list_(std::make_unique<base::FieldTrialList>(nullptr)),
@@ -398,6 +404,7 @@ bool BrowserTestBase::UsingSoftwareGL() const {
 }
 
 void BrowserTestBase::InitializeNetworkProcess() {
+  g_network_initialized = true;
   const testing::TestInfo* const test_info =
       testing::UnitTest::GetInstance()->current_test_info();
   bool network_service =
