@@ -4,6 +4,10 @@
 
 #include "chrome/browser/ui/webui/print_preview/print_preview_handler.h"
 
+#include <map>
+#include <utility>
+#include <vector>
+
 #include "base/base64.h"
 #include "base/containers/flat_set.h"
 #include "base/json/json_writer.h"
@@ -327,8 +331,8 @@ class PrintPreviewHandlerTest : public testing::Test {
 
     auto preview_ui = std::make_unique<printing::FakePrintPreviewUI>(
         web_ui(), std::move(preview_handler));
-    preview_ui->SetInitiatorTitle(
-        base::ASCIIToUTF16(printing::kDummyInitiatorName));
+    preview_ui->SetInitiatorTitleAndURL(
+        base::ASCIIToUTF16(printing::kDummyInitiatorName), GURL());
     web_ui()->SetController(preview_ui.release());
   }
 

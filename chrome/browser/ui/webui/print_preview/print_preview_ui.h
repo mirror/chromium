@@ -7,7 +7,7 @@
 
 #include <stdint.h>
 
-#include <string>
+#include <memory>
 
 #include "base/callback_forward.h"
 #include "base/gtest_prod_util.h"
@@ -16,6 +16,7 @@
 #include "base/time/time.h"
 #include "chrome/browser/ui/webui/constrained_web_dialog_ui.h"
 #include "printing/features/features.h"
+#include "url/gurl.h"
 
 class PrintPreviewHandler;
 struct PrintHostMsg_DidGetPreviewPageCount_Params;
@@ -39,7 +40,6 @@ struct PageSizeMargins;
 class PrintPreviewUI : public ConstrainedWebDialogUI {
  public:
   explicit PrintPreviewUI(content::WebUI* web_ui);
-
   ~PrintPreviewUI() override;
 
   // Gets the print preview |data|. |index| is zero-based, and can be
@@ -62,14 +62,13 @@ class PrintPreviewUI : public ConstrainedWebDialogUI {
   virtual int GetAvailableDraftPageCount() const;
 
   // Setters
-  void SetInitiatorTitle(const base::string16& initiator_title);
+  void SetInitiatorTitleAndURL(const base::string16& initiator_title,
+                               const GURL& url);
 
   const base::string16& initiator_title() const { return initiator_title_; }
-
+  const GURL& initiator_url() const { return initiator_url_; }
   bool source_is_modifiable() const { return source_is_modifiable_; }
-
   bool source_has_selection() const { return source_has_selection_; }
-
   bool print_selection_only() const { return print_selection_only_; }
 
   // Set initial settings for PrintPreviewUI.
@@ -193,9 +192,10 @@ class PrintPreviewUI : public ConstrainedWebDialogUI {
   // Indicates whether only the selection should be printed.
   bool print_selection_only_;
 
-  // Store the initiator title, used for populating the print preview dialog
-  // title.
+  // Stores the initiator title and URL, used for populating the print preview
+  // dialog title.
   base::string16 initiator_title_;
+  GURL initiator_url_;
 
   // Keeps track of whether OnClosePrintPreviewDialog() has been called or not.
   bool dialog_closed_;

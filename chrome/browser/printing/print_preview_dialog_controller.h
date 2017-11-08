@@ -104,9 +104,9 @@ class PrintPreviewDialogController
   content::WebContents* CreatePrintPreviewDialog(
       content::WebContents* initiator);
 
-  // Helper function to store the title of the initiator associated with
+  // Helper function to store the title and URL of the initiator associated with
   // |preview_dialog| in |preview_dialog|'s PrintPreviewUI.
-  void SaveInitiatorTitle(content::WebContents* preview_dialog);
+  void SaveInitiatorTitleAndURL(content::WebContents* preview_dialog);
 
   // Adds/Removes observers for notifications from |contents|.
   void AddObservers(content::WebContents* contents);
