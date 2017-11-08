@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "6c99c05f_2eb343ed",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 6
+      },
+      "lineNbr": 10,
+      "author": {
+        "id": 1109754
+      },
+      "writtenOn": "2017-11-08T00:08:34Z",
+      "side": 1,
+      "message": "Thanks for the lint error fix, patch still LGTM.",
+      "revId": "6a11e0200fe7ffef852bb39df893a25befec02fe",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    }
+  ]
+}
