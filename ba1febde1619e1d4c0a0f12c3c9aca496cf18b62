@@ -376,6 +376,30 @@
     },
     {
       "key": {
+        "uuid": "00f2e985_f2974be7",
+        "filename": "ios/chrome/browser/ui/browser_view_controller.mm",
+        "patchSetId": 5
+      },
+      "lineNbr": 2149,
+      "author": {
+        "id": 1163361
+      },
+      "writtenOn": "2017-11-08T23:33:52Z",
+      "side": 1,
+      "message": "Before this CL, the only item that was updated at this time was the |isTabLoading| for the visibility of the refresh button or stop button. So what has changed that warrants a delegate protocol?",
+      "parentUuid": "e9d92e0d_e421bea5",
+      "range": {
+        "startLine": 2149,
+        "startChar": 26,
+        "endLine": 2149,
+        "endChar": 45
+      },
+      "revId": "ba1febde1619e1d4c0a0f12c3c9aca496cf18b62",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "727ad104_f07137ea",
         "filename": "ios/chrome/browser/ui/browser_view_controller.mm",
         "patchSetId": 5
