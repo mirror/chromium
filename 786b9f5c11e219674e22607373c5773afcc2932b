@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "5f510ea6_472ed382",
+        "filename": "chrome/browser/banners/app_banner_infobar_delegate_android.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 108,
+      "author": {
+        "id": 1002272
+      },
+      "writtenOn": "2017-11-08T02:24:01Z",
+      "side": 0,
+      "message": "Is the GetIcon from the base class used for anything?",
+      "revId": "786b9f5c11e219674e22607373c5773afcc2932b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
