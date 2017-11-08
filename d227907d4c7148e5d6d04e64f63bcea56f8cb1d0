@@ -16,6 +16,24 @@
       "revId": "d227907d4c7148e5d6d04e64f63bcea56f8cb1d0",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e8f847b2_8ed30655",
+        "filename": "base/process/kill_posix.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 149,
+      "author": {
+        "id": 1117419
+      },
+      "writtenOn": "2017-11-08T23:50:48Z",
+      "side": 1,
+      "message": "Done.  Though I think I\u0027ll just use a generic \"-1\" instead of using the WTERMSIG.",
+      "parentUuid": "766b16dd_574c5d98",
+      "revId": "d227907d4c7148e5d6d04e64f63bcea56f8cb1d0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
