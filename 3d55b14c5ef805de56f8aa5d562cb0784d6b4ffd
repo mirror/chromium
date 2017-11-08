@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "719a87b1_ab3b4040",
+        "filename": "chrome/test/media_router/media_router_integration_browsertest.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 245,
+      "author": {
+        "id": 1190572
+      },
+      "writtenOn": "2017-11-08T22:37:03Z",
+      "side": 1,
+      "message": "We\u0027re waiting for the Mojo callback for MediaRouteProvider::CreateRoute() to be called, and for MediaRouter to receive an OnRoutesUpdated() call with the created route, if any. The latter can be observed by adding a MediaRoutesObserver, but the former is not as straightforward.\n\nDo you have a recommendation for what Wait() should be called instead?",
+      "parentUuid": "abc3a489_b016ee6c",
+      "range": {
+        "startLine": 242,
+        "startChar": 0,
+        "endLine": 245,
+        "endChar": 40
+      },
+      "revId": "3d55b14c5ef805de56f8aa5d562cb0784d6b4ffd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "ca43190a_4c644712",
         "filename": "chrome/test/media_router/media_router_integration_browsertest.cc",
         "patchSetId": 6
@@ -36,6 +60,30 @@
       "writtenOn": "2017-11-08T19:53:04Z",
       "side": 1,
       "message": "nit: The test is already MANUAL; why does it need to also be DISABLED?",
+      "range": {
+        "startLine": 735,
+        "startChar": 0,
+        "endLine": 735,
+        "endChar": 71
+      },
+      "revId": "3d55b14c5ef805de56f8aa5d562cb0784d6b4ffd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c60ef8c1_f67ca6d4",
+        "filename": "chrome/test/media_router/media_router_integration_browsertest.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 735,
+      "author": {
+        "id": 1190572
+      },
+      "writtenOn": "2017-11-08T22:37:03Z",
+      "side": 1,
+      "message": "We run these tests in MediaRouter\u0027s own buildbots. When integration tests fail telemetry tests don\u0027t get run.",
+      "parentUuid": "ca43190a_4c644712",
       "range": {
         "startLine": 735,
         "startChar": 0,
