@@ -15,9 +15,8 @@ class RenderProcessHost;
 // A KeepAliveHandleFactory creates mojom::KeepAliveHandle. Each created
 // handle prolongs the associated renderer's lifetime by using
 // RenderProcessHost's KeepAliveRefCounts while alive.
-// When a certain time (default: 30sec) passes after the factory is destroyed,
-// all created handles are invalidated, which will result in render process
-// shutdown.
+// When a certain time passes after the factory is destroyed, all created
+// handles are invalidated, which will result in render process shutdown.
 class KeepAliveHandleFactory final {
  public:
   // |process_host->DisableKeepAliveRefCount()| must be false.
