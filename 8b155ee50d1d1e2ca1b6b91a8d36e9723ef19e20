@@ -34,6 +34,24 @@
       "revId": "8b155ee50d1d1e2ca1b6b91a8d36e9723ef19e20",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "6b1d7e77_c39b3ae3",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 3
+      },
+      "lineNbr": 7,
+      "author": {
+        "id": 1000623
+      },
+      "writtenOn": "2017-11-08T00:21:59Z",
+      "side": 1,
+      "message": "I just did a search through the code base for webui, and in the first 11 pages I only saw ~3 examples of WebUi, and the rest were WebUI. Granted content::WebUI is responsible for many of the matches, but there are others. You can take a look yourself and see if you agree. \n\nThe style guide makes sense, and WebUi would be consistent with that, but it looks weird to me. All the examples of UI that I\u0027m familiar with and could find, like PowerUI, NetworkUI, WebDialogUI, CryptohomeUI, VoiceSearchUI, etc, use UI. For instance:\nhttps://cs.chromium.org/search/?q\u003d_ui+file:.h+file:chromeos\u0026sq\u003dpackage:chromium\u0026type\u003dcs",
+      "parentUuid": "a942faf1_11fb220d",
+      "revId": "8b155ee50d1d1e2ca1b6b91a8d36e9723ef19e20",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
