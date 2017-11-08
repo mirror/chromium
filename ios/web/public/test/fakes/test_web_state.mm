@@ -246,17 +246,18 @@ void TestWebState::OnRenderProcessGone() {
   for (auto& observer : observers_)
     observer.RenderProcessGone(this);
 }
-
+/*
 void TestWebState::OnFormActivity(const std::string& form_name,
                                   const std::string& field_name,
+                                  const std::string& field_type,
                                   const std::string& type,
                                   const std::string& value,
                                   bool input_missing) {
   for (auto& observer : observers_) {
-    observer.FormActivityRegistered(this, form_name, field_name, type, value,
-                                    input_missing);
+    observer.FormActivityRegistered(this, form_name, field_name, field_type,
+                                    type, value, input_missing);
   }
-}
+}*/
 
 void TestWebState::ShowTransientContentView(CRWContentView* content_view) {
   if (content_view) {
