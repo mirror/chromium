@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "bae0c16d_3d9dd856",
+        "filename": "ui/app_list/views/suggestions_container_view.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 85,
+      "author": {
+        "id": 1147616
+      },
+      "writtenOn": "2017-11-08T00:51:50Z",
+      "side": 0,
+      "message": "I suspected problem was here. |apps_num| parameter should be display_results. But not sure how crash happens.",
+      "revId": "dc78612b571a8ca5729f1125f39ffa0d50632061",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
