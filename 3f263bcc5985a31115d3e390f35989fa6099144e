@@ -46,6 +46,30 @@
       "revId": "3f263bcc5985a31115d3e390f35989fa6099144e",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e365da5b_b8e404e2",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/toolbar/ToolbarManager.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 337,
+      "author": {
+        "id": 1135279
+      },
+      "writtenOn": "2017-11-08T21:09:37Z",
+      "side": 1,
+      "message": "I thought the plumbing fix might be O-specific, but I was wrong. The \u0027ready for capture\u0027 flag is not set until the next time the URL is updated. onUrlUpdated is not called initially (and therefore the flag not set) since the reparented tab technically hasn\u0027t updated; I\u0027m not sure if this is the intended behavior. Updated description.",
+      "parentUuid": "54faebac_2e1b4f17",
+      "range": {
+        "startLine": 335,
+        "startChar": 12,
+        "endLine": 337,
+        "endChar": 13
+      },
+      "revId": "3f263bcc5985a31115d3e390f35989fa6099144e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
