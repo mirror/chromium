@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "0cc94b37_c0950836",
+        "filename": "third_party/WebKit/Source/modules/payments/PaymentRequestRespondWithObserver.cpp",
+        "patchSetId": 3
+      },
+      "lineNbr": 67,
+      "author": {
+        "id": 1129572
+      },
+      "writtenOn": "2017-11-08T20:27:13Z",
+      "side": 1,
+      "message": "Done\n\nresponse.hasMethodName() and response.hasDetails() are false will not cause crash directly in render side according to my test. But they will cause crash after sending to browser side then forward to payment request. Calling OnResponseRejected will also cause crash in this case. So I was slightly prefer to send partial information to browser side as we talked offline.\n\nNote that I kept both method name and details empty check in browser side for reference that we expect both of them are not empty,",
+      "parentUuid": "7d22836d_c0c01f3f",
+      "range": {
+        "startLine": 67,
+        "startChar": 25,
+        "endLine": 67,
+        "endChar": 47
+      },
+      "revId": "f8df94fe0cdc6a0c438784ca4d4a6953e1ca0a49",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "d739ca8d_a3ae7aaa",
         "filename": "third_party/WebKit/Source/modules/payments/PaymentRequestRespondWithObserver.cpp",
         "patchSetId": 3
@@ -45,6 +69,30 @@
       "revId": "f8df94fe0cdc6a0c438784ca4d4a6953e1ca0a49",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0d948bb7_4961662b",
+        "filename": "third_party/WebKit/Source/modules/payments/PaymentRequestRespondWithObserver.cpp",
+        "patchSetId": 3
+      },
+      "lineNbr": 71,
+      "author": {
+        "id": 1129572
+      },
+      "writtenOn": "2017-11-08T20:27:13Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "d739ca8d_a3ae7aaa",
+      "range": {
+        "startLine": 70,
+        "startChar": 0,
+        "endLine": 71,
+        "endChar": 73
+      },
+      "revId": "f8df94fe0cdc6a0c438784ca4d4a6953e1ca0a49",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
