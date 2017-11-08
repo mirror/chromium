@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "dc8b082e_c33ab6d8",
+        "filename": "ios/chrome/browser/ui/activity_services/canonical_url_retriever_unittest.mm",
+        "patchSetId": 10
+      },
+      "lineNbr": 68,
+      "author": {
+        "id": 1125535
+      },
+      "writtenOn": "2017-11-08T00:49:13Z",
+      "side": 1,
+      "message": "nit: Since this is initialized to \"empty\", even if RetrieveCanonicalUrl() does nothing but return true, EXPECT_TRUE(url.is_empty()) will still pass.",
+      "range": {
+        "startLine": 68,
+        "startChar": 2,
+        "endLine": 68,
+        "endChar": 11
+      },
+      "revId": "07ae96ecd01c24abd5d06b95cd3e1e25633555dd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
