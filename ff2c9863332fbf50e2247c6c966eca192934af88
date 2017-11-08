@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "9796935d_cad03fe4",
+        "filename": "components/download/downloader/in_progress/in_progress_cache_impl.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 73,
+      "author": {
+        "id": 1226039
+      },
+      "writtenOn": "2017-11-08T19:56:39Z",
+      "side": 1,
+      "message": "Not sure if just logging an error and returning makes the most sense in these cases--should it return an error that can be handled?",
+      "range": {
+        "startLine": 73,
+        "startChar": 4,
+        "endLine": 73,
+        "endChar": 10
+      },
+      "revId": "ff2c9863332fbf50e2247c6c966eca192934af88",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "219ddff4_d00d7c99",
+        "filename": "components/download/downloader/in_progress/in_progress_cache_impl.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 127,
+      "author": {
+        "id": 1226039
+      },
+      "writtenOn": "2017-11-08T19:56:39Z",
+      "side": 1,
+      "message": "Is it necessary to wait for these entries to be read from the file? Is there a way to check if the initialization has been completed?",
+      "range": {
+        "startLine": 125,
+        "startChar": 0,
+        "endLine": 127,
+        "endChar": 78
+      },
+      "revId": "ff2c9863332fbf50e2247c6c966eca192934af88",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
