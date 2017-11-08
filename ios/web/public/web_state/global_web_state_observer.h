@@ -21,6 +21,8 @@ class WebState;
 // WARNING: This class exists only to mimic //chrome-specific flows that
 // listen for notifications from all WebContents or NavigationController
 // instances. Do not add new subclasses of this class for any other reason.
+// DEPRECATED. Use WebStateObserver directly instead.
+// TODO(crbug.com/782269): Remove this class.
 class GlobalWebStateObserver {
  public:
   // Called when navigation items have been pruned in |web_state|.
@@ -28,9 +30,14 @@ class GlobalWebStateObserver {
                                      size_t pruned_item_count) {}
 
   // Called when a navigation item has changed in |web_state|.
+  // DEPRECATED. Use WebStateObserver's |TitleWasSet| to listen for title
+  // changes and |DidFinishNavigation| for |window.location.replace|.
+  // TODO(crbug.com/782269): Remove this method.
   virtual void NavigationItemChanged(WebState* web_state) {}
 
   // Called when a navigation item has been committed in |web_state|.
+  // DEPRECATED. Use WebStateObserver's |DidFinishNavigation| instead.
+  // TODO(crbug.com/782269): Remove this method.
   virtual void NavigationItemCommitted(
       WebState* web_state,
       const LoadCommittedDetails& load_details) {}
