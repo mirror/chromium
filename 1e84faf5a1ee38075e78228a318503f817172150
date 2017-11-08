@@ -48,6 +48,30 @@
     },
     {
       "key": {
+        "uuid": "8b0784a7_93b3abff",
+        "filename": "tools/cygprofile/lightweight_cygprofile.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 101,
+      "author": {
+        "id": 1132034
+      },
+      "writtenOn": "2017-11-08T13:46:20Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "8174750d_c044b93a",
+      "range": {
+        "startLine": 101,
+        "startChar": 1,
+        "endLine": 101,
+        "endChar": 2
+      },
+      "revId": "1e84faf5a1ee38075e78228a318503f817172150",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "53458996_6e4b9aa8",
         "filename": "tools/cygprofile/lightweight_cygprofile.cc",
         "patchSetId": 1
@@ -59,6 +83,30 @@
       "writtenOn": "2017-11-08T12:57:01Z",
       "side": 1,
       "message": "trip to double and then back to int again, loosing precision?",
+      "range": {
+        "startLine": 121,
+        "startChar": 19,
+        "endLine": 121,
+        "endChar": 47
+      },
+      "revId": "1e84faf5a1ee38075e78228a318503f817172150",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5a560ba8_3f3e7a06",
+        "filename": "tools/cygprofile/lightweight_cygprofile.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 121,
+      "author": {
+        "id": 1132034
+      },
+      "writtenOn": "2017-11-08T13:46:20Z",
+      "side": 1,
+      "message": "Thanks!\nDone.",
+      "parentUuid": "53458996_6e4b9aa8",
       "range": {
         "startLine": 121,
         "startChar": 19,
