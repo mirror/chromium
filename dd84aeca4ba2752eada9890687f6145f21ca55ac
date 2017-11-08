@@ -1,0 +1,157 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "e6b63f4a_dd4fb35a",
+        "filename": "chrome/browser/ui/translate/translate_bubble_test_utils.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 8,
+      "author": {
+        "id": 1176036
+      },
+      "writtenOn": "2017-11-08T06:18:11Z",
+      "side": 1,
+      "message": "maybe use a forward declaration?",
+      "revId": "dd84aeca4ba2752eada9890687f6145f21ca55ac",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "01b86737_8b8163c3",
+        "filename": "chrome/browser/ui/views/translate/translate_bubble_test_utils_views.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 37,
+      "author": {
+        "id": 1176036
+      },
+      "writtenOn": "2017-11-08T06:18:11Z",
+      "side": 1,
+      "message": "better switch variables: target_name\u003c-\u003edisplay_name so it\u0027s more aligned with the function name",
+      "revId": "dd84aeca4ba2752eada9890687f6145f21ca55ac",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "dba3cd05_39c35479",
+        "filename": "chrome/browser/ui/views/translate/translate_bubble_test_utils_views.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 56,
+      "author": {
+        "id": 1176036
+      },
+      "writtenOn": "2017-11-08T06:18:11Z",
+      "side": 1,
+      "message": "DCHECK_GE",
+      "revId": "dd84aeca4ba2752eada9890687f6145f21ca55ac",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a9a93829_af4f7d26",
+        "filename": "chrome/browser/ui/views/translate/translate_bubble_view.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 13,
+      "author": {
+        "id": 1176036
+      },
+      "writtenOn": "2017-11-08T06:18:11Z",
+      "side": 1,
+      "message": "same here",
+      "revId": "dd84aeca4ba2752eada9890687f6145f21ca55ac",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "50916b2c_b652128c",
+        "filename": "chrome/browser/ui/views/translate/translate_language_browsertest.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 62,
+      "author": {
+        "id": 1176036
+      },
+      "writtenOn": "2017-11-08T06:18:11Z",
+      "side": 1,
+      "message": "I wonder what\u0027s the behavior of changing this to und?",
+      "revId": "dd84aeca4ba2752eada9890687f6145f21ca55ac",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d92fd845_8469c33a",
+        "filename": "chrome/browser/ui/views/translate/translate_language_browsertest.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 155,
+      "author": {
+        "id": 1176036
+      },
+      "writtenOn": "2017-11-08T06:18:11Z",
+      "side": 1,
+      "message": "DCHECK(client)?",
+      "revId": "dd84aeca4ba2752eada9890687f6145f21ca55ac",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "191128d8_04e07692",
+        "filename": "chrome/browser/ui/views/translate/translate_language_browsertest.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 257,
+      "author": {
+        "id": 1176036
+      },
+      "writtenOn": "2017-11-08T06:18:11Z",
+      "side": 1,
+      "message": "seems we can test the recent target language as well in this test",
+      "revId": "dd84aeca4ba2752eada9890687f6145f21ca55ac",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d87ce8df_f06473bc",
+        "filename": "chrome/browser/ui/views/translate/translate_language_browsertest.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 288,
+      "author": {
+        "id": 1176036
+      },
+      "writtenOn": "2017-11-08T06:18:11Z",
+      "side": 1,
+      "message": "if it is a french page, what\u0027s the expected behavior?",
+      "revId": "dd84aeca4ba2752eada9890687f6145f21ca55ac",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6e79127f_de7932db",
+        "filename": "components/translate/core/browser/translate_manager.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 384,
+      "author": {
+        "id": 1176036
+      },
+      "writtenOn": "2017-11-08T06:18:11Z",
+      "side": 1,
+      "message": "why the behavior is not fallback to the previously translated language?",
+      "revId": "dd84aeca4ba2752eada9890687f6145f21ca55ac",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
