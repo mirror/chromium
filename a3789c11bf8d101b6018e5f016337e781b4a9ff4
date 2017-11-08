@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "daca0e50_57c66cc6",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 11
+      },
+      "lineNbr": 13,
+      "author": {
+        "id": 1001618
+      },
+      "writtenOn": "2017-11-08T21:13:57Z",
+      "side": 1,
+      "message": "I\u0027d prefer we hold off on this until we understand how we\u0027d do it in TWA too. Can we chat offline about it",
+      "range": {
+        "startLine": 13,
+        "startChar": 5,
+        "endLine": 13,
+        "endChar": 20
+      },
+      "revId": "a3789c11bf8d101b6018e5f016337e781b4a9ff4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1cd61f3c_fb2ad1bf",
+        "filename": "chrome/android/webapk/shell_apk/AndroidManifest.xml",
+        "patchSetId": 11
+      },
+      "lineNbr": 67,
+      "author": {
+        "id": 1001618
+      },
+      "writtenOn": "2017-11-08T21:13:57Z",
+      "side": 1,
+      "message": "if we keep this, I\u0027d prefer it we make the entire resource value the variable? This would mean we\u0027re not limited to a mipmap from the server",
+      "range": {
+        "startLine": 67,
+        "startChar": 90,
+        "endLine": 67,
+        "endChar": 96
+      },
+      "revId": "a3789c11bf8d101b6018e5f016337e781b4a9ff4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
