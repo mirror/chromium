@@ -22,6 +22,30 @@
       "revId": "9e20249dd526627204d6212964e4f9cf18f26ecc",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "cab023c9_3ca8940e",
+        "filename": "components/signin/core/browser/account_reconcilor.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 110,
+      "author": {
+        "id": 1001438
+      },
+      "writtenOn": "2017-11-08T14:44:50Z",
+      "side": 1,
+      "message": "If we go with this, I suggest the following:\n\n2 boolean histograms:\n* Dice enabled/disabled\n* Dice compatible/incompatible\n\nOr a single histogram but with these buckets:\n* Dice disabled and not ready to migrate\n* Dice disabled and ready to migrate\n* Dice enabled\n\nI went with the second approach (single histogram).\n\nAny experimental group is only expected to report 2 possible values, and thus it does not have more information than the boolean, but hopefully it\u0027s easier to understand.",
+      "parentUuid": "1bdd5001_b3882f3c",
+      "range": {
+        "startLine": 110,
+        "startChar": 32,
+        "endLine": 110,
+        "endChar": 53
+      },
+      "revId": "9e20249dd526627204d6212964e4f9cf18f26ecc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
