@@ -16,6 +16,24 @@
       "revId": "698e0dbf3a6238858d7957fc396d73b096e8db37",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "33abca17_7931fc66",
+        "filename": "content/browser/loader/navigation_url_loader_network_service.cc",
+        "patchSetId": 20
+      },
+      "lineNbr": 171,
+      "author": {
+        "id": 1228344
+      },
+      "writtenOn": "2017-11-08T09:47:39Z",
+      "side": 1,
+      "message": "Okay, I see, that makes sense. I can try to do a mojom::URLLoaderFactory that will call ResourceDispatcherHostImpl::BeginNavigation() internally. I just need to find a way to pass the additional parameters.\nIf possible, I would like to do it in another CL.",
+      "parentUuid": "381e0e09_7b92ee60",
+      "revId": "698e0dbf3a6238858d7957fc396d73b096e8db37",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
