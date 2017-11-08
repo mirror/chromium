@@ -437,6 +437,9 @@ class CONTENT_EXPORT WebContentsObserver : public IPC::Listener {
                                    const MediaPlayerId& id) {}
   virtual void MediaStoppedPlaying(const MediaPlayerInfo& video_type,
                                    const MediaPlayerId& id) {}
+  virtual void MediaStoppedPlaying(const MediaPlayerInfo& video_type,
+                                   const MediaPlayerId& id,
+                                   bool reached_end_of_stream) {}
   virtual void MediaResized(const gfx::Size& size, const MediaPlayerId& id) {}
   // Invoked when media enters or exits fullscreen. We must use a heuristic
   // to determine this as it is not trivial for media with custom controls.
