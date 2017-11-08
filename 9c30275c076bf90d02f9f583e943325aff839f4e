@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "8bab3169_cb2832ef",
+        "filename": "tools/android/native_lib_memory/process_residency.py",
+        "patchSetId": 4
+      },
+      "lineNbr": 6,
+      "author": {
+        "id": 1132034
+      },
+      "writtenOn": "2017-11-08T18:04:21Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "9f89ebc5_cd838516",
+      "range": {
+        "startLine": 6,
+        "startChar": 48,
+        "endLine": 6,
+        "endChar": 70
+      },
+      "revId": "9c30275c076bf90d02f9f583e943325aff839f4e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "9f0a07cf_71b47e8f",
         "filename": "tools/cygprofile/anchor_functions.h",
         "patchSetId": 4
@@ -36,6 +60,30 @@
       "writtenOn": "2017-11-08T14:08:45Z",
       "side": 1,
       "message": "The header comment should probably be reduced to just explain what\u0027s exported in the header, and generally to not be exactly the same as the .cc file as that\u0027s not maintainable.",
+      "range": {
+        "startLine": 13,
+        "startChar": 27,
+        "endLine": 13,
+        "endChar": 31
+      },
+      "revId": "9c30275c076bf90d02f9f583e943325aff839f4e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4eb24d46_68ea457e",
+        "filename": "tools/cygprofile/anchor_functions.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 13,
+      "author": {
+        "id": 1132034
+      },
+      "writtenOn": "2017-11-08T18:04:21Z",
+      "side": 1,
+      "message": "Oops, you catched my distracted copy-paste.",
+      "parentUuid": "9f0a07cf_71b47e8f",
       "range": {
         "startLine": 13,
         "startChar": 27,
@@ -71,6 +119,30 @@
     },
     {
       "key": {
+        "uuid": "c629688e_ea725828",
+        "filename": "tools/cygprofile/lightweight_cygprofile.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 16,
+      "author": {
+        "id": 1132034
+      },
+      "writtenOn": "2017-11-08T18:04:21Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "e8eab3d0_b7219d40",
+      "range": {
+        "startLine": 16,
+        "startChar": 15,
+        "endLine": 16,
+        "endChar": 28
+      },
+      "revId": "9c30275c076bf90d02f9f583e943325aff839f4e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "897f51e1_1350bc30",
         "filename": "tools/cygprofile/lightweight_cygprofile.cc",
         "patchSetId": 4
@@ -94,6 +166,30 @@
     },
     {
       "key": {
+        "uuid": "ee9d8f39_123626e2",
+        "filename": "tools/cygprofile/lightweight_cygprofile.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 48,
+      "author": {
+        "id": 1132034
+      },
+      "writtenOn": "2017-11-08T18:04:21Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "897f51e1_1350bc30",
+      "range": {
+        "startLine": 48,
+        "startChar": 17,
+        "endLine": 48,
+        "endChar": 21
+      },
+      "revId": "9c30275c076bf90d02f9f583e943325aff839f4e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "54fbf74e_b3afea4f",
         "filename": "tools/cygprofile/log_residency.cc",
         "patchSetId": 4
@@ -105,6 +201,30 @@
       "writtenOn": "2017-11-08T15:15:06Z",
       "side": 1,
       "message": "base::kNanosecondsPerSecond",
+      "range": {
+        "startLine": 70,
+        "startChar": 31,
+        "endLine": 70,
+        "endChar": 41
+      },
+      "revId": "9c30275c076bf90d02f9f583e943325aff839f4e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "faa40cb5_f741f19d",
+        "filename": "tools/cygprofile/log_residency.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 70,
+      "author": {
+        "id": 1132034
+      },
+      "writtenOn": "2017-11-08T18:04:21Z",
+      "side": 1,
+      "message": "feels a bit silly, adding an include just for that. Do you mind not changing it?",
+      "parentUuid": "54fbf74e_b3afea4f",
       "range": {
         "startLine": 70,
         "startChar": 31,
@@ -137,6 +257,30 @@
       "revId": "9c30275c076bf90d02f9f583e943325aff839f4e",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8ac20b95_d4ef774b",
+        "filename": "tools/cygprofile/log_residency.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 75,
+      "author": {
+        "id": 1132034
+      },
+      "writtenOn": "2017-11-08T18:04:21Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "6605b308_5b0567f9",
+      "range": {
+        "startLine": 75,
+        "startChar": 6,
+        "endLine": 75,
+        "endChar": 12
+      },
+      "revId": "9c30275c076bf90d02f9f583e943325aff839f4e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
