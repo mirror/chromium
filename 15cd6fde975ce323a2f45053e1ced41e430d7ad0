@@ -1,0 +1,106 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "a3118e19_ab65ab75",
+        "filename": "chrome/browser/metrics/process_memory_metrics_emitter_unittest.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 195,
+      "author": {
+        "id": 1115906
+      },
+      "writtenOn": "2017-11-08T16:49:49Z",
+      "side": 1,
+      "message": "should this be SharedMemoryFootprint? I\u0027m surprised this doesn\u0027t cause errrors.",
+      "revId": "15cd6fde975ce323a2f45053e1ced41e430d7ad0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6fc4c31a_e9921354",
+        "filename": "services/resource_coordinator/memory_instrumentation/graph_processor.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 19,
+      "author": {
+        "id": 1115906
+      },
+      "writtenOn": "2017-11-08T16:49:49Z",
+      "side": 1,
+      "message": "what are the ownership semantics of this pointer?",
+      "revId": "15cd6fde975ce323a2f45053e1ced41e430d7ad0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f9fdcc55_fce62004",
+        "filename": "services/resource_coordinator/memory_instrumentation/queued_request_dispatcher.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 192,
+      "author": {
+        "id": 1115906
+      },
+      "writtenOn": "2017-11-08T16:49:49Z",
+      "side": 1,
+      "message": "what are the ownership semantics of this pointer?",
+      "revId": "15cd6fde975ce323a2f45053e1ced41e430d7ad0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9768c0be_34b32975",
+        "filename": "services/resource_coordinator/memory_instrumentation/queued_request_dispatcher.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 240,
+      "author": {
+        "id": 1115906
+      },
+      "writtenOn": "2017-11-08T16:49:49Z",
+      "side": 1,
+      "message": "could you use explicit types here?",
+      "revId": "15cd6fde975ce323a2f45053e1ced41e430d7ad0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ba0a0d91_771627ae",
+        "filename": "services/resource_coordinator/memory_instrumentation/queued_request_dispatcher.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 248,
+      "author": {
+        "id": 1115906
+      },
+      "writtenOn": "2017-11-08T16:49:49Z",
+      "side": 1,
+      "message": "there are a lot of raw pointers floating around here. It\u0027s not immediately clear to me who owns the underlying objects, and why it\u0027s okay to just pass around raw pointers.",
+      "revId": "15cd6fde975ce323a2f45053e1ced41e430d7ad0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ed42d818_cf5c00a3",
+        "filename": "services/resource_coordinator/public/interfaces/memory_instrumentation/memory_instrumentation.mojom",
+        "patchSetId": 5
+      },
+      "lineNbr": 159,
+      "author": {
+        "id": 1115906
+      },
+      "writtenOn": "2017-11-08T16:49:49Z",
+      "side": 1,
+      "message": "Can you point to the code that does this computation? It\u0027s not clear to me how we can calculate resident or swapped shared memory on some OSes, like macOS.",
+      "revId": "15cd6fde975ce323a2f45053e1ced41e430d7ad0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
