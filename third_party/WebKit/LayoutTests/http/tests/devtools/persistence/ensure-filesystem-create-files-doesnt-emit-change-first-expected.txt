@@ -1,0 +1,7 @@
+Check to ensure when a file is being created we don't honor events from filesystem before content is fully set.
+
+Creating File
+IsolatedFileSystem setFileContent
+ERROR! UISourceCode received checkContentUpdated but content has not been set yet when creating file. This should not happen.
+File Created
+
