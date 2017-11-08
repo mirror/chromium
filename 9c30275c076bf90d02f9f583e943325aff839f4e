@@ -2,6 +2,29 @@
   "comments": [
     {
       "key": {
+        "uuid": "9f89ebc5_cd838516",
+        "filename": "tools/android/native_lib_memory/process_residency.py",
+        "patchSetId": 4
+      },
+      "lineNbr": 6,
+      "author": {
+        "id": 1000429
+      },
+      "writtenOn": "2017-11-08T15:15:06Z",
+      "side": 1,
+      "message": "s/lightweight_cygprofile/log_residency/",
+      "range": {
+        "startLine": 6,
+        "startChar": 48,
+        "endLine": 6,
+        "endChar": 70
+      },
+      "revId": "9c30275c076bf90d02f9f583e943325aff839f4e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "9f0a07cf_71b47e8f",
         "filename": "tools/cygprofile/anchor_functions.h",
         "patchSetId": 4
@@ -18,6 +41,98 @@
         "startChar": 27,
         "endLine": 13,
         "endChar": 31
+      },
+      "revId": "9c30275c076bf90d02f9f583e943325aff839f4e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e8eab3d0_b7219d40",
+        "filename": "tools/cygprofile/lightweight_cygprofile.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 16,
+      "author": {
+        "id": 1000429
+      },
+      "writtenOn": "2017-11-08T15:15:06Z",
+      "side": 1,
+      "message": "I think format_macros.h and eintr_wrapper.h are not needed any more",
+      "range": {
+        "startLine": 16,
+        "startChar": 15,
+        "endLine": 16,
+        "endChar": 28
+      },
+      "revId": "9c30275c076bf90d02f9f583e943325aff839f4e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "897f51e1_1350bc30",
+        "filename": "tools/cygprofile/lightweight_cygprofile.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 48,
+      "author": {
+        "id": 1000429
+      },
+      "writtenOn": "2017-11-08T15:15:06Z",
+      "side": 1,
+      "message": "s/this// as a good side effect of reducing side effects",
+      "range": {
+        "startLine": 48,
+        "startChar": 17,
+        "endLine": 48,
+        "endChar": 21
+      },
+      "revId": "9c30275c076bf90d02f9f583e943325aff839f4e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "54fbf74e_b3afea4f",
+        "filename": "tools/cygprofile/log_residency.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 70,
+      "author": {
+        "id": 1000429
+      },
+      "writtenOn": "2017-11-08T15:15:06Z",
+      "side": 1,
+      "message": "base::kNanosecondsPerSecond",
+      "range": {
+        "startLine": 70,
+        "startChar": 31,
+        "endLine": 70,
+        "endChar": 41
+      },
+      "revId": "9c30275c076bf90d02f9f583e943325aff839f4e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6605b308_5b0567f9",
+        "filename": "tools/cygprofile/log_residency.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 75,
+      "author": {
+        "id": 1000429
+      },
+      "writtenOn": "2017-11-08T15:15:06Z",
+      "side": 1,
+      "message": "this should rather crash early to avoid spending time figuring out why later-running scripts failed",
+      "range": {
+        "startLine": 75,
+        "startChar": 6,
+        "endLine": 75,
+        "endChar": 12
       },
       "revId": "9c30275c076bf90d02f9f583e943325aff839f4e",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
