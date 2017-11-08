@@ -51,7 +51,7 @@ class RegistrationCallback
 
   Persistent<HTMLLinkElement> owner_;
 };
-}
+}  // namespace
 
 ServiceWorkerLinkResource* ServiceWorkerLinkResource::Create(
     HTMLLinkElement* owner) {
@@ -97,6 +97,7 @@ void ServiceWorkerLinkResource::Process() {
 
   container->RegisterServiceWorkerImpl(
       &document, script_url, scope_url,
+      mojom::ServiceWorkerUpdateViaCache::kImports,
       WTF::MakeUnique<RegistrationCallback>(owner_));
 }
 
