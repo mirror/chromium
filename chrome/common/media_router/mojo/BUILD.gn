@@ -6,6 +6,7 @@ import("//mojo/public/tools/bindings/mojom.gni")
 
 mojom("dial_utility_interfaces") {
   sources = [
+    "dial_app_info_parser.mojom",
     "dial_device_description_parser.mojom",
   ]
 
