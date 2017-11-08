@@ -49,6 +49,30 @@
     },
     {
       "key": {
+        "uuid": "ec14db7a_b0f6844c",
+        "filename": "ash/accessibility/accessibility_focus_ring_controller.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 46,
+      "author": {
+        "id": 1250213
+      },
+      "writtenOn": "2017-11-08T22:01:24Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "5a0fd54f_a6111ed2",
+      "range": {
+        "startLine": 46,
+        "startChar": 13,
+        "endLine": 46,
+        "endChar": 23
+      },
+      "revId": "5e226628cbe772b407307fc7cef58bbc59cc91ba",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "ea0443c6_fc646f2b",
         "filename": "ash/accessibility/accessibility_focus_ring_controller.h",
         "patchSetId": 3
@@ -63,6 +87,24 @@
       "revId": "5e226628cbe772b407307fc7cef58bbc59cc91ba",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "afa062fb_ab3505ba",
+        "filename": "ash/accessibility/accessibility_focus_ring_controller.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 54,
+      "author": {
+        "id": 1250213
+      },
+      "writtenOn": "2017-11-08T22:01:24Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "ea0443c6_fc646f2b",
+      "revId": "5e226628cbe772b407307fc7cef58bbc59cc91ba",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -113,6 +155,30 @@
     },
     {
       "key": {
+        "uuid": "29165594_74318674",
+        "filename": "ash/accessibility/accessibility_focus_ring_controller.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 55,
+      "author": {
+        "id": 1250213
+      },
+      "writtenOn": "2017-11-08T22:01:24Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "badbd944_3510b68a",
+      "range": {
+        "startLine": 55,
+        "startChar": 6,
+        "endLine": 55,
+        "endChar": 16
+      },
+      "revId": "5e226628cbe772b407307fc7cef58bbc59cc91ba",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "ebf969a7_74fd649c",
         "filename": "ash/accessibility/accessibility_highlight_layer.cc",
         "patchSetId": 3
@@ -127,6 +193,24 @@
       "revId": "5e226628cbe772b407307fc7cef58bbc59cc91ba",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "72b72b20_c9e3d28e",
+        "filename": "ash/accessibility/accessibility_highlight_layer.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 43,
+      "author": {
+        "id": 1250213
+      },
+      "writtenOn": "2017-11-08T22:01:24Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "ebf969a7_74fd649c",
+      "revId": "5e226628cbe772b407307fc7cef58bbc59cc91ba",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -147,6 +231,24 @@
     },
     {
       "key": {
+        "uuid": "5a7bc2a6_374da3dc",
+        "filename": "ash/accessibility/accessibility_highlight_layer.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 45,
+      "author": {
+        "id": 1250213
+      },
+      "writtenOn": "2017-11-08T22:01:24Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "29005a7c_274e977e",
+      "revId": "5e226628cbe772b407307fc7cef58bbc59cc91ba",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "f059e385_e0c91586",
         "filename": "chrome/browser/resources/chromeos/select_to_speak/select_to_speak.js",
         "patchSetId": 3
@@ -161,6 +263,24 @@
       "revId": "5e226628cbe772b407307fc7cef58bbc59cc91ba",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4413a88d_57c226c6",
+        "filename": "chrome/browser/resources/chromeos/select_to_speak/select_to_speak.js",
+        "patchSetId": 3
+      },
+      "lineNbr": 725,
+      "author": {
+        "id": 1250213
+      },
+      "writtenOn": "2017-11-08T22:01:24Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "f059e385_e0c91586",
+      "revId": "5e226628cbe772b407307fc7cef58bbc59cc91ba",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
