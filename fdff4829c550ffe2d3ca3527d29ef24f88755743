@@ -96,6 +96,30 @@
     },
     {
       "key": {
+        "uuid": "c47a9169_c46003d9",
+        "filename": "chrome/browser/media/router/presentation_receiver_window.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 90,
+      "author": {
+        "id": 1002076
+      },
+      "writtenOn": "2017-11-08T04:25:54Z",
+      "side": 1,
+      "message": "Yes, IMHO, it should be a DCHECK there too.",
+      "parentUuid": "c7dadb51_fc5abcdc",
+      "range": {
+        "startLine": 89,
+        "startChar": 0,
+        "endLine": 90,
+        "endChar": 60
+      },
+      "revId": "fdff4829c550ffe2d3ca3527d29ef24f88755743",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "fd040fef_b76973da",
         "filename": "chrome/browser/media/router/presentation_receiver_window.cc",
         "patchSetId": 3
@@ -190,6 +214,30 @@
     },
     {
       "key": {
+        "uuid": "3b75a455_b7fcf8f5",
+        "filename": "chrome/browser/media/router/presentation_receiver_window.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 101,
+      "author": {
+        "id": 1002076
+      },
+      "writtenOn": "2017-11-08T04:25:54Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "6004b769_3c74215a",
+      "range": {
+        "startLine": 99,
+        "startChar": 0,
+        "endLine": 101,
+        "endChar": 38
+      },
+      "revId": "fdff4829c550ffe2d3ca3527d29ef24f88755743",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "f8a36939_47f6787b",
         "filename": "chrome/browser/media/router/presentation_receiver_window.h",
         "patchSetId": 3
@@ -272,6 +320,30 @@
       "side": 1,
       "message": "mfoltz and anthonyvd can chime in, but I think it makes sense here.  Because we are using a Browser and not just a WebContents, the situation is slightly different from offscreen tabs.  Although we are deleting all uses of the profile in ~Browser, I\u0027m not sure we can simply write \"delete profile\" there, so I was leaning towards reusing the ProfileDestroyer logic.",
       "parentUuid": "a8536cfc_1938d89f",
+      "range": {
+        "startLine": 64,
+        "startChar": 0,
+        "endLine": 64,
+        "endChar": 36
+      },
+      "revId": "fdff4829c550ffe2d3ca3527d29ef24f88755743",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "665b4a5c_d68ec27f",
+        "filename": "chrome/browser/profiles/profile_destroyer.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 64,
+      "author": {
+        "id": 1002076
+      },
+      "writtenOn": "2017-11-08T04:25:54Z",
+      "side": 1,
+      "message": "Seems fine to me. I\u0027ll defer to those with better knowledge of how Profile instances are memory-managed.\n\nRandom thought: Should PresentationReceiverWindow remove the WebContents and destroy it in its dtor, before the base class dtor (i.e., ~Browser) runs? Then, it should be safe to delete the profile there. All said, I\u0027m not actually sure where we really *should* be deleting the profile. ;-)",
+      "parentUuid": "1ee7bcd1_fcae4478",
       "range": {
         "startLine": 64,
         "startChar": 0,
