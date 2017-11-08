@@ -106,6 +106,7 @@ class NavigationController {
 
     // SiteInstance of the frame that initiated the navigation or null if we
     // don't know it.
+    // TODO / DO NOT SUBMIT: Also remove?
     scoped_refptr<SiteInstance> source_site_instance;
 
     // See LoadURLType comments above.

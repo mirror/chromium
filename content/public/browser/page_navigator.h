@@ -54,10 +54,6 @@ struct CONTENT_EXPORT OpenURLParams {
   GURL url;
   Referrer referrer;
 
-  // SiteInstance of the frame that initiated the navigation or null if we
-  // don't know it.
-  scoped_refptr<content::SiteInstance> source_site_instance;
-
   // Any redirect URLs that occurred for this navigation before |url|.
   std::vector<GURL> redirect_chain;
 
