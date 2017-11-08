@@ -1,0 +1,96 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "546c5e5b_d03c65b2",
+        "filename": "tools/metrics/histograms/histograms.xml",
+        "patchSetId": 1
+      },
+      "lineNbr": 2294,
+      "author": {
+        "id": 1136699
+      },
+      "writtenOn": "2017-11-08T22:11:45Z",
+      "side": 1,
+      "message": "nit: Do we have multiple OEM folders?",
+      "range": {
+        "startLine": 2294,
+        "startChar": 44,
+        "endLine": 2294,
+        "endChar": 55
+      },
+      "revId": "cde95c95c3bd1bf49c5059bdcacbf7f35f8a539e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "24002663_f2673451",
+        "filename": "ui/app_list/app_list_model.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 336,
+      "author": {
+        "id": 1136699
+      },
+      "writtenOn": "2017-11-08T22:11:45Z",
+      "side": 1,
+      "message": "nit: ++i for consistency in this file, for example L329\nL340 might also be updated.",
+      "range": {
+        "startLine": 336,
+        "startChar": 60,
+        "endLine": 336,
+        "endChar": 64
+      },
+      "revId": "cde95c95c3bd1bf49c5059bdcacbf7f35f8a539e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3069fb6a_e3b8b4eb",
+        "filename": "ui/app_list/app_list_model.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 347,
+      "author": {
+        "id": 1136699
+      },
+      "writtenOn": "2017-11-08T22:11:45Z",
+      "side": 1,
+      "message": "nit: Move it to consts as well",
+      "range": {
+        "startLine": 347,
+        "startChar": 27,
+        "endLine": 347,
+        "endChar": 72
+      },
+      "revId": "cde95c95c3bd1bf49c5059bdcacbf7f35f8a539e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "96f27b7a_c86e3e10",
+        "filename": "ui/app_list/views/app_list_view.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 298,
+      "author": {
+        "id": 1136699
+      },
+      "writtenOn": "2017-11-08T22:11:45Z",
+      "side": 1,
+      "message": "nit: Move to constants as well?",
+      "range": {
+        "startLine": 298,
+        "startChar": 22,
+        "endLine": 298,
+        "endChar": 48
+      },
+      "revId": "cde95c95c3bd1bf49c5059bdcacbf7f35f8a539e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
