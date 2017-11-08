@@ -24,7 +24,8 @@ class CSSParserThreadedTest : public MultiThreadedTest {
                                             const String& text) {
     MutableStylePropertySet* style =
         MutableStylePropertySet::Create(kHTMLStandardMode);
-    CSSParser::ParseValue(style, prop, text, true);
+    CSSParser::ParseValue(style, prop, text, true,
+                          /* is_secure_context */ false);
     return style;
   }
 };
@@ -62,7 +63,8 @@ TSAN_TEST_F(CSSParserThreadedTest, ValuePropertyFont) {
 
 TSAN_TEST_F(CSSParserThreadedTest, FontFaceDescriptor) {
   RunOnThreads([]() {
-    CSSParserContext* ctx = CSSParserContext::Create(kCSSFontFaceRuleMode);
+    CSSParserContext* ctx = CSSParserContext::Create(
+        kCSSFontFaceRuleMode, /* is_secure_context */ false);
     const CSSValue* v = CSSParser::ParseFontFaceDescriptor(
         CSSPropertySrc, "url(myfont.ttf)", ctx);
     ASSERT_TRUE(v);

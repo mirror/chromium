@@ -12,7 +12,8 @@ namespace blink {
 TEST(FontStyleResolverTest, Simple) {
   MutableStylePropertySet* style =
       MutableStylePropertySet::Create(kHTMLStandardMode);
-  CSSParser::ParseValue(style, CSSPropertyFont, "15px Ahem", true);
+  CSSParser::ParseValue(style, CSSPropertyFont, "15px Ahem", true,
+                        /* is_secure_context */ false);
 
   FontDescription desc = FontStyleResolver::ComputeFont(*style, nullptr);
 
@@ -24,7 +25,8 @@ TEST(FontStyleResolverTest, Simple) {
 TEST(FontStyleResolverTest, InvalidSize) {
   MutableStylePropertySet* style =
       MutableStylePropertySet::Create(kHTMLStandardMode);
-  CSSParser::ParseValue(style, CSSPropertyFont, "-1px Ahem", true);
+  CSSParser::ParseValue(style, CSSPropertyFont, "-1px Ahem", true,
+                        /* is_secure_context */ false);
 
   FontDescription desc = FontStyleResolver::ComputeFont(*style, nullptr);
 
@@ -36,7 +38,8 @@ TEST(FontStyleResolverTest, InvalidSize) {
 TEST(FontStyleResolverTest, InvalidWeight) {
   MutableStylePropertySet* style =
       MutableStylePropertySet::Create(kHTMLStandardMode);
-  CSSParser::ParseValue(style, CSSPropertyFont, "wrong 1px Ahem", true);
+  CSSParser::ParseValue(style, CSSPropertyFont, "wrong 1px Ahem", true,
+                        /* is_secure_context */ false);
 
   FontDescription desc = FontStyleResolver::ComputeFont(*style, nullptr);
 
@@ -49,7 +52,7 @@ TEST(FontStyleResolverTest, InvalidEverything) {
   MutableStylePropertySet* style =
       MutableStylePropertySet::Create(kHTMLStandardMode);
   CSSParser::ParseValue(style, CSSPropertyFont, "wrong wrong wrong 1px Ahem",
-                        true);
+                        true, /* is_secure_context */ false);
 
   FontDescription desc = FontStyleResolver::ComputeFont(*style, nullptr);
 
@@ -61,7 +64,8 @@ TEST(FontStyleResolverTest, InvalidEverything) {
 TEST(FontStyleResolverTest, RelativeSize) {
   MutableStylePropertySet* style =
       MutableStylePropertySet::Create(kHTMLStandardMode);
-  CSSParser::ParseValue(style, CSSPropertyFont, "italic 2ex Ahem", true);
+  CSSParser::ParseValue(style, CSSPropertyFont, "italic 2ex Ahem", true,
+                        /* is_secure_context */ false);
 
   FontDescription desc = FontStyleResolver::ComputeFont(*style, nullptr);
 

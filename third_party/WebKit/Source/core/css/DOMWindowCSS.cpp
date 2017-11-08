@@ -33,12 +33,15 @@
 #include "core/css/StylePropertySet.h"
 #include "core/css/parser/CSSParser.h"
 #include "core/css/properties/CSSProperty.h"
+#include "core/dom/ExecutionContext.h"
 #include "platform/wtf/text/StringBuilder.h"
 #include "platform/wtf/text/WTFString.h"
 
 namespace blink {
 
-bool DOMWindowCSS::supports(const String& property, const String& value) {
+bool DOMWindowCSS::supports(const ExecutionContext* execution_context,
+                            const String& property,
+                            const String& value) {
   CSSPropertyID unresolved_property = unresolvedCSSPropertyID(property);
   if (unresolved_property == CSSPropertyInvalid)
     return false;
@@ -46,9 +49,10 @@ bool DOMWindowCSS::supports(const String& property, const String& value) {
     MutableStylePropertySet* dummy_style =
         MutableStylePropertySet::Create(kHTMLStandardMode);
     bool is_animation_tainted = false;
-    return CSSParser::ParseValueForCustomProperty(dummy_style, "--valid",
-                                                  nullptr, value, false,
-                                                  nullptr, is_animation_tainted)
+    return CSSParser::ParseValueForCustomProperty(
+               dummy_style, "--valid", nullptr, value, false,
+               execution_context->IsSecureContext(), nullptr,
+               is_animation_tainted)
         .did_parse;
   }
 
@@ -60,12 +64,15 @@ bool DOMWindowCSS::supports(const String& property, const String& value) {
   // This will return false when !important is present
   MutableStylePropertySet* dummy_style =
       MutableStylePropertySet::Create(kHTMLStandardMode);
-  return CSSParser::ParseValue(dummy_style, unresolved_property, value, false)
+  return CSSParser::ParseValue(dummy_style, unresolved_property, value, false,
+                               execution_context->IsSecureContext())
       .did_parse;
 }
 
-bool DOMWindowCSS::supports(const String& condition_text) {
-  return CSSParser::ParseSupportsCondition(condition_text);
+bool DOMWindowCSS::supports(const ExecutionContext* execution_context,
+                            const String& condition_text) {
+  return CSSParser::ParseSupportsCondition(
+      condition_text, execution_context->IsSecureContext());
 }
 
 String DOMWindowCSS::escape(const String& ident) {

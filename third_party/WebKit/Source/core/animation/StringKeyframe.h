@@ -35,6 +35,7 @@ class CORE_EXPORT StringKeyframe : public Keyframe {
       const AtomicString& property_name,
       const PropertyRegistry*,
       const String& value,
+      bool is_secure_context,
       StyleSheetContents*);
   MutableStylePropertySet::SetResult SetCSSPropertyValue(CSSPropertyID,
                                                          const String& value,

@@ -38,8 +38,10 @@ namespace blink {
 
 WebString CanonicalizeSelector(WebString web_selector,
                                WebSelectorType restriction) {
-  CSSSelectorList selector_list =
-      CSSParser::ParseSelector(StrictCSSParserContext(), nullptr, web_selector);
+  // DO NOT SUBMIT explain is_secure_context.
+  CSSSelectorList selector_list = CSSParser::ParseSelector(
+      StrictCSSParserContext(/* is_secure_context */ false), nullptr,
+      web_selector);
 
   if (restriction == kWebSelectorTypeCompound) {
     for (const CSSSelector* selector = selector_list.First(); selector;

@@ -4399,6 +4399,7 @@ inline void Element::SetInlineStyleFromString(
     DCHECK(inline_style->IsMutable());
     static_cast<MutableStylePropertySet*>(inline_style.Get())
         ->ParseDeclarationList(new_style_string,
+                               GetDocument().IsSecureContext(),
                                GetDocument().ElementSheet().Contents());
   }
 }

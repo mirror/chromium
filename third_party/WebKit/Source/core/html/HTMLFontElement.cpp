@@ -123,8 +123,9 @@ static const CSSValueList* CreateFontFaceValueWithPool(
   CSSValuePool::FontFaceValueCache::AddResult entry =
       CssValuePool().GetFontFaceCacheEntry(string);
   if (!entry.stored_value->value) {
-    const CSSValue* parsed_value =
-        CSSParser::ParseSingleValue(CSSPropertyFontFamily, string);
+    // DO NOT SUBMIT
+    const CSSValue* parsed_value = CSSParser::ParseSingleValue(
+        CSSPropertyFontFamily, string, /* is_secure_context */ false, nullptr);
     if (parsed_value && parsed_value->IsValueList())
       entry.stored_value->value = ToCSSValueList(parsed_value);
   }

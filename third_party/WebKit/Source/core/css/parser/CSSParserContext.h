@@ -49,6 +49,7 @@ class CORE_EXPORT CSSParserContext
 
   static CSSParserContext* Create(
       CSSParserMode,
+      bool is_secure_context,
       SelectorProfile = kDynamicProfile,
       const Document* use_counter_document = nullptr);
   static CSSParserContext* Create(const Document&);
@@ -110,6 +111,7 @@ class CORE_EXPORT CSSParserContext
                    const Referrer&,
                    bool is_html_document,
                    bool use_legacy_background_size_shorthand_behavior,
+                   bool is_secure_context,
                    ContentSecurityPolicyDisposition,
                    const Document* use_counter_document);
 
@@ -121,12 +123,14 @@ class CORE_EXPORT CSSParserContext
   Referrer referrer_;
   bool is_html_document_;
   bool use_legacy_background_size_shorthand_behavior_;
+  bool is_secure_context_;
   ContentSecurityPolicyDisposition should_check_content_security_policy_;
 
   WeakMember<const Document> document_;
 };
 
-CORE_EXPORT const CSSParserContext* StrictCSSParserContext();
+CORE_EXPORT const CSSParserContext* StrictCSSParserContext(
+    bool is_secure_context);
 
 }  // namespace blink
 

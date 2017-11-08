@@ -94,7 +94,8 @@ MutableStylePropertySet* CanvasFontCache::ParseFont(const String& font_string) {
     font_lru_list_.insert(font_string);
   } else {
     parsed_style = MutableStylePropertySet::Create(kHTMLStandardMode);
-    CSSParser::ParseValue(parsed_style, CSSPropertyFont, font_string, true);
+    CSSParser::ParseValue(parsed_style, CSSPropertyFont, font_string, true,
+                          document_->IsSecureContext());
     if (parsed_style->IsEmpty())
       return nullptr;
     // According to

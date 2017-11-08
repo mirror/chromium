@@ -332,6 +332,7 @@ MutableStylePropertySet::SetResult MutableStylePropertySet::SetProperty(
     const PropertyRegistry* registry,
     const String& value,
     bool important,
+    bool is_secure_context,
     StyleSheetContents* context_style_sheet,
     bool is_animation_tainted) {
   if (value.IsEmpty()) {
@@ -340,7 +341,7 @@ MutableStylePropertySet::SetResult MutableStylePropertySet::SetProperty(
     return MutableStylePropertySet::SetResult{did_parse, did_change};
   }
   return CSSParser::ParseValueForCustomProperty(
-      this, custom_property_name, registry, value, important,
+      this, custom_property_name, registry, value, important, is_secure_context,
       context_style_sheet, is_animation_tainted);
 }
 
@@ -389,6 +390,7 @@ bool MutableStylePropertySet::SetProperty(CSSPropertyID property_id,
 
 void MutableStylePropertySet::ParseDeclarationList(
     const String& style_declaration,
+    bool is_secure_context,
     StyleSheetContents* context_style_sheet) {
   property_vector_.clear();
 
@@ -398,7 +400,7 @@ void MutableStylePropertySet::ParseDeclarationList(
         context_style_sheet->ParserContext(), context_style_sheet);
     context->SetMode(CssParserMode());
   } else {
-    context = CSSParserContext::Create(CssParserMode());
+    context = CSSParserContext::Create(CssParserMode(), is_secure_context);
   }
 
   CSSParser::ParseDeclarationList(context, this, style_declaration);
