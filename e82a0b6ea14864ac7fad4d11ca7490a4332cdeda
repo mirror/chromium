@@ -1,0 +1,72 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "ff5693f3_28b20698",
+        "filename": "third_party/sqlite/amalgamation/shell.c",
+        "patchSetId": 4
+      },
+      "lineNbr": 1502,
+      "author": {
+        "id": 1115884
+      },
+      "writtenOn": "2017-11-08T00:20:24Z",
+      "side": 1,
+      "message": "Should this file have the patches applied? For example I don\u0027t see sqlite_shell_init_icu change from 0005-Custom-shell.c-helpers-to-load-Chromium-s-ICU-data.patch applied.",
+      "revId": "e82a0b6ea14864ac7fad4d11ca7490a4332cdeda",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "005e00b2_3ae1a754",
+        "filename": "third_party/sqlite/patches/0003-Modify-default-VFS-to-support-WebDatabase.patch",
+        "patchSetId": 4
+      },
+      "lineNbr": 66,
+      "author": {
+        "id": 1115884
+      },
+      "writtenOn": "2017-11-08T00:20:24Z",
+      "side": 1,
+      "message": "pPreallocatedUnused in comment?",
+      "revId": "e82a0b6ea14864ac7fad4d11ca7490a4332cdeda",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1d3c0c06_b2c727f0",
+        "filename": "third_party/sqlite/patches/0003-Modify-default-VFS-to-support-WebDatabase.patch",
+        "patchSetId": 4
+      },
+      "lineNbr": 97,
+      "author": {
+        "id": 1115884
+      },
+      "writtenOn": "2017-11-08T00:20:24Z",
+      "side": 1,
+      "message": "Are these \"pUnused\" also be changed to \"pPreallocatedUnused\"? The unixFile struct doesn\u0027t have a pUnused member anymore.",
+      "revId": "e82a0b6ea14864ac7fad4d11ca7490a4332cdeda",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f68fc887_f7f3ff8f",
+        "filename": "third_party/sqlite/src/src/os_unix.c",
+        "patchSetId": 4
+      },
+      "lineNbr": 5923,
+      "author": {
+        "id": 1115884
+      },
+      "writtenOn": "2017-11-08T00:20:24Z",
+      "side": 1,
+      "message": "Was dropping the comment intentional?",
+      "revId": "e82a0b6ea14864ac7fad4d11ca7490a4332cdeda",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
