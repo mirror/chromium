@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "582fbfbd_bac20670",
+        "filename": "ash/display/display_move_window_util.cc",
+        "patchSetId": 12
+      },
+      "lineNbr": 98,
+      "author": {
+        "id": 1147616
+      },
+      "writtenOn": "2017-11-08T20:14:01Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "4591cc98_f2a2d719",
+      "range": {
+        "startLine": 98,
+        "startChar": 55,
+        "endLine": 98,
+        "endChar": 57
+      },
+      "revId": "c153f63bda96652a73703575d488c795efa0fba2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "e9d4c12b_1c139f29",
         "filename": "ash/display/display_move_window_util.cc",
         "patchSetId": 12
@@ -48,6 +72,30 @@
     },
     {
       "key": {
+        "uuid": "e67f097c_f7338a9e",
+        "filename": "ash/display/display_move_window_util.cc",
+        "patchSetId": 12
+      },
+      "lineNbr": 128,
+      "author": {
+        "id": 1147616
+      },
+      "writtenOn": "2017-11-08T20:14:01Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "e9d4c12b_1c139f29",
+      "range": {
+        "startLine": 124,
+        "startChar": 12,
+        "endLine": 128,
+        "endChar": 26
+      },
+      "revId": "c153f63bda96652a73703575d488c795efa0fba2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "439db0c2_e3944529",
         "filename": "ash/display/display_move_window_util_unittest.cc",
         "patchSetId": 12
@@ -59,6 +107,30 @@
       "writtenOn": "2017-11-08T19:17:36Z",
       "side": 1,
       "message": "Is there a reason not to use AshTestBase::CreateTestWindowInShellWithBounds();?",
+      "range": {
+        "startLine": 35,
+        "startChar": 0,
+        "endLine": 37,
+        "endChar": 50
+      },
+      "revId": "c153f63bda96652a73703575d488c795efa0fba2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "61cb0cd4_ed3e7eba",
+        "filename": "ash/display/display_move_window_util_unittest.cc",
+        "patchSetId": 12
+      },
+      "lineNbr": 37,
+      "author": {
+        "id": 1147616
+      },
+      "writtenOn": "2017-11-08T20:14:01Z",
+      "side": 1,
+      "message": "We can do that. Thanks!\n\nWe need two setups: (1) parent to primary root window, (2) ActivateWindow. Looks like (1) is satisfied as far as the given bounds are in primary root window.",
+      "parentUuid": "439db0c2_e3944529",
       "range": {
         "startLine": 35,
         "startChar": 0,
@@ -91,6 +163,30 @@
       "revId": "c153f63bda96652a73703575d488c795efa0fba2",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "cf0e8603_3734c27a",
+        "filename": "ash/display/display_move_window_util_unittest.cc",
+        "patchSetId": 12
+      },
+      "lineNbr": 43,
+      "author": {
+        "id": 1147616
+      },
+      "writtenOn": "2017-11-08T20:14:01Z",
+      "side": 1,
+      "message": "done",
+      "parentUuid": "4d4ddb07_d11b0089",
+      "range": {
+        "startLine": 43,
+        "startChar": 2,
+        "endLine": 43,
+        "endChar": 52
+      },
+      "revId": "c153f63bda96652a73703575d488c795efa0fba2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
