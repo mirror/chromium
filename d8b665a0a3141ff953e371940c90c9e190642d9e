@@ -209,6 +209,30 @@
     },
     {
       "key": {
+        "uuid": "84a585c8_45c85233",
+        "filename": "tools/metrics/histograms/histograms.xml",
+        "patchSetId": 11
+      },
+      "lineNbr": 17501,
+      "author": {
+        "id": 1001352
+      },
+      "writtenOn": "2017-11-08T18:21:43Z",
+      "side": 1,
+      "message": "Oh, thanks. I was not aware of that. I looked for a something usable in histograms.xml instead, and didn\u0027t found anything (through LanguageUsage.ApplicationLanguage seems good, I\u0027m really interested in the Locale here). I\u0027ve removed this, which simplifies the code considerably :)",
+      "parentUuid": "1f77099d_8f068200",
+      "range": {
+        "startLine": 17501,
+        "startChar": 50,
+        "endLine": 17501,
+        "endChar": 0
+      },
+      "revId": "d8b665a0a3141ff953e371940c90c9e190642d9e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "dac96f49_74be4a1f",
         "filename": "tools/metrics/histograms/histograms.xml",
         "patchSetId": 11
@@ -232,6 +256,30 @@
     },
     {
       "key": {
+        "uuid": "06bfb310_9ba3ec42",
+        "filename": "tools/metrics/histograms/histograms.xml",
+        "patchSetId": 11
+      },
+      "lineNbr": 17524,
+      "author": {
+        "id": 1001352
+      },
+      "writtenOn": "2017-11-08T18:21:43Z",
+      "side": 1,
+      "message": "Didn\u0027t realize you could use an enumeration without listing all possible values. Done!",
+      "parentUuid": "dac96f49_74be4a1f",
+      "range": {
+        "startLine": 17524,
+        "startChar": 37,
+        "endLine": 17524,
+        "endChar": 51
+      },
+      "revId": "d8b665a0a3141ff953e371940c90c9e190642d9e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "7c32a0c9_f92743c3",
         "filename": "tools/metrics/histograms/histograms.xml",
         "patchSetId": 11
@@ -243,6 +291,30 @@
       "writtenOn": "2017-11-06T16:06:21Z",
       "side": 1,
       "message": "This description does not mention when this is logged. Is it once on startup? Is it periodically? Does it capture the SIM card changing at runtime (i.e. user ejects and inserts a new card). What happens on phones that have multiple SIM cards?",
+      "range": {
+        "startLine": 17528,
+        "startChar": 57,
+        "endLine": 17528,
+        "endChar": 0
+      },
+      "revId": "d8b665a0a3141ff953e371940c90c9e190642d9e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b9ed233b_da76470f",
+        "filename": "tools/metrics/histograms/histograms.xml",
+        "patchSetId": 11
+      },
+      "lineNbr": 17528,
+      "author": {
+        "id": 1001352
+      },
+      "writtenOn": "2017-11-08T18:21:43Z",
+      "side": 1,
+      "message": "I\u0027ve updated the text (it is recorded on each startup, and we only care about the SIM card in use at that time).",
+      "parentUuid": "7c32a0c9_f92743c3",
       "range": {
         "startLine": 17528,
         "startChar": 57,
