@@ -912,7 +912,9 @@ double WebMediaPlayerImpl::CurrentTime() const {
   // TODO(scherkus): Replace with an explicit ended signal to HTMLMediaElement,
   // see http://crbug.com/409280
   // Note: Duration() may be infinity.
-  return ended_ ? Duration() : GetCurrentTimeInternal().InSecondsF();
+  return (ended_ && !std::isinf(Duration()))
+             ? Duration()
+             : GetCurrentTimeInternal().InSecondsF();
 }
 
 WebMediaPlayer::NetworkState WebMediaPlayerImpl::GetNetworkState() const {
@@ -1445,6 +1447,7 @@ void WebMediaPlayerImpl::OnEnded() {
   TRACE_EVENT1("media", "WebMediaPlayerImpl::OnEnded", "duration", Duration());
   DVLOG(1) << __func__;
   DCHECK(main_task_runner_->BelongsToCurrentThread());
+  DCHECK(!std::isinf(Duration()));
 
   // Ignore state changes until we've completed all outstanding operations.
   if (!pipeline_controller_.IsStable())
