@@ -1,0 +1,12 @@
+<html>
+<body>
+  <script>
+    if (!localStorage.getItem('flag')) {
+      localStorage.setItem('flag', true);
+      var frame = document.createElement('iframe');
+      frame.src = 'simple_page_1.html';
+      document.body.appendChild(frame);
+    }
+  </script>
+</body>
+</html>
