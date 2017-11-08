@@ -1,0 +1,142 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "120e1ff9_f93680f2",
+        "filename": "chrome/browser/ssl/chrome_expect_ct_reporter.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 235,
+      "author": {
+        "id": 1002611
+      },
+      "writtenOn": "2017-11-08T19:58:22Z",
+      "side": 1,
+      "message": "Unretaind (spelling)",
+      "range": {
+        "startLine": 235,
+        "startChar": 36,
+        "endLine": 235,
+        "endChar": 46
+      },
+      "revId": "56de77c9e8fc97cc79c14beec0bc0629346266ff",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "45b348e1_a949a739",
+        "filename": "chrome/browser/ssl/chrome_expect_ct_reporter.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 50,
+      "author": {
+        "id": 1002611
+      },
+      "writtenOn": "2017-11-08T19:58:22Z",
+      "side": 1,
+      "message": "How about moving callbacks to OnExpectCTFailed() as parameters? It\u0027s only called from one place in production code, and tests can just pass empty callbacks.\n\nAlternatively, pass it to the constructor. It doesn\u0027t look like it\u0027s changed once it\u0027s set.",
+      "range": {
+        "startLine": 50,
+        "startChar": 67,
+        "endLine": 50,
+        "endChar": 0
+      },
+      "revId": "56de77c9e8fc97cc79c14beec0bc0629346266ff",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d70e1eaf_b1d6bcdf",
+        "filename": "chrome/browser/ssl/chrome_expect_ct_reporter_unittest.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 661,
+      "author": {
+        "id": 1002611
+      },
+      "writtenOn": "2017-11-08T19:58:22Z",
+      "side": 1,
+      "message": "nit: Inline?",
+      "range": {
+        "startLine": 661,
+        "startChar": 13,
+        "endLine": 661,
+        "endChar": 16
+      },
+      "revId": "56de77c9e8fc97cc79c14beec0bc0629346266ff",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "59a05ec1_d8c119b8",
+        "filename": "chrome/browser/ssl/chrome_expect_ct_reporter_unittest.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 664,
+      "author": {
+        "id": 1002611
+      },
+      "writtenOn": "2017-11-08T19:58:22Z",
+      "side": 1,
+      "message": "If the value of the log ID doesn\u0027t matter, would it make sense to change it to something that looks more like a test value? e.g. 0x00, 0x01, 0x02 ...",
+      "range": {
+        "startLine": 664,
+        "startChar": 20,
+        "endLine": 664,
+        "endChar": 0
+      },
+      "revId": "56de77c9e8fc97cc79c14beec0bc0629346266ff",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "754eda54_8983c306",
+        "filename": "chrome/browser/ui/webui/net_internals/net_internals_ui.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 389,
+      "author": {
+        "id": 1002611
+      },
+      "writtenOn": "2017-11-08T19:58:22Z",
+      "side": 1,
+      "message": "Is there any reason not to make this a local var?",
+      "range": {
+        "startLine": 389,
+        "startChar": 62,
+        "endLine": 389,
+        "endChar": 0
+      },
+      "revId": "56de77c9e8fc97cc79c14beec0bc0629346266ff",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f32392a9_083f2ff2",
+        "filename": "chrome/browser/ui/webui/net_internals/net_internals_ui_browsertest.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 361,
+      "author": {
+        "id": 1002611
+      },
+      "writtenOn": "2017-11-08T19:58:22Z",
+      "side": 1,
+      "message": "It\u0027s not clear to me why the rest of the code uses this style. Why not \n\nbase::Value report_uri_value(net_internals_test_-\u003eembedded_test_server()-\u003eGetURL(\"/\").spec())?\n\nOr, RunJavascriptCallback could just take a const base::Value\u0026.",
+      "range": {
+        "startLine": 361,
+        "startChar": 31,
+        "endLine": 361,
+        "endChar": 47
+      },
+      "revId": "56de77c9e8fc97cc79c14beec0bc0629346266ff",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
