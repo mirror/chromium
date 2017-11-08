@@ -33,6 +33,24 @@
       "revId": "933a35aab244654a5e3df46956bbee9bfb5ce2f2",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "44b83d76_61f32b66",
+        "filename": "content/browser/gpu/gpu_process_host.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 120,
+      "author": {
+        "id": 1128439
+      },
+      "writtenOn": "2017-11-08T00:28:13Z",
+      "side": 1,
+      "message": "\u003e nit: maybe do this in kGLSwitchesCopiedFromGpuProcessHost in ui/gl/gl_switches.cc for consistency?\n\nDone.\n\n\u003e nit: Can you also add the kEnableDirectComposition flag to this list?\n\nThere is no such flag (it\u0027s on by default). The related flag kEnableDirectCompositionLayers is already copied over.",
+      "parentUuid": "4e86a684_158c1d0b",
+      "revId": "933a35aab244654a5e3df46956bbee9bfb5ce2f2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
