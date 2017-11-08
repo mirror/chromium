@@ -52,6 +52,24 @@
       "revId": "45ec2068b6aa666983fcd184b8441f1fa5c95df2",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "0bcf2425_841d5f6a",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/download/SystemDownloadNotifier.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 124,
+      "author": {
+        "id": 1226039
+      },
+      "writtenOn": "2017-11-08T16:49:50Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "ff90d6f3_6ed92fa5",
+      "revId": "45ec2068b6aa666983fcd184b8441f1fa5c95df2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
