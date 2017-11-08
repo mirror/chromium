@@ -27,6 +27,7 @@
 #include "ipc/ipc_test_sink.h"
 #include "mojo/public/cpp/bindings/associated_binding.h"
 #include "net/http/http_response_info.h"
+#include "third_party/WebKit/public/platform/modules/serviceworker/service_worker.mojom.h"
 #include "url/gurl.h"
 
 class GURL;
@@ -83,6 +84,7 @@ class EmbeddedWorkerTestHelper : public IPC::Sender,
         mojom::ServiceWorkerEventDispatcherRequest dispatcher_request,
         mojom::ControllerServiceWorkerRequest controller_request,
         mojom::ServiceWorkerInstalledScriptsInfoPtr installed_scripts_info,
+        blink::mojom::ServiceWorkerHostAssociatedPtrInfo service_worker_host,
         mojom::EmbeddedWorkerInstanceHostAssociatedPtrInfo instance_host,
         mojom::ServiceWorkerProviderInfoForStartWorkerPtr provider_info,
         blink::mojom::WorkerContentSettingsProxyPtr content_settings_proxy)

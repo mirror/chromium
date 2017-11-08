@@ -479,6 +479,7 @@ void EmbeddedWorkerInstance::Start(
     mojom::ServiceWorkerEventDispatcherRequest dispatcher_request,
     mojom::ControllerServiceWorkerRequest controller_request,
     mojom::ServiceWorkerInstalledScriptsInfoPtr installed_scripts_info,
+    blink::mojom::ServiceWorkerHostAssociatedPtrInfo sw_host_ptr_info,
     StatusCallback callback) {
   restart_count_++;
   if (!context_) {
@@ -514,7 +515,7 @@ void EmbeddedWorkerInstance::Start(
   pending_dispatcher_request_ = std::move(dispatcher_request);
   pending_controller_request_ = std::move(controller_request);
   pending_installed_scripts_info_ = std::move(installed_scripts_info);
-
+  pending_sw_host_ptr_info_ = std::move(sw_host_ptr_info);
   inflight_start_task_.reset(
       new StartTask(this, params->script_url, std::move(request)));
   inflight_start_task_->Start(std::move(params), std::move(callback));
@@ -645,6 +646,7 @@ ServiceWorkerStatusCode EmbeddedWorkerInstance::SendStartWorker(
   }
   DCHECK(pending_dispatcher_request_.is_pending());
   DCHECK(pending_controller_request_.is_pending());
+  DCHECK(pending_sw_host_ptr_info_.is_valid());
 
   DCHECK(!instance_host_binding_.is_bound());
   mojom::EmbeddedWorkerInstanceHostAssociatedPtrInfo host_ptr_info;
@@ -662,6 +664,7 @@ ServiceWorkerStatusCode EmbeddedWorkerInstance::SendStartWorker(
   client_->StartWorker(*params, std::move(pending_dispatcher_request_),
                        std::move(pending_controller_request_),
                        std::move(pending_installed_scripts_info_),
+                       std::move(pending_sw_host_ptr_info_),
                        std::move(host_ptr_info), std::move(provider_info),
                        std::move(content_settings_proxy_ptr_info));
   registry_->BindWorkerToProcess(process_id(), embedded_worker_id());

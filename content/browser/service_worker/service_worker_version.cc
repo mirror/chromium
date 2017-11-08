@@ -287,6 +287,7 @@ ServiceWorkerVersion::ServiceWorkerVersion(
       scope_(registration->pattern()),
       fetch_handler_existence_(FetchHandlerExistence::UNKNOWN),
       site_for_uma_(ServiceWorkerMetrics::SiteFromURL(scope_)),
+      binding_(this),
       context_(context),
       script_cache_map_(this, context),
       tick_clock_(std::make_unique<base::DefaultTickClock>()),
@@ -991,8 +992,6 @@ bool ServiceWorkerVersion::OnMessageReceived(const IPC::Message& message) {
     IPC_MESSAGE_HANDLER(ServiceWorkerHostMsg_OpenNewPopup, OnOpenNewPopup)
     IPC_MESSAGE_HANDLER(ServiceWorkerHostMsg_SetCachedMetadata,
                         OnSetCachedMetadata)
-    IPC_MESSAGE_HANDLER(ServiceWorkerHostMsg_ClearCachedMetadata,
-                        OnClearCachedMetadata)
     IPC_MESSAGE_HANDLER(ServiceWorkerHostMsg_PostMessageToClient,
                         OnPostMessageToClient)
     IPC_MESSAGE_HANDLER(ServiceWorkerHostMsg_FocusClient,
@@ -1208,10 +1207,10 @@ void ServiceWorkerVersion::OnSetCachedMetadataFinished(int64_t callback_id,
     observer.OnCachedMetadataUpdated(this);
 }
 
-void ServiceWorkerVersion::OnClearCachedMetadata(const GURL& url) {
+void ServiceWorkerVersion::ClearCachedMetadata(const GURL& url) {
   int64_t callback_id = tick_clock_->NowTicks().ToInternalValue();
   TRACE_EVENT_ASYNC_BEGIN1("ServiceWorker",
-                           "ServiceWorkerVersion::OnClearCachedMetadata",
+                           "ServiceWorkerVersion::ClearCachedMetadata",
                            callback_id, "URL", url.spec());
   script_cache_map_.ClearMetadata(
       url, base::Bind(&ServiceWorkerVersion::OnClearCachedMetadataFinished,
@@ -1221,7 +1220,7 @@ void ServiceWorkerVersion::OnClearCachedMetadata(const GURL& url) {
 void ServiceWorkerVersion::OnClearCachedMetadataFinished(int64_t callback_id,
                                                          int result) {
   TRACE_EVENT_ASYNC_END1("ServiceWorker",
-                         "ServiceWorkerVersion::OnClearCachedMetadata",
+                         "ServiceWorkerVersion::ClearCachedMetadata",
                          callback_id, "result", result);
   for (auto& observer : listeners_)
     observer.OnCachedMetadataUpdated(this);
@@ -1559,6 +1558,10 @@ void ServiceWorkerVersion::StartWorkerInternal() {
   CHECK(event_dispatcher_.is_bound());
   CHECK(event_dispatcher_request.is_pending());
 
+  blink::mojom::ServiceWorkerHostAssociatedPtrInfo sw_host_ptr_info;
+  binding_.Close();
+  binding_.Bind(mojo::MakeRequest(&sw_host_ptr_info));
+
   embedded_worker_->Start(
       std::move(params),
       // Unretained is used here because the callback will be owned by
@@ -1567,6 +1570,7 @@ void ServiceWorkerVersion::StartWorkerInternal() {
                      std::move(pending_provider_host), context()),
       mojo::MakeRequest(&event_dispatcher_),
       mojo::MakeRequest(&controller_ptr_), std::move(installed_scripts_info),
+      std::move(sw_host_ptr_info),
       base::BindOnce(&ServiceWorkerVersion::OnStartSentAndScriptEvaluated,
                      weak_factory_.GetWeakPtr()));
   event_dispatcher_.set_connection_error_handler(base::BindOnce(
@@ -1645,6 +1649,7 @@ void ServiceWorkerVersion::OnTimeoutTimer() {
     scoped_refptr<ServiceWorkerVersion> protect_this(this);
     embedded_worker_->RemoveListener(this);
     embedded_worker_->Detach();
+    binding_.Close();
     embedded_worker_ = context_->embedded_worker_registry()->CreateWorker();
     embedded_worker_->AddListener(this);
 
