@@ -42,14 +42,30 @@
 namespace blink {
 
 ScriptResource* ScriptResource::Fetch(FetchParameters& params,
-                                      ResourceFetcher* fetcher) {
+                                      ResourceFetcher* fetcher,
+                                      ResourceClient* client) {
   DCHECK_EQ(params.GetResourceRequest().GetFrameType(),
             WebURLRequest::kFrameTypeNone);
   params.SetRequestContext(WebURLRequest::kRequestContextScript);
   ScriptResource* resource = ToScriptResource(
-      fetcher->RequestResource(params, ScriptResourceFactory()));
+      fetcher->RequestResource(params, client, ScriptResourceFactory()));
   if (resource && !params.IntegrityMetadata().IsEmpty())
     resource->SetIntegrityMetadata(params.IntegrityMetadata());
+  return resource;
+}
+
+ScriptResource* ScriptResource::CreateForTest(const KURL& url,
+                                              const WTF::TextEncoding& encoding,
+                                              ResourceClient* client) {
+  ResourceRequest request(url);
+  request.SetFetchCredentialsMode(network::mojom::FetchCredentialsMode::kOmit);
+  ResourceLoaderOptions options;
+  TextResourceDecoderOptions decoder_options(
+      TextResourceDecoderOptions::kPlainTextContent, encoding);
+  ScriptResource* resource =
+      new ScriptResource(request, options, decoder_options);
+  if (client)
+    resource->AddClient(client, nullptr);
   return resource;
 }
 

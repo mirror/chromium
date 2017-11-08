@@ -1165,12 +1165,12 @@ void DocumentThreadableLoader::LoadRequestAsync(
   ResourceFetcher* fetcher = loading_context_->GetResourceFetcher();
   if (request.GetRequestContext() == WebURLRequest::kRequestContextVideo ||
       request.GetRequestContext() == WebURLRequest::kRequestContextAudio)
-    SetResource(RawResource::FetchMedia(new_params, fetcher));
+    SetResource(RawResource::FetchMedia(new_params, fetcher, this));
   else if (request.GetRequestContext() ==
            WebURLRequest::kRequestContextManifest)
-    SetResource(RawResource::FetchManifest(new_params, fetcher));
+    SetResource(RawResource::FetchManifest(new_params, fetcher, this));
   else
-    SetResource(RawResource::Fetch(new_params, fetcher));
+    SetResource(RawResource::Fetch(new_params, fetcher, this));
 
   if (!GetResource()) {
     probe::documentThreadableLoaderFailedToStartLoadingForClient(
@@ -1318,6 +1318,21 @@ bool DocumentThreadableLoader::IsAllowedRedirect(
     return true;
 
   return !cors_flag_ && GetSecurityOrigin()->CanRequest(url);
+}
+
+void DocumentThreadableLoader::SetResource(RawResource* new_resource) {
+  if (new_resource == resource_)
+    return;
+
+  if (RawResource* old_resource = resource_.Release()) {
+    checker_.WillRemoveClient();
+    old_resource->RemoveClient(this);
+  }
+
+  if (new_resource) {
+    resource_ = new_resource;
+    checker_.WillAddClient();
+  }
 }
 
 SecurityOrigin* DocumentThreadableLoader::GetSecurityOrigin() const {
