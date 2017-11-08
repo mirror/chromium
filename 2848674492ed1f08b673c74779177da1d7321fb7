@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "b20045b3_01accea7",
+        "filename": "third_party/WebKit/Source/modules/canvas/canvas2d/CanvasRenderingContext2DState.cpp",
+        "patchSetId": 2
+      },
+      "lineNbr": 255,
+      "author": {
+        "id": 1115939
+      },
+      "writtenOn": "2017-11-08T22:05:24Z",
+      "side": 1,
+      "message": "this is not the right behavior.  Assignment is supposed to abort (keep the previous value) when attempting to assign an invalid value.  All canvas context attributes behave this way.",
+      "range": {
+        "startLine": 255,
+        "startChar": 18,
+        "endLine": 255,
+        "endChar": 29
+      },
+      "revId": "2848674492ed1f08b673c74779177da1d7321fb7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
