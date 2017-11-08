@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "bd760ad4_dae19e1b",
+        "filename": "content/browser/file_url_loader_factory.cc",
+        "patchSetId": 12
+      },
+      "lineNbr": 344,
+      "author": {
+        "id": 1002808
+      },
+      "writtenOn": "2017-11-08T04:08:29Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "9048aa81_01026ae9",
+      "revId": "fdbe21469f4a8f9cf72895fc567106b409a57fd3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "8225faa4_aed192df",
         "filename": "content/browser/loader/navigation_url_loader_network_service.cc",
         "patchSetId": 12
@@ -30,6 +48,24 @@
       "writtenOn": "2017-11-08T03:26:57Z",
       "side": 1,
       "message": "Is it infeasible to fix this? Null for testing always makes me sad.",
+      "revId": "fdbe21469f4a8f9cf72895fc567106b409a57fd3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3d91dd52_354da9b5",
+        "filename": "content/browser/loader/navigation_url_loader_network_service.cc",
+        "patchSetId": 12
+      },
+      "lineNbr": 630,
+      "author": {
+        "id": 1002808
+      },
+      "writtenOn": "2017-11-08T04:08:29Z",
+      "side": 1,
+      "message": "I agree re sadness. It\u0027s really only a specific test fixture (NavigationURLLoaderNetworkServiceTest). This is used in content_unittests though, and I was unable to find a simple convenient way of bringing up a frame tree + node + RFH. It kind of seemed like overkill to attempt to do that in this CL.",
+      "parentUuid": "8225faa4_aed192df",
       "revId": "fdbe21469f4a8f9cf72895fc567106b409a57fd3",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -53,6 +89,24 @@
     },
     {
       "key": {
+        "uuid": "bf20d824_054fe780",
+        "filename": "extensions/browser/extension_protocols.cc",
+        "patchSetId": 12
+      },
+      "lineNbr": 455,
+      "author": {
+        "id": 1002808
+      },
+      "writtenOn": "2017-11-08T04:08:29Z",
+      "side": 1,
+      "message": "Seems reasonable. Done.",
+      "parentUuid": "73754ee8_a0983a99",
+      "revId": "fdbe21469f4a8f9cf72895fc567106b409a57fd3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "ad8c181d_44682aad",
         "filename": "extensions/browser/extension_protocols.cc",
         "patchSetId": 12
@@ -70,6 +124,24 @@
     },
     {
       "key": {
+        "uuid": "6f3a839a_ef504905",
+        "filename": "extensions/browser/extension_protocols.cc",
+        "patchSetId": 12
+      },
+      "lineNbr": 883,
+      "author": {
+        "id": 1002808
+      },
+      "writtenOn": "2017-11-08T04:08:29Z",
+      "side": 1,
+      "message": "Correct - It\u0027s not really a \"maybe\" yet, but I wanted to capture the intent in the name.",
+      "parentUuid": "ad8c181d_44682aad",
+      "revId": "fdbe21469f4a8f9cf72895fc567106b409a57fd3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "917cc29c_22346300",
         "filename": "extensions/browser/extension_protocols.cc",
         "patchSetId": 12
@@ -84,6 +156,24 @@
       "revId": "fdbe21469f4a8f9cf72895fc567106b409a57fd3",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "56e1d2fc_68e2e5a6",
+        "filename": "extensions/browser/extension_protocols.cc",
+        "patchSetId": 12
+      },
+      "lineNbr": 894,
+      "author": {
+        "id": 1002808
+      },
+      "writtenOn": "2017-11-08T04:08:29Z",
+      "side": 1,
+      "message": "Right, for now those decisions are all relegated to the internals of ExtensionURLLoaderFactory, mimicking the logic of the existing protocol handler. We give all frames one of these loaders indiscriminately, so there are no problems with web accessible resources here.\n\nIn the future we might make the effort to deduce up-front the total viable set of extensions which may be accessed by a given frame URL based on installed extensions in the profile and their content scripts, permissions, web accessible resources, etc.",
+      "parentUuid": "917cc29c_22346300",
+      "revId": "fdbe21469f4a8f9cf72895fc567106b409a57fd3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
