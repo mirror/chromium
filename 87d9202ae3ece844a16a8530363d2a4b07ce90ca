@@ -120,6 +120,30 @@
     },
     {
       "key": {
+        "uuid": "002cf2f1_76a9a32e",
+        "filename": "ios/web/public/download/download_controller.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 102,
+      "author": {
+        "id": 1123009
+      },
+      "writtenOn": "2017-11-08T23:08:54Z",
+      "side": 1,
+      "message": "Thanks! Updated the comment.",
+      "parentUuid": "f6a5fbf0_05583f7f",
+      "range": {
+        "startLine": 102,
+        "startChar": 24,
+        "endLine": 102,
+        "endChar": 42
+      },
+      "revId": "87d9202ae3ece844a16a8530363d2a4b07ce90ca",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "d7ccbc38_2c69ef07",
         "filename": "ios/web/public/download/download_task_observer.h",
         "patchSetId": 6
