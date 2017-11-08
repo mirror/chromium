@@ -735,6 +735,9 @@ bool PasswordAutofillAgent::FillSuggestion(
 
   password_element.SetAutofillValue(blink::WebString::FromUTF16(password));
   password_element.SetAutofilled(true);
+  LOG(ERROR) << "FillSuggestion " << password_element.NameForAutofill().Utf8();
+  password_element.SetShouldRevealPassword(false);
+  LOG(ERROR) << "check " << password_element.ShouldRevealPassword();
   UpdateFieldValueAndPropertiesMaskMap(password_element, &password,
                                        FieldPropertiesFlags::AUTOFILLED,
                                        &field_value_and_properties_map_);
@@ -1565,6 +1568,11 @@ void PasswordAutofillAgent::FocusedNodeHasChanged(const blink::WebNode& node) {
     return;
   const blink::WebFormControlElement control_element =
       web_element.ToConst<blink::WebFormControlElement>();
+
+  const blink::WebInputElement* input = ToWebInputElement(&control_element);
+  if (input && !input->IsNull())
+    LOG(ERROR) << "focus " << input->NameForAutofill().Utf8() << " "
+               << input->ShouldRevealPassword();
   UpdateFieldValueAndPropertiesMaskMap(control_element, nullptr,
                                        FieldPropertiesFlags::HAD_FOCUS,
                                        &field_value_and_properties_map_);
@@ -1823,6 +1831,8 @@ bool PasswordAutofillAgent::FillUserNameAndPassword(
   registration_callback.Run(password_element);
 
   password_element->SetAutofilled(true);
+  LOG(ERROR) << "FillUserNameAndPassword ";
+  password_element->SetShouldRevealPassword(false);
   if (logger)
     logger->LogElementName(Logger::STRING_PASSWORD_FILLED, *password_element);
   return true;

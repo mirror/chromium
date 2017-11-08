@@ -1511,9 +1511,15 @@ void RenderViewContextMenu::AppendPasswordItems() {
                                       IDS_CONTENT_CONTEXT_FORCESAVEPASSWORD);
       add_separator = true;
     }
+    LOG(ERROR)
+        << "ManualPasswordGenerationEnabled "
+        << password_manager_util::ManualPasswordGenerationEnabled(
+               ProfileSyncServiceFactory::GetSyncServiceForBrowserContext(
+                   browser_context_));
     if (password_manager_util::ManualPasswordGenerationEnabled(
             ProfileSyncServiceFactory::GetSyncServiceForBrowserContext(
                 browser_context_))) {
+      LOG(ERROR) << "option was added";
       menu_model_.AddItemWithStringId(IDC_CONTENT_CONTEXT_GENERATEPASSWORD,
                                       IDS_CONTENT_CONTEXT_GENERATEPASSWORD);
       add_separator = true;

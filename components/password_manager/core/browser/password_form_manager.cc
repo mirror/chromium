@@ -499,6 +499,7 @@ void PasswordFormManager::PresaveGeneratedPassword(
   if (has_generated_password_) {
     generated_password_changed_ = true;
   } else {
+    LOG(ERROR) << "presave true";
     SetHasGeneratedPassword(true);
     generated_password_changed_ = false;
   }
@@ -507,6 +508,7 @@ void PasswordFormManager::PresaveGeneratedPassword(
 void PasswordFormManager::PasswordNoLongerGenerated() {
   DCHECK(has_generated_password_);
   form_saver()->RemovePresavedPassword();
+  LOG(ERROR) << "cleared false";
   SetHasGeneratedPassword(false);
   generated_password_changed_ = false;
 }
@@ -1369,6 +1371,7 @@ void PasswordFormManager::OnNoInteraction(bool is_update) {
 }
 
 void PasswordFormManager::SetHasGeneratedPassword(bool generated_password) {
+  LOG(ERROR) << "::set " << generated_password;
   has_generated_password_ = generated_password;
   metrics_recorder_->SetHasGeneratedPassword(generated_password);
 }
