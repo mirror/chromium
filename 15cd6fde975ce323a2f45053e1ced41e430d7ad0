@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "07c8c3af_eecaae1b",
+        "filename": "chrome/browser/metrics/process_memory_metrics_emitter_unittest.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 195,
+      "author": {
+        "id": 1242479
+      },
+      "writtenOn": "2017-11-08T18:53:50Z",
+      "side": 1,
+      "message": "Adding this to the metric map doesn\u0027t actually make sense because we\u0027re not reporting metrics so removed for now.",
+      "parentUuid": "a3118e19_ab65ab75",
+      "revId": "15cd6fde975ce323a2f45053e1ced41e430d7ad0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "6fc4c31a_e9921354",
         "filename": "services/resource_coordinator/memory_instrumentation/graph_processor.h",
         "patchSetId": 5
@@ -33,6 +51,24 @@
       "revId": "15cd6fde975ce323a2f45053e1ced41e430d7ad0",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "629ff358_a880ef23",
+        "filename": "services/resource_coordinator/memory_instrumentation/graph_processor.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 19,
+      "author": {
+        "id": 1242479
+      },
+      "writtenOn": "2017-11-08T18:53:50Z",
+      "side": 1,
+      "message": "Added comment.",
+      "parentUuid": "6fc4c31a_e9921354",
+      "revId": "15cd6fde975ce323a2f45053e1ced41e430d7ad0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -53,6 +89,24 @@
     },
     {
       "key": {
+        "uuid": "e8215bf7_3af47cb4",
+        "filename": "services/resource_coordinator/memory_instrumentation/queued_request_dispatcher.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 192,
+      "author": {
+        "id": 1242479
+      },
+      "writtenOn": "2017-11-08T18:53:50Z",
+      "side": 1,
+      "message": "Added a comment.",
+      "parentUuid": "f9fdcc55_fce62004",
+      "revId": "15cd6fde975ce323a2f45053e1ced41e430d7ad0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "9768c0be_34b32975",
         "filename": "services/resource_coordinator/memory_instrumentation/queued_request_dispatcher.cc",
         "patchSetId": 5
@@ -67,6 +121,24 @@
       "revId": "15cd6fde975ce323a2f45053e1ced41e430d7ad0",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e08a32d8_c9fbe846",
+        "filename": "services/resource_coordinator/memory_instrumentation/queued_request_dispatcher.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 240,
+      "author": {
+        "id": 1242479
+      },
+      "writtenOn": "2017-11-08T18:53:50Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "9768c0be_34b32975",
+      "revId": "15cd6fde975ce323a2f45053e1ced41e430d7ad0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -87,6 +159,24 @@
     },
     {
       "key": {
+        "uuid": "1ab19750_5fb28d96",
+        "filename": "services/resource_coordinator/memory_instrumentation/queued_request_dispatcher.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 248,
+      "author": {
+        "id": 1242479
+      },
+      "writtenOn": "2017-11-08T18:53:50Z",
+      "side": 1,
+      "message": "Added a comment.",
+      "parentUuid": "ba0a0d91_771627ae",
+      "revId": "15cd6fde975ce323a2f45053e1ced41e430d7ad0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "ed42d818_cf5c00a3",
         "filename": "services/resource_coordinator/public/interfaces/memory_instrumentation/memory_instrumentation.mojom",
         "patchSetId": 5
@@ -98,6 +188,24 @@
       "writtenOn": "2017-11-08T16:49:49Z",
       "side": 1,
       "message": "Can you point to the code that does this computation? It\u0027s not clear to me how we can calculate resident or swapped shared memory on some OSes, like macOS.",
+      "revId": "15cd6fde975ce323a2f45053e1ced41e430d7ad0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f06c4616_9ba9f0ae",
+        "filename": "services/resource_coordinator/public/interfaces/memory_instrumentation/memory_instrumentation.mojom",
+        "patchSetId": 5
+      },
+      "lineNbr": 159,
+      "author": {
+        "id": 1242479
+      },
+      "writtenOn": "2017-11-08T18:53:50Z",
+      "side": 1,
+      "message": "Updated comment as discussed offline. Is this one more correct?",
+      "parentUuid": "ed42d818_cf5c00a3",
       "revId": "15cd6fde975ce323a2f45053e1ced41e430d7ad0",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
