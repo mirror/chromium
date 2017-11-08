@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "64dbac33_b674e8ba",
+        "filename": "components/cronet/ios/test/cronet_metrics_test.mm",
+        "patchSetId": 8
+      },
+      "lineNbr": 10,
+      "author": {
+        "id": 1002889
+      },
+      "writtenOn": "2017-11-08T17:21:38Z",
+      "side": 1,
+      "message": "please remove headers that are not used.",
+      "range": {
+        "startLine": 10,
+        "startChar": 10,
+        "endLine": 10,
+        "endChar": 13
+      },
+      "revId": "fe63f5c37425784ee1b4d1584b3688dc24c4311d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6af6f5b1_1755dc54",
+        "filename": "components/cronet/ios/test/cronet_metrics_test.mm",
+        "patchSetId": 8
+      },
+      "lineNbr": 17,
+      "author": {
+        "id": 1002889
+      },
+      "writtenOn": "2017-11-08T17:21:38Z",
+      "side": 1,
+      "message": "nit: Maybe call it |TestMetricsDelegate| or somesuch?",
+      "range": {
+        "startLine": 17,
+        "startChar": 11,
+        "endLine": 17,
+        "endChar": 26
+      },
+      "revId": "fe63f5c37425784ee1b4d1584b3688dc24c4311d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
