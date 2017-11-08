@@ -147,6 +147,14 @@ class CONTENT_EXPORT RenderFrameHost : public IPC::Listener,
   // Returns the last committed origin of the frame.
   virtual const url::Origin& GetLastCommittedOrigin() = 0;
 
+  // Returns a globally unique ID representing the current Document in this
+  // frame. This changes on every cross-document navigation. This does not
+  // change on document.open or document.write operations, because these do not
+  // generate new Documents in Blink.
+  // TODO(######): This should update on javascript: URLs that replace the
+  // current document.
+  virtual int64_t GetDocumentId() = 0;
+
   // Returns the associated widget's native view.
   virtual gfx::NativeView GetNativeView() = 0;
 
