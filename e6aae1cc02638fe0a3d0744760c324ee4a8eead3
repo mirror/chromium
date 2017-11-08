@@ -212,6 +212,24 @@
       "revId": "e6aae1cc02638fe0a3d0744760c324ee4a8eead3",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a0af89b4_6c82af8d",
+        "filename": "chrome/browser/extensions/bookmark_app_navigation_throttle.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 212,
+      "author": {
+        "id": 1133035
+      },
+      "writtenOn": "2017-11-08T03:38:20Z",
+      "side": 1,
+      "message": "\u003e OK .. hmm.\n\u003e \n\u003e Digging a bit deeper:\n\u003e \n\u003e 1. For navigations from within an app window:\n\u003e - Android seems to check whether the navigation is to a URL in the current app\u0027s scope, and don\u0027t do anything special if it is. That sounds ok.\n\u003e - it could produce some weirdness if there are multiple apps with overlapping scope, but I think that is fine - it is ambiguous what we should do, and this seems the most predictable.\n\u003e \n\u003e 2. For navigations from within a tab:\n\u003e - I wonder if Android\u0027s behaviour is pre-PWAs? It seems to be general external intent handling. Maybe it is to stop things like browsing in the web on youtube.com constantly opening the youtube app. That would get annoying if you were deliberately using youtube in a tab\n\u003e - We probably need something similar for users who have deliberately opened things in tabs ... but this feels like an edge case\n\nInteresting! This was the case the origin check was trying to solve.\n\n\u003e - I think by default we should open apps if there is an app in scope, regardless of origin. E.g. if you are on google search, which doesn\u0027t have an app install, and click on a link to maps, which does, you should be sent to the app.\n\nMaybe we can do something with scopes to address that use case: get the apps that have the current URL in their scope, if the target app is one of those apps then don\u0027t open the app, otherwise open the app. That would avoid making sites that have installed apps unusable in a browser (thinking of youtube where there is a lot of navigations) but handle the case you mention.\n\nSince that is unrelated to bouncing out of scope navigations back to the browser, do you think it\u0027s OK to do in a follow up?",
+      "parentUuid": "304b9d06_8a18f117",
+      "revId": "e6aae1cc02638fe0a3d0744760c324ee4a8eead3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
