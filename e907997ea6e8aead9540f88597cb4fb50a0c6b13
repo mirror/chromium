@@ -2,6 +2,46 @@
   "comments": [
     {
       "key": {
+        "uuid": "68bf87b2_75c7b6ac",
+        "filename": "third_party/WebKit/Source/platform/heap/HeapPage.cpp",
+        "patchSetId": 10
+      },
+      "lineNbr": 576,
+      "author": {
+        "id": 1119605
+      },
+      "writtenOn": "2017-11-08T15:07:14Z",
+      "side": 1,
+      "message": "How about factoring this method out into a VerifyHeap method? We can add verification code similar to V8 later.",
+      "revId": "e907997ea6e8aead9540f88597cb4fb50a0c6b13",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b646a8ba_30382ef5",
+        "filename": "third_party/WebKit/Source/platform/heap/HeapPage.cpp",
+        "patchSetId": 10
+      },
+      "lineNbr": 691,
+      "author": {
+        "id": 1119605
+      },
+      "writtenOn": "2017-11-08T15:07:14Z",
+      "side": 1,
+      "message": "I just saw this one the first time. This method is super expensive. Why does Oilpan need that? - This has nothing todo with this CL :-)",
+      "range": {
+        "startLine": 691,
+        "startChar": 22,
+        "endLine": 691,
+        "endChar": 30
+      },
+      "revId": "e907997ea6e8aead9540f88597cb4fb50a0c6b13",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "f831089b_6823d007",
         "filename": "third_party/WebKit/Source/platform/heap/HeapPage.h",
         "patchSetId": 10
@@ -17,6 +57,92 @@
         "startLine": 458,
         "startChar": 22,
         "endLine": 458,
+        "endChar": 39
+      },
+      "revId": "e907997ea6e8aead9540f88597cb4fb50a0c6b13",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d23368db_1b525d56",
+        "filename": "third_party/WebKit/Source/platform/heap/HeapPage.h",
+        "patchSetId": 10
+      },
+      "lineNbr": 458,
+      "author": {
+        "id": 1119605
+      },
+      "writtenOn": "2017-11-08T15:07:14Z",
+      "side": 1,
+      "message": "Nit: ObjectStartBitmap could have a more generic name.",
+      "range": {
+        "startLine": 458,
+        "startChar": 22,
+        "endLine": 458,
+        "endChar": 39
+      },
+      "revId": "e907997ea6e8aead9540f88597cb4fb50a0c6b13",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3cae8908_9a0995dc",
+        "filename": "third_party/WebKit/Source/platform/heap/HeapPage.h",
+        "patchSetId": 10
+      },
+      "lineNbr": 1072,
+      "author": {
+        "id": 1119605
+      },
+      "writtenOn": "2017-11-08T15:07:14Z",
+      "side": 1,
+      "message": "header_address does not need to be at the object start. It can be any address unless you want to restrict it.",
+      "range": {
+        "startLine": 1072,
+        "startChar": 17,
+        "endLine": 1072,
+        "endChar": 23
+      },
+      "revId": "e907997ea6e8aead9540f88597cb4fb50a0c6b13",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9b9e5929_52d6461d",
+        "filename": "third_party/WebKit/Source/platform/heap/HeapPage.h",
+        "patchSetId": 10
+      },
+      "lineNbr": 1079,
+      "author": {
+        "id": 1119605
+      },
+      "writtenOn": "2017-11-08T15:07:14Z",
+      "side": 1,
+      "message": "How about adding: DCHECK(reinterpret_cast\u003cHeapObjectHeader*\u003e(header_address)-\u003eIsValid()); That should be true here or does it break with compaction?",
+      "revId": "e907997ea6e8aead9540f88597cb4fb50a0c6b13",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3fec2c6c_9429f080",
+        "filename": "third_party/WebKit/Source/platform/heap/HeapPage.h",
+        "patchSetId": 10
+      },
+      "lineNbr": 1102,
+      "author": {
+        "id": 1119605
+      },
+      "writtenOn": "2017-11-08T15:07:14Z",
+      "side": 1,
+      "message": "Make 8 and 7 below also constants computed from uint8_t. The computation above for kMaxEntries should also use a constant.",
+      "range": {
+        "startLine": 1102,
+        "startChar": 38,
+        "endLine": 1102,
         "endChar": 39
       },
       "revId": "e907997ea6e8aead9540f88597cb4fb50a0c6b13",
@@ -42,6 +168,116 @@
         "endLine": 1107,
         "endChar": 33
       },
+      "revId": "e907997ea6e8aead9540f88597cb4fb50a0c6b13",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a829e813_3abda4b5",
+        "filename": "third_party/WebKit/Source/platform/heap/HeapPage.h",
+        "patchSetId": 10
+      },
+      "lineNbr": 1107,
+      "author": {
+        "id": 1119605
+      },
+      "writtenOn": "2017-11-08T15:07:14Z",
+      "side": 1,
+      "message": "I guess it is fine to keep it there as a utility function.",
+      "parentUuid": "284e979e_1526bbf9",
+      "range": {
+        "startLine": 1107,
+        "startChar": 11,
+        "endLine": 1107,
+        "endChar": 33
+      },
+      "revId": "e907997ea6e8aead9540f88597cb4fb50a0c6b13",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c58d0ab6_3d7508c3",
+        "filename": "third_party/WebKit/Source/platform/heap/HeapPage.h",
+        "patchSetId": 10
+      },
+      "lineNbr": 1111,
+      "author": {
+        "id": 1119605
+      },
+      "writtenOn": "2017-11-08T15:07:14Z",
+      "side": 1,
+      "message": "checkout the v8 implementation: https://cs.chromium.org/chromium/src/v8/src/base/bits.h?type\u003dcs\u0026l\u003d116",
+      "range": {
+        "startLine": 1111,
+        "startChar": 2,
+        "endLine": 1111,
+        "endChar": 4
+      },
+      "revId": "e907997ea6e8aead9540f88597cb4fb50a0c6b13",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8c716643_d9af23ab",
+        "filename": "third_party/WebKit/Source/platform/heap/HeapPage.h",
+        "patchSetId": 10
+      },
+      "lineNbr": 1130,
+      "author": {
+        "id": 1119605
+      },
+      "writtenOn": "2017-11-08T15:07:14Z",
+      "side": 1,
+      "message": "use constant instead of 8",
+      "range": {
+        "startLine": 1130,
+        "startChar": 19,
+        "endLine": 1130,
+        "endChar": 38
+      },
+      "revId": "e907997ea6e8aead9540f88597cb4fb50a0c6b13",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ebba756a_2022e35b",
+        "filename": "third_party/WebKit/Source/platform/heap/HeapPage.h",
+        "patchSetId": 10
+      },
+      "lineNbr": 1134,
+      "author": {
+        "id": 1119605
+      },
+      "writtenOn": "2017-11-08T15:07:14Z",
+      "side": 1,
+      "message": "Advance bitmap \u003d\u003e Clear current object bit in temporary value to advance iteration.",
+      "range": {
+        "startLine": 1134,
+        "startChar": 17,
+        "endLine": 1134,
+        "endChar": 23
+      },
+      "revId": "e907997ea6e8aead9540f88597cb4fb50a0c6b13",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1f1c027a_8289a6b5",
+        "filename": "third_party/WebKit/Source/platform/heap/HeapPage.h",
+        "patchSetId": 10
+      },
+      "lineNbr": 1135,
+      "author": {
+        "id": 1119605
+      },
+      "writtenOn": "2017-11-08T15:07:14Z",
+      "side": 1,
+      "message": "use constant instead of 7",
       "revId": "e907997ea6e8aead9540f88597cb4fb50a0c6b13",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
