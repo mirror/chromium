@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "2f2d9b19_d983c03a",
+        "filename": "chrome/browser/extensions/api/webrtc_logging_private/webrtc_logging_private_api.cc",
+        "patchSetId": 17
+      },
+      "lineNbr": 528,
+      "author": {
+        "id": 1244443
+      },
+      "writtenOn": "2017-11-08T22:01:28Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "6e36fbdf_ec5bdaff",
+      "range": {
+        "startLine": 528,
+        "startChar": 64,
+        "endLine": 528,
+        "endChar": 70
+      },
+      "revId": "554782b41dc36a0a1be2d3f65f1bc7ab1ef50887",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "a691531b_bffd2a6a",
         "filename": "chrome/browser/extensions/api/webrtc_logging_private/webrtc_logging_private_api.cc",
         "patchSetId": 17
@@ -39,6 +63,24 @@
       "revId": "554782b41dc36a0a1be2d3f65f1bc7ab1ef50887",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ec281d89_80522a06",
+        "filename": "chrome/browser/extensions/api/webrtc_logging_private/webrtc_logging_private_api.cc",
+        "patchSetId": 17
+      },
+      "lineNbr": 536,
+      "author": {
+        "id": 1244443
+      },
+      "writtenOn": "2017-11-08T22:01:28Z",
+      "side": 1,
+      "message": "I was following the pattern from line 513, but I agree that it\u0027s frustrating in the client code when an extension function fails silently (as the startAudioDebugRecordings does without the command line flag).\n\nAdded an error message.",
+      "parentUuid": "a691531b_bffd2a6a",
+      "revId": "554782b41dc36a0a1be2d3f65f1bc7ab1ef50887",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -59,6 +101,24 @@
     },
     {
       "key": {
+        "uuid": "cf3dbac5_8abaf2ad",
+        "filename": "chrome/browser/extensions/api/webrtc_logging_private/webrtc_logging_private_apitest.cc",
+        "patchSetId": 17
+      },
+      "lineNbr": 459,
+      "author": {
+        "id": 1244443
+      },
+      "writtenOn": "2017-11-08T22:01:28Z",
+      "side": 1,
+      "message": "Oops. Didn\u0027t mean to upload as a stub.\n\nWebrtcLoggingPrivateApiBrowserTest is the other test I ended up adding.\n\nI wasn\u0027t able to get this working, so I reverted it. Let me know if you can think of some other appropriate tests to add for this.",
+      "parentUuid": "c91eaa3b_f0ff8ab3",
+      "revId": "554782b41dc36a0a1be2d3f65f1bc7ab1ef50887",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "e1fbe45a_24245afa",
         "filename": "chrome/browser/extensions/api/webrtc_logging_private/webrtc_logging_private_browsertest.cc",
         "patchSetId": 17
@@ -76,6 +136,24 @@
     },
     {
       "key": {
+        "uuid": "60a5ab78_58ea4d27",
+        "filename": "chrome/browser/extensions/api/webrtc_logging_private/webrtc_logging_private_browsertest.cc",
+        "patchSetId": 17
+      },
+      "lineNbr": 7,
+      "author": {
+        "id": 1244443
+      },
+      "writtenOn": "2017-11-08T22:01:28Z",
+      "side": 1,
+      "message": "Much better. Thanks!",
+      "parentUuid": "e1fbe45a_24245afa",
+      "revId": "554782b41dc36a0a1be2d3f65f1bc7ab1ef50887",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "c6396999_a45ad459",
         "filename": "chrome/renderer/resources/extensions/webrtc_logging_private_custom_bindings.js",
         "patchSetId": 17
@@ -90,6 +168,24 @@
       "revId": "554782b41dc36a0a1be2d3f65f1bc7ab1ef50887",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "044b84cb_a50d0e9b",
+        "filename": "chrome/renderer/resources/extensions/webrtc_logging_private_custom_bindings.js",
+        "patchSetId": 17
+      },
+      "lineNbr": 18,
+      "author": {
+        "id": 1244443
+      },
+      "writtenOn": "2017-11-08T22:01:28Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "c6396999_a45ad459",
+      "revId": "554782b41dc36a0a1be2d3f65f1bc7ab1ef50887",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -116,6 +212,30 @@
     },
     {
       "key": {
+        "uuid": "2394b0ee_135858da",
+        "filename": "chrome/test/data/extensions/api_test/webrtc_logging_private/get_logs_directory/test.js",
+        "patchSetId": 17
+      },
+      "lineNbr": 6,
+      "author": {
+        "id": 1244443
+      },
+      "writtenOn": "2017-11-08T22:01:28Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "698bd753_5f159a82",
+      "range": {
+        "startLine": 6,
+        "startChar": 53,
+        "endLine": 6,
+        "endChar": 54
+      },
+      "revId": "554782b41dc36a0a1be2d3f65f1bc7ab1ef50887",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "06ec286d_d1792b38",
         "filename": "chrome/test/data/extensions/api_test/webrtc_logging_private/get_logs_directory/test.js",
         "patchSetId": 17
@@ -130,6 +250,24 @@
       "revId": "554782b41dc36a0a1be2d3f65f1bc7ab1ef50887",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "73080e87_e3efbeb1",
+        "filename": "chrome/test/data/extensions/api_test/webrtc_logging_private/get_logs_directory/test.js",
+        "patchSetId": 17
+      },
+      "lineNbr": 8,
+      "author": {
+        "id": 1244443
+      },
+      "writtenOn": "2017-11-08T22:01:28Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "06ec286d_d1792b38",
+      "revId": "554782b41dc36a0a1be2d3f65f1bc7ab1ef50887",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
