@@ -106,6 +106,24 @@
       "revId": "22de40fb6d6990a74025863b884120cfc3582f4d",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9b012f48_a097b2ad",
+        "filename": "chrome/browser/ui/app_list/search/extension_app_result.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 68,
+      "author": {
+        "id": 1189880
+      },
+      "writtenOn": "2017-11-08T21:15:09Z",
+      "side": 1,
+      "message": "Calamity@ said this was definitely a bug, and this would not negatively effect metrics.",
+      "parentUuid": "8a14df99_f2d95760",
+      "revId": "22de40fb6d6990a74025863b884120cfc3582f4d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
