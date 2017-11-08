@@ -35,7 +35,7 @@
 #include "platform/CrossThreadFunctional.h"
 #include "platform/WaitableEvent.h"
 #include "platform/WebTaskRunner.h"
-#include "platform/graphics/CanvasResourceProvider.cpp"
+#include "platform/graphics/CanvasResourceProvider.h"
 #include "platform/graphics/ImageBuffer.h"
 #include "platform/graphics/StaticBitmapImage.h"
 #include "platform/graphics/UnacceleratedImageBufferSurface.h"
