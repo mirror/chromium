@@ -480,6 +480,11 @@ class NET_EXPORT_PRIVATE QuicChromiumClientSession
                        std::unique_ptr<QuicChromiumPacketReader> reader,
                        std::unique_ptr<QuicChromiumPacketWriter> writer);
 
+  MigrationResult SendConnectivityProbing(
+      NetworkChangeNotifier::NetworkHandle network,
+      IPEndPoint peer_address,
+      const NetLogWithSource& migration_net_log);
+
   // Called when NetworkChangeNotifier notifies observers of a newly
   // connected network. Migrates this session to the newly connected
   // network if the session has a pending migration.
@@ -631,6 +636,11 @@ class NET_EXPORT_PRIVATE QuicChromiumClientSession
   // Stores packet that witnesses socket write error. This packet is
   // written to a new socket after migration completes.
   scoped_refptr<QuicChromiumPacketWriter::ReusableIOBuffer> packet_;
+
+  std::unique_ptr<DatagramClientSocket> probing_socket_;
+  std::unique_ptr<QuicChromiumPacketReader> probing_reader_;
+  std::unique_ptr<QuicChromiumPacketWriter> probing_writer_;
+
   // TODO(jri): Replace use of migration_pending_ sockets_.size().
   // When a task is posted for MigrateSessionOnError, pass in
   // sockets_.size(). Then in MigrateSessionOnError, check to see if

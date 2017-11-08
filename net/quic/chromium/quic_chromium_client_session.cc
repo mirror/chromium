@@ -2061,6 +2061,38 @@ bool QuicChromiumClientSession::MigrateToSocket(
   return true;
 }
 
+MigrationResult QuicChromiumClientSession::SendConnectivityProbing(
+    NetworkChangeNotifier::NetworkHandle network,
+    IPEndPoint peer_address,
+    const NetLogWithSource& migration_net_log) {
+  if (!stream_factory_)
+    return MigrationResult::FAILURE;
+
+  // Create and configure socket on |network|
+  probing_socket_ =
+      stream_factory_->CreateSocket(net_log_.net_log(), net_log_.source());
+  if (stream_factory_->ConfigureSocket(probing_socket_.get(), peer_address,
+                                       network) != OK) {
+    HistogramAndLogMigrationFailure(
+        migration_net_log, MIGRATION_STATUS_INTERNAL_ERROR, connection_id(),
+        "Socket configuration failed");
+    return MigrationResult::FAILURE;
+  }
+
+  // Create new packet reader and writer on the new socket.
+  probing_reader_.reset(new QuicChromiumPacketReader(
+      probing_socket_.get(), clock_, this, yield_after_packets_,
+      yield_after_duration_, net_log_));
+  probing_writer_.reset(new QuicChromiumPacketWriter(probing_socket_.get()));
+  probing_writer_->set_delegate(this);
+
+  // TODO(zhongyi): add logics similar to MigrateToSocket() to address packet
+  // reading.
+  connection()->SendProbingPacket(probing_writer_.get());
+
+  return MigrationResult::SUCCESS;
+}
+
 void QuicChromiumClientSession::PopulateNetErrorDetails(
     NetErrorDetails* details) const {
   details->quic_port_migration_detected = port_migration_detected_;
