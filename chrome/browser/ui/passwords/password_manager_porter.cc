@@ -4,6 +4,10 @@
 
 #include "chrome/browser/ui/passwords/password_manager_porter.h"
 
+#include <string>
+#include <utility>
+#include <vector>
+
 #include "base/metrics/histogram_macros.h"
 #include "base/path_service.h"
 #include "build/build_config.h"
@@ -12,7 +16,9 @@
 #include "chrome/browser/ui/chrome_select_file_policy.h"
 #include "chrome/common/chrome_paths.h"
 #include "chrome/grit/generated_resources.h"
-#include "components/password_manager/core/browser/export/password_exporter.h"
+// #include
+// "components/password_manager/core/browser/export/password_exporter.h"
+#include "components/password_manager/core/browser/export/password_csv_writer.h"
 #include "components/password_manager/core/browser/password_store.h"
 #include "components/password_manager/core/browser/ui/credential_provider_interface.h"
 #include "content/public/browser/web_contents.h"
@@ -20,7 +26,27 @@
 #include "ui/base/l10n/l10n_util.h"
 #include "url/gurl.h"
 
+#include "base/files/file_util.h"
+#include "base/location.h"
+#include "base/task_scheduler/post_task.h"
+
 namespace {
+
+const base::FilePath::CharType kFileExtension[] = FILE_PATH_LITERAL("csv");
+
+// Get the file extensions that are supported for import/export.
+std::vector<std::vector<base::FilePath::StringType>>
+GetSupportedFileExtensions() {
+  return std::vector<std::vector<base::FilePath::StringType>>(
+      1, std::vector<base::FilePath::StringType>(1, kFileExtension));
+}
+
+// Wrapper for writing an std::string to a file.
+void WriteToFile(const base::FilePath& path,
+                 std::unique_ptr<std::string> data) {
+  base::WriteFile(path, data->c_str(), data->size());
+}
+
 // The following are not used on Android due to the |SelectFileDialog| being
 // unused.
 #if !defined(OS_ANDROID)
@@ -111,8 +137,7 @@ void PasswordManagerPorter::PresentFileSelector(
 
   // Get the default file extension for password files.
   ui::SelectFileDialog::FileTypeInfo file_type_info;
-  file_type_info.extensions =
-      password_manager::PasswordExporter::GetSupportedFileExtensions();
+  file_type_info.extensions = GetSupportedFileExtensions();
   DCHECK(!file_type_info.extensions.empty());
   DCHECK(!file_type_info.extensions[0].empty());
   file_type_info.include_all_files = true;
@@ -174,5 +199,10 @@ void PasswordManagerPorter::ExportPasswordsToPath(const base::FilePath& path) {
       credential_provider_interface_->GetAllPasswords();
   UMA_HISTOGRAM_COUNTS("PasswordManager.ExportedPasswordsPerUserInCSV",
                        password_list.size());
-  password_manager::PasswordExporter::Export(path, std::move(password_list));
+  base::PostTaskWithTraits(
+      FROM_HERE, {base::TaskPriority::USER_VISIBLE, base::MayBlock()},
+      base::Bind(&WriteToFile, path,
+                 base::Passed(std::make_unique<std::string>(
+                     password_manager::PasswordCSVWriter::SerializePasswords(
+                         password_list)))));
 }
