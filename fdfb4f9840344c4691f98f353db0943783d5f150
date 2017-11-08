@@ -16,6 +16,24 @@
       "revId": "fdfb4f9840344c4691f98f353db0943783d5f150",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3903ba14_7d9c2fce",
+        "filename": "chrome/browser/ui/views/location_bar/zoom_bubble_view.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 466,
+      "author": {
+        "id": 1000097
+      },
+      "writtenOn": "2017-11-08T21:54:03Z",
+      "side": 1,
+      "message": "I initially considered this solution.  After discussing it with dmazzoni and dtseng, we decided it would be better to fix the bug with the minimal change, and add the event to Label later as a separate refactor.",
+      "parentUuid": "7d627d8f_5e496488",
+      "revId": "fdfb4f9840344c4691f98f353db0943783d5f150",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
