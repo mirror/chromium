@@ -118,6 +118,30 @@
       "revId": "3f263bcc5985a31115d3e390f35989fa6099144e",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b114119e_e30db4c4",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/toolbar/ToolbarManager.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 337,
+      "author": {
+        "id": 1135279
+      },
+      "writtenOn": "2017-11-08T23:36:25Z",
+      "side": 1,
+      "message": "As per offline chat, I added a check for the URL since the other events do not get triggered on this particular observer.",
+      "parentUuid": "0982aac2_9fae45b8",
+      "range": {
+        "startLine": 335,
+        "startChar": 12,
+        "endLine": 337,
+        "endChar": 13
+      },
+      "revId": "3f263bcc5985a31115d3e390f35989fa6099144e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
