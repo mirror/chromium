@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "96644698_aeaebf1a",
+        "filename": "ios/web/public/download/download_controller.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 24,
+      "author": {
+        "id": 1123009
+      },
+      "writtenOn": "2017-11-08T17:20:33Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "5454d0d8_99bb822d",
+      "range": {
+        "startLine": 24,
+        "startChar": 40,
+        "endLine": 24,
+        "endChar": 44
+      },
+      "revId": "b1b7f1e60c18f47288bd713aa161a23606defd57",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "38f87645_fdc5c7e2",
         "filename": "ios/web/public/download/download_controller.h",
         "patchSetId": 5
@@ -48,6 +72,30 @@
     },
     {
       "key": {
+        "uuid": "383544dd_cb34985f",
+        "filename": "ios/web/public/download/download_controller.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 25,
+      "author": {
+        "id": 1123009
+      },
+      "writtenOn": "2017-11-08T17:20:33Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "38f87645_fdc5c7e2",
+      "range": {
+        "startLine": 25,
+        "startChar": 13,
+        "endLine": 25,
+        "endChar": 16
+      },
+      "revId": "b1b7f1e60c18f47288bd713aa161a23606defd57",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "58f64f76_5155ad47",
         "filename": "ios/web/public/download/download_controller.h",
         "patchSetId": 5
@@ -59,6 +107,30 @@
       "writtenOn": "2017-11-08T15:10:59Z",
       "side": 1,
       "message": "Even if this is an example, I would recommend not depending on BrowserState* to access objects, but injecting them, this make the code much easier to test, as it is easier to inject fake implementation.\n\nSo I would suggest changing this example to use the following pattern:\n\n  class MyDownloadManager : public DownloadTaskObserver,\n                            public DownloadControllerDelegate {\n   public:\n    explicit MyDownloadManager(DownloadController* controller) {\n      controller-\u003eSetDelegate(this);\n    }\n\n    ...\n\n    // DownloadControllerDelegate implementation.\n    void OnDownloadControllerDestroyed(DownloadController* controller) override {\n      controller-\u003eSetDelegate(nullptr);\n    }\n  };",
+      "range": {
+        "startLine": 31,
+        "startChar": 23,
+        "endLine": 31,
+        "endChar": 42
+      },
+      "revId": "b1b7f1e60c18f47288bd713aa161a23606defd57",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6edc7e08_096e84a2",
+        "filename": "ios/web/public/download/download_controller.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 31,
+      "author": {
+        "id": 1123009
+      },
+      "writtenOn": "2017-11-08T17:20:33Z",
+      "side": 1,
+      "message": "I want to keep my example, because it also demonstrates obtaining DownloadController object, which is something that every embedder has to do. Architecturally the example is not great for multiple reasons. For example the same class should not implement both DownloadTaskObserver and DownloadControllerDelegate. Those are responsibilities of difference classes, but then the example will probably take more than one screen which will not be great.",
+      "parentUuid": "58f64f76_5155ad47",
       "range": {
         "startLine": 31,
         "startChar": 23,
@@ -94,6 +166,30 @@
     },
     {
       "key": {
+        "uuid": "59f0ca73_c957bf5f",
+        "filename": "ios/web/public/download/download_controller.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 51,
+      "author": {
+        "id": 1123009
+      },
+      "writtenOn": "2017-11-08T17:20:33Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "340880ea_fdf8ee42",
+      "range": {
+        "startLine": 51,
+        "startChar": 65,
+        "endLine": 51,
+        "endChar": 69
+      },
+      "revId": "b1b7f1e60c18f47288bd713aa161a23606defd57",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "dba77e4f_3845efbb",
         "filename": "ios/web/public/download/download_controller_delegate.h",
         "patchSetId": 5
@@ -117,6 +213,30 @@
     },
     {
       "key": {
+        "uuid": "12cec28c_9163ddc4",
+        "filename": "ios/web/public/download/download_controller_delegate.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 22,
+      "author": {
+        "id": 1123009
+      },
+      "writtenOn": "2017-11-08T17:20:33Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "dba77e4f_3845efbb",
+      "range": {
+        "startLine": 22,
+        "startChar": 24,
+        "endLine": 22,
+        "endChar": 27
+      },
+      "revId": "b1b7f1e60c18f47288bd713aa161a23606defd57",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "05841b71_40369707",
         "filename": "ios/web/public/download/download_task.h",
         "patchSetId": 5
@@ -128,6 +248,24 @@
       "writtenOn": "2017-11-08T15:10:59Z",
       "side": 1,
       "message": "Why have a separate SetReponseWriter and Start if they always need to be called in the correct order? Why not instead have Start take the  ResponseWriter?\n\n  // Starts the download. The |writer| must be valid and allows to perform in-memory\n  // or in-file downloads.\n  virtual void Start(std::unique_ptr\u003curl::URLFetcherResponseWriter\u003e writer) \u003d 0;\n\nThis makes the API smaller, and avoid the possibility of the object to be in an inconsistent state (Start called without having called SetResponseWriter). It also prevents setting response writer to null after calling Start. This assumes the following code is invalid:\n\n  // Suggested change would prevent this. If it is valid, then we may need to keep\n  // separate SetResponseWriter/Start methods.\n  task-\u003eSetResponseWriter(std::make_unique\u003c...\u003e());\n  task-\u003eStart();\n  task-\u003eSetResponseWriter(nullptr);",
+      "revId": "b1b7f1e60c18f47288bd713aa161a23606defd57",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "bf21b000_cecbc647",
+        "filename": "ios/web/public/download/download_task.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 30,
+      "author": {
+        "id": 1123009
+      },
+      "writtenOn": "2017-11-08T17:20:33Z",
+      "side": 1,
+      "message": "DownloadTask was refcountable when I added Start without arguments. I wanted to make Start idempotent, so I could not pass any arguments to this method. Now when DownloadTask is uniquely owned, It will be better to DCHECK when start is called for the second time and passing net::URLFetcherResponseWriter to Start makes more sense.\n\nSo thank you for bringing this up, because there is no value in changing URLFetcherResponseWriter after the download has started.",
+      "parentUuid": "05841b71_40369707",
       "revId": "b1b7f1e60c18f47288bd713aa161a23606defd57",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
