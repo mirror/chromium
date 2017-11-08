@@ -1,0 +1,106 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "ea32f2d0_188afbdc",
+        "filename": "chrome/browser/notifications/notification_template_builder.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 121,
+      "author": {
+        "id": 1002032
+      },
+      "writtenOn": "2017-11-08T12:10:56Z",
+      "side": 1,
+      "message": "nit: can and should this be reverted?",
+      "revId": "98a29b427fa6674e4ce49d761b6f98ec86fb113e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3edfb645_00b40fec",
+        "filename": "chrome/browser/notifications/notification_template_builder.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 217,
+      "author": {
+        "id": 1002032
+      },
+      "writtenOn": "2017-11-08T12:10:56Z",
+      "side": 1,
+      "message": "up to you: personally I\u0027d coalesce lines 209-217 into:\n\n  std::string settings_title \u003d l10n_util::GetStringFUTF8(\n      IDS_MESSAGE_NOTIFICATION_SETTINGS_CONTEXT_MENU_ITEM_NAME,\n      l10n_util::GetStringUTF16(IDS_SHORT_PRODUCT_NAME));\n  if (context_menu_label_override_)\n    settings_title \u003d context_menu_label_override_;\n\nIt makes it more explicit that we\u0027re dealing with an override, and the extra cost only exists in testing where we don\u0027t really care anyway.",
+      "revId": "98a29b427fa6674e4ce49d761b6f98ec86fb113e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "dfb1ab1b_366a9a7f",
+        "filename": "chrome/browser/notifications/notification_template_builder.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 217,
+      "author": {
+        "id": 1002032
+      },
+      "writtenOn": "2017-11-08T12:10:56Z",
+      "side": 1,
+      "message": "up to you: personally I\u0027d coalesce lines 209-217 into:\n\n  std::string settings_title \u003d l10n_util::GetStringFUTF8(\n      IDS_MESSAGE_NOTIFICATION_SETTINGS_CONTEXT_MENU_ITEM_NAME,\n      l10n_util::GetStringUTF16(IDS_SHORT_PRODUCT_NAME));\n  if (context_menu_label_override_)\n    settings_title \u003d context_menu_label_override_;\n\nIt makes it more explicit that we\u0027re dealing with an override, and the extra cost only exists in testing where we don\u0027t really care anyway.",
+      "revId": "98a29b427fa6674e4ce49d761b6f98ec86fb113e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "51c7b4b2_e2094675",
+        "filename": "chrome/browser/notifications/notification_template_builder.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 96,
+      "author": {
+        "id": 1002032
+      },
+      "writtenOn": "2017-11-08T12:10:56Z",
+      "side": 1,
+      "message": "Could we store this as a \"static const char*\" and add a method-level comment to OverrideContextMenuLabelForTesting() detailing that ownership of the string remains with the caller? (Thus, similarly, the caller is responsible for setting it back to a nullptr after they\u0027re done, i.e. as you do in TearDown().)",
+      "revId": "98a29b427fa6674e4ce49d761b6f98ec86fb113e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "cf606612_c44e377f",
+        "filename": "chrome/browser/notifications/notification_template_builder_unittest.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 303,
+      "author": {
+        "id": 1002032
+      },
+      "writtenOn": "2017-11-08T12:10:56Z",
+      "side": 1,
+      "message": "nit: expected_xml",
+      "revId": "98a29b427fa6674e4ce49d761b6f98ec86fb113e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ca406c33_04184ef4",
+        "filename": "ui/strings/ui_strings.grd",
+        "patchSetId": 4
+      },
+      "lineNbr": 680,
+      "author": {
+        "id": 1002032
+      },
+      "writtenOn": "2017-11-08T12:10:56Z",
+      "side": 1,
+      "message": "This should probably go in chrome/app/settings_strings.grdp",
+      "revId": "98a29b427fa6674e4ce49d761b6f98ec86fb113e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
