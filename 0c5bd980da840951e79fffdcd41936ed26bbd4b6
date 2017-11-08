@@ -55,6 +55,24 @@
     },
     {
       "key": {
+        "uuid": "4d900a9a_8288cd4f",
+        "filename": "third_party/WebKit/Source/core/page/FocusController.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 1075,
+      "author": {
+        "id": 1121234
+      },
+      "writtenOn": "2017-11-08T17:38:55Z",
+      "side": 1,
+      "message": "Thanks you Kochi for the clarification. I will correct it in PS2",
+      "parentUuid": "53921031_4427be12",
+      "revId": "0c5bd980da840951e79fffdcd41936ed26bbd4b6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "62a73799_1944b174",
         "filename": "third_party/WebKit/Source/core/page/FocusController.cpp",
         "patchSetId": 1
