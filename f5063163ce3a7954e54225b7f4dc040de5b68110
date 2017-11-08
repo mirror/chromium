@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "6aa13398_5cec2690",
+        "filename": "ui/events/event_unittest.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 487,
+      "author": {
+        "id": 1001385
+      },
+      "writtenOn": "2017-11-08T17:19:41Z",
+      "side": 0,
+      "message": "Although we\u0027ll still use the IsRepeated synthesis for non-native input events, this test appears to be exclusively about native events, so it no longer makes sense under Windows, where we\u0027re now just passing the repeat flag through.",
+      "range": {
+        "startLine": 479,
+        "startChar": 0,
+        "endLine": 487,
+        "endChar": 6
+      },
+      "revId": "f5063163ce3a7954e54225b7f4dc040de5b68110",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}

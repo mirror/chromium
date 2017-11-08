@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "7b46a6c8_5a161929",
+        "filename": "ui/events/event.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 1128,
+      "author": {
+        "id": 1001385
+      },
+      "writtenOn": "2017-11-08T17:19:41Z",
+      "side": 1,
+      "message": "This is short-cutting the repeat calculation, so if we see native events for a key, and then something decides to simulate a repeat then the synthesized repeat will have the wrong flag set - my feeling is that that\u0027s probably an acceptable limitation, but WDYT?",
+      "range": {
+        "startLine": 1122,
+        "startChar": 0,
+        "endLine": 1128,
+        "endChar": 6
+      },
+      "revId": "3e1134c2477b654d115f56c75c1e590b8d50f97d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
