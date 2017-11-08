@@ -1,0 +1,55 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "909b604d_efdb0315",
+        "filename": "content/renderer/render_view_impl.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 2082,
+      "author": {
+        "id": 1001706
+      },
+      "writtenOn": "2017-11-08T15:51:26Z",
+      "side": 1,
+      "message": "I don\u0027t understand why we would want to add memory to this property.  Why should the previous state of canHaveScrollbars have an effect here?\n\nAlso: blink style now calls for hacker_style variable names",
+      "revId": "43af7b92233f8b51ff9570a2eb643beca054596f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5b63f6ad_5fb0fa86",
+        "filename": "third_party/WebKit/Source/core/frame/LocalFrameView.cpp",
+        "patchSetId": 3
+      },
+      "lineNbr": 689,
+      "author": {
+        "id": 1001706
+      },
+      "writtenOn": "2017-11-08T15:51:26Z",
+      "side": 1,
+      "message": "Is this necessary?  Don\u0027t we just use the scrollbar modes for the root layer?",
+      "revId": "43af7b92233f8b51ff9570a2eb643beca054596f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "480e7fba_6636e7c7",
+        "filename": "third_party/WebKit/Source/core/paint/PaintLayerScrollableArea.cpp",
+        "patchSetId": 3
+      },
+      "lineNbr": 1312,
+      "author": {
+        "id": 1001706
+      },
+      "writtenOn": "2017-11-08T15:51:26Z",
+      "side": 1,
+      "message": "It looks to me like this is the important change.  I\u0027m not sure anything else in this patch is necessary.",
+      "revId": "43af7b92233f8b51ff9570a2eb643beca054596f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
