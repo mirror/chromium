@@ -34,6 +34,58 @@
       "revId": "e597ce9f7c0a2464466e49aa95dfb794f5f5962a",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "fd60e58e_db6790ba",
+        "filename": "third_party/WebKit/Source/platform/blob/BlobBytesProviderTest.cpp",
+        "patchSetId": 2
+      },
+      "lineNbr": 5,
+      "author": {
+        "id": 1237531
+      },
+      "writtenOn": "2017-11-08T03:17:40Z",
+      "side": 1,
+      "message": "Huh. I think it\u0027s a bug, either in the linter (specifically in tools/depot_tools/cpplint.py\u0027s _DropCommonSuffixes function), or how the Chromium build process applies that linter to Chromium\u0027s *third_party* code (including third_party/WebKit code).\n\n(Are you applying the linter manually, or is it part of the presubmit process?)\n\nIt triggers because this test filename uses WebKit style \"FooTest.cpp\" instead of first party or Google style \"foo_unittest.cc\". Note two differences: upper-case \"Test\" versus lower-case \"_unittest\", and also \"cpp\" versus \"cc\".\n\nDo you want to file a bug (for the linter)?\n\nI\u0027m not well versed in Chromium C++ style, but personally, I\u0027d still go with my original suggestion:\n\n----\n#include \"platform/blob/BlobBytesProvider.h\"\n\n#include \u003calgorithm\u003e\n#include \u003cmemory\u003e\n#include \u003cutility\u003e\n\n#include \"base/files/file.h\"\netc\n----\n\nand ignore the linter complaint (especially if you\u0027re applying it manually), possibly with a \"-f\" flag.",
+      "parentUuid": "9e1ce9be_fdd7d80d",
+      "revId": "e597ce9f7c0a2464466e49aa95dfb794f5f5962a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "6dfacaca_3d46ca41",
+        "filename": "third_party/WebKit/Source/platform/graphics/compositing/CompositedLayerRasterInvalidator.cpp",
+        "patchSetId": 2
+      },
+      "lineNbr": 6,
+      "author": {
+        "id": 1237531
+      },
+      "writtenOn": "2017-11-08T03:17:40Z",
+      "side": 1,
+      "message": "Add a blank line before this one.\n\nOr, if you did that already, upload a new patch set (via \"git cl upload\").",
+      "revId": "e597ce9f7c0a2464466e49aa95dfb794f5f5962a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "727ba968_cc62c201",
+        "filename": "third_party/WebKit/Source/platform/loader/fetch/FetchParameters.cpp",
+        "patchSetId": 2
+      },
+      "lineNbr": 27,
+      "author": {
+        "id": 1237531
+      },
+      "writtenOn": "2017-11-08T03:17:40Z",
+      "side": 1,
+      "message": "Ditto.",
+      "revId": "e597ce9f7c0a2464466e49aa95dfb794f5f5962a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
