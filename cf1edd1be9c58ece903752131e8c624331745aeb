@@ -119,6 +119,30 @@
     },
     {
       "key": {
+        "uuid": "131ce88f_b5e22ec6",
+        "filename": "chrome/browser/metrics/out_of_memory_reporter.cc",
+        "patchSetId": 10
+      },
+      "lineNbr": 86,
+      "author": {
+        "id": 1125359
+      },
+      "writtenOn": "2017-11-08T19:33:31Z",
+      "side": 1,
+      "message": "Thanks!",
+      "parentUuid": "220bd011_8ddb7d02",
+      "range": {
+        "startLine": 86,
+        "startChar": 33,
+        "endLine": 86,
+        "endChar": 59
+      },
+      "revId": "cf1edd1be9c58ece903752131e8c624331745aeb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "57c8c560_4ccb5224",
         "filename": "chrome/browser/metrics/out_of_memory_reporter.h",
         "patchSetId": 10
@@ -151,6 +175,24 @@
       "revId": "cf1edd1be9c58ece903752131e8c624331745aeb",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d85c8a6f_d0cd8971",
+        "filename": "chrome/browser/metrics/out_of_memory_reporter.h",
+        "patchSetId": 10
+      },
+      "lineNbr": 64,
+      "author": {
+        "id": 1125359
+      },
+      "writtenOn": "2017-11-08T19:33:31Z",
+      "side": 1,
+      "message": "Yeah having multiple observers is not really an issue, was mainly worried about dealing with AddObserver.\nahh OutOfMemoryReporter::FromWebContents is the thing i was looking for! Okay sounds good in that case :)",
+      "parentUuid": "68855206_6c66979b",
+      "revId": "cf1edd1be9c58ece903752131e8c624331745aeb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
