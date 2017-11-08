@@ -23,8 +23,27 @@ namespace ash {
 
 namespace {
 
-// The minimum offset that will be considered as a drag event.
-constexpr int kMinimiumDragOffset = 5;
+// Checks if a drag whose origin is in a snap region has moved more than
+// |kMinimumDragOffsetAlreadyInSnapRegionDp|. Drags which are less than the
+// offset will not be counted as drags for splitview purposes.
+bool IsDraggedEnoughInSnapRegion(
+    const gfx::Vector2d& distance,
+    SplitViewController::SnapPosition snap_position,
+    bool is_landscape) {
+  DCHECK(snap_position != SplitViewController::NONE);
+
+  // If the pending snap position is on the left or top we want the distance in
+  // the opposite direction.
+  gfx::Vector2d delta =
+      snap_position == SplitViewController::LEFT ? -distance : distance;
+
+  if (is_landscape)
+    return delta.x() >= OverviewWindowDragController::
+                            kMinimumDragOffsetAlreadyInSnapRegionDp;
+
+  return delta.y() >=
+         OverviewWindowDragController::kMinimumDragOffsetAlreadyInSnapRegionDp;
+}
 
 // Returns true if |screen_orientation| is a primary orientation.
 bool IsPrimaryScreenOrientation(
@@ -59,12 +78,29 @@ void OverviewWindowDragController::InitiateDrag(
 }
 
 void OverviewWindowDragController::Drag(const gfx::Point& location_in_screen) {
-  if (!did_move_ &&
-      (std::abs(location_in_screen.x() - previous_event_location_.x()) <
-           kMinimiumDragOffset ||
-       std::abs(location_in_screen.y() - previous_event_location_.y()) <
-           kMinimiumDragOffset)) {
-    return;
+  if (!did_move_) {
+    gfx::Vector2d distance = location_in_screen - previous_event_location_;
+    // Do not start dragging if the distance from |location_in_screen| to
+    // |previous_event_location_| is not greater than |kMinimumDragOffset|.
+    if (std::abs(distance.x()) < kMinimumDragOffset &&
+        std::abs(distance.y()) < kMinimumDragOffset) {
+      return;
+    }
+
+    // Do not start dragging if |previous_event_location_| is in a snap region,
+    // and the distance from |location_in_screen| to |previous_event_location_|
+    // is less than |kMinimumDragOffsetAlreadyInSnapRegionDp|.
+    auto previous_location_snap_position =
+        GetSnapPosition(previous_event_location_);
+    auto location_snap_position = GetSnapPosition(location_in_screen);
+    if (previous_location_snap_position == location_snap_position &&
+        previous_location_snap_position != SplitViewController::NONE) {
+      if (!IsDraggedEnoughInSnapRegion(
+              distance, previous_location_snap_position,
+              split_view_controller_->IsCurrentScreenOrientationLandscape())) {
+        return;
+      }
+    }
   }
   did_move_ = true;
 
