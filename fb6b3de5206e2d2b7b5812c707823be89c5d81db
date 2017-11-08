@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "4ad26f83_8a83a25a",
+        "filename": "content/browser/renderer_host/render_process_host_impl.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 2113,
+      "author": {
+        "id": 1001472
+      },
+      "writtenOn": "2017-11-08T10:09:13Z",
+      "side": 1,
+      "message": "If we don\u0027t set this for testing this returns 0?",
+      "revId": "fb6b3de5206e2d2b7b5812c707823be89c5d81db",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "40005c4f_bfe5fc05",
+        "filename": "content/browser/renderer_host/render_process_host_impl.h",
+        "patchSetId": 8
+      },
+      "lineNbr": 398,
+      "author": {
+        "id": 1001472
+      },
+      "writtenOn": "2017-11-08T10:09:13Z",
+      "side": 1,
+      "message": "We don\u0027t have any \u0027context\u0027 like object that can keep these values? (E.g. for network we have resource context etc..)",
+      "revId": "fb6b3de5206e2d2b7b5812c707823be89c5d81db",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
