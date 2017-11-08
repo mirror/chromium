@@ -750,6 +750,15 @@ Signing in anyway will merge Chrome information like bookmarks, history, and oth
         <message name="IDS_CHROME_CLEANUP_WEBUI_EXPLANATION" desc="Description in the Chrome Cleanup web page that Chrome browser shows when unwanted software, like ad injectors or software that changes the user's settings without their knowledge, is found on the user's computer. Appears under the title asking 'Remove harmful software.' Actor is Chrome; we are asking, Do you want Chrome to remove harmful software? 'it' is harmful software. The user can click 'Remove' to proceed with a cleanup. Preferrably, the translation for this string should match IDS_CHROME_CLEANUP_PROMPT_EXPLANATION.">
           Chrome found harmful software on your computer. Chrome can remove it and restore your settings to make your browser work normally again.
         </message>
+        <message name="IDS_CHROME_CLEANUP_WEBUI_EXPLANATION_CLEANUP_ERROR" desc="Body of a generic error message that could appear during the cleanup of harmful software. Multiple causes for the error are possible.">
+          An error occurred while Chrome was removing harmful software.
+        </message>
+        <message name="IDS_CHROME_CLEANUP_WEBUI_EXPLANATION_FIND_AND_REMOVE" desc="Subtitle of the 'Find an remove harmful software' item. Imperative.">
+          Chrome can find harmful software on your computer and remove it.
+        </message>
+        <message name="IDS_CHROME_CLEANUP_WEBUI_EXPLANATION_SCAN_ERROR" desc="Body of error message that could appear during the cleanup of harmful software.">
+          An error occurred while Chrome was searching for harmful software.
+        </message>
       </if>
 
       <!-- Sync/sign-in error messages -->
