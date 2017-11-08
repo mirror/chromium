@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "f5874abb_ac824291",
+        "filename": "chrome/test/chromedriver/test/run_py_tests.py",
+        "patchSetId": 3
+      },
+      "lineNbr": 996,
+      "author": {
+        "id": 1181219
+      },
+      "writtenOn": "2017-11-08T17:39:42Z",
+      "side": 1,
+      "message": "Our convention is to indent by 2 characters in function definition. Please adhere to that.",
+      "range": {
+        "startLine": 996,
+        "startChar": 7,
+        "endLine": 996,
+        "endChar": 8
+      },
+      "revId": "06e4c053feaa30ce8492792f13e4cc575bcceee2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
