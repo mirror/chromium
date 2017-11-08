@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "a53267f6_3749523a",
+        "filename": "chrome/browser/ui/cocoa/constrained_window/constrained_window_sheet_info.mm",
+        "patchSetId": 1
+      },
+      "lineNbr": 58,
+      "author": {
+        "id": 1160249
+      },
+      "writtenOn": "2017-11-08T23:42:12Z",
+      "side": 1,
+      "message": "I can\u0027t repro in 10.9-10.11. Added that to the comment.",
+      "parentUuid": "be6649a5_591f86eb",
+      "range": {
+        "startLine": 58,
+        "startChar": 59,
+        "endLine": 58,
+        "endChar": 66
+      },
+      "revId": "809cb81642f0deae7749bf3316996f48980399c0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "a3d877ed_e0ed8e01",
         "filename": "chrome/browser/ui/cocoa/constrained_window/constrained_window_sheet_info.mm",
         "patchSetId": 1
@@ -48,6 +72,30 @@
     },
     {
       "key": {
+        "uuid": "a061ef79_eb1b7f6e",
+        "filename": "chrome/browser/ui/cocoa/constrained_window/constrained_window_sheet_info.mm",
+        "patchSetId": 1
+      },
+      "lineNbr": 80,
+      "author": {
+        "id": 1160249
+      },
+      "writtenOn": "2017-11-08T23:42:12Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "a3d877ed_e0ed8e01",
+      "range": {
+        "startLine": 80,
+        "startChar": 24,
+        "endLine": 80,
+        "endChar": 30
+      },
+      "revId": "809cb81642f0deae7749bf3316996f48980399c0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "21208c8c_4a45dcfe",
         "filename": "chrome/browser/ui/cocoa/constrained_window/constrained_window_sheet_info.mm",
         "patchSetId": 1
@@ -68,6 +116,30 @@
       "revId": "809cb81642f0deae7749bf3316996f48980399c0",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d261079f_f1ab1867",
+        "filename": "chrome/browser/ui/cocoa/constrained_window/constrained_window_sheet_info.mm",
+        "patchSetId": 1
+      },
+      "lineNbr": 84,
+      "author": {
+        "id": 1160249
+      },
+      "writtenOn": "2017-11-08T23:42:12Z",
+      "side": 1,
+      "message": "I think it technically could be — but `makeSheetKeyAndOrderFront` is part of the ConstrainedWindowSheet protocol. I\u0027m not sure if it\u0027s worth adding another method. What do you think?",
+      "parentUuid": "21208c8c_4a45dcfe",
+      "range": {
+        "startLine": 84,
+        "startChar": 25,
+        "endLine": 84,
+        "endChar": 35
+      },
+      "revId": "809cb81642f0deae7749bf3316996f48980399c0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
