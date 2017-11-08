@@ -117,6 +117,30 @@
       "revId": "5cee889ee9806d3040ae037b7e08563a87e8ddd2",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8d09f56e_f8bb78d0",
+        "filename": "ui/events/blink/web_input_event.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 339,
+      "author": {
+        "id": 1001385
+      },
+      "writtenOn": "2017-11-08T01:44:44Z",
+      "side": 1,
+      "message": "Re #1: OK, so IIUC what you\u0027re saying is that this code should be fine as-is, i.e. with IsAutoRepeat set either if Windows says it\u0027s a repeat, OR ui::Events say so.\n\nRe #2: I\u0027m happy to move this into ui::Events IsRepeated initialization in an OS_WIN block; I\u0027d prefer to do that so that we have ui::Events as the bit doing the platform integration, and WebInputEvents just adapting for any webby quirks that we need to cope with.",
+      "parentUuid": "89b21cbb_d3aaf58c",
+      "range": {
+        "startLine": 339,
+        "startChar": 54,
+        "endLine": 339,
+        "endChar": 67
+      },
+      "revId": "5cee889ee9806d3040ae037b7e08563a87e8ddd2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
