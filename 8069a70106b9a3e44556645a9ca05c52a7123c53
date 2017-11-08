@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "b326eeb2_d719941a",
+        "filename": "ui/app_list/views/app_list_view.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 431,
+      "author": {
+        "id": 1116056
+      },
+      "writtenOn": "2017-11-08T19:43:42Z",
+      "side": 1,
+      "message": "* const",
+      "range": {
+        "startLine": 430,
+        "startChar": 1,
+        "endLine": 431,
+        "endChar": 48
+      },
+      "revId": "8069a70106b9a3e44556645a9ca05c52a7123c53",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
