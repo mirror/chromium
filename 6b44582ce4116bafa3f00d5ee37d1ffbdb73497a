@@ -107,6 +107,24 @@
     },
     {
       "key": {
+        "uuid": "d2fe99d5_80b3f648",
+        "filename": "third_party/WebKit/Source/core/layout/LayoutBlock.cpp",
+        "patchSetId": 2
+      },
+      "lineNbr": 1251,
+      "author": {
+        "id": 1115630
+      },
+      "writtenOn": "2017-11-08T02:03:55Z",
+      "side": 1,
+      "message": "My current patch changes HitTest for floats in any case, hence, it follows your suggestion, if I understood it correctly. What is still open is Phillip suggestion of removing the float hit testing phase completely. I\u0027m not sure I understand the implications of such a change, so I d appreciate any feedback on this issue.",
+      "parentUuid": "7b85313b_e13390ca",
+      "revId": "6b44582ce4116bafa3f00d5ee37d1ffbdb73497a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "34570912_cb630c09",
         "filename": "third_party/WebKit/Source/core/layout/LayoutBlock.cpp",
         "patchSetId": 2
