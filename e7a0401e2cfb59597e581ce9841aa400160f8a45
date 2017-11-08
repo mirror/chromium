@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "40bb8c8c_b4c3b054",
+        "filename": "third_party/WebKit/LayoutTests/external/wpt/mediacapture-streams/MediaStream-default-feature-policy.https.html",
+        "patchSetId": 11
+      },
+      "lineNbr": 40,
+      "author": {
+        "id": 1247458
+      },
+      "writtenOn": "2017-11-08T15:21:07Z",
+      "side": 1,
+      "message": "The spec indeed says the error name, not the error message.\nI spent some time understanding the test code and found how to update how the error is checked and updated the only other call-site for this test function.",
+      "parentUuid": "a1ad211d_7f83eb6b",
+      "range": {
+        "startLine": 40,
+        "startChar": 24,
+        "endLine": 40,
+        "endChar": 108
+      },
+      "revId": "e7a0401e2cfb59597e581ce9841aa400160f8a45",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "37b97706_e0fbfd42",
         "filename": "third_party/WebKit/LayoutTests/virtual/feature-policy-permissions/external/wpt/mediacapture-streams/GUM-impossible-constraint.https-expected.txt",
         "patchSetId": 11
@@ -39,6 +63,24 @@
       "revId": "e7a0401e2cfb59597e581ce9841aa400160f8a45",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "dcd06d17_f1435b73",
+        "filename": "third_party/WebKit/LayoutTests/virtual/feature-policy-permissions/external/wpt/mediacapture-streams/GUM-impossible-constraint.https-expected.txt",
+        "patchSetId": 11
+      },
+      "lineNbr": 3,
+      "author": {
+        "id": 1247458
+      },
+      "writtenOn": "2017-11-08T15:21:07Z",
+      "side": 1,
+      "message": "Foolip explained that in order to get a virtual test to run, an expectation file needs to be present, even if it\u0027s all PASS. And no, the cl checks won\u0027t complain about those since they are required.",
+      "parentUuid": "37b97706_e0fbfd42",
+      "revId": "e7a0401e2cfb59597e581ce9841aa400160f8a45",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -71,6 +113,24 @@
       "side": 1,
       "message": "Ideally, we would have used ExceptionCode directly, but due to the visibility restrictions across layers, we unfortunately need an intermediate enum that has to replicate either the lower-layer or the upper-layer enum and make the translation in one of the layers.\nIn this case, I\u0027m inclined to make the translation in the uppermost layer since the lower-level error carries more information and it\u0027s probably better to lose that extra info as late as possible so that it\u0027s available in case we ever need it. It\u0027s also simpler if we ever need to send the error from some other place in the lower layers.\nHowever, I\u0027ll let orphis@ make the final decision on this one since both approaches would work.",
       "parentUuid": "c21bbfb5_efdfe935",
+      "revId": "e7a0401e2cfb59597e581ce9841aa400160f8a45",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "845df68e_80088d6b",
+        "filename": "third_party/WebKit/Source/modules/mediastream/UserMediaRequest.cpp",
+        "patchSetId": 11
+      },
+      "lineNbr": 530,
+      "author": {
+        "id": 1247458
+      },
+      "writtenOn": "2017-11-08T15:21:07Z",
+      "side": 1,
+      "message": "As Guido said, we just don\u0027t have access to the DOMException enum from the layer that is propagating the error in the first place.\nI agree with the concept of propagating the detailed error as far as possible. It can easily be changed later if we need to.",
+      "parentUuid": "fc8f19cb_b54097d8",
       "revId": "e7a0401e2cfb59597e581ce9841aa400160f8a45",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
