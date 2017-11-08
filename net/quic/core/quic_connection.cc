@@ -1454,7 +1454,13 @@ void QuicConnection::WritePendingRetransmissions() {
     // Flush the packet generator before making a new packet.
     // TODO(ianswett): Implement ReserializeAllFrames as a separate path that
     // does not require the creator to be flushed.
-    packet_generator_.FlushAllQueuedFrames();
+    // TODO(fayang): FlushAllQueuedFrames should only be called once, and should
+    // be moved outside of the loop. Also, CanWrite is not checked after the
+    // generator is flushed.
+    {
+      ScopedPacketBundler bundler(this, NO_ACK);
+      packet_generator_.FlushAllQueuedFrames();
+    }
     char buffer[kMaxPacketSize];
     packet_generator_.ReserializeAllFrames(pending, buffer, kMaxPacketSize);
   }
