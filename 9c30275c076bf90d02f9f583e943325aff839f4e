@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "9f0a07cf_71b47e8f",
+        "filename": "tools/cygprofile/anchor_functions.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 13,
+      "author": {
+        "id": 1154589
+      },
+      "writtenOn": "2017-11-08T14:08:45Z",
+      "side": 1,
+      "message": "The header comment should probably be reduced to just explain what\u0027s exported in the header, and generally to not be exactly the same as the .cc file as that\u0027s not maintainable.",
+      "range": {
+        "startLine": 13,
+        "startChar": 27,
+        "endLine": 13,
+        "endChar": 31
+      },
+      "revId": "9c30275c076bf90d02f9f583e943325aff839f4e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
