@@ -69,6 +69,24 @@
       "revId": "2ac139969b94ea3a2dcb897a2de21ef14b2e8703",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c9f1dff0_cd1394c4",
+        "filename": "chrome/browser/ui/ash/vpn_list_forwarder.cc",
+        "patchSetId": 20
+      },
+      "lineNbr": 51,
+      "author": {
+        "id": 1001168
+      },
+      "writtenOn": "2017-11-08T01:30:44Z",
+      "side": 1,
+      "message": "Hm... OK. It seems like another option would be to have the C++ type in //ash, but I\u0027m not an OWNER (and not familiar with how this is supposed to be structured).\n\nTo unblock this CL, please convert this to be a TypeConverter specialization: https://chromium.googlesource.com/chromium/src/+/master/docs/security/mojo.md#Do-not-write-one_off-functions-to-convert-to_from-Mojo-types\n\nThen at least we can keep track of code that\u0027s doing these conversions, since we\u0027d like to minimize / eliminate this as much as possible.",
+      "parentUuid": "8ab22dbc_d942fa68",
+      "revId": "2ac139969b94ea3a2dcb897a2de21ef14b2e8703",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
