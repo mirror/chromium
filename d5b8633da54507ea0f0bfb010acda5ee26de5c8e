@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "13f6e0ed_429f6131",
+        "filename": "net/spdy/chromium/http2_push_promise_index.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 57,
+      "author": {
+        "id": 1116491
+      },
+      "writtenOn": "2017-11-08T16:34:41Z",
+      "side": 1,
+      "message": "The same error logging macro is used at https://cs.chromium.org/chromium/src/net/base/host_port_pair.cc?l\u003d68.",
+      "range": {
+        "startLine": 57,
+        "startChar": 0,
+        "endLine": 57,
+        "endChar": 77
+      },
+      "revId": "d5b8633da54507ea0f0bfb010acda5ee26de5c8e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "fac4fd55_34d7644c",
+        "filename": "net/spdy/chromium/http2_push_promise_index_test.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 67,
+      "author": {
+        "id": 1116491
+      },
+      "writtenOn": "2017-11-08T16:34:41Z",
+      "side": 1,
+      "message": "The same test macro is used at https://cs.chromium.org/chromium/src/net/base/host_port_pair_unittest.cc?l\u003d79.",
+      "range": {
+        "startLine": 67,
+        "startChar": 0,
+        "endLine": 67,
+        "endChar": 53
+      },
+      "revId": "d5b8633da54507ea0f0bfb010acda5ee26de5c8e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    }
+  ]
+}
