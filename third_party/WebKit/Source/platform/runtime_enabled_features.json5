@@ -401,6 +401,10 @@
       status: "stable"
     },
     {
+      name: "FeaturePolicyJavaScriptInterface",
+      status: "experimental"
+    },
+    {
       name: "FetchRequestCache",
       status: "experimental",
     },
