@@ -16,6 +16,24 @@
       "revId": "c3f2aaca1143bd4629b3c5f8f22107cef8aab8f5",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6c25c82e_1725b55f",
+        "filename": "chrome/browser/task_manager/task_manager_browsertest.cc",
+        "patchSetId": 27
+      },
+      "lineNbr": 949,
+      "author": {
+        "id": 1130134
+      },
+      "writtenOn": "2017-11-08T23:06:28Z",
+      "side": 1,
+      "message": "\u003e So is chrome::GoForward() essentially a no-op here (i.e., it doesn\u0027t trigger a navigation in any frame)?\n\nIt does trigger a navigation, but all the dynamically created frames (all frames in this test) will go through a fresh navigation (rather than being restored to the previously seen URL).\n\nBefore this CL, the behavior is:\n\n1. state: tab1: a(b(b(c)))\n2. action: script navigating b(c) frame to d(e)\n3. state: tab1: a(b(d(e)))\n4. action: back\n5. state: tab1: a(b(b(c)))\n6. action: forward into a new background tab\n7. state: tab1: a(b(b(c))); tab2: a(b(d(e)))\n\nAfter this CL, the behavior is the same except the end:\n\n5. state: tab1: a(b(b(c)))\n6. action: forward into a new background tab\n7. state: tab1: a(b(b(c))); tab2: a(b(b(c)))\n\nThis is because after this CL, the b(c) frame created (dynamically / by script) in tab2 will get a fresh, random \"unique name\" and therefore won\u0027t be matched to the history entry for d(e).\n\n\u003e I\u0027m trying to understand the logic behind removing the GoForward call, versus leaving it in and updating the expectation.\n\nI see the following options:\n\n\nOptionA: Land as-is and hope that (eventually :-/) things will be fixed through https://crbug.com/780038.\n\n\nOptionB: Restore the forward/new-background-tab action and tweak test assertions.  Note that kNullProcessId (old lines 954 and 957) are somewhat meaningless if we make them match b.com and c.com instead of d.com and e.com - b.com and c.com from tab1 will be immediately matched (and not b.com and c.com from tab2).  I also couldn\u0027t make memory assertions work in this case, because the assertions on old lines 970 and 972 expect *exactly* one matching row and there will now be 2 b.com frames and 2 c.com frames.  The \"exactly one\" expectation is hardcoded in WaitForTaskManagerStatToExceed and is difficult to change outside of task_manager_browsertest_util.cc because it doesn\u0027t expose ResourceChangeObserver to outsiders.\n\n\nOptionC: Restore the forward navigation, but keep it in the same tab.  This seems to work with a few tweaks of test expectations.  With option C, the behavior is:\n\n5. state: tab1: a(b(b(c)))\n6. action: forward\n7. state: tab1: a(b(d(e)))\n\nThis is because the b(c) frame is reused here (not recreated like in tab2 in option B).  Since the frame is reused, it\u0027s unique name will match the name stored in the corresponding history entry.\n\n\nFWIW, I went forward with option C in the latest patchset.  WDYT?",
+      "parentUuid": "f859ef33_b5261af2",
+      "revId": "c3f2aaca1143bd4629b3c5f8f22107cef8aab8f5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }

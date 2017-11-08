@@ -16,6 +16,24 @@
       "revId": "f1d468e87426765c55bc7cd8194799e14267732d",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e660661d_5b787f17",
+        "filename": "chrome/browser/task_manager/task_manager_browsertest.cc",
+        "patchSetId": 27
+      },
+      "lineNbr": 956,
+      "author": {
+        "id": 1130134
+      },
+      "writtenOn": "2017-11-08T23:06:28Z",
+      "side": 0,
+      "message": "\u003e I\u0027d rather not lose the kNullProcessID coverage. This ensures that the temporarily-created null pid rows don\u0027t last forever.\n\nAck.  I\u0027ve incorrectly (and not sure why :-/) assumed that this test mostly cares about correct memory columns after (any) history navigation.  You\u0027re right - the null pid verification is also important and should be preserved.\n\nI hope that the CURRENT_TAB vs NEW_BACKGROUND_TAB aspect of the test is not important.\n\u003e \n\u003e I think it would suffice to to add (after line 947, before line 948) the following assertion:\n\u003e \n\u003e ASSERT_NO_FATAL_FAILURE(WaitForTaskManagerStatToExceed(\n\u003e       MatchSubframe(\"http://c.com/\"), ColumnSpecifier::PROCESS_ID,\n\u003e       base::kNullProcessId));\n\nPlease see my other comment for an explanation why this wouldn\u0027t be sufficient.",
+      "parentUuid": "f80f48d6_f05f9893",
+      "revId": "f1d468e87426765c55bc7cd8194799e14267732d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
