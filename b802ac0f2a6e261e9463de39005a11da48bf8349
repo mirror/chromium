@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "578562d9_3e7692b3",
+        "filename": "chrome/browser/extensions/api/tabs/tabs_api.cc",
+        "patchSetId": 13
+      },
+      "lineNbr": 224,
+      "author": {
+        "id": 1145669
+      },
+      "writtenOn": "2017-11-08T16:42:22Z",
+      "side": 1,
+      "message": "The problem is this is generated from [1], and in the API design they wanted to use the new window state called \u0027locked\u0027 (ie. chrome.windows.create({url: ..., state: \u0027locked\u0027})). Might try and rename it to some variant of \u0027locked-fullscreen\u0027 if you think that\u0027s more consistent with the rest. WDYT?\n\n[1] https://chromium-review.googlesource.com/c/chromium/src/+/723422/13/chrome/common/extensions/api/windows.json",
+      "parentUuid": "f6d7dbb1_94e5189b",
+      "revId": "b802ac0f2a6e261e9463de39005a11da48bf8349",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "21a616f6_bc87c843",
         "filename": "chrome/browser/extensions/api/tabs/tabs_api.cc",
         "patchSetId": 13
@@ -33,6 +51,24 @@
       "revId": "b802ac0f2a6e261e9463de39005a11da48bf8349",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7663a4bc_9660dce5",
+        "filename": "chrome/browser/extensions/api/tabs/tabs_api.cc",
+        "patchSetId": 13
+      },
+      "lineNbr": 225,
+      "author": {
+        "id": 1145669
+      },
+      "writtenOn": "2017-11-08T16:42:22Z",
+      "side": 1,
+      "message": "I see, that would work, thanks.",
+      "parentUuid": "21a616f6_bc87c843",
+      "revId": "b802ac0f2a6e261e9463de39005a11da48bf8349",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -71,6 +107,24 @@
     },
     {
       "key": {
+        "uuid": "fe678df6_1119a82b",
+        "filename": "chrome/browser/extensions/api/tabs/tabs_api.cc",
+        "patchSetId": 13
+      },
+      "lineNbr": 605,
+      "author": {
+        "id": 1145669
+      },
+      "writtenOn": "2017-11-08T16:42:22Z",
+      "side": 1,
+      "message": "Oh right, thanks for the hint! Done.",
+      "parentUuid": "bfddd998_6240732f",
+      "revId": "b802ac0f2a6e261e9463de39005a11da48bf8349",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "6ac3dbfd_ebf10d28",
         "filename": "chrome/browser/extensions/api/tabs/tabs_api.cc",
         "patchSetId": 13
@@ -88,6 +142,24 @@
     },
     {
       "key": {
+        "uuid": "e7142955_bbc1d5a0",
+        "filename": "chrome/browser/extensions/api/tabs/tabs_api.cc",
+        "patchSetId": 13
+      },
+      "lineNbr": 700,
+      "author": {
+        "id": 1145669
+      },
+      "writtenOn": "2017-11-08T16:42:22Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "6ac3dbfd_ebf10d28",
+      "revId": "b802ac0f2a6e261e9463de39005a11da48bf8349",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "e93c7b07_96f971b2",
         "filename": "chrome/browser/extensions/window_controller.cc",
         "patchSetId": 13
@@ -102,6 +174,24 @@
       "revId": "b802ac0f2a6e261e9463de39005a11da48bf8349",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "39ee4475_9b0f4fee",
+        "filename": "chrome/browser/extensions/window_controller.cc",
+        "patchSetId": 13
+      },
+      "lineNbr": 95,
+      "author": {
+        "id": 1145669
+      },
+      "writtenOn": "2017-11-08T16:42:22Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "e93c7b07_96f971b2",
+      "revId": "b802ac0f2a6e261e9463de39005a11da48bf8349",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }

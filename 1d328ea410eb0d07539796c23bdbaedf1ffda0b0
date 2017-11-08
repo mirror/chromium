@@ -149,6 +149,30 @@
     },
     {
       "key": {
+        "uuid": "2e02167a_da411812",
+        "filename": "chrome/browser/extensions/api/tabs/tabs_api.cc",
+        "patchSetId": 12
+      },
+      "lineNbr": 589,
+      "author": {
+        "id": 1145669
+      },
+      "writtenOn": "2017-11-08T16:42:22Z",
+      "side": 1,
+      "message": "Removed FeatureSwitch so this is gone as well.",
+      "parentUuid": "c91997a2_60407313",
+      "range": {
+        "startLine": 589,
+        "startChar": 6,
+        "endLine": 589,
+        "endChar": 58
+      },
+      "revId": "1d328ea410eb0d07539796c23bdbaedf1ffda0b0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "934bf5a1_c0152921",
         "filename": "chrome/browser/extensions/api/tabs/tabs_api.cc",
         "patchSetId": 12
@@ -267,6 +291,30 @@
     },
     {
       "key": {
+        "uuid": "74bc8800_7167232d",
+        "filename": "chrome/browser/extensions/api/tabs/tabs_api.cc",
+        "patchSetId": 12
+      },
+      "lineNbr": 684,
+      "author": {
+        "id": 1145669
+      },
+      "writtenOn": "2017-11-08T16:42:22Z",
+      "side": 1,
+      "message": "On second thought, I put it below inside \"switch (show_state)\" - that seems better actually, right?",
+      "parentUuid": "a6bf891d_93d05c54",
+      "range": {
+        "startLine": 684,
+        "startChar": 0,
+        "endLine": 684,
+        "endChar": 24
+      },
+      "revId": "1d328ea410eb0d07539796c23bdbaedf1ffda0b0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "18d4db8a_3f8ce234",
         "filename": "chrome/browser/extensions/api/tabs/tabs_api.cc",
         "patchSetId": 12
@@ -364,6 +412,24 @@
       "revId": "1d328ea410eb0d07539796c23bdbaedf1ffda0b0",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a27826af_43da1cc5",
+        "filename": "chrome/browser/extensions/window_open_apitest.cc",
+        "patchSetId": 12
+      },
+      "lineNbr": 387,
+      "author": {
+        "id": 1145669
+      },
+      "writtenOn": "2017-11-08T16:42:22Z",
+      "side": 1,
+      "message": "Added them here after all.",
+      "parentUuid": "7effd717_1e1c472d",
+      "revId": "1d328ea410eb0d07539796c23bdbaedf1ffda0b0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -576,6 +642,30 @@
       "revId": "1d328ea410eb0d07539796c23bdbaedf1ffda0b0",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "56a5ff13_63033116",
+        "filename": "extensions/common/feature_switch.cc",
+        "patchSetId": 12
+      },
+      "lineNbr": 71,
+      "author": {
+        "id": 1145669
+      },
+      "writtenOn": "2017-11-08T16:42:22Z",
+      "side": 1,
+      "message": "Ok, removed the FeatureSwitch.",
+      "parentUuid": "7b52213a_130e5888",
+      "range": {
+        "startLine": 71,
+        "startChar": 12,
+        "endLine": 71,
+        "endChar": 43
+      },
+      "revId": "1d328ea410eb0d07539796c23bdbaedf1ffda0b0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
