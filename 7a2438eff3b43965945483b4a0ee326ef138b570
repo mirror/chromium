@@ -16,6 +16,24 @@
       "revId": "7a2438eff3b43965945483b4a0ee326ef138b570",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "12c90c27_09baab99",
+        "filename": "components/viz/service/frame_sinks/compositor_frame_sink_impl.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 23,
+      "author": {
+        "id": 1002076
+      },
+      "writtenOn": "2017-11-08T20:22:53Z",
+      "side": 1,
+      "message": "No, CapturableFrameSink won\u0027t become a mojo interface.\n\nI did it this way since it seemed to work best in the current code structure. The two main concerns are:\n\n1. Each [Root]CompositorFrameSinkImpl has a private pointer to a CompositorFrameSinkSupport. So, I could add an accessor method to [Root]CompositorFrameSinkImpl to get access to the CompositorFrameSinkSupport; but then I\u0027d be exposing something private. Instead, I followed the existing pattern where [Root]CompositorFrameSinkImpl is a \"shell\" that simply delegates many method calls to its |support_|.\n\n2. FrameSinkManagerImpl has the mapping from FrameSinkIds to [Root]CompositorFrameSinkImpls. My upcoming FrameSinkVideoCapturer will need to ask the manager to look-up a CapturableFrameSink instance by its FrameSinkId. This new \"find\" method that I want to add to FrameSinkManagerImpl becomes trivial if [Root]CompositorFrameSinkImpl implements this interface. (See my big WIP CL; specifically: https://chromium-review.googlesource.com/c/chromium/src/+/757822/1/components/viz/service/frame_sinks/frame_sink_manager_impl.cc#340)\n\nWDYT?",
+      "parentUuid": "2d49fc40_3fddf9cb",
+      "revId": "7a2438eff3b43965945483b4a0ee326ef138b570",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
