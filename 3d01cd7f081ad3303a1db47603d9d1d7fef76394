@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "050bd8bc_a5eb829c",
+        "filename": "tools/metrics/histograms/histograms.xml",
+        "patchSetId": 3
+      },
+      "lineNbr": 78350,
+      "author": {
+        "id": 1002483
+      },
+      "writtenOn": "2017-11-08T21:51:27Z",
+      "side": 1,
+      "message": "Instead of modifying the existing histogram, please mark it as obsolete and create a new one.",
+      "range": {
+        "startLine": 78350,
+        "startChar": 78,
+        "endLine": 78350,
+        "endChar": 0
+      },
+      "revId": "3d01cd7f081ad3303a1db47603d9d1d7fef76394",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "567c2fdc_ea9ad3fb",
+        "filename": "tools/metrics/histograms/histograms.xml",
+        "patchSetId": 3
+      },
+      "lineNbr": 78352,
+      "author": {
+        "id": 1002483
+      },
+      "writtenOn": "2017-11-08T21:51:27Z",
+      "side": 1,
+      "message": "This no longer has anything to do with profiles?",
+      "range": {
+        "startLine": 78352,
+        "startChar": 11,
+        "endLine": 78352,
+        "endChar": 58
+      },
+      "revId": "3d01cd7f081ad3303a1db47603d9d1d7fef76394",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
