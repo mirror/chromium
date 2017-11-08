@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "95294252_f47ce595",
+        "filename": "ui/compositor/layer_delegate.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 34,
+      "author": {
+        "id": 1002897
+      },
+      "writtenOn": "2017-11-08T20:40:45Z",
+      "side": 1,
+      "message": "The reader doesn\u0027t need to know how animations are implemented.\n\nI removed the word \"threaded\" from comments and instead highlighted the fact that OnLayerBoundsChanged() is called at every step of an animation while OnLayerTransformed()/OnLayerOpacityChanged() are only guaranteed to be called before the first frame is rendered.\n\nIIUC, bounds animations are never threaded because every change to the bounds of a layer may affect its content (unlike a change to the transform or opacity). ajuma@: Is this right?",
+      "parentUuid": "6b603572_eed85738",
+      "revId": "42ba3daa1e539d4e32e1ef24507df45a202e60eb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "e1b5f2fc_f7dacafe",
         "filename": "ui/compositor/layer_delegate.h",
         "patchSetId": 5
@@ -33,6 +51,24 @@
       "revId": "42ba3daa1e539d4e32e1ef24507df45a202e60eb",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7ec3de41_8b40c495",
+        "filename": "ui/compositor/layer_delegate.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 39,
+      "author": {
+        "id": 1002897
+      },
+      "writtenOn": "2017-11-08T20:40:45Z",
+      "side": 1,
+      "message": "see previous comment",
+      "parentUuid": "e1b5f2fc_f7dacafe",
+      "revId": "42ba3daa1e539d4e32e1ef24507df45a202e60eb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -53,6 +89,24 @@
     },
     {
       "key": {
+        "uuid": "1e94e310_7e45ebf7",
+        "filename": "ui/compositor/layer_unittest.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 2316,
+      "author": {
+        "id": 1002897
+      },
+      "writtenOn": "2017-11-08T20:40:45Z",
+      "side": 1,
+      "message": "OnLayerBoundsChanged() expects to receive the old bounds. Added |initial_bounds| variable to make this clearer.",
+      "parentUuid": "6e67fd98_50628f0a",
+      "revId": "42ba3daa1e539d4e32e1ef24507df45a202e60eb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "aaedc079_4398d287",
         "filename": "ui/compositor/layer_unittest.cc",
         "patchSetId": 5
@@ -70,6 +124,24 @@
     },
     {
       "key": {
+        "uuid": "0d0efaea_5e3a5f64",
+        "filename": "ui/compositor/layer_unittest.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 2402,
+      "author": {
+        "id": 1002897
+      },
+      "writtenOn": "2017-11-08T20:40:45Z",
+      "side": 1,
+      "message": "CreateInterpolatedTransformElement (below) is expected to return a non-threaded LayerAnimationElement. Added ASSERT_FALSE(element-\u003eIsThreaded()) to ensure that this doesn\u0027t change.",
+      "parentUuid": "aaedc079_4398d287",
+      "revId": "42ba3daa1e539d4e32e1ef24507df45a202e60eb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "65a393f2_1f7da057",
         "filename": "ui/compositor/layer_unittest.cc",
         "patchSetId": 5
@@ -84,6 +156,24 @@
       "revId": "42ba3daa1e539d4e32e1ef24507df45a202e60eb",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c3b501cb_6bcf0e14",
+        "filename": "ui/compositor/layer_unittest.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 2515,
+      "author": {
+        "id": 1002897
+      },
+      "writtenOn": "2017-11-08T20:40:45Z",
+      "side": 1,
+      "message": "The client can call \"animator-\u003eIsAnimatingProperty(LayerAnimationElement::PROPERTY)\" to know if a property is done animating.\n\nHaving a DONE_ANIMATING value in the PropertyChangeReason enum would be convenient, but:\n- It would require more refactoring, since the LayerAnimationElements which make the Set**FromAnimation() calls don\u0027t know when the animation is ending.\n- WindowOcclusionTracker would still need to call IsAnimatingOnePropertyOf() because it needs to perform an action when there are no more BOUNDS/TRANSFORM/OPACITY animations, not when a single animation ends.",
+      "parentUuid": "65a393f2_1f7da057",
+      "revId": "42ba3daa1e539d4e32e1ef24507df45a202e60eb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
