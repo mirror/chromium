@@ -199,7 +199,8 @@ class RenderThreadImplBrowserTest : public testing::Test {
 
     channel_ =
         IPC::ChannelProxy::Create(IPC::ChannelMojo::CreateServerFactory(
-                                      std::move(pipe.handle0), io_task_runner),
+                                      std::move(pipe.handle0), io_task_runner,
+                                      base::ThreadTaskRunnerHandle::Get()),
                                   nullptr, io_task_runner);
 
     mock_process_.reset(new MockRenderProcess);
