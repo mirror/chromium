@@ -16,6 +16,24 @@
       "revId": "02db3c56a1aeeba925fdacd43953c578eab2f4e2",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "135a792f_e7a5a199",
+        "filename": "ui/compositor/compositor.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 551,
+      "author": {
+        "id": 1003154
+      },
+      "writtenOn": "2017-11-08T21:47:36Z",
+      "side": 1,
+      "message": "I don\u0027t really know this code well, so I\u0027ll leave it to you and piman to decide.",
+      "parentUuid": "4d78fa5b_dbf33d3f",
+      "revId": "02db3c56a1aeeba925fdacd43953c578eab2f4e2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
