@@ -2982,6 +2982,7 @@ void Document::CancelParsing() {
   SetParsingState(kFinishedParsing);
   SetReadyState(kComplete);
   SuppressLoadEvent();
+  CheckCompleted();
 }
 
 DocumentParser* Document::OpenForNavigation(
