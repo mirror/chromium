@@ -345,6 +345,13 @@ class AURA_EXPORT Window : public ui::LayerDelegate,
   // return a valid FrameSinkId.
   viz::FrameSinkId GetFrameSinkId() const;
 
+  viz::FrameSinkId embed_frame_sink_id() { return embed_frame_sink_id_; }
+  void set_embed_frame_sink_id(viz::FrameSinkId embed_frame_sink_id) {
+    embed_frame_sink_id_ = embed_frame_sink_id;
+  }
+  // Returns whether this window is an embed window.
+  bool IsEmbeddingClient() const;
+
  protected:
   // Deletes (or removes if not owned by parent) all child windows. Intended for
   // use from the destructor.
@@ -504,6 +511,9 @@ class AURA_EXPORT Window : public ui::LayerDelegate,
   bool visible_;
 
   int id_;
+
+  // Only set when it is embedding another client inside.
+  viz::FrameSinkId embed_frame_sink_id_;
 
   // Whether layer is initialized as non-opaque. Defaults to false.
   bool transparent_;
