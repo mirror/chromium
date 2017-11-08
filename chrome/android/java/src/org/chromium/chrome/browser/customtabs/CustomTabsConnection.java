@@ -717,6 +717,7 @@ public class CustomTabsConnection {
 
     public boolean validateRelationship(
             CustomTabsSessionToken sessionToken, int relation, Uri origin, Bundle extras) {
+        if (!mWarmupHasBeenCalled.get()) return false;
         return mClientManager.validateRelationship(sessionToken, relation, origin, extras);
     }
 
