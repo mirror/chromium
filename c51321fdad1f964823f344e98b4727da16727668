@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "36f7ed1d_b097ea8b",
+        "filename": "content/browser/web_contents/web_contents_impl.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 6059,
+      "author": {
+        "id": 1002725
+      },
+      "writtenOn": "2017-11-08T20:35:38Z",
+      "side": 1,
+      "message": "no need for these I think, WebContentsViewAndroid can just get the delegate directly from WebContents?\n\nplus I\u0027m not sure if this compiles on desktop since the delegate calls are OS_ANDROID",
+      "revId": "c51321fdad1f964823f344e98b4727da16727668",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
