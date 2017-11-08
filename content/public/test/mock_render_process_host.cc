@@ -344,6 +344,10 @@ bool MockRenderProcessHost::IsKeepAliveRefCountDisabled() {
   return false;
 }
 
+base::TimeDelta MockRenderProcessHost::GetKeepaliveRequestTimeout() const {
+  return base::TimeDelta();
+}
+
 void MockRenderProcessHost::PurgeAndSuspend() {}
 
 void MockRenderProcessHost::Resume() {}

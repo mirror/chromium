@@ -16,10 +16,6 @@
 
 namespace content {
 
-namespace {
-constexpr base::TimeDelta kDefaultTimeout = base::TimeDelta::FromSeconds(30);
-}  // namespace
-
 class KeepAliveHandleFactory::Context final : public base::RefCounted<Context> {
  public:
   explicit Context(RenderProcessHost* process_host)
@@ -41,10 +37,13 @@ class KeepAliveHandleFactory::Context final : public base::RefCounted<Context> {
 
   void DetachLater() {
     DCHECK_CURRENTLY_ON(BrowserThread::UI);
-    auto timeout = kDefaultTimeout;
+    RenderProcessHost* process_host = RenderProcessHost::FromID(process_id_);
+    base::TimeDelta timeout;
+    if (process_host)
+      timeout = process_host->GetKeepaliveRequestTimeout();
     int timeout_set_by_finch_in_sec = base::GetFieldTrialParamByFeatureAsInt(
         features::kKeepAliveRendererForKeepaliveRequests, "timeout_in_sec",
-        kDefaultTimeout.InSeconds());
+        timeout.InSeconds());
     // Adopt only "reasonable" values.
     if (timeout_set_by_finch_in_sec > 0 && timeout_set_by_finch_in_sec <= 60) {
       timeout = base::TimeDelta::FromSeconds(timeout_set_by_finch_in_sec);
