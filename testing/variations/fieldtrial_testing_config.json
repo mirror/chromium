@@ -876,9 +876,9 @@
             "experiments": [
                 {
                     "name": "Expected",
-                    "params": {
-                        "enable_ranker_integration": "true"
-                    }
+                    "enable_features": [
+                        "ContextualSearchMlTapSuppression"
+                    ]
                 }
             ]
         }
