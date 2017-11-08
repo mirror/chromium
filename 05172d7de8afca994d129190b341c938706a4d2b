@@ -22,6 +22,30 @@
       "revId": "05172d7de8afca994d129190b341c938706a4d2b",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f0de8baf_9e46043b",
+        "filename": "ui/gfx/color_space.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 221,
+      "author": {
+        "id": 1002358
+      },
+      "writtenOn": "2017-11-08T22:59:14Z",
+      "side": 1,
+      "message": "Like, find gamma that minimizes the error of F(x)\u003dx^gamma versus the table? Yeah, I think that\u0027s a good thing to do.\n\nMost of the profiles I\u0027ve found online have 3 different tables that can\u0027t be well-approximated together (so I sort of want to consider adding support for that, but ... also sort of don\u0027t).\n\nUltimately whatever result we get out of this is then fed into a LUT to the true SkColorSpace.",
+      "parentUuid": "a3145947_20ce7a89",
+      "range": {
+        "startLine": 221,
+        "startChar": 46,
+        "endLine": 221,
+        "endChar": 0
+      },
+      "revId": "05172d7de8afca994d129190b341c938706a4d2b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
