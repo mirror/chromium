@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "33a2a084_81ab4d3c",
+        "filename": "chrome/android/webapk/shell_apk/res/mipmap-mdpi/ic_launcher_foreground.png",
+        "patchSetId": 9
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1001618
+      },
+      "writtenOn": "2017-11-08T18:27:32Z",
+      "side": 1,
+      "message": "how did you pick this icon? I think we should only use chromium-style icons here",
+      "revId": "c8ca1cd52ed6f70c9971b3a51e8f37e941eaf4a9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
