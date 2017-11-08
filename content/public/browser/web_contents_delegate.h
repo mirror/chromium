@@ -419,6 +419,10 @@ class CONTENT_EXPORT WebContentsDelegate {
                                    int version,
                                    const std::vector<gfx::RectF>& rects,
                                    const gfx::RectF& active_rect) {}
+
+  virtual int GetTopControlsHeight() const;
+  virtual int GetBottomControlsHeight() const;
+  virtual bool DoBrowserControlsShrinkBlinkSize() const;
 #endif
 
   // Invoked when the preferred size of the contents has been changed.

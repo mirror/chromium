@@ -733,6 +733,9 @@ class CONTENT_EXPORT WebContentsImpl : public WebContents,
   void FocusedNodeTouched(bool editable) override;
   void DidReceiveCompositorFrame() override;
   bool IsShowingContextMenuOnPage() const override;
+  int GetTopControlsHeight() const override;
+  int GetBottomControlsHeight() const override;
+  bool DoBrowserControlsShrinkBlinkSize() const override;
 
   // RenderFrameHostManager::Delegate ------------------------------------------
 

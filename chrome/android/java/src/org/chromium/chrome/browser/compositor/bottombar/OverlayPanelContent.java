@@ -180,6 +180,21 @@ public class OverlayPanelContent {
             public ContentVideoViewEmbedder getContentVideoViewEmbedder() {
                 return null;  // Have a no-op embedder be used.
             }
+
+            @Override
+            public int getTopControlsHeight() {
+                return mBarHeightPx;
+            }
+
+            @Override
+            public int getBottomControlsHeight() {
+                return 0;
+            }
+
+            @Override
+            public boolean controlsResizeView() {
+                return false;
+            }
         };
     }
 
@@ -260,7 +275,7 @@ public class OverlayPanelContent {
 
         mContentViewCore = createContentViewCore(mActivity);
 
-        ContentView cv = ContentView.createContentView(mActivity, mContentViewCore);
+        final ContentView cv = ContentView.createContentView(mActivity, mContentViewCore);
         if (mContentViewWidth != 0 || mContentViewHeight != 0) {
             int width = mContentViewWidth == 0 ? ContentView.DEFAULT_MEASURE_SPEC
                     : MeasureSpec.makeMeasureSpec(mContentViewWidth, MeasureSpec.EXACTLY);
@@ -349,9 +364,7 @@ public class OverlayPanelContent {
         if (mContentViewWidth != 0 && mContentViewHeight != 0) {
             onPhysicalBackingSizeChanged(mContentViewWidth, mContentViewHeight);
         }
-
-        mContentViewCore.setTopControlsHeight(mBarHeightPx, false);
-        mContentViewCore.setBottomControlsHeight(0);
+        panelWebContents.setSize(cv.getWidth(), cv.getHeight());
     }
 
     /**
@@ -496,9 +509,10 @@ public class OverlayPanelContent {
     }
 
     void onSizeChanged(int width, int height) {
-        if (mContentViewCore == null) return;
+        if (mContentViewCore == null || getWebContents() == null) return;
         mContentViewCore.onSizeChanged(width, height, mContentViewCore.getViewportWidthPix(),
                 mContentViewCore.getViewportHeightPix());
+        getWebContents().setSize(width, height);
     }
 
     void onPhysicalBackingSizeChanged(int width, int height) {

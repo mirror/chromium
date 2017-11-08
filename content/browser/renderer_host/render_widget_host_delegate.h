@@ -279,6 +279,15 @@ class CONTENT_EXPORT RenderWidgetHostDelegate {
   // Returns true if there is context menu shown on page.
   virtual bool IsShowingContextMenuOnPage() const;
 
+  // Returns the height of the top controls in DIP.
+  virtual int GetTopControlsHeight() const;
+
+  // Returns the height of the bottom controls in DIP.
+  virtual int GetBottomControlsHeight() const;
+
+  // Returns true if the browser controls resize Blink's view size.
+  virtual bool DoBrowserControlsShrinkBlinkSize() const;
+
  protected:
   virtual ~RenderWidgetHostDelegate() {}
 };

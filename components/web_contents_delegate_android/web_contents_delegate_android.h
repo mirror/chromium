@@ -112,6 +112,10 @@ class WebContentsDelegateAndroid : public content::WebContentsDelegate {
   void OnDidBlockFramebust(content::WebContents* web_contents,
                            const GURL& url) override;
 
+  int GetTopControlsHeight() const override;
+  int GetBottomControlsHeight() const override;
+  bool DoBrowserControlsShrinkBlinkSize() const override;
+
  protected:
   base::android::ScopedJavaLocalRef<jobject> GetJavaDelegate(JNIEnv* env) const;
 

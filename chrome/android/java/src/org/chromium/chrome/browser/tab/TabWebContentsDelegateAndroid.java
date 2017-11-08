@@ -509,6 +509,28 @@ public class TabWebContentsDelegateAndroid extends WebContentsDelegateAndroid {
     }
 
     @Override
+    public int getTopControlsHeight() {
+        FullscreenManager fullscreenManager = mTab.getFullscreenManager();
+        if (fullscreenManager == null) return 0;
+        float dipScale = mTab.getWindowAndroid().getDisplay().getDipScale();
+        return (int) (fullscreenManager.getTopControlsHeight() / dipScale);
+    }
+
+    @Override
+    public int getBottomControlsHeight() {
+        FullscreenManager fullscreenManager = mTab.getFullscreenManager();
+        if (fullscreenManager == null) return 0;
+        float dipScale = mTab.getWindowAndroid().getDisplay().getDipScale();
+        return (int) (fullscreenManager.getBottomControlsHeight() / dipScale);
+    }
+
+    @Override
+    public boolean controlsResizeView() {
+        FullscreenManager fullscreenManager = mTab.getFullscreenManager();
+        return fullscreenManager != null ? fullscreenManager.controlsResizeView() : false;
+    }
+
+    @Override
     public ContentVideoViewEmbedder getContentVideoViewEmbedder() {
         return new ActivityContentVideoViewEmbedder(mTab.getActivity()) {
             @Override

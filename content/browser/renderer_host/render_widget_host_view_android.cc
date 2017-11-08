@@ -697,7 +697,7 @@ gfx::Rect RenderWidgetHostViewAndroid::GetViewBounds() const {
   if (!content_view_core_)
     return default_bounds_;
 
-  gfx::Size size(content_view_core_->GetViewSize());
+  gfx::Size size(view_.GetSize());
   if (base::CommandLine::ForCurrentProcess()->HasSwitch(
           switches::kEnableOSKOverscroll)) {
     size.Enlarge(0, view_.GetSystemWindowInsetBottom() / view_.GetDipScale());
@@ -710,7 +710,7 @@ gfx::Size RenderWidgetHostViewAndroid::GetVisibleViewportSize() const {
   if (!content_view_core_)
     return default_bounds_.size();
 
-  return content_view_core_->GetViewSize();
+  return view_.GetSize();
 }
 
 gfx::Size RenderWidgetHostViewAndroid::GetPhysicalBackingSize() const {
@@ -726,26 +726,18 @@ gfx::Size RenderWidgetHostViewAndroid::GetPhysicalBackingSize() const {
 }
 
 bool RenderWidgetHostViewAndroid::DoBrowserControlsShrinkBlinkSize() const {
-  // Whether or not Blink's viewport size should be shrunk by the height of the
-  // URL-bar.
-  return content_view_core_ &&
-         content_view_core_->DoBrowserControlsShrinkBlinkSize();
+  RenderWidgetHostDelegate* delegate = host_->delegate();
+  return !delegate ? false : delegate->DoBrowserControlsShrinkBlinkSize();
 }
 
 float RenderWidgetHostViewAndroid::GetTopControlsHeight() const {
-  if (!content_view_core_)
-    return default_bounds_.x();
-
-  // The height of the browser controls.
-  return content_view_core_->GetTopControlsHeightDip();
+  RenderWidgetHostDelegate* delegate = host_->delegate();
+  return !delegate ? 0.f : delegate->GetTopControlsHeight();
 }
 
 float RenderWidgetHostViewAndroid::GetBottomControlsHeight() const {
-  if (!content_view_core_)
-    return 0.f;
-
-  // The height of the browser controls.
-  return content_view_core_->GetBottomControlsHeightDip();
+  RenderWidgetHostDelegate* delegate = host_->delegate();
+  return !delegate ? 0.f : delegate->GetBottomControlsHeight();
 }
 
 void RenderWidgetHostViewAndroid::UpdateCursor(const WebCursor& cursor) {
@@ -2097,14 +2089,6 @@ void RenderWidgetHostViewAndroid::SetContentViewCore(
   if (content_view_core != content_view_core_) {
     touch_selection_controller_.reset();
     RunAckCallbacks();
-    // TODO(yusufo) : Get rid of the below conditions and have a better handling
-    // for resizing after crbug.com/628302 is handled.
-    bool is_size_initialized = !content_view_core ||
-                               content_view_core->GetViewSize().width() != 0 ||
-                               content_view_core->GetViewSize().height() != 0;
-
-    if (content_view_core_ || is_size_initialized)
-      resize = true;
     if (content_view_core_) {
       view_.RemoveObserver(this);
       view_.RemoveFromParent();
@@ -2116,6 +2100,13 @@ void RenderWidgetHostViewAndroid::SetContentViewCore(
       parent_view->AddChild(&view_);
       parent_view->GetLayer()->AddChild(view_.GetLayer());
     }
+    // TODO(yusufo) : Get rid of the below conditions and have a better handling
+    // for resizing after crbug.com/628302 is handled.
+    bool is_size_initialized = !content_view_core ||
+                               view_.GetSize().width() != 0 ||
+                               view_.GetSize().height() != 0;
+    if (content_view_core_ || is_size_initialized)
+      resize = true;
     content_view_core_ = content_view_core;
   }
 
@@ -2184,6 +2175,10 @@ void RenderWidgetHostViewAndroid::OnGestureEvent(
     web_gesture.SetModifiers(blink::WebInputEvent::kNoModifiers);
   }
   SendGestureEvent(web_gesture);
+}
+
+void RenderWidgetHostViewAndroid::OnSizeChanged() {
+  WasResized();
 }
 
 void RenderWidgetHostViewAndroid::OnPhysicalBackingSizeChanged() {

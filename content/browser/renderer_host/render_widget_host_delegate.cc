@@ -123,4 +123,16 @@ bool RenderWidgetHostDelegate::IsShowingContextMenuOnPage() const {
   return false;
 }
 
+int RenderWidgetHostDelegate::GetTopControlsHeight() const {
+  return 0;
+}
+
+int RenderWidgetHostDelegate::GetBottomControlsHeight() const {
+  return 0;
+}
+
+bool RenderWidgetHostDelegate::DoBrowserControlsShrinkBlinkSize() const {
+  return false;
+}
+
 }  // namespace content

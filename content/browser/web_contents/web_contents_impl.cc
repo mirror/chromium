@@ -6056,6 +6056,18 @@ bool WebContentsImpl::IsShowingContextMenuOnPage() const {
   return showing_context_menu_;
 }
 
+int WebContentsImpl::GetTopControlsHeight() const {
+  return delegate_ ? delegate_->GetTopControlsHeight() : 0;
+}
+
+int WebContentsImpl::GetBottomControlsHeight() const {
+  return delegate_ ? delegate_->GetBottomControlsHeight() : 0;
+}
+
+bool WebContentsImpl::DoBrowserControlsShrinkBlinkSize() const {
+  return delegate_ ? delegate_->DoBrowserControlsShrinkBlinkSize() : false;
+}
+
 void WebContentsImpl::NotifyPreferencesChanged() {
   std::set<RenderViewHost*> render_view_host_set;
   for (FrameTreeNode* node : frame_tree_.Nodes()) {
