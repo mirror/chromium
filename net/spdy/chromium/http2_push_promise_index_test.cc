@@ -4,170 +4,223 @@
 
 #include "net/spdy/chromium/http2_push_promise_index.h"
 
-#include "base/run_loop.h"
 #include "net/base/host_port_pair.h"
 #include "net/base/privacy_mode.h"
-#include "net/log/test_net_log.h"
-#include "net/socket/socket_test_util.h"
-#include "net/spdy/chromium/spdy_session.h"
-#include "net/spdy/chromium/spdy_test_util_common.h"
-#include "net/test/cert_test_util.h"
-#include "net/test/test_data_directory.h"
+#include "net/test/gtest_util.h"
 #include "testing/gtest/include/gtest/gtest.h"
 #include "url/gurl.h"
 
+// For simplicity, these tests do not create SpdySession instances (necessary
+// for a non-null weak pointer) but use nullptr instead.  Streams are identified
+// by their SpdyStreamId.
+
 namespace net {
 namespace test {
+namespace {
+
+class TestDelegate : public Http2PushPromiseIndex::Delegate {
+ public:
+  TestDelegate() = delete;
+  TestDelegate(const SpdySessionKey& key, Http2PushPromiseIndex* index)
+      : key_(key), index_(index) {}
+  ~TestDelegate() override {}
+
+  bool ValidatePushedStream(const SpdySessionKey& key) const override {
+    return key.Equals(key_);
+  }
+
+  // SpdySession overrides Delegate::OnPushedStreamClaimed() and deletes claimed
+  // streams from its internal index, which calls back to
+  // Http2PushPromiseIndex::Unregister().  TestDelegate mimics this behavior.
+  void OnPushedStreamClaimed(const GURL& url, SpdyStreamId stream_id) override {
+    index_->Unregister(url, nullptr, stream_id);
+  }
+
+ private:
+  SpdySessionKey key_;
+  Http2PushPromiseIndex* index_;
+};
 
 class Http2PushPromiseIndexTest : public testing::Test {
  protected:
   Http2PushPromiseIndexTest()
       : url1_("https://www.example.org"),
         url2_("https://mail.example.com"),
-        host_port_pair1_(HostPortPair::FromURL(url1_)),
-        host_port_pair2_(HostPortPair::FromURL(url2_)),
-        key1_(host_port_pair1_, ProxyServer::Direct(), PRIVACY_MODE_ENABLED),
-        key2_(host_port_pair2_, ProxyServer::Direct(), PRIVACY_MODE_ENABLED),
-        http_network_session_(
-            SpdySessionDependencies::SpdyCreateSession(&session_deps_)) {}
+        key1_(HostPortPair::FromURL(url1_),
+              ProxyServer::Direct(),
+              PRIVACY_MODE_ENABLED),
+        key2_(HostPortPair::FromURL(url2_),
+              ProxyServer::Direct(),
+              PRIVACY_MODE_ENABLED) {}
 
-  NetLogWithSource log_;
   const GURL url1_;
   const GURL url2_;
-  const HostPortPair host_port_pair1_;
-  const HostPortPair host_port_pair2_;
   const SpdySessionKey key1_;
   const SpdySessionKey key2_;
-  SpdySessionDependencies session_deps_;
-  std::unique_ptr<HttpNetworkSession> http_network_session_;
   Http2PushPromiseIndex index_;
 };
 
+}  // namespace
+
+// Trying to unregister a stream not in the index should log to DFATAL.
+// Case 1: no streams for the given URL.
+TEST_F(Http2PushPromiseIndexTest, UnregisterNonexistingEntryCrashes1) {
+  EXPECT_DFATAL(index_.Unregister(url1_, nullptr, 2),
+                "Only a previously registered entry can be unregistered.");
+}
+
+// Trying to unregister a stream not in the index should log to DFATAL.
+// Case 2: there is a stream for the given URL, but not with the same
+// (SpdySession, SpdyStreamId) pair.
+TEST_F(Http2PushPromiseIndexTest, UnregisterNonexistingEntryCrashes2) {
+  TestDelegate delegate(key1_, &index_);
+  index_.Register(url1_, nullptr, 2, &delegate);
+  EXPECT_DFATAL(index_.Unregister(url1_, nullptr, 4),
+                "Only a previously registered entry can be unregistered.");
+  // Stream must be unregistered so that Http2PushPromiseIndex destructor
+  // does not crash.
+  index_.Unregister(url1_, nullptr, 2);
+}
+
+// Test that Claim() resets |stream_id| outparam if no stream found.
 TEST_F(Http2PushPromiseIndexTest, Empty) {
-  EXPECT_FALSE(index_.Find(key1_, url1_));
-  EXPECT_FALSE(index_.Find(key2_, url2_));
+  base::WeakPtr<SpdySession> spdy_session;
+  SpdyStreamId stream_id = 2;
+  index_.Claim(url1_, key1_, &spdy_session, &stream_id);
+  EXPECT_EQ(kNoPushedStreamFound, stream_id);
+
+  stream_id = 2;
+  index_.Claim(url1_, key2_, &spdy_session, &stream_id);
+  EXPECT_EQ(kNoPushedStreamFound, stream_id);
+
+  stream_id = 2;
+  index_.Claim(url2_, key1_, &spdy_session, &stream_id);
+  EXPECT_EQ(kNoPushedStreamFound, stream_id);
+
+  stream_id = 2;
+  index_.Claim(url2_, key2_, &spdy_session, &stream_id);
+  EXPECT_EQ(kNoPushedStreamFound, stream_id);
 }
 
-TEST_F(Http2PushPromiseIndexTest, FindMultipleSessionsWithDifferentUrl) {
-  MockRead reads[] = {MockRead(SYNCHRONOUS, ERR_IO_PENDING, 0)};
-  SSLSocketDataProvider ssl(SYNCHRONOUS, OK);
-  ssl.cert = ImportCertFromFile(GetTestCertsDirectory(), "spdy_pooling.pem");
-  // For first session.
-  SequencedSocketData data1(reads, arraysize(reads), nullptr, 0);
-  session_deps_.socket_factory->AddSSLSocketDataProvider(&ssl);
-  session_deps_.socket_factory->AddSocketDataProvider(&data1);
-  // For second session.
-  SequencedSocketData data2(reads, arraysize(reads), nullptr, 0);
-  session_deps_.socket_factory->AddSSLSocketDataProvider(&ssl);
-  session_deps_.socket_factory->AddSocketDataProvider(&data2);
+TEST_F(Http2PushPromiseIndexTest, FindMultipleStreamsWithDifferentUrl) {
+  // Test that Claim() works correctly with one stream in the index.
+  TestDelegate delegate1(key1_, &index_);
+  index_.Register(url1_, nullptr, 2, &delegate1);
 
-  base::WeakPtr<SpdySession> spdy_session1 =
-      CreateSpdySession(http_network_session_.get(), key1_, log_);
-  base::WeakPtr<SpdySession> spdy_session2 =
-      CreateSpdySession(http_network_session_.get(), key2_, log_);
-  // Read hanging socket data.
-  base::RunLoop().RunUntilIdle();
+  base::WeakPtr<SpdySession> spdy_session;
+  SpdyStreamId stream_id = 0;
+  index_.Claim(url1_, key1_, &spdy_session, &stream_id);
+  EXPECT_EQ(2u, stream_id);
 
-  EXPECT_FALSE(index_.Find(key1_, url1_));
-  EXPECT_FALSE(index_.Find(key2_, url2_));
+  // Test that the previous call of Claim() removed the stream from the index.
+  stream_id = 2;
+  index_.Claim(url1_, key1_, &spdy_session, &stream_id);
+  EXPECT_EQ(kNoPushedStreamFound, stream_id);
 
-  index_.RegisterUnclaimedPushedStream(url1_, spdy_session1);
+  // Test that Claim() works correctly with two streams in the index.
+  TestDelegate delegate2(key2_, &index_);
+  index_.Register(url1_, nullptr, 2, &delegate1);
+  index_.Register(url2_, nullptr, 4, &delegate2);
 
-  EXPECT_EQ(spdy_session1.get(), index_.Find(key1_, url1_).get());
-  EXPECT_FALSE(index_.Find(key2_, url2_));
+  // If SpdySessionKey does not match, Claim should not return a stream.
+  stream_id = 2;
+  index_.Claim(url1_, key2_, &spdy_session, &stream_id);
+  EXPECT_EQ(kNoPushedStreamFound, stream_id);
 
-  index_.RegisterUnclaimedPushedStream(url2_, spdy_session2);
+  stream_id = 2;
+  index_.Claim(url2_, key1_, &spdy_session, &stream_id);
+  EXPECT_EQ(kNoPushedStreamFound, stream_id);
 
-  EXPECT_EQ(spdy_session1.get(), index_.Find(key1_, url1_).get());
-  EXPECT_EQ(spdy_session2.get(), index_.Find(key2_, url2_).get());
+  // Claim both streams.
+  stream_id = 0;
+  index_.Claim(url1_, key1_, &spdy_session, &stream_id);
+  EXPECT_EQ(2u, stream_id);
 
-  index_.UnregisterUnclaimedPushedStream(url1_, spdy_session1.get());
+  stream_id = 0;
+  index_.Claim(url2_, key2_, &spdy_session, &stream_id);
+  EXPECT_EQ(4u, stream_id);
 
-  EXPECT_FALSE(index_.Find(key1_, url1_));
-  EXPECT_EQ(spdy_session2.get(), index_.Find(key2_, url2_).get());
+  // Test that the previous calls of Claim() removed the streams from the index.
+  stream_id = 2;
+  index_.Claim(url1_, key1_, &spdy_session, &stream_id);
+  EXPECT_EQ(kNoPushedStreamFound, stream_id);
 
-  index_.UnregisterUnclaimedPushedStream(url2_, spdy_session2.get());
-
-  EXPECT_FALSE(index_.Find(key1_, url1_));
-  EXPECT_FALSE(index_.Find(key2_, url2_));
-
-  // SpdySession weak pointers must still be valid,
-  // otherwise comparisons above are not meaningful.
-  EXPECT_TRUE(spdy_session1);
-  EXPECT_TRUE(spdy_session2);
-
-  EXPECT_TRUE(data1.AllReadDataConsumed());
-  EXPECT_TRUE(data1.AllWriteDataConsumed());
-  EXPECT_TRUE(data2.AllReadDataConsumed());
-  EXPECT_TRUE(data2.AllWriteDataConsumed());
+  stream_id = 2;
+  index_.Claim(url2_, key2_, &spdy_session, &stream_id);
+  EXPECT_EQ(kNoPushedStreamFound, stream_id);
 }
 
-TEST_F(Http2PushPromiseIndexTest, MultipleSessionsForSingleUrl) {
-  MockRead reads[] = {MockRead(SYNCHRONOUS, ERR_IO_PENDING, 0)};
-  SSLSocketDataProvider ssl(SYNCHRONOUS, OK);
-  ssl.cert = ImportCertFromFile(GetTestCertsDirectory(), "spdy_pooling.pem");
-  // For first session.
-  SequencedSocketData data1(reads, arraysize(reads), nullptr, 0);
-  session_deps_.socket_factory->AddSSLSocketDataProvider(&ssl);
-  session_deps_.socket_factory->AddSocketDataProvider(&data1);
-  // For second session.
-  SequencedSocketData data2(reads, arraysize(reads), nullptr, 0);
-  session_deps_.socket_factory->AddSSLSocketDataProvider(&ssl);
-  session_deps_.socket_factory->AddSocketDataProvider(&data2);
+TEST_F(Http2PushPromiseIndexTest,
+       MultipleStreamsForSingleUrlWithDifferentKeys) {
+  TestDelegate delegate1(key1_, &index_);
+  index_.Register(url1_, nullptr, 2, &delegate1);
+  TestDelegate delegate2(key2_, &index_);
+  index_.Register(url1_, nullptr, 4, &delegate2);
 
-  base::WeakPtr<SpdySession> spdy_session1 =
-      CreateSpdySession(http_network_session_.get(), key1_, log_);
-  base::WeakPtr<SpdySession> spdy_session2 =
-      CreateSpdySession(http_network_session_.get(), key2_, log_);
-  // Read hanging socket data.
-  base::RunLoop().RunUntilIdle();
+  // Test that no streams are returned for a different URL.
+  base::WeakPtr<SpdySession> spdy_session;
+  SpdyStreamId stream_id = 2;
+  index_.Claim(url2_, key1_, &spdy_session, &stream_id);
+  EXPECT_EQ(kNoPushedStreamFound, stream_id);
 
-  EXPECT_FALSE(index_.Find(key1_, url1_));
-  EXPECT_FALSE(index_.Find(key2_, url1_));
-  EXPECT_FALSE(index_.Find(key1_, url2_));
-  EXPECT_FALSE(index_.Find(key2_, url2_));
+  stream_id = 2;
+  index_.Claim(url2_, key2_, &spdy_session, &stream_id);
+  EXPECT_EQ(kNoPushedStreamFound, stream_id);
 
-  index_.RegisterUnclaimedPushedStream(url1_, spdy_session1);
+  // Test that the proper stream is returned for |url1_, key2_|.
+  stream_id = 0;
+  index_.Claim(url1_, key2_, &spdy_session, &stream_id);
+  EXPECT_EQ(4u, stream_id);
 
-  // Note that Find() only uses its SpdySessionKey argument to verify proxy and
-  // privacy mode.  Cross-origin pooling is supported, therefore HostPortPair of
-  // SpdySessionKey does not matter.
-  EXPECT_EQ(spdy_session1.get(), index_.Find(key1_, url1_).get());
-  EXPECT_EQ(spdy_session1.get(), index_.Find(key2_, url1_).get());
-  EXPECT_FALSE(index_.Find(key1_, url2_));
-  EXPECT_FALSE(index_.Find(key2_, url2_));
+  // Test that the previous call of Claim() removed the stream from the index.
+  stream_id = 4;
+  index_.Claim(url1_, key2_, &spdy_session, &stream_id);
+  EXPECT_EQ(kNoPushedStreamFound, stream_id);
 
-  index_.RegisterUnclaimedPushedStream(url1_, spdy_session2);
+  // Claim the other stream for the same URL.
+  stream_id = 4;
+  index_.Claim(url1_, key1_, &spdy_session, &stream_id);
+  EXPECT_EQ(2u, stream_id);
 
-  // Find returns the first SpdySession if there are multiple for the same URL.
-  EXPECT_EQ(spdy_session1.get(), index_.Find(key1_, url1_).get());
-  EXPECT_EQ(spdy_session1.get(), index_.Find(key2_, url1_).get());
-  EXPECT_FALSE(index_.Find(key1_, url2_));
-  EXPECT_FALSE(index_.Find(key2_, url2_));
+  stream_id = 2;
+  index_.Claim(url1_, key1_, &spdy_session, &stream_id);
+  EXPECT_EQ(kNoPushedStreamFound, stream_id);
+}
 
-  index_.UnregisterUnclaimedPushedStream(url1_, spdy_session1.get());
+TEST_F(Http2PushPromiseIndexTest, MultipleStreamsForSingleUrlWithSameKey) {
+  TestDelegate delegate1(key1_, &index_);
+  index_.Register(url1_, nullptr, 2, &delegate1);
+  index_.Register(url1_, nullptr, 4, &delegate1);
 
-  EXPECT_EQ(spdy_session2.get(), index_.Find(key1_, url1_).get());
-  EXPECT_EQ(spdy_session2.get(), index_.Find(key2_, url1_).get());
-  EXPECT_FALSE(index_.Find(key1_, url2_));
-  EXPECT_FALSE(index_.Find(key2_, url2_));
+  // Test that no streams are returned for a different URL.
+  base::WeakPtr<SpdySession> spdy_session;
+  SpdyStreamId stream_id = 2;
+  index_.Claim(url2_, key1_, &spdy_session, &stream_id);
+  EXPECT_EQ(kNoPushedStreamFound, stream_id);
 
-  index_.UnregisterUnclaimedPushedStream(url1_, spdy_session2.get());
+  stream_id = 2;
+  index_.Claim(url2_, key2_, &spdy_session, &stream_id);
+  EXPECT_EQ(kNoPushedStreamFound, stream_id);
 
-  EXPECT_FALSE(index_.Find(key1_, url1_));
-  EXPECT_FALSE(index_.Find(key2_, url1_));
-  EXPECT_FALSE(index_.Find(key1_, url2_));
-  EXPECT_FALSE(index_.Find(key2_, url2_));
+  // Test that no streams are returned for a different SpdySessionKey.
+  stream_id = 2;
+  index_.Claim(url1_, key2_, &spdy_session, &stream_id);
+  EXPECT_EQ(kNoPushedStreamFound, stream_id);
 
-  // SpdySession weak pointers must still be valid,
-  // otherwise comparisons above are not meaningful.
-  EXPECT_TRUE(spdy_session1);
-  EXPECT_TRUE(spdy_session2);
+  // First entry in the list wins.
+  stream_id = 0;
+  index_.Claim(url1_, key1_, &spdy_session, &stream_id);
+  EXPECT_EQ(2u, stream_id);
 
-  EXPECT_TRUE(data1.AllReadDataConsumed());
-  EXPECT_TRUE(data1.AllWriteDataConsumed());
-  EXPECT_TRUE(data2.AllReadDataConsumed());
-  EXPECT_TRUE(data2.AllWriteDataConsumed());
+  // Claim the other stream for the same URL.
+  stream_id = 2;
+  index_.Claim(url1_, key1_, &spdy_session, &stream_id);
+  EXPECT_EQ(4u, stream_id);
+
+  // No more streams.
+  stream_id = 4;
+  index_.Claim(url1_, key1_, &spdy_session, &stream_id);
+  EXPECT_EQ(kNoPushedStreamFound, stream_id);
 }
 
 }  // namespace test
