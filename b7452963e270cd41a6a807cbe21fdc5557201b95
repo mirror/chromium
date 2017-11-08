@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "430de78b_1dc393f0",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 15
+      },
+      "lineNbr": 16,
+      "author": {
+        "id": 1161750
+      },
+      "writtenOn": "2017-11-08T22:44:02Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "cf049b35_f3cbe0ac",
+      "revId": "b7452963e270cd41a6a807cbe21fdc5557201b95",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "15fd5652_e0012dd0",
         "filename": "chrome/browser/ui/cocoa/profiles/avatar_base_controller.mm",
         "patchSetId": 15
@@ -33,6 +51,24 @@
       "revId": "b7452963e270cd41a6a807cbe21fdc5557201b95",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3c0991d3_3c34a328",
+        "filename": "chrome/browser/ui/cocoa/profiles/avatar_base_controller.mm",
+        "patchSetId": 15
+      },
+      "lineNbr": 25,
+      "author": {
+        "id": 1161750
+      },
+      "writtenOn": "2017-11-08T22:44:02Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "15fd5652_e0012dd0",
+      "revId": "b7452963e270cd41a6a807cbe21fdc5557201b95",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -53,6 +89,24 @@
     },
     {
       "key": {
+        "uuid": "330608db_6893be6c",
+        "filename": "chrome/browser/ui/cocoa/profiles/avatar_base_controller.mm",
+        "patchSetId": 15
+      },
+      "lineNbr": 32,
+      "author": {
+        "id": 1161750
+      },
+      "writtenOn": "2017-11-08T22:44:02Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "77ae6280_f145f13a",
+      "revId": "b7452963e270cd41a6a807cbe21fdc5557201b95",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "46d01a4c_dd9c4e17",
         "filename": "chrome/browser/ui/cocoa/profiles/avatar_base_controller.mm",
         "patchSetId": 15
@@ -67,6 +121,24 @@
       "revId": "b7452963e270cd41a6a807cbe21fdc5557201b95",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "81ffde35_292fa483",
+        "filename": "chrome/browser/ui/cocoa/profiles/avatar_base_controller.mm",
+        "patchSetId": 15
+      },
+      "lineNbr": 34,
+      "author": {
+        "id": 1161750
+      },
+      "writtenOn": "2017-11-08T22:44:02Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "46d01a4c_dd9c4e17",
+      "revId": "b7452963e270cd41a6a807cbe21fdc5557201b95",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -93,6 +165,30 @@
     },
     {
       "key": {
+        "uuid": "5d0e7aa7_01db47a3",
+        "filename": "chrome/browser/ui/cocoa/profiles/avatar_base_controller.mm",
+        "patchSetId": 15
+      },
+      "lineNbr": 36,
+      "author": {
+        "id": 1161750
+      },
+      "writtenOn": "2017-11-08T22:44:02Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "a4edeaf3_e2978e90",
+      "range": {
+        "startLine": 36,
+        "startChar": 53,
+        "endLine": 36,
+        "endChar": 73
+      },
+      "revId": "b7452963e270cd41a6a807cbe21fdc5557201b95",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "4dceddcb_7e3ed9e1",
         "filename": "chrome/browser/ui/cocoa/profiles/avatar_base_controller.mm",
         "patchSetId": 15
@@ -107,6 +203,24 @@
       "revId": "b7452963e270cd41a6a807cbe21fdc5557201b95",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e1b942bf_6049721f",
+        "filename": "chrome/browser/ui/cocoa/profiles/avatar_base_controller.mm",
+        "patchSetId": 15
+      },
+      "lineNbr": 40,
+      "author": {
+        "id": 1161750
+      },
+      "writtenOn": "2017-11-08T22:44:02Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "4dceddcb_7e3ed9e1",
+      "revId": "b7452963e270cd41a6a807cbe21fdc5557201b95",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -127,6 +241,24 @@
     },
     {
       "key": {
+        "uuid": "708b8778_6be29d0f",
+        "filename": "chrome/browser/ui/cocoa/profiles/avatar_base_controller.mm",
+        "patchSetId": 15
+      },
+      "lineNbr": 42,
+      "author": {
+        "id": 1161750
+      },
+      "writtenOn": "2017-11-08T22:44:02Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "465f9093_310c56b2",
+      "revId": "b7452963e270cd41a6a807cbe21fdc5557201b95",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "a028a98d_18bec411",
         "filename": "chrome/browser/ui/cocoa/profiles/avatar_base_controller.mm",
         "patchSetId": 15
@@ -141,6 +273,24 @@
       "revId": "b7452963e270cd41a6a807cbe21fdc5557201b95",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "fae1d4fd_8d915804",
+        "filename": "chrome/browser/ui/cocoa/profiles/avatar_base_controller.mm",
+        "patchSetId": 15
+      },
+      "lineNbr": 49,
+      "author": {
+        "id": 1161750
+      },
+      "writtenOn": "2017-11-08T22:44:02Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "a028a98d_18bec411",
+      "revId": "b7452963e270cd41a6a807cbe21fdc5557201b95",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -161,6 +311,24 @@
     },
     {
       "key": {
+        "uuid": "3fd332ba_a4943af0",
+        "filename": "chrome/browser/ui/cocoa/profiles/avatar_base_controller.mm",
+        "patchSetId": 15
+      },
+      "lineNbr": 50,
+      "author": {
+        "id": 1161750
+      },
+      "writtenOn": "2017-11-08T22:44:02Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "b90fcb28_4ee9a9c5",
+      "revId": "b7452963e270cd41a6a807cbe21fdc5557201b95",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "b01ca202_2157e364",
         "filename": "chrome/browser/ui/cocoa/profiles/avatar_base_controller.mm",
         "patchSetId": 15
@@ -178,6 +346,24 @@
     },
     {
       "key": {
+        "uuid": "65c6fcf1_ccddab3b",
+        "filename": "chrome/browser/ui/cocoa/profiles/avatar_base_controller.mm",
+        "patchSetId": 15
+      },
+      "lineNbr": 51,
+      "author": {
+        "id": 1161750
+      },
+      "writtenOn": "2017-11-08T22:44:02Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "b01ca202_2157e364",
+      "revId": "b7452963e270cd41a6a807cbe21fdc5557201b95",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "79ae7f5c_30ccbfdd",
         "filename": "chrome/browser/ui/cocoa/profiles/avatar_base_controller.mm",
         "patchSetId": 15
@@ -192,6 +378,24 @@
       "revId": "b7452963e270cd41a6a807cbe21fdc5557201b95",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "38a36925_f5083477",
+        "filename": "chrome/browser/ui/cocoa/profiles/avatar_base_controller.mm",
+        "patchSetId": 15
+      },
+      "lineNbr": 60,
+      "author": {
+        "id": 1161750
+      },
+      "writtenOn": "2017-11-08T22:44:02Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "79ae7f5c_30ccbfdd",
+      "revId": "b7452963e270cd41a6a807cbe21fdc5557201b95",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -218,6 +422,30 @@
     },
     {
       "key": {
+        "uuid": "5c2ce991_b25072b6",
+        "filename": "chrome/browser/ui/cocoa/profiles/avatar_base_controller.mm",
+        "patchSetId": 15
+      },
+      "lineNbr": 63,
+      "author": {
+        "id": 1161750
+      },
+      "writtenOn": "2017-11-08T22:44:02Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "0d7eea87_1c462185",
+      "range": {
+        "startLine": 63,
+        "startChar": 21,
+        "endLine": 63,
+        "endChar": 30
+      },
+      "revId": "b7452963e270cd41a6a807cbe21fdc5557201b95",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "0a5b65f0_d569e621",
         "filename": "chrome/browser/ui/cocoa/profiles/avatar_base_controller.mm",
         "patchSetId": 15
@@ -232,6 +460,24 @@
       "revId": "b7452963e270cd41a6a807cbe21fdc5557201b95",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a1d3fa0f_dd6fdf42",
+        "filename": "chrome/browser/ui/cocoa/profiles/avatar_base_controller.mm",
+        "patchSetId": 15
+      },
+      "lineNbr": 146,
+      "author": {
+        "id": 1161750
+      },
+      "writtenOn": "2017-11-08T22:44:02Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "0a5b65f0_d569e621",
+      "revId": "b7452963e270cd41a6a807cbe21fdc5557201b95",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -252,6 +498,24 @@
     },
     {
       "key": {
+        "uuid": "00febd1b_4d502228",
+        "filename": "chrome/browser/ui/cocoa/profiles/avatar_base_controller.mm",
+        "patchSetId": 15
+      },
+      "lineNbr": 167,
+      "author": {
+        "id": 1161750
+      },
+      "writtenOn": "2017-11-08T22:44:02Z",
+      "side": 1,
+      "message": "That works for me, but I still like to keep the -[AvatarBaseController isMenuOpened] in the header. There is no reason to expose the instance of ProfileChooserViewObserverBridge for the other files.",
+      "parentUuid": "db34d236_a39debb5",
+      "revId": "b7452963e270cd41a6a807cbe21fdc5557201b95",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "f755fe1d_00fa1d06",
         "filename": "chrome/browser/ui/cocoa/profiles/avatar_base_controller.mm",
         "patchSetId": 15
@@ -266,6 +530,24 @@
       "revId": "b7452963e270cd41a6a807cbe21fdc5557201b95",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b869f7a7_4161e8b5",
+        "filename": "chrome/browser/ui/cocoa/profiles/avatar_base_controller.mm",
+        "patchSetId": 15
+      },
+      "lineNbr": 176,
+      "author": {
+        "id": 1161750
+      },
+      "writtenOn": "2017-11-08T22:44:02Z",
+      "side": 1,
+      "message": "Weird, since it is a NSObject property... It was designed to be used with a dot. But ok.",
+      "parentUuid": "f755fe1d_00fa1d06",
+      "revId": "b7452963e270cd41a6a807cbe21fdc5557201b95",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -292,6 +574,30 @@
     },
     {
       "key": {
+        "uuid": "eea60aed_8a12bdc2",
+        "filename": "chrome/browser/ui/cocoa/profiles/avatar_base_controller.mm",
+        "patchSetId": 15
+      },
+      "lineNbr": 181,
+      "author": {
+        "id": 1161750
+      },
+      "writtenOn": "2017-11-08T22:44:02Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "0fd113a0_dadaa3ef",
+      "range": {
+        "startLine": 181,
+        "startChar": 64,
+        "endLine": 181,
+        "endChar": 67
+      },
+      "revId": "b7452963e270cd41a6a807cbe21fdc5557201b95",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "4236a591_84213503",
         "filename": "chrome/browser/ui/cocoa/profiles/avatar_base_controller.mm",
         "patchSetId": 15
@@ -306,6 +612,24 @@
       "revId": "b7452963e270cd41a6a807cbe21fdc5557201b95",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "94b1c986_b1589457",
+        "filename": "chrome/browser/ui/cocoa/profiles/avatar_base_controller.mm",
+        "patchSetId": 15
+      },
+      "lineNbr": 184,
+      "author": {
+        "id": 1161750
+      },
+      "writtenOn": "2017-11-08T22:44:02Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "4236a591_84213503",
+      "revId": "b7452963e270cd41a6a807cbe21fdc5557201b95",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -326,6 +650,24 @@
     },
     {
       "key": {
+        "uuid": "7dc22681_269666cf",
+        "filename": "chrome/browser/ui/cocoa/profiles/avatar_base_controller.mm",
+        "patchSetId": 15
+      },
+      "lineNbr": 193,
+      "author": {
+        "id": 1161750
+      },
+      "writtenOn": "2017-11-08T22:44:02Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "aacab5ab_fb5e1993",
+      "revId": "b7452963e270cd41a6a807cbe21fdc5557201b95",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "56d1c33f_46704cca",
         "filename": "chrome/browser/ui/cocoa/profiles/avatar_base_controller.mm",
         "patchSetId": 15
@@ -337,6 +679,24 @@
       "writtenOn": "2017-11-08T04:09:06Z",
       "side": 1,
       "message": "Widget::Close() already posts a task -- OnWidgetDestroying typically comes in after the RunLoop has been pumped anyway - so I\u0027m not sure this is achieving what you expect. Does this technique work if you move the mouse a bit while the button is pressed, then release?\n\nAnyway. Usually menus are shown on mac on mouseDown -- not mouseUp. This is true for most Cocoa browser UI, but not the profile switcher on the mac browser now -- is that intentional?\n\nMaybe the right way to fix this is just to toggle the menu on mousedown -- not mouse up.",
+      "revId": "b7452963e270cd41a6a807cbe21fdc5557201b95",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "aa49789f_14d0ec26",
+        "filename": "chrome/browser/ui/cocoa/profiles/avatar_base_controller.mm",
+        "patchSetId": 15
+      },
+      "lineNbr": 219,
+      "author": {
+        "id": 1161750
+      },
+      "writtenOn": "2017-11-08T22:44:02Z",
+      "side": 1,
+      "message": "My goal is to keep the current behavior:\n + click on the button (mouse down and then mouse up)\n    \u003d\u003e the menu opens\n + click a second time on the button (mouse down and then mouse up)\n    \u003d\u003e the menu closes\n\nOn the second click, OnWidgetDestroying() is called, and then -[AvatarBaseController buttonClicked:] is called.\nMy issue is to make sure that on the second mouse click, the menu is not opened a second time.",
+      "parentUuid": "56d1c33f_46704cca",
       "revId": "b7452963e270cd41a6a807cbe21fdc5557201b95",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -360,6 +720,24 @@
     },
     {
       "key": {
+        "uuid": "bc6c18a6_bff8e35d",
+        "filename": "chrome/browser/ui/cocoa/profiles/avatar_button_controller.mm",
+        "patchSetId": 15
+      },
+      "lineNbr": 325,
+      "author": {
+        "id": 1161750
+      },
+      "writtenOn": "2017-11-08T22:44:02Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "d95ea1ad_158c99db",
+      "revId": "b7452963e270cd41a6a807cbe21fdc5557201b95",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "cbbc963b_5fa9779e",
         "filename": "chrome/browser/ui/cocoa/profiles/avatar_button_controller.mm",
         "patchSetId": 15
@@ -377,6 +755,24 @@
     },
     {
       "key": {
+        "uuid": "5419c7e3_c510da61",
+        "filename": "chrome/browser/ui/cocoa/profiles/avatar_button_controller.mm",
+        "patchSetId": 15
+      },
+      "lineNbr": 327,
+      "author": {
+        "id": 1161750
+      },
+      "writtenOn": "2017-11-08T22:44:02Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "cbbc963b_5fa9779e",
+      "revId": "b7452963e270cd41a6a807cbe21fdc5557201b95",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "18a55677_57fd8469",
         "filename": "chrome/browser/ui/cocoa/profiles/profile_chooser_controller.h",
         "patchSetId": 15
@@ -388,6 +784,24 @@
       "writtenOn": "2017-11-08T04:09:06Z",
       "side": 1,
       "message": "Wow - tearing out the Cocoa version is very bold!\n\nI would not recommend this, and it makes me a little uncomfortable. For all other UI we\u0027ve been keeping it behind a flag, made launch bugs, etc.\n\nI\u0027m fine with approving a CL that keeps this behind a chrome://flag but, as is, I think this needs to be run by launch review first. There\u0027s just no precedent for rolling out significant changes this way.",
+      "revId": "b7452963e270cd41a6a807cbe21fdc5557201b95",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "96a93a96_066c9227",
+        "filename": "chrome/browser/ui/cocoa/profiles/profile_chooser_controller.h",
+        "patchSetId": 15
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1161750
+      },
+      "writtenOn": "2017-11-08T22:44:02Z",
+      "side": 1,
+      "message": "This is going to be a bit complicated to have both working at the same time. If you really want me to do that, I guess I will need more time.",
+      "parentUuid": "18a55677_57fd8469",
       "revId": "b7452963e270cd41a6a807cbe21fdc5557201b95",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -417,6 +831,30 @@
     },
     {
       "key": {
+        "uuid": "af4dad0d_01555cfc",
+        "filename": "chrome/browser/ui/views/profiles/profile_chooser_view.h",
+        "patchSetId": 15
+      },
+      "lineNbr": 51,
+      "author": {
+        "id": 1161750
+      },
+      "writtenOn": "2017-11-08T22:44:02Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "208b8b73_cb493472",
+      "range": {
+        "startLine": 51,
+        "startChar": 38,
+        "endLine": 51,
+        "endChar": 44
+      },
+      "revId": "b7452963e270cd41a6a807cbe21fdc5557201b95",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "335d2a3b_6982e917",
         "filename": "chrome/browser/ui/views/profiles/profile_chooser_view.h",
         "patchSetId": 15
@@ -431,6 +869,24 @@
       "revId": "b7452963e270cd41a6a807cbe21fdc5557201b95",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ebb0751f_8b5705be",
+        "filename": "chrome/browser/ui/views/profiles/profile_chooser_view.h",
+        "patchSetId": 15
+      },
+      "lineNbr": 60,
+      "author": {
+        "id": 1161750
+      },
+      "writtenOn": "2017-11-08T22:44:02Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "335d2a3b_6982e917",
+      "revId": "b7452963e270cd41a6a807cbe21fdc5557201b95",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
