@@ -38,6 +38,7 @@ namespace viz {
 
 class DisplayProvider;
 class FrameSinkManagerClient;
+class FrameSinkManagerTestConnectorImpl;
 
 // FrameSinkManagerImpl manages BeginFrame hierarchy. This is the implementation
 // detail for FrameSinkManagerImpl.
@@ -154,6 +155,7 @@ class VIZ_SERVICE_EXPORT FrameSinkManagerImpl : public SurfaceObserver,
 
  private:
   friend class cc::test::SurfaceSynchronizationTest;
+  friend class FrameSinkManagerTestConnectorImpl;
 
   void RecursivelyAttachBeginFrameSource(const FrameSinkId& frame_sink_id,
                                          BeginFrameSource* source);
@@ -212,6 +214,8 @@ class VIZ_SERVICE_EXPORT FrameSinkManagerImpl : public SurfaceObserver,
 
   mojom::FrameSinkManagerClientPtr client_ptr_;
   mojo::Binding<mojom::FrameSinkManager> binding_;
+
+  std::unique_ptr<FrameSinkManagerTestConnectorImpl> test_connector_impl_;
 
   DISALLOW_COPY_AND_ASSIGN(FrameSinkManagerImpl);
 };

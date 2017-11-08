@@ -57,13 +57,17 @@
         ],
         "service_manager:service_factory": [
           "service_manager::mojom::ServiceFactory"
+        ],
+        "test": [
+          "viz::mojom::FrameSinkManagerTestConnector"
         ]
       },
       "requires": {
         "*": [ "app" ],
         "cdm": [ "media:cdm" ],
         "content_browser": [
-          "geolocation_config"
+          "geolocation_config",
+          "test"
         ],
         "content_gpu": [ "browser" ],
         "content_plugin": [ "browser" ],
@@ -88,7 +92,10 @@
           "test",
           "url_loader"
         ],
-        "ui": [ "display_output_protection" ],
+        "ui": [
+          "display_output_protection",
+          "test"
+        ],
         "service_manager": [
           "service_manager:client_process",
           "service_manager:instance_name",

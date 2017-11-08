@@ -37,6 +37,7 @@
 #include "services/ui/public/interfaces/window_tree_host.mojom.h"
 #include "services/ui/ws/user_id.h"
 #include "services/ui/ws/window_server_delegate.h"
+#include "services/viz/privileged/interfaces/compositing/frame_sink_manager.mojom.h"
 
 #if defined(USE_OZONE)
 #include "ui/ozone/public/client_native_pixmap_factory_ozone.h"
@@ -144,6 +145,9 @@ class Service : public service_manager::Service,
   void BindDisplayManagerRequest(
       mojom::DisplayManagerRequest request,
       const service_manager::BindSourceInfo& source_info);
+
+  void BindFrameSinkManagerTestConnectorRequest(
+      viz::mojom::FrameSinkManagerTestConnectorRequest request);
 
   void BindGpuRequest(mojom::GpuRequest request);
 

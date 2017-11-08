@@ -25,7 +25,8 @@
         ],
         "test": [
           "ui::mojom::RemoteEventDispatcher",
-          "ui::mojom::WindowServerTest"
+          "ui::mojom::WindowServerTest",
+          "viz::mojom::FrameSinkManagerTestConnector"
         ],
         "discardable_memory": [
           "discardable_memory::mojom::DiscardableSharedMemoryManager"

@@ -74,6 +74,7 @@ class DelegatedFrameHostClient;
 class RenderFrameHostImpl;
 class RenderWidgetHostImpl;
 class RenderWidgetHostView;
+class TestFrameSinkManagerObserver;
 class TouchSelectionControllerClientAura;
 
 // RenderWidgetHostView class hierarchy described in render_widget_host_view.h.
@@ -363,6 +364,7 @@ class CONTENT_EXPORT RenderWidgetHostViewAura
   friend class InputMethodAuraTestBase;
   friend class RenderWidgetHostViewAuraTest;
   friend class RenderWidgetHostViewAuraCopyRequestTest;
+  friend class TestFrameSinkManagerObserver;
   friend class TestInputMethodObserver;
   FRIEND_TEST_ALL_PREFIXES(InputMethodResultAuraTest,
                            FinishImeCompositionSession);

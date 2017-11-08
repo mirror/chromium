@@ -69,6 +69,7 @@
 #include "content/public/test/browser_test_utils.h"
 #include "content/public/test/download_test_observer.h"
 #include "content/public/test/fake_speech_recognition_manager.h"
+#include "content/public/test/test_frame_sink_manager_observer.h"
 #include "content/public/test/test_navigation_observer.h"
 #include "content/public/test/test_renderer_host.h"
 #include "content/public/test/test_utils.h"
@@ -1883,6 +1884,8 @@ IN_PROC_BROWSER_TEST_P(WebViewTest, MAYBE_InterstitialPageFocusedWidget) {
   if (!base::FeatureList::IsEnabled(::features::kGuestViewCrossProcessFrames))
     return;
 
+  content::TestFrameSinkManagerObserver frame_sink_observer;
+
   InterstitialTestHelper();
 
   content::WebContents* outer_web_contents = GetFirstAppWindowWebContents();
@@ -1895,7 +1898,7 @@ IN_PROC_BROWSER_TEST_P(WebViewTest, MAYBE_InterstitialPageFocusedWidget) {
   content::RenderWidgetHost* interstitial_widget =
       interstitial_main_frame->GetRenderViewHost()->GetWidget();
 
-  content::WaitForChildFrameSurfaceReady(interstitial_main_frame);
+  frame_sink_observer.WaitForChildFrameSurfaceReady(interstitial_main_frame);
 
   EXPECT_NE(interstitial_widget,
             content::GetFocusedRenderWidgetHost(guest_web_contents));
@@ -3666,10 +3669,13 @@ IN_PROC_BROWSER_TEST_P(WebViewTest, ReloadAfterCrash) {
   if (!base::FeatureList::IsEnabled(::features::kGuestViewCrossProcessFrames))
     return;
 
+  content::TestFrameSinkManagerObserver frame_sink_observer;
+
   // Load guest and wait for it to appear.
   LoadAppWithGuest("web_view/simple");
   EXPECT_TRUE(GetGuestWebContents()->GetMainFrame()->GetView());
-  WaitForChildFrameSurfaceReady(GetGuestWebContents()->GetMainFrame());
+  frame_sink_observer.WaitForChildFrameSurfaceReady(
+      GetGuestWebContents()->GetMainFrame());
 
   // Kill guest.
   auto* rph = GetGuestWebContents()->GetMainFrame()->GetProcess();
@@ -3689,7 +3695,8 @@ IN_PROC_BROWSER_TEST_P(WebViewTest, ReloadAfterCrash) {
   // When the frame passed has a RenderWidgetHostViewChildFrame,
   // WaitForChildFrameSurfaceReady will only return when the guest is embedded
   // within the root surface.
-  WaitForChildFrameSurfaceReady(GetGuestWebContents()->GetMainFrame());
+  frame_sink_observer.WaitForChildFrameSurfaceReady(
+      GetGuestWebContents()->GetMainFrame());
 }
 
 IN_PROC_BROWSER_TEST_P(WebViewAccessibilityTest, LoadWebViewAccessibility) {

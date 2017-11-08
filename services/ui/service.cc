@@ -322,7 +322,11 @@ void Service::OnStart() {
   if (test_config_) {
     registry_.AddInterface<WindowServerTest>(base::Bind(
         &Service::BindWindowServerTestRequest, base::Unretained(this)));
+    registry_.AddInterface<viz::mojom::FrameSinkManagerTestConnector>(
+        base::Bind(&Service::BindFrameSinkManagerTestConnectorRequest,
+                   base::Unretained(this)));
   }
+
   registry_.AddInterface<mojom::RemoteEventDispatcher>(base::Bind(
       &Service::BindRemoteEventDispatcherRequest, base::Unretained(this)));
 
@@ -453,6 +457,12 @@ void Service::BindDisplayManagerRequest(
   window_server_->display_manager()
       ->GetUserDisplayManager(source_info.identity.user_id())
       ->AddDisplayManagerBinding(std::move(request));
+}
+
+void Service::BindFrameSinkManagerTestConnectorRequest(
+    viz::mojom::FrameSinkManagerTestConnectorRequest request) {
+  window_server_->gpu_host()->BindFrameSinkManagerTestConnectorRequest(
+      std::move(request));
 }
 
 void Service::BindGpuRequest(mojom::GpuRequest request) {

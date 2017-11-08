@@ -28,8 +28,11 @@
 #include "build/build_config.h"
 #include "components/tracing/common/tracing_switches.h"
 #include "components/viz/common/switches.h"
+#include "components/viz/service/frame_sinks/frame_sink_manager_impl.h"
+#include "components/viz/service/frame_sinks/frame_sink_manager_test_connector_impl.h"
 #include "content/browser/browser_child_process_host_impl.h"
 #include "content/browser/browser_main_loop.h"
+#include "content/browser/compositor/surface_utils.h"
 #include "content/browser/field_trial_recorder.h"
 #include "content/browser/gpu/compositor_util.h"
 #include "content/browser/gpu/gpu_data_manager_impl.h"
@@ -67,6 +70,7 @@
 #include "services/service_manager/runner/common/client_util.h"
 #include "services/service_manager/sandbox/sandbox_type.h"
 #include "services/service_manager/sandbox/switches.h"
+#include "services/viz/privileged/interfaces/compositing/frame_sink_manager.mojom.h"
 #include "ui/base/ui_base_switches.h"
 #include "ui/display/display_switches.h"
 #include "ui/gfx/switches.h"
@@ -328,6 +332,10 @@ class GpuProcessHost::ConnectionFilterImpl : public ConnectionFilter {
     auto task_runner = BrowserThread::GetTaskRunnerForThread(BrowserThread::UI);
     registry_.AddInterface(base::Bind(&FieldTrialRecorder::Create),
                            task_runner);
+    registry_.AddInterface<viz::mojom::FrameSinkManagerTestConnector>(
+        base::Bind(&ConnectionFilterImpl::BindFrameSinkManagerTestConnector,
+                   base::Unretained(this)),
+        task_runner);
 #if defined(OS_ANDROID)
     registry_.AddInterface(
         base::Bind(&BindJavaInterface<media::mojom::AndroidOverlayProvider>),
@@ -345,6 +353,12 @@ class GpuProcessHost::ConnectionFilterImpl : public ConnectionFilter {
       GetContentClient()->browser()->BindInterfaceRequest(
           source_info, interface_name, interface_pipe);
     }
+  }
+
+  void BindFrameSinkManagerTestConnector(
+      viz::mojom::FrameSinkManagerTestConnectorRequest request) {
+    viz::FrameSinkManagerTestConnectorImpl::CreateAndBind(GetFrameSinkManager(),
+                                                          std::move(request));
   }
 
   service_manager::BinderRegistry registry_;
