@@ -16,6 +16,24 @@
       "revId": "45ec2068b6aa666983fcd184b8441f1fa5c95df2",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "eb0553ec_493a10be",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/download/SystemDownloadNotifier.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 124,
+      "author": {
+        "id": 1226039
+      },
+      "writtenOn": "2017-11-08T00:38:47Z",
+      "side": 1,
+      "message": "After iter.next() is called (as it is in the first argument of the updateDownloadNotification), the iterator moves to that item, so at that point, the iter.hasNext() should return whether the item that is being passed into the updateDownloadNotification function is the last item or not.",
+      "parentUuid": "e37076b1_3c5846b3",
+      "revId": "45ec2068b6aa666983fcd184b8441f1fa5c95df2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
