@@ -1,0 +1,89 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "a7cc58a4_6aff9916",
+        "filename": "ash/frame/custom_frame_view_ash.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 109,
+      "author": {
+        "id": 1001380
+      },
+      "writtenOn": "2017-11-08T02:23:42Z",
+      "side": 1,
+      "message": "can you document this method?",
+      "revId": "92a037ba6e5a757f942178ab872f85c536bb84c3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "26530fcc_e9109830",
+        "filename": "components/exo/shell_surface.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 89,
+      "author": {
+        "id": 1001380
+      },
+      "writtenOn": "2017-11-08T02:23:42Z",
+      "side": 1,
+      "message": "The code below should only be used for !frame_enabled_ no?",
+      "revId": "92a037ba6e5a757f942178ab872f85c536bb84c3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1f10f432_e9891473",
+        "filename": "components/exo/shell_surface.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 99,
+      "author": {
+        "id": 1001380
+      },
+      "writtenOn": "2017-11-08T02:23:42Z",
+      "side": 1,
+      "message": "we need this only when inset \u003e 0 ?",
+      "revId": "92a037ba6e5a757f942178ab872f85c536bb84c3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e1f77aa6_2e7c1da4",
+        "filename": "components/exo/shell_surface.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 101,
+      "author": {
+        "id": 1001380
+      },
+      "writtenOn": "2017-11-08T02:23:42Z",
+      "side": 1,
+      "message": "FYI: I actually doubt that we need to handle this case. You may want to ask verkha@ why this was necessary.\n\nMy guess was that this was added to support an app that uses alpha shape (old hangout app used it), but API must have been deprecated and there must be no app that uses it, and for such app, it must be using their own frame.",
+      "revId": "92a037ba6e5a757f942178ab872f85c536bb84c3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "23029ffe_939a3ba4",
+        "filename": "components/exo/shell_surface.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 172,
+      "author": {
+        "id": 1001380
+      },
+      "writtenOn": "2017-11-08T02:23:42Z",
+      "side": 1,
+      "message": "will optional work?",
+      "revId": "92a037ba6e5a757f942178ab872f85c536bb84c3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
