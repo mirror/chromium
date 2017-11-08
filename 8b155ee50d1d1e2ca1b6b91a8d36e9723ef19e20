@@ -52,6 +52,24 @@
       "revId": "8b155ee50d1d1e2ca1b6b91a8d36e9723ef19e20",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "1d641e26_c08fc8e3",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 3
+      },
+      "lineNbr": 7,
+      "author": {
+        "id": 1127641
+      },
+      "writtenOn": "2017-11-08T00:26:18Z",
+      "side": 1,
+      "message": "I\u0027ll change it to UI.",
+      "parentUuid": "6b1d7e77_c39b3ae3",
+      "revId": "8b155ee50d1d1e2ca1b6b91a8d36e9723ef19e20",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
