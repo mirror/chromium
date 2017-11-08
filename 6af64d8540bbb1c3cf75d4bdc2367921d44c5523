@@ -46,6 +46,30 @@
       "revId": "6af64d8540bbb1c3cf75d4bdc2367921d44c5523",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "a51bf154_e8444db8",
+        "filename": "chrome/browser/extensions/api/tabs/tabs_test.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 2289,
+      "author": {
+        "id": 1130134
+      },
+      "writtenOn": "2017-11-08T23:51:21Z",
+      "side": 1,
+      "message": "Ooops, I missed the other part of your comment.  Done now.",
+      "parentUuid": "461ad288_9680a1df",
+      "range": {
+        "startLine": 2289,
+        "startChar": 62,
+        "endLine": 2289,
+        "endChar": 70
+      },
+      "revId": "6af64d8540bbb1c3cf75d4bdc2367921d44c5523",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
