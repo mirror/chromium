@@ -1,0 +1,55 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "3e2f73e5_a765b25a",
+        "filename": "ui/gfx/render_text_unittest.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 4950,
+      "author": {
+        "id": 1001118
+      },
+      "writtenOn": "2017-11-08T03:28:04Z",
+      "side": 1,
+      "message": "nit: \"const int\" here and avoid static cast below.",
+      "revId": "d64840781a09a4e6a3a68720ff45a249fb129534",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "fc7d5b43_582822b1",
+        "filename": "ui/gfx/render_text_unittest.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 4956,
+      "author": {
+        "id": 1001118
+      },
+      "writtenOn": "2017-11-08T03:28:04Z",
+      "side": 1,
+      "message": "nit: This static cast should not be needed, please remove it.",
+      "revId": "d64840781a09a4e6a3a68720ff45a249fb129534",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f1fcb537_e9c4f589",
+        "filename": "ui/gfx/render_text_unittest.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 4957,
+      "author": {
+        "id": 1001118
+      },
+      "writtenOn": "2017-11-08T03:28:04Z",
+      "side": 1,
+      "message": "nit: maybe EXPECT_EQ(width_without_glyph_spacing + total_spacing, run-\u003ewidth);",
+      "revId": "d64840781a09a4e6a3a68720ff45a249fb129534",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
