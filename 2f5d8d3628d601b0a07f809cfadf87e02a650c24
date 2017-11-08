@@ -363,6 +363,30 @@
       "revId": "2f5d8d3628d601b0a07f809cfadf87e02a650c24",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0c2759e7_9c8b2df9",
+        "filename": "content/renderer/service_worker/web_service_worker_provider_impl.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 242,
+      "author": {
+        "id": 1161621
+      },
+      "writtenOn": "2017-11-08T02:00:33Z",
+      "side": 1,
+      "message": "I think we can make each WebSWProviderImpl manage its own WebSWProviderClient now, rather than managing a provider client map inside SWDispatcher.\nBecause here (https://cs.chromium.org/chromium/src/content/renderer/service_worker/service_worker_dispatcher.cc?rcl\u003dd4f91d118274c0f0583e7a6f196be6c48da4acc9\u0026l\u003d256) is the last one usage to the map |provider_clients_|, now this logic disappears. We just need to put a pointer of WebSWProviderClient as member of WebSWProviderImpl, update this member in SetClient() and check the member\u0027s nullity whenever we want to use it, all these logic just happen inside WebSWProviderImpl.",
+      "parentUuid": "06679e3a_158a159a",
+      "range": {
+        "startLine": 242,
+        "startChar": 6,
+        "endLine": 242,
+        "endChar": 40
+      },
+      "revId": "2f5d8d3628d601b0a07f809cfadf87e02a650c24",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
