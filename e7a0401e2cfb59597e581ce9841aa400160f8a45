@@ -56,6 +56,24 @@
       "revId": "e7a0401e2cfb59597e581ce9841aa400160f8a45",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "fc8f19cb_b54097d8",
+        "filename": "third_party/WebKit/Source/modules/mediastream/UserMediaRequest.cpp",
+        "patchSetId": 11
+      },
+      "lineNbr": 530,
+      "author": {
+        "id": 1143639
+      },
+      "writtenOn": "2017-11-08T11:03:13Z",
+      "side": 1,
+      "message": "Ideally, we would have used ExceptionCode directly, but due to the visibility restrictions across layers, we unfortunately need an intermediate enum that has to replicate either the lower-layer or the upper-layer enum and make the translation in one of the layers.\nIn this case, I\u0027m inclined to make the translation in the uppermost layer since the lower-level error carries more information and it\u0027s probably better to lose that extra info as late as possible so that it\u0027s available in case we ever need it. It\u0027s also simpler if we ever need to send the error from some other place in the lower layers.\nHowever, I\u0027ll let orphis@ make the final decision on this one since both approaches would work.",
+      "parentUuid": "c21bbfb5_efdfe935",
+      "revId": "e7a0401e2cfb59597e581ce9841aa400160f8a45",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
