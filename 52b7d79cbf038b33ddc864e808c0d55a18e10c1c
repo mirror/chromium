@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "ce1cdee1_59fdb0bf",
+        "filename": "cc/DEPS",
+        "patchSetId": 7
+      },
+      "lineNbr": 17,
+      "author": {
+        "id": 1115895
+      },
+      "writtenOn": "2017-11-08T22:24:09Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "5ee529f9_224e5690",
+      "revId": "52b7d79cbf038b33ddc864e808c0d55a18e10c1c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "4d10b818_70777f1a",
         "filename": "cc/paint/oop_pixeltest.cc",
         "patchSetId": 7
@@ -36,6 +54,24 @@
     },
     {
       "key": {
+        "uuid": "51189292_d79028f8",
+        "filename": "cc/paint/oop_pixeltest.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 226,
+      "author": {
+        "id": 1115895
+      },
+      "writtenOn": "2017-11-08T22:24:09Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "4d10b818_70777f1a",
+      "revId": "52b7d79cbf038b33ddc864e808c0d55a18e10c1c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "897db2ad_9a55a042",
         "filename": "cc/paint/oop_pixeltest.cc",
         "patchSetId": 7
@@ -47,6 +83,24 @@
       "writtenOn": "2017-11-08T22:14:47Z",
       "side": 1,
       "message": "I\u0027m kind of wondering if we should just return a bitmap here and in the oop raster, since we reconstruct that in the expectation call anyway. Probably a good follow-up.",
+      "revId": "52b7d79cbf038b33ddc864e808c0d55a18e10c1c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6efb9c25_aada0c16",
+        "filename": "cc/paint/oop_pixeltest.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 238,
+      "author": {
+        "id": 1115895
+      },
+      "writtenOn": "2017-11-08T22:24:09Z",
+      "side": 1,
+      "message": "Can do in a followup.",
+      "parentUuid": "897db2ad_9a55a042",
       "revId": "52b7d79cbf038b33ddc864e808c0d55a18e10c1c",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
