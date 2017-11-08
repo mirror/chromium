@@ -2,6 +2,103 @@
   "comments": [
     {
       "key": {
+        "uuid": "f6f63e8f_95d135c0",
+        "filename": "components/web_contents_delegate_android/web_contents_delegate_android.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 379,
+      "author": {
+        "id": 1002725
+      },
+      "writtenOn": "2017-11-08T22:57:04Z",
+      "side": 1,
+      "message": "separate CL, but why are there empty methods here...",
+      "revId": "c51321fdad1f964823f344e98b4727da16727668",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "191dff2f_c937c46e",
+        "filename": "components/web_contents_delegate_android/web_contents_delegate_android.h",
+        "patchSetId": 9
+      },
+      "lineNbr": 114,
+      "author": {
+        "id": 1002725
+      },
+      "writtenOn": "2017-11-08T22:57:04Z",
+      "side": 1,
+      "message": "no blank line",
+      "revId": "c51321fdad1f964823f344e98b4727da16727668",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ee57d923_b6304b31",
+        "filename": "content/browser/android/content_view_core.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 628,
+      "author": {
+        "id": 1002725
+      },
+      "writtenOn": "2017-11-08T22:57:04Z",
+      "side": 1,
+      "message": "hmm? this has nothing to do with actual browser control height?",
+      "range": {
+        "startLine": 628,
+        "startChar": 18,
+        "endLine": 628,
+        "endChar": 59
+      },
+      "revId": "c51321fdad1f964823f344e98b4727da16727668",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2b0fc028_6ce62538",
+        "filename": "content/browser/renderer_host/render_widget_host_delegate.h",
+        "patchSetId": 9
+      },
+      "lineNbr": 282,
+      "author": {
+        "id": 1002725
+      },
+      "writtenOn": "2017-11-08T22:57:04Z",
+      "side": 1,
+      "message": "I think these should be on render_view_host_delegate_view.h?\n\nSo the call sequence should be RWHVA -\u003e RVHDelegateView(WebContentsViewAndroid) -\u003e WebContentsDelegate (retrieved from WebContentsImpl)?",
+      "revId": "c51321fdad1f964823f344e98b4727da16727668",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a224d414_9117f507",
+        "filename": "content/browser/renderer_host/render_widget_host_view_android.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 730,
+      "author": {
+        "id": 1002725
+      },
+      "writtenOn": "2017-11-08T22:57:04Z",
+      "side": 1,
+      "message": "reverse the condition, always prefer positive condition, easier to read, ditto below",
+      "range": {
+        "startLine": 730,
+        "startChar": 9,
+        "endLine": 730,
+        "endChar": 18
+      },
+      "revId": "c51321fdad1f964823f344e98b4727da16727668",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "36f7ed1d_b097ea8b",
         "filename": "content/browser/web_contents/web_contents_impl.cc",
         "patchSetId": 9
@@ -13,6 +110,46 @@
       "writtenOn": "2017-11-08T20:35:38Z",
       "side": 1,
       "message": "no need for these I think, WebContentsViewAndroid can just get the delegate directly from WebContents?\n\nplus I\u0027m not sure if this compiles on desktop since the delegate calls are OS_ANDROID",
+      "revId": "c51321fdad1f964823f344e98b4727da16727668",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f7d7ebe8_a12e8255",
+        "filename": "content/browser/web_contents/web_contents_view_android.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 496,
+      "author": {
+        "id": 1002725
+      },
+      "writtenOn": "2017-11-08T22:57:04Z",
+      "side": 1,
+      "message": "is this necessary? rwhva already overrides this?",
+      "revId": "c51321fdad1f964823f344e98b4727da16727668",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d7fde011_8abeb238",
+        "filename": "content/public/android/java/src/org/chromium/content/browser/ContentViewCore.java",
+        "patchSetId": 9
+      },
+      "lineNbr": 619,
+      "author": {
+        "id": 1002725
+      },
+      "writtenOn": "2017-11-08T22:57:04Z",
+      "side": 1,
+      "message": "do this in test code. all code on CVC should be UI thread only",
+      "range": {
+        "startLine": 619,
+        "startChar": 19,
+        "endLine": 619,
+        "endChar": 52
+      },
       "revId": "c51321fdad1f964823f344e98b4727da16727668",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
