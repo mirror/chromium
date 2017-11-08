@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "4d78fa5b_dbf33d3f",
+        "filename": "ui/compositor/compositor.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 551,
+      "author": {
+        "id": 1000887
+      },
+      "writtenOn": "2017-11-08T21:31:51Z",
+      "side": 1,
+      "message": "Yeah that looks right, though I do wondered what youall\u0027d think about the 3rd option, where we only set this to true inside the widget_valid_ block?",
+      "revId": "02db3c56a1aeeba925fdacd43953c578eab2f4e2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
