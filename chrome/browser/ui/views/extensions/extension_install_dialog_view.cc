@@ -246,8 +246,8 @@ void ExtensionInstallDialogView::InitView() {
 
     int rating_text_context, user_count_text_context;
     if (provider->IsHarmonyMode()) {
-      rating_text_context = CONTEXT_BODY_TEXT_LARGE;
-      user_count_text_context = CONTEXT_BODY_TEXT_SMALL;
+      rating_text_context = views::style::CONTEXT_BODY_TEXT_LARGE;
+      user_count_text_context = views::style::CONTEXT_BODY_TEXT_SMALL;
     } else {
       rating_text_context = user_count_text_context = CONTEXT_DEPRECATED_SMALL;
     }
@@ -259,8 +259,9 @@ void ExtensionInstallDialogView::InitView() {
     rating->AddChildView(rating_count);
 
     layout->StartRow(0, column_set_id);
-    views::Label* user_count = new views::Label(
-        prompt_->GetUserCount(), user_count_text_context, STYLE_SECONDARY);
+    views::Label* user_count =
+        new views::Label(prompt_->GetUserCount(), user_count_text_context,
+                         views::style::STYLE_SECONDARY);
     user_count->SetAutoColorReadabilityEnabled(false);
     user_count->SetEnabledColor(SK_ColorGRAY);
     layout->AddView(user_count);

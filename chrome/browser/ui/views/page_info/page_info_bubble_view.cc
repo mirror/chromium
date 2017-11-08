@@ -134,8 +134,9 @@ views::View* CreateInspectLinkSection(const gfx::ImageSkia& image_icon,
   icon->SetImage(image_icon);
   layout->AddView(icon);
 
-  views::Label* title_label = new views::Label(
-      l10n_util::GetStringUTF16(title_id), CONTEXT_BODY_TEXT_LARGE);
+  views::Label* title_label =
+      new views::Label(l10n_util::GetStringUTF16(title_id),
+                       views::style::CONTEXT_BODY_TEXT_LARGE);
   layout->AddView(title_label);
 
   layout->StartRow(1, column);

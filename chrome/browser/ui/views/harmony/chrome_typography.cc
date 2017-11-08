@@ -24,7 +24,6 @@ void ApplyCommonFontStyles(int context,
 const gfx::FontList& LegacyTypographyProvider::GetFont(int context,
                                                        int style) const {
   constexpr int kHeadlineDelta = 8;
-  constexpr int kDialogMessageDelta = 1;
 
   int size_delta;
   gfx::Font::Weight font_weight;
@@ -39,13 +38,6 @@ const gfx::FontList& LegacyTypographyProvider::GetFont(int context,
   switch (context) {
     case CONTEXT_HEADLINE:
       size_delta = kHeadlineDelta;
-      break;
-    case CONTEXT_BODY_TEXT_LARGE:
-      // Note: Not using ui::kMessageFontSizeDelta, so 13pt in most cases.
-      size_delta = kDialogMessageDelta;
-      break;
-    case CONTEXT_BODY_TEXT_SMALL:
-      size_delta = ui::kLabelFontSizeDelta;
       break;
     case CONTEXT_DEPRECATED_SMALL:
       size_delta = ui::ResourceBundle::kSmallFontDelta;
@@ -65,8 +57,8 @@ const gfx::FontList& LegacyTypographyProvider::GetFont(int context,
 SkColor LegacyTypographyProvider::GetColor(int context,
                                            int style,
                                            const ui::NativeTheme& theme) const {
-  // Use "disabled grey" for HINT and SECONDARY when Harmony is disabled.
-  if (style == STYLE_HINT || style == STYLE_SECONDARY)
+  // Use "disabled grey" for HINT when Harmony is disabled.
+  if (style == STYLE_HINT)
     style = views::style::STYLE_DISABLED;
 
   return DefaultTypographyProvider::GetColor(context, style, theme);

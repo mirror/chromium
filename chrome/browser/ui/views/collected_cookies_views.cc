@@ -411,7 +411,7 @@ views::View* CollectedCookiesViews::CreateAllowedPane() {
   // Create the controls that go into the pane.
   allowed_label_ = new views::Label(
       l10n_util::GetStringUTF16(IDS_COLLECTED_COOKIES_ALLOWED_COOKIES_LABEL),
-      CONTEXT_BODY_TEXT_LARGE);
+      views::style::CONTEXT_BODY_TEXT_LARGE);
   allowed_label_->SetHorizontalAlignment(gfx::ALIGN_LEFT);
 
   allowed_cookies_tree_model_ =
@@ -484,7 +484,7 @@ views::View* CollectedCookiesViews::CreateBlockedPane() {
           prefs->GetBoolean(prefs::kBlockThirdPartyCookies)
               ? IDS_COLLECTED_COOKIES_BLOCKED_THIRD_PARTY_BLOCKING_ENABLED
               : IDS_COLLECTED_COOKIES_BLOCKED_COOKIES_LABEL),
-      CONTEXT_BODY_TEXT_LARGE);
+      views::style::CONTEXT_BODY_TEXT_LARGE);
   blocked_label_->SetMultiLine(true);
   blocked_label_->SetHorizontalAlignment(gfx::ALIGN_LEFT);
   blocked_label_->SizeToFit(kTreeViewWidth);

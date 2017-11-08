@@ -91,7 +91,7 @@ CredentialsItemView::CredentialsItemView(
   // TODO(tapted): Check these (and the STYLE_ values below) against the spec on
   // http://crbug.com/651681.
   const int kLabelContext = ChromeLayoutProvider::Get()->IsHarmonyMode()
-                                ? CONTEXT_BODY_TEXT_SMALL
+                                ? views::style::CONTEXT_BODY_TEXT_SMALL
                                 : CONTEXT_DEPRECATED_SMALL;
 
   if (!upper_text.empty()) {
@@ -102,7 +102,8 @@ CredentialsItemView::CredentialsItemView(
   }
 
   if (!lower_text.empty()) {
-    lower_label_ = new views::Label(lower_text, kLabelContext, STYLE_SECONDARY);
+    lower_label_ = new views::Label(lower_text, kLabelContext,
+                                    views::style::STYLE_SECONDARY);
     lower_label_->SetHorizontalAlignment(gfx::ALIGN_LEFT);
     lower_label_->SetMultiLine(true);
     AddChildView(lower_label_);

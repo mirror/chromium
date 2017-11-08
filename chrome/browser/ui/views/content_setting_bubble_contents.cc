@@ -383,8 +383,9 @@ void ContentSettingBubbleContents::Init() {
   bool bubble_content_empty = true;
 
   if (!bubble_content.message.empty()) {
-    views::Label* message_label = new views::Label(
-        bubble_content.message, views::style::CONTEXT_LABEL, STYLE_SECONDARY);
+    views::Label* message_label =
+        new views::Label(bubble_content.message, views::style::CONTEXT_LABEL,
+                         views::style::STYLE_SECONDARY);
     message_label->SetMultiLine(true);
     message_label->SetHorizontalAlignment(gfx::ALIGN_LEFT);
     layout->StartRow(0, kSingleColumnSetId);

@@ -25,12 +25,6 @@ enum ChromeTextContext {
   // Headline text. Usually 20pt. Never multi-line.
   CONTEXT_HEADLINE = CHROME_TEXT_CONTEXT_START,
 
-  // "Body 1". Usually 13pt.
-  CONTEXT_BODY_TEXT_LARGE,
-
-  // "Body 2". Usually 12pt.
-  CONTEXT_BODY_TEXT_SMALL,
-
   // Text for titles, body text and buttons that appear in dialogs attempting to
   // mimic the native Windows 10 look and feel.
   CONTEXT_WINDOWS10_NATIVE,
@@ -44,11 +38,8 @@ enum ChromeTextContext {
 enum ChromeTextStyle {
   CHROME_TEXT_STYLE_START = views::style::VIEWS_TEXT_STYLE_END,
 
-  // Secondary text. May be lighter than views::style::PRIMARY.
-  STYLE_SECONDARY = CHROME_TEXT_STYLE_START,
-
   // "Hint" text, usually a line that gives context to something more important.
-  STYLE_HINT,
+  STYLE_HINT = CHROME_TEXT_STYLE_START,
 
   // A solid shade of red.
   STYLE_RED,

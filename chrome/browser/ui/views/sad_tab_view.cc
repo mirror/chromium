@@ -35,8 +35,8 @@ constexpr int kMinColumnWidth = 120;
 constexpr int kTitleBottomSpacing = 13;
 
 views::Label* CreateFormattedLabel(const base::string16& message) {
-  views::Label* label =
-      new views::Label(message, views::style::CONTEXT_LABEL, STYLE_SECONDARY);
+  views::Label* label = new views::Label(message, views::style::CONTEXT_LABEL,
+                                         views::style::STYLE_SECONDARY);
 
   label->SetMultiLine(true);
   label->SetHorizontalAlignment(gfx::ALIGN_LEFT);

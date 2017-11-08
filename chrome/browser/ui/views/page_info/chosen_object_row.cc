@@ -56,14 +56,14 @@ ChosenObjectRow::ChosenObjectRow(
   views::Label* label = new views::Label(
       l10n_util::GetStringFUTF16(info_->ui_info.label_string_id,
                                  PageInfoUI::ChosenObjectToUIString(*info_)),
-      CONTEXT_BODY_TEXT_LARGE);
+      views::style::CONTEXT_BODY_TEXT_LARGE);
   layout->AddView(label);
   // Create the delete button.
   if (ui::MaterialDesignController::IsSecondaryUiMaterial()) {
     delete_button_ = views::CreateVectorImageButton(this);
     views::SetImageFromVectorIcon(
         delete_button_, vector_icons::kClose16Icon,
-        views::style::GetColor(CONTEXT_BODY_TEXT_LARGE,
+        views::style::GetColor(views::style::CONTEXT_BODY_TEXT_LARGE,
                                views::style::STYLE_PRIMARY, GetNativeTheme()));
 
   } else {

@@ -23,6 +23,7 @@
 #include "ui/views/layout/box_layout.h"
 #include "ui/views/layout/grid_layout.h"
 #include "ui/views/layout/layout_provider.h"
+#include "ui/views/style/typography.h"
 #include "ui/views/widget/widget.h"
 #include "ui/views/window/client_view.h"
 #include "ui/views/window/dialog_delegate.h"
@@ -184,7 +185,8 @@ void MessageBoxView::Init(const InitParams& params) {
     std::vector<base::string16> texts;
     SplitStringIntoParagraphs(params.message, &texts);
     for (size_t i = 0; i < texts.size(); ++i) {
-      Label* message_label = new Label(texts[i]);
+      Label* message_label = new Label(texts[i], style::CONTEXT_BODY_TEXT_LARGE,
+                                       style::STYLE_SECONDARY);
       // Avoid empty multi-line labels, which have a height of 0.
       message_label->SetMultiLine(!texts[i].empty());
       message_label->SetAllowCharacterBreak(true);
@@ -192,7 +194,8 @@ void MessageBoxView::Init(const InitParams& params) {
       message_labels_.push_back(message_label);
     }
   } else {
-    Label* message_label = new Label(params.message);
+    Label* message_label = new Label(
+        params.message, style::CONTEXT_BODY_TEXT_LARGE, style::STYLE_SECONDARY);
     message_label->SetMultiLine(true);
     message_label->SetAllowCharacterBreak(true);
     message_label->SetHorizontalAlignment(gfx::ALIGN_LEFT);

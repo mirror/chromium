@@ -289,7 +289,7 @@ PermissionSelectorRow::PermissionSelectorRow(
   // Create the label that displays the permission type.
   label_ =
       new views::Label(PageInfoUI::PermissionTypeToUIString(permission.type),
-                       CONTEXT_BODY_TEXT_LARGE);
+                       views::style::CONTEXT_BODY_TEXT_LARGE);
   layout->AddView(label_);
   // Create the menu model.
   menu_model_.reset(new PermissionMenuModel(

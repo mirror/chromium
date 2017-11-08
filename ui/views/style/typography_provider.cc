@@ -73,6 +73,11 @@ SkColor DefaultTypographyProvider::GetColor(
     const ui::NativeTheme& theme) const {
   ui::NativeTheme::ColorId color_id =
       ui::NativeTheme::kColorId_LabelEnabledColor;
+
+  // The secondary style color is the same as STYLE_DISABLED by default.
+  if (style == views::style::STYLE_SECONDARY)
+    style = views::style::STYLE_DISABLED;
+
   if (context == style::CONTEXT_BUTTON_MD) {
     switch (style) {
       case views::style::STYLE_DIALOG_BUTTON_DEFAULT:
@@ -104,6 +109,7 @@ void DefaultTypographyProvider::GetDefaultFont(int context,
                                                int style,
                                                int* size_delta,
                                                Font::Weight* font_weight) {
+  constexpr int kDialogMessageDelta = 1;
   *font_weight = Font::Weight::NORMAL;
 
   switch (context) {
@@ -116,6 +122,10 @@ void DefaultTypographyProvider::GetDefaultFont(int context,
       break;
     case style::CONTEXT_TOUCH_MENU:
       *size_delta = -1;
+      break;
+    case style::CONTEXT_BODY_TEXT_LARGE:
+      // Note: Not using ui::kMessageFontSizeDelta, so 13pt in most cases.
+      *size_delta = kDialogMessageDelta;
       break;
     default:
       *size_delta = ui::kLabelFontSizeDelta;

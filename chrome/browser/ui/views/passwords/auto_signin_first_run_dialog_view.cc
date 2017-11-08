@@ -91,8 +91,8 @@ void AutoSigninFirstRunDialogView::InitWindow() {
   std::pair<base::string16, gfx::Range> text_content =
       controller_->GetAutoSigninText();
   text_ = new views::StyledLabel(text_content.first, this);
-  text_->SetTextContext(CONTEXT_BODY_TEXT_LARGE);
-  text_->SetDefaultTextStyle(STYLE_SECONDARY);
+  text_->SetTextContext(views::style::CONTEXT_BODY_TEXT_LARGE);
+  text_->SetDefaultTextStyle(views::style::STYLE_SECONDARY);
   if (!text_content.second.is_empty()) {
     text_->AddStyleRange(text_content.second,
                          views::StyledLabel::RangeStyleInfo::CreateForLink());

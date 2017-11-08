@@ -94,9 +94,9 @@ int HarmonyTypographyProvider::GetPlatformFontHeight(int font_context) {
       return windows_10 && direct_write_enabled ? 27 : 28;
     case views::style::CONTEXT_DIALOG_TITLE:
       return windows_10 || !direct_write_enabled ? 20 : 21;
-    case CONTEXT_BODY_TEXT_LARGE:
+    case views::style::CONTEXT_BODY_TEXT_LARGE:
       return direct_write_enabled ? 18 : 17;
-    case CONTEXT_BODY_TEXT_SMALL:
+    case views::style::CONTEXT_BODY_TEXT_SMALL:
       return windows_10 && direct_write_enabled ? 16 : 15;
   }
   NOTREACHED();
@@ -128,7 +128,7 @@ const gfx::FontList& HarmonyTypographyProvider::GetFont(int context,
     case views::style::CONTEXT_DIALOG_TITLE:
       size_delta = kTitleSize - gfx::PlatformFont::kDefaultBaseFontSize;
       break;
-    case CONTEXT_BODY_TEXT_LARGE:
+    case views::style::CONTEXT_BODY_TEXT_LARGE:
       size_delta = kBodyTextLargeSize - gfx::PlatformFont::kDefaultBaseFontSize;
       break;
     case CONTEXT_HEADLINE:
@@ -169,7 +169,7 @@ SkColor HarmonyTypographyProvider::GetColor(
       return SkColorSetRGB(0x9e, 0x9e, 0x9e);
     case views::style::STYLE_LINK:
       return gfx::kGoogleBlue700;
-    case STYLE_SECONDARY:
+    case views::style::STYLE_SECONDARY:
     case STYLE_HINT:
       return SkColorSetRGB(0x75, 0x75, 0x75);
     case STYLE_RED:
@@ -207,9 +207,9 @@ int HarmonyTypographyProvider::GetLineHeight(int context, int style) const {
   static const int kTitlePlatformHeight =
       GetPlatformFontHeight(views::style::CONTEXT_DIALOG_TITLE);
   static const int kBodyTextLargePlatformHeight =
-      GetPlatformFontHeight(CONTEXT_BODY_TEXT_LARGE);
+      GetPlatformFontHeight(views::style::CONTEXT_BODY_TEXT_LARGE);
   static const int kBodyTextSmallPlatformHeight =
-      GetPlatformFontHeight(CONTEXT_BODY_TEXT_SMALL);
+      GetPlatformFontHeight(views::style::CONTEXT_BODY_TEXT_SMALL);
 #else
   constexpr int kHeadlinePlatformHeight = 24;
   constexpr int kTitlePlatformHeight = 18;
@@ -230,10 +230,12 @@ int HarmonyTypographyProvider::GetLineHeight(int context, int style) const {
       GetFont(views::style::CONTEXT_DIALOG_TITLE, kTemplateStyle).GetHeight() -
       kTitlePlatformHeight + kTitleHeight;
   static const int body_large_height =
-      GetFont(CONTEXT_BODY_TEXT_LARGE, kTemplateStyle).GetHeight() -
+      GetFont(views::style::CONTEXT_BODY_TEXT_LARGE, kTemplateStyle)
+          .GetHeight() -
       kBodyTextLargePlatformHeight + kBodyHeight;
   static const int default_height =
-      GetFont(CONTEXT_BODY_TEXT_SMALL, kTemplateStyle).GetHeight() -
+      GetFont(views::style::CONTEXT_BODY_TEXT_SMALL, kTemplateStyle)
+          .GetHeight() -
       kBodyTextSmallPlatformHeight + kBodyHeight;
 
   switch (context) {
@@ -242,7 +244,7 @@ int HarmonyTypographyProvider::GetLineHeight(int context, int style) const {
       return kButtonAbsoluteHeight;
     case views::style::CONTEXT_DIALOG_TITLE:
       return title_height;
-    case CONTEXT_BODY_TEXT_LARGE:
+    case views::style::CONTEXT_BODY_TEXT_LARGE:
     case views::style::CONTEXT_TABLE_ROW:
       return body_large_height;
     case CONTEXT_HEADLINE:

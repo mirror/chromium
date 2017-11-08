@@ -53,6 +53,12 @@ enum TextContext {
   // Embedders must start TextContext enum values from this value.
   VIEWS_TEXT_CONTEXT_END,
 
+  // "Body 1". Usually 13pt.
+  CONTEXT_BODY_TEXT_LARGE,
+
+  // "Body 2". Usually 12pt.
+  CONTEXT_BODY_TEXT_SMALL,
+
   // All TextContext enum values must be below this value.
   TEXT_CONTEXT_MAX = 0x1000
 };
@@ -68,6 +74,9 @@ enum TextStyle {
   // Primary text: solid black, normal weight. Converts to DISABLED in some
   // contexts (e.g. BUTTON_TEXT, FIELD).
   STYLE_PRIMARY = VIEWS_TEXT_STYLE_START,
+
+  // Secondary text. May be lighter than STYLE_PRIMARY.
+  STYLE_SECONDARY,
 
   // Style for the default button on a dialog.
   STYLE_DIALOG_BUTTON_DEFAULT,

@@ -30,7 +30,8 @@ namespace {
 const int kColumnWidth = 285;
 
 views::Label* CreateExtensionNameLabel(const base::string16& text) {
-  views::Label* label = new views::Label(text, CONTEXT_BODY_TEXT_SMALL);
+  views::Label* label =
+      new views::Label(text, views::style::CONTEXT_BODY_TEXT_SMALL);
   label->SetMultiLine(true);
   label->SetHorizontalAlignment(gfx::ALIGN_LEFT);
   return label;
