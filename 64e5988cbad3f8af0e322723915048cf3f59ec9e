@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "0adf33b0_a7be789e",
+        "filename": "chrome/browser/app_controller_mac_browsertest.mm",
+        "patchSetId": 3
+      },
+      "lineNbr": 133,
+      "author": {
+        "id": 1002092
+      },
+      "writtenOn": "2017-11-08T06:42:12Z",
+      "side": 1,
+      "message": "doh - no crashes, but it looks like there\u0027s no guarantee that a status bubble is created on the bots. I\u0027ll play with this tomorrow. Probably I can filter out the status bubble by classname...  but that\u0027s not an ideal solution at this layer (e.g. for the case it eventually becomes a views::Widget and doesn\u0027t have as much RTTI any more - there is Widget::is_secondary_widget(), but that\u0027s also a bit gross).\n\nOr I could just stop relying on [NSApp windows] in the test. Or try counting the *change* in window count..",
+      "revId": "64e5988cbad3f8af0e322723915048cf3f59ec9e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
