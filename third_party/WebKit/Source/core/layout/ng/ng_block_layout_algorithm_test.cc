@@ -18,7 +18,7 @@
 #include "core/layout/ng/ng_physical_box_fragment.h"
 #include "core/layout/ng/ng_physical_fragment.h"
 #include "core/style/ComputedStyle.h"
-#include "platform/runtime_enabled_features.h"
+#include "platform/testing/RuntimeEnabledFeaturesTestHelpers.h"
 #include "testing/gmock/include/gmock/gmock.h"
 
 namespace blink {
@@ -27,12 +27,14 @@ namespace {
 using ::testing::ElementsAre;
 using ::testing::Pointee;
 
-class NGBlockLayoutAlgorithmTest : public NGBaseLayoutAlgorithmTest {
+class NGBlockLayoutAlgorithmTest
+    : public NGBaseLayoutAlgorithmTest,
+      private ScopedLayoutNGFragmentCachingForTest {
+ public:
+  NGBlockLayoutAlgorithmTest() : ScopedLayoutNGFragmentCachingForTest(false) {}
+
  protected:
   void SetUp() override {
-    // Make sure to reset this, except for the one test that needs it.
-    RuntimeEnabledFeatures::SetLayoutNGFragmentCachingEnabled(false);
-
     NGBaseLayoutAlgorithmTest::SetUp();
     style_ = ComputedStyle::Create();
   }
@@ -89,7 +91,7 @@ TEST_F(NGBlockLayoutAlgorithmTest, FixedSize) {
 }
 
 TEST_F(NGBlockLayoutAlgorithmTest, Caching) {
-  RuntimeEnabledFeatures::SetLayoutNGFragmentCachingEnabled(true);
+  ScopedLayoutNGFragmentCachingForTest layout_ng_fragment_caching(true);
 
   SetBodyInnerHTML(R"HTML(
     <div id="box" style="width:30px; height:40px"></div>
