@@ -13,8 +13,8 @@
 #include "mojo/edk/embedder/named_platform_handle.h"
 #include "mojo/edk/embedder/named_platform_handle_utils.h"
 #include "mojo/edk/embedder/platform_handle.h"
-#include "mojo/edk/embedder/platform_handle_vector.h"
 #include "mojo/edk/embedder/platform_shared_buffer.h"
+#include "mojo/edk/embedder/scoped_platform_handle.h"
 #include "mojo/edk/system/broker.h"
 #include "mojo/edk/system/broker_messages.h"
 #include "mojo/edk/system/channel.h"
@@ -35,7 +35,7 @@ bool TakeHandlesFromBrokerMessage(Channel::Message* message,
     return false;
   }
 
-  ScopedPlatformHandleVectorPtr handles = message->TakeHandles();
+  ScopedPlatformHandleVector handles = message->TakeHandles();
   DCHECK(handles);
   DCHECK_EQ(handles->size(), num_handles);
   DCHECK(out_handles);

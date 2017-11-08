@@ -5,6 +5,8 @@
 #ifndef MOJO_EDK_EMBEDDER_SCOPED_PLATFORM_HANDLE_H_
 #define MOJO_EDK_EMBEDDER_SCOPED_PLATFORM_HANDLE_H_
 
+#include <vector>
+
 #include "base/compiler_specific.h"
 #include "base/macros.h"
 #include "mojo/edk/embedder/platform_handle.h"
@@ -56,6 +58,8 @@ class MOJO_SYSTEM_IMPL_EXPORT ScopedPlatformHandle {
 
   DISALLOW_COPY_AND_ASSIGN(ScopedPlatformHandle);
 };
+
+using ScopedPlatformHandleVector = std::vector<ScopedPlatformHandle>;
 
 }  // namespace edk
 }  // namespace mojo

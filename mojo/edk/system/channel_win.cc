@@ -20,7 +20,7 @@
 #include "base/synchronization/lock.h"
 #include "base/task_runner.h"
 #include "base/win/win_util.h"
-#include "mojo/edk/embedder/platform_handle_vector.h"
+#include "mojo/edk/embedder/scoped_platform_handle.h"
 
 namespace mojo {
 namespace edk {
@@ -123,11 +123,10 @@ class ChannelWin : public Channel,
     leak_handle_ = true;
   }
 
-  bool GetReadPlatformHandles(
-      size_t num_handles,
-      const void* extra_header,
-      size_t extra_header_size,
-      ScopedPlatformHandleVectorPtr* handles) override {
+  bool GetReadPlatformHandles(size_t num_handles,
+                              const void* extra_header,
+                              size_t extra_header_size,
+                              ScopedPlatformHandleVector* handles) override {
     if (num_handles > std::numeric_limits<uint16_t>::max())
       return false;
     using HandleEntry = Channel::Message::HandleEntry;
@@ -268,9 +267,9 @@ class ChannelWin : public Channel,
         outgoing_messages_.pop_front();
 
         // Clear any handles so they don't get closed on destruction.
-        ScopedPlatformHandleVectorPtr handles = message->TakeHandles();
-        if (handles)
-          handles->clear();
+        ScopedPlatformHandleVector handles = message->TakeHandles();
+        for (auto& handle : handles)
+          ignore_result(handle.release());
       }
 
       if (!WriteNextNoLock())

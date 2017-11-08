@@ -13,7 +13,7 @@
 #include "base/mac/scoped_mach_port.h"
 #include "base/metrics/histogram_macros.h"
 #include "base/process/process.h"
-#include "mojo/edk/embedder/platform_handle_vector.h"
+#include "mojo/edk/embedder/scoped_platform_handle.h"
 
 namespace mojo {
 namespace edk {
@@ -110,10 +110,10 @@ void MachPortRelay::SendPortsToProcess(Channel::Message* message,
   DCHECK(message);
   mach_port_t task_port = port_provider_->TaskForPid(process);
 
-  ScopedPlatformHandleVectorPtr handles = message->TakeHandles();
+  ScopedPlatformHandleVector handles = message->TakeHandles();
   // Message should have handles, otherwise there's no point in calling this
   // function.
-  DCHECK(handles);
+  DCHECK(!handles.empty());
   for (size_t i = 0; i < handles->size(); i++) {
     PlatformHandle* handle = &(*handles)[i];
     DCHECK(handle->type != PlatformHandle::Type::MACH_NAME);
