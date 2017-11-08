@@ -16,6 +16,24 @@
       "revId": "8dfdd5c89b113097bbc34690f042cec6b4675363",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "69b39ff4_824bb08f",
+        "filename": "chrome/browser/permissions/permission_uma_util.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 736,
+      "author": {
+        "id": 1003044
+      },
+      "writtenOn": "2017-11-08T02:26:21Z",
+      "side": 0,
+      "message": "We don\u0027t actually get into here for durable storage though, I don\u0027t think we\u0027ve ever logged anything for Permissions.*.DurableStorage. Maybe we should log it somewhere but it\u0027s probably going to be misleading if we add it to Permissions.Action, as the other histograms are all for prompt actions.",
+      "parentUuid": "d52831df_41cbdf5a",
+      "revId": "8dfdd5c89b113097bbc34690f042cec6b4675363",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
