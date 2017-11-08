@@ -77,8 +77,11 @@ void ServiceTest::SetUp() {
 }
 
 void ServiceTest::TearDown() {
+  VLOG(0) << "xxxxxxxxxxxxxxxxxxxxxxxxxxx";
   background_service_manager_.reset();
+  VLOG(0) << "yyyyyyyyyyyyyyyyyyyyyyyyyyy";
   context_.reset();
+  VLOG(0) << "zzzzzzzzzzzzzzzzzzzzzzzzzzz";
 }
 
 }  // namespace test

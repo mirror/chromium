@@ -503,7 +503,7 @@ NetworkChangeNotifier::~NetworkChangeNotifier() {
 // static
 void NetworkChangeNotifier::SetFactory(
     NetworkChangeNotifierFactory* factory) {
-  CHECK(!g_network_change_notifier_factory);
+  CHECK(!g_network_change_notifier_factory || !factory);
   g_network_change_notifier_factory = factory;
 }
 
@@ -539,6 +539,11 @@ NetworkChangeNotifier* NetworkChangeNotifier::Create() {
 // static
 bool NetworkChangeNotifier::HasNetworkChangeNotifier() {
   return g_network_change_notifier != nullptr;
+}
+
+// static
+bool NetworkChangeNotifier::HasFactory() {
+  return g_network_change_notifier_factory != nullptr;
 }
 
 // static

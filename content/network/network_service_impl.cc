@@ -10,6 +10,7 @@
 #include "base/logging.h"
 #include "base/memory/ptr_util.h"
 #include "base/values.h"
+#include "build/build_config.h"
 #include "content/network/network_context.h"
 #include "content/public/common/content_switches.h"
 #include "mojo/public/cpp/bindings/strong_binding.h"
@@ -19,12 +20,42 @@
 #include "net/log/net_log.h"
 #include "net/log/net_log_util.h"
 #include "net/url_request/url_request_context_builder.h"
-
-#if defined(OS_ANDROID)
-#include "net/android/network_change_notifier_factory_android.h"
-#endif
+#include "services/service_manager/public/cpp/service_context.h"
 
 namespace content {
+
+namespace {
+
+std::unique_ptr<net::NetworkChangeNotifier>
+CreateNetworkChangeNotifierIfNeeded() {
+  // There is a global singleton net::NetworkChangeNotifier if NetworkService
+  // is running inside of the browser process.
+  if (!net::NetworkChangeNotifier::HasNetworkChangeNotifier()) {
+    VLOG(0) << "0000000000000000";
+#if defined(OS_ANDROID)
+    VLOG(0) << "1111111111111111111";
+    if (!net::NetworkChangeNotifier::HasFactory()) {
+      // Android should take care of creating the factory. If factory is not
+      // set (which can happen for tests), return early.
+      VLOG(0) << "22222222222222222";
+      return nullptr;
+    }
+#elif defined(OS_CHROMEOS) || defined(OS_IOS) || defined(OS_FUCHSIA)
+    // ChromeOS has its own implementation of NetworkChangeNotifier that lives
+    // outside of //net. iOS doesn't embed //content. Fuchsia doesn't have an
+    // implementation yet.
+    // TODO(xunjieli): Figure out what to do for these 3 platforms.
+    NOTIMPLEMENTED();
+    return nullptr;
+#endif
+    VLOG(0) << "333333333333333";
+    return base::WrapUnique(net::NetworkChangeNotifier::Create());
+  }
+  VLOG(0) << "444444444444444444";
+  return nullptr;
+}
+
+}  // namespace
 
 std::unique_ptr<NetworkService> NetworkService::Create(
     mojom::NetworkServiceRequest request,
@@ -82,28 +113,8 @@ NetworkServiceImpl::NetworkServiceImpl(
     Create(std::move(request));
   }
 
-  std::unique_ptr<net::NetworkChangeNotifier> network_change_notifier;
-  // There is a global singleton net::NetworkChangeNotifier if NetworkService
-  // is running inside of the browser process.
-  if (!net::NetworkChangeNotifier::HasNetworkChangeNotifier()) {
-#if defined(OS_ANDROID)
-    network_change_notifier_factory_ =
-        std::make_unique<net::NetworkChangeNotifierFactoryAndroid>();
-    network_change_notifier =
-        base::WrapUnique(network_change_notifier_factory_->CreateInstance());
-#elif defined(OS_CHROMEOS) || defined(OS_IOS) || defined(OS_FUCHSIA)
-    // ChromeOS has its own implementation of NetworkChangeNotifier that lives
-    // outside of //net. iOS doesn't embed //content. Fuchsia doesn't have an
-    // implementation yet.
-    // TODO(xunjieli): Figure out what to do for these 3 platforms.
-    NOTIMPLEMENTED();
-#else
-    network_change_notifier =
-        base::WrapUnique(net::NetworkChangeNotifier::Create());
-#endif
-  }
   network_change_manager_ = std::make_unique<NetworkChangeManager>(
-      std::move(network_change_notifier));
+      CreateNetworkChangeNotifierIfNeeded());
 
   if (net_log) {
     net_log_ = net_log;
@@ -127,8 +138,13 @@ NetworkServiceImpl::~NetworkServiceImpl() {
   // Call each Network and ask it to release its net::URLRequestContext, as they
   // may have references to shared objects owned by the NetworkService. The
   // NetworkContexts deregister themselves in Cleanup(), so have to be careful.
-  while (!network_contexts_.empty())
+  int i = 0;
+  while (!network_contexts_.empty()) {
+    i++;
+    VLOG(0) << "cleaning up contexts " << i;
     (*network_contexts_.begin())->Cleanup();
+  }
+  VLOG(0) << "~NetworkServiceImpl  cleaning up contexts " << i;
 }
 
 std::unique_ptr<mojom::NetworkContext>
@@ -204,6 +220,12 @@ net::NetLog* NetworkServiceImpl::net_log() const {
 void NetworkServiceImpl::GetNetworkChangeManager(
     mojom::NetworkChangeManagerRequest request) {
   network_change_manager_->AddRequest(std::move(request));
+}
+
+void NetworkServiceImpl::OnStart() {
+  ref_factory_.reset(new service_manager::ServiceContextRefFactory(
+      base::Bind(&service_manager::ServiceContext::RequestQuit,
+                 base::Unretained(context()))));
 }
 
 void NetworkServiceImpl::OnBindInterface(

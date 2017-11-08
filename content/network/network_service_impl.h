@@ -10,7 +10,6 @@
 #include <string>
 
 #include "base/macros.h"
-#include "build/build_config.h"
 #include "content/common/content_export.h"
 #include "content/network/network_change_manager.h"
 #include "content/public/common/network_service.mojom.h"
@@ -18,15 +17,13 @@
 #include "mojo/public/cpp/bindings/binding.h"
 #include "services/service_manager/public/cpp/binder_registry.h"
 #include "services/service_manager/public/cpp/service.h"
+#include "services/service_manager/public/cpp/service_context_ref.h"
 
 namespace net {
 class NetLog;
 class LoggingNetworkChangeObserver;
 class URLRequestContext;
 class URLRequestContextBuilder;
-#if defined(OS_ANDROID)
-class NetworkChangeNotifierFactoryAndroid;
-#endif
 }  // namespace net
 
 namespace content {
@@ -81,6 +78,7 @@ class CONTENT_EXPORT NetworkServiceImpl : public service_manager::Service,
   friend class NetworkService;
 
   // service_manager::Service implementation.
+  void OnStart() override;
   void OnBindInterface(const service_manager::BindSourceInfo& source_info,
                        const std::string& interface_name,
                        mojo::ScopedMessagePipeHandle interface_pipe) override;
@@ -99,10 +97,6 @@ class CONTENT_EXPORT NetworkServiceImpl : public service_manager::Service,
   // destroyed before them.
   std::unique_ptr<net::LoggingNetworkChangeObserver> network_change_observer_;
 
-#if defined(OS_ANDROID)
-  std::unique_ptr<net::NetworkChangeNotifierFactoryAndroid>
-      network_change_notifier_factory_;
-#endif
   std::unique_ptr<NetworkChangeManager> network_change_manager_;
 
   std::unique_ptr<service_manager::BinderRegistry> registry_;
@@ -115,6 +109,8 @@ class CONTENT_EXPORT NetworkServiceImpl : public service_manager::Service,
   // destroyed first.
   std::set<NetworkContext*> network_contexts_;
   std::set<uint32_t> processes_with_raw_headers_access_;
+
+  std::unique_ptr<service_manager::ServiceContextRefFactory> ref_factory_;
 
   bool quic_disabled_ = false;
 

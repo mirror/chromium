@@ -5,6 +5,7 @@
 #include <memory>
 
 #include "base/run_loop.h"
+#include "base/sequence_checker.h"
 #include "base/strings/string_util.h"
 #include "base/test/scoped_task_environment.h"
 #include "base/threading/thread_task_runner_handle.h"
@@ -20,6 +21,10 @@
 #include "services/service_manager/public/cpp/service_test.h"
 #include "services/service_manager/public/interfaces/service_factory.mojom.h"
 #include "testing/gtest/include/gtest/gtest.h"
+
+#if defined(OS_ANDROID)
+#include "net/android/network_change_notifier_factory_android.h"
+#endif
 
 namespace content {
 
@@ -318,8 +323,11 @@ class TestNetworkChangeManagerClient
     : public mojom::NetworkChangeManagerClient {
  public:
   explicit TestNetworkChangeManagerClient(
-      mojom::NetworkService* network_service)
-      : connection_type_(mojom::ConnectionType::CONNECTION_UNKNOWN),
+      mojom::NetworkService* network_service,
+      mojom::ConnectionType expected_type,
+      base::OnceClosure done_closure)
+      : connection_type_(expected_type),
+        done_closure_(std::move(done_closure)),
         binding_(this) {
     mojom::NetworkChangeManagerPtr manager_ptr;
     mojom::NetworkChangeManagerRequest request(mojo::MakeRequest(&manager_ptr));
@@ -336,27 +344,65 @@ class TestNetworkChangeManagerClient
 
   // NetworkChangeManagerClient implementation:
   void OnInitialConnectionType(mojom::ConnectionType type) override {
-    if (type == connection_type_)
-      run_loop_.Quit();
+    DCHECK_CALLED_ON_VALID_SEQUENCE(sequence_checker_);
+    VLOG(0) << "OnInitialConnectionType" << type;
+    if (type == connection_type_) {
+      VLOG(0) << "qqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqq";
+      std::move(done_closure_).Run();
+    } else {
+      VLOG(0) << "type : " << type << ", expected: " << connection_type_;
+    }
   }
 
   void OnNetworkChanged(mojom::ConnectionType type) override {
-    if (type == connection_type_)
-      run_loop_.Quit();
-  }
-
-  // Waits for the desired |connection_type| notification.
-  void WaitForNotification(mojom::ConnectionType type) {
-    connection_type_ = type;
-    run_loop_.Run();
+    DCHECK_CALLED_ON_VALID_SEQUENCE(sequence_checker_);
+    VLOG(0) << "OnNetworkChanged" << type;
+    if (type == connection_type_) {
+      std::move(done_closure_).Run();
+    } else {
+      VLOG(0) << "type : " << type << ", expected: " << connection_type_;
+    }
   }
 
  private:
-  base::RunLoop run_loop_;
-  mojom::ConnectionType connection_type_;
+  SEQUENCE_CHECKER(sequence_checker_);
+  const mojom::ConnectionType connection_type_;
+  base::OnceClosure done_closure_;
   mojo::Binding<mojom::NetworkChangeManagerClient> binding_;
 
   DISALLOW_COPY_AND_ASSIGN(TestNetworkChangeManagerClient);
+};
+
+class NetworkChangeTest : public testing::Test {
+ public:
+  NetworkChangeTest()
+      : scoped_task_environment_(
+            base::test::ScopedTaskEnvironment::MainThreadType::IO) {
+#if defined(OS_ANDROID)
+    // In non-testing code, this factory class lives on main/UI thread. Here it
+    // is fine to initialize it on network service's thread, because tests
+    // always access the factory delegate on the same thread.
+    network_change_notifier_factory_ =
+        std::make_unique<net::NetworkChangeNotifierFactoryAndroid>();
+    net::NetworkChangeNotifier::SetFactory(
+        network_change_notifier_factory_.get());
+#endif
+    service_ = NetworkServiceImpl::CreateForTesting();
+  }
+
+  ~NetworkChangeTest() override {
+    net::NetworkChangeNotifier::SetFactory(nullptr);
+  }
+
+  NetworkService* service() const { return service_.get(); }
+
+ private:
+  base::test::ScopedTaskEnvironment scoped_task_environment_;
+#if defined(OS_ANDROID)
+  std::unique_ptr<net::NetworkChangeNotifierFactoryAndroid>
+      network_change_notifier_factory_;
+#endif
+  std::unique_ptr<NetworkService> service_;
 };
 
 // mojom:NetworkChangeManager currently doesn't support ChromeOS, which has a
@@ -366,11 +412,15 @@ class TestNetworkChangeManagerClient
 #else
 #define MAYBE_NetworkChangeManagerRequest NetworkChangeManagerRequest
 #endif
-TEST_F(NetworkServiceTest, MAYBE_NetworkChangeManagerRequest) {
-  TestNetworkChangeManagerClient manager_client(service());
+TEST_F(NetworkChangeTest, MAYBE_NetworkChangeManagerRequest) {
+  base::RunLoop run_loop;
+  TestNetworkChangeManagerClient manager_client(
+      service(),
+      /*expected_type=*/mojom::ConnectionType::CONNECTION_3G,
+      run_loop.QuitClosure());
   net::NetworkChangeNotifier::NotifyObserversOfNetworkChangeForTests(
       net::NetworkChangeNotifier::CONNECTION_3G);
-  manager_client.WaitForNotification(mojom::ConnectionType::CONNECTION_3G);
+  run_loop.Run();
 }
 
 class NetworkServiceNetworkChangeTest
@@ -391,12 +441,28 @@ class NetworkServiceNetworkChangeTest
     explicit ServiceTestClientWithNetworkChange(
         service_manager::test::ServiceTest* test)
         : ServiceTestClient(test) {}
-    ~ServiceTestClientWithNetworkChange() override {}
+    ~ServiceTestClientWithNetworkChange() override {
+      net::NetworkChangeNotifier::SetFactory(nullptr);
+    }
 
    protected:
     void CreateService(service_manager::mojom::ServiceRequest request,
                        const std::string& name) override {
       if (name == mojom::kNetworkServiceName) {
+#if defined(OS_ANDROID)
+        // In non-testing code, this factory class lives on main/UI thread. Here
+        // it is fine to initialize it on network service's thread, because
+        // tests always access the factory delegate on the same thread.
+        network_change_notifier_factory_ =
+            std::make_unique<net::NetworkChangeNotifierFactoryAndroid>();
+        if (net::NetworkChangeNotifier::HasFactory()) {
+          VLOG(0) << "has factory************************";
+        } else {
+          VLOG(0) << "do not have  factory************************";
+        }
+        net::NetworkChangeNotifier::SetFactory(
+            network_change_notifier_factory_.get());
+#endif
         service_context_.reset(new service_manager::ServiceContext(
             NetworkServiceImpl::CreateForTesting(), std::move(request)));
         // Send a broadcast after NetworkService is actually created.
@@ -405,6 +471,12 @@ class NetworkServiceNetworkChangeTest
             net::NetworkChangeNotifier::CONNECTION_3G);
       }
     }
+
+   private:
+#if defined(OS_ANDROID)
+    std::unique_ptr<net::NetworkChangeNotifierFactoryAndroid>
+        network_change_notifier_factory_;
+#endif
   };
   std::unique_ptr<service_manager::Service> CreateService() override {
     return std::make_unique<ServiceTestClientWithNetworkChange>(this);
@@ -415,14 +487,25 @@ class NetworkServiceNetworkChangeTest
     connector()->BindInterface(mojom::kNetworkServiceName, &network_service_);
   }
 
+  void TearDown() override {
+    VLOG(0) << "bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb";
+    service_manager::test::ServiceTest::TearDown();
+    VLOG(0) << "ttttttttttttttttttttttttttttttt";
+  }
+
   mojom::NetworkServicePtr network_service_;
 
   DISALLOW_COPY_AND_ASSIGN(NetworkServiceNetworkChangeTest);
 };
 
 TEST_F(NetworkServiceNetworkChangeTest, MAYBE_NetworkChangeManagerRequest) {
-  TestNetworkChangeManagerClient manager_client(service());
-  manager_client.WaitForNotification(mojom::ConnectionType::CONNECTION_3G);
+  base::RunLoop run_loop;
+  TestNetworkChangeManagerClient manager_client(
+      service(),
+      /*expected_type=*/mojom::ConnectionType::CONNECTION_3G,
+      run_loop.QuitClosure());
+  run_loop.Run();
+  VLOG(0) << "QQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQ";
 }
 
 }  // namespace
