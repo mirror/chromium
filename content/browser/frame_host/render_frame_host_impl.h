@@ -1146,8 +1146,7 @@ class CONTENT_EXPORT RenderFrameHostImpl
   bool is_loading_;
 
   // PlzNavigate
-  // Used to track whether a commit is expected in this frame. Only used in
-  // tests.
+  // Used to track whether a commit is expected in this frame.
   bool pending_commit_;
 
   // The unique ID of the latest NavigationEntry that this RenderFrameHost is
