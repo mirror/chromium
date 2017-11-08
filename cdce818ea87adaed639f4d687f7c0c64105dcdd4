@@ -94,6 +94,30 @@
       "revId": "cdce818ea87adaed639f4d687f7c0c64105dcdd4",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ccfc4b0b_ee20b93f",
+        "filename": "build/mac/find_sdk.py",
+        "patchSetId": 1
+      },
+      "lineNbr": 57,
+      "author": {
+        "id": 1174099
+      },
+      "writtenOn": "2017-11-08T18:20:15Z",
+      "side": 1,
+      "message": "or possibly just look for a string ending in .app/Contents/Developer, that may be enough.",
+      "parentUuid": "a65500f9_85f96ed8",
+      "range": {
+        "startLine": 57,
+        "startChar": 32,
+        "endLine": 57,
+        "endChar": 63
+      },
+      "revId": "cdce818ea87adaed639f4d687f7c0c64105dcdd4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
