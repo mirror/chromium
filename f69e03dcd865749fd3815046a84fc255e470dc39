@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "52006331_bd92101d",
+        "filename": "third_party/WebKit/Source/core/exported/WebSharedWorkerImpl.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 205,
+      "author": {
+        "id": 1115976
+      },
+      "writtenOn": "2017-11-08T09:55:40Z",
+      "side": 1,
+      "message": "Can you move GetGlobalScopeScheduler() to WorkerThread\u0027s \u0027private\u0027 section and provide WorkerThread::GetTaskRunner() instead? This is because GlobalScopeScheduler is basically not thread-safe and it\u0027d be better to avoid exposing it to non-worker threads as much as possible.",
+      "revId": "f69e03dcd865749fd3815046a84fc255e470dc39",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
