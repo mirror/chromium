@@ -1,0 +1,142 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "c0462134_35aa9a9e",
+        "filename": "remoting/codec/cast_software_video_encoder_adapter.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 39,
+      "author": {
+        "id": 1157930
+      },
+      "writtenOn": "2017-11-08T18:25:43Z",
+      "side": 1,
+      "message": "base::TimeTicks::Now();\n\nI am thinking maybe we only need call base::TimeTicks::Now() once:\n\nconst base::TimeTicks current \u003d base::TimeTicks::Now();\nif (start_time_stamp_.is_null()) {\n  start_time_stamp_ \u003d current;\n  ...\n}\n\n....\n\nencoder_-\u003eEncode(CreateVideoFrame(*frame, current - start_time_stamp_),\n                 current,\n                 \u0026encoded_frame);\n...",
+      "range": {
+        "startLine": 39,
+        "startChar": 23,
+        "endLine": 39,
+        "endChar": 40
+      },
+      "revId": "f63f49591980b76fbe3d2f1ceca998a350bdd89a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "95e77a5c_4e8dbe95",
+        "filename": "remoting/codec/cast_software_video_encoder_adapter.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 60,
+      "author": {
+        "id": 1157930
+      },
+      "writtenOn": "2017-11-08T18:25:43Z",
+      "side": 1,
+      "message": "nit: Add the bug number: 555909\n\nThe media::VideoFrame::WrapExternalData() will return nullptr now. Should we hold off this CL until crbug.com/555909 gets fixed or you do some workaround here?",
+      "range": {
+        "startLine": 60,
+        "startChar": 2,
+        "endLine": 60,
+        "endChar": 43
+      },
+      "revId": "f63f49591980b76fbe3d2f1ceca998a350bdd89a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "acf7593d_58a1724a",
+        "filename": "remoting/codec/cast_software_video_encoder_adapter.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 62,
+      "author": {
+        "id": 1157930
+      },
+      "writtenOn": "2017-11-08T18:25:43Z",
+      "side": 1,
+      "message": "nit: DCHECK(!start_timestamp_.is_null());\nOr have the timestamp as an input parameter. See my comment above.",
+      "range": {
+        "startLine": 62,
+        "startChar": 2,
+        "endLine": 62,
+        "endChar": 45
+      },
+      "revId": "f63f49591980b76fbe3d2f1ceca998a350bdd89a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4dfbe8f6_c47a2ded",
+        "filename": "remoting/codec/cast_software_video_encoder_adapter.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 82,
+      "author": {
+        "id": 1157930
+      },
+      "writtenOn": "2017-11-08T18:25:43Z",
+      "side": 1,
+      "message": "INDEPENDENT indicates the frame is independently decodable, not necessarily being a key frame.\nresult-\u003ekey_frame \u003d media_frame.dependency \u003d\u003d media::cast::EncodedFrame::KEY;",
+      "range": {
+        "startLine": 82,
+        "startChar": 59,
+        "endLine": 82,
+        "endChar": 70
+      },
+      "revId": "f63f49591980b76fbe3d2f1ceca998a350bdd89a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8574ea4d_6bcf0713",
+        "filename": "remoting/codec/cast_software_video_encoder_adapter.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 32,
+      "author": {
+        "id": 1157930
+      },
+      "writtenOn": "2017-11-08T18:25:43Z",
+      "side": 1,
+      "message": "nit: explicit is not needed here.",
+      "range": {
+        "startLine": 32,
+        "startChar": 2,
+        "endLine": 32,
+        "endChar": 10
+      },
+      "revId": "f63f49591980b76fbe3d2f1ceca998a350bdd89a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "df86d2c7_f719e5c3",
+        "filename": "remoting/codec/cast_software_video_encoder_adapter.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 52,
+      "author": {
+        "id": 1157930
+      },
+      "writtenOn": "2017-11-08T18:25:43Z",
+      "side": 1,
+      "message": "Use base::TimeTicks instead to have a monotonically non-decreasing clock time?",
+      "range": {
+        "startLine": 52,
+        "startChar": 13,
+        "endLine": 52,
+        "endChar": 29
+      },
+      "revId": "f63f49591980b76fbe3d2f1ceca998a350bdd89a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
