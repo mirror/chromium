@@ -71,6 +71,24 @@
     },
     {
       "key": {
+        "uuid": "0b3715f3_07357d06",
+        "filename": "ui/compositor/compositor.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 551,
+      "author": {
+        "id": 1148065
+      },
+      "writtenOn": "2017-11-08T22:25:34Z",
+      "side": 1,
+      "message": "This solution is more obvious to me that it is correct. Moving  layer_tree_frame_sink_requested_ to inside the widget_valid_ block means it is tracking something different than today (\"we requested a LTFS from the ContextFactory\" as opposed to \"LTH requested a LTFS\"), and so I\u0027m not sure SetAcceleratedWidget would do the right thing depending on the order of calls, e.g.\nCompositor::ReleaseAcceleratedWidget() (externally)\nCompositor::RequestNewLayerTreeFrameSink() (from LTH)\nCompositor::SetAcceleratedWidget() (externally)\n\nAt that point, layer_tree_frame_sink_requested_ would *not* be true, so we won\u0027t create a LTFS, but LTH won\u0027t ask us again either, so... ?",
+      "parentUuid": "135a792f_e7a5a199",
+      "revId": "02db3c56a1aeeba925fdacd43953c578eab2f4e2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "8f42508d_bc9d8f21",
         "filename": "ui/compositor/compositor.cc",
         "patchSetId": 7
