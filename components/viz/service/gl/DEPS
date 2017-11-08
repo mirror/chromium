@@ -1,4 +1,6 @@
 include_rules = [
+  "+components/arc/common",
+  "+components/arc/video_accelerator",
   "+gpu/command_buffer",
   "+gpu/config",
   "+gpu/ipc",
