@@ -742,6 +742,10 @@ shared_library("libchrome") {
     deps += [ "//tools/cygprofile" ]
   }
 
+  if (log_library_residency) {
+    deps += [ "//tools/cygprofile:log_residency" ]
+  }
+
   # See crbug.com/705088, crbug.com/717815.
   if (target_cpu == "arm" && (is_asan || use_order_profiling)) {
     ldflags = [ "-Wl,--long-plt" ]
