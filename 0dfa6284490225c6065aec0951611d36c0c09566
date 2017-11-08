@@ -55,6 +55,24 @@
     },
     {
       "key": {
+        "uuid": "4bbfc008_4f6f3962",
+        "filename": "content/renderer/service_worker/service_worker_subresource_loader_unittest.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 717,
+      "author": {
+        "id": 1000128
+      },
+      "writtenOn": "2017-11-08T19:19:52Z",
+      "side": 1,
+      "message": "Yep there are a lot of things doing loading,. This class is the one we use for service workers intercepting subresource requests.\n\nI think we could probably just remove the static_assert and comment since now we don\u0027t hardcode \"21\".",
+      "parentUuid": "4478c334_d84a80c3",
+      "revId": "0dfa6284490225c6065aec0951611d36c0c09566",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "681977ab_160f4d3f",
         "filename": "net/url_request/url_request.h",
         "patchSetId": 4
