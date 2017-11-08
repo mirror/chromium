@@ -22,6 +22,7 @@ class DedicatedWorker;
 class DedicatedWorkerObjectProxy;
 class SerializedScriptValue;
 class WorkerClients;
+struct RemoteAsyncTaskToken;
 
 // A proxy class to talk to the DedicatedWorkerGlobalScope on a worker thread
 // via the DedicatedWorkerMessagingProxy from the main thread. See class
@@ -40,7 +41,8 @@ class CORE_EXPORT DedicatedWorkerMessagingProxy
   void StartWorkerGlobalScope(const KURL& script_url,
                               const String& user_agent,
                               const String& source_code,
-                              ReferrerPolicy);
+                              ReferrerPolicy,
+                              std::unique_ptr<RemoteAsyncTaskToken>);
   void PostMessageToWorkerGlobalScope(scoped_refptr<SerializedScriptValue>,
                                       Vector<MessagePortChannel>);
 

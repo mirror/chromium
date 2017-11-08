@@ -107,6 +107,7 @@ void WorkerThreadDebugger::ContextWillBeDestroyed(
   int worker_context_group_id = ContextGroupId(worker_thread);
   DCHECK(worker_threads_.Contains(worker_context_group_id));
   worker_threads_.erase(worker_context_group_id);
+  debugger_ids_.erase(worker_context_group_id);
   GetV8Inspector()->contextDestroyed(context);
 }
 
@@ -222,6 +223,21 @@ v8::MaybeLocal<v8::Value> WorkerThreadDebugger::memoryInfo(
     v8::Local<v8::Context>) {
   NOTREACHED();
   return v8::MaybeLocal<v8::Value>();
+}
+
+std::unique_ptr<v8_inspector::StringBuffer>
+WorkerThreadDebugger::uniqueDebuggerId(int context_group_id) {
+  return v8_inspector::StringBuffer::create(
+      ToV8InspectorStringView(DebuggerId(context_group_id)));
+}
+
+String WorkerThreadDebugger::DebuggerId(int context_group_id) {
+  auto it = debugger_ids_.find(context_group_id);
+  if (it != debugger_ids_.end())
+    return it->value;
+  String debugger_id = "dedicated:" + IdentifiersFactory::CreateIdentifier();
+  debugger_ids_.insert(context_group_id, debugger_id);
+  return debugger_id;
 }
 
 }  // namespace blink
