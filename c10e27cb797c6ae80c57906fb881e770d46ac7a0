@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "bb52593d_641e721b",
+        "filename": "tools/metrics/histograms/histograms.xml",
+        "patchSetId": 13
+      },
+      "lineNbr": 17556,
+      "author": {
+        "id": 1002483
+      },
+      "writtenOn": "2017-11-08T21:57:24Z",
+      "side": 1,
+      "message": "Can you re-work the *Timeout histograms to use histogram suffixes (described at top of file). It will avoid repeated prose, and help us keep this file in the totally reasonable 6-digit line count range.",
+      "revId": "c10e27cb797c6ae80c57906fb881e770d46ac7a0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
