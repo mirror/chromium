@@ -13,7 +13,6 @@ import org.chromium.base.ThreadUtils;
 import org.chromium.base.annotations.CalledByNative;
 import org.chromium.base.annotations.JNINamespace;
 
-import java.lang.reflect.Method;
 import java.util.List;
 
 /**
@@ -28,9 +27,6 @@ public class AwContentsStatics {
     private static String sUnreachableWebDataUrl;
 
     private static boolean sRecordFullDocument;
-
-    private static final String sSafeBrowsingWarmUpHelper =
-            "com.android.webview.chromium.SafeBrowsingWarmUpHelper";
 
     /**
      * Return the client certificate lookup table.
@@ -122,13 +118,9 @@ public class AwContentsStatics {
             }
         };
 
-        try {
-            Class cls = Class.forName(sSafeBrowsingWarmUpHelper);
-            Method m = cls.getDeclaredMethod("warmUpSafeBrowsing", Context.class, Callback.class);
-            m.invoke(null, appContext, wrapperCallback);
-        } catch (ReflectiveOperationException e) {
-            wrapperCallback.onResult(false);
-        }
+        SafeBrowsingWarmUpHelper safeBrowsingWarmUpHelper =
+                PrivateFactory.createSafeBrowsingWarmUpHelper();
+        safeBrowsingWarmUpHelper.warmUpSafeBrowsing(appContext, wrapperCallback);
     }
 
     public static Uri getSafeBrowsingPrivacyPolicyUrl() {

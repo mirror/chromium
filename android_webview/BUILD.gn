@@ -779,7 +779,6 @@ android_library("android_webview_java") {
     "java/src/org/chromium/android_webview/AwContentsClientBridge.java",
     "java/src/org/chromium/android_webview/AwContentsClientCallbackHelper.java",
     "java/src/org/chromium/android_webview/AwContentsIoThreadClient.java",
-    "java/src/org/chromium/android_webview/AwContentsLifecycleNotifier.java",
     "java/src/org/chromium/android_webview/AwContentsStatics.java",
     "java/src/org/chromium/android_webview/AwCookieManager.java",
     "java/src/org/chromium/android_webview/AwDebug.java",
@@ -806,7 +805,6 @@ android_library("android_webview_java") {
     "java/src/org/chromium/android_webview/AwServiceWorkerController.java",
     "java/src/org/chromium/android_webview/AwServiceWorkerSettings.java",
     "java/src/org/chromium/android_webview/AwSettings.java",
-    "java/src/org/chromium/android_webview/AwSwitches.java",
     "java/src/org/chromium/android_webview/AwTokenBindingManager.java",
     "java/src/org/chromium/android_webview/AwViewMethods.java",
     "java/src/org/chromium/android_webview/AwViewAndroidDelegate.java",
@@ -843,7 +841,9 @@ android_library("android_webview_java") {
   deps = [
     ":android_webview_commandline_java",
     ":android_webview_crash_services_java",
+    ":android_webview_interfaces_java",
     ":android_webview_platform_services_java",
+    ":android_webview_private_factory_java",
     ":resources",
     ":strings_grd",
     ":system_webview_manifest",
@@ -934,12 +934,39 @@ java_strings_grd("strings_grd") {
   ]
 }
 
+android_library("android_webview_private_factory_java") {
+  java_files = []
+  deps = [
+    ":android_webview_interfaces_java",
+  ]
+  if (defined(private_factory_path)) {
+    java_files += [ "../$private_factory_path" ]
+    deps += private_factory_deps
+  } else {
+    java_files +=
+        [ "java/src/org/chromium/android_webview/PrivateFactory.java" ]
+  }
+}
+
 # Separate target to allow for a dependency on GmsCore without pulling in all of
 # android_webview_java.
 android_library("android_webview_platform_services_java") {
   java_files =
       [ "java/src/org/chromium/android_webview/PlatformServiceBridge.java" ]
 
+  deps = [
+    "//base:base_java",
+  ]
+}
+
+android_library("android_webview_interfaces_java") {
+  java_files = [
+    "java/src/org/chromium/android_webview/AwSafeBrowsingOptInPreferenceFetcher.java",
+    "java/src/org/chromium/android_webview/AwContentsLifecycleNotifier.java",
+    "java/src/org/chromium/android_webview/AwSwitches.java",
+    "java/src/org/chromium/android_webview/AwSafeBrowsingApiHandler.java",
+    "java/src/org/chromium/android_webview/SafeBrowsingWarmUpHelper.java",
+  ]
   deps = [
     "//base:base_java",
   ]
