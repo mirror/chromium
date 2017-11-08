@@ -228,6 +228,10 @@ class ASH_EXPORT SplitViewController : public aura::WindowObserver,
   // on the minimum size of current snapped windows.
   void GetDividerOptionalPositionRatios(std::vector<float>* positionRatios);
 
+  // Starts/Ends overview mode if the overview mode is inactive/active.
+  void StartOverview();
+  void EndOverview();
+
   // The current left/right snapped window.
   aura::Window* left_window_ = nullptr;
   aura::Window* right_window_ = nullptr;

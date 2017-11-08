@@ -315,15 +315,16 @@ void SplitViewController::EndResize(const gfx::Point& location_in_screen) {
   UpdateDividerPosition(modified_location_in_screen);
   MoveDividerToClosestFixedPosition();
   NotifyDividerPositionChanged();
+  UpdateSnappedWindowsAndDividerBounds();
 
   // Check if one of the snapped windows needs to be closed.
   if (ShouldEndSplitViewAfterResizing()) {
     aura::Window* active_window = GetActiveWindowAfterResizingUponExit();
-    if (active_window)
-      wm::ActivateWindow(active_window);
     EndSplitView();
-  } else {
-    UpdateSnappedWindowsAndDividerBounds();
+    if (active_window) {
+      EndOverview();
+      wm::ActivateWindow(active_window);
+    }
   }
 }
 
@@ -384,8 +385,7 @@ void SplitViewController::OnPostWindowStateTypeChange(
     // full-screened. Also end overview mode if overview mode is active at the
     // moment.
     EndSplitView();
-    if (Shell::Get()->window_selector_controller()->IsSelecting())
-      Shell::Get()->window_selector_controller()->ToggleOverview();
+    EndOverview();
   } else if (window_state->IsMinimized()) {
     OnSnappedWindowMinimizedOrDestroyed(window_state->window());
   }
@@ -782,7 +782,7 @@ void SplitViewController::OnSnappedWindowMinimizedOrDestroyed(
     state_ = left_window_ ? LEFT_SNAPPED : RIGHT_SNAPPED;
     default_snap_position_ = left_window_ ? LEFT : RIGHT;
     NotifySplitViewStateChanged(previous_state, state_);
-    Shell::Get()->window_selector_controller()->ToggleOverview();
+    StartOverview();
   }
 }
 
@@ -859,6 +859,16 @@ void SplitViewController::GetDividerOptionalPositionRatios(
 
   if (min_size_right_ratio <= kOneThirdPositionRatio)
     position_ratios->push_back(kTwoThirdPositionRatio);
+}
+
+void SplitViewController::StartOverview() {
+  if (!Shell::Get()->window_selector_controller()->IsSelecting())
+    Shell::Get()->window_selector_controller()->ToggleOverview();
+}
+
+void SplitViewController::EndOverview() {
+  if (Shell::Get()->window_selector_controller()->IsSelecting())
+    Shell::Get()->window_selector_controller()->ToggleOverview();
 }
 
 }  // namespace ash
