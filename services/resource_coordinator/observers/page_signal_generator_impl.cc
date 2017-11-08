@@ -59,6 +59,7 @@ void PageSignalGeneratorImpl::OnProcessPropertyChanged(
       int64_t duration;
       if (!page_cu || !page_cu->GetExpectedTaskQueueingDuration(&duration))
         continue;
+      LOG(ERROR) << "Generator - SetExpectedTaskQueueingDuration - " << value;
       DISPATCH_PAGE_SIGNAL(receivers_, SetExpectedTaskQueueingDuration,
                            page_cu->id(),
                            base::TimeDelta::FromMilliseconds(duration));
