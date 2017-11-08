@@ -542,6 +542,11 @@ bool NetworkChangeNotifier::HasNetworkChangeNotifier() {
 }
 
 // static
+bool NetworkChangeNotifier::HasFactory() {
+  return g_network_change_notifier_factory != nullptr;
+}
+
+// static
 NetworkChangeNotifier::ConnectionType
 NetworkChangeNotifier::GetConnectionType() {
   return g_network_change_notifier ?
