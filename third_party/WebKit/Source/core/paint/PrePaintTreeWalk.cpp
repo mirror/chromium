@@ -11,6 +11,7 @@
 #include "core/layout/LayoutMultiColumnSpannerPlaceholder.h"
 #include "core/layout/LayoutView.h"
 #include "core/paint/PaintLayer.h"
+#include "core/paint/PaintPropertyTreePrinter.h"
 #include "core/paint/compositing/CompositingLayerPropertyUpdater.h"
 #include "platform/graphics/paint/GeometryMapper.h"
 
@@ -66,6 +67,15 @@ void PrePaintTreeWalk::Walk(LocalFrameView& root_frame) {
 
   Walk(root_frame, initial_context);
   paint_invalidator_.ProcessPendingDelayedPaintInvalidations();
+
+#if DCHECK_IS_ON()
+  if (VLOG_IS_ON(2) && root_frame.GetLayoutView()) {
+    LOG(ERROR) << "PaintLayer tree:";
+    showLayerTree(root_frame.GetLayoutView()->Layer());
+  }
+  if (VLOG_IS_ON(1))
+    showAllPropertyTrees(root_frame);
+#endif
 }
 
 void PrePaintTreeWalk::Walk(LocalFrameView& frame_view,
@@ -90,6 +100,14 @@ void PrePaintTreeWalk::Walk(LocalFrameView& frame_view,
                                      *context.paint_invalidator_context);
 
   if (LayoutView* view = frame_view.GetLayoutView()) {
+#ifndef NDEBUG
+    if (VLOG_IS_ON(3)) {
+      LOG(ERROR) << "PrePaintTreeWalk::Walk frame_view=" << &frame_view
+                 << " Layout tree:";
+      showLayoutTree(view);
+    }
+#endif
+
     Walk(*view, context);
 #if DCHECK_IS_ON()
     view->AssertSubtreeClearedPaintInvalidationFlags();
