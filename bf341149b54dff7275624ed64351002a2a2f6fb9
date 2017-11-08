@@ -16,6 +16,47 @@
       "revId": "bf341149b54dff7275624ed64351002a2a2f6fb9",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "56694342_db7351c1",
+        "filename": "ios/chrome/browser/ui/toolbar/web_toolbar_controller.mm",
+        "patchSetId": 12
+      },
+      "lineNbr": 2455,
+      "author": {
+        "id": 1180589
+      },
+      "writtenOn": "2017-11-08T08:08:19Z",
+      "side": 1,
+      "message": "I don\u0027t know. When is this happening? It is during the stack view? Is it during the stack view with the toolbar in the card\u0027s view hierarchy or back in the BVC?",
+      "parentUuid": "03356c31_a4e7e639",
+      "revId": "bf341149b54dff7275624ed64351002a2a2f6fb9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d478730f_5b2c4519",
+        "filename": "ios/chrome/browser/ui/toolbar/web_toolbar_controller.mm",
+        "patchSetId": 12
+      },
+      "lineNbr": 2460,
+      "author": {
+        "id": 1180589
+      },
+      "writtenOn": "2017-11-08T08:08:19Z",
+      "side": 1,
+      "message": "Shouldn\u0027t this be fixFrame?",
+      "range": {
+        "startLine": 2460,
+        "startChar": 24,
+        "endLine": 2460,
+        "endChar": 29
+      },
+      "revId": "bf341149b54dff7275624ed64351002a2a2f6fb9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
