@@ -22,6 +22,30 @@
       "revId": "bcfdb95a15455e5b283e24f72476e0e72bd94ef8",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f2cb0f56_6eeb96f4",
+        "filename": "components/cronet/ios/cronet_metrics.h",
+        "patchSetId": 8
+      },
+      "lineNbr": 7,
+      "author": {
+        "id": 1179923
+      },
+      "writtenOn": "2017-11-08T14:26:48Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "0bb10f5d_25b52766",
+      "range": {
+        "startLine": 7,
+        "startChar": 10,
+        "endLine": 7,
+        "endChar": 32
+      },
+      "revId": "bcfdb95a15455e5b283e24f72476e0e72bd94ef8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
