@@ -1,0 +1,96 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "0cf268aa_7c251bdb",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 11
+      },
+      "lineNbr": 16,
+      "author": {
+        "id": 1002541
+      },
+      "writtenOn": "2017-11-08T12:11:12Z",
+      "side": 1,
+      "message": "Please make sure to include the bug number.",
+      "range": {
+        "startLine": 16,
+        "startChar": 0,
+        "endLine": 16,
+        "endChar": 3
+      },
+      "revId": "a4c2aa64d750d4782c311bffd2fb85db3374bf5c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0f47889f_7b38443a",
+        "filename": "ios/chrome/browser/passwords/BUILD.gn",
+        "patchSetId": 11
+      },
+      "lineNbr": 44,
+      "author": {
+        "id": 1002541
+      },
+      "writtenOn": "2017-11-08T12:11:12Z",
+      "side": 1,
+      "message": "Please check with sdefresne@ or the Bling team what the best name is. Some time ago the guidance was to prefix such factories with IOSChrome (ios_chrome_ for filenames).",
+      "range": {
+        "startLine": 44,
+        "startChar": 5,
+        "endLine": 44,
+        "endChar": 47
+      },
+      "revId": "a4c2aa64d750d4782c311bffd2fb85db3374bf5c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5a97f0c3_82242607",
+        "filename": "ios/chrome/browser/passwords/password_manager_internals_service_factory.cc",
+        "patchSetId": 11
+      },
+      "lineNbr": 43,
+      "author": {
+        "id": 1002541
+      },
+      "writtenOn": "2017-11-08T12:11:12Z",
+      "side": 1,
+      "message": "This is now std::make_unique.",
+      "range": {
+        "startLine": 43,
+        "startChar": 9,
+        "endLine": 43,
+        "endChar": 25
+      },
+      "revId": "a4c2aa64d750d4782c311bffd2fb85db3374bf5c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "661fcd27_fa2c9879",
+        "filename": "ios/chrome/browser/passwords/password_manager_internals_service_factory.h",
+        "patchSetId": 11
+      },
+      "lineNbr": 12,
+      "author": {
+        "id": 1002541
+      },
+      "writtenOn": "2017-11-08T12:11:12Z",
+      "side": 1,
+      "message": "Seems unused.",
+      "range": {
+        "startLine": 12,
+        "startChar": 11,
+        "endLine": 12,
+        "endChar": 28
+      },
+      "revId": "a4c2aa64d750d4782c311bffd2fb85db3374bf5c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
