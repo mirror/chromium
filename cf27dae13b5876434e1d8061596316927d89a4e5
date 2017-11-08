@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "24df16e9_8701fec8",
+        "filename": "chrome/browser/ui/browser_navigator.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 358,
+      "author": {
+        "id": 1001216
+      },
+      "writtenOn": "2017-11-08T23:01:43Z",
+      "side": 0,
+      "message": "I\u0027m still trying to understand how this relates to the new params.opener\u0027s SiteInstance.  From the discussion on https://codereview.chromium.org/2921753002/diff/20001/chrome/browser/ui/browser_navigator.cc#oldcode362, I think the outcome is the same?\n\nDo we need params.source_site_instance anymore?  It looks like the only other use is GetSourceProfile, and I wonder if that could be handled with params.opener now?  (Just trying to clean it up if we can.)",
+      "revId": "cf27dae13b5876434e1d8061596316927d89a4e5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
