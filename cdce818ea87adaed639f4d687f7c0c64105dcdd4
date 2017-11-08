@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "769d9f8e_26313f97",
+        "filename": "build/mac/find_sdk.py",
+        "patchSetId": 1
+      },
+      "lineNbr": 57,
+      "author": {
+        "id": 1174099
+      },
+      "writtenOn": "2017-11-08T17:32:54Z",
+      "side": 1,
+      "message": "This isn’t great. Xcode betas come from Apple as “Xcode-beta.app”. Developers might have a reason to install multiple Xcode.app instances side-by-side and they’d have to give them distinct names (like Xcode 8.app). The whole raison d’être for xcode-select is to allow for this kind of thing.",
+      "range": {
+        "startLine": 57,
+        "startChar": 32,
+        "endLine": 57,
+        "endChar": 63
+      },
+      "revId": "cdce818ea87adaed639f4d687f7c0c64105dcdd4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
