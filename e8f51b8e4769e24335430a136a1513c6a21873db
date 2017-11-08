@@ -1,0 +1,44 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "e17d235c_f83162d6",
+        "filename": "ui/gfx/x/x11.h",
+        "patchSetId": 7
+      },
+      "lineNbr": 24,
+      "author": {
+        "id": 1000042
+      },
+      "writtenOn": "2017-11-08T20:59:23Z",
+      "side": 1,
+      "message": "nit: needs",
+      "range": {
+        "startLine": 24,
+        "startChar": 31,
+        "endLine": 24,
+        "endChar": 35
+      },
+      "revId": "e8f51b8e4769e24335430a136a1513c6a21873db",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "965021c1_2730a3a8",
+        "filename": "ui/gfx/x/x11.h",
+        "patchSetId": 7
+      },
+      "lineNbr": 68,
+      "author": {
+        "id": 1000042
+      },
+      "writtenOn": "2017-11-08T20:59:23Z",
+      "side": 1,
+      "message": "i know it\u0027s probably a lot of updating at this point, but the style guide says to use lowerspace namespace names. is this capitalized to prevent it from conflicting with an existing \"x11\" namespace? if not, opinions about using \"x11\" or (even more precise) \"xlib\"?",
+      "revId": "e8f51b8e4769e24335430a136a1513c6a21873db",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
