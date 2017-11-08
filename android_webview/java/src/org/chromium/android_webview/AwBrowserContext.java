@@ -8,7 +8,6 @@ import android.content.Context;
 import android.content.SharedPreferences;
 
 import org.chromium.components.safe_browsing.SafeBrowsingApiBridge;
-import org.chromium.components.safe_browsing.SafeBrowsingApiHandler;
 import org.chromium.content.browser.ContentViewStatics;
 
 /**
@@ -72,16 +71,7 @@ public class AwBrowserContext {
 
     @SuppressWarnings("unchecked")
     private void initSafeBrowsingApiHandler() {
-        final String safeBrowsingApiHandler =
-                "com.android.webview.chromium.AwSafeBrowsingApiHandler";
-
-        // Try to get a specialized service bridge.
-        try {
-            Class<? extends SafeBrowsingApiHandler> cls =
-                    (Class<? extends SafeBrowsingApiHandler>) Class.forName(safeBrowsingApiHandler);
-            SafeBrowsingApiBridge.setSafeBrowsingHandlerType(cls);
-        } catch (ClassNotFoundException e) {
-            // This is not an error; it just means this device doesn't have specialized services.
-        }
+        SafeBrowsingApiBridge.setSafeBrowsingHandlerType(
+                (Class) PrivateFactory.createAwSafeBrowsingApiHandler().getClass());
     }
 }
