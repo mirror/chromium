@@ -16,6 +16,24 @@
       "revId": "4f6524916730ae0fb105648b91a31b2172427e97",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c5a2aebe_dcb3147b",
+        "filename": "net/quic/chromium/quic_stream_factory.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 126,
+      "author": {
+        "id": 1228995
+      },
+      "writtenOn": "2017-11-08T18:06:44Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "b4358c56_2eb0d7bd",
+      "revId": "4f6524916730ae0fb105648b91a31b2172427e97",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
