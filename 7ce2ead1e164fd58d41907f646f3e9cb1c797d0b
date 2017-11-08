@@ -1,0 +1,119 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "c36c258b_a17c3fe1",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 17
+      },
+      "lineNbr": 9,
+      "author": {
+        "id": 1001385
+      },
+      "writtenOn": "2017-11-08T00:34:32Z",
+      "side": 1,
+      "message": "nit: You have some extra spaces on a couple of the lines. :)",
+      "range": {
+        "startLine": 9,
+        "startChar": 0,
+        "endLine": 9,
+        "endChar": 63
+      },
+      "revId": "7ce2ead1e164fd58d41907f646f3e9cb1c797d0b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ddac392f_b541bd26",
+        "filename": "ash/accelerators/accelerator_controller.cc",
+        "patchSetId": 17
+      },
+      "lineNbr": 635,
+      "author": {
+        "id": 1001385
+      },
+      "writtenOn": "2017-11-08T00:34:32Z",
+      "side": 1,
+      "message": "nit: Since this doesn\u0027t always _start_ nor _toggle_ interactions, if we\u0027re going to rename it then can we instead call it HandleVoiceInteractionAccelerator, since that\u0027s what it actually does?",
+      "range": {
+        "startLine": 635,
+        "startChar": 11,
+        "endLine": 635,
+        "endChar": 16
+      },
+      "revId": "7ce2ead1e164fd58d41907f646f3e9cb1c797d0b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "26eed1d6_53675080",
+        "filename": "ui/events/keycodes/dom_us_layout_data.h",
+        "patchSetId": 17
+      },
+      "lineNbr": 241,
+      "author": {
+        "id": 1001385
+      },
+      "writtenOn": "2017-11-08T00:34:32Z",
+      "side": 1,
+      "message": "As previously mentioned, the DomKey \"SpeechInputToggle\" means something different to the DomCode \"VoiceCommand\", so we should not just map one to the other - if we really need a DomKey then we should define a separate DomKey \"VoiceCommand\" (garykac@ can help with the process).\n\nHowever, we _shouldn\u0027t_ need a DomKey, just a DomCode-\u003eVKEY mapping, since it looks like the ChromeOS keyboard input code should work with that.",
+      "range": {
+        "startLine": 241,
+        "startChar": 0,
+        "endLine": 241,
+        "endChar": 58
+      },
+      "revId": "7ce2ead1e164fd58d41907f646f3e9cb1c797d0b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "74db8ade_4aa25066",
+        "filename": "ui/events/keycodes/dom_us_layout_data.h",
+        "patchSetId": 17
+      },
+      "lineNbr": 602,
+      "author": {
+        "id": 1001385
+      },
+      "writtenOn": "2017-11-08T00:34:32Z",
+      "side": 1,
+      "message": "This should be sufficient; you should not need the DomKey-\u003eVKEY lookup as well.\n\nThe lookups basically either do DomCode-\u003eDomKey-\u003eVKEY or just DomCode-\u003eVKEY, so you either need an entry in this table (DomCode-\u003eVKEY) or ones in the DomCode-\u003eDomKey and DomKey-\u003eVKEY tables.",
+      "range": {
+        "startLine": 599,
+        "startChar": 0,
+        "endLine": 602,
+        "endChar": 0
+      },
+      "revId": "7ce2ead1e164fd58d41907f646f3e9cb1c797d0b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "527017a5_4de1bff1",
+        "filename": "ui/events/ozone/layout/keyboard_layout_engine_unittest.cc",
+        "patchSetId": 17
+      },
+      "lineNbr": 196,
+      "author": {
+        "id": 1001385
+      },
+      "writtenOn": "2017-11-08T00:34:32Z",
+      "side": 1,
+      "message": "nit: This needs to be VOICE_COMMAND, since you\u0027ve renamed the DomCode definition to that.",
+      "range": {
+        "startLine": 196,
+        "startChar": 16,
+        "endLine": 196,
+        "endChar": 35
+      },
+      "revId": "7ce2ead1e164fd58d41907f646f3e9cb1c797d0b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}

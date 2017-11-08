@@ -104,6 +104,24 @@
       "revId": "6d781110c51c6260f93b7025cac7e9f43aa2b494",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "39050a7d_dbb15b3b",
+        "filename": "ui/events/keycodes/dom_us_layout_data.h",
+        "patchSetId": 14
+      },
+      "lineNbr": 401,
+      "author": {
+        "id": 1001385
+      },
+      "writtenOn": "2017-11-08T00:34:32Z",
+      "side": 1,
+      "message": "The dom_us_layout_data.h file is used by the UsLayout functions in keyboard_code_conversion.cc.  We have tables for DomCode-\u003eDomKey, DomKey-\u003eVKEY and DomCode-\u003eVKEY; so long as the ChromeOS input pipeline is using the DomCode-\u003eVKEY table, we should be able to generate events with no DomKey, but valid DomCode and VKEY set.\n\nI\u0027m not familiar with how this ended up being wired-up for ChromeOS, but the InputMethodEngine::SendKeyEvent() method does check the incoming event\u0027s |key_code|, and applies the US English DomCode-\u003eVKEY mapping if it is \"UNKNOWN\" - so if this isn\u0027t working with just a DomCode::VOICE_COMMAND-\u003eVKEY_VOICE_COMMAND mapping then we\u0027re either not hitting SendKeyEvent, or we\u0027re reaching it but somehow already have a different key_code set?\n\nSimilarly, there is code in XkbKeyboardLayoutEngine::Lookup() which performs the same lookup - do you know which path we\u0027re hitting, which is failing?",
+      "parentUuid": "7663d7c8_0a5849be",
+      "revId": "6d781110c51c6260f93b7025cac7e9f43aa2b494",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
