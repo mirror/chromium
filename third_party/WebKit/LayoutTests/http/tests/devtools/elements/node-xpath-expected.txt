@@ -1,6 +1,6 @@
 Tests node xPath construction
 
-3 Prefix  Suffix
+3 Prefix <greeting>Hello, world!</greeting> Suffix
 4
 5
 6

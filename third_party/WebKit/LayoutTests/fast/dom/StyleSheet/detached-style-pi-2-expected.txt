@@ -1,5 +1,50 @@
-Bug 45205: Test that <xml-stylesheet> processing instructions only have stylesheets when in document.
 
+
+
+
+
+Bug 45205:
+Test that <xml-stylesheet> processing instructions only have stylesheets when in document.
 Not in document: PASS
 After adding to document: PASS
 DONE
+
+
+if (window.testRunner) {
+    testRunner.dumpAsText();
+    testRunner.waitUntilDone();
+}
+
+sheet = document.styleSheets[0];
+pi = document.firstChild;
+result = document.getElementById("result");
+
+document.removeChild(pi);
+
+function finishTest()
+{
+    result.innerHTML += "Not in document: " + ((pi.sheet === null) ? "PASS" : ("FAIL: " + pi.sheet)) + "\n";
+
+    document.appendChild(pi);
+    window.requestAnimationFrame(finishTest2);
+}
+
+var retryCount = 0;
+
+function finishTest2() {
+    // This subtest may fail because loading the resource may not complete immediately after
+    // appendChild().
+    if (pi.sheet === null && ++retryCount < 10) {
+        window.requestAnimationFrame(finishTest2);
+        return;
+    }
+
+    result.innerHTML += "After adding to document: " + ((pi.sheet === null) ? ("FAIL: " + pi.sheet) : "PASS") + "\n";
+    result.innerHTML += "DONE";
+    if (window.testRunner)
+        testRunner.notifyDone();
+}
+
+
+
+

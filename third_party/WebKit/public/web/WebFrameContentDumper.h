@@ -39,7 +39,12 @@ class WebFrameContentDumper {
   BLINK_EXPORT static WebString DeprecatedDumpFrameTreeAsText(WebLocalFrame*,
                                                               size_t max_chars);
 
-  // Dumps the contents of of a WebView as text, starting from the main
+  // Dumps the contents of a single WebLocalFrame as text, skipping its
+  // subframes (if any).
+  BLINK_EXPORT static WebString DumpSingleFrameAsText(WebLocalFrame*,
+                                                      size_t max_chars);
+
+  // Dumps the contents of a WebView as text, starting from the main
   // frame and recursively appending every subframe, separated by an
   // empty line.
   BLINK_EXPORT static WebString DumpWebViewAsText(WebView*, size_t max_chars);
