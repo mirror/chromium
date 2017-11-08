@@ -97,6 +97,8 @@ class TriggerManager {
       history::HistoryService* history_service,
       const SBErrorOptions& error_display_options);
 
+  // test cl
+
   // Completes the collection of a ThreatDetails report on the specified
   // |web_contents| and sends the report. |delay| can be used to wait a period
   // of time before finishing the report. |did_proceed| indicates whether the
