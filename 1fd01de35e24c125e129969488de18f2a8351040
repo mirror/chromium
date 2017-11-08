@@ -2,6 +2,23 @@
   "comments": [
     {
       "key": {
+        "uuid": "0b989fb0_a4d6542d",
+        "filename": "third_party/WebKit/Source/core/layout/ng/ng_container_fragment_builder.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 116,
+      "author": {
+        "id": 1128431
+      },
+      "writtenOn": "2017-11-08T07:15:50Z",
+      "side": 1,
+      "message": "We use |Direction()| if |direction| isn\u0027t given in all other places, can you explain/add comment only here it is |false|?\n\nIf this code can refer to |Direction()|, we can simply do:\n  direction \u003d direction ? *direction : Direction();\nand avoid all checking elsewhere, no?\n\nOr have 2 variations of |AddOutOfFlowChildCandidate()|, one with |direction| and another without, might be another option.\n\nBut AFAIU this condition using |false| prevents such generalization, correct?",
+      "revId": "1fd01de35e24c125e129969488de18f2a8351040",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "34775e8a_96be8bf4",
         "filename": "third_party/WebKit/Source/core/layout/ng/ng_container_fragment_builder.cc",
         "patchSetId": 2
@@ -19,6 +36,23 @@
         "endLine": 120,
         "endChar": 52
       },
+      "revId": "1fd01de35e24c125e129969488de18f2a8351040",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "032868f7_bda8fc76",
+        "filename": "third_party/WebKit/Source/core/layout/ng/ng_container_fragment_builder.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 120,
+      "author": {
+        "id": 1128431
+      },
+      "writtenOn": "2017-11-08T07:15:50Z",
+      "side": 1,
+      "message": "While I understand this might be more efficient, I think this is getting harder to read.\n\nWhat about having two fields:\n  TextDirection child_offset_direction;\n  bool is_child_offset_visual; /* or is_child_offset_line_relative, naming up to you */\n\nIIUC, |child_offset_is_rtl| is a product from these flags, correct?",
       "revId": "1fd01de35e24c125e129969488de18f2a8351040",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
