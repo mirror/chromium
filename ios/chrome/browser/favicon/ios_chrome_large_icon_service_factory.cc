@@ -15,6 +15,20 @@
 #include "ios/chrome/browser/browser_state/chrome_browser_state.h"
 #include "ios/chrome/browser/favicon/favicon_service_factory.h"
 
+namespace {
+std::unique_ptr<KeyedService> BuildLargeIconService(
+    web::BrowserState* context) {
+  ios::ChromeBrowserState* browser_state =
+      ios::ChromeBrowserState::FromBrowserState(context);
+  return base::MakeUnique<favicon::LargeIconService>(
+      ios::FaviconServiceFactory::GetForBrowserState(
+          browser_state, ServiceAccessType::EXPLICIT_ACCESS),
+      base::MakeUnique<image_fetcher::ImageFetcherImpl>(
+          image_fetcher::CreateIOSImageDecoder(),
+          browser_state->GetRequestContext()));
+}
+}  // namespace
+
 // static
 favicon::LargeIconService* IOSChromeLargeIconServiceFactory::GetForBrowserState(
     ios::ChromeBrowserState* browser_state) {
@@ -26,6 +40,12 @@ favicon::LargeIconService* IOSChromeLargeIconServiceFactory::GetForBrowserState(
 IOSChromeLargeIconServiceFactory*
 IOSChromeLargeIconServiceFactory::GetInstance() {
   return base::Singleton<IOSChromeLargeIconServiceFactory>::get();
+}
+
+// static
+BrowserStateKeyedServiceFactory::TestingFactoryFunction
+IOSChromeLargeIconServiceFactory::GetDefaultFactory() {
+  return &BuildLargeIconService;
 }
 
 IOSChromeLargeIconServiceFactory::IOSChromeLargeIconServiceFactory()
@@ -40,14 +60,7 @@ IOSChromeLargeIconServiceFactory::~IOSChromeLargeIconServiceFactory() {}
 std::unique_ptr<KeyedService>
 IOSChromeLargeIconServiceFactory::BuildServiceInstanceFor(
     web::BrowserState* context) const {
-  ios::ChromeBrowserState* browser_state =
-      ios::ChromeBrowserState::FromBrowserState(context);
-  return base::MakeUnique<favicon::LargeIconService>(
-      ios::FaviconServiceFactory::GetForBrowserState(
-          browser_state, ServiceAccessType::EXPLICIT_ACCESS),
-      base::MakeUnique<image_fetcher::ImageFetcherImpl>(
-          image_fetcher::CreateIOSImageDecoder(),
-          browser_state->GetRequestContext()));
+  return BuildLargeIconService(context);
 }
 
 web::BrowserState* IOSChromeLargeIconServiceFactory::GetBrowserStateToUse(
