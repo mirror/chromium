@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "14413d0c_8b61bdfa",
+        "filename": "pdf/out_of_process_instance.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 174,
+      "author": {
+        "id": 1002410
+      },
+      "writtenOn": "2017-11-08T21:46:44Z",
+      "side": 1,
+      "message": "Where is this constant coming from, i.e. where is the main enum defined?  I\u0027m concerned that if an additional annotation type is ever added in the future, it\u0027s easy to forget to update this constant.",
+      "range": {
+        "startLine": 174,
+        "startChar": 37,
+        "endLine": 174,
+        "endChar": 0
+      },
+      "revId": "6405bc8d33d2fe75e18aa1cc5b957670bae094aa",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "571fb539_397085ea",
+        "filename": "tools/metrics/histograms/enums.xml",
+        "patchSetId": 4
+      },
+      "lineNbr": 4705,
+      "author": {
+        "id": 1002410
+      },
+      "writtenOn": "2017-11-08T21:46:44Z",
+      "side": 1,
+      "message": "Optional: It\u0027s often easier to parse these labels on the dashboard when they are shorter, so I\u0027d recommend omitting the common \" annotation\" suffix.",
+      "range": {
+        "startLine": 4705,
+        "startChar": 32,
+        "endLine": 4705,
+        "endChar": 43
+      },
+      "revId": "6405bc8d33d2fe75e18aa1cc5b957670bae094aa",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
