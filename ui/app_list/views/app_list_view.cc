@@ -411,9 +411,9 @@ bool AppListView::ShouldHandleSystemCommands() const {
 
 class AppListView::FullscreenWidgetObserver : views::WidgetObserver {
  public:
-  explicit FullscreenWidgetObserver(app_list::AppListView* view)
-      : widget_observer_(this) {
-    view_ = view;
+  explicit FullscreenWidgetObserver(AppListView* view,
+                                    AppListViewDelegate* delegate)
+      : view_(view), delegate_(delegate), widget_observer_(this) {
     widget_observer_.Add(view_->GetWidget());
   }
   ~FullscreenWidgetObserver() override {}
@@ -422,11 +422,13 @@ class AppListView::FullscreenWidgetObserver : views::WidgetObserver {
   void OnWidgetClosing(views::Widget* widget) override {
     if (view_->app_list_state() != AppListView::CLOSED)
       view_->SetState(AppListView::CLOSED);
+    delegate_->ViewClosing();
     widget_observer_.Remove(view_->GetWidget());
   }
 
  private:
-  app_list::AppListView* view_;
+  AppListView* view_;              // Not owned.
+  AppListViewDelegate* delegate_;  // Not owned.
   ScopedObserver<views::Widget, WidgetObserver> widget_observer_;
   DISALLOW_COPY_AND_ASSIGN(FullscreenWidgetObserver);
 };
@@ -569,7 +571,7 @@ void AppListView::InitializeFullscreen(gfx::NativeView parent,
   overlay_view_ = new AppListOverlayView(0 /* no corners */);
 
   widget_observer_ = std::unique_ptr<FullscreenWidgetObserver>(
-      new FullscreenWidgetObserver(this));
+      new FullscreenWidgetObserver(this, delegate_));
 }
 
 void AppListView::InitializeBubble() {
