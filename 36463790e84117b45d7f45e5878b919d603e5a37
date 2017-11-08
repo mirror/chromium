@@ -72,6 +72,30 @@
     },
     {
       "key": {
+        "uuid": "907e9208_5738c6e5",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/widget/bottomsheet/BottomSheet.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 493,
+      "author": {
+        "id": 1002483
+      },
+      "writtenOn": "2017-11-08T21:44:18Z",
+      "side": 1,
+      "message": "Maybe I\u0027m confused by units here, but I\u0027m surprised this gives enough accuracy. So, mLastSheetOpenMicrosPerDp is Micros/dp. I\u0027ll assume timeDelta is milliseconds then. mLastSheetOpenMicrosPerDp is passed to recordTimesHistogram with TimeUnit.MICROSECONDS. recordTimesHistogram uses TimeUnit.MICROSECONDS to convert mLastSheetOpenMicrosPerDp to milliseconds, and will later be clamped to int. recordTimesHistogram lets you record to a range up to 10 seconds. Without knowing what a dp is, I\u0027d still guess the time per dp to be very short no?\n\nWhat\u0027s the value range you\u0027re expecting here?",
+      "parentUuid": "c163ad76_335ba021",
+      "range": {
+        "startLine": 493,
+        "startChar": 51,
+        "endLine": 493,
+        "endChar": 67
+      },
+      "revId": "36463790e84117b45d7f45e5878b919d603e5a37",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "7e1c55da_d7c6b12e",
         "filename": "chrome/android/java/src/org/chromium/chrome/browser/widget/bottomsheet/BottomSheet.java",
         "patchSetId": 1
@@ -211,6 +235,29 @@
       "revId": "36463790e84117b45d7f45e5878b919d603e5a37",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "e6280a85_170db74f",
+        "filename": "tools/metrics/histograms/histograms.xml",
+        "patchSetId": 1
+      },
+      "lineNbr": 696,
+      "author": {
+        "id": 1002483
+      },
+      "writtenOn": "2017-11-08T21:44:18Z",
+      "side": 1,
+      "message": "It\u0027s recording the reciprocal of the velocity no? Is there a reason you\u0027re not recording velocity?",
+      "range": {
+        "startLine": 696,
+        "startChar": 12,
+        "endLine": 696,
+        "endChar": 20
+      },
+      "revId": "36463790e84117b45d7f45e5878b919d603e5a37",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
