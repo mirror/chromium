@@ -616,7 +616,7 @@ void URLLoader::NotifyCompleted(int error_code) {
   if (consumer_handle_.is_valid())
     SendResponseToClient();
 
-  ResourceRequestCompletionStatus request_complete_data;
+  network::URLLoaderStatus request_complete_data;
   request_complete_data.error_code = error_code;
   request_complete_data.exists_in_cache =
       url_request_->response_info().was_cached;
