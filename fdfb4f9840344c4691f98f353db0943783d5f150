@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "7d627d8f_5e496488",
+        "filename": "chrome/browser/ui/views/location_bar/zoom_bubble_view.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 466,
+      "author": {
+        "id": 1001118
+      },
+      "writtenOn": "2017-11-08T03:34:46Z",
+      "side": 1,
+      "message": "It seems easy for developers to overlook the need for a separate ax event when updating a label. Would make sense if Label::SetText called this? Perhaps that would be obnoxious if it\u0027s called on Label initialization... This definitely seems okay for now.",
+      "revId": "fdfb4f9840344c4691f98f353db0943783d5f150",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
