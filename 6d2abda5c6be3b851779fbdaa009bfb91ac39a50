@@ -1,0 +1,280 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "154602c9_ecc11d5a",
+        "filename": "components/autofill/ios/browser/autofill_client_ios.h",
+        "patchSetId": 8
+      },
+      "lineNbr": 88,
+      "author": {
+        "id": 1126726
+      },
+      "writtenOn": "2017-11-08T16:54:02Z",
+      "side": 1,
+      "message": "Hrmm sorry I must have missed this in an earlier CL, but this doesn\u0027t look right; we can\u0027t have this content dependency on iOS code. Moreover, it looks like this argument is unused so we can just delete it from this content method. Can you file a bug to clean that up?",
+      "range": {
+        "startLine": 88,
+        "startChar": 6,
+        "endLine": 88,
+        "endChar": 36
+      },
+      "revId": "6d2abda5c6be3b851779fbdaa009bfb91ac39a50",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "74453b85_1449eb00",
+        "filename": "components/autofill/ios/browser/autofill_client_ios.h",
+        "patchSetId": 8
+      },
+      "lineNbr": 95,
+      "author": {
+        "id": 1126726
+      },
+      "writtenOn": "2017-11-08T16:54:02Z",
+      "side": 1,
+      "message": "Is this allowed on iOS? Generally I thought protected data members were not allowed (https://google.github.io/styleguide/cppguide.html#Access_Control)",
+      "range": {
+        "startLine": 95,
+        "startChar": 17,
+        "endLine": 95,
+        "endChar": 27
+      },
+      "revId": "6d2abda5c6be3b851779fbdaa009bfb91ac39a50",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1fc1d1ce_69fe1142",
+        "filename": "components/autofill/ios/browser/autofill_driver_ios.mm",
+        "patchSetId": 8
+      },
+      "lineNbr": 87,
+      "author": {
+        "id": 1126726
+      },
+      "writtenOn": "2017-11-08T16:54:02Z",
+      "side": 1,
+      "message": "nit: curly braces around multi-line bodies",
+      "range": {
+        "startLine": 87,
+        "startChar": 62,
+        "endLine": 87,
+        "endChar": 0
+      },
+      "revId": "6d2abda5c6be3b851779fbdaa009bfb91ac39a50",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "418a0f03_75632d2a",
+        "filename": "components/security_state/ios/ssl_status_input_event_data.mm",
+        "patchSetId": 8
+      },
+      "lineNbr": 4,
+      "author": {
+        "id": 1126726
+      },
+      "writtenOn": "2017-11-08T16:54:02Z",
+      "side": 1,
+      "message": "nit: blank line above",
+      "range": {
+        "startLine": 4,
+        "startChar": 1,
+        "endLine": 4,
+        "endChar": 8
+      },
+      "revId": "6d2abda5c6be3b851779fbdaa009bfb91ac39a50",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "28182778_c46ff6f2",
+        "filename": "components/security_state/ios/ssl_status_input_event_data.mm",
+        "patchSetId": 8
+      },
+      "lineNbr": 9,
+      "author": {
+        "id": 1126726
+      },
+      "writtenOn": "2017-11-08T16:54:02Z",
+      "side": 1,
+      "message": "ditto",
+      "range": {
+        "startLine": 9,
+        "startChar": 25,
+        "endLine": 9,
+        "endChar": 48
+      },
+      "revId": "6d2abda5c6be3b851779fbdaa009bfb91ac39a50",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "27be87e9_c289b1da",
+        "filename": "ios/chrome/browser/passwords/password_controller_unittest.mm",
+        "patchSetId": 8
+      },
+      "lineNbr": 1359,
+      "author": {
+        "id": 1126726
+      },
+      "writtenOn": "2017-11-08T16:54:02Z",
+      "side": 1,
+      "message": "nit: ASSERT_TRUE(input_events)",
+      "range": {
+        "startLine": 1359,
+        "startChar": 0,
+        "endLine": 1359,
+        "endChar": 35
+      },
+      "revId": "6d2abda5c6be3b851779fbdaa009bfb91ac39a50",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4d3b0f80_5e5c2f0e",
+        "filename": "ios/chrome/browser/ssl/insecure_input_tab_helper.h",
+        "patchSetId": 8
+      },
+      "lineNbr": 14,
+      "author": {
+        "id": 1126726
+      },
+      "writtenOn": "2017-11-08T16:54:02Z",
+      "side": 1,
+      "message": "nit: forms",
+      "range": {
+        "startLine": 14,
+        "startChar": 29,
+        "endLine": 14,
+        "endChar": 34
+      },
+      "revId": "6d2abda5c6be3b851779fbdaa009bfb91ac39a50",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6e6bc523_07f4e89e",
+        "filename": "ios/chrome/browser/ssl/insecure_input_tab_helper.h",
+        "patchSetId": 8
+      },
+      "lineNbr": 19,
+      "author": {
+        "id": 1126726
+      },
+      "writtenOn": "2017-11-08T16:54:02Z",
+      "side": 1,
+      "message": "optional nit: I\u0027d remove this sentence as it seems likely to rot (e.g. factory class gets renamed but this comment doesn\u0027t get updated)",
+      "range": {
+        "startLine": 18,
+        "startChar": 0,
+        "endLine": 19,
+        "endChar": 42
+      },
+      "revId": "6d2abda5c6be3b851779fbdaa009bfb91ac39a50",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4dbeba5b_edba85ca",
+        "filename": "ios/chrome/browser/ssl/insecure_input_tab_helper.h",
+        "patchSetId": 8
+      },
+      "lineNbr": 39,
+      "author": {
+        "id": 1126726
+      },
+      "writtenOn": "2017-11-08T16:54:02Z",
+      "side": 1,
+      "message": "nit: can this be private? Haven\u0027t read the impl yet but I\u0027d expect that this would only be called from FormActivityRegistered.",
+      "range": {
+        "startLine": 39,
+        "startChar": 7,
+        "endLine": 39,
+        "endChar": 36
+      },
+      "revId": "6d2abda5c6be3b851779fbdaa009bfb91ac39a50",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a4208740_8212cf6d",
+        "filename": "ios/chrome/browser/ssl/insecure_input_tab_helper.mm",
+        "patchSetId": 8
+      },
+      "lineNbr": 22,
+      "author": {
+        "id": 1126726
+      },
+      "writtenOn": "2017-11-08T16:54:02Z",
+      "side": 1,
+      "message": "nit: blank line above",
+      "range": {
+        "startLine": 22,
+        "startChar": 3,
+        "endLine": 22,
+        "endChar": 10
+      },
+      "revId": "6d2abda5c6be3b851779fbdaa009bfb91ac39a50",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4a8507ea_328e2043",
+        "filename": "ios/chrome/browser/ssl/insecure_input_tab_helper.mm",
+        "patchSetId": 8
+      },
+      "lineNbr": 44,
+      "author": {
+        "id": 1126726
+      },
+      "writtenOn": "2017-11-08T16:54:02Z",
+      "side": 1,
+      "message": "ditto",
+      "range": {
+        "startLine": 44,
+        "startChar": 1,
+        "endLine": 44,
+        "endChar": 2
+      },
+      "revId": "6d2abda5c6be3b851779fbdaa009bfb91ac39a50",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "bf8bf653_0ec91421",
+        "filename": "ios/chrome/browser/ssl/ios_security_state_tab_helper_unittest.mm",
+        "patchSetId": 8
+      },
+      "lineNbr": 41,
+      "author": {
+        "id": 1126726
+      },
+      "writtenOn": "2017-11-08T16:54:02Z",
+      "side": 1,
+      "message": "nit: |insecure_input_|\n\nand ideally this would be private with a protected getter but I suppose it\u0027s okay to have it protected in test code.",
+      "range": {
+        "startLine": 41,
+        "startChar": 26,
+        "endLine": 41,
+        "endChar": 40
+      },
+      "revId": "6d2abda5c6be3b851779fbdaa009bfb91ac39a50",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
