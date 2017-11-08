@@ -22,6 +22,30 @@
       "revId": "3f263bcc5985a31115d3e390f35989fa6099144e",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "54faebac_2e1b4f17",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/toolbar/ToolbarManager.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 337,
+      "author": {
+        "id": 1116043
+      },
+      "writtenOn": "2017-11-08T18:37:56Z",
+      "side": 1,
+      "message": "I think this seems fine, but can you describe why the current system doesn\u0027t work?\n\nAre we not getting new draw calls?  Is the invalidate check not working?  Are we invalidating but saying the toolbar can\u0027t be recaptured?  It would be good to know what about the current system is broken and document that in the CL comment.",
+      "parentUuid": "e3e07c71_5f2d12f3",
+      "range": {
+        "startLine": 335,
+        "startChar": 12,
+        "endLine": 337,
+        "endChar": 13
+      },
+      "revId": "3f263bcc5985a31115d3e390f35989fa6099144e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
