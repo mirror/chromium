@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "ed16d75e_841db8a0",
+        "filename": "third_party/WebKit/Source/core/editing/Editor.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 1488,
+      "author": {
+        "id": 1002258
+      },
+      "writtenOn": "2017-11-08T02:04:51Z",
+      "side": 1,
+      "message": "Do we want to display selection handle even if selection is caret other than\nexecuting command?\n\nIf the answer is no and we don\u0027t want to display selection handle for\ncaret case, selection handler part should handle it instead of here to\navoid checking range selection in all call sites of SetShouldShowHandle().\n\nDoes Android use |LocalFrameView::ComputeCompositedSelection()|?\nIt check handle visibility and caret or range.",
+      "revId": "c2716e9c5e756988f6f9f627f65f9e742a361e58",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
