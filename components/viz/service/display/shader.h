@@ -311,6 +311,9 @@ class VIZ_SERVICE_EXPORT FragmentShader {
   int lut_texture_location_ = -1;
   int lut_size_location_ = -1;
 
+  bool has_color_scales_ = false;
+  int color_scales_location_ = -1;
+
  private:
   friend class Program;
 

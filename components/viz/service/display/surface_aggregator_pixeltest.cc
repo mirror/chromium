@@ -56,11 +56,13 @@ SharedQuadState* CreateAndAppendTestSharedQuadState(
   const gfx::Rect clip_rect = gfx::Rect(size);
   bool is_clipped = false;
   bool are_contents_opaque = false;
+  const gfx::Vector3dF color_scales(1.f, 1.f, 1.f);
   float opacity = 1.f;
   const SkBlendMode blend_mode = SkBlendMode::kSrcOver;
   auto* shared_state = render_pass->CreateAndAppendSharedQuadState();
   shared_state->SetAll(transform, layer_rect, visible_layer_rect, clip_rect,
-                       is_clipped, are_contents_opaque, opacity, blend_mode, 0);
+                       is_clipped, are_contents_opaque, color_scales, opacity,
+                       blend_mode, 0);
   return shared_state;
 }
 

@@ -102,6 +102,7 @@ class VIZ_SERVICE_EXPORT SurfaceAggregator {
 
   void HandleSurfaceQuad(const SurfaceDrawQuad* surface_quad,
                          const gfx::Transform& target_transform,
+                         const gfx::Vector3dF& target_color_scales,
                          const ClipData& clip_rect,
                          RenderPass* dest_pass,
                          bool ignore_undamaged,
@@ -113,6 +114,7 @@ class VIZ_SERVICE_EXPORT SurfaceAggregator {
                           const gfx::Rect& rect,
                           const gfx::Rect& visible_rect,
                           const gfx::Transform& target_transform,
+                          const gfx::Vector3dF& target_color_scales,
                           const ClipData& clip_rect,
                           RenderPass* dest_pass,
                           bool ignore_undamaged,
@@ -121,6 +123,7 @@ class VIZ_SERVICE_EXPORT SurfaceAggregator {
 
   void EmitDefaultBackgroundColorQuad(const SurfaceDrawQuad* surface_quad,
                                       const gfx::Transform& target_transform,
+                                      const gfx::Vector3dF& target_color_scales,
                                       const ClipData& clip_rect,
                                       RenderPass* dest_pass);
 
@@ -129,6 +132,7 @@ class VIZ_SERVICE_EXPORT SurfaceAggregator {
       const gfx::Rect& fallback_rect,
       const SharedQuadState* primary_shared_quad_state,
       const gfx::Transform& target_transform,
+      const gfx::Vector3dF& target_color_scales,
       const ClipData& clip_rect,
       SkColor background_color,
       RenderPass* dest_pass);
@@ -136,15 +140,18 @@ class VIZ_SERVICE_EXPORT SurfaceAggregator {
   void ReportMissingFallbackSurface(const SurfaceId& fallback_surface_id,
                                     const Surface* fallback_surface);
 
-  SharedQuadState* CopySharedQuadState(const SharedQuadState* source_sqs,
-                                       const gfx::Transform& target_transform,
-                                       const ClipData& clip_rect,
-                                       RenderPass* dest_render_pass);
+  SharedQuadState* CopySharedQuadState(
+      const SharedQuadState* source_sqs,
+      const gfx::Transform& target_transform,
+      const gfx::Vector3dF& target_color_scales,
+      const ClipData& clip_rect,
+      RenderPass* dest_render_pass);
   void CopyQuadsToPass(
       const QuadList& source_quad_list,
       const SharedQuadStateList& source_shared_quad_state_list,
       const std::unordered_map<ResourceId, ResourceId>& resource_to_child_map,
       const gfx::Transform& target_transform,
+      const gfx::Vector3dF& target_color_scales,
       const ClipData& clip_rect,
       RenderPass* dest_pass,
       const SurfaceId& surface_id);

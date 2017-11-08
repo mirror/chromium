@@ -28,14 +28,15 @@ SharedQuadState* CreateSharedQuadState(RenderPass* render_pass) {
   gfx::Rect clip_rect(19, 21, 23, 25);
   bool is_clipped = false;
   bool are_contents_opaque = false;
+  const gfx::Vector3dF color_scales(1.f, 1.f, 1.f);
   float opacity = 1.f;
   int sorting_context_id = 65536;
   SkBlendMode blend_mode = SkBlendMode::kSrcOver;
 
   SharedQuadState* state = render_pass->CreateAndAppendSharedQuadState();
   state->SetAll(quad_transform, content_rect, visible_layer_rect, clip_rect,
-                is_clipped, are_contents_opaque, opacity, blend_mode,
-                sorting_context_id);
+                is_clipped, are_contents_opaque, color_scales, opacity,
+                blend_mode, sorting_context_id);
   return state;
 }
 

@@ -185,6 +185,7 @@ void SurfaceAggregator::UnrefResources(
 void SurfaceAggregator::HandleSurfaceQuad(
     const SurfaceDrawQuad* surface_quad,
     const gfx::Transform& target_transform,
+    const gfx::Vector3dF& target_color_scales,
     const ClipData& clip_rect,
     RenderPass* dest_pass,
     bool ignore_undamaged,
@@ -196,8 +197,8 @@ void SurfaceAggregator::HandleSurfaceQuad(
   if (primary_surface && primary_surface->HasActiveFrame()) {
     EmitSurfaceContent(primary_surface, surface_quad->shared_quad_state,
                        surface_quad->rect, surface_quad->visible_rect,
-                       target_transform, clip_rect, dest_pass, ignore_undamaged,
-                       damage_rect_in_quad_space,
+                       target_transform, target_color_scales, clip_rect,
+                       dest_pass, ignore_undamaged, damage_rect_in_quad_space,
                        damage_rect_in_quad_space_valid);
     return;
   }
@@ -205,8 +206,8 @@ void SurfaceAggregator::HandleSurfaceQuad(
   // If there's no fallback surface ID provided, then simply emit a
   // SolidColorDrawQuad with the provided default background color.
   if (!surface_quad->fallback_surface_id) {
-    EmitDefaultBackgroundColorQuad(surface_quad, target_transform, clip_rect,
-                                   dest_pass);
+    EmitDefaultBackgroundColorQuad(surface_quad, target_transform,
+                                   target_color_scales, clip_rect, dest_pass);
     return;
   }
 
@@ -217,8 +218,8 @@ void SurfaceAggregator::HandleSurfaceQuad(
   // error to console, and log the UMA.
   if (!fallback_surface || !fallback_surface->HasActiveFrame()) {
     ReportMissingFallbackSurface(fallback_surface_id, fallback_surface);
-    EmitDefaultBackgroundColorQuad(surface_quad, target_transform, clip_rect,
-                                   dest_pass);
+    EmitDefaultBackgroundColorQuad(surface_quad, target_transform,
+                                   target_color_scales, clip_rect, dest_pass);
     return;
   }
 
@@ -229,7 +230,7 @@ void SurfaceAggregator::HandleSurfaceQuad(
 
   EmitGutterQuadsIfNecessary(
       surface_quad->rect, fallback_rect, surface_quad->shared_quad_state,
-      target_transform, clip_rect,
+      target_transform, target_color_scales, clip_rect,
       fallback_frame.metadata.root_background_color, dest_pass);
 
   gfx::Rect fallback_visible_rect(surface_quad->visible_rect);
@@ -242,8 +243,8 @@ void SurfaceAggregator::HandleSurfaceQuad(
   // fallback or we need to stretch the content to fill the bounds of the quad.
   EmitSurfaceContent(fallback_surface, surface_quad->shared_quad_state,
                      fallback_rect, fallback_visible_rect, target_transform,
-                     clip_rect, dest_pass, ignore_undamaged,
-                     damage_rect_in_quad_space,
+                     target_color_scales, clip_rect, dest_pass,
+                     ignore_undamaged, damage_rect_in_quad_space,
                      damage_rect_in_quad_space_valid);
 }
 
@@ -253,6 +254,7 @@ void SurfaceAggregator::EmitSurfaceContent(
     const gfx::Rect& rect,
     const gfx::Rect& visible_rect,
     const gfx::Transform& target_transform,
+    const gfx::Vector3dF& target_color_scales,
     const ClipData& clip_rect,
     RenderPass* dest_pass,
     bool ignore_undamaged,
@@ -331,9 +333,11 @@ void SurfaceAggregator::EmitSurfaceContent(
     copy_pass->transform_to_root_target.ConcatTransform(
         dest_pass->transform_to_root_target);
 
+    const gfx::Vector3dF identity_color_scales(1.f, 1.f, 1.f);
     CopyQuadsToPass(source.quad_list, source.shared_quad_state_list,
-                    child_to_parent_map, gfx::Transform(), ClipData(),
-                    copy_pass.get(), surface_id);
+                    child_to_parent_map, gfx::Transform(),
+                    identity_color_scales, ClipData(), copy_pass.get(),
+                    surface_id);
 
     // If the render pass has copy requests, or should be cached, or has
     // moving-pixel filters, or in a moving-pixel surface, we should damage the
@@ -360,6 +364,9 @@ void SurfaceAggregator::EmitSurfaceContent(
   gfx::Transform surface_transform = source_sqs->quad_to_target_transform;
   surface_transform.ConcatTransform(target_transform);
 
+  const gfx::Vector3dF surface_color_scales =
+      gfx::ScaleVector3d(source_sqs->color_scales, target_color_scales);
+
   const auto& last_pass = *render_pass_list.back();
   // This will check if all the surface_quads (including child surfaces) has
   // damage because HandleSurfaceQuad is a recursive call by calling
@@ -385,15 +392,16 @@ void SurfaceAggregator::EmitSurfaceContent(
         CalculateClipRect(clip_rect, surface_quad_clip_rect, target_transform);
 
     CopyQuadsToPass(quads, last_pass.shared_quad_state_list,
-                    child_to_parent_map, surface_transform, quads_clip,
-                    dest_pass, surface_id);
+                    child_to_parent_map, surface_transform,
+                    surface_color_scales, quads_clip, dest_pass, surface_id);
   } else {
     RenderPassId remapped_pass_id = RemapPassId(last_pass.id, surface_id);
 
     // TODO(fsamuel): It seems like we can reduce the clip rect here as well
     // as we do above in the merge case.
     auto* shared_quad_state =
-        CopySharedQuadState(source_sqs, target_transform, clip_rect, dest_pass);
+        CopySharedQuadState(source_sqs, target_transform, target_color_scales,
+                            clip_rect, dest_pass);
 
     auto* quad = dest_pass->CreateAndAppendDrawQuad<RenderPassDrawQuad>();
     quad->SetNew(shared_quad_state, rect, visible_rect, remapped_pass_id, 0,
@@ -409,6 +417,7 @@ void SurfaceAggregator::EmitSurfaceContent(
 void SurfaceAggregator::EmitDefaultBackgroundColorQuad(
     const SurfaceDrawQuad* surface_quad,
     const gfx::Transform& target_transform,
+    const gfx::Vector3dF& target_color_scales,
     const ClipData& clip_rect,
     RenderPass* dest_pass) {
   // The primary surface is unavailable and there is no fallback
@@ -424,8 +433,9 @@ void SurfaceAggregator::EmitDefaultBackgroundColorQuad(
     background_color = SK_ColorMAGENTA;
   }
 #endif
-  auto* shared_quad_state = CopySharedQuadState(
-      surface_quad->shared_quad_state, target_transform, clip_rect, dest_pass);
+  auto* shared_quad_state =
+      CopySharedQuadState(surface_quad->shared_quad_state, target_transform,
+                          target_color_scales, clip_rect, dest_pass);
   auto* solid_color_quad =
       dest_pass->CreateAndAppendDrawQuad<SolidColorDrawQuad>();
   solid_color_quad->SetNew(shared_quad_state, surface_quad->rect,
@@ -437,6 +447,7 @@ void SurfaceAggregator::EmitGutterQuadsIfNecessary(
     const gfx::Rect& fallback_rect,
     const SharedQuadState* primary_shared_quad_state,
     const gfx::Transform& target_transform,
+    const gfx::Vector3dF& target_color_scales,
     const ClipData& clip_rect,
     SkColor background_color,
     RenderPass* dest_pass) {
@@ -449,8 +460,9 @@ void SurfaceAggregator::EmitGutterQuadsIfNecessary(
 
   SharedQuadState* shared_quad_state = nullptr;
   if (fallback_rect.width() < primary_rect.width()) {
-    shared_quad_state = CopySharedQuadState(
-        primary_shared_quad_state, target_transform, clip_rect, dest_pass);
+    shared_quad_state =
+        CopySharedQuadState(primary_shared_quad_state, target_transform,
+                            target_color_scales, clip_rect, dest_pass);
 
     // The right gutter also includes the bottom-right corner, if necessary.
     gfx::Rect right_gutter_rect(fallback_rect.right(), primary_rect.y(),
@@ -464,8 +476,9 @@ void SurfaceAggregator::EmitGutterQuadsIfNecessary(
 
   if (fallback_rect.height() < primary_rect.height()) {
     if (!shared_quad_state) {
-      shared_quad_state = CopySharedQuadState(
-          primary_shared_quad_state, target_transform, clip_rect, dest_pass);
+      shared_quad_state =
+          CopySharedQuadState(primary_shared_quad_state, target_transform,
+                              target_color_scales, clip_rect, dest_pass);
     }
 
     gfx::Rect bottom_gutter_rect(
@@ -527,7 +540,9 @@ void SurfaceAggregator::AddColorConversionPass() {
       /*quad_layer_rect=*/output_rect,
       /*visible_quad_layer_rect=*/output_rect,
       /*clip_rect=*/gfx::Rect(),
-      /*is_clipped=*/false, /*are_contents_opaque=*/false, /*opacity=*/1.f,
+      /*is_clipped=*/false, /*are_contents_opaque=*/false,
+      /*color_scales=*/gfx::Vector3dF(1.f, 1.f, 1.f),
+      /*opacity=*/1.f,
       /*blend_mode=*/SkBlendMode::kSrcOver, /*sorting_context_id=*/0);
 
   auto* quad =
@@ -542,6 +557,7 @@ void SurfaceAggregator::AddColorConversionPass() {
 SharedQuadState* SurfaceAggregator::CopySharedQuadState(
     const SharedQuadState* source_sqs,
     const gfx::Transform& target_transform,
+    const gfx::Vector3dF& target_color_scales,
     const ClipData& clip_rect,
     RenderPass* dest_render_pass) {
   auto* copy_shared_quad_state =
@@ -557,12 +573,17 @@ SharedQuadState* SurfaceAggregator::CopySharedQuadState(
   ClipData new_clip_rect = CalculateClipRect(
       clip_rect, ClipData(source_sqs->is_clipped, source_sqs->clip_rect),
       target_transform);
-  copy_shared_quad_state->SetAll(new_transform, source_sqs->quad_layer_rect,
-                                 source_sqs->visible_quad_layer_rect,
-                                 new_clip_rect.rect, new_clip_rect.is_clipped,
-                                 source_sqs->are_contents_opaque,
-                                 source_sqs->opacity, source_sqs->blend_mode,
-                                 source_sqs->sorting_context_id);
+
+  // Similar to the transform above, we also merge the color scales.
+  const gfx::Vector3dF new_color_scales =
+      gfx::ScaleVector3d(source_sqs->color_scales, target_color_scales);
+
+  copy_shared_quad_state->SetAll(
+      new_transform, source_sqs->quad_layer_rect,
+      source_sqs->visible_quad_layer_rect, new_clip_rect.rect,
+      new_clip_rect.is_clipped, source_sqs->are_contents_opaque,
+      new_color_scales, source_sqs->opacity, source_sqs->blend_mode,
+      source_sqs->sorting_context_id);
 
   return copy_shared_quad_state;
 }
@@ -572,6 +593,7 @@ void SurfaceAggregator::CopyQuadsToPass(
     const SharedQuadStateList& source_shared_quad_state_list,
     const std::unordered_map<ResourceId, ResourceId>& child_to_parent_map,
     const gfx::Transform& target_transform,
+    const gfx::Vector3dF& target_color_scales,
     const ClipData& clip_rect,
     RenderPass* dest_pass,
     const SurfaceId& surface_id) {
@@ -611,13 +633,15 @@ void SurfaceAggregator::CopyQuadsToPass(
       if (!surface_quad->primary_surface_id.is_valid())
         continue;
 
-      HandleSurfaceQuad(surface_quad, target_transform, clip_rect, dest_pass,
-                        ignore_undamaged, &damage_rect_in_quad_space,
+      HandleSurfaceQuad(surface_quad, target_transform, target_color_scales,
+                        clip_rect, dest_pass, ignore_undamaged,
+                        &damage_rect_in_quad_space,
                         &damage_rect_in_quad_space_valid);
     } else {
       if (quad->shared_quad_state != last_copied_source_shared_quad_state) {
-        const SharedQuadState* dest_shared_quad_state = CopySharedQuadState(
-            quad->shared_quad_state, target_transform, clip_rect, dest_pass);
+        const SharedQuadState* dest_shared_quad_state =
+            CopySharedQuadState(quad->shared_quad_state, target_transform,
+                                target_color_scales, clip_rect, dest_pass);
         last_copied_source_shared_quad_state = quad->shared_quad_state;
         if (aggregate_only_damaged_ && !has_copy_requests_ &&
             !has_cached_render_passes_) {
@@ -717,9 +741,11 @@ void SurfaceAggregator::CopyPasses(const CompositorFrame& frame,
         source.has_transparent_background, source.cache_render_pass,
         source.has_damage_from_contributing_content, source.generate_mipmap);
 
+    const gfx::Vector3dF identity_color_scales(1.f, 1.f, 1.f);
     CopyQuadsToPass(source.quad_list, source.shared_quad_state_list,
-                    child_to_parent_map, gfx::Transform(), ClipData(),
-                    copy_pass.get(), surface->surface_id());
+                    child_to_parent_map, gfx::Transform(),
+                    identity_color_scales, ClipData(), copy_pass.get(),
+                    surface->surface_id());
 
     // If the render pass has copy requests, or should be cached, or has
     // moving-pixel filters, or in a moving-pixel surface, we should damage the

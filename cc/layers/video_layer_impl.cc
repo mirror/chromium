@@ -172,8 +172,8 @@ void VideoLayerImpl::AppendQuads(viz::RenderPass* render_pass,
   gfx::Rect rotated_size_rect(rotated_size);
   shared_quad_state->SetAll(transform, rotated_size_rect, visible_layer_rect(),
                             clip_rect(), is_clipped(), contents_opaque(),
-                            draw_opacity(), SkBlendMode::kSrcOver,
-                            GetSortingContextId());
+                            draw_color_scales(), draw_opacity(),
+                            SkBlendMode::kSrcOver, GetSortingContextId());
 
   AppendDebugBorderQuad(render_pass, rotated_size_rect, shared_quad_state,
                         append_quads_data);

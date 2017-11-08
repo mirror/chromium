@@ -46,6 +46,13 @@ class CC_EXPORT RenderSurfaceImpl {
   // reflection.
   gfx::RectF DrawableContentRect() const;
 
+  void SetDrawColorScales(const gfx::Vector3dF& color_scales) {
+    draw_properties_.draw_color_scales = color_scales;
+  }
+  const gfx::Vector3dF& draw_color_scales() const {
+    return draw_properties_.draw_color_scales;
+  }
+
   void SetDrawOpacity(float opacity) {
     draw_properties_.draw_opacity = opacity;
   }
@@ -200,6 +207,8 @@ class CC_EXPORT RenderSurfaceImpl {
   struct DrawProperties {
     DrawProperties();
     ~DrawProperties();
+
+    gfx::Vector3dF draw_color_scales;
 
     float draw_opacity;
 

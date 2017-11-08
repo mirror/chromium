@@ -204,6 +204,9 @@ bool OverlayCandidate::FromDrawQuad(DisplayResourceProvider* resource_provider,
         quad->shared_quad_state->blend_mode == SkBlendMode::kSrcOver))
     return false;
 
+  if (quad->shared_quad_state->color_scales.LengthSquared() < 3.0)
+    return false;
+
   switch (quad->material) {
     case viz::DrawQuad::TEXTURE_CONTENT:
       return FromTextureQuad(resource_provider,

@@ -15,6 +15,7 @@ namespace viz {
 
 SharedQuadState::SharedQuadState()
     : is_clipped(false),
+      color_scales(1.f, 1.f, 1.f),
       opacity(0.f),
       blend_mode(SkBlendMode::kSrcOver),
       sorting_context_id(0) {}
@@ -33,6 +34,7 @@ void SharedQuadState::SetAll(const gfx::Transform& quad_to_target_transform,
                              const gfx::Rect& clip_rect,
                              bool is_clipped,
                              bool are_contents_opaque,
+                             const gfx::Vector3dF& color_scales,
                              float opacity,
                              SkBlendMode blend_mode,
                              int sorting_context_id) {
@@ -42,6 +44,7 @@ void SharedQuadState::SetAll(const gfx::Transform& quad_to_target_transform,
   this->clip_rect = clip_rect;
   this->is_clipped = is_clipped;
   this->are_contents_opaque = are_contents_opaque;
+  this->color_scales = color_scales;
   this->opacity = opacity;
   this->blend_mode = blend_mode;
   this->sorting_context_id = sorting_context_id;
@@ -57,6 +60,9 @@ void SharedQuadState::AsValueInto(base::trace_event::TracedValue* value) const {
   cc::MathUtil::AddToTracedValue("clip_rect", clip_rect, value);
 
   value->SetBoolean("are_contents_opaque", are_contents_opaque);
+  value->SetDouble("color_scale_red", color_scales.x());
+  value->SetDouble("color_scale_green", color_scales.y());
+  value->SetDouble("color_scale_blue", color_scales.z());
   value->SetDouble("opacity", opacity);
   value->SetString("blend_mode", SkBlendMode_Name(blend_mode));
   TracedValue::MakeDictIntoImplicitSnapshotWithCategory(

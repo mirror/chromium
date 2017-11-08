@@ -254,6 +254,9 @@ class CC_EXPORT LayerImpl {
 
   // The following are shortcut accessors to get various information from
   // draw_properties_
+  const gfx::Vector3dF& draw_color_scales() const {
+    return draw_properties_.color_scales;
+  }
   float draw_opacity() const { return draw_properties_.opacity; }
   bool screen_space_transform_is_animating() const {
     return draw_properties_.screen_space_transform_is_animating;

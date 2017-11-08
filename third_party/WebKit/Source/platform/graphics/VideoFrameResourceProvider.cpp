@@ -38,7 +38,8 @@ void VideoFrameResourceProvider::AppendQuads(viz::RenderPass& render_pass) {
   viz::SharedQuadState* shared_state =
       render_pass.CreateAndAppendSharedQuadState();
   shared_state->SetAll(gfx::Transform(), rect, rect, rect, is_clipped,
-                       are_contents_opaque, 1, SkBlendMode::kSrcOver, 0);
+                       are_contents_opaque, gfx::Vector3dF(1.f, 1.f, 1.f), 1,
+                       SkBlendMode::kSrcOver, 0);
   viz::SolidColorDrawQuad* solid_color_quad =
       render_pass.CreateAndAppendDrawQuad<viz::SolidColorDrawQuad>();
   // Fluxuate colors for placeholder testing.
