@@ -36,6 +36,24 @@
     },
     {
       "key": {
+        "uuid": "4bc42a8f_f39eb2df",
+        "filename": "third_party/WebKit/Source/core/loader/FrameLoader.cpp",
+        "patchSetId": 12
+      },
+      "lineNbr": 384,
+      "author": {
+        "id": 1116039
+      },
+      "writtenOn": "2017-11-08T20:51:24Z",
+      "side": 1,
+      "message": "Note that SaveScrollAnchor is also called from LocalFrameView::DidScrollTimerFired.  Would visibilitychange buy us anything we don\u0027t already capture from scroll timer callback + unload?",
+      "parentUuid": "ba2fc29e_ce96c506",
+      "revId": "22b9f73d330eb09607c6bba94fa2a9a8f16f7803",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "1dcd3f94_d133ad93",
         "filename": "third_party/WebKit/Source/core/loader/FrameLoader.cpp",
         "patchSetId": 12
