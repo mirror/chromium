@@ -42,6 +42,30 @@
     },
     {
       "key": {
+        "uuid": "fb92de1a_eb22c206",
+        "filename": "third_party/WebKit/Source/platform/heap/HeapPage.cpp",
+        "patchSetId": 10
+      },
+      "lineNbr": 691,
+      "author": {
+        "id": 1131764
+      },
+      "writtenOn": "2017-11-08T16:22:19Z",
+      "side": 1,
+      "message": "Kentaro? We can also discuss this at the next meeting.",
+      "parentUuid": "b646a8ba_30382ef5",
+      "range": {
+        "startLine": 691,
+        "startChar": 22,
+        "endLine": 691,
+        "endChar": 30
+      },
+      "revId": "e907997ea6e8aead9540f88597cb4fb50a0c6b13",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "f831089b_6823d007",
         "filename": "third_party/WebKit/Source/platform/heap/HeapPage.h",
         "patchSetId": 10
@@ -88,6 +112,30 @@
     },
     {
       "key": {
+        "uuid": "d20a3d93_cabc7746",
+        "filename": "third_party/WebKit/Source/platform/heap/HeapPage.h",
+        "patchSetId": 10
+      },
+      "lineNbr": 458,
+      "author": {
+        "id": 1131764
+      },
+      "writtenOn": "2017-11-08T16:22:19Z",
+      "side": 1,
+      "message": "Not sure what to pick. It is not too generic as it depends on a couple of blink-related internal constants.",
+      "parentUuid": "d23368db_1b525d56",
+      "range": {
+        "startLine": 458,
+        "startChar": 22,
+        "endLine": 458,
+        "endChar": 39
+      },
+      "revId": "e907997ea6e8aead9540f88597cb4fb50a0c6b13",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "3cae8908_9a0995dc",
         "filename": "third_party/WebKit/Source/platform/heap/HeapPage.h",
         "patchSetId": 10
@@ -111,6 +159,30 @@
     },
     {
       "key": {
+        "uuid": "25d5118d_4cf26162",
+        "filename": "third_party/WebKit/Source/platform/heap/HeapPage.h",
+        "patchSetId": 10
+      },
+      "lineNbr": 1072,
+      "author": {
+        "id": 1131764
+      },
+      "writtenOn": "2017-11-08T16:22:19Z",
+      "side": 1,
+      "message": "Done. Fixed by requiring the type instead of an address here.\n\nIt is only called when having an actual header. In this case it is either a large object page or a normal page.",
+      "parentUuid": "3cae8908_9a0995dc",
+      "range": {
+        "startLine": 1072,
+        "startChar": 17,
+        "endLine": 1072,
+        "endChar": 23
+      },
+      "revId": "e907997ea6e8aead9540f88597cb4fb50a0c6b13",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "9b9e5929_52d6461d",
         "filename": "third_party/WebKit/Source/platform/heap/HeapPage.h",
         "patchSetId": 10
@@ -125,6 +197,24 @@
       "revId": "e907997ea6e8aead9540f88597cb4fb50a0c6b13",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4b0d143a_2dabf376",
+        "filename": "third_party/WebKit/Source/platform/heap/HeapPage.h",
+        "patchSetId": 10
+      },
+      "lineNbr": 1079,
+      "author": {
+        "id": 1131764
+      },
+      "writtenOn": "2017-11-08T16:22:19Z",
+      "side": 1,
+      "message": "In general, I kept the notion of actual HeapObjectHeader out of the bitmap. \n\nAs far as I can remember, it doesn\u0027t work \n- with unittests: as they don\u0027t have a valid HeapObjectHeader.\n- with compaction: as they compaction frontier only receives a valid header at the end.",
+      "parentUuid": "9b9e5929_52d6461d",
+      "revId": "e907997ea6e8aead9540f88597cb4fb50a0c6b13",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -148,6 +238,30 @@
       "revId": "e907997ea6e8aead9540f88597cb4fb50a0c6b13",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "dbec8c35_4502ae82",
+        "filename": "third_party/WebKit/Source/platform/heap/HeapPage.h",
+        "patchSetId": 10
+      },
+      "lineNbr": 1102,
+      "author": {
+        "id": 1131764
+      },
+      "writtenOn": "2017-11-08T16:22:19Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "3fec2c6c_9429f080",
+      "range": {
+        "startLine": 1102,
+        "startChar": 38,
+        "endLine": 1102,
+        "endChar": 39
+      },
+      "revId": "e907997ea6e8aead9540f88597cb4fb50a0c6b13",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -198,6 +312,30 @@
     },
     {
       "key": {
+        "uuid": "9597e1ef_eda31b5e",
+        "filename": "third_party/WebKit/Source/platform/heap/HeapPage.h",
+        "patchSetId": 10
+      },
+      "lineNbr": 1107,
+      "author": {
+        "id": 1131764
+      },
+      "writtenOn": "2017-11-08T16:22:19Z",
+      "side": 1,
+      "message": "Mhm, maybe a utility file would make sense? Kentaro?",
+      "parentUuid": "a829e813_3abda4b5",
+      "range": {
+        "startLine": 1107,
+        "startChar": 11,
+        "endLine": 1107,
+        "endChar": 33
+      },
+      "revId": "e907997ea6e8aead9540f88597cb4fb50a0c6b13",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "c58d0ab6_3d7508c3",
         "filename": "third_party/WebKit/Source/platform/heap/HeapPage.h",
         "patchSetId": 10
@@ -218,6 +356,30 @@
       "revId": "e907997ea6e8aead9540f88597cb4fb50a0c6b13",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "58a8a139_32f2d854",
+        "filename": "third_party/WebKit/Source/platform/heap/HeapPage.h",
+        "patchSetId": 10
+      },
+      "lineNbr": 1111,
+      "author": {
+        "id": 1131764
+      },
+      "writtenOn": "2017-11-08T16:22:19Z",
+      "side": 1,
+      "message": "Done. Used V8\u0027s implementation with slightly different define guards.",
+      "parentUuid": "c58d0ab6_3d7508c3",
+      "range": {
+        "startLine": 1111,
+        "startChar": 2,
+        "endLine": 1111,
+        "endChar": 4
+      },
+      "revId": "e907997ea6e8aead9540f88597cb4fb50a0c6b13",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -244,6 +406,30 @@
     },
     {
       "key": {
+        "uuid": "a3d612b2_824d1f1e",
+        "filename": "third_party/WebKit/Source/platform/heap/HeapPage.h",
+        "patchSetId": 10
+      },
+      "lineNbr": 1130,
+      "author": {
+        "id": 1131764
+      },
+      "writtenOn": "2017-11-08T16:22:19Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "8c716643_d9af23ab",
+      "range": {
+        "startLine": 1130,
+        "startChar": 19,
+        "endLine": 1130,
+        "endChar": 38
+      },
+      "revId": "e907997ea6e8aead9540f88597cb4fb50a0c6b13",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "ebba756a_2022e35b",
         "filename": "third_party/WebKit/Source/platform/heap/HeapPage.h",
         "patchSetId": 10
@@ -267,6 +453,30 @@
     },
     {
       "key": {
+        "uuid": "c27ef72b_bd025dbf",
+        "filename": "third_party/WebKit/Source/platform/heap/HeapPage.h",
+        "patchSetId": 10
+      },
+      "lineNbr": 1134,
+      "author": {
+        "id": 1131764
+      },
+      "writtenOn": "2017-11-08T16:22:19Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "ebba756a_2022e35b",
+      "range": {
+        "startLine": 1134,
+        "startChar": 17,
+        "endLine": 1134,
+        "endChar": 23
+      },
+      "revId": "e907997ea6e8aead9540f88597cb4fb50a0c6b13",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "1f1c027a_8289a6b5",
         "filename": "third_party/WebKit/Source/platform/heap/HeapPage.h",
         "patchSetId": 10
@@ -281,6 +491,24 @@
       "revId": "e907997ea6e8aead9540f88597cb4fb50a0c6b13",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "163aded4_a4008e64",
+        "filename": "third_party/WebKit/Source/platform/heap/HeapPage.h",
+        "patchSetId": 10
+      },
+      "lineNbr": 1135,
+      "author": {
+        "id": 1131764
+      },
+      "writtenOn": "2017-11-08T16:22:19Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "1f1c027a_8289a6b5",
+      "revId": "e907997ea6e8aead9540f88597cb4fb50a0c6b13",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
