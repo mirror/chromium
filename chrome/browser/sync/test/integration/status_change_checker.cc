@@ -40,8 +40,7 @@ void StatusChangeChecker::StartBlockingWait() {
 
   {
     base::MessageLoop* loop = base::MessageLoop::current();
-    base::MessageLoop::ScopedNestableTaskAllower allow(loop);
-    base::RunLoop().Run();
+    base::RunLoop(base::RunLoop::Type::kNestableTasksAllowed).Run();
   }
 }
 
@@ -62,3 +61,4 @@ void StatusChangeChecker::OnTimeout() {
   timed_out_ = true;
   StopWaiting();
 }
+
