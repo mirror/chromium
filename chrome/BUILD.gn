@@ -296,6 +296,8 @@ if (!is_android && !is_mac) {
       }
 
       data_deps += [ "//third_party/widevine/cdm:widevinecdmadapter" ]
+      deps += [ "//third_party/ink-portable" ]
+      ldflags += ["-lGL"]
 
       if (is_multi_dll_chrome) {
         defines += [ "CHROME_MULTIPLE_DLL" ]

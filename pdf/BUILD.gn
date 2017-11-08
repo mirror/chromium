@@ -24,9 +24,12 @@ if (enable_pdf) {
       "//net",
       "//ppapi/cpp:objects",
       "//ppapi/cpp/private:internal_module",
+      "//third_party/ink-portable",
       "//ui/base",
       "//ui/gfx/range",
     ]
+
+    configs += ["//third_party/ink-portable:ink_config"]
 
     sources = [
       "chunk_stream.h",

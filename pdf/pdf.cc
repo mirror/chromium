@@ -10,12 +10,15 @@
 #include <windows.h>
 #endif
 
+#include <memory>
+
 #include "base/command_line.h"
 #include "base/logging.h"
 #include "pdf/out_of_process_instance.h"
 #include "ppapi/c/ppp.h"
 #include "ppapi/cpp/private/internal_module.h"
 #include "ppapi/cpp/private/pdf.h"
+#include "third_party/sketchology/portable/portable_ink_engine.h"
 #include "v8/include/v8.h"
 
 namespace chrome_pdf {
@@ -23,6 +26,9 @@ namespace chrome_pdf {
 namespace {
 
 bool g_sdk_initialized_via_pepper = false;
+
+// Don't actually do this.
+std::shared_ptr<sketchology::portable::PortableInkEngine> g_ink;
 
 }  // namespace
 
@@ -39,6 +45,11 @@ bool PDFModule::Init() {
   return true;
 }
 
+class FakeInkPlatform : public sketchology::portable::IPlatform {
+  void SetTargetFPS(uint32_t fps) override {}
+  uint32_t GetTargetFPS() const override { return 60; }
+};
+
 pp::Instance* PDFModule::CreateInstance(PP_Instance instance) {
   if (!g_sdk_initialized_via_pepper) {
     v8::StartupData natives;
@@ -53,6 +64,13 @@ pp::Instance* PDFModule::CreateInstance(PP_Instance instance) {
     if (!InitializeSDK())
       return nullptr;
     g_sdk_initialized_via_pepper = true;
+    sketchology::portable::Viewport vp;
+    vp.width_pixels = 800;
+    vp.height_pixels = 600;
+    vp.pixels_per_inch = 100;
+    g_ink = std::make_shared<sketchology::portable::PortableInkEngine>(
+      new FakeInkPlatform(), vp, 0,
+      sketchology::portable::RenderingStrategy::BUFFERED);
   }
 
   return new OutOfProcessInstance(instance);
