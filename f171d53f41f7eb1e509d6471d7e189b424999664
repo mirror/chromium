@@ -126,6 +126,24 @@
     },
     {
       "key": {
+        "uuid": "595962f0_1a79d94f",
+        "filename": "chrome/test/data/webui/extensions/extension_manager_unit_test.js",
+        "patchSetId": 18
+      },
+      "lineNbr": 69,
+      "author": {
+        "id": 1115893
+      },
+      "writtenOn": "2017-11-08T20:59:43Z",
+      "side": 1,
+      "message": "This test follows the pattern used in Settings and AFAIK it is not considered a brittle pattern. Explaining a bit more the rationale below:\n\nWhen unit testing a UI component, the C++ side of things is considered an external dependency and should not be tested along with the unit test. But, the calls that are made between this unit and the external world are part of the \"contract\" between these two systems, and therefore this test verifies that this unit adheres to the \"contract\". We don\u0027t expose an onReady-type Promise, because we are interested on explicitly validating that these calls to the \"external\" world happen and more specifically we can verify that they happen when expected (for example on startup, or when user clicks a button etc).\n\nIt\u0027s the responsibility of a different unit test (a C++ one) to verify that when those calls are made, the correct responses are sent back to JS, therefore in the JS unit test, we provide dummy responses, as necessary to trigger all the interesting codepaths.\n\nAlso worth noting that splitting the responsibilities of JS and C++ unit tests (and testing the communication layer from both sides separately) has been done with the motivation of reducing flakiness, not increasing it. I am interested to hear your thoughts (not necessarily in this context) if you think otherwise.",
+      "parentUuid": "b6a727ea_acfe6e51",
+      "revId": "f171d53f41f7eb1e509d6471d7e189b424999664",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "f81afc73_5505b978",
         "filename": "chrome/test/data/webui/extensions/extension_manager_unit_test.js",
         "patchSetId": 18
@@ -176,6 +194,24 @@
       "revId": "f171d53f41f7eb1e509d6471d7e189b424999664",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1020bec1_c9b48216",
+        "filename": "chrome/test/data/webui/extensions/extension_manager_unit_test.js",
+        "patchSetId": 18
+      },
+      "lineNbr": 91,
+      "author": {
+        "id": 1115893
+      },
+      "writtenOn": "2017-11-08T20:59:43Z",
+      "side": 1,
+      "message": "\u003e we have no end-to-end tests with real installed extensions that we try to manipulate.\n\nextensions_manager_tests.js still contains tests that contact chrome.developerPrivate. Same holds for other tests that extend CrExtensionsManagerTestWithMultipleExtensionTypesInstalled and CrExtensionsBrowserTestWithInstalledExtension, so we still have some end-to-end tests.\n\nHaving said that (also see my other comment about C++/JS testing separation), I\u0027d prefer having C++ unit tests like https://cs.chromium.org/search/?q\u003d_unittest.cc+file:%5Esrc/chrome/browser/ui/webui/settings/+package:%5Echromium$\u0026type\u003dcs, to test the C++ side of things, instead of relying on chrome/test/data/webui/* tests to do that.\n\nIn my ideal world there are:\n1) JS unit tests (do not talk to C++ at all)\n2) C++ unit tests (do not talk to JS at all)\n3) end-to-end tests (both sides talk to each other).\n\nEven though end-to-end tests can catch a certain class of errors not caught by the other two, they are harder to author and maintain. Examples scenarios that come to mind from Settings that are fairly hard to simulate in an end-to-end test: logged-in, multiple profiles, guest mode, detected corrupt profile, detected malware etc. Those are much easier to simulate in unit tests.\n\nIn my past experience with WebUI, developers are more likely to write unit tests than end-to-end tests, especially when writing unit tests is made fairly easy (like providing canonical ways of mocking, e.g TestBrowserProxy).",
+      "parentUuid": "1cc174d4_f94ae0b6",
+      "revId": "f171d53f41f7eb1e509d6471d7e189b424999664",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
