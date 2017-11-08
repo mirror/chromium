@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "4a479cf3_300f9a3b",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 5
+      },
+      "lineNbr": 10,
+      "author": {
+        "id": 1152109
+      },
+      "writtenOn": "2017-11-08T00:53:56Z",
+      "side": 1,
+      "message": "Done. Used more specific text.",
+      "parentUuid": "c0a6feaa_0ff60c81",
+      "range": {
+        "startLine": 10,
+        "startChar": 69,
+        "endLine": 10,
+        "endChar": 0
+      },
+      "revId": "d7b3a5677d9458e1feac1655b6e5d3ce549738ae",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "25834ce5_11da853b",
         "filename": "/COMMIT_MSG",
         "patchSetId": 5
@@ -36,6 +60,30 @@
       "writtenOn": "2017-11-07T00:06:29Z",
       "side": 1,
       "message": "This third point seems rather different in scope from the first two, which seem to be primarily refactoring. Does this add any new functionality? It seems that you\u0027re providing an ICE config URL where previously none was set. What are the ramifications of that?",
+      "range": {
+        "startLine": 13,
+        "startChar": 26,
+        "endLine": 13,
+        "endChar": 0
+      },
+      "revId": "d7b3a5677d9458e1feac1655b6e5d3ce549738ae",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a1357c97_18b41d86",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 5
+      },
+      "lineNbr": 13,
+      "author": {
+        "id": 1152109
+      },
+      "writtenOn": "2017-11-08T00:53:56Z",
+      "side": 1,
+      "message": "\u003e This third point seems rather different in scope from the first two, which seem to be primarily refactoring.\n\nThis is basically just for me to test the new code easier. It\u0027s used when WebRTC is on. I can move it to a separate CL if you like..\n\n\u003e Does this add any new functionality? It seems that you\u0027re providing an ICE config URL where previously none was set. What are the ramifications of that?\n\nThis is actually fixing an existing bug. For WebRTC you\u0027ll need to provide an ICE config URL and authenticator in order to fetch things like the list of STUN and TURN servers. The host already made this change:\n\nhttps://cs.chromium.org/chromium/src/remoting/host/remoting_me2me_host.cc?l\u003d1520\u0026rcl\u003d881c1b3d573be9408bce097ca4bd919f87fbe5a3\n\nWhile the client hadn\u0027t for some reason. Without this change the WebRTC protocol simply doesn\u0027t work on STUN and relay connection.",
+      "parentUuid": "25834ce5_11da853b",
       "range": {
         "startLine": 13,
         "startChar": 26,
@@ -71,6 +119,30 @@
     },
     {
       "key": {
+        "uuid": "83194e88_390f6860",
+        "filename": "remoting/client/oauth_token_getter_proxy.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 13,
+      "author": {
+        "id": 1152109
+      },
+      "writtenOn": "2017-11-08T00:53:56Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "10eeca20_4a32e25f",
+      "range": {
+        "startLine": 13,
+        "startChar": 35,
+        "endLine": 13,
+        "endChar": 0
+      },
+      "revId": "d7b3a5677d9458e1feac1655b6e5d3ce549738ae",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "6ad10550_f3c77782",
         "filename": "remoting/client/oauth_token_getter_proxy.cc",
         "patchSetId": 5
@@ -94,6 +166,30 @@
     },
     {
       "key": {
+        "uuid": "8bc02522_0418c968",
+        "filename": "remoting/client/oauth_token_getter_proxy.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 109,
+      "author": {
+        "id": 1152109
+      },
+      "writtenOn": "2017-11-08T00:53:56Z",
+      "side": 1,
+      "message": "No. |task_runner_| is to run tasks on the OAuthTokenGetter being proxied, while |current_task_runner_| is for replying back to |on_access_token|.\n\nI just renamed it to |task_runner_to_reply| to avoid confusion.",
+      "parentUuid": "6ad10550_f3c77782",
+      "range": {
+        "startLine": 109,
+        "startChar": 62,
+        "endLine": 109,
+        "endChar": 0
+      },
+      "revId": "d7b3a5677d9458e1feac1655b6e5d3ce549738ae",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "0f783516_81f1a86a",
         "filename": "remoting/ios/facade/ios_oauth_token_getter.mm",
         "patchSetId": 5
@@ -114,6 +210,30 @@
       "revId": "d7b3a5677d9458e1feac1655b6e5d3ce549738ae",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "345d51c0_646fb5ac",
+        "filename": "remoting/ios/facade/ios_oauth_token_getter.mm",
+        "patchSetId": 5
+      },
+      "lineNbr": 48,
+      "author": {
+        "id": 1152109
+      },
+      "writtenOn": "2017-11-08T00:53:56Z",
+      "side": 1,
+      "message": "The SSO implementation doesn\u0027t seem to cache the the token while the Chromium implementation (looks like Android also) does. TBH we never call InvalidateCache() in mobile clients and we assume access code never expires. Just filed bug 782071.",
+      "parentUuid": "0f783516_81f1a86a",
+      "range": {
+        "startLine": 48,
+        "startChar": 19,
+        "endLine": 48,
+        "endChar": 0
+      },
+      "revId": "d7b3a5677d9458e1feac1655b6e5d3ce549738ae",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
