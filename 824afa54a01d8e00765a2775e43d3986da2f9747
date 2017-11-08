@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "fa8f7f84_bf3ae158",
+        "filename": "cc/tiles/gpu_image_decode_cache.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 505,
+      "author": {
+        "id": 1002410
+      },
+      "writtenOn": "2017-11-08T23:03:30Z",
+      "side": 1,
+      "message": "Do we really need 100 buckets for this histogram?  I would guess that 50, or perhaps even 20, would suffice, given how small the range is.  WDYT?",
+      "range": {
+        "startLine": 505,
+        "startChar": 45,
+        "endLine": 505,
+        "endChar": 48
+      },
+      "revId": "824afa54a01d8e00765a2775e43d3986da2f9747",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "832e5ce5_a9f2ee60",
+        "filename": "cc/tiles/software_image_decode_cache.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 227,
+      "author": {
+        "id": 1002410
+      },
+      "writtenOn": "2017-11-08T23:03:30Z",
+      "side": 1,
+      "message": "(Same question applies here, too.)",
+      "range": {
+        "startLine": 227,
+        "startChar": 45,
+        "endLine": 227,
+        "endChar": 48
+      },
+      "revId": "824afa54a01d8e00765a2775e43d3986da2f9747",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
