@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "f4714adc_07e4ffbf",
+        "filename": "third_party/WebKit/LayoutTests/http/tests/devtools/network/network-xhr-replay-expected.txt",
+        "patchSetId": 1
+      },
+      "lineNbr": 1,
+      "author": {
+        "id": 1165714
+      },
+      "writtenOn": "2017-11-08T23:31:30Z",
+      "side": 0,
+      "message": "Not dumping console messages b/c it\u0027s noisy:\n\n```\n53\tVM:5 XHR loaded: 1\n54\tVM:31 [Deprecation] Synchronous XMLHttpRequest on the main thread is deprecated because of its detrimental effects to the end user\u0027s experience. For more help, check https://xhr.spec.whatwg.org/.\n55\tmakeXHR @ VM:31\n56\tmakeXHRForJSONArguments @ VM:43\n57\t(anonymous) @ VM:1\n58\tVM:5 XHR loaded: 2\n59\tVM:5 XHR loaded: 3\n60\tVM:5 XHR loaded: 4\n61\t7Failed to load resource: the server responded with a status of 404 (Not Found)\n62\tVM:5 XHR loaded: 5\n63\tVM:5 XHR loaded: 6\n64\tVM:5 XHR loaded: 7\n65\tVM:5 XHR loaded: 8\n```",
+      "revId": "966b76361c548f58c038efd501e70260b9294e86",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
