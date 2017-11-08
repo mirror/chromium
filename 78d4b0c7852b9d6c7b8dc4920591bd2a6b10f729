@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "59e6a5e1_f1135e12",
+        "filename": "third_party/WebKit/LayoutTests/vr/latest/vrWebGLLayer_opaque_framebuffer.html",
+        "patchSetId": 2
+      },
+      "lineNbr": 14,
+      "author": {
+        "id": 1163549
+      },
+      "writtenOn": "2017-11-08T00:16:40Z",
+      "side": 1,
+      "message": "I don\u0027t see anything immediately wrong with this test, although someone who\u0027s more familiar with WebGL should definitely take a look, as well.",
+      "range": {
+        "startLine": 14,
+        "startChar": 0,
+        "endLine": 14,
+        "endChar": 15
+      },
+      "revId": "78d4b0c7852b9d6c7b8dc4920591bd2a6b10f729",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "097c3b35_856e0f9d",
+        "filename": "third_party/WebKit/LayoutTests/vr/latest/vrWebGLLayer_opaque_framebuffer.html",
+        "patchSetId": 2
+      },
+      "lineNbr": 68,
+      "author": {
+        "id": 1163549
+      },
+      "writtenOn": "2017-11-08T00:16:40Z",
+      "side": 1,
+      "message": "Nit: Declare this outside the step scope and use for both this step and the next?",
+      "range": {
+        "startLine": 68,
+        "startChar": 8,
+        "endLine": 68,
+        "endChar": 13
+      },
+      "revId": "78d4b0c7852b9d6c7b8dc4920591bd2a6b10f729",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
