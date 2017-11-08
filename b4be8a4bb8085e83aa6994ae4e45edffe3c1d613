@@ -1,0 +1,73 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "3c596209_6f9cb936",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/tabmodel/TabModelImpl.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 788,
+      "author": {
+        "id": 1116043
+      },
+      "writtenOn": "2017-11-08T18:46:00Z",
+      "side": 1,
+      "message": "why add this?  doesn\u0027t look to be used anywhere.  The saver is more of a selector construct as well, so I\u0027d prefer not to expose that on the individual models if we can avoid it.",
+      "range": {
+        "startLine": 788,
+        "startChar": 16,
+        "endLine": 788,
+        "endChar": 45
+      },
+      "revId": "b4be8a4bb8085e83aa6994ae4e45edffe3c1d613",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "98db31ec_fc2ade82",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/tabmodel/TabPersistentStore.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 139,
+      "author": {
+        "id": 1116043
+      },
+      "writtenOn": "2017-11-08T18:46:00Z",
+      "side": 1,
+      "message": "I\u0027d be tempted to just broadcast the metadata object instead of the individual lists.",
+      "range": {
+        "startLine": 139,
+        "startChar": 50,
+        "endLine": 139,
+        "endChar": 0
+      },
+      "revId": "b4be8a4bb8085e83aa6994ae4e45edffe3c1d613",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b2e9c67b_84268a4a",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/tabmodel/TabPersistentStore.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 1169,
+      "author": {
+        "id": 1116043
+      },
+      "writtenOn": "2017-11-08T18:46:00Z",
+      "side": 1,
+      "message": "for public fields, no leading m prefix",
+      "range": {
+        "startLine": 1169,
+        "startChar": 28,
+        "endLine": 1169,
+        "endChar": 37
+      },
+      "revId": "b4be8a4bb8085e83aa6994ae4e45edffe3c1d613",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
