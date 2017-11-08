@@ -191,6 +191,10 @@ body {
   opacity: 0.25;
 }
 
+.keyboard-overlay-key.smaller-font-size {
+ font-size: 65%
+}
+
 #instructions:focus {
   outline: none;
 }
