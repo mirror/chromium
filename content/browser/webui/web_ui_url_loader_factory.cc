@@ -207,8 +207,9 @@ void StartURLLoader(const ResourceRequest& request,
 class WebUIURLLoaderFactory : public mojom::URLLoaderFactory,
                               public FrameTreeNode::Observer {
  public:
-  WebUIURLLoaderFactory(FrameTreeNode* ftn)
+  WebUIURLLoaderFactory(FrameTreeNode* ftn, const std::string& scheme)
       : frame_tree_node_id_(ftn->frame_tree_node_id()),
+        scheme_(scheme),
         storage_partition_(static_cast<StoragePartitionImpl*>(
             ftn->current_frame_host()->GetProcess()->GetStoragePartition())) {
     ftn->AddObserver(this);
@@ -232,6 +233,12 @@ class WebUIURLLoaderFactory : public mojom::URLLoaderFactory,
                             const net::MutableNetworkTrafficAnnotationTag&
                                 traffic_annotation) override {
     DCHECK_CURRENTLY_ON(BrowserThread::UI);
+
+    if (request.url.scheme() != scheme_) {
+      NOTREACHED();
+      client->OnComplete(ResourceRequestCompletionStatus(net::ERR_FAILED));
+    }
+
     if (request.url.host_piece() == kChromeUINetworkViewCacheHost) {
       storage_partition_->GetNetworkContext()->HandleViewCacheRequest(
           request.url, std::move(client));
@@ -276,8 +283,11 @@ class WebUIURLLoaderFactory : public mojom::URLLoaderFactory,
     g_web_ui_url_loader_factories.Get().erase(frame_tree_node_id_);
   }
 
+  const std::string& scheme() const { return scheme_; }
+
  private:
   int frame_tree_node_id_;
+  std::string scheme_;
   StoragePartitionImpl* storage_partition_;
   mojo::BindingSet<mojom::URLLoaderFactory> loader_factory_bindings_;
 
@@ -286,11 +296,14 @@ class WebUIURLLoaderFactory : public mojom::URLLoaderFactory,
 
 }  // namespace
 
-mojom::URLLoaderFactoryPtr CreateWebUIURLLoader(FrameTreeNode* node) {
+mojom::URLLoaderFactoryPtr CreateWebUIURLLoader(FrameTreeNode* node,
+                                                const std::string& scheme) {
   int ftn_id = node->frame_tree_node_id();
-  if (g_web_ui_url_loader_factories.Get()[ftn_id].get() == nullptr)
+  if (g_web_ui_url_loader_factories.Get()[ftn_id].get() == nullptr ||
+      g_web_ui_url_loader_factories.Get()[ftn_id]->scheme() != scheme) {
     g_web_ui_url_loader_factories.Get()[ftn_id] =
-        std::make_unique<WebUIURLLoaderFactory>(node);
+        std::make_unique<WebUIURLLoaderFactory>(node, scheme);
+  }
   return g_web_ui_url_loader_factories.Get()[ftn_id]->CreateBinding();
 }
 
