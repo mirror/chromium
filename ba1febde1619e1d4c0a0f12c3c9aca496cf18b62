@@ -97,6 +97,30 @@
     },
     {
       "key": {
+        "uuid": "53102b86_61a3778c",
+        "filename": "ios/chrome/browser/ui/browser_view_controller.mm",
+        "patchSetId": 5
+      },
+      "lineNbr": 2009,
+      "author": {
+        "id": 1192584
+      },
+      "writtenOn": "2017-11-08T22:29:27Z",
+      "side": 1,
+      "message": "Thanks Mark, this makes sense.",
+      "parentUuid": "0310a1ac_3ae11f65",
+      "range": {
+        "startLine": 2009,
+        "startChar": 0,
+        "endLine": 2009,
+        "endChar": 70
+      },
+      "revId": "ba1febde1619e1d4c0a0f12c3c9aca496cf18b62",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "f386def6_0b04248e",
         "filename": "ios/chrome/browser/ui/browser_view_controller.mm",
         "patchSetId": 5
@@ -132,6 +156,30 @@
       "side": 1,
       "message": "I share your instincts :-). We\u0027ve discussed this a little in person, but to document:\n\nWhen I started this refactor I tried to move away from notifications to have a single presentation delegate for the coordinator with four willShow/didShow/willHide/didHide methods. \n\nThere are two main reasons I didn\u0027t finish with that approach:\n\n1. There are two objects which directly configure the tools popup when they are notified about the presentation of its presentation: the BVC and the ToolsController.\n\nBoth need to do important things when they hear about a popup coming or going:\n\n• BVC configures other views, such as dismissing omnibox UI or ending editing states\n• ToolbarController sets the visibility of the tools button so that it matches the presentation of the tools popup.\n\nOne thought is to combine these into one delegate object, but the ToolbarController cannot be it because it would need information from the BVC which is higher in the hierarchy and it seems counter-productive to make a change that more tightly couples those classes. \n\nBVC is a better choice, we will need to expose a button from ToolbarController to the BVC, a button which is currently not a publicly exposed property. This seems like a small tradeoff to have all configuration code in one place, and so I have done this in the next revision.\n\n2. We already have other parts of the application dependent on didShow/didHide notifications. For example the FullScreen and Overscroll components (I have just renamed the notifications slightly in this refactor, but they are not a new concept); so we cannot remove the notifications altogether without a more significant refactor, and it seems to me to be a bad tradeoff to implement both a delegate pattern and have notifications for presentation events if we can help it.\n\nLet me know if I\u0027ve misunderstood anything here!",
       "parentUuid": "f386def6_0b04248e",
+      "range": {
+        "startLine": 2018,
+        "startChar": 3,
+        "endLine": 2018,
+        "endChar": 39
+      },
+      "revId": "ba1febde1619e1d4c0a0f12c3c9aca496cf18b62",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "b8ab63bd_5bb83ba7",
+        "filename": "ios/chrome/browser/ui/browser_view_controller.mm",
+        "patchSetId": 5
+      },
+      "lineNbr": 2018,
+      "author": {
+        "id": 1192584
+      },
+      "writtenOn": "2017-11-08T22:29:27Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "3bdca273_615d19cb",
       "range": {
         "startLine": 2018,
         "startChar": 3,
@@ -215,6 +263,24 @@
     },
     {
       "key": {
+        "uuid": "5b1cb233_00c03599",
+        "filename": "ios/chrome/browser/ui/browser_view_controller.mm",
+        "patchSetId": 5
+      },
+      "lineNbr": 2020,
+      "author": {
+        "id": 1192584
+      },
+      "writtenOn": "2017-11-08T22:29:27Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "dd48b92d_7171ed78",
+      "revId": "ba1febde1619e1d4c0a0f12c3c9aca496cf18b62",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "cefe5f10_57cf0143",
         "filename": "ios/chrome/browser/ui/browser_view_controller.mm",
         "patchSetId": 5
@@ -286,6 +352,30 @@
     },
     {
       "key": {
+        "uuid": "e9d92e0d_e421bea5",
+        "filename": "ios/chrome/browser/ui/browser_view_controller.mm",
+        "patchSetId": 5
+      },
+      "lineNbr": 2149,
+      "author": {
+        "id": 1192584
+      },
+      "writtenOn": "2017-11-08T22:29:27Z",
+      "side": 1,
+      "message": "Unfortunately it\u0027s not that easy. While we do have a single Popup configuration object, there are other elements of configuration that are not included in that object. The Coordinator uses the configuration protcol to query multiple methods to update the state of various buttons. The underlying configuration of the menu, i.e. what items are shown are not RE-configurable at all, so it\u0027s not possible to have a one-shot method like you describe. This \u0027updateConfiguration\u0027 method prompts the coordinator to poll all its sources of configuration, which may or may not be implemented.",
+      "parentUuid": "4e3f1f59_f2d513f6",
+      "range": {
+        "startLine": 2149,
+        "startChar": 26,
+        "endLine": 2149,
+        "endChar": 45
+      },
+      "revId": "ba1febde1619e1d4c0a0f12c3c9aca496cf18b62",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "727ad104_f07137ea",
         "filename": "ios/chrome/browser/ui/browser_view_controller.mm",
         "patchSetId": 5
@@ -345,6 +435,30 @@
       "side": 1,
       "message": "I think this has to stay a dispatcher call now that ToolBarCoordinator owns ToolsMenuCoordinator? (Is this an example of Dispatcher being useful?)",
       "parentUuid": "bfeb0ff0_d743537d",
+      "range": {
+        "startLine": 2179,
+        "startChar": 2,
+        "endLine": 2179,
+        "endChar": 38
+      },
+      "revId": "ba1febde1619e1d4c0a0f12c3c9aca496cf18b62",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "5623778b_a0504464",
+        "filename": "ios/chrome/browser/ui/browser_view_controller.mm",
+        "patchSetId": 5
+      },
+      "lineNbr": 2179,
+      "author": {
+        "id": 1192584
+      },
+      "writtenOn": "2017-11-08T22:29:27Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "9e1cc0ee_7691af7d",
       "range": {
         "startLine": 2179,
         "startChar": 2,

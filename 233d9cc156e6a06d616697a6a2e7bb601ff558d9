@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "c1661643_1b7ebc74",
+        "filename": "ios/chrome/browser/ui/browser_view_controller.mm",
+        "patchSetId": 8
+      },
+      "lineNbr": 4220,
+      "author": {
+        "id": 1192584
+      },
+      "writtenOn": "2017-11-08T22:29:27Z",
+      "side": 1,
+      "message": "Thanks, just needs to hop under the coordinator pragma.",
+      "parentUuid": "d86c7daa_54e3b4e2",
+      "revId": "233d9cc156e6a06d616697a6a2e7bb601ff558d9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "65956a56_f728e05c",
         "filename": "ios/chrome/browser/ui/browser_view_controller.mm",
         "patchSetId": 8
@@ -39,6 +57,30 @@
       "revId": "233d9cc156e6a06d616697a6a2e7bb601ff558d9",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "990716b2_7106100f",
+        "filename": "ios/chrome/browser/ui/browser_view_controller.mm",
+        "patchSetId": 8
+      },
+      "lineNbr": 4271,
+      "author": {
+        "id": 1192584
+      },
+      "writtenOn": "2017-11-08T22:29:27Z",
+      "side": 1,
+      "message": "You\u0027re right, great catch - this would have the same behavior as before but be very fragile to future changes. I will put this in prepareForToolsMenuPresentationByCoordinator:. Thanks!",
+      "parentUuid": "65956a56_f728e05c",
+      "range": {
+        "startLine": 4271,
+        "startChar": 10,
+        "endLine": 4271,
+        "endChar": 22
+      },
+      "revId": "233d9cc156e6a06d616697a6a2e7bb601ff558d9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -65,6 +107,30 @@
     },
     {
       "key": {
+        "uuid": "b52219b3_c14ea8ff",
+        "filename": "ios/chrome/browser/ui/commands/browser_commands.h",
+        "patchSetId": 8
+      },
+      "lineNbr": 16,
+      "author": {
+        "id": 1192584
+      },
+      "writtenOn": "2017-11-08T22:29:27Z",
+      "side": 1,
+      "message": "YES!!!",
+      "parentUuid": "f477a48d_aef62959",
+      "range": {
+        "startLine": 16,
+        "startChar": 46,
+        "endLine": 16,
+        "endChar": 51
+      },
+      "revId": "233d9cc156e6a06d616697a6a2e7bb601ff558d9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "c1ac60a3_0d1dc917",
         "filename": "ios/chrome/browser/ui/commands/tools_popup_commands.h",
         "patchSetId": 8
@@ -85,6 +151,30 @@
       "revId": "233d9cc156e6a06d616697a6a2e7bb601ff558d9",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c85711e1_218a8328",
+        "filename": "ios/chrome/browser/ui/commands/tools_popup_commands.h",
+        "patchSetId": 8
+      },
+      "lineNbr": 10,
+      "author": {
+        "id": 1192584
+      },
+      "writtenOn": "2017-11-08T22:29:27Z",
+      "side": 1,
+      "message": "👍",
+      "parentUuid": "c1ac60a3_0d1dc917",
+      "range": {
+        "startLine": 10,
+        "startChar": 10,
+        "endLine": 10,
+        "endChar": 28
+      },
+      "revId": "233d9cc156e6a06d616697a6a2e7bb601ff558d9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -111,6 +201,30 @@
     },
     {
       "key": {
+        "uuid": "564c4c19_4e5540d8",
+        "filename": "ios/chrome/browser/ui/popup_menu/popup_menu_controller.mm",
+        "patchSetId": 8
+      },
+      "lineNbr": 187,
+      "author": {
+        "id": 1192584
+      },
+      "writtenOn": "2017-11-08T22:29:27Z",
+      "side": 1,
+      "message": "👍",
+      "parentUuid": "fc904d8c_b3b2b128",
+      "range": {
+        "startLine": 187,
+        "startChar": 28,
+        "endLine": 187,
+        "endChar": 42
+      },
+      "revId": "233d9cc156e6a06d616697a6a2e7bb601ff558d9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "ee393270_b941f1a0",
         "filename": "ios/chrome/browser/ui/stack_view/stack_view_controller.mm",
         "patchSetId": 8
@@ -131,6 +245,30 @@
       "revId": "233d9cc156e6a06d616697a6a2e7bb601ff558d9",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "180ca372_0cbb7279",
+        "filename": "ios/chrome/browser/ui/stack_view/stack_view_controller.mm",
+        "patchSetId": 8
+      },
+      "lineNbr": 2760,
+      "author": {
+        "id": 1192584
+      },
+      "writtenOn": "2017-11-08T22:29:27Z",
+      "side": 1,
+      "message": "👍",
+      "parentUuid": "ee393270_b941f1a0",
+      "range": {
+        "startLine": 2759,
+        "startChar": 0,
+        "endLine": 2760,
+        "endChar": 40
+      },
+      "revId": "233d9cc156e6a06d616697a6a2e7bb601ff558d9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -157,6 +295,30 @@
     },
     {
       "key": {
+        "uuid": "34a5b9a7_f7826ee5",
+        "filename": "ios/chrome/browser/ui/stack_view/stack_view_controller_private.h",
+        "patchSetId": 8
+      },
+      "lineNbr": 11,
+      "author": {
+        "id": 1192584
+      },
+      "writtenOn": "2017-11-08T22:29:27Z",
+      "side": 1,
+      "message": "Good catch, thanks!",
+      "parentUuid": "dce717a2_a17d75d9",
+      "range": {
+        "startLine": 11,
+        "startChar": 26,
+        "endLine": 11,
+        "endChar": 47
+      },
+      "revId": "233d9cc156e6a06d616697a6a2e7bb601ff558d9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "ffd152f0_832271c7",
         "filename": "ios/chrome/browser/ui/toolbar/toolbar_controller.h",
         "patchSetId": 8
@@ -177,6 +339,30 @@
       "revId": "233d9cc156e6a06d616697a6a2e7bb601ff558d9",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0cb3f564_beef5ceb",
+        "filename": "ios/chrome/browser/ui/toolbar/toolbar_controller.h",
+        "patchSetId": 8
+      },
+      "lineNbr": 29,
+      "author": {
+        "id": 1192584
+      },
+      "writtenOn": "2017-11-08T22:29:27Z",
+      "side": 1,
+      "message": "You got it. I\u0027ve changed the protocol naming.",
+      "parentUuid": "ffd152f0_832271c7",
+      "range": {
+        "startLine": 29,
+        "startChar": 15,
+        "endLine": 29,
+        "endChar": 55
+      },
+      "revId": "233d9cc156e6a06d616697a6a2e7bb601ff558d9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -203,6 +389,30 @@
     },
     {
       "key": {
+        "uuid": "27b024b1_de80f7dd",
+        "filename": "ios/chrome/browser/ui/toolbar/toolbar_controller.h",
+        "patchSetId": 8
+      },
+      "lineNbr": 48,
+      "author": {
+        "id": 1192584
+      },
+      "writtenOn": "2017-11-08T22:29:27Z",
+      "side": 1,
+      "message": "You got it, this is now ToolsMenuPresentationStateProvider.",
+      "parentUuid": "36926040_29f88c56",
+      "range": {
+        "startLine": 48,
+        "startChar": 7,
+        "endLine": 48,
+        "endChar": 52
+      },
+      "revId": "233d9cc156e6a06d616697a6a2e7bb601ff558d9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "0d482df0_5b29731b",
         "filename": "ios/chrome/browser/ui/toolbar/toolbar_controller.mm",
         "patchSetId": 8
@@ -226,6 +436,30 @@
     },
     {
       "key": {
+        "uuid": "fcf93b57_92226326",
+        "filename": "ios/chrome/browser/ui/toolbar/toolbar_controller.mm",
+        "patchSetId": 8
+      },
+      "lineNbr": 84,
+      "author": {
+        "id": 1192584
+      },
+      "writtenOn": "2017-11-08T22:29:27Z",
+      "side": 1,
+      "message": "Yes, I think that makes sense here - I\u0027ve changed the property too.",
+      "parentUuid": "0d482df0_5b29731b",
+      "range": {
+        "startLine": 84,
+        "startChar": 0,
+        "endLine": 84,
+        "endChar": 76
+      },
+      "revId": "233d9cc156e6a06d616697a6a2e7bb601ff558d9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "eb5b7520_ce231e1e",
         "filename": "ios/chrome/browser/ui/tools_menu/tools_menu_constants.h",
         "patchSetId": 8
@@ -246,6 +480,30 @@
       "revId": "233d9cc156e6a06d616697a6a2e7bb601ff558d9",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "30bc5c04_77fe28b0",
+        "filename": "ios/chrome/browser/ui/tools_menu/tools_menu_constants.h",
+        "patchSetId": 8
+      },
+      "lineNbr": 24,
+      "author": {
+        "id": 1192584
+      },
+      "writtenOn": "2017-11-08T22:29:27Z",
+      "side": 1,
+      "message": "Makes sense, thanks :-)\n\nI will rename these protocols to remove the \u0027Coordinator\u0027 part.",
+      "parentUuid": "eb5b7520_ce231e1e",
+      "range": {
+        "startLine": 24,
+        "startChar": 1,
+        "endLine": 24,
+        "endChar": 9
+      },
+      "revId": "233d9cc156e6a06d616697a6a2e7bb601ff558d9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -296,6 +554,30 @@
     },
     {
       "key": {
+        "uuid": "f30c043e_332b0768",
+        "filename": "ios/chrome/browser/ui/tools_menu/tools_menu_constants.h",
+        "patchSetId": 8
+      },
+      "lineNbr": 29,
+      "author": {
+        "id": 1192584
+      },
+      "writtenOn": "2017-11-08T22:29:27Z",
+      "side": 1,
+      "message": "Done! In discussion with Sergio I\u0027ve put these in a \u0027public\u0027 subdirectory - not sure whether this should be \u0027requirements\u0027. Let me know and I can easily change it.\n\nThanks!",
+      "parentUuid": "9535b8a7_9b4a6950",
+      "range": {
+        "startLine": 21,
+        "startChar": 0,
+        "endLine": 29,
+        "endChar": 4
+      },
+      "revId": "233d9cc156e6a06d616697a6a2e7bb601ff558d9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "b70125f1_c97d5490",
         "filename": "ios/chrome/browser/ui/tools_menu/tools_menu_constants.h",
         "patchSetId": 8
@@ -316,6 +598,30 @@
       "revId": "233d9cc156e6a06d616697a6a2e7bb601ff558d9",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "983ffb4e_99353a39",
+        "filename": "ios/chrome/browser/ui/tools_menu/tools_menu_constants.h",
+        "patchSetId": 8
+      },
+      "lineNbr": 34,
+      "author": {
+        "id": 1192584
+      },
+      "writtenOn": "2017-11-08T22:29:27Z",
+      "side": 1,
+      "message": "Done, I\u0027ve changed this to ToolsMenuPresentationStateProvider.\n\nThis is needed by some components in the app that want to know whether the tools menu is showing at any point in time. Originally I had this just declared on the ToolsMenuCoordinator, and interested parties had access to that and would ask it. However I had some feedback that we should decouple this further and make that link abstract through a protocol so that we could limit exposure of the coordinator class.\n\nLet me know if that doesn\u0027t make sense!",
+      "parentUuid": "b70125f1_c97d5490",
+      "range": {
+        "startLine": 34,
+        "startChar": 10,
+        "endLine": 34,
+        "endChar": 55
+      },
+      "revId": "233d9cc156e6a06d616697a6a2e7bb601ff558d9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -342,6 +648,30 @@
     },
     {
       "key": {
+        "uuid": "59a6507c_3fe480c6",
+        "filename": "ios/chrome/browser/ui/tools_menu/tools_menu_coordinator.mm",
+        "patchSetId": 8
+      },
+      "lineNbr": 18,
+      "author": {
+        "id": 1192584
+      },
+      "writtenOn": "2017-11-08T22:29:27Z",
+      "side": 1,
+      "message": "Whups, thanks!",
+      "parentUuid": "f680241c_2763d37e",
+      "range": {
+        "startLine": 18,
+        "startChar": 24,
+        "endLine": 18,
+        "endChar": 45
+      },
+      "revId": "233d9cc156e6a06d616697a6a2e7bb601ff558d9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "e4ce48fa_9e4092bb",
         "filename": "ios/chrome/browser/ui/tools_menu/tools_menu_coordinator.mm",
         "patchSetId": 8
@@ -362,6 +692,30 @@
       "revId": "233d9cc156e6a06d616697a6a2e7bb601ff558d9",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "bf21b608_36c90150",
+        "filename": "ios/chrome/browser/ui/tools_menu/tools_menu_coordinator.mm",
+        "patchSetId": 8
+      },
+      "lineNbr": 56,
+      "author": {
+        "id": 1192584
+      },
+      "writtenOn": "2017-11-08T22:29:27Z",
+      "side": 1,
+      "message": "👍 You got it!",
+      "parentUuid": "e4ce48fa_9e4092bb",
+      "range": {
+        "startLine": 44,
+        "startChar": 0,
+        "endLine": 56,
+        "endChar": 1
+      },
+      "revId": "233d9cc156e6a06d616697a6a2e7bb601ff558d9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -388,6 +742,30 @@
     },
     {
       "key": {
+        "uuid": "a260ba63_d12695d5",
+        "filename": "ios/chrome/browser/ui/tools_menu/tools_menu_coordinator.mm",
+        "patchSetId": 8
+      },
+      "lineNbr": 60,
+      "author": {
+        "id": 1192584
+      },
+      "writtenOn": "2017-11-08T22:29:27Z",
+      "side": 1,
+      "message": "Yes this could be removed to directly use the instance variable, thanks!",
+      "parentUuid": "e2378a33_d67b2d65",
+      "range": {
+        "startLine": 60,
+        "startChar": 33,
+        "endLine": 60,
+        "endChar": 74
+      },
+      "revId": "233d9cc156e6a06d616697a6a2e7bb601ff558d9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "0f24b274_d9b6916c",
         "filename": "ios/chrome/browser/ui/tools_menu/tools_menu_coordinator.mm",
         "patchSetId": 8
@@ -408,6 +786,30 @@
       "revId": "233d9cc156e6a06d616697a6a2e7bb601ff558d9",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f6b8acdf_23c503ed",
+        "filename": "ios/chrome/browser/ui/tools_menu/tools_menu_coordinator.mm",
+        "patchSetId": 8
+      },
+      "lineNbr": 133,
+      "author": {
+        "id": 1192584
+      },
+      "writtenOn": "2017-11-08T22:29:27Z",
+      "side": 1,
+      "message": "Sure, I\u0027ve removed the sending object from all of these notifications. It was in there originally because we have multiple tools menu coordinators and it may be that we want to only listen to notifications from one (e.g. ToolbarCoordinator listens to its, and StackViewController likewise).\n\nThat functionality isn\u0027t used so it seems ok to remove this.",
+      "parentUuid": "0f24b274_d9b6916c",
+      "range": {
+        "startLine": 131,
+        "startChar": 2,
+        "endLine": 133,
+        "endChar": 31
+      },
+      "revId": "233d9cc156e6a06d616697a6a2e7bb601ff558d9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -434,6 +836,30 @@
     },
     {
       "key": {
+        "uuid": "32e4cd90_8e2eec06",
+        "filename": "ios/chrome/browser/ui/tools_menu/tools_popup_controller.h",
+        "patchSetId": 8
+      },
+      "lineNbr": 35,
+      "author": {
+        "id": 1192584
+      },
+      "writtenOn": "2017-11-08T22:29:27Z",
+      "side": 1,
+      "message": "👍",
+      "parentUuid": "6a0e510d_bd54647c",
+      "range": {
+        "startLine": 35,
+        "startChar": 33,
+        "endLine": 35,
+        "endChar": 47
+      },
+      "revId": "233d9cc156e6a06d616697a6a2e7bb601ff558d9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "c8b29808_3f7c547f",
         "filename": "ios/chrome/browser/ui/tools_menu/tools_popup_controller.mm",
         "patchSetId": 8
@@ -454,6 +880,30 @@
       "revId": "233d9cc156e6a06d616697a6a2e7bb601ff558d9",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "229e468a_9ee10c74",
+        "filename": "ios/chrome/browser/ui/tools_menu/tools_popup_controller.mm",
+        "patchSetId": 8
+      },
+      "lineNbr": 53,
+      "author": {
+        "id": 1192584
+      },
+      "writtenOn": "2017-11-08T22:29:27Z",
+      "side": 1,
+      "message": "I didn\u0027t like it either :-).\n\nThis is just how the current implementation works, I renamed the initializer so it was clear what would happen!\n\nWould you be happy if I just took a bug to change how this works separately?",
+      "parentUuid": "c8b29808_3f7c547f",
+      "range": {
+        "startLine": 53,
+        "startChar": 0,
+        "endLine": 53,
+        "endChar": 31
+      },
+      "revId": "233d9cc156e6a06d616697a6a2e7bb601ff558d9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }

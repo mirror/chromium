@@ -336,6 +336,30 @@
     },
     {
       "key": {
+        "uuid": "954ec756_4118e926",
+        "filename": "ios/chrome/browser/ui/tools_menu/BUILD.gn",
+        "patchSetId": 7
+      },
+      "lineNbr": 17,
+      "author": {
+        "id": 1192584
+      },
+      "writtenOn": "2017-11-08T22:29:27Z",
+      "side": 1,
+      "message": "Done, thank you!",
+      "parentUuid": "bca63c3c_b8316fc2",
+      "range": {
+        "startLine": 17,
+        "startChar": 42,
+        "endLine": 17,
+        "endChar": 0
+      },
+      "revId": "be11233f96436a2e0f8d2ffbb6df7124bfcbc08e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "25c2eaa2_eb884388",
         "filename": "ios/chrome/browser/ui/tools_menu/tools_menu_configuration_visibility_protocol.h",
         "patchSetId": 7
@@ -477,6 +501,30 @@
     },
     {
       "key": {
+        "uuid": "c244e106_73c1fd5a",
+        "filename": "ios/chrome/browser/ui/tools_menu/tools_menu_configuration_visibility_protocol.h",
+        "patchSetId": 7
+      },
+      "lineNbr": 17,
+      "author": {
+        "id": 1192584
+      },
+      "writtenOn": "2017-11-08T22:29:27Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "f56f9e27_1ebbbda8",
+      "range": {
+        "startLine": 16,
+        "startChar": 0,
+        "endLine": 17,
+        "endChar": 27
+      },
+      "revId": "be11233f96436a2e0f8d2ffbb6df7124bfcbc08e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "83c454af_01130f24",
         "filename": "ios/chrome/browser/ui/tools_menu/tools_menu_coordinator.h",
         "patchSetId": 7
@@ -592,6 +640,30 @@
       "revId": "be11233f96436a2e0f8d2ffbb6df7124bfcbc08e",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ae929b18_76f8ee90",
+        "filename": "ios/chrome/browser/ui/tools_menu/tools_menu_coordinator.mm",
+        "patchSetId": 7
+      },
+      "lineNbr": 74,
+      "author": {
+        "id": 1192584
+      },
+      "writtenOn": "2017-11-08T22:29:27Z",
+      "side": 1,
+      "message": "Thanks! I\u0027ve actually removed this code now so this point doesn\u0027t apply, but interesting none the less. Is this is to force some kind of compile-time check for the cast? Thanks!",
+      "parentUuid": "fe34ab1c_0bc89892",
+      "range": {
+        "startLine": 73,
+        "startChar": 38,
+        "endLine": 74,
+        "endChar": 52
+      },
+      "revId": "be11233f96436a2e0f8d2ffbb6df7124bfcbc08e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
