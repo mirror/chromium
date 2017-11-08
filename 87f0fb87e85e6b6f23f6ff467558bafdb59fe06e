@@ -72,6 +72,24 @@
     },
     {
       "key": {
+        "uuid": "06b8196b_834ba9fb",
+        "filename": "services/ui/ws/display_manager.cc",
+        "patchSetId": 14
+      },
+      "lineNbr": 179,
+      "author": {
+        "id": 1001118
+      },
+      "writtenOn": "2017-11-08T19:03:50Z",
+      "side": 1,
+      "message": "No, see the comment below. Ash (1) calls SetDisplayConfiguration with the display-\u003emirror change, and then (2) destroys the display as it becomes a mirror. I do think it would be better to avoid destroying displays when we remove/replace root windows.",
+      "parentUuid": "bf994398_b9bfde0a",
+      "revId": "87f0fb87e85e6b6f23f6ff467558bafdb59fe06e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "82815854_2a6d661e",
         "filename": "services/ui/ws/display_manager.cc",
         "patchSetId": 14
@@ -107,6 +125,24 @@
     },
     {
       "key": {
+        "uuid": "0aeacc73_3eda80cc",
+        "filename": "services/ui/ws/display_manager.cc",
+        "patchSetId": 14
+      },
+      "lineNbr": 261,
+      "author": {
+        "id": 1001118
+      },
+      "writtenOn": "2017-11-08T19:03:50Z",
+      "side": 1,
+      "message": "Yeah, afiact, SetDisplayConfiguration does the correct thing, then Ash\u0027s NotifyDisplayRemoved correctly destroys the root window, but that also causes unintended destruction of the ws::Display. It seems like DisplayManager should be explicitly manage ws::Displays, and WindowTree root removal should not destroy ws::Displays.",
+      "parentUuid": "faf3a85a_a16078f7",
+      "revId": "87f0fb87e85e6b6f23f6ff467558bafdb59fe06e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "3fa892e6_500ee388",
         "filename": "ui/display/manager/chromeos/display_configurator.cc",
         "patchSetId": 14
@@ -124,6 +160,24 @@
     },
     {
       "key": {
+        "uuid": "3c467997_1f354c40",
+        "filename": "ui/display/manager/chromeos/display_configurator.cc",
+        "patchSetId": 14
+      },
+      "lineNbr": 290,
+      "author": {
+        "id": 1001118
+      },
+      "writtenOn": "2017-11-08T19:03:50Z",
+      "side": 1,
+      "message": "This is a possible method for detecting that the displays are fake linux-desktop chromeos display windows, and reverting from hardware mirroring to software mirroring when using the display configurator.",
+      "parentUuid": "3fa892e6_500ee388",
+      "revId": "87f0fb87e85e6b6f23f6ff467558bafdb59fe06e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "38e55415_64e406f9",
         "filename": "ui/display/manager/display_manager.cc",
         "patchSetId": 14
@@ -135,6 +189,24 @@
       "writtenOn": "2017-11-08T14:44:05Z",
       "side": 1,
       "message": "When running classic ash on Linux desktop do the displays ever get added to the |hardware_mirroring_display_id_list_| or are they only added to the |software_mirroring_display_list_|? It looks like displays are considered for hardware mirroring if they have the same origin here:\n\nhttps://cs.chromium.org/chromium/src/ui/display/manager/display_manager.cc?type\u003dcs\u0026sq\u003dpackage:chromium\u0026l\u003d737\n\nWhen running cash on Linux desktop it doesn\u0027t run ConfigureDisplaysTask which is what updates DisplaySnapshot origin. ConfigureDisplaysTask does run with mus/mash and when building the DisplayConfigureRequest all displays get the origin of (0, 0) here:\n\nhttps://cs.chromium.org/chromium/src/ui/display/manager/chromeos/display_configurator.cc?l\u003d220\n\nIt seems like somewhere (DisplayConfigurator, UpdateDiplayConfigurationTask or ConfiugreDisplaysTask probably) that drops into software mirroring automatically if !chromeos::IsRunningAsSystemCompositor().",
+      "revId": "87f0fb87e85e6b6f23f6ff467558bafdb59fe06e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "cf67bda0_00e7cb3c",
+        "filename": "ui/display/manager/display_manager.cc",
+        "patchSetId": 14
+      },
+      "lineNbr": 1241,
+      "author": {
+        "id": 1001118
+      },
+      "writtenOn": "2017-11-08T19:03:50Z",
+      "side": 1,
+      "message": "No, afaict, the displays are never added to |hardware_mirroring_display_id_list_| when running classic ash on Linux desktop, and OnNativeDisplaysChanged is never called when switching in or out of mirroring mode on mus... the DisplayConfigurator and mus desktop codepaths are vastly different than the classic ash desktop codepaths, making it tricky for me to establish a solid mental model of how these components should work.\n\nCan you enlighten me about chromeos::IsRunningAsSystemCompositor? Is that essentially a check for cash vs. mus, or is it related to running on device/desktop?",
+      "parentUuid": "38e55415_64e406f9",
       "revId": "87f0fb87e85e6b6f23f6ff467558bafdb59fe06e",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
