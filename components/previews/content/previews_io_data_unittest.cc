@@ -114,11 +114,13 @@ class TestPreviewsUIService : public PreviewsUIService {
       PreviewsIOData* previews_io_data,
       const scoped_refptr<base::SingleThreadTaskRunner>& io_task_runner,
       std::unique_ptr<PreviewsOptOutStore> previews_opt_out_store,
+      std::unique_ptr<PreviewsOptimizationGuide> previews_opt_guide,
       const PreviewsIsEnabledCallback& is_enabled_callback,
       std::unique_ptr<PreviewsLogger> logger)
       : PreviewsUIService(previews_io_data,
                           io_task_runner,
                           std::move(previews_opt_out_store),
+                          std::move(previews_opt_guide),
                           is_enabled_callback,
                           std::move(logger)),
         user_blacklisted_(false),
@@ -233,13 +235,6 @@ class TestPreviewsIOData : public PreviewsIOData {
     SetPreviewsBlacklistForTesting(std::move(blacklist));
   }
 
-  // Expose the injecting previews optimization guide method from
-  // PreviewsIOData, and inject |guide| into |this|.
-  void InjectTestPreviewsOptimizationGuide(
-      std::unique_ptr<TestPreviewsOptimizationGuide> guide) {
-    SetPreviewsOptimizationGuideForTesting(std::move(guide));
-  }
-
  private:
   // Set |initialized_| to true and use base class functionality.
   void InitializeOnIOThread(
@@ -306,11 +301,12 @@ class PreviewsIODataTest : public testing::Test {
   }
 
   void InitializeUIServiceWithoutWaitingForBlackList() {
-    ui_service_.reset(
-        new TestPreviewsUIService(&io_data_, loop_.task_runner(),
-                                  base::MakeUnique<TestPreviewsOptOutStore>(),
-                                  base::Bind(&IsPreviewFieldTrialEnabled),
-                                  base::MakeUnique<PreviewsLogger>()));
+    ui_service_.reset(new TestPreviewsUIService(
+        &io_data_, loop_.task_runner(),
+        base::MakeUnique<TestPreviewsOptOutStore>(),
+        base::MakeUnique<TestPreviewsOptimizationGuide>(),
+        base::Bind(&IsPreviewFieldTrialEnabled),
+        base::MakeUnique<PreviewsLogger>()));
   }
 
   void InitializeUIService() {
@@ -678,10 +674,6 @@ TEST_F(PreviewsIODataTest, NoScriptAllowedByFeatureWithWhitelist) {
   base::test::ScopedFeatureList scoped_feature_list;
   scoped_feature_list.InitWithFeatures(
       {features::kNoScriptPreviews, features::kOptimizationHints}, {});
-
-  std::unique_ptr<TestPreviewsOptimizationGuide> guide =
-      base::MakeUnique<TestPreviewsOptimizationGuide>();
-  io_data()->InjectTestPreviewsOptimizationGuide(std::move(guide));
 
   network_quality_estimator()->set_effective_connection_type(
       net::EFFECTIVE_CONNECTION_TYPE_2G);
