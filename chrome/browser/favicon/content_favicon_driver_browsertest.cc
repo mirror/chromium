@@ -692,6 +692,33 @@ IN_PROC_BROWSER_TEST_F(ContentFaviconDriverTest,
                          .bitmap_data);
 }
 
+// Test that a page which uses JavaScript's history.replaceState() to update
+// the URL in the omnibox (and history) gets associated favicons, for the cases
+// where favicon candidates are received before the URL changes.
+IN_PROC_BROWSER_TEST_F(
+    ContentFaviconDriverTest,
+    AssociateIconWithInitialPageIconDespiteDelayedReplaceState) {
+  ASSERT_TRUE(embedded_test_server()->Start());
+  GURL url = embedded_test_server()->GetURL(
+      "/favicon/replacestate_with_favicon_delayed.html");
+  GURL replacestate_url = embedded_test_server()->GetURL(
+      "/favicon/replacestate_with_favicon_replaced.html");
+
+  PendingTaskWaiter waiter(web_contents());
+  waiter.AlsoRequireUrl(replacestate_url);
+  ui_test_utils::NavigateToURLWithDisposition(
+      browser(), url, WindowOpenDisposition::CURRENT_TAB,
+      ui_test_utils::BROWSER_TEST_NONE);
+  waiter.Wait();
+
+  EXPECT_NE(
+      nullptr,
+      GetFaviconForPageURL(url, favicon_base::IconType::kFavicon).bitmap_data);
+  EXPECT_NE(nullptr, GetFaviconForPageURL(replacestate_url,
+                                          favicon_base::IconType::kFavicon)
+                         .bitmap_data);
+}
+
 #if defined(OS_ANDROID)
 IN_PROC_BROWSER_TEST_F(ContentFaviconDriverTest,
                        LoadIconFromWebManifestDespitePushState) {

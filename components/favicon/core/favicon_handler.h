@@ -288,6 +288,9 @@ class FaviconHandler {
                             favicon_base::IconType icon_type,
                             const gfx::Image& image);
 
+  // Called when all candidates have been processed.
+  void CandidatesProcessingFinished();
+
   // Return the current candidate if any.
   const FaviconCandidate* current_candidate() const {
     return current_candidate_index_ < candidates_.size()

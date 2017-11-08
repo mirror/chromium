@@ -219,22 +219,39 @@ favicon_base::IconTypeSet FaviconHandler::GetIconTypesFromHandlerType(
 
 void FaviconHandler::FetchFavicon(const GURL& page_url, bool is_same_document) {
   cancelable_task_tracker_for_page_url_.TryCancelAll();
-  cancelable_task_tracker_for_candidates_.TryCancelAll();
 
-  // We generally clear |page_urls_| and start clean unless there are obvious
-  // reasons to think URLs share favicons: the navigation must be within the
-  // same document (e.g. fragment navigation) AND it happened so early that no
-  // candidates were received for the previous URL(s) (e.g. redirect-like
-  // history.replaceState() during page load).
-  if (!is_same_document || candidates_received_) {
-    page_urls_.clear();
+  // If the navigation happens within the same document, we can safely assume
+  // favicons haven't actually changed, until we observe otherwise, that is,
+  // OnUpdateCandidates() gets called.
+  //
+  // Within |is_same_document==true|, there are three possible scenarios:
+  // a) Candidates haven't been received yet.
+  // b) Candidates haven't been (fully) processed yet so SetFavicon() hasn't
+  //    been called yet.
+  // c) Candidates have already been processed (idle case): no further
+  //    SetFavicons() would be called if we didn't start again.
+  //
+  // Cases a) and b) require no action: we just append the page URL and wait
+  // for SetFavicon() to handle it.
+  if (is_same_document && (!candidates_received_ ||  // Case a).
+                           current_candidate())) {   // Case b).
+    // If the page lists different favicons (case b, or favicons at all
+    // for case a), they will be handled properly in OnUpdateCandidates().
+    last_page_url_ = page_url;
+    page_urls_.insert(page_url);
+    return;
   }
-  page_urls_.insert(page_url);
+
+  // Case c) is no differet from |!is_same_document|: we need to start again.
   last_page_url_ = page_url;
+  page_urls_ = base::flat_set<GURL>{page_url};
 
   initial_history_result_expired_or_incomplete_ = false;
   redownload_icons_ = false;
   got_favicon_from_history_ = false;
+
+  // Abort ongoing candidate processing.
+  cancelable_task_tracker_for_candidates_.TryCancelAll();
   manifest_download_request_.Cancel();
   image_download_request_.Cancel();
   candidates_received_ = false;
@@ -371,6 +388,12 @@ void FaviconHandler::OnUpdateCandidates(
     return;
   }
 
+  // If the new candidates override existing candidates for the page, we avoid
+  // propagating the icons to earlier in-same-document navigation URLs.
+  // TODO(mastiz) / DONOTSUBMIT: Add unit test for this.
+  if (candidates_received_)
+    page_urls_ = base::flat_set<GURL>{last_page_url_};
+
   candidates_received_ = true;
   error_other_than_404_found_ = false;
   non_manifest_original_candidates_ = candidates;
@@ -434,6 +457,8 @@ void FaviconHandler::OnFaviconDataForManifestFromFaviconService(
         &FaviconHandler::OnDidDownloadManifest, base::Unretained(this)));
     delegate_->DownloadManifest(manifest_url_,
                                 manifest_download_request_.callback());
+  } else {
+    CandidatesProcessingFinished();
   }
 }
 
@@ -596,10 +621,8 @@ void FaviconHandler::OnDidDownloadFavicon(
                      ? best_favicon_.candidate.icon_type
                      : favicon_base::IconType::kWebManifestIcon);
     }
-    // Clear download related state.
-    current_candidate_index_ = candidates_.size();
-    num_image_download_requests_ = 0;
-    best_favicon_ = DownloadedFavicon();
+
+    CandidatesProcessingFinished();
   }
 }
 
@@ -713,9 +736,12 @@ void FaviconHandler::OnFaviconData(const std::vector<
   if (has_expired_or_incomplete_result) {
     ScheduleImageDownload(current_candidate()->icon_url,
                           current_candidate()->icon_type);
-  } else if (num_image_download_requests_ > 0) {
-    RecordDownloadAttemptsForHandlerType(handler_type_,
-                                         num_image_download_requests_);
+  } else {
+    // TODO(mastiz): Isn't this racy because another page URL could have been
+    // added during UpdateFaviconMappingsAndFetch()? It seems like the only
+    // possible alternative is to update the mappings one more time in that
+    // particular case.
+    CandidatesProcessingFinished();
   }
 }
 
@@ -743,6 +769,17 @@ void FaviconHandler::ScheduleImageDownload(const GURL& image_url,
       image_url, GetMaximalIconSize(handler_type_, !manifest_url_.is_empty()),
       image_download_request_.callback());
   DCHECK_NE(download_id, 0);
+}
+
+void FaviconHandler::CandidatesProcessingFinished() {
+  DCHECK(!HasPendingTasksForTest());
+
+  current_candidate_index_ = candidates_.size();
+  if (num_image_download_requests_ > 0) {
+    RecordDownloadAttemptsForHandlerType(handler_type_,
+                                         num_image_download_requests_);
+    num_image_download_requests_ = 0;
+  }
 }
 
 }  // namespace favicon
