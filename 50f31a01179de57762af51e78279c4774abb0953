@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "b22e00b7_3fe77807",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/survey/ChromeHomeSurveyController.java",
+        "patchSetId": 9
+      },
+      "lineNbr": 160,
+      "author": {
+        "id": 1227244
+      },
+      "writtenOn": "2017-11-08T22:47:18Z",
+      "side": 1,
+      "message": "Added it to the async task that handles filtering in the filtering CL.",
+      "parentUuid": "170d5afb_f0e06227",
+      "range": {
+        "startLine": 160,
+        "startChar": 7,
+        "endLine": 160,
+        "endChar": 77
+      },
+      "revId": "50f31a01179de57762af51e78279c4774abb0953",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "b7a1948f_7ca6dee0",
         "filename": "chrome/android/java/src/org/chromium/chrome/browser/survey/ChromeHomeSurveyController.java",
         "patchSetId": 9
@@ -39,6 +63,24 @@
       "revId": "50f31a01179de57762af51e78279c4774abb0953",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ba6eaf6a_6d6cbae8",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/survey/ChromeHomeSurveyController.java",
+        "patchSetId": 9
+      },
+      "lineNbr": 209,
+      "author": {
+        "id": 1227244
+      },
+      "writtenOn": "2017-11-08T22:47:18Z",
+      "side": 1,
+      "message": "This is only called when infobars are created/destroyed and isn\u0027t called if the user switches tabs and switches back.\nonShown handles the latter case.",
+      "parentUuid": "b7a1948f_7ca6dee0",
+      "revId": "50f31a01179de57762af51e78279c4774abb0953",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
