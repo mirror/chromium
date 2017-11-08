@@ -2,11 +2,22 @@
 // Use of this source code is governed by a BSD-style license that can be
 // found in the LICENSE file.
 
-#ifndef IOS_CHROME_BROWSER_UI_TOOLS_MENU_TOOLS_MENU_CONSTANTS_H_
-#define IOS_CHROME_BROWSER_UI_TOOLS_MENU_TOOLS_MENU_CONSTANTS_H_
+#ifndef IOS_CHROME_BROWSER_UI_TOOLS_MENU_PUBLIC_TOOLS_MENU_CONSTANTS_H_
+#define IOS_CHROME_BROWSER_UI_TOOLS_MENU_PUBLIC_TOOLS_MENU_CONSTANTS_H_
 
 #import <Foundation/Foundation.h>
 
+// Tools Menu Notifications.
+// Notification that the tools menu will be shown.
+extern NSString* const kToolsMenuWillShowNotification;
+// Notification that the tools menu will dismiss.
+extern NSString* const kToolsMenuWillHideNotification;
+// Notification that the tools menu did show.
+extern NSString* const kToolsMenuDidShowNotification;
+// Notification that the tools menu did dismiss.
+extern NSString* const kToolsMenuDidHideNotification;
+
+// Tools Menu item IDs.
 // New Tab item accessibility Identifier.
 extern NSString* const kToolsMenuNewTabId;
 // New incognito Tab item accessibility Identifier.
@@ -63,4 +74,4 @@ typedef NS_ENUM(int, ToolsMenuItemID) {
   TOOLS_REQUEST_MOBILE_SITE = -22,
 };
 
-#endif  // IOS_CHROME_BROWSER_UI_TOOLS_MENU_TOOLS_MENU_CONSTANTS_H_
+#endif  // IOS_CHROME_BROWSER_UI_TOOLS_MENU_PUBLIC_TOOLS_MENU_CONSTANTS_H_
