@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "666bb31e_f2574c03",
+        "filename": "third_party/WebKit/Source/modules/accessibility/AXObject.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 2480,
+      "author": {
+        "id": 1139279
+      },
+      "writtenOn": "2017-11-08T23:51:19Z",
+      "side": 1,
+      "message": "1. Add a | before the type too.\n2. Use single quotes when streming single characters to avoid creating a string object.\n\u0027|\u0027 \u003c\u003c classname \u003c\u003c \u0027|\u0027",
+      "revId": "6216ba14f1aa39a94e3995d698773254213b483b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
