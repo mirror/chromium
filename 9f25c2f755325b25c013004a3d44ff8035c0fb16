@@ -1,0 +1,188 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "9361ae7a_f3c1e0bb",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/contextualsearch/ContextualSearchRankerLoggerImpl.java",
+        "patchSetId": 9
+      },
+      "lineNbr": 144,
+      "author": {
+        "id": 1212246
+      },
+      "writtenOn": "2017-11-08T19:39:31Z",
+      "side": 1,
+      "message": "Is there a reason why you do not directly assign to mAssistRankerPrediction?",
+      "range": {
+        "startLine": 144,
+        "startChar": 16,
+        "endLine": 144,
+        "endChar": 36
+      },
+      "revId": "9f25c2f755325b25c013004a3d44ff8035c0fb16",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4eff1fd2_74450b5d",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/contextualsearch/ContextualSearchSelectionController.java",
+        "patchSetId": 9
+      },
+      "lineNbr": 383,
+      "author": {
+        "id": 1212246
+      },
+      "writtenOn": "2017-11-08T19:39:31Z",
+      "side": 1,
+      "message": "Shouldn\u0027t this be UNDETERMINED by default?\nUNAVAILABLE suggests it was queried but could not provide an answer.",
+      "range": {
+        "startLine": 383,
+        "startChar": 51,
+        "endLine": 383,
+        "endChar": 62
+      },
+      "revId": "9f25c2f755325b25c013004a3d44ff8035c0fb16",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "24ef959a_8d7cdfba",
+        "filename": "chrome/browser/android/contextualsearch/contextual_search_ranker_logger_impl.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 32,
+      "author": {
+        "id": 1212246
+      },
+      "writtenOn": "2017-11-08T19:39:31Z",
+      "side": 1,
+      "message": "The strings LGTM.",
+      "range": {
+        "startLine": 32,
+        "startChar": 16,
+        "endLine": 32,
+        "endChar": 21
+      },
+      "revId": "9f25c2f755325b25c013004a3d44ff8035c0fb16",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1b6c64d9_23b5c296",
+        "filename": "chrome/browser/android/contextualsearch/contextual_search_ranker_logger_impl.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 34,
+      "author": {
+        "id": 1212246
+      },
+      "writtenOn": "2017-11-08T19:39:31Z",
+      "side": 1,
+      "message": "kContextualSearchRankerModelUrlParam or kContextualSearchRankerModelUrlParamName?\nThe name suggests that it is the URL.",
+      "range": {
+        "startLine": 34,
+        "startChar": 11,
+        "endLine": 34,
+        "endChar": 42
+      },
+      "revId": "9f25c2f755325b25c013004a3d44ff8035c0fb16",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "62885c9a_89ef1466",
+        "filename": "chrome/browser/android/contextualsearch/contextual_search_ranker_logger_impl.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 49,
+      "author": {
+        "id": 1212246
+      },
+      "writtenOn": "2017-11-08T19:39:31Z",
+      "side": 1,
+      "message": "DISABLED_BY_DEFAULT.\nAt least until we have launched query to stable. We can always enable it through finch with a controlled rollout.",
+      "range": {
+        "startLine": 49,
+        "startChar": 41,
+        "endLine": 49,
+        "endChar": 67
+      },
+      "revId": "9f25c2f755325b25c013004a3d44ff8035c0fb16",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8a701228_77966000",
+        "filename": "chrome/browser/android/contextualsearch/contextual_search_ranker_logger_impl.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 105,
+      "author": {
+        "id": 1212246
+      },
+      "writtenOn": "2017-11-08T19:39:31Z",
+      "side": 1,
+      "message": "This should be conditioned on kContextualSearchRankerQuery. We should not initialize the predictor if the feature is disabled. \nOnce we move the Finch feature inside Ranker eventually, we will make sure that this is cheap to do if the feature is disabled. But, for now, I\u0027d rather keep the initialization behind the feature.",
+      "range": {
+        "startLine": 105,
+        "startChar": 0,
+        "endLine": 105,
+        "endChar": 69
+      },
+      "revId": "9f25c2f755325b25c013004a3d44ff8035c0fb16",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4cde6d17_8cc3b984",
+        "filename": "chrome/browser/android/contextualsearch/contextual_search_ranker_logger_impl.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 159,
+      "author": {
+        "id": 1212246
+      },
+      "writtenOn": "2017-11-08T19:39:31Z",
+      "side": 1,
+      "message": "The call to Predict should be conditioned on kContextualSearchRankerQuery",
+      "range": {
+        "startLine": 159,
+        "startChar": 4,
+        "endLine": 159,
+        "endChar": 23
+      },
+      "revId": "9f25c2f755325b25c013004a3d44ff8035c0fb16",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "01533f93_0261b15c",
+        "filename": "chrome/browser/android/contextualsearch/contextual_search_ranker_logger_impl.h",
+        "patchSetId": 9
+      },
+      "lineNbr": 33,
+      "author": {
+        "id": 1212246
+      },
+      "writtenOn": "2017-11-08T19:39:31Z",
+      "side": 1,
+      "message": "Instead of YES an NO, we could be more explicit about what these mean. E.g. ASSIST_RANKER_PREDICTION_SUPPRESS or ASSIST_RANKER_PREDICTION_DONT_SHOW\nand\nASSIST_RANKER_PREDICTION_SHOW.\n\nI don\u0027t insist on this.",
+      "range": {
+        "startLine": 33,
+        "startChar": 2,
+        "endLine": 33,
+        "endChar": 30
+      },
+      "revId": "9f25c2f755325b25c013004a3d44ff8035c0fb16",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
