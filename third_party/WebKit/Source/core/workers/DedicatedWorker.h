@@ -5,13 +5,13 @@
 #ifndef DedicatedWorker_h
 #define DedicatedWorker_h
 
+#include "bindings/core/v8/ActiveScriptWrappableAdapter.h"
 #include "core/CoreExport.h"
 #include "core/dom/MessagePort.h"
 #include "core/dom/PausableObject.h"
 #include "core/dom/events/EventListener.h"
 #include "core/dom/events/EventTarget.h"
 #include "core/workers/AbstractWorker.h"
-#include "platform/bindings/ActiveScriptWrappable.h"
 #include "platform/wtf/Forward.h"
 #include "platform/wtf/RefPtr.h"
 
@@ -30,7 +30,7 @@ class WorkerScriptLoader;
 // called DedicatedWorker. This lives on the main thread.
 class CORE_EXPORT DedicatedWorker final
     : public AbstractWorker,
-      public ActiveScriptWrappable<DedicatedWorker> {
+      public ActiveScriptWrappableAdapter<DedicatedWorker> {
   DEFINE_WRAPPERTYPEINFO();
   USING_GARBAGE_COLLECTED_MIXIN(DedicatedWorker);
   // Eager finalization is needed to notify the parent object destruction of the

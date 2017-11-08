@@ -31,13 +31,13 @@
 #ifndef FontFace_h
 #define FontFace_h
 
+#include "bindings/core/v8/ActiveScriptWrappableAdapter.h"
 #include "bindings/core/v8/ScriptPromise.h"
 #include "bindings/core/v8/ScriptPromiseProperty.h"
 #include "core/CSSPropertyNames.h"
 #include "core/css/CSSValue.h"
 #include "core/dom/ContextLifecycleObserver.h"
 #include "core/dom/DOMException.h"
-#include "platform/bindings/ActiveScriptWrappable.h"
 #include "platform/bindings/ScriptWrappable.h"
 #include "platform/fonts/FontSelectionTypes.h"
 #include "platform/wtf/text/WTFString.h"
@@ -56,7 +56,7 @@ class StylePropertySet;
 class StyleRuleFontFace;
 
 class CORE_EXPORT FontFace : public ScriptWrappable,
-                             public ActiveScriptWrappable<FontFace>,
+                             public ActiveScriptWrappableAdapter<FontFace>,
                              public ContextClient {
   DEFINE_WRAPPERTYPEINFO();
   USING_GARBAGE_COLLECTED_MIXIN(FontFace);

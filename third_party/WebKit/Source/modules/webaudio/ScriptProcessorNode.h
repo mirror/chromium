@@ -27,9 +27,9 @@
 #define ScriptProcessorNode_h
 
 #include "base/gtest_prod_util.h"
+#include "bindings/core/v8/ActiveScriptWrappableAdapter.h"
 #include "modules/webaudio/AudioNode.h"
 #include "platform/audio/AudioBus.h"
-#include "platform/bindings/ActiveScriptWrappable.h"
 #include "platform/wtf/Forward.h"
 #include "platform/wtf/RefPtr.h"
 #include "platform/wtf/Vector.h"
@@ -110,7 +110,7 @@ class ScriptProcessorHandler final : public AudioHandler {
 
 class ScriptProcessorNode final
     : public AudioNode,
-      public ActiveScriptWrappable<ScriptProcessorNode> {
+      public ActiveScriptWrappableAdapter<ScriptProcessorNode> {
   DEFINE_WRAPPERTYPEINFO();
   USING_GARBAGE_COLLECTED_MIXIN(ScriptProcessorNode);
 

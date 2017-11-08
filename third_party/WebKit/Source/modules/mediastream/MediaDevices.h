@@ -5,13 +5,13 @@
 #ifndef MediaDevices_h
 #define MediaDevices_h
 
+#include "bindings/core/v8/ActiveScriptWrappableAdapter.h"
 #include "bindings/core/v8/ScriptPromise.h"
 #include "core/dom/PausableObject.h"
 #include "core/dom/events/EventTarget.h"
 #include "modules/EventTargetModules.h"
 #include "modules/ModulesExport.h"
 #include "platform/AsyncMethodRunner.h"
-#include "platform/bindings/ActiveScriptWrappable.h"
 
 namespace blink {
 
@@ -22,7 +22,7 @@ class UserMediaController;
 
 class MODULES_EXPORT MediaDevices final
     : public EventTargetWithInlineData,
-      public ActiveScriptWrappable<MediaDevices>,
+      public ActiveScriptWrappableAdapter<MediaDevices>,
       public PausableObject {
   USING_GARBAGE_COLLECTED_MIXIN(MediaDevices);
   DEFINE_WRAPPERTYPEINFO();

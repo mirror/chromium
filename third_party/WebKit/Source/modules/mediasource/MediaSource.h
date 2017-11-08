@@ -32,6 +32,7 @@
 #define MediaSource_h
 
 #include <memory>
+#include "bindings/core/v8/ActiveScriptWrappableAdapter.h"
 #include "core/dom/ContextLifecycleObserver.h"
 #include "core/dom/ExceptionCode.h"
 #include "core/html/TimeRanges.h"
@@ -41,6 +42,7 @@
 #include "modules/mediasource/SourceBuffer.h"
 #include "modules/mediasource/SourceBufferList.h"
 #include "platform/bindings/ActiveScriptWrappable.h"
+#include "platform/wtf/Vector.h"
 #include "public/platform/WebMediaSource.h"
 
 namespace blink {
@@ -51,7 +53,7 @@ class WebSourceBuffer;
 
 class MediaSource final : public EventTargetWithInlineData,
                           public HTMLMediaSource,
-                          public ActiveScriptWrappable<MediaSource>,
+                          public ActiveScriptWrappableAdapter<MediaSource>,
                           public ContextLifecycleObserver {
   DEFINE_WRAPPERTYPEINFO();
   USING_GARBAGE_COLLECTED_MIXIN(MediaSource);

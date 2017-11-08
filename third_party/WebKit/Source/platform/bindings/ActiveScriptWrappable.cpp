@@ -1,4 +1,4 @@
-// Copyright 2016 The Chromium Authors. All rights reserved.
+// Copyright 2017 The Chromium Authors. All rights reserved.
 // Use of this source code is governed by a BSD-style license that can be
 // found in the LICENSE file.
 
@@ -12,14 +12,14 @@
 
 namespace blink {
 
-ActiveScriptWrappableBase::ActiveScriptWrappableBase() {
+ActiveScriptWrappable::ActiveScriptWrappable() {
   DCHECK(ThreadState::Current());
   v8::Isolate* isolate = ThreadState::Current()->GetIsolate();
   V8PerIsolateData* isolate_data = V8PerIsolateData::From(isolate);
   isolate_data->AddActiveScriptWrappable(this);
 }
 
-void ActiveScriptWrappableBase::TraceActiveScriptWrappables(
+void ActiveScriptWrappable::TraceActiveScriptWrappables(
     v8::Isolate* isolate,
     ScriptWrappableVisitor* visitor) {
   V8PerIsolateData* isolate_data = V8PerIsolateData::From(isolate);

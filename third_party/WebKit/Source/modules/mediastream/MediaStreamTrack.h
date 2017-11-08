@@ -27,11 +27,11 @@
 #define MediaStreamTrack_h
 
 #include <memory>
+#include "bindings/core/v8/ActiveScriptWrappableAdapter.h"
 #include "bindings/core/v8/ScriptPromise.h"
 #include "core/dom/ContextLifecycleObserver.h"
 #include "modules/EventTargetModules.h"
 #include "modules/ModulesExport.h"
-#include "platform/bindings/ActiveScriptWrappable.h"
 #include "platform/mediastream/MediaStreamDescriptor.h"
 #include "platform/mediastream/MediaStreamSource.h"
 #include "platform/wtf/Forward.h"
@@ -50,7 +50,7 @@ class ScriptState;
 
 class MODULES_EXPORT MediaStreamTrack
     : public EventTargetWithInlineData,
-      public ActiveScriptWrappable<MediaStreamTrack>,
+      public ActiveScriptWrappableAdapter<MediaStreamTrack>,
       public ContextLifecycleObserver,
       public MediaStreamSource::Observer {
   USING_GARBAGE_COLLECTED_MIXIN(MediaStreamTrack);

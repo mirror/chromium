@@ -54,7 +54,7 @@ const WrapperTypeInfo& TestIntegerIndexedPrimaryGlobal::wrapper_type_info_ = V8T
 
 // not [ActiveScriptWrappable]
 static_assert(
-    !std::is_base_of<ActiveScriptWrappableBase, TestIntegerIndexedPrimaryGlobal>::value,
+    !std::is_base_of<ActiveScriptWrappable, TestIntegerIndexedPrimaryGlobal>::value,
     "TestIntegerIndexedPrimaryGlobal inherits from ActiveScriptWrappable<>, but is not specifying "
     "[ActiveScriptWrappable] extended attribute in the IDL file.  "
     "Be consistent.");

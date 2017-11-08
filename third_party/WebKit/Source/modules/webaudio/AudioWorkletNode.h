@@ -75,8 +75,9 @@ class AudioWorkletHandler final : public AudioHandler {
   HashMap<String, std::unique_ptr<AudioFloatArray>> param_value_map_;
 };
 
-class AudioWorkletNode final : public AudioNode,
-                               public ActiveScriptWrappable<AudioWorkletNode> {
+class AudioWorkletNode final
+    : public AudioNode,
+      public ActiveScriptWrappableAdapter<AudioWorkletNode> {
   DEFINE_WRAPPERTYPEINFO();
   USING_GARBAGE_COLLECTED_MIXIN(AudioWorkletNode);
 

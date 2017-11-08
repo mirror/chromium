@@ -32,6 +32,7 @@
 #define RTCPeerConnection_h
 
 #include <memory>
+#include "bindings/core/v8/ActiveScriptWrappableAdapter.h"
 #include "bindings/core/v8/ScriptPromise.h"
 #include "core/dom/PausableObject.h"
 #include "modules/EventTargetModules.h"
@@ -40,7 +41,6 @@
 #include "modules/peerconnection/RTCIceCandidate.h"
 #include "platform/AsyncMethodRunner.h"
 #include "platform/WebFrameScheduler.h"
-#include "platform/bindings/ActiveScriptWrappable.h"
 #include "platform/heap/HeapAllocator.h"
 #include "public/platform/WebMediaConstraints.h"
 #include "public/platform/WebRTCPeerConnectionHandler.h"
@@ -71,7 +71,7 @@ struct WebRTCConfiguration;
 class MODULES_EXPORT RTCPeerConnection final
     : public EventTargetWithInlineData,
       public WebRTCPeerConnectionHandlerClient,
-      public ActiveScriptWrappable<RTCPeerConnection>,
+      public ActiveScriptWrappableAdapter<RTCPeerConnection>,
       public PausableObject,
       public MediaStreamObserver {
   DEFINE_WRAPPERTYPEINFO();

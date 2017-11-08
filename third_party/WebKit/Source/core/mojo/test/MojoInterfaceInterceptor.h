@@ -5,11 +5,11 @@
 #ifndef MojoInterfaceInterceptor_h
 #define MojoInterfaceInterceptor_h
 
+#include "bindings/core/v8/ActiveScriptWrappableAdapter.h"
 #include "core/dom/ContextLifecycleObserver.h"
 #include "core/dom/events/EventListener.h"
 #include "core/dom/events/EventTarget.h"
 #include "mojo/public/cpp/system/message_pipe.h"
-#include "platform/bindings/ActiveScriptWrappable.h"
 #include "platform/bindings/ScriptWrappable.h"
 #include "platform/wtf/text/WTFString.h"
 
@@ -30,7 +30,7 @@ class ExecutionContext;
 // but in test environments it's often useful to mock them out locally.
 class MojoInterfaceInterceptor final
     : public EventTargetWithInlineData,
-      public ActiveScriptWrappable<MojoInterfaceInterceptor>,
+      public ActiveScriptWrappableAdapter<MojoInterfaceInterceptor>,
       public ContextLifecycleObserver {
   DEFINE_WRAPPERTYPEINFO();
   USING_GARBAGE_COLLECTED_MIXIN(MojoInterfaceInterceptor);

@@ -5,12 +5,12 @@
 #ifndef PresentationAvailability_h
 #define PresentationAvailability_h
 
+#include "bindings/core/v8/ActiveScriptWrappableAdapter.h"
 #include "core/dom/PausableObject.h"
 #include "core/dom/events/EventTarget.h"
 #include "core/page/PageVisibilityObserver.h"
 #include "modules/ModulesExport.h"
 #include "modules/presentation/PresentationPromiseProperty.h"
-#include "platform/bindings/ActiveScriptWrappable.h"
 #include "platform/weborigin/KURL.h"
 #include "platform/wtf/Vector.h"
 #include "public/platform/WebURL.h"
@@ -27,7 +27,7 @@ class ExecutionContext;
 // change. The object will only listen to changes when required.
 class MODULES_EXPORT PresentationAvailability final
     : public EventTargetWithInlineData,
-      public ActiveScriptWrappable<PresentationAvailability>,
+      public ActiveScriptWrappableAdapter<PresentationAvailability>,
       public PausableObject,
       public PageVisibilityObserver,
       public WebPresentationAvailabilityObserver {

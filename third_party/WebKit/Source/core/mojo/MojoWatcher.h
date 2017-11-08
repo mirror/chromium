@@ -5,10 +5,10 @@
 #ifndef MojoWatcher_h
 #define MojoWatcher_h
 
+#include "bindings/core/v8/ActiveScriptWrappableAdapter.h"
 #include "core/dom/ContextLifecycleObserver.h"
 #include "mojo/public/cpp/system/handle.h"
 #include "mojo/public/cpp/system/watcher.h"
-#include "platform/bindings/ActiveScriptWrappable.h"
 #include "platform/bindings/ScriptWrappable.h"
 #include "platform/bindings/TraceWrapperMember.h"
 
@@ -19,7 +19,7 @@ class MojoHandleSignals;
 class V8MojoWatchCallback;
 
 class MojoWatcher final : public ScriptWrappable,
-                          public ActiveScriptWrappable<MojoWatcher>,
+                          public ActiveScriptWrappableAdapter<MojoWatcher>,
                           public ContextLifecycleObserver {
   DEFINE_WRAPPERTYPEINFO();
   USING_GARBAGE_COLLECTED_MIXIN(MojoWatcher);

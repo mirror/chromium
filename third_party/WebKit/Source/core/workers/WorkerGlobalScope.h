@@ -28,6 +28,7 @@
 #define WorkerGlobalScope_h
 
 #include <memory>
+#include "bindings/core/v8/ActiveScriptWrappableAdapter.h"
 #include "bindings/core/v8/V8CacheOptions.h"
 #include "core/CoreExport.h"
 #include "core/dom/ExecutionContext.h"
@@ -39,7 +40,6 @@
 #include "core/workers/WorkerEventQueue.h"
 #include "core/workers/WorkerOrWorkletGlobalScope.h"
 #include "core/workers/WorkerSettings.h"
-#include "platform/bindings/ActiveScriptWrappable.h"
 #include "platform/heap/Handle.h"
 #include "platform/loader/fetch/CachedMetadataHandler.h"
 #include "platform/wtf/ListHashSet.h"
@@ -64,7 +64,7 @@ struct GlobalScopeCreationParams;
 
 class CORE_EXPORT WorkerGlobalScope
     : public EventTargetWithInlineData,
-      public ActiveScriptWrappable<WorkerGlobalScope>,
+      public ActiveScriptWrappableAdapter<WorkerGlobalScope>,
       public SecurityContext,
       public WorkerOrWorkletGlobalScope,
       public Supplementable<WorkerGlobalScope>,

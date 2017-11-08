@@ -32,13 +32,13 @@
 #define FileReader_h
 
 #include <memory>
+#include "bindings/core/v8/ActiveScriptWrappableAdapter.h"
 #include "core/CoreExport.h"
 #include "core/dom/ContextLifecycleObserver.h"
 #include "core/dom/events/EventTarget.h"
 #include "core/fileapi/FileError.h"
 #include "core/fileapi/FileReaderLoader.h"
 #include "core/fileapi/FileReaderLoaderClient.h"
-#include "platform/bindings/ActiveScriptWrappable.h"
 #include "platform/heap/Handle.h"
 #include "platform/wtf/Forward.h"
 
@@ -49,10 +49,11 @@ class ExceptionState;
 class ExecutionContext;
 class StringOrArrayBuffer;
 
-class CORE_EXPORT FileReader final : public EventTargetWithInlineData,
-                                     public ActiveScriptWrappable<FileReader>,
-                                     public ContextLifecycleObserver,
-                                     public FileReaderLoaderClient {
+class CORE_EXPORT FileReader final
+    : public EventTargetWithInlineData,
+      public ActiveScriptWrappableAdapter<FileReader>,
+      public ContextLifecycleObserver,
+      public FileReaderLoaderClient {
   DEFINE_WRAPPERTYPEINFO();
   USING_GARBAGE_COLLECTED_MIXIN(FileReader);
 

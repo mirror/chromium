@@ -20,10 +20,10 @@
 #ifndef MediaQueryList_h
 #define MediaQueryList_h
 
+#include "bindings/core/v8/ActiveScriptWrappableAdapter.h"
 #include "core/CoreExport.h"
 #include "core/dom/ContextLifecycleObserver.h"
 #include "core/dom/events/EventTarget.h"
-#include "platform/bindings/ActiveScriptWrappable.h"
 #include "platform/bindings/ScriptWrappable.h"
 #include "platform/heap/Handle.h"
 #include "platform/wtf/Forward.h"
@@ -43,7 +43,7 @@ class MediaQuerySet;
 
 class CORE_EXPORT MediaQueryList final
     : public EventTargetWithInlineData,
-      public ActiveScriptWrappable<MediaQueryList>,
+      public ActiveScriptWrappableAdapter<MediaQueryList>,
       public ContextLifecycleObserver {
   DEFINE_WRAPPERTYPEINFO();
   USING_GARBAGE_COLLECTED_MIXIN(MediaQueryList);

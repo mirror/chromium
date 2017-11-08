@@ -5,12 +5,12 @@
 #ifndef UnderlyingSourceBase_h
 #define UnderlyingSourceBase_h
 
+#include "bindings/core/v8/ActiveScriptWrappableAdapter.h"
 #include "bindings/core/v8/ScriptPromise.h"
 #include "bindings/core/v8/ScriptValue.h"
 #include "core/CoreExport.h"
 #include "core/dom/ContextLifecycleObserver.h"
 #include "core/dom/ExecutionContext.h"
-#include "platform/bindings/ActiveScriptWrappable.h"
 #include "platform/bindings/ScriptState.h"
 #include "platform/bindings/ScriptWrappable.h"
 #include "platform/heap/GarbageCollected.h"
@@ -22,7 +22,7 @@ class ReadableStreamController;
 
 class CORE_EXPORT UnderlyingSourceBase
     : public ScriptWrappable,
-      public ActiveScriptWrappable<UnderlyingSourceBase>,
+      public ActiveScriptWrappableAdapter<UnderlyingSourceBase>,
       public ContextLifecycleObserver {
   DEFINE_WRAPPERTYPEINFO();
   USING_GARBAGE_COLLECTED_MIXIN(UnderlyingSourceBase);

@@ -52,7 +52,7 @@ const WrapperTypeInfo& TestInterfaceConstructor3::wrapper_type_info_ = V8TestInt
 
 // not [ActiveScriptWrappable]
 static_assert(
-    !std::is_base_of<ActiveScriptWrappableBase, TestInterfaceConstructor3>::value,
+    !std::is_base_of<ActiveScriptWrappable, TestInterfaceConstructor3>::value,
     "TestInterfaceConstructor3 inherits from ActiveScriptWrappable<>, but is not specifying "
     "[ActiveScriptWrappable] extended attribute in the IDL file.  "
     "Be consistent.");
