@@ -12,6 +12,7 @@
 #include "build/build_config.h"
 #include "chrome/browser/accessibility/accessibility_permission_context.h"
 #include "chrome/browser/background_sync/background_sync_permission_context.h"
+#include "chrome/browser/clipboard/clipboard_permission_context.h"
 #include "chrome/browser/content_settings/host_content_settings_map_factory.h"
 #include "chrome/browser/generic_sensor/sensor_permission_context.h"
 #include "chrome/browser/media/midi_permission_context.h"
@@ -112,6 +113,9 @@ ContentSettingsType PermissionTypeToContentSetting(PermissionType permission) {
       return CONTENT_SETTINGS_TYPE_SENSORS;
     case PermissionType::ACCESSIBILITY_EVENTS:
       return CONTENT_SETTINGS_TYPE_ACCESSIBILITY_EVENTS;
+    case PermissionType::CLIPBOARD_READ:
+    case PermissionType::CLIPBOARD_WRITE:
+      return CONTENT_SETTINGS_TYPE_CLIPBOARD;
     case PermissionType::NUM:
       // This will hit the NOTREACHED below.
       break;
@@ -296,6 +300,8 @@ PermissionManager::PermissionManager(Profile* profile)
       base::MakeUnique<SensorPermissionContext>(profile);
   permission_contexts_[CONTENT_SETTINGS_TYPE_ACCESSIBILITY_EVENTS] =
       base::MakeUnique<AccessibilityPermissionContext>(profile);
+  permission_contexts_[CONTENT_SETTINGS_TYPE_CLIPBOARD] =
+      base::MakeUnique<ClipboardPermissionContext>(profile);
 }
 
 PermissionManager::~PermissionManager() {

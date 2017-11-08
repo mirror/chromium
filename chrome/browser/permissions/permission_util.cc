@@ -47,6 +47,8 @@ std::string PermissionUtil::GetPermissionString(
       return "Sensors";
     case CONTENT_SETTINGS_TYPE_ACCESSIBILITY_EVENTS:
       return "AccessibilityEvents";
+    case CONTENT_SETTINGS_TYPE_CLIPBOARD:
+      return "Clipboard";
     default:
       break;
   }
@@ -81,6 +83,8 @@ std::string PermissionUtil::ConvertContentSettingsTypeToSafeBrowsingName(
       return "SENSORS";
     case CONTENT_SETTINGS_TYPE_ACCESSIBILITY_EVENTS:
       return "ACCESSIBILITY_EVENTS";
+    case CONTENT_SETTINGS_TYPE_CLIPBOARD:
+      return "CLIPBOARD";
     default:
       break;
   }
@@ -108,6 +112,8 @@ PermissionRequestType PermissionUtil::GetRequestType(ContentSettingsType type) {
       return PermissionRequestType::PERMISSION_MEDIASTREAM_CAMERA;
     case CONTENT_SETTINGS_TYPE_ACCESSIBILITY_EVENTS:
       return PermissionRequestType::PERMISSION_ACCESSIBILITY_EVENTS;
+    case CONTENT_SETTINGS_TYPE_CLIPBOARD:
+      return PermissionRequestType::PERMISSION_CLIPBOARD;
     default:
       NOTREACHED();
       return PermissionRequestType::UNKNOWN;
@@ -149,6 +155,8 @@ bool PermissionUtil::GetPermissionType(ContentSettingsType type,
     *out = PermissionType::SENSORS;
   } else if (type == CONTENT_SETTINGS_TYPE_ACCESSIBILITY_EVENTS) {
     *out = PermissionType::ACCESSIBILITY_EVENTS;
+  } else if (type == CONTENT_SETTINGS_TYPE_CLIPBOARD) {
+    *out = PermissionType::CLIPBOARD_READ;
   } else {
     return false;
   }
@@ -178,6 +186,7 @@ bool PermissionUtil::IsPermission(ContentSettingsType type) {
 #endif
     case CONTENT_SETTINGS_TYPE_SENSORS:
     case CONTENT_SETTINGS_TYPE_ACCESSIBILITY_EVENTS:
+    case CONTENT_SETTINGS_TYPE_CLIPBOARD:
       return true;
     default:
       return false;

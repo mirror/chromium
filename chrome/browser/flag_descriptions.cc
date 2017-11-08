@@ -117,6 +117,10 @@ const char kClickToOpenPDFDescription[] =
     "When the PDF plugin is unavailable, show a click-to-open placeholder for "
     "embedded PDFs.";
 
+const char kClipboardContentSettingName[] = "Clipboard content setting";
+const char kClipboardContentSettingDescription[] =
+    "Enable site-wide content setting for the asynchronous clipboard API";
+
 const char kCloudImportName[] = "Cloud Import";
 const char kCloudImportDescription[] = "Allows the cloud-import feature.";
 

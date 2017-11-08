@@ -38,6 +38,7 @@ enum class PermissionRequestType {
   PERMISSION_MEDIASTREAM_MIC,
   PERMISSION_MEDIASTREAM_CAMERA,
   PERMISSION_ACCESSIBILITY_EVENTS,
+  PERMISSION_CLIPBOARD,
   // NUM must be the last value in the enum.
   NUM
 };
