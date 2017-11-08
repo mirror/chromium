@@ -137,6 +137,7 @@ class ProfileIOData {
       content::ProtocolHandlerMap* protocol_handlers);
 
   // Sets a global CertVerifier to use when initializing all profiles.
+  // |cert_verifier| must outlive any profiles created after it is set.
   static void SetCertVerifierForTesting(net::CertVerifier* cert_verifier);
 
   // Called by Profile.
