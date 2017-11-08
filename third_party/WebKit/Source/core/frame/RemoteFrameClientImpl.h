@@ -41,6 +41,7 @@ class RemoteFrameClientImpl final : public RemoteFrameClient {
   void AdvanceFocus(WebFocusType, LocalFrame*) override;
   void VisibilityChanged(bool visible) override;
   void SetIsInert(bool) override;
+  void UpdateRenderThrottlingStatus(bool, bool) override;
 
   WebRemoteFrameImpl* GetWebFrame() const { return web_frame_; }
 
