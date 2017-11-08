@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "79bb49ed_ecbf50f5",
+        "filename": "third_party/WebKit/Source/bindings/scripts/v8_interface.py",
+        "patchSetId": 3
+      },
+      "lineNbr": 421,
+      "author": {
+        "id": 1002507
+      },
+      "writtenOn": "2017-11-08T10:15:43Z",
+      "side": 1,
+      "message": "Sooner or later, we\u0027ll need to support a combination of [SecureContext] and [Unforgeable], and this is just confusing to me.  \"conditionally_enabled_attributes\" sounds having general meaning, so I don\u0027t want to replace it with \"_on_prototype_or_interface\" silently.\n\nMisleading naming is a root of confusion.  Let\u0027s avoid it.",
+      "revId": "f3ff696e6accb35ad7a33fc944dd78586b51cbe1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
