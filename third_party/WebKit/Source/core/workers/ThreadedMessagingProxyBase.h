@@ -23,6 +23,7 @@ class SourceLocation;
 class ThreadableLoadingContext;
 class WorkerInspectorProxy;
 struct GlobalScopeCreationParams;
+struct RemoteAsyncTaskToken;
 
 // The base proxy class to talk to Worker/WorkletGlobalScope on a worker thread
 // from the parent context thread (Note that this is always the main thread for
@@ -71,7 +72,8 @@ class CORE_EXPORT ThreadedMessagingProxyBase
   void InitializeWorkerThread(
       std::unique_ptr<GlobalScopeCreationParams>,
       const WTF::Optional<WorkerBackingThreadStartupData>&,
-      const KURL& script_url);
+      const KURL& script_url,
+      std::unique_ptr<RemoteAsyncTaskToken>);
   virtual void WorkerThreadCreated();
 
   ThreadableLoadingContext* CreateThreadableLoadingContext() const;

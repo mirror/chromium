@@ -7,6 +7,7 @@
 #include "core/dom/TaskRunnerHelper.h"
 #include "core/events/MessageEvent.h"
 #include "core/inspector/ConsoleMessageStorage.h"
+#include "core/inspector/ThreadDebugger.h"
 #include "core/testing/DummyPageHolder.h"
 #include "core/workers/DedicatedWorkerGlobalScope.h"
 #include "core/workers/DedicatedWorkerMessagingProxy.h"
@@ -138,7 +139,7 @@ class DedicatedWorkerMessagingProxyForTest
         WorkerBackingThreadStartupData(
             WorkerBackingThreadStartupData::HeapLimitMode::kDefault,
             WorkerBackingThreadStartupData::AtomicsWaitMode::kAllow),
-        script_url);
+        script_url, nullptr);
   }
 
   DedicatedWorkerThreadForTest* GetDedicatedWorkerThread() {

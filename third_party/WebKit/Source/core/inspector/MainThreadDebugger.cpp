@@ -231,6 +231,20 @@ void MainThreadDebugger::InterruptMainThreadAndRun(
   }
 }
 
+std::unique_ptr<RemoteAsyncTaskToken>
+MainThreadDebugger::RemoteAsyncTaskScheduled(LocalFrame* frame,
+                                             const String& task_name,
+                                             const String& target_debugger_id) {
+  String debugger_id = DebuggerId(frame);
+  if (debugger_id.IsEmpty())
+    return nullptr;
+  v8_inspector::V8Inspector::RemoteAsyncTaskId task_id =
+      ThreadDebugger::RemoteAsyncTaskScheduled(task_name, target_debugger_id);
+  if (task_id == v8_inspector::V8Inspector::kEmptyAsyncTaskId)
+    return nullptr;
+  return std::make_unique<RemoteAsyncTaskToken>(task_id, debugger_id);
+}
+
 void MainThreadDebugger::runMessageLoopOnPause(int context_group_id) {
   LocalFrame* paused_frame =
       WeakIdentifierMap<LocalFrame>::Lookup(context_group_id);
@@ -334,6 +348,19 @@ v8::MaybeLocal<v8::Value> MainThreadDebugger::memoryInfo(
   DCHECK(execution_context);
   DCHECK(execution_context->IsDocument());
   return ToV8(MemoryInfo::Create(), context->Global(), isolate);
+}
+
+String MainThreadDebugger::DebuggerId(LocalFrame* frame) {
+  return frame ? IdentifiersFactory::FrameId(frame) : String();
+}
+
+std::unique_ptr<v8_inspector::StringBuffer>
+MainThreadDebugger::uniqueDebuggerId(int context_group_id) {
+  LocalFrame* frame = WeakIdentifierMap<LocalFrame>::Lookup(context_group_id);
+  String token = DebuggerId(frame);
+  if (token.IsEmpty())
+    return nullptr;
+  return v8_inspector::StringBuffer::create(ToV8InspectorStringView(token));
 }
 
 void MainThreadDebugger::installAdditionalCommandLineAPI(

@@ -22,6 +22,7 @@ class ExceptionState;
 class ExecutionContext;
 class ScriptState;
 class WorkerScriptLoader;
+struct RemoteAsyncTaskToken;
 
 // Implementation of the Worker interface defined in the WebWorker HTML spec:
 // https://html.spec.whatwg.org/multipage/workers.html#worker
@@ -76,7 +77,7 @@ class CORE_EXPORT DedicatedWorker final
 
   // Callbacks for |script_loader_|.
   void OnResponse();
-  void OnFinished();
+  void OnFinished(std::unique_ptr<RemoteAsyncTaskToken> async_token);
 
   // Implements EventTarget (via AbstractWorker -> EventTargetWithInlineData).
   const AtomicString& InterfaceName() const final;
