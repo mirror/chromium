@@ -100,6 +100,10 @@ int HarmonyLayoutProvider::GetDistanceMetric(int metric) const {
       return kHarmonyLayoutUnit;
     case DISTANCE_MODAL_DIALOG_WIDTH_CONTAINING_MULTILINE_TEXT:
       return kMediumSnapPoint;
+    case DISTANCE_SINGLE_HOVER_CONTENT_LIST_VERTICAL:
+      return kHarmonyLayoutUnit / 4;
+    case DISTANCE_MULTI_HOVER_CONTENT_LIST_VERTICAL:
+      return kHarmonyLayoutUnit / 2;
     default:
       return ChromeLayoutProvider::GetDistanceMetric(metric);
   }
