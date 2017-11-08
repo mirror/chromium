@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "83941581_986963b9",
+        "filename": "content/renderer/service_worker/service_worker_subresource_loader_unittest.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 717,
+      "author": {
+        "id": 1000193
+      },
+      "writtenOn": "2017-11-08T15:56:12Z",
+      "side": 1,
+      "message": "Nit/question: Curious why you put the static_assert here versus one of the other files?\n\nThat is, this is testing Service Worker + Fetch integration, but I would think that the loading subsystem (navigation_url_loader_network_service?) might make more sense.",
+      "revId": "0dfa6284490225c6065aec0951611d36c0c09566",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "681977ab_160f4d3f",
+        "filename": "net/url_request/url_request.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 132,
+      "author": {
+        "id": 1000193
+      },
+      "writtenOn": "2017-11-08T15:56:12Z",
+      "side": 1,
+      "message": "Design question: Curious why an untyped enum versus a constexpr. Per https://google.github.io/styleguide/cppguide.html#Use_of_constexpr it seems like you\u0027d be able to declare this constexpr and have it assigned in the header (e.g. without having to split)\n\nComment nit: It seems like it\u0027d be appropriate to mention this value may be histogrammed? I\u0027m curious in the context of service_worker_metrics, because now that ceiling value is derived from this, so changing this is not \u0027free\u0027 (nor obvious the impact)",
+      "revId": "0dfa6284490225c6065aec0951611d36c0c09566",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
