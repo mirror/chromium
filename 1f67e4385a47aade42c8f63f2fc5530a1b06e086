@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "8ca8beb7_4bd55cfb",
+        "filename": "ui/aura/window_observer.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 85,
+      "author": {
+        "id": 1002897
+      },
+      "writtenOn": "2017-11-08T20:47:30Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "2315bb40_0c2a5953",
+      "revId": "1f67e4385a47aade42c8f63f2fc5530a1b06e086",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "9369c791_71bc5c6d",
         "filename": "ui/aura/window_observer.h",
         "patchSetId": 3
@@ -33,6 +51,24 @@
       "revId": "1f67e4385a47aade42c8f63f2fc5530a1b06e086",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3fb53741_9ffa0bff",
+        "filename": "ui/aura/window_observer.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 100,
+      "author": {
+        "id": 1002897
+      },
+      "writtenOn": "2017-11-08T20:47:30Z",
+      "side": 1,
+      "message": "Reason will be added by https://chromium-review.googlesource.com/c/chromium/src/+/700619",
+      "parentUuid": "9369c791_71bc5c6d",
+      "revId": "1f67e4385a47aade42c8f63f2fc5530a1b06e086",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
