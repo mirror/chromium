@@ -40,6 +40,7 @@
 #include "sandbox/linux/services/thread_helpers.h"
 #include "sandbox/linux/services/yama.h"
 #include "sandbox/linux/suid/client/setuid_sandbox_client.h"
+#include "sandbox/sandbox_features.h"
 #include "services/service_manager/sandbox/linux/sandbox_seccomp_bpf_linux.h"
 #include "services/service_manager/sandbox/sandbox.h"
 #include "services/service_manager/sandbox/sandbox_type.h"
@@ -264,19 +265,36 @@ sandbox::SetuidSandboxClient* SandboxLinux::setuid_sandbox_client() const {
 // For seccomp-bpf, we use the SandboxSeccompBPF class.
 bool SandboxLinux::StartSeccompBPF(service_manager::SandboxType sandbox_type,
                                    SandboxSeccompBPF::PreSandboxHook hook,
-                                   const SandboxSeccompBPF::Options& opts) {
+                                   const SandboxSeccompBPF::Options& options) {
   CHECK(!seccomp_bpf_started_);
   CHECK(pre_initialized_);
+#if BUILDFLAG(USE_SECCOMP_BPF)
   if (!seccomp_bpf_supported())
     return false;
 
-  if (!SandboxSeccompBPF::StartSandbox(sandbox_type, OpenProc(proc_fd_),
-                                       std::move(hook), opts)) {
-    return false;
+  if (IsUnsandboxedSandboxType(sandbox_type) ||
+      !SandboxSeccompBPF::IsSeccompBPFDesired() ||
+      !SandboxSeccompBPF::SupportsSandbox()) {
+    return true;
   }
+
+  // If the kernel supports the sandbox, and if the command line says we
+  // should enable it, enable it or die.
+  std::unique_ptr<BPFBasePolicy> policy =
+      SandboxSeccompBPF::PolicyForSandboxType(sandbox_type, options);
+
+  if (hook)
+    CHECK(std::move(hook).Run(policy.get(), options));
+
+  SandboxSeccompBPF::StartSandboxWithExternalPolicy(std::move(policy),
+                                                    OpenProc(proc_fd_));
+  SandboxSeccompBPF::RunSandboxSanityChecks(sandbox_type, options);
   seccomp_bpf_started_ = true;
   LogSandboxStarted("seccomp-bpf");
   return true;
+#else
+  return false;
+#endif
 }
 
 bool SandboxLinux::InitializeSandbox(SandboxType sandbox_type,
