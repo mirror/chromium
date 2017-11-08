@@ -52,6 +52,24 @@
       "revId": "64ca627db6ea8ef3bc261ac9db4c4b957a70f8f9",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3eb716e3_ac6ae964",
+        "filename": "ios/chrome/PRESUBMIT.py",
+        "patchSetId": 3
+      },
+      "lineNbr": 10,
+      "author": {
+        "id": 1183785
+      },
+      "writtenOn": "2017-11-08T23:11:47Z",
+      "side": 1,
+      "message": "Checked the commits in these two days,  ios/web has ~5 commits per day, ios/chrome ~20,  ios ~25-30.  It may not be that worse to run on //ios than //ios/chrome,  although there might be a traffic jam during busy hours.\n\nI\u0027ll move it to //ios then and try to allocate more machines.",
+      "parentUuid": "d193e556_176cb9fc",
+      "revId": "64ca627db6ea8ef3bc261ac9db4c4b957a70f8f9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
