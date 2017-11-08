@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "796466a4_61848619",
+        "filename": "chrome/browser/ui/views/collected_cookies_views.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 544,
+      "author": {
+        "id": 1000022
+      },
+      "writtenOn": "2017-11-08T12:15:24Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "ad2b2e4d_148fae77",
+      "range": {
+        "startLine": 544,
+        "startChar": 4,
+        "endLine": 544,
+        "endChar": 30
+      },
+      "revId": "58fad18c156b8228d6d21ac32497dacebd5b27e3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "f4b9b2e6_1a04c844",
         "filename": "ui/views/view.h",
         "patchSetId": 1
@@ -45,6 +69,30 @@
       "revId": "58fad18c156b8228d6d21ac32497dacebd5b27e3",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3cf49031_e28032f6",
+        "filename": "ui/views/view.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 518,
+      "author": {
+        "id": 1000022
+      },
+      "writtenOn": "2017-11-08T12:15:24Z",
+      "side": 1,
+      "message": "Okay, I\u0027ve undone this change.\n\nI had a look at the linked CL. What made you unhappy about that approach? It seems okay to me.",
+      "parentUuid": "f4b9b2e6_1a04c844",
+      "range": {
+        "startLine": 518,
+        "startChar": 2,
+        "endLine": 518,
+        "endChar": 63
+      },
+      "revId": "58fad18c156b8228d6d21ac32497dacebd5b27e3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
