@@ -70,7 +70,10 @@ service_test("services_unittests") {
     # NOTE: We do not currently support standalone service binaries on Android
     # or iOS, so any tests which use the ServiceTest framework to connect to
     # standalone services must be added here.
-    deps += [ "//services/video_capture:tests" ]
+    deps += [
+      "//services/audio:tests",
+      "//services/video_capture:tests",
+    ]
   }
 
   if (is_chromeos) {
@@ -91,6 +94,7 @@ catalog("services_unittests_catalog") {
 
   if (!is_ios) {
     catalog_deps += [
+      "//services/audio:tests_catalog",
       "//services/device:tests_catalog",
       "//services/preferences:tests_catalog",
       "//services/resource_coordinator:tests_catalog",
