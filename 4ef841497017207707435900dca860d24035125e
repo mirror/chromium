@@ -1,0 +1,96 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "44a2abfb_7bf35acf",
+        "filename": "device/geolocation/network_location_request.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 24,
+      "author": {
+        "id": 1211034
+      },
+      "writtenOn": "2017-11-08T06:55:47Z",
+      "side": 1,
+      "message": "Is this required?",
+      "range": {
+        "startLine": 24,
+        "startChar": 7,
+        "endLine": 24,
+        "endChar": 41
+      },
+      "revId": "4ef841497017207707435900dca860d24035125e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0bca2c1f_f541e362",
+        "filename": "services/device/geolocation/public_ip_address_location_notifier.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 118,
+      "author": {
+        "id": 1211034
+      },
+      "writtenOn": "2017-11-08T06:55:47Z",
+      "side": 1,
+      "message": "I suggest adding a DCHECK for existance of network traffic annotation tag.",
+      "range": {
+        "startLine": 118,
+        "startChar": 53,
+        "endLine": 118,
+        "endChar": 0
+      },
+      "revId": "4ef841497017207707435900dca860d24035125e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4991c5c4_d2c125f6",
+        "filename": "services/device/geolocation/public_ip_address_location_notifier_unittest.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 12,
+      "author": {
+        "id": 1211034
+      },
+      "writtenOn": "2017-11-08T06:55:47Z",
+      "side": 1,
+      "message": "Instead, please use:\nnet/traffic_annotation/network_traffic_annotation_test_helper.h",
+      "range": {
+        "startLine": 12,
+        "startChar": 0,
+        "endLine": 12,
+        "endChar": 62
+      },
+      "revId": "4ef841497017207707435900dca860d24035125e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1c191388_aa120325",
+        "filename": "services/device/geolocation/public_ip_address_location_notifier_unittest.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 43,
+      "author": {
+        "id": 1211034
+      },
+      "writtenOn": "2017-11-08T06:55:47Z",
+      "side": 1,
+      "message": "Instead, please use \u0027PARTIAL_TRAFFIC_ANNOTATION_FOR_TESTS\u0027.",
+      "range": {
+        "startLine": 38,
+        "startChar": 0,
+        "endLine": 43,
+        "endChar": 1
+      },
+      "revId": "4ef841497017207707435900dca860d24035125e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
