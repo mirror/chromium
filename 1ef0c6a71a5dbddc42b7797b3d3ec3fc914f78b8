@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "abea0b8c_6f889bf7",
+        "filename": "third_party/WebKit/LayoutTests/external/wpt/async_cookies/resources/cookie-store-tests.js",
+        "patchSetId": 35
+      },
+      "lineNbr": 14,
+      "author": {
+        "id": 1204072
+      },
+      "writtenOn": "2017-11-08T00:04:49Z",
+      "side": 1,
+      "message": "I have attempted to further clarify in the comment. As getCookieStringObserved is in some cases used in the sense of \"ensure no change is reported to observers\", the \"wait possibly forever\" pattern won\u0027t work.",
+      "parentUuid": "f7d9a753_94bda9bf",
+      "revId": "1ef0c6a71a5dbddc42b7797b3d3ec3fc914f78b8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "60af85d5_1f94a6fb",
         "filename": "third_party/WebKit/LayoutTests/external/wpt/async_cookies/resources/cookie-store-tests.js",
         "patchSetId": 35
@@ -36,6 +54,24 @@
     },
     {
       "key": {
+        "uuid": "e9cc734a_c46d8c54",
+        "filename": "third_party/WebKit/LayoutTests/external/wpt/async_cookies/resources/cookie-store-tests.js",
+        "patchSetId": 35
+      },
+      "lineNbr": 21,
+      "author": {
+        "id": 1204072
+      },
+      "writtenOn": "2017-11-08T00:04:49Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "60af85d5_1f94a6fb",
+      "revId": "1ef0c6a71a5dbddc42b7797b3d3ec3fc914f78b8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "5e4b5f53_f8c1f564",
         "filename": "third_party/WebKit/LayoutTests/external/wpt/async_cookies/resources/cookie-store-tests.js",
         "patchSetId": 35
@@ -47,6 +83,24 @@
       "writtenOn": "2017-10-20T22:55:46Z",
       "side": 1,
       "message": "If you have to use setTimeout, please be explicit about the time argument (0).",
+      "revId": "1ef0c6a71a5dbddc42b7797b3d3ec3fc914f78b8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c7c9f603_28a570cd",
+        "filename": "third_party/WebKit/LayoutTests/external/wpt/async_cookies/resources/cookie-store-tests.js",
+        "patchSetId": 35
+      },
+      "lineNbr": 26,
+      "author": {
+        "id": 1204072
+      },
+      "writtenOn": "2017-11-08T00:04:49Z",
+      "side": 1,
+      "message": "Why? 0 is explicitly the default value for timeout. However, I did clarify that in the message below.",
+      "parentUuid": "5e4b5f53_f8c1f564",
       "revId": "1ef0c6a71a5dbddc42b7797b3d3ec3fc914f78b8",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -70,6 +124,24 @@
     },
     {
       "key": {
+        "uuid": "7d1aab4f_57986d5c",
+        "filename": "third_party/WebKit/LayoutTests/external/wpt/async_cookies/resources/cookie-store-tests.js",
+        "patchSetId": 35
+      },
+      "lineNbr": 51,
+      "author": {
+        "id": 1204072
+      },
+      "writtenOn": "2017-11-08T00:04:49Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "1f4484f9_cd0233f6",
+      "revId": "1ef0c6a71a5dbddc42b7797b3d3ec3fc914f78b8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "4f39f886_8f6a2103",
         "filename": "third_party/WebKit/LayoutTests/external/wpt/async_cookies/resources/cookie-store-tests.js",
         "patchSetId": 35
@@ -84,6 +156,24 @@
       "revId": "1ef0c6a71a5dbddc42b7797b3d3ec3fc914f78b8",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "eac7067d_1d298bbb",
+        "filename": "third_party/WebKit/LayoutTests/external/wpt/async_cookies/resources/cookie-store-tests.js",
+        "patchSetId": 35
+      },
+      "lineNbr": 63,
+      "author": {
+        "id": 1204072
+      },
+      "writtenOn": "2017-11-08T00:04:49Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "4f39f886_8f6a2103",
+      "revId": "1ef0c6a71a5dbddc42b7797b3d3ec3fc914f78b8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -104,6 +194,24 @@
     },
     {
       "key": {
+        "uuid": "48c430bf_6aff0d13",
+        "filename": "third_party/WebKit/LayoutTests/external/wpt/async_cookies/resources/cookie-store-tests.js",
+        "patchSetId": 35
+      },
+      "lineNbr": 67,
+      "author": {
+        "id": 1204072
+      },
+      "writtenOn": "2017-11-08T00:04:49Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "50e5da22_6b36b3ed",
+      "revId": "1ef0c6a71a5dbddc42b7797b3d3ec3fc914f78b8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "c973010c_3bde97ac",
         "filename": "third_party/WebKit/LayoutTests/external/wpt/async_cookies/resources/cookie-store-tests.js",
         "patchSetId": 35
@@ -121,6 +229,24 @@
     },
     {
       "key": {
+        "uuid": "7dd8ed66_8da62a1d",
+        "filename": "third_party/WebKit/LayoutTests/external/wpt/async_cookies/resources/cookie-store-tests.js",
+        "patchSetId": 35
+      },
+      "lineNbr": 72,
+      "author": {
+        "id": 1204072
+      },
+      "writtenOn": "2017-11-08T00:04:49Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "c973010c_3bde97ac",
+      "revId": "1ef0c6a71a5dbddc42b7797b3d3ec3fc914f78b8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "5f3e95b0_122fc8db",
         "filename": "third_party/WebKit/LayoutTests/external/wpt/async_cookies/resources/cookie-store-tests.js",
         "patchSetId": 35
@@ -132,6 +258,24 @@
       "writtenOn": "2017-10-20T22:55:46Z",
       "side": 1,
       "message": "The meaning of \"legacy\" is unclear here. Consider switching to \"unsecured\", to match the name of the function setting it.",
+      "revId": "1ef0c6a71a5dbddc42b7797b3d3ec3fc914f78b8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "636e8435_86c6d040",
+        "filename": "third_party/WebKit/LayoutTests/external/wpt/async_cookies/resources/cookie-store-tests.js",
+        "patchSetId": 35
+      },
+      "lineNbr": 121,
+      "author": {
+        "id": 1204072
+      },
+      "writtenOn": "2017-11-08T00:04:49Z",
+      "side": 1,
+      "message": "\"LEGACY\" here means it is an old-style unprefixed cookie name, so you can\u0027t tell e.g. whether it is Secure-flagged or /-pathed just by looking at it. Comment added.",
+      "parentUuid": "5f3e95b0_122fc8db",
       "revId": "1ef0c6a71a5dbddc42b7797b3d3ec3fc914f78b8",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -155,6 +299,24 @@
     },
     {
       "key": {
+        "uuid": "8fe1988f_81fbbee8",
+        "filename": "third_party/WebKit/LayoutTests/external/wpt/async_cookies/resources/cookie-store-tests.js",
+        "patchSetId": 35
+      },
+      "lineNbr": 185,
+      "author": {
+        "id": 1204072
+      },
+      "writtenOn": "2017-11-08T00:04:49Z",
+      "side": 1,
+      "message": "Agreed about sort order intuition, so I added ASCII digit prefices for that.\n\nAs discussed offline, additional ASCII-only cases can be added in a follow-up change.",
+      "parentUuid": "337f28a8_b6fa7d44",
+      "revId": "1ef0c6a71a5dbddc42b7797b3d3ec3fc914f78b8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "6781fd77_634a8e41",
         "filename": "third_party/WebKit/LayoutTests/external/wpt/async_cookies/resources/cookie-store-tests.js",
         "patchSetId": 35
@@ -166,6 +328,24 @@
       "writtenOn": "2017-10-20T22:55:46Z",
       "side": 1,
       "message": "I still don\u0027t think assertions are appropriate in a cleanup.\n\nThe best way around that I can see is to pull out an array with the steps above, then conditionally concatenate the steps below (simplified to bare cookie.delete calls) if the page is https.\n\nSeparately, I think that Promise.all() should be sufficient here -- if a cookieStore.delete call fails, there\u0027s little reason to expect that the other calls would succeed.",
+      "revId": "1ef0c6a71a5dbddc42b7797b3d3ec3fc914f78b8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2b376ced_689c4127",
+        "filename": "third_party/WebKit/LayoutTests/external/wpt/async_cookies/resources/cookie-store-tests.js",
+        "patchSetId": 35
+      },
+      "lineNbr": 277,
+      "author": {
+        "id": 1204072
+      },
+      "writtenOn": "2017-11-08T00:04:49Z",
+      "side": 1,
+      "message": "resetCookies also verifies delete behavior. Renamed to testDeleteCookies.\n\nI\u0027m using sequential awaits rather than Promise.all to make it much more obvious which step failed by running them non-overlapping, and to ensure only (at most) one failing step at a time. I could make it async/overlapped but I\u0027d rather not unless you feel strongly about it.",
+      "parentUuid": "6781fd77_634a8e41",
       "revId": "1ef0c6a71a5dbddc42b7797b3d3ec3fc914f78b8",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -189,6 +369,24 @@
     },
     {
       "key": {
+        "uuid": "e82ef992_f171a17f",
+        "filename": "third_party/WebKit/LayoutTests/external/wpt/async_cookies/resources/cookie-store-tests.js",
+        "patchSetId": 35
+      },
+      "lineNbr": 305,
+      "author": {
+        "id": 1204072
+      },
+      "writtenOn": "2017-11-08T00:04:49Z",
+      "side": 1,
+      "message": "Moved to a separate helper and called separately.",
+      "parentUuid": "1b7d82b9_82ddc5bf",
+      "revId": "1ef0c6a71a5dbddc42b7797b3d3ec3fc914f78b8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "002c78c3_392f6d02",
         "filename": "third_party/WebKit/LayoutTests/external/wpt/async_cookies/resources/cookie-store-tests.js",
         "patchSetId": 35
@@ -200,6 +398,24 @@
       "writtenOn": "2017-10-20T22:55:46Z",
       "side": 1,
       "message": "This seems like a good candidate for a test cleanup to be registered right after the observer is created. The change would make the observer lifetime clearer.",
+      "revId": "1ef0c6a71a5dbddc42b7797b3d3ec3fc914f78b8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4849727e_30741dc5",
+        "filename": "third_party/WebKit/LayoutTests/external/wpt/async_cookies/resources/cookie-store-tests.js",
+        "patchSetId": 35
+      },
+      "lineNbr": 322,
+      "author": {
+        "id": 1204072
+      },
+      "writtenOn": "2017-11-08T00:04:49Z",
+      "side": 1,
+      "message": "Moved to end of harness.",
+      "parentUuid": "002c78c3_392f6d02",
       "revId": "1ef0c6a71a5dbddc42b7797b3d3ec3fc914f78b8",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -240,6 +456,24 @@
     },
     {
       "key": {
+        "uuid": "ef5f9785_7a9bc685",
+        "filename": "third_party/WebKit/LayoutTests/external/wpt/async_cookies/resources/cookie-store-tests.js",
+        "patchSetId": 35
+      },
+      "lineNbr": 338,
+      "author": {
+        "id": 1204072
+      },
+      "writtenOn": "2017-11-08T00:04:49Z",
+      "side": 1,
+      "message": "Documented in a comment at the beginning",
+      "parentUuid": "af99229f_b52a472f",
+      "revId": "1ef0c6a71a5dbddc42b7797b3d3ec3fc914f78b8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "980caaad_b0268520",
         "filename": "third_party/WebKit/LayoutTests/external/wpt/async_cookies/resources/cookie-store-tests.js",
         "patchSetId": 35
@@ -251,6 +485,24 @@
       "writtenOn": "2017-10-20T22:55:46Z",
       "side": 1,
       "message": "Please consider cookie-name or cookie_name instead of shouty casing.",
+      "revId": "1ef0c6a71a5dbddc42b7797b3d3ec3fc914f78b8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ace80980_db77b52c",
+        "filename": "third_party/WebKit/LayoutTests/external/wpt/async_cookies/resources/cookie-store-tests.js",
+        "patchSetId": 35
+      },
+      "lineNbr": 339,
+      "author": {
+        "id": 1204072
+      },
+      "writtenOn": "2017-11-08T00:04:49Z",
+      "side": 1,
+      "message": "Added a comment at the beginning. This is intended to be realistic. Traditional session cookie names are often all-upper-case for framework compatibility. The more modern \"__Host-\" prefix has only one allowed casing. An expected upgrade path from traditional \"legacy\" cookie names to simple origin cookie names is simply to prefix the traditional name with the \"__Host-\" prefix.",
+      "parentUuid": "980caaad_b0268520",
       "revId": "1ef0c6a71a5dbddc42b7797b3d3ec3fc914f78b8",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -274,6 +526,24 @@
     },
     {
       "key": {
+        "uuid": "90fecdb3_440ccb4c",
+        "filename": "third_party/WebKit/LayoutTests/external/wpt/async_cookies/resources/cookie-store-tests.js",
+        "patchSetId": 35
+      },
+      "lineNbr": 350,
+      "author": {
+        "id": 1204072
+      },
+      "writtenOn": "2017-11-08T00:04:49Z",
+      "side": 1,
+      "message": "The use of let vs const is intentional, and depends on whether the JS gets rewritten mechanically (const if not, let if so). \"async function\" does not cleanly support rewriting, and also doesn\u0027t allow arrow notation and so reduces readability.",
+      "parentUuid": "b18886ac_ad4ff5db",
+      "revId": "1ef0c6a71a5dbddc42b7797b3d3ec3fc914f78b8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "97cb9a50_0f4ef228",
         "filename": "third_party/WebKit/LayoutTests/external/wpt/async_cookies/resources/cookie-store-tests.js",
         "patchSetId": 35
@@ -291,6 +561,24 @@
     },
     {
       "key": {
+        "uuid": "4bb6baf9_20aa914b",
+        "filename": "third_party/WebKit/LayoutTests/external/wpt/async_cookies/resources/cookie-store-tests.js",
+        "patchSetId": 35
+      },
+      "lineNbr": 484,
+      "author": {
+        "id": 1204072
+      },
+      "writtenOn": "2017-11-08T00:04:49Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "97cb9a50_0f4ef228",
+      "revId": "1ef0c6a71a5dbddc42b7797b3d3ec3fc914f78b8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "29e46bbe_27a0850b",
         "filename": "third_party/WebKit/LayoutTests/external/wpt/async_cookies/resources/cookie-store-tests.js",
         "patchSetId": 35
@@ -302,6 +590,24 @@
       "writtenOn": "2017-10-20T22:55:46Z",
       "side": 1,
       "message": "Can you please stick to [A-Za-z0-9_]+ (and English words) for variable names?",
+      "revId": "1ef0c6a71a5dbddc42b7797b3d3ec3fc914f78b8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "567d308e_6917aeb9",
+        "filename": "third_party/WebKit/LayoutTests/external/wpt/async_cookies/resources/cookie-store-tests.js",
+        "patchSetId": 35
+      },
+      "lineNbr": 493,
+      "author": {
+        "id": 1204072
+      },
+      "writtenOn": "2017-11-08T00:04:49Z",
+      "side": 1,
+      "message": "Done, sorry about that.",
+      "parentUuid": "29e46bbe_27a0850b",
       "revId": "1ef0c6a71a5dbddc42b7797b3d3ec3fc914f78b8",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -325,6 +631,24 @@
     },
     {
       "key": {
+        "uuid": "be637e12_9b3f90af",
+        "filename": "third_party/WebKit/LayoutTests/external/wpt/async_cookies/resources/cookie-store-tests.js",
+        "patchSetId": 35
+      },
+      "lineNbr": 567,
+      "author": {
+        "id": 1204072
+      },
+      "writtenOn": "2017-11-08T00:04:49Z",
+      "side": 1,
+      "message": "Still relevant, but obsolete comment updated and moved all these to the end.",
+      "parentUuid": "4794e998_a26c15f6",
+      "revId": "1ef0c6a71a5dbddc42b7797b3d3ec3fc914f78b8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "3e4530f3_44fc4083",
         "filename": "third_party/WebKit/LayoutTests/external/wpt/async_cookies/resources/cookie-store-tests.js",
         "patchSetId": 35
@@ -336,6 +660,24 @@
       "writtenOn": "2017-10-20T22:55:46Z",
       "side": 1,
       "message": "This really seems like it can be its own test. I can\u0027t think of interactions issues that would be uncovered by having it combined with other tests.",
+      "revId": "1ef0c6a71a5dbddc42b7797b3d3ec3fc914f78b8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0008ea7b_bd3fe027",
+        "filename": "third_party/WebKit/LayoutTests/external/wpt/async_cookies/resources/cookie-store-tests.js",
+        "patchSetId": 35
+      },
+      "lineNbr": 793,
+      "author": {
+        "id": 1204072
+      },
+      "writtenOn": "2017-11-08T00:04:49Z",
+      "side": 1,
+      "message": "Actually there are quite a few. It\u0027s a special case for serialization, and looks different in the jar depending on whether there are other cookies.",
+      "parentUuid": "3e4530f3_44fc4083",
       "revId": "1ef0c6a71a5dbddc42b7797b3d3ec3fc914f78b8",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -359,6 +701,24 @@
     },
     {
       "key": {
+        "uuid": "594704f1_7ebad22d",
+        "filename": "third_party/WebKit/LayoutTests/external/wpt/async_cookies/resources/cookie-store-tests.js",
+        "patchSetId": 35
+      },
+      "lineNbr": 834,
+      "author": {
+        "id": 1204072
+      },
+      "writtenOn": "2017-11-08T00:04:49Z",
+      "side": 1,
+      "message": "Disagree about scope and added a comment explaining why. Until the feature is gone, it interacts with other cookie APIs, including this one. It is not yet gone from the HTML spec.\n\nOnce it\u0027s gone, it shouldn\u0027t. I think we need tests to ensure the interactions are present when expected and absent otherwise. Especially if these tests are used in browsers that have not reached the same tentative deletion conclusion, I think it\u0027s wise to ensure interoperability as the history of the meta element means it may not be obvious that it should be handled differently than the HTTP-level header.",
+      "parentUuid": "ceb89ba1_3608b6a7",
+      "revId": "1ef0c6a71a5dbddc42b7797b3d3ec3fc914f78b8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "3b85a23e_6baa14c0",
         "filename": "third_party/WebKit/LayoutTests/external/wpt/async_cookies/resources/cookie-store-tests.js",
         "patchSetId": 35
@@ -370,6 +730,24 @@
       "writtenOn": "2017-10-20T22:55:46Z",
       "side": 1,
       "message": "This comment doesn\u0027t look helpful to someone trying to build an interoperable implementation. I\u0027m guessing it means that some of the checks below are not helpful either.",
+      "revId": "1ef0c6a71a5dbddc42b7797b3d3ec3fc914f78b8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "83df265f_b813e309",
+        "filename": "third_party/WebKit/LayoutTests/external/wpt/async_cookies/resources/cookie-store-tests.js",
+        "patchSetId": 35
+      },
+      "lineNbr": 990,
+      "author": {
+        "id": 1204072
+      },
+      "writtenOn": "2017-11-08T00:04:49Z",
+      "side": 1,
+      "message": "Comment was actually entirely obsolete. Replaced.",
+      "parentUuid": "3b85a23e_6baa14c0",
       "revId": "1ef0c6a71a5dbddc42b7797b3d3ec3fc914f78b8",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
