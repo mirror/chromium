@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "0b196bc8_379cac30",
+        "filename": "chrome/browser/ui/webui/policy_ui_handler.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 320,
+      "author": {
+        "id": 1111144
+      },
+      "writtenOn": "2017-11-08T13:33:54Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "af93877f_8b5e384d",
+      "range": {
+        "startLine": 320,
+        "startChar": 23,
+        "endLine": 320,
+        "endChar": 44
+      },
+      "revId": "03aee0b7f56855c030cd60f888dd59c50fe001ad",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "1c13eccc_251167f8",
         "filename": "components/policy/proto/device_management_backend.proto",
         "patchSetId": 6
@@ -45,6 +69,30 @@
       "revId": "03aee0b7f56855c030cd60f888dd59c50fe001ad",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0a4b1ce5_2afaa18e",
+        "filename": "components/policy/proto/device_management_backend.proto",
+        "patchSetId": 6
+      },
+      "lineNbr": 355,
+      "author": {
+        "id": 1111144
+      },
+      "writtenOn": "2017-11-08T13:33:54Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "1c13eccc_251167f8",
+      "range": {
+        "startLine": 354,
+        "startChar": 23,
+        "endLine": 355,
+        "endChar": 14
+      },
+      "revId": "03aee0b7f56855c030cd60f888dd59c50fe001ad",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
