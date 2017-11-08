@@ -860,6 +860,7 @@ test("content_browsertests") {
     "//services/device/public/interfaces",
     "//services/device/public/interfaces:generic_sensor",
     "//services/service_manager/public/cpp",
+    "//services/service_manager/sandbox:sandbox",
     "//services/test/echo/public/interfaces",
     "//services/ui/public/cpp/gpu",
     "//services/video_capture/public/cpp",
