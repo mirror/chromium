@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "fe43ba0b_ff9104a7",
+        "filename": "chrome/utility/importer/firefox_importer.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 382,
+      "author": {
+        "id": 1002541
+      },
+      "writtenOn": "2017-11-08T11:54:34Z",
+      "side": 1,
+      "message": "I\u0027m wondering if we should count the number of forms passed to bridge_-\u003eSetPasswordForm on line 387 instead of the total size of |forms|.",
+      "range": {
+        "startLine": 382,
+        "startChar": 31,
+        "endLine": 382,
+        "endChar": 41
+      },
+      "revId": "86dc7b761bead0c757bac8a02b26571994dfeef1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
