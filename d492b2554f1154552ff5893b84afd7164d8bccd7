@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "35877f08_5c51042b",
+        "filename": "testing/buildbot/chromium.android.fyi.json",
+        "patchSetId": 6
+      },
+      "lineNbr": 2289,
+      "author": {
+        "id": 1170419
+      },
+      "writtenOn": "2017-11-08T18:03:23Z",
+      "side": 0,
+      "message": "You didn\u0027t add any requested dimensions to the new tests, so they\u0027ll run on *any* swarming bot (eg mac, windows, linux). Is that intentional?",
+      "revId": "d492b2554f1154552ff5893b84afd7164d8bccd7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
