@@ -16,6 +16,24 @@
       "revId": "64ca627db6ea8ef3bc261ac9db4c4b957a70f8f9",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ea7fd149_ea0629af",
+        "filename": "ios/chrome/PRESUBMIT.py",
+        "patchSetId": 3
+      },
+      "lineNbr": 10,
+      "author": {
+        "id": 1000119
+      },
+      "writtenOn": "2017-11-08T21:52:31Z",
+      "side": 1,
+      "message": "My understand is that\u0027s where we want to end up, but we\u0027re ramping it up slowly because we\u0027re worried about overloading the CQ bots.  I think it makes sense to start smaller and ramp up as aggressively as we can.\n\nI don\u0027t have a strong opinion on where to start.  Are changes in ios/chrome more likely to break EG tests than changes in ios/web, or vice-versa?  I\u0027d guess that there are fewer daily changes in ios/web, if that matters.",
+      "parentUuid": "eab5755c_bc0b91e3",
+      "revId": "64ca627db6ea8ef3bc261ac9db4c4b957a70f8f9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
