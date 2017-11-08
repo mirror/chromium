@@ -162,7 +162,7 @@ class MediaEngagementContentsObserver : public content::WebContentsObserver {
   static const int kMaxInsignificantPlaybackReason;
 
   // Record the score and change in score to UKM.
-  void RecordUkmMetrics();
+  void RecordUkmMetrics(int, int);
 
   bool significant_playback_recorded_ = false;
 
@@ -186,6 +186,9 @@ class MediaEngagementContentsObserver : public content::WebContentsObserver {
 
   // The task runner to use when creating timers. It is used for testing.
   scoped_refptr<base::SequencedTaskRunner> task_runner_;
+
+  // The seconds between significant playbacks to be recorded to UKM.
+  int seconds_since_playback_for_ukm_ = 0;
 
   url::Origin committed_origin_;
 

@@ -6,6 +6,7 @@
 
 #include "base/metrics/histogram.h"
 #include "base/metrics/histogram_macros.h"
+#include "base/time/default_clock.h"
 #include "build/build_config.h"
 #include "chrome/browser/media/media_engagement_service.h"
 #include "content/public/browser/navigation_handle.h"
@@ -74,7 +75,6 @@ void MediaEngagementContentsObserver::WebContentsDestroyed() {
   // Commit a visit if we have not had a playback.
   MaybeCommitPendingData(kVisitEnd);
 
-  RecordUkmMetrics();
   ClearPlayerStates();
   service_->contents_observers_.erase(this);
   delete this;
@@ -86,7 +86,9 @@ void MediaEngagementContentsObserver::ClearPlayerStates() {
   player_timers_.clear();
 }
 
-void MediaEngagementContentsObserver::RecordUkmMetrics() {
+void MediaEngagementContentsObserver::RecordUkmMetrics(
+    int audible_players_count,
+    int significant_players_count) {
   ukm::UkmRecorder* ukm_recorder = ukm::UkmRecorder::Get();
   if (!ukm_recorder)
     return;
@@ -97,15 +99,22 @@ void MediaEngagementContentsObserver::RecordUkmMetrics() {
 
   ukm::SourceId source_id = ukm_recorder->GetNewSourceID();
   ukm_recorder->UpdateSourceURL(source_id, url);
-
   MediaEngagementScore score = service_->CreateEngagementScore(url);
+
   ukm::builders::Media_Engagement_SessionFinished(source_id)
       .SetPlaybacks_Total(score.media_playbacks())
       .SetVisits_Total(score.visits())
       .SetEngagement_Score(ConvertScoreToPercentage(score.actual_score()))
       .SetPlaybacks_Delta(significant_playback_recorded_)
       .SetEngagement_IsHigh(score.high_score())
+      .SetPlayer_Audible_Delta(audible_players_count)
+      .SetPlayer_Audible_Total(score.audible_playbacks())
+      .SetPlayer_Significant_Delta(significant_players_count)
+      .SetPlayer_Significant_Total(score.significant_playbacks())
+      .SetPlaybacks_SecondsSinceLast(seconds_since_playback_for_ukm_)
       .Record(ukm_recorder);
+
+  seconds_since_playback_for_ukm_ = 0;
 }
 
 void MediaEngagementContentsObserver::MaybeCommitPendingData(
@@ -121,12 +130,16 @@ void MediaEngagementContentsObserver::MaybeCommitPendingData(
     }
   }
 
-  if (!pending_data_to_commit_.has_value() && !audible_players_count)
+  if (!pending_data_to_commit_.has_value() && !audible_players_count) {
+    // If the commit trigger was the end then we should record UKM metrics.
+    if (trigger == kVisitEnd)
+      RecordUkmMetrics(0, 0);
     return;
+  }
 
   // If the current origin is not a valid URL then we should just silently reset
   // any pending data.
-  if (!committed_origin_.GetURL().is_valid()) {
+  if (!service_->ShouldRecordEngagement(committed_origin_.GetURL())) {
     pending_data_to_commit_.reset();
     audible_players_.clear();
     return;
@@ -138,8 +151,22 @@ void MediaEngagementContentsObserver::MaybeCommitPendingData(
   if (pending_data_to_commit_.has_value())
     score.IncrementVisits();
 
-  if (pending_data_to_commit_.value_or(false))
+  if (pending_data_to_commit_.value_or(false)) {
+    // Media playbacks trigger a commit so we should only increment media
+    // playbacks if a significant media playback has occured.
+    DCHECK_EQ(trigger, kSignificantMediaPlayback);
+    const base::Time old_time = score.last_media_playback_time();
     score.IncrementMediaPlaybacks();
+
+    if (!old_time.is_null()) {
+      // Calculate the number of seconds since the last playback and the first
+      // significant playback this visit. If there is no last playback time then
+      // we will record 0.
+      const base::TimeDelta difference =
+          score.last_media_playback_time() - old_time;
+      seconds_since_playback_for_ukm_ = difference.InSeconds();
+    }
+  }
 
   if (audible_players_count > 0)
     score.IncrementAudiblePlaybacks(audible_players_count);
@@ -155,6 +182,10 @@ void MediaEngagementContentsObserver::MaybeCommitPendingData(
   // either being destroyed or we are navigating away.
   if (audible_players_count)
     audible_players_.clear();
+
+  // If the commit trigger was the end then we should record UKM metrics.
+  if (trigger == kVisitEnd)
+    RecordUkmMetrics(audible_players_count, significant_players_count);
 }
 
 void MediaEngagementContentsObserver::DidFinishNavigation(
@@ -174,8 +205,6 @@ void MediaEngagementContentsObserver::DidFinishNavigation(
   // Commit a visit if we have not had a playback before the new origin is
   // updated.
   MaybeCommitPendingData(kVisitEnd);
-
-  RecordUkmMetrics();
 
   committed_origin_ = new_origin;
   significant_playback_recorded_ = false;
@@ -326,10 +355,9 @@ void MediaEngagementContentsObserver::OnSignificantMediaPlaybackTime(
     // pending to commit.
     DCHECK(pending_data_to_commit_.has_value());
     pending_data_to_commit_ = true;
+    significant_playback_recorded_ = true;
     MaybeCommitPendingData(kSignificantMediaPlayback);
   }
-
-  significant_playback_recorded_ = true;
 }
 
 void MediaEngagementContentsObserver::RecordInsignificantReasons(
