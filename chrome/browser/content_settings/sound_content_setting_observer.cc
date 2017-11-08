@@ -9,6 +9,7 @@
 #include "chrome/browser/profiles/profile.h"
 #include "components/content_settings/core/browser/host_content_settings_map.h"
 #include "content/public/browser/navigation_handle.h"
+#include "content/public/common/url_constants.h"
 
 #if !defined(OS_ANDROID)
 #include "chrome/browser/ui/tabs/tab_utils.h"
@@ -63,6 +64,14 @@ void SoundContentSettingObserver::MuteOrUnmuteIfNecessary() {
   // Do not override the decisions of an extension.
   if (reason == TabMutedReason::EXTENSION)
     return;
+
+  // Don't unmute a chrome:// url if the tab has been explicitly muted on a
+  // chrome:// url.
+  if (reason == TabMutedReason::CONTENT_SETTING_CHROME) {
+    GURL url = web_contents()->GetLastCommittedURL();
+    if (url.SchemeIs(content::kChromeUIScheme))
+      return;
+  }
 
   chrome::SetTabAudioMuted(web_contents(), mute,
                            TabMutedReason::CONTENT_SETTING, std::string());
