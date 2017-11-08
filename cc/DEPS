@@ -14,6 +14,7 @@ include_rules = [
   "+gpu/command_buffer/common/texture_in_use_response.h",
   "+gpu/config/gpu_driver_bug_workaround_type.h",
   "+gpu/config/gpu_feature_info.h",
+  "+gpu/skia_bindings",
   "+gpu/vulkan",
   "+media",
   "+skia/ext",
