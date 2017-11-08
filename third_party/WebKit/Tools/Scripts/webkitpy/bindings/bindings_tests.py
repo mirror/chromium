@@ -77,6 +77,7 @@ DEPENDENCY_IDL_FILES = frozenset([
     'test_interface_partial_3.idl',
     'test_interface_partial_4.idl',
     'test_interface_partial_secure_context.idl',
+    'test_interface_secure_context_partial.idl',
     'test_interface_2_partial.idl',
     'test_interface_2_partial_2.idl',
 ]) if IS_SNAKE_CASE else frozenset([
@@ -88,6 +89,7 @@ DEPENDENCY_IDL_FILES = frozenset([
     'TestInterfacePartial3.idl',
     'TestInterfacePartial4.idl',
     'TestInterfacePartialSecureContext.idl',
+    'TestInterfaceSecureContextPartial.idl',
     'TestInterface2Partial.idl',
     'TestInterface2Partial2.idl',
 ])

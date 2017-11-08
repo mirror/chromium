@@ -29,7 +29,7 @@ namespace blink {
 #pragma clang diagnostic push
 #pragma clang diagnostic ignored "-Wglobal-constructors"
 #endif
-const WrapperTypeInfo V8TestInterfaceSecureContext::wrapperTypeInfo = {
+WrapperTypeInfo V8TestInterfaceSecureContext::wrapperTypeInfo = {
     gin::kEmbedderBlink,
     V8TestInterfaceSecureContext::domTemplate,
     V8TestInterfaceSecureContext::Trace,
@@ -410,7 +410,7 @@ void V8TestInterfaceSecureContext::secureContextWorkerExposedRuntimeEnabledMetho
   TestInterfaceSecureContextV8Internal::secureContextWorkerExposedRuntimeEnabledMethodMethod(info);
 }
 
-static void installV8TestInterfaceSecureContextTemplate(
+void V8TestInterfaceSecureContext::installV8TestInterfaceSecureContextTemplate(
     v8::Isolate* isolate,
     const DOMWrapperWorld& world,
     v8::Local<v8::FunctionTemplate> interfaceTemplate) {
@@ -427,9 +427,6 @@ static void installV8TestInterfaceSecureContextTemplate(
   // Register IDL constants, attributes and operations.
 
   // Custom signature
-
-  V8TestInterfaceSecureContext::InstallRuntimeEnabledFeaturesOnTemplate(
-      isolate, world, interfaceTemplate);
 }
 
 void V8TestInterfaceSecureContext::InstallRuntimeEnabledFeaturesOnTemplate(
@@ -449,7 +446,7 @@ void V8TestInterfaceSecureContext::InstallRuntimeEnabledFeaturesOnTemplate(
 }
 
 v8::Local<v8::FunctionTemplate> V8TestInterfaceSecureContext::domTemplate(v8::Isolate* isolate, const DOMWrapperWorld& world) {
-  return V8DOMConfiguration::DomClassTemplate(isolate, world, const_cast<WrapperTypeInfo*>(&wrapperTypeInfo), installV8TestInterfaceSecureContextTemplate);
+  return V8DOMConfiguration::DomClassTemplate(isolate, world, const_cast<WrapperTypeInfo*>(&wrapperTypeInfo), V8TestInterfaceSecureContext::installV8TestInterfaceSecureContextTemplateFunction);
 }
 
 bool V8TestInterfaceSecureContext::hasInstance(v8::Local<v8::Value> v8Value, v8::Isolate* isolate) {
@@ -575,6 +572,31 @@ void V8TestInterfaceSecureContext::preparePrototypeAndInterfaceObject(v8::Local<
           V8DOMConfiguration::InstallMethod(isolate, world, v8::Local<v8::Object>(), prototypeObject, interfaceObject, signature, methodConfig);
       }
     }
+  }
+}
+
+InstallRuntimeEnabledFeaturesOnTemplateFunction
+V8TestInterfaceSecureContext::install_runtime_enabled_features_on_template_function_ =
+    &V8TestInterfaceSecureContext::InstallRuntimeEnabledFeaturesOnTemplate;
+
+InstallTemplateFunction V8TestInterfaceSecureContext::installV8TestInterfaceSecureContextTemplateFunction =
+    &V8TestInterfaceSecureContext::installV8TestInterfaceSecureContextTemplate;
+
+void V8TestInterfaceSecureContext::UpdateWrapperTypeInfo(
+    InstallTemplateFunction install_template_function,
+    InstallRuntimeEnabledFeaturesFunction install_runtime_enabled_features_function,
+    InstallRuntimeEnabledFeaturesOnTemplateFunction install_runtime_enabled_features_on_template_function,
+    PreparePrototypeAndInterfaceObjectFunction prepare_prototype_and_interface_object_function) {
+  V8TestInterfaceSecureContext::installV8TestInterfaceSecureContextTemplateFunction =
+      install_template_function;
+
+  CHECK(install_runtime_enabled_features_on_template_function);
+  V8TestInterfaceSecureContext::install_runtime_enabled_features_on_template_function_ =
+      install_runtime_enabled_features_on_template_function;
+
+  if (prepare_prototype_and_interface_object_function) {
+    V8TestInterfaceSecureContext::wrapperTypeInfo.prepare_prototype_and_interface_object_function =
+        prepare_prototype_and_interface_object_function;
   }
 }
 

@@ -34,7 +34,7 @@ class V8TestInterfaceSecureContext {
     return ToScriptWrappable(object)->ToImpl<TestInterfaceSecureContext>();
   }
   CORE_EXPORT static TestInterfaceSecureContext* ToImplWithTypeCheck(v8::Isolate*, v8::Local<v8::Value>);
-  CORE_EXPORT static const WrapperTypeInfo wrapperTypeInfo;
+  CORE_EXPORT static WrapperTypeInfo wrapperTypeInfo;
   static void Trace(Visitor* visitor, ScriptWrappable* scriptWrappable) {
     visitor->TraceFromGeneratedCode(scriptWrappable->ToImpl<TestInterfaceSecureContext>());
   }
@@ -43,6 +43,13 @@ class V8TestInterfaceSecureContext {
   }
   static const int internalFieldCount = kV8DefaultWrapperInternalFieldCount;
   CORE_EXPORT static void preparePrototypeAndInterfaceObject(v8::Local<v8::Context>, const DOMWrapperWorld&, v8::Local<v8::Object> prototypeObject, v8::Local<v8::Function> interfaceObject, v8::Local<v8::FunctionTemplate> interfaceTemplate);
+
+  CORE_EXPORT static void UpdateWrapperTypeInfo(
+      InstallTemplateFunction,
+      InstallRuntimeEnabledFeaturesFunction,
+      InstallRuntimeEnabledFeaturesOnTemplateFunction,
+      PreparePrototypeAndInterfaceObjectFunction);
+  CORE_EXPORT static void installV8TestInterfaceSecureContextTemplate(v8::Isolate*, const DOMWrapperWorld&, v8::Local<v8::FunctionTemplate> interfaceTemplate);
 
   // Callback functions
 
@@ -66,10 +73,15 @@ class V8TestInterfaceSecureContext {
   CORE_EXPORT static void secureContextWindowExposedRuntimeEnabledMethodMethodCallback(const v8::FunctionCallbackInfo<v8::Value>&);
   CORE_EXPORT static void secureContextWorkerExposedRuntimeEnabledMethodMethodCallback(const v8::FunctionCallbackInfo<v8::Value>&);
 
-  static void InstallRuntimeEnabledFeaturesOnTemplate(
+  CORE_EXPORT static void InstallRuntimeEnabledFeaturesOnTemplate(
       v8::Isolate*,
       const DOMWrapperWorld&,
       v8::Local<v8::FunctionTemplate> interface_template);
+  static InstallRuntimeEnabledFeaturesOnTemplateFunction
+  install_runtime_enabled_features_on_template_function_;
+
+ private:
+  static InstallTemplateFunction installV8TestInterfaceSecureContextTemplateFunction;
 };
 
 template <>
