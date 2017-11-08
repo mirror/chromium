@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "cbaa4411_f9c4c92b",
+        "filename": "content/browser/service_worker/service_worker_version.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 1563,
+      "author": {
+        "id": 1161621
+      },
+      "writtenOn": "2017-11-08T13:31:19Z",
+      "side": 1,
+      "message": "I think rebinding forcefully here is fine, no need to care about whether the previous Mojo connection has been closed or not, just make |this| keep serving the latest embedded worker instance.",
+      "range": {
+        "startLine": 1562,
+        "startChar": 2,
+        "endLine": 1563,
+        "endChar": 54
+      },
+      "revId": "4a38be62beac62ccb35642b8e169f855f663214e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ba863900_54b04026",
+        "filename": "content/browser/service_worker/service_worker_version.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 541,
+      "author": {
+        "id": 1161621
+      },
+      "writtenOn": "2017-11-08T13:31:19Z",
+      "side": 1,
+      "message": "Eventually we\u0027ll remove this function from EmbeddedWorkerInstance::Listener after mojofied all IPCs it handles.",
+      "range": {
+        "startLine": 541,
+        "startChar": 7,
+        "endLine": 541,
+        "endChar": 24
+      },
+      "revId": "4a38be62beac62ccb35642b8e169f855f663214e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
