@@ -16,6 +16,24 @@
       "revId": "f3ddac9b4ccf1d951de818c14754d3c90fc947a7",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4e7908ac_92c1e3d9",
+        "filename": "ui/app_list/views/suggestions_container_view.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 142,
+      "author": {
+        "id": 1147616
+      },
+      "writtenOn": "2017-11-08T21:55:52Z",
+      "side": 1,
+      "message": "done, I changed knumStartPageTiles type from size_t to int to avoid the type cast here.",
+      "parentUuid": "eb6392a7_ac728549",
+      "revId": "f3ddac9b4ccf1d951de818c14754d3c90fc947a7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
