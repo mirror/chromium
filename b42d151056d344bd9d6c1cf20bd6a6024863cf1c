@@ -46,6 +46,30 @@
       "revId": "b42d151056d344bd9d6c1cf20bd6a6024863cf1c",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "f1b47f3f_138f297d",
+        "filename": "chrome/browser/ui/views/device_chooser_content_view_unittest.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 96,
+      "author": {
+        "id": 1149144
+      },
+      "writtenOn": "2017-11-08T23:38:30Z",
+      "side": 1,
+      "message": "Thanks. I am ok with both.",
+      "parentUuid": "b8222653_a444f6cd",
+      "range": {
+        "startLine": 88,
+        "startChar": 0,
+        "endLine": 96,
+        "endChar": 3
+      },
+      "revId": "b42d151056d344bd9d6c1cf20bd6a6024863cf1c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }

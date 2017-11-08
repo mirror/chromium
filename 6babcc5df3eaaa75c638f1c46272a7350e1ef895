@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "befd6cf3_70d52e68",
+        "filename": "chrome/browser/ui/views/device_chooser_content_view_unittest.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 50,
+      "author": {
+        "id": 1149144
+      },
+      "writtenOn": "2017-11-08T23:38:30Z",
+      "side": 1,
+      "message": "Based on the gtest documentation:\nhttps://github.com/google/googletest/blob/master/googletest/docs/Primer.md#basic-assertions\nThe ASSERT_TRUE() aborts the tests and EXPECT_TRUE() allows the function to continue running.\n\nI still think here it should use ASSERT_TRUE() instead of EXPECT_NE() or EXPECT_TRUE(). Because if any of these pointers is nullptr, the test shouldn\u0027t continue running since the following code uses and depends on these pointers and the test code will crash. ASSERT_TRUE() will give a more clear signal if any of the pointers is nullptr.",
+      "range": {
+        "startLine": 47,
+        "startChar": 0,
+        "endLine": 50,
+        "endChar": 40
+      },
+      "revId": "6babcc5df3eaaa75c638f1c46272a7350e1ef895",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
