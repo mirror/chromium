@@ -1225,7 +1225,9 @@ void ProfileIOData::Init(
   main_request_context_->transport_security_state()->SetReportSender(
       certificate_report_sender_.get());
 
-  expect_ct_reporter_.reset(new ChromeExpectCTReporter(main_request_context_));
+  expect_ct_reporter_.reset(new ChromeExpectCTReporter(
+      main_request_context_, base::Bind(&base::DoNothing),
+      base::Bind(&base::DoNothing)));
   main_request_context_->transport_security_state()->SetExpectCTReporter(
       expect_ct_reporter_.get());
 
