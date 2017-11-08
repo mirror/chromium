@@ -546,7 +546,7 @@ void PushMessagingManager::Core::RegisterOnUI(
           // detect whether incognito is active.
           GURL requesting_origin = data.requesting_origin;
           browser_context->GetPermissionManager()->RequestPermission(
-              PermissionType::PUSH_MESSAGING, render_frame_host,
+              PermissionType::NOTIFICATIONS, render_frame_host,
               requesting_origin, data.user_gesture,
               base::Bind(
                   &PushMessagingManager::Core::DidRequestPermissionInIncognito,
