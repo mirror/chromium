@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "d3ce0698_fd0cdcb5",
+        "filename": "components/viz/service/display/direct_renderer.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 620,
+      "author": {
+        "id": 1000887
+      },
+      "writtenOn": "2017-11-08T16:14:50Z",
+      "side": 1,
+      "message": "I agree, that seems nice, but except that CanSkipRenderPass() would have side effects - it would be the one to allocate the render pass texture.\n\nSo if you called UseRenderPass() without CanSkipRenderPass() the first time, then it would not have a texture.. it\u0027s a bit odd?",
+      "parentUuid": "2e43c2cc_1e6d0e4b",
+      "revId": "ef778b0a98314c4778f8cf89f93c807b402514ff",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "388863e1_54f9909f",
         "filename": "components/viz/service/display/direct_renderer.cc",
         "patchSetId": 3
