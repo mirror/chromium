@@ -10,6 +10,7 @@
 #include <string>
 #include <vector>
 
+#include "base/time/time.h"
 #include "build/build_config.h"
 
 class GURL;
@@ -113,6 +114,9 @@ bool IsMetricsReportingOptIn();
 // the process singleton has been grabbed by the current process
 // (http://crbug.com/264694).
 void CreateSentinelIfNeeded();
+
+// Returns the |creation_time| of the first run sentinel file info.
+base::Time GetFirstRunSentinelCreationTime();
 
 // Sets the kShowFirstRunBubbleOption local state pref so that the browser
 // shows the bubble once the main message loop gets going (or refrains from
