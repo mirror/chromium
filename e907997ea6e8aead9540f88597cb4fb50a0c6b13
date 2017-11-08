@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "f831089b_6823d007",
+        "filename": "third_party/WebKit/Source/platform/heap/HeapPage.h",
+        "patchSetId": 10
+      },
+      "lineNbr": 458,
+      "author": {
+        "id": 1131764
+      },
+      "writtenOn": "2017-11-08T13:57:29Z",
+      "side": 1,
+      "message": "The bitmap still depends on the constants mentioned in the header. I don\u0027t think it\u0027s worth abstracting those out.",
+      "range": {
+        "startLine": 458,
+        "startChar": 22,
+        "endLine": 458,
+        "endChar": 39
+      },
+      "revId": "e907997ea6e8aead9540f88597cb4fb50a0c6b13",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "284e979e_1526bbf9",
+        "filename": "third_party/WebKit/Source/platform/heap/HeapPage.h",
+        "patchSetId": 10
+      },
+      "lineNbr": 1107,
+      "author": {
+        "id": 1131764
+      },
+      "writtenOn": "2017-11-08T13:57:29Z",
+      "side": 1,
+      "message": "Not sure where this should go.",
+      "range": {
+        "startLine": 1107,
+        "startChar": 11,
+        "endLine": 1107,
+        "endChar": 33
+      },
+      "revId": "e907997ea6e8aead9540f88597cb4fb50a0c6b13",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
