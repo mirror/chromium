@@ -16,6 +16,24 @@
       "revId": "786b9f5c11e219674e22607373c5773afcc2932b",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "170ef3fa_7456dd34",
+        "filename": "chrome/browser/banners/app_banner_infobar_delegate_android.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 108,
+      "author": {
+        "id": 1186534
+      },
+      "writtenOn": "2017-11-08T02:33:17Z",
+      "side": 0,
+      "message": "No. This is an Android-only infobar, and the only place on Android where the method is called is in ConfirmInfoBar::CreateRenderInfoBar(), which we override to customise the infobar layout.",
+      "parentUuid": "5f510ea6_472ed382",
+      "revId": "786b9f5c11e219674e22607373c5773afcc2932b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
