@@ -45,6 +45,54 @@
       "revId": "cf8e70fd7a9247d91195044e4e1342f9cbe3a96e",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "597db89e_e106d4c2",
+        "filename": "ios/third_party/material_internationalization_ios/BUILD.gn",
+        "patchSetId": 2
+      },
+      "lineNbr": 18,
+      "author": {
+        "id": 1180589
+      },
+      "writtenOn": "2017-11-08T10:44:34Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "c2261bea_87417531",
+      "range": {
+        "startLine": 18,
+        "startChar": 77,
+        "endLine": 18,
+        "endChar": 100
+      },
+      "revId": "cf8e70fd7a9247d91195044e4e1342f9cbe3a96e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "02558828_7e484233",
+        "filename": "ios/third_party/material_internationalization_ios/BUILD.gn",
+        "patchSetId": 2
+      },
+      "lineNbr": 18,
+      "author": {
+        "id": 1180589
+      },
+      "writtenOn": "2017-11-08T10:44:34Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "1a76fe5b_177862b5",
+      "range": {
+        "startLine": 18,
+        "startChar": 58,
+        "endLine": 18,
+        "endChar": 76
+      },
+      "revId": "cf8e70fd7a9247d91195044e4e1342f9cbe3a96e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
