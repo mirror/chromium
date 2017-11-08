@@ -49,6 +49,30 @@
     },
     {
       "key": {
+        "uuid": "117753ee_c2b71492",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/partnerbookmarks/PartnerBookmarksReader.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 56,
+      "author": {
+        "id": 1230128
+      },
+      "writtenOn": "2017-11-08T18:35:00Z",
+      "side": 1,
+      "message": "When we instantiate the callback below, we actually have the URL from the onBookmarkPush call, so we can just use that. We can make it explicitly returned in the callback as well if you feel it\u0027s necessary.",
+      "parentUuid": "f017cccc_6c128863",
+      "range": {
+        "startLine": 56,
+        "startChar": 13,
+        "endLine": 56,
+        "endChar": 29
+      },
+      "revId": "4f1b62a727227be19581e42af9ffc69c7183056e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "ef67930f_aa7b823c",
         "filename": "chrome/android/java/src/org/chromium/chrome/browser/partnerbookmarks/PartnerBookmarksReader.java",
         "patchSetId": 5
@@ -69,6 +93,30 @@
       "revId": "4f1b62a727227be19581e42af9ffc69c7183056e",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7455ec6b_3a63020f",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/partnerbookmarks/PartnerBookmarksReader.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 112,
+      "author": {
+        "id": 1230128
+      },
+      "writtenOn": "2017-11-08T18:35:00Z",
+      "side": 1,
+      "message": "Yes, setting to false for now so we don\u0027t hammer a server for the favicon every time we don\u0027t have it stored. This will need to be true once the cache is functional.",
+      "parentUuid": "ef67930f_aa7b823c",
+      "range": {
+        "startLine": 112,
+        "startChar": 46,
+        "endLine": 112,
+        "endChar": 50
+      },
+      "revId": "4f1b62a727227be19581e42af9ffc69c7183056e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -119,6 +167,30 @@
     },
     {
       "key": {
+        "uuid": "3873ce60_61caa2a4",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/partnerbookmarks/PartnerBookmarksReader.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 127,
+      "author": {
+        "id": 1230128
+      },
+      "writtenOn": "2017-11-08T18:35:00Z",
+      "side": 1,
+      "message": "For safety I\u0027ve added a flag to protect shutDown from being called multiple times, since we\u0027re dealing with async callbacks here now.",
+      "parentUuid": "31d82193_0071b081",
+      "range": {
+        "startLine": 127,
+        "startChar": 19,
+        "endLine": 127,
+        "endChar": 27
+      },
+      "revId": "4f1b62a727227be19581e42af9ffc69c7183056e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "4bdf7320_df4ce8c5",
         "filename": "chrome/browser/android/bookmarks/partner_bookmarks_reader.cc",
         "patchSetId": 5
@@ -139,6 +211,30 @@
       "revId": "4f1b62a727227be19581e42af9ffc69c7183056e",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8408dc4d_f23cf34e",
+        "filename": "chrome/browser/android/bookmarks/partner_bookmarks_reader.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 319,
+      "author": {
+        "id": 1230128
+      },
+      "writtenOn": "2017-11-08T18:35:00Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "4bdf7320_df4ce8c5",
+      "range": {
+        "startLine": 319,
+        "startChar": 46,
+        "endLine": 319,
+        "endChar": 66
+      },
+      "revId": "4f1b62a727227be19581e42af9ffc69c7183056e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
