@@ -169,6 +169,21 @@
         "test": "compositor_unittests"
       },
       {
+        "args": [
+          "--enable-viz",
+          "--ozone-platform=headless",
+          "--override-use-software-gl-for-tests",
+          "--test-launcher-filter-file=../../testing/buildbot/filters/viz.content_browsertests.filter"
+        ],
+        "name": "viz_content_browsertests",
+        "swarming": {
+          "can_use_on_swarming_builders": true,
+          "hard_timeout": 1500,
+          "shards": 5
+        },
+        "test": "content_browsertests"
+      },
+      {
         "swarming": {
           "can_use_on_swarming_builders": true,
           "shards": 2
