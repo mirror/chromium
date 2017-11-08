@@ -1,0 +1,44 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "f4112908_ad499799",
+        "filename": "chrome/browser/ui/cocoa/bookmarks/bookmark_button_cell.mm",
+        "patchSetId": 2
+      },
+      "lineNbr": 418,
+      "author": {
+        "id": 1160249
+      },
+      "writtenOn": "2017-11-08T22:39:49Z",
+      "side": 1,
+      "message": "nit/optional: I would delete this check. There\u0027s no reason to think that NSMaxX(textRect) will be a reasonable value: the width from AppKit could be too small just as easily as it\u0027s too big right now and this won\u0027t catch it.",
+      "range": {
+        "startLine": 418,
+        "startChar": 4,
+        "endLine": 418,
+        "endChar": 43
+      },
+      "revId": "224afda77a48dee41a858f6b962de8d00b44f58d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "46557671_76470ca1",
+        "filename": "chrome/browser/ui/cocoa/bookmarks/bookmark_button_cell.mm",
+        "patchSetId": 2
+      },
+      "lineNbr": 419,
+      "author": {
+        "id": 1160249
+      },
+      "writtenOn": "2017-11-08T22:39:49Z",
+      "side": 1,
+      "message": "nit: Could you file a bug (feel free to assign it to me) to figure out what the padding should actually be?",
+      "revId": "224afda77a48dee41a858f6b962de8d00b44f58d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    }
+  ]
+}
