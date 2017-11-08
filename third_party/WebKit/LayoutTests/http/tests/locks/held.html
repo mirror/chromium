@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<title>Web Locks API: Lock held until callback result resolves</title>
+<script src="/resources/testharness.js"></script>
+<script src="/resources/testharnessreport.js"></script>
+<script>
+'use strict';
+
+// For uncaught rejections.
+setup({allow_uncaught_exception: true});
+
+function snooze(t, ms) { return new Promise(r => t.step_timeout(r, ms)); }
+
+promise_test(async t => {
+  navigator.locks.acquire('a', lock => 123);
+  await navigator.locks.acquire('a', lock => {});
+}, 'callback\'s result is promisified if not async');
+
+promise_test(async t => {
+  // Resolved when the lock is granted.
+  let granted;
+  const gpromise = new Promise(r => { granted = r; });
+
+  // Lock is held until this is resolved.
+  let resolve;
+  const rpromise = new Promise(r => { resolve = r; });
+
+  const order = [];
+
+  navigator.locks.acquire('a', lock => {
+    granted(lock);
+    return rpromise;
+  });
+  await granted;
+
+  await Promise.all([
+    snooze(t, 50).then(() => {
+      order.push('resolve');
+      resolve();
+    }),
+    navigator.locks.acquire('a', () => {
+      order.push('granted');
+    })
+  ]);
+
+  assert_array_equals(order, ['resolve', 'granted']);
+}, 'lock is held until callback\'s returned promise resolves');
+
+promise_test(async t => {
+  // Resolved when the lock is granted.
+  let granted;
+  const gpromise = new Promise(r => { granted = r; });
+
+  // Lock is held until this is rejected.
+  let reject;
+  const rpromise = new Promise((_, r) => { reject = r; });
+
+  const order = [];
+
+  navigator.locks.acquire('a', lock => {
+    granted(lock);
+    return rpromise;
+  });
+  await granted;
+
+  await Promise.all([
+    snooze(t, 50).then(() => {
+      order.push('reject');
+      reject(new Error('this uncaught rejection is expected'));
+    }),
+    navigator.locks.acquire('a', () => {
+      order.push('granted');
+    })
+  ]);
+
+  assert_array_equals(order, ['reject', 'granted']);
+}, 'lock is held until callback\'s returned promise rejects');
+
+</script>
