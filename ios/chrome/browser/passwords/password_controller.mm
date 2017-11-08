@@ -69,6 +69,38 @@ constexpr int kNotifyAutoSigninDuration = 3;  // seconds
 // Script command prefix for form changes. Possible command to be sent from
 // injected JS is 'form.buttonClicked'.
 constexpr char kCommandPrefix[] = "passwordForm";
+
+struct FormData {
+  GURL action;
+  std::string name;
+  std::string username_element;
+  std::string password_element;
+};
+
+struct Credential {
+  base::string16 username;
+  base::string16 password;
+};
+
+struct AccountSelectPasswordData {
+  std::map<pair<std::string, std::string>, FormData> forms;
+  std::vector<Credential> credentials;
+
+  void Reset() {
+    forms.clear();
+    credentials.clear();
+  }
+
+  void AddPasswordForm(const autofill::PasswordFormFillData& formData) {}
+
+  bool CheckIfSuggestionsAvailableForForm(const std::string& form_name,
+                                          const std::string& field_name) {
+    std::pair<std::string, std::string> form_and_field(form_name, field_name);
+    return forms.find(form_and_field) != forms.end();
+  }
+
+  std::vector<std::string> GetUsernameSuggestions() {}
+};
 }
 
 @interface PasswordController ()
@@ -286,6 +318,9 @@ bool GetPageURLAndCheckTrustLevel(web::WebState* web_state, GURL* page_url) {
   // The pending form data.
   std::unique_ptr<autofill::PasswordFormFillData> formData_;
 
+  std::set<std::pair<base::string16, base::string16>>
+      formsForFill_;  // todo better name
+
   // Bridge to observe WebState from Objective-C.
   std::unique_ptr<web::WebStateObserverBridge> webStateObserverBridge_;
 
@@ -440,6 +475,7 @@ bool GetPageURLAndCheckTrustLevel(web::WebState* web_state, GURL* page_url) {
 - (void)webState:(web::WebState*)webState didLoadPageWithSuccess:(BOOL)success {
   // Clear per-page state.
   formData_.reset();
+  formsForFill_.clear();
   sent_request_to_store_ = NO;
 
   // Retrieve the identity of the page. In case the page might be malicous,
@@ -677,10 +713,11 @@ bool GetPageURLAndCheckTrustLevel(web::WebState* web_state, GURL* page_url) {
   }
 
   // Suggestions are available for the username field of the password form.
-  const base::string16& pendingFormName = formData_->name;
-  const base::string16& pendingFieldName = formData_->username_field.name;
-  completion(base::SysNSStringToUTF16(formName) == pendingFormName &&
-             base::SysNSStringToUTF16(fieldName) == pendingFieldName);
+  std::pair<base::string16, base::string16> formField(
+      base::SysNSStringToUTF16(formName), base::SysNSStringToUTF16(fieldName));
+  bool is_suggestion_available =
+      formsForFill_.find(formField) != formsForFill_.end();
+  completion(is_suggestion_available);
 }
 
 - (void)retrieveSuggestionsForForm:(NSString*)formName
@@ -938,6 +975,8 @@ bool GetPageURLAndCheckTrustLevel(web::WebState* web_state, GURL* page_url) {
 - (void)fillPasswordForm:(const autofill::PasswordFormFillData&)formData
        completionHandler:(void (^)(BOOL))completionHandler {
   formData_.reset(new autofill::PasswordFormFillData(formData));
+  formsForFill_.insert(
+      std::make_pair(formData.name, formData.username_field.name));
 
   // Don't fill immediately if waiting for the user to type a username.
   if (formData_->wait_for_username) {
