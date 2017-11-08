@@ -94,6 +94,30 @@
       "revId": "ad0465424511714531f5df8759b2c680ff422635",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b9f3276a_1869be45",
+        "filename": "components/payments/content/payment_request_spec.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 233,
+      "author": {
+        "id": 1002114
+      },
+      "writtenOn": "2017-11-08T20:59:37Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "ec740784_40b9ba68",
+      "range": {
+        "startLine": 229,
+        "startChar": 0,
+        "endLine": 233,
+        "endChar": 48
+      },
+      "revId": "ad0465424511714531f5df8759b2c680ff422635",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
