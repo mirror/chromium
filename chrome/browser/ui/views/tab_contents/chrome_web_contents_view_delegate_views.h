@@ -44,9 +44,10 @@ class ChromeWebContentsViewDelegateViews
   gfx::NativeWindow GetNativeWindow() override;
   content::WebDragDestDelegate* GetDragDestDelegate() override;
   void StoreFocus() override;
-  void RestoreFocus() override;
+  bool RestoreFocus() override;
+  void ResetStoredFocus() override;
   bool Focus() override;
-  void TakeFocus(bool reverse) override;
+  bool TakeFocus(bool reverse) override;
   void ShowContextMenu(content::RenderFrameHost* render_frame_host,
                        const content::ContextMenuParams& params) override;
   void SizeChanged(const gfx::Size& size) override;
@@ -61,7 +62,6 @@ class ChromeWebContentsViewDelegateViews
   aura::Window* GetActiveNativeView();
   views::Widget* GetTopLevelWidget();
   views::FocusManager* GetFocusManager();
-  void SetInitialFocus();
 
   // Used to store the last focused view.
   std::unique_ptr<views::ViewTracker> last_focused_view_tracker_;

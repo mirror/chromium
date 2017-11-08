@@ -74,15 +74,12 @@ class CONTENT_EXPORT InterstitialPageImpl : public InterstitialPage,
   void DontCreateViewForTesting() override;
   void SetSize(const gfx::Size& size) override;
   void Focus() override;
+  void FocusThroughTabTraversal(bool reverse) override;
 
   // Allows the user to navigate away by disabling the interstitial, canceling
   // the pending request, and unblocking the hidden renderer.  The interstitial
   // will stay visible until the navigation completes.
   void CancelForNavigation();
-
-  // Focus the first (last if reverse is true) element in the interstitial page.
-  // Called when tab traversing.
-  void FocusThroughTabTraversal(bool reverse);
 
   RenderWidgetHostView* GetView();
 

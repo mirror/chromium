@@ -48,10 +48,17 @@ class CONTENT_EXPORT WebContentsViewDelegate {
   // These methods allow the embedder to intercept a WebContentsView's
   // implementation of these methods. See the WebContentsView interface
   // documentation for more information about these methods.
+  //
+  // Storing current focused view and start tracking it.
   virtual void StoreFocus();
-  virtual void RestoreFocus();
+  // Restore focus to stored view if possible, return true if succesfull.
+  virtual bool RestoreFocus();
+  // Should be called when WebContentsView do something for change focus.
+  virtual void ResetStoredFocus();
+  // Allow focus a special view if needed, return true if make it.
   virtual bool Focus();
-  virtual void TakeFocus(bool reverse);
+  // Advance focus to next view.
+  virtual bool TakeFocus(bool reverse);
   virtual void SizeChanged(const gfx::Size& size);
 
   // This method allows the embedder to specify the display color space (instead
