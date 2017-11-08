@@ -1,0 +1,73 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "636f78ee_dd43dfab",
+        "filename": "chrome/android/javatests/src/org/chromium/chrome/browser/browseractions/BrowserActionActivityTest.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 88,
+      "author": {
+        "id": 1116043
+      },
+      "writtenOn": "2017-11-08T23:26:14Z",
+      "side": 1,
+      "message": "based on my below comment, should this be BITMAP_ICON_ID vs VECTOR_ICON_ID to make it easier to see the differences?\n\nAhh...looking at the title, it does look like that is the intent.\n\nOne thing that might make it potentially easier to parse is actually having the BrowserActionItem be statically defined at the top.  Then when adding the browseractionitem below, it would be CUSTOM_BROWSER_ACTION_BITMAP_DRAWABLE, CUSTOM_BROWSER_ACTION_VECTOR_DRAWABLE, CUSTOM_BROWSER_ACTION_INVALID_DRAWABLE.",
+      "range": {
+        "startLine": 88,
+        "startChar": 29,
+        "endLine": 88,
+        "endChar": 50
+      },
+      "revId": "6189aa7f96b36624ae0de9ae7570d7463d5d8f4e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ab5df769_699325aa",
+        "filename": "chrome/android/javatests/src/org/chromium/chrome/browser/browseractions/BrowserActionActivityTest.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 90,
+      "author": {
+        "id": 1116043
+      },
+      "writtenOn": "2017-11-08T23:26:14Z",
+      "side": 1,
+      "message": "I\u0027d call this INVALID_ICON_ID",
+      "range": {
+        "startLine": 90,
+        "startChar": 29,
+        "endLine": 90,
+        "endChar": 50
+      },
+      "revId": "6189aa7f96b36624ae0de9ae7570d7463d5d8f4e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "491ab1d1_0b595005",
+        "filename": "chrome/android/javatests/src/org/chromium/chrome/browser/browseractions/BrowserActionActivityTest.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 218,
+      "author": {
+        "id": 1116043
+      },
+      "writtenOn": "2017-11-08T23:26:14Z",
+      "side": 1,
+      "message": "why do we need this check?  Is it a vector drawable?",
+      "range": {
+        "startLine": 218,
+        "startChar": 43,
+        "endLine": 218,
+        "endChar": 56
+      },
+      "revId": "6189aa7f96b36624ae0de9ae7570d7463d5d8f4e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
