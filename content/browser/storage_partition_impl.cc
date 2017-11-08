@@ -476,6 +476,9 @@ std::unique_ptr<StoragePartitionImpl> StoragePartitionImpl::Create(
       base::WrapUnique(new StoragePartitionImpl(
           context, partition_path, context->GetSpecialStoragePolicy()));
 
+  partition->is_in_memory_ = in_memory;
+  partition->relative_partition_path_ = relative_partition_path;
+
   // All of the clients have to be created and registered with the
   // QuotaManager prior to the QuotaManger being used. We do them
   // all together here prior to handing out a reference to anything
@@ -545,9 +548,7 @@ std::unique_ptr<StoragePartitionImpl> StoragePartitionImpl::Create(
   scoped_refptr<ChromeBlobStorageContext> blob_context =
       ChromeBlobStorageContext::GetFor(context);
 
-  partition->network_context_ =
-      GetContentClient()->browser()->CreateNetworkContext(
-          context, in_memory, relative_partition_path);
+  // partition->network_context_ = partition->GetNetworkContext();
 
   if (base::FeatureList::IsEnabled(features::kNetworkService)) {
     BlobURLLoaderFactory::BlobContextGetter blob_getter =
@@ -589,7 +590,7 @@ StoragePartitionImpl::GetMediaURLRequestContext() {
 
 mojom::NetworkContext* StoragePartitionImpl::GetNetworkContext() {
   // Create the NetworkContext as needed, when the network service is disabled.
-  if (!network_context_) {
+  if (!base::FeatureList::IsEnabled(features::kNetworkService)) {
     DCHECK(!base::FeatureList::IsEnabled(features::kNetworkService));
     DCHECK(!network_context_owner_);
     network_context_owner_ = std::make_unique<NetworkContextOwner>();
@@ -598,6 +599,12 @@ mojom::NetworkContext* StoragePartitionImpl::GetNetworkContext() {
         base::BindOnce(&NetworkContextOwner::Initialize,
                        base::Unretained(network_context_owner_.get()),
                        MakeRequest(&network_context_), url_request_context_));
+    return network_context_.get();
+  }
+
+  if (!network_context_.is_bound() || network_context_.encountered_error()) {
+    network_context_ = GetContentClient()->browser()->CreateNetworkContext(
+        browser_context_, is_in_memory_, relative_partition_path_);
   }
   return network_context_.get();
 }
