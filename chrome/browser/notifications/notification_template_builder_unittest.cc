@@ -10,9 +10,13 @@
 #include "base/macros.h"
 #include "base/memory/ptr_util.h"
 #include "base/strings/string16.h"
+#include "base/strings/stringprintf.h"
 #include "base/strings/utf_string_conversions.h"
+#include "chrome/grit/chromium_strings.h"
 #include "testing/gtest/include/gtest/gtest.h"
+#include "ui/base/l10n/l10n_util.h"
 #include "ui/message_center/notification.h"
+#include "ui/strings/grit/ui_strings.h"
 
 using message_center::Notification;
 using message_center::NotifierId;
@@ -24,6 +28,7 @@ const char kNotificationId[] = "notification_id";
 const char kNotificationTitle[] = "My Title";
 const char kNotificationMessage[] = "My Message";
 const char kNotificationOrigin[] = "https://example.com";
+const char kContextMenuLabel[] = "settings";
 
 // Intermediary format for the options available when creating a notification,
 // with default values specific to this test suite to avoid endless repetition.
@@ -57,6 +62,15 @@ class NotificationTemplateBuilderTest : public ::testing::Test {
  public:
   NotificationTemplateBuilderTest() = default;
   ~NotificationTemplateBuilderTest() override = default;
+
+  void SetUp() override {
+    NotificationTemplateBuilder::OverrideContextMenuLabelForTesting(
+        kContextMenuLabel);
+  }
+
+  void TearDown() override {
+    NotificationTemplateBuilder::OverrideContextMenuLabelForTesting(nullptr);
+  }
 
  protected:
   // Builds the message_center::Notification object and then the template for
@@ -111,6 +125,9 @@ TEST_F(NotificationTemplateBuilderTest, SimpleToast) {
    <text placement="attribution">example.com</text>
   </binding>
  </visual>
+ <actions>
+  <action content="settings" placement="contextMenu" activationType="foreground" arguments="notificationSettings"/>
+ </actions>
 </toast>
 )";
 
@@ -140,6 +157,7 @@ TEST_F(NotificationTemplateBuilderTest, Buttons) {
  <actions>
   <action activationType="foreground" content="Button1" arguments="buttonIndex=0"/>
   <action activationType="foreground" content="Button2" arguments="buttonIndex=1"/>
+  <action content="settings" placement="contextMenu" activationType="foreground" arguments="notificationSettings"/>
  </actions>
 </toast>
 )";
@@ -174,6 +192,7 @@ TEST_F(NotificationTemplateBuilderTest, InlineReplies) {
   <input id="userResponse" type="text" placeHolderContent="Reply here"/>
   <action activationType="foreground" content="Button1" arguments="buttonIndex=0"/>
   <action activationType="foreground" content="Button2" arguments="buttonIndex=1"/>
+  <action content="settings" placement="contextMenu" activationType="foreground" arguments="notificationSettings"/>
  </actions>
 </toast>
 )";
@@ -211,6 +230,7 @@ TEST_F(NotificationTemplateBuilderTest, InlineRepliesDoubleInput) {
   <input id="userResponse" type="text" placeHolderContent="Reply here"/>
   <action activationType="foreground" content="Button1" arguments="buttonIndex=0"/>
   <action activationType="foreground" content="Button2" arguments="buttonIndex=1"/>
+  <action content="settings" placement="contextMenu" activationType="foreground" arguments="notificationSettings"/>
  </actions>
 </toast>
 )";
@@ -245,9 +265,45 @@ TEST_F(NotificationTemplateBuilderTest, InlineRepliesTextTypeNotFirst) {
   <input id="userResponse" type="text" placeHolderContent="Reply here"/>
   <action activationType="foreground" content="Button1" arguments="buttonIndex=0"/>
   <action activationType="foreground" content="Button2" arguments="buttonIndex=1"/>
+  <action content="settings" placement="contextMenu" activationType="foreground" arguments="notificationSettings"/>
  </actions>
 </toast>
 )";
 
   EXPECT_EQ(xml_template, kExpectedXml);
+}
+
+TEST_F(NotificationTemplateBuilderTest, LocalizedContextMenu) {
+  NotificationData notification_data;
+  base::string16 xml_template;
+  std::vector<message_center::ButtonInfo> buttons;
+  // Disable overriding context menu label.
+  NotificationTemplateBuilder::OverrideContextMenuLabelForTesting(nullptr);
+
+  ASSERT_NO_FATAL_FAILURE(
+      BuildTemplate(notification_data, buttons, &xml_template));
+
+  const wchar_t kExpectedXmlTemplate[] =
+      LR"(<toast launch="notification_id" displayTimestamp="1998-09-04T01:02:03Z">
+ <visual>
+  <binding template="ToastGeneric">
+   <text>My Title</text>
+   <text>My Message</text>
+   <text placement="attribution">example.com</text>
+  </binding>
+ </visual>
+ <actions>
+  <action content="%ls" placement="contextMenu" activationType="foreground" arguments="notificationSettings"/>
+ </actions>
+</toast>
+)";
+
+  base::string16 product_name =
+      l10n_util::GetStringUTF16(IDS_SHORT_PRODUCT_NAME);
+  base::string16 settings_msg = l10n_util::GetStringFUTF16(
+      IDS_MESSAGE_NOTIFICATION_SETTINGS_CONTEXT_MENU_ITEM_NAME, product_name);
+  base::string16 expected_xml =
+      base::StringPrintf(kExpectedXmlTemplate, settings_msg.c_str());
+
+  EXPECT_EQ(xml_template, expected_xml);
 }
