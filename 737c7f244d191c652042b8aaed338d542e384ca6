@@ -1,0 +1,44 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "402050b9_d892ce82",
+        "filename": "ios/chrome/browser/ui/dialogs/java_script_dialog_presenter_impl.mm",
+        "patchSetId": 2
+      },
+      "lineNbr": 15,
+      "author": {
+        "id": 1123009
+      },
+      "writtenOn": "2017-11-08T15:49:03Z",
+      "side": 1,
+      "message": "Could you please explain in the comments the reason for truncation. Did we agree that truncation is a permanent solution? If it\u0027s a temporary one, please add \"TODO(674649): remove truncation, once non-modal custom dialogs are implemented\".",
+      "range": {
+        "startLine": 15,
+        "startChar": 40,
+        "endLine": 15,
+        "endChar": 41
+      },
+      "revId": "737c7f244d191c652042b8aaed338d542e384ca6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5b53713e_c1710f68",
+        "filename": "ios/chrome/browser/ui/dialogs/java_script_dialog_presenter_impl.mm",
+        "patchSetId": 2
+      },
+      "lineNbr": 41,
+      "author": {
+        "id": 1123009
+      },
+      "writtenOn": "2017-11-08T15:49:03Z",
+      "side": 1,
+      "message": "Should we use API from text_elider.h instead?",
+      "revId": "737c7f244d191c652042b8aaed338d542e384ca6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
