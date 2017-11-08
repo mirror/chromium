@@ -34,6 +34,24 @@
       "revId": "2ad3851562c60d59a220b2af64f6c08f366ed313",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "ce14f70c_2c0f3973",
+        "filename": "chrome/browser/ui/webui/welcome_win10_handler.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 69,
+      "author": {
+        "id": 1001118
+      },
+      "writtenOn": "2017-11-08T00:06:53Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "20bba268_1fbc1b25",
+      "revId": "2ad3851562c60d59a220b2af64f6c08f366ed313",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
