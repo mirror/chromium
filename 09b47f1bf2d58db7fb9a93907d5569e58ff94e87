@@ -120,6 +120,30 @@
     },
     {
       "key": {
+        "uuid": "a4c2aaf3_694a9833",
+        "filename": "third_party/webrtc_overrides/rtc_base/logging.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 93,
+      "author": {
+        "id": 1178490
+      },
+      "writtenOn": "2017-11-08T13:31:30Z",
+      "side": 1,
+      "message": "No worries. :)\nYes, I will keep my name since I plan to get rid of the backwards compatibility block on Friday.",
+      "parentUuid": "54e77b7c_b884ae54",
+      "range": {
+        "startLine": 93,
+        "startChar": 8,
+        "endLine": 93,
+        "endChar": 28
+      },
+      "revId": "09b47f1bf2d58db7fb9a93907d5569e58ff94e87",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "6ab9de49_76a4b3f0",
         "filename": "third_party/webrtc_overrides/rtc_base/logging.h",
         "patchSetId": 4
