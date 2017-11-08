@@ -5,6 +5,8 @@
 #ifndef ASH_SYSTEM_POWER_POWER_BUTTON_DISPLAY_CONTROLLER_H_
 #define ASH_SYSTEM_POWER_POWER_BUTTON_DISPLAY_CONTROLLER_H_
 
+#include <memory>
+
 #include "ash/ash_export.h"
 #include "base/macros.h"
 #include "base/memory/weak_ptr.h"
@@ -19,6 +21,8 @@ class TickClock;
 }  // namespace base
 
 namespace ash {
+
+class LockScreenNoteController;
 
 // PowerButtonDisplayController performs display-related tasks (e.g. forcing
 // backlights off or disabling the touchscreen) on behalf of
@@ -95,6 +99,8 @@ class ASH_EXPORT PowerButtonDisplayController
 
   // Time source for performed action times.
   base::TickClock* tick_clock_;  // Not owned.
+
+  std::unique_ptr<LockScreenNoteController> lock_screen_note_controller_;
 
   base::WeakPtrFactory<PowerButtonDisplayController> weak_ptr_factory_;
 
