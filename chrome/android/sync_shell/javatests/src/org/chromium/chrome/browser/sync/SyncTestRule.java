@@ -13,6 +13,7 @@ import org.junit.runner.Description;
 import org.junit.runners.model.Statement;
 
 import org.chromium.base.ThreadUtils;
+import org.chromium.base.library_loader.LibraryLoader;
 import org.chromium.chrome.browser.ChromeActivity;
 import org.chromium.chrome.browser.identity.UniqueIdentificationGenerator;
 import org.chromium.chrome.browser.identity.UniqueIdentificationGeneratorFactory;
@@ -209,7 +210,19 @@ public class SyncTestRule extends ChromeActivityTestRule<ChromeActivity> {
                 mContext = InstrumentationRegistry.getTargetContext();
 
                 setUpMockAndroidSyncSettings();
-
+                CriteriaHelper.pollUiThread(new Criteria() {
+                    @Override
+                    public boolean isSatisfied() {
+                        return LibraryLoader.isInitialized();
+                    }
+                });
+                ThreadUtils.runOnUiThreadBlocking(new Runnable() {
+                    @Override
+                    public void run() {
+                        AndroidSyncSettings.isSyncEnabled(mContext);
+                    }
+                });
+                Thread.sleep(1000);
                 ThreadUtils.runOnUiThreadBlocking(new Runnable() {
                     @Override
                     public void run() {
