@@ -18,6 +18,7 @@ enum class WebTreeScopeType;
 class InterfaceRegistry;
 class WebFrameClient;
 class WebLayer;
+class WebMutableSecurityOrigin;
 class WebRemoteFrameClient;
 class WebString;
 class WebView;
@@ -62,7 +63,7 @@ class WebRemoteFrame : public WebFrame {
   virtual void SetWebLayer(WebLayer*) = 0;
 
   // Set security origin replicated from another process.
-  virtual void SetReplicatedOrigin(const WebSecurityOrigin&) = 0;
+  virtual void SetReplicatedOrigin(const WebMutableSecurityOrigin&) = 0;
 
   // Set sandbox flags replicated from another process.
   virtual void SetReplicatedSandboxFlags(WebSandboxFlags) = 0;
