@@ -192,6 +192,24 @@
       "revId": "fdbe21469f4a8f9cf72895fc567106b409a57fd3",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "dd12a484_d73f79ff",
+        "filename": "extensions/browser/extension_protocols.cc",
+        "patchSetId": 12
+      },
+      "lineNbr": 894,
+      "author": {
+        "id": 1002808
+      },
+      "writtenOn": "2017-11-08T05:30:57Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "aae6150b_e42f0acc",
+      "revId": "fdbe21469f4a8f9cf72895fc567106b409a57fd3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
