@@ -427,11 +427,9 @@ component("skia") {
     sources +=
         [ "//third_party/skia/src/gpu/gl/GrGLDefaultInterface_native.cpp" ]
     if (is_android) {
-      sources += [ "//third_party/skia/src/gpu/gl/android/GrGLCreateNativeInterface_android.cpp" ]
-      libs = [
-        "EGL",
-        "GLESv2",
-      ]
+      # TODO(782871): Enable Ganesh.
+      sources +=
+          [ "//third_party/skia/src/gpu/gl/GrGLCreateNativeInterface_none.cpp" ]
     } else if (is_linux) {
       sources += [ "//third_party/skia/src/gpu/gl/glx/GrGLCreateNativeInterface_glx.cpp" ]
       libs = [ "GL" ]
