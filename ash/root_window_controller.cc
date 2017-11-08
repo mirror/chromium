@@ -584,12 +584,21 @@ void RootWindowController::ActivateKeyboard(
     return;
   }
   DCHECK(keyboard_controller);
+  // if (!keyboard::IsKeyboardEnabled())
+  //   return;
+
+  // if (keyboard_controller->IsActivated())
+  //   return;
+
   Shell::Get()->NotifyVirtualKeyboardActivated(true, GetRootWindow());
   aura::Window* parent = GetContainer(kShellWindowId_ImeWindowParentContainer);
   DCHECK(parent);
-  aura::Window* keyboard_container = keyboard_controller->GetContainerWindow();
-  keyboard_container->set_id(kShellWindowId_VirtualKeyboardContainer);
-  parent->AddChild(keyboard_container);
+  aura::Window* keyboard_window = keyboard_controller->GetContainerWindow();
+  // aura::Window* container =
+  // GetContainer(kShellWindowId_VirtualKeyboardContainer); DCHECK(container);
+  // aura::Window* keyboard_window = keyboard_controller->Create
+  keyboard_window->set_id(kShellWindowId_VirtualKeyboardContainer);
+  parent->AddChild(keyboard_window);
 
   keyboard_controller->LoadKeyboardUiInBackground();
 }
