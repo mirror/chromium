@@ -96,11 +96,10 @@ bool SelectionTemplate<Strategy>::IsValidFor(const Document& document) const {
 template <typename Strategy>
 bool SelectionTemplate<Strategy>::AssertValidFor(
     const Document& document) const {
-  if (!AssertValid())
-    return false;
-  if (base_.IsNull())
+  if (IsNone())
     return true;
-  DCHECK_EQ(base_.GetDocument(), document) << *this;
+  DCHECK(base_.IsValidFor(document)) << "base " << *this;
+  DCHECK(extent_.IsValidFor(document)) << "extent " << *this;
   return true;
 }
 
