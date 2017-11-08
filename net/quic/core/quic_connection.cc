@@ -1768,6 +1768,10 @@ void QuicConnection::OnHandshakeComplete() {
       ack_frame_updated()) {
     ack_alarm_->Update(clock_->ApproximateNow(), QuicTime::Delta::Zero());
   }
+  // LOG(ERROR) << "zhongyi_log: send a ping on connection_id = " << connection_id_;
+  // SendPing();
+
+  SendProbingPacket(kDefaultMaxPacketSize);
 }
 
 void QuicConnection::SendOrQueuePacket(SerializedPacket* packet) {
@@ -2350,13 +2354,14 @@ QuicByteCount QuicConnection::GetLimitedMaxPacketSize(
 }
 
 void QuicConnection::SendProbingPacket(QuicByteCount packet_size) {
+  LOG(ERROR) << "zhongyi_log : send probing packet for connection id = " << connection_id_;
   if (writer_->IsWriteBlocked()) {
     QUIC_BUG << "Write Blocked when send probing";
     visitor_->OnWriteBlocked();
     return;
   }
 
-  QUIC_DLOG(INFO) << ENDPOINT << "Send connectivity probing packet";
+  LOG(ERROR) << ENDPOINT << "Send connectivity probing packet";
 
   std::unique_ptr<QuicEncryptedPacket> probing_packet(
       packet_generator_.SerializeConnectivityProbingPacket());
@@ -2367,7 +2372,7 @@ void QuicConnection::SendProbingPacket(QuicByteCount packet_size) {
 
   if (result.status == WRITE_STATUS_ERROR) {
     OnWriteError(result.error_code);
-    QUIC_BUG << "Write probing packet failed with error = "
+     LOG(ERROR) << "Write probing packet failed with error = "
              << result.error_code;
     return;
   }
@@ -2375,7 +2380,7 @@ void QuicConnection::SendProbingPacket(QuicByteCount packet_size) {
   if (result.status == WRITE_STATUS_BLOCKED) {
     visitor_->OnWriteBlocked();
     if (writer_->IsWriteBlockedDataBuffered()) {
-      QUIC_BUG << "Write probing packet blocked";
+      LOG(ERROR) << "Write probing packet blocked";
       return;
     }
   }
@@ -2386,6 +2391,7 @@ void QuicConnection::SendMtuDiscoveryPacket(QuicByteCount target_mtu) {
   DCHECK_EQ(target_mtu, GetLimitedMaxPacketSize(target_mtu));
 
   // Send the probe.
+  LOG(ERROR) << "zhongyi_log: send mtu probe packet for connection_id = " << connection_id_;
   packet_generator_.GenerateMtuDiscoveryPacket(target_mtu);
 }
 

@@ -1721,6 +1721,10 @@ size_t QuicFramer::EncryptInPlace(EncryptionLevel level,
                                   size_t total_len,
                                   size_t buffer_len,
                                   char* buffer) {
+  LOG(ERROR) << "zhongyi_debug: "
+             << " ad_len = " << ad_len
+             << "; total_len = " << total_len
+             << "; buffer_len = " << buffer_len;
   size_t output_length = 0;
   if (!encrypter_[level]->EncryptPacket(
           transport_version_, packet_number,
