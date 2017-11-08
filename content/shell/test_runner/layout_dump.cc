@@ -66,7 +66,11 @@ std::string DumpLayout(WebLocalFrame* frame,
                     frame, WebFrameContentDumper::kLayoutAsTextPrinting)
                     .Utf8();
     } else {
-      result += frame->GetDocument().ContentAsTextForTesting().Utf8();
+      // We don't want to set a hard limit on dump size here. Some tests (e.g.,
+      // external/wpt/) may generate very large text dump.
+      const size_t max_length = 1u << 30;
+      result += WebFrameContentDumper::DumpSingleFrameAsText(frame, max_length)
+                    .Utf8();
     }
     result += "\n";
   } else if (flags.dump_as_markup()) {

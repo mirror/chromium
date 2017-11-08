@@ -156,7 +156,8 @@ class TextDumper final {
 
 void FrameContentAsPlainText(size_t max_chars,
                              LocalFrame* frame,
-                             StringBuilder& output) {
+                             StringBuilder& output,
+                             bool enter_subframes) {
   Document* document = frame->GetDocument();
   if (!document)
     return;
@@ -169,6 +170,9 @@ void FrameContentAsPlainText(size_t max_chars,
 
   if (document->documentElement())
     TextDumper(output, max_chars).DumpTextFrom(*document->documentElement());
+
+  if (!enter_subframes)
+    return;
 
   // The separator between frames when the frames are converted to plain text.
   const LChar kFrameSeparator[] = {'\n', '\n'};
@@ -207,7 +211,7 @@ void FrameContentAsPlainText(size_t max_chars,
       return;
 
     output.Append(kFrameSeparator, frame_separator_length);
-    FrameContentAsPlainText(max_chars, cur_local_child, output);
+    FrameContentAsPlainText(max_chars, cur_local_child, output, true);
     if (output.length() >= max_chars)
       return;  // Filled up the buffer.
   }
@@ -222,7 +226,17 @@ WebString WebFrameContentDumper::DeprecatedDumpFrameTreeAsText(
     return WebString();
   StringBuilder text;
   FrameContentAsPlainText(max_chars, ToWebLocalFrameImpl(frame)->GetFrame(),
-                          text);
+                          text, true);
+  return text.ToString();
+}
+
+WebString WebFrameContentDumper::DumpSingleFrameAsText(WebLocalFrame* frame,
+                                                       size_t max_chars) {
+  if (!frame)
+    return WebString();
+  StringBuilder text;
+  FrameContentAsPlainText(max_chars, ToWebLocalFrameImpl(frame)->GetFrame(),
+                          text, false);
   return text.ToString();
 }
 
