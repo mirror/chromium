@@ -1427,6 +1427,30 @@
     },
     {
       "key": {
+        "uuid": "c07f2087_ef68b26e",
+        "filename": "content/browser/webauth/collected_client_data.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 35,
+      "author": {
+        "id": 1128380
+      },
+      "writtenOn": "2017-11-08T19:37:49Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "ba8e1a4a_2b17d5f7",
+      "range": {
+        "startLine": 35,
+        "startChar": 29,
+        "endLine": 35,
+        "endChar": 35
+      },
+      "revId": "518d1cacc9bfc6a0a0593d22baf5eb3dd9ecd4d8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "9cb91bc7_776c2409",
         "filename": "content/browser/webauth/ec_public_key.cc",
         "patchSetId": 6
