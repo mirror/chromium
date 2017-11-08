@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "325645dd_27b78463",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/ntp/cards/SuggestionsSection.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 259,
+      "author": {
+        "id": 1001606
+      },
+      "writtenOn": "2017-11-08T16:28:14Z",
+      "side": 1,
+      "message": "Actually, could you put an assert in here? That way we just might trigger this in a debug build where we\u0027d then have reproduction steps.",
+      "range": {
+        "startLine": 259,
+        "startChar": 7,
+        "endLine": 259,
+        "endChar": 30
+      },
+      "revId": "b4491aab323b1207f070d27ba38fdcdc6a947161",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
