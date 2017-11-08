@@ -342,6 +342,7 @@ void DiscardSystemPages(void* address, size_t length) {
   ret = madvise(address, length, MADV_DONTNEED);
 #endif  // MADV_FREE
 #endif  // OS_MACOSX
+  CHECK(!ret);
 #else
   // On Windows discarded pages are not returned to the system immediately and
   // not guaranteed to be zeroed when returned to the application.
