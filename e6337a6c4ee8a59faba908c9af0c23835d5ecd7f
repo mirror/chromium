@@ -22,6 +22,30 @@
       "revId": "e6337a6c4ee8a59faba908c9af0c23835d5ecd7f",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "028141b5_8a1dcf41",
+        "filename": "ash/public/interfaces/window_properties.mojom",
+        "patchSetId": 10
+      },
+      "lineNbr": 8,
+      "author": {
+        "id": 1115904
+      },
+      "writtenOn": "2017-11-08T00:28:54Z",
+      "side": 1,
+      "message": "The service_manager establishes connections between services. So when, say ui::Service::BindWindowTreeFactoryRequest() is called, it is passed a service_manager::BindSourceInfo object, which contains the service_manager::Identity, which contains a name. This name comes from the service manager, not the service which is making the call.\n\nSo mus is getting the string \u0027content_browser\u0027 from the service manager, which it then passes on to the window manager on new WindowTree creation. I think this is safe since the string comes from the service_manager, and then it\u0027s safe for the window manager to trust data coming from mus since both are privileged processes and the WM already trusts the data coming from mus.",
+      "parentUuid": "cdd450ed_777f78ab",
+      "range": {
+        "startLine": 8,
+        "startChar": 61,
+        "endLine": 8,
+        "endChar": 76
+      },
+      "revId": "e6337a6c4ee8a59faba908c9af0c23835d5ecd7f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
