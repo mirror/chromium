@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "955c0b8c_f3ec005a",
+        "filename": "ios/chrome/browser/metrics/tab_usage_recorder_egtest.mm",
+        "patchSetId": 3
+      },
+      "lineNbr": 538,
+      "author": {
+        "id": 1144530
+      },
+      "writtenOn": "2017-11-08T15:23:03Z",
+      "side": 1,
+      "message": "why not SpinRunLoopWithMinDelay ?",
+      "range": {
+        "startLine": 538,
+        "startChar": 15,
+        "endLine": 538,
+        "endChar": 30
+      },
+      "revId": "fa7b3b7582f0950d83b48243eeb5509400bcb718",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
