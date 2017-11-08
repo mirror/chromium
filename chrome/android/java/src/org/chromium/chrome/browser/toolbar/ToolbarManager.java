@@ -332,6 +332,11 @@ public class ToolbarManager implements ToolbarTabController, UrlFocusChangeListe
             }
 
             @Override
+            public void onShown(Tab tab) {
+                mControlContainer.setReadyForBitmapCapture(true);
+            }
+
+            @Override
             public void onCrash(Tab tab, boolean sadTabShown) {
                 updateTabLoadingState(false);
                 updateButtonStatus();
