@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "3d0d4071_19b26e7e",
+        "filename": "third_party/WebKit/Source/devtools/front_end/persistence/IsolatedFileSystem.js",
+        "patchSetId": 1
+      },
+      "lineNbr": 276,
+      "author": {
+        "id": 1113672
+      },
+      "writtenOn": "2017-11-08T02:18:06Z",
+      "side": 1,
+      "message": "let\u0027s fullfill the promise here as well",
+      "revId": "b978d04eb5fed86bb8d17142655d8741e5b552f0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
