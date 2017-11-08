@@ -37,6 +37,24 @@
     },
     {
       "key": {
+        "uuid": "4478c334_d84a80c3",
+        "filename": "content/renderer/service_worker/service_worker_subresource_loader_unittest.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 717,
+      "author": {
+        "id": 1000193
+      },
+      "writtenOn": "2017-11-08T16:31:36Z",
+      "side": 1,
+      "message": "Yeah, I wasn\u0027t sure if it was trying to keep consistency with the comment or the expectation. Mostly, it was seeing the comment and the constant deleted in appcache_subresource_url_factory that made me wonder, since the file still has a dependency on the Fetch spec, but now line 281 of that file no longer has the comment \u0027connecting\u0027 it to Fetch.\n\nAs I said, it was mostly a nit/question trying to understand the rationale :)",
+      "parentUuid": "79564061_fe2e6801",
+      "revId": "0dfa6284490225c6065aec0951611d36c0c09566",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "681977ab_160f4d3f",
         "filename": "net/url_request/url_request.h",
         "patchSetId": 4
@@ -66,6 +84,24 @@
       "side": 1,
       "message": "You are not the first to ask in this review. :-)\n\nenums are a simple way to define a numeric constant, that is the full explanation.\n\nThere is a followup to change it to something else. Right now a static const int, but could make it a constexpr instead.\n\nI looked at the histogram code before following the review request to use the constant there and it seems that it would be robust as long as this constant doesn\u0027t change by a magnitude. I had no idea that it would actually change any time soon since it seemed to be one of those historical things.",
       "parentUuid": "681977ab_160f4d3f",
+      "revId": "0dfa6284490225c6065aec0951611d36c0c09566",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1a790f9a_5f534828",
+        "filename": "net/url_request/url_request.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 132,
+      "author": {
+        "id": 1000193
+      },
+      "writtenOn": "2017-11-08T16:31:36Z",
+      "side": 1,
+      "message": "Yeah, I\u0027m still learning PolyGerrit\u0027s UI for reading comments from other reviewers, so sorry for the duplication.\n\nPreferring constexpr is the \"new hotness\", so sounds like you\u0027re on top of it :)\n\nThanks for confirming you\u0027d considered the histograms. The only impact I could think of would be if we increased the max value, we\u0027d have a situation where some clients histogram at the edge value (21) meaning \"anything greater than 20\", while others histogram at exactly (21) (if, for example, the new edge value was 25, and there were 24 max redirects).\n\nI didn\u0027t see any risk for making it lower, but didn\u0027t want to assume we\u0027d only lower it :) Similarly, if we lowered it, and then raised it later, we\u0027d run into the same issue - hence the suggestion that it\u0027s worth mentioning it participates in histograms, so folks would know to search for the symbols\u0027 usage and evaluate on a per-histogram basis the impact of changing.",
+      "parentUuid": "7766b0e9_c6ec5cfb",
       "revId": "0dfa6284490225c6065aec0951611d36c0c09566",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
