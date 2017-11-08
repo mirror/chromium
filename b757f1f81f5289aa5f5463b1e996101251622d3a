@@ -1,0 +1,73 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "fcce4101_21cfc09e",
+        "filename": "chrome/browser/resources/local_ntp/local_ntp.css",
+        "patchSetId": 3
+      },
+      "lineNbr": 170,
+      "author": {
+        "id": 1116059
+      },
+      "writtenOn": "2017-11-08T15:40:59Z",
+      "side": 1,
+      "message": "Where does this exact number come from? Does it have any particular significance?",
+      "range": {
+        "startLine": 170,
+        "startChar": 16,
+        "endLine": 170,
+        "endChar": 0
+      },
+      "revId": "b757f1f81f5289aa5f5463b1e996101251622d3a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8a0643ed_e293269d",
+        "filename": "chrome/browser/resources/local_ntp/local_ntp.js",
+        "patchSetId": 3
+      },
+      "lineNbr": 674,
+      "author": {
+        "id": 1116059
+      },
+      "writtenOn": "2017-11-08T15:40:59Z",
+      "side": 1,
+      "message": "I think here\u0027s where the no-fade-out comes in: Add a condition \"\u0026\u0026 ddl.type !\u003d INTERACTIVE\" or something like that.",
+      "range": {
+        "startLine": 674,
+        "startChar": 27,
+        "endLine": 674,
+        "endChar": 0
+      },
+      "revId": "b757f1f81f5289aa5f5463b1e996101251622d3a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2c6559fd_3a1b6e09",
+        "filename": "chrome/browser/search/local_ntp_source.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 244,
+      "author": {
+        "id": 1116059
+      },
+      "writtenOn": "2017-11-08T15:40:59Z",
+      "side": 1,
+      "message": "nit: return std::string();",
+      "range": {
+        "startLine": 244,
+        "startChar": 12,
+        "endLine": 244,
+        "endChar": 0
+      },
+      "revId": "b757f1f81f5289aa5f5463b1e996101251622d3a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
