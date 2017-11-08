@@ -56,12 +56,11 @@ namespace blink {
 void V8Document::openMethodCustom(
     const v8::FunctionCallbackInfo<v8::Value>& info) {
   Document* document = V8Document::ToImpl(info.Holder());
+  ExceptionState exception_state(
+      info.GetIsolate(), ExceptionState::kExecutionContext, "Document", "open");
 
   if (info.Length() > 2) {
     if (!document->domWindow()) {
-      ExceptionState exception_state(info.GetIsolate(),
-                                     ExceptionState::kExecutionContext,
-                                     "Document", "open");
       exception_state.ThrowDOMException(
           kInvalidAccessError, "The document has no window associated.");
       return;
@@ -88,21 +87,34 @@ void V8Document::openMethodCustom(
                                        "open is not a function");
       return;
     }
-    // Wrap up the arguments and call the function.
-    std::unique_ptr<v8::Local<v8::Value>[]> params =
-        WrapArrayUnique(new v8::Local<v8::Value>[info.Length()]);
-    for (int i = 0; i < info.Length(); i++)
-      params[i] = info[i];
 
-    V8SetReturnValue(
-        info, V8ScriptRunner::CallFunction(
-                  v8::Local<v8::Function>::Cast(function), frame->GetDocument(),
-                  global, info.Length(), params.get(), info.GetIsolate()));
+    TOSTRING_VOID(V8StringResource<kTreatNullAndUndefinedAsNullString>,
+                  url_string, info[0]);
+    AtomicString frame_name;
+    if (info[1]->IsUndefined() || info[1]->IsNull()) {
+      frame_name = "_blank";
+    } else {
+      TOSTRING_VOID(V8StringResource<>, frame_name_resource, info[1]);
+      frame_name = frame_name_resource;
+    }
+    TOSTRING_VOID(V8StringResource<kTreatNullAndUndefinedAsNullString>,
+                  window_features_string, info[2]);
+    DOMWindow* opened_window = document->domWindow()->open(
+        url_string, frame_name, window_features_string,
+        CurrentDOMWindow(info.GetIsolate()),
+        EnteredDOMWindow(info.GetIsolate()), exception_state);
+
+    if (exception_state.HadException()) {
+      return;
+    }
+    if (!opened_window) {
+      V8SetReturnValueNull(info);
+      return;
+    }
+    V8SetReturnValueFast(info, opened_window, V8Window::ToImpl(info.Holder()));
     return;
   }
 
-  ExceptionState exception_state(
-      info.GetIsolate(), ExceptionState::kExecutionContext, "Document", "open");
   document->open(EnteredDOMWindow(info.GetIsolate())->document(),
                  exception_state);
 
