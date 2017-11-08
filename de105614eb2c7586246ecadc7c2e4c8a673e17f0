@@ -1,0 +1,188 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "a2d7c80a_4085768e",
+        "filename": "ios/web/public/test/fakes/test_web_state.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 111,
+      "author": {
+        "id": 1123009
+      },
+      "writtenOn": "2017-11-08T17:46:17Z",
+      "side": 1,
+      "message": "I\u0027m pretty sure we still need this one ;)",
+      "range": {
+        "startLine": 111,
+        "startChar": 9,
+        "endLine": 111,
+        "endChar": 23
+      },
+      "revId": "de105614eb2c7586246ecadc7c2e4c8a673e17f0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2a81116b_117fb6c4",
+        "filename": "ios/web/public/test/fakes/test_web_state_observer_util.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 108,
+      "author": {
+        "id": 1123009
+      },
+      "writtenOn": "2017-11-08T17:46:17Z",
+      "side": 1,
+      "message": "Can we use existing struct instead of adding a new field?",
+      "range": {
+        "startLine": 108,
+        "startChar": 14,
+        "endLine": 108,
+        "endChar": 24
+      },
+      "revId": "de105614eb2c7586246ecadc7c2e4c8a673e17f0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "842c46d8_75fd8524",
+        "filename": "ios/web/public/web_state/form_activity_params.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 11,
+      "author": {
+        "id": 1123009
+      },
+      "writtenOn": "2017-11-08T17:46:17Z",
+      "side": 1,
+      "message": "Could you please give an HTML example of a form and explain which ivar corresponds to which field.",
+      "range": {
+        "startLine": 11,
+        "startChar": 27,
+        "endLine": 11,
+        "endChar": 32
+      },
+      "revId": "de105614eb2c7586246ecadc7c2e4c8a673e17f0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "fc719214_52b0caa5",
+        "filename": "ios/web/public/web_state/form_activity_params.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 13,
+      "author": {
+        "id": 1123009
+      },
+      "writtenOn": "2017-11-08T17:46:17Z",
+      "side": 1,
+      "message": "nit: No need for this. Struct fields are public by default.",
+      "range": {
+        "startLine": 13,
+        "startChar": 1,
+        "endLine": 13,
+        "endChar": 7
+      },
+      "revId": "de105614eb2c7586246ecadc7c2e4c8a673e17f0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "45e051d1_3bf71d7c",
+        "filename": "ios/web/public/web_state/form_activity_params.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 23,
+      "author": {
+        "id": 1123009
+      },
+      "writtenOn": "2017-11-08T17:46:17Z",
+      "side": 1,
+      "message": "Please explain the meaning of |input_missing| in the comments",
+      "range": {
+        "startLine": 23,
+        "startChar": 20,
+        "endLine": 23,
+        "endChar": 21
+      },
+      "revId": "de105614eb2c7586246ecadc7c2e4c8a673e17f0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f4fdb971_a5a74be8",
+        "filename": "ios/web/public/web_state/web_state_observer.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 150,
+      "author": {
+        "id": 1123009
+      },
+      "writtenOn": "2017-11-08T17:46:17Z",
+      "side": 1,
+      "message": "This comment is outdated now",
+      "range": {
+        "startLine": 150,
+        "startChar": 59,
+        "endLine": 150,
+        "endChar": 72
+      },
+      "revId": "de105614eb2c7586246ecadc7c2e4c8a673e17f0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0faf46ba_eca7c9a5",
+        "filename": "ios/web/public/web_state/web_state_observer_bridge.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 69,
+      "author": {
+        "id": 1123009
+      },
+      "writtenOn": "2017-11-08T17:46:17Z",
+      "side": 1,
+      "message": "nit: Maybe s/didRegisterFormActivityWithParams:/didRegisterFormActivity: ?",
+      "range": {
+        "startLine": 69,
+        "startChar": 4,
+        "endLine": 69,
+        "endChar": 37
+      },
+      "revId": "de105614eb2c7586246ecadc7c2e4c8a673e17f0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "223d0c9b_b2ffc36b",
+        "filename": "ios/web/web_state/js/resources/form.js",
+        "patchSetId": 5
+      },
+      "lineNbr": 35,
+      "author": {
+        "id": 1123009
+      },
+      "writtenOn": "2017-11-08T17:46:17Z",
+      "side": 1,
+      "message": "Is this something that we could test in CRWWebControllerFormActivityTest.KeyUpEvent? If no, that\u0027s fine.",
+      "range": {
+        "startLine": 35,
+        "startChar": 19,
+        "endLine": 35,
+        "endChar": 28
+      },
+      "revId": "de105614eb2c7586246ecadc7c2e4c8a673e17f0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
