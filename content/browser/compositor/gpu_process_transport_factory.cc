@@ -346,6 +346,8 @@ void GpuProcessTransportFactory::EstablishedGpuChannel(
       gpu_channel_host->gpu_feature_info()
               .status_values[gpu::GPU_FEATURE_TYPE_GPU_COMPOSITING] !=
           gpu::kGpuFeatureStatusEnabled) {
+    LOG(INFO) << "GpuProcessTransportFactory::EstablishedGpuChannel(): "
+              << "GPU compositing blacklisted";
     use_gpu_compositing = false;
   }
   // Gpu compositing may have been disabled in the meantime.

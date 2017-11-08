@@ -56,6 +56,7 @@ SingleThreadProxy::SingleThreadProxy(LayerTreeHost* layer_tree_host,
   DCHECK(task_runner_provider_);
   DCHECK(task_runner_provider_->IsMainThread());
   DCHECK(layer_tree_host);
+  LOG(INFO) << "SingleThreadProxy(): flag = false";
 }
 
 void SingleThreadProxy::Start() {
@@ -112,10 +113,12 @@ void SingleThreadProxy::SetVisible(bool visible) {
 }
 
 void SingleThreadProxy::RequestNewLayerTreeFrameSink() {
+  LOG(INFO) << "RequestNewLayerTreeFrameSink(): ENTER";
   DCHECK(task_runner_provider_->IsMainThread());
   layer_tree_frame_sink_creation_callback_.Cancel();
   if (layer_tree_frame_sink_creation_requested_)
     return;
+  LOG(INFO) << "RequestNewLayerTreeFrameSink(): flag = true";
   layer_tree_frame_sink_creation_requested_ = true;
   layer_tree_host_->RequestNewLayerTreeFrameSink();
 }
@@ -130,6 +133,7 @@ void SingleThreadProxy::ReleaseLayerTreeFrameSink() {
 
 void SingleThreadProxy::SetLayerTreeFrameSink(
     LayerTreeFrameSink* layer_tree_frame_sink) {
+  LOG(INFO) << "SetLayerTreeFrameSink(): ENTER";
   DCHECK(task_runner_provider_->IsMainThread());
   DCHECK(layer_tree_frame_sink_creation_requested_);
 
@@ -147,6 +151,7 @@ void SingleThreadProxy::SetLayerTreeFrameSink(
       scheduler_on_impl_thread_->DidCreateAndInitializeLayerTreeFrameSink();
     else if (!inside_synchronous_composite_)
       SetNeedsCommit();
+    LOG(INFO) << "SetLayerTreeFrameSink(): InitRenderer success, flag = false";
     layer_tree_frame_sink_creation_requested_ = false;
     layer_tree_frame_sink_lost_ = false;
   } else {
