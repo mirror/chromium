@@ -94,6 +94,30 @@
       "revId": "07b75dcccdf02a7440f9dbf02927416f136f9386",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c3d5cc10_aff926c9",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/ntp/cards/SignInPromo.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 370,
+      "author": {
+        "id": 1209769
+      },
+      "writtenOn": "2017-11-08T17:09:28Z",
+      "side": 1,
+      "message": "Sorry, I haven\u0027t noticed that you call bindPersonalizedSigninPromo from onBindViewHolder.",
+      "parentUuid": "76015c5d_a9fe2b5b",
+      "range": {
+        "startLine": 370,
+        "startChar": 21,
+        "endLine": 370,
+        "endChar": 48
+      },
+      "revId": "07b75dcccdf02a7440f9dbf02927416f136f9386",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
