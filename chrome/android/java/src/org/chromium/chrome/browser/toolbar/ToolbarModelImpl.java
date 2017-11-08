@@ -121,10 +121,13 @@ class ToolbarModelImpl extends ToolbarModel implements ToolbarDataProvider, Tool
                 displayText =
                         DomDistillerTabUtils.getFormattedUrlFromOriginalDistillerUrl(originalUrl);
             }
-        } else if (isOfflinePage()) {
+        } else if (isTrustedOfflinePage()) {
             String originalUrl = mTab.getOriginalUrl();
             displayText = OfflinePageUtils.stripSchemeFromOnlineUrl(
                   DomDistillerTabUtils.getFormattedUrlFromOriginalDistillerUrl(originalUrl));
+        } else if (isNotTrustedOfflinePage()) {
+            Context context = ContextUtils.getApplicationContext();
+            displayText = context.getString(R.string.location_bar_not_trusted_offline_url);
         }
 
         return displayText;
@@ -188,5 +191,13 @@ class ToolbarModelImpl extends ToolbarModel implements ToolbarDataProvider, Tool
     @Override
     public boolean isOfflinePage() {
         return hasTab() && OfflinePageUtils.isOfflinePage(mTab);
+    }
+
+    public boolean isTrustedOfflinePage() {
+        return hasTab() && OfflinePageUtils.isTrustedOfflinePage(mTab);
+    }
+
+    public boolean isNotTrustedOfflinePage() {
+        return hasTab() && OfflinePageUtils.isNotTrustedOfflinePage(mTab);
     }
 }

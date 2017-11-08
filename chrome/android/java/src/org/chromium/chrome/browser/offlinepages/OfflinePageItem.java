@@ -95,4 +95,11 @@ public class OfflinePageItem {
     public String getRequestOrigin() {
         return mRequestOrigin;
     }
+
+    /** @return Whether this offline page is trusted or not. */
+    public boolean isTrusted() {
+        return !(mClientId.getNamespace().equals(OfflinePageBridge.DOWNLOAD_NAMESPACE)
+                || mClientId.getNamespace().equals(OfflinePageBridge.ASYNC_NAMESPACE)
+                || mClientId.getNamespace().equals(OfflinePageBridge.BROWSER_ACTIONS_NAMESPACE));
+    }
 }

@@ -68,6 +68,7 @@ import org.chromium.chrome.browser.ntp.NativePageFactory;
 import org.chromium.chrome.browser.ntp.NewTabPage;
 import org.chromium.chrome.browser.ntp.NewTabPage.FakeboxDelegate;
 import org.chromium.chrome.browser.ntp.NewTabPageUma;
+import org.chromium.chrome.browser.offlinepages.OfflinePageUtils;
 import org.chromium.chrome.browser.omnibox.AutocompleteController.OnSuggestionsReceivedListener;
 import org.chromium.chrome.browser.omnibox.OmniboxResultsAdapter.OmniboxResultItem;
 import org.chromium.chrome.browser.omnibox.OmniboxResultsAdapter.OmniboxSuggestionDelegate;
@@ -1028,6 +1029,10 @@ public class LocationBarLayout extends FrameLayout
         updateNavigationButton();
         if (hasFocus) {
             if (mNativeInitialized) RecordUserAction.record("FocusLocation");
+            if (OfflinePageUtils.isOfflinePage(mToolbarDataProvider.getTab())
+                    && OfflinePageUtils.isNotTrustedOfflinePage(mToolbarDataProvider.getTab())) {
+                setUrlBarText("", null);
+            }
             mUrlBar.deEmphasizeUrl();
         } else {
             mUrlFocusedFromFakebox = false;
@@ -2190,9 +2195,13 @@ public class LocationBarLayout extends FrameLayout
         if (NativePageFactory.isNativePageUrl(url, getCurrentTab().isIncognito())
                 || NewTabPage.isNTPUrl(url)) {
             return "";
+        } else if (OfflinePageUtils.isNotTrustedOfflinePage(mToolbarDataProvider.getTab())
+                && mUrlHasFocus) {
+            return "";
         }
 
         String displayText = mToolbarDataProvider.getText();
+
         // Because Android versions 4.2 and before lack proper RTL support,
         // force the formatted URL to render as LTR using an LRM character.
         // See: https://www.ietf.org/rfc/rfc3987.txt and crbug.com/709417

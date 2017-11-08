@@ -1932,6 +1932,9 @@ To obtain new licenses, connect to the internet and play your downloaded content
       <message name="IDS_PAGE_INFO_CONNECTION_OFFLINE" desc="Message to display in the page info bubble when viewing and offline page.">
         You are viewing an offline copy of this page from <ph name="CREATION_TIME">%1$s<ex>Feb 9, 2016</ex></ph>
       </message>
+      <message name="IDS_PAGE_INFO_OFFLINE_PAGE_NOT_TRUSTED" desc="Additional message to be shown in the page info bubble, when of offline page shown is not trusted.">
+        It may have been modified.
+      </message>
       <message name="IDS_PAGE_INFO_DOMAIN_HIDDEN" desc="Message to display in the page info bubble when the domain is hidden.">
         This content is from <ph name="DOMAIN_NAME">%1$s<ex>google.com</ex></ph>, delivered by Google.
       </message>
@@ -2614,6 +2617,9 @@ To obtain new licenses, connect to the internet and play your downloaded content
       <!-- Omnibox -->
       <message name="IDS_LOCATION_BAR_VERBOSE_STATUS_OFFLINE" desc="Verbose indication of offline status in the location bar. [CHAR-LIMIT=20]">
         Offline
+      </message>
+      <message name="IDS_LOCATION_BAR_NOT_TRUSTED_OFFLINE_URL" desc="Text replacing URL of a page, when the offline copy might have been modified.">
+        Shared copy
       </message>
 
       <!-- Omnibox Placeholder Experiment -->

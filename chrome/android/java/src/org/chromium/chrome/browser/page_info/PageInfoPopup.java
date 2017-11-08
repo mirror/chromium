@@ -307,6 +307,10 @@ public class PageInfoPopup implements OnClickListener {
     // Creation date of an offline copy, if web contents contains an offline page.
     private String mOfflinePageCreationDate;
 
+    // Whether offline page is trusted to not have been modified, if web contents contains an
+    // offline page.
+    private boolean mIsOfflinePageTrusted;
+
     // The name of the content publisher, if any.
     private String mContentPublisher;
 
@@ -319,16 +323,18 @@ public class PageInfoPopup implements OnClickListener {
      * @param activity                 Activity which is used for showing a popup.
      * @param tab                      Tab for which the pop up is shown.
      * @param offlinePageCreationDate  Date when the offline page was created.
+     * @param isOfflinePageTrusted     Whether offline page is trusted (to not have been modified).
      * @param publisher                The name of the content publisher, if any.
      */
     private PageInfoPopup(Activity activity, Tab tab, String offlinePageCreationDate,
-            String publisher) {
+            boolean isOfflinePageTrusted, String publisher) {
         mContext = activity;
         mTab = tab;
         mIsBottomPopup = mTab.getActivity().getBottomSheet() != null;
 
         if (offlinePageCreationDate != null) {
             mOfflinePageCreationDate = offlinePageCreationDate;
+            mIsOfflinePageTrusted = isOfflinePageTrusted;
         }
         mWindowAndroid = mTab.getWebContents().getTopLevelNativeWindow();
         mContentPublisher = publisher;
@@ -705,9 +711,17 @@ public class PageInfoPopup implements OnClickListener {
             messageBuilder.append(
                     mContext.getString(R.string.page_info_domain_hidden, mContentPublisher));
         } else if (isShowingOfflinePage()) {
+            // Switch on page being trusted or not.
             messageBuilder.append(String.format(
                     mContext.getString(R.string.page_info_connection_offline),
                     mOfflinePageCreationDate));
+            if (!mIsOfflinePageTrusted) {
+                // Terminating the previous message with a period, which is only needed in case we
+                // have multiple sentences.
+                messageBuilder.append(". ");
+                messageBuilder.append(
+                        mContext.getString(R.string.page_info_offline_page_not_trusted));
+            }
         } else {
             if (!TextUtils.equals(summary, details)) {
                 mConnectionSummary.setVisibility(View.VISIBLE);
@@ -1027,6 +1041,7 @@ public class PageInfoPopup implements OnClickListener {
         }
 
         String offlinePageCreationDate = null;
+        boolean isOfflinePageTrusted = false;
 
         OfflinePageItem offlinePage = OfflinePageUtils.getOfflinePage(tab);
         if (offlinePage != null) {
@@ -1034,9 +1049,11 @@ public class PageInfoPopup implements OnClickListener {
             Date creationDate = new Date(offlinePage.getCreationTimeMs());
             DateFormat df = DateFormat.getDateInstance(DateFormat.MEDIUM);
             offlinePageCreationDate = df.format(creationDate);
+            isOfflinePageTrusted = offlinePage.isTrusted();
         }
 
-        new PageInfoPopup(activity, tab, offlinePageCreationDate, contentPublisher);
+        new PageInfoPopup(
+                activity, tab, offlinePageCreationDate, isOfflinePageTrusted, contentPublisher);
     }
 
     private static native long nativeInit(PageInfoPopup popup, WebContents webContents);
