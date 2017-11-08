@@ -153,6 +153,7 @@ void NGInlineLayoutAlgorithm::PlaceItems(
   // Place items from line-left to line-right along with the baseline.
   // Items are already bidi-reordered to the visual order.
   LayoutUnit position;
+  bool has_out_of_flow_positioned = false;
 
   if (IsRtl(line_info->BaseDirection()) && line_info->LineEndShapeResult()) {
     PlaceGeneratedContent(std::move(line_info->LineEndShapeResult()),
@@ -220,6 +221,7 @@ void NGInlineLayoutAlgorithm::PlaceItems(
       container_builder_.AddOutOfFlowChildCandidate(
           node, NGLogicalOffset(position, LayoutUnit()),
           CurrentDirection(line_info->BaseDirection()));
+      has_out_of_flow_positioned = true;
       continue;
     } else {
       continue;
@@ -234,16 +236,21 @@ void NGInlineLayoutAlgorithm::PlaceItems(
                           &text_builder);
   }
 
-  if (line_box_.IsEmpty()) {
-    return;  // The line was empty.
+  NGBfcOffset line_bfc_offset(line_info->LineBfcOffset());
+
+  if (line_box_.IsEmpty()) {  // The line was empty.
+    if (has_out_of_flow_positioned && text_align != ETextAlign::kJustify) {
+      ApplyTextAlign(*line_info, text_align, &line_bfc_offset.line_offset,
+                     LayoutUnit());
+      container_builder_.SetBfcOffset(line_bfc_offset);
+    }
+    return;
   }
 
   box_states_->OnEndPlaceItems(&line_box_, baseline_type_, position);
   const NGLineHeightMetrics& line_box_metrics =
       box_states_->LineBoxState().metrics;
   DCHECK(!line_box_metrics.IsEmpty());
-
-  NGBfcOffset line_bfc_offset(line_info->LineBfcOffset());
 
   // TODO(kojii): Implement flipped line (vertical-lr). In this case, line_top
   // and block_start do not match.
