@@ -2,6 +2,23 @@
   "comments": [
     {
       "key": {
+        "uuid": "947c9b2c_b0f69c72",
+        "filename": "chrome/browser/consent_auditor/consent_auditor_factory.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 42,
+      "author": {
+        "id": 1116027
+      },
+      "writtenOn": "2017-11-08T14:05:37Z",
+      "side": 1,
+      "message": "This is the wrong location to make this test. This method should be overridden only if GetForProfile(profile) needs to return non-null for a off-the-record profile. The default implementation is:\n\n  content::BrowserContext*\n  BrowserContextKeyedServiceFactory::GetBrowserContextToUse(\n      content::BrowserContext* context) const {\n    // TODO(crbug.com/701326): This DCHECK should be moved to GetContextToUse().\n    DCHECK_CALLED_ON_VALID_SEQUENCE(sequence_checker_);\n\n    // Safe default for Incognito mode: no service.\n    if (context-\u003eIsOffTheRecord())\n      return nullptr;\n\n    return context;\n  }\n\nIf you want to DCHECK that no-one try to access the ConsentAuditor from an off-the-record profile, the correct location is ConsentAuditorFactory::GetForProfile():\n\n  // static\n  consent_auditor::ConsentAuditor* ConsentAuditorFactory::GetForProfile(\n      Profile* profile) {\n    // Recording local consents in Incognito is not useful, as the record would\n    // soon disappear. Consents tied to the user\u0027s Google account should retrieve\n    // account information from the original profile. In both cases, there is no\n    // reason to support Incognito.\n    DCHECK(!profile-\u003eIsOffTheRecord());\n    return static_cast\u003cconsent_auditor::ConsentAuditor*\u003e(\n        GetInstance()-\u003eGetServiceForBrowserContext(profile, true));\n  }",
+      "revId": "d83c16ba7e7b342863ec4ae4d38921db4f2c6171",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "50542871_0eef777b",
         "filename": "components/consent_auditor/consent_auditor.cc",
         "patchSetId": 9
