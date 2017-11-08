@@ -25,13 +25,15 @@ class TestClientControlledStateDelegate
   TestClientControlledStateDelegate() = default;
   ~TestClientControlledStateDelegate() override = default;
 
-  void HandleWindowStateRequest(mojom::WindowStateType current_state,
+  void HandleWindowStateRequest(WindowState* window_state,
+                                ClientControlledState* state_impl,
                                 mojom::WindowStateType next_state) override {
-    old_state_ = current_state;
+    old_state_ = window_state->GetStateType();
     new_state_ = next_state;
   }
 
-  void HandleBoundsRequest(mojom::WindowStateType current_state,
+  void HandleBoundsRequest(WindowState* window_state,
+                           ClientControlledState* state_impl,
                            const gfx::Rect& bounds) override {
     requested_bounds_ = bounds;
   }
