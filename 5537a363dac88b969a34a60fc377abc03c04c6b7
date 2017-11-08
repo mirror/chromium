@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "11e8762c_5b0955b1",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 4
+      },
+      "lineNbr": 7,
+      "author": {
+        "id": 1001472
+      },
+      "writtenOn": "2017-11-08T10:56:24Z",
+      "side": 1,
+      "message": "nit: pass ... until -\u003e you meant \u0027pass ... to\u0027 maybe?",
+      "revId": "5537a363dac88b969a34a60fc377abc03c04c6b7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
