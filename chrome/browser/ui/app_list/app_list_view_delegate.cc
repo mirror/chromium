@@ -269,6 +269,9 @@ void AppListViewDelegate::Dismiss() {
 }
 
 void AppListViewDelegate::ViewClosing() {
+  if (search_controller_)
+    search_controller_->ClearResults();
+  // TODO(warx): Below is called only for bubble launcher.
   controller_->ViewClosing();
 
   if (!profile_)

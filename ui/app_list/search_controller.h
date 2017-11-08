@@ -41,6 +41,9 @@ class APP_LIST_EXPORT SearchController {
                           int action_index,
                           int event_flags);
 
+  // Clear previously added search results on all search providers.
+  void ClearResults();
+
   // Adds a new mixer group. See Mixer::AddGroup.
   size_t AddGroup(size_t max_results, double multiplier, double boost);
 
