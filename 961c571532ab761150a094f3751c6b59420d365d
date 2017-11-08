@@ -2,6 +2,75 @@
   "comments": [
     {
       "key": {
+        "uuid": "19bd3501_a5f81772",
+        "filename": "chrome/browser/media/router/presentation_receiver_window.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 26,
+      "author": {
+        "id": 1001606
+      },
+      "writtenOn": "2017-11-08T17:30:09Z",
+      "side": 1,
+      "message": "You can use a static local for this too :)",
+      "range": {
+        "startLine": 26,
+        "startChar": 49,
+        "endLine": 26,
+        "endChar": 68
+      },
+      "revId": "961c571532ab761150a094f3751c6b59420d365d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "55e7c59b_92f35a92",
+        "filename": "chrome/browser/media/router/presentation_receiver_window.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 32,
+      "author": {
+        "id": 1001606
+      },
+      "writtenOn": "2017-11-08T17:30:09Z",
+      "side": 1,
+      "message": "This is in chrome/, why can\u0027t you just DCHECK_CURRENTLY_ON(BrowserThread::UI)?",
+      "range": {
+        "startLine": 32,
+        "startChar": 23,
+        "endLine": 32,
+        "endChar": 59
+      },
+      "revId": "961c571532ab761150a094f3751c6b59420d365d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "45942501_bf10dbce",
+        "filename": "chrome/browser/media/router/presentation_receiver_window.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 31,
+      "author": {
+        "id": 1001606
+      },
+      "writtenOn": "2017-11-08T17:30:09Z",
+      "side": 1,
+      "message": "What is the actual contract of this method? It deletes the profile, but so does a plain `delete profile`. Is it just that it also removes the profile from the set of tracked profiles? Could we just have it do only that?",
+      "range": {
+        "startLine": 31,
+        "startChar": 14,
+        "endLine": 31,
+        "endChar": 27
+      },
+      "revId": "961c571532ab761150a094f3751c6b59420d365d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "7c0e317f_1138cc80",
         "filename": "chrome/browser/profiles/profile_destroyer.cc",
         "patchSetId": 4
