@@ -1143,10 +1143,9 @@ bool UiSceneManager::ShouldRenderWebVr() {
 
 void UiSceneManager::OnGlInitialized(
     unsigned int content_texture_id,
-    UiElementRenderer::TextureLocation content_location,
-    SkiaSurfaceProvider* provider) {
+    UiElementRenderer::TextureLocation content_location) {
   main_content_->SetTexture(content_texture_id, content_location);
-  scene_->OnGlInitialized(provider);
+  scene_->OnGlInitialized();
 
   ConfigureScene();
 }
