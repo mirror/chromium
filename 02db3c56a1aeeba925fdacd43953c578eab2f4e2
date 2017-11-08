@@ -125,6 +125,24 @@
     },
     {
       "key": {
+        "uuid": "48c7a06c_927a6378",
+        "filename": "ui/compositor/compositor.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 551,
+      "author": {
+        "id": 1148065
+      },
+      "writtenOn": "2017-11-08T22:34:58Z",
+      "side": 1,
+      "message": "I see, that makes more sense, in which case that would work, eliminating #8 in https://bugs.chromium.org/p/chromium/issues/detail?id\u003d781349#c5 and would be overall simpler.",
+      "parentUuid": "894037cd_a6c3257b",
+      "revId": "02db3c56a1aeeba925fdacd43953c578eab2f4e2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "8f42508d_bc9d8f21",
         "filename": "ui/compositor/compositor.cc",
         "patchSetId": 7
