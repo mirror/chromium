@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "766b16dd_574c5d98",
+        "filename": "base/process/kill_posix.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 149,
+      "author": {
+        "id": 1174099
+      },
+      "writtenOn": "2017-11-08T22:34:08Z",
+      "side": 1,
+      "message": "WEXITSTATUS() is only valid if WIFEXITED() holds. The other option here is WIFSIGNALED(), in which case you’d want to check WTERMSIG(). But don’t confuse exit codes (WEXITSTATUS) with signals (WTERMSIG)!",
+      "revId": "d227907d4c7148e5d6d04e64f63bcea56f8cb1d0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
