@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "f8be4842_b060ac45",
+        "filename": "services/resource_coordinator/memory_instrumentation/queued_request_dispatcher.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 189,
+      "author": {
+        "id": 1115906
+      },
+      "writtenOn": "2017-11-08T19:22:46Z",
+      "side": 1,
+      "message": "ah I see, these are temporary containers that hold raw pointers to sub-elements of |request|, which is guaranteed to outlive these containers.",
+      "revId": "3951c8594b40a66cdf91a8ff4daf70eacfe67571",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
