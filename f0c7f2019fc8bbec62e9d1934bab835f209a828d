@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "b9e292c4_7db76809",
+        "filename": "ui/app_list/views/app_list_view_unittest.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 338,
+      "author": {
+        "id": 1199459
+      },
+      "writtenOn": "2017-11-08T01:44:35Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "eae1a481_27c6972e",
+      "range": {
+        "startLine": 338,
+        "startChar": 37,
+        "endLine": 338,
+        "endChar": 45
+      },
+      "revId": "f0c7f2019fc8bbec62e9d1934bab835f209a828d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "91d60b81_a11d20de",
         "filename": "ui/app_list/views/app_list_view_unittest.cc",
         "patchSetId": 7
@@ -48,6 +72,30 @@
     },
     {
       "key": {
+        "uuid": "02d97d14_836bdb74",
+        "filename": "ui/app_list/views/app_list_view_unittest.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 349,
+      "author": {
+        "id": 1199459
+      },
+      "writtenOn": "2017-11-08T01:44:35Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "91d60b81_a11d20de",
+      "range": {
+        "startLine": 349,
+        "startChar": 21,
+        "endLine": 349,
+        "endChar": 62
+      },
+      "revId": "f0c7f2019fc8bbec62e9d1934bab835f209a828d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "862145f6_329a0324",
         "filename": "ui/app_list/views/folder_header_view.cc",
         "patchSetId": 7
@@ -59,6 +107,24 @@
       "writtenOn": "2017-11-07T20:00:25Z",
       "side": 1,
       "message": "left/right is confusing to read. How about explicitly call out the |reverse| (or move direction)?\n\ne.g.\n\nconst bool reverse \u003d base::i18n::IsRTL() ?\n    key_event.key_code() \u003d\u003d ui::VKEY_LEFT :\n    key_event.key_code() \u003d\u003d ui::VKEY_RIGHT;\n\nif (folder_name_view_-\u003etext().empty())\n    GetFocusManager()-\u003eAdvanceFocus(reverse);\n\n...\n\nconst bool text_rtl \u003d ...;\nconst bool cursor_at_beginning \u003d ...;\n\nif (cursor_at_beginning \u0026\u0026 reverse) {\n  GetFocusManager()-\u003eAdvanceFocus(reverse);\n}\n\nif (!cursor_at_beginning \u0026\u0026 !reverse) {\n  GetFocusManager()-\u003eAdvanceFocus(!reverse);\n}",
+      "revId": "f0c7f2019fc8bbec62e9d1934bab835f209a828d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ef2b25ac_4f0866a2",
+        "filename": "ui/app_list/views/folder_header_view.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 267,
+      "author": {
+        "id": 1199459
+      },
+      "writtenOn": "2017-11-08T01:44:35Z",
+      "side": 1,
+      "message": "In the new patch set, I use |move_cursor_reverse| and |move_focus_reverse|. In RTL environmnet, if we type English in textfield. The beginning position of cursor is at left, and if we hit LEFT key, |move_cursor_reverse| will be true, because cursor will move in a different direction than it grows. And it will move focus outside the textfield. But |move_focus_reverse| will be false, because left is the forward direction for RTL environment.",
+      "parentUuid": "862145f6_329a0324",
       "revId": "f0c7f2019fc8bbec62e9d1934bab835f209a828d",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -79,6 +145,24 @@
       "revId": "f0c7f2019fc8bbec62e9d1934bab835f209a828d",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a5eaba5c_f95e931b",
+        "filename": "ui/app_list/views/search_box_view.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 887,
+      "author": {
+        "id": 1199459
+      },
+      "writtenOn": "2017-11-08T01:44:35Z",
+      "side": 1,
+      "message": "Yes, that\u0027s better. Done.",
+      "parentUuid": "77a9762b_b69b7e33",
+      "revId": "f0c7f2019fc8bbec62e9d1934bab835f209a828d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
