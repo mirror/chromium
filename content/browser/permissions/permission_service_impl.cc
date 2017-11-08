@@ -59,8 +59,14 @@ PermissionType PermissionDescriptorToPermissionType(
     case PermissionName::ACCESSIBILITY_EVENTS:
       return PermissionType::ACCESSIBILITY_EVENTS;
     case PermissionName::CLIPBOARD_READ:
+      if (descriptor->extension && descriptor->extension->is_clipboard()) {
+        return PermissionType::CLIPBOARD_READ;
+      }
+      break;
     case PermissionName::CLIPBOARD_WRITE:
-      NOTIMPLEMENTED();
+      if (descriptor->extension && descriptor->extension->is_clipboard()) {
+        return PermissionType::CLIPBOARD_WRITE;
+      }
       break;
   }
 
@@ -89,6 +95,8 @@ blink::WebFeaturePolicyFeature PermissionTypeToFeaturePolicyFeature(
     case PermissionType::FLASH:
     case PermissionType::SENSORS:
     case PermissionType::ACCESSIBILITY_EVENTS:
+    case PermissionType::CLIPBOARD_READ:
+    case PermissionType::CLIPBOARD_WRITE:
     case PermissionType::NUM:
       // These aren't exposed by feature policy.
       return blink::WebFeaturePolicyFeature::kNotFound;

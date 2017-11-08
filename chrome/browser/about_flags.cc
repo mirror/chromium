@@ -3612,6 +3612,11 @@ const FeatureEntry kFeatureEntries[] = {
      SINGLE_VALUE_TYPE(ash::switches::kAshEnableKeyboardShortcutViewer)},
 #endif  // OS_CHROMEOS
 
+    {"clipboard-content-setting",
+     flag_descriptions::kClipboardContentSettingName,
+     flag_descriptions::kClipboardContentSettingDescription, kOsAll,
+     FEATURE_VALUE_TYPE(features::kClipboardContentSetting)},
+
 #if defined(OS_CHROMEOS)
     {"native-samba", flag_descriptions::kNativeSambaName,
      flag_descriptions::kNativeSambaDescription, kOsCrOS,
