@@ -81,6 +81,24 @@
       "revId": "50f31a01179de57762af51e78279c4774abb0953",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "ab9620e0_b5d436b3",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/survey/ChromeHomeSurveyController.java",
+        "patchSetId": 9
+      },
+      "lineNbr": 209,
+      "author": {
+        "id": 1122966
+      },
+      "writtenOn": "2017-11-08T22:55:13Z",
+      "side": 1,
+      "message": "I think it\u0027s a bit unexpected, as a user, that an infobar asking me to take a survey would show up because I was switched tabs. I think we should probably dismiss the infobar, not log it as having been shown, and try again on the next cold start if the user leaves the tab before the infobar is shown.\n\nIn 65+ we should also sync with UX on what we should do if the tab is already showing infobars. It similarly seems odd to me that a survey infobar could show up in the middle of infobars triggered by/related to the current web page.",
+      "parentUuid": "ba6eaf6a_6d6cbae8",
+      "revId": "50f31a01179de57762af51e78279c4774abb0953",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
