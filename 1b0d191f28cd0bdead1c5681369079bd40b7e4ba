@@ -1,0 +1,78 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "6e7c2827_7eaf2c0f",
+        "filename": "media/mojo/services/mojo_cdm_file_io.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 201,
+      "author": {
+        "id": 1002182
+      },
+      "writtenOn": "2017-11-08T23:45:51Z",
+      "side": 1,
+      "message": "Since most times read will succeed. To make sure people don\u0027t accidentally add code between |start| and now, move this line to be immediately after line 189? It\u0027s okay to keep the histogram report here.",
+      "revId": "1b0d191f28cd0bdead1c5681369079bd40b7e4ba",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0b9ad151_63b79bc6",
+        "filename": "media/mojo/services/mojo_cdm_file_io.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 279,
+      "author": {
+        "id": 1002182
+      },
+      "writtenOn": "2017-11-08T23:45:51Z",
+      "side": 1,
+      "message": "ditto",
+      "revId": "1b0d191f28cd0bdead1c5681369079bd40b7e4ba",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "52a92caf_260b1233",
+        "filename": "tools/metrics/histograms/histograms.xml",
+        "patchSetId": 1
+      },
+      "lineNbr": 32772,
+      "author": {
+        "id": 1002182
+      },
+      "writtenOn": "2017-11-08T23:45:51Z",
+      "side": 1,
+      "message": "CDM reads a lot of things. Maybe CdmFileIOReadTime?",
+      "range": {
+        "startLine": 32772,
+        "startChar": 27,
+        "endLine": 32772,
+        "endChar": 38
+      },
+      "revId": "1b0d191f28cd0bdead1c5681369079bd40b7e4ba",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a247e5b5_926c64dd",
+        "filename": "tools/metrics/histograms/histograms.xml",
+        "patchSetId": 1
+      },
+      "lineNbr": 32777,
+      "author": {
+        "id": 1002182
+      },
+      "writtenOn": "2017-11-08T23:45:51Z",
+      "side": 1,
+      "message": "ditto",
+      "revId": "1b0d191f28cd0bdead1c5681369079bd40b7e4ba",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
