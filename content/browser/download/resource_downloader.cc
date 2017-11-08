@@ -75,7 +75,7 @@ ResourceDownloader::InterceptNavigationResponse(
     const SSLStatus& ssl_status,
     std::unique_ptr<ThrottlingURLLoader> url_loader,
     std::vector<GURL> url_chain,
-    base::Optional<ResourceRequestCompletionStatus> completion_status) {
+    base::Optional<network::URLLoaderStatus> completion_status) {
   auto downloader = std::make_unique<ResourceDownloader>(
       delegate, std::move(resource_request),
       std::make_unique<DownloadSaveInfo>(), content::DownloadItem::kInvalidId,
@@ -143,7 +143,7 @@ void ResourceDownloader::InterceptResponse(
     mojo::ScopedDataPipeConsumerHandle consumer_handle,
     const SSLStatus& ssl_status,
     std::vector<GURL> url_chain,
-    base::Optional<ResourceRequestCompletionStatus> completion_status) {
+    base::Optional<network::URLLoaderStatus> completion_status) {
   url_loader_ = std::move(url_loader);
   url_loader_->set_forwarding_client(&response_handler_);
   net::SSLInfo info;

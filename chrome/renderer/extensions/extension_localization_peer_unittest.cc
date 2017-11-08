@@ -12,7 +12,6 @@
 
 #include "base/macros.h"
 #include "base/memory/ptr_util.h"
-#include "content/public/common/resource_request_completion_status.h"
 #include "content/public/renderer/fixed_received_data.h"
 #include "extensions/common/message_bundle.h"
 #include "ipc/ipc_sender.h"
@@ -20,6 +19,7 @@
 #include "net/base/net_errors.h"
 #include "net/url_request/redirect_info.h"
 #include "net/url_request/url_request_status.h"
+#include "services/network/public/cpp/url_loader_status.h"
 #include "testing/gmock/include/gmock/gmock.h"
 #include "testing/gtest/include/gtest/gtest.h"
 
@@ -77,9 +77,8 @@ class MockRequestPeer : public content::RequestPeer {
   }
   MOCK_METHOD2(OnReceivedDataInternal, void(const char* data, int data_length));
   MOCK_METHOD1(OnTransferSizeUpdated, void(int transfer_size_diff));
-  MOCK_METHOD1(
-      OnCompletedRequest,
-      void(const content::ResourceRequestCompletionStatus& completion_status));
+  MOCK_METHOD1(OnCompletedRequest,
+               void(const network::URLLoaderStatus& completion_status));
 
  private:
   DISALLOW_COPY_AND_ASSIGN(MockRequestPeer);
@@ -148,7 +147,7 @@ TEST_F(ExtensionLocalizationPeerTest, OnCompletedRequestBadURLRequestStatus) {
   SetUpExtensionLocalizationPeer("text/css", GURL(kExtensionUrl_1));
 
   EXPECT_CALL(*original_peer_, OnReceivedResponse(_));
-  content::ResourceRequestCompletionStatus completion_status(net::ERR_ABORTED);
+  network::URLLoaderStatus completion_status(net::ERR_ABORTED);
   EXPECT_CALL(*original_peer_, OnCompletedRequest(completion_status));
 
   filter_peer_->OnCompletedRequest(completion_status);
@@ -161,7 +160,7 @@ TEST_F(ExtensionLocalizationPeerTest, OnCompletedRequestEmptyData) {
   EXPECT_CALL(*sender_, Send(_)).Times(0);
 
   EXPECT_CALL(*original_peer_, OnReceivedResponse(_));
-  content::ResourceRequestCompletionStatus completion_status(net::OK);
+  network::URLLoaderStatus completion_status(net::OK);
   EXPECT_CALL(*original_peer_, OnCompletedRequest(completion_status));
 
   filter_peer_->OnCompletedRequest(completion_status);
@@ -179,7 +178,7 @@ TEST_F(ExtensionLocalizationPeerTest, OnCompletedRequestNoCatalogs) {
   EXPECT_CALL(*original_peer_,
               OnReceivedDataInternal(StrEq(data.c_str()), data.length()))
       .Times(1);
-  content::ResourceRequestCompletionStatus completion_status(net::OK);
+  network::URLLoaderStatus completion_status(net::OK);
   EXPECT_CALL(*original_peer_, OnCompletedRequest(completion_status)).Times(1);
 
   filter_peer_->OnCompletedRequest(completion_status);
@@ -216,7 +215,7 @@ TEST_F(ExtensionLocalizationPeerTest, OnCompletedRequestWithCatalogs) {
   EXPECT_CALL(*original_peer_,
               OnReceivedDataInternal(StrEq(data.c_str()), data.length()));
 
-  content::ResourceRequestCompletionStatus completion_status(net::OK);
+  network::URLLoaderStatus completion_status(net::OK);
   EXPECT_CALL(*original_peer_, OnCompletedRequest(completion_status));
 
   filter_peer_->OnCompletedRequest(completion_status);
@@ -242,7 +241,7 @@ TEST_F(ExtensionLocalizationPeerTest, OnCompletedRequestReplaceMessagesFails) {
   EXPECT_CALL(*original_peer_,
               OnReceivedDataInternal(StrEq(message.c_str()), message.length()));
 
-  content::ResourceRequestCompletionStatus completion_status(net::OK);
+  network::URLLoaderStatus completion_status(net::OK);
   EXPECT_CALL(*original_peer_, OnCompletedRequest(completion_status));
 
   filter_peer_->OnCompletedRequest(completion_status);

@@ -93,7 +93,7 @@ class NavigationPreloadLoaderClient final : public mojom::URLLoaderClient {
     // We could call OnResponseStream() here, but for simplicity, don't do
     // anything until OnComplete().
   }
-  void OnComplete(const ResourceRequestCompletionStatus& status) override {
+  void OnComplete(const network::URLLoaderStatus& status) override {
     blink::mojom::ServiceWorkerStreamCallbackPtr stream_callback;
     auto stream_handle = blink::mojom::ServiceWorkerStreamHandle::New();
     stream_handle->callback_request = mojo::MakeRequest(&stream_callback);
@@ -183,7 +183,7 @@ class MockNetworkURLLoaderFactory final : public mojom::URLLoaderFactory {
                                          MOJO_WRITE_DATA_FLAG_ALL_OR_NONE);
     client->OnStartLoadingResponseBody(std::move(data_pipe.consumer_handle));
 
-    ResourceRequestCompletionStatus status;
+    network::URLLoaderStatus status;
     status.error_code = net::OK;
     client->OnComplete(status);
   }

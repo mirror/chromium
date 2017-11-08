@@ -99,7 +99,7 @@ void SyncLoadContext::OnReceivedData(std::unique_ptr<ReceivedData> data) {
 void SyncLoadContext::OnTransferSizeUpdated(int transfer_size_diff) {}
 
 void SyncLoadContext::OnCompletedRequest(
-    const ResourceRequestCompletionStatus& completion_status) {
+    const network::URLLoaderStatus& completion_status) {
   response_->error_code = completion_status.error_code;
   response_->encoded_data_length = completion_status.encoded_data_length;
   response_->encoded_body_length = completion_status.encoded_body_length;

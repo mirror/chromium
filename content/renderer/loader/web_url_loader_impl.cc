@@ -410,8 +410,7 @@ class WebURLLoaderImpl::Context : public base::RefCounted<Context> {
   void OnReceivedData(std::unique_ptr<ReceivedData> data);
   void OnTransferSizeUpdated(int transfer_size_diff);
   void OnReceivedCachedMetadata(const char* data, int len);
-  void OnCompletedRequest(
-      const ResourceRequestCompletionStatus& completion_status);
+  void OnCompletedRequest(const network::URLLoaderStatus& completion_status);
 
  private:
   friend class base::RefCounted<Context>;
@@ -470,7 +469,7 @@ class WebURLLoaderImpl::RequestPeerImpl : public RequestPeer {
   void OnTransferSizeUpdated(int transfer_size_diff) override;
   void OnReceivedCachedMetadata(const char* data, int len) override;
   void OnCompletedRequest(
-      const ResourceRequestCompletionStatus& completion_status) override;
+      const network::URLLoaderStatus& completion_status) override;
 
  private:
   scoped_refptr<Context> context_;
@@ -886,7 +885,7 @@ void WebURLLoaderImpl::Context::OnReceivedCachedMetadata(
 }
 
 void WebURLLoaderImpl::Context::OnCompletedRequest(
-    const ResourceRequestCompletionStatus& completion_status) {
+    const network::URLLoaderStatus& completion_status) {
   int64_t total_transfer_size = completion_status.encoded_data_length;
   int64_t encoded_body_size = completion_status.encoded_body_length;
 
@@ -1028,7 +1027,7 @@ void WebURLLoaderImpl::Context::HandleDataURL() {
       OnReceivedData(std::make_unique<FixedReceivedData>(data.data(), size));
   }
 
-  ResourceRequestCompletionStatus completion_status(error_code);
+  network::URLLoaderStatus completion_status(error_code);
   completion_status.encoded_body_length = data.size();
   completion_status.decoded_body_length = data.size();
   OnCompletedRequest(completion_status);
@@ -1188,7 +1187,7 @@ void WebURLLoaderImpl::RequestPeerImpl::OnReceivedCachedMetadata(
 }
 
 void WebURLLoaderImpl::RequestPeerImpl::OnCompletedRequest(
-    const ResourceRequestCompletionStatus& completion_status) {
+    const network::URLLoaderStatus& completion_status) {
   context_->OnCompletedRequest(completion_status);
 }
 

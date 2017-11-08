@@ -39,7 +39,7 @@ class TestRequestPeer : public RequestPeer {
   void OnTransferSizeUpdated(int transfer_size_diff) override;
   void OnReceivedCachedMetadata(const char* data, int len) override;
   void OnCompletedRequest(
-      const ResourceRequestCompletionStatus& completion_status) override;
+      const network::URLLoaderStatus& completion_status) override;
 
   struct Context final {
     Context();
