@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "7bc2ec12_5a5478c0",
+        "filename": "ash/accessibility/accessibility_focus_ring_controller.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 46,
+      "author": {
+        "id": 1250213
+      },
+      "writtenOn": "2017-11-08T20:44:29Z",
+      "side": 1,
+      "message": "I went over these with Laura and they seem OK for most readable text on a white background. For blue or dark backgrounds we may need to think about a different approach.",
+      "range": {
+        "startLine": 46,
+        "startChar": 13,
+        "endLine": 46,
+        "endChar": 23
+      },
+      "revId": "5e226628cbe772b407307fc7cef58bbc59cc91ba",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "41dd1ac2_8b49c1c2",
+        "filename": "ash/accessibility/accessibility_focus_ring_controller.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 55,
+      "author": {
+        "id": 1250213
+      },
+      "writtenOn": "2017-11-08T20:44:29Z",
+      "side": 1,
+      "message": "Actually not sure that we will ever need a fadeable highlight; I may remove this TODO. What do you think?",
+      "range": {
+        "startLine": 55,
+        "startChar": 6,
+        "endLine": 55,
+        "endChar": 16
+      },
+      "revId": "5e226628cbe772b407307fc7cef58bbc59cc91ba",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
