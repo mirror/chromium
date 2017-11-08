@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "b4c7a2af_0fb99132",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 3
+      },
+      "lineNbr": 7,
+      "author": {
+        "id": 1002737
+      },
+      "writtenOn": "2017-11-08T16:19:37Z",
+      "side": 1,
+      "message": "Leftovers are much bigger. They include the UI in password_generation_* Do you wanna remove it too here or later?",
+      "range": {
+        "startLine": 7,
+        "startChar": 27,
+        "endLine": 7,
+        "endChar": 36
+      },
+      "revId": "53650ad6b95714816fa2a7c0b3a59f4297600128",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
