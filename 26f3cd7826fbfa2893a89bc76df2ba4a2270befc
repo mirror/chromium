@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "94f33dcd_411cacfd",
+        "filename": "content/browser/frame_host/render_frame_host_impl.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 290,
+      "author": {
+        "id": 1001216
+      },
+      "writtenOn": "2017-11-08T00:15:36Z",
+      "side": 1,
+      "message": "Let\u0027s rephrase to give a sense of context, since it\u0027s kind of re-entrant:\n\nUpdate this frame\u0027s state at the appropriate time when a navigation commits. This is called by NavigatorImpl::DidNavigate as a helper, in the midst of a DidCommitProvisionalLoad call.",
+      "revId": "26f3cd7826fbfa2893a89bc76df2ba4a2270befc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
