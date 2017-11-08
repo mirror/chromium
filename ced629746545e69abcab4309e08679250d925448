@@ -22,6 +22,30 @@
       "revId": "ced629746545e69abcab4309e08679250d925448",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d84a4d02_2ef338bb",
+        "filename": "ios/chrome/browser/ui/stack_view/stack_view_controller.mm",
+        "patchSetId": 3
+      },
+      "lineNbr": 2123,
+      "author": {
+        "id": 1180589
+      },
+      "writtenOn": "2017-11-08T07:30:15Z",
+      "side": 1,
+      "message": "It is a point.",
+      "parentUuid": "e6f769d6_b89be843",
+      "range": {
+        "startLine": 2123,
+        "startChar": 14,
+        "endLine": 2123,
+        "endChar": 19
+      },
+      "revId": "ced629746545e69abcab4309e08679250d925448",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
