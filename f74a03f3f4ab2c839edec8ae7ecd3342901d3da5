@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "660e48f9_48429929",
+        "filename": "services/shape_detection/detection_utils_win.h",
+        "patchSetId": 8
+      },
+      "lineNbr": 29,
+      "author": {
+        "id": 1114999
+      },
+      "writtenOn": "2017-11-08T01:56:22Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "fafce600_12cebb48",
+      "range": {
+        "startLine": 29,
+        "startChar": 2,
+        "endLine": 29,
+        "endChar": 10
+      },
+      "revId": "f74a03f3f4ab2c839edec8ae7ecd3342901d3da5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "65d8a915_1b1f5f11",
         "filename": "services/shape_detection/detection_utils_win.h",
         "patchSetId": 8
@@ -45,6 +69,30 @@
       "revId": "f74a03f3f4ab2c839edec8ae7ecd3342901d3da5",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "959a7b1b_09757c48",
+        "filename": "services/shape_detection/detection_utils_win.h",
+        "patchSetId": 8
+      },
+      "lineNbr": 39,
+      "author": {
+        "id": 1114999
+      },
+      "writtenOn": "2017-11-08T01:56:22Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "65d8a915_1b1f5f11",
+      "range": {
+        "startLine": 39,
+        "startChar": 26,
+        "endLine": 39,
+        "endChar": 39
+      },
+      "revId": "f74a03f3f4ab2c839edec8ae7ecd3342901d3da5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -71,6 +119,30 @@
     },
     {
       "key": {
+        "uuid": "56ae7c0b_6c2a28f4",
+        "filename": "services/shape_detection/detection_utils_win.h",
+        "patchSetId": 8
+      },
+      "lineNbr": 44,
+      "author": {
+        "id": 1114999
+      },
+      "writtenOn": "2017-11-08T01:56:22Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "00e8beeb_04614435",
+      "range": {
+        "startLine": 44,
+        "startChar": 12,
+        "endLine": 44,
+        "endChar": 13
+      },
+      "revId": "f74a03f3f4ab2c839edec8ae7ecd3342901d3da5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "1b0eeafc_ba21e708",
         "filename": "services/shape_detection/detection_utils_win.h",
         "patchSetId": 8
@@ -91,6 +163,30 @@
       "revId": "f74a03f3f4ab2c839edec8ae7ecd3342901d3da5",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c126ecfa_87fc971e",
+        "filename": "services/shape_detection/detection_utils_win.h",
+        "patchSetId": 8
+      },
+      "lineNbr": 91,
+      "author": {
+        "id": 1114999
+      },
+      "writtenOn": "2017-11-08T01:56:22Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "1b0eeafc_ba21e708",
+      "range": {
+        "startLine": 88,
+        "startChar": 0,
+        "endLine": 91,
+        "endChar": 3
+      },
+      "revId": "f74a03f3f4ab2c839edec8ae7ecd3342901d3da5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -117,6 +213,30 @@
     },
     {
       "key": {
+        "uuid": "228beb90_5e352cd2",
+        "filename": "services/shape_detection/face_detection_impl_win.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 61,
+      "author": {
+        "id": 1114999
+      },
+      "writtenOn": "2017-11-08T01:56:22Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "aa16b2ef_0f2d12bb",
+      "range": {
+        "startLine": 61,
+        "startChar": 0,
+        "endLine": 61,
+        "endChar": 73
+      },
+      "revId": "f74a03f3f4ab2c839edec8ae7ecd3342901d3da5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "2fc1310b_8682fbbd",
         "filename": "services/shape_detection/face_detection_impl_win.cc",
         "patchSetId": 8
@@ -128,6 +248,30 @@
       "writtenOn": "2017-11-07T16:46:11Z",
       "side": 1,
       "message": "Can\u0027t we just inspect |face_detector_| to see if the \nasynchronous creation has happened correctly? That way\nwe don\u0027t need a state variable nor holding on to\n|async_create_detector_ops_| (that, if needed, should\nhave been passed to the bound OnFaceDetectorCreated() \ncallback).",
+      "range": {
+        "startLine": 84,
+        "startChar": 0,
+        "endLine": 84,
+        "endChar": 26
+      },
+      "revId": "f74a03f3f4ab2c839edec8ae7ecd3342901d3da5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "349feb5e_c11b2d5c",
+        "filename": "services/shape_detection/face_detection_impl_win.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 84,
+      "author": {
+        "id": 1114999
+      },
+      "writtenOn": "2017-11-08T01:56:22Z",
+      "side": 1,
+      "message": "It also will be failed if IAsyncOperation pointer is null or async status isn\u0027t completed [1]. The state variable is used for detecting face one by one when calling the Detect function repeatedly because it\u0027s async.\n\n[1] https://chromium-review.googlesource.com/c/chromium/src/+/750006/8/services/shape_detection/detection_utils_win.h#97",
+      "parentUuid": "2fc1310b_8682fbbd",
       "range": {
         "startLine": 84,
         "startChar": 0,
@@ -183,6 +327,30 @@
       "revId": "f74a03f3f4ab2c839edec8ae7ecd3342901d3da5",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "cb307d11_8654aba6",
+        "filename": "services/shape_detection/face_detection_impl_win.h",
+        "patchSetId": 8
+      },
+      "lineNbr": 58,
+      "author": {
+        "id": 1114999
+      },
+      "writtenOn": "2017-11-08T01:56:22Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "27171183_6b6c5c81",
+      "range": {
+        "startLine": 58,
+        "startChar": 6,
+        "endLine": 58,
+        "endChar": 60
+      },
+      "revId": "f74a03f3f4ab2c839edec8ae7ecd3342901d3da5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
