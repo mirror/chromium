@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "1d38b38e_38e5be91",
+        "filename": "ios/chrome/browser/ssl/ios_ssl_error_handler.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 52,
+      "author": {
+        "id": 1123009
+      },
+      "writtenOn": "2017-11-08T23:33:00Z",
+      "side": 1,
+      "message": "The interface of this class used to be the same as SSLErrorHandler interface. Is there a reason for diverging? Can we follow SSLErrorHandler interface so people familiar with SSLErrorHandler know show to work with IOS version?",
+      "range": {
+        "startLine": 52,
+        "startChar": 15,
+        "endLine": 52,
+        "endChar": 0
+      },
+      "revId": "1e0de2a8a912772d963ef9e0387740eb061e4872",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "12e5987c_9cf2c5ef",
+        "filename": "ios/chrome/browser/ssl/ios_ssl_error_handler.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 77,
+      "author": {
+        "id": 1123009
+      },
+      "writtenOn": "2017-11-08T23:33:00Z",
+      "side": 1,
+      "message": "It would be better to initialize all ivars here.",
+      "range": {
+        "startLine": 77,
+        "startChar": 23,
+        "endLine": 77,
+        "endChar": 33
+      },
+      "revId": "1e0de2a8a912772d963ef9e0387740eb061e4872",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
