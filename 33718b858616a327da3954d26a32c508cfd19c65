@@ -42,6 +42,24 @@
     },
     {
       "key": {
+        "uuid": "9f8aa433_7e34bbe1",
+        "filename": "components/viz/service/display/direct_renderer.h",
+        "patchSetId": 18
+      },
+      "lineNbr": 166,
+      "author": {
+        "id": 1139801
+      },
+      "writtenOn": "2017-11-08T00:39:02Z",
+      "side": 1,
+      "message": "Does this necessary? RenderPassId is uint64_t.",
+      "parentUuid": "96087dbd_f0403755",
+      "revId": "33718b858616a327da3954d26a32c508cfd19c65",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "17343f88_074732ff",
         "filename": "components/viz/service/display/direct_renderer.h",
         "patchSetId": 18
@@ -56,6 +74,24 @@
       "revId": "33718b858616a327da3954d26a32c508cfd19c65",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "940f8dec_c0d5dd9d",
+        "filename": "components/viz/service/display/direct_renderer.h",
+        "patchSetId": 18
+      },
+      "lineNbr": 170,
+      "author": {
+        "id": 1139801
+      },
+      "writtenOn": "2017-11-08T00:39:02Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "17343f88_074732ff",
+      "revId": "33718b858616a327da3954d26a32c508cfd19c65",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -76,6 +112,24 @@
     },
     {
       "key": {
+        "uuid": "e17b4612_2aa61bb4",
+        "filename": "components/viz/service/display/direct_renderer.h",
+        "patchSetId": 18
+      },
+      "lineNbr": 172,
+      "author": {
+        "id": 1139801
+      },
+      "writtenOn": "2017-11-08T00:39:02Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "c5e15b51_6b882bf9",
+      "revId": "33718b858616a327da3954d26a32c508cfd19c65",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "d2e83b7c_443134b2",
         "filename": "components/viz/service/display/gl_renderer.cc",
         "patchSetId": 18
@@ -87,6 +141,24 @@
       "writtenOn": "2017-11-07T21:16:37Z",
       "side": 1,
       "message": "nit: in_frame_it ? we\u0027re iterating something already so clarifying what this is could help",
+      "revId": "33718b858616a327da3954d26a32c508cfd19c65",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5cebb7c8_d1e85614",
+        "filename": "components/viz/service/display/gl_renderer.cc",
+        "patchSetId": 18
+      },
+      "lineNbr": 3575,
+      "author": {
+        "id": 1139801
+      },
+      "writtenOn": "2017-11-08T00:39:02Z",
+      "side": 1,
+      "message": "name it render_pass_it",
+      "parentUuid": "d2e83b7c_443134b2",
       "revId": "33718b858616a327da3954d26a32c508cfd19c65",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -107,6 +179,24 @@
       "revId": "33718b858616a327da3954d26a32c508cfd19c65",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4e075079_5acfff44",
+        "filename": "components/viz/service/display/gl_renderer.cc",
+        "patchSetId": 18
+      },
+      "lineNbr": 3604,
+      "author": {
+        "id": 1139801
+      },
+      "writtenOn": "2017-11-08T00:39:02Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "25e2be93_ff5d213d",
+      "revId": "33718b858616a327da3954d26a32c508cfd19c65",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
