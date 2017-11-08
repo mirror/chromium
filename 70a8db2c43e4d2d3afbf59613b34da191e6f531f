@@ -140,6 +140,30 @@
       "revId": "70a8db2c43e4d2d3afbf59613b34da191e6f531f",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d6caadbd_29d80e3f",
+        "filename": "media/filters/ffmpeg_demuxer_unittest.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 923,
+      "author": {
+        "id": 1129179
+      },
+      "writtenOn": "2017-11-08T23:28:52Z",
+      "side": 1,
+      "message": "\u003e Test values aren\u0027t updated. \n\nSorry, mixed up with SeekText test a ways down.\n\n\u003e It breaks text stream discard, but that\u0027s fine, we\u0027ll still discard this data appropriately.\n\nWhere do we do the discard if not via ffmpeg?",
+      "parentUuid": "09afde5e_96b4daa3",
+      "range": {
+        "startLine": 923,
+        "startChar": 54,
+        "endLine": 923,
+        "endChar": 77
+      },
+      "revId": "70a8db2c43e4d2d3afbf59613b34da191e6f531f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
