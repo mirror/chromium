@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "fb6312fa_f0fab01f",
+        "filename": "chrome/browser/chromeos/arc/intent_helper/arc_settings_service.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 434,
+      "author": {
+        "id": 1118346
+      },
+      "writtenOn": "2017-11-08T09:25:42Z",
+      "side": 1,
+      "message": "Could you add a TODO to remove this code path after enough time?",
+      "range": {
+        "startLine": 434,
+        "startChar": 0,
+        "endLine": 434,
+        "endChar": 76
+      },
+      "revId": "e2c8895eb2c416130ca9b858bb2a86d4ff1f2f32",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6efea068_3b366af6",
+        "filename": "components/arc/common/backup_settings.mojom",
+        "patchSetId": 1
+      },
+      "lineNbr": 11,
+      "author": {
+        "id": 1118346
+      },
+      "writtenOn": "2017-11-08T09:25:42Z",
+      "side": 1,
+      "message": "Is it fine to make this async method? That is, do we never change our mind and want to know when this operation is finished?",
+      "range": {
+        "startLine": 11,
+        "startChar": 0,
+        "endLine": 11,
+        "endChar": 49
+      },
+      "revId": "e2c8895eb2c416130ca9b858bb2a86d4ff1f2f32",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
