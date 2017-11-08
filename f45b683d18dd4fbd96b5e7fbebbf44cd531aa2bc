@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "43851b59_3e0e6c52",
+        "filename": "base/memory/protected_memory.h",
+        "patchSetId": 10
+      },
+      "lineNbr": 50,
+      "author": {
+        "id": 1002691
+      },
+      "writtenOn": "2017-11-08T19:12:23Z",
+      "side": 1,
+      "message": "Here, can you add a sentence or two about the use-case? I\u0027m thinking it should mention that normally the memory is write-protected at the OS level so we can make certain guarantees and do X...",
+      "revId": "f45b683d18dd4fbd96b5e7fbebbf44cd531aa2bc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
