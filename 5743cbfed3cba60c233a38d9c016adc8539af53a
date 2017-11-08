@@ -16,6 +16,24 @@
       "revId": "5743cbfed3cba60c233a38d9c016adc8539af53a",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "cbf6550b_dd9d12b4",
+        "filename": "third_party/WebKit/LayoutTests/http/tests/devtools/persistence/persistence-do-not-overwrite-css-expected.txt",
+        "patchSetId": 2
+      },
+      "lineNbr": 10,
+      "author": {
+        "id": 1165714
+      },
+      "writtenOn": "2017-11-08T00:09:24Z",
+      "side": 1,
+      "message": "The loadHTML call causes the code to be indented.",
+      "parentUuid": "fd04c9f7_55d40a2e",
+      "revId": "5743cbfed3cba60c233a38d9c016adc8539af53a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
