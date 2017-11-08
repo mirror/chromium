@@ -175,7 +175,7 @@ class DEVICE_BLUETOOTH_EXPORT BluetoothDeviceBlueZ
   void GattServiceRemoved(const dbus::ObjectPath& object_path) override;
 
   // Called once all services have been discovered. Invokes
-  // NotifyGattDiscoveryComplete() for services for which we haven't notified
+  // NotifyGattServiceRemoved() for services for which we haven't notified
   // before e.g. if a services is exposed during construction but services
   // haven't been resolved yet..
   void UpdateGattServices(const dbus::ObjectPath& object_path);
@@ -264,9 +264,9 @@ class DEVICE_BLUETOOTH_EXPORT BluetoothDeviceBlueZ
   int num_connecting_calls_;
 
   // Keeps track of all services for which we've called
-  // NotifyGattDiscoveryComplete().
+  // NotifyGattServiceRemoved().
   std::unordered_set<device::BluetoothRemoteGattService*>
-      discovery_complete_notified_;
+      gatt_service_removed_notified_;
 
   // UI thread task runner and socket thread object used to create sockets.
   scoped_refptr<base::SequencedTaskRunner> ui_task_runner_;
