@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "ec9d71a5_acdfecc8",
+        "filename": "build/config/android/rules.gni",
+        "patchSetId": 2
+      },
+      "lineNbr": 339,
+      "author": {
+        "id": 1126674
+      },
+      "writtenOn": "2017-11-08T21:12:11Z",
+      "side": 1,
+      "message": "Change lgtm, but as a question: Do you know why generate_jni() uses two include dirs?",
+      "revId": "e784c6101485241a41b7b536149a414312cd09b1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
