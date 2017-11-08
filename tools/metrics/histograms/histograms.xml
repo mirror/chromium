@@ -35444,6 +35444,9 @@ http://cs/file:chrome/histograms.xml - but prefer this file for new entries.
 </histogram>
 
 <histogram name="Memory.Browser.Large2" units="MB">
+  <obsolete>
+    Deprecated 11/2017 Replaced with Memory.Browser.PrivateMemoryFootprint.
+  </obsolete>
   <owner>bashi@chromium.org</owner>
   <owner>kouhei@chromium.org</owner>
   <summary>
@@ -35468,6 +35471,10 @@ http://cs/file:chrome/histograms.xml - but prefer this file for new entries.
 </histogram>
 
 <histogram name="Memory.Chrome" units="KB">
+  <obsolete>
+    Deprecated 11/2017. No direct replacement, but
+    Memory.Renderer.PrivateMemoryFootprint is similar.
+  </obsolete>
   <owner>hajimehoshi@chromium.org</owner>
   <owner>kenjibaheux@google.com</owner>
   <owner>kouhei@chromium.org</owner>
@@ -35888,6 +35895,9 @@ http://cs/file:chrome/histograms.xml - but prefer this file for new entries.
 </histogram>
 
 <histogram name="Memory.Extension" units="KB">
+  <obsolete>
+    Deprecated 11/2017. Replaced by Memory.Extension.PrivateMemoryFootprint.
+  </obsolete>
   <owner>hajimehoshi@chromium.org</owner>
   <owner>kenjibaheux@google.com</owner>
   <owner>kouhei@chromium.org</owner>
@@ -35935,6 +35945,9 @@ http://cs/file:chrome/histograms.xml - but prefer this file for new entries.
 </histogram>
 
 <histogram name="Memory.Gpu" units="KB">
+  <obsolete>
+    Deprecated 11/2017. Replaced by Memory.Gpu.PrivateMemoryFootprint.
+  </obsolete>
   <owner>hajimehoshi@chromium.org</owner>
   <owner>jamescook@chromium.org</owner>
   <owner>kenjibaheux@google.com</owner>
@@ -35974,6 +35987,9 @@ http://cs/file:chrome/histograms.xml - but prefer this file for new entries.
 </histogram>
 
 <histogram name="Memory.NativeClient" units="KB">
+  <obsolete>
+    Deprecated 11/2017. No direct replacement.
+  </obsolete>
   <owner>hajimehoshi@chromium.org</owner>
   <owner>kenjibaheux@google.com</owner>
   <owner>kouhei@chromium.org</owner>
@@ -35984,6 +36000,9 @@ http://cs/file:chrome/histograms.xml - but prefer this file for new entries.
 </histogram>
 
 <histogram name="Memory.NativeClientBroker" units="KB">
+  <obsolete>
+    Deprecated 11/2017. No direct replacement.
+  </obsolete>
   <owner>hajimehoshi@chromium.org</owner>
   <owner>kenjibaheux@google.com</owner>
   <owner>kouhei@chromium.org</owner>
@@ -36100,6 +36119,9 @@ http://cs/file:chrome/histograms.xml - but prefer this file for new entries.
 </histogram>
 
 <histogram name="Memory.PepperFlashPlugin" units="KB">
+  <obsolete>
+    Deprecated 11/2017. No direct replacement.
+  </obsolete>
   <owner>thestig@chromium.org</owner>
   <summary>
     The private working set used by each Pepper Flash plugin process. Each
@@ -36108,6 +36130,9 @@ http://cs/file:chrome/histograms.xml - but prefer this file for new entries.
 </histogram>
 
 <histogram name="Memory.PepperPlugin" units="KB">
+  <obsolete>
+    Deprecated 11/2017. No direct replacement.
+  </obsolete>
   <owner>hajimehoshi@chromium.org</owner>
   <owner>kenjibaheux@google.com</owner>
   <owner>kouhei@chromium.org</owner>
@@ -36118,6 +36143,9 @@ http://cs/file:chrome/histograms.xml - but prefer this file for new entries.
 </histogram>
 
 <histogram name="Memory.PepperPluginBroker" units="KB">
+  <obsolete>
+    Deprecated 11/2017. No direct replacement.
+  </obsolete>
   <owner>hajimehoshi@chromium.org</owner>
   <owner>kenjibaheux@google.com</owner>
   <owner>kouhei@chromium.org</owner>
@@ -36238,6 +36266,9 @@ http://cs/file:chrome/histograms.xml - but prefer this file for new entries.
 </histogram>
 
 <histogram name="Memory.Renderer.Large2" units="MB">
+  <obsolete>
+    Deprecated 11/2017. Replaced by Memory.Renderer.PrivateMemoryFootprint.
+  </obsolete>
   <owner>bashi@chromium.org</owner>
   <owner>kouhei@chromium.org</owner>
   <summary>
@@ -36255,6 +36286,10 @@ http://cs/file:chrome/histograms.xml - but prefer this file for new entries.
 </histogram>
 
 <histogram name="Memory.RendererAll" units="MB">
+  <obsolete>
+    Deprecated 11/2017. No direct replacement, although
+    Memory.Total.PrivateMemoryFootprint is similar.
+  </obsolete>
   <owner>bashi@chromium.org</owner>
   <owner>hajimehoshi@chromium.org</owner>
   <owner>tasak@chromium.org</owner>
@@ -36322,6 +36357,9 @@ http://cs/file:chrome/histograms.xml - but prefer this file for new entries.
 </histogram>
 
 <histogram name="Memory.SandboxHelper" units="KB">
+  <obsolete>
+    Deprecated 11/2017. No direct replacement.
+  </obsolete>
   <owner>hajimehoshi@chromium.org</owner>
   <owner>kenjibaheux@google.com</owner>
   <owner>kouhei@chromium.org</owner>
@@ -36741,6 +36779,9 @@ http://cs/file:chrome/histograms.xml - but prefer this file for new entries.
 </histogram>
 
 <histogram name="Memory.Total2" units="MiB">
+  <obsolete>
+    Deprecated 11/2017. Replaced by Memory.Total.PrivateMemoryFootprint.
+  </obsolete>
   <owner>hajimehoshi@chromium.org</owner>
   <owner>kenjibaheux@google.com</owner>
   <owner>kouhei@chromium.org</owner>
@@ -36752,6 +36793,9 @@ http://cs/file:chrome/histograms.xml - but prefer this file for new entries.
 </histogram>
 
 <histogram name="Memory.Utility" units="KB">
+  <obsolete>
+    Deprecated 11/2017. No direct replacement.
+  </obsolete>
   <owner>hajimehoshi@chromium.org</owner>
   <owner>kenjibaheux@google.com</owner>
   <owner>kouhei@chromium.org</owner>
@@ -36781,6 +36825,9 @@ http://cs/file:chrome/histograms.xml - but prefer this file for new entries.
 </histogram>
 
 <histogram name="Memory.Zygote" units="KB">
+  <obsolete>
+    Deprecated 11/2017. No direct replacement.
+  </obsolete>
   <owner>hajimehoshi@chromium.org</owner>
   <owner>kenjibaheux@google.com</owner>
   <owner>kouhei@chromium.org</owner>
