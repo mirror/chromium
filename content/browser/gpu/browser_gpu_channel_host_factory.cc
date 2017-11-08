@@ -293,10 +293,15 @@ void BrowserGpuChannelHostFactory::EstablishGpuChannel(
   }
 
   if (!callback.is_null()) {
-    if (gpu_channel_.get())
+    if (gpu_channel_.get()) {
+      LOG(INFO) << "BrowserGpuChannelHostFactory::EstablishGpuChannel(): "
+                << "run callback";
       callback.Run(gpu_channel_);
-    else
+    } else {
+      LOG(INFO) << "BrowserGpuChannelHostFactory::EstablishGpuChannel(): "
+                << "add callback";
       established_callbacks_.push_back(callback);
+    }
   }
 }
 
@@ -332,6 +337,7 @@ gpu::GpuChannelHost* BrowserGpuChannelHostFactory::GetGpuChannel() {
 }
 
 void BrowserGpuChannelHostFactory::GpuChannelEstablished() {
+  LOG(INFO) << "GpuChannelEstablished(): BEGIN";
   DCHECK(IsMainThread());
   DCHECK(pending_request_.get());
   if (!pending_request_->channel_handle().mojo_handle.is_valid()) {
@@ -351,6 +357,7 @@ void BrowserGpuChannelHostFactory::GpuChannelEstablished() {
   established_callbacks_.swap(established_callbacks);
   for (auto& callback : established_callbacks)
     callback.Run(gpu_channel_);
+  LOG(INFO) << "GpuChannelEstablished(): END";
 }
 
 void BrowserGpuChannelHostFactory::RestartTimeout() {
