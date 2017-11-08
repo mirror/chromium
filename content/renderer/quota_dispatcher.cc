@@ -8,6 +8,7 @@
 #include <utility>
 
 #include "base/lazy_instance.h"
+#include "base/logging.h"
 #include "base/macros.h"
 #include "base/memory/ptr_util.h"
 #include "base/threading/thread_local.h"
@@ -116,6 +117,7 @@ void QuotaDispatcher::QueryStorageUsageAndQuota(
   DCHECK(callback);
   int request_id = quota_message_filter_->GenerateRequestID(CurrentWorkerId());
   pending_quota_callbacks_.AddWithID(std::move(callback), request_id);
+  NOTREACHED();
   thread_safe_sender_->Send(new QuotaHostMsg_QueryStorageUsageAndQuota(
       request_id, origin_url, type));
 }
@@ -136,6 +138,7 @@ void QuotaDispatcher::RequestStorageQuota(int render_frame_id,
   params.origin_url = origin_url;
   params.storage_type = type;
   params.requested_size = requested_size;
+  NOTREACHED();
   thread_safe_sender_->Send(new QuotaHostMsg_RequestStorageQuota(params));
 }
 
@@ -149,6 +152,7 @@ QuotaDispatcher::CreateWebStorageQuotaCallbacksWrapper(
 void QuotaDispatcher::DidGrantStorageQuota(int request_id,
                                            int64_t current_usage,
                                            int64_t granted_quota) {
+  NOTREACHED();
   Callback* callback = pending_quota_callbacks_.Lookup(request_id);
   DCHECK(callback);
   callback->DidGrantStorageQuota(current_usage, granted_quota);
@@ -158,6 +162,7 @@ void QuotaDispatcher::DidGrantStorageQuota(int request_id,
 void QuotaDispatcher::DidQueryStorageUsageAndQuota(int request_id,
                                                    int64_t current_usage,
                                                    int64_t current_quota) {
+  NOTREACHED();
   Callback* callback = pending_quota_callbacks_.Lookup(request_id);
   DCHECK(callback);
   callback->DidQueryStorageUsageAndQuota(current_usage, current_quota);
@@ -167,6 +172,7 @@ void QuotaDispatcher::DidQueryStorageUsageAndQuota(int request_id,
 void QuotaDispatcher::DidFail(
     int request_id,
     QuotaStatusCode error) {
+  NOTREACHED();
   Callback* callback = pending_quota_callbacks_.Lookup(request_id);
   DCHECK(callback);
   callback->DidFail(error);
