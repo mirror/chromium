@@ -52,6 +52,24 @@
       "revId": "f1a26f96b56f7b11089755ccade6c886546ff953",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "65dd52cc_a23f221c",
+        "filename": "chrome/browser/search/one_google_bar/one_google_bar_fetcher_impl.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 180,
+      "author": {
+        "id": 1116059
+      },
+      "writtenOn": "2017-11-08T09:07:02Z",
+      "side": 1,
+      "message": "Ah sorry, I totally misinterpreted that.\nThe \"server\" in this case in GWS and in particular the async framework. I\u0027m sure it\u0027s *possible* to fix that, but I\u0027m equally sure that that\u0027s not something I ever want to touch.\nWe have the exact same workaround in place for the doodle API...",
+      "parentUuid": "0a457d97_dc7ab118",
+      "revId": "f1a26f96b56f7b11089755ccade6c886546ff953",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
