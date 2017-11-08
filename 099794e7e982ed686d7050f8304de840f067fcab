@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "3e39cf7e_9cdf9a73",
+        "filename": "components/offline_pages/core/model/offline_page_model_taskified_unittest.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 50,
+      "author": {
+        "id": 1134722
+      },
+      "writtenOn": "2017-11-08T19:10:16Z",
+      "side": 1,
+      "message": "nit: \"Random\" gives the impression that the URL is actually random. How about renaming to something like kOtherUrl or kDifferentUrl?",
+      "range": {
+        "startLine": 50,
+        "startChar": 11,
+        "endLine": 50,
+        "endChar": 21
+      },
+      "revId": "099794e7e982ed686d7050f8304de840f067fcab",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
