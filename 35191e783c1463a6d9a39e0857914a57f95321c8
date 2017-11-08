@@ -75,6 +75,24 @@
       "revId": "35191e783c1463a6d9a39e0857914a57f95321c8",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "74478910_ede74b6b",
+        "filename": "chrome/renderer/chrome_content_renderer_client.cc",
+        "patchSetId": 13
+      },
+      "lineNbr": 742,
+      "author": {
+        "id": 1001168
+      },
+      "writtenOn": "2017-11-08T01:28:29Z",
+      "side": 1,
+      "message": "Yeah I could go either way on this. Personally, I like the way it\u0027s currently written since it\u0027s slightly less code the compiler has to emit. Would it be better if this was wrapped up in a helper somehow?",
+      "parentUuid": "7ac2c872_3e20384a",
+      "revId": "35191e783c1463a6d9a39e0857914a57f95321c8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
