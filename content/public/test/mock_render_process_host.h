@@ -126,6 +126,7 @@ class MockRenderProcessHost : public RenderProcessHost {
   void DecrementKeepAliveRefCount() override;
   void DisableKeepAliveRefCount() override;
   bool IsKeepAliveRefCountDisabled() override;
+  base::TimeDelta GetKeepaliveRequestTimeout() const override;
   void PurgeAndSuspend() override;
   void Resume() override;
   mojom::Renderer* GetRendererInterface() override;

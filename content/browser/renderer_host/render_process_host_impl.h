@@ -20,6 +20,7 @@
 #include "base/process/process.h"
 #include "base/single_thread_task_runner.h"
 #include "base/synchronization/waitable_event.h"
+#include "base/time/time.h"
 #include "build/build_config.h"
 #include "components/viz/service/display_embedder/shared_bitmap_allocation_notifier_impl.h"
 #include "content/browser/child_process_launcher.h"
@@ -213,6 +214,7 @@ class CONTENT_EXPORT RenderProcessHostImpl
   void DecrementKeepAliveRefCount() override;
   void DisableKeepAliveRefCount() override;
   bool IsKeepAliveRefCountDisabled() override;
+  base::TimeDelta GetKeepaliveRequestTimeout() const override;
   void PurgeAndSuspend() override;
   void Resume() override;
   mojom::Renderer* GetRendererInterface() override;
@@ -391,6 +393,10 @@ class CONTENT_EXPORT RenderProcessHostImpl
   PermissionServiceContext& permission_service_context() {
     return *permission_service_context_;
   };
+
+  void set_keepalive_request_timeout_for_testing(base::TimeDelta timeout) {
+    keepalive_request_timeout_ = timeout;
+  }
 
  protected:
   // A proxy for our IPC::Channel that lives on the IO thread.
@@ -784,6 +790,8 @@ class CONTENT_EXPORT RenderProcessHostImpl
 
   viz::SharedBitmapAllocationNotifierImpl
       shared_bitmap_allocation_notifier_impl_;
+
+  base::TimeDelta keepalive_request_timeout_;
 
   base::WeakPtrFactory<RenderProcessHostImpl> weak_factory_;
 
