@@ -59,4 +59,16 @@ class JavaHandlerThreadHelpers {
         if (exception == null) return false;
         return exception instanceof TestException;
     }
+
+    @CalledByNative
+    private static void postJavaTask() {
+        new Handler().post(new Runnable() {
+            @Override
+            public void run() {
+                nativeOnJavaTaskRun();
+            }
+        });
+    }
+
+    private static native void nativeOnJavaTaskRun();
 }

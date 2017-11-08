@@ -6,14 +6,18 @@
 #define BASE_MESSAGE_LOOP_MESSAGE_PUMP_ANDROID_H_
 
 #include <jni.h>
+#include <atomic>
 #include <memory>
 
 #include "base/android/scoped_java_ref.h"
 #include "base/base_export.h"
+#include "base/callback.h"
 #include "base/compiler_specific.h"
 #include "base/macros.h"
 #include "base/message_loop/message_pump.h"
 #include "base/time/time.h"
+
+struct ALooper;
 
 namespace base {
 
@@ -45,13 +49,31 @@ class BASE_EXPORT MessagePumpForUI : public MessagePump {
   void Abort() { should_abort_ = true; }
   bool ShouldAbort() const { return should_abort_; }
 
+  void SetIdleCallback(base::OnceClosure callback);
+
+  void OnLooperCallback(bool delayed);
+
+ protected:
+  void Initialize(bool use_native_looper);
+  void SetDelegate(Delegate* delegate) { delegate_ = delegate; }
+  bool IsIdle();
+
  private:
+  void DoIdleWork();
+
   std::unique_ptr<RunLoop> run_loop_;
   base::android::ScopedJavaGlobalRef<jobject> system_message_handler_obj_;
   bool should_abort_ = false;
   bool quit_ = false;
   Delegate* delegate_ = nullptr;
   base::TimeTicks delayed_scheduled_time_;
+  bool use_native_looper_ = false;
+  std::atomic_int pending_tasks_{0};
+  base::OnceClosure idle_callback_;
+
+  int non_delayed_fd_;
+  int delayed_fd_;
+  ALooper* looper_ = nullptr;
 
   DISALLOW_COPY_AND_ASSIGN(MessagePumpForUI);
 };
