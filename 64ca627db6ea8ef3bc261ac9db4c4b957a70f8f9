@@ -34,6 +34,24 @@
       "revId": "64ca627db6ea8ef3bc261ac9db4c4b957a70f8f9",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d193e556_176cb9fc",
+        "filename": "ios/chrome/PRESUBMIT.py",
+        "patchSetId": 3
+      },
+      "lineNbr": 10,
+      "author": {
+        "id": 1123009
+      },
+      "writtenOn": "2017-11-08T22:07:27Z",
+      "side": 1,
+      "message": "Makes sense. It is true that there are fewer changes in ios/web than in ios/chrome.",
+      "parentUuid": "ea7fd149_ea0629af",
+      "revId": "64ca627db6ea8ef3bc261ac9db4c4b957a70f8f9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
