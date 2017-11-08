@@ -16,8 +16,10 @@
 #include "base/memory/ref_counted.h"
 #include "base/memory/shared_memory.h"
 #include "build/build_config.h"
+#include "content/common/clipboard.mojom.h"
 #include "content/common/clipboard_format.h"
 #include "content/common/content_export.h"
+#include "content/public/browser/browser_associated_interface.h"
 #include "content/public/browser/browser_message_filter.h"
 #include "ui/base/clipboard/clipboard.h"
 
@@ -36,67 +38,56 @@ namespace content {
 class ChromeBlobStorageContext;
 class ClipboardMessageFilterTest;
 
-class CONTENT_EXPORT ClipboardMessageFilter : public BrowserMessageFilter {
+class CONTENT_EXPORT ClipboardMessageFilter : public mojom::ClipboardHost {
  public:
   explicit ClipboardMessageFilter(
       scoped_refptr<ChromeBlobStorageContext> blob_storage_context);
 
-  void OverrideThreadForMessage(const IPC::Message& message,
-                                BrowserThread::ID* thread) override;
-  bool OnMessageReceived(const IPC::Message& message) override;
+  ~ClipboardMessageFilter() override;
+
+  static void Create(
+      scoped_refptr<ChromeBlobStorageContext> blob_storage_context,
+      mojom::ClipboardHostRequest request);
 
  private:
   friend class ClipboardMessageFilterTest;
 
-  ~ClipboardMessageFilter() override;
-
-  void OnGetSequenceNumber(const ui::ClipboardType type,
-                           uint64_t* sequence_number);
-  void OnIsFormatAvailable(ClipboardFormat format,
-                           ui::ClipboardType type,
-                           bool* result);
-  void OnClear(ui::ClipboardType type);
-  void OnReadAvailableTypes(ui::ClipboardType type,
-                            std::vector<base::string16>* types,
-                            bool* contains_filenames);
-  void OnReadText(ui::ClipboardType type, base::string16* result);
-  void OnReadHTML(ui::ClipboardType type,
-                  base::string16* markup,
-                  GURL* url,
-                  uint32_t* fragment_start,
-                  uint32_t* fragment_end);
-  void OnReadRTF(ui::ClipboardType type, std::string* result);
-  void OnReadImage(ui::ClipboardType type, IPC::Message* reply_msg);
-  void ReadAndEncodeImage(const SkBitmap& bitmap, IPC::Message* reply_msg);
+  void ReadAndEncodeImage(const SkBitmap& bitmap, ReadImageCallback callback);
   void OnReadAndEncodeImageFinished(
       std::unique_ptr<std::vector<uint8_t>> png_data,
-      IPC::Message* reply_msg);
-  void OnReadCustomData(ui::ClipboardType clipboard_type,
-                        const base::string16& type,
-                        base::string16* result);
-  void OnReadData(const ui::Clipboard::FormatType& format,
-                  std::string* data);
+      ReadImageCallback callback);
 
-  void OnWriteText(ui::ClipboardType clipboard_type,
-                   const base::string16& text);
-  void OnWriteHTML(ui::ClipboardType clipboard_type,
-                   const base::string16& markup,
-                   const GURL& url);
-  void OnWriteSmartPasteMarker(ui::ClipboardType clipboard_type);
-  void OnWriteCustomData(
-      ui::ClipboardType clipboard_type,
-      const std::unordered_map<base::string16, base::string16>& data);
-  void OnWriteBookmark(ui::ClipboardType clipboard_type,
-                       const std::string& url,
-                       const base::string16& title);
-  void OnWriteImage(ui::ClipboardType clipboard_type,
-                    const gfx::Size& size,
-                    base::SharedMemoryHandle handle);
-  void OnCommitWrite(ui::ClipboardType clipboard_type);
+  // content::mojom::ClipboardHost
+  void GetSequenceNumber(ui::ClipboardType type,
+                         GetSequenceNumberCallback callback) override;
+  void IsFormatAvailable(content::ClipboardFormat format,
+                         ui::ClipboardType type,
+                         IsFormatAvailableCallback callback) override;
+  void ReadAvailableTypes(ui::ClipboardType type,
+                          ReadAvailableTypesCallback callback) override;
+  void ReadText(ui::ClipboardType type, ReadTextCallback callback) override;
+  void ReadHTML(ui::ClipboardType type, ReadHTMLCallback callback) override;
+  void ReadRTF(ui::ClipboardType type, ReadRTFCallback callback) override;
+  void ReadImage(ui::ClipboardType type, ReadImageCallback callback) override;
+  void ReadCustomData(ui::ClipboardType clipboard_type,
+                      const base::string16& type,
+                      ReadCustomDataCallback callback) override;
+  void WriteText(ui::ClipboardType type, const base::string16& text) override;
+  void WriteHTML(ui::ClipboardType type,
+                 const base::string16& markup,
+                 const GURL& url) override;
+  void WriteSmartPasteMarker(ui::ClipboardType type) override;
+  void WriteCustomData(ui::ClipboardType type,
+                       mojom::CustomDataMapPtr data) override;
+  void WriteBookmark(ui::ClipboardType type,
+                     const std::string& url,
+                     const base::string16& title) override;
+  void WriteImage(ui::ClipboardType type,
+                  const gfx::Size& size_in_pixels,
+                  mojo::ScopedSharedBufferHandle shared_buffer_handle) override;
+  void CommitWrite(ui::ClipboardType type) override;
 
-#if defined(OS_MACOSX)
-  void OnFindPboardWriteString(const base::string16& text);
-#endif
+  void FindPboardWriteStringAsync(const base::string16& text) override;
 
   // We have our own clipboard because we want to access the clipboard on the
   // IO thread instead of forwarding (possibly synchronous) messages to the UI
@@ -106,8 +97,6 @@ class CONTENT_EXPORT ClipboardMessageFilter : public BrowserMessageFilter {
 
   scoped_refptr<ChromeBlobStorageContext> blob_storage_context_;
   std::unique_ptr<ui::ScopedClipboardWriter> clipboard_writer_;
-
-  DISALLOW_COPY_AND_ASSIGN(ClipboardMessageFilter);
 };
 
 }  // namespace content
