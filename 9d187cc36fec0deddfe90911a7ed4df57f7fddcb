@@ -37,6 +37,24 @@
     },
     {
       "key": {
+        "uuid": "b7dee7c1_26afd770",
+        "filename": "third_party/WebKit/LayoutTests/external/wpt/css/css-grid-1/alignment/grid-column-axis-alignment-positioned-items-001.html",
+        "patchSetId": 15
+      },
+      "lineNbr": 21,
+      "author": {
+        "id": 1115747
+      },
+      "writtenOn": "2017-11-08T13:09:56Z",
+      "side": 1,
+      "message": "Ah ok, I got it.",
+      "parentUuid": "b2b11a38_4928dab0",
+      "revId": "9d187cc36fec0deddfe90911a7ed4df57f7fddcb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "46c571ac_dbb79490",
         "filename": "third_party/WebKit/LayoutTests/external/wpt/css/css-grid-1/alignment/grid-column-axis-alignment-positioned-items-001.html",
         "patchSetId": 15
@@ -72,6 +90,24 @@
     },
     {
       "key": {
+        "uuid": "1ce85449_d165d8ba",
+        "filename": "third_party/WebKit/LayoutTests/external/wpt/css/css-grid-1/alignment/grid-column-axis-alignment-positioned-items-001.html",
+        "patchSetId": 15
+      },
+      "lineNbr": 31,
+      "author": {
+        "id": 1115747
+      },
+      "writtenOn": "2017-11-08T13:09:56Z",
+      "side": 1,
+      "message": "Yeah but we don\u0027t need to repeat the grid-row|grid-column properties.\nAlso you can remove the colors stuff before, as those classes already add colors.",
+      "parentUuid": "25232652_9fb78bc8",
+      "revId": "9d187cc36fec0deddfe90911a7ed4df57f7fddcb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "ae6b4d04_e005a8c5",
         "filename": "third_party/WebKit/LayoutTests/external/wpt/css/css-grid-1/alignment/grid-self-alignment-non-static-positioned-items-002.html",
         "patchSetId": 15
@@ -101,6 +137,24 @@
       "side": 1,
       "message": "Having the same class here makes easier to realize about the differences between the other test cases, where we add padding and border.",
       "parentUuid": "ae6b4d04_e005a8c5",
+      "revId": "9d187cc36fec0deddfe90911a7ed4df57f7fddcb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "07019234_e25582f0",
+        "filename": "third_party/WebKit/LayoutTests/external/wpt/css/css-grid-1/alignment/grid-self-alignment-non-static-positioned-items-002.html",
+        "patchSetId": 15
+      },
+      "lineNbr": 25,
+      "author": {
+        "id": 1115747
+      },
+      "writtenOn": "2017-11-08T13:09:56Z",
+      "side": 1,
+      "message": "It makes it a little more confusing if you\u0027re just checking one test.\nI think that it\u0027d be easy too to see the difference between:\n.grid \u003e div {\n  position: absolute;\n}\nvs\n.grid \u003e div {\n  position: absolute;\n  margin: 5px 10px 15px 20px;\n}",
+      "parentUuid": "b7c4e639_3e18095e",
       "revId": "9d187cc36fec0deddfe90911a7ed4df57f7fddcb",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -171,6 +225,24 @@
       "side": 1,
       "message": "About the br elements, I wanted the four cases to fit in the viewport width, so we need the br elements to ensure only 2 grids are rendered per line.\n\nAbout the element with the log id, I\u0027ll check it out.",
       "parentUuid": "e9e4dcd2_09081b6f",
+      "revId": "9d187cc36fec0deddfe90911a7ed4df57f7fddcb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8b5d4047_d8250ea0",
+        "filename": "third_party/WebKit/LayoutTests/external/wpt/css/css-grid-1/alignment/grid-self-alignment-non-static-positioned-items-005.html",
+        "patchSetId": 15
+      },
+      "lineNbr": 85,
+      "author": {
+        "id": 1115747
+      },
+      "writtenOn": "2017-11-08T13:09:56Z",
+      "side": 1,
+      "message": "As it\u0027s a check-layout test, I don\u0027t think the need to be in the viewport is important.",
+      "parentUuid": "38335b10_52800aa0",
       "revId": "9d187cc36fec0deddfe90911a7ed4df57f7fddcb",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -311,6 +383,24 @@
       "side": 1,
       "message": "Umm, no, do you want me to do it as part of this CL ?",
       "parentUuid": "f15842aa_33bd2869",
+      "revId": "9d187cc36fec0deddfe90911a7ed4df57f7fddcb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8fe2db54_2cc34af6",
+        "filename": "third_party/WebKit/Source/core/layout/LayoutGrid.cpp",
+        "patchSetId": 15
+      },
+      "lineNbr": 2143,
+      "author": {
+        "id": 1115747
+      },
+      "writtenOn": "2017-11-08T13:09:56Z",
+      "side": 1,
+      "message": "I\u0027d be fine with checking it in a separated CL.\nAnyway it seems it can be possible in a grid container with a fixed height of 100px and a row of 200px.\nIf you have a positioned item with \"grid-row: 2 / auto\", the end 100px will be smaller than the start 200px.\nSo probably we need to keep this code.",
+      "parentUuid": "9d0136b4_e6e25883",
       "revId": "9d187cc36fec0deddfe90911a7ed4df57f7fddcb",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
