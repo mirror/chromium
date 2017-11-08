@@ -36,8 +36,14 @@
           "type": "SZ",
           "data": "\"$PROGRAM_FILES\\$CHROME_DIR\\Application\\$NEXT_VERSION_MINI_INSTALLER_FILE_VERSION\\Installer\\setup.exe\" --uninstall --system-level --verbose-logging"
         },
-        "Version": {"type": "SZ", "data": "$NEXT_VERSION_MINI_INSTALLER_FILE_VERSION"}
+        "Version": {
+          "type": "SZ",
+          "data": "$NEXT_VERSION_MINI_INSTALLER_FILE_VERSION"
+        }
       }
+    },
+    "HKEY_LOCAL_MACHINE\\$CHROME_TOAST_ACTIVATOR_CLSID_KEY": {
+      "exists": "required"
     },
     "HKEY_LOCAL_MACHINE\\Software\\Classes\\$CHROME_SHORT_NAME": {
       "exists": "forbidden"
