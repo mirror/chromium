@@ -1,0 +1,113 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "7f418bc5_5c744e56",
+        "filename": "base/trace_event/memory_infra_background_whitelist.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 25,
+      "author": {
+        "id": 1125359
+      },
+      "writtenOn": "2017-11-08T19:10:15Z",
+      "side": 1,
+      "message": "add \"DnsConfigServicePosix::HostsReader\"",
+      "revId": "43d066521a83bdc2dab4d5ed18029b881c2df02f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "52edf189_6162816f",
+        "filename": "net/dns/dns_config_service_posix.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 372,
+      "author": {
+        "id": 1125359
+      },
+      "writtenOn": "2017-11-08T19:10:15Z",
+      "side": 1,
+      "message": "Are you sure this is the right thread to access |hosts_| and |file_path_hosts_| ?\nI didn\u0027t look at the code too much, just want to make sure. The comment reads \"read in OnWorkFinished, no lock necessary\". Should this be updated?",
+      "range": {
+        "startLine": 372,
+        "startChar": 8,
+        "endLine": 372,
+        "endChar": 41
+      },
+      "revId": "43d066521a83bdc2dab4d5ed18029b881c2df02f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "16707e44_ef8aba3a",
+        "filename": "net/dns/dns_config_service_posix.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 378,
+      "author": {
+        "id": 1125359
+      },
+      "writtenOn": "2017-11-08T19:10:15Z",
+      "side": 1,
+      "message": "just making sure, will there be only one instance of DnsConfigServicePosix::HostsReader in browser?",
+      "range": {
+        "startLine": 378,
+        "startChar": 34,
+        "endLine": 378,
+        "endChar": 75
+      },
+      "revId": "43d066521a83bdc2dab4d5ed18029b881c2df02f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d5c19c42_41ff2804",
+        "filename": "net/dns/dns_config_service_posix.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 379,
+      "author": {
+        "id": 1125359
+      },
+      "writtenOn": "2017-11-08T19:10:15Z",
+      "side": 1,
+      "message": "nit: use MemoryAllocatorDump::kUnitsobjects. the name already have \"entry_count\"",
+      "range": {
+        "startLine": 379,
+        "startChar": 42,
+        "endLine": 379,
+        "endChar": 49
+      },
+      "revId": "43d066521a83bdc2dab4d5ed18029b881c2df02f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "77fe029f_3a151089",
+        "filename": "net/dns/dns_config_service_posix.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 382,
+      "author": {
+        "id": 1125359
+      },
+      "writtenOn": "2017-11-08T19:10:15Z",
+      "side": 1,
+      "message": "nit add {}",
+      "range": {
+        "startLine": 382,
+        "startChar": 16,
+        "endLine": 382,
+        "endChar": 0
+      },
+      "revId": "43d066521a83bdc2dab4d5ed18029b881c2df02f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
