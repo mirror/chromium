@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "9bf480c4_289d1870",
+        "filename": "content/browser/renderer_host/render_widget_host_view_aura.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 977,
+      "author": {
+        "id": 1115911
+      },
+      "writtenOn": "2017-11-08T23:28:33Z",
+      "side": 1,
+      "message": "This is really weird. How do we make sure we don\u0027t end up with a FrameSinkId collision when running in Mus here? Also, I wouldn\u0027t wait until SubmitCompositorFrame. Set the embed_frame_sink_id as soon as it\u0027s allocated?",
+      "revId": "f6bea165c7661e78eeb84c9ec3915e56b0fedd2d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
