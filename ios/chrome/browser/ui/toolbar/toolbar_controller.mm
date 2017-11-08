@@ -93,6 +93,9 @@ using ios::material::TimingFunction;
   API_AVAILABLE(ios(10.0)) UIViewPropertyAnimator* _omniboxContractorAnimator;
 }
 
+@property(nonatomic, strong) NSLayoutConstraint* leadingFakeSafeAreaConstraint;
+@property(nonatomic, strong) NSLayoutConstraint* trailingFakeSafeAreaConstraint;
+
 // Returns the background image that should be used for |style|.
 - (UIImage*)getBackgroundImageForStyle:(ToolbarControllerStyle)style;
 
@@ -121,6 +124,8 @@ using ios::material::TimingFunction;
 @synthesize style = style_;
 @synthesize heightConstraint = heightConstraint_;
 @synthesize dispatcher = dispatcher_;
+@synthesize leadingFakeSafeAreaConstraint = _leadingFakeSafeAreaConstraint;
+@synthesize trailingFakeSafeAreaConstraint = _trailingFakeSafeAreaConstraint;
 
 - (NSLayoutConstraint*)heightConstraint {
   if (!heightConstraint_) {
@@ -172,19 +177,33 @@ using ios::material::TimingFunction;
     contentView_ = [[UIView alloc] initWithFrame:viewFrame];
     contentView_.translatesAutoresizingMaskIntoConstraints = NO;
     [view_ addSubview:contentView_];
+    NSLayoutConstraint* safeAreaLeading = nil;
+    NSLayoutConstraint* safeAreaTrailing = nil;
     if (@available(iOS 11.0, *)) {
       UILayoutGuide* safeArea = view_.safeAreaLayoutGuide;
-      [NSLayoutConstraint activateConstraints:@[
-        [contentView_.leadingAnchor
-            constraintEqualToAnchor:safeArea.leadingAnchor],
-        [contentView_.trailingAnchor
-            constraintEqualToAnchor:safeArea.trailingAnchor],
-        [contentView_.topAnchor constraintEqualToAnchor:view_.topAnchor],
-        [contentView_.bottomAnchor constraintEqualToAnchor:view_.bottomAnchor],
-      ]];
+      safeAreaLeading = [contentView_.leadingAnchor
+          constraintEqualToAnchor:safeArea.leadingAnchor];
+      safeAreaTrailing = [contentView_.trailingAnchor
+          constraintEqualToAnchor:safeArea.trailingAnchor];
     } else {
-      AddSameConstraints(view_, contentView_);
+      safeAreaLeading = [contentView_.leadingAnchor
+          constraintEqualToAnchor:view_.leadingAnchor];
+      safeAreaTrailing = [contentView_.trailingAnchor
+          constraintEqualToAnchor:view_.trailingAnchor];
     }
+    self.leadingFakeSafeAreaConstraint = [contentView_.leadingAnchor
+        constraintEqualToAnchor:view_.leadingAnchor];
+    self.trailingFakeSafeAreaConstraint = [contentView_.trailingAnchor
+        constraintEqualToAnchor:view_.trailingAnchor];
+    safeAreaLeading.priority = UILayoutPriorityDefaultHigh;
+    safeAreaTrailing.priority = UILayoutPriorityDefaultHigh;
+    [NSLayoutConstraint activateConstraints:@[
+      safeAreaLeading,
+      safeAreaTrailing,
+      [contentView_.topAnchor constraintEqualToAnchor:view_.topAnchor],
+      [contentView_.bottomAnchor constraintEqualToAnchor:view_.bottomAnchor],
+    ]];
+
     toolsMenuButton_ =
         [[ToolbarToolsMenuButton alloc] initWithFrame:toolsMenuButtonFrame
                                                 style:style_];
@@ -321,6 +340,18 @@ using ios::material::TimingFunction;
         [[ToolsMenuButtonObserverBridge alloc] initWithModel:readingListModel_
                                                toolbarButton:toolsMenuButton_];
   }
+}
+
+- (void)activateFakeSafeAreaInsets:(UIEdgeInsets)fakeSafeAreaInsets {
+  self.leadingFakeSafeAreaConstraint.constant = fakeSafeAreaInsets.left;
+  self.trailingFakeSafeAreaConstraint.constant = -fakeSafeAreaInsets.right;
+  self.leadingFakeSafeAreaConstraint.active = YES;
+  self.trailingFakeSafeAreaConstraint.active = YES;
+}
+
+- (void)deactivateFakeSafeAreaInsets {
+  self.leadingFakeSafeAreaConstraint.active = NO;
+  self.trailingFakeSafeAreaConstraint.active = NO;
 }
 
 #pragma mark ToolsMenuPopUp
