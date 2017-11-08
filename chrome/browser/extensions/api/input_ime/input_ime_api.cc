@@ -38,13 +38,17 @@ void ImeObserver::OnActivate(const std::string& component_id) {
   // Send onActivate event to give the IME a chance to add their listeners.
   if (extension_id_.empty())
     return;
+}
+LOG(ERROR) << "OnActivate for " << extension_id_
+           << ", listener=" << HasListener(input_ime::OnActivate::kEventName);
 
-  std::unique_ptr<base::ListValue> args(input_ime::OnActivate::Create(
-      component_id, input_ime::ParseScreenType(GetCurrentScreenType())));
+std::unique_ptr<base::ListValue> args(input_ime::OnActivate::Create(
+    component_id,
+    input_ime::ParseScreenType(GetCurrentScreenType())));
 
-  DispatchEventToExtension(extensions::events::INPUT_IME_ON_ACTIVATE,
-                           input_ime::OnActivate::kEventName,
-                           std::move(args));
+DispatchEventToExtension(extensions::events::INPUT_IME_ON_ACTIVATE,
+                         input_ime::OnActivate::kEventName,
+                         std::move(args));
 }
 
 void ImeObserver::OnFocus(

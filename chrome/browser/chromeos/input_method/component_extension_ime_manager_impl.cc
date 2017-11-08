@@ -23,6 +23,7 @@
 #include "chrome/common/chrome_paths.h"
 #include "chrome/common/extensions/extension_constants.h"
 #include "chrome/grit/browser_resources.h"
+#include "extensions/browser/event_router.h"
 #include "extensions/browser/extension_pref_value_map.h"
 #include "extensions/browser/extension_pref_value_map_factory.h"
 #include "extensions/browser/extension_system.h"
@@ -96,6 +97,14 @@ void DoLoadExtension(Profile* profile,
   extensions::ExtensionSystem* extension_system =
       extensions::ExtensionSystem::Get(profile);
   ExtensionService* extension_service = extension_system->extension_service();
+
+  // Clear the registered event list for the extension.
+  extensions::EventRouter* router = extensions::EventRouter::Get(profile);
+  if (router) {
+    router->ClearRegisteredEventsForTest(extension_id);
+  }
+  ////////////////////////////////////////////////////////////
+
   DCHECK(extension_service);
   if (extension_service->GetExtensionById(extension_id, false)) {
     VLOG(1) << "the IME extension(id=\"" << extension_id
