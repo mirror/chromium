@@ -91,6 +91,52 @@
       "revId": "8304782a07d99e20d0a51ab7a4dc16d7f2cabb48",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "56932d0e_6a9a72ff",
+        "filename": "content/test/content_browser_test_test.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 76,
+      "author": {
+        "id": 1118209
+      },
+      "writtenOn": "2017-11-08T01:13:28Z",
+      "side": 1,
+      "message": "There\u0027s a content::RenderProcessHostWatcher helper, which other tests typically use to wait for renderer crashes; I wonder if that would also work here and avoid the need for CrashObserver altogether?  Also seems that checking RenderProcessHostWatcher\u0027s did_exit_normally() instead of the more specific status codes would have avoided the bug with TERMINATION_STATUS_PROCESS_WAS_KILLED.",
+      "range": {
+        "startLine": 76,
+        "startChar": 2,
+        "endLine": 76,
+        "endChar": 18
+      },
+      "revId": "8304782a07d99e20d0a51ab7a4dc16d7f2cabb48",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7d9b9e60_2468d05d",
+        "filename": "content/test/content_browser_test_test.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 109,
+      "author": {
+        "id": 1118209
+      },
+      "writtenOn": "2017-11-08T01:13:28Z",
+      "side": 1,
+      "message": "Yes, seems reasonable given that linux_chromium_tsan_rel_ng also runs tests with --no-sandbox.",
+      "range": {
+        "startLine": 109,
+        "startChar": 2,
+        "endLine": 109,
+        "endChar": 46
+      },
+      "revId": "8304782a07d99e20d0a51ab7a4dc16d7f2cabb48",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
