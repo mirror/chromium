@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "9048aa81_01026ae9",
+        "filename": "content/browser/file_url_loader_factory.cc",
+        "patchSetId": 12
+      },
+      "lineNbr": 344,
+      "author": {
+        "id": 1002532
+      },
+      "writtenOn": "2017-11-08T01:33:13Z",
+      "side": 1,
+      "message": "super nit:\n\nperhaps it would be slightly easier to read this if this was combined with above? i.e.\n\nif (info.is_directory) {\n  if (policy\u003d\u003dfail) {\n    client-\u003eOnComplete();\n    return;\n  }\n\n  this block\n}\n\n\nthen you don\u0027t need the dcheck",
+      "revId": "fdbe21469f4a8f9cf72895fc567106b409a57fd3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
