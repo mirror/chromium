@@ -108,6 +108,24 @@
     },
     {
       "key": {
+        "uuid": "b6a727ea_acfe6e51",
+        "filename": "chrome/test/data/webui/extensions/extension_manager_unit_test.js",
+        "patchSetId": 18
+      },
+      "lineNbr": 69,
+      "author": {
+        "id": 1115745
+      },
+      "writtenOn": "2017-11-08T19:59:25Z",
+      "side": 1,
+      "message": "Hmm... this seems like something where we\u0027d be better off exposing an onReady-type promise from manager, which it has control over.  This strikes me as brittle, since it will break if we change which of these need to be called, or require more to be called in the future (and might break flakily in the second case).",
+      "parentUuid": "48df86ac_6fcb293b",
+      "revId": "f171d53f41f7eb1e509d6471d7e189b424999664",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "f81afc73_5505b978",
         "filename": "chrome/test/data/webui/extensions/extension_manager_unit_test.js",
         "patchSetId": 18
@@ -137,6 +155,24 @@
       "side": 1,
       "message": "This is mostly copy-paste. I changed the way installed extensions are simulated, using simulateExtensionInstall(). Before, when these tests resided within Service, the test fixture was a subclass of CrExtensionsBrowserTestWithInstalledExtension and was relying on actual calls to chrome.developerPrivate to provide test data. The current test does  not talk to chrome.developerPrivate, instead it talks to TestService defined near the top of this file.",
       "parentUuid": "f81afc73_5505b978",
+      "revId": "f171d53f41f7eb1e509d6471d7e189b424999664",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1cc174d4_f94ae0b6",
+        "filename": "chrome/test/data/webui/extensions/extension_manager_unit_test.js",
+        "patchSetId": 18
+      },
+      "lineNbr": 91,
+      "author": {
+        "id": 1115745
+      },
+      "writtenOn": "2017-11-08T19:59:25Z",
+      "side": 1,
+      "message": "I\u0027m a bit nervous that we appear to have fully migrated off any dependencies on developerPrivate.  This is good for manger tests, but it seems like now we have no end-to-end tests with real installed extensions that we try to manipulate.  I\u0027d feel more comfortable having one or two integration tests somewhere (not in this unit test file).\n\nI\u0027d be fine saving that for another CL, but I think it is reasonably important.",
+      "parentUuid": "33634d9f_fc9eb9c2",
       "revId": "f171d53f41f7eb1e509d6471d7e189b424999664",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
