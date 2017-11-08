@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "abc3a489_b016ee6c",
+        "filename": "chrome/test/media_router/media_router_integration_browsertest.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 245,
+      "author": {
+        "id": 1001385
+      },
+      "writtenOn": "2017-11-08T19:53:04Z",
+      "side": 1,
+      "message": "Fixed waits in tests are good to avoid, if we can; they slow down the test runs and will flake whenever the test happens to run on a slow or congested device.\n\nWhat are we actually waiting for at this point? Is there some other signal we can wait for here, instead of just a fixed delay?\n\n(Not for this CL: We should at least rename Wait(), to make clear that it spins the message-loop while waiting, but preferably we should just replace it with more specific event-driven waits).",
+      "range": {
+        "startLine": 242,
+        "startChar": 0,
+        "endLine": 245,
+        "endChar": 40
+      },
+      "revId": "3d55b14c5ef805de56f8aa5d562cb0784d6b4ffd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ca43190a_4c644712",
+        "filename": "chrome/test/media_router/media_router_integration_browsertest.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 735,
+      "author": {
+        "id": 1001385
+      },
+      "writtenOn": "2017-11-08T19:53:04Z",
+      "side": 1,
+      "message": "nit: The test is already MANUAL; why does it need to also be DISABLED?",
+      "range": {
+        "startLine": 735,
+        "startChar": 0,
+        "endLine": 735,
+        "endChar": 71
+      },
+      "revId": "3d55b14c5ef805de56f8aa5d562cb0784d6b4ffd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
