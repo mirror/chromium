@@ -683,10 +683,6 @@ mojom("mojo_bindings") {
     sources += [ "conflicts/module_event_sink_win.mojom" ]
   }
 
-  if (safe_browsing_mode == 1) {
-    sources += [ "safe_browsing/safe_archive_analyzer.mojom" ]
-  }
-
   public_deps = [
     "//components/content_settings/core/common:mojo_bindings",
     "//mojo/common:common_custom_types",
@@ -694,6 +690,10 @@ mojom("mojo_bindings") {
     "//ui/gfx/geometry/mojo",
     "//url/mojo:url_mojom_gurl",
   ]
+
+  if (safe_browsing_mode == 1) {
+    public_deps += [ "//chrome/services/file_util/public/interfaces" ]
+  }
 
   overridden_deps = [ "//third_party/WebKit/public:mojo_bindings" ]
   component_deps = [ "//content/public/common" ]

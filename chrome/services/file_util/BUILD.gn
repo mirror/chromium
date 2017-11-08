@@ -9,13 +9,12 @@ source_set("lib") {
   sources = [
     "file_util_service.cc",
     "file_util_service.h",
-    "zip_file_creator.cc",
-    "zip_file_creator.h",
+    "safe_archive_analyzer.cc",
+    "safe_archive_analyzer.h",
   ]
 
   deps = [
     "//base",
-    "//components/filesystem/public/interfaces",
     "//mojo/public/cpp/bindings",
   ]
 
@@ -23,6 +22,15 @@ source_set("lib") {
     "//chrome/services/file_util/public/interfaces",
     "//services/service_manager/public/cpp",
   ]
+
+  if (is_chromeos) {
+    sources += [
+      "zip_file_creator.cc",
+      "zip_file_creator.h",
+    ]
+
+    deps += [ "//components/filesystem/public/interfaces" ]
+  }
 }
 
 service_manifest("manifest") {
