@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "78d6d8f9_bc9fd5b3",
+        "filename": "chrome/browser/chromeos/DEPS",
+        "patchSetId": 9
+      },
+      "lineNbr": 26,
+      "author": {
+        "id": 1000763
+      },
+      "writtenOn": "2017-11-08T18:17:11Z",
+      "side": 1,
+      "message": "Remove \u0027/hid\u0027 and and the next line (you\u0027ll end up with one dep for services/device/public).",
+      "range": {
+        "startLine": 26,
+        "startChar": 4,
+        "endLine": 26,
+        "endChar": 30
+      },
+      "revId": "860de1b134d5c4ebf78351c8286beb9401cab2c9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
