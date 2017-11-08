@@ -58,7 +58,7 @@ class SERVICE_MANAGER_SANDBOX_EXPORT SandboxSeccompBPF {
   // Start the sandbox and apply the policy for sandbox_type, depending on
   // command line switches and options. |hook|, if non-empty is run right
   // before the sandbox is engaged.
-  static bool StartSandbox(service_manager::SandboxType sandbox_type,
+  static bool StartSandbox(SandboxType sandbox_type,
                            base::ScopedFD proc_fd,
                            PreSandboxHook hook,
                            const Options& options);
