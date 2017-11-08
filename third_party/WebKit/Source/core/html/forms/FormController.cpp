@@ -401,19 +401,14 @@ DocumentState* DocumentState::Create() {
   return new DocumentState;
 }
 
-void DocumentState::Trace(blink::Visitor* visitor) {
-  visitor->Trace(form_controls_);
-}
+void DocumentState::Trace(blink::Visitor* visitor) {}
 
 void DocumentState::AddControl(HTMLFormControlElementWithState* control) {
-  auto result = form_controls_.insert(control);
-  DCHECK(result.is_new_entry);
+  form_controls_.Append(control);
 }
 
 void DocumentState::RemoveControl(HTMLFormControlElementWithState* control) {
-  auto it = form_controls_.find(control);
-  CHECK(it != form_controls_.end());
-  form_controls_.erase(it);
+  form_controls_.Remove(control);
 }
 
 static String FormStateSignature() {
@@ -429,8 +424,8 @@ Vector<String> DocumentState::ToStateVector() {
   FormKeyGenerator* key_generator = FormKeyGenerator::Create();
   std::unique_ptr<SavedFormStateMap> state_map =
       WTF::WrapUnique(new SavedFormStateMap);
-  for (const auto& form_control : form_controls_) {
-    HTMLFormControlElementWithState* control = form_control.Get();
+  for (HTMLFormControlElementWithState* control = form_controls_.Head();
+       control; control = control->Next()) {
     DCHECK(control->isConnected());
     if (!control->ShouldSaveAndRestoreFormControlState())
       continue;
@@ -570,13 +565,13 @@ Vector<String> FormController::GetReferencedFilePaths(
 }
 
 void FormController::RegisterStatefulFormControl(
-    HTMLFormControlElementWithState& control) {
-  document_state_->AddControl(&control);
+    HTMLFormControlElementWithState* control) {
+  document_state_->AddControl(control);
 }
 
 void FormController::UnregisterStatefulFormControl(
-    HTMLFormControlElementWithState& control) {
-  document_state_->RemoveControl(&control);
+    HTMLFormControlElementWithState* control) {
+  document_state_->RemoveControl(control);
 }
 
 }  // namespace blink
