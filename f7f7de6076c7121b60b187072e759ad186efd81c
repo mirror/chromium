@@ -191,6 +191,30 @@
     },
     {
       "key": {
+        "uuid": "899aa86b_944d8502",
+        "filename": "chrome/browser/feature_engagement/feature_tracker.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 106,
+      "author": {
+        "id": 1003325
+      },
+      "writtenOn": "2017-11-08T14:53:27Z",
+      "side": 1,
+      "message": "The issue here is that the FeatureTracker should not know about how the sentinel is structured. Getting the first run time should be completely handled within the first_run namespace.\n\nAlso, outside components are not allowed to use internal namespaces of components, so the first_run::internal::GetFirstRunSentinelFilePath call is a violation of that.",
+      "parentUuid": "83951da6_518634db",
+      "range": {
+        "startLine": 105,
+        "startChar": 6,
+        "endLine": 106,
+        "endChar": 72
+      },
+      "revId": "f7f7de6076c7121b60b187072e759ad186efd81c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "d00b9f5a_aef5a371",
         "filename": "chrome/browser/feature_engagement/feature_tracker.cc",
         "patchSetId": 2
