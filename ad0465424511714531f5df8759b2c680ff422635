@@ -22,6 +22,30 @@
       "revId": "ad0465424511714531f5df8759b2c680ff422635",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c9c9e0bc_ddc8d317",
+        "filename": "components/payments/content/payment_request_spec.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 233,
+      "author": {
+        "id": 1129572
+      },
+      "writtenOn": "2017-11-08T19:40:18Z",
+      "side": 1,
+      "message": "Not sure I understand the question, could you elaborate a little more details?",
+      "parentUuid": "155b4536_a0ee1d92",
+      "range": {
+        "startLine": 229,
+        "startChar": 0,
+        "endLine": 233,
+        "endChar": 48
+      },
+      "revId": "ad0465424511714531f5df8759b2c680ff422635",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
