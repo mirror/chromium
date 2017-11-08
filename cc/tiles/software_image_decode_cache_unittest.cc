@@ -1655,5 +1655,34 @@ TEST(SoftwareImageDecodeCacheTest, CacheDecodesExpectedFrames) {
   cache.DrawWithImageFinished(subset_draw_image, decoded_image);
 }
 
+TEST(SoftwareImageDecodeCacheTest, EmptyCacheEntriesAreRemoved) {
+  TestSoftwareImageDecodeCache cache;
+  bool is_decomposable = true;
+  SkFilterQuality quality = kMedium_SkFilterQuality;
+
+  PaintImage paint_image = CreatePaintImage(500, 200);
+  DrawImage draw_image(
+      paint_image, SkIRect::MakeWH(paint_image.width(), paint_image.height()),
+      quality, CreateMatrix(SkSize::Make(1.f, 1.f), is_decomposable),
+      PaintImage::kDefaultFrameIndex, DefaultColorSpace());
+
+  ImageDecodeCache::TaskResult result =
+      cache.GetTaskForImageAndRef(draw_image, ImageDecodeCache::TracingInfo());
+  EXPECT_TRUE(result.task);
+  EXPECT_TRUE(result.need_unref);
+
+  TestTileTaskRunner::CancelTask(result.task.get());
+  TestTileTaskRunner::CompleteTask(result.task.get());
+
+  // We still have a ref on this image, so we expect it to be in the cache.
+  EXPECT_EQ(1u, cache.GetNumCacheEntriesForTesting());
+
+  cache.UnrefImage(draw_image);
+
+  // Refs went to 0, and we had no memory created for this entry. It should be
+  // deleted.
+  EXPECT_EQ(0u, cache.GetNumCacheEntriesForTesting());
+}
+
 }  // namespace
 }  // namespace cc

@@ -351,6 +351,10 @@ void SoftwareImageDecodeCache::UnrefImage(const ImageKey& key) {
       RemoveBudgetForImage(key, entry);
     if (entry->is_locked)
       entry->Unlock();
+    // If this entry didn't have any memory, then we might as well remove it
+    // from the cache to keep the number of entries bounded.
+    if (!entry->memory)
+      decoded_images_.Erase(decoded_image_it);
   }
 }
 
