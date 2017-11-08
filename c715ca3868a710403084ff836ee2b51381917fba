@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "62fa29c2_f29f122a",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 7
+      },
+      "lineNbr": 12,
+      "author": {
+        "id": 1211635
+      },
+      "writtenOn": "2017-11-08T02:05:46Z",
+      "side": 1,
+      "message": "Yes, it\u0027s also true for clients like quick-launch. Updated description.",
+      "parentUuid": "fa19b541_6cd03262",
+      "range": {
+        "startLine": 12,
+        "startChar": 15,
+        "endLine": 12,
+        "endChar": 32
+      },
+      "revId": "c715ca3868a710403084ff836ee2b51381917fba",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "62140f59_1819796a",
         "filename": "/COMMIT_MSG",
         "patchSetId": 7
@@ -42,6 +66,24 @@
     },
     {
       "key": {
+        "uuid": "9d8971f0_d3ed5f7f",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 7
+      },
+      "lineNbr": 21,
+      "author": {
+        "id": 1211635
+      },
+      "writtenOn": "2017-11-08T02:05:46Z",
+      "side": 1,
+      "message": "Nice! Updated.\n\nRenderer doesn\u0027t use this case tho? This is only from WindowTreeClient::CreateWindowPortForTopLevel [1].\n\n[1] https://cs.chromium.org/chromium/src/ui/aura/mus/window_tree_client.cc?type\u003dcs\u0026l\u003d2324",
+      "parentUuid": "62140f59_1819796a",
+      "revId": "c715ca3868a710403084ff836ee2b51381917fba",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "d00accec_3612e8d0",
         "filename": "/COMMIT_MSG",
         "patchSetId": 7
@@ -53,6 +95,24 @@
       "writtenOn": "2017-11-06T21:20:37Z",
       "side": 1,
       "message": "I think the description for 2 is also fairly complex, and would be very difficult to follow for someone not closely familiar with this. It would be good to simplify this farther.",
+      "revId": "c715ca3868a710403084ff836ee2b51381917fba",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "be6d9c60_4cf8e0a0",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 7
+      },
+      "lineNbr": 36,
+      "author": {
+        "id": 1211635
+      },
+      "writtenOn": "2017-11-08T02:05:46Z",
+      "side": 1,
+      "message": "Updated, wdyt?",
+      "parentUuid": "d00accec_3612e8d0",
       "revId": "c715ca3868a710403084ff836ee2b51381917fba",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
