@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "c33f6053_e958fcb9",
+        "filename": "third_party/WebKit/Source/modules/serviceworkers/ServiceWorkerContainer.cpp",
+        "patchSetId": 7
+      },
+      "lineNbr": 77,
+      "author": {
+        "id": 1001472
+      },
+      "writtenOn": "2017-11-08T03:48:57Z",
+      "side": 1,
+      "message": "tiny-nit: finish comments with a period",
+      "revId": "c9b069c013cf8ea00be3d5c76e8e92bcc35775b4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a327e717_95944932",
+        "filename": "third_party/WebKit/public/platform/modules/serviceworker/service_worker_registration.mojom",
+        "patchSetId": 7
+      },
+      "lineNbr": 21,
+      "author": {
+        "id": 1001472
+      },
+      "writtenOn": "2017-11-08T03:48:57Z",
+      "side": 1,
+      "message": "kLast is not used anywhere (at least yet)?  If so let\u0027s remove it.",
+      "revId": "c9b069c013cf8ea00be3d5c76e8e92bcc35775b4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
