@@ -47,6 +47,8 @@ class AXInlineTextBox final : public AXObject {
   static AXInlineTextBox* Create(scoped_refptr<AbstractInlineTextBox>,
                                  AXObjectCacheImpl&);
 
+  std::string AXClassName() const override { return "AXInlineTextBox"; }
+
  protected:
   void Init() override;
   void Detach() override;

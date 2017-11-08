@@ -61,6 +61,8 @@ class MODULES_EXPORT AXLayoutObject : public AXNodeObject {
   AccessibilityRole DetermineAccessibilityRole() override;
   AccessibilityRole NativeAccessibilityRoleIgnoringAria() const override;
 
+  std::string AXClassName() const override { return "AXLayoutObject"; }
+
  protected:
   LayoutObject* layout_object_;
 

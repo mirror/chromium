@@ -28,6 +28,8 @@ class AXRadioInput final : public AXLayoutObject {
   int PosInSet() const final;
   int SetSize() const final;
 
+  std::string AXClassName() const override { return "AXRadioInput"; }
+
  private:
   AXRadioInput(LayoutObject*, AXObjectCacheImpl&);
   bool CalculatePosInSet();

@@ -65,6 +65,8 @@ class AXImageMapLink final : public AXNodeObject {
                          FloatRect& out_bounds_in_container,
                          SkMatrix44& out_container_transform) const override;
 
+  std::string AXClassName() const override { return "AXImageMapLink"; }
+
  private:
   bool IsImageMapLink() const override { return true; }
 };

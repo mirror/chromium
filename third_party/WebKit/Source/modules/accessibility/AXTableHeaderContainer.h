@@ -52,6 +52,8 @@ class AXTableHeaderContainer final : public AXMockObject {
 
   void AddChildren() override;
 
+  std::string AXClassName() const override { return "AXTableHeaderContainer"; }
+
  private:
   bool ComputeAccessibilityIsIgnored(IgnoredReasons* = nullptr) const override;
 };

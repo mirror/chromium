@@ -61,6 +61,8 @@ class MODULES_EXPORT AXTableColumn final : public AXMockObject {
   void AddChildren() override;
   void SetParent(AXObject*) override;
 
+  std::string AXClassName() const override { return "AXTableColumn"; }
+
  private:
   unsigned column_index_;
 

@@ -64,6 +64,8 @@ class AXARIAGridRow final : public AXTableRow {
     return cells_;
   };
 
+  std::string AXClassName() const override { return "AXARIAGridRow"; }
+
  private:
   bool IsARIARow() const final;
   void ComputeCells(AXObjectVector from_child_list);

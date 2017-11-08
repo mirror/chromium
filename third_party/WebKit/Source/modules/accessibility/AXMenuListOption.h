@@ -43,6 +43,8 @@ class AXMenuListOption final : public AXMockObject {
   }
   ~AXMenuListOption() override;
 
+  std::string AXClassName() const override { return "AXMenuListOption"; }
+
  private:
   AXMenuListOption(HTMLOptionElement*, AXObjectCacheImpl&);
   virtual void Trace(blink::Visitor*);

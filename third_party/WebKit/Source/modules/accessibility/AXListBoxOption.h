@@ -61,6 +61,8 @@ class AXListBoxOption final : public AXLayoutObject {
                          AXRelatedObjectVector*,
                          NameSources*) const override;
 
+  std::string AXClassName() const override { return "AXListBoxOption"; }
+
  private:
   bool CanHaveChildren() const override { return false; }
   bool ComputeAccessibilityIsIgnored(IgnoredReasons* = nullptr) const override;
