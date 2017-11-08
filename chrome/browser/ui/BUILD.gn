@@ -1741,8 +1741,8 @@ split_static_library("ui") {
       "cocoa/media_picker/desktop_media_picker_item.mm",
       "cocoa/native_window_tracker_cocoa.h",
       "cocoa/native_window_tracker_cocoa.mm",
-      "cocoa/notifications/message_center_tray_bridge.h",
-      "cocoa/notifications/message_center_tray_bridge.mm",
+      "cocoa/notifications/ui_controller_bridge.h",
+      "cocoa/notifications/ui_controller_bridge.mm",
       "cocoa/nsmenuitem_additions.h",
       "cocoa/nsmenuitem_additions.mm",
       "cocoa/profiles/profile_menu_controller.h",
@@ -3213,8 +3213,8 @@ split_static_library("ui") {
         "views/frame/desktop_browser_frame_aura.h",
         "views/message_center/message_center_frame_view.cc",
         "views/message_center/message_center_frame_view.h",
-        "views/message_center/web_notification_tray.cc",
-        "views/message_center/web_notification_tray.h",
+        "views/message_center/message_center_ui_delegate.cc",
+        "views/message_center/message_center_ui_delegate.h",
       ]
     }
   }

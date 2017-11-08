@@ -2,7 +2,7 @@
 // Use of this source code is governed by a BSD-style license that can be
 // found in the LICENSE file.
 
-#include "chrome/browser/ui/cocoa/notifications/message_center_tray_bridge.h"
+#include "chrome/browser/ui/cocoa/notifications/ui_controller_bridge.h"
 
 #include "base/bind.h"
 #include "base/i18n/number_formatting.h"
@@ -13,40 +13,37 @@
 #include "components/prefs/pref_service.h"
 #import "ui/message_center/cocoa/popup_collection.h"
 #include "ui/message_center/message_center.h"
-#include "ui/message_center/message_center_tray.h"
+#include "ui/message_center/ui_controller.h"
 
-message_center::MessageCenterTrayDelegate* CreateMessageCenterTrayDelegate() {
-  return new MessageCenterTrayBridge(g_browser_process->message_center());
+message_center::UiDelegate* CreateUiDelegate() {
+  return new UiControllerBridge(g_browser_process->message_center());
 }
 
-MessageCenterTrayBridge::MessageCenterTrayBridge(
+UiControllerBridge::UiControllerBridge(
     message_center::MessageCenter* message_center)
     : message_center_(message_center),
-      tray_(new message_center::MessageCenterTray(this, message_center)) {}
+      controller_(new message_center::UiController(this, message_center)) {}
 
-MessageCenterTrayBridge::~MessageCenterTrayBridge() {
-}
+UiControllerBridge::~UiControllerBridge() {}
 
-void MessageCenterTrayBridge::OnMessageCenterTrayChanged() {
-}
+void UiControllerBridge::OnMessageCenterContentsChanged() {}
 
-bool MessageCenterTrayBridge::ShowPopups() {
+bool UiControllerBridge::ShowPopups() {
   popup_collection_.reset(
       [[MCPopupCollection alloc] initWithMessageCenter:message_center_]);
   return true;
 }
 
-void MessageCenterTrayBridge::HidePopups() {
+void UiControllerBridge::HidePopups() {
   popup_collection_.reset();
 }
 
-bool MessageCenterTrayBridge::ShowMessageCenter(bool show_by_click) {
+bool UiControllerBridge::ShowMessageCenter(bool show_by_click) {
   return false;
 }
 
-void MessageCenterTrayBridge::HideMessageCenter() {
-}
+void UiControllerBridge::HideMessageCenter() {}
 
-bool MessageCenterTrayBridge::ShowNotifierSettings() {
+bool UiControllerBridge::ShowNotifierSettings() {
   return false;
 }
