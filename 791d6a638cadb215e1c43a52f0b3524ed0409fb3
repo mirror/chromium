@@ -16,6 +16,24 @@
       "revId": "791d6a638cadb215e1c43a52f0b3524ed0409fb3",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "49ef8a8e_7608c733",
+        "filename": "chrome/browser/resources/settings/printing_page/cups_add_printer_dialog.html",
+        "patchSetId": 3
+      },
+      "lineNbr": 64,
+      "author": {
+        "id": 1118421
+      },
+      "writtenOn": "2017-11-08T21:02:44Z",
+      "side": 1,
+      "message": "When the dialog opens, |selectedPrinter| is not set (its value is undefined), however, the button is disabled during the discovery process. I added some log and verified that canAddPrinter_() is called when the dialog opens.",
+      "parentUuid": "b081a521_2bde82be",
+      "revId": "791d6a638cadb215e1c43a52f0b3524ed0409fb3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
