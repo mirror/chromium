@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "8daef177_ccada46a",
+        "filename": "content/shell/renderer/layout_test/leak_detector.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 123,
+      "author": {
+        "id": 1115916
+      },
+      "writtenOn": "2017-11-08T07:48:58Z",
+      "side": 1,
+      "message": "Won\u0027t this break the leak detection? I think that the JavaScript side is still using \"numberOfLiveSuspendableObjects\".",
+      "revId": "482cfb8e6acaf94a1f1b7d7605eaf2bcd884aa65",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
