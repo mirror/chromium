@@ -22,6 +22,30 @@
       "revId": "07b75dcccdf02a7440f9dbf02927416f136f9386",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8c4c0e17_72ead8c3",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/ntp/cards/SignInPromo.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 370,
+      "author": {
+        "id": 1001606
+      },
+      "writtenOn": "2017-11-08T13:57:09Z",
+      "side": 1,
+      "message": "Two separate functions on SigninPromoController, you mean? I think I would want to keep the ability to detach it from the view, so the view can be garbage collected.\n\nSigninPromoController.detach() is idempotent because we have some cases where we destroy the controller before we have attached a view.",
+      "parentUuid": "b3877657_7af1a28e",
+      "range": {
+        "startLine": 370,
+        "startChar": 21,
+        "endLine": 370,
+        "endChar": 48
+      },
+      "revId": "07b75dcccdf02a7440f9dbf02927416f136f9386",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
