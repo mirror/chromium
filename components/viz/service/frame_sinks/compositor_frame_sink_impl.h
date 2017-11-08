@@ -9,6 +9,7 @@
 #include "components/viz/common/surfaces/frame_sink_id.h"
 #include "components/viz/common/surfaces/local_surface_id.h"
 #include "components/viz/service/frame_sinks/compositor_frame_sink_support.h"
+#include "components/viz/service/frame_sinks/video_capture/capturable_frame_sink.h"
 #include "mojo/public/cpp/bindings/binding.h"
 #include "services/viz/public/interfaces/compositing/compositor_frame_sink.mojom.h"
 
@@ -18,7 +19,8 @@ class FrameSinkManagerImpl;
 
 // The viz portion of a non-root CompositorFrameSink. Holds the
 // Binding/InterfacePtr for the mojom::CompositorFrameSink interface.
-class CompositorFrameSinkImpl : public mojom::CompositorFrameSink {
+class CompositorFrameSinkImpl : public mojom::CompositorFrameSink,
+                                public CapturableFrameSink {
  public:
   CompositorFrameSinkImpl(FrameSinkManagerImpl* frame_sink_manager,
                           const FrameSinkId& frame_sink_id,
@@ -34,6 +36,12 @@ class CompositorFrameSinkImpl : public mojom::CompositorFrameSink {
                              mojom::HitTestRegionListPtr hit_test_region_list,
                              uint64_t submit_time) override;
   void DidNotProduceFrame(const BeginFrameAck& begin_frame_ack) override;
+
+  // CapturableFrameSink:
+  void AttachCaptureClient(CapturableFrameSink::Client* client) override;
+  void DetachCaptureClient(CapturableFrameSink::Client* client) override;
+  void RequestCopyOfNextFrame(
+      std::unique_ptr<CopyOutputRequest> request) override;
 
  private:
   void OnClientConnectionLost();

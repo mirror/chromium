@@ -90,6 +90,21 @@ void RootCompositorFrameSinkImpl::DidNotProduceFrame(
   support_->DidNotProduceFrame(begin_frame_ack);
 }
 
+void RootCompositorFrameSinkImpl::AttachCaptureClient(
+    CapturableFrameSink::Client* client) {
+  support_->AttachCaptureClient(client);
+}
+
+void RootCompositorFrameSinkImpl::DetachCaptureClient(
+    CapturableFrameSink::Client* client) {
+  support_->DetachCaptureClient(client);
+}
+
+void RootCompositorFrameSinkImpl::RequestCopyOfNextFrame(
+    std::unique_ptr<CopyOutputRequest> request) {
+  support_->RequestCopyOfSurface(std::move(request));
+}
+
 void RootCompositorFrameSinkImpl::OnAggregatedHitTestRegionListUpdated(
     mojo::ScopedSharedBufferHandle active_handle,
     uint32_t active_handle_size,
