@@ -70,6 +70,30 @@
       "revId": "821a5dccccf2ca12d53276a1e4c233156b1a081c",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "026a66cd_897677d3",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/webapps/WebApkActivity.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 176,
+      "author": {
+        "id": 1117405
+      },
+      "writtenOn": "2017-11-08T19:50:58Z",
+      "side": 1,
+      "message": "Move the setTitle() to WebappActivity.",
+      "parentUuid": "5693744e_ad2ab165",
+      "range": {
+        "startLine": 176,
+        "startChar": 17,
+        "endLine": 176,
+        "endChar": 28
+      },
+      "revId": "821a5dccccf2ca12d53276a1e4c233156b1a081c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
