@@ -11,6 +11,8 @@ import org.junit.runner.RunWith;
 import org.chromium.base.test.params.ParameterAnnotations.ClassParameter;
 import org.chromium.base.test.params.ParameterAnnotations.MethodParameter;
 import org.chromium.base.test.params.ParameterAnnotations.UseMethodParameter;
+import org.chromium.base.test.params.ParameterAnnotations.UseMethodParameterAfter;
+import org.chromium.base.test.params.ParameterAnnotations.UseMethodParameterBefore;
 import org.chromium.base.test.params.ParameterAnnotations.UseRunnerDelegate;
 
 import java.util.ArrayList;
@@ -64,15 +66,33 @@ public class ExampleParameterizedTest {
                 "A and B string length aren't equal", mStringA.length(), mStringB.length());
     }
 
+    private Integer mSum;
+
+    @UseMethodParameterBefore("A")
+    public void setupWithOnlyA(int intA, int intB) {
+        mSum = intA + intB;
+    }
+
     @Test
     @UseMethodParameter("A")
     public void testWithOnlyA(int intA, int intB) {
-        Assert.assertTrue(intA + 1 == intB);
+        Assert.assertEquals(intA + 1, intB);
+        Assert.assertEquals(mSum, Integer.valueOf(intA + intB));
+        mSum = null;
     }
+
+    private String mConcatenation;
 
     @Test
     @UseMethodParameter("B")
     public void testWithOnlyB(String a, String b) {
         Assert.assertTrue(a != b);
+        mConcatenation = a + b;
+    }
+
+    @UseMethodParameterAfter("B")
+    public void teardownWithOnlyB(String a, String b) {
+        Assert.assertEquals(mConcatenation, a + b);
+        mConcatenation = null;
     }
 }
