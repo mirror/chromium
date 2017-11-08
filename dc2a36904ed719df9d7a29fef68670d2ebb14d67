@@ -49,6 +49,30 @@
     },
     {
       "key": {
+        "uuid": "e3bcab59_ee354515",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 2
+      },
+      "lineNbr": 17,
+      "author": {
+        "id": 1002410
+      },
+      "writtenOn": "2017-11-08T00:32:23Z",
+      "side": 1,
+      "message": "Would you mind also referencing the CL explicitly by the metric, as well as the CL where the names ROUpdateResult/RWUpdateResult were added?  It\u0027s not obvious, at least to me, that the CQ-DEPEND line would be the place to look for this.",
+      "parentUuid": "a90d0fa8_d9b9dbbb",
+      "range": {
+        "startLine": 7,
+        "startChar": 0,
+        "endLine": 17,
+        "endChar": 35
+      },
+      "revId": "dc2a36904ed719df9d7a29fef68670d2ebb14d67",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "f9db134c_0f68f4eb",
         "filename": "tools/metrics/histograms/histograms.xml",
         "patchSetId": 2
