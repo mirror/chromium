@@ -30,6 +30,7 @@
 #include "core/CoreExport.h"
 #include "core/dom/SandboxFlags.h"
 #include "platform/heap/Handle.h"
+#include "platform/weborigin/SecurityOrigin.h"
 #include "platform/weborigin/Suborigin.h"
 #include "platform/wtf/HashSet.h"
 #include "platform/wtf/Noncopyable.h"
@@ -45,7 +46,6 @@
 
 namespace blink {
 
-class SecurityOrigin;
 class ContentSecurityPolicy;
 
 class CORE_EXPORT SecurityContext : public GarbageCollectedMixin {
@@ -92,7 +92,15 @@ class CORE_EXPORT SecurityContext : public GarbageCollectedMixin {
     return insecure_request_policy_;
   }
 
+  // SecurityOrigin modifiers.
   void EnforceSuborigin(const Suborigin&);
+  void SetDomainFromDOM(const String& new_domain);
+  void SetUniqueOriginIsPotentiallyTrustworthy(
+      bool is_unique_origin_potentially_trustworthy);
+  void GrantLoadLocalResources();
+  void GrantUniversalAccess();
+  void BlockLocalAccessFromLocalOrigin();
+  void TransferPrivilegesFrom(std::unique_ptr<SecurityOrigin::PrivilegeData>);
 
   FeaturePolicy* GetFeaturePolicy() const { return feature_policy_.get(); }
   void InitializeFeaturePolicy(const ParsedFeaturePolicy& parsed_header,
