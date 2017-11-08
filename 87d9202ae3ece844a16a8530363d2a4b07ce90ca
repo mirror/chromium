@@ -1,0 +1,73 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "8c5dd637_cfdcc80f",
+        "filename": "ios/web/public/download/download_controller.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 91,
+      "author": {
+        "id": 1191445
+      },
+      "writtenOn": "2017-11-08T20:19:12Z",
+      "side": 1,
+      "message": "Typo",
+      "range": {
+        "startLine": 91,
+        "startChar": 62,
+        "endLine": 91,
+        "endChar": 66
+      },
+      "revId": "87d9202ae3ece844a16a8530363d2a4b07ce90ca",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d40e3e0e_63f11b90",
+        "filename": "ios/web/public/download/download_controller.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 102,
+      "author": {
+        "id": 1191445
+      },
+      "writtenOn": "2017-11-08T20:19:12Z",
+      "side": 1,
+      "message": "Are there any cases where an embedder would want to create a download task besides restarting a download after termination? I wonder if it would make sense to rename this method to focus on that purpose. That way, there would be less confusion about whether to call this for a renderer initiated download.",
+      "range": {
+        "startLine": 102,
+        "startChar": 24,
+        "endLine": 102,
+        "endChar": 42
+      },
+      "revId": "87d9202ae3ece844a16a8530363d2a4b07ce90ca",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d7ccbc38_2c69ef07",
+        "filename": "ios/web/public/download/download_task_observer.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 18,
+      "author": {
+        "id": 1191445
+      },
+      "writtenOn": "2017-11-08T20:19:12Z",
+      "side": 1,
+      "message": "Add \"the\"",
+      "range": {
+        "startLine": 18,
+        "startChar": 16,
+        "endLine": 18,
+        "endChar": 17
+      },
+      "revId": "87d9202ae3ece844a16a8530363d2a4b07ce90ca",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
