@@ -41,13 +41,13 @@ cr.define('settings_people_page', function() {
 
         cr.webUIListenerCallback(
           'profile-info-changed',
-          {name: 'pushedName', iconUrl: 'http://pushed-url/'});
+          {name: 'pushedName', iconUrl: 'chrome://pushed-url/'});
 
         Polymer.dom.flush();
         assertEquals('pushedName',
                      peoplePage.$$('#profile-name').textContent.trim());
         var newBg = peoplePage.$$('#profile-icon').style.backgroundImage;
-        assertTrue(newBg.includes('http://pushed-url/'));
+        assertTrue(newBg.includes('chrome://pushed-url/'));
       });
     });
 
