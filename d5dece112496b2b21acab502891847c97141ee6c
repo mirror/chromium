@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "6f2f7f7e_03580090",
+        "filename": "content/browser/file_url_loader_factory.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 317,
+      "author": {
+        "id": 1002808
+      },
+      "writtenOn": "2017-11-08T00:40:07Z",
+      "side": 1,
+      "message": "Hmm, I\u0027m not sure that would be an appropriate use of a DCHECK. Note that any extension can elicit this path by trying to fetch a directory path. I think it is reasonable to reserve DCHECK usage for actual assertions that something will never happen, and I also think it\u0027s sufficient for these requests to fail with FILE_NOT_FOUND in the event that they ever do happen.",
+      "parentUuid": "db77dbe3_4ba23977",
+      "revId": "d5dece112496b2b21acab502891847c97141ee6c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "eb1a9576_8e6b466b",
         "filename": "content/browser/file_url_loader_factory.h",
         "patchSetId": 8
@@ -33,6 +51,24 @@
       "revId": "d5dece112496b2b21acab502891847c97141ee6c",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "28d76e69_f9d1167b",
+        "filename": "content/browser/file_url_loader_factory.h",
+        "patchSetId": 8
+      },
+      "lineNbr": 28,
+      "author": {
+        "id": 1002808
+      },
+      "writtenOn": "2017-11-08T00:40:07Z",
+      "side": 1,
+      "message": "Removed.",
+      "parentUuid": "eb1a9576_8e6b466b",
+      "revId": "d5dece112496b2b21acab502891847c97141ee6c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -53,6 +89,24 @@
     },
     {
       "key": {
+        "uuid": "1c28faa9_cadad10e",
+        "filename": "content/public/browser/file_backed_url_loader.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 11,
+      "author": {
+        "id": 1002808
+      },
+      "writtenOn": "2017-11-08T00:40:07Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "5142b7c6_615ab890",
+      "revId": "d5dece112496b2b21acab502891847c97141ee6c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "0aae6cda_4f4dc84e",
         "filename": "content/public/browser/file_backed_url_loader.h",
         "patchSetId": 8
@@ -70,6 +124,24 @@
     },
     {
       "key": {
+        "uuid": "de7bc21d_548ef474",
+        "filename": "content/public/browser/file_backed_url_loader.h",
+        "patchSetId": 8
+      },
+      "lineNbr": 21,
+      "author": {
+        "id": 1002808
+      },
+      "writtenOn": "2017-11-08T00:40:07Z",
+      "side": 1,
+      "message": "Both done",
+      "parentUuid": "0aae6cda_4f4dc84e",
+      "revId": "d5dece112496b2b21acab502891847c97141ee6c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "9fd677c8_fe48508d",
         "filename": "extensions/browser/extension_protocols.cc",
         "patchSetId": 8
@@ -84,6 +156,24 @@
       "revId": "d5dece112496b2b21acab502891847c97141ee6c",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ac74c840_022386d5",
+        "filename": "extensions/browser/extension_protocols.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 672,
+      "author": {
+        "id": 1002808
+      },
+      "writtenOn": "2017-11-08T00:40:07Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "9fd677c8_fe48508d",
+      "revId": "d5dece112496b2b21acab502891847c97141ee6c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
