@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "7cae67fb_3bf8b9a6",
+        "filename": "ui/base/cursor/cursor_loader_x11.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 184,
+      "author": {
+        "id": 1114374
+      },
+      "writtenOn": "2017-11-08T17:31:26Z",
+      "side": 1,
+      "message": "It is. Seems the automatic formatting doesn\u0027t want to do fancy aligned tables.",
+      "parentUuid": "386bd3a1_19898cff",
+      "revId": "168324c4a6ae89aeb535bb02619d8c92d65dbfb1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "35afb4c3_dccad78f",
         "filename": "ui/gfx/x/x11.h",
         "patchSetId": 4
@@ -33,6 +51,24 @@
       "revId": "168324c4a6ae89aeb535bb02619d8c92d65dbfb1",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "80668859_80eb873b",
+        "filename": "ui/gfx/x/x11.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 9,
+      "author": {
+        "id": 1114374
+      },
+      "writtenOn": "2017-11-08T17:31:26Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "35afb4c3_dccad78f",
+      "revId": "168324c4a6ae89aeb535bb02619d8c92d65dbfb1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -59,6 +95,30 @@
     },
     {
       "key": {
+        "uuid": "6bf8bdd3_1c0fd35c",
+        "filename": "ui/gfx/x/x11.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 11,
+      "author": {
+        "id": 1114374
+      },
+      "writtenOn": "2017-11-08T17:31:26Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "5a36db11_fb4acbe1",
+      "range": {
+        "startLine": 11,
+        "startChar": 1,
+        "endLine": 11,
+        "endChar": 7
+      },
+      "revId": "168324c4a6ae89aeb535bb02619d8c92d65dbfb1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "7b542d2d_56f5caeb",
         "filename": "ui/gfx/x/x11.h",
         "patchSetId": 4
@@ -70,6 +130,30 @@
       "writtenOn": "2017-11-07T18:51:56Z",
       "side": 1,
       "message": "Maybe worth expanding/updating this comment, since it\u0027s undef\u0027ed in this file below?",
+      "range": {
+        "startLine": 15,
+        "startChar": 53,
+        "endLine": 15,
+        "endChar": 57
+      },
+      "revId": "168324c4a6ae89aeb535bb02619d8c92d65dbfb1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "75099f16_0d2958e2",
+        "filename": "ui/gfx/x/x11.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 15,
+      "author": {
+        "id": 1114374
+      },
+      "writtenOn": "2017-11-08T17:31:26Z",
+      "side": 1,
+      "message": "I\u0027ve added some more documentation now. I learned that his is because of ui/gl and its headers. Possible to fix (I\u0027ve done so on the WIP branch) but not trivial so better to not include here.",
+      "parentUuid": "7b542d2d_56f5caeb",
       "range": {
         "startLine": 15,
         "startChar": 53,
@@ -96,6 +180,24 @@
       "revId": "168324c4a6ae89aeb535bb02619d8c92d65dbfb1",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "dccbe0b8_b2741086",
+        "filename": "ui/gfx/x/x11.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 62,
+      "author": {
+        "id": 1114374
+      },
+      "writtenOn": "2017-11-08T17:31:26Z",
+      "side": 1,
+      "message": "Thanks! Replaced RootWindow \"calls\" with XRootWindow calls so it\u0027s not needed anymore.",
+      "parentUuid": "fa18afd0_20785331",
+      "revId": "168324c4a6ae89aeb535bb02619d8c92d65dbfb1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
