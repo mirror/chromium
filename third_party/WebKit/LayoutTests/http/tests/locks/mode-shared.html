@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<title>Web Locks API: Shared Mode</title>
+<script src="/resources/testharness.js"></script>
+<script src="/resources/testharnessreport.js"></script>
+<script>
+'use strict';
+
+promise_test(async t => {
+  let n = 0;
+  const granted = [];
+  function grant(n) { return () => { granted.push(n); }; }
+
+  await Promise.all([
+    requestLock('a', grant(++n), {mode: 'shared'}),
+    requestLock('b', grant(++n), {mode: 'shared'}),
+    requestLock('c', grant(++n), {mode: 'shared'}),
+    requestLock('a', grant(++n), {mode: 'shared'}),
+    requestLock('b', grant(++n), {mode: 'shared'}),
+    requestLock('c', grant(++n), {mode: 'shared'}),
+  ]);
+
+  assert_array_equals(granted, [1, 2, 3, 4, 5, 6]);
+}, 'Lock requests are granted in order');
+
+promise_test(async t => {
+  await requestLock(['a', 'b'], async lock => {
+    assert_array_equals(lock.scope, ['a', 'b']);
+    assert_equals(lock.mode, 'shared');
+
+    // Since lock over [a, b] is held, these requests would
+    // be blocked if the locks were not all 'shared'.
+
+    await requestLock('a', lock => {
+      assert_array_equals(lock.scope, ['a']);
+      assert_equals(lock.mode, 'shared');
+    }, {mode: 'shared'});
+
+    await requestLock('b', lock => {
+      assert_array_equals(lock.scope, ['b']);
+      assert_equals(lock.mode, 'shared');
+    }, {mode: 'shared'});
+
+  }, {mode: 'shared'});
+}, 'Shared locks are not exclusive');
+
+</script>

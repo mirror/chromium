@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<title>Web Locks API: Lock Attributes</title>
+<script src="/resources/testharness.js"></script>
+<script src="/resources/testharnessreport.js"></script>
+<script>
+'use strict';
+
+promise_test(async t => {
+  await requestLock(['r1', 'r2'], lock => {
+    assert_array_equals(lock.scope, ['r1', 'r2']);
+    assert_equals(lock.mode, 'exclusive');
+  });
+}, 'Lock attributes reflect requested properties (exclusive)');
+
+promise_test(async t => {
+  await requestLock(['r1', 'r2'], lock => {
+    assert_array_equals(lock.scope, ['r1', 'r2']);
+    assert_equals(lock.mode, 'shared');
+  }, {mode: 'shared'});
+}, 'Lock attributes reflect requested properties (shared)');
+
+promise_test(async t => {
+  await requestLock(['r2', 'r1'], lock => {
+    assert_array_equals(lock.scope, ['r1', 'r2']);
+  });
+}, 'Lock.scope is in sorted order');
+
+promise_test(async t => {
+  await requestLock(['r2', 'r1', 'r2', 'r1'], lock => {
+    assert_array_equals(lock.scope, ['r1', 'r2']);
+  });
+}, 'Lock.scope has no duplicates');
+
+</script>
