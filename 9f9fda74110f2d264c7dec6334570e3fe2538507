@@ -22,6 +22,30 @@
       "revId": "9f9fda74110f2d264c7dec6334570e3fe2538507",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "704843d7_dad28da6",
+        "filename": "ios/chrome/browser/ui/toolbar/toolbar_controller.mm",
+        "patchSetId": 4
+      },
+      "lineNbr": 344,
+      "author": {
+        "id": 1180589
+      },
+      "writtenOn": "2017-11-08T14:09:26Z",
+      "side": 1,
+      "message": "I had the same though when I wrote those constraints but the real safe area insets are not directed, which is a problem in my opinion.\nOther part of the app are using the safe area insets with right/left meaning trailing/leading.\nI have modified it to use UIEdgeInsetsGetTrailing/Leading",
+      "parentUuid": "e48df871_2e86dfbd",
+      "range": {
+        "startLine": 344,
+        "startChar": 67,
+        "endLine": 344,
+        "endChar": 71
+      },
+      "revId": "9f9fda74110f2d264c7dec6334570e3fe2538507",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
