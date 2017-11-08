@@ -7263,6 +7263,11 @@ void vpx_sad64x64x4d_avx2(const uint8_t* src_ptr,
                           const uint8_t* const ref_ptr[],
                           int ref_stride,
                           uint32_t* sad_array);
+void vpx_sad64x64x4d_avx512(const uint8_t* src_ptr,
+                            int src_stride,
+                            const uint8_t* const ref_ptr[],
+                            int ref_stride,
+                            uint32_t* sad_array);
 RTCD_EXTERN void (*vpx_sad64x64x4d)(const uint8_t* src_ptr,
                                     int src_stride,
                                     const uint8_t* const ref_ptr[],
@@ -10116,6 +10121,8 @@ static void setup_rtcd_internal(void) {
     vpx_sad64x64x4d = vpx_sad64x64x4d_sse2;
   if (flags & HAS_AVX2)
     vpx_sad64x64x4d = vpx_sad64x64x4d_avx2;
+  if (flags & HAS_AVX512)
+    vpx_sad64x64x4d = vpx_sad64x64x4d_avx512;
   vpx_sad8x16 = vpx_sad8x16_c;
   if (flags & HAS_SSE2)
     vpx_sad8x16 = vpx_sad8x16_sse2;

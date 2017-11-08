@@ -12,7 +12,7 @@
 # $ ./generate_gni.sh [--disable-avx] [--only-configs]
 #
 # The following optional flags are supported:
-# --disable-avx : AVX+AVX2 support is disabled.
+# --disable-avx512 : AVX512 support is disabled.
 # --only-configs : Excludes generation of GN and GYP files (i.e. only
 #                  configuration headers are generated).
 # --disable-vp9-highbitdepth : Revert x86[_64] builds to low-bit-depth only.
@@ -27,8 +27,8 @@ HIGHBD="--enable-vp9-highbitdepth"
 for i in "$@"
 do
 case $i in
-  --disable-avx)
-  DISABLE_AVX="--disable-avx --disable-avx2"
+  --disable-avx512)
+  DISABLE_AVX512="--disable-avx512"
   shift
   ;;
   --only-configs)
@@ -123,7 +123,7 @@ function convert_srcs_to_project_files {
 
   # Select all x86 files ending with .c
   local intrinsic_list=$(echo "$source_list" | \
-    egrep '(mmx|sse2|sse3|ssse3|sse4|avx|avx2).c$')
+    egrep '(mmx|sse2|sse3|ssse3|sse4|avx|avx2|avx512).c$')
 
   # Select all neon files ending in C but only when building in RTCD mode
   if [ "libvpx_srcs_arm_neon_cpu_detect" == "$2" ]; then
@@ -151,6 +151,7 @@ function convert_srcs_to_project_files {
     local sse4_1_sources=$(echo "$intrinsic_list" | grep '_sse4\.c$')
     local avx_sources=$(echo "$intrinsic_list" | grep '_avx\.c$')
     local avx2_sources=$(echo "$intrinsic_list" | grep '_avx2\.c$')
+    local avx512_sources=$(echo "$intrinsic_list" | grep '_avx512\.c$')
 
     write_gni c_sources $2 "$BASE_DIR/libvpx_srcs.gni"
     write_gni assembly_sources $2_assembly "$BASE_DIR/libvpx_srcs.gni"
@@ -159,9 +160,10 @@ function convert_srcs_to_project_files {
     write_gni sse3_sources $2_sse3 "$BASE_DIR/libvpx_srcs.gni"
     write_gni ssse3_sources $2_ssse3 "$BASE_DIR/libvpx_srcs.gni"
     write_gni sse4_1_sources $2_sse4_1 "$BASE_DIR/libvpx_srcs.gni"
-    if [ -z "$DISABLE_AVX" ]; then
-      write_gni avx_sources $2_avx "$BASE_DIR/libvpx_srcs.gni"
-      write_gni avx2_sources $2_avx2 "$BASE_DIR/libvpx_srcs.gni"
+    write_gni avx_sources $2_avx "$BASE_DIR/libvpx_srcs.gni"
+    write_gni avx2_sources $2_avx2 "$BASE_DIR/libvpx_srcs.gni"
+    if [ -z "$DISABLE_AVX512" ]; then
+      write_gni avx512_sources $2_avx512 "$BASE_DIR/libvpx_srcs.gni"
     fi
   else
     local c_sources=$(echo "$source_list" | egrep '.(c|h)$')
