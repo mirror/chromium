@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "6d26963a_24bca69d",
+        "filename": "chrome/browser/resources/print_preview/new/compiled_resources2.gyp",
+        "patchSetId": 9
+      },
+      "lineNbr": 10,
+      "author": {
+        "id": 1182404
+      },
+      "writtenOn": "2017-11-08T02:34:33Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "78eaf9e0_28d824fa",
+      "revId": "2876468ce0ad73da92c820aeb99e311a11f379b9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "fa2bf395_732b9b49",
         "filename": "chrome/browser/resources/print_preview/new/copies_settings.html",
         "patchSetId": 9
@@ -39,6 +57,30 @@
       "revId": "2876468ce0ad73da92c820aeb99e311a11f379b9",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "cd05aa2f_534ab972",
+        "filename": "chrome/browser/resources/print_preview/new/copies_settings.html",
+        "patchSetId": 9
+      },
+      "lineNbr": 38,
+      "author": {
+        "id": 1182404
+      },
+      "writtenOn": "2017-11-08T02:34:33Z",
+      "side": 1,
+      "message": "No, removed.",
+      "parentUuid": "fa2bf395_732b9b49",
+      "range": {
+        "startLine": 38,
+        "startChar": 36,
+        "endLine": 38,
+        "endChar": 51
+      },
+      "revId": "2876468ce0ad73da92c820aeb99e311a11f379b9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -65,6 +107,30 @@
     },
     {
       "key": {
+        "uuid": "a9e803de_67bf2075",
+        "filename": "chrome/browser/resources/print_preview/new/copies_settings.html",
+        "patchSetId": 9
+      },
+      "lineNbr": 44,
+      "author": {
+        "id": 1182404
+      },
+      "writtenOn": "2017-11-08T02:34:33Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "852387fc_ef8daf6d",
+      "range": {
+        "startLine": 44,
+        "startChar": 31,
+        "endLine": 44,
+        "endChar": 43
+      },
+      "revId": "2876468ce0ad73da92c820aeb99e311a11f379b9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "bada7fae_31434a8e",
         "filename": "chrome/browser/resources/print_preview/new/copies_settings.html",
         "patchSetId": 9
@@ -88,6 +154,30 @@
     },
     {
       "key": {
+        "uuid": "d4607853_333bd2a1",
+        "filename": "chrome/browser/resources/print_preview/new/copies_settings.html",
+        "patchSetId": 9
+      },
+      "lineNbr": 55,
+      "author": {
+        "id": 1182404
+      },
+      "writtenOn": "2017-11-08T02:34:33Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "bada7fae_31434a8e",
+      "range": {
+        "startLine": 55,
+        "startChar": 18,
+        "endLine": 55,
+        "endChar": 19
+      },
+      "revId": "2876468ce0ad73da92c820aeb99e311a11f379b9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "eaafcedc_14916be0",
         "filename": "chrome/browser/resources/print_preview/new/layout_settings.html",
         "patchSetId": 9
@@ -102,6 +192,24 @@
       "revId": "2876468ce0ad73da92c820aeb99e311a11f379b9",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "410ad9df_fc9330ad",
+        "filename": "chrome/browser/resources/print_preview/new/layout_settings.html",
+        "patchSetId": 9
+      },
+      "lineNbr": 9,
+      "author": {
+        "id": 1182404
+      },
+      "writtenOn": "2017-11-08T02:34:33Z",
+      "side": 1,
+      "message": "Changed and moved this into select_css.html, since currently all the select settings have their own css files that all specify this exact same styling.",
+      "parentUuid": "eaafcedc_14916be0",
+      "revId": "2876468ce0ad73da92c820aeb99e311a11f379b9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
