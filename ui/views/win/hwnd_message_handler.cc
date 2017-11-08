@@ -250,7 +250,7 @@ const int kTouchDownContextResetTimeout = 500;
 const int kSynthesizedMouseMessagesTimeDifference = 500;
 
 // Currently this flag is always false - see http://crbug.com/763223
-const bool kUsePointerEventsForTouch = false;
+const bool kUsePointerEventsForTouch = true;
 
 }  // namespace
 
@@ -2770,7 +2770,7 @@ LRESULT HWNDMessageHandler::HandlePointerEventTypeTouch(UINT message,
   if (event_type == ui::ET_TOUCH_RELEASED)
     id_generator_.ReleaseNumber(pointer_id);
   if (ref)
-    SetMsgHandled(TRUE);
+    SetMsgHandled(event.handled() && !(event.result() & ui::ER_CONSUMED));
   return 0;
 }
 

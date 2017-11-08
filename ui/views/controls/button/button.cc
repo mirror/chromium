@@ -5,8 +5,7 @@
 #include "ui/views/controls/button/button.h"
 
 #include "base/strings/utf_string_conversions.h"
-#include "ui/accessibility/ax_node_data.h"
-
+#include "build/build_config.h"
 #include "ui/accessibility/ax_node_data.h"
 #include "ui/base/class_property.h"
 #include "ui/events/event.h"
@@ -49,6 +48,17 @@ Button::KeyClickAction GetKeyClickActionForEvent(const ui::KeyEvent& event) {
       PlatformStyle::kReturnClicksFocusedControl)
     return Button::CLICK_ON_KEY_PRESS;
   return Button::CLICK_NONE;
+}
+
+bool EventIsFromMouse(const ui::MouseEvent& event) {
+  if (event.flags() & ui::EF_FROM_TOUCH)
+    return false;
+#if defined(OS_WIN)
+  CURSORINFO c = {sizeof(CURSORINFO)};
+  if (GetCursorInfo(&c) && !(c.flags & CURSOR_SHOWING))
+    return false;
+#endif
+  return true;
 }
 
 }  // namespace
@@ -262,7 +272,7 @@ void Button::OnMouseCaptureLost() {
 }
 
 void Button::OnMouseEntered(const ui::MouseEvent& event) {
-  if (state_ != STATE_DISABLED)
+  if ((state_ != STATE_DISABLED) && EventIsFromMouse(event))
     SetState(STATE_HOVERED);
 }
 
