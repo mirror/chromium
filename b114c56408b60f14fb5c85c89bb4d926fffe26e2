@@ -88,6 +88,24 @@
       "revId": "b114c56408b60f14fb5c85c89bb4d926fffe26e2",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5974b415_e4973035",
+        "filename": "chrome/browser/ui/views/frame/browser_non_client_frame_view_ash.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 329,
+      "author": {
+        "id": 1228419
+      },
+      "writtenOn": "2017-11-08T06:29:20Z",
+      "side": 1,
+      "message": "The old code passes true. Hope there is a test can explain why we need true. Or I can read more to find out how do we expect and use the window property kTopViewInset.",
+      "parentUuid": "da5c4db3_1bbeb977",
+      "revId": "b114c56408b60f14fb5c85c89bb4d926fffe26e2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
