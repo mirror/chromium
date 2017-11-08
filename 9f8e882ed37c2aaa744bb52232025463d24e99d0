@@ -72,6 +72,24 @@
     },
     {
       "key": {
+        "uuid": "8bc85718_c21dada3",
+        "filename": "third_party/WebKit/Source/build/scripts/core/style/templates/ComputedStyleInitialValues.h.tmpl",
+        "patchSetId": 13
+      },
+      "lineNbr": 13,
+      "author": {
+        "id": 1215107
+      },
+      "writtenOn": "2017-11-08T05:24:03Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "1438c579_36420a69",
+      "revId": "9f8e882ed37c2aaa744bb52232025463d24e99d0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "01fb025a_aeaa3f03",
         "filename": "third_party/WebKit/Source/build/scripts/core/style/templates/ComputedStyleInitialValues.h.tmpl",
         "patchSetId": 13

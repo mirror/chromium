@@ -37,6 +37,24 @@
     },
     {
       "key": {
+        "uuid": "27944d5c_8f955540",
+        "filename": "third_party/WebKit/Source/build/scripts/core/css/properties/templates/CSSPropertyAPISubclass.h.tmpl",
+        "patchSetId": 13
+      },
+      "lineNbr": 49,
+      "author": {
+        "id": 1215107
+      },
+      "writtenOn": "2017-11-08T05:24:03Z",
+      "side": 0,
+      "message": "Ack",
+      "parentUuid": "8d6da65f_57082fe0",
+      "revId": "a3774c1640a918643a2a68fc43fb8ec3a688b484",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "3dc84046_755530b7",
         "filename": "third_party/WebKit/Source/build/scripts/templates/StyleBuilderFunctions.cpp.tmpl",
         "patchSetId": 13
@@ -66,6 +84,24 @@
       "side": 0,
       "message": "Unfortunately it can\u0027t, since most of the set_value macros expand into something that uses ComputedStyle.",
       "parentUuid": "3dc84046_755530b7",
+      "revId": "a3774c1640a918643a2a68fc43fb8ec3a688b484",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "eea7c9c0_c954e256",
+        "filename": "third_party/WebKit/Source/build/scripts/templates/StyleBuilderFunctions.cpp.tmpl",
+        "patchSetId": 13
+      },
+      "lineNbr": 28,
+      "author": {
+        "id": 1215107
+      },
+      "writtenOn": "2017-11-08T05:24:03Z",
+      "side": 0,
+      "message": "foiled by state.Style() again, ack",
+      "parentUuid": "7d7f72fd_50de0ad5",
       "revId": "a3774c1640a918643a2a68fc43fb8ec3a688b484",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": false
@@ -136,6 +172,24 @@
       "side": 0,
       "message": "hmm yeah I don\u0027t know. It\u0027s a bit of a PITA to put them on the APIs too, since the initial functions return different types :/ Something to think about outside of the scope of this CL I guess.",
       "parentUuid": "081e0853_7dc4c1f3",
+      "revId": "a3774c1640a918643a2a68fc43fb8ec3a688b484",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "7766c895_cf1c10ba",
+        "filename": "third_party/WebKit/Source/core/animation/LengthPropertyFunctions.cpp",
+        "patchSetId": 13
+      },
+      "lineNbr": 97,
+      "author": {
+        "id": 1215107
+      },
+      "writtenOn": "2017-11-08T05:24:03Z",
+      "side": 0,
+      "message": "Agreed",
+      "parentUuid": "3442c017_23153687",
       "revId": "a3774c1640a918643a2a68fc43fb8ec3a688b484",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": false
