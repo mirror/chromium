@@ -6,6 +6,7 @@
 
 #include <memory>
 #include <string>
+#include <utility>
 
 #include "base/barrier_closure.h"
 #include "base/bind_helpers.h"
@@ -16,6 +17,7 @@
 #include "base/run_loop.h"
 #include "content/browser/background_fetch/background_fetch_request_info.h"
 #include "content/browser/background_fetch/background_fetch_test_base.h"
+#include "content/browser/background_fetch/storage/database_helpers.h"
 #include "content/browser/service_worker/service_worker_context_wrapper.h"
 #include "content/public/browser/browser_thread.h"
 #include "content/public/common/content_switches.h"
@@ -23,7 +25,10 @@
 namespace content {
 namespace {
 
+const char kUserDataPrefix[] = "bgfetch_";
+
 const char kExampleDeveloperId[] = "my-example-id";
+// const char kUnusedDeveloperId[] = "my-unused-id";
 const char kExampleUniqueId[] = "7e57ab1e-c0de-a150-ca75-1e75f005ba11";
 const char kAlternativeUniqueId[] = "bb48a9fb-c21f-4c2d-a9ae-58bd48a9fb53";
 
@@ -38,7 +43,8 @@ constexpr size_t kUserDataKeysPerActiveRegistration =
 // A "bgfetch_request_" per request.
 constexpr size_t kUserDataKeysPerInactiveRequest = 1u;
 
-// An additional "bgfetch_pending_request_" per request.
+// An additional "bgfetch_pending_request_" and "bgfetch_active_request_" per
+// request.
 constexpr size_t kUserDataKeysPerActiveRequest =
     kUserDataKeysPerInactiveRequest + 1u;
 
@@ -101,6 +107,53 @@ class BackgroundFetchDataManagerTest : public BackgroundFetchTestBase {
     run_loop.Run();
   }
 
+  void DidGetRegistration(
+      base::Closure quit_closure,
+      blink::mojom::BackgroundFetchError* out_error,
+      std::unique_ptr<BackgroundFetchRegistration>* out_registration,
+      blink::mojom::BackgroundFetchError error,
+      std::unique_ptr<BackgroundFetchRegistration> registration) {
+    if (error == blink::mojom::BackgroundFetchError::NONE) {
+      DCHECK(registration);
+    }
+    *out_error = error;
+    *out_registration = std::move(registration);
+
+    quit_closure.Run();
+  }
+
+  std::unique_ptr<BackgroundFetchRegistration> GetRegistration(
+      const BackgroundFetchRegistrationId& registration_id,
+      blink::mojom::BackgroundFetchError* out_error) {
+    DCHECK(out_error);
+
+    std::unique_ptr<BackgroundFetchRegistration> registration;
+    base::RunLoop run_loop;
+    background_fetch_data_manager_->GetRegistration(
+        registration_id.service_worker_registration_id(),
+        registration_id.origin(), registration_id.developer_id(),
+        base::BindOnce(&BackgroundFetchDataManagerTest::DidGetRegistration,
+                       base::Unretained(this), run_loop.QuitClosure(),
+                       out_error, &registration));
+    run_loop.Run();
+
+    return registration;
+  }
+
+  // Synchronous version of BackgroundFetchDataManager::PopNextRequest().
+  void PopNextRequest(const BackgroundFetchRegistrationId& registration_id,
+                      scoped_refptr<BackgroundFetchRequestInfo>* out_request) {
+    DCHECK(out_request);
+
+    base::RunLoop run_loop;
+    background_fetch_data_manager_->PopNextRequest(
+        registration_id,
+        base::BindOnce(&BackgroundFetchDataManagerTest::DidPopNextRequest,
+                       base::Unretained(this), run_loop.QuitClosure(),
+                       out_request));
+    run_loop.Run();
+  }
+
   // Synchronous version of
   // BackgroundFetchDataManager::MarkRegistrationForDeletion().
   void MarkRegistrationForDeletion(
@@ -147,6 +200,14 @@ class BackgroundFetchDataManagerTest : public BackgroundFetchTestBase {
   }
 
  protected:
+  void DidPopNextRequest(base::Closure quit_closure,
+                         scoped_refptr<BackgroundFetchRequestInfo>* out_request,
+                         scoped_refptr<BackgroundFetchRequestInfo> request) {
+    *out_request = request;
+
+    quit_closure.Run();
+  }
+
   std::unique_ptr<BackgroundFetchDataManager> background_fetch_data_manager_;
 };
 
@@ -227,13 +288,21 @@ TEST_F(BackgroundFetchDataManagerTest, CreateAndDeleteRegistrationPersisted) {
       kUserDataKeysPerActiveRegistration +
       requests.size() * kUserDataKeysPerActiveRequest;
 
-  EXPECT_EQ(0u, GetRegistrationUserDataByKeyPrefix(sw_id, "bgfetch_").size());
+  EXPECT_EQ(0u,
+            GetRegistrationUserDataByKeyPrefix(sw_id, kUserDataPrefix).size());
 
   // Creating the initial registration should succeed.
   CreateRegistration(registration_id1, requests, options, &error);
   EXPECT_EQ(error, blink::mojom::BackgroundFetchError::NONE);
   EXPECT_EQ(expected_active_data_count,
-            GetRegistrationUserDataByKeyPrefix(sw_id, "bgfetch_").size());
+            GetRegistrationUserDataByKeyPrefix(sw_id, kUserDataPrefix).size());
+
+  std::unique_ptr<BackgroundFetchRegistration> registration =
+      GetRegistration(registration_id1, &error);
+  ASSERT_EQ(error, blink::mojom::BackgroundFetchError::NONE);
+  ASSERT_TRUE(registration) << "Registration must be initialized";
+  EXPECT_EQ(kExampleUniqueId, registration->unique_id);
+  EXPECT_EQ(kExampleDeveloperId, registration->developer_id);
 
   RestartDataManagerFromPersistentStorage();
 
@@ -252,7 +321,7 @@ TEST_F(BackgroundFetchDataManagerTest, CreateAndDeleteRegistrationPersisted) {
   MarkRegistrationForDeletion(registration_id1, &error);
   EXPECT_EQ(error, blink::mojom::BackgroundFetchError::NONE);
   EXPECT_EQ(expected_inactive_data_count,
-            GetRegistrationUserDataByKeyPrefix(sw_id, "bgfetch_").size());
+            GetRegistrationUserDataByKeyPrefix(sw_id, kUserDataPrefix).size());
 
   RestartDataManagerFromPersistentStorage();
 
@@ -263,7 +332,7 @@ TEST_F(BackgroundFetchDataManagerTest, CreateAndDeleteRegistrationPersisted) {
   CreateRegistration(registration_id2, requests, options, &error);
   EXPECT_EQ(error, blink::mojom::BackgroundFetchError::NONE);
   EXPECT_EQ(expected_inactive_data_count + expected_active_data_count,
-            GetRegistrationUserDataByKeyPrefix(sw_id, "bgfetch_").size());
+            GetRegistrationUserDataByKeyPrefix(sw_id, kUserDataPrefix).size());
 
   RestartDataManagerFromPersistentStorage();
 
@@ -271,7 +340,7 @@ TEST_F(BackgroundFetchDataManagerTest, CreateAndDeleteRegistrationPersisted) {
   DeleteRegistration(registration_id1, &error);
   EXPECT_EQ(error, blink::mojom::BackgroundFetchError::NONE);
   EXPECT_EQ(expected_active_data_count,
-            GetRegistrationUserDataByKeyPrefix(sw_id, "bgfetch_").size());
+            GetRegistrationUserDataByKeyPrefix(sw_id, kUserDataPrefix).size());
 }
 
 TEST_F(BackgroundFetchDataManagerTest, Cleanup) {
@@ -295,7 +364,8 @@ TEST_F(BackgroundFetchDataManagerTest, Cleanup) {
       kUserDataKeysPerInactiveRegistration +
       requests.size() * kUserDataKeysPerInactiveRequest;
 
-  EXPECT_EQ(0u, GetRegistrationUserDataByKeyPrefix(sw_id, "bgfetch_").size());
+  EXPECT_EQ(0u,
+            GetRegistrationUserDataByKeyPrefix(sw_id, kUserDataPrefix).size());
 
   // Create a registration.
   CreateRegistration(registration_id, requests, options, &error);
@@ -308,17 +378,19 @@ TEST_F(BackgroundFetchDataManagerTest, Cleanup) {
   RestartDataManagerFromPersistentStorage();
 
   EXPECT_EQ(expected_inactive_data_count,
-            GetRegistrationUserDataByKeyPrefix(sw_id, "bgfetch_").size());
+            GetRegistrationUserDataByKeyPrefix(sw_id, kUserDataPrefix).size());
 
   // Cleanup should delete the registration.
   background_fetch_data_manager_->Cleanup();
   base::RunLoop().RunUntilIdle();
-  EXPECT_EQ(0u, GetRegistrationUserDataByKeyPrefix(sw_id, "bgfetch_").size());
+  EXPECT_EQ(0u,
+            GetRegistrationUserDataByKeyPrefix(sw_id, kUserDataPrefix).size());
 
   RestartDataManagerFromPersistentStorage();
 
   // The deletion should have been persisted.
-  EXPECT_EQ(0u, GetRegistrationUserDataByKeyPrefix(sw_id, "bgfetch_").size());
+  EXPECT_EQ(0u,
+            GetRegistrationUserDataByKeyPrefix(sw_id, kUserDataPrefix).size());
 }
 
 TEST_F(BackgroundFetchDataManagerTest, CreateInParallel) {
