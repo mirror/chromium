@@ -17,7 +17,7 @@ class MediaKeysGetStatusForPolicy {
  public:
   static ScriptPromise getStatusForPolicy(ScriptState*,
                                           MediaKeys&,
-                                          MediaKeysPolicy*);
+                                          MediaKeysPolicy);
 };
 
 }  // namespace blink
