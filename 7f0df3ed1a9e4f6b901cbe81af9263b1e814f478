@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "e06f4f37_d8cade1e",
+        "filename": "ios/chrome/browser/ui/stack_view/stack_view_controller.mm",
+        "patchSetId": 2
+      },
+      "lineNbr": 509,
+      "author": {
+        "id": 1163361
+      },
+      "writtenOn": "2017-11-08T19:30:41Z",
+      "side": 1,
+      "message": "I wonder if this should be an active state enum { INACTIVE, PREPARING_FOR_ACTIVE, ACTIVE }?",
+      "range": {
+        "startLine": 505,
+        "startChar": 2,
+        "endLine": 509,
+        "endChar": 27
+      },
+      "revId": "7f0df3ed1a9e4f6b901cbe81af9263b1e814f478",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
