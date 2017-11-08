@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "806d91fa_7e7941c5",
+        "filename": "content/network/restricted_cookie_manager_unittest.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 120,
+      "author": {
+        "id": 1001809
+      },
+      "writtenOn": "2017-11-08T21:53:48Z",
+      "side": 1,
+      "message": "I\u0027ll note that, at xunjieli@\u0027s suggestion, I\u0027ve shifted the cookie_manager_impl_unittest.cc tests over to setting specific cookies in each test--it\u0027s more flexible and easier to compare the set of cookies in the store to the set output without scrolling all over the place.  Optional, bug recommended.",
+      "range": {
+        "startLine": 120,
+        "startChar": 18,
+        "endLine": 120,
+        "endChar": 19
+      },
+      "revId": "bd8974bf33d18e6a5f29ea26f8682e73ae1ba9ed",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "143a047f_0c3aa630",
+        "filename": "content/network/restricted_cookie_manager_unittest.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 161,
+      "author": {
+        "id": 1001809
+      },
+      "writtenOn": "2017-11-08T21:53:48Z",
+      "side": 1,
+      "message": "This would be a better test if you had some cookies in the store that the GetAllForUrl call *weren\u0027t* returning.",
+      "range": {
+        "startLine": 161,
+        "startChar": 16,
+        "endLine": 161,
+        "endChar": 23
+      },
+      "revId": "bd8974bf33d18e6a5f29ea26f8682e73ae1ba9ed",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
