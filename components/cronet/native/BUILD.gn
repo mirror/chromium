@@ -1,0 +1,40 @@
+import("//mojo/public/tools/bindings/mojom.gni")
+import("//testing/test.gni")
+
+# Ephemeral target to verify that cronet.idl is mojo-compatible.
+mojom("cronet_mojo") {
+  sources = [
+    "cronet.idl",
+  ]
+}
+
+# Cronet native API implementation. Currently just generated from cronet.idl.
+source_set("cronet_native_impl") {
+  sources = [
+    "cronet.idl_c.h",
+    "cronet.idl_impl_interface.cc",
+    "cronet.idl_impl_interface.h",
+    "cronet.idl_impl_struct.cc",
+    "cronet.idl_impl_struct.h",
+  ]
+  deps = [
+    "//base",
+    "//net",
+  ]
+}
+
+# Tests for Cronet native API. Currently just generated from cronet.idl.
+source_set("cronet_native_impl_tests") {
+  testonly = true
+
+  deps = [
+    ":cronet_mojo",
+    ":cronet_native_impl",
+    "//net:test_support",
+  ]
+
+  sources = [
+    "cronet.idl_impl_interface_unittest.cc",
+    "cronet.idl_impl_struct_unittest.cc",
+  ]
+}
