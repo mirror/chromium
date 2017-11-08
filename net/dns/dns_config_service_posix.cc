@@ -11,6 +11,7 @@
 #include "base/files/file.h"
 #include "base/files/file_path.h"
 #include "base/files/file_path_watcher.h"
+#include "base/files/file_util.h"
 #include "base/lazy_instance.h"
 #include "base/location.h"
 #include "base/macros.h"
@@ -19,6 +20,10 @@
 #include "base/threading/scoped_blocking_call.h"
 #include "base/threading/thread_task_runner_handle.h"
 #include "base/time/time.h"
+#include "base/trace_event/memory_allocator_dump.h"
+#include "base/trace_event/memory_dump_manager.h"
+#include "base/trace_event/memory_dump_provider.h"
+#include "base/trace_event/process_memory_dump.h"
 #include "base/trace_event/trace_event.h"
 #include "build/build_config.h"
 #include "net/base/ip_address.h"
@@ -354,15 +359,41 @@ class DnsConfigServicePosix::ConfigReader : public SerialWorker {
 };
 
 // A SerialWorker that reads the HOSTS file and runs Callback.
-class DnsConfigServicePosix::HostsReader : public SerialWorker {
+class DnsConfigServicePosix::HostsReader
+    : public SerialWorker,
+      public base::trace_event::MemoryDumpProvider {
  public:
   explicit HostsReader(DnsConfigServicePosix* service)
       : service_(service),
         file_path_hosts_(service->file_path_hosts_),
-        success_(false) {}
+        success_(false) {
+    base::trace_event::MemoryDumpManager::GetInstance()->RegisterDumpProvider(
+        this, "DnsConfigServicePosix::HostsReader",
+        base::ThreadTaskRunnerHandle::Get());
+  }
+
+  bool OnMemoryDump(const base::trace_event::MemoryDumpArgs& args,
+                    base::trace_event::ProcessMemoryDump* pmd) override {
+    base::trace_event::MemoryAllocatorDump* dump =
+        pmd->CreateAllocatorDump("net/dns_config_service_posix_hosts_reader");
+    dump->AddScalar("hosts_entry_count",
+                    base::trace_event::MemoryAllocatorDump::kUnitsObjects,
+                    hosts_.size());
+    int64_t file_size;
+    bool success = base::GetFileSize(file_path_hosts_, &file_size);
+    if (success) {
+      dump->AddScalar("hosts_file_size",
+                      base::trace_event::MemoryAllocatorDump::kUnitsBytes,
+                      file_size);
+    }
+    return true;
+  }
 
  private:
-  ~HostsReader() override {}
+  ~HostsReader() override {
+    base::trace_event::MemoryDumpManager::GetInstance()->UnregisterDumpProvider(
+        this);
+  }
 
   void DoWork() override {
     TRACE_HEAP_PROFILER_API_SCOPED_TASK_EXECUTION scoped_heap_context(
