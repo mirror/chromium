@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "b4358c56_2eb0d7bd",
+        "filename": "net/quic/chromium/quic_stream_factory.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 126,
+      "author": {
+        "id": 1116006
+      },
+      "writtenOn": "2017-11-08T17:47:16Z",
+      "side": 1,
+      "message": "nit: As long as you\u0027re here, can you add a comment.",
+      "revId": "4f6524916730ae0fb105648b91a31b2172427e97",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
