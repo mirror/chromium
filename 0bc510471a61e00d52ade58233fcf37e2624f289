@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "00b4c71c_c4f43350",
+        "filename": "chrome/browser/extensions/api/declarative_net_request/declarative_net_request_browsertest.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 258,
+      "author": {
+        "id": 1001727
+      },
+      "writtenOn": "2017-11-08T22:32:21Z",
+      "side": 1,
+      "message": "So the assumption is that there were too many cases before that was causing bots to timeout?\n\nnvm, I just read the CL description :)",
+      "revId": "0bc510471a61e00d52ade58233fcf37e2624f289",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
