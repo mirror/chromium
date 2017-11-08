@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "1673a73c_435f5b6e",
+        "filename": "ash/accessibility/focus_ring_layer.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 50,
+      "author": {
+        "id": 1250213
+      },
+      "writtenOn": "2017-11-08T01:57:11Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "7efef6bd_c9feb30a",
+      "revId": "026f0f4dfcfa70dae842b2466d3b98a33003b971",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "edcb392f_2a9c3c99",
         "filename": "ash/accessibility/focus_ring_layer.h",
         "patchSetId": 4
@@ -33,6 +51,24 @@
       "revId": "026f0f4dfcfa70dae842b2466d3b98a33003b971",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8cbe20dc_30648f40",
+        "filename": "ash/accessibility/focus_ring_layer.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 28,
+      "author": {
+        "id": 1250213
+      },
+      "writtenOn": "2017-11-08T01:57:11Z",
+      "side": 1,
+      "message": "CanAnimate needs to be public, but the other method doesn\u0027t. It feels odd to me to move the other one to public when it isn\u0027t necessary, but I\u0027ll do it. The style guide (kind-of) supports this: \"When you derive from a base class, group any overriding functions in your header file in one labeled section.\"",
+      "parentUuid": "edcb392f_2a9c3c99",
+      "revId": "026f0f4dfcfa70dae842b2466d3b98a33003b971",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
