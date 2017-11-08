@@ -451,6 +451,16 @@ void CloseTabAtIndexAndSync(NSUInteger i) {
   [[GREYConfiguration sharedInstance]
           setValue:@(NO)
       forConfigKey:kGREYConfigKeySynchronizationEnabled];
+  // Make sure the button is here and displayed before tapping it.
+  id<GREYMatcher> toolMenuMatcher =
+      grey_accessibilityID(kToolbarToolsMenuButtonIdentifier);
+  Wait(toolMenuMatcher, @"Tool Menu");
+  GREYCondition* myCondition = [GREYCondition conditionWithName:@"0.5s wait"
+                                                          block:^BOOL {
+                                                            return NO;
+                                                          }];
+  [myCondition waitWithTimeout:0.5];
+
   OpenNewMainTabUsingUIUnsynced();
   [[GREYConfiguration sharedInstance]
           setValue:@(YES)
@@ -521,6 +531,11 @@ void CloseTabAtIndexAndSync(NSUInteger i) {
       grey_accessibilityID(kToolbarToolsMenuButtonIdentifier);
   Wait(toolMenuMatcher, @"Tool Menu");
 
+  GREYCondition* myCondition = [GREYCondition conditionWithName:@"0.5s wait"
+                                                          block:^BOOL {
+                                                            return NO;
+                                                          }];
+  [myCondition waitWithTimeout:0.5];
   GREYAssertTrue(chrome_test_util::SimulateTabsBackgrounding(),
                  @"Failed to simulate tab backgrounding.");
   [[GREYConfiguration sharedInstance]
