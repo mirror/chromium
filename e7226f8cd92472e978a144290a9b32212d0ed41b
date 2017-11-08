@@ -1,0 +1,157 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "6ff00c97_fb4d0c2a",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 18
+      },
+      "lineNbr": 7,
+      "author": {
+        "id": 1002808
+      },
+      "writtenOn": "2017-11-08T20:59:40Z",
+      "side": 1,
+      "message": "Maybe expand on this a bit. It\u0027s really introducing the concept of a content embedder renderer service and giving browser-side embedder code a way to connect to it. Unless of course you do remove the incomplete aw_renderer stuff, in which case this description seems fine as-is.",
+      "revId": "e7226f8cd92472e978a144290a9b32212d0ed41b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5f721209_41e4f69d",
+        "filename": "android_webview/common/constants.mojom",
+        "patchSetId": 18
+      },
+      "lineNbr": 7,
+      "author": {
+        "id": 1002808
+      },
+      "writtenOn": "2017-11-08T20:59:40Z",
+      "side": 1,
+      "message": "No manifest or content_renderer overlay? How does this work?",
+      "revId": "e7226f8cd92472e978a144290a9b32212d0ed41b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c1246a86_4c205658",
+        "filename": "android_webview/renderer/aw_content_renderer_client.cc",
+        "patchSetId": 18
+      },
+      "lineNbr": 126,
+      "author": {
+        "id": 1002808
+      },
+      "writtenOn": "2017-11-08T20:59:40Z",
+      "side": 1,
+      "message": "GetInterface is a no-op on |this|, so I assume in webview, SpellCheck will fail to acquire a working SpellCheckHost interface. Do you need to implement AwContentRendererClient::GetInterface?\n\nBased on this and the lack of a manifest or other relevant changes, is there even any reason to hook this stuff up in android_webview? It seems incomplete here. Can/should that be a separate patch?",
+      "revId": "e7226f8cd92472e978a144290a9b32212d0ed41b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "79d4bd67_e8c2b2ef",
+        "filename": "chrome/browser/chrome_service.cc",
+        "patchSetId": 18
+      },
+      "lineNbr": 36,
+      "author": {
+        "id": 1002808
+      },
+      "writtenOn": "2017-11-08T20:59:40Z",
+      "side": 1,
+      "message": "nit: cache a local copy of the UI runner and use it in all these places?",
+      "revId": "e7226f8cd92472e978a144290a9b32212d0ed41b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5dfcaded_61bf4106",
+        "filename": "chrome/browser/chrome_service.h",
+        "patchSetId": 18
+      },
+      "lineNbr": 16,
+      "author": {
+        "id": 1002808
+      },
+      "writtenOn": "2017-11-08T20:59:40Z",
+      "side": 1,
+      "message": "Could use a class comment I suppose",
+      "revId": "e7226f8cd92472e978a144290a9b32212d0ed41b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b7ce3abe_6879ccec",
+        "filename": "chrome/browser/chrome_service.h",
+        "patchSetId": 18
+      },
+      "lineNbr": 24,
+      "author": {
+        "id": 1002808
+      },
+      "writtenOn": "2017-11-08T20:59:40Z",
+      "side": 1,
+      "message": "Ideally this would just be a Connector* accessor that returns a lazily initialized / cloned thing. Then no need for all the internal plumbing and queueing of BindInterface requests.",
+      "revId": "e7226f8cd92472e978a144290a9b32212d0ed41b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "10aaf14f_dead0a2f",
+        "filename": "chrome/renderer/chrome_renderer_service.cc",
+        "patchSetId": 18
+      },
+      "lineNbr": 10,
+      "author": {
+        "id": 1002808
+      },
+      "writtenOn": "2017-11-08T20:59:40Z",
+      "side": 1,
+      "message": "nit: std::make_unique",
+      "revId": "e7226f8cd92472e978a144290a9b32212d0ed41b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "667c2f0a_27d19f21",
+        "filename": "components/spellcheck/renderer/spellcheck.h",
+        "patchSetId": 18
+      },
+      "lineNbr": 53,
+      "author": {
+        "id": 1002808
+      },
+      "writtenOn": "2017-11-08T20:59:40Z",
+      "side": 1,
+      "message": "nit: Please document that |registry| must outlive this SpellCheck object. Alternatively we could change the implementation to bind its callback with a WeakPtr. All this unowned pointer soup is worrisome.",
+      "revId": "e7226f8cd92472e978a144290a9b32212d0ed41b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ecdafeeb_fa3369a9",
+        "filename": "content/public/browser/content_browser_client.h",
+        "patchSetId": 18
+      },
+      "lineNbr": 753,
+      "author": {
+        "id": 1002808
+      },
+      "writtenOn": "2017-11-08T20:59:40Z",
+      "side": 1,
+      "message": "Is there any way we can change this to GetEmbedderConnector()? I think this would be much easier to understand and explain, and avoids duplicating essentially the same interface as Connector everywhere.",
+      "revId": "e7226f8cd92472e978a144290a9b32212d0ed41b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
