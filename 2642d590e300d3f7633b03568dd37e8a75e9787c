@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "6668599a_bb963e10",
+        "filename": "chromecast/browser/android/apk/AndroidManifest.xml.jinja2",
+        "patchSetId": 1
+      },
+      "lineNbr": 29,
+      "author": {
+        "id": 1242380
+      },
+      "writtenOn": "2017-11-08T00:07:25Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "4a284549_d65cdba5",
+      "range": {
+        "startLine": 29,
+        "startChar": 37,
+        "endLine": 29,
+        "endChar": 42
+      },
+      "revId": "2642d590e300d3f7633b03568dd37e8a75e9787c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "ec6c2189_840952d3",
         "filename": "chromecast/browser/android/apk/src/org/chromium/chromecast/shell/CastWebContentsActivity.java",
         "patchSetId": 1
@@ -45,6 +69,30 @@
       "revId": "2642d590e300d3f7633b03568dd37e8a75e9787c",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1116cc1a_afb6933a",
+        "filename": "chromecast/browser/android/apk/src/org/chromium/chromecast/shell/CastWebContentsActivity.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 201,
+      "author": {
+        "id": 1242380
+      },
+      "writtenOn": "2017-11-08T00:07:25Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "ec6c2189_840952d3",
+      "range": {
+        "startLine": 201,
+        "startChar": 8,
+        "endLine": 201,
+        "endChar": 36
+      },
+      "revId": "2642d590e300d3f7633b03568dd37e8a75e9787c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
