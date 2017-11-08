@@ -205,7 +205,8 @@ StaticRangeVector* RangesFromCurrentSelectionOrExtendCaret(
     TextGranularity granularity) {
   frame.GetDocument()->UpdateStyleAndLayoutIgnorePendingStylesheets();
   SelectionModifier selection_modifier(
-      frame, frame.Selection().ComputeVisibleSelectionInDOMTreeDeprecated());
+      frame, frame.Selection().ComputeVisibleSelectionInDOMTreeDeprecated(),
+      frame.Selection().IsDirectional());
   if (selection_modifier.Selection().IsCaret())
     selection_modifier.Modify(SelectionModifyAlteration::kExtend, direction,
                               granularity);
@@ -825,8 +826,9 @@ static bool ExecuteDeleteToMark(LocalFrame& frame,
         SetSelectionOptions::Builder().SetShouldCloseTyping(true).Build());
   }
   frame.GetEditor().PerformDelete();
-  frame.GetEditor().SetMark(
-      frame.Selection().ComputeVisibleSelectionInDOMTreeDeprecated());
+  frame.GetEditor().SetMarkWithDirectional(
+      frame.Selection().ComputeVisibleSelectionInDOMTreeDeprecated(),
+      frame.Selection().IsDirectional());
   return true;
 }
 
@@ -1241,11 +1243,17 @@ bool ModifySelectionyWithPageGranularity(
     unsigned vertical_distance,
     SelectionModifyVerticalDirection direction) {
   SelectionModifier selection_modifier(
-      frame, frame.Selection().ComputeVisibleSelectionInDOMTree());
+      frame, frame.Selection().ComputeVisibleSelectionInDOMTree(),
+      frame.Selection().IsDirectional());
   if (!selection_modifier.ModifyWithPageGranularity(alter, vertical_distance,
                                                     direction)) {
     return false;
   }
+
+  bool directional =
+      frame.GetEditor().Behavior().ShouldConsiderSelectionAsDirectional();
+  if (alter == SelectionModifyAlteration::kExtend)
+    directional = true;
 
   frame.Selection().SetSelection(
       selection_modifier.Selection().AsSelection(),
@@ -1256,6 +1264,7 @@ bool ModifySelectionyWithPageGranularity(
           .SetCursorAlignOnScroll(alter == SelectionModifyAlteration::kMove
                                       ? CursorAlignOnScroll::kAlways
                                       : CursorAlignOnScroll::kIfNeeded)
+          .SetIsDirectional(directional)
           .Build());
   return true;
 }
@@ -1876,8 +1885,9 @@ static bool ExecuteSetMark(LocalFrame& frame,
                            Event*,
                            EditorCommandSource,
                            const String&) {
-  frame.GetEditor().SetMark(
-      frame.Selection().ComputeVisibleSelectionInDOMTreeDeprecated());
+  frame.GetEditor().SetMarkWithDirectional(
+      frame.Selection().ComputeVisibleSelectionInDOMTreeDeprecated(),
+      frame.Selection().IsDirectional());
   return true;
 }
 
@@ -1937,8 +1947,14 @@ static bool ExecuteSwapWithMark(LocalFrame& frame,
       frame.Selection().ComputeVisibleSelectionInDOMTreeDeprecated();
   if (mark.IsNone() || selection.IsNone())
     return false;
-  frame.Selection().SetSelection(mark.AsSelection());
-  frame.GetEditor().SetMark(selection);
+  frame.Selection().SetSelection(
+      mark.AsSelection(),
+      SetSelectionOptions::Builder()
+          .SetIsDirectional(frame.GetEditor().GetMarkIsDirectional())
+          .Build());
+  frame.GetEditor().SetMarkWithDirectional(selection,
+                                           frame.Selection().IsDirectional());
+
   return true;
 }
 

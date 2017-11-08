@@ -48,8 +48,9 @@ class SelectionModifier {
   // |frame| is used for providing settings.
   SelectionModifier(const LocalFrame& /* frame */,
                     const VisibleSelection&,
-                    LayoutUnit);
-  SelectionModifier(const LocalFrame&, const VisibleSelection&);
+                    LayoutUnit,
+                    bool);
+  SelectionModifier(const LocalFrame&, const VisibleSelection&, bool);
 
   LayoutUnit XPosForVerticalArrowNavigation() const {
     return x_pos_for_vertical_arrow_navigation_;
@@ -111,6 +112,7 @@ class SelectionModifier {
   // |current_selection_| holds initial value and result of |Modify()|.
   SelectionInDOMTree current_selection_;
   LayoutUnit x_pos_for_vertical_arrow_navigation_;
+  bool is_directional_;
 
   DISALLOW_COPY_AND_ASSIGN(SelectionModifier);
 };
