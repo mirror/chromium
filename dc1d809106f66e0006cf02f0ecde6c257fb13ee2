@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "3b58ff08_122f4701",
+        "filename": "ui/aura/window_observer.h",
+        "patchSetId": 18
+      },
+      "lineNbr": 112,
+      "author": {
+        "id": 1000111
+      },
+      "writtenOn": "2017-11-08T23:35:53Z",
+      "side": 1,
+      "message": "Comment about animation ending and checking ::TRANSFORM.",
+      "revId": "dc1d809106f66e0006cf02f0ecde6c257fb13ee2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
