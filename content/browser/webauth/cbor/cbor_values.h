@@ -60,13 +60,30 @@ class CONTENT_EXPORT CBORValue {
   using ArrayValue = std::vector<CBORValue>;
   using MapValue = base::flat_map<std::string, CBORValue, CTAPLess>;
 
+  // Mask selecting the last 5 bits  of the "initial byte" where
+  // 'additional information is encoded.
+  static constexpr uint8_t kAdditionalInformationDataMask = 0x1F;
+  // Indicates the major type of the corresponding cbor value.
+  static constexpr uint8_t kMajorTypeDataMask = 0xE0;
+  // Indicates the integer is in the following byte.
+  static constexpr uint8_t kAdditionalInformation1Byte = 24;
+  // Indicates the integer is in the next 2 bytes.
+  static constexpr uint8_t kAdditionalInformation2Bytes = 25;
+  // Indicates the integer is in the next 4 bytes.
+  static constexpr uint8_t kAdditionalInformation4Bytes = 26;
+  // Indicates the integer is in the next 8 bytes.
+  static constexpr uint8_t kAdditionalInformation8Bytes = 27;
+  // Indicates number of bits to shift to read major type from first CBOR byte.
+  static constexpr uint8_t kMajorTypeBitShift = 5;
+
   enum class Type {
-    NONE,
-    UNSIGNED,
-    BYTESTRING,
-    STRING,
-    ARRAY,
-    MAP,
+    UNSIGNED = 0,
+    NEGATIVE = 1,
+    BYTESTRING = 2,
+    STRING = 3,
+    ARRAY = 4,
+    MAP = 5,
+    NONE = 8,
   };
 
   CBORValue(CBORValue&& that) noexcept;

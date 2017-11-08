@@ -20,8 +20,6 @@ CBORValue::CBORValue(CBORValue&& that) noexcept {
 CBORValue::CBORValue(Type type) : type_(type) {
   // Initialize with the default value.
   switch (type_) {
-    case Type::NONE:
-      return;
     case Type::UNSIGNED:
       unsigned_value_ = 0;
       return;
@@ -37,6 +35,9 @@ CBORValue::CBORValue(Type type) : type_(type) {
     case Type::MAP:
       new (&map_value_) MapValue();
       return;
+    case Type::NONE:
+    default:
+      break;
   }
 }
 
@@ -104,6 +105,8 @@ CBORValue CBORValue::Clone() const {
       return CBORValue(array_value_);
     case Type::MAP:
       return CBORValue(map_value_);
+    default:
+      break;
   }
 
   NOTREACHED();
@@ -139,8 +142,6 @@ void CBORValue::InternalMoveConstructFrom(CBORValue&& that) {
   type_ = that.type_;
 
   switch (type_) {
-    case Type::NONE:
-      return;
     case Type::UNSIGNED:
       unsigned_value_ = that.unsigned_value_;
       return;
@@ -156,16 +157,14 @@ void CBORValue::InternalMoveConstructFrom(CBORValue&& that) {
     case Type::MAP:
       new (&map_value_) MapValue(std::move(that.map_value_));
       return;
+    case Type::NONE:
+    default:
+      break;
   }
 }
 
 void CBORValue::InternalCleanup() {
   switch (type_) {
-    case Type::NONE:
-    case Type::UNSIGNED:
-      // Nothing to do
-      break;
-      ;
     case Type::BYTESTRING:
       bytestring_value_.~BinaryValue();
       break;
@@ -177,6 +176,10 @@ void CBORValue::InternalCleanup() {
       break;
     case Type::MAP:
       map_value_.~MapValue();
+      break;
+    case Type::NONE:
+    case Type::UNSIGNED:
+    default:
       break;
   }
   type_ = Type::NONE;
