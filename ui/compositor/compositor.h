@@ -486,6 +486,10 @@ class COMPOSITOR_EXPORT Compositor : public cc::LayerTreeHostClient,
 
   base::WeakPtrFactory<Compositor> weak_ptr_factory_;
   base::WeakPtrFactory<Compositor> lock_timeout_weak_ptr_factory_;
+  // This is only used for context creation. This is necessary besides
+  // |weak_ptr_factory_| so invalidating it won't cause the compositor to
+  // never unlock.
+  base::WeakPtrFactory<Compositor> context_creation_weak_ptr_factory_;
 
   DISALLOW_COPY_AND_ASSIGN(Compositor);
 };
