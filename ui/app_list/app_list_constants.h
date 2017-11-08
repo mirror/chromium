@@ -197,6 +197,7 @@ APP_LIST_EXPORT extern const char kAppListFolderOpenedHistogram[];
 APP_LIST_EXPORT extern const char kAppListPeekingToFullscreenHistogram[];
 APP_LIST_EXPORT extern const char kAppListToggleMethodHistogram[];
 APP_LIST_EXPORT extern const char kPageOpenedHistogram[];
+APP_LIST_EXPORT extern const char kNumberOfFoldersHistogram[];
 
 APP_LIST_EXPORT extern const char kSearchResultOpenDisplayTypeHistogram[];
 APP_LIST_EXPORT extern const char kSearchQueryLength[];

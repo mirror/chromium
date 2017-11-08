@@ -2287,6 +2287,14 @@ http://cs/file:chrome/histograms.xml - but prefer this file for new entries.
   </summary>
 </histogram>
 
+<histogram name="Apps.NumberOfFolders" units="folder(s)">
+  <owner>newcomer@google.com</owner>
+  <summary>
+    The number of folders that users have in their Launcher. Includes OEM
+    folders. This metric is recorded every time the launcher is shown.
+  </summary>
+</histogram>
+
 <histogram name="Apps.StateTransition.AnimationSmoothness" units="%">
   <owner>vadimt@chromium.org</owner>
   <summary>
