@@ -53,6 +53,24 @@
     },
     {
       "key": {
+        "uuid": "76bcb96a_c822d914",
+        "filename": "chrome/browser/vr/elements/ui_element.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 254,
+      "author": {
+        "id": 1117479
+      },
+      "writtenOn": "2017-11-08T16:50:27Z",
+      "side": 1,
+      "message": "That\u0027s an awesome idea.  Too bad there isn\u0027t gfx::RRectF, as RectF has a point-wise Contains method (which we use elsewhere).",
+      "parentUuid": "cbbc4b91_95490123",
+      "revId": "13992d78cd4c5a2d3156ae4dae54a39a790a67a9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "1ad2cc1b_49740005",
         "filename": "chrome/browser/vr/elements/ui_element.cc",
         "patchSetId": 1
