@@ -330,7 +330,8 @@ ImmutableStylePropertySet* CSSParserImpl::ParseCustomPropertySet(
   range.ConsumeWhitespace();
   if (!range.AtEnd())
     return nullptr;
-  CSSParserImpl parser(StrictCSSParserContext());
+  // DO NOT SUBMIT
+  CSSParserImpl parser(StrictCSSParserContext(/* is_secure_context */ false));
   parser.ConsumeDeclarationListForAtApply(block);
 
   return CreateStylePropertySet(parser.parsed_properties_, kHTMLStandardMode);

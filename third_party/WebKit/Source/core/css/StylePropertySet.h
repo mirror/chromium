@@ -244,6 +244,7 @@ class CORE_EXPORT MutableStylePropertySet : public StylePropertySet {
                         const PropertyRegistry*,
                         const String& value,
                         bool important,
+                        bool is_secure_context,
                         StyleSheetContents* context_style_sheet,
                         bool is_animation_tainted);
   void SetProperty(CSSPropertyID, const CSSValue&, bool important = false);
@@ -264,6 +265,7 @@ class CORE_EXPORT MutableStylePropertySet : public StylePropertySet {
 
   void Clear();
   void ParseDeclarationList(const String& style_declaration,
+                            bool is_secure_context,
                             StyleSheetContents* context_style_sheet);
 
   CSSStyleDeclaration* EnsureCSSStyleDeclaration();

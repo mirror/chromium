@@ -75,7 +75,9 @@ void StyleRuleImport::SetCSSStyleSheet(
     style_sheet_->ClearOwnerRule();
 
   Document* document = nullptr;
-  const CSSParserContext* context = StrictCSSParserContext();
+  // DO NOT SUBMIT
+  const CSSParserContext* context =
+      StrictCSSParserContext(/* is_secure_context */ false);
   if (parent_style_sheet_) {
     document = parent_style_sheet_->SingleOwnerDocument();
     context = parent_style_sheet_->ParserContext();

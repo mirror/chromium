@@ -74,7 +74,8 @@ bool FontFaceSetWorker::ResolveFontStyle(const String& font_string,
   // CanvasRenderingContext2D.
   MutableStylePropertySet* parsed_style =
       MutableStylePropertySet::Create(kHTMLStandardMode);
-  CSSParser::ParseValue(parsed_style, CSSPropertyFont, font_string, true);
+  CSSParser::ParseValue(parsed_style, CSSPropertyFont, font_string, true,
+                        GetExecutionContext()->IsSecureContext());
   if (parsed_style->IsEmpty())
     return false;
 

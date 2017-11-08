@@ -48,7 +48,8 @@ class CORE_EXPORT CSSVariableData : public RefCounted<CSSVariableData> {
 
   bool NeedsVariableResolution() const { return needs_variable_resolution_; }
 
-  const CSSValue* ParseForSyntax(const CSSSyntaxDescriptor&) const;
+  const CSSValue* ParseForSyntax(const CSSSyntaxDescriptor&,
+                                 bool is_secure_context) const;
 
   StylePropertySet* PropertySet();
 

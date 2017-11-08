@@ -23,10 +23,11 @@ MutableStylePropertySet::SetResult StringKeyframe::SetCSSPropertyValue(
     const AtomicString& property_name,
     const PropertyRegistry* registry,
     const String& value,
+    bool is_secure_context,
     StyleSheetContents* style_sheet_contents) {
   bool is_animation_tainted = true;
   return css_property_map_->SetProperty(property_name, registry, value, false,
-                                        style_sheet_contents,
+                                        is_secure_context, style_sheet_contents,
                                         is_animation_tainted);
 }
 

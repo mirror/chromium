@@ -51,12 +51,14 @@ class CORE_EXPORT CSSParser {
       MutableStylePropertySet*,
       CSSPropertyID unresolved_property,
       const String&,
-      bool important);
+      bool important,
+      bool is_secure_context);
   static MutableStylePropertySet::SetResult ParseValue(
       MutableStylePropertySet*,
       CSSPropertyID unresolved_property,
       const String&,
       bool important,
+      bool is_secure_context,
       StyleSheetContents*);
 
   static MutableStylePropertySet::SetResult ParseValueForCustomProperty(
@@ -65,15 +67,16 @@ class CORE_EXPORT CSSParser {
       const PropertyRegistry*,
       const String& value,
       bool important,
+      bool is_secure_context,
       StyleSheetContents*,
       bool is_animation_tainted);
   static ImmutableStylePropertySet* ParseCustomPropertySet(CSSParserTokenRange);
 
   // This is for non-shorthands only
-  static const CSSValue* ParseSingleValue(
-      CSSPropertyID,
-      const String&,
-      const CSSParserContext* = StrictCSSParserContext());
+  static const CSSValue* ParseSingleValue(CSSPropertyID,
+                                          const String&,
+                                          bool is_secure_context,
+                                          const CSSParserContext*);
 
   static const CSSValue* ParseFontFaceDescriptor(CSSPropertyID,
                                                  const String&,
@@ -86,7 +89,7 @@ class CORE_EXPORT CSSParser {
   static StyleRuleKeyframe* ParseKeyframeRule(const CSSParserContext*,
                                               const String&);
 
-  static bool ParseSupportsCondition(const String&);
+  static bool ParseSupportsCondition(const String&, bool is_secure_context);
 
   // The color will only be changed when string contains a valid CSS color, so
   // callers can set it to a default color and ignore the boolean result.

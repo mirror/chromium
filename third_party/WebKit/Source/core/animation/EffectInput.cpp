@@ -92,7 +92,7 @@ void SetKeyframeValue(Element& element,
             ? keyframe.SetCSSPropertyValue(
                   AtomicString(property),
                   element.GetDocument().GetPropertyRegistry(), value,
-                  style_sheet_contents)
+                  element.GetDocument().IsSecureContext(), style_sheet_contents)
             : keyframe.SetCSSPropertyValue(css_property, value,
                                            style_sheet_contents);
     if (!set_result.did_parse && execution_context) {

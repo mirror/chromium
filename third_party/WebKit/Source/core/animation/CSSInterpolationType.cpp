@@ -242,8 +242,10 @@ InterpolationValue CSSInterpolationType::MaybeConvertCustomPropertyDeclaration(
     resolved_tokens = declaration.Value();
   }
   const CSSValue* resolved_value =
-      resolved_tokens ? resolved_tokens->ParseForSyntax(registration_->Syntax())
-                      : nullptr;
+      resolved_tokens
+          ? resolved_tokens->ParseForSyntax(
+                registration_->Syntax(), state.GetDocument().IsSecureContext())
+          : nullptr;
   if (!resolved_value) {
     return nullptr;
   }

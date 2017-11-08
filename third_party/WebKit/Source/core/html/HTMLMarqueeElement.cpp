@@ -350,10 +350,11 @@ HTMLMarqueeElement::Metrics HTMLMarqueeElement::GetMetrics() {
   }
 
   if (IsHorizontal()) {
-    mover_->style()->setProperty("width", "-webkit-max-content", "important",
-                                 ASSERT_NO_EXCEPTION);
+    mover_->style()->setProperty(&GetDocument(), "width", "-webkit-max-content",
+                                 "important", ASSERT_NO_EXCEPTION);
   } else {
-    mover_->style()->setProperty("height", "-webkit-max-content", "important",
+    mover_->style()->setProperty(&GetDocument(), "height",
+                                 "-webkit-max-content", "important",
                                  ASSERT_NO_EXCEPTION);
   }
   CSSStyleDeclaration* mover_style =

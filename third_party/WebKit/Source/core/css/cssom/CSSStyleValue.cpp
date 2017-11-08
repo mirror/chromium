@@ -15,9 +15,11 @@ namespace blink {
 
 namespace {
 
-CSSStyleValueVector ParseCSSStyleValue(const String& property_name,
-                                       const String& value,
-                                       ExceptionState& exception_state) {
+CSSStyleValueVector ParseCSSStyleValue(
+    const ExecutionContext* execution_context,
+    const String& property_name,
+    const String& value,
+    ExceptionState& exception_state) {
   const CSSPropertyID property_id = cssPropertyID(property_name);
 
   // TODO(775804): Handle custom properties
@@ -32,8 +34,8 @@ CSSStyleValueVector ParseCSSStyleValue(const String& property_name,
     return CSSStyleValueVector();
   }
 
-  const CSSValue* css_value =
-      CSSParser::ParseSingleValue(property_id, value, StrictCSSParserContext());
+  const CSSValue* css_value = CSSParser::ParseSingleValue(
+      property_id, value, execution_context->IsSecureContext(), nullptr);
   if (!css_value) {
     exception_state.ThrowDOMException(
         kSyntaxError, "The value provided ('" + value +
@@ -50,11 +52,12 @@ CSSStyleValueVector ParseCSSStyleValue(const String& property_name,
 
 }  // namespace
 
-CSSStyleValue* CSSStyleValue::parse(const String& property_name,
+CSSStyleValue* CSSStyleValue::parse(const ExecutionContext* execution_context,
+                                    const String& property_name,
                                     const String& value,
                                     ExceptionState& exception_state) {
-  CSSStyleValueVector style_value_vector =
-      ParseCSSStyleValue(property_name, value, exception_state);
+  CSSStyleValueVector style_value_vector = ParseCSSStyleValue(
+      execution_context, property_name, value, exception_state);
   if (style_value_vector.IsEmpty())
     return nullptr;
 
@@ -62,11 +65,12 @@ CSSStyleValue* CSSStyleValue::parse(const String& property_name,
 }
 
 Nullable<CSSStyleValueVector> CSSStyleValue::parseAll(
+    const ExecutionContext* execution_context,
     const String& property_name,
     const String& value,
     ExceptionState& exception_state) {
-  CSSStyleValueVector style_value_vector =
-      ParseCSSStyleValue(property_name, value, exception_state);
+  CSSStyleValueVector style_value_vector = ParseCSSStyleValue(
+      execution_context, property_name, value, exception_state);
   if (style_value_vector.IsEmpty())
     return nullptr;
 

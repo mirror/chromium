@@ -15,6 +15,7 @@
 namespace blink {
 
 class ExceptionState;
+class ExecutionContext;
 
 class CSSStyleValue;
 using CSSStyleValueVector = HeapVector<Member<CSSStyleValue>>;
@@ -50,10 +51,12 @@ class CORE_EXPORT CSSStyleValue : public ScriptWrappable {
     kInvalidType,
   };
 
-  static CSSStyleValue* parse(const String& property_name,
+  static CSSStyleValue* parse(const ExecutionContext*,
+                              const String& property_name,
                               const String& value,
                               ExceptionState&);
-  static Nullable<CSSStyleValueVector> parseAll(const String& property_name,
+  static Nullable<CSSStyleValueVector> parseAll(const ExecutionContext*,
+                                                const String& property_name,
                                                 const String& value,
                                                 ExceptionState&);
 
@@ -63,7 +66,8 @@ class CORE_EXPORT CSSStyleValue : public ScriptWrappable {
   virtual bool ContainsPercent() const { return false; }
 
   virtual const CSSValue* ToCSSValue() const = 0;
-  virtual const CSSValue* ToCSSValueWithProperty(CSSPropertyID) const {
+  virtual const CSSValue* ToCSSValueWithProperty(CSSPropertyID,
+                                                 bool is_secure_context) const {
     return ToCSSValue();
   }
   virtual String toString() const {
