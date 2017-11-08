@@ -70,6 +70,24 @@
       "revId": "7761f64552ed61aec5e6a75b20ff90be57ac7324",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "35294f08_0e88578e",
+        "filename": "third_party/WebKit/Source/core/workers/WorkletGlobalScope.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 45,
+      "author": {
+        "id": 1115976
+      },
+      "writtenOn": "2017-11-08T02:27:51Z",
+      "side": 1,
+      "message": "Chatted with kouhei@.\n\n1) Overriding the referrer policy is correct for top-level module fetch.\n2) Modulator::GetReferrerPolicy() is called for non-top-level module fetch. \n\nThis CL is necessary for 2) non-top-level module fetch. Currently, we don\u0027t have tests for the referrer policy for non-top-level module fetch. I\u0027ll include the tests in this CL.",
+      "parentUuid": "653357c7_1b26404d",
+      "revId": "7761f64552ed61aec5e6a75b20ff90be57ac7324",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
