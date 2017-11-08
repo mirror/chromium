@@ -94,7 +94,6 @@ class TestSearchProvider : public SearchProvider {
       Add(std::unique_ptr<SearchResult>(result));
     }
   }
-  void Stop() override {}
 
   void set_prefix(const std::string& prefix) { prefix_ = prefix; }
   void set_display_type(SearchResult::DisplayType display_type) {
