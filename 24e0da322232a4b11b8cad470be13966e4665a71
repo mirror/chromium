@@ -22,6 +22,30 @@
       "revId": "24e0da322232a4b11b8cad470be13966e4665a71",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "04e8f055_5ae239fe",
+        "filename": "components/patch_service/OWNERS",
+        "patchSetId": 18
+      },
+      "lineNbr": 1,
+      "author": {
+        "id": 1002246
+      },
+      "writtenOn": "2017-11-08T16:45:17Z",
+      "side": 1,
+      "message": "I added waffles@ and sorin@ as OWNERS as they are already OWNERS of chrome/browser/component_updater from where the code being servicified comes from.\nThey have already reviewed and +1\u0027ed the CL.\nAlso added the README.md.",
+      "parentUuid": "4157d41e_94ec9303",
+      "range": {
+        "startLine": 1,
+        "startChar": 22,
+        "endLine": 1,
+        "endChar": 23
+      },
+      "revId": "24e0da322232a4b11b8cad470be13966e4665a71",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
