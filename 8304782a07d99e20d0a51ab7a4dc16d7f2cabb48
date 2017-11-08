@@ -213,6 +213,30 @@
     },
     {
       "key": {
+        "uuid": "f45edf64_65eb06f3",
+        "filename": "content/test/content_browser_test_test.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 76,
+      "author": {
+        "id": 1003006
+      },
+      "writtenOn": "2017-11-08T21:58:48Z",
+      "side": 1,
+      "message": "I think my mistake was using WATCH_FOR_HOST_DESTRUCTION, which I saw in a different example. Now I\u0027ve gotten it to work, and am reuploading. It\u0027s probably worth re-reviewing.",
+      "parentUuid": "b67ac6e5_0cc06c00",
+      "range": {
+        "startLine": 76,
+        "startChar": 2,
+        "endLine": 76,
+        "endChar": 18
+      },
+      "revId": "8304782a07d99e20d0a51ab7a4dc16d7f2cabb48",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "7d9b9e60_2468d05d",
         "filename": "content/test/content_browser_test_test.cc",
         "patchSetId": 5
@@ -272,6 +296,30 @@
       "side": 1,
       "message": "Actually, I originally missed this, but this constant is (also, I guess?) defined in content/public/common/content_switches.h, so you can use it from there and shouldn\u0027t need the DEPS change.",
       "parentUuid": "db89692e_554c70e9",
+      "range": {
+        "startLine": 109,
+        "startChar": 2,
+        "endLine": 109,
+        "endChar": 46
+      },
+      "revId": "8304782a07d99e20d0a51ab7a4dc16d7f2cabb48",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "065aabae_a44ac2e9",
+        "filename": "content/test/content_browser_test_test.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 109,
+      "author": {
+        "id": 1003006
+      },
+      "writtenOn": "2017-11-08T21:58:48Z",
+      "side": 1,
+      "message": "I guess codesearch prefers the one defined in services. \u003d/ I\u0027ll use this one.",
+      "parentUuid": "b9008f5f_10ad52af",
       "range": {
         "startLine": 109,
         "startChar": 2,
