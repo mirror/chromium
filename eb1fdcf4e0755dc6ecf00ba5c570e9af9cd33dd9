@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "af735a12_26e63d11",
+        "filename": "ui/message_center/mojo/notification.mojom",
+        "patchSetId": 6
+      },
+      "lineNbr": 49,
+      "author": {
+        "id": 1116053
+      },
+      "writtenOn": "2017-11-08T17:54:55Z",
+      "side": 1,
+      "message": "did you mean RichNotificationData? optional_fields; ?",
+      "range": {
+        "startLine": 49,
+        "startChar": 2,
+        "endLine": 49,
+        "endChar": 22
+      },
+      "revId": "eb1fdcf4e0755dc6ecf00ba5c570e9af9cd33dd9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
