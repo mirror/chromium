@@ -37,8 +37,8 @@ const base::TimeDelta kClearStorageStartingDelay =
 // one.
 const base::TimeDelta kClearStorageInterval = base::TimeDelta::FromMinutes(30);
 
-void WrapInMultipleItemsCallback(const MultipleOfflineIdCallback& callback,
-                                 const MultipleOfflinePageItemResult& pages) {
+void OfflineItemsToOfflineIds(const MultipleOfflineIdCallback& callback,
+                              const MultipleOfflinePageItemResult& pages) {
   std::vector<int64_t> results;
   for (const auto& page : pages)
     results.push_back(page.offline_id);
@@ -142,15 +142,36 @@ void OfflinePageModelTaskified::MarkPageAccessed(int64_t offline_id) {
 
 void OfflinePageModelTaskified::DeletePagesByOfflineId(
     const std::vector<int64_t>& offline_ids,
-    const DeletePageCallback& callback) {}
+    const DeletePageCallback& callback) {
+  auto task = DeletePageTask::CreateTaskMatchingOfflineIds(
+      store_.get(),
+      base::BindOnce(&OfflinePageModelTaskified::OnDeleteDone,
+                     weak_ptr_factory_.GetWeakPtr(), callback),
+      offline_ids);
+  task_queue_.AddTask(std::move(task));
+}
 
 void OfflinePageModelTaskified::DeletePagesByClientIds(
     const std::vector<ClientId>& client_ids,
-    const DeletePageCallback& callback) {}
+    const DeletePageCallback& callback) {
+  auto task = DeletePageTask::CreateTaskMatchingClientIds(
+      store_.get(),
+      base::BindOnce(&OfflinePageModelTaskified::OnDeleteDone,
+                     weak_ptr_factory_.GetWeakPtr(), callback),
+      client_ids);
+  task_queue_.AddTask(std::move(task));
+}
 
 void OfflinePageModelTaskified::DeleteCachedPagesByURLPredicate(
     const UrlPredicate& predicate,
-    const DeletePageCallback& callback) {}
+    const DeletePageCallback& callback) {
+  auto task = DeletePageTask::CreateTaskMatchingUrlPredicateForCachedPages(
+      store_.get(),
+      base::BindOnce(&OfflinePageModelTaskified::OnDeleteDone,
+                     weak_ptr_factory_.GetWeakPtr(), callback),
+      policy_controller_.get(), predicate);
+  task_queue_.AddTask(std::move(task));
+}
 
 void OfflinePageModelTaskified::GetAllPages(
     const MultipleOfflinePageItemCallback& callback) {
@@ -220,7 +241,7 @@ void OfflinePageModelTaskified::GetOfflineIdsForClientId(
   // since we're not expecting many pages within one client id. But there could
   // be an alternative to implement the functionality in task level.
   auto task = GetPagesTask::CreateTaskMatchingClientIds(
-      store_.get(), base::Bind(&WrapInMultipleItemsCallback, callback),
+      store_.get(), base::Bind(&OfflineItemsToOfflineIds, callback),
       {client_id});
   task_queue_.AddTask(std::move(task));
 }
