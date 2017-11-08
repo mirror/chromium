@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "64e92649_6e97f34d",
+        "filename": "chrome/browser/ui/webui/print_preview/print_preview_handler.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 756,
+      "author": {
+        "id": 1182404
+      },
+      "writtenOn": "2017-11-08T18:11:30Z",
+      "side": 1,
+      "message": "nit (optional): s/have/has",
+      "range": {
+        "startLine": 756,
+        "startChar": 15,
+        "endLine": 756,
+        "endChar": 19
+      },
+      "revId": "479bbf70a4fe2c9ef87a929f6c5dd6e2415c82b2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
