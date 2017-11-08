@@ -22,6 +22,30 @@
       "revId": "c9474a6d826fbbc82313ef5ba9c9cc4a06f03dc0",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0712cc76_b77df5f2",
+        "filename": "base/debug/stack_trace_posix.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 782,
+      "author": {
+        "id": 1239995
+      },
+      "writtenOn": "2017-11-08T08:31:54Z",
+      "side": 1,
+      "message": "I\u0027m planning to make additional passes for operating systems other than linux, but sure I can fix it here.",
+      "parentUuid": "7b68eac8_3e05e8fe",
+      "range": {
+        "startLine": 782,
+        "startChar": 41,
+        "endLine": 782,
+        "endChar": 45
+      },
+      "revId": "c9474a6d826fbbc82313ef5ba9c9cc4a06f03dc0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
