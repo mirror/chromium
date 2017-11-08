@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "15c395cf_47693832",
+        "filename": "chrome/browser/profiles/profile_io_data.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 184,
+      "author": {
+        "id": 1000193
+      },
+      "writtenOn": "2017-11-08T20:43:43Z",
+      "side": 1,
+      "message": "Comment nit:\n\n// A CertVerifier that forwards all requests to another verifier. This is\n// used to allow Profiles to have their own\n// std::unique_ptr\u003cnet::CertVerifier\u003e while forwarding calls to the shared\n// g_cert_verifier_for_testing\n\nThat said, in writing that comment, I realized we could probably simplify the lifetime constraints even more (re: g_cert_verifier_for_testing) by\nsimply having WrappedCertVerifier check/call g_cert_verifier_for_testing directly\n\ne.g.\n\nint Verify(...) {\n  verify_result-\u003eReset();\n  if (!g_cert_verifier_for_testing)\n    return ERR_FAILED;\n  return g_cert_verifier_for_testing-\u003eVerify(...)\n}\n\nbool SupportsOCSPStapling() {\n  if (!g_cert_verifier_for_testing)\n    return false;\n  return g_cert_verifier_for_testing-\u003eSupportsOCSPStapling();\n}\n\nPlease consider the above fully optional - the main advantage is simply that the lifetime of g_cert_verifier_for_testing can now be independent of WrappedCertVerifier, while still maintaining defined behaviours.",
+      "revId": "572fe3402148b241fc30712e343f700733cfcdde",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "172fc9f9_d9fe1038",
+        "filename": "chrome/browser/profiles/profile_io_data.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 192,
+      "author": {
+        "id": 1000193
+      },
+      "writtenOn": "2017-11-08T20:43:43Z",
+      "side": 1,
+      "message": "Small pedantry: forward SupportsOCSPStapling as well from the wrapped verifier.",
+      "revId": "572fe3402148b241fc30712e343f700733cfcdde",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
