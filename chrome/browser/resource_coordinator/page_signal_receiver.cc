@@ -48,6 +48,7 @@ void PageSignalReceiver::NotifyPageAlmostIdle(const CoordinationUnitID& cu_id) {
 void PageSignalReceiver::SetExpectedTaskQueueingDuration(
     const CoordinationUnitID& cu_id,
     base::TimeDelta duration) {
+  LOG(ERROR) << "receiver - SetExpectedTaskQueueingDuration - " << duration;
   auto web_contents_iter = cu_id_web_contents_map_.find(cu_id);
   if (web_contents_iter == cu_id_web_contents_map_.end())
     return;
