@@ -387,6 +387,30 @@
       "revId": "2f5d8d3628d601b0a07f809cfadf87e02a650c24",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8f483c88_0511b4ff",
+        "filename": "content/renderer/service_worker/web_service_worker_provider_impl.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 242,
+      "author": {
+        "id": 1125915
+      },
+      "writtenOn": "2017-11-08T05:14:26Z",
+      "side": 1,
+      "message": "Ah, I didn\u0027t realize falken has already mentioned about that. \nAs Leon said, I also think we can have |provider_client_| as a member of WebSWProviderImpl. We cannot guarantee the lifetime of |provider_client_| so that |provider_client_| should be nullified at RemoveProviderClient() because there are no clear ownership between blink::SWContainer (which is WebSWProviderClient) and blink::SWContextClient (which is the owner of WebSWProviderImpl). I guess they basically should be tied with the ExecutionContext\u0027s lifecycle, but I\u0027m still not sure of that.\nSo we need to check whether |provider_client_| is null or not for every Mojo call.\n\n// Sorry I was missing that PostMessageToClients is actually a member of WebSWProviderImpl. Once |provider_client_| could be the member of it, we no longer use GetProviderClient().",
+      "parentUuid": "0c2759e7_9c8b2df9",
+      "range": {
+        "startLine": 242,
+        "startChar": 6,
+        "endLine": 242,
+        "endChar": 40
+      },
+      "revId": "2f5d8d3628d601b0a07f809cfadf87e02a650c24",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }

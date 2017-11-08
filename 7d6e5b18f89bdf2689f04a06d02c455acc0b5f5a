@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "335a5cb3_cf077a48",
+        "filename": "content/renderer/service_worker/service_worker_provider_context.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 309,
+      "author": {
+        "id": 1125915
+      },
+      "writtenOn": "2017-11-08T05:14:26Z",
+      "side": 1,
+      "message": "nit: state-\u003e\n\n// Sorry for lack of explanation...!",
+      "range": {
+        "startLine": 309,
+        "startChar": 2,
+        "endLine": 309,
+        "endChar": 19
+      },
+      "revId": "7d6e5b18f89bdf2689f04a06d02c455acc0b5f5a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5ea0cf23_710f93cc",
+        "filename": "content/renderer/service_worker/service_worker_provider_context_unittest.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 108,
+      "author": {
+        "id": 1125915
+      },
+      "writtenOn": "2017-11-08T05:14:26Z",
+      "side": 1,
+      "message": "nit: const ref since it\u0027s container",
+      "range": {
+        "startLine": 108,
+        "startChar": 2,
+        "endLine": 108,
+        "endChar": 36
+      },
+      "revId": "7d6e5b18f89bdf2689f04a06d02c455acc0b5f5a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
