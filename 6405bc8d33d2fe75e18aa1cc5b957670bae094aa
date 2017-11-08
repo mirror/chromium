@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "0af0104e_bdbebc40",
+        "filename": "pdf/out_of_process_instance.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 174,
+      "author": {
+        "id": 1241393
+      },
+      "writtenOn": "2017-11-08T21:58:24Z",
+      "side": 1,
+      "message": "It\u0027s equivalent to this: https://cs.chromium.org/chromium/src/third_party/pdfium/public/fpdf_annot.h?l\u003d20\n\nAlthough we don\u0027t anticipate new annotation types being added to the spec, it\u0027s possible it grows one day. We shouldn\u0027t add dependencies from our plugin to PDFium though, and adding a method to do it through the PDFEngine interface feels forced.",
+      "parentUuid": "14413d0c_8b61bdfa",
+      "range": {
+        "startLine": 174,
+        "startChar": 37,
+        "endLine": 174,
+        "endChar": 0
+      },
+      "revId": "6405bc8d33d2fe75e18aa1cc5b957670bae094aa",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "571fb539_397085ea",
         "filename": "tools/metrics/histograms/enums.xml",
         "patchSetId": 4
@@ -45,6 +69,30 @@
       "revId": "6405bc8d33d2fe75e18aa1cc5b957670bae094aa",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6f416fbe_d6e4a1d2",
+        "filename": "tools/metrics/histograms/enums.xml",
+        "patchSetId": 4
+      },
+      "lineNbr": 4705,
+      "author": {
+        "id": 1241393
+      },
+      "writtenOn": "2017-11-08T21:58:24Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "571fb539_397085ea",
+      "range": {
+        "startLine": 4705,
+        "startChar": 32,
+        "endLine": 4705,
+        "endChar": 43
+      },
+      "revId": "6405bc8d33d2fe75e18aa1cc5b957670bae094aa",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
