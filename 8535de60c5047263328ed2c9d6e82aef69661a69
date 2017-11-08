@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "dd6b80d4_e8da5682",
+        "filename": "content/renderer/device_sensors/device_sensor_event_pump.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 120,
+      "author": {
+        "id": 1113896
+      },
+      "writtenOn": "2017-11-08T23:47:43Z",
+      "side": 0,
+      "message": "It was removed intentionally as |sensor| is now bound by this line as opposed to expecting to be bound before this call.",
+      "parentUuid": "fe55dfbe_6e9a0fa6",
+      "revId": "8535de60c5047263328ed2c9d6e82aef69661a69",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "ac5d1f16_12e95450",
         "filename": "services/device/generic_sensor/sensor_provider_impl.cc",
         "patchSetId": 2
@@ -33,6 +51,24 @@
       "revId": "8535de60c5047263328ed2c9d6e82aef69661a69",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "dd3d180d_5dcb722c",
+        "filename": "services/device/generic_sensor/sensor_provider_impl.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 31,
+      "author": {
+        "id": 1113896
+      },
+      "writtenOn": "2017-11-08T23:47:43Z",
+      "side": 0,
+      "message": "I don\u0027t think it was ever necessary. As the callback is a Mojo reply callback it will always result in code executing asynchronously so there is no concern about callbacks triggering unintended reentrancy.",
+      "parentUuid": "ac5d1f16_12e95450",
+      "revId": "8535de60c5047263328ed2c9d6e82aef69661a69",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
