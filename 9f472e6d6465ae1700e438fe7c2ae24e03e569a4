@@ -22,6 +22,30 @@
       "revId": "9f472e6d6465ae1700e438fe7c2ae24e03e569a4",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "84e8548d_d3696c4f",
+        "filename": "content/public/common/network_connection_tracker.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 76,
+      "author": {
+        "id": 1120845
+      },
+      "writtenOn": "2017-11-08T12:26:28Z",
+      "side": 1,
+      "message": "We can, but some classes do have not WeakPtrFactory (e.g. chrome_signin_client). I am a little concerned of adding WeakPtrFactory to those classes just for GetConnectionType()\u0027s use. Will that lead to abuse of weak ptr when lifetime is clear? If you think that\u0027s fine, I can do that too.",
+      "parentUuid": "3c5c116e_84404109",
+      "range": {
+        "startLine": 76,
+        "startChar": 25,
+        "endLine": 76,
+        "endChar": 26
+      },
+      "revId": "9f472e6d6465ae1700e438fe7c2ae24e03e569a4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
