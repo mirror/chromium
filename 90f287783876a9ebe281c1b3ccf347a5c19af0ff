@@ -1,0 +1,188 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "7d340711_647b9d2f",
+        "filename": "content/renderer/media_capture_from_element/canvas_capture_handler.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 98,
+      "author": {
+        "id": 1002076
+      },
+      "writtenOn": "2017-11-08T03:23:50Z",
+      "side": 1,
+      "message": "Pass these by value too. (See comment for SendFrame() in header file.)",
+      "range": {
+        "startLine": 98,
+        "startChar": 31,
+        "endLine": 98,
+        "endChar": 40
+      },
+      "revId": "90f287783876a9ebe281c1b3ccf347a5c19af0ff",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0041a17d_de42ace1",
+        "filename": "content/renderer/media_capture_from_element/canvas_capture_handler.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 175,
+      "author": {
+        "id": 1002076
+      },
+      "writtenOn": "2017-11-08T03:23:50Z",
+      "side": 1,
+      "message": "s/block main/block the main/",
+      "range": {
+        "startLine": 175,
+        "startChar": 62,
+        "endLine": 175,
+        "endChar": 72
+      },
+      "revId": "90f287783876a9ebe281c1b3ccf347a5c19af0ff",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1ca598eb_1bbd03d5",
+        "filename": "content/renderer/media_capture_from_element/canvas_capture_handler.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 258,
+      "author": {
+        "id": 1002076
+      },
+      "writtenOn": "2017-11-08T03:23:50Z",
+      "side": 1,
+      "message": "This should be moved up to the top of this method since you\u0027re reading pixels that were rendered before this method was called. (Some significant time may elapse during image-\u003ereadPixels(), for example.)",
+      "range": {
+        "startLine": 258,
+        "startChar": 0,
+        "endLine": 258,
+        "endChar": 59
+      },
+      "revId": "90f287783876a9ebe281c1b3ccf347a5c19af0ff",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6b0cf627_5e664bec",
+        "filename": "content/renderer/media_capture_from_element/canvas_capture_handler.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 302,
+      "author": {
+        "id": 1002076
+      },
+      "writtenOn": "2017-11-08T03:23:50Z",
+      "side": 1,
+      "message": "For the other code paths, you just set base::TimeDelta() here. Seems that the VideoFrame::timestamp should be consistent, regardless of code paths used.\n\nI\u0027d suggest setting it at the common endpoint, in SendFrame().\n\nAlso, the VideoFrame timestamps are relative media stream timestamps. Meaning, the first frame usually has a TimeDelta of zero, and the following frames have relatively increasing deltas from there. Often, for real-time capture cases, folks will map TimeTicks to the video frame TimeDeltas by saving the first frame\u0027s TimeTicks value:\n\n  // in header file:\n  base::Optional\u003cbase::TimeTicks\u003e first_frame_ticks_;\n\n  // in SendFrame() in .cc file:\n  if (!first_frame_ticks_)\n    first_frame_ticks_ \u003d this_frame_ticks;\n  video_frame-\u003eset_timestamp(this_frame_ticks - *first_frame_ticks_);",
+      "range": {
+        "startLine": 302,
+        "startChar": 6,
+        "endLine": 302,
+        "endChar": 35
+      },
+      "revId": "90f287783876a9ebe281c1b3ccf347a5c19af0ff",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "034e5ce2_c94fa02e",
+        "filename": "content/renderer/media_capture_from_element/canvas_capture_handler.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 317,
+      "author": {
+        "id": 1002076
+      },
+      "writtenOn": "2017-11-08T03:23:50Z",
+      "side": 1,
+      "message": "This should be cached. It\u0027s actually rather expensive to create and tear-down this for every frame (because, internally, it caches intermediate textures, framebuffers, and other GL objects). However, I leave it up to you whether you want to do that in this CL or a future one.\n\nThe issue with caching is that you have to know to delete the ReadbackYUVInterface whenever the context is lost because it internally caches a raw pointer to the GLHelper. (A bit brittle, I know. This is old code refactored and moved around by a bunch of different people over the years, which led to its current state.) You\u0027ll probably need to add an observer to |context_provider| to notify this class when the context is lost (or the GLHelper is destroyed) so you can delete the ReadbackYUVInterface.\n\nAlternatively, and perhaps a much simpler solution might be to just fix the ReadbackYUVInterface class so that it internally holds a WeakPtr to the GLHelper instead of a raw pointer. Then, add a ReadbackYUVInterface::IsValid() method like:\n\n  bool ReadbackYUVInterface::IsValid() const {\n    return !!weak_gl_helper_pointer_;\n  }\n\nThen, here, you can just do something simple like:\n\n  if (!yuv_reader_ || !yuv_reader_-\u003eIsValid()) {\n    ...recreate a new one from the new GLHelper...\n  } else {\n    // Use the existing one. Good to go!\n  }",
+      "range": {
+        "startLine": 315,
+        "startChar": 0,
+        "endLine": 317,
+        "endChar": 74
+      },
+      "revId": "90f287783876a9ebe281c1b3ccf347a5c19af0ff",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7d83e0ce_dfb2aadb",
+        "filename": "content/renderer/media_capture_from_element/canvas_capture_handler.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 341,
+      "author": {
+        "id": 1002076
+      },
+      "writtenOn": "2017-11-08T03:23:50Z",
+      "side": 1,
+      "message": "For more accuracy, I suggest calling TimeTicks::Now() in ReadARGBPixelsAsync(), and then pass the value as an argument to this callback.",
+      "range": {
+        "startLine": 341,
+        "startChar": 0,
+        "endLine": 341,
+        "endChar": 59
+      },
+      "revId": "90f287783876a9ebe281c1b3ccf347a5c19af0ff",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "78013844_4023b4da",
+        "filename": "content/renderer/media_capture_from_element/canvas_capture_handler.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 361,
+      "author": {
+        "id": 1002076
+      },
+      "writtenOn": "2017-11-08T03:23:50Z",
+      "side": 1,
+      "message": "Time accuracy issue here too. (Now() is much later than the actual frame timestamp...Possibly dozens of milliseconds for the GPU readback cases.)",
+      "range": {
+        "startLine": 361,
+        "startChar": 23,
+        "endLine": 361,
+        "endChar": 45
+      },
+      "revId": "90f287783876a9ebe281c1b3ccf347a5c19af0ff",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9bdc27ab_05dc61d1",
+        "filename": "content/renderer/media_capture_from_element/canvas_capture_handler.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 440,
+      "author": {
+        "id": 1002076
+      },
+      "writtenOn": "2017-11-08T03:23:50Z",
+      "side": 1,
+      "message": "std::move(video_frame) here, once you change the args to this method.",
+      "range": {
+        "startLine": 440,
+        "startChar": 57,
+        "endLine": 440,
+        "endChar": 68
+      },
+      "revId": "90f287783876a9ebe281c1b3ccf347a5c19af0ff",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}

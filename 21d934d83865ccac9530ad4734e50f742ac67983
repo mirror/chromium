@@ -49,6 +49,29 @@
     },
     {
       "key": {
+        "uuid": "064e1b23_8d9f531e",
+        "filename": "content/renderer/media_capture_from_element/canvas_capture_handler.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 105,
+      "author": {
+        "id": 1002076
+      },
+      "writtenOn": "2017-11-08T03:23:50Z",
+      "side": 1,
+      "message": "nit: Both these args should be passed by value, per current style guidelines:\n\n  void SendFrame(scoped_refptr\u003cmedia::VideoFrame\u003e video_frame,\n                 base::TimeTicks current_time);\n\nNote that, in all cases, you are already providing an rvalue video_frame argument in all your calls to SendFrame(). So, there shouldn\u0027t be any extra ref-count thrashing.",
+      "range": {
+        "startLine": 104,
+        "startChar": 17,
+        "endLine": 105,
+        "endChar": 52
+      },
+      "revId": "21d934d83865ccac9530ad4734e50f742ac67983",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "01092647_8dbbc263",
         "filename": "content/renderer/webgraphicscontext3d_provider_impl.cc",
         "patchSetId": 5
@@ -131,6 +154,29 @@
       "side": 1,
       "message": "provider_ is not nulled, neither is gl_helper_.",
       "parentUuid": "2af16909_08145973",
+      "revId": "21d934d83865ccac9530ad4734e50f742ac67983",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "08d5af84_089901e9",
+        "filename": "content/test/data/media/canvas_capture_color.html",
+        "patchSetId": 5
+      },
+      "lineNbr": 189,
+      "author": {
+        "id": 1002076
+      },
+      "writtenOn": "2017-11-08T03:23:50Z",
+      "side": 1,
+      "message": "nit (simpler promise chain structure, fewer LOC): How about:\n\n  doCanvasCaptureAndCheckRgba(contextType, RED)\n      .then(function() {\n        window.internals.loseSharedGraphicsContext3D();\n        // For the canvas to realize its Graphics context was lost we must try\n        // to use the contents of the canvas.\n        var imageData \u003d canvas.getContext(contextType).getImageData(0, 0, 1, 1);\n        return draw(canvas, contextType, GREEN)\n            .then(doCanvasCaptureAndCheckRgba.bind(contextType, BLUE));\n      })\n      .then(function() {\n        window.domAutomationController.send(\u0027OK\u0027);\n      }, function(err) {\n        window.domAutomationController.send(err);\n      });",
+      "range": {
+        "startLine": 167,
+        "startChar": 0,
+        "endLine": 189,
+        "endChar": 9
+      },
       "revId": "21d934d83865ccac9530ad4734e50f742ac67983",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
