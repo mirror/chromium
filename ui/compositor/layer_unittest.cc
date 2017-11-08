@@ -25,8 +25,8 @@
 #include "base/trace_event/trace_event.h"
 #include "cc/animation/animation_events.h"
 #include "cc/animation/animation_host.h"
-#include "cc/animation/animation_player.h"
 #include "cc/animation/animation_ticker.h"
+#include "cc/animation/single_animation_player.h"
 #include "cc/layers/layer.h"
 #include "cc/test/pixel_test_utils.h"
 #include "components/viz/common/frame_sinks/copy_output_request.h"
@@ -1972,7 +1972,9 @@ TEST_F(LayerWithRealCompositorTest, AddRemoveThreadedAnimations) {
   EXPECT_TRUE(player1->has_any_animation());
 
   root->Add(l1.get());
+  LOG(ERROR) << "setting";
   GetCompositor()->SetRootLayer(root.get());
+  LOG(ERROR) << "set";
 
   // Now l1 is part of a tree.
   EXPECT_TRUE(player1->has_any_animation());

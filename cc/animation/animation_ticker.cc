@@ -16,8 +16,12 @@
 
 namespace cc {
 
-AnimationTicker::AnimationTicker(AnimationPlayer* animation_player)
+AnimationTicker::AnimationTicker(AnimationPlayer* animation_player,
+                                 int id,
+                                 ElementId element_id)
     : animation_player_(animation_player),
+      id_(id),
+      element_id_(element_id),
       element_animations_(),
       needs_to_start_animations_(false),
       scroll_offset_animation_was_interrupted_(false),

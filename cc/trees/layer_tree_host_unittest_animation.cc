@@ -11,12 +11,12 @@
 #include "cc/animation/animation_curve.h"
 #include "cc/animation/animation_host.h"
 #include "cc/animation/animation_id_provider.h"
-#include "cc/animation/animation_player.h"
 #include "cc/animation/animation_ticker.h"
 #include "cc/animation/animation_timeline.h"
 #include "cc/animation/element_animations.h"
 #include "cc/animation/scroll_offset_animation_curve.h"
 #include "cc/animation/scroll_offset_animations.h"
+#include "cc/animation/single_animation_player.h"
 #include "cc/animation/timing_function.h"
 #include "cc/animation/transform_operations.h"
 #include "cc/base/completion_event.h"
@@ -40,8 +40,8 @@ class LayerTreeHostAnimationTest : public LayerTreeTest {
         player_id_(AnimationIdProvider::NextPlayerId()),
         player_child_id_(AnimationIdProvider::NextPlayerId()) {
     timeline_ = AnimationTimeline::Create(timeline_id_);
-    player_ = AnimationPlayer::Create(player_id_);
-    player_child_ = AnimationPlayer::Create(player_child_id_);
+    player_ = SingleAnimationPlayer::Create(player_id_);
+    player_child_ = SingleAnimationPlayer::Create(player_child_id_);
 
     player_->set_animation_delegate(this);
   }
@@ -70,8 +70,8 @@ class LayerTreeHostAnimationTest : public LayerTreeTest {
 
  protected:
   scoped_refptr<AnimationTimeline> timeline_;
-  scoped_refptr<AnimationPlayer> player_;
-  scoped_refptr<AnimationPlayer> player_child_;
+  scoped_refptr<SingleAnimationPlayer> player_;
+  scoped_refptr<SingleAnimationPlayer> player_child_;
 
   scoped_refptr<AnimationTimeline> timeline_impl_;
   scoped_refptr<AnimationPlayer> player_impl_;
@@ -477,7 +477,7 @@ class LayerTreeHostAnimationTestTransformAnimationNotifiesClient
         FROM_HERE,
         base::BindOnce(
             base::IgnoreResult(
-                static_cast<int (*)(AnimationPlayer*, double, int, int)>(
+                static_cast<int (*)(SingleAnimationPlayer*, double, int, int)>(
                     &AddAnimatedTransformToPlayer)),
             base::Unretained(player_.get()), 0.0, 2, 2));
     EXPECT_CALL(layer_client_, DidChangeLayerTransform());
@@ -1862,7 +1862,7 @@ SINGLE_AND_MULTI_THREAD_TEST_F(
 
 // Check that transform sync happens correctly at commit when we remove and add
 // a different animation player to an element.
-class LayerTreeHostAnimationTestChangeAnimationPlayer
+class LayerTreeHostAnimationTestChangeSingleAnimationPlayer
     : public LayerTreeHostAnimationTest {
  public:
   void SetupTree() override {
@@ -1920,7 +1920,8 @@ class LayerTreeHostAnimationTestChangeAnimationPlayer
   void AfterTest() override {}
 };
 
-SINGLE_AND_MULTI_THREAD_TEST_F(LayerTreeHostAnimationTestChangeAnimationPlayer);
+SINGLE_AND_MULTI_THREAD_TEST_F(
+    LayerTreeHostAnimationTestChangeSingleAnimationPlayer);
 
 // Check that SetTransformIsPotentiallyAnimatingChanged is called
 // if we destroy ElementAnimations.
@@ -2004,7 +2005,8 @@ class LayerTreeHostAnimationTestSetPotentiallyAnimatingOnLacDestruction
 MULTI_THREAD_TEST_F(
     LayerTreeHostAnimationTestSetPotentiallyAnimatingOnLacDestruction);
 
-// Check that we invalidate property trees on AnimationPlayer::SetNeedsCommit.
+// Check that we invalidate property trees on
+// SingleAnimationPlayer::SetNeedsCommit.
 class LayerTreeHostAnimationTestRebuildPropertyTreesOnAnimationSetNeedsCommit
     : public LayerTreeHostAnimationTest {
  public:
