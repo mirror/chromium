@@ -7,9 +7,11 @@
 #include <memory>
 #include <set>
 #include <utility>
+#import <WebKit/WebKit.h>
 
 #include "base/bind.h"
 #include "base/callback.h"
+#include "base/ios/ios_util.h"
 #include "base/logging.h"
 #include "base/memory/ptr_util.h"
 #include "base/sequenced_task_runner.h"
@@ -31,6 +33,7 @@
 #include "ios/chrome/browser/pref_names.h"
 #include "ios/net/cookies/cookie_store_ios.h"
 #include "ios/web/public/web_thread.h"
+#include "ios/web/web_state/ui/wk_web_view_configuration_provider.h"
 #include "net/base/cache_type.h"
 #include "net/cookies/cookie_store.h"
 #include "net/extras/sqlite/sqlite_channel_id_store.h"
@@ -41,6 +44,7 @@
 #include "net/ssl/default_channel_id_store.h"
 #include "net/url_request/url_request_intercepting_job_factory.h"
 #include "net/url_request/url_request_job_factory_impl.h"
+
 
 #if !defined(__has_feature) || !__has_feature(objc_arc)
 #error "This file requires ARC support."
@@ -78,6 +82,13 @@ void ChromeBrowserStateImplIOData::Handle::Init(
   lazy_params->channel_id_path = channel_id_path;
   lazy_params->cache_path = cache_path;
   lazy_params->cache_max_size = cache_max_size;
+    if(base::ios::IsRunningOnIOS11OrLater()) {
+        web::WKWebViewConfigurationProvider& config = web::WKWebViewConfigurationProvider::FromBrowserState(browser_state_);
+         if (@available(iOS 11.0, *))
+             {
+                 lazy_params->wk_cookie_store = config.GetWebViewConfiguration().websiteDataStore.httpCookieStore;
+             }
+    }
   io_data_->lazy_params_.reset(lazy_params);
 
   // Keep track of profile path and cache sizes separately so we can use them
