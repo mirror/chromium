@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "236a660e_62511613",
+        "filename": "testing/buildbot/chromium.chromiumos.json",
+        "patchSetId": 1
+      },
+      "lineNbr": 183,
+      "author": {
+        "id": 1109584
+      },
+      "writtenOn": "2017-11-08T18:55:49Z",
+      "side": 1,
+      "message": "I was basing this on the previous --mus work we had done. Such as browser_tests.\n\nI could switch this to match the base content_browsertests if you feel that is more appropriate.",
+      "parentUuid": "7ec125d8_adf1899c",
+      "range": {
+        "startLine": 179,
+        "startChar": 8,
+        "endLine": 183,
+        "endChar": 10
+      },
+      "revId": "dc059c1f3c613fc0d5fe43067542e6b7fd51fdd0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "1fc81153_2b484c41",
         "filename": "testing/buildbot/filters/viz.content_browsertests.filter",
         "patchSetId": 1
@@ -36,6 +60,30 @@
       "writtenOn": "2017-11-08T18:51:17Z",
       "side": 1,
       "message": "If you can, I encourage you to have pointers to bugs for the sets of failures.",
+      "range": {
+        "startLine": 1,
+        "startChar": 2,
+        "endLine": 30,
+        "endChar": 24
+      },
+      "revId": "dc059c1f3c613fc0d5fe43067542e6b7fd51fdd0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a6afd545_77fda4e1",
+        "filename": "testing/buildbot/filters/viz.content_browsertests.filter",
+        "patchSetId": 1
+      },
+      "lineNbr": 30,
+      "author": {
+        "id": 1109584
+      },
+      "writtenOn": "2017-11-08T18:55:49Z",
+      "side": 1,
+      "message": "We currently have a master bug crbug.com/760181 so I\u0027ll see if I can get more fine grained bugs for each of these.",
+      "parentUuid": "1fc81153_2b484c41",
       "range": {
         "startLine": 1,
         "startChar": 2,
