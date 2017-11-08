@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "cccc2ff2_dca41520",
+        "filename": "third_party/WebKit/Source/core/workers/WorkerThread.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 173,
+      "author": {
+        "id": 1115976
+      },
+      "writtenOn": "2017-11-08T11:43:08Z",
+      "side": 1,
+      "message": "Can you add a comment like \"// Can be called on both the main thread and the worker thread.\"?",
+      "revId": "568d1f5c9e33500ebac2bb14c6226f5563d25cdf",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
