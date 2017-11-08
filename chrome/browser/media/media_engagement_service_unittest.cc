@@ -245,7 +245,7 @@ TEST_F(MediaEngagementServiceTest, RestrictedToHTTPAndHTTPS) {
 }
 
 TEST_F(MediaEngagementServiceTest,
-       HandleRecordVisitAndPlaybackAndAdvanceClockion) {
+       HandleRecordVisitAndPlaybackAndAdvanceClock) {
   GURL url1("https://www.google.com");
   ExpectScores(url1, 0.0, 0, 0, TimeNotSet());
   RecordVisitAndPlaybackAndAdvanceClock(url1);

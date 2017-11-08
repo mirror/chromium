@@ -273,6 +273,7 @@ void MediaEngagementService::RecordPlayback(const GURL& url) {
 
   MediaEngagementScore score = CreateEngagementScore(url);
   score.IncrementMediaPlaybacks();
+  score.set_last_media_playback_time(clock_->Now());
   score.Commit();
 }
 

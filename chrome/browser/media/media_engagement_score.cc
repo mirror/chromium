@@ -143,11 +143,6 @@ void MediaEngagementScore::Commit() {
       content_settings::ResourceIdentifier(), std::move(score_dict_));
 }
 
-void MediaEngagementScore::IncrementMediaPlaybacks() {
-  SetMediaPlaybacks(media_playbacks() + 1);
-  last_media_playback_time_ = clock_->Now();
-}
-
 bool MediaEngagementScore::UpdateScoreDict() {
   int stored_visits = 0;
   int stored_media_playbacks = 0;

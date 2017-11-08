@@ -87,6 +87,8 @@ class MediaEngagementScoreTest : public ChromeRenderViewHostTestHarness {
     score->IncrementAudiblePlaybacks(1);
     score->IncrementSignificantPlaybacks(1);
     score->IncrementVisitsWithMediaTag();
+
+    score->set_last_media_playback_time(test_clock.Now());
   }
 
   void TestScoreInitializesAndUpdates(
