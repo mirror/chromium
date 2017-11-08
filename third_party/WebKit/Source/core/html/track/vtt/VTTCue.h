@@ -101,8 +101,14 @@ class VTTCue final : public TextTrackCue {
   void line(DoubleOrAutoKeyword&) const;
   void setLine(const DoubleOrAutoKeyword&);
 
+  const String& lineAlign() const;
+  void setLineAlign(const String&);
+
   void position(DoubleOrAutoKeyword&) const;
   void setPosition(const DoubleOrAutoKeyword&, ExceptionState&);
+
+  const String& positionAlign() const;
+  void setPositionAlign(const String&);
 
   double size() const { return cue_size_; }
   void setSize(double, ExceptionState&);
@@ -136,7 +142,7 @@ class VTTCue final : public TextTrackCue {
   };
   WritingDirection GetWritingDirection() const { return writing_direction_; }
 
-  enum CueAlignment {
+  enum TextAlignment {
     kStart = 0,
     kCenter,
     kEnd,
@@ -144,7 +150,24 @@ class VTTCue final : public TextTrackCue {
     kRight,
     kNumberOfAlignments
   };
-  CueAlignment GetCueAlignment() const { return cue_alignment_; }
+  TextAlignment GetTextAlignment() const { return text_alignment_; }
+
+  enum LineAlignment {
+    kLineStart = 0,
+    kLineCenter,
+    kLineEnd,
+    kNumberOfLineAlignments
+  };
+  LineAlignment GetLineAlignment() const { return line_alignment_; }
+
+  enum PositionAlignment {
+    kPositionLineLeft = 0,
+    kPositionCenter,
+    kPositionLineRight,
+    kPositionAuto,
+    kNumberOfPositionAlignments
+  };
+  PositionAlignment GetPositionAlignment() const { return position_alignment_; }
 
   ExecutionContext* GetExecutionContext() const override;
 
@@ -171,7 +194,9 @@ class VTTCue final : public TextTrackCue {
 
   VTTDisplayParameters CalculateDisplayParameters() const;
   float CalculateComputedTextPosition() const;
-  CueAlignment CalculateComputedCueAlignment() const;
+  LineAlignment CalculateComputedLineAlignment() const;
+  PositionAlignment CalculateComputedPositionAlignment(
+      CSSValueID direction) const;
 
   enum CueSetting {
     kNone,
@@ -189,7 +214,9 @@ class VTTCue final : public TextTrackCue {
   float text_position_;
   float cue_size_;
   WritingDirection writing_direction_;
-  CueAlignment cue_alignment_;
+  LineAlignment line_alignment_;
+  PositionAlignment position_alignment_;
+  TextAlignment text_alignment_;
 
   Member<VTTRegion> region_;
   Member<DocumentFragment> vtt_node_tree_;
