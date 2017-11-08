@@ -143,6 +143,24 @@
     },
     {
       "key": {
+        "uuid": "ae294d18_2bd33a3a",
+        "filename": "third_party/WebKit/Source/platform/network/FormDataEncoder.cpp",
+        "patchSetId": 2
+      },
+      "lineNbr": 168,
+      "author": {
+        "id": 1204072
+      },
+      "writtenOn": "2017-11-08T02:18:24Z",
+      "side": 1,
+      "message": "Reading a bit more closely, I think the language in https://tools.ietf.org/html/rfc7578#section-5.1.2 accurately describes Chrome\u0027s behavior both before and after this change.\n\nThe part the RFC does not address and which this change is concerned with is how to escape, encode, or replace characters in file names that are not representable in the form-charset once a particular form-charset has been chosen. The older inapplicable-to-HTML character encoding methods mentioned in the RFC (they would be web-breaking BTW which is why we do not implement them, and instead submit \"raw\" data in the form-charset) are instead concerned with representing non-ASCII characters from the form-charset in US-ASCII.\n\nI have added a chromestatus entry https://www.chromestatus.com/features/5634575908732928 and started a blink-dev thread https://groups.google.com/a/chromium.org/d/msg/blink-dev/T11QWD2Jyyo/3oS5gCxYAQAJ at your suggestion.",
+      "parentUuid": "38c785b4_d84569ae",
+      "revId": "e52089f463e12c914b4bd2a8989730c47348c2ab",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "1a1f6f9a_b205df44",
         "filename": "third_party/WebKit/Source/platform/network/FormDataEncoder.cpp",
         "patchSetId": 2
