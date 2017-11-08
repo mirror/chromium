@@ -48,6 +48,30 @@
     },
     {
       "key": {
+        "uuid": "c7cf05ba_559d880f",
+        "filename": "components/autofill/ios/browser/autofill_client_ios.h",
+        "patchSetId": 8
+      },
+      "lineNbr": 95,
+      "author": {
+        "id": 1123009
+      },
+      "writtenOn": "2017-11-08T17:29:46Z",
+      "side": 1,
+      "message": "Good catch. Protected members only allowed in unit tests, iOS does not have exceptions.",
+      "parentUuid": "74453b85_1449eb00",
+      "range": {
+        "startLine": 95,
+        "startChar": 17,
+        "endLine": 95,
+        "endChar": 27
+      },
+      "revId": "6d2abda5c6be3b851779fbdaa009bfb91ac39a50",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "1fc1d1ce_69fe1142",
         "filename": "components/autofill/ios/browser/autofill_driver_ios.mm",
         "patchSetId": 8
