@@ -16,6 +16,74 @@
       "revId": "fdbe21469f4a8f9cf72895fc567106b409a57fd3",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8225faa4_aed192df",
+        "filename": "content/browser/loader/navigation_url_loader_network_service.cc",
+        "patchSetId": 12
+      },
+      "lineNbr": 630,
+      "author": {
+        "id": 1001168
+      },
+      "writtenOn": "2017-11-08T03:26:57Z",
+      "side": 1,
+      "message": "Is it infeasible to fix this? Null for testing always makes me sad.",
+      "revId": "fdbe21469f4a8f9cf72895fc567106b409a57fd3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "73754ee8_a0983a99",
+        "filename": "extensions/browser/extension_protocols.cc",
+        "patchSetId": 12
+      },
+      "lineNbr": 455,
+      "author": {
+        "id": 1001168
+      },
+      "writtenOn": "2017-11-08T03:26:57Z",
+      "side": 1,
+      "message": "It seems like this can be legitimately hit for a disabled extension: is it still worth logging a warning in that case?",
+      "revId": "fdbe21469f4a8f9cf72895fc567106b409a57fd3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ad8c181d_44682aad",
+        "filename": "extensions/browser/extension_protocols.cc",
+        "patchSetId": 12
+      },
+      "lineNbr": 883,
+      "author": {
+        "id": 1001168
+      },
+      "writtenOn": "2017-11-08T03:26:57Z",
+      "side": 1,
+      "message": "I might be missing something, but I\u0027m not understanding the \u0027maybe\u0027 at the moment (I guess this is because that might be true once the TODO is implemented?)",
+      "revId": "fdbe21469f4a8f9cf72895fc567106b409a57fd3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "917cc29c_22346300",
+        "filename": "extensions/browser/extension_protocols.cc",
+        "patchSetId": 12
+      },
+      "lineNbr": 894,
+      "author": {
+        "id": 1001168
+      },
+      "writtenOn": "2017-11-08T03:26:57Z",
+      "side": 1,
+      "message": "How does this work for web accessible resources? It seems like we could have a non-extension frame_url, no content scripts, and yet still refer to an extension subresource that\u0027s web accessible.",
+      "revId": "fdbe21469f4a8f9cf72895fc567106b409a57fd3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
