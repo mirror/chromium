@@ -747,6 +747,14 @@ class CONTENT_EXPORT ContentBrowserClient {
       const std::string& interface_name,
       mojo::ScopedMessagePipeHandle* interface_pipe) {}
 
+  // Asks the embedder to bind an interface request for |interface_name| to
+  // |interface_pipe|, targeted at its service instance created by
+  // |renderer_identity|'s service factory.
+  virtual void BindEmbedderInterface(
+      const service_manager::Identity& renderer_identity,
+      const std::string& interface_name,
+      mojo::ScopedMessagePipeHandle interface_pipe) {}
+
   using StaticServiceMap =
       std::map<std::string, service_manager::EmbeddedServiceInfo>;
 

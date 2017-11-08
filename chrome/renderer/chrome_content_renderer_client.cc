@@ -47,6 +47,7 @@
 #include "chrome/renderer/chrome_render_frame_observer.h"
 #include "chrome/renderer/chrome_render_thread_observer.h"
 #include "chrome/renderer/chrome_render_view_observer.h"
+#include "chrome/renderer/chrome_renderer_service.h"
 #include "chrome/renderer/content_settings_observer.h"
 #include "chrome/renderer/loadtimes_extension_bindings.h"
 #include "chrome/renderer/net/net_error_helper.h"
@@ -444,7 +445,7 @@ void ChromeContentRendererClient::RenderThreadStarted() {
   // ChromeRenderViewTest::SetUp() creates a Spellcheck and injects it using
   // SetSpellcheck(). Don't overwrite it.
   if (!spellcheck_) {
-    spellcheck_.reset(new SpellCheck(this));
+    spellcheck_.reset(new SpellCheck(&registry_, this));
     thread->AddObserver(spellcheck_.get());
   }
 #endif
@@ -1710,4 +1711,12 @@ bool ChromeContentRendererClient::OverrideLegacySymantecCertConsoleMessage(
       "more information.",
       url::Origin::Create(url).Serialize().c_str(), in_future_string);
   return true;
+}
+
+void ChromeContentRendererClient::RegisterServices(StaticServiceMap* services) {
+  service_manager::EmbeddedServiceInfo chrome_renderer_service_info;
+  chrome_renderer_service_info.factory =
+      base::Bind(&ChromeRendererService::Create, base::Unretained(&registry_));
+  services->emplace(chrome::mojom::kRendererServiceName,
+                    chrome_renderer_service_info);
 }
