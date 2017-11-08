@@ -16,6 +16,24 @@
       "revId": "eab413e8c1abeef7a5602537835fa3a178191b26",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6e17fbd8_9353b462",
+        "filename": "third_party/WebKit/Source/devtools/front_end/common/ParsedURL.js",
+        "patchSetId": 1
+      },
+      "lineNbr": 156,
+      "author": {
+        "id": 1148840
+      },
+      "writtenOn": "2017-11-08T01:49:56Z",
+      "side": 1,
+      "message": "Windows uses backslashes.",
+      "parentUuid": "d401a887_3553bf8b",
+      "revId": "eab413e8c1abeef7a5602537835fa3a178191b26",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
