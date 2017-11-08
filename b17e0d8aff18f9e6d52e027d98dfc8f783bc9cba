@@ -55,6 +55,24 @@
     },
     {
       "key": {
+        "uuid": "254c30ec_567b73cb",
+        "filename": "chrome/browser/notifications/notification_platform_bridge_win.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 342,
+      "author": {
+        "id": 1002500
+      },
+      "writtenOn": "2017-11-08T14:27:42Z",
+      "side": 1,
+      "message": "I\u0027m confused... Did you mean for this comment to be on the thread below this one? If so, my reply would be that the code has been updated and the smart pointer in question no longer exists. I don\u0027t think we need to do anything more there...",
+      "parentUuid": "dc3f672a_8a6deb95",
+      "revId": "b17e0d8aff18f9e6d52e027d98dfc8f783bc9cba",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "cbfa53b5_bea558b4",
         "filename": "chrome/browser/notifications/notification_platform_bridge_win.cc",
         "patchSetId": 4

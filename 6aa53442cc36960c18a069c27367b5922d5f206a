@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "d405803c_318f6240",
+        "filename": "chrome/browser/notifications/notification_platform_bridge_win.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 284,
+      "author": {
+        "id": 1002500
+      },
+      "writtenOn": "2017-11-08T14:27:42Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "158df891_21912160",
+      "revId": "6aa53442cc36960c18a069c27367b5922d5f206a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "abf25ac0_cb00e3fe",
         "filename": "chrome/browser/notifications/notification_platform_bridge_win.h",
         "patchSetId": 7
@@ -30,6 +48,24 @@
       "writtenOn": "2017-11-08T13:21:24Z",
       "side": 1,
       "message": "Hmm this is going to be quite a conflict when rebasing against your image CL :(",
+      "revId": "6aa53442cc36960c18a069c27367b5922d5f206a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ed0c8c4e_087c2eb3",
+        "filename": "chrome/browser/notifications/notification_platform_bridge_win.h",
+        "patchSetId": 7
+      },
+      "lineNbr": 54,
+      "author": {
+        "id": 1002500
+      },
+      "writtenOn": "2017-11-08T14:27:42Z",
+      "side": 1,
+      "message": "Fun for the whole family...",
+      "parentUuid": "abf25ac0_cb00e3fe",
       "revId": "6aa53442cc36960c18a069c27367b5922d5f206a",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -50,6 +86,24 @@
       "revId": "6aa53442cc36960c18a069c27367b5922d5f206a",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3482033c_92357f0f",
+        "filename": "chrome/browser/notifications/notification_platform_bridge_win_unittest.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 38,
+      "author": {
+        "id": 1002500
+      },
+      "writtenOn": "2017-11-08T14:27:42Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "c4ab9584_09ef5c21",
+      "revId": "6aa53442cc36960c18a069c27367b5922d5f206a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
