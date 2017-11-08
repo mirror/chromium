@@ -37,6 +37,8 @@ class APP_LIST_EXPORT SearchProvider {
 
   const Results& results() const { return results_; }
 
+  void ClearResults();
+
  protected:
   // Interface for the derived class to generate search results.
   void Add(std::unique_ptr<SearchResult> result);
@@ -45,8 +47,6 @@ class APP_LIST_EXPORT SearchProvider {
   // This is useful when multiple results will be added, and the notification is
   // desired to be done only once when all results are added.
   void SwapResults(Results* new_results);
-
-  void ClearResults();
 
  private:
   void FireResultChanged();
