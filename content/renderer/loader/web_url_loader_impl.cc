@@ -661,6 +661,8 @@ void WebURLLoaderImpl::Context::Start(const WebURLRequest& request,
   resource_request->report_raw_headers = request.ReportRawHeaders();
   resource_request->previews_state =
       static_cast<PreviewsState>(request.GetPreviewsState());
+  if (request.GetDownloadFilename().has_value())
+    resource_request->download_filename = request.GetDownloadFilename()->Utf8();
 
   // PlzNavigate: during navigation, the renderer should request a stream which
   // contains the body of the response. The network request has already been

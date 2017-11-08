@@ -122,6 +122,7 @@ ResourceRequest::ResourceRequest(CrossThreadResourceRequestData* data)
   loading_ipc_type_ = data->loading_ipc_type_;
   input_perf_metric_report_policy_ = data->input_perf_metric_report_policy_;
   redirect_status_ = data->redirect_status_;
+  download_filename_ = data->download_filename_;
 }
 
 ResourceRequest::ResourceRequest(const ResourceRequest&) = default;
@@ -173,6 +174,7 @@ std::unique_ptr<CrossThreadResourceRequestData> ResourceRequest::CopyData()
   data->loading_ipc_type_ = loading_ipc_type_;
   data->input_perf_metric_report_policy_ = input_perf_metric_report_policy_;
   data->redirect_status_ = redirect_status_;
+  data->download_filename_ = download_filename_;
   return data;
 }
 
