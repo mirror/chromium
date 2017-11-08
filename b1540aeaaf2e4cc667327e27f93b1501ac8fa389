@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "9dc8cfd4_3f14a605",
+        "filename": "third_party/WebKit/Source/core/layout/ng/ng_block_layout_algorithm_test.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 34,
+      "author": {
+        "id": 1002481
+      },
+      "writtenOn": "2017-11-08T21:37:50Z",
+      "side": 1,
+      "message": "I think we don\u0027t need this.\n\nRemoving RuntimeEnabledFeatures::SetLayoutNGFragmentCachingEnabled(false) from SetUp() is enough. That was needed because NGBlockLayoutAlgtorithmTest.Caching enabled the feature without resetting it.",
+      "revId": "b1540aeaaf2e4cc667327e27f93b1501ac8fa389",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1a8db3c7_16f8502b",
+        "filename": "third_party/WebKit/Source/core/layout/ng/ng_column_layout_algorithm_test.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 18,
+      "author": {
+        "id": 1002481
+      },
+      "writtenOn": "2017-11-08T21:37:50Z",
+      "side": 1,
+      "message": "I think we don\u0027t need this. See my comment in ng_block_layout_algorithm_test.cc.",
+      "revId": "b1540aeaaf2e4cc667327e27f93b1501ac8fa389",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
