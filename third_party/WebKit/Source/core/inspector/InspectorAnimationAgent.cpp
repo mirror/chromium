@@ -106,10 +106,9 @@ BuildObjectForAnimationEffect(KeyframeEffectReadOnly* effect,
     const KeyframeEffectModelBase* model =
         ToKeyframeEffectModelBase(effect->Model());
     // TODO(smcgruer): I'm not sure if this actually needs to be calling
-    // GetComputedOffsetsForInspector; can transition offsets be NaN?
+    // GetComputedOffsets; can transition offsets be NaN?
     Vector<double> computed_offsets =
-        KeyframeEffectModelBase::GetComputedOffsetsForInspector(
-            model->GetFrames());
+        KeyframeEffectModelBase::GetComputedOffsets(model->GetFrames());
     if (computed_offsets.size() == 3) {
       delay = computed_offsets.at(1) * duration;
       duration -= delay;
@@ -157,8 +156,7 @@ BuildObjectForAnimationKeyframes(const KeyframeEffectReadOnly* effect) {
   const KeyframeEffectModelBase* model =
       ToKeyframeEffectModelBase(effect->Model());
   Vector<double> computed_offsets =
-      KeyframeEffectModelBase::GetComputedOffsetsForInspector(
-          model->GetFrames());
+      KeyframeEffectModelBase::GetComputedOffsets(model->GetFrames());
   std::unique_ptr<protocol::Array<protocol::Animation::KeyframeStyle>>
       keyframes = protocol::Array<protocol::Animation::KeyframeStyle>::create();
 
