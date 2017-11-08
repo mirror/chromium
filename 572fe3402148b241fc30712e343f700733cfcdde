@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "6a7aa74e_669b5186",
+        "filename": "chrome/browser/profiles/profile_io_data.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 184,
+      "author": {
+        "id": 1002844
+      },
+      "writtenOn": "2017-11-08T22:12:01Z",
+      "side": 1,
+      "message": "I like it, but it does make me worry about the threading story. Right now tests call SetCertVerifierForTesting in their setup before the test starts, I assume on the main thread. Then the test would access the verifier on the IO thread. Which should be fine if the lifetime requirement is met. But if we support the profile outliving the test verifier then we probably need to be more precise about the threading requirements of calling SetCertVerifierForTesting..\n\nNow I\u0027m wondering about all the places that call mock_cert_verifier-\u003eAddResultForCert during the test, looks unsafe too..\n\n(I had already made the change before thinking about all that, so I went ahead and uploaded it, but let me know what you think.)",
+      "parentUuid": "15c395cf_47693832",
+      "revId": "572fe3402148b241fc30712e343f700733cfcdde",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "172fc9f9_d9fe1038",
         "filename": "chrome/browser/profiles/profile_io_data.cc",
         "patchSetId": 5
@@ -33,6 +51,24 @@
       "revId": "572fe3402148b241fc30712e343f700733cfcdde",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "cdef91db_9fa77428",
+        "filename": "chrome/browser/profiles/profile_io_data.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 192,
+      "author": {
+        "id": 1002844
+      },
+      "writtenOn": "2017-11-08T22:12:01Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "172fc9f9_d9fe1038",
+      "revId": "572fe3402148b241fc30712e343f700733cfcdde",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
