@@ -16,6 +16,24 @@
       "revId": "1ecc2dd563bb573d0f866e2328b7cd1a76a209dd",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "18e74341_f5d1c439",
+        "filename": "third_party/WebKit/LayoutTests/external/wpt/fetch/api/abort/general-serviceworker.https-expected.txt",
+        "patchSetId": 4
+      },
+      "lineNbr": 12,
+      "author": {
+        "id": 1002340
+      },
+      "writtenOn": "2017-11-08T13:59:58Z",
+      "side": 1,
+      "message": "Well, this test would be testing something useful if it didn\u0027t depend on AbortController, so I wouldn\u0027t call it harmless exactly. But it doesn\u0027t indicate a problem with your change.",
+      "parentUuid": "4f450496_275cc2cf",
+      "revId": "1ecc2dd563bb573d0f866e2328b7cd1a76a209dd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
