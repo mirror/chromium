@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "3dd61203_2d384123",
+        "filename": "chromeos/dbus/debug_daemon_client.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 659,
+      "author": {
+        "id": 1000169
+      },
+      "writtenOn": "2017-11-08T03:41:42Z",
+      "side": 0,
+      "message": "This CL changes the log level of D-Bus method call errors from VLOG(1) to ERROR.\nIs this OK?",
+      "revId": "8ce87be5f330036e987dbad2955779d3ac6463b9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}

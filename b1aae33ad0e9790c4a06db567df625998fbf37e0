@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "e3ac638f_74905113",
+        "filename": "chromeos/dbus/debug_daemon_client.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 99,
+      "author": {
+        "id": 1000169
+      },
+      "writtenOn": "2017-11-08T03:41:42Z",
+      "side": 1,
+      "message": "nit: This looks redundant, as VoidDBusMethodCallback is supposed to be called on an error.",
+      "range": {
+        "startLine": 99,
+        "startChar": 44,
+        "endLine": 99,
+        "endChar": 55
+      },
+      "revId": "b1aae33ad0e9790c4a06db567df625998fbf37e0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
