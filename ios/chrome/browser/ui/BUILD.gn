@@ -449,6 +449,7 @@ source_set("eg_tests") {
   testonly = true
   sources = [
     "browser_view_controller_egtest.mm",
+    "keyboard_commands_egtest.mm",
   ]
   deps = [
     ":ui",
