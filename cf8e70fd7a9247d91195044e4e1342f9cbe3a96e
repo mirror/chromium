@@ -22,6 +22,29 @@
       "revId": "cf8e70fd7a9247d91195044e4e1342f9cbe3a96e",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c2261bea_87417531",
+        "filename": "ios/third_party/material_internationalization_ios/BUILD.gn",
+        "patchSetId": 2
+      },
+      "lineNbr": 18,
+      "author": {
+        "id": 1116027
+      },
+      "writtenOn": "2017-11-08T10:39:29Z",
+      "side": 1,
+      "message": "nit: you can avoid duplication here by re-using $executable_name variable:\n\n  \"PRODUCT_BUNDLE_IDENTIFIER\u003d$ios_app_bundle_id_prefix.$chromium_bundle_id.$executable_name\",",
+      "range": {
+        "startLine": 18,
+        "startChar": 77,
+        "endLine": 18,
+        "endChar": 100
+      },
+      "revId": "cf8e70fd7a9247d91195044e4e1342f9cbe3a96e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
