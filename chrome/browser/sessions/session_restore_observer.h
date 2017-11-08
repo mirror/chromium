@@ -5,6 +5,8 @@
 #ifndef CHROME_BROWSER_SESSIONS_SESSION_RESTORE_OBSERVER_H_
 #define CHROME_BROWSER_SESSIONS_SESSION_RESTORE_OBSERVER_H_
 
+#include <stddef.h>
+
 namespace content {
 class WebContents;
 }
@@ -30,6 +32,17 @@ class SessionRestoreObserver {
   // OnWillRestoreTab() is called right after a tab is created by session
   // restore.
   virtual void OnWillRestoreTab(content::WebContents* web_contents) {}
+
+  // OnWillRestoreNumOfTabs() notifies observers the number of tabs that will be
+  // restored. It is called after all restored tabs are created, but before
+  // actually loading most of them. The exact sequence is:
+  // 1. OnSessionRestoreStartedLoadingTabs()
+  // 2. Create the 1st restored tab, which is in the foreground. Showing it will
+  //    kick off its navigation and loading.
+  // 3. Create all other restored tabs, which are backgrounded.
+  // 4. OnWillRestoreNumOfTabs(num_of_tabs)
+  // 5. Schedule loading the rest of restored tabs.
+  virtual void OnWillRestoreNumOfTabs(size_t num_of_tabs) {}
 };
 
 #endif  // CHROME_BROWSER_SESSIONS_SESSION_RESTORE_OBSERVER_H_

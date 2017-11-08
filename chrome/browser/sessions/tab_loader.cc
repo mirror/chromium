@@ -80,6 +80,7 @@ void TabLoader::RestoreTabs(const std::vector<RestoredTab>& tabs,
   if (!shared_tab_loader_)
     shared_tab_loader_ = new TabLoader(restore_started);
 
+  SessionRestore::OnWillRestoreNumOfTabs(tabs.size());
   shared_tab_loader_->stats_collector_->TrackTabs(tabs);
   shared_tab_loader_->StartLoading(tabs);
 }
