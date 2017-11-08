@@ -1,0 +1,119 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "5983f260_e0b22c3a",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 2
+      },
+      "lineNbr": 14,
+      "author": {
+        "id": 1144344
+      },
+      "writtenOn": "2017-11-08T22:26:40Z",
+      "side": 1,
+      "message": "Add 780042 as well?",
+      "range": {
+        "startLine": 14,
+        "startChar": 4,
+        "endLine": 14,
+        "endChar": 10
+      },
+      "revId": "18ff407dc73520982005d14522003c49eca2629c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "78801ebc_40849abe",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/partnerbookmarks/PartnerBookmarksCache.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 43,
+      "author": {
+        "id": 1144344
+      },
+      "writtenOn": "2017-11-08T22:26:40Z",
+      "side": 1,
+      "message": "If we use URL as key and timestamp as value, we use SharedPreferences.getAll() instead.",
+      "range": {
+        "startLine": 43,
+        "startChar": 29,
+        "endLine": 43,
+        "endChar": 33
+      },
+      "revId": "18ff407dc73520982005d14522003c49eca2629c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "eb7c51b7_453557ba",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/partnerbookmarks/PartnerBookmarksCache.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 76,
+      "author": {
+        "id": 1144344
+      },
+      "writtenOn": "2017-11-08T22:26:40Z",
+      "side": 1,
+      "message": "Can we use URL as key and timestamp as value?",
+      "range": {
+        "startLine": 76,
+        "startChar": 19,
+        "endLine": 76,
+        "endChar": 28
+      },
+      "revId": "18ff407dc73520982005d14522003c49eca2629c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1de8d503_26afdd69",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/partnerbookmarks/PartnerBookmarksCache.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 88,
+      "author": {
+        "id": 1144344
+      },
+      "writtenOn": "2017-11-08T22:26:40Z",
+      "side": 1,
+      "message": "I guess package-private would be enough.",
+      "range": {
+        "startLine": 88,
+        "startChar": 4,
+        "endLine": 88,
+        "endChar": 10
+      },
+      "revId": "18ff407dc73520982005d14522003c49eca2629c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7a4b8c09_49dd1f9c",
+        "filename": "chrome/android/javatests/src/org/chromium/chrome/browser/partnerbookmarks/PartnerBookmarksCacheTest.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 1,
+      "author": {
+        "id": 1144344
+      },
+      "writtenOn": "2017-11-08T22:26:40Z",
+      "side": 1,
+      "message": "2017",
+      "range": {
+        "startLine": 1,
+        "startChar": 13,
+        "endLine": 1,
+        "endChar": 17
+      },
+      "revId": "18ff407dc73520982005d14522003c49eca2629c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
