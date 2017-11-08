@@ -217,7 +217,8 @@
   return nil;
 }
 
-- (UIView*)snapshotForStackViewWithWidth:(CGFloat)width {
+- (UIView*)snapshotForStackViewWithWidth:(CGFloat)width
+                          safeAreaInsets:(UIEdgeInsets)safeAreaIns {
   UIView* toolbar = _toolbarController.view;
   CGRect oldFrame = toolbar.frame;
   CGRect newFrame = oldFrame;
