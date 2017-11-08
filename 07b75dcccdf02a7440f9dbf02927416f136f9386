@@ -46,6 +46,30 @@
       "revId": "07b75dcccdf02a7440f9dbf02927416f136f9386",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4e966261_05e74fcd",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/ntp/cards/SignInPromo.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 370,
+      "author": {
+        "id": 1209769
+      },
+      "writtenOn": "2017-11-08T14:01:47Z",
+      "side": 1,
+      "message": "I actually meant this class and updatePersonalizedSigninPromo/bindPersonalizedSigninPromo. Merging detach and setupPromoView in SigninPromoController seems tempting as well, but that\u0027s another story for another time. :-)",
+      "parentUuid": "8c4c0e17_72ead8c3",
+      "range": {
+        "startLine": 370,
+        "startChar": 21,
+        "endLine": 370,
+        "endChar": 48
+      },
+      "revId": "07b75dcccdf02a7440f9dbf02927416f136f9386",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
