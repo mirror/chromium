@@ -178,25 +178,6 @@ void GetOrigins(JNIEnv* env,
                     jembedder);
     }
   }
-
-  // Add the DSE origin if it allows geolocation.
-  if (content_type == CONTENT_SETTINGS_TYPE_GEOLOCATION) {
-    SearchPermissionsService* search_helper =
-        SearchPermissionsService::Factory::GetForBrowserContext(
-            GetActiveUserProfile(false /* is_incognito */));
-    if (search_helper) {
-      const url::Origin& dse_origin = search_helper->GetDSEOriginIfEnabled();
-      if (!dse_origin.unique()) {
-        std::string dse_origin_string = dse_origin.Serialize();
-        if (!base::ContainsValue(seen_origins, dse_origin_string)) {
-          seen_origins.push_back(dse_origin_string);
-          insertionFunc(env, list,
-                        ConvertOriginToJavaString(env, dse_origin_string),
-                        jembedder);
-        }
-      }
-    }
-  }
 }
 
 ContentSetting GetSettingForOrigin(JNIEnv* env,
@@ -777,7 +758,7 @@ static void ClearBannerData(JNIEnv* env,
       CONTENT_SETTINGS_TYPE_APP_BANNER, std::string(), nullptr);
 }
 
-static jboolean ShouldUseDSEGeolocationSetting(
+static jboolean ArePermissionsControlledByDSE(
     JNIEnv* env,
     const JavaParamRef<jclass>& clazz,
     const JavaParamRef<jstring>& jorigin,
@@ -786,25 +767,8 @@ static jboolean ShouldUseDSEGeolocationSetting(
       SearchPermissionsService::Factory::GetForBrowserContext(
           GetActiveUserProfile(is_incognito));
   return search_helper &&
-         search_helper->UseDSEGeolocationSetting(
+         search_helper->ArePermissionsControlledByDSE(
              url::Origin::Create(GURL(ConvertJavaStringToUTF8(env, jorigin))));
-}
-
-static jboolean GetDSEGeolocationSetting(JNIEnv* env,
-                                         const JavaParamRef<jclass>& clazz) {
-  SearchPermissionsService* search_helper =
-      SearchPermissionsService::Factory::GetForBrowserContext(
-          GetActiveUserProfile(false /* is_incognito */));
-  return search_helper->GetDSEGeolocationSetting();
-}
-
-static void SetDSEGeolocationSetting(JNIEnv* env,
-                                     const JavaParamRef<jclass>& clazz,
-                                     jboolean setting) {
-  SearchPermissionsService* search_helper =
-      SearchPermissionsService::Factory::GetForBrowserContext(
-          GetActiveUserProfile(false /* is_incognito */));
-  return search_helper->SetDSEGeolocationSetting(setting);
 }
 
 static jboolean GetAdBlockingActivated(JNIEnv* env,
