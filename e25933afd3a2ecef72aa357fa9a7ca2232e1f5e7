@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "98d71662_d6663c40",
+        "filename": "chrome/utility/media_router/dial_app_info_parser_impl.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 61,
+      "author": {
+        "id": 1212411
+      },
+      "writtenOn": "2017-11-08T23:53:24Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "57f07aea_e3fe2615",
+      "revId": "e25933afd3a2ecef72aa357fa9a7ca2232e1f5e7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "83c12004_455c500d",
         "filename": "chrome/utility/media_router/dial_app_info_parser_impl.cc",
         "patchSetId": 5
@@ -30,6 +48,24 @@
       "writtenOn": "2017-11-07T18:57:42Z",
       "side": 1,
       "message": "Does the xml reader give out any more information about where it failed?  Might be useful if trying to debug bad dial xml etc. (but perhaps we do that rarely enough it doesn\u0027t matter)",
+      "revId": "e25933afd3a2ecef72aa357fa9a7ca2232e1f5e7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "fe1b0420_dff55620",
+        "filename": "chrome/utility/media_router/dial_app_info_parser_impl.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 64,
+      "author": {
+        "id": 1212411
+      },
+      "writtenOn": "2017-11-08T23:53:24Z",
+      "side": 1,
+      "message": "For unit tests it prints error info out to console if parsing XML failed. It seems none trivial to pass detailed error message back to browser process: we may 1. change XmlReader::Load() api to return error message; 2. capture std out (error?) output from utility process and pass it back to browser process...\n\nIf it is for dev debug, if I see INVALID_XML error, I just print out xml text passed to utility process, and create a simple test case to test if parsing succeeds...",
+      "parentUuid": "83c12004_455c500d",
       "revId": "e25933afd3a2ecef72aa357fa9a7ca2232e1f5e7",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -50,6 +86,24 @@
       "revId": "e25933afd3a2ecef72aa357fa9a7ca2232e1f5e7",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f061b7d7_11af063c",
+        "filename": "chrome/utility/media_router/dial_app_info_parser_impl.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 112,
+      "author": {
+        "id": 1212411
+      },
+      "writtenOn": "2017-11-08T23:53:24Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "55ce676e_63b03a2d",
+      "revId": "e25933afd3a2ecef72aa357fa9a7ca2232e1f5e7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }

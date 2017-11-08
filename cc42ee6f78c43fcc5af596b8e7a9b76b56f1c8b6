@@ -16,6 +16,24 @@
       "revId": "cc42ee6f78c43fcc5af596b8e7a9b76b56f1c8b6",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8e76270c_9d1aa736",
+        "filename": "chrome/utility/media_router/dial_app_info_parser_impl.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 106,
+      "author": {
+        "id": 1212411
+      },
+      "writtenOn": "2017-11-08T23:53:24Z",
+      "side": 1,
+      "message": "\"name\" and \"state\" are required properties. No, we cannot do anything useful without name or state...capabilities are optional.\n\nYes, returning earlier makes more sense. Changing continue to break. We also check response XML length (max 256k) in DialAppInfoFetcher (https://chromium-review.googlesource.com/c/chromium/src/+/754294)\n\nNot sure about malicious payload. Given a malicious payload, utility process may hang or crash. That seems acceptable since it will not affect browser process..(We have a metric recording utility process error, may help analyze this).",
+      "parentUuid": "a0609a6d_8daf187a",
+      "revId": "cc42ee6f78c43fcc5af596b8e7a9b76b56f1c8b6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
