@@ -1,0 +1,436 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "cf049b35_f3cbe0ac",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 15
+      },
+      "lineNbr": 16,
+      "author": {
+        "id": 1002092
+      },
+      "writtenOn": "2017-11-08T04:09:06Z",
+      "side": 1,
+      "message": "Can you attach this to http://crbug.com/728141 ? - we shouldn\u0027t have googleplex links in Chromium (or its git log)",
+      "revId": "b7452963e270cd41a6a807cbe21fdc5557201b95",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "15fd5652_e0012dd0",
+        "filename": "chrome/browser/ui/cocoa/profiles/avatar_base_controller.mm",
+        "patchSetId": 15
+      },
+      "lineNbr": 25,
+      "author": {
+        "id": 1002092
+      },
+      "writtenOn": "2017-11-08T04:09:06Z",
+      "side": 1,
+      "message": "Can you add a file like \n\nchrome/browser/ui/views/profiles/profile_chooser_bridge_views.h\n\n(see e.g. chrome/browser/ui/cocoa/translate/translate_bubble_bridge_views.h)\n\nThis will avoid having to add the DEPS change, and keep the split between cocoa/views code clear",
+      "revId": "b7452963e270cd41a6a807cbe21fdc5557201b95",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "77ae6280_f145f13a",
+        "filename": "chrome/browser/ui/cocoa/profiles/avatar_base_controller.mm",
+        "patchSetId": 15
+      },
+      "lineNbr": 32,
+      "author": {
+        "id": 1002092
+      },
+      "writtenOn": "2017-11-08T04:09:06Z",
+      "side": 1,
+      "message": "move to the bridge .h/.cc. Also please add a class comment. Be sure to describe what owns this.",
+      "revId": "b7452963e270cd41a6a807cbe21fdc5557201b95",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "46d01a4c_dd9c4e17",
+        "filename": "chrome/browser/ui/cocoa/profiles/avatar_base_controller.mm",
+        "patchSetId": 15
+      },
+      "lineNbr": 34,
+      "author": {
+        "id": 1002092
+      },
+      "writtenOn": "2017-11-08T04:09:06Z",
+      "side": 1,
+      "message": "remove semicolon after function",
+      "revId": "b7452963e270cd41a6a807cbe21fdc5557201b95",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a4edeaf3_e2978e90",
+        "filename": "chrome/browser/ui/cocoa/profiles/avatar_base_controller.mm",
+        "patchSetId": 15
+      },
+      "lineNbr": 36,
+      "author": {
+        "id": 1002092
+      },
+      "writtenOn": "2017-11-08T04:09:06Z",
+      "side": 1,
+      "message": "avatarBaseController -\u003e avatar_base_controller -- we only use camel case for new delcarations between @implementation/@end (or @interface/@end, @protocol/@end, etc.)",
+      "range": {
+        "startLine": 36,
+        "startChar": 53,
+        "endLine": 36,
+        "endChar": 73
+      },
+      "revId": "b7452963e270cd41a6a807cbe21fdc5557201b95",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4dceddcb_7e3ed9e1",
+        "filename": "chrome/browser/ui/cocoa/profiles/avatar_base_controller.mm",
+        "patchSetId": 15
+      },
+      "lineNbr": 40,
+      "author": {
+        "id": 1002092
+      },
+      "writtenOn": "2017-11-08T04:09:06Z",
+      "side": 1,
+      "message": "perhaps ObserveWidget() or something more descriptive",
+      "revId": "b7452963e270cd41a6a807cbe21fdc5557201b95",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "465f9093_310c56b2",
+        "filename": "chrome/browser/ui/cocoa/profiles/avatar_base_controller.mm",
+        "patchSetId": 15
+      },
+      "lineNbr": 42,
+      "author": {
+        "id": 1002092
+      },
+      "writtenOn": "2017-11-08T04:09:06Z",
+      "side": 1,
+      "message": "// views::WidgetObserver:",
+      "revId": "b7452963e270cd41a6a807cbe21fdc5557201b95",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a028a98d_18bec411",
+        "filename": "chrome/browser/ui/cocoa/profiles/avatar_base_controller.mm",
+        "patchSetId": 15
+      },
+      "lineNbr": 49,
+      "author": {
+        "id": 1002092
+      },
+      "writtenOn": "2017-11-08T04:09:06Z",
+      "side": 1,
+      "message": "needs an initializer - preferably in the constructor? (perhaps use unique_ptr inside @interface AvatarBaseController () {})",
+      "revId": "b7452963e270cd41a6a807cbe21fdc5557201b95",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b90fcb28_4ee9a9c5",
+        "filename": "chrome/browser/ui/cocoa/profiles/avatar_base_controller.mm",
+        "patchSetId": 15
+      },
+      "lineNbr": 50,
+      "author": {
+        "id": 1002092
+      },
+      "writtenOn": "2017-11-08T04:09:06Z",
+      "side": 1,
+      "message": "DISALLOW_COPY_AND_ASSIGN",
+      "revId": "b7452963e270cd41a6a807cbe21fdc5557201b95",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b01ca202_2157e364",
+        "filename": "chrome/browser/ui/cocoa/profiles/avatar_base_controller.mm",
+        "patchSetId": 15
+      },
+      "lineNbr": 51,
+      "author": {
+        "id": 1002092
+      },
+      "writtenOn": "2017-11-08T04:09:06Z",
+      "side": 1,
+      "message": "}  // namespace",
+      "revId": "b7452963e270cd41a6a807cbe21fdc5557201b95",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "79ae7f5c_30ccbfdd",
+        "filename": "chrome/browser/ui/cocoa/profiles/avatar_base_controller.mm",
+        "patchSetId": 15
+      },
+      "lineNbr": 60,
+      "author": {
+        "id": 1002092
+      },
+      "writtenOn": "2017-11-08T04:09:06Z",
+      "side": 1,
+      "message": "underscore at end",
+      "revId": "b7452963e270cd41a6a807cbe21fdc5557201b95",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0d7eea87_1c462185",
+        "filename": "chrome/browser/ui/cocoa/profiles/avatar_base_controller.mm",
+        "patchSetId": 15
+      },
+      "lineNbr": 63,
+      "author": {
+        "id": 1002092
+      },
+      "writtenOn": "2017-11-08T04:09:06Z",
+      "side": 1,
+      "message": "can this be readonly?",
+      "range": {
+        "startLine": 63,
+        "startChar": 21,
+        "endLine": 63,
+        "endChar": 30
+      },
+      "revId": "b7452963e270cd41a6a807cbe21fdc5557201b95",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0a5b65f0_d569e621",
+        "filename": "chrome/browser/ui/cocoa/profiles/avatar_base_controller.mm",
+        "patchSetId": 15
+      },
+      "lineNbr": 146,
+      "author": {
+        "id": 1002092
+      },
+      "writtenOn": "2017-11-08T04:09:06Z",
+      "side": 1,
+      "message": "this should do profileChooserViewObserverBridge_.reset();",
+      "revId": "b7452963e270cd41a6a807cbe21fdc5557201b95",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "db34d236_a39debb5",
+        "filename": "chrome/browser/ui/cocoa/profiles/avatar_base_controller.mm",
+        "patchSetId": 15
+      },
+      "lineNbr": 167,
+      "author": {
+        "id": 1002092
+      },
+      "writtenOn": "2017-11-08T04:09:06Z",
+      "side": 1,
+      "message": "I would suggest replacing this BOOL. \n\nInstead, delay creating profileChooserViewObserverBridge_ at all until you have a Widget*. Then you can just check whether profileChooserViewObserverBridge_ is non-null to determine whether the menu is open.",
+      "revId": "b7452963e270cd41a6a807cbe21fdc5557201b95",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f755fe1d_00fa1d06",
+        "filename": "chrome/browser/ui/cocoa/profiles/avatar_base_controller.mm",
+        "patchSetId": 15
+      },
+      "lineNbr": 176,
+      "author": {
+        "id": 1002092
+      },
+      "writtenOn": "2017-11-08T04:09:06Z",
+      "side": 1,
+      "message": "anchor.bounds -\u003e [anchor bounds]  (we only use dot notation for structs - not NSObject* )",
+      "revId": "b7452963e270cd41a6a807cbe21fdc5557201b95",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0fd113a0_dadaa3ef",
+        "filename": "chrome/browser/ui/cocoa/profiles/avatar_base_controller.mm",
+        "patchSetId": 15
+      },
+      "lineNbr": 181,
+      "author": {
+        "id": 1002092
+      },
+      "writtenOn": "2017-11-08T04:09:06Z",
+      "side": 1,
+      "message": "LTF -\u003e LTR?",
+      "range": {
+        "startLine": 181,
+        "startChar": 64,
+        "endLine": 181,
+        "endChar": 67
+      },
+      "revId": "b7452963e270cd41a6a807cbe21fdc5557201b95",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4236a591_84213503",
+        "filename": "chrome/browser/ui/cocoa/profiles/avatar_base_controller.mm",
+        "patchSetId": 15
+      },
+      "lineNbr": 184,
+      "author": {
+        "id": 1002092
+      },
+      "writtenOn": "2017-11-08T04:09:06Z",
+      "side": 1,
+      "message": "Can you use gfx::Rect::Inset?",
+      "revId": "b7452963e270cd41a6a807cbe21fdc5557201b95",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "aacab5ab_fb5e1993",
+        "filename": "chrome/browser/ui/cocoa/profiles/avatar_base_controller.mm",
+        "patchSetId": 15
+      },
+      "lineNbr": 193,
+      "author": {
+        "id": 1002092
+      },
+      "writtenOn": "2017-11-08T04:09:06Z",
+      "side": 1,
+      "message": "it would be good to move most of this to profile_chooser_bridge_views (see the translate bubble example for inspiration)",
+      "revId": "b7452963e270cd41a6a807cbe21fdc5557201b95",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "56d1c33f_46704cca",
+        "filename": "chrome/browser/ui/cocoa/profiles/avatar_base_controller.mm",
+        "patchSetId": 15
+      },
+      "lineNbr": 219,
+      "author": {
+        "id": 1002092
+      },
+      "writtenOn": "2017-11-08T04:09:06Z",
+      "side": 1,
+      "message": "Widget::Close() already posts a task -- OnWidgetDestroying typically comes in after the RunLoop has been pumped anyway - so I\u0027m not sure this is achieving what you expect. Does this technique work if you move the mouse a bit while the button is pressed, then release?\n\nAnyway. Usually menus are shown on mac on mouseDown -- not mouseUp. This is true for most Cocoa browser UI, but not the profile switcher on the mac browser now -- is that intentional?\n\nMaybe the right way to fix this is just to toggle the menu on mousedown -- not mouse up.",
+      "revId": "b7452963e270cd41a6a807cbe21fdc5557201b95",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d95ea1ad_158c99db",
+        "filename": "chrome/browser/ui/cocoa/profiles/avatar_button_controller.mm",
+        "patchSetId": 15
+      },
+      "lineNbr": 325,
+      "author": {
+        "id": 1002092
+      },
+      "writtenOn": "2017-11-08T04:09:06Z",
+      "side": 1,
+      "message": "[self isMenuOpen] or just YES? (perhaps comment why not just YES?)",
+      "revId": "b7452963e270cd41a6a807cbe21fdc5557201b95",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "cbbc963b_5fa9779e",
+        "filename": "chrome/browser/ui/cocoa/profiles/avatar_button_controller.mm",
+        "patchSetId": 15
+      },
+      "lineNbr": 327,
+      "author": {
+        "id": 1002092
+      },
+      "writtenOn": "2017-11-08T04:09:06Z",
+      "side": 1,
+      "message": "// AvatarBaseController overrides:",
+      "revId": "b7452963e270cd41a6a807cbe21fdc5557201b95",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "18a55677_57fd8469",
+        "filename": "chrome/browser/ui/cocoa/profiles/profile_chooser_controller.h",
+        "patchSetId": 15
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1002092
+      },
+      "writtenOn": "2017-11-08T04:09:06Z",
+      "side": 1,
+      "message": "Wow - tearing out the Cocoa version is very bold!\n\nI would not recommend this, and it makes me a little uncomfortable. For all other UI we\u0027ve been keeping it behind a flag, made launch bugs, etc.\n\nI\u0027m fine with approving a CL that keeps this behind a chrome://flag but, as is, I think this needs to be run by launch review first. There\u0027s just no precedent for rolling out significant changes this way.",
+      "revId": "b7452963e270cd41a6a807cbe21fdc5557201b95",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "208b8b73_cb493472",
+        "filename": "chrome/browser/ui/views/profiles/profile_chooser_view.h",
+        "patchSetId": 15
+      },
+      "lineNbr": 51,
+      "author": {
+        "id": 1002092
+      },
+      "writtenOn": "2017-11-08T04:09:06Z",
+      "side": 1,
+      "message": "Bublle -\u003e Bubble",
+      "range": {
+        "startLine": 51,
+        "startChar": 38,
+        "endLine": 51,
+        "endChar": 44
+      },
+      "revId": "b7452963e270cd41a6a807cbe21fdc5557201b95",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "335d2a3b_6982e917",
+        "filename": "chrome/browser/ui/views/profiles/profile_chooser_view.h",
+        "patchSetId": 15
+      },
+      "lineNbr": 60,
+      "author": {
+        "id": 1002092
+      },
+      "writtenOn": "2017-11-08T04:09:06Z",
+      "side": 1,
+      "message": "const gfx::Rect\u0026",
+      "revId": "b7452963e270cd41a6a807cbe21fdc5557201b95",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
