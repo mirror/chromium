@@ -1,0 +1,96 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "5be1ccfa_4cc33d8c",
+        "filename": "services/device/geolocation/public_ip_address_location_notifier.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 7,
+      "author": {
+        "id": 1182889
+      },
+      "writtenOn": "2017-11-08T02:00:51Z",
+      "side": 1,
+      "message": "Not needed",
+      "range": {
+        "startLine": 7,
+        "startChar": 9,
+        "endLine": 7,
+        "endChar": 10
+      },
+      "revId": "6086883be398af09fce1e3228e9f7e6770124eb6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5ac69f3e_bc220b64",
+        "filename": "services/device/geolocation/public_ip_address_location_notifier.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 8,
+      "author": {
+        "id": 1182889
+      },
+      "writtenOn": "2017-11-08T02:00:51Z",
+      "side": 1,
+      "message": "Not needed",
+      "range": {
+        "startLine": 8,
+        "startChar": 14,
+        "endLine": 8,
+        "endChar": 0
+      },
+      "revId": "6086883be398af09fce1e3228e9f7e6770124eb6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b0e82295_8040c781",
+        "filename": "services/device/geolocation/public_ip_address_location_notifier.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 109,
+      "author": {
+        "id": 1182889
+      },
+      "writtenOn": "2017-11-08T02:00:51Z",
+      "side": 1,
+      "message": "s/sending by the/provided by a/",
+      "range": {
+        "startLine": 109,
+        "startChar": 56,
+        "endLine": 109,
+        "endChar": 70
+      },
+      "revId": "6086883be398af09fce1e3228e9f7e6770124eb6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "425454b8_eedd5675",
+        "filename": "services/device/geolocation/public_ip_address_location_notifier.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 110,
+      "author": {
+        "id": 1182889
+      },
+      "writtenOn": "2017-11-08T02:00:51Z",
+      "side": 1,
+      "message": "I wonder if we can just store a raw pointer rather than copying the tag into a unique_ptr.\n\nHopefully Ramin can advise us about the best practice for this \"copy-like\" usage of the tags.",
+      "range": {
+        "startLine": 110,
+        "startChar": 7,
+        "endLine": 110,
+        "endChar": 17
+      },
+      "revId": "6086883be398af09fce1e3228e9f7e6770124eb6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
