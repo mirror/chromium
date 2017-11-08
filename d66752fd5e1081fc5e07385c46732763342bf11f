@@ -91,6 +91,24 @@
     },
     {
       "key": {
+        "uuid": "edeb44db_eb4ffb29",
+        "filename": "docs/testing/json_test_results_format.md",
+        "patchSetId": 6
+      },
+      "lineNbr": 47,
+      "author": {
+        "id": 1148599
+      },
+      "writtenOn": "2017-11-08T01:07:36Z",
+      "side": 1,
+      "message": "I would agree that the extensibility is better with this format. And it is more proto like; protos don\u0027t generally use maps, from what I understand, so something like what dirk suggested isn\u0027t really proto style, at least from the bit of proto style I know.\n\nI\u0027m fine either way. \n\nAlthough, I feel like maybe we shouldn\u0027t do something like\n\nartifacts: {\n  \"screenshot\": [\"a\", \"b\"],\n}\n\nWhat happens if one of the runs of a test doesn\u0027t produce an artifact? Do we put a null in there? Maybe that\u0027s me being a bit over-designing, but I feel like we could run into a weird situation there.",
+      "parentUuid": "13916665_67c7ca0c",
+      "revId": "d66752fd5e1081fc5e07385c46732763342bf11f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "a83ba1fa_ed36459c",
         "filename": "docs/testing/json_test_results_format.md",
         "patchSetId": 6
