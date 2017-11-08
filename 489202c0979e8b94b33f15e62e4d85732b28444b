@@ -1,0 +1,44 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "53984a5a_49bd1a3e",
+        "filename": "chrome/test/mini_installer/config/chrome_beta_not_installed.prop",
+        "patchSetId": 21
+      },
+      "lineNbr": 18,
+      "author": {
+        "id": 1178124
+      },
+      "writtenOn": "2017-11-08T11:31:40Z",
+      "side": 1,
+      "message": "since the variable expands to the LocalServer32 subkey, this test would pass if only LocalServer32 was deleted but not the activator class key. i think it\u0027s better for the variable to be only the CLSID and for the rest of the path to be in the various .prop files. it\u0027s easier to see what\u0027s going on this way. note that this isn\u0027t done for the various UPDATE keys because the whole path changes for the Chromium/Google Chrome change. that\u0027s not the case here.",
+      "range": {
+        "startLine": 18,
+        "startChar": 24,
+        "endLine": 18,
+        "endChar": 56
+      },
+      "revId": "489202c0979e8b94b33f15e62e4d85732b28444b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "671603e4_805b7911",
+        "filename": "chrome/test/mini_installer/variable_expander.py",
+        "patchSetId": 21
+      },
+      "lineNbr": 205,
+      "author": {
+        "id": 1178124
+      },
+      "writtenOn": "2017-11-08T11:31:40Z",
+      "side": 1,
+      "message": "the CLSID for Chromium is {635EFA6F-08D6-4EC9-BD14-8A0FDE975159}",
+      "revId": "489202c0979e8b94b33f15e62e4d85732b28444b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
