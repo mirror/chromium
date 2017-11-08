@@ -22,6 +22,30 @@
       "revId": "eb1fdcf4e0755dc6ecf00ba5c570e9af9cd33dd9",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c8aee9eb_533ea170",
+        "filename": "ui/message_center/mojo/notification.mojom",
+        "patchSetId": 6
+      },
+      "lineNbr": 49,
+      "author": {
+        "id": 1115907
+      },
+      "writtenOn": "2017-11-08T18:09:19Z",
+      "side": 1,
+      "message": "The name optional_fields matches the name of the field in message_center::Notification. It\u0027s not actually optional and there\u0027s no notion of an empty or missing value (although you can leave everything at the default). There are many fields in RichNotificationData and it\u0027s not clear why some fields are there and some are in Notification, except that the Notification fields are passed in its ctor and the RichNotificationData values are optionally set separately.",
+      "parentUuid": "af735a12_26e63d11",
+      "range": {
+        "startLine": 49,
+        "startChar": 2,
+        "endLine": 49,
+        "endChar": 22
+      },
+      "revId": "eb1fdcf4e0755dc6ecf00ba5c570e9af9cd33dd9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
