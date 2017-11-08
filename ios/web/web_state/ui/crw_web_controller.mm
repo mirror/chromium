@@ -1711,11 +1711,17 @@ registerLoadRequestForURL:(const GURL&)requestURL
 
 - (void)loadNativeViewWithSuccess:(BOOL)loadSuccess
                 navigationContext:(web::NavigationContextImpl*)context {
-  _webStateImpl->OnNavigationStarted(context);
+  if (loadSuccess) {
+    // No DidStartNavigation callback for displaying error page.
+    _webStateImpl->OnNavigationStarted(context);
+  }
   const GURL currentURL([self currentURL]);
   [self didStartLoadingURL:currentURL];
   _loadPhase = web::PAGE_LOADED;
-  _webStateImpl->OnNavigationFinished(context);
+  if (loadSuccess) {
+    // No DidFinishNavigation callback for displaying error page.
+    _webStateImpl->OnNavigationFinished(context);
+  }
 
   // Perform post-load-finished updates.
   [self didFinishWithURL:currentURL loadSuccess:loadSuccess];
@@ -4262,6 +4268,16 @@ registerLoadRequestForURL:(const GURL&)requestURL
     return;
   }
 
+  if (web::GetWebClient()->IsAppSpecificURL(requestURL) &&
+      !web::GetWebClient()->IsAppSpecificURL(_documentURL)) {
+    // Renderer-initiated loads of WebUI can be done only from other WebUI
+    // pages. WebUI pages may have increased power and using the same web
+    // process (which may potentially be controller by an attacker) is
+    // dangerous.
+    decisionHandler(WKNavigationActionPolicyCancel);
+    return;
+  }
+
   // The page will not be changed until this navigation is committed, so the
   // retrieved state will be pending until |didCommitNavigation| callback.
   [self updatePendingNavigationInfoFromNavigationAction:action];
@@ -4442,20 +4458,19 @@ registerLoadRequestForURL:(const GURL&)requestURL
     // pages. WebUI pages may have increased power and using the same web
     // process (which may potentially be controller by an attacker) is
     // dangerous.
-    if (web::GetWebClient()->IsAppSpecificURL(_documentURL)) {
-      [self abortLoad];
+    DCHECK(web::GetWebClient()->IsAppSpecificURL(_documentURL));
+    [self abortLoad];
 
-      // Do some additional book keeping for WKBasedNavigationManagerImpl, which
-      // doesn't use KVO to manage navigation states. Sometimes
-      // WKNavigationDelegate callbacks may arrive after calling |stopLoading|.
-      // Remove this navigation from |_navigationStates| allows those delinquent
-      // callbacks to be ignored.
-      if (web::GetWebClient()->IsSlimNavigationManagerEnabled()) {
-        [_navigationStates removeNavigation:navigation];
-      }
-      NavigationManager::WebLoadParams params(webViewURL);
-      self.webState->GetNavigationManager()->LoadURLWithParams(params);
+    // Do some additional book keeping for WKBasedNavigationManagerImpl, which
+    // doesn't use KVO to manage navigation states. Sometimes
+    // WKNavigationDelegate callbacks may arrive after calling |stopLoading|.
+    // Remove this navigation from |_navigationStates| allows those delinquent
+    // callbacks to be ignored.
+    if (web::GetWebClient()->IsSlimNavigationManagerEnabled()) {
+      [_navigationStates removeNavigation:navigation];
     }
+    NavigationManager::WebLoadParams params(webViewURL);
+    self.webState->GetNavigationManager()->LoadURLWithParams(params);
     return;
   }
 
@@ -4524,10 +4539,13 @@ registerLoadRequestForURL:(const GURL&)requestURL
   } else {
     error = WKWebViewErrorWithSource(error, PROVISIONAL_LOAD);
 
-    if (web::IsWKWebViewSSLCertError(error))
+    if (web::IsWKWebViewSSLCertError(error)) {
       [self handleSSLCertError:error forNavigation:navigation];
-    else
+    } else {
       [self handleLoadError:error inMainFrame:YES forNavigation:navigation];
+      _webStateImpl->OnNavigationFinished(
+          [_navigationStates contextForNavigation:navigation]);
+    }
   }
 
   // This must be reset at the end, since code above may need information about
