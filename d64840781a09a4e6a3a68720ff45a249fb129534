@@ -72,6 +72,24 @@
     },
     {
       "key": {
+        "uuid": "6832f6f6_07bfef42",
+        "filename": "ui/gfx/render_text_unittest.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 4956,
+      "author": {
+        "id": 1001118
+      },
+      "writtenOn": "2017-11-08T19:08:18Z",
+      "side": 1,
+      "message": "Ah, maybe convert all types to float, and that\u0027ll avoid explicit casts?\n  const float width_without_glyph_spacing \u003d run-\u003ewidth;\n  const float kGlyphSpacing \u003d 5;\n  ...\n  const float total_spacing \u003d seuss.length() * kGlyphSpacing;\n  EXPECT_EQ(width_without_glyph_spacing + total_spacing, run-\u003ewidth);",
+      "parentUuid": "d1c9b7e7_3503d4f5",
+      "revId": "d64840781a09a4e6a3a68720ff45a249fb129534",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "f1fcb537_e9c4f589",
         "filename": "ui/gfx/render_text_unittest.cc",
         "patchSetId": 6
