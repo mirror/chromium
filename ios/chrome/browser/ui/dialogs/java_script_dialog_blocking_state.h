@@ -39,9 +39,8 @@ class JavaScriptDialogBlockingState
   explicit JavaScriptDialogBlockingState(web::WebState* web_state);
 
   // WebStateObserver:
-  void NavigationItemCommitted(
-      web::WebState* web_state,
-      const web::LoadCommittedDetails& load_details) override;
+  void DidStartNavigation(web::WebState* web_state,
+                          web::NavigationContext* navigation_context) override;
   void WebStateDestroyed(web::WebState* web_state) override;
 
   // Whether to show the blocking option.

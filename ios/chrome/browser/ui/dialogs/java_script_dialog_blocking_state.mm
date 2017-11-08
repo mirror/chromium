@@ -4,6 +4,8 @@
 
 #import "ios/chrome/browser/ui/dialogs/java_script_dialog_blocking_state.h"
 
+#import "ios/web/public/web_state/navigation_context.h"
+
 #if !defined(__has_feature) || !__has_feature(objc_arc)
 #error "This file requires ARC support."
 #endif
@@ -22,11 +24,14 @@ JavaScriptDialogBlockingState::~JavaScriptDialogBlockingState() {
   DCHECK(!web_state());
 }
 
-void JavaScriptDialogBlockingState::NavigationItemCommitted(
+void JavaScriptDialogBlockingState::DidStartNavigation(
     web::WebState* web_state,
-    const web::LoadCommittedDetails& load_details) {
-  dialog_count_ = 0;
-  blocked_ = false;
+    web::NavigationContext* navigation_context) {
+  if (!navigation_context->IsRendererInitiated() ||
+      !navigation_context->IsSameDocument()) {
+    dialog_count_ = 0;
+    blocked_ = false;
+  }
 }
 
 void JavaScriptDialogBlockingState::WebStateDestroyed(
