@@ -406,6 +406,30 @@
     },
     {
       "key": {
+        "uuid": "8d712ece_f81f6f85",
+        "filename": "net/http/http_server_properties_impl.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 619,
+      "author": {
+        "id": 1143554
+      },
+      "writtenOn": "2017-11-08T17:21:47Z",
+      "side": 1,
+      "message": "I can see two solutions that will not introduce too much complexity to the code:\n1) Add a map that translates a canonical suffix to QuicServerInfo (string). Whenever, ServerInfo is updated, we update the map. There are 4 canonical suffixes, so the max memory impact is server info length multiplied by 4 if an app connects to hosts with all four different canonical suffixes.\n\n2) Add a map similar to |canonical_host_to_origin_map_| to map a canonical suffix to origin that can be used to retrieve server info from |quic_server_info_map_|. Compared to solution 1, it has memory usage benefits but a little more complex (due to extra level of indirection) and may require extra CPU cycles during search.\n\nI would not like to mix alt-svc and server info in |canonical_host_to_origin_map_| because it adds complexity and may not be functionally correct in all scenarios. E.g., HttpServerPropertiesImpl exposes public setters and getters for alt-svc and server info. They look completely independent to a class caller, e.g., if the caller sets alt-svc, the result of \u0027get\u0027 operation should not depend on whether a setter for the server info was called in between.\n\nWhat do think? Should we implement approach 1, 2 or something else?",
+      "parentUuid": "131e8391_65d41dcd",
+      "range": {
+        "startLine": 619,
+        "startChar": 3,
+        "endLine": 619,
+        "endChar": 0
+      },
+      "revId": "785ae66296e8738e554a36075491aaf0e4926ffc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "71ac8a88_d9a35a62",
         "filename": "net/http/http_server_properties_impl_unittest.cc",
         "patchSetId": 2
