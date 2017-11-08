@@ -282,6 +282,24 @@
     },
     {
       "key": {
+        "uuid": "236c9225_5a97159a",
+        "filename": "ash/accessibility/accessibility_layer.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 70,
+      "author": {
+        "id": 1000045
+      },
+      "writtenOn": "2017-11-08T00:21:11Z",
+      "side": 1,
+      "message": "This is fine.\n\nOptionally: If there aren\u0027t going to be many subclasses, you might want to go pure virtual (\u003d 0) and let the subclasses just return 0. It forces the other users to make an explicit decision about insets.\n\nAlso optionally: Will the inset value change dynamically? If not, you could make it a parameter to the constructor, or to Set().",
+      "parentUuid": "2b230cdc_476ea8ae",
+      "revId": "6f7d6fc7a72a1c2d1db7f2d2b81023cd5a32518c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "7982e137_650ebe18",
         "filename": "ash/accessibility/focus_ring_layer.h",
         "patchSetId": 2

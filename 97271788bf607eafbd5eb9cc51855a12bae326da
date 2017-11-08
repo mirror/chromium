@@ -1,0 +1,55 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "5999519f_c0db91a4",
+        "filename": "ash/accessibility/accessibility_layer.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 10,
+      "author": {
+        "id": 1000045
+      },
+      "writtenOn": "2017-11-08T00:21:11Z",
+      "side": 1,
+      "message": "nit: base/macros.h is still needed for DISALLOW_COPY_AND_ASSIGN",
+      "revId": "97271788bf607eafbd5eb9cc51855a12bae326da",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3f99bba6_64884b72",
+        "filename": "ash/accessibility/accessibility_layer.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 34,
+      "author": {
+        "id": 1000045
+      },
+      "writtenOn": "2017-11-08T00:21:11Z",
+      "side": 1,
+      "message": "nit: It\u0027s OK to use {} in a header for an inline empty destructor function, and that\u0027s a common pattern for observers/delegates. It\u0027s not OK if the class has complex member variables, since the compiler writes code to destroy them, but there\u0027s a compiler warning for that.",
+      "revId": "97271788bf607eafbd5eb9cc51855a12bae326da",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "35519ac7_f5b9f03b",
+        "filename": "ash/accessibility/focus_ring_layer.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 31,
+      "author": {
+        "id": 1000045
+      },
+      "writtenOn": "2017-11-08T00:21:11Z",
+      "side": 1,
+      "message": "nit: Group overrides together (make all public or all private), replace this comment with \"// AccessibilityLayer:\"",
+      "revId": "97271788bf607eafbd5eb9cc51855a12bae326da",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
