@@ -1,0 +1,142 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "dffd448d_165c77f1",
+        "filename": "components/autofill/content/renderer/html_based_username_detector.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 489,
+      "author": {
+        "id": 1002541
+      },
+      "writtenOn": "2017-11-08T12:46:50Z",
+      "side": 1,
+      "message": "Seems unused.",
+      "range": {
+        "startLine": 489,
+        "startChar": 6,
+        "endLine": 489,
+        "endChar": 24
+      },
+      "revId": "558a9e51f546c4db999348c39668dea749270666",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "58313599_5c80e147",
+        "filename": "components/autofill/content/renderer/html_based_username_detector.h",
+        "patchSetId": 7
+      },
+      "lineNbr": 21,
+      "author": {
+        "id": 1002541
+      },
+      "writtenOn": "2017-11-08T12:46:50Z",
+      "side": 1,
+      "message": "You should also mention how the cache is altered if a mapping not included in it yet is found. Also, whether the cache can be null.",
+      "range": {
+        "startLine": 21,
+        "startChar": 36,
+        "endLine": 21,
+        "endChar": 59
+      },
+      "revId": "558a9e51f546c4db999348c39668dea749270666",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "759d0393_5e85b0b1",
+        "filename": "components/autofill/content/renderer/html_based_username_detector.h",
+        "patchSetId": 7
+      },
+      "lineNbr": 22,
+      "author": {
+        "id": 1002541
+      },
+      "writtenOn": "2017-11-08T12:46:50Z",
+      "side": 1,
+      "message": "typo: set -\u003e is set",
+      "range": {
+        "startLine": 22,
+        "startChar": 22,
+        "endLine": 22,
+        "endChar": 25
+      },
+      "revId": "558a9e51f546c4db999348c39668dea749270666",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e84ae226_be0b87ba",
+        "filename": "components/autofill/content/renderer/password_autofill_agent.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 889,
+      "author": {
+        "id": 1002541
+      },
+      "writtenOn": "2017-11-08T12:46:50Z",
+      "side": 1,
+      "message": "Here we replace element.GetDocument().GetFrame() with render_frame()-\u003eGetWebFrame(). Are they always the same?",
+      "range": {
+        "startLine": 889,
+        "startChar": 20,
+        "endLine": 889,
+        "endChar": 59
+      },
+      "revId": "558a9e51f546c4db999348c39668dea749270666",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b7ddc13a_4d25ecdc",
+        "filename": "components/autofill/content/renderer/password_form_conversion_utils.h",
+        "patchSetId": 7
+      },
+      "lineNbr": 60,
+      "author": {
+        "id": 1002541
+      },
+      "writtenOn": "2017-11-08T12:46:50Z",
+      "side": 1,
+      "message": "Please comment on the role of the new argument (also below).",
+      "range": {
+        "startLine": 60,
+        "startChar": 27,
+        "endLine": 60,
+        "endChar": 50
+      },
+      "revId": "558a9e51f546c4db999348c39668dea749270666",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "08d5e347_6c78cf43",
+        "filename": "components/autofill/content/renderer/password_form_conversion_utils_browsertest.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 584,
+      "author": {
+        "id": 1002541
+      },
+      "writtenOn": "2017-11-08T12:46:50Z",
+      "side": 1,
+      "message": "typo: cache -\u003e caches",
+      "range": {
+        "startLine": 584,
+        "startChar": 71,
+        "endLine": 584,
+        "endChar": 76
+      },
+      "revId": "558a9e51f546c4db999348c39668dea749270666",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
