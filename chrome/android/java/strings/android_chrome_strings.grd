@@ -2621,6 +2621,9 @@ To obtain new licenses, connect to the internet and play your downloaded content
       <message name="IDS_LOCATION_BAR_VERBOSE_STATUS_OFFLINE" desc="Verbose indication of offline status in the location bar. [CHAR-LIMIT=20]">
         Offline
       </message>
+      <message name="IDS_LOCATION_BAR_NOT_TRUSTED_OFFLINE_URL" desc="Text replacing URL of a page, when the offline copy might have been modified.">
+        Shared copy
+      </message>
 
       <!-- Omnibox Placeholder Experiment -->
       <message name="IDS_SEARCH_OR_TYPE_WEB_ADDRESS" desc="Prompt to enter text into the text field that will either perform web searches or navigate to a website.">

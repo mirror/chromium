@@ -705,6 +705,7 @@ public class PageInfoPopup implements OnClickListener {
             messageBuilder.append(
                     mContext.getString(R.string.page_info_domain_hidden, mContentPublisher));
         } else if (isShowingOfflinePage()) {
+            // Switch on page being trusted or not.
             messageBuilder.append(String.format(
                     mContext.getString(R.string.page_info_connection_offline),
                     mOfflinePageCreationDate));

@@ -418,6 +418,18 @@ public class OfflinePageUtils {
         return offlinePageBridge.getOfflinePage(webContents);
     }
 
+    public static boolean isTrustedOfflinePage(Tab tab) {
+        if (!isOfflinePage(tab)) return false;
+        OfflinePageItem page = getOfflinePage(tab);
+        return page != null && page.isTrusted();
+    }
+
+    public static boolean isNotTrustedOfflinePage(Tab tab) {
+        if (!isOfflinePage(tab)) return false;
+        OfflinePageItem page = getOfflinePage(tab);
+        return page != null && !page.isTrusted();
+    }
+
     /**
      * Reloads specified tab, which should allow to open an online version of the page.
      * @param tab The tab to be reloaded.
