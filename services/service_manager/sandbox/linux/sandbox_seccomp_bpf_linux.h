@@ -55,13 +55,15 @@ class SERVICE_MANAGER_SANDBOX_EXPORT SandboxSeccompBPF {
   // Check if the kernel supports TSYNC (thread synchronization) with seccomp.
   static bool SupportsSandboxWithTsync();
 
-  // Start the sandbox and apply the policy for sandbox_type, depending on
-  // command line switches and options. |hook|, if non-empty is run right
-  // before the sandbox is engaged.
-  static bool StartSandbox(service_manager::SandboxType sandbox_type,
-                           base::ScopedFD proc_fd,
-                           PreSandboxHook hook,
-                           const Options& options);
+  // Return a policy suitable for use with StartSandboxWithExternalPolicy.
+  static std::unique_ptr<BPFBasePolicy> PolicyForSandboxType(
+      SandboxType sandbox_type,
+      const SandboxSeccompBPF::Options& options);
+
+  // Prove that the sandbox was engaged by the StartSandbox() call. Crashes
+  // the process if the sandbox failed to engage.
+  static void RunSandboxSanityChecks(SandboxType sandbox_type,
+                                     const SandboxSeccompBPF::Options& options);
 #endif  // !defined(OS_NACL_NONSFI)
 
   // This is the API to enable a seccomp-bpf sandbox by using an
