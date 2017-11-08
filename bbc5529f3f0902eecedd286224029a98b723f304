@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "4f9ad27f_35d2c768",
+        "filename": "third_party/WebKit/Source/core/html/track/vtt/VTTCue.cpp",
+        "patchSetId": 3
+      },
+      "lineNbr": 663,
+      "author": {
+        "id": 1117045
+      },
+      "writtenOn": "2017-11-08T15:14:33Z",
+      "side": 1,
+      "message": "According to algorithm steps, there are 3 cases, left, right and else case. As the text_alignment_ is already validated while setting we don\u0027t need to have default with NOTREACHED() here. So probably we can have default case return 50.",
+      "range": {
+        "startLine": 663,
+        "startChar": 9,
+        "endLine": 663,
+        "endChar": 15
+      },
+      "revId": "bbc5529f3f0902eecedd286224029a98b723f304",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
