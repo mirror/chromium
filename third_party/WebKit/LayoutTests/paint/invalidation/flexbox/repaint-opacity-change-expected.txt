@@ -27,10 +27,6 @@
     {
       "object": "LayoutBlockFlow DIV id='target' class='item'",
       "reason": "subtree"
-    },
-    {
-      "object": "LayoutBlockFlow DIV id='target' class='item'",
-      "reason": "subtree"
     }
   ]
 }
