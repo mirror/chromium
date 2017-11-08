@@ -157,7 +157,9 @@ component("gl") {
     "//ui/gfx/geometry",
   ]
 
-  data_deps = []
+  data_deps = [
+    "//third_party/mesa:osmesa",
+  ]
   if (enable_swiftshader) {
     data_deps += [ "//third_party/swiftshader" ]
   }
@@ -268,7 +270,6 @@ component("gl") {
     data_deps += [
       "//third_party/angle:libEGL",
       "//third_party/angle:libGLESv2",
-      "//third_party/mesa:osmesa",
       "//third_party/swiftshader",
     ]
 
