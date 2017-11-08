@@ -1,0 +1,44 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "5976123c_77e6c32d",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 2
+      },
+      "lineNbr": 15,
+      "author": {
+        "id": 1000101
+      },
+      "writtenOn": "2017-11-08T23:56:45Z",
+      "side": 1,
+      "message": "Is this still true?",
+      "range": {
+        "startLine": 15,
+        "startChar": 8,
+        "endLine": 15,
+        "endChar": 28
+      },
+      "revId": "1b6bd6caf36ad53e66966bcac2800a9007ed8c50",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "00adf929_902131af",
+        "filename": "chrome/browser/ui/app_list/app_list_view_delegate.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 235,
+      "author": {
+        "id": 1000101
+      },
+      "writtenOn": "2017-11-08T23:56:45Z",
+      "side": 1,
+      "message": "nit: add a comment.",
+      "revId": "1b6bd6caf36ad53e66966bcac2800a9007ed8c50",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
