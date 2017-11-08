@@ -1,0 +1,329 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "62af1fff_6ae05e65",
+        "filename": "components/omnibox/browser/break_iterator_adapter.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 18,
+      "author": {
+        "id": 1001310
+      },
+      "writtenOn": "2017-11-08T19:43:46Z",
+      "side": 1,
+      "message": "nit: please rephrase as\nDCHECK_EQ(BreakIterator::BREAK_WORD, break_type);\n\n(This is chromium style:\n- use more specific asserts / checks rather than generic \"is true\" checks if possible\n- in these types of checks, put the expected value first\n.)",
+      "revId": "436a8ea4b6e4e5ce5c3b5dc50fd8c9673cff3c67",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "794e8069_70e7262a",
+        "filename": "components/omnibox/browser/break_iterator_adapter.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 28,
+      "author": {
+        "id": 1001310
+      },
+      "writtenOn": "2017-11-08T19:43:46Z",
+      "side": 1,
+      "message": "nit: Instead, negate in order to return early\nif (!BreakIterator::Advance()) \n  return false;\n\nThen lines 29-39 do not need to be indented.",
+      "revId": "436a8ea4b6e4e5ce5c3b5dc50fd8c9673cff3c67",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "27971460_29cb9875",
+        "filename": "components/omnibox/browser/break_iterator_adapter.h",
+        "patchSetId": 7
+      },
+      "lineNbr": 16,
+      "author": {
+        "id": 1001310
+      },
+      "writtenOn": "2017-11-08T19:43:46Z",
+      "side": 1,
+      "message": "nit: works -\u003e behaves as normal",
+      "range": {
+        "startLine": 16,
+        "startChar": 27,
+        "endLine": 16,
+        "endChar": 32
+      },
+      "revId": "436a8ea4b6e4e5ce5c3b5dc50fd8c9673cff3c67",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "93e76cc1_17909379",
+        "filename": "components/omnibox/browser/break_iterator_adapter.h",
+        "patchSetId": 7
+      },
+      "lineNbr": 26,
+      "author": {
+        "id": 1001310
+      },
+      "writtenOn": "2017-11-08T19:43:46Z",
+      "side": 1,
+      "message": "nit: period at end of sentence",
+      "range": {
+        "startLine": 26,
+        "startChar": 44,
+        "endLine": 26,
+        "endChar": 49
+      },
+      "revId": "436a8ea4b6e4e5ce5c3b5dc50fd8c9673cff3c67",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "bde40fe9_cc31b2a3",
+        "filename": "components/omnibox/browser/break_iterator_adapter.h",
+        "patchSetId": 7
+      },
+      "lineNbr": 28,
+      "author": {
+        "id": 1001310
+      },
+      "writtenOn": "2017-11-08T19:43:46Z",
+      "side": 1,
+      "message": "Please mention the meaning of the return value:\n// Returns false if we\u0027ve run past the end of the string.",
+      "revId": "436a8ea4b6e4e5ce5c3b5dc50fd8c9673cff3c67",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6b61ea34_78ef2614",
+        "filename": "components/omnibox/browser/break_iterator_adapter.h",
+        "patchSetId": 7
+      },
+      "lineNbr": 32,
+      "author": {
+        "id": 1001310
+      },
+      "writtenOn": "2017-11-08T19:43:46Z",
+      "side": 1,
+      "message": "Add:\nOtherwise returns the normal BreakIterator-determined current word.",
+      "range": {
+        "startLine": 32,
+        "startChar": 11,
+        "endLine": 32,
+        "endChar": 0
+      },
+      "revId": "436a8ea4b6e4e5ce5c3b5dc50fd8c9673cff3c67",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "07992cba_7dddb998",
+        "filename": "components/omnibox/browser/break_iterator_adapter.h",
+        "patchSetId": 7
+      },
+      "lineNbr": 39,
+      "author": {
+        "id": 1001310
+      },
+      "writtenOn": "2017-11-08T19:43:46Z",
+      "side": 1,
+      "message": "Try replacing the sentence with something like:\n// Return true if we processing a word with underscores (i.e., |pos| points to a valid position in |underscore_word_|).",
+      "revId": "436a8ea4b6e4e5ce5c3b5dc50fd8c9673cff3c67",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6bafd618_df1a7833",
+        "filename": "components/omnibox/browser/break_iterator_adapter.h",
+        "patchSetId": 7
+      },
+      "lineNbr": 46,
+      "author": {
+        "id": 1001310
+      },
+      "writtenOn": "2017-11-08T19:43:46Z",
+      "side": 1,
+      "message": "nit: replace with character \u0027_\u0027",
+      "range": {
+        "startLine": 46,
+        "startChar": 54,
+        "endLine": 46,
+        "endChar": 64
+      },
+      "revId": "436a8ea4b6e4e5ce5c3b5dc50fd8c9673cff3c67",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a4d16ffe_73acfb88",
+        "filename": "components/omnibox/browser/break_iterator_adapter_unittest.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 5,
+      "author": {
+        "id": 1001310
+      },
+      "writtenOn": "2017-11-08T19:43:46Z",
+      "side": 1,
+      "message": "nit: put this in the normal place (approximately line 13)",
+      "revId": "436a8ea4b6e4e5ce5c3b5dc50fd8c9673cff3c67",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5eaaade4_c79d6feb",
+        "filename": "components/omnibox/browser/break_iterator_adapter_unittest.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 10,
+      "author": {
+        "id": 1001310
+      },
+      "writtenOn": "2017-11-08T19:43:46Z",
+      "side": 1,
+      "message": "I don\u0027t think you use this.  Please remove.",
+      "revId": "436a8ea4b6e4e5ce5c3b5dc50fd8c9673cff3c67",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "798ce2c4_cbc7e7ea",
+        "filename": "components/omnibox/browser/break_iterator_adapter_unittest.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 11,
+      "author": {
+        "id": 1001310
+      },
+      "writtenOn": "2017-11-08T19:43:46Z",
+      "side": 1,
+      "message": "I don\u0027t think you use this.  Please remove.",
+      "revId": "436a8ea4b6e4e5ce5c3b5dc50fd8c9673cff3c67",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0fe74923_cb7d74c7",
+        "filename": "components/omnibox/browser/in_memory_url_index_types.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 13,
+      "author": {
+        "id": 1001310
+      },
+      "writtenOn": "2017-11-08T19:43:46Z",
+      "side": 1,
+      "message": "Please keep the include:\n#include \"base/i18n/break_iterator.h\"\n\n(Chromium style has include-what-you-you use, and at the moment this code uses both break iterator versions.  We want to include it directly rather than getting it indirectly from the adapter.)",
+      "range": {
+        "startLine": 13,
+        "startChar": 38,
+        "endLine": 13,
+        "endChar": 0
+      },
+      "revId": "436a8ea4b6e4e5ce5c3b5dc50fd8c9673cff3c67",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "eb33ae39_0ea06933",
+        "filename": "components/omnibox/browser/in_memory_url_index_types.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 120,
+      "author": {
+        "id": 1001310
+      },
+      "writtenOn": "2017-11-08T19:43:46Z",
+      "side": 1,
+      "message": "nit: also make it const",
+      "revId": "436a8ea4b6e4e5ce5c3b5dc50fd8c9673cff3c67",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6619ba85_d725aa31",
+        "filename": "components/omnibox/browser/in_memory_url_index_types_unittest.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 87,
+      "author": {
+        "id": 1001310
+      },
+      "writtenOn": "2017-11-08T19:43:46Z",
+      "side": 1,
+      "message": "I\u0027m surprised this test passes right now.  Don\u0027t you need to turn on the omnibox feature flag?\n\nMaybe you need to include base/test/scoped_feature_list.h and follow the instruction in that file to add the SetUp() method to class InMemoryURLIndexTypesTest above.\n\nIt\u0027d be best if we had one test for the feature flag off and one test for the feature flag on.  However, because we decided to make the feature flag value statically cached in the implementation, that\u0027s hard.  I think it\u0027s not worth the trouble.  Let\u0027s just make sure the test here passes with the break iterator adaptor flag on.",
+      "revId": "436a8ea4b6e4e5ce5c3b5dc50fd8c9673cff3c67",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6c3b67f6_24239037",
+        "filename": "components/omnibox/browser/in_memory_url_index_unittest.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 11,
+      "author": {
+        "id": 1001310
+      },
+      "writtenOn": "2017-11-08T19:43:46Z",
+      "side": 1,
+      "message": "nit: I don\u0027t think anything in this file uses logging.  Please remove.",
+      "revId": "436a8ea4b6e4e5ce5c3b5dc50fd8c9673cff3c67",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "bb5485b8_39c318b5",
+        "filename": "components/omnibox/browser/url_index_private_data.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 18,
+      "author": {
+        "id": 1001310
+      },
+      "writtenOn": "2017-11-08T19:43:46Z",
+      "side": 1,
+      "message": "Please keep the include:\n#include \"base/i18n/break_iterator.h\"\n\n(Chromium style has include-what-you-you use, and at the moment this code uses both break iterator versions.  We want to include it directly rather than getting it indirectly from the adapter.)",
+      "range": {
+        "startLine": 18,
+        "startChar": 30,
+        "endLine": 18,
+        "endChar": 0
+      },
+      "revId": "436a8ea4b6e4e5ce5c3b5dc50fd8c9673cff3c67",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b9d48ef3_f5f51305",
+        "filename": "components/omnibox/browser/url_index_private_data.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 729,
+      "author": {
+        "id": 1001310
+      },
+      "writtenOn": "2017-11-08T19:43:46Z",
+      "side": 1,
+      "message": "nit: also make it const",
+      "revId": "436a8ea4b6e4e5ce5c3b5dc50fd8c9673cff3c67",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
