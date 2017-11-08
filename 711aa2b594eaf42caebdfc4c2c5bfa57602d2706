@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "258940db_d0a16cd3",
+        "filename": "chrome/android/java/res/layout/modal_dialog_view.xml",
+        "patchSetId": 2
+      },
+      "lineNbr": 6,
+      "author": {
+        "id": 1225365
+      },
+      "writtenOn": "2017-11-08T20:18:55Z",
+      "side": 1,
+      "message": "The styles here are just temporary. I\u0027ve already asked Hannah for a spec.\n\nAlternatively, we can include abc_alert_dialog_material.xml instead of creating our own views. If using this approach, we don\u0027t need our own spec but there are a lot more views to handle that are probably never used in our app.\n\nI\u0027m not sure which one fits our long term goal better?",
+      "range": {
+        "startLine": 6,
+        "startChar": 36,
+        "endLine": 6,
+        "endChar": 55
+      },
+      "revId": "711aa2b594eaf42caebdfc4c2c5bfa57602d2706",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a0fd9cd3_df32961d",
+        "filename": "chrome/android/java_sources.gni",
+        "patchSetId": 2
+      },
+      "lineNbr": 1412,
+      "author": {
+        "id": 1225365
+      },
+      "writtenOn": "2017-11-08T20:18:55Z",
+      "side": 1,
+      "message": "To be removed on the next patch.",
+      "range": {
+        "startLine": 1412,
+        "startChar": 30,
+        "endLine": 1412,
+        "endChar": 36
+      },
+      "revId": "711aa2b594eaf42caebdfc4c2c5bfa57602d2706",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
