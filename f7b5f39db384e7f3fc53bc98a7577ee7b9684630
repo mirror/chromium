@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "5dea24d9_a6e22ee8",
+        "filename": "services/ui/ws/window_manager_state.cc",
+        "patchSetId": 14
+      },
+      "lineNbr": 300,
+      "author": {
+        "id": 1001118
+      },
+      "writtenOn": "2017-11-08T00:57:00Z",
+      "side": 0,
+      "message": "This is reached on un-mirroring when ash (1) notifies Mus that mirroring has ended, the mirror made a full-fledged display with a new root and then (2) destroys the old root window used for mirroring (it\u0027s no longer the root for that display).\n\nAgain, I\u0027m not sure if there\u0027s a better way to go about this; maybe we need a more thoughtful ash-\u003emus synchronization/control, as DisplaySynchronizer seems to plumb through every change, perhaps with a bad ordering of window/display changes. Or maybe we need to rethink the way that root windows control displays and vice versa? Or a workaround like this might be appropriate...",
+      "revId": "f7b5f39db384e7f3fc53bc98a7577ee7b9684630",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "fddcaf7c_935b9487",
+        "filename": "services/ui/ws/window_tree.cc",
+        "patchSetId": 14
+      },
+      "lineNbr": 317,
+      "author": {
+        "id": 1001118
+      },
+      "writtenOn": "2017-11-08T00:57:00Z",
+      "side": 0,
+      "message": "This now occurs when ash (1) calls SetDisplayConfiguration with the mirroring change, and then (2) calls SetDisplayRoot for the new mirror... Perhaps that won\u0027t happen once I flush out the actual mirroring implementation?",
+      "revId": "f7b5f39db384e7f3fc53bc98a7577ee7b9684630",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}

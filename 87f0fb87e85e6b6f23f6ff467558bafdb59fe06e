@@ -1,0 +1,55 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "9fba35de_78a9f1ff",
+        "filename": "services/ui/ws/display_manager.cc",
+        "patchSetId": 14
+      },
+      "lineNbr": 138,
+      "author": {
+        "id": 1001118
+      },
+      "writtenOn": "2017-11-08T00:57:00Z",
+      "side": 1,
+      "message": "This is not what we eventually want, but helpful towards making progress.",
+      "revId": "87f0fb87e85e6b6f23f6ff467558bafdb59fe06e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "11654857_8fb648e0",
+        "filename": "services/ui/ws/display_manager.cc",
+        "patchSetId": 14
+      },
+      "lineNbr": 179,
+      "author": {
+        "id": 1001118
+      },
+      "writtenOn": "2017-11-08T00:57:00Z",
+      "side": 1,
+      "message": "I wonder why we want to delete displays the user is when merely switching configurations. It seems mostly like an unintended side-effect of automatic display destruction when removing a display\u0027s root window (which is perhaps useful in other scenarios?). It\u0027s also probably a misdirected communication as ash\u0027s DisplayManager is attempting to notify components sitting above it that a display is going away (ie. there is no unique second display with its own root window now, only an inaccessible mirror), but this same notification propagates to Mus as a \"Hey, this physical display is being removed (eg. disconnected)\"...",
+      "revId": "87f0fb87e85e6b6f23f6ff467558bafdb59fe06e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "82815854_2a6d661e",
+        "filename": "services/ui/ws/display_manager.cc",
+        "patchSetId": 14
+      },
+      "lineNbr": 261,
+      "author": {
+        "id": 1001118
+      },
+      "writtenOn": "2017-11-08T00:57:00Z",
+      "side": 1,
+      "message": "It\u0027s a bit tough to discern the intended workflow between ash and mus when it comes to display configuration, but this occurs when ash (1) calls SetDisplayConfiguration with the display-\u003emirror change, and then (2) destroys the display as it becomes a mirror.\n\nCallstack from (1):\n  base::debug::StackTrace::StackTrace()\n  ash::DisplaySynchronizer::SendDisplayConfigurationToServer()\n  ash::DisplaySynchronizer::OnDidProcessDisplayChanges()\n  display::DisplayManager::BeginEndNotifier::~BeginEndNotifier()\n  display::DisplayManager::UpdateDisplaysWith()\n  display::DisplayManager::OnNativeDisplaysChanged()\n  display::DisplayChangeObserver::OnDisplayModeChanged()\n  display::DisplayConfigurator::NotifyDisplayStateObservers()\n  display::DisplayConfigurator::OnConfigured()\n\nCallstack from (2):\n  ui::ws::DisplayManager::DestroyDisplay()\n  ui::ws::WindowManagerState::DeleteWindowManagerDisplayRoot()\n  ui::ws::WindowTree::RemoveRoot()\n  ui::ws::WindowTree::DeleteWindow\n MOJO...\n  aura::WindowTreeClient::OnWindowMusDestroyed()\n  aura::WindowPortMus::~WindowPortMus()\n ... \n  ash::RootWindowController::Shutdown()\n  ash::WindowTreeHostManager::DeleteHost()\n  ash::WindowTreeHostManager::OnDisplayRemoved()\n  display::DisplayManager::NotifyDisplayRemoved()\n  display::DisplayManager::UpdateDisplaysWith()\n\nIf I don\u0027t remove the display from that list here, we hit a dcheck when it\u0027s re-added on the next SetDisplayConfiguration call... and sadly I need to check that the screen manager exists (it doesn\u0027t as some tests destroy all displays on shut down...)",
+      "revId": "87f0fb87e85e6b6f23f6ff467558bafdb59fe06e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
