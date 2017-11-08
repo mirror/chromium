@@ -71,6 +71,30 @@
     },
     {
       "key": {
+        "uuid": "7fe78b23_d65c7ad4",
+        "filename": "content/test/content_browser_test_test.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 52,
+      "author": {
+        "id": 1003006
+      },
+      "writtenOn": "2017-11-08T17:11:26Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "7ccca054_a884ca36",
+      "range": {
+        "startLine": 52,
+        "startChar": 2,
+        "endLine": 52,
+        "endChar": 10
+      },
+      "revId": "8304782a07d99e20d0a51ab7a4dc16d7f2cabb48",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "be616ce5_5b4284ed",
         "filename": "content/test/content_browser_test_test.cc",
         "patchSetId": 5
@@ -91,6 +115,30 @@
       "revId": "8304782a07d99e20d0a51ab7a4dc16d7f2cabb48",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6b774e1e_b5e5ffb7",
+        "filename": "content/test/content_browser_test_test.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 72,
+      "author": {
+        "id": 1003006
+      },
+      "writtenOn": "2017-11-08T17:11:26Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "be616ce5_5b4284ed",
+      "range": {
+        "startLine": 72,
+        "startChar": 64,
+        "endLine": 72,
+        "endChar": 65
+      },
+      "revId": "8304782a07d99e20d0a51ab7a4dc16d7f2cabb48",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -117,6 +165,30 @@
     },
     {
       "key": {
+        "uuid": "dca8b41e_06c0ea43",
+        "filename": "content/test/content_browser_test_test.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 76,
+      "author": {
+        "id": 1003006
+      },
+      "writtenOn": "2017-11-08T17:11:26Z",
+      "side": 1,
+      "message": "I tried using it this morning, but I couldn\u0027t figure out how to use it correctly. The renderer dies, but RenderProcessHostWatcher::Wait never returns.",
+      "parentUuid": "56932d0e_6a9a72ff",
+      "range": {
+        "startLine": 76,
+        "startChar": 2,
+        "endLine": 76,
+        "endChar": 18
+      },
+      "revId": "8304782a07d99e20d0a51ab7a4dc16d7f2cabb48",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "7d9b9e60_2468d05d",
         "filename": "content/test/content_browser_test_test.cc",
         "patchSetId": 5
@@ -128,6 +200,30 @@
       "writtenOn": "2017-11-08T01:13:28Z",
       "side": 1,
       "message": "Yes, seems reasonable given that linux_chromium_tsan_rel_ng also runs tests with --no-sandbox.",
+      "range": {
+        "startLine": 109,
+        "startChar": 2,
+        "endLine": 109,
+        "endChar": 46
+      },
+      "revId": "8304782a07d99e20d0a51ab7a4dc16d7f2cabb48",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "db89692e_554c70e9",
+        "filename": "content/test/content_browser_test_test.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 109,
+      "author": {
+        "id": 1003006
+      },
+      "writtenOn": "2017-11-08T17:11:26Z",
+      "side": 1,
+      "message": "Aha! You have solved the mystery. One concern I have is that I had to change DEPS and BUILD.gn to reuse this constant. Would you prefer to just inline \"no-sandbox\" here instead, or use the constant?",
+      "parentUuid": "7d9b9e60_2468d05d",
       "range": {
         "startLine": 109,
         "startChar": 2,
