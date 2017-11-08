@@ -1216,4 +1216,7 @@ void URLRequest::set_status(URLRequestStatus status) {
   status_ = status;
 }
 
+// static
+const int URLRequest::kMaxRedirects;
+
 }  // namespace net
