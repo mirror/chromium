@@ -30,8 +30,14 @@
           "type": "SZ",
           "data": "\"$LOCAL_APPDATA\\$CHROME_DIR_SXS\\Application\\$MINI_INSTALLER_FILE_VERSION\\Installer\\setup.exe\" --uninstall --chrome-sxs --verbose-logging"
         },
-        "Version": {"type": "SZ", "data": "$MINI_INSTALLER_FILE_VERSION"}
+        "Version": {
+          "type": "SZ",
+          "data": "$MINI_INSTALLER_FILE_VERSION"
+        }
       }
+    },
+    "HKEY_CURRENT_USER\\$CHROME_TOAST_ACTIVATOR_CLSID_KEY_SXS": {
+      "exists": "required"
     },
     "HKEY_CURRENT_USER\\Software\\Classes\\$CHROME_SHORT_NAME_SXS$USER_SPECIFIC_REGISTRY_SUFFIX": {
       "exists": "forbidden"
