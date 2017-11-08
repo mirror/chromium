@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "1d89e12e_c14db8e9",
+        "filename": "third_party/WebKit/Source/core/paint/PaintLayerPainter.cpp",
+        "patchSetId": 11
+      },
+      "lineNbr": 308,
+      "author": {
+        "id": 1002481
+      },
+      "writtenOn": "2017-11-08T22:27:32Z",
+      "side": 0,
+      "message": "I combined this block into the block starting at line 553 (old), and there is no test failures. This block was added in https://codereview.chromium.org/2479623002/. Now we no longer need it because the paired display items no longer applicable in SPv175+.",
+      "revId": "21fed54a333a981fab4e13d100cfb3f8ddfd1ca4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
