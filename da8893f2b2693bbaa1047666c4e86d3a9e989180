@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "ce1e9c5f_a0a3f2d8",
+        "filename": "components/offline_pages/core/model/offline_page_model_taskified.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 40,
+      "author": {
+        "id": 1184710
+      },
+      "writtenOn": "2017-11-08T02:07:58Z",
+      "side": 1,
+      "message": "Actually pages is the return(output) value and callback is a input/output parameter. So not changing the order.\nRenamed to WrapInMultipleItemsCallback, since it\u0027s translating the MultipleOfflineItemCallback to MultipleOfflineIdCallback.",
+      "parentUuid": "4f39aca4_a2c8be7a",
+      "range": {
+        "startLine": 40,
+        "startChar": 5,
+        "endLine": 40,
+        "endChar": 29
+      },
+      "revId": "da8893f2b2693bbaa1047666c4e86d3a9e989180",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "2975ea3f_70324826",
         "filename": "components/offline_pages/core/model/offline_page_model_taskified.cc",
         "patchSetId": 3
@@ -45,6 +69,30 @@
       "revId": "da8893f2b2693bbaa1047666c4e86d3a9e989180",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "dfbd3723_a2d91193",
+        "filename": "components/offline_pages/core/model/offline_page_model_taskified.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 193,
+      "author": {
+        "id": 1184710
+      },
+      "writtenOn": "2017-11-08T02:07:58Z",
+      "side": 1,
+      "message": "Done\nplease see the general reply",
+      "parentUuid": "2975ea3f_70324826",
+      "range": {
+        "startLine": 193,
+        "startChar": 32,
+        "endLine": 193,
+        "endChar": 59
+      },
+      "revId": "da8893f2b2693bbaa1047666c4e86d3a9e989180",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -71,6 +119,30 @@
     },
     {
       "key": {
+        "uuid": "f7ff187d_65d65ac7",
+        "filename": "components/offline_pages/core/model/offline_page_model_taskified.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 200,
+      "author": {
+        "id": 1184710
+      },
+      "writtenOn": "2017-11-08T02:07:58Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "27b67c60_ba53b657",
+      "range": {
+        "startLine": 200,
+        "startChar": 32,
+        "endLine": 200,
+        "endChar": 60
+      },
+      "revId": "da8893f2b2693bbaa1047666c4e86d3a9e989180",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "2fb8489c_ad8ee6f4",
         "filename": "components/offline_pages/core/model/offline_page_model_taskified_unittest.cc",
         "patchSetId": 3
@@ -91,6 +163,30 @@
       "revId": "da8893f2b2693bbaa1047666c4e86d3a9e989180",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f58614f3_fc522cec",
+        "filename": "components/offline_pages/core/model/offline_page_model_taskified_unittest.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 128,
+      "author": {
+        "id": 1184710
+      },
+      "writtenOn": "2017-11-08T02:07:58Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "2fb8489c_ad8ee6f4",
+      "range": {
+        "startLine": 128,
+        "startChar": 13,
+        "endLine": 128,
+        "endChar": 29
+      },
+      "revId": "da8893f2b2693bbaa1047666c4e86d3a9e989180",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -117,6 +213,30 @@
     },
     {
       "key": {
+        "uuid": "cc666bbc_0559808f",
+        "filename": "components/offline_pages/core/model/offline_page_model_taskified_unittest.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 136,
+      "author": {
+        "id": 1184710
+      },
+      "writtenOn": "2017-11-08T02:07:58Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "11f70678_12ad28fa",
+      "range": {
+        "startLine": 136,
+        "startChar": 54,
+        "endLine": 136,
+        "endChar": 73
+      },
+      "revId": "da8893f2b2693bbaa1047666c4e86d3a9e989180",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "145f8cb0_6408de49",
         "filename": "components/offline_pages/core/model/offline_page_model_taskified_unittest.cc",
         "patchSetId": 3
@@ -131,6 +251,24 @@
       "revId": "da8893f2b2693bbaa1047666c4e86d3a9e989180",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "52572a0c_d2b59311",
+        "filename": "components/offline_pages/core/model/offline_page_model_taskified_unittest.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 485,
+      "author": {
+        "id": 1184710
+      },
+      "writtenOn": "2017-11-08T02:07:58Z",
+      "side": 1,
+      "message": "This CL only moves tests related with GetPages, for more details: https://docs.google.com/document/d/1p09joIEpQUMH1n3Zwzolch7vNTY_gMAWfjn-yoBeO6s/edit#bookmark\u003did.i0zgyu6769m0",
+      "parentUuid": "145f8cb0_6408de49",
+      "revId": "da8893f2b2693bbaa1047666c4e86d3a9e989180",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -157,6 +295,30 @@
     },
     {
       "key": {
+        "uuid": "667dd203_d2509d66",
+        "filename": "components/offline_pages/core/model/offline_page_model_taskified_unittest.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 486,
+      "author": {
+        "id": 1184710
+      },
+      "writtenOn": "2017-11-08T02:07:58Z",
+      "side": 1,
+      "message": "Done\nRenamed the test and added the new one at the end of file.",
+      "parentUuid": "11fd1ef1_d8e2ae2c",
+      "range": {
+        "startLine": 486,
+        "startChar": 38,
+        "endLine": 486,
+        "endChar": 49
+      },
+      "revId": "da8893f2b2693bbaa1047666c4e86d3a9e989180",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "37db4abb_5943d592",
         "filename": "components/offline_pages/core/model/offline_page_model_taskified_unittest.cc",
         "patchSetId": 3
@@ -168,6 +330,30 @@
       "writtenOn": "2017-11-07T23:09:13Z",
       "side": 1,
       "message": "Generally speaking, I find stubs easier to reason about when coding and debugging than mocks.  Mocks do have their uses, particularly for very large classes, so I wouldn\u0027t forbid them, but consider if the code might be more maintainable with stubs (even if it would be more verbose).\n\nIf the big problem is having many EXPECT macros vs only one EXPECT_CALL, we could have a function to compare the two pages, and just expect that to return true.",
+      "range": {
+        "startLine": 487,
+        "startChar": 8,
+        "endLine": 487,
+        "endChar": 20
+      },
+      "revId": "da8893f2b2693bbaa1047666c4e86d3a9e989180",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "31f6647d_fe81bdd9",
+        "filename": "components/offline_pages/core/model/offline_page_model_taskified_unittest.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 487,
+      "author": {
+        "id": 1184710
+      },
+      "writtenOn": "2017-11-08T02:07:58Z",
+      "side": 1,
+      "message": "I think we may have a wider discussion within the team on this topic.\nBut for now shall we keep this as-is? Since all other tests are written using a similar paradigm, once we have an agreement we can change all of them in a single CL. WDYT?",
+      "parentUuid": "37db4abb_5943d592",
       "range": {
         "startLine": 487,
         "startChar": 8,
@@ -203,6 +389,30 @@
     },
     {
       "key": {
+        "uuid": "b0ed8f58_b69cf270",
+        "filename": "components/offline_pages/core/model/offline_page_model_taskified_unittest.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 497,
+      "author": {
+        "id": 1184710
+      },
+      "writtenOn": "2017-11-08T02:07:58Z",
+      "side": 1,
+      "message": "Done\nit seems too long... I\u0027ve renamed to page_generator().",
+      "parentUuid": "591c599a_59ac90bc",
+      "range": {
+        "startLine": 497,
+        "startChar": 2,
+        "endLine": 497,
+        "endChar": 11
+      },
+      "revId": "da8893f2b2693bbaa1047666c4e86d3a9e989180",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "51702623_28424915",
         "filename": "components/offline_pages/core/model/offline_page_model_taskified_unittest.cc",
         "patchSetId": 3
@@ -223,6 +433,30 @@
       "revId": "da8893f2b2693bbaa1047666c4e86d3a9e989180",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "eb3a67b4_7b6d8c9d",
+        "filename": "components/offline_pages/core/model/offline_page_model_taskified_unittest.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 537,
+      "author": {
+        "id": 1184710
+      },
+      "writtenOn": "2017-11-08T02:07:58Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "51702623_28424915",
+      "range": {
+        "startLine": 537,
+        "startChar": 31,
+        "endLine": 537,
+        "endChar": 41
+      },
+      "revId": "da8893f2b2693bbaa1047666c4e86d3a9e989180",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -249,6 +483,30 @@
     },
     {
       "key": {
+        "uuid": "36c3c97c_963a7b5c",
+        "filename": "components/offline_pages/core/model/offline_page_model_taskified_unittest.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 544,
+      "author": {
+        "id": 1184710
+      },
+      "writtenOn": "2017-11-08T02:07:58Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "2e16268c_4976c5ab",
+      "range": {
+        "startLine": 544,
+        "startChar": 38,
+        "endLine": 544,
+        "endChar": 76
+      },
+      "revId": "da8893f2b2693bbaa1047666c4e86d3a9e989180",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "d2c1c6cb_b3cc8528",
         "filename": "components/offline_pages/core/model/offline_page_model_taskified_unittest.cc",
         "patchSetId": 3
@@ -260,6 +518,24 @@
       "writtenOn": "2017-11-07T23:09:13Z",
       "side": 1,
       "message": "More missing tests here.  Intentional?  Merging some existing tests into the one below? (I still don\u0027t see a test for CanSaveURL or DownloadMetrics, though)",
+      "revId": "da8893f2b2693bbaa1047666c4e86d3a9e989180",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "43bc67b6_90129c38",
+        "filename": "components/offline_pages/core/model/offline_page_model_taskified_unittest.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 595,
+      "author": {
+        "id": 1184710
+      },
+      "writtenOn": "2017-11-08T02:07:58Z",
+      "side": 1,
+      "message": "Those two tests are not related with GetPages* so they\u0027re not in this CL. sorry for the confusion.",
+      "parentUuid": "d2c1c6cb_b3cc8528",
       "revId": "da8893f2b2693bbaa1047666c4e86d3a9e989180",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -289,6 +565,30 @@
     },
     {
       "key": {
+        "uuid": "7ab299a5_e1d95f4d",
+        "filename": "components/offline_pages/core/model/offline_page_model_taskified_unittest.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 618,
+      "author": {
+        "id": 1184710
+      },
+      "writtenOn": "2017-11-08T02:07:58Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "c8acd374_dd8d5090",
+      "range": {
+        "startLine": 618,
+        "startChar": 40,
+        "endLine": 618,
+        "endChar": 0
+      },
+      "revId": "da8893f2b2693bbaa1047666c4e86d3a9e989180",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "f7ae22ef_d591282b",
         "filename": "components/offline_pages/core/model/offline_page_model_taskified_unittest.cc",
         "patchSetId": 3
@@ -312,6 +612,30 @@
     },
     {
       "key": {
+        "uuid": "bd8e461b_9a927b75",
+        "filename": "components/offline_pages/core/model/offline_page_model_taskified_unittest.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 635,
+      "author": {
+        "id": 1184710
+      },
+      "writtenOn": "2017-11-08T02:07:58Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "f7ae22ef_d591282b",
+      "range": {
+        "startLine": 635,
+        "startChar": 32,
+        "endLine": 635,
+        "endChar": 50
+      },
+      "revId": "da8893f2b2693bbaa1047666c4e86d3a9e989180",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "3a9fadc3_828ae89f",
         "filename": "components/offline_pages/core/model/offline_page_model_taskified_unittest.cc",
         "patchSetId": 3
@@ -326,6 +650,24 @@
       "revId": "da8893f2b2693bbaa1047666c4e86d3a9e989180",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "168a2906_ed295958",
+        "filename": "components/offline_pages/core/model/offline_page_model_taskified_unittest.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 647,
+      "author": {
+        "id": 1184710
+      },
+      "writtenOn": "2017-11-08T02:07:58Z",
+      "side": 1,
+      "message": "The UMAs are not implemented yet, so all those tests are missing. They\u0027ll come in another patch.",
+      "parentUuid": "3a9fadc3_828ae89f",
+      "revId": "da8893f2b2693bbaa1047666c4e86d3a9e989180",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -352,6 +694,30 @@
     },
     {
       "key": {
+        "uuid": "c0e73fb7_84d5caf2",
+        "filename": "components/offline_pages/core/model/offline_page_model_taskified_unittest.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 654,
+      "author": {
+        "id": 1184710
+      },
+      "writtenOn": "2017-11-08T02:07:58Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "c2910e7e_b7cbe194",
+      "range": {
+        "startLine": 654,
+        "startChar": 29,
+        "endLine": 654,
+        "endChar": 0
+      },
+      "revId": "da8893f2b2693bbaa1047666c4e86d3a9e989180",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "fe9c6111_0dde3f1a",
         "filename": "components/offline_pages/core/model/offline_page_model_taskified_unittest.cc",
         "patchSetId": 3
@@ -375,6 +741,30 @@
     },
     {
       "key": {
+        "uuid": "99757f50_d7fc6f0f",
+        "filename": "components/offline_pages/core/model/offline_page_model_taskified_unittest.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 665,
+      "author": {
+        "id": 1184710
+      },
+      "writtenOn": "2017-11-08T02:07:58Z",
+      "side": 1,
+      "message": "please see the general reply.",
+      "parentUuid": "fe9c6111_0dde3f1a",
+      "range": {
+        "startLine": 665,
+        "startChar": 38,
+        "endLine": 665,
+        "endChar": 65
+      },
+      "revId": "da8893f2b2693bbaa1047666c4e86d3a9e989180",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "a8685ed9_2ebf2f3e",
         "filename": "components/offline_pages/core/model/offline_page_model_taskified_unittest.cc",
         "patchSetId": 3
@@ -386,6 +776,30 @@
       "writtenOn": "2017-11-07T23:09:13Z",
       "side": 1,
       "message": "Is this fixed yet?  Maybe we an remove the MAYBE_",
+      "range": {
+        "startLine": 705,
+        "startChar": 46,
+        "endLine": 705,
+        "endChar": 52
+      },
+      "revId": "da8893f2b2693bbaa1047666c4e86d3a9e989180",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6441d0e1_76a2aba5",
+        "filename": "components/offline_pages/core/model/offline_page_model_taskified_unittest.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 705,
+      "author": {
+        "id": 1184710
+      },
+      "writtenOn": "2017-11-08T02:07:58Z",
+      "side": 1,
+      "message": "no it\u0027s not. I\u0027m actually thinking about getting a windows machine and fix it.",
+      "parentUuid": "a8685ed9_2ebf2f3e",
       "range": {
         "startLine": 705,
         "startChar": 46,
