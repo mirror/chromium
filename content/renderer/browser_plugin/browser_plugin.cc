@@ -261,14 +261,15 @@ void BrowserPlugin::WasResized() {
       !sent_resize_params_ || size_changed ||
       sent_resize_params_->screen_info != pending_resize_params_.screen_info;
 
-  if (synchronized_params_changed)
+  if (synchronized_params_changed) {
     local_surface_id_ = local_surface_id_allocator_.GenerateId();
 
-  if (enable_surface_synchronization_ && frame_sink_id_.is_valid()) {
-    viz::SurfaceInfo surface_info(
-        viz::SurfaceId(frame_sink_id_, local_surface_id_),
-        GetDeviceScaleFactor(), FrameRectInPixels().size());
-    compositing_helper_->SetPrimarySurfaceInfo(surface_info);
+    if (enable_surface_synchronization_ && frame_sink_id_.is_valid()) {
+      viz::SurfaceInfo surface_info(
+          viz::SurfaceId(frame_sink_id_, local_surface_id_),
+          GetDeviceScaleFactor(), FrameRectInPixels().size());
+      compositing_helper_->SetPrimarySurfaceInfo(surface_info);
+    }
   }
 
   bool position_changed =
