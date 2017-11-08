@@ -1215,6 +1215,12 @@
     <message name="IDS_SETTINGS_DATE_TIME" desc="Name of the settings page which displays date and time preferences.">
       Date and time
     </message>
+    <message name="IDS_SETTINGS_TIME_ZONE_BUTTON" desc="Label for the button that opens time zone settings page.">
+      Time zone
+    </message>
+    <message name="IDS_SETTINGS_TIME_ZONE_SUBPAGE_TITLE" desc="The title of the dialog that allows user to control different time zone settings.">
+      Time zone
+    </message>
     <message name="IDS_SETTINGS_TIME_ZONE" desc="Label for the picker which allows users to choose their time zone.">
       Time zone:
     </message>

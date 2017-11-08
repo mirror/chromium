@@ -207,7 +207,7 @@ EnrollmentConfig DeviceCloudPolicyInitializer::GetPrescribedEnrollmentConfig()
     device_state->GetString(kDeviceStateManagementDomain,
                             &device_state_management_domain);
   }
-
+/*
   const bool pref_enrollment_auto_start_present =
       local_state_->HasPrefPath(prefs::kDeviceEnrollmentAutoStart);
   const bool pref_enrollment_auto_start =
@@ -248,7 +248,7 @@ EnrollmentConfig DeviceCloudPolicyInitializer::GetPrescribedEnrollmentConfig()
   } else if (oem_is_managed) {
     config.mode = EnrollmentConfig::MODE_LOCAL_ADVERTISED;
   }
-
+*/
   return config;
 }
 
