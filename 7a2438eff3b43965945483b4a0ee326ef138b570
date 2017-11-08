@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "2d49fc40_3fddf9cb",
+        "filename": "components/viz/service/frame_sinks/compositor_frame_sink_impl.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 23,
+      "author": {
+        "id": 1115911
+      },
+      "writtenOn": "2017-11-08T04:45:49Z",
+      "side": 1,
+      "message": "Why is CompositorFrameSinkImpl a CapturableFrameSink? \n\nWill CapturableFrameSink eventually become a mojo interface? If not, does it make sense to move this to CompositorFrameSinkSupport instead? Thanks!",
+      "revId": "7a2438eff3b43965945483b4a0ee326ef138b570",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
