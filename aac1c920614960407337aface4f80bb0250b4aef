@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "23ca940a_a1b01d06",
+        "filename": "tools/perf/page_sets/media_cases.py",
+        "patchSetId": 4
+      },
+      "lineNbr": 89,
+      "author": {
+        "id": 1149061
+      },
+      "writtenOn": "2017-11-08T19:17:44Z",
+      "side": 1,
+      "message": "In Telemetry, Page class constructor requires access to the StorySet (StorySet is the same thing as PageSet basically) that it is inside. So the self that is passed in originally was the StorySet\u0027s self, which is a StorySet. This is a Page object, so its \"self\" is a page. We totally can still subclass these pages just fine. (Note I didn\u0027t change anything about how this works in this changelist)",
+      "parentUuid": "6ed52a5e_51fb0957",
+      "range": {
+        "startLine": 89,
+        "startChar": 26,
+        "endLine": 89,
+        "endChar": 34
+      },
+      "revId": "aac1c920614960407337aface4f80bb0250b4aef",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "19d6921b_9d1b8c2b",
         "filename": "tools/perf/page_sets/media_cases.py",
         "patchSetId": 4
@@ -45,6 +69,30 @@
       "revId": "aac1c920614960407337aface4f80bb0250b4aef",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "64d78b4f_5a96f862",
+        "filename": "tools/perf/page_sets/media_cases.py",
+        "patchSetId": 4
+      },
+      "lineNbr": 315,
+      "author": {
+        "id": 1149061
+      },
+      "writtenOn": "2017-11-08T19:17:44Z",
+      "side": 1,
+      "message": "Thank you!",
+      "parentUuid": "19d6921b_9d1b8c2b",
+      "range": {
+        "startLine": 315,
+        "startChar": 8,
+        "endLine": 315,
+        "endChar": 31
+      },
+      "revId": "aac1c920614960407337aface4f80bb0250b4aef",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
