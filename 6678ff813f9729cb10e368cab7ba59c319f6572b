@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "1b2c3fb5_697dd4af",
+        "filename": "components/gcm_driver/instance_id/android/java/src/org/chromium/components/gcm_driver/instance_id/InstanceIDWithSubtype.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 34,
+      "author": {
+        "id": 1002032
+      },
+      "writtenOn": "2017-11-08T11:49:26Z",
+      "side": 1,
+      "message": "Did this suppression become obsolete now that the visibility qualifier for sSubtypeInstances is not public anymore?",
+      "revId": "6678ff813f9729cb10e368cab7ba59c319f6572b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
