@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "a80c1066_d572abbc",
+        "filename": "docs/testing/json_test_results_format.md",
+        "patchSetId": 6
+      },
+      "lineNbr": 47,
+      "author": {
+        "id": 1003232
+      },
+      "writtenOn": "2017-11-08T00:03:04Z",
+      "side": 1,
+      "message": "should this just be a name-\u003elocation dict, i.e., \n\nartifacts: {\n  \"screenshot\": \"/screenshots/page.png\"\n}?\n\nis there a reason we\u0027d want more than one of a give artifact, or support something other than just the path to the file? For non-perf-artifacts, I\u0027m pretty sure the answer is no, but I\u0027m less familiar with perf artifacts.\n\nEdit: ah, I see you want to handle N retries, which makes sense. I suggest we change that to a list of name -\u003e [file...], as I think we should change \"expected\" and \"actual\" to lists as well.\n\nThoughts?",
+      "revId": "d66752fd5e1081fc5e07385c46732763342bf11f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a83ba1fa_ed36459c",
+        "filename": "docs/testing/json_test_results_format.md",
+        "patchSetId": 6
+      },
+      "lineNbr": 64,
+      "author": {
+        "id": 1003232
+      },
+      "writtenOn": "2017-11-08T00:03:04Z",
+      "side": 1,
+      "message": "maybe this should be just \"artifact_types\"?",
+      "revId": "d66752fd5e1081fc5e07385c46732763342bf11f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
