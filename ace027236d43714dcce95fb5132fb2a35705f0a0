@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "8458f1d8_0411ca65",
+        "filename": "chrome/browser/ui/cocoa/dock_icon.mm",
+        "patchSetId": 2
+      },
+      "lineNbr": 19,
+      "author": {
+        "id": 1160249
+      },
+      "writtenOn": "2017-11-08T23:41:46Z",
+      "side": 1,
+      "message": "The size is fixed, but it could change across OS versions. Good catch, done!",
+      "parentUuid": "9829dc3f_5264a60f",
+      "range": {
+        "startLine": 19,
+        "startChar": 18,
+        "endLine": 19,
+        "endChar": 28
+      },
+      "revId": "ace027236d43714dcce95fb5132fb2a35705f0a0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "2d694afa_3cb584c3",
         "filename": "chrome/browser/ui/cocoa/dock_icon.mm",
         "patchSetId": 2
@@ -48,6 +72,30 @@
     },
     {
       "key": {
+        "uuid": "20ca0770_300b0ec6",
+        "filename": "chrome/browser/ui/cocoa/dock_icon.mm",
+        "patchSetId": 2
+      },
+      "lineNbr": 136,
+      "author": {
+        "id": 1160249
+      },
+      "writtenOn": "2017-11-08T23:41:46Z",
+      "side": 1,
+      "message": "I agree, but do you think we could leave it for another CL since I\u0027m not touching it here? I\u0027d be happy to open a bug.",
+      "parentUuid": "2d694afa_3cb584c3",
+      "range": {
+        "startLine": 136,
+        "startChar": 9,
+        "endLine": 136,
+        "endChar": 10
+      },
+      "revId": "ace027236d43714dcce95fb5132fb2a35705f0a0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "551cf8af_7cf4dc6c",
         "filename": "chrome/browser/ui/cocoa/dock_icon.mm",
         "patchSetId": 2
@@ -59,6 +107,30 @@
       "writtenOn": "2017-11-06T13:58:50Z",
       "side": 1,
       "message": "instead of doing:\n\nwhile (1) { ... if (cond) break; }\n\nI think this can be:\n\ndo { ... } while (!cond);",
+      "range": {
+        "startLine": 166,
+        "startChar": 6,
+        "endLine": 166,
+        "endChar": 11
+      },
+      "revId": "ace027236d43714dcce95fb5132fb2a35705f0a0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f3e4010c_cdbfa37a",
+        "filename": "chrome/browser/ui/cocoa/dock_icon.mm",
+        "patchSetId": 2
+      },
+      "lineNbr": 166,
+      "author": {
+        "id": 1160249
+      },
+      "writtenOn": "2017-11-08T23:41:46Z",
+      "side": 1,
+      "message": "Ditto?",
+      "parentUuid": "551cf8af_7cf4dc6c",
       "range": {
         "startLine": 166,
         "startChar": 6,
