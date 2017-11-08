@@ -176,6 +176,24 @@
       "revId": "e6aae1cc02638fe0a3d0744760c324ee4a8eead3",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7a53b9c0_4332b9d7",
+        "filename": "chrome/browser/extensions/bookmark_app_navigation_throttle.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 212,
+      "author": {
+        "id": 1133035
+      },
+      "writtenOn": "2017-11-08T00:37:38Z",
+      "side": 1,
+      "message": "In case you\u0027re curious about Android:\n\n1. For WebAPKs to not open other in-scope links in a new WebAPK[1]\n2. For regular tabs to not open in-scope links if the host is the same (not origin, just host)[2]\n\n[1] https://cs.chromium.org/chromium/src/chrome/android/java/src/org/chromium/chrome/browser/externalnav/ExternalNavigationHandler.java?rcl\u003ddb0e590542ca41876ea92d6b9413073e9fb0ef46\u0026l\u003d263\n[2] \nhttps://cs.chromium.org/chromium/src/chrome/android/java/src/org/chromium/chrome/browser/externalnav/ExternalNavigationHandler.java?rcl\u003ddb0e590542ca41876ea92d6b9413073e9fb0ef46\u0026l\u003d456",
+      "parentUuid": "41108ccb_fff5a82e",
+      "revId": "e6aae1cc02638fe0a3d0744760c324ee4a8eead3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
