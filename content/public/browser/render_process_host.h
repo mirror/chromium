@@ -15,6 +15,7 @@
 #include "base/process/kill.h"
 #include "base/process/process_handle.h"
 #include "base/supports_user_data.h"
+#include "base/time/time.h"
 #include "build/build_config.h"
 #include "content/common/content_export.h"
 #include "content/public/common/bind_interface_helpers.h"
@@ -367,6 +368,9 @@ class CONTENT_EXPORT RenderProcessHost : public IPC::Sender,
 
   // Returns true if DisableKeepAliveRefCount() was called.
   virtual bool IsKeepAliveRefCountDisabled() = 0;
+
+  // Returns the timeout duration for which keepalive requests wait.
+  virtual base::TimeDelta GetKeepaliveRequestTimeout() const = 0;
 
   // Purges and suspends the renderer process.
   virtual void PurgeAndSuspend() = 0;
