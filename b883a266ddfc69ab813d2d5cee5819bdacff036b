@@ -206,6 +206,23 @@
     },
     {
       "key": {
+        "uuid": "35e4c352_9a6a7eab",
+        "filename": "services/viz/privileged/interfaces/compositing/frame_sink_manager.mojom",
+        "patchSetId": 14
+      },
+      "lineNbr": 114,
+      "author": {
+        "id": 1000111
+      },
+      "writtenOn": "2017-11-08T21:51:40Z",
+      "side": 1,
+      "message": "Is FrameSinkManagerClient the best place for this? With mus-ws, the mus-ws will have the FrameSinkManagerClient. But, from what I understand, we would still want the FrameToken to reach the browser. Wouldn\u0027t it be easier to send this FrameToken over CompositorFrameSinkClient to the embedder instead? That way, it would always reach the browser, regardless of whether browser is the viz-host or not.",
+      "revId": "b883a266ddfc69ab813d2d5cee5819bdacff036b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "10f50c8e_20880f4e",
         "filename": "ui/android/delegated_frame_host_android.cc",
         "patchSetId": 14
