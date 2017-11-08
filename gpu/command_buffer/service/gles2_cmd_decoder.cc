@@ -69,6 +69,7 @@
 #include "gpu/command_buffer/service/transform_feedback_manager.h"
 #include "gpu/command_buffer/service/vertex_array_manager.h"
 #include "gpu/command_buffer/service/vertex_attrib_manager.h"
+#include "gpu/ipc/common/gpu_fence_impl.h"
 #include "third_party/angle/src/image_util/loadimage.h"
 #include "third_party/skia/include/core/SkCanvas.h"
 #include "third_party/skia/include/core/SkSurface.h"
@@ -553,6 +554,9 @@ class GLES2DecoderImpl : public GLES2Decoder, public ErrorStateClient {
   void ReleaseSurface() override;
   void TakeFrontBuffer(const Mailbox& mailbox) override;
   void ReturnFrontBuffer(const Mailbox& mailbox, bool is_lost) override;
+  void CreateGpuFence(uint32_t fetch_id, const base::Callback<void(
+      const gfx::GpuFenceHandle& handle)>& callback) override;
+  void InsertGpuFence(const gfx::GpuFenceHandle& handle) override;
   bool ResizeOffscreenFramebuffer(const gfx::Size& size) override;
   bool MakeCurrent() override;
   gl::GLApi* api() const { return state_.api(); }
@@ -5106,6 +5110,39 @@ void GLES2DecoderImpl::ReturnFrontBuffer(const Mailbox& mailbox, bool is_lost) {
   }
 
   DLOG(ERROR) << "Attempting to return a frontbuffer that was not saved.";
+}
+
+void GLES2DecoderImpl::CreateGpuFence(
+    uint32_t fetch_id, const base::Callback<void(
+        const gfx::GpuFenceHandle& handle)>& callback) {
+
+  gfx::GpuFenceHandle handle;
+
+  if (GpuFenceImpl::IsSupported()) {
+    TRACE_EVENT_BEGIN0("gpu", "DupNativeFenceFD");
+    std::unique_ptr<GpuFenceImpl> fence = GpuFenceImpl::CreateNew();
+    handle = gfx::CloneHandleForIPC(fence->GetHandle());
+    TRACE_EVENT_END0("gpu", "DupNativeFenceFD");
+    //LOG(INFO) << __FUNCTION__ << ";;; sync_fd=" << handle.native_fd.fd;
+  } else {
+    LOG(ERROR) << __FUNCTION__ << ";;; eglDupNativeFenceFDANDROID not supported";
+  }
+
+  callback.Run(handle);
+
+  //LOG(INFO) << __FUNCTION__ << ";;; end";
+}
+
+void GLES2DecoderImpl::InsertGpuFence(const gfx::GpuFenceHandle& handle) {
+  if (!GpuFenceImpl::IsSupported())
+    return;
+
+  std::unique_ptr<GpuFenceImpl> gpu_fence = GpuFenceImpl::CreateFromHandle(
+      handle);
+  if (!gpu_fence)
+    return;
+
+  gpu_fence->ServerWait();
 }
 
 void GLES2DecoderImpl::CreateBackTexture() {
