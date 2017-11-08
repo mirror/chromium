@@ -381,6 +381,12 @@ void TranslateManager::RevertTranslation() {
   // Capture the revert event in the translate metrics
   RecordTranslateEvent(metrics::TranslateEventProto::USER_REVERT);
 
+  // Clear stored target language if user is reverting from it.
+  std::unique_ptr<TranslatePrefs> prefs =
+      translate_client_->GetTranslatePrefs();
+  if (language_state_.current_language() == prefs->GetRecentTargetLanguage())
+    prefs->SetRecentTargetLanguage("");
+
   // Revert the translation.
   translate_driver_->RevertTranslation(page_seq_no_);
   language_state_.SetCurrentLanguage(language_state_.original_language());
@@ -480,6 +486,14 @@ void TranslateManager::OnTranslateScriptFetchComplete(
 std::string TranslateManager::GetTargetLanguage(
     const TranslatePrefs* prefs,
     language::LanguageModel* language_model) {
+  DCHECK(prefs);
+  const std::string& recent_target = prefs->GetRecentTargetLanguage();
+
+  // If we've recorded the most recent target language, use that.
+  if (base::FeatureList::IsEnabled(kTranslateRecentTarget) &&
+      !recent_target.empty())
+    return recent_target;
+
   if (language_model) {
     // Use the first language from the model that translate supports.
     for (const auto& lang : language_model->GetLanguages()) {
