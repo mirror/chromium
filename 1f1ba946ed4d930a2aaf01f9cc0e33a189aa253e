@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "adf4566a_7d251701",
+        "filename": "third_party/WebKit/Source/modules/payments/PaymentRequestRespondWithObserver.cpp",
+        "patchSetId": 4
+      },
+      "lineNbr": 70,
+      "author": {
+        "id": 1002114
+      },
+      "writtenOn": "2017-11-08T20:57:45Z",
+      "side": 1,
+      "message": "Nit: Please add a console error message here as well.",
+      "range": {
+        "startLine": 70,
+        "startChar": 4,
+        "endLine": 70,
+        "endChar": 62
+      },
+      "revId": "1f1ba946ed4d930a2aaf01f9cc0e33a189aa253e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
