@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "24a5b78e_78bc8f43",
+        "filename": "chrome/browser/ui/views/passwords/manage_passwords_bubble_view.cc",
+        "patchSetId": 10
+      },
+      "lineNbr": 930,
+      "author": {
+        "id": 1126912
+      },
+      "writtenOn": "2017-11-08T00:58:38Z",
+      "side": 1,
+      "message": "The dialog classes unregister themselves as the manage_passwords_bubble_ global (which is not a ManagePasswordsBubbleView). Under MANAGE_STATE a new ManagePasswordItemsView which is not a ManagePasswordsBubbleView. As more dialogs are broken out ManagePasswordsBubbleView will get smaller and smaller and eventually vanish, is the idea.\n\nBoth tab_dialogs_views_mac.mm and tab_dialog_views.cc rely on the classes unregistering themselves as the global. Getting rid of the global is not in the scope of this CL (but it would be schweet).",
+      "parentUuid": "34577e69_e005ba81",
+      "revId": "e91bcdf204ada0c9581434b8e4a27ee4abe361e3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "6d74c732_b862e4ff",
         "filename": "chrome/browser/ui/views/passwords/manage_passwords_bubble_view.h",
         "patchSetId": 10
@@ -36,6 +54,24 @@
     },
     {
       "key": {
+        "uuid": "a54e5817_5acd5d35",
+        "filename": "chrome/browser/ui/views/passwords/manage_passwords_bubble_view.h",
+        "patchSetId": 10
+      },
+      "lineNbr": 58,
+      "author": {
+        "id": 1126912
+      },
+      "writtenOn": "2017-11-08T00:58:38Z",
+      "side": 1,
+      "message": "No, this is global for model-\u003eGetWebContents() used from tab_dialog_views (eew), model() doesn\u0027t exist on LocationBarBubbleDelegateView() which is what you get from manage_passwords_bubble_model() after this change.",
+      "parentUuid": "6d74c732_b862e4ff",
+      "revId": "e91bcdf204ada0c9581434b8e4a27ee4abe361e3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "b9499727_f4a9ec65",
         "filename": "chrome/browser/ui/views/passwords/manage_passwords_bubble_view.h",
         "patchSetId": 10
@@ -47,6 +83,41 @@
       "writtenOn": "2017-11-08T00:43:09Z",
       "side": 1,
       "message": "is the second static necessary? Updating two raw/weak pointers might be more fragile than simply having a helper function that does `return manage_passwords_bubble_ ? manage_passwords_bubble_-\u003emodel() : nullptr;`",
+      "revId": "e91bcdf204ada0c9581434b8e4a27ee4abe361e3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0d8ff0ad_13121c7a",
+        "filename": "chrome/browser/ui/views/passwords/manage_passwords_bubble_view.h",
+        "patchSetId": 10
+      },
+      "lineNbr": 127,
+      "author": {
+        "id": 1126912
+      },
+      "writtenOn": "2017-11-08T00:58:38Z",
+      "side": 1,
+      "message": "manage_passwords_bubble_ doesn\u0027t have ::model() as it\u0027s no longer a ManagePasswordsBubbleView, we\u0027re trying to break away from having a \"god dialog\" owning all password dialogs.",
+      "parentUuid": "b9499727_f4a9ec65",
+      "revId": "e91bcdf204ada0c9581434b8e4a27ee4abe361e3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "461342c8_f0b87c7a",
+        "filename": "chrome/browser/ui/views/tab_dialogs_views.cc",
+        "patchSetId": 10
+      },
+      "lineNbr": 82,
+      "author": {
+        "id": 1126912
+      },
+      "writtenOn": "2017-11-08T00:58:38Z",
+      "side": 1,
+      "message": "tapted@: Do you think this check is always equivalent to if the present bubble is the same as the one we created? If so ShowBubble can return the dialog and we can check if ManagePasswordsBubbleView::manage_passwords_bubble_model() \u003d\u003d dialog_we_created_already_.\n\nDoes that make sense?",
       "revId": "e91bcdf204ada0c9581434b8e4a27ee4abe361e3",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
