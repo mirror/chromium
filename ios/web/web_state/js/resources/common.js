@@ -705,4 +705,25 @@ __gCrWeb['common'] = __gCrWeb.common;
     return new URL(url_one).origin == new URL(url_two).origin;
   }
 
+ /**
+  * Returns the element with the specified name that is a child of the
+  * specified parent element.
+  * @param {Element} parent The parent of the desired element.
+  * @param {string} name The name of the desired element.
+  * @param {boolen} isPassword Whether the field should be a password field;
+  *     if not supplied, |false| is assumed.
+  * @return {Element} The element if found, otherwise null;
+  */
+ __gCrWeb.common.getElementByNameWithParent = function(
+     parent, name, isPassword) {
+   selector_template = isPassword ?
+     "[name='%s'][type='password']" :
+     "[name='%s']:not([type='password'])";
+
+   selector = selector_template.replace('%s', name);
+
+   return parent.querySelector(selector);
+ };
+
+
 }());  // End of anonymous object
