@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "eb6392a7_ac728549",
+        "filename": "ui/app_list/views/suggestions_container_view.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 142,
+      "author": {
+        "id": 1000101
+      },
+      "writtenOn": "2017-11-08T21:29:04Z",
+      "side": 1,
+      "message": "nit: DCHECK_LE(apps_num, kNumStartPageTiles);\n\nJust in case.",
+      "revId": "f3ddac9b4ccf1d951de818c14754d3c90fc947a7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
