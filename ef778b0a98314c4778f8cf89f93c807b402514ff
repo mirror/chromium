@@ -51,6 +51,24 @@
       "revId": "ef778b0a98314c4778f8cf89f93c807b402514ff",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e03d0c38_6d9ecbe2",
+        "filename": "components/viz/service/display/direct_renderer.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 655,
+      "author": {
+        "id": 1000887
+      },
+      "writtenOn": "2017-11-08T16:18:25Z",
+      "side": 1,
+      "message": "Right, I think the early return makes sense for the call from DrawRenderPass(), just as the no-damage-and-cached one does. It means we don\u0027t need to change the render pass\u0027 texture.\n\nIn the other cases, we\u0027ve already decided that we will change the texture, and we\u0027re in the process, but the texture may not be bound as framebuffer anymore which is incorrect.\n\nI think for this early out its likely that it can\u0027t change while drawing the render pass, so it would never early out in the other calls if it didnt in the first. But that could change in the future easily as seemingly unrelated code changed.",
+      "parentUuid": "388863e1_54f9909f",
+      "revId": "ef778b0a98314c4778f8cf89f93c807b402514ff",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
