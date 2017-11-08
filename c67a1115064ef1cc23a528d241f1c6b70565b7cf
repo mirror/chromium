@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "4c6ecd42_0228aaaf",
+        "filename": "components/arc/BUILD.gn",
+        "patchSetId": 2
+      },
+      "lineNbr": 210,
+      "author": {
+        "id": 1000111
+      },
+      "writtenOn": "2017-11-08T13:48:17Z",
+      "side": 1,
+      "message": "Can you move this into a BUILD.gn file inside the video_accelerator directory?",
+      "revId": "c67a1115064ef1cc23a528d241f1c6b70565b7cf",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ff27ed49_84800281",
+        "filename": "components/arc/BUILD.gn",
+        "patchSetId": 2
+      },
+      "lineNbr": 226,
+      "author": {
+        "id": 1000111
+      },
+      "writtenOn": "2017-11-08T13:48:17Z",
+      "side": 1,
+      "message": "This looked problematic at first glance. But it looks like it\u0027s just a bunch of mojom files. So this is probably OK. But it would be good to follow a more traditional scheme for these (e.g., they should live in public/interfaces/, and so on). That\u0027s a separate issue from what you are working on though. So I wouldn\u0027t block on that, but it would be good to bring that up with components/arc OWNERS.",
+      "revId": "c67a1115064ef1cc23a528d241f1c6b70565b7cf",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
