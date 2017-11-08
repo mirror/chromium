@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "96cffef5_fa2bf9fc",
+        "filename": "components/offline_pages/core/model/offline_page_model_taskified.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 96,
+      "author": {
+        "id": 1002546
+      },
+      "writtenOn": "2017-11-08T21:27:34Z",
+      "side": 1,
+      "message": "I\u0027m not sure what \"supported by downloads\" means.  Can we expand the explanation a bit?  For instance, do we mean anything that we consider a download as opposed to last_n?  Do we mean to include or exclude prefetched pages?",
+      "range": {
+        "startLine": 96,
+        "startChar": 46,
+        "endLine": 96,
+        "endChar": 68
+      },
+      "revId": "215d2af8f160490d7800227fd70bc654060c74ce",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
