@@ -14,9 +14,47 @@
 #include "chrome/browser/vr/test/animation_utils.h"
 #include "chrome/browser/vr/test/constants.h"
 #include "chrome/browser/vr/ui_scene.h"
+#include "testing/gmock/include/gmock/gmock.h"
 #include "testing/gtest/include/gtest/gtest.h"
 
+using testing::_;
+
 namespace vr {
+
+namespace {
+
+class MockUiElement : public UiElement {
+ public:
+  MockUiElement() : UiElement() {}
+  ~MockUiElement() override {}
+
+  MOCK_METHOD2(SetLayoutOffset, void(float, float));
+
+ private:
+  DISALLOW_COPY_AND_ASSIGN(MockUiElement);
+};
+
+}  // namespace
+
+TEST(UiElement, LayOutChildrenCanSkipChildren) {
+  auto parent = base::MakeUnique<UiElement>();
+  auto child = base::MakeUnique<MockUiElement>();
+  auto* child_ptr = child.get();
+  parent->AddChild(std::move(child));
+
+  child_ptr->set_x_anchoring(TOP);
+  EXPECT_CALL(*child_ptr, SetLayoutOffset(_, _)).Times(1);
+  parent->LayOutChildren();
+
+  child_ptr->set_x_anchoring(NONE);
+  EXPECT_CALL(*child_ptr, SetLayoutOffset(_, _)).Times(0);
+  parent->LayOutChildren();
+
+  child_ptr->set_x_anchoring(TOP);
+  child_ptr->set_requires_layout(false);
+  EXPECT_CALL(*child_ptr, SetLayoutOffset(_, _)).Times(0);
+  parent->LayOutChildren();
+}
 
 TEST(UiElements, AnimateSize) {
   UiScene scene;

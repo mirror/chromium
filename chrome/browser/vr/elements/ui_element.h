@@ -19,6 +19,7 @@
 #include "chrome/browser/vr/elements/draw_phase.h"
 #include "chrome/browser/vr/elements/ui_element_iterator.h"
 #include "chrome/browser/vr/elements/ui_element_name.h"
+#include "chrome/browser/vr/macros.h"
 #include "chrome/browser/vr/target_property.h"
 #include "third_party/skia/include/core/SkColor.h"
 #include "ui/gfx/geometry/point3_f.h"
@@ -162,7 +163,7 @@ class UiElement : public cc::AnimationTarget {
   // These are convenience functions for setting the transform operations. They
   // will animate if you've set a transition. If you need to animate more than
   // one operation simultaneously, please use |SetTransformOperations| below.
-  void SetLayoutOffset(float x, float y);
+  VIRTUAL_FOR_MOCKS void SetLayoutOffset(float x, float y);
   void SetTranslate(float x, float y, float z);
   void SetRotate(float x, float y, float z, float radians);
   void SetScale(float x, float y, float z);

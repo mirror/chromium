@@ -411,6 +411,10 @@ bool UiElement::IsAnimatingProperty(TargetProperty property) const {
 void UiElement::LayOutChildren() {
   DCHECK_LE(kUpdatedTexturesAndSizes, phase_);
   for (auto& child : children_) {
+    if (!child->requires_layout() ||
+        (child->x_anchoring() == NONE && child->y_anchoring() == NONE)) {
+      continue;
+    }
     // To anchor a child, use the parent's size to find its edge.
     float x_offset = 0.0f;
     if (child->x_anchoring() == LEFT) {
