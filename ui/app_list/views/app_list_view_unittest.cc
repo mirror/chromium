@@ -1364,18 +1364,6 @@ TEST_F(AppListViewTest, StartPageTest) {
   EXPECT_TRUE(SetAppListState(AppListModel::STATE_START));
   gfx::Size view_size(view_->GetPreferredSize());
 
-  // The "All apps" button should have its "parent background color" set
-  // to the tiles container's background color.
-  TileItemView* all_apps_button = start_page_view->all_apps_button();
-  EXPECT_TRUE(all_apps_button->visible());
-  EXPECT_EQ(kLabelBackgroundColor, all_apps_button->parent_background_color());
-
-  // Simulate clicking the "All apps" button. Check that we navigate to the
-  // apps grid view.
-  SimulateClick(all_apps_button);
-  main_view->contents_view()->Layout();
-  EXPECT_TRUE(IsStateShown(AppListModel::STATE_APPS));
-
   // Hiding and showing the search box should not affect the app list's
   // preferred size. This is a regression test for http://crbug.com/386912.
   EXPECT_EQ(view_size.ToString(), view_->GetPreferredSize().ToString());
