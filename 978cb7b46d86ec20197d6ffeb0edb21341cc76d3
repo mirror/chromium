@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "59a2b393_f8f2b0fd",
+        "filename": "ui/aura/local/window_port_local.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 161,
+      "author": {
+        "id": 1211635
+      },
+      "writtenOn": "2017-11-08T23:30:55Z",
+      "side": 1,
+      "message": "As discussed offline: moved embed_frame_sink_id_ to aura::Window, which is set by WindowPortMus and RWHVA if they are embedding another client.",
+      "parentUuid": "8942a441_e9e79541",
+      "revId": "978cb7b46d86ec20197d6ffeb0edb21341cc76d3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "7dae41ea_9917e7f0",
         "filename": "ui/aura/mus/window_port_mus.cc",
         "patchSetId": 1
@@ -30,6 +48,24 @@
       "writtenOn": "2017-11-02T16:03:32Z",
       "side": 1,
       "message": "return embed_frame_sink_id_.is_valid();",
+      "revId": "978cb7b46d86ec20197d6ffeb0edb21341cc76d3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ff60f8cb_acfd76e8",
+        "filename": "ui/aura/mus/window_port_mus.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 133,
+      "author": {
+        "id": 1211635
+      },
+      "writtenOn": "2017-11-08T23:30:55Z",
+      "side": 1,
+      "message": "Done. Moved to aura::Window",
+      "parentUuid": "7dae41ea_9917e7f0",
       "revId": "978cb7b46d86ec20197d6ffeb0edb21341cc76d3",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
