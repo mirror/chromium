@@ -1,0 +1,67 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "42b8a4c4_047e319b",
+        "filename": "tools/binary_size/libsupersize/linker_map_parser.py",
+        "patchSetId": 1
+      },
+      "lineNbr": 256,
+      "author": {
+        "id": 1126674
+      },
+      "writtenOn": "2017-11-08T21:29:15Z",
+      "side": 1,
+      "message": "nit: Flush(), Create()",
+      "range": {
+        "startLine": 256,
+        "startChar": 6,
+        "endLine": 256,
+        "endChar": 11
+      },
+      "revId": "058a1d2629f7f63fe21a88c6970c37915d24bde5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2661538c_698c5b19",
+        "filename": "tools/binary_size/libsupersize/linker_map_parser.py",
+        "patchSetId": 1
+      },
+      "lineNbr": 304,
+      "author": {
+        "id": 1126674
+      },
+      "writtenOn": "2017-11-08T21:29:15Z",
+      "side": 1,
+      "message": "Having shared ownership of self._symbols can make data flow a bit harder to grok. Can we remove self._symbols, and just assign self._symbols \u003d sym_maker.syms at the end?",
+      "revId": "058a1d2629f7f63fe21a88c6970c37915d24bde5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1cd1dc3f_1b08909f",
+        "filename": "tools/binary_size/libsupersize/linker_map_parser.py",
+        "patchSetId": 1
+      },
+      "lineNbr": 333,
+      "author": {
+        "id": 1126674
+      },
+      "writtenOn": "2017-11-08T21:29:15Z",
+      "side": 1,
+      "message": "I know this will change soon anyways, but rather than ignore these for now, can we add them as \"** lld merge section\" (important that it starts with a *, since some other code checks for this)",
+      "range": {
+        "startLine": 333,
+        "startChar": 26,
+        "endLine": 333,
+        "endChar": 34
+      },
+      "revId": "058a1d2629f7f63fe21a88c6970c37915d24bde5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
