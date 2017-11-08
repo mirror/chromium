@@ -54,6 +54,42 @@
     },
     {
       "key": {
+        "uuid": "657f3141_20d98459",
+        "filename": "third_party/WebKit/Source/core/loader/FrameLoader.cpp",
+        "patchSetId": 12
+      },
+      "lineNbr": 384,
+      "author": {
+        "id": 1189064
+      },
+      "writtenOn": "2017-11-08T23:06:32Z",
+      "side": 1,
+      "message": "The intent of saving on unload is to capture a snapshot right before leaving the page, in case the timer hasn\u0027t fired yet. But unload doesn\u0027t fire reliably. IIUC, visibilitychange buys us an up to date snapshot in the scenarios where we\u0027re leaving the page but unload doesn\u0027t fire.",
+      "parentUuid": "4bc42a8f_f39eb2df",
+      "revId": "22b9f73d330eb09607c6bba94fa2a9a8f16f7803",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d19e9d25_7b99c16e",
+        "filename": "third_party/WebKit/Source/core/loader/FrameLoader.cpp",
+        "patchSetId": 12
+      },
+      "lineNbr": 384,
+      "author": {
+        "id": 1189064
+      },
+      "writtenOn": "2017-11-08T23:06:32Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "ba2fc29e_ce96c506",
+      "revId": "22b9f73d330eb09607c6bba94fa2a9a8f16f7803",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "1dcd3f94_d133ad93",
         "filename": "third_party/WebKit/Source/core/loader/FrameLoader.cpp",
         "patchSetId": 12
@@ -68,6 +104,24 @@
       "revId": "22b9f73d330eb09607c6bba94fa2a9a8f16f7803",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "70b91d08_b233876b",
+        "filename": "third_party/WebKit/Source/core/loader/FrameLoader.cpp",
+        "patchSetId": 12
+      },
+      "lineNbr": 1180,
+      "author": {
+        "id": 1189064
+      },
+      "writtenOn": "2017-11-08T23:06:32Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "1dcd3f94_d133ad93",
+      "revId": "22b9f73d330eb09607c6bba94fa2a9a8f16f7803",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
