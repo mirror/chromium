@@ -355,7 +355,7 @@
                 ],
                 "returns": [
                     { "name": "frameId", "$ref": "FrameId", "description": "Frame id that will be navigated." },
-                    { "name": "loaderId", "$ref": "Network.LoaderId", "experimental": true, "description": "Loader id that will be used during navigation." }
+                    { "name": "errorText", "type": "string", "optional": true, "description": "User friendly error message." }
                 ],
                 "description": "Navigates current page to the given URL."
             },
