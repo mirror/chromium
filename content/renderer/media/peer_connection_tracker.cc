@@ -366,7 +366,10 @@ bool PeerConnectionTracker::OnControlMessageReceived(
   IPC_BEGIN_MESSAGE_MAP(PeerConnectionTracker, message)
     IPC_MESSAGE_HANDLER(PeerConnectionTracker_GetAllStats, OnGetAllStats)
     IPC_MESSAGE_HANDLER(PeerConnectionTracker_OnSuspend, OnSuspend)
-    IPC_MESSAGE_HANDLER(PeerConnectionTracker_StartEventLog, OnStartEventLog)
+    IPC_MESSAGE_HANDLER(PeerConnectionTracker_StartEventLogFile,
+                        OnStartEventLogFile)
+    IPC_MESSAGE_HANDLER(PeerConnectionTracker_StartEventLogOutput,
+                        OnStartEventLogOutput)
     IPC_MESSAGE_HANDLER(PeerConnectionTracker_StopEventLog, OnStopEventLog)
     IPC_MESSAGE_UNHANDLED(handled = false)
   IPC_END_MESSAGE_MAP()
@@ -404,8 +407,9 @@ void PeerConnectionTracker::OnSuspend() {
   }
 }
 
-void PeerConnectionTracker::OnStartEventLog(int peer_connection_id,
-                                            IPC::PlatformFileForTransit file) {
+void PeerConnectionTracker::OnStartEventLogFile(
+    int peer_connection_id,
+    IPC::PlatformFileForTransit file) {
   DCHECK(main_thread_.CalledOnValidThread());
   for (auto& it : peer_connection_id_map_) {
     if (it.second == peer_connection_id) {
@@ -419,6 +423,16 @@ void PeerConnectionTracker::OnStartEventLog(int peer_connection_id,
       const int64_t kMaxFilesizeBytes = 60000000;
 #endif
       it.first->StartEventLog(file, kMaxFilesizeBytes);
+      return;
+    }
+  }
+}
+
+void PeerConnectionTracker::OnStartEventLogOutput(int peer_connection_id) {
+  DCHECK(main_thread_.CalledOnValidThread());
+  for (auto& it : peer_connection_id_map_) {
+    if (it.second == peer_connection_id) {
+      it.first->StartEventLog();
       return;
     }
   }
@@ -719,6 +733,17 @@ void PeerConnectionTracker::TrackGetUserMedia(
       user_media_request.Audio(), user_media_request.Video(),
       SerializeMediaConstraints(user_media_request.AudioConstraints()),
       SerializeMediaConstraints(user_media_request.VideoConstraints())));
+}
+
+void PeerConnectionTracker::TrackRtcEventLogWrite(
+    RTCPeerConnectionHandler* pc_handler,
+    const std::string& output) {
+  DCHECK(main_thread_.CalledOnValidThread());
+  int id = GetLocalIDForHandler(pc_handler);
+  if (id == -1)
+    return;
+  SendTarget()->Send(
+      new PeerConnectionTrackerHost_RtcEventLogWrite(id, output));
 }
 
 int PeerConnectionTracker::GetNextLocalID() {
