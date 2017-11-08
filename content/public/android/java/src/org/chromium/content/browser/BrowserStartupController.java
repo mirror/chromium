@@ -241,6 +241,7 @@ public class BrowserStartupController {
      */
     @VisibleForTesting
     int contentStart() {
+        //android.util.Log.w("MY-DBG", "contentStart", new Throwable());
         assert !mHasCalledContentStart;
         mHasCalledContentStart = true;
         return ContentMain.start();
@@ -339,7 +340,7 @@ public class BrowserStartupController {
                     mPostResourceExtractionTasksCompleted = true;
                 }
 
-                if (completionCallback != null) completionCallback.run();
+                if (completionCallback != null) ThreadUtils.postOnUiThreadDelayed(completionCallback, 0);//10 * 1000);
             }
         };
 
