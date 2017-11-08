@@ -1,0 +1,90 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "722221c9_02b74cc6",
+        "filename": "components/offline_pages/core/model/delete_page_task_unittest.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 382,
+      "author": {
+        "id": 1134722
+      },
+      "writtenOn": "2017-11-08T00:55:08Z",
+      "side": 1,
+      "message": "I\u0027ve seen in Chromium code disabled but implemented test. I also saw TODO comments for implementing a needed test once some condition is met. But this disabled and un-implemented test seems weird to me.\nIt seems to me the TODO comment would more appropriate here and more in sync with what is found elsewhere in our code base. Is there a reason for this kind of reminder?",
+      "range": {
+        "startLine": 382,
+        "startChar": 27,
+        "endLine": 382,
+        "endChar": 66
+      },
+      "revId": "7438a3ae44780433cbf897b22698b9b2b93188c4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0b673f4e_94b1012c",
+        "filename": "components/offline_pages/core/model/offline_page_model_taskified_unittest.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 502,
+      "author": {
+        "id": 1134722
+      },
+      "writtenOn": "2017-11-08T00:55:08Z",
+      "side": 1,
+      "message": "Ditto here and the other test cases below.",
+      "range": {
+        "startLine": 502,
+        "startChar": 38,
+        "endLine": 502,
+        "endChar": 67
+      },
+      "revId": "7438a3ae44780433cbf897b22698b9b2b93188c4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "25bbf6dd_31246ff6",
+        "filename": "components/offline_pages/core/model/offline_page_model_taskified_unittest.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 523,
+      "author": {
+        "id": 1134722
+      },
+      "writtenOn": "2017-11-08T00:55:08Z",
+      "side": 1,
+      "message": "nit: new line after the comment as it is not directly related to the following test.",
+      "revId": "7438a3ae44780433cbf897b22698b9b2b93188c4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b4c573d5_0246c703",
+        "filename": "components/offline_pages/core/model/offline_page_model_taskified_unittest.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 525,
+      "author": {
+        "id": 1134722
+      },
+      "writtenOn": "2017-11-08T00:55:08Z",
+      "side": 1,
+      "message": "nit: Would it make sense to move some of this initialization code that many tests seem to use into SetUp?",
+      "range": {
+        "startLine": 525,
+        "startChar": 2,
+        "endLine": 525,
+        "endChar": 57
+      },
+      "revId": "7438a3ae44780433cbf897b22698b9b2b93188c4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
