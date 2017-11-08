@@ -9,10 +9,10 @@
 #include "base/macros.h"
 #include "base/memory/ptr_util.h"
 #include "content/common/resource_messages.h"
-#include "content/public/common/resource_request_completion_status.h"
 #include "content/public/renderer/request_peer.h"
 #include "content/renderer/loader/resource_dispatcher.h"
 #include "content/renderer/loader/site_isolation_stats_gatherer.h"
+#include "services/network/public/cpp/url_loader_status.h"
 
 namespace content {
 
@@ -61,7 +61,7 @@ URLResponseBodyConsumer::URLResponseBodyConsumer(
 URLResponseBodyConsumer::~URLResponseBodyConsumer() {}
 
 void URLResponseBodyConsumer::OnComplete(
-    const ResourceRequestCompletionStatus& status) {
+    const network::URLLoaderStatus& status) {
   if (has_been_cancelled_)
     return;
   has_received_completion_ = true;

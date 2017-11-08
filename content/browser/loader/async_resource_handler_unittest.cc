@@ -267,8 +267,7 @@ TEST_F(AsyncResourceHandlerTest, OneChunkLengths) {
   ASSERT_EQ(ResourceMsg_RequestComplete::ID, messages[3]->type());
   ResourceMsg_RequestComplete::Param completion_params;
   ResourceMsg_RequestComplete::Read(messages[3].get(), &completion_params);
-  ResourceRequestCompletionStatus completion_status =
-      std::get<1>(completion_params);
+  network::URLLoaderStatus completion_status = std::get<1>(completion_params);
 
   EXPECT_EQ(TotalReceivedBytes(kDataSize),
             completion_status.encoded_data_length);
@@ -297,8 +296,7 @@ TEST_F(AsyncResourceHandlerTest, TwoChunksLengths) {
   ASSERT_EQ(ResourceMsg_RequestComplete::ID, messages[4]->type());
   ResourceMsg_RequestComplete::Param completion_params;
   ResourceMsg_RequestComplete::Read(messages[4].get(), &completion_params);
-  ResourceRequestCompletionStatus completion_status =
-      std::get<1>(completion_params);
+  network::URLLoaderStatus completion_status = std::get<1>(completion_params);
   EXPECT_EQ(TotalReceivedBytes(kDataSize),
             completion_status.encoded_data_length);
   EXPECT_EQ(kDataSize, completion_status.encoded_body_length);

@@ -351,7 +351,7 @@ class WebURLLoaderImplTest : public testing::Test {
 
   void DoCompleteRequest() {
     EXPECT_FALSE(client()->did_finish());
-    ResourceRequestCompletionStatus completion_status(net::OK);
+    network::URLLoaderStatus completion_status(net::OK);
     completion_status.encoded_data_length = arraysize(kTestData);
     completion_status.encoded_body_length = arraysize(kTestData);
     completion_status.decoded_body_length = arraysize(kTestData);
@@ -363,7 +363,7 @@ class WebURLLoaderImplTest : public testing::Test {
 
   void DoFailRequest() {
     EXPECT_FALSE(client()->did_finish());
-    ResourceRequestCompletionStatus completion_status(net::ERR_FAILED);
+    network::URLLoaderStatus completion_status(net::ERR_FAILED);
     completion_status.encoded_data_length = arraysize(kTestData);
     completion_status.encoded_body_length = arraysize(kTestData);
     completion_status.decoded_body_length = arraysize(kTestData);
@@ -593,7 +593,7 @@ TEST_F(WebURLLoaderImplTest, FtpDeleteOnReceiveMoreData) {
   // cancel in DoReceiveDataFtp, before the request finishes.
   client()->set_delete_on_receive_data();
 
-  ResourceRequestCompletionStatus completion_status(net::OK);
+  network::URLLoaderStatus completion_status(net::OK);
   completion_status.encoded_data_length = arraysize(kTestData);
   completion_status.encoded_body_length = arraysize(kTestData);
   completion_status.decoded_body_length = arraysize(kTestData);

@@ -40,7 +40,7 @@ class ResourceDownloader : public UrlDownloadHandler,
       const SSLStatus& ssl_status,
       std::unique_ptr<ThrottlingURLLoader> url_loader,
       std::vector<GURL> url_chain,
-      base::Optional<ResourceRequestCompletionStatus> completion_status);
+      base::Optional<network::URLLoaderStatus> completion_status);
 
   ResourceDownloader(base::WeakPtr<UrlDownloadHandler::Delegate> delegate,
                      std::unique_ptr<ResourceRequest> resource_request,
@@ -73,7 +73,7 @@ class ResourceDownloader : public UrlDownloadHandler,
       mojo::ScopedDataPipeConsumerHandle consumer_handle,
       const SSLStatus& ssl_status,
       std::vector<GURL> url_chain,
-      base::Optional<ResourceRequestCompletionStatus> completion_status);
+      base::Optional<network::URLLoaderStatus> completion_status);
 
   base::WeakPtr<UrlDownloadHandler::Delegate> delegate_;
 

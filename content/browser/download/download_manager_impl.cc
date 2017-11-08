@@ -199,7 +199,7 @@ void InterceptNavigationResponse(
     std::unique_ptr<ResourceRequest> resource_request,
     std::unique_ptr<ThrottlingURLLoader> url_loader,
     std::vector<GURL> url_chain,
-    base::Optional<ResourceRequestCompletionStatus> completion_status) {
+    base::Optional<network::URLLoaderStatus> completion_status) {
   DCHECK_CURRENTLY_ON(BrowserThread::IO);
   DownloadManagerImpl::UniqueUrlDownloadHandlerPtr resource_downloader(
       ResourceDownloader::InterceptNavigationResponse(

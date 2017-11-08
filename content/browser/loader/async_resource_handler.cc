@@ -23,13 +23,13 @@
 #include "content/common/resource_messages.h"
 #include "content/common/view_messages.h"
 #include "content/network/upload_progress_tracker.h"
-#include "content/public/common/resource_request_completion_status.h"
 #include "content/public/common/resource_response.h"
 #include "ipc/ipc_message_macros.h"
 #include "net/base/io_buffer.h"
 #include "net/base/load_flags.h"
 #include "net/base/upload_progress.h"
 #include "net/url_request/redirect_info.h"
+#include "services/network/public/cpp/url_loader_status.h"
 
 using base::TimeDelta;
 using base::TimeTicks;
@@ -348,7 +348,7 @@ void AsyncResourceHandler::OnResponseCompleted(
 
   DCHECK(status.status() != net::URLRequestStatus::IO_PENDING);
 
-  ResourceRequestCompletionStatus request_complete_data;
+  network::URLLoaderStatus request_complete_data;
   request_complete_data.error_code = error_code;
   request_complete_data.exists_in_cache = request()->response_info().was_cached;
   request_complete_data.completion_time = TimeTicks::Now();
