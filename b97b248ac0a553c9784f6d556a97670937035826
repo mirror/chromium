@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "b34444fe_790d38d7",
+        "filename": "third_party/WebKit/Source/devtools/front_end/console/ConsoleView.js",
+        "patchSetId": 13
+      },
+      "lineNbr": 737,
+      "author": {
+        "id": 1115999
+      },
+      "writtenOn": "2017-11-08T01:27:05Z",
+      "side": 1,
+      "message": "Why didn\u0027t you use i for workDone ?",
+      "revId": "b97b248ac0a553c9784f6d556a97670937035826",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
