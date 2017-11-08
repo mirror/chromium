@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "5620cd94_865a0368",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 3
+      },
+      "lineNbr": 10,
+      "author": {
+        "id": 1230579
+      },
+      "writtenOn": "2017-11-08T03:19:43Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "06b1beb4_5d7fde9d",
+      "range": {
+        "startLine": 10,
+        "startChar": 9,
+        "endLine": 10,
+        "endChar": 21
+      },
+      "revId": "5c874062221251aa39729f3c62811355e6856aac",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "cb6eaf49_a31b4e42",
         "filename": "third_party/WebKit/LayoutTests/svg/dom/tooltip-title-inline-svg.html",
         "patchSetId": 3
@@ -36,6 +60,30 @@
       "writtenOn": "2017-11-04T10:39:41Z",
       "side": 1,
       "message": "You can make this setup(...) instead.",
+      "range": {
+        "startLine": 14,
+        "startChar": 0,
+        "endLine": 14,
+        "endChar": 4
+      },
+      "revId": "5c874062221251aa39729f3c62811355e6856aac",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "31ee171b_3253416c",
+        "filename": "third_party/WebKit/LayoutTests/svg/dom/tooltip-title-inline-svg.html",
+        "patchSetId": 3
+      },
+      "lineNbr": 14,
+      "author": {
+        "id": 1230579
+      },
+      "writtenOn": "2017-11-08T03:19:43Z",
+      "side": 1,
+      "message": "I tried moving it to setup but encountered some testharness error, \n\"CONSOLE ERROR: line 1397: Uncaught Error: Tried to create a test with file_is_test\nThis is a testharness.js-based test.\"\nI didn\u0027t see any other tests with asserts in setups so I\u0027m guessing asserts are allowed only in test functions.",
+      "parentUuid": "cb6eaf49_a31b4e42",
       "range": {
         "startLine": 14,
         "startChar": 0,
