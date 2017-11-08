@@ -22,6 +22,30 @@
       "revId": "c19f1b32ccd99c2b75970b012b0efdb6bc7ab3bc",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e07aa12d_9e1f6ccf",
+        "filename": "ios/chrome/browser/ui/browser_view_controller_unittest.mm",
+        "patchSetId": 9
+      },
+      "lineNbr": 139,
+      "author": {
+        "id": 1165759
+      },
+      "writtenOn": "2017-11-08T00:20:07Z",
+      "side": 1,
+      "message": "If it is then I run into the same issues on initing. This made things way more simple.",
+      "parentUuid": "01c36ecb_f5ad6906",
+      "range": {
+        "startLine": 139,
+        "startChar": 38,
+        "endLine": 139,
+        "endChar": 54
+      },
+      "revId": "c19f1b32ccd99c2b75970b012b0efdb6bc7ab3bc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
