@@ -73,6 +73,24 @@
     },
     {
       "key": {
+        "uuid": "ed1e5ecb_33cdaacf",
+        "filename": "chrome/browser/resources/md_extensions/load_error.js",
+        "patchSetId": 17
+      },
+      "lineNbr": 45,
+      "author": {
+        "id": 1115893
+      },
+      "writtenOn": "2017-11-08T00:19:55Z",
+      "side": 1,
+      "message": "Retracting my previous comment. The way I am simulating errors just to try this UI locally has confused me (it was not providing a retryGuid). When a retry happens, there is no new file chooser dialog showing, therefore the problem originally described still exists. I\u0027ll experiment with the \"retrying\" string, although  my preference would be to do this in a separate CL.\n\nThe code before this CL was always hiding this dialog and re-showing it when a new error occurred. Which is basically what my original version does too. Are you OK with reverting to that (meaning patch 15) for now?",
+      "parentUuid": "9e9fc867_fd90e53d",
+      "revId": "2909db982666cd57936c9ea669d6f468a8f1eedf",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "b4f3dfa6_864756b3",
         "filename": "chrome/browser/resources/md_extensions/manager.js",
         "patchSetId": 17
