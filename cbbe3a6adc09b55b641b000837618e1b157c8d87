@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "50a96306_17d16bc6",
+        "filename": "chrome/browser/search_provider_logos/logo_service_factory.cc",
+        "patchSetId": 12
+      },
+      "lineNbr": 30,
+      "author": {
+        "id": 1123275
+      },
+      "writtenOn": "2017-11-08T15:40:04Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "eff51a1c_51648de0",
+      "range": {
+        "startLine": 30,
+        "startChar": 5,
+        "endLine": 30,
+        "endChar": 28
+      },
+      "revId": "cbbe3a6adc09b55b641b000837618e1b157c8d87",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "a213a05a_180d6a5b",
         "filename": "components/search_provider_logos/google_logo_api.cc",
         "patchSetId": 12
@@ -45,6 +69,30 @@
       "revId": "cbbe3a6adc09b55b641b000837618e1b157c8d87",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "44841511_110f5478",
+        "filename": "components/search_provider_logos/google_logo_api.cc",
+        "patchSetId": 12
+      },
+      "lineNbr": 62,
+      "author": {
+        "id": 1123275
+      },
+      "writtenOn": "2017-11-08T15:40:04Z",
+      "side": 1,
+      "message": "I just went with naive code that assumes that we know what we are getting as base doodle URL. \nThe old one also does, assuming that the current query does not contain async, right?\n\nBut if search engines can set their own then yeah, the code should behave properly. Fixed.",
+      "parentUuid": "a213a05a_180d6a5b",
+      "range": {
+        "startLine": 62,
+        "startChar": 4,
+        "endLine": 62,
+        "endChar": 13
+      },
+      "revId": "cbbe3a6adc09b55b641b000837618e1b157c8d87",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -214,6 +262,30 @@
     },
     {
       "key": {
+        "uuid": "d4f4bb52_9213eb44",
+        "filename": "components/search_provider_logos/google_logo_api.cc",
+        "patchSetId": 12
+      },
+      "lineNbr": 87,
+      "author": {
+        "id": 1123275
+      },
+      "writtenOn": "2017-11-08T15:40:04Z",
+      "side": 1,
+      "message": "Removed the function",
+      "parentUuid": "16119479_af5cd6fe",
+      "range": {
+        "startLine": 87,
+        "startChar": 61,
+        "endLine": 87,
+        "endChar": 0
+      },
+      "revId": "cbbe3a6adc09b55b641b000837618e1b157c8d87",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "ade82956_cbbf4d1c",
         "filename": "components/search_provider_logos/google_logo_api.h",
         "patchSetId": 12
@@ -225,6 +297,30 @@
       "writtenOn": "2017-11-02T09:24:30Z",
       "side": 1,
       "message": "Hrm, I should probably have landed crrev.com/c/716257 before this, would\u0027ve made things easier for everyone. Or maybe not, because then it\u0027d be hard to merge...",
+      "range": {
+        "startLine": 22,
+        "startChar": 76,
+        "endLine": 22,
+        "endChar": 0
+      },
+      "revId": "cbbe3a6adc09b55b641b000837618e1b157c8d87",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "0f2f2761_15124622",
+        "filename": "components/search_provider_logos/google_logo_api.h",
+        "patchSetId": 12
+      },
+      "lineNbr": 22,
+      "author": {
+        "id": 1123275
+      },
+      "writtenOn": "2017-11-08T15:40:04Z",
+      "side": 1,
+      "message": "Already merged locally :) Thanks for the heads up!",
+      "parentUuid": "ade82956_cbbf4d1c",
       "range": {
         "startLine": 22,
         "startChar": 76,
@@ -260,6 +356,30 @@
     },
     {
       "key": {
+        "uuid": "87e82748_8c0e7c88",
+        "filename": "components/search_provider_logos/google_logo_api.h",
+        "patchSetId": 12
+      },
+      "lineNbr": 38,
+      "author": {
+        "id": 1123275
+      },
+      "writtenOn": "2017-11-08T15:40:04Z",
+      "side": 1,
+      "message": "Done, rewrote the comment.",
+      "parentUuid": "16bec630_1ad048bf",
+      "range": {
+        "startLine": 38,
+        "startChar": 14,
+        "endLine": 38,
+        "endChar": 24
+      },
+      "revId": "cbbe3a6adc09b55b641b000837618e1b157c8d87",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "ccb84974_b655ee6b",
         "filename": "components/search_provider_logos/logo_service_impl.cc",
         "patchSetId": 12
@@ -283,6 +403,30 @@
     },
     {
       "key": {
+        "uuid": "e0defe2a_050cdc28",
+        "filename": "components/search_provider_logos/logo_service_impl.cc",
+        "patchSetId": 12
+      },
+      "lineNbr": 249,
+      "author": {
+        "id": 1123275
+      },
+      "writtenOn": "2017-11-08T15:40:04Z",
+      "side": 1,
+      "message": "As discussed, it gets cleared when logo_url changes, which is why I\u0027m adding whether the logo we want is gray in there.",
+      "parentUuid": "ccb84974_b655ee6b",
+      "range": {
+        "startLine": 249,
+        "startChar": 7,
+        "endLine": 249,
+        "endChar": 26
+      },
+      "revId": "cbbe3a6adc09b55b641b000837618e1b157c8d87",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "8ad00ae6_c508aa8b",
         "filename": "components/search_provider_logos/logo_service_impl.h",
         "patchSetId": 12
@@ -303,6 +447,30 @@
       "revId": "cbbe3a6adc09b55b641b000837618e1b157c8d87",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "16c23028_6730e9f7",
+        "filename": "components/search_provider_logos/logo_service_impl.h",
+        "patchSetId": 12
+      },
+      "lineNbr": 42,
+      "author": {
+        "id": 1123275
+      },
+      "writtenOn": "2017-11-08T15:40:04Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "8ad00ae6_c508aa8b",
+      "range": {
+        "startLine": 42,
+        "startChar": 38,
+        "endLine": 42,
+        "endChar": 64
+      },
+      "revId": "cbbe3a6adc09b55b641b000837618e1b157c8d87",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
