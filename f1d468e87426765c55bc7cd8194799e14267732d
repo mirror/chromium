@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "f80f48d6_f05f9893",
+        "filename": "chrome/browser/task_manager/task_manager_browsertest.cc",
+        "patchSetId": 27
+      },
+      "lineNbr": 956,
+      "author": {
+        "id": 1002169
+      },
+      "writtenOn": "2017-11-08T19:12:39Z",
+      "side": 0,
+      "message": "I\u0027d rather not lose the kNullProcessID coverage. This ensures that the temporarily-created null pid rows don\u0027t last forever.\n\nI think it would suffice to to add (after line 947, before line 948) the following assertion:\n\nASSERT_NO_FATAL_FAILURE(WaitForTaskManagerStatToExceed(\n      MatchSubframe(\"http://c.com/\"), ColumnSpecifier::PROCESS_ID,\n      base::kNullProcessId));",
+      "revId": "f1d468e87426765c55bc7cd8194799e14267732d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
