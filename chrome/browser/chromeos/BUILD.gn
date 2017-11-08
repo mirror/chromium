@@ -444,6 +444,8 @@ source_set("chromeos") {
     "attestation/attestation_ca_client.h",
     "attestation/attestation_policy_observer.cc",
     "attestation/attestation_policy_observer.h",
+    "attestation/enrollment_policy_observer.cc",
+    "attestation/enrollment_policy_observer.h",
     "attestation/platform_verification_dialog.cc",
     "attestation/platform_verification_dialog.h",
     "attestation/platform_verification_flow.cc",

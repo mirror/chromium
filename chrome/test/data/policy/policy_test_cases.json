@@ -3305,6 +3305,14 @@
     ]
   },
 
+  "DeviceEnrollmentIdNeeded": {
+    "os": ["chromeos"],
+    "test_policy": { "DeviceEnrollmentIdNeeded": true },
+    "pref_mappings": [
+      { "pref": "cros.device.enrollment_id_needed" }
+    ]
+  },
+
   "----- Chrome Frame policies -------------------------------------------": {},
 
   "ChromeFrameRendererSettings": {
