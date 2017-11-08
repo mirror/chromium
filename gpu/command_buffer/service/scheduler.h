@@ -124,6 +124,7 @@ class GPU_EXPORT Scheduler {
 
   void RebuildSchedulingQueue();
 
+  SequenceId GetSequenceId(const SyncToken& sync_token);
   Sequence* GetSequence(SequenceId sequence_id);
 
   void RunNextTask();
