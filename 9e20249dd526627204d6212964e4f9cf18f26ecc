@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "1bdd5001_b3882f3c",
+        "filename": "components/signin/core/browser/account_reconcilor.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 110,
+      "author": {
+        "id": 1115972
+      },
+      "writtenOn": "2017-11-08T14:01:00Z",
+      "side": 1,
+      "message": "I think this should now be a histogram with multiple rows (maybe change the histogram name to Signin.DiceStatusForProfile:\n* DICE disabled\n* DICE incompatible\n* DICE compatible\n* DICE enabled",
+      "range": {
+        "startLine": 110,
+        "startChar": 32,
+        "endLine": 110,
+        "endChar": 53
+      },
+      "revId": "9e20249dd526627204d6212964e4f9cf18f26ecc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
