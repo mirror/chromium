@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "7036525b_bde7b0b7",
+        "filename": "third_party/WebKit/Source/devtools/front_end/emulation/DeviceModeToolbar.js",
+        "patchSetId": 3
+      },
+      "lineNbr": 449,
+      "author": {
+        "id": 1230559
+      },
+      "writtenOn": "2017-11-08T22:24:39Z",
+      "side": 1,
+      "message": "Since we expect that rotating can change the scale, we should really update scale first, so that setWidth(w) actually sets the width to w.\n\nI\u0027ve fixed the setSizeAndScaleToFit() and used it here.",
+      "parentUuid": "53197cdd_980b48b7",
+      "revId": "7490a26927949ec10832b8cdebc9ba022969ac2e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "5d7b81fb_faf8bb76",
         "filename": "third_party/WebKit/Source/devtools/front_end/emulation/DeviceModeToolbar.js",
         "patchSetId": 3
@@ -33,6 +51,24 @@
       "revId": "7490a26927949ec10832b8cdebc9ba022969ac2e",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6fdfa1f5_ea56cee1",
+        "filename": "third_party/WebKit/Source/devtools/front_end/emulation/DeviceModeToolbar.js",
+        "patchSetId": 3
+      },
+      "lineNbr": 555,
+      "author": {
+        "id": 1230559
+      },
+      "writtenOn": "2017-11-08T22:24:39Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "5d7b81fb_faf8bb76",
+      "revId": "7490a26927949ec10832b8cdebc9ba022969ac2e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
