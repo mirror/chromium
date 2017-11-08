@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "eb4e41e1_c179b978",
+        "filename": "chrome/browser/notifications/notification_template_builder.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 184,
+      "author": {
+        "id": 1002500
+      },
+      "writtenOn": "2017-11-08T14:46:34Z",
+      "side": 1,
+      "message": "Nit: In my upcoming CL for supporting images I\u0027ve been moving these kinds of early returns to the caller. We should probably follow suit here. For example, in Build() this becomes:\n\nif (!buttons.empty())\n  builder-\u003eAddActions(notification.buttons());",
+      "range": {
+        "startLine": 184,
+        "startChar": 4,
+        "endLine": 184,
+        "endChar": 10
+      },
+      "revId": "0ad88b01efbac5ab0db5424d7ecc8b068fdd6a09",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "746dfa34_0664de66",
+        "filename": "chrome/browser/notifications/notification_template_builder.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 216,
+      "author": {
+        "id": 1002500
+      },
+      "writtenOn": "2017-11-08T14:46:34Z",
+      "side": 1,
+      "message": "Nit: Why not...?\n\nif (context_menu_label_override_) {\n  WriteContextMenuElement(context_menu_label_override_, kNotificationSettings);\n} else {\n  base::string16 product_name \u003d ...;\n  std::string notification_settings_msg \u003d ...;\n  WriteContextMenuElement(notification_settings_msg, kNotificationSettings);\n}",
+      "range": {
+        "startLine": 216,
+        "startChar": 2,
+        "endLine": 216,
+        "endChar": 25
+      },
+      "revId": "0ad88b01efbac5ab0db5424d7ecc8b068fdd6a09",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
