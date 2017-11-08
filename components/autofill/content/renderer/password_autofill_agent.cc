@@ -25,6 +25,7 @@
 #include "build/build_config.h"
 #include "components/autofill/content/renderer/form_autofill_util.h"
 #include "components/autofill/content/renderer/password_form_conversion_utils.h"
+#include "components/autofill/content/renderer/password_generation_agent.h"
 #include "components/autofill/content/renderer/renderer_save_password_progress_logger.h"
 #include "components/autofill/core/common/autofill_constants.h"
 #include "components/autofill/core/common/autofill_util.h"
@@ -618,6 +619,11 @@ void PasswordAutofillAgent::SetAutofillAgent(AutofillAgent* autofill_agent) {
   autofill_agent_ = autofill_agent;
 }
 
+void PasswordAutofillAgent::SetPasswordGenerationAgent(
+    PasswordGenerationAgent* generation_agent) {
+  password_generation_agent_ = generation_agent;
+}
+
 PasswordAutofillAgent::PasswordValueGatekeeper::PasswordValueGatekeeper()
     : was_user_gesture_seen_(false) {
 }
@@ -733,6 +739,7 @@ bool PasswordAutofillAgent::FillSuggestion(
                                          &field_value_and_properties_map_);
   }
 
+  password_generation_agent_->OnFieldAutofilled(password_element);
   password_element.SetAutofillValue(blink::WebString::FromUTF16(password));
   password_element.SetAutofilled(true);
   UpdateFieldValueAndPropertiesMaskMap(password_element, &password,
@@ -1814,6 +1821,7 @@ bool PasswordAutofillAgent::FillUserNameAndPassword(
   // Wait to fill in the password until a user gesture occurs. This is to make
   // sure that we do not fill in the DOM with a password until we believe the
   // user is intentionally interacting with the page.
+  password_generation_agent_->OnFieldAutofilled(*password_element);
   password_element->SetSuggestedValue(blink::WebString::FromUTF16(password));
   UpdateFieldValueAndPropertiesMaskMap(*password_element, &password,
                                        FieldPropertiesFlags::AUTOFILLED,
@@ -1821,8 +1829,8 @@ bool PasswordAutofillAgent::FillUserNameAndPassword(
   ProvisionallySavePassword(password_element->Form(), *password_element,
                             RESTRICTION_NONE);
   registration_callback.Run(password_element);
-
   password_element->SetAutofilled(true);
+
   if (logger)
     logger->LogElementName(Logger::STRING_PASSWORD_FILLED, *password_element);
   return true;
