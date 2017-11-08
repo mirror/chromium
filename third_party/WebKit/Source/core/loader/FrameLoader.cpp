@@ -1468,6 +1468,7 @@ void FrameLoader::StartLoad(FrameLoadRequest& frame_load_request,
   if (had_placeholder_client_document_loader)
     provisional_document_loader_->SetSentDidFinishLoad();
   frame_->GetDocument()->CancelParsing();
+  frame_->GetDocument()->CheckCompleted();
   DetachDocumentLoader(provisional_document_loader_);
 
   // beforeunload fired above, and detaching a DocumentLoader can fire events,
