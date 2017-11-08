@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "cedc41c9_bfeadd52",
+        "filename": "base/trace_event/memory_infra_background_whitelist.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 25,
+      "author": {
+        "id": 1113149
+      },
+      "writtenOn": "2017-11-08T20:14:47Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "7f418bc5_5c744e56",
+      "revId": "43d066521a83bdc2dab4d5ed18029b881c2df02f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "52edf189_6162816f",
         "filename": "net/dns/dns_config_service_posix.cc",
         "patchSetId": 3
@@ -39,6 +57,30 @@
       "revId": "43d066521a83bdc2dab4d5ed18029b881c2df02f",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "67db8820_263300f7",
+        "filename": "net/dns/dns_config_service_posix.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 372,
+      "author": {
+        "id": 1113149
+      },
+      "writtenOn": "2017-11-08T20:14:47Z",
+      "side": 1,
+      "message": "file_path_hosts_ is fine, it never changes. hosts_ is not threadsafe, but the work required to make it threadsafe would be more disruptive than it\u0027s worth, since it\u0027s just a read and hosts_ is only written once soon after startup. The worst case is that we get a memory dump where it\u0027s in a weird state.",
+      "parentUuid": "52edf189_6162816f",
+      "range": {
+        "startLine": 372,
+        "startChar": 8,
+        "endLine": 372,
+        "endChar": 41
+      },
+      "revId": "43d066521a83bdc2dab4d5ed18029b881c2df02f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -65,6 +107,30 @@
     },
     {
       "key": {
+        "uuid": "183dea8f_503d71a0",
+        "filename": "net/dns/dns_config_service_posix.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 378,
+      "author": {
+        "id": 1113149
+      },
+      "writtenOn": "2017-11-08T20:14:47Z",
+      "side": 1,
+      "message": "yes",
+      "parentUuid": "16707e44_ef8aba3a",
+      "range": {
+        "startLine": 378,
+        "startChar": 34,
+        "endLine": 378,
+        "endChar": 75
+      },
+      "revId": "43d066521a83bdc2dab4d5ed18029b881c2df02f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "d5c19c42_41ff2804",
         "filename": "net/dns/dns_config_service_posix.cc",
         "patchSetId": 3
@@ -88,6 +154,30 @@
     },
     {
       "key": {
+        "uuid": "d6958081_01b19e8b",
+        "filename": "net/dns/dns_config_service_posix.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 379,
+      "author": {
+        "id": 1113149
+      },
+      "writtenOn": "2017-11-08T20:14:47Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "d5c19c42_41ff2804",
+      "range": {
+        "startLine": 379,
+        "startChar": 42,
+        "endLine": 379,
+        "endChar": 49
+      },
+      "revId": "43d066521a83bdc2dab4d5ed18029b881c2df02f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "77fe029f_3a151089",
         "filename": "net/dns/dns_config_service_posix.cc",
         "patchSetId": 3
@@ -108,6 +198,30 @@
       "revId": "43d066521a83bdc2dab4d5ed18029b881c2df02f",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "337d0b9e_1f7150f1",
+        "filename": "net/dns/dns_config_service_posix.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 382,
+      "author": {
+        "id": 1113149
+      },
+      "writtenOn": "2017-11-08T20:14:47Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "77fe029f_3a151089",
+      "range": {
+        "startLine": 382,
+        "startChar": 16,
+        "endLine": 382,
+        "endChar": 0
+      },
+      "revId": "43d066521a83bdc2dab4d5ed18029b881c2df02f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
