@@ -414,6 +414,10 @@ const CGFloat kKernAmount = 0.2;
         NSMinX(imageRect) - textRect.origin.x - kIconTextSpacer;
   } else {
     textRect.origin.x = NSMaxX(imageRect) + kIconTextSpacer;
+    // Ensure the title rect doesn't overlap the cell.
+    if (NSMaxX(theRect) < NSMaxX(textRect)) {
+      textRect.size.width = NSMaxX(theRect) - NSMinX(textRect);
+    }
   }
   return textRect;
 }
