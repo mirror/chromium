@@ -16,6 +16,24 @@
       "revId": "1d91ebf0669de14fd1bee6770ef684a2342d24d4",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3d92ca1e_b9883df6",
+        "filename": "chrome/browser/chromeos/login/users/wallpaper/wallpaper_manager.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 937,
+      "author": {
+        "id": 1179965
+      },
+      "writtenOn": "2017-11-08T01:23:50Z",
+      "side": 1,
+      "message": "This may introduce regression since if user is logged in, they need to set user wallpaper instead of sign-in wallpaper. If we switch these two functions, like:\n\nif (user_manager::UserManager::Get()-\u003eIsUserLoggedIn())\n  ShowUserWallpaper(last_selected_user_);\nelse\n  ShowSigninWallpaper();\n\nit still has regression because even when user is not logged in, they may need to call ShowUserWallpaper() (e.g. when a user pod is focused)\n\nThe main issue here is this function uses |last_selected_user_| to choose the wallpaper, but\n|SetDeviceWallpaperIfApplicable| does not update |last_selected_user_|. But if we add the update there I can\u0027t tell if it will introduce other regression..\n\nIf this issue is not serious enough to need a merge, I\u0027ll just close this CL and revisit when refactoring this function later. Otherwise I suggest we just use this temporary fix. (Or at most move the order of wallpaper_cache_.clear(); so that the logic looks better.. but I\u0027m afraid of regression)",
+      "parentUuid": "60d2e39e_99cd0427",
+      "revId": "1d91ebf0669de14fd1bee6770ef684a2342d24d4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
