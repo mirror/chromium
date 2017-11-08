@@ -331,6 +331,7 @@ Document* XMLHttpRequest::GetDocument() const {
 }
 
 SecurityOrigin* XMLHttpRequest::GetSecurityOrigin() const {
+  // When this is modified, also update InitResponseDocument().
   return isolated_world_security_origin_
              ? isolated_world_security_origin_.get()
              : GetExecutionContext()->GetSecurityOrigin();
@@ -384,7 +385,15 @@ void XMLHttpRequest::InitResponseDocument() {
     response_document_ = XMLDocument::Create(init);
 
   // FIXME: Set Last-Modified.
-  response_document_->SetSecurityOrigin(GetSecurityOrigin());
+
+  // This should be consistent with XMLHttpRequest::GetSecurityOrigin().
+  if (isolated_world_security_origin_) {
+    response_document_->SetSecurityOrigin(isolated_world_security_origin_);
+  } else {
+    response_document_->SetSecurityOriginFromExecutionContext(
+        *GetExecutionContext());
+  }
+
   response_document_->SetContextFeatures(GetDocument()->GetContextFeatures());
   response_document_->SetMimeType(FinalResponseMIMETypeWithFallback());
 }

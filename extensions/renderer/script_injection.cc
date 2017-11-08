@@ -70,7 +70,7 @@ int GetIsolatedWorldIdForInstance(const InjectionHost* injection_host,
   // world since these are stored per frame, and we might not have used this
   // isolated world in this frame before.
   frame->SetIsolatedWorldSecurityOrigin(
-      id, blink::WebSecurityOrigin::Create(injection_host->url()));
+      id, blink::WebMutableSecurityOrigin::Create(injection_host->url()));
   frame->SetIsolatedWorldContentSecurityPolicy(
       id,
       blink::WebString::FromUTF8(injection_host->GetContentSecurityPolicy()));
