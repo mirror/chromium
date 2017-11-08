@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "fe88e7b9_92d4fdcb",
+        "filename": "build/secondary/third_party/crashpad/crashpad/util/BUILD.gn",
+        "patchSetId": 1
+      },
+      "lineNbr": 6,
+      "author": {
+        "id": 1174099
+      },
+      "writtenOn": "2017-11-08T05:18:42Z",
+      "side": 1,
+      "message": "Nit: Looks like these want to be alphabetized.",
+      "revId": "aa29f1e57daa7fa7024eba75e5388bbaa23654a6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
