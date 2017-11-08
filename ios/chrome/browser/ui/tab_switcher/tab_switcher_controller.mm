@@ -202,6 +202,9 @@ enum class SnapshotViewOption {
                               forProtocol:@protocol(BrowserCommands)];
     [_dispatcher startDispatchingToTarget:endpoint
                               forProtocol:@protocol(ApplicationCommands)];
+    [_dispatcher
+        startDispatchingToTarget:endpoint
+                     forProtocol:@protocol(ApplicationSettingsCommands)];
     // self.dispatcher shouldn't be used in this init method, so duplicate the
     // typecast to pass dispatcher into child objects.
     id<ApplicationCommands, BrowserCommands> passableDispatcher =
