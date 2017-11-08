@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "97a142d0_d78a8ea7",
+        "filename": "content/browser/streams/stream_url_request_job.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 60,
+      "author": {
+        "id": 1186495
+      },
+      "writtenOn": "2017-11-08T17:26:17Z",
+      "side": 1,
+      "message": "It turned out that the error was not propagated down from here. I wonder if it was possible at all (and how, if it was) to get DidFailLoadWithError without this change.",
+      "range": {
+        "startLine": 60,
+        "startChar": 6,
+        "endLine": 60,
+        "endChar": 15
+      },
+      "revId": "7ca1b5f1075b82f236912e4105bddb068fefbbd7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
