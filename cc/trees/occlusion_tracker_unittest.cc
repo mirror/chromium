@@ -268,6 +268,21 @@ class OcclusionTrackerTest : public testing::Test {
     LeaveContributingSurface(layer, occlusion);
   }
 
+  void EnterRenderTarget(LayerImpl* layer, OcclusionTracker* occlusion) {
+    ASSERT_TRUE(layer_iterator_->target_render_surface());
+    ASSERT_TRUE(layer_iterator_->state() ==
+                EffectTreeLayerListIterator::State::TARGET_SURFACE);
+    occlusion->EnterLayer(*layer_iterator_);
+  }
+
+  void LeaveRenderTarget(LayerImpl* layer, OcclusionTracker* occlusion) {
+    ASSERT_TRUE(layer_iterator_->target_render_surface());
+    ASSERT_TRUE(layer_iterator_->state() ==
+                EffectTreeLayerListIterator::State::TARGET_SURFACE);
+    occlusion->LeaveLayer(*layer_iterator_);
+    ++(*layer_iterator_);
+  }
+
   void ResetLayerIterator() {
     *layer_iterator_ =
         EffectTreeLayerListIterator(host_->host_impl()->active_tree());
@@ -342,12 +357,38 @@ class OcclusionTrackerTestIdentityTransforms : public OcclusionTrackerTest {
 
     TestOcclusionTrackerWithClip occlusion(gfx::Rect(0, 0, 1000, 1000));
 
+    // layer is on the top, but will be clipped by parent.
     this->VisitLayer(layer, &occlusion);
-    this->EnterLayer(parent, &occlusion);
-
     EXPECT_EQ(gfx::Rect().ToString(),
               occlusion.occlusion_from_outside_target().ToString());
     EXPECT_EQ(gfx::Rect(30, 30, 70, 70).ToString(),
+              occlusion.occlusion_from_inside_target().ToString());
+
+    this->EnterLayer(parent, &occlusion);
+    EXPECT_EQ(gfx::Rect().ToString(),
+              occlusion.occlusion_from_outside_target().ToString());
+    EXPECT_EQ(gfx::Rect(30, 30, 70, 70).ToString(),
+              occlusion.occlusion_from_inside_target().ToString());
+
+    // parent will update its occlusion_from_inside_target when it leaves.
+    this->LeaveLayer(parent, &occlusion);
+    EXPECT_EQ(gfx::Rect().ToString(),
+              occlusion.occlusion_from_outside_target().ToString());
+    EXPECT_EQ(gfx::Rect(0, 0, 100, 100).ToString(),
+              occlusion.occlusion_from_inside_target().ToString());
+
+    this->EnterLayer(root, &occlusion);
+    EXPECT_EQ(gfx::Rect().ToString(),
+              occlusion.occlusion_from_outside_target().ToString());
+    EXPECT_EQ(gfx::Rect(0, 0, 100, 100).ToString(),
+              occlusion.occlusion_from_inside_target().ToString());
+
+    // For root, it has no opaque area. So its occlusion_from_inside_target is
+    // from children.
+    this->LeaveLayer(root, &occlusion);
+    EXPECT_EQ(gfx::Rect().ToString(),
+              occlusion.occlusion_from_outside_target().ToString());
+    EXPECT_EQ(gfx::Rect(0, 0, 100, 100).ToString(),
               occlusion.occlusion_from_inside_target().ToString());
   }
 };
@@ -537,12 +578,59 @@ class OcclusionTrackerTestScaledRenderSurface : public OcclusionTrackerTest {
 
     TestOcclusionTrackerWithClip occlusion(gfx::Rect(0, 0, 1000, 1000));
 
-    this->VisitLayer(occluder, &occlusion);
-    this->EnterLayer(layer2, &occlusion);
+    this->EnterLayer(occluder, &occlusion);
+    // occluder is on the top, nothing occludes it from outside.
+    EXPECT_EQ(gfx::Rect().ToString(),
+              occlusion.occlusion_from_outside_target().ToString());
+    EXPECT_EQ(gfx::Rect().ToString(),
+              occlusion.occlusion_from_inside_target().ToString());
+    // occluder will be clipped by parent. Itself has 100, 100, 100x100 opaque
+    // area.
+    this->LeaveLayer(occluder, &occlusion);
+    EXPECT_EQ(gfx::Rect().ToString(),
+              occlusion.occlusion_from_outside_target().ToString());
+    EXPECT_EQ(gfx::Rect(100, 100, 100, 100).ToString(),
+              occlusion.occlusion_from_inside_target().ToString());
 
+    this->EnterLayer(layer2, &occlusion);
+    // layer2's occlusion_from_outside_target is the union of above layer's
+    // occlusion_from_inside_target and occlusion_from_outside_target.
     EXPECT_EQ(gfx::Rect(100, 100, 100, 100).ToString(),
               occlusion.occlusion_from_outside_target().ToString());
     EXPECT_EQ(gfx::Rect().ToString(),
+              occlusion.occlusion_from_inside_target().ToString());
+    this->LeaveLayer(layer2, &occlusion);
+    EXPECT_EQ(gfx::Rect(100, 100, 100, 100).ToString(),
+              occlusion.occlusion_from_outside_target().ToString());
+    // After translate and scale, layer2 is 50, 50, 100x100.
+    EXPECT_EQ(gfx::Rect(50, 50, 100, 100).ToString(),
+              occlusion.occlusion_from_inside_target().ToString());
+
+    // layer1's occlusion_from_outside_target is from occluder's
+    // occlusion_from_inside_target. Its occlusion_from_inside_target is from
+    // the opaque area of layer1 and layer2.
+    this->EnterLayer(layer1, &occlusion);
+    EXPECT_EQ(gfx::Rect(100, 100, 100, 100).ToString(),
+              occlusion.occlusion_from_outside_target().ToString());
+    EXPECT_EQ(gfx::Rect(50, 50, 100, 100).ToString(),
+              occlusion.occlusion_from_inside_target().ToString());
+    this->LeaveLayer(layer1, &occlusion);
+    EXPECT_EQ(gfx::Rect(100, 100, 100, 100).ToString(),
+              occlusion.occlusion_from_outside_target().ToString());
+    EXPECT_EQ(gfx::Rect(0, 0, 200, 200).ToString(),
+              occlusion.occlusion_from_inside_target().ToString());
+
+    // If is the root, will not update the occlusion_from_outside_target and
+    // occlusion_from_inside_target.
+    this->EnterRenderTarget(parent, &occlusion);
+    EXPECT_EQ(gfx::Rect(100, 100, 100, 100).ToString(),
+              occlusion.occlusion_from_outside_target().ToString());
+    EXPECT_EQ(gfx::Rect(0, 0, 200, 200).ToString(),
+              occlusion.occlusion_from_inside_target().ToString());
+    this->LeaveRenderTarget(parent, &occlusion);
+    EXPECT_EQ(gfx::Rect(100, 100, 100, 100).ToString(),
+              occlusion.occlusion_from_outside_target().ToString());
+    EXPECT_EQ(gfx::Rect(0, 0, 200, 200).ToString(),
               occlusion.occlusion_from_inside_target().ToString());
   }
 };
