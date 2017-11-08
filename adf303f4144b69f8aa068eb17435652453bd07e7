@@ -22,6 +22,30 @@
       "revId": "adf303f4144b69f8aa068eb17435652453bd07e7",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5e2bedf0_64313f43",
+        "filename": "chrome/utility/importer/firefox_importer.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 107,
+      "author": {
+        "id": 1135394
+      },
+      "writtenOn": "2017-11-08T00:40:59Z",
+      "side": 1,
+      "message": "Ahh, good point. Thanks!",
+      "parentUuid": "3aea5d01_6723837b",
+      "range": {
+        "startLine": 107,
+        "startChar": 24,
+        "endLine": 107,
+        "endChar": 51
+      },
+      "revId": "adf303f4144b69f8aa068eb17435652453bd07e7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
