@@ -17,6 +17,11 @@ class GL_EXPORT GLFenceEGL : public GLFence {
   static void SetIgnoreFailures();
 
   GLFenceEGL();
+
+  // Custom constructor for use with GpuFenceHandle. You MUST check IsValid()
+  // before doing any further operations on the fence.
+  GLFenceEGL(EGLenum type, EGLint* attribs);
+
   ~GLFenceEGL() override;
 
   // GLFence implementation:
@@ -24,13 +29,23 @@ class GL_EXPORT GLFenceEGL : public GLFence {
   void ClientWait() override;
   void ServerWait() override;
 
+  // Check if creation succeeded. Intended for use with the custom constructor
+  // which may fail if used with invalid arguments. If it's not valid, other
+  // method calls on it are undefined.
+  bool IsValid();
+
   // EGL-specific wait-with-timeout implementation:
   EGLint ClientWaitWithTimeoutNanos(EGLTimeKHR timeout);
 
- private:
+  // Extract backing file descriptor for use in a GpuFenceHandle. Requires
+  // GLSurfaceEGL::IsAndroidNativeFenceSyncSupported(), and the fence must
+  // have been created with type EGL_SYNC_NATIVE_FENCE_ANDROID.
+  EGLint ExtractNativeFileDescriptor();
+ protected:
   EGLSyncKHR sync_;
   EGLDisplay display_;
 
+ private:
   DISALLOW_COPY_AND_ASSIGN(GLFenceEGL);
 };
 

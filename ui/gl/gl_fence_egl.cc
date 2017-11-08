@@ -6,6 +6,7 @@
 
 #include "ui/gl/egl_util.h"
 #include "ui/gl/gl_bindings.h"
+#include "ui/gl/gl_surface_egl.h"
 
 namespace gl {
 
@@ -20,11 +21,19 @@ void GLFenceEGL::SetIgnoreFailures() {
   g_ignore_egl_sync_failures = true;
 }
 
-GLFenceEGL::GLFenceEGL() {
+GLFenceEGL::GLFenceEGL() :
+    GLFenceEGL(EGL_SYNC_FENCE_KHR, nullptr) {
+  DCHECK(IsValid());
+}
+
+GLFenceEGL::GLFenceEGL(EGLenum type, EGLint* attribs) {
   display_ = eglGetCurrentDisplay();
-  sync_ = eglCreateSyncKHR(display_, EGL_SYNC_FENCE_KHR, NULL);
-  DCHECK(sync_ != EGL_NO_SYNC_KHR);
+  sync_ = eglCreateSyncKHR(display_, type, attribs);
   glFlush();
+}
+
+bool GLFenceEGL::IsValid() {
+  return sync_ != EGL_NO_SYNC_KHR;
 }
 
 bool GLFenceEGL::HasCompleted() {
@@ -67,6 +76,11 @@ void GLFenceEGL::ServerWait() {
                << ui::GetLastEGLErrorString();
     CHECK(g_ignore_egl_sync_failures);
   }
+}
+
+EGLint GLFenceEGL::ExtractNativeFileDescriptor() {
+  DCHECK(GLSurfaceEGL::IsAndroidNativeFenceSyncSupported());
+  return eglDupNativeFenceFDANDROID(display_, sync_);
 }
 
 GLFenceEGL::~GLFenceEGL() {
