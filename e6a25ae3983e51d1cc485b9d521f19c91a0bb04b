@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "f3d15345_3f869d71",
+        "filename": "content/browser/renderer_host/render_widget_host_view_android.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 738,
+      "author": {
+        "id": 1149077
+      },
+      "writtenOn": "2017-11-08T10:51:41Z",
+      "side": 1,
+      "message": "Turning these control info out of band will be done in other CL as mentioned in the description.",
+      "parentUuid": "4e0534b1_765f158e",
+      "revId": "e6a25ae3983e51d1cc485b9d521f19c91a0bb04b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "09bbe0aa_ff6b6e7e",
         "filename": "content/browser/renderer_host/render_widget_host_view_android.cc",
         "patchSetId": 8
@@ -30,6 +48,24 @@
       "writtenOn": "2017-11-07T23:18:33Z",
       "side": 1,
       "message": "ditto",
+      "revId": "e6a25ae3983e51d1cc485b9d521f19c91a0bb04b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5d9d2a16_64d37613",
+        "filename": "content/browser/renderer_host/render_widget_host_view_android.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 744,
+      "author": {
+        "id": 1149077
+      },
+      "writtenOn": "2017-11-08T10:51:41Z",
+      "side": 1,
+      "message": "This one too.",
+      "parentUuid": "09bbe0aa_ff6b6e7e",
       "revId": "e6a25ae3983e51d1cc485b9d521f19c91a0bb04b",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -59,6 +95,30 @@
     },
     {
       "key": {
+        "uuid": "379d8a92_72b7362e",
+        "filename": "content/public/android/java/src/org/chromium/content/browser/ContentViewCore.java",
+        "patchSetId": 8
+      },
+      "lineNbr": 620,
+      "author": {
+        "id": 1149077
+      },
+      "writtenOn": "2017-11-08T10:51:41Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "668a1185_d044af39",
+      "range": {
+        "startLine": 620,
+        "startChar": 35,
+        "endLine": 620,
+        "endChar": 64
+      },
+      "revId": "e6a25ae3983e51d1cc485b9d521f19c91a0bb04b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "a543b786_48ab23eb",
         "filename": "content/public/browser/render_widget_host_view.h",
         "patchSetId": 8
@@ -70,6 +130,24 @@
       "writtenOn": "2017-11-07T23:18:33Z",
       "side": 1,
       "message": "yeah, these should be on webcontents, not here",
+      "revId": "e6a25ae3983e51d1cc485b9d521f19c91a0bb04b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8366aec4_ec1f4b50",
+        "filename": "content/public/browser/render_widget_host_view.h",
+        "patchSetId": 8
+      },
+      "lineNbr": 82,
+      "author": {
+        "id": 1149077
+      },
+      "writtenOn": "2017-11-08T10:51:41Z",
+      "side": 1,
+      "message": "I thought it is not preferred to add view/size API in WebContents..? I refactored to make use of RenderWidgetHostDelegate/WebContentsDelegate.",
+      "parentUuid": "a543b786_48ab23eb",
       "revId": "e6a25ae3983e51d1cc485b9d521f19c91a0bb04b",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
