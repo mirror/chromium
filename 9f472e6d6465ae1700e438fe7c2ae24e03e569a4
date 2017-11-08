@@ -46,6 +46,30 @@
       "revId": "9f472e6d6465ae1700e438fe7c2ae24e03e569a4",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1b99b7b5_fc30f85a",
+        "filename": "content/public/common/network_connection_tracker.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 76,
+      "author": {
+        "id": 1115968
+      },
+      "writtenOn": "2017-11-08T12:33:01Z",
+      "side": 1,
+      "message": "That\u0027s a valid point, but I think in this case, the complexity in this class and consumers isn\u0027t worth the benefit.  If you, or other reviewers, disagree on this, then I\u0027m fine with it.",
+      "parentUuid": "84e8548d_d3696c4f",
+      "range": {
+        "startLine": 76,
+        "startChar": 25,
+        "endLine": 76,
+        "endChar": 26
+      },
+      "revId": "9f472e6d6465ae1700e438fe7c2ae24e03e569a4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
