@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "9dd7a036_f689b99b",
+        "filename": "ui/compositor/compositor.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 443,
+      "author": {
+        "id": 1003154
+      },
+      "writtenOn": "2017-11-08T22:28:07Z",
+      "side": 1,
+      "message": "I\u0027ll add a comment to where context_creation_weak_ptr_factory_ is declared instead of where it\u0027s used here and below.",
+      "parentUuid": "7191c2f3_6a16b7d8",
+      "revId": "02db3c56a1aeeba925fdacd43953c578eab2f4e2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "18b17477_ca4c9f81",
         "filename": "ui/compositor/compositor.cc",
         "patchSetId": 7
