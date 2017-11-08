@@ -1,0 +1,197 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "8d79db60_19254be9",
+        "filename": "build/android/pylib/utils/maven_downloader.py",
+        "patchSetId": 6
+      },
+      "lineNbr": 44,
+      "author": {
+        "id": 1181690
+      },
+      "writtenOn": "2017-11-08T16:54:09Z",
+      "side": 1,
+      "message": "nit: single quotes",
+      "range": {
+        "startLine": 44,
+        "startChar": 46,
+        "endLine": 44,
+        "endChar": 52
+      },
+      "revId": "a3549e34097cba527b48c9f3daec5b39832b64aa",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b57ed2f6_7780eaab",
+        "filename": "build/android/pylib/utils/maven_downloader.py",
+        "patchSetId": 6
+      },
+      "lineNbr": 48,
+      "author": {
+        "id": 1181690
+      },
+      "writtenOn": "2017-11-08T16:54:09Z",
+      "side": 1,
+      "message": "Instance variables should typically be protected and prefixed w/ _ to indicate that. Doing so will let pylint catch when someone tries to use them outside of the class.\n\nIf something else needs read access to these, provide a @property.",
+      "revId": "a3549e34097cba527b48c9f3daec5b39832b64aa",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "009c5ce6_393e3d11",
+        "filename": "build/android/pylib/utils/maven_downloader.py",
+        "patchSetId": 6
+      },
+      "lineNbr": 61,
+      "author": {
+        "id": 1181690
+      },
+      "writtenOn": "2017-11-08T16:54:09Z",
+      "side": 1,
+      "message": "We typically avoid assertions in favor of explicit exceptions. This is particularly true for cases like this, where the contents of artifacts is outside the control of the class.",
+      "revId": "a3549e34097cba527b48c9f3daec5b39832b64aa",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e8c00e20_23ed205b",
+        "filename": "build/android/pylib/utils/maven_downloader.py",
+        "patchSetId": 6
+      },
+      "lineNbr": 89,
+      "author": {
+        "id": 1181690
+      },
+      "writtenOn": "2017-11-08T16:54:09Z",
+      "side": 1,
+      "message": "How does this handle the case where the desired artifact already exists locally? Does it just silently succeed after realizing it doesn\u0027t need to do anything?",
+      "revId": "a3549e34097cba527b48c9f3daec5b39832b64aa",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "fe35183a_98c82561",
+        "filename": "build/android/pylib/utils/maven_downloader.py",
+        "patchSetId": 6
+      },
+      "lineNbr": 91,
+      "author": {
+        "id": 1181690
+      },
+      "writtenOn": "2017-11-08T16:54:09Z",
+      "side": 1,
+      "message": "Should the repo be hard-coded here?",
+      "revId": "a3549e34097cba527b48c9f3daec5b39832b64aa",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "67b06a26_723c1e43",
+        "filename": "build/android/pylib/utils/maven_downloader.py",
+        "patchSetId": 6
+      },
+      "lineNbr": 98,
+      "author": {
+        "id": 1181690
+      },
+      "writtenOn": "2017-11-08T16:54:09Z",
+      "side": 1,
+      "message": "We\u0027ve done this elsewhere w/ parallelizer.pMap: https://codesearch.chromium.org/chromium/src/third_party/catapult/devil/devil/utils/parallelizer.py?rcl\u003daf046c52f16840247004247b8063c61dcaef410b\u0026l\u003d154",
+      "revId": "a3549e34097cba527b48c9f3daec5b39832b64aa",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "79eb51be_187429c5",
+        "filename": "build/android/pylib/utils/maven_downloader.py",
+        "patchSetId": 6
+      },
+      "lineNbr": 101,
+      "author": {
+        "id": 1181690
+      },
+      "writtenOn": "2017-11-08T16:54:09Z",
+      "side": 1,
+      "message": "Again, please avoid assertions.",
+      "revId": "a3549e34097cba527b48c9f3daec5b39832b64aa",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "29994e44_b917eb50",
+        "filename": "build/android/pylib/utils/maven_downloader.py",
+        "patchSetId": 6
+      },
+      "lineNbr": 104,
+      "author": {
+        "id": 1181690
+      },
+      "writtenOn": "2017-11-08T16:54:09Z",
+      "side": 1,
+      "message": "I\u0027d recommend a different error type here.",
+      "revId": "a3549e34097cba527b48c9f3daec5b39832b64aa",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "63590527_5b346304",
+        "filename": "build/android/pylib/utils/maven_downloader.py",
+        "patchSetId": 6
+      },
+      "lineNbr": 108,
+      "author": {
+        "id": 1181690
+      },
+      "writtenOn": "2017-11-08T16:54:09Z",
+      "side": 1,
+      "message": "nit: would\n\n  os.path.join(*group_id.split(\u0027.\u0027), artifact_id, version, ...)\n\nwork here?",
+      "revId": "a3549e34097cba527b48c9f3daec5b39832b64aa",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2affac0b_173c8e6d",
+        "filename": "tools/android/roll/update_support_library.py",
+        "patchSetId": 6
+      },
+      "lineNbr": 20,
+      "author": {
+        "id": 1181690
+      },
+      "writtenOn": "2017-11-08T16:54:09Z",
+      "side": 1,
+      "message": "noqa?",
+      "revId": "a3549e34097cba527b48c9f3daec5b39832b64aa",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "55d686c2_cd1b01f0",
+        "filename": "tools/android/roll/update_support_library.py",
+        "patchSetId": 6
+      },
+      "lineNbr": 68,
+      "author": {
+        "id": 1181690
+      },
+      "writtenOn": "2017-11-08T16:54:09Z",
+      "side": 1,
+      "message": ":( but traces are so useful!",
+      "revId": "a3549e34097cba527b48c9f3daec5b39832b64aa",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
