@@ -176,28 +176,7 @@ class PLATFORM_EXPORT HeapObjectHeader {
  public:
   // If |gcInfoIndex| is 0, this header is interpreted as a free list header.
   NO_SANITIZE_ADDRESS
-  HeapObjectHeader(size_t size, size_t gc_info_index) {
-    // sizeof(HeapObjectHeader) must be equal to or smaller than
-    // |kAllocationGranularity|, because |HeapObjectHeader| is used as a header
-    // for a freed entry. Given that the smallest entry size is
-    // |kAllocationGranurarity|, |HeapObjectHeader| must fit into the size.
-    static_assert(
-        sizeof(HeapObjectHeader) <= kAllocationGranularity,
-        "size of HeapObjectHeader must be smaller than kAllocationGranularity");
-#if defined(ARCH_CPU_64_BITS)
-    static_assert(sizeof(HeapObjectHeader) == 8,
-                  "sizeof(HeapObjectHeader) must be 8 bytes");
-    magic_ = GetMagic();
-#endif
-
-    DCHECK(gc_info_index < GCInfoTable::kMaxIndex);
-    DCHECK_LT(size, kNonLargeObjectPageSizeMax);
-    DCHECK(!(size & kAllocationMask));
-    encoded_ = static_cast<uint32_t>(
-        (gc_info_index << kHeaderGCInfoIndexShift) | size |
-        (gc_info_index == kGcInfoIndexForFreeListHeader ? kHeaderFreedBitMask
-                                                        : 0));
-  }
+  inline HeapObjectHeader(size_t, size_t);
 
   NO_SANITIZE_ADDRESS bool IsFree() const {
     return encoded_ & kHeaderFreedBitMask;
@@ -376,6 +355,8 @@ class BasePage {
   DISALLOW_NEW_EXCEPT_PLACEMENT_NEW();
 
  public:
+  static inline BasePage* FromHeader(HeapObjectHeader*);
+
   BasePage(PageMemory*, BaseArena*);
   virtual ~BasePage() {}
 
@@ -397,7 +378,6 @@ class BasePage {
   virtual void RemoveFromHeap() = 0;
   virtual void Sweep() = 0;
   virtual void MakeConsistentForMutator() = 0;
-  virtual void InvalidateObjectStartBitmap() = 0;
 
 #if defined(ADDRESS_SANITIZER)
   virtual void PoisonUnmarkedObjects() = 0;
@@ -468,9 +448,56 @@ class BasePage {
   friend class BaseArena;
 };
 
+// A bitmap for recording object starts. Objects have to be allocated at
+// minimum granularity of kGranularity.
+//
+// Depends on internals such as:
+// - kReservedForObjectBitMap
+// - kObjectStartBitMapSize
+// - kAllocationGranularity
+class PLATFORM_EXPORT ObjectStartBitmap {
+ public:
+  // Granularity of addresses added to the bitmap.
+  static const size_t kGranularity = kAllocationGranularity;
+
+  // Maximum number of entries in the bitmap.
+  static const size_t kMaxEntries = kReservedForObjectBitMap * sizeof(uint8_t);
+
+  explicit ObjectStartBitmap(Address offset);
+
+  // Finds an object header based on a hint. Will search for an object start
+  // in decreasing address order.
+  Address FindHeader(Address hint);
+
+  inline void SetBit(Address);
+  inline void ClearBit(Address);
+  inline bool CheckBit(Address) const;
+
+  // Iterates all object starts recorded in the bitmap.
+  //
+  // The callback is of type
+  //   void(Address)
+  // and is passed the object start address as parameter.
+  template <typename Callback>
+  inline void Iterate(Callback) const;
+
+  // Clear the object start bitmap.
+  void Clear();
+
+ private:
+  static const size_t kCellSize = sizeof(uint8_t);
+  static const size_t kCellMask = sizeof(uint8_t) - 1;
+
+  inline void ObjectStartIndexAndBit(Address, size_t*, size_t*) const;
+
+  const Address offset_;
+  uint8_t object_start_bit_map_[kReservedForObjectBitMap];
+};
+
 class NormalPage final : public BasePage {
  public:
   NormalPage(PageMemory*, BaseArena*);
+  ~NormalPage();
 
   Address Payload() { return GetAddress() + PageHeaderSize(); }
   size_t PayloadSize() {
@@ -486,9 +513,6 @@ class NormalPage final : public BasePage {
   void RemoveFromHeap() override;
   void Sweep() override;
   void MakeConsistentForMutator() override;
-  void InvalidateObjectStartBitmap() override {
-    object_start_bit_map_computed_ = false;
-  }
 #if defined(ADDRESS_SANITIZER)
   void PoisonUnmarkedObjects() override;
 #endif
@@ -541,12 +565,17 @@ class NormalPage final : public BasePage {
 
   void SweepAndCompact(CompactionContext&);
 
+  // Object start bitmap of this page.
+  ObjectStartBitmap* object_start_bit_map() { return &object_start_bit_map_; }
+
+  // Verifies that the object start bitmap only contains a bit iff the object
+  // is also reachable through iteration on the page.
+  void VerifyObjectStartBitmapIsConsistentWithPayload();
+
  private:
   HeapObjectHeader* FindHeaderFromAddress(Address);
-  void PopulateObjectStartBitMap();
 
-  bool object_start_bit_map_computed_;
-  uint8_t object_start_bit_map_[kReservedForObjectBitMap];
+  ObjectStartBitmap object_start_bit_map_;
 };
 
 // Large allocations are allocated as separate objects and linked in a list.
@@ -577,7 +606,6 @@ class LargeObjectPage final : public BasePage {
   void RemoveFromHeap() override;
   void Sweep() override;
   void MakeConsistentForMutator() override;
-  void InvalidateObjectStartBitmap() override {}
 #if defined(ADDRESS_SANITIZER)
   void PoisonUnmarkedObjects() override;
 #endif
@@ -1038,6 +1066,141 @@ inline Address NormalPageArena::AllocateObject(size_t allocation_size,
 
 inline NormalPageArena* NormalPage::ArenaForNormalPage() const {
   return static_cast<NormalPageArena*>(Arena());
+}
+
+inline BasePage* BasePage::FromHeader(HeapObjectHeader* header) {
+#if DCHECK_IS_ON()
+  DCHECK(header->IsFree() || header->IsValid());
+#endif  // DCHECK_IS_ON()
+  return reinterpret_cast<BasePage*>(
+      BlinkPageAddress(reinterpret_cast<Address>(header)) +
+      kBlinkGuardPageSize);
+}
+
+inline void ObjectStartBitmap::SetBit(Address header_address) {
+  size_t map_index, object_bit;
+  ObjectStartIndexAndBit(header_address, &map_index, &object_bit);
+  object_start_bit_map_[map_index] |= (1 << object_bit);
+}
+
+inline void ObjectStartBitmap::ClearBit(Address header_address) {
+  size_t map_index, object_bit;
+  ObjectStartIndexAndBit(header_address, &map_index, &object_bit);
+  object_start_bit_map_[map_index] &= ~(1 << object_bit);
+}
+
+inline bool ObjectStartBitmap::CheckBit(Address header_address) const {
+  size_t map_index, object_bit;
+  ObjectStartIndexAndBit(header_address, &map_index, &object_bit);
+  return object_start_bit_map_[map_index] & (1 << object_bit);
+}
+
+inline void ObjectStartBitmap::ObjectStartIndexAndBit(Address header_address,
+                                                      size_t* map_index,
+                                                      size_t* bit) const {
+  const size_t object_offset = header_address - offset_;
+  DCHECK(!(object_offset & kAllocationMask));
+  const size_t object_start_number = object_offset / kAllocationGranularity;
+  *map_index = object_start_number / 8;
+  DCHECK_LT(*map_index, kObjectStartBitMapSize);
+  *bit = object_start_number & kCellMask;
+}
+
+// CountPopulation(value) returns the number of bits set in |value|.
+template <typename T>
+constexpr inline
+    typename std::enable_if<std::is_unsigned<T>::value && sizeof(T) <= 8,
+                            unsigned>::type
+    CountPopulation(T value) {
+#ifdef __GNUC__
+  return sizeof(T) == 8 ? __builtin_popcountll(static_cast<uint64_t>(value))
+                        : __builtin_popcount(static_cast<uint32_t>(value));
+#else
+  constexpr uint64_t mask[] = {0x5555555555555555, 0x3333333333333333,
+                               0x0f0f0f0f0f0f0f0f, 0x00ff00ff00ff00ff,
+                               0x0000ffff0000ffff, 0x00000000ffffffff};
+  value = ((value >> 1) & mask[0]) + (value & mask[0]);
+  value = ((value >> 2) & mask[1]) + (value & mask[1]);
+  value = ((value >> 4) & mask[2]) + (value & mask[2]);
+  if (sizeof(T) > 1)
+    value = ((value >> (sizeof(T) > 1 ? 8 : 0)) & mask[3]) + (value & mask[3]);
+  if (sizeof(T) > 2)
+    value = ((value >> (sizeof(T) > 2 ? 16 : 0)) & mask[4]) + (value & mask[4]);
+  if (sizeof(T) > 4)
+    value = ((value >> (sizeof(T) > 4 ? 32 : 0)) & mask[5]) + (value & mask[5]);
+  return static_cast<unsigned>(value);
+#endif
+}
+
+// CountTrailingZeros(value) returns the number of zero bits preceding the
+// least significant 1 bit in |value| if |value| is non-zero, otherwise it
+// returns {sizeof(T) * 8}.
+template <typename T, unsigned bits = sizeof(T) * 8>
+inline constexpr
+    typename std::enable_if<std::is_integral<T>::value && sizeof(T) <= 8,
+                            unsigned>::type
+    NumberOfTrailingZeroes(T value) {
+#ifdef __GNUC__
+  return value == 0 ? bits
+                    : bits == 64 ? __builtin_ctzll(static_cast<uint64_t>(value))
+                                 : __builtin_ctz(static_cast<uint32_t>(value));
+#else
+  // Fall back to popcount (see "Hacker's Delight" by Henry S. Warren, Jr.),
+  // chapter 5-4. On x64, since is faster than counting in a loop and faster
+  // than doing binary search.
+  using U = typename std::make_unsigned<T>::type;
+  U u = value;
+  return CountPopulation(static_cast<U>(~u & (u - 1u)));
+#endif
+}
+
+template <typename Callback>
+inline void ObjectStartBitmap::Iterate(Callback callback) const {
+  for (size_t map_index = 0; map_index < kReservedForObjectBitMap;
+       map_index++) {
+    if (!object_start_bit_map_[map_index])
+      continue;
+
+    uint8_t value = object_start_bit_map_[map_index];
+    while (value) {
+      const int trailing_zeroes = NumberOfTrailingZeroes(value);
+      const size_t object_start_number =
+          (map_index * kCellSize) + trailing_zeroes;
+      const Address object_address =
+          offset_ + (kAllocationGranularity * object_start_number);
+      callback(object_address);
+      // Clear current object bit in temporary value to advance iteration.
+      value &= ~(1 << (object_start_number & kCellMask));
+    }
+  }
+}
+
+inline HeapObjectHeader::HeapObjectHeader(size_t size, size_t gc_info_index) {
+  // sizeof(HeapObjectHeader) must be equal to or smaller than
+  // |kAllocationGranularity|, because |HeapObjectHeader| is used as a header
+  // for a freed entry. Given that the smallest entry size is
+  // |kAllocationGranurarity|, |HeapObjectHeader| must fit into the size.
+  static_assert(
+      sizeof(HeapObjectHeader) <= kAllocationGranularity,
+      "size of HeapObjectHeader must be smaller than kAllocationGranularity");
+#if defined(ARCH_CPU_64_BITS)
+  static_assert(sizeof(HeapObjectHeader) == 8,
+                "sizeof(HeapObjectHeader) must be 8 bytes");
+  magic_ = GetMagic();
+#endif
+
+  DCHECK(gc_info_index < GCInfoTable::kMaxIndex);
+  DCHECK_LT(size, kNonLargeObjectPageSizeMax);
+  DCHECK(!(size & kAllocationMask));
+  encoded_ = static_cast<uint32_t>(
+      (gc_info_index << kHeaderGCInfoIndexShift) | size |
+      (gc_info_index == kGcInfoIndexForFreeListHeader ? kHeaderFreedBitMask
+                                                      : 0));
+  BasePage* page = BasePage::FromHeader(this);
+  if (!page->IsLargeObjectPage()) {
+    static_cast<NormalPage*>(page)->object_start_bit_map()->SetBit(
+        reinterpret_cast<Address>(this));
+  }
 }
 
 }  // namespace blink
