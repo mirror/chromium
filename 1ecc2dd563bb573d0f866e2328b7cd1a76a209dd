@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "4f450496_275cc2cf",
+        "filename": "third_party/WebKit/LayoutTests/external/wpt/fetch/api/abort/general-serviceworker.https-expected.txt",
+        "patchSetId": 4
+      },
+      "lineNbr": 12,
+      "author": {
+        "id": 1114080
+      },
+      "writtenOn": "2017-11-08T13:36:36Z",
+      "side": 1,
+      "message": "This is harmless according to https://github.com/w3c/web-platform-tests/blob/master/fetch/api/abort/general.any.js:\n\n\"\"\"\n// If this doesn\u0027t throw, we\u0027ll effectively skip the test.\n// It\u0027ll fail properly in ../request/request-error.html\n\"\"\"",
+      "revId": "1ecc2dd563bb573d0f866e2328b7cd1a76a209dd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    }
+  ]
+}
