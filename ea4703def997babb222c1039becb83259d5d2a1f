@@ -1,0 +1,96 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "be52b5f9_d1712509",
+        "filename": "components/search_provider_logos/google_logo_api.cc",
+        "patchSetId": 16
+      },
+      "lineNbr": 32,
+      "author": {
+        "id": 1116059
+      },
+      "writtenOn": "2017-11-08T16:02:46Z",
+      "side": 1,
+      "message": "AppendToAsyncQueryparam maybe? Also I think this deserves a comment about what exactly it does, since it\u0027s not super clear.",
+      "range": {
+        "startLine": 32,
+        "startChar": 5,
+        "endLine": 32,
+        "endChar": 21
+      },
+      "revId": "ea4703def997babb222c1039becb83259d5d2a1f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "170c0b85_7e7ce55c",
+        "filename": "components/search_provider_logos/logo_service_impl.cc",
+        "patchSetId": 16
+      },
+      "lineNbr": 248,
+      "author": {
+        "id": 1116059
+      },
+      "writtenOn": "2017-11-08T16:02:46Z",
+      "side": 1,
+      "message": "nit: Move this into the else? It\u0027s not needed for fixed logos.\nMaybe also add a comment to explain how changes to this will cause LogoTracker to clear its cache.",
+      "range": {
+        "startLine": 248,
+        "startChar": 58,
+        "endLine": 248,
+        "endChar": 0
+      },
+      "revId": "ea4703def997babb222c1039becb83259d5d2a1f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "41cb7fab_2acde16d",
+        "filename": "components/search_provider_logos/logo_service_impl_unittest.cc",
+        "patchSetId": 16
+      },
+      "lineNbr": 373,
+      "author": {
+        "id": 1116059
+      },
+      "writtenOn": "2017-11-08T16:02:46Z",
+      "side": 1,
+      "message": "std::make_unique\u003cnet::FakeURLFetcher\u003e(...)",
+      "range": {
+        "startLine": 373,
+        "startChar": 9,
+        "endLine": 373,
+        "endChar": 45
+      },
+      "revId": "ea4703def997babb222c1039becb83259d5d2a1f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "748b4c33_df2df1a1",
+        "filename": "ios/chrome/browser/google/google_logo_service.mm",
+        "patchSetId": 16
+      },
+      "lineNbr": 44,
+      "author": {
+        "id": 1116059
+      },
+      "writtenOn": "2017-11-08T16:02:46Z",
+      "side": 1,
+      "message": "nit: This comment is now kinda redundant.",
+      "range": {
+        "startLine": 44,
+        "startChar": 31,
+        "endLine": 44,
+        "endChar": 55
+      },
+      "revId": "ea4703def997babb222c1039becb83259d5d2a1f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
