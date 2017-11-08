@@ -1,0 +1,55 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "9359ddb8_1ff9641f",
+        "filename": "ash/public/cpp/window_properties.h",
+        "patchSetId": 13
+      },
+      "lineNbr": 31,
+      "author": {
+        "id": 1000045
+      },
+      "writtenOn": "2017-11-08T23:43:34Z",
+      "side": 1,
+      "message": "Is this comment still true?",
+      "revId": "c966818315a7b4666c677e36ededbcfc7b1b5492",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9bb3eaa7_e62e1a27",
+        "filename": "ash/wm/window_state.h",
+        "patchSetId": 13
+      },
+      "lineNbr": 276,
+      "author": {
+        "id": 1000045
+      },
+      "writtenOn": "2017-11-08T23:43:34Z",
+      "side": 1,
+      "message": "optional: GetCan sounds weird, maybe just Can?",
+      "revId": "c966818315a7b4666c677e36ededbcfc7b1b5492",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "594c41d4_3987d4db",
+        "filename": "ash/wm/window_state_unittest.cc",
+        "patchSetId": 13
+      },
+      "lineNbr": 466,
+      "author": {
+        "id": 1000045
+      },
+      "writtenOn": "2017-11-08T23:43:34Z",
+      "side": 1,
+      "message": "Maybe test that it defaults to false?",
+      "revId": "c966818315a7b4666c677e36ededbcfc7b1b5492",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
