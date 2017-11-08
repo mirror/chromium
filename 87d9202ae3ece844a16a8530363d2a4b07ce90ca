@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "83dc8914_84774822",
+        "filename": "ios/web/public/download/download_controller.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 91,
+      "author": {
+        "id": 1123009
+      },
+      "writtenOn": "2017-11-08T22:11:15Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "8c5dd637_cfdcc80f",
+      "range": {
+        "startLine": 91,
+        "startChar": 62,
+        "endLine": 91,
+        "endChar": 66
+      },
+      "revId": "87d9202ae3ece844a16a8530363d2a4b07ce90ca",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "d40e3e0e_63f11b90",
         "filename": "ios/web/public/download/download_controller.h",
         "patchSetId": 6
@@ -36,6 +60,30 @@
       "writtenOn": "2017-11-08T20:19:12Z",
       "side": 1,
       "message": "Are there any cases where an embedder would want to create a download task besides restarting a download after termination? I wonder if it would make sense to rename this method to focus on that purpose. That way, there would be less confusion about whether to call this for a renderer initiated download.",
+      "range": {
+        "startLine": 102,
+        "startChar": 24,
+        "endLine": 102,
+        "endChar": 42
+      },
+      "revId": "87d9202ae3ece844a16a8530363d2a4b07ce90ca",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5db85aae_27da6ee9",
+        "filename": "ios/web/public/download/download_controller.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 102,
+      "author": {
+        "id": 1123009
+      },
+      "writtenOn": "2017-11-08T22:11:15Z",
+      "side": 1,
+      "message": "This is an interesting idea. WebController will call this method as well. So I could add DownloadControllerImpl::CreateDownloadTask, DownloadControllerImpl::FromBrowserState and DownloadController::CreateDownloadTask\u003cResumal Stuff\u003e. \n\nBut that seems like a lot of efforts just to change the name. Also in the future embedder may call this method for another purpose (like download the image to match other platforms). So leaving the current name also leaves enough flexibility for the future (especially giving that CreateDownloadTask can be used for any purpose).\n\nI can add more comments to say something like \"Clients may call this method to resume the download after the application relaunch or start a new download.\", but leave comments about renderer-initiated downloads.\n\nThoughts?",
+      "parentUuid": "d40e3e0e_63f11b90",
       "range": {
         "startLine": 102,
         "startChar": 24,
@@ -68,6 +116,30 @@
       "revId": "87d9202ae3ece844a16a8530363d2a4b07ce90ca",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "23da40d4_699da382",
+        "filename": "ios/web/public/download/download_task_observer.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 18,
+      "author": {
+        "id": 1123009
+      },
+      "writtenOn": "2017-11-08T22:11:15Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "d7ccbc38_2c69ef07",
+      "range": {
+        "startLine": 18,
+        "startChar": 16,
+        "endLine": 18,
+        "endChar": 17
+      },
+      "revId": "87d9202ae3ece844a16a8530363d2a4b07ce90ca",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
