@@ -1,0 +1,215 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "49126e2e_ca63325b",
+        "filename": "chrome/browser/resources/print_preview/new/copies_settings.html",
+        "patchSetId": 12
+      },
+      "lineNbr": 9,
+      "author": {
+        "id": 1115893
+      },
+      "writtenOn": "2017-11-08T18:43:52Z",
+      "side": 1,
+      "message": "Is this prefix necessary? All input elements in this element reside within a .settings-box anyway.",
+      "range": {
+        "startLine": 9,
+        "startChar": 6,
+        "endLine": 9,
+        "endChar": 19
+      },
+      "revId": "34d8cc01b498140402c036bfeef8ac06fbbc04e1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4fea5112_151832fc",
+        "filename": "chrome/browser/resources/print_preview/new/copies_settings.html",
+        "patchSetId": 12
+      },
+      "lineNbr": 14,
+      "author": {
+        "id": 1115893
+      },
+      "writtenOn": "2017-11-08T18:43:52Z",
+      "side": 1,
+      "message": "Same here.",
+      "range": {
+        "startLine": 14,
+        "startChar": 6,
+        "endLine": 14,
+        "endChar": 19
+      },
+      "revId": "34d8cc01b498140402c036bfeef8ac06fbbc04e1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "09540b13_34fc7eed",
+        "filename": "chrome/browser/resources/print_preview/new/copies_settings.js",
+        "patchSetId": 12
+      },
+      "lineNbr": 24,
+      "author": {
+        "id": 1115893
+      },
+      "writtenOn": "2017-11-08T18:43:52Z",
+      "side": 1,
+      "message": "Nit (optional): Per convention computed properties method are named like computeCopiesValid_(). It\u0027s not enforced consistently everywhere (see some examples at https://cs.chromium.org/search/?q\u003dcompute+file:%5Esrc/chrome/browser/resources/settings/+package:%5Echromium$\u0026type\u003dcs), but I think it does make the code more readable.",
+      "revId": "34d8cc01b498140402c036bfeef8ac06fbbc04e1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f51520d7_5c51e336",
+        "filename": "chrome/browser/resources/print_preview/new/copies_settings.js",
+        "patchSetId": 12
+      },
+      "lineNbr": 52,
+      "author": {
+        "id": 1115893
+      },
+      "writtenOn": "2017-11-08T18:43:52Z",
+      "side": 1,
+      "message": "getCopiesValid_ both determines whether user\u0027s input is valid, but also is responsible for updating the model. Could we separate those concerns to different methods? Thinking something as follows:\n\nproperties: {\n  ...\n  copiesValid_: {\n      type: Boolean,\n      computed: \u0027getCopiesValid_(copiesString_)\u0027,\n      observer: \u0027onCopiesValidChanged_\u0027,\n  },\n  ...\n}\n\ncomputeCopiesValid_: function() {\n  return this.$$(\u0027.user-value\u0027).validity.valid \u0026\u0026 this.copiesString_ !\u003d \u0027\u0027;\n},\n\nonCopiesValidChanged_: function() {\n  this.set(\u0027model.copies\u0027, this.copiesValid_ ? parseInt(this.copiesString_, 10) : 1);\n  this.set(\u0027model.printTicketInvalid\u0027, !this.copiesValid_);\n},",
+      "revId": "34d8cc01b498140402c036bfeef8ac06fbbc04e1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6d142b45_3d1868d8",
+        "filename": "chrome/browser/resources/print_preview/new/copies_settings.js",
+        "patchSetId": 12
+      },
+      "lineNbr": 54,
+      "author": {
+        "id": 1115893
+      },
+      "writtenOn": "2017-11-08T18:43:52Z",
+      "side": 1,
+      "message": "Nit: Equivalent to\nthis.set(\u0027model.copies\u0027, valid ? parseInt(this.copiesString_, 10) : 1);",
+      "revId": "34d8cc01b498140402c036bfeef8ac06fbbc04e1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d71159fd_93fab5a3",
+        "filename": "chrome/browser/resources/print_preview/new/header.html",
+        "patchSetId": 12
+      },
+      "lineNbr": 77,
+      "author": {
+        "id": 1115893
+      },
+      "writtenOn": "2017-11-08T18:43:52Z",
+      "side": 1,
+      "message": "Indent of by 2.",
+      "revId": "34d8cc01b498140402c036bfeef8ac06fbbc04e1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e7e0bfe8_02054ad4",
+        "filename": "chrome/browser/resources/print_preview/new/header.js",
+        "patchSetId": 12
+      },
+      "lineNbr": 30,
+      "author": {
+        "id": 1115893
+      },
+      "writtenOn": "2017-11-08T18:43:52Z",
+      "side": 1,
+      "message": "\"String || null\" is meaningless to Polymer AFAIK. Just \"String\" should be enough here. You could add a comment though explaining what a null value means here.",
+      "revId": "34d8cc01b498140402c036bfeef8ac06fbbc04e1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "20328bb8_0bd619c3",
+        "filename": "chrome/browser/resources/print_preview/new/header.js",
+        "patchSetId": 12
+      },
+      "lineNbr": 31,
+      "author": {
+        "id": 1115893
+      },
+      "writtenOn": "2017-11-08T18:43:52Z",
+      "side": 1,
+      "message": "Nit: s/checkFor/compute",
+      "range": {
+        "startLine": 31,
+        "startChar": 17,
+        "endLine": 31,
+        "endChar": 25
+      },
+      "revId": "34d8cc01b498140402c036bfeef8ac06fbbc04e1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d3ff7a36_4df7e07b",
+        "filename": "chrome/browser/resources/print_preview/new/layout_settings.html",
+        "patchSetId": 12
+      },
+      "lineNbr": 9,
+      "author": {
+        "id": 1115893
+      },
+      "writtenOn": "2017-11-08T18:43:52Z",
+      "side": 1,
+      "message": "Nit: Can fit in previous line.",
+      "revId": "34d8cc01b498140402c036bfeef8ac06fbbc04e1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "85e7932c_3047755a",
+        "filename": "chrome/browser/resources/print_preview/new/layout_settings.html",
+        "patchSetId": 12
+      },
+      "lineNbr": 10,
+      "author": {
+        "id": 1115893
+      },
+      "writtenOn": "2017-11-08T18:43:52Z",
+      "side": 1,
+      "message": "Where is this being used?",
+      "range": {
+        "startLine": 10,
+        "startChar": 43,
+        "endLine": 10,
+        "endChar": 50
+      },
+      "revId": "34d8cc01b498140402c036bfeef8ac06fbbc04e1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7bb7e868_d8f2a2a8",
+        "filename": "chrome/browser/resources/print_preview/new/select_css.html",
+        "patchSetId": 12
+      },
+      "lineNbr": 29,
+      "author": {
+        "id": 1115893
+      },
+      "writtenOn": "2017-11-08T18:43:52Z",
+      "side": 1,
+      "message": "No need for -webkit-any here. The following is equivalent I think (similarly at line 22 above).\n\nselect:enabled:active",
+      "revId": "34d8cc01b498140402c036bfeef8ac06fbbc04e1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
