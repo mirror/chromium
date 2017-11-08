@@ -883,6 +883,12 @@ void SessionRestore::OnWillRestoreTab(content::WebContents* web_contents) {
 }
 
 // static
+void SessionRestore::OnWillRestoreNumOfTabs(size_t num_of_tabs) {
+  for (auto& observer : *observers())
+    observer.OnWillRestoreNumOfTabs(num_of_tabs);
+}
+
+// static
 base::CallbackList<void(int)>*
     SessionRestore::on_session_restored_callbacks_ = nullptr;
 
