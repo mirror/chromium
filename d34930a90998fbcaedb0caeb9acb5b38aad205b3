@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "e7eadd75_470668d6",
+        "filename": "chrome/app/settings_chromium_strings.grdp",
+        "patchSetId": 5
+      },
+      "lineNbr": 115,
+      "author": {
+        "id": 1115893
+      },
+      "writtenOn": "2017-11-08T22:40:40Z",
+      "side": 1,
+      "message": "Can we avoid having to do this? The only other example I found doing similar thing is at https://cs.chromium.org/chromium/src/chrome/app/chromium_strings.grd?type\u003dcs\u0026q\u003dIDS_ABOUT_TERMS_OF_SERVICE\u0026sq\u003dpackage:chromium\u0026l\u003d214.\n\nHow about the following alternative:\n - Move the strings that are only used in official Chrome in settings_strings.grdp.\n - Wrap them with \u003cif expr\u003d\"_google_chrome\"\u003e...\u003c/if\u003e\n\nDo you still get the collision? See example at https://cs.chromium.org/chromium/src/chrome/app/settings_strings.grdp?l\u003d136-140.\n\nMy understanding is that files named *google_chrome_strings and *chromium_strings are meant to be used for cases where the same strings appear in both official and non-official. For strings that appear only in one or the other, they should not reside in such files.",
+      "revId": "d34930a90998fbcaedb0caeb9acb5b38aad205b3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
