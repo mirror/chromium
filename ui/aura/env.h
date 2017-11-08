@@ -128,6 +128,7 @@ class AURA_EXPORT Env : public ui::EventTarget,
   // See CreateInstance() for description.
   void SetWindowTreeClient(WindowTreeClient* window_tree_client);
   bool HasWindowTreeClient() const { return window_tree_client_ != nullptr; }
+  WindowTreeClient* window_tree_client() { return window_tree_client_; }
 
   // Schedules an embed of a client. See
   // mojom::WindowTreeClient::ScheduleEmbed() for details.
