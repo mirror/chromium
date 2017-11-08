@@ -17,7 +17,6 @@
 #include "ui/views/view.h"
 
 class ContentSettingImageModel;
-class LocationBarView;
 
 namespace content {
 class WebContents;
@@ -36,13 +35,27 @@ class BubbleDialogDelegateView;
 // blocking, geolocation).
 class ContentSettingImageView : public IconLabelBubbleView {
  public:
+  class Delegate {
+   public:
+    virtual content::WebContents* GetWebContents() = 0;
+    virtual ContentSettingBubbleModelDelegate*
+    GetContentSettingBubbleModelDelegate() = 0;
+
+   protected:
+    virtual ~Delegate() {}
+  };
+
   ContentSettingImageView(std::unique_ptr<ContentSettingImageModel> image_model,
-                          LocationBarView* parent,
+                          views::View* parent,
+                          Delegate* delegate,
                           const gfx::FontList& font_list);
   ~ContentSettingImageView() override;
 
   // Updates the decoration from the shown WebContents.
   void Update(content::WebContents* web_contents);
+
+  // Set the color of the button icon. Based on the text color by default.
+  void SetIconColor(SkColor color);
 
  private:
   // The total animation time, including open and close as well as an
@@ -62,6 +75,9 @@ class ContentSettingImageView : public IconLabelBubbleView {
   bool ShowBubble(const ui::Event& event) override;
   bool IsBubbleShowing() const override;
 
+  // InkDropHostView:
+  SkColor GetInkDropBaseColor() const override;
+
   // gfx::AnimationDelegate:
   void AnimationEnded(const gfx::Animation* animation) override;
   void AnimationProgressed(const gfx::Animation* animation) override;
@@ -80,12 +96,14 @@ class ContentSettingImageView : public IconLabelBubbleView {
   // animation is running.
   void AnimateIn();
 
-  LocationBarView* parent_;  // Weak, owns us.
+  views::View* parent_;  // Weak, owns us.
+  Delegate* delegate_;   // Weak.
   std::unique_ptr<ContentSettingImageModel> content_setting_image_model_;
   gfx::SlideAnimation slide_animator_;
   bool pause_animation_;
   double pause_animation_state_;
   views::BubbleDialogDelegateView* bubble_view_;
+  base::Optional<SkColor> icon_color_;
 
   DISALLOW_COPY_AND_ASSIGN(ContentSettingImageView);
 };
