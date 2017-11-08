@@ -1,0 +1,55 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "f7e9fd19_4f95a421",
+        "filename": "testing/scripts/upload_test_result_artifacts.py",
+        "patchSetId": 4
+      },
+      "lineNbr": 79,
+      "author": {
+        "id": 1148599
+      },
+      "writtenOn": "2017-11-08T20:22:47Z",
+      "side": 1,
+      "message": "I feel like this isn\u0027t the most optimal way to do this... It worked on my machine though.",
+      "revId": "6d438391e39e521adfd9bd9ffc9cc24b00fba759",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "dd1fc2fe_df52ebd2",
+        "filename": "testing/scripts/upload_test_result_artifacts.py",
+        "patchSetId": 4
+      },
+      "lineNbr": 96,
+      "author": {
+        "id": 1148599
+      },
+      "writtenOn": "2017-11-08T20:22:47Z",
+      "side": 1,
+      "message": "maruel@, I vaguely remember you saying something about how switching the isolate server hash algorithm is really hard because of a design decisions? Is this a good way to handle this?",
+      "revId": "6d438391e39e521adfd9bd9ffc9cc24b00fba759",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "276bb630_80e7afb7",
+        "filename": "testing/scripts/upload_test_result_artifacts.py",
+        "patchSetId": 4
+      },
+      "lineNbr": 120,
+      "author": {
+        "id": 1148599
+      },
+      "writtenOn": "2017-11-08T20:22:47Z",
+      "side": 1,
+      "message": "I rename the file when I write it out. Should I do this or just override the actual file?",
+      "revId": "6d438391e39e521adfd9bd9ffc9cc24b00fba759",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
