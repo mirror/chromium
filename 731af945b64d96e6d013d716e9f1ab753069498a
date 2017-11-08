@@ -1,0 +1,73 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "ee6c3136_b3e23e7f",
+        "filename": "chrome/browser/ui/views/toolbar/app_menu_button.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 44,
+      "author": {
+        "id": 1000763
+      },
+      "writtenOn": "2017-11-08T16:58:44Z",
+      "side": 1,
+      "message": "Make this a TimeDelta, that way it\u0027s clear what the interval is.",
+      "range": {
+        "startLine": 44,
+        "startChar": 10,
+        "endLine": 44,
+        "endChar": 16
+      },
+      "revId": "731af945b64d96e6d013d716e9f1ab753069498a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "64903154_72c1bd18",
+        "filename": "chrome/browser/ui/views/toolbar/app_menu_button.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 90,
+      "author": {
+        "id": 1000763
+      },
+      "writtenOn": "2017-11-08T16:58:44Z",
+      "side": 1,
+      "message": "Why is this public? Can it be private?",
+      "range": {
+        "startLine": 90,
+        "startChar": 7,
+        "endLine": 90,
+        "endChar": 28
+      },
+      "revId": "731af945b64d96e6d013d716e9f1ab753069498a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e4c8ac25_0ed44727",
+        "filename": "chrome/browser/ui/views/toolbar/app_menu_button.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 140,
+      "author": {
+        "id": 1000763
+      },
+      "writtenOn": "2017-11-08T16:58:44Z",
+      "side": 1,
+      "message": "I think this indicates whether to delay the initial animation. Maybe should_delay_animation_?",
+      "range": {
+        "startLine": 140,
+        "startChar": 7,
+        "endLine": 140,
+        "endChar": 27
+      },
+      "revId": "731af945b64d96e6d013d716e9f1ab753069498a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
