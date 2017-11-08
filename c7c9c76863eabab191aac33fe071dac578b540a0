@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "431842bc_dc302342",
+        "filename": "chrome/browser/extensions/api/declarative_net_request/declarative_net_request_browsertest.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 254,
+      "author": {
+        "id": 1161815
+      },
+      "writtenOn": "2017-11-08T21:45:09Z",
+      "side": 0,
+      "message": "Also removed this section, since this doesn\u0027t add much value to the test.",
+      "range": {
+        "startLine": 254,
+        "startChar": 20,
+        "endLine": 254,
+        "endChar": 21
+      },
+      "revId": "c7c9c76863eabab191aac33fe071dac578b540a0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
