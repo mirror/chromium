@@ -175,6 +175,24 @@
       "revId": "6169398846d0b1797391e6802e421e10a2dc07bf",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "da04485e_28bd72b2",
+        "filename": "content/shell/tools/breakpad_integration_test.py",
+        "patchSetId": 4
+      },
+      "lineNbr": 49,
+      "author": {
+        "id": 1174099
+      },
+      "writtenOn": "2017-11-08T22:12:22Z",
+      "side": 1,
+      "message": "\u003e The output of crashpad_database_util is an undefined human-readable text format, not something machine-friendly (hello procfs). But even still, it would only allow us to retrieve a path in a safe way. The test needs to delete the dmp file at the end, since it attempts crashing twice, and the util tool doesn\u0027t have any support for removing reports.\n\nMy counteroffer: link here to a newly filed bug about this so that we can find a solution to both the “reach-in” that I don’t like and the drawbacks of crashpad_database_util that you point out.",
+      "parentUuid": "f3ce89e9_7dd4ade7",
+      "revId": "6169398846d0b1797391e6802e421e10a2dc07bf",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
