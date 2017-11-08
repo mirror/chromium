@@ -53,9 +53,6 @@ class TestBluetoothAdapterObserver : public BluetoothAdapter::Observer {
                           BluetoothRemoteGattService* service) override;
   void GattServicesDiscovered(BluetoothAdapter* adapter,
                               BluetoothDevice* device) override;
-  void GattDiscoveryCompleteForService(
-      BluetoothAdapter* adapter,
-      BluetoothRemoteGattService* service) override;
   void GattServiceChanged(BluetoothAdapter* adapter,
                           BluetoothRemoteGattService* service) override;
   void GattCharacteristicAdded(

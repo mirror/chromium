@@ -208,15 +208,6 @@ void TestBluetoothAdapterObserver::GattServicesDiscovered(
   QuitMessageLoop();
 }
 
-void TestBluetoothAdapterObserver::GattDiscoveryCompleteForService(
-    BluetoothAdapter* adapter,
-    BluetoothRemoteGattService* service) {
-  ASSERT_EQ(adapter_.get(), adapter);
-  ++gatt_discovery_complete_count_;
-
-  QuitMessageLoop();
-}
-
 void TestBluetoothAdapterObserver::GattServiceChanged(
     BluetoothAdapter* adapter,
     BluetoothRemoteGattService* service) {

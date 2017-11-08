@@ -141,7 +141,7 @@ TEST_F(CryptAuthBluetoothLowEnergyCharacteristicFinderTest,
       from_peripheral_char_, success_callback_, error_callback_);
   // Upcasting |characteristic_finder| to access the virtual protected methods
   // from Observer: GattCharacteristicAdded() and
-  // GattDiscoveryCompleteForService().
+  // GattServiceRemoved().
   device::BluetoothAdapter::Observer* observer =
       static_cast<device::BluetoothAdapter::Observer*>(&characteristic_finder);
 
@@ -166,7 +166,7 @@ TEST_F(CryptAuthBluetoothLowEnergyCharacteristicFinderTest,
 
   EXPECT_CALL(*service_, GetUUID())
       .WillOnce(Return(device::BluetoothUUID(kServiceUUID)));
-  observer->GattDiscoveryCompleteForService(adapter_.get(), service_.get());
+  observer->GattServiceRemoved(adapter_.get(), device_.get(), service_.get());
 }
 
 // Tests that CharacteristicFinder ignores events for other devices.
@@ -181,7 +181,7 @@ TEST_F(CryptAuthBluetoothLowEnergyCharacteristicFinderTest,
       from_peripheral_char_, success_callback_, error_callback_);
   // Upcasting |characteristic_finder| to access the virtual protected methods
   // from Observer: GattCharacteristicAdded() and
-  // GattDiscoveryCompleteForService().
+  // GattServiceRemoved().
   device::BluetoothAdapter::Observer* observer =
       static_cast<device::BluetoothAdapter::Observer*>(&characteristic_finder);
 
@@ -203,7 +203,7 @@ TEST_F(CryptAuthBluetoothLowEnergyCharacteristicFinderTest,
 
   EXPECT_CALL(*service_, GetUUID())
       .WillOnce(Return(device::BluetoothUUID(kServiceUUID)));
-  observer->GattDiscoveryCompleteForService(adapter_.get(), service_.get());
+  observer->GattServiceRemoved(adapter_.get(), device_.get(), service_.get());
 }
 
 TEST_F(CryptAuthBluetoothLowEnergyCharacteristicFinderTest,
@@ -224,7 +224,7 @@ TEST_F(CryptAuthBluetoothLowEnergyCharacteristicFinderTest,
 
   EXPECT_CALL(*service_, GetUUID())
       .WillOnce(Return(device::BluetoothUUID(kServiceUUID)));
-  observer->GattDiscoveryCompleteForService(adapter_.get(), service_.get());
+  observer->GattServiceRemoved(adapter_.get(), device_.get(), service_.get());
 }
 
 TEST_F(CryptAuthBluetoothLowEnergyCharacteristicFinderTest,
@@ -270,7 +270,7 @@ TEST_F(CryptAuthBluetoothLowEnergyCharacteristicFinderTest,
 
   EXPECT_CALL(*service_, GetUUID())
       .WillOnce(Return(device::BluetoothUUID(kServiceUUID)));
-  observer->GattDiscoveryCompleteForService(adapter_.get(), service_.get());
+  observer->GattServiceRemoved(adapter_.get(), device_.get(), service_.get());
   EXPECT_EQ(kFromPeripheralCharID, found_from_char.id);
 }
 
@@ -308,7 +308,7 @@ TEST_F(CryptAuthBluetoothLowEnergyCharacteristicFinderTest,
 
   EXPECT_CALL(*service_, GetUUID())
       .WillOnce(Return(device::BluetoothUUID(kServiceUUID)));
-  observer->GattDiscoveryCompleteForService(adapter_.get(), service_.get());
+  observer->GattServiceRemoved(adapter_.get(), device_.get(), service_.get());
 }
 
 TEST_F(CryptAuthBluetoothLowEnergyCharacteristicFinderTest,
@@ -348,7 +348,7 @@ TEST_F(CryptAuthBluetoothLowEnergyCharacteristicFinderTest,
 
   EXPECT_CALL(*service_, GetUUID())
       .WillOnce(Return(device::BluetoothUUID(kServiceUUID)));
-  observer->GattDiscoveryCompleteForService(adapter_.get(), service_.get());
+  observer->GattServiceRemoved(adapter_.get(), device_.get(), service_.get());
 }
 
 }  // namespace cryptauth
