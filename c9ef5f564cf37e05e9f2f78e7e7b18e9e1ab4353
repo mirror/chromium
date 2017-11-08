@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "43715264_2eeccbd9",
+        "filename": "testing/buildbot/chromium.fyi.json",
+        "patchSetId": 2
+      },
+      "lineNbr": 4356,
+      "author": {
+        "id": 1000763
+      },
+      "writtenOn": "2017-11-08T17:27:54Z",
+      "side": 1,
+      "message": "I don\u0027t *think* so, by which I mean I\u0027m not entirely sure. These values match that of content_browsertests on the main ChromeOS config ( https://chromium.googlesource.com/chromium/src/+/master/testing/buildbot/chromium.chromiumos.json#176 ).",
+      "parentUuid": "055659a4_a8c74a09",
+      "revId": "c9ef5f564cf37e05e9f2f78e7e7b18e9e1ab4353",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "b292abfc_8791eb7b",
         "filename": "testing/buildbot/filters/mojo.fyi.mus.content_browsertests.filter",
         "patchSetId": 2
@@ -30,6 +48,24 @@
       "writtenOn": "2017-11-08T17:12:05Z",
       "side": 1,
       "message": "Is this the right bug to cite so many times throughout?",
+      "revId": "c9ef5f564cf37e05e9f2f78e7e7b18e9e1ab4353",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "497f8276_73a4ad56",
+        "filename": "testing/buildbot/filters/mojo.fyi.mus.content_browsertests.filter",
+        "patchSetId": 2
+      },
+      "lineNbr": 3,
+      "author": {
+        "id": 1000763
+      },
+      "writtenOn": "2017-11-08T17:27:54Z",
+      "side": 1,
+      "message": "Yes and no. 775030 is a meta bug about reworking what is called CompositorFrame sniffing. That means that many of the bugs sited here are relying on content being able to see CompositorFrames. That is no longer the case with viz. 775030 is the meta bug for reworking all the deps. So, it\u0027s entirely possible some of these should reference the more specific bugs under 775030.\n\nMy actual hope is that when --mus no longer means --viz that most of these exclusions can go away into a filter file for --mus/--viz, which is why I\u0027m not spending too much time figuring out the specifics. Once --mus no longer runs --viz I will spend more time on the specifics.",
+      "parentUuid": "b292abfc_8791eb7b",
       "revId": "c9ef5f564cf37e05e9f2f78e7e7b18e9e1ab4353",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
