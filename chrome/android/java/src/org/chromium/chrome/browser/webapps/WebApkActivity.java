@@ -168,6 +168,15 @@ public class WebApkActivity extends WebappActivity {
     }
 
     @Override
+    public void preInflationStartup() {
+        super.preInflationStartup();
+        // When turning on TalkBack on Android, hitting app switcher to bring a WebApkActivity to
+        // front will speak "Web App", which is the label of WebApkActivity. Therefore, we set title
+        // of the WebApkActivity explicitly to make it speaks the short name of the WebAPK.
+        setTitle(mWebappInfo.shortName());
+    }
+
+    @Override
     public void onResumeWithNative() {
         super.onResumeWithNative();
 
