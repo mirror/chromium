@@ -154,6 +154,10 @@ class Setup {
   // Owned by the Value (if it exists) in the dotfile_scope_.
   const Scope* default_args_;
 
+  // Overrides that are not possibly needed, setting their value doesn't
+  // trigger error even if the argument is never declared.
+  std::vector<std::string> not_needed_args_;
+
   // Set to true when we should populate the build arguments from the command
   // line or build argument file. See setter above.
   bool fill_arguments_;

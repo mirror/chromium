@@ -237,6 +237,10 @@ bool Args::VerifyAllOverridesUsed(Err* err) const {
   for (const auto& map_pair : declared_arguments_per_toolchain_)
     RemoveDeclaredOverrides(map_pair.second, &unused_overrides);
 
+  for (const auto& a : not_needed_args_)
+    if (unused_overrides.find(a) != unused_overrides.end())
+      unused_overrides.erase(a);
+
   if (unused_overrides.empty())
     return true;
 

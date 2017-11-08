@@ -5499,6 +5499,15 @@
 
       This is intended to be used when subprojects declare arguments with
       default values that need to be changed for whatever reason.
+
+  not_needed_args [optional]
+      List containing names of arguments that are not needed. Specifying
+      a default value for these arguments will not raise an error even
+      if those arguments were never declared.
+
+      This is intended to be used when subprojects declare arguments with
+      default values that need to be changed, but which may not be always
+      built.
 ```
 
 #### **Example .gn file contents**
@@ -5520,6 +5529,10 @@
     is_debug = false
     is_component_build = false
   }
+
+  not_needed_args = [
+    "is_component_build",
+  ]
 ```
 ### <a name="execution"></a>**Build graph and execution overview**
 

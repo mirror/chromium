@@ -41,6 +41,9 @@ class Args {
   Args(const Args& other);
   ~Args();
 
+  std::vector<std::string> not_needed_args() const { return not_needed_args_; }
+  void set_not_needed_args(const std::vector<std::string>& a) { not_needed_args_ = a; }
+
   // Specifies overrides of the build arguments. These are normally specified
   // on the command line.
   void AddArgOverride(const char* name, const Value& value);
@@ -102,6 +105,8 @@ class Args {
   // Since this is called during setup which we assume is single-threaded,
   // this is not protected by the lock. It should be set only during init.
   Scope::KeyValueMap overrides_;
+
+  std::vector<std::string> not_needed_args_;
 
   mutable base::Lock lock_;
 

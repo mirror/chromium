@@ -124,6 +124,16 @@ Variables
       This is intended to be used when subprojects declare arguments with
       default values that need to be changed for whatever reason.
 
+  not_needed_args [optional]
+      List containing names of arguments that are not needed. Specifying
+      a default value for these arguments will not raise an error even
+      if those arguments were never declared.
+
+      This is intended to be used when subprojects declare arguments with
+      default values that need to be changed, but which may not be always
+      built.
+
+
 Example .gn file contents
 
   buildconfig = "//build/config/BUILDCONFIG.gn"
@@ -142,6 +152,10 @@ Example .gn file contents
     is_debug = false
     is_component_build = false
   }
+
+  not_needed_args = [
+    "is_component_build",
+  ]
 )";
 
 namespace {
@@ -326,6 +340,9 @@ bool Setup::DoSetup(const std::string& build_dir, bool force_create) {
     default_args_->GetCurrentScopeValues(&overrides);
     build_settings_.build_args().AddArgOverrides(overrides);
   }
+
+  if (not_needed_args_.size())
+    build_settings_.build_args().set_not_needed_args(not_needed_args_);
 
   if (fill_arguments_) {
     if (!FillArguments(*cmdline))
@@ -806,6 +823,23 @@ bool Setup::FillOtherConfig(const base::CommandLine& cmdline) {
     }
     SourceFile path(arg_file_template_value->string_value());
     build_settings_.set_arg_file_template_path(path);
+  }
+
+  const Value* not_needed_args_value =
+      dotfile_scope_.GetValue("not_needed_args", true);
+  if (not_needed_args_value) {
+    if (!not_needed_args_value->VerifyTypeIs(Value::LIST, &err)) {
+      err.PrintToStdout();
+      return false;
+    }
+
+    for (const Value& cur : not_needed_args_value->list_value()) {
+      if (!cur.VerifyTypeIs(Value::STRING, &err)) {
+        err.PrintToStdout();
+        return false;
+      }
+      not_needed_args_.push_back(cur.string_value());
+    }
   }
 
   return true;
