@@ -8,6 +8,24 @@
 
 namespace blink {
 
+#if DCHECK_IS_ON()
+String PaintChunk::TypeAsDebugString(Type type) {
+  if (type < kLayerChunk)
+    return DisplayItem::TypeAsDebugString(static_cast<DisplayItem::Type>(type));
+
+  switch (type) {
+    case kLayerChunk:
+      return "LayerChunk";
+    case kLayerChunkBackground:
+      return "LayerChunkBackground";
+    case kLayerChunkMask:
+      return "LayerChunkMask";
+  }
+  NOTREACHED();
+  return "Unknown";
+}
+#endif
+
 String PaintChunk::ToString() const {
   return String::Format(
       "begin=%zu, end=%zu, id=%p:"
@@ -20,7 +38,7 @@ String PaintChunk::ToString() const {
       "raster_invalidation_rects=%zu",
       begin_index, end_index, &id.client,
 #if DCHECK_IS_ON()
-      DisplayItem::TypeAsDebugString(id.type).Ascii().data(),
+      TypeAsDebugString(id.type).Ascii().data(),
 #else
       static_cast<int>(id.type),
 #endif
