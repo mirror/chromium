@@ -55,6 +55,24 @@
     },
     {
       "key": {
+        "uuid": "5056a7e2_50ebdfe7",
+        "filename": "chrome/browser/resources/vr_daydream_resources.grd",
+        "patchSetId": 2
+      },
+      "lineNbr": 7,
+      "author": {
+        "id": 1189473
+      },
+      "writtenOn": "2017-11-08T01:11:02Z",
+      "side": 1,
+      "message": "We could add a separate test grd, then tests could depend on that instead of the product one, and the product could avoid pulling in test resources.\n\nThis grd could then be cross-platform, and only pull in resources needed for the specific platform we are building.",
+      "parentUuid": "649d839f_3bc01b31",
+      "revId": "5918d2348a271a19f0bf9d6fc67bf002825cb373",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "1929210d_822a2812",
         "filename": "chrome/browser/vr/BUILD.gn",
         "patchSetId": 2
