@@ -1,0 +1,176 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "11f86039_6430befc",
+        "filename": "build/config/ios/codesign.py",
+        "patchSetId": 4
+      },
+      "lineNbr": 337,
+      "author": {
+        "id": 1116027
+      },
+      "writtenOn": "2017-11-08T12:57:01Z",
+      "side": 1,
+      "message": "nit: I prefer --disable-embedded-mobileprovision (the python variable will be unchanged)",
+      "range": {
+        "startLine": 337,
+        "startChar": 11,
+        "endLine": 337,
+        "endChar": 43
+      },
+      "revId": "2009f57ff1e5da25aa27c87577e658a5c7f77967",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b573ae6d_62a56d53",
+        "filename": "build/config/ios/codesign.py",
+        "patchSetId": 4
+      },
+      "lineNbr": 417,
+      "author": {
+        "id": 1116027
+      },
+      "writtenOn": "2017-11-08T12:57:01Z",
+      "side": 1,
+      "message": "style: no () around the condition of an \"if\" in python",
+      "range": {
+        "startLine": 417,
+        "startChar": 4,
+        "endLine": 417,
+        "endChar": 38
+      },
+      "revId": "2009f57ff1e5da25aa27c87577e658a5c7f77967",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f54b832b_16ea4cad",
+        "filename": "build/config/ios/codesign.py",
+        "patchSetId": 4
+      },
+      "lineNbr": 427,
+      "author": {
+        "id": 1116027
+      },
+      "writtenOn": "2017-11-08T12:57:01Z",
+      "side": 1,
+      "message": "ditto, no ()",
+      "range": {
+        "startLine": 427,
+        "startChar": 11,
+        "endLine": 427,
+        "endChar": 47
+      },
+      "revId": "2009f57ff1e5da25aa27c87577e658a5c7f77967",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c172622a_1d709f78",
+        "filename": "build/config/ios/codesign.py",
+        "patchSetId": 4
+      },
+      "lineNbr": 427,
+      "author": {
+        "id": 1116027
+      },
+      "writtenOn": "2017-11-08T12:57:01Z",
+      "side": 1,
+      "message": "I suggest that we support entitlements with no mobile provisioning (it is currently an unsupported configuration by the target OS, but I\u0027d like the script to support this).\n\nThis mean that we would need to move this condition out of the previous if block, and check whether provisioning_profile is None or not, something like this:\n\n  provisioning_profile \u003d None\n  if args.embedded_mobileprovision:\n    # Find mobile provisioning profile and embeds it into the bundle (if a\n    # code signing identify has been provided, fails if no valid mobile\n    # provisioning is found).\n    provisioning_profile_required \u003d args.identity !\u003d \u0027-\u0027\n    provisioning_profile \u003d FindProvisioningProfile(\n          bundle.identifier, provisioning_profile_required)\n    if provisioning_profile and args.platform !\u003d \u0027iphonesimulator\u0027:\n      provisioning_profile.Install(embedded_provisioning_profile)\n\n  if args.entitlements_path:\n    temporary_entitlements_file \u003d tempfile.NamedTemporaryFile(suffix\u003d\u0027.xcent\u0027)\n    codesign_extra_args.extend(\n        [\u0027--entitlements\u0027, temporary_entitlements_file.name])\n    entitlements \u003d GenerateEntitlements(\n        args.entitlements_path, provisioning_profile, bundle.identifier)\n    entitlements.WriteTo(temporary_entitlements_file.name)\n\nNote that I checked and GenerateEntitlements supports the case when provisioning_profile is None.",
+      "revId": "2009f57ff1e5da25aa27c87577e658a5c7f77967",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "cee6a281_86b23aa6",
+        "filename": "build/config/ios/rules.gni",
+        "patchSetId": 4
+      },
+      "lineNbr": 173,
+      "author": {
+        "id": 1116027
+      },
+      "writtenOn": "2017-11-08T12:57:01Z",
+      "side": 1,
+      "message": "nit: (optional, defaults to false)",
+      "range": {
+        "startLine": 173,
+        "startChar": 9,
+        "endLine": 173,
+        "endChar": 17
+      },
+      "revId": "2009f57ff1e5da25aa27c87577e658a5c7f77967",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ee41d573_2227943d",
+        "filename": "build/config/ios/rules.gni",
+        "patchSetId": 4
+      },
+      "lineNbr": 178,
+      "author": {
+        "id": 1116027
+      },
+      "writtenOn": "2017-11-08T12:57:01Z",
+      "side": 1,
+      "message": "nit: (optional, defaults to false)",
+      "range": {
+        "startLine": 178,
+        "startChar": 9,
+        "endLine": 178,
+        "endChar": 17
+      },
+      "revId": "2009f57ff1e5da25aa27c87577e658a5c7f77967",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2d3a31a5_96e00e00",
+        "filename": "build/config/ios/rules.gni",
+        "patchSetId": 4
+      },
+      "lineNbr": 244,
+      "author": {
+        "id": 1116027
+      },
+      "writtenOn": "2017-11-08T12:57:01Z",
+      "side": 1,
+      "message": "nit: to avoid double negative in the \"if\"-s, can you renamed the local variable to _enable_...\n\n  _enable_embedded_mobileprovision \u003d true\n  if (defined(invoker.disable_embedded_mobileprovision)) {\n    _enable_embedded_mobileprovision \u003d !invoker.disable_embedded_mobileprovision\n  }\n\n  _enable_entitlements \u003d true\n  if (defined(invoker.disable_entitlements)) {\n    _enable_entitlements \u003d !invoker.disable_entitlements\n  }\n\n  if (_enable_entitlements) {\n    ...\n\nYou can even make the definition a bit more terse (but I\u0027m not sure whether this is better):\n\n  _enable_embedded_mobileprovision \u003d\n      !(defined(invoker.disable_embedded_mobileprovision) \u0026\u0026\n          invoker.disable_embedded_mobileprovision)",
+      "range": {
+        "startLine": 244,
+        "startChar": 2,
+        "endLine": 244,
+        "endChar": 35
+      },
+      "revId": "2009f57ff1e5da25aa27c87577e658a5c7f77967",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ddf8a209_139fead5",
+        "filename": "build/config/ios/rules.gni",
+        "patchSetId": 4
+      },
+      "lineNbr": 1460,
+      "author": {
+        "id": 1116027
+      },
+      "writtenOn": "2017-11-08T12:57:01Z",
+      "side": 1,
+      "message": "Please add a comment above those two variable to explain that .framework do not have entitlements nor mobileprovision because they use the one from the bundle using them (.app or .appex) as they are just dynamic library with shared code.",
+      "revId": "2009f57ff1e5da25aa27c87577e658a5c7f77967",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
