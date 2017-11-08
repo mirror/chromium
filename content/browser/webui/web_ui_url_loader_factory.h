@@ -10,8 +10,12 @@
 namespace content {
 class FrameTreeNode;
 
-// Creates a URLLoaderFactory interface pointer for serving WebUI requests.
-mojom::URLLoaderFactoryPtr CreateWebUIURLLoader(FrameTreeNode* node);
+// Creates a URLLoaderFactory interface pointer for serving WebUI requests to
+// the given |node|. The factory will only create loaders for requests with the
+// same scheme as |scheme|. This is needed because there is more than one scheme
+// used for WebUI, and not all have WebUI bindings.
+mojom::URLLoaderFactoryPtr CreateWebUIURLLoader(FrameTreeNode* node,
+                                                const std::string& scheme);
 
 }  // namespace content
 
