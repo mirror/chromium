@@ -105,6 +105,11 @@ void SearchController::InvokeResultAction(SearchResult* result,
   result->InvokeAction(action_index, event_flags);
 }
 
+void SearchController::ClearResults() {
+  for (const auto& provider : providers_)
+    provider->ClearResults();
+}
+
 size_t SearchController::AddGroup(size_t max_results,
                                   double multiplier,
                                   double boost) {
