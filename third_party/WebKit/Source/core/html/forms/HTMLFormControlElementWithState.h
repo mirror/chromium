@@ -27,13 +27,17 @@
 
 #include "core/CoreExport.h"
 #include "core/html/forms/HTMLFormControlElement.h"
+#include "platform/wtf/DoublyLinkedList.h"
 
 namespace blink {
 
 class FormControlState;
 
 class CORE_EXPORT HTMLFormControlElementWithState
-    : public HTMLFormControlElement {
+    : public HTMLFormControlElement,
+      public DoublyLinkedListNode<HTMLFormControlElementWithState> {
+  friend class WTF::DoublyLinkedListNode<HTMLFormControlElementWithState>;
+
  public:
   ~HTMLFormControlElementWithState() override;
 
@@ -46,6 +50,8 @@ class CORE_EXPORT HTMLFormControlElementWithState
   virtual void RestoreFormControlState(const FormControlState&) {}
   void NotifyFormStateChanged();
 
+  void Trace(Visitor*) override;
+
  protected:
   HTMLFormControlElementWithState(const QualifiedName& tag_name, Document&);
 
@@ -53,6 +59,11 @@ class CORE_EXPORT HTMLFormControlElementWithState
   InsertionNotificationRequest InsertedInto(ContainerNode*) override;
   void RemovedFrom(ContainerNode*) override;
   bool IsFormControlElementWithState() const final;
+
+ private:
+  // Pointers for DoublyLinkedListNode<HTMLFormControlElementWithState>
+  Member<HTMLFormControlElementWithState> prev_;
+  Member<HTMLFormControlElementWithState> next_;
 };
 
 DEFINE_TYPE_CASTS(HTMLFormControlElementWithState,
