@@ -5,6 +5,8 @@
 #ifndef CHROME_BROWSER_UI_PASSWORDS_PASSWORD_MANAGER_PORTER_H_
 #define CHROME_BROWSER_UI_PASSWORDS_PASSWORD_MANAGER_PORTER_H_
 
+#include <memory>
+
 #include "components/password_manager/core/browser/import/password_importer.h"
 #include "components/password_manager/core/browser/ui/export_flow.h"
 #include "components/password_manager/core/browser/ui/import_flow.h"
