@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "bfa5f033_21439d12",
+        "filename": "ios/web/public/web_state/global_web_state_observer.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 26,
+      "author": {
+        "id": 1123009
+      },
+      "writtenOn": "2017-11-08T21:40:22Z",
+      "side": 1,
+      "message": "Sylvain, do you agree that we should remove GlobalWebStateObserver and that clients should observe multiple web states?",
+      "range": {
+        "startLine": 26,
+        "startChar": 6,
+        "endLine": 26,
+        "endChar": 28
+      },
+      "revId": "a86a59c7dba53d6727616336abe2ae2f3ce9bd63",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
