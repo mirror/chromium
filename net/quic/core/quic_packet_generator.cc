@@ -163,10 +163,11 @@ QuicConsumedData QuicPacketGenerator::ConsumeDataFastPath(
 void QuicPacketGenerator::GenerateMtuDiscoveryPacket(QuicByteCount target_mtu) {
   // MTU discovery frames must be sent by themselves.
   if (!packet_creator_.CanSetMaxPacketLength()) {
-    QUIC_BUG << "MTU discovery packets should only be sent when no other "
+    LOG(ERROR) << "MTU discovery packets should only be sent when no other "
              << "frames needs to be sent.";
     return;
   }
+  LOG(ERROR) << "zhongyi_log : send mtu packet on wire.";
   const QuicByteCount current_mtu = GetCurrentMaxPacketLength();
 
   // The MTU discovery frame is allocated on the stack, since it is going to be
