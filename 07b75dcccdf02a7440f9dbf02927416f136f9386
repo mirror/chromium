@@ -70,6 +70,30 @@
       "revId": "07b75dcccdf02a7440f9dbf02927416f136f9386",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "76015c5d_a9fe2b5b",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/ntp/cards/SignInPromo.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 370,
+      "author": {
+        "id": 1001606
+      },
+      "writtenOn": "2017-11-08T16:22:50Z",
+      "side": 1,
+      "message": "Gotcha.\n\nIf we add a detach() right before setupPromoView(), we will not catch any cases where we forget to to detach the view before rebinding (for a full bind, that is). Given that those might in principle be memory leaks, I would be tempted to keep this -- if we\u0027re more confident we\u0027ve shaken out the leaks, we can merge the methods?",
+      "parentUuid": "4e966261_05e74fcd",
+      "range": {
+        "startLine": 370,
+        "startChar": 21,
+        "endLine": 370,
+        "endChar": 48
+      },
+      "revId": "07b75dcccdf02a7440f9dbf02927416f136f9386",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
