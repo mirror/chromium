@@ -16,6 +16,24 @@
       "revId": "a8a36b4589e7557ff3b731affef7b6a19d48706c",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5f2e4d94_04a2d12d",
+        "filename": "ios/chrome/browser/ui/bookmarks/bookmarks_new_generation_egtest.mm",
+        "patchSetId": 2
+      },
+      "lineNbr": 730,
+      "author": {
+        "id": 1212314
+      },
+      "writtenOn": "2017-11-08T06:42:19Z",
+      "side": 1,
+      "message": "Done.\nThanks Sylvain! I should be more careful.",
+      "parentUuid": "afcf428d_eb263657",
+      "revId": "a8a36b4589e7557ff3b731affef7b6a19d48706c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
