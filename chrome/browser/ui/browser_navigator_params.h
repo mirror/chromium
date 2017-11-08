@@ -242,13 +242,6 @@ struct NavigateParams {
   // Whether or not the related navigation was started in the context menu.
   bool started_from_context_menu;
 
-  // SiteInstance of the frame that initiated the navigation or null if we
-  // don't know it. This should be assigned from the OpenURLParams of the
-  // WebContentsDelegate::OpenURLFromTab implementation and is used to determine
-  // the SiteInstance that will be used for the resulting frame in the case of
-  // an about:blank or a data url navigation.
-  scoped_refptr<content::SiteInstance> source_site_instance;
-
  private:
   NavigateParams();
 };

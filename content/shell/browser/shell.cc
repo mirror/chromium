@@ -350,7 +350,7 @@ WebContents* Shell::OpenURLFromTab(WebContents* source,
       Shell* new_window =
           Shell::CreateNewWindow(source->GetBrowserContext(),
                                  GURL(),  // Don't load anything just yet.
-                                 params.source_site_instance,
+                                 nullptr,
                                  gfx::Size());  // Use default size.
       target = new_window->web_contents();
       if (switches::IsRunLayoutTestSwitchPresent())
@@ -374,7 +374,6 @@ WebContents* Shell::OpenURLFromTab(WebContents* source,
   }
 
   NavigationController::LoadURLParams load_url_params(params.url);
-  load_url_params.source_site_instance = params.source_site_instance;
   load_url_params.transition_type = params.transition;
   load_url_params.frame_tree_node_id = params.frame_tree_node_id;
   load_url_params.referrer = params.referrer;
