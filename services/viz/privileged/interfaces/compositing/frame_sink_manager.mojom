@@ -7,6 +7,7 @@ module viz.mojom;
 import "gpu/ipc/common/surface_handle.mojom";
 import "mojo/common/time.mojom";
 import "services/viz/privileged/interfaces/compositing/display_private.mojom";
+import "services/viz/privileged/interfaces/compositing/frame_sink_video_capture.mojom";
 import "services/viz/privileged/interfaces/compositing/renderer_settings.mojom";
 import "services/viz/public/interfaces/compositing/compositor_frame_sink.mojom";
 import "services/viz/public/interfaces/compositing/frame_sink_id.mojom";
@@ -82,6 +83,9 @@ interface FrameSinkManager {
   // Drops the temporary reference for |surface_id|. This will get called when
   // the FrameSinkManagerClient doesn't think |surface_id| will be embedded.
   DropTemporaryReference(SurfaceId surface_id);
+
+  // Creates a FrameSinkVideoCapturer instance.
+  CreateVideoCapturer(FrameSinkVideoCapturer& request);
 };
 
 // The FrameSinkManagerClient interface is implemented by the Display

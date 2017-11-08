@@ -1,0 +1,120 @@
+// Copyright 2017 The Chromium Authors. All rights reserved.
+// Use of this source code is governed by a BSD-style license that can be
+// found in the LICENSE file.
+
+module viz.mojom;
+
+import "media/mojo/interfaces/media_types.mojom";
+import "mojo/common/time.mojom";
+import "services/viz/public/interfaces/compositing/frame_sink_id.mojom";
+import "ui/gfx/geometry/mojo/geometry.mojom";
+
+// Provided with each FrameSinkVideoFrame so that the consumer can notify the
+// capturer how long the image data in shared memory must remain valid, and to
+// provide utilization feedback.
+interface FrameSinkVideoFrameCallbacks {
+  // Informs the capturer that the consumer is done reading from the shared
+  // memory buffer.
+  Done();
+
+  // Reports that the frame incurred some fractional |utilization| of the
+  // downstream pipeline's per-frame processing capacity. See code comments in
+  // media::base::VideoFrameMetadata for a discussion of how |utilization| is
+  // interpreted. The capturer uses this information to auto-adjust the capture
+  // resolution based on the current system environment.
+  ProvideFeedback(double utilization);
+};
+
+// The callbacks, change region and timing data for one frame of video capture.
+struct FrameSinkVideoFrame {
+  // The representation of the image data, size, timestamp, and other metadata.
+  // The following media::VideoFrameMetadata keys are set: CAPTURE_BEGIN_TIME,
+  // CAPTURE_END_TIME, COLOR_SPACE, FRAME_DURATION, INTERACTIVE_CONTENT,
+  // REFERENCE_TIME.
+  media.mojom.VideoFrame frame;
+
+  // The update rect. The consumer assumes, conceptually, that the whole video
+  // frame has upper-left coordinates of (0,0) and lower-right coordinates of
+  // (resolution.width, resolution.height) (see
+  // FrameSinkVideoConsumer.OnImageReset()). The update rect is the area of the
+  // video frame that has changed since the last frame.
+  gfx.mojom.Rect update_rect;
+
+  // Used by the consumer to provide the "done signal" and (optionally) frame-
+  // level utilization feedback for this frame.
+  FrameSinkVideoFrameCallbacks callbacks;
+};
+
+// Interface for a consumer that receives frames and notifications related to
+// capture of the source content. An instance that implements this interface is
+// provided to FrameSinkVideoCapturer.Start().
+interface FrameSinkVideoConsumer {
+  // Called to deliver each frame.
+  OnFrameCaptured(FrameSinkVideoFrame frame);
+
+  // Indicates the video capture target (a frame sink) has gone away. A consumer
+  // should use this to determine whether to change to a different target or
+  // shutdown.
+  OnTargetLost(FrameSinkId frame_sink_id);
+
+  // Indicates that OnFrameCaptured() will not be called again.
+  OnStopped();
+};
+
+// Interface to an implementation that captures a video of a
+// CompositorFrameSink's surface. During operation, the "target" FrameSink can
+// be changed.
+//
+// The SetXYZ() methods set or update the video capture constraints. They may be
+// called any time before and/or after a Start() call. Note that the consumer
+// must not assume any format or resolution changes have taken effect until they
+// are reflected by some later FrameSinkVideoFrame.frame.
+//
+// General usage: A capturer is created, its SetXYZ() methods are called,
+// followed by ChangeTarget() and then Start(). Then, later, when video capture
+// should suspend, Stop() is called. After that point, Start() can be called
+// again to resume capture; or the mojo binding can be dropped to auto-terminate
+// the capturer.
+interface FrameSinkVideoCapturer {
+  // Specifies the pixel format and color space to use.
+  //
+  // Default, if never called: PIXEL_FORMAT_I420, COLOR_SPACE_HD_REC709
+  SetFormat(media.mojom.VideoPixelFormat format,
+            media.mojom.ColorSpace color_space);
+
+  // Specifies the maximum rate of capture in terms of a minimum time period
+  // (min_period = 1/max_frame_rate).
+  //
+  // Default, if never called: 1/30 second (for 30 FPS max).
+  SetMinCapturePeriod(mojo.common.mojom.TimeDelta min_period);
+
+  // Specifies the range (if any) of acceptable capture resolutions and whether
+  // a fixed aspect ratio is required. When |min_size| is equal to |max_size|,
+  // capture resolution will be held constant. Otherwise, capture resolution
+  // will dynamically adapt over time as the source content size and system
+  // resource utilization change. If a fixed aspect ratio is required, the
+  // aspect ratio of |max_size| is used and the implementation will letterbox
+  // around the captured content when needed.
+  //
+  // Default, if never called: Fixed at 1280x720.
+  SetResolutionConstraints(gfx.mojom.Size min_size, gfx.mojom.Size max_size,
+                           bool use_fixed_aspect_ratio);
+
+  // Targets a different compositor frame sink. This may be called anytime,
+  // before or after Start().
+  ChangeTarget(FrameSinkId frame_sink_id);
+
+  // Starts capturing the current frame sink target, emitting video frames to
+  // the given |consumer|. No frames will be emitted until a target has been
+  // set.
+  Start(FrameSinkVideoConsumer consumer);
+
+  // Stops capturing "soon." Meaning, no new frame captures will be started, but
+  // there may already be some in-flight. Wait for FSVConsumer.OnStopped() as an
+  // "end of stream" signal.
+  Stop();
+
+  // Requests the capturer send a duplicate of the last frame. This is used to
+  // resolve occasional "picture loss" issues consumer-side.
+  RequestRefreshFrame();
+};

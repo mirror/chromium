@@ -53,6 +53,21 @@ void CompositorFrameSinkImpl::DidNotProduceFrame(
   support_->DidNotProduceFrame(begin_frame_ack);
 }
 
+void CompositorFrameSinkImpl::AttachCaptureClient(
+    CapturableFrameSink::Client* client) {
+  support_->AttachCaptureClient(client);
+}
+
+void CompositorFrameSinkImpl::DetachCaptureClient(
+    CapturableFrameSink::Client* client) {
+  support_->DetachCaptureClient(client);
+}
+
+void CompositorFrameSinkImpl::RequestCopyOfNextFrame(
+    std::unique_ptr<CopyOutputRequest> request) {
+  support_->RequestCopyOfSurface(std::move(request));
+}
+
 void CompositorFrameSinkImpl::OnClientConnectionLost() {
   support_->frame_sink_manager()->OnClientConnectionLost(
       support_->frame_sink_id());

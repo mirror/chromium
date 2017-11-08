@@ -16,6 +16,7 @@
 #include "base/threading/thread_checker.h"
 #include "components/viz/common/surfaces/frame_sink_id.h"
 #include "components/viz/service/frame_sinks/primary_begin_frame_source.h"
+#include "components/viz/service/frame_sinks/video_capture/frame_sink_video_capturer_manager.h"
 #include "components/viz/service/hit_test/hit_test_manager.h"
 #include "components/viz/service/surfaces/surface_manager.h"
 #include "components/viz/service/surfaces/surface_observer.h"
@@ -23,6 +24,7 @@
 #include "gpu/ipc/common/surface_handle.h"
 #include "mojo/public/cpp/bindings/binding.h"
 #include "services/viz/privileged/interfaces/compositing/frame_sink_manager.mojom.h"
+#include "services/viz/privileged/interfaces/compositing/frame_sink_video_capture.mojom.h"
 
 namespace cc {
 
@@ -41,8 +43,10 @@ class FrameSinkManagerClient;
 
 // FrameSinkManagerImpl manages BeginFrame hierarchy. This is the implementation
 // detail for FrameSinkManagerImpl.
-class VIZ_SERVICE_EXPORT FrameSinkManagerImpl : public SurfaceObserver,
-                                                public mojom::FrameSinkManager {
+class VIZ_SERVICE_EXPORT FrameSinkManagerImpl
+    : public SurfaceObserver,
+      public mojom::FrameSinkManager,
+      public FrameSinkVideoCapturerManager {
  public:
   FrameSinkManagerImpl(SurfaceManager::LifetimeType lifetime_type =
                            SurfaceManager::LifetimeType::REFERENCES,
@@ -84,6 +88,8 @@ class VIZ_SERVICE_EXPORT FrameSinkManagerImpl : public SurfaceObserver,
   void AssignTemporaryReference(const SurfaceId& surface_id,
                                 const FrameSinkId& owner) override;
   void DropTemporaryReference(const SurfaceId& surface_id) override;
+  void CreateVideoCapturer(
+      mojom::FrameSinkVideoCapturerRequest request) override;
 
   // CompositorFrameSinkSupport, hierarchy, and BeginFrameSource can be
   // registered and unregistered in any order with respect to each other.
@@ -160,6 +166,11 @@ class VIZ_SERVICE_EXPORT FrameSinkManagerImpl : public SurfaceObserver,
   void RecursivelyDetachBeginFrameSource(const FrameSinkId& frame_sink_id,
                                          BeginFrameSource* source);
 
+  // FrameSinkVideoCapturerManager implementation:
+  CapturableFrameSink* FindCapturableFrameSink(
+      const FrameSinkId& frame_sink_id) override;
+  void OnCapturerConnectionLost(FrameSinkVideoCapturerImpl* capturer) override;
+
   // Returns true if |child framesink| is or has |search_frame_sink_id| as a
   // child.
   bool ChildContains(const FrameSinkId& child_frame_sink_id,
@@ -199,10 +210,17 @@ class VIZ_SERVICE_EXPORT FrameSinkManagerImpl : public SurfaceObserver,
 
   HitTestManager hit_test_manager_;
 
+  // Scoped ownership of all [Root]CompositorFrameSinkImpl instances. The
+  // CapturableFrameSink type is used here because: 1) It is a common interface
+  // shared by both classes; and 2) It is the interface needed by
+  // FindCapturableFrameSink().
   std::unordered_map<FrameSinkId,
-                     std::unique_ptr<mojom::CompositorFrameSink>,
+                     std::unique_ptr<CapturableFrameSink>,
                      FrameSinkIdHash>
       compositor_frame_sinks_;
+
+  // Video Capturer instances.
+  std::vector<std::unique_ptr<FrameSinkVideoCapturerImpl>> video_capturers_;
 
   THREAD_CHECKER(thread_checker_);
 

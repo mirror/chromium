@@ -19,6 +19,7 @@
 #include "components/viz/service/frame_sinks/referenced_surface_tracker.h"
 #include "components/viz/service/frame_sinks/surface_resource_holder.h"
 #include "components/viz/service/frame_sinks/surface_resource_holder_client.h"
+#include "components/viz/service/frame_sinks/video_capture/capturable_frame_sink.h"
 #include "components/viz/service/surfaces/surface_client.h"
 #include "components/viz/service/viz_service_export.h"
 #include "services/viz/public/interfaces/compositing/compositor_frame_sink.mojom.h"
@@ -103,6 +104,9 @@ class VIZ_SERVICE_EXPORT CompositorFrameSinkSupport
       mojom::HitTestRegionListPtr hit_test_region_list = nullptr);
   void RequestCopyOfSurface(std::unique_ptr<CopyOutputRequest> request);
 
+  void AttachCaptureClient(CapturableFrameSink::Client* client);
+  void DetachCaptureClient(CapturableFrameSink::Client* client);
+
   Surface* GetCurrentSurfaceForTesting();
 
  private:
@@ -137,6 +141,10 @@ class VIZ_SERVICE_EXPORT CompositorFrameSinkSupport
 
   void UpdateNeedsBeginFramesInternal();
   Surface* CreateSurface(const SurfaceInfo& surface_info);
+
+  void OnAggregatedDamage(const LocalSurfaceId& local_surface_id,
+                          const gfx::Rect& damage_rect,
+                          const CompositorFrame& frame) const;
 
   mojom::CompositorFrameSinkClient* const client_;
 
@@ -176,9 +184,15 @@ class VIZ_SERVICE_EXPORT CompositorFrameSinkSupport
   // A callback that will be run at the start of the destructor if set.
   base::OnceCallback<void()> destruction_callback_;
 
+  // TODO(crbug.com/754872): Remove once tab capture has moved into VIZ.
   AggregatedDamageCallback aggregated_damage_callback_;
 
   uint64_t last_frame_index_ = kFrameIndexStart;
+
+  // The video capture clients hooking into this instance to observe frame
+  // begins and damage, and then make CopyOutputRequests on the appropriate
+  // frames.
+  std::vector<CapturableFrameSink::Client*> capture_clients_;
 
   base::WeakPtrFactory<CompositorFrameSinkSupport> weak_factory_;
 

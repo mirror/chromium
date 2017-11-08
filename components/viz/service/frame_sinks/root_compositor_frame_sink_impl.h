@@ -11,6 +11,7 @@
 #include "components/viz/common/surfaces/local_surface_id.h"
 #include "components/viz/service/display/display_client.h"
 #include "components/viz/service/frame_sinks/compositor_frame_sink_support.h"
+#include "components/viz/service/frame_sinks/video_capture/capturable_frame_sink.h"
 #include "components/viz/service/hit_test/hit_test_aggregator.h"
 #include "components/viz/service/hit_test/hit_test_aggregator_delegate.h"
 #include "mojo/public/cpp/bindings/associated_binding.h"
@@ -26,6 +27,7 @@ class FrameSinkManagerImpl;
 // The viz portion of a root CompositorFrameSink. Holds the Binding/InterfacePtr
 // for the mojom::CompositorFrameSink interface and owns the Display.
 class RootCompositorFrameSinkImpl : public mojom::CompositorFrameSink,
+                                    public CapturableFrameSink,
                                     public mojom::DisplayPrivate,
                                     public DisplayClient,
                                     public HitTestAggregatorDelegate {
@@ -54,6 +56,12 @@ class RootCompositorFrameSinkImpl : public mojom::CompositorFrameSink,
                              mojom::HitTestRegionListPtr hit_test_region_list,
                              uint64_t submit_time) override;
   void DidNotProduceFrame(const BeginFrameAck& begin_frame_ack) override;
+
+  // CapturableFrameSink:
+  void AttachCaptureClient(CapturableFrameSink::Client* client) override;
+  void DetachCaptureClient(CapturableFrameSink::Client* client) override;
+  void RequestCopyOfNextFrame(
+      std::unique_ptr<CopyOutputRequest> request) override;
 
   // HitTestAggregatorDelegate:
   void OnAggregatedHitTestRegionListUpdated(

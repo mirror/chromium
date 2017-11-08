@@ -7,6 +7,8 @@
 #include <stddef.h>
 #include <stdint.h>
 
+#include "base/bind.h"
+#include "base/bind_helpers.h"
 #include "base/logging.h"
 #include "components/viz/service/display/display.h"
 #include "components/viz/service/display_embedder/display_provider.h"
@@ -14,6 +16,7 @@
 #include "components/viz/service/frame_sinks/frame_sink_manager_client.h"
 #include "components/viz/service/frame_sinks/primary_begin_frame_source.h"
 #include "components/viz/service/frame_sinks/root_compositor_frame_sink_impl.h"
+#include "components/viz/service/frame_sinks/video_capture/frame_sink_video_capturer_impl.h"
 
 #if DCHECK_IS_ON()
 #include <sstream>
@@ -45,6 +48,8 @@ FrameSinkManagerImpl::~FrameSinkManagerImpl() {
   DCHECK_CALLED_ON_VALID_THREAD(thread_checker_);
   // All FrameSinks should be unregistered prior to FrameSinkManager
   // destruction.
+  for (auto& capturer : video_capturers_)
+    capturer->OnTargetWillGoAway();
   compositor_frame_sinks_.clear();
   DCHECK_EQ(clients_.size(), 0u);
   DCHECK_EQ(registered_sources_.size(), 0u);
@@ -80,6 +85,10 @@ void FrameSinkManagerImpl::RegisterFrameSinkId(
 void FrameSinkManagerImpl::InvalidateFrameSinkId(
     const FrameSinkId& frame_sink_id) {
   DCHECK_CALLED_ON_VALID_THREAD(thread_checker_);
+  for (auto& capturer : video_capturers_) {
+    if (capturer->requested_target() == frame_sink_id)
+      capturer->OnTargetWillGoAway();
+  }
   compositor_frame_sinks_.erase(frame_sink_id);
   surface_manager_.InvalidateFrameSinkId(frame_sink_id);
 }
@@ -111,6 +120,11 @@ void FrameSinkManagerImpl::CreateRootCompositorFrameSink(
           this, frame_sink_id, std::move(display),
           std::move(begin_frame_source), std::move(request), std::move(client),
           std::move(display_private_request));
+
+  for (auto& capturer : video_capturers_) {
+    if (capturer->requested_target() == frame_sink_id)
+      capturer->SetResolvedTarget(compositor_frame_sinks_[frame_sink_id].get());
+  }
 }
 
 void FrameSinkManagerImpl::CreateCompositorFrameSink(
@@ -123,6 +137,11 @@ void FrameSinkManagerImpl::CreateCompositorFrameSink(
   compositor_frame_sinks_[frame_sink_id] =
       base::MakeUnique<CompositorFrameSinkImpl>(
           this, frame_sink_id, std::move(request), std::move(client));
+
+  for (auto& capturer : video_capturers_) {
+    if (capturer->requested_target() == frame_sink_id)
+      capturer->SetResolvedTarget(compositor_frame_sinks_[frame_sink_id].get());
+  }
 }
 
 void FrameSinkManagerImpl::RegisterFrameSinkHierarchy(
@@ -201,6 +220,12 @@ void FrameSinkManagerImpl::AssignTemporaryReference(const SurfaceId& surface_id,
 
 void FrameSinkManagerImpl::DropTemporaryReference(const SurfaceId& surface_id) {
   surface_manager_.DropTemporaryReference(surface_id);
+}
+
+void FrameSinkManagerImpl::CreateVideoCapturer(
+    mojom::FrameSinkVideoCapturerRequest request) {
+  video_capturers_.emplace_back(new FrameSinkVideoCapturerImpl());
+  video_capturers_.back()->Bind(std::move(request), this);
 }
 
 void FrameSinkManagerImpl::RegisterFrameSinkManagerClient(
@@ -310,6 +335,24 @@ void FrameSinkManagerImpl::RecursivelyDetachBeginFrameSource(
   for (size_t i = 0; i < children.size(); ++i) {
     RecursivelyDetachBeginFrameSource(children[i], source);
   }
+}
+
+CapturableFrameSink* FrameSinkManagerImpl::FindCapturableFrameSink(
+    const FrameSinkId& frame_sink_id) {
+  const auto it = compositor_frame_sinks_.find(frame_sink_id);
+  if (it == compositor_frame_sinks_.end())
+    return nullptr;
+  return it->second.get();
+}
+
+void FrameSinkManagerImpl::OnCapturerConnectionLost(
+    FrameSinkVideoCapturerImpl* capturer) {
+  // When a capturer's mojo connection has been lost, it should be destroyed.
+  base::EraseIf(
+      video_capturers_,
+      [capturer](const std::unique_ptr<FrameSinkVideoCapturerImpl>& ptr) {
+        return ptr.get() == capturer;
+      });
 }
 
 bool FrameSinkManagerImpl::ChildContains(
