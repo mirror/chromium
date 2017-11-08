@@ -70,7 +70,8 @@ void SharedContextRateLimiter::Reset() {
     return;
 
   gpu::gles2::GLES2Interface* gl = context_provider_->ContextGL();
-  if (gl && gl->GetGraphicsResetStatusKHR() == GL_NO_ERROR) {
+  if (gl && gl->GetGraphicsResetStatusKHR() == GL_NO_ERROR &&
+      can_use_sync_queries_) {
     while (queries_.size() > 0) {
       gl->DeleteQueriesEXT(1, &queries_.front());
       queries_.pop_front();
