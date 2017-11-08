@@ -2,6 +2,23 @@
   "comments": [
     {
       "key": {
+        "uuid": "4bd1ddd0_71581599",
+        "filename": "third_party/WebKit/LayoutTests/scrollbars/destroy-scrollbar-if-scrollsizes-lesser-than-contentsizes.html",
+        "patchSetId": 9
+      },
+      "lineNbr": 7,
+      "author": {
+        "id": 1001706
+      },
+      "writtenOn": "2017-11-08T07:51:27Z",
+      "side": 1,
+      "message": "Remove \"overflow:auto\" on this -- it\u0027s not necessary, and a bit confusing.",
+      "revId": "639b5a236002984ee06b78091f492cea2073e392",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "e625ed1b_8b78fef6",
         "filename": "third_party/WebKit/Source/core/paint/PaintLayerScrollableArea.cpp",
         "patchSetId": 9
