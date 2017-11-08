@@ -9,6 +9,8 @@
 #include "base/memory/ptr_util.h"
 #include "base/memory/ref_counted.h"
 #include "base/run_loop.h"
+#include "base/test/test_mock_time_task_runner.h"
+#include "base/threading/sequenced_task_runner_handle.h"
 #include "chrome/browser/profiles/profile_manager.h"
 #include "chrome/browser/safe_browsing/chrome_cleaner/chrome_cleaner_controller_win.h"
 #include "chrome/browser/safe_browsing/chrome_cleaner/mock_chrome_cleaner_controller_win.h"
@@ -31,6 +33,38 @@ using ::testing::_;
 using ::testing::InvokeWithoutArgs;
 using ::testing::StrictMock;
 using ::testing::Return;
+
+class RunLoopBlockingTest : public InProcessBrowserTest {
+ public:
+  void SetUpOnMainThread() override {
+    saved_task_runner_ = base::ThreadTaskRunnerHandle::Get();
+    ASSERT_NE(mock_time_task_runner_, saved_task_runner_);
+    base::MessageLoop::current()->SetTaskRunner(mock_time_task_runner_);
+  }
+
+  void TearDownOnMainThread() override {
+    base::MessageLoop::current()->SetTaskRunner(saved_task_runner_);
+  }
+
+  scoped_refptr<base::TestMockTimeTaskRunner> mock_time_task_runner_ =
+      new base::TestMockTimeTaskRunner();
+  scoped_refptr<base::SingleThreadTaskRunner> saved_task_runner_;
+};
+
+IN_PROC_BROWSER_TEST_F(RunLoopBlockingTest, Default) {
+  base::Thread t("t");
+  CHECK(t.Start());
+
+  base::RunLoop r;
+  t.task_runner()->PostTask(FROM_HERE, base::BindOnce(
+                                           [](base::RunLoop* r) {
+                                             LOG(ERROR) << "Should unblock now";
+                                             r->Quit();
+                                           },
+                                           &r));
+  r.Run();
+  LOG(ERROR) << "OK";
+}
 
 constexpr char kSRTPromptGroup[] = "SRTGroup";
 
