@@ -2,6 +2,46 @@
   "comments": [
     {
       "key": {
+        "uuid": "0252b5cc_017f8d5d",
+        "filename": "components/cronet/ios/Cronet.h",
+        "patchSetId": 8
+      },
+      "lineNbr": 39,
+      "author": {
+        "id": 1143554
+      },
+      "writtenOn": "2017-11-08T17:50:06Z",
+      "side": 1,
+      "message": "Just a suggestion: \n\"A delegate that a client can pass to Cronet to collect metrics for a session task. The delegate can be added and removed by calling [Cronet addMetricsDelegate:] and [Cronet removeMetricsDelegate:] methods respectively.\"",
+      "range": {
+        "startLine": 36,
+        "startChar": 0,
+        "endLine": 39,
+        "endChar": 25
+      },
+      "revId": "fe63f5c37425784ee1b4d1584b3688dc24c4311d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "15919d69_392adca6",
+        "filename": "components/cronet/ios/Cronet.h",
+        "patchSetId": 8
+      },
+      "lineNbr": 41,
+      "author": {
+        "id": 1143554
+      },
+      "writtenOn": "2017-11-08T17:50:06Z",
+      "side": 1,
+      "message": "We can add the following doc to the method: \"Tells the delegate that the metrics for the task are ready.\"",
+      "revId": "fe63f5c37425784ee1b4d1584b3688dc24c4311d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "64dbac33_b674e8ba",
         "filename": "components/cronet/ios/test/cronet_metrics_test.mm",
         "patchSetId": 8
