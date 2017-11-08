@@ -140,6 +140,16 @@ class NavigationURLLoaderTest : public testing::Test {
         switches::kEnableBrowserSideNavigation);
   }
 
+  ~NavigationURLLoaderTest() override {
+    // Outside of this tests, the ResourceDispatcherHost lives on the IO thread
+    // and the NavigationURLLoaderDelegate on the UI thread. In this test, they
+    // are both on the same thread. The issue is that it makes deletions tasks
+    // to happens before the destruction of the ResourceDispatcherHost instead
+    // of before. The following line execute any pending task before the
+    // destruction.
+    base::RunLoop().RunUntilIdle();
+  }
+
   std::unique_ptr<NavigationURLLoader> MakeTestLoader(
       const GURL& url,
       NavigationURLLoaderDelegate* delegate) {

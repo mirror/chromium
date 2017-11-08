@@ -58,6 +58,7 @@ void TestNavigationURLLoaderDelegate::OnRequestRedirected(
 }
 
 void TestNavigationURLLoaderDelegate::OnResponseStarted(
+    mojom::URLLoaderClientRequest url_loader_client_request,
     const scoped_refptr<ResourceResponse>& response,
     std::unique_ptr<StreamHandle> body,
     mojo::ScopedDataPipeConsumerHandle consumer_handle,
@@ -67,6 +68,7 @@ void TestNavigationURLLoaderDelegate::OnResponseStarted(
     bool is_download,
     bool is_stream,
     base::Optional<SubresourceLoaderParams> subresource_loader_params) {
+  url_loader_client_request_ = std::move(url_loader_client_request);
   response_ = response;
   body_ = std::move(body);
   handle_ = std::move(consumer_handle);

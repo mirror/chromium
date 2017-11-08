@@ -78,7 +78,8 @@ void TestRenderFrame::Navigate(const CommonNavigationParams& common_params,
   // PlzNavigate
   if (IsBrowserSideNavigationEnabled()) {
     CommitNavigation(ResourceResponseHead(), GURL(), common_params,
-                     request_params, mojo::ScopedDataPipeConsumerHandle(),
+                     request_params, mojom::URLLoaderClientRequest(),
+                     mojo::ScopedDataPipeConsumerHandle(),
                      URLLoaderFactoryBundle());
   } else {
     OnNavigate(common_params, start_params, request_params);

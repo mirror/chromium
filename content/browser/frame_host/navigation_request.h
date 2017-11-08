@@ -203,16 +203,18 @@ class CONTENT_EXPORT NavigationRequest : public NavigationURLLoaderDelegate {
   void OnRequestRedirected(
       const net::RedirectInfo& redirect_info,
       const scoped_refptr<ResourceResponse>& response) override;
-  void OnResponseStarted(const scoped_refptr<ResourceResponse>& response,
-                         std::unique_ptr<StreamHandle> body,
-                         mojo::ScopedDataPipeConsumerHandle consumer_handle,
-                         const SSLStatus& ssl_status,
-                         std::unique_ptr<NavigationData> navigation_data,
-                         const GlobalRequestID& request_id,
-                         bool is_download,
-                         bool is_stream,
-                         base::Optional<SubresourceLoaderParams>
-                             subresource_loader_params) override;
+  void OnResponseStarted(
+      mojom::URLLoaderClientRequest url_loader_client_request,
+      const scoped_refptr<ResourceResponse>& response,
+      std::unique_ptr<StreamHandle> body,
+      mojo::ScopedDataPipeConsumerHandle consumer_handle,
+      const SSLStatus& ssl_status,
+      std::unique_ptr<NavigationData> navigation_data,
+      const GlobalRequestID& request_id,
+      bool is_download,
+      bool is_stream,
+      base::Optional<SubresourceLoaderParams> subresource_loader_params)
+      override;
   void OnRequestFailed(bool has_stale_copy_in_cache,
                        int net_error,
                        const base::Optional<net::SSLInfo>& ssl_info,
@@ -335,6 +337,7 @@ class CONTENT_EXPORT NavigationRequest : public NavigationURLLoaderDelegate {
   // checks are performed by the NavigationHandle.
   scoped_refptr<ResourceResponse> response_;
   std::unique_ptr<StreamHandle> body_;
+  mojom::URLLoaderClientRequest url_loader_client_request_;
   mojo::ScopedDataPipeConsumerHandle handle_;
   SSLStatus ssl_status_;
   bool is_download_;
