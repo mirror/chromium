@@ -22,6 +22,30 @@
       "revId": "4ea66e512fc11f3c3050c7c6ea0b40f417443925",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9fb8ed0f_563d145f",
+        "filename": "third_party/WebKit/Source/core/loader/LinkLoader.cpp",
+        "patchSetId": 11
+      },
+      "lineNbr": 425,
+      "author": {
+        "id": 1115949
+      },
+      "writtenOn": "2017-11-08T01:41:12Z",
+      "side": 1,
+      "message": "My understanding is that this aligns w/ what the current spec PR says.\nHowever, this *might* cause a problem when handling modulepreload inside HTML import.\nWould you add such test case? (and confirm it doesn\u0027t crash?)",
+      "parentUuid": "ea07d163_01c54dea",
+      "range": {
+        "startLine": 425,
+        "startChar": 48,
+        "endLine": 425,
+        "endChar": 56
+      },
+      "revId": "4ea66e512fc11f3c3050c7c6ea0b40f417443925",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
