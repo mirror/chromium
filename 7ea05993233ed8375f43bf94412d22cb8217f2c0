@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "32a09646_57253043",
+        "filename": "chrome/browser/profiling_host/background_profiling_triggers.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 110,
+      "author": {
+        "id": 1115906
+      },
+      "writtenOn": "2017-11-08T20:19:22Z",
+      "side": 1,
+      "message": "\u003e This is also unsafe and needs to be moved to the UI thread since |timer_.Start()| was first called on the UI thread.\nDone\n\n\u003eHowever, why are we using a timer? Why not just PostDelayedTask?\nSemantically, I think of this as a repeating task: every X hours, check for condition Y. If the condition is met, change the timer to every Z hours.\n\nThis could also be implemented as a PostTask with a weak_ptr [effectively the same as a cancellable task]. Is there any particular reason you want to see a change?",
+      "parentUuid": "38765f05_9a6176cb",
+      "range": {
+        "startLine": 110,
+        "startChar": 9,
+        "endLine": 110,
+        "endChar": 14
+      },
+      "revId": "7ea05993233ed8375f43bf94412d22cb8217f2c0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "686d2d90_84d5dd2f",
         "filename": "chrome/browser/profiling_host/background_profiling_triggers.cc",
         "patchSetId": 1
@@ -45,6 +69,30 @@
       "revId": "7ea05993233ed8375f43bf94412d22cb8217f2c0",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a5c703c2_1e25683e",
+        "filename": "chrome/browser/profiling_host/background_profiling_triggers.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 118,
+      "author": {
+        "id": 1115906
+      },
+      "writtenOn": "2017-11-08T20:19:22Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "686d2d90_84d5dd2f",
+      "range": {
+        "startLine": 118,
+        "startChar": 20,
+        "endLine": 118,
+        "endChar": 23
+      },
+      "revId": "7ea05993233ed8375f43bf94412d22cb8217f2c0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
