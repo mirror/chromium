@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "17a2824a_d0594da8",
+        "filename": "ui/compositor/compositor.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 448,
+      "author": {
+        "id": 1003154
+      },
+      "writtenOn": "2017-11-08T21:12:26Z",
+      "side": 1,
+      "message": "This line is the only difference from the reverted CL.",
+      "range": {
+        "startLine": 448,
+        "startChar": 20,
+        "endLine": 448,
+        "endChar": 38
+      },
+      "revId": "0e430e25275bb19ce32c910d59da195e0518b123",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
