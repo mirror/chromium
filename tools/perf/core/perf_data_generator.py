@@ -136,6 +136,10 @@ def get_fyi_waterfall_config():
 BUILDER_ADDITIONAL_COMPILE_TARGETS = {
     'Android Compile': ['microdump_stackwalk'],
     'Android arm64 Compile': ['microdump_stackwalk'],
+    'Linux Builder': ['chromedriver'],
+    'Mac Builder': ['chromedriver'],
+    'Win Builder': ['chromedriver'],
+    'Win x64 Builder': ['chromedriver'],
 }
 
 
