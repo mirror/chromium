@@ -37,6 +37,24 @@
     },
     {
       "key": {
+        "uuid": "2fb087dd_7fbd93f2",
+        "filename": "ios/chrome/browser/ui/toolbar/web_toolbar_controller.mm",
+        "patchSetId": 12
+      },
+      "lineNbr": 2455,
+      "author": {
+        "id": 1116294
+      },
+      "writtenOn": "2017-11-08T13:19:20Z",
+      "side": 1,
+      "message": "I can reproduce it locally when moving from the stack view to new tab.\nI can reproduce it in an egtest (but not reliably manually) when I have two tabs open, scroll the second tab off screen, then close that second tab via javascript.",
+      "parentUuid": "56694342_db7351c1",
+      "revId": "bf341149b54dff7275624ed64351002a2a2f6fb9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "d478730f_5b2c4519",
         "filename": "ios/chrome/browser/ui/toolbar/web_toolbar_controller.mm",
         "patchSetId": 12
@@ -57,6 +75,30 @@
       "revId": "bf341149b54dff7275624ed64351002a2a2f6fb9",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2919684f_d3e7251c",
+        "filename": "ios/chrome/browser/ui/toolbar/web_toolbar_controller.mm",
+        "patchSetId": 12
+      },
+      "lineNbr": 2460,
+      "author": {
+        "id": 1116294
+      },
+      "writtenOn": "2017-11-08T13:19:20Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "d478730f_5b2c4519",
+      "range": {
+        "startLine": 2460,
+        "startChar": 24,
+        "endLine": 2460,
+        "endChar": 29
+      },
+      "revId": "bf341149b54dff7275624ed64351002a2a2f6fb9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
