@@ -16,6 +16,24 @@
       "revId": "f69e03dcd865749fd3815046a84fc255e470dc39",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "67a913a8_dbbb4959",
+        "filename": "third_party/WebKit/Source/core/exported/WebSharedWorkerImpl.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 205,
+      "author": {
+        "id": 1115913
+      },
+      "writtenOn": "2017-11-08T10:30:45Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "52006331_bd92101d",
+      "revId": "f69e03dcd865749fd3815046a84fc255e470dc39",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
