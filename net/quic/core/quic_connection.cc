@@ -988,7 +988,8 @@ void QuicConnection::MaybeQueueAck(bool was_missing) {
               kMaxRetransmittablePacketsBeforeAck) {
         ack_queued_ = true;
       } else if (!ack_alarm_->IsSet()) {
-        // Wait the minimum of a quarter min_rtt and the delayed ack time.
+        // Wait for the minimum of the ack decimation delay or the delayed ack
+        // time before sending an ack.
         QuicTime::Delta ack_delay = std::min(
             DelayedAckTime(), sent_packet_manager_.GetRttStats()->min_rtt() *
                                   ack_decimation_delay_);
