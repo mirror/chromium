@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "8fdf8a65_9998dd76",
+        "filename": "chrome/browser/ui/views/frame/system_menu_model_builder.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 82,
+      "author": {
+        "id": 1166470
+      },
+      "writtenOn": "2017-11-08T19:56:31Z",
+      "side": 1,
+      "message": "Are these string ids right?",
+      "range": {
+        "startLine": 82,
+        "startChar": 50,
+        "endLine": 82,
+        "endChar": 70
+      },
+      "revId": "18937f9a4c26b6762e0566ef13ed9dd07312ac92",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
