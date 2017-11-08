@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "53197cdd_980b48b7",
+        "filename": "third_party/WebKit/Source/devtools/front_end/emulation/DeviceModeToolbar.js",
+        "patchSetId": 3
+      },
+      "lineNbr": 449,
+      "author": {
+        "id": 1000379
+      },
+      "writtenOn": "2017-11-08T21:30:38Z",
+      "side": 1,
+      "message": "model.setWidth()\nmodel.setHeight()\nmodel.scaleSetting().set(model.fitScale())",
+      "revId": "7490a26927949ec10832b8cdebc9ba022969ac2e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5d7b81fb_faf8bb76",
+        "filename": "third_party/WebKit/Source/devtools/front_end/emulation/DeviceModeToolbar.js",
+        "patchSetId": 3
+      },
+      "lineNbr": 555,
+      "author": {
+        "id": 1000379
+      },
+      "writtenOn": "2017-11-08T21:30:38Z",
+      "side": 1,
+      "message": "else setEnabled(false)?",
+      "revId": "7490a26927949ec10832b8cdebc9ba022969ac2e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
