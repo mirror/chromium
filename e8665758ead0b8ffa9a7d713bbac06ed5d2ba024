@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "5938f215_5f825c4d",
+        "filename": "services/viz/public/interfaces/hit_test/input_target_client.mojom",
+        "patchSetId": 7
+      },
+      "lineNbr": 5,
+      "author": {
+        "id": 1000111
+      },
+      "writtenOn": "2017-11-08T16:30:33Z",
+      "side": 1,
+      "message": "Not totally sure this is actually correct. All hit-test related api currently live under services/viz, and I don\u0027t think there are plans to move them into services/ui.",
+      "revId": "e8665758ead0b8ffa9a7d713bbac06ed5d2ba024",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ee1bf261_9c28a056",
+        "filename": "services/viz/public/interfaces/hit_test/input_target_client.mojom",
+        "patchSetId": 7
+      },
+      "lineNbr": 12,
+      "author": {
+        "id": 1000111
+      },
+      "writtenOn": "2017-11-08T16:30:33Z",
+      "side": 1,
+      "message": "This is a little too ... content-y. Widget, routing-id, frame etc. don\u0027t mean a lot in viz. Can this happen in terms of FrameSinkId? So this would be: FrameSinkIdAt(point) \u003d\u003e (FrameSinkId)",
+      "revId": "e8665758ead0b8ffa9a7d713bbac06ed5d2ba024",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
