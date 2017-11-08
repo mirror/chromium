@@ -1377,6 +1377,9 @@ extern const char kSyzyAsanDcheckIsFatalName[];
 extern const char kSyzyAsanDcheckIsFatalDescription[];
 #endif  // DCHECK_IS_ON() && defined(SYZYASAN)
 
+extern const char kWebvrOpenVRName[];
+extern const char kWebvrOpenVRDescription[];
+
 #endif  // defined(OS_WIN)
 
 // Mac ------------------------------------------------------------------------

@@ -109,6 +109,10 @@ extern const base::Feature kExperimentalKeyboardLockUI;
 extern const base::Feature kExperimentalVRFeatures;
 #endif
 
+#if defined(OS_WIN)
+extern const base::Feature kWebvrOpenVR;
+#endif
+
 #if defined(OS_MACOSX)
 extern const base::Feature kFullscreenToolbarReveal;
 #endif

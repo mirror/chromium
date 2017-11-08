@@ -2249,6 +2249,11 @@ const FeatureEntry kFeatureEntries[] = {
      flag_descriptions::kWebVrVsyncAlignDescription, kOsAndroid,
      FEATURE_VALUE_TYPE(features::kWebVrVsyncAlign)},
 #endif  // OS_ANDROID
+#if defined(OS_WIN)
+    {"enable-openvr", flag_descriptions::kWebvrOpenVRName,
+     flag_descriptions::kWebvrOpenVRDescription, kOsWin,
+     FEATURE_VALUE_TYPE(features::kWebvrOpenVR)},
+#endif  // OS_WIN
 #endif  // ENABLE_VR
 #if defined(OS_CHROMEOS)
     {"disable-accelerated-mjpeg-decode",
