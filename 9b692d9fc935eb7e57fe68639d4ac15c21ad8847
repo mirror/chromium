@@ -62,6 +62,23 @@
       "revId": "9b692d9fc935eb7e57fe68639d4ac15c21ad8847",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3f437a8a_b96670f6",
+        "filename": "components/optimization_guide/optimization_guide_service_unittest.cc",
+        "patchSetId": 11
+      },
+      "lineNbr": 92,
+      "author": {
+        "id": 1116033
+      },
+      "writtenOn": "2017-11-08T00:07:16Z",
+      "side": 1,
+      "message": "One more thing. We\u0027ve noticed that component tests that rely on RunUntilIdle are somewhat unreliably. Therefore, our component updater avoids RunUntilIdle() as much as possible, and uses Run() instead. We post a quit closure when we want to end the test.\n\nSince all the tests below appear to call received_notification(), that would be a good place to hook up a post task with the closure to exit the run loop.\n\nYou could inspect our tests in components/update_client to see how we\u0027ve done it.",
+      "revId": "9b692d9fc935eb7e57fe68639d4ac15c21ad8847",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
