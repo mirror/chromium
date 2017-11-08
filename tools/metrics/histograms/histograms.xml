@@ -32769,6 +32769,16 @@ http://cs/file:chrome/histograms.xml - but prefer this file for new entries.
   <summary>The time spent to load a library CDM.</summary>
 </histogram>
 
+<histogram name="Media.EME.CdmReadTime" units="ms">
+  <owner>media-dev@chromium.org</owner>
+  <summary>The actual time spent by the CDM reading a file.</summary>
+</histogram>
+
+<histogram name="Media.EME.CdmWriteTime" units="ms">
+  <owner>media-dev@chromium.org</owner>
+  <summary>The actual time spent by the CDM writing a file.</summary>
+</histogram>
+
 <histogram name="Media.EME.ClearKey" enum="CdmPromiseResult">
   <owner>sandersd@chromium.org</owner>
   <summary>

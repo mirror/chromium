@@ -9,6 +9,7 @@
 
 #include "base/bind.h"
 #include "base/callback.h"
+#include "base/metrics/histogram_macros.h"
 #include "base/task_scheduler/post_task.h"
 #include "base/trace_event/trace_event.h"
 #include "media/base/scoped_callback_runner.h"
@@ -183,6 +184,7 @@ void MojoCdmFileIO::DoRead(int64_t num_bytes) {
   // If the file has 0 bytes, no need to read anything.
   if (bytes_to_read != 0) {
     TRACE_EVENT0("media", "MojoCdmFileIO::ActualRead");
+    base::TimeTicks start = base::TimeTicks::Now();
     int bytes_read = file_for_reading_.Read(
         0, reinterpret_cast<char*>(buffer.data()), bytes_to_read);
     if (bytes_to_read != bytes_read) {
@@ -194,6 +196,10 @@ void MojoCdmFileIO::DoRead(int64_t num_bytes) {
       OnError(ErrorType::kReadError);
       return;
     }
+
+    // Only report reading time for successful reads.
+    base::TimeDelta read_time = base::TimeTicks::Now() - start;
+    UMA_HISTOGRAM_TIMES("Media.EME.CdmReadTime", read_time);
   }
 
   // Call this before OnReadComplete() so that we always have the latest file
@@ -259,6 +265,7 @@ void MojoCdmFileIO::DoWrite(const std::vector<uint8_t>& data,
   int bytes_to_write = base::checked_cast<int>(data.size());
   if (bytes_to_write > 0) {
     TRACE_EVENT0("media", "MojoCdmFileIO::ActualWrite");
+    base::TimeTicks start = base::TimeTicks::Now();
     int bytes_written = temporary_file.Write(
         0, reinterpret_cast<const char*>(data.data()), bytes_to_write);
     if (bytes_written != bytes_to_write) {
@@ -267,6 +274,10 @@ void MojoCdmFileIO::DoWrite(const std::vector<uint8_t>& data,
       OnError(ErrorType::kWriteError);
       return;
     }
+
+    // Only report writing time for successful writes.
+    base::TimeDelta write_time = base::TimeTicks::Now() - start;
+    UMA_HISTOGRAM_TIMES("Media.EME.CdmWriteTime", write_time);
   }
 
   // Close the temporary file returned before renaming. Original file was
