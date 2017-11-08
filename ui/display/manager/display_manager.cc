@@ -266,6 +266,9 @@ int64_t DisplayManager::kUnifiedDisplayId = -10;
 DisplayManager::DisplayManager(std::unique_ptr<Screen> screen)
     : screen_(std::move(screen)),
       layout_store_(new DisplayLayoutStore),
+      is_multi_mirroring_enabled_(
+          base::CommandLine::ForCurrentProcess()->HasSwitch(
+              ::switches::kEnableMultiMirroring)),
       weak_ptr_factory_(this) {
 #if defined(OS_CHROMEOS)
   configure_displays_ = chromeos::IsRunningAsSystemCompositor();
@@ -363,10 +366,12 @@ DisplayIdList DisplayManager::GetCurrentDisplayIdList() const {
   DisplayIdList display_id_list = CreateDisplayIdList(active_display_list_);
 
   if (IsInSoftwareMirrorMode()) {
-    CHECK_EQ(2u, num_connected_displays());
-    // This comment is to make it easy to distinguish the crash
-    // between two checks.
-    CHECK_EQ(1u, active_display_list_.size());
+    if (!is_multi_mirroring_enabled_) {
+      CHECK_EQ(2u, num_connected_displays());
+      // This comment is to make it easy to distinguish the crash
+      // between two checks.
+      CHECK_EQ(1u, active_display_list_.size());
+    }
 
     DisplayIdList software_mirroring_display_id_list =
         CreateDisplayIdList(software_mirroring_display_list_);
@@ -1081,7 +1086,7 @@ bool DisplayManager::IsInHardwareMirrorMode() const {
   return true;
 }
 
-DisplayIdList DisplayManager::GetMirroringDstDisplayIdList() const {
+DisplayIdList DisplayManager::GetMirroringDestinationDisplayIdList() const {
   if (IsInSoftwareMirrorMode())
     return CreateDisplayIdList(software_mirroring_display_list_);
   if (IsInHardwareMirrorMode())
@@ -1175,9 +1180,10 @@ int64_t DisplayManager::GetDisplayIdForUIScaling() const {
 }
 
 void DisplayManager::SetMirrorMode(bool mirror) {
-  // TODO(oshima): Enable mirror mode for 2> displays. crbug.com/589319.
-  if (num_connected_displays() != 2)
+  if ((is_multi_mirroring_enabled_ && num_connected_displays() < 2) ||
+      (!is_multi_mirroring_enabled_ && num_connected_displays() != 2)) {
     return;
+  }
 
 #if defined(OS_CHROMEOS)
   if (configure_displays_) {
@@ -1466,8 +1472,10 @@ void DisplayManager::CreateSoftwareMirroringDisplayInfo(
   // mirrored.
   switch (multi_display_mode_) {
     case MIRRORING: {
-      if (display_info_list->size() != 2)
+      if ((is_multi_mirroring_enabled_ && display_info_list->size() < 2) ||
+          (!is_multi_mirroring_enabled_ && display_info_list->size() != 2)) {
         return;
+      }
 
       int64_t source_id = kInvalidDisplayId;
       if (Display::HasInternalDisplay()) {
