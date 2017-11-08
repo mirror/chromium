@@ -14,6 +14,11 @@
 
 class JsonPrefStore;
 
+#if __OBJC__
+@class WKHTTPCookieStore;
+#else
+typedef void WKHTTPCookieStore;
+#endif
 namespace ios {
 class ChromeBrowserState;
 }
@@ -105,6 +110,7 @@ class ChromeBrowserStateImplIOData : public ChromeBrowserStateIOData {
     base::FilePath cookie_path;
     base::FilePath channel_id_path;
     base::FilePath cache_path;
+    WKHTTPCookieStore* wk_cookie_store;
     int cache_max_size;
   };
 

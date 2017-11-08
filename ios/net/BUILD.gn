@@ -24,6 +24,9 @@ source_set("net") {
   deps = [
     ":ios_net_features",
     "//base",
+
+    # TODO: do not include ios/chrome from net.
+    "//ios/chrome/browser:browser_internal",
     "//net",
     "//url:url_features",
   ]
@@ -42,6 +45,8 @@ source_set("net") {
     "cookies/cookie_store_ios_client.mm",
     "cookies/cookie_store_ios_persistent.h",
     "cookies/cookie_store_ios_persistent.mm",
+    "cookies/cookie_store_wk_web_view.h",
+    "cookies/cookie_store_wk_web_view.mm",
     "cookies/system_cookie_util.h",
     "cookies/system_cookie_util.mm",
     "crn_http_protocol_handler.h",

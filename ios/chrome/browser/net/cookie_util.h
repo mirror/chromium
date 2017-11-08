@@ -18,6 +18,7 @@ class ChromeBrowserState;
 namespace net {
 class CookieCryptoDelegate;
 class CookieStore;
+class SQLitePersistentCookieStore;
 }
 
 namespace cookie_util {
@@ -69,6 +70,11 @@ struct CookieStoreConfig {
   // config.
   net::CookieCryptoDelegate* crypto_delegate;
 };
+
+scoped_refptr<net::SQLitePersistentCookieStore> CreatePersistentCookieStore(
+    const base::FilePath& path,
+    bool restore_old_session_cookies,
+    net::CookieCryptoDelegate* crypto_delegate);
 
 // Creates a cookie store wich is internally either a CookieMonster or a
 // CookieStoreIOS.

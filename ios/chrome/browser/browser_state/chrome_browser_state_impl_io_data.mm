@@ -4,12 +4,14 @@
 
 #include "ios/chrome/browser/browser_state/chrome_browser_state_impl_io_data.h"
 
+#include <WebKit/WebKit.h>
 #include <memory>
 #include <set>
 #include <utility>
 
 #include "base/bind.h"
 #include "base/callback.h"
+#include "base/ios/ios_util.h"
 #include "base/logging.h"
 #include "base/memory/ptr_util.h"
 #include "base/sequenced_task_runner.h"
@@ -30,10 +32,13 @@
 #include "ios/chrome/browser/net/ios_chrome_url_request_context_getter.h"
 #include "ios/chrome/browser/pref_names.h"
 #include "ios/net/cookies/cookie_store_ios.h"
+#import "ios/web/public/cookie_store_util.h"
 #include "ios/web/public/web_thread.h"
+#include "ios/web/web_state/ui/wk_web_view_configuration_provider.h"
 #include "net/base/cache_type.h"
 #include "net/cookies/cookie_store.h"
 #include "net/extras/sqlite/sqlite_channel_id_store.h"
+#include "net/extras/sqlite/sqlite_persistent_cookie_store.h"
 #include "net/http/http_cache.h"
 #include "net/http/http_network_session.h"
 #include "net/http/http_server_properties_manager.h"
@@ -78,6 +83,12 @@ void ChromeBrowserStateImplIOData::Handle::Init(
   lazy_params->channel_id_path = channel_id_path;
   lazy_params->cache_path = cache_path;
   lazy_params->cache_max_size = cache_max_size;
+  if (@available(iOS 11.0, *)) {
+    web::WKWebViewConfigurationProvider& config_provider =
+        web::WKWebViewConfigurationProvider::FromBrowserState(browser_state);
+    lazy_params->wk_cookie_store = config_provider.GetWebViewConfiguration()
+                                       .websiteDataStore.httpCookieStore;
+  }
   io_data_->lazy_params_.reset(lazy_params);
 
   // Keep track of profile path and cache sizes separately so we can use them
@@ -244,7 +255,24 @@ void ChromeBrowserStateImplIOData::InitializeInternal(
       cookie_util::CookieStoreConfig::RESTORED_SESSION_COOKIES,
       cookie_util::CookieStoreConfig::COOKIE_STORE_IOS,
       cookie_config::GetCookieCryptoDelegate());
-  main_cookie_store_ = cookie_util::CreateCookieStore(ios_cookie_config);
+  main_cookie_store_ =
+      web::CreateCoookieStore(ios_cookie_config, lazy_params_->wk_cookie_store);
+
+  // Proto
+  if (base::ios::IsRunningOnIOS11OrLater()) {
+    scoped_refptr<net::SQLitePersistentCookieStore> persistent_store =
+        cookie_util::CreatePersistentCookieStore(
+            ios_cookie_config.path, true /* restore_old_session_cookies */,
+            ios_cookie_config.crypto_delegate);
+
+    // TODO: browser state must only be accessed on IO thread.
+
+    main_cookie_store_ = web::CreateCookieStore(persistent_store.get(),
+                                                lazy_params_->wk_cookie_store);
+  } else {
+    main_cookie_store_ = cookie_util::CreateCookieStore(ios_cookie_config);
+  }
+  // End Proto
 
   if (profile_params->path.BaseName().value() ==
       kIOSChromeInitialBrowserState) {
@@ -322,8 +350,14 @@ ChromeBrowserStateImplIOData::InitializeAppRequestContext(
       base::FilePath(),
       cookie_util::CookieStoreConfig::EPHEMERAL_SESSION_COOKIES,
       cookie_util::CookieStoreConfig::COOKIE_STORE_IOS, nullptr);
-  std::unique_ptr<net::CookieStore> cookie_store =
-      cookie_util::CreateCookieStore(ios_cookie_config);
+  std::unique_ptr<net::CookieStore> cookie_store;
+
+  if (base::ios::IsRunningOnIOS11OrLater()) {
+    cookie_store =
+        web::CreateCookieStore(nullptr /*persistent_store*/, nullptr);
+  } else {
+    cookie_store = cookie_util::CreateCookieStore(ios_cookie_config);
+  }
 
   // Transfer ownership of the ChannelIDStore, HttpNetworkSession, cookies, and
   // cache to AppRequestContext.

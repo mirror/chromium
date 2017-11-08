@@ -29,7 +29,6 @@
 
 namespace cookie_util {
 
-namespace {
 
 // Date of the last cookie deletion.
 NSString* const kLastCookieDeletionDate = @"LastCookieDeletionDate";
@@ -49,6 +48,14 @@ scoped_refptr<net::SQLitePersistentCookieStore> CreatePersistentCookieStore(
               {base::MayBlock(), base::TaskPriority::BACKGROUND}),
           restore_old_session_cookies, crypto_delegate));
 }
+
+namespace {
+
+// Date of the last cookie deletion.
+NSString* const kLastCookieDeletionDate = @"LastCookieDeletionDate";
+
+// Empty callback.
+void DoNothing(int n) {}
 
 // Creates a CookieMonster configured by |config|.
 std::unique_ptr<net::CookieMonster> CreateCookieMonster(

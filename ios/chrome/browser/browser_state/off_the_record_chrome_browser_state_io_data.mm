@@ -10,6 +10,7 @@
 
 #include "base/bind.h"
 #include "base/command_line.h"
+#include "base/ios/ios_util.h"
 #include "base/logging.h"
 #include "base/mac/bind_objc_block.h"
 #include "base/stl_util.h"
@@ -22,11 +23,13 @@
 #include "ios/chrome/browser/net/ios_chrome_network_delegate.h"
 #include "ios/chrome/browser/net/ios_chrome_url_request_context_getter.h"
 #include "ios/chrome/browser/pref_names.h"
+#import "ios/web/public/cookie_store_util.h"
 #include "ios/web/public/web_thread.h"
 #include "net/base/sdch_manager.h"
 #include "net/cookies/cookie_store.h"
 #include "net/disk_cache/disk_cache.h"
 #include "net/extras/sqlite/sqlite_channel_id_store.h"
+#include "net/extras/sqlite/sqlite_persistent_cookie_store.h"
 #include "net/ftp/ftp_network_layer.h"
 #include "net/http/http_cache.h"
 #include "net/http/http_network_session.h"
@@ -194,11 +197,23 @@ void OffTheRecordChromeBrowserStateIOData::InitializeInternal(
   set_channel_id_service(channel_id_service);
   main_context->set_channel_id_service(channel_id_service);
 
-  main_cookie_store_ =
-      cookie_util::CreateCookieStore(cookie_util::CookieStoreConfig(
-          cookie_path_,
-          cookie_util::CookieStoreConfig::RESTORED_SESSION_COOKIES,
-          cookie_util::CookieStoreConfig::COOKIE_STORE_IOS, nullptr));
+  cookie_util::CookieStoreConfig ios_cookie_config(
+      cookie_path_, cookie_util::CookieStoreConfig::RESTORED_SESSION_COOKIES,
+      cookie_util::CookieStoreConfig::COOKIE_STORE_IOS, nullptr);
+  if (base::ios::IsRunningOnIOS11OrLater()) {
+    scoped_refptr<net::SQLitePersistentCookieStore> persistent_store =
+        cookie_util::CreatePersistentCookieStore(
+            ios_cookie_config.path, true /* restore_old_session_cookies */,
+            ios_cookie_config.crypto_delegate);
+
+    web::BrowserState* browser_state =
+        static_cast<web::BrowserState*>(profile_params->browser_state);
+    main_cookie_store_ =
+        web::CreateCookieStore(persistent_store.get(), browser_state);
+  } else {
+    main_cookie_store_ = cookie_util::CreateCookieStore(ios_cookie_config);
+  }
+
   main_context->set_cookie_store(main_cookie_store_.get());
   main_cookie_store_->SetChannelIDServiceID(channel_id_service->GetUniqueID());
 
