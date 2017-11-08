@@ -22,6 +22,30 @@
       "revId": "a0195952f094f271a69b4aab2fdf1a0fc935cc58",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8c8037fe_8f42ad30",
+        "filename": "ios/chrome/browser/ui/bookmarks/cells/bookmark_table_cell.mm",
+        "patchSetId": 3
+      },
+      "lineNbr": 242,
+      "author": {
+        "id": 1212314
+      },
+      "writtenOn": "2017-11-08T07:13:28Z",
+      "side": 1,
+      "message": "Thanks for catching this.\nI don\u0027t understand either.  Sorry I should digest the code before copying.\nI will assign the string directly.",
+      "parentUuid": "ea9a1679_04c40218",
+      "range": {
+        "startLine": 242,
+        "startChar": 6,
+        "endLine": 242,
+        "endChar": 60
+      },
+      "revId": "a0195952f094f271a69b4aab2fdf1a0fc935cc58",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
