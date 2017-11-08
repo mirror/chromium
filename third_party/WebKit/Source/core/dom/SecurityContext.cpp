@@ -103,6 +103,33 @@ void SecurityContext::EnforceSuborigin(const Suborigin& suborigin) {
   DidUpdateSecurityOrigin();
 }
 
+void SecurityContext::SetDomainFromDOM(const String& new_domain) {
+  security_origin_->SetDomainFromDOM(new_domain);
+}
+
+void SecurityContext::SetUniqueOriginIsPotentiallyTrustworthy(
+    bool is_unique_origin_potentially_trustworthy) {
+  security_origin_->SetUniqueOriginIsPotentiallyTrustworthy(
+      is_unique_origin_potentially_trustworthy);
+}
+
+void SecurityContext::GrantLoadLocalResources() {
+  security_origin_->GrantLoadLocalResources();
+}
+
+void SecurityContext::GrantUniversalAccess() {
+  security_origin_->GrantUniversalAccess();
+}
+
+void SecurityContext::BlockLocalAccessFromLocalOrigin() {
+  security_origin_->BlockLocalAccessFromLocalOrigin();
+}
+
+void SecurityContext::TransferPrivilegesFrom(
+    std::unique_ptr<SecurityOrigin::PrivilegeData> data) {
+  security_origin_->TransferPrivilegesFrom(std::move(data));
+}
+
 void SecurityContext::InitializeFeaturePolicy(
     const ParsedFeaturePolicy& parsed_header,
     const ParsedFeaturePolicy& container_policy,
