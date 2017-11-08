@@ -46,6 +46,30 @@
       "revId": "4ea66e512fc11f3c3050c7c6ea0b40f417443925",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7008f956_69577cf0",
+        "filename": "third_party/WebKit/Source/core/loader/LinkLoader.cpp",
+        "patchSetId": 11
+      },
+      "lineNbr": 425,
+      "author": {
+        "id": 1115941
+      },
+      "writtenOn": "2017-11-08T05:37:06Z",
+      "side": 1,
+      "message": "Chatted w/ Kouhei, and we think node document\u0027s \"relevant settings object\" means document.ContextDocument().\n\nChanged the code accordingly, but I\u0027m not sure if there\u0027s any case where this makes difference, since (module)preload doesn\u0027t work in imported documents and other frame-less documents.",
+      "parentUuid": "9fb8ed0f_563d145f",
+      "range": {
+        "startLine": 425,
+        "startChar": 48,
+        "endLine": 425,
+        "endChar": 56
+      },
+      "revId": "4ea66e512fc11f3c3050c7c6ea0b40f417443925",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
