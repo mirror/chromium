@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "6e504475_8deab1c3",
+        "filename": "docs/testing/json_test_results_format.md",
+        "patchSetId": 6
+      },
+      "lineNbr": 47,
+      "author": {
+        "id": 1148599
+      },
+      "writtenOn": "2017-11-08T00:13:03Z",
+      "side": 1,
+      "message": "estaab@ suggested this format. I think that does make a bit more sense, but I don\u0027t remember the exact reasons. I think it had something to do with not putting values as keys?",
+      "parentUuid": "a80c1066_d572abbc",
+      "revId": "d66752fd5e1081fc5e07385c46732763342bf11f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "a83ba1fa_ed36459c",
         "filename": "docs/testing/json_test_results_format.md",
         "patchSetId": 6
@@ -33,6 +51,24 @@
       "revId": "d66752fd5e1081fc5e07385c46732763342bf11f",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "366c1889_aed120aa",
+        "filename": "docs/testing/json_test_results_format.md",
+        "patchSetId": 6
+      },
+      "lineNbr": 64,
+      "author": {
+        "id": 1148599
+      },
+      "writtenOn": "2017-11-08T00:13:03Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "a83ba1fa_ed36459c",
+      "revId": "d66752fd5e1081fc5e07385c46732763342bf11f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
