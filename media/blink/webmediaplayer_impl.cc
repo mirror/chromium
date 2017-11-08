@@ -1445,6 +1445,7 @@ void WebMediaPlayerImpl::OnEnded() {
   TRACE_EVENT1("media", "WebMediaPlayerImpl::OnEnded", "duration", Duration());
   DVLOG(1) << __func__;
   DCHECK(main_task_runner_->BelongsToCurrentThread());
+  DCHECK(!std::isinf(Duration()));
 
   // Ignore state changes until we've completed all outstanding operations.
   if (!pipeline_controller_.IsStable())
