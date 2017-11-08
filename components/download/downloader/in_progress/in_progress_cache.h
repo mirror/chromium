@@ -7,11 +7,8 @@
 
 #include <string>
 
-#include "base/files/file_path.h"
-#include "base/macros.h"
-#include "base/sequenced_task_runner.h"
+#include "base/optional.h"
 #include "components/download/downloader/in_progress/download_entry.h"
-#include "components/download/downloader/in_progress/proto/download_entry.pb.h"
 
 namespace download {
 
@@ -21,21 +18,17 @@ namespace download {
 // right away.
 class InProgressCache {
  public:
-  InProgressCache(const base::FilePath& cache_file_path,
-                  const scoped_refptr<base::SequencedTaskRunner>& task_runner);
-  ~InProgressCache();
+  virtual ~InProgressCache() = default;
 
   // Adds or updates an existing entry.
-  void AddOrReplaceEntry(const DownloadEntry& entry);
+  virtual void AddOrReplaceEntry(const DownloadEntry& entry) = 0;
 
   // Retrieves an existing entry.
-  DownloadEntry* RetrieveEntry(const std::string& guid);
+  virtual base::Optional<DownloadEntry> RetrieveEntry(
+      const std::string& guid) = 0;
 
   // Removes an entry.
-  void RemoveEntry(const std::string& guid);
-
- private:
-  DISALLOW_COPY_AND_ASSIGN(InProgressCache);
+  virtual void RemoveEntry(const std::string& guid) = 0;
 };
 
 }  // namespace download
