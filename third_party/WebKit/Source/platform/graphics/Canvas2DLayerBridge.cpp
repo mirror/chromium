@@ -32,8 +32,6 @@
 #include "gpu/command_buffer/client/gles2_interface.h"
 #include "gpu/command_buffer/client/gpu_memory_buffer_manager.h"
 #include "gpu/command_buffer/common/capabilities.h"
-#include "gpu/config/gpu_driver_bug_workaround_type.h"
-#include "gpu/config/gpu_feature_info.h"
 #include "platform/Histogram.h"
 #include "platform/WebTaskRunner.h"
 #include "platform/graphics/AcceleratedStaticBitmapImage.h"
@@ -198,16 +196,6 @@ Canvas2DLayerBridge::Canvas2DLayerBridge(const IntSize& size,
     context_provider_wrapper_ = SharedGpuContext::ContextProviderWrapper();
     DCHECK(context_provider_wrapper_);
     DCHECK(SharedGpuContext::IsGpuCompositingEnabled());
-    // See whether the use of GpuMemoryBuffers was blacklisted since
-    // the time the browser determined whether to use the feature
-    // based on the command line flags. This is the only way to avoid
-    // race conditions when determining whether to use this feature.
-    use_gpu_memory_buffers_ =
-        RuntimeEnabledFeatures::Canvas2dImageChromiumEnabled() &&
-        !context_provider_wrapper_->ContextProvider()
-             ->GetGpuFeatureInfo()
-             .IsWorkaroundEnabled(
-                 gpu::DISABLE_GPU_MEMORY_BUFFERS_AS_RENDER_TARGETS);
   }
   // Used by browser tests to detect the use of a Canvas2DLayerBridge.
   TRACE_EVENT_INSTANT0("test_gpu", "Canvas2DLayerBridgeCreation",
@@ -220,7 +208,7 @@ Canvas2DLayerBridge::Canvas2DLayerBridge(const IntSize& size,
 Canvas2DLayerBridge::~Canvas2DLayerBridge() {
   BeginDestruction();
   DCHECK(destruction_in_progress_);
-  if (use_gpu_memory_buffers_)
+  if (RuntimeEnabledFeatures::Canvas2dImageChromiumEnabled())
     ClearCHROMIUMImageCache();
   layer_.reset();
 }
@@ -387,7 +375,7 @@ Canvas2DLayerBridge::CreateGpuMemoryBufferBackedTexture() {
   if (!image_id)
     return nullptr;
 
-  GLuint texture_id = 0;
+  GLuint texture_id;
   gl->GenTextures(1, &texture_id);
   GLenum target = GC3D_TEXTURE_RECTANGLE_ARB;
   gl->BindTexture(target, texture_id);
@@ -434,7 +422,7 @@ bool Canvas2DLayerBridge::PrepareMailboxFromImage(
   if (!skia_image || !skia_image->getTexture())
     return false;
 
-  if (use_gpu_memory_buffers_) {
+  if (RuntimeEnabledFeatures::Canvas2dImageChromiumEnabled()) {
     if (PrepareGpuMemoryBufferMailboxFromImage(skia_image.get(), mailbox_info,
                                                out_mailbox))
       return true;
@@ -563,7 +551,7 @@ void Canvas2DLayerBridge::Hibernate() {
   hibernation_image_ = temp_hibernation_surface->makeImageSnapshot();
   ResetSurface();
   layer_->ClearTexture();
-  if (use_gpu_memory_buffers_)
+  if (RuntimeEnabledFeatures::Canvas2dImageChromiumEnabled())
     ClearCHROMIUMImageCache();
   // shouldBeDirectComposited() may have changed.
   if (image_buffer_)
@@ -1041,21 +1029,24 @@ void Canvas2DLayerBridge::ReleaseFrameResources(
                  ->GetGraphicsResetStatusKHR() != GL_NO_ERROR);
   }
 
-  scoped_refptr<ImageInfo>& info = released_mailbox_info->image_info_;
-  if (info) {
-    if (lost_resource || context_or_layer_bridge_lost) {
-      DeleteCHROMIUMImage(context_provider_wrapper,
-                          std::move(info->gpu_memory_buffer_), info->image_id_,
-                          info->texture_id_);
-    } else {
-      layer_bridge->image_info_cache_.push_back(info);
+  if (RuntimeEnabledFeatures::Canvas2dImageChromiumEnabled()) {
+    scoped_refptr<ImageInfo>& info = released_mailbox_info->image_info_;
+    if (info) {
+      if (lost_resource || context_or_layer_bridge_lost) {
+        DeleteCHROMIUMImage(context_provider_wrapper,
+                            std::move(info->gpu_memory_buffer_),
+                            info->image_id_, info->texture_id_);
+      } else {
+        layer_bridge->image_info_cache_.push_back(info);
+      }
     }
   }
 
   // Invalidate texture state in case the compositor altered it since the
   // copy-on-write.
   if (released_mailbox_info->image_) {
-    DCHECK(!released_mailbox_info->image_info_);
+    if (RuntimeEnabledFeatures::Canvas2dImageChromiumEnabled())
+      DCHECK(!released_mailbox_info->image_info_);
     bool layer_bridge_with_valid_context =
         layer_bridge && !context_or_layer_bridge_lost;
     if (layer_bridge_with_valid_context || !layer_bridge) {
