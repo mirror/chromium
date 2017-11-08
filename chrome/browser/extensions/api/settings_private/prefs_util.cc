@@ -40,6 +40,7 @@
 #include "chrome/browser/chromeos/policy/browser_policy_connector_chromeos.h"
 #include "chrome/browser/chromeos/profiles/profile_helper.h"
 #include "chrome/browser/chromeos/settings/cros_settings.h"
+#include "chrome/browser/chromeos/system/timezone_resolver_manager.h"
 #include "chrome/browser/chromeos/system/timezone_util.h"
 #include "chromeos/settings/cros_settings_names.h"
 #include "components/arc/arc_prefs.h"
@@ -331,10 +332,14 @@ const PrefsUtil::TypedPrefMap& PrefsUtil::GetWhitelistedKeys() {
       settings_private::PrefType::PREF_TYPE_STRING;
   (*s_whitelist)[prefs::kUserTimezone] =
       settings_private::PrefType::PREF_TYPE_STRING;
-  (*s_whitelist)[::prefs::kResolveTimezoneByGeolocationMethod] =
+  (*s_whitelist)[prefs::kResolveTimezoneByGeolocationMethod] =
       settings_private::PrefType::PREF_TYPE_NUMBER;
   (*s_whitelist)[chromeos::kPerUserTimezoneEnabled] =
       settings_private::PrefType::PREF_TYPE_BOOLEAN;
+  (*s_whitelist)[chromeos::kFineGrainedTimeZoneResolveEnabled] =
+      settings_private::PrefType::PREF_TYPE_BOOLEAN;
+  (*s_whitelist)[prefs::kSystemTimezoneAutomaticDetectionPolicy] =
+      settings_private::PrefType::PREF_TYPE_NUMBER;
 
   // Ash settings.
   (*s_whitelist)[ash::prefs::kEnableStylusTools] =
@@ -488,26 +493,40 @@ std::unique_ptr<settings_private::PrefObject> PrefsUtil::GetCrosSettingsPref(
 
 std::unique_ptr<settings_private::PrefObject> PrefsUtil::GetPref(
     const std::string& name) {
+  //LOG(ERROR) << "PrefsUtil::GetPref(name='" << name << "'): Called";
+  //if (name == prefs::kSystemTimezoneAutomaticDetectionPolicy) LOG(ERROR) << "PrefsUtil::GetPref(name=kSystemTimezoneAutomaticDetectionPolicy): pref = kSystemTimezoneAutomaticDetectionPolicy";
   if (GetWhitelistedPrefType(name) ==
       settings_private::PrefType::PREF_TYPE_NONE) {
     return nullptr;
   }
+  //if (name == prefs::kSystemTimezoneAutomaticDetectionPolicy) LOG(ERROR) << "PrefsUtil::GetPref(name=kSystemTimezoneAutomaticDetectionPolicy): pref is whitelisted";
 
   const PrefService::Preference* pref = nullptr;
   std::unique_ptr<settings_private::PrefObject> pref_object;
   if (IsCrosSetting(name)) {
+    //if (name == prefs::kSystemTimezoneAutomaticDetectionPolicy) LOG(ERROR) << "PrefsUtil::GetPref(name=kSystemTimezoneAutomaticDetectionPolicy): pref is cros setting";
     pref_object = GetCrosSettingsPref(name);
     if (!pref_object)
       return nullptr;
   } else {
+    //if (name == prefs::kSystemTimezoneAutomaticDetectionPolicy) LOG(ERROR) << "PrefsUtil::GetPref(name=kSystemTimezoneAutomaticDetectionPolicy): pref is regular";
     PrefService* pref_service = FindServiceForPref(name);
     pref = pref_service->FindPreference(name);
+    //if (name == prefs::kSystemTimezoneAutomaticDetectionPolicy) LOG(ERROR) << "PrefsUtil::GetPref(name=kSystemTimezoneAutomaticDetectionPolicy): pref=" << pref;;
     if (!pref)
       return nullptr;
     pref_object.reset(new settings_private::PrefObject());
     pref_object->key = pref->name();
     pref_object->type = GetType(name, pref->GetType());
-    pref_object->value.reset(pref->GetValue()->DeepCopy());
+#if defined(OS_CHROMEOS)
+    if (name == ::prefs::kResolveTimezoneByGeolocationMethod) {
+      pref_object->value.reset(new base::Value(static_cast<int>(chromeos::system::TimeZoneResolverManager::GetUserTimeZoneResolveMethod(pref_service))));
+    } else {
+#endif
+      pref_object->value.reset(pref->GetValue()->DeepCopy());
+#if defined(OS_CHROMEOS)
+    }
+#endif
   }
 
 #if defined(OS_CHROMEOS)
@@ -629,7 +648,15 @@ PrefsUtil::SetPrefResult PrefsUtil::SetPref(const std::string& pref_name,
       if (!value->GetAsDouble(&double_value))
         return PREF_TYPE_MISMATCH;
 
-      pref_service->SetInteger(pref_name, static_cast<int>(double_value));
+#if defined(OS_CHROMEOS)
+      if (pref_name == ::prefs::kResolveTimezoneByGeolocationMethod) {
+        pref_service->SetInteger(pref_name, static_cast<int>(chromeos::system::TimeZoneResolverManager::TimeZoneResolveMethodFromInt(static_cast<int>(double_value))));
+      } else {
+#endif
+        pref_service->SetInteger(pref_name, static_cast<int>(double_value));
+#if defined(OS_CHROMEOS)
+      }
+#endif
       break;
     }
     case base::Value::Type::STRING: {
@@ -729,11 +756,10 @@ bool PrefsUtil::IsPrefEnterpriseManaged(const std::string& pref_name) {
     return false;
   if (IsPrivilegedCrosSetting(pref_name))
     return true;
-  if (chromeos::system::PerUserTimezoneEnabled() &&
-      (pref_name == prefs::kUserTimezone ||
-       pref_name == prefs::kResolveTimezoneByGeolocationMethod)) {
+  if (pref_name == prefs::kUserTimezone || pref_name == prefs::kResolveTimezoneByGeolocationMethod) {
     return chromeos::system::IsTimezonePrefsManaged(pref_name);
   }
+
   return false;
 }
 

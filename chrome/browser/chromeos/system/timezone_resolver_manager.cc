@@ -236,7 +236,15 @@ TimeZoneResolverManager::TimeZoneResolveMethodFromInt(int value) {
     return TimeZoneResolveMethod::DISABLED;
   }
 
-  return static_cast<TimeZoneResolveMethod>(value);
+  const TimeZoneResolverManager::TimeZoneResolveMethod method = static_cast<TimeZoneResolveMethod>(value);
+
+  if (FineGrainedTimeZoneDetectionEnabled())
+    return method;
+
+  if (method == TimeZoneResolveMethod::DISABLED)
+    return TimeZoneResolveMethod::DISABLED;
+
+  return TimeZoneResolveMethod::IP_ONLY;
 }
 
 // static

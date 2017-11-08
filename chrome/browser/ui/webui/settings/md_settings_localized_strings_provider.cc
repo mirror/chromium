@@ -821,8 +821,10 @@ void AddImportDataStrings(content::WebUIDataSource* html_source) {
 void AddDateTimeStrings(content::WebUIDataSource* html_source) {
   LocalizedString localized_strings[] = {
       {"dateTimePageTitle", IDS_SETTINGS_DATE_TIME},
-      {"timeZone", IDS_SETTINGS_TIME_ZONE},
+      {"timeZoneColon", IDS_SETTINGS_TIME_ZONE},
       {"timeZoneGeolocation", IDS_SETTINGS_TIME_ZONE_GEOLOCATION},
+      {"timeZoneButton", IDS_SETTINGS_TIME_ZONE_BUTTON},
+      {"timeZoneSubpageTitle", IDS_SETTINGS_TIME_ZONE_SUBPAGE_TITLE},
       {"use24HourClock", IDS_SETTINGS_USE_24_HOUR_CLOCK},
       {"setDateTime", IDS_SETTINGS_SET_DATE_TIME},
   };
