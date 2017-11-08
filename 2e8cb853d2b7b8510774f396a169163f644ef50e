@@ -84,6 +84,24 @@
     },
     {
       "key": {
+        "uuid": "24717f1b_c48299d9",
+        "filename": "components/sync/model_impl/processor_entity_tracker.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 192,
+      "author": {
+        "id": 1153420
+      },
+      "writtenOn": "2017-11-08T18:50:59Z",
+      "side": 1,
+      "message": "Hmm, that\u0027s fair, I guess I don\u0027t know if you can commit a tombstone without a server id. My guess is that this is rare enough that the bandwidth usage would be so small, we might as well just commit it to be safe. \n\nIf we got into this situation, we could try to trigger a GU and see if it made it to the server, but that read is potentially inconsistent and the client side architecture doesn\u0027t not at all lend itself to allow us to ask for a GU right here.\n\nIt seems like, theoretically, you also have a third option. Keep the tombstone locally, but don\u0027t commit it. And clean it up later, after at least a poll duration or a GU or something. Maybe record the current progress marker in the metadata, and if that changes, then we know we don\u0027t need it. But this would be a whole lot more logic, for a rare edge case.\n\nGiven that the directory already had this problem, I\u0027m okay with the TODO. Though I suppose this could be part of the reason we saw bookmarks duplication, we don\u0027t really know how impactful it is being.",
+      "parentUuid": "66a54ca8_9798c093",
+      "revId": "2e8cb853d2b7b8510774f396a169163f644ef50e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "b4828fad_1696f192",
         "filename": "components/sync/model_impl/shared_model_type_processor.cc",
         "patchSetId": 2
