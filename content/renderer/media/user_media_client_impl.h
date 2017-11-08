@@ -71,7 +71,7 @@ class CONTENT_EXPORT UserMediaClientImpl : public RenderFrameObserver,
       const blink::WebApplyConstraintsRequest& web_request) override;
 
   // RenderFrameObserver override
-  void WillCommitProvisionalLoad() override;
+  void WillCommitProvisionalLoad(bool is_same_document_navigation) override;
 
   void SetMediaDevicesDispatcherForTesting(
       ::mojom::MediaDevicesDispatcherHostPtr media_devices_dispatcher);

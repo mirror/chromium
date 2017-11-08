@@ -754,6 +754,7 @@ IN_PROC_BROWSER_TEST_F(BrowserFocusTest, NoFocusForBackgroundNTP) {
   content::WebContentsAddedObserver open_observer;
   ASSERT_TRUE(content::ExecuteScript(opener_web_contents, open_script));
   WebContents* new_web_contents = open_observer.GetWebContents();
+  EXPECT_TRUE(content::WaitForLoadStop(new_web_contents));
 
   // Tell the first (non-selected) tab to go back.  This should not give the
   // omnibox focus, since the navigation occurred in a different tab.  Otherwise
