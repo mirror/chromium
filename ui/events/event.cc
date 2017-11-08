@@ -1118,6 +1118,15 @@ bool KeyEvent::IsRepeated(const KeyEvent& event) {
   }
 
   CHECK_EQ(ui::ET_KEY_PRESSED, event.type());
+
+#if defined(OS_WIN)
+  if (event.HasNativeEvent()) {
+    // Bit 30 of lParam represents the "previous key state". If set, the key
+    // was already down, therefore this is an auto-repeat.
+    return (event.native_event().lParam & 0x40000000) != 0;
+  }
+#endif
+
   if (!(*last_key_event)) {
     *last_key_event = new KeyEvent(event);
     return false;
