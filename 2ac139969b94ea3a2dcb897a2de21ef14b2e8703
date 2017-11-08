@@ -87,6 +87,24 @@
       "revId": "2ac139969b94ea3a2dcb897a2de21ef14b2e8703",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ad4fe114_5cf6ed9c",
+        "filename": "chrome/browser/ui/ash/vpn_list_forwarder.cc",
+        "patchSetId": 20
+      },
+      "lineNbr": 51,
+      "author": {
+        "id": 1146976
+      },
+      "writtenOn": "2017-11-08T02:54:51Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "c9f1dff0_cd1394c4",
+      "revId": "2ac139969b94ea3a2dcb897a2de21ef14b2e8703",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
