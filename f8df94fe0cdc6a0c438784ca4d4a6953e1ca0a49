@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "7d22836d_c0c01f3f",
+        "filename": "third_party/WebKit/Source/modules/payments/PaymentRequestRespondWithObserver.cpp",
+        "patchSetId": 3
+      },
+      "lineNbr": 67,
+      "author": {
+        "id": 1002114
+      },
+      "writtenOn": "2017-11-08T18:53:53Z",
+      "side": 1,
+      "message": "Calling response.methodName() when !response.hasMethodName() will cause a crash. Please avoid doing that.",
+      "range": {
+        "startLine": 67,
+        "startChar": 25,
+        "endLine": 67,
+        "endChar": 47
+      },
+      "revId": "f8df94fe0cdc6a0c438784ca4d4a6953e1ca0a49",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
