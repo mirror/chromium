@@ -39,6 +39,18 @@ const char kSource[] = "ChromiumAccountReconcilor";
 const char kDiceMigrationOnStartupPref[] =
     "signin.AccountReconcilor.kDiceMigrationOnStartup";
 
+const char kDiceMigrationStatusHistogram[] = "Signin.DiceMigrationStatus";
+
+// Used for UMA histogram kDiceMigrationStatusHistogram.
+// Do not remove or re-order values.
+enum class DiceMigrationStatus {
+  kEnabled,
+  kDisabledReadyForMigration,
+  kDisabledNotReadyForMigration,
+
+  kDiceMigrationStatusCount
+};
+
 class AccountEqualToFunc {
  public:
   explicit AccountEqualToFunc(const gaia::ListedAccount& account)
@@ -97,15 +109,22 @@ AccountReconcilor::AccountReconcilor(
       reconcile_on_unblock_(false) {
   VLOG(1) << "AccountReconcilor::AccountReconcilor";
   PrefService* prefs = client_->GetPrefs();
-  if (ShouldMigrateToDiceOnStartup(is_new_profile)) {
+  bool should_migrate_to_dice = ShouldMigrateToDiceOnStartup(is_new_profile);
+  if (should_migrate_to_dice && signin::IsDiceMigrationEnabled()) {
     DCHECK(prefs);
     if (!signin::IsDiceEnabledForProfile(prefs))
       VLOG(1) << "Profile is migrating to Dice";
     signin::MigrateProfileToDice(prefs);
     DCHECK(signin::IsDiceEnabledForProfile(prefs));
   }
-  UMA_HISTOGRAM_BOOLEAN("Signin.DiceEnabledForProfile",
-                        signin::IsDiceEnabledForProfile(prefs));
+  UMA_HISTOGRAM_ENUMERATION(
+      kDiceMigrationStatusHistogram,
+      signin::IsDiceEnabledForProfile(prefs)
+          ? DiceMigrationStatus::kEnabled
+          : (should_migrate_to_dice
+                 ? DiceMigrationStatus::kDisabledReadyForMigration
+                 : DiceMigrationStatus::kDisabledNotReadyForMigration),
+      DiceMigrationStatus::kDiceMigrationStatusCount);
 }
 
 AccountReconcilor::~AccountReconcilor() {
@@ -757,9 +776,8 @@ void AccountReconcilor::UnblockReconcile() {
 }
 
 bool AccountReconcilor::ShouldMigrateToDiceOnStartup(bool is_new_profile) {
-  return signin::IsDiceMigrationEnabled() &&
-         (is_new_profile ||
-          client_->GetPrefs()->GetBoolean(kDiceMigrationOnStartupPref));
+  return is_new_profile ||
+         client_->GetPrefs()->GetBoolean(kDiceMigrationOnStartupPref);
 }
 
 // static

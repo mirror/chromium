@@ -160,7 +160,6 @@ class AccountReconcilor : public KeyedService,
   FRIEND_TEST_ALL_PREFIXES(AccountReconcilorTest, NoLoopWithBadPrimary);
   FRIEND_TEST_ALL_PREFIXES(AccountReconcilorTest, WontMergeAccountsWithError);
   FRIEND_TEST_ALL_PREFIXES(AccountReconcilorMigrationTest, MigrateAtCreation);
-  FRIEND_TEST_ALL_PREFIXES(AccountReconcilorMigrationTest, NewProfile);
 
   bool IsRegisteredWithTokenService() const {
     return registered_with_token_service_;

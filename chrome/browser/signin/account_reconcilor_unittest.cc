@@ -1596,8 +1596,6 @@ TEST(AccountReconcilorMigrationTest, MigrateAtCreation) {
     EXPECT_FALSE(signin::IsDiceEnabledForProfile(&pref_service));
     AccountReconcilor reconcilor(nullptr, nullptr, &signin_client, nullptr,
                                  false /* is_new_profile */);
-    EXPECT_FALSE(
-        reconcilor.ShouldMigrateToDiceOnStartup(false /* is_new_profile */));
     EXPECT_FALSE(signin::IsDiceEnabledForProfile(&pref_service));
   }
 
@@ -1608,8 +1606,6 @@ TEST(AccountReconcilorMigrationTest, MigrateAtCreation) {
     signin::ScopedAccountConsistencyDiceFixAuthErrors scoped_dice_fix_errors;
     AccountReconcilor reconcilor(nullptr, nullptr, &signin_client, nullptr,
                                  false /* is_new_profile */);
-    EXPECT_FALSE(
-        reconcilor.ShouldMigrateToDiceOnStartup(false /* is_new_profile */));
     EXPECT_FALSE(signin::IsDiceEnabledForProfile(&pref_service));
   }
 
@@ -1618,8 +1614,6 @@ TEST(AccountReconcilorMigrationTest, MigrateAtCreation) {
     signin::ScopedAccountConsistencyDiceMigration scoped_dice_migration;
     AccountReconcilor reconcilor(nullptr, nullptr, &signin_client, nullptr,
                                  false /* is_new_profile */);
-    EXPECT_TRUE(
-        reconcilor.ShouldMigrateToDiceOnStartup(false /* is_new_profile */));
     EXPECT_TRUE(signin::IsDiceEnabledForProfile(&pref_service));
   }
 }

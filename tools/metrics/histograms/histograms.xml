@@ -78347,11 +78347,9 @@ http://cs/file:chrome/histograms.xml - but prefer this file for new entries.
   <summary>The total number of accounts in the cookie jar.</summary>
 </histogram>
 
-<histogram name="Signin.DiceEnabledForProfile" enum="Boolean">
+<histogram name="Signin.DiceMigrationStatus" enum="SigninDiceMigrationStatus">
   <owner>droger@chromium.org</owner>
-  <summary>
-    Whether Dice is enabled for the current profile, recorded at startup.
-  </summary>
+  <summary>The Dice migration status, recorded at startup.</summary>
 </histogram>
 
 <histogram name="Signin.DiceResponseHeader" enum="SigninDiceResponseHeader">

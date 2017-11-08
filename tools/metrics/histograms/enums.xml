@@ -36628,6 +36628,12 @@ Called by update_use_counter_css.py.-->
   <int value="2" label="New Profile"/>
 </enum>
 
+<enum name="SigninDiceMigrationStatus">
+  <int value="0" label="Enabled"/>
+  <int value="1" label="Disabled, ready for migration"/>
+  <int value="2" label="Disabled, not ready for migration"/>
+</enum>
+
 <enum name="SigninDiceResponseHeader">
   <int value="0" label="Signin"/>
   <int value="1" label="SignoutPrimary">
