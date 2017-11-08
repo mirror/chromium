@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "00c46619_6ab4f115",
+        "filename": "third_party/WebKit/Source/core/frame/LocalFrame.cpp",
+        "patchSetId": 5
+      },
+      "lineNbr": 271,
+      "author": {
+        "id": 1001168
+      },
+      "writtenOn": "2017-11-08T03:35:27Z",
+      "side": 1,
+      "message": "Yes, hence the DCHECK: if the document this is executing in is already detached, we shouldn\u0027t be able to look up the frame.",
+      "parentUuid": "cbb40e69_d31f835e",
+      "revId": "f4d8e91cde2e0a38fd28da07368da7b5f9fe7291",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "3cd34839_54b2bb6c",
         "filename": "third_party/WebKit/Source/core/loader/FrameFetchContext.cpp",
         "patchSetId": 5
@@ -33,6 +51,24 @@
       "revId": "f4d8e91cde2e0a38fd28da07368da7b5f9fe7291",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1eadb3d6_e09145e7",
+        "filename": "third_party/WebKit/Source/core/loader/FrameFetchContext.cpp",
+        "patchSetId": 5
+      },
+      "lineNbr": 668,
+      "author": {
+        "id": 1001168
+      },
+      "writtenOn": "2017-11-08T03:35:27Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "3cd34839_54b2bb6c",
+      "revId": "f4d8e91cde2e0a38fd28da07368da7b5f9fe7291",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
