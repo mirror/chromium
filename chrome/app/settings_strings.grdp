@@ -2151,6 +2151,18 @@
   <message name="IDS_SETTINGS_RESET_BANNER_RESET_BUTTON_TEXT" desc="The text on the reset button in the Automatic Settings Reset Banner suggesting to reset ALL settings after an automatic reset of SOME settings.">
     Reset all settings
   </message>
+  <!-- Reset card title and Chrome Cleanup item on Windows -->
+  <if expr="is_win">
+    <message name="IDS_SETTINGS_RESET_AND_CLEANUP" desc="Title of a section in Chrome Settings. Imperative. 'Reset' refers to resetting settings to defaults. 'Clean up' refers to cleaning up harmful software on the user's computer.">
+      Reset and clean up
+    </message>
+    <message name="IDS_SETTINGS_CLEAN_UP_COMPUTER_TITLE" desc="Title for an item in the 'Reset and clean up' section of Chrome Settings. 'Clean up' refers to cleaning up harmful software on the user's computer. Imperative.">
+      Clean up computer
+    </message>
+    <message name="IDS_SETTINGS_FIND_AND_REMOVE" desc="Title of an item in Chrome Settings. Imperative.">
+      Find and remove harmful software
+    </message>
+  </if>
 
   <!-- Factory Reset / Powerwash -->
   <if expr="chromeos">
