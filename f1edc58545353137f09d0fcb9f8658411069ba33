@@ -22,6 +22,30 @@
       "revId": "f1edc58545353137f09d0fcb9f8658411069ba33",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5c9269ea_4914516f",
+        "filename": "ios/chrome/browser/ui/overscroll_actions/overscroll_actions_controller.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 72,
+      "author": {
+        "id": 1116027
+      },
+      "writtenOn": "2017-11-08T13:08:00Z",
+      "side": 1,
+      "message": "I initially had the object listen to -webStateDestroyed, but this required adding a dependency on WebState that was not present in the code. In addition, this object is only instantiated in a single location that listen to -webStateDestroyed and call -invalidate.\n\nIt felt a bit stupid to have two objects listen for the same notification to call the same method. And The owner of OverscrollActionsController need to call -invalidate when it is destroyed anyway, so I cannot just have this object observe WebState.\n\nAnd as you said, this code is going to be refactored soon with the full screen refactoring, so probably not worth fixing more than this.",
+      "parentUuid": "dc8db4e2_af940c26",
+      "range": {
+        "startLine": 72,
+        "startChar": 6,
+        "endLine": 72,
+        "endChar": 10
+      },
+      "revId": "f1edc58545353137f09d0fcb9f8658411069ba33",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
