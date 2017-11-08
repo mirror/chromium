@@ -276,7 +276,7 @@ InputImeEventRouter::~InputImeEventRouter() {}
 bool InputImeEventRouter::RegisterImeExtension(
     const std::string& extension_id,
     const std::vector<InputComponentInfo>& input_components) {
-  VLOG(1) << "RegisterImeExtension: " << extension_id;
+  LOG(ERROR) << "RegisterImeExtension: " << extension_id;
 
   if (engine_map_[extension_id])
     return false;
@@ -626,6 +626,10 @@ void InputImeAPI::OnExtensionLoaded(content::BrowserContext* browser_context,
       InputComponents::GetInputComponents(extension);
   InputImeEventRouter* event_router =
       GetInputImeEventRouter(Profile::FromBrowserContext(browser_context));
+  LOG(ERROR) << "Extension(" << (extension ? extension->id() : "")
+             << ") is loaded";
+  LOG(ERROR) << "input_components = " << input_components
+             << ", event_router = " << event_router;
   if (input_components && event_router) {
     event_router->RegisterImeExtension(extension->id(), *input_components);
   }
@@ -636,6 +640,9 @@ void InputImeAPI::OnExtensionUnloaded(content::BrowserContext* browser_context,
                                       UnloadedExtensionReason reason) {
   const std::vector<InputComponentInfo>* input_components =
       InputComponents::GetInputComponents(extension);
+  LOG(ERROR) << "Extension(" << (extension ? extension->id() : "")
+             << ") is unloaded";
+  LOG(ERROR) << "input_components = " << input_components;
   if (!input_components || input_components->empty())
     return;
   InputImeEventRouter* event_router =
@@ -646,6 +653,8 @@ void InputImeAPI::OnExtensionUnloaded(content::BrowserContext* browser_context,
 }
 
 void InputImeAPI::OnListenerAdded(const EventListenerInfo& details) {
+  LOG(ERROR) << "InputImeAPI::OnListenerAdded";
+
   if (!details.browser_context)
     return;
   InputMethodEngine* engine =

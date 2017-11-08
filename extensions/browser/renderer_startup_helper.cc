@@ -87,6 +87,7 @@ void RendererStartupHelper::Observe(
 
 void RendererStartupHelper::InitializeProcess(
     content::RenderProcessHost* process) {
+  LOG(ERROR) << "RendererStartupHelper::InitializeProcess";
   ExtensionsBrowserClient* client = ExtensionsBrowserClient::Get();
   if (!client->IsSameContext(browser_context_, process->GetBrowserContext()))
     return;
@@ -157,6 +158,7 @@ void RendererStartupHelper::InitializeProcess(
     loaded_extensions.push_back(
         ExtensionMsg_Loaded_Params(ext.get(), include_tab_permissions));
     extension_process_map_[ext->id()].insert(process);
+    // LOG(ERROR) << "InitializeProcess: Insert one process for " << ext->id();
   }
 
   // Activate pending extensions.
@@ -169,6 +171,8 @@ void RendererStartupHelper::InitializeProcess(
       DCHECK(base::ContainsKey(extension_process_map_, id));
       DCHECK(base::ContainsKey(extension_process_map_[id], process));
       process->Send(new ExtensionMsg_ActivateExtension(id));
+      // LOG(ERROR) << "InitializeProcess: send activate extension("
+      //            << id << ")";
     }
   }
 
@@ -192,6 +196,7 @@ void RendererStartupHelper::UntrackProcess(
 void RendererStartupHelper::ActivateExtensionInProcess(
     const Extension& extension,
     content::RenderProcessHost* process) {
+  LOG(ERROR) << "ActivateExtensionInProcess: " << extension.id();
   // The extension should have been loaded already. Dump without crashing to
   // debug crbug.com/528026.
   if (!base::ContainsKey(extension_process_map_, extension.id())) {
@@ -210,26 +215,34 @@ void RendererStartupHelper::ActivateExtensionInProcess(
   if (base::ContainsKey(initialized_processes_, process)) {
     DCHECK(base::ContainsKey(extension_process_map_[extension.id()], process));
     process->Send(new ExtensionMsg_ActivateExtension(extension.id()));
+    LOG(ERROR) << "Send ActivateExtension message";
   } else {
     pending_active_extensions_[process].insert(extension.id());
+    LOG(ERROR) << "add it to pending_active_extensions_";
   }
 }
 
 void RendererStartupHelper::OnExtensionLoaded(const Extension& extension) {
+  LOG(ERROR) << "RendererStartupHelper::OnExtensionLoaded";
   // Extension was already loaded.
   // TODO(crbug.com/708230): Ensure that clients don't call this for an
   // already loaded extension and change this to a DCHECK.
-  if (base::ContainsKey(extension_process_map_, extension.id()))
+  if (base::ContainsKey(extension_process_map_, extension.id())) {
+    LOG(ERROR) << "already in extension_process_map_";
     return;
+  }
 
   // Mark the extension as loaded.
   std::set<content::RenderProcessHost*>& loaded_process_set =
       extension_process_map_[extension.id()];
+  LOG(ERROR) << "Got loaded_process_set, # is " << loaded_process_set.size();
 
   // IsExtensionVisibleToContext() would filter out themes, but we choose to
   // return early for performance reasons.
-  if (extension.is_theme())
+  if (extension.is_theme()) {
+    LOG(ERROR) << "It's theme extension";
     return;
+  }
 
   // We don't need to include tab permisisons here, since the extension
   // was just loaded.
@@ -241,9 +254,11 @@ void RendererStartupHelper::OnExtensionLoaded(const Extension& extension) {
   for (content::RenderProcessHost* process : initialized_processes_) {
     if (!IsExtensionVisibleToContext(extension, process->GetBrowserContext()))
       continue;
+    LOG(ERROR) << "Found process, send Loaded msg";
     process->Send(new ExtensionMsg_Loaded(params));
     loaded_process_set.insert(process);
   }
+  LOG(ERROR) << "Now loaded_process_set = " << loaded_process_set.size();
 }
 
 void RendererStartupHelper::OnExtensionUnloaded(const Extension& extension) {

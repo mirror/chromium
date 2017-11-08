@@ -401,6 +401,7 @@ bool EventRouter::ExtensionHasEventListener(
 std::set<std::string> EventRouter::GetRegisteredEvents(
     const std::string& extension_id,
     RegisteredEventType type) const {
+  LOG(ERROR) << "GetRegisteredEvents for " << extension_id;
   std::set<std::string> events;
   const ListValue* events_value = NULL;
 
@@ -409,6 +410,7 @@ std::set<std::string> EventRouter::GetRegisteredEvents(
                              : kRegisteredServiceWorkerEvents;
   if (!extension_prefs_ || !extension_prefs_->ReadPrefAsList(
                                extension_id, pref_key, &events_value)) {
+    LOG(ERROR) << "Failed to read registered event";
     return events;
   }
 
@@ -417,6 +419,7 @@ std::set<std::string> EventRouter::GetRegisteredEvents(
     if (events_value->GetString(i, &event))
       events.insert(event);
   }
+  LOG(ERROR) << "Returned " << events.size() << " events for " << extension_id;
   return events;
 }
 
@@ -780,6 +783,8 @@ void EventRouter::DispatchPendingEvent(
 void EventRouter::SetRegisteredEvents(const std::string& extension_id,
                                       const std::set<std::string>& events,
                                       RegisteredEventType type) {
+  LOG(ERROR) << "SetRegisteredEvents for (" << extension_id << "), "
+             << events.size() << "events";
   auto events_value = std::make_unique<base::ListValue>();
   for (std::set<std::string>::const_iterator iter = events.begin();
        iter != events.end(); ++iter) {

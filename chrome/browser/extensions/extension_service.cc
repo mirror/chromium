@@ -1012,11 +1012,13 @@ void ExtensionService::PostActivateExtension(
   // BrowserContextKeyedService and use ExtensionRegistryObserver.
   profile_->GetExtensionSpecialStoragePolicy()->GrantRightsForExtension(
       extension.get(), profile_);
+  LOG(ERROR) << "GrantRightsForExtensions";
 
   // TODO(kalman): This is broken. The crash reporter is process-wide so doesn't
   // work properly multi-profile. Besides which, it should be using
   // ExtensionRegistryObserver. See http://crbug.com/355029.
   UpdateActiveExtensionsInCrashReporter();
+  LOG(ERROR) << "UpdateActiveExtensionsInCrashReporter";
 
   const extensions::PermissionsData* permissions_data =
       extension->permissions_data();
@@ -1303,7 +1305,11 @@ void ExtensionService::SetReadyAndNotifyListeners() {
 }
 
 void ExtensionService::AddExtension(const Extension* extension) {
+  LOG(ERROR) << "ExtensionService::AddExtension: id=" << extension->id()
+             << ", location=" << extension->location();
   if (!Manifest::IsValidLocation(extension->location())) {
+    LOG(ERROR) << "Manifest is in invalid location";
+
     // TODO(devlin): We should *never* add an extension with an invalid
     // location, but some bugs (e.g. crbug.com/692069) seem to indicate we do.
     // Track down the cases when this can happen, and remove this
@@ -1330,6 +1336,7 @@ void ExtensionService::AddExtension(const Extension* extension) {
       extension->location() != Manifest::COMPONENT &&
       !Manifest::IsExternalLocation(extension->location()) &&
       disable_flag_exempted_extensions_.count(extension->id()) == 0) {
+    LOG(ERROR) << "temporary branch returning";
     return;
   }
 
@@ -1345,10 +1352,13 @@ void ExtensionService::AddExtension(const Extension* extension) {
     // that we aren't downgrading.
     if (!Manifest::IsUnpackedLocation(extension->location()))
       CHECK_GE(version_compare_result, 0);
+    LOG(ERROR) << "There is old one, is_extension_upgrade="
+               << is_extension_upgrade;
   }
 
   // If the extension was disabled for a reload, we will enable it.
   bool reloading = reloading_extensions_.erase(extension->id()) > 0;
+  LOG(ERROR) << "reloading = " << reloading;
 
   // Set the upgraded bit; we consider reloads upgrades.
   system_->runtime_data()->SetBeingUpgraded(extension->id(),
@@ -1400,11 +1410,12 @@ void ExtensionService::AddComponentExtension(const Extension* extension) {
       extension_prefs_->GetVersionString(extension->id()));
   const base::Version old_version(old_version_string);
 
-  VLOG(1) << "AddComponentExtension " << extension->name();
+  LOG(ERROR) << "AddComponentExtension " << extension->name();
   if (!old_version.IsValid() || old_version != *extension->version()) {
-    VLOG(1) << "Component extension " << extension->name() << " ("
-        << extension->id() << ") installing/upgrading from '"
-        << old_version_string << "' to " << extension->version()->GetString();
+    LOG(ERROR) << "Component extension " << extension->name() << " ("
+               << extension->id() << ") installing/upgrading from '"
+               << old_version_string << "' to "
+               << extension->version()->GetString();
 
     // TODO(crbug.com/696822): If needed, add support for Declarative Net
     // Request to component extensions and pass the ruleset checksum here.

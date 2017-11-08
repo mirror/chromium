@@ -220,8 +220,12 @@ std::string ComponentLoader::Add(
 
   component_extensions_.push_back(std::move(info));
   ComponentExtensionInfo& added_info = component_extensions_.back();
-  if (extension_service_->is_ready())
+  if (extension_service_->is_ready()) {
+    LOG(ERROR) << "%%%%%%%%%% " << added_info.extension_id;
     Load(added_info);
+  } else {
+    LOG(ERROR) << "$$$$$$$$$$" << added_info.extension_id;
+  }
   return added_info.extension_id;
 }
 

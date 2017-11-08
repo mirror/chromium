@@ -194,7 +194,7 @@ InputMethodManagerImpl::StateImpl::GetActiveInputMethods() const {
       if (ix != extra_input_methods.end())
         result->push_back(ix->second);
       else
-        DVLOG(1) << "Descriptor is not found for: " << input_method_id;
+        LOG(ERROR) << "Descriptor is not found for: " << input_method_id;
     }
   }
   if (result->empty()) {
@@ -257,17 +257,18 @@ void InputMethodManagerImpl::StateImpl::EnableLoginLayouts(
         if (IsInputMethodAllowed(initial_layouts[i])) {
           layouts.push_back(initial_layouts[i]);
         } else {
-          DVLOG(1) << "EnableLoginLayouts: ignoring layout disallowd by policy:"
-                   << initial_layouts[i];
+          LOG(ERROR)
+              << "EnableLoginLayouts: ignoring layout disallowd by policy:"
+              << initial_layouts[i];
         }
       } else {
-        DVLOG(1)
+        LOG(ERROR)
             << "EnableLoginLayouts: ignoring non-login initial keyboard layout:"
             << initial_layouts[i];
       }
     } else if (!initial_layouts[i].empty()) {
-      DVLOG(1) << "EnableLoginLayouts: ignoring non-keyboard or invalid ID: "
-               << initial_layouts[i];
+      LOG(ERROR) << "EnableLoginLayouts: ignoring non-keyboard or invalid ID: "
+                 << initial_layouts[i];
     }
   }
 
@@ -342,13 +343,14 @@ bool InputMethodManagerImpl::StateImpl::EnableInputMethodImpl(
     const std::string& input_method_id,
     std::vector<std::string>* new_active_input_method_ids) const {
   if (!IsInputMethodAllowed(input_method_id)) {
-    DVLOG(1) << "EnableInputMethod: " << input_method_id << " is not allowed.";
+    LOG(ERROR) << "EnableInputMethod: " << input_method_id
+               << " is not allowed.";
     return false;
   }
 
   DCHECK(new_active_input_method_ids);
   if (!manager_->util_.IsValidInputMethodId(input_method_id)) {
-    DVLOG(1) << "EnableInputMethod: Invalid ID: " << input_method_id;
+    LOG(ERROR) << "EnableInputMethod: Invalid ID: " << input_method_id;
     return false;
   }
 
@@ -380,7 +382,7 @@ bool InputMethodManagerImpl::StateImpl::ReplaceEnabledInputMethods(
                           &new_active_input_method_ids_filtered);
 
   if (new_active_input_method_ids_filtered.empty()) {
-    DVLOG(1) << "ReplaceEnabledInputMethods: No valid input method ID";
+    LOG(ERROR) << "ReplaceEnabledInputMethods: No valid input method ID";
     return false;
   }
 
@@ -522,7 +524,7 @@ void InputMethodManagerImpl::StateImpl::AddInputMethodExtension(
   DCHECK(engine);
 
   manager_->engine_map_[profile][extension_id] = engine;
-  VLOG(1) << "Add an engine for \"" << extension_id << "\"";
+  LOG(ERROR) << "Add an engine for \"" << extension_id << "\"";
 
   bool contain = false;
   for (size_t i = 0; i < descriptors.size(); i++) {
@@ -533,8 +535,8 @@ void InputMethodManagerImpl::StateImpl::AddInputMethodExtension(
       if (!base::ContainsValue(active_input_method_ids, id)) {
         active_input_method_ids.push_back(id);
       } else {
-        DVLOG(1) << "AddInputMethodExtension: already added: " << id << ", "
-                 << descriptor.name();
+        LOG(ERROR) << "AddInputMethodExtension: already added: " << id << ", "
+                   << descriptor.name();
       }
       contain = true;
     }
@@ -731,12 +733,12 @@ void InputMethodManagerImpl::StateImpl::SetInputMethodLoginDefault() {
 bool InputMethodManagerImpl::StateImpl::CanCycleInputMethod() const {
   // Sanity checks.
   if (active_input_method_ids.empty()) {
-    DVLOG(1) << "active input method is empty";
+    LOG(ERROR) << "active input method is empty";
     return false;
   }
 
   if (current_input_method.id().empty()) {
-    DVLOG(1) << "current_input_method is unknown";
+    LOG(ERROR) << "current_input_method is unknown";
     return false;
   }
 
@@ -966,9 +968,9 @@ const InputMethodDescriptor* InputMethodManagerImpl::LookupInputMethod(
     DCHECK(!input_methods->empty());
     input_method_id_to_switch = input_methods->at(0).id();
     if (!input_method_id.empty()) {
-      DVLOG(1) << "Can't change the current input method to "
-               << input_method_id << " since the engine is not enabled. "
-               << "Switch to " << input_method_id_to_switch << " instead.";
+      LOG(ERROR) << "Can't change the current input method to "
+                 << input_method_id << " since the engine is not enabled. "
+                 << "Switch to " << input_method_id_to_switch << " instead.";
     }
   }
 
@@ -994,7 +996,7 @@ void InputMethodManagerImpl::ChangeInputMethodInternal(
     bool notify_menu) {
   // No need to switch input method when terminating.
   if (ui_session_ == STATE_TERMINATING) {
-    VLOG(1) << "No need to switch input method when terminating.";
+    LOG(ERROR) << "No need to switch input method when terminating.";
     return;
   }
 
@@ -1099,7 +1101,7 @@ void InputMethodManagerImpl::ActivateInputMethodMenuItem(
     return;
   }
 
-  DVLOG(1) << "ActivateInputMethodMenuItem: unknown key: " << key;
+  LOG(ERROR) << "ActivateInputMethodMenuItem: unknown key: " << key;
 }
 
 bool InputMethodManagerImpl::IsISOLevel5ShiftUsedByCurrentInputMethod() const {

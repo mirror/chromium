@@ -98,8 +98,8 @@ void DoLoadExtension(Profile* profile,
   ExtensionService* extension_service = extension_system->extension_service();
   DCHECK(extension_service);
   if (extension_service->GetExtensionById(extension_id, false)) {
-    VLOG(1) << "the IME extension(id=\"" << extension_id
-            << "\") is already enabled";
+    LOG(ERROR) << "the IME extension(id=\"" << extension_id
+               << "\") is already enabled";
     return;
   }
   const std::string loaded_extension_id =

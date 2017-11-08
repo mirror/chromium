@@ -92,6 +92,8 @@ void ExtensionWebContentsObserver::RenderFrameCreated(
   if (!extension)
     return;
 
+  LOG(ERROR) << "RenderFrameCreated for id = " << extension->id();
+
   Manifest::Type type = extension->GetType();
 
   // Some extensions use file:// URLs.
