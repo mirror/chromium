@@ -12,6 +12,7 @@
 #include "base/logging.h"
 #include "base/macros.h"
 #include "base/posix/global_descriptors.h"
+#include "sandbox/linux/syscall_broker/broker_file_permission.h"
 #include "services/service_manager/sandbox/export.h"
 #include "services/service_manager/sandbox/linux/sandbox_seccomp_bpf_linux.h"
 #include "services/service_manager/sandbox/sandbox_type.h"
@@ -157,18 +158,17 @@ class SERVICE_MANAGER_SANDBOX_EXPORT SandboxLinux {
 #endif
 
   // A BrokerProcess is a helper that is started before the sandbox is engaged
-  // and will serve requests to access files over an IPC channel. The client of
-  // this runs from a SIGSYS handler triggered by the seccomp-bpf sandbox.
+  // and will serve requests to access files over an IPC channel. The client
+  // of this runs from a SIGSYS handler triggered by the seccomp-bpf sandbox.
   // This should never be destroyed, as after the sandbox is started it is
-  // vital to the process.
+  // vital to the process. Crashes the process if the broker can not be
+  // started.
+  void StartBrokerProcess(
+      BPFBasePolicy* client_sandbox_policy,
+      std::vector<sandbox::syscall_broker::BrokerFilePermission> permissions);
+
   sandbox::syscall_broker::BrokerProcess* broker_process() const {
     return broker_process_;
-  }
-
-  void set_broker_process(
-      std::unique_ptr<sandbox::syscall_broker::BrokerProcess> broker_process) {
-    DCHECK(!broker_process_);
-    broker_process_ = broker_process.release();
   }
 
  private:
