@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "3c5c116e_84404109",
+        "filename": "content/public/common/network_connection_tracker.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 76,
+      "author": {
+        "id": 1115968
+      },
+      "writtenOn": "2017-11-08T12:23:37Z",
+      "side": 1,
+      "message": "Why can\u0027t we use a WeakPtr in the callback instead?",
+      "range": {
+        "startLine": 76,
+        "startChar": 25,
+        "endLine": 76,
+        "endChar": 26
+      },
+      "revId": "9f472e6d6465ae1700e438fe7c2ae24e03e569a4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
