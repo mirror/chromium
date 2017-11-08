@@ -624,14 +624,6 @@ void ArcBluetoothBridge::GattServicesDiscovered(BluetoothAdapter* adapter,
                                   mojom::BluetoothGattStatus::GATT_SUCCESS);
 }
 
-void ArcBluetoothBridge::GattDiscoveryCompleteForService(
-    BluetoothAdapter* adapter,
-    BluetoothRemoteGattService* service) {
-  if (!IsInstanceUp())
-    return;
-  // Placeholder for GATT client functionality
-}
-
 void ArcBluetoothBridge::GattServiceChanged(
     BluetoothAdapter* adapter,
     BluetoothRemoteGattService* service) {

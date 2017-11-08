@@ -890,28 +890,6 @@ void BluetoothLowEnergyEventRouter::GattServiceRemoved(
   EventRouter::Get(browser_context_)->BroadcastEvent(std::move(event));
 }
 
-void BluetoothLowEnergyEventRouter::GattDiscoveryCompleteForService(
-    BluetoothAdapter* adapter,
-    BluetoothRemoteGattService* service) {
-  DCHECK_CURRENTLY_ON(BrowserThread::UI);
-  DCHECK_EQ(adapter, adapter_.get());
-  VLOG(2) << "GATT service discovery complete: " << service->GetIdentifier();
-
-  DCHECK(service_id_to_device_address_.find(service->GetIdentifier()) !=
-         service_id_to_device_address_.end());
-
-  // Signal the service added event here.
-  apibtle::Service api_service;
-  PopulateService(service, &api_service);
-
-  std::unique_ptr<base::ListValue> args =
-      apibtle::OnServiceAdded::Create(api_service);
-  std::unique_ptr<Event> event(
-      new Event(events::BLUETOOTH_LOW_ENERGY_ON_SERVICE_ADDED,
-                apibtle::OnServiceAdded::kEventName, std::move(args)));
-  EventRouter::Get(browser_context_)->BroadcastEvent(std::move(event));
-}
-
 void BluetoothLowEnergyEventRouter::DeviceAddressChanged(
     BluetoothAdapter* adapter,
     BluetoothDevice* device,
