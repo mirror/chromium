@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "3e3924a8_0786ed6e",
+        "filename": "chrome/browser/prefs/browser_prefs.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 467,
+      "author": {
+        "id": 1118331
+      },
+      "writtenOn": "2017-11-08T12:55:47Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "f55a7adf_0249db9e",
+      "revId": "1e7526c0c9e491546b8bf81d37d6eb98fd009f9a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "35637cfc_ad3b873d",
         "filename": "components/consent_auditor/README.md",
         "patchSetId": 6
@@ -42,6 +60,30 @@
     },
     {
       "key": {
+        "uuid": "f0d5dddb_eba44f4e",
+        "filename": "components/consent_auditor/README.md",
+        "patchSetId": 6
+      },
+      "lineNbr": 3,
+      "author": {
+        "id": 1118331
+      },
+      "writtenOn": "2017-11-08T12:55:47Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "35637cfc_ad3b873d",
+      "range": {
+        "startLine": 3,
+        "startChar": 46,
+        "endLine": 3,
+        "endChar": 62
+      },
+      "revId": "1e7526c0c9e491546b8bf81d37d6eb98fd009f9a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "f95ce2a6_db7c7c50",
         "filename": "components/consent_auditor/README.md",
         "patchSetId": 6
@@ -56,6 +98,24 @@
       "revId": "1e7526c0c9e491546b8bf81d37d6eb98fd009f9a",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "77068526_5b7a875d",
+        "filename": "components/consent_auditor/README.md",
+        "patchSetId": 6
+      },
+      "lineNbr": 9,
+      "author": {
+        "id": 1118331
+      },
+      "writtenOn": "2017-11-08T12:55:47Z",
+      "side": 1,
+      "message": "That\u0027s a great idea! But leaving that part as TBD :)",
+      "parentUuid": "f95ce2a6_db7c7c50",
+      "revId": "1e7526c0c9e491546b8bf81d37d6eb98fd009f9a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -76,6 +136,24 @@
     },
     {
       "key": {
+        "uuid": "1e957db4_8d35c3db",
+        "filename": "components/consent_auditor/README.md",
+        "patchSetId": 6
+      },
+      "lineNbr": 17,
+      "author": {
+        "id": 1118331
+      },
+      "writtenOn": "2017-11-08T12:55:47Z",
+      "side": 1,
+      "message": "Good point! The ones that I\u0027m mostly interested in are UMA and SBER, and their preferences are not syncable, so we don\u0027t need it right now.\n\nIf we do need it eventually, that\u0027s going to be a bit messy. I\u0027ll clarify with ctanaka@.",
+      "parentUuid": "0679e04b_8fd740be",
+      "revId": "1e7526c0c9e491546b8bf81d37d6eb98fd009f9a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "9305abe7_2daa66d0",
         "filename": "components/consent_auditor/consent_auditor.cc",
         "patchSetId": 6
@@ -87,6 +165,30 @@
       "writtenOn": "2017-11-06T13:37:48Z",
       "side": 1,
       "message": "This appears to be unused. Remove?",
+      "range": {
+        "startLine": 28,
+        "startChar": 35,
+        "endLine": 28,
+        "endChar": 54
+      },
+      "revId": "1e7526c0c9e491546b8bf81d37d6eb98fd009f9a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "31dfe56c_8510a60b",
+        "filename": "components/consent_auditor/consent_auditor.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 28,
+      "author": {
+        "id": 1118331
+      },
+      "writtenOn": "2017-11-08T12:55:47Z",
+      "side": 1,
+      "message": "Let me take a step back and clarify the intentions behind this CL :)\n\nMy primary goal is to use UserEventService to record GAIA-keyed consents. But that\u0027s going to be a larger CL, so I wanted to at least decouple the infrastructure parts. The point of this CL is to see if an architecture where we have a KeyedService in //components that is dependent on UserEventService makes sense. But I also didn\u0027t want to land a completely empty component, so I added a prototype of the local consent recording, which is the secondary goal.\n\nFor that reason, I\u0027d like to keep it. And it\u0027s going to be used in the next CL.\n\nBut I do understand the principle of not landing unused code, so if you insist, I can remove it too.",
+      "parentUuid": "9305abe7_2daa66d0",
       "range": {
         "startLine": 28,
         "startChar": 35,
@@ -116,6 +218,24 @@
     },
     {
       "key": {
+        "uuid": "ab3acd8e_f97a5546",
+        "filename": "components/consent_auditor/consent_auditor.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 35,
+      "author": {
+        "id": 1118331
+      },
+      "writtenOn": "2017-11-08T12:55:47Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "f8dadc3e_f5976897",
+      "revId": "1e7526c0c9e491546b8bf81d37d6eb98fd009f9a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "651b62e9_e199fe61",
         "filename": "components/consent_auditor/consent_auditor.cc",
         "patchSetId": 6
@@ -130,6 +250,24 @@
       "revId": "1e7526c0c9e491546b8bf81d37d6eb98fd009f9a",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a141a928_e01de49d",
+        "filename": "components/consent_auditor/consent_auditor.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 42,
+      "author": {
+        "id": 1118331
+      },
+      "writtenOn": "2017-11-08T12:55:47Z",
+      "side": 1,
+      "message": "Changed to void.\n\nRecording GAIA-keyed consents serverside could possibly fail, so those methods will have boolean return values. I wanted to treat these ones the same for consistency. But now I realized that I\u0027m already handling failures in this methods by actually DCHECK()ing them, so it really doesn\u0027t make sense.",
+      "parentUuid": "651b62e9_e199fe61",
+      "revId": "1e7526c0c9e491546b8bf81d37d6eb98fd009f9a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -150,6 +288,24 @@
     },
     {
       "key": {
+        "uuid": "6118964c_d09c5a8f",
+        "filename": "components/consent_auditor/consent_auditor.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 45,
+      "author": {
+        "id": 1118331
+      },
+      "writtenOn": "2017-11-08T12:55:47Z",
+      "side": 1,
+      "message": "This condition actually does happen :)\n\nAfter registering a pref we only write the default value to the DefaultPrefStore, and until an actual value is explicitly set, HasPrefPath() is still false.\n\nBut FindPref() and the Get() below already work (by returning the default value), so you\u0027re right that the condition is not needed and can be removed.",
+      "parentUuid": "3bb279ce_4fd3917b",
+      "revId": "1e7526c0c9e491546b8bf81d37d6eb98fd009f9a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "7f3a4e8a_8c2f6b1c",
         "filename": "components/consent_auditor/consent_auditor.cc",
         "patchSetId": 6
@@ -164,6 +320,24 @@
       "revId": "1e7526c0c9e491546b8bf81d37d6eb98fd009f9a",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0e904f03_4d1f91c0",
+        "filename": "components/consent_auditor/consent_auditor.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 50,
+      "author": {
+        "id": 1118331
+      },
+      "writtenOn": "2017-11-08T12:55:47Z",
+      "side": 1,
+      "message": "Removed the block.\n\nYou\u0027re right that it\u0027s not needed. I just find it better readable to be explicit about destroying objects that have this kind of side effects in the destructor. The block is a nice visual way of denoting that. But I don\u0027t insist on keeping it.",
+      "parentUuid": "7f3a4e8a_8c2f6b1c",
+      "revId": "1e7526c0c9e491546b8bf81d37d6eb98fd009f9a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -202,6 +376,24 @@
     },
     {
       "key": {
+        "uuid": "75ff186c_1beb471d",
+        "filename": "components/consent_auditor/consent_auditor.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 56,
+      "author": {
+        "id": 1118331
+      },
+      "writtenOn": "2017-11-08T12:55:47Z",
+      "side": 1,
+      "message": "Yes!\n\nWe\u0027ll definitely want to record version. Added that.\n\nPlumbing in the UI language is going to be a bit more difficult, so if you don\u0027t mind, I left a TODO.\n\nWe\u0027ll definitely need that for GAIA-keyed consents anyways. It\u0027s going to be practical to have it for local consents too, but there I\u0027d argue that it\u0027s not strictly necessary - if you know that you\u0027re looking for a version of the string in a particular language, then you also know which particular string you\u0027re looking for.",
+      "parentUuid": "a6a126b6_b70a65e2",
+      "revId": "1e7526c0c9e491546b8bf81d37d6eb98fd009f9a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "68de539f_d86bfec4",
         "filename": "components/consent_auditor/consent_auditor.h",
         "patchSetId": 6
@@ -222,6 +414,30 @@
       "revId": "1e7526c0c9e491546b8bf81d37d6eb98fd009f9a",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f5ce100d_cbef6ab0",
+        "filename": "components/consent_auditor/consent_auditor.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 32,
+      "author": {
+        "id": 1118331
+      },
+      "writtenOn": "2017-11-08T12:55:47Z",
+      "side": 1,
+      "message": "Done. Indeed, I was trying to avoid referencing Profile.",
+      "parentUuid": "68de539f_d86bfec4",
+      "range": {
+        "startLine": 32,
+        "startChar": 14,
+        "endLine": 32,
+        "endChar": 27
+      },
+      "revId": "1e7526c0c9e491546b8bf81d37d6eb98fd009f9a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -265,6 +481,48 @@
     },
     {
       "key": {
+        "uuid": "8c3031ed_7f98aae7",
+        "filename": "components/consent_auditor/consent_auditor.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 38,
+      "author": {
+        "id": 1118331
+      },
+      "writtenOn": "2017-11-08T12:55:47Z",
+      "side": 1,
+      "message": "I\u0027ll still have to clarify this part with ctanaka@, but I think we don\u0027t.\n\nIf you enable a feature, we\u0027re trying to make sure that we have more information than just the one boolean that it\u0027s enabled. But if you disable a feature, the fact that the corresponding boolean is false is probably everything we need to know.",
+      "parentUuid": "16b44c53_ab98c7b7",
+      "revId": "1e7526c0c9e491546b8bf81d37d6eb98fd009f9a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "e1dbea76_f80abd13",
+        "filename": "components/consent_auditor/consent_auditor.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 38,
+      "author": {
+        "id": 1118331
+      },
+      "writtenOn": "2017-11-08T12:55:47Z",
+      "side": 1,
+      "message": "The sign-in + sync consent will likely need to be able to distinguish profiles as well. But that\u0027s for a later CL.\n\nRegarding Chrome-wide non-GAIA-keyed consents, there is at least one case - UMA. We could have another version of this method that uses local state instead of profile prefs. But I think it actually makes sense to record enabling UMA in the profile of the user that did it, and the code is also simpler that way.",
+      "parentUuid": "4a185db2_305d62e2",
+      "range": {
+        "startLine": 38,
+        "startChar": 7,
+        "endLine": 38,
+        "endChar": 25
+      },
+      "revId": "1e7526c0c9e491546b8bf81d37d6eb98fd009f9a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "c95f44b1_dc1dc27d",
         "filename": "components/consent_auditor/consent_auditor.h",
         "patchSetId": 6
@@ -279,6 +537,24 @@
       "revId": "1e7526c0c9e491546b8bf81d37d6eb98fd009f9a",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9a498d1f_b93f4a49",
+        "filename": "components/consent_auditor/consent_auditor.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 40,
+      "author": {
+        "id": 1118331
+      },
+      "writtenOn": "2017-11-08T12:55:47Z",
+      "side": 1,
+      "message": "Yes, that\u0027s a good idea. But I haven\u0027t yet done an audit of the local consents that will be recorded here, so I\u0027d prefer not inventing the options on the spot now.",
+      "parentUuid": "c95f44b1_dc1dc27d",
+      "revId": "1e7526c0c9e491546b8bf81d37d6eb98fd009f9a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -305,6 +581,30 @@
     },
     {
       "key": {
+        "uuid": "c31df48f_27d42da8",
+        "filename": "components/consent_auditor/consent_auditor_unittest.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 37,
+      "author": {
+        "id": 1118331
+      },
+      "writtenOn": "2017-11-08T12:55:47Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "7079794b_be0da805",
+      "range": {
+        "startLine": 37,
+        "startChar": 28,
+        "endLine": 37,
+        "endChar": 48
+      },
+      "revId": "1e7526c0c9e491546b8bf81d37d6eb98fd009f9a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "0c4aa6ac_fa2b6e78",
         "filename": "components/consent_auditor/consent_auditor_unittest.cc",
         "patchSetId": 6
@@ -322,6 +622,24 @@
     },
     {
       "key": {
+        "uuid": "c6d19e55_760aa29b",
+        "filename": "components/consent_auditor/consent_auditor_unittest.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 61,
+      "author": {
+        "id": 1118331
+      },
+      "writtenOn": "2017-11-08T12:55:47Z",
+      "side": 1,
+      "message": "Not all of them! I\u0027m keeping |consents| as DictionaryValue, because I need size() which is actually defined only in the subclass.\n\nBut this one can be changed to base::Value.",
+      "parentUuid": "0c4aa6ac_fa2b6e78",
+      "revId": "1e7526c0c9e491546b8bf81d37d6eb98fd009f9a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "5c7a3855_177d21cf",
         "filename": "components/consent_auditor/consent_auditor_unittest.cc",
         "patchSetId": 6
@@ -336,6 +654,24 @@
       "revId": "1e7526c0c9e491546b8bf81d37d6eb98fd009f9a",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6477858e_cc57afea",
+        "filename": "components/consent_auditor/consent_auditor_unittest.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 67,
+      "author": {
+        "id": 1118331
+      },
+      "writtenOn": "2017-11-08T12:55:47Z",
+      "side": 1,
+      "message": "Done. I would argue that ASSERTing it explicitly results in cleaner test failures, but sure, let\u0027s simplify.",
+      "parentUuid": "5c7a3855_177d21cf",
+      "revId": "1e7526c0c9e491546b8bf81d37d6eb98fd009f9a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
