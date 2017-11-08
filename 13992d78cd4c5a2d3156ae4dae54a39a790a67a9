@@ -1,0 +1,55 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "f3fa7bf7_80211e04",
+        "filename": "chrome/browser/vr/elements/ui_element.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 250,
+      "author": {
+        "id": 1117479
+      },
+      "writtenOn": "2017-11-08T16:21:29Z",
+      "side": 1,
+      "message": "No need for the comment, it\u0027s pretty obvious what\u0027s happening.",
+      "revId": "13992d78cd4c5a2d3156ae4dae54a39a790a67a9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5a3b67fc_835c6ec3",
+        "filename": "chrome/browser/vr/elements/ui_element.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 254,
+      "author": {
+        "id": 1117479
+      },
+      "writtenOn": "2017-11-08T16:21:29Z",
+      "side": 1,
+      "message": "When the previous clause returns, there shouldn\u0027t be an \u0027else\u0027 - just another \u0027if\u0027.  Applies to three else\u0027s in this method.",
+      "revId": "13992d78cd4c5a2d3156ae4dae54a39a790a67a9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1ad2cc1b_49740005",
+        "filename": "chrome/browser/vr/elements/ui_element.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 280,
+      "author": {
+        "id": 1117479
+      },
+      "writtenOn": "2017-11-08T16:21:29Z",
+      "side": 1,
+      "message": "Why not corner_radius() * corner_radius()?  pow() seems like overkill.",
+      "revId": "13992d78cd4c5a2d3156ae4dae54a39a790a67a9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
