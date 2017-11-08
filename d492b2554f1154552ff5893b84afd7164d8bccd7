@@ -16,6 +16,24 @@
       "revId": "d492b2554f1154552ff5893b84afd7164d8bccd7",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "fd4ef811_64678d1e",
+        "filename": "testing/buildbot/chromium.android.fyi.json",
+        "patchSetId": 6
+      },
+      "lineNbr": 2289,
+      "author": {
+        "id": 1149089
+      },
+      "writtenOn": "2017-11-08T18:37:13Z",
+      "side": 0,
+      "message": "Done. Thanks for pointing out!",
+      "parentUuid": "35877f08_5c51042b",
+      "revId": "d492b2554f1154552ff5893b84afd7164d8bccd7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
