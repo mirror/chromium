@@ -1124,11 +1124,20 @@ void GLRenderer::DrawRenderPassQuadInternal(
       params->quad->shared_quad_state->quad_to_target_transform;
   if (!InitializeRPDQParameters(params))
     return;
+
   UpdateRPDQShadersForBlending(params);
-  if (!UpdateRPDQWithSkiaFilters(params))
-    return;
+  bool can_draw = UpdateRPDQWithSkiaFilters(params);
+  // The above calls use ScopedUseGrContext which can change the bound
+  // framebuffer, so we need to restore it for the current RenderPass.
   UseRenderPass(current_frame()->current_render_pass);
+  // As part of restoring the framebuffer, we call SetViewport directly, rather
+  // than through PrepareSurfaceForPass. PrepareSurfaceForPass also clears the
+  // surface, which is not desired when restoring.
   SetViewport();
+
+  if (!can_draw)
+    return;
+
   UpdateRPDQTexturesForSampling(params);
   UpdateRPDQBlendMode(params);
   ChooseRPDQProgram(params);
@@ -2861,7 +2870,7 @@ void GLRenderer::BindFramebufferToOutputSurface() {
   }
 }
 
-bool GLRenderer::BindFramebufferToTexture(const cc::ScopedResource* texture) {
+void GLRenderer::BindFramebufferToTexture(const cc::ScopedResource* texture) {
   DCHECK(texture->id());
 
   // Explicitly release lock, otherwise we can crash when try to lock
@@ -2903,7 +2912,6 @@ bool GLRenderer::BindFramebufferToTexture(const cc::ScopedResource* texture) {
   } else {
     SetStencilEnabled(false);
   }
-  return true;
 }
 
 void GLRenderer::SetScissorTestRect(const gfx::Rect& scissor_rect) {
