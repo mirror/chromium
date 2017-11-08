@@ -12,6 +12,7 @@
 #include "base/logging.h"
 #include "base/memory/ptr_util.h"
 #include "base/memory/ref_counted.h"
+#include "base/metrics/histogram_macros.h"
 #include "base/path_service.h"
 #include "base/sequenced_task_runner.h"
 #include "base/task_scheduler/post_task.h"
@@ -30,6 +31,7 @@
 #include "chrome/browser/policy/schema_registry_service.h"
 #include "chrome/browser/policy/schema_registry_service_factory.h"
 #include "chrome/browser/profiles/profile.h"
+#include "chrome/common/pref_names.h"
 #include "chromeos/chromeos_paths.h"
 #include "chromeos/chromeos_switches.h"
 #include "chromeos/dbus/dbus_thread_manager.h"
@@ -39,6 +41,8 @@
 #include "components/policy/core/common/cloud/device_management_service.h"
 #include "components/policy/core/common/configuration_policy_provider.h"
 #include "components/policy/policy_constants.h"
+#include "components/prefs/pref_service.h"
+#include "components/user_manager/known_user.h"
 #include "components/user_manager/user.h"
 #include "components/user_manager/user_manager.h"
 #include "content/public/browser/browser_thread.h"
@@ -65,6 +69,9 @@ const base::FilePath::CharType kPolicyExternalDataDir[] =
 // Timeout in seconds after which to abandon the initial policy fetch and start
 // the session regardless.
 const int kInitialPolicyFetchTimeoutSeconds = 10;
+
+const char kUMAHasPolicyPrefNotMigrated[] =
+    "Enterprise.UserPolicyChromeOS.HasPolicyPrefNotMigrated";
 
 }  // namespace
 
@@ -145,10 +152,11 @@ UserPolicyManagerFactoryChromeOS::CreateManagerForProfile(
   DCHECK(active_directory_managers_.find(profile) ==
          active_directory_managers_.end());
 
-  const base::CommandLine* command_line =
-      base::CommandLine::ForCurrentProcess();
-  // Don't initialize cloud policy for the signin  and the lock screen app
-  // profile.
+  const user_manager::UserManager* const user_manager =
+      user_manager::UserManager::Get();
+
+  // Don't initialize cloud policy for the signin and the lock screen app
+  // profile, or if running a stub user in the test harness.
   if (chromeos::ProfileHelper::IsSigninProfile(profile) ||
       chromeos::ProfileHelper::IsLockScreenAppProfile(profile)) {
     return {};
@@ -173,6 +181,10 @@ UserPolicyManagerFactoryChromeOS::CreateManagerForProfile(
   const AccountId& account_id = user->GetAccountId();
   if (user->IsSupervised() ||
       BrowserPolicyConnector::IsNonEnterpriseUser(account_id.GetUserEmail())) {
+    DLOG(WARNING) << "No policy loaded for known non-enterprise user";
+    // Mark this profile as not requiring policy.
+    user_manager::known_user::SetProfileRequiresPolicy(
+        account_id, user_manager::known_user::NO_POLICY_REQUIRED);
     return {};
   }
 
@@ -185,6 +197,7 @@ UserPolicyManagerFactoryChromeOS::CreateManagerForProfile(
       // TODO(tnagel): Return nullptr for unknown accounts once AccountId
       // migration is finished.  (KioskAppManager still needs to be migrated.)
       if (!user->HasGaiaAccount()) {
+        DLOG(WARNING) << "No policy for users without Gaia accounts";
         return {};
       }
       is_active_directory = false;
@@ -197,22 +210,96 @@ UserPolicyManagerFactoryChromeOS::CreateManagerForProfile(
       break;
   }
 
-  const bool is_browser_restart =
-      command_line->HasSwitch(chromeos::switches::kLoginUser);
-  const user_manager::UserManager* const user_manager =
-      user_manager::UserManager::Get();
+  const user_manager::known_user::ProfileRequiresPolicy requires_policy =
+      user_manager::known_user::GetProfileRequiresPolicy(account_id);
+  const base::CommandLine* command_line =
+      base::CommandLine::ForCurrentProcess();
 
-  // We want to block for policy if the session has never been initialized
-  // (generally true if the user is new, or if there was a crash before the
-  // profile finished initializing). There is code in UserSelectionScreen to
-  // force an online signin for uninitialized sessions to help ensure we are
-  // able to load policy.
-  const bool block_forever_for_policy =
-      !user_manager->IsLoggedInAsStub() &&
-      !user_manager->GetActiveUser()->profile_ever_initialized();
+  // If true, we've never check for policy for this user - this typically
+  // means that we need to do a policy check during initialization (see comment
+  // below).
+  const bool never_checked_for_policy =
+      (requires_policy == user_manager::known_user::UNKNOWN) &&
+      !command_line->HasSwitch(chromeos::switches::kProfileRequiresPolicy);
+
+  // If true, we must load policy for this user - we will abort profile
+  // initialization if we are unable to load policy (say, due to disk errors).
+  // We either read this flag from the known_user database, or from a
+  // command-line flag (required for ephemeral users who are not persisted
+  // in the known_user database).
+  const bool policy_required =
+      (requires_policy == user_manager::known_user::POLICY_REQUIRED) ||
+      (command_line->GetSwitchValueASCII(
+           chromeos::switches::kProfileRequiresPolicy) == "true");
+
+  // If true, we must either load policy from disk, or else check the server
+  // for policy. This differs from |policy_required| in that it's OK if the
+  // server says we don't have policy.
+  bool policy_check_required = false;
+
+  if (never_checked_for_policy) {
+    // There is no preference telling us that the profile has policy. In
+    // general, this means that this is a new session, or else there was a crash
+    // before this preference could be set. However, there is also a chance that
+    // this user existed before we started tracking the ProfileRequiresPolicy
+    // flag, so we rely on profile_ever_initialized() instead in that case --
+    // otherwise, this would break offline login for pre-existing users.
+    // We track this case via UMA - once people stop hitting this migration
+    // path, we can remove the migration code here and in
+    // known_user::WasProfileEverInitialized().
+    // TODO(atwilson): Remove this when UMA stats show migration is complete
+    // (crbug.com/731726).
+    if (user_manager->GetActiveUser()->profile_ever_initialized()) {
+      LOG(WARNING) << "Migrating user with no policy status";
+      UMA_HISTOGRAM_BOOLEAN(kUMAHasPolicyPrefNotMigrated, true);
+    } else {
+      // Profile was truly never initialized - we have to block until we've
+      // checked for policy.
+      policy_check_required = true;
+    }
+  }
+
+  // We should never have |policy_required| and |policy_check_required| both
+  // set, since the |policy_required| implies that we already know that
+  // the user requires policy.
+  CHECK(!(policy_required && policy_check_required));
+
+  // We want to block forever for policy if we have determined that we need to
+  // do an online policy check (for example, if the user is new, or if there was
+  // a crash before the profile finished initializing). There is code in
+  // UserSelectionScreen to force an online signin for uninitialized sessions
+  // to help ensure we are able to load policy.
+  //
+  // If |force_immediate_load| is true, then we can't block forever (loading
+  // from network is not allowed - only from cache) - instead, logic in
+  // UserCloudPolicyManagerChromeOS will exit the session if we fail to load
+  // policy from our cache.
+  //
+  // If we have cached policy (i.e. policy_required == true), then we shouldn't
+  // block forever - we should do a policy refresh but let that refresh
+  // time out since we have cached policy. This means that signin can fail if
+  // the cached policy can't be loaded for some reason but the server fetch
+  // times out, but this is an edge case that shouldn't happen often.
+  bool block_forever_for_policy = !user_manager->IsLoggedInAsStub() &&
+                                  policy_check_required &&
+                                  !force_immediate_load;
+
+  // |force_immediate_load| is true during Chrome restart, or during
+  // initialization of stub user profiles when running tests. If we ever get
+  // a Chrome restart before a real user session has been initialized, we should
+  // exit the user session entirely - it means that there was a crash during
+  // profile initialization, and we can't rely on the cached policy being valid
+  // (so can't force immediate load of policy).
+  if (never_checked_for_policy && force_immediate_load &&
+      !user_manager->IsLoggedInAsStub()) {
+    LOG(ERROR) << "Exiting non-stub session because browser restarted before"
+               << " profile was initialized.";
+    chrome::AttemptUserExit();
+    return {};
+  }
 
   const bool wait_for_policy_fetch =
-      block_forever_for_policy || !is_browser_restart;
+      block_forever_for_policy || !force_immediate_load;
 
   base::TimeDelta initial_policy_fetch_timeout;
   if (block_forever_for_policy) {
@@ -271,6 +358,7 @@ UserPolicyManagerFactoryChromeOS::CreateManagerForProfile(
         base::MakeUnique<UserCloudPolicyManagerChromeOS>(
             std::move(store), std::move(external_data_manager),
             component_policy_cache_dir, initial_policy_fetch_timeout,
+            base::BindOnce(&chrome::AttemptUserExit), policy_required,
             base::ThreadTaskRunnerHandle::Get(), io_task_runner);
 
     // TODO(tnagel): Enable whitelist for Active Directory.
