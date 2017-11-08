@@ -370,6 +370,7 @@ void CreatePaymentManager(RenderFrameHostImpl* rfh,
   StoragePartitionImpl* storage_partition =
       static_cast<StoragePartitionImpl*>(BrowserContext::GetStoragePartition(
           rfh->GetSiteInstance()->GetBrowserContext(), rfh->GetSiteInstance()));
+  DCHECK_EQ(rfh->GetProcess()->GetStoragePartition(), storage_partition);
   storage_partition->GetPaymentAppContext()->CreatePaymentManager(
       std::move(request));
 }
@@ -2856,6 +2857,7 @@ void RenderFrameHostImpl::CreateNewWindow(
   // This will clone the sessionStorage for namespace_id_to_clone.
   StoragePartition* storage_partition = BrowserContext::GetStoragePartition(
       GetSiteInstance()->GetBrowserContext(), GetSiteInstance());
+  DCHECK_EQ(GetProcess()->GetStoragePartition(), storage_partition);
   DOMStorageContextWrapper* dom_storage_context =
       static_cast<DOMStorageContextWrapper*>(
           storage_partition->GetDOMStorageContext());
@@ -3468,6 +3470,7 @@ void RenderFrameHostImpl::CommitNavigation(
     StoragePartitionImpl* storage_partition =
         static_cast<StoragePartitionImpl*>(BrowserContext::GetStoragePartition(
             GetSiteInstance()->GetBrowserContext(), GetSiteInstance()));
+    DCHECK_EQ(GetProcess()->GetStoragePartition(), storage_partition);
     if (subresource_loader_params &&
         subresource_loader_params->loader_factory_info.is_valid()) {
       // If the caller has supplied a default URLLoaderFactory override (for
