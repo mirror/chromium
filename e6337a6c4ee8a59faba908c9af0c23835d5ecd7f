@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "cdd450ed_777f78ab",
+        "filename": "ash/public/interfaces/window_properties.mojom",
+        "patchSetId": 10
+      },
+      "lineNbr": 8,
+      "author": {
+        "id": 1116053
+      },
+      "writtenOn": "2017-11-08T00:15:06Z",
+      "side": 1,
+      "message": "can you refresh my memory about how we determine the app name, and why we think clients can\u0027t forge these?",
+      "range": {
+        "startLine": 8,
+        "startChar": 61,
+        "endLine": 8,
+        "endChar": 76
+      },
+      "revId": "e6337a6c4ee8a59faba908c9af0c23835d5ecd7f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
