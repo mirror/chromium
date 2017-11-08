@@ -55,6 +55,24 @@
     },
     {
       "key": {
+        "uuid": "10aee694_36f1d2e2",
+        "filename": "components/viz/service/frame_sinks/video_detector.cc",
+        "patchSetId": 38
+      },
+      "lineNbr": 91,
+      "author": {
+        "id": 1174470
+      },
+      "writtenOn": "2017-11-08T23:46:27Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "aeac35ef_efe50560",
+      "revId": "4e644e0fb5e6bf15b32a5d04621f770c345a6b93",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "e5d6949a_65c75ba6",
         "filename": "components/viz/service/frame_sinks/video_detector.cc",
         "patchSetId": 38
@@ -90,6 +108,24 @@
     },
     {
       "key": {
+        "uuid": "bdec30f6_86e24aa6",
+        "filename": "components/viz/service/frame_sinks/video_detector.cc",
+        "patchSetId": 38
+      },
+      "lineNbr": 96,
+      "author": {
+        "id": 1174470
+      },
+      "writtenOn": "2017-11-08T23:46:27Z",
+      "side": 1,
+      "message": "I updated the code as we discussed offline. We now lazily create VideoDetector, and receive notifications about registering FrameSinkIds.",
+      "parentUuid": "ce78d9cc_acb08f47",
+      "revId": "4e644e0fb5e6bf15b32a5d04621f770c345a6b93",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "f1b1e653_40416c4c",
         "filename": "components/viz/service/frame_sinks/video_detector.cc",
         "patchSetId": 38
@@ -104,6 +140,24 @@
       "revId": "4e644e0fb5e6bf15b32a5d04621f770c345a6b93",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "06a58cf9_dc6fbe57",
+        "filename": "components/viz/service/frame_sinks/video_detector.cc",
+        "patchSetId": 38
+      },
+      "lineNbr": 99,
+      "author": {
+        "id": 1174470
+      },
+      "writtenOn": "2017-11-08T23:46:27Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "f1b1e653_40416c4c",
+      "revId": "4e644e0fb5e6bf15b32a5d04621f770c345a6b93",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -175,6 +229,24 @@
       "revId": "4e644e0fb5e6bf15b32a5d04621f770c345a6b93",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "85d61910_d0fe5829",
+        "filename": "components/viz/service/frame_sinks/video_detector.cc",
+        "patchSetId": 38
+      },
+      "lineNbr": 135,
+      "author": {
+        "id": 1174470
+      },
+      "writtenOn": "2017-11-08T23:46:27Z",
+      "side": 1,
+      "message": "Now we\u0027re passing Surface*. Only one lookup now.",
+      "parentUuid": "41eaacfc_8edc4952",
+      "revId": "4e644e0fb5e6bf15b32a5d04621f770c345a6b93",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
