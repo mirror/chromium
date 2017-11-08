@@ -11,6 +11,11 @@
 #error "This file requires ARC support."
 #endif
 
+namespace {
+// The maximum characters to use for the JavaScript dialog message text.
+const NSUInteger kMaxMessageLength = 150;
+}
+
 JavaScriptDialogPresenterImpl::JavaScriptDialogPresenterImpl(
     DialogPresenter* dialogPresenter)
     : dialog_presenter_(dialogPresenter) {}
@@ -29,6 +34,11 @@ void JavaScriptDialogPresenterImpl::RunJavaScriptDialog(
     // Block the dialog if needed.
     callback.Run(NO, nil);
     return;
+  }
+  if (message_text.length > kMaxMessageLength) {
+    NSRange range = NSMakeRange(0, kMaxMessageLength);
+    message_text = [message_text substringWithRange:range];
+    message_text = [message_text stringByAppendingString:@"..."];
   }
   switch (dialog_type) {
     case web::JAVASCRIPT_DIALOG_TYPE_ALERT: {
