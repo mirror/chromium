@@ -1,0 +1,55 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "158df891_21912160",
+        "filename": "chrome/browser/notifications/notification_platform_bridge_win.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 284,
+      "author": {
+        "id": 1002032
+      },
+      "writtenOn": "2017-11-08T13:21:24Z",
+      "side": 1,
+      "message": "nit: this sort of docs should now go in the header file",
+      "revId": "6aa53442cc36960c18a069c27367b5922d5f206a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "abf25ac0_cb00e3fe",
+        "filename": "chrome/browser/notifications/notification_platform_bridge_win.h",
+        "patchSetId": 7
+      },
+      "lineNbr": 54,
+      "author": {
+        "id": 1002032
+      },
+      "writtenOn": "2017-11-08T13:21:24Z",
+      "side": 1,
+      "message": "Hmm this is going to be quite a conflict when rebasing against your image CL :(",
+      "revId": "6aa53442cc36960c18a069c27367b5922d5f206a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c4ab9584_09ef5c21",
+        "filename": "chrome/browser/notifications/notification_platform_bridge_win_unittest.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 38,
+      "author": {
+        "id": 1002032
+      },
+      "writtenOn": "2017-11-08T13:21:24Z",
+      "side": 1,
+      "message": "std::make_unique\u003cNotificationPlatformBridgeWin\u003e()",
+      "revId": "6aa53442cc36960c18a069c27367b5922d5f206a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}

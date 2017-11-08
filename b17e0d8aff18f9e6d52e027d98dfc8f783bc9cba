@@ -37,6 +37,24 @@
     },
     {
       "key": {
+        "uuid": "dc3f672a_8a6deb95",
+        "filename": "chrome/browser/notifications/notification_platform_bridge_win.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 342,
+      "author": {
+        "id": 1002032
+      },
+      "writtenOn": "2017-11-08T13:21:24Z",
+      "side": 1,
+      "message": "That\u0027s unfortunate. Would you be open to going against the style guide here? I think it would be much clearer since it\u0027s not affecting ownership, and there are a few other places where we do that already with ComPtrs.",
+      "parentUuid": "27e166d2_c3b5b4f1",
+      "revId": "b17e0d8aff18f9e6d52e027d98dfc8f783bc9cba",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "cbfa53b5_bea558b4",
         "filename": "chrome/browser/notifications/notification_platform_bridge_win.cc",
         "patchSetId": 4
@@ -139,6 +157,24 @@
       "revId": "b17e0d8aff18f9e6d52e027d98dfc8f783bc9cba",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ab920812_787d61a8",
+        "filename": "chrome/browser/notifications/notification_platform_bridge_win.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 369,
+      "author": {
+        "id": 1002032
+      },
+      "writtenOn": "2017-11-08T13:21:24Z",
+      "side": 1,
+      "message": "Let\u0027s do that when we\u0027re confident we\u0027ve caught all the cases.",
+      "parentUuid": "9ec5c321_341e0bb8",
+      "revId": "b17e0d8aff18f9e6d52e027d98dfc8f783bc9cba",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
