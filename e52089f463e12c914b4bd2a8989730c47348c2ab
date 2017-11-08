@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "f5a1515c_aa6381d5",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 2
+      },
+      "lineNbr": 7,
+      "author": {
+        "id": 1204072
+      },
+      "writtenOn": "2017-11-08T00:25:39Z",
+      "side": 1,
+      "message": "These are numeric character references, not character entities.",
+      "parentUuid": "52621964_9b0d256a",
+      "revId": "e52089f463e12c914b4bd2a8989730c47348c2ab",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "56a47ac2_d197359a",
         "filename": "/COMMIT_MSG",
         "patchSetId": 2
@@ -33,6 +51,24 @@
       "revId": "e52089f463e12c914b4bd2a8989730c47348c2ab",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "35b7a455_c7de2b87",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 2
+      },
+      "lineNbr": 10,
+      "author": {
+        "id": 1204072
+      },
+      "writtenOn": "2017-11-08T00:25:39Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "56a47ac2_d197359a",
+      "revId": "e52089f463e12c914b4bd2a8989730c47348c2ab",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -71,6 +107,24 @@
     },
     {
       "key": {
+        "uuid": "7dcc2a3e_dc472196",
+        "filename": "third_party/WebKit/Source/platform/network/FormDataEncoder.cpp",
+        "patchSetId": 2
+      },
+      "lineNbr": 168,
+      "author": {
+        "id": 1204072
+      },
+      "writtenOn": "2017-11-08T00:25:39Z",
+      "side": 1,
+      "message": "This aspect is not yet described by the standard, and the change to Chromium is intended to improve interoperability so we can then propose to standardize the interoperable behavior.",
+      "parentUuid": "8cb7816a_2957cb09",
+      "revId": "e52089f463e12c914b4bd2a8989730c47348c2ab",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "1a1f6f9a_b205df44",
         "filename": "third_party/WebKit/Source/platform/network/FormDataEncoder.cpp",
         "patchSetId": 2
@@ -85,6 +139,24 @@
       "revId": "e52089f463e12c914b4bd2a8989730c47348c2ab",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b212201c_f1429634",
+        "filename": "third_party/WebKit/Source/platform/network/FormDataEncoder.cpp",
+        "patchSetId": 2
+      },
+      "lineNbr": 169,
+      "author": {
+        "id": 1204072
+      },
+      "writtenOn": "2017-11-08T00:25:39Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "1a1f6f9a_b205df44",
+      "revId": "e52089f463e12c914b4bd2a8989730c47348c2ab",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
