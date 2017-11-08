@@ -23,9 +23,9 @@
 #ifndef WTF_ListHashSet_h
 #define WTF_ListHashSet_h
 
+#include <memory>
 #include "platform/wtf/HashSet.h"
 #include "platform/wtf/allocator/PartitionAllocator.h"
-#include <memory>
 
 namespace WTF {
 
@@ -256,6 +256,7 @@ class ListHashSet
   ImplType impl_;
   Node* head_;
   Node* tail_;
+  int64_t generation_ = 0;
   typename Allocator::AllocatorProvider allocator_provider_;
 };
 
@@ -565,12 +566,15 @@ class ListHashSetConstIterator {
   friend class ListHashSetIterator<Set>;
 
   ListHashSetConstIterator(const Set* set, Node* position)
-      : set_(set), position_(position) {}
+      : set_(set), position_(position), generation_(set->generation_) {}
 
  public:
   ListHashSetConstIterator() {}
 
-  PointerType Get() const { return &position_->value_; }
+  PointerType Get() const {
+    DCHECK(generation_ == set_->generation_);
+    return &position_->value_;
+  }
   ReferenceType operator*() const { return *Get(); }
   PointerType operator->() const { return Get(); }
 
@@ -610,6 +614,7 @@ class ListHashSetConstIterator {
 
   const Set* set_;
   Node* position_;
+  int64_t generation_;
 
   template <typename T, size_t inlineCapacity, typename U, typename V>
   friend class ListHashSet;
@@ -799,6 +804,7 @@ inline void ListHashSet<T, inlineCapacity, U, V>::Swap(ListHashSet& other) {
   impl_.swap(other.impl_);
   std::swap(head_, other.head_);
   std::swap(tail_, other.tail_);
+  std::swap(generation_, other.generation_);
   allocator_provider_.Swap(other.allocator_provider_);
 }
 
@@ -819,6 +825,7 @@ inline T& ListHashSet<T, inlineCapacity, U, V>::front() {
 template <typename T, size_t inlineCapacity, typename U, typename V>
 inline void ListHashSet<T, inlineCapacity, U, V>::RemoveFirst() {
   DCHECK(!IsEmpty());
+  generation_++;
   impl_.erase(head_);
   UnlinkAndDelete(head_);
 }
@@ -844,6 +851,7 @@ inline const T& ListHashSet<T, inlineCapacity, U, V>::back() const {
 template <typename T, size_t inlineCapacity, typename U, typename V>
 inline void ListHashSet<T, inlineCapacity, U, V>::pop_back() {
   DCHECK(!IsEmpty());
+  generation_++;
   impl_.erase(tail_);
   UnlinkAndDelete(tail_);
 }
@@ -924,6 +932,7 @@ ListHashSet<T, inlineCapacity, U, V>::insert(IncomingValueType&& value) {
   // because it lets it take lvalues by reference, but for our purposes it's
   // inconvenient, since it constrains us to be const, whereas the allocator
   // actually changes when it does allocations.
+  generation_++;
   auto result = impl_.template insert<BaseTranslator>(
       std::forward<IncomingValueType>(value), *this->GetAllocator());
   if (result.is_new_entry)
@@ -945,6 +954,7 @@ typename ListHashSet<T, inlineCapacity, U, V>::AddResult
 ListHashSet<T, inlineCapacity, U, V>::AppendOrMoveToLast(
     IncomingValueType&& value) {
   CreateAllocatorIfNeeded();
+  generation_++;
   auto result = impl_.template insert<BaseTranslator>(
       std::forward<IncomingValueType>(value), *this->GetAllocator());
   Node* node = *result.stored_value;
@@ -960,6 +970,7 @@ typename ListHashSet<T, inlineCapacity, U, V>::AddResult
 ListHashSet<T, inlineCapacity, U, V>::PrependOrMoveToFirst(
     IncomingValueType&& value) {
   CreateAllocatorIfNeeded();
+  generation_++;
   auto result = impl_.template insert<BaseTranslator>(
       std::forward<IncomingValueType>(value), *this->GetAllocator());
   Node* node = *result.stored_value;
@@ -976,6 +987,7 @@ ListHashSet<T, inlineCapacity, U, V>::InsertBefore(
     iterator it,
     IncomingValueType&& new_value) {
   CreateAllocatorIfNeeded();
+  generation_++;
   auto result = impl_.template insert<BaseTranslator>(
       std::forward<IncomingValueType>(new_value), *this->GetAllocator());
   if (result.is_new_entry)
@@ -998,6 +1010,7 @@ template <typename T, size_t inlineCapacity, typename U, typename V>
 inline void ListHashSet<T, inlineCapacity, U, V>::erase(iterator it) {
   if (it == end())
     return;
+  generation_++;
   impl_.erase(it.GetNode());
   UnlinkAndDelete(it.GetNode());
 }
@@ -1005,6 +1018,7 @@ inline void ListHashSet<T, inlineCapacity, U, V>::erase(iterator it) {
 template <typename T, size_t inlineCapacity, typename U, typename V>
 inline void ListHashSet<T, inlineCapacity, U, V>::clear() {
   DeleteAllNodes();
+  generation_++;
   impl_.clear();
   head_ = nullptr;
   tail_ = nullptr;
@@ -1015,6 +1029,7 @@ auto ListHashSet<T, inlineCapacity, U, V>::Take(iterator it) -> ValueType {
   if (it == end())
     return ValueTraits::EmptyValue();
 
+  generation_++;
   impl_.erase(it.GetNode());
   ValueType result = std::move(it.GetNode()->value_);
   UnlinkAndDelete(it.GetNode());
@@ -1031,6 +1046,7 @@ auto ListHashSet<T, inlineCapacity, U, V>::Take(ValuePeekInType value)
 template <typename T, size_t inlineCapacity, typename U, typename V>
 auto ListHashSet<T, inlineCapacity, U, V>::TakeFirst() -> ValueType {
   DCHECK(!IsEmpty());
+  generation_++;
   impl_.erase(head_);
   ValueType result = std::move(head_->value_);
   UnlinkAndDelete(head_);
