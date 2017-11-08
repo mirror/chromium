@@ -41,6 +41,7 @@ class WebFrameClient;
 class WebFrameWidget;
 class WebFrameScheduler;
 class WebInputMethodController;
+class WebMutableSecurityOrigin;
 class WebPerformance;
 class WebRange;
 class WebSecurityOrigin;
@@ -366,8 +367,9 @@ class WebLocalFrame : public WebFrame {
   // Associates an isolated world (see above for description) with a security
   // origin. XMLHttpRequest instances used in that world will be considered
   // to come from that origin, not the frame's.
-  virtual void SetIsolatedWorldSecurityOrigin(int world_id,
-                                              const WebSecurityOrigin&) = 0;
+  virtual void SetIsolatedWorldSecurityOrigin(
+      int world_id,
+      const WebMutableSecurityOrigin&) = 0;
 
   // Associates a content security policy with an isolated world. This policy
   // should be used when evaluating script in the isolated world, and should
