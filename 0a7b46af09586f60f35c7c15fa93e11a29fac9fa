@@ -16,6 +16,24 @@
       "revId": "0a7b46af09586f60f35c7c15fa93e11a29fac9fa",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2640eaa1_563bedc3",
+        "filename": "third_party/WebKit/PRESUBMIT_test.py",
+        "patchSetId": 1
+      },
+      "lineNbr": 83,
+      "author": {
+        "id": 1001168
+      },
+      "writtenOn": "2017-11-08T01:44:39Z",
+      "side": 1,
+      "message": "The test checks for both allowed and disallowed constructs. This just moves it so the test is testing the right thing.",
+      "parentUuid": "2154483a_2ae0183a",
+      "revId": "0a7b46af09586f60f35c7c15fa93e11a29fac9fa",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
