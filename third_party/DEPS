@@ -1,6 +1,7 @@
 # Undo everything in the include_rules section of src/DEPS.
 include_rules = [
   '-base',
+  '+base/unguessable_token.h',
   '-build',
   '-ipc',
   '-library_loaders',
