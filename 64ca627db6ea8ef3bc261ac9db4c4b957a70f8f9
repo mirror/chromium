@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "eab5755c_bc0b91e3",
+        "filename": "ios/chrome/PRESUBMIT.py",
+        "patchSetId": 3
+      },
+      "lineNbr": 10,
+      "author": {
+        "id": 1123009
+      },
+      "writtenOn": "2017-11-08T21:44:05Z",
+      "side": 1,
+      "message": "Changes in ios/web can also break EG tests. How about moving this PRESUBMIT to //ios/?",
+      "revId": "64ca627db6ea8ef3bc261ac9db4c4b957a70f8f9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
