@@ -970,7 +970,9 @@ public class ChromeTabbedActivity
             if (bottomSheet.isSheetOpen()) return false;
 
             if (mLayoutManager != null && mLayoutManager.overviewVisible()) {
-                if (reuseOrCreateNewNtp()) {
+                if ((getTimeSinceLastBackgroundedMs()
+                            >= TIME_SINCE_BACKGROUNDED_TO_SHOW_BOTTOM_SHEET_HALF_MS)
+                        && reuseOrCreateNewNtp()) {
                     // Since reusing/creating a new NTP when using Chrome Home brings up the bottom
                     // sheet, we need to record it in our metrics.
                     bottomSheet.getBottomSheetMetrics().recordSheetOpenReason(
