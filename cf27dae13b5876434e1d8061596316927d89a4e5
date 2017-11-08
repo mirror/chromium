@@ -16,6 +16,24 @@
       "revId": "cf27dae13b5876434e1d8061596316927d89a4e5",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8da3c035_52faa243",
+        "filename": "chrome/browser/ui/browser_navigator.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 358,
+      "author": {
+        "id": 1130134
+      },
+      "writtenOn": "2017-11-08T23:43:11Z",
+      "side": 0,
+      "message": "One potential problem is NavigatorImpl::RequestOpenURL [1] which A) sets source_site_instance, but B) doesn\u0027t set opener (and I think this is okay / I think that it is possible to trigger the OpenURL navigation path without being an opener, right?).  The new |opener| field will eventually (in the next CL) get surfaced via window.opener and will be used to infer the browsing instance boundaries in blink-side window.name-based frame lookups.\n\nFWIW, I\u0027ve created a separate, follow-up CL [2] that tries to remove |source_site_instance|, but based on the above I expect it to fail tryjobs.  OTOH, if it doesn\u0027t, then maybe we can pull/merge this other CL into the current CL under review?\n\nWDYT?\n\n[1] https://cs.chromium.org/chromium/src/content/browser/frame_host/navigator_impl.cc?rcl\u003d6c7dbec18f8ec23f6b146cd361016ee19db7732d\u0026l\u003d752\n\n[2] https://chromium-review.googlesource.com/#/c/chromium/src/+/759150",
+      "parentUuid": "24df16e9_8701fec8",
+      "revId": "cf27dae13b5876434e1d8061596316927d89a4e5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
