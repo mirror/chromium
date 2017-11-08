@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "33ffc2dc_1139a291",
+        "filename": "components/cronet/native/BUILD.gn",
+        "patchSetId": 35
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1002889
+      },
+      "writtenOn": "2017-11-08T23:19:02Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "e428649e_b896bbd7",
+      "revId": "1096f4e86e2a480d8dc72f9ad2b0c8619a25e71e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "0859a785_d42667d6",
         "filename": "components/cronet/native/OWNERS",
         "patchSetId": 35
@@ -36,6 +54,24 @@
     },
     {
       "key": {
+        "uuid": "18fa95d9_8be48092",
+        "filename": "components/cronet/native/OWNERS",
+        "patchSetId": 35
+      },
+      "lineNbr": 2,
+      "author": {
+        "id": 1002889
+      },
+      "writtenOn": "2017-11-08T23:19:02Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "0859a785_d42667d6",
+      "revId": "1096f4e86e2a480d8dc72f9ad2b0c8619a25e71e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "42d20fea_5cdc485b",
         "filename": "components/cronet/native/cronet.mojom",
         "patchSetId": 35
@@ -47,6 +83,30 @@
       "writtenOn": "2017-11-07T14:20:46Z",
       "side": 1,
       "message": "What is Annotation used for?",
+      "range": {
+        "startLine": 9,
+        "startChar": 19,
+        "endLine": 9,
+        "endChar": 0
+      },
+      "revId": "1096f4e86e2a480d8dc72f9ad2b0c8619a25e71e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "89e02f45_df078098",
+        "filename": "components/cronet/native/cronet.mojom",
+        "patchSetId": 35
+      },
+      "lineNbr": 9,
+      "author": {
+        "id": 1002889
+      },
+      "writtenOn": "2017-11-08T23:19:02Z",
+      "side": 1,
+      "message": "This is app-provided thing to annotate UrlRequest, similar to ExperimentalUrlRequest.Builder.addRequestAnnotation().\n\nThe definition may change with the actual implementation, I haven\u0027t thought this through yet. Maybe it should be an interface that app implements?",
+      "parentUuid": "42d20fea_5cdc485b",
       "range": {
         "startLine": 9,
         "startChar": 19,
@@ -76,6 +136,24 @@
     },
     {
       "key": {
+        "uuid": "2c21eb17_eaa8c99c",
+        "filename": "components/cronet/native/cronet.mojom",
+        "patchSetId": 35
+      },
+      "lineNbr": 13,
+      "author": {
+        "id": 1002889
+      },
+      "writtenOn": "2017-11-08T23:19:02Z",
+      "side": 1,
+      "message": "RawBuffer is a kludge to simplify code generation for an array of bytes. \nThe definition may change with the actual implementation, I haven\u0027t thought this through yet.",
+      "parentUuid": "24a3c994_3ac69366",
+      "revId": "1096f4e86e2a480d8dc72f9ad2b0c8619a25e71e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "ab7cfc56_dbfbd994",
         "filename": "components/cronet/native/cronet.mojom",
         "patchSetId": 35
@@ -90,6 +168,24 @@
       "revId": "1096f4e86e2a480d8dc72f9ad2b0c8619a25e71e",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f5d79203_c86069de",
+        "filename": "components/cronet/native/cronet.mojom",
+        "patchSetId": 35
+      },
+      "lineNbr": 17,
+      "author": {
+        "id": 1002889
+      },
+      "writtenOn": "2017-11-08T23:19:02Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "ab7cfc56_dbfbd994",
+      "revId": "1096f4e86e2a480d8dc72f9ad2b0c8619a25e71e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -116,6 +212,30 @@
     },
     {
       "key": {
+        "uuid": "6c3f6176_81f0f28c",
+        "filename": "components/cronet/native/cronet.mojom",
+        "patchSetId": 35
+      },
+      "lineNbr": 31,
+      "author": {
+        "id": 1002889
+      },
+      "writtenOn": "2017-11-08T23:19:02Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "ea8e5f3f_c8b96c99",
+      "range": {
+        "startLine": 31,
+        "startChar": 39,
+        "endLine": 31,
+        "endChar": 0
+      },
+      "revId": "1096f4e86e2a480d8dc72f9ad2b0c8619a25e71e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "a543f58b_791f89f0",
         "filename": "components/cronet/native/cronet.mojom",
         "patchSetId": 35
@@ -127,6 +247,30 @@
       "writtenOn": "2017-11-07T14:20:46Z",
       "side": 1,
       "message": "where is CreateWithParams described?",
+      "range": {
+        "startLine": 46,
+        "startChar": 26,
+        "endLine": 46,
+        "endChar": 0
+      },
+      "revId": "1096f4e86e2a480d8dc72f9ad2b0c8619a25e71e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2a69b54d_929d8489",
+        "filename": "components/cronet/native/cronet.mojom",
+        "patchSetId": 35
+      },
+      "lineNbr": 46,
+      "author": {
+        "id": 1002889
+      },
+      "writtenOn": "2017-11-08T23:19:02Z",
+      "side": 1,
+      "message": "Stale comment / API. Renamed {Create|Init}WithParams into StartWithParams.",
+      "parentUuid": "a543f58b_791f89f0",
       "range": {
         "startLine": 46,
         "startChar": 26,
@@ -162,6 +306,30 @@
     },
     {
       "key": {
+        "uuid": "b7e43dd8_b42a05ae",
+        "filename": "components/cronet/native/cronet.mojom",
+        "patchSetId": 35
+      },
+      "lineNbr": 96,
+      "author": {
+        "id": 1002889
+      },
+      "writtenOn": "2017-11-08T23:19:02Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "c1a8d7f2_6f654ade",
+      "range": {
+        "startLine": 96,
+        "startChar": 27,
+        "endLine": 96,
+        "endChar": 0
+      },
+      "revId": "1096f4e86e2a480d8dc72f9ad2b0c8619a25e71e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "a9fdd95c_0b6b4053",
         "filename": "components/cronet/native/cronet.mojom",
         "patchSetId": 35
@@ -173,6 +341,30 @@
       "writtenOn": "2017-11-07T14:20:46Z",
       "side": 1,
       "message": "should this be an absolute path? or relative to what?",
+      "range": {
+        "startLine": 104,
+        "startChar": 74,
+        "endLine": 104,
+        "endChar": 0
+      },
+      "revId": "1096f4e86e2a480d8dc72f9ad2b0c8619a25e71e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ff28fdce_ae3a035e",
+        "filename": "components/cronet/native/cronet.mojom",
+        "patchSetId": 35
+      },
+      "lineNbr": 104,
+      "author": {
+        "id": 1002889
+      },
+      "writtenOn": "2017-11-08T23:19:02Z",
+      "side": 1,
+      "message": "I\u0027ve copied this from CronetEngine.Builder. I think absolute vs relative doesn\u0027t matter as long as it can used directly. Having that said the separate network service process would require an absolute path, but I don\u0027t think we have to define it now.",
+      "parentUuid": "a9fdd95c_0b6b4053",
       "range": {
         "startLine": 104,
         "startChar": 74,
@@ -208,6 +400,30 @@
     },
     {
       "key": {
+        "uuid": "fb6e1825_11077e70",
+        "filename": "components/cronet/native/cronet.mojom",
+        "patchSetId": 35
+      },
+      "lineNbr": 113,
+      "author": {
+        "id": 1002889
+      },
+      "writtenOn": "2017-11-08T23:19:02Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "b64768c3_ddf70e15",
+      "range": {
+        "startLine": 113,
+        "startChar": 18,
+        "endLine": 113,
+        "endChar": 0
+      },
+      "revId": "1096f4e86e2a480d8dc72f9ad2b0c8619a25e71e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "03023e5b_0c6c475b",
         "filename": "components/cronet/native/cronet.mojom",
         "patchSetId": 35
@@ -228,6 +444,30 @@
       "revId": "1096f4e86e2a480d8dc72f9ad2b0c8619a25e71e",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "bc5bc5e7_8c9d563b",
+        "filename": "components/cronet/native/cronet.mojom",
+        "patchSetId": 35
+      },
+      "lineNbr": 159,
+      "author": {
+        "id": 1002889
+      },
+      "writtenOn": "2017-11-08T23:19:02Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "03023e5b_0c6c475b",
+      "range": {
+        "startLine": 159,
+        "startChar": 25,
+        "endLine": 159,
+        "endChar": 0
+      },
+      "revId": "1096f4e86e2a480d8dc72f9ad2b0c8619a25e71e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -254,6 +494,30 @@
     },
     {
       "key": {
+        "uuid": "e3269272_d3ad9170",
+        "filename": "components/cronet/native/cronet.mojom",
+        "patchSetId": 35
+      },
+      "lineNbr": 232,
+      "author": {
+        "id": 1002889
+      },
+      "writtenOn": "2017-11-08T23:19:02Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "97334606_4d064895",
+      "range": {
+        "startLine": 232,
+        "startChar": 29,
+        "endLine": 232,
+        "endChar": 0
+      },
+      "revId": "1096f4e86e2a480d8dc72f9ad2b0c8619a25e71e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "b98298e2_26da9b3a",
         "filename": "components/cronet/native/cronet.mojom_c.h",
         "patchSetId": 35
@@ -271,6 +535,24 @@
     },
     {
       "key": {
+        "uuid": "cd36e16d_bc65bab7",
+        "filename": "components/cronet/native/cronet.mojom_c.h",
+        "patchSetId": 35
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1002889
+      },
+      "writtenOn": "2017-11-08T23:19:02Z",
+      "side": 1,
+      "message": "Yes, although this particular file defines actual API. \nWe still can generate it during the build, but will have to distribute it alongside the library.",
+      "parentUuid": "b98298e2_26da9b3a",
+      "revId": "1096f4e86e2a480d8dc72f9ad2b0c8619a25e71e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "d855014f_740b111c",
         "filename": "components/cronet/tools/generate_mojo_bindings.py",
         "patchSetId": 35
@@ -282,6 +564,24 @@
       "writtenOn": "2017-11-07T14:20:46Z",
       "side": 1,
       "message": "How is this invoked?  Can it be automatically invoked by a BUILD.gn target?",
+      "revId": "1096f4e86e2a480d8dc72f9ad2b0c8619a25e71e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "059816b4_081b563e",
+        "filename": "components/cronet/tools/generate_mojo_bindings.py",
+        "patchSetId": 35
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1002889
+      },
+      "writtenOn": "2017-11-08T23:19:02Z",
+      "side": 1,
+      "message": "Currently it is invoked manually, but yes, it can be invoked by BUILD.gn target.",
+      "parentUuid": "d855014f_740b111c",
       "revId": "1096f4e86e2a480d8dc72f9ad2b0c8619a25e71e",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -311,6 +611,30 @@
     },
     {
       "key": {
+        "uuid": "e9595745_6c3b9c48",
+        "filename": "components/cronet/tools/generators/cronet_bindings_generator.py",
+        "patchSetId": 35
+      },
+      "lineNbr": 37,
+      "author": {
+        "id": 1002889
+      },
+      "writtenOn": "2017-11-08T23:19:02Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "1d76ac81_62024800",
+      "range": {
+        "startLine": 37,
+        "startChar": 73,
+        "endLine": 37,
+        "endChar": 0
+      },
+      "revId": "1096f4e86e2a480d8dc72f9ad2b0c8619a25e71e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "301d906f_c76fc91f",
         "filename": "components/cronet/tools/generators/cronet_c_generator.py",
         "patchSetId": 35
@@ -331,6 +655,30 @@
       "revId": "1096f4e86e2a480d8dc72f9ad2b0c8619a25e71e",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1df42d10_ce15c09a",
+        "filename": "components/cronet/tools/generators/cronet_c_generator.py",
+        "patchSetId": 35
+      },
+      "lineNbr": 5,
+      "author": {
+        "id": 1002889
+      },
+      "writtenOn": "2017-11-08T23:19:02Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "301d906f_c76fc91f",
+      "range": {
+        "startLine": 5,
+        "startChar": 22,
+        "endLine": 5,
+        "endChar": 23
+      },
+      "revId": "1096f4e86e2a480d8dc72f9ad2b0c8619a25e71e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
