@@ -1,0 +1,310 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "e7214b18_2b985e3d",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 7
+      },
+      "lineNbr": 10,
+      "author": {
+        "id": 1000045
+      },
+      "writtenOn": "2017-11-08T01:48:01Z",
+      "side": 1,
+      "message": "super-nit: Android",
+      "revId": "05b0f1f39c9b42aa3851dbeb3d21780e88f32289",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8b95707a_ac523e8b",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 7
+      },
+      "lineNbr": 11,
+      "author": {
+        "id": 1000045
+      },
+      "writtenOn": "2017-11-08T01:48:01Z",
+      "side": 1,
+      "message": "Android",
+      "revId": "05b0f1f39c9b42aa3851dbeb3d21780e88f32289",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3645b945_7c507582",
+        "filename": "ash/wm/base_state.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 6,
+      "author": {
+        "id": 1000045
+      },
+      "writtenOn": "2017-11-08T01:48:01Z",
+      "side": 1,
+      "message": "nit: blank line above",
+      "revId": "05b0f1f39c9b42aa3851dbeb3d21780e88f32289",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "67e1ec32_98840cc7",
+        "filename": "ash/wm/base_state.h",
+        "patchSetId": 7
+      },
+      "lineNbr": 6,
+      "author": {
+        "id": 1000045
+      },
+      "writtenOn": "2017-11-08T01:48:01Z",
+      "side": 1,
+      "message": "nit: no blank line",
+      "revId": "05b0f1f39c9b42aa3851dbeb3d21780e88f32289",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7ff514cb_df65a84d",
+        "filename": "ash/wm/base_state.h",
+        "patchSetId": 7
+      },
+      "lineNbr": 36,
+      "author": {
+        "id": 1000045
+      },
+      "writtenOn": "2017-11-08T01:48:01Z",
+      "side": 1,
+      "message": "nit: SET_BOUNDS",
+      "revId": "05b0f1f39c9b42aa3851dbeb3d21780e88f32289",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "129f7c28_ab2422f8",
+        "filename": "ash/wm/client_controlled_state.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 44,
+      "author": {
+        "id": 1000045
+      },
+      "writtenOn": "2017-11-08T01:48:01Z",
+      "side": 1,
+      "message": "nit: {}",
+      "revId": "05b0f1f39c9b42aa3851dbeb3d21780e88f32289",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0de86263_b40fe5c4",
+        "filename": "ash/wm/client_controlled_state.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 177,
+      "author": {
+        "id": 1000045
+      },
+      "writtenOn": "2017-11-08T01:48:01Z",
+      "side": 1,
+      "message": "nit: comment why you only need to update minimized state if you have a parent (I don\u0027t really understand this)",
+      "revId": "05b0f1f39c9b42aa3851dbeb3d21780e88f32289",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9222032e_0b1c004a",
+        "filename": "ash/wm/client_controlled_state.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 179,
+      "author": {
+        "id": 1000045
+      },
+      "writtenOn": "2017-11-08T01:48:01Z",
+      "side": 1,
+      "message": "nit: no {}",
+      "revId": "05b0f1f39c9b42aa3851dbeb3d21780e88f32289",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b545fb33_fb3bd47c",
+        "filename": "ash/wm/client_controlled_state.h",
+        "patchSetId": 7
+      },
+      "lineNbr": 26,
+      "author": {
+        "id": 1000045
+      },
+      "writtenOn": "2017-11-08T01:48:01Z",
+      "side": 1,
+      "message": "nit: Mention why this is useful, like for Android where Android owns some state.",
+      "revId": "05b0f1f39c9b42aa3851dbeb3d21780e88f32289",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1a7fea9e_73ad567d",
+        "filename": "ash/wm/client_controlled_state.h",
+        "patchSetId": 7
+      },
+      "lineNbr": 45,
+      "author": {
+        "id": 1000045
+      },
+      "writtenOn": "2017-11-08T01:48:01Z",
+      "side": 1,
+      "message": "nit: explicit",
+      "revId": "05b0f1f39c9b42aa3851dbeb3d21780e88f32289",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "dec89d2b_e282efd8",
+        "filename": "ash/wm/client_controlled_state.h",
+        "patchSetId": 7
+      },
+      "lineNbr": 53,
+      "author": {
+        "id": 1000045
+      },
+      "writtenOn": "2017-11-08T01:48:01Z",
+      "side": 1,
+      "message": "super-nit: either just \":\", or change BaseState: to use the word \"overrides\"",
+      "revId": "05b0f1f39c9b42aa3851dbeb3d21780e88f32289",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "95a2238e_2a379dfb",
+        "filename": "ash/wm/client_controlled_state.h",
+        "patchSetId": 7
+      },
+      "lineNbr": 69,
+      "author": {
+        "id": 1000045
+      },
+      "writtenOn": "2017-11-08T01:48:01Z",
+      "side": 1,
+      "message": "nit: Document return value",
+      "revId": "05b0f1f39c9b42aa3851dbeb3d21780e88f32289",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e1473530_6cd0fa52",
+        "filename": "ash/wm/client_controlled_state.h",
+        "patchSetId": 7
+      },
+      "lineNbr": 70,
+      "author": {
+        "id": 1000045
+      },
+      "writtenOn": "2017-11-08T01:48:01Z",
+      "side": 1,
+      "message": "optional: EnterNextState? GoToNextState? \"EnterTo\" sounds a little strange to me.",
+      "revId": "05b0f1f39c9b42aa3851dbeb3d21780e88f32289",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "930a8303_91330dff",
+        "filename": "ash/wm/client_controlled_state_unittest.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 92,
+      "author": {
+        "id": 1000045
+      },
+      "writtenOn": "2017-11-08T01:48:01Z",
+      "side": 1,
+      "message": "nit: does this need the ::ash::wm?\n\noptional: WDYT of naming this method GetWidgetState(), or some other name that isn\u0027t GetWindowState()? window_state()?",
+      "revId": "05b0f1f39c9b42aa3851dbeb3d21780e88f32289",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "df2f1bf2_ad624b8e",
+        "filename": "ash/wm/client_controlled_state_unittest.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 224,
+      "author": {
+        "id": 1000045
+      },
+      "writtenOn": "2017-11-08T01:48:01Z",
+      "side": 1,
+      "message": "nit: remove",
+      "revId": "05b0f1f39c9b42aa3851dbeb3d21780e88f32289",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "28dfd96a_1aecbb75",
+        "filename": "ash/wm/client_controlled_state_unittest.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 272,
+      "author": {
+        "id": 1000045
+      },
+      "writtenOn": "2017-11-08T01:48:01Z",
+      "side": 1,
+      "message": "nit: simultaneously",
+      "revId": "05b0f1f39c9b42aa3851dbeb3d21780e88f32289",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2d400a46_c3ec07fd",
+        "filename": "ash/wm/client_controlled_state_unittest.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 322,
+      "author": {
+        "id": 1000045
+      },
+      "writtenOn": "2017-11-08T01:48:01Z",
+      "side": 1,
+      "message": "nit: simultaneously",
+      "revId": "05b0f1f39c9b42aa3851dbeb3d21780e88f32289",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "dc527625_31ada179",
+        "filename": "ash/wm/wm_event.h",
+        "patchSetId": 7
+      },
+      "lineNbr": 106,
+      "author": {
+        "id": 1000045
+      },
+      "writtenOn": "2017-11-08T01:48:01Z",
+      "side": 1,
+      "message": "nit: document what all these categories mean, or refer to another comment elsewhere",
+      "revId": "05b0f1f39c9b42aa3851dbeb3d21780e88f32289",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
