@@ -1,0 +1,43 @@
+<!doctype html>
+<meta charset="utf-8">
+<title>Async Cookes: cookieStore.has() arguments and options</title>
+<link rel="author" href="pwnall@chromium.org" title="Victor Costan">
+<script src="../../resources/testharness.js"></script>
+<script src="../../resources/testharnessreport.js"></script>
+<script>
+'use strict';
+
+promise_test(async testCase => {
+  await cookieStore.set('cookie-name', 'cookie-value');
+  await cookieStore.delete('cookie-name-2');
+
+  const has_cookie = await cookieStore.has('cookie-name');
+  assert_equals(has_cookie, true);
+  const has_cookie2 = await cookieStore.has('cookie-name-2');
+  assert_equals(has_cookie2, false);
+
+  try { await cookieStore.delete('cookie-name'); } catch (e) {}
+}, 'cookieStore.has with positional name');
+
+promise_test(async testCase => {
+  await cookieStore.set('cookie-name', 'cookie-value');
+  await cookieStore.delete('cookie-name-2');
+
+  const has_cookie = await cookieStore.has({ name: 'cookie-name' });
+  assert_equals(has_cookie, true);
+  const has_cookie2 = await cookieStore.has({ name: 'cookie-name-2' });
+  assert_equals(has_cookie2, false);
+
+  try { await cookieStore.delete('cookie-name'); } catch (e) {}
+}, 'cookieStore.has with name in options');
+
+promise_test(async testCase => {
+  await cookieStore.set('cookie-name', 'cookie-value');
+
+  await promise_rejects(testCase, new TypeError(), cookieStore.has(
+      'cookie-name', { name: 'cookie-name' }));
+
+  try { await cookieStore.delete('cookie-name'); } catch (e) {}
+}, 'cookieStore.has with name in both positional arguments and options');
+
+</script>

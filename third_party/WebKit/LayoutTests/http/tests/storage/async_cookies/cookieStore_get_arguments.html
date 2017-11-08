@@ -1,0 +1,58 @@
+<!doctype html>
+<meta charset="utf-8">
+<title>Async Cookes: cookieStore.get() arguments and options</title>
+<link rel="author" href="pwnall@chromium.org" title="Victor Costan">
+<script src="../../resources/testharness.js"></script>
+<script src="../../resources/testharnessreport.js"></script>
+<script>
+'use strict';
+
+promise_test(async testCase => {
+  await cookieStore.set('cookie-name', 'cookie-value');
+
+  const cookie = await cookieStore.get('cookie-name');
+  assert_equals(cookie.name, 'cookie-name');
+  assert_equals(cookie.value, 'cookie-value');
+
+  try { await cookieStore.delete('cookie-name'); } catch (e) {}
+}, 'cookieStore.get with positional name');
+
+promise_test(async testCase => {
+  await cookieStore.set('cookie-name', 'cookie-value');
+
+  const cookie = await cookieStore.get({ name: 'cookie-name' });
+  assert_equals(cookie.name, 'cookie-name');
+  assert_equals(cookie.value, 'cookie-value');
+
+  try { await cookieStore.delete('cookie-name'); } catch (e) {}
+}, 'cookieStore.get with name in options');
+
+promise_test(async testCase => {
+  await cookieStore.set('cookie-name', 'cookie-value');
+
+  await promise_rejects(testCase, new TypeError(), cookieStore.get(
+      'cookie-name', { name: 'cookie-name' }));
+
+  try { await cookieStore.delete('cookie-name'); } catch (e) {}
+}, 'cookieStore.get with name in both positional arguments and options');
+
+promise_test(async testCase => {
+  await cookieStore.set('cookie-name', 'cookie-value');
+
+  const cookie = await cookieStore.get('cookie-na', { matchType: 'startsWith' });
+  assert_equals(cookie.name, 'cookie-name');
+  assert_equals(cookie.value, 'cookie-value');
+
+  try { await cookieStore.delete('cookie-name'); } catch (e) {}
+}, 'cookieStore.get with matchType set to startsWith');
+
+promise_test(async testCase => {
+  await cookieStore.set('cookie-name', 'cookie-value');
+
+  await promise_rejects(testCase, new TypeError(), cookieStore.get(
+      'cookie-name', { matchType: 'invalid' }));
+
+  try { await cookieStore.delete('cookie-name'); } catch (e) {}
+}, 'cookieStore.get with invalid matchType');
+
+</script>
