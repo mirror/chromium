@@ -49,6 +49,30 @@
     },
     {
       "key": {
+        "uuid": "5c80e7f7_222c7bba",
+        "filename": "chromeos/dbus/dbus_clients_browser.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 94,
+      "author": {
+        "id": 1240064
+      },
+      "writtenOn": "2017-11-08T05:05:32Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "7e6f0cf1_1dd17ac6",
+      "range": {
+        "startLine": 94,
+        "startChar": 0,
+        "endLine": 94,
+        "endChar": 58
+      },
+      "revId": "b3d006f1ea2999a6fb4dc5c5345e394c36ea9523",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "b8bea935_afb71ede",
         "filename": "chromeos/dbus/smb_provider_client.cc",
         "patchSetId": 3
@@ -63,6 +87,24 @@
       "revId": "b3d006f1ea2999a6fb4dc5c5345e394c36ea9523",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3e5e9101_bc6f61de",
+        "filename": "chromeos/dbus/smb_provider_client.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 23,
+      "author": {
+        "id": 1240064
+      },
+      "writtenOn": "2017-11-08T05:05:32Z",
+      "side": 1,
+      "message": "Yes it shouldn\u0027t happen. The other implementations return a DBUS_ERROR_FAILURE. I am returning a similar failure",
+      "parentUuid": "b8bea935_afb71ede",
+      "revId": "b3d006f1ea2999a6fb4dc5c5345e394c36ea9523",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -89,6 +131,30 @@
     },
     {
       "key": {
+        "uuid": "a4ab826b_05748cd4",
+        "filename": "chromeos/dbus/smb_provider_client.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 38,
+      "author": {
+        "id": 1240064
+      },
+      "writtenOn": "2017-11-08T05:05:32Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "60a5abde_2c55f58e",
+      "range": {
+        "startLine": 38,
+        "startChar": 4,
+        "endLine": 38,
+        "endChar": 36
+      },
+      "revId": "b3d006f1ea2999a6fb4dc5c5345e394c36ea9523",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "a6780b6e_914ac3b7",
         "filename": "chromeos/dbus/smb_provider_client.cc",
         "patchSetId": 3
@@ -109,6 +175,30 @@
       "revId": "b3d006f1ea2999a6fb4dc5c5345e394c36ea9523",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "532b4520_07ea095c",
+        "filename": "chromeos/dbus/smb_provider_client.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 49,
+      "author": {
+        "id": 1240064
+      },
+      "writtenOn": "2017-11-08T05:05:32Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "a6780b6e_914ac3b7",
+      "range": {
+        "startLine": 49,
+        "startChar": 4,
+        "endLine": 49,
+        "endChar": 33
+      },
+      "revId": "b3d006f1ea2999a6fb4dc5c5345e394c36ea9523",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -147,6 +237,24 @@
     },
     {
       "key": {
+        "uuid": "5da47261_ad321208",
+        "filename": "chromeos/dbus/smb_provider_client.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 69,
+      "author": {
+        "id": 1240064
+      },
+      "writtenOn": "2017-11-08T05:05:32Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "85d46063_6911c37f",
+      "revId": "b3d006f1ea2999a6fb4dc5c5345e394c36ea9523",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "ad064dd7_29b279bb",
         "filename": "chromeos/dbus/smb_provider_client.cc",
         "patchSetId": 3
@@ -170,6 +278,30 @@
     },
     {
       "key": {
+        "uuid": "031abc58_e72c0e32",
+        "filename": "chromeos/dbus/smb_provider_client.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 79,
+      "author": {
+        "id": 1240064
+      },
+      "writtenOn": "2017-11-08T05:05:32Z",
+      "side": 1,
+      "message": "We discussed this one and we think that this will only return a mount_id in the foreseeable future. We will keep this in mind, but for now I will mark it as resolved",
+      "parentUuid": "ad064dd7_29b279bb",
+      "range": {
+        "startLine": 79,
+        "startChar": 2,
+        "endLine": 79,
+        "endChar": 38
+      },
+      "revId": "b3d006f1ea2999a6fb4dc5c5345e394c36ea9523",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "7e78e57e_e5866b66",
         "filename": "chromeos/dbus/smb_provider_client.h",
         "patchSetId": 3
@@ -184,6 +316,24 @@
       "revId": "b3d006f1ea2999a6fb4dc5c5345e394c36ea9523",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "639048d6_779e61b4",
+        "filename": "chromeos/dbus/smb_provider_client.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 35,
+      "author": {
+        "id": 1240064
+      },
+      "writtenOn": "2017-11-08T05:05:32Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "7e78e57e_e5866b66",
+      "revId": "b3d006f1ea2999a6fb4dc5c5345e394c36ea9523",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -204,6 +354,24 @@
     },
     {
       "key": {
+        "uuid": "783e535c_fc572652",
+        "filename": "chromeos/dbus/smb_provider_client.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 40,
+      "author": {
+        "id": 1240064
+      },
+      "writtenOn": "2017-11-08T05:05:32Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "047f681f_1c7bc386",
+      "revId": "b3d006f1ea2999a6fb4dc5c5345e394c36ea9523",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "e38da8d8_e6d9848f",
         "filename": "chromeos/dbus/smb_provider_client.h",
         "patchSetId": 3
@@ -218,6 +386,24 @@
       "revId": "b3d006f1ea2999a6fb4dc5c5345e394c36ea9523",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0a9fd16d_9cc49928",
+        "filename": "chromeos/dbus/smb_provider_client.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 46,
+      "author": {
+        "id": 1240064
+      },
+      "writtenOn": "2017-11-08T05:05:32Z",
+      "side": 1,
+      "message": "I think it needs to be protected because the Fake implementation derives from this class.",
+      "parentUuid": "e38da8d8_e6d9848f",
+      "revId": "b3d006f1ea2999a6fb4dc5c5345e394c36ea9523",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
