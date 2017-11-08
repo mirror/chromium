@@ -24,6 +24,7 @@
 #include "content/public/test/test_navigation_observer.h"
 #include "content/public/test/test_utils.h"
 #include "content/shell/browser/shell.h"
+#include "content/test/content_browser_test_utils_internal.h"
 #include "content/test/test_content_browser_client.h"
 #include "net/dns/mock_host_resolver.h"
 #include "net/test/embedded_test_server/embedded_test_server.h"
@@ -870,6 +871,92 @@ IN_PROC_BROWSER_TEST_F(
   std::string second_part_received;
   EXPECT_TRUE(dom_message_queue.WaitForMessage(&second_part_received));
   EXPECT_EQ("\"Second part received\"", second_part_received);
+}
+
+namespace {
+
+using RenderFrameHostPendingCommitTest = ContentBrowserTest;
+
+class BrowserInitiatedNavigationsChecker : public WebContentsObserver {
+ public:
+  BrowserInitiatedNavigationsChecker(WebContents* contents)
+      : WebContentsObserver(contents) {}
+
+  void DidStartNavigation(NavigationHandle* handle) override {
+    EXPECT_FALSE(handle->IsRendererInitiated());
+  }
+};
+
+// Helper for executing a callback right before a RFH processes a DidStopLoading
+// message.
+class RunOnFrameStopLoadingHelper : public WebContentsObserver {
+ public:
+  RunOnFrameStopLoadingHelper(WebContents* contents, base::OnceClosure callback)
+      : WebContentsObserver(contents), callback_(std::move(callback)) {}
+
+  // Waits until the callback is executed.
+  void Wait() { run_loop_.Run(); }
+
+ private:
+  bool OnMessageReceived(const IPC::Message& msg,
+                         RenderFrameHost* rfh) override {
+    IPC_BEGIN_MESSAGE_MAP(RunOnFrameStopLoadingHelper, msg)
+      IPC_MESSAGE_HANDLER(FrameHostMsg_DidStopLoading, OnDidStopLoading)
+    IPC_END_MESSAGE_MAP()
+
+    return false;
+  }
+
+  void OnDidStopLoading() {
+    std::move(callback_).Run();
+    run_loop_.Quit();
+  }
+
+  base::RunLoop run_loop_;
+  base::OnceClosure callback_;
+};
+
+}  // namespace
+
+IN_PROC_BROWSER_TEST_F(RenderFrameHostPendingCommitTest,
+                       StopLoadingWithPendingCommit) {
+  const std::string kFirstPagePath("/virtual/first_page");
+  ControllableHttpResponse first_response(embedded_test_server(),
+                                          kFirstPagePath);
+  ASSERT_TRUE(embedded_test_server()->Start());
+
+  BrowserInitiatedNavigationsChecker checker(shell()->web_contents());
+  const GURL first_url(embedded_test_server()->GetURL(kFirstPagePath));
+
+  UrlCommitObserver commit_observer(
+      static_cast<WebContentsImpl*>(shell()->web_contents())
+          ->GetFrameTree()
+          ->root(),
+      first_url);
+  shell()->LoadURL(first_url);
+  first_response.WaitForRequest();
+  first_response.Send("HTTP/1.1 200 OK\r\n\r\n<html>");
+  commit_observer.Wait();
+
+  // Ensure that the new navigation starts committing right before the first
+  // load finishes.
+  GURL new_url(embedded_test_server()->GetURL("/title2.html"));
+  TestNavigationManager navigation_manager_2(shell()->web_contents(), new_url);
+  shell()->LoadURL(new_url);
+  EXPECT_TRUE(navigation_manager_2.WaitForResponse());
+
+  {
+    RunOnFrameStopLoadingHelper helper(
+        shell()->web_contents(),
+        base::BindOnce(&TestNavigationManager::ResumeNavigation,
+                       base::Unretained(&navigation_manager_2)));
+    first_response.Done();
+    helper.Wait();
+  }
+  navigation_manager_2.WaitForNavigationFinished();
+  // Navigation finish should be caused by successfully committing the new URL.
+  EXPECT_EQ(new_url, shell()->web_contents()->GetLastCommittedURL());
+  EXPECT_TRUE(WaitForLoadStop(shell()->web_contents()));
 }
 
 }  // namespace content
