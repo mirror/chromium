@@ -16,6 +16,24 @@
       "revId": "480aeeb1f7baa79b8cd8212fe507946684064bc0",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "48b93433_ce76ce45",
+        "filename": "components/autofill/core/browser/autofill_field.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 624,
+      "author": {
+        "id": 1209219
+      },
+      "writtenOn": "2017-11-08T15:24:31Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "a867ef61_2bd83929",
+      "revId": "480aeeb1f7baa79b8cd8212fe507946684064bc0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
