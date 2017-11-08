@@ -36,6 +36,24 @@
     },
     {
       "key": {
+        "uuid": "0d6522be_121ba83f",
+        "filename": "services/ui/ws/display_manager.cc",
+        "patchSetId": 14
+      },
+      "lineNbr": 179,
+      "author": {
+        "id": 1146978
+      },
+      "writtenOn": "2017-11-08T14:44:05Z",
+      "side": 1,
+      "message": "Maybe this points to removing a root ServerWindow/AshWindowTreeHost being something separate from destroying a ws::Display?",
+      "parentUuid": "11654857_8fb648e0",
+      "revId": "87f0fb87e85e6b6f23f6ff467558bafdb59fe06e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "82815854_2a6d661e",
         "filename": "services/ui/ws/display_manager.cc",
         "patchSetId": 14
@@ -47,6 +65,58 @@
       "writtenOn": "2017-11-08T00:57:00Z",
       "side": 1,
       "message": "It\u0027s a bit tough to discern the intended workflow between ash and mus when it comes to display configuration, but this occurs when ash (1) calls SetDisplayConfiguration with the display-\u003emirror change, and then (2) destroys the display as it becomes a mirror.\n\nCallstack from (1):\n  base::debug::StackTrace::StackTrace()\n  ash::DisplaySynchronizer::SendDisplayConfigurationToServer()\n  ash::DisplaySynchronizer::OnDidProcessDisplayChanges()\n  display::DisplayManager::BeginEndNotifier::~BeginEndNotifier()\n  display::DisplayManager::UpdateDisplaysWith()\n  display::DisplayManager::OnNativeDisplaysChanged()\n  display::DisplayChangeObserver::OnDisplayModeChanged()\n  display::DisplayConfigurator::NotifyDisplayStateObservers()\n  display::DisplayConfigurator::OnConfigured()\n\nCallstack from (2):\n  ui::ws::DisplayManager::DestroyDisplay()\n  ui::ws::WindowManagerState::DeleteWindowManagerDisplayRoot()\n  ui::ws::WindowTree::RemoveRoot()\n  ui::ws::WindowTree::DeleteWindow\n MOJO...\n  aura::WindowTreeClient::OnWindowMusDestroyed()\n  aura::WindowPortMus::~WindowPortMus()\n ... \n  ash::RootWindowController::Shutdown()\n  ash::WindowTreeHostManager::DeleteHost()\n  ash::WindowTreeHostManager::OnDisplayRemoved()\n  display::DisplayManager::NotifyDisplayRemoved()\n  display::DisplayManager::UpdateDisplaysWith()\n\nIf I don\u0027t remove the display from that list here, we hit a dcheck when it\u0027s re-added on the next SetDisplayConfiguration call... and sadly I need to check that the screen manager exists (it doesn\u0027t as some tests destroy all displays on shut down...)",
+      "revId": "87f0fb87e85e6b6f23f6ff467558bafdb59fe06e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "faf3a85a_a16078f7",
+        "filename": "services/ui/ws/display_manager.cc",
+        "patchSetId": 14
+      },
+      "lineNbr": 261,
+      "author": {
+        "id": 1146978
+      },
+      "writtenOn": "2017-11-08T14:44:05Z",
+      "side": 1,
+      "message": "Is the root of the problem here that the ws::Display is destroyed when WindowTreeClient::OnWindowMusDestroyed() is called for a root window? The information contained in WindowTreeClient::SetDisplayConfiguration() also provides a signal to destroy a ws::Display (or move it to mirroring list) based on the fact that the display is no longer in the list.",
+      "parentUuid": "82815854_2a6d661e",
+      "revId": "87f0fb87e85e6b6f23f6ff467558bafdb59fe06e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3fa892e6_500ee388",
+        "filename": "ui/display/manager/chromeos/display_configurator.cc",
+        "patchSetId": 14
+      },
+      "lineNbr": 290,
+      "author": {
+        "id": 1146978
+      },
+      "writtenOn": "2017-11-08T14:44:05Z",
+      "side": 1,
+      "message": "Can you explain this a bit better to me?",
+      "revId": "87f0fb87e85e6b6f23f6ff467558bafdb59fe06e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "38e55415_64e406f9",
+        "filename": "ui/display/manager/display_manager.cc",
+        "patchSetId": 14
+      },
+      "lineNbr": 1241,
+      "author": {
+        "id": 1146978
+      },
+      "writtenOn": "2017-11-08T14:44:05Z",
+      "side": 1,
+      "message": "When running classic ash on Linux desktop do the displays ever get added to the |hardware_mirroring_display_id_list_| or are they only added to the |software_mirroring_display_list_|? It looks like displays are considered for hardware mirroring if they have the same origin here:\n\nhttps://cs.chromium.org/chromium/src/ui/display/manager/display_manager.cc?type\u003dcs\u0026sq\u003dpackage:chromium\u0026l\u003d737\n\nWhen running cash on Linux desktop it doesn\u0027t run ConfigureDisplaysTask which is what updates DisplaySnapshot origin. ConfigureDisplaysTask does run with mus/mash and when building the DisplayConfigureRequest all displays get the origin of (0, 0) here:\n\nhttps://cs.chromium.org/chromium/src/ui/display/manager/chromeos/display_configurator.cc?l\u003d220\n\nIt seems like somewhere (DisplayConfigurator, UpdateDiplayConfigurationTask or ConfiugreDisplaysTask probably) that drops into software mirroring automatically if !chromeos::IsRunningAsSystemCompositor().",
       "revId": "87f0fb87e85e6b6f23f6ff467558bafdb59fe06e",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
