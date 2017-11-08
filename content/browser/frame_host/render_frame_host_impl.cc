@@ -3457,6 +3457,7 @@ void RenderFrameHostImpl::CommitNavigation(
 
   // TODO(scottmg): Pass a factory for SW, etc. once we have one.
   base::Optional<URLLoaderFactoryBundle> subresource_loader_factories;
+  subresource_loader_factories.emplace();
   if (base::FeatureList::IsEnabled(features::kNetworkService) &&
       (!is_same_document || is_first_navigation)) {
     // NOTE: On Network Service navigations, we want to ensure that a frame is
@@ -3474,6 +3475,26 @@ void RenderFrameHostImpl::CommitNavigation(
       default_factory.Bind(
           std::move(subresource_loader_params->loader_factory_info));
     } else {
+      const auto& schemes = URLDataManagerBackend::GetWebUISchemes();
+      std::string scheme = common_params.url.scheme();
+      if (std::find(schemes.begin(), schemes.end(), scheme) != schemes.end()) {
+        mojom::URLLoaderFactoryPtr factory_for_webui =
+            CreateWebUIURLLoader(frame_tree_node_, scheme);
+        if (ChildProcessSecurityPolicyImpl::GetInstance()->HasWebUIBindings(
+                GetProcess()->GetID())) {
+          // If the renderer has webui bindings, then don't give it access to
+          // network loader for security reasons.
+          default_factory = std::move(factory_for_webui);
+        } else {
+          // This is a webui scheme that doesn't have webui bindings. Give it
+          // access to the network loader as it might require it.
+          subresource_loader_factories->RegisterFactory(
+              scheme, std::move(factory_for_webui));
+        }
+      }
+    }
+
+    if (!default_factory.is_bound()) {
       // Otherwise default to a Network Service-backed loader from the
       // appropriate NetworkContext.
       storage_partition->GetNetworkContext()->CreateURLLoaderFactory(
@@ -3481,7 +3502,6 @@ void RenderFrameHostImpl::CommitNavigation(
     }
 
     DCHECK(default_factory.is_bound());
-    subresource_loader_factories.emplace();
     subresource_loader_factories->SetDefaultFactory(std::move(default_factory));
 
     // Everyone gets a blob loader.
