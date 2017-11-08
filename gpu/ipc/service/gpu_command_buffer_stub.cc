@@ -36,6 +36,7 @@
 #include "gpu/command_buffer/service/sync_point_manager.h"
 #include "gpu/command_buffer/service/transfer_buffer_manager.h"
 #include "gpu/config/gpu_crash_keys.h"
+#include "gpu/ipc/common/gpu_fence_impl.h"
 #include "gpu/ipc/common/gpu_messages.h"
 #include "gpu/ipc/service/gpu_channel.h"
 #include "gpu/ipc/service/gpu_channel_manager.h"
@@ -45,6 +46,7 @@
 #include "gpu/ipc/service/gpu_memory_tracking.h"
 #include "gpu/ipc/service/gpu_watchdog_thread.h"
 #include "gpu/ipc/service/image_transport_surface.h"
+#include "ui/gfx/gpu_fence_handle.h"
 #include "ui/gl/gl_bindings.h"
 #include "ui/gl/gl_context.h"
 #include "ui/gl/gl_image.h"
@@ -298,6 +300,8 @@ bool GpuCommandBufferStub::OnMessageReceived(const IPC::Message& message) {
     IPC_MESSAGE_HANDLER(GpuCommandBufferMsg_DestroyImage, OnDestroyImage);
     IPC_MESSAGE_HANDLER(GpuCommandBufferMsg_CreateStreamTexture,
                         OnCreateStreamTexture)
+    IPC_MESSAGE_HANDLER(GpuCommandBufferMsg_CreateGpuFence, OnCreateGpuFence)
+    IPC_MESSAGE_HANDLER(GpuCommandBufferMsg_InsertGpuFence, OnInsertGpuFence)
     IPC_MESSAGE_UNHANDLED(handled = false)
   IPC_END_MESSAGE_MAP()
 
@@ -1069,6 +1073,49 @@ void GpuCommandBufferStub::OnSignalQuery(uint32_t query_id, uint32_t id) {
   }
   // Something went wrong, run callback immediately.
   OnSignalAck(id);
+}
+
+void GpuCommandBufferStub::OnCreateGpuFence(uint32_t fetch_id) {
+  TRACE_EVENT0("gpu", __FUNCTION__);
+  //LOG(INFO) << __FUNCTION__ << ";;; start, fetch_id=" << fetch_id;
+
+  gfx::GpuFenceHandle handle;
+
+  if (GpuFenceImpl::IsSupported()) {
+    TRACE_EVENT_BEGIN0("gpu", "DupNativeFenceFD");
+    std::unique_ptr<GpuFenceImpl> fence = GpuFenceImpl::CreateNew();
+    handle = gfx::CloneHandleForIPC(fence->GetHandle());
+    TRACE_EVENT_END0("gpu", "DupNativeFenceFD");
+    //LOG(INFO) << __FUNCTION__ << ";;; sync_fd=" << handle.native_fd.fd;
+  } else {
+    LOG(ERROR) << __FUNCTION__ << ";;; eglDupNativeFenceFDANDROID not supported";
+  }
+
+  GpuCommandBufferMsg_CreateGpuFence_Return ret;
+  // IPC Send takes ownership of the file descriptor.
+  ret.sync_point = handle;
+  {
+    TRACE_EVENT0("gpu", "SendReply");
+    Send(new GpuCommandBufferMsg_CreateGpuFenceComplete(
+        route_id_, fetch_id, ret));
+  }
+
+  //LOG(INFO) << __FUNCTION__ << ";;; end";
+}
+
+void GpuCommandBufferStub::OnInsertGpuFence(const gfx::GpuFenceHandle& handle) {
+  TRACE_EVENT0("gpu", __FUNCTION__);
+
+  if (!GpuFenceImpl::IsSupported())
+    return;
+
+  std::unique_ptr<GpuFenceImpl> gpu_fence = GpuFenceImpl::CreateFromHandle(
+      handle);
+  if (!gpu_fence)
+    return;
+
+  DCHECK(gpu_fence->GetGLFence());
+  gpu_fence->GetGLFence()->ServerWait();
 }
 
 void GpuCommandBufferStub::OnFenceSyncRelease(uint64_t release) {

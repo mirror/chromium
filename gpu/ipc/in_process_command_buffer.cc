@@ -985,6 +985,16 @@ void InProcessCommandBuffer::SignalQueryOnGpuThread(
     query->AddCallback(callback);
 }
 
+void InProcessCommandBuffer::CreateGpuFence(
+    const base::Callback<void(const gfx::GpuFenceHandle&)>& callback) {
+  NOTIMPLEMENTED();
+  // LOG(INFO) << __FUNCTION__ << ";;;";
+}
+
+void InProcessCommandBuffer::InsertGpuFence(const gfx::GpuFenceHandle&) {
+  NOTIMPLEMENTED();
+}
+
 void InProcessCommandBuffer::SetLock(base::Lock*) {
   // No support for using on multiple threads.
   NOTREACHED();
