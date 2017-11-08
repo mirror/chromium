@@ -153,11 +153,9 @@ class CORE_EXPORT PointerEventManager
   // Sends touch pointer events and sets consumed bits in TouchInfo array
   // based on the return value of pointer event handlers.
   void DispatchTouchPointerEvent(
-      const WebTouchPoint&,
+      const WebPointerEvent&,
+      const Vector<WebPointerEvent>& coalesced_events,
       const EventHandlingUtil::PointerEventTarget&,
-      const Vector<std::pair<WebTouchPoint, TimeTicks>>& coalesced_events,
-      WebInputEvent::Modifiers,
-      double timestamp,
       uint32_t unique_touch_event_id);
 
   // Returns whether the event is consumed or not.
