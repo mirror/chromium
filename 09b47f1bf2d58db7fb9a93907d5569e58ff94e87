@@ -96,6 +96,30 @@
     },
     {
       "key": {
+        "uuid": "54e77b7c_b884ae54",
+        "filename": "third_party/webrtc_overrides/rtc_base/logging.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 93,
+      "author": {
+        "id": 1002285
+      },
+      "writtenOn": "2017-11-08T10:18:55Z",
+      "side": 1,
+      "message": "Actually, it was fine with a bug reference and even encouraged. I wasn\u0027t aware of this fairly new (I think) style guide. Sorry about this, you can keep it as is now.",
+      "parentUuid": "31a01a0d_026cfd0b",
+      "range": {
+        "startLine": 93,
+        "startChar": 8,
+        "endLine": 93,
+        "endChar": 28
+      },
+      "revId": "09b47f1bf2d58db7fb9a93907d5569e58ff94e87",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "6ab9de49_76a4b3f0",
         "filename": "third_party/webrtc_overrides/rtc_base/logging.h",
         "patchSetId": 4
@@ -125,6 +149,24 @@
       "side": 1,
       "message": "Done, I have changed the block above to RTC_ and added a block of backwards compatible macros.",
       "parentUuid": "6ab9de49_76a4b3f0",
+      "revId": "09b47f1bf2d58db7fb9a93907d5569e58ff94e87",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "470ac63f_79b15722",
+        "filename": "third_party/webrtc_overrides/rtc_base/logging.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 97,
+      "author": {
+        "id": 1002285
+      },
+      "writtenOn": "2017-11-08T10:18:55Z",
+      "side": 1,
+      "message": "Thanks!",
+      "parentUuid": "2a99d698_717d3b9a",
       "revId": "09b47f1bf2d58db7fb9a93907d5569e58ff94e87",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": false
