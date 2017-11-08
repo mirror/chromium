@@ -11,8 +11,11 @@
 #include "components/prefs/pref_store.h"
 #include "ios/chrome/browser/browser_state/chrome_browser_state_io_data.h"
 #include "ios/chrome/browser/net/net_types.h"
+#import "ios/web/web_state/ui/wk_web_view_configuration_provider.h"
+#import <Webkit/Webkit.h>
 
 class JsonPrefStore;
+@class WKHTTPCookieStore;
 
 namespace ios {
 class ChromeBrowserState;
@@ -105,6 +108,7 @@ class ChromeBrowserStateImplIOData : public ChromeBrowserStateIOData {
     base::FilePath cookie_path;
     base::FilePath channel_id_path;
     base::FilePath cache_path;
+    WKHTTPCookieStore* systemStore;
     int cache_max_size;
   };
 
