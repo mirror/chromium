@@ -5,7 +5,6 @@
 #include "ui/base/x/selection_requestor.h"
 
 #include <algorithm>
-#include <X11/Xlib.h>
 
 #include "base/message_loop/message_loop.h"
 #include "base/run_loop.h"
@@ -13,6 +12,7 @@
 #include "ui/base/x/x11_util.h"
 #include "ui/events/platform/platform_event_dispatcher.h"
 #include "ui/events/platform/platform_event_source.h"
+#include "ui/gfx/x/x11.h"
 #include "ui/gfx/x/x11_atom_cache.h"
 #include "ui/gfx/x/x11_types.h"
 
@@ -60,7 +60,7 @@ SelectionRequestor::SelectionRequestor(XDisplay* x_display,
                                        PlatformEventDispatcher* dispatcher)
     : x_display_(x_display),
       x_window_(x_window),
-      x_property_(None),
+      x_property_(X11::None),
       dispatcher_(dispatcher),
       current_request_index_(0u) {
   x_property_ = gfx::GetAtom(kChromeSelection);
@@ -120,7 +120,7 @@ SelectionData SelectionRequestor::RequestAndWaitForTypes(
   for (std::vector<XAtom>::const_iterator it = types.begin();
        it != types.end(); ++it) {
     scoped_refptr<base::RefCountedMemory> data;
-    XAtom type = None;
+    XAtom type = X11::None;
     if (PerformBlockingConvertSelection(selection,
                                         *it,
                                         &data,
@@ -142,7 +142,7 @@ void SelectionRequestor::OnSelectionNotify(const XEvent& event) {
       request->selection != event.xselection.selection ||
       request->target != event.xselection.target) {
     // ICCCM requires us to delete the property passed into SelectionNotify.
-    if (event_property != None)
+    if (event_property != X11::None)
       XDeleteProperty(x_display_, x_window_, event_property);
     return;
   }
@@ -160,14 +160,14 @@ void SelectionRequestor::OnSelectionNotify(const XEvent& event) {
       request->out_data.push_back(out_data);
     }
   }
-  if (event_property != None)
+  if (event_property != X11::None)
     XDeleteProperty(x_display_, x_window_, event_property);
 
   if (request->out_type == gfx::GetAtom(kIncr)) {
     request->data_sent_incrementally = true;
     request->out_data.clear();
     request->out_data_items = 0u;
-    request->out_type = None;
+    request->out_type = X11::None;
     request->timeout = base::TimeTicks::Now() +
         base::TimeDelta::FromMilliseconds(kRequestTimeoutMs);
   } else {
@@ -188,7 +188,7 @@ void SelectionRequestor::OnPropertyEvent(const XEvent& event) {
 
   scoped_refptr<base::RefCountedMemory> out_data;
   size_t out_data_items = 0u;
-  Atom out_type = None;
+  Atom out_type = X11::None;
   bool success = ui::GetRawBytesOfProperty(x_window_,
                                            x_property_,
                                            &out_data,
@@ -199,7 +199,7 @@ void SelectionRequestor::OnPropertyEvent(const XEvent& event) {
     return;
   }
 
-  if (request->out_type != None && request->out_type != out_type) {
+  if (request->out_type != X11::None && request->out_type != out_type) {
     CompleteRequest(current_request_index_, false);
     return;
   }
@@ -249,12 +249,8 @@ void SelectionRequestor::CompleteRequest(size_t index, bool success) {
 void SelectionRequestor::ConvertSelectionForCurrentRequest() {
   Request* request = GetCurrentRequest();
   if (request) {
-    XConvertSelection(x_display_,
-                      request->selection,
-                      request->target,
-                      x_property_,
-                      x_window_,
-                      CurrentTime);
+    XConvertSelection(x_display_, request->selection, request->target,
+                      x_property_, x_window_, X11::CurrentTime);
   }
 }
 
@@ -303,11 +299,10 @@ SelectionRequestor::Request::Request(XAtom selection,
       target(target),
       data_sent_incrementally(false),
       out_data_items(0u),
-      out_type(None),
+      out_type(X11::None),
       success(false),
       timeout(timeout),
-      completed(false) {
-}
+      completed(false) {}
 
 SelectionRequestor::Request::~Request() {
 }
