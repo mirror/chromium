@@ -109,6 +109,24 @@
     },
     {
       "key": {
+        "uuid": "b1bd5aff_e8a76638",
+        "filename": "docs/testing/json_test_results_format.md",
+        "patchSetId": 6
+      },
+      "lineNbr": 47,
+      "author": {
+        "id": 1003232
+      },
+      "writtenOn": "2017-11-08T01:09:04Z",
+      "side": 1,
+      "message": "I agree that we don\u0027t need O(1) lookup, but apart from that, using name-\u003epath does make it clearer and is more consistent with the way the other keys are used. \n\nI agree that it doesn\u0027t easily map to a proto, but I\u0027m not sure that the rest of the format is better in this regard. Put differently, I\u0027d rather address that need all at once, rather than addressing it for bits of the format but not others.",
+      "parentUuid": "13916665_67c7ca0c",
+      "revId": "d66752fd5e1081fc5e07385c46732763342bf11f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "a83ba1fa_ed36459c",
         "filename": "docs/testing/json_test_results_format.md",
         "patchSetId": 6
