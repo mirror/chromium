@@ -179,6 +179,7 @@ def ConvertTrace(lines, load_vaddrs, more_info, fallback_monochrome, arch_define
   pool.join()
   end = time.time()
   logging.debug('Finished processing. Elapsed time: %.4fs', (end - start))
+  timing_results = 'Finished preprocessing (extract useful information from lines). Elapsed time: %.4fs\n' % (end - start)
   if so_dirs:
     UpdateLibrarySearchPath(so_dirs)
 
@@ -188,11 +189,14 @@ def ConvertTrace(lines, load_vaddrs, more_info, fallback_monochrome, arch_define
     if arch:
       print ('Find ABI:' + arch)
       symbol.ARCH = arch
-
+  start = time.time()
   ResolveCrashSymbol(list(useful_log), more_info)
   end = time.time()
-  logging.debug('Finished resolving symbols. Elapsed time: %.4fs',
+  logging.info('Finished resolving symbols. Elapsed time: %.4fs',
                 (end - start))
+  timing_results += 'Finished resolving symbols. Elapsed time: %.4fs' % (end - start)
+  with open('/tmp/stack_symbolization_time', 'w') as f:
+    f.write(timing_results)
 
 class PreProcessLog:
   """Closure wrapper, for multiprocessing.Pool.map."""
@@ -323,6 +327,7 @@ def ResolveCrashSymbol(lines, more_info):
   # Collects all java exception lines, keyed by pid for later output during
   # native crash handling.
   java_stderr_by_pid = {}
+  start_time = time.time()
   for line in lines:
     lib, address = None, None
 
@@ -341,11 +346,18 @@ def ResolveCrashSymbol(lines, more_info):
     if java_stderr_match:
       pid, msg = java_stderr_match.groups()
       java_stderr_by_pid.setdefault(pid, []).append(msg)
+  timing_log = 'processing time of "for line in lines" block is %fs.\n' % (time.time() - start_time) 
 
+  start_time = time.time()
+  timing_log += 'code_addresses for loop times %d. \n' % len(code_addresses)
+  with open('/tmp/SymbolInformationForSet_timing', 'w') as f:
+    f.write('Enter "for lib in code_addresses" block. \n')
   for lib in code_addresses:
     symbol.SymbolInformationForSet(
         symbol.TranslateLibPath(lib), code_addresses[lib], more_info)
+  timing_log += 'processing time of "for lib in code_addresses" block is %fs.\n' % (time.time() - start_time) 
 
+  start_time = time.time()
   for line in lines:
     # AndroidFeedback adds zero width spaces into its crash reports. These
     # should be removed or the regular expresssions will fail to match.
@@ -451,11 +463,18 @@ def ResolveCrashSymbol(lines, more_info):
                             value,
                             object_symbol_with_offset,
                             source_location))
+  timing_log += 'processing time of the second "for line in lines" block is %fs.\n' % (time.time() - start_time)
 
+
+  start_time = time.time()
   java_lines = []
   if pid != -1 and pid in java_stderr_by_pid:
     java_lines = java_stderr_by_pid[pid]
   PrintOutput(trace_lines, value_lines, java_lines, more_info)
+  timing_log += 'processing time of the rest, such as PrintOutput is %fs.\n' % (time.time() - start_time)
+
+  with open('/tmp/converttrace_time', 'w') as f:
+    f.write(timing_log)
 
 def UpdateLibrarySearchPath(so_dirs):
   # All dirs in so_dirs must be same, since a dir represents the cpu arch.

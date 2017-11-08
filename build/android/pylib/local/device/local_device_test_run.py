@@ -55,6 +55,7 @@ class LocalDeviceTestRun(test_run.TestRun):
   #override
   def RunTests(self):
     tests = self._GetTests()
+    print tests
 
     exit_now = threading.Event()
 

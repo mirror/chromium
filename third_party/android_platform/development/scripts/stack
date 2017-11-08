@@ -21,6 +21,7 @@ import glob
 import logging
 import os
 import sys
+import time
 
 import stack_core
 import stack_libs
@@ -202,6 +203,8 @@ def main(argv):
     print "Searching for native crashes in: " + os.path.realpath(arguments[0])
     f = open(arguments[0], "r")
 
+  print ('Processing before ConvertTrace (readlines, GetTargetAndroidVersionNumber, etc.)')
+  start_time = time.time()
   lines = f.readlines()
   f.close()
 
@@ -227,6 +230,8 @@ def main(argv):
   chrome_search_path = symbol.GetLibrarySearchPaths()
   print ("Searching for Chrome symbols from within: "
          + ':'.join((os.path.normpath(d) for d in chrome_search_path)))
+
+  print ('Processing before ConverTrace operations end. It took %f second.' % (time.time() - start_time))
   stack_core.ConvertTrace(lines, load_vaddrs, more_info, fallback_monochrome,
                           arch_defined)
 

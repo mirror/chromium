@@ -21,6 +21,7 @@ const uint64_t k64BitSwappedTestData = 0x11223344ddccbbaa;
 }  // namespace
 
 TEST(ByteOrderTest, ByteSwap16) {
+  DCHECK(false);
   uint16_t swapped = base::ByteSwap(k16BitTestData);
   EXPECT_EQ(k16BitSwappedTestData, swapped);
   uint16_t reswapped = base::ByteSwap(swapped);

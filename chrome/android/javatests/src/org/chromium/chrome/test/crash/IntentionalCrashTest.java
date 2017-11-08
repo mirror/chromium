@@ -12,7 +12,6 @@ import org.junit.Test;
 import org.junit.runner.RunWith;
 
 import org.chromium.base.test.util.CommandLineFlags;
-import org.chromium.base.test.util.DisabledTest;
 import org.chromium.chrome.browser.ChromeActivity;
 import org.chromium.chrome.browser.ChromeSwitches;
 import org.chromium.chrome.test.ChromeActivityTestRule;
@@ -29,7 +28,6 @@ public class IntentionalCrashTest {
     public ChromeActivityTestRule<ChromeActivity> mActivityTestRule =
             new ChromeActivityTestRule<>(ChromeActivity.class);
 
-    @DisabledTest
     @SmallTest
     @Test
     public void testRendererCrash() {
@@ -41,7 +39,6 @@ public class IntentionalCrashTest {
         }
     }
 
-    @DisabledTest
     @SmallTest
     @Test
     public void testBrowserCrash() {
@@ -53,7 +50,6 @@ public class IntentionalCrashTest {
         }
     }
 
-    @DisabledTest
     @SmallTest
     @Test
     public void testJavaCrash() {
@@ -65,7 +61,6 @@ public class IntentionalCrashTest {
         }
     }
 
-    @DisabledTest
     @SmallTest
     @Test
     public void testGpuCrash() {

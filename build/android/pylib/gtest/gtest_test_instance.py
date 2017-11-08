@@ -7,6 +7,7 @@ import logging
 import os
 import re
 import tempfile
+import time
 import threading
 import xml.etree.ElementTree
 
@@ -147,9 +148,14 @@ def ParseGTestOutput(output, symbolizer, device_abi):
     if not stack:
       stack_string = ''
     else:
+      start_time = time.clock()
+      logging.info('Symbolization starts.')
       stack_string = '\n'.join(
           symbolizer.ExtractAndResolveNativeStackTraces(
               stack, device_abi))
+      end_time = time.clock()
+      logging.info('Symbolization ends and it took %f second.' %
+                   (end_time - start_time))
     return '%s\n%s' % (log_string, stack_string)
 
   def handle_possibly_unknown_test():

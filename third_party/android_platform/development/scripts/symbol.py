@@ -27,6 +27,7 @@ import re
 import struct
 import subprocess
 import sys
+import time
 import zipfile
 
 sys.path.insert(0, os.path.join(os.path.dirname(__file__),
@@ -413,17 +414,22 @@ def SymbolInformationForSet(lib, unique_addrs, get_detailed_info):
   if not lib:
     return None
 
+  timinglog = '\n\n\nA new call to symbolinformationforset has started. \n'
+  start = time.time()
   addr_to_line = CallAddr2LineForSet(lib, unique_addrs)
+  timinglog += 'CallAddr2LineforSet took %fs.\n' % (time.time() - start)
   if not addr_to_line:
     return None
-
+  start = time.time()
   if get_detailed_info:
     addr_to_objdump = CallObjdumpForSet(lib, unique_addrs)
     if not addr_to_objdump:
       return None
   else:
     addr_to_objdump = dict((addr, ("", 0)) for addr in unique_addrs)
+  timinglog += 'get_detailed_info if else block took %fs.\n' % (time.time() - start)
 
+  start = time.time()
   result = {}
   for addr in unique_addrs:
     source_info = addr_to_line.get(addr)
@@ -437,7 +443,9 @@ def SymbolInformationForSet(lib, unique_addrs, get_detailed_info):
       object_symbol_with_offset = None
     result[addr] = [(source_symbol, source_location, object_symbol_with_offset)
         for (source_symbol, source_location) in source_info]
-
+  timinglog += 'for addr in unique_addrs block took %fs.\n' % (time.time() - start)
+  with open('/tmp/SymbolInformationForSet_timing', 'a') as f:
+    f.write(timinglog)
   return result
 
 
@@ -563,9 +571,15 @@ def CallObjdumpForSet(lib, unique_addrs):
   #   177b2:  b510        push  {r4, lr}
   asm_regexp = re.compile("(^[ a-f0-9]*):[ a-f0-0]*.*$")
 
+  with open('/tmp/SymbolInformationForSet_timing', 'a') as f:
+    f.write('unique address:\n %s\n' % unique_addrs)
+
   for target_addr in unique_addrs:
     start_addr_dec = str(StripPC(int(target_addr, 16)))
     stop_addr_dec = str(StripPC(int(target_addr, 16)) + 8)
+    with open('/tmp/SymbolInformationForSet_timing', 'a') as f:
+      f.write('start_addre_dec: %s' % start_addr_dec)
+      f.write('stop_addre_dec: %s' % stop_addr_dec)
     cmd = [ToolPath("objdump"),
            "--section=.text",
            "--demangle",
@@ -578,7 +592,11 @@ def CallObjdumpForSet(lib, unique_addrs):
     current_symbol_addr = 0  # The address of the current function.
 
     stream = subprocess.Popen(cmd, stdout=subprocess.PIPE).stdout
+    with open('/tmp/SymbolInformationForSet_timing', 'a') as f:
+      f.write('\nresult of objdump: \n')
     for line in stream:
+      with open('/tmp/SymbolInformationForSet_timing', 'a') as f:
+        f.write(line)
       # Is it a function line like:
       #   000177b0 <android::IBinder::~IBinder()>:
       components = func_regexp.match(line)
