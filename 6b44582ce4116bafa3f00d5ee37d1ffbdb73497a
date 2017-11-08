@@ -125,6 +125,24 @@
     },
     {
       "key": {
+        "uuid": "a5dc9ad1_1f312079",
+        "filename": "third_party/WebKit/Source/core/layout/LayoutBlock.cpp",
+        "patchSetId": 2
+      },
+      "lineNbr": 1251,
+      "author": {
+        "id": 1002258
+      },
+      "writtenOn": "2017-11-08T02:12:56Z",
+      "side": 1,
+      "message": "I\u0027m not familiar with HitTest code and not sure where HitTest code consider\nabout selection.",
+      "parentUuid": "d2fe99d5_80b3f648",
+      "revId": "6b44582ce4116bafa3f00d5ee37d1ffbdb73497a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "34570912_cb630c09",
         "filename": "third_party/WebKit/Source/core/layout/LayoutBlock.cpp",
         "patchSetId": 2
