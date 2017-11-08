@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "20b6ca57_7e2baa5b",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 10
+      },
+      "lineNbr": 11,
+      "author": {
+        "id": 1120879
+      },
+      "writtenOn": "2017-11-08T18:27:16Z",
+      "side": 1,
+      "message": "The formatting of attributes changed when we switched to Gerrit, it should be in this format:\n\nBug: 592067",
+      "range": {
+        "startLine": 11,
+        "startChar": 0,
+        "endLine": 11,
+        "endChar": 10
+      },
+      "revId": "f0dd957f3ccf60c84bd2dd11e612eb0e5b9f8c70",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
