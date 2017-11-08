@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "03356c31_a4e7e639",
+        "filename": "ios/chrome/browser/ui/toolbar/web_toolbar_controller.mm",
+        "patchSetId": 12
+      },
+      "lineNbr": 2455,
+      "author": {
+        "id": 1116294
+      },
+      "writtenOn": "2017-11-08T07:03:01Z",
+      "side": 1,
+      "message": "I am least thrilled about this change.  But I can\u0027t seem to figure out why [self view] is being reset to 0.  Any ideas?",
+      "revId": "bf341149b54dff7275624ed64351002a2a2f6fb9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
