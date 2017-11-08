@@ -70,6 +70,24 @@
       "revId": "b114c56408b60f14fb5c85c89bb4d926fffe26e2",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "da5c4db3_1bbeb977",
+        "filename": "chrome/browser/ui/views/frame/browser_non_client_frame_view_ash.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 329,
+      "author": {
+        "id": 1001380
+      },
+      "writtenOn": "2017-11-08T02:53:59Z",
+      "side": 1,
+      "message": "\u003e What does the \"restore\" mean here? How can I test if I change restore to false?\n\nyou\u0027re passing true for restore argument. What was the reason?",
+      "parentUuid": "0178aaac_9855be9a",
+      "revId": "b114c56408b60f14fb5c85c89bb4d926fffe26e2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
