@@ -120,6 +120,30 @@
     },
     {
       "key": {
+        "uuid": "e2cc2148_aa6cf212",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/tabmodel/TabModelImpl.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 461,
+      "author": {
+        "id": 1116043
+      },
+      "writtenOn": "2017-11-08T00:07:54Z",
+      "side": 1,
+      "message": "Sorry for the delay here, but I\u0027d like to discuss a potential long term solution and see what immediately sounds crazy about it.  If it sounds viable, we could discuss short term solutions as well.\n\nWhat if we were to actually reparent the whole tab model/selector to the FullscreenActivity?  Then the fullscreenactivity would still be able to save and keep the persistence logic alive along with the activity.  It would only show a single tab, but I would in theory own all of the others as well.\n\nI\u0027m sure this would cause more issues as well.  What happens if a background tab shows a javascript alert dialog that forces it to come to the foreground?  Is that worse than the current behavior?  Would that dismiss the FullscreenActivity as it fires an intent to bring CTA to the foreground?\n\nMy thinking is that we\u0027re discussing things to work around the wonky persistence/ownership relationship that arises with this kind of single tab movement, so I\u0027m wondering if it makes it easier to move the whole selector.\n\nWould this require us adding a \"detached\" state to the Activity?  Do all current consumers need to listen for some new event on the TabModelSelector (maybe all clients are already listening to the reparenting signals and would handle this)?\n\nI know the tab model reparenting would be useful for the chrome home promo restart which currently only handles a single tab.  It might be useful for VR if we wanted to open up the ability for them to have their own activity.  That being said, I\u0027m not sure what is fully involved and whether this would be a huge undertaking.\n\n---------------\n\nFor the short term, I would recommend not adding a detach method to TabModel.  I think something like \"removeAndRetainOwnership\" would be clear and not likely to confuse anyone.  Then Tab#detach would still pass a boolean that determines whether we call that or simply remove().  Granted, we could also just add a method \"retainOwnership\" to TabModel that would be clear as well.\n\nThen in TabModel#addTab(...), it could check if the Tab instances is in the retainedTabs and pull it out from there as needed.\n\nBy not reparenting the selector, we\u0027ll be opening ourselves to having the tab state be out of date with the tab (for fullscreen activity this would only matter if it is changing the serialized web contents data).  I think reparenting the selector might be the right longer term solution, but again, it might open just as many gremlins.",
+      "parentUuid": "f8844523_fd6861da",
+      "range": {
+        "startLine": 461,
+        "startChar": 16,
+        "endLine": 461,
+        "endChar": 25
+      },
+      "revId": "f1ad22e8664788a35423b68ed0a92342c5927ccf",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "01b26004_ac5bc372",
         "filename": "chrome/android/java/src/org/chromium/chrome/browser/tabmodel/TabModelImpl.java",
         "patchSetId": 1
