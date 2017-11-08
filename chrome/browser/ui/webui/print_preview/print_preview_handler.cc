@@ -596,17 +596,14 @@ void PrintPreviewHandler::HandleGetPreview(const base::ListValue* args) {
   DCHECK(success);
   if (display_header_footer) {
     settings->SetString(printing::kSettingHeaderFooterTitle,
-                        initiator->GetTitle());
-    std::string url;
-    content::NavigationEntry* entry =
-        initiator->GetController().GetLastCommittedEntry();
-    if (entry) {
-      url::Replacements<char> url_sanitizer;
-      url_sanitizer.ClearUsername();
-      url_sanitizer.ClearPassword();
-
-      url = entry->GetVirtualURL().ReplaceComponents(url_sanitizer).spec();
-    }
+                        print_preview_ui()->initiator_title());
+    url::Replacements<char> url_sanitizer;
+    url_sanitizer.ClearUsername();
+    url_sanitizer.ClearPassword();
+    std::string url = print_preview_ui()
+                          ->initiator_url()
+                          .ReplaceComponents(url_sanitizer)
+                          .spec();
     settings->SetString(printing::kSettingHeaderFooterURL, url);
   }
 

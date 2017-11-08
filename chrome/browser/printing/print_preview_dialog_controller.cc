@@ -326,7 +326,7 @@ void PrintPreviewDialogController::OnNavEntryCommitted(
                                        ui::PAGE_TRANSITION_AUTO_TOPLEVEL) &&
           nav_type == content::NAVIGATION_TYPE_NEW_PAGE) {
         waiting_for_new_preview_page_ = false;
-        SaveInitiatorTitle(preview_dialog);
+        SaveInitiatorTitleAndURL(preview_dialog);
         return;
       }
 
@@ -394,14 +394,15 @@ WebContents* PrintPreviewDialogController::CreatePrintPreviewDialog(
   return preview_dialog;
 }
 
-void PrintPreviewDialogController::SaveInitiatorTitle(
+void PrintPreviewDialogController::SaveInitiatorTitleAndURL(
     WebContents* preview_dialog) {
   WebContents* initiator = GetInitiator(preview_dialog);
   if (initiator && preview_dialog->GetWebUI()) {
     PrintPreviewUI* print_preview_ui = static_cast<PrintPreviewUI*>(
         preview_dialog->GetWebUI()->GetController());
-    print_preview_ui->SetInitiatorTitle(
-        PrintViewManager::FromWebContents(initiator)->RenderSourceName());
+    print_preview_ui->SetInitiatorTitleAndURL(
+        PrintViewManager::FromWebContents(initiator)->RenderSourceName(),
+        initiator->GetLastCommittedURL());
   }
 }
 
