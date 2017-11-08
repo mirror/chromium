@@ -164,11 +164,9 @@ void FormDataEncoder::AddFilenameToMultiPartHeader(
     Vector<char>& buffer,
     const WTF::TextEncoding& encoding,
     const String& filename) {
-  // FIXME: This loses data irreversibly if the filename includes characters you
-  // can't encode in the website's character set.
   Append(buffer, "; filename=\"");
-  AppendQuotedString(
-      buffer, encoding.Encode(filename, WTF::kQuestionMarksForUnencodables));
+  AppendQuotedString(buffer,
+                     encoding.Encode(filename, WTF::kEntitiesForUnencodables));
   Append(buffer, '"');
 }
 

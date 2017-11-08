@@ -1,0 +1,12 @@
+
+Test for sending a dragged UTF-8-named file via POST to an ISO-2022-JP form.
+
+On success, you will see a series of "PASS" messages, followed by "TEST COMPLETE".
+
+
+PASS event.dataTransfer contains a File object on drop.
+PASS Expected response data received.
+PASS successfullyParsed is true
+
+TEST COMPLETE
+
