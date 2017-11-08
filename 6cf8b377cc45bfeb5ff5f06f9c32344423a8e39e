@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "0309a1c6_bd1dab94",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/partnerbookmarks/PartnerBookmarksReader.java",
+        "patchSetId": 6
+      },
+      "lineNbr": 135,
+      "author": {
+        "id": 1144344
+      },
+      "writtenOn": "2017-11-08T22:39:26Z",
+      "side": 1,
+      "message": "To be really safe, we might use lock. I think this would only decrease the probability of being called multiple times.",
+      "range": {
+        "startLine": 135,
+        "startChar": 8,
+        "endLine": 135,
+        "endChar": 25
+      },
+      "revId": "6cf8b377cc45bfeb5ff5f06f9c32344423a8e39e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
