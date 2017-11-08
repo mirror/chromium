@@ -1,0 +1,28 @@
+// Copyright 2017 The Chromium Authors. All rights reserved.
+// Use of this source code is governed by a BSD-style license that can be
+// found in the LICENSE file.
+
+module arc.mojom;
+
+//re-use device.mojom.UsbDeviceInfo
+import "device/usb/public/interfaces/device.mojom";
+
+interface UsbHost {
+  OpenDevice@0(string guid) => (handle usb_fd);
+
+  GetDeviceInfo@2(string guid) => (device.mojom.UsbDeviceInfo info);
+
+  RequestPermission@3(string guid, string pkg_name, bool interactive)
+      => (bool authorized);
+};
+
+interface UsbHostInstance {
+  // Establishes full-duplex communication with the host.
+  Init@0(UsbHost host_ptr);
+
+  // Notifies the instance of a new USB device.
+  OnDeviceAdded@1(string guid);
+
+  // Notifies the instance of the removal of a USB device.
+  OnDeviceRemoved@2(string guid);
+};
