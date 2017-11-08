@@ -189,6 +189,30 @@
     },
     {
       "key": {
+        "uuid": "b67ac6e5_0cc06c00",
+        "filename": "content/test/content_browser_test_test.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 76,
+      "author": {
+        "id": 1118209
+      },
+      "writtenOn": "2017-11-08T21:12:12Z",
+      "side": 1,
+      "message": "Here\u0027s one example that also uses chrome://crash/: https://cs.chromium.org/chromium/src/content/browser/frame_host/render_frame_host_manager_browsertest.cc?l\u003d1798-1803\u0026rcl\u003d2ced980486d865cf63755411ee7684e847f48d70\n\nDoes something like this not work here?",
+      "parentUuid": "dca8b41e_06c0ea43",
+      "range": {
+        "startLine": 76,
+        "startChar": 2,
+        "endLine": 76,
+        "endChar": 18
+      },
+      "revId": "8304782a07d99e20d0a51ab7a4dc16d7f2cabb48",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "7d9b9e60_2468d05d",
         "filename": "content/test/content_browser_test_test.cc",
         "patchSetId": 5
@@ -224,6 +248,30 @@
       "side": 1,
       "message": "Aha! You have solved the mystery. One concern I have is that I had to change DEPS and BUILD.gn to reuse this constant. Would you prefer to just inline \"no-sandbox\" here instead, or use the constant?",
       "parentUuid": "7d9b9e60_2468d05d",
+      "range": {
+        "startLine": 109,
+        "startChar": 2,
+        "endLine": 109,
+        "endChar": 46
+      },
+      "revId": "8304782a07d99e20d0a51ab7a4dc16d7f2cabb48",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b9008f5f_10ad52af",
+        "filename": "content/test/content_browser_test_test.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 109,
+      "author": {
+        "id": 1118209
+      },
+      "writtenOn": "2017-11-08T21:12:12Z",
+      "side": 1,
+      "message": "Actually, I originally missed this, but this constant is (also, I guess?) defined in content/public/common/content_switches.h, so you can use it from there and shouldn\u0027t need the DEPS change.",
+      "parentUuid": "db89692e_554c70e9",
       "range": {
         "startLine": 109,
         "startChar": 2,
