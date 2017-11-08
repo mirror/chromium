@@ -64,10 +64,13 @@ bool ChromeWebContentsViewDelegateViews::Focus() {
   return false;
 }
 
-void ChromeWebContentsViewDelegateViews::TakeFocus(bool reverse) {
+bool ChromeWebContentsViewDelegateViews::TakeFocus(bool reverse) {
   views::FocusManager* focus_manager = GetFocusManager();
-  if (focus_manager)
+  if (focus_manager) {
     focus_manager->AdvanceFocus(reverse);
+    return true;
+  }
+  return false;
 }
 
 void ChromeWebContentsViewDelegateViews::StoreFocus() {
@@ -76,24 +79,19 @@ void ChromeWebContentsViewDelegateViews::StoreFocus() {
     last_focused_view_tracker_->SetView(GetFocusManager()->GetFocusedView());
 }
 
-void ChromeWebContentsViewDelegateViews::RestoreFocus() {
+bool ChromeWebContentsViewDelegateViews::RestoreFocus() {
   views::View* last_focused_view = last_focused_view_tracker_->view();
-  if (!last_focused_view) {
-    SetInitialFocus();
-  } else {
-    if (last_focused_view->IsFocusable() &&
-        GetFocusManager()->ContainsView(last_focused_view)) {
-      last_focused_view->RequestFocus();
-    } else {
-      // The focused view may not belong to the same window hierarchy (e.g.
-      // if the location bar was focused and the tab is dragged out), or it may
-      // no longer be focusable (e.g. if the location bar was focused and then
-      // we switched to fullscreen mode).  In that case we default to the
-      // default focus.
-      SetInitialFocus();
-    }
-    last_focused_view_tracker_->Clear();
+  last_focused_view_tracker_->Clear();
+  if (last_focused_view && last_focused_view->IsFocusable() &&
+      GetFocusManager()->ContainsView(last_focused_view)) {
+    last_focused_view->RequestFocus();
+    return true;
   }
+  return false;
+}
+
+void ChromeWebContentsViewDelegateViews::ResetStoredFocus() {
+  last_focused_view_tracker_->Clear();
 }
 
 std::unique_ptr<RenderViewContextMenuBase>
@@ -153,15 +151,6 @@ views::FocusManager*
     ChromeWebContentsViewDelegateViews::GetFocusManager() {
   views::Widget* toplevel_widget = GetTopLevelWidget();
   return toplevel_widget ? toplevel_widget->GetFocusManager() : NULL;
-}
-
-void ChromeWebContentsViewDelegateViews::SetInitialFocus() {
-  if (web_contents_->FocusLocationBarByDefault()) {
-    if (web_contents_->GetDelegate())
-      web_contents_->GetDelegate()->SetFocusToLocationBar(false);
-  } else {
-    web_contents_->Focus();
-  }
 }
 
 namespace chrome {

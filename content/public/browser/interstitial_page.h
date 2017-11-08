@@ -87,6 +87,10 @@ class InterstitialPage {
   // Sets the focus to the interstitial.
   virtual void Focus() = 0;
 
+  // Focus the first (last if reverse is true) element in the interstitial page.
+  // Called when tab traversing.
+  virtual void FocusThroughTabTraversal(bool reverse) {}
+
   // Get the WebContents in which this interstitial is shown. Warning: Frames
   // in the intersitital are NOT visible through WebContentObservers' normal
   // notifications (e.g. RenderFrameDeleted). The only sensible use of this

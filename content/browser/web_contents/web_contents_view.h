@@ -74,6 +74,8 @@ class WebContentsView {
   // invoked, SetInitialFocus is invoked.
   virtual void RestoreFocus() = 0;
 
+  virtual void FocusThroughTabTraversal(bool reverse) {}
+
   // Returns the current drop data, if any.
   virtual DropData* GetDropData() const = 0;
 

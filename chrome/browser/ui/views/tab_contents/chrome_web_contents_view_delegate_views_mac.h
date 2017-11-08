@@ -7,17 +7,35 @@
 
 #import "chrome/browser/ui/cocoa/tab_contents/chrome_web_contents_view_delegate_mac.h"
 
+namespace views {
+class FocusManager;
+class ViewTracker;
+class Widget;
+}  // namespace views
+
 // A MacViews specific class that extends ChromeWebContentsViewDelegateMac.
 class ChromeWebContentsViewDelegateViewsMac
     : public ChromeWebContentsViewDelegateMac {
  public:
   explicit ChromeWebContentsViewDelegateViewsMac(
       content::WebContents* web_contents);
+  ~ChromeWebContentsViewDelegateViewsMac() override;
 
   // ChromeWebContentsViewDelegateMac:
+  void StoreFocus() override;
+  bool RestoreFocus() override;
+  void ResetStoredFocus() override;
+  bool TakeFocus(bool reverse) override;
   void SizeChanged(const gfx::Size& size) override;
 
  private:
+  gfx::NativeView GetActiveNativeView();
+  views::Widget* GetTopLevelWidget();
+  views::FocusManager* GetFocusManager();
+
+  // Used to store the last focused view.
+  std::unique_ptr<views::ViewTracker> last_focused_view_tracker_;
+
   DISALLOW_COPY_AND_ASSIGN(ChromeWebContentsViewDelegateViewsMac);
 };
 
