@@ -1,0 +1,73 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "c777d3c3_873aa8c6",
+        "filename": "components/offline_items_collection/core/offline_content_aggregator.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 231,
+      "author": {
+        "id": 1134722
+      },
+      "writtenOn": "2017-11-08T18:46:58Z",
+      "side": 1,
+      "message": "nit: this is not really an iterator but a reference to the maps\u0027s std::pair.",
+      "range": {
+        "startLine": 231,
+        "startChar": 15,
+        "endLine": 231,
+        "endChar": 17
+      },
+      "revId": "61b6d9c3ecc53a6ce932ee2fbf9ae9c09263ce19",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5ead49c3_16b32cc2",
+        "filename": "components/offline_items_collection/core/offline_content_aggregator.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 244,
+      "author": {
+        "id": 1134722
+      },
+      "writtenOn": "2017-11-08T18:46:58Z",
+      "side": 1,
+      "message": "Just to confirm: do we really want to notify observers (only once) even if there are no providers? Would there be any reason to wait for at least one provider?",
+      "range": {
+        "startLine": 239,
+        "startChar": 0,
+        "endLine": 244,
+        "endChar": 3
+      },
+      "revId": "61b6d9c3ecc53a6ce932ee2fbf9ae9c09263ce19",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "fd54f50d_3172d7b5",
+        "filename": "components/offline_items_collection/core/offline_content_aggregator_unittest.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 483,
+      "author": {
+        "id": 1134722
+      },
+      "writtenOn": "2017-11-08T18:46:58Z",
+      "side": 1,
+      "message": "Is this needed?",
+      "range": {
+        "startLine": 483,
+        "startChar": 2,
+        "endLine": 483,
+        "endChar": 38
+      },
+      "revId": "61b6d9c3ecc53a6ce932ee2fbf9ae9c09263ce19",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
