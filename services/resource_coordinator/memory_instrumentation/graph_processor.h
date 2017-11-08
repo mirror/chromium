@@ -16,7 +16,7 @@ namespace memory_instrumentation {
 class GraphProcessor {
  public:
   using MemoryDumpMap =
-      std::map<base::ProcessId, base::trace_event::ProcessMemoryDump>;
+      std::map<base::ProcessId, const base::trace_event::ProcessMemoryDump*>;
 
   static std::unique_ptr<GlobalDumpGraph> CreateMemoryGraph(
       const MemoryDumpMap& process_dumps);
