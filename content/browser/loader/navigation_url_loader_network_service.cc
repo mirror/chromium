@@ -142,7 +142,6 @@ class NavigationURLLoaderNetworkService::URLLoaderRequestController
       AppCacheNavigationHandleCore* appcache_handle_core,
       std::unique_ptr<NavigationRequestInfo> request_info,
       mojom::URLLoaderFactoryPtrInfo factory_for_webui,
-      mojom::URLLoaderFactoryPtrInfo subresource_factory_for_webui,
       int frame_tree_node_id,
       std::unique_ptr<service_manager::Connector> connector) {
     DCHECK_CURRENTLY_ON(BrowserThread::IO);
@@ -170,9 +169,6 @@ class NavigationURLLoaderNetworkService::URLLoaderRequestController
               web_contents_getter_),
           frame_tree_node_id_, 0 /* request_id? */, mojom::kURLLoadOptionNone,
           *resource_request_, this, kTrafficAnnotation);
-      SubresourceLoaderParams params;
-      params.loader_factory_info = std::move(subresource_factory_for_webui);
-      subresource_loader_params_ = std::move(params);
       return;
     }
 
@@ -585,15 +581,13 @@ NavigationURLLoaderNetworkService::NavigationURLLoaderNetworkService(
 
   // Check if a web UI scheme wants to handle this request.
   mojom::URLLoaderFactoryPtrInfo factory_for_webui;
-  mojom::URLLoaderFactoryPtrInfo subresource_factory_for_webui;
   const auto& schemes = URLDataManagerBackend::GetWebUISchemes();
-  if (std::find(schemes.begin(), schemes.end(), new_request->url.scheme()) !=
-      schemes.end()) {
+  std::string scheme = new_request->url.scheme();
+  if (std::find(schemes.begin(), schemes.end(), scheme) != schemes.end()) {
     FrameTreeNode* frame_tree_node =
         FrameTreeNode::GloballyFindByID(frame_tree_node_id);
-    factory_for_webui = CreateWebUIURLLoader(frame_tree_node).PassInterface();
-    subresource_factory_for_webui =
-        CreateWebUIURLLoader(frame_tree_node).PassInterface();
+    factory_for_webui =
+        CreateWebUIURLLoader(frame_tree_node, scheme).PassInterface();
   }
 
   g_next_request_id--;
@@ -613,7 +607,6 @@ NavigationURLLoaderNetworkService::NavigationURLLoaderNetworkService(
                      appcache_handle ? appcache_handle->core() : nullptr,
                      base::Passed(std::move(request_info)),
                      base::Passed(std::move(factory_for_webui)),
-                     base::Passed(std::move(subresource_factory_for_webui)),
                      frame_tree_node_id,
                      base::Passed(ServiceManagerConnection::GetForProcess()
                                       ->GetConnector()
