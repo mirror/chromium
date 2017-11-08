@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "4157d41e_94ec9303",
+        "filename": "components/patch_service/OWNERS",
+        "patchSetId": 18
+      },
+      "lineNbr": 1,
+      "author": {
+        "id": 1113941
+      },
+      "writtenOn": "2017-11-08T14:46:17Z",
+      "side": 1,
+      "message": "Could you add OWNERS for the component itself, plus a README.md describing the fact that the component is a service and what its purpose is? An OWNER for the component itself should do the detailed code review of the new code and then I could just do a high-level structural review of the addition of the component.",
+      "range": {
+        "startLine": 1,
+        "startChar": 22,
+        "endLine": 1,
+        "endChar": 23
+      },
+      "revId": "24e0da322232a4b11b8cad470be13966e4665a71",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
