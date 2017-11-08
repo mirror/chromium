@@ -84,6 +84,21 @@ void GpuClient::EstablishGpuChannel(
                  callback));
 }
 
+void GpuClient::CreateArcVideoDecodeAccelerator(
+    arc::mojom::VideoDecodeAcceleratorRequest vda_request) {
+  LOG(ERROR) << "We don't support it for renderer!";
+}
+
+void GpuClient::CreateArcVideoEncodeAccelerator(
+    arc::mojom::VideoEncodeAcceleratorRequest vea_request) {
+  LOG(ERROR) << "We don't support it for renderer!";
+}
+
+void GpuClient::CreateArcProtectedBufferManager(
+    arc::mojom::ProtectedBufferManagerRequest pbm_request) {
+  LOG(ERROR) << "We don't support it for renderer!";
+}
+
 void GpuClient::CreateJpegDecodeAccelerator(
     media::mojom::GpuJpegDecodeAcceleratorRequest jda_request) {
   GpuProcessHost* host = GpuProcessHost::Get();

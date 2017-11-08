@@ -13,10 +13,17 @@
 #include "base/single_thread_task_runner.h"
 #include "base/synchronization/waitable_event.h"
 #include "base/threading/thread.h"
+#include "build/build_config.h"
 #include "components/viz/common/gpu/context_provider.h"
 #include "gpu/ipc/client/gpu_channel_host.h"
 #include "services/ui/public/cpp/gpu/client_gpu_memory_buffer_manager.h"
 #include "services/ui/public/interfaces/gpu.mojom.h"
+
+#if defined(OS_CHROMEOS)
+#include "components/arc/common/protected_buffer_manager.mojom.h"
+#include "components/arc/common/video_decode_accelerator.mojom.h"
+#include "components/arc/common/video_encode_accelerator.mojom.h"
+#endif
 
 namespace service_manager {
 class Connector;
@@ -43,7 +50,14 @@ class Gpu : public gpu::GpuChannelHostFactory,
 
   scoped_refptr<viz::ContextProvider> CreateContextProvider(
       scoped_refptr<gpu::GpuChannelHost> gpu_channel);
-
+#if defined(OS_CHROMEOS)
+  void CreateArcVideoDecodeAccelerator(
+      arc::mojom::VideoDecodeAcceleratorRequest vda_request);
+  void CreateArcVideoEncodeAccelerator(
+      arc::mojom::VideoEncodeAcceleratorRequest vea_request);
+  void CreateArcProtectedBufferManager(
+      arc::mojom::ProtectedBufferManagerRequest pbm_request);
+#endif
   void CreateJpegDecodeAccelerator(
       media::mojom::GpuJpegDecodeAcceleratorRequest jda_request);
   void CreateVideoEncodeAcceleratorProvider(

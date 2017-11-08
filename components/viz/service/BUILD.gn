@@ -147,6 +147,7 @@ viz_component("service") {
 
   deps = [
     "//cc/paint",
+    "//components/arc/video_accelerator",
     "//components/viz/common",
 
     # Note that dependency on //gpu/ipc/client is for GpuMemoryBufferImpl. This
