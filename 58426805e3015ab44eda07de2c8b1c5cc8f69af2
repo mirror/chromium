@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "c07b7039_188a443e",
+        "filename": "chrome/test/data/webui/settings/people_page_test.js",
+        "patchSetId": 3
+      },
+      "lineNbr": 44,
+      "author": {
+        "id": 1115893
+      },
+      "writtenOn": "2017-11-08T22:27:38Z",
+      "side": 1,
+      "message": "Can we use a dummy data URL instead of invalid chrome URLs? Looking at the prod code, this is expected to always be a data URL, see https://cs.chromium.org/chromium/src/chrome/browser/ui/webui/settings/profile_info_handler.cc?l\u003d202,189.",
+      "revId": "58426805e3015ab44eda07de2c8b1c5cc8f69af2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
