@@ -48,19 +48,19 @@ void AddEntryToNode(Node* node, const MemoryAllocatorDump::Entry& entry) {
 
 // static
 std::unique_ptr<GlobalDumpGraph> GraphProcessor::CreateMemoryGraph(
-    const std::map<ProcessId, ProcessMemoryDump>& process_dumps) {
+    const GraphProcessor::MemoryDumpMap& process_dumps) {
   auto global_graph = std::make_unique<GlobalDumpGraph>();
 
   // First pass: collects allocator dumps into a graph and populate
   // with entries.
   for (const auto& pid_to_dump : process_dumps) {
     auto* graph = global_graph->CreateGraphForProcess(pid_to_dump.first);
-    CollectAllocatorDumps(pid_to_dump.second, global_graph.get(), graph);
+    CollectAllocatorDumps(*pid_to_dump.second, global_graph.get(), graph);
   }
 
   // Second pass: generate the graph of edges between the nodes.
   for (const auto& pid_to_dump : process_dumps) {
-    AddEdges(pid_to_dump.second, global_graph.get());
+    AddEdges(*pid_to_dump.second, global_graph.get());
   }
 
   return global_graph;
