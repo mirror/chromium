@@ -9,6 +9,7 @@
 #include "bindings/core/v8/V8BindingForCore.h"
 #include "bindings/modules/v8/V8PaymentHandlerResponse.h"
 #include "core/dom/ExecutionContext.h"
+#include "core/inspector/ConsoleMessage.h"
 #include "modules/payments/PaymentHandlerResponse.h"
 #include "modules/payments/PaymentHandlerUtils.h"
 #include "modules/serviceworkers/ServiceWorkerGlobalScopeClient.h"
@@ -45,6 +46,17 @@ void PaymentRequestRespondWithObserver::OnResponseFulfilled(
   if (exception_state.HadException()) {
     exception_state.ClearException();
     OnResponseRejected(kWebServiceWorkerResponseErrorNoV8Instance);
+    return;
+  }
+
+  // Check payment response validity.
+  if (!response.hasMethodName() || !response.hasDetails()) {
+    GetExecutionContext()->AddConsoleMessage(
+        ConsoleMessage::Create(kJSMessageSource, kErrorMessageLevel,
+                               "'PaymentHandlerResponse.methodName' and "
+                               "'PaymentHandlerResponse.details' must not "
+                               "be empty in payment response."));
+    OnResponseRejected(kWebServiceWorkerResponseErrorUnknown);
     return;
   }
 
