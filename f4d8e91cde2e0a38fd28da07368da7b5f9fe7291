@@ -1,0 +1,55 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "cbb40e69_d31f835e",
+        "filename": "third_party/WebKit/Source/core/frame/LocalFrame.cpp",
+        "patchSetId": 5
+      },
+      "lineNbr": 271,
+      "author": {
+        "id": 1002864
+      },
+      "writtenOn": "2017-11-08T03:07:46Z",
+      "side": 1,
+      "message": "Is this dereference safe because it\u0027s guaranteed that this frame is attached in this call context?",
+      "revId": "f4d8e91cde2e0a38fd28da07368da7b5f9fe7291",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3cd34839_54b2bb6c",
+        "filename": "third_party/WebKit/Source/core/loader/FrameFetchContext.cpp",
+        "patchSetId": 5
+      },
+      "lineNbr": 668,
+      "author": {
+        "id": 1002864
+      },
+      "writtenOn": "2017-11-08T03:07:46Z",
+      "side": 1,
+      "message": "let\u0027s remove document_ from the condition as it\u0027s already guaranteed to be non-null by L665.",
+      "revId": "f4d8e91cde2e0a38fd28da07368da7b5f9fe7291",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6fd9f2c5_ab5055e1",
+        "filename": "third_party/WebKit/Source/core/loader/FrameFetchContext.cpp",
+        "patchSetId": 5
+      },
+      "lineNbr": 670,
+      "author": {
+        "id": 1002864
+      },
+      "writtenOn": "2017-11-08T03:07:46Z",
+      "side": 1,
+      "message": "I see. Before this patch, use of ParentDocument() was excluding the case where the parent frame is remote frame. Now, we\u0027re dispatching AddResourceTiming also for RemoteFrame, to prepare for actual impl in RemoteFrame.",
+      "revId": "f4d8e91cde2e0a38fd28da07368da7b5f9fe7291",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
