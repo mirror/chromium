@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "e48df871_2e86dfbd",
+        "filename": "ios/chrome/browser/ui/toolbar/toolbar_controller.mm",
+        "patchSetId": 4
+      },
+      "lineNbr": 344,
+      "author": {
+        "id": 1115958
+      },
+      "writtenOn": "2017-11-08T12:43:49Z",
+      "side": 1,
+      "message": "What if fakeSafeAreaInsets has unequal left and right insets, and the app is in RTL? \n\n(We have UIEdgeInsetsMakeDirected() that will handle conditionally flipping edge insets, but you should make the API contract around how |fakeSafeAreaInsets| is interpreted explicit).",
+      "range": {
+        "startLine": 344,
+        "startChar": 67,
+        "endLine": 344,
+        "endChar": 71
+      },
+      "revId": "9f9fda74110f2d264c7dec6334570e3fe2538507",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
