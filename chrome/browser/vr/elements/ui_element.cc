@@ -246,13 +246,39 @@ float UiElement::computed_opacity() const {
 }
 
 bool UiElement::HitTest(const gfx::PointF& point) const {
-  if (size().width() == size().height() &&
-      corner_radius() == size().width() / 2) {
-    return (point - gfx::PointF(0.5, 0.5)).LengthSquared() < 0.25;
-  } else {
-    // TODO(bshe): handle rounded rect case.
+  if (corner_radius() == 0.f) {
+    // Hit test for rectangle is much easier and faster. So we special case
+    // rectangle.
     return point.x() >= 0.0f && point.x() <= 1.0f && point.y() >= 0.0f &&
            point.y() <= 1.0f;
+  } else if (size().width() == size().height() &&
+             corner_radius() == size().width() / 2) {
+    // Hit test for circle is much easier and faster. So we also special case
+    // circle.
+    return (point - gfx::PointF(0.5, 0.5)).LengthSquared() < 0.25;
+  } else {
+    // |point| is at 0.0 to 1.0 range for both direction and the origin is at
+    // the top left corner. We transform it to element space which means origin
+    // is at the center of the element.
+    gfx::PointF point_in_element;
+    point_in_element.set_x((point.x() - 0.5f) * size().width());
+    point_in_element.set_y((point.y() - 0.5f) * size().height());
+
+    // Given the shape is symetric, we transform all points to 1st quadrants
+    // before doing hit test.
+    gfx::PointF point_abs = gfx::PointF(std::fabs(point_in_element.x()),
+                                        std::fabs(point_in_element.y()));
+    gfx::PointF corner_circle_center =
+        gfx::PointF(size().width() / 2 - corner_radius(),
+                    size().height() / 2 - corner_radius());
+
+    if (point_abs.x() <= corner_circle_center.x() ||
+        point_abs.y() <= corner_circle_center.y()) {
+      return true;
+    } else {
+      return (point_abs - corner_circle_center).LengthSquared() <
+             std::pow(corner_radius(), 2);
+    }
   }
 }
 
