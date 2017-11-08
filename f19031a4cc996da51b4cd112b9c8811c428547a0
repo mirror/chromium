@@ -2,6 +2,40 @@
   "comments": [
     {
       "key": {
+        "uuid": "ba3d3fa8_2c3a98f2",
+        "filename": "ash/display/touch_calibrator_controller.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 75,
+      "author": {
+        "id": 1001380
+      },
+      "writtenOn": "2017-11-08T03:05:33Z",
+      "side": 1,
+      "message": "why you need this? The root transform is from host to the window, not from native screen.",
+      "revId": "f19031a4cc996da51b4cd112b9c8811c428547a0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "dea60551_67afaa86",
+        "filename": "ash/display/touch_calibrator_controller_unittest.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 60,
+      "author": {
+        "id": 1001380
+      },
+      "writtenOn": "2017-11-08T03:05:33Z",
+      "side": 1,
+      "message": "shouldn\u0027t we do this in AshTestBase::TearDown()?",
+      "revId": "f19031a4cc996da51b4cd112b9c8811c428547a0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "f8baaec7_75780c9f",
         "filename": "ash/display/touch_calibrator_controller_unittest.cc",
         "patchSetId": 9
@@ -13,6 +47,23 @@
       "writtenOn": "2017-11-07T21:09:20Z",
       "side": 1,
       "message": "Pass |ctrl| by reference (const\u0026 where possible) to make it more clear that these are not output parameters.",
+      "revId": "f19031a4cc996da51b4cd112b9c8811c428547a0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b764528c_a1957aa9",
+        "filename": "ash/display/touch_calibrator_controller_unittest.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 129,
+      "author": {
+        "id": 1001380
+      },
+      "writtenOn": "2017-11-08T03:05:33Z",
+      "side": 1,
+      "message": "do you need () ?",
       "revId": "f19031a4cc996da51b4cd112b9c8811c428547a0",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
