@@ -517,7 +517,9 @@ bool MimeSniffingResourceHandler::MustDownload() {
 
   std::string disposition;
   request()->GetResponseHeaderByName("content-disposition", &disposition);
-  if (!disposition.empty() &&
+  if (GetRequestInfo()->download_filename().has_value()) {
+    must_download_ = true;
+  } else if (!disposition.empty() &&
       net::HttpContentDisposition(disposition, std::string()).is_attachment()) {
     must_download_ = true;
   } else if (host_->delegate() &&

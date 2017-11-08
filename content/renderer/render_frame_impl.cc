@@ -539,7 +539,11 @@ CommonNavigationParams MakeCommonNavigationParams(
       base::TimeTicks::Now(), info.url_request.HttpMethod().Latin1(),
       GetRequestBodyForWebURLRequest(info.url_request), source_location,
       should_check_main_world_csp, false /* started_from_context_menu */,
-      info.url_request.HasUserGesture());
+      info.url_request.HasUserGesture(),
+      info.url_request.GetDownloadFilename().has_value()
+          ? base::Optional<std::string>(
+                info.url_request.GetDownloadFilename()->Utf8())
+          : base::Optional<std::string>());
 }
 
 WebFrameLoadType ReloadFrameLoadTypeFor(
