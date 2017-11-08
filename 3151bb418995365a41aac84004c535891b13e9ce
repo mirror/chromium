@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "899b6cb7_8feaad6c",
+        "filename": "third_party/WebKit/LayoutTests/external/wpt/worklets/resources/service-worker-interception-tests.js",
+        "patchSetId": 4
+      },
+      "lineNbr": 19,
+      "author": {
+        "id": 1115976
+      },
+      "writtenOn": "2017-11-08T09:16:51Z",
+      "side": 1,
+      "message": "I changed \"controlled\" to \"served\" because Worklet itself is not controlled thanks to its opaque origin.",
+      "range": {
+        "startLine": 19,
+        "startChar": 38,
+        "endLine": 19,
+        "endChar": 44
+      },
+      "revId": "3151bb418995365a41aac84004c535891b13e9ce",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "80ce57b3_07730d96",
+        "filename": "third_party/WebKit/LayoutTests/external/wpt/worklets/resources/service-worker.js",
+        "patchSetId": 4
+      },
+      "lineNbr": 2,
+      "author": {
+        "id": 1115976
+      },
+      "writtenOn": "2017-11-08T09:16:51Z",
+      "side": 1,
+      "message": "This is necessary for avoiding intercepting import-non-existent-worklet-script.js.",
+      "range": {
+        "startLine": 2,
+        "startChar": 29,
+        "endLine": 2,
+        "endChar": 30
+      },
+      "revId": "3151bb418995365a41aac84004c535891b13e9ce",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
