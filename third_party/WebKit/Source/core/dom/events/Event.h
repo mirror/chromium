@@ -28,6 +28,7 @@
 #include "core/CoreExport.h"
 #include "core/dom/DOMHighResTimeStamp.h"
 #include "core/dom/DOMTimeStamp.h"
+#include "core/dom/events/EventDispatcher.h"
 #include "core/dom/events/EventInit.h"
 #include "core/dom/events/EventPath.h"
 #include "platform/bindings/ScriptWrappable.h"
@@ -38,7 +39,6 @@
 namespace blink {
 
 class DOMWrapperWorld;
-class EventDispatchMediator;
 class EventTarget;
 class ScriptState;
 
@@ -205,7 +205,7 @@ class CORE_EXPORT Event : public ScriptWrappable {
   void SetUnderlyingEvent(Event*);
 
   bool HasEventPath() { return event_path_; }
-  EventPath& GetEventPath() {
+  EventPath& GetEventPath() const {
     DCHECK(event_path_);
     return *event_path_;
   }
@@ -221,8 +221,6 @@ class CORE_EXPORT Event : public ScriptWrappable {
   virtual bool CanBeDispatchedInWorld(const DOMWrapperWorld&) const {
     return true;
   }
-
-  virtual EventDispatchMediator* CreateMediator();
 
   bool isTrusted() const { return is_trusted_; }
   void SetTrusted(bool value) { is_trusted_ = value; }
@@ -241,6 +239,8 @@ class CORE_EXPORT Event : public ScriptWrappable {
   bool PreventDefaultCalledOnUncancelableEvent() const {
     return prevent_default_called_on_uncancelable_event_;
   }
+
+  virtual DispatchEventResult DispatchEvent(EventDispatcher&);
 
   virtual void Trace(blink::Visitor*);
 
