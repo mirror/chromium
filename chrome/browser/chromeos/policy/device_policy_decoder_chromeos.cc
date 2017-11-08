@@ -961,6 +961,16 @@ void DecodeGenericPolicies(const em::ChromeDeviceSettingsProto& policy,
                     base::MakeUnique<base::Value>(container.chrome_version()),
                     nullptr);
   }
+
+  if (policy.has_forced_reenrollment()) {
+    const em::ForcedReenrollmentProto& container(policy.forced_reenrollment());
+    if (container.has_enrollment_id_needed())
+      policies->Set(
+          key::kDeviceEnrollmentIdNeeded, POLICY_LEVEL_MANDATORY,
+          POLICY_SCOPE_MACHINE, POLICY_SOURCE_CLOUD,
+          base::MakeUnique<base::Value>(container.enrollment_id_needed()),
+          nullptr);
+  }
 }
 }  // namespace
 
