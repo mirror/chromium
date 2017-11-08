@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "7f6dfeed_4e056aea",
+        "filename": "build/secondary/third_party/crashpad/crashpad/handler/BUILD.gn",
+        "patchSetId": 4
+      },
+      "lineNbr": 94,
+      "author": {
+        "id": 1144624
+      },
+      "writtenOn": "2017-11-08T22:08:17Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "0c051f6a_31094f14",
+      "range": {
+        "startLine": 94,
+        "startChar": 88,
+        "endLine": 94,
+        "endChar": 89
+      },
+      "revId": "6169398846d0b1797391e6802e421e10a2dc07bf",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "5fa712a9_617d8d18",
         "filename": "content/shell/BUILD.gn",
         "patchSetId": 4
@@ -45,6 +69,30 @@
       "revId": "6169398846d0b1797391e6802e421e10a2dc07bf",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4b2605ff_1aadd339",
+        "filename": "content/shell/BUILD.gn",
+        "patchSetId": 4
+      },
+      "lineNbr": 643,
+      "author": {
+        "id": 1144624
+      },
+      "writtenOn": "2017-11-08T22:08:17Z",
+      "side": 1,
+      "message": "bundle_data compiled deps need to be public so that they actually get built (ya I know...).",
+      "parentUuid": "5fa712a9_617d8d18",
+      "range": {
+        "startLine": 643,
+        "startChar": 4,
+        "endLine": 643,
+        "endChar": 10
+      },
+      "revId": "6169398846d0b1797391e6802e421e10a2dc07bf",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -71,6 +119,30 @@
     },
     {
       "key": {
+        "uuid": "da330d9f_66c6641c",
+        "filename": "content/shell/app/shell_main_delegate.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 66,
+      "author": {
+        "id": 1144624
+      },
+      "writtenOn": "2017-11-08T22:08:17Z",
+      "side": 1,
+      "message": "GN tries to verify that #includes are covered by deps[] rules, but it doesn\u0027t know anything about #if blocks, so on Windows it thinks this #include is illegal.",
+      "parentUuid": "3fe272d5_033fdfd0",
+      "range": {
+        "startLine": 66,
+        "startChar": 52,
+        "endLine": 66,
+        "endChar": 64
+      },
+      "revId": "6169398846d0b1797391e6802e421e10a2dc07bf",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "d3d0b042_98a86d72",
         "filename": "content/shell/tools/breakpad_integration_test.py",
         "patchSetId": 4
@@ -85,6 +157,24 @@
       "revId": "6169398846d0b1797391e6802e421e10a2dc07bf",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f3ce89e9_7dd4ade7",
+        "filename": "content/shell/tools/breakpad_integration_test.py",
+        "patchSetId": 4
+      },
+      "lineNbr": 49,
+      "author": {
+        "id": 1144624
+      },
+      "writtenOn": "2017-11-08T22:08:17Z",
+      "side": 1,
+      "message": "The output of crashpad_database_util is an undefined human-readable text format, not something machine-friendly (hello procfs). But even still, it would only allow us to retrieve a path in a safe way. The test needs to delete the dmp file at the end, since it attempts crashing twice, and the util tool doesn\u0027t have any support for removing reports.",
+      "parentUuid": "d3d0b042_98a86d72",
+      "revId": "6169398846d0b1797391e6802e421e10a2dc07bf",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
