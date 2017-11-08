@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "6a76e6f8_1e708472",
+        "filename": "chrome/browser/resources/print_preview/new/copies_settings.html",
+        "patchSetId": 12
+      },
+      "lineNbr": 9,
+      "author": {
+        "id": 1182404
+      },
+      "writtenOn": "2017-11-08T23:51:45Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "49126e2e_ca63325b",
+      "range": {
+        "startLine": 9,
+        "startChar": 6,
+        "endLine": 9,
+        "endChar": 19
+      },
+      "revId": "34d8cc01b498140402c036bfeef8ac06fbbc04e1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "4fea5112_151832fc",
         "filename": "chrome/browser/resources/print_preview/new/copies_settings.html",
         "patchSetId": 12
@@ -48,6 +72,30 @@
     },
     {
       "key": {
+        "uuid": "f8704401_9d820fad",
+        "filename": "chrome/browser/resources/print_preview/new/copies_settings.html",
+        "patchSetId": 12
+      },
+      "lineNbr": 14,
+      "author": {
+        "id": 1182404
+      },
+      "writtenOn": "2017-11-08T23:51:45Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "4fea5112_151832fc",
+      "range": {
+        "startLine": 14,
+        "startChar": 6,
+        "endLine": 14,
+        "endChar": 19
+      },
+      "revId": "34d8cc01b498140402c036bfeef8ac06fbbc04e1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "09540b13_34fc7eed",
         "filename": "chrome/browser/resources/print_preview/new/copies_settings.js",
         "patchSetId": 12
@@ -65,6 +113,24 @@
     },
     {
       "key": {
+        "uuid": "f62761d3_3b089ad7",
+        "filename": "chrome/browser/resources/print_preview/new/copies_settings.js",
+        "patchSetId": 12
+      },
+      "lineNbr": 24,
+      "author": {
+        "id": 1182404
+      },
+      "writtenOn": "2017-11-08T23:51:45Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "09540b13_34fc7eed",
+      "revId": "34d8cc01b498140402c036bfeef8ac06fbbc04e1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "f51520d7_5c51e336",
         "filename": "chrome/browser/resources/print_preview/new/copies_settings.js",
         "patchSetId": 12
@@ -76,6 +142,24 @@
       "writtenOn": "2017-11-08T18:43:52Z",
       "side": 1,
       "message": "getCopiesValid_ both determines whether user\u0027s input is valid, but also is responsible for updating the model. Could we separate those concerns to different methods? Thinking something as follows:\n\nproperties: {\n  ...\n  copiesValid_: {\n      type: Boolean,\n      computed: \u0027getCopiesValid_(copiesString_)\u0027,\n      observer: \u0027onCopiesValidChanged_\u0027,\n  },\n  ...\n}\n\ncomputeCopiesValid_: function() {\n  return this.$$(\u0027.user-value\u0027).validity.valid \u0026\u0026 this.copiesString_ !\u003d \u0027\u0027;\n},\n\nonCopiesValidChanged_: function() {\n  this.set(\u0027model.copies\u0027, this.copiesValid_ ? parseInt(this.copiesString_, 10) : 1);\n  this.set(\u0027model.printTicketInvalid\u0027, !this.copiesValid_);\n},",
+      "revId": "34d8cc01b498140402c036bfeef8ac06fbbc04e1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "00faf6d1_a747c090",
+        "filename": "chrome/browser/resources/print_preview/new/copies_settings.js",
+        "patchSetId": 12
+      },
+      "lineNbr": 52,
+      "author": {
+        "id": 1182404
+      },
+      "writtenOn": "2017-11-08T23:51:45Z",
+      "side": 1,
+      "message": "Since the model also needs to change if the copies string changes, I added an observer to set the model, but it relies on both copiesValid_ and copiesString_.",
+      "parentUuid": "f51520d7_5c51e336",
       "revId": "34d8cc01b498140402c036bfeef8ac06fbbc04e1",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -99,6 +183,24 @@
     },
     {
       "key": {
+        "uuid": "d3a0d23f_dfbe9ec8",
+        "filename": "chrome/browser/resources/print_preview/new/copies_settings.js",
+        "patchSetId": 12
+      },
+      "lineNbr": 54,
+      "author": {
+        "id": 1182404
+      },
+      "writtenOn": "2017-11-08T23:51:45Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "6d142b45_3d1868d8",
+      "revId": "34d8cc01b498140402c036bfeef8ac06fbbc04e1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "d71159fd_93fab5a3",
         "filename": "chrome/browser/resources/print_preview/new/header.html",
         "patchSetId": 12
@@ -116,6 +218,24 @@
     },
     {
       "key": {
+        "uuid": "7e185cf5_010195c4",
+        "filename": "chrome/browser/resources/print_preview/new/header.html",
+        "patchSetId": 12
+      },
+      "lineNbr": 77,
+      "author": {
+        "id": 1182404
+      },
+      "writtenOn": "2017-11-08T23:51:45Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "d71159fd_93fab5a3",
+      "revId": "34d8cc01b498140402c036bfeef8ac06fbbc04e1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "e7e0bfe8_02054ad4",
         "filename": "chrome/browser/resources/print_preview/new/header.js",
         "patchSetId": 12
@@ -130,6 +250,24 @@
       "revId": "34d8cc01b498140402c036bfeef8ac06fbbc04e1",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b12c2077_b7610077",
+        "filename": "chrome/browser/resources/print_preview/new/header.js",
+        "patchSetId": 12
+      },
+      "lineNbr": 30,
+      "author": {
+        "id": 1182404
+      },
+      "writtenOn": "2017-11-08T23:51:45Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "e7e0bfe8_02054ad4",
+      "revId": "34d8cc01b498140402c036bfeef8ac06fbbc04e1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -156,6 +294,30 @@
     },
     {
       "key": {
+        "uuid": "62c73860_021b8213",
+        "filename": "chrome/browser/resources/print_preview/new/header.js",
+        "patchSetId": 12
+      },
+      "lineNbr": 31,
+      "author": {
+        "id": 1182404
+      },
+      "writtenOn": "2017-11-08T23:51:45Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "20328bb8_0bd619c3",
+      "range": {
+        "startLine": 31,
+        "startChar": 17,
+        "endLine": 31,
+        "endChar": 25
+      },
+      "revId": "34d8cc01b498140402c036bfeef8ac06fbbc04e1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "d3ff7a36_4df7e07b",
         "filename": "chrome/browser/resources/print_preview/new/layout_settings.html",
         "patchSetId": 12
@@ -170,6 +332,24 @@
       "revId": "34d8cc01b498140402c036bfeef8ac06fbbc04e1",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1e6ea8bb_d26a2bae",
+        "filename": "chrome/browser/resources/print_preview/new/layout_settings.html",
+        "patchSetId": 12
+      },
+      "lineNbr": 9,
+      "author": {
+        "id": 1182404
+      },
+      "writtenOn": "2017-11-08T23:51:45Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "d3ff7a36_4df7e07b",
+      "revId": "34d8cc01b498140402c036bfeef8ac06fbbc04e1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -196,6 +376,30 @@
     },
     {
       "key": {
+        "uuid": "8422a301_52c22f0f",
+        "filename": "chrome/browser/resources/print_preview/new/layout_settings.html",
+        "patchSetId": 12
+      },
+      "lineNbr": 10,
+      "author": {
+        "id": 1182404
+      },
+      "writtenOn": "2017-11-08T23:51:45Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "85e7932c_3047755a",
+      "range": {
+        "startLine": 10,
+        "startChar": 43,
+        "endLine": 10,
+        "endChar": 50
+      },
+      "revId": "34d8cc01b498140402c036bfeef8ac06fbbc04e1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "7bb7e868_d8f2a2a8",
         "filename": "chrome/browser/resources/print_preview/new/select_css.html",
         "patchSetId": 12
@@ -207,6 +411,24 @@
       "writtenOn": "2017-11-08T18:43:52Z",
       "side": 1,
       "message": "No need for -webkit-any here. The following is equivalent I think (similarly at line 22 above).\n\nselect:enabled:active",
+      "revId": "34d8cc01b498140402c036bfeef8ac06fbbc04e1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d6f1f7fb_4ccc5411",
+        "filename": "chrome/browser/resources/print_preview/new/select_css.html",
+        "patchSetId": 12
+      },
+      "lineNbr": 29,
+      "author": {
+        "id": 1182404
+      },
+      "writtenOn": "2017-11-08T23:51:45Z",
+      "side": 1,
+      "message": "summary of offline discussion/changes:\n- select:enabled:active does not override the :enabled:active:-webkit-any(... select ...) in print_preview_shared_css.\n- instead sharing styles instead of defining everything in print_preview_shared_css\n- ideally, linear-gradients used for background-image should be CSS variables, but currently this causes a DCHECK in Blink (https://crbug.com/781461)",
+      "parentUuid": "7bb7e868_d8f2a2a8",
       "revId": "34d8cc01b498140402c036bfeef8ac06fbbc04e1",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
