@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "32270ea2_5ba066c6",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 2
+      },
+      "lineNbr": 10,
+      "author": {
+        "id": 1108705
+      },
+      "writtenOn": "2017-11-08T01:34:55Z",
+      "side": 1,
+      "message": "exceeds 72 characters",
+      "revId": "f1c316a8496937dc6fb62db12af0ce8bf1a70f03",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f3829eac_1c051e95",
+        "filename": "device/bluetooth/bluetooth_adapter.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 176,
+      "author": {
+        "id": 1108705
+      },
+      "writtenOn": "2017-11-08T01:34:55Z",
+      "side": 1,
+      "message": "TODO(crbug.com/#) exceeds TODO(#) by an order of magnitude.  Not sure if there is a standard.",
+      "revId": "f1c316a8496937dc6fb62db12af0ce8bf1a70f03",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
