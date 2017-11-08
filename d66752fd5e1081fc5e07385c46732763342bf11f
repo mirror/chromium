@@ -127,6 +127,24 @@
     },
     {
       "key": {
+        "uuid": "daf3e72c_d76d01ee",
+        "filename": "docs/testing/json_test_results_format.md",
+        "patchSetId": 6
+      },
+      "lineNbr": 47,
+      "author": {
+        "id": 1003232
+      },
+      "writtenOn": "2017-11-08T01:12:25Z",
+      "side": 1,
+      "message": "\u003e What happens if one of the runs of a test doesn\u0027t produce an artifact? \n\nYou have this problem with the current repeated-field design as well. I think the only way to solve that is to implement the repetition at the invocation level as a whole (which is actually what my trace-based format did, but that\u0027s a very different format).",
+      "parentUuid": "b1bd5aff_e8a76638",
+      "revId": "d66752fd5e1081fc5e07385c46732763342bf11f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "a83ba1fa_ed36459c",
         "filename": "docs/testing/json_test_results_format.md",
         "patchSetId": 6
