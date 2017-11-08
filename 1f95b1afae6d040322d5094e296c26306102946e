@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "3c1e1688_8e022da1",
+        "filename": "third_party/WebKit/LayoutTests/external/wpt/fetch/api/request/request-cache-only-if-cached.html",
+        "patchSetId": 3
+      },
+      "lineNbr": 77,
+      "author": {
+        "id": 1002340
+      },
+      "writtenOn": "2017-11-08T13:05:36Z",
+      "side": 1,
+      "message": "Nit: Calling TypeError() as a function appears to work, but I haven\u0027t found anything indicating that it is standard. Probably safer to do \"new TypeError()\" here, and below.",
+      "revId": "1f95b1afae6d040322d5094e296c26306102946e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
