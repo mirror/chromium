@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "4daa6207_83d5be7c",
+        "filename": "third_party/WebKit/Source/devtools/front_end/ui/tabbedPane.css",
+        "patchSetId": 2
+      },
+      "lineNbr": 119,
+      "author": {
+        "id": 1230559
+      },
+      "writtenOn": "2017-11-08T01:01:25Z",
+      "side": 1,
+      "message": "It does seem redundant, but looks like this was added intentionally made more specific to override another selector below on L141 \".tabbed-pane-header-tab.selected { background-color: white\".\nhttps://codereview.chromium.org/1573683003\n\nThis bug only affects IVTP, the main DevTools tabs.  inspectorViewTabbedPane.css (IVTP) also tries to override the \"background-color: white\", but its selector unintentionally overrides the hover and dragging styles as well.\n\nI\u0027ve changed up the CL, sorry, but I think this is the more correct approach, where IVTP is more specific about when it overrides the background color.",
+      "parentUuid": "5505cafa_e342a8a7",
+      "revId": "e31639ff859114241d5ade5886507b4214a776a8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "85a9c08c_e9320cec",
         "filename": "third_party/WebKit/Source/devtools/front_end/ui/tabbedPane.css",
         "patchSetId": 2
