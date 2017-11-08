@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "c0f65efd_2cd72610",
+        "filename": "content/common/frame_messages.h",
+        "patchSetId": 11
+      },
+      "lineNbr": 1467,
+      "author": {
+        "id": 1001433
+      },
+      "writtenOn": "2017-11-08T16:19:02Z",
+      "side": 1,
+      "message": "I\u0027ve added a comment. Yes, subtree_throttled means that there is a throttled ancestor. LocalFrameView treats that slightly differently than when it is just the current frame throttled.",
+      "parentUuid": "26c2b358_9075dd4c",
+      "range": {
+        "startLine": 1467,
+        "startChar": 0,
+        "endLine": 1467,
+        "endChar": 47
+      },
+      "revId": "af6e0eaa104a700b3b860e870d916f0b856cec20",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "16191c8f_cc450e9d",
         "filename": "content/common/frame_messages.h",
         "patchSetId": 11
@@ -45,6 +69,30 @@
       "revId": "af6e0eaa104a700b3b860e870d916f0b856cec20",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "935b63c9_35e0b028",
+        "filename": "content/common/frame_messages.h",
+        "patchSetId": 11
+      },
+      "lineNbr": 1469,
+      "author": {
+        "id": 1001433
+      },
+      "writtenOn": "2017-11-08T16:19:02Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "16191c8f_cc450e9d",
+      "range": {
+        "startLine": 1469,
+        "startChar": 28,
+        "endLine": 1469,
+        "endChar": 39
+      },
+      "revId": "af6e0eaa104a700b3b860e870d916f0b856cec20",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -71,6 +119,30 @@
     },
     {
       "key": {
+        "uuid": "43261422_d28bdde0",
+        "filename": "content/renderer/render_frame_proxy.cc",
+        "patchSetId": 11
+      },
+      "lineNbr": 625,
+      "author": {
+        "id": 1001433
+      },
+      "writtenOn": "2017-11-08T16:19:02Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "53ab7f76_a468225e",
+      "range": {
+        "startLine": 625,
+        "startChar": 57,
+        "endLine": 625,
+        "endChar": 68
+      },
+      "revId": "af6e0eaa104a700b3b860e870d916f0b856cec20",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "69c1dbb3_0b1a483e",
         "filename": "content/renderer/render_widget.cc",
         "patchSetId": 11
@@ -82,6 +154,24 @@
       "writtenOn": "2017-11-08T02:53:23Z",
       "side": 1,
       "message": "Why would we get this message on a non web-frame-widget RenderWidget?",
+      "revId": "af6e0eaa104a700b3b860e870d916f0b856cec20",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4e4f87d8_23edd04a",
+        "filename": "content/renderer/render_widget.cc",
+        "patchSetId": 11
+      },
+      "lineNbr": 1830,
+      "author": {
+        "id": 1001433
+      },
+      "writtenOn": "2017-11-08T16:19:02Z",
+      "side": 1,
+      "message": "It shouldn\u0027t. I\u0027ve converted it to a DCHECK, and also some of the neighboring methods.",
+      "parentUuid": "69c1dbb3_0b1a483e",
       "revId": "af6e0eaa104a700b3b860e870d916f0b856cec20",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -111,6 +201,30 @@
     },
     {
       "key": {
+        "uuid": "e25b13f0_e6c6567e",
+        "filename": "content/renderer/render_widget.cc",
+        "patchSetId": 11
+      },
+      "lineNbr": 1831,
+      "author": {
+        "id": 1001433
+      },
+      "writtenOn": "2017-11-08T16:19:02Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "cd2e91a5_f2cafeee",
+      "range": {
+        "startLine": 1831,
+        "startChar": 4,
+        "endLine": 1831,
+        "endChar": 10
+      },
+      "revId": "af6e0eaa104a700b3b860e870d916f0b856cec20",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "da20885f_c73fdb63",
         "filename": "third_party/WebKit/LayoutTests/http/tests/dom/raf-throttling-out-of-view-cross-origin-page.html",
         "patchSetId": 11
@@ -122,6 +236,30 @@
       "writtenOn": "2017-11-07T23:35:42Z",
       "side": 1,
       "message": "I think http layout tests are already served from this origin by default, so this won\u0027t actually be cross-origin.  I think this can be \"http://localhost:8000\" instead, which will use OOPIFs on our bots.  Alternatively, if this test only makes sense for OOPIFs, we could also use something like \"http://foo.oopif.test:8000\", which will always use OOPIFs no matter what.\n\n(I wasn\u0027t sure, so I double-checked that RemoteFrameView::AttachToLayout was never getting hit with 127.0.0.1:8000, but it was with localhost:8000).",
+      "range": {
+        "startLine": 14,
+        "startChar": 48,
+        "endLine": 14,
+        "endChar": 69
+      },
+      "revId": "af6e0eaa104a700b3b860e870d916f0b856cec20",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a183ce8d_214271ad",
+        "filename": "third_party/WebKit/LayoutTests/http/tests/dom/raf-throttling-out-of-view-cross-origin-page.html",
+        "patchSetId": 11
+      },
+      "lineNbr": 14,
+      "author": {
+        "id": 1001433
+      },
+      "writtenOn": "2017-11-08T16:19:02Z",
+      "side": 1,
+      "message": "Thanks. I thought I had verified this but somehow I must have mixed it up.",
+      "parentUuid": "da20885f_c73fdb63",
       "range": {
         "startLine": 14,
         "startChar": 48,
@@ -154,6 +292,30 @@
       "revId": "af6e0eaa104a700b3b860e870d916f0b856cec20",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f05c3e7e_63a24557",
+        "filename": "third_party/WebKit/LayoutTests/http/tests/dom/raf-throttling-out-of-view-cross-origin-page.html",
+        "patchSetId": 11
+      },
+      "lineNbr": 27,
+      "author": {
+        "id": 1001433
+      },
+      "writtenOn": "2017-11-08T16:19:02Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "1c19255b_98c06ef6",
+      "range": {
+        "startLine": 26,
+        "startChar": 73,
+        "endLine": 27,
+        "endChar": 11
+      },
+      "revId": "af6e0eaa104a700b3b860e870d916f0b856cec20",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -203,6 +365,54 @@
     },
     {
       "key": {
+        "uuid": "6a1520ef_d262095e",
+        "filename": "third_party/WebKit/LayoutTests/http/tests/dom/raf-throttling-out-of-view-cross-origin-page.html",
+        "patchSetId": 11
+      },
+      "lineNbr": 42,
+      "author": {
+        "id": 1001433
+      },
+      "writtenOn": "2017-11-08T16:19:02Z",
+      "side": 1,
+      "message": "Yes, it is racy. I had seen some flakiness around that when writing this test.",
+      "parentUuid": "36fab43a_00ec384f",
+      "range": {
+        "startLine": 41,
+        "startChar": 7,
+        "endLine": 42,
+        "endChar": 16
+      },
+      "revId": "af6e0eaa104a700b3b860e870d916f0b856cec20",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "82a2ac8a_f184e1a6",
+        "filename": "third_party/WebKit/LayoutTests/http/tests/dom/raf-throttling-out-of-view-cross-origin-page.html",
+        "patchSetId": 11
+      },
+      "lineNbr": 42,
+      "author": {
+        "id": 1001433
+      },
+      "writtenOn": "2017-11-08T16:19:02Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "eb3775e6_b7bbad23",
+      "range": {
+        "startLine": 42,
+        "startChar": 63,
+        "endLine": 42,
+        "endChar": 77
+      },
+      "revId": "af6e0eaa104a700b3b860e870d916f0b856cec20",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "1c28ea21_c1d110a8",
         "filename": "third_party/WebKit/Source/core/frame/LocalFrameView.cpp",
         "patchSetId": 11
@@ -214,6 +424,30 @@
       "writtenOn": "2017-11-07T23:35:42Z",
       "side": 1,
       "message": "What makes the check below execute only for OOPIFs and local frame roots?  It only seems to check for IsMainFrame(), and it\u0027s hard to tell how ShouldThrottleRendering() restricts it.\n\nAnd a related question.  ShouldThrottleRendering() calls CanThrottleRendering(), which calls IsCrossOriginSubframe(), which looks a little suspicious to me, because it checks the frame\u0027s origin against the top frame\u0027s origin.  Does that mean that with A(B(A)), the innermost frame can\u0027t be throttled?  Even if B is throttled?  What about a case like A(B(C(B))), should the innermost B frame be allowed to be throttled if C is throttled?",
+      "range": {
+        "startLine": 3194,
+        "startChar": 5,
+        "endLine": 3194,
+        "endChar": 28
+      },
+      "revId": "af6e0eaa104a700b3b860e870d916f0b856cec20",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4d9013ae_254949bc",
+        "filename": "third_party/WebKit/Source/core/frame/LocalFrameView.cpp",
+        "patchSetId": 11
+      },
+      "lineNbr": 3194,
+      "author": {
+        "id": 1001433
+      },
+      "writtenOn": "2017-11-08T16:19:02Z",
+      "side": 1,
+      "message": "\u003e What makes the check below execute only for OOPIFs and local frame roots?\n\nI\u0027ve expanded the comment to make it clearer. It\u0027s a bit subtle, but local frame roots are the only frames for which ShouldThrottleRendering() could return true here, give that the same function must have returned false above (at this point, past_layout_lifecycle_update_ has been set).\n\nGood point about IsCrossOriginSubframe(). I think the current behavior means that the innermost frame in A(B(A)) can\u0027t be throttled, and that might be intended because throttling could break some synchronous behavior. But your A(B(C(B))) example in that case might be somewhat broken. The whole concept of LocalFrame::IsCrossOriginSubframe() seems questionable to me, tbh.\n\nI don\u0027t want to change anything about that here but it might warrant a follow-up bug. I wonder if dcheng@ has any thoughts.",
+      "parentUuid": "1c28ea21_c1d110a8",
       "range": {
         "startLine": 3194,
         "startChar": 5,
@@ -249,6 +483,30 @@
     },
     {
       "key": {
+        "uuid": "4e4755d5_321a6a7a",
+        "filename": "third_party/WebKit/Source/core/frame/LocalFrameView.cpp",
+        "patchSetId": 11
+      },
+      "lineNbr": 5245,
+      "author": {
+        "id": 1001433
+      },
+      "writtenOn": "2017-11-08T16:19:02Z",
+      "side": 1,
+      "message": "I think this should be okay as is, because the IntersectionObservers for B and C will correctly trigger updates as a result of their viewport intersections having changed. This part just makes sure that local frames are all kept in sync, but that shouldn\u0027t matter for OOPIFs.",
+      "parentUuid": "c52c4c8a_f9dd809f",
+      "range": {
+        "startLine": 5245,
+        "startChar": 4,
+        "endLine": 5245,
+        "endChar": 30
+      },
+      "revId": "af6e0eaa104a700b3b860e870d916f0b856cec20",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "debe6215_33e117e8",
         "filename": "third_party/WebKit/Source/core/frame/RemoteFrameView.cpp",
         "patchSetId": 11
@@ -269,6 +527,30 @@
       "revId": "af6e0eaa104a700b3b860e870d916f0b856cec20",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ccd4260b_37caa2ad",
+        "filename": "third_party/WebKit/Source/core/frame/RemoteFrameView.cpp",
+        "patchSetId": 11
+      },
+      "lineNbr": 195,
+      "author": {
+        "id": 1001433
+      },
+      "writtenOn": "2017-11-08T16:19:02Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "debe6215_33e117e8",
+      "range": {
+        "startLine": 195,
+        "startChar": 42,
+        "endLine": 195,
+        "endChar": 43
+      },
+      "revId": "af6e0eaa104a700b3b860e870d916f0b856cec20",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -319,6 +601,30 @@
     },
     {
       "key": {
+        "uuid": "d0dc7f2c_78addcd0",
+        "filename": "third_party/WebKit/Source/core/frame/RemoteFrameView.h",
+        "patchSetId": 11
+      },
+      "lineNbr": 81,
+      "author": {
+        "id": 1001433
+      },
+      "writtenOn": "2017-11-08T16:19:02Z",
+      "side": 1,
+      "message": "Alex: It seems like RemoteFrameView and LocalFrameView end up having different implementations for all of these, and it doesn\u0027t often happen that we end up with a FrameView pointer that we want to call virtual methods on. It probably makes sense to move these booleans to FrameView since they are in common.\n\nFor consolidating the bools, filed: https://crbug.com/782694",
+      "parentUuid": "3589d0fd_2c29d4da",
+      "range": {
+        "startLine": 80,
+        "startChar": 0,
+        "endLine": 81,
+        "endChar": 38
+      },
+      "revId": "af6e0eaa104a700b3b860e870d916f0b856cec20",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "80ee4649_ab153d5f",
         "filename": "third_party/WebKit/public/web/WebRemoteFrameClient.h",
         "patchSetId": 11
@@ -339,6 +645,30 @@
       "revId": "af6e0eaa104a700b3b860e870d916f0b856cec20",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "48ba7cce_f333e73c",
+        "filename": "third_party/WebKit/public/web/WebRemoteFrameClient.h",
+        "patchSetId": 11
+      },
+      "lineNbr": 50,
+      "author": {
+        "id": 1001433
+      },
+      "writtenOn": "2017-11-08T16:19:02Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "80ee4649_ab153d5f",
+      "range": {
+        "startLine": 50,
+        "startChar": 49,
+        "endLine": 50,
+        "endChar": 60
+      },
+      "revId": "af6e0eaa104a700b3b860e870d916f0b856cec20",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
