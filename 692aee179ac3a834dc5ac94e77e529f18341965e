@@ -1,0 +1,96 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "8c242cf9_935a573b",
+        "filename": "components/autofill/core/browser/webdata/autofill_data_type_controller.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 86,
+      "author": {
+        "id": 1002186
+      },
+      "writtenOn": "2017-11-08T22:59:43Z",
+      "side": 1,
+      "message": "I think this logic is special to Wallet, and not necessary for normal Autofill. Wallet is specifically a server-driven datatype, but normal Autofill isn\u0027t.",
+      "range": {
+        "startLine": 84,
+        "startChar": 34,
+        "endLine": 86,
+        "endChar": 39
+      },
+      "revId": "692aee179ac3a834dc5ac94e77e529f18341965e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6bef3ab4_fc89b2ce",
+        "filename": "components/autofill/core/browser/webdata/autofill_data_type_controller.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 122,
+      "author": {
+        "id": 1002186
+      },
+      "writtenOn": "2017-11-08T22:59:43Z",
+      "side": 1,
+      "message": "nit: might be good to pull this logic into a method to avoid duplication (e.g. the other OnUnrecoverableError above)",
+      "range": {
+        "startLine": 122,
+        "startChar": 6,
+        "endLine": 122,
+        "endChar": 24
+      },
+      "revId": "692aee179ac3a834dc5ac94e77e529f18341965e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2a48d5bc_13acda4a",
+        "filename": "components/autofill/core/browser/webdata/autofill_data_type_controller.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 63,
+      "author": {
+        "id": 1002186
+      },
+      "writtenOn": "2017-11-08T22:59:43Z",
+      "side": 1,
+      "message": "Set a default value?",
+      "range": {
+        "startLine": 63,
+        "startChar": 7,
+        "endLine": 63,
+        "endChar": 25
+      },
+      "revId": "692aee179ac3a834dc5ac94e77e529f18341965e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "19b75d5e_41518977",
+        "filename": "components/autofill/core/browser/webdata/autofill_profile_data_type_controller.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 119,
+      "author": {
+        "id": 1002186
+      },
+      "writtenOn": "2017-11-08T22:59:43Z",
+      "side": 1,
+      "message": "Same comment here.",
+      "range": {
+        "startLine": 117,
+        "startChar": 34,
+        "endLine": 119,
+        "endChar": 39
+      },
+      "revId": "692aee179ac3a834dc5ac94e77e529f18341965e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
