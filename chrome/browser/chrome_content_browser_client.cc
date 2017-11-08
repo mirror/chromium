@@ -3067,11 +3067,22 @@ void ChromeContentBrowserClient::BindInterfaceRequest(
     gpu_binder_registry_.TryBindInterface(interface_name, interface_pipe);
 }
 
+void ChromeContentBrowserClient::BindEmbedderInterface(
+    const service_manager::Identity& renderer_identity,
+    const std::string& interface_name,
+    mojo::ScopedMessagePipeHandle interface_pipe) {
+  service_manager::Identity child_service_identity(
+      chrome::mojom::kRendererServiceName, renderer_identity.user_id(),
+      renderer_identity.instance());
+  chrome_service_.BindInterface(child_service_identity, interface_name,
+                                std::move(interface_pipe));
+}
+
 void ChromeContentBrowserClient::RegisterInProcessServices(
     StaticServiceMap* services) {
   {
     service_manager::EmbeddedServiceInfo info;
-    info.factory = base::Bind(&ChromeService::Create);
+    info.factory = chrome_service_.CreateChromeServiceFactory();
     services->insert(std::make_pair(chrome::mojom::kServiceName, info));
   }
   if (g_browser_process->pref_service_factory()) {
