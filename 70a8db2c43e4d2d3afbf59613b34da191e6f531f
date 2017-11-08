@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "2aa1cc53_6fcf591f",
+        "filename": "media/ffmpeg/ffmpeg_decoding_loop.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 57,
+      "author": {
+        "id": 1001250
+      },
+      "writtenOn": "2017-11-08T21:43:49Z",
+      "side": 1,
+      "message": "Yeah apparently we don\u0027t have any test cases that audio decode errors are allowed. It resulted in this bug http://crbug.com/782498 -- looking into regenerating the test clips.",
+      "parentUuid": "ecce4e73_1b1b26ba",
+      "range": {
+        "startLine": 57,
+        "startChar": 6,
+        "endLine": 57,
+        "endChar": 14
+      },
+      "revId": "70a8db2c43e4d2d3afbf59613b34da191e6f531f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "596f2517_400673eb",
         "filename": "media/filters/ffmpeg_aac_bitstream_converter.cc",
         "patchSetId": 7
@@ -48,6 +72,30 @@
     },
     {
       "key": {
+        "uuid": "7f4f7297_c9c0c1c2",
+        "filename": "media/filters/ffmpeg_aac_bitstream_converter.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 244,
+      "author": {
+        "id": 1001250
+      },
+      "writtenOn": "2017-11-08T21:43:49Z",
+      "side": 1,
+      "message": "this avoids deprecation warnings for fields in the AVPacket.",
+      "parentUuid": "596f2517_400673eb",
+      "range": {
+        "startLine": 244,
+        "startChar": 2,
+        "endLine": 244,
+        "endChar": 8
+      },
+      "revId": "70a8db2c43e4d2d3afbf59613b34da191e6f531f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "6f962991_bac163f7",
         "filename": "media/filters/ffmpeg_demuxer_unittest.cc",
         "patchSetId": 7
@@ -59,6 +107,30 @@
       "writtenOn": "2017-11-08T21:23:43Z",
       "side": 1,
       "message": "This bug doesn\u0027t tell me why the test is now disabled (but its test values are updated?)? Context?",
+      "range": {
+        "startLine": 923,
+        "startChar": 54,
+        "endLine": 923,
+        "endChar": 77
+      },
+      "revId": "70a8db2c43e4d2d3afbf59613b34da191e6f531f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "09afde5e_96b4daa3",
+        "filename": "media/filters/ffmpeg_demuxer_unittest.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 923,
+      "author": {
+        "id": 1001250
+      },
+      "writtenOn": "2017-11-08T21:43:49Z",
+      "side": 1,
+      "message": "Test values aren\u0027t updated. Nothing is discarded on text streams in webm since I reverted a hunk that frank had taken out during his ffmpeg roll. It breaks text stream discard, but that\u0027s fine, we\u0027ll still discard this data appropriately.",
+      "parentUuid": "6f962991_bac163f7",
       "range": {
         "startLine": 923,
         "startChar": 54,

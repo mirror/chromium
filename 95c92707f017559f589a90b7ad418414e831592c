@@ -48,6 +48,30 @@
     },
     {
       "key": {
+        "uuid": "8932bff5_67fd58c6",
+        "filename": "media/filters/ffmpeg_audio_decoder.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 308,
+      "author": {
+        "id": 1001250
+      },
+      "writtenOn": "2017-11-08T21:43:49Z",
+      "side": 0,
+      "message": "Deprecated and not necessary with avcodec_send/receive_frame.\n\nhttps://chromium.googlesource.com/chromium/third_party/ffmpeg/+/merge-m64/libavcodec/avcodec.h#2292",
+      "parentUuid": "c553e196_34c79824",
+      "range": {
+        "startLine": 308,
+        "startChar": 18,
+        "endLine": 308,
+        "endChar": 35
+      },
+      "revId": "95c92707f017559f589a90b7ad418414e831592c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "447b8972_0cc31185",
         "filename": "media/filters/ffmpeg_video_decoder.cc",
         "patchSetId": 7
@@ -59,6 +83,30 @@
       "writtenOn": "2017-11-08T21:23:43Z",
       "side": 0,
       "message": "Whats the context for these changes?",
+      "range": {
+        "startLine": 413,
+        "startChar": 2,
+        "endLine": 413,
+        "endChar": 16
+      },
+      "revId": "95c92707f017559f589a90b7ad418414e831592c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0b0c9376_aa10f1a3",
+        "filename": "media/filters/ffmpeg_video_decoder.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 413,
+      "author": {
+        "id": 1001250
+      },
+      "writtenOn": "2017-11-08T21:43:49Z",
+      "side": 0,
+      "message": "Deprecated, https://chromium.googlesource.com/chromium/third_party/ffmpeg/+/merge-m64/doc/APIchanges#1068",
+      "parentUuid": "447b8972_0cc31185",
       "range": {
         "startLine": 413,
         "startChar": 2,
