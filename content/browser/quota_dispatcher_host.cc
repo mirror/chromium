@@ -9,6 +9,7 @@
 #include <memory>
 
 #include "base/bind.h"
+#include "base/logging.h"
 #include "base/memory/ptr_util.h"
 #include "base/memory/weak_ptr.h"
 #include "base/numerics/safe_conversions.h"
@@ -100,8 +101,10 @@ class QuotaDispatcherHost::QueryUsageAndQuotaDispatcher
                  "::DidQueryStorageUsageAndQuota");
 
     if (status != storage::kQuotaStatusOk) {
+      NOTREACHED();
       dispatcher_host()->Send(new QuotaMsg_DidFail(request_id(), status));
     } else {
+      NOTREACHED();
       dispatcher_host()->Send(new QuotaMsg_DidQueryStorageUsageAndQuota(
           request_id(), usage, quota));
     }
@@ -211,8 +214,10 @@ class QuotaDispatcherHost::RequestQuotaDispatcher
       return;
     DCHECK(dispatcher_host());
     if (status != storage::kQuotaStatusOk) {
+      NOTREACHED();
       dispatcher_host()->Send(new QuotaMsg_DidFail(request_id(), status));
     } else {
+      NOTREACHED();
       dispatcher_host()->Send(new QuotaMsg_DidGrantStorageQuota(
           request_id(), usage, granted_quota));
     }
@@ -255,6 +260,7 @@ void QuotaDispatcherHost::OnQueryStorageUsageAndQuota(
     int request_id,
     const GURL& origin,
     StorageType type) {
+  NOTREACHED();
   QueryUsageAndQuotaDispatcher* dispatcher = new QueryUsageAndQuotaDispatcher(
       weak_factory_.GetWeakPtr(), request_id);
   dispatcher->QueryStorageUsageAndQuota(origin, type);
@@ -262,9 +268,11 @@ void QuotaDispatcherHost::OnQueryStorageUsageAndQuota(
 
 void QuotaDispatcherHost::OnRequestStorageQuota(
     const StorageQuotaParams& params) {
+  NOTREACHED();
   if (params.storage_type != storage::kStorageTypeTemporary &&
       params.storage_type != storage::kStorageTypePersistent) {
     // Unsupported storage types.
+    NOTREACHED();
     Send(new QuotaMsg_DidFail(params.request_id,
                               storage::kQuotaErrorNotSupported));
     return;
