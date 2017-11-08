@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "ec279c18_0290c3c1",
+        "filename": "chrome/browser/supervised_user/child_accounts/child_account_service.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 43,
+      "author": {
+        "id": 1209769
+      },
+      "writtenOn": "2017-11-08T17:04:45Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "d9c1639e_2cb3a631",
+      "range": {
+        "startLine": 43,
+        "startChar": 21,
+        "endLine": 43,
+        "endChar": 23
+      },
+      "revId": "b4c38510b1ddcca514776ba0fd044ea400023089",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "c655fb35_ea09654f",
         "filename": "chrome/browser/supervised_user/child_accounts/child_account_service.h",
         "patchSetId": 1
@@ -36,6 +60,30 @@
       "writtenOn": "2017-11-08T16:26:43Z",
       "side": 1,
       "message": "Could we just use PENDING or is that reserved? Or maybe even \"UNKNOWN\", as we either are authenticated or not, what is incomplete is just our knowledge of it.",
+      "range": {
+        "startLine": 46,
+        "startChar": 16,
+        "endLine": 46,
+        "endChar": 23
+      },
+      "revId": "b4c38510b1ddcca514776ba0fd044ea400023089",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "fab3f04b_3e679bda",
+        "filename": "chrome/browser/supervised_user/child_accounts/child_account_service.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 46,
+      "author": {
+        "id": 1209769
+      },
+      "writtenOn": "2017-11-08T17:04:45Z",
+      "side": 1,
+      "message": "Sure. I prefer PENDING, tough, as it also conveys the fact that auth state will be updated soon. Do you have a strong preference for UNKNOWN?",
+      "parentUuid": "c655fb35_ea09654f",
       "range": {
         "startLine": 46,
         "startChar": 16,
@@ -68,6 +116,30 @@
       "revId": "b4c38510b1ddcca514776ba0fd044ea400023089",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "24254cf1_088f19e4",
+        "filename": "chrome/browser/supervised_user/child_accounts/child_account_service.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 69,
+      "author": {
+        "id": 1209769
+      },
+      "writtenOn": "2017-11-08T17:04:45Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "ccdccd63_5d0f8102",
+      "range": {
+        "startLine": 69,
+        "startChar": 13,
+        "endLine": 69,
+        "endChar": 34
+      },
+      "revId": "b4c38510b1ddcca514776ba0fd044ea400023089",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
