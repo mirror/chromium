@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "869b68cb_28804e31",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/compositor/bottombar/contextualsearch/ContextualSearchPanelMetrics.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 90,
+      "author": {
+        "id": 1122966
+      },
+      "writtenOn": "2017-11-08T01:32:58Z",
+      "side": 1,
+      "message": "We keep track of when the panel was opened (mPanelOpenedBeyondPeekTimeNs). Should we use that instead of panel view since that would better tell us if users are opening then quickly closing the panel?",
+      "range": {
+        "startLine": 90,
+        "startChar": 17,
+        "endLine": 90,
+        "endChar": 36
+      },
+      "revId": "f08dc41b908198e6134ed017226398a19b82c1b9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "020e8a4c_00a0bee8",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/contextualsearch/ContextualSearchUma.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 759,
+      "author": {
+        "id": 1122966
+      },
+      "writtenOn": "2017-11-08T01:32:58Z",
+      "side": 1,
+      "message": "For our normal panel open duration histogram, we use a medium times histogram (see logPanelOpenDuration) which records from 10ms up to 3 minutes using 50 buckets. Is that range acceptable for this purpose? If so, I like the consistency. If not, how about using recordTimesHistogram which does 1ms up to 10seconds with 50 buckets?",
+      "range": {
+        "startLine": 757,
+        "startChar": 12,
+        "endLine": 759,
+        "endChar": 33
+      },
+      "revId": "f08dc41b908198e6134ed017226398a19b82c1b9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
