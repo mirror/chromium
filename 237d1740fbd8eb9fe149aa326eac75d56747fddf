@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "f8391ec5_f698bea2",
+        "filename": "ios/chrome/browser/autofill/form_suggestion_controller.mm",
+        "patchSetId": 2
+      },
+      "lineNbr": 168,
+      "author": {
+        "id": 1002737
+      },
+      "writtenOn": "2017-11-08T17:07:32Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "68a648f5_4088f2ca",
+      "range": {
+        "startLine": 168,
+        "startChar": 37,
+        "endLine": 168,
+        "endChar": 54
+      },
+      "revId": "237d1740fbd8eb9fe149aa326eac75d56747fddf",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "f5a7ed00_9997c176",
         "filename": "ios/web/public/web_state/web_state_observer.h",
         "patchSetId": 2
@@ -36,6 +60,30 @@
       "writtenOn": "2017-11-07T18:23:21Z",
       "side": 1,
       "message": "There is a long awaited bug to wrap all arguments into a struct, because the list of the arguments is very long (crbug.com/547122). At this point I think we should not add more arguments and create a data structure to carry the form data. Do you know if //content has a data structure to represent form info?",
+      "range": {
+        "startLine": 154,
+        "startChar": 57,
+        "endLine": 154,
+        "endChar": 67
+      },
+      "revId": "237d1740fbd8eb9fe149aa326eac75d56747fddf",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c625b98a_42b4ce3b",
+        "filename": "ios/web/public/web_state/web_state_observer.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 154,
+      "author": {
+        "id": 1002737
+      },
+      "writtenOn": "2017-11-08T17:07:32Z",
+      "side": 1,
+      "message": "I don\u0027t think so. On desktop we would do it differently. Renderer would pull all the necessary info from Blink and send a very detailed message to the browser like ShowPasswordPopup()\nI created a structure for iOS.",
+      "parentUuid": "f5a7ed00_9997c176",
       "range": {
         "startLine": 154,
         "startChar": 57,
@@ -68,6 +116,30 @@
       "revId": "237d1740fbd8eb9fe149aa326eac75d56747fddf",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e3b67689_e09bc8cc",
+        "filename": "ios/web/web_state/js/resources/form.js",
+        "patchSetId": 2
+      },
+      "lineNbr": 34,
+      "author": {
+        "id": 1002737
+      },
+      "writtenOn": "2017-11-08T17:07:32Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "d6fef428_2faa7c40",
+      "range": {
+        "startLine": 34,
+        "startChar": 33,
+        "endLine": 34,
+        "endChar": 43
+      },
+      "revId": "237d1740fbd8eb9fe149aa326eac75d56747fddf",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
