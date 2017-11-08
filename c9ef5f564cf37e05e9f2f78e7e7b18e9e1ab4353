@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "055659a4_a8c74a09",
+        "filename": "testing/buildbot/chromium.fyi.json",
+        "patchSetId": 2
+      },
+      "lineNbr": 4356,
+      "author": {
+        "id": 1001118
+      },
+      "writtenOn": "2017-11-08T17:12:05Z",
+      "side": 1,
+      "message": "q: does this need a \"hard_timeout\" like others? and why fewer shards?",
+      "revId": "c9ef5f564cf37e05e9f2f78e7e7b18e9e1ab4353",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b292abfc_8791eb7b",
+        "filename": "testing/buildbot/filters/mojo.fyi.mus.content_browsertests.filter",
+        "patchSetId": 2
+      },
+      "lineNbr": 3,
+      "author": {
+        "id": 1001118
+      },
+      "writtenOn": "2017-11-08T17:12:05Z",
+      "side": 1,
+      "message": "Is this the right bug to cite so many times throughout?",
+      "revId": "c9ef5f564cf37e05e9f2f78e7e7b18e9e1ab4353",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
