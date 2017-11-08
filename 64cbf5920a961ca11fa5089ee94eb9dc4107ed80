@@ -16,6 +16,24 @@
       "revId": "64cbf5920a961ca11fa5089ee94eb9dc4107ed80",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "10497916_200f6e3c",
+        "filename": "remoting/codec/cast_software_video_encoder_adapter.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 30,
+      "author": {
+        "id": 1196069
+      },
+      "writtenOn": "2017-11-08T01:29:10Z",
+      "side": 1,
+      "message": "Yes, we should at least add some fuzzy tests for encoder wrappers. I will do it in a different change, since this encoder is not workable for now.",
+      "parentUuid": "05a380ea_4dab22eb",
+      "revId": "64cbf5920a961ca11fa5089ee94eb9dc4107ed80",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
