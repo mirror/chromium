@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "6bc5ed21_baa68f46",
+        "filename": "build/android/gyp/process_resources.py",
+        "patchSetId": 5
+      },
+      "lineNbr": 385,
+      "author": {
+        "id": 1126674
+      },
+      "writtenOn": "2017-11-08T21:14:57Z",
+      "side": 1,
+      "message": "alsign",
+      "range": {
+        "startLine": 385,
+        "startChar": 6,
+        "endLine": 385,
+        "endChar": 12
+      },
+      "revId": "6a5046179b6ceac7240b135f1f3715b8e614051d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
