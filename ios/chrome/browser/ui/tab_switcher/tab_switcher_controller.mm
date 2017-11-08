@@ -362,6 +362,12 @@ enum class SnapshotViewOption {
 }
 
 - (void)setOtrTabModel:(TabModel*)otrModel {
+  if (_onLoadActiveModel == nil) {
+    _onLoadActiveModel = otrModel;
+  } else if (_onLoadActiveModel == [_tabSwitcherModel otrTabModel]) {
+    _onLoadActiveModel = nil;
+  }
+
   [_cache setMainTabModel:[_cache mainTabModel] otrTabModel:otrModel];
   [_tabSwitcherModel setMainTabModel:[_tabSwitcherModel mainTabModel]
                          otrTabModel:otrModel];

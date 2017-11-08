@@ -53,6 +53,28 @@
   DCHECK(self.currentBVC == bvc);
 }
 
+#pragma mark - UIViewController methods
+
+- (void)presentViewController:(UIViewController*)viewControllerToPresent
+                     animated:(BOOL)flag
+                   completion:(void (^)())completion {
+  // If there is no activeViewController then this call will get inadvertently
+  // dropped.
+  DCHECK(self.currentBVC);
+  [self.currentBVC presentViewController:viewControllerToPresent
+                                          animated:flag
+                                        completion:completion];
+}
+
+- (void)dismissViewControllerAnimated:(BOOL)flag
+                           completion:(void (^)())completion {
+  // If there is no activeViewController then this call will get inadvertently
+  // dropped.
+  DCHECK(self.currentBVC);
+  [self.currentBVC dismissViewControllerAnimated:flag
+                                                completion:completion];
+}
+
 - (UIViewController*)childViewControllerForStatusBarHidden {
   return self.currentBVC;
 }
@@ -124,6 +146,7 @@
     self.bvcContainer.transitioningDelegate = self;
     self.bvcContainer = nil;
     BOOL animated = !self.animationsDisabledForTesting;
+    NSLog(@"MPC dismissViewControllerAnimated (dismissing BVC)");
     [super dismissViewControllerAnimated:animated completion:completion];
   } else {
     if (completion) {
@@ -173,6 +196,7 @@
   // If there is no activeViewController then this call will get inadvertently
   // dropped.
   DCHECK(self.activeViewController);
+  NSLog(@"MPC dismissViewControllerAnimated (forwarding)");
   [self.activeViewController dismissViewControllerAnimated:flag
                                                 completion:completion];
 }
@@ -200,6 +224,7 @@ animationControllerForPresentedController:(UIViewController*)presented
   TabSwitcherToBVCContainerAnimator* animator =
       [[TabSwitcherToBVCContainerAnimator alloc] init];
   animator.tabSwitcher = self.tabSwitcher;
+  NSLog(@"animator for presented controller");
   return animator;
 }
 
@@ -214,6 +239,7 @@ animationControllerForDismissedController:(UIViewController*)dismissed {
   BVCContainerToTabSwitcherAnimator* animator =
       [[BVCContainerToTabSwitcherAnimator alloc] init];
   animator.tabSwitcher = self.tabSwitcher;
+  NSLog(@"animator for dismissed controller");
   return animator;
 }
 
