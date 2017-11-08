@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "ac91da65_99ba44a6",
+        "filename": "third_party/WebKit/Source/core/dom/events/Event.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 208,
+      "author": {
+        "id": 1125369
+      },
+      "writtenOn": "2017-11-08T16:29:50Z",
+      "side": 1,
+      "message": "|GetEventPath()| callers seem to expect mutable |EventPath|s.  The function here is still |const| because it doesn\u0027t modify |*this|.",
+      "parentUuid": "ff89be60_716993df",
+      "revId": "f34851c13d6568071a696251cbeb7cdf8695aa2a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "6018a0ab_3cfdae39",
         "filename": "third_party/WebKit/Source/core/dom/events/EventPath.cpp",
         "patchSetId": 4
@@ -30,6 +48,24 @@
       "writtenOn": "2017-11-08T00:15:34Z",
       "side": 1,
       "message": "This feels like it mutates the TouchEvent.. I don\u0027t think it should be const. no?",
+      "revId": "f34851c13d6568071a696251cbeb7cdf8695aa2a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f0878995_b9681b1f",
+        "filename": "third_party/WebKit/Source/core/dom/events/EventPath.cpp",
+        "patchSetId": 4
+      },
+      "lineNbr": 315,
+      "author": {
+        "id": 1125369
+      },
+      "writtenOn": "2017-11-08T16:29:50Z",
+      "side": 1,
+      "message": "This function possibly modifies |*this|, and does nothing to the |touch_event|.  This is true even for the |AdjustTouchList| function called from here: the local |HeapVector|s are \"adjusted\" w/o affecting |touch_event|\u0027s lists.\n\nThe whole \"adjustment\" looks suspicious.  Added a TODO to investigate later.",
+      "parentUuid": "6018a0ab_3cfdae39",
       "revId": "f34851c13d6568071a696251cbeb7cdf8695aa2a",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
