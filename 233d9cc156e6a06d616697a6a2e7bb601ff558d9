@@ -19,6 +19,29 @@
     },
     {
       "key": {
+        "uuid": "65956a56_f728e05c",
+        "filename": "ios/chrome/browser/ui/browser_view_controller.mm",
+        "patchSetId": 8
+      },
+      "lineNbr": 4271,
+      "author": {
+        "id": 1115958
+      },
+      "writtenOn": "2017-11-08T15:28:45Z",
+      "side": 1,
+      "message": "I think this is no longer the correct place for this metric, since this method is now just vending config information.",
+      "range": {
+        "startLine": 4271,
+        "startChar": 10,
+        "endLine": 4271,
+        "endChar": 22
+      },
+      "revId": "233d9cc156e6a06d616697a6a2e7bb601ff558d9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "f477a48d_aef62959",
         "filename": "ios/chrome/browser/ui/commands/browser_commands.h",
         "patchSetId": 8
@@ -134,6 +157,52 @@
     },
     {
       "key": {
+        "uuid": "ffd152f0_832271c7",
+        "filename": "ios/chrome/browser/ui/toolbar/toolbar_controller.h",
+        "patchSetId": 8
+      },
+      "lineNbr": 29,
+      "author": {
+        "id": 1115958
+      },
+      "writtenOn": "2017-11-08T15:28:45Z",
+      "side": 1,
+      "message": "nit: I\u0027d prefer that this was \"ToolsMenuPresentationProvider\", since the coordinator isn\u0027t what\u0027s presented.",
+      "range": {
+        "startLine": 29,
+        "startChar": 15,
+        "endLine": 29,
+        "endChar": 55
+      },
+      "revId": "233d9cc156e6a06d616697a6a2e7bb601ff558d9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "36926040_29f88c56",
+        "filename": "ios/chrome/browser/ui/toolbar/toolbar_controller.h",
+        "patchSetId": 8
+      },
+      "lineNbr": 48,
+      "author": {
+        "id": 1115958
+      },
+      "writtenOn": "2017-11-08T15:28:45Z",
+      "side": 1,
+      "message": "Prefer not to name protocols \u0027protocol\u0027. I\u0027ll comment further when I see the implementation.",
+      "range": {
+        "startLine": 48,
+        "startChar": 7,
+        "endLine": 48,
+        "endChar": 52
+      },
+      "revId": "233d9cc156e6a06d616697a6a2e7bb601ff558d9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "0d482df0_5b29731b",
         "filename": "ios/chrome/browser/ui/toolbar/toolbar_controller.mm",
         "patchSetId": 8
@@ -157,6 +226,29 @@
     },
     {
       "key": {
+        "uuid": "eb5b7520_ce231e1e",
+        "filename": "ios/chrome/browser/ui/tools_menu/tools_menu_constants.h",
+        "patchSetId": 8
+      },
+      "lineNbr": 24,
+      "author": {
+        "id": 1115958
+      },
+      "writtenOn": "2017-11-08T15:28:45Z",
+      "side": 1,
+      "message": "Prefer for protocols with a single method to never be optional, since a class that doesn\u0027t implement the method shouldn\u0027t conform to the protocol at all.\n\nPrefer to remove \"Coordinator\" from all of these protocol names.",
+      "range": {
+        "startLine": 24,
+        "startChar": 1,
+        "endLine": 24,
+        "endChar": 9
+      },
+      "revId": "233d9cc156e6a06d616697a6a2e7bb601ff558d9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "fd7b4849_1db32c3b",
         "filename": "ios/chrome/browser/ui/tools_menu/tools_menu_constants.h",
         "patchSetId": 8
@@ -173,6 +265,76 @@
         "startChar": 0,
         "endLine": 29,
         "endChar": 4
+      },
+      "revId": "233d9cc156e6a06d616697a6a2e7bb601ff558d9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9535b8a7_9b4a6950",
+        "filename": "ios/chrome/browser/ui/tools_menu/tools_menu_constants.h",
+        "patchSetId": 8
+      },
+      "lineNbr": 29,
+      "author": {
+        "id": 1115958
+      },
+      "writtenOn": "2017-11-08T15:28:45Z",
+      "side": 1,
+      "message": "Yes, and these headers should go into a tools_menu/requirements/ subdirectory (the idea being that all of the protocols that other components will need to adopt in order to use the boxed component will be in requirements/)/.",
+      "parentUuid": "fd7b4849_1db32c3b",
+      "range": {
+        "startLine": 21,
+        "startChar": 0,
+        "endLine": 29,
+        "endChar": 4
+      },
+      "revId": "233d9cc156e6a06d616697a6a2e7bb601ff558d9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b70125f1_c97d5490",
+        "filename": "ios/chrome/browser/ui/tools_menu/tools_menu_constants.h",
+        "patchSetId": 8
+      },
+      "lineNbr": 34,
+      "author": {
+        "id": 1115958
+      },
+      "writtenOn": "2017-11-08T15:28:45Z",
+      "side": 1,
+      "message": "Not sure how to name this; I prefer not to name protocols \u0027Protocol\u0027. I\u0027m also not yet clear on why it\u0027s needed.",
+      "range": {
+        "startLine": 34,
+        "startChar": 10,
+        "endLine": 34,
+        "endChar": 55
+      },
+      "revId": "233d9cc156e6a06d616697a6a2e7bb601ff558d9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f680241c_2763d37e",
+        "filename": "ios/chrome/browser/ui/tools_menu/tools_menu_coordinator.mm",
+        "patchSetId": 8
+      },
+      "lineNbr": 18,
+      "author": {
+        "id": 1115958
+      },
+      "writtenOn": "2017-11-08T15:28:45Z",
+      "side": 1,
+      "message": "Leading underscores for ivars.",
+      "range": {
+        "startLine": 18,
+        "startChar": 24,
+        "endLine": 18,
+        "endChar": 45
       },
       "revId": "233d9cc156e6a06d616697a6a2e7bb601ff558d9",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
@@ -265,6 +427,29 @@
         "startChar": 33,
         "endLine": 35,
         "endChar": 47
+      },
+      "revId": "233d9cc156e6a06d616697a6a2e7bb601ff558d9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c8b29808_3f7c547f",
+        "filename": "ios/chrome/browser/ui/tools_menu/tools_popup_controller.mm",
+        "patchSetId": 8
+      },
+      "lineNbr": 53,
+      "author": {
+        "id": 1115958
+      },
+      "writtenOn": "2017-11-08T15:28:45Z",
+      "side": 1,
+      "message": "I think I don\u0027t like presentation being coupled to init. Is there a reason not to do this in two steps?",
+      "range": {
+        "startLine": 53,
+        "startChar": 0,
+        "endLine": 53,
+        "endChar": 31
       },
       "revId": "233d9cc156e6a06d616697a6a2e7bb601ff558d9",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",

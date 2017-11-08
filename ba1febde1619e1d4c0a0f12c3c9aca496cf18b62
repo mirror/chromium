@@ -73,6 +73,30 @@
     },
     {
       "key": {
+        "uuid": "0310a1ac_3ae11f65",
+        "filename": "ios/chrome/browser/ui/browser_view_controller.mm",
+        "patchSetId": 5
+      },
+      "lineNbr": 2009,
+      "author": {
+        "id": 1115958
+      },
+      "writtenOn": "2017-11-08T15:28:45Z",
+      "side": 1,
+      "message": "Just to respond to this -- I think the tools menu is conceptually a prime candidate for \"local presentation\", where the most proximate parent object (in this case, the toolbar) is responsible for creating, starting, and owning it. However, as you point out, the current implementation of the tools menu requires a significant delegate hook-up that we\u0027d prefer not to re-plumb in all possible locations.\n\nThis leads nicely into the question of what dispatch is for. The dispatcher is best used for the invocation of \"non-local\" UI -- for example, most of the actions triggered from the tools menu won\u0027t be local to it, and their actual locations in the UI are likely to vary independently of the tools menu, so they are a good fit for handling via dispatch. \n\nI\u0027m fine with both the BVC owning the tools menu coordinator, and that coordinator handling its own invocation commands for now, since we\u0027re not yet in a place where we can do things differently.",
+      "parentUuid": "40a57d7b_cd332c04",
+      "range": {
+        "startLine": 2009,
+        "startChar": 0,
+        "endLine": 2009,
+        "endChar": 70
+      },
+      "revId": "ba1febde1619e1d4c0a0f12c3c9aca496cf18b62",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "f386def6_0b04248e",
         "filename": "ios/chrome/browser/ui/browser_view_controller.mm",
         "patchSetId": 5
