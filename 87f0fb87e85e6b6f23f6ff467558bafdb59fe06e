@@ -54,6 +54,24 @@
     },
     {
       "key": {
+        "uuid": "bf994398_b9bfde0a",
+        "filename": "services/ui/ws/display_manager.cc",
+        "patchSetId": 14
+      },
+      "lineNbr": 179,
+      "author": {
+        "id": 1000763
+      },
+      "writtenOn": "2017-11-08T18:24:52Z",
+      "side": 1,
+      "message": "What is the display sequence when a display is setup as a mirror? Do we end up in WindowManagerState::DeleteWindowManagerDisplayRoot() for the display before it is made the mirror?",
+      "parentUuid": "0d6522be_121ba83f",
+      "revId": "87f0fb87e85e6b6f23f6ff467558bafdb59fe06e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "82815854_2a6d661e",
         "filename": "services/ui/ws/display_manager.cc",
         "patchSetId": 14
