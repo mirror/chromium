@@ -474,7 +474,7 @@ bool DocumentLoader::RedirectReceived(
   // If the redirecting url is not allowed to display content from the target
   // origin, then block the redirect.
   const KURL& request_url = request_.Url();
-  scoped_refptr<SecurityOrigin> redirecting_origin =
+  scoped_refptr<const SecurityOrigin> redirecting_origin =
       SecurityOrigin::Create(redirect_response.Url());
   if (!redirecting_origin->CanDisplay(request_url)) {
     frame_->Console().AddMessage(ConsoleMessage::Create(
@@ -589,7 +589,7 @@ void DocumentLoader::ResponseReceived(
 
   if (RuntimeEnabledFeatures::EmbedderCSPEnforcementEnabled() &&
       !GetFrameLoader().RequiredCSP().IsEmpty()) {
-    SecurityOrigin* parent_security_origin =
+    const SecurityOrigin* parent_security_origin =
         frame_->Tree().Parent()->GetSecurityContext()->GetSecurityOrigin();
     if (ContentSecurityPolicy::ShouldEnforceEmbeddersPolicy(
             response, parent_security_origin)) {
@@ -1005,7 +1005,7 @@ void DocumentLoader::DidCommitNavigation() {
 // static
 bool DocumentLoader::ShouldClearWindowName(
     const LocalFrame& frame,
-    SecurityOrigin* previous_security_origin,
+    const SecurityOrigin* previous_security_origin,
     const Document& new_document) {
   if (!previous_security_origin)
     return false;
@@ -1061,7 +1061,7 @@ void DocumentLoader::InstallNewDocument(
         FrameLoaderStateMachine::kCommittedFirstRealLoad);
   }
 
-  SecurityOrigin* previous_security_origin = nullptr;
+  const SecurityOrigin* previous_security_origin = nullptr;
   if (frame_->GetDocument())
     previous_security_origin = frame_->GetDocument()->GetSecurityOrigin();
 

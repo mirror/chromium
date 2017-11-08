@@ -325,7 +325,7 @@ class FrameFetchContextModifyRequestTest : public FrameFetchContextTest {
     document->GetFrame()->SetOwner(iframe);
   }
 
-  scoped_refptr<SecurityOrigin> example_origin;
+  scoped_refptr<const SecurityOrigin> example_origin;
   scoped_refptr<SecurityOrigin> secure_origin;
 };
 
