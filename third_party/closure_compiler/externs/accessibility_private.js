@@ -81,6 +81,14 @@ chrome.accessibilityPrivate.setNativeAccessibilityEnabled = function(enabled) {}
 chrome.accessibilityPrivate.setFocusRing = function(rects, color) {};
 
 /**
+ * Set the bounds of highlighted regions on the screen.
+ * @param {!Array<!chrome.accessibilityPrivate.ScreenRect>} rects Array of
+ *     rectangles to draw the highlights on.
+ * @see https://developer.chrome.com/extensions/accessibilityPrivate#method-setHighlight
+ */
+chrome.accessibilityPrivate.setHighlight = function(rects) {};
+
+/**
  * Sets the calling extension as a listener of all keyboard events optionally
  * allowing the calling extension to capture/swallow the key event via DOM apis.
  * Returns false via callback when unable to set the listener.
