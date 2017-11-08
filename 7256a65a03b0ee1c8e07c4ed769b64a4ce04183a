@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "1d90da58_7602d41c",
+        "filename": "chrome/browser/ui/send_mouse_move_uitest_win.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 34,
+      "author": {
+        "id": 1000763
+      },
+      "writtenOn": "2017-11-08T18:13:10Z",
+      "side": 1,
+      "message": "I\u0027m pretty sure there are tests that move to locations outside the window, and possibly even click. Maybe they don\u0027t wait for the location though.",
+      "range": {
+        "startLine": 32,
+        "startChar": 21,
+        "endLine": 34,
+        "endChar": 21
+      },
+      "revId": "7256a65a03b0ee1c8e07c4ed769b64a4ce04183a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b15bd35a_08fac30a",
+        "filename": "ui/base/test/ui_controls_internal_win.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 107,
+      "author": {
+        "id": 1000763
+      },
+      "writtenOn": "2017-11-08T18:13:10Z",
+      "side": 1,
+      "message": "const",
+      "range": {
+        "startLine": 107,
+        "startChar": 2,
+        "endLine": 107,
+        "endChar": 12
+      },
+      "revId": "7256a65a03b0ee1c8e07c4ed769b64a4ce04183a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
