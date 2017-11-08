@@ -65,6 +65,7 @@ PreviewsIOData::PreviewsIOData(
     const scoped_refptr<base::SingleThreadTaskRunner>& io_task_runner)
     : ui_task_runner_(ui_task_runner),
       io_task_runner_(io_task_runner),
+      page_id_(1u),
       weak_factory_(this) {}
 
 PreviewsIOData::~PreviewsIOData() {}
@@ -211,6 +212,10 @@ bool PreviewsIOData::ShouldAllowPreviewAtECT(
   LogPreviewDecisionMade(PreviewsEligibilityReason::ALLOWED, request.url(),
                          base::Time::Now(), type);
   return true;
+}
+
+uint64_t PreviewsIOData::GeneratePageId() {
+  return ++page_id_;
 }
 
 }  // namespace previews

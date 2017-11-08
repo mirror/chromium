@@ -644,7 +644,7 @@ class PreviewsStateResourceDispatcherHostDelegate
   }
 
   PreviewsState GetPreviewsState(
-      const net::URLRequest& request,
+      net::URLRequest* request,
       content::ResourceContext* resource_context,
       content::PreviewsState previews_to_allow) override {
     DCHECK_CURRENTLY_ON(BrowserThread::IO);

@@ -6,6 +6,7 @@
 
 #include "base/bind.h"
 #include "base/bind_helpers.h"
+#include "chrome/browser/loader/chrome_navigation_data.h"
 #include "chrome/browser/net/spdyproxy/data_reduction_proxy_chrome_settings.h"
 #include "chrome/browser/net/spdyproxy/data_reduction_proxy_chrome_settings_factory.h"
 #include "chrome/browser/previews/previews_infobar_delegate.h"
@@ -64,6 +65,18 @@ void PreviewsInfoBarTabHelper::DidFinishNavigation(
   if (!navigation_handle->IsInMainFrame() ||
       !navigation_handle->HasCommitted() || navigation_handle->IsSameDocument())
     return;
+
+  previews_user_data_.reset();
+
+  // Store Previews information for this navigation.
+  ChromeNavigationData* chrome_navigation_data =
+      static_cast<ChromeNavigationData*>(
+          navigation_handle->GetNavigationData());
+  if (chrome_navigation_data) {
+    previews_user_data_ =
+        chrome_navigation_data->previews_user_data()->DeepCopy();
+  }
+
   // The infobar should only be told if the page was a reload if the previous
   // page displayed a timestamp.
   bool is_reload =

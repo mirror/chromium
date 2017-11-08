@@ -54,6 +54,7 @@
 #include "components/policy/core/common/cloud/policy_header_io_helper.h"
 #include "components/previews/core/previews_experiments.h"
 #include "components/previews/core/previews_io_data.h"
+#include "components/previews/core/previews_user_data.h"
 #include "components/variations/net/variations_http_headers.h"
 #include "content/public/browser/browser_thread.h"
 #include "content/public/browser/navigation_data.h"
@@ -884,7 +885,7 @@ void ChromeResourceDispatcherHostDelegate::RequestComplete(
 }
 
 content::PreviewsState ChromeResourceDispatcherHostDelegate::GetPreviewsState(
-    const net::URLRequest& url_request,
+    net::URLRequest* url_request,
     content::ResourceContext* resource_context,
     content::PreviewsState previews_to_allow) {
   ProfileIOData* io_data = ProfileIOData::FromResourceContext(resource_context);
@@ -895,11 +896,12 @@ content::PreviewsState ChromeResourceDispatcherHostDelegate::GetPreviewsState(
 
   previews::PreviewsIOData* previews_io_data = io_data->previews_io_data();
   if (data_reduction_proxy_io_data && previews_io_data) {
-    if (data_reduction_proxy_io_data->ShouldEnableLoFi(url_request,
+    previews::PreviewsUserData::Create(url_request, previews_io_data);
+    if (data_reduction_proxy_io_data->ShouldEnableLoFi(*url_request,
                                                        previews_io_data)) {
       previews_state |= content::SERVER_LOFI_ON;
     }
-    if (data_reduction_proxy_io_data->ShouldEnableLitePages(url_request,
+    if (data_reduction_proxy_io_data->ShouldEnableLitePages(*url_request,
                                                             previews_io_data)) {
       previews_state |= content::SERVER_LITE_PAGE_ON;
     }
@@ -910,7 +912,7 @@ content::PreviewsState ChromeResourceDispatcherHostDelegate::GetPreviewsState(
     if (data_reduction_proxy_io_data->IsEnabled() &&
         previews::params::IsClientLoFiEnabled() &&
         previews_io_data->ShouldAllowPreviewAtECT(
-            url_request, previews::PreviewsType::LOFI,
+            *url_request, previews::PreviewsType::LOFI,
             previews::params::EffectiveConnectionTypeThresholdForClientLoFi(),
             previews::params::GetBlackListedHostsForClientLoFiFieldTrial())) {
       previews_state |= content::CLIENT_LOFI_ON;
@@ -962,6 +964,12 @@ ChromeResourceDispatcherHostDelegate::GetNavigationData(
   // when content makes a clone of NavigationData for the UI thread.
   if (data_reduction_proxy_data)
     data->SetDataReductionProxyData(data_reduction_proxy_data->DeepCopy());
+
+  previews::PreviewsUserData* previews_user_data =
+      previews::PreviewsUserData::GetData(*request);
+  if (previews_user_data)
+    data->SetPreviewsUserData(previews_user_data->DeepCopy());
+
   return data;
 }
 

@@ -8,6 +8,7 @@
 
 #include "base/memory/ptr_util.h"
 #include "components/data_reduction_proxy/core/browser/data_reduction_proxy_data.h"
+#include "components/previews/core/previews_user_data.h"
 #include "content/public/browser/navigation_data.h"
 #include "testing/gtest/include/gtest/gtest.h"
 
@@ -25,11 +26,25 @@ TEST_F(ChromeNavigationDataTest, AddingDataReductionProxyData) {
   EXPECT_EQ(data_reduction_proxy_data, data->GetDataReductionProxyData());
 }
 
+TEST_F(ChromeNavigationDataTest, AddingPreviewsUserData) {
+  std::unique_ptr<ChromeNavigationData> data(new ChromeNavigationData());
+  previews::PreviewsUserData* previews_user_data =
+      new previews::PreviewsUserData(1u);
+  data->SetPreviewsUserData(base::WrapUnique(previews_user_data));
+  EXPECT_EQ(previews_user_data, data->previews_user_data());
+}
+
 TEST_F(ChromeNavigationDataTest, Clone) {
   std::unique_ptr<ChromeNavigationData> data(new ChromeNavigationData());
+
   data_reduction_proxy::DataReductionProxyData* data_reduction_proxy_data =
       new data_reduction_proxy::DataReductionProxyData();
   data->SetDataReductionProxyData(base::WrapUnique(data_reduction_proxy_data));
+
+  previews::PreviewsUserData* previews_user_data =
+      new previews::PreviewsUserData(1u);
+  data->SetPreviewsUserData(base::WrapUnique(previews_user_data));
+
   std::unique_ptr<content::NavigationData> clone_data = data->Clone();
   ChromeNavigationData* clone_chrome_data =
       static_cast<ChromeNavigationData*>(clone_data.get());
@@ -37,6 +52,10 @@ TEST_F(ChromeNavigationDataTest, Clone) {
   EXPECT_NE(data.get(), clone_chrome_data);
   EXPECT_NE(data->GetDataReductionProxyData(),
             clone_chrome_data->GetDataReductionProxyData());
+  EXPECT_NE(data->previews_user_data(),
+            clone_chrome_data->previews_user_data());
   EXPECT_EQ(data_reduction_proxy_data, data->GetDataReductionProxyData());
+  EXPECT_EQ(previews_user_data, data->previews_user_data());
   EXPECT_TRUE(clone_chrome_data->GetDataReductionProxyData());
+  EXPECT_TRUE(clone_chrome_data->previews_user_data());
 }

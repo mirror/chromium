@@ -12,6 +12,7 @@
 #include "base/strings/stringprintf.h"
 #include "base/threading/thread_task_runner_handle.h"
 #include "chrome/browser/infobars/infobar_service.h"
+#include "chrome/browser/loader/chrome_navigation_data.h"
 #include "chrome/browser/net/spdyproxy/data_reduction_proxy_chrome_settings.h"
 #include "chrome/browser/net/spdyproxy/data_reduction_proxy_chrome_settings_factory.h"
 #include "chrome/browser/previews/previews_infobar_tab_helper.h"
@@ -23,6 +24,7 @@
 #include "components/offline_pages/core/request_header/offline_page_header.h"
 #include "components/offline_pages/features/features.h"
 #include "components/prefs/pref_registry_simple.h"
+#include "components/previews/core/previews_user_data.h"
 #include "components/proxy_config/proxy_config_pref_names.h"
 #include "content/public/browser/navigation_handle.h"
 #include "content/public/test/web_contents_tester.h"
@@ -98,6 +100,17 @@ class PreviewsInfoBarTabHelperUnitTest
 
   void CallDidFinishNavigation() { test_handle_.reset(); }
 
+  void SetPreviewsUserData(
+      std::unique_ptr<previews::PreviewsUserData> previews_user_data) {
+    EXPECT_TRUE(test_handle_);
+    EXPECT_TRUE(previews_user_data);
+    std::unique_ptr<ChromeNavigationData> navigation_data =
+        base::MakeUnique<ChromeNavigationData>();
+    navigation_data->SetPreviewsUserData(std::move(previews_user_data));
+    content::WebContentsTester::For(web_contents())
+        ->SetNavigationData(test_handle_.get(), std::move(navigation_data));
+  }
+
  private:
   std::unique_ptr<content::NavigationHandle> test_handle_;
   std::unique_ptr<data_reduction_proxy::DataReductionProxyTestContext>
@@ -122,6 +135,28 @@ TEST_F(PreviewsInfoBarTabHelperUnitTest, CreateLitePageInfoBar) {
       ->NavigateAndCommit(GURL(kTestUrl));
 
   EXPECT_FALSE(infobar_tab_helper->displayed_preview_infobar());
+}
+
+TEST_F(PreviewsInfoBarTabHelperUnitTest, TestPreviewsIDSet) {
+  PreviewsInfoBarTabHelper* infobar_tab_helper =
+      PreviewsInfoBarTabHelper::FromWebContents(web_contents());
+
+  SimulateCommit();
+
+  uint64_t id = 5u;
+  std::unique_ptr<previews::PreviewsUserData> previews_user_data =
+      base::MakeUnique<previews::PreviewsUserData>(id);
+  SetPreviewsUserData(std::move(previews_user_data));
+
+  CallDidFinishNavigation();
+  EXPECT_TRUE(infobar_tab_helper->previews_user_data());
+  EXPECT_EQ(id, infobar_tab_helper->previews_user_data()->page_id());
+
+  // Navigate to reset the displayed state.
+  content::WebContentsTester::For(web_contents())
+      ->NavigateAndCommit(GURL(kTestUrl));
+
+  EXPECT_FALSE(infobar_tab_helper->previews_user_data());
 }
 
 #if BUILDFLAG(ENABLE_OFFLINE_PAGES)
