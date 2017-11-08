@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "b465c60e_b224a772",
+        "filename": "third_party/WebKit/Source/core/events/WheelEvent.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 74,
+      "author": {
+        "id": 1123071
+      },
+      "writtenOn": "2017-11-08T00:15:34Z",
+      "side": 0,
+      "message": "Isn\u0027t this removing the fact that we don\u0027t adjust the path for Wheel events? Even though they inherit from MouseEvents?",
+      "revId": "fbefdb0bac773bb088f7145e24c6e582e7415aad",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}

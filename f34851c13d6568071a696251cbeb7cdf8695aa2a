@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "ff89be60_716993df",
+        "filename": "third_party/WebKit/Source/core/dom/events/Event.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 208,
+      "author": {
+        "id": 1123071
+      },
+      "writtenOn": "2017-11-08T00:15:34Z",
+      "side": 1,
+      "message": "Shouldn\u0027t this return const EventPath\u0026 then?",
+      "revId": "f34851c13d6568071a696251cbeb7cdf8695aa2a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6018a0ab_3cfdae39",
+        "filename": "third_party/WebKit/Source/core/dom/events/EventPath.cpp",
+        "patchSetId": 4
+      },
+      "lineNbr": 315,
+      "author": {
+        "id": 1123071
+      },
+      "writtenOn": "2017-11-08T00:15:34Z",
+      "side": 1,
+      "message": "This feels like it mutates the TouchEvent.. I don\u0027t think it should be const. no?",
+      "revId": "f34851c13d6568071a696251cbeb7cdf8695aa2a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
