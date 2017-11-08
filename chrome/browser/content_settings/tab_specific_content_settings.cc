@@ -329,7 +329,6 @@ void TabSpecificContentSettings::OnContentBlockedWithDetail(
     // relevant pieces again.
     status.blocked = false;
     status.blockage_indicated_to_user = false;
-  }
 #endif
 
   if (!status.blocked) {

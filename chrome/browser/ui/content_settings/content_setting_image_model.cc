@@ -10,6 +10,7 @@
 #include "build/build_config.h"
 #include "chrome/app/vector_icons/vector_icons.h"
 #include "chrome/browser/browser_process.h"
+#include "chrome/browser/content_settings/framebust_block_tab_helper.h"
 #include "chrome/browser/content_settings/host_content_settings_map_factory.h"
 #include "chrome/browser/content_settings/tab_specific_content_settings.h"
 #include "chrome/browser/download/download_request_limiter.h"
@@ -17,6 +18,7 @@
 #include "chrome/browser/prerender/prerender_manager.h"
 #include "chrome/browser/profiles/profile.h"
 #include "chrome/common/chrome_features.h"
+#include "chrome/grit/chromium_strings.h"
 #include "chrome/grit/generated_resources.h"
 #include "components/content_settings/core/browser/host_content_settings_map.h"
 #include "components/vector_icons/vector_icons.h"
@@ -468,6 +470,52 @@ void ContentSettingSubresourceFilterImageModel::SetAnimationHasRun(
   if (content_settings) {
     content_settings->SetBlockageHasBeenIndicated(CONTENT_SETTINGS_TYPE_ADS);
   }
+}
+
+// Blocked Framebust -----------------------------------------------------------
+
+ContentSettingFramebustBlockImageModel::ContentSettingFramebustBlockImageModel()
+    : ContentSettingImageModel() {}
+
+void ContentSettingFramebustBlockImageModel::UpdateFromWebContents(
+    WebContents* web_contents) {
+  set_visible(false);
+
+  if (!web_contents)
+    return;
+
+  // Early exit if no blocked Framebust.
+  if (!FramebustBlockTabHelper::FromWebContents(web_contents)->HasBlockedUrls())
+    return;
+
+  set_icon(kBlockedRedirectIcon, kBlockedBadgeIcon);
+  set_explanatory_string_id(IDS_REDIRECT_BLOCKED_TITLE);
+  set_tooltip(l10n_util::GetStringUTF16(IDS_REDIRECT_BLOCKED_TOOLTIP));
+  set_visible(true);
+}
+
+ContentSettingBubbleModel*
+ContentSettingFramebustBlockImageModel::CreateBubbleModel(
+    ContentSettingBubbleModel::Delegate* delegate,
+    WebContents* web_contents,
+    Profile* profile) {
+  return new ContentSettingFramebustBlockBubbleModel(delegate, web_contents,
+                                                     profile);
+}
+
+bool ContentSettingFramebustBlockImageModel::ShouldRunAnimation(
+    WebContents* web_contents) {
+  if (!web_contents)
+    return false;
+  return FramebustBlockTabHelper::FromWebContents(web_contents)
+      ->ShouldRunAnimation();
+}
+
+void ContentSettingFramebustBlockImageModel::SetAnimationHasRun(
+    WebContents* web_contents) {
+  if (!web_contents)
+    return;
+  FramebustBlockTabHelper::FromWebContents(web_contents)->SetAnimationHasRun();
 }
 
 // Protocol handlers -----------------------------------------------------------

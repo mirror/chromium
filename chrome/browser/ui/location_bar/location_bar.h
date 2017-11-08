@@ -46,6 +46,9 @@ class LocationBar {
   // Updates the state of the images showing the content settings status.
   virtual void UpdateContentSettingsIcons() = 0;
 
+  // Updates the state of the blocked Framebusts icon.
+  virtual void UpdateFramebustBlockIcon() = 0;
+
   // Updates the password icon and pops up a bubble from the icon if needed.
   virtual void UpdateManagePasswordsIconAndBubble() = 0;
 

@@ -38,6 +38,7 @@
 #include "chrome/common/insecure_content_renderer.mojom.h"
 #include "chrome/common/pref_names.h"
 #include "chrome/common/render_messages.h"
+#include "chrome/grit/chromium_strings.h"
 #include "chrome/grit/generated_resources.h"
 #include "chrome/grit/theme_resources.h"
 #include "components/content_settings/core/browser/content_settings_utils.h"
@@ -65,6 +66,7 @@
 #include "ui/base/resource/resource_bundle.h"
 #include "ui/base/window_open_disposition.h"
 #include "ui/resources/grit/ui_resources.h"
+#include "ui/strings/grit/ui_strings.h"
 
 using base::UserMetricsAction;
 using content::WebContents;
@@ -1586,6 +1588,93 @@ void ContentSettingDownloadsBubbleModel::OnManageButtonClicked() {
   if (delegate())
     delegate()->ShowContentSettingsPage(
         CONTENT_SETTINGS_TYPE_AUTOMATIC_DOWNLOADS);
+}
+
+// ContentSettingFramebustBlockBubbleModel -------------------------------------
+
+ContentSettingFramebustBlockBubbleModel::
+    ContentSettingFramebustBlockBubbleModel(Delegate* delegate,
+                                            WebContents* web_contents,
+                                            Profile* profile)
+    : ContentSettingBubbleModel(delegate, web_contents, profile) {
+  if (!web_contents)
+    return;
+
+  // Setup the bubble.
+  set_manage_text_style(ContentSettingBubbleModel::ManageTextStyle::kNone);
+  set_show_learn_more(false);
+
+  set_message(l10n_util::GetStringUTF16(IDS_REDIRECT_BLOCKED_MESSAGE));
+  set_done_button_text(l10n_util::GetStringUTF16(IDS_OK));
+
+  auto* helper = FramebustBlockTabHelper::FromWebContents(web_contents);
+
+  // Build the blocked urls list.
+  for (const auto& blocked_url : helper->GetBlockedUrls())
+    AddListItem(CreateListItem(blocked_url));
+
+  helper->SetObserver(this);
+}
+
+ContentSettingFramebustBlockBubbleModel::
+    ~ContentSettingFramebustBlockBubbleModel() {
+  if (web_contents()) {
+    auto* helper = FramebustBlockTabHelper::FromWebContents(web_contents());
+    helper->ClearObserver();
+  }
+}
+
+void ContentSettingFramebustBlockBubbleModel::Observe(
+    int type,
+    const content::NotificationSource& source,
+    const content::NotificationDetails& details) {
+  ContentSettingBubbleModel::Observe(type, source, details);
+  if (type == content::NOTIFICATION_WEB_CONTENTS_DESTROYED)
+    FramebustBlockTabHelper::FromWebContents(web_contents())->ClearObserver();
+}
+
+void ContentSettingFramebustBlockBubbleModel::OnListItemClicked(
+    int index,
+    int event_flags) {
+  if (!web_contents())
+    return;
+
+  const GURL& url = FramebustBlockTabHelper::FromWebContents(web_contents())
+                        ->GetBlockedUrls()[index];
+
+  // It is not necessary to clear the list of all its items as it will
+  // automatically happen when the navigation finishes.
+  web_contents()->GetController().LoadURL(
+      url, content::Referrer(), ui::PageTransition::PAGE_TRANSITION_LINK,
+      std::string());
+}
+
+void ContentSettingFramebustBlockBubbleModel::OnBlockedUrlAdded(
+    const GURL& blocked_url) {
+  AddListItem(CreateListItem(blocked_url));
+}
+
+ContentSettingBubbleModel::ListItem
+ContentSettingFramebustBlockBubbleModel::CreateListItem(const GURL& url) {
+  base::string16 title;
+  // Skip invalid URLS.
+  if (url.spec().empty())
+    title = l10n_util::GetStringUTF16(IDS_TAB_LOADING_TITLE);
+  else
+    title = base::UTF8ToUTF16(url.spec());
+
+  const bool use_md = ui::MaterialDesignController::IsSecondaryUiMaterial();
+  if (use_md) {
+    // Format the title to include the unicode single dot bullet code-point
+    // \u2022 and two spaces.
+    title = l10n_util::GetStringFUTF16(IDS_LIST_BULLET, title);
+  }
+
+  return ListItem(use_md
+                      ? gfx::Image()
+                      : ui::ResourceBundle::GetSharedInstance().GetImageNamed(
+                            IDR_DEFAULT_FAVICON),
+                  title, true, 0);
 }
 
 // ContentSettingBubbleModel ---------------------------------------------------
