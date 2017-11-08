@@ -45,6 +45,30 @@
       "revId": "b055ee6eaf7a50142d344202fca96b54e276a78c",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4b6b1bc1_e4d3476d",
+        "filename": "chrome/browser/thumbnails/thumbnail_tab_helper.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 119,
+      "author": {
+        "id": 1116059
+      },
+      "writtenOn": "2017-11-08T13:29:59Z",
+      "side": 1,
+      "message": "It\u0027s a bit misnamed now I guess, but I think it is meaningful, per the comment above: We don\u0027t really know what the visual state is, so best not to take a screenshot until we get another paint notification (or not take a screenshot at all if that notification doesn\u0027t come).",
+      "parentUuid": "40b5e7e5_2ddf9556",
+      "range": {
+        "startLine": 119,
+        "startChar": 46,
+        "endLine": 119,
+        "endChar": 0
+      },
+      "revId": "b055ee6eaf7a50142d344202fca96b54e276a78c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
