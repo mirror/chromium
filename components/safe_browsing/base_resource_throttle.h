@@ -169,6 +169,9 @@ class BaseResourceThrottle
   const content::ResourceType resource_type_;
   NetEventLogger net_event_logger_;
 
+  base::TimeDelta total_delay_;
+  bool user_action_involved_ = false;
+
   DISALLOW_COPY_AND_ASSIGN(BaseResourceThrottle);
 };
 
