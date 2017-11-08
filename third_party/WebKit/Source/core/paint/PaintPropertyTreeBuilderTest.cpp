@@ -3459,6 +3459,20 @@ TEST_P(PaintPropertyTreeBuilderTest, PaintOffsetsUnderMultiColumnScrolled) {
                                  .To2DTranslation());
 }
 
+TEST_P(PaintPropertyTreeBuilderTest, PaintOffsetsUnderMultiColumnWithOutline) {
+  SetBodyInnerHTML(R"HTML(
+    <div style='columns: 1'>
+      <div id=target style='outline: 2px solid black; width: 200px; height: 100px; background: lightblue'></div>
+    </div>
+  )HTML");
+
+  LayoutObject* target = GetLayoutObjectByElementId("target");
+
+  // Outline does not affect paint offset, since it is positioned to the
+  // top-left of the border box.
+  EXPECT_EQ(LayoutPoint(8, 8), target->FirstFragment().PaintOffset());
+}
+
 TEST_P(PaintPropertyTreeBuilderTest,
        PaintOffsetUnderMulticolumnScrollFixedPos) {
   SetBodyInnerHTML(R"HTML(
