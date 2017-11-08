@@ -471,6 +471,10 @@ void KeyboardController::OnTextInputStateChanged(
       client && (client->GetTextInputType() != ui::TEXT_INPUT_TYPE_NONE);
   bool should_hide = !focused && container_behavior_->TextBlurHidesKeyboard();
 
+  LOG(ERROR) << "OnTextInputStateChanged: client = " << client;
+  if (client)
+    LOG(ERROR) << " type = " << client->GetTextInputType();
+
   if (should_hide) {
     switch (state_) {
       case KeyboardControllerState::LOADING_EXTENSION:

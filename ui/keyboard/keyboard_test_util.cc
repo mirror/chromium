@@ -39,9 +39,9 @@ class WindowVisibilityChangeWaiter : public aura::WindowObserver {
 class ControllerStateChangeWaiter
     : public keyboard::KeyboardControllerObserver {
  public:
-  explicit ControllerStateChangeWaiter(keyboard::KeyboardControllerState state)
-      : controller_(keyboard::KeyboardController::GetInstance()),
-        state_(state) {
+  explicit ControllerStateChangeWaiter(keyboard::KeyboardControllerState state,
+                                       keyboard::KeyboardController* controller)
+      : controller_(controller), state_(state) {
     controller_->AddObserver(this);
   }
   ~ControllerStateChangeWaiter() override { controller_->RemoveObserver(this); }
@@ -87,8 +87,9 @@ bool WaitUntilHidden() {
   return WaitVisibilityChangesTo(false);
 }
 
-void WaitControllerStateChangesTo(KeyboardControllerState state) {
-  ControllerStateChangeWaiter waiter(state);
+void WaitControllerStateChangesTo(KeyboardControllerState state,
+                                  KeyboardController* controller) {
+  ControllerStateChangeWaiter waiter(state, controller);
   waiter.Wait();
 }
 

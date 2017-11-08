@@ -26,7 +26,9 @@ bool WaitUntilShown();
 bool WaitUntilHidden();
 
 // Waits until the keyboard state is changed to the given state.
-void WaitControllerStateChangesTo(const KeyboardControllerState state);
+void WaitControllerStateChangesTo(
+    const KeyboardControllerState state,
+    KeyboardController* controller = KeyboardController::GetInstance());
 
 // Gets the calculated keyboard bounds from |root_bounds|. The keyboard height
 // is specified by |keyboard_height|.

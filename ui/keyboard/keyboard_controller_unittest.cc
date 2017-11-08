@@ -16,6 +16,7 @@
 #include "ui/aura/client/focus_client.h"
 #include "ui/aura/test/aura_test_helper.h"
 #include "ui/aura/test/test_window_delegate.h"
+#include "ui/aura/test/test_windows.h"
 #include "ui/aura/window.h"
 #include "ui/base/ime/dummy_text_input_client.h"
 #include "ui/base/ime/input_method.h"
@@ -676,6 +677,40 @@ TEST_F(KeyboardControllerTest, DisplayChangeShouldNotifyBoundsChange) {
   EXPECT_EQ(2, number_of_calls());
   MockRotateScreen();
   EXPECT_EQ(3, number_of_calls());
+}
+
+TEST_F(KeyboardControllerTest, HidingKeyboardRetainWindowFocus) {
+  base::RunLoop run_loop;
+  ScopedTouchKeyboardEnabler scoped_keyboard_enabler;
+  ui::DummyTextInputClient no_input_client(ui::TEXT_INPUT_TYPE_NONE);
+  std::unique_ptr<aura::Window> window(aura::test::CreateTestWindowWithBounds(
+      root_window()->bounds(), root_window()));
+
+  aura::Window* container(controller()->GetContainerWindow());
+  root_window()->AddChild(container);
+  controller()->LoadKeyboardUiInBackground();
+  EXPECT_EQ(KeyboardControllerState::LOADING_EXTENSION,
+            controller()->GetStateForTest());
+  aura::Window* contents(ui()->GetContentsWindow());
+  contents->SetBounds(gfx::Rect(0, 0, 800, 100));
+  EXPECT_EQ(KeyboardControllerState::HIDDEN, controller()->GetStateForTest());
+
+  EXPECT_FALSE(window->HasFocus());
+
+  window->Show();
+  EXPECT_TRUE(window->IsVisible());
+  window->Focus();
+  EXPECT_TRUE(window->HasFocus());
+
+  EXPECT_EQ(KeyboardControllerState::HIDDEN, controller()->GetStateForTest());
+  ShowKeyboard();
+  EXPECT_EQ(KeyboardControllerState::SHOWN, controller()->GetStateForTest());
+  EXPECT_EQ(gfx::Rect(0, 500, 800, 100), container->bounds());
+  SetFocus(&no_input_client);
+  EXPECT_TRUE(WillHideKeyboard());
+  WaitControllerStateChangesTo(KeyboardControllerState::HIDDEN, controller());
+  EXPECT_FALSE(container->IsVisible());
+  EXPECT_TRUE(window->HasFocus());
 }
 
 }  // namespace keyboard

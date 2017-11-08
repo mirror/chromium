@@ -460,11 +460,14 @@ void TrayBubbleView::FocusDefaultIfNeeded() {
   if (!view)
     return;
 
+  LOG(ERROR) << "TrayBubbleView::FocusDefaultIfNeeded";
+
   // No need to explicitly activate the widget. View::RequestFocus will activate
   // it if necessary.
   set_can_activate(true);
 
   view->RequestFocus();
+  LOG(ERROR) << "End of TrayBubbleView::FocusDefaultIfNeeded";
 }
 
 }  // namespace views

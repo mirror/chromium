@@ -1788,6 +1788,8 @@ void RenderWidgetHostViewAura::OnWindowFocused(aura::Window* gained_focus,
                                                aura::Window* lost_focus) {
   DCHECK(window_ == gained_focus || window_ == lost_focus);
   if (window_ == gained_focus) {
+    LOG(ERROR) << "RWHVA get focus";
+
     // We need to honor input bypass if the associated tab is does not want
     // input. This gives the current focused window a chance to be the text
     // input client and handle events.
@@ -1809,6 +1811,9 @@ void RenderWidgetHostViewAura::OnWindowFocused(aura::Window* gained_focus,
     if (manager)
       manager->OnWindowFocused();
   } else if (window_ == lost_focus) {
+    LOG(ERROR) << "RWVHA lost focus, gained = " << gained_focus;
+    if (gained_focus)
+      LOG(ERROR) << ", name = " << gained_focus->GetName();
     host_->SetActive(false);
     host_->LostFocus();
 

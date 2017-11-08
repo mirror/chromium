@@ -193,6 +193,7 @@ class ImeButtonsView : public views::View, public views::ButtonListener {
 
   // views::ButtonListener:
   void ButtonPressed(views::Button* sender, const ui::Event& event) override {
+    LOG(ERROR) << "ImeButtonsView::ButtonPressed";
     if (sender == settings_button_) {
       ime_menu_tray_->CloseBubble();
       ShowIMESettings();
@@ -216,6 +217,7 @@ class ImeButtonsView : public views::View, public views::ButtonListener {
       NOTREACHED();
     }
 
+    LOG(ERROR) << "Calling ShowKeyboardWithKeyset";
     ime_menu_tray_->ShowKeyboardWithKeyset(keyset);
   }
 
@@ -361,11 +363,15 @@ void ImeMenuTray::ShowImeMenuBubbleInternal(bool show_by_click) {
 }
 
 void ImeMenuTray::ShowKeyboardWithKeyset(const std::string& keyset) {
+  LOG(ERROR) << "ShowKeyboardWithKeySet";
   CloseBubble();
+  LOG(ERROR) << "CloseBubble";
 
   // Overrides the keyboard url ref to make it shown with the given keyset.
   if (InputMethodManager::Get())
     InputMethodManager::Get()->OverrideKeyboardUrlRef(keyset);
+
+  LOG(ERROR) << "Overrides the keyboard url";
 
   // If onscreen keyboard has been enabled, shows the keyboard directly.
   keyboard::KeyboardController* keyboard_controller =
@@ -381,6 +387,7 @@ void ImeMenuTray::ShowKeyboardWithKeyset(const std::string& keyset) {
     // native side could just skip showing the keyboard.
     if (!keyboard_controller->IsKeyboardWindowCreated())
       keyboard_controller->ShowKeyboard(false);
+    LOG(ERROR) << "End 1";
     return;
   }
 
@@ -399,6 +406,8 @@ void ImeMenuTray::ShowKeyboardWithKeyset(const std::string& keyset) {
     keyboard_controller->AddObserver(this);
     keyboard_controller->ShowKeyboard(false);
   }
+
+  LOG(ERROR) << "End 2";
 }
 
 bool ImeMenuTray::ShouldShowBottomButtons() {
