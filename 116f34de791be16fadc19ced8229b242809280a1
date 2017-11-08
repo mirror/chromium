@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "d7d26b89_e6855cce",
+        "filename": "content/browser/download/download_response_handler.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 145,
+      "author": {
+        "id": 1107754
+      },
+      "writtenOn": "2017-11-08T16:43:12Z",
+      "side": 1,
+      "message": "Should we have a custom interrupt reason.",
+      "range": {
+        "startLine": 145,
+        "startChar": 20,
+        "endLine": 145,
+        "endChar": 64
+      },
+      "revId": "116f34de791be16fadc19ced8229b242809280a1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
