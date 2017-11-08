@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "f017cccc_6c128863",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/partnerbookmarks/PartnerBookmarksReader.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 56,
+      "author": {
+        "id": 1144344
+      },
+      "writtenOn": "2017-11-08T06:07:20Z",
+      "side": 1,
+      "message": "This can be done in the next CL.",
+      "parentUuid": "a871d1f3_f02c51f8",
+      "range": {
+        "startLine": 56,
+        "startChar": 13,
+        "endLine": 56,
+        "endChar": 29
+      },
+      "revId": "4f1b62a727227be19581e42af9ffc69c7183056e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "ef67930f_aa7b823c",
         "filename": "chrome/android/java/src/org/chromium/chrome/browser/partnerbookmarks/PartnerBookmarksReader.java",
         "patchSetId": 5
@@ -59,6 +83,30 @@
       "writtenOn": "2017-11-07T23:05:56Z",
       "side": 1,
       "message": "PartnerBookmarksShim also calls this, right? The caller there needs renaming as well.",
+      "range": {
+        "startLine": 127,
+        "startChar": 19,
+        "endLine": 127,
+        "endChar": 27
+      },
+      "revId": "4f1b62a727227be19581e42af9ffc69c7183056e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "31d82193_0071b081",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/partnerbookmarks/PartnerBookmarksReader.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 127,
+      "author": {
+        "id": 1144344
+      },
+      "writtenOn": "2017-11-08T06:07:20Z",
+      "side": 1,
+      "message": "Ah, I read it wrong. Please ignore this one.\n\nAnother question: is there a racing condition calling shutDown() from different threads?",
+      "parentUuid": "5e21f7a1_49fb1ed3",
       "range": {
         "startLine": 127,
         "startChar": 19,
