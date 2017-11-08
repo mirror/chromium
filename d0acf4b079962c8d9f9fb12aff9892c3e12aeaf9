@@ -1,0 +1,55 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "c7982e5a_16e51db7",
+        "filename": "ash/display/cursor_window_controller.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 94,
+      "author": {
+        "id": 1001380
+      },
+      "writtenOn": "2017-11-08T00:54:28Z",
+      "side": 1,
+      "message": "nit: initialize this to be consistent",
+      "revId": "d0acf4b079962c8d9f9fb12aff9892c3e12aeaf9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1c5e8ec6_2500e9dc",
+        "filename": "ash/display/display_manager_unittest.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 3880,
+      "author": {
+        "id": 1001380
+      },
+      "writtenOn": "2017-11-08T00:54:28Z",
+      "side": 1,
+      "message": "just use gfx:Rect(). Using string is legacy pattern that was necessary when pretty print wasn\u0027t available in EXPECT_XX",
+      "revId": "d0acf4b079962c8d9f9fb12aff9892c3e12aeaf9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d6660964_6e019eed",
+        "filename": "ash/display/display_manager_unittest.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 3887,
+      "author": {
+        "id": 1001380
+      },
+      "writtenOn": "2017-11-08T00:54:28Z",
+      "side": 1,
+      "message": "ditto",
+      "revId": "d0acf4b079962c8d9f9fb12aff9892c3e12aeaf9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
