@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "c2facae8_68f08709",
+        "filename": "chrome/browser/ui/app_list/app_list_view_delegate.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 272,
+      "author": {
+        "id": 1000101
+      },
+      "writtenOn": "2017-11-08T23:17:15Z",
+      "side": 1,
+      "message": "This might cause the suggestions to flash because we would re-create the suggestion items now.\n\nAlso I am not sure whether it would actually fix the answer card crash. It seems to me that the answer card webView is owned by AnswerCardSearchProvider. The provider is only deleted when AppListViewDelegate::SetProfile is called with a different profile. I think we should clear the result when we release SearchController [1], not when closing app list.\n\nIf the assumption is correct, the crash could probably be repro\u0027d liks this:\n1. Have two users A and B signed in;\n2. In user A, do some launcher search and ensure you have an answer card;\n3. Switch to user B, pull up launcher. You don\u0027t need to search but pulling up the launcher would cause SearchController be destroyed but user A\u0027s AppListModel still holds a reference to the WebView;\n4. Switch back to user A, pull up the launcher. And we should crash because of the dangling WebView pointer;\n\n[1]: https://cs.chromium.org/chromium/src/chrome/browser/ui/app_list/app_list_view_delegate.cc?rcl\u003d905e5b5cd96bfd7dd5b51525cad1d398c7850f10\u0026l\u003d134",
+      "revId": "6e9d55901f001a384597b78e5e96305d04090467",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7844ae95_30f600eb",
+        "filename": "ui/app_list/views/app_list_view.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 414,
+      "author": {
+        "id": 1000101
+      },
+      "writtenOn": "2017-11-08T23:17:15Z",
+      "side": 1,
+      "message": "nit: \"explicit\" is no longer needed since it is no longer a single arg ctor",
+      "revId": "6e9d55901f001a384597b78e5e96305d04090467",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
