@@ -128,6 +128,8 @@ class VIZ_SERVICE_EXPORT SurfaceManager {
   // possibly because a renderer process has crashed.
   void InvalidateFrameSinkId(const FrameSinkId& frame_sink_id);
 
+  bool IsFrameSinkIdValid(const FrameSinkId& frame_sink_id);
+
   // Set |debug_label| of the |frame_sink_id|. |frame_sink_id| must exist in
   // |valid_frame_sink_labels_| already when UpdateFrameSinkDebugLabel is
   // called.
@@ -145,6 +147,11 @@ class VIZ_SERVICE_EXPORT SurfaceManager {
                                   const FrameSinkId& child_frame_sink_id);
   void UnregisterFrameSinkHierarchy(const FrameSinkId& parent_frame_sink_id,
                                     const FrameSinkId& child_frame_sink_id);
+
+  const base::flat_map<FrameSinkId, std::string>& valid_frame_sink_labels()
+      const {
+    return valid_frame_sink_labels_;
+  }
 
   // Returns the top level root SurfaceId. Surfaces that are not reachable
   // from the top level root may be garbage collected. It will not be a valid
@@ -188,6 +195,10 @@ class VIZ_SERVICE_EXPORT SurfaceManager {
   bool using_surface_references() const {
     return lifetime_type_ == LifetimeType::REFERENCES;
   }
+
+  // Called by SurfaceAggregator notifying us that it will use |surface| in the
+  // next display frame. We will notify SurfaceObservers accordingly.
+  void SurfaceWillBeDrawn(Surface* surface);
 
  private:
   friend class test::SurfaceSynchronizationTest;
