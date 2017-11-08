@@ -57,7 +57,7 @@ class CORE_EXPORT WebRemoteFrameImpl final
                                     WebRemoteFrameClient*,
                                     WebFrame* opener) override;
   void SetWebLayer(WebLayer*) override;
-  void SetReplicatedOrigin(const WebSecurityOrigin&) override;
+  void SetReplicatedOrigin(const WebMutableSecurityOrigin&) override;
   void SetReplicatedSandboxFlags(WebSandboxFlags) override;
   void SetReplicatedName(const WebString&) override;
   void SetReplicatedFeaturePolicyHeader(

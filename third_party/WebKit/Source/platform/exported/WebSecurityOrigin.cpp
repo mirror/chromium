@@ -37,21 +37,45 @@
 
 namespace blink {
 
+WebMutableSecurityOrigin WebMutableSecurityOrigin::CreateFromString(
+    const WebString& origin) {
+  return WebMutableSecurityOrigin(SecurityOrigin::CreateFromString(origin));
+}
+
+WebMutableSecurityOrigin WebMutableSecurityOrigin::Create(const WebURL& url) {
+  return WebMutableSecurityOrigin(SecurityOrigin::Create(url));
+}
+
+WebMutableSecurityOrigin WebMutableSecurityOrigin::CreateUnique() {
+  return WebMutableSecurityOrigin(SecurityOrigin::CreateUnique());
+}
+
+void WebMutableSecurityOrigin::Reset() {
+  private_ = nullptr;
+}
+
+void WebMutableSecurityOrigin::Assign(const WebMutableSecurityOrigin& other) {
+  private_ = other.private_;
+}
+
+WebMutableSecurityOrigin::WebMutableSecurityOrigin(
+    scoped_refptr<SecurityOrigin> origin)
+    : private_(std::move(origin)) {}
+
+SecurityOrigin* WebMutableSecurityOrigin::Get() const {
+  return private_.Get();
+}
+
+WebMutableSecurityOrigin::WebMutableSecurityOrigin(const url::Origin& origin) {
+  *this = SecurityOrigin::CreateFromUrlOrigin(origin);
+}
+
 WebSecurityOrigin WebSecurityOrigin::CreateFromString(const WebString& origin) {
   return WebSecurityOrigin(SecurityOrigin::CreateFromString(origin));
 }
 
 WebSecurityOrigin WebSecurityOrigin::Create(const WebURL& url) {
   return WebSecurityOrigin(SecurityOrigin::Create(url));
-}
-
-WebSecurityOrigin WebSecurityOrigin::CreateFromTupleWithSuborigin(
-    const WebString& protocol,
-    const WebString& host,
-    int port,
-    const WebString& suborigin) {
-  return WebSecurityOrigin(
-      SecurityOrigin::Create(protocol, host, port, suborigin));
 }
 
 WebSecurityOrigin WebSecurityOrigin::CreateUnique() {
@@ -64,6 +88,10 @@ void WebSecurityOrigin::Reset() {
 
 void WebSecurityOrigin::Assign(const WebSecurityOrigin& other) {
   private_ = other.private_;
+}
+
+void WebSecurityOrigin::Assign(const WebMutableSecurityOrigin& other) {
+  private_ = other.Get();
 }
 
 WebString WebSecurityOrigin::Protocol() const {

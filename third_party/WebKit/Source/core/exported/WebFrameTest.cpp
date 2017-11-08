@@ -9483,7 +9483,7 @@ TEST_P(WebFrameSwapTest, NavigateRemoteFrameViaLocation) {
   ASSERT_EQ(MainFrame()->FirstChild(), remote_frame);
 
   remote_frame->SetReplicatedOrigin(
-      WebSecurityOrigin::CreateFromString("http://127.0.0.1"));
+      SecurityOrigin::CreateFromString("http://127.0.0.1"));
   MainFrame()->ExecuteScript(
       WebScriptSource("document.getElementsByTagName('iframe')[0]."
                       "contentWindow.location = 'data:text/html,hi'"));
