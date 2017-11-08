@@ -171,16 +171,13 @@ class PluginInfoMessageFilter : public content::BrowserMessageFilter,
   void ReportMetrics(int render_frame_id,
                      const base::StringPiece& mime_type,
                      const GURL& url,
-                     const url::Origin& main_frame_origin,
-                     ukm::SourceId ukm_source_id);
+                     const url::Origin& main_frame_origin);
 
   Context context_;
   std::unique_ptr<KeyedServiceShutdownNotifier::Subscription>
       shutdown_notifier_;
 
   scoped_refptr<base::SingleThreadTaskRunner> main_thread_task_runner_;
-
-  const ukm::SourceId ukm_source_id_;
 
   // Binding is mutable so we can Close it in the const OnDestruct method
   // (which unfortunately hops ~PluginInfoMesssageFilter to the UI thread).

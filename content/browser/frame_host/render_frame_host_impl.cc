@@ -695,6 +695,10 @@ const url::Origin& RenderFrameHostImpl::GetLastCommittedOrigin() {
   return last_committed_origin_;
 }
 
+int64_t RenderFrameHostImpl::GetDocumentId() {
+  return document_id_;
+}
+
 gfx::NativeView RenderFrameHostImpl::GetNativeView() {
   RenderWidgetHostView* view = render_view_host_->GetWidget()->GetView();
   if (!view)
@@ -1376,10 +1380,14 @@ void RenderFrameHostImpl::DidNavigate(
   if (!params.url_is_unreachable)
     last_successful_url_ = params.url;
 
-  // After setting the last committed origin, reset the feature policy in the
-  // RenderFrameHost to a blank policy based on the parent frame.
-  if (!is_same_document_navigation)
+  if (!is_same_document_navigation) {
+    static int64_t unique_id_counter_ = 0;
+    document_id_ = ++unique_id_counter_;
+
+    // After setting the last committed origin, reset the feature policy in the
+    // RenderFrameHost to a blank policy based on the parent frame.
     ResetFeaturePolicy();
+  }
 }
 
 void RenderFrameHostImpl::SetLastCommittedOrigin(const url::Origin& origin) {

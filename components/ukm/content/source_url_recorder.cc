@@ -9,6 +9,7 @@
 #include "base/containers/flat_map.h"
 #include "base/macros.h"
 #include "content/public/browser/navigation_handle.h"
+#include "content/public/browser/render_frame_host.h"
 #include "content/public/browser/web_contents.h"
 #include "content/public/browser/web_contents_observer.h"
 #include "content/public/browser/web_contents_user_data.h"
@@ -105,13 +106,19 @@ void SourceUrlRecorderWebContentsObserver::MaybeRecordUrl(
 
   const ukm::SourceId source_id = ukm::ConvertToSourceId(
       navigation_handle->GetNavigationId(), ukm::SourceIdType::NAVIGATION_ID);
+  const ukm::SourceId doc_id =
+      ukm::ConvertToSourceId(web_contents()->GetMainFrame()->GetDocumentId(),
+                             ukm::SourceIdType::DOCUMENT_ID);
 
   if (IsValidUkmUrl(initial_url))
     ukm_recorder->UpdateSourceURL(source_id, initial_url);
 
   const GURL& final_url = navigation_handle->GetURL();
-  if (final_url != initial_url && IsValidUkmUrl(final_url))
-    ukm_recorder->UpdateSourceURL(source_id, final_url);
+  if (IsValidUkmUrl(final_url)) {
+    if (final_url != initial_url)
+      ukm_recorder->UpdateSourceURL(source_id, final_url);
+    ukm_recorder->UpdateSourceURL(doc_id, final_url);
+  }
 }
 
 // static
