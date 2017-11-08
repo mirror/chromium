@@ -183,6 +183,29 @@
       "revId": "9f25c2f755325b25c013004a3d44ff8035c0fb16",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "113b86e2_89da4de3",
+        "filename": "testing/variations/fieldtrial_testing_config.json",
+        "patchSetId": 9
+      },
+      "lineNbr": 880,
+      "author": {
+        "id": 1212246
+      },
+      "writtenOn": "2017-11-08T21:12:03Z",
+      "side": 1,
+      "message": "I need a bit of clarification on the features. If I understand correctly, this one controls the enforcement of the model decision, or does it control more than that (e.g. logging)?. We also have ContextualSearchRankerQuery that controls whether or not we query the ranker.\n\nI think the study name here is a bit too general. How about using \"ContextualSearchRanker\"?",
+      "range": {
+        "startLine": 880,
+        "startChar": 25,
+        "endLine": 880,
+        "endChar": 57
+      },
+      "revId": "9f25c2f755325b25c013004a3d44ff8035c0fb16",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
