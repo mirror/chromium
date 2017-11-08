@@ -859,7 +859,7 @@ TEST_F(BluetoothGattBlueZTest, GattCharacteristicAddedAndRemoved) {
   EXPECT_TRUE(service->GetCharacteristics().empty());
 
   // Re-expose the heart rate characteristics. We shouldn't get another
-  // GattDiscoveryCompleteForService call, since the service thinks that
+  // GattServiceRemoved call, since the service thinks that
   // discovery is done. On the bluetoothd side, characteristics will be removed
   // only if the service will also be subsequently removed.
   fake_bluetooth_gatt_characteristic_client_->ExposeHeartRateCharacteristics(

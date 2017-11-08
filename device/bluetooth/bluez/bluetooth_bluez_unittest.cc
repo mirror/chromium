@@ -4287,7 +4287,6 @@ TEST_F(BluetoothBlueZTest, Shutdown) {
   // NotifyGattServiceAdded
   // NotifyGattServiceRemoved
   // NotifyGattServiceChanged
-  // NotifyGattDiscoveryComplete
   // NotifyGattCharacteristicAdded
   // NotifyGattCharacteristicRemoved
   // NotifyGattDescriptorAdded

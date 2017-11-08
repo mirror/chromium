@@ -220,14 +220,6 @@ void BluetoothAdapter::NotifyGattServicesDiscovered(BluetoothDevice* device) {
     observer.GattServicesDiscovered(this, device);
 }
 
-void BluetoothAdapter::NotifyGattDiscoveryComplete(
-    BluetoothRemoteGattService* service) {
-  DCHECK_EQ(service->GetDevice()->GetAdapter(), this);
-
-  for (auto& observer : observers_)
-    observer.GattDiscoveryCompleteForService(this, service);
-}
-
 void BluetoothAdapter::NotifyGattCharacteristicAdded(
     BluetoothRemoteGattCharacteristic* characteristic) {
   DCHECK_EQ(characteristic->GetService()->GetDevice()->GetAdapter(), this);

@@ -57,15 +57,6 @@ void BluetoothLowEnergyCharacteristicsFinder::GattCharacteristicAdded(
   HandleCharacteristicUpdate(characteristic);
 }
 
-void BluetoothLowEnergyCharacteristicsFinder::GattDiscoveryCompleteForService(
-    BluetoothAdapter* adapter,
-    BluetoothRemoteGattService* service) {
-  if (!service || service->GetUUID() != remote_service_.uuid)
-    return;
-
-  OnCharacteristicDiscoveryEnded(service->GetDevice());
-}
-
 void BluetoothLowEnergyCharacteristicsFinder::GattServicesDiscovered(
     BluetoothAdapter* adapter,
     BluetoothDevice* device) {
