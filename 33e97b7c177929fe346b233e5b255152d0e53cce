@@ -1,0 +1,123 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "6eddd179_cc54d337",
+        "filename": "third_party/WebKit/Source/core/dom/DOMImplementation.cpp",
+        "patchSetId": 8
+      },
+      "lineNbr": 96,
+      "author": {
+        "id": 1115924
+      },
+      "writtenOn": "2017-11-08T22:21:14Z",
+      "side": 1,
+      "message": "Covered by http/tests/security/create-document-change-domain.html",
+      "revId": "33e97b7c177929fe346b233e5b255152d0e53cce",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e83ac699_660c2fe7",
+        "filename": "third_party/WebKit/Source/core/dom/DOMImplementation.cpp",
+        "patchSetId": 8
+      },
+      "lineNbr": 219,
+      "author": {
+        "id": 1115924
+      },
+      "writtenOn": "2017-11-08T22:21:14Z",
+      "side": 1,
+      "message": "Covered by http/tests/security/create-document-unique-origin.html",
+      "revId": "33e97b7c177929fe346b233e5b255152d0e53cce",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "42a66384_03009c4c",
+        "filename": "third_party/WebKit/Source/core/dom/Document.cpp",
+        "patchSetId": 8
+      },
+      "lineNbr": 565,
+      "author": {
+        "id": 1115924
+      },
+      "writtenOn": "2017-11-08T22:21:14Z",
+      "side": 1,
+      "message": "Not covered by tests.\n\n(Sharing Document\u0027s SecurityOrigin with a document created by JavaScript |new Document|)",
+      "revId": "33e97b7c177929fe346b233e5b255152d0e53cce",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "15ade445_ab3e4f76",
+        "filename": "third_party/WebKit/Source/core/dom/Document.cpp",
+        "patchSetId": 8
+      },
+      "lineNbr": 2917,
+      "author": {
+        "id": 1115924
+      },
+      "writtenOn": "2017-11-08T22:21:14Z",
+      "side": 1,
+      "message": "Covered by http/tests/security/aboutBlank/security-context-grandchildren-alias.html",
+      "revId": "33e97b7c177929fe346b233e5b255152d0e53cce",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "29e85a70_18b9cff6",
+        "filename": "third_party/WebKit/Source/core/dom/Document.cpp",
+        "patchSetId": 8
+      },
+      "lineNbr": 6051,
+      "author": {
+        "id": 1115924
+      },
+      "writtenOn": "2017-11-08T22:21:14Z",
+      "side": 1,
+      "message": "Covered by:\n\nCrash:\nexternal/wpt/webstorage/document-domain.html\n\nFail:\nexternal/wpt/html/browsers/origin/relaxing-the-same-origin-restriction/document_domain_setter_srcdoc.html\nhttp/tests/security/aboutBlank/security-context-alias.html\n\nTimeouts:\nfast/xmlhttprequest/xmlhttprequest-no-file-access.html\nhttp/tests/security/cross-frame-access-parent-explicit-domain.html\nhttp/tests/security/popup-allowed-by-sandbox-when-allowed.html\nhttp/tests/security/popup-allowed-by-sandbox-is-sandboxed-control.html\nhttp/tests/security/popup-allowed-by-sandbox-is-sandboxed.html\nhttp/tests/security/cross-frame-access-protocol-explicit-domain.html\nhttp/tests/security/cross-frame-access-port-explicit-domain.html",
+      "revId": "33e97b7c177929fe346b233e5b255152d0e53cce",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "882a5a29_09e73d01",
+        "filename": "third_party/WebKit/Source/core/xml/DOMParser.cpp",
+        "patchSetId": 8
+      },
+      "lineNbr": 36,
+      "author": {
+        "id": 1115924
+      },
+      "writtenOn": "2017-11-08T22:21:14Z",
+      "side": 1,
+      "message": "Not covered by tests.\n\n(Sharing Document\u0027s SecurityOrigin with a document created by JavaScript\u0027s DOMParser\u0027s parseFromString())",
+      "revId": "33e97b7c177929fe346b233e5b255152d0e53cce",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e261aa1a_52fb9250",
+        "filename": "third_party/WebKit/Source/core/xml/XSLTProcessor.cpp",
+        "patchSetId": 8
+      },
+      "lineNbr": 96,
+      "author": {
+        "id": 1115924
+      },
+      "writtenOn": "2017-11-08T22:21:14Z",
+      "side": 1,
+      "message": "Not covered by tests.",
+      "revId": "33e97b7c177929fe346b233e5b255152d0e53cce",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
