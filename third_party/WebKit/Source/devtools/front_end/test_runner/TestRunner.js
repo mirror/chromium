@@ -471,11 +471,30 @@ TestRunner.deprecatedRunAfterPendingDispatches = function(callback) {
  * @return {!Promise<undefined>}
  */
 TestRunner.loadHTML = function(html) {
+  return TestRunner._loadHTML(html, false);
+};
+
+/**
+ * This doesn't set a base tag because it causes certain document.write
+ * calls to have unexpected results
+ * @param {string} html
+ * @return {!Promise<undefined>}
+ */
+TestRunner.forceLoadHTML = function(html) {
+  return TestRunner._loadHTML(html, true);
+};
+
+/**
+ * @param {string} html
+ * @param {boolean=} suppressBaseTag
+ * @return {!Promise<undefined>}
+ */
+TestRunner._loadHTML = function(html, suppressBaseTag) {
   var testPath = TestRunner.url();
-  if (!html.includes('<base'))
+  if (!html.includes('<base') && !suppressBaseTag)
     html = `<base href="${testPath}">` + html;
   html = html.replace(/'/g, '\\\'').replace(/\n/g, '\\n');
-  return TestRunner.evaluateInPageAnonymously(`document.write('${html}');document.close();`);
+  return TestRunner.evaluateInPageAnonymously(`document.write(\`${html}\`);document.close();`);
 };
 
 /**
