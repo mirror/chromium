@@ -20,7 +20,7 @@ include_rules = [
     "+net/http",
     "+public/platform",
     "-public/web",
-    "+services/network/public/interfaces",
+    "+services/network/public",
     "+services/service_manager/public/interfaces",
     "+third_party/skia",
     "+ui/gfx",

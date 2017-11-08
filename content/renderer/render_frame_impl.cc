@@ -5494,11 +5494,12 @@ void RenderFrameImpl::OnFailedNavigation(
       common_params, StartNavigationParams(), request_params));
 
   // Send the provisional load failure.
-  WebURLError error(
-      WebURLError::Domain::kNet, error_code,
+  blink::WebURLError error(
+      Domain::kNet, error_code,
       has_stale_copy_in_cache ? WebURLError::HasCopyInCache::kTrue
                               : WebURLError::HasCopyInCache::kFalse,
-      WebURLError::IsWebSecurityViolation::kFalse, common_params.url);
+      WebURLError::IsWebSecurityViolation::kFalse, common_params.url,
+      base::nullopt /* cors_error_status */);
   WebURLRequest failed_request =
       CreateURLRequestForNavigation(common_params, request_params,
                                     std::unique_ptr<StreamOverrideParameters>(),

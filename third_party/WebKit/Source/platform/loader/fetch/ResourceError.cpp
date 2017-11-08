@@ -42,7 +42,7 @@ constexpr char kThrottledErrorDescription[] =
 }  // namespace
 
 ResourceError ResourceError::CancelledError(const KURL& url) {
-  return ResourceError(Domain::kNet, net::ERR_ABORTED, url);
+  return ResourceError(Domain::kNet, net::ERR_ABORTED, url, WTF::nullopt);
 }
 
 ResourceError ResourceError::CancelledDueToAccessCheckError(
@@ -65,19 +65,26 @@ ResourceError ResourceError::CancelledDueToAccessCheckError(
 }
 
 ResourceError ResourceError::CacheMissError(const KURL& url) {
-  return ResourceError(Domain::kNet, net::ERR_CACHE_MISS, url);
+  return ResourceError(Domain::kNet, net::ERR_CACHE_MISS, url, WTF::nullopt);
 }
 
 ResourceError ResourceError::TimeoutError(const KURL& url) {
-  return ResourceError(Domain::kNet, net::ERR_TIMED_OUT, url);
+  return ResourceError(Domain::kNet, net::ERR_TIMED_OUT, url, WTF::nullopt);
 }
 
 ResourceError ResourceError::Failure(const KURL& url) {
-  return ResourceError(Domain::kNet, net::ERR_FAILED, url);
+  return ResourceError(Domain::kNet, net::ERR_FAILED, url, WTF::nullopt);
 }
 
-ResourceError::ResourceError(Domain domain, int error_code, const KURL& url)
-    : domain_(domain), error_code_(error_code), failing_url_(url) {
+ResourceError::ResourceError(
+    Domain domain,
+    int error_code,
+    const KURL& url,
+    WTF::Optional<network::CORSErrorStatus> cors_error_status)
+    : domain_(domain),
+      error_code_(error_code),
+      failing_url_(url),
+      cors_error_status_(cors_error_status) {
   DCHECK_NE(error_code_, 0);
   InitializeDescription();
 }
@@ -93,7 +100,8 @@ ResourceError::ResourceError(const WebURLError& error)
 }
 
 ResourceError ResourceError::Copy() const {
-  ResourceError error_copy(domain_, error_code_, failing_url_.Copy());
+  ResourceError error_copy(domain_, error_code_, failing_url_.Copy(),
+                           cors_error_status_);
   error_copy.stale_copy_in_cache_ = stale_copy_in_cache_;
   error_copy.localized_description_ = localized_description_.IsolatedCopy();
   error_copy.is_access_check_ = is_access_check_;
@@ -107,7 +115,7 @@ ResourceError::operator WebURLError() const {
                      is_access_check_
                          ? WebURLError::IsWebSecurityViolation::kTrue
                          : WebURLError::IsWebSecurityViolation::kFalse,
-                     failing_url_);
+                     failing_url_, cors_error_status_);
 }
 
 bool ResourceError::Compare(const ResourceError& a, const ResourceError& b) {
@@ -127,6 +135,9 @@ bool ResourceError::Compare(const ResourceError& a, const ResourceError& b) {
     return false;
 
   if (a.StaleCopyInCache() != b.StaleCopyInCache())
+    return false;
+
+  if (a.CORSErrorStatus() != b.CORSErrorStatus())
     return false;
 
   return true;
