@@ -16,6 +16,24 @@
       "revId": "00ef1e54fa73100f467b3a77a0d5969f62feb79f",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "76567dc3_d05979b9",
+        "filename": "content/public/android/java/src/org/chromium/content/browser/androidoverlay/DialogOverlayCore.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 156,
+      "author": {
+        "id": 1130490
+      },
+      "writtenOn": "2017-11-08T16:21:10Z",
+      "side": 1,
+      "message": "i did it this way so that the dismiss call is synchronous with respect to surfaceDestroyed.  doing it in DSImpl will require a post to the right thread.\n\nhowever, you have a good point -- maybe sync isn\u0027t actually necessary.  i\u0027ll give it a try.\n\nnot sure that i understand the idea about swapping wait / enforce.  we have to give the client time to quit using the surface before returning, else android breaks sometimes.",
+      "parentUuid": "e33e1aec_75e66273",
+      "revId": "00ef1e54fa73100f467b3a77a0d5969f62feb79f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
