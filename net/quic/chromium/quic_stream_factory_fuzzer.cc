@@ -115,9 +115,11 @@ extern "C" int LLVMFuzzerTestOneInput(const uint8_t* data, size_t size) {
                   env->net_log, &net_error_details, callback.callback());
 
   callback.WaitForResult();
-  std::unique_ptr<HttpStream> stream = request.CreateStream();
-  if (!stream.get())
+  std::unique_ptr<QuicChromiumClientSession::Handle> session =
+      request.ReleaseSessionHandle();
+  if (!session)
     return 0;
+  std::unique_ptr<HttpStream> stream(new QuicHttpStream(std::move(session)));
 
   HttpRequestInfo request_info;
   request_info.method = kMethod;
