@@ -6,7 +6,6 @@
 
 #include "ui/app_list/app_list_constants.h"
 #include "ui/app_list/app_list_features.h"
-#include "ui/app_list/views/all_apps_tile_item_view.h"
 #include "ui/app_list/views/app_list_main_view.h"
 #include "ui/app_list/views/contents_view.h"
 #include "ui/app_list/views/search_result_tile_item_view.h"
@@ -25,10 +24,8 @@ constexpr int kTilesHorizontalMarginLeft = 145;
 
 SuggestionsContainerView::SuggestionsContainerView(
     ContentsView* contents_view,
-    AllAppsTileItemView* all_apps_button,
     PaginationModel* pagination_model)
     : contents_view_(contents_view),
-      all_apps_button_(all_apps_button),
       pagination_model_(pagination_model),
       is_fullscreen_app_list_enabled_(features::IsFullscreenAppListEnabled()) {
   SetPaintToLayer();
@@ -37,10 +34,6 @@ SuggestionsContainerView::SuggestionsContainerView(
   DCHECK(contents_view);
   view_delegate_ = contents_view_->app_list_main_view()->view_delegate();
   SetBackground(views::CreateSolidBackground(kLabelBackgroundColor));
-  if (all_apps_button_) {
-    all_apps_button_->SetHoverStyle(TileItemView::HOVER_STYLE_ANIMATE_SHADOW);
-    all_apps_button_->SetParentBackgroundColor(kLabelBackgroundColor);
-  }
 
   CreateAppsGrid(is_fullscreen_app_list_enabled_ ? kNumStartPageTilesFullscreen
                                                  : kNumStartPageTiles);
@@ -50,8 +43,6 @@ SuggestionsContainerView::~SuggestionsContainerView() = default;
 
 TileItemView* SuggestionsContainerView::GetTileItemView(int index) {
   DCHECK_GT(num_results(), index);
-  if (all_apps_button_ && index == num_results() - 1)
-    return all_apps_button_;
 
   return search_result_tile_views_[index];
 }
@@ -79,8 +70,6 @@ int SuggestionsContainerView::DoUpdate() {
     for (size_t i = 0; i < search_result_tile_views_.size(); ++i)
       delete search_result_tile_views_[i];
     search_result_tile_views_.clear();
-    if (all_apps_button_)
-      RemoveChildView(all_apps_button_);
 
     CreateAppsGrid(is_fullscreen_app_list_enabled_
                        ? kNumStartPageTilesFullscreen
@@ -176,18 +165,6 @@ void SuggestionsContainerView::CreateAppsGrid(int apps_num) {
     tile_item->SetParentBackgroundColor(kLabelBackgroundColor);
     tile_item->SetHoverStyle(TileItemView::HOVER_STYLE_ANIMATE_SHADOW);
     search_result_tile_views_.emplace_back(tile_item);
-  }
-
-  if (all_apps_button_ && !is_fullscreen_app_list_enabled_) {
-    all_apps_button_->UpdateIcon();
-
-    // Also add a special "all apps" button to the end of the next row of the
-    // container.
-    if (i % kNumTilesCols == 0)
-      tiles_layout_manager->StartRow(0, 0);
-
-    tiles_layout_manager->AddView(all_apps_button_);
-    AddChildView(all_apps_button_);
   }
 }
 
