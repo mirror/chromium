@@ -17,6 +17,7 @@
 #include "content/browser/background_fetch/storage/create_registration_task.h"
 #include "content/browser/background_fetch/storage/database_task.h"
 #include "content/browser/background_fetch/storage/delete_registration_task.h"
+#include "content/browser/background_fetch/storage/get_registration_task.h"
 #include "content/browser/background_fetch/storage/mark_registration_for_deletion_task.h"
 #include "content/browser/blob_storage/chrome_blob_storage_context.h"
 #include "content/browser/service_worker/service_worker_context_wrapper.h"
@@ -245,6 +246,14 @@ void BackgroundFetchDataManager::GetRegistration(
     GetRegistrationCallback callback) {
   DCHECK_CURRENTLY_ON(BrowserThread::IO);
 
+  if (base::CommandLine::ForCurrentProcess()->HasSwitch(
+          switches::kEnableBackgroundFetchPersistence)) {
+    AddDatabaseTask(std::make_unique<background_fetch::GetRegistrationTask>(
+        this, service_worker_registration_id, origin, developer_id,
+        std::move(callback)));
+    return;
+  }
+
   auto developer_id_tuple =
       std::make_tuple(service_worker_registration_id, origin, developer_id);
 
@@ -315,19 +324,6 @@ void BackgroundFetchDataManager::PopNextRequest(
     next_request = registration_data->PopNextPendingRequest();
 
   std::move(callback).Run(std::move(next_request));
-}
-
-void BackgroundFetchDataManager::MarkRequestAsStarted(
-    const BackgroundFetchRegistrationId& registration_id,
-    BackgroundFetchRequestInfo* request,
-    const std::string& download_guid) {
-  DCHECK_CURRENTLY_ON(BrowserThread::IO);
-
-  auto iter = registrations_.find(registration_id.unique_id());
-  DCHECK(iter != registrations_.end());
-
-  RegistrationData* registration_data = iter->second.get();
-  registration_data->MarkRequestAsStarted(request, download_guid);
 }
 
 void BackgroundFetchDataManager::MarkRequestAsComplete(
