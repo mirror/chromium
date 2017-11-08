@@ -1,0 +1,96 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "4591cc98_f2a2d719",
+        "filename": "ash/display/display_move_window_util.cc",
+        "patchSetId": 12
+      },
+      "lineNbr": 98,
+      "author": {
+        "id": 1125479
+      },
+      "writtenOn": "2017-11-08T19:17:36Z",
+      "side": 1,
+      "message": "Nit: the",
+      "range": {
+        "startLine": 98,
+        "startChar": 55,
+        "endLine": 98,
+        "endChar": 57
+      },
+      "revId": "c153f63bda96652a73703575d488c795efa0fba2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e9d4c12b_1c139f29",
+        "filename": "ash/display/display_move_window_util.cc",
+        "patchSetId": 12
+      },
+      "lineNbr": 128,
+      "author": {
+        "id": 1125479
+      },
+      "writtenOn": "2017-11-08T19:17:36Z",
+      "side": 1,
+      "message": "Nit: To make this if more readable and less hairy, better cache the values above.\n\nconst int candidate_orthogonal_space \u003d ...;\nconst int current_orthogonal_space \u003d ...;",
+      "range": {
+        "startLine": 124,
+        "startChar": 12,
+        "endLine": 128,
+        "endChar": 26
+      },
+      "revId": "c153f63bda96652a73703575d488c795efa0fba2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "439db0c2_e3944529",
+        "filename": "ash/display/display_move_window_util_unittest.cc",
+        "patchSetId": 12
+      },
+      "lineNbr": 37,
+      "author": {
+        "id": 1125479
+      },
+      "writtenOn": "2017-11-08T19:17:36Z",
+      "side": 1,
+      "message": "Is there a reason not to use AshTestBase::CreateTestWindowInShellWithBounds();?",
+      "range": {
+        "startLine": 35,
+        "startChar": 0,
+        "endLine": 37,
+        "endChar": 50
+      },
+      "revId": "c153f63bda96652a73703575d488c795efa0fba2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4d4ddb07_d11b0089",
+        "filename": "ash/display/display_move_window_util_unittest.cc",
+        "patchSetId": 12
+      },
+      "lineNbr": 43,
+      "author": {
+        "id": 1125479
+      },
+      "writtenOn": "2017-11-08T19:17:36Z",
+      "side": 1,
+      "message": "Just create a function that returns GetScreen(), or cache it the test themselves.",
+      "range": {
+        "startLine": 43,
+        "startChar": 2,
+        "endLine": 43,
+        "endChar": 52
+      },
+      "revId": "c153f63bda96652a73703575d488c795efa0fba2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
