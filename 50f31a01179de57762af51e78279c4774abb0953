@@ -1,0 +1,44 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "170d5afb_f0e06227",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/survey/ChromeHomeSurveyController.java",
+        "patchSetId": 9
+      },
+      "lineNbr": 160,
+      "author": {
+        "id": 1122966
+      },
+      "writtenOn": "2017-11-08T21:03:59Z",
+      "side": 1,
+      "message": "The other in-flight change to add client-side filtering has some things in an async task.. it would be good to put this in the async task either as part of this patch or as part of that patch.",
+      "range": {
+        "startLine": 160,
+        "startChar": 7,
+        "endLine": 160,
+        "endChar": 77
+      },
+      "revId": "50f31a01179de57762af51e78279c4774abb0953",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b7a1948f_7ca6dee0",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/survey/ChromeHomeSurveyController.java",
+        "patchSetId": 9
+      },
+      "lineNbr": 209,
+      "author": {
+        "id": 1122966
+      },
+      "writtenOn": "2017-11-08T21:03:59Z",
+      "side": 1,
+      "message": "When does this get called vs Tab#onShown()? I think some code comments around the expected behavior and the scenarios this is handling would be really helpful.",
+      "revId": "50f31a01179de57762af51e78279c4774abb0953",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
