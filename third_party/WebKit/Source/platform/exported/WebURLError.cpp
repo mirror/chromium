@@ -30,6 +30,7 @@
 
 #include "public/platform/WebURLError.h"
 
+#include "net/base/net_errors.h"
 #include "platform/loader/fetch/ResourceError.h"
 #include "platform/weborigin/KURL.h"
 

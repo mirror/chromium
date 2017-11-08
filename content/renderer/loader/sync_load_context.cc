@@ -99,10 +99,11 @@ void SyncLoadContext::OnReceivedData(std::unique_ptr<ReceivedData> data) {
 void SyncLoadContext::OnTransferSizeUpdated(int transfer_size_diff) {}
 
 void SyncLoadContext::OnCompletedRequest(
-    const ResourceRequestCompletionStatus& completion_status) {
-  response_->error_code = completion_status.error_code;
-  response_->encoded_data_length = completion_status.encoded_data_length;
-  response_->encoded_body_length = completion_status.encoded_body_length;
+    const network::URLLoaderStatus& status) {
+  // TODO(toyoshim): Pass CORS related information here.
+  response_->error_code = status.error_code;
+  response_->encoded_data_length = status.encoded_data_length;
+  response_->encoded_body_length = status.encoded_body_length;
   event_->Signal();
 
   // This will indirectly cause this object to be deleted.
