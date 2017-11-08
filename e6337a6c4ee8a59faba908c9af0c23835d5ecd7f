@@ -46,6 +46,30 @@
       "revId": "e6337a6c4ee8a59faba908c9af0c23835d5ecd7f",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "14c480a0_6d7865d3",
+        "filename": "ash/public/interfaces/window_properties.mojom",
+        "patchSetId": 10
+      },
+      "lineNbr": 8,
+      "author": {
+        "id": 1116053
+      },
+      "writtenOn": "2017-11-08T16:55:37Z",
+      "side": 1,
+      "message": "Yep, just wanted to confirm that this is coming directly via a pipe from the service manager and not being relayed through the untrusted process.",
+      "parentUuid": "028141b5_8a1dcf41",
+      "range": {
+        "startLine": 8,
+        "startChar": 61,
+        "endLine": 8,
+        "endChar": 76
+      },
+      "revId": "e6337a6c4ee8a59faba908c9af0c23835d5ecd7f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
