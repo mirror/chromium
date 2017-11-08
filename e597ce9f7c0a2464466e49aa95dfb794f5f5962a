@@ -55,6 +55,24 @@
     },
     {
       "key": {
+        "uuid": "45e2301d_2a6e2ccf",
+        "filename": "third_party/WebKit/Source/platform/blob/BlobBytesProviderTest.cpp",
+        "patchSetId": 2
+      },
+      "lineNbr": 5,
+      "author": {
+        "id": 1237531
+      },
+      "writtenOn": "2017-11-08T03:25:06Z",
+      "side": 1,
+      "message": "Oh, if you were wondering how I got to tools/depot_tools/cpplint.py, I searched for \"build/include_order\" (which I copy/pasted from your error message) in https://cs.chromium.org/ and tools/depot_tools/cpplint.py was the first hit.\n\nThere\u0027s also src/third_party/depot_tools/cpplint.py. One\u0027s probably a fork of the other. I don\u0027t know which one is canonical.",
+      "parentUuid": "fd60e58e_db6790ba",
+      "revId": "e597ce9f7c0a2464466e49aa95dfb794f5f5962a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "6dfacaca_3d46ca41",
         "filename": "third_party/WebKit/Source/platform/graphics/compositing/CompositedLayerRasterInvalidator.cpp",
         "patchSetId": 2
