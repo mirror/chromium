@@ -16,6 +16,23 @@
       "revId": "ef778b0a98314c4778f8cf89f93c807b402514ff",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "388863e1_54f9909f",
+        "filename": "components/viz/service/display/direct_renderer.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 655,
+      "author": {
+        "id": 1228419
+      },
+      "writtenOn": "2017-11-08T00:13:04Z",
+      "side": 1,
+      "message": "Please verify this early return. jbauman@ suggested to add this in https://codereview.chromium.org/2930803003/",
+      "revId": "ef778b0a98314c4778f8cf89f93c807b402514ff",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
