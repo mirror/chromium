@@ -84,6 +84,7 @@ ProfileSyncServiceAndroid::ProfileSyncServiceAndroid(JNIEnv* env, jobject obj)
     : profile_(nullptr),
       sync_service_(nullptr),
       weak_java_profile_sync_service_(env, obj) {
+  DCHECK(g_browser_process);
   if (g_browser_process == nullptr ||
       g_browser_process->profile_manager() == nullptr) {
     NOTREACHED() << "Browser process or profile manager not initialized";
