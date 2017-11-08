@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "39fa7e3c_4927859c",
+        "filename": "chrome/browser/ui/views/extensions/pwa_confirmation_view.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 64,
+      "author": {
+        "id": 1174915
+      },
+      "writtenOn": "2017-11-08T05:53:16Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "f538673e_c2307fe2",
+      "revId": "39a39f749f82168c103ff2827b1b617a7978854f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "6a3c3e75_691c509f",
         "filename": "chrome/browser/ui/views/extensions/pwa_confirmation_view.cc",
         "patchSetId": 6
@@ -33,6 +51,24 @@
       "revId": "39a39f749f82168c103ff2827b1b617a7978854f",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ed47b3d5_7dd6c8a8",
+        "filename": "chrome/browser/ui/views/extensions/pwa_confirmation_view.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 80,
+      "author": {
+        "id": 1174915
+      },
+      "writtenOn": "2017-11-08T05:53:16Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "6a3c3e75_691c509f",
+      "revId": "39a39f749f82168c103ff2827b1b617a7978854f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -53,6 +89,24 @@
     },
     {
       "key": {
+        "uuid": "ed13fe8f_797bcd48",
+        "filename": "chrome/browser/ui/views/extensions/pwa_confirmation_view.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 87,
+      "author": {
+        "id": 1174915
+      },
+      "writtenOn": "2017-11-08T05:53:16Z",
+      "side": 1,
+      "message": "Done. However I have used font_list() in the new code in order to call gfx::ElideText. Is that OK?",
+      "parentUuid": "8b3eb03c_efcdb21d",
+      "revId": "39a39f749f82168c103ff2827b1b617a7978854f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "9fb975b6_7c895fc7",
         "filename": "chrome/browser/ui/views/extensions/pwa_confirmation_view.cc",
         "patchSetId": 6
@@ -67,6 +121,24 @@
       "revId": "39a39f749f82168c103ff2827b1b617a7978854f",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6dfe053f_3cae8402",
+        "filename": "chrome/browser/ui/views/extensions/pwa_confirmation_view.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 99,
+      "author": {
+        "id": 1174915
+      },
+      "writtenOn": "2017-11-08T05:53:16Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "9fb975b6_7c895fc7",
+      "revId": "39a39f749f82168c103ff2827b1b617a7978854f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -87,6 +159,24 @@
     },
     {
       "key": {
+        "uuid": "3e4614d9_ce493e85",
+        "filename": "chrome/browser/ui/views/extensions/pwa_confirmation_view.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 107,
+      "author": {
+        "id": 1174915
+      },
+      "writtenOn": "2017-11-08T05:53:16Z",
+      "side": 1,
+      "message": "Done.",
+      "parentUuid": "76973bdc_397f099a",
+      "revId": "39a39f749f82168c103ff2827b1b617a7978854f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "3fb2127d_99bcc48a",
         "filename": "chrome/browser/ui/views/extensions/pwa_confirmation_view.cc",
         "patchSetId": 6
@@ -101,6 +191,24 @@
       "revId": "39a39f749f82168c103ff2827b1b617a7978854f",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "db1a3d6c_43b57f6b",
+        "filename": "chrome/browser/ui/views/extensions/pwa_confirmation_view.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 126,
+      "author": {
+        "id": 1174915
+      },
+      "writtenOn": "2017-11-08T05:53:16Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "3fb2127d_99bcc48a",
+      "revId": "39a39f749f82168c103ff2827b1b617a7978854f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -121,6 +229,24 @@
     },
     {
       "key": {
+        "uuid": "c6c9dd51_c27fdf2e",
+        "filename": "chrome/browser/ui/views/extensions/pwa_confirmation_view.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 137,
+      "author": {
+        "id": 1174915
+      },
+      "writtenOn": "2017-11-08T05:53:16Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "7239d58b_6567b15b",
+      "revId": "39a39f749f82168c103ff2827b1b617a7978854f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "8c3eeae0_850da1f9",
         "filename": "chrome/browser/ui/views/extensions/web_app_info_image_source.h",
         "patchSetId": 6
@@ -135,6 +261,24 @@
       "revId": "39a39f749f82168c103ff2827b1b617a7978854f",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "eb812a92_d4264c5b",
+        "filename": "chrome/browser/ui/views/extensions/web_app_info_image_source.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 26,
+      "author": {
+        "id": 1174915
+      },
+      "writtenOn": "2017-11-08T05:53:16Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "8c3eeae0_850da1f9",
+      "revId": "39a39f749f82168c103ff2827b1b617a7978854f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
