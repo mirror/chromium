@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "c0e2e207_93bc4772",
+        "filename": "chrome/browser/ui/views/cookie_info_view.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 125,
+      "author": {
+        "id": 1151884
+      },
+      "writtenOn": "2017-11-08T20:20:12Z",
+      "side": 1,
+      "message": "96? That\u0027s unexpected. Does Alan actually want the second column to be right-aligned? Anyway, this should be a LayoutProvider distance metric.",
+      "range": {
+        "startLine": 125,
+        "startChar": 16,
+        "endLine": 125,
+        "endChar": 34
+      },
+      "revId": "096c40527e25b5717e3481d926cf7f82205dd772",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
