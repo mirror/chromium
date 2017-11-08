@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "e3e07c71_5f2d12f3",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/toolbar/ToolbarManager.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 337,
+      "author": {
+        "id": 1135279
+      },
+      "writtenOn": "2017-11-08T16:43:12Z",
+      "side": 1,
+      "message": "Of the options I tried, this seems the most reasonable. I tried adding plumbing to invalidate the bitmap and set the toolbar as \u0027ready for capture\u0027, but I would still need to remove the check for Android O since this happens on other platforms. I can add a todo to remove this down the line; this is one of many issues that I believe can be fixed by doing an in-memory reparent of the tab rather than relying on the intent system. This is easier to merge though. Thoughts?",
+      "range": {
+        "startLine": 335,
+        "startChar": 12,
+        "endLine": 337,
+        "endChar": 13
+      },
+      "revId": "3f263bcc5985a31115d3e390f35989fa6099144e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
