@@ -12,8 +12,12 @@ import "video_common.mojom";
 [Extensible]
 enum HalPixelFormatExtension {
   HAL_PIXEL_FORMAT_YCbCr_420_888 = 0x23,
+  HAL_PIXEL_FORMAT_YV12 = 0x32315659,
+  HAL_PIXEL_FORMAT_NV12 = 0x3231564e,
+
   HAL_PIXEL_FORMAT_H264 = 0x34363248,
   HAL_PIXEL_FORMAT_VP8 = 0x00385056,
+  HAL_PIXEL_FORMAT_VP9 = 0x00395056,
 };
 
 enum PortType {
@@ -27,8 +31,9 @@ struct BufferMetadata {
 };
 
 struct VideoFormat {
-  uint32 pixel_format;
-  uint32 buffer_size;
+  // The buffer format is no longer specified from the Chromium side.
+  uint32 pixel_format_deprecated;
+  uint32 buffer_size_deprecated;
 
   // minimal number of buffers required to process the video.
   uint32 min_num_buffers;
@@ -40,7 +45,7 @@ struct VideoFormat {
   uint32 crop_height;
 };
 
-// Next MinVersion: 2
+// Next MinVersion: 3
 struct VideoDecodeAcceleratorConfig {
   // Deprecated. This config struct is used for decoder only.
   enum DeviceTypeDeprecated {
@@ -53,6 +58,7 @@ struct VideoDecodeAcceleratorConfig {
   uint32 num_input_buffers;
   uint32 input_pixel_format;
   [MinVersion=1] bool secure_mode;
+  [MinVersion=2] uint32 output_pixel_format;
 };
 
 // Next MinVersion: 5
