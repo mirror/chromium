@@ -7,6 +7,7 @@
 
 #include "base/macros.h"
 #include "base/memory/weak_ptr.h"
+#include "base/time/time.h"
 #include "content/browser/loader/navigation_url_loader.h"
 #include "content/public/browser/ssl_status.h"
 #include "content/public/common/url_loader.mojom.h"
@@ -56,6 +57,7 @@ class CONTENT_EXPORT NavigationURLLoaderNetworkService
 
  private:
   class URLLoaderRequestController;
+  void OnRequestStarted(base::TimeTicks timestamp);
 
   bool IsDownload() const;
 
