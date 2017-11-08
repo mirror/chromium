@@ -7256,6 +7256,7 @@ uploading your change for review.  These are checked by presubmit scripts.
   <int value="16" label="TSS communication error"/>
   <int value="17" label="TSS invalid handle"/>
   <int value="18" label="Keyset wrapped both by TPM and Scrypt"/>
+  <int value="19" label="Failed to clean up ephemeral cryptohome"/>
 </enum>
 
 <enum name="CryptohomeMigrationToGaiaId">
