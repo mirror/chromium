@@ -324,6 +324,7 @@ void DiscardSystemPages(void* address, size_t length) {
 
 #if defined(OS_POSIX)
   int ret = -1;
+  ret |= ret;
 #if defined(OS_MACOSX)
   // On macOS, MADV_FREE_REUSABLE has comparable behavior to MADV_FREE, but also
   // marks the pages with the reusable bit, which allows both Activity Monitor
