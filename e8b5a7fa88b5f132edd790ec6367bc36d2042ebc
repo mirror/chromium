@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "af295dec_30126ffc",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 1
+      },
+      "lineNbr": 10,
+      "author": {
+        "id": 1001040
+      },
+      "writtenOn": "2017-11-08T21:28:38Z",
+      "side": 1,
+      "message": "Typo: explosion",
+      "revId": "e8b5a7fa88b5f132edd790ec6367bc36d2042ebc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
