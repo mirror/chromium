@@ -4358,6 +4358,11 @@ bool LayoutBlockFlow::CreatesNewFormattingContext() const {
     return true;
   }
 
+  // TODO(layout-dev): Once editing supports LayoutNG, we should remove this
+  // if-statememt.
+  if (RuntimeEnabledFeatures::LayoutNGEnabled())
+    return StyleRef().UserModify() != EUserModify::kReadOnly;
+
   return false;
 }
 
