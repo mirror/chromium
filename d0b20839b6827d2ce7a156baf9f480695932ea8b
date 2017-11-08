@@ -34,6 +34,24 @@
       "revId": "d0b20839b6827d2ce7a156baf9f480695932ea8b",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7929f9e8_52ceab32",
+        "filename": "content/shell/renderer/layout_test/layout_test_content_renderer_client.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 174,
+      "author": {
+        "id": 1002823
+      },
+      "writtenOn": "2017-11-08T01:26:39Z",
+      "side": 0,
+      "message": "Yes, that\u0027s why this CL deletes it.\nThe caller is coded like \"if OverrideCreateWebMediaStreamCenter returns null, call content::MediaStreamCenter\". This CL deletes the call to OverrideCreateWebMediaStreamCenter, along with the function and the MockWebMediaStreamCenter.",
+      "parentUuid": "2546fe5d_96a38a18",
+      "revId": "d0b20839b6827d2ce7a156baf9f480695932ea8b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
