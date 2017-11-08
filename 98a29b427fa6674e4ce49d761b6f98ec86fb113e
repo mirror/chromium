@@ -209,6 +209,24 @@
       "revId": "98a29b427fa6674e4ce49d761b6f98ec86fb113e",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "892fd59a_f505e6f4",
+        "filename": "ui/strings/ui_strings.grd",
+        "patchSetId": 4
+      },
+      "lineNbr": 680,
+      "author": {
+        "id": 1138489
+      },
+      "writtenOn": "2017-11-08T15:25:29Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "99a8b19a_164473ad",
+      "revId": "98a29b427fa6674e4ce49d761b6f98ec86fb113e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
