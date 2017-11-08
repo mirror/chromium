@@ -1,0 +1,72 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "81e5862b_e94b153d",
+        "filename": "content/browser/webauth/cbor/cbor_writer.cc",
+        "patchSetId": 19
+      },
+      "lineNbr": 5,
+      "author": {
+        "id": 1003152
+      },
+      "writtenOn": "2017-11-08T13:13:28Z",
+      "side": 1,
+      "message": "nit: already included in the header.",
+      "revId": "3a4c3ce3543aa97b80c79933b51f0570622470bf",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8e5d017f_566fdfa8",
+        "filename": "content/browser/webauth/cbor/cbor_writer.h",
+        "patchSetId": 19
+      },
+      "lineNbr": 9,
+      "author": {
+        "id": 1003152
+      },
+      "writtenOn": "2017-11-08T13:13:28Z",
+      "side": 1,
+      "message": "nit: Neither \u003cstring\u003e nor string_piece.h is used in the header, let\u0027s move them to the .cc.",
+      "revId": "3a4c3ce3543aa97b80c79933b51f0570622470bf",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4717ea6f_1315bd3c",
+        "filename": "content/browser/webauth/cbor/cbor_writer.h",
+        "patchSetId": 19
+      },
+      "lineNbr": 11,
+      "author": {
+        "id": 1003152
+      },
+      "writtenOn": "2017-11-08T13:13:28Z",
+      "side": 1,
+      "message": "nit: I think this is unused.",
+      "revId": "3a4c3ce3543aa97b80c79933b51f0570622470bf",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "458279d0_6b529eba",
+        "filename": "content/browser/webauth/cbor/cbor_writer_unittest.cc",
+        "patchSetId": 19
+      },
+      "lineNbr": 7,
+      "author": {
+        "id": 1003152
+      },
+      "writtenOn": "2017-11-08T13:13:28Z",
+      "side": 1,
+      "message": "nit: Now you\u0027ll need to include string_piece.h and \u003cstring\u003e here.",
+      "revId": "3a4c3ce3543aa97b80c79933b51f0570622470bf",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
