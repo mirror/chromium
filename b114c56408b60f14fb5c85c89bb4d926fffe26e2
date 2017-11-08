@@ -106,6 +106,24 @@
       "revId": "b114c56408b60f14fb5c85c89bb4d926fffe26e2",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2267d622_b88c392a",
+        "filename": "chrome/browser/ui/views/frame/browser_non_client_frame_view_ash.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 329,
+      "author": {
+        "id": 1001380
+      },
+      "writtenOn": "2017-11-08T13:42:24Z",
+      "side": 1,
+      "message": "restored means that it returns normal insets even if it\u0027s maximized in tabbed mode. since tab strip is always invislble for this case, you should pass false.\n\nSee also:\n\nhttps://cs.chromium.org/chromium/src/chrome/browser/ui/views/frame/browser_view_layout.cc?rcl\u003d7efabb4a472a7fdd10f7d4a3d0ec6b7915b238b5\u0026l\u003d342",
+      "parentUuid": "5974b415_e4973035",
+      "revId": "b114c56408b60f14fb5c85c89bb4d926fffe26e2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
