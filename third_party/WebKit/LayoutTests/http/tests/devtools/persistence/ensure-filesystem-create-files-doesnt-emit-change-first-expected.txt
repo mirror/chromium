@@ -1,0 +1,6 @@
+Check to ensure when a file is being created we don't honor events from filesystem before content is fully set.
+
+Creating File
+IsolatedFileSystem setFileContent
+File Created
+
