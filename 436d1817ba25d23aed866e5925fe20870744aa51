@@ -16,6 +16,24 @@
       "revId": "436d1817ba25d23aed866e5925fe20870744aa51",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "bccac844_2312718a",
+        "filename": "content/public/android/java/src/org/chromium/content/browser/androidoverlay/DialogOverlayImpl.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 132,
+      "author": {
+        "id": 1130490
+      },
+      "writtenOn": "2017-11-08T22:15:51Z",
+      "side": 1,
+      "message": "erm, indeed.  i saw DSCore.release() happening in testing, so ... no idea.  maybe i fixed it and reverted it with the debugging?  don\u0027t remember fixing it though.\n\nweird.\n\ngood catch.  thanks.",
+      "parentUuid": "d3c57553_9550bb1d",
+      "revId": "436d1817ba25d23aed866e5925fe20870744aa51",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
