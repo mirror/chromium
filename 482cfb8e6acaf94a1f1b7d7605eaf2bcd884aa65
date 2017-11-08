@@ -34,6 +34,24 @@
       "revId": "482cfb8e6acaf94a1f1b7d7605eaf2bcd884aa65",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b9272b34_522c3bb0",
+        "filename": "content/shell/renderer/layout_test/leak_detector.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 123,
+      "author": {
+        "id": 1115933
+      },
+      "writtenOn": "2017-11-08T08:31:30Z",
+      "side": 1,
+      "message": "I don\u0027t think that JSON is used",
+      "parentUuid": "1eb16df4_def9bc97",
+      "revId": "482cfb8e6acaf94a1f1b7d7605eaf2bcd884aa65",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
