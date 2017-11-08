@@ -34,6 +34,24 @@
       "revId": "c1fb63551c48588285bedfcc1a21efc3e3a87fee",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "30c73e9e_47c76051",
+        "filename": "chrome/browser/ui/page_info/page_info_ui.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 50,
+      "author": {
+        "id": 1121739
+      },
+      "writtenOn": "2017-11-08T02:03:20Z",
+      "side": 1,
+      "message": "Thanks for renaming; unfortunately \"SecurityStyle\" also means something similar. 😔\nCould you make it something like \"SecuritySummaryColor\"?",
+      "parentUuid": "5798b8eb_3cbcd55e",
+      "revId": "c1fb63551c48588285bedfcc1a21efc3e3a87fee",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }

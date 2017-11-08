@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "d2cf98ff_d8208dc8",
+        "filename": "chrome/browser/ui/views/page_info/page_info_bubble_view.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 153,
+      "author": {
+        "id": 1121739
+      },
+      "writtenOn": "2017-11-08T02:03:20Z",
+      "side": 1,
+      "message": "Nit: move this to a separate CL (or at least mention this in the description).",
+      "revId": "ae70a85a2fe4343a8885eb6121fd5fa0d960444f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e2c2cf2a_4b79d0d1",
+        "filename": "chrome/browser/ui/views/page_info/page_info_bubble_view.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 687,
+      "author": {
+        "id": 1121739
+      },
+      "writtenOn": "2017-11-08T02:03:20Z",
+      "side": 1,
+      "message": "ditto",
+      "revId": "ae70a85a2fe4343a8885eb6121fd5fa0d960444f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
