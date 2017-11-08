@@ -52,6 +52,24 @@
       "revId": "d0b20839b6827d2ce7a156baf9f480695932ea8b",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "59ef7c07_d81aa0f8",
+        "filename": "content/shell/renderer/layout_test/layout_test_content_renderer_client.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 174,
+      "author": {
+        "id": 1115881
+      },
+      "writtenOn": "2017-11-08T14:33:58Z",
+      "side": 0,
+      "message": "Ack. I understood from the commit description that MockWebMediaStreamCenter wasn\u0027t used anymore, not that this was an intentional decision to remove it (hence my question).",
+      "parentUuid": "7929f9e8_52ceab32",
+      "revId": "d0b20839b6827d2ce7a156baf9f480695932ea8b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
