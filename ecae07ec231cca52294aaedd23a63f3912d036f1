@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "1b765b4a_1608910d",
+        "filename": "chrome/browser/signin/process_dice_header_observer_impl.cc",
+        "patchSetId": 10
+      },
+      "lineNbr": 47,
+      "author": {
+        "id": 1001438
+      },
+      "writtenOn": "2017-11-08T14:30:04Z",
+      "side": 1,
+      "message": "Nit: move this up before line 43, to keep the profile definition close to where it is used.",
+      "range": {
+        "startLine": 47,
+        "startChar": 2,
+        "endLine": 47,
+        "endChar": 47
+      },
+      "revId": "ecae07ec231cca52294aaedd23a63f3912d036f1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
