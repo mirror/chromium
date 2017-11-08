@@ -278,7 +278,7 @@ PDFViewer.prototype = {
     if (shouldIgnoreKeyEvents(document.activeElement) || e.defaultPrevented)
       return;
 
-    this.toolbarManager_.hideToolbarsAfterTimeout(e);
+    // this.toolbarManager_.hideToolbarsAfterTimeout(e);
 
     var pageUpHandler = () => {
       // Go to the previous page if we are fit-to-page.
@@ -406,10 +406,10 @@ PDFViewer.prototype = {
   },
 
   handleMouseEvent_: function(e) {
-    if (e.type == 'mousemove')
-      this.toolbarManager_.handleMouseMove(e);
-    else if (e.type == 'mouseout')
-      this.toolbarManager_.hideToolbarsForMouseOut();
+    // if (e.type == 'mousemove')
+    //   this.toolbarManager_.handleMouseMove(e);
+    // else if (e.type == 'mouseout')
+    //   this.toolbarManager_.hideToolbarsForMouseOut();
   },
 
   handleContextMenuEvent_: function(e) {
@@ -445,7 +445,7 @@ PDFViewer.prototype = {
    */
   fitToPage_: function() {
     this.viewport_.fitToPage();
-    this.toolbarManager_.forceHideTopToolbar();
+    // this.toolbarManager_.forceHideTopToolbar();
   },
 
   /**
@@ -541,7 +541,7 @@ PDFViewer.prototype = {
       while (this.delayedScriptingMessages_.length > 0)
         this.handleScriptingMessage(this.delayedScriptingMessages_.shift());
 
-      this.toolbarManager_.hideToolbarsAfterTimeout();
+      // this.toolbarManager_.hideToolbarsAfterTimeout();
     }
   },
 

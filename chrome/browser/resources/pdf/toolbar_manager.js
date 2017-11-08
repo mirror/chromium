@@ -74,40 +74,40 @@ function ToolbarManager(window, toolbar, zoomToolbar) {
 
 ToolbarManager.prototype = {
 
-  handleMouseMove: function(e) {
-    this.isMouseNearTopToolbar_ = this.toolbar_ && isMouseNearTopToolbar(e);
-    this.isMouseNearSideToolbar_ = isMouseNearSideToolbar(e, this.window_);
+  // handleMouseMove: function(e) {
+  //   this.isMouseNearTopToolbar_ = this.toolbar_ && isMouseNearTopToolbar(e);
+  //   this.isMouseNearSideToolbar_ = isMouseNearSideToolbar(e, this.window_);
 
-    this.keyboardNavigationActive = false;
-    var touchInteractionActive =
-        (e.sourceCapabilities && e.sourceCapabilities.firesTouchEvents);
+  //   this.keyboardNavigationActive = false;
+  //   var touchInteractionActive =
+  //       (e.sourceCapabilities && e.sourceCapabilities.firesTouchEvents);
 
-    // Allow the top toolbar to be shown if the mouse moves away from the side
-    // toolbar (as long as the timeout has elapsed).
-    if (!this.isMouseNearSideToolbar_ && !this.sideToolbarAllowedOnlyTimer_)
-      this.sideToolbarAllowedOnly_ = false;
+  //   // Allow the top toolbar to be shown if the mouse moves away from the side
+  //   // toolbar (as long as the timeout has elapsed).
+  //   if (!this.isMouseNearSideToolbar_ && !this.sideToolbarAllowedOnlyTimer_)
+  //     this.sideToolbarAllowedOnly_ = false;
 
-    // Allow the top toolbar to be shown if the mouse moves to the top edge.
-    if (this.isMouseNearTopToolbar_)
-      this.sideToolbarAllowedOnly_ = false;
+  //   // Allow the top toolbar to be shown if the mouse moves to the top edge.
+  //   if (this.isMouseNearTopToolbar_)
+  //     this.sideToolbarAllowedOnly_ = false;
 
-    // Tapping the screen with toolbars open tries to close them.
-    if (touchInteractionActive && this.zoomToolbar_.isVisible()) {
-      this.hideToolbarsIfAllowed();
-      return;
-    }
+  //   // Tapping the screen with toolbars open tries to close them.
+  //   if (touchInteractionActive && this.zoomToolbar_.isVisible()) {
+  //     this.hideToolbarsIfAllowed();
+  //     return;
+  //   }
 
-    // Show the toolbars if the mouse is near the top or bottom-right of the
-    // screen, if the mouse moved fast, or if the touchscreen was tapped.
-    if (this.isMouseNearTopToolbar_ || this.isMouseNearSideToolbar_ ||
-        this.isHighVelocityMouseMove_(e) || touchInteractionActive) {
-      if (this.sideToolbarAllowedOnly_)
-        this.zoomToolbar_.show();
-      else
-        this.showToolbars();
-    }
-    this.hideToolbarsAfterTimeout();
-  },
+  //   // Show the toolbars if the mouse is near the top or bottom-right of the
+  //   // screen, if the mouse moved fast, or if the touchscreen was tapped.
+  //   if (this.isMouseNearTopToolbar_ || this.isMouseNearSideToolbar_ ||
+  //       this.isHighVelocityMouseMove_(e) || touchInteractionActive) {
+  //     if (this.sideToolbarAllowedOnly_)
+  //       this.zoomToolbar_.show();
+  //     else
+  //       this.showToolbars();
+  //   }
+  //   this.hideToolbarsAfterTimeout();
+  // },
 
   /**
    * Whether a mousemove event is high enough velocity to reveal the toolbars.
@@ -116,32 +116,32 @@ ToolbarManager.prototype = {
    * otherwise.
    * @private
    */
-  isHighVelocityMouseMove_: function(e) {
-    if (e.type == 'mousemove') {
-      if (this.lastMovementTimestamp == null) {
-        this.lastMovementTimestamp = this.getCurrentTimestamp_();
-      } else {
-        var movement =
-            Math.sqrt(e.movementX * e.movementX + e.movementY * e.movementY);
-        var newTime = this.getCurrentTimestamp_();
-        var interval = newTime - this.lastMovementTimestamp;
-        this.lastMovementTimestamp = newTime;
+  // isHighVelocityMouseMove_: function(e) {
+  //   if (e.type == 'mousemove') {
+  //     if (this.lastMovementTimestamp == null) {
+  //       this.lastMovementTimestamp = this.getCurrentTimestamp_();
+  //     } else {
+  //       var movement =
+  //           Math.sqrt(e.movementX * e.movementX + e.movementY * e.movementY);
+  //       var newTime = this.getCurrentTimestamp_();
+  //       var interval = newTime - this.lastMovementTimestamp;
+  //       this.lastMovementTimestamp = newTime;
 
-        if (interval != 0)
-          return movement / interval > SHOW_VELOCITY;
-      }
-    }
-    return false;
-  },
+  //       if (interval != 0)
+  //         return movement / interval > SHOW_VELOCITY;
+  //     }
+  //   }
+  //   return false;
+  // },
 
   /**
    * Wrapper around Date.now() to make it easily replaceable for testing.
    * @return {number}
    * @private
    */
-  getCurrentTimestamp_: function() {
-    return Date.now();
-  },
+  // getCurrentTimestamp_: function() {
+  //   return Date.now();
+  // },
 
   /**
    * Display both UI toolbars.
@@ -166,11 +166,11 @@ ToolbarManager.prototype = {
    * Hide toolbars after a delay, regardless of the position of the mouse.
    * Intended to be called when the mouse has moved out of the parent window.
    */
-  hideToolbarsForMouseOut: function() {
-    this.isMouseNearTopToolbar_ = false;
-    this.isMouseNearSideToolbar_ = false;
-    this.hideToolbarsAfterTimeout();
-  },
+  // hideToolbarsForMouseOut: function() {
+  //   this.isMouseNearTopToolbar_ = false;
+  //   this.isMouseNearSideToolbar_ = false;
+  //   this.hideToolbarsAfterTimeout();
+  // },
 
   /**
    * Check if the toolbars are able to be closed, and close them if they are.
@@ -202,12 +202,12 @@ ToolbarManager.prototype = {
   /**
    * Hide the toolbar after the HIDE_TIMEOUT has elapsed.
    */
-  hideToolbarsAfterTimeout: function() {
-    if (this.toolbarTimeout_)
-      this.window_.clearTimeout(this.toolbarTimeout_);
-    this.toolbarTimeout_ = this.window_.setTimeout(
-        this.hideToolbarsIfAllowed.bind(this), HIDE_TIMEOUT);
-  },
+  // hideToolbarsAfterTimeout: function() {
+  //   if (this.toolbarTimeout_)
+  //     this.window_.clearTimeout(this.toolbarTimeout_);
+  //   this.toolbarTimeout_ = this.window_.setTimeout(
+  //       this.hideToolbarsIfAllowed.bind(this), HIDE_TIMEOUT);
+  // },
 
   /**
    * Hide the 'topmost' layer of toolbars. Hides any dropdowns that are open, or
@@ -228,15 +228,15 @@ ToolbarManager.prototype = {
    * The top toolbar can be immediately re-opened by moving the mouse to the top
    * of the screen.
    */
-  forceHideTopToolbar: function() {
-    if (!this.toolbar_)
-      return;
-    this.toolbar_.hide();
-    this.sideToolbarAllowedOnly_ = true;
-    this.sideToolbarAllowedOnlyTimer_ = this.window_.setTimeout(() => {
-      this.sideToolbarAllowedOnlyTimer_ = null;
-    }, FORCE_HIDE_TIMEOUT);
-  },
+  // forceHideTopToolbar: function() {
+  //   if (!this.toolbar_)
+  //     return;
+  //   this.toolbar_.hide();
+  //   this.sideToolbarAllowedOnly_ = true;
+  //   this.sideToolbarAllowedOnlyTimer_ = this.window_.setTimeout(() => {
+  //     this.sideToolbarAllowedOnlyTimer_ = null;
+  //   }, FORCE_HIDE_TIMEOUT);
+  // },
 
   /**
    * Updates the size of toolbar dropdowns based on the positions of the rest of
