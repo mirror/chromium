@@ -16,6 +16,24 @@
       "revId": "fce134b3cbf5c28fa7162c824b41b5581b556ed1",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b956f3c9_0a304eea",
+        "filename": "third_party/WebKit/Source/core/dom/events/EventTargetImpl.h",
+        "patchSetId": 11
+      },
+      "lineNbr": 16,
+      "author": {
+        "id": 1247388
+      },
+      "writtenOn": "2017-11-08T03:42:17Z",
+      "side": 1,
+      "message": "OK, I just added the comment. Is it sufficient?",
+      "parentUuid": "55c2addb_521d904c",
+      "revId": "fce134b3cbf5c28fa7162c824b41b5581b556ed1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
