@@ -166,6 +166,30 @@
       "revId": "069197544a1e1a9701aa8478e1d3a311c0ccc09e",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8d0ff961_b992a71f",
+        "filename": "chrome/browser/ui/ash/launcher/app_shortcut_launcher_item_controller.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 29,
+      "author": {
+        "id": 1003321
+      },
+      "writtenOn": "2017-11-08T00:41:09Z",
+      "side": 0,
+      "message": "I\u0027ve updated this comment to explain what gets replaced when. The other headers look relatively okay.",
+      "parentUuid": "68c5b3c4_b49214ab",
+      "range": {
+        "startLine": 28,
+        "startChar": 3,
+        "endLine": 29,
+        "endChar": 58
+      },
+      "revId": "069197544a1e1a9701aa8478e1d3a311c0ccc09e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
