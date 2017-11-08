@@ -46,6 +46,30 @@
       "revId": "ad0465424511714531f5df8759b2c680ff422635",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "083cf02e_54e2750b",
+        "filename": "components/payments/content/payment_request_spec.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 233,
+      "author": {
+        "id": 1002114
+      },
+      "writtenOn": "2017-11-08T19:55:20Z",
+      "side": 1,
+      "message": "On the left, I see the following:\n\nstd::vector\u003cstd::string\u003e supported_networks;\nstd::set\u003cstd::string\u003e supported_card_networks_set;\n\nOn the right, I see this instead:\n\nstd::set\u003cstd::string\u003e supported_card_networks_set;\nstd::vector\u003cstd::string\u003e supported_networks;\n\nIt looks to me like the change is only flipping the order of variables. The code functionality in this block is not changed. Did I miss anything?",
+      "parentUuid": "c9c9e0bc_ddc8d317",
+      "range": {
+        "startLine": 229,
+        "startChar": 0,
+        "endLine": 233,
+        "endChar": 48
+      },
+      "revId": "ad0465424511714531f5df8759b2c680ff422635",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
