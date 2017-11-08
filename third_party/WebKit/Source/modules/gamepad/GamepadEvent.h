@@ -19,7 +19,22 @@ class GamepadEvent final : public Event {
                               bool can_bubble,
                               bool cancelable,
                               Gamepad* gamepad) {
-    return new GamepadEvent(type, can_bubble, cancelable, gamepad);
+    // First get the Time from the system
+    base::Time system_time = base::Time::NowFromSystemTime();
+    // Now get the Time base for now and also the TimeTicks
+    base::Time time_base = base::Time::Now();
+    base::TimeTicks time_ticks_base = base::TimeTicks::Now();
+
+    // In order to convert the system type to time ticks we will
+    // use the delta between the system time and time_base
+    base::TimeDelta time_difference = time_base - system_time;
+
+    // Then the system time in TimeTicks is the difference between
+    // time_ticks_base and time_difference.
+    base::TimeTicks timestamp = time_ticks_base - time_difference;
+
+    return new GamepadEvent(type, can_bubble, cancelable,
+                            WTF::TimeTicks(timestamp), gamepad);
   }
   static GamepadEvent* Create(const AtomicString& type,
                               const GamepadEventInit& initializer) {
@@ -37,6 +52,7 @@ class GamepadEvent final : public Event {
   GamepadEvent(const AtomicString& type,
                bool can_bubble,
                bool cancelable,
+               WTF::TimeTicks time_stamp,
                Gamepad*);
   GamepadEvent(const AtomicString&, const GamepadEventInit&);
 
