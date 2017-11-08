@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "5ea94ec7_dcff2867",
+        "filename": "device/geolocation/location_arbitrator.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 24,
+      "author": {
+        "id": 1113991
+      },
+      "writtenOn": "2017-11-08T15:31:33Z",
+      "side": 1,
+      "message": "base::TimeDelta::FromSeconds(11);  ?",
+      "range": {
+        "startLine": 24,
+        "startChar": 3,
+        "endLine": 24,
+        "endChar": 78
+      },
+      "revId": "68fa0c70f3ed3ae46057d68f4df8edc483a140aa",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
