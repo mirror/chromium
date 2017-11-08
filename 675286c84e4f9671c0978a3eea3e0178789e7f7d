@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "0301d531_73223951",
+        "filename": "components/policy/core/common/policy_loader_win_unittest.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 45,
+      "author": {
+        "id": 1161264
+      },
+      "writtenOn": "2017-11-08T09:13:03Z",
+      "side": 1,
+      "message": "Shouldn\u0027t be needed anymore.",
+      "range": {
+        "startLine": 45,
+        "startChar": 0,
+        "endLine": 45,
+        "endChar": 54
+      },
+      "revId": "675286c84e4f9671c0978a3eea3e0178789e7f7d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}

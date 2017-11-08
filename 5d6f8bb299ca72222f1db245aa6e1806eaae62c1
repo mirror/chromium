@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "cd225699_9e5be255",
+        "filename": "components/policy/core/common/policy_loader_win_unittest.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 1189,
+      "author": {
+        "id": 1161264
+      },
+      "writtenOn": "2017-11-08T09:13:03Z",
+      "side": 0,
+      "message": "While you\u0027re at it, could you clarity why this is called \"AlternativeSpelling\"? It looks like it just tests policy for two independent extensions.",
+      "range": {
+        "startLine": 1189,
+        "startChar": 47,
+        "endLine": 1189,
+        "endChar": 66
+      },
+      "revId": "5d6f8bb299ca72222f1db245aa6e1806eaae62c1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
