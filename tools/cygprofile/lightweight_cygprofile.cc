@@ -2,10 +2,12 @@
 // Use of this source code is governed by a BSD-style license that can be
 // found in the LICENSE file.
 
+#include <sys/mman.h>
 #include <unistd.h>
 
 #include <atomic>
 #include <cstdio>
+#include <memory>
 #include <string>
 #include <thread>
 #include <vector>
@@ -14,23 +16,9 @@
 #include "base/logging.h"
 #include "base/macros.h"
 #include "base/strings/stringprintf.h"
+#include "tools/cygprofile/anchor_functions.h"
 
-// These functions are here to, respectively:
-// 1. Check that functions are ordered
-// 2. Delimit the start of .text
-// 3. Delimit the end of .text
-//
-// (2) and (3) require a suitably constructed orderfile, with these
-// functions at the beginning and end. (1) doesn't need to be in it.
-//
-// Also note that we have "load-bearing" CHECK()s below: they have side-effects.
-// Without any code taking the address of a function, Identical Code Folding
-// would merge these functions with other empty ones, defeating their purpose.
-extern "C" {
-void dummy_function_to_check_ordering() {}
-void dummy_function_to_anchor_text() {}
-void dummy_function_at_the_end_of_text() {}
-}
+namespace cygprofile {
 
 namespace {
 
@@ -47,27 +35,13 @@ std::atomic<uint32_t> g_return_offsets[kArraySize];
 // to save a global load in the instrumentation function.
 std::atomic<std::atomic<uint32_t>*> g_enabled_and_array = {g_return_offsets};
 
-// Used to compute the offset of any return address inside .text, as relative
-// to this function.
-const size_t kStartOfText =
-    reinterpret_cast<size_t>(dummy_function_to_anchor_text);
-const size_t kEndOfText =
-    reinterpret_cast<size_t>(dummy_function_at_the_end_of_text);
 
 // Disables the logging and dumps the result after |kDelayInSeconds|.
 class DelayedDumper {
  public:
   DelayedDumper() {
-    // The linker usually keeps the input file ordering for symbols.
-    // dummy_function_to_anchor_text() should then be after
-    // dummy_function_to_check_ordering() without ordering.
-    // This check is thus intended to catch the lack of ordering.
-    CHECK_LT(kStartOfText,
-             reinterpret_cast<size_t>(&dummy_function_to_check_ordering));
-    CHECK_LT(kStartOfText, kEndOfText);
     CHECK_LT(kEndOfText - kStartOfText, kMaxTextSizeInBytes);
-    CHECK_LT(kStartOfText,
-             reinterpret_cast<size_t>(&dummy_function_to_check_ordering));
+    CheckOrderingSanity();
 
     std::thread([]() {
       sleep(kDelayInSeconds);
@@ -115,6 +89,9 @@ class DelayedDumper {
 // |kDelayInSeconds|.
 DelayedDumper g_dump_later;
 
+}  // namespace
+}  // namespace cygprofile
+
 extern "C" {
 
 // Since this function relies on the return address, if it's not inlined and
@@ -125,18 +102,19 @@ extern "C" {
 __attribute__((__always_inline__)) void mcount() {
   // To avoid any risk of infinite recusion, this *must* *never* call any
   // instrumented function.
-  auto* array = g_enabled_and_array.load(std::memory_order_relaxed);
+  auto* array = cygprofile::g_enabled_and_array.load(std::memory_order_relaxed);
   if (!array)
     return;
 
   size_t return_address = reinterpret_cast<size_t>(__builtin_return_address(0));
   // Not a CHECK() to avoid the possibility of calling an instrumented function.
-  if (UNLIKELY(return_address < kStartOfText || return_address > kEndOfText)) {
-    g_enabled_and_array.store(nullptr, std::memory_order_relaxed);
+  if (UNLIKELY(return_address < cygprofile::kStartOfText ||
+               return_address > cygprofile::kEndOfText)) {
+    cygprofile::g_enabled_and_array.store(nullptr, std::memory_order_relaxed);
     LOG(FATAL) << "Return address out of bounds (wrong ordering?)";
   }
 
-  size_t index = (return_address - kStartOfText) / sizeof(int);
+  size_t index = (return_address - cygprofile::kStartOfText) / sizeof(int);
   // Atomically set the corresponding bit in the array.
   std::atomic<uint32_t>* element = array + (index / 32);
   // First, a racy check. This saves a CAS if the bit is already set, and allows
@@ -166,5 +144,3 @@ void __cyg_profile_func_enter(void* unused1, void* unused2) {
 void __cyg_profile_func_exit(void* unused1, void* unused2) {}
 
 }  // extern "C"
-
-}  // namespace
