@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "894de454_59302e35",
+        "filename": "ui/events/ozone/evdev/libgestures_glue/gesture_property_provider.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 47,
+      "author": {
+        "id": 1109710
+      },
+      "writtenOn": "2017-11-08T20:18:07Z",
+      "side": 1,
+      "message": "Bit concerned about initialization split between places.",
+      "revId": "6c041332c2935b80294a5095b5a609b4f5b88e54",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
