@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "c5cba1fc_3a9752bf",
+        "filename": "content/browser/loader/navigation_url_loader_network_service.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 350,
+      "author": {
+        "id": 1114080
+      },
+      "writtenOn": "2017-11-08T07:39:33Z",
+      "side": 1,
+      "message": "Can you reflow the comment?",
+      "range": {
+        "startLine": 350,
+        "startChar": 40,
+        "endLine": 350,
+        "endChar": 41
+      },
+      "revId": "9f82639ca2fa3aa70ab4b78cd847e8fc7d2670f5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
