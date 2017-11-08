@@ -37,6 +37,24 @@
     },
     {
       "key": {
+        "uuid": "419ca2f7_692adcfb",
+        "filename": "content/renderer/media/media_stream_video_capturer_source_unittest.cc",
+        "patchSetId": 10
+      },
+      "lineNbr": 354,
+      "author": {
+        "id": 1126249
+      },
+      "writtenOn": "2017-11-08T16:17:49Z",
+      "side": 1,
+      "message": "The JavaScript browser tests are flaky and spammy so if possible in a lower layer that would be preferred, but LGTM regardless.",
+      "parentUuid": "878ff91d_a8fad7e9",
+      "revId": "fe711f70f8c723f49430e37aabaf1e6b7dffa88d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "ad899399_b58398f7",
         "filename": "content/renderer/media/media_stream_video_source.cc",
         "patchSetId": 10
