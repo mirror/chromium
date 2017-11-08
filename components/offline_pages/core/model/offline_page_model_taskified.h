@@ -90,8 +90,10 @@ class OfflinePageModelTaskified : public OfflinePageModel,
   void GetPagesByNamespace(
       const std::string& name_space,
       const MultipleOfflinePageItemCallback& callback) override;
+  // Get all pages in the namespaces that will be removed on cache reset.
   void GetPagesRemovedOnCacheReset(
       const MultipleOfflinePageItemCallback& callback) override;
+  // Get all pages in the namespaces that are supported by downloads.
   void GetPagesSupportedByDownloads(
       const MultipleOfflinePageItemCallback& callback) override;
   void GetPagesByRequestOrigin(
