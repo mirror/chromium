@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "6333adca_d0184db7",
+        "filename": "components/arc/BUILD.gn",
+        "patchSetId": 7
+      },
+      "lineNbr": 61,
+      "author": {
+        "id": 1000016
+      },
+      "writtenOn": "2017-11-08T14:24:39Z",
+      "side": 1,
+      "message": "these files have just be removed, I will update the merge conflict here when  I rebased after this cycle of review.",
+      "range": {
+        "startLine": 60,
+        "startChar": 0,
+        "endLine": 61,
+        "endChar": 58
+      },
+      "revId": "4e7a846e44c52c5b5a040264a58ceb07c426d796",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
