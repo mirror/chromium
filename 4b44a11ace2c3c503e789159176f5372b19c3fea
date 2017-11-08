@@ -1,0 +1,96 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "9e8beb91_16e7bb3a",
+        "filename": "chrome/browser/about_flags.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 2253,
+      "author": {
+        "id": 1000158
+      },
+      "writtenOn": "2017-11-08T20:05:41Z",
+      "side": 1,
+      "message": "I don\u0027t think we want to specify a polarity in the flag name anymore. See some of the other examples below.",
+      "range": {
+        "startLine": 2253,
+        "startChar": 6,
+        "endLine": 2253,
+        "endChar": 13
+      },
+      "revId": "4b44a11ace2c3c503e789159176f5372b19c3fea",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f7c2073a_71cd0215",
+        "filename": "chrome/browser/flag_descriptions.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 1380,
+      "author": {
+        "id": 1000158
+      },
+      "writtenOn": "2017-11-08T20:05:41Z",
+      "side": 1,
+      "message": "Is there a reason that WebVR is in the name? It just happens that this is the only use supported for VR devices on Windows right now.",
+      "range": {
+        "startLine": 1380,
+        "startChar": 19,
+        "endLine": 1380,
+        "endChar": 24
+      },
+      "revId": "4b44a11ace2c3c503e789159176f5372b19c3fea",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "75e610a2_5fe4775a",
+        "filename": "chrome/common/chrome_features.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 209,
+      "author": {
+        "id": 1000158
+      },
+      "writtenOn": "2017-11-08T20:05:41Z",
+      "side": 1,
+      "message": "Controls?",
+      "range": {
+        "startLine": 209,
+        "startChar": 3,
+        "endLine": 209,
+        "endChar": 10
+      },
+      "revId": "4b44a11ace2c3c503e789159176f5372b19c3fea",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e10a4932_bcd1fe7d",
+        "filename": "chrome/common/chrome_features.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 209,
+      "author": {
+        "id": 1000158
+      },
+      "writtenOn": "2017-11-08T20:05:41Z",
+      "side": 1,
+      "message": "ditto",
+      "range": {
+        "startLine": 209,
+        "startChar": 30,
+        "endLine": 209,
+        "endChar": 35
+      },
+      "revId": "4b44a11ace2c3c503e789159176f5372b19c3fea",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
