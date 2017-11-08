@@ -1,0 +1,96 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "0b2284a2_e6fb6f29",
+        "filename": "components/data_reduction_proxy/core/browser/data_reduction_proxy_config.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 405,
+      "author": {
+        "id": 1116492
+      },
+      "writtenOn": "2017-11-08T22:56:59Z",
+      "side": 1,
+      "message": "nit: add blank line between methods",
+      "range": {
+        "startLine": 405,
+        "startChar": 1,
+        "endLine": 405,
+        "endChar": 0
+      },
+      "revId": "7ba2971930f1aaf7c5164e10651f18e6a1197c6f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3ee458c1_e15d1dca",
+        "filename": "components/data_reduction_proxy/core/browser/data_reduction_proxy_prefs.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 174,
+      "author": {
+        "id": 1116492
+      },
+      "writtenOn": "2017-11-08T22:56:59Z",
+      "side": 1,
+      "message": "Why does this need to be a dictionary pref? Could this just be a string pref?",
+      "range": {
+        "startLine": 174,
+        "startChar": 12,
+        "endLine": 174,
+        "endChar": 34
+      },
+      "revId": "7ba2971930f1aaf7c5164e10651f18e6a1197c6f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "67de7910_671d48d5",
+        "filename": "components/data_reduction_proxy/core/browser/network_properties_manager.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 13,
+      "author": {
+        "id": 1116492
+      },
+      "writtenOn": "2017-11-08T22:56:59Z",
+      "side": 1,
+      "message": "nit: Are you going to be posting tasks around here or stuff like that? If not, then you could just use a base::ThreadChecker to do the BelongsToCurrentThread() dchecks. You\u0027d just need to call thread_checker_.DetachFromThread() at the end of the constructor if it could be constructed on a different thread then it\u0027ll be used on.",
+      "range": {
+        "startLine": 12,
+        "startChar": 3,
+        "endLine": 13,
+        "endChar": 63
+      },
+      "revId": "7ba2971930f1aaf7c5164e10651f18e6a1197c6f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "87183b86_fc126a37",
+        "filename": "components/data_reduction_proxy/core/browser/network_properties_manager.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 66,
+      "author": {
+        "id": 1116492
+      },
+      "writtenOn": "2017-11-08T22:56:59Z",
+      "side": 1,
+      "message": "Instead of passing in the path, could you just pass in the NetworkProperties proto message in the constructor, if the object will be created on the UI thread anyways? Alternatively, you could just pass in the PrefService and decode the NetworkProperties proto message in the constructor of this class.",
+      "range": {
+        "startLine": 66,
+        "startChar": 2,
+        "endLine": 66,
+        "endChar": 25
+      },
+      "revId": "7ba2971930f1aaf7c5164e10651f18e6a1197c6f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
