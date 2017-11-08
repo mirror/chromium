@@ -558,12 +558,11 @@ class Document::NetworkStateObserver final
       online_observer_handle_;
 };
 
-Document* Document::Create(const Document& document) {
-  Document* new_document =
-      new Document(DocumentInit::Create()
-                       .WithContextDocument(const_cast<Document*>(&document))
-                       .WithURL(BlankURL()));
-  new_document->SetSecurityOrigin(document.GetSecurityOrigin());
+Document* Document::Create(Document& document) {
+  Document* new_document = new Document(
+      DocumentInit::Create().WithContextDocument(&document).WithURL(
+          BlankURL()));
+  new_document->SetSecurityOriginFromExecutionContext(document);
   new_document->SetContextFeatures(document.GetContextFeatures());
   return new_document;
 }
@@ -2915,7 +2914,7 @@ void Document::open(Document* entered_document,
           "Can only call open() on same-origin documents.");
       return;
     }
-    SetSecurityOrigin(entered_document->GetSecurityOrigin());
+    SetSecurityOriginFromExecutionContext(*entered_document);
 
     if (this != entered_document) {
       // Clear the hash fragment from the inherited URL to prevent a
@@ -6049,7 +6048,7 @@ void Document::InitSecurityContext(const DocumentInit& initializer) {
     cookie_url_ = owner->CookieURL();
     // We alias the SecurityOrigins to match Firefox, see Bug 15313
     // https://bugs.webkit.org/show_bug.cgi?id=15313
-    SetSecurityOrigin(owner->GetSecurityOrigin());
+    SetSecurityOriginFromExecutionContext(*owner);
     policy_to_inherit = owner->GetContentSecurityPolicy();
   } else {
     cookie_url_ = url_;
@@ -6246,6 +6245,12 @@ void Document::EnforceSandboxFlags(SandboxFlags mask) {
 
 void Document::UpdateSecurityOrigin(scoped_refptr<SecurityOrigin> origin) {
   SetSecurityOrigin(std::move(origin));
+  DidUpdateSecurityOrigin();
+}
+
+void Document::UpdateSecurityOriginFromExecutionContext(
+    ExecutionContext& source) {
+  SetSecurityOriginFromExecutionContext(source);
   DidUpdateSecurityOrigin();
 }
 

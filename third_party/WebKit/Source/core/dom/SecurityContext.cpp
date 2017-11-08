@@ -26,6 +26,7 @@
 
 #include "core/dom/SecurityContext.h"
 
+#include "core/dom/ExecutionContext.h"
 #include "core/frame/csp/ContentSecurityPolicy.h"
 #include "platform/feature_policy/FeaturePolicy.h"
 #include "platform/runtime_enabled_features.h"
@@ -49,6 +50,12 @@ void SecurityContext::Trace(blink::Visitor* visitor) {
 void SecurityContext::SetSecurityOrigin(
     scoped_refptr<SecurityOrigin> security_origin) {
   security_origin_ = std::move(security_origin);
+  UpdateFeaturePolicyOrigin();
+}
+
+void SecurityContext::SetSecurityOriginFromExecutionContext(
+    ExecutionContext& source) {
+  security_origin_ = source.GetSecurityContext().security_origin_;
   UpdateFeaturePolicyOrigin();
 }
 
