@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "d3c57553_9550bb1d",
+        "filename": "content/public/android/java/src/org/chromium/content/browser/androidoverlay/DialogOverlayImpl.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 132,
+      "author": {
+        "id": 1002725
+      },
+      "writtenOn": "2017-11-08T19:37:20Z",
+      "side": 1,
+      "message": "this check is still here, so does this actually change behavior? I think you wanted to check mReleaseCoreRunnable is not null instead?",
+      "revId": "436d1817ba25d23aed866e5925fe20870744aa51",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
