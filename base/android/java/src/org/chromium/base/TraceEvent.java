@@ -342,6 +342,7 @@ public class TraceEvent implements AutoCloseable {
      * @param arg  The arguments of the event.
      */
     public static void begin(String name, String arg) {
+        //android.util.Log.w("MY-DBG", "====> " + name + " (" + arg + ")");
         EarlyTraceEvent.begin(name);
         if (sEnabled) nativeBegin(name, arg);
     }
@@ -360,6 +361,7 @@ public class TraceEvent implements AutoCloseable {
      * @param arg  The arguments of the event.
      */
     public static void end(String name, String arg) {
+        //android.util.Log.w("MY-DBG", "<== " + name + " (" + arg + ")");
         EarlyTraceEvent.end(name);
         if (sEnabled) nativeEnd(name, arg);
     }
