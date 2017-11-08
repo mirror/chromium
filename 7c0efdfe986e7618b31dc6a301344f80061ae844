@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "5d462d1e_77ef466e",
+        "filename": "components/offline_pages/core/model/offline_page_model_taskified.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 218,
+      "author": {
+        "id": 1184710
+      },
+      "writtenOn": "2017-11-08T22:54:00Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "41fb9ec8_8b53ee51",
+      "range": {
+        "startLine": 218,
+        "startChar": 37,
+        "endLine": 218,
+        "endChar": 40
+      },
+      "revId": "7c0efdfe986e7618b31dc6a301344f80061ae844",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "e63e3397_3afde6c0",
         "filename": "components/offline_pages/core/model/offline_page_model_taskified.cc",
         "patchSetId": 4
@@ -45,6 +69,30 @@
       "revId": "7c0efdfe986e7618b31dc6a301344f80061ae844",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a455a8a6_ce0e20a1",
+        "filename": "components/offline_pages/core/model/offline_page_model_taskified.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 220,
+      "author": {
+        "id": 1184710
+      },
+      "writtenOn": "2017-11-08T22:54:00Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "e63e3397_3afde6c0",
+      "range": {
+        "startLine": 220,
+        "startChar": 42,
+        "endLine": 220,
+        "endChar": 52
+      },
+      "revId": "7c0efdfe986e7618b31dc6a301344f80061ae844",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -71,6 +119,30 @@
     },
     {
       "key": {
+        "uuid": "4f8af9ae_8e71a0a0",
+        "filename": "components/offline_pages/core/model/offline_page_model_taskified.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 221,
+      "author": {
+        "id": 1184710
+      },
+      "writtenOn": "2017-11-08T22:54:00Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "e68f39a4_f25aaf03",
+      "range": {
+        "startLine": 220,
+        "startChar": 65,
+        "endLine": 221,
+        "endChar": 68
+      },
+      "revId": "7c0efdfe986e7618b31dc6a301344f80061ae844",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "9adb1285_6e3b9a30",
         "filename": "components/offline_pages/core/model/offline_page_model_taskified_unittest.cc",
         "patchSetId": 4
@@ -94,6 +166,30 @@
     },
     {
       "key": {
+        "uuid": "f9307abf_8bb1dd5f",
+        "filename": "components/offline_pages/core/model/offline_page_model_taskified_unittest.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 578,
+      "author": {
+        "id": 1184710
+      },
+      "writtenOn": "2017-11-08T22:54:00Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "9adb1285_6e3b9a30",
+      "range": {
+        "startLine": 578,
+        "startChar": 38,
+        "endLine": 578,
+        "endChar": 58
+      },
+      "revId": "7c0efdfe986e7618b31dc6a301344f80061ae844",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "ede03b26_d79a496f",
         "filename": "components/offline_pages/core/model/offline_page_model_taskified_unittest.cc",
         "patchSetId": 4
@@ -114,6 +210,30 @@
       "revId": "7c0efdfe986e7618b31dc6a301344f80061ae844",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8915b902_b99a23d2",
+        "filename": "components/offline_pages/core/model/offline_page_model_taskified_unittest.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 636,
+      "author": {
+        "id": 1184710
+      },
+      "writtenOn": "2017-11-08T22:54:00Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "ede03b26_d79a496f",
+      "range": {
+        "startLine": 636,
+        "startChar": 38,
+        "endLine": 636,
+        "endChar": 39
+      },
+      "revId": "7c0efdfe986e7618b31dc6a301344f80061ae844",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }

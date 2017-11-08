@@ -855,6 +855,30 @@
     },
     {
       "key": {
+        "uuid": "4ead592e_a928f8dc",
+        "filename": "components/offline_pages/core/model/offline_page_model_taskified_unittest.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 665,
+      "author": {
+        "id": 1184710
+      },
+      "writtenOn": "2017-11-08T22:54:00Z",
+      "side": 1,
+      "message": "Sorry I think I forgot to reply about this.\nI think it indeed needs some changes to make the names more readable, but I\u0027m keeping this since it\u0027s kind of a convention used by multiple places within OfflinePages code base, and the \u0027origin\u0027 of the naming starts in offline_page_client_policy.h/client_policy_controller.h.\nI would suggest to have a thorough change of the naming of similar names in a separate patch.\nWDYT?",
+      "parentUuid": "987e7bb4_f12ab581",
+      "range": {
+        "startLine": 665,
+        "startChar": 38,
+        "endLine": 665,
+        "endChar": 65
+      },
+      "revId": "da8893f2b2693bbaa1047666c4e86d3a9e989180",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "a8685ed9_2ebf2f3e",
         "filename": "components/offline_pages/core/model/offline_page_model_taskified_unittest.cc",
         "patchSetId": 3
