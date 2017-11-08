@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "ca501aba_7a4b6bbf",
+        "filename": "third_party/WebKit/Source/core/css/cssom/CSSMathInvert.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 21,
+      "author": {
+        "id": 1197444
+      },
+      "writtenOn": "2017-11-08T04:16:17Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "f15dba18_f7784bf0",
+      "revId": "735e7f377e293ad23b79d49b2e5fca12886b311c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "28d8eb03_9a5b9677",
         "filename": "third_party/WebKit/Source/core/css/cssom/CSSNumericValueType.h",
         "patchSetId": 2
@@ -33,6 +51,24 @@
       "revId": "735e7f377e293ad23b79d49b2e5fca12886b311c",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9b58d474_ad204a1d",
+        "filename": "third_party/WebKit/Source/core/css/cssom/CSSNumericValueType.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 40,
+      "author": {
+        "id": 1197444
+      },
+      "writtenOn": "2017-11-08T04:16:17Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "28d8eb03_9a5b9677",
+      "revId": "735e7f377e293ad23b79d49b2e5fca12886b311c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -53,6 +89,24 @@
     },
     {
       "key": {
+        "uuid": "261ab023_8b9f3a34",
+        "filename": "third_party/WebKit/Source/core/css/cssom/CSSNumericValueType.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 51,
+      "author": {
+        "id": 1197444
+      },
+      "writtenOn": "2017-11-08T04:16:17Z",
+      "side": 1,
+      "message": "Yes, unfortunately the integer represents the \"power\" of the unit e.g. px^5 or s^-1.",
+      "parentUuid": "59b27033_ce7b0aec",
+      "revId": "735e7f377e293ad23b79d49b2e5fca12886b311c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "3de85264_e05892a3",
         "filename": "third_party/WebKit/Source/core/css/cssom/CSSUnitValueTest.cpp",
         "patchSetId": 2
@@ -70,6 +124,24 @@
     },
     {
       "key": {
+        "uuid": "7008e1b6_251e54cc",
+        "filename": "third_party/WebKit/Source/core/css/cssom/CSSUnitValueTest.cpp",
+        "patchSetId": 2
+      },
+      "lineNbr": 183,
+      "author": {
+        "id": 1197444
+      },
+      "writtenOn": "2017-11-08T04:16:17Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "3de85264_e05892a3",
+      "revId": "735e7f377e293ad23b79d49b2e5fca12886b311c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "dc56c673_184699f4",
         "filename": "third_party/WebKit/Source/core/css/cssom/CSSUnitValueTest.cpp",
         "patchSetId": 2
@@ -84,6 +156,24 @@
       "revId": "735e7f377e293ad23b79d49b2e5fca12886b311c",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "253bd3e0_63bcfa4a",
+        "filename": "third_party/WebKit/Source/core/css/cssom/CSSUnitValueTest.cpp",
+        "patchSetId": 2
+      },
+      "lineNbr": 205,
+      "author": {
+        "id": 1197444
+      },
+      "writtenOn": "2017-11-08T04:16:17Z",
+      "side": 1,
+      "message": "It\u0027ll be used a lot in future patches :)",
+      "parentUuid": "dc56c673_184699f4",
+      "revId": "735e7f377e293ad23b79d49b2e5fca12886b311c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
