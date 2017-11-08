@@ -16,6 +16,24 @@
       "revId": "c2716e9c5e756988f6f9f627f65f9e742a361e58",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5d6df1c0_0866857e",
+        "filename": "third_party/WebKit/Source/core/editing/Editor.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 1488,
+      "author": {
+        "id": 1213235
+      },
+      "writtenOn": "2017-11-08T02:14:10Z",
+      "side": 1,
+      "message": "We want to show the handle if it is a caret when if a tap or long-press create the caret. So there are cases where the handle will be shown for a caret selection.\n\nAndroid does use |LocalFrameView::ComputeCompositedSelection()| but at that point we will not know how the handle was created.",
+      "parentUuid": "ed16d75e_841db8a0",
+      "revId": "c2716e9c5e756988f6f9f627f65f9e742a361e58",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
