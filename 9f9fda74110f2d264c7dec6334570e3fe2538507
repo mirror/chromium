@@ -70,6 +70,30 @@
       "revId": "9f9fda74110f2d264c7dec6334570e3fe2538507",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "dccefa94_dad7fc8f",
+        "filename": "ios/chrome/browser/ui/toolbar/toolbar_controller.mm",
+        "patchSetId": 4
+      },
+      "lineNbr": 344,
+      "author": {
+        "id": 1180589
+      },
+      "writtenOn": "2017-11-08T14:28:33Z",
+      "side": 1,
+      "message": "Yes, you are right. It makes a lot of sense actually.\nThanks!",
+      "parentUuid": "9c239f9c_05e2f8a4",
+      "range": {
+        "startLine": 344,
+        "startChar": 67,
+        "endLine": 344,
+        "endChar": 71
+      },
+      "revId": "9f9fda74110f2d264c7dec6334570e3fe2538507",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
