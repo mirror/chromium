@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "2c2e4e59_d9415975",
+        "filename": "tools/metrics/histograms/histograms.xml",
+        "patchSetId": 3
+      },
+      "lineNbr": 78350,
+      "author": {
+        "id": 1001438
+      },
+      "writtenOn": "2017-11-09T10:37:17Z",
+      "side": 1,
+      "message": "Done, although can you clarify when it is fine to delete histograms?\n\nAs I said earlier, this histogram was never used, so I\u0027m a bit surprised that we need to keep it around in this case.",
+      "parentUuid": "050bd8bc_a5eb829c",
+      "range": {
+        "startLine": 78350,
+        "startChar": 78,
+        "endLine": 78350,
+        "endChar": 0
+      },
+      "revId": "3d01cd7f081ad3303a1db47603d9d1d7fef76394",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "567c2fdc_ea9ad3fb",
         "filename": "tools/metrics/histograms/histograms.xml",
         "patchSetId": 3
@@ -45,6 +69,30 @@
       "revId": "3d01cd7f081ad3303a1db47603d9d1d7fef76394",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9231fed4_238cf126",
+        "filename": "tools/metrics/histograms/histograms.xml",
+        "patchSetId": 3
+      },
+      "lineNbr": 78352,
+      "author": {
+        "id": 1001438
+      },
+      "writtenOn": "2017-11-09T10:37:17Z",
+      "side": 1,
+      "message": "Done.\n\nYes, it\u0027s per profile. I added that back, if we think it is useful to mention it specifically.",
+      "parentUuid": "567c2fdc_ea9ad3fb",
+      "range": {
+        "startLine": 78352,
+        "startChar": 11,
+        "endLine": 78352,
+        "endChar": 58
+      },
+      "revId": "3d01cd7f081ad3303a1db47603d9d1d7fef76394",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
