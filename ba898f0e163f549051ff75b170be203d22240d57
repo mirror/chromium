@@ -37,6 +37,24 @@
     },
     {
       "key": {
+        "uuid": "0a1978d4_ad9f587a",
+        "filename": "tools/perf/measurements/smoothness.py",
+        "patchSetId": 4
+      },
+      "lineNbr": 78,
+      "author": {
+        "id": 1128437
+      },
+      "writtenOn": "2017-11-09T23:18:49Z",
+      "side": 1,
+      "message": "Ok, so we don\u0027t expect other processes to have interaction records, right? We may need to revisit this for thread times because we\u0027d want to collect metrics from other processes too.",
+      "parentUuid": "69deb653_a8ab5202",
+      "revId": "ba898f0e163f549051ff75b170be203d22240d57",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "7a4bc4b7_497c9958",
         "filename": "tools/perf/measurements/smoothness.py",
         "patchSetId": 4
