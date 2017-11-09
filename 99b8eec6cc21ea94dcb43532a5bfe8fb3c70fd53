@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "f10f63bb_25f6161f",
+        "filename": "cc/paint/paint_op_buffer.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 103,
+      "author": {
+        "id": 1145109
+      },
+      "writtenOn": "2017-11-09T06:32:59Z",
+      "side": 1,
+      "message": "I pulled out the logic for save/restore balancing, op skipping and next alpha folding into a templated class. Initially I went with a FlatteningIterator and that took me down a rabbit hole which was much uglier. The templated class doesn\u0027t look so bad.\n\nI went with option 1). We need to replicate the transform/clip state tracking done during playback on the client side anyway, for decoding images so we might as well fix the matrix here.",
+      "parentUuid": "d91d9209_d533e710",
+      "revId": "99b8eec6cc21ea94dcb43532a5bfe8fb3c70fd53",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "a19a448d_c26e3e10",
         "filename": "cc/paint/paint_op_buffer.cc",
         "patchSetId": 2
@@ -33,6 +51,24 @@
       "revId": "99b8eec6cc21ea94dcb43532a5bfe8fb3c70fd53",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "fbaca915_b64bfb06",
+        "filename": "cc/paint/paint_op_buffer.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 1842,
+      "author": {
+        "id": 1145109
+      },
+      "writtenOn": "2017-11-09T06:32:59Z",
+      "side": 1,
+      "message": "It was reading the header part which was duplicated, I moved that to a common function.",
+      "parentUuid": "a19a448d_c26e3e10",
+      "revId": "99b8eec6cc21ea94dcb43532a5bfe8fb3c70fd53",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -70,6 +106,24 @@
     },
     {
       "key": {
+        "uuid": "d594ea1a_5fe6885f",
+        "filename": "cc/paint/paint_op_buffer.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 1865,
+      "author": {
+        "id": 1145109
+      },
+      "writtenOn": "2017-11-09T06:32:59Z",
+      "side": 1,
+      "message": "I think we can reuse PaintOpBufferSerializer for paint record shaders. I was making note that when we set up that serializer, we need to add the rasterization scale for the record when serializing that buffer. Its going to be similar to what we do here during regular raster (https://cs.chromium.org/chromium/src/cc/paint/paint_shader.cc?dr\u0026l\u003d15).",
+      "parentUuid": "7cda1350_6d23481f",
+      "revId": "99b8eec6cc21ea94dcb43532a5bfe8fb3c70fd53",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "8e652a3e_7586aa6e",
         "filename": "cc/paint/paint_op_buffer_unittest.cc",
         "patchSetId": 2
@@ -101,6 +155,24 @@
       "revId": "99b8eec6cc21ea94dcb43532a5bfe8fb3c70fd53",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "faac67f4_6a38a4a8",
+        "filename": "cc/paint/paint_op_buffer_unittest.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 2218,
+      "author": {
+        "id": 1145109
+      },
+      "writtenOn": "2017-11-09T06:32:59Z",
+      "side": 1,
+      "message": "This is to verify that we don\u0027t hit that function and unfurl the DrawRecord ops as we encounter them. PaintOpBufferSerializer does this.",
+      "parentUuid": "9a797ba0_6c999ef0",
+      "revId": "99b8eec6cc21ea94dcb43532a5bfe8fb3c70fd53",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
