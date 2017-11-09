@@ -150,7 +150,6 @@ class AppsGridViewTest : public views::ViewsTestBase,
   }
 
  protected:
-
   AppListItemView* GetItemViewAt(int index) const {
     return static_cast<AppListItemView*>(test_api_->GetViewAtModelIndex(index));
   }
@@ -765,7 +764,7 @@ TEST_F(AppsGridViewTest, UpdateFolderBackgroundOnCancelDrag) {
             model_->GetModelContent());
 }
 
-TEST_P(AppsGridViewTest, MoveSelectedOnAllAppsTiles) {
+TEST_P(AppsGridViewTest, DISABLED_MoveSelectedOnAllAppsTiles) {
   const int kItemsOnSecondPage = 3;
   const int kAllAppsItems = GetTilesPerPage(0) + kItemsOnSecondPage;
   const int kLastIndexOfFirstPage = GetTilesPerPage(0) - 1;
@@ -822,7 +821,7 @@ TEST_P(AppsGridViewTest, MoveSelectedOnAllAppsTiles) {
 }
 
 // Tests that moving selection down from the searchbox selects the first app.
-TEST_P(AppsGridViewTest, SelectionDownFromSearchBoxSelectsFirstApp) {
+TEST_P(AppsGridViewTest, DISABLED_SelectionDownFromSearchBoxSelectsFirstApp) {
   model_->PopulateApps(5);
   // Check that nothing is selected.
   EXPECT_TRUE(CheckNoSelection());
@@ -834,7 +833,7 @@ TEST_P(AppsGridViewTest, SelectionDownFromSearchBoxSelectsFirstApp) {
 }
 
 // Tests that moving selection up from the first app selects nothing.
-TEST_P(AppsGridViewTest, SelectionUpFromFirstAppSelectsNothing) {
+TEST_P(AppsGridViewTest, DISABLED_SelectionUpFromFirstAppSelectsNothing) {
   model_->PopulateApps(5);
   // Select the first app.
   suggestions_container_->SetSelectedIndex(0);
@@ -875,7 +874,7 @@ TEST_F(AppsGridViewTest, UMATestForLaunchingApps) {
 // first app selects nothing, and that selection returns to the suggested apps
 // when selection moves forwards (right in ltr, left in rtl).
 TEST_P(AppsGridViewTest,
-       SelectionMovingBackwardsAndForwardsOnFirstSuggestedApp) {
+       DISABLED_SelectionMovingBackwardsAndForwardsOnFirstSuggestedApp) {
   model_->PopulateApps(5);
 
   // Check that nothing is selected.
@@ -901,7 +900,7 @@ TEST_P(AppsGridViewTest,
 }
 
 // Tests that selection can traverse all suggested apps.
-TEST_P(AppsGridViewTest, SelectionTraversesAllSuggestedApps) {
+TEST_P(AppsGridViewTest, DISABLED_SelectionTraversesAllSuggestedApps) {
   model_->PopulateApps(5);
 
   // Select the first suggested app.
@@ -928,7 +927,8 @@ TEST_P(AppsGridViewTest, SelectionTraversesAllSuggestedApps) {
 
 // Tests that selection moves from the last suggested app to the first app that
 // is not suggested when selection moves forward.
-TEST_P(AppsGridViewTest, SelectionMovesFromLastSuggestedAppToFirstAppInGrid) {
+TEST_P(AppsGridViewTest,
+       DISABLED_SelectionMovesFromLastSuggestedAppToFirstAppInGrid) {
   model_->PopulateApps(5);
   // Select the last of three selected apps.
   suggestions_container_->SetSelectedIndex(2);
@@ -942,7 +942,8 @@ TEST_P(AppsGridViewTest, SelectionMovesFromLastSuggestedAppToFirstAppInGrid) {
 
 // Tests that selection moves to the first element of the next page when the
 // next key is pressed.
-TEST_P(AppsGridViewTest, SelectionMovesToFirstElementOfNextPageWithNextKey) {
+TEST_P(AppsGridViewTest,
+       DISABLED_SelectionMovesToFirstElementOfNextPageWithNextKey) {
   const int kPages = 2;
   const int kAllAppsItems = GetTilesPerPage(0) + 1;
   model_->PopulateApps(kAllAppsItems);
@@ -962,7 +963,8 @@ TEST_P(AppsGridViewTest, SelectionMovesToFirstElementOfNextPageWithNextKey) {
 
 // Tests that selection moves to the first element of the previous page with the
 // prev key.
-TEST_P(AppsGridViewTest, SelectionMovesToFirstElementOfPrevPageWithPrevKey) {
+TEST_P(AppsGridViewTest,
+       DISABLED_SelectionMovesToFirstElementOfPrevPageWithPrevKey) {
   const int kAllAppsItems = GetTilesPerPage(0) + 1;
   model_->PopulateApps(kAllAppsItems);
   // Move to next page.
@@ -983,7 +985,7 @@ TEST_P(AppsGridViewTest, SelectionMovesToFirstElementOfPrevPageWithPrevKey) {
 // Tests that in state start there's no selection at the beginning. And hitting
 // down/tab/right arrow key moves the selection to the first app in suggestions
 // container.
-TEST_P(AppsGridViewTest, InitialSelectionInStateStart) {
+TEST_P(AppsGridViewTest, DISABLED_InitialSelectionInStateStart) {
   // Simulates that the app list is at state start.
   contents_view_->SetActiveState(AppListModel::STATE_START);
   model_->PopulateApps(GetTilesPerPage(0));
@@ -1003,7 +1005,7 @@ TEST_P(AppsGridViewTest, InitialSelectionInStateStart) {
 
 // Tests that in state start when selection exists. Hitting tab key does
 // nothing while hitting shift+tab key clears selection.
-TEST_P(AppsGridViewTest, ClearSelectionInStateStart) {
+TEST_P(AppsGridViewTest, DISABLED_ClearSelectionInStateStart) {
   // Simulates that the app list is at state start.
   contents_view_->SetActiveState(AppListModel::STATE_START);
   model_->PopulateApps(GetTilesPerPage(0));
@@ -1021,7 +1023,7 @@ TEST_P(AppsGridViewTest, ClearSelectionInStateStart) {
 // Tests that in state start when selection is on expand arrow, only hitting
 // left/up arrow key moves the selection to the last app in suggestion
 // container.
-TEST_P(AppsGridViewTest, ExpandArrowSelectionInStateStart) {
+TEST_P(AppsGridViewTest, DISABLED_ExpandArrowSelectionInStateStart) {
   // Simulates that the app list is at state start.
   contents_view_->SetActiveState(AppListModel::STATE_START);
   model_->PopulateApps(GetTilesPerPage(0));
@@ -1066,7 +1068,7 @@ TEST_P(AppsGridViewTest, ExpandArrowSelectionInStateStart) {
 // selection to app on the left/right if index is valid. Hitting right key when
 // selection is on the last app in suggestions container or hitting down key
 // move the selection to the expand arrow.
-TEST_P(AppsGridViewTest, SuggestionsContainerSelectionInStateStart) {
+TEST_P(AppsGridViewTest, DISABLED_SuggestionsContainerSelectionInStateStart) {
   // Simulates that the app list is at state start.
   contents_view_->SetActiveState(AppListModel::STATE_START);
   model_->PopulateApps(GetTilesPerPage(0));
