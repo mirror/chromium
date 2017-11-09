@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "093ce482_3bd39a40",
+        "filename": "chrome/test/data/webui/mocha_adapter.js",
+        "patchSetId": 3
+      },
+      "lineNbr": 69,
+      "author": {
+        "id": 1136204
+      },
+      "writtenOn": "2017-11-09T22:50:44Z",
+      "side": 1,
+      "message": "wdyt of adding escapeRe[1] as in [2]?\n\nmocha.grep(new RegExp(`^${escapeRe(testName)}$`)).run();\n\n\n[1] or something like escapeRe(), escapeRe is not defined in this scope.\n[2] https://cs.chromium.org/chromium/infra/appengine/third_party/npm_modules/polymer_2.0.2/bower_components/mocha/mocha.js?type\u003dcs\u0026q\u003dfgrep+mocha\u0026sq\u003dpackage:chromium\u0026l\u003d1527",
+      "revId": "d9dd290bfa4e9e2660b0ab51aaa20524be283637",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
