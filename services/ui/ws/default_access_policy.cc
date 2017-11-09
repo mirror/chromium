@@ -82,14 +82,16 @@ bool DefaultAccessPolicy::CanDeleteWindow(const ServerWindow* window) const {
 
 bool DefaultAccessPolicy::CanGetWindowTree(const ServerWindow* window) const {
   return WasCreatedByThisClient(window) ||
-         delegate_->HasRootForAccessPolicy(window);
+         delegate_->HasRootForAccessPolicy(window) ||
+         delegate_->ShouldInterceptEventsForAccessPolicy(window);
 }
 
 bool DefaultAccessPolicy::CanDescendIntoWindowForWindowTree(
     const ServerWindow* window) const {
   return (WasCreatedByThisClient(window) &&
           !delegate_->IsWindowRootOfAnotherTreeForAccessPolicy(window)) ||
-         delegate_->HasRootForAccessPolicy(window);
+         delegate_->HasRootForAccessPolicy(window) ||
+         delegate_->ShouldInterceptEventsForAccessPolicy(window);
 }
 
 bool DefaultAccessPolicy::CanEmbed(const ServerWindow* window) const {
@@ -210,8 +212,17 @@ bool DefaultAccessPolicy::ShouldNotifyOnHierarchyChange(
     const ServerWindow* window,
     const ServerWindow** new_parent,
     const ServerWindow** old_parent) const {
-  if (!WasCreatedByThisClient(window))
+  if (!WasCreatedByThisClient(window)) {
+    if (*new_parent &&
+        delegate_->ShouldInterceptEventsForAccessPolicy(*new_parent)) {
+      if (*old_parent &&
+          !delegate_->ShouldInterceptEventsForAccessPolicy(*old_parent)) {
+        *old_parent = nullptr;
+      }
+      return true;
+    }
     return false;
+  }
 
   if (*new_parent && !WasCreatedByThisClient(*new_parent) &&
       !delegate_->HasRootForAccessPolicy((*new_parent))) {
