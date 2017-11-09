@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "4ef9a1d9_54c12cd0",
+        "filename": "media/gpu/vaapi_wrapper.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 143,
+      "author": {
+        "id": 1103654
+      },
+      "writtenOn": "2017-11-09T16:25:30Z",
+      "side": 1,
+      "message": "We recommend for the histogram to have two values - one for success and one for error, so you can more easily tell the rate of errors.\n\nOtherwise, it\u0027s hard to reason about this. For example, let\u0027s say you get a value of 33828 errors. Is that a lot? Is that not very much? You can\u0027t answer those questions without knowing more info - such as how many users you\u0027re looking at overall and what percentage of them reported the error. But even then, you don\u0027t know which percentage of them tried this code path in the first place.",
+      "range": {
+        "startLine": 143,
+        "startChar": 37,
+        "endLine": 143,
+        "endChar": 54
+      },
+      "revId": "2752074224f5445fdde72b9f2759eacde2e43f9d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
