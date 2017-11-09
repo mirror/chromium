@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "4a59c84d_1267a552",
+        "filename": "chrome/browser/ui/views/harmony/harmony_typography_provider.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 168,
+      "author": {
+        "id": 1126912
+      },
+      "writtenOn": "2017-11-09T17:25:50Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "21c2774d_0a96e936",
+      "revId": "d388fff5439f811edf21f2afb35598674eac6ba4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "f7c18831_af6107e1",
         "filename": "chrome/browser/ui/views/harmony/harmony_typography_provider.cc",
         "patchSetId": 2
@@ -33,6 +51,24 @@
       "revId": "d388fff5439f811edf21f2afb35598674eac6ba4",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5d27d75a_ad3e29da",
+        "filename": "chrome/browser/ui/views/harmony/harmony_typography_provider.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 170,
+      "author": {
+        "id": 1126912
+      },
+      "writtenOn": "2017-11-09T17:25:50Z",
+      "side": 1,
+      "message": "Keeping curlies because this if now spans multiple lines.",
+      "parentUuid": "f7c18831_af6107e1",
+      "revId": "d388fff5439f811edf21f2afb35598674eac6ba4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -53,6 +89,24 @@
     },
     {
       "key": {
+        "uuid": "a491bc3d_149fb2d8",
+        "filename": "ui/views/style/typography.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 53,
+      "author": {
+        "id": 1126912
+      },
+      "writtenOn": "2017-11-09T17:25:50Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "884e3944_f3906709",
+      "revId": "d388fff5439f811edf21f2afb35598674eac6ba4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "811ad9e0_53464b03",
         "filename": "ui/views/style/typography.h",
         "patchSetId": 2
@@ -67,6 +121,24 @@
       "revId": "d388fff5439f811edf21f2afb35598674eac6ba4",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1e757a3a_e2b2c42e",
+        "filename": "ui/views/style/typography.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 54,
+      "author": {
+        "id": 1126912
+      },
+      "writtenOn": "2017-11-09T17:25:50Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "811ad9e0_53464b03",
+      "revId": "d388fff5439f811edf21f2afb35598674eac6ba4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
