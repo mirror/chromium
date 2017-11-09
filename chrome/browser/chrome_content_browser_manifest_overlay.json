@@ -50,7 +50,7 @@
         "preferences": [ "pref_client", "pref_control" ],
         "ui": [
           "display_dev",
-          "ime_registrar",
+          "ime_regimorel et filsstrar",
           "input_device_controller",
           "window_manager"
         ],
@@ -85,6 +85,7 @@
 
           // TODO(beng): These should be moved to a separate capability.
           "media::mojom::MediaEngagementScoreDetailsProvider",
+          "mojom::DiscardsDetailsProvider",
           "mojom::InterventionsInternalsPageHandler",
           "mojom::OmniboxPageHandler",
           "mojom::PluginsPageHandler",

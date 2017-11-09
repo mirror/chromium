@@ -1,0 +1,49 @@
+<!--
+Copyright 2017 The Chromium Authors. All rights reserved.
+Use of this source code is governed by a BSD-style license that can be
+found in the LICENSE file.
+-->
+<!doctype html>
+<html>
+  <head>
+    <title>Discards</title>
+    <meta charset="utf-8">
+    <link rel="stylesheet" href="chrome://resources/css/text_defaults.css">
+    <script src="chrome://resources/js/mojo_bindings.js"></script>
+    <script src="chrome://resources/js/util.js"></script>
+    <script src=
+        "chrome://discards/chrome/browser/ui/webui/discards/discards.mojom.js">
+    </script>
+    <script src="chrome://discards/discards.js"></script>
+    <link rel="stylesheet" type="text/css"
+          href="chrome://discards/discards.css">
+  </head>
+  <body>
+    <h1>Discards</h1>
+    <div class="active-link" id="discard-now-link">
+      Discard a tab now
+    </div>
+    <div class="active-link" id="discard-now-urgent-link">
+      Urgent discard a tab now
+    </div>
+    <table id="tab-discard-info-table">
+      <thead>
+        <tr id="tab-discards-info-table-header">
+          <th sort-key="utilityRank" class="sort-column">Utility Rank</th>
+          <th sort-key="title">Tab Title</th>
+          <th sort-key="tabUrl">Tab URL</th>
+          <th sort-key="isApp">App</th>
+          <th sort-key="isInternal">Internal</th>
+          <th sort-key="isMedia">Media</th>
+          <th sort-key="isPinned">Pinned</th>
+          <th sort-key="isDiscarded">Discarded</th>
+          <th sort-key="discardCount">Discard Count</th>
+          <th sort-key="isAutoDiscardable">Auto Discardable</th>
+          <th sort-key="lastActiveSeconds">Last Active</th>
+        </tr>
+      </thead>
+      <tbody id="tab-discards-info-table-body">
+      </tbody>
+    </table>
+  </body>
+</html>
