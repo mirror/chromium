@@ -56,6 +56,7 @@ namespace extensions {
 class ContentWatcher;
 class DispatcherDelegate;
 class ExtensionBindingsSystem;
+class IPCMessageSender;
 class ScriptContext;
 class ScriptInjectionManager;
 struct EventFilteringInfo;
@@ -133,6 +134,14 @@ class Dispatcher : public content::RenderThreadObserver,
                                 const std::string& module_name,
                                 const std::string& function_name,
                                 const base::ListValue& args);
+
+  // Creates the ExtensionBindingsSystem. Note: this may be called on any
+  // thread, and thus cannot mutate any state or rely on state which can be
+  // mutated in Dispatcher.
+  // TODO(devlin/lazyboy): Is this safe?
+  std::unique_ptr<ExtensionBindingsSystem> CreateBindingsSystem(
+      std::unique_ptr<IPCMessageSender> ipc_sender,
+      ResourceBundleSourceMap* source_map);
 
   // Returns a list of (module name, resource id) pairs for the JS modules to
   // add to the source map.
