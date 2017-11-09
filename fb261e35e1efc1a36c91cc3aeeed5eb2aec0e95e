@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "b61f617d_07984f76",
+        "filename": "third_party/WebKit/Source/core/page/FocusController.cpp",
+        "patchSetId": 2
+      },
+      "lineNbr": 1095,
+      "author": {
+        "id": 1000098
+      },
+      "writtenOn": "2017-11-09T16:40:17Z",
+      "side": 1,
+      "message": "nit: this is practically same as the previous, and I understand you incorporated my comment, but I\u0027d say the previous one was better - in Google C++ style variable initialization should be at declaration.\nhttps://google.github.io/styleguide/cppguide.html#Local_Variables\nso maybe revert to previous, or you could also write this as\n\nElement* next_element \u003d FindFocusableElement(focus_type, *element);\nint traversal \u003d 0;\nfor (; next_leement \u0026\u0026 traversal \u003c kFocusTraversalThreshold;\n  ...",
+      "revId": "fb261e35e1efc1a36c91cc3aeeed5eb2aec0e95e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
