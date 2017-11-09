@@ -209,6 +209,24 @@
       "revId": "f15b02e53b57fea61216fb4fcfec465738bee5cd",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "cc32b627_f7303241",
+        "filename": "chrome/browser/extensions/display_info_provider_chromeos.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 755,
+      "author": {
+        "id": 1115745
+      },
+      "writtenOn": "2017-11-09T15:02:02Z",
+      "side": 1,
+      "message": "ah, okay.  I\u0027ve very little knowledge of display parenting, so as long as this is WAI, we\u0027re good. :)",
+      "parentUuid": "4e29f7f8_10604dbc",
+      "revId": "f15b02e53b57fea61216fb4fcfec465738bee5cd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
