@@ -16,6 +16,24 @@
       "revId": "013f50c19c4c3fd81576592a515e9d4d3893bd66",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "51ad8f8c_318c9d33",
+        "filename": "chrome/browser/ui/views/translate/translate_language_browsertest.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 259,
+      "author": {
+        "id": 1215199
+      },
+      "writtenOn": "2017-11-09T05:46:25Z",
+      "side": 1,
+      "message": "As far as I can tell, we can only access the target language UI via the TranslateBubbleView (which internally accesses this info through a TranslateBubbleModel).\n\nThe TranslateBubbleModel doesn\u0027t expose language codes, but it can report language display names by index and set target language by index. So I thought the most reliable solution would be to identify the correct index via display name, then set the target language with this index.",
+      "parentUuid": "bffdf999_bc076872",
+      "revId": "013f50c19c4c3fd81576592a515e9d4d3893bd66",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
