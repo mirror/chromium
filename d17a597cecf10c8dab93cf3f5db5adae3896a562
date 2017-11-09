@@ -1,0 +1,61 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "b1f6276a_39f1aa0d",
+        "filename": "build/protoc_java.py",
+        "patchSetId": 9
+      },
+      "lineNbr": 44,
+      "author": {
+        "id": 1126674
+      },
+      "writtenOn": "2017-11-09T17:46:14Z",
+      "side": 1,
+      "message": "nit: just for style points, change this to an if \u0026 raise Exception(). Assertions are meant just for checking your own program logic.",
+      "revId": "d17a597cecf10c8dab93cf3f5db5adae3896a562",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8f8c6773_60e2ed7e",
+        "filename": "build/protoc_java.py",
+        "patchSetId": 9
+      },
+      "lineNbr": 45,
+      "author": {
+        "id": 1126674
+      },
+      "writtenOn": "2017-11-09T17:46:14Z",
+      "side": 1,
+      "message": "\" -\u003e \u0027.\n\nAlso, using \\ to wrap is basically not allowed by our style guide. Alway use ()s instead:\n\n   (\u0027...\u0027\n    \u0027...\u0027)",
+      "range": {
+        "startLine": 45,
+        "startChar": 8,
+        "endLine": 45,
+        "endChar": 9
+      },
+      "revId": "d17a597cecf10c8dab93cf3f5db5adae3896a562",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "dc3df290_603cedab",
+        "filename": "build/protoc_java.py",
+        "patchSetId": 9
+      },
+      "lineNbr": 54,
+      "author": {
+        "id": 1126674
+      },
+      "writtenOn": "2017-11-09T17:46:14Z",
+      "side": 1,
+      "message": "I just meant, instead of having \u003d\u003d \u0027true\u0027 here, have:\n  if options.lite:\n\nAnd on the GN size, only add the \"--lite\" flag when we want to turn it on.",
+      "revId": "d17a597cecf10c8dab93cf3f5db5adae3896a562",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
