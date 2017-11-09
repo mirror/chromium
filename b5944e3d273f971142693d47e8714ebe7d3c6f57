@@ -407,6 +407,24 @@
     },
     {
       "key": {
+        "uuid": "739002e8_c0292281",
+        "filename": "content/browser/webauth/attestation_data.cc",
+        "patchSetId": 10
+      },
+      "lineNbr": 47,
+      "author": {
+        "id": 1128380
+      },
+      "writtenOn": "2017-11-09T01:00:06Z",
+      "side": 1,
+      "message": "Nothing else is currently performing checks, since it\u0027s just a blob coming back from //device/u2f. We can always manipulate the parsing to return an error that would resolve to a NotSupported DOMException.",
+      "parentUuid": "23140e63_4f449d96",
+      "revId": "b5944e3d273f971142693d47e8714ebe7d3c6f57",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "e464d828_d3835341",
         "filename": "content/browser/webauth/attestation_data.cc",
         "patchSetId": 10

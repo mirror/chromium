@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "63eeabc1_40d159dc",
+        "filename": "content/browser/webauth/authenticator_utils.cc",
+        "patchSetId": 11
+      },
+      "lineNbr": 10,
+      "author": {
+        "id": 1128380
+      },
+      "writtenOn": "2017-11-09T01:00:06Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "4bfa8234_b88e1175",
+      "revId": "07f2f13d018920fe9ec37eff572bda186eacb29d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "473b98bd_9f8be0be",
         "filename": "content/browser/webauth/authenticator_utils.cc",
         "patchSetId": 11
@@ -33,6 +51,24 @@
       "revId": "07f2f13d018920fe9ec37eff572bda186eacb29d",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "880f9c87_44dd4e28",
+        "filename": "content/browser/webauth/authenticator_utils.cc",
+        "patchSetId": 11
+      },
+      "lineNbr": 17,
+      "author": {
+        "id": 1128380
+      },
+      "writtenOn": "2017-11-09T01:00:06Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "473b98bd_9f8be0be",
+      "revId": "07f2f13d018920fe9ec37eff572bda186eacb29d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -53,6 +89,24 @@
     },
     {
       "key": {
+        "uuid": "ff824bef_978f2607",
+        "filename": "content/browser/webauth/authenticator_utils.cc",
+        "patchSetId": 11
+      },
+      "lineNbr": 18,
+      "author": {
+        "id": 1128380
+      },
+      "writtenOn": "2017-11-09T01:00:06Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "683f0f92_fb6b2793",
+      "revId": "07f2f13d018920fe9ec37eff572bda186eacb29d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "16b22142_18f95859",
         "filename": "content/browser/webauth/authenticator_utils.h",
         "patchSetId": 11
@@ -67,6 +121,24 @@
       "revId": "07f2f13d018920fe9ec37eff572bda186eacb29d",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a2e2b42e_b6e4e531",
+        "filename": "content/browser/webauth/authenticator_utils.h",
+        "patchSetId": 11
+      },
+      "lineNbr": 30,
+      "author": {
+        "id": 1128380
+      },
+      "writtenOn": "2017-11-09T01:00:06Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "16b22142_18f95859",
+      "revId": "07f2f13d018920fe9ec37eff572bda186eacb29d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -90,6 +162,30 @@
       "revId": "07f2f13d018920fe9ec37eff572bda186eacb29d",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ba71ba15_ce978185",
+        "filename": "content/browser/webauth/authenticator_utils.h",
+        "patchSetId": 11
+      },
+      "lineNbr": 32,
+      "author": {
+        "id": 1128380
+      },
+      "writtenOn": "2017-11-09T01:00:06Z",
+      "side": 1,
+      "message": "Extract?",
+      "parentUuid": "e5b90d97_d3210e4f",
+      "range": {
+        "startLine": 32,
+        "startChar": 21,
+        "endLine": 32,
+        "endChar": 27
+      },
+      "revId": "07f2f13d018920fe9ec37eff572bda186eacb29d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
