@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "33b5b0ed_c77ab739",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 1
+      },
+      "lineNbr": 9,
+      "author": {
+        "id": 1114080
+      },
+      "writtenOn": "2017-11-09T09:07:35Z",
+      "side": 1,
+      "message": "Is \"... by default on platforms other than Android,\" clearer?",
+      "range": {
+        "startLine": 9,
+        "startChar": 46,
+        "endLine": 9,
+        "endChar": 49
+      },
+      "revId": "add107b76338c756658b6bee3fb775eb510d0553",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6b3485e0_79a90aa2",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 1
+      },
+      "lineNbr": 10,
+      "author": {
+        "id": 1114080
+      },
+      "writtenOn": "2017-11-09T09:07:35Z",
+      "side": 1,
+      "message": "Is \"make the flag Android-only in order to avoid confusion\" better?",
+      "range": {
+        "startLine": 10,
+        "startChar": 59,
+        "endLine": 10,
+        "endChar": 60
+      },
+      "revId": "add107b76338c756658b6bee3fb775eb510d0553",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
