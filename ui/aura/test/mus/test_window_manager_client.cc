@@ -115,7 +115,8 @@ void TestWindowManagerClient::WmSetCursorTouchVisible(bool enabled) {}
 
 void TestWindowManagerClient::OnWmCreatedTopLevelWindow(
     uint32_t change_id,
-    Id transport_window_id) {}
+    Id transport_window_id,
+    const viz::FrameSinkId& frame_sink_id) {}
 
 void TestWindowManagerClient::OnAcceleratorAck(
     uint32_t event_id,

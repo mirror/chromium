@@ -1798,7 +1798,7 @@ void WindowTreeClient::WmSetCanFocus(Id window_id, bool can_focus) {
 
 void WindowTreeClient::WmCreateTopLevelWindow(
     uint32_t change_id,
-    ClientSpecificId requesting_client_id,
+    const viz::FrameSinkId& frame_sink_id,
     const std::unordered_map<std::string, std::vector<uint8_t>>&
         transport_properties) {
   std::map<std::string, std::vector<uint8_t>> properties =
@@ -1814,14 +1814,17 @@ void WindowTreeClient::WmCreateTopLevelWindow(
   Window* window = window_manager_delegate_->OnWmCreateTopLevelWindow(
       window_type, &properties);
   if (!window) {
-    window_manager_client_->OnWmCreatedTopLevelWindow(change_id,
-                                                      kInvalidServerId);
+    window_manager_client_->OnWmCreatedTopLevelWindow(
+        change_id, kInvalidServerId, frame_sink_id);
     return;
   }
-  embedded_windows_[requesting_client_id].insert(window);
+  embedded_windows_[base::checked_cast<ClientSpecificId>(
+                        frame_sink_id.client_id())]
+      .insert(window);
   if (window_manager_client_) {
     window_manager_client_->OnWmCreatedTopLevelWindow(
-        change_id, WindowMus::Get(window)->server_id());
+        change_id, WindowMus::Get(window)->server_id(), frame_sink_id);
+    OnFrameSinkIdAllocated(WindowMus::Get(window)->server_id(), frame_sink_id);
   }
 }
 
