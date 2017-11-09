@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "9cbccdc3_dd65a431",
+        "filename": "third_party/WebKit/Source/platform/scheduler/renderer/renderer_scheduler_impl.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 657,
+      "author": {
+        "id": 1116032
+      },
+      "writtenOn": "2017-11-09T15:42:00Z",
+      "side": 1,
+      "message": "This looks unused?",
+      "range": {
+        "startLine": 657,
+        "startChar": 37,
+        "endLine": 657,
+        "endChar": 68
+      },
+      "revId": "3777bee8d185e6c3aee5f0c3a2d3aa701b12ad6b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
