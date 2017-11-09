@@ -48,6 +48,7 @@ include_rules = [
   "+services/device/public/cpp/device_features.h",
   "+services/identity/public",
   "+services/metrics/public",
+  "+services/network/public",
   "+services/preferences/public/cpp",
   "+services/preferences/public/interfaces",
   "+services/proxy_resolver",  # Android runs the packaged proxy resolver

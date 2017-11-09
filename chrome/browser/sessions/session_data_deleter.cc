@@ -19,17 +19,11 @@
 #include "content/public/browser/dom_storage_context.h"
 #include "content/public/browser/local_storage_usage_info.h"
 #include "content/public/browser/storage_partition.h"
-#include "net/cookies/cookie_store.h"
 #include "net/cookies/cookie_util.h"
-#include "net/url_request/url_request_context.h"
-#include "net/url_request/url_request_context_getter.h"
+#include "services/network/public/interfaces/cookie_manager.mojom.h"
 #include "storage/browser/quota/special_storage_policy.h"
 
 namespace {
-
-void CookieDeleted(uint32_t num_cookies_deleted) {
-  DCHECK_EQ(1u, num_cookies_deleted);
-}
 
 class SessionDataDeleter
     : public base::RefCountedThreadSafe<SessionDataDeleter> {
@@ -37,9 +31,7 @@ class SessionDataDeleter
   SessionDataDeleter(storage::SpecialStoragePolicy* storage_policy,
                      bool delete_only_by_session_only_policy);
 
-  void Run(
-      content::StoragePartition* storage_partition,
-      scoped_refptr<net::URLRequestContextGetter> url_request_context_getter);
+  void Run(content::StoragePartition* storage_partition);
 
  private:
   friend class base::RefCountedThreadSafe<SessionDataDeleter>;
@@ -51,22 +43,21 @@ class SessionDataDeleter
       content::StoragePartition* storage_partition,
       const std::vector<content::LocalStorageUsageInfo>& usages);
 
-  // Deletes all cookies that are session only if
-  // |delete_only_by_session_only_policy_| is false. Once completed or skipped,
-  // this arranges for DeleteSessionOnlyOriginCookies to be called with a list
-  // of all remaining cookies.
-  void DeleteSessionCookiesOnIOThread(
-      scoped_refptr<net::URLRequestContextGetter> url_request_context_getter);
+  // Initiate deletion of all cookies that are session only by the
+  // storage policy of the constructor.  The |num_deleted| uint32_t
+  // argument is so that this can be used as a callback from a previous
+  // deletion--the argument is ignored.
+  void DeleteSessionOnlyOriginCookies(uint32_t num_deleted);
 
-  // Called when all session-only cookies have been deleted.
-  void DeleteSessionCookiesDone(net::CookieStore* cookie_store,
-                                uint32_t num_deleted);
+  // Second phase of deletion of cookies that are session only by the
+  // sstorage policy of the constructor.
+  void DeleteSessionOnlyOriginCookiesCallback(
+      const std::vector<net::CanonicalCookie>& cookies);
 
-  // Deletes the cookies in |cookies| that are for origins which are
-  // session-only.
-  void DeleteSessionOnlyOriginCookies(net::CookieStore* cookie_store,
-                                      const net::CookieList& cookies);
+  // Callback for the deletion of the individual cookies.
+  void CookieDeleted(bool success);
 
+  network::mojom::CookieManagerPtr cookie_manager_;
   scoped_refptr<storage::SpecialStoragePolicy> storage_policy_;
   const bool delete_only_by_session_only_policy_;
 
@@ -80,19 +71,65 @@ SessionDataDeleter::SessionDataDeleter(
       delete_only_by_session_only_policy_(delete_only_by_session_only_policy) {
 }
 
-void SessionDataDeleter::Run(
-    content::StoragePartition* storage_partition,
-    scoped_refptr<net::URLRequestContextGetter> url_request_context_getter) {
+void SessionDataDeleter::Run(content::StoragePartition* storage_partition) {
   if (storage_policy_.get() && storage_policy_->HasSessionOnlyOrigins()) {
     storage_partition->GetDOMStorageContext()->GetLocalStorageUsage(
         base::Bind(&SessionDataDeleter::ClearSessionOnlyLocalStorage,
                    this,
                    storage_partition));
   }
-  content::BrowserThread::PostTask(
-      content::BrowserThread::IO, FROM_HERE,
-      base::Bind(&SessionDataDeleter::DeleteSessionCookiesOnIOThread, this,
-                 url_request_context_getter));
+
+  storage_partition->GetNetworkContext()->GetCookieManager(
+      mojo::MakeRequest(&cookie_manager_));
+  if (delete_only_by_session_only_policy_) {
+    DeleteSessionOnlyOriginCookies(0u);
+  } else {
+    network::mojom::CookieDeletionFilterPtr filter(
+        network::mojom::CookieDeletionFilter::New());
+    filter->session_control =
+        network::mojom::CookieDeletionSessionControl::SESSION_COOKIES;
+    cookie_manager_->DeleteCookies(
+        std::move(filter),
+        base::Bind(&SessionDataDeleter::DeleteSessionOnlyOriginCookies, this));
+  }
+}
+
+void SessionDataDeleter::DeleteSessionOnlyOriginCookies(
+    uint32_t /* num_deleted */) {
+  DCHECK(cookie_manager_.get());
+  if (!storage_policy_.get() || !storage_policy_->HasSessionOnlyOrigins())
+    return;
+  cookie_manager_->GetAllCookies(base::Bind(
+      &SessionDataDeleter::DeleteSessionOnlyOriginCookiesCallback, this));
+}
+
+void SessionDataDeleter::DeleteSessionOnlyOriginCookiesCallback(
+    const std::vector<net::CanonicalCookie>& cookies) {
+  base::Time yesterday(base::Time::Now() - base::TimeDelta::FromDays(1));
+  for (const auto& cookie : cookies) {
+    GURL url =
+        net::cookie_util::CookieOriginToURL(cookie.Domain(), cookie.IsSecure());
+    if (!storage_policy_->IsStorageSessionOnly(url))
+      continue;
+
+    // Delete a single cookie by setting its expiration time into the past.
+    cookie_manager_->SetCanonicalCookie(
+        net::CanonicalCookie(cookie.Name(), cookie.Value(), cookie.Domain(),
+                             cookie.Path(), cookie.CreationDate(), yesterday,
+                             cookie.LastAccessDate(), cookie.IsSecure(),
+                             cookie.IsHttpOnly(), cookie.SameSite(),
+                             cookie.Priority()),
+        true /* secure_source */, true /* modify_http_only */,
+        // Callback will keep |*this| alive until all dispatched
+        // messages return.  Strictly, this is not needed as the
+        // mojo messages will be delivered even if this end of the pipe
+        // is closed.
+        base::Bind(&SessionDataDeleter::CookieDeleted, this));
+  }
+}
+
+void SessionDataDeleter::CookieDeleted(bool success) {
+  DCHECK(success);
 }
 
 SessionDataDeleter::~SessionDataDeleter() {}
@@ -107,54 +144,6 @@ void SessionDataDeleter::ClearSessionOnlyLocalStorage(
     if (!storage_policy_->IsStorageSessionOnly(usage.origin))
       continue;
     storage_partition->GetDOMStorageContext()->DeleteLocalStorage(usage.origin);
-  }
-}
-
-void SessionDataDeleter::DeleteSessionCookiesOnIOThread(
-    scoped_refptr<net::URLRequestContextGetter> url_request_context_getter) {
-  DCHECK_CURRENTLY_ON(content::BrowserThread::IO);
-  net::URLRequestContext* request_context =
-      url_request_context_getter->GetURLRequestContext();
-  // Shouldn't happen, but best not to depend on the URLRequestContext's
-  // lifetime
-  if (!request_context)
-    return;
-  net::CookieStore* cookie_store = request_context->cookie_store();
-  // If these callbacks are invoked, |cookie_store| is guaranteed to still
-  // exist, since deleting the CookieStore will cancel pending callbacks.
-  if (delete_only_by_session_only_policy_) {
-    cookie_store->GetAllCookiesAsync(
-        base::Bind(&SessionDataDeleter::DeleteSessionOnlyOriginCookies, this,
-                   base::Unretained(cookie_store)));
-  } else {
-    cookie_store->DeleteSessionCookiesAsync(
-        base::Bind(&SessionDataDeleter::DeleteSessionCookiesDone, this,
-                   base::Unretained(cookie_store)));
-  }
-}
-
-void SessionDataDeleter::DeleteSessionCookiesDone(
-    net::CookieStore* cookie_store,
-    uint32_t num_deleted) {
-  // If these callbacks are invoked, |cookie_store| is gauranteed to still
-  // exist, since deleting the CookieStore will cancel pending callbacks.
-  cookie_store->GetAllCookiesAsync(
-      base::Bind(&SessionDataDeleter::DeleteSessionOnlyOriginCookies, this,
-                 base::Unretained(cookie_store)));
-}
-
-void SessionDataDeleter::DeleteSessionOnlyOriginCookies(
-    net::CookieStore* cookie_store,
-    const net::CookieList& cookies) {
-  if (!storage_policy_.get() || !storage_policy_->HasSessionOnlyOrigins())
-    return;
-
-  for (const auto& cookie : cookies) {
-    GURL url =
-        net::cookie_util::CookieOriginToURL(cookie.Domain(), cookie.IsSecure());
-    if (!storage_policy_->IsStorageSessionOnly(url))
-      continue;
-    cookie_store->DeleteCanonicalCookieAsync(cookie, base::Bind(CookieDeleted));
   }
 }
 
@@ -179,6 +168,5 @@ void DeleteSessionOnlyData(Profile* profile) {
   scoped_refptr<SessionDataDeleter> deleter(
       new SessionDataDeleter(profile->GetSpecialStoragePolicy(),
                              startup_pref_type == SessionStartupPref::LAST));
-  deleter->Run(Profile::GetDefaultStoragePartition(profile),
-               profile->GetRequestContext());
+  deleter->Run(Profile::GetDefaultStoragePartition(profile));
 }
