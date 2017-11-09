@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "85a633a8_e5ff4fce",
+        "filename": "content/renderer/media/media_factory.cc",
+        "patchSetId": 26
+      },
+      "lineNbr": 328,
+      "author": {
+        "id": 1002076
+      },
+      "writtenOn": "2017-11-09T03:48:30Z",
+      "side": 1,
+      "message": "nit: s/base::MakeUnique/std::make_unique/",
+      "range": {
+        "startLine": 328,
+        "startChar": 6,
+        "endLine": 328,
+        "endChar": 22
+      },
+      "revId": "221d284a7682045e2a13d70e2eace76635d8f17d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
