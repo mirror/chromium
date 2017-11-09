@@ -127,9 +127,7 @@ class MediaRouterMojoImpl : public MediaRouterBase,
   // Mojo connection may be terminated at any later time.
   mojom::MediaRouteProvider* GetProviderForRoute(
       const MediaRoute::Id& route_id);
-  mojom::MediaRouteProvider* GetProviderForSink(
-      const MediaSink::Id& sink_id,
-      const MediaSource::Id& source_id);
+  mojom::MediaRouteProvider* GetProviderForSink(const MediaSink::Id& sink_id);
   virtual mojom::MediaRouteProvider* GetProviderForPresentation(
       const std::string& presentation_id);
 
@@ -215,9 +213,8 @@ class MediaRouterMojoImpl : public MediaRouterBase,
     bool HasObserver(MediaSinksObserver* observer) const;
     bool HasObservers() const;
 
-    const base::flat_map<mojom::MediaRouteProvider::Id, std::vector<MediaSink>>&
-    providers_to_sinks() const {
-      return providers_to_sinks_;
+    const std::vector<MediaSink>& cached_sink_list() const {
+      return cached_sink_list_;
     }
     void set_origins(const std::vector<url::Origin>& origins) {
       origins_ = origins;
@@ -226,12 +223,6 @@ class MediaRouterMojoImpl : public MediaRouterBase,
    private:
     // Cached list of sinks for the query.
     std::vector<MediaSink> cached_sink_list_;
-
-    // Cached lists of sinks for each MRP.
-    // TODO(crbug.com/761493): Consider making MRP ID an attribute of
-    // MediaSinks, so that we can simplify this into a vector.
-    base::flat_map<mojom::MediaRouteProvider::Id, std::vector<MediaSink>>
-        providers_to_sinks_;
 
     // Cached list of origins for the query.
     // TODO(takumif): The list of supported origins may differ between MRPs, so
@@ -381,6 +372,8 @@ class MediaRouterMojoImpl : public MediaRouterBase,
   // Invalidates and removes controllers from |route_controllers_| whose media
   // routes do not appear in |routes|.
   void RemoveInvalidRouteControllers(const std::vector<MediaRoute>& routes);
+
+  base::Optional<MediaSink> GetSinkById(const MediaSink::Id& sink_id) const;
 
   base::flat_map<MediaSource::Id, std::unique_ptr<MediaSinksQuery>>
       sinks_queries_;
