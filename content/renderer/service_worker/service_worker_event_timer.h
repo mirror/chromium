@@ -5,7 +5,11 @@
 #ifndef CONTENT_RENDERER_SERVICE_WORKER_SERVICE_WORKER_EVENT_TIMER_H_
 #define CONTENT_RENDERER_SERVICE_WORKER_SERVICE_WORKER_EVENT_TIMER_H_
 
+#include <queue>
+#include <unordered_map>
+
 #include "base/callback.h"
+#include "base/time/time.h"
 #include "base/timer/timer.h"
 #include "content/common/content_export.h"
 
@@ -20,14 +24,17 @@ class CONTENT_EXPORT ServiceWorkerEventTimer {
   ServiceWorkerEventTimer(base::RepeatingClosure idle_callback);
   ~ServiceWorkerEventTimer();
 
-  void StartEvent();
-  void FinishEvent();
+  int StartEvent(base::OnceCallback<void(int /* event_id */)> abort_callback);
+  void FinishEvent(int event_id);
 
   static constexpr base::TimeDelta kIdleDelay =
       base::TimeDelta::FromSeconds(30);
 
  private:
-  uint64_t num_inflight_events_;
+  // For aborting long standing events.
+  std::unordered_map<int /* event_id */, base::OnceClosure> abort_callbacks_;
+  std::priority_queue<std::pair<base::TimeTicks, int /* event_id */>>
+      event_timeouts_;
 
   // This is repeating timer since |idle_timer_| will fire repeatedly once it's
   // considered as idle.
