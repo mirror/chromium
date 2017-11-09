@@ -97,6 +97,30 @@
     },
     {
       "key": {
+        "uuid": "8dc63dc4_4b4eb18e",
+        "filename": "chrome/test/media_router/media_router_integration_browsertest.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 245,
+      "author": {
+        "id": 1001385
+      },
+      "writtenOn": "2017-11-09T20:53:45Z",
+      "side": 1,
+      "message": "Would it be possible to add a OnCreateRouteFailed() hook for that purpose, even if only for testing?  What is it that we go and query to verify that CreateRoute was called, at present?\n\nIf not then can we at least have call-sites which expect OnRoutesUpdated to wait for that, and only call-sites which essentially wait-for-nothing do the multi-second wait?",
+      "parentUuid": "0ab1fb9b_48bae4c0",
+      "range": {
+        "startLine": 242,
+        "startChar": 0,
+        "endLine": 245,
+        "endChar": 40
+      },
+      "revId": "3d55b14c5ef805de56f8aa5d562cb0784d6b4ffd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "ca43190a_4c644712",
         "filename": "chrome/test/media_router/media_router_integration_browsertest.cc",
         "patchSetId": 6
