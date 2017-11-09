@@ -63,9 +63,9 @@ String StyleRuleKeyframe::CssText() const {
   return result.ToString();
 }
 
-void StyleRuleKeyframe::TraceAfterDispatch(blink::Visitor* visitor) {
+void StyleRuleKeyframe::Trace(blink::Visitor* visitor) {
   visitor->Trace(properties_);
-  StyleRuleBase::TraceAfterDispatch(visitor);
+  StyleRuleBase::Trace(visitor);
 }
 
 }  // namespace blink
