@@ -6,9 +6,11 @@
 
 #include "content/browser/blob_storage/blob_url_loader_factory.h"
 #include "content/browser/download/download_utils.h"
+#include "content/browser/frame_host/frame_tree_node.h"
 #include "content/common/throttling_url_loader.h"
 #include "content/public/browser/render_frame_host.h"
 #include "content/public/browser/web_contents.h"
+#include "content/public/common/browser_side_navigation_policy.h"
 #include "storage/browser/fileapi/file_system_context.h"
 
 namespace content {
@@ -16,9 +18,13 @@ namespace content {
 // This class is only used for providing the WebContents to DownloadItemImpl.
 class RequestHandle : public DownloadRequestHandleInterface {
  public:
-  RequestHandle(int render_process_id, int render_frame_id)
+  RequestHandle(int render_process_id,
+                int render_frame_id,
+                int frame_tree_node_id)
       : render_process_id_(render_process_id),
-        render_frame_id_(render_frame_id) {}
+        render_frame_id_(render_frame_id),
+        frame_tree_node_id_(frame_tree_node_id) {}
+
   RequestHandle(RequestHandle&& other)
       : render_process_id_(other.render_process_id_),
         render_frame_id_(other.render_frame_id_) {}
@@ -27,6 +33,16 @@ class RequestHandle : public DownloadRequestHandleInterface {
   WebContents* GetWebContents() const override {
     RenderFrameHost* host =
         RenderFrameHost::FromID(render_process_id_, render_frame_id_);
+
+    // PlzNavigate: navigations don't have associated RenderFrameHosts.
+    // Get the WebContents from |frame_tree_node_id_|.
+    if (!host && IsBrowserSideNavigationEnabled()) {
+      FrameTreeNode* frame_tree_node =
+          FrameTreeNode::GloballyFindByID(frame_tree_node_id_);
+      if (frame_tree_node)
+        host = frame_tree_node->current_frame_host();
+    }
+
     if (host)
       return WebContents::FromRenderFrameHost(host);
     return nullptr;
@@ -39,6 +55,7 @@ class RequestHandle : public DownloadRequestHandleInterface {
  private:
   int render_process_id_;
   int render_frame_id_;
+  int frame_tree_node_id_;
 
   DISALLOW_COPY_AND_ASSIGN(RequestHandle);
 };
@@ -164,7 +181,8 @@ void ResourceDownloader::OnResponseStarted(
   download_create_info->guid = guid_;
   if (resource_request_->origin_pid >= 0) {
     download_create_info->request_handle.reset(new RequestHandle(
-        resource_request_->origin_pid, resource_request_->render_frame_id));
+        resource_request_->origin_pid, resource_request_->render_frame_id,
+        resource_request_->frame_tree_node_id));
   }
   BrowserThread::PostTask(
       BrowserThread::UI, FROM_HERE,

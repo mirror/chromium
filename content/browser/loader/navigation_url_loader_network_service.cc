@@ -580,6 +580,7 @@ NavigationURLLoaderNetworkService::NavigationURLLoaderNetworkService(
   new_request->fetch_redirect_mode = FetchRedirectMode::MANUAL_MODE;
 
   int frame_tree_node_id = request_info->frame_tree_node_id;
+  new_request->frame_tree_node_id = frame_tree_node_id;
 
   // Check if a web UI scheme wants to handle this request.
   FrameTreeNode* frame_tree_node =
