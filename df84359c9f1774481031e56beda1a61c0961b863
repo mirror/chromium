@@ -1,0 +1,96 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "6acf988c_858d5b9d",
+        "filename": "services/device/generic_sensor/fake_platform_sensor_and_provider.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 22,
+      "author": {
+        "id": 1149144
+      },
+      "writtenOn": "2017-11-09T18:26:22Z",
+      "side": 1,
+      "message": "style nit:\n// PlatformSensor:",
+      "range": {
+        "startLine": 22,
+        "startChar": 5,
+        "endLine": 22,
+        "endChar": 30
+      },
+      "revId": "df84359c9f1774481031e56beda1a61c0961b863",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5af98d08_1907e12b",
+        "filename": "services/device/generic_sensor/platform_sensor_fusion_unittest.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 109,
+      "author": {
+        "id": 1149144
+      },
+      "writtenOn": "2017-11-09T18:26:22Z",
+      "side": 1,
+      "message": "This change causes the use of static_cast\u003c\u003e in the above code. Why this change?",
+      "range": {
+        "startLine": 109,
+        "startChar": 2,
+        "endLine": 109,
+        "endChar": 53
+      },
+      "revId": "df84359c9f1774481031e56beda1a61c0961b863",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a37fcb7d_25cdbc7f",
+        "filename": "services/device/generic_sensor/platform_sensor_fusion_unittest.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 163,
+      "author": {
+        "id": 1149144
+      },
+      "writtenOn": "2017-11-09T18:26:22Z",
+      "side": 1,
+      "message": "Move this namespace and function to the beginning of this file?",
+      "range": {
+        "startLine": 159,
+        "startChar": 0,
+        "endLine": 163,
+        "endChar": 56
+      },
+      "revId": "df84359c9f1774481031e56beda1a61c0961b863",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3895f00e_1b495bb9",
+        "filename": "services/device/generic_sensor/platform_sensor_fusion_unittest.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 166,
+      "author": {
+        "id": 1149144
+      },
+      "writtenOn": "2017-11-09T18:26:22Z",
+      "side": 1,
+      "message": "In this case, the \"0u\" is the expected value, so move it to be the first parameter:\nEXPECT_EQ(0u, expected_count);",
+      "range": {
+        "startLine": 166,
+        "startChar": 4,
+        "endLine": 166,
+        "endChar": 34
+      },
+      "revId": "df84359c9f1774481031e56beda1a61c0961b863",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
