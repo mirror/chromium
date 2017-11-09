@@ -22,6 +22,47 @@
       "revId": "a86a59c7dba53d6727616336abe2ae2f3ce9bd63",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6ec31da2_91edf9e9",
+        "filename": "ios/web/public/web_state/global_web_state_observer.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 26,
+      "author": {
+        "id": 1116027
+      },
+      "writtenOn": "2017-11-09T09:11:45Z",
+      "side": 1,
+      "message": "There are two reason for the existence of GlobalWebStateObserver:\n1. be informed of WebState creation\n2. observe multiple WebStates\n\nI want to remove reason 2. and instead change client code to directly observe the WebState using WebStateObserver. For reason 1., if possible I\u0027d like to see if we can remove it too by instead changing the observer to tab helpers, but I don\u0027t know yet whether this is possible or not.\n\nBut yes, I\u0027d like to deprecate this class.",
+      "parentUuid": "bfa5f033_21439d12",
+      "range": {
+        "startLine": 26,
+        "startChar": 6,
+        "endLine": 26,
+        "endChar": 28
+      },
+      "revId": "a86a59c7dba53d6727616336abe2ae2f3ce9bd63",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "488d5c9c_ed39462a",
+        "filename": "ios/web/public/web_state/global_web_state_observer.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 29,
+      "author": {
+        "id": 1116027
+      },
+      "writtenOn": "2017-11-09T09:11:45Z",
+      "side": 1,
+      "message": "Please add TODO here too and to the other methods (WebStateDidStartLoading, WebStateDiStopLoading, PageLoaded, RenderProcessGone, WebStateDestroyed).",
+      "revId": "a86a59c7dba53d6727616336abe2ae2f3ce9bd63",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
