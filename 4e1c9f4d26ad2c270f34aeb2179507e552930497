@@ -36,6 +36,24 @@
     },
     {
       "key": {
+        "uuid": "4ed617a0_dc24945c",
+        "filename": "chrome/browser/chromeos/login/screens/terms_of_service_screen.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 130,
+      "author": {
+        "id": 1115968
+      },
+      "writtenOn": "2017-11-09T15:26:36Z",
+      "side": 1,
+      "message": "Not needed - this class owns the loader.  The callback will not be invoked after the loader is destroyed.",
+      "parentUuid": "35e2e953_64fe881c",
+      "revId": "4e1c9f4d26ad2c270f34aeb2179507e552930497",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "28727128_8b34818a",
         "filename": "chrome/browser/chromeos/login/screens/terms_of_service_screen.h",
         "patchSetId": 8
