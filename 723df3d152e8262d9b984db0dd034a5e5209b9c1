@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "ce164c75_966060dd",
+        "filename": "cc/paint/paint_op_buffer.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 78,
+      "author": {
+        "id": 1145109
+      },
+      "writtenOn": "2017-11-09T22:49:54Z",
+      "side": 1,
+      "message": "Woops. Done.",
+      "parentUuid": "302f6c88_c34dd4bf",
+      "revId": "723df3d152e8262d9b984db0dd034a5e5209b9c1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "104d4d63_177b594e",
         "filename": "cc/paint/paint_op_buffer.cc",
         "patchSetId": 6
@@ -30,6 +48,24 @@
       "writtenOn": "2017-11-09T19:34:04Z",
       "side": 1,
       "message": "I think this should return an empty PaintOpBuffer, since that\u0027s what was serialized.  Otherwise, serializing an empty paint buffer would be an error on the deserialization side.\n\nCan you add a test that serializing an empty PaintOpBuffer is not an error?",
+      "revId": "723df3d152e8262d9b984db0dd034a5e5209b9c1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8111de06_02e7b71c",
+        "filename": "cc/paint/paint_op_buffer.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 1839,
+      "author": {
+        "id": 1145109
+      },
+      "writtenOn": "2017-11-09T22:49:54Z",
+      "side": 1,
+      "message": "Should we DCHECK empty buffers at record time? It shouldn\u0027t ever make sense to have one either as a nested buffer or on a shader/filter. I has this thought when serializing, that why do a save/restore pair for an empty buffer. We\u0027ll still need to do it at deserialization since the input can\u0027t be trusted but would be nice if the code didn\u0027t have to worry about it.",
+      "parentUuid": "104d4d63_177b594e",
       "revId": "723df3d152e8262d9b984db0dd034a5e5209b9c1",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -53,6 +89,24 @@
     },
     {
       "key": {
+        "uuid": "cb3aa794_74110181",
+        "filename": "cc/paint/paint_op_buffer.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 151,
+      "author": {
+        "id": 1145109
+      },
+      "writtenOn": "2017-11-09T22:49:54Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "56178677_a339c7ef",
+      "revId": "723df3d152e8262d9b984db0dd034a5e5209b9c1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "6512bf82_5d46f8b0",
         "filename": "cc/paint/paint_op_buffer_serializer.h",
         "patchSetId": 6
@@ -67,6 +121,24 @@
       "revId": "723df3d152e8262d9b984db0dd034a5e5209b9c1",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d54ce686_b8f533a3",
+        "filename": "cc/paint/paint_op_buffer_serializer.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 15,
+      "author": {
+        "id": 1145109
+      },
+      "writtenOn": "2017-11-09T22:49:54Z",
+      "side": 1,
+      "message": "Excellent idea! This felt like one of the cases where templates was an overkill.",
+      "parentUuid": "6512bf82_5d46f8b0",
+      "revId": "723df3d152e8262d9b984db0dd034a5e5209b9c1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -87,6 +159,24 @@
     },
     {
       "key": {
+        "uuid": "cb7525bf_c28f169f",
+        "filename": "cc/paint/paint_op_buffer_serializer.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 34,
+      "author": {
+        "id": 1145109
+      },
+      "writtenOn": "2017-11-09T22:49:54Z",
+      "side": 1,
+      "message": "Done. I don\u0027t know why I thought it was necessary for retaining the original ctm as a result of the preamble earlier.",
+      "parentUuid": "205b86aa_2b237742",
+      "revId": "723df3d152e8262d9b984db0dd034a5e5209b9c1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "ef189a36_0a0796ac",
         "filename": "cc/paint/paint_op_buffer_unittest.cc",
         "patchSetId": 6
@@ -101,6 +191,24 @@
       "revId": "723df3d152e8262d9b984db0dd034a5e5209b9c1",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "cd1cf86d_7dafb86a",
+        "filename": "cc/paint/paint_op_buffer_unittest.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 2188,
+      "author": {
+        "id": 1145109
+      },
+      "writtenOn": "2017-11-09T22:49:54Z",
+      "side": 1,
+      "message": "Sure, done.",
+      "parentUuid": "ef189a36_0a0796ac",
+      "revId": "723df3d152e8262d9b984db0dd034a5e5209b9c1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -121,6 +229,24 @@
     },
     {
       "key": {
+        "uuid": "b7916326_03be3c31",
+        "filename": "cc/paint/paint_op_reader.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 30,
+      "author": {
+        "id": 1145109
+      },
+      "writtenOn": "2017-11-09T22:49:54Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "7fde4a05_22b55dfc",
+      "revId": "723df3d152e8262d9b984db0dd034a5e5209b9c1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "190ec133_68106245",
         "filename": "gpu/command_buffer/client/gles2_implementation.cc",
         "patchSetId": 6
@@ -132,6 +258,24 @@
       "writtenOn": "2017-11-09T19:34:04Z",
       "side": 1,
       "message": "This preamble step is only going to get used for the GLES2Implementation call here, and not for callers inside of shaders, right?\n\nI think this code is fine, but I have a weak preference to just have a second Serialize() function that also takes a gfx::Vector2d translation, the gfx::Rect playback_rect, and a gfx::AxisTransform2d and does all this internally instead of passing it as a PaintOpBuffer.",
+      "revId": "723df3d152e8262d9b984db0dd034a5e5209b9c1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3803bd5d_f95b91b4",
+        "filename": "gpu/command_buffer/client/gles2_implementation.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 7227,
+      "author": {
+        "id": 1145109
+      },
+      "writtenOn": "2017-11-09T22:49:54Z",
+      "side": 1,
+      "message": "I was hoping to reuse it for the extra scale for paint record shaders. We\u0027ll apply the raster scale at serialization, similar to the ToSkPicture step in paint_shader.cc. Passing a PaintOpBuffer lets it be the same API for both cases.",
+      "parentUuid": "190ec133_68106245",
       "revId": "723df3d152e8262d9b984db0dd034a5e5209b9c1",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
