@@ -22,6 +22,46 @@
       "revId": "7752b8b6a25c24de5dbc8a7667ab30b5b95849f3",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4bdc6beb_adee45da",
+        "filename": "third_party/WebKit/Source/bindings/templates/attributes.cpp.tmpl",
+        "patchSetId": 4
+      },
+      "lineNbr": 584,
+      "author": {
+        "id": 1002507
+      },
+      "writtenOn": "2017-11-09T07:18:10Z",
+      "side": 1,
+      "message": "I\u0027d like to add a suffix \"_on_prototype_and_interface\" to be clear.  I think that it\u0027s possible that you\u0027re going to introduce \"on_instance\" version.",
+      "range": {
+        "startLine": 584,
+        "startChar": 9,
+        "endLine": 584,
+        "endChar": 49
+      },
+      "revId": "7752b8b6a25c24de5dbc8a7667ab30b5b95849f3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "94f009dc_c71f1fb1",
+        "filename": "third_party/WebKit/Source/bindings/templates/interface_base.cpp.tmpl",
+        "patchSetId": 4
+      },
+      "lineNbr": 970,
+      "author": {
+        "id": 1002507
+      },
+      "writtenOn": "2017-11-09T07:18:10Z",
+      "side": 1,
+      "message": "install_conditionally_... should work well with an empty list, so we can drop these if-guards.  But I\u0027m fine with either way (drop or keep it).",
+      "revId": "7752b8b6a25c24de5dbc8a7667ab30b5b95849f3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
