@@ -22,6 +22,30 @@
       "revId": "669909f884eb1f815c5fb47b6a422b665465e43f",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c25221ec_08ef3277",
+        "filename": "chrome/browser/consent_auditor/consent_auditor_factory.cc",
+        "patchSetId": 10
+      },
+      "lineNbr": 17,
+      "author": {
+        "id": 1118331
+      },
+      "writtenOn": "2017-11-09T16:55:03Z",
+      "side": 1,
+      "message": "Done. Yes, I believe it should be fine.",
+      "parentUuid": "ec4fcca9_03003d97",
+      "range": {
+        "startLine": 17,
+        "startChar": 2,
+        "endLine": 17,
+        "endChar": 54
+      },
+      "revId": "669909f884eb1f815c5fb47b6a422b665465e43f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
