@@ -1675,9 +1675,22 @@ if (enable_java_templates) {
         outputs = [
           invoker.output,
         ]
+        if (defined(invoker.srcjar_path)) {
+          args += [
+            "--srcjar-path",
+            rebase_path(invoker.srcjar_path, root_build_dir),
+          ]
+          outputs += [ invoker.srcjar_path ]
+        }
+        if (defined(invoker.post_process_args)) {
+          args += invoker.post_process_args
+        }
         public_deps = [
           ":${_package_resources_target_name}",
         ]
+        if (defined(invoker.post_process_deps)) {
+          public_deps += invoker.post_process_deps
+        }
       }
     }
   }
