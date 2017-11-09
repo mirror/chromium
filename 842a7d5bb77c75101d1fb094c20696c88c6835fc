@@ -2,6 +2,23 @@
   "comments": [
     {
       "key": {
+        "uuid": "45a8f1c1_edb30cbc",
+        "filename": "cc/paint/paint_texture.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 1,
+      "author": {
+        "id": 1002513
+      },
+      "writtenOn": "2017-11-09T18:35:51Z",
+      "side": 1,
+      "message": "I\u0027m not sure cc/paint is the right spot for this file. It seems to be used exclusively in media code. cc/paint is primarily used for painted content transport from the renderer to the gpu. I\u0027m not sure about the media code structure too much, but maybe this is better suited for something like media/base?",
+      "revId": "842a7d5bb77c75101d1fb094c20696c88c6835fc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "9c70985e_2974a33f",
         "filename": "content/renderer/media/webmediaplayer_ms.h",
         "patchSetId": 2
