@@ -1,0 +1,72 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "7f81fbdb_5480bbb5",
+        "filename": "content/browser/background_fetch/background_fetch_data_manager_unittest.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 72,
+      "author": {
+        "id": 1002032
+      },
+      "writtenOn": "2017-11-09T15:51:15Z",
+      "side": 1,
+      "message": "nit: personally I\u0027d find an enum clearer, but I do admit that your use of the persistent_ boolean is clearly named.",
+      "revId": "86ac744e30746d97c7ff6ab2facdf0fa9dc722f2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6d39c522_e0b291d7",
+        "filename": "content/browser/background_fetch/background_fetch_data_manager_unittest.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 194,
+      "author": {
+        "id": 1002032
+      },
+      "writtenOn": "2017-11-09T15:51:15Z",
+      "side": 1,
+      "message": "persistent_",
+      "revId": "86ac744e30746d97c7ff6ab2facdf0fa9dc722f2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5cc00784_e76db59e",
+        "filename": "content/common/background_fetch/background_fetch_types.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 50,
+      "author": {
+        "id": 1002032
+      },
+      "writtenOn": "2017-11-09T15:51:15Z",
+      "side": 1,
+      "message": "You\u0027re now breaking this contract, which is unfortunate. It further breaks the contract with the mojom file and the struct traits, which is equally unfortunate.\n\nCould we store |origin| and |creation_microseconds_since_unix_epoch| elsewhere and pass them separately? Otherwise we\u0027d probably want these to be base::Optional\u003c\u003es.",
+      "revId": "86ac744e30746d97c7ff6ab2facdf0fa9dc722f2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0323e665_0edf3e15",
+        "filename": "content/common/background_fetch/background_fetch_types.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 66,
+      "author": {
+        "id": 1002032
+      },
+      "writtenOn": "2017-11-09T15:51:15Z",
+      "side": 1,
+      "message": "++docs (initial creation time of the registration, not this instance)",
+      "revId": "86ac744e30746d97c7ff6ab2facdf0fa9dc722f2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
