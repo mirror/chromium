@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "032d4de6_c64c73ca",
+        "filename": "third_party/WebKit/LayoutTests/fast/text/sub-pixel/resources/text-scaling.js",
+        "patchSetId": 10
+      },
+      "lineNbr": 5,
+      "author": {
+        "id": 1115899
+      },
+      "writtenOn": "2017-11-09T03:43:04Z",
+      "side": 1,
+      "message": "Might as well bump this up to 0.025 or 0.03 and update the comment above.",
+      "revId": "2dbde1a075bcfeae290b6db43958c1be39a67705",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
