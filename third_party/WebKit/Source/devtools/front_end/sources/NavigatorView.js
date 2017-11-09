@@ -965,6 +965,9 @@ Sources.NavigatorSourceTreeElement = class extends UI.TreeElement {
     this.tooltip = uiSourceCode.url();
     this._navigatorView = navigatorView;
     this._uiSourceCode = uiSourceCode;
+
+    this.listItemElement.addEventListener('keydown', this._onKeyDown.bind(this), false);
+
     this.updateIcon();
   }
 
@@ -1091,6 +1094,16 @@ Sources.NavigatorSourceTreeElement = class extends UI.TreeElement {
   _handleContextMenuEvent(event) {
     this.select();
     this._navigatorView.handleFileContextMenu(event, this._node);
+  }
+
+  /**
+   * @param {!Event} event
+   */
+  _onKeyDown(event) {
+    if (event.key !== 'F2')
+      return;
+    this._navigatorView.rename(this._node, false);
+    event.consume(true);
   }
 };
 
