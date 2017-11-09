@@ -128,6 +128,30 @@
       "revId": "e2c8895eb2c416130ca9b858bb2a86d4ff1f2f32",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "be9b1b18_e8befabb",
+        "filename": "components/arc/common/backup_settings.mojom",
+        "patchSetId": 1
+      },
+      "lineNbr": 11,
+      "author": {
+        "id": 1115919
+      },
+      "writtenOn": "2017-11-09T07:07:39Z",
+      "side": 1,
+      "message": "\u003e we can always add the version with a callback later at that timing.\n\nThis is partly not true for adding completion callback, which does not support versioning.\nSo, if you newly need to have a callback later, you\u0027d need to deprecate this method, and introduce a new one instead.\n\nBTW, could you add document for SetBackupEnabled() as it should be a stable communication interface between the container and Chrome?",
+      "parentUuid": "4b5eb721_eadc391a",
+      "range": {
+        "startLine": 11,
+        "startChar": 0,
+        "endLine": 11,
+        "endChar": 49
+      },
+      "revId": "e2c8895eb2c416130ca9b858bb2a86d4ff1f2f32",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
