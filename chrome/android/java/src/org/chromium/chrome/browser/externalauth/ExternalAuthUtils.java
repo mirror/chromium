@@ -213,6 +213,16 @@ public class ExternalAuthUtils {
     }
 
     /**
+     * Shortcut of {@link #canUseGooglePlayServices(Context, UserRecoverableErrorHandler)}.
+     *
+     * @return true if and only if Google Play Services can be used
+     */
+    public static boolean canUseGooglePlayServices() {
+        return getInstance().canUseGooglePlayServices(
+                ContextUtils.getApplicationContext(), new UserRecoverableErrorHandler.Silent());
+    }
+
+    /**
      * Same as {@link #canUseGooglePlayServices(Context, UserRecoverableErrorHandler)}
      * but also with the constraint that first-party APIs must be available. This check is
      * implemented by verifying that the package is Google-signed; if not, first-party APIs will
