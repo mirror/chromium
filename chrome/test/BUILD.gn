@@ -3522,6 +3522,13 @@ test("unit_tests") {
     "../../third_party/zlib/google/zip_unittest.cc",
   ]
 
+  if (is_win) {
+    sources += [
+      "../browser/notifications/mock_notification_image_retainer.cc",
+      "../browser/notifications/mock_notification_image_retainer.h",
+    ]
+  }
+
   configs += [ "//build/config:precompiled_headers" ]
 
   data_deps = [
