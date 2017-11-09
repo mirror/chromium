@@ -1108,34 +1108,6 @@ TEST_F(GeolocationPermissionContextTests, TabDestroyed) {
 }
 
 #if defined(OS_ANDROID)
-TEST_F(GeolocationPermissionContextTests, SearchGeolocationInIncognito) {
-  GURL requesting_frame(TestSearchEngineDelegate::kDSETestUrl);
-  // The DSE Geolocation setting should be used in incognito if it is BLOCK,
-  // but not if it is ALLOW.
-  SearchPermissionsService* geo_service =
-      SearchPermissionsService::Factory::GetForBrowserContext(profile());
-  geo_service->SetSearchEngineDelegateForTest(
-      base::MakeUnique<TestSearchEngineDelegate>());
-
-  Profile* otr_profile = profile()->GetOffTheRecordProfile();
-
-  // A DSE setting of ALLOW should not flow through to incognito.
-  geo_service->SetDSEGeolocationSetting(true);
-  ASSERT_EQ(CONTENT_SETTING_ASK,
-            PermissionManager::Get(otr_profile)
-                ->GetPermissionStatus(CONTENT_SETTINGS_TYPE_GEOLOCATION,
-                                      requesting_frame, requesting_frame)
-                .content_setting);
-
-  // Changing the setting to BLOCK should flow through to incognito.
-  geo_service->SetDSEGeolocationSetting(false);
-  ASSERT_EQ(CONTENT_SETTING_BLOCK,
-            PermissionManager::Get(otr_profile)
-                ->GetPermissionStatus(CONTENT_SETTINGS_TYPE_GEOLOCATION,
-                                      requesting_frame, requesting_frame)
-                .content_setting);
-}
-
 TEST_F(GeolocationPermissionContextTests, GeolocationStatusAndroidDisabled) {
   GURL requesting_frame("https://www.example.com/geolocation");
 
