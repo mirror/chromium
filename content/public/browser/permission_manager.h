@@ -67,13 +67,13 @@ class CONTENT_EXPORT PermissionManager {
   // tuple. This is not taking a RenderFrameHost because the call might happen
   // outside of a frame context.
   virtual blink::mojom::PermissionStatus GetPermissionStatus(
-      PermissionType permission,
+      blink::mojom::PermissionName permission,
       const GURL& requesting_origin,
       const GURL& embedding_origin) = 0;
 
   // Sets the permission back to its default for the requesting_origin/
   // embedding_origin tuple.
-  virtual void ResetPermission(PermissionType permission,
+  virtual void ResetPermission(blink::mojom::PermissionName permission,
                                const GURL& requesting_origin,
                                const GURL& embedding_origin) = 0;
 

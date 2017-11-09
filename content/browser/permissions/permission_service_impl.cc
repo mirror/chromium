@@ -28,46 +28,6 @@ namespace content {
 
 namespace {
 
-PermissionType PermissionDescriptorToPermissionType(
-    const PermissionDescriptorPtr& descriptor) {
-  switch (descriptor->name) {
-    case PermissionName::GEOLOCATION:
-      return PermissionType::GEOLOCATION;
-    case PermissionName::NOTIFICATIONS:
-      return PermissionType::NOTIFICATIONS;
-    case PermissionName::PUSH_NOTIFICATIONS:
-      return PermissionType::PUSH_MESSAGING;
-    case PermissionName::MIDI: {
-      if (descriptor->extension && descriptor->extension->is_midi() &&
-          descriptor->extension->get_midi()->sysex) {
-        return PermissionType::MIDI_SYSEX;
-      }
-      return PermissionType::MIDI;
-    }
-    case PermissionName::PROTECTED_MEDIA_IDENTIFIER:
-      return PermissionType::PROTECTED_MEDIA_IDENTIFIER;
-    case PermissionName::DURABLE_STORAGE:
-      return PermissionType::DURABLE_STORAGE;
-    case PermissionName::AUDIO_CAPTURE:
-      return PermissionType::AUDIO_CAPTURE;
-    case PermissionName::VIDEO_CAPTURE:
-      return PermissionType::VIDEO_CAPTURE;
-    case PermissionName::BACKGROUND_SYNC:
-      return PermissionType::BACKGROUND_SYNC;
-    case PermissionName::SENSORS:
-      return PermissionType::SENSORS;
-    case PermissionName::ACCESSIBILITY_EVENTS:
-      return PermissionType::ACCESSIBILITY_EVENTS;
-    case PermissionName::CLIPBOARD_READ:
-    case PermissionName::CLIPBOARD_WRITE:
-      NOTIMPLEMENTED();
-      break;
-  }
-
-  NOTREACHED();
-  return PermissionType::NUM;
-}
-
 blink::FeaturePolicyFeature PermissionTypeToFeaturePolicyFeature(
     PermissionType type) {
   switch (type) {
@@ -232,13 +192,13 @@ void PermissionServiceImpl::RequestPermissions(
     return;
   }
 
-  std::vector<PermissionType> types(permissions.size());
+  std::vector<PermissionName> types(permissions.size());
   for (size_t i = 0; i < types.size(); ++i)
-    types[i] = PermissionDescriptorToPermissionType(permissions[i]);
+    types[i] = permissions[i].name;
 
   std::unique_ptr<PendingRequest> pending_request =
       std::make_unique<PendingRequest>(types, std::move(callback));
-  std::vector<PermissionType> request_types;
+  std::vector<PermissionName> request_types;
   for (size_t i = 0; i < types.size(); ++i) {
     // Check feature policy.
     if (!AllowedByFeaturePolicy(context_->render_frame_host(), types[i]))
@@ -295,10 +255,8 @@ void PermissionServiceImpl::RevokePermission(
     PermissionDescriptorPtr permission,
     const url::Origin& origin,
     PermissionStatusCallback callback) {
-  PermissionType permission_type =
-      PermissionDescriptorToPermissionType(permission);
   PermissionStatus status =
-      GetPermissionStatusFromType(permission_type, origin);
+      GetPermissionStatus(permission, origin);
 
   // Resetting the permission should only be possible if the permission is
   // already granted.
@@ -307,9 +265,9 @@ void PermissionServiceImpl::RevokePermission(
     return;
   }
 
-  ResetPermissionStatus(permission_type, origin);
+  ResetPermissionStatus(permission.name, origin);
 
-  std::move(callback).Run(GetPermissionStatusFromType(permission_type, origin));
+  std::move(callback).Run(GetPermissionStatus(permission, origin));
 }
 
 void PermissionServiceImpl::AddPermissionObserver(
@@ -323,19 +281,11 @@ void PermissionServiceImpl::AddPermissionObserver(
     last_known_status = current_status;
   }
 
-  context_->CreateSubscription(PermissionDescriptorToPermissionType(permission),
-                               origin, std::move(observer));
+  context_->CreateSubscription(permission.name, origin, std::move(observer));
 }
 
 PermissionStatus PermissionServiceImpl::GetPermissionStatus(
     const PermissionDescriptorPtr& permission,
-    const url::Origin& origin) {
-  return GetPermissionStatusFromType(
-      PermissionDescriptorToPermissionType(permission), origin);
-}
-
-PermissionStatus PermissionServiceImpl::GetPermissionStatusFromType(
-    PermissionType type,
     const url::Origin& origin) {
   BrowserContext* browser_context = context_->GetBrowserContext();
   if (!browser_context)
@@ -346,7 +296,7 @@ PermissionStatus PermissionServiceImpl::GetPermissionStatusFromType(
 
   // If there is no frame (i.e. this is a worker) ignore the feature policy.
   if (context_->render_frame_host() &&
-      !AllowedByFeaturePolicy(context_->render_frame_host(), type)) {
+      !AllowedByFeaturePolicy(context_->render_frame_host(), permission.name)) {
     return PermissionStatus::DENIED;
   }
 
@@ -354,11 +304,11 @@ PermissionStatus PermissionServiceImpl::GetPermissionStatusFromType(
   // If the embedding_origin is empty we'll use |origin| instead.
   GURL embedding_origin = context_->GetEmbeddingOrigin();
   return browser_context->GetPermissionManager()->GetPermissionStatus(
-      type, requesting_origin,
+      name, requesting_origin,
       embedding_origin.is_empty() ? requesting_origin : embedding_origin);
 }
 
-void PermissionServiceImpl::ResetPermissionStatus(PermissionType type,
+void PermissionServiceImpl::ResetPermissionStatus(PermissionName name,
                                                   const url::Origin& origin) {
   BrowserContext* browser_context = context_->GetBrowserContext();
   if (!browser_context)
@@ -371,7 +321,7 @@ void PermissionServiceImpl::ResetPermissionStatus(PermissionType type,
   // If the embedding_origin is empty we'll use |origin| instead.
   GURL embedding_origin = context_->GetEmbeddingOrigin();
   browser_context->GetPermissionManager()->ResetPermission(
-      type, requesting_origin,
+      name, requesting_origin,
       embedding_origin.is_empty() ? requesting_origin : embedding_origin);
 }
 
