@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "e9028a31_6fb13271",
+        "filename": "chrome/browser/sessions/session_data_deleter.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 103,
+      "author": {
+        "id": 1001809
+      },
+      "writtenOn": "2017-11-09T21:34:36Z",
+      "side": 1,
+      "message": "To me, this depends on the answer to your null callback question, below.  If we decide (for cleanliness/OCD reasons; as I note below Mojo semantics will do the right thing even if the pipe is deleted on this side) that we should keep the SessionDataDeleter alive until all messages have responded, I think it would be fine to dispatch this in parallel.  But if we want to keep the SDD alive, then we need to have some synchronization with the returning callback from the DeleteCookies message, and serializing the calls makes for simpler code than some type of counter/reference system.",
+      "parentUuid": "07863b43_482b1bf0",
+      "range": {
+        "startLine": 102,
+        "startChar": 2,
+        "endLine": 103,
+        "endChar": 74
+      },
+      "revId": "7a2aac4f8ef2c2ce2f3ce5dcba232fd5a7539e22",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "b5f1cd8b_2ac7b230",
         "filename": "chrome/browser/sessions/session_data_deleter.cc",
         "patchSetId": 2
@@ -48,6 +72,30 @@
     },
     {
       "key": {
+        "uuid": "9996e1fd_989d3338",
+        "filename": "chrome/browser/sessions/session_data_deleter.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 121,
+      "author": {
+        "id": 1001809
+      },
+      "writtenOn": "2017-11-09T21:34:36Z",
+      "side": 1,
+      "message": "So the key change here from my POV is between CookieStore (which is an in-process object that exposes async methods) and CookieManager (which is a Mojo interface to a cookie store \"somewhere\", possibly off process).  I don\u0027t think you\u0027re asking about that distinction, but if you are, please poke me again.\n\nThe reason I\u0027ve switched to SetCanonicalCookie is that there is no \"delete single cookie\" interface on CookieManager.  The reason I didn\u0027t put such an interface on it is that it\u0027s equivalent to set a new cookie on top of the old one with an expiration date in the past; such a cookie will replace the old one and be immediately invalid and so deleted (conceptually--the code actually short-circuits that).  So this should be equivalent semantically.  \n\nI wasn\u0027t clear from looking at the directory where the SessionDataDeleter code was being tested from; if this doesn\u0027t do what\u0027s expected, is there a test that will catch it?",
+      "parentUuid": "b5f1cd8b_2ac7b230",
+      "range": {
+        "startLine": 116,
+        "startChar": 4,
+        "endLine": 121,
+        "endChar": 48
+      },
+      "revId": "7a2aac4f8ef2c2ce2f3ce5dcba232fd5a7539e22",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "58af1144_c32a0b67",
         "filename": "chrome/browser/sessions/session_data_deleter.cc",
         "patchSetId": 2
@@ -59,6 +107,30 @@
       "writtenOn": "2017-11-09T20:04:41Z",
       "side": 1,
       "message": "Is there a reason not to supply an empty callback here?",
+      "range": {
+        "startLine": 127,
+        "startChar": 8,
+        "endLine": 127,
+        "endChar": 60
+      },
+      "revId": "7a2aac4f8ef2c2ce2f3ce5dcba232fd5a7539e22",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4ac99a70_2482c02e",
+        "filename": "chrome/browser/sessions/session_data_deleter.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 127,
+      "author": {
+        "id": 1001809
+      },
+      "writtenOn": "2017-11-09T21:34:36Z",
+      "side": 1,
+      "message": "Heh.  No, but that relies on something that I consider a subtle aspect of Mojo communication.  Mojo interfaces push messages down pipes, and store callbacks to call when the response message to a pushed message comes back.  I checked, and we\u0027re guaranteed that Mojo messages will be delivered even if the pipe is closed immediately after the message push (as long as the other end of the pipe isn\u0027t closed).  \n\nSo I could indeed make this an empty callback (not sure if it has to be a null function as this code used to have or if I could just construct a null callback with the appropriate signature).  I did it this way to keep the pipe alive, but it\u0027s probably fine to let the pipe die, I\u0027ll just change the comment to specify the Mojo semantics I\u0027m relying on.  Would you prefer that?",
+      "parentUuid": "58af1144_c32a0b67",
       "range": {
         "startLine": 127,
         "startChar": 8,
