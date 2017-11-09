@@ -442,6 +442,10 @@ RenderWidgetHostViewAura::RenderWidgetHostViewAura(
   }
 }
 
+void RenderWidgetHostViewAura::OnFrameTokenChanged(uint32_t frame_token) {
+  host_->DidProcessFrame(frame_token);
+}
+
 ////////////////////////////////////////////////////////////////////////////////
 // RenderWidgetHostViewAura, RenderWidgetHostView implementation:
 

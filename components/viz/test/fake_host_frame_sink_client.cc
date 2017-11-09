@@ -6,8 +6,12 @@
 
 namespace viz {
 
-FakeHostFrameSinkClient::FakeHostFrameSinkClient() = default;
+FakeHostFrameSinkClient::FakeHostFrameSinkClient() : frame_token_seen_(0) {}
 
 FakeHostFrameSinkClient::~FakeHostFrameSinkClient() = default;
+
+void FakeHostFrameSinkClient::OnFrameTokenChanged(uint32_t frame_token) {
+  frame_token_seen_ = frame_token;
+}
 
 }  // namespace viz

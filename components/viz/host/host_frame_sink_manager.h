@@ -125,6 +125,9 @@ class VIZ_HOST_EXPORT HostFrameSinkManager
       bool is_root,
       bool needs_sync_points) override;
 
+  void OnFrameTokenChanged(const FrameSinkId& frame_sink_id,
+                           uint32_t frame_token) override;
+
  private:
   friend class HostFrameSinkManagerTestBase;
 
