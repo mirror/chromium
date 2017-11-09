@@ -1,0 +1,44 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "27cbe4f1_81fa6cfa",
+        "filename": "components/exo/shell_surface.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 84,
+      "author": {
+        "id": 1000539
+      },
+      "writtenOn": "2017-11-09T22:46:03Z",
+      "side": 1,
+      "message": "nit: remove this line. this is not specific to arc",
+      "revId": "08dcd315d09e6c21d4b59387b7a8e4e15726a8d9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ae8abe65_c36d4c0c",
+        "filename": "components/exo/shell_surface.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 96,
+      "author": {
+        "id": 1000539
+      },
+      "writtenOn": "2017-11-09T22:46:03Z",
+      "side": 1,
+      "message": "nit: remove \u0027const\u0027. exo code doesn\u0027t use const for local variables. only for compile time constants.",
+      "range": {
+        "startLine": 96,
+        "startChar": 4,
+        "endLine": 96,
+        "endChar": 10
+      },
+      "revId": "08dcd315d09e6c21d4b59387b7a8e4e15726a8d9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
