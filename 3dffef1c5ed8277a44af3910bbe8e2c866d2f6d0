@@ -88,6 +88,24 @@
       "revId": "3dffef1c5ed8277a44af3910bbe8e2c866d2f6d0",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5a4086e8_4ee6751d",
+        "filename": "base/files/memory_mapped_file.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 77,
+      "author": {
+        "id": 1160859
+      },
+      "writtenOn": "2017-11-09T18:38:38Z",
+      "side": 1,
+      "message": "Thanks.\n\nI for one think that int64_t should be enough file size for everyone, and humanity using Chrome v2000 in the future can quote me on this.",
+      "parentUuid": "b3af3f8c_d868535a",
+      "revId": "3dffef1c5ed8277a44af3910bbe8e2c866d2f6d0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
