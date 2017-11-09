@@ -50,6 +50,7 @@
 #include "components/search_engines/template_url_service.h"
 #include "components/search_provider_logos/logo_service.h"
 #include "content/public/browser/navigation_entry.h"
+#include "content/public/browser/render_frame_host.h"
 #include "content/public/browser/web_contents.h"
 #include "content/public/test/browser_test_utils.h"
 #include "content/public/test/test_navigation_observer.h"
@@ -65,6 +66,7 @@ using search_provider_logos::LogoCallbacks;
 using search_provider_logos::LogoCallbackReason;
 using search_provider_logos::LogoObserver;
 using search_provider_logos::LogoService;
+using search_provider_logos::LogoType;
 using testing::_;
 using testing::DoAll;
 using testing::Eq;
@@ -547,9 +549,9 @@ namespace {
 // Returns the RenderFrameHost corresponding to the most visited iframe in the
 // given |tab|. |tab| must correspond to an NTP.
 content::RenderFrameHost* GetMostVisitedIframe(content::WebContents* tab) {
-  CHECK_EQ(2u, tab->GetAllFrames().size());
+  CHECK_EQ(3u, tab->GetAllFrames().size());
   for (content::RenderFrameHost* frame : tab->GetAllFrames()) {
-    if (frame != tab->GetMainFrame()) {
+    if (frame->GetFrameName() == "mv-single") {
       return frame;
     }
   }
@@ -1229,6 +1231,7 @@ IN_PROC_BROWSER_TEST_F(LocalNTPDoodleTest, ShouldAnimateLogoWhenClicked) {
   EncodedLogo cached_logo;
   cached_logo.encoded_image = MakeRefPtr(kCachedB64);
   cached_logo.metadata.mime_type = "image/png";
+  cached_logo.metadata.type = LogoType::ANIMATED;
   cached_logo.metadata.animated_url =
       GURL("https://www.chromium.org/animated.gif");
   cached_logo.metadata.on_click_url = GURL("https://www.chromium.org/");
