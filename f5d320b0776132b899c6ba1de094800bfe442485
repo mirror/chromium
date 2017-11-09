@@ -1,0 +1,106 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "6e6bf0e5_0826929a",
+        "filename": "chrome/browser/download/chrome_download_manager_delegate.h",
+        "patchSetId": 11
+      },
+      "lineNbr": 195,
+      "author": {
+        "id": 1116010
+      },
+      "writtenOn": "2017-11-09T06:52:20Z",
+      "side": 1,
+      "message": "file_thread_ is a bad name, a sequencedTaskRunner may execute task on multiple threads. I would rename this to metadata_task_runner_ or metadata_cache_task_runner_",
+      "revId": "f5d320b0776132b899c6ba1de094800bfe442485",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7b5223a7_0c02ca2e",
+        "filename": "chrome/common/chrome_constants.cc",
+        "patchSetId": 11
+      },
+      "lineNbr": 143,
+      "author": {
+        "id": 1116010
+      },
+      "writtenOn": "2017-11-09T06:52:20Z",
+      "side": 1,
+      "message": "pending_download_metadata_store?",
+      "revId": "f5d320b0776132b899c6ba1de094800bfe442485",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "85081b57_c04edfed",
+        "filename": "components/download/downloader/in_progress/in_progress_conversions.cc",
+        "patchSetId": 11
+      },
+      "lineNbr": 31,
+      "author": {
+        "id": 1116010
+      },
+      "writtenOn": "2017-11-09T06:52:20Z",
+      "side": 1,
+      "message": "no {} needed",
+      "revId": "f5d320b0776132b899c6ba1de094800bfe442485",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9afb454a_4e99d1f1",
+        "filename": "components/download/downloader/in_progress/proto/download_entry.proto",
+        "patchSetId": 11
+      },
+      "lineNbr": 13,
+      "author": {
+        "id": 1116010
+      },
+      "writtenOn": "2017-11-09T06:52:20Z",
+      "side": 1,
+      "message": "required?",
+      "revId": "f5d320b0776132b899c6ba1de094800bfe442485",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "89536b9b_c28b1f6a",
+        "filename": "content/browser/download/download_manager_impl.cc",
+        "patchSetId": 11
+      },
+      "lineNbr": 220,
+      "author": {
+        "id": 1116010
+      },
+      "writtenOn": "2017-11-09T06:52:20Z",
+      "side": 1,
+      "message": "Maybe the DownloadEntry should have a ctor that takes in guid and request_origin, so we don\u0027t need to do the same thing in multiple files",
+      "revId": "f5d320b0776132b899c6ba1de094800bfe442485",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "def41950_d5b83db3",
+        "filename": "content/browser/download/download_manager_impl.cc",
+        "patchSetId": 11
+      },
+      "lineNbr": 921,
+      "author": {
+        "id": 1116010
+      },
+      "writtenOn": "2017-11-09T06:52:20Z",
+      "side": 1,
+      "message": "The default DownloadManagerDelegate::GetInProgressCache() returns null.\nSo you need to do a null check here.",
+      "revId": "f5d320b0776132b899c6ba1de094800bfe442485",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
