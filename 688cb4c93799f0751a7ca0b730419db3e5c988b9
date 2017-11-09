@@ -16,6 +16,24 @@
       "revId": "688cb4c93799f0751a7ca0b730419db3e5c988b9",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d8e6b82e_d1f14dcc",
+        "filename": "ash/accessibility/accessibility_focus_ring_controller.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 47,
+      "author": {
+        "id": 1250213
+      },
+      "writtenOn": "2017-11-09T19:21:13Z",
+      "side": 1,
+      "message": "Maybe I\u0027ll make it a default, since I think this is a good value that shows a color without hiding too much of the text. If the user sets an alpha value we can use that instead.\n\nDigging into this further, I see that I\u0027ll need to change image_util.cc\u0027s ParseHexColorString function to take strings with RGBA format. I\u0027d like to do this separately as this change already has a lot of scope. Sound ok?",
+      "parentUuid": "20ad3783_353a0639",
+      "revId": "688cb4c93799f0751a7ca0b730419db3e5c988b9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
