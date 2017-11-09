@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "ccc8e36e_89976d27",
+        "filename": "chrome/browser/ui/webui/print_preview/pdf_printer_handler.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 207,
+      "author": {
+        "id": 1001934
+      },
+      "writtenOn": "2017-11-09T01:30:27Z",
+      "side": 1,
+      "message": "rbpotter: Calling GetLastCommittedURL(), just like in https://chromium-review.googlesource.com/c/chromium/src/+/758887",
+      "revId": "7ee65431eb1414706778bbb3248d59631581f6cb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6a83b260_b5f8344f",
+        "filename": "chrome/browser/ui/webui/print_preview/pdf_printer_handler.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 262,
+      "author": {
+        "id": 1001934
+      },
+      "writtenOn": "2017-11-09T01:30:27Z",
+      "side": 1,
+      "message": "qinmin: FYI. In case you are curious why I randomly cleaned up some SavePackage code.",
+      "revId": "7ee65431eb1414706778bbb3248d59631581f6cb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
