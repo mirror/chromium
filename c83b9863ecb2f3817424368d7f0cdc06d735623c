@@ -1,0 +1,409 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "8cb2e57d_7fd98419",
+        "filename": "content/browser/webauth/cbor/cbor_reader.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 64,
+      "author": {
+        "id": 1003152
+      },
+      "writtenOn": "2017-11-09T22:32:14Z",
+      "side": 1,
+      "message": "nit: Do we need this struct? It\u0027s used in exactly one place.",
+      "revId": "c83b9863ecb2f3817424368d7f0cdc06d735623c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b94df626_d79282e8",
+        "filename": "content/browser/webauth/cbor/cbor_reader.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 76,
+      "author": {
+        "id": 1003152
+      },
+      "writtenOn": "2017-11-09T22:32:14Z",
+      "side": 1,
+      "message": "For consistency, have you considered returning a base::Optional\u003cCBORValue\u003e from these helper functions?\n\nYou seem to be spending a lot of lines \"converting\" between using base::Optionals and \"bool return value and pointer output param\".\n\nEach label in this switch would have a sole return statement with this, and I think the Read* functions would become simpler too.",
+      "range": {
+        "startLine": 76,
+        "startChar": 10,
+        "endLine": 76,
+        "endChar": 19
+      },
+      "revId": "c83b9863ecb2f3817424368d7f0cdc06d735623c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8a508aa1_4bd59b71",
+        "filename": "content/browser/webauth/cbor/cbor_reader.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 83,
+      "author": {
+        "id": 1003152
+      },
+      "writtenOn": "2017-11-09T22:32:14Z",
+      "side": 1,
+      "message": "Let\u0027s try to avoid copying this twice and make ReadString work with a std::string.",
+      "revId": "c83b9863ecb2f3817424368d7f0cdc06d735623c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "887fcd86_612816e2",
+        "filename": "content/browser/webauth/cbor/cbor_reader.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 89,
+      "author": {
+        "id": 1003152
+      },
+      "writtenOn": "2017-11-09T22:32:14Z",
+      "side": 1,
+      "message": "Let\u0027s std::move in all these cases to take advantage of move vs. copy.",
+      "revId": "c83b9863ecb2f3817424368d7f0cdc06d735623c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1565b3e1_580c4d4c",
+        "filename": "content/browser/webauth/cbor/cbor_reader.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 112,
+      "author": {
+        "id": 1003152
+      },
+      "writtenOn": "2017-11-09T22:32:14Z",
+      "side": 1,
+      "message": "Hang on, can we just not use |bit_shift| at all, but shift |int_data| by 8 bytes every time we append the new lowermost byte?",
+      "revId": "c83b9863ecb2f3817424368d7f0cdc06d735623c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "28473a64_d3d61afc",
+        "filename": "content/browser/webauth/cbor/cbor_reader.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 129,
+      "author": {
+        "id": 1003152
+      },
+      "writtenOn": "2017-11-09T22:32:14Z",
+      "side": 1,
+      "message": "nit: This check is not technically needed.",
+      "revId": "c83b9863ecb2f3817424368d7f0cdc06d735623c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9f342f51_eefccea2",
+        "filename": "content/browser/webauth/cbor/cbor_reader.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 130,
+      "author": {
+        "id": 1003152
+      },
+      "writtenOn": "2017-11-09T22:32:14Z",
+      "side": 1,
+      "message": "naming nit: CanConsume[Bytes]()",
+      "range": {
+        "startLine": 130,
+        "startChar": 9,
+        "endLine": 130,
+        "endChar": 27
+      },
+      "revId": "c83b9863ecb2f3817424368d7f0cdc06d735623c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "337437d9_b7ee71d9",
+        "filename": "content/browser/webauth/cbor/cbor_reader.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 139,
+      "author": {
+        "id": 1003152
+      },
+      "writtenOn": "2017-11-09T22:32:14Z",
+      "side": 1,
+      "message": "nit: length",
+      "range": {
+        "startLine": 139,
+        "startChar": 40,
+        "endLine": 139,
+        "endChar": 49
+      },
+      "revId": "c83b9863ecb2f3817424368d7f0cdc06d735623c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "99a914eb_fcd6e378",
+        "filename": "content/browser/webauth/cbor/cbor_reader.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 151,
+      "author": {
+        "id": 1003152
+      },
+      "writtenOn": "2017-11-09T22:32:14Z",
+      "side": 1,
+      "message": "nit: length",
+      "range": {
+        "startLine": 151,
+        "startChar": 38,
+        "endLine": 151,
+        "endChar": 47
+      },
+      "revId": "c83b9863ecb2f3817424368d7f0cdc06d735623c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3e4d5816_6dc844ce",
+        "filename": "content/browser/webauth/cbor/cbor_reader.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 155,
+      "author": {
+        "id": 1003152
+      },
+      "writtenOn": "2017-11-09T22:32:14Z",
+      "side": 1,
+      "message": "nit: value",
+      "range": {
+        "startLine": 155,
+        "startChar": 30,
+        "endLine": 155,
+        "endChar": 33
+      },
+      "revId": "c83b9863ecb2f3817424368d7f0cdc06d735623c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "48e19822_de9dcb4d",
+        "filename": "content/browser/webauth/cbor/cbor_reader.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 166,
+      "author": {
+        "id": 1003152
+      },
+      "writtenOn": "2017-11-09T22:32:14Z",
+      "side": 1,
+      "message": "Technically, this class can\u0027t read non-canonical maps, because only one value will be retained per key.",
+      "revId": "c83b9863ecb2f3817424368d7f0cdc06d735623c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6d1c1cba_a2d7b1fb",
+        "filename": "content/browser/webauth/cbor/cbor_reader.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 171,
+      "author": {
+        "id": 1003152
+      },
+      "writtenOn": "2017-11-09T22:32:14Z",
+      "side": 1,
+      "message": "I find it confusing to have ReadInt and ReadLength -- can we just inline the former here, and name the latter ReadUnsignedInt?",
+      "range": {
+        "startLine": 171,
+        "startChar": 17,
+        "endLine": 171,
+        "endChar": 27
+      },
+      "revId": "c83b9863ecb2f3817424368d7f0cdc06d735623c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "eb053205_220e7398",
+        "filename": "content/browser/webauth/cbor/cbor_reader.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 81,
+      "author": {
+        "id": 1003152
+      },
+      "writtenOn": "2017-11-09T22:32:14Z",
+      "side": 1,
+      "message": "nit: To keep the header file lean, let\u0027s move this into an unnamed namespace in the header, we don\u0027t seem to be using it here.",
+      "revId": "c83b9863ecb2f3817424368d7f0cdc06d735623c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2c65ebd9_da37e8d3",
+        "filename": "content/browser/webauth/cbor/cbor_reader.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 98,
+      "author": {
+        "id": 1003152
+      },
+      "writtenOn": "2017-11-09T22:32:14Z",
+      "side": 1,
+      "message": "nit: This sentence carries no information, let\u0027s get rid of it.",
+      "range": {
+        "startLine": 98,
+        "startChar": 5,
+        "endLine": 98,
+        "endChar": 69
+      },
+      "revId": "c83b9863ecb2f3817424368d7f0cdc06d735623c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c3336e48_0144eaef",
+        "filename": "content/browser/webauth/cbor/cbor_reader.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 110,
+      "author": {
+        "id": 1003152
+      },
+      "writtenOn": "2017-11-09T22:32:14Z",
+      "side": 1,
+      "message": "nit: Is \u0027strict mode\u0027 a term defined by the CBOR spec? Otherwise, let\u0027s use consistent terminology and just say |require_canonical_format| or something along these lines.",
+      "revId": "c83b9863ecb2f3817424368d7f0cdc06d735623c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9f2065b0_38c40fd6",
+        "filename": "content/browser/webauth/cbor/cbor_values.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 39,
+      "author": {
+        "id": 1003152
+      },
+      "writtenOn": "2017-11-09T22:32:14Z",
+      "side": 1,
+      "message": "nit: Let\u0027s not add a `default` label to allow compile time checking of all enumerators being explicitly handled. Same below, 4 places altogether.",
+      "revId": "c83b9863ecb2f3817424368d7f0cdc06d735623c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e6573139_6aa9ac11",
+        "filename": "content/browser/webauth/cbor/cbor_values.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 42,
+      "author": {
+        "id": 1003152
+      },
+      "writtenOn": "2017-11-09T22:32:14Z",
+      "side": 1,
+      "message": "However, let\u0027s keep \"return\" instead of \"break\" for each legitimate label, and add a NOTREACHED() macro here. Same below.",
+      "revId": "c83b9863ecb2f3817424368d7f0cdc06d735623c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d0c99a2a_bfc349c4",
+        "filename": "content/browser/webauth/cbor/cbor_values.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 65,
+      "author": {
+        "id": 1003152
+      },
+      "writtenOn": "2017-11-09T22:32:14Z",
+      "side": 1,
+      "message": "Do you foresee any clients of either CBORReader or Write needing these values? If no, let\u0027s move them into a separate header included by cbor_reader/writer.cc to keep this interface definition clear.\n\nI\u0027d also argue that these are related to the CBOR binary format, not the parsed format.",
+      "revId": "c83b9863ecb2f3817424368d7f0cdc06d735623c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "de76871a_87ee77e8",
+        "filename": "content/browser/webauth/cbor/cbor_values.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 81,
+      "author": {
+        "id": 1003152
+      },
+      "writtenOn": "2017-11-09T22:32:14Z",
+      "side": 1,
+      "message": "Have you considered just not defining enumerator `NEGATIVE`?\n\nThat way, you could still rely on compile time checking that switch\u0027es handle all legal enumeration values, and would not need to add a default label.",
+      "revId": "c83b9863ecb2f3817424368d7f0cdc06d735623c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "cda11bc0_f763db78",
+        "filename": "content/browser/webauth/cbor/cbor_values.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 86,
+      "author": {
+        "id": 1003152
+      },
+      "writtenOn": "2017-11-09T22:32:14Z",
+      "side": 1,
+      "message": "The underlying type of this enum class will be a (signed) int by default, have you considered using -1 as the value for NONE?",
+      "revId": "c83b9863ecb2f3817424368d7f0cdc06d735623c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "66b44cf1_f77707f1",
+        "filename": "content/browser/webauth/cbor/cbor_writer.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 40,
+      "author": {
+        "id": 1003152
+      },
+      "writtenOn": "2017-11-09T22:32:14Z",
+      "side": 1,
+      "message": "style nit: BYTE_STRING",
+      "range": {
+        "startLine": 40,
+        "startChar": 33,
+        "endLine": 40,
+        "endChar": 43
+      },
+      "revId": "c83b9863ecb2f3817424368d7f0cdc06d735623c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
