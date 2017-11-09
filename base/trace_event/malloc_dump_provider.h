@@ -39,6 +39,12 @@ class BASE_EXPORT MallocDumpProvider : public MemoryDumpProvider {
   void InsertAllocation(void* address, size_t size);
   void RemoveAllocation(void* address);
 
+  // Used by out-of-process heap-profiling. When malloc is profiled by an
+  // external process, that process will be responsible for emitting metrics on
+  // behalf of this one. Thus, MallocDumpProvider should not do anything.
+  void EnableMetrics();
+  void DisableMetrics();
+
  private:
   friend struct DefaultSingletonTraits<MallocDumpProvider>;
 
@@ -52,6 +58,8 @@ class BASE_EXPORT MallocDumpProvider : public MemoryDumpProvider {
   // This is to prevent re-entrancy in the heap profiler when the heap dump
   // generation is malloc/new-ing for its own bookkeeping data structures.
   PlatformThreadId tid_dumping_heap_;
+
+  bool emit_metrics_on_memory_dump_;
 
   DISALLOW_COPY_AND_ASSIGN(MallocDumpProvider);
 };
