@@ -1,0 +1,205 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "41d1aa5e_fc11ed3c",
+        "filename": "components/previews/content/previews_optimization_guide_hints.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 22,
+      "author": {
+        "id": 1147716
+      },
+      "writtenOn": "2017-11-09T17:24:07Z",
+      "side": 1,
+      "message": "Somewhere we will want to put some crash loop detection in case some issue processing the proto so may be good to add a TODO somewhere. But it might be better to do in OGService though?",
+      "range": {
+        "startLine": 22,
+        "startChar": 39,
+        "endLine": 22,
+        "endChar": 55
+      },
+      "revId": "9fcf340e5e2b041751fb0dbff898b11187133a3f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d686da3c_d6cdcc7f",
+        "filename": "components/previews/content/previews_optimization_guide_hints.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 31,
+      "author": {
+        "id": 1147716
+      },
+      "writtenOn": "2017-11-09T17:24:07Z",
+      "side": 1,
+      "message": "[btw, later, we might consider an UMA count for this (along with count for number accepted hints)]",
+      "range": {
+        "startLine": 31,
+        "startChar": 8,
+        "endLine": 31,
+        "endChar": 75
+      },
+      "revId": "9fcf340e5e2b041751fb0dbff898b11187133a3f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "096da873_a4741999",
+        "filename": "components/previews/content/previews_optimization_guide_hints.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 46,
+      "author": {
+        "id": 1147716
+      },
+      "writtenOn": "2017-11-09T17:24:07Z",
+      "side": 1,
+      "message": "[Later we could think about a helper that maps optimization to PreviewsType to generalize this a bit.]",
+      "revId": "9fcf340e5e2b041751fb0dbff898b11187133a3f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "2b16efbe_6c6a85da",
+        "filename": "components/previews/content/previews_optimization_guide_hints.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 73,
+      "author": {
+        "id": 1147716
+      },
+      "writtenOn": "2017-11-09T17:24:07Z",
+      "side": 1,
+      "message": "Consider TODO wrt to checking for multiple matches and using most specific match.",
+      "range": {
+        "startLine": 73,
+        "startChar": 4,
+        "endLine": 73,
+        "endChar": 10
+      },
+      "revId": "9fcf340e5e2b041751fb0dbff898b11187133a3f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "39c92ec9_87ee388a",
+        "filename": "components/previews/content/previews_optimization_guide_hints.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 117,
+      "author": {
+        "id": 1147716
+      },
+      "writtenOn": "2017-11-09T17:24:07Z",
+      "side": 1,
+      "message": "hmm, I wonder if we should be reset()-ing hints_ here instead.",
+      "range": {
+        "startLine": 117,
+        "startChar": 2,
+        "endLine": 117,
+        "endChar": 11
+      },
+      "revId": "9fcf340e5e2b041751fb0dbff898b11187133a3f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e71e4887_8a2986d0",
+        "filename": "components/previews/content/previews_optimization_guide_hints.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 36,
+      "author": {
+        "id": 1147716
+      },
+      "writtenOn": "2017-11-09T17:24:07Z",
+      "side": 1,
+      "message": "PreviewsOptimizationGuideImpl?  or else add a class comment about what this is.\nActually might be good to have class comment anyway - eg, URLMatcher-based implementation .... Observes OptimizationGuide updates ....",
+      "range": {
+        "startLine": 36,
+        "startChar": 6,
+        "endLine": 36,
+        "endChar": 36
+      },
+      "revId": "9fcf340e5e2b041751fb0dbff898b11187133a3f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "34518242_49c1e516",
+        "filename": "components/previews/content/previews_optimization_guide_hints.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 53,
+      "author": {
+        "id": 1147716
+      },
+      "writtenOn": "2017-11-09T17:24:07Z",
+      "side": 1,
+      "message": "// Holds Previews Hints data extracted from the OptimizationGuide configuration.  ?",
+      "range": {
+        "startLine": 53,
+        "startChar": 3,
+        "endLine": 53,
+        "endChar": 13
+      },
+      "revId": "9fcf340e5e2b041751fb0dbff898b11187133a3f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5f81a813_8027e93e",
+        "filename": "components/previews/content/previews_optimization_guide_hints.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 58,
+      "author": {
+        "id": 1147716
+      },
+      "writtenOn": "2017-11-09T17:24:07Z",
+      "side": 1,
+      "message": "CreateFromConfigProto maybe?? (not a strong opinion here though)",
+      "range": {
+        "startLine": 58,
+        "startChar": 34,
+        "endLine": 58,
+        "endChar": 50
+      },
+      "revId": "9fcf340e5e2b041751fb0dbff898b11187133a3f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c3b1e4db_e6d2a32f",
+        "filename": "components/previews/content/previews_optimization_guide_hints.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 81,
+      "author": {
+        "id": 1147716
+      },
+      "writtenOn": "2017-11-09T17:24:07Z",
+      "side": 1,
+      "message": "sometimes chromium code also adds \"Not owned.\" comment to such members",
+      "range": {
+        "startLine": 80,
+        "startChar": 6,
+        "endLine": 81,
+        "endChar": 33
+      },
+      "revId": "9fcf340e5e2b041751fb0dbff898b11187133a3f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
