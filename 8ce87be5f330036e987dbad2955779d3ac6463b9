@@ -16,6 +16,24 @@
       "revId": "8ce87be5f330036e987dbad2955779d3ac6463b9",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f0b661ff_868b9510",
+        "filename": "chromeos/dbus/debug_daemon_client.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 659,
+      "author": {
+        "id": 1115919
+      },
+      "writtenOn": "2017-11-09T13:53:43Z",
+      "side": 0,
+      "message": "It looks ok, because the caller doesn\u0027t seem to expect an error for regular cases.\nsque@, could you double check?",
+      "parentUuid": "3dd61203_2d384123",
+      "revId": "8ce87be5f330036e987dbad2955779d3ac6463b9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
