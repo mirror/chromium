@@ -22,6 +22,30 @@
       "revId": "f9adfef868a223fc20fed5c4499e3faf54a862c8",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9368d9fb_80627a97",
+        "filename": "ui/views/widget/desktop_aura/desktop_window_tree_host_x11.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 1522,
+      "author": {
+        "id": 1166470
+      },
+      "writtenOn": "2017-11-09T19:05:00Z",
+      "side": 1,
+      "message": "No.  You\u0027re supposed to restart GTK apps in order to see the setting change (weird, I know).  This is true of all GTK apps that I\u0027ve tested.  Even trying to read \"gtk-application-prefer-dark-theme\" after changing the setting will just return whatever it was when gtk_init() was called.\n\nAlso, one thing I\u0027m unsure of is if we should avoid setting _GTK_THEME_VARIANT if the user isn\u0027t using the GTK theme.  Though this would require getting the profile setting for the specific window, which is tricky.  And it wouldn\u0027t blend with all the other apps that do use dark titlebars.  wdyt?",
+      "parentUuid": "29ea9d61_ccce7b5c",
+      "range": {
+        "startLine": 1520,
+        "startChar": 4,
+        "endLine": 1522,
+        "endChar": 79
+      },
+      "revId": "f9adfef868a223fc20fed5c4499e3faf54a862c8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
