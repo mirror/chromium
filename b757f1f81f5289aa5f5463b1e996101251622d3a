@@ -96,6 +96,30 @@
     },
     {
       "key": {
+        "uuid": "32f8cb77_cd223a06",
+        "filename": "chrome/browser/resources/local_ntp/local_ntp.js",
+        "patchSetId": 3
+      },
+      "lineNbr": 674,
+      "author": {
+        "id": 1116059
+      },
+      "writtenOn": "2017-11-09T14:56:41Z",
+      "side": 1,
+      "message": "I thought the idea was that an interactive (cached or fresh) is never swapped out? (because that\u0027d be annoying if the user had started to play with it)",
+      "parentUuid": "9731fafc_9c6b4527",
+      "range": {
+        "startLine": 674,
+        "startChar": 27,
+        "endLine": 674,
+        "endChar": 0
+      },
+      "revId": "b757f1f81f5289aa5f5463b1e996101251622d3a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "2c6559fd_3a1b6e09",
         "filename": "chrome/browser/search/local_ntp_source.cc",
         "patchSetId": 3
