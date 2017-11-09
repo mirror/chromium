@@ -213,7 +213,7 @@ using web::test::HttpServer;
 
 // Tests that elements on iPad tab switcher are accessible.
 // TODO: (crbug.com/691095) Open tabs label is not accessible
-- (void)DISABLED_testAccessibilityOnTabSwitcher {
+- (void)testAccessibilityOnTabSwitcher {
   if (!IsIPadIdiom())
     return;
   [self assertTabSwitcherIsInactive];
@@ -230,13 +230,12 @@ using web::test::HttpServer;
   // Press the :: icon to exit the tab switcher.
   [[EarlGrey selectElementWithMatcher:TabletTabSwitcherCloseButton()]
       performAction:grey_tap()];
-
   [self assertTabSwitcherIsInactive];
 }
 
 // Tests that elements on iPad tab switcher incognito tab are accessible.
 // TODO: (crbug.com/691095) Incognito tabs label should be tappable.
-- (void)DISABLED_testAccessibilityOnIncognitoTabSwitcher {
+- (void)testAccessibilityOnIncognitoTabSwitcher {
   if (!IsIPadIdiom())
     return;
   [self assertTabSwitcherIsInactive];
@@ -255,16 +254,15 @@ using web::test::HttpServer;
 
   chrome_test_util::VerifyAccessibilityForCurrentScreen();
 
-  // Press the :: icon to exit the tab switcher.
-  [[EarlGrey selectElementWithMatcher:TabletTabSwitcherCloseButton()]
+  // Create new incognito tab to exit the tab switcher.
+  [[EarlGrey selectElementWithMatcher:TabletTabSwitcherNewIncognitoTabButton()]
       performAction:grey_tap()];
-
   [self assertTabSwitcherIsInactive];
 }
 
 // Tests that elements on iPad tab switcher other devices are accessible.
 // TODO: (crbug.com/691095) Other devices label should be tappable.
-- (void)DISABLED_testAccessibilityOnOtherDeviceTabSwitcher {
+- (void)testAccessibilityOnOtherDeviceTabSwitcher {
   if (!IsIPadIdiom())
     return;
   [self assertTabSwitcherIsInactive];
@@ -283,10 +281,9 @@ using web::test::HttpServer;
 
   chrome_test_util::VerifyAccessibilityForCurrentScreen();
 
-  // Create new incognito tab to exit the tab switcher.
-  [[EarlGrey selectElementWithMatcher:TabletTabSwitcherNewIncognitoTabButton()]
+  // Press the :: icon to exit the tab switcher.
+  [[EarlGrey selectElementWithMatcher:TabletTabSwitcherCloseButton()]
       performAction:grey_tap()];
-
   [self assertTabSwitcherIsInactive];
 }
 
