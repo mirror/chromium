@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "3af29aa5_6f60f673",
+        "filename": "build/mac/find_sdk.py",
+        "patchSetId": 2
+      },
+      "lineNbr": 61,
+      "author": {
+        "id": 1174099
+      },
+      "writtenOn": "2017-11-09T18:02:17Z",
+      "side": 1,
+      "message": "sdk_dir.endswith(\u0027.app/Contents/Developer\u0027) ?",
+      "revId": "435c3a746f7dd2b45bf1721b0583183284373b92",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
