@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "72b1a3e4_d15d57b1",
+        "filename": "chrome/browser/ui/views/payments/payment_request_browsertest_base.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 98,
+      "author": {
+        "id": 1003016
+      },
+      "writtenOn": "2017-11-09T04:11:38Z",
+      "side": 1,
+      "message": "test_file_path? (or fix the comment)",
+      "range": {
+        "startLine": 98,
+        "startChar": 37,
+        "endLine": 98,
+        "endChar": 46
+      },
+      "revId": "0608dfa68d270fa0465e303ff4d992a4bad43f7d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
