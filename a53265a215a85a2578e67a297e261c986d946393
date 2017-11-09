@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "c618e1ad_11f7f5bc",
+        "filename": "ios/chrome/browser/ui/activity_services/activity_service_legacy_coordinator.mm",
+        "patchSetId": 5
+      },
+      "lineNbr": 39,
+      "author": {
+        "id": 1125535
+      },
+      "writtenOn": "2017-11-09T15:19:52Z",
+      "side": 1,
+      "message": "Is there any reason why we are using TimeTicks instead of NSDate? NSTimeInterval has sub-millisecond precision as well.",
+      "range": {
+        "startLine": 39,
+        "startChar": 29,
+        "endLine": 39,
+        "endChar": 44
+      },
+      "revId": "a53265a215a85a2578e67a297e261c986d946393",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
