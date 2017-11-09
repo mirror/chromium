@@ -49,6 +49,30 @@
     },
     {
       "key": {
+        "uuid": "d7953d25_655bcb31",
+        "filename": "chrome/test/media_router/media_router_integration_browsertest.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 245,
+      "author": {
+        "id": 1001385
+      },
+      "writtenOn": "2017-11-09T00:29:52Z",
+      "side": 1,
+      "message": "IIUC the thing we are waiting for is that the MediaRouter receives the OnRoutesUpdated - if we see that then CreateRoute must have been called?  So can we just add the MediaRoutesObserver and use that to watch for OnRoutesUpdated for this case?",
+      "parentUuid": "719a87b1_ab3b4040",
+      "range": {
+        "startLine": 242,
+        "startChar": 0,
+        "endLine": 245,
+        "endChar": 40
+      },
+      "revId": "3d55b14c5ef805de56f8aa5d562cb0784d6b4ffd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "ca43190a_4c644712",
         "filename": "chrome/test/media_router/media_router_integration_browsertest.cc",
         "patchSetId": 6
@@ -93,6 +117,30 @@
       "revId": "3d55b14c5ef805de56f8aa5d562cb0784d6b4ffd",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2bbf153d_a0cefe52",
+        "filename": "chrome/test/media_router/media_router_integration_browsertest.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 735,
+      "author": {
+        "id": 1001385
+      },
+      "writtenOn": "2017-11-09T00:29:52Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "c60ef8c1_f67ca6d4",
+      "range": {
+        "startLine": 735,
+        "startChar": 0,
+        "endLine": 735,
+        "endChar": 71
+      },
+      "revId": "3d55b14c5ef805de56f8aa5d562cb0784d6b4ffd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
