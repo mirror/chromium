@@ -2,6 +2,23 @@
   "comments": [
     {
       "key": {
+        "uuid": "d0113702_1e974eca",
+        "filename": "content/browser/service_worker/service_worker_version.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 914,
+      "author": {
+        "id": 1000128
+      },
+      "writtenOn": "2017-11-09T16:18:37Z",
+      "side": 1,
+      "message": "It\u0027s not really about this CL, but it makes me uneasy that these observer functions are mutating state that can trigger more observer function calls.\n\nI think it should be illegal to do something in an observer function can that trigger another invocation since the ordering gets really hard to understand.\n\nShould we just have EWInstance haavae a pointer to its owner SWVersion, and it calls some explicit function on it instead of doing this is an observer?",
+      "revId": "a065a4dc67c790d0934fd00bb9fb18fe66abffb6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "d18e3038_b653c581",
         "filename": "content/browser/service_worker/service_worker_version.cc",
         "patchSetId": 3
@@ -19,6 +36,58 @@
     },
     {
       "key": {
+        "uuid": "4cd07256_cd532db1",
+        "filename": "content/browser/service_worker/service_worker_version.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 1748,
+      "author": {
+        "id": 1000128
+      },
+      "writtenOn": "2017-11-09T16:18:37Z",
+      "side": 1,
+      "message": "and can remove the \"first\" from \"first check\" above.",
+      "parentUuid": "d18e3038_b653c581",
+      "revId": "a065a4dc67c790d0934fd00bb9fb18fe66abffb6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "02ac69fb_dbb01c19",
+        "filename": "content/common/service_worker/embedded_worker.mojom",
+        "patchSetId": 3
+      },
+      "lineNbr": 63,
+      "author": {
+        "id": 1000128
+      },
+      "writtenOn": "2017-11-09T16:18:37Z",
+      "side": 1,
+      "message": "\"requests termination to the browser\" -\u003e \"requests to be terminated.\"",
+      "revId": "a065a4dc67c790d0934fd00bb9fb18fe66abffb6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c768f843_76ea85a1",
+        "filename": "content/common/service_worker/embedded_worker.mojom",
+        "patchSetId": 3
+      },
+      "lineNbr": 64,
+      "author": {
+        "id": 1000128
+      },
+      "writtenOn": "2017-11-09T16:18:37Z",
+      "side": 1,
+      "message": "can remove the \"could be terminated after the request\" part and just say: \"The request may be ignored, for example when...\"",
+      "revId": "a065a4dc67c790d0934fd00bb9fb18fe66abffb6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "44bfc04d_2ed00b4d",
         "filename": "content/renderer/service_worker/service_worker_context_client.cc",
         "patchSetId": 3
@@ -30,6 +99,98 @@
       "writtenOn": "2017-11-09T09:16:20Z",
       "side": 1,
       "message": "I wonder... if having some convenient interface that can be passed to WaitUntilObserver is less error prone? Would it make sense to have the timer in, say, WebKit/public/platform, pass it when we start the worker -\u003e SWGlobalProxy?",
+      "revId": "a065a4dc67c790d0934fd00bb9fb18fe66abffb6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "60cb28f0_e35f0738",
+        "filename": "content/renderer/service_worker/service_worker_context_client.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 1361,
+      "author": {
+        "id": 1000128
+      },
+      "writtenOn": "2017-11-09T16:18:37Z",
+      "side": 1,
+      "message": "Yea this feels a bit too easy to forget to call StartEvent or EndEvent.\n\nIf we go with the current patch I\u0027d at least recommend moving all StartEvent() calls to immediately above the Dispatch*() call for consistency.\n\nDo all our events have callbacks? Maybe all the callback maps could have an additional member like InflightEventToken which calls StartEvent() in the ctor and EndEvent in the dtor?",
+      "parentUuid": "44bfc04d_2ed00b4d",
+      "revId": "a065a4dc67c790d0934fd00bb9fb18fe66abffb6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "34828cfb_50ece98a",
+        "filename": "content/renderer/service_worker/service_worker_context_client.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 385,
+      "author": {
+        "id": 1000128
+      },
+      "writtenOn": "2017-11-09T16:18:37Z",
+      "side": 1,
+      "message": "Maybe more natural as:\nis passed -\u003e has passed\nhas finished -\u003e finished",
+      "range": {
+        "startLine": 385,
+        "startChar": 32,
+        "endLine": 385,
+        "endChar": 35
+      },
+      "revId": "a065a4dc67c790d0934fd00bb9fb18fe66abffb6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a1145984_aeabab5d",
+        "filename": "content/renderer/service_worker/service_worker_event_timer.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 19,
+      "author": {
+        "id": 1000128
+      },
+      "writtenOn": "2017-11-09T16:18:37Z",
+      "side": 1,
+      "message": "ended",
+      "revId": "a065a4dc67c790d0934fd00bb9fb18fe66abffb6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "99fc5175_f918e9a5",
+        "filename": "content/renderer/service_worker/service_worker_event_timer.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 20,
+      "author": {
+        "id": 1000128
+      },
+      "writtenOn": "2017-11-09T16:18:37Z",
+      "side": 1,
+      "message": "explicit",
+      "revId": "a065a4dc67c790d0934fd00bb9fb18fe66abffb6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "74577986_f03cd80d",
+        "filename": "content/renderer/service_worker/service_worker_event_timer.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 30,
+      "author": {
+        "id": 1000128
+      },
+      "writtenOn": "2017-11-09T16:18:37Z",
+      "side": 1,
+      "message": "Would recommend just initializing here for new code, Chromium seems to be going that direction and I\u0027ve seen bad bugs where we forget to init in the ctor.",
       "revId": "a065a4dc67c790d0934fd00bb9fb18fe66abffb6",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
