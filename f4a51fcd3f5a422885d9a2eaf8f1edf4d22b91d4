@@ -1,0 +1,96 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "fef854d8_8ddc2aae",
+        "filename": "third_party/WebKit/Source/core/paint/PrePaintTreeWalk.cpp",
+        "patchSetId": 11
+      },
+      "lineNbr": 73,
+      "author": {
+        "id": 1210854
+      },
+      "writtenOn": "2017-11-09T18:35:08Z",
+      "side": 1,
+      "message": "Minor nit: Could you add context to this, such as \"PrePaintTree::Walk root frame_view\u003d\"?",
+      "range": {
+        "startLine": 73,
+        "startChar": 30,
+        "endLine": 73,
+        "endChar": 34
+      },
+      "revId": "f4a51fcd3f5a422885d9a2eaf8f1edf4d22b91d4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "db6db6b0_7c1e22b0",
+        "filename": "third_party/WebKit/Source/platform/graphics/GraphicsLayer.cpp",
+        "patchSetId": 11
+      },
+      "lineNbr": 286,
+      "author": {
+        "id": 1210854
+      },
+      "writtenOn": "2017-11-09T18:35:08Z",
+      "side": 1,
+      "message": "\"GraphicsLayer::PaintRecursively() tree:\\n\"",
+      "range": {
+        "startLine": 286,
+        "startChar": 3,
+        "endLine": 286,
+        "endChar": 37
+      },
+      "revId": "f4a51fcd3f5a422885d9a2eaf8f1edf4d22b91d4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "718806d9_fb206c66",
+        "filename": "third_party/WebKit/Source/platform/graphics/compositing/PaintArtifactCompositor.cpp",
+        "patchSetId": 11
+      },
+      "lineNbr": 773,
+      "author": {
+        "id": 1210854
+      },
+      "writtenOn": "2017-11-09T18:35:08Z",
+      "side": 1,
+      "message": "Extra output: \"PaintArtifactCompositor::Update complete\"",
+      "range": {
+        "startLine": 773,
+        "startChar": 4,
+        "endLine": 773,
+        "endChar": 40
+      },
+      "revId": "f4a51fcd3f5a422885d9a2eaf8f1edf4d22b91d4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a1e0ba67_5b2296f5",
+        "filename": "third_party/WebKit/Source/platform/graphics/paint/PaintController.cpp",
+        "patchSetId": 11
+      },
+      "lineNbr": 673,
+      "author": {
+        "id": 1210854
+      },
+      "writtenOn": "2017-11-09T18:35:08Z",
+      "side": 1,
+      "message": "LOG(ERROR) \u003c\u003c \"PaintController::CommitNewDisplayItems() done\\n\";",
+      "range": {
+        "startLine": 673,
+        "startChar": 4,
+        "endLine": 673,
+        "endChar": 16
+      },
+      "revId": "f4a51fcd3f5a422885d9a2eaf8f1edf4d22b91d4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
