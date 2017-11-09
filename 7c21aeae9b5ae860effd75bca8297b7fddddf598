@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "4f47449f_9ae4f906",
+        "filename": "chrome/browser/media/router/presentation_receiver_window.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 25,
+      "author": {
+        "id": 1000763
+      },
+      "writtenOn": "2017-11-09T20:33:30Z",
+      "side": 1,
+      "message": "Browser isn\u0027t intended for subclassing. Subclassing browser is going to be fragile and error prone. It seems like you want to display a WebContents in a window. That is entirely possible (and done in other places) without subclassing Browser.",
+      "range": {
+        "startLine": 25,
+        "startChar": 42,
+        "endLine": 25,
+        "endChar": 49
+      },
+      "revId": "7c21aeae9b5ae860effd75bca8297b7fddddf598",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
