@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "3dd43568_b82c2b90",
+        "filename": "chrome/common/extensions/api/webrtc_logging_private.idl",
+        "patchSetId": 19
+      },
+      "lineNbr": 173,
+      "author": {
+        "id": 1244443
+      },
+      "writtenOn": "2017-11-09T23:17:51Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "96b1c970_68d18d6e",
+      "range": {
+        "startLine": 173,
+        "startChar": 60,
+        "endLine": 173,
+        "endChar": 65
+      },
+      "revId": "418681f48f4e0a47213194370ec7e51ef263d4d4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "ab60b64d_6fb7df6c",
         "filename": "chrome/renderer/extensions/chrome_extensions_dispatcher_delegate.cc",
         "patchSetId": 19
@@ -42,6 +66,24 @@
     },
     {
       "key": {
+        "uuid": "066c32e2_27c2e86f",
+        "filename": "chrome/renderer/extensions/chrome_extensions_dispatcher_delegate.cc",
+        "patchSetId": 19
+      },
+      "lineNbr": 252,
+      "author": {
+        "id": 1244443
+      },
+      "writtenOn": "2017-11-09T23:17:51Z",
+      "side": 1,
+      "message": "Agreed, since the whole implementation is behind that build flag.\n\nLooks like that def is set from a build arg[1] that is disabled when building fuchsia or the audio only chromecast build[2][3].\n\n[1] https://cs.chromium.org/chromium/src/media/BUILD.gn?l\u003d32\u0026rcl\u003d035cd9a4cde9a792be5b981d016d7728970aae1b\n[2] https://cs.chromium.org/chromium/src/media/media_options.gni?l\u003d80\u0026rcl\u003d2378d7e540220f30c94c65f91c0834d545775649\n[3] https://cs.chromium.org/chromium/src/build/config/chromecast_build.gni?l\u003d14\u0026rcl\u003d2378d7e540220f30c94c65f91c0834d545775649",
+      "parentUuid": "ab60b64d_6fb7df6c",
+      "revId": "418681f48f4e0a47213194370ec7e51ef263d4d4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "b6dd97c9_d1f5d157",
         "filename": "chrome/test/data/extensions/api_test/webrtc_logging_private/get_logs_directory/test.js",
         "patchSetId": 19
@@ -56,6 +98,24 @@
       "revId": "418681f48f4e0a47213194370ec7e51ef263d4d4",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f6a880e9_7d1690ab",
+        "filename": "chrome/test/data/extensions/api_test/webrtc_logging_private/get_logs_directory/test.js",
+        "patchSetId": 19
+      },
+      "lineNbr": 10,
+      "author": {
+        "id": 1244443
+      },
+      "writtenOn": "2017-11-09T23:17:51Z",
+      "side": 1,
+      "message": "Added more checks. Couldn\u0027t do an instance of because it\u0027s implemented as [NoInterfaceObject].",
+      "parentUuid": "b6dd97c9_d1f5d157",
+      "revId": "418681f48f4e0a47213194370ec7e51ef263d4d4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
