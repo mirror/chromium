@@ -525,9 +525,14 @@ void RemoteSuggestionsSchedulerImpl::OnSuggestionsCleared() {
   debug_logger_->Log(FROM_HERE, /*message=*/std::string());
   // This should be called by |provider_| so it should exist.
   DCHECK(provider_);
-  // Some user action causes suggestions to be cleared, fetch now (as an
-  // interactive request).
-  provider_->ReloadSuggestions();
+  // Some user action causes suggestions to be cleared, we need to fetch as soon
+  // as possible.
+  ClearLastFetchAttemptTimeAndMarkLastFetchStale();
+  // Suggestions can get cleared in multiple situations, in some of them a NTP
+  // is already opened. Thus, we assume here the worst case from the UI
+  // perspective - the surface with cleared suggestions is visible and we need
+  // to refetch them ASAP.
+  RefetchIfAppropriate(TriggerType::SURFACE_OPENED);
 }
 
 void RemoteSuggestionsSchedulerImpl::OnHistoryCleared() {
@@ -538,7 +543,7 @@ void RemoteSuggestionsSchedulerImpl::OnHistoryCleared() {
       clock_->Now() + base::TimeDelta::FromMinutes(
                           kBlockBackgroundFetchesMinutesAfterClearingHistory);
   // After that time elapses, we should fetch as soon as possible.
-  ClearLastFetchAttemptTime();
+  ClearLastFetchAttemptTimeAndMarkLastFetchStale();
 }
 
 void RemoteSuggestionsSchedulerImpl::OnBrowserUpgraded() {
@@ -882,8 +887,13 @@ void RemoteSuggestionsSchedulerImpl::OnFetchCompleted(Status fetch_status) {
   ApplyPersistentFetchingSchedule();
 }
 
-void RemoteSuggestionsSchedulerImpl::ClearLastFetchAttemptTime() {
+void RemoteSuggestionsSchedulerImpl::
+    ClearLastFetchAttemptTimeAndMarkLastFetchStale() {
   profile_prefs_->ClearPref(prefs::kSnippetLastFetchAttemptTime);
+  // To mark the last fetch as stale, we need to keep the time in prefs, only
+  // making sure it is long ago.
+  profile_prefs_->SetInt64(prefs::kSnippetLastSuccessfulFetchTime,
+                           SerializeTime(base::Time()));
 }
 
 std::set<RemoteSuggestionsSchedulerImpl::TriggerType>
