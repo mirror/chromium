@@ -1,0 +1,140 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "302f6c88_c34dd4bf",
+        "filename": "cc/paint/paint_op_buffer.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 78,
+      "author": {
+        "id": 1115895
+      },
+      "writtenOn": "2017-11-09T19:34:04Z",
+      "side": 1,
+      "message": "vestigial?",
+      "revId": "723df3d152e8262d9b984db0dd034a5e5209b9c1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "104d4d63_177b594e",
+        "filename": "cc/paint/paint_op_buffer.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 1839,
+      "author": {
+        "id": 1115895
+      },
+      "writtenOn": "2017-11-09T19:34:04Z",
+      "side": 1,
+      "message": "I think this should return an empty PaintOpBuffer, since that\u0027s what was serialized.  Otherwise, serializing an empty paint buffer would be an error on the deserialization side.\n\nCan you add a test that serializing an empty PaintOpBuffer is not an error?",
+      "revId": "723df3d152e8262d9b984db0dd034a5e5209b9c1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "56178677_a339c7ef",
+        "filename": "cc/paint/paint_op_buffer.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 151,
+      "author": {
+        "id": 1115895
+      },
+      "writtenOn": "2017-11-09T19:34:04Z",
+      "side": 1,
+      "message": "Add a comment here that op must be a draw op.",
+      "revId": "723df3d152e8262d9b984db0dd034a5e5209b9c1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6512bf82_5d46f8b0",
+        "filename": "cc/paint/paint_op_buffer_serializer.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 15,
+      "author": {
+        "id": 1115895
+      },
+      "writtenOn": "2017-11-09T19:34:04Z",
+      "side": 1,
+      "message": "This is *really* nice.  So much better than the flattening iterator.\n\nIs it possible that the PaintOpBufferSerializer could just bind a callback to allocate more memory and return a pointer and a size instead of being templated?",
+      "revId": "723df3d152e8262d9b984db0dd034a5e5209b9c1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "205b86aa_2b237742",
+        "filename": "cc/paint/paint_op_buffer_serializer.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 34,
+      "author": {
+        "id": 1115895
+      },
+      "writtenOn": "2017-11-09T19:34:04Z",
+      "side": 1,
+      "message": "I think this save should come before the preamble, and then the preamble shouldn\u0027t save to avoid an unnecessary extra save.",
+      "revId": "723df3d152e8262d9b984db0dd034a5e5209b9c1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ef189a36_0a0796ac",
+        "filename": "cc/paint/paint_op_buffer_unittest.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 2188,
+      "author": {
+        "id": 1115895
+      },
+      "writtenOn": "2017-11-09T19:34:04Z",
+      "side": 1,
+      "message": "Ah nice way to reuse this test!\n\n(Also, maybe just call this deserialized_buffer? I know it\u0027s long, but d_ doesn\u0027t make sense to me as a general abbreviation.  Similarly o_ below.  The rest of the file calls things deserialize_options etc as well.)",
+      "revId": "723df3d152e8262d9b984db0dd034a5e5209b9c1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7fde4a05_22b55dfc",
+        "filename": "cc/paint/paint_op_reader.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 30,
+      "author": {
+        "id": 1115895
+      },
+      "writtenOn": "2017-11-09T19:34:04Z",
+      "side": 1,
+      "message": "bikeshed: ReadAndValidateOpHeader?",
+      "revId": "723df3d152e8262d9b984db0dd034a5e5209b9c1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "190ec133_68106245",
+        "filename": "gpu/command_buffer/client/gles2_implementation.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 7227,
+      "author": {
+        "id": 1115895
+      },
+      "writtenOn": "2017-11-09T19:34:04Z",
+      "side": 1,
+      "message": "This preamble step is only going to get used for the GLES2Implementation call here, and not for callers inside of shaders, right?\n\nI think this code is fine, but I have a weak preference to just have a second Serialize() function that also takes a gfx::Vector2d translation, the gfx::Rect playback_rect, and a gfx::AxisTransform2d and does all this internally instead of passing it as a PaintOpBuffer.",
+      "revId": "723df3d152e8262d9b984db0dd034a5e5209b9c1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
