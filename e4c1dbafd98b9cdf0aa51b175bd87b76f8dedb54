@@ -213,6 +213,24 @@
     },
     {
       "key": {
+        "uuid": "b7486ba4_dd890b5c",
+        "filename": "ios/chrome/browser/ui/stack_view/stack_view_controller.mm",
+        "patchSetId": 11
+      },
+      "lineNbr": 515,
+      "author": {
+        "id": 1133065
+      },
+      "writtenOn": "2017-11-09T21:26:11Z",
+      "side": 1,
+      "message": "Okay, that clears it up a bit, thanks.  I\u0027m not a huge fan of the current implementation, as I feel that the object that creates the coordinator should also be in charge of starting/stopping it.  I think that in the future, we could accomplish this using helper objects owned by BVC/ StackViewController that handle the commands + owning/starting/stopping the coordinator.  That way we can avoid code duplication, while still handling UI state at the part coordinator hierarchy that is most localized to where the actual presentation is happening.  Having coordinators that handle commands to start/stop themselves seems akin to UIAlertView\u0027s old self-owning presentation management behavior, which UIKit has wisely moved away from by introducing UIAlertController as a UIViewController that can have more sane presentation logic.\n\nSeeing as we already use a similar pattern for the history coordinator, I\u0027m okay with using the current strategy for now; it might be better to hammer out \"best practices\" for these types of scenarios in the future when we have a more mature coordinator hierarchy.",
+      "parentUuid": "1c482e76_52159e2f",
+      "revId": "e4c1dbafd98b9cdf0aa51b175bd87b76f8dedb54",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "c3f98c79_a452e3cd",
         "filename": "ios/chrome/browser/ui/toolbar/toolbar_controller.h",
         "patchSetId": 11
