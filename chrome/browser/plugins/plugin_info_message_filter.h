@@ -55,9 +55,13 @@ namespace url {
 class Origin;
 }
 
+struct PluginInfoMessageFilterTraits;
+
 // This class filters out incoming IPC messages requesting plugin information.
-class PluginInfoMessageFilter : public content::BrowserMessageFilter,
-                                public chrome::mojom::PluginInfoHost {
+class PluginInfoMessageFilter
+    : public base::RefCountedThreadSafe<PluginInfoMessageFilter,
+                                        PluginInfoMessageFilterTraits>,
+      public chrome::mojom::PluginInfoHost {
  public:
   struct GetPluginInfo_Params;
 
@@ -105,14 +109,13 @@ class PluginInfoMessageFilter : public content::BrowserMessageFilter,
     BooleanPrefMember run_all_flash_in_allow_mode_;
   };
 
+  static void Create(int render_process_id,
+                     Profile* profile,
+                     chrome::mojom::PluginInfoHostAssociatedRequest request);
+
   PluginInfoMessageFilter(int render_process_id, Profile* profile);
 
-  // content::BrowserMessageFilter methods:
-  bool OnMessageReceived(const IPC::Message& message) override;
-  void OnDestruct() const override;
-
   void DestructOnBrowserThread() const;
-
   void OnPluginInfoHostRequest(
       chrome::mojom::PluginInfoHostAssociatedRequest request);
 
@@ -122,9 +125,11 @@ class PluginInfoMessageFilter : public content::BrowserMessageFilter,
   friend struct content::BrowserThread::DeleteOnThread<
       content::BrowserThread::UI>;
   friend class base::DeleteHelper<PluginInfoMessageFilter>;
+  friend struct PluginInfoMessageFilterTraits;
+
+  ~PluginInfoMessageFilter() override;
 
   void ShutdownOnUIThread();
-  ~PluginInfoMessageFilter() override;
 
   // chrome::mojom::PluginInfoHost
   void GetPluginInfo(int32_t render_frame_id,
@@ -132,6 +137,10 @@ class PluginInfoMessageFilter : public content::BrowserMessageFilter,
                      const url::Origin& origin,
                      const std::string& mime_type,
                      const GetPluginInfoCallback& callback) override;
+
+  void IsInternalPluginAvailableForMimeType(
+      const std::string& mime_type,
+      const IsInternalPluginAvailableForMimeTypeCallback& callback) override;
 
   // |params| wraps the parameters passed to |OnGetPluginInfo|, because
   // |base::Bind| doesn't support the required arity <http://crbug.com/98542>.
@@ -150,21 +159,6 @@ class PluginInfoMessageFilter : public content::BrowserMessageFilter,
                            chrome::mojom::PluginInfoPtr output,
                            GetPluginInfoCallback callback,
                            std::unique_ptr<PluginMetadata> plugin_metadata);
-
-#if BUILDFLAG(ENABLE_LIBRARY_CDMS)
-  // Returns whether any internal plugin supporting |mime_type| is registered
-  // and enabled. Does not determine whether the plugin can actually be
-  // instantiated (e.g. whether it has all its dependencies).
-  // When the returned *|is_available| is true, |additional_param_names| and
-  // |additional_param_values| contain the name-value pairs, if any, specified
-  // for the *first* non-disabled plugin found that is registered for
-  // |mime_type|.
-  void OnIsInternalPluginAvailableForMimeType(
-      const std::string& mime_type,
-      bool* is_available,
-      std::vector<base::string16>* additional_param_names,
-      std::vector<base::string16>* additional_param_values);
-#endif
 
   // Reports usage metrics to RAPPOR and UKM. This must be a class function,
   // because UkmService requires a friend declaration by design to call.
@@ -187,6 +181,10 @@ class PluginInfoMessageFilter : public content::BrowserMessageFilter,
   mutable mojo::AssociatedBinding<chrome::mojom::PluginInfoHost> binding_;
 
   DISALLOW_COPY_AND_ASSIGN(PluginInfoMessageFilter);
+};
+
+struct PluginInfoMessageFilterTraits {
+  static void Destruct(const PluginInfoMessageFilter* filter);
 };
 
 #endif  // CHROME_BROWSER_PLUGINS_PLUGIN_INFO_MESSAGE_FILTER_H_

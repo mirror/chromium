@@ -43,7 +43,6 @@ void ChromeContentBrowserClientPluginsPart::ExposeInterfacesToRenderer(
   Profile* profile = Profile::FromBrowserContext(host->GetBrowserContext());
   auto plugin_info_filter =
       base::MakeRefCounted<PluginInfoMessageFilter>(host->GetID(), profile);
-  host->AddFilter(plugin_info_filter.get());
   host->GetChannel()->AddAssociatedInterfaceForIOThread(
       base::Bind(&PluginInfoMessageFilter::OnPluginInfoHostRequest,
                  std::move(plugin_info_filter)));

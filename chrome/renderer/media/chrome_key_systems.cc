@@ -14,7 +14,7 @@
 #include "base/strings/string_split.h"
 #include "base/strings/utf_string_conversions.h"
 #include "build/build_config.h"
-#include "chrome/common/render_messages.h"
+#include "chrome/renderer/chrome_content_renderer_client.h"
 #include "chrome/renderer/chrome_render_thread_observer.h"
 #include "components/cdm/renderer/external_clear_key_key_system_properties.h"
 #include "components/cdm/renderer/widevine_key_system_properties.h"
@@ -51,15 +51,19 @@ static bool IsPepperCdmAvailable(
     const std::string& pepper_type,
     std::vector<base::string16>* additional_param_names,
     std::vector<base::string16>* additional_param_values) {
-  bool is_available = false;
-  content::RenderThread::Get()->Send(
-      new ChromeViewHostMsg_IsInternalPluginAvailableForMimeType(
-          pepper_type,
-          &is_available,
-          additional_param_names,
-          additional_param_values));
+  base::Optional<std::vector<base::string16>> opt_additional_param_names;
+  base::Optional<std::vector<base::string16>> opt_additional_param_values;
+  ChromeContentRendererClient::GetPluginInfoHost()
+      ->IsInternalPluginAvailableForMimeType(pepper_type,
+                                             &opt_additional_param_names,
+                                             &opt_additional_param_values);
 
-  return is_available;
+  if (opt_additional_param_names || opt_additional_param_values) {
+    *additional_param_names = *opt_additional_param_names;
+    *additional_param_values = *opt_additional_param_values;
+    return true;
+  }
+  return false;
 }
 
 // External Clear Key (used for testing).

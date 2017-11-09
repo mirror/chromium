@@ -33,7 +33,6 @@
 #include "chrome/common/features.h"
 #include "chrome/common/plugin.mojom.h"
 #include "chrome/common/pref_names.h"
-#include "chrome/common/render_messages.h"
 #include "components/component_updater/component_updater_service.h"
 #include "components/content_settings/core/browser/content_settings_utils.h"
 #include "components/content_settings/core/browser/host_content_settings_map.h"
@@ -190,8 +189,7 @@ void PluginInfoMessageFilter::Context::ShutdownOnUIThread() {
 
 PluginInfoMessageFilter::PluginInfoMessageFilter(int render_process_id,
                                                  Profile* profile)
-    : BrowserMessageFilter(ChromeMsgStart),
-      context_(render_process_id, profile),
+    : context_(render_process_id, profile),
       main_thread_task_runner_(base::ThreadTaskRunnerHandle::Get()),
       ukm_source_id_(ukm::UkmRecorder::GetNewSourceID()),
       binding_(this) {
@@ -207,25 +205,12 @@ void PluginInfoMessageFilter::ShutdownOnUIThread() {
   shutdown_notifier_.reset();
 }
 
-bool PluginInfoMessageFilter::OnMessageReceived(const IPC::Message& message) {
-#if BUILDFLAG(ENABLE_LIBRARY_CDMS)
-  IPC_BEGIN_MESSAGE_MAP(PluginInfoMessageFilter, message)
-    IPC_MESSAGE_HANDLER(
-        ChromeViewHostMsg_IsInternalPluginAvailableForMimeType,
-        OnIsInternalPluginAvailableForMimeType)
-    IPC_MESSAGE_UNHANDLED(return false)
-  IPC_END_MESSAGE_MAP()
-  return true;
-#else
-  return false;
-#endif
-}
-
-void PluginInfoMessageFilter::OnDestruct() const {
+void PluginInfoMessageFilterTraits::Destruct(
+    const PluginInfoMessageFilter* filter) {
   content::BrowserThread::PostTask(
       content::BrowserThread::IO, FROM_HERE,
       base::BindOnce(&PluginInfoMessageFilter::DestructOnBrowserThread,
-                     base::Unretained(this)));
+                     base::Unretained(filter)));
 }
 
 void PluginInfoMessageFilter::DestructOnBrowserThread() const {
@@ -302,13 +287,10 @@ void PluginInfoMessageFilter::PluginsLoaded(
   }
 }
 
-#if BUILDFLAG(ENABLE_LIBRARY_CDMS)
-
-void PluginInfoMessageFilter::OnIsInternalPluginAvailableForMimeType(
+void PluginInfoMessageFilter::IsInternalPluginAvailableForMimeType(
     const std::string& mime_type,
-    bool* is_available,
-    std::vector<base::string16>* additional_param_names,
-    std::vector<base::string16>* additional_param_values) {
+    const IsInternalPluginAvailableForMimeTypeCallback& callback) {
+#if BUILDFLAG(ENABLE_LIBRARY_CDMS)
   std::vector<WebPluginInfo> plugins;
   PluginService::GetInstance()->GetInternalPlugins(&plugins);
 
@@ -323,22 +305,22 @@ void PluginInfoMessageFilter::OnIsInternalPluginAvailableForMimeType(
           is_plugin_disabled = true;
           break;
         }
-
-        *is_available = true;
-        *additional_param_names = mime_types[j].additional_param_names;
-        *additional_param_values = mime_types[j].additional_param_values;
+        std::move(callback).Run(mime_types[j].additional_param_names,
+                                mime_types[j].additional_param_values);
         SendPluginAvailabilityUMA(mime_type, PLUGIN_AVAILABLE);
         return;
       }
     }
   }
 
-  *is_available = false;
+  std::move(callback).Run(base::nullopt, base::nullopt);
   SendPluginAvailabilityUMA(
       mime_type, is_plugin_disabled ? PLUGIN_DISABLED : PLUGIN_NOT_REGISTERED);
+#else
+  NOTREACHED();
+#endif  // BUILDFLAG(ENABLE_LIBRARY_CDMS)
 }
 
-#endif  // BUILDFLAG(ENABLE_LIBRARY_CDMS)
 
 void PluginInfoMessageFilter::Context::DecidePluginStatus(
     const GURL& url,
