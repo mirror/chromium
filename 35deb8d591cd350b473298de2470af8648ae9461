@@ -22,6 +22,30 @@
       "revId": "35deb8d591cd350b473298de2470af8648ae9461",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4b4ee87e_bd87de0d",
+        "filename": "media/filters/vp9_parser.cc",
+        "patchSetId": 12
+      },
+      "lineNbr": 81,
+      "author": {
+        "id": 1113991
+      },
+      "writtenOn": "2017-11-09T02:34:20Z",
+      "side": 1,
+      "message": "Like talked about offline, Vaapi is the only client of\nthis parser that supports 10bits and it doesn\u0027t support\n12 bits yet. Filed a Github issue for it explaining it,\nhttps://github.com/01org/libva/issues/137 and I\u0027ll say\nit in the CL description and leave a comment here.",
+      "parentUuid": "f66a31a7_df850a85",
+      "range": {
+        "startLine": 81,
+        "startChar": 4,
+        "endLine": 81,
+        "endChar": 0
+      },
+      "revId": "35deb8d591cd350b473298de2470af8648ae9461",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
