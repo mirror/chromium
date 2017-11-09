@@ -209,6 +209,24 @@
       "revId": "8b004508ba14cd6bf5e58c4f169682dd0b78da1d",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b34eb10f_615f75c7",
+        "filename": "chrome/browser/ui/extensions/hosted_app_browsertest.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 397,
+      "author": {
+        "id": 1002092
+      },
+      "writtenOn": "2017-11-09T04:49:46Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "65f03f03_665df18d",
+      "revId": "8b004508ba14cd6bf5e58c4f169682dd0b78da1d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }

@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "867d1191_fbeb993b",
+        "filename": "chrome/browser/ui/extensions/hosted_app_browsertest.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 380,
+      "author": {
+        "id": 1002092
+      },
+      "writtenOn": "2017-11-09T04:49:46Z",
+      "side": 1,
+      "message": "rather than skipping when disabled, can you add a base::ScopedFeatureList to the test harness that always enables it?",
+      "revId": "70ebc171200d6fb8968d871be07682e09fd0c679",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "56a9a5f0_dd553cad",
+        "filename": "chrome/browser/ui/page_info/page_info.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 468,
+      "author": {
+        "id": 1002092
+      },
+      "writtenOn": "2017-11-09T04:49:46Z",
+      "side": 1,
+      "message": "this doesn\u0027t look right  - isn\u0027t this called whenever the bubble closes? This should only happen when it closes due to the site settings link being clicked. (maybe this is not the #endif you were looking for).",
+      "revId": "70ebc171200d6fb8968d871be07682e09fd0c679",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
