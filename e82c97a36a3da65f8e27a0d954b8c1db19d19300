@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "065426c0_2ec3ea7e",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 11
+      },
+      "lineNbr": 11,
+      "author": {
+        "id": 1120879
+      },
+      "writtenOn": "2017-11-09T00:42:31Z",
+      "side": 1,
+      "message": "This should be grouped with the Change-Id to help tools that parse CL descriptions.",
+      "range": {
+        "startLine": 11,
+        "startChar": 0,
+        "endLine": 11,
+        "endChar": 11
+      },
+      "revId": "e82c97a36a3da65f8e27a0d954b8c1db19d19300",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
