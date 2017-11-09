@@ -1,0 +1,55 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "e46e6bdc_d336ac79",
+        "filename": "content/renderer/service_worker/service_worker_dispatcher.h",
+        "patchSetId": 7
+      },
+      "lineNbr": 56,
+      "author": {
+        "id": 1001472
+      },
+      "writtenOn": "2017-11-09T07:49:33Z",
+      "side": 1,
+      "message": "At this point we should remove this and the map too?",
+      "revId": "46f485b7ccac87d98c0c656f89207e0f986d9bd7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c5578999_9960469f",
+        "filename": "content/renderer/service_worker/web_service_worker_provider_impl.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 66,
+      "author": {
+        "id": 1001472
+      },
+      "writtenOn": "2017-11-09T07:49:33Z",
+      "side": 1,
+      "message": "nit: you can now remove { }",
+      "revId": "46f485b7ccac87d98c0c656f89207e0f986d9bd7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1d4ff793_4613ee94",
+        "filename": "content/renderer/service_worker/web_service_worker_provider_impl.h",
+        "patchSetId": 7
+      },
+      "lineNbr": 106,
+      "author": {
+        "id": 1001472
+      },
+      "writtenOn": "2017-11-09T07:49:33Z",
+      "side": 1,
+      "message": "\u003d nullptr; (here or in ctor)\n\nWould be good to have a brief documentation about the lifetime relationship, as it\u0027s not too obvious...",
+      "revId": "46f485b7ccac87d98c0c656f89207e0f986d9bd7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
