@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "7a72dd23_cd57bb9e",
+        "filename": "content/public/android/java/src/org/chromium/content/browser/ContentViewCore.java",
+        "patchSetId": 10
+      },
+      "lineNbr": 616,
+      "author": {
+        "id": 1002725
+      },
+      "writtenOn": "2017-11-09T03:56:33Z",
+      "side": 1,
+      "message": "null check mNativeContentViewCore",
+      "revId": "ce75a64b39d82055ba9388869a76f71d0521039f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}

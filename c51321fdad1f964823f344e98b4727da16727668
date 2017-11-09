@@ -101,6 +101,30 @@
     },
     {
       "key": {
+        "uuid": "e4a331cc_5a644659",
+        "filename": "content/browser/android/content_view_core.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 628,
+      "author": {
+        "id": 1002725
+      },
+      "writtenOn": "2017-11-09T03:56:33Z",
+      "side": 1,
+      "message": "\u003e Did include DoBrowser... here to get the height (or zero if the flag is false) to avoid having to add another test-only method (DoBrowserControlsShrinkBlinkSizeForTesting). To clarify the intention, added a comment in the header, renamed the method to Get\u0027Visible\u0027TopControlHeight.... see if they address your concern.\n\nThat name is more confusing, since visibility is a special concept in chrome. How about GetTopControlsShrinkBlinkHeightPixForTesting, what a mouthful, but it\u0027s a test-only method...",
+      "parentUuid": "b66ab178_f9ef7de8",
+      "range": {
+        "startLine": 628,
+        "startChar": 18,
+        "endLine": 628,
+        "endChar": 59
+      },
+      "revId": "c51321fdad1f964823f344e98b4727da16727668",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "2b0fc028_6ce62538",
         "filename": "content/browser/renderer_host/render_widget_host_delegate.h",
         "patchSetId": 9
