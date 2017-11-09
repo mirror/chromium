@@ -327,6 +327,7 @@ void BookmarkModel::Copy(const BookmarkNode* node,
 const gfx::Image& BookmarkModel::GetFavicon(const BookmarkNode* node) {
   DCHECK(node);
   if (node->favicon_state() == BookmarkNode::INVALID_FAVICON) {
+    LOG(INFO) << "Loading icon for node " << node << " url " << node->url();
     BookmarkNode* mutable_node = AsMutable(node);
     LoadFavicon(mutable_node, client_->PreferTouchIcon()
                                   ? favicon_base::IconType::kTouchIcon
@@ -376,6 +377,8 @@ void BookmarkModel::SetURL(const BookmarkNode* node, const GURL& url) {
 
   if (node->url() == url)
     return;
+
+  LOG(INFO) << "SetURL() " << node << " from " << node->url() << " to " << url;
 
   BookmarkNode* mutable_node = AsMutable(node);
   mutable_node->InvalidateFavicon();
@@ -491,6 +494,7 @@ void BookmarkModel::OnFaviconsChanged(const std::set<GURL>& page_urls,
   }
 
   for (const BookmarkNode* node : to_update) {
+    LOG(INFO) << "******* OnFaviconChanged() requires updating " << node;
     // Rerequest the favicon.
     BookmarkNode* mutable_node = AsMutable(node);
     mutable_node->InvalidateFavicon();
@@ -1021,6 +1025,7 @@ void BookmarkModel::OnFaviconDataAvailable(
   node->set_favicon_load_task_id(base::CancelableTaskTracker::kBadTaskId);
   node->set_favicon_state(BookmarkNode::LOADED_FAVICON);
   if (!image_result.image.IsEmpty()) {
+    LOG(INFO) << "Non-empty image";
     node->set_favicon_type(icon_type);
     node->set_favicon(image_result.image);
     node->set_icon_url(image_result.icon_url);
@@ -1031,6 +1036,7 @@ void BookmarkModel::OnFaviconDataAvailable(
     LoadFavicon(node, favicon_base::IconType::kFavicon);
   } else {
     // No favicon available, but we still notify observers.
+    LOG(INFO) << "EMPTY image";
     FaviconLoaded(node);
   }
 }
@@ -1057,6 +1063,7 @@ void BookmarkModel::LoadFavicon(BookmarkNode* node,
 }
 
 void BookmarkModel::FaviconLoaded(const BookmarkNode* node) {
+  LOG(INFO) << "Favicon loaded for " << node << " id " << node->id() << " url " << node->url();
   for (BookmarkModelObserver& observer : observers_)
     observer.BookmarkNodeFaviconChanged(this, node);
 }
