@@ -28,8 +28,8 @@ class InterfaceFactoryImpl : public mojom::InterfaceFactory {
   InterfaceFactoryImpl(
       service_manager::mojom::InterfaceProviderPtr interfaces,
       MediaLog* media_log,
-      std::unique_ptr<service_manager::ServiceContextRef> connection_ref,
-      MojoMediaClient* mojo_media_client);
+      MojoMediaClient* mojo_media_client,
+      service_manager::ServiceContextRefFactory* context_ref_factory);
   ~InterfaceFactoryImpl() final;
 
   // mojom::InterfaceFactory implementation.
@@ -71,8 +71,9 @@ class InterfaceFactoryImpl : public mojom::InterfaceFactory {
   mojo::StrongBindingSet<mojom::ContentDecryptionModule> cdm_bindings_;
 #endif  // BUILDFLAG(ENABLE_MOJO_CDM)
 
-  std::unique_ptr<DelayedReleaseServiceContextRef> connection_ref_;
   MojoMediaClient* mojo_media_client_;
+  service_manager::ServiceContextRefFactory* context_ref_factory_;
+  std::unique_ptr<DelayedReleaseServiceContextRef> context_ref_;
 
   DISALLOW_COPY_AND_ASSIGN(InterfaceFactoryImpl);
 };

@@ -9,7 +9,7 @@
 #include "base/callback_helpers.h"
 #include "base/location.h"
 #include "base/logging.h"
-#include "base/memory/ref_counted.h"
+#include "base/memory/scoped_refptr.h"
 #include "base/single_thread_task_runner.h"
 #include "base/unguessable_token.h"
 #include "media/base/bind_to_current_loop.h"
@@ -21,8 +21,31 @@
 #include "media/mojo/common/mojo_decoder_buffer_converter.h"
 #include "media/mojo/interfaces/media_types.mojom.h"
 #include "media/video/gpu_video_accelerator_factories.h"
+#include "mojo/public/cpp/bindings/interface_request.h"
 
 namespace media {
+
+MojoVideoFrameReleaser::MojoVideoFrameReleaser(
+    mojom::VideoFrameReleaserAssociatedPtrInfo video_frame_releaser_ptr_info) {
+  // Connection errors are not handled because we wouldn't do anything
+  // differently. ("If a tree falls in a forest...")
+  video_frame_releaser_.Bind(std::move(video_frame_releaser_ptr_info));
+}
+
+MojoVideoFrameReleaser::~MojoVideoFrameReleaser() {}
+
+VideoFrame::ReleaseMailboxCB MojoVideoFrameReleaser::CreateReleaseMailboxCB(
+    const base::UnguessableToken& release_token) {
+  return base::Bind(&MojoVideoFrameReleaser::OnVideoFrameReleased, this,
+                    release_token);
+}
+
+void MojoVideoFrameReleaser::OnVideoFrameReleased(
+    const base::UnguessableToken& release_token,
+    const gpu::SyncToken& release_sync_token) {
+  // Thread-safe because |video_frame_releaser_| is an associated binding.
+  video_frame_releaser_->ReleaseVideoFrame(release_token, release_sync_token);
+}
 
 MojoVideoDecoder::MojoVideoDecoder(
     scoped_refptr<base::SingleThreadTaskRunner> task_runner,
@@ -129,17 +152,11 @@ void MojoVideoDecoder::OnVideoFrameDecoded(
 
   if (release_token) {
     frame->SetReleaseMailboxCB(
-        BindToCurrentLoop(base::Bind(&MojoVideoDecoder::OnReleaseMailbox,
-                                     weak_this_, release_token.value())));
+        mojo_video_frame_releaser_->CreateReleaseMailboxCB(
+            release_token.value()));
   }
-  output_cb_.Run(frame);
-}
 
-void MojoVideoDecoder::OnReleaseMailbox(
-    const base::UnguessableToken& release_token,
-    const gpu::SyncToken& release_sync_token) {
-  DCHECK(task_runner_->BelongsToCurrentThread());
-  remote_decoder_->OnReleaseMailbox(release_token, release_sync_token);
+  output_cb_.Run(frame);
 }
 
 void MojoVideoDecoder::OnDecodeDone(uint64_t decode_id, DecodeStatus status) {
@@ -205,17 +222,29 @@ void MojoVideoDecoder::BindRemoteDecoder() {
   remote_decoder_.set_connection_error_handler(
       base::Bind(&MojoVideoDecoder::Stop, base::Unretained(this)));
 
+  // Create |client| interface (bound to |this|).
   mojom::VideoDecoderClientAssociatedPtrInfo client_ptr_info;
   client_binding_.Bind(mojo::MakeRequest(&client_ptr_info));
 
+  // Create |media_log| interface (bound to |media_log_service_|).
   mojom::MediaLogAssociatedPtrInfo media_log_ptr_info;
   media_log_binding_.Bind(mojo::MakeRequest(&media_log_ptr_info));
 
-  // TODO(sandersd): Better buffer sizing.
+  // Create |video_frame_releaser| interface request, and bind
+  // |mojo_video_frame_releaser_| to it.
+  mojom::VideoFrameReleaserAssociatedRequest video_frame_releaser_request;
+  mojom::VideoFrameReleaserAssociatedPtrInfo video_frame_releaser_ptr_info;
+  video_frame_releaser_request =
+      mojo::MakeRequest(&video_frame_releaser_ptr_info);
+  mojo_video_frame_releaser_ = base::MakeRefCounted<MojoVideoFrameReleaser>(
+      std::move(video_frame_releaser_ptr_info));
+
+  // Create |decoder_buffer_pipe|, and bind |mojo_decoder_buffer_writer_| to it.
   mojo::ScopedDataPipeConsumerHandle remote_consumer_handle;
   mojo_decoder_buffer_writer_ = MojoDecoderBufferWriter::Create(
       DemuxerStream::VIDEO, &remote_consumer_handle);
 
+  // Generate |command_buffer_id|.
   media::mojom::CommandBufferIdPtr command_buffer_id;
   if (gpu_factories_) {
     base::UnguessableToken channel_token = gpu_factories_->GetChannelToken();
@@ -228,6 +257,7 @@ void MojoVideoDecoder::BindRemoteDecoder() {
 
   remote_decoder_->Construct(
       std::move(client_ptr_info), std::move(media_log_ptr_info),
+      std::move(video_frame_releaser_request),
       std::move(remote_consumer_handle), std::move(command_buffer_id));
 }
 

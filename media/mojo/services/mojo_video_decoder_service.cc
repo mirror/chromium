@@ -23,23 +23,110 @@
 
 namespace media {
 
+namespace {
+
+class StaticSyncTokenClient : public VideoFrame::SyncTokenClient {
+ public:
+  explicit StaticSyncTokenClient(const gpu::SyncToken& sync_token)
+      : sync_token_(sync_token) {}
+
+  // VideoFrame::SyncTokenClient implementation
+  void GenerateSyncToken(gpu::SyncToken* sync_token) final {
+    *sync_token = sync_token_;
+  }
+
+  void WaitSyncToken(const gpu::SyncToken& sync_token) final {
+    // NOP; we don't care what the old sync token was.
+  }
+
+ private:
+  gpu::SyncToken sync_token_;
+};
+
+}  // namespace
+
+MojoVideoFrameReleaserService::MojoVideoFrameReleaserService(
+    mojom::VideoFrameReleaserAssociatedRequest video_frame_releaser_request,
+    std::unique_ptr<service_manager::ServiceContextRef> context_ref)
+    : context_ref_(std::move(context_ref)), binding_(this) {
+  DVLOG(3) << __func__;
+  binding_.Bind(std::move(video_frame_releaser_request));
+  binding_.set_connection_error_handler(
+      base::Bind(&MojoVideoFrameReleaserService::OnConnectionError,
+                 base::Unretained(this)));
+}
+
+MojoVideoFrameReleaserService::~MojoVideoFrameReleaserService() {
+  DVLOG(3) << __func__;
+}
+
+base::UnguessableToken MojoVideoFrameReleaserService::RegisterVideoFrame(
+    scoped_refptr<VideoFrame> frame) {
+  base::UnguessableToken token = base::UnguessableToken::Create();
+  DVLOG(2) << __func__ << " => " << token.ToString();
+  video_frames_[token] = std::move(frame);
+  return token;
+}
+
+void MojoVideoFrameReleaserService::Destroy() {
+  DVLOG(3) << __func__;
+  if (video_frames_.empty())
+    delete this;
+  destroying_ = true;
+}
+
+void MojoVideoFrameReleaserService::ReleaseVideoFrame(
+    const base::UnguessableToken& release_token,
+    const gpu::SyncToken& release_sync_token) {
+  DVLOG(2) << __func__ << "(" << release_token.ToString() << ")";
+  auto it = video_frames_.find(release_token);
+  if (it == video_frames_.end()) {
+    DLOG(ERROR) << "Release token " << release_token.ToString() << " not found";
+    return;
+  }
+  StaticSyncTokenClient client(release_sync_token);
+  it->second->UpdateReleaseSyncToken(&client);
+  video_frames_.erase(it);
+
+  if (destroying_ && video_frames_.empty())
+    delete this;
+}
+
+void MojoVideoFrameReleaserService::OnConnectionError() {
+  DVLOG(3) << __func__;
+  if (destroying_)
+    delete this;
+}
+
 MojoVideoDecoderService::MojoVideoDecoderService(
-    MojoMediaClient* mojo_media_client)
-    : mojo_media_client_(mojo_media_client), weak_factory_(this) {
+    MojoMediaClient* mojo_media_client,
+    service_manager::ServiceContextRefFactory* context_ref_factory)
+    : mojo_media_client_(mojo_media_client),
+      context_ref_factory_(context_ref_factory),
+      weak_factory_(this) {
+  DVLOG(3) << __func__;
+  DCHECK(mojo_media_client_);
+  DCHECK(context_ref_factory_);
   weak_this_ = weak_factory_.GetWeakPtr();
 }
 
-MojoVideoDecoderService::~MojoVideoDecoderService() {}
+MojoVideoDecoderService::~MojoVideoDecoderService() {
+  DVLOG(3) << __func__;
+  if (mojo_video_frame_releaser_service_)
+    mojo_video_frame_releaser_service_->Destroy();
+}
 
 void MojoVideoDecoderService::Construct(
     mojom::VideoDecoderClientAssociatedPtrInfo client,
     mojom::MediaLogAssociatedPtrInfo media_log,
+    mojom::VideoFrameReleaserAssociatedRequest video_frame_releaser,
     mojo::ScopedDataPipeConsumerHandle decoder_buffer_pipe,
     mojom::CommandBufferIdPtr command_buffer_id) {
   DVLOG(1) << __func__;
 
   if (decoder_) {
     // TODO(sandersd): Close the channel.
+    DLOG(ERROR) << "|decoder_| already exists";
     return;
   }
 
@@ -49,14 +136,15 @@ void MojoVideoDecoderService::Construct(
   media_log_ptr.Bind(std::move(media_log));
   media_log_ = base::MakeUnique<MojoMediaLog>(std::move(media_log_ptr));
 
+  mojo_video_frame_releaser_service_ = new MojoVideoFrameReleaserService(
+      std::move(video_frame_releaser), context_ref_factory_->CreateRef());
+
   mojo_decoder_buffer_reader_.reset(
       new MojoDecoderBufferReader(std::move(decoder_buffer_pipe)));
 
   decoder_ = mojo_media_client_->CreateVideoDecoder(
       base::ThreadTaskRunnerHandle::Get(), media_log_.get(),
       std::move(command_buffer_id),
-      base::Bind(&MojoVideoDecoderService::OnDecoderOutputWithReleaseCB,
-                 weak_this_),
       base::Bind(&MojoVideoDecoderService::OnDecoderRequestedOverlayInfo,
                  weak_this_));
 }
@@ -75,13 +163,13 @@ void MojoVideoDecoderService::Initialize(const VideoDecoderConfig& config,
       config, low_delay, nullptr,
       base::Bind(&MojoVideoDecoderService::OnDecoderInitialized, weak_this_,
                  base::Passed(&callback)),
-      base::Bind(&MojoVideoDecoderService::OnDecoderOutput, weak_this_,
-                 base::nullopt));
+      base::Bind(&MojoVideoDecoderService::OnDecoderOutput, weak_this_));
 }
 
 void MojoVideoDecoderService::Decode(mojom::DecoderBufferPtr buffer,
                                      DecodeCallback callback) {
   DVLOG(2) << __func__ << " pts=" << buffer->timestamp.InMilliseconds();
+
   if (!decoder_) {
     std::move(callback).Run(DecodeStatus::DECODE_ERROR);
     return;
@@ -115,6 +203,8 @@ void MojoVideoDecoderService::OnDecoderInitialized(InitializeCallback callback,
 void MojoVideoDecoderService::OnDecoderRead(
     DecodeCallback callback,
     scoped_refptr<DecoderBuffer> buffer) {
+  DVLOG(3) << __func__;
+
   if (!buffer) {
     // TODO(sandersd): Close the channel.
     std::move(callback).Run(DecodeStatus::DECODE_ERROR);
@@ -137,44 +227,21 @@ void MojoVideoDecoderService::OnDecoderReset(ResetCallback callback) {
   std::move(callback).Run();
 }
 
-void MojoVideoDecoderService::OnDecoderOutputWithReleaseCB(
-    MojoMediaClient::ReleaseMailboxCB release_cb,
+void MojoVideoDecoderService::OnDecoderOutput(
     const scoped_refptr<VideoFrame>& frame) {
-  DVLOG(2) << __func__ << " pts=" << frame->timestamp().InMilliseconds();
+  DVLOG(2) << __func__;
   DCHECK(client_);
+  DCHECK(mojo_video_frame_releaser_service_);
   DCHECK(decoder_);
 
   base::Optional<base::UnguessableToken> release_token;
-  if (release_cb) {
-    release_token = base::UnguessableToken::Create();
-    release_mailbox_cbs_[*release_token] = std::move(release_cb);
+  if (frame->HasReleaseMailboxCB()) {
+    release_token =
+        mojo_video_frame_releaser_service_->RegisterVideoFrame(frame);
   }
-  OnDecoderOutput(std::move(release_token), frame);
-}
 
-void MojoVideoDecoderService::OnDecoderOutput(
-    base::Optional<base::UnguessableToken> release_token,
-    const scoped_refptr<VideoFrame>& frame) {
-  DCHECK(client_);
-  DCHECK(decoder_);
   client_->OnVideoFrameDecoded(frame, decoder_->CanReadWithoutStalling(),
                                std::move(release_token));
-}
-
-void MojoVideoDecoderService::OnReleaseMailbox(
-    const base::UnguessableToken& release_token,
-    const gpu::SyncToken& release_sync_token) {
-  DVLOG(2) << __func__;
-
-  // TODO(sandersd): Is it a serious error for the client to call
-  // OnReleaseMailbox() with an invalid |release_token|?
-  auto it = release_mailbox_cbs_.find(release_token);
-  if (it == release_mailbox_cbs_.end())
-    return;
-
-  MojoMediaClient::ReleaseMailboxCB cb = std::move(it->second);
-  release_mailbox_cbs_.erase(it);
-  std::move(cb).Run(release_sync_token);
 }
 
 void MojoVideoDecoderService::OnOverlayInfoChanged(
