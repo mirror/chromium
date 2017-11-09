@@ -2,6 +2,86 @@
   "comments": [
     {
       "key": {
+        "uuid": "18d6a098_9ed97945",
+        "filename": "third_party/android_platform/development/scripts/symbol.py",
+        "patchSetId": 2
+      },
+      "lineNbr": 53,
+      "author": {
+        "id": 1126674
+      },
+      "writtenOn": "2017-11-09T01:28:16Z",
+      "side": 1,
+      "message": "Wow, and now I see they were just copied from below. Still, I think it\u0027s worth fixing.\n\nAlso, prefix with _ to denote that other files should not reference them.",
+      "revId": "02fe941c6f1f9a0a944dbadbc824696a03fad8b9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "17f31cb8_41edac35",
+        "filename": "third_party/android_platform/development/scripts/symbol.py",
+        "patchSetId": 2
+      },
+      "lineNbr": 53,
+      "author": {
+        "id": 1126674
+      },
+      "writtenOn": "2017-11-09T01:28:16Z",
+      "side": 1,
+      "message": "Unless it\u0027s optional, should use + instead of * (here and on other patterns)",
+      "range": {
+        "startLine": 53,
+        "startChar": 36,
+        "endLine": 53,
+        "endChar": 37
+      },
+      "revId": "02fe941c6f1f9a0a944dbadbc824696a03fad8b9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3f98a910_c81ca385",
+        "filename": "third_party/android_platform/development/scripts/symbol.py",
+        "patchSetId": 2
+      },
+      "lineNbr": 53,
+      "author": {
+        "id": 1126674
+      },
+      "writtenOn": "2017-11-09T01:28:16Z",
+      "side": 1,
+      "message": "You should use r\", rather than \", or else this backslash isn\u0027t doing anything (actually, I don\u0027t think it\u0027s required in either case)",
+      "range": {
+        "startLine": 53,
+        "startChar": 39,
+        "endLine": 53,
+        "endChar": 40
+      },
+      "revId": "02fe941c6f1f9a0a944dbadbc824696a03fad8b9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3f2cd2f5_3eb0990b",
+        "filename": "third_party/android_platform/development/scripts/symbol.py",
+        "patchSetId": 2
+      },
+      "lineNbr": 546,
+      "author": {
+        "id": 1126674
+      },
+      "writtenOn": "2017-11-09T01:28:16Z",
+      "side": 1,
+      "message": "Rest of file uses CamelCase rather than snake_case.\nAlso - don\u0027t prefix non-trivial functions with \"get\". In this case, \"Compute\" would be a better verb.",
+      "revId": "02fe941c6f1f9a0a944dbadbc824696a03fad8b9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "b537a70e_7f5870a5",
         "filename": "third_party/android_platform/development/scripts/symbol.py",
         "patchSetId": 2
@@ -13,6 +93,24 @@
       "writtenOn": "2017-11-09T00:49:53Z",
       "side": 1,
       "message": "The reason I have \"global\" here is that I don\u0027t want to pass this huge symbols around in multiprocess pool. I think when you call pool.map(func, args), python will create a copy of args and slows it down. Correct me if I am wrong though. Creating copy of big symbols object defeats the purpose of speeding it up. I tried to pass symbols to pool.map on line 614 and it takes more time to resolve symbols.",
+      "revId": "02fe941c6f1f9a0a944dbadbc824696a03fad8b9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "36cb9905_0e3c5985",
+        "filename": "third_party/android_platform/development/scripts/symbol.py",
+        "patchSetId": 2
+      },
+      "lineNbr": 605,
+      "author": {
+        "id": 1126674
+      },
+      "writtenOn": "2017-11-09T01:28:16Z",
+      "side": 1,
+      "message": "When using multiprocessing, you\u0027re correct that any non-trivial data should be passed in globals for performance. However, if you used threads rather than multiple processes, it would be fine to pass it.\n\nMight be worth seeing if:\nimport multiprocessing.pool\npool \u003d multiprocessing.pool.ThreadPool()\n... same as you have...\n\nhas the same speed-up. I think either is fine though.\n\n\nIf you stick with the global though, you should add a comment explaining why you pass it like this.",
+      "parentUuid": "b537a70e_7f5870a5",
       "revId": "02fe941c6f1f9a0a944dbadbc824696a03fad8b9",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
