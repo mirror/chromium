@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "5d94eb05_7cc7716c",
+        "filename": "chrome/browser/extensions/api/settings_private/prefs_util.cc",
+        "patchSetId": 11
+      },
+      "lineNbr": 522,
+      "author": {
+        "id": 1000191
+      },
+      "writtenOn": "2017-11-09T21:55:33Z",
+      "side": 1,
+      "message": "Avoid #ifdefs around brackets like this, it\u0027s hard on editors, and hard to read. You can do:\n\n#if defined(OS_CHROMEOS)\n    if (name \u003d\u003d prefs::kResolveTimezoneByGeolocationMethod) {\n      ...\n    } else\n#endif\n    {\n      pref_object-\u003evalue.reset(pref-\u003eGetValue()-\u003eDeepCopy());\n    }\n\nor \n\n#if defined(OS_CHROMEOS)\n    if (name \u003d\u003d prefs::kResolveTimezoneByGeolocationMethod) {\n      ...\n    }\n#endif\n    if (!pref_object-\u003evalue)\n       pref_object-\u003evalue.reset(pref-\u003eGetValue()-\u003eDeepCopy());",
+      "revId": "3d79abf6e42f58a40bddf0ce5cad689de09921b4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
