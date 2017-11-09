@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "568e4daf_30f1c2b9",
+        "filename": "components/cronet/ios/Cronet.h",
+        "patchSetId": 9
+      },
+      "lineNbr": 41,
+      "author": {
+        "id": 1002889
+      },
+      "writtenOn": "2017-11-09T19:42:50Z",
+      "side": 1,
+      "message": "nit: Is called -\u003e Invoked",
+      "range": {
+        "startLine": 41,
+        "startChar": 6,
+        "endLine": 41,
+        "endChar": 12
+      },
+      "revId": "523fb5ebd1565e92cd6aed45a7580a3a77eb1340",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "99e73d27_b11dc74b",
+        "filename": "components/cronet/ios/test/cronet_metrics_test.mm",
+        "patchSetId": 9
+      },
+      "lineNbr": 8,
+      "author": {
+        "id": 1002889
+      },
+      "writtenOn": "2017-11-09T19:42:50Z",
+      "side": 1,
+      "message": "not used?",
+      "range": {
+        "startLine": 8,
+        "startChar": 0,
+        "endLine": 8,
+        "endChar": 52
+      },
+      "revId": "523fb5ebd1565e92cd6aed45a7580a3a77eb1340",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
