@@ -46,6 +46,98 @@
       "revId": "ae08c9818cbf9688da1211de35040c21430f36e7",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "cb615aa5_d880fd01",
+        "filename": "ios/chrome/browser/ui/activity_services/canonical_url_retriever.mm",
+        "patchSetId": 8
+      },
+      "lineNbr": 104,
+      "author": {
+        "id": 1125535
+      },
+      "writtenOn": "2017-11-09T21:53:10Z",
+      "side": 1,
+      "message": "slightly-nitty: Since UrlFromValue() may log a histogram and just below this LogValidCanonicalUrlFoundResult() may be called again if not empty, is there a situation where histogram may be logged more than once or none at all? How can we be sure?\n\nBTW, I can see that your unit tests are likely to catch this if a bug is introduced, but it would be better if there\u0027s a easier way to tell when reading the code.",
+      "range": {
+        "startLine": 104,
+        "startChar": 8,
+        "endLine": 104,
+        "endChar": 49
+      },
+      "revId": "ae08c9818cbf9688da1211de35040c21430f36e7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8b6316eb_eafd2eae",
+        "filename": "ios/chrome/browser/ui/activity_services/canonical_url_retriever.mm",
+        "patchSetId": 8
+      },
+      "lineNbr": 107,
+      "author": {
+        "id": 1125535
+      },
+      "writtenOn": "2017-11-09T21:53:10Z",
+      "side": 1,
+      "message": "Since visible_url is a reference variable, can it become stale by the time this block is executed?",
+      "range": {
+        "startLine": 107,
+        "startChar": 57,
+        "endLine": 107,
+        "endChar": 68
+      },
+      "revId": "ae08c9818cbf9688da1211de35040c21430f36e7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f0ed937b_c65db5a5",
+        "filename": "ios/chrome/browser/ui/activity_services/canonical_url_retriever_private.h",
+        "patchSetId": 8
+      },
+      "lineNbr": 36,
+      "author": {
+        "id": 1125535
+      },
+      "writtenOn": "2017-11-09T21:53:10Z",
+      "side": 1,
+      "message": "Please add a reminder that \"This must be the last item in this enum.\"",
+      "range": {
+        "startLine": 36,
+        "startChar": 39,
+        "endLine": 36,
+        "endChar": 40
+      },
+      "revId": "ae08c9818cbf9688da1211de35040c21430f36e7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e9fa90dd_ddb75944",
+        "filename": "ios/chrome/browser/ui/activity_services/canonical_url_retriever_unittest.mm",
+        "patchSetId": 8
+      },
+      "lineNbr": 56,
+      "author": {
+        "id": 1125535
+      },
+      "writtenOn": "2017-11-09T21:53:10Z",
+      "side": 1,
+      "message": "nit: Is this \", and the appropriate...\" necessary at all? You added this comment in this test and the next test, but not the rest. It also seems like a given that this tests the correctness of implementation so metrics is part of that.",
+      "range": {
+        "startLine": 55,
+        "startChar": 42,
+        "endLine": 56,
+        "endChar": 12
+      },
+      "revId": "ae08c9818cbf9688da1211de35040c21430f36e7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
