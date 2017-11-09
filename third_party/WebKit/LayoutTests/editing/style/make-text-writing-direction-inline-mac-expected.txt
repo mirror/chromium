@@ -2,7 +2,6 @@ Tests to ensure MakeTextWritingDirection* modifies the direction of text and emb
 
 On success, you will see a series of "PASS" messages, followed by "TEST COMPLETE".
 
-
 PASS Natural on first word of "hello world"
 PASS LeftToRight on first word of "hello world"
 PASS RightToLeft on first word of "hello world"

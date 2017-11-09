@@ -2,7 +2,6 @@ Test lazy IndexedDB index population with various key types.
 
 On success, you will see a series of "PASS" messages, followed by "TEST COMPLETE".
 
-
 dbname = "lazy-index-types.html"
 indexedDB.deleteDatabase(dbname)
 indexedDB.open(dbname, 1)

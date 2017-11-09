@@ -2,7 +2,6 @@ Verifies that pointer capture works for touch.
 
 On success, you will see a series of "PASS" messages, followed by "TEST COMPLETE".
 
-
  ======= Touch and release =======
     **** First touch on green box & jiggle ****
 green received pointerover 2

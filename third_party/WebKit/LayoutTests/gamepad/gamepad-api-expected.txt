@@ -2,7 +2,6 @@ Validates the exposed Gamepad API.
 
 On success, you will see a series of "PASS" messages, followed by "TEST COMPLETE".
 
-
 PASS navigator.getGamepads is defined.
 PASS GamepadEvent is defined.
 PASS gamepads.length is 4

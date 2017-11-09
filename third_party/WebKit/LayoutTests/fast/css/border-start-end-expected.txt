@@ -2,7 +2,6 @@ Tests border-start and border-end
 
 On success, you will see a series of "PASS" messages, followed by "TEST COMPLETE".
 
-
 PASS testWidth("ltr", "-webkit-border-start-width: 10px; -webkit-border-start-style: solid") is 110
 PASS testWidth("ltr", "-webkit-border-end-width: 20px; -webkit-border-end-style:  solid") is 120
 PASS testWidth("rtl", "-webkit-border-start-width: 10px; -webkit-border-start-style:  solid") is 110

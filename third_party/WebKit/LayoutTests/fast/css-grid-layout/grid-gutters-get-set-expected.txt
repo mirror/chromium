@@ -2,7 +2,6 @@ Test that setting and getting grid-column-gap and grid-row-gap works as expected
 
 On success, you will see a series of "PASS" messages, followed by "TEST COMPLETE".
 
-
 Test getting grid-column-gap and grid-row-gap set through CSS
 PASS window.getComputedStyle(defaultGrid, '').getPropertyValue('grid-row-gap') is "0px"
 PASS window.getComputedStyle(defaultGrid, '').getPropertyValue('grid-column-gap') is "0px"

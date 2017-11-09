@@ -2,7 +2,6 @@ Test getting/setting FontFace properties.
 
 On success, you will see a series of "PASS" messages, followed by "TEST COMPLETE".
 
-
 PASS ahemFace.family is "Ahem"
 PASS ahemFace.style is "italic"
 PASS ahemFace.weight is "300"

@@ -1,7 +1,18 @@
 a
-a	a	a
-a	a	a
-a	a	a
+
+a	
+a	
+a
+
+
+a	
+a	
+a
+
+
+a	
+a	
+a
 a
 a
 PASS successfullyParsed is true
@@ -16,8 +27,8 @@ PASS gFocusedDocument.activeElement.getAttribute("id") is "8"
 PASS gFocusedDocument.activeElement.getAttribute("id") is "9"
 PASS gFocusedDocument.activeElement.getAttribute("id") is "6"
 PASS gFocusedDocument.activeElement.getAttribute("id") is "right"
-PASS gFocusedDocument.activeElement.getAttribute("id") is "6"
-PASS gFocusedDocument.activeElement.getAttribute("id") is "3"
-PASS gFocusedDocument.activeElement.getAttribute("id") is "2"
-PASS gFocusedDocument.activeElement.getAttribute("id") is "1"
+FAIL gFocusedDocument.activeElement.getAttribute("id") should be 6. Was 3.
+FAIL gFocusedDocument.activeElement.getAttribute("id") should be 3. Was start.
+FAIL gFocusedDocument.activeElement.getAttribute("id") should be 2. Was start.
+FAIL gFocusedDocument.activeElement.getAttribute("id") should be 1. Was start.
 

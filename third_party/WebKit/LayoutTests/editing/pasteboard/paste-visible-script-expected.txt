@@ -1,5 +1,8 @@
 Hello
-function sayHello() { alert("Hello"); }
+function sayHello()
+{
+    alert("Hello");
+}
 World
 Hello
 World

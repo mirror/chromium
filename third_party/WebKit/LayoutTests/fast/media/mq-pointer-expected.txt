@@ -1,4 +1,5 @@
-Test the (pointer) media features. See Bug 136119 for details.
+Test the (pointer) media features.
+    See Bug 136119 for details.
 
 ------------- with 'coarse' pointer -------------
 Query "(pointer)": true

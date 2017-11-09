@@ -2,7 +2,6 @@ Test that deleteDatabase is not blocked when connections close in on versionchan
 
 On success, you will see a series of "PASS" messages, followed by "TEST COMPLETE".
 
-
 dbname = "deletedatabase-not-blocked.html"
 indexedDB.open(dbname)
 

@@ -10,7 +10,7 @@ X X
 PASS
 XX
 PASS
-X X
+X  X
 PASS
 X X
 PASS

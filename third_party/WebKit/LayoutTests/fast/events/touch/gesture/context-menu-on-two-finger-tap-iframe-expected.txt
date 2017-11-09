@@ -1,8 +1,6 @@
-
 This test checks that the context menu is sent to the iframe on a two finger tap gesture.
 
 On success, you will see a series of "PASS" messages, followed by "TEST COMPLETE".
-
 
 PASS successfullyParsed is true
 

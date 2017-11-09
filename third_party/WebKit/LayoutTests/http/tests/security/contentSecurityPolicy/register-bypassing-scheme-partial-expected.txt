@@ -26,6 +26,5 @@ CONSOLE MESSAGE: line 15: PASS (11/12)
 CONSOLE ERROR: line 1: Refused to load the stylesheet 'http://127.0.0.1:8000/security/resources/cssStyle.css' because it violates the following Content Security Policy directive: "default-src https:". Note that 'style-src' was not explicitly set, so 'default-src' is used as a fallback.
 
 CONSOLE MESSAGE: line 15: PASS (12/12)
-This test ensures that registering a scheme as bypassing CSP actually bypasses CSP. This test passes if only PASSes are generated.
-
-
+This test ensures that registering a scheme as bypassing CSP actually bypasses CSP.
+        This test passes if only PASSes are generated.

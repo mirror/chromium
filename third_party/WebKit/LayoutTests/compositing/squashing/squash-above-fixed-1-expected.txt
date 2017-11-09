@@ -1,6 +1,12 @@
-The gray div is a composited fixed-position element, and the cyan/lime elements should be squashed together on top. When scrolling, paragraphs may pop in-and-out of the squashing layer when they change overlapping status with respect to the composited layer underneath.
+The gray div is a composited fixed-position element, and the cyan/lime
+    elements should be squashed together on top. When scrolling, paragraphs may
+    pop in-and-out of the squashing layer when they change overlapping status
+    with respect to the composited layer underneath.
 
-This scenario tests (1) that content repaints correctly as layers pop in and out of squashing, and (2) that the positioning of the squashing layer remains correct (i.e. scrolls properly) when the squashing layer is on top of a fixed-position composited layer.
+This scenario tests (1) that content repaints correctly as layers pop in
+    and out of squashing, and (2) that the positioning of the squashing layer
+    remains correct (i.e. scrolls properly) when the squashing layer is on top
+    of a fixed-position composited layer.
 
 CASE 1, original layer tree:
 {
@@ -47,6 +53,7 @@ CASE 1, original layer tree:
     }
   ]
 }
+
 CASE 2, scrolling y to 80, new layers will be squashed, so things repaint:
 {
   "layers": [
@@ -200,6 +207,7 @@ CASE 2, scrolling y to 80, new layers will be squashed, so things repaint:
     }
   ]
 }
+
 CASE 3, scrolling y to 120, no repaints expected:
 {
   "layers": [
@@ -259,6 +267,7 @@ CASE 3, scrolling y to 120, no repaints expected:
     }
   ]
 }
+
 CASE 4, scrolling y to 170 new layers will be squashed, so things repaint:
 {
   "layers": [

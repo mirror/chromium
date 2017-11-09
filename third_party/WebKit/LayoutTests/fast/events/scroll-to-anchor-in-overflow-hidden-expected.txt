@@ -6,5 +6,7 @@ If you stay here after the click, the test has failed.
 
 
 
+
 Automated test : PASSED
-Bottom of the page Manual Test : PASSED
+Bottom of the page
+Manual Test : PASSED

@@ -20,10 +20,24 @@ PASS
 Parent with fixed height and percentage min
 PASS
 Parent with auto height and a max set. This test will not have the border all around, it will only be on the top portion.
-XXXXX XXXXX XXXXX XXXXX XXXXX XXXXX XXXXX XXXXX
+XXXXX
+            XXXXX
+            XXXXX
+            XXXXX
+            XXXXX
+            XXXXX
+            XXXXX
+            XXXXX
 PASS
 Parent with auto height and a min set
-XXXXX XXXXX XXXXX XXXXX XXXXX XXXXX XXXXX XXXXX
+XXXXX
+            XXXXX
+            XXXXX
+            XXXXX
+            XXXXX
+            XXXXX
+            XXXXX
+            XXXXX
 PASS
 The following two tests will have a 6 pixel red border.
 Parent with fixed height and padding and max set
@@ -31,8 +45,18 @@ PASS
 Parent with fixed height and padding and min set
 PASS
 Fixed height parent with scroll bar
-XXXXXXXXXX XXXXXXXXXX XXXXXXXXXX XXXXXXXXXX XXXXXXXXXX XXXXXXXXXX
+XXXXXXXXXX
+            XXXXXXXXXX
+            XXXXXXXXXX
+            XXXXXXXXXX
+            XXXXXXXXXX
+            XXXXXXXXXX
 PASS
 Parent with percent height and scroll bar
-XXXXXXXXXX XXXXXXXXXX XXXXXXXXXX XXXXXXXXXX XXXXXXXXXX XXXXXXXXXX
+XXXXXXXXXX
+                XXXXXXXXXX
+                XXXXXXXXXX
+                XXXXXXXXXX
+                XXXXXXXXXX
+                XXXXXXXXXX
 PASS

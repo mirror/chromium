@@ -1,4 +1,5 @@
-This page verifies that timers with equivalent fire times fire in the order they were registered. If the test passes, you'll see a series of PASS messages below.
+This page verifies that timers with equivalent fire times fire in the order they
+were registered. If the test passes, you'll see a series of PASS messages below.
 
 PASS: firedTimers[0] should be 0 and is.
 PASS: firedTimers[1] should be 1 and is.

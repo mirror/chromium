@@ -2,7 +2,6 @@ Test IndexedDB's cursor mutation
 
 On success, you will see a series of "PASS" messages, followed by "TEST COMPLETE".
 
-
 dbname = "cursor-mutation.html"
 indexedDB.deleteDatabase(dbname)
 indexedDB.open(dbname)

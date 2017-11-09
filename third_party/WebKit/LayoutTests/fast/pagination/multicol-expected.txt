@@ -1,6 +1,11 @@
 Test that a multicol container inside a paged container is fragmented correctly.
 
-Below there should be a blue square above a papayawhip square above some spacing above a horizontal scrollbar. There should be no red.
+Below there should be a blue square above a papayawhip square above some spacing above a horizontal scrollbar.
+    There should be no red.
+
+
+
+
 
 
 
@@ -9,4 +14,5 @@ Below there should be a blue square above a papayawhip square above some spacing
 X
 X
 X
+
 PASS

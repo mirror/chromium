@@ -16,5 +16,7 @@ CONSOLE MESSAGE: line 25: Dragging over plugin
 Plugin received event: MouseEnter
 Plugin received event: MouseMove
 Plugin received event: MouseLeave
-  
+
+
+
 Some text to drag

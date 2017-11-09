@@ -1,8 +1,6 @@
-
 Taps at a point that becomes a scrollbar (i.e. hit test with innerNode=null) during the tap and verifies we don't crash.
 
 On success, you will see a series of "PASS" messages, followed by "TEST COMPLETE".
-
 
 Test case: Tap on consistent scrollbar
 Sending GestureTap
