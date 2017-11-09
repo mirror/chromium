@@ -41,10 +41,7 @@ Polymer({
 
     showChangePassword: {
       type: Boolean,
-      value: function() {
-        return loadTimeData.valueExists('changePasswordEnabled') &&
-            loadTimeData.getBoolean('changePasswordEnabled');
-      },
+      value: false,
     },
 
     /**
@@ -123,11 +120,14 @@ Polymer({
       this.showChangePassword = false;
     });
 
-    settings.ChangePasswordBrowserProxyImpl.getInstance()
-        .initializeChangePasswordHandler();
-    this.addWebUIListener('change-password-on-show', () => {
+    this.addWebUIListener('show-change-password-card', () => {
       this.showChangePassword = true;
     });
+    this.addWebUIListener('hide-change-password-card', () => {
+      this.showChangePassword = false;
+    });
+    settings.ChangePasswordBrowserProxyImpl.getInstance()
+        .initializeChangePasswordHandler();
 
     if (settings.AndroidAppsBrowserProxyImpl) {
       this.addWebUIListener(

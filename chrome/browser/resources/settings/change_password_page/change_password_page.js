@@ -10,7 +10,7 @@
 Polymer({
   is: 'settings-change-password-page',
 
-  behaviors: [WebUIListenerBehavior],
+  behaviors: [],
 
   properties: {
     /**
@@ -28,9 +28,6 @@ Polymer({
   /** @override */
   attached: function() {
     this.browserProxy_ = settings.ChangePasswordBrowserProxyImpl.getInstance();
-    this.browserProxy_.onChangePasswordPageShown();
-    this.addWebUIListener(
-        'change-password-on-dismiss', this.onDismiss_.bind(this));
   },
 
   /** @private */
@@ -39,13 +36,4 @@ Polymer({
       this.browserProxy_.changePassword();
     });
   },
-
-  /**
-   * Listener of event "change-password-on-dismiss".
-   * This function hides the change password card.
-   * @private
-   */
-  onDismiss_: function() {
-    this.fire('change-password-dismissed');
-  }
 });
