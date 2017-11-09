@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "91c29e10_58df01f0",
+        "filename": "chrome/browser/chromeos/arc/intent_helper/arc_settings_service.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 607,
+      "author": {
+        "id": 1003168
+      },
+      "writtenOn": "2017-11-09T21:11:46Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "a2814b3a_c9aabb43",
+      "range": {
+        "startLine": 607,
+        "startChar": 2,
+        "endLine": 607,
+        "endChar": 38
+      },
+      "revId": "0ab64921fea4e32d3818fe47f69bda0179057f51",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "c679c6f6_c84e71d5",
         "filename": "chrome/browser/chromeos/preferences.cc",
         "patchSetId": 7
@@ -45,6 +69,30 @@
       "revId": "0ab64921fea4e32d3818fe47f69bda0179057f51",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "32c4e8c5_64ddb0fe",
+        "filename": "chrome/browser/chromeos/preferences.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 83,
+      "author": {
+        "id": 1003168
+      },
+      "writtenOn": "2017-11-09T21:11:46Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "c679c6f6_c84e71d5",
+      "range": {
+        "startLine": 82,
+        "startChar": 3,
+        "endLine": 83,
+        "endChar": 39
+      },
+      "revId": "0ab64921fea4e32d3818fe47f69bda0179057f51",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -71,6 +119,30 @@
     },
     {
       "key": {
+        "uuid": "bda111cd_7d630fbb",
+        "filename": "chrome/browser/chromeos/preferences.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 84,
+      "author": {
+        "id": 1003168
+      },
+      "writtenOn": "2017-11-09T21:11:46Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "cef4464e_bc40eb74",
+      "range": {
+        "startLine": 84,
+        "startChar": 0,
+        "endLine": 84,
+        "endChar": 25
+      },
+      "revId": "0ab64921fea4e32d3818fe47f69bda0179057f51",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "636b4bab_74547af1",
         "filename": "chrome/browser/chromeos/preferences.cc",
         "patchSetId": 7
@@ -94,6 +166,30 @@
     },
     {
       "key": {
+        "uuid": "5bb39f8c_ddbad399",
+        "filename": "chrome/browser/chromeos/preferences.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 494,
+      "author": {
+        "id": 1003168
+      },
+      "writtenOn": "2017-11-09T21:11:46Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "636b4bab_74547af1",
+      "range": {
+        "startLine": 493,
+        "startChar": 2,
+        "endLine": 494,
+        "endChar": 39
+      },
+      "revId": "0ab64921fea4e32d3818fe47f69bda0179057f51",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "744a7a6a_f08b0f59",
         "filename": "chrome/browser/chromeos/preferences.cc",
         "patchSetId": 7
@@ -105,6 +201,30 @@
       "writtenOn": "2017-11-07T00:45:46Z",
       "side": 1,
       "message": "If the prefs haven\u0027t been synced yet, could this migration cause a bug?\n\n1. Device A: Set boolean geolocation pref to enabled, sign out\n2. Device B: Update to this CL, migrate geolocation pref to IP_ONLY, change geolocation pref to DISABLED\n3. Device A: Update to this CL, sign in, migrate geolocation pref to IP_ONLY, sync\n\nDoes that result in the geolocation pref being changed back to IP_ONLY after sync, since Device A\u0027s change is more recent than Device B\u0027s? That would be a problem because the most recent user-requested change was to DISABLED.",
+      "range": {
+        "startLine": 516,
+        "startChar": 48,
+        "endLine": 516,
+        "endChar": 73
+      },
+      "revId": "0ab64921fea4e32d3818fe47f69bda0179057f51",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3f34e121_88f6711a",
+        "filename": "chrome/browser/chromeos/preferences.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 516,
+      "author": {
+        "id": 1003168
+      },
+      "writtenOn": "2017-11-09T21:11:46Z",
+      "side": 1,
+      "message": "Refactored per-offline discussion.",
+      "parentUuid": "744a7a6a_f08b0f59",
       "range": {
         "startLine": 516,
         "startChar": 48,
@@ -140,6 +260,30 @@
     },
     {
       "key": {
+        "uuid": "4b5d5975_a21e2ef6",
+        "filename": "chrome/browser/resources/settings/date_time_page/date_time_page.js",
+        "patchSetId": 7
+      },
+      "lineNbr": 24,
+      "author": {
+        "id": 1003168
+      },
+      "writtenOn": "2017-11-09T21:11:46Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "48a46fd5_cf7524e8",
+      "range": {
+        "startLine": 24,
+        "startChar": 76,
+        "endLine": 24,
+        "endChar": 77
+      },
+      "revId": "0ab64921fea4e32d3818fe47f69bda0179057f51",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "80afdb81_d3df09d8",
         "filename": "chrome/common/pref_names.h",
         "patchSetId": 7
@@ -160,6 +304,30 @@
       "revId": "0ab64921fea4e32d3818fe47f69bda0179057f51",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2b8548e6_b7d0210c",
+        "filename": "chrome/common/pref_names.h",
+        "patchSetId": 7
+      },
+      "lineNbr": 195,
+      "author": {
+        "id": 1003168
+      },
+      "writtenOn": "2017-11-09T21:11:46Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "80afdb81_d3df09d8",
+      "range": {
+        "startLine": 195,
+        "startChar": 18,
+        "endLine": 195,
+        "endChar": 47
+      },
+      "revId": "0ab64921fea4e32d3818fe47f69bda0179057f51",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
