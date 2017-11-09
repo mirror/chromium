@@ -1,0 +1,84 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "06079b24_9d19d0db",
+        "filename": "chrome/browser/chrome_content_browser_manifest_overlay.json",
+        "patchSetId": 2
+      },
+      "lineNbr": 53,
+      "author": {
+        "id": 1001216
+      },
+      "writtenOn": "2017-11-09T23:04:16Z",
+      "side": 1,
+      "message": "Unintentional?",
+      "revId": "012fa31f6c77145b8625cc46ee3beea781706e7e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7611681c_2a4e9d9d",
+        "filename": "chrome/browser/resource_coordinator/tab_manager.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 782,
+      "author": {
+        "id": 1001216
+      },
+      "writtenOn": "2017-11-09T23:04:16Z",
+      "side": 1,
+      "message": "This is deprecated.  Can you use GetLastCommittedURL() instead?\n\nAlso, how often is this updated?  I\u0027m wondering if this URL will get stale after a navigation commits, and whether that matters?",
+      "range": {
+        "startLine": 782,
+        "startChar": 32,
+        "endLine": 782,
+        "endChar": 38
+      },
+      "revId": "012fa31f6c77145b8625cc46ee3beea781706e7e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "cdcc737b_e2da6063",
+        "filename": "chrome/browser/resource_coordinator/tab_manager.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 125,
+      "author": {
+        "id": 1001216
+      },
+      "writtenOn": "2017-11-09T23:04:16Z",
+      "side": 1,
+      "message": "Please elaborate on what the tab ID is.",
+      "range": {
+        "startLine": 125,
+        "startChar": 29,
+        "endLine": 125,
+        "endChar": 43
+      },
+      "revId": "012fa31f6c77145b8625cc46ee3beea781706e7e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ede782ea_5f2ded6c",
+        "filename": "chrome/browser/resource_coordinator/tab_manager.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 209,
+      "author": {
+        "id": 1001216
+      },
+      "writtenOn": "2017-11-09T23:04:16Z",
+      "side": 1,
+      "message": "Rephrase?",
+      "revId": "012fa31f6c77145b8625cc46ee3beea781706e7e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
