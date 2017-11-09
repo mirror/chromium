@@ -55,6 +55,24 @@
     },
     {
       "key": {
+        "uuid": "1d057d66_6123b749",
+        "filename": "build/android/pylib/utils/maven_downloader.py",
+        "patchSetId": 8
+      },
+      "lineNbr": 59,
+      "author": {
+        "id": 1123275
+      },
+      "writtenOn": "2017-11-09T15:43:51Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "3cb2b8de_39256b2f",
+      "revId": "7022f71da8d13d96521ce505c9600db45d1466f5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "35fb29ed_99b23f5f",
         "filename": "build/android/pylib/utils/maven_downloader.py",
         "patchSetId": 8
