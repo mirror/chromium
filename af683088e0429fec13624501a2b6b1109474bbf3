@@ -22,6 +22,30 @@
       "revId": "af683088e0429fec13624501a2b6b1109474bbf3",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d4687db7_e9691e83",
+        "filename": "net/dns/dns_config_service_posix.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 403,
+      "author": {
+        "id": 1120845
+      },
+      "writtenOn": "2017-11-09T17:04:07Z",
+      "side": 1,
+      "message": "Sorry, I didn\u0027t see that you also changed this file in this patch. \nThe change LGTM, but would prefer a way to do less surgery on the existing code.\nI have a slight preference of doing an extra read. I think the fs is usally smart to cache those. If we are to remove the code in a few weeks, that would be less disruptive.\nNot familiar with the code, I am fine either way.",
+      "parentUuid": "a2d0dd62_386e29f0",
+      "range": {
+        "startLine": 403,
+        "startChar": 18,
+        "endLine": 403,
+        "endChar": 32
+      },
+      "revId": "af683088e0429fec13624501a2b6b1109474bbf3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
