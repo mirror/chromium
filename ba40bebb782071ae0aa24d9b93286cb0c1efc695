@@ -1,0 +1,257 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "f4f86ae0_c3822f23",
+        "filename": "chrome/browser/ui/views/profiles/badged_profile_photo.cc",
+        "patchSetId": 18
+      },
+      "lineNbr": 7,
+      "author": {
+        "id": 1002737
+      },
+      "writtenOn": "2017-11-09T17:52:04Z",
+      "side": 1,
+      "message": "seems like it should be in the header",
+      "range": {
+        "startLine": 7,
+        "startChar": 15,
+        "endLine": 7,
+        "endChar": 21
+      },
+      "revId": "ba40bebb782071ae0aa24d9b93286cb0c1efc695",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b45ebaa9_5a49c900",
+        "filename": "chrome/browser/ui/views/profiles/badged_profile_photo.cc",
+        "patchSetId": 18
+      },
+      "lineNbr": 9,
+      "author": {
+        "id": 1002737
+      },
+      "writtenOn": "2017-11-09T17:52:04Z",
+      "side": 1,
+      "message": "Do you use Profile? May be there are more unused headers",
+      "range": {
+        "startLine": 9,
+        "startChar": 34,
+        "endLine": 9,
+        "endChar": 41
+      },
+      "revId": "ba40bebb782071ae0aa24d9b93286cb0c1efc695",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5cdca2cd_6cf44343",
+        "filename": "chrome/browser/ui/views/profiles/badged_profile_photo.cc",
+        "patchSetId": 18
+      },
+      "lineNbr": 37,
+      "author": {
+        "id": 1002737
+      },
+      "writtenOn": "2017-11-09T17:52:04Z",
+      "side": 1,
+      "message": "Can you name them a bit less generic?",
+      "range": {
+        "startLine": 37,
+        "startChar": 14,
+        "endLine": 37,
+        "endChar": 21
+      },
+      "revId": "ba40bebb782071ae0aa24d9b93286cb0c1efc695",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f58ddf70_ecc04057",
+        "filename": "chrome/browser/ui/views/profiles/badged_profile_photo.cc",
+        "patchSetId": 18
+      },
+      "lineNbr": 41,
+      "author": {
+        "id": 1002737
+      },
+      "writtenOn": "2017-11-09T17:52:04Z",
+      "side": 1,
+      "message": "I didn\u0027t get the point of this class. You have two image views one on top of another. Why do you need to cut anything?",
+      "range": {
+        "startLine": 41,
+        "startChar": 6,
+        "endLine": 41,
+        "endChar": 21
+      },
+      "revId": "ba40bebb782071ae0aa24d9b93286cb0c1efc695",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "756bf647_7ee3c0b4",
+        "filename": "chrome/browser/ui/views/profiles/badged_profile_photo.cc",
+        "patchSetId": 18
+      },
+      "lineNbr": 68,
+      "author": {
+        "id": 1002737
+      },
+      "writtenOn": "2017-11-09T17:52:04Z",
+      "side": 1,
+      "message": "Do you need it given SetEnabled(false) below? Or maybe you don\u0027t need SetEnabled?",
+      "range": {
+        "startLine": 68,
+        "startChar": 2,
+        "endLine": 68,
+        "endChar": 39
+      },
+      "revId": "ba40bebb782071ae0aa24d9b93286cb0c1efc695",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e4d35b77_abdfd801",
+        "filename": "chrome/browser/ui/views/profiles/badged_profile_photo.h",
+        "patchSetId": 18
+      },
+      "lineNbr": 8,
+      "author": {
+        "id": 1002737
+      },
+      "writtenOn": "2017-11-09T17:52:04Z",
+      "side": 1,
+      "message": "unused?",
+      "range": {
+        "startLine": 8,
+        "startChar": 10,
+        "endLine": 8,
+        "endChar": 18
+      },
+      "revId": "ba40bebb782071ae0aa24d9b93286cb0c1efc695",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d8d3a3ba_eaf8d611",
+        "filename": "chrome/browser/ui/views/profiles/badged_profile_photo.h",
+        "patchSetId": 18
+      },
+      "lineNbr": 11,
+      "author": {
+        "id": 1002737
+      },
+      "writtenOn": "2017-11-09T17:52:04Z",
+      "side": 1,
+      "message": "unused?",
+      "range": {
+        "startLine": 11,
+        "startChar": 28,
+        "endLine": 11,
+        "endChar": 38
+      },
+      "revId": "ba40bebb782071ae0aa24d9b93286cb0c1efc695",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1bad72e9_c29eefe6",
+        "filename": "chrome/browser/ui/views/profiles/badged_profile_photo.h",
+        "patchSetId": 18
+      },
+      "lineNbr": 34,
+      "author": {
+        "id": 1002737
+      },
+      "writtenOn": "2017-11-09T17:52:04Z",
+      "side": 1,
+      "message": "Constants before the constructor.",
+      "range": {
+        "startLine": 34,
+        "startChar": 23,
+        "endLine": 34,
+        "endChar": 36
+      },
+      "revId": "ba40bebb782071ae0aa24d9b93286cb0c1efc695",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "96fa57f6_44777466",
+        "filename": "chrome/browser/ui/views/profiles/profile_chooser_view.cc",
+        "patchSetId": 18
+      },
+      "lineNbr": 952,
+      "author": {
+        "id": 1002737
+      },
+      "writtenOn": "2017-11-09T17:52:04Z",
+      "side": 1,
+      "message": "padding of size 0? Why?",
+      "range": {
+        "startLine": 952,
+        "startChar": 15,
+        "endLine": 952,
+        "endChar": 28
+      },
+      "revId": "ba40bebb782071ae0aa24d9b93286cb0c1efc695",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "93f303fb_7dd0d811",
+        "filename": "chrome/browser/ui/views/profiles/profile_chooser_view.cc",
+        "patchSetId": 18
+      },
+      "lineNbr": 956,
+      "author": {
+        "id": 1002737
+      },
+      "writtenOn": "2017-11-09T17:52:04Z",
+      "side": 1,
+      "message": "Can you comment what column is what?",
+      "range": {
+        "startLine": 956,
+        "startChar": 11,
+        "endLine": 956,
+        "endChar": 20
+      },
+      "revId": "ba40bebb782071ae0aa24d9b93286cb0c1efc695",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7dfc3d1e_9ef47007",
+        "filename": "chrome/browser/ui/views/profiles/profile_chooser_view.cc",
+        "patchSetId": 18
+      },
+      "lineNbr": 962,
+      "author": {
+        "id": 1002737
+      },
+      "writtenOn": "2017-11-09T17:52:04Z",
+      "side": 1,
+      "message": "Same question here.",
+      "range": {
+        "startLine": 962,
+        "startChar": 15,
+        "endLine": 962,
+        "endChar": 28
+      },
+      "revId": "ba40bebb782071ae0aa24d9b93286cb0c1efc695",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
