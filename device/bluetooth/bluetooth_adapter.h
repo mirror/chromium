@@ -154,14 +154,6 @@ class DEVICE_BLUETOOTH_EXPORT BluetoothAdapter
     virtual void GattServicesDiscovered(BluetoothAdapter* adapter,
                                         BluetoothDevice* device) {}
 
-    // Called when all characteristic and descriptor discovery procedures are
-    // known to be completed for the GATT service |service|. This method will be
-    // called after the initial discovery of a GATT service and will usually be
-    // preceded by calls to GattCharacteristicAdded and GattDescriptorAdded.
-    virtual void GattDiscoveryCompleteForService(
-        BluetoothAdapter* adapter,
-        BluetoothRemoteGattService* service) {}
-
     // Called when properties of the remote GATT service |service| have changed.
     // This will get called for properties such as UUID, as well as for changes
     // to the list of known characteristics and included services. Observers
@@ -484,7 +476,6 @@ class DEVICE_BLUETOOTH_EXPORT BluetoothAdapter
   void NotifyGattServiceRemoved(BluetoothRemoteGattService* service);
   void NotifyGattServiceChanged(BluetoothRemoteGattService* service);
   void NotifyGattServicesDiscovered(BluetoothDevice* device);
-  void NotifyGattDiscoveryComplete(BluetoothRemoteGattService* service);
   void NotifyGattCharacteristicAdded(
       BluetoothRemoteGattCharacteristic* characteristic);
   void NotifyGattCharacteristicRemoved(
