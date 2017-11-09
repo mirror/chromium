@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "594def1e_fcea250b",
+        "filename": "base/process/kill.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 22,
+      "author": {
+        "id": 1002844
+      },
+      "writtenOn": "2017-11-09T01:31:00Z",
+      "side": 1,
+      "message": "This is to fix the failures on the win10 bot in some of the try runs. I was unable to reproduce the failure locally, so the comment is just a guess as to what is happening.",
+      "revId": "f712463ffeadc2f8c16357e4c75ad58eaa04ed54",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}

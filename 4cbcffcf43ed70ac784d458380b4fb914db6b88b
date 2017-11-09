@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "c8396c4b_0b013570",
+        "filename": "chrome/browser/process_singleton_browsertest.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 94,
+      "author": {
+        "id": 1002844
+      },
+      "writtenOn": "2017-11-09T01:31:00Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "6d9d9b43_9851c090",
+      "range": {
+        "startLine": 94,
+        "startChar": 14,
+        "endLine": 94,
+        "endChar": 53
+      },
+      "revId": "4cbcffcf43ed70ac784d458380b4fb914db6b88b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "4e9c3235_c3801e62",
         "filename": "chrome/browser/process_singleton_browsertest.cc",
         "patchSetId": 3
@@ -36,6 +60,24 @@
       "writtenOn": "2017-11-08T00:19:43Z",
       "side": 1,
       "message": "Does this need to be initialized in the ctor?",
+      "revId": "4cbcffcf43ed70ac784d458380b4fb914db6b88b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7081791a_6c715396",
+        "filename": "chrome/browser/process_singleton_browsertest.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 118,
+      "author": {
+        "id": 1002844
+      },
+      "writtenOn": "2017-11-09T01:31:00Z",
+      "side": 1,
+      "message": "It\u0027s only accessed if process_terminated_ is true, so it should be fine. Added a comment.",
+      "parentUuid": "4e9c3235_c3801e62",
       "revId": "4cbcffcf43ed70ac784d458380b4fb914db6b88b",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -59,6 +101,24 @@
     },
     {
       "key": {
+        "uuid": "dcec4e17_1f8606dc",
+        "filename": "chrome/browser/process_singleton_browsertest.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 215,
+      "author": {
+        "id": 1002844
+      },
+      "writtenOn": "2017-11-09T01:31:00Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "6605ad87_b3b0ffb9",
+      "revId": "4cbcffcf43ed70ac784d458380b4fb914db6b88b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "5a3b1d70_faa2e0da",
         "filename": "chrome/browser/process_singleton_browsertest.cc",
         "patchSetId": 3
@@ -76,6 +136,24 @@
     },
     {
       "key": {
+        "uuid": "e9c4aa3e_4122d148",
+        "filename": "chrome/browser/process_singleton_browsertest.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 224,
+      "author": {
+        "id": 1002844
+      },
+      "writtenOn": "2017-11-09T01:31:00Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "5a3b1d70_faa2e0da",
+      "revId": "4cbcffcf43ed70ac784d458380b4fb914db6b88b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "e5f0cde8_1f6ba943",
         "filename": "chrome/browser/process_singleton_browsertest.cc",
         "patchSetId": 3
@@ -90,6 +168,24 @@
       "revId": "4cbcffcf43ed70ac784d458380b4fb914db6b88b",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2931b06d_c308f983",
+        "filename": "chrome/browser/process_singleton_browsertest.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 226,
+      "author": {
+        "id": 1002844
+      },
+      "writtenOn": "2017-11-09T01:31:00Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "e5f0cde8_1f6ba943",
+      "revId": "4cbcffcf43ed70ac784d458380b4fb914db6b88b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
