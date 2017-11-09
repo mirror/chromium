@@ -231,6 +231,24 @@
     },
     {
       "key": {
+        "uuid": "658c11dd_655c6b1a",
+        "filename": "ios/chrome/browser/ui/stack_view/stack_view_controller.mm",
+        "patchSetId": 11
+      },
+      "lineNbr": 515,
+      "author": {
+        "id": 1192584
+      },
+      "writtenOn": "2017-11-09T22:17:27Z",
+      "side": 1,
+      "message": "Sounds good! Yes, perhaps we need a cheat-sheet for our architectural components, e.g. something like:\n\n\"Here is what we consider a \u0027Coordinator\u0027 why we have them and how we expect them to be used\"\n\n\"Here is what we consider a \u0027Dispatcher\u0027 why we have them ... etc.\"\n\nI see we have lots of docs on our Bling architecture projects that might contain this info, but they seem to be in flux or somewhat deprecated, or at least the most relevant few items are buried. One consideration is moving this most pertinent relevant documentation to the header (e.g. to CommandDispatcher.h).\n\nThanks!",
+      "parentUuid": "b7486ba4_dd890b5c",
+      "revId": "e4c1dbafd98b9cdf0aa51b175bd87b76f8dedb54",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "c3f98c79_a452e3cd",
         "filename": "ios/chrome/browser/ui/toolbar/toolbar_controller.h",
         "patchSetId": 11
