@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "8c07ca86_839a182e",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 5
+      },
+      "lineNbr": 9,
+      "author": {
+        "id": 1146978
+      },
+      "writtenOn": "2017-11-09T19:10:46Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "ba5fb0e7_a655d035",
+      "revId": "bcf40191f7c7e5e378e110f3847aac04a0597a7f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "4d9a6dee_e95fe78b",
         "filename": "/COMMIT_MSG",
         "patchSetId": 5
@@ -33,6 +51,24 @@
       "revId": "bcf40191f7c7e5e378e110f3847aac04a0597a7f",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f408494f_54d41e5e",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 5
+      },
+      "lineNbr": 18,
+      "author": {
+        "id": 1146978
+      },
+      "writtenOn": "2017-11-09T19:10:46Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "4d9a6dee_e95fe78b",
+      "revId": "bcf40191f7c7e5e378e110f3847aac04a0597a7f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -53,6 +89,24 @@
     },
     {
       "key": {
+        "uuid": "8fb5a471_83a90f8b",
+        "filename": "services/ui/public/cpp/gpu/gpu.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 250,
+      "author": {
+        "id": 1146978
+      },
+      "writtenOn": "2017-11-09T19:10:46Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "7779baa1_0c094246",
+      "revId": "bcf40191f7c7e5e378e110f3847aac04a0597a7f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "8cef9143_a17abce0",
         "filename": "services/ui/public/cpp/gpu/gpu.cc",
         "patchSetId": 5
@@ -67,6 +121,24 @@
       "revId": "bcf40191f7c7e5e378e110f3847aac04a0597a7f",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d74688a4_bd81b99b",
+        "filename": "services/ui/public/cpp/gpu/gpu.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 276,
+      "author": {
+        "id": 1146978
+      },
+      "writtenOn": "2017-11-09T19:10:46Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "8cef9143_a17abce0",
+      "revId": "bcf40191f7c7e5e378e110f3847aac04a0597a7f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -87,6 +159,24 @@
     },
     {
       "key": {
+        "uuid": "4b98cc66_529eb94e",
+        "filename": "services/ui/public/cpp/tests/gpu_unittest.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 103,
+      "author": {
+        "id": 1146978
+      },
+      "writtenOn": "2017-11-09T19:10:46Z",
+      "side": 1,
+      "message": "Each time we do this it runs all tasks currently scheduled on IO. If one of those tasks schedules a future task that doesn\u0027t run. There are a couple tasks that run and schedule new tasks:\n\n1. Gpu::EstablishRequest::SendRequest\n2. TestGpuImpl::EstablishGpuChannel\n3. Gpu::EstablishRequest::OnEstablishedGpuChannel\n4. Gpu::OnEstablishedGpuChannel\n\nEach iteration runs one of those tasks which schedules the next. More iterations will do nothing in this case since there isn\u0027t anything else on the IO thread.",
+      "parentUuid": "0d09a92d_818b7f26",
+      "revId": "bcf40191f7c7e5e378e110f3847aac04a0597a7f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "dd7030bb_ad6ea015",
         "filename": "services/ui/public/cpp/tests/gpu_unittest.cc",
         "patchSetId": 5
@@ -101,6 +191,24 @@
       "revId": "bcf40191f7c7e5e378e110f3847aac04a0597a7f",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e571ee4f_bcb4f63f",
+        "filename": "services/ui/public/cpp/tests/gpu_unittest.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 205,
+      "author": {
+        "id": 1146978
+      },
+      "writtenOn": "2017-11-09T19:10:46Z",
+      "side": 1,
+      "message": "Gotcha, there would be a slight difference in Gpu::OnEstablishedGpuChannel not having returned yet. Changed back to the old test flow.",
+      "parentUuid": "dd7030bb_ad6ea015",
+      "revId": "bcf40191f7c7e5e378e110f3847aac04a0597a7f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
