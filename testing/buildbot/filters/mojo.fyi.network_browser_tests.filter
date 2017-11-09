@@ -840,7 +840,6 @@
 -PDFExtensionTest.ContextMenuCoordinates
 -PasswordManagerBrowserTestBase.CorrectEntryForHttpAuth
 -PolicyTest.CertificateTransparencyEnforcementDisabledForUrls
--PolicyTest.DownloadDirectory
 -PolicyTest.ExtensionInstallSources
 -PolicyTest.ForceGoogleSafeSearch
 -PolicyTest.FullscreenAllowedApp

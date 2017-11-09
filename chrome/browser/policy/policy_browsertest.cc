@@ -418,16 +418,25 @@ void CheckURLIsBlocked(Browser* browser, const std::string& spec) {
   EXPECT_TRUE(result);
 }
 
+base::FilePath GetTestDataDirectory() {
+  base::FilePath test_file_directory;
+  PathService::Get(chrome::DIR_TEST_DATA, &test_file_directory);
+  return test_file_directory;
+}
+
 // Downloads a file named |file| and expects it to be saved to |dir|, which
 // must be empty.
 void DownloadAndVerifyFile(
     Browser* browser, const base::FilePath& dir, const base::FilePath& file) {
+  net::EmbeddedTestServer embedded_test_server;
+  embedded_test_server.ServeFilesFromDirectory(GetTestDataDirectory());
+  ASSERT_TRUE(embedded_test_server.Start());
   content::DownloadManager* download_manager =
       content::BrowserContext::GetDownloadManager(browser->profile());
   content::DownloadTestObserverTerminal observer(
       download_manager, 1,
       content::DownloadTestObserver::ON_DANGEROUS_DOWNLOAD_FAIL);
-  GURL url(URLRequestMockHTTPJob::GetMockUrl(file.MaybeAsASCII()));
+  GURL url(embedded_test_server.GetURL(std::string("/") + file.MaybeAsASCII()));
   base::FilePath downloaded = dir.Append(file);
   EXPECT_FALSE(base::PathExists(downloaded));
   ui_test_utils::NavigateToURL(browser, url);
