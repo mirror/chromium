@@ -411,6 +411,30 @@
       "revId": "2f5d8d3628d601b0a07f809cfadf87e02a650c24",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5bdcbc96_3cca5f7f",
+        "filename": "content/renderer/service_worker/web_service_worker_provider_impl.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 242,
+      "author": {
+        "id": 1223459
+      },
+      "writtenOn": "2017-11-09T06:10:28Z",
+      "side": 1,
+      "message": "Done, thank a lot!",
+      "parentUuid": "8f483c88_0511b4ff",
+      "range": {
+        "startLine": 242,
+        "startChar": 6,
+        "endLine": 242,
+        "endChar": 40
+      },
+      "revId": "2f5d8d3628d601b0a07f809cfadf87e02a650c24",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }

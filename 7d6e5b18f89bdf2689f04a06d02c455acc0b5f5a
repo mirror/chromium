@@ -45,6 +45,23 @@
       "revId": "7d6e5b18f89bdf2689f04a06d02c455acc0b5f5a",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9b7de5c3_f7de0e06",
+        "filename": "content/renderer/service_worker/web_service_worker_provider_impl.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 77,
+      "author": {
+        "id": 1223459
+      },
+      "writtenOn": "2017-11-09T06:10:28Z",
+      "side": 1,
+      "message": "@Kinuko, we delete the Add/RemoveProviderClient here, so is there any impact on this TODO? Thanks.",
+      "revId": "7d6e5b18f89bdf2689f04a06d02c455acc0b5f5a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
