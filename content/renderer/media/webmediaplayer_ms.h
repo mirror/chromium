@@ -160,31 +160,17 @@ class CONTENT_EXPORT WebMediaPlayerMS
   void OnBecamePersistentVideo(bool value) override;
 
   bool CopyVideoTextureToPlatformTexture(
-      gpu::gles2::GLES2Interface* gl,
-      unsigned target,
-      unsigned int texture,
-      unsigned internal_format,
-      unsigned format,
-      unsigned type,
-      int level,
-      bool premultiply_alpha,
-      bool flip_y,
+      gpu::gles2::GLES2Interface*,
+      cc::TexParams params,
+      cc::TexFormat format,
       int already_uploaded_id,
       VideoFrameUploadMetadata* out_metadata) override;
 
   bool TexImageImpl(TexImageFunctionID functionID,
-                    unsigned target,
                     gpu::gles2::GLES2Interface* gl,
-                    unsigned int texture,
-                    int level,
-                    int internalformat,
-                    unsigned format,
-                    unsigned type,
-                    int xoffset,
-                    int yoffset,
-                    int zoffset,
-                    bool flip_y,
-                    bool premultiply_alpha) override;
+                    cc::TexParams params,
+                    cc::TexFormat format,
+                    cc::TexOffset offset) override;
 
   // blink::WebMediaStreamObserver implementation
   void TrackAdded(const blink::WebMediaStreamTrack& track) override;
