@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "7867da10_8fbd1a57",
+        "filename": "components/viz/service/display/direct_renderer.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 623,
+      "author": {
+        "id": 1228419
+      },
+      "writtenOn": "2017-11-09T20:51:07Z",
+      "side": 1,
+      "message": "This part might have different behavior as before:\n\nIf has_damage is false:\n\nFirst pass for new texture, we will return false because texture id \u003d\u003d 0. So we will create texture but not draw yet.\nSecond pass in DrawRenderPassQuadInternal, we will return true here to skip the real draw.\n\nThe old behavior is that, when creating the texture, we always reset the has_damage to true, so it will not return true in the second pass.",
+      "revId": "aa973a787498b2f50e1903e934485b84a27130c8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
