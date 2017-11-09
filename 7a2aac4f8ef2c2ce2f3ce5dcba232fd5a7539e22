@@ -1,0 +1,73 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "07863b43_482b1bf0",
+        "filename": "chrome/browser/sessions/session_data_deleter.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 103,
+      "author": {
+        "id": 1000763
+      },
+      "writtenOn": "2017-11-09T20:04:41Z",
+      "side": 1,
+      "message": "Can this be called immediately after the call to DeleteCookies() on line 91? Is there a reason we need to wait for the response?",
+      "range": {
+        "startLine": 102,
+        "startChar": 2,
+        "endLine": 103,
+        "endChar": 74
+      },
+      "revId": "7a2aac4f8ef2c2ce2f3ce5dcba232fd5a7539e22",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b5f1cd8b_2ac7b230",
+        "filename": "chrome/browser/sessions/session_data_deleter.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 121,
+      "author": {
+        "id": 1000763
+      },
+      "writtenOn": "2017-11-09T20:04:41Z",
+      "side": 1,
+      "message": "I\u0027m not familiar with this (or the old code), are the two the same? e.g. SetCanonicalCookie and DeleteCanonicalCookieAsync?",
+      "range": {
+        "startLine": 116,
+        "startChar": 4,
+        "endLine": 121,
+        "endChar": 48
+      },
+      "revId": "7a2aac4f8ef2c2ce2f3ce5dcba232fd5a7539e22",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "58af1144_c32a0b67",
+        "filename": "chrome/browser/sessions/session_data_deleter.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 127,
+      "author": {
+        "id": 1000763
+      },
+      "writtenOn": "2017-11-09T20:04:41Z",
+      "side": 1,
+      "message": "Is there a reason not to supply an empty callback here?",
+      "range": {
+        "startLine": 127,
+        "startChar": 8,
+        "endLine": 127,
+        "endChar": 60
+      },
+      "revId": "7a2aac4f8ef2c2ce2f3ce5dcba232fd5a7539e22",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
