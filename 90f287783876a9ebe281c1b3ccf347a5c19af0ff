@@ -237,6 +237,30 @@
     },
     {
       "key": {
+        "uuid": "4a8613db_ec184637",
+        "filename": "content/renderer/media_capture_from_element/canvas_capture_handler.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 317,
+      "author": {
+        "id": 1002076
+      },
+      "writtenOn": "2017-11-09T05:05:45Z",
+      "side": 1,
+      "message": "This is fine, assuming this is the only code that uses the GLHelper-owned instance. I\u0027m not sure there\u0027s a good way in the code structure to enforce that. Maybe blink::WebGraphicsContext3DProvider should own ReadbackYUVInterface instead of GLHelper?\n\nThere is one possible (but not-very-likely) danger here, if someone else starts using the shared ReadbackYUVInterface for some other feature and they call SetScaler() while your Canvas capturer is running. So, for safety, you might want to add a DCHECK(!yuv_reader-\u003escaler()) before the call to ReadbackYUV(). Or, maybe put the DCHECK in the getter method that returns the YUVReadbackInterface?\n\nAlso, there might be a performance penalty if ReadbackYUV() is being called repeatedly with different image sizes (e.g., because 2 different Canvas captures are running). This is because, internally, ReadbackYUV() will resize the cached textures; which pretty much defeats the caching.\n\nAs we\u0027ve worked through all the issues with GLHelper in this (and the last) code review, a design idea is forming in my mind: We could avoid a lot of the mess if ContextProvider had an API for letting clients make CopyOutputRequests on arbitrary textures. Then, we wouldn\u0027t need GLHelper at all, and no more worrying about context loses or sharing objects. :)",
+      "parentUuid": "85eb8ff0_e8b37fd5",
+      "range": {
+        "startLine": 315,
+        "startChar": 0,
+        "endLine": 317,
+        "endChar": 74
+      },
+      "revId": "90f287783876a9ebe281c1b3ccf347a5c19af0ff",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "7d83e0ce_dfb2aadb",
         "filename": "content/renderer/media_capture_from_element/canvas_capture_handler.cc",
         "patchSetId": 8

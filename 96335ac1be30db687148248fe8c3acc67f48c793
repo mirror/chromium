@@ -1,0 +1,165 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "ac2f1fa1_223d5acf",
+        "filename": "components/viz/common/gl_helper.h",
+        "patchSetId": 9
+      },
+      "lineNbr": 469,
+      "author": {
+        "id": 1002076
+      },
+      "writtenOn": "2017-11-09T05:05:45Z",
+      "side": 1,
+      "message": "Since there can only ever be 2 instances max (one for flipping, one for no flipping), how about just having two std::unique_ptr members here:\n\n  std::unique_ptr\u003cReadbackYUVInterface\u003e shared_readback_yuv_flip_;\n  std::unique_ptr\u003cReadbackYUVInterface\u003e shared_readback_yuv_noflip_;",
+      "range": {
+        "startLine": 469,
+        "startChar": 2,
+        "endLine": 469,
+        "endChar": 77
+      },
+      "revId": "96335ac1be30db687148248fe8c3acc67f48c793",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "66e0700d_ae5804b9",
+        "filename": "content/renderer/media_capture_from_element/canvas_capture_handler.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 101,
+      "author": {
+        "id": 1002076
+      },
+      "writtenOn": "2017-11-09T05:05:45Z",
+      "side": 1,
+      "message": "The first arg should be: std::move(video_frame)",
+      "range": {
+        "startLine": 101,
+        "startChar": 28,
+        "endLine": 101,
+        "endChar": 39
+      },
+      "revId": "96335ac1be30db687148248fe8c3acc67f48c793",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3fa29cf0_4b4efc5f",
+        "filename": "content/renderer/media_capture_from_element/canvas_capture_handler.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 124,
+      "author": {
+        "id": 1002076
+      },
+      "writtenOn": "2017-11-09T05:05:45Z",
+      "side": 1,
+      "message": "std::move(io_task_runner)",
+      "range": {
+        "startLine": 124,
+        "startChar": 22,
+        "endLine": 124,
+        "endChar": 36
+      },
+      "revId": "96335ac1be30db687148248fe8c3acc67f48c793",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "42181bc1_ebb8665b",
+        "filename": "content/renderer/media_capture_from_element/canvas_capture_handler.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 150,
+      "author": {
+        "id": 1002076
+      },
+      "writtenOn": "2017-11-09T05:05:45Z",
+      "side": 1,
+      "message": "std::move(io_task_runner)",
+      "range": {
+        "startLine": 150,
+        "startChar": 49,
+        "endLine": 150,
+        "endChar": 63
+      },
+      "revId": "96335ac1be30db687148248fe8c3acc67f48c793",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f06bf2d5_7c2d0fbb",
+        "filename": "content/renderer/media_capture_from_element/canvas_capture_handler.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 320,
+      "author": {
+        "id": 1002076
+      },
+      "writtenOn": "2017-11-09T05:05:45Z",
+      "side": 1,
+      "message": "Extra semicolon here.",
+      "range": {
+        "startLine": 320,
+        "startChar": 0,
+        "endLine": 320,
+        "endChar": 3
+      },
+      "revId": "96335ac1be30db687148248fe8c3acc67f48c793",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "bceebae8_400d6ea2",
+        "filename": "content/renderer/media_capture_from_element/canvas_capture_handler.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 335,
+      "author": {
+        "id": 1002076
+      },
+      "writtenOn": "2017-11-09T05:05:45Z",
+      "side": 1,
+      "message": "nit: Can this be replaced with a simple \"bool is_opaque\"?",
+      "range": {
+        "startLine": 335,
+        "startChar": 4,
+        "endLine": 335,
+        "endChar": 24
+      },
+      "revId": "96335ac1be30db687148248fe8c3acc67f48c793",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "41766034_43aa94c1",
+        "filename": "content/renderer/media_capture_from_element/canvas_capture_handler.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 355,
+      "author": {
+        "id": 1002076
+      },
+      "writtenOn": "2017-11-09T05:05:45Z",
+      "side": 1,
+      "message": "Seems this arg is unused. Or, is it meant to hold a reference to the SkImage so that the texture doesn\u0027t go away in the meantime? Since the ReadbackYUV() call issues all the necessary GL commands on the source texture, it should be safe to allow SkImage to destroy the source texture (GPU pipeline order-of-operations is good).",
+      "range": {
+        "startLine": 355,
+        "startChar": 4,
+        "endLine": 355,
+        "endChar": 25
+      },
+      "revId": "96335ac1be30db687148248fe8c3acc67f48c793",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
