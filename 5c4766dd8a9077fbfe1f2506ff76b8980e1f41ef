@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "3420b637_be02cde8",
+        "filename": "third_party/WebKit/Source/core/layout/LayoutView.cpp",
+        "patchSetId": 4
+      },
+      "lineNbr": 797,
+      "author": {
+        "id": 1110037
+      },
+      "writtenOn": "2017-11-09T22:12:23Z",
+      "side": 1,
+      "message": "These always could be null but weren\u0027t in the callsites this was called from. These were really just overzealous null checks. I\u0027ve refactored this function to share it in both null and non-null usecases.",
+      "parentUuid": "4a2a100a_5a23d509",
+      "range": {
+        "startLine": 797,
+        "startChar": 7,
+        "endLine": 797,
+        "endChar": 23
+      },
+      "revId": "5c4766dd8a9077fbfe1f2506ff76b8980e1f41ef",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "382b3d64_38ddd602",
         "filename": "third_party/WebKit/Source/core/paint/BoxPaintInvalidator.cpp",
         "patchSetId": 4
@@ -42,6 +66,24 @@
     },
     {
       "key": {
+        "uuid": "0afa1f62_8442dce0",
+        "filename": "third_party/WebKit/Source/core/paint/BoxPaintInvalidator.cpp",
+        "patchSetId": 4
+      },
+      "lineNbr": 276,
+      "author": {
+        "id": 1110037
+      },
+      "writtenOn": "2017-11-09T22:12:23Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "382b3d64_38ddd602",
+      "revId": "5c4766dd8a9077fbfe1f2506ff76b8980e1f41ef",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "a6f4c369_c70726c0",
         "filename": "third_party/WebKit/Source/core/paint/BoxPaintInvalidator.cpp",
         "patchSetId": 4
@@ -53,6 +95,30 @@
       "writtenOn": "2017-11-09T21:57:42Z",
       "side": 1,
       "message": "suggest a helper like IsFull(BackgroundInvalidationType)",
+      "range": {
+        "startLine": 281,
+        "startChar": 7,
+        "endLine": 281,
+        "endChar": 35
+      },
+      "revId": "5c4766dd8a9077fbfe1f2506ff76b8980e1f41ef",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e98577f6_2eaf5904",
+        "filename": "third_party/WebKit/Source/core/paint/BoxPaintInvalidator.cpp",
+        "patchSetId": 4
+      },
+      "lineNbr": 281,
+      "author": {
+        "id": 1110037
+      },
+      "writtenOn": "2017-11-09T22:12:23Z",
+      "side": 1,
+      "message": "Mind if we leave this one since there\u0027s just one callsite at the moment? I think this area might get more complicated in the next patch.\n\nI did update this to be \"is_full_background_invalidation_type\" to reduce ambiguity.",
+      "parentUuid": "a6f4c369_c70726c0",
       "range": {
         "startLine": 281,
         "startChar": 7,
@@ -88,6 +154,30 @@
     },
     {
       "key": {
+        "uuid": "0bb0e71b_02612c33",
+        "filename": "third_party/WebKit/Source/core/paint/BoxPaintInvalidator.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 43,
+      "author": {
+        "id": 1110037
+      },
+      "writtenOn": "2017-11-09T22:12:23Z",
+      "side": 1,
+      "message": "I have refactored as you suggested though these are no longer ordered by character length.",
+      "parentUuid": "19dd046f_d730ce59",
+      "range": {
+        "startLine": 43,
+        "startChar": 4,
+        "endLine": 43,
+        "endChar": 30
+      },
+      "revId": "5c4766dd8a9077fbfe1f2506ff76b8980e1f41ef",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "30e48f50_24142bee",
         "filename": "third_party/WebKit/Source/core/paint/BoxPaintInvalidator.h",
         "patchSetId": 4
@@ -108,6 +198,30 @@
       "revId": "5c4766dd8a9077fbfe1f2506ff76b8980e1f41ef",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "888da099_deb738f0",
+        "filename": "third_party/WebKit/Source/core/paint/BoxPaintInvalidator.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 50,
+      "author": {
+        "id": 1110037
+      },
+      "writtenOn": "2017-11-09T22:12:23Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "30e48f50_24142bee",
+      "range": {
+        "startLine": 50,
+        "startChar": 19,
+        "endLine": 50,
+        "endChar": 32
+      },
+      "revId": "5c4766dd8a9077fbfe1f2506ff76b8980e1f41ef",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
