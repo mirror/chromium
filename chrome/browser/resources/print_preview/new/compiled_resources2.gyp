@@ -9,6 +9,11 @@
         'header',
         'copies_settings',
         'layout_settings',
+        'color_settings',
+        'media_size_settings',
+        'margins_settings',
+        'dpi_settings',
+	'scaling_settings',
         'model',
       ],
       'includes': ['../../../../../third_party/closure_compiler/compile_js2.gypi'],
@@ -31,6 +36,37 @@
     {
       'target_name': 'layout_settings',
       'dependencies': [
+      ],
+      'includes': ['../../../../../third_party/closure_compiler/compile_js2.gypi'],
+    },
+    {
+      'target_name': 'color_settings',
+      'dependencies': [
+      ],
+      'includes': ['../../../../../third_party/closure_compiler/compile_js2.gypi'],
+    },
+    {
+      'target_name': 'media_size_settings',
+      'dependencies': [
+      ],
+      'includes': ['../../../../../third_party/closure_compiler/compile_js2.gypi'],
+    },
+    {
+      'target_name': 'margins_settings',
+      'dependencies': [
+      ],
+      'includes': ['../../../../../third_party/closure_compiler/compile_js2.gypi'],
+    },
+    {
+      'target_name': 'dpi_settings',
+      'dependencies': [
+      ],
+      'includes': ['../../../../../third_party/closure_compiler/compile_js2.gypi'],
+    },
+    {
+      'target_name': 'scaling_settings',
+      'dependencies': [
+        'model',
       ],
       'includes': ['../../../../../third_party/closure_compiler/compile_js2.gypi'],
     },
