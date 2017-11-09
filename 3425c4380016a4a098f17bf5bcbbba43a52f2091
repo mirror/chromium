@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "0dafa891_715154ed",
+        "filename": "ios/chrome/browser/ui/signin_interaction/signin_interaction_controller.mm",
+        "patchSetId": 4
+      },
+      "lineNbr": 45,
+      "author": {
+        "id": 1115958
+      },
+      "writtenOn": "2017-11-09T09:50:01Z",
+      "side": 1,
+      "message": "Should this be set to the nav controller as a default somewhere? It only seems to be set when something is presented.",
+      "range": {
+        "startLine": 45,
+        "startChar": 27,
+        "endLine": 45,
+        "endChar": 64
+      },
+      "revId": "3425c4380016a4a098f17bf5bcbbba43a52f2091",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "600c3984_ea0ac41a",
+        "filename": "ios/chrome/browser/ui/signin_interaction/signin_interaction_controller.mm",
+        "patchSetId": 4
+      },
+      "lineNbr": 238,
+      "author": {
+        "id": 1115958
+      },
+      "writtenOn": "2017-11-09T09:50:01Z",
+      "side": 1,
+      "message": "Does this need to be reset when |viewController| is dismissed?",
+      "range": {
+        "startLine": 238,
+        "startChar": 2,
+        "endLine": 238,
+        "endChar": 39
+      },
+      "revId": "3425c4380016a4a098f17bf5bcbbba43a52f2091",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
