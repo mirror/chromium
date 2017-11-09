@@ -98,6 +98,7 @@
 #if defined(SAFE_BROWSING_DB_LOCAL)
 #include "chrome/browser/safe_browsing/chrome_password_protection_service.h"
 #include "chrome/browser/ui/webui/settings/change_password_handler.h"
+#include "components/prefs/pref_change_registrar.h"
 #endif
 
 namespace settings {
@@ -220,6 +221,12 @@ MdSettingsUI::MdSettingsUI(content::WebUI* web_ui)
 #endif  // defined(OS_WIN)
 
 #if defined(SAFE_BROWSING_DB_LOCAL)
+  pref_change_registrar_ = base::MakeUnique<PrefChangeRegistrar>();
+  pref_change_registrar_->Init(profile->GetPrefs());
+  pref_change_registrar_->Add(
+      prefs::kSafeBrowsingUnhandledSyncPasswordReuses,
+      base::Bind(&MdSettingsUI::UpdateChangePasswordDataSource,
+                 base::Unretained(this)));
   AddSettingsPageUIHandler(base::MakeUnique<ChangePasswordHandler>(profile));
   html_source->AddBoolean("changePasswordEnabled",
                           safe_browsing::ChromePasswordProtectionService::
@@ -356,5 +363,19 @@ void MdSettingsUI::UpdateCleanupDataSource(bool cleanupEnabled,
                                    std::move(update));
 }
 #endif  // defined(OS_WIN)
+
+#if defined(SAFE_BROWSING_DB_LOCAL)
+void MdSettingsUI::UpdateChangePasswordDataSource() {
+  DCHECK(web_ui());
+  Profile* profile = Profile::FromWebUI(web_ui());
+
+  std::unique_ptr<base::DictionaryValue> update(new base::DictionaryValue);
+  update->SetBoolean("changePasswordEnabled",
+                     safe_browsing::ChromePasswordProtectionService::
+                         ShouldShowChangePasswordSettingUI(profile));
+  content::WebUIDataSource::Update(profile, chrome::kChromeUISettingsHost,
+                                   std::move(update));
+}
+#endif  // defined(SAFE_BROWSING_DB_LOCAL)
 
 }  // namespace settings
