@@ -163,8 +163,7 @@ NotificationPermissionContext::NotificationPermissionContext(
                             content_settings_type,
                             blink::FeaturePolicyFeature::kNotFound),
       weak_factory_ui_thread_(this) {
-  DCHECK(content_settings_type == CONTENT_SETTINGS_TYPE_NOTIFICATIONS ||
-         content_settings_type == CONTENT_SETTINGS_TYPE_PUSH_MESSAGING);
+  DCHECK(content_settings_type == CONTENT_SETTINGS_TYPE_NOTIFICATIONS);
 }
 
 NotificationPermissionContext::~NotificationPermissionContext() {}

@@ -26,8 +26,7 @@ int HeadlessPermissionManager::RequestPermission(
   // without accepting or denying. Push Notifications are the exception to this,
   // which are explicitly disabled in Incognito mode.
   if (browser_context_->IsOffTheRecord() &&
-      (permission == content::PermissionType::PUSH_MESSAGING ||
-       permission == content::PermissionType::NOTIFICATIONS)) {
+      permission == content::PermissionType::NOTIFICATIONS) {
     callback.Run(blink::mojom::PermissionStatus::DENIED);
     return kNoPendingOperation;
   }
