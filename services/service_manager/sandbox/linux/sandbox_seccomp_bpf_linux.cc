@@ -36,6 +36,7 @@
 #include "services/service_manager/sandbox/linux/bpf_cros_amd_gpu_policy_linux.h"
 #include "services/service_manager/sandbox/linux/bpf_cros_arm_gpu_policy_linux.h"
 #include "services/service_manager/sandbox/linux/bpf_gpu_policy_linux.h"
+#include "services/service_manager/sandbox/linux/bpf_network_policy_linux.h"
 #include "services/service_manager/sandbox/linux/bpf_pdf_compositor_policy_linux.h"
 #include "services/service_manager/sandbox/linux/bpf_ppapi_policy_linux.h"
 #include "services/service_manager/sandbox/linux/bpf_renderer_policy_linux.h"
@@ -185,10 +186,12 @@ std::unique_ptr<BPFBasePolicy> SandboxSeccompBPF::PolicyForSandboxType(
       return std::make_unique<CdmProcessPolicy>();
     case SANDBOX_TYPE_PDF_COMPOSITOR:
       return std::make_unique<PdfCompositorProcessPolicy>();
+    case SANDBOX_TYPE_NETWORK:
+      return std::make_unique<NetworkProcessPolicy>();
     case SANDBOX_TYPE_NO_SANDBOX:
     default:
       NOTREACHED();
-      return std::make_unique<AllowAllPolicy>();
+      return nullptr;
   }
 }
 
@@ -201,7 +204,8 @@ void SandboxSeccompBPF::RunSandboxSanityChecks(
     case SANDBOX_TYPE_GPU:
     case SANDBOX_TYPE_PPAPI:
     case SANDBOX_TYPE_PDF_COMPOSITOR:
-    case SANDBOX_TYPE_CDM: {
+    case SANDBOX_TYPE_CDM:
+    case SANDBOX_TYPE_NETWORK: {
       int syscall_ret;
       errno = 0;
 
