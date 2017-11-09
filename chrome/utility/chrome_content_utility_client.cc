@@ -56,6 +56,8 @@
 #endif
 
 #if BUILDFLAG(ENABLE_EXTENSIONS)
+#include "chrome/services/media_util/media_util_service.h"
+#include "chrome/services/media_util/public/interfaces/constants.mojom.h"
 #include "chrome/utility/extensions/extensions_handler.h"
 #endif
 
@@ -299,6 +301,14 @@ void ChromeContentUtilityClient::RegisterServices(
     service_info.factory = base::Bind(&patch::PatchService::CreateService);
     services->emplace(patch::mojom::kServiceName, service_info);
   }
+
+#if BUILDFLAG(ENABLE_EXTENSIONS)
+  {
+    service_manager::EmbeddedServiceInfo service_info;
+    service_info.factory = base::Bind(&chrome::MediaUtilService::CreateService);
+    services->emplace(chrome::mojom::kMediaUtilServiceName, service_info);
+  }
+#endif
 
 #if BUILDFLAG(ENABLE_MUS)
   RegisterMashServices(services);
