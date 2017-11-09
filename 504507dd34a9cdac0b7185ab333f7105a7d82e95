@@ -234,6 +234,23 @@
       "revId": "504507dd34a9cdac0b7185ab333f7105a7d82e95",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "a252dc8d_8f6991b4",
+        "filename": "chrome/browser/first_run/first_run.h",
+        "patchSetId": 8
+      },
+      "lineNbr": 118,
+      "author": {
+        "id": 1002237
+      },
+      "writtenOn": "2017-11-09T22:23:15Z",
+      "side": 1,
+      "message": "Maybe mention what happens if the file can not be found or an error happens during reading the creation time?",
+      "revId": "504507dd34a9cdac0b7185ab333f7105a7d82e95",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
