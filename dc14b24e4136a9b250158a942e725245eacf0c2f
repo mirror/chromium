@@ -1,0 +1,55 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "fff43630_b4fd53ec",
+        "filename": "ash/wm/tablet_mode/tablet_mode_controller.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 143,
+      "author": {
+        "id": 1118421
+      },
+      "writtenOn": "2017-11-09T23:28:49Z",
+      "side": 1,
+      "message": "Probably better to add observer when tablet mode starts and remove observer when tablet mode ends.",
+      "revId": "dc14b24e4136a9b250158a942e725245eacf0c2f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7356db3e_93bfcf57",
+        "filename": "ash/wm/tablet_mode/tablet_mode_controller.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 330,
+      "author": {
+        "id": 1118421
+      },
+      "writtenOn": "2017-11-09T23:28:49Z",
+      "side": 1,
+      "message": "if (is_previous_landscape \u003d\u003d is_current_landscape) return;",
+      "revId": "dc14b24e4136a9b250158a942e725245eacf0c2f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "bfe00576_dca20f47",
+        "filename": "tools/metrics/histograms/histograms.xml",
+        "patchSetId": 3
+      },
+      "lineNbr": 3423,
+      "author": {
+        "id": 1118421
+      },
+      "writtenOn": "2017-11-09T23:28:49Z",
+      "side": 1,
+      "message": "probably better to use the same units as previous histograms",
+      "revId": "dc14b24e4136a9b250158a942e725245eacf0c2f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
