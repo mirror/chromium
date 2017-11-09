@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "2467fa3c_f71c5bef",
+        "filename": "ios/chrome/browser/ui/toolbar/keyboard_assist/toolbar_keyboard_accessory_view.mm",
+        "patchSetId": 4
+      },
+      "lineNbr": 61,
+      "author": {
+        "id": 1180589
+      },
+      "writtenOn": "2017-11-09T12:33:33Z",
+      "side": 1,
+      "message": "The previous height was 44. From the constraint, I would expect the height to be 4 + 34 + 4 \u003d 42. Is there an additional point between the stack view and its content?",
+      "range": {
+        "startLine": 61,
+        "startChar": 34,
+        "endLine": 61,
+        "endChar": 35
+      },
+      "revId": "28fa95930735e1e0b0c46de53d083a7554c43ca7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4332b624_9d99c562",
+        "filename": "ios/chrome/browser/ui/toolbar/keyboard_assist/toolbar_keyboard_accessory_view.mm",
+        "patchSetId": 4
+      },
+      "lineNbr": 110,
+      "author": {
+        "id": 1180589
+      },
+      "writtenOn": "2017-11-09T12:33:33Z",
+      "side": 1,
+      "message": "Maybe we could just do [shortcutStackView.topAnchor constraintEqualToAnchor:searchStackView.topAnchor] and same for bottomAnchor so it is clear that they are aligned?",
+      "range": {
+        "startLine": 106,
+        "startChar": 4,
+        "endLine": 110,
+        "endChar": 50
+      },
+      "revId": "28fa95930735e1e0b0c46de53d083a7554c43ca7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
