@@ -1,0 +1,55 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "b0469e6b_c5accc1e",
+        "filename": "third_party/WebKit/Source/build/scripts/core/css/properties/templates/CSSProperty.h.tmpl",
+        "patchSetId": 3
+      },
+      "lineNbr": 26,
+      "author": {
+        "id": 1161824
+      },
+      "writtenOn": "2017-11-09T07:23:50Z",
+      "side": 1,
+      "message": "nit: These should be alphabetical",
+      "revId": "56e9e4360ae898d35a24187e7f7ee805ff04cd05",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "47c61554_2545eecc",
+        "filename": "third_party/WebKit/Source/build/scripts/core/css/properties/templates/CSSProperty.h.tmpl",
+        "patchSetId": 3
+      },
+      "lineNbr": 51,
+      "author": {
+        "id": 1161824
+      },
+      "writtenOn": "2017-11-09T07:23:50Z",
+      "side": 1,
+      "message": "Most of these would only apply to longhands right? In that case they should be moved to the Longhand and Shorthand classes.",
+      "revId": "56e9e4360ae898d35a24187e7f7ee805ff04cd05",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "08192648_5c6fd660",
+        "filename": "third_party/WebKit/Source/build/scripts/core/css/properties/templates/CSSProperty.h.tmpl",
+        "patchSetId": 3
+      },
+      "lineNbr": 60,
+      "author": {
+        "id": 1161824
+      },
+      "writtenOn": "2017-11-09T07:23:50Z",
+      "side": 1,
+      "message": "There isn\u0027t really a sensible default here, so I think these should both be NOTREACHED() on the base class, or alternately we could make this class abstract for clarity.",
+      "revId": "56e9e4360ae898d35a24187e7f7ee805ff04cd05",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
