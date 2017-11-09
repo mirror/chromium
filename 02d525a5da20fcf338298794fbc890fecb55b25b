@@ -22,6 +22,30 @@
       "revId": "02d525a5da20fcf338298794fbc890fecb55b25b",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "79c697ab_3f951df1",
+        "filename": "ios/chrome/browser/ui/bookmarks/bookmark_home_tablet_ntp_controller.mm",
+        "patchSetId": 2
+      },
+      "lineNbr": 278,
+      "author": {
+        "id": 1000119
+      },
+      "writtenOn": "2017-11-09T21:25:13Z",
+      "side": 1,
+      "message": "Mark thinks that will work just fine.  I don\u0027t have any reason to disagree, but I was trying to keep my changes to be no-ops when the experiment is off.",
+      "parentUuid": "37389751_33faf658",
+      "range": {
+        "startLine": 277,
+        "startChar": 40,
+        "endLine": 278,
+        "endChar": 76
+      },
+      "revId": "02d525a5da20fcf338298794fbc890fecb55b25b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
