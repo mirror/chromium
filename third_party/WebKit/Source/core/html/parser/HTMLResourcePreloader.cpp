@@ -76,15 +76,18 @@ void HTMLResourcePreloader::Preload(
   if (!document_->Loader())
     return;
 
-  Resource* resource = preload->Start(document_);
-
-  if (resource && !resource->IsLoaded() &&
-      preload->ResourceType() == Resource::kCSSStyleSheet) {
+  CSSPreloaderResourceClient* client = nullptr;
+  if (preload->ResourceType() == Resource::kCSSStyleSheet) {
     Settings* settings = document_->GetSettings();
     if (settings && (settings->GetCSSExternalScannerNoPreload() ||
-                     settings->GetCSSExternalScannerPreload()))
-      css_preloaders_.insert(new CSSPreloaderResourceClient(resource, this));
+                     settings->GetCSSExternalScannerPreload())) {
+      client = new CSSPreloaderResourceClient(this);
+      css_preloaders_.insert(client);
+    }
   }
+  Resource* resource = preload->Start(document_, client);
+  if (resource && !resource->IsLoaded() && client)
+    client->SetResource(resource);
 }
 
 }  // namespace blink

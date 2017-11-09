@@ -75,7 +75,8 @@ DocumentModuleScriptFetcher::DocumentModuleScriptFetcher(
 void DocumentModuleScriptFetcher::Fetch(FetchParameters& fetch_params,
                                         ModuleScriptFetcher::Client* client) {
   SetClient(client);
-  ScriptResource* resource = ScriptResource::Fetch(fetch_params, fetcher_);
+  ScriptResource* resource =
+      ScriptResource::Fetch(fetch_params, fetcher_, this);
   if (was_fetched_) {
     // ScriptResource::Fetch() has succeeded synchronously,
     // ::NotifyFinished() already took care of the |resource|.

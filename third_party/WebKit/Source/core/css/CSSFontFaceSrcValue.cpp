@@ -98,10 +98,9 @@ FontResource* CSSFontFaceSrcValue::Fetch(ExecutionContext* context) const {
                                          kCrossOriginAttributeAnonymous);
     }
 
-    FontResource* resource = FontResource::Fetch(params, context->Fetcher());
-    if (!resource)
+    fetched_ = FontResourceHelper::Create(params, context->Fetcher());
+    if (!fetched_)
       return nullptr;
-    fetched_ = FontResourceHelper::Create(resource);
   } else {
     // FIXME: CSSFontFaceSrcValue::Fetch is invoked when @font-face rule
     // is processed by StyleResolver / StyleEngine.

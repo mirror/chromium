@@ -86,7 +86,7 @@ class HTMLImportLoader final
   bool HasError() const { return state_ == kStateError; }
   bool ShouldBlockScriptExecution() const;
 
-  void StartLoading(RawResource*);
+  void StartLoading(FetchParameters&, ResourceFetcher*);
 
   // Tells the loader that all of the import's stylesheets finished
   // loading.

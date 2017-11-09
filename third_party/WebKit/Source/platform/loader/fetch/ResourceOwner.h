@@ -73,10 +73,7 @@ inline void ResourceOwner<R, C>::SetResource(R* new_resource) {
   if (ResourceType* old_resource = resource_.Release())
     old_resource->RemoveClient(this);
 
-  if (new_resource) {
-    resource_ = new_resource;
-    resource_->AddClient(this);
-  }
+  resource_ = new_resource;
 }
 
 }  // namespace blink
