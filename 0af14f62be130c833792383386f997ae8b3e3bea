@@ -68,6 +68,30 @@
       "revId": "0af14f62be130c833792383386f997ae8b3e3bea",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "931b16cc_f7ff52b1",
+        "filename": "third_party/WebKit/Source/platform/wtf/BitwiseOperations.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 40,
+      "author": {
+        "id": 1115916
+      },
+      "writtenOn": "2017-11-09T12:13:47Z",
+      "side": 1,
+      "message": "You don\u0027t need to add this because now Blink can directly use //base/.",
+      "parentUuid": "d0a55853_c9e6ac81",
+      "range": {
+        "startLine": 40,
+        "startChar": 18,
+        "endLine": 40,
+        "endChar": 38
+      },
+      "revId": "0af14f62be130c833792383386f997ae8b3e3bea",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
