@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "0b5b8bc3_cf0d42d5",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 6
+      },
+      "lineNbr": 13,
+      "author": {
+        "id": 1002076
+      },
+      "writtenOn": "2017-11-09T06:48:48Z",
+      "side": 1,
+      "message": "Depending on how you\u0027re capturing the desktop, you might be able to leverage the stuff I\u0027ve been working on lately: At least for desktop capture on CrOS (plus browser window capture on all Aura platforms), there will be built-in compositor support for I420 video capture.\n\nNot sure what to do about Win/Mac, though (I assume you are using the platform\u0027s native desktop capture APIs?). You also have to be careful about using things like libyuv to convert RGBA→I420 since the color space conversion factors are fixed (and are usually not correct for the common usage cases); so this will significantly reduce color accuracy end-to-end.",
+      "range": {
+        "startLine": 13,
+        "startChar": 14,
+        "endLine": 13,
+        "endChar": 64
+      },
+      "revId": "57a8789e4cb53d31d4562fba312eb1a11e818b93",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "df7e45b0_570f647a",
+        "filename": "remoting/codec/DEPS",
+        "patchSetId": 6
+      },
+      "lineNbr": 9,
+      "author": {
+        "id": 1002076
+      },
+      "writtenOn": "2017-11-09T06:48:48Z",
+      "side": 1,
+      "message": "Hmm...I\u0027m not totally comfortable with having an external dependency on media/cast code. I\u0027m worried that we might end up changing something that turns out to harm remoting\u0027s performance. However, let me think about this a bit more before you do anything about it: I need some time to think about the pros/cons of alternative approaches. :)",
+      "range": {
+        "startLine": 9,
+        "startChar": 0,
+        "endLine": 9,
+        "endChar": 16
+      },
+      "revId": "57a8789e4cb53d31d4562fba312eb1a11e818b93",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
