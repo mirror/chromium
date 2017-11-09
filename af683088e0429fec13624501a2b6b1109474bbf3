@@ -46,6 +46,30 @@
       "revId": "af683088e0429fec13624501a2b6b1109474bbf3",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e4184e7e_35385e3a",
+        "filename": "net/dns/dns_config_service_posix.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 403,
+      "author": {
+        "id": 1113149
+      },
+      "writtenOn": "2017-11-09T17:20:52Z",
+      "side": 1,
+      "message": "Discussed in person; this version has less change to existing code without doing a second read.",
+      "parentUuid": "d4687db7_e9691e83",
+      "range": {
+        "startLine": 403,
+        "startChar": 18,
+        "endLine": 403,
+        "endChar": 32
+      },
+      "revId": "af683088e0429fec13624501a2b6b1109474bbf3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
