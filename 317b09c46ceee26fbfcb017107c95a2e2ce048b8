@@ -33,6 +33,24 @@
       "revId": "317b09c46ceee26fbfcb017107c95a2e2ce048b8",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3bd1f345_3911533d",
+        "filename": "device/geolocation/geolocation_context.h",
+        "patchSetId": 11
+      },
+      "lineNbr": 30,
+      "author": {
+        "id": 1177311
+      },
+      "writtenOn": "2017-11-09T03:30:15Z",
+      "side": 1,
+      "message": "The GeolocationImpl is still weakly bound to |request|, no change.\n\nThe strong-binding here is between |request| and GeolocationContext. Before this change the GeolocactionContext is owned by WebContentImpl, after this change, the WebContentImpl connect the GeolocationContext via mojo, that\u0027s why to use a strongbinding here.",
+      "parentUuid": "99793b89_9b52f8b6",
+      "revId": "317b09c46ceee26fbfcb017107c95a2e2ce048b8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
