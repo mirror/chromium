@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<meta charset="utf-8">
+<!-- Generate token with the command:
+generate_token.py http://127.0.0.1:8000 LineHeightStep --expire-timestamp=2000000000
+-- -->
+<meta http-equiv="origin-trial" content="Aty7baSQUPE/XyAiBW5Xy0xzy6z+syhFaTnH1WjY0xZ7KYYX4o8EGZgEqpIvfGpgavu7mJKKwRkii2iFgUX91AEAAABWeyJvcmlnaW4iOiAiaHR0cDovLzEyNy4wLjAuMTo4MDAwIiwgImZlYXR1cmUiOiAiTGluZUhlaWdodFN0ZXAiLCAiZXhwaXJ5IjogMjAwMDAwMDAwMH0=" />
+<script src="../../resources/testharness.js"></script>
+<script src="../../resources/testharnessreport.js"></script>
+<style>
+#target {
+  line-height: 10px;
+  line-height-step: 50px;
+  background-color: white;
+}
+#marker {
+  background-color: red;
+  position: absolute;
+  line-height: 10px;
+height: 40px;
+z-index: -1;
+}
+</style>
+<div id=marker>Test</div>
+<div id=target>Test pass if no red below this text.</div>
+<script>
+test(t => {
+  let style = getComputedStyle(document.documentElement);
+  assert_equals(style.lineHeightStep, '0px');
+}, "The CSS line-height-step property is available in Origin-Trial enabled document.");
+test(t => {
+  let element = document.getElementById('target');
+  assert_equals(element.offsetHeight, 50);
+}, "The CSS line-height-step property has effective in Origin-Trial enabled document.");
+</script>
