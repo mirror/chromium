@@ -816,7 +816,7 @@ void ChromeUserManagerImpl::SupervisedUserLoggedIn(
     SetIsCurrentUserNew(true);
     active_user_ = user_manager::User::CreateSupervisedUser(account_id);
     // Leaving OAuth token status at the default state = unknown.
-    WallpaperManager::Get()->ShowUserWallpaper(account_id);
+    WallpaperControllerClient::Get()->ShowUserWallpaper(account_id);
   } else {
     if (supervised_user_manager_->CheckForFirstRun(account_id.GetUserEmail())) {
       SetIsCurrentUserNew(true);
