@@ -2,6 +2,40 @@
   "comments": [
     {
       "key": {
+        "uuid": "aea8ecf6_ec38f7db",
+        "filename": "testing/scripts/test.uploaded.json",
+        "patchSetId": 4
+      },
+      "lineNbr": 9,
+      "author": {
+        "id": 1003232
+      },
+      "writtenOn": "2017-11-09T17:03:32Z",
+      "side": 1,
+      "message": "Are we doing hashes? I thought we weren\u0027t (it\u0027s fine if we are, though).\n\nAlso, I think we were going to use the same hash that the isolate server uses, which I think is still SHA-1?",
+      "revId": "6d438391e39e521adfd9bd9ffc9cc24b00fba759",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "eab095f7_1610e521",
+        "filename": "testing/scripts/upload_test_result_artifacts.py",
+        "patchSetId": 4
+      },
+      "lineNbr": 34,
+      "author": {
+        "id": 1003232
+      },
+      "writtenOn": "2017-11-09T17:03:32Z",
+      "side": 1,
+      "message": "sha1?",
+      "revId": "6d438391e39e521adfd9bd9ffc9cc24b00fba759",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "f7e9fd19_4f95a421",
         "filename": "testing/scripts/upload_test_result_artifacts.py",
         "patchSetId": 4
@@ -13,6 +47,24 @@
       "writtenOn": "2017-11-08T20:22:47Z",
       "side": 1,
       "message": "I feel like this isn\u0027t the most optimal way to do this... It worked on my machine though.",
+      "revId": "6d438391e39e521adfd9bd9ffc9cc24b00fba759",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "87ab1256_e8705b6e",
+        "filename": "testing/scripts/upload_test_result_artifacts.py",
+        "patchSetId": 4
+      },
+      "lineNbr": 79,
+      "author": {
+        "id": 1003232
+      },
+      "writtenOn": "2017-11-09T17:03:32Z",
+      "side": 1,
+      "message": "This works, but will upload the files one at a time, which will be brutally slow. I think it\u0027s probably better to create a temporary copy of the whole tree in a directory and then upload everything at once.\n\nThen again, maruel@ might know some better way to upload-if-changed programmatically or something.",
+      "parentUuid": "f7e9fd19_4f95a421",
       "revId": "6d438391e39e521adfd9bd9ffc9cc24b00fba759",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -47,6 +99,24 @@
       "writtenOn": "2017-11-08T20:22:47Z",
       "side": 1,
       "message": "I rename the file when I write it out. Should I do this or just override the actual file?",
+      "revId": "6d438391e39e521adfd9bd9ffc9cc24b00fba759",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3ff60057_d0058dc6",
+        "filename": "testing/scripts/upload_test_result_artifacts.py",
+        "patchSetId": 4
+      },
+      "lineNbr": 120,
+      "author": {
+        "id": 1003232
+      },
+      "writtenOn": "2017-11-09T17:03:32Z",
+      "side": 1,
+      "message": "I think you\u0027ll probably want to take the output path as a command line argument.",
+      "parentUuid": "276bb630_80e7afb7",
       "revId": "6d438391e39e521adfd9bd9ffc9cc24b00fba759",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
