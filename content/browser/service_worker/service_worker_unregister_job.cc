@@ -73,12 +73,9 @@ void ServiceWorkerUnregisterJob::OnRegistrationFound(
 
   // TODO: "7. If registration.updatePromise is not null..."
 
-  // "8. Resolve promise."
-  ResolvePromise(registration->id(), SERVICE_WORKER_OK);
-
-  registration->ClearWhenReady();
-
-  Complete(registration->id(), SERVICE_WORKER_OK);
+  registration->ClearWhenReady(base::Bind(&ServiceWorkerUnregisterJob::Complete,
+                                          base::Unretained(this),
+                                          registration->id()));
 }
 
 void ServiceWorkerUnregisterJob::Complete(int64_t registration_id,
