@@ -62,8 +62,11 @@
 #include "content/shell/android/shell_descriptors.h"
 #endif
 
-#if defined(OS_MACOSX)
+#if defined(OS_MACOSX) || defined(OS_WIN)
 #include "components/crash/content/app/crashpad.h"  // nogncheck
+#endif
+
+#if defined(OS_MACOSX)
 #include "content/shell/app/paths_mac.h"
 #include "content/shell/app/shell_main_delegate_mac.h"
 #endif  // OS_MACOSX
@@ -266,7 +269,8 @@ void ShellMainDelegate::PreSandboxStartup() {
   base::CPU cpu_info;
 #endif
 
-// Disable platform crash handling & initialize Breakpad, if requested.
+// Disable platform crash handling and initialize the crash reporter, if
+// requested.
 // TODO(crbug.com/753619): Implement crash reporter integration for Fuchsia.
 #if !defined(OS_FUCHSIA)
   if (base::CommandLine::ForCurrentProcess()->HasSwitch(
@@ -275,13 +279,7 @@ void ShellMainDelegate::PreSandboxStartup() {
         base::CommandLine::ForCurrentProcess()->GetSwitchValueASCII(
             switches::kProcessType);
     crash_reporter::SetCrashReporterClient(g_shell_crash_client.Pointer());
-#if defined(OS_WIN)
-    UINT new_flags =
-        SEM_FAILCRITICALERRORS | SEM_NOGPFAULTERRORBOX | SEM_NOOPENFILEERRORBOX;
-    UINT existing_flags = SetErrorMode(new_flags);
-    SetErrorMode(existing_flags | new_flags);
-    breakpad::InitCrashReporter(process_type);
-#elif defined(OS_MACOSX)
+#if defined(OS_MACOSX) || defined(OS_WIN)
     crash_reporter::InitializeCrashpad(process_type.empty(), process_type);
 #elif defined(OS_LINUX)
     // Reporting for sub-processes will be initialized in ZygoteForked.
