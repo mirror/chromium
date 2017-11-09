@@ -129,7 +129,8 @@ PaintLayerScrollableArea::PaintLayerScrollableArea(PaintLayer& layer)
       resizer_(nullptr),
       scroll_anchor_(this),
       non_composited_main_thread_scrolling_reasons_(0),
-      has_been_disposed_(false) {
+      has_been_disposed_(false),
+      can_have_scrollbars_(false) {
   Node* node = Box().GetNode();
   if (node && node->IsElementNode()) {
     // We save and restore only the scrollOffset as the other scroll values are
@@ -1308,8 +1309,10 @@ void PaintLayerScrollableArea::ComputeScrollbarExistence(
     ComputeScrollbarExistenceOption option) const {
   // Scrollbars may be hidden or provided by visual viewport or frame instead.
   DCHECK(Box().GetFrame()->GetSettings());
-  if (VisualViewportSuppliesScrollbars() || !CanHaveOverflowScrollbars(Box()) ||
-      Box().GetFrame()->GetSettings()->GetHideScrollbars()) {
+  if (!GetCanHaveScrollbars() ||
+      (VisualViewportSuppliesScrollbars() ||
+       !CanHaveOverflowScrollbars(Box()) ||
+       Box().GetFrame()->GetSettings()->GetHideScrollbars())) {
     needs_horizontal_scrollbar = false;
     needs_vertical_scrollbar = false;
     return;
