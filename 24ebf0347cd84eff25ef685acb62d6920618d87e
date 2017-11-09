@@ -16,6 +16,24 @@
       "revId": "24ebf0347cd84eff25ef685acb62d6920618d87e",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "680a61cf_c7980251",
+        "filename": "chrome/browser/resources/settings/basic_page/basic_page.js",
+        "patchSetId": 6
+      },
+      "lineNbr": 45,
+      "author": {
+        "id": 1144209
+      },
+      "writtenOn": "2017-11-09T23:39:13Z",
+      "side": 0,
+      "message": "Ah, forgot about this one. Sure. This should be remove. Thanks for catching this!",
+      "parentUuid": "319bde62_d2a52ca4",
+      "revId": "24ebf0347cd84eff25ef685acb62d6920618d87e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
