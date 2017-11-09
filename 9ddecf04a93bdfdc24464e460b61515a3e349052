@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "c81cf68e_80d51524",
+        "filename": "ios/chrome/browser/ui/bookmarks/bookmarks_new_generation_egtest.mm",
+        "patchSetId": 4
+      },
+      "lineNbr": 131,
+      "author": {
+        "id": 1115986
+      },
+      "writtenOn": "2017-11-09T12:57:01Z",
+      "side": 0,
+      "message": "You should leave those in, if we turn the flag back off, these tests will still run.",
+      "range": {
+        "startLine": 131,
+        "startChar": 0,
+        "endLine": 131,
+        "endChar": 67
+      },
+      "revId": "9ddecf04a93bdfdc24464e460b61515a3e349052",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
