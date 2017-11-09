@@ -9,7 +9,7 @@
 #include "core/css/properties/CSSProperty.h"
 
 {% for property_class in longhand_property_classnames %}
-  {% if property_class != "CSSProperty" %}
+  {% if property_class != "Longhand" %}
 #include "core/css/properties/longhands/{{property_class}}.h"
   {% endif %}
 {% endfor %}
@@ -20,9 +20,9 @@
 namespace blink {
 namespace {
 
-{% for _, property_id, classname, namespace in property_classes_by_property_id %}
-  {% if namespace != None %}
-static constexpr {{namespace}}::{{classname}} property_{{property_id.lower()}}({{property_id}});
+{% for _, property_id, classname, superclass in property_classes_by_property_id %}
+  {% if superclass != None %}
+static constexpr CSS{{superclass}}::{{classname}} property_{{property_id.lower()}}({{property_id}});
   {% else %}
 static constexpr {{classname}} property_{{property_id.lower()}}({{property_id}});
   {% endif %}

@@ -11,15 +11,15 @@
 #ifndef ApplyAtRule_h
 #define ApplyAtRule_h
 
-#include "core/css/properties/CSSProperty.h"
+#include "core/css/properties/Longhand.h"
 #include "platform/runtime_enabled_features.h"
 
 namespace blink {
 namespace CSSLonghand {
 
-class ApplyAtRule : public CSSProperty {
+class ApplyAtRule : public Longhand {
  public:
-  constexpr ApplyAtRule(CSSPropertyID id) : CSSProperty(id) {}
+  constexpr ApplyAtRule(CSSPropertyID id) : Longhand(id) {}
 
   bool IsEnabled() const override {
     return RuntimeEnabledFeatures::CSSApplyAtRulesEnabled();
