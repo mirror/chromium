@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "bf197786_d8c4d747",
+        "filename": "third_party/WebKit/Source/bindings/scripts/v8_interface.py",
+        "patchSetId": 4
+      },
+      "lineNbr": 414,
+      "author": {
+        "id": 1115863
+      },
+      "writtenOn": "2017-11-09T06:14:38Z",
+      "side": 1,
+      "message": "This may not directly related to this CL, but I feel it\u0027s unfortunate that we have a lot of pylint disables here. Too long variable names is a bad signal for code health (there might be another good abstraction point).\n\nI don\u0027t want to block your work, so this is just my two cents.",
+      "range": {
+        "startLine": 414,
+        "startChar": 78,
+        "endLine": 414,
+        "endChar": 98
+      },
+      "revId": "7752b8b6a25c24de5dbc8a7667ab30b5b95849f3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
