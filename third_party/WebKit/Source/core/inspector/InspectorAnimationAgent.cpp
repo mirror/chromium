@@ -103,12 +103,10 @@ BuildObjectForAnimationEffect(KeyframeEffectReadOnly* effect,
   if (is_transition) {
     // Obtain keyframes and convert keyframes back to delay
     DCHECK(effect->Model()->IsKeyframeEffectModel());
-    const KeyframeEffectModelBase* model =
-        ToKeyframeEffectModelBase(effect->Model());
-    Vector<scoped_refptr<Keyframe>> keyframes =
-        KeyframeEffectModelBase::NormalizedKeyframesForInspector(
-            model->GetFrames());
+    const KeyframeVector& keyframes =
+        ToKeyframeEffectModelBase(effect->Model())->GetFrames();
     if (keyframes.size() == 3) {
+      DCHECK(!IsNull(keyframes.at(1)->Offset()));
       delay = keyframes.at(1)->Offset() * duration;
       duration -= delay;
       easing = keyframes.at(1)->Easing().ToString();
@@ -134,8 +132,9 @@ BuildObjectForAnimationEffect(KeyframeEffectReadOnly* effect,
 }
 
 static std::unique_ptr<protocol::Animation::KeyframeStyle>
-BuildObjectForStringKeyframe(const StringKeyframe* keyframe) {
-  Decimal decimal = Decimal::FromDouble(keyframe->Offset() * 100);
+BuildObjectForStringKeyframe(const StringKeyframe* keyframe,
+                             double computed_offset) {
+  Decimal decimal = Decimal::FromDouble(computed_offset * 100);
   String offset = decimal.ToString();
   offset.append('%');
 
@@ -153,18 +152,20 @@ BuildObjectForAnimationKeyframes(const KeyframeEffectReadOnly* effect) {
     return nullptr;
   const KeyframeEffectModelBase* model =
       ToKeyframeEffectModelBase(effect->Model());
-  Vector<scoped_refptr<Keyframe>> normalized_keyframes =
-      KeyframeEffectModelBase::NormalizedKeyframesForInspector(
+  Vector<double> computed_offsets =
+      KeyframeEffectModelBase::GetComputedOffsetsForInspector(
           model->GetFrames());
   std::unique_ptr<protocol::Array<protocol::Animation::KeyframeStyle>>
       keyframes = protocol::Array<protocol::Animation::KeyframeStyle>::create();
 
-  for (const auto& keyframe : normalized_keyframes) {
+  for (size_t i = 0; i < model->GetFrames().size(); i++) {
+    const scoped_refptr<Keyframe>& keyframe = model->GetFrames().at(i);
     // Ignore CSS Transitions
     if (!keyframe.get()->IsStringKeyframe())
       continue;
     const StringKeyframe* string_keyframe = ToStringKeyframe(keyframe.get());
-    keyframes->addItem(BuildObjectForStringKeyframe(string_keyframe));
+    keyframes->addItem(
+        BuildObjectForStringKeyframe(string_keyframe, computed_offsets.at(i)));
   }
   return protocol::Animation::KeyframesRule::create()
       .setKeyframes(std::move(keyframes))
