@@ -65,6 +65,10 @@ function BrowserTestReporter(runner) {
   });
 }
 
+mocha.runTest = function(testName) {
+  mocha.grep(new RegExp(`^${testName}$`)).run();
+}
+
 // Configure mocha.
 mocha.setup({
   // Use TDD interface instead of BDD.
