@@ -22,6 +22,30 @@
       "revId": "6babcc5df3eaaa75c638f1c46272a7350e1ef895",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ee847c78_48ccf967",
+        "filename": "chrome/browser/ui/views/device_chooser_content_view_unittest.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 50,
+      "author": {
+        "id": 1151884
+      },
+      "writtenOn": "2017-11-09T22:22:24Z",
+      "side": 1,
+      "message": "Fair enough, done. I thought a failed EXPECT in SetUp would abort the test, but it doesn\u0027t.",
+      "parentUuid": "befd6cf3_70d52e68",
+      "range": {
+        "startLine": 47,
+        "startChar": 0,
+        "endLine": 50,
+        "endChar": 40
+      },
+      "revId": "6babcc5df3eaaa75c638f1c46272a7350e1ef895",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
