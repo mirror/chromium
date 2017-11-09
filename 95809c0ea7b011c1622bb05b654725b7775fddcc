@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "980cef72_f477349e",
+        "filename": "chrome/browser/extensions/api/tabs/tabs_api.cc",
+        "patchSetId": 19
+      },
+      "lineNbr": 258,
+      "author": {
+        "id": 1145669
+      },
+      "writtenOn": "2017-11-09T14:48:50Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "a631cff3_5b837391",
+      "revId": "95809c0ea7b011c1622bb05b654725b7775fddcc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "c8dfa7a2_9e12b234",
         "filename": "chrome/browser/extensions/api/tabs/tabs_api.cc",
         "patchSetId": 19
@@ -33,6 +51,24 @@
       "revId": "95809c0ea7b011c1622bb05b654725b7775fddcc",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "bb8d7291_f51278f0",
+        "filename": "chrome/browser/extensions/api/tabs/tabs_api.cc",
+        "patchSetId": 19
+      },
+      "lineNbr": 597,
+      "author": {
+        "id": 1145669
+      },
+      "writtenOn": "2017-11-09T14:48:50Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "c8dfa7a2_9e12b234",
+      "revId": "95809c0ea7b011c1622bb05b654725b7775fddcc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -53,6 +89,24 @@
     },
     {
       "key": {
+        "uuid": "2e63796f_1ab57c64",
+        "filename": "chrome/browser/extensions/window_open_apitest.cc",
+        "patchSetId": 19
+      },
+      "lineNbr": 414,
+      "author": {
+        "id": 1145669
+      },
+      "writtenOn": "2017-11-09T14:48:50Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "a34fe25a_6c3542c1",
+      "revId": "95809c0ea7b011c1622bb05b654725b7775fddcc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "409db20c_7110a237",
         "filename": "chrome/browser/extensions/window_open_apitest.cc",
         "patchSetId": 19
@@ -67,6 +121,24 @@
       "revId": "95809c0ea7b011c1622bb05b654725b7775fddcc",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4e24859c_133e9a7a",
+        "filename": "chrome/browser/extensions/window_open_apitest.cc",
+        "patchSetId": 19
+      },
+      "lineNbr": 452,
+      "author": {
+        "id": 1145669
+      },
+      "writtenOn": "2017-11-09T14:48:50Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "409db20c_7110a237",
+      "revId": "95809c0ea7b011c1622bb05b654725b7775fddcc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -93,6 +165,30 @@
     },
     {
       "key": {
+        "uuid": "906c31df_636456b5",
+        "filename": "chrome/test/data/extensions/api_test/locked_fullscreen/with_permission/test.js",
+        "patchSetId": 19
+      },
+      "lineNbr": 5,
+      "author": {
+        "id": 1145669
+      },
+      "writtenOn": "2017-11-09T14:48:50Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "15004b51_77ef3672",
+      "range": {
+        "startLine": 5,
+        "startChar": 0,
+        "endLine": 5,
+        "endChar": 15
+      },
+      "revId": "95809c0ea7b011c1622bb05b654725b7775fddcc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "857d74b3_1aff95c7",
         "filename": "chrome/test/data/extensions/api_test/locked_fullscreen/with_permission/test.js",
         "patchSetId": 19
@@ -107,6 +203,24 @@
       "revId": "95809c0ea7b011c1622bb05b654725b7775fddcc",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "170b96cf_a4e10fd7",
+        "filename": "chrome/test/data/extensions/api_test/locked_fullscreen/with_permission/test.js",
+        "patchSetId": 19
+      },
+      "lineNbr": 11,
+      "author": {
+        "id": 1145669
+      },
+      "writtenOn": "2017-11-09T14:48:50Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "857d74b3_1aff95c7",
+      "revId": "95809c0ea7b011c1622bb05b654725b7775fddcc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }

@@ -339,6 +339,30 @@
     },
     {
       "key": {
+        "uuid": "fae0156b_8b75c545",
+        "filename": "chrome/browser/extensions/api/tabs/tabs_api.cc",
+        "patchSetId": 12
+      },
+      "lineNbr": 684,
+      "author": {
+        "id": 1145669
+      },
+      "writtenOn": "2017-11-09T14:48:50Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "29216ea9_14991d85",
+      "range": {
+        "startLine": 684,
+        "startChar": 0,
+        "endLine": 684,
+        "endChar": 24
+      },
+      "revId": "1d328ea410eb0d07539796c23bdbaedf1ffda0b0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "18d4db8a_3f8ce234",
         "filename": "chrome/browser/extensions/api/tabs/tabs_api.cc",
         "patchSetId": 12

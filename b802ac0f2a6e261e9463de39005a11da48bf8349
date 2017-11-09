@@ -55,6 +55,24 @@
     },
     {
       "key": {
+        "uuid": "f6f376f1_bbd84851",
+        "filename": "chrome/browser/extensions/api/tabs/tabs_api.cc",
+        "patchSetId": 13
+      },
+      "lineNbr": 224,
+      "author": {
+        "id": 1145669
+      },
+      "writtenOn": "2017-11-09T14:48:50Z",
+      "side": 1,
+      "message": "\"locked-fullscreen\" it is.",
+      "parentUuid": "0b80c368_3255d60f",
+      "revId": "b802ac0f2a6e261e9463de39005a11da48bf8349",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "21a616f6_bc87c843",
         "filename": "chrome/browser/extensions/api/tabs/tabs_api.cc",
         "patchSetId": 13
