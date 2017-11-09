@@ -15,10 +15,12 @@ DEFINE_WEB_CONTENTS_USER_DATA_KEY(OutOfMemoryReporter);
 OutOfMemoryReporter::~OutOfMemoryReporter() {}
 
 void OutOfMemoryReporter::AddObserver(Observer* observer) {
+  LOG(ERROR) << "Added Observer: " << observer;
   observers_.AddObserver(observer);
 }
 
 void OutOfMemoryReporter::RemoveObserver(Observer* observer) {
+  LOG(ERROR) << "Removed Observer: " << observer;
   observers_.RemoveObserver(observer);
 }
 

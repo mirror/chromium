@@ -2010,6 +2010,8 @@ split_static_library("browser") {
       "android/omnibox/autocomplete_controller_android.h",
       "android/omnibox/omnibox_prerender.cc",
       "android/omnibox/omnibox_prerender.h",
+      "android/oom_intervention/foreground_oom_observer.cc",
+      "android/oom_intervention/foreground_oom_observer.h",
       "android/oom_intervention/near_oom_monitor.cc",
       "android/oom_intervention/near_oom_monitor.h",
       "android/oom_intervention/oom_intervention_tab_helper.cc",
