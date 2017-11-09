@@ -50,6 +50,9 @@ enum TextContext {
   // Text for the menu items that appear in the touch-selection context menu.
   CONTEXT_TOUCH_MENU,
 
+  // Text used in message boxes.
+  CONTEXT_MESSAGE_BOX_BODY_TEXT,
+
   // Embedders must start TextContext enum values from this value.
   VIEWS_TEXT_CONTEXT_END,
 
