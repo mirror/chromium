@@ -36,6 +36,24 @@
     },
     {
       "key": {
+        "uuid": "2b236bfa_cc3b00cc",
+        "filename": "components/web_contents_delegate_android/web_contents_delegate_android.h",
+        "patchSetId": 9
+      },
+      "lineNbr": 114,
+      "author": {
+        "id": 1149077
+      },
+      "writtenOn": "2017-11-09T01:19:25Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "191dff2f_c937c46e",
+      "revId": "c51321fdad1f964823f344e98b4727da16727668",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "ee57d923_b6304b31",
         "filename": "content/browser/android/content_view_core.cc",
         "patchSetId": 9
@@ -47,6 +65,30 @@
       "writtenOn": "2017-11-08T22:57:04Z",
       "side": 1,
       "message": "hmm? this has nothing to do with actual browser control height?",
+      "range": {
+        "startLine": 628,
+        "startChar": 18,
+        "endLine": 628,
+        "endChar": 59
+      },
+      "revId": "c51321fdad1f964823f344e98b4727da16727668",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b66ab178_f9ef7de8",
+        "filename": "content/browser/android/content_view_core.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 628,
+      "author": {
+        "id": 1149077
+      },
+      "writtenOn": "2017-11-09T01:19:25Z",
+      "side": 1,
+      "message": "Did include DoBrowser... here to get the height (or zero if the flag is false) to avoid having to add another test-only method (DoBrowserControlsShrinkBlinkSizeForTesting). To clarify the intention, added a comment in the header, renamed the method to Get\u0027Visible\u0027TopControlHeight.... see if they address your concern.",
+      "parentUuid": "ee57d923_b6304b31",
       "range": {
         "startLine": 628,
         "startChar": 18,
@@ -76,6 +118,24 @@
     },
     {
       "key": {
+        "uuid": "9b5abda1_464863bb",
+        "filename": "content/browser/renderer_host/render_widget_host_delegate.h",
+        "patchSetId": 9
+      },
+      "lineNbr": 282,
+      "author": {
+        "id": 1149077
+      },
+      "writtenOn": "2017-11-09T01:19:25Z",
+      "side": 1,
+      "message": "Done.",
+      "parentUuid": "2b0fc028_6ce62538",
+      "revId": "c51321fdad1f964823f344e98b4727da16727668",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "a224d414_9117f507",
         "filename": "content/browser/renderer_host/render_widget_host_view_android.cc",
         "patchSetId": 9
@@ -99,6 +159,30 @@
     },
     {
       "key": {
+        "uuid": "f0600897_af343097",
+        "filename": "content/browser/renderer_host/render_widget_host_view_android.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 730,
+      "author": {
+        "id": 1149077
+      },
+      "writtenOn": "2017-11-09T01:19:25Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "a224d414_9117f507",
+      "range": {
+        "startLine": 730,
+        "startChar": 9,
+        "endLine": 730,
+        "endChar": 18
+      },
+      "revId": "c51321fdad1f964823f344e98b4727da16727668",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "36f7ed1d_b097ea8b",
         "filename": "content/browser/web_contents/web_contents_impl.cc",
         "patchSetId": 9
@@ -116,6 +200,24 @@
     },
     {
       "key": {
+        "uuid": "a3f0f6f5_720b2ed6",
+        "filename": "content/browser/web_contents/web_contents_impl.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 6059,
+      "author": {
+        "id": 1149077
+      },
+      "writtenOn": "2017-11-09T01:19:25Z",
+      "side": 1,
+      "message": "Moved to WebContentsViewAndroid. \nNo more OS guard which I believe is discouraged.",
+      "parentUuid": "36f7ed1d_b097ea8b",
+      "revId": "c51321fdad1f964823f344e98b4727da16727668",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "f7d7ebe8_a12e8255",
         "filename": "content/browser/web_contents/web_contents_view_android.cc",
         "patchSetId": 9
@@ -127,6 +229,24 @@
       "writtenOn": "2017-11-08T22:57:04Z",
       "side": 1,
       "message": "is this necessary? rwhva already overrides this?",
+      "revId": "c51321fdad1f964823f344e98b4727da16727668",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2feaaf60_2972e32b",
+        "filename": "content/browser/web_contents/web_contents_view_android.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 496,
+      "author": {
+        "id": 1149077
+      },
+      "writtenOn": "2017-11-09T01:19:25Z",
+      "side": 1,
+      "message": "This is copied over from CVC::WasResized() and necessary. What can be removed is rather the override in rwhva. Not sure why I added it but everything seems to work without it. Removed it instead.",
+      "parentUuid": "f7d7ebe8_a12e8255",
       "revId": "c51321fdad1f964823f344e98b4727da16727668",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -153,6 +273,30 @@
       "revId": "c51321fdad1f964823f344e98b4727da16727668",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "30cea8d5_54431882",
+        "filename": "content/public/android/java/src/org/chromium/content/browser/ContentViewCore.java",
+        "patchSetId": 9
+      },
+      "lineNbr": 619,
+      "author": {
+        "id": 1149077
+      },
+      "writtenOn": "2017-11-09T01:19:25Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "d7fde011_8abeb238",
+      "range": {
+        "startLine": 619,
+        "startChar": 19,
+        "endLine": 619,
+        "endChar": 52
+      },
+      "revId": "c51321fdad1f964823f344e98b4727da16727668",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
