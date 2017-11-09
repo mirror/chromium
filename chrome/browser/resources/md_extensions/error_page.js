@@ -72,6 +72,11 @@ cr.define('extensions', function() {
       'onSelectedErrorChanged_(selectedError_)',
     ],
 
+    /** @override */
+    ready: function() {
+      cr.ui.FocusOutlineManager.forDocument(document);
+    },
+
     /**
      * Watches for changes to |data| in order to fetch the corresponding
      * file source.
