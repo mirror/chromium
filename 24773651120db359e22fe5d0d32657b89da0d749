@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "eefc1055_a4802140",
+        "filename": "components/browser_watcher/watcher_metrics_provider_win.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 93,
+      "author": {
+        "id": 1003006
+      },
+      "writtenOn": "2017-11-09T22:33:15Z",
+      "side": 1,
+      "message": "This appears to cause warnings with MSVC:\nwatcher_metrics_provider_win.cc(93): warning C4018: \u0027\u003e\u0027: signed/unsigned mismatch",
+      "revId": "24773651120db359e22fe5d0d32657b89da0d749",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
