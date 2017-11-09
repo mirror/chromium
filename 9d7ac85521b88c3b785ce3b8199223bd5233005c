@@ -143,6 +143,30 @@
     },
     {
       "key": {
+        "uuid": "596a4cc6_ecc2d0dc",
+        "filename": "content/browser/network_service_restart_browsertest.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 52,
+      "author": {
+        "id": 1115968
+      },
+      "writtenOn": "2017-11-09T21:54:02Z",
+      "side": 1,
+      "message": "It does, though I\u0027m not sure its accurate.  Namely, I\u0027m not sure if the NetworkContext\u0027s notices if the pipe is closed by a crash.  I suspect it is.  Regardless of that, though, I\u0027m now convinced that NetworkServiceProcessRecovery is non-racy.  I\u0027m not sure about the other test, however.",
+      "parentUuid": "6b3e1711_a9990a76",
+      "range": {
+        "startLine": 52,
+        "startChar": 43,
+        "endLine": 52,
+        "endChar": 0
+      },
+      "revId": "9d7ac85521b88c3b785ce3b8199223bd5233005c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "ac6f2210_f3cf8ca4",
         "filename": "content/browser/network_service_restart_browsertest.cc",
         "patchSetId": 4
@@ -159,6 +183,29 @@
         "startChar": 30,
         "endLine": 93,
         "endChar": 47
+      },
+      "revId": "9d7ac85521b88c3b785ce3b8199223bd5233005c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "86105bae_84b96f09",
+        "filename": "content/browser/network_service_restart_browsertest.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 115,
+      "author": {
+        "id": 1115968
+      },
+      "writtenOn": "2017-11-09T21:54:02Z",
+      "side": 1,
+      "message": "SimulateNetworkServiceCrash spins the RunLoop...So if anything else touches partition-\u003eGetNetworkContext() in the mean time, there\u0027s a chance we\u0027ll notice it was destroyed and make a new one.  That would result in deleting network_context, and lead to a use-after-free crash.\n\nI don\u0027t think this is an issue with the above test, because we own the NetworkContextPtr (And you\u0027re right about why there\u0027s no race).",
+      "range": {
+        "startLine": 115,
+        "startChar": 29,
+        "endLine": 115,
+        "endChar": 30
       },
       "revId": "9d7ac85521b88c3b785ce3b8199223bd5233005c",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
