@@ -22,6 +22,30 @@
       "revId": "9ddecf04a93bdfdc24464e460b61515a3e349052",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "33b85cd4_d2b47d2a",
+        "filename": "ios/chrome/browser/ui/bookmarks/bookmarks_new_generation_egtest.mm",
+        "patchSetId": 4
+      },
+      "lineNbr": 131,
+      "author": {
+        "id": 1212314
+      },
+      "writtenOn": "2017-11-09T13:14:22Z",
+      "side": 0,
+      "message": "I will add those back in my next patch.  thx.",
+      "parentUuid": "c81cf68e_80d51524",
+      "range": {
+        "startLine": 131,
+        "startChar": 0,
+        "endLine": 131,
+        "endChar": 67
+      },
+      "revId": "9ddecf04a93bdfdc24464e460b61515a3e349052",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }

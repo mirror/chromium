@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "856bfe6c_1038ada2",
+        "filename": "ios/chrome/browser/ui/BUILD.gn",
+        "patchSetId": 4
+      },
+      "lineNbr": 453,
+      "author": {
+        "id": 1212314
+      },
+      "writtenOn": "2017-11-09T13:14:22Z",
+      "side": 1,
+      "message": "Sorry I should explain more clearly.\n\nThis egtest was mistakenly removed from BUILD.gn in the following CL:\nhttps://chromium-review.googlesource.com/c/chromium/src/+/736033\nSo I will add it back.",
+      "parentUuid": "148f45d9_3401a134",
+      "range": {
+        "startLine": 453,
+        "startChar": 5,
+        "endLine": 453,
+        "endChar": 29
+      },
+      "revId": "1f0745f20a0253fe0bf3570dec85b13236dc6107",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "3bf7b52a_9e77db39",
         "filename": "ios/chrome/browser/ui/bookmarks/bookmark_home_view_controller_unittest.mm",
         "patchSetId": 4
@@ -36,6 +60,30 @@
       "writtenOn": "2017-11-09T12:57:01Z",
       "side": 1,
       "message": "Should it be a scoped feature list and still run the test?",
+      "range": {
+        "startLine": 25,
+        "startChar": 0,
+        "endLine": 25,
+        "endChar": 5
+      },
+      "revId": "1f0745f20a0253fe0bf3570dec85b13236dc6107",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e24f976e_1ced693b",
+        "filename": "ios/chrome/browser/ui/bookmarks/bookmark_home_view_controller_unittest.mm",
+        "patchSetId": 4
+      },
+      "lineNbr": 25,
+      "author": {
+        "id": 1212314
+      },
+      "writtenOn": "2017-11-09T13:14:22Z",
+      "side": 1,
+      "message": "I will try use scoped feature in my next patch.",
+      "parentUuid": "3bf7b52a_9e77db39",
       "range": {
         "startLine": 25,
         "startChar": 0,
