@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "555e31a4_434c0d19",
+        "filename": "third_party/WebKit/Source/platform/graphics/compositing/CompositedLayerRasterInvalidator.cpp",
+        "patchSetId": 4
+      },
+      "lineNbr": 100,
+      "author": {
+        "id": 1003330
+      },
+      "writtenOn": "2017-11-09T00:56:43Z",
+      "side": 1,
+      "message": "This check is not strong enough, because intermediate clips may be in a rotated space, in which case, LocalToAncestorClipRect() can return false positive. For example:\n\u003cdiv style\u003d\"transform:skewX(45deg); overflow:hidden;\"\u003e\n  \u003cdiv style\u003d\"transform:skewX(-45deg);\"\u003e\n  Foo\n  \u003c/div\u003e\n\u003c/div\u003e\nThere is a TODO item in GeometryMapper that we should signal false positive in the cases of transform and rounded border. See crbug.com/708741.\n\nAlso we should check that there is no intermediate effects that can move pixels. Incremental invalidation may be hard for those cases.",
+      "revId": "0d130cf780ac3acadd46563fc224c8098280ccc5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b355c473_d326ba7f",
+        "filename": "third_party/WebKit/Source/platform/graphics/compositing/CompositedLayerRasterInvalidator.cpp",
+        "patchSetId": 4
+      },
+      "lineNbr": 241,
+      "author": {
+        "id": 1003330
+      },
+      "writtenOn": "2017-11-09T00:56:43Z",
+      "side": 1,
+      "message": "This is a bit lame... I think SkRegion should be efficient enough.\n\nSkRegion diff(old_chunk.bounds_in_layer);\ndiff.op(new_chunk.bounds_in_layer, SkRegion::kXOR_Op);\nfor (SkRegion::Iterator it(diff); !it.done(); id.next())\n  AddRasterInvalidation(it.rect(), \u0026new_chunk.id.client, PaintInvalidationReason::kIncremental);",
+      "revId": "0d130cf780ac3acadd46563fc224c8098280ccc5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
