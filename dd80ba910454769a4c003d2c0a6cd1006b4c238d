@@ -1,0 +1,55 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "4977860a_b5483e38",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 1
+      },
+      "lineNbr": 9,
+      "author": {
+        "id": 1002532
+      },
+      "writtenOn": "2017-11-09T16:38:38Z",
+      "side": 1,
+      "message": "What\u0027s OMA? Can you expand the acronym for others not familiar?",
+      "revId": "dd80ba910454769a4c003d2c0a6cd1006b4c238d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "21f6abb8_ed03cd3f",
+        "filename": "chrome/browser/android/download/intercept_download_navigation_throttle.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 32,
+      "author": {
+        "id": 1002532
+      },
+      "writtenOn": "2017-11-09T16:38:38Z",
+      "side": 1,
+      "message": "can skip this (WC::FromRVH does null check so that all the callers don\u0027t have to)",
+      "revId": "dd80ba910454769a4c003d2c0a6cd1006b4c238d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1649a793_cb9d29ce",
+        "filename": "chrome/browser/chrome_content_browser_client.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 3302,
+      "author": {
+        "id": 1002532
+      },
+      "writtenOn": "2017-11-09T16:38:38Z",
+      "side": 1,
+      "message": "since this is always created, no need for if check",
+      "revId": "dd80ba910454769a4c003d2c0a6cd1006b4c238d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
