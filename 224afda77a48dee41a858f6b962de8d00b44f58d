@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "11d8b24a_8b164eb1",
+        "filename": "chrome/browser/ui/cocoa/bookmarks/bookmark_button_cell.mm",
+        "patchSetId": 2
+      },
+      "lineNbr": 418,
+      "author": {
+        "id": 1160249
+      },
+      "writtenOn": "2017-11-09T14:03:25Z",
+      "side": 1,
+      "message": "Actually, I\u0027d definitely delete this check. Width should be set to a known value, the default from [super titleRectForBounds:] isn\u0027t known.",
+      "parentUuid": "f4112908_ad499799",
+      "range": {
+        "startLine": 418,
+        "startChar": 4,
+        "endLine": 418,
+        "endChar": 43
+      },
+      "revId": "224afda77a48dee41a858f6b962de8d00b44f58d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "46557671_76470ca1",
         "filename": "chrome/browser/ui/cocoa/bookmarks/bookmark_button_cell.mm",
         "patchSetId": 2
@@ -39,6 +63,24 @@
       "revId": "224afda77a48dee41a858f6b962de8d00b44f58d",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "4ed9a56a_706765e3",
+        "filename": "chrome/browser/ui/cocoa/bookmarks/bookmark_button_cell.mm",
+        "patchSetId": 2
+      },
+      "lineNbr": 419,
+      "author": {
+        "id": 1160249
+      },
+      "writtenOn": "2017-11-09T14:03:25Z",
+      "side": 1,
+      "message": "The RTL path subtracts kTrailingPadding when calculating textRect\u0027s width (by adding it to the origin and then subtracting the origin later), could you do that here too?",
+      "parentUuid": "46557671_76470ca1",
+      "revId": "224afda77a48dee41a858f6b962de8d00b44f58d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
