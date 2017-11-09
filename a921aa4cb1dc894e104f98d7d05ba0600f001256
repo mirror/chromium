@@ -1,0 +1,90 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "ea155edd_33ed2023",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 7
+      },
+      "lineNbr": 7,
+      "author": {
+        "id": 1000101
+      },
+      "writtenOn": "2017-11-09T19:18:42Z",
+      "side": 1,
+      "message": "nit: I would swap the order since enable new focus model by default is more imporatnt.\n\ni.e.\n  applist-focus: Enable new focus model by default and disable old tests",
+      "range": {
+        "startLine": 7,
+        "startChar": 15,
+        "endLine": 7,
+        "endChar": 69
+      },
+      "revId": "a921aa4cb1dc894e104f98d7d05ba0600f001256",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c8366339_180e4dba",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 7
+      },
+      "lineNbr": 7,
+      "author": {
+        "id": 1000101
+      },
+      "writtenOn": "2017-11-09T19:18:42Z",
+      "side": 1,
+      "message": "nit: I would swap the order since enable new focus model by default is more imporatnt.\n\ni.e.\n  applist-focus: Enable new focus model by default and disable old tests",
+      "range": {
+        "startLine": 7,
+        "startChar": 15,
+        "endLine": 7,
+        "endChar": 69
+      },
+      "revId": "a921aa4cb1dc894e104f98d7d05ba0600f001256",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9b9af842_a78c36eb",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 7
+      },
+      "lineNbr": 12,
+      "author": {
+        "id": 1000101
+      },
+      "writtenOn": "2017-11-09T19:18:42Z",
+      "side": 1,
+      "message": "nit: alignment",
+      "revId": "a921aa4cb1dc894e104f98d7d05ba0600f001256",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a0f189e6_911d8844",
+        "filename": "ui/app_list/views/apps_grid_view_unittest.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 767,
+      "author": {
+        "id": 1000101
+      },
+      "writtenOn": "2017-11-09T19:18:42Z",
+      "side": 1,
+      "message": "nit: TODO(crbug.com/766807): ...\n\nSee https://groups.google.com/a/chromium.org/d/msgid/chromium-dev/CAF1j9YNUJXvndrN_hvX0QVS5uienG-m75Ftob3Ogc%3DaDA3WzuA%40mail.gmail.com?utm_medium\u003demail\u0026utm_source\u003dfooter",
+      "range": {
+        "startLine": 767,
+        "startChar": 8,
+        "endLine": 767,
+        "endChar": 14
+      },
+      "revId": "a921aa4cb1dc894e104f98d7d05ba0600f001256",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
