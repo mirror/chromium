@@ -16,6 +16,24 @@
       "revId": "e096ffaba410f3abb6a388bc1e44a1f5eecf2475",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3551511a_fe2914df",
+        "filename": "device/media_transfer_protocol/media_transfer_protocol_manager.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 52,
+      "author": {
+        "id": 1001934
+      },
+      "writtenOn": "2017-11-09T22:10:20Z",
+      "side": 1,
+      "message": "Given the massive number of test suites that failed. I\u0027m not going to not try the fake bus route. So I put back the checks and added additional comments to explain what\u0027s happening.",
+      "parentUuid": "e380ce5d_436371cb",
+      "revId": "e096ffaba410f3abb6a388bc1e44a1f5eecf2475",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
