@@ -36,6 +36,29 @@
     },
     {
       "key": {
+        "uuid": "58795a59_89b8a282",
+        "filename": "components/omnibox/browser/break_iterator_adapter.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 82,
+      "author": {
+        "id": 1151758
+      },
+      "writtenOn": "2017-11-09T00:28:17Z",
+      "side": 1,
+      "message": "nit: an underscore is found at the current position,",
+      "range": {
+        "startLine": 82,
+        "startChar": 7,
+        "endLine": 82,
+        "endChar": 27
+      },
+      "revId": "436a8ea4b6e4e5ce5c3b5dc50fd8c9673cff3c67",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "27971460_29cb9875",
         "filename": "components/omnibox/browser/break_iterator_adapter.h",
         "patchSetId": 7
@@ -281,6 +304,29 @@
       "writtenOn": "2017-11-08T19:43:46Z",
       "side": 1,
       "message": "nit: I don\u0027t think anything in this file uses logging.  Please remove.",
+      "revId": "436a8ea4b6e4e5ce5c3b5dc50fd8c9673cff3c67",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9b0ef20e_92472dad",
+        "filename": "components/omnibox/browser/in_memory_url_index_unittest.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 1347,
+      "author": {
+        "id": 1151758
+      },
+      "writtenOn": "2017-11-09T00:28:17Z",
+      "side": 1,
+      "message": "Don\u0027t we need to have a test for more than one underscores in the input? \ne.g. abc_def_gh .\n\nPerhaps, it\u0027s ok because it\u0027s tested in another BI adaptor unittest.",
+      "range": {
+        "startLine": 1347,
+        "startChar": 22,
+        "endLine": 1347,
+        "endChar": 59
+      },
       "revId": "436a8ea4b6e4e5ce5c3b5dc50fd8c9673cff3c67",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
