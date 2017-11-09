@@ -319,7 +319,8 @@ void VrMetricsHelper::MediaStartedPlaying(const MediaPlayerInfo& media_info,
 }
 
 void VrMetricsHelper::MediaStoppedPlaying(const MediaPlayerInfo& media_info,
-                                          const MediaPlayerId&) {
+                                          const MediaPlayerId&,
+                                          bool reached_end_of_stream) {
   DCHECK_CURRENTLY_ON(content::BrowserThread::UI);
 
   if (!media_info.has_video)

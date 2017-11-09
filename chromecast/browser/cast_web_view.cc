@@ -317,7 +317,8 @@ void CastWebView::MediaStartedPlaying(const MediaPlayerInfo& media_info,
 }
 
 void CastWebView::MediaStoppedPlaying(const MediaPlayerInfo& media_info,
-                                      const MediaPlayerId& id) {
+                                      const MediaPlayerId& id,
+                                      bool reached_end_of_stream) {
   metrics::CastMetricsHelper::GetInstance()->LogMediaPause();
 }
 

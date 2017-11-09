@@ -65,7 +65,8 @@ class VrMetricsHelper : public content::WebContentsObserver {
   void MediaStartedPlaying(const MediaPlayerInfo& media_info,
                            const MediaPlayerId&) override;
   void MediaStoppedPlaying(const MediaPlayerInfo& media_info,
-                           const MediaPlayerId&) override;
+                           const MediaPlayerId&,
+                           bool reached_end_of_stream) override;
   void DidFinishNavigation(content::NavigationHandle* handle) override;
   void DidToggleFullscreenModeForTab(bool entered_fullscreen,
                                      bool will_cause_resize) override;
