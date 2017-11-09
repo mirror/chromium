@@ -22,6 +22,30 @@
       "revId": "a53265a215a85a2578e67a297e261c986d946393",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f0ef530e_70e51dd5",
+        "filename": "ios/chrome/browser/ui/activity_services/activity_service_legacy_coordinator.mm",
+        "patchSetId": 5
+      },
+      "lineNbr": 39,
+      "author": {
+        "id": 1191445
+      },
+      "writtenOn": "2017-11-09T16:24:06Z",
+      "side": 1,
+      "message": "The histogram takes in a TimeDelta.",
+      "parentUuid": "c618e1ad_11f7f5bc",
+      "range": {
+        "startLine": 39,
+        "startChar": 29,
+        "endLine": 39,
+        "endChar": 44
+      },
+      "revId": "a53265a215a85a2578e67a297e261c986d946393",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
