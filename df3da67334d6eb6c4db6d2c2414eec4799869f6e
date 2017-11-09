@@ -34,6 +34,24 @@
       "revId": "df3da67334d6eb6c4db6d2c2414eec4799869f6e",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ec904637_db845713",
+        "filename": "testing/buildbot/gn_isolate_map.pyl",
+        "patchSetId": 1
+      },
+      "lineNbr": 319,
+      "author": {
+        "id": 1181219
+      },
+      "writtenOn": "2017-11-09T03:33:06Z",
+      "side": 1,
+      "message": "To clarify, without this change, \"git cl upload\" would issue an error and block the upload.",
+      "parentUuid": "10b29a69_3bebf66f",
+      "revId": "df3da67334d6eb6c4db6d2c2414eec4799869f6e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
