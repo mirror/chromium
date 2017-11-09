@@ -35,6 +35,12 @@ class RunningSamples {
   // 0 if no sample available
   int64_t Max() const;
 
+  int64_t first_sample() const;
+
+  int64_t last_sample() const;
+
+  size_t size() const;
+
   // Whether there is at least one record.
   bool IsEmpty() const;
 
