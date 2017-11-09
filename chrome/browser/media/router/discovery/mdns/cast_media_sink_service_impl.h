@@ -113,6 +113,8 @@ class CastMediaSinkServiceImpl
                            CacheDialDiscoveredSinks);
   FRIEND_TEST_ALL_PREFIXES(CastMediaSinkServiceImplTest,
                            DualDiscoveryDoesntDuplicateCacheItems);
+  FRIEND_TEST_ALL_PREFIXES(CastMediaSinkServiceImplTest,
+                           CacheSinksForDirectNetworkChange);
   FRIEND_TEST_ALL_PREFIXES(CastMediaSinkServiceImplTest, TestAttemptConnection);
   FRIEND_TEST_ALL_PREFIXES(CastMediaSinkServiceImplTest,
                            TestInitRetryParametersWithFeatureDisabled);
@@ -204,6 +206,11 @@ class CastMediaSinkServiceImpl
   // for the device description URL advertised by Cast devices to determine the
   // long term solution for restricting dual discovery.
   bool IsProbablyNonCastDevice(const MediaSinkInternal& sink) const;
+
+  // Adds |this| as an observer of DiscoveryNetworkMonitor from the correct
+  // sequence so that future notifications will also occur on the correct
+  // sequence.
+  void AddNetworkChangeObserverOnSequence();
 
   // Holds Finch field trial parameters controlling Cast channel retry strategy.
   struct RetryParams {
