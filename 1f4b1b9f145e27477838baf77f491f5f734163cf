@@ -2,6 +2,29 @@
   "comments": [
     {
       "key": {
+        "uuid": "0d90cf77_48b28432",
+        "filename": "chrome/browser/ui/webui/settings/md_settings_ui.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 229,
+      "author": {
+        "id": 1002115
+      },
+      "writtenOn": "2017-11-09T00:54:58Z",
+      "side": 1,
+      "message": "is there a reason you need to set up a custom pref change registrar for this 1 pref?\n\nwe have a big whitelist which handles this for the hundreds of other prefs in settings.  I\u0027ve added a comment on the original pref change mechanism here:\n\nhttps://chromium-review.googlesource.com/c/chromium/src/+/599036/19/chrome/browser/resources/settings/basic_page/basic_page.js#43",
+      "range": {
+        "startLine": 229,
+        "startChar": 21,
+        "endLine": 229,
+        "endChar": 22
+      },
+      "revId": "1f4b1b9f145e27477838baf77f491f5f734163cf",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "1ab760d6_f7b00d42",
         "filename": "chrome/browser/ui/webui/settings/md_settings_ui.cc",
         "patchSetId": 2
