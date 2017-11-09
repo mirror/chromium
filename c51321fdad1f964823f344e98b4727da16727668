@@ -321,6 +321,23 @@
       "revId": "c51321fdad1f964823f344e98b4727da16727668",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "4936d9f0_4ef092f1",
+        "filename": "content/public/browser/web_contents_delegate.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 201,
+      "author": {
+        "id": 1149077
+      },
+      "writtenOn": "2017-11-09T07:18:03Z",
+      "side": 1,
+      "message": "Oops these should have been pulled out of the os guard. Will do in the next patch.",
+      "revId": "c51321fdad1f964823f344e98b4727da16727668",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
