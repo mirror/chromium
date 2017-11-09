@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "7e5178b6_fa7e79b9",
+        "filename": "chrome/utility/extensions/extensions_handler.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 171,
+      "author": {
+        "id": 1109754
+      },
+      "writtenOn": "2017-11-09T03:32:27Z",
+      "side": 0,
+      "message": "Notice this elevation test and it\u0027s attached comment.  Should we be doing the same when we move interfaces into services?",
+      "revId": "d4dfb5372f17b19164657b937346e9cea727e748",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}

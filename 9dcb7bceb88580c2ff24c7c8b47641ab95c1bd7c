@@ -1,0 +1,106 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "270fc12f_71f30051",
+        "filename": "chrome/browser/extensions/api/networking_private/networking_private_credentials_getter_win.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 20,
+      "author": {
+        "id": 1109754
+      },
+      "writtenOn": "2017-11-09T03:32:27Z",
+      "side": 1,
+      "message": "Possible unused include: are you using something from process.h anywhere?",
+      "revId": "9dcb7bceb88580c2ff24c7c8b47641ab95c1bd7c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0bdc5be2_1b4839e4",
+        "filename": "chrome/services/wifi_util_win/OWNERS",
+        "patchSetId": 8
+      },
+      "lineNbr": 2,
+      "author": {
+        "id": 1109754
+      },
+      "writtenOn": "2017-11-09T03:32:27Z",
+      "side": 1,
+      "message": "Wow: I mojo something, and I end up owning it :)",
+      "revId": "9dcb7bceb88580c2ff24c7c8b47641ab95c1bd7c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9711e282_aedcf4ba",
+        "filename": "chrome/services/wifi_util_win/public/interfaces/BUILD.gn",
+        "patchSetId": 8
+      },
+      "lineNbr": 14,
+      "author": {
+        "id": 1109754
+      },
+      "writtenOn": "2017-11-09T03:32:27Z",
+      "side": 1,
+      "message": "wifi_credentials_getter.mojom does not use common:common_custom_types, right?",
+      "revId": "9dcb7bceb88580c2ff24c7c8b47641ab95c1bd7c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b1d03106_28daf31b",
+        "filename": "chrome/services/wifi_util_win/wifi_credentials_getter.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 8,
+      "author": {
+        "id": 1109754
+      },
+      "writtenOn": "2017-11-09T03:32:27Z",
+      "side": 1,
+      "message": "strong_binding.h being used here somewhere?",
+      "revId": "9dcb7bceb88580c2ff24c7c8b47641ab95c1bd7c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0a68d681_abc9df07",
+        "filename": "chrome/utility/chrome_content_utility_client.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 312,
+      "author": {
+        "id": 1109754
+      },
+      "writtenOn": "2017-11-09T03:32:27Z",
+      "side": 1,
+      "message": "#if defined(OS_WIN) \u0026\u0026 BUILDFLAG(ENABLE_EXTENSIONS)",
+      "revId": "9dcb7bceb88580c2ff24c7c8b47641ab95c1bd7c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d07afccc_ad9dbc01",
+        "filename": "chrome/utility/chrome_content_utility_client.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 314,
+      "author": {
+        "id": 1109754
+      },
+      "writtenOn": "2017-11-09T03:32:27Z",
+      "side": 1,
+      "message": "Formerly, this interface was added only if the utility process is running elevated.  As a service, its get added regardless of elevation, which seems scary.\n\nIn fact, it hard to tell which of the services being adding in this routine need process elevation or not.  If the utility process is running elevated, perhaps we should only be adding elevated services here?  If the process is not running elevated, then only add the non-elevated services?  (We do that for mojo interfaces, see comment below).",
+      "revId": "9dcb7bceb88580c2ff24c7c8b47641ab95c1bd7c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
