@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "5599f284_afb98c81",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/customtabs/CustomTabActivity.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 302,
+      "author": {
+        "id": 1117450
+      },
+      "writtenOn": "2017-11-09T22:55:20Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "d606c0cd_90f9910c",
+      "range": {
+        "startLine": 302,
+        "startChar": 66,
+        "endLine": 302,
+        "endChar": 67
+      },
+      "revId": "424928320e5393d5040cd881dde8ea6014d420a0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "01ebef08_3d78553b",
         "filename": "chrome/android/java/src/org/chromium/chrome/browser/customtabs/CustomTabIntentDataProvider.java",
         "patchSetId": 2
@@ -45,6 +69,30 @@
       "revId": "424928320e5393d5040cd881dde8ea6014d420a0",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3673544f_d9b2f262",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/customtabs/CustomTabIntentDataProvider.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 62,
+      "author": {
+        "id": 1117450
+      },
+      "writtenOn": "2017-11-09T22:55:20Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "01ebef08_3d78553b",
+      "range": {
+        "startLine": 62,
+        "startChar": 28,
+        "endLine": 62,
+        "endChar": 53
+      },
+      "revId": "424928320e5393d5040cd881dde8ea6014d420a0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -71,6 +119,30 @@
     },
     {
       "key": {
+        "uuid": "f96e2518_c35744f7",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/customtabs/CustomTabIntentDataProvider.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 97,
+      "author": {
+        "id": 1117450
+      },
+      "writtenOn": "2017-11-09T22:55:20Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "66087cf0_ce1b51e2",
+      "range": {
+        "startLine": 97,
+        "startChar": 39,
+        "endLine": 97,
+        "endChar": 45
+      },
+      "revId": "424928320e5393d5040cd881dde8ea6014d420a0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "1c78fa25_70acd928",
         "filename": "chrome/android/java/src/org/chromium/chrome/browser/customtabs/CustomTabIntentDataProvider.java",
         "patchSetId": 2
@@ -94,6 +166,30 @@
     },
     {
       "key": {
+        "uuid": "978122dd_6dc27413",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/customtabs/CustomTabIntentDataProvider.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 99,
+      "author": {
+        "id": 1117450
+      },
+      "writtenOn": "2017-11-09T22:55:20Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "1c78fa25_70acd928",
+      "range": {
+        "startLine": 99,
+        "startChar": 40,
+        "endLine": 99,
+        "endChar": 60
+      },
+      "revId": "424928320e5393d5040cd881dde8ea6014d420a0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "34244c44_cd50c5ae",
         "filename": "chrome/android/java/src/org/chromium/chrome/browser/webapps/WebappActivity.java",
         "patchSetId": 2
@@ -114,6 +210,30 @@
       "revId": "424928320e5393d5040cd881dde8ea6014d420a0",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b71d3853_ccaa3f89",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/webapps/WebappActivity.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 849,
+      "author": {
+        "id": 1117450
+      },
+      "writtenOn": "2017-11-09T22:55:20Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "34244c44_cd50c5ae",
+      "range": {
+        "startLine": 849,
+        "startChar": 53,
+        "endLine": 849,
+        "endChar": 63
+      },
+      "revId": "424928320e5393d5040cd881dde8ea6014d420a0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
