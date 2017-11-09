@@ -558,6 +558,7 @@ class CONTENT_EXPORT ServiceWorkerVersion
   void OnThreadStarted() override;
   void OnStarting() override;
   void OnStarted() override;
+  void OnTerminationRequested() override;
   void OnStopping() override;
   void OnStopped(EmbeddedWorkerStatus old_status) override;
   void OnDetached(EmbeddedWorkerStatus old_status) override;
