@@ -193,6 +193,10 @@ openssl req -x509 -days 3650 -extensions req_spdy_pooling \
     -config ../scripts/ee.cnf -newkey rsa:2048 -text \
     -out ../certificates/spdy_pooling.pem
 
+## Generate static char array that can be included at compile time.
+/bin/sh -c "xxd -i < ../certificates/spdy_pooling.pem \
+    > ../certificates/spdy_pooling.inc"
+
 ## SubjectAltName parsing
 openssl req -x509 -days 3650 -extensions req_san_sanity \
     -config ../scripts/ee.cnf -newkey rsa:2048 -text \

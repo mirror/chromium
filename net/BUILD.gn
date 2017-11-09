@@ -6203,6 +6203,7 @@ fuzzer_test("net_http_server_fuzzer") {
 
 fuzzer_test("net_spdy_session_fuzzer") {
   sources = [
+    "data/ssl/certificates/spdy_pooling.inc",
     "spdy/chromium/spdy_session_fuzzer.cc",
   ]
   deps = [
