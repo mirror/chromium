@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "79d6c1bf_fcbd01ac",
+        "filename": "ios/chrome/browser/ui/browser_view_controller.mm",
+        "patchSetId": 11
+      },
+      "lineNbr": 397,
+      "author": {
+        "id": 1192584
+      },
+      "writtenOn": "2017-11-09T21:12:50Z",
+      "side": 1,
+      "message": "Thanks, fixed! This was coming in through the Coordinator import. Remind me to have an offline discussion about how we feel about umbrella headers!",
+      "parentUuid": "99cb941d_c78c242c",
+      "range": {
+        "startLine": 397,
+        "startChar": 36,
+        "endLine": 397,
+        "endChar": 66
+      },
+      "revId": "e4c1dbafd98b9cdf0aa51b175bd87b76f8dedb54",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "9121d91c_de4b83c6",
         "filename": "ios/chrome/browser/ui/browser_view_controller.mm",
         "patchSetId": 11
@@ -39,6 +63,24 @@
       "revId": "e4c1dbafd98b9cdf0aa51b175bd87b76f8dedb54",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d77c73d8_526364fa",
+        "filename": "ios/chrome/browser/ui/browser_view_controller.mm",
+        "patchSetId": 11
+      },
+      "lineNbr": 4220,
+      "author": {
+        "id": 1192584
+      },
+      "writtenOn": "2017-11-09T21:12:50Z",
+      "side": 1,
+      "message": "Thanks, I\u0027ve reshuffled things so all the Browser Commands are together under that pragma.",
+      "parentUuid": "9121d91c_de4b83c6",
+      "revId": "e4c1dbafd98b9cdf0aa51b175bd87b76f8dedb54",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -65,6 +107,30 @@
     },
     {
       "key": {
+        "uuid": "bd40ac99_25f65c87",
+        "filename": "ios/chrome/browser/ui/commands/tools_menu_commands.h",
+        "patchSetId": 11
+      },
+      "lineNbr": 11,
+      "author": {
+        "id": 1192584
+      },
+      "writtenOn": "2017-11-09T21:12:50Z",
+      "side": 1,
+      "message": "👍",
+      "parentUuid": "d26da880_829fd6b3",
+      "range": {
+        "startLine": 10,
+        "startChar": 40,
+        "endLine": 11,
+        "endChar": 24
+      },
+      "revId": "e4c1dbafd98b9cdf0aa51b175bd87b76f8dedb54",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "7e75111b_cbff32d0",
         "filename": "ios/chrome/browser/ui/stack_view/stack_view_controller.mm",
         "patchSetId": 11
@@ -88,6 +154,30 @@
     },
     {
       "key": {
+        "uuid": "bf9a1bab_09ff468f",
+        "filename": "ios/chrome/browser/ui/stack_view/stack_view_controller.mm",
+        "patchSetId": 11
+      },
+      "lineNbr": 204,
+      "author": {
+        "id": 1192584
+      },
+      "writtenOn": "2017-11-09T21:12:50Z",
+      "side": 1,
+      "message": "👍",
+      "parentUuid": "7e75111b_cbff32d0",
+      "range": {
+        "startLine": 204,
+        "startChar": 34,
+        "endLine": 204,
+        "endChar": 64
+      },
+      "revId": "e4c1dbafd98b9cdf0aa51b175bd87b76f8dedb54",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "a2843caf_1403a14d",
         "filename": "ios/chrome/browser/ui/stack_view/stack_view_controller.mm",
         "patchSetId": 11
@@ -99,6 +189,24 @@
       "writtenOn": "2017-11-09T04:11:56Z",
       "side": 1,
       "message": "I can\u0027t find where |toolsMenuCoordinator| is actually started.  Which class handles the command to start this coordinator?  Does it make sense for this class and BVC to just handle these commands directly, since they own the coordinators?  If we keep it such that another class starts |toolsMenuCoordinator|, we should just move it to StackViewController\u0027s public interface.",
+      "revId": "e4c1dbafd98b9cdf0aa51b175bd87b76f8dedb54",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1c482e76_52159e2f",
+        "filename": "ios/chrome/browser/ui/stack_view/stack_view_controller.mm",
+        "patchSetId": 11
+      },
+      "lineNbr": 515,
+      "author": {
+        "id": 1192584
+      },
+      "writtenOn": "2017-11-09T21:12:50Z",
+      "side": 1,
+      "message": "ToolsMenuCoordinator works similarly to the history coordinator, in that when it is supplied with a dispatcher it registers itself as the handler for the coordinator commands, when it handles those commands it \u0027starts\u0027 itself.\n\nIn discussion with Ed and Sergio, we struck on this pattern as there a preexisting parallel in the history coordinator, and also because there isn\u0027t a single class where the coordinator would be started and stopped - the Toolbar currently \u0027starts\u0027 the presentation (with a dispatcher call) and the StackViewController is capable of \u0027stopping\u0027 it, (again via the dispatcher). We could remove the dispatcher from the StackView implementation, and the Coordinator would work just fine, but we would need to somehow plumb through the Coordinator object between the Toolbar and the StackViewController.\n\nDoes that make sense? Let me know if you have strong opinions about presenting the coordinator directly and I can see what that might look like?",
+      "parentUuid": "a2843caf_1403a14d",
       "revId": "e4c1dbafd98b9cdf0aa51b175bd87b76f8dedb54",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -128,6 +236,30 @@
     },
     {
       "key": {
+        "uuid": "91c2aaba_e6318bbc",
+        "filename": "ios/chrome/browser/ui/toolbar/toolbar_controller.h",
+        "patchSetId": 11
+      },
+      "lineNbr": 16,
+      "author": {
+        "id": 1192584
+      },
+      "writtenOn": "2017-11-09T21:12:50Z",
+      "side": 1,
+      "message": "If this is just forward declared, WebToolbarController, which wants to use this protocol-conforming object, complains that it doesn\u0027t see any selector \u0027isShowingToolsMenu\u0027.\n\nSo the protocol needs to be exposed to this class and its descendants somewhere. As this is the class header that declares the conforming property, is best practice to leave it here (alternatively it could go in the subclass, but that seems bad to disconnect it from the property declaration, and it would have to be repeated for all subclasses that wanted to use the property)? Thanks!\n\n(Resolved?)",
+      "parentUuid": "c3f98c79_a452e3cd",
+      "range": {
+        "startLine": 16,
+        "startChar": 0,
+        "endLine": 16,
+        "endChar": 90
+      },
+      "revId": "e4c1dbafd98b9cdf0aa51b175bd87b76f8dedb54",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "ef27ea07_c5623a38",
         "filename": "ios/chrome/browser/ui/toolbar/toolbar_controller.h",
         "patchSetId": 11
@@ -151,6 +283,30 @@
     },
     {
       "key": {
+        "uuid": "c08e250f_f73278bf",
+        "filename": "ios/chrome/browser/ui/toolbar/toolbar_controller.h",
+        "patchSetId": 11
+      },
+      "lineNbr": 46,
+      "author": {
+        "id": 1192584
+      },
+      "writtenOn": "2017-11-09T21:12:50Z",
+      "side": 1,
+      "message": "In this case, this is in the header file for ToolbarController itself, so I thought this was essentially equivalent, but to avoid any doubt, I\u0027ll adopt your suggestion, thanks!",
+      "parentUuid": "ef27ea07_c5623a38",
+      "range": {
+        "startLine": 45,
+        "startChar": 3,
+        "endLine": 46,
+        "endChar": 40
+      },
+      "revId": "e4c1dbafd98b9cdf0aa51b175bd87b76f8dedb54",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "e86124ce_0e07fcde",
         "filename": "ios/chrome/browser/ui/toolbar/toolbar_controller.h",
         "patchSetId": 11
@@ -162,6 +318,30 @@
       "writtenOn": "2017-11-09T00:35:19Z",
       "side": 1,
       "message": "What do you think about inverting this to be more like UIKit\u0027s |isHidden| property? \nhttps://developer.apple.com/documentation/uikit/uiview/1622585-hidden",
+      "range": {
+        "startLine": 96,
+        "startChar": 0,
+        "endLine": 96,
+        "endChar": 64
+      },
+      "revId": "e4c1dbafd98b9cdf0aa51b175bd87b76f8dedb54",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ca246b7e_82587d3b",
+        "filename": "ios/chrome/browser/ui/toolbar/toolbar_controller.h",
+        "patchSetId": 11
+      },
+      "lineNbr": 96,
+      "author": {
+        "id": 1192584
+      },
+      "writtenOn": "2017-11-09T21:12:50Z",
+      "side": 1,
+      "message": "The naming for this thing is tough - this method does *not* hide and show the button, it updates the state of the button for the given visibility of the menu. \n\nSo the chosen naming here just follows the ToolbarToolsMenuButton\u0027s method:\nsetToolsMenuIsVisible:\n\n... the challenge changing this is both the complexity of communicating that this is not setting visibility, but state based on something else\u0027s visibility, and that ToolbarController has to be opaque and not expose the button directly (cf. Sergio\u0027s comments).\n\nSo we can\u0027t have:\n\n\u0027setToolsMenuHidden:\u0027 - infers it will control the whole menu visibility, it won\u0027t\n\n... something like this might be more concise?:\n\n\u0027setToolsMenuVisibilityForMenuButton:\n\n... although abstracting away the \u0027button\u0027 implementation detail might be nice, and this is a bit softer than the \u0027set...Hidden\u0027: option:\n\n\u0027setToolsMenuVisibility:\u0027\n\n... what do you think about this last option?",
+      "parentUuid": "e86124ce_0e07fcde",
       "range": {
         "startLine": 96,
         "startChar": 0,
@@ -197,6 +377,30 @@
     },
     {
       "key": {
+        "uuid": "a413dc10_7bb7e472",
+        "filename": "ios/chrome/browser/ui/toolbar/toolbar_controller.mm",
+        "patchSetId": 11
+      },
+      "lineNbr": 84,
+      "author": {
+        "id": 1192584
+      },
+      "writtenOn": "2017-11-09T21:12:50Z",
+      "side": 1,
+      "message": "For some reason I thought this was preferred style - the \u0027style_\u0027 variable is also declared in this way - I\u0027ll remove both, thanks!",
+      "parentUuid": "ff849690_e2c4b02f",
+      "range": {
+        "startLine": 84,
+        "startChar": 0,
+        "endLine": 84,
+        "endChar": 72
+      },
+      "revId": "e4c1dbafd98b9cdf0aa51b175bd87b76f8dedb54",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "80169ec8_cb256728",
         "filename": "ios/chrome/browser/ui/toolbar/toolbar_controller.mm",
         "patchSetId": 11
@@ -217,6 +421,30 @@
       "revId": "e4c1dbafd98b9cdf0aa51b175bd87b76f8dedb54",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ae25c52e_53fbb96d",
+        "filename": "ios/chrome/browser/ui/toolbar/toolbar_controller.mm",
+        "patchSetId": 11
+      },
+      "lineNbr": 309,
+      "author": {
+        "id": 1192584
+      },
+      "writtenOn": "2017-11-09T21:12:50Z",
+      "side": 1,
+      "message": "👍",
+      "parentUuid": "80169ec8_cb256728",
+      "range": {
+        "startLine": 309,
+        "startChar": 0,
+        "endLine": 309,
+        "endChar": 43
+      },
+      "revId": "e4c1dbafd98b9cdf0aa51b175bd87b76f8dedb54",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -243,6 +471,30 @@
     },
     {
       "key": {
+        "uuid": "2be82a5b_cd8d80a4",
+        "filename": "ios/chrome/browser/ui/toolbar/toolbar_controller.mm",
+        "patchSetId": 11
+      },
+      "lineNbr": 688,
+      "author": {
+        "id": 1192584
+      },
+      "writtenOn": "2017-11-09T21:12:50Z",
+      "side": 1,
+      "message": "👍",
+      "parentUuid": "75614077_c22e7f58",
+      "range": {
+        "startLine": 684,
+        "startChar": 0,
+        "endLine": 688,
+        "endChar": 0
+      },
+      "revId": "e4c1dbafd98b9cdf0aa51b175bd87b76f8dedb54",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "ae8ef7e4_cb3ae6dd",
         "filename": "ios/chrome/browser/ui/toolbar/toolbar_coordinator.h",
         "patchSetId": 11
@@ -263,6 +515,30 @@
       "revId": "e4c1dbafd98b9cdf0aa51b175bd87b76f8dedb54",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2fe81dd5_6660525b",
+        "filename": "ios/chrome/browser/ui/toolbar/toolbar_coordinator.h",
+        "patchSetId": 11
+      },
+      "lineNbr": 14,
+      "author": {
+        "id": 1192584
+      },
+      "writtenOn": "2017-11-09T21:12:50Z",
+      "side": 1,
+      "message": "👍",
+      "parentUuid": "ae8ef7e4_cb3ae6dd",
+      "range": {
+        "startLine": 14,
+        "startChar": 0,
+        "endLine": 14,
+        "endChar": 85
+      },
+      "revId": "e4c1dbafd98b9cdf0aa51b175bd87b76f8dedb54",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -289,6 +565,30 @@
     },
     {
       "key": {
+        "uuid": "98193154_eaf86d37",
+        "filename": "ios/chrome/browser/ui/toolbar/toolbar_coordinator.h",
+        "patchSetId": 11
+      },
+      "lineNbr": 15,
+      "author": {
+        "id": 1192584
+      },
+      "writtenOn": "2017-11-09T21:12:50Z",
+      "side": 1,
+      "message": "👍",
+      "parentUuid": "71553265_7c77e988",
+      "range": {
+        "startLine": 15,
+        "startChar": 0,
+        "endLine": 15,
+        "endChar": 84
+      },
+      "revId": "e4c1dbafd98b9cdf0aa51b175bd87b76f8dedb54",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "8437c5df_84e8aa3e",
         "filename": "ios/chrome/browser/ui/toolbar/toolbar_coordinator.h",
         "patchSetId": 11
@@ -309,6 +609,30 @@
       "revId": "e4c1dbafd98b9cdf0aa51b175bd87b76f8dedb54",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f749d448_4806f391",
+        "filename": "ios/chrome/browser/ui/toolbar/toolbar_coordinator.h",
+        "patchSetId": 11
+      },
+      "lineNbr": 79,
+      "author": {
+        "id": 1192584
+      },
+      "writtenOn": "2017-11-09T21:12:50Z",
+      "side": 1,
+      "message": "All other method declarations in this header have a comment preceding their section, removing this would imply this method was part of \"WebToolbarController public interface\".\n\nBut I\u0027ve removed the comment as suggested.",
+      "parentUuid": "8437c5df_84e8aa3e",
+      "range": {
+        "startLine": 79,
+        "startChar": 0,
+        "endLine": 79,
+        "endChar": 48
+      },
+      "revId": "e4c1dbafd98b9cdf0aa51b175bd87b76f8dedb54",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -335,6 +659,30 @@
     },
     {
       "key": {
+        "uuid": "36185472_c0f45649",
+        "filename": "ios/chrome/browser/ui/toolbar/toolbar_coordinator.mm",
+        "patchSetId": 11
+      },
+      "lineNbr": 111,
+      "author": {
+        "id": 1192584
+      },
+      "writtenOn": "2017-11-09T21:12:50Z",
+      "side": 1,
+      "message": "This is just a transposed comment from https://cs.chromium.org/chromium/src/ios/chrome/browser/ui/browser_view_controller.mm?type\u003dcs\u0026q\u003d%22Also+update+the+loading+state+for+the+tools+menu%22\u0026sq\u003dpackage:chromium\u0026l\u003d2154\n\n... I don\u0027t think this comment adds much however, I\u0027ll remove it.",
+      "parentUuid": "12dd080a_1abf70d2",
+      "range": {
+        "startLine": 110,
+        "startChar": 54,
+        "endLine": 111,
+        "endChar": 45
+      },
+      "revId": "e4c1dbafd98b9cdf0aa51b175bd87b76f8dedb54",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "ada7c273_6697aa4b",
         "filename": "ios/chrome/browser/ui/toolbar/toolbar_coordinator.mm",
         "patchSetId": 11
@@ -355,6 +703,30 @@
       "revId": "e4c1dbafd98b9cdf0aa51b175bd87b76f8dedb54",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "33762981_b3df807b",
+        "filename": "ios/chrome/browser/ui/toolbar/toolbar_coordinator.mm",
+        "patchSetId": 11
+      },
+      "lineNbr": 187,
+      "author": {
+        "id": 1192584
+      },
+      "writtenOn": "2017-11-09T21:12:50Z",
+      "side": 1,
+      "message": "👍",
+      "parentUuid": "ada7c273_6697aa4b",
+      "range": {
+        "startLine": 187,
+        "startChar": 0,
+        "endLine": 187,
+        "endChar": 28
+      },
+      "revId": "e4c1dbafd98b9cdf0aa51b175bd87b76f8dedb54",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -381,6 +753,30 @@
     },
     {
       "key": {
+        "uuid": "d677d47b_f463a30b",
+        "filename": "ios/chrome/browser/ui/tools_menu/public/tools_menu_configuration_provider.h",
+        "patchSetId": 11
+      },
+      "lineNbr": 31,
+      "author": {
+        "id": 1192584
+      },
+      "writtenOn": "2017-11-09T21:12:50Z",
+      "side": 1,
+      "message": "👍 (fixed in later revision)",
+      "parentUuid": "d3677567_93d41cfb",
+      "range": {
+        "startLine": 31,
+        "startChar": 17,
+        "endLine": 31,
+        "endChar": 21
+      },
+      "revId": "e4c1dbafd98b9cdf0aa51b175bd87b76f8dedb54",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "dca00cd1_f043b15f",
         "filename": "ios/chrome/browser/ui/tools_menu/public/tools_menu_presentation_provider.h",
         "patchSetId": 11
@@ -401,6 +797,30 @@
       "revId": "e4c1dbafd98b9cdf0aa51b175bd87b76f8dedb54",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4bc790e7_982b9fe0",
+        "filename": "ios/chrome/browser/ui/tools_menu/public/tools_menu_presentation_provider.h",
+        "patchSetId": 11
+      },
+      "lineNbr": 14,
+      "author": {
+        "id": 1192584
+      },
+      "writtenOn": "2017-11-09T21:12:50Z",
+      "side": 1,
+      "message": "👍",
+      "parentUuid": "dca00cd1_f043b15f",
+      "range": {
+        "startLine": 14,
+        "startChar": 39,
+        "endLine": 14,
+        "endChar": 49
+      },
+      "revId": "e4c1dbafd98b9cdf0aa51b175bd87b76f8dedb54",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -451,6 +871,30 @@
     },
     {
       "key": {
+        "uuid": "c96da654_f9df3c79",
+        "filename": "ios/chrome/browser/ui/tools_menu/public/tools_menu_presentation_provider.h",
+        "patchSetId": 11
+      },
+      "lineNbr": 17,
+      "author": {
+        "id": 1192584
+      },
+      "writtenOn": "2017-11-09T21:12:50Z",
+      "side": 1,
+      "message": "This needs to be a UIButton because it is given to the existing ToolsMenuConfiguration object which wants a button for its toolsMenuButton property.",
+      "parentUuid": "bcd89e4b_aa7afa59",
+      "range": {
+        "startLine": 17,
+        "startChar": 3,
+        "endLine": 17,
+        "endChar": 12
+      },
+      "revId": "e4c1dbafd98b9cdf0aa51b175bd87b76f8dedb54",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "e57fab0c_506a2e45",
         "filename": "ios/chrome/browser/ui/tools_menu/public/tools_menu_presentation_state_provider.h",
         "patchSetId": 11
@@ -471,6 +915,30 @@
       "revId": "e4c1dbafd98b9cdf0aa51b175bd87b76f8dedb54",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "30eb024f_1515f2e6",
+        "filename": "ios/chrome/browser/ui/tools_menu/public/tools_menu_presentation_state_provider.h",
+        "patchSetId": 11
+      },
+      "lineNbr": 13,
+      "author": {
+        "id": 1192584
+      },
+      "writtenOn": "2017-11-09T21:12:50Z",
+      "side": 1,
+      "message": "👍",
+      "parentUuid": "e57fab0c_506a2e45",
+      "range": {
+        "startLine": 13,
+        "startChar": 44,
+        "endLine": 13,
+        "endChar": 54
+      },
+      "revId": "e4c1dbafd98b9cdf0aa51b175bd87b76f8dedb54",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -497,6 +965,30 @@
     },
     {
       "key": {
+        "uuid": "33fe1d5c_df062a03",
+        "filename": "ios/chrome/browser/ui/tools_menu/tools_menu_coordinator.h",
+        "patchSetId": 11
+      },
+      "lineNbr": 12,
+      "author": {
+        "id": 1192584
+      },
+      "writtenOn": "2017-11-09T21:12:50Z",
+      "side": 1,
+      "message": "👍",
+      "parentUuid": "1db4189f_5d424287",
+      "range": {
+        "startLine": 11,
+        "startChar": 0,
+        "endLine": 12,
+        "endChar": 84
+      },
+      "revId": "e4c1dbafd98b9cdf0aa51b175bd87b76f8dedb54",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "94c4b760_e72a50f8",
         "filename": "ios/chrome/browser/ui/tools_menu/tools_menu_coordinator.h",
         "patchSetId": 11
@@ -517,6 +1009,30 @@
       "revId": "e4c1dbafd98b9cdf0aa51b175bd87b76f8dedb54",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2d68af4a_4756a699",
+        "filename": "ios/chrome/browser/ui/tools_menu/tools_menu_coordinator.h",
+        "patchSetId": 11
+      },
+      "lineNbr": 31,
+      "author": {
+        "id": 1192584
+      },
+      "writtenOn": "2017-11-09T21:12:50Z",
+      "side": 1,
+      "message": "👍",
+      "parentUuid": "94c4b760_e72a50f8",
+      "range": {
+        "startLine": 31,
+        "startChar": 0,
+        "endLine": 31,
+        "endChar": 71
+      },
+      "revId": "e4c1dbafd98b9cdf0aa51b175bd87b76f8dedb54",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -543,6 +1059,30 @@
     },
     {
       "key": {
+        "uuid": "1b1a45ad_1942a590",
+        "filename": "ios/chrome/browser/ui/tools_menu/tools_menu_coordinator.h",
+        "patchSetId": 11
+      },
+      "lineNbr": 36,
+      "author": {
+        "id": 1192584
+      },
+      "writtenOn": "2017-11-09T21:12:50Z",
+      "side": 1,
+      "message": "👍",
+      "parentUuid": "d7d7fcc0_f84cad2d",
+      "range": {
+        "startLine": 34,
+        "startChar": 0,
+        "endLine": 36,
+        "endChar": 0
+      },
+      "revId": "e4c1dbafd98b9cdf0aa51b175bd87b76f8dedb54",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "c4c85d9e_35b40823",
         "filename": "ios/chrome/browser/ui/tools_menu/tools_menu_coordinator.mm",
         "patchSetId": 11
@@ -563,6 +1103,30 @@
       "revId": "e4c1dbafd98b9cdf0aa51b175bd87b76f8dedb54",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ce0b4995_fab60e13",
+        "filename": "ios/chrome/browser/ui/tools_menu/tools_menu_coordinator.mm",
+        "patchSetId": 11
+      },
+      "lineNbr": 124,
+      "author": {
+        "id": 1192584
+      },
+      "writtenOn": "2017-11-09T21:12:50Z",
+      "side": 1,
+      "message": "👍",
+      "parentUuid": "c4c85d9e_35b40823",
+      "range": {
+        "startLine": 124,
+        "startChar": 6,
+        "endLine": 124,
+        "endChar": 61
+      },
+      "revId": "e4c1dbafd98b9cdf0aa51b175bd87b76f8dedb54",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -589,6 +1153,30 @@
     },
     {
       "key": {
+        "uuid": "ba6f2f82_1229bba8",
+        "filename": "ios/chrome/browser/ui/tools_menu/tools_popup_controller.h",
+        "patchSetId": 11
+      },
+      "lineNbr": 35,
+      "author": {
+        "id": 1192584
+      },
+      "writtenOn": "2017-11-09T21:12:50Z",
+      "side": 1,
+      "message": "👍",
+      "parentUuid": "42cdffa2_158a4584",
+      "range": {
+        "startLine": 35,
+        "startChar": 33,
+        "endLine": 35,
+        "endChar": 48
+      },
+      "revId": "e4c1dbafd98b9cdf0aa51b175bd87b76f8dedb54",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "01d792e1_90d6199d",
         "filename": "ios/chrome/browser/ui/tools_menu/tools_popup_controller.mm",
         "patchSetId": 11
@@ -609,6 +1197,30 @@
       "revId": "e4c1dbafd98b9cdf0aa51b175bd87b76f8dedb54",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "acc89e20_e7b231c3",
+        "filename": "ios/chrome/browser/ui/tools_menu/tools_popup_controller.mm",
+        "patchSetId": 11
+      },
+      "lineNbr": 56,
+      "author": {
+        "id": 1192584
+      },
+      "writtenOn": "2017-11-09T21:12:50Z",
+      "side": 1,
+      "message": "👍",
+      "parentUuid": "01d792e1_90d6199d",
+      "range": {
+        "startLine": 56,
+        "startChar": 33,
+        "endLine": 56,
+        "endChar": 47
+      },
+      "revId": "e4c1dbafd98b9cdf0aa51b175bd87b76f8dedb54",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
