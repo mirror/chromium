@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "ef1902f6_961f3f81",
+        "filename": "chrome/test/android/javatests/src/org/chromium/chrome/test/util/RenderTestRule.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 198,
+      "author": {
+        "id": 1001606
+      },
+      "writtenOn": "2017-11-09T14:47:15Z",
+      "side": 1,
+      "message": "Nit: This comment doesn\u0027t add that much. Maybe rephrase it as an imperative, i.e. \"Add new sanitizations if more things causing flakiness are found.\"?",
+      "range": {
+        "startLine": 198,
+        "startChar": 11,
+        "endLine": 198,
+        "endChar": 68
+      },
+      "revId": "4c4415b0f97fe6ff2f96b59cfdcd5cd798d6b86b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
