@@ -67,6 +67,46 @@
       "revId": "95809c0ea7b011c1622bb05b654725b7775fddcc",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "15004b51_77ef3672",
+        "filename": "chrome/test/data/extensions/api_test/locked_fullscreen/with_permission/test.js",
+        "patchSetId": 19
+      },
+      "lineNbr": 5,
+      "author": {
+        "id": 1001727
+      },
+      "writtenOn": "2017-11-09T02:21:55Z",
+      "side": 1,
+      "message": "nit: since this is test, you can concatenate smaller substring to fit them within 80 char limit.",
+      "range": {
+        "startLine": 5,
+        "startChar": 0,
+        "endLine": 5,
+        "endChar": 15
+      },
+      "revId": "95809c0ea7b011c1622bb05b654725b7775fddcc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "857d74b3_1aff95c7",
+        "filename": "chrome/test/data/extensions/api_test/locked_fullscreen/with_permission/test.js",
+        "patchSetId": 19
+      },
+      "lineNbr": 11,
+      "author": {
+        "id": 1001727
+      },
+      "writtenOn": "2017-11-09T02:21:55Z",
+      "side": 1,
+      "message": "nit: Here and below: chrome.test.assertEq(\u0027locked\u0027, window.state), i.e. assertEq(expected, actual).",
+      "revId": "95809c0ea7b011c1622bb05b654725b7775fddcc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
