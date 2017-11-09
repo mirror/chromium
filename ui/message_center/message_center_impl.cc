@@ -529,6 +529,25 @@ void MessageCenterImpl::ClickOnNotificationButton(const std::string& id,
   }
 }
 
+void MessageCenterImpl::ClickOnNotificationButtonWithReply(
+    const std::string& id,
+    int button_index,
+    const base::string16& reply) {
+  DCHECK_CALLED_ON_VALID_THREAD(thread_checker_);
+  if (FindVisibleNotificationById(id) == nullptr)
+    return;
+#if defined(OS_CHROMEOS)
+  if (HasPopupNotifications())
+    MarkSinglePopupAsShown(id, true);
+#endif
+  scoped_refptr<NotificationDelegate> delegate =
+      notification_list_->GetNotificationDelegate(id);
+  if (delegate.get())
+    delegate->ButtonClickWithReply(button_index, reply);
+  for (auto& observer : observer_list_)
+    observer.OnNotificationButtonClickedWithReply(id, button_index, reply);
+}
+
 void MessageCenterImpl::ClickOnSettingsButton(const std::string& id) {
   DCHECK_CALLED_ON_VALID_THREAD(thread_checker_);
   DCHECK(!iterating_);
