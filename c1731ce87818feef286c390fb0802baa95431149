@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "58f5dfd1_e83c6e4f",
+        "filename": "ash/accessibility/accessibility_controller.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 106,
+      "author": {
+        "id": 1000045
+      },
+      "writtenOn": "2017-11-09T21:41:04Z",
+      "side": 1,
+      "message": "It\u0027s unfortunate this is necessary. I think the browser test TrayAccessibilityTest is doing something wrong with how it simulates login (in theory it shouldn\u0027t need to poke directly into ash). I\u0027m going to take a quick look at removing AccessibilityController::SetPrefServiceForTest() -- I should have an answer today.\n\nFor now this is fine, just be aware I might delete pref_service_for_test_ soon. :-)",
+      "revId": "c1731ce87818feef286c390fb0802baa95431149",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
