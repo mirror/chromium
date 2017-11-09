@@ -104,6 +104,24 @@
       "revId": "46f485b7ccac87d98c0c656f89207e0f986d9bd7",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "d9183dc5_754ba098",
+        "filename": "content/renderer/service_worker/web_service_worker_provider_impl.h",
+        "patchSetId": 7
+      },
+      "lineNbr": 106,
+      "author": {
+        "id": 1001472
+      },
+      "writtenOn": "2017-11-09T08:18:47Z",
+      "side": 1,
+      "message": "Sg. Maybe we could also elaborate a bit more? \"|provider_client_| is implemented by blink::SWContainer and this pointer\u0027s nullified when its execution context is destroyed. (|this| is attached to the same context, but could live longer until the context is GC\u0027ed)\"",
+      "parentUuid": "e8e013fd_129d7723",
+      "revId": "46f485b7ccac87d98c0c656f89207e0f986d9bd7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }

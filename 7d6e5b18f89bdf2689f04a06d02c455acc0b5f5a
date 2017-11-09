@@ -110,6 +110,24 @@
       "revId": "7d6e5b18f89bdf2689f04a06d02c455acc0b5f5a",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0696053b_e01f7fce",
+        "filename": "content/renderer/service_worker/web_service_worker_provider_impl.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 77,
+      "author": {
+        "id": 1001472
+      },
+      "writtenOn": "2017-11-09T08:18:47Z",
+      "side": 1,
+      "message": "(Overlooked this question) originally we were thinking that one ProviderContext (and therefore a pair of dispatcher + provider) could be shared by multiple clients (e.g. for document and its workers) but it didn\u0027t happen and the new design with mojo will look totally different, so just removing this together with various maps looks fine.",
+      "parentUuid": "9b7de5c3_f7de0e06",
+      "revId": "7d6e5b18f89bdf2689f04a06d02c455acc0b5f5a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
