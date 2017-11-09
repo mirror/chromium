@@ -16,9 +16,10 @@
 window.onmessage = e => {
   const worklet_type = e.data.type;
   const script_url = e.data.script_url;
-  get_worklet(worklet_type).addModule(script_url)
-      .then(() => window.opener.postMessage('RESOLVED', '*'))
-      .catch(e => window.opener.postMessage('REJECTED', '*'));
+  undefined.foo();
+//  get_worklet(worklet_type).addModule(script_url)
+//      .then(() => window.opener.postMessage('RESOLVED', '*'))
+//      .catch(e => window.opener.postMessage('REJECTED', '*'));
 };
 
 window.opener.postMessage('LOADED', '*');
