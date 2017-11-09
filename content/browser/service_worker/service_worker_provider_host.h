@@ -543,6 +543,8 @@ class CONTENT_EXPORT ServiceWorkerProviderHost
   DISALLOW_COPY_AND_ASSIGN(ServiceWorkerProviderHost);
 };
 
+WebContents* GetWebContents(int render_process_id, int render_frame_id);
+
 }  // namespace content
 
 #endif  // CONTENT_BROWSER_SERVICE_WORKER_SERVICE_WORKER_PROVIDER_HOST_H_

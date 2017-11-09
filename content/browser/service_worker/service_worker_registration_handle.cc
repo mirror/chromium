@@ -22,16 +22,6 @@
 
 namespace content {
 
-namespace {
-
-WebContents* GetWebContents(int render_process_id, int render_frame_id) {
-  RenderFrameHost* rfh =
-      RenderFrameHost::FromID(render_process_id, render_frame_id);
-  return WebContents::FromRenderFrameHost(rfh);
-}
-
-}  // anonymous namespace
-
 ServiceWorkerRegistrationHandle::ServiceWorkerRegistrationHandle(
     base::WeakPtr<ServiceWorkerContextCore> context,
     ServiceWorkerDispatcherHost* dispatcher_host,

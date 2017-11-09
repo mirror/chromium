@@ -121,12 +121,6 @@ void RemoveProviderHost(base::WeakPtr<ServiceWorkerContextCore> context,
   context->RemoveProviderHost(process_id, provider_id);
 }
 
-WebContents* GetWebContents(int render_process_id, int render_frame_id) {
-  RenderFrameHost* rfh =
-      RenderFrameHost::FromID(render_process_id, render_frame_id);
-  return WebContents::FromRenderFrameHost(rfh);
-}
-
 void GetInterfaceImpl(const std::string& interface_name,
                       mojo::ScopedMessagePipeHandle interface_pipe,
                       const url::Origin& origin,
@@ -141,6 +135,12 @@ void GetInterfaceImpl(const std::string& interface_name,
 }
 
 }  // anonymous namespace
+
+WebContents* GetWebContents(int render_process_id, int render_frame_id) {
+  RenderFrameHost* rfh =
+      RenderFrameHost::FromID(render_process_id, render_frame_id);
+  return WebContents::FromRenderFrameHost(rfh);
+}
 
 // static
 std::unique_ptr<ServiceWorkerProviderHost>
