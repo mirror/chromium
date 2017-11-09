@@ -22,6 +22,30 @@
       "revId": "b865a2fb7204677a04d3de3c93836cfdb4cb46e4",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8b9187ba_8981348f",
+        "filename": "ios/chrome/browser/ui/fullscreen/legacy_fullscreen_controller.mm",
+        "patchSetId": 3
+      },
+      "lineNbr": 716,
+      "author": {
+        "id": 1116027
+      },
+      "writtenOn": "2017-11-09T09:23:14Z",
+      "side": 1,
+      "message": "Removed anyway (check was in the old code path that got the WebState from the CRWWebController).",
+      "parentUuid": "f193cff5_102bb90c",
+      "range": {
+        "startLine": 716,
+        "startChar": 8,
+        "endLine": 716,
+        "endChar": 16
+      },
+      "revId": "b865a2fb7204677a04d3de3c93836cfdb4cb46e4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
