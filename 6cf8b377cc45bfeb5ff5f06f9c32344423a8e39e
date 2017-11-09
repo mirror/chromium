@@ -46,6 +46,29 @@
       "revId": "6cf8b377cc45bfeb5ff5f06f9c32344423a8e39e",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3c7e48b2_0c31c32d",
+        "filename": "chrome/browser/android/bookmarks/partner_bookmarks_reader.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 313,
+      "author": {
+        "id": 1144344
+      },
+      "writtenOn": "2017-11-09T06:59:11Z",
+      "side": 1,
+      "message": "I think we should differentiate errors here. For example, FAILURE_CONNECTION_ERROR means the device is offline, and we should retry next time. On the other hand, FAILURE_HTTP_ERROR means the URL doesn\u0027t have a favicon, and we should not try to retrieve it again for a while.\n\nLooks like the chromium favicon code already has throttling built-in, but I guess we still want to have our own safeguard, since the cache there is not persistent.\n\nSee UnableToDownloadFavicon():\nhttps://cs.chromium.org/chromium/src/components/favicon/core/favicon_service_impl.cc?l\u003d261\u0026gs\u003dcpp%253Afavicon%253A%253Aclass-FaviconServiceImpl%253A%253AUnableToDownloadFavicon(const%2BGURL%2B%2526)%2540chromium%252F..%252F..%252Fcomponents%252Ffavicon%252Fcore%252Ffavicon_service_impl.cc%257Cdef\u0026gsn\u003dUnableToDownloadFavicon\u0026ct\u003dxref_usages",
+      "range": {
+        "startLine": 313,
+        "startChar": 6,
+        "endLine": 313,
+        "endChar": 71
+      },
+      "revId": "6cf8b377cc45bfeb5ff5f06f9c32344423a8e39e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
