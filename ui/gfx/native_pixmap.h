@@ -32,6 +32,7 @@ class NativePixmap : public base::RefCountedThreadSafe<NativePixmap> {
   virtual int GetDmaBufOffset(size_t plane) const = 0;
   virtual uint64_t GetDmaBufModifier(size_t plane) const = 0;
   virtual gfx::BufferFormat GetBufferFormat() const = 0;
+  virtual size_t GetNumberOfPlanes() const = 0;
   virtual gfx::Size GetBufferSize() const = 0;
 
   // Return an id that is guaranteed to be unique and equal for all instances

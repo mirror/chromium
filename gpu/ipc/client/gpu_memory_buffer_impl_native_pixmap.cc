@@ -36,7 +36,7 @@ GpuMemoryBufferImplNativePixmap::GpuMemoryBufferImplNativePixmap(
     std::unique_ptr<gfx::ClientNativePixmap> pixmap,
     const std::vector<gfx::NativePixmapPlane>& planes,
     base::ScopedFD fd)
-    : GpuMemoryBufferImpl(id, size, format, callback),
+    : GpuMemoryBufferImpl(id, size, format, planes.size(), callback),
       pixmap_(std::move(pixmap)),
       planes_(planes),
       fd_(std::move(fd)) {}
@@ -137,7 +137,7 @@ void GpuMemoryBufferImplNativePixmap::Unmap() {
 }
 
 int GpuMemoryBufferImplNativePixmap::stride(size_t plane) const {
-  DCHECK_LT(plane, gfx::NumberOfPlanesForBufferFormat(format_));
+  DCHECK_LT(plane, number_of_planes_);
   return pixmap_->GetStride(plane);
 }
 

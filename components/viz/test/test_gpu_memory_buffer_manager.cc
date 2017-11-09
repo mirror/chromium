@@ -48,7 +48,7 @@ class GpuMemoryBufferImpl : public gfx::GpuMemoryBuffer {
   }
   void* memory(size_t plane) override {
     DCHECK(mapped_);
-    DCHECK_LT(plane, gfx::NumberOfPlanesForBufferFormat(format_));
+    DCHECK_LT(plane, GetNumberOfPlanes());
     return reinterpret_cast<uint8_t*>(shared_memory_->memory()) + offset_ +
            gfx::BufferOffsetForBufferFormat(size_, format_, plane);
   }
@@ -58,9 +58,12 @@ class GpuMemoryBufferImpl : public gfx::GpuMemoryBuffer {
     mapped_ = false;
   }
   gfx::Size GetSize() const override { return size_; }
+  size_t GetNumberOfPlanes() const override {
+    return gfx::NumberOfPlanesForBufferFormat(format_);
+  }
   gfx::BufferFormat GetFormat() const override { return format_; }
   int stride(size_t plane) const override {
-    DCHECK_LT(plane, gfx::NumberOfPlanesForBufferFormat(format_));
+    DCHECK_LT(plane, GetNumberOfPlanes());
     return base::checked_cast<int>(gfx::RowSizeForBufferFormat(
         size_.width(), format_, static_cast<int>(plane)));
   }
@@ -103,6 +106,9 @@ class GpuMemoryBufferFromClient : public gfx::GpuMemoryBuffer {
   void* memory(size_t plane) override { return client_buffer_->memory(plane); }
   void Unmap() override { client_buffer_->Unmap(); }
   gfx::Size GetSize() const override { return client_buffer_->GetSize(); }
+  size_t GetNumberOfPlanes() const override {
+    return client_buffer_->GetNumberOfPlanes();
+  }
   gfx::BufferFormat GetFormat() const override {
     return client_buffer_->GetFormat();
   }

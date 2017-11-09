@@ -41,7 +41,7 @@ GpuMemoryBufferImplIOSurface::GpuMemoryBufferImplIOSurface(
     const DestructionCallback& callback,
     IOSurfaceRef io_surface,
     uint32_t lock_flags)
-    : GpuMemoryBufferImpl(id, size, format, callback),
+    : GpuMemoryBufferImpl(id, size, format, 1, callback),
       io_surface_(io_surface),
       lock_flags_(lock_flags) {}
 
@@ -98,7 +98,7 @@ bool GpuMemoryBufferImplIOSurface::Map() {
 
 void* GpuMemoryBufferImplIOSurface::memory(size_t plane) {
   DCHECK(mapped_);
-  DCHECK_LT(plane, gfx::NumberOfPlanesForBufferFormat(format_));
+  DCHECK_LT(plane, number_of_planes_);
   return IOSurfaceGetBaseAddressOfPlane(io_surface_, plane);
 }
 
@@ -109,7 +109,7 @@ void GpuMemoryBufferImplIOSurface::Unmap() {
 }
 
 int GpuMemoryBufferImplIOSurface::stride(size_t plane) const {
-  DCHECK_LT(plane, gfx::NumberOfPlanesForBufferFormat(format_));
+  DCHECK_LT(plane, number_of_planes_);
   return IOSurfaceGetBytesPerRowOfPlane(io_surface_, plane);
 }
 

@@ -41,7 +41,7 @@ class RasterBufferImpl : public RasterBuffer {
     if (!buffer)
       return;
 
-    DCHECK_EQ(1u, gfx::NumberOfPlanesForBufferFormat(buffer->GetFormat()));
+    DCHECK_EQ(1u, buffer->GetNumberOfPlanes());
     bool rv = buffer->Map();
     DCHECK(rv);
     DCHECK(buffer->memory(0));

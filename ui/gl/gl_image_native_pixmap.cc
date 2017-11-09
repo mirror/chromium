@@ -173,7 +173,7 @@ bool GLImageNativePixmap::Initialize(gfx::NativePixmap* pixmap,
 
     for (size_t attrs_plane = 0;
          attrs_plane <
-         gfx::NumberOfPlanesForBufferFormat(pixmap->GetBufferFormat());
+         pixmap->GetNumberOfPlanes();
          ++attrs_plane) {
       attrs.push_back(EGL_DMA_BUF_PLANE0_FD_EXT + attrs_plane * 3);
 
@@ -187,6 +187,7 @@ bool GLImageNativePixmap::Initialize(gfx::NativePixmap* pixmap,
       attrs.push_back(pixmap->GetDmaBufPitch(pixmap_plane));
       if (has_dma_buf_import_modifier) {
         uint64_t modifier = pixmap->GetDmaBufModifier(pixmap_plane);
+
         DCHECK(attrs_plane < arraysize(kLinuxDrmModifiers));
         attrs.push_back(kLinuxDrmModifiers[attrs_plane]);
         attrs.push_back(modifier & 0xffffffff);

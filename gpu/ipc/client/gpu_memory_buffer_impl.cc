@@ -29,10 +29,12 @@ namespace gpu {
 GpuMemoryBufferImpl::GpuMemoryBufferImpl(gfx::GpuMemoryBufferId id,
                                          const gfx::Size& size,
                                          gfx::BufferFormat format,
+					 size_t number_of_planes,
                                          const DestructionCallback& callback)
     : id_(id),
       size_(size),
       format_(format),
+      number_of_planes_(number_of_planes),
       callback_(callback),
       mapped_(false) {}
 
@@ -85,6 +87,10 @@ gfx::Size GpuMemoryBufferImpl::GetSize() const {
 
 gfx::BufferFormat GpuMemoryBufferImpl::GetFormat() const {
   return format_;
+}
+
+size_t GpuMemoryBufferImpl::GetNumberOfPlanes() const {
+  return number_of_planes_;
 }
 
 gfx::GpuMemoryBufferId GpuMemoryBufferImpl::GetId() const {

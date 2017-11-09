@@ -27,7 +27,7 @@ GpuMemoryBufferImplSharedMemory::GpuMemoryBufferImplSharedMemory(
     std::unique_ptr<base::SharedMemory> shared_memory,
     size_t offset,
     int stride)
-    : GpuMemoryBufferImpl(id, size, format, callback),
+    : GpuMemoryBufferImpl(id, size, format, 1, callback),
       shared_memory_(std::move(shared_memory)),
       offset_(offset),
       stride_(stride) {
@@ -200,7 +200,7 @@ bool GpuMemoryBufferImplSharedMemory::Map() {
 
 void* GpuMemoryBufferImplSharedMemory::memory(size_t plane) {
   DCHECK(mapped_);
-  DCHECK_LT(plane, gfx::NumberOfPlanesForBufferFormat(format_));
+  DCHECK_LT(plane, number_of_planes_);
   return reinterpret_cast<uint8_t*>(shared_memory_->memory()) + offset_ +
          gfx::BufferOffsetForBufferFormat(size_, format_, plane);
 }
@@ -211,7 +211,7 @@ void GpuMemoryBufferImplSharedMemory::Unmap() {
 }
 
 int GpuMemoryBufferImplSharedMemory::stride(size_t plane) const {
-  DCHECK_LT(plane, gfx::NumberOfPlanesForBufferFormat(format_));
+  DCHECK_LT(plane, number_of_planes_);
   return gfx::RowSizeForBufferFormat(size_.width(), format_, plane);
 }
 

@@ -41,6 +41,7 @@ class GbmBuffer : public ScanoutBuffer {
       std::vector<base::ScopedFD>&& fds,
       const std::vector<gfx::NativePixmapPlane>& planes);
   uint32_t GetFormat() const { return format_; }
+  size_t GetNumberOfPlanes() const;
   uint32_t GetFlags() const { return flags_; }
   bool AreFdsValid() const;
   size_t GetFdCount() const;
@@ -118,6 +119,7 @@ class GbmPixmap : public gfx::NativePixmap {
   int GetDmaBufOffset(size_t plane) const override;
   uint64_t GetDmaBufModifier(size_t plane) const override;
   gfx::BufferFormat GetBufferFormat() const override;
+  size_t GetNumberOfPlanes() const override;
   gfx::Size GetBufferSize() const override;
   uint32_t GetUniqueId() const override;
   bool ScheduleOverlayPlane(gfx::AcceleratedWidget widget,

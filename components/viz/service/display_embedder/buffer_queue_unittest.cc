@@ -39,6 +39,9 @@ class StubGpuMemoryBufferImpl : public gfx::GpuMemoryBuffer {
   void* memory(size_t plane) override { return nullptr; }
   void Unmap() override {}
   gfx::Size GetSize() const override { return gfx::Size(); }
+  size_t GetNumberOfPlanes() const override {
+    return 1;
+  }
   gfx::BufferFormat GetFormat() const override {
     return gfx::BufferFormat::BGRX_8888;
   }

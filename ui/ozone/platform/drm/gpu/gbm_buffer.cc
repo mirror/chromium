@@ -55,7 +55,8 @@ GbmBuffer::GbmBuffer(const scoped_refptr<GbmDevice>& gbm,
     uint32_t offsets[4] = {0};
     uint64_t modifiers[4] = {0};
 
-    for (size_t i = 0; i < gbm_bo_get_num_planes(bo); ++i) {
+    size_t num_planes = GetNumberOfPlanes();
+    for (size_t i = 0; i < num_planes; ++i) {
       handles[i] = gbm_bo_get_plane_handle(bo, i).u32;
       strides[i] = gbm_bo_get_plane_stride(bo, i);
       offsets[i] = gbm_bo_get_plane_offset(bo, i);
@@ -90,6 +91,10 @@ GbmBuffer::~GbmBuffer() {
     drm_->RemoveFramebuffer(opaque_framebuffer_);
   if (bo())
     gbm_bo_destroy(bo());
+}
+
+size_t GbmBuffer::GetNumberOfPlanes() const {
+  return gbm_bo_get_num_planes(bo_);
 }
 
 bool GbmBuffer::AreFdsValid() const {
@@ -302,11 +307,7 @@ GbmPixmap::GbmPixmap(GbmSurfaceFactory* surface_manager,
 
 gfx::NativePixmapHandle GbmPixmap::ExportHandle() {
   gfx::NativePixmapHandle handle;
-  gfx::BufferFormat format =
-      ui::GetBufferFormatFromFourCCFormat(buffer_->GetFormat());
-  // TODO(dcastagna): Use gbm_bo_get_num_planes once all the formats we use are
-  // supported by gbm.
-  for (size_t i = 0; i < gfx::NumberOfPlanesForBufferFormat(format); ++i) {
+  for (size_t i = 0; i < buffer_->GetNumberOfPlanes(); ++i) {
     // Some formats (e.g: YVU_420) might have less than one fd per plane.
     if (i < buffer_->GetFdCount()) {
       base::ScopedFD scoped_fd(HANDLE_EINTR(dup(buffer_->GetFd(i))));
@@ -357,6 +358,10 @@ uint64_t GbmPixmap::GetDmaBufModifier(size_t plane) const {
 
 gfx::BufferFormat GbmPixmap::GetBufferFormat() const {
   return ui::GetBufferFormatFromFourCCFormat(buffer_->GetFormat());
+}
+
+size_t GbmPixmap::GetNumberOfPlanes() const {
+  return buffer_->GetNumberOfPlanes();
 }
 
 gfx::Size GbmPixmap::GetBufferSize() const {

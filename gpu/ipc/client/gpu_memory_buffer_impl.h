@@ -37,6 +37,7 @@ class GPU_EXPORT GpuMemoryBufferImpl : public gfx::GpuMemoryBuffer {
   // Overridden from gfx::GpuMemoryBuffer:
   gfx::Size GetSize() const override;
   gfx::BufferFormat GetFormat() const override;
+  size_t GetNumberOfPlanes() const override;
   gfx::GpuMemoryBufferId GetId() const override;
   ClientBuffer AsClientBuffer() override;
 
@@ -48,11 +49,13 @@ class GPU_EXPORT GpuMemoryBufferImpl : public gfx::GpuMemoryBuffer {
   GpuMemoryBufferImpl(gfx::GpuMemoryBufferId id,
                       const gfx::Size& size,
                       gfx::BufferFormat format,
+		      size_t number_of_planes,
                       const DestructionCallback& callback);
 
   const gfx::GpuMemoryBufferId id_;
   const gfx::Size size_;
   const gfx::BufferFormat format_;
+  const size_t number_of_planes_;
   const DestructionCallback callback_;
   bool mapped_;
   gpu::SyncToken destruction_sync_token_;

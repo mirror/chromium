@@ -61,7 +61,7 @@ GpuMemoryBufferImplAndroidHardwareBuffer::
         gfx::BufferFormat format,
         const DestructionCallback& callback,
         const base::SharedMemoryHandle& handle)
-    : GpuMemoryBufferImpl(id, size, format, callback),
+    : GpuMemoryBufferImpl(id, size, format, 1, callback),
       shared_memory_(handle, false) {}
 
 GpuMemoryBufferImplAndroidHardwareBuffer::

@@ -84,6 +84,9 @@ class GFX_EXPORT GpuMemoryBuffer {
   // Returns the format for the buffer.
   virtual BufferFormat GetFormat() const = 0;
 
+  // Returns the number of planes for the buffer.
+  virtual size_t GetNumberOfPlanes() const = 0;
+
   // Fills the stride in bytes for each plane of the buffer. The stride of
   // plane K is stored at index K-1 of the |stride| array.
   virtual int stride(size_t plane) const = 0;

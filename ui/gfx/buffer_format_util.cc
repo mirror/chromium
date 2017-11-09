@@ -97,6 +97,7 @@ std::vector<BufferFormat> GetBufferFormatsForTesting() {
                                    kBufferFormats + arraysize(kBufferFormats));
 }
 
+// Only valid for formats with linear layout
 size_t NumberOfPlanesForBufferFormat(BufferFormat format) {
   switch (format) {
     case BufferFormat::ATC:

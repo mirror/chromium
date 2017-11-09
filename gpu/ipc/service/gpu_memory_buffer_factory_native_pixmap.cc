@@ -120,6 +120,11 @@ GpuMemoryBufferFactoryNativePixmap::CreateImageForGpuMemoryBuffer(
   scoped_refptr<gl::GLImageNativePixmap> image(
       new gl::GLImageNativePixmap(size, internalformat));
   if (!image->Initialize(pixmap.get(), format)) {
+
+
+    LOG(ERROR) << "pixmap: " << pixmap.get();
+
+
     LOG(ERROR) << "Failed to create GLImage " << size.ToString() << " format "
                << static_cast<int>(format);
     return nullptr;

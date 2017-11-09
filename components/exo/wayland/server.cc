@@ -677,7 +677,7 @@ bool ValidateLinuxBufferParams(wl_resource* resource,
 
   LinuxBufferParams* linux_buffer_params =
       GetUserDataAs<LinuxBufferParams>(resource);
-  size_t num_planes = gfx::NumberOfPlanesForBufferFormat(format);
+  size_t num_planes = linux_buffer_params->planes.size();
 
   for (uint32_t i = 0; i < num_planes; ++i) {
     auto plane_it = linux_buffer_params->planes.find(i);
@@ -687,12 +687,6 @@ bool ValidateLinuxBufferParams(wl_resource* resource,
                              "missing a plane");
       return false;
     }
-  }
-
-  if (linux_buffer_params->planes.size() != num_planes) {
-    wl_resource_post_error(resource, ZWP_LINUX_BUFFER_PARAMS_V1_ERROR_PLANE_IDX,
-                           "plane idx out of bounds");
-    return false;
   }
 
   return true;
@@ -723,8 +717,7 @@ void linux_buffer_params_create(wl_client* client,
   LinuxBufferParams* linux_buffer_params =
       GetUserDataAs<LinuxBufferParams>(resource);
 
-  size_t num_planes =
-      gfx::NumberOfPlanesForBufferFormat(supported_format->buffer_format);
+  size_t num_planes = linux_buffer_params->planes.size();
 
   std::vector<gfx::NativePixmapPlane> planes;
   std::vector<base::ScopedFD> fds;
@@ -782,8 +775,7 @@ void linux_buffer_params_create_immed(wl_client* client,
   LinuxBufferParams* linux_buffer_params =
       GetUserDataAs<LinuxBufferParams>(resource);
 
-  size_t num_planes =
-      gfx::NumberOfPlanesForBufferFormat(supported_format->buffer_format);
+  size_t num_planes = linux_buffer_params->planes.size();
 
   std::vector<gfx::NativePixmapPlane> planes;
   std::vector<base::ScopedFD> fds;

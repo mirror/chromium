@@ -118,7 +118,7 @@ GpuMemoryBufferImplDXGI::GpuMemoryBufferImplDXGI(
     gfx::BufferFormat format,
     const DestructionCallback& callback,
     const base::SharedMemoryHandle& dxgi_handle)
-    : GpuMemoryBufferImpl(id, size, format, callback),
+    : GpuMemoryBufferImpl(id, size, format, 1, callback),
       shared_memory_(dxgi_handle, false) {}
 
 }  // namespace gpu

@@ -747,8 +747,7 @@ scoped_refptr<VASurface> VaapiWrapper::CreateVASurfaceForPixmap(
   va_attrib_extbuf.height = size.height();
 
   size_t num_fds = pixmap->GetDmaBufFdCount();
-  size_t num_planes =
-      gfx::NumberOfPlanesForBufferFormat(pixmap->GetBufferFormat());
+  size_t num_planes = pixmap->GetNumberOfPlanes();
   if (num_fds == 0 || num_fds > num_planes) {
     LOG(ERROR) << "Invalid number of dmabuf fds: " << num_fds
                << " , planes: " << num_planes;
