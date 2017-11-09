@@ -1733,6 +1733,10 @@ void QuicChromiumClientSession::OnProofVerifyDetailsAvailable(
 }
 
 void QuicChromiumClientSession::StartReading() {
+  if (probing_reader_) {
+    probing_reader_->StartReading();
+  }
+
   for (auto& packet_reader : packet_readers_) {
     packet_reader->StartReading();
   }
