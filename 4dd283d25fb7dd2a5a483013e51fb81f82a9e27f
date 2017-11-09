@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "97996a25_54dfd182",
+        "filename": "content/common/proxy_config_traits.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 19,
+      "author": {
+        "id": 1115968
+      },
+      "writtenOn": "2017-11-09T13:48:19Z",
+      "side": 1,
+      "message": "If you look in proxy_config.typemaps, you\u0027ll see a map from net classes to Mojo classes (Defined in proxy_config.mojom).  This file has the magic to convert them.\n\nThe mojo_name(const net::Class\u0026 foo) methods take a net object and return the mojo_name value of the corresponding mojo class, which is sent over IPC.  The Read methods do the opposite.",
+      "range": {
+        "startLine": 19,
+        "startChar": 13,
+        "endLine": 19,
+        "endChar": 14
+      },
+      "revId": "4dd283d25fb7dd2a5a483013e51fb81f82a9e27f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d7efbd23_08cbb605",
+        "filename": "content/public/common/network_service.mojom",
+        "patchSetId": 6
+      },
+      "lineNbr": 78,
+      "author": {
+        "id": 1115968
+      },
+      "writtenOn": "2017-11-09T13:48:19Z",
+      "side": 1,
+      "message": "|proxy_config_client_request| sets up a separate pipe just for the proxy configuration.  We could make this a top level method of the NetworkContext instead, but the pipe means that all configuration changes come from a single central location, while NetworkContexts can be used by anyone at any time, so I prefer this approach.",
+      "range": {
+        "startLine": 78,
+        "startChar": 22,
+        "endLine": 78,
+        "endChar": 49
+      },
+      "revId": "4dd283d25fb7dd2a5a483013e51fb81f82a9e27f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
