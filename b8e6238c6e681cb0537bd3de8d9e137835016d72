@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "6f3ca2fd_1b99aa5d",
+        "filename": "base/bits.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 84,
+      "author": {
+        "id": 1001168
+      },
+      "writtenOn": "2017-11-09T12:41:52Z",
+      "side": 1,
+      "message": "Why is_integral here?",
+      "range": {
+        "startLine": 84,
+        "startChar": 33,
+        "endLine": 84,
+        "endChar": 44
+      },
+      "revId": "b8e6238c6e681cb0537bd3de8d9e137835016d72",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
