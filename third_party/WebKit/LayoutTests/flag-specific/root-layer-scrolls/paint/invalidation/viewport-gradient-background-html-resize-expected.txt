@@ -17,17 +17,26 @@
       "backgroundColor": "#FFFFFF",
       "paintInvalidations": [
         {
-          "object": "LayoutBlockFlow DIV id='outer'",
-          "rect": [8, 8, 784, 500],
-          "reason": "background"
+          "object": "LayoutView #document",
+          "rect": [0, 0, 800, 600],
+          "reason": "background on scrolling contents layer"
+        },
+        {
+          "object": "LayoutBlockFlow BODY",
+          "rect": [0, 0, 800, 200],
+          "reason": "geometry"
         }
       ]
     }
   ],
   "objectPaintInvalidations": [
     {
-      "object": "LayoutBlockFlow DIV id='outer'",
-      "reason": "background"
+      "object": "Scrolling Contents Layer",
+      "reason": "background on scrolling contents layer"
+    },
+    {
+      "object": "LayoutBlockFlow BODY",
+      "reason": "geometry"
     }
   ]
 }

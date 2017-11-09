@@ -113,7 +113,7 @@ class CORE_EXPORT LayoutView final : public LayoutBlockFlow {
   float ZoomFactor() const;
 
   LocalFrameView* GetFrameView() const { return frame_view_; }
-  const LayoutBox& RootBox() const;
+  const LayoutBox* RootBox() const;
 
   void UpdateAfterLayout() override;
 
@@ -139,9 +139,6 @@ class CORE_EXPORT LayoutView final : public LayoutBlockFlow {
   LayoutSize OffsetForFixedPosition(bool include_pending_scroll = false) const;
 
   void InvalidatePaintForViewAndCompositedLayers();
-
-  PaintInvalidationReason InvalidatePaint(
-      const PaintInvalidatorContext&) const override;
 
   void Paint(const PaintInfo&, const LayoutPoint&) const override;
   void PaintBoxDecorationBackground(const PaintInfo&,
