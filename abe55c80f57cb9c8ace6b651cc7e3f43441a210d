@@ -1,0 +1,73 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "5dcdc4e7_cc3fb366",
+        "filename": "ios/chrome/browser/ui/tab_switcher/tab_switcher_controller.mm",
+        "patchSetId": 3
+      },
+      "lineNbr": 79,
+      "author": {
+        "id": 1163361
+      },
+      "writtenOn": "2017-11-09T22:08:11Z",
+      "side": 1,
+      "message": "Should this be \"enum class\" like others in this file?",
+      "range": {
+        "startLine": 79,
+        "startChar": 0,
+        "endLine": 79,
+        "endChar": 17
+      },
+      "revId": "abe55c80f57cb9c8ace6b651cc7e3f43441a210d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7e7f3a06_8021dc4c",
+        "filename": "ios/chrome/browser/ui/tab_switcher/tab_switcher_controller.mm",
+        "patchSetId": 3
+      },
+      "lineNbr": 231,
+      "author": {
+        "id": 1163361
+      },
+      "writtenOn": "2017-11-09T22:08:11Z",
+      "side": 1,
+      "message": "DCHECK(activeModel \u003d\u003d mainModel || activeModel \u003d\u003d otrModel);",
+      "range": {
+        "startLine": 230,
+        "startChar": 4,
+        "endLine": 231,
+        "endChar": 66
+      },
+      "revId": "abe55c80f57cb9c8ace6b651cc7e3f43441a210d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3322b6d5_453613f8",
+        "filename": "ios/chrome/browser/ui/tab_switcher/tab_switcher_controller.mm",
+        "patchSetId": 3
+      },
+      "lineNbr": 817,
+      "author": {
+        "id": 1163361
+      },
+      "writtenOn": "2017-11-09T22:08:11Z",
+      "side": 1,
+      "message": "Protect against future expansion of the enum: default: NOTREACHED()?",
+      "range": {
+        "startLine": 817,
+        "startChar": 4,
+        "endLine": 817,
+        "endChar": 19
+      },
+      "revId": "abe55c80f57cb9c8ace6b651cc7e3f43441a210d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
