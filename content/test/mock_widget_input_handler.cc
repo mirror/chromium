@@ -28,7 +28,7 @@ MockWidgetInputHandler::~MockWidgetInputHandler() {}
 
 void MockWidgetInputHandler::SetFocus(bool focused) {
   dispatched_messages_.emplace_back(
-      std::make_unique<DispatchedMessage>("SetFocus"));
+      std::make_unique<DispatchedFocusMessage>(focused));
 }
 
 void MockWidgetInputHandler::MouseCaptureLost() {
@@ -115,6 +115,10 @@ MockWidgetInputHandler::DispatchedMessage::ToEditCommand() {
 }
 MockWidgetInputHandler::DispatchedEventMessage*
 MockWidgetInputHandler::DispatchedMessage::ToEvent() {
+  return nullptr;
+}
+MockWidgetInputHandler::DispatchedFocusMessage*
+MockWidgetInputHandler::DispatchedMessage::ToFocus() {
   return nullptr;
 }
 MockWidgetInputHandler::DispatchedIMEMessage*
@@ -222,6 +226,17 @@ bool MockWidgetInputHandler::DispatchedEventMessage::HasCallback() const {
 const content::InputEvent*
 MockWidgetInputHandler::DispatchedEventMessage::Event() const {
   return event_.get();
+}
+
+MockWidgetInputHandler::DispatchedFocusMessage::DispatchedFocusMessage(
+    bool focused)
+    : DispatchedMessage("SetFocus"), focused_(focused) {}
+
+MockWidgetInputHandler::DispatchedFocusMessage::~DispatchedFocusMessage() {}
+
+MockWidgetInputHandler::DispatchedFocusMessage*
+MockWidgetInputHandler::DispatchedFocusMessage::ToFocus() {
+  return this;
 }
 
 }  // namespace content

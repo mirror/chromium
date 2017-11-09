@@ -25,6 +25,7 @@ class MockWidgetInputHandler : public mojom::WidgetInputHandler {
 
   class DispatchedEditCommandMessage;
   class DispatchedEventMessage;
+  class DispatchedFocusMessage;
   class DispatchedIMEMessage;
 
   // Abstract storage of a received call on the MockWidgetInputHandler
@@ -40,6 +41,9 @@ class MockWidgetInputHandler : public mojom::WidgetInputHandler {
 
     // Cast this to an DispatchedEventMessage if it is one, null otherwise.
     virtual DispatchedEventMessage* ToEvent();
+
+    // Cast this to an DispatchedFocusMessage if it is one, null otherwise.
+    virtual DispatchedFocusMessage* ToFocus();
 
     // Cast this to an DispatchedIMEMessage if it is one, null otherwise.
     virtual DispatchedIMEMessage* ToIME();
@@ -104,6 +108,24 @@ class MockWidgetInputHandler : public mojom::WidgetInputHandler {
     std::vector<content::EditCommand> commands_;
 
     DISALLOW_COPY_AND_ASSIGN(DispatchedEditCommandMessage);
+  };
+
+  // A DispatchedMessage that stores the focus parameters
+  // that were invoked with.
+  class DispatchedFocusMessage : public DispatchedMessage {
+   public:
+    explicit DispatchedFocusMessage(bool focused);
+    ~DispatchedFocusMessage() override;
+
+    // Override and return |this|.
+    DispatchedFocusMessage* ToFocus() override;
+
+    bool focused() const { return focused_; }
+
+   private:
+    bool focused_;
+
+    DISALLOW_COPY_AND_ASSIGN(DispatchedFocusMessage);
   };
 
   // A DispatchedMessage that stores the InputEvent and callback
