@@ -167,6 +167,30 @@
     },
     {
       "key": {
+        "uuid": "04c683d1_ed65655e",
+        "filename": "content/browser/network_service_restart_browsertest.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 52,
+      "author": {
+        "id": 1166494
+      },
+      "writtenOn": "2017-11-09T23:11:16Z",
+      "side": 1,
+      "message": "Regarding \"notices if the pipe is closed by a crash\": I\u0027m not exactly sure how it works, but it feels like there is nothing I can do other than trusting the API...\n\nAdded the concern to the design doc though (See link below).",
+      "parentUuid": "596a4cc6_ecc2d0dc",
+      "range": {
+        "startLine": 52,
+        "startChar": 43,
+        "endLine": 52,
+        "endChar": 0
+      },
+      "revId": "9d7ac85521b88c3b785ce3b8199223bd5233005c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "ac6f2210_f3cf8ca4",
         "filename": "content/browser/network_service_restart_browsertest.cc",
         "patchSetId": 4
@@ -201,6 +225,30 @@
       "writtenOn": "2017-11-09T21:54:02Z",
       "side": 1,
       "message": "SimulateNetworkServiceCrash spins the RunLoop...So if anything else touches partition-\u003eGetNetworkContext() in the mean time, there\u0027s a chance we\u0027ll notice it was destroyed and make a new one.  That would result in deleting network_context, and lead to a use-after-free crash.\n\nI don\u0027t think this is an issue with the above test, because we own the NetworkContextPtr (And you\u0027re right about why there\u0027s no race).",
+      "range": {
+        "startLine": 115,
+        "startChar": 29,
+        "endLine": 115,
+        "endChar": 30
+      },
+      "revId": "9d7ac85521b88c3b785ce3b8199223bd5233005c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9b10bbf7_c12537c3",
+        "filename": "content/browser/network_service_restart_browsertest.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 115,
+      "author": {
+        "id": 1166494
+      },
+      "writtenOn": "2017-11-09T23:11:16Z",
+      "side": 1,
+      "message": "Just to make sure I understand your concern correctly:\nYou are saying in production, it\u0027s possible that we decided to restart and delete old |network_context|, while clients are still holding the raw |mojom::NetworkContext*|. In this case the code won\u0027t crash before CL (e.g. Clients are just accessing an invalid interface), but will crash after CL since it\u0027s an invalid pointer now.\n\nI\u0027m not sure how to avoid this issue, but it feels to me that the possibly is very low and doesn\u0027t overcome the benefits of having a restartable Network Service.\n\nI\u0027ve added this concern to the design doc for future investigation, or would you suggest we solve this issue now?\nhttps://docs.google.com/document/d/14dQpOaPgnpX0TZffSGeYyE-dUS93HY06VKGWUGZHtrY/edit#heading\u003dh.69flrjb783dm",
+      "parentUuid": "86105bae_84b96f09",
       "range": {
         "startLine": 115,
         "startChar": 29,
