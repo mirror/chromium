@@ -88,6 +88,23 @@
     },
     {
       "key": {
+        "uuid": "a2843caf_1403a14d",
+        "filename": "ios/chrome/browser/ui/stack_view/stack_view_controller.mm",
+        "patchSetId": 11
+      },
+      "lineNbr": 515,
+      "author": {
+        "id": 1133065
+      },
+      "writtenOn": "2017-11-09T04:11:56Z",
+      "side": 1,
+      "message": "I can\u0027t find where |toolsMenuCoordinator| is actually started.  Which class handles the command to start this coordinator?  Does it make sense for this class and BVC to just handle these commands directly, since they own the coordinators?  If we keep it such that another class starts |toolsMenuCoordinator|, we should just move it to StackViewController\u0027s public interface.",
+      "revId": "e4c1dbafd98b9cdf0aa51b175bd87b76f8dedb54",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "c3f98c79_a452e3cd",
         "filename": "ios/chrome/browser/ui/toolbar/toolbar_controller.h",
         "patchSetId": 11
@@ -398,6 +415,30 @@
       "writtenOn": "2017-11-09T00:35:19Z",
       "side": 1,
       "message": "In clean, did we decide to make this a CGRect, rather than passing a UI element?\nIs the button actually required, or just the location of the button for placement of the menu?",
+      "range": {
+        "startLine": 17,
+        "startChar": 3,
+        "endLine": 17,
+        "endChar": 12
+      },
+      "revId": "e4c1dbafd98b9cdf0aa51b175bd87b76f8dedb54",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "bcd89e4b_aa7afa59",
+        "filename": "ios/chrome/browser/ui/tools_menu/public/tools_menu_presentation_provider.h",
+        "patchSetId": 11
+      },
+      "lineNbr": 17,
+      "author": {
+        "id": 1133065
+      },
+      "writtenOn": "2017-11-09T04:11:56Z",
+      "side": 1,
+      "message": "The actual UIViews are passed because you can use coordinator conversion API to easily account for location changes due to rotation.  I\u0027ve created crbug.com/783037 to create a helper object that can be used for dynamic location tracking without exposing the actual UIViews.",
+      "parentUuid": "f86af223_1e5fb61e",
       "range": {
         "startLine": 17,
         "startChar": 3,
