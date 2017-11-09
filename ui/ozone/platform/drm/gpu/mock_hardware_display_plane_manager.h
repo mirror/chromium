@@ -44,8 +44,12 @@ class MockHardwareDisplayPlaneManager
   int plane_count() const;
   void ResetPlaneCount();
 
+  std::vector<int> plane_render_fence_fds() const;
+  void ResetPlaneRenderFenceFDs();
+
  private:
   int plane_count_ = 0;
+  std::vector<base::ScopedFD> plane_render_fence_fds_;
 };
 
 }  // namespace ui
