@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "73ffad45_b1e71a4f",
+        "filename": "chrome/browser/ui/webui/signin/user_manager_screen_handler.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 477,
+      "author": {
+        "id": 1127730
+      },
+      "writtenOn": "2017-11-09T20:48:19Z",
+      "side": 1,
+      "message": "Does this address this TODO?",
+      "range": {
+        "startLine": 477,
+        "startChar": 18,
+        "endLine": 477,
+        "endChar": 21
+      },
+      "revId": "3f2664ba084580a8cea40c8fac8a435079472765",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
