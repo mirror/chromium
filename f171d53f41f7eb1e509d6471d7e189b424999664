@@ -180,6 +180,24 @@
     },
     {
       "key": {
+        "uuid": "05921231_08c91411",
+        "filename": "chrome/test/data/webui/extensions/extension_manager_unit_test.js",
+        "patchSetId": 18
+      },
+      "lineNbr": 69,
+      "author": {
+        "id": 1115745
+      },
+      "writtenOn": "2017-11-09T01:43:25Z",
+      "side": 1,
+      "message": "\u003e Testing interaction like \"user clicks button-\u003e request to backend sent -\u003eresponse received-\u003e DOM updated\", is more feasible with the whenCalled() pattern than with a Promise exposed from the prod code.\n\nAgreed, any methods which change state should be verified (and possibly stubbed out).  I think that checking calls to developerPrivate or service for those is desirable (hence the \"testClickingCalls\" method).  The difference is that none of the methods here change state - they only query it.  So I\u0027d only recommend moving to a onReady-style promise in this very specific case. :)",
+      "parentUuid": "c2ba09a8_fd6a485f",
+      "revId": "f171d53f41f7eb1e509d6471d7e189b424999664",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "f81afc73_5505b978",
         "filename": "chrome/test/data/webui/extensions/extension_manager_unit_test.js",
         "patchSetId": 18
