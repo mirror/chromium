@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "6cd78ace_83a9b3b7",
+        "filename": "chrome/browser/sessions/session_restore_observer.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 42,
+      "author": {
+        "id": 1112850
+      },
+      "writtenOn": "2017-11-09T20:36:25Z",
+      "side": 1,
+      "message": "This process is the same each browser window. Now this API is removed in this CL.",
+      "parentUuid": "8508dc39_aadced35",
+      "range": {
+        "startLine": 42,
+        "startChar": 50,
+        "endLine": 42,
+        "endChar": 62
+      },
+      "revId": "4b22d624e250834624f8ef20db738e7c39c66140",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "1317e0e8_857cb170",
         "filename": "chrome/browser/sessions/session_restore_observer.h",
         "patchSetId": 6
@@ -45,6 +69,30 @@
       "revId": "4b22d624e250834624f8ef20db738e7c39c66140",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "bacf69bf_1ab1b30f",
+        "filename": "chrome/browser/sessions/session_restore_observer.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 45,
+      "author": {
+        "id": 1112850
+      },
+      "writtenOn": "2017-11-09T20:36:25Z",
+      "side": 1,
+      "message": "Oh, right. I think that actually works. I was mostly thinking about just using one call to pass the number. But using OnWillRestoreTab should be enough.\n\nAfter removing this API, there is nothing for you to review in this CL. I will remove you as the reviewer. Thanks for checking!",
+      "parentUuid": "1317e0e8_857cb170",
+      "range": {
+        "startLine": 45,
+        "startChar": 15,
+        "endLine": 45,
+        "endChar": 37
+      },
+      "revId": "4b22d624e250834624f8ef20db738e7c39c66140",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
