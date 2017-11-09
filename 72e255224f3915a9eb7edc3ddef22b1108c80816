@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "3b9e57de_ec667f38",
+        "filename": "chrome/browser/chromeos/system/timezone_resolver_manager.cc",
+        "patchSetId": 10
+      },
+      "lineNbr": 136,
+      "author": {
+        "id": 1003321
+      },
+      "writtenOn": "2017-11-09T21:30:53Z",
+      "side": 1,
+      "message": "nit: keep blank line before closing brace",
+      "range": {
+        "startLine": 136,
+        "startChar": 0,
+        "endLine": 136,
+        "endChar": 26
+      },
+      "revId": "72e255224f3915a9eb7edc3ddef22b1108c80816",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f89f6aed_b31824e3",
+        "filename": "chrome/browser/extensions/api/settings_private/prefs_util.cc",
+        "patchSetId": 10
+      },
+      "lineNbr": 512,
+      "author": {
+        "id": 1003321
+      },
+      "writtenOn": "2017-11-09T21:30:53Z",
+      "side": 1,
+      "message": "we need to check if this is the right pref first, right?",
+      "range": {
+        "startLine": 512,
+        "startChar": 0,
+        "endLine": 512,
+        "endChar": 45
+      },
+      "revId": "72e255224f3915a9eb7edc3ddef22b1108c80816",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
