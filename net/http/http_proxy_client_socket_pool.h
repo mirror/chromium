@@ -32,27 +32,38 @@ class HttpProxyClientSocketWrapper;
 class NetLog;
 class NetworkQualityProvider;
 class ProxyDelegate;
+class QuicStreamFactory;
 class SSLClientSocketPool;
 class SSLSocketParams;
 class SpdySessionPool;
 class TransportClientSocketPool;
 class TransportSocketParams;
 
-// HttpProxySocketParams only needs the socket params for one of the proxy
-// types.  The other param must be NULL.  When using an HTTP Proxy,
-// |transport_params| must be set.  When using an HTTPS Proxy, |ssl_params|
-// must be set.
+// HttpProxySocketParams can include params for HTTP, HTTPS, or QUIC proxy;
+// it must only have params for exactly one of the aforementioned 3 proxy types.
+// More specifically, exactly one of the following statements must be true:
+// 1. |transport_params| is set (for using an HTTP proxy)
+// 2. |ssl_params| is set (for using an HTTPS proxy)
+// 3. |quic_version| is not QUIC_VERSION_UNSUPPORTED (for using QUIC proxy)
+// Furthermore, if using a QUIC proxy, |quic_proxy_server|, |quic_version|,
+// |quic_privacy_mode|, quic_cert_verify_flags|, and |quic_stream_factory| must
+// be valid.
 class NET_EXPORT_PRIVATE HttpProxySocketParams
     : public base::RefCounted<HttpProxySocketParams> {
  public:
   HttpProxySocketParams(
       const scoped_refptr<TransportSocketParams>& transport_params,
       const scoped_refptr<SSLSocketParams>& ssl_params,
+      const HostPortPair& quic_proxy_server,
+      QuicTransportVersion quic_version,
+      PrivacyMode quic_privacy_mode,
+      int quic_cert_verify_flags,
       const std::string& user_agent,
       const HostPortPair& endpoint,
       HttpAuthCache* http_auth_cache,
       HttpAuthHandlerFactory* http_auth_handler_factory,
       SpdySessionPool* spdy_session_pool,
+      QuicStreamFactory* quic_stream_factory,
       bool tunnel,
       ProxyDelegate* proxy_delegate);
 
@@ -62,6 +73,10 @@ class NET_EXPORT_PRIVATE HttpProxySocketParams
   const scoped_refptr<SSLSocketParams>& ssl_params() const {
     return ssl_params_;
   }
+  const HostPortPair& quic_proxy_server() const { return quic_proxy_server_; }
+  QuicTransportVersion quic_version() const { return quic_version_; }
+  PrivacyMode quic_privacy_mode() const { return quic_privacy_mode_; }
+  int quic_cert_verify_flags() const { return quic_cert_verify_flags_; }
   const std::string& user_agent() const { return user_agent_; }
   const HostPortPair& endpoint() const { return endpoint_; }
   HttpAuthCache* http_auth_cache() const { return http_auth_cache_; }
@@ -70,6 +85,9 @@ class NET_EXPORT_PRIVATE HttpProxySocketParams
   }
   SpdySessionPool* spdy_session_pool() {
     return spdy_session_pool_;
+  }
+  QuicStreamFactory* quic_stream_factory() const {
+    return quic_stream_factory_;
   }
   const HostResolver::RequestInfo& destination() const;
   bool tunnel() const { return tunnel_; }
@@ -84,7 +102,14 @@ class NET_EXPORT_PRIVATE HttpProxySocketParams
 
   const scoped_refptr<TransportSocketParams> transport_params_;
   const scoped_refptr<SSLSocketParams> ssl_params_;
+
+  const HostPortPair quic_proxy_server_;
+  QuicTransportVersion quic_version_;
+  PrivacyMode quic_privacy_mode_;
+  int quic_cert_verify_flags_;
+
   SpdySessionPool* spdy_session_pool_;
+  QuicStreamFactory* quic_stream_factory_;
   const std::string user_agent_;
   const HostPortPair endpoint_;
   HttpAuthCache* const http_auth_cache_;
