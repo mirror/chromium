@@ -671,6 +671,7 @@ QuicStreamFactory::QuicStreamFactory(
     int reduced_ping_timeout_seconds,
     bool connect_using_default_network,
     bool migrate_sessions_on_network_change,
+    bool migrate_sessions_on_network_change_v2,
     bool migrate_sessions_early,
     bool allow_server_migration,
     bool race_cert_verification,
@@ -713,6 +714,8 @@ QuicStreamFactory::QuicStreamFactory(
           connect_using_default_network &&
           NetworkChangeNotifier::AreNetworkHandlesSupported()),
       migrate_sessions_on_network_change_(migrate_sessions_on_network_change),
+      migrate_sessions_on_network_change_v2_(
+          migrate_sessions_on_network_change_v2),
       migrate_sessions_early_(migrate_sessions_early &&
                               migrate_sessions_on_network_change_),
       allow_server_migration_(allow_server_migration),
