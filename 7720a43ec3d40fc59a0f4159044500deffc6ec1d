@@ -19,6 +19,40 @@
     },
     {
       "key": {
+        "uuid": "19c5cfd9_a48158f3",
+        "filename": "media/audio/win/core_audio_util_win.cc",
+        "patchSetId": 10
+      },
+      "lineNbr": 369,
+      "author": {
+        "id": 1153409
+      },
+      "writtenOn": "2017-11-09T14:36:18Z",
+      "side": 1,
+      "message": "const, BTW",
+      "revId": "7720a43ec3d40fc59a0f4159044500deffc6ec1d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "76d940fa_9ac5a753",
+        "filename": "media/audio/win/core_audio_util_win_unittest.cc",
+        "patchSetId": 10
+      },
+      "lineNbr": 480,
+      "author": {
+        "id": 1153409
+      },
+      "writtenOn": "2017-11-09T14:36:18Z",
+      "side": 1,
+      "message": "Do we want to test UMA logging if there are no devices?",
+      "revId": "7720a43ec3d40fc59a0f4159044500deffc6ec1d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "6822ab03_464b3fb3",
         "filename": "tools/metrics/histograms/histograms.xml",
         "patchSetId": 10

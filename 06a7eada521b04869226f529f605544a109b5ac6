@@ -37,6 +37,24 @@
     },
     {
       "key": {
+        "uuid": "921503df_44677ff7",
+        "filename": "media/audio/win/core_audio_util_win.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 45,
+      "author": {
+        "id": 1153409
+      },
+      "writtenOn": "2017-11-09T14:36:18Z",
+      "side": 1,
+      "message": "I don\u0027t think reusing them in a random logging function is useful. Descriptive name helps reading, general name obscures things. Common prefix helps reading.\nSo I\u0027d prefer at least UmaLogStep + STEP_.. prefix.",
+      "parentUuid": "e51499e1_3cfd265b",
+      "revId": "06a7eada521b04869226f529f605544a109b5ac6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "19eef7e1_8b0278ce",
         "filename": "media/audio/win/core_audio_util_win.cc",
         "patchSetId": 9
@@ -329,6 +347,24 @@
       "side": 1,
       "message": "Why? It explains where does the data come from and what it represents. Or do you think this is clear from histogram name?",
       "parentUuid": "5fce0507_92463cfb",
+      "revId": "06a7eada521b04869226f529f605544a109b5ac6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0d319433_5b76cca0",
+        "filename": "tools/metrics/histograms/histograms.xml",
+        "patchSetId": 9
+      },
+      "lineNbr": 32233,
+      "author": {
+        "id": 1153409
+      },
+      "writtenOn": "2017-11-09T14:36:18Z",
+      "side": 1,
+      "message": "It\u0027s quite clear from the source code (lookup in codesearch will take 5 seconds), and without looking into the source code the paragraph above does not help anyways, so it clutters dashboard without bringing enough of value. The paragraph below is informative enough to interpret what we see on the dashboard (and if we see something bad we\u0027ll need to go look into source code anyways).\nAlso, UMA reviewers do not like this type of information, because of the reasons above. You can try to keep it, maybe you\u0027ll get not a very picky reviewer ;)",
+      "parentUuid": "94deb9d6_ff55e175",
       "revId": "06a7eada521b04869226f529f605544a109b5ac6",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
