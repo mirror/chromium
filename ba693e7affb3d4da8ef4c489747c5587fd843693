@@ -16,6 +16,24 @@
       "revId": "ba693e7affb3d4da8ef4c489747c5587fd843693",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ccf0c4a6_bfc9751a",
+        "filename": "ios/chrome/browser/ui/tab_switcher/tab_switcher_controller.mm",
+        "patchSetId": 2
+      },
+      "lineNbr": 372,
+      "author": {
+        "id": 1000119
+      },
+      "writtenOn": "2017-11-09T20:37:00Z",
+      "side": 1,
+      "message": "Reworked.  See which version you like better.",
+      "parentUuid": "b2e263e3_1d08ec64",
+      "revId": "ba693e7affb3d4da8ef4c489747c5587fd843693",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
