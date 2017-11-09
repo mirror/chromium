@@ -1,0 +1,157 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "d37df965_74f616f0",
+        "filename": "third_party/WebKit/LayoutTests/http/tests/local/fileapi/send-dragged-file-form.html",
+        "patchSetId": 8
+      },
+      "lineNbr": 1,
+      "author": {
+        "id": 1001349
+      },
+      "writtenOn": "2017-11-09T22:29:56Z",
+      "side": 1,
+      "message": "Why not just: \u003c!doctype html\u003e",
+      "revId": "715dcf9e183e09a617bcb333a2777129ea405111",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c6ca7e19_93586139",
+        "filename": "third_party/WebKit/LayoutTests/http/tests/local/fileapi/send-dragged-file-form.html",
+        "patchSetId": 8
+      },
+      "lineNbr": 7,
+      "author": {
+        "id": 1001349
+      },
+      "writtenOn": "2017-11-09T22:29:56Z",
+      "side": 1,
+      "message": "Can just use \"/resources/testharness.js\"",
+      "revId": "715dcf9e183e09a617bcb333a2777129ea405111",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3739dc3a_f2f91c35",
+        "filename": "third_party/WebKit/LayoutTests/http/tests/local/fileapi/send-dragged-file-form.html",
+        "patchSetId": 8
+      },
+      "lineNbr": 20,
+      "author": {
+        "id": 1001349
+      },
+      "writtenOn": "2017-11-09T22:29:56Z",
+      "side": 1,
+      "message": "FYI: It\u0027s nice (but not required) to have the test instead offer instructions for how to manually trigger the behavior.",
+      "revId": "715dcf9e183e09a617bcb333a2777129ea405111",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0c64b821_788bf594",
+        "filename": "third_party/WebKit/LayoutTests/http/tests/local/fileapi/send-dragged-file-form.html",
+        "patchSetId": 8
+      },
+      "lineNbr": 47,
+      "author": {
+        "id": 1001349
+      },
+      "writtenOn": "2017-11-09T22:29:56Z",
+      "side": 1,
+      "message": "How about event \u003d\u003e event....() rather than relying on window.event which is still not implemented in all browsers?\n\n(Not a big deal, but since you need to write something before the \u003d\u003e anyway...)",
+      "revId": "715dcf9e183e09a617bcb333a2777129ea405111",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0f32b2cb_47398214",
+        "filename": "third_party/WebKit/LayoutTests/http/tests/local/fileapi/send-dragged-file-form.html",
+        "patchSetId": 8
+      },
+      "lineNbr": 67,
+      "author": {
+        "id": 1001349
+      },
+      "writtenOn": "2017-11-09T22:29:56Z",
+      "side": 1,
+      "message": "FYI, document.body.prepend() is a thing.",
+      "revId": "715dcf9e183e09a617bcb333a2777129ea405111",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "93e9ca4c_7ac9277b",
+        "filename": "third_party/WebKit/LayoutTests/http/tests/local/fileapi/send-dragged-file-form.html",
+        "patchSetId": 8
+      },
+      "lineNbr": 71,
+      "author": {
+        "id": 1001349
+      },
+      "writtenOn": "2017-11-09T22:29:56Z",
+      "side": 1,
+      "message": "nit: A Blob with a name is just a File. You could shorten this to \"...constructed FileList.\" with the implication it gets a ctor taking Files.\n\nAlso, TODO should have an owner name and/or crbug reference",
+      "revId": "715dcf9e183e09a617bcb333a2777129ea405111",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "437b6b6b_39077ee7",
+        "filename": "third_party/WebKit/LayoutTests/http/tests/local/fileapi/send-dragged-file-form.html",
+        "patchSetId": 8
+      },
+      "lineNbr": 96,
+      "author": {
+        "id": 1001349
+      },
+      "writtenOn": "2017-11-09T22:29:56Z",
+      "side": 1,
+      "message": "How about using `` strings, i.e. `Content-Disposition.... filename\u003d\"${expectEncodedBaseName}\"`",
+      "revId": "715dcf9e183e09a617bcb333a2777129ea405111",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5519501b_4cdd9107",
+        "filename": "third_party/WebKit/LayoutTests/http/tests/local/fileapi/send-dragged-file-form.html",
+        "patchSetId": 8
+      },
+      "lineNbr": 106,
+      "author": {
+        "id": 1001349
+      },
+      "writtenOn": "2017-11-09T22:29:56Z",
+      "side": 1,
+      "message": "String.prototype.startsWith ?",
+      "revId": "715dcf9e183e09a617bcb333a2777129ea405111",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ea763ac2_3992b87e",
+        "filename": "third_party/WebKit/LayoutTests/http/tests/local/fileapi/send-dragged-file-form.html",
+        "patchSetId": 8
+      },
+      "lineNbr": 109,
+      "author": {
+        "id": 1001349
+      },
+      "writtenOn": "2017-11-09T22:29:56Z",
+      "side": 1,
+      "message": "Is failure output going to be stable here since the boundaries are usually random? Not sure we really care.",
+      "revId": "715dcf9e183e09a617bcb333a2777129ea405111",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
