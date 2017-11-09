@@ -297,6 +297,8 @@ class GLHelper::CopyTextureToImpl
 
     GLHelper::ScalerInterface* scaler() const override;
 
+    bool IsFlippingOutput() const override;
+
     void ReadbackYUV(const gpu::Mailbox& mailbox,
                      const gpu::SyncToken& sync_token,
                      const gfx::Size& src_texture_size,
@@ -1117,6 +1119,10 @@ GLHelper::CopyTextureToImpl::ReadbackYUVImpl::scaler() const {
   return scaler_.get();
 }
 
+bool GLHelper::CopyTextureToImpl::ReadbackYUVImpl::IsFlippingOutput() const {
+  return I420ConverterImpl::IsFlippingOutput();
+}
+
 void GLHelper::CopyTextureToImpl::ReadbackYUVImpl::ReadbackYUV(
     const gpu::Mailbox& mailbox,
     const gpu::SyncToken& sync_token,
@@ -1215,6 +1221,17 @@ std::unique_ptr<ReadbackYUVInterface> GLHelper::CreateReadbackPipelineYUV(
   InitCopyTextToImpl();
   return copy_texture_to_impl_->CreateReadbackPipelineYUV(flip_vertically,
                                                           use_mrt);
+}
+
+ReadbackYUVInterface* GLHelper::GetReadbackPipelineYUV(
+    bool vertically_flip_texture) {
+  for (const auto& pipeline : readback_pipelines_yuv_) {
+    if (pipeline->IsFlippingOutput() == vertically_flip_texture)
+      return pipeline.get();
+  }
+  readback_pipelines_yuv_.emplace_back(
+      CreateReadbackPipelineYUV(vertically_flip_texture, true /* use_mrt */));
+  return readback_pipelines_yuv_.back().get();
 }
 
 GLHelperReadbackSupport* GLHelper::GetReadbackSupport() {

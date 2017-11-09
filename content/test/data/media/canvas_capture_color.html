@@ -157,6 +157,29 @@ function testCanvasWebGLCaptureColors() {
       });
 }
 
+// Forces a context loss between captured frames and checks if capture continues
+// as expected.
+function testCanvas2DContextLoss() {
+  var contextType = '2d';
+  connectStream(contextType);
+  var canvas = document.getElementById('canvas-' + contextType);
+
+  doCanvasCaptureAndCheckRgba(contextType, RED)
+      .then(function() {
+        window.internals.loseSharedGraphicsContext3D();
+        // For the canvas to realize its Graphics context was lost we must try
+        // to use the contents of the canvas.
+        var imageData = canvas.getContext(contextType).getImageData(0, 0, 1, 1);
+        return draw(canvas, contextType, GREEN)
+            .then(doCanvasCaptureAndCheckRgba.bind(contextType, BLUE));
+      })
+      .then(function() {
+        window.domAutomationController.send('OK');
+      }, function(err) {
+        window.domAutomationController.send(err);
+      });
+}
+
 // This function fills a canvas with one rgba color and canvas-captures it
 // to a video element. We then snapshot the video element to
 // another canvas and checks the color is what we expect.
