@@ -34,6 +34,24 @@
       "revId": "c0dd0f49f92ae5183405dee44b6abe123c9c0b77",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3eb9a24f_e44db8fa",
+        "filename": "ash/wm/overview/overview_window_drag_controller.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 37,
+      "author": {
+        "id": 1118421
+      },
+      "writtenOn": "2017-11-09T23:34:25Z",
+      "side": 1,
+      "message": "The logic seems incorrect to me in primary portrait mode and secondary landscape mode. Seems in these two cases, delta should be the following? Could you double check it?\ndelta \u003d (snap_position \u003d\u003d SplitViewController::LEFT) ? distance : -distance;",
+      "parentUuid": "279d7146_b8d8118b",
+      "revId": "c0dd0f49f92ae5183405dee44b6abe123c9c0b77",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
