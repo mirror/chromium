@@ -1648,4 +1648,80 @@ IN_PROC_BROWSER_TEST_F(WebContentsImplBrowserTest,
   ASSERT_EQ(title, base::ASCIIToUTF16("done"));
 }
 
+// Navigate to an about:blank URL. Modifying the contents of this window
+// should keep the URL as about:blank.
+IN_PROC_BROWSER_TEST_F(WebContentsImplBrowserTest, AboutBlank_NoContent) {
+  ASSERT_TRUE(NavigateToURL(shell(), GURL("about:blank")));
+  WebContentsImpl* web_contents =
+      static_cast<WebContentsImpl*>(shell()->web_contents());
+
+  ASSERT_TRUE(ExecuteScript(web_contents, "document.write('test')"));
+  EXPECT_EQ(GURL("about:blank"), shell()->web_contents()->GetURL());
+  EXPECT_EQ(GURL(), shell()
+                        ->web_contents()
+                        ->GetMainFrame()
+                        ->GetLastCommittedOrigin()
+                        .GetURL());
+}
+
+// Open a new window with an about:blank URL. Modifying the contents of this
+// window should change its URL to the URL of the opener.
+IN_PROC_BROWSER_TEST_F(WebContentsImplBrowserTest, AboutBlank_DocumentWrite) {
+  ASSERT_TRUE(embedded_test_server()->Start());
+
+  const GURL kOpenerUrl = embedded_test_server()->GetURL("/empty.html");
+  ASSERT_TRUE(NavigateToURL(shell(), kOpenerUrl));
+  WebContentsImpl* web_contents =
+      static_cast<WebContentsImpl*>(shell()->web_contents());
+
+  ShellAddedObserver shell_observer;
+  const char kScript[] =
+      "w = window.open('about:blank'); w.document.write('test');";
+  ASSERT_TRUE(ExecuteScript(web_contents, kScript));
+
+  Shell* new_shell = shell_observer.GetShell();
+  EXPECT_EQ(kOpenerUrl, new_shell->web_contents()->GetURL());
+  EXPECT_EQ(
+      url::Origin::Create(kOpenerUrl),
+      new_shell->web_contents()->GetMainFrame()->GetLastCommittedOrigin());
+
+  // Do another document.write.
+  ASSERT_TRUE(ExecuteScript(web_contents, "w.document.write('test2');"));
+  EXPECT_EQ(kOpenerUrl, new_shell->web_contents()->GetURL());
+  EXPECT_EQ(
+      url::Origin::Create(kOpenerUrl),
+      new_shell->web_contents()->GetMainFrame()->GetLastCommittedOrigin());
+
+  // And a document.open.
+  ASSERT_TRUE(ExecuteScript(web_contents, "w.document.open();"));
+  EXPECT_EQ(kOpenerUrl, new_shell->web_contents()->GetURL());
+  EXPECT_EQ(
+      url::Origin::Create(kOpenerUrl),
+      new_shell->web_contents()->GetMainFrame()->GetLastCommittedOrigin());
+}
+
+// Open a new window with no URL. Modifying the contents of this window
+// shouldn't change its URL.
+// TODO(meacer): Change this once crbug.com/524208 is fixed. It should behave
+// the same as AboutBlank_DocumentWrite.
+IN_PROC_BROWSER_TEST_F(WebContentsImplBrowserTest,
+                       AboutBlank_EmptyURL_DocumentWrite) {
+  ASSERT_TRUE(embedded_test_server()->Start());
+
+  const GURL kOpenerUrl = embedded_test_server()->GetURL("/empty.html");
+  ASSERT_TRUE(NavigateToURL(shell(), kOpenerUrl));
+  WebContentsImpl* web_contents =
+      static_cast<WebContentsImpl*>(shell()->web_contents());
+
+  ShellAddedObserver shell_observer;
+  const char kScript[] = "var w = window.open(); w.document.write('test');";
+  ASSERT_TRUE(ExecuteScript(web_contents, kScript));
+
+  Shell* new_shell = shell_observer.GetShell();
+  EXPECT_EQ(GURL(), new_shell->web_contents()->GetURL());
+  EXPECT_EQ(
+      url::Origin::Create(kOpenerUrl),
+      new_shell->web_contents()->GetMainFrame()->GetLastCommittedOrigin());
+}
+
 }  // namespace content

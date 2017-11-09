@@ -2916,6 +2916,9 @@ void Document::open(Document* entered_document,
     }
     SetSecurityOrigin(entered_document->GetSecurityOrigin());
 
+    if (frame_ && Url().IsAboutBlankURL())
+      frame_->Client()->DidUpdateAboutBlank(entered_document->Url());
+
     if (this != entered_document) {
       // Clear the hash fragment from the inherited URL to prevent a
       // scroll-into-view for any document.open()'d frame.

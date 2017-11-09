@@ -858,6 +858,7 @@ bool WebContentsImpl::OnMessageReceived(RenderFrameHostImpl* render_frame_host,
                         OnUpdatePageImportanceSignals)
     IPC_MESSAGE_HANDLER(FrameHostMsg_Find_Reply, OnFindReply)
     IPC_MESSAGE_HANDLER(FrameHostMsg_UpdateFaviconURL, OnUpdateFaviconURL)
+    IPC_MESSAGE_HANDLER(FrameHostMsg_UpdateAboutBlank, OnUpdateAboutBlank)
 #if BUILDFLAG(ENABLE_PLUGINS)
     IPC_MESSAGE_HANDLER(FrameHostMsg_PepperInstanceCreated,
                         OnPepperInstanceCreated)
@@ -4335,6 +4336,23 @@ void WebContentsImpl::OnUpdateFaviconURL(
 
   for (auto& observer : observers_)
     observer.DidUpdateFaviconURL(candidates);
+}
+
+void WebContentsImpl::OnUpdateAboutBlank(RenderFrameHostImpl* render_frame_host,
+                                         const GURL& url) {
+  // TODO(crbug.com/524208): A navigation via window.open("") ends up as an
+  // about:blank URL but doesn't have a last committed entry.
+  CHECK(render_frame_host->GetLastCommittedURL().IsAboutBlank() ||
+        render_frame_host->GetLastCommittedURL().is_empty());
+  const url::Origin origin = url::Origin::Create(url);
+  if (!render_frame_host->GetLastCommittedOrigin().IsSameOriginWith(origin))
+    render_frame_host->SetLastCommittedOrigin(origin);
+  NavigationEntryImpl* entry =
+      controller_.GetEntryWithUniqueID(render_frame_host->nav_entry_id());
+  if (!entry)
+    return;
+  entry->SetVirtualURL(url);
+  DidChangeVisibleSecurityState();
 }
 
 void WebContentsImpl::SetIsOverlayContent(bool is_overlay_content) {
