@@ -12,6 +12,8 @@
 #include "media/audio/mock_audio_manager.h"
 #include "testing/gmock/include/gmock/gmock.h"
 
+#include "base/threading/thread_task_runner_handle.h"
+
 using ::testing::InvokeWithoutArgs;
 
 namespace media {

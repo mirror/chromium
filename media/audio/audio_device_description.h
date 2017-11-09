@@ -56,6 +56,7 @@ struct MEDIA_EXPORT AudioDeviceDescription {
   // This device is not supported on all platforms.
   static std::string GetCommunicationsDeviceName();
 
+  AudioDeviceDescription() = default;
   AudioDeviceDescription(const AudioDeviceDescription& other) = default;
   AudioDeviceDescription(const std::string& device_name,
                          const std::string& unique_id,
