@@ -3,7 +3,6 @@ It covers all configurations of the node/Range relationship and some exception c
 
 On success, you will see a series of "PASS" messages, followed by "TEST COMPLETE".
 
-
 1.1 Node starts before the range and ends before the range
 PASS intersects is false
 

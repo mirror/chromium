@@ -2,7 +2,6 @@ Test to make sure WebKit adds style to the appropriate container.
 
 On success, you will see a series of "PASS" messages, followed by "TEST COMPLETE".
 
-
 styleWithCSS = false
 PASS fontSize(3) on all of "<font size="3">hello <font size="4">world</font></font>" yields "<font size="3">hello world</font>"
 PASS fontSize(4) on all of "<font face="Arial">hello</font>" yields "<font face="Arial" size="4">hello</font>"

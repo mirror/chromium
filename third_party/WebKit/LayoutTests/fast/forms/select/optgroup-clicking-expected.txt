@@ -3,7 +3,6 @@ Test clicking with optgroup element
 On success, you will see a series of "PASS" messages, followed by "TEST COMPLETE".
 
 
-
 Click enabled option
 PASS $("listbox").selectedIndex is 1
 
@@ -14,9 +13,11 @@ Click disabled option - doesn't change selectedIndex
 PASS $("listbox").selectedIndex is 1
 
 Menu list with arrow key. The test is expected to fail on OSX because of a key binding difference.
-PASS $("menulist").selectedIndex is 8
+FAIL $("menulist").selectedIndex should be 8. Was 3.
 PASS successfullyParsed is true
 
 TEST COMPLETE
- 
+
+
+
 

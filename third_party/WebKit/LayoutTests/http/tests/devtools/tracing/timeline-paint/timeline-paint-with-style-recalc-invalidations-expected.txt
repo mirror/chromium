@@ -2,7 +2,6 @@ Tests the Timeline API instrumentation of paint events with style recalc invalid
 
 PASS
 
-
 Running: testLocalFrame
 first paint invalidations[
     {

@@ -1,4 +1,5 @@
-Test for http://bugs.webkit.org/show_bug.cgi?id=12899 Ordered lists not updating dynamically with new styles.
+Test for http://bugs.webkit.org/show_bug.cgi?id=12899
+        Ordered lists not updating dynamically with new styles.
 
 The items in the following list should be numbered 1, 2, 3.
 

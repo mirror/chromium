@@ -2,7 +2,6 @@ Check that read-only transactions within a database can run in parallel.
 
 On success, you will see a series of "PASS" messages, followed by "TEST COMPLETE".
 
-
 dbname = "transaction-coordination-within-database.html"
 indexedDB.deleteDatabase(dbname)
 indexedDB.open(dbname)

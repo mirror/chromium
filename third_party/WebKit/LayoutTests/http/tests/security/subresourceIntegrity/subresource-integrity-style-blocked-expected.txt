@@ -8,11 +8,15 @@ Test 2
 Test 3
 
 Summary
+
 Harness status: OK
 
 Found 1 tests
 
 1 Pass
 Details
-Result	Test Name	Message
-Pass	Subresource integrity blocked style resources	
+Result	
+Test Name	
+Message
+Pass	
+Subresource integrity blocked style resources	

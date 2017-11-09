@@ -2,7 +2,6 @@ Accessing SpeechRecognition on a detached window should not crash.
 
 On success, you will see a series of "PASS" messages, followed by "TEST COMPLETE".
 
-
 PASS recognition.start() is undefined.
 PASS recognition.stop() is undefined.
 PASS recognition.abort() is undefined.

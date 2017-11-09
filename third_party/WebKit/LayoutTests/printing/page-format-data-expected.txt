@@ -2,7 +2,6 @@ This tests page format data
 
 On success, you will see a series of "PASS" messages, followed by "TEST COMPLETE".
 
-
 Test default visibility
 PASS internals.isPageBoxVisible(document, 0) is true
 Test display: none. display property doesn't apply to @page

@@ -2,7 +2,6 @@ Check stepping-up and -down for week input fields from renderer.
 
 On success, you will see a series of "PASS" messages, followed by "TEST COMPLETE".
 
-
 Function arguments are (value, min, max).
 Week
 PASS stepUp("2000-W05", "2000-W05", "2000-W40") is "2000-W06"

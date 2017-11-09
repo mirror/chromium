@@ -4,4 +4,5 @@ TEST COMPLETE
 PASS targetDiv.innerText is "TEST"
 PASS targetDiv.innerText is ""
 PASS targetDiv.innerText is "TEST"
+
 TEST

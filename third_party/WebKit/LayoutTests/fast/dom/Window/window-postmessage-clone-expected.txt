@@ -1,5 +1,4 @@
 Tests that we clone object hierarchies
-
 PASS: 'postMessage((function(){}))' threw DataCloneError: Failed to execute 'postMessage' on 'Window': function (){} could not be cloned.
 PASS: 'postMessage(var x = 0; try { eval("badref"); } catch(e) { x = e; } x)' threw DataCloneError: Failed to execute 'postMessage' on 'Window': ReferenceError: badref is not defined could not be cloned.
 PASS: 'postMessage(arrayBuffer)' threw DataCloneError: Failed to execute 'postMessage' on 'Window': An ArrayBuffer is neutered and could not be cloned.
@@ -25,7 +24,7 @@ PASS: eventData is [object Object] of type object
 PASS: eventData is [object Object] of type object
 PASS: eventData is [object Object] of type object
 PASS: eventData is [object Object] of type object
-PASS: eventData is of type object
+PASS: eventData is  of type object
 PASS: eventData is a,a,b,a,b of type object
 PASS: eventData is a,a,b,[object Object] of type object
 PASS: eventData is 1,2,3 of type object

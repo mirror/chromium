@@ -1,15 +1,33 @@
 Intrinsic
- webkit.org <a no href> <span>
+
+webkit.org
+<a no href>
+<span>
 draggable attr set to true
- webkit.org <a no href> <span>
+
+webkit.org
+<a no href>
+<span>
 draggable attr set to false
- webkit.org <a no href> <span>
+
+webkit.org
+<a no href>
+<span>
 draggable attr set to maybe
- webkit.org <a no href> <span>
+
+webkit.org
+<a no href>
+<span>
 draggable dom prop set to true
- webkit.org <a no href> <span>
+
+webkit.org
+<a no href>
+<span>
 draggable dom prop set to false
- webkit.org <a no href> <span>
+
+webkit.org
+<a no href>
+<span>
 dom - attr
 ----------
 true - null

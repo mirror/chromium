@@ -1,8 +1,6 @@
-
 This test verifies touch and corresponding pointerevent targets inside and outside the iframe.
 
 On success, you will see a series of "PASS" messages, followed by "TEST COMPLETE".
-
 
 PASS successfullyParsed is true
 

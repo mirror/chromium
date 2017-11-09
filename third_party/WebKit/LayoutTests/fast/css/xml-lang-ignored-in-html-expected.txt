@@ -1,4 +1,5 @@
-This tests that the attribute in no namespace with no prefix and with the literal localname "xml:lang" is ignored in HTML. See bug 67586.
+This tests that the attribute in no namespace with no prefix and with the literal localname "xml:lang" is ignored in HTML. See
+bug 67586.
 
 PASS languageOfNode('m1') is "auto"
 PASS languageOfNode('n1') is "\"ko\""

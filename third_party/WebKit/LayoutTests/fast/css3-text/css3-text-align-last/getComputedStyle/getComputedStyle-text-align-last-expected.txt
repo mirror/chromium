@@ -2,7 +2,6 @@ This test checks that text-align-last parses properly the properties from CSS 3 
 
 On success, you will see a series of "PASS" messages, followed by "TEST COMPLETE".
 
-
 Test the initial value:
 PASS computedStyle.textAlignLast is 'auto'
 
@@ -57,4 +56,5 @@ PASS computedStyle.textAlignLast is 'auto'
 PASS successfullyParsed is true
 
 TEST COMPLETE
+
 hello world

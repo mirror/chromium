@@ -1,6 +1,7 @@
 Test for bug 7296.
 
-This test checks to see whether you get exceptions when setting a property with a "bad value". Setting using JavaScript property syntax and with setProperty() should behave the same.
+This test checks to see whether you get exceptions when setting a property with a "bad value".
+Setting using JavaScript property syntax and with setProperty() should behave the same.
 
 It is OK if the order of properties changes from the expected results - IE 6 and Firefox 2 don't agree on it anyway.
 

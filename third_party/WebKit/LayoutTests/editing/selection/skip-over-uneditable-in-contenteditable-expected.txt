@@ -8,7 +8,6 @@ Ensure that extending a selection inside a contentEditable skips past an unedita
 
 On success, you will see a series of "PASS" messages, followed by "TEST COMPLETE".
 
-
 PASS sel.focusNode is after
 PASS sel.focusNode.parentElement is before
 PASS sel.focusNode is after

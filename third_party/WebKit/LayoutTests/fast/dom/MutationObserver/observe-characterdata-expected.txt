@@ -2,7 +2,6 @@ Test WebKitMutationObserver.observe on CharacterData nodes
 
 On success, you will see a series of "PASS" messages, followed by "TEST COMPLETE".
 
-
 Testing basic aspects of characterData observation.
 ...can characterData changes be observed at all
 PASS mutations.length is 1

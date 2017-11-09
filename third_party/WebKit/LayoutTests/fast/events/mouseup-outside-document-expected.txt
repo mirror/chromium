@@ -1,4 +1,5 @@
-This test verifies that a document that receives a mouse down event receives a corresponding mouse up event when the mouse up happens outside the window.
+This test verifies that a document that receives a mouse down event receives
+a corresponding mouse up event when the mouse up happens outside the window.
 
 If the test passes, you'll see a PASS message below.
 
@@ -7,5 +8,6 @@ To run this test in Safari:
 Mouse down inside the document.
 Move the mouse outside the window.
 Mouse up.
+
 PASS: mouseup event fired
 

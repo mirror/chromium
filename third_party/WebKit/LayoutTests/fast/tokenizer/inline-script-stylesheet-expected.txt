@@ -1,1 +1,2 @@
-Test that inline script blocks on stylesheet load: PASS
+Test that inline script blocks on stylesheet load:
+PASS

@@ -1,4 +1,5 @@
-Test for bug 12389: Chinese decoding error at hk.antispam.yahoo.com
+Test for bug 12389:
+Chinese decoding error at hk.antispam.yahoo.com
 
 You should see two identical lines below:
 

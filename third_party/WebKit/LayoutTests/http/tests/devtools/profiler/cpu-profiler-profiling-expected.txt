@@ -1,4 +1,5 @@
-Tests that CPU profiling works. Bug 52634.
+Tests that CPU profiling works.
+Bug 52634.
 
 Profiler was enabled.
 

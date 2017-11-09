@@ -1,4 +1,5 @@
-This test checks that document.defaultView returns the window object, and that it implements all the methods and properties it should.
+This test checks that document.defaultView returns the window object, and that it implements 
+all the methods and properties it should.
 
 If the test passes, you will see only PASS messages below.
 

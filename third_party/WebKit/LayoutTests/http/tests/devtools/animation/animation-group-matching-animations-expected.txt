@@ -1,4 +1,5 @@
-Tests the matching performed in AnimationModel of groups composed of animations, which are applied through a variety of selectors.
+Tests the matching performed in AnimationModel of groups composed of animations,
+which are applied through a variety of selectors.
 
 >> restartAnimation('node1', 'expandWidth')
 New group #0 started.

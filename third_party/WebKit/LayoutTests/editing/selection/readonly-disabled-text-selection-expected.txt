@@ -9,4 +9,12 @@ PASS window.getSelection().toString() is "NormalTextarea"
 PASS window.getSelection().toString() is "ReadonlyTextarea"
 PASS window.getSelection().toString() is "DisabledTextarea"
 PASS window.getSelection().toString() is "ReadonlyDisabledTextarea"
-       
+
+
+
+
+
+
+
+
+

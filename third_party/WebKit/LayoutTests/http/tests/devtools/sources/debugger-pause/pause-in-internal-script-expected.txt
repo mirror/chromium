@@ -1,4 +1,5 @@
-Tests that internal scripts unknown to front-end are processed correctly when appear in debugger call frames. Bug 64995
+Tests that internal scripts unknown to front-end are processed correctly when appear in debugger call frames.
+Bug 64995
 
 
 Running: testSetBreakpoint

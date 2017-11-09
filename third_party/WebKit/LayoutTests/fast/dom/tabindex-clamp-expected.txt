@@ -1,4 +1,6 @@
-This page tests that the tabindex attribute is accepted for values between -2147483648 and 2147483647. Values outside of this range will make the tabIndex reflected value zero.
+This page tests that the tabindex attribute is accepted for
+    values between -2147483648 and 2147483647. Values outside of this range will
+    make the tabIndex reflected value zero.
 
 Testing input elements in the page
 getAttribute("tabindex") = 3147483648; tabIndex = 0

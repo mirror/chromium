@@ -1,4 +1,5 @@
-This tests to make sure that large box-ordinal-group values don't hang the renderer. This test passes if it does not timeout.
+This tests to make sure that large box-ordinal-group values don't hang the renderer.
+This test passes if it does not timeout.
 
 1
 2

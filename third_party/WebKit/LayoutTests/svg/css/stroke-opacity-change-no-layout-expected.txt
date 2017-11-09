@@ -2,4 +2,6 @@ PASS successfullyParsed is true
 
 TEST COMPLETE
 PASS window.internals.needsLayoutCount() is 0
-Change of stroke-opacity should cause style recalc only, no layout. 
+
+Change of stroke-opacity should cause style recalc only, no layout.
+

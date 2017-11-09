@@ -1,4 +1,5 @@
-Tests that after a navigation, scroll restoration from history takes precedence over scrolling to the hash fragment.
+Tests that after a navigation, scroll restoration from history takes
+  precedence over scrolling to the hash fragment.
 
 PASS 600 is 600
 PASS successfullyParsed is true

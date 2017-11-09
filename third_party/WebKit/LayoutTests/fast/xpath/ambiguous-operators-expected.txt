@@ -1,6 +1,8 @@
-Test that an NCName and * are interpreted as an operator when in binary operator context, and as a NameTest otherwise.
+Test that an NCName and * are interpreted as an operator when in
+binary operator context, and as a NameTest otherwise.
 
-See bug 50366: XPath lexer misinterprets expression starting with "div".
+See bug 50366:
+XPath lexer misinterprets expression starting with "div".
 
 PASS div
 PASS   div
