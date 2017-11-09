@@ -1,0 +1,61 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "d29ee2e9_9f32a6ee",
+        "filename": "extensions/common/api/media_perception_private.idl",
+        "patchSetId": 5
+      },
+      "lineNbr": 76,
+      "author": {
+        "id": 1000232
+      },
+      "writtenOn": "2017-11-09T18:55:10Z",
+      "side": 1,
+      "message": "nit: I think |type| should  be good enough - it can be inferred from the context that type refers to \u0027component\u0027.\nsame with status in ComponentState\n\nalso, |featureSet| might be good alternative for this name (it\u0027s little more descriptive imho)",
+      "range": {
+        "startLine": 76,
+        "startChar": 18,
+        "endLine": 76,
+        "endChar": 31
+      },
+      "revId": "d84d241e630664a3c76ad6c55a690b2c7888010d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "278ef14c_3efe5a17",
+        "filename": "extensions/common/api/media_perception_private.idl",
+        "patchSetId": 5
+      },
+      "lineNbr": 244,
+      "author": {
+        "id": 1000232
+      },
+      "writtenOn": "2017-11-09T18:55:10Z",
+      "side": 1,
+      "message": "are there any restrictions on analytics process state when this is called? (e.g. I would not find it surprising to require the analytics process not to be running).",
+      "revId": "d84d241e630664a3c76ad6c55a690b2c7888010d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f37b5f42_2e424db6",
+        "filename": "extensions/common/api/media_perception_private.idl",
+        "patchSetId": 5
+      },
+      "lineNbr": 250,
+      "author": {
+        "id": 1000232
+      },
+      "writtenOn": "2017-11-09T18:55:10Z",
+      "side": 1,
+      "message": "what will happen to the old component? Will there eventually be components that can run together?\nI wonder if this should be called something like setAnalyticsService(options, callback) - I think naming would do better job implying that the components are not expected to run concurrently (assuming this is correct assumption).\n\nDo we need a method to unload a component, in case you plan to eventually extend this to support more than one component.\n\nI\u0027m also little concerned that \"component\" is not very well defined in this context (e.g. component of what is the service, it sounds more like this method is intended to load components of the analytics service).",
+      "revId": "d84d241e630664a3c76ad6c55a690b2c7888010d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
