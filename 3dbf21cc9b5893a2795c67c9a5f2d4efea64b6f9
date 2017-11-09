@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "51e84993_35a17f8f",
+        "filename": "components/user_manager/scoped_user_manager_enabler.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 19,
+      "author": {
+        "id": 1115919
+      },
+      "writtenOn": "2017-11-09T14:31:09Z",
+      "side": 1,
+      "message": "Clarification:\n\nhttps://cs.chromium.org/chromium/src/components/arc/arc_util_unittest.cc?q\u003dScopedUserManager\u0026sq\u003dpackage:chromium\u0026l\u003d46\n\nThere is ScopedUserManager, which has same function, as well. Xiyuan, which name is better?\nAs we need to touch all the file, it\u0027s good timing iff we want.",
+      "revId": "3dbf21cc9b5893a2795c67c9a5f2d4efea64b6f9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ff179878_c5866e18",
+        "filename": "components/user_manager/scoped_user_manager_enabler.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 22,
+      "author": {
+        "id": 1115919
+      },
+      "writtenOn": "2017-11-09T14:31:09Z",
+      "side": 1,
+      "message": "(optional): Can we use std::unique_ptr\u003c\u003e to explicitly tells callers that this takes the ownership?",
+      "revId": "3dbf21cc9b5893a2795c67c9a5f2d4efea64b6f9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
