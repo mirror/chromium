@@ -352,7 +352,7 @@ bool IncomingTaskQueue::PostPendingTaskLockRequired(PendingTask* pending_task) {
   return false;
 }
 
-int IncomingTaskQueue::ReloadWorkQueue(TaskQueue* work_queue) {
+int IncomingTaskQueue::ReloadWorkQueue(base::queue<PendingTask>* work_queue) {
   // Make sure no tasks are lost.
   DCHECK(work_queue->empty());
 

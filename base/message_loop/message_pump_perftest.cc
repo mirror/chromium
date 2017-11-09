@@ -266,7 +266,7 @@ class PostTaskTest : public testing::Test {
                                     base::TimeDelta(), Nestable::kNonNestable);
           num_posted++;
         }
-        TaskQueue loop_local_queue;
+        base::queue<PendingTask> loop_local_queue;
         queue->ReloadWorkQueue(&loop_local_queue);
         while (!loop_local_queue.empty()) {
           PendingTask t = std::move(loop_local_queue.front());

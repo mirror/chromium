@@ -144,7 +144,7 @@ class BASE_EXPORT IncomingTaskQueue
     void ReloadFromIncomingQueueIfEmpty();
 
     IncomingTaskQueue* const outer_;
-    TaskQueue queue_;
+    base::queue<PendingTask> queue_;
 
     DISALLOW_COPY_AND_ASSIGN(TriageQueue);
   };
@@ -183,7 +183,7 @@ class BASE_EXPORT IncomingTaskQueue
 
    private:
     IncomingTaskQueue* const outer_;
-    TaskQueue queue_;
+    base::queue<PendingTask> queue_;
 
     DISALLOW_COPY_AND_ASSIGN(DeferredQueue);
   };
@@ -203,7 +203,7 @@ class BASE_EXPORT IncomingTaskQueue
   // Loads tasks from the |incoming_queue_| into |*work_queue|. Must be called
   // from the sequence processing the tasks. Returns the number of tasks that
   // require high resolution timers in |work_queue|.
-  int ReloadWorkQueue(TaskQueue* work_queue);
+  int ReloadWorkQueue(base::queue<PendingTask>* work_queue);
 
   // Checks calls made only on the MessageLoop thread.
   SEQUENCE_CHECKER(sequence_checker_);
@@ -243,7 +243,7 @@ class BASE_EXPORT IncomingTaskQueue
   // An incoming queue of tasks that are acquired under a mutex for processing
   // on this instance's thread. These tasks have not yet been been pushed to
   // |message_loop_|.
-  TaskQueue incoming_queue_;
+  base::queue<PendingTask> incoming_queue_;
 
   // True if new tasks should be accepted.
   bool accept_new_tasks_ = true;

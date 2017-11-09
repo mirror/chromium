@@ -57,8 +57,6 @@ struct BASE_EXPORT PendingTask {
   bool is_high_res;
 };
 
-using TaskQueue = base::queue<PendingTask>;
-
 // PendingTasks are sorted by their |delayed_run_time| property.
 using DelayedTaskQueue = std::priority_queue<base::PendingTask>;
 
