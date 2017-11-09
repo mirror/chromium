@@ -97,6 +97,30 @@
     },
     {
       "key": {
+        "uuid": "c6dfa1e9_06ba84f1",
+        "filename": "ash/display/display_manager_unittest.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 3833,
+      "author": {
+        "id": 1001380
+      },
+      "writtenOn": "2017-11-09T18:51:02Z",
+      "side": 1,
+      "message": "Not big deal, but contexpr should be just fine as well. constexpr forces it to be compile time constant, while const may or may not (compiler makes it anyway tho).",
+      "parentUuid": "8de41fe7_56e5ad75",
+      "range": {
+        "startLine": 3833,
+        "startChar": 7,
+        "endLine": 3833,
+        "endChar": 11
+      },
+      "revId": "770337e0b34bb383b6ec3e317b6b4cfc715ffdad",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "bb1687a6_e4a3666c",
         "filename": "ui/display/manager/chromeos/display_change_observer.cc",
         "patchSetId": 1
