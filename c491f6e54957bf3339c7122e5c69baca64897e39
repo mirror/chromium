@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "978a9c47_bab0f8ca",
+        "filename": "tools/perf/core/perf_data_generator.py",
+        "patchSetId": 2
+      },
+      "lineNbr": 138,
+      "author": {
+        "id": 1002882
+      },
+      "writtenOn": "2017-11-09T18:59:04Z",
+      "side": 1,
+      "message": "nit: maybe point out who is the user within Chrome (like test team) and who to talk to if an infra refactoring might end up removing chromedriver here.",
+      "range": {
+        "startLine": 138,
+        "startChar": 48,
+        "endLine": 138,
+        "endChar": 68
+      },
+      "revId": "c491f6e54957bf3339c7122e5c69baca64897e39",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
