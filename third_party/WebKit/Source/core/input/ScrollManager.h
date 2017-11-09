@@ -145,6 +145,11 @@ class CORE_EXPORT ScrollManager
   // scroll other than the |m_previousGestureScrolledNode|.
   bool delta_consumed_for_scroll_sequence_;
 
+  // True iff some of the delta has been consumed for the current
+  // scroll sequence in this frame on the specific axis.
+  bool did_scroll_x_for_scroll_sequence_;
+  bool did_scroll_y_for_scroll_sequence_;
+
   Member<Scrollbar> scrollbar_handling_scroll_gesture_;
 
   Member<PaintLayerScrollableArea> resize_scrollable_area_;

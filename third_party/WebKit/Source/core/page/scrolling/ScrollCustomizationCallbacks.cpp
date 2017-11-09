@@ -34,6 +34,7 @@ void ScrollCustomizationCallbacks::RemoveApplyScroll(Element* element) {
 
 ScrollStateCallback* ScrollCustomizationCallbacks::GetApplyScroll(
     Element* element) {
+  LOG(ERROR) << apply_scroll_callbacks_.size();
   auto it = apply_scroll_callbacks_.find(element);
   if (it == apply_scroll_callbacks_.end())
     return nullptr;
