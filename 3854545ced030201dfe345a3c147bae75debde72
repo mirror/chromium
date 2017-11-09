@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "29717f4c_547aface",
+        "filename": "content/shell/browser/shell.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 353,
+      "author": {
+        "id": 1130134
+      },
+      "writtenOn": "2017-11-09T23:15:04Z",
+      "side": 1,
+      "message": "This is fine - AFAIR I\u0027ve introduced the code above and was passing |params.source_site_instance| mostly because of cargo-culting what //chrome layer does (or rather - used to do before this CL).  The cargo-culting was to ensure that layout tests cover similar behavior to what //chrome layer does.  And after this CL, this will still hold true (//chrome layer creates new WebContents with effectively a nullptr site instance, unless an opener is present [and unless tab_util::GetSiteInstanceForNewTab does something special for WebUI and/or extensions])",
+      "range": {
+        "startLine": 353,
+        "startChar": 33,
+        "endLine": 353,
+        "endChar": 40
+      },
+      "revId": "3854545ced030201dfe345a3c147bae75debde72",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    }
+  ]
+}

@@ -1,0 +1,119 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "17531725_fa3d4edb",
+        "filename": "content/browser/frame_host/navigation_controller_impl.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 730,
+      "author": {
+        "id": 1130134
+      },
+      "writtenOn": "2017-11-09T23:15:04Z",
+      "side": 0,
+      "message": "This seems fine I think - I assume that using |nullptr| here means \"I don\u0027t care about site instance - use the current one\".",
+      "range": {
+        "startLine": 730,
+        "startChar": 41,
+        "endLine": 730,
+        "endChar": 74
+      },
+      "revId": "32fe8d52b93337aa0dde0e0e207d98d4fbed687a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "61a51f2d_7e8c0ab5",
+        "filename": "content/browser/frame_host/navigator_impl.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 737,
+      "author": {
+        "id": 1130134
+      },
+      "writtenOn": "2017-11-09T23:15:04Z",
+      "side": 0,
+      "message": "Note that we still do the ShouldAllowOpenURL check (this is something that Alex asked about).",
+      "range": {
+        "startLine": 737,
+        "startChar": 38,
+        "endLine": 737,
+        "endChar": 56
+      },
+      "revId": "32fe8d52b93337aa0dde0e0e207d98d4fbed687a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "69484353_002866da",
+        "filename": "content/browser/frame_host/navigator_impl.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 769,
+      "author": {
+        "id": 1130134
+      },
+      "writtenOn": "2017-11-09T23:15:04Z",
+      "side": 0,
+      "message": "Green tryjobs suggest that the removed assignment above is not really needed?  FWIW, the line above comes from r429625 by Alex (a follow-up for r429532 [about ShouldAllowOpenURL], also by Alex).",
+      "range": {
+        "startLine": 765,
+        "startChar": 0,
+        "endLine": 769,
+        "endChar": 54
+      },
+      "revId": "32fe8d52b93337aa0dde0e0e207d98d4fbed687a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "86645e69_0a9a4a12",
+        "filename": "content/browser/frame_host/navigator_impl.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 796,
+      "author": {
+        "id": 1130134
+      },
+      "writtenOn": "2017-11-09T23:15:04Z",
+      "side": 0,
+      "message": "RenderFrameProxy still passes its |source_site_instance| here (in response to OpenURL IPC).",
+      "range": {
+        "startLine": 796,
+        "startChar": 18,
+        "endLine": 796,
+        "endChar": 38
+      },
+      "revId": "32fe8d52b93337aa0dde0e0e207d98d4fbed687a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "b4ad02c1_2b818e28",
+        "filename": "content/browser/frame_host/navigator_impl.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 769,
+      "author": {
+        "id": 1130134
+      },
+      "writtenOn": "2017-11-09T23:15:04Z",
+      "side": 0,
+      "message": "I don\u0027t know why this was needed :-(  I hope that this was needed while RenderFrameProxy was still going through OpenURL (rather than TransferURL) and therefore is not needed anymore...",
+      "range": {
+        "startLine": 769,
+        "startChar": 2,
+        "endLine": 769,
+        "endChar": 54
+      },
+      "revId": "32fe8d52b93337aa0dde0e0e207d98d4fbed687a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    }
+  ]
+}
