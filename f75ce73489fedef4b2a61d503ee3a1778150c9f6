@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "19d5dd1e_e34818c4",
+        "filename": "chrome/profiling/allocation_event.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 20,
+      "author": {
+        "id": 1002691
+      },
+      "writtenOn": "2017-11-09T18:40:39Z",
+      "side": 1,
+      "message": "I was trying to avoid this type of statement since this isn\u0027t true over time. I feel like it was clear enough without this comment and have consumers use the type of comparison they need. If you think it needs this, it would be good to qualify.",
+      "revId": "f75ce73489fedef4b2a61d503ee3a1778150c9f6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
