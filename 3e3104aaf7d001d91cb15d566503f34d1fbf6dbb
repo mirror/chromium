@@ -37,6 +37,24 @@
     },
     {
       "key": {
+        "uuid": "8b081fba_4bc78c07",
+        "filename": "third_party/WebKit/Source/controller/BlinkInitializer.cpp",
+        "patchSetId": 2
+      },
+      "lineNbr": 116,
+      "author": {
+        "id": 1000379
+      },
+      "writtenOn": "2017-11-09T13:05:28Z",
+      "side": 1,
+      "message": "I went ahead and moved it to controller/ in this patch.",
+      "parentUuid": "a6cb77f5_e912d23d",
+      "revId": "3e3104aaf7d001d91cb15d566503f34d1fbf6dbb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "f2bb6e52_babeeff5",
         "filename": "third_party/WebKit/Source/controller/BlinkInitializer.cpp",
         "patchSetId": 2
@@ -95,6 +113,30 @@
     },
     {
       "key": {
+        "uuid": "180723d5_d28fff39",
+        "filename": "third_party/WebKit/Source/core/exported/DevToolsFrontendImpl.cpp",
+        "patchSetId": 2
+      },
+      "lineNbr": 51,
+      "author": {
+        "id": 1000379
+      },
+      "writtenOn": "2017-11-09T13:05:28Z",
+      "side": 1,
+      "message": "Removed this code.",
+      "parentUuid": "ff72f264_a7fca7a9",
+      "range": {
+        "startLine": 51,
+        "startChar": 31,
+        "endLine": 51,
+        "endChar": 68
+      },
+      "revId": "3e3104aaf7d001d91cb15d566503f34d1fbf6dbb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "e994d267_1742c63b",
         "filename": "third_party/WebKit/Source/core/exported/DevToolsFrontendImpl.cpp",
         "patchSetId": 2
@@ -109,6 +151,24 @@
       "revId": "3e3104aaf7d001d91cb15d566503f34d1fbf6dbb",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4a50e442_6cf8e82f",
+        "filename": "third_party/WebKit/Source/core/exported/DevToolsFrontendImpl.cpp",
+        "patchSetId": 2
+      },
+      "lineNbr": 63,
+      "author": {
+        "id": 1000379
+      },
+      "writtenOn": "2017-11-09T13:05:28Z",
+      "side": 1,
+      "message": "I made everything garbage-collected, and now only cleanup when removing manually.",
+      "parentUuid": "e994d267_1742c63b",
+      "revId": "3e3104aaf7d001d91cb15d566503f34d1fbf6dbb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -135,6 +195,30 @@
     },
     {
       "key": {
+        "uuid": "741c3fd5_dcc842cc",
+        "filename": "third_party/WebKit/Source/core/exported/DevToolsFrontendImpl.cpp",
+        "patchSetId": 2
+      },
+      "lineNbr": 131,
+      "author": {
+        "id": 1000379
+      },
+      "writtenOn": "2017-11-09T13:05:28Z",
+      "side": 1,
+      "message": "Removed this code.",
+      "parentUuid": "a64ff134_61d1b042",
+      "range": {
+        "startLine": 131,
+        "startChar": 31,
+        "endLine": 131,
+        "endChar": 70
+      },
+      "revId": "3e3104aaf7d001d91cb15d566503f34d1fbf6dbb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "9bb60997_ba0633ee",
         "filename": "third_party/WebKit/Source/core/exported/DevToolsFrontendImpl.h",
         "patchSetId": 2
@@ -149,6 +233,24 @@
       "revId": "3e3104aaf7d001d91cb15d566503f34d1fbf6dbb",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "298ef0c7_cc00d4cd",
+        "filename": "third_party/WebKit/Source/core/exported/DevToolsFrontendImpl.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 80,
+      "author": {
+        "id": 1000379
+      },
+      "writtenOn": "2017-11-09T13:05:28Z",
+      "side": 1,
+      "message": "Turned it into Supplement\u003cLocalFrame\u003e.",
+      "parentUuid": "9bb60997_ba0633ee",
+      "revId": "3e3104aaf7d001d91cb15d566503f34d1fbf6dbb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
