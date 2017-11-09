@@ -639,6 +639,10 @@
       name: "ModernMediaControls",
     },
     {
+      name: "ModulePreload",
+      status: "experimental",
+    },
+    {
       name: "ModuleScriptsDynamicImport",
     },
     {
