@@ -268,13 +268,12 @@ UIColor* BackgroundColorIncognito() {
   if (!match.hasAnswer && [match.detailText length] == 0) {
     textLabel.center = CGPointMake(textLabel.center.x, floor(kRowHeight / 2));
     textLabel.frame = AlignRectToPixel(textLabel.frame);
+
   } else {
     CGRect frame = textLabel.frame;
     frame.origin.y = kTextCellTopPadding;
     textLabel.frame = frame;
   }
-  textLabel.autoresizingMask = UIViewAutoresizingFlexibleWidth;
-  [textLabel setNeedsDisplay];
 
   // The leading image (e.g. magnifying glass, star, clock) is only shown on
   // iPad.
@@ -294,6 +293,7 @@ UIColor* BackgroundColorIncognito() {
         LayoutRectForRectInBoundingRect(textLabel.frame, self.view.frame);
     layout.size.width -= kAppendButtonWidth;
     textLabel.frame = LayoutRectGetRect(layout);
+
     layout =
         LayoutRectForRectInBoundingRect(detailTextLabel.frame, self.view.frame);
     layout.size.width -=
@@ -318,6 +318,8 @@ UIColor* BackgroundColorIncognito() {
     frame.origin.x = kLTRTextInRTLLayoutLeftPadding;
     detailTextLabel.frame = frame;
   }
+
+  [textLabel setNeedsDisplay];
 }
 
 - (void)layoutRows {
