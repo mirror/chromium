@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "cfbb0230_db46aefd",
+        "filename": "media/test/data/eme_player_js/player_utils.js",
+        "patchSetId": 3
+      },
+      "lineNbr": 72,
+      "author": {
+        "id": 1003189
+      },
+      "writtenOn": "2017-11-09T19:46:31Z",
+      "side": 1,
+      "message": "Tried it. However, formatting puts it back to this.",
+      "parentUuid": "125d8d89_76ad33ca",
+      "revId": "6128b4810b7a40d137b7331924d6ce8cb3cc1a8e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "fb11343f_df743b5b",
         "filename": "third_party/WebKit/LayoutTests/media/encrypted-media/encrypted-media-getstatusforpolicy.html",
         "patchSetId": 3
@@ -36,6 +54,24 @@
     },
     {
       "key": {
+        "uuid": "503f4bbe_50e2125d",
+        "filename": "third_party/WebKit/LayoutTests/media/encrypted-media/encrypted-media-getstatusforpolicy.html",
+        "patchSetId": 3
+      },
+      "lineNbr": 43,
+      "author": {
+        "id": 1003189
+      },
+      "writtenOn": "2017-11-09T19:46:31Z",
+      "side": 1,
+      "message": "Added this and a normal getter.",
+      "parentUuid": "fb11343f_df743b5b",
+      "revId": "6128b4810b7a40d137b7331924d6ce8cb3cc1a8e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "3cb57e5d_506d05a1",
         "filename": "third_party/WebKit/Source/modules/encryptedmedia/MediaKeysGetStatusForPolicy.h",
         "patchSetId": 3
@@ -50,6 +86,24 @@
       "revId": "6128b4810b7a40d137b7331924d6ce8cb3cc1a8e",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c235257d_8ab11420",
+        "filename": "third_party/WebKit/Source/modules/encryptedmedia/MediaKeysGetStatusForPolicy.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 20,
+      "author": {
+        "id": 1003189
+      },
+      "writtenOn": "2017-11-09T19:46:31Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "3cb57e5d_506d05a1",
+      "revId": "6128b4810b7a40d137b7331924d6ce8cb3cc1a8e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
