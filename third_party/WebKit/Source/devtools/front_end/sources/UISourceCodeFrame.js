@@ -78,6 +78,7 @@ Sources.UISourceCodeFrame = class extends SourceFrame.SourceFrame {
 
     this._errorPopoverHelper.setTimeout(100, 100);
 
+    /** @type {!Array<!Sources.UISourceCodeFrame.Plugin>} */
     this._plugins = [];
 
     /**
@@ -252,8 +253,13 @@ Sources.UISourceCodeFrame = class extends SourceFrame.SourceFrame {
 
   _refreshPlugins() {
     this._disposePlugins();
-    if (this._uiSourceCode.contentType().isStyleSheet())
+    var binding = Persistence.persistence.binding(this._uiSourceCode);
+    var pluginUISourceCode = binding ? binding.network : this._uiSourceCode;
+
+    if (Sources.CSSPlugin.accepts(pluginUISourceCode))
       this._plugins.push(new Sources.CSSPlugin(this.textEditor));
+    if (Sources.JavaScriptCompilerPlugin.accepts(pluginUISourceCode))
+      this._plugins.push(new Sources.JavaScriptCompilerPlugin(this.textEditor, pluginUISourceCode));
   }
 
   _disposePlugins() {
@@ -725,6 +731,13 @@ Workspace.UISourceCode.Message.messageLevelComparator = function(a, b) {
  * @interface
  */
 Sources.UISourceCodeFrame.Plugin = class {
+  /**
+   * @param {!Workspace.UISourceCode} uiSourceCode
+   * @return {boolean}
+   */
+  static accepts(uiSourceCode) {
+  }
+
   dispose() {
   }
 };
