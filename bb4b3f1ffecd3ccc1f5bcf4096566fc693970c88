@@ -1,0 +1,106 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "600069eb_801b4ff5",
+        "filename": "ui/compositor/compositor_unittest.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 57,
+      "author": {
+        "id": 1000887
+      },
+      "writtenOn": "2017-11-09T22:42:33Z",
+      "side": 1,
+      "message": "Can remove?",
+      "revId": "bb4b3f1ffecd3ccc1f5bcf4096566fc693970c88",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e865ac1c_e7c618b7",
+        "filename": "ui/compositor/compositor_unittest.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 129,
+      "author": {
+        "id": 1000887
+      },
+      "writtenOn": "2017-11-09T22:42:33Z",
+      "side": 1,
+      "message": "Let\u0027s use a name to explain it other than My, ReplaceWidgetContextFactory?\n\nAnd maybe stick this right beside the test so we can find it easily?",
+      "revId": "bb4b3f1ffecd3ccc1f5bcf4096566fc693970c88",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8e4e928e_f86049ae",
+        "filename": "ui/compositor/compositor_unittest.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 131,
+      "author": {
+        "id": 1000887
+      },
+      "writtenOn": "2017-11-09T22:42:33Z",
+      "side": 1,
+      "message": "I think you can use OnceClosure here, we only want to call it once",
+      "revId": "bb4b3f1ffecd3ccc1f5bcf4096566fc693970c88",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5481a18b_00f02325",
+        "filename": "ui/compositor/compositor_unittest.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 132,
+      "author": {
+        "id": 1000887
+      },
+      "writtenOn": "2017-11-09T22:42:33Z",
+      "side": 1,
+      "message": "std::move()",
+      "revId": "bb4b3f1ffecd3ccc1f5bcf4096566fc693970c88",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "843b25f9_7cd0fb06",
+        "filename": "ui/compositor/compositor_unittest.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 522,
+      "author": {
+        "id": 1000887
+      },
+      "writtenOn": "2017-11-09T22:42:33Z",
+      "side": 1,
+      "message": "Comment that the Compositor will try to make a LayerTreeFrameSink, which then releases and sets the accelerated widget to simulate the ContextFactory forcing the Compositor to make a new frame sink. And this verifies that we don\u0027t re-enter the process making 2 frame sinks?",
+      "revId": "bb4b3f1ffecd3ccc1f5bcf4096566fc693970c88",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "82c96d4d_66592b6e",
+        "filename": "ui/compositor/compositor_unittest.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 523,
+      "author": {
+        "id": 1000887
+      },
+      "writtenOn": "2017-11-09T22:42:33Z",
+      "side": 1,
+      "message": "did you mean to check called_ here?",
+      "revId": "bb4b3f1ffecd3ccc1f5bcf4096566fc693970c88",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
