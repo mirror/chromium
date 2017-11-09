@@ -22,6 +22,30 @@
       "revId": "b8e6238c6e681cb0537bd3de8d9e137835016d72",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "83e2d84d_bbdd4637",
+        "filename": "base/bits.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 84,
+      "author": {
+        "id": 1131764
+      },
+      "writtenOn": "2017-11-09T12:46:21Z",
+      "side": 1,
+      "message": "I used V8\u0027s implementation here but this does make some sense to me too as it avoids calling it on pointers, enum, etc. If somebody wants to do that, then there is likely a weird cast involved somewhere.\n\nhttps://cs.chromium.org/chromium/src/v8/src/base/bits.h?q\u003dCountTrailing\u0026l\u003d110",
+      "parentUuid": "6f3ca2fd_1b99aa5d",
+      "range": {
+        "startLine": 84,
+        "startChar": 33,
+        "endLine": 84,
+        "endChar": 44
+      },
+      "revId": "b8e6238c6e681cb0537bd3de8d9e137835016d72",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
