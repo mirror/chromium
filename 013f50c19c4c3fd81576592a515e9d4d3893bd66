@@ -34,6 +34,41 @@
       "revId": "013f50c19c4c3fd81576592a515e9d4d3893bd66",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1327e5b1_299ee80e",
+        "filename": "chrome/browser/ui/views/translate/translate_language_browsertest.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 259,
+      "author": {
+        "id": 1115913
+      },
+      "writtenOn": "2017-11-09T06:22:13Z",
+      "side": 1,
+      "message": "Hmm, now I understood that TranslateBubbleView/Model didn\u0027t know about language codes. However, I feel like specifying the language by its name is fragile. I\u0027d add TranslateBubbleModel::UpdateTargetLanguage using TranslateUIDelegate::UpdateTargetLanguage.",
+      "parentUuid": "51ad8f8c_318c9d33",
+      "revId": "013f50c19c4c3fd81576592a515e9d4d3893bd66",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ca6a8752_c48a3e70",
+        "filename": "components/translate/core/browser/translate_manager.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 488,
+      "author": {
+        "id": 1115913
+      },
+      "writtenOn": "2017-11-09T06:22:13Z",
+      "side": 1,
+      "message": "nit: {}",
+      "revId": "013f50c19c4c3fd81576592a515e9d4d3893bd66",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
