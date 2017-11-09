@@ -159,6 +159,24 @@
       "revId": "cdce818ea87adaed639f4d687f7c0c64105dcdd4",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d2f6303b_36e2a529",
+        "filename": "build/mac/find_sdk.py",
+        "patchSetId": 1
+      },
+      "lineNbr": 58,
+      "author": {
+        "id": 1153089
+      },
+      "writtenOn": "2017-11-09T11:34:06Z",
+      "side": 1,
+      "message": "This was my suggestion based on same pattern on line 54 above and line 65 below. Raising exception here is used to prevent returning code 0 on line 93 and not to actually provide a way of handling it. A better way would be to rewrite the logic below as\n\n  if __name__ \u003d\u003d \u0027__main__\u0027:\n    if sys.platform !\u003d \u0027darwin\u0027:\n      print \"This script only runs on Mac\"\n      return 1\n    sys.exit(main())\n\nAnd then rewrite code here as\n\n  print \u0027Install Xcode, launch it, and accept the license agreement to continue.\u0027\n  return 1\n\nOther parts of main function need to be adapted as well: lines 54, 65 and 86. Given the number changes, I feel like change changes should be moved into a separate refactoring CL (to avoid reverting them with logic changes here if something breaks). I don\u0027t this it\u0027s fair to ask Mathias to create it...",
+      "parentUuid": "8ee0fa8c_744f794b",
+      "revId": "cdce818ea87adaed639f4d687f7c0c64105dcdd4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
