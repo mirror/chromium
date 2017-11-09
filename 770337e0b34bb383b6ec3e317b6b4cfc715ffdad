@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "547f316d_737c4942",
+        "filename": "ui/display/manager/chromeos/update_display_configuration_task.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 200,
+      "author": {
+        "id": 1001380
+      },
+      "writtenOn": "2017-11-09T02:00:04Z",
+      "side": 1,
+      "message": "do you need to check this?",
+      "revId": "770337e0b34bb383b6ec3e317b6b4cfc715ffdad",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6d853a52_01ae1fee",
+        "filename": "ui/display/manager/chromeos/update_display_configuration_task.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 212,
+      "author": {
+        "id": 1001380
+      },
+      "writtenOn": "2017-11-09T02:00:04Z",
+      "side": 1,
+      "message": "I think you can just update this condition instead.",
+      "revId": "770337e0b34bb383b6ec3e317b6b4cfc715ffdad",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
