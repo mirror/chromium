@@ -42,6 +42,30 @@
     },
     {
       "key": {
+        "uuid": "e0877dae_dc507aaa",
+        "filename": "chrome/browser/net/chrome_mojo_proxy_resolver_factory.cc",
+        "patchSetId": 42
+      },
+      "lineNbr": 53,
+      "author": {
+        "id": 1115968
+      },
+      "writtenOn": "2017-11-09T23:00:39Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "f72a4356_651adda4",
+      "range": {
+        "startLine": 53,
+        "startChar": 5,
+        "endLine": 53,
+        "endChar": 12
+      },
+      "revId": "7c6aadaae3071b249bb96fc29ebf637f4225453f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "a982afa0_8262988c",
         "filename": "chrome/browser/net/chrome_mojo_proxy_resolver_factory.h",
         "patchSetId": 42
@@ -62,6 +86,30 @@
       "revId": "7c6aadaae3071b249bb96fc29ebf637f4225453f",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ab45b435_d244064a",
+        "filename": "chrome/browser/net/chrome_mojo_proxy_resolver_factory.h",
+        "patchSetId": 42
+      },
+      "lineNbr": 28,
+      "author": {
+        "id": 1115968
+      },
+      "writtenOn": "2017-11-09T23:00:39Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "a982afa0_8262988c",
+      "range": {
+        "startLine": 28,
+        "startChar": 29,
+        "endLine": 28,
+        "endChar": 36
+      },
+      "revId": "7c6aadaae3071b249bb96fc29ebf637f4225453f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -88,6 +136,30 @@
     },
     {
       "key": {
+        "uuid": "95e5daef_84a2b6b7",
+        "filename": "chrome/browser/net/chrome_mojo_proxy_resolver_factory_browsertest.cc",
+        "patchSetId": 42
+      },
+      "lineNbr": 196,
+      "author": {
+        "id": 1115968
+      },
+      "writtenOn": "2017-11-09T23:00:39Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "46ae5b0d_09149dee",
+      "range": {
+        "startLine": 196,
+        "startChar": 40,
+        "endLine": 196,
+        "endChar": 41
+      },
+      "revId": "7c6aadaae3071b249bb96fc29ebf637f4225453f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "e1267768_576d041e",
         "filename": "content/public/network/url_request_context_builder_mojo.h",
         "patchSetId": 42
@@ -99,6 +171,30 @@
       "writtenOn": "2017-11-09T22:53:07Z",
       "side": 1,
       "message": "Typo: ProxyService",
+      "range": {
+        "startLine": 29,
+        "startChar": 58,
+        "endLine": 29,
+        "endChar": 69
+      },
+      "revId": "7c6aadaae3071b249bb96fc29ebf637f4225453f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "37b96d46_7a41d68e",
+        "filename": "content/public/network/url_request_context_builder_mojo.h",
+        "patchSetId": 42
+      },
+      "lineNbr": 29,
+      "author": {
+        "id": 1115968
+      },
+      "writtenOn": "2017-11-09T23:00:39Z",
+      "side": 1,
+      "message": "Done.  I\u0027ve made this one multiple times, for some reason.  Freudian slip, maybe.",
+      "parentUuid": "e1267768_576d041e",
       "range": {
         "startLine": 29,
         "startChar": 58,
