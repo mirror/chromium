@@ -21,13 +21,22 @@ class ScopedPaintChunkProperties {
  public:
   ScopedPaintChunkProperties(PaintController& paint_controller,
                              const DisplayItemClient& client,
-                             DisplayItem::Type type,
+                             PaintChunk::Type type,
                              const PaintChunkProperties& properties)
       : paint_controller_(paint_controller),
         previous_properties_(paint_controller.CurrentPaintChunkProperties()) {
     PaintChunk::Id id(client, type);
     paint_controller_.UpdateCurrentPaintChunkProperties(&id, properties);
   }
+
+  ScopedPaintChunkProperties(PaintController& paint_controller,
+                             const DisplayItemClient& client,
+                             DisplayItem::Type type,
+                             const PaintChunkProperties& properties)
+      : ScopedPaintChunkProperties(paint_controller,
+                                   client,
+                                   static_cast<PaintChunk::Type>(type),
+                                   properties) {}
 
   // Omits the type parameter, in case that the client creates only one
   // PaintChunkProperties node during each painting.
