@@ -47,7 +47,7 @@ const char kKeySeparator = '\x00';
 const int64_t kFirstPersistentNotificationId = 1;
 
 // Converts the LevelDB |status| to one of the notification database's values.
-NotificationDatabase::Status LevelDBStatusToStatus(
+NotificationDatabase::Status ToNotificationDatabaseStatus(
     const leveldb::Status& status) {
   if (status.ok())
     return NotificationDatabase::STATUS_OK;
@@ -132,7 +132,7 @@ NotificationDatabase::Status NotificationDatabase::Open(
     options.env = env_.get();
   }
 
-  Status status = LevelDBStatusToStatus(
+  Status status = ToNotificationDatabaseStatus(
       leveldb_env::OpenDB(options, path_.AsUTF8Unsafe(), &db_));
   if (status != STATUS_OK)
     return status;
@@ -159,7 +159,7 @@ NotificationDatabase::Status NotificationDatabase::ReadNotificationData(
   std::string key = CreateDataKey(origin, notification_id);
   std::string serialized_data;
 
-  Status status = LevelDBStatusToStatus(
+  Status status = ToNotificationDatabaseStatus(
       db_->Get(leveldb::ReadOptions(), key, &serialized_data));
   if (status != STATUS_OK)
     return status;
@@ -219,7 +219,8 @@ NotificationDatabase::Status NotificationDatabase::WriteNotificationData(
               base::Int64ToString(next_persistent_notification_id_));
   }
 
-  return LevelDBStatusToStatus(db_->Write(leveldb::WriteOptions(), &batch));
+  return ToNotificationDatabaseStatus(
+      db_->Write(leveldb::WriteOptions(), &batch));
 }
 
 NotificationDatabase::Status NotificationDatabase::DeleteNotificationData(
@@ -231,7 +232,8 @@ NotificationDatabase::Status NotificationDatabase::DeleteNotificationData(
   DCHECK(origin.is_valid());
 
   std::string key = CreateDataKey(origin, notification_id);
-  return LevelDBStatusToStatus(db_->Delete(leveldb::WriteOptions(), key));
+  return ToNotificationDatabaseStatus(
+      db_->Delete(leveldb::WriteOptions(), key));
 }
 
 NotificationDatabase::Status
@@ -268,14 +270,14 @@ NotificationDatabase::Status NotificationDatabase::Destroy() {
   state_ = STATE_DISABLED;
   db_.reset();
 
-  return LevelDBStatusToStatus(
+  return ToNotificationDatabaseStatus(
       leveldb::DestroyDB(path_.AsUTF8Unsafe(), options));
 }
 
 NotificationDatabase::Status
 NotificationDatabase::ReadNextPersistentNotificationId() {
   std::string value;
-  Status status = LevelDBStatusToStatus(
+  Status status = ToNotificationDatabaseStatus(
       db_->Get(leveldb::ReadOptions(), kNextNotificationIdKey, &value));
 
   if (status == STATUS_ERROR_NOT_FOUND) {
@@ -331,7 +333,7 @@ NotificationDatabase::ReadAllNotificationDataInternal(
     notification_data_vector->push_back(notification_database_data);
   }
 
-  return LevelDBStatusToStatus(iter->status());
+  return ToNotificationDatabaseStatus(iter->status());
 }
 
 NotificationDatabase::Status
@@ -387,7 +389,8 @@ NotificationDatabase::DeleteAllNotificationDataInternal(
   if (deleted_notification_ids->empty())
     return STATUS_OK;
 
-  return LevelDBStatusToStatus(db_->Write(leveldb::WriteOptions(), &batch));
+  return ToNotificationDatabaseStatus(
+      db_->Write(leveldb::WriteOptions(), &batch));
 }
 
 }  // namespace content
