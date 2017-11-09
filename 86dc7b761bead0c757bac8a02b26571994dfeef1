@@ -46,6 +46,30 @@
       "revId": "86dc7b761bead0c757bac8a02b26571994dfeef1",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2b99cd1d_cfe57ace",
+        "filename": "chrome/utility/importer/firefox_importer.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 382,
+      "author": {
+        "id": 1002410
+      },
+      "writtenOn": "2017-11-09T01:17:53Z",
+      "side": 1,
+      "message": "I agree that it\u0027s probably ok to live with a small amount of bias.  It\u0027s probably worth documenting the bias in the histogram \u003csummary\u003e, just in case it affects anyone\u0027s analysis of the data.",
+      "parentUuid": "359876f1_8b84f21b",
+      "range": {
+        "startLine": 382,
+        "startChar": 31,
+        "endLine": 382,
+        "endChar": 41
+      },
+      "revId": "86dc7b761bead0c757bac8a02b26571994dfeef1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
