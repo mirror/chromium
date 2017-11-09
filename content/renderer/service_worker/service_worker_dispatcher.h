@@ -37,7 +37,6 @@ class Message;
 namespace content {
 
 class ServiceWorkerHandleReference;
-class ServiceWorkerProviderContext;
 class ThreadSafeSender;
 class WebServiceWorkerImpl;
 class WebServiceWorkerRegistrationImpl;
@@ -53,19 +52,6 @@ class CONTENT_EXPORT ServiceWorkerDispatcher : public WorkerThread::Observer {
   ~ServiceWorkerDispatcher() override;
 
   void OnMessageReceived(const IPC::Message& msg);
-
-  // Called when a new provider context for a document is created. Usually
-  // this happens when a new document is being loaded, and is called much
-  // earlier than AddScriptClient.
-  // (This is attached only to the document thread's ServiceWorkerDispatcher)
-  void AddProviderContext(ServiceWorkerProviderContext* provider_context);
-  void RemoveProviderContext(ServiceWorkerProviderContext* provider_context);
-
-  // Called when navigator.serviceWorker is instantiated or detached
-  // for a document whose provider can be identified by |provider_id|.
-  void AddProviderClient(int provider_id,
-                         blink::WebServiceWorkerProviderClient* client);
-  void RemoveProviderClient(int provider_id);
 
   blink::WebServiceWorkerProviderClient* GetProviderClient(int provider_id);
 
@@ -110,8 +96,6 @@ class CONTENT_EXPORT ServiceWorkerDispatcher : public WorkerThread::Observer {
  private:
   using ProviderClientMap =
       std::map<int, blink::WebServiceWorkerProviderClient*>;
-  using ProviderContextMap = std::map<int, ServiceWorkerProviderContext*>;
-  using WorkerToProviderMap = std::map<int, ServiceWorkerProviderContext*>;
   using WorkerObjectMap = std::map<int, WebServiceWorkerImpl*>;
   using RegistrationObjectMap =
       std::map<int, WebServiceWorkerRegistrationImpl*>;
@@ -126,7 +110,6 @@ class CONTENT_EXPORT ServiceWorkerDispatcher : public WorkerThread::Observer {
   void OnServiceWorkerStateChanged(int thread_id,
                                    int handle_id,
                                    blink::mojom::ServiceWorkerState state);
-  void OnCountFeature(int thread_id, int provider_id, uint32_t feature);
 
   // Keeps map from handle_id to ServiceWorker object.
   void AddServiceWorker(int handle_id, WebServiceWorkerImpl* worker);
@@ -140,7 +123,6 @@ class CONTENT_EXPORT ServiceWorkerDispatcher : public WorkerThread::Observer {
       int registration_handle_id);
 
   ProviderClientMap provider_clients_;
-  ProviderContextMap provider_contexts_;
 
   WorkerObjectMap service_workers_;
   RegistrationObjectMap registrations_;

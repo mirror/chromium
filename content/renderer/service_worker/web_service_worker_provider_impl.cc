@@ -57,23 +57,18 @@ WebServiceWorkerProviderImpl::WebServiceWorkerProviderImpl(
 }
 
 WebServiceWorkerProviderImpl::~WebServiceWorkerProviderImpl() {
-  // Make sure the provider client is removed.
-  RemoveProviderClient();
+  // The provider client should be nullified.
+  provider_client_ = nullptr;
 }
 
 void WebServiceWorkerProviderImpl::SetClient(
     blink::WebServiceWorkerProviderClient* client) {
   if (!client) {
-    RemoveProviderClient();
+    provider_client_ = nullptr;
     return;
   }
 
-  // TODO(kinuko): Here we could also register the current thread ID
-  // on the provider context so that multiple WebServiceWorkerProviderImpl
-  // (e.g. on document and on dedicated workers) can properly share
-  // the single provider context across threads. (http://crbug.com/366538
-  // for more context)
-  GetDispatcher()->AddProviderClient(context_->provider_id(), client);
+  provider_client_ = client;
 
   if (!context_->controller())
     return;
@@ -198,36 +193,29 @@ bool WebServiceWorkerProviderImpl::ValidateScopeAndScriptURL(
 
 void WebServiceWorkerProviderImpl::SetController(
     blink::mojom::ServiceWorkerObjectInfoPtr info,
-    const std::set<uint32_t>& features,
+    const std::set<blink::mojom::WebFeature>& features,
     bool should_notify_controller_change) {
-  blink::WebServiceWorkerProviderClient* provider_client =
-      GetDispatcher()->GetProviderClient(context_->provider_id());
-  // The document may have been destroyed so that |provider_client| is null.
-  if (!provider_client)
+  // The document may have been destroyed so that |provider_client_| is null.
+  if (!provider_client_)
     return;
 
   scoped_refptr<WebServiceWorkerImpl> controller =
       GetDispatcher()->GetOrCreateServiceWorker(
           ServiceWorkerHandleReference::Create(std::move(info),
                                                thread_safe_sender_.get()));
-  for (uint32_t feature : features)
-    provider_client->CountFeature(feature);
-  provider_client->SetController(WebServiceWorkerImpl::CreateHandle(controller),
-                                 should_notify_controller_change);
-}
-
-int WebServiceWorkerProviderImpl::provider_id() const {
-  return context_->provider_id();
+  for (blink::mojom::WebFeature feature : features)
+    provider_client_->CountFeature(feature);
+  provider_client_->SetController(
+      WebServiceWorkerImpl::CreateHandle(controller),
+      should_notify_controller_change);
 }
 
 void WebServiceWorkerProviderImpl::PostMessageToClient(
     blink::mojom::ServiceWorkerObjectInfoPtr source,
     const base::string16& message,
     std::vector<mojo::ScopedMessagePipeHandle> message_pipes) {
-  blink::WebServiceWorkerProviderClient* provider_client =
-      GetDispatcher()->GetProviderClient(context_->provider_id());
-  // The document may have been destroyed so that |provider_client| is null.
-  if (!provider_client)
+  // The document may have been destroyed so that |provider_client_| is null.
+  if (!provider_client_)
     return;
 
   scoped_refptr<WebServiceWorkerImpl> worker =
@@ -236,18 +224,21 @@ void WebServiceWorkerProviderImpl::PostMessageToClient(
                                                thread_safe_sender_.get()));
   auto message_ports =
       blink::MessagePortChannel::CreateFromHandles(std::move(message_pipes));
-  provider_client->DispatchMessageEvent(
+  provider_client_->DispatchMessageEvent(
       WebServiceWorkerImpl::CreateHandle(std::move(worker)),
       blink::WebString::FromUTF16(message), std::move(message_ports));
 }
 
-void WebServiceWorkerProviderImpl::RemoveProviderClient() {
-  // Remove the provider client, but only if the dispatcher is still there.
-  // (For cleanup path we don't need to bother creating a new dispatcher)
-  ServiceWorkerDispatcher* dispatcher =
-      ServiceWorkerDispatcher::GetThreadSpecificInstance();
-  if (dispatcher)
-    dispatcher->RemoveProviderClient(context_->provider_id());
+void WebServiceWorkerProviderImpl::CountFeature(
+    blink::mojom::WebFeature feature) {
+  // The document may have been destroyed so that |provider_client_| is null.
+  if (!provider_client_)
+    return;
+  provider_client_->CountFeature(feature);
+}
+
+int WebServiceWorkerProviderImpl::provider_id() const {
+  return context_->provider_id();
 }
 
 ServiceWorkerDispatcher* WebServiceWorkerProviderImpl::GetDispatcher() {
