@@ -1,0 +1,73 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "9ccb8939_3a736f14",
+        "filename": "services/device/generic_sensor/platform_sensor_fusion.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 21,
+      "author": {
+        "id": 1113896
+      },
+      "writtenOn": "2017-11-09T16:23:24Z",
+      "side": 1,
+      "message": "scoped_refptr\u003cFactory\u003e factory(",
+      "range": {
+        "startLine": 21,
+        "startChar": 4,
+        "endLine": 21,
+        "endChar": 42
+      },
+      "revId": "bf788cc83e0624e0fbf35ed9db33e0ffc60c972e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9ecb54b2_5fd4238e",
+        "filename": "services/device/generic_sensor/platform_sensor_fusion.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 41,
+      "author": {
+        "id": 1113896
+      },
+      "writtenOn": "2017-11-09T16:23:24Z",
+      "side": 1,
+      "message": "Checking for dups is a useful DCHECK but since the source set is always defined by the programmer it\u0027s not worth the overhead of an actual set.",
+      "range": {
+        "startLine": 41,
+        "startChar": 4,
+        "endLine": 41,
+        "endChar": 59
+      },
+      "revId": "bf788cc83e0624e0fbf35ed9db33e0ffc60c972e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "564f2136_ae58563b",
+        "filename": "services/device/generic_sensor/platform_sensor_fusion.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 71,
+      "author": {
+        "id": 1113896
+      },
+      "writtenOn": "2017-11-09T16:23:24Z",
+      "side": 1,
+      "message": "scoped_refptr\u003cPlatformSensor\u003e fusion_sensor(",
+      "range": {
+        "startLine": 70,
+        "startChar": 6,
+        "endLine": 71,
+        "endChar": 39
+      },
+      "revId": "bf788cc83e0624e0fbf35ed9db33e0ffc60c972e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
