@@ -21,6 +21,18 @@ template <typename Host, typename Interface>
 void BindInterface(Host* host, mojo::InterfaceRequest<Interface> request) {
   host->BindInterface(Interface::Name_, std::move(request.PassMessagePipe()));
 }
+template <typename Host, typename Interface>
+void BindEmbedderInterface(Host* host, mojo::InterfacePtr<Interface>* ptr) {
+  mojo::MessagePipe pipe;
+  ptr->Bind(mojo::InterfacePtrInfo<Interface>(std::move(pipe.handle0), 0u));
+  host->BindEmbedderInterface(Interface::Name_, std::move(pipe.handle1));
+}
+template <typename Host, typename Interface>
+void BindEmbedderInterface(Host* host,
+                           mojo::InterfaceRequest<Interface> request) {
+  host->BindEmbedderInterface(Interface::Name_,
+                              std::move(request.PassMessagePipe()));
+}
 
 }  // namespace
 
