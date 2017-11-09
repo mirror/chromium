@@ -1,6 +1,5 @@
-This tests that a data: URL loaded in an iframe inside another data: URL loaded iframe doesn't have access to its parent, the first data: URL loaded iframe.
-
-
+This tests that a data: URL loaded in an iframe inside another data: URL loaded iframe doesn't have access to its parent, the 
+        first data: URL loaded iframe.
 
 --------
 Frame: 'aFrame'
@@ -8,8 +7,6 @@ Frame: 'aFrame'
 PASS: Cross frame access from a data: URL was denied.
 
 Inner iframe.
-
-
 
 --------
 Frame: 'innerFrame'

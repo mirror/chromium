@@ -1,4 +1,5 @@
-Verify that navigator shows proper UISourceCodes as shadow dom styles and scripts are added and removed.
+Verify that navigator shows proper UISourceCodes as shadow dom 
+styles and scripts are added and removed.
 
 
 Running: dumpInitialNavigator

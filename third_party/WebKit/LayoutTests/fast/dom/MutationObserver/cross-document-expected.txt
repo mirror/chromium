@@ -2,7 +2,6 @@ Test that MutationObservers move correctly across documents
 
 On success, you will see a series of "PASS" messages, followed by "TEST COMPLETE".
 
-
 Testing basic aspects of cross-document observation.
 PASS mutations.length is 1
 PASS mutations[0].type is "attributes"

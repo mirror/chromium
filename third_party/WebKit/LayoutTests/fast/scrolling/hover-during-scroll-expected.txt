@@ -1,34 +1,93 @@
 was hovered
 was hovered
+
+
 currently hovered
+
+
 hover over me
+
+
 hover over me
+
+
 hover over me
+
+
 hover over me
+
+
 hover over me
+
+
 hover over me
+
+
 hover over me
+
+
 hover over me
+
+
 hover over me
+
+
 hover over me
+
+
 hover over me
+
+
 hover over me
+
+
 hover over me
+
+
 hover over me
+
+
 hover over me
+
+
 hover over me
+
+
 hover over me
+
+
 hover over me
+
+
 hover over me
+
+
 hover over me
+
+
 hover over me
+
+
 hover over me
+
+
 hover over me
+
+
 hover over me
+
+
 hover over me
+
+
 hover over me
+
+
 hover over me
+
+
 hover over me
+
 Test for http://crbug.com/153784. New hover effects should not be invoked during scroll if the mouse cursor is not visible.
 
 PASS successfullyParsed is true

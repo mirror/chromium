@@ -2,7 +2,6 @@ Tests that watchPosition does not report position changes when the page is not v
 
 On success, you will see a series of "PASS" messages, followed by "TEST COMPLETE".
 
-
 * Page is visible
 device moved to (52.478, 0.834)
 Page is notified of the position change

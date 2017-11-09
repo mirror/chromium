@@ -2,7 +2,6 @@ Test cloning mediastreams and their tracks.
 
 On success, you will see a series of "PASS" messages, followed by "TEST COMPLETE".
 
-
 PASS stream.getAudioTracks().length is 1
 PASS stream.getVideoTracks().length is 1
 PASS stream.id is not cloned_stream.id

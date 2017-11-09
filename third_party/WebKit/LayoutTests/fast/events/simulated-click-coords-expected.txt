@@ -1,7 +1,9 @@
 Ensure that simulated click on label elements uses the original mouse coordinates.
 
- Click Me
- Click Me
+
+Click Me
+
+Click Me
 PASS: event.clientX is same for both real and simulated event.
 PASS: event.clientY is same for both real and simulated event.
 PASS: event.layerX is same for both real and simulated event.

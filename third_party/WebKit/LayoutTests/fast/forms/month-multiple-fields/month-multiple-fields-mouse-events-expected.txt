@@ -2,13 +2,11 @@ Multiple fields UI of month input type with mouse events
 
 On success, you will see a series of "PASS" messages, followed by "TEST COMPLETE".
 
-
 Please run this with DRT or WTR.
 
 Test following mouse actions:
 Mouse click to focus each of sub-fields
 Mouse click on the spin button to update each of sub-fields
-
 PASS successfullyParsed is true
 
 TEST COMPLETE

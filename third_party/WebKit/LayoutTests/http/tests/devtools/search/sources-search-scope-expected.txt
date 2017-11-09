@@ -1,5 +1,4 @@
 
-
 Running: testIgnoreCaseAndIgnoreDynamicScript
 Search result #1: uiSourceCode.url = http://127.0.0.1:8000/devtools/search/resources/search.css
   search match #1: lineNumber = 0, lineContent = 'div.searchTestUniqueString {'

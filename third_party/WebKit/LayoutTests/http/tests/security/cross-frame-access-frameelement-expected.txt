@@ -1,6 +1,7 @@
 This test checks if frameElement is accessible from the same or cross origin iframe.
 
- 
+
+
 
 --------
 Frame: '<!--framePath //<!--frame0-->-->'

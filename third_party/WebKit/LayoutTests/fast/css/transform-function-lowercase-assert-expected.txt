@@ -1,3 +1,4 @@
-This is a test for an assertion failure in CSSParser.cpp’s equalIgnoringCase() when parsing transform functions whose canonical form is mixed-case (e.g. translateX).
+This is a test for an assertion failure in CSSParser.cpp’s equalIgnoringCase() when
+    parsing transform functions whose canonical form is mixed-case (e.g. translateX).
 
 No assertion failure means PASS.

@@ -1,4 +1,7 @@
-On Mac when word-selecting backwards starting with the caret on the middle of a word and then word-selecting forward, the caret is left in the same place where it was, instead of directly selecting to the end of the word (which is windows/unix behavior).
+On Mac when word-selecting backwards starting with the
+caret on the middle of a word and then word-selecting forward, the
+caret is left in the same place where it was, instead of directly selecting to the end
+of the word (which is windows/unix behavior).
 
 mac:
 Extend backward and then forward by word: PASS

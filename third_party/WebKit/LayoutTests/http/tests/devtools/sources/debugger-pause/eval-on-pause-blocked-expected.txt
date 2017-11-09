@@ -1,4 +1,5 @@
-Test that evaluation in the context of top frame will not be blocked by Content-Security-Policy. Bug 77203.
+Test that evaluation in the context of top frame will not be blocked by Content-Security-Policy.
+Bug 77203.
 
 Set timer for test function.
 Script execution paused.

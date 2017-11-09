@@ -26,6 +26,7 @@ CONSOLE ERROR: line 46: Refused to set unsafe header "PROXY-FOO"
 CONSOLE ERROR: line 48: Refused to set unsafe header "Sec-"
 CONSOLE ERROR: line 49: Refused to set unsafe header "Sec-test"
 CONSOLE ERROR: line 50: Refused to set unsafe header "SEC-FOO"
-Test that setRequestHeader cannot be used to alter security-sensitive headers for file:// urls.
+Test that setRequestHeader cannot be used to alter security-sensitive headers
+for file:// urls.
 
 SUCCESS

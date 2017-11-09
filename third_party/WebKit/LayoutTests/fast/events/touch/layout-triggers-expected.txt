@@ -1,7 +1,6 @@
-Check which type of events trigger layout when it's dirty. Events that do a hit-test must update layout, but all other events shouldn't need to.
+Check which type of events trigger layout when it's dirty.  Events that do a hit-test must update layout, but all other events shouldn't need to.
 
 On success, you will see a series of "PASS" messages, followed by "TEST COMPLETE".
-
 
 Forcing initial layout
 PASS internals.needsLayoutCount() is 0

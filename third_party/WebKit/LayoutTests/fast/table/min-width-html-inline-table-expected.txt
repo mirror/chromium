@@ -2,7 +2,6 @@ This test checks that the min-width style is applied to inline HTML tables.
 
 On success, you will see a series of "PASS" messages, followed by "TEST COMPLETE".
 
-
 ======== General notes ========
 
 The stylesheet used to style the table in each test is available at: LayoutTests/fast/table/resources/min-width.css

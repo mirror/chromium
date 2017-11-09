@@ -1,7 +1,6 @@
 Scrolled position should be restored when the div is hidden and shown again
 
 Div will be moved here.
-
 Scrolling to 0, 75
 Div's display is none now
 PASS e.scrollTop is 0

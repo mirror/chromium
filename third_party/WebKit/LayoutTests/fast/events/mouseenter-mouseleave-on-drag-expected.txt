@@ -2,7 +2,6 @@ Verifies that dragging mouse in/out of an element doesn't fire redundant mouseen
 
 On success, you will see a series of "PASS" messages, followed by "TEST COMPLETE".
 
-
 --- drag across inner ---
 outer received mouseover
 outer received mouseenter

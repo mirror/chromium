@@ -1,7 +1,6 @@
 Tests the Timeline API instrumentation of layout invalidations on a deleted node.
 
 
-
 Running: testLocalFrame
 paint invalidations[
     {

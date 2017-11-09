@@ -2,7 +2,6 @@ Test that setting/getting grid-template-{columns|rows} with repeat(auto-fill|aut
 
 On success, you will see a series of "PASS" messages, followed by "TEST COMPLETE".
 
-
 Test auto-repeat syntax.
 PASS getComputedStyle(element, '').getPropertyValue('grid-template-columns') is "[foo bar] 200px [foo bar] 200px [foo bar] 200px [foo bar] 200px"
 PASS element.style.gridTemplateColumns is "repeat(auto-fill, [foo bar] 200px)"

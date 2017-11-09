@@ -5,11 +5,11 @@ This tests that list items are properly marked when some of the items are indire
 10 Ten
 9 Nine
 8 Eight
--> 7 Seven
+->   7 Seven
 4 Four
 3 Three
--> 2 Two
--> 1 One
+->   2 Two
+->   1 One
 0 Zero
 -1 Minus One
 

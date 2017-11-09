@@ -2,7 +2,6 @@ Test exporting keys with various usages to JWK.
 
 On success, you will see a series of "PASS" messages, followed by "TEST COMPLETE".
 
-
 encrypt:
 PASS jwk.use is undefined
 PASS jwk.key_ops is ["encrypt"]

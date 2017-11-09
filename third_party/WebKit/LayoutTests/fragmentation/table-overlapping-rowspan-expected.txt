@@ -10,6 +10,38 @@ There should be two squares below, of different size and color.
 
 
 
+	
+
+
+
+
+	
+
+
+	
+
+
+	
+
+
+
+
+
+	
+
+	
+
+	
+
+
+
+
+
+	
+	
+
+
+	
 
 
 
@@ -25,7 +57,11 @@ There should be two squares below, of different size and color.
 
 
 
+	
 
+	
+
+	
 
 
 PASS

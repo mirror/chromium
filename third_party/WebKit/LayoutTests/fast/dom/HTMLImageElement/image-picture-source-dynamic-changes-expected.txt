@@ -10,4 +10,4 @@ PASS currentSrcFileName("simple") is "image-set-1x.png?2"
 PASS successfullyParsed is true
 
 TEST COMPLETE
- 
+

@@ -2,7 +2,6 @@ This test checks that grid-template-areas is properly parsed.
 
 On success, you will see a series of "PASS" messages, followed by "TEST COMPLETE".
 
-
 Test getting grid-template-areas set through CSS.
 PASS window.getComputedStyle(gridWithDefaultTemplate).getPropertyValue('grid-template-areas') is "none"
 PASS window.getComputedStyle(gridWithSingleStringTemplate).getPropertyValue('grid-template-areas') is "\"area\""

@@ -2,7 +2,6 @@ Test to make sure shadow nodes are not exposed.
 
 On success, you will see a series of "PASS" messages, followed by "TEST COMPLETE".
 
-
 PASS getSelection().anchorNode is null
 PASS getSelection().anchorOffset is 0
 PASS getSelection().focusNode is null

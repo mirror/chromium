@@ -1,4 +1,5 @@
 Reinserting SVG animation into document should continue the animation
+
 PASS successfullyParsed is true
 
 TEST COMPLETE

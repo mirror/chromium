@@ -2,7 +2,6 @@ Test that keyboard scrolling while the page is scaled scrolls both viewports. To
 
 On success, you will see a series of "PASS" messages, followed by "TEST COMPLETE".
 
-
 PASS successfullyParsed is true
 
 TEST COMPLETE
@@ -29,4 +28,9 @@ PASS internals.visualViewportScrollY() is > 0
 PASS internals.visualViewportScrollY() is pageHeight - internals.visualViewportHeight()
 PASS internals.visualViewportScrollY() is 0
 
-Top of pageBottom of pageLeft of pageRight of pageMiddle of page
+
+Top of page
+Bottom of page
+Left of page
+Right of page
+Middle of page

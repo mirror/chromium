@@ -1,4 +1,5 @@
-Even though the fixed-position element's container is nonscrollable, it should still be composited because one of its ancestors is scrolling.
+Even though the fixed-position element's container is nonscrollable, it
+    should still be composited because one of its ancestors is scrolling.
 
 {
   "layers": [

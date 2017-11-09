@@ -2,7 +2,6 @@ Exercise optional arguments with missing vs. undefined in IndexedDB methods.
 
 On success, you will see a series of "PASS" messages, followed by "TEST COMPLETE".
 
-
 dbname = "optional-arguments.html"
 indexedDB.deleteDatabase(dbname)
 indexedDB.open(dbname)

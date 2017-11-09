@@ -2,7 +2,6 @@ Verifies that when element is focused in frames then selection by menu key, cont
 
 On success, you will see a series of "PASS" messages, followed by "TEST COMPLETE".
 
-
 PASS successfullyParsed is true
 
 TEST COMPLETE

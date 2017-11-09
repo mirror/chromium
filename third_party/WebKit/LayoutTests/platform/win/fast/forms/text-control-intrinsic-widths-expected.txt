@@ -2,7 +2,6 @@ This test measures the width of textareas and text inputs for different fonts.
 
 On success, you will see a series of "PASS" messages, followed by "TEST COMPLETE".
 
-
 Lucida Grande
 input
 size=1 clientWidth=6

@@ -35,4 +35,6 @@ PASS navigator.getGamepads()[0].buttons === oldButtons is false
 PASS successfullyParsed is true
 
 TEST COMPLETE
+
+
 Typical polling access to gamepads contents.

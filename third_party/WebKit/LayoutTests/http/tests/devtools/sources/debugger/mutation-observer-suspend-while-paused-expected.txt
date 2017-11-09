@@ -1,3 +1,5 @@
+CONSOLE ERROR: line 57: Uncaught TypeError: Cannot read property 'dispatchMessage' of undefined
+CONSOLE ERROR: line 57: Uncaught TypeError: Cannot read property 'dispatchMessage' of undefined
 Tests that DOM Mutation Observers do not attempt to deliver mutation records while the debugger is paused.Bug 105810
 
 DIV and observer setup.

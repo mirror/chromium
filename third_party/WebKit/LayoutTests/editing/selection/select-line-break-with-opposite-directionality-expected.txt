@@ -1,4 +1,6 @@
-This tests selecting LTR/RTL text that spans multiple lines in RTL/LTR block (opposite directionality). To manually test, select text in each of editable regions below by dragging mouse from one edge to another. The entire line should be selected.
+This tests selecting LTR/RTL text that spans multiple lines in RTL/LTR block (opposite directionality).
+To manually test, select text in each of editable regions below by dragging mouse from one edge to another.
+The entire line should be selected.
 
 TEST 1 line 1:PASS
 TEST 1 line 2:PASS

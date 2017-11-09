@@ -1,6 +1,22 @@
-Test for bug 13287: Cannot change SELECT to a dynamically created option.
+Test for bug 13287:
+Cannot change SELECT to a dynamically created option.
 
-         
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 Results:
 Passed
 Passed
