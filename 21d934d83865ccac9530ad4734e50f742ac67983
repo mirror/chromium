@@ -49,6 +49,30 @@
     },
     {
       "key": {
+        "uuid": "6b06a7f6_95ed0ee6",
+        "filename": "content/renderer/media_capture_from_element/canvas_capture_handler.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 164,
+      "author": {
+        "id": 1123894
+      },
+      "writtenOn": "2017-11-09T01:19:12Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "c3fc5db6_19455f61",
+      "range": {
+        "startLine": 164,
+        "startChar": 28,
+        "endLine": 164,
+        "endChar": 49
+      },
+      "revId": "21d934d83865ccac9530ad4734e50f742ac67983",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "064e1b23_8d9f531e",
         "filename": "content/renderer/media_capture_from_element/canvas_capture_handler.h",
         "patchSetId": 5
@@ -69,6 +93,30 @@
       "revId": "21d934d83865ccac9530ad4734e50f742ac67983",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "974661aa_cac7468a",
+        "filename": "content/renderer/media_capture_from_element/canvas_capture_handler.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 105,
+      "author": {
+        "id": 1123894
+      },
+      "writtenOn": "2017-11-09T01:19:12Z",
+      "side": 1,
+      "message": "Done. Removed them here and other instances of this class.",
+      "parentUuid": "064e1b23_8d9f531e",
+      "range": {
+        "startLine": 104,
+        "startChar": 17,
+        "endLine": 105,
+        "endChar": 52
+      },
+      "revId": "21d934d83865ccac9530ad4734e50f742ac67983",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -180,6 +228,30 @@
       "revId": "21d934d83865ccac9530ad4734e50f742ac67983",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4f76ffed_2ad88e2e",
+        "filename": "content/test/data/media/canvas_capture_color.html",
+        "patchSetId": 5
+      },
+      "lineNbr": 189,
+      "author": {
+        "id": 1123894
+      },
+      "writtenOn": "2017-11-09T01:19:12Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "08d5af84_089901e9",
+      "range": {
+        "startLine": 167,
+        "startChar": 0,
+        "endLine": 189,
+        "endChar": 9
+      },
+      "revId": "21d934d83865ccac9530ad4734e50f742ac67983",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
