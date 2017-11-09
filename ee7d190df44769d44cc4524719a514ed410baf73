@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "02d64f6b_043d49cc",
+        "filename": "chrome/browser/ui/views/message_center/message_center_ui_delegate.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 23,
+      "author": {
+        "id": 1000191
+      },
+      "writtenOn": "2017-11-09T23:15:19Z",
+      "side": 1,
+      "message": "The naming of this is pretty confusing; it is practically identical to the base class. I\u0027m also not clear on which platforms use this, is this non-cros only? Maybe clarify the comment and/or namespace or rename this class?",
+      "revId": "ee7d190df44769d44cc4524719a514ed410baf73",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
