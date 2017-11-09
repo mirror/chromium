@@ -246,7 +246,7 @@ TEST(PermissionsDataTest, SocketPermissions) {
                                     "socket1.json",
                                     Manifest::INTERNAL, Extension::NO_FLAGS,
                                     &error);
-  EXPECT_TRUE(extension.get() == NULL);
+  EXPECT_TRUE(extension.get() == nullptr);
   std::string expected_error_msg_header = ErrorUtils::FormatErrorMessage(
       manifest_errors::kInvalidPermissionWithDetail,
       "socket",
@@ -405,7 +405,7 @@ class ExtensionScriptAndCaptureVisibleTest : public testing::Test {
     urls_.insert(settings_url);
     urls_.insert(about_url);
     // Ignore the policy delegate for this test.
-    PermissionsData::SetPolicyDelegate(NULL);
+    PermissionsData::SetPolicyDelegate(nullptr);
   }
 
   bool AllowedScript(const Extension* extension, const GURL& url) {
@@ -427,9 +427,10 @@ class ExtensionScriptAndCaptureVisibleTest : public testing::Test {
   }
 
   bool Allowed(const Extension* extension, const GURL& url, int tab_id) {
-    return (extension->permissions_data()->CanAccessPage(extension, url, tab_id,
-                                                         nullptr) &&
-            extension->permissions_data()->CanCaptureVisiblePage(tab_id, NULL));
+    return (
+        extension->permissions_data()->CanAccessPage(extension, url, tab_id,
+                                                     nullptr) &&
+        extension->permissions_data()->CanCaptureVisiblePage(tab_id, nullptr));
   }
 
   bool CaptureOnly(const Extension* extension, const GURL& url) {
@@ -646,7 +647,7 @@ TEST_F(ExtensionScriptAndCaptureVisibleTest, PermissionsWithChromeURLsEnabled) {
                                     "extension_wildcard_chrome.json",
                                     Manifest::INTERNAL, Extension::NO_FLAGS,
                                     &error);
-  EXPECT_FALSE(extension.get() == NULL);
+  EXPECT_FALSE(extension.get() == nullptr);
   EXPECT_TRUE(Blocked(extension.get(), http_url));
   EXPECT_TRUE(Blocked(extension.get(), https_url));
   EXPECT_TRUE(ScriptOnly(extension.get(), settings_url));

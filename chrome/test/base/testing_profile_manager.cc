@@ -45,13 +45,12 @@ TestingProfileManager::TestingProfileManager(TestingBrowserProcess* process)
     : called_set_up_(false),
       browser_process_(process),
       local_state_(process),
-      profile_manager_(NULL) {
-}
+      profile_manager_(nullptr) {}
 
 TestingProfileManager::~TestingProfileManager() {
   // Destroying this class also destroys the LocalState, so make sure the
   // associated ProfileManager is also destroyed.
-  browser_process_->SetProfileManager(NULL);
+  browser_process_->SetProfileManager(nullptr);
 }
 
 bool TestingProfileManager::SetUp() {
@@ -211,7 +210,7 @@ void TestingProfileManager::DeleteSystemProfile() {
 }
 
 void TestingProfileManager::DeleteProfileInfoCache() {
-  profile_manager_->profile_info_cache_.reset(NULL);
+  profile_manager_->profile_info_cache_.reset(nullptr);
 }
 
 void TestingProfileManager::SetLoggedIn(bool logged_in) {

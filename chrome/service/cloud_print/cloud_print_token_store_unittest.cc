@@ -9,13 +9,13 @@
 namespace cloud_print {
 
 TEST(CloudPrintTokenStoreTest, Basic) {
-  EXPECT_EQ(NULL, CloudPrintTokenStore::current());
+  EXPECT_EQ(nullptr, CloudPrintTokenStore::current());
   CloudPrintTokenStore* store = new CloudPrintTokenStore;
   EXPECT_EQ(store, CloudPrintTokenStore::current());
   CloudPrintTokenStore::current()->SetToken("myclientlogintoken");
   EXPECT_EQ(CloudPrintTokenStore::current()->token(), "myclientlogintoken");
   delete store;
-  EXPECT_EQ(NULL, CloudPrintTokenStore::current());
+  EXPECT_EQ(nullptr, CloudPrintTokenStore::current());
 }
 
 }  // namespace cloud_print

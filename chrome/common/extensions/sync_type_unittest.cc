@@ -219,7 +219,7 @@ TEST_F(ExtensionSyncTypeTest, DisplayInXManifestProperties) {
   EXPECT_TRUE(app->ShouldDisplayInNewTabPage());
 
   // Value display_in_NTP = false only, overrides default = true.
-  manifest.Remove(keys::kDisplayInLauncher, NULL);
+  manifest.Remove(keys::kDisplayInLauncher, nullptr);
   manifest.SetBoolean(keys::kDisplayInNewTabPage, false);
   app = Extension::Create(
       base::FilePath(), Manifest::COMPONENT, manifest, 0, &error);

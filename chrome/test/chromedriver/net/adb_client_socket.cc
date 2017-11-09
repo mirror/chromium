@@ -380,7 +380,7 @@ class AdbSendFileSocket : AdbClientSocket {
   }
 
   void SendDone() {
-    int data = time(NULL);
+    int data = time(nullptr);
     SendPayload(kDoneCommand, data, nullptr, 0,
                 base::Bind(&AdbSendFileSocket::ReadFinalResponse,
                            base::Unretained(this)));
@@ -417,7 +417,7 @@ class AdbSendFileSocket : AdbClientSocket {
   bool CheckNetResultOrDie(int result) {
     if (result >= 0)
       return true;
-    callback_.Run(result, NULL);
+    callback_.Run(result, nullptr);
     delete this;
     return false;
   }
@@ -514,7 +514,7 @@ void AdbClientSocket::Connect(const net::CompletionCallback& callback) {
   net::AddressList address_list = net::AddressList::CopyWithPort(
       ip_list, port_);
 
-  socket_.reset(new net::TCPClientSocket(address_list, NULL, NULL,
+  socket_.reset(new net::TCPClientSocket(address_list, nullptr, nullptr,
                                          net::NetLogSource()));
   int result = socket_->Connect(callback);
   if (result != net::ERR_IO_PENDING)

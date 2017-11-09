@@ -326,7 +326,7 @@ TEST(PermissionsTest, ExplicitAccessToOrigin) {
 }
 
 TEST(PermissionsTest, CreateUnion) {
-  APIPermission* permission = NULL;
+  APIPermission* permission = nullptr;
 
   ManifestPermissionSet manifest_permissions;
   APIPermissionSet apis1;
@@ -355,7 +355,7 @@ TEST(PermissionsTest, CreateUnion) {
     value->AppendString("tcp-connect:*.example.com:80");
     value->AppendString("udp-bind::8080");
     value->AppendString("udp-send-to::8888");
-    ASSERT_TRUE(permission->FromValue(value.get(), NULL, NULL));
+    ASSERT_TRUE(permission->FromValue(value.get(), nullptr, nullptr));
   }
 
   // Union with an empty set.
@@ -399,7 +399,7 @@ TEST(PermissionsTest, CreateUnion) {
     std::unique_ptr<base::ListValue> value(new base::ListValue());
     value->AppendString("tcp-connect:*.example.com:80");
     value->AppendString("udp-send-to::8899");
-    ASSERT_TRUE(permission->FromValue(value.get(), NULL, NULL));
+    ASSERT_TRUE(permission->FromValue(value.get(), nullptr, nullptr));
   }
   apis2.insert(permission);
 
@@ -415,7 +415,7 @@ TEST(PermissionsTest, CreateUnion) {
     value->AppendString("udp-bind::8080");
     value->AppendString("udp-send-to::8888");
     value->AppendString("udp-send-to::8899");
-    ASSERT_TRUE(permission->FromValue(value.get(), NULL, NULL));
+    ASSERT_TRUE(permission->FromValue(value.get(), nullptr, nullptr));
   }
   // Insert a new permission socket permisssion which will replace the old one.
   expected_apis.insert(permission);
@@ -448,7 +448,7 @@ TEST(PermissionsTest, CreateUnion) {
 }
 
 TEST(PermissionsTest, CreateIntersection) {
-  APIPermission* permission = NULL;
+  APIPermission* permission = nullptr;
 
   ManifestPermissionSet manifest_permissions;
   APIPermissionSet apis1;
@@ -481,7 +481,7 @@ TEST(PermissionsTest, CreateIntersection) {
     value->AppendString("tcp-connect:*.example.com:80");
     value->AppendString("udp-bind::8080");
     value->AppendString("udp-send-to::8888");
-    ASSERT_TRUE(permission->FromValue(value.get(), NULL, NULL));
+    ASSERT_TRUE(permission->FromValue(value.get(), nullptr, nullptr));
   }
   apis1.insert(permission);
 
@@ -518,7 +518,7 @@ TEST(PermissionsTest, CreateIntersection) {
     value->AppendString("udp-bind::8080");
     value->AppendString("udp-send-to::8888");
     value->AppendString("udp-send-to::8899");
-    ASSERT_TRUE(permission->FromValue(value.get(), NULL, NULL));
+    ASSERT_TRUE(permission->FromValue(value.get(), nullptr, nullptr));
   }
   apis2.insert(permission);
 
@@ -528,7 +528,7 @@ TEST(PermissionsTest, CreateIntersection) {
     std::unique_ptr<base::ListValue> value(new base::ListValue());
     value->AppendString("udp-bind::8080");
     value->AppendString("udp-send-to::8888");
-    ASSERT_TRUE(permission->FromValue(value.get(), NULL, NULL));
+    ASSERT_TRUE(permission->FromValue(value.get(), nullptr, nullptr));
   }
   expected_apis.insert(permission);
 
@@ -560,7 +560,7 @@ TEST(PermissionsTest, CreateIntersection) {
 }
 
 TEST(PermissionsTest, CreateDifference) {
-  APIPermission* permission = NULL;
+  APIPermission* permission = nullptr;
 
   ManifestPermissionSet manifest_permissions;
   APIPermissionSet apis1;
@@ -593,7 +593,7 @@ TEST(PermissionsTest, CreateDifference) {
     value->AppendString("tcp-connect:*.example.com:80");
     value->AppendString("udp-bind::8080");
     value->AppendString("udp-send-to::8888");
-    ASSERT_TRUE(permission->FromValue(value.get(), NULL, NULL));
+    ASSERT_TRUE(permission->FromValue(value.get(), nullptr, nullptr));
   }
   apis1.insert(permission);
 
@@ -617,7 +617,7 @@ TEST(PermissionsTest, CreateDifference) {
     std::unique_ptr<base::ListValue> value(new base::ListValue());
     value->AppendString("tcp-connect:*.example.com:80");
     value->AppendString("udp-send-to::8899");
-    ASSERT_TRUE(permission->FromValue(value.get(), NULL, NULL));
+    ASSERT_TRUE(permission->FromValue(value.get(), nullptr, nullptr));
   }
   apis2.insert(permission);
 
@@ -627,7 +627,7 @@ TEST(PermissionsTest, CreateDifference) {
     std::unique_ptr<base::ListValue> value(new base::ListValue());
     value->AppendString("udp-bind::8080");
     value->AppendString("udp-send-to::8888");
-    ASSERT_TRUE(permission->FromValue(value.get(), NULL, NULL));
+    ASSERT_TRUE(permission->FromValue(value.get(), nullptr, nullptr));
   }
   expected_apis.insert(permission);
 
@@ -887,7 +887,7 @@ TEST(PermissionsTest, PermissionMessages) {
   for (APIPermissionSet::const_iterator i = permissions.begin();
        i != permissions.end(); ++i) {
     const APIPermissionInfo* permission_info = i->info();
-    EXPECT_TRUE(permission_info != NULL);
+    EXPECT_TRUE(permission_info != nullptr);
 
     PermissionIDSet id;
     id.insert(permission_info->id());

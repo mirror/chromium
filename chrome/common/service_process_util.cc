@@ -120,7 +120,7 @@ std::string GetServiceProcessScopedVersionedName(
 bool GetServiceProcessData(std::string* version, base::ProcessId* pid) {
   std::unique_ptr<base::SharedMemory> shared_mem_service_data;
   shared_mem_service_data.reset(new base::SharedMemory());
-  ServiceProcessSharedData* service_data = NULL;
+  ServiceProcessSharedData* service_data = nullptr;
   if (shared_mem_service_data.get() &&
       shared_mem_service_data->Open(GetServiceProcessSharedMemName(), true) &&
       shared_mem_service_data->Map(sizeof(ServiceProcessSharedData))) {
@@ -194,7 +194,7 @@ std::unique_ptr<base::CommandLine> CreateServiceProcessCommandLine() {
   return command_line;
 }
 
-ServiceProcessState::ServiceProcessState() : state_(NULL) {
+ServiceProcessState::ServiceProcessState() : state_(nullptr) {
   autorun_command_line_ = CreateServiceProcessCommandLine();
   CreateState();
 }

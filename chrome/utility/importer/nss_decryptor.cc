@@ -113,7 +113,7 @@ base::string16 NSSDecryptor::Decrypt(const std::string& crypt) const {
     if (!base::Base64Decode(crypt, &decoded_data))
       return base::string16();
     PK11SlotInfo* slot = GetKeySlotForDB();
-    SECStatus result = PK11_Authenticate(slot, PR_TRUE, NULL);
+    SECStatus result = PK11_Authenticate(slot, PR_TRUE, nullptr);
     if (result != SECSuccess) {
       FreeSlot(slot);
       return base::string16();
@@ -124,10 +124,10 @@ base::string16 NSSDecryptor::Decrypt(const std::string& crypt) const {
         const_cast<char*>(decoded_data.data()));
     request.len = static_cast<unsigned int>(decoded_data.size());
     SECItem reply;
-    reply.data = NULL;
+    reply.data = nullptr;
     reply.len = 0;
 #if defined(USE_NSS_CERTS)
-    result = PK11SDR_DecryptWithSlot(slot, &request, &reply, NULL);
+    result = PK11SDR_DecryptWithSlot(slot, &request, &reply, nullptr);
 #else
     result = PK11SDR_Decrypt(&request, &reply, NULL);
 #endif  // defined(USE_NSS_CERTS)

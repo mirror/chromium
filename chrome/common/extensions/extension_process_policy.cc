@@ -20,7 +20,7 @@ const extensions::Extension* GetNonBookmarkAppExtension(
   const extensions::Extension* extension =
       extensions.GetExtensionOrAppByURL(url);
   if (extension && extension->from_bookmark())
-    extension = NULL;
+    extension = nullptr;
   return extension;
 }
 

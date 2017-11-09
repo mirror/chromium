@@ -93,7 +93,7 @@ URLOverridesHandler::~URLOverridesHandler() {
 }
 
 bool URLOverridesHandler::Parse(Extension* extension, base::string16* error) {
-  const base::DictionaryValue* overrides = NULL;
+  const base::DictionaryValue* overrides = nullptr;
   if (!extension->manifest()->GetDictionary(keys::kChromeURLOverrides,
                                             &overrides)) {
     *error = base::ASCIIToUTF16(errors::kInvalidChromeURLOverrides);

@@ -62,7 +62,7 @@
 #include <glib-object.h>
 #endif
 
-ServiceProcess* g_service_process = NULL;
+ServiceProcess* g_service_process = nullptr;
 
 namespace {
 
@@ -135,7 +135,7 @@ void PrepareRestartOnCrashEnviroment(
 ServiceProcess::ServiceProcess()
     : shutdown_event_(base::WaitableEvent::ResetPolicy::MANUAL,
                       base::WaitableEvent::InitialState::NOT_SIGNALED),
-      main_message_loop_(NULL),
+      main_message_loop_(nullptr),
       enabled_services_(0),
       update_available_(false) {
   DCHECK(!g_service_process);
@@ -223,7 +223,7 @@ bool ServiceProcess::Initialize(base::MessageLoopForUI* message_loop,
   }
   ui::MaterialDesignController::Initialize();
   ui::ResourceBundle::InitSharedInstanceWithLocale(
-      locale, NULL, ui::ResourceBundle::LOAD_COMMON_RESOURCES);
+      locale, nullptr, ui::ResourceBundle::LOAD_COMMON_RESOURCES);
 
   PrepareRestartOnCrashEnviroment(command_line);
 
@@ -436,5 +436,5 @@ void ServiceProcess::ShutdownIfNeeded() {
 
 ServiceProcess::~ServiceProcess() {
   Teardown();
-  g_service_process = NULL;
+  g_service_process = nullptr;
 }

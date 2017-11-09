@@ -285,8 +285,8 @@ void CloudPrintProxyBackend::Core::CreateAuthAndConnector() {
 }
 
 void CloudPrintProxyBackend::Core::DestroyAuthAndConnector() {
-  auth_ = NULL;
-  connector_ = NULL;
+  auth_ = nullptr;
+  connector_ = nullptr;
 }
 
 void CloudPrintProxyBackend::Core::DoInitializeWithToken(

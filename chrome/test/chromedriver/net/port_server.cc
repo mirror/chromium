@@ -164,7 +164,7 @@ uint16_t PortManager::FindAvailablePort() const {
       continue;
 
     net::NetLogSource source;
-    net::TCPServerSocket sock(NULL, source);
+    net::TCPServerSocket sock(nullptr, source);
     if (sock.Listen(
             net::IPEndPoint(net::IPAddress::IPv4Localhost(), try_port_uint16),
             1) == net::OK)

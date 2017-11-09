@@ -26,7 +26,7 @@ bool GetNativeWindow(const Browser* browser, gfx::NativeWindow* native_window) {
 }  // namespace
 
 bool BringBrowserWindowToFront(const Browser* browser) {
-  gfx::NativeWindow window = NULL;
+  gfx::NativeWindow window = nullptr;
   if (!GetNativeWindow(browser, &window))
     return false;
 
@@ -44,7 +44,7 @@ bool SendKeyPressSync(const Browser* browser,
                       bool shift,
                       bool alt,
                       bool command) {
-  gfx::NativeWindow window = NULL;
+  gfx::NativeWindow window = nullptr;
   if (!GetNativeWindow(browser, &window))
     return false;
   return SendKeyPressToWindowSync(window, key, control, shift, alt, command);

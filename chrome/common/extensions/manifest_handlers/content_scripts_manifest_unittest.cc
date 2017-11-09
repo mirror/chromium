@@ -98,7 +98,7 @@ TEST_F(ContentScriptsManifestTest, FailLoadingNonUTF8Scripts) {
   std::string error;
   scoped_refptr<Extension> extension(file_util::LoadExtension(
       install_dir, Manifest::UNPACKED, Extension::NO_FLAGS, &error));
-  ASSERT_TRUE(extension.get() == NULL);
+  ASSERT_TRUE(extension.get() == nullptr);
   ASSERT_STREQ(
       "Could not load file 'bad_encoding.js' for content script. "
       "It isn't UTF-8 encoded.",

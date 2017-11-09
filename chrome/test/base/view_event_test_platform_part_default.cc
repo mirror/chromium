@@ -45,7 +45,7 @@ class ViewEventTestPlatformPartDefault : public ViewEventTestPlatformPart {
   }
 
   // Overridden from ViewEventTestPlatformPart:
-  gfx::NativeWindow GetContext() override { return NULL; }
+  gfx::NativeWindow GetContext() override { return nullptr; }
 
  private:
   std::unique_ptr<display::Screen> screen_;

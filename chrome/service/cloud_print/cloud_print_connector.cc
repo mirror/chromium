@@ -34,7 +34,7 @@ CloudPrintConnector::CloudPrintConnector(
     const ConnectorSettings& settings,
     const net::PartialNetworkTrafficAnnotationTag& partial_traffic_annotation)
     : client_(client),
-      next_response_handler_(NULL),
+      next_response_handler_(nullptr),
       partial_traffic_annotation_(partial_traffic_annotation),
       stats_ptr_factory_(this) {
   settings_.CopyFrom(settings);
@@ -51,7 +51,7 @@ bool CloudPrintConnector::InitPrintSystem() {
   }
   PrintSystem::PrintSystemResult result = print_system_->Init();
   if (!result.succeeded()) {
-    print_system_ = NULL;
+    print_system_ = nullptr;
     // We could not initialize the print system. We need to notify the server.
     ReportUserMessage(kPrintSystemFailedMessageId, result.message());
     return false;
@@ -99,12 +99,12 @@ void CloudPrintConnector::Stop() {
   // Do uninitialization here.
   stats_ptr_factory_.InvalidateWeakPtrs();
   pending_tasks_.clear();
-  print_server_watcher_ = NULL;
-  request_ = NULL;
+  print_server_watcher_ = nullptr;
+  request_ = nullptr;
 }
 
 bool CloudPrintConnector::IsRunning() {
-  return print_server_watcher_.get() != NULL;
+  return print_server_watcher_.get() != nullptr;
 }
 
 std::list<std::string> CloudPrintConnector::GetPrinterIds() const {

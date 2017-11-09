@@ -126,7 +126,7 @@ UIOverridesHandler::UIOverridesHandler() {}
 UIOverridesHandler::~UIOverridesHandler() {}
 
 bool UIOverridesHandler::Parse(Extension* extension, base::string16* error) {
-  const base::Value* dict = NULL;
+  const base::Value* dict = nullptr;
   CHECK(extension->manifest()->Get(manifest_keys::kUIOverride, &dict));
   std::unique_ptr<ChromeUIOverrides> overrides(
       ChromeUIOverrides::FromValue(*dict, error));
@@ -141,8 +141,8 @@ bool UIOverridesHandler::Parse(Extension* extension, base::string16* error) {
         manifest_keys::kUIOverride);
     return false;
   }
-  info->manifest_permission.reset(new ManifestPermissionImpl(
-      info->bookmarks_ui.get() != NULL));
+  info->manifest_permission.reset(
+      new ManifestPermissionImpl(info->bookmarks_ui.get() != nullptr));
   extension->SetManifestData(manifest_keys::kUIOverride, std::move(info));
   return true;
 }
@@ -174,7 +174,7 @@ ManifestPermission* UIOverridesHandler::CreateInitialRequiredPermission(
   const UIOverrides* data = UIOverrides::Get(extension);
   if (data)
     return data->manifest_permission->Clone();
-  return NULL;
+  return nullptr;
 }
 const std::vector<std::string> UIOverridesHandler::Keys() const {
   return SingleKey(manifest_keys::kUIOverride);

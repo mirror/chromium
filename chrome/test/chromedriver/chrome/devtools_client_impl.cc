@@ -93,7 +93,7 @@ DevToolsClientImpl::DevToolsClientImpl(const SyncWebSocketFactory& factory,
       id_(id),
       frontend_closer_func_(base::Bind(&FakeCloseFrontends)),
       parser_func_(base::Bind(&internal::ParseInspectorMessage)),
-      unnotified_event_(NULL),
+      unnotified_event_(nullptr),
       next_id_(1),
       stack_count_(0) {}
 
@@ -108,7 +108,7 @@ DevToolsClientImpl::DevToolsClientImpl(
       id_(id),
       frontend_closer_func_(frontend_closer_func),
       parser_func_(base::Bind(&internal::ParseInspectorMessage)),
-      unnotified_event_(NULL),
+      unnotified_event_(nullptr),
       next_id_(1),
       stack_count_(0) {}
 
@@ -124,7 +124,7 @@ DevToolsClientImpl::DevToolsClientImpl(
       id_(id),
       frontend_closer_func_(frontend_closer_func),
       parser_func_(parser_func),
-      unnotified_event_(NULL),
+      unnotified_event_(nullptr),
       next_id_(1),
       stack_count_(0) {}
 
@@ -381,7 +381,7 @@ Status DevToolsClientImpl::ProcessEvent(const internal::InspectorEvent& event) {
   unnotified_event_listeners_ = listeners_;
   unnotified_event_ = &event;
   Status status = EnsureListenersNotifiedOfEvent();
-  unnotified_event_ = NULL;
+  unnotified_event_ = nullptr;
   if (status.IsError())
     return status;
   if (event.method == "Inspector.detached")
@@ -517,7 +517,7 @@ bool ParseInspectorMessage(
     std::string method;
     if (!message_dict->GetString("method", &method))
       return false;
-    base::DictionaryValue* params = NULL;
+    base::DictionaryValue* params = nullptr;
     message_dict->GetDictionary("params", &params);
 
     *type = kEventMessageType;
@@ -528,8 +528,8 @@ bool ParseInspectorMessage(
       event->params.reset(new base::DictionaryValue());
     return true;
   } else if (message_dict->GetInteger("id", &id)) {
-    base::DictionaryValue* unscoped_error = NULL;
-    base::DictionaryValue* unscoped_result = NULL;
+    base::DictionaryValue* unscoped_error = nullptr;
+    base::DictionaryValue* unscoped_result = nullptr;
     *type = kCommandResponseMessageType;
     command_response->id = id;
     // As per Chromium issue 392577, DevTools does not necessarily return a

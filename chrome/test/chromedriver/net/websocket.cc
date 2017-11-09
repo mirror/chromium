@@ -47,7 +47,7 @@ bool ResolveHost(const std::string& host,
   hints.ai_socktype = SOCK_STREAM;
 
   struct addrinfo* result;
-  if (getaddrinfo(host.c_str(), NULL, &hints, &result))
+  if (getaddrinfo(host.c_str(), nullptr, &hints, &result))
     return false;
 
   auto list = net::AddressList::CreateFromAddrinfo(result);
@@ -92,7 +92,7 @@ void WebSocket::Connect(const net::CompletionCallback& callback) {
   }
 
   net::NetLogSource source;
-  socket_.reset(new net::TCPClientSocket(addresses, NULL, NULL, source));
+  socket_.reset(new net::TCPClientSocket(addresses, nullptr, nullptr, source));
 
   state_ = CONNECTING;
   connect_callback_ = callback;

@@ -55,7 +55,7 @@ TEST_F(UIOverrideTest, ParseManifest) {
   std::string manifest(kManifest);
   JSONStringValueDeserializer json(manifest);
   std::string error;
-  std::unique_ptr<base::Value> root(json.Deserialize(NULL, &error));
+  std::unique_ptr<base::Value> root(json.Deserialize(nullptr, &error));
   ASSERT_TRUE(root);
   ASSERT_TRUE(root->is_dict());
   scoped_refptr<Extension> extension = Extension::Create(
@@ -83,7 +83,7 @@ TEST_F(UIOverrideTest, ParseBrokenManifest) {
   std::string manifest(kBrokenManifest);
   JSONStringValueDeserializer json(manifest);
   std::string error;
-  std::unique_ptr<base::Value> root(json.Deserialize(NULL, &error));
+  std::unique_ptr<base::Value> root(json.Deserialize(nullptr, &error));
   ASSERT_TRUE(root);
   ASSERT_TRUE(root->is_dict());
   scoped_refptr<Extension> extension = Extension::Create(

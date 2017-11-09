@@ -59,7 +59,7 @@ class FetchUrlTest : public testing::Test,
 
   void InitOnIO(base::WaitableEvent* event) {
     std::unique_ptr<net::ServerSocket> server_socket(
-        new net::TCPServerSocket(NULL, net::NetLogSource()));
+        new net::TCPServerSocket(nullptr, net::NetLogSource()));
     server_socket->ListenWithAddressAndPort("127.0.0.1", 0, 1);
     server_.reset(new net::HttpServer(std::move(server_socket), this));
     net::IPEndPoint address;
@@ -69,7 +69,7 @@ class FetchUrlTest : public testing::Test,
   }
 
   void DestroyServerOnIO(base::WaitableEvent* event) {
-    server_.reset(NULL);
+    server_.reset(nullptr);
     event->Signal();
   }
 

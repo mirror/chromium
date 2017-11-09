@@ -146,7 +146,7 @@ Status StubWebView::IsPendingNavigation(const std::string& frame_id,
 }
 
 JavaScriptDialogManager* StubWebView::GetJavaScriptDialogManager() {
-  return NULL;
+  return nullptr;
 }
 
 Status StubWebView::OverrideGeolocation(const Geoposition& geoposition) {

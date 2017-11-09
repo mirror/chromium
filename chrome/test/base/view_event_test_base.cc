@@ -54,8 +54,7 @@ const int kMouseMoveDelayMS = 200;
 }  // namespace
 
 ViewEventTestBase::ViewEventTestBase()
-  : window_(NULL),
-    content_view_(NULL) {
+    : window_(nullptr), content_view_(nullptr) {
   // The TestingBrowserProcess must be created in the constructor because there
   // are tests that require it before SetUp() is called.
   TestingBrowserProcess::CreateInstance();
@@ -100,7 +99,7 @@ void ViewEventTestBase::TearDown() {
   if (window_) {
     window_->Close();
     content::RunAllPendingInMessageLoop();
-    window_ = NULL;
+    window_ = nullptr;
   }
 
   ui::Clipboard::DestroyClipboardForCurrentThread();
@@ -169,7 +168,7 @@ void ViewEventTestBase::ScheduleMouseMoveInBackground(int x, int y) {
 }
 
 void ViewEventTestBase::StopBackgroundThread() {
-  dnd_thread_.reset(NULL);
+  dnd_thread_.reset(nullptr);
 }
 
 void ViewEventTestBase::RunTestMethod(const base::Closure& task) {

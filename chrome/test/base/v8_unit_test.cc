@@ -181,7 +181,7 @@ void V8UnitTest::SetUp() {
   send_function->RemovePrototype();
   chrome->Set(v8::String::NewFromUtf8(isolate, "send"), send_function);
 
-  context_.Reset(isolate, v8::Context::New(isolate, NULL, global));
+  context_.Reset(isolate, v8::Context::New(isolate, nullptr, global));
 
   // Set up console object for console.log(), etc.
   v8::Local<v8::ObjectTemplate> console = v8::ObjectTemplate::New(isolate);
@@ -286,7 +286,7 @@ void V8UnitTest::TestFunction(const std::string& function_name) {
       v8::Local<v8::Function>::Cast(function_property);
 
   v8::TryCatch try_catch(isolate);
-  v8::Local<v8::Value> result = function->Call(context->Global(), 0, NULL);
+  v8::Local<v8::Value> result = function->Call(context->Global(), 0, nullptr);
   // The test fails if an exception was thrown.
   if (result.IsEmpty())
     FAIL() << ExceptionToString(try_catch);

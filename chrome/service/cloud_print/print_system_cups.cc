@@ -177,9 +177,7 @@ class PrintServerWatcherCUPS
   : public PrintSystem::PrintServerWatcher {
  public:
   explicit PrintServerWatcherCUPS(PrintSystemCUPS* print_system)
-      : print_system_(print_system),
-        delegate_(NULL) {
-  }
+      : print_system_(print_system), delegate_(nullptr) {}
 
   // PrintSystem::PrintServerWatcher implementation.
   bool StartWatching(
@@ -193,7 +191,7 @@ class PrintServerWatcherCUPS
   }
 
   bool StopWatching() override {
-    delegate_ = NULL;
+    delegate_ = nullptr;
     return true;
   }
 
@@ -245,14 +243,13 @@ class PrinterWatcherCUPS
   PrinterWatcherCUPS(PrintSystemCUPS* print_system,
                      const std::string& printer_name)
       : printer_name_(printer_name),
-        delegate_(NULL),
-        print_system_(print_system) {
-  }
+        delegate_(nullptr),
+        print_system_(print_system) {}
 
   // PrintSystem::PrinterWatcher implementation.
   bool StartWatching(PrintSystem::PrinterWatcher::Delegate* delegate) override {
     scoped_refptr<printing::PrintBackend> print_backend(
-        printing::PrintBackend::CreateInstance(NULL));
+        printing::PrintBackend::CreateInstance(nullptr));
     crash_keys::ScopedPrinterInfo crash_key(
         print_backend->GetPrinterDriverInfo(printer_name_));
     if (delegate_)
@@ -272,7 +269,7 @@ class PrinterWatcherCUPS
   }
 
   bool StopWatching() override {
-    delegate_ = NULL;
+    delegate_ = nullptr;
     return true;
   }
 
@@ -522,7 +519,7 @@ void PrintSystemCUPS::GetPrinterCapsAndDefaults(
 }
 
 bool PrintSystemCUPS::IsValidPrinter(const std::string& printer_name) {
-  return GetPrinterInfo(printer_name, NULL);
+  return GetPrinterInfo(printer_name, nullptr);
 }
 
 bool PrintSystemCUPS::ValidatePrintTicket(
@@ -599,7 +596,7 @@ bool PrintSystemCUPS::GetJobDetails(const std::string& printer_name,
 
   crash_keys::ScopedPrinterInfo crash_key(
       server_info->backend->GetPrinterDriverInfo(short_printer_name));
-  cups_job_t* jobs = NULL;
+  cups_job_t* jobs = nullptr;
   int num_jobs = GetJobs(&jobs, server_info->url, cups_encryption_,
                          short_printer_name.c_str(), 1, -1);
   bool error = (num_jobs == 0) && (cupsLastError() > IPP_OK_EVENTS_COMPLETE);
@@ -820,7 +817,7 @@ PrintServerInfoCUPS* PrintSystemCUPS::FindServerByFullName(
   if (front == std::string::npos || separator == std::string::npos) {
     LOG(WARNING) << "CP_CUPS: Invalid UNC"
                  << ", printer name: " << full_printer_name;
-    return NULL;
+    return nullptr;
   }
   std::string server = full_printer_name.substr(2, separator - 2);
 
@@ -839,7 +836,7 @@ PrintServerInfoCUPS* PrintSystemCUPS::FindServerByFullName(
 
   LOG(WARNING) << "CP_CUPS: Server not found"
                << ", printer name: " << full_printer_name;
-  return NULL;
+  return nullptr;
 }
 
 void PrintSystemCUPS::RunCapsCallback(

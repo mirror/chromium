@@ -23,7 +23,8 @@ int g_signal_socket = -1;
 // Caller is responsible for ownership of the MultiProcessLock.
 MultiProcessLock* TakeNamedLock(const std::string& name, bool waiting) {
   std::unique_ptr<MultiProcessLock> lock(MultiProcessLock::Create(name));
-  if (lock == NULL) return NULL;
+  if (lock == nullptr)
+    return nullptr;
   bool got_lock = false;
   for (int i = 0; i < 10; ++i) {
     if (lock->TryLock()) {
@@ -153,7 +154,7 @@ ServiceProcessState::StateData::~StateData() {
     }
   }
   if (set_action) {
-    if (sigaction(SIGTERM, &old_action, NULL) < 0) {
+    if (sigaction(SIGTERM, &old_action, nullptr) < 0) {
       DPLOG(ERROR) << "sigaction";
     }
   }
@@ -173,7 +174,7 @@ bool ServiceProcessState::SignalReady(
 
 #if !defined(OS_MACOSX)
   state_->running_lock.reset(TakeServiceRunningLock(true));
-  if (state_->running_lock.get() == NULL) {
+  if (state_->running_lock.get() == nullptr) {
     return false;
   }
 #endif

@@ -88,7 +88,7 @@ Log::Level GetLevelFromSeverity(int severity) {
 WebDriverLog* GetSessionLog() {
   Session* session = GetThreadLocalSession();
   if (!session)
-    return NULL;
+    return nullptr;
   return session->driver_log.get();
 }
 
@@ -173,9 +173,9 @@ bool GetFirstErrorMessageFromList(const base::ListValue* list,
   for (base::ListValue::const_iterator it = list->begin();
        it != list->end();
        ++it) {
-    const base::DictionaryValue* log_entry = NULL;
+    const base::DictionaryValue* log_entry = nullptr;
     it->GetAsDictionary(&log_entry);
-    if (log_entry != NULL) {
+    if (log_entry != nullptr) {
       std::string level;
       if (log_entry->GetString("level", &level))
         if (level == kLevelToName[Log::kError])

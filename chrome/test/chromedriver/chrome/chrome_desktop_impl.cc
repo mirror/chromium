@@ -45,7 +45,7 @@ bool KillProcess(const base::Process& process, bool kill_gracefully) {
     base::TimeTicks deadline =
         base::TimeTicks::Now() + base::TimeDelta::FromSeconds(30);
     while (base::TimeTicks::Now() < deadline) {
-      pid_t pid = HANDLE_EINTR(waitpid(process.Pid(), NULL, WNOHANG));
+      pid_t pid = HANDLE_EINTR(waitpid(process.Pid(), nullptr, WNOHANG));
       if (pid == process.Pid())
         return true;
       if (pid == -1) {
@@ -196,7 +196,7 @@ std::string ChromeDesktopImpl::GetOperatingSystemName() {
 }
 
 bool ChromeDesktopImpl::IsMobileEmulationEnabled() const {
-  return devtools_http_client_->device_metrics() != NULL;
+  return devtools_http_client_->device_metrics() != nullptr;
 }
 
 bool ChromeDesktopImpl::HasTouchScreen() const {

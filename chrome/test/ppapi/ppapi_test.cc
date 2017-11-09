@@ -108,10 +108,10 @@ void PPAPITestBase::InfoBarObserver::Observe(
 void PPAPITestBase::InfoBarObserver::VerifyInfoBarState() {
   content::WebContents* web_contents =
       test_base_->browser()->tab_strip_model()->GetActiveWebContents();
-  ASSERT_TRUE(web_contents != NULL);
+  ASSERT_TRUE(web_contents != nullptr);
   InfoBarService* infobar_service =
       InfoBarService::FromWebContents(web_contents);
-  ASSERT_TRUE(infobar_service != NULL);
+  ASSERT_TRUE(infobar_service != nullptr);
 
   EXPECT_EQ(expecting_infobar_ ? 1U : 0U, infobar_service->infobar_count());
   if (!expecting_infobar_)
@@ -121,7 +121,7 @@ void PPAPITestBase::InfoBarObserver::VerifyInfoBarState() {
   infobars::InfoBar* infobar = infobar_service->infobar_at(0);
   ConfirmInfoBarDelegate* delegate =
       infobar->delegate()->AsConfirmInfoBarDelegate();
-  ASSERT_TRUE(delegate != NULL);
+  ASSERT_TRUE(delegate != nullptr);
   if (should_accept_)
     delegate->Accept();
   else

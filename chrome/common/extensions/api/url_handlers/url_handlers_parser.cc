@@ -52,14 +52,14 @@ const std::vector<UrlHandlerInfo>* UrlHandlers::GetUrlHandlers(
     const Extension* extension) {
   UrlHandlers* info = static_cast<UrlHandlers*>(
       extension->GetManifestData(mkeys::kUrlHandlers));
-  return info ? &info->handlers : NULL;
+  return info ? &info->handlers : nullptr;
 }
 
 // static
 bool UrlHandlers::CanExtensionHandleUrl(
     const Extension* extension,
     const GURL& url) {
-  return FindMatchingUrlHandler(extension, url) != NULL;
+  return FindMatchingUrlHandler(extension, url) != nullptr;
 }
 
 // static
@@ -68,11 +68,11 @@ const UrlHandlerInfo* UrlHandlers::FindMatchingUrlHandler(
     const GURL& url) {
   const std::vector<UrlHandlerInfo>* handlers = GetUrlHandlers(extension);
   if (!handlers)
-    return NULL;
+    return nullptr;
 
   if (NetworkChangeNotifier::IsOffline() &&
       !OfflineEnabledInfo::IsOfflineEnabled(extension))
-    return NULL;
+    return nullptr;
 
   for (std::vector<extensions::UrlHandlerInfo>::const_iterator it =
        handlers->begin(); it != handlers->end(); it++) {
@@ -80,7 +80,7 @@ const UrlHandlerInfo* UrlHandlers::FindMatchingUrlHandler(
       return &(*it);
   }
 
-  return NULL;
+  return nullptr;
 }
 
 UrlHandlersParser::UrlHandlersParser() {
@@ -103,7 +103,7 @@ bool ParseUrlHandler(const std::string& handler_id,
     return false;
   }
 
-  const base::ListValue* manif_patterns = NULL;
+  const base::ListValue* manif_patterns = nullptr;
   if (!handler_info.GetList(mkeys::kMatches, &manif_patterns) ||
       manif_patterns->GetSize() == 0) {
     *error = ErrorUtils::FormatErrorMessageUTF16(
@@ -140,7 +140,7 @@ bool UrlHandlersParser::Parse(Extension* extension, base::string16* error) {
     return false;
   }
   std::unique_ptr<UrlHandlers> info(new UrlHandlers);
-  const base::DictionaryValue* all_handlers = NULL;
+  const base::DictionaryValue* all_handlers = nullptr;
   if (!extension->manifest()->GetDictionary(
         mkeys::kUrlHandlers, &all_handlers)) {
     *error = base::ASCIIToUTF16(merrors::kInvalidURLHandlers);
@@ -152,7 +152,7 @@ bool UrlHandlersParser::Parse(Extension* extension, base::string16* error) {
   for (base::DictionaryValue::Iterator iter(*all_handlers); !iter.IsAtEnd();
        iter.Advance()) {
     // A URL handler entry is a title and a list of URL patterns to handle.
-    const base::DictionaryValue* handler = NULL;
+    const base::DictionaryValue* handler = nullptr;
     if (!iter.value().GetAsDictionary(&handler)) {
       *error = base::ASCIIToUTF16(merrors::kInvalidURLHandlerPatternElement);
       return false;

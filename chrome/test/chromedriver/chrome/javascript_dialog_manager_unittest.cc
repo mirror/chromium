@@ -22,7 +22,7 @@ TEST(JavaScriptDialogManager, NoDialog) {
   ASSERT_EQ(kNoAlertOpen, manager.GetDialogMessage(&message).code());
   ASSERT_FALSE(manager.IsDialogOpen());
   ASSERT_STREQ("HI", message.c_str());
-  ASSERT_EQ(kNoAlertOpen, manager.HandleDialog(false, NULL).code());
+  ASSERT_EQ(kNoAlertOpen, manager.HandleDialog(false, nullptr).code());
 }
 
 TEST(JavaScriptDialogManager, HandleDialogPassesParams) {
@@ -55,7 +55,7 @@ TEST(JavaScriptDialogManager, HandleDialogNullPrompt) {
   ASSERT_EQ(
       kOk,
       manager.OnEvent(&client, "Page.javascriptDialogOpening", params).code());
-  ASSERT_EQ(kOk, manager.HandleDialog(false, NULL).code());
+  ASSERT_EQ(kOk, manager.HandleDialog(false, nullptr).code());
   ASSERT_TRUE(client.commands_[0].params.HasKey("promptText"));
   ASSERT_TRUE(client.commands_[0].params.HasKey("accept"));
 }
@@ -79,14 +79,14 @@ TEST(JavaScriptDialogManager, ReconnectClearsStateAndSendsEnable) {
   ASSERT_EQ("Page.enable", client.commands_[0].method);
   ASSERT_FALSE(manager.IsDialogOpen());
   ASSERT_EQ(kNoAlertOpen, manager.GetDialogMessage(&message).code());
-  ASSERT_EQ(kNoAlertOpen, manager.HandleDialog(false, NULL).code());
+  ASSERT_EQ(kNoAlertOpen, manager.HandleDialog(false, nullptr).code());
 }
 
 namespace {
 
 class FakeDevToolsClient : public StubDevToolsClient {
  public:
-  FakeDevToolsClient() : listener_(NULL), closing_count_(0) {}
+  FakeDevToolsClient() : listener_(nullptr), closing_count_(0) {}
   ~FakeDevToolsClient() override {}
 
   void set_closing_count(int closing_count) {
@@ -142,10 +142,10 @@ TEST(JavaScriptDialogManager, OneDialog) {
   ASSERT_EQ("alert", type);
 
   client.set_closing_count(1);
-  ASSERT_EQ(kOk, manager.HandleDialog(false, NULL).code());
+  ASSERT_EQ(kOk, manager.HandleDialog(false, nullptr).code());
   ASSERT_FALSE(manager.IsDialogOpen());
   ASSERT_EQ(kNoAlertOpen, manager.GetDialogMessage(&message).code());
-  ASSERT_EQ(kNoAlertOpen, manager.HandleDialog(false, NULL).code());
+  ASSERT_EQ(kNoAlertOpen, manager.HandleDialog(false, nullptr).code());
 }
 
 TEST(JavaScriptDialogManager, TwoDialogs) {
@@ -173,7 +173,7 @@ TEST(JavaScriptDialogManager, TwoDialogs) {
   ASSERT_EQ("1", message);
   ASSERT_EQ("confirm", type);
 
-  ASSERT_EQ(kOk, manager.HandleDialog(false, NULL).code());
+  ASSERT_EQ(kOk, manager.HandleDialog(false, nullptr).code());
   ASSERT_TRUE(manager.IsDialogOpen());
   ASSERT_EQ(kOk, manager.GetDialogMessage(&message).code());
   ASSERT_EQ(kOk, manager.GetTypeOfDialog(&type).code());
@@ -181,10 +181,10 @@ TEST(JavaScriptDialogManager, TwoDialogs) {
   ASSERT_EQ("alert", type);
 
   client.set_closing_count(2);
-  ASSERT_EQ(kOk, manager.HandleDialog(false, NULL).code());
+  ASSERT_EQ(kOk, manager.HandleDialog(false, nullptr).code());
   ASSERT_FALSE(manager.IsDialogOpen());
   ASSERT_EQ(kNoAlertOpen, manager.GetDialogMessage(&message).code());
-  ASSERT_EQ(kNoAlertOpen, manager.HandleDialog(false, NULL).code());
+  ASSERT_EQ(kNoAlertOpen, manager.HandleDialog(false, nullptr).code());
 }
 
 TEST(JavaScriptDialogManager, OneDialogManualClose) {
@@ -214,5 +214,5 @@ TEST(JavaScriptDialogManager, OneDialogManualClose) {
       manager.OnEvent(&client, "Page.javascriptDialogClosed", params).code());
   ASSERT_FALSE(manager.IsDialogOpen());
   ASSERT_EQ(kNoAlertOpen, manager.GetDialogMessage(&message).code());
-  ASSERT_EQ(kNoAlertOpen, manager.HandleDialog(false, NULL).code());
+  ASSERT_EQ(kNoAlertOpen, manager.HandleDialog(false, nullptr).code());
 }

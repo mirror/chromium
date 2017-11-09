@@ -522,9 +522,9 @@ void PrinterJobHandlerTest::MakeJobFetchReturnNoJobs() {
 }
 
 PrinterJobHandlerTest::PrinterJobHandlerTest()
-    : factory_(NULL, base::Bind(&TestURLFetcherCallback::CreateURLFetcher,
-                                base::Unretained(&url_callback_))) {
-}
+    : factory_(nullptr,
+               base::Bind(&TestURLFetcherCallback::CreateURLFetcher,
+                          base::Unretained(&url_callback_))) {}
 
 bool PrinterJobHandlerTest::PostSpoolSuccess() {
   base::ThreadTaskRunnerHandle::Get()->PostTask(
@@ -628,20 +628,19 @@ void PrinterJobHandlerTest::TearDown() {
   CloudPrintURLFetcher::set_test_factory(nullptr);
 }
 
-MockPrintServerWatcher::MockPrintServerWatcher() : delegate_(NULL) {
+MockPrintServerWatcher::MockPrintServerWatcher() : delegate_(nullptr) {
   ON_CALL(*this, StartWatching(_))
       .WillByDefault(DoAll(SaveArg<0>(&delegate_), Return(true)));
   ON_CALL(*this, StopWatching()).WillByDefault(Return(true));
 }
 
-
-MockPrinterWatcher::MockPrinterWatcher() : delegate_(NULL) {
+MockPrinterWatcher::MockPrinterWatcher() : delegate_(nullptr) {
   ON_CALL(*this, StartWatching(_))
       .WillByDefault(DoAll(SaveArg<0>(&delegate_), Return(true)));
   ON_CALL(*this, StopWatching()).WillByDefault(Return(true));
 }
 
-MockJobSpooler::MockJobSpooler() : delegate_(NULL) {
+MockJobSpooler::MockJobSpooler() : delegate_(nullptr) {
   ON_CALL(*this, Spool(_, _, _, _, _, _, _, _))
       .WillByDefault(DoAll(SaveArg<7>(&delegate_), Return(true)));
 }

@@ -67,7 +67,7 @@ class ChromeUnitTestSuiteInitializer : public testing::EmptyTestEventListener {
     browser_content_client_.reset();
     utility_content_client_.reset();
     content_client_.reset();
-    content::SetContentClient(NULL);
+    content::SetContentClient(nullptr);
 
     TestingBrowserProcess::DeleteInstance();
   }
@@ -155,7 +155,7 @@ void ChromeUnitTestSuite::InitializeResourceBundle() {
   // Force unittests to run using en-US so if we test against string
   // output, it'll pass regardless of the system language.
   ui::ResourceBundle::InitSharedInstanceWithLocale(
-      "en-US", NULL, ui::ResourceBundle::LOAD_COMMON_RESOURCES);
+      "en-US", nullptr, ui::ResourceBundle::LOAD_COMMON_RESOURCES);
   base::FilePath resources_pack_path;
   PathService::Get(chrome::FILE_RESOURCES_PACK, &resources_pack_path);
   ui::ResourceBundle::GetSharedInstance().AddDataPackFromPath(

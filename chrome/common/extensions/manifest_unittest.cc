@@ -53,7 +53,7 @@ class ManifestUnitTest : public testing::Test {
     if (value)
       manifest_value->Set(key, std::move(value));
     else
-      manifest_value->Remove(key, NULL);
+      manifest_value->Remove(key, nullptr);
     manifest->reset(
         new Manifest(Manifest::INTERNAL, std::move(manifest_value)));
   }
@@ -140,15 +140,13 @@ TEST_F(ManifestUnitTest, ExtensionTypes) {
   MutateManifest(&manifest, keys::kTheme,
                  base::MakeUnique<base::DictionaryValue>());
   AssertType(manifest.get(), Manifest::TYPE_THEME);
-  MutateManifest(
-      &manifest, keys::kTheme, NULL);
+  MutateManifest(&manifest, keys::kTheme, nullptr);
 
   // Shared module.
   MutateManifest(&manifest, keys::kExport,
                  base::MakeUnique<base::DictionaryValue>());
   AssertType(manifest.get(), Manifest::TYPE_SHARED_MODULE);
-  MutateManifest(
-      &manifest, keys::kExport, NULL);
+  MutateManifest(&manifest, keys::kExport, nullptr);
 
   // Packaged app.
   MutateManifest(&manifest, keys::kApp,
@@ -159,20 +157,17 @@ TEST_F(ManifestUnitTest, ExtensionTypes) {
   MutateManifest(&manifest, keys::kPlatformAppBackground,
                  base::MakeUnique<base::DictionaryValue>());
   AssertType(manifest.get(), Manifest::TYPE_PLATFORM_APP);
-  MutateManifest(
-      &manifest, keys::kPlatformAppBackground, NULL);
+  MutateManifest(&manifest, keys::kPlatformAppBackground, nullptr);
 
   // Hosted app.
   MutateManifest(&manifest, keys::kWebURLs,
                  base::MakeUnique<base::ListValue>());
   AssertType(manifest.get(), Manifest::TYPE_HOSTED_APP);
-  MutateManifest(
-      &manifest, keys::kWebURLs, NULL);
+  MutateManifest(&manifest, keys::kWebURLs, nullptr);
   MutateManifest(&manifest, keys::kLaunchWebURL,
                  base::MakeUnique<base::Value>("foo"));
   AssertType(manifest.get(), Manifest::TYPE_HOSTED_APP);
-  MutateManifest(
-      &manifest, keys::kLaunchWebURL, NULL);
+  MutateManifest(&manifest, keys::kLaunchWebURL, nullptr);
 }
 
 // Verifies that the getters filter restricted keys.
@@ -190,7 +185,7 @@ TEST_F(ManifestUnitTest, RestrictedKeys) {
   EXPECT_TRUE(warnings.empty());
 
   // "Commands" requires manifest version 2.
-  const base::Value* output = NULL;
+  const base::Value* output = nullptr;
   MutateManifest(&manifest, keys::kCommands,
                  base::MakeUnique<base::DictionaryValue>());
   EXPECT_FALSE(manifest->HasKey(keys::kCommands));
@@ -213,8 +208,7 @@ TEST_F(ManifestUnitTest, RestrictedKeys) {
   AssertType(manifest.get(), Manifest::TYPE_PLATFORM_APP);
   EXPECT_FALSE(manifest->HasKey(keys::kPageAction));
   EXPECT_FALSE(manifest->Get(keys::kPageAction, &output));
-  MutateManifest(
-      &manifest, keys::kPlatformAppBackground, NULL);
+  MutateManifest(&manifest, keys::kPlatformAppBackground, nullptr);
 
   // Platform apps also can't have a "Commands" key.
   EXPECT_FALSE(manifest->HasKey(keys::kCommands));

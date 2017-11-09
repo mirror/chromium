@@ -94,16 +94,15 @@ PrinterJobHandler::PrinterJobHandler(
       cloud_print_server_url_(cloud_print_server_url),
       delegate_(delegate),
       local_job_id_(-1),
-      next_json_data_handler_(NULL),
-      next_data_handler_(NULL),
+      next_json_data_handler_(nullptr),
+      next_data_handler_(nullptr),
       print_thread_("Chrome_CloudPrintJobPrintThread"),
       job_handler_task_runner_(base::ThreadTaskRunnerHandle::Get()),
       shutting_down_(false),
       job_check_pending_(false),
       printer_update_pending_(true),
       task_in_progress_(false),
-      weak_ptr_factory_(this) {
-}
+      weak_ptr_factory_(this) {}
 
 bool PrinterJobHandler::Initialize() {
   if (!print_system_->IsValidPrinter(printer_info_.printer_name))
@@ -266,7 +265,7 @@ void PrinterJobHandler::OnJobSpoolSucceeded(const PlatformJobId& job_id) {
   DCHECK(CurrentlyOnPrintThread());
   job_spooler_->AddRef();
   print_thread_.task_runner()->ReleaseSoon(FROM_HERE, job_spooler_.get());
-  job_spooler_ = NULL;
+  job_spooler_ = nullptr;
   job_handler_task_runner_->PostTask(
       FROM_HERE, base::BindOnce(&PrinterJobHandler::JobSpooled, this, job_id));
 }
@@ -275,7 +274,7 @@ void PrinterJobHandler::OnJobSpoolFailed() {
   DCHECK(CurrentlyOnPrintThread());
   job_spooler_->AddRef();
   print_thread_.task_runner()->ReleaseSoon(FROM_HERE, job_spooler_.get());
-  job_spooler_ = NULL;
+  job_spooler_ = nullptr;
   VLOG(1) << "CP_CONNECTOR: Job failed (spool failed)";
   job_handler_task_runner_->PostTask(
       FROM_HERE,
@@ -530,7 +529,7 @@ void PrinterJobHandler::StartPrinting() {
   UMA_HISTOGRAM_ENUMERATION("CloudPrint.JobHandlerEvent",
                             JOB_HANDLER_SET_START_PRINTING, JOB_HANDLER_MAX);
   // We are done with the request object for now.
-  request_ = NULL;
+  request_ = nullptr;
   if (!shutting_down_) {
 #if defined(OS_WIN)
     print_thread_.init_com_with_mta(true);
@@ -549,7 +548,7 @@ void PrinterJobHandler::StartPrinting() {
 
 void PrinterJobHandler::Reset() {
   job_details_.Clear();
-  request_ = NULL;
+  request_ = nullptr;
   print_thread_.Stop();
 }
 
@@ -597,12 +596,12 @@ void PrinterJobHandler::RunScheduledJobCheck() {
 
 void PrinterJobHandler::SetNextJSONHandler(JSONDataHandler handler) {
   next_json_data_handler_ = handler;
-  next_data_handler_ = NULL;
+  next_data_handler_ = nullptr;
 }
 
 void PrinterJobHandler::SetNextDataHandler(DataHandler handler) {
   next_data_handler_ = handler;
-  next_json_data_handler_ = NULL;
+  next_json_data_handler_ = nullptr;
 }
 
 void PrinterJobHandler::JobFailed(PrintJobError error) {

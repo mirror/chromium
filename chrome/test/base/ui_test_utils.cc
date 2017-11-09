@@ -94,7 +94,7 @@ namespace {
 
 Browser* WaitForBrowserNotInSet(std::set<Browser*> excluded_browsers) {
   Browser* new_browser = GetBrowserNotInSet(excluded_browsers);
-  if (new_browser == NULL) {
+  if (new_browser == nullptr) {
     BrowserAddedObserver observer;
     new_browser = observer.WaitForSingleNewBrowser();
     // The new browser should never be in |excluded_browsers|.
@@ -225,12 +225,12 @@ void NavigateToURLWithDispositionBlockUntilNavigationsComplete(
     // Some other flag caused the wait prior to this.
     return;
   }
-  WebContents* web_contents = NULL;
+  WebContents* web_contents = nullptr;
   if (disposition == WindowOpenDisposition::NEW_BACKGROUND_TAB) {
     // We've opened up a new tab, but not selected it.
     TabStripModel* tab_strip = browser->tab_strip_model();
     web_contents = tab_strip->GetWebContentsAt(tab_strip->active_index() + 1);
-    EXPECT_TRUE(web_contents != NULL)
+    EXPECT_TRUE(web_contents != nullptr)
         << " Unable to wait for navigation to \"" << url.spec()
         << "\" because the new tab is not available yet";
     if (!web_contents)
@@ -251,9 +251,9 @@ void NavigateToURLWithDispositionBlockUntilNavigationsComplete(
     observer.Wait();
     return;
   }
-  EXPECT_TRUE(NULL != web_contents) << " Unable to wait for navigation to \""
-                                    << url.spec() << "\""
-                                    << " because we can't get the tab contents";
+  EXPECT_TRUE(nullptr != web_contents)
+      << " Unable to wait for navigation to \"" << url.spec() << "\""
+      << " because we can't get the tab contents";
 }
 
 void NavigateToURLWithDisposition(Browser* browser,
@@ -448,8 +448,7 @@ void GetCookies(const GURL& url,
 WindowedTabAddedNotificationObserver::WindowedTabAddedNotificationObserver(
     const content::NotificationSource& source)
     : WindowedNotificationObserver(chrome::NOTIFICATION_TAB_ADDED, source),
-      added_tab_(NULL) {
-}
+      added_tab_(nullptr) {}
 
 void WindowedTabAddedNotificationObserver::Observe(
     int type,

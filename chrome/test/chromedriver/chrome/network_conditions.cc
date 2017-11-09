@@ -38,13 +38,13 @@ Status FindPresetNetwork(std::string network_name,
   for (base::ListValue::iterator it = networks->begin();
        it != networks->end();
        ++it) {
-    base::DictionaryValue* network = NULL;
+    base::DictionaryValue* network = nullptr;
     if (!it->GetAsDictionary(&network)) {
       return Status(kUnknownError,
                     "malformed network in list: should be a dictionary");
     }
 
-    if (network == NULL)
+    if (network == nullptr)
       continue;
 
     std::string title;

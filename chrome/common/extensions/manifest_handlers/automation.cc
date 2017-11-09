@@ -102,9 +102,9 @@ PermissionIDSet AutomationManifestPermission::GetPermissions() const {
 
 bool AutomationManifestPermission::FromValue(const base::Value* value) {
   base::string16 error;
-  automation_info_.reset(AutomationInfo::FromValue(*value,
-                                                   NULL /* install_warnings */,
-                                                   &error).release());
+  automation_info_.reset(
+      AutomationInfo::FromValue(*value, nullptr /* install_warnings */, &error)
+          .release());
   return error.empty();
 }
 
@@ -161,7 +161,7 @@ AutomationHandler::~AutomationHandler() {
 }
 
 bool AutomationHandler::Parse(Extension* extension, base::string16* error) {
-  const base::Value* automation = NULL;
+  const base::Value* automation = nullptr;
   CHECK(extension->manifest()->Get(keys::kAutomation, &automation));
   std::vector<InstallWarning> install_warnings;
   std::unique_ptr<AutomationInfo> info =
@@ -195,7 +195,7 @@ ManifestPermission* AutomationHandler::CreateInitialRequiredPermission(
         base::WrapUnique(new const AutomationInfo(info->desktop, info->matches,
                                                   info->interact)));
   }
-  return NULL;
+  return nullptr;
 }
 
 // static

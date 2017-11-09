@@ -79,7 +79,7 @@ class HttpServer : public net::HttpServer::Delegate {
 
   bool Start(uint16_t port, bool allow_remote) {
     std::unique_ptr<net::ServerSocket> server_socket(
-        new net::TCPServerSocket(NULL, net::NetLogSource()));
+        new net::TCPServerSocket(nullptr, net::NetLogSource()));
     if (ListenOnIPv4(server_socket.get(), port, allow_remote) != net::OK) {
       // This will work on an IPv6-only host, but we will be IPv4-only on
       // dual-stack hosts.
@@ -178,7 +178,7 @@ base::LazyInstance<base::ThreadLocalPointer<HttpServer>>::DestructorAtExit
 void StopServerOnIOThread() {
   // Note, |server| may be NULL.
   HttpServer* server = lazy_tls_server.Pointer()->Get();
-  lazy_tls_server.Pointer()->Set(NULL);
+  lazy_tls_server.Pointer()->Set(nullptr);
   delete server;
 }
 

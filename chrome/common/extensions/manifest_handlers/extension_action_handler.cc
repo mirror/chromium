@@ -26,15 +26,15 @@ ExtensionActionHandler::~ExtensionActionHandler() {
 
 bool ExtensionActionHandler::Parse(Extension* extension,
                                    base::string16* error) {
-  const char* key = NULL;
-  const char* error_key = NULL;
+  const char* key = nullptr;
+  const char* error_key = nullptr;
   if (extension->manifest()->HasKey(manifest_keys::kPageAction)) {
     key = manifest_keys::kPageAction;
     error_key = manifest_errors::kInvalidPageAction;
   }
 
   if (extension->manifest()->HasKey(manifest_keys::kBrowserAction)) {
-    if (key != NULL) {
+    if (key != nullptr) {
       // An extension cannot have both browser and page actions.
       *error = base::ASCIIToUTF16(manifest_errors::kOneUISurfaceOnly);
       return false;
@@ -44,7 +44,7 @@ bool ExtensionActionHandler::Parse(Extension* extension,
   }
 
   if (key) {
-    const base::DictionaryValue* dict = NULL;
+    const base::DictionaryValue* dict = nullptr;
     if (!extension->manifest()->GetDictionary(key, &dict)) {
       *error = base::ASCIIToUTF16(error_key);
       return false;

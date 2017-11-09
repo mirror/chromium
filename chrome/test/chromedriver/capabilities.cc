@@ -76,7 +76,7 @@ Status ParseFilePath(base::FilePath* to_set,
 Status ParseDict(std::unique_ptr<base::DictionaryValue>* to_set,
                  const base::Value& option,
                  Capabilities* capabilities) {
-  const base::DictionaryValue* dict = NULL;
+  const base::DictionaryValue* dict = nullptr;
   if (!option.GetAsDictionary(&dict))
     return Status(kUnknownError, "must be a dictionary");
   to_set->reset(dict->DeepCopy());
@@ -205,7 +205,7 @@ Status ParseUnexpectedAlertBehaviour(const base::Value& option,
 
 Status ParseSwitches(const base::Value& option,
                      Capabilities* capabilities) {
-  const base::ListValue* switches_list = NULL;
+  const base::ListValue* switches_list = nullptr;
   if (!option.GetAsList(&switches_list))
     return Status(kUnknownError, "must be a list");
   for (size_t i = 0; i < switches_list->GetSize(); ++i) {
@@ -218,7 +218,7 @@ Status ParseSwitches(const base::Value& option,
 }
 
 Status ParseExtensions(const base::Value& option, Capabilities* capabilities) {
-  const base::ListValue* extensions = NULL;
+  const base::ListValue* extensions = nullptr;
   if (!option.GetAsList(&extensions))
     return Status(kUnknownError, "must be a list");
   for (size_t i = 0; i < extensions->GetSize(); ++i) {
@@ -254,7 +254,7 @@ Status ParseProxy(const base::Value& option, Capabilities* capabilities) {
   } else if (proxy_type == "manual") {
     const char* const proxy_servers_options[][2] = {
         {"ftpProxy", "ftp"}, {"httpProxy", "http"}, {"sslProxy", "https"}};
-    const base::Value* option_value = NULL;
+    const base::Value* option_value = nullptr;
     std::string proxy_servers;
     for (size_t i = 0; i < arraysize(proxy_servers_options); ++i) {
       if (!proxy_dict->Get(proxy_servers_options[i][0], &option_value) ||
@@ -301,7 +301,7 @@ Status ParseProxy(const base::Value& option, Capabilities* capabilities) {
 
 Status ParseExcludeSwitches(const base::Value& option,
                             Capabilities* capabilities) {
-  const base::ListValue* switches = NULL;
+  const base::ListValue* switches = nullptr;
   if (!option.GetAsList(&switches))
     return Status(kUnknownError, "must be a list");
   for (size_t i = 0; i < switches->GetSize(); ++i) {
@@ -337,7 +337,7 @@ Status ParseUseRemoteBrowser(const base::Value& option,
 
 Status ParseLoggingPrefs(const base::Value& option,
                          Capabilities* capabilities) {
-  const base::DictionaryValue* logging_prefs = NULL;
+  const base::DictionaryValue* logging_prefs = nullptr;
   if (!option.GetAsDictionary(&logging_prefs))
     return Status(kUnknownError, "must be a dictionary");
 
@@ -371,7 +371,7 @@ Status ParseInspectorDomainStatus(
 
 Status ParsePerfLoggingPrefs(const base::Value& option,
                              Capabilities* capabilities) {
-  const base::DictionaryValue* perf_logging_prefs = NULL;
+  const base::DictionaryValue* perf_logging_prefs = nullptr;
   if (!option.GetAsDictionary(&perf_logging_prefs))
     return Status(kUnknownError, "must be a dictionary");
 
@@ -410,7 +410,7 @@ Status ParseDevToolsEventsLoggingPrefs(const base::Value& option,
 }
 
 Status ParseWindowTypes(const base::Value& option, Capabilities* capabilities) {
-  const base::ListValue* window_types = NULL;
+  const base::ListValue* window_types = nullptr;
   if (!option.GetAsList(&window_types))
     return Status(kUnknownError, "must be a list");
   std::set<WebViewInfo::Type> window_types_tmp;
@@ -432,7 +432,7 @@ Status ParseWindowTypes(const base::Value& option, Capabilities* capabilities) {
 Status ParseChromeOptions(
     const base::Value& capability,
     Capabilities* capabilities) {
-  const base::DictionaryValue* chrome_options = NULL;
+  const base::DictionaryValue* chrome_options = nullptr;
   if (!capability.GetAsDictionary(&chrome_options))
     return Status(kUnknownError, "must be a dictionary");
 
@@ -665,7 +665,7 @@ Status Capabilities::Parse(const base::DictionaryValue& desired_caps) {
   }
   for (std::map<std::string, Parser>::iterator it = parser_map.begin();
        it != parser_map.end(); ++it) {
-    const base::Value* capability = NULL;
+    const base::Value* capability = nullptr;
     if (desired_caps.Get(it->first, &capability)) {
       Status status = it->second.Run(*capability, this);
       if (status.IsError()) {
@@ -678,7 +678,7 @@ Status Capabilities::Parse(const base::DictionaryValue& desired_caps) {
   LoggingPrefs::const_iterator iter = logging_prefs.find(
       WebDriverLog::kPerformanceType);
   if (iter == logging_prefs.end() || iter->second == Log::kOff) {
-    const base::DictionaryValue* chrome_options = NULL;
+    const base::DictionaryValue* chrome_options = nullptr;
     if ((desired_caps.GetDictionary("goog:chromeOptions", &chrome_options) ||
          desired_caps.GetDictionary("chromeOptions", &chrome_options)) &&
         chrome_options->HasKey("perfLoggingPrefs")) {
@@ -690,7 +690,7 @@ Status Capabilities::Parse(const base::DictionaryValue& desired_caps) {
       WebDriverLog::kDevToolsType);
   if (dt_events_logging_iter == logging_prefs.end()
       || dt_events_logging_iter->second == Log::kOff) {
-    const base::DictionaryValue* chrome_options = NULL;
+    const base::DictionaryValue* chrome_options = nullptr;
     if ((desired_caps.GetDictionary("goog:chromeOptions", &chrome_options) ||
          desired_caps.GetDictionary("chromeOptions", &chrome_options)) &&
         chrome_options->HasKey("devToolsEventsToLog")) {

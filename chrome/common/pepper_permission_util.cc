@@ -48,8 +48,8 @@ bool IsExtensionOrSharedModuleWhitelisted(
 
   // Check the modules that are imported by this extension to see if any of them
   // is whitelisted.
-  const Extension* extension = extension_set ? extension_set->GetByID(host)
-                                             : NULL;
+  const Extension* extension =
+      extension_set ? extension_set->GetByID(host) : nullptr;
   if (!extension)
     return false;
 

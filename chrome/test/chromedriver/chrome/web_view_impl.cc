@@ -777,7 +777,7 @@ Status WebViewImpl::CallAsyncFunctionInternal(
       return status;
     }
 
-    base::DictionaryValue* result_info = NULL;
+    base::DictionaryValue* result_info = nullptr;
     if (!query_value->GetAsDictionary(&result_info))
       return Status(kUnknownError, "async result info is not a dictionary");
     int status_code;
@@ -789,7 +789,7 @@ Status WebViewImpl::CallAsyncFunctionInternal(
       return Status(static_cast<StatusCode>(status_code), message);
     }
 
-    base::Value* value = NULL;
+    base::Value* value = nullptr;
     if (result_info->Get("value", &value)) {
       result->reset(value->DeepCopy());
       return Status(kOk);

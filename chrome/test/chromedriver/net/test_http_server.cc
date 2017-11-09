@@ -143,7 +143,7 @@ void TestHttpServer::OnClose(int connection_id) {
 void TestHttpServer::StartOnServerThread(bool* success,
                                          base::WaitableEvent* event) {
   std::unique_ptr<net::ServerSocket> server_socket(
-      new net::TCPServerSocket(NULL, net::NetLogSource()));
+      new net::TCPServerSocket(nullptr, net::NetLogSource()));
   server_socket->ListenWithAddressAndPort("127.0.0.1", 0, 1);
   server_.reset(new net::HttpServer(std::move(server_socket), this));
 
@@ -155,13 +155,13 @@ void TestHttpServer::StartOnServerThread(bool* success,
     web_socket_url_ = GURL(base::StringPrintf("ws://127.0.0.1:%d",
                                               address.port()));
   } else {
-    server_.reset(NULL);
+    server_.reset(nullptr);
   }
   *success = server_.get();
   event->Signal();
 }
 
 void TestHttpServer::StopOnServerThread(base::WaitableEvent* event) {
-  server_.reset(NULL);
+  server_.reset(nullptr);
   event->Signal();
 }

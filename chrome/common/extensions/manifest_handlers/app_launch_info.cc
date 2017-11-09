@@ -32,7 +32,7 @@ bool ReadLaunchDimension(const extensions::Manifest* manifest,
                          int* target,
                          bool is_valid_container,
                          base::string16* error) {
-  const base::Value* temp = NULL;
+  const base::Value* temp = nullptr;
   if (manifest->Get(key, &temp)) {
     if (!is_valid_container) {
       *error = ErrorUtils::FormatErrorMessageUTF16(
@@ -116,17 +116,17 @@ bool AppLaunchInfo::Parse(Extension* extension, base::string16* error) {
 }
 
 bool AppLaunchInfo::LoadLaunchURL(Extension* extension, base::string16* error) {
-  const base::Value* temp = NULL;
+  const base::Value* temp = nullptr;
 
   // Launch URL can be either local (to chrome-extension:// root) or an absolute
   // web URL.
   if (extension->manifest()->Get(keys::kLaunchLocalPath, &temp)) {
-    if (extension->manifest()->Get(keys::kLaunchWebURL, NULL)) {
+    if (extension->manifest()->Get(keys::kLaunchWebURL, nullptr)) {
       *error = base::ASCIIToUTF16(errors::kLaunchPathAndURLAreExclusive);
       return false;
     }
 
-    if (extension->manifest()->Get(keys::kWebURLs, NULL)) {
+    if (extension->manifest()->Get(keys::kWebURLs, nullptr)) {
       *error = base::ASCIIToUTF16(errors::kLaunchPathAndExtentAreExclusive);
       return false;
     }
@@ -227,7 +227,7 @@ bool AppLaunchInfo::LoadLaunchURL(Extension* extension, base::string16* error) {
 
 bool AppLaunchInfo::LoadLaunchContainer(Extension* extension,
                                         base::string16* error) {
-  const base::Value* tmp_launcher_container = NULL;
+  const base::Value* tmp_launcher_container = nullptr;
   if (!extension->manifest()->Get(keys::kLaunchContainer,
                                   &tmp_launcher_container))
     return true;

@@ -226,7 +226,7 @@ Status ExecuteWindowCommand(const WindowCommand& command,
                             const base::DictionaryValue& params,
                             std::unique_ptr<base::Value>* value) {
   Timeout timeout;
-  WebView* web_view = NULL;
+  WebView* web_view = nullptr;
   Status status = session->GetTargetWindow(&web_view);
   if (status.IsError())
     return status;
@@ -431,7 +431,7 @@ Status ExecuteSwitchToFrame(Session* session,
   base::ListValue new_args;
   new_args.Append(element->CreateDeepCopy());
   new_args.AppendString(chrome_driver_id);
-  result.reset(NULL);
+  result.reset(nullptr);
   status = web_view->CallFunction(
       session->GetCurrentFrameId(), kSetFrameIdentifier, new_args, &result);
   if (status.IsError())
@@ -479,7 +479,8 @@ Status ExecuteFindElement(int interval_ms,
                           const base::DictionaryValue& params,
                           std::unique_ptr<base::Value>* value,
                           Timeout* timeout) {
-  return FindElement(interval_ms, true, NULL, session, web_view, params, value);
+  return FindElement(interval_ms, true, nullptr, session, web_view, params,
+                     value);
 }
 
 Status ExecuteFindElements(int interval_ms,
@@ -488,8 +489,8 @@ Status ExecuteFindElements(int interval_ms,
                            const base::DictionaryValue& params,
                            std::unique_ptr<base::Value>* value,
                            Timeout* timeout) {
-  return FindElement(
-      interval_ms, false, NULL, session, web_view, params, value);
+  return FindElement(interval_ms, false, nullptr, session, web_view, params,
+                     value);
 }
 
 Status ExecuteGetCurrentUrl(Session* session,
@@ -1295,10 +1296,10 @@ Status ExecuteScreenshot(Session* session,
     return status;
 
   std::string screenshot;
-  ChromeDesktopImpl* desktop = NULL;
+  ChromeDesktopImpl* desktop = nullptr;
   status = session->chrome->GetAsDesktop(&desktop);
   if (status.IsOk() && !session->force_devtools_screenshot) {
-    AutomationExtension* extension = NULL;
+    AutomationExtension* extension = nullptr;
     status = desktop->GetAutomationExtension(&extension,
                                              session->w3c_compliant);
     if (status.IsError())
@@ -1458,7 +1459,7 @@ Status ExecuteSetLocation(Session* session,
                           const base::DictionaryValue& params,
                           std::unique_ptr<base::Value>* value,
                           Timeout* timeout) {
-  const base::DictionaryValue* location = NULL;
+  const base::DictionaryValue* location = nullptr;
   Geoposition geoposition;
   if (!params.GetDictionary("location", &location) ||
       !location->GetDouble("latitude", &geoposition.latitude) ||
@@ -1485,7 +1486,7 @@ Status ExecuteSetNetworkConditions(Session* session,
                                    std::unique_ptr<base::Value>* value,
                                    Timeout* timeout) {
   std::string network_name;
-  const base::DictionaryValue* conditions = NULL;
+  const base::DictionaryValue* conditions = nullptr;
   std::unique_ptr<NetworkConditions> network_conditions(
       new NetworkConditions());
   if (params.GetString("network_name", &network_name)) {

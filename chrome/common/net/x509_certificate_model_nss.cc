@@ -57,7 +57,7 @@ std::string Stringize(char* nss_text, const std::string& alternative_text) {
 std::string HashCert(CERTCertificate* cert, HASH_HashType algorithm, int len) {
   unsigned char fingerprint[HASH_LENGTH_MAX];
 
-  DCHECK(NULL != cert->derCert.data);
+  DCHECK(nullptr != cert->derCert.data);
   DCHECK_NE(0U, cert->derCert.len);
   DCHECK_LE(len, HASH_LENGTH_MAX);
   memset(fingerprint, 0, len);
@@ -219,7 +219,7 @@ void GetExtensions(const string& critical_label,
                    CERTCertificate* cert_handle,
                    Extensions* extensions) {
   if (cert_handle->extensions) {
-    for (size_t i = 0; cert_handle->extensions[i] != NULL; ++i) {
+    for (size_t i = 0; cert_handle->extensions[i] != nullptr; ++i) {
       Extension extension;
       extension.name = psm::GetOIDText(&cert_handle->extensions[i]->id);
       extension.value = ProcessExtension(
@@ -271,11 +271,10 @@ string GetCMSString(const net::ScopedCERTCertificateList& cert_chain,
     return std::string();
   }
 
-  SECItem cert_p7 = { siBuffer, NULL, 0 };
-  NSSCMSEncoderContext *ecx = NSS_CMSEncoder_Start(message.get(), NULL, NULL,
-                                                   &cert_p7, arena.get(), NULL,
-                                                   NULL, NULL, NULL, NULL,
-                                                   NULL);
+  SECItem cert_p7 = {siBuffer, nullptr, 0};
+  NSSCMSEncoderContext* ecx = NSS_CMSEncoder_Start(
+      message.get(), nullptr, nullptr, &cert_p7, arena.get(), nullptr, nullptr,
+      nullptr, nullptr, nullptr, nullptr);
   if (!ecx) {
     DLOG(ERROR) << "NSS_CMSEncoder_Start failed";
     return std::string();

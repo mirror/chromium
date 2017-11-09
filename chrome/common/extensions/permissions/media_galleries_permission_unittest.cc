@@ -162,7 +162,7 @@ TEST(MediaGalleriesPermissionTest, UnknownValues) {
   // Unnknown with a NULL argument.
   value.reset(new base::ListValue());
   value->AppendString("Unknown1");
-  EXPECT_FALSE(permission->FromValue(value.get(), &error, NULL));
+  EXPECT_FALSE(permission->FromValue(value.get(), &error, nullptr));
   EXPECT_FALSE(error.empty());
   error.clear();
 }
@@ -179,43 +179,43 @@ TEST(MediaGalleriesPermissionTest, Equal) {
   std::unique_ptr<base::ListValue> value(new base::ListValue());
   value->AppendString(MediaGalleriesPermission::kAllAutoDetectedPermission);
   value->AppendString(MediaGalleriesPermission::kReadPermission);
-  ASSERT_TRUE(permission1->FromValue(value.get(), NULL, NULL));
+  ASSERT_TRUE(permission1->FromValue(value.get(), nullptr, nullptr));
 
   value.reset(new base::ListValue());
   value->AppendString(MediaGalleriesPermission::kReadPermission);
   value->AppendString(MediaGalleriesPermission::kAllAutoDetectedPermission);
-  ASSERT_TRUE(permission2->FromValue(value.get(), NULL, NULL));
+  ASSERT_TRUE(permission2->FromValue(value.get(), nullptr, nullptr));
   EXPECT_TRUE(permission1->Equal(permission2.get()));
 
   value.reset(new base::ListValue());
   value->AppendString(MediaGalleriesPermission::kReadPermission);
   value->AppendString(MediaGalleriesPermission::kReadPermission);
   value->AppendString(MediaGalleriesPermission::kAllAutoDetectedPermission);
-  ASSERT_TRUE(permission2->FromValue(value.get(), NULL, NULL));
+  ASSERT_TRUE(permission2->FromValue(value.get(), nullptr, nullptr));
   EXPECT_TRUE(permission1->Equal(permission2.get()));
 
   value.reset(new base::ListValue());
   value->AppendString(MediaGalleriesPermission::kReadPermission);
   value->AppendString(MediaGalleriesPermission::kDeletePermission);
-  ASSERT_TRUE(permission1->FromValue(value.get(), NULL, NULL));
+  ASSERT_TRUE(permission1->FromValue(value.get(), nullptr, nullptr));
 
   value.reset(new base::ListValue());
   value->AppendString(MediaGalleriesPermission::kDeletePermission);
   value->AppendString(MediaGalleriesPermission::kReadPermission);
-  ASSERT_TRUE(permission2->FromValue(value.get(), NULL, NULL));
+  ASSERT_TRUE(permission2->FromValue(value.get(), nullptr, nullptr));
   EXPECT_TRUE(permission1->Equal(permission2.get()));
 
   value.reset(new base::ListValue());
   value->AppendString(MediaGalleriesPermission::kReadPermission);
   value->AppendString(MediaGalleriesPermission::kCopyToPermission);
   value->AppendString(MediaGalleriesPermission::kDeletePermission);
-  ASSERT_TRUE(permission1->FromValue(value.get(), NULL, NULL));
+  ASSERT_TRUE(permission1->FromValue(value.get(), nullptr, nullptr));
 
   value.reset(new base::ListValue());
   value->AppendString(MediaGalleriesPermission::kDeletePermission);
   value->AppendString(MediaGalleriesPermission::kCopyToPermission);
   value->AppendString(MediaGalleriesPermission::kReadPermission);
-  ASSERT_TRUE(permission2->FromValue(value.get(), NULL, NULL));
+  ASSERT_TRUE(permission2->FromValue(value.get(), nullptr, nullptr));
   EXPECT_TRUE(permission1->Equal(permission2.get()));
 }
 
@@ -231,14 +231,14 @@ TEST(MediaGalleriesPermissionTest, NotEqual) {
   std::unique_ptr<base::ListValue> value(new base::ListValue());
   value->AppendString(MediaGalleriesPermission::kAllAutoDetectedPermission);
   value->AppendString(MediaGalleriesPermission::kReadPermission);
-  ASSERT_TRUE(permission1->FromValue(value.get(), NULL, NULL));
+  ASSERT_TRUE(permission1->FromValue(value.get(), nullptr, nullptr));
 
   value.reset(new base::ListValue());
   value->AppendString(MediaGalleriesPermission::kAllAutoDetectedPermission);
   value->AppendString(MediaGalleriesPermission::kReadPermission);
   value->AppendString(MediaGalleriesPermission::kDeletePermission);
   value->AppendString(MediaGalleriesPermission::kCopyToPermission);
-  ASSERT_TRUE(permission2->FromValue(value.get(), NULL, NULL));
+  ASSERT_TRUE(permission2->FromValue(value.get(), nullptr, nullptr));
   EXPECT_FALSE(permission1->Equal(permission2.get()));
 }
 
@@ -254,41 +254,41 @@ TEST(MediaGalleriesPermissionTest, ToFromValue) {
   std::unique_ptr<base::ListValue> value(new base::ListValue());
   value->AppendString(MediaGalleriesPermission::kAllAutoDetectedPermission);
   value->AppendString(MediaGalleriesPermission::kReadPermission);
-  ASSERT_TRUE(permission1->FromValue(value.get(), NULL, NULL));
+  ASSERT_TRUE(permission1->FromValue(value.get(), nullptr, nullptr));
 
   std::unique_ptr<base::Value> vtmp(permission1->ToValue());
   ASSERT_TRUE(vtmp);
-  ASSERT_TRUE(permission2->FromValue(vtmp.get(), NULL, NULL));
+  ASSERT_TRUE(permission2->FromValue(vtmp.get(), nullptr, nullptr));
   EXPECT_TRUE(permission1->Equal(permission2.get()));
 
   value.reset(new base::ListValue());
   value->AppendString(MediaGalleriesPermission::kReadPermission);
   value->AppendString(MediaGalleriesPermission::kDeletePermission);
   value->AppendString(MediaGalleriesPermission::kCopyToPermission);
-  ASSERT_TRUE(permission1->FromValue(value.get(), NULL, NULL));
+  ASSERT_TRUE(permission1->FromValue(value.get(), nullptr, nullptr));
 
   vtmp = permission1->ToValue();
   ASSERT_TRUE(vtmp);
-  ASSERT_TRUE(permission2->FromValue(vtmp.get(), NULL, NULL));
+  ASSERT_TRUE(permission2->FromValue(vtmp.get(), nullptr, nullptr));
   EXPECT_TRUE(permission1->Equal(permission2.get()));
 
   value.reset(new base::ListValue());
   value->AppendString(MediaGalleriesPermission::kReadPermission);
   value->AppendString(MediaGalleriesPermission::kDeletePermission);
-  ASSERT_TRUE(permission1->FromValue(value.get(), NULL, NULL));
+  ASSERT_TRUE(permission1->FromValue(value.get(), nullptr, nullptr));
 
   vtmp = permission1->ToValue();
   ASSERT_TRUE(vtmp);
-  ASSERT_TRUE(permission2->FromValue(vtmp.get(), NULL, NULL));
+  ASSERT_TRUE(permission2->FromValue(vtmp.get(), nullptr, nullptr));
   EXPECT_TRUE(permission1->Equal(permission2.get()));
 
   value.reset(new base::ListValue());
   // without sub-permission
-  ASSERT_TRUE(permission1->FromValue(NULL, NULL, NULL));
+  ASSERT_TRUE(permission1->FromValue(nullptr, nullptr, nullptr));
 
   vtmp = permission1->ToValue();
   ASSERT_TRUE(vtmp);
-  ASSERT_TRUE(permission2->FromValue(vtmp.get(), NULL, NULL));
+  ASSERT_TRUE(permission2->FromValue(vtmp.get(), nullptr, nullptr));
   EXPECT_TRUE(permission1->Equal(permission2.get()));
 }
 

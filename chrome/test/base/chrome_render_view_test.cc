@@ -97,11 +97,10 @@ class MockAutofillAgent : public AutofillAgent {
 }  // namespace
 
 ChromeRenderViewTest::ChromeRenderViewTest()
-    : password_autofill_agent_(NULL),
-      password_generation_(NULL),
-      autofill_agent_(NULL),
-      chrome_render_thread_(NULL) {
-}
+    : password_autofill_agent_(nullptr),
+      password_generation_(nullptr),
+      autofill_agent_(nullptr),
+      chrome_render_thread_(nullptr) {}
 
 ChromeRenderViewTest::~ChromeRenderViewTest() {
 }

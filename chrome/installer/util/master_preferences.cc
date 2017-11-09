@@ -38,7 +38,7 @@ std::vector<std::string> GetNamedList(const char* name,
   if (!prefs)
     return list;
 
-  const base::ListValue* value_list = NULL;
+  const base::ListValue* value_list = nullptr;
   if (!prefs->GetList(name, &value_list))
     return list;
 
@@ -59,15 +59,15 @@ base::DictionaryValue* ParseDistributionPreferences(
     const std::string& json_data) {
   JSONStringValueDeserializer json(json_data);
   std::string error;
-  std::unique_ptr<base::Value> root(json.Deserialize(NULL, &error));
+  std::unique_ptr<base::Value> root(json.Deserialize(nullptr, &error));
   if (!root.get()) {
     LOG(WARNING) << "Failed to parse master prefs file: " << error;
-    return NULL;
+    return nullptr;
   }
   if (!root->is_dict()) {
     LOG(WARNING) << "Failed to parse master prefs file: "
                  << "Root item must be a dictionary.";
-    return NULL;
+    return nullptr;
   }
   return static_cast<base::DictionaryValue*>(root.release());
 }

@@ -316,8 +316,8 @@ TEST_F(BookmarkHTMLReaderTestWithData, Firefox2BookmarkFileImport) {
 
   std::vector<ImportedBookmarkEntry> bookmarks;
   ImportBookmarksFile(base::Callback<bool(void)>(),
-                      base::Callback<bool(const GURL&)>(),
-                      path, &bookmarks, NULL, NULL);
+                      base::Callback<bool(const GURL&)>(), path, &bookmarks,
+                      nullptr, nullptr);
 
   ASSERT_EQ(3U, bookmarks.size());
   ExpectFirstFirefox2Bookmark(bookmarks[0]);
@@ -330,8 +330,8 @@ TEST_F(BookmarkHTMLReaderTestWithData, BookmarkFileWithHrTagImport) {
 
   std::vector<ImportedBookmarkEntry> bookmarks;
   ImportBookmarksFile(base::Callback<bool(void)>(),
-                      base::Callback<bool(const GURL&)>(),
-                      path, &bookmarks, NULL, NULL);
+                      base::Callback<bool(const GURL&)>(), path, &bookmarks,
+                      nullptr, nullptr);
 
   ASSERT_EQ(3U, bookmarks.size());
   ExpectFirstFirefox23Bookmark(bookmarks[0]);
@@ -344,8 +344,8 @@ TEST_F(BookmarkHTMLReaderTestWithData, EpiphanyBookmarkFileImport) {
 
   std::vector<ImportedBookmarkEntry> bookmarks;
   ImportBookmarksFile(base::Callback<bool(void)>(),
-                      base::Callback<bool(const GURL&)>(),
-                      path, &bookmarks, NULL, NULL);
+                      base::Callback<bool(const GURL&)>(), path, &bookmarks,
+                      nullptr, nullptr);
 
   ASSERT_EQ(2U, bookmarks.size());
   ExpectFirstEpiphanyBookmark(bookmarks[0]);
@@ -358,8 +358,8 @@ TEST_F(BookmarkHTMLReaderTestWithData, FirefoxBookmarkFileWithKeywordImport) {
 
   std::vector<importer::SearchEngineInfo> search_engines;
   ImportBookmarksFile(base::Callback<bool(void)>(),
-                      base::Callback<bool(const GURL&)>(),
-                      path, NULL, &search_engines, NULL);
+                      base::Callback<bool(const GURL&)>(), path, nullptr,
+                      &search_engines, nullptr);
 
   ASSERT_EQ(2U, search_engines.size());
   ExpectFirstFirefoxBookmarkWithKeyword(search_engines[0]);
@@ -372,7 +372,7 @@ TEST_F(BookmarkHTMLReaderTestWithData, EmptyFolderImport) {
   std::vector<ImportedBookmarkEntry> bookmarks;
   ImportBookmarksFile(base::Callback<bool(void)>(),
                       base::Callback<bool(const GURL&)>(), path, &bookmarks,
-                      NULL, NULL);
+                      nullptr, nullptr);
 
   ASSERT_EQ(3U, bookmarks.size());
   ExpectFirstEmptyFolderBookmark(bookmarks[0]);
@@ -386,8 +386,8 @@ TEST_F(BookmarkHTMLReaderTestWithData,
 
   std::vector<ImportedBookmarkEntry> bookmarks;
   ImportBookmarksFile(base::Callback<bool(void)>(),
-                      base::Callback<bool(const GURL&)>(),
-                      path, &bookmarks, NULL, NULL);
+                      base::Callback<bool(const GURL&)>(), path, &bookmarks,
+                      nullptr, nullptr);
 
   ASSERT_EQ(2U, bookmarks.size());
   EXPECT_EQ(ASCIIToUTF16("Google"), bookmarks[0].title);
@@ -403,8 +403,8 @@ TEST_F(BookmarkHTMLReaderTestWithData,
 
   std::vector<ImportedBookmarkEntry> bookmarks;
   ImportBookmarksFile(base::Callback<bool(void)>(),
-                      base::Callback<bool(const GURL&)>(),
-                      path, &bookmarks, NULL, NULL);
+                      base::Callback<bool(const GURL&)>(), path, &bookmarks,
+                      nullptr, nullptr);
 
   ASSERT_EQ(3U, bookmarks.size());
   EXPECT_EQ(ASCIIToUTF16("Google"), bookmarks[0].title);
@@ -433,8 +433,8 @@ TEST_F(BookmarkHTMLReaderTestWithData, CancellationCallback) {
   CancelAfterFifteenCalls cancel_fifteen;
   ImportBookmarksFile(base::Bind(&CancelAfterFifteenCalls::ShouldCancel,
                                  base::Unretained(&cancel_fifteen)),
-                      base::Callback<bool(const GURL&)>(),
-                      path, &bookmarks, NULL, NULL);
+                      base::Callback<bool(const GURL&)>(), path, &bookmarks,
+                      nullptr, nullptr);
 
   // The cancellation callback is checked before each line is read, so fifteen
   // lines are imported. The first fifteen lines of firefox2.html include only
@@ -457,9 +457,8 @@ TEST_F(BookmarkHTMLReaderTestWithData, ValidURLCallback) {
   base::FilePath path = test_data_path_.AppendASCII("firefox2.html");
 
   std::vector<ImportedBookmarkEntry> bookmarks;
-  ImportBookmarksFile(base::Callback<bool(void)>(),
-                      base::Bind(&IsURLValid),
-                      path, &bookmarks, NULL, NULL);
+  ImportBookmarksFile(base::Callback<bool(void)>(), base::Bind(&IsURLValid),
+                      path, &bookmarks, nullptr, nullptr);
 
   ASSERT_EQ(2U, bookmarks.size());
   ExpectFirstFirefox2Bookmark(bookmarks[0]);

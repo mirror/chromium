@@ -27,7 +27,7 @@ void Log::AddEntry(Level level,
 
 namespace {
 
-IsVLogOnFunc g_is_vlog_on_func = NULL;
+IsVLogOnFunc g_is_vlog_on_func = nullptr;
 
 void TruncateString(std::string* data) {
   const size_t kMaxLength = 200;
@@ -39,8 +39,8 @@ void TruncateString(std::string* data) {
 
 std::unique_ptr<base::Value> SmartDeepCopy(const base::Value* value) {
   const size_t kMaxChildren = 20;
-  const base::ListValue* list = NULL;
-  const base::DictionaryValue* dict = NULL;
+  const base::ListValue* list = nullptr;
+  const base::DictionaryValue* dict = nullptr;
   std::string data;
   if (value->GetAsDictionary(&dict)) {
     std::unique_ptr<base::DictionaryValue> dict_copy(
@@ -51,7 +51,7 @@ std::unique_ptr<base::Value> SmartDeepCopy(const base::Value* value) {
         dict_copy->SetKey("~~~", base::Value("..."));
         break;
       }
-      const base::Value* child = NULL;
+      const base::Value* child = nullptr;
       dict->GetWithoutPathExpansion(it.key(), &child);
       dict_copy->SetWithoutPathExpansion(it.key(), SmartDeepCopy(child));
     }
@@ -59,7 +59,7 @@ std::unique_ptr<base::Value> SmartDeepCopy(const base::Value* value) {
   } else if (value->GetAsList(&list)) {
     std::unique_ptr<base::ListValue> list_copy(new base::ListValue());
     for (size_t i = 0; i < list->GetSize(); ++i) {
-      const base::Value* child = NULL;
+      const base::Value* child = nullptr;
       if (!list->Get(i, &child))
         continue;
       if (list_copy->GetSize() >= kMaxChildren - 1) {

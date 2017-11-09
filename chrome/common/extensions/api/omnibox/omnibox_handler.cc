@@ -37,7 +37,7 @@ OmniboxHandler::~OmniboxHandler() {
 
 bool OmniboxHandler::Parse(Extension* extension, base::string16* error) {
   std::unique_ptr<OmniboxInfo> info(new OmniboxInfo);
-  const base::DictionaryValue* dict = NULL;
+  const base::DictionaryValue* dict = nullptr;
   if (!extension->manifest()->GetDictionary(manifest_keys::kOmnibox,
                                             &dict) ||
       !dict->GetString(kKeyword, &info->keyword) ||

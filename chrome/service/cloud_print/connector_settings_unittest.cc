@@ -78,10 +78,7 @@ class ConnectorSettingsTest : public testing::Test {
 
 TEST_F(ConnectorSettingsTest, InitFromEmpty) {
   const char* const kEmptyJSons[] = {
-    NULL,
-    "{}",
-    "{'foo': []}",
-    "{'foo',,}",
+      nullptr, "{}", "{'foo': []}", "{'foo',,}",
   };
   for (size_t i = 0; i < arraysize(kEmptyJSons); ++i) {
     std::unique_ptr<ServiceProcessPrefs> prefs(CreateTestFile(kEmptyJSons[i]));
@@ -92,7 +89,7 @@ TEST_F(ConnectorSettingsTest, InitFromEmpty) {
               settings.server_url().spec());
     EXPECT_FALSE(settings.proxy_id().empty());
     EXPECT_FALSE(settings.delete_on_enum_fail());
-    EXPECT_EQ(NULL, settings.print_system_settings());
+    EXPECT_EQ(nullptr, settings.print_system_settings());
     EXPECT_TRUE(settings.ShouldConnect("prn1"));
     EXPECT_FALSE(settings.xmpp_ping_enabled());
   }

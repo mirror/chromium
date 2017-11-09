@@ -65,7 +65,7 @@ TEST_F(MultiProcessLockTest, BasicCreationTest) {
   std::string name = GenerateLockName();
   std::unique_ptr<MultiProcessLock> scoped(MultiProcessLock::Create(name));
   ExpectLockIsUnlocked(name);
-  scoped.reset(NULL);
+  scoped.reset(nullptr);
 }
 
 TEST_F(MultiProcessLockTest, LongNameTest) {

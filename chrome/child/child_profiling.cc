@@ -12,13 +12,13 @@
 
 namespace {
 
-base::debug::AddDynamicSymbol add_dynamic_symbol_func = NULL;
-base::debug::MoveDynamicSymbol move_dynamic_symbol_func = NULL;
+base::debug::AddDynamicSymbol add_dynamic_symbol_func = nullptr;
+base::debug::MoveDynamicSymbol move_dynamic_symbol_func = nullptr;
 
 void JitCodeEventHandler(const v8::JitCodeEvent* event) {
-  DCHECK_NE(static_cast<base::debug::AddDynamicSymbol>(NULL),
+  DCHECK_NE(static_cast<base::debug::AddDynamicSymbol>(nullptr),
             add_dynamic_symbol_func);
-  DCHECK_NE(static_cast<base::debug::MoveDynamicSymbol>(NULL),
+  DCHECK_NE(static_cast<base::debug::MoveDynamicSymbol>(nullptr),
             move_dynamic_symbol_func);
 
   switch (event->type) {
@@ -45,7 +45,7 @@ void ChildProfiling::ProcessStarted() {
     base::debug::ReturnAddressLocationResolver resolve_func =
         base::debug::GetProfilerReturnAddrResolutionFunc();
 
-    if (resolve_func != NULL) {
+    if (resolve_func != nullptr) {
       v8::V8::SetReturnAddressLocationResolver(resolve_func);
     }
 
@@ -58,9 +58,8 @@ void ChildProfiling::ProcessStarted() {
     add_dynamic_symbol_func = base::debug::GetProfilerAddDynamicSymbolFunc();
     move_dynamic_symbol_func = base::debug::GetProfilerMoveDynamicSymbolFunc();
 
-    if (entry_hook_func != NULL &&
-        add_dynamic_symbol_func != NULL &&
-        move_dynamic_symbol_func != NULL) {
+    if (entry_hook_func != nullptr && add_dynamic_symbol_func != nullptr &&
+        move_dynamic_symbol_func != nullptr) {
       gin::Debug::SetFunctionEntryHook(entry_hook_func);
       gin::Debug::SetJitCodeEventHandler(&JitCodeEventHandler);
     }

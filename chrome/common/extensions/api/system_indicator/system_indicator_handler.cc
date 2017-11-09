@@ -22,7 +22,7 @@ SystemIndicatorHandler::~SystemIndicatorHandler() {
 
 bool SystemIndicatorHandler::Parse(Extension* extension,
                                    base::string16* error) {
-  const base::DictionaryValue* system_indicator_value = NULL;
+  const base::DictionaryValue* system_indicator_value = nullptr;
   if (!extension->manifest()->GetDictionary(
           manifest_keys::kSystemIndicator, &system_indicator_value)) {
     *error = base::ASCIIToUTF16(manifest_errors::kInvalidSystemIndicator);

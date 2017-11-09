@@ -52,12 +52,9 @@ void LoadDefaultBookmarks(const base::FilePath& app_path,
 
   std::vector<ImportedBookmarkEntry> bookmarks;
   std::vector<importer::SearchEngineInfo> search_engines;
-  bookmark_html_reader::ImportBookmarksFile(base::Callback<bool(void)>(),
-                                            base::Callback<bool(const GURL&)>(),
-                                            file,
-                                            &bookmarks,
-                                            &search_engines,
-                                            NULL);
+  bookmark_html_reader::ImportBookmarksFile(
+      base::Callback<bool(void)>(), base::Callback<bool(const GURL&)>(), file,
+      &bookmarks, &search_engines, nullptr);
   for (size_t i = 0; i < bookmarks.size(); ++i)
     urls->insert(bookmarks[i].url);
 }
@@ -223,7 +220,7 @@ void FirefoxImporter::ImportBookmarks() {
   GetTopBookmarkFolder(&db, unsorted_folder_id, &list);
   size_t count = list.size();
   for (size_t i = 0; i < count; ++i)
-    GetWholeBookmarkFolder(&db, &list, i, NULL);
+    GetWholeBookmarkFolder(&db, &list, i, nullptr);
 
   std::vector<ImportedBookmarkEntry> bookmarks;
   std::vector<importer::SearchEngineInfo> search_engines;
@@ -538,8 +535,8 @@ void FirefoxImporter::GetSearchEnginesXMLDataFromJSON(
       source_path_.AppendASCII("search-metadata.json");
   JSONFileValueDeserializer metadata_deserializer(search_metadata_json_file);
   std::unique_ptr<base::Value> metadata_root =
-      metadata_deserializer.Deserialize(NULL, NULL);
-  const base::DictionaryValue* search_metadata_root = NULL;
+      metadata_deserializer.Deserialize(nullptr, nullptr);
+  const base::DictionaryValue* search_metadata_root = nullptr;
   if (metadata_root)
     metadata_root->GetAsDictionary(&search_metadata_root);
 
@@ -549,13 +546,14 @@ void FirefoxImporter::GetSearchEnginesXMLDataFromJSON(
     return;
 
   JSONFileValueDeserializer deserializer(search_json_file);
-  std::unique_ptr<base::Value> root = deserializer.Deserialize(NULL, NULL);
-  const base::DictionaryValue* search_root = NULL;
+  std::unique_ptr<base::Value> root =
+      deserializer.Deserialize(nullptr, nullptr);
+  const base::DictionaryValue* search_root = nullptr;
   if (!root || !root->GetAsDictionary(&search_root))
     return;
 
   const std::string kDirectories("directories");
-  const base::DictionaryValue* search_directories = NULL;
+  const base::DictionaryValue* search_directories = nullptr;
   if (!search_root->GetDictionary(kDirectories, &search_directories))
     return;
 
@@ -578,18 +576,18 @@ void FirefoxImporter::GetSearchEnginesXMLDataFromJSON(
     // for retrieving <engines>. Hence, it is needed to get |it| as dictionary.
     // The resulted dictionary can be used for retrieving <engines>.
     const std::string kEngines("engines");
-    const base::DictionaryValue* search_directory = NULL;
+    const base::DictionaryValue* search_directory = nullptr;
     if (!it.value().GetAsDictionary(&search_directory))
       continue;
 
-    const base::ListValue* search_engines = NULL;
+    const base::ListValue* search_engines = nullptr;
     if (!search_directory->GetList(kEngines, &search_engines))
       continue;
 
     const std::string kFilePath("filePath");
     const std::string kHidden("_hidden");
     for (size_t i = 0; i < search_engines->GetSize(); ++i) {
-      const base::DictionaryValue* engine_info = NULL;
+      const base::DictionaryValue* engine_info = nullptr;
       if (!search_engines->GetDictionary(i, &engine_info))
         continue;
 
@@ -624,7 +622,7 @@ void FirefoxImporter::GetSearchEnginesXMLDataFromJSON(
         // If a keyword is mentioned for this search engine, then add
         // it to the XML string as an <Alias> element and use this updated
         // string.
-        const base::DictionaryValue* search_xml_path = NULL;
+        const base::DictionaryValue* search_xml_path = nullptr;
         if (search_metadata_root && search_metadata_root->HasKey(file_path) &&
             search_metadata_root->GetDictionaryWithoutPathExpansion(
                 file_path, &search_xml_path)) {
@@ -730,7 +728,7 @@ void FirefoxImporter::GetWholeBookmarkFolder(sql::Connection* db,
     item->empty_folder = true;
 
     temp_list.push_back(std::move(item));
-    if (empty_folder != NULL)
+    if (empty_folder != nullptr)
       *empty_folder = false;
   }
 

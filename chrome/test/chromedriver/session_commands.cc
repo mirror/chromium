@@ -145,7 +145,7 @@ std::unique_ptr<base::DictionaryValue> CreateCapabilities(
     caps->SetBoolean("setWindowRect", true);
   }
 
-  ChromeDesktopImpl* desktop = NULL;
+  ChromeDesktopImpl* desktop = nullptr;
   Status status = session->chrome->GetAsDesktop(&desktop);
   if (status.IsOk()) {
     caps->SetString("chrome.userDataDir",
@@ -158,7 +158,7 @@ std::unique_ptr<base::DictionaryValue> CreateCapabilities(
 }
 
 Status CheckSessionCreated(Session* session) {
-  WebView* web_view = NULL;
+  WebView* web_view = nullptr;
   Status status = session->GetTargetWindow(&web_view);
   if (status.IsError())
     return Status(kSessionNotCreatedException, status);
@@ -337,7 +337,7 @@ Status ExecuteInitSession(const InitSessionParams& bound_params,
   Status status = InitSessionHelper(bound_params, session, params, value);
   if (status.IsError()) {
     session->quit = true;
-    if (session->chrome != NULL)
+    if (session->chrome != nullptr)
       session->chrome->Quit();
   }
   return status;
@@ -364,7 +364,7 @@ Status ExecuteGetSessionCapabilities(Session* session,
 Status ExecuteGetCurrentWindowHandle(Session* session,
                                      const base::DictionaryValue& params,
                                      std::unique_ptr<base::Value>* value) {
-  WebView* web_view = NULL;
+  WebView* web_view = nullptr;
   Status status = session->GetTargetWindow(&web_view);
   if (status.IsError())
     return status;
@@ -380,12 +380,12 @@ Status ExecuteLaunchApp(Session* session,
   if (!params.GetString("id", &id))
     return Status(kUnknownError, "'id' must be a string");
 
-  ChromeDesktopImpl* desktop = NULL;
+  ChromeDesktopImpl* desktop = nullptr;
   Status status = session->chrome->GetAsDesktop(&desktop);
   if (status.IsError())
     return status;
 
-  AutomationExtension* extension = NULL;
+  AutomationExtension* extension = nullptr;
   status = desktop->GetAutomationExtension(&extension, session->w3c_compliant);
   if (status.IsError())
     return status;
@@ -404,7 +404,7 @@ Status ExecuteClose(Session* session,
   bool is_last_web_view = web_view_ids.size() == 1u;
   web_view_ids.clear();
 
-  WebView* web_view = NULL;
+  WebView* web_view = nullptr;
   status = session->GetTargetWindow(&web_view);
   if (status.IsError())
     return status;
@@ -604,7 +604,7 @@ Status ExecuteImplicitlyWait(Session* session,
 Status ExecuteIsLoading(Session* session,
                         const base::DictionaryValue& params,
                         std::unique_ptr<base::Value>* value) {
-  WebView* web_view = NULL;
+  WebView* web_view = nullptr;
   Status status = session->GetTargetWindow(&web_view);
   if (status.IsError())
     return status;
@@ -753,7 +753,7 @@ Status ExecuteSetNetworkConnection(Session* session,
 Status ExecuteGetWindowRect(Session* session,
                             const base::DictionaryValue& params,
                             std::unique_ptr<base::Value>* value) {
-  ChromeDesktopImpl* desktop = NULL;
+  ChromeDesktopImpl* desktop = nullptr;
   Status status = session->chrome->GetAsDesktop(&desktop);
   if (status.IsError())
     return status;
@@ -767,7 +767,7 @@ Status ExecuteGetWindowRect(Session* session,
       return status;
     status = desktop->GetWindowSize(session->window, &width, &height);
   } else {
-    AutomationExtension* extension = NULL;
+    AutomationExtension* extension = nullptr;
     status =
         desktop->GetAutomationExtension(&extension, session->w3c_compliant);
     if (status.IsError())
@@ -793,7 +793,7 @@ Status ExecuteGetWindowRect(Session* session,
 Status ExecuteGetWindowPosition(Session* session,
                                 const base::DictionaryValue& params,
                                 std::unique_ptr<base::Value>* value) {
-  ChromeDesktopImpl* desktop = NULL;
+  ChromeDesktopImpl* desktop = nullptr;
   Status status = session->chrome->GetAsDesktop(&desktop);
   if (status.IsError())
     return status;
@@ -803,7 +803,7 @@ Status ExecuteGetWindowPosition(Session* session,
   if (desktop->GetBrowserInfo()->build_no >= kBrowserWindowDevtoolsBuildNo) {
     status = desktop->GetWindowPosition(session->window, &x, &y);
   } else {
-    AutomationExtension* extension = NULL;
+    AutomationExtension* extension = nullptr;
     status =
         desktop->GetAutomationExtension(&extension, session->w3c_compliant);
     if (status.IsError())
@@ -829,7 +829,7 @@ Status ExecuteSetWindowPosition(Session* session,
   if (!params.GetDouble("x", &x) || !params.GetDouble("y", &y))
     return Status(kUnknownError, "missing or invalid 'x' or 'y'");
 
-  ChromeDesktopImpl* desktop = NULL;
+  ChromeDesktopImpl* desktop = nullptr;
   Status status = session->chrome->GetAsDesktop(&desktop);
   if (status.IsError())
     return status;
@@ -839,7 +839,7 @@ Status ExecuteSetWindowPosition(Session* session,
                                       static_cast<int>(y));
   }
 
-  AutomationExtension* extension = NULL;
+  AutomationExtension* extension = nullptr;
   status = desktop->GetAutomationExtension(&extension, session->w3c_compliant);
   if (status.IsError())
     return status;
@@ -850,7 +850,7 @@ Status ExecuteSetWindowPosition(Session* session,
 Status ExecuteGetWindowSize(Session* session,
                             const base::DictionaryValue& params,
                             std::unique_ptr<base::Value>* value) {
-  ChromeDesktopImpl* desktop = NULL;
+  ChromeDesktopImpl* desktop = nullptr;
   Status status = session->chrome->GetAsDesktop(&desktop);
   if (status.IsError())
     return status;
@@ -860,7 +860,7 @@ Status ExecuteGetWindowSize(Session* session,
   if (desktop->GetBrowserInfo()->build_no >= kBrowserWindowDevtoolsBuildNo) {
     status = desktop->GetWindowSize(session->window, &width, &height);
   } else {
-    AutomationExtension* extension = NULL;
+    AutomationExtension* extension = nullptr;
     status =
         desktop->GetAutomationExtension(&extension, session->w3c_compliant);
     if (status.IsError())
@@ -886,7 +886,7 @@ Status ExecuteSetWindowRect(Session* session,
   double x = 0;
   double y = 0;
 
-  ChromeDesktopImpl* desktop = NULL;
+  ChromeDesktopImpl* desktop = nullptr;
   Status status = session->chrome->GetAsDesktop(&desktop);
   if (status.IsError())
     return status;
@@ -921,7 +921,7 @@ Status ExecuteSetWindowSize(Session* session,
       !params.GetDouble("height", &height))
     return Status(kUnknownError, "missing or invalid 'width' or 'height'");
 
-  ChromeDesktopImpl* desktop = NULL;
+  ChromeDesktopImpl* desktop = nullptr;
   Status status = session->chrome->GetAsDesktop(&desktop);
   if (status.IsError())
     return status;
@@ -931,7 +931,7 @@ Status ExecuteSetWindowSize(Session* session,
                                   static_cast<int>(height));
   }
 
-  AutomationExtension* extension = NULL;
+  AutomationExtension* extension = nullptr;
   status = desktop->GetAutomationExtension(&extension, session->w3c_compliant);
   if (status.IsError())
     return status;
@@ -943,7 +943,7 @@ Status ExecuteSetWindowSize(Session* session,
 Status ExecuteMaximizeWindow(Session* session,
                              const base::DictionaryValue& params,
                              std::unique_ptr<base::Value>* value) {
-  ChromeDesktopImpl* desktop = NULL;
+  ChromeDesktopImpl* desktop = nullptr;
   Status status = session->chrome->GetAsDesktop(&desktop);
   if (status.IsError())
     return status;
@@ -951,7 +951,7 @@ Status ExecuteMaximizeWindow(Session* session,
   if (desktop->GetBrowserInfo()->build_no >= kBrowserWindowDevtoolsBuildNo)
     return desktop->MaximizeWindow(session->window);
 
-  AutomationExtension* extension = NULL;
+  AutomationExtension* extension = nullptr;
   status = desktop->GetAutomationExtension(&extension, session->w3c_compliant);
   if (status.IsError())
     return status;
@@ -962,7 +962,7 @@ Status ExecuteMaximizeWindow(Session* session,
 Status ExecuteFullScreenWindow(Session* session,
                                const base::DictionaryValue& params,
                                std::unique_ptr<base::Value>* value) {
-  ChromeDesktopImpl* desktop = NULL;
+  ChromeDesktopImpl* desktop = nullptr;
   Status status = session->chrome->GetAsDesktop(&desktop);
   if (status.IsError())
     return status;
@@ -970,7 +970,7 @@ Status ExecuteFullScreenWindow(Session* session,
   if (desktop->GetBrowserInfo()->build_no >= kBrowserWindowDevtoolsBuildNo)
     return desktop->FullScreenWindow(session->window);
 
-  AutomationExtension* extension = NULL;
+  AutomationExtension* extension = nullptr;
   status = desktop->GetAutomationExtension(&extension, session->w3c_compliant);
   if (status.IsError())
     return status;

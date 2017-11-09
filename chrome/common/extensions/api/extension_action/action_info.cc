@@ -42,7 +42,7 @@ static const ActionInfo* GetActionInfo(const Extension* extension,
                                        const std::string& key) {
   ActionInfoData* data = static_cast<ActionInfoData*>(
       extension->GetManifestData(key));
-  return data ? data->action_info.get() : NULL;
+  return data ? data->action_info.get() : nullptr;
 }
 
 }  // namespace
@@ -63,7 +63,7 @@ std::unique_ptr<ActionInfo> ActionInfo::Load(const Extension* extension,
   if (extension->manifest_version() == 1) {
     // kPageActionIcons is obsolete, and used by very few extensions. Continue
     // loading it, but only take the first icon as the default_icon path.
-    const base::ListValue* icons = NULL;
+    const base::ListValue* icons = nullptr;
     if (dict->HasKey(keys::kPageActionIcons) &&
         dict->GetList(keys::kPageActionIcons, &icons)) {
       base::ListValue::const_iterator iter = icons->begin();
@@ -91,7 +91,7 @@ std::unique_ptr<ActionInfo> ActionInfo::Load(const Extension* extension,
   // The |default_icon| value can be either dictionary {icon size -> icon path}
   // or non empty string value.
   if (dict->HasKey(keys::kPageActionDefaultIcon)) {
-    const base::DictionaryValue* icons_value = NULL;
+    const base::DictionaryValue* icons_value = nullptr;
     std::string default_icon;
     if (dict->GetDictionary(keys::kPageActionDefaultIcon, &icons_value)) {
       if (!manifest_handler_helpers::LoadIconsFromDictionary(
@@ -128,7 +128,7 @@ std::unique_ptr<ActionInfo> ActionInfo::Load(const Extension* extension,
   }
 
   // Read the action's |popup| (optional).
-  const char* popup_key = NULL;
+  const char* popup_key = nullptr;
   if (dict->HasKey(keys::kPageActionDefaultPopup))
     popup_key = keys::kPageActionDefaultPopup;
 
@@ -145,7 +145,7 @@ std::unique_ptr<ActionInfo> ActionInfo::Load(const Extension* extension,
   }
 
   if (popup_key) {
-    const base::DictionaryValue* popup = NULL;
+    const base::DictionaryValue* popup = nullptr;
     std::string url_str;
 
     if (dict->GetString(popup_key, &url_str)) {

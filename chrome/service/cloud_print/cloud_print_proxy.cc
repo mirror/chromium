@@ -27,10 +27,7 @@
 namespace cloud_print {
 
 CloudPrintProxy::CloudPrintProxy()
-    : service_prefs_(NULL),
-      client_(NULL),
-      enabled_(false) {
-}
+    : service_prefs_(nullptr), client_(nullptr), enabled_(false) {}
 
 CloudPrintProxy::~CloudPrintProxy() {
   DCHECK_CALLED_ON_VALID_SEQUENCE(sequence_checker_);

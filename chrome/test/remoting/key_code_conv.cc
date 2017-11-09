@@ -17,7 +17,7 @@ ui::KeyboardCode InvalidKeyboardCode() {
 
 void GetKeyValuesFromChar(
     char c, const char** code, ui::KeyboardCode* vkey_code, bool* shift) {
-  *code = NULL;
+  *code = nullptr;
   *vkey_code = InvalidKeyboardCode();
 
   for (size_t i = 0; i < arraysize(key_code_map); ++i) {

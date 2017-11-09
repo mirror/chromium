@@ -30,7 +30,7 @@ Status FindMobileDevice(std::string device_name,
   if (!devices_value->GetAsDictionary(&mobile_devices))
     return Status(kUnknownError, "malformed device metrics dictionary");
 
-  base::DictionaryValue* device = NULL;
+  base::DictionaryValue* device = nullptr;
   if (!mobile_devices->GetDictionary(device_name, &device))
     return Status(kUnknownError, "must be a valid device");
 

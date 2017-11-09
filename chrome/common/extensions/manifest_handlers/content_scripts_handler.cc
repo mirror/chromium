@@ -49,7 +49,7 @@ bool LoadGlobsHelper(const base::DictionaryValue* content_script,
   if (!content_script->HasKey(globs_property_name))
     return true;  // they are optional
 
-  const base::ListValue* list = NULL;
+  const base::ListValue* list = nullptr;
   if (!content_script->GetList(globs_property_name, &list)) {
     *error = ErrorUtils::FormatErrorMessageUTF16(
         errors::kInvalidGlobList,
@@ -129,7 +129,7 @@ std::unique_ptr<UserScript> LoadUserScriptFromDictionary(
   }
 
   // matches (required)
-  const base::ListValue* matches = NULL;
+  const base::ListValue* matches = nullptr;
   if (!content_script->GetList(keys::kMatches, &matches)) {
     *error = ErrorUtils::FormatErrorMessageUTF16(
         errors::kInvalidMatches,
@@ -189,7 +189,7 @@ std::unique_ptr<UserScript> LoadUserScriptFromDictionary(
 
   // exclude_matches
   if (content_script->HasKey(keys::kExcludeMatches)) {  // optional
-    const base::ListValue* exclude_matches = NULL;
+    const base::ListValue* exclude_matches = nullptr;
     if (!content_script->GetList(keys::kExcludeMatches, &exclude_matches)) {
       *error = ErrorUtils::FormatErrorMessageUTF16(
           errors::kInvalidExcludeMatches,
@@ -235,7 +235,7 @@ std::unique_ptr<UserScript> LoadUserScriptFromDictionary(
   }
 
   // js and css keys
-  const base::ListValue* js = NULL;
+  const base::ListValue* js = nullptr;
   if (content_script->HasKey(keys::kJs) &&
       !content_script->GetList(keys::kJs, &js)) {
     *error = ErrorUtils::FormatErrorMessageUTF16(
@@ -244,7 +244,7 @@ std::unique_ptr<UserScript> LoadUserScriptFromDictionary(
     return std::unique_ptr<UserScript>();
   }
 
-  const base::ListValue* css = NULL;
+  const base::ListValue* css = nullptr;
   if (content_script->HasKey(keys::kCss) &&
       !content_script->GetList(keys::kCss, &css)) {
     *error = ErrorUtils::
@@ -389,14 +389,14 @@ const std::vector<std::string> ContentScriptsHandler::Keys() const {
 bool ContentScriptsHandler::Parse(Extension* extension, base::string16* error) {
   std::unique_ptr<ContentScriptsInfo> content_scripts_info(
       new ContentScriptsInfo);
-  const base::ListValue* scripts_list = NULL;
+  const base::ListValue* scripts_list = nullptr;
   if (!extension->manifest()->GetList(keys::kContentScripts, &scripts_list)) {
     *error = base::ASCIIToUTF16(errors::kInvalidContentScriptsList);
     return false;
   }
 
   for (size_t i = 0; i < scripts_list->GetSize(); ++i) {
-    const base::DictionaryValue* script_dict = NULL;
+    const base::DictionaryValue* script_dict = nullptr;
     if (!scripts_list->GetDictionary(i, &script_dict)) {
       *error = ErrorUtils::FormatErrorMessageUTF16(
           errors::kInvalidContentScript, base::SizeTToString(i));

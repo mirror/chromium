@@ -124,7 +124,7 @@ class CloudPrintURLFetcherTest : public testing::Test,
   }
 
   void TearDown() override {
-    fetcher_ = NULL;
+    fetcher_ = nullptr;
     // Deleting the fetcher causes a task to be posted to the IO thread to
     // release references to the URLRequestContextGetter. We need to run all
     // pending tasks to execute that (this is the IO thread).

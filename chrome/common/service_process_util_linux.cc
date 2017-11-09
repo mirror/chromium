@@ -63,7 +63,7 @@ mojo::edk::NamedPlatformHandle GetServiceProcessChannel() {
 
 bool CheckServiceProcessReady() {
   std::unique_ptr<MultiProcessLock> running_lock(TakeServiceRunningLock(false));
-  return running_lock.get() == NULL;
+  return running_lock.get() == nullptr;
 }
 
 bool ServiceProcessState::TakeSingletonLock() {

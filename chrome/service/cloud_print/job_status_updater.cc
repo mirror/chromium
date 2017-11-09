@@ -93,7 +93,7 @@ void JobStatusUpdater::UpdateStatus() {
 }
 
 void JobStatusUpdater::Stop() {
-  request_ = NULL;
+  request_ = nullptr;
   DCHECK(delegate_);
   stopped_ = true;
   delegate_->OnJobCompleted(this);

@@ -77,7 +77,7 @@ bool CheckPepperFlashInterfaceString(const std::string& interface_string) {
 // Returns true if this browser implements all the interfaces that Flash
 // specifies in its component installer manifest.
 bool CheckPepperFlashInterfaces(const base::DictionaryValue& manifest) {
-  const base::ListValue* interface_list = NULL;
+  const base::ListValue* interface_list = nullptr;
 
   // We don't *require* an interface list, apparently.
   if (!manifest.GetList("x-ppapi-required-interfaces", &interface_list))
