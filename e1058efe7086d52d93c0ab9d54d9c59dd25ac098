@@ -2,6 +2,75 @@
   "comments": [
     {
       "key": {
+        "uuid": "ade919a4_3a481e5b",
+        "filename": "chrome/app/chromium_strings.grd",
+        "patchSetId": 2
+      },
+      "lineNbr": 1188,
+      "author": {
+        "id": 1123275
+      },
+      "writtenOn": "2017-11-09T10:42:24Z",
+      "side": 1,
+      "message": "nit: That disambiguation is nice, would you mind also adding that to the message above?",
+      "range": {
+        "startLine": 1188,
+        "startChar": 185,
+        "endLine": 1188,
+        "endChar": 200
+      },
+      "revId": "e1058efe7086d52d93c0ab9d54d9c59dd25ac098",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "05d2562b_fe1d7735",
+        "filename": "chrome/app/chromium_strings.grd",
+        "patchSetId": 2
+      },
+      "lineNbr": 1189,
+      "author": {
+        "id": 1123275
+      },
+      "writtenOn": "2017-11-09T10:42:24Z",
+      "side": 1,
+      "message": "bLocked",
+      "range": {
+        "startLine": 1189,
+        "startChar": 20,
+        "endLine": 1189,
+        "endChar": 26
+      },
+      "revId": "e1058efe7086d52d93c0ab9d54d9c59dd25ac098",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "bb6645ac_868e4902",
+        "filename": "chrome/app/google_chrome_strings.grd",
+        "patchSetId": 2
+      },
+      "lineNbr": 1206,
+      "author": {
+        "id": 1123275
+      },
+      "writtenOn": "2017-11-09T10:42:24Z",
+      "side": 1,
+      "message": "bLocked",
+      "range": {
+        "startLine": 1206,
+        "startChar": 20,
+        "endLine": 1206,
+        "endChar": 26
+      },
+      "revId": "e1058efe7086d52d93c0ab9d54d9c59dd25ac098",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "4ebdbedf_9639f67c",
         "filename": "chrome/browser/content_settings/framebust_block_tab_helper.cc",
         "patchSetId": 2
