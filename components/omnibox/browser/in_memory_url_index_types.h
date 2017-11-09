@@ -107,10 +107,15 @@ String16Set String16SetFromString16(const base::string16& cleaned_uni_string,
 //    "http", "www", "google", "com", "harry", "the", "rabbit"
 //   With |break_on_space| true the returned list will contain:
 //    "http://", "www.google.com/", "harry", "the", "rabbit."
+//
+// |breaking_at_underscore| is only used for unit test.
+// If |breaking_at_underscore| is true, BreakIteratorAdapter works
+// even if omnibox::kBreakWordsAtUnderscores feature is turned off.
 String16Vector String16VectorFromString16(
     const base::string16& cleaned_uni_string,
     bool break_on_space,
-    WordStarts* word_starts);
+    WordStarts* word_starts,
+    bool breaking_at_underscore = false);
 
 // Breaks the |uni_word| string down into its individual characters.
 // Note that this is temporarily intended to work on a single word, but

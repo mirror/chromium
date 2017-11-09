@@ -235,9 +235,13 @@ class URLIndexPrivateData
 
   // Fills in |terms_to_word_starts_offsets| according to where the word starts
   // in each term.  For example, in the term "-foo" the word starts at offset 1.
+  // |breaking_at_underscore| is only used for unit test.
+  // If |breaking_at_underscore| is true, BreakIteratorAdapter works
+  // even if omnibox::kBreakWordsAtUnderscores feature is turned off.
   static void CalculateWordStartsOffsets(
       const String16Vector& terms,
-      WordStarts* terms_to_word_starts_offsets);
+      WordStarts* terms_to_word_starts_offsets,
+      bool breaking_at_underscore = false);
 
   // Indexes one URL history item as described by |row|. Returns true if the
   // row was actually indexed. |scheme_whitelist| is used to filter
