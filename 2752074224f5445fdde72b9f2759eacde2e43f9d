@@ -70,6 +70,30 @@
       "revId": "2752074224f5445fdde72b9f2759eacde2e43f9d",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "97c204a9_e808f0f4",
+        "filename": "media/gpu/vaapi_wrapper.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 143,
+      "author": {
+        "id": 1113991
+      },
+      "writtenOn": "2017-11-09T19:18:42Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "3e8715dc_2ff8e076",
+      "range": {
+        "startLine": 143,
+        "startChar": 37,
+        "endLine": 143,
+        "endChar": 54
+      },
+      "revId": "2752074224f5445fdde72b9f2759eacde2e43f9d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
