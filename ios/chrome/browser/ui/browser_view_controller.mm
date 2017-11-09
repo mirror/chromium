@@ -5258,10 +5258,6 @@ bubblePresenterForFeature:(const base::Feature&)feature
 
 #pragma mark - VoiceSearchPresenter
 
-- (UIView*)voiceSearchButton {
-  return nil;
-}
-
 - (const ViewInfo*)voiceSearchOriginViewInfo {
   return _voiceSearchOriginViewInfo.get();
 }
