@@ -1,0 +1,73 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "98418537_898b49ba",
+        "filename": "base/bits.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 93,
+      "author": {
+        "id": 1131764
+      },
+      "writtenOn": "2017-11-09T11:47:35Z",
+      "side": 1,
+      "message": "Should we remove those and call the generic one directly?",
+      "range": {
+        "startLine": 93,
+        "startChar": 23,
+        "endLine": 93,
+        "endChar": 45
+      },
+      "revId": "0af14f62be130c833792383386f997ae8b3e3bea",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5ec04051_8002de93",
+        "filename": "base/bits.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 150,
+      "author": {
+        "id": 1131764
+      },
+      "writtenOn": "2017-11-09T11:47:35Z",
+      "side": 1,
+      "message": "We could also remove those.",
+      "range": {
+        "startLine": 150,
+        "startChar": 21,
+        "endLine": 150,
+        "endChar": 46
+      },
+      "revId": "0af14f62be130c833792383386f997ae8b3e3bea",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d0a55853_c9e6ac81",
+        "filename": "third_party/WebKit/Source/platform/wtf/BitwiseOperations.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 40,
+      "author": {
+        "id": 1131764
+      },
+      "writtenOn": "2017-11-09T11:47:35Z",
+      "side": 1,
+      "message": "There are currently no callers of those functions but there will be in the Blink followup CL. I\u0027d like to avoid nuking and recreating the file.",
+      "range": {
+        "startLine": 40,
+        "startChar": 18,
+        "endLine": 40,
+        "endChar": 38
+      },
+      "revId": "0af14f62be130c833792383386f997ae8b3e3bea",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}

@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "206cb3d0_0584a7bd",
+        "filename": "third_party/WebKit/Source/platform/wtf/BitwiseOperations.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 31,
+      "author": {
+        "id": 1131764
+      },
+      "writtenOn": "2017-11-09T11:47:35Z",
+      "side": 0,
+      "message": "This TODO looks done.",
+      "range": {
+        "startLine": 31,
+        "startChar": 8,
+        "endLine": 31,
+        "endChar": 14
+      },
+      "revId": "9d30e5e343d85ad29301796debb3d1666413c37b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
