@@ -1,0 +1,44 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "a67e5d86_cf27e857",
+        "filename": "chrome/services/media_util/public/cpp/DEPS",
+        "patchSetId": 5
+      },
+      "lineNbr": 3,
+      "author": {
+        "id": 1001917
+      },
+      "writtenOn": "2017-11-09T23:53:34Z",
+      "side": 1,
+      "message": "you can remove this, see comment below.",
+      "range": {
+        "startLine": 3,
+        "startChar": 0,
+        "endLine": 3,
+        "endChar": 29
+      },
+      "revId": "6a23938344657d5ad943a609eb6bfac36bd90690",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a946f57b_2b4f7e63",
+        "filename": "chrome/services/media_util/public/cpp/safe_audio_video_checker.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 29,
+      "author": {
+        "id": 1001917
+      },
+      "writtenOn": "2017-11-09T23:53:34Z",
+      "side": 1,
+      "message": "Instead of this, can you make a type here:\ntypedef base::OnceCallback\u003cvoid(base::File::Error result)\u003e ResultCallback;\n\nThen you can remove the dependency on storage/browser/fileapi",
+      "revId": "6a23938344657d5ad943a609eb6bfac36bd90690",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
