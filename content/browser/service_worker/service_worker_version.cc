@@ -120,7 +120,7 @@ void RunTaskAfterStartWorker(base::WeakPtr<ServiceWorkerVersion> version,
   std::move(task).Run();
 }
 
-void KillEmbeddedWorkerProcess(int process_id, ResultCode code) {
+void KillEmbeddedWorkerProcess(int process_id) {
   DCHECK_CURRENTLY_ON(BrowserThread::UI);
   RenderProcessHost* render_process_host =
       RenderProcessHost::FromID(process_id);
@@ -1143,8 +1143,7 @@ void ServiceWorkerVersion::OnOpenWindow(int request_id,
     DVLOG(1) << "Received unexpected invalid URL from renderer process.";
     BrowserThread::PostTask(BrowserThread::UI, FROM_HERE,
                             base::BindOnce(&KillEmbeddedWorkerProcess,
-                                           embedded_worker_->process_id(),
-                                           RESULT_CODE_KILLED_BAD_MESSAGE));
+                                           embedded_worker_->process_id()));
     return;
   }
 
@@ -1307,8 +1306,7 @@ void ServiceWorkerVersion::OnNavigateClient(int request_id,
     DVLOG(1) << "Received unexpected invalid URL/UUID from renderer process.";
     BrowserThread::PostTask(BrowserThread::UI, FROM_HERE,
                             base::BindOnce(&KillEmbeddedWorkerProcess,
-                                           embedded_worker_->process_id(),
-                                           RESULT_CODE_KILLED_BAD_MESSAGE));
+                                           embedded_worker_->process_id()));
     return;
   }
 
@@ -1425,8 +1423,7 @@ void ServiceWorkerVersion::RegisterForeignFetchScopes(
       DVLOG(1) << "Received unexpected invalid URL from renderer process.";
       BrowserThread::PostTask(BrowserThread::UI, FROM_HERE,
                               base::BindOnce(&KillEmbeddedWorkerProcess,
-                                             embedded_worker_->process_id(),
-                                             RESULT_CODE_KILLED_BAD_MESSAGE));
+                                             embedded_worker_->process_id()));
       return;
     }
   }
@@ -1435,8 +1432,7 @@ void ServiceWorkerVersion::RegisterForeignFetchScopes(
       DVLOG(1) << "Received unexpected unique origin from renderer process.";
       BrowserThread::PostTask(BrowserThread::UI, FROM_HERE,
                               base::BindOnce(&KillEmbeddedWorkerProcess,
-                                             embedded_worker_->process_id(),
-                                             RESULT_CODE_KILLED_BAD_MESSAGE));
+                                             embedded_worker_->process_id()));
       return;
     }
   }
