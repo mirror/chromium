@@ -1145,17 +1145,16 @@ void NodeController::OnRelayEventMessage(const ports::NodeName& from_node,
   // Note that we explicitly mark the handles as being owned by the sending
   // process before rewriting them, in order to accommodate RewriteHandles'
   // internal sanity checks.
-  ScopedPlatformHandleVectorPtr handles = message->TakeHandles();
-  for (size_t i = 0; i < handles->size(); ++i)
-    (*handles)[i].owning_process = from_process;
-  if (!Channel::Message::RewriteHandles(from_process,
-                                        base::GetCurrentProcessHandle(),
-                                        handles.get())) {
+  ScopedPlatformHandleVector handles = message->TakeHandles();
+  for (auto& handle : handles)
+    handle.get().owning_process = from_process;
+  if (!Channel::Message::RewriteHandles(
+          from_process, base::GetCurrentProcessHandle(), &handles)) {
     DLOG(ERROR) << "Failed to relay one or more handles.";
   }
   message->SetHandles(std::move(handles));
 #else
-  ScopedPlatformHandleVectorPtr handles = message->TakeHandles();
+  ScopedPlatformHandleVector handles = message->TakeHandles();
   for (size_t i = 0; i < handles->size(); ++i) {
     PlatformHandle* handle = &(*handles)[i];
     if (handle->type == PlatformHandle::Type::MACH_NAME) {

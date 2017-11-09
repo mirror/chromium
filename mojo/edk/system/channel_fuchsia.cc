@@ -15,12 +15,12 @@
 #include "base/containers/circular_deque.h"
 #include "base/files/scoped_file.h"
 #include "base/location.h"
+#include "base/logging.h"
 #include "base/macros.h"
 #include "base/memory/ref_counted.h"
 #include "base/message_loop/message_loop.h"
 #include "base/synchronization/lock.h"
 #include "base/task_runner.h"
-#include "mojo/edk/embedder/platform_handle_vector.h"
 
 namespace mojo {
 namespace edk {
@@ -153,7 +153,7 @@ class MessageView {
     offset_ += num_bytes;
   }
 
-  ScopedPlatformHandleVectorPtr TakeHandles() {
+  ScopedPlatformHandleVector TakeHandles() {
     if (handles_) {
       // We can only pass Fuchsia handles via IPC, so unwrap any FDIO file-
       // descriptors in |handles_| into the underlying handles, and serialize
@@ -162,7 +162,7 @@ class MessageView {
           message_->mutable_extra_header());
       memset(handles_info, 0, message_->extra_header_size());
 
-      ScopedPlatformHandleVectorPtr in_handles(std::move(handles_));
+      ScopedPlatformHandleVector in_handles = std::move(handles_);
 
       handles_.reset(new PlatformHandleVector);
       handles_->reserve(in_handles->size());
@@ -180,7 +180,7 @@ class MessageView {
  private:
   Channel::MessagePtr message_;
   size_t offset_;
-  ScopedPlatformHandleVectorPtr handles_;
+  ScopedPlatformHandleVector handles_;
 
   DISALLOW_COPY_AND_ASSIGN(MessageView);
 };
@@ -240,7 +240,7 @@ class ChannelFuchsia : public Channel,
   bool GetReadPlatformHandles(size_t num_handles,
                               const void* extra_header,
                               size_t extra_header_size,
-                              ScopedPlatformHandleVectorPtr* handles) override {
+                              ScopedPlatformHandleVector* handles) override {
     DCHECK(io_task_runner_->RunsTasksInCurrentSequence());
     if (num_handles > std::numeric_limits<uint16_t>::max())
       return false;
@@ -379,8 +379,7 @@ class ChannelFuchsia : public Channel,
     do {
       message_view.advance_data_offset(write_bytes);
 
-      ScopedPlatformHandleVectorPtr outgoing_handles =
-          message_view.TakeHandles();
+      ScopedPlatformHandleVector outgoing_handles = message_view.TakeHandles();
       size_t handles_count = 0;
       zx_handle_t handles[ZX_CHANNEL_MAX_MSG_HANDLES] = {};
       if (outgoing_handles) {
