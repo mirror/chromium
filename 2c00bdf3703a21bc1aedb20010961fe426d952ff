@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "1373554d_cd65030a",
+        "filename": "media/base/android/mock_media_codec_bridge.h",
+        "patchSetId": 11
+      },
+      "lineNbr": 14,
+      "author": {
+        "id": 1123449
+      },
+      "writtenOn": "2017-11-09T22:21:37Z",
+      "side": 0,
+      "message": "Nit: leave the empty line",
+      "revId": "2c00bdf3703a21bc1aedb20010961fe426d952ff",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
