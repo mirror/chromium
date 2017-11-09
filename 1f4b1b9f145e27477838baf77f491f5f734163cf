@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "1ab760d6_f7b00d42",
+        "filename": "chrome/browser/ui/webui/settings/md_settings_ui.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 373,
+      "author": {
+        "id": 1115893
+      },
+      "writtenOn": "2017-11-09T00:38:48Z",
+      "side": 1,
+      "message": "Based on this change, I am wondering if passing this information as part of loadTimeData() was the appropriate mechanism in the first place.\n\nThe first thing that strikes a bit odd is that no other PrefChangeRegistrar exists in this class. Instead there are plenty on the individual message handlers, see [1]. loadTimeData is generally used for things that are not expected to change.\n\nShould we change how this flow of data works?\n 1) On startup, JS makes a request to ChangePasswordHandler. Depending on the response, it shows the prompt or does nothing.\n 2) On startup a listener is added for when the boolean changes.\n 3) When something changes, a WebUI event is fired notifying the page (all settings pages that are open) to show the prompt.\n\nThen there would be no need to update the WebUIDataSource IIUC, and the entire interaction would be more consistent with other messaging in Settings. \n\n[1] https://cs.chromium.org/search/?q\u003dPrefChangeRegistrar+file:%5Esrc/chrome/browser/ui/webui/settings/+package:%5Echromium$\u0026type\u003dcs",
+      "revId": "1f4b1b9f145e27477838baf77f491f5f734163cf",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
