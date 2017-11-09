@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "529626c6_0525aef8",
+        "filename": "chrome/browser/ui/views/payments/payment_request_completion_status_metrics_browsertest.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 414,
+      "author": {
+        "id": 1002532
+      },
+      "writtenOn": "2017-11-09T01:02:28Z",
+      "side": 1,
+      "message": "this is the only logic change in this cl. The reason this is needed is because the NavigateTo call for initiated_test.html now happens quite a bit later than earlier (i.e. before it was in PaymentRequestBrowserTestBase::SetUpOnMainThread) while now it\u0027s after the browser test harness posts a task to the browser main loop. The order of line 400 and 401 didn\u0027t make a difference in the expected output, so I put it there since I thought it improved readability (i.e. since the histogramtester ended up capturing events from that navigate).",
+      "revId": "5810b0d741c96a65e25933fc6126c43eee179f3c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
