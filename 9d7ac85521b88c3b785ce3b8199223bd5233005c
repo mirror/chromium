@@ -306,6 +306,30 @@
       "revId": "9d7ac85521b88c3b785ce3b8199223bd5233005c",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ef9864ce_29b346c4",
+        "filename": "content/browser/network_service_restart_browsertest.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 115,
+      "author": {
+        "id": 1115968
+      },
+      "writtenOn": "2017-11-09T23:33:21Z",
+      "side": 1,
+      "message": "So here\u0027s my suggestion to address both issues:\n\nIn this test, create our own URLLoaderPtr, and use it for the first two requests.  Then flush partition-\u003eGetNetworkContext().  Then run a request with a new URLLoaderPtr.  Test should not be racy.\n\nIn the other test, you could do the same thing, but the only important new thing is to flush the network_context.",
+      "parentUuid": "6b134419_12c66b1c",
+      "range": {
+        "startLine": 115,
+        "startChar": 29,
+        "endLine": 115,
+        "endChar": 30
+      },
+      "revId": "9d7ac85521b88c3b785ce3b8199223bd5233005c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
