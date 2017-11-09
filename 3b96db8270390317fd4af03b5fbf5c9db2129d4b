@@ -34,6 +34,24 @@
       "revId": "3b96db8270390317fd4af03b5fbf5c9db2129d4b",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a1c14c06_ed144752",
+        "filename": "third_party/WebKit/Source/core/layout/LayoutListItem.cpp",
+        "patchSetId": 2
+      },
+      "lineNbr": 141,
+      "author": {
+        "id": 1230334
+      },
+      "writtenOn": "2017-11-09T12:17:35Z",
+      "side": 1,
+      "message": "Looks like \"!curr_child-\u003eIsLayoutBlockFlow()\" has existed since LayoutListItem created. \nSee: https://chromium.googlesource.com/chromium/src/+/573605bab08130eb2e94e9f3e296688ba054ca65\nI guess the reason to break at here is that it\u0027s unreasonable to add marker in these objects.\nE.g: https://jsbin.com/nuhacaz/edit?html,css,output\nIf add marker inside the first flex item, it would be difficult to deal with the horizontal position.\n\nIsWritingModeRoot(): The very test case comes to my mind is https://jsbin.com/folitog/edit?html,css,output \n\nIf we just return curr_child here and apply the new design to them, marker will be positioned at the right place. See the new patch.",
+      "parentUuid": "012c1577_0d0d6a23",
+      "revId": "3b96db8270390317fd4af03b5fbf5c9db2129d4b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
