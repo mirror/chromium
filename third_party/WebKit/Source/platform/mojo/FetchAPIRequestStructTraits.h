@@ -5,6 +5,7 @@
 #ifndef FetchAPIRequestStructTraits_h
 #define FetchAPIRequestStructTraits_h
 
+#include "platform/PlatformExport.h"
 #include "platform/wtf/text/WTFString.h"
 #include "public/platform/WebURLRequest.h"
 #include "public/platform/modules/fetch/fetch_api_request.mojom-blink.h"
@@ -16,8 +17,8 @@ class KURL;
 namespace mojo {
 
 template <>
-struct EnumTraits<::blink::mojom::FetchRedirectMode,
-                  ::blink::WebURLRequest::FetchRedirectMode> {
+struct PLATFORM_EXPORT EnumTraits<::blink::mojom::FetchRedirectMode,
+                                  ::blink::WebURLRequest::FetchRedirectMode> {
   static ::blink::mojom::FetchRedirectMode ToMojom(
       ::blink::WebURLRequest::FetchRedirectMode input);
 
@@ -26,8 +27,8 @@ struct EnumTraits<::blink::mojom::FetchRedirectMode,
 };
 
 template <>
-struct EnumTraits<::blink::mojom::RequestContextFrameType,
-                  ::blink::WebURLRequest::FrameType> {
+struct PLATFORM_EXPORT EnumTraits<::blink::mojom::RequestContextFrameType,
+                                  ::blink::WebURLRequest::FrameType> {
   static ::blink::mojom::RequestContextFrameType ToMojom(
       ::blink::WebURLRequest::FrameType input);
 
@@ -36,8 +37,8 @@ struct EnumTraits<::blink::mojom::RequestContextFrameType,
 };
 
 template <>
-struct EnumTraits<::blink::mojom::RequestContextType,
-                  ::blink::WebURLRequest::RequestContext> {
+struct PLATFORM_EXPORT EnumTraits<::blink::mojom::RequestContextType,
+                                  ::blink::WebURLRequest::RequestContext> {
   static ::blink::mojom::RequestContextType ToMojom(
       ::blink::WebURLRequest::RequestContext input);
 
@@ -46,8 +47,8 @@ struct EnumTraits<::blink::mojom::RequestContextType,
 };
 
 template <>
-struct StructTraits<::blink::mojom::FetchAPIRequestDataView,
-                    ::blink::WebServiceWorkerRequest> {
+struct PLATFORM_EXPORT StructTraits<::blink::mojom::FetchAPIRequestDataView,
+                                    ::blink::WebServiceWorkerRequest> {
   static ::network::mojom::FetchRequestMode mode(
       const ::blink::WebServiceWorkerRequest& request) {
     return request.Mode();
@@ -111,9 +112,9 @@ struct StructTraits<::blink::mojom::FetchAPIRequestDataView,
   }
 
   // The |fetch_type| is not used by ::blink yet.
-  static ::blink::mojom::blink::ServiceWorkerFetchType fetch_type(
+  static ::blink::mojom::ServiceWorkerFetchType fetch_type(
       const ::blink::WebServiceWorkerRequest& request) {
-    return ::blink::mojom::blink::ServiceWorkerFetchType::FETCH;
+    return ::blink::mojom::ServiceWorkerFetchType::FETCH;
   }
 
   static bool Read(::blink::mojom::FetchAPIRequestDataView,

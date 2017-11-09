@@ -8,9 +8,13 @@
 #include <utility>
 #include "bindings/core/v8/ScriptPromiseResolver.h"
 #include "core/dom/DOMException.h"
+#include "core/dom/Document.h"
 #include "core/dom/ExceptionCode.h"
 #include "core/dom/ExecutionContext.h"
+#include "core/frame/LocalFrame.h"
 #include "core/inspector/ConsoleMessage.h"
+#include "core/workers/WorkerGlobalScope.h"
+#include "core/workers/WorkerThread.h"
 #include "modules/cachestorage/CacheStorageError.h"
 #include "modules/fetch/Request.h"
 #include "modules/fetch/Response.h"
@@ -40,6 +44,21 @@ bool CommonChecks(ScriptState* script_state, ExceptionState& exception_state) {
     exception_state.ThrowSecurityError(error_message);
     return false;
   }
+  return true;
+}
+
+bool ConnectToService(ExecutionContext* execution_context,
+                      mojom::blink::CacheStorageRequest request) {
+  if (execution_context->IsWorkerGlobalScope()) {
+    execution_context->GetInterfaceProvider()->GetInterface(std::move(request));
+    return true;
+  }
+
+  LocalFrame* frame = ToDocument(execution_context)->GetFrame();
+  if (!frame)
+    return false;
+
+  frame->GetInterfaceProvider().GetInterface(std::move(request));
   return true;
 }
 
@@ -237,6 +256,27 @@ CacheStorage* CacheStorage::Create(
   return new CacheStorage(fetcher, std::move(web_cache_storage));
 }
 
+mojom::blink::CacheStorage* CacheStorage::GetService() {
+#if 1
+  // Just to avoid unused compiler warning.
+  ConnectToService(nullptr, mojo::MakeRequest(&service_));
+  return nullptr;
+#else
+  if (!GetExecutionContext())
+    return nullptr;
+  if (!service_ &&
+      ConnectToService(GetExecutionContext(), mojo::MakeRequest(&service_))) {
+    service_.set_connection_error_handler(ConvertToBaseCallback(WTF::Bind(
+        &CacheStorage::ServiceConnectionError, WrapWeakPersistent(this))));
+    return service_.get();
+  }
+#endif
+}
+
+void CacheStorage::ServiceConnectionError() {
+  service_.reset();
+}
+
 ScriptPromise CacheStorage::open(ScriptState* script_state,
                                  const String& cache_name,
                                  ExceptionState& exception_state) {
@@ -246,6 +286,14 @@ ScriptPromise CacheStorage::open(ScriptState* script_state,
   ScriptPromiseResolver* resolver = ScriptPromiseResolver::Create(script_state);
   const ScriptPromise promise = resolver->Promise();
 
+#if 1
+  mojom::blink::CacheStorage* service = GetService();
+  if (service) {
+    // TODO(cmumford): Finish me.
+  } else {
+    resolver->Reject(CreateNoImplementationException());
+  }
+#else
   if (web_cache_storage_) {
     web_cache_storage_->DispatchOpen(
         WTF::MakeUnique<WithCacheCallbacks>(cache_name, this, resolver),
@@ -253,6 +301,7 @@ ScriptPromise CacheStorage::open(ScriptState* script_state,
   } else {
     resolver->Reject(CreateNoImplementationException());
   }
+#endif
 
   return promise;
 }

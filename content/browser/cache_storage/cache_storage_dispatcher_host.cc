@@ -18,9 +18,11 @@
 #include "content/browser/bad_message.h"
 #include "content/browser/cache_storage/cache_storage_cache.h"
 #include "content/browser/cache_storage/cache_storage_cache_handle.h"
+#include "content/browser/cache_storage/cache_storage_cache_impl.h"
 #include "content/browser/cache_storage/cache_storage_context_impl.h"
 #include "content/browser/cache_storage/cache_storage_manager.h"
 #include "content/common/cache_storage/cache_storage_messages.h"
+#include "content/common/service_worker/service_worker_cache_storage_struct_traits.h"
 #include "content/public/browser/content_browser_client.h"
 #include "content/public/common/origin_util.h"
 #include "storage/browser/blob/blob_data_handle.h"
@@ -42,6 +44,45 @@ bool OriginCanAccessCacheStorage(const url::Origin& origin) {
 }
 
 void StopPreservingCache(CacheStorageCacheHandle cache_handle) {}
+
+// TODO(cmumford): Rename after deleting legacy IPC methods.
+void OnCacheStorageHasCallbackMojo(
+    blink::mojom::CacheStorage::HasCallback callback,
+    bool has_cache,
+    CacheStorageError error) {
+  if (error != CacheStorageError::kSuccess) {
+    std::move(callback).Run(blink::mojom::HasResult::NewStatus(error));
+    return;
+  }
+  if (!has_cache) {
+    std::move(callback).Run(blink::mojom::HasResult::NewStatus(
+        CacheStorageError::kErrorCacheNameNotFound));
+    return;
+  }
+
+  std::move(callback).Run(blink::mojom::HasResult::NewHasCache(has_cache));
+}
+
+void OnCacheStorageDeleteCallbackMojo(
+    blink::mojom::CacheStorage::DeleteCallback callback,
+    bool deleted,
+    CacheStorageError error) {
+  CacheStorageError e;
+  if (!deleted || error != CacheStorageError::kSuccess)
+    e = error;
+  else
+    e = CacheStorageError::kSuccess;
+  std::move(callback).Run(e);
+}
+
+void OnCacheStorageKeysCallbackMojo(
+    blink::mojom::CacheStorage::KeysCallback callback,
+    const CacheStorageIndex& cache_index) {
+  std::vector<std::string> names;
+  for (const auto& metadata : cache_index.ordered_cache_metadata())
+    names.push_back(metadata.name);
+  std::move(callback).Run(std::move(names));
+}
 
 }  // namespace
 
@@ -95,6 +136,92 @@ void CacheStorageDispatcherHost::CreateCacheListener(
     CacheStorageContextImpl* context) {
   DCHECK_CURRENTLY_ON(BrowserThread::IO);
   context_ = context;
+}
+
+// TODO(cmumford): Should these strings be a string16?
+void CacheStorageDispatcherHost::Has(const url::Origin& origin,
+                                     const std::string& cache_name,
+                                     HasCallback callback) {
+  TRACE_EVENT0("CacheStorage", "CacheStorageDispatcherHost::Has");
+  if (!OriginCanAccessCacheStorage(origin)) {
+    // TODO(cmumford): Correctly handle a bad message.
+    bad_message::ReceivedBadMessage(this, bad_message::CSDH_INVALID_ORIGIN);
+    return;
+  }
+  context_->cache_manager()->HasCache(
+      origin.GetURL(), cache_name,
+      base::BindOnce(&OnCacheStorageHasCallbackMojo, std::move(callback)));
+}
+
+void CacheStorageDispatcherHost::Open(const url::Origin& origin,
+                                      const std::string& cache_name,
+                                      OpenCallback callback) {
+  TRACE_EVENT0("CacheStorage", "CacheStorageDispatcherHost::Open");
+  if (!OriginCanAccessCacheStorage(origin)) {
+    bad_message::ReceivedBadMessage(this, bad_message::CSDH_INVALID_ORIGIN);
+    return;
+  }
+  context_->cache_manager()->OpenCache(
+      origin.GetURL(), cache_name,
+      base::BindOnce(
+          &CacheStorageDispatcherHost::OnCacheStorageOpenCallbackMojo, this,
+          std::move(callback)));
+}
+
+void CacheStorageDispatcherHost::Delete(const url::Origin& origin,
+                                        const std::string& cache_name,
+                                        DeleteCallback callback) {
+  TRACE_EVENT0("CacheStorage", "CacheStorageDispatcherHost::Delete");
+  if (!OriginCanAccessCacheStorage(origin)) {
+    bad_message::ReceivedBadMessage(this, bad_message::CSDH_INVALID_ORIGIN);
+    return;
+  }
+  context_->cache_manager()->DeleteCache(
+      origin.GetURL(), cache_name,
+      base::BindOnce(&OnCacheStorageDeleteCallbackMojo, std::move(callback)));
+}
+
+void CacheStorageDispatcherHost::Keys(const url::Origin& origin,
+                                      KeysCallback callback) {
+  TRACE_EVENT0("CacheStorage", "CacheStorageDispatcherHost::Keys");
+  if (!OriginCanAccessCacheStorage(origin)) {
+    bad_message::ReceivedBadMessage(this, bad_message::CSDH_INVALID_ORIGIN);
+    return;
+  }
+  context_->cache_manager()->EnumerateCaches(
+      origin.GetURL(),
+      base::BindOnce(&OnCacheStorageKeysCallbackMojo, std::move(callback)));
+}
+
+void CacheStorageDispatcherHost::Match(
+    const url::Origin& origin,
+    const content::ServiceWorkerFetchRequest& request,
+    const CacheStorageCacheQueryParams& match_params,
+    MatchCallback callback) {
+  TRACE_EVENT0("CacheStorage", "CacheStorageDispatcherHost::Match");
+  if (!OriginCanAccessCacheStorage(origin)) {
+    bad_message::ReceivedBadMessage(this, bad_message::CSDH_INVALID_ORIGIN);
+    return;
+  }
+  std::unique_ptr<ServiceWorkerFetchRequest> scoped_request(
+      new ServiceWorkerFetchRequest(request.url, request.method,
+                                    request.headers, request.referrer,
+                                    request.is_reload));
+
+  if (match_params.cache_name.is_null()) {
+    context_->cache_manager()->MatchAllCaches(
+        origin.GetURL(), std::move(scoped_request), match_params,
+        base::BindOnce(
+            &CacheStorageDispatcherHost::OnCacheStorageMatchCallbackMojo, this,
+            std::move(callback)));
+    return;
+  }
+  context_->cache_manager()->MatchCache(
+      origin.GetURL(), base::UTF16ToUTF8(match_params.cache_name.string()),
+      std::move(scoped_request), match_params,
+      base::BindOnce(
+          &CacheStorageDispatcherHost::OnCacheStorageMatchCallbackMojo, this,
+          std::move(callback)));
 }
 
 void CacheStorageDispatcherHost::OnCacheStorageHas(
@@ -328,6 +455,31 @@ void CacheStorageDispatcherHost::OnCacheStorageHasCallback(
   Send(new CacheStorageMsg_CacheStorageHasSuccess(thread_id, request_id));
 }
 
+void CacheStorageDispatcherHost::OnCacheStorageOpenCallbackMojo(
+    blink::mojom::CacheStorage::OpenCallback callback,
+    CacheStorageCacheHandle cache_handle,
+    CacheStorageError error) {
+  if (error != CacheStorageError::kSuccess) {
+    std::move(callback).Run(blink::mojom::OpenResult::NewStatus(error));
+    return;
+  }
+
+  // Hang on to the cache for a few seconds. This way if the user quickly closes
+  // and reopens it the cache backend won't have to be reinitialized.
+  base::ThreadTaskRunnerHandle::Get()->PostDelayedTask(
+      FROM_HERE, base::BindOnce(&StopPreservingCache, cache_handle.Clone()),
+      base::TimeDelta::FromSeconds(kCachePreservationSeconds));
+
+  ::blink::mojom::CacheStorageCacheAssociatedPtrInfo ptr_info;
+  auto request = mojo::MakeRequest(&ptr_info);
+  auto cache_impl =
+      base::MakeUnique<CacheStorageCacheImpl>(std::move(cache_handle), this);
+  cache_bindings_.AddBinding(std::move(cache_impl), std::move(request));
+
+  std::move(callback).Run(
+      blink::mojom::OpenResult::NewCache(std::move(ptr_info)));
+}
+
 void CacheStorageDispatcherHost::OnCacheStorageOpenCallback(
     int thread_id,
     int request_id,
@@ -392,6 +544,22 @@ void CacheStorageDispatcherHost::OnCacheStorageMatchCallback(
 
   Send(new CacheStorageMsg_CacheStorageMatchSuccess(thread_id, request_id,
                                                     *response));
+}
+
+void CacheStorageDispatcherHost::OnCacheStorageMatchCallbackMojo(
+    blink::mojom::CacheStorage::MatchCallback callback,
+    CacheStorageError error,
+    std::unique_ptr<ServiceWorkerResponse> response,
+    std::unique_ptr<storage::BlobDataHandle> blob_data_handle) {
+  if (error != CacheStorageError::kSuccess) {
+    std::move(callback).Run(blink::mojom::MatchResult::NewStatus(error));
+    return;
+  }
+
+  if (blob_data_handle)
+    StoreBlobDataHandle(*blob_data_handle);
+
+  std::move(callback).Run(blink::mojom::MatchResult::NewResponse(*response));
 }
 
 void CacheStorageDispatcherHost::OnCacheMatchCallback(
@@ -510,6 +678,17 @@ void CacheStorageDispatcherHost::DropBlobDataHandle(const std::string& uuid) {
   it->second.pop_front();
   if (it->second.empty())
     blob_handle_store_.erase(it);
+}
+
+void CacheStorageDispatcherHost::AddBinding(
+    blink::mojom::CacheStorageAssociatedRequest request) {
+  bindings_.AddBinding(this, std::move(request));
+}
+
+void CacheStorageDispatcherHost::AddCacheBinding(
+    std::unique_ptr<blink::mojom::CacheStorageCache> cache,
+    blink::mojom::CacheStorageCacheAssociatedRequest request) {
+  cache_bindings_.AddBinding(std::move(cache), std::move(request));
 }
 
 }  // namespace content

@@ -17,6 +17,11 @@
 #include "content/browser/cache_storage/cache_storage.h"
 #include "content/browser/cache_storage/cache_storage_index.h"
 #include "content/public/browser/browser_message_filter.h"
+#include "mojo/public/cpp/bindings/associated_binding_set.h"
+#include "mojo/public/cpp/bindings/strong_associated_binding_set.h"
+#include "third_party/WebKit/public/platform/modules/cache_storage/cache_storage.mojom.h"
+#include "third_party/WebKit/public/platform/modules/fetch/fetch_api_request.mojom.h"
+#include "third_party/WebKit/public/platform/modules/serviceworker/service_worker_cache_storage.mojom.h"
 
 namespace url {
 class Origin;
@@ -29,7 +34,9 @@ class CacheStorageContextImpl;
 // Handles Cache Storage related messages sent to the browser process from
 // child processes. One host instance exists per child process. All
 // messages are processed on the IO thread.
-class CONTENT_EXPORT CacheStorageDispatcherHost : public BrowserMessageFilter {
+class CONTENT_EXPORT CacheStorageDispatcherHost
+    : public BrowserMessageFilter,
+      public blink::mojom::CacheStorage {
  public:
   CacheStorageDispatcherHost();
 
@@ -40,9 +47,16 @@ class CONTENT_EXPORT CacheStorageDispatcherHost : public BrowserMessageFilter {
   void OnDestruct() const override;
   bool OnMessageReceived(const IPC::Message& message) override;
 
+  void AddBinding(::blink::mojom::CacheStorageAssociatedRequest request);
+
+  void AddCacheBinding(
+      std::unique_ptr<blink::mojom::CacheStorageCache> cache,
+      blink::mojom::CacheStorageCacheAssociatedRequest request);
+
  private:
   // Friends to allow OnDestruct() delegation
   friend class BrowserThread;
+  friend class CacheStorageCacheImpl;
   friend class base::DeleteHelper<CacheStorageDispatcherHost>;
 
   typedef int32_t CacheID;  // TODO(jkarlin): Bump to 64 bit.
@@ -54,6 +68,22 @@ class CONTENT_EXPORT CacheStorageDispatcherHost : public BrowserMessageFilter {
 
   // Called by Init() on IO thread.
   void CreateCacheListener(CacheStorageContextImpl* context);
+
+  // blink::mojom::CacheStorage implementation:
+  void Has(const url::Origin& origin,
+           const std::string& cache_name,
+           HasCallback callback) override;
+  void Open(const url::Origin& origin,
+            const std::string& cache_name,
+            OpenCallback callback) override;
+  void Delete(const url::Origin& origin,
+              const std::string& cache_name,
+              DeleteCallback callback) override;
+  void Keys(const url::Origin& origin, KeysCallback callback) override;
+  void Match(const url::Origin& origin,
+             const content::ServiceWorkerFetchRequest& request,
+             const CacheStorageCacheQueryParams& match_params,
+             MatchCallback callback) override;
 
   // The message receiver functions for the CacheStorage API:
   void OnCacheStorageHas(int thread_id,
@@ -108,12 +138,21 @@ class CONTENT_EXPORT CacheStorageDispatcherHost : public BrowserMessageFilter {
                                     int request_id,
                                     bool deleted,
                                     blink::mojom::CacheStorageError error);
+  void OnCacheStorageOpenCallbackMojo(
+      blink::mojom::CacheStorage::OpenCallback callback,
+      CacheStorageCacheHandle cache_handle,
+      blink::mojom::CacheStorageError error);
   void OnCacheStorageKeysCallback(int thread_id,
                                   int request_id,
                                   const CacheStorageIndex& cache_index);
   void OnCacheStorageMatchCallback(
       int thread_id,
       int request_id,
+      blink::mojom::CacheStorageError error,
+      std::unique_ptr<ServiceWorkerResponse> response,
+      std::unique_ptr<storage::BlobDataHandle> blob_data_handle);
+  void OnCacheStorageMatchCallbackMojo(
+      blink::mojom::CacheStorage::MatchCallback callback,
       blink::mojom::CacheStorageError error,
       std::unique_ptr<ServiceWorkerResponse> response,
       std::unique_ptr<storage::BlobDataHandle> blob_data_handle);
@@ -172,6 +211,11 @@ class CONTENT_EXPORT CacheStorageDispatcherHost : public BrowserMessageFilter {
   UUIDToBlobDataHandleList blob_handle_store_;
 
   scoped_refptr<CacheStorageContextImpl> context_;
+
+  mojo::AssociatedBindingSet<blink::mojom::CacheStorage> bindings_;
+
+  mojo::StrongAssociatedBindingSet<blink::mojom::CacheStorageCache>
+      cache_bindings_;
 
   DISALLOW_COPY_AND_ASSIGN(CacheStorageDispatcherHost);
 };
