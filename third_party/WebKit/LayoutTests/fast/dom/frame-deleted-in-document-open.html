@@ -10,10 +10,11 @@ window.onload = function()
 
     frame.contentWindow.open = null;
     frame.contentWindow.__defineGetter__("open", function() {
-        document.body.removeChild(frame);
+        alert('FAIL: Reached unreachable code');
         return function() { };
     });
     frame.contentDocument.open(1, 1, 1, 1, 1);
+    document.body.removeChild(frame);
 }
 </script>
 </head>

@@ -8,8 +8,9 @@ if (window.testRunner) {
   testRunner.dumpAsText();
   testRunner.evaluateScriptInIsolatedWorld(
     1,
-    "window.open = function () { alert('PASS'); };\n" +
-    "document.open(1, 2, 3);");
+    "window.open = function () { alert('FAIL: Reached unreachable code'); };\n" +
+    "document.open(1, 2, 3);\n" +
+    "alert('PASS')");
 }
 </script>
 </body>
