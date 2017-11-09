@@ -53,6 +53,12 @@ class GIN_EXPORT IsolateHolder {
     kStableAndExperimentalV8Extras,
   };
 
+  enum class SnapshotMode : uint8_t {
+    kNone,
+    kV8Snapshot,
+    kV8ContextSnapshot,
+  };
+
   explicit IsolateHolder(
       scoped_refptr<base::SingleThreadTaskRunner> task_runner);
   IsolateHolder(scoped_refptr<base::SingleThreadTaskRunner> task_runner,
@@ -99,6 +105,8 @@ class GIN_EXPORT IsolateHolder {
   // This method returns if v8::Locker is needed to access isolate.
   AccessMode access_mode() const { return access_mode_; }
 
+  SnapshotMode snapshot_mode() const { return snapshot_mode_; }
+
   v8::SnapshotCreator* snapshot_creator() const {
     return snapshot_creator_.get();
   }
@@ -121,6 +129,7 @@ class GIN_EXPORT IsolateHolder {
   std::unique_ptr<RunMicrotasksObserver> task_observer_;
   std::unique_ptr<V8IsolateMemoryDumpProvider> isolate_memory_dump_provider_;
   AccessMode access_mode_;
+  SnapshotMode snapshot_mode_;
 
   DISALLOW_COPY_AND_ASSIGN(IsolateHolder);
 };

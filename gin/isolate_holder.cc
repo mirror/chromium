@@ -61,12 +61,23 @@ IsolateHolder::IsolateHolder(
   params.allow_atomics_wait = atomics_wait_mode == kAllowAtomicsWait;
   params.external_references = reference;
 
+  // TODO(peria): Make |startup_data| mandatory. It can be a member of
+  // IsolateHolder.
+  snapshot_mode_ = SnapshotMode::kNone;
   if (startup_data) {
-    CHECK(reference);
-    V8Initializer::GetV8ContextSnapshotData(startup_data);
-    if (startup_data->data) {
-      params.snapshot_blob = startup_data;
+    switch (V8Initializer::GetV8ContextSnapshotData(startup_data)) {
+      case 0:
+        break;
+      case 1:
+        CHECK(startup_data->data);
+        snapshot_mode_ = SnapshotMode::kV8Snapshot;
+        break;
+      case 2:
+        CHECK(startup_data->data);
+        snapshot_mode_ = SnapshotMode::kV8ContextSnapshot;
+        break;
     }
+    params.snapshot_blob = startup_data;
   }
   isolate_ = v8::Isolate::New(params);
 
