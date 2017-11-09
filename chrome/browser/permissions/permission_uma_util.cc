@@ -519,11 +519,6 @@ void PermissionUmaUtil::PermissionPromptAcceptedWithPersistenceToggle(
       UMA_HISTOGRAM_BOOLEAN("Permissions.Prompt.Accepted.Persisted.MidiSysEx",
                             toggle_enabled);
       break;
-    case CONTENT_SETTINGS_TYPE_PUSH_MESSAGING:
-      UMA_HISTOGRAM_BOOLEAN(
-          "Permissions.Prompt.Accepted.Persisted.PushMessaging",
-          toggle_enabled);
-      break;
     case CONTENT_SETTINGS_TYPE_PROTECTED_MEDIA_IDENTIFIER:
       UMA_HISTOGRAM_BOOLEAN(
           "Permissions.Prompt.Accepted.Persisted.ProtectedMedia",
@@ -569,10 +564,6 @@ void PermissionUmaUtil::PermissionPromptDeniedWithPersistenceToggle(
       break;
     case CONTENT_SETTINGS_TYPE_MIDI_SYSEX:
       UMA_HISTOGRAM_BOOLEAN("Permissions.Prompt.Denied.Persisted.MidiSysEx",
-                            toggle_enabled);
-      break;
-    case CONTENT_SETTINGS_TYPE_PUSH_MESSAGING:
-      UMA_HISTOGRAM_BOOLEAN("Permissions.Prompt.Denied.Persisted.PushMessaging",
                             toggle_enabled);
       break;
     case CONTENT_SETTINGS_TYPE_PROTECTED_MEDIA_IDENTIFIER:
@@ -701,10 +692,6 @@ void PermissionUmaUtil::RecordPermissionAction(
       break;
     case CONTENT_SETTINGS_TYPE_MIDI_SYSEX:
       UMA_HISTOGRAM_ENUMERATION("Permissions.Action.MidiSysEx", action,
-                                PermissionAction::NUM);
-      break;
-    case CONTENT_SETTINGS_TYPE_PUSH_MESSAGING:
-      UMA_HISTOGRAM_ENUMERATION("Permissions.Action.PushMessaging", action,
                                 PermissionAction::NUM);
       break;
     case CONTENT_SETTINGS_TYPE_PROTECTED_MEDIA_IDENTIFIER:

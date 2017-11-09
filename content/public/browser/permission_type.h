@@ -14,7 +14,8 @@ namespace content {
 // immediately before PermissionType::NUM
 enum class PermissionType {
   MIDI_SYSEX = 1,
-  PUSH_MESSAGING = 2,
+  // Unified with NOTIFICATIONS in M64 (see crbug.com/781672).
+  // PUSH_MESSAGING = 2,
   NOTIFICATIONS = 3,
   GEOLOCATION = 4,
   PROTECTED_MEDIA_IDENTIFIER = 5,
