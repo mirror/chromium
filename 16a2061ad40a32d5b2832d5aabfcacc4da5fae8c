@@ -52,6 +52,24 @@
       "revId": "16a2061ad40a32d5b2832d5aabfcacc4da5fae8c",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "52a85ca8_fadded3b",
+        "filename": "chromeos/dbus/lorgnette_manager_client.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 141,
+      "author": {
+        "id": 1115919
+      },
+      "writtenOn": "2017-11-09T14:15:15Z",
+      "side": 1,
+      "message": "Thank you for suggestion!\nIt makes sense. base::Optional is also nice to avoid unnecessary initialization by default ctor, but it is not in this case neither.\n\nDone.",
+      "parentUuid": "0ed087e7_9535e398",
+      "revId": "16a2061ad40a32d5b2832d5aabfcacc4da5fae8c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
