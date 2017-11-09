@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "e8100607_dfc6c75f",
+        "filename": "tools/perf/measurements/smoothness.py",
+        "patchSetId": 4
+      },
+      "lineNbr": 78,
+      "author": {
+        "id": 1128437
+      },
+      "writtenOn": "2017-11-09T23:09:58Z",
+      "side": 1,
+      "message": "TBM seems to be collecting records for all threads. We\u0027re sure we don\u0027t need that, right?",
+      "revId": "ba898f0e163f549051ff75b170be203d22240d57",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7a4bc4b7_497c9958",
+        "filename": "tools/perf/measurements/smoothness.py",
+        "patchSetId": 4
+      },
+      "lineNbr": 83,
+      "author": {
+        "id": 1128437
+      },
+      "writtenOn": "2017-11-09T23:09:58Z",
+      "side": 1,
+      "message": "Do you why TBM adds the trace to results in DidRunPage? Should we do the same thing here?",
+      "revId": "ba898f0e163f549051ff75b170be203d22240d57",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
