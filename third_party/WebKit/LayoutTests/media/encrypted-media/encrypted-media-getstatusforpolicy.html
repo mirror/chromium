@@ -14,28 +14,9 @@
                 var hdcpVersion2_0 = "hdcp-2.0";
                 var mediaKeys;
 
-                function checkMediaKeysPolicyConstruction() {
-                  var policy = new MediaKeysPolicy({minHdcpVersion: hdcpVersionNone});
-                  assert_equals(policy.minHdcpVersion, hdcpVersionNone);
-
-                  policy = new MediaKeysPolicy({minHdcpVersion: hdcpVersion2_0});
-                  assert_equals(policy.minHdcpVersion, hdcpVersion2_0);
-
-                  policy = new MediaKeysPolicy({minHdcpVersion: hdcpVersion2_0, foo: "bar"});
-                  assert_equals(policy.minHdcpVersion, hdcpVersion2_0);
-                  assert_false('foo' in policy);
-
-                  policy = new MediaKeysPolicy({foo: "bar"});
-                  assert_equals(policy.minHdcpVersion, hdcpVersionNone);
-                  assert_false('foo' in policy);
-
-                  return Promise.resolve();
-                }
-
                 function getStatusForHdcpPolicy(hdcpVersion)
                 {
-                    var policy = new MediaKeysPolicy({minHdcpVersion: hdcpVersion});
-                    mediaKeys.getStatusForPolicy(policy).then(function(MediaKeyStatus) {
+                    mediaKeys.getStatusForPolicy(hdcpVersion).then(function(MediaKeyStatus) {
                       // getStatusForPolicy() is not supported by Clear Key key
                       // system and the promise should always be rejected with
                       // NotSupportedError.
@@ -50,11 +31,13 @@
                     return access.createMediaKeys();
                 }).then(function(result) {
                     mediaKeys = result;
-                    return checkMediaKeysPolicyConstruction();
+                    return getStatusForHdcpPolicy({});
                 }).then(function() {
-                    return getStatusForHdcpPolicy(hdcpVersionNone);
+                    return getStatusForHdcpPolicy({minHdcpVersion: hdcpVersionNone});
                 }).then(function() {
-                    return getStatusForHdcpPolicy(hdcpVersion2_0);
+                    return getStatusForHdcpPolicy({minHdcpVersion: hdcpVersion2_0});
+                }).then(function() {
+                    return getStatusForHdcpPolicy({foo: "bar"});
                 });
             }, 'MediaKeys.getStatusForPolicy');
         </script>
