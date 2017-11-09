@@ -48,6 +48,30 @@
     },
     {
       "key": {
+        "uuid": "5e9d0b6a_2c7dc8b6",
+        "filename": "net/http/http_proxy_client_socket_wrapper.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 91,
+      "author": {
+        "id": 1228995
+      },
+      "writtenOn": "2017-11-09T23:52:40Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "d5561ea5_8dd7ec5c",
+      "range": {
+        "startLine": 91,
+        "startChar": 53,
+        "endLine": 91,
+        "endChar": 0
+      },
+      "revId": "af602d181737b90392d26f74421432398bf4e02c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "49303abc_f3daf36a",
         "filename": "net/http/http_proxy_client_socket_wrapper.cc",
         "patchSetId": 4
@@ -94,6 +118,30 @@
     },
     {
       "key": {
+        "uuid": "89d61f92_aa9091ee",
+        "filename": "net/http/http_proxy_client_socket_wrapper.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 94,
+      "author": {
+        "id": 1228995
+      },
+      "writtenOn": "2017-11-09T23:52:40Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "e30546b7_596ea1d0",
+      "range": {
+        "startLine": 94,
+        "startChar": 50,
+        "endLine": 94,
+        "endChar": 0
+      },
+      "revId": "af602d181737b90392d26f74421432398bf4e02c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "c22b4d17_f5479cbe",
         "filename": "net/http/http_proxy_client_socket_wrapper.h",
         "patchSetId": 4
@@ -105,6 +153,30 @@
       "writtenOn": "2017-11-09T19:04:16Z",
       "side": 1,
       "message": "How is this different from endpoint?",
+      "range": {
+        "startLine": 67,
+        "startChar": 44,
+        "endLine": 67,
+        "endChar": 0
+      },
+      "revId": "af602d181737b90392d26f74421432398bf4e02c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c6fd158a_a4535e59",
+        "filename": "net/http/http_proxy_client_socket_wrapper.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 67,
+      "author": {
+        "id": 1228995
+      },
+      "writtenOn": "2017-11-09T23:52:40Z",
+      "side": 1,
+      "message": "I thought endpoint is the server we\u0027re trying to reach through the proxy?",
+      "parentUuid": "c22b4d17_f5479cbe",
       "range": {
         "startLine": 67,
         "startChar": 44,
@@ -140,6 +212,30 @@
     },
     {
       "key": {
+        "uuid": "0b35297a_5b09e446",
+        "filename": "net/http/http_proxy_client_socket_wrapper.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 70,
+      "author": {
+        "id": 1228995
+      },
+      "writtenOn": "2017-11-09T23:52:40Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "8d324d13_a6a4f726",
+      "range": {
+        "startLine": 70,
+        "startChar": 33,
+        "endLine": 70,
+        "endChar": 0
+      },
+      "revId": "af602d181737b90392d26f74421432398bf4e02c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "10cc2e25_fcfc4608",
         "filename": "net/http/http_proxy_client_socket_wrapper.h",
         "patchSetId": 4
@@ -160,6 +256,30 @@
       "revId": "af602d181737b90392d26f74421432398bf4e02c",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "15bae83b_dbb1d3e9",
+        "filename": "net/http/http_proxy_client_socket_wrapper.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 180,
+      "author": {
+        "id": 1228995
+      },
+      "writtenOn": "2017-11-09T23:52:40Z",
+      "side": 1,
+      "message": "Change has been undone.",
+      "parentUuid": "10cc2e25_fcfc4608",
+      "range": {
+        "startLine": 180,
+        "startChar": 39,
+        "endLine": 180,
+        "endChar": 0
+      },
+      "revId": "af602d181737b90392d26f74421432398bf4e02c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }

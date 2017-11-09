@@ -22,6 +22,30 @@
       "revId": "367af0efc0933f4f17732ef5034f0ae736b1d590",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3d0fd28f_c9e52fdd",
+        "filename": "net/socket/client_socket_pool_manager.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 174,
+      "author": {
+        "id": 1228995
+      },
+      "writtenOn": "2017-11-09T23:52:40Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "5a2d40bd_48e7c75b",
+      "range": {
+        "startLine": 174,
+        "startChar": 6,
+        "endLine": 174,
+        "endChar": 7
+      },
+      "revId": "367af0efc0933f4f17732ef5034f0ae736b1d590",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
