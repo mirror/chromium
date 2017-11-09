@@ -46,6 +46,30 @@
       "revId": "02d525a5da20fcf338298794fbc890fecb55b25b",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "348d398f_e490964c",
+        "filename": "ios/chrome/browser/ui/bookmarks/bookmark_home_tablet_ntp_controller.mm",
+        "patchSetId": 2
+      },
+      "lineNbr": 278,
+      "author": {
+        "id": 1163361
+      },
+      "writtenOn": "2017-11-09T21:43:40Z",
+      "side": 1,
+      "message": "I\u0027m going to need to remove the rootViewController here pretty soon. We can either deal with it then, or deal with it now. \u003d)",
+      "parentUuid": "79c697ab_3f951df1",
+      "range": {
+        "startLine": 277,
+        "startChar": 40,
+        "endLine": 278,
+        "endChar": 76
+      },
+      "revId": "02d525a5da20fcf338298794fbc890fecb55b25b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
