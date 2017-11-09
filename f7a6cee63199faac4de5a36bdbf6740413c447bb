@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "99e82667_8a03e53f",
+        "filename": "third_party/WebKit/Source/core/streams/TransformStream.js",
+        "patchSetId": 4
+      },
+      "lineNbr": 1,
+      "author": {
+        "id": 1002340
+      },
+      "writtenOn": "2017-11-09T08:49:40Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "9bddfdd4_a745344e",
+      "revId": "f7a6cee63199faac4de5a36bdbf6740413c447bb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "dec4918f_f5da8f65",
         "filename": "third_party/WebKit/Source/core/streams/TransformStream.js",
         "patchSetId": 4
@@ -33,6 +51,24 @@
       "revId": "f7a6cee63199faac4de5a36bdbf6740413c447bb",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "87eb3b44_7fa8f83e",
+        "filename": "third_party/WebKit/Source/core/streams/TransformStream.js",
+        "patchSetId": 4
+      },
+      "lineNbr": 59,
+      "author": {
+        "id": 1002340
+      },
+      "writtenOn": "2017-11-09T08:49:40Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "dec4918f_f5da8f65",
+      "revId": "f7a6cee63199faac4de5a36bdbf6740413c447bb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -53,6 +89,24 @@
     },
     {
       "key": {
+        "uuid": "a607b07d_b7ecc4b9",
+        "filename": "third_party/WebKit/Source/core/streams/TransformStream.js",
+        "patchSetId": 4
+      },
+      "lineNbr": 60,
+      "author": {
+        "id": 1002340
+      },
+      "writtenOn": "2017-11-09T08:49:40Z",
+      "side": 1,
+      "message": "Not intentional, I just wrote it from memory. Fixed.",
+      "parentUuid": "4334d4c2_3943bee8",
+      "revId": "f7a6cee63199faac4de5a36bdbf6740413c447bb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "74a1cfcc_81ed3cba",
         "filename": "third_party/WebKit/Source/core/streams/TransformStream.js",
         "patchSetId": 4
@@ -64,6 +118,24 @@
       "writtenOn": "2017-11-09T06:38:49Z",
       "side": 1,
       "message": "need to initialize [[backpressure]] and [[backpressureChangePromise]] before this?",
+      "revId": "f7a6cee63199faac4de5a36bdbf6740413c447bb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "cebbe42a_b30cd85a",
+        "filename": "third_party/WebKit/Source/core/streams/TransformStream.js",
+        "patchSetId": 4
+      },
+      "lineNbr": 86,
+      "author": {
+        "id": 1002340
+      },
+      "writtenOn": "2017-11-09T08:49:40Z",
+      "side": 1,
+      "message": "Since they are implicitly undefined due to being unset, it\u0027s not necessary to set them explicitly. I added a comment to say that.",
+      "parentUuid": "74a1cfcc_81ed3cba",
       "revId": "f7a6cee63199faac4de5a36bdbf6740413c447bb",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
