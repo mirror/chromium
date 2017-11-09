@@ -206,6 +206,11 @@ const base::Feature kExperimentalVRFeatures{"ExperimentalVRFeatures",
 #endif
 
 #if defined(OS_WIN)
+// Controls OpenVR support.
+const base::Feature kOpenVR{"OpenVR", base::FEATURE_DISABLED_BY_DEFAULT};
+#endif
+
+#if defined(OS_WIN)
 // Enables using GDI to print text as simply text.
 const base::Feature kGdiTextPrinting {"GdiTextPrinting",
                                       base::FEATURE_DISABLED_BY_DEFAULT};

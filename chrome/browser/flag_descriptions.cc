@@ -2250,6 +2250,10 @@ const char kSyzyAsanDcheckIsFatalDescription[] =
     "failed DCHECKs. If enabled, DCHECKs will crash the calling process.";
 #endif  // DCHECK_IS_ON() && defined(SYZYASAN)
 
+const char kOpenVRName[] = "OpenVR hardware support";
+const char kOpenVRDescription[] =
+    "If enabled, Chrome will use OpenVR devices for VR.";
+
 #endif  // defined(OS_WIN)
 
 // Mac -------------------------------------------------------------------------
