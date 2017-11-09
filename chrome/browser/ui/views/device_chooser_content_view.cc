@@ -69,9 +69,9 @@ DeviceChooserContentView::DeviceChooserContentView(
   table_parent_ = table_view_->CreateParentIfNecessary();
   AddChildView(table_parent_);
 
-  throbber_ = new views::Throbber();
-  throbber_->SetVisible(false);
-  AddChildView(throbber_);
+  // throbber_ = new views::Throbber();
+  // throbber_->SetVisible(false);
+  // AddChildView(throbber_);
 
   base::string16 link_text = l10n_util::GetStringUTF16(
       IDS_BLUETOOTH_DEVICE_CHOOSER_TURN_ON_BLUETOOTH_LINK_TEXT);
@@ -84,6 +84,13 @@ DeviceChooserContentView::DeviceChooserContentView(
       views::StyledLabel::RangeStyleInfo::CreateForLink());
   turn_adapter_off_help_->SetVisible(false);
   AddChildView(turn_adapter_off_help_);
+
+  if (chooser_controller_->ShouldShowFootnoteView()) {
+    footnote_link_ = base::MakeUnique<views::StyledLabel>(help_text_, this);
+    footnote_link_->set_owned_by_client();
+    footnote_link_->AddStyleRange(
+        help_text_range_, views::StyledLabel::RangeStyleInfo::CreateForLink());
+  }
 }
 
 DeviceChooserContentView::~DeviceChooserContentView() {
@@ -287,17 +294,6 @@ bool DeviceChooserContentView::IsDialogButtonEnabled(
     ui::DialogButton button) const {
   return button != ui::DIALOG_BUTTON_OK ||
          !table_view_->selection_model().empty();
-}
-
-views::StyledLabel* DeviceChooserContentView::footnote_link() {
-  if (chooser_controller_->ShouldShowFootnoteView()) {
-    footnote_link_ = base::MakeUnique<views::StyledLabel>(help_text_, this);
-    footnote_link_->set_owned_by_client();
-    footnote_link_->AddStyleRange(
-        help_text_range_, views::StyledLabel::RangeStyleInfo::CreateForLink());
-  }
-
-  return footnote_link_.get();
 }
 
 void DeviceChooserContentView::Accept() {
