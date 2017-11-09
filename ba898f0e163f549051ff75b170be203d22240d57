@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "69deb653_a8ab5202",
+        "filename": "tools/perf/measurements/smoothness.py",
+        "patchSetId": 4
+      },
+      "lineNbr": 78,
+      "author": {
+        "id": 1128435
+      },
+      "writtenOn": "2017-11-09T23:14:28Z",
+      "side": 1,
+      "message": "Yes correct. TBM is intended to be able to support multi tabs, but for now we can just leave this single tab. Once we convert this to TBMv2, it won\u0027t matter as TBMv2 force the metric to be written in a way that must support multi renderers.",
+      "parentUuid": "e8100607_dfc6c75f",
+      "revId": "ba898f0e163f549051ff75b170be203d22240d57",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "7a4bc4b7_497c9958",
         "filename": "tools/perf/measurements/smoothness.py",
         "patchSetId": 4
@@ -30,6 +48,24 @@
       "writtenOn": "2017-11-09T23:09:58Z",
       "side": 1,
       "message": "Do you why TBM adds the trace to results in DidRunPage? Should we do the same thing here?",
+      "revId": "ba898f0e163f549051ff75b170be203d22240d57",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "795f5f8c_aecd2f5c",
+        "filename": "tools/perf/measurements/smoothness.py",
+        "patchSetId": 4
+      },
+      "lineNbr": 83,
+      "author": {
+        "id": 1128435
+      },
+      "writtenOn": "2017-11-09T23:14:28Z",
+      "side": 1,
+      "message": "Good call! We also should adds the trace to results in DidRunPage.",
+      "parentUuid": "7a4bc4b7_497c9958",
       "revId": "ba898f0e163f549051ff75b170be203d22240d57",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
