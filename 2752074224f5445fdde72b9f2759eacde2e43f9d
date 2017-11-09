@@ -94,6 +94,30 @@
       "revId": "2752074224f5445fdde72b9f2759eacde2e43f9d",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "2eed207c_f6066893",
+        "filename": "media/gpu/vaapi_wrapper.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 143,
+      "author": {
+        "id": 1103654
+      },
+      "writtenOn": "2017-11-09T22:41:30Z",
+      "side": 1,
+      "message": "Sorry, I had assumed you would include the success and failure cases in the enumeration - rather than just adding a single enum-histogram. I don\u0027t think this transformed version is any better than the boolean. (In fact, I think it will hit a DCHECK as single-value enums are not supported.)\n\nSo if your other alternative is to indeed log the success in your subsequent CL, how about merging this CL into that one and logging both values there? (That would be better than landing this first - because then looking at metrics can be confusing since some builds would only log failures and others both values.)",
+      "parentUuid": "97c204a9_e808f0f4",
+      "range": {
+        "startLine": 143,
+        "startChar": 37,
+        "endLine": 143,
+        "endChar": 54
+      },
+      "revId": "2752074224f5445fdde72b9f2759eacde2e43f9d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
