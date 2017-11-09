@@ -1,0 +1,97 @@
+<!DOCTYPE HTML PUBLIC "-//IETF//DTD HTML//EN">
+<html>
+<head>
+<meta charset="utf-8">
+<script src="../../../../resources/js-test.js"></script>
+</head>
+<body>
+<p id="description"></p>
+<div id="console"></div>
+<iframe id="resultframe" name="resultframe"></iframe>
+<script src="resources/setup-file-input-element-for-drag.js"></script>
+<script>
+description("Test for sending a dragged UTF-8-named file via POST to a UTF-8 form.");
+
+var form = document.createElement("form");
+form.action = "http://127.0.0.1:8000/xmlhttprequest/resources/post-echo.cgi";
+form.method = "POST";
+form.enctype = "multipart/form-data";
+form.target = "resultframe";
+
+var realFileInput = document.createElement("input");
+realFileInput.type = "file";
+realFileInput.name = "file";
+realFileInput.style.width = "100px";
+realFileInput.style.height = "100px";
+
+form.appendChild(realFileInput);
+
+// Important that we put this at the top of the doc so that logging does not cause it to go out of view (where it can't be dragged to)
+document.body.insertBefore(form, document.body.firstChild);
+
+function runTest()
+{
+  realFileInput.addEventListener("dragenter", function() {
+    event.preventDefault();
+  }, false);
+
+  realFileInput.addEventListener("dragover", function() {
+    event.preventDefault();
+  }, false);
+
+  realFileInput.addEventListener("drop", function() {
+    if (event.dataTransfer.types.indexOf("Files") != -1 && event.dataTransfer.files.length == 1)
+        testPassed("event.dataTransfer contains a File object on drop.");
+    else {
+        testFailed("event.dataTransfer does not contain a File object on drop.");
+        finishJSTest();
+        return;
+    }
+    realFileInput.files = event.dataTransfer.files;
+    event.preventDefault();
+    form.submit();
+    document.all.resultframe.onload = function() {
+      responseText = resultframe.document.body.innerText;
+      responseLines = responseText.split('\n');
+      if (responseLines.length && !responseLines[responseLines.length - 1]) {
+        --responseLines.length;
+      }
+      if (responseLines.length > 2 &&
+          responseLines[responseLines.length - 1] === responseLines[0] + '--') {
+        var boundary = responseLines[0];
+        var expectedText = [
+          boundary,
+          'Content-Disposition: form-data; name="file"; filename="file-for-drag-to-send3-ABC~¤•★🌟★•¤~XYZ.txt"',
+          'Content-Type: text/plain',
+          '',
+          'ABC~¤•★🌟★•¤~XYZ',
+          '',
+          boundary + '--',
+        ].join('\n');
+        if (responseText.indexOf(expectedText) === 0) testPassed("Expected response data received.");
+        else testFailed("Unexpected multipart-shaped response data received:\n" + responseText + "\nExpected:\n" + expectedText);
+      } else {
+        testFailed("Unexpected non-multipart-shaped response data received:\n" + responseText);
+      }
+      finishJSTest();
+    };
+  });
+  eventSender.beginDragWithFiles(["../resources/file-for-drag-to-send3-ABC~¤•★🌟★•¤~XYZ.txt"]);
+  moveMouseToCenterOfElement(realFileInput);
+  eventSender.mouseUp();
+}
+
+if (window.eventSender) {
+  removeFileInputElement();
+  runTest();
+} else {
+  testFailed("This test is not interactive, please run using DumpRenderTree");
+}
+
+var successfullyParsed = true;
+
+self.jsTestIsAsync = true;
+
+</script>
+</body>
+</html>
