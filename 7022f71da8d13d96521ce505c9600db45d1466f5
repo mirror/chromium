@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "c81f75f2_20998eb8",
+        "filename": "build/android/pylib/utils/maven_downloader.py",
+        "patchSetId": 8
+      },
+      "lineNbr": 59,
+      "author": {
+        "id": 1123275
+      },
+      "writtenOn": "2017-11-09T15:17:42Z",
+      "side": 1,
+      "message": "That\u0027s to support the previous behaviour of play_services/update.py, that cached the artifacts in a temporary dir. I changed that to use the default maven directory, which saves times as it doesn\u0027t need to download a lot of stuff between runs. But in case someone wants to revert that, or need it in another script or environment, it would be easy to implement. Since I had the code implemented and working already, I just left it in. LMK if I should remove it.",
+      "parentUuid": "1734e264_de021b40",
+      "revId": "7022f71da8d13d96521ce505c9600db45d1466f5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "35fb29ed_99b23f5f",
         "filename": "build/android/pylib/utils/maven_downloader.py",
         "patchSetId": 8
@@ -36,6 +54,24 @@
     },
     {
       "key": {
+        "uuid": "7fd75b22_588242c7",
+        "filename": "build/android/pylib/utils/maven_downloader.py",
+        "patchSetId": 8
+      },
+      "lineNbr": 148,
+      "author": {
+        "id": 1123275
+      },
+      "writtenOn": "2017-11-09T15:17:42Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "35fb29ed_99b23f5f",
+      "revId": "7022f71da8d13d96521ce505c9600db45d1466f5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "d2055534_6bddf914",
         "filename": "tools/android/roll/update_support_library.py",
         "patchSetId": 8
@@ -50,6 +86,24 @@
       "revId": "7022f71da8d13d96521ce505c9600db45d1466f5",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "af674a66_7ee8629e",
+        "filename": "tools/android/roll/update_support_library.py",
+        "patchSetId": 8
+      },
+      "lineNbr": 20,
+      "author": {
+        "id": 1123275
+      },
+      "writtenOn": "2017-11-09T15:17:42Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "d2055534_6bddf914",
+      "revId": "7022f71da8d13d96521ce505c9600db45d1466f5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
