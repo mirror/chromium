@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "abb04fd3_b3c72227",
+        "filename": "content/browser/background_fetch/background_fetch_data_manager_unittest.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 72,
+      "author": {
+        "id": 1204345
+      },
+      "writtenOn": "2017-11-09T18:17:07Z",
+      "side": 1,
+      "message": "Simple enough to add an enum. Done",
+      "parentUuid": "7f81fbdb_5480bbb5",
+      "revId": "86ac744e30746d97c7ff6ab2facdf0fa9dc722f2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "6d39c522_e0b291d7",
         "filename": "content/browser/background_fetch/background_fetch_data_manager_unittest.cc",
         "patchSetId": 4
@@ -33,6 +51,24 @@
       "revId": "86ac744e30746d97c7ff6ab2facdf0fa9dc722f2",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8ef1f606_686a6d40",
+        "filename": "content/browser/background_fetch/background_fetch_data_manager_unittest.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 194,
+      "author": {
+        "id": 1204345
+      },
+      "writtenOn": "2017-11-09T18:17:07Z",
+      "side": 1,
+      "message": "variable removed (and the new one has the trailing _).",
+      "parentUuid": "6d39c522_e0b291d7",
+      "revId": "86ac744e30746d97c7ff6ab2facdf0fa9dc722f2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -53,6 +89,24 @@
     },
     {
       "key": {
+        "uuid": "acc9b18c_6679daac",
+        "filename": "content/common/background_fetch/background_fetch_types.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 50,
+      "author": {
+        "id": 1204345
+      },
+      "writtenOn": "2017-11-09T18:17:07Z",
+      "side": 1,
+      "message": "I\u0027ve removed these changes as they\u0027re not needed (at least for this change). I was intending to use them for testing purposes to check that the registration retrieved from the DataManager was the same as the one we created earlier. The unique_id is probably sufficient for that test anyway.",
+      "parentUuid": "5cc00784_e76db59e",
+      "revId": "86ac744e30746d97c7ff6ab2facdf0fa9dc722f2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "0323e665_0edf3e15",
         "filename": "content/common/background_fetch/background_fetch_types.h",
         "patchSetId": 4
@@ -67,6 +121,24 @@
       "revId": "86ac744e30746d97c7ff6ab2facdf0fa9dc722f2",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b2a7ea77_ecb84634",
+        "filename": "content/common/background_fetch/background_fetch_types.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 66,
+      "author": {
+        "id": 1204345
+      },
+      "writtenOn": "2017-11-09T18:17:07Z",
+      "side": 1,
+      "message": "no longer relevant",
+      "parentUuid": "0323e665_0edf3e15",
+      "revId": "86ac744e30746d97c7ff6ab2facdf0fa9dc722f2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
