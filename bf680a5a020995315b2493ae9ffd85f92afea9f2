@@ -22,6 +22,30 @@
       "revId": "bf680a5a020995315b2493ae9ffd85f92afea9f2",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "918c2ea3_b219991f",
+        "filename": "ios/chrome/app/application_delegate/app_state_unittest.mm",
+        "patchSetId": 2
+      },
+      "lineNbr": 287,
+      "author": {
+        "id": 1180589
+      },
+      "writtenOn": "2017-11-09T14:52:39Z",
+      "side": 1,
+      "message": "I know but I wanted to be consistent with the other method names.",
+      "parentUuid": "890749cf_a2c2a702",
+      "range": {
+        "startLine": 287,
+        "startChar": 27,
+        "endLine": 287,
+        "endChar": 42
+      },
+      "revId": "bf680a5a020995315b2493ae9ffd85f92afea9f2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
