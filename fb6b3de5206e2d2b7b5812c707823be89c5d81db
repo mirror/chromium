@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "13e0be56_50959c52",
+        "filename": "content/browser/renderer_host/render_process_host_impl.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 2113,
+      "author": {
+        "id": 1114080
+      },
+      "writtenOn": "2017-11-09T08:27:49Z",
+      "side": 1,
+      "message": "Oops, thank you. I fixed the issue.",
+      "parentUuid": "4ad26f83_8a83a25a",
+      "revId": "fb6b3de5206e2d2b7b5812c707823be89c5d81db",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "40005c4f_bfe5fc05",
         "filename": "content/browser/renderer_host/render_process_host_impl.h",
         "patchSetId": 8
@@ -33,6 +51,24 @@
       "revId": "fb6b3de5206e2d2b7b5812c707823be89c5d81db",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7e5ffea1_92e8f073",
+        "filename": "content/browser/renderer_host/render_process_host_impl.h",
+        "patchSetId": 8
+      },
+      "lineNbr": 398,
+      "author": {
+        "id": 1114080
+      },
+      "writtenOn": "2017-11-09T08:27:49Z",
+      "side": 1,
+      "message": "I moved the logic to RenderFrameHostImpl.",
+      "parentUuid": "40005c4f_bfe5fc05",
+      "revId": "fb6b3de5206e2d2b7b5812c707823be89c5d81db",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
