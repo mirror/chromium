@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "557c172d_1021b09f",
+        "filename": "third_party/WebKit/Source/devtools/front_end/sdk/NetworkManager.js",
+        "patchSetId": 2
+      },
+      "lineNbr": 1128,
+      "author": {
+        "id": 1113672
+      },
+      "writtenOn": "2017-11-09T00:57:21Z",
+      "side": 1,
+      "message": "why do we need this?",
+      "range": {
+        "startLine": 1128,
+        "startChar": 38,
+        "endLine": 1128,
+        "endChar": 58
+      },
+      "revId": "a48dfedb3da90c2131ee61aee77fcbc19095480f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
