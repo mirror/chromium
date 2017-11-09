@@ -1,0 +1,188 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "42ac9e4f_069fce43",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/survey/ChromeHomeSurveyController.java",
+        "patchSetId": 10
+      },
+      "lineNbr": 48,
+      "author": {
+        "id": 1135279
+      },
+      "writtenOn": "2017-11-09T00:18:42Z",
+      "side": 1,
+      "message": "nit: MS",
+      "range": {
+        "startLine": 48,
+        "startChar": 46,
+        "endLine": 48,
+        "endChar": 52
+      },
+      "revId": "c65cd6d66a7f9fb03229ce356280992cb27e4f99",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8172391c_bc8d6870",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/survey/ChromeHomeSurveyController.java",
+        "patchSetId": 10
+      },
+      "lineNbr": 131,
+      "author": {
+        "id": 1135279
+      },
+      "writtenOn": "2017-11-09T00:18:42Z",
+      "side": 1,
+      "message": "Can we hold a reference to this and remove it from the tab in \"recordInfobarDisplayed\"? Handling it in \"onHidden\" seems a bit weird since it can hang around well past the time its use has expired.",
+      "range": {
+        "startLine": 131,
+        "startChar": 24,
+        "endLine": 131,
+        "endChar": 40
+      },
+      "revId": "c65cd6d66a7f9fb03229ce356280992cb27e4f99",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "57c942fe_8ee7897b",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/survey/ChromeHomeSurveyController.java",
+        "patchSetId": 10
+      },
+      "lineNbr": 132,
+      "author": {
+        "id": 1135279
+      },
+      "writtenOn": "2017-11-09T00:18:42Z",
+      "side": 1,
+      "message": "Similarly, can we remove this observer on \"recordInfobarDisplayed\"?",
+      "range": {
+        "startLine": 132,
+        "startChar": 8,
+        "endLine": 132,
+        "endChar": 61
+      },
+      "revId": "c65cd6d66a7f9fb03229ce356280992cb27e4f99",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "55f642e1_f63a4d82",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/survey/ChromeHomeSurveyController.java",
+        "patchSetId": 10
+      },
+      "lineNbr": 166,
+      "author": {
+        "id": 1135279
+      },
+      "writtenOn": "2017-11-09T00:18:42Z",
+      "side": 1,
+      "message": "This is a bit confusing since it both returns and modifies state. Can we instead do something like:\n\n   boolean hasInfoBarBeenDisplayed() {\n        try (StrictModeContext unused \u003d StrictModeContext.allowDiskReads()) {\n            SharedPreferences sharedPreferences \u003d ContextUtils.getAppSharedPreferences();\n            return sharedPreferences.getBoolean(SURVEY_INFO_BAR_DISPLAYED_KEY, false);\n        }\n        return false;\n    }\n\nIt looks like the mInfoBarDisplayRecorded will always be false (unless forced) if we run the other logic in this class. So it seems like we wouldn\u0027t need to set it in here.",
+      "range": {
+        "startLine": 158,
+        "startChar": 4,
+        "endLine": 166,
+        "endChar": 5
+      },
+      "revId": "c65cd6d66a7f9fb03229ce356280992cb27e4f99",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "61d531cc_a3553061",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/survey/ChromeHomeSurveyController.java",
+        "patchSetId": 10
+      },
+      "lineNbr": 168,
+      "author": {
+        "id": 1135279
+      },
+      "writtenOn": "2017-11-09T00:18:42Z",
+      "side": 1,
+      "message": "nit: doc",
+      "range": {
+        "startLine": 168,
+        "startChar": 4,
+        "endLine": 168,
+        "endChar": 42
+      },
+      "revId": "c65cd6d66a7f9fb03229ce356280992cb27e4f99",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2d3525a3_38c19109",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/survey/ChromeHomeSurveyController.java",
+        "patchSetId": 10
+      },
+      "lineNbr": 211,
+      "author": {
+        "id": 1135279
+      },
+      "writtenOn": "2017-11-09T00:18:42Z",
+      "side": 1,
+      "message": "nit: The first part is semi-accurate and documented on the interface. The second part can probably be documented inside the method.",
+      "range": {
+        "startLine": 210,
+        "startChar": 4,
+        "endLine": 211,
+        "endChar": 91
+      },
+      "revId": "c65cd6d66a7f9fb03229ce356280992cb27e4f99",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "fd0caa5b_d16e355e",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/survey/ChromeHomeSurveyController.java",
+        "patchSetId": 10
+      },
+      "lineNbr": 233,
+      "author": {
+        "id": 1135279
+      },
+      "writtenOn": "2017-11-09T00:18:42Z",
+      "side": 1,
+      "message": "Why do we wait for the infobar to be closed? Now that we know when it was shown with \"notifyAllAnimationFinished\", should we only be recording this there?",
+      "range": {
+        "startLine": 233,
+        "startChar": 16,
+        "endLine": 233,
+        "endChar": 41
+      },
+      "revId": "c65cd6d66a7f9fb03229ce356280992cb27e4f99",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f67645b8_8f9a63d0",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/survey/ChromeHomeSurveyController.java",
+        "patchSetId": 10
+      },
+      "lineNbr": 249,
+      "author": {
+        "id": 1135279
+      },
+      "writtenOn": "2017-11-09T00:18:42Z",
+      "side": 1,
+      "message": "nit: Doc here and below.",
+      "range": {
+        "startLine": 249,
+        "startChar": 3,
+        "endLine": 249,
+        "endChar": 39
+      },
+      "revId": "c65cd6d66a7f9fb03229ce356280992cb27e4f99",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
