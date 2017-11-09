@@ -1,4 +1,5 @@
-Bug 45205: Test that <link> elements only have stylesheets when in document.
+Bug 45205:
+Test that <link> elements only have stylesheets when in document.
 
 Not in document: PASS
 After adding to document: PASS

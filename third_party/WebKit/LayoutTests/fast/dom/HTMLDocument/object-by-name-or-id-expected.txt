@@ -1,4 +1,5 @@
-This tests when object elements are accessible by name or id directly as properties of the document object. A PASS result means that behavior matches IE and Firefox.
+This tests when object elements are accessible by name or id directly as properties of the
+document object. A PASS result means that behavior matches IE and Firefox.
 
 Results:
 

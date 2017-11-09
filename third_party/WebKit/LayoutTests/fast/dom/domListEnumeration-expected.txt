@@ -3,7 +3,6 @@ This tests enumerating the elements of DOM lists.
 On success, you will see a series of "PASS" messages, followed by "TEST COMPLETE".
 
 
-
 [object NodeList]
 PASS resultArray.length is 9
 PASS resultArray[0].i is '0'
