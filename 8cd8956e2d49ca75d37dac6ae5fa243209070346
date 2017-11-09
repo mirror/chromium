@@ -60,6 +60,24 @@
     },
     {
       "key": {
+        "uuid": "cb94fde4_3fbe8dbe",
+        "filename": "components/policy/resources/policy_templates.json",
+        "patchSetId": 3
+      },
+      "lineNbr": 589,
+      "author": {
+        "id": 1126309
+      },
+      "writtenOn": "2017-11-09T13:50:49Z",
+      "side": 1,
+      "message": "OK, I\u0027m fine with postponing this to a follow-up CL.\nBut, in the end, the claimed goal is \"Group device policies in the same way as Help Center\", so I think this should be done eventually.",
+      "parentUuid": "899ff505_511b0344",
+      "revId": "8cd8956e2d49ca75d37dac6ae5fa243209070346",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "339cf6b9_af9157e7",
         "filename": "components/policy/resources/policy_templates.json",
         "patchSetId": 3
@@ -95,6 +113,24 @@
     },
     {
       "key": {
+        "uuid": "0d268f63_dcfd9e66",
+        "filename": "components/policy/resources/policy_templates.json",
+        "patchSetId": 3
+      },
+      "lineNbr": 610,
+      "author": {
+        "id": 1126309
+      },
+      "writtenOn": "2017-11-09T13:50:49Z",
+      "side": 1,
+      "message": "I see. But note that the whole group \"Accessibility\" can\u0027t be moved here, as it combines both device-level and user-level policies.\n\nThat\u0027s probably a general question for this CL. Is it really better for the admins to see the level-based grouping at first level with the topic-based grouping only at second level? This implies that some topics will be split into two halves.",
+      "parentUuid": "c7a49262_59e206f3",
+      "revId": "8cd8956e2d49ca75d37dac6ae5fa243209070346",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "ad684de6_e4e8221f",
         "filename": "components/policy/resources/policy_templates.json",
         "patchSetId": 3
@@ -124,6 +160,24 @@
       "side": 1,
       "message": "The reason some policies are missing is because they were not there when I wrote the script to collect them ;-) We should add them, though. The ones that we didn\u0027t find we moved somewhere we thought would be appropriate, like ExtensionCacheSize.",
       "parentUuid": "ad684de6_e4e8221f",
+      "revId": "8cd8956e2d49ca75d37dac6ae5fa243209070346",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0e440e56_25341e0c",
+        "filename": "components/policy/resources/policy_templates.json",
+        "patchSetId": 3
+      },
+      "lineNbr": 705,
+      "author": {
+        "id": 1126309
+      },
+      "writtenOn": "2017-11-09T13:50:49Z",
+      "side": 1,
+      "message": "Roman, could you please add DeviceOffHours and other policies that are not referenced in any group currently?\n\nPolicies like CastReceiverName and SupervisedUsersEnabled are probably of a different question, as they are already present in the existing topic-based groups (\"CastReceiver\" and \"LocallyManagedUsers\" accordingly). But I\u0027m still not quite understanding your plan about them - do you want to eventually split those old topic-based groups into pairs of device-level and user-level groups? Or you want to touch only those that are referenced in the Help Article, making only those level+topic-grouped and keeping some policies topic-grouped? The latter sounds a bit inconsistent, although you maybe have a good argument for doing this :)",
+      "parentUuid": "73f4ce31_c1d2781b",
       "revId": "8cd8956e2d49ca75d37dac6ae5fa243209070346",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
