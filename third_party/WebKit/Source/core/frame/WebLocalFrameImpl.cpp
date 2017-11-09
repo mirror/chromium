@@ -1851,6 +1851,12 @@ void WebLocalFrameImpl::SetCanHaveScrollbars(bool can_have_scrollbars) {
     view->SetCanHaveScrollbars(can_have_scrollbars);
 }
 
+bool WebLocalFrameImpl::CanHaveScrollbars() const {
+  if (LocalFrameView* view = GetFrameView())
+    return view->CanHaveScrollbars();
+  return false;
+}
+
 void WebLocalFrameImpl::SetInputEventsScaleForEmulation(
     float content_scale_factor) {
   input_events_scale_factor_for_emulation_ = content_scale_factor;
