@@ -55,6 +55,24 @@
     },
     {
       "key": {
+        "uuid": "fe9cb687_38a52587",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/ntp/cards/SuggestionsSection.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 324,
+      "author": {
+        "id": 1001606
+      },
+      "writtenOn": "2017-11-09T18:04:25Z",
+      "side": 1,
+      "message": "\u003e Actually, I am not sure this assertion is correct :)\n\u003e What if a user scrolls super-quickly on a super-slow device? Can it happen that some of the views in the middle of the scrolling do not get drawn?\n\nThat can certainly happen, yeah.",
+      "parentUuid": "9e37ff4e_910d869e",
+      "revId": "955ea5826a62c639f8b49e29ce2db3fbe1e25352",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "6ea0622b_a83caa13",
         "filename": "chrome/android/java/src/org/chromium/chrome/browser/ntp/cards/SuggestionsSection.java",
         "patchSetId": 2
