@@ -30,6 +30,8 @@ class Browser;
 // Creates and returns a touch bar for the browser window.
 - (NSTouchBar*)makeTouchBar API_AVAILABLE(macos(10.12.2));
 
+- (void)updateBackForwardControl;
+
 @end
 
 // Private methods exposed for testing.
@@ -39,11 +41,12 @@ class Browser;
 // touch bar or the page load state has been updated. Exposed for
 // testing.
 - (void)updateReloadStopButton;
-- (void)updateBackForwardControl;
-- (void)updateStarredButton;
 
 // Returns the reload/stop button on the touch bar.
 - (NSButton*)reloadStopButton;
+
+// Returns the back/forward segmented control.
+- (NSSegmentedControl*)backForwardControl;
 
 @end
 
