@@ -23,6 +23,7 @@
 #include "ash/shelf/shelf_button.h"
 #include "ash/shelf/shelf_constants.h"
 #include "ash/shelf/shelf_context_menu_model.h"
+#include "ash/shelf/shelf_controller.h"
 #include "ash/shelf/shelf_widget.h"
 #include "ash/shell.h"
 #include "ash/shell_delegate.h"
@@ -1512,11 +1513,19 @@ gfx::Size ShelfView::CalculatePreferredSize() const {
 }
 
 void ShelfView::OnTabletModeStarted() {
-  is_tablet_mode_animation_running_ = true;
+  // Animate entering tablet mode iff the stored laptop mode alignment for
+  // |shelf_| is on the bottom.
+  base::Optional<ShelfAlignment> stored_alignment =
+      Shell::Get()->shelf_controller()->GetShelfAlignmentFromPrefs(shelf_);
+  if (stored_alignment.has_value() &&
+      *stored_alignment == SHELF_ALIGNMENT_BOTTOM)
+    is_tablet_mode_animation_running_ = true;
 }
 
 void ShelfView::OnTabletModeEnded() {
-  is_tablet_mode_animation_running_ = true;
+  // Animate exiting tablet mode iff the laptop mode alignment is on the bottom.
+  if (shelf_->IsHorizontalAlignment())
+    is_tablet_mode_animation_running_ = true;
 }
 
 void ShelfView::OnBoundsChanged(const gfx::Rect& previous_bounds) {

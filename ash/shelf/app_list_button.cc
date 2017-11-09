@@ -437,25 +437,14 @@ gfx::Point AppListButton::GetAppListButtonCenterPoint() const {
     }
     return gfx::Point(x_mid, x_mid);
   } else if (alignment == SHELF_ALIGNMENT_RIGHT) {
-    if (is_tablet_mode || is_animating) {
-      return gfx::Point(kShelfButtonSize / 2.f,
-                        height() - kShelfButtonSize / 2.f);
-    }
     return gfx::Point(y_mid, y_mid);
   } else {
     DCHECK_EQ(alignment, SHELF_ALIGNMENT_LEFT);
-    if (is_tablet_mode || is_animating) {
-      return gfx::Point(width() - kShelfButtonSize / 2.f,
-                        height() - kShelfButtonSize / 2.f);
-    }
     return gfx::Point(width() - y_mid, y_mid);
   }
 }
 
 gfx::Point AppListButton::GetBackButtonCenterPoint() const {
-  if (shelf_->alignment() == SHELF_ALIGNMENT_LEFT)
-    return gfx::Point(width() - kShelfButtonSize / 2.f, kShelfButtonSize / 2.f);
-
   // In RTL, the app list circle is shown to the right of the back button. If
   // the shelf orientation is not horizontal then the back button center x
   // coordinate will be the same in LTR or RTL.

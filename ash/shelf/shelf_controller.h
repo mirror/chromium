@@ -21,6 +21,7 @@ class PrefChangeRegistrar;
 class PrefRegistrySimple;
 
 namespace ash {
+class Shelf;
 
 // Ash's ShelfController owns the ShelfModel and implements interface functions
 // that allow Chrome to modify and observe the Shelf and ShelfModel state.
@@ -43,6 +44,11 @@ class ASH_EXPORT ShelfController : public mojom::ShelfController,
   bool should_synchronize_shelf_models() const {
     return should_synchronize_shelf_models_;
   }
+
+  // Returns the stored shelf alignment from prefs. Returns nullopt if the pref
+  // service is not ready or |shelf| does not match any of the shelfs associated
+  // with the displays.
+  base::Optional<ShelfAlignment> GetShelfAlignmentFromPrefs(Shelf* shelf);
 
   // mojom::ShelfController:
   void AddObserver(mojom::ShelfObserverAssociatedPtrInfo observer) override;

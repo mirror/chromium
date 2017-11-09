@@ -144,6 +144,24 @@ void ShelfController::BindRequest(mojom::ShelfControllerRequest request) {
   bindings_.AddBinding(this, std::move(request));
 }
 
+base::Optional<ShelfAlignment> ShelfController::GetShelfAlignmentFromPrefs(
+    Shelf* shelf) {
+  SessionController* session_controller = Shell::Get()->session_controller();
+  PrefService* prefs = session_controller->GetLastActiveUserPrefService();
+  if (!prefs)
+    return base::nullopt;
+
+  for (const auto& display : display::Screen::GetScreen()->GetAllDisplays()) {
+    Shelf* display_shelf = GetShelfForDisplay(display.id());
+    if (shelf != display_shelf)
+      continue;
+
+    return base::make_optional(GetShelfAlignmentPref(prefs, display.id()));
+  }
+
+  return base::nullopt;
+}
+
 void ShelfController::AddObserver(
     mojom::ShelfObserverAssociatedPtrInfo observer) {
   mojom::ShelfObserverAssociatedPtr observer_ptr;
