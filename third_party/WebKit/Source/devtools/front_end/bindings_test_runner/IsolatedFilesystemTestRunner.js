@@ -209,8 +209,13 @@ BindingsTestRunner.TestFileSystem.Entry.prototype = {
       return;
     }
 
-    if (!entry)
+    if (!entry) {
       entry = parentEntry.addFile(name, '');
+      var fullPath = this._fileSystem.fileSystemPath + entry.fullPath;
+      InspectorFrontendHost.events.dispatchEventToListeners(
+          InspectorFrontendHostAPI.Events.FileSystemFilesChangedAddedRemoved,
+          {changed: [], added: [fullPath], removed: []});
+    }
 
     callback(entry);
   },
