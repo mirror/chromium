@@ -175,6 +175,12 @@ std::vector<GURL> GetUrlsToOpen(const std::vector<const BookmarkNode*>& nodes) {
     // ViewController hierarchy (as each view controller is setting itself as
     // delegate).
     self.navigationController.interactivePopGestureRecognizer.delegate = self;
+
+    // Prevent Bookmarks from showing under the appBar.
+    // See https://crbug.com/754661
+    [self.bookmarksTableView.tableView
+        setContentOffset:CGPointMake(0, -self.bookmarksTableView.tableView
+                                             .contentInset.top)];
   }
 }
 
