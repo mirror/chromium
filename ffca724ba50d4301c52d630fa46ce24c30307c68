@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "77e50ce6_bd9b4bdc",
+        "filename": "chrome/browser/resources/settings/basic_page/basic_page.js",
+        "patchSetId": 19
+      },
+      "lineNbr": 43,
+      "author": {
+        "id": 1002115
+      },
+      "writtenOn": "2017-11-09T00:52:30Z",
+      "side": 1,
+      "message": "is there a reason we are special-casing this pref rather than just registering something in prefs_utils.cc[1] and using `this.prefs.*`?\n\nadding your pref to a whitelist (even conditionally) sets up a bunch of listeners for preference changes (and policy enrollment, etc.).\n\n[1] https://cs.chromium.org/chromium/src/chrome/browser/extensions/api/settings_private/prefs_util.cc?q\u003dprefs_util.cc\u0026sq\u003dpackage:chromium\u0026dr\u0026l\u003d173\n[2] https://cs.chromium.org/chromium/src/chrome/browser/resources/settings/privacy_page/privacy_page.html?type\u003dcs\u0026q\u003dsafebrowsing.enabled\u0026l\u003d97",
+      "range": {
+        "startLine": 43,
+        "startChar": 41,
+        "endLine": 43,
+        "endChar": 62
+      },
+      "revId": "ffca724ba50d4301c52d630fa46ce24c30307c68",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
