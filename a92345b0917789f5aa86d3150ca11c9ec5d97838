@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "6e92cdca_0e30ad0f",
+        "filename": "tools/metrics/histograms/histograms.xml",
+        "patchSetId": 14
+      },
+      "lineNbr": 99416,
+      "author": {
+        "id": 1002483
+      },
+      "writtenOn": "2017-11-09T22:20:24Z",
+      "side": 1,
+      "message": "Can you add a label to these too, e.g. \"Failed with RetryLater error.\"",
+      "range": {
+        "startLine": 99416,
+        "startChar": 29,
+        "endLine": 99416,
+        "endChar": 0
+      },
+      "revId": "a92345b0917789f5aa86d3150ca11c9ec5d97838",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
