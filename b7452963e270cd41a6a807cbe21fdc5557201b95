@@ -757,6 +757,24 @@
     },
     {
       "key": {
+        "uuid": "fb93bf00_c50da45a",
+        "filename": "chrome/browser/ui/cocoa/profiles/avatar_base_controller.mm",
+        "patchSetId": 15
+      },
+      "lineNbr": 219,
+      "author": {
+        "id": 1161750
+      },
+      "writtenOn": "2017-11-09T13:47:55Z",
+      "side": 1,
+      "message": "Removing that part. It is easier to support cocoa and views at the same time. And that\u0027s true that with this implementation, the menu was removed on the mouse down, and not on the mouse up.\nIt will be hard problem to solve.",
+      "parentUuid": "182e75b2_aebaa80f",
+      "revId": "b7452963e270cd41a6a807cbe21fdc5557201b95",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "d95ea1ad_158c99db",
         "filename": "chrome/browser/ui/cocoa/profiles/avatar_button_controller.mm",
         "patchSetId": 15
