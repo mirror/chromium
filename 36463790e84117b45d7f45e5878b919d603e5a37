@@ -96,6 +96,30 @@
     },
     {
       "key": {
+        "uuid": "b0eedd6b_52a93c5e",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/widget/bottomsheet/BottomSheet.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 493,
+      "author": {
+        "id": 1135279
+      },
+      "writtenOn": "2017-11-09T16:40:46Z",
+      "side": 1,
+      "message": "You are correct; since time isn\u0027t recorded as a float, I\u0027m simply moving the decimal place over so the division to a non floating point value retains more information (granted in a seemingly hacked way). I didn\u0027t realize the histogram worked in the way you described; it seems like this will not work in that case.\n\nThe times I expect here are \u003c 500ms for a vast majority of cases (probably \u003c 100ms). Millisecond resolution is not sufficient for what I\u0027m trying to record. Is there a histogram that I can use to do this? If not, I can probably multiply the recorded value to artificially get a higher number.",
+      "parentUuid": "907e9208_5738c6e5",
+      "range": {
+        "startLine": 493,
+        "startChar": 51,
+        "endLine": 493,
+        "endChar": 67
+      },
+      "revId": "36463790e84117b45d7f45e5878b919d603e5a37",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "7e1c55da_d7c6b12e",
         "filename": "chrome/android/java/src/org/chromium/chrome/browser/widget/bottomsheet/BottomSheet.java",
         "patchSetId": 1
@@ -249,6 +273,30 @@
       "writtenOn": "2017-11-08T21:44:18Z",
       "side": 1,
       "message": "It\u0027s recording the reciprocal of the velocity no? Is there a reason you\u0027re not recording velocity?",
+      "range": {
+        "startLine": 696,
+        "startChar": 12,
+        "endLine": 696,
+        "endChar": 20
+      },
+      "revId": "36463790e84117b45d7f45e5878b919d603e5a37",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8dfb18b8_886f90ce",
+        "filename": "tools/metrics/histograms/histograms.xml",
+        "patchSetId": 1
+      },
+      "lineNbr": 696,
+      "author": {
+        "id": 1135279
+      },
+      "writtenOn": "2017-11-09T16:40:46Z",
+      "side": 1,
+      "message": "I updated the summary to note that it is the reciprocal. The reason I\u0027m not recording velocity directly is that there isn\u0027t (at least that I know of) a histogram for recording a range of arbitrary float values. If there is, I\u0027ll be happy to change this.",
+      "parentUuid": "e6280a85_170db74f",
       "range": {
         "startLine": 696,
         "startChar": 12,
