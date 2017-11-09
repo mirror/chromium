@@ -72,6 +72,24 @@
     },
     {
       "key": {
+        "uuid": "ce1c5bdc_b90ba986",
+        "filename": "components/viz/service/main/viz_main_impl.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 118,
+      "author": {
+        "id": 1000111
+      },
+      "writtenOn": "2017-11-09T16:16:57Z",
+      "side": 1,
+      "message": "From my reading of the code, ukm_recorder_ptr will *always* be bound here, regardless of whether there is a real impl available or not (I am looking at code here [1]). If that is the case, then the DCHECK here isn\u0027t useful.\n\n[1] https://cs.chromium.org/chromium/src/mojo/public/cpp/bindings/interface_request.h?type\u003dcs\u0026sq\u003dpackage:chromium\u0026l\u003d137",
+      "parentUuid": "712f1c89_3eb0f6d9",
+      "revId": "ce799ce036a1963cbffc8f1b0a22575869e62ac6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "29bafd87_704eeb8c",
         "filename": "components/viz/service/main/viz_main_impl.cc",
         "patchSetId": 5
