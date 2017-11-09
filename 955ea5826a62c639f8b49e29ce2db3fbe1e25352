@@ -73,6 +73,24 @@
     },
     {
       "key": {
+        "uuid": "5c1f9d1a_a12fde1a",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/ntp/cards/SuggestionsSection.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 324,
+      "author": {
+        "id": 1161814
+      },
+      "writtenOn": "2017-11-09T19:29:52Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "fe9cb687_38a52587",
+      "revId": "955ea5826a62c639f8b49e29ce2db3fbe1e25352",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "6ea0622b_a83caa13",
         "filename": "chrome/android/java/src/org/chromium/chrome/browser/ntp/cards/SuggestionsSection.java",
         "patchSetId": 2

@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "18314a7a_6b2b51de",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/metrics/ImpressionTracker.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 21,
+      "author": {
+        "id": 1161814
+      },
+      "writtenOn": "2017-11-09T19:29:52Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "b3f57bc0_d72a5ac1",
+      "range": {
+        "startLine": 20,
+        "startChar": 56,
+        "endLine": 21,
+        "endChar": 34
+      },
+      "revId": "b9b64a33ccf004a30d2b300335ed649aa3c83ac2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "d43fe5c9_80bea117",
         "filename": "chrome/android/java/src/org/chromium/chrome/browser/ntp/cards/SuggestionsSection.java",
         "patchSetId": 4
@@ -45,6 +69,30 @@
       "revId": "b9b64a33ccf004a30d2b300335ed649aa3c83ac2",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "cd7fdc0e_072bb8f4",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/ntp/cards/SuggestionsSection.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 327,
+      "author": {
+        "id": 1161814
+      },
+      "writtenOn": "2017-11-09T19:29:52Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "d43fe5c9_80bea117",
+      "range": {
+        "startLine": 327,
+        "startChar": 71,
+        "endLine": 327,
+        "endChar": 72
+      },
+      "revId": "b9b64a33ccf004a30d2b300335ed649aa3c83ac2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -71,6 +119,30 @@
     },
     {
       "key": {
+        "uuid": "6d4aa62d_a83679ce",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/ntp/cards/SuggestionsSection.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 331,
+      "author": {
+        "id": 1161814
+      },
+      "writtenOn": "2017-11-09T19:29:52Z",
+      "side": 1,
+      "message": "Ah, of course not :)\nRemoved.",
+      "parentUuid": "250be44c_6c201687",
+      "range": {
+        "startLine": 331,
+        "startChar": 15,
+        "endLine": 331,
+        "endChar": 23
+      },
+      "revId": "b9b64a33ccf004a30d2b300335ed649aa3c83ac2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "e3fa5a69_bdd754b9",
         "filename": "chrome/android/java/src/org/chromium/chrome/browser/ntp/snippets/SnippetArticleViewHolder.java",
         "patchSetId": 4
@@ -91,6 +163,30 @@
       "revId": "b9b64a33ccf004a30d2b300335ed649aa3c83ac2",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b5eea62c_9e6668f5",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/ntp/snippets/SnippetArticleViewHolder.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 116,
+      "author": {
+        "id": 1161814
+      },
+      "writtenOn": "2017-11-09T19:29:52Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "e3fa5a69_bdd754b9",
+      "range": {
+        "startLine": 116,
+        "startChar": 41,
+        "endLine": 116,
+        "endChar": 42
+      },
+      "revId": "b9b64a33ccf004a30d2b300335ed649aa3c83ac2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
