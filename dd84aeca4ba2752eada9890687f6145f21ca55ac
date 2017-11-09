@@ -107,6 +107,24 @@
     },
     {
       "key": {
+        "uuid": "4f10ca16_8f142295",
+        "filename": "chrome/browser/ui/views/translate/translate_bubble_test_utils_views.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 56,
+      "author": {
+        "id": 1215199
+      },
+      "writtenOn": "2017-11-09T01:28:28Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "6d351074_cc01f7dd",
+      "revId": "dd84aeca4ba2752eada9890687f6145f21ca55ac",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "a9a93829_af4f7d26",
         "filename": "chrome/browser/ui/views/translate/translate_bubble_view.h",
         "patchSetId": 2
@@ -156,6 +174,24 @@
       "revId": "dd84aeca4ba2752eada9890687f6145f21ca55ac",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c8684c33_27ddf214",
+        "filename": "chrome/browser/ui/views/translate/translate_language_browsertest.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 62,
+      "author": {
+        "id": 1215199
+      },
+      "writtenOn": "2017-11-09T01:28:28Z",
+      "side": 1,
+      "message": "According to this contract\nhttps://cs.chromium.org/chromium/src/components/translate/core/browser/resources/translate.js?l\u003d173\u0026rcl\u003d4c50a1681d406258bc2ccc5ba896a42d8b57b3d3\nwe should return an empty string unless the source language sent to the server was \"auto\". So I\u0027ll change to returning \"\" (which applies for all our tests).",
+      "parentUuid": "50916b2c_b652128c",
+      "revId": "dd84aeca4ba2752eada9890687f6145f21ca55ac",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -211,6 +247,24 @@
     },
     {
       "key": {
+        "uuid": "799068a5_4fd70f37",
+        "filename": "chrome/browser/ui/views/translate/translate_language_browsertest.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 257,
+      "author": {
+        "id": 1215199
+      },
+      "writtenOn": "2017-11-09T01:28:28Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "191128d8_04e07692",
+      "revId": "dd84aeca4ba2752eada9890687f6145f21ca55ac",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "d87ce8df_f06473bc",
         "filename": "chrome/browser/ui/views/translate/translate_language_browsertest.cc",
         "patchSetId": 2
@@ -228,6 +282,24 @@
     },
     {
       "key": {
+        "uuid": "b8a65616_25cd066e",
+        "filename": "chrome/browser/ui/views/translate/translate_language_browsertest.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 288,
+      "author": {
+        "id": 1215199
+      },
+      "writtenOn": "2017-11-09T01:28:28Z",
+      "side": 1,
+      "message": "Expected behaviour is for auto-translate to override most recent - this is tested on line 260.",
+      "parentUuid": "d87ce8df_f06473bc",
+      "revId": "dd84aeca4ba2752eada9890687f6145f21ca55ac",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "6e79127f_de7932db",
         "filename": "components/translate/core/browser/translate_manager.cc",
         "patchSetId": 2
@@ -242,6 +314,24 @@
       "revId": "dd84aeca4ba2752eada9890687f6145f21ca55ac",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2489634f_782747b2",
+        "filename": "components/translate/core/browser/translate_manager.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 384,
+      "author": {
+        "id": 1215199
+      },
+      "writtenOn": "2017-11-09T01:28:28Z",
+      "side": 1,
+      "message": "Discussed offline: removing logic.",
+      "parentUuid": "6e79127f_de7932db",
+      "revId": "dd84aeca4ba2752eada9890687f6145f21ca55ac",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
