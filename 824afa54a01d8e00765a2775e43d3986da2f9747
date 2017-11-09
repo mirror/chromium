@@ -49,6 +49,30 @@
     },
     {
       "key": {
+        "uuid": "3229b23b_dc30dec9",
+        "filename": "cc/tiles/gpu_image_decode_cache.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 505,
+      "author": {
+        "id": 1002410
+      },
+      "writtenOn": "2017-11-09T01:15:34Z",
+      "side": 1,
+      "message": "Please feel free to use more buckets if you need the extra granularity – I just wanted to double-check, since intuitively it seems like a lot.  FWIW, you might find that a linear histogram with a smaller number of buckets might serve your needs better than an exponentially-spaced histogram with a larger number of buckets, if your primary goal is to pick a suitable upper threshold.",
+      "parentUuid": "907bbe37_009e2beb",
+      "range": {
+        "startLine": 505,
+        "startChar": 45,
+        "endLine": 505,
+        "endChar": 48
+      },
+      "revId": "824afa54a01d8e00765a2775e43d3986da2f9747",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "832e5ce5_a9f2ee60",
         "filename": "cc/tiles/software_image_decode_cache.cc",
         "patchSetId": 2
