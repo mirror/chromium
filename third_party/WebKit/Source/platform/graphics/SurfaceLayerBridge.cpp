@@ -124,7 +124,8 @@ void SurfaceLayerBridge::OnFirstSurfaceActivation(
     web_layer_ =
         Platform::Current()->CompositorSupport()->CreateLayerFromCCLayer(
             cc_layer_.get());
-    GraphicsLayer::RegisterContentsLayer(web_layer_.get());
+    if (observer_)
+      observer_->OnWebLayerReplaced();
   } else if (current_surface_id_ != surface_info.id()) {
     // A different SurfaceId is received, prompting change to existing
     // SurfaceLayer
@@ -134,9 +135,6 @@ void SurfaceLayerBridge::OnFirstSurfaceActivation(
     surface_layer->SetPrimarySurfaceInfo(surface_info);
     surface_layer->SetFallbackSurfaceId(surface_info.id());
   }
-
-  if (observer_)
-    observer_->OnWebLayerReplaced();
   cc_layer_->SetBounds(surface_info.size_in_pixels());
 }
 
