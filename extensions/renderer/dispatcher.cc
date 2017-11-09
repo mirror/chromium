@@ -199,19 +199,8 @@ Dispatcher::Dispatcher(std::unique_ptr<DispatcherDelegate> delegate)
   const base::CommandLine& command_line =
       *(base::CommandLine::ForCurrentProcess());
 
-  std::unique_ptr<IPCMessageSender> ipc_message_sender =
-      IPCMessageSender::CreateMainThreadIPCMessageSender();
-  if (FeatureSwitch::native_crx_bindings()->IsEnabled()) {
-    // This Unretained is safe because the IPCMessageSender is guaranteed to
-    // outlive the bindings system.
-    auto system = std::make_unique<NativeExtensionBindingsSystem>(
-        std::move(ipc_message_sender));
-    delegate_->InitializeBindingsSystem(this, system->api_system());
-    bindings_system_ = std::move(system);
-  } else {
-    bindings_system_ = std::make_unique<JsExtensionBindingsSystem>(
-        &source_map_, std::move(ipc_message_sender));
-  }
+  bindings_system_ = CreateBindingsSystem(
+      IPCMessageSender::CreateMainThreadIPCMessageSender(), &source_map_);
 
   set_idle_notifications_ =
       command_line.HasSwitch(switches::kExtensionProcess) ||
@@ -641,6 +630,22 @@ void Dispatcher::InvokeModuleSystemMethod(content::RenderFrame* render_frame,
     RenderThread::Get()->ScheduleIdleHandler(
         kInitialExtensionIdleHandlerDelayMs);
   }
+}
+
+std::unique_ptr<ExtensionBindingsSystem> Dispatcher::CreateBindingsSystem(
+    std::unique_ptr<IPCMessageSender> ipc_sender,
+    ResourceBundleSourceMap* source_map) {
+  std::unique_ptr<ExtensionBindingsSystem> bindings_system;
+  if (FeatureSwitch::native_crx_bindings()->IsEnabled()) {
+    auto system =
+        std::make_unique<NativeExtensionBindingsSystem>(std::move(ipc_sender));
+    delegate_->InitializeBindingsSystem(this, system->api_system());
+    bindings_system = std::move(system);
+  } else {
+    bindings_system = std::make_unique<JsExtensionBindingsSystem>(
+        &source_map_, std::move(ipc_sender));
+  }
+  return bindings_system;
 }
 
 // static
