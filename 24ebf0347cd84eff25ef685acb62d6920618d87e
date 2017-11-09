@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "319bde62_d2a52ca4",
+        "filename": "chrome/browser/resources/settings/basic_page/basic_page.js",
+        "patchSetId": 6
+      },
+      "lineNbr": 45,
+      "author": {
+        "id": 1115893
+      },
+      "writtenOn": "2017-11-09T23:11:59Z",
+      "side": 0,
+      "message": "Can we now also remove this https://cs.chromium.org/chromium/src/chrome/browser/ui/webui/settings/md_settings_ui.cc?l\u003d224?",
+      "revId": "24ebf0347cd84eff25ef685acb62d6920618d87e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}

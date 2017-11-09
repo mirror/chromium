@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "3e617cae_55cade92",
+        "filename": "chrome/browser/ui/webui/settings/change_password_handler.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 25,
+      "author": {
+        "id": 1115893
+      },
+      "writtenOn": "2017-11-09T23:11:59Z",
+      "side": 1,
+      "message": "This class is pretty much a no-op if service_ is not available. Can we just not instantiate it at [1] if that is the case?\n\n[1] https://cs.chromium.org/chromium/src/chrome/browser/ui/webui/settings/md_settings_ui.cc?type\u003dcs\u0026q\u003dChangePasswordHandler\u0026sq\u003dpackage:chromium\u0026l\u003d223",
+      "revId": "04991fe5bdf74cb4578e146c862f447bc7d3df84",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
