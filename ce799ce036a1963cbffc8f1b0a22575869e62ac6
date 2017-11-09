@@ -247,6 +247,24 @@
       "revId": "ce799ce036a1963cbffc8f1b0a22575869e62ac6",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "358b86a8_fa020430",
+        "filename": "services/metrics/public/cpp/mojo_ukm_recorder.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 47,
+      "author": {
+        "id": 1115962
+      },
+      "writtenOn": "2017-11-09T20:21:59Z",
+      "side": 1,
+      "message": "I think the only things that can influence the lifetime of the connection is the interface pointer on one end, and the Binding on the other end. So yeah, Service/Connector which were used to establish the connection shouldn\u0027t matter. (@sadrul - please correct me if I am wrong on this.)",
+      "parentUuid": "7f5c208d_a7ad4000",
+      "revId": "ce799ce036a1963cbffc8f1b0a22575869e62ac6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
