@@ -7,6 +7,7 @@
 
 #include <memory>
 
+#include "components/signin/core/browser/account_info.h"
 #include "components/version_info/version_info.h"
 
 namespace base {
@@ -72,6 +73,11 @@ extern const char kUpdate[];
 // Note that |service| may be null.
 std::unique_ptr<base::DictionaryValue> ConstructAboutInformation(
     SyncService* service,
+    version_info::Channel channel);
+
+std::unique_ptr<base::DictionaryValue> ConstructAboutInformationHelper(
+    SyncService* service,
+    AccountInfo primary_account_info,
     version_info::Channel channel);
 
 }  // namespace sync_ui_util
