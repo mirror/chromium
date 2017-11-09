@@ -57,8 +57,6 @@ struct AutocompleteMatchType {
     PHYSICAL_WEB                = 21,  // A Physical Web nearby URL.
     PHYSICAL_WEB_OVERFLOW       = 22,  // An item representing multiple
                                        // Physical Web nearby URLs.
-    TAB_SEARCH                  = 23,  // A suggested open tab, based on its
-                                       // URL or title, via HQP.
     NUM_TYPES,
   };
   // clang-format on

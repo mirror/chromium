@@ -694,7 +694,7 @@ void OmniboxEditModel::OpenMatch(AutocompleteMatch match,
     base::RecordAction(
         base::UserMetricsAction("OmniboxDestinationURLIsSearchOnDSP"));
   }
-  if (match.type == AutocompleteMatchType::TAB_SEARCH) {
+  if (match.has_tab_match) {
     // Only close the current tab if it's the new tab page.  Look at
     // |permanent_text_| to do this identification.  If this fails (the
     // previously found tab may have closed or navigated since) fall through and

@@ -35,7 +35,6 @@ std::string AutocompleteMatchType::ToString(AutocompleteMatchType::Type type) {
     "voice-suggest",
     "physical-web",
     "physical-web-overflow",
-    "tab-search",
   };
   // clang-format on
   static_assert(arraysize(strings) == AutocompleteMatchType::NUM_TYPES,
@@ -80,7 +79,6 @@ base::string16 AutocompleteMatchType::ToAccessibilityLabel(
       0,                               // VOICE_SUGGEST
       0,                               // PHYSICAL_WEB
       0,                               // PHYSICAL_WEB_OVERFLOW
-      0,                               // TAB_SEARCH
   };
   static_assert(arraysize(message_ids) == AutocompleteMatchType::NUM_TYPES,
                 "message_ids must have NUM_TYPES elements");

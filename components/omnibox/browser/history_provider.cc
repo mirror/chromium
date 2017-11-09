@@ -109,7 +109,7 @@ void HistoryProvider::ConvertOpenTabMatches() {
   for (auto& match : matches_) {
     // If url is in a tab, change type, update classification.
     if (client()->IsTabOpenWithURL(match.destination_url)) {
-      match.type = AutocompleteMatchType::TAB_SEARCH;
+      match.has_tab_match = true;
       const base::string16 switch_tab_message =
           l10n_util::GetStringUTF16(IDS_OMNIBOX_TAB_SUGGEST_HINT) +
           base::UTF8ToUTF16(" - ");

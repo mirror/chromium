@@ -404,6 +404,9 @@ struct AutocompleteMatch {
   // Type of this match.
   Type type;
 
+  // True if we saw a tab that matched this suggestion.
+  bool has_tab_match;
+
   // Used to identify the specific source / type for suggestions by the
   // suggest server. See |result_subtype_identifier| in omnibox.proto for more
   // details.
