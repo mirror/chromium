@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "7dc94d6a_5bafcb1d",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/externalauth/ExternalAuthUtils.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 250,
+      "author": {
+        "id": 1116043
+      },
+      "writtenOn": "2017-11-09T20:36:51Z",
+      "side": 1,
+      "message": "for the downstream ones, do you want to leave in some with the context to allow this to roll cleanly and then followup with another change to remove these after the downstream cleanup lands separately?",
+      "range": {
+        "startLine": 250,
+        "startChar": 26,
+        "endLine": 250,
+        "endChar": 60
+      },
+      "revId": "617fab8156cf5652fc75b75929c1c94443ec8ab4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
