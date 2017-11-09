@@ -96,6 +96,30 @@
     },
     {
       "key": {
+        "uuid": "956587bb_8a341c5e",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/partnerbookmarks/PartnerBookmarksCache.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 17,
+      "author": {
+        "id": 1144344
+      },
+      "writtenOn": "2017-11-09T07:07:57Z",
+      "side": 1,
+      "message": "We only store URLs here when we received a response from favicon server, saying the URL doesn\u0027t have a favicon. For other kinds of failures, like the device is offline, we don\u0027t store these URLs here. Therefore, there\u0027s only one kind of errors in this cache, and only one kind of timeout. In this case, either saving the last failed retrieval or expiry makes sense and doesn\u0027t make the logic complicated.\n\nI was thinking that we were saving URLs from different kinds of errors here, but it should not be the case.\n\nRef: https://chromium-review.googlesource.com/c/chromium/src/+/756193#message-01c4e4fa27a1f799a841bca5ca5859e7b45e85aa",
+      "parentUuid": "653dcc2b_af0aa5fa",
+      "range": {
+        "startLine": 17,
+        "startChar": 75,
+        "endLine": 17,
+        "endChar": 96
+      },
+      "revId": "18ff407dc73520982005d14522003c49eca2629c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "78801ebc_40849abe",
         "filename": "chrome/android/java/src/org/chromium/chrome/browser/partnerbookmarks/PartnerBookmarksCache.java",
         "patchSetId": 2
