@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "1cd99343_cda72788",
+        "filename": "ash/display/display_manager_unittest.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 3833,
+      "author": {
+        "id": 1199459
+      },
+      "writtenOn": "2017-11-09T03:21:58Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "8dc7a790_5e1a0220",
+      "range": {
+        "startLine": 3833,
+        "startChar": 7,
+        "endLine": 3833,
+        "endChar": 11
+      },
+      "revId": "770337e0b34bb383b6ec3e317b6b4cfc715ffdad",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "bb1687a6_e4a3666c",
         "filename": "ui/display/manager/chromeos/display_change_observer.cc",
         "patchSetId": 1
@@ -48,6 +72,30 @@
     },
     {
       "key": {
+        "uuid": "515c443c_cf05d992",
+        "filename": "ui/display/manager/chromeos/display_change_observer.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 148,
+      "author": {
+        "id": 1199459
+      },
+      "writtenOn": "2017-11-09T03:21:58Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "bb1687a6_e4a3666c",
+      "range": {
+        "startLine": 148,
+        "startChar": 25,
+        "endLine": 148,
+        "endChar": 51
+      },
+      "revId": "770337e0b34bb383b6ec3e317b6b4cfc715ffdad",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "547f316d_737c4942",
         "filename": "ui/display/manager/chromeos/update_display_configuration_task.cc",
         "patchSetId": 1
@@ -65,6 +113,24 @@
     },
     {
       "key": {
+        "uuid": "2e1acc3a_d45515b0",
+        "filename": "ui/display/manager/chromeos/update_display_configuration_task.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 200,
+      "author": {
+        "id": 1199459
+      },
+      "writtenOn": "2017-11-09T03:21:58Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "547f316d_737c4942",
+      "revId": "770337e0b34bb383b6ec3e317b6b4cfc715ffdad",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "6d853a52_01ae1fee",
         "filename": "ui/display/manager/chromeos/update_display_configuration_task.cc",
         "patchSetId": 1
@@ -79,6 +145,24 @@
       "revId": "770337e0b34bb383b6ec3e317b6b4cfc715ffdad",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "95237440_6b18415e",
+        "filename": "ui/display/manager/chromeos/update_display_configuration_task.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 212,
+      "author": {
+        "id": 1199459
+      },
+      "writtenOn": "2017-11-09T03:21:58Z",
+      "side": 1,
+      "message": "Ok, that\u0027s better. Done.",
+      "parentUuid": "6d853a52_01ae1fee",
+      "revId": "770337e0b34bb383b6ec3e317b6b4cfc715ffdad",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -102,6 +186,30 @@
       "revId": "770337e0b34bb383b6ec3e317b6b4cfc715ffdad",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a34c0665_17b63663",
+        "filename": "ui/display/manager/chromeos/update_display_configuration_task.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 219,
+      "author": {
+        "id": 1199459
+      },
+      "writtenOn": "2017-11-09T03:21:58Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "cac86270_0b74c48b",
+      "range": {
+        "startLine": 198,
+        "startChar": 0,
+        "endLine": 219,
+        "endChar": 69
+      },
+      "revId": "770337e0b34bb383b6ec3e317b6b4cfc715ffdad",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
