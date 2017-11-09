@@ -33,6 +33,7 @@
 #include "bindings/core/v8/V8Initializer.h"
 #include "bindings/modules/v8/V8ContextSnapshotExternalReferences.h"
 #include "build/build_config.h"
+#include "controller/DevToolsFrontendImpl.h"
 #include "controller/OomInterventionImpl.h"
 #include "core/animation/AnimationClock.h"
 #include "core/frame/LocalFrame.h"
@@ -124,6 +125,22 @@ void BlinkInitializer::RegisterInterfaces(InterfaceRegistry& registry) {
 
   registry.AddInterface(CrossThreadBind(&OomInterventionImpl::Create),
                         main_thread->GetSingleThreadTaskRunner());
+}
+
+void BlinkInitializer::InitLocalFrame(LocalFrame& frame) const {
+  ModulesInitializer::InitLocalFrame(frame);
+  frame.GetInterfaceRegistry()->AddAssociatedInterface(WTF::Bind(
+      &DevToolsFrontendImpl::BindMojoRequest, WrapWeakPersistent(&frame)));
+}
+
+void BlinkInitializer::OnClearWindowObjectInMainWorld(
+    Document& document,
+    const Settings& settings) const {
+  ModulesInitializer::OnClearWindowObjectInMainWorld(document, settings);
+  if (DevToolsFrontendImpl* devtools_frontend =
+          DevToolsFrontendImpl::From(document.GetFrame())) {
+    devtools_frontend->DidClearWindowObject();
+  }
 }
 
 }  // namespace blink
