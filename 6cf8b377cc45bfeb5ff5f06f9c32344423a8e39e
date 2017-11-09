@@ -22,6 +22,30 @@
       "revId": "6cf8b377cc45bfeb5ff5f06f9c32344423a8e39e",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f221a20f_f83f10d6",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/partnerbookmarks/PartnerBookmarksReader.java",
+        "patchSetId": 6
+      },
+      "lineNbr": 135,
+      "author": {
+        "id": 1144344
+      },
+      "writtenOn": "2017-11-09T06:02:53Z",
+      "side": 1,
+      "message": "Using this flag to guard it is not enough. For example, if one thread calls shutDown, and it is calling the native part. At this time, mShutdown is still false, and another thread can call shutDown, which will call the native part again.",
+      "parentUuid": "0309a1c6_bd1dab94",
+      "range": {
+        "startLine": 135,
+        "startChar": 8,
+        "endLine": 135,
+        "endChar": 25
+      },
+      "revId": "6cf8b377cc45bfeb5ff5f06f9c32344423a8e39e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
