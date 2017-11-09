@@ -1,0 +1,106 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "ba5fb0e7_a655d035",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 5
+      },
+      "lineNbr": 9,
+      "author": {
+        "id": 1000111
+      },
+      "writtenOn": "2017-11-09T17:20:24Z",
+      "side": 1,
+      "message": "-i",
+      "revId": "bcf40191f7c7e5e378e110f3847aac04a0597a7f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4d9a6dee_e95fe78b",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 5
+      },
+      "lineNbr": 18,
+      "author": {
+        "id": 1000111
+      },
+      "writtenOn": "2017-11-09T17:20:24Z",
+      "side": 1,
+      "message": "this, part",
+      "revId": "bcf40191f7c7e5e378e110f3847aac04a0597a7f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7779baa1_0c094246",
+        "filename": "services/ui/public/cpp/gpu/gpu.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 250,
+      "author": {
+        "id": 1000111
+      },
+      "writtenOn": "2017-11-09T17:20:24Z",
+      "side": 1,
+      "message": "It\u0027s necessary to call this here so that the callbacks in previous async calls are run first, right? Can you add a comment here to that effect?",
+      "revId": "bcf40191f7c7e5e378e110f3847aac04a0597a7f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8cef9143_a17abce0",
+        "filename": "services/ui/public/cpp/gpu/gpu.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 276,
+      "author": {
+        "id": 1000111
+      },
+      "writtenOn": "2017-11-09T17:20:24Z",
+      "side": 1,
+      "message": "base::RetainedRef(gpu_ptr_)?",
+      "revId": "bcf40191f7c7e5e378e110f3847aac04a0597a7f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0d09a92d_818b7f26",
+        "filename": "services/ui/public/cpp/tests/gpu_unittest.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 103,
+      "author": {
+        "id": 1000111
+      },
+      "writtenOn": "2017-11-09T17:20:24Z",
+      "side": 1,
+      "message": "Why do we need to do this |num_tasks| times? Why wouldn\u0027t doing this just once be sufficient?",
+      "revId": "bcf40191f7c7e5e378e110f3847aac04a0597a7f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "dd7030bb_ad6ea015",
+        "filename": "services/ui/public/cpp/tests/gpu_unittest.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 205,
+      "author": {
+        "id": 1000111
+      },
+      "writtenOn": "2017-11-09T17:20:24Z",
+      "side": 1,
+      "message": "It looks like this test is now testing that a second call to establish channel can pass after the first call failed. The purpose of this test is to actually verify that the second request can be issued from the callback of the first request. I think we want to still have a test for that scenario.",
+      "revId": "bcf40191f7c7e5e378e110f3847aac04a0597a7f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
