@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "58733f32_96190bad",
+        "filename": "third_party/WebKit/Source/core/dom/ProcessingInstruction.cpp",
+        "patchSetId": 6
+      },
+      "lineNbr": 171,
+      "author": {
+        "id": 1115930
+      },
+      "writtenOn": "2017-11-09T22:51:12Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "e224aa1f_473ecb68",
+      "revId": "dc111557a990a3feb9a414389ce2fb2bebcd78df",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "69a8d1cb_c510a79f",
         "filename": "third_party/WebKit/Source/core/dom/ProcessingInstruction.cpp",
         "patchSetId": 6
@@ -36,6 +54,24 @@
     },
     {
       "key": {
+        "uuid": "24460225_db3ee8da",
+        "filename": "third_party/WebKit/Source/core/dom/ProcessingInstruction.cpp",
+        "patchSetId": 6
+      },
+      "lineNbr": 172,
+      "author": {
+        "id": 1115930
+      },
+      "writtenOn": "2017-11-09T22:51:12Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "69a8d1cb_c510a79f",
+      "revId": "dc111557a990a3feb9a414389ce2fb2bebcd78df",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "5b4c856b_213b6fbf",
         "filename": "third_party/WebKit/Source/core/html/LinkStyle.cpp",
         "patchSetId": 6
@@ -50,6 +86,24 @@
       "revId": "dc111557a990a3feb9a414389ce2fb2bebcd78df",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "77a95ce5_25c5507d",
+        "filename": "third_party/WebKit/Source/core/html/LinkStyle.cpp",
+        "patchSetId": 6
+      },
+      "lineNbr": 141,
+      "author": {
+        "id": 1115930
+      },
+      "writtenOn": "2017-11-09T22:51:12Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "5b4c856b_213b6fbf",
+      "revId": "dc111557a990a3feb9a414389ce2fb2bebcd78df",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -73,6 +127,30 @@
       "revId": "dc111557a990a3feb9a414389ce2fb2bebcd78df",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "dde686d6_86489bb1",
+        "filename": "third_party/WebKit/Source/core/html/LinkStyle.cpp",
+        "patchSetId": 6
+      },
+      "lineNbr": 249,
+      "author": {
+        "id": 1115930
+      },
+      "writtenOn": "2017-11-09T22:51:12Z",
+      "side": 1,
+      "message": "Plumbed the parameter from the client callback instead.",
+      "parentUuid": "3e876da2_d05e91e3",
+      "range": {
+        "startLine": 249,
+        "startChar": 31,
+        "endLine": 249,
+        "endChar": 44
+      },
+      "revId": "dc111557a990a3feb9a414389ce2fb2bebcd78df",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -180,6 +258,24 @@
       "revId": "dc111557a990a3feb9a414389ce2fb2bebcd78df",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6fcb5a65_406c44bb",
+        "filename": "third_party/WebKit/Source/core/loader/WorkletScriptLoader.cpp",
+        "patchSetId": 6
+      },
+      "lineNbr": 29,
+      "author": {
+        "id": 1115930
+      },
+      "writtenOn": "2017-11-09T22:51:12Z",
+      "side": 1,
+      "message": "These issues should be temporary. Hopefully I\u0027ll be able to make cache hits like this always-async in a followup.",
+      "parentUuid": "5268a6cf_a3c7366c",
+      "revId": "dc111557a990a3feb9a414389ce2fb2bebcd78df",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
