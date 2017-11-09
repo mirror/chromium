@@ -2,6 +2,8 @@
 // Use of this source code is governed by a BSD-style license that can be
 // found in the LICENSE file.
 
+#include <vector>
+
 #include "base/command_line.h"
 #include "base/debug/leak_annotations.h"
 #include "base/message_loop/message_loop.h"
@@ -17,9 +19,11 @@
 #include "content/public/common/main_function_params.h"
 #include "content/public/common/sandbox_init.h"
 #include "content/utility/utility_thread_impl.h"
+
 #include "services/service_manager/sandbox/sandbox.h"
 
 #if defined(OS_LINUX)
+#include "sandbox/linux/syscall_broker/broker_file_permission.h"
 #include "services/service_manager/sandbox/linux/sandbox_linux.h"
 #endif
 
@@ -31,6 +35,21 @@ sandbox::TargetServices* g_utility_target_services = nullptr;
 #endif
 
 namespace content {
+namespace {
+
+#if defined(OS_LINUX)
+// Doesn't really belong here, but let's get the ball rolling ...
+bool NetworkPreSandboxHook(service_manager::BPFBasePolicy* policy,
+                           service_manager::SandboxLinux::Options options) {
+  std::vector<sandbox::syscall_broker::BrokerFilePermission> file_permissions;
+  service_manager::SandboxLinux::GetInstance()->StartBrokerProcess(
+      policy, std::move(file_permissions),
+      service_manager::SandboxLinux::PreSandboxHook(), options);
+  return true;
+}
+#endif  // defined(OS_LINUX)
+
+}  // namespace
 
 // Mainline routine for running as the utility process.
 int UtilityMain(const MainFunctionParams& parameters) {
@@ -52,8 +71,11 @@ int UtilityMain(const MainFunctionParams& parameters) {
   if (parameters.zygote_child) {
     auto sandbox_type =
         service_manager::SandboxTypeFromCommandLine(parameters.command_line);
+    service_manager::SandboxLinux::PreSandboxHook pre_sandbox_hook;
+    if (sandbox_type == service_manager::SANDBOX_TYPE_NETWORK)
+      pre_sandbox_hook = base::BindOnce(&NetworkPreSandboxHook);
     service_manager::Sandbox::Initialize(
-        sandbox_type, service_manager::SandboxSeccompBPF::PreSandboxHook(),
+        sandbox_type, std::move(pre_sandbox_hook),
         service_manager::SandboxLinux::Options());
   }
 #elif defined(OS_WIN)

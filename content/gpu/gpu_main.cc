@@ -354,11 +354,11 @@ bool StartSandboxLinux(gpu::GpuWatchdogThread* watchdog_thread,
   // SandboxLinux::InitializeSandbox() must always be called
   // with only one thread.
   service_manager::SandboxLinux::Options sandbox_options;
+  sandbox_options.engage_namespace_sandbox = true;
   sandbox_options.use_amd_specific_policies =
       gpu_info && angle::IsAMD(gpu_info->active_gpu().vendor_id);
   sandbox_options.accelerated_video_decode_enabled =
       !gpu_prefs.disable_accelerated_video_decode;
-
 #if defined(OS_CHROMEOS)
   sandbox_options.vaapi_accelerated_video_encode_enabled =
       !gpu_prefs.disable_vaapi_accelerated_video_encode;

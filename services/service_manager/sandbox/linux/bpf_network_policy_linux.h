@@ -2,8 +2,8 @@
 // Use of this source code is governed by a BSD-style license that can be
 // found in the LICENSE file.
 
-#ifndef SERVICES_SERVICE_MANAGER_SANDBOX_LINUX_BPF_GPU_POLICY_LINUX_H_
-#define SERVICES_SERVICE_MANAGER_SANDBOX_LINUX_BPF_GPU_POLICY_LINUX_H_
+#ifndef SERVICES_SERVICE_MANAGER_SANDBOX_LINUX_BPF_NETWORK_POLICY_LINUX_H_
+#define SERVICES_SERVICE_MANAGER_SANDBOX_LINUX_BPF_NETWORK_POLICY_LINUX_H_
 
 #include <memory>
 
@@ -15,10 +15,11 @@
 
 namespace service_manager {
 
-class SERVICE_MANAGER_SANDBOX_EXPORT GpuProcessPolicy : public BPFBasePolicy {
+class SERVICE_MANAGER_SANDBOX_EXPORT NetworkProcessPolicy
+    : public BPFBasePolicy {
  public:
-  GpuProcessPolicy();
-  ~GpuProcessPolicy() override;
+  NetworkProcessPolicy();
+  ~NetworkProcessPolicy() override;
 
   sandbox::bpf_dsl::ResultExpr EvaluateSyscall(
       int system_call_number) const override;
@@ -26,22 +27,22 @@ class SERVICE_MANAGER_SANDBOX_EXPORT GpuProcessPolicy : public BPFBasePolicy {
   std::unique_ptr<BPFBasePolicy> GetBrokerSandboxPolicy() override;
 
  private:
-  DISALLOW_COPY_AND_ASSIGN(GpuProcessPolicy);
+  DISALLOW_COPY_AND_ASSIGN(NetworkProcessPolicy);
 };
 
-class SERVICE_MANAGER_SANDBOX_EXPORT GpuBrokerProcessPolicy
-    : public GpuProcessPolicy {
+class SERVICE_MANAGER_SANDBOX_EXPORT NetworkBrokerProcessPolicy
+    : public NetworkProcessPolicy {
  public:
-  GpuBrokerProcessPolicy();
-  ~GpuBrokerProcessPolicy() override;
+  NetworkBrokerProcessPolicy();
+  ~NetworkBrokerProcessPolicy() override;
 
   sandbox::bpf_dsl::ResultExpr EvaluateSyscall(
       int system_call_number) const override;
 
  private:
-  DISALLOW_COPY_AND_ASSIGN(GpuBrokerProcessPolicy);
+  DISALLOW_COPY_AND_ASSIGN(NetworkBrokerProcessPolicy);
 };
 
 }  // namespace service_manager
 
-#endif  // SERVICES_SERVICE_MANAGER_SANDBOX_LINUX_BPF_GPU_POLICY_LINUX_H_
+#endif  // SERVICES_SERVICE_MANAGER_SANDBOX_LINUX_BPF_NETWORK_POLICY_LINUX_H_

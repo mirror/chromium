@@ -2,7 +2,7 @@
 // Use of this source code is governed by a BSD-style license that can be
 // found in the LICENSE file.
 
-#include "services/service_manager/sandbox/linux/bpf_gpu_policy_linux.h"
+#include "services/service_manager/sandbox/linux/bpf_network_policy_linux.h"
 
 #include <dlfcn.h>
 #include <errno.h>
@@ -45,8 +45,8 @@ using sandbox::SyscallSets;
 namespace service_manager {
 namespace {
 
-intptr_t GpuSIGSYS_Handler(const struct arch_seccomp_data& args,
-                           void* aux_broker_process) {
+intptr_t NetworkSIGSYS_Handler(const struct arch_seccomp_data& args,
+                               void* aux_broker_process) {
   RAW_CHECK(aux_broker_process);
   BrokerProcess* broker_process =
       static_cast<BrokerProcess*>(aux_broker_process);
@@ -87,12 +87,12 @@ intptr_t GpuSIGSYS_Handler(const struct arch_seccomp_data& args,
 
 }  // namespace
 
-GpuProcessPolicy::GpuProcessPolicy() {}
+NetworkProcessPolicy::NetworkProcessPolicy() {}
 
-GpuProcessPolicy::~GpuProcessPolicy() {}
+NetworkProcessPolicy::~NetworkProcessPolicy() {}
 
-// Main policy for x86_64/i386. Extended by CrosArmGpuProcessPolicy.
-ResultExpr GpuProcessPolicy::EvaluateSyscall(int sysno) const {
+// Main policy for x86_64/i386. Extended by CrosArmNetworkProcessPolicy.
+ResultExpr NetworkProcessPolicy::EvaluateSyscall(int sysno) const {
   switch (sysno) {
 #if !defined(OS_CHROMEOS)
     case __NR_ftruncate:
@@ -119,7 +119,7 @@ ResultExpr GpuProcessPolicy::EvaluateSyscall(int sysno) const {
     case __NR_openat: {
       auto* broker_process = SandboxLinux::GetInstance()->broker_process();
       DCHECK(broker_process);
-      return Trap(GpuSIGSYS_Handler, broker_process);
+      return Trap(NetworkSIGSYS_Handler, broker_process);
     }
     case __NR_sched_getaffinity:
     case __NR_sched_setaffinity:
@@ -133,18 +133,18 @@ ResultExpr GpuProcessPolicy::EvaluateSyscall(int sysno) const {
   }
 }
 
-std::unique_ptr<BPFBasePolicy> GpuProcessPolicy::GetBrokerSandboxPolicy() {
-  return std::make_unique<GpuBrokerProcessPolicy>();
+std::unique_ptr<BPFBasePolicy> NetworkProcessPolicy::GetBrokerSandboxPolicy() {
+  return std::make_unique<NetworkBrokerProcessPolicy>();
 }
 
-GpuBrokerProcessPolicy::GpuBrokerProcessPolicy() {}
+NetworkBrokerProcessPolicy::NetworkBrokerProcessPolicy() {}
 
-GpuBrokerProcessPolicy::~GpuBrokerProcessPolicy() {}
+NetworkBrokerProcessPolicy::~NetworkBrokerProcessPolicy() {}
 
 // x86_64/i386 or desktop ARM.
-// A GPU broker policy is the same as a GPU policy with access, open,
+// A NETWORK broker policy is the same as a NETWORK policy with access, open,
 // openat and in the non-Chrome OS case unlink allowed.
-ResultExpr GpuBrokerProcessPolicy::EvaluateSyscall(int sysno) const {
+ResultExpr NetworkBrokerProcessPolicy::EvaluateSyscall(int sysno) const {
   switch (sysno) {
 #if !defined(__aarch64__)
     case __NR_access:
@@ -159,7 +159,7 @@ ResultExpr GpuBrokerProcessPolicy::EvaluateSyscall(int sysno) const {
 #endif
       return Allow();
     default:
-      return GpuProcessPolicy::EvaluateSyscall(sysno);
+      return NetworkProcessPolicy::EvaluateSyscall(sysno);
   }
 }
 

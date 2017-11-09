@@ -10,6 +10,19 @@
 
 namespace service_manager {
 
+SERVICE_MANAGER_SANDBOX_EXPORT bool IsUnsandboxedSandboxType(
+    SandboxType sandbox_type) {
+  return
+#if defined(OS_WIN)
+      sandbox_type == SANDBOX_TYPE_NO_SANDBOX_AND_ELEVATED_PRIVILEGES ||
+#endif
+#if !defined(OS_LINUX)
+      // TODO(tsepez): Sandbox network process beyond linux.
+      sandbox_type == SANDBOX_TYPE_NETWORK ||
+#endif
+      sandbox_type == SANDBOX_TYPE_NO_SANDBOX;
+}
+
 void SetCommandLineFlagsForSandboxType(base::CommandLine* command_line,
                                        SandboxType sandbox_type) {
   switch (sandbox_type) {
