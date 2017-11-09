@@ -72,6 +72,30 @@
     },
     {
       "key": {
+        "uuid": "32b352c9_b0219c4a",
+        "filename": "ios/chrome/browser/ui/activity_services/canonical_url_retriever.mm",
+        "patchSetId": 8
+      },
+      "lineNbr": 104,
+      "author": {
+        "id": 1191445
+      },
+      "writtenOn": "2017-11-09T23:22:23Z",
+      "side": 1,
+      "message": "I restructured and added comments to make this clearer.",
+      "parentUuid": "cb615aa5_d880fd01",
+      "range": {
+        "startLine": 104,
+        "startChar": 8,
+        "endLine": 104,
+        "endChar": 49
+      },
+      "revId": "ae08c9818cbf9688da1211de35040c21430f36e7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "8b6316eb_eafd2eae",
         "filename": "ios/chrome/browser/ui/activity_services/canonical_url_retriever.mm",
         "patchSetId": 8
@@ -92,6 +116,30 @@
       "revId": "ae08c9818cbf9688da1211de35040c21430f36e7",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0c5ed3ed_5b8ecdf4",
+        "filename": "ios/chrome/browser/ui/activity_services/canonical_url_retriever.mm",
+        "patchSetId": 8
+      },
+      "lineNbr": 107,
+      "author": {
+        "id": 1191445
+      },
+      "writtenOn": "2017-11-09T23:22:23Z",
+      "side": 1,
+      "message": "Since it is a C++ reference, it is copied into the block, so the underlying object can\u0027t be released before the block is executed.",
+      "parentUuid": "8b6316eb_eafd2eae",
+      "range": {
+        "startLine": 107,
+        "startChar": 57,
+        "endLine": 107,
+        "endChar": 68
+      },
+      "revId": "ae08c9818cbf9688da1211de35040c21430f36e7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -118,6 +166,30 @@
     },
     {
       "key": {
+        "uuid": "23f6a7b0_52fd34f9",
+        "filename": "ios/chrome/browser/ui/activity_services/canonical_url_retriever_private.h",
+        "patchSetId": 8
+      },
+      "lineNbr": 36,
+      "author": {
+        "id": 1191445
+      },
+      "writtenOn": "2017-11-09T23:22:23Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "f0ed937b_c65db5a5",
+      "range": {
+        "startLine": 36,
+        "startChar": 39,
+        "endLine": 36,
+        "endChar": 40
+      },
+      "revId": "ae08c9818cbf9688da1211de35040c21430f36e7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "e9fa90dd_ddb75944",
         "filename": "ios/chrome/browser/ui/activity_services/canonical_url_retriever_unittest.mm",
         "patchSetId": 8
@@ -138,6 +210,30 @@
       "revId": "ae08c9818cbf9688da1211de35040c21430f36e7",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "bf36da33_4e599046",
+        "filename": "ios/chrome/browser/ui/activity_services/canonical_url_retriever_unittest.mm",
+        "patchSetId": 8
+      },
+      "lineNbr": 56,
+      "author": {
+        "id": 1191445
+      },
+      "writtenOn": "2017-11-09T23:22:23Z",
+      "side": 1,
+      "message": "Removed.",
+      "parentUuid": "e9fa90dd_ddb75944",
+      "range": {
+        "startLine": 55,
+        "startChar": 42,
+        "endLine": 56,
+        "endChar": 12
+      },
+      "revId": "ae08c9818cbf9688da1211de35040c21430f36e7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
