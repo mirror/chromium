@@ -37,6 +37,24 @@
     },
     {
       "key": {
+        "uuid": "fe913f34_50a8a345",
+        "filename": "chrome/browser/ui/app_list/app_list_view_delegate.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 272,
+      "author": {
+        "id": 1147616
+      },
+      "writtenOn": "2017-11-09T06:06:44Z",
+      "side": 1,
+      "message": "awesome analysis. Yes, that causes the crash. I will update the bugtracker. Thanks",
+      "parentUuid": "751c3360_2382b1e6",
+      "revId": "6e9d55901f001a384597b78e5e96305d04090467",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "7844ae95_30f600eb",
         "filename": "ui/app_list/views/app_list_view.cc",
         "patchSetId": 4
