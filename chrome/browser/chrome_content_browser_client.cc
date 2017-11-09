@@ -283,6 +283,7 @@
 #include "chrome/browser/android/app_hooks.h"
 #include "chrome/browser/android/chrome_context_util.h"
 #include "chrome/browser/android/devtools_manager_delegate_android.h"
+#include "chrome/browser/android/download/intercept_download_navigation_throttle.h"
 #include "chrome/browser/android/ntp/new_tab_page_url_handler.h"
 #include "chrome/browser/android/service_tab_launcher.h"
 #include "chrome/browser/android/tab_android.h"
@@ -3296,6 +3297,7 @@ ChromeContentBrowserClient::CreateThrottlesForNavigation(
         navigation_interception::InterceptNavigationDelegate::CreateThrottleFor(
             handle));
   }
+  throttles.push_back(InterceptDownloadNavigationThrottle::Create(handle));
 #elif BUILDFLAG(ENABLE_EXTENSIONS)
   if (handle->IsInMainFrame()) {
     // Redirect some navigations to apps that have registered matching URL
