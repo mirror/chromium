@@ -78,24 +78,35 @@ int32_t GetInt32Param(const std::string& param_name, int32_t default_value) {
 HttpProxySocketParams::HttpProxySocketParams(
     const scoped_refptr<TransportSocketParams>& transport_params,
     const scoped_refptr<SSLSocketParams>& ssl_params,
+    const HostPortPair& quic_proxy_server,
+    QuicTransportVersion quic_version,
+    PrivacyMode quic_privacy_mode,
+    int quic_cert_verify_flags,
     const std::string& user_agent,
     const HostPortPair& endpoint,
     HttpAuthCache* http_auth_cache,
     HttpAuthHandlerFactory* http_auth_handler_factory,
     SpdySessionPool* spdy_session_pool,
+    QuicStreamFactory* quic_stream_factory,
     bool tunnel,
     ProxyDelegate* proxy_delegate)
     : transport_params_(transport_params),
       ssl_params_(ssl_params),
+      quic_proxy_server_(quic_proxy_server),
+      quic_version_(quic_version),
+      quic_privacy_mode_(quic_privacy_mode),
+      quic_cert_verify_flags_(quic_cert_verify_flags),
       spdy_session_pool_(spdy_session_pool),
+      quic_stream_factory_(quic_stream_factory),
       user_agent_(user_agent),
       endpoint_(endpoint),
       http_auth_cache_(tunnel ? http_auth_cache : NULL),
       http_auth_handler_factory_(tunnel ? http_auth_handler_factory : NULL),
       tunnel_(tunnel),
       proxy_delegate_(proxy_delegate) {
-  DCHECK((transport_params.get() == NULL && ssl_params.get() != NULL) ||
-         (transport_params.get() != NULL && ssl_params.get() == NULL));
+  DCHECK(quic_version == QUIC_VERSION_UNSUPPORTED
+             ? (transport_params.get() == NULL) != (ssl_params.get() == NULL)
+             : (transport_params.get() == NULL) && (ssl_params.get() == NULL));
 }
 
 const HostResolver::RequestInfo& HttpProxySocketParams::destination() const {
@@ -136,11 +147,16 @@ HttpProxyConnectJob::HttpProxyConnectJob(
           ssl_pool,
           params->transport_params(),
           params->ssl_params(),
+          params->quic_proxy_server(),
+          params->quic_version(),
+          params->quic_privacy_mode(),
+          params->quic_cert_verify_flags(),
           params->user_agent(),
           params->endpoint(),
           params->http_auth_cache(),
           params->http_auth_handler_factory(),
           params->spdy_session_pool(),
+          params->quic_stream_factory(),
           params->tunnel(),
           params->proxy_delegate(),
           this->net_log())) {}
