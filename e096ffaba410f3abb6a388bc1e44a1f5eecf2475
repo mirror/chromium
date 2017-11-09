@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "e380ce5d_436371cb",
+        "filename": "device/media_transfer_protocol/media_transfer_protocol_manager.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 52,
+      "author": {
+        "id": 1001934
+      },
+      "writtenOn": "2017-11-09T00:11:41Z",
+      "side": 1,
+      "message": "FATAL:media_transfer_protocol_manager.cc(52)] Check failed: bus_.\n\nIt sort of sucks to have a bunch of ifs just to make the test pass. I\u0027ll check if we can put in some fake bus and get back to you.",
+      "revId": "e096ffaba410f3abb6a388bc1e44a1f5eecf2475",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
