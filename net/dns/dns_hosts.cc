@@ -9,6 +9,7 @@
 #include "base/macros.h"
 #include "base/metrics/histogram_macros.h"
 #include "base/strings/string_util.h"
+#include "net/base/net_errors.h"
 #include "net/dns/dns_util.h"
 
 using base::StringPiece;
@@ -188,15 +189,15 @@ void ParseHosts(const std::string& contents, DnsHosts* dns_hosts) {
   ParseHostsWithCommaMode(contents, dns_hosts, comma_mode);
 }
 
-bool ParseHostsFile(const base::FilePath& path, DnsHosts* dns_hosts) {
+int ParseHostsFile(const base::FilePath& path, DnsHosts* dns_hosts) {
   dns_hosts->clear();
   // Missing file indicates empty HOSTS.
   if (!base::PathExists(path))
-    return true;
+    return 0;
 
   int64_t size;
   if (!base::GetFileSize(path, &size))
-    return false;
+    return ERR_FAILED;
 
   UMA_HISTOGRAM_COUNTS_1M("AsyncDNS.HostsSize",
                           static_cast<base::HistogramBase::Sample>(size));
@@ -204,14 +205,14 @@ bool ParseHostsFile(const base::FilePath& path, DnsHosts* dns_hosts) {
   // Reject HOSTS files larger than |kMaxHostsSize| bytes.
   const int64_t kMaxHostsSize = 1 << 25;  // 32MB
   if (size > kMaxHostsSize)
-    return false;
+    return ERR_FAILED;
 
   std::string contents;
   if (!base::ReadFileToString(path, &contents))
-    return false;
+    return ERR_FAILED;
 
   ParseHosts(contents, dns_hosts);
-  return true;
+  return size;
 }
 
 }  // namespace net

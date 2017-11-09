@@ -11,6 +11,7 @@
 #include "base/files/file.h"
 #include "base/files/file_path.h"
 #include "base/files/file_path_watcher.h"
+#include "base/files/file_util.h"
 #include "base/lazy_instance.h"
 #include "base/location.h"
 #include "base/macros.h"
@@ -19,10 +20,15 @@
 #include "base/threading/scoped_blocking_call.h"
 #include "base/threading/thread_task_runner_handle.h"
 #include "base/time/time.h"
+#include "base/trace_event/memory_allocator_dump.h"
+#include "base/trace_event/memory_dump_manager.h"
+#include "base/trace_event/memory_dump_provider.h"
+#include "base/trace_event/process_memory_dump.h"
 #include "base/trace_event/trace_event.h"
 #include "build/build_config.h"
 #include "net/base/ip_address.h"
 #include "net/base/ip_endpoint.h"
+#include "net/base/net_errors.h"
 #include "net/dns/dns_hosts.h"
 #include "net/dns/dns_protocol.h"
 #include "net/dns/notify_watcher_mac.h"
@@ -354,15 +360,39 @@ class DnsConfigServicePosix::ConfigReader : public SerialWorker {
 };
 
 // A SerialWorker that reads the HOSTS file and runs Callback.
-class DnsConfigServicePosix::HostsReader : public SerialWorker {
+class DnsConfigServicePosix::HostsReader
+    : public SerialWorker,
+      public base::trace_event::MemoryDumpProvider {
  public:
   explicit HostsReader(DnsConfigServicePosix* service)
       : service_(service),
         file_path_hosts_(service->file_path_hosts_),
-        success_(false) {}
+        hosts_size_(ERR_FAILED) {
+    base::trace_event::MemoryDumpManager::GetInstance()->RegisterDumpProvider(
+        this, "DnsConfigServicePosix::HostsReader",
+        base::ThreadTaskRunnerHandle::Get());
+  }
+
+  bool OnMemoryDump(const base::trace_event::MemoryDumpArgs& args,
+                    base::trace_event::ProcessMemoryDump* pmd) override {
+    base::trace_event::MemoryAllocatorDump* dump =
+        pmd->CreateAllocatorDump("net/dns_config_service_posix_hosts_reader");
+    dump->AddScalar("hosts_entry_count",
+                    base::trace_event::MemoryAllocatorDump::kUnitsObjects,
+                    hosts_.size());
+    if (hosts_size_ >= 0) {
+      dump->AddScalar("hosts_file_size",
+                      base::trace_event::MemoryAllocatorDump::kUnitsBytes,
+                      hosts_size_);
+    }
+    return true;
+  }
 
  private:
-  ~HostsReader() override {}
+  ~HostsReader() override {
+    base::trace_event::MemoryDumpManager::GetInstance()->UnregisterDumpProvider(
+        this);
+  }
 
   void DoWork() override {
     TRACE_HEAP_PROFILER_API_SCOPED_TASK_EXECUTION scoped_heap_context(
@@ -370,8 +400,8 @@ class DnsConfigServicePosix::HostsReader : public SerialWorker {
     base::TimeTicks start_time = base::TimeTicks::Now();
     base::ScopedBlockingCall scoped_blocking_call(
         base::BlockingType::MAY_BLOCK);
-    success_ = ParseHostsFile(file_path_hosts_, &hosts_);
-    UMA_HISTOGRAM_BOOLEAN("AsyncDNS.HostParseResult", success_);
+    hosts_size_ = ParseHostsFile(file_path_hosts_, &hosts_);
+    UMA_HISTOGRAM_BOOLEAN("AsyncDNS.HostParseResult", hosts_size_ >= 0);
     UMA_HISTOGRAM_TIMES("AsyncDNS.HostsParseDuration",
                         base::TimeTicks::Now() - start_time);
   }
@@ -379,7 +409,7 @@ class DnsConfigServicePosix::HostsReader : public SerialWorker {
   void OnWorkFinished() override {
     TRACE_HEAP_PROFILER_API_SCOPED_TASK_EXECUTION scoped_heap_context(
         "net/dns/hostsreaderfinished");
-    if (success_) {
+    if (hosts_size_ >= 0) {
       service_->OnHostsRead(hosts_);
     } else {
       LOG(WARNING) << "Failed to read DnsHosts.";
@@ -394,7 +424,8 @@ class DnsConfigServicePosix::HostsReader : public SerialWorker {
   const base::FilePath file_path_hosts_;
   // Written in DoWork, read in OnWorkFinished, no locking necessary.
   DnsHosts hosts_;
-  bool success_;
+  // Negative value indicates that hosts read failed.
+  int hosts_size_;
 
   DISALLOW_COPY_AND_ASSIGN(HostsReader);
 };
