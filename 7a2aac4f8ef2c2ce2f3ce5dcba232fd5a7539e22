@@ -164,6 +164,30 @@
       "revId": "7a2aac4f8ef2c2ce2f3ce5dcba232fd5a7539e22",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2e1df9d3_4932fd96",
+        "filename": "chrome/browser/sessions/session_data_deleter.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 127,
+      "author": {
+        "id": 1001809
+      },
+      "writtenOn": "2017-11-09T23:20:55Z",
+      "side": 1,
+      "message": "Arggh, I meant to ask you about that.  Thanks for bringing the issue up--it\u0027s a good question :-}.  \n\nSo moving this function into the service looks like an incredible PITA to me, because my scan of the possible things storage_policy_-\u003eIsStorageSessionOnly(url) might depend on looked pretty large, and I didn\u0027t see a way to write a delete function to encapsulate/parameterize them.  But that was based on five minutes of scanning, and I might be wrong.  Still, I\u0027d rather not.\n\nThe performance *doesn\u0027t* look that bad to me, because while this is a lot of mojo IPCs, they\u0027re pipelined.  So I wouldn\u0027t actually expect very many context switches, though there will obviously be a lot of tasks dispatched from the message loop on the serving side.  So I elected to just go with individual calls.\n\nThe two other possibilities I considered were:\n* Expanding the deletion functionality to include scheme as well as host, which would means that we could reduce the number of IPCs to one per scheme+host that IsStorageSessionOnly() marked for deletion instead of one per cookie matching such a scheme/host.  This would add complexity to the code, and I\u0027m not sure how much it would help (depends on #cookies vs. #scheme+hosts).\n\n* Expanding the deletion functionality to take a batch of cookies rather than a single cookie, to reduce this all to a single IPC.  I\u0027m up for this if you/Ken thinks it\u0027s important performance wise.",
+      "parentUuid": "d687a6bb_2361a905",
+      "range": {
+        "startLine": 127,
+        "startChar": 8,
+        "endLine": 127,
+        "endChar": 60
+      },
+      "revId": "7a2aac4f8ef2c2ce2f3ce5dcba232fd5a7539e22",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
