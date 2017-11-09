@@ -1661,6 +1661,11 @@ void RenderFrameHostImpl::DidCommitProvisionalLoad(
     RenderWidgetHostImpl::From(GetView()->GetRenderWidgetHost())
         ->StartNewContentRenderingTimeout(validated_params->content_source_id);
   }
+
+  frame_->GetCanonicalUrlForSharing(
+      base::Bind([](const base::Optional<GURL>& url) {
+        // TODO: do something neat with |url|.
+      }));
 }
 
 void RenderFrameHostImpl::OnUpdateState(const PageState& state) {
