@@ -11,6 +11,7 @@
 
 #include "content/common/content_export.h"
 #include "content/common/service_worker/service_worker_types.h"
+#include "url/origin.h"
 
 namespace content {
 
@@ -59,6 +60,10 @@ struct CONTENT_EXPORT BackgroundFetchRegistration {
   // distinguish registrations in case a developer re-uses |developer_id|s. Not
   // exposed to JavaScript.
   std::string unique_id;
+
+  url::Origin origin;
+
+  int64_t creation_microseconds_since_unix_epoch;
 
   uint64_t upload_total = 0;
   uint64_t uploaded = 0;
