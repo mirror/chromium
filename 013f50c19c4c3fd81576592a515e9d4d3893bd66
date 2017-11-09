@@ -55,6 +55,24 @@
     },
     {
       "key": {
+        "uuid": "58b0bc71_b95200ab",
+        "filename": "chrome/browser/ui/views/translate/translate_language_browsertest.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 259,
+      "author": {
+        "id": 1215199
+      },
+      "writtenOn": "2017-11-09T23:32:16Z",
+      "side": 1,
+      "message": "If I just modify the model, I think it would go out of sync with the view (i.e. the combobox would be on one index, and the model would have another selected) - so I\u0027d have to add \"by code\" methods to both the view and model.\n\nIf it\u0027s up to me, I\u0027d like to leave as-is.",
+      "parentUuid": "1327e5b1_299ee80e",
+      "revId": "013f50c19c4c3fd81576592a515e9d4d3893bd66",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "ca6a8752_c48a3e70",
         "filename": "components/translate/core/browser/translate_manager.cc",
         "patchSetId": 4
