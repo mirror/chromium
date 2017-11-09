@@ -37,6 +37,24 @@
     },
     {
       "key": {
+        "uuid": "e2922b51_805905cb",
+        "filename": "ash/login/ui/login_password_view.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 383,
+      "author": {
+        "id": 1179965
+      },
+      "writtenOn": "2017-11-09T02:22:48Z",
+      "side": 1,
+      "message": "By the way, the wifi password box allows revealing the password, so it will most likely require the text field to apply different glyph spacing when the password is toggled between revealed/obscured states. I think this part needs UX input.",
+      "parentUuid": "becc57fa_ccee4043",
+      "revId": "66025470dca6f3200be83e1da226606850133e90",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "f7ca7ad2_287bfa37",
         "filename": "ui/gfx/render_text.cc",
         "patchSetId": 3
