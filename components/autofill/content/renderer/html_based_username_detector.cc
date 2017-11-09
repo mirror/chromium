@@ -11,6 +11,7 @@
 #include "base/strings/string_split.h"
 #include "base/strings/utf_string_conversions.h"
 #include "components/autofill/content/renderer/form_autofill_util.h"
+#include "components/autofill/content/renderer/html_based_username_detector_vocabulary.h"
 #include "third_party/WebKit/public/web/WebFormElement.h"
 
 using blink::WebFormControlElement;
@@ -32,234 +33,6 @@ struct UsernameFieldData {
   std::vector<base::string16> user_short_tokens;
 };
 
-// "Latin" translations are the translations of the words for which the
-// original translation is similar to the romanized translation (translation of
-// the word only using ISO basic Latin alphabet).
-// "Non-latin" translations are the translations of the words that have custom,
-// country specific characters.
-const char* const kNegativeLatin[] = {
-    "pin",    "parola",   "wagwoord",   "wachtwoord",
-    "fake",   "parole",   "givenname",  "achinsinsi",
-    "token",  "parool",   "firstname",  "facalfaire",
-    "fname",  "lozinka",  "pasahitza",  "focalfaire",
-    "lname",  "passord",  "pasiwedhi",  "iphasiwedi",
-    "geslo",  "huahuna",  "passwuert",  "katalaluan",
-    "heslo",  "fullname", "phasewete",  "adgangskode",
-    "parol",  "optional", "wachtwurd",  "contrasenya",
-    "sandi",  "lastname", "cyfrinair",  "contrasinal",
-    "senha",  "kupuhipa", "katasandi",  "kalmarsirri",
-    "hidden", "password", "loluszais",  "tenimiafina",
-    "second", "passwort", "middlename", "paroladordine",
-    "codice", "pasvorto", "familyname", "inomboloyokuvula",
-    "modpas", "salasana", "motdepasse", "numeraeleiloaesesi"};
-constexpr int kNegativeLatinSize = arraysize(kNegativeLatin);
-
-const char* const kNegativeNonLatin[] = {"fjalëkalim",
-                                         "የይለፍቃል",
-                                         "كلمهالسر",
-                                         "գաղտնաբառ",
-                                         "пароль",
-                                         "পাসওয়ার্ড",
-                                         "парола",
-                                         "密码",
-                                         "密碼",
-                                         "დაგავიწყდათ",
-                                         "κωδικόςπρόσβασης",
-                                         "પાસવર્ડ",
-                                         "סיסמה",
-                                         "पासवर्ड",
-                                         "jelszó",
-                                         "lykilorð",
-                                         "paswọọdụ",
-                                         "パスワード",
-                                         "ಪಾಸ್ವರ್ಡ್",
-                                         "пароль",
-                                         "ការពាក្យសម្ងាត់",
-                                         "암호",
-                                         "şîfre",
-                                         "купуясөз",
-                                         "ລະຫັດຜ່ານ",
-                                         "slaptažodis",
-                                         "лозинка",
-                                         "पासवर्ड",
-                                         "нууцүг",
-                                         "စကားဝှက်ကို",
-                                         "पासवर्ड",
-                                         "رمز",
-                                         "کلمهعبور",
-                                         "hasło",
-                                         "пароль",
-                                         "лозинка",
-                                         "پاسورڊ",
-                                         "මුරපදය",
-                                         "contraseña",
-                                         "lösenord",
-                                         "гузарвожа",
-                                         "கடவுச்சொல்",
-                                         "పాస్వర్డ్",
-                                         "รหัสผ่าน",
-                                         "пароль",
-                                         "پاسورڈ",
-                                         "mậtkhẩu",
-                                         "פּאַראָל",
-                                         "ọrọigbaniwọle"};
-constexpr int kNegativeNonLatinSize = arraysize(kNegativeNonLatin);
-
-const char* const kUsernameLatin[] = {
-    "gatti",      "uzantonomo",   "solonanarana",    "nombredeusuario",
-    "olumulo",    "nomenusoris",  "enwdefnyddiwr",   "nomdutilisateur",
-    "lolowera",   "notandanafn",  "nomedeusuario",   "vartotojovardas",
-    "username",   "ahanjirimara", "gebruikersnaam",  "numedeutilizator",
-    "brugernavn", "benotzernumm", "jinalamtumiaji",  "erabiltzaileizena",
-    "brukernavn", "benutzername", "sunanmaiamfani",  "foydalanuvchinomi",
-    "mosebedisi", "kasutajanimi", "ainmcleachdaidh", "igamalomsebenzisi",
-    "nomdusuari", "lomsebenzisi", "jenengpanganggo", "ingoakaiwhakamahi",
-    "nomeutente", "namapengguna"};
-constexpr int kUsernameLatinSize = arraysize(kUsernameLatin);
-
-const char* const kUsernameNonLatin[] = {"用户名",
-                                         "کاتيجونالو",
-                                         "用戶名",
-                                         "የተጠቃሚስም",
-                                         "логин",
-                                         "اسمالمستخدم",
-                                         "נאמען",
-                                         "کاصارفکانام",
-                                         "ユーザ名",
-                                         "όνομα χρήστη",
-                                         "brûkersnamme",
-                                         "корисничкоиме",
-                                         "nonitilizatè",
-                                         "корисничкоиме",
-                                         "ngaranpamaké",
-                                         "ຊື່ຜູ້ໃຊ້",
-                                         "användarnamn",
-                                         "యూజర్పేరు",
-                                         "korisničkoime",
-                                         "пайдаланушыаты",
-                                         "שםמשתמש",
-                                         "ім'якористувача",
-                                         "کارننوم",
-                                         "хэрэглэгчийннэр",
-                                         "nomedeusuário",
-                                         "имяпользователя",
-                                         "têntruynhập",
-                                         "பயனர்பெயர்",
-                                         "ainmúsáideora",
-                                         "ชื่อผู้ใช้",
-                                         "사용자이름",
-                                         "імякарыстальніка",
-                                         "lietotājvārds",
-                                         "потребителскоиме",
-                                         "uporabniškoime",
-                                         "колдонуучунунаты",
-                                         "kullanıcıadı",
-                                         "පරිශීලකනාමය",
-                                         "istifadəçiadı",
-                                         "օգտագործողիանունը",
-                                         "navêbikarhêner",
-                                         "ಬಳಕೆದಾರಹೆಸರು",
-                                         "emriipërdoruesit",
-                                         "वापरकर्तानाव",
-                                         "käyttäjätunnus",
-                                         "વપરાશકર્તાનામ",
-                                         "felhasználónév",
-                                         "उपयोगकर्तानाम",
-                                         "nazwaużytkownika",
-                                         "ഉപയോക്തൃനാമം",
-                                         "სახელი",
-                                         "အသုံးပြုသူအမည်",
-                                         "نامکاربری",
-                                         "प्रयोगकर्तानाम",
-                                         "uživatelskéjméno",
-                                         "ব্যবহারকারীরনাম",
-                                         "užívateľskémeno",
-                                         "ឈ្មោះអ្នកប្រើប្រាស់"};
-constexpr int kUsernameNonLatinSize = arraysize(kUsernameNonLatin);
-
-const char* const kUserLatin[] = {
-    "user",   "wosuta",   "gebruiker",  "utilizator",
-    "usor",   "notandi",  "gumagamit",  "vartotojas",
-    "fammi",  "olumulo",  "maiamfani",  "cleachdaidh",
-    "utent",  "pemakai",  "mpampiasa",  "umsebenzisi",
-    "bruger", "usuario",  "panganggo",  "utilisateur",
-    "bruker", "benotzer", "uporabnik",  "doutilizador",
-    "numake", "benutzer", "covneegsiv", "erabiltzaile",
-    "usuari", "kasutaja", "defnyddiwr", "kaiwhakamahi",
-    "utente", "korisnik", "mosebedisi", "foydalanuvchi",
-    "uzanto", "pengguna", "mushandisi"};
-constexpr int kUserLatinSize = arraysize(kUserLatin);
-
-const char* const kUserNonLatin[] = {"用户",
-                                     "użytkownik",
-                                     "tagatafaʻaaogā",
-                                     "دکارونکيعکس",
-                                     "用戶",
-                                     "užívateľ",
-                                     "корисник",
-                                     "карыстальнік",
-                                     "brûker",
-                                     "kullanıcı",
-                                     "истифода",
-                                     "អ្នកប្រើ",
-                                     "ọrụ",
-                                     "ተጠቃሚ",
-                                     "באַניצער",
-                                     "хэрэглэгчийн",
-                                     "يوزر",
-                                     "istifadəçi",
-                                     "ຜູ້ໃຊ້",
-                                     "пользователь",
-                                     "صارف",
-                                     "meahoʻohana",
-                                     "потребител",
-                                     "वापरकर्ता",
-                                     "uživatel",
-                                     "ユーザー",
-                                     "מִשׁתַמֵשׁ",
-                                     "ผู้ใช้งาน",
-                                     "사용자",
-                                     "bikaranîvan",
-                                     "колдонуучу",
-                                     "વપરાશકર્તા",
-                                     "përdorues",
-                                     "ngườidùng",
-                                     "корисникот",
-                                     "उपयोगकर्ता",
-                                     "itilizatè",
-                                     "χρήστης",
-                                     "користувач",
-                                     "օգտվողիանձնագիրը",
-                                     "használó",
-                                     "faoiúsáideoir",
-                                     "შესახებ",
-                                     "ব্যবহারকারী",
-                                     "lietotājs",
-                                     "பயனர்",
-                                     "ಬಳಕೆದಾರ",
-                                     "ഉപയോക്താവ്",
-                                     "کاربر",
-                                     "యూజర్",
-                                     "පරිශීලක",
-                                     "प्रयोगकर्ता",
-                                     "användare",
-                                     "المستعمل",
-                                     "пайдаланушы",
-                                     "အသုံးပြုသူကို",
-                                     "käyttäjä"};
-constexpr int kUserNonLatinSize = arraysize(kUserNonLatin);
-
-const char* const kTechnicalWords[] = {
-    "uid",         "newtel",     "uaccount",   "regaccount",  "ureg",
-    "loginid",     "laddress",   "accountreg", "regid",       "regname",
-    "loginname",   "membername", "uname",      "ucreate",     "loginmail",
-    "accountname", "umail",      "loginreg",   "accountid",   "loginaccount",
-    "ulogin",      "regemail",   "newmobile",  "accountlogin"};
-constexpr int kTechnicalWordsSize = arraysize(kTechnicalWords);
-
-const char* const kWeakWords[] = {"id", "login", "mail"};
-constexpr int kWeakWordsSize = arraysize(kWeakWords);
-
 // Words that the algorithm looks for are split into multiple categories.
 // A category may contain latin dictionary and non-latin dictionary. It is
 // mandatory that it has latin one, but non-latin might be missing.
@@ -274,13 +47,14 @@ struct CategoryOfWords {
 // Short words will have different treatment than the others.
 constexpr int kMinimumWordLength = 4;
 
+// TODO
 void BuildValueAndShortTokens(
     const base::string16& raw_value,
     base::string16* field_data_value,
     std::vector<base::string16>* field_data_short_tokens) {
   // List of separators that can appear in HTML attribute values.
   static const std::string kDelimiters =
-      "\"\'?%*@!\\/&^#:+~`;,>|<.[](){}-_ 0123456789";
+      "$\"\'?%*@!\\/&^#:+~`;,>|<.[](){}-_ 0123456789";
   base::string16 lowercase_value = base::i18n::ToLower(raw_value);
   std::vector<base::StringPiece16> tokens =
       base::SplitStringPiece(lowercase_value, base::ASCIIToUTF16(kDelimiters),
@@ -294,6 +68,7 @@ void BuildValueAndShortTokens(
                });
 
   for (const base::StringPiece16& token : short_tokens) {
+    LOG(ERROR) << "short token " << token.as_string();
     field_data_short_tokens->push_back(token.as_string());
   }
 }
@@ -312,6 +87,8 @@ UsernameFieldData ComputeFieldData(const blink::WebInputElement& input_element,
                            &field_data.developer_short_tokens);
   BuildValueAndShortTokens(field.label, &field_data.user_value,
                            &field_data.user_short_tokens);
+  LOG(ERROR) << "field " << field_data.developer_value << " "
+             << field_data.user_value;
   return field_data;
 }
 
@@ -353,13 +130,17 @@ bool SearchFieldInDictionary(const base::string16& value,
     if (strlen(dictionary[i]) < kMinimumWordLength) {
       // Treat short words by looking up for them in the tokens list.
       for (const base::string16& token : tokens) {
-        if (token == base::UTF8ToUTF16(dictionary[i]))
+        if (token == base::UTF8ToUTF16(dictionary[i])) {
+          LOG(ERROR) << "found " << dictionary[i] << " in " << token;
           return true;
+        }
       }
     } else {
       // Treat long words by looking for them as a substring in |value|.
-      if (value.find(base::UTF8ToUTF16(dictionary[i])) != std::string::npos)
+      if (value.find(base::UTF8ToUTF16(dictionary[i])) != std::string::npos) {
+        LOG(ERROR) << "found " << dictionary[i] << " in " << value;
         return true;
+      }
     }
   }
   return false;
@@ -389,9 +170,6 @@ bool ContainsWordFromCategory(const UsernameFieldData& possible_username,
 // usernames, because their computed values contain at least one negative word.
 void RemoveFieldsWithNegativeWords(
     std::vector<UsernameFieldData>* possible_usernames_data) {
-  // Words that certainly point to a non-username field.
-  // If field values contain at least one negative word, then the field is
-  // excluded from the list of possible usernames.
   static const CategoryOfWords kNegativeCategory{
       kNegativeLatin, kNegativeLatinSize, kNegativeNonLatin,
       kNegativeNonLatinSize};
@@ -428,6 +206,7 @@ bool FormContainsWordFromCategory(
     }
   }
 
+  // TODO
   if (count && count <= 2) {
     *username_element = chosen_field;
     return true;
@@ -442,27 +221,15 @@ bool FindUsernameFieldInternal(
     WebInputElement* username_element) {
   DCHECK(username_element);
 
-  // Translations of "username".
   static const CategoryOfWords kUsernameCategory{
       kUsernameLatin, kUsernameLatinSize, kUsernameNonLatin,
       kUsernameNonLatinSize};
-
-  // Translations of "user".
   static const CategoryOfWords kUserCategory{kUserLatin, kUserLatinSize,
                                              kUserNonLatin, kUserNonLatinSize};
-
-  // Words that certainly point to a username field, if they appear in developer
-  // value. They are technical words, because they can only be used as variable
-  // names, and not as stand-alone words.
   static const CategoryOfWords kTechnicalCategory{
       kTechnicalWords, kTechnicalWordsSize, nullptr, 0};
-
-  // Words that might point to a username field.They have the smallest priority
-  // in the heuristic, because there are also field attribute values that
-  // contain them, but are not username fields.
   static const CategoryOfWords kWeakCategory{kWeakWords, kWeakWordsSize,
                                              nullptr, 0};
-
   // These categories contain words that point to username field.
   static const CategoryOfWords kPositiveCategories[] = {
       kUsernameCategory, kUserCategory, kTechnicalCategory, kWeakCategory};
