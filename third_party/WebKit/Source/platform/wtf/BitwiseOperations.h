@@ -28,10 +28,6 @@
  * OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
 
-// TODO(palmer): The only caller of this code in Blink is PartitionAlloc. When
-// PA is moved to base, we can remove this file.
-// https://bugs.chromium.org/p/chromium/issues/detail?id=632441
-
 #ifndef WTF_BitwiseOperations_h
 #define WTF_BitwiseOperations_h
 
@@ -40,12 +36,9 @@
 
 namespace WTF {
 
-using base::bits::CountLeadingZeroBits32;
 using base::bits::CountLeadingZeroBitsSizeT;
-
-#if defined(ARCH_CPU_64_BITS)
-using base::bits::CountLeadingZeroBits64;
-#endif
+using base::bits::CountLeadingZeroBits;
+using base::bits::CountTrailingZeroBits;
 
 }  // namespace WTF
 
