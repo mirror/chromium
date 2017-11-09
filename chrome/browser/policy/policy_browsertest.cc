@@ -371,6 +371,40 @@ class MakeRequestFail {
   const std::string host_;
 };
 
+// Registers a handler to respond to requests whose path matches |match_path|.
+// The response contents are generated from |template_file|, by replacing all
+// "${URL_PLACEHOLDER}" substrings in the file with the request URL excluding
+// filename, query values and fragment.
+void RegisterURLReplacingHandler(net::EmbeddedTestServer* test_server,
+                                 const std::string& match_path,
+                                 const base::FilePath& template_file) {
+  test_server->RegisterRequestHandler(base::Bind(
+      [](net::EmbeddedTestServer* test_server, const std::string& match_path,
+         const base::FilePath& template_file,
+         const net::test_server::HttpRequest& request) {
+        GURL url = test_server->GetURL(request.relative_url);
+        LOG(ERROR) << "match_path: " << match_path
+                   << " relative_url: " << request.relative_url
+                   << "  path: " << url.path();
+        if (url.path() != match_path)
+          return std::unique_ptr<net::test_server::HttpResponse>();
+
+        std::string contents;
+        CHECK(base::ReadFileToString(template_file, &contents));
+
+        GURL url_base = url.GetWithoutFilename();
+        base::ReplaceSubstringsAfterOffset(&contents, 0, "${URL_PLACEHOLDER}",
+                                           url_base.spec());
+
+        auto response = std::make_unique<net::test_server::BasicHttpResponse>();
+        response->set_content(contents);
+        response->set_content_type("text/plain");
+        return std::unique_ptr<net::test_server::HttpResponse>(
+            std::move(response));
+      },
+      base::Unretained(test_server), match_path, template_file));
+}
+
 // Verifies that the given url |spec| can be opened. This assumes that |spec|
 // points at empty.html in the test data dir.
 void CheckCanOpenURL(Browser* browser, const std::string& spec) {
@@ -644,9 +678,9 @@ class PolicyTest : public InProcessBrowserTest {
 
   void SetUpOnMainThread() override {
     host_resolver()->AddRule("*", "127.0.0.1");
-    BrowserThread::PostTask(
+    /*BrowserThread::PostTask(
         BrowserThread::IO, FROM_HERE,
-        base::BindOnce(chrome_browser_net::SetUrlRequestMocksEnabled, true));
+        base::BindOnce(chrome_browser_net::SetUrlRequestMocksEnabled, true));*/
     if (extension_service()->updater()) {
       extension_service()->updater()->SetExtensionCacheForTesting(
           test_extension_cache_.get());
@@ -1500,6 +1534,20 @@ IN_PROC_BROWSER_TEST_F(PolicyTest, MAYBE_ExtensionInstallBlacklistWildcard) {
 IN_PROC_BROWSER_TEST_F(PolicyTest, ExtensionInstallBlacklistSharedModules) {
   // Verifies that shared_modules are not affected by the blacklist.
 
+  base::FilePath base_path;
+  PathService::Get(chrome::DIR_TEST_DATA, &base_path);
+  base::FilePath update_xml_template_path =
+      base_path.Append(kTestExtensionsDir)
+          .AppendASCII("policy_shared_module")
+          .AppendASCII("update_template.xml");
+
+  std::string update_xml_path =
+      "/" + base::FilePath(kTestExtensionsDir).MaybeAsASCII() +
+      "/policy_shared_module/gen_update.xml";
+  RegisterURLReplacingHandler(embedded_test_server(), update_xml_path,
+                              update_xml_template_path);
+  ASSERT_TRUE(embedded_test_server()->Start());
+
   const char kImporterId[] = "pchakhniekfaeoddkifplhnfbffomabh";
   const char kSharedModuleId[] = "nfgclafboonjbiafbllihiailjlhelpm";
 
@@ -1514,11 +1562,7 @@ IN_PROC_BROWSER_TEST_F(PolicyTest, ExtensionInstallBlacklistSharedModules) {
 
   // Mock the webstore update URL. This is where the shared module extension
   // will be installed from.
-  base::FilePath update_xml_path = base::FilePath(kTestExtensionsDir)
-                                       .AppendASCII("policy_shared_module")
-                                       .AppendASCII("update.xml");
-  GURL update_xml_url(
-      URLRequestMockHTTPJob::GetMockUrl(update_xml_path.MaybeAsASCII()));
+  GURL update_xml_url = embedded_test_server()->GetURL(update_xml_path);
   extension_test_util::SetGalleryUpdateURL(update_xml_url);
   ui_test_utils::NavigateToURL(browser(), update_xml_url);
 
