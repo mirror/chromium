@@ -79,8 +79,11 @@ void TabDialogsViewsMac::ShowManagePasswordsBubble(bool user_action) {
   LocationBarBubbleDelegateView::DisplayReason reason =
       user_action ? LocationBarBubbleDelegateView::USER_GESTURE
                   : LocationBarBubbleDelegateView::AUTOMATIC;
-  ManagePasswordsBubbleView* bubble_view = new ManagePasswordsBubbleView(
-      web_contents(), nullptr, anchor_point, reason);
+
+  ManagePasswordsBubbleView::CreateBubble(web_contents(), nullptr, anchor_point,
+                                          reason);
+  LocationBarBubbleDelegateView* bubble_view =
+      ManagePasswordsBubbleView::manage_password_bubble();
   bubble_view->set_arrow(views::BubbleBorder::TOP_RIGHT);
   bubble_view->set_parent_window(parent);
   views::BubbleDialogDelegateView::CreateBubble(bubble_view);
