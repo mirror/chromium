@@ -22,6 +22,30 @@
       "revId": "2752074224f5445fdde72b9f2759eacde2e43f9d",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "35398f07_0aa0ca01",
+        "filename": "media/gpu/vaapi_wrapper.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 143,
+      "author": {
+        "id": 1113991
+      },
+      "writtenOn": "2017-11-09T16:56:24Z",
+      "side": 1,
+      "message": "That\u0027s what\u0027s being done on ToT, e.g. Media.VAVDA.DecoderFailure [1],\nwhere there\u0027s no reference of the amount of non-failures. This\nbehaviour is somewhat obfuscated by counting an enum instead of \nhaving a success/error situation.\n\nEasiest thing would be to also ping the UMA with a success case\nin the subsequent CL crrev.com/c/758879 where LazyProfileInfos\nis taken out of VaapiWrapper and there\u0027s a clear sucess/failure\npath.\n\nAlternatively I can make and count a UMA_HISTOGRAM_ENUMERATION().\n\nPlease instruct :-)\n\n[1] https://uma.googleplex.com/p/chrome/timeline_v2/?sid\u003ddd93f76e62decc5b670950326b9fe4ab",
+      "parentUuid": "4ef9a1d9_54c12cd0",
+      "range": {
+        "startLine": 143,
+        "startChar": 37,
+        "endLine": 143,
+        "endChar": 54
+      },
+      "revId": "2752074224f5445fdde72b9f2759eacde2e43f9d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
