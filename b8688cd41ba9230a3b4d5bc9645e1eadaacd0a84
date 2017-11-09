@@ -1,0 +1,55 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "bf1a274e_ebfd696a",
+        "filename": "third_party/WebKit/LayoutTests/http/tests/devtools/persistence/ensure-filesystem-create-files-doesnt-emit-change-first.js",
+        "patchSetId": 2
+      },
+      "lineNbr": 20,
+      "author": {
+        "id": 1113672
+      },
+      "writtenOn": "2017-11-09T08:57:54Z",
+      "side": 1,
+      "message": "let\u0027s fix the TestFileSystem to dispatch \"changed\" event when file is written.\nShould be easy to do:\n\ndevtools/front_end/bindings_test_runner/IsolatedFilesystemTestRunner.js:277\ndevtools/front_end/bindings_test_runner/IsolatedFilesystemTestRunner.js:285",
+      "revId": "b8688cd41ba9230a3b4d5bc9645e1eadaacd0a84",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f5f7a760_6c096631",
+        "filename": "third_party/WebKit/LayoutTests/http/tests/devtools/persistence/ensure-filesystem-create-files-doesnt-emit-change-first.js",
+        "patchSetId": 2
+      },
+      "lineNbr": 26,
+      "author": {
+        "id": 1113672
+      },
+      "writtenOn": "2017-11-09T08:57:54Z",
+      "side": 1,
+      "message": "why do you need this?",
+      "revId": "b8688cd41ba9230a3b4d5bc9645e1eadaacd0a84",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8120b0d2_fa396a40",
+        "filename": "third_party/WebKit/Source/devtools/front_end/persistence/FileSystemWorkspaceBinding.js",
+        "patchSetId": 2
+      },
+      "lineNbr": 501,
+      "author": {
+        "id": 1113672
+      },
+      "writtenOn": "2017-11-09T08:57:54Z",
+      "side": 1,
+      "message": "Why are you sure that path has a trailing \u0027/\u0027? Also, are you sure that this._fileSystemPath doesn\u0027t have a trailing \u0027/\u0027?",
+      "revId": "b8688cd41ba9230a3b4d5bc9645e1eadaacd0a84",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
