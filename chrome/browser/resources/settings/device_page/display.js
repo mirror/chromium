@@ -582,4 +582,11 @@ Polymer({
         this.getPref('ash.night_light.schedule_type').value ==
         NightLightScheduleType.CUSTOM;
   },
+
+  /** @private */
+  getTemperatureDivClass_: function(nightLightEnabled) {
+    return nightLightEnabled ?
+        'settings-box indented continuation' :
+        'settings-box indented continuation disabled-box';
+  },
 });
