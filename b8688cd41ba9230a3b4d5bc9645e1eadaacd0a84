@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "0148e17e_8832eb93",
+        "filename": "third_party/WebKit/LayoutTests/http/tests/devtools/persistence/ensure-filesystem-create-files-doesnt-emit-change-first.js",
+        "patchSetId": 2
+      },
+      "lineNbr": 20,
+      "author": {
+        "id": 1148840
+      },
+      "writtenOn": "2017-11-09T22:28:55Z",
+      "side": 1,
+      "message": "I am doing something more specific. It should be more clear now in the new cl.",
+      "parentUuid": "bf1a274e_ebfd696a",
+      "revId": "b8688cd41ba9230a3b4d5bc9645e1eadaacd0a84",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "f5f7a760_6c096631",
         "filename": "third_party/WebKit/LayoutTests/http/tests/devtools/persistence/ensure-filesystem-create-files-doesnt-emit-change-first.js",
         "patchSetId": 2
@@ -30,6 +48,24 @@
       "writtenOn": "2017-11-09T08:57:54Z",
       "side": 1,
       "message": "why do you need this?",
+      "revId": "b8688cd41ba9230a3b4d5bc9645e1eadaacd0a84",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "969fd91b_45b9a8d2",
+        "filename": "third_party/WebKit/LayoutTests/http/tests/devtools/persistence/ensure-filesystem-create-files-doesnt-emit-change-first.js",
+        "patchSetId": 2
+      },
+      "lineNbr": 26,
+      "author": {
+        "id": 1148840
+      },
+      "writtenOn": "2017-11-09T22:28:55Z",
+      "side": 1,
+      "message": "Because I want to ensure promises are resolved. This path is littered with promises.",
+      "parentUuid": "f5f7a760_6c096631",
       "revId": "b8688cd41ba9230a3b4d5bc9645e1eadaacd0a84",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -50,6 +86,24 @@
       "revId": "b8688cd41ba9230a3b4d5bc9645e1eadaacd0a84",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4acb5fd8_801f6c2c",
+        "filename": "third_party/WebKit/Source/devtools/front_end/persistence/FileSystemWorkspaceBinding.js",
+        "patchSetId": 2
+      },
+      "lineNbr": 501,
+      "author": {
+        "id": 1148840
+      },
+      "writtenOn": "2017-11-09T22:28:55Z",
+      "side": 1,
+      "message": "yes, initialGitFolders() also adds a \u0027/\u0027.",
+      "parentUuid": "8120b0d2_fa396a40",
+      "revId": "b8688cd41ba9230a3b4d5bc9645e1eadaacd0a84",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
