@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "49ef54be_51f58e7e",
+        "filename": "third_party/WebKit/LayoutTests/external/wpt/service-workers/service-worker/detached-context.https.html",
+        "patchSetId": 3
+      },
+      "lineNbr": 108,
+      "author": {
+        "id": 1001472
+      },
+      "writtenOn": "2017-11-09T08:05:19Z",
+      "side": 1,
+      "message": "This one\u0027s sketchier than others, but let\u0027s see.",
+      "revId": "22b6e13bd9fd456b5f4a2c7338d46911b57452d0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
