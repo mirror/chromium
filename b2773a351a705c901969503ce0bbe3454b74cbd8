@@ -1,0 +1,106 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "21f9ee8c_4cae9b8a",
+        "filename": "third_party/WebKit/Source/build/scripts/core/css/properties/templates/CSSProperty.h.tmpl",
+        "patchSetId": 10
+      },
+      "lineNbr": 59,
+      "author": {
+        "id": 1215107
+      },
+      "writtenOn": "2017-11-09T22:40:47Z",
+      "side": 1,
+      "message": "these don\u0027t seem to be used?",
+      "revId": "b2773a351a705c901969503ce0bbe3454b74cbd8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "cb8a66c8_0916f5bc",
+        "filename": "third_party/WebKit/Source/build/scripts/templates/StyleBuilder.cpp.tmpl",
+        "patchSetId": 10
+      },
+      "lineNbr": 31,
+      "author": {
+        "id": 1215107
+      },
+      "writtenOn": "2017-11-09T22:40:47Z",
+      "side": 1,
+      "message": "where is ToLonghand defined?",
+      "revId": "b2773a351a705c901969503ce0bbe3454b74cbd8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ec1c79ad_0d1d532c",
+        "filename": "third_party/WebKit/Source/core/css/parser/CSSPropertyParser.cpp",
+        "patchSetId": 10
+      },
+      "lineNbr": 92,
+      "author": {
+        "id": 1215107
+      },
+      "writtenOn": "2017-11-09T22:40:47Z",
+      "side": 1,
+      "message": "why not use your new api method here?",
+      "revId": "b2773a351a705c901969503ce0bbe3454b74cbd8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4b5c313c_8f2edb81",
+        "filename": "third_party/WebKit/Source/core/css/properties/Longhand.h",
+        "patchSetId": 10
+      },
+      "lineNbr": 31,
+      "author": {
+        "id": 1215107
+      },
+      "writtenOn": "2017-11-09T22:40:47Z",
+      "side": 1,
+      "message": "why not let the base class return false for both of these and *not* override the one that is false? any instantiation of CSSProperty that is neither longhand nor shorthand would logically return false for both.",
+      "revId": "b2773a351a705c901969503ce0bbe3454b74cbd8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6a4c5d1a_09ab0953",
+        "filename": "third_party/WebKit/Source/core/css/properties/longhands/ApplyAtRule.h",
+        "patchSetId": 10
+      },
+      "lineNbr": 20,
+      "author": {
+        "id": 1215107
+      },
+      "writtenOn": "2017-11-09T22:40:47Z",
+      "side": 1,
+      "message": "should this be a longhand? it doesn\u0027t seem like one. does it need anything that only Longhand has? I would expect these special cases to inherit straight from CSSProperty",
+      "revId": "b2773a351a705c901969503ce0bbe3454b74cbd8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a58ecd53_6cc3af67",
+        "filename": "third_party/WebKit/Source/core/css/properties/longhands/Variable.h",
+        "patchSetId": 10
+      },
+      "lineNbr": 19,
+      "author": {
+        "id": 1215107
+      },
+      "writtenOn": "2017-11-09T22:40:47Z",
+      "side": 1,
+      "message": "should this be a longhand?",
+      "revId": "b2773a351a705c901969503ce0bbe3454b74cbd8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
