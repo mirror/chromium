@@ -258,6 +258,30 @@
       "revId": "9d7ac85521b88c3b785ce3b8199223bd5233005c",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6b134419_12c66b1c",
+        "filename": "content/browser/network_service_restart_browsertest.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 115,
+      "author": {
+        "id": 1115968
+      },
+      "writtenOn": "2017-11-09T23:24:17Z",
+      "side": 1,
+      "message": "Not quite.  I\u0027m concerned that this code is holding onto a raw mojom::NetworkContext*.  Since SimulateNetworkCrash both crashes the other process, and spins the MessageLoop, it\u0027s possible that if anything else tries to make a network request (Or do anything else network related) that a new NetworkContextPtr will be created, and our own mojom::NetworkContext* will be invalidated.\n\nSo the bug is actually in this test itself, not in other clients.\n\n\n\n\nEven with that aside...I\u0027m once again a bit worried about the other test (Once again).  The ERR_FAILED LoadBasicRequest creates a URLLoader from the NetworkContext.  Then when the URLLoader pipe is closed, fails the request.  I\u0027m not sure if we\u0027re guaranteed that we\u0027ll notice the URLLoader pipe fails to be created strictly after the NetworkContext starts exposing to consumers the fact that it\u0027s been disconnected.  Are there docs on this?",
+      "parentUuid": "9b10bbf7_c12537c3",
+      "range": {
+        "startLine": 115,
+        "startChar": 29,
+        "endLine": 115,
+        "endChar": 30
+      },
+      "revId": "9d7ac85521b88c3b785ce3b8199223bd5233005c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
