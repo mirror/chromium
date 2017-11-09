@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "20a42f7b_f34625e8",
+        "filename": "chrome/browser/extensions/api/certificate_provider/certificate_provider_apitest.cc",
+        "patchSetId": 15
+      },
+      "lineNbr": 93,
+      "author": {
+        "id": 1126309
+      },
+      "writtenOn": "2017-11-09T16:26:24Z",
+      "side": 0,
+      "message": "The certificateProvider API consumer used to have to add the PKCS#1 padding on their own. Isn\u0027t the CL breaking this?\n\n(Sorry, it\u0027s unclear to me from OpenSSL docs, and I didn\u0027t have time to check this manually.)",
+      "revId": "102b7c61aefa7d5be6bbe7b85ecf418b7071eb0e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
