@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "dd30fb33_3914271b",
+        "filename": "third_party/libvpx/BUILD.gn",
+        "patchSetId": 8
+      },
+      "lineNbr": 213,
+      "author": {
+        "id": 1117029
+      },
+      "writtenOn": "2017-11-09T03:50:21Z",
+      "side": 1,
+      "message": "I believe clang-cl is the default compiler now.",
+      "parentUuid": "2c3ed072_1d425e01",
+      "revId": "ef7d400e43fcbef328570b9f2f77c061dc74eee8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "63231388_1c05be4f",
         "filename": "third_party/libvpx/generate_gni.sh",
         "patchSetId": 8
