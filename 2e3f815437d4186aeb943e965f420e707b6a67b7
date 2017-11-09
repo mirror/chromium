@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "69cfc2cb_0b1b8ea9",
+        "filename": "media/audio/win/core_audio_util_win.cc",
+        "patchSetId": 10
+      },
+      "lineNbr": 239,
+      "author": {
+        "id": 1153409
+      },
+      "writtenOn": "2017-11-09T14:45:10Z",
+      "side": 0,
+      "message": "It looks like we used to fail creating a \"\" device, and now we create a default one?",
+      "revId": "2e3f815437d4186aeb943e965f420e707b6a67b7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
