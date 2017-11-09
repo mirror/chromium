@@ -63,6 +63,17 @@ LayoutUnit ResolveInlineLength(const NGConstraintSpace& constraint_space,
   if (type != LengthResolveType::kMarginBorderPaddingSize) {
     border_and_padding = ComputeBorders(constraint_space, style) +
                          ComputePadding(constraint_space, style);
+    if (!IsParallelWritingMode(
+            constraint_space.WritingMode(),
+            FromPlatformWritingMode(style.GetWritingMode()))) {
+      border_and_padding =
+          border_and_padding
+              .ConvertToPhysical(
+                  FromPlatformWritingMode(style.GetWritingMode()),
+                  style.Direction())
+              .ConvertToLogical(constraint_space.WritingMode(),
+                                constraint_space.Direction());
+    }
   }
   switch (length.GetType()) {
     case kAuto:
@@ -127,7 +138,6 @@ LayoutUnit ResolveBlockLength(const NGConstraintSpace& constraint_space,
                               LengthResolveType type) {
   DCHECK(!length.IsMaxSizeNone());
   DCHECK_NE(type, LengthResolveType::kMarginBorderPaddingSize);
-
   if (constraint_space.IsAnonymous())
     return content_size;
 
@@ -147,6 +157,17 @@ LayoutUnit ResolveBlockLength(const NGConstraintSpace& constraint_space,
   if (type != LengthResolveType::kMarginBorderPaddingSize) {
     border_and_padding = ComputeBorders(constraint_space, style) +
                          ComputePadding(constraint_space, style);
+    if (!IsParallelWritingMode(
+            constraint_space.WritingMode(),
+            FromPlatformWritingMode(style.GetWritingMode()))) {
+      border_and_padding =
+          border_and_padding
+              .ConvertToPhysical(
+                  FromPlatformWritingMode(style.GetWritingMode()),
+                  style.Direction())
+              .ConvertToLogical(constraint_space.WritingMode(),
+                                constraint_space.Direction());
+    }
   }
   switch (length.GetType()) {
     case kFillAvailable: {

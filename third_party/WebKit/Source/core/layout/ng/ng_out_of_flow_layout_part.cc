@@ -94,7 +94,7 @@ scoped_refptr<NGLayoutResult> NGOutOfFlowLayoutPart::LayoutDescendant(
           .SetTextDirection(container_style_.Direction())
           .SetAvailableSize(container_size_)
           .SetPercentageResolutionSize(container_size_)
-          .ToConstraintSpace(descendant_writing_mode);
+          .ToConstraintSpace(container_writing_mode);
   Optional<MinMaxSize> min_max_size;
   Optional<LayoutUnit> block_estimate;
 
