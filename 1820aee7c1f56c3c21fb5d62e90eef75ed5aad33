@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "23877375_1733cd33",
+        "filename": "chrome/browser/ui/views/frame/system_menu_model_builder.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 82,
+      "author": {
+        "id": 1166470
+      },
+      "writtenOn": "2017-11-09T23:02:18Z",
+      "side": 1,
+      "message": "added separate strings for this",
+      "parentUuid": "fc5ab90b_31bf9127",
+      "range": {
+        "startLine": 82,
+        "startChar": 50,
+        "endLine": 82,
+        "endChar": 70
+      },
+      "revId": "1820aee7c1f56c3c21fb5d62e90eef75ed5aad33",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "7942d6d6_040de254",
         "filename": "chrome/browser/ui/views/frame/system_menu_model_delegate.cc",
         "patchSetId": 3
@@ -36,6 +60,30 @@
       "writtenOn": "2017-11-09T01:59:11Z",
       "side": 1,
       "message": "Does linux really hide like this? I would expect disabling, but I\u0027m not familiar with exactly how it is wired.",
+      "range": {
+        "startLine": 69,
+        "startChar": 30,
+        "endLine": 69,
+        "endChar": 48
+      },
+      "revId": "1820aee7c1f56c3c21fb5d62e90eef75ed5aad33",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8f5e4cf7_ffc8e78e",
+        "filename": "chrome/browser/ui/views/frame/system_menu_model_delegate.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 69,
+      "author": {
+        "id": 1166470
+      },
+      "writtenOn": "2017-11-09T23:02:18Z",
+      "side": 1,
+      "message": "Yeah, all apps I\u0027ve tested have a menu entry toggling between maximize and restore.  Windows does the disabling though.  I don\u0027t really have a strong preference, so I can change it to use disabling if you think it makes more sense.",
+      "parentUuid": "7942d6d6_040de254",
       "range": {
         "startLine": 69,
         "startChar": 30,
