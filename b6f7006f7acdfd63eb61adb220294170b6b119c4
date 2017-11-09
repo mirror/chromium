@@ -1,0 +1,55 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "5a4472e7_5d0ea4cb",
+        "filename": "third_party/WebKit/Source/devtools/front_end/ui/treeoutline.js",
+        "patchSetId": 1
+      },
+      "lineNbr": 84,
+      "author": {
+        "id": 1113672
+      },
+      "writtenOn": "2017-11-09T01:14:26Z",
+      "side": 1,
+      "message": "private!",
+      "revId": "b6f7006f7acdfd63eb61adb220294170b6b119c4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4cbc35c1_eef2c41c",
+        "filename": "third_party/WebKit/Source/devtools/front_end/ui/treeoutline.js",
+        "patchSetId": 1
+      },
+      "lineNbr": 223,
+      "author": {
+        "id": 1113672
+      },
+      "writtenOn": "2017-11-09T01:14:26Z",
+      "side": 1,
+      "message": "make these private?",
+      "revId": "b6f7006f7acdfd63eb61adb220294170b6b119c4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4f18dacb_bc58f3e9",
+        "filename": "third_party/WebKit/Source/devtools/front_end/ui/treeoutline.js",
+        "patchSetId": 1
+      },
+      "lineNbr": 225,
+      "author": {
+        "id": 1113672
+      },
+      "writtenOn": "2017-11-09T01:14:26Z",
+      "side": 1,
+      "message": "while (first \u0026\u0026 !first.selectable)\n  first \u003d first.traverseNextTreeElement(true);\n...",
+      "revId": "b6f7006f7acdfd63eb61adb220294170b6b119c4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
