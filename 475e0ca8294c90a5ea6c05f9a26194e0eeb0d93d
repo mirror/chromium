@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "8870f6ab_3c832f0d",
+        "filename": "ash/system/web_notification/login_state_notification_blocker.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 28,
+      "author": {
+        "id": 1000045
+      },
+      "writtenOn": "2017-11-09T00:46:10Z",
+      "side": 1,
+      "message": "Should this be the same as ShouldShowNotificationAsPopup? What happens if this returns true (for example, you\u0027re at the multiprofile add-user screen) but ShouldShowNotificationAsPopup() returns false?\n\nDitto for \"always show\" notifications, like low battery?",
+      "revId": "475e0ca8294c90a5ea6c05f9a26194e0eeb0d93d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
