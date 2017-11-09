@@ -22,6 +22,30 @@
       "revId": "c57799e77bf84c69b8b6960c1aaac2ad13a6ddaf",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "13d07f60_64e2dcd5",
+        "filename": "chrome/browser/chromeos/printing/synced_printers_manager.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 205,
+      "author": {
+        "id": 1242535
+      },
+      "writtenOn": "2017-11-09T17:50:32Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "d02adcce_03368007",
+      "range": {
+        "startLine": 205,
+        "startChar": 16,
+        "endLine": 205,
+        "endChar": 71
+      },
+      "revId": "c57799e77bf84c69b8b6960c1aaac2ad13a6ddaf",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
