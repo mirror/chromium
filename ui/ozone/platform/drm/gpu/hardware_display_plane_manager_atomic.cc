@@ -6,6 +6,7 @@
 
 #include "base/bind.h"
 #include "base/stl_util.h"
+#include "base/task_scheduler/post_task.h"
 #include "ui/ozone/platform/drm/gpu/crtc_controller.h"
 #include "ui/ozone/platform/drm/gpu/drm_device.h"
 #include "ui/ozone/platform/drm/gpu/hardware_display_plane_atomic.h"
@@ -114,6 +115,15 @@ bool HardwareDisplayPlaneManagerAtomic::DisableOverlayPlanes(
 
   plane_list->atomic_property_set.reset(drmModeAtomicAlloc());
   return ret;
+}
+
+void HardwareDisplayPlaneManagerAtomic::WaitForRender(
+    base::OnceClosure render_wait_task,
+    base::OnceClosure render_done_callback) {
+  base::PostTaskWithTraitsAndReply(
+      FROM_HERE,
+      {base::MayBlock(), base::TaskShutdownBehavior::CONTINUE_ON_SHUTDOWN},
+      std::move(render_wait_task), std::move(render_done_callback));
 }
 
 bool HardwareDisplayPlaneManagerAtomic::SetPlaneData(

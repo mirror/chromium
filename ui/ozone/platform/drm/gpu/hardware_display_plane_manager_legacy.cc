@@ -7,6 +7,7 @@
 #include <errno.h>
 
 #include "base/bind.h"
+#include "base/task_scheduler/post_task.h"
 #include "ui/ozone/platform/drm/gpu/crtc_controller.h"
 #include "ui/ozone/platform/drm/gpu/drm_device.h"
 #include "ui/ozone/platform/drm/gpu/scanout_buffer.h"
@@ -107,6 +108,15 @@ bool HardwareDisplayPlaneManagerLegacy::DisableOverlayPlanes(
                         return plane->type() == HardwareDisplayPlane::kOverlay;
                       }) == plane_list->old_plane_list.end());
   return true;
+}
+
+void HardwareDisplayPlaneManagerLegacy::WaitForRender(
+    base::OnceClosure render_wait_task,
+    base::OnceClosure render_done_callback) {
+  base::PostTaskWithTraitsAndReply(
+      FROM_HERE,
+      {base::MayBlock(), base::TaskShutdownBehavior::CONTINUE_ON_SHUTDOWN},
+      std::move(render_wait_task), std::move(render_done_callback));
 }
 
 bool HardwareDisplayPlaneManagerLegacy::SetPlaneData(

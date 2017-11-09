@@ -21,6 +21,8 @@ class HardwareDisplayPlaneManagerAtomic : public HardwareDisplayPlaneManager {
   bool Commit(HardwareDisplayPlaneList* plane_list,
               bool test_only) override;
   bool DisableOverlayPlanes(HardwareDisplayPlaneList* plane_list) override;
+  void WaitForRender(base::OnceClosure render_wait_task,
+                     base::OnceClosure render_done_callback) override;
 
  private:
   bool SetPlaneData(HardwareDisplayPlaneList* plane_list,
