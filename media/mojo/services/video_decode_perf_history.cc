@@ -11,6 +11,8 @@
 #include "base/strings/stringprintf.h"
 #include "media/base/video_codecs.h"
 #include "mojo/public/cpp/bindings/strong_binding.h"
+#include "services/metrics/public/cpp/ukm_builders.h"
+#include "services/metrics/public/cpp/ukm_recorder.h"
 
 namespace media {
 
@@ -94,6 +96,21 @@ void VideoDecodePerfHistory::GetPerfInfo(VideoCodecProfile profile,
                                 std::move(callback)));
 }
 
+void VideoDecodePerfHistory::AssessStats(
+    const VideoDecodeStatsDB::DecodeStatsEntry& stats,
+    bool* is_smooth,
+    bool* is_power_efficient) {
+  double percent_dropped =
+      static_cast<double>(stats.frames_dropped) / stats.frames_decoded;
+  double percent_power_efficient =
+      static_cast<double>(stats.frames_decoded_power_efficient) /
+      stats.frames_decoded;
+
+  *is_power_efficient =
+      percent_power_efficient >= kMinPowerEfficientDecodedFramePercent;
+  *is_smooth = percent_dropped <= kMaxSmoothDroppedFramesPercent;
+}
+
 void VideoDecodePerfHistory::OnGotStatsForRequest(
     const VideoDecodeStatsDB::VideoDescKey& video_key,
     GetPerfInfoCallback mojo_cb,
@@ -116,9 +133,7 @@ void VideoDecodePerfHistory::OnGotStatsForRequest(
         static_cast<double>(stats->frames_decoded_power_efficient) /
         stats->frames_decoded;
 
-    is_power_efficient =
-        percent_power_efficient >= kMinPowerEfficientDecodedFramePercent;
-    is_smooth = percent_dropped <= kMaxSmoothDroppedFramesPercent;
+    AssessStats(*stats, &is_smooth, &is_power_efficient);
   } else {
     // TODO(chcunningham/mlamouri): Refactor database API to give us nearby
     // stats whenever we don't have a perfect match. If higher
@@ -148,6 +163,7 @@ void VideoDecodePerfHistory::OnGotStatsForRequest(
 }
 
 void VideoDecodePerfHistory::SavePerfRecord(
+    const GURL& url,
     VideoCodecProfile profile,
     const gfx::Size& natural_size,
     int frame_rate,
@@ -165,7 +181,7 @@ void VideoDecodePerfHistory::SavePerfRecord(
   if (db_init_status_ != COMPLETE) {
     init_deferred_api_calls_.push_back(base::BindOnce(
         &VideoDecodePerfHistory::SavePerfRecord, weak_ptr_factory_.GetWeakPtr(),
-        profile, natural_size, frame_rate, frames_decoded, frames_dropped,
+        url, profile, natural_size, frame_rate, frames_decoded, frames_dropped,
         frames_decoded_power_efficient));
     InitDatabase();
     return;
@@ -177,12 +193,13 @@ void VideoDecodePerfHistory::SavePerfRecord(
 
   // Get past perf info and report UKM metrics before saving this record.
   db_->GetDecodeStats(
-      video_key,
-      base::BindOnce(&VideoDecodePerfHistory::OnGotStatsForSave,
-                     weak_ptr_factory_.GetWeakPtr(), video_key, new_stats));
+      video_key, base::BindOnce(&VideoDecodePerfHistory::OnGotStatsForSave,
+                                weak_ptr_factory_.GetWeakPtr(), url, video_key,
+                                new_stats));
 }
 
 void VideoDecodePerfHistory::OnGotStatsForSave(
+    const GURL& url,
     const VideoDecodeStatsDB::VideoDescKey& video_key,
     const VideoDecodeStatsDB::DecodeStatsEntry& new_stats,
     bool success,
@@ -195,17 +212,56 @@ void VideoDecodePerfHistory::OnGotStatsForSave(
     return;
   }
 
-  ReportUkmMetrics(video_key, new_stats, past_stats.get());
+  ReportUkmMetrics(url, video_key, new_stats, past_stats.get());
 
   db_->AppendDecodeStats(video_key, new_stats);
 }
 
 void VideoDecodePerfHistory::ReportUkmMetrics(
+    const GURL& url,
     const VideoDecodeStatsDB::VideoDescKey& video_key,
     const VideoDecodeStatsDB::DecodeStatsEntry& new_stats,
     VideoDecodeStatsDB::DecodeStatsEntry* past_stats) {
   DCHECK_CALLED_ON_VALID_SEQUENCE(sequence_checker_);
-  // TODO(chcunningham): Report metrics.
+  DCHECK(!url.is_empty());
+
+  // UKM may be unavailable in content_shell or other non-chrome/ builds; it
+  // may also be unavailable if browser shutdown has started; so this may be a
+  // nullptr. If it's unavailable, UKM reporting will be skipped.
+  ukm::UkmRecorder* ukm_recorder = ukm::UkmRecorder::Get();
+  if (!ukm_recorder)
+    return;
+
+  const int32_t source_id = ukm_recorder->GetNewSourceID();
+  ukm_recorder->UpdateSourceURL(source_id, url);
+  ukm::builders::Media_VideoDecodePerfRecord builder(source_id);
+
+  builder.SetVideo_CodecProfile(video_key.codec_profile);
+  builder.SetVideo_FramesPerSecond(video_key.frame_rate);
+  builder.SetVideo_NaturalHeight(video_key.size.height());
+  builder.SetVideo_NaturalWidth(video_key.size.width());
+
+  bool past_is_smooth = false;
+  bool past_is_efficient = false;
+  AssessStats(*past_stats, &past_is_smooth, &past_is_efficient);
+  builder.SetPerf_ApiWouldClaimIsSmooth(past_is_smooth);
+  builder.SetPerf_ApiWouldClaimIsPowerEfficient(past_is_efficient);
+  builder.SetPerf_PastVideoFramesDecoded(past_stats->frames_decoded);
+  builder.SetPerf_PastVideoFramesDropped(past_stats->frames_dropped);
+  builder.SetPerf_PastVideoFramesPowerEfficient(
+      past_stats->frames_decoded_power_efficient);
+
+  bool new_is_smooth = false;
+  bool new_is_efficient = false;
+  AssessStats(new_stats, &new_is_smooth, &new_is_efficient);
+  builder.SetPerf_RecordIsSmooth(new_is_smooth);
+  builder.SetPerf_RecordIsPowerEfficient(new_is_efficient);
+  builder.SetPerf_VideoFramesDecoded(new_stats.frames_decoded);
+  builder.SetPerf_VideoFramesDropped(new_stats.frames_dropped);
+  builder.SetPerf_VideoFramesPowerEfficient(
+      new_stats.frames_decoded_power_efficient);
+
+  builder.Record(ukm_recorder);
 }
 
 }  // namespace media

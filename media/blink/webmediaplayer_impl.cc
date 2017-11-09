@@ -1523,9 +1523,14 @@ void WebMediaPlayerImpl::CreateVideoDecodeStatsReporter() {
   if (is_encrypted_)
     return;
 
+  // Setup the recorder Mojo service.
+  mojom::VideoDecodeStatsRecorderPtr recorder =
+      create_decode_stats_recorder_cb_.Run();
+  recorder->SetURL(url::Origin(frame_->GetSecurityOrigin()).GetURL());
+
   // Create capabilities reporter and synchronize its initial state.
   video_decode_stats_reporter_.reset(new VideoDecodeStatsReporter(
-      create_decode_stats_recorder_cb_.Run(),
+      std::move(recorder),
       base::Bind(&WebMediaPlayerImpl::GetPipelineStatistics,
                  base::Unretained(this)),
       pipeline_metadata_.video_decoder_config));

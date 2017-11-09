@@ -31,6 +31,11 @@ void VideoDecodeStatsRecorder::Create(
       std::move(request));
 }
 
+void VideoDecodeStatsRecorder::SetURL(const GURL& url) {
+  DCHECK(url_.is_empty());
+  url_ = url;
+}
+
 void VideoDecodeStatsRecorder::StartNewRecord(VideoCodecProfile profile,
                                               const gfx::Size& natural_size,
                                               int frames_per_sec) {
@@ -81,7 +86,7 @@ void VideoDecodeStatsRecorder::FinalizeRecord() {
            << " decoded:" << frames_decoded_ << " dropped:" << frames_dropped_
            << " power efficient decoded:" << frames_decoded_power_efficient_;
 
-  perf_history_->SavePerfRecord(profile_, natural_size_, frames_per_sec_,
+  perf_history_->SavePerfRecord(url_, profile_, natural_size_, frames_per_sec_,
                                 frames_decoded_, frames_dropped_,
                                 frames_decoded_power_efficient_);
 }

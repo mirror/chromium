@@ -19,6 +19,7 @@
 #include "media/mojo/services/video_decode_stats_db.h"
 #include "mojo/public/cpp/bindings/binding_set.h"
 #include "ui/gfx/geometry/size.h"
+#include "url/gurl.h"
 
 namespace media {
 
@@ -61,7 +62,8 @@ class MEDIA_MOJO_EXPORT VideoDecodePerfHistory
                    GetPerfInfoCallback callback) override;
 
   // Save a record of the given performance stats for the described stream.
-  void SavePerfRecord(VideoCodecProfile profile,
+  void SavePerfRecord(const GURL& url,
+                      VideoCodecProfile profile,
                       const gfx::Size& natural_size,
                       int frame_rate,
                       uint32_t frames_decoded,
@@ -108,6 +110,7 @@ class MEDIA_MOJO_EXPORT VideoDecodePerfHistory
   // of the GetPerfInfo() API. Comparison is recorded via UKM. Then saves the
   // |new_*| performance stats to the database.
   void OnGotStatsForSave(
+      const GURL& url,
       const VideoDecodeStatsDB::VideoDescKey& video_key,
       const VideoDecodeStatsDB::DecodeStatsEntry& new_stats,
       bool success,
@@ -115,9 +118,14 @@ class MEDIA_MOJO_EXPORT VideoDecodePerfHistory
 
   // Report UKM metrics to grade the claims of the API by evaluating how well
   // |past_stats| predicts |new_stats|.
-  void ReportUkmMetrics(const VideoDecodeStatsDB::VideoDescKey& video_key,
+  void ReportUkmMetrics(const GURL& url,
+                        const VideoDecodeStatsDB::VideoDescKey& video_key,
                         const VideoDecodeStatsDB::DecodeStatsEntry& new_stats,
                         VideoDecodeStatsDB::DecodeStatsEntry* past_stats);
+
+  void AssessStats(const VideoDecodeStatsDB::DecodeStatsEntry& stats,
+                   bool* is_smooth,
+                   bool* is_power_efficient);
 
   // Factory for creating |db_|.
   std::unique_ptr<VideoDecodeStatsDBFactory> db_factory_;

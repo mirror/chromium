@@ -14,6 +14,7 @@
 #include "media/mojo/services/video_decode_stats_db.h"
 #include "testing/gmock/include/gmock/gmock.h"
 #include "testing/gtest/include/gtest/gtest.h"
+#include "url/gurl.h"
 
 namespace media {
 
@@ -22,6 +23,7 @@ const bool kIsSmooth = true;
 const bool kIsNotSmooth = false;
 const bool kIsPowerEfficient = true;
 const bool kIsNotPowerEfficient = false;
+const GURL kURL = GURL("http://example.com");
 
 class FakeVideoDecodeStatsDB : public VideoDecodeStatsDB {
  public:
@@ -175,12 +177,12 @@ TEST_P(VideoDecodePerfHistoryTest, GetPerfInfo_Smooth) {
       kFramesDecoded * kMaxSmoothDroppedFramesPercent + 1;
 
   // Add the entries.
-  perf_history_->SavePerfRecord(kKnownProfile, kKownSize, kSmoothFrameRate,
-                                kFramesDecoded, kSmoothFramesDropped,
-                                kNotPowerEfficientFramesDecoded);
-  perf_history_->SavePerfRecord(kKnownProfile, kKownSize, kNotSmoothFrameRate,
-                                kFramesDecoded, kNotSmoothFramesDropped,
-                                kNotPowerEfficientFramesDecoded);
+  perf_history_->SavePerfRecord(
+      kURL, kKnownProfile, kKownSize, kSmoothFrameRate, kFramesDecoded,
+      kSmoothFramesDropped, kNotPowerEfficientFramesDecoded);
+  perf_history_->SavePerfRecord(
+      kURL, kKnownProfile, kKownSize, kNotSmoothFrameRate, kFramesDecoded,
+      kNotSmoothFramesDropped, kNotPowerEfficientFramesDecoded);
 
   // Verify perf history returns is_smooth = true for the smooth entry.
   EXPECT_CALL(*this, MockGetPerfInfoCB(kIsSmooth, kIsNotPowerEfficient));
@@ -250,14 +252,14 @@ TEST_P(VideoDecodePerfHistoryTest, GetPerfInfo_PowerEfficient) {
 
   // Add the entries.
   perf_history_->SavePerfRecord(
-      kPowerEfficientProfile, kKownSize, kSmoothFrameRate, kFramesDecoded,
+      kURL, kPowerEfficientProfile, kKownSize, kSmoothFrameRate, kFramesDecoded,
       kSmoothFramesDropped, kPowerEfficientFramesDecoded);
   perf_history_->SavePerfRecord(
-      kNotPowerEfficientProfile, kKownSize, kSmoothFrameRate, kFramesDecoded,
-      kSmoothFramesDropped, kNotPowerEfficientFramesDecoded);
+      kURL, kNotPowerEfficientProfile, kKownSize, kSmoothFrameRate,
+      kFramesDecoded, kSmoothFramesDropped, kNotPowerEfficientFramesDecoded);
   perf_history_->SavePerfRecord(
-      kPowerEfficientProfile, kKownSize, kNotSmoothFrameRate, kFramesDecoded,
-      kNotSmoothFramesDropped, kPowerEfficientFramesDecoded);
+      kURL, kPowerEfficientProfile, kKownSize, kNotSmoothFrameRate,
+      kFramesDecoded, kNotSmoothFramesDropped, kPowerEfficientFramesDecoded);
 
   // Verify perf history returns is_smooth = true, is_power_efficient = true.
   EXPECT_CALL(*this, MockGetPerfInfoCB(kIsSmooth, kIsPowerEfficient));

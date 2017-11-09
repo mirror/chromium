@@ -13,6 +13,7 @@
 #include "media/mojo/interfaces/video_decode_stats_recorder.mojom.h"
 #include "media/mojo/services/media_mojo_export.h"
 #include "services/service_manager/public/cpp/bind_source_info.h"
+#include "url/gurl.h"
 
 namespace media {
 
@@ -33,6 +34,7 @@ class MEDIA_MOJO_EXPORT VideoDecodeStatsRecorder
                      mojom::VideoDecodeStatsRecorderRequest request);
 
   // mojom::VideoDecodeStatsRecorder implementation:
+  void SetURL(const GURL& url) override;
   void StartNewRecord(VideoCodecProfile profile,
                       const gfx::Size& natural_size,
                       int frames_per_sec) override;
@@ -45,6 +47,7 @@ class MEDIA_MOJO_EXPORT VideoDecodeStatsRecorder
   // starting a new record.
   void FinalizeRecord();
 
+  GURL url_;
   VideoDecodePerfHistory* perf_history_;
   VideoCodecProfile profile_ = VIDEO_CODEC_PROFILE_UNKNOWN;
   gfx::Size natural_size_;

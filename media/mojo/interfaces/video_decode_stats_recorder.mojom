@@ -6,10 +6,14 @@ module media.mojom;
 
 import "media/mojo/interfaces/media_types.mojom";
 import "ui/gfx/geometry/mojo/geometry.mojom";
+import "url/mojo/url.mojom";
 
 // Interface for media players in the renderer to send decode stats to the
 // browser process. Each player will have its own recorder instance.
 interface VideoDecodeStatsRecorder {
+  // Provide the URL of the page hosting the video.
+  SetURL(url.mojom.Url url);
+
   // Will finalize any ongoing record and begin a new record with the given
   // properties.
   StartNewRecord(VideoCodecProfile profile, gfx.mojom.Size video_size,
