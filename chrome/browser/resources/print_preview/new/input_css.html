@@ -1,0 +1,40 @@
+<link rel="import" href="chrome://resources/html/polymer.html">
+
+<dom-module id="input">
+  <template>
+    <style>
+      :root {
+        --error-text-color: rgb(140, 20, 20);
+      }
+
+      input:invalid {
+        background: rgb(255, 240, 240);
+        color: var(--error-text-color);
+      }
+
+      input[type='number'] {
+        -webkit-margin-end: 16px;
+        margin-bottom: 2.5px;
+        margin-top: 2.5px;
+      }
+
+      .settings-box {
+        align-items: center;
+        display: inline-flex;
+        width: 100%;
+      }
+
+      span.hint {
+        background: white;
+        color: var(--error-text-color);
+        font-size: 0.9em;
+        font-weight: bold;
+        height: auto;
+        margin-bottom: -5px;
+        margin-top: 5px;
+        padding-bottom: 5px;
+        user-select: text;
+      }
+    </style>
+  </template>
+</dom-module>

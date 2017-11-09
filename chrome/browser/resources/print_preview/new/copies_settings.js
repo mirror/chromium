@@ -54,7 +54,7 @@ Polymer({
   },
 
   /**
-   * Updates model.copies and model.printTicketInvalid based on the validity
+   * Updates model.copies and model.copiesInvalid based on the validity
    * and current value of the copies input.
    * @private
    */
@@ -62,7 +62,7 @@ Polymer({
     this.set(
         'model.copies',
         this.copiesValid_ ? parseInt(this.copiesString_, 10) : 1);
-    this.set('model.printTicketInvalid', !this.copiesValid_);
+    this.set('model.copiesInvalid', !this.copiesValid_);
   },
 
   /**
