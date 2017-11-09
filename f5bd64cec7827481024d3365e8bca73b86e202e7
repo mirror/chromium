@@ -49,6 +49,30 @@
     },
     {
       "key": {
+        "uuid": "882a4b60_671478bd",
+        "filename": "services/ui/public/interfaces/window_manager.mojom",
+        "patchSetId": 10
+      },
+      "lineNbr": 195,
+      "author": {
+        "id": 1211635
+      },
+      "writtenOn": "2017-11-09T21:01:42Z",
+      "side": 1,
+      "message": "Added description and changed to pass FSID. I had them separate because we were also using |requesting_client_id| separately and FSID has two uint32. But yea it can be confusing.",
+      "parentUuid": "a94612c8_429895c2",
+      "range": {
+        "startLine": 195,
+        "startChar": 25,
+        "endLine": 195,
+        "endChar": 52
+      },
+      "revId": "f5bd64cec7827481024d3365e8bca73b86e202e7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "f6cce303_7168e89a",
         "filename": "services/ui/ws/server_window.cc",
         "patchSetId": 10
@@ -60,6 +84,30 @@
       "writtenOn": "2017-11-09T16:31:39Z",
       "side": 1,
       "message": "Do you need to worry about the case of no parent, and then added to a parent? Similarly what if this is removed from the parent?",
+      "range": {
+        "startLine": 130,
+        "startChar": 6,
+        "endLine": 135,
+        "endChar": 7
+      },
+      "revId": "f5bd64cec7827481024d3365e8bca73b86e202e7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "03bfd7d5_04a513fa",
+        "filename": "services/ui/ws/server_window.cc",
+        "patchSetId": 10
+      },
+      "lineNbr": 135,
+      "author": {
+        "id": 1211635
+      },
+      "writtenOn": "2017-11-09T21:01:42Z",
+      "side": 1,
+      "message": "Do you mean when we add/remove the embed window? When SeverWindow::Add/Remove is called, we register/unregister hierarchy in Viz in WindowServer::OnWindowHierarchyChanged [1].\n\n[1] https://cs.chromium.org/chromium/src/services/ui/ws/window_server.cc?type\u003dcs\u0026l\u003d757",
+      "parentUuid": "f6cce303_7168e89a",
       "range": {
         "startLine": 130,
         "startChar": 6,
@@ -95,6 +143,30 @@
     },
     {
       "key": {
+        "uuid": "93905782_7cc14578",
+        "filename": "services/ui/ws/server_window.h",
+        "patchSetId": 10
+      },
+      "lineNbr": 253,
+      "author": {
+        "id": 1211635
+      },
+      "writtenOn": "2017-11-09T21:01:42Z",
+      "side": 1,
+      "message": "Yes :)",
+      "parentUuid": "81549678_eb3b6899",
+      "range": {
+        "startLine": 253,
+        "startChar": 10,
+        "endLine": 253,
+        "endChar": 33
+      },
+      "revId": "f5bd64cec7827481024d3365e8bca73b86e202e7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "a83ee2ae_7dffed60",
         "filename": "services/ui/ws/window_tree_client_unittest.cc",
         "patchSetId": 10
@@ -106,6 +178,30 @@
       "writtenOn": "2017-11-09T16:34:47Z",
       "side": 1,
       "message": "You shouldn\u0027t need the \u003d\u003d 0 here.",
+      "range": {
+        "startLine": 237,
+        "startChar": 63,
+        "endLine": 237,
+        "endChar": 67
+      },
+      "revId": "f5bd64cec7827481024d3365e8bca73b86e202e7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "956f677f_36043027",
+        "filename": "services/ui/ws/window_tree_client_unittest.cc",
+        "patchSetId": 10
+      },
+      "lineNbr": 237,
+      "author": {
+        "id": 1211635
+      },
+      "writtenOn": "2017-11-09T21:01:42Z",
+      "side": 1,
+      "message": "We check this value in some tests, changed to !SetWindowOpacity(0, 1.0f).",
+      "parentUuid": "a83ee2ae_7dffed60",
       "range": {
         "startLine": 237,
         "startChar": 63,
