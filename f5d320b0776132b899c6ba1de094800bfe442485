@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "1a7a02cd_5674cd87",
+        "filename": "chrome/browser/download/chrome_download_manager_delegate.h",
+        "patchSetId": 11
+      },
+      "lineNbr": 195,
+      "author": {
+        "id": 1226039
+      },
+      "writtenOn": "2017-11-09T21:38:14Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "6e6bf0e5_0826929a",
+      "revId": "f5d320b0776132b899c6ba1de094800bfe442485",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "7b5223a7_0c02ca2e",
         "filename": "chrome/common/chrome_constants.cc",
         "patchSetId": 11
@@ -33,6 +51,24 @@
       "revId": "f5d320b0776132b899c6ba1de094800bfe442485",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5f982e8e_851ec714",
+        "filename": "chrome/common/chrome_constants.cc",
+        "patchSetId": 11
+      },
+      "lineNbr": 143,
+      "author": {
+        "id": 1226039
+      },
+      "writtenOn": "2017-11-09T21:38:14Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "7b5223a7_0c02ca2e",
+      "revId": "f5d320b0776132b899c6ba1de094800bfe442485",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -53,6 +89,24 @@
     },
     {
       "key": {
+        "uuid": "f27fafd3_1a85f06b",
+        "filename": "components/download/downloader/in_progress/in_progress_conversions.cc",
+        "patchSetId": 11
+      },
+      "lineNbr": 31,
+      "author": {
+        "id": 1226039
+      },
+      "writtenOn": "2017-11-09T21:38:14Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "85081b57_c04edfed",
+      "revId": "f5d320b0776132b899c6ba1de094800bfe442485",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "9afb454a_4e99d1f1",
         "filename": "components/download/downloader/in_progress/proto/download_entry.proto",
         "patchSetId": 11
@@ -67,6 +121,24 @@
       "revId": "f5d320b0776132b899c6ba1de094800bfe442485",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4ad25a58_622bf21c",
+        "filename": "components/download/downloader/in_progress/proto/download_entry.proto",
+        "patchSetId": 11
+      },
+      "lineNbr": 13,
+      "author": {
+        "id": 1226039
+      },
+      "writtenOn": "2017-11-09T21:38:14Z",
+      "side": 1,
+      "message": "Someone commented on the previous CL that there should never be a required proto field.",
+      "parentUuid": "9afb454a_4e99d1f1",
+      "revId": "f5d320b0776132b899c6ba1de094800bfe442485",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -87,6 +159,24 @@
     },
     {
       "key": {
+        "uuid": "36daa72b_6c8d1ba7",
+        "filename": "content/browser/download/download_manager_impl.cc",
+        "patchSetId": 11
+      },
+      "lineNbr": 220,
+      "author": {
+        "id": 1226039
+      },
+      "writtenOn": "2017-11-09T21:38:14Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "89536b9b_c28b1f6a",
+      "revId": "f5d320b0776132b899c6ba1de094800bfe442485",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "def41950_d5b83db3",
         "filename": "content/browser/download/download_manager_impl.cc",
         "patchSetId": 11
@@ -101,6 +191,24 @@
       "revId": "f5d320b0776132b899c6ba1de094800bfe442485",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e948eaf3_b75c918e",
+        "filename": "content/browser/download/download_manager_impl.cc",
+        "patchSetId": 11
+      },
+      "lineNbr": 921,
+      "author": {
+        "id": 1226039
+      },
+      "writtenOn": "2017-11-09T21:38:14Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "def41950_d5b83db3",
+      "revId": "f5d320b0776132b899c6ba1de094800bfe442485",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
