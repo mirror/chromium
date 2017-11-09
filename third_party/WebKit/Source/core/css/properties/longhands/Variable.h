@@ -11,14 +11,14 @@
 #ifndef Variable_h
 #define Variable_h
 
-#include "core/css/properties/CSSProperty.h"
+#include "core/css/properties/Longhand.h"
 
 namespace blink {
 namespace CSSLonghand {
 
-class Variable : public CSSProperty {
+class Variable : public Longhand {
  public:
-  constexpr Variable(CSSPropertyID id) : CSSProperty(id) {}
+  constexpr Variable(CSSPropertyID id) : Longhand(id) {}
 
   bool IsInherited() const override { return true; }
   bool IsAffectedByAll() const override { return false; }
