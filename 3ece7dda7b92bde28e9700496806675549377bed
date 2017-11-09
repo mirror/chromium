@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "3064df4b_22764115",
+        "filename": "chrome/browser/ui/views/harmony/harmony_typography_provider.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 37,
+      "author": {
+        "id": 1000763
+      },
+      "writtenOn": "2017-11-09T20:19:35Z",
+      "side": 1,
+      "message": "How about making the name of the two matches? Hopefully this means you can remove the ifdef. Also, update the comment to match.",
+      "range": {
+        "startLine": 34,
+        "startChar": 26,
+        "endLine": 37,
+        "endChar": 34
+      },
+      "revId": "3ece7dda7b92bde28e9700496806675549377bed",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "649a8fbd_d3754c7d",
+        "filename": "ui/native_theme/native_theme.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 425,
+      "author": {
+        "id": 1000763
+      },
+      "writtenOn": "2017-11-09T20:19:35Z",
+      "side": 1,
+      "message": "Is there a reason not to do this right now? I think you should do this now to make the reviewing easier, also having two nearly identical functions is confusing.",
+      "range": {
+        "startLine": 425,
+        "startChar": 6,
+        "endLine": 425,
+        "endChar": 78
+      },
+      "revId": "3ece7dda7b92bde28e9700496806675549377bed",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
