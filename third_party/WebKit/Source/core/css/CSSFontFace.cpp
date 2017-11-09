@@ -61,8 +61,7 @@ bool CSSFontFace::FontLoaded(RemoteFontFaceSource* source) {
   if (LoadStatus() == FontFace::kLoading) {
     if (source->IsValid()) {
       SetLoadStatus(FontFace::kLoaded);
-    } else if (source->GetDisplayPeriod() ==
-               RemoteFontFaceSource::kFailurePeriod) {
+    } else if (source->IsFailurePeriod()) {
       sources_.clear();
       SetLoadStatus(FontFace::kError);
     } else {
@@ -98,6 +97,8 @@ scoped_refptr<SimpleFontData> CSSFontFace::GetFontData(
 
   while (!sources_.IsEmpty()) {
     Member<CSSFontFaceSource>& source = sources_.front();
+    if (source->IsFailurePeriod())
+      return nullptr;
     if (scoped_refptr<SimpleFontData> result = source->GetFontData(
             font_description,
             segmented_font_face_->GetFontSelectionCapabilities())) {
