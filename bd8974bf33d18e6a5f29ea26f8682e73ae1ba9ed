@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "112a8d15_020b0c55",
+        "filename": "content/network/restricted_cookie_manager_unittest.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 120,
+      "author": {
+        "id": 1163599
+      },
+      "writtenOn": "2017-11-09T00:29:34Z",
+      "side": 1,
+      "message": "Done.\n\nFunny, I was just thinking of that while I was writing the new tests :)",
+      "parentUuid": "806d91fa_7e7941c5",
+      "range": {
+        "startLine": 120,
+        "startChar": 18,
+        "endLine": 120,
+        "endChar": 19
+      },
+      "revId": "bd8974bf33d18e6a5f29ea26f8682e73ae1ba9ed",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "143a047f_0c3aa630",
         "filename": "content/network/restricted_cookie_manager_unittest.cc",
         "patchSetId": 8
@@ -45,6 +69,30 @@
       "revId": "bd8974bf33d18e6a5f29ea26f8682e73ae1ba9ed",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "685d1f17_affebedd",
+        "filename": "content/network/restricted_cookie_manager_unittest.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 161,
+      "author": {
+        "id": 1163599
+      },
+      "writtenOn": "2017-11-09T00:29:34Z",
+      "side": 1,
+      "message": "Done.\n\nThank you for pointing this out!",
+      "parentUuid": "143a047f_0c3aa630",
+      "range": {
+        "startLine": 161,
+        "startChar": 16,
+        "endLine": 161,
+        "endChar": 23
+      },
+      "revId": "bd8974bf33d18e6a5f29ea26f8682e73ae1ba9ed",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
