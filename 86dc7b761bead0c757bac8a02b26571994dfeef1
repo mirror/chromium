@@ -70,6 +70,30 @@
       "revId": "86dc7b761bead0c757bac8a02b26571994dfeef1",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "cc68507f_a2d9cfc8",
+        "filename": "chrome/utility/importer/firefox_importer.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 382,
+      "author": {
+        "id": 1002541
+      },
+      "writtenOn": "2017-11-09T08:57:38Z",
+      "side": 1,
+      "message": "Good points, both of you!\nJinyoung Hur, I like your account of pros and cons and I share your opinion that the minor discrepancy is not worth increasing the complexity of the code. So the current code looks good to me. Ilya\u0027s suggestion to mention the discrepancy in the \u003csummary\u003e of the histogram sounds very useful.",
+      "parentUuid": "2b99cd1d_cfe57ace",
+      "range": {
+        "startLine": 382,
+        "startChar": 31,
+        "endLine": 382,
+        "endChar": 41
+      },
+      "revId": "86dc7b761bead0c757bac8a02b26571994dfeef1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
