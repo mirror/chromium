@@ -36,8 +36,8 @@
 #include "public/platform/WebDisplayMode.h"
 #include "public/platform/WebDragOperation.h"
 #include "public/platform/WebFocusType.h"
-#include "public/platform/WebPageVisibilityState.h"
 #include "public/platform/WebString.h"
+#include "public/platform/web_page_visibility_state.mojom-shared.h"
 
 namespace blink {
 
@@ -114,7 +114,8 @@ class WebView : protected WebWidget {
   //
   // client may be null, while WebPageVisibilityState defines the initial
   // visibility of the page.
-  BLINK_EXPORT static WebView* Create(WebViewClient*, WebPageVisibilityState);
+  BLINK_EXPORT static WebView* Create(WebViewClient*,
+                                      mojom::WebPageVisibilityState);
 
   // Initializes the various client interfaces.
   virtual void SetCredentialManagerClient(WebCredentialManagerClient*) = 0;
@@ -415,8 +416,9 @@ class WebView : protected WebWidget {
   // Visibility -----------------------------------------------------------
 
   // Sets the visibility of the WebView.
-  virtual void SetVisibilityState(WebPageVisibilityState visibility_state,
-                                  bool is_initial_state) {}
+  virtual void SetVisibilityState(
+      mojom::WebPageVisibilityState visibility_state,
+      bool is_initial_state) {}
 
   // PageOverlay ----------------------------------------------------------
 
