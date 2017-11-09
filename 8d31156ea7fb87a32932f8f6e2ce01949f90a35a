@@ -1,0 +1,257 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "321ed0c8_fd40cbe2",
+        "filename": "chrome/browser/ssl/ssl_browser_tests.cc",
+        "patchSetId": 29
+      },
+      "lineNbr": 268,
+      "author": {
+        "id": 1126726
+      },
+      "writtenOn": "2017-11-09T21:57:28Z",
+      "side": 1,
+      "message": "It looks like you always expect this to be CMD_TEXT_FOUND, so could you return void instead? Then in the body you can do:\n\nASSERT_TRUE(content::ExecuteScriptAndExtractInt(...))\nEXPECT_EQ(CMD_TEXT_FOUND, result);\n\nand at the callsites:\nASSERT_NO_FATAL_FAILURE(FindProceedLink(...))",
+      "range": {
+        "startLine": 256,
+        "startChar": 0,
+        "endLine": 268,
+        "endChar": 1
+      },
+      "revId": "8d31156ea7fb87a32932f8f6e2ce01949f90a35a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a2e7e730_c6fdabf6",
+        "filename": "chrome/browser/ssl/ssl_error_handler.h",
+        "patchSetId": 29
+      },
+      "lineNbr": 91,
+      "author": {
+        "id": 1126726
+      },
+      "writtenOn": "2017-11-09T21:57:28Z",
+      "side": 1,
+      "message": "What is this used for?\n\n...\n\nok now that I\u0027ve read more, I see this is the type of callback that the throttle uses to handle the error. I think it should be defined on the throttle then.",
+      "range": {
+        "startLine": 91,
+        "startChar": 6,
+        "endLine": 91,
+        "endChar": 28
+      },
+      "revId": "8d31156ea7fb87a32932f8f6e2ce01949f90a35a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "cd59254d_0e737858",
+        "filename": "chrome/browser/ssl/ssl_error_handler.h",
+        "patchSetId": 29
+      },
+      "lineNbr": 155,
+      "author": {
+        "id": 1126726
+      },
+      "writtenOn": "2017-11-09T21:57:28Z",
+      "side": 1,
+      "message": "nit: const ref",
+      "range": {
+        "startLine": 155,
+        "startChar": 6,
+        "endLine": 155,
+        "endChar": 31
+      },
+      "revId": "8d31156ea7fb87a32932f8f6e2ce01949f90a35a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ed5c25c8_80977173",
+        "filename": "chrome/browser/ssl/ssl_error_navigation_throttle.cc",
+        "patchSetId": 29
+      },
+      "lineNbr": 72,
+      "author": {
+        "id": 1126726
+      },
+      "writtenOn": "2017-11-09T21:57:28Z",
+      "side": 1,
+      "message": "nit: rephrase as \"Get the error page content before giving up ownership of |blocking_page|.\"",
+      "range": {
+        "startLine": 72,
+        "startChar": 0,
+        "endLine": 72,
+        "endChar": 75
+      },
+      "revId": "8d31156ea7fb87a32932f8f6e2ce01949f90a35a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a1a3a035_5d88c947",
+        "filename": "chrome/browser/ssl/ssl_error_navigation_throttle_unittest.cc",
+        "patchSetId": 29
+      },
+      "lineNbr": 50,
+      "author": {
+        "id": 1126726
+      },
+      "writtenOn": "2017-11-09T21:57:28Z",
+      "side": 1,
+      "message": "nit: //  namespace\nand blank line above",
+      "range": {
+        "startLine": 50,
+        "startChar": 1,
+        "endLine": 50,
+        "endChar": 0
+      },
+      "revId": "8d31156ea7fb87a32932f8f6e2ce01949f90a35a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c357ecc2_67c0273a",
+        "filename": "chrome/browser/ssl/ssl_error_navigation_throttle_unittest.cc",
+        "patchSetId": 29
+      },
+      "lineNbr": 52,
+      "author": {
+        "id": 1126726
+      },
+      "writtenOn": "2017-11-09T21:57:28Z",
+      "side": 1,
+      "message": "is this test subclass necessary? as opposed to just constructing an SSLErrorNavigationThrottle directly",
+      "range": {
+        "startLine": 52,
+        "startChar": 6,
+        "endLine": 52,
+        "endChar": 36
+      },
+      "revId": "8d31156ea7fb87a32932f8f6e2ce01949f90a35a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d2979a5f_b14e2999",
+        "filename": "chrome/browser/ssl/ssl_error_tab_helper.cc",
+        "patchSetId": 29
+      },
+      "lineNbr": 12,
+      "author": {
+        "id": 1126726
+      },
+      "writtenOn": "2017-11-09T21:57:28Z",
+      "side": 1,
+      "message": "nit: please make sure definition order matches declaration order",
+      "range": {
+        "startLine": 12,
+        "startChar": 19,
+        "endLine": 12,
+        "endChar": 36
+      },
+      "revId": "8d31156ea7fb87a32932f8f6e2ce01949f90a35a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e4b711fc_ec923c62",
+        "filename": "chrome/browser/ssl/ssl_error_tab_helper.cc",
+        "patchSetId": 29
+      },
+      "lineNbr": 12,
+      "author": {
+        "id": 1126726
+      },
+      "writtenOn": "2017-11-09T21:57:28Z",
+      "side": 1,
+      "message": "nit: call the superclass constructor and then you don\u0027t need to call Observe",
+      "range": {
+        "startLine": 12,
+        "startChar": 72,
+        "endLine": 12,
+        "endChar": 73
+      },
+      "revId": "8d31156ea7fb87a32932f8f6e2ce01949f90a35a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "21cb8b7c_f8289235",
+        "filename": "chrome/browser/ssl/ssl_error_tab_helper.h",
+        "patchSetId": 29
+      },
+      "lineNbr": 52,
+      "author": {
+        "id": 1126726
+      },
+      "writtenOn": "2017-11-09T21:57:28Z",
+      "side": 1,
+      "message": "I\u0027ve never seen this pattern before... rename these as GetBlockingPagesForNavigationsForTesting() and GetBlockingPageForCurrentlyCommittedNavigationForTesting() instead.\n\n... after looking at the tests, I\u0027m thinking it would be nice to test in a way that doesn\u0027t require inspecting the internal state of the class. Could we structure the tests so that they observe SSLBlockingPages getting cleaned up at the appropriate times, instead of observing the internal state of the tab helper changing? For example, we could have a subclass of SSLBlockingPage that calls a test fixture method when it\u0027s destroyed. Then you could check that the blocking page for the current navigation is destroyed when another navigation commits, etc.",
+      "range": {
+        "startLine": 42,
+        "startChar": 0,
+        "endLine": 52,
+        "endChar": 6
+      },
+      "revId": "8d31156ea7fb87a32932f8f6e2ce01949f90a35a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a2184c5b_439d9954",
+        "filename": "chrome/browser/ssl/ssl_error_tab_helper.h",
+        "patchSetId": 29
+      },
+      "lineNbr": 66,
+      "author": {
+        "id": 1126726
+      },
+      "writtenOn": "2017-11-09T21:57:28Z",
+      "side": 1,
+      "message": "comment needs to be updated, I think",
+      "range": {
+        "startLine": 63,
+        "startChar": 2,
+        "endLine": 66,
+        "endChar": 36
+      },
+      "revId": "8d31156ea7fb87a32932f8f6e2ce01949f90a35a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8b21cc30_5fde0010",
+        "filename": "chrome/browser/ssl/ssl_error_tab_helper_unittest.cc",
+        "patchSetId": 29
+      },
+      "lineNbr": 21,
+      "author": {
+        "id": 1126726
+      },
+      "writtenOn": "2017-11-09T21:57:28Z",
+      "side": 1,
+      "message": "nit: I think these can be protected",
+      "range": {
+        "startLine": 21,
+        "startChar": 1,
+        "endLine": 21,
+        "endChar": 7
+      },
+      "revId": "8d31156ea7fb87a32932f8f6e2ce01949f90a35a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
