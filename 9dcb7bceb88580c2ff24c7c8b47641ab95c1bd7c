@@ -72,6 +72,24 @@
     },
     {
       "key": {
+        "uuid": "359ad82b_3e88ca43",
+        "filename": "chrome/services/wifi_util_win/OWNERS",
+        "patchSetId": 8
+      },
+      "lineNbr": 2,
+      "author": {
+        "id": 1109754
+      },
+      "writtenOn": "2017-11-09T06:43:04Z",
+      "side": 1,
+      "message": "stevenjb@chromium.org could advise or take it.  We should add him to this review regardless.",
+      "parentUuid": "d97431cf_bdf16bd0",
+      "revId": "9dcb7bceb88580c2ff24c7c8b47641ab95c1bd7c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "9711e282_aedcf4ba",
         "filename": "chrome/services/wifi_util_win/public/interfaces/BUILD.gn",
         "patchSetId": 8
