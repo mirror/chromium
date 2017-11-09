@@ -74,14 +74,14 @@ void SearchController::OpenResult(SearchResult* result, int event_flags) {
   if (!result)
     return;
 
-  // Count AppList.Search here because it is composed of search + action.
-  base::RecordAction(base::UserMetricsAction("AppList_Search"));
-
   UMA_HISTOGRAM_ENUMERATION(kSearchResultOpenDisplayTypeHistogram,
                             result->display_type(),
                             SearchResult::DISPLAY_TYPE_LAST);
 
   if (result->display_type() != SearchResult::DISPLAY_RECOMMENDATION) {
+    // Count AppList.Search here because it is composed of search + action.
+    base::RecordAction(base::UserMetricsAction("AppList_Search"));
+
     UMA_HISTOGRAM_COUNTS_100(kSearchQueryLength, search_box_->text().size());
 
     if (result->distance_from_origin() >= 0) {
