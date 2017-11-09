@@ -793,6 +793,7 @@ void NativeExtensionBindingsSystem::OnEventListenerChanged(
     const base::DictionaryValue* filter,
     bool update_lazy_listeners,
     v8::Local<v8::Context> context) {
+  LOG(WARNING) << "Event listeners changed: " << event_name;
   ScriptContext* script_context = GetScriptContextChecked(context);
   // Note: Check context_type() first to avoid accessing ExtensionFrameHelper on
   // a worker thread.
