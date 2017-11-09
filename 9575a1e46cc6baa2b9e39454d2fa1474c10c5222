@@ -16,6 +16,24 @@
       "revId": "9575a1e46cc6baa2b9e39454d2fa1474c10c5222",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2712cc5a_0789b769",
+        "filename": "content/renderer/render_frame_proxy.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 673,
+      "author": {
+        "id": 1115911
+      },
+      "writtenOn": "2017-11-09T23:39:06Z",
+      "side": 1,
+      "message": "I guess we don\u0027t change FrameSinkIds as often as Resize. I think if we have a transient state then we will have flaky tests? We can fix this by making the FrameSinkId invalid when running in Mus in CrossProcessFrameConnector.",
+      "parentUuid": "446e5549_17adf61d",
+      "revId": "9575a1e46cc6baa2b9e39454d2fa1474c10c5222",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
