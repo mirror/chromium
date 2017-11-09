@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "00fa510d_36753b08",
+        "filename": "base/trace_event/malloc_dump_provider.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 62,
+      "author": {
+        "id": 1002871
+      },
+      "writtenOn": "2017-11-09T20:29:05Z",
+      "side": 1,
+      "message": "\u003d true, or this will be uninitialized.\nIn fact I think it\u0027s why random bots are failing.",
+      "range": {
+        "startLine": 62,
+        "startChar": 35,
+        "endLine": 62,
+        "endChar": 36
+      },
+      "revId": "b89b2c0afbf36cf253dd766bfd850d2dec325363",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
