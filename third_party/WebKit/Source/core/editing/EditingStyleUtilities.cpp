@@ -32,6 +32,7 @@
 #include "core/css/CSSIdentifierValue.h"
 #include "core/css/CSSPropertyValueSet.h"
 #include "core/css/parser/CSSParser.h"
+#include "core/css/properties/Longhand.h"
 #include "core/editing/EditingStyle.h"
 #include "core/editing/EditingUtilities.h"
 #include "core/editing/EphemeralRange.h"

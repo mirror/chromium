@@ -40,6 +40,7 @@
 #include "core/css/StyleRule.h"
 #include "core/css/parser/CSSParser.h"
 #include "core/css/properties/CSSProperty.h"
+#include "core/css/properties/Longhand.h"
 #include "core/css/resolver/StyleResolver.h"
 #include "core/dom/Document.h"
 #include "core/dom/Element.h"
