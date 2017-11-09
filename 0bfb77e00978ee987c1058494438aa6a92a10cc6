@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "d5c5db09_435548ed",
+        "filename": "chrome/browser/ui/views/autofill/save_card_bubble_views.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 122,
+      "author": {
+        "id": 1003016
+      },
+      "writtenOn": "2017-11-09T04:06:16Z",
+      "side": 1,
+      "message": "Thanks for the context and the suggestion.",
+      "parentUuid": "cad2f74a_e00a1932",
+      "revId": "0bfb77e00978ee987c1058494438aa6a92a10cc6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "e3713b3c_0006d8e9",
         "filename": "chrome/browser/ui/views/autofill/save_card_bubble_views.cc",
         "patchSetId": 1
@@ -33,6 +51,24 @@
       "revId": "0bfb77e00978ee987c1058494438aa6a92a10cc6",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7bbc9a37_9f55a141",
+        "filename": "chrome/browser/ui/views/autofill/save_card_bubble_views.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 396,
+      "author": {
+        "id": 1003016
+      },
+      "writtenOn": "2017-11-09T04:06:16Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "e3713b3c_0006d8e9",
+      "revId": "0bfb77e00978ee987c1058494438aa6a92a10cc6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
