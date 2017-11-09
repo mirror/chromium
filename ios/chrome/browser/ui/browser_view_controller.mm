@@ -1372,7 +1372,7 @@ applicationCommandEndpoint:(id<ApplicationCommands>)applicationCommandEndpoint {
   self.visible = YES;
 
   // Restore hidden infobars.
-  if (IsIPadIdiom()) {
+  if (IsIPadIdiom() && _infoBarContainer) {
     _infoBarContainer->RestoreInfobars();
   }
 
@@ -1392,7 +1392,7 @@ applicationCommandEndpoint:(id<ApplicationCommands>)applicationCommandEndpoint {
   [self updateDialogPresenterActiveState];
   [[_model currentTab] wasHidden];
   [_bookmarkInteractionController dismissSnackbar];
-  if (IsIPadIdiom()) {
+  if (IsIPadIdiom() && _infoBarContainer) {
     _infoBarContainer->SuspendInfobars();
   }
   [super viewWillDisappear:animated];
@@ -1504,6 +1504,9 @@ applicationCommandEndpoint:(id<ApplicationCommands>)applicationCommandEndpoint {
 
 - (void)dismissViewControllerAnimated:(BOOL)flag
                            completion:(void (^)())completion {
+  NSLog(@"BVC dismissViewControllerAnimated");
+  DCHECK(self.presentedViewController);
+
   // Some calling code invokes |dismissViewControllerAnimated:completion:|
   // multiple times.  When the BVC is displayed using VC containment, multiple
   // calls are effectively idempotent because only the first call has any effect
@@ -1511,7 +1514,8 @@ applicationCommandEndpoint:(id<ApplicationCommands>)applicationCommandEndpoint {
   // subsequent calls end up dismissing the BVC itself.  This is never what we
   // want, so check for this case and return early.
   // TODO(crbug.com/782338): Fix callers and remove this early return.
-  if (TabSwitcherPresentsBVCEnabled() && self.dismissingModal) {
+  if (TabSwitcherPresentsBVCEnabled() &&
+      (self.dismissingModal || self.presentedViewController.isBeingDismissed)) {
     return;
   }
 
@@ -4658,6 +4662,9 @@ bubblePresenterForFeature:(const base::Feature&)feature
     //
     // To ensure the completion is called, nil is passed to the call to dismiss,
     // and the completion is called explicitly below.
+    NSLog(@"BEING DISMISSED: %d %d",
+          self.presentedViewController.isBeingDismissed, self.dismissingModal);
+    NSLog(@"%@", self.presentedViewController);
     if (!TabSwitcherPresentsBVCEnabled() || !self.dismissingModal) {
       [self dismissViewControllerAnimated:NO completion:nil];
     }
