@@ -460,10 +460,11 @@ std::unique_ptr<base::ListValue> GetVideoAcceleratorsInfo() {
     std::string codec_string = base::StringPrintf(
         "Encode %s", GetProfileName(profile.profile).c_str());
     std::string resolution_string = base::StringPrintf(
-        "up to %s pixels and/or %.3f fps",
+        "up to %s pixels and/or %.3f fps %s",
         profile.max_resolution.ToString().c_str(),
         static_cast<double>(profile.max_framerate_numerator) /
-            profile.max_framerate_denominator);
+            profile.max_framerate_denominator,
+        profile.encrypted_only ? "(encrypted)" : "");
     info->Append(NewDescriptionValuePair(codec_string, resolution_string));
   }
   return info;
