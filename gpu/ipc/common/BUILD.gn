@@ -79,6 +79,8 @@ source_set("ipc_common_sources") {
   sources = [
     "flush_params.cc",
     "flush_params.h",
+    "gpu_fence_impl.cc",
+    "gpu_fence_impl.h",
     "gpu_memory_buffer_support.cc",
     "gpu_memory_buffer_support.h",
     "gpu_message_generator.cc",
@@ -128,6 +130,13 @@ source_set("ipc_common_sources") {
       "gpu_surface_lookup.h",
       "gpu_surface_tracker.cc",
       "gpu_surface_tracker.h",
+    ]
+  }
+
+  if (is_android || is_chromeos) {
+    sources += [
+        "gpu_fence_impl_android_native_fence_sync.cc",
+        "gpu_fence_impl_android_native_fence_sync.h",
     ]
   }
 
