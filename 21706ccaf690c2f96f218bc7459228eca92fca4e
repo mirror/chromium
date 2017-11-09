@@ -1,0 +1,257 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "a0ec8aef_07e4f38a",
+        "filename": "docs/network_traffic_annotations.md",
+        "patchSetId": 10
+      },
+      "lineNbr": 115,
+      "author": {
+        "id": 1118331
+      },
+      "writtenOn": "2017-11-09T22:57:44Z",
+      "side": 1,
+      "message": "s/\\t/\\ /",
+      "range": {
+        "startLine": 115,
+        "startChar": 0,
+        "endLine": 115,
+        "endChar": 1
+      },
+      "revId": "21706ccaf690c2f96f218bc7459228eca92fca4e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7a8ba7d2_0b1b5423",
+        "filename": "docs/network_traffic_annotations.md",
+        "patchSetId": 10
+      },
+      "lineNbr": 116,
+      "author": {
+        "id": 1118331
+      },
+      "writtenOn": "2017-11-09T22:57:44Z",
+      "side": 1,
+      "message": "superfluous",
+      "range": {
+        "startLine": 116,
+        "startChar": 37,
+        "endLine": 116,
+        "endChar": 51
+      },
+      "revId": "21706ccaf690c2f96f218bc7459228eca92fca4e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "655c8bbf_a8f10f97",
+        "filename": "docs/network_traffic_annotations.md",
+        "patchSetId": 10
+      },
+      "lineNbr": 120,
+      "author": {
+        "id": 1118331
+      },
+      "writtenOn": "2017-11-09T22:57:44Z",
+      "side": 1,
+      "message": "Consistency: this is referenced to as `destination_other` just two lines above. All of these entries should probably follow underscore_naming, as they are in code",
+      "range": {
+        "startLine": 120,
+        "startChar": 5,
+        "endLine": 120,
+        "endChar": 22
+      },
+      "revId": "21706ccaf690c2f96f218bc7459228eca92fca4e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "231bbb43_1263bc25",
+        "filename": "docs/network_traffic_annotations.md",
+        "patchSetId": 10
+      },
+      "lineNbr": 130,
+      "author": {
+        "id": 1118331
+      },
+      "writtenOn": "2017-11-09T22:57:44Z",
+      "side": 1,
+      "message": "Consistency: elsewhere you use ``",
+      "range": {
+        "startLine": 130,
+        "startChar": 8,
+        "endLine": 130,
+        "endChar": 23
+      },
+      "revId": "21706ccaf690c2f96f218bc7459228eca92fca4e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "cc198a91_73eaa07f",
+        "filename": "docs/network_traffic_annotations.md",
+        "patchSetId": 10
+      },
+      "lineNbr": 133,
+      "author": {
+        "id": 1118331
+      },
+      "writtenOn": "2017-11-09T22:57:44Z",
+      "side": 1,
+      "message": "Ditto",
+      "range": {
+        "startLine": 133,
+        "startChar": 11,
+        "endLine": 133,
+        "endChar": 26
+      },
+      "revId": "21706ccaf690c2f96f218bc7459228eca92fca4e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b914b246_42245cca",
+        "filename": "docs/network_traffic_annotations.md",
+        "patchSetId": 10
+      },
+      "lineNbr": 232,
+      "author": {
+        "id": 1118331
+      },
+      "writtenOn": "2017-11-09T22:57:44Z",
+      "side": 1,
+      "message": "Can you phrase these in the form of an annotation?",
+      "range": {
+        "startLine": 229,
+        "startChar": 0,
+        "endLine": 232,
+        "endChar": 70
+      },
+      "revId": "21706ccaf690c2f96f218bc7459228eca92fca4e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0ed80c28_2b571771",
+        "filename": "docs/network_traffic_annotations.md",
+        "patchSetId": 10
+      },
+      "lineNbr": 234,
+      "author": {
+        "id": 1118331
+      },
+      "writtenOn": "2017-11-09T22:57:44Z",
+      "side": 1,
+      "message": "*cough* that was a request for you, and not a text to be copied verbatim *cough*",
+      "range": {
+        "startLine": 233,
+        "startChar": 3,
+        "endLine": 234,
+        "endChar": 13
+      },
+      "revId": "21706ccaf690c2f96f218bc7459228eca92fca4e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "25d954e4_276f94ce",
+        "filename": "docs/network_traffic_annotations.md",
+        "patchSetId": 10
+      },
+      "lineNbr": 269,
+      "author": {
+        "id": 1118331
+      },
+      "writtenOn": "2017-11-09T22:57:44Z",
+      "side": 1,
+      "message": "-y",
+      "range": {
+        "startLine": 269,
+        "startChar": 5,
+        "endLine": 269,
+        "endChar": 6
+      },
+      "revId": "21706ccaf690c2f96f218bc7459228eca92fca4e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "441511f2_ab32a97b",
+        "filename": "docs/network_traffic_annotations.md",
+        "patchSetId": 10
+      },
+      "lineNbr": 297,
+      "author": {
+        "id": 1118331
+      },
+      "writtenOn": "2017-11-09T22:57:44Z",
+      "side": 1,
+      "message": "plural",
+      "range": {
+        "startLine": 297,
+        "startChar": 8,
+        "endLine": 297,
+        "endChar": 14
+      },
+      "revId": "21706ccaf690c2f96f218bc7459228eca92fca4e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f32f1d77_0de80cdf",
+        "filename": "docs/network_traffic_annotations.md",
+        "patchSetId": 10
+      },
+      "lineNbr": 302,
+      "author": {
+        "id": 1118331
+      },
+      "writtenOn": "2017-11-09T22:57:44Z",
+      "side": 1,
+      "message": "For better readability, I would be a bit more verbose:\ne.g. if you are changing the file from an unsupported...",
+      "range": {
+        "startLine": 302,
+        "startChar": 18,
+        "endLine": 302,
+        "endChar": 19
+      },
+      "revId": "21706ccaf690c2f96f218bc7459228eca92fca4e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "45777e31_0139aa3a",
+        "filename": "tools/traffic_annotation/traffic_annotation.proto",
+        "patchSetId": 10
+      },
+      "lineNbr": 109,
+      "author": {
+        "id": 1118331
+      },
+      "writtenOn": "2017-11-09T22:57:44Z",
+      "side": 1,
+      "message": "Superfluous",
+      "range": {
+        "startLine": 109,
+        "startChar": 53,
+        "endLine": 109,
+        "endChar": 67
+      },
+      "revId": "21706ccaf690c2f96f218bc7459228eca92fca4e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
