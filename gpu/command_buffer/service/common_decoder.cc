@@ -18,17 +18,14 @@ static const size_t kDefaultMaxBucketSize = 1u << 30;  // 1 GB
 }
 
 const CommonDecoder::CommandInfo CommonDecoder::command_info[] = {
-#define COMMON_COMMAND_BUFFER_CMD_OP(name)                       \
-  {                                                              \
-    &CommonDecoder::Handle##name, cmd::name::kArgFlags,          \
-        cmd::name::cmd_flags,                                    \
-        sizeof(cmd::name) / sizeof(CommandBufferEntry) - 1,      \
-  }                                                              \
-  ,  /* NOLINT */
-  COMMON_COMMAND_BUFFER_CMDS(COMMON_COMMAND_BUFFER_CMD_OP)
-  #undef COMMON_COMMAND_BUFFER_CMD_OP
+#define COMMON_COMMAND_BUFFER_CMD_OP(name)                                  \
+  {                                                                         \
+      &CommonDecoder::Handle##name,                                         \
+      sizeof(cmd::name) / sizeof(CommandBufferEntry), cmd::name::cmd_flags, \
+  }, /* NOLINT */
+    COMMON_COMMAND_BUFFER_CMDS(COMMON_COMMAND_BUFFER_CMD_OP)
+#undef COMMON_COMMAND_BUFFER_CMD_OP
 };
-
 
 CommonDecoder::Bucket::Bucket() : size_(0) {}
 
@@ -210,15 +207,14 @@ RETURN_TYPE GetImmediateDataAs(const volatile COMMAND_TYPE& pod) {
 // by a (malicious) client at any time, so if validation has to happen, it
 // should operate on a copy of them.
 error::Error CommonDecoder::DoCommonCommand(unsigned int command,
-                                            unsigned int arg_count,
+                                            unsigned int command_size,
                                             const volatile void* cmd_data) {
   if (command < arraysize(command_info)) {
     const CommandInfo& info = command_info[command];
-    unsigned int info_arg_count = static_cast<unsigned int>(info.arg_count);
-    if ((info.arg_flags == cmd::kFixed && arg_count == info_arg_count) ||
-        (info.arg_flags == cmd::kAtLeastN && arg_count >= info_arg_count)) {
+    unsigned int min_size = static_cast<unsigned int>(info.min_size);
+    if (command_size >= min_size) {
       uint32_t immediate_data_size =
-          (arg_count - info_arg_count) * sizeof(CommandBufferEntry);  // NOLINT
+          (command_size - min_size) * sizeof(CommandBufferEntry);  // NOLINT
       return (this->*info.cmd_handler)(immediate_data_size, cmd_data);
     } else {
       return error::kInvalidArguments;

@@ -90,8 +90,8 @@ class GLES2DecoderTestBase : public ::testing::TestWithParam<bool>,
 
   template <typename T>
   error::Error ExecuteCmd(const T& cmd) {
-    static_assert(T::kArgFlags == cmd::kFixed,
-                  "T::kArgFlags should equal cmd::kFixed");
+    static_assert((T::cmd_flags & CMD_FLAG_IMMEDIATE) == 0,
+                  "T should not be immediate");
     int entries_processed = 0;
     return decoder_->DoCommands(1, (const void*)&cmd,
                                 ComputeNumEntries(sizeof(cmd)),
@@ -100,8 +100,8 @@ class GLES2DecoderTestBase : public ::testing::TestWithParam<bool>,
 
   template <typename T>
   error::Error ExecuteImmediateCmd(const T& cmd, size_t data_size) {
-    static_assert(T::kArgFlags == cmd::kAtLeastN,
-                  "T::kArgFlags should equal cmd::kAtLeastN");
+    static_assert((T::cmd_flags & CMD_FLAG_IMMEDIATE) != 0,
+                  "T should be immediate");
     int entries_processed = 0;
     return decoder_->DoCommands(1, (const void*)&cmd,
                                 ComputeNumEntries(sizeof(cmd) + data_size),
@@ -845,8 +845,8 @@ class GLES2DecoderPassthroughTestBase : public testing::Test,
 
   template <typename T>
   error::Error ExecuteCmd(const T& cmd) {
-    static_assert(T::kArgFlags == cmd::kFixed,
-                  "T::kArgFlags should equal cmd::kFixed");
+    static_assert((T::cmd_flags & CMD_FLAG_IMMEDIATE) == 0,
+                  "T should not be immediate");
     int entries_processed = 0;
     return decoder_->DoCommands(1, (const void*)&cmd,
                                 ComputeNumEntries(sizeof(cmd)),
@@ -855,8 +855,8 @@ class GLES2DecoderPassthroughTestBase : public testing::Test,
 
   template <typename T>
   error::Error ExecuteImmediateCmd(const T& cmd, size_t data_size) {
-    static_assert(T::kArgFlags == cmd::kAtLeastN,
-                  "T::kArgFlags should equal cmd::kAtLeastN");
+    static_assert((T::cmd_flags & CMD_FLAG_IMMEDIATE) != 0,
+                  "T should be immediate");
     int entries_processed = 0;
     return decoder_->DoCommands(1, (const void*)&cmd,
                                 ComputeNumEntries(sizeof(cmd) + data_size),

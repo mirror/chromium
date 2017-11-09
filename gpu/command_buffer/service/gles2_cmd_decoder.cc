@@ -2507,9 +2507,8 @@ class GLES2DecoderImpl : public GLES2Decoder, public ErrorStateClient {
   // A struct to hold info about each command.
   struct CommandInfo {
     CmdHandler cmd_handler;
-    uint8_t arg_flags;   // How to handle the arguments for this command
+    uint16_t min_size;   // Minimum number of entries necessary for this command
     uint8_t cmd_flags;   // How to handle this command
-    uint16_t arg_count;  // How many arguments are expected for this command.
   };
 
   // A table of CommandInfo for all the commands.
@@ -2539,13 +2538,11 @@ class GLES2DecoderImpl : public GLES2Decoder, public ErrorStateClient {
 };
 
 constexpr GLES2DecoderImpl::CommandInfo GLES2DecoderImpl::command_info[] = {
-#define GLES2_CMD_OP(name)                                   \
-  {                                                          \
-    &GLES2DecoderImpl::Handle##name, cmds::name::kArgFlags,  \
-        cmds::name::cmd_flags,                               \
-        sizeof(cmds::name) / sizeof(CommandBufferEntry) - 1, \
-  }                                                          \
-  , /* NOLINT */
+#define GLES2_CMD_OP(name)                                                    \
+  {                                                                           \
+      &GLES2DecoderImpl::Handle##name,                                        \
+      sizeof(cmds::name) / sizeof(CommandBufferEntry), cmds::name::cmd_flags, \
+  }, /* NOLINT */
     GLES2_COMMAND_LIST(GLES2_CMD_OP)
 #undef GLES2_CMD_OP
 };
@@ -5402,15 +5399,15 @@ error::Error GLES2DecoderImpl::DoCommandsImpl(unsigned int num_commands,
 
   while (process_pos < num_entries && result == error::kNoError &&
          commands_to_process_--) {
-    const unsigned int size = cmd_data->value_header.size;
+    const unsigned int command_size = cmd_data->value_header.size;
     command = cmd_data->value_header.command;
 
-    if (size == 0) {
+    if (command_size == 0) {
       result = error::kInvalidSize;
       break;
     }
 
-    if (static_cast<int>(size) + process_pos > num_entries) {
+    if (static_cast<int>(command_size) + process_pos > num_entries) {
       result = error::kOutOfBounds;
       break;
     }
@@ -5420,13 +5417,11 @@ error::Error GLES2DecoderImpl::DoCommandsImpl(unsigned int num_commands,
                  << "cmd: " << GetCommandName(command);
     }
 
-    const unsigned int arg_count = size - 1;
     unsigned int command_index = command - kFirstGLES2Command;
     if (command_index < arraysize(command_info)) {
       const CommandInfo& info = command_info[command_index];
-      unsigned int info_arg_count = static_cast<unsigned int>(info.arg_count);
-      if ((info.arg_flags == cmd::kFixed && arg_count == info_arg_count) ||
-          (info.arg_flags == cmd::kAtLeastN && arg_count >= info_arg_count)) {
+      unsigned int min_size = static_cast<unsigned int>(info.min_size);
+      if (command_size >= min_size) {
         bool doing_gpu_trace = false;
         if (DebugImpl && gpu_trace_commands_) {
           if (CMD_FLAG_GET_TRACE_LEVEL(info.cmd_flags) <= gpu_trace_level_) {
@@ -5437,8 +5432,8 @@ error::Error GLES2DecoderImpl::DoCommandsImpl(unsigned int num_commands,
           }
         }
 
-        uint32_t immediate_data_size = (arg_count - info_arg_count) *
-                                       sizeof(CommandBufferEntry);  // NOLINT
+        uint32_t immediate_data_size =
+            (command_size - min_size) * sizeof(CommandBufferEntry);  // NOLINT
 
         result = (this->*info.cmd_handler)(immediate_data_size, cmd_data);
 
@@ -5458,7 +5453,7 @@ error::Error GLES2DecoderImpl::DoCommandsImpl(unsigned int num_commands,
         result = error::kInvalidArguments;
       }
     } else {
-      result = DoCommonCommand(command, arg_count, cmd_data);
+      result = DoCommonCommand(command, command_size, cmd_data);
     }
 
     if (result == error::kNoError &&
@@ -5468,11 +5463,12 @@ error::Error GLES2DecoderImpl::DoCommandsImpl(unsigned int num_commands,
     }
 
     if (result != error::kDeferCommandUntilLater) {
-      process_pos += size;
-      cmd_data += size;
+      process_pos += command_size;
+      cmd_data += command_size;
     }
   }
 
+  DCHECK(entries_processed != nullptr);
   *entries_processed = process_pos;
 
   if (error::IsError(result)) {

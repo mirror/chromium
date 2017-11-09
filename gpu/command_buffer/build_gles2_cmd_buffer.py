@@ -4861,7 +4861,6 @@ class TypeHandler(object):
     f.write("struct %s {\n" % func.name)
     f.write("  typedef %s ValueType;\n" % func.name)
     f.write("  static const CommandId kCmdId = k%s;\n" % func.name)
-    func.WriteCmdArgFlag(f)
     func.WriteCmdFlag(f)
     f.write("\n")
     result = func.GetInfo('result')
@@ -9640,9 +9639,12 @@ class Function(object):
     """Writes the validation code for a command."""
     pass
 
+  def GetExtraCmdFlags(self):
+      return []
+
   def WriteCmdFlag(self, f):
     """Writes the cmd cmd_flags constant."""
-    flags = []
+    flags = self.GetExtraCmdFlags()
     # By default trace only at the highest level 3.
     trace_level = int(self.GetInfo('trace_level', default = 3))
     if trace_level not in xrange(0, 4):
@@ -9656,11 +9658,6 @@ class Function(object):
       cmd_flags = 0
 
     f.write("  static const uint8_t cmd_flags = %s;\n" % cmd_flags)
-
-
-  def WriteCmdArgFlag(self, f):
-    """Writes the cmd kArgFlags constant."""
-    f.write("  static const cmd::ArgFlags kArgFlags = cmd::kFixed;\n")
 
   def WriteCmdComputeSize(self, f):
     """Writes the ComputeSize function for the command."""
@@ -9852,9 +9849,8 @@ class ImmediateFunction(Function):
     """Overridden from Function"""
     self.type_handler.WriteImmediateValidationCode(self, f)
 
-  def WriteCmdArgFlag(self, f):
-    """Overridden from Function"""
-    f.write("  static const cmd::ArgFlags kArgFlags = cmd::kAtLeastN;\n")
+  def GetExtraCmdFlags(self):
+      return ['CMD_FLAG_IMMEDIATE']
 
   def WriteCmdComputeSize(self, f):
     """Overridden from Function"""

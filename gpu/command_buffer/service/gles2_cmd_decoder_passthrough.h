@@ -406,9 +406,8 @@ class GPU_EXPORT GLES2DecoderPassthroughImpl : public GLES2Decoder {
   // A struct to hold info about each command.
   struct CommandInfo {
     CmdHandler cmd_handler;
-    uint8_t arg_flags;   // How to handle the arguments for this scommand
-    uint8_t cmd_flags;   // How to handle this command
-    uint16_t arg_count;  // How many arguments are expected for this command.
+    uint16_t min_size;  // Minimum number of entries necessary for this command
+    uint8_t cmd_flags;  // How to handle this command
   };
 
   // A table of CommandInfo for all the commands.

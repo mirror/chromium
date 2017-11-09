@@ -1572,16 +1572,28 @@ TEST_P(GLES2DecoderDoCommandsTest, DoCommandsOutOfBounds) {
   EXPECT_EQ(entries_per_cmd_, num_processed);
 }
 
-// Test that commands with bad argument size are skipped without processing.
-TEST_P(GLES2DecoderDoCommandsTest, DoCommandsBadArgSize) {
-  cmds_[1].header.size += 1;
+// Test that commands with extra padding skip entries correctly
+TEST_P(GLES2DecoderDoCommandsTest, DoCommandsExtraSizeSkipCorrectly) {
+  cmds_[0].header.size += entries_per_cmd_;
+  int num_processed = -1;
+  SetExpectationsForNCommands(2);  // cmds_[1] will be skipped
+  EXPECT_EQ(
+      error::kNoError,
+      decoder_->DoCommands(3, &cmds_, entries_per_cmd_ * 3, &num_processed));
+  EXPECT_EQ(GL_NO_ERROR, GetGLError());
+  EXPECT_EQ(3 * entries_per_cmd_, num_processed);
+}
+
+// Test they bounds check correctly
+TEST_P(GLES2DecoderDoCommandsTest, DoCommandsExtraSizeBoundsCheck) {
+  cmds_[1].header.size += entries_per_cmd_;
   int num_processed = -1;
   SetExpectationsForNCommands(1);
-  EXPECT_EQ(error::kInvalidArguments,
-            decoder_->DoCommands(
-                2, &cmds_, entries_per_cmd_ * 2 + 1, &num_processed));
+  EXPECT_EQ(error::kOutOfBounds,
+            decoder_->DoCommands(2, &cmds_, entries_per_cmd_ * 3 - 1,
+                                 &num_processed));
   EXPECT_EQ(GL_NO_ERROR, GetGLError());
-  EXPECT_EQ(entries_per_cmd_ + cmds_[1].header.size, num_processed);
+  EXPECT_EQ(entries_per_cmd_, num_processed);
 }
 
 class GLES2DecoderDescheduleUntilFinishedTest : public GLES2DecoderTest {
