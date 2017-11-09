@@ -22,6 +22,30 @@
       "revId": "53650ad6b95714816fa2a7c0b3a59f4297600128",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ba41b5f3_41a261d6",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 3
+      },
+      "lineNbr": 7,
+      "author": {
+        "id": 1128440
+      },
+      "writtenOn": "2017-11-09T13:34:54Z",
+      "side": 1,
+      "message": "Ok, at the first I didn\u0027t want to remove UI classes, since they don\u0027t harm anyone, but ok, if we started removing generation let\u0027s remove everything.",
+      "parentUuid": "b4c7a2af_0fb99132",
+      "range": {
+        "startLine": 7,
+        "startChar": 27,
+        "endLine": 7,
+        "endChar": 36
+      },
+      "revId": "53650ad6b95714816fa2a7c0b3a59f4297600128",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
