@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "d18e3038_b653c581",
+        "filename": "content/browser/service_worker/service_worker_version.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 1748,
+      "author": {
+        "id": 1001472
+      },
+      "writtenOn": "2017-11-09T09:16:20Z",
+      "side": 1,
+      "message": "nit: this can be concatenated to the previous if with \u0026\u0026 (I did split them just for readability + comments)",
+      "revId": "a065a4dc67c790d0934fd00bb9fb18fe66abffb6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "44bfc04d_2ed00b4d",
+        "filename": "content/renderer/service_worker/service_worker_context_client.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 1361,
+      "author": {
+        "id": 1001472
+      },
+      "writtenOn": "2017-11-09T09:16:20Z",
+      "side": 1,
+      "message": "I wonder... if having some convenient interface that can be passed to WaitUntilObserver is less error prone? Would it make sense to have the timer in, say, WebKit/public/platform, pass it when we start the worker -\u003e SWGlobalProxy?",
+      "revId": "a065a4dc67c790d0934fd00bb9fb18fe66abffb6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
