@@ -16,6 +16,24 @@
       "revId": "d9dd290bfa4e9e2660b0ab51aaa20524be283637",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4b08aaf4_390b979f",
+        "filename": "chrome/test/data/webui/mocha_adapter.js",
+        "patchSetId": 3
+      },
+      "lineNbr": 69,
+      "author": {
+        "id": 1115893
+      },
+      "writtenOn": "2017-11-09T23:00:58Z",
+      "side": 1,
+      "message": "Escaping sounds like a good idea, just in case a test name includes characters which would have been special RegExp characters otherwise. The following should do the job:\n\nfunction escapeRegExp(str) {\n  return str.replace(/[\\-\\[\\]\\/\\{\\}\\(\\)\\*\\+\\?\\.\\\\\\^\\$\\|]/g, \"\\\\$\u0026\");\n}\n\nHaving said that, I am still looking for how to fix the issue I mentioned at https://bugs.chromium.org/p/chromium/issues/detail?id\u003d783334#c2, which is unrelated to escaping. I\u0027ll add escaping before posting this CL for review.",
+      "parentUuid": "093ce482_3bd39a40",
+      "revId": "d9dd290bfa4e9e2660b0ab51aaa20524be283637",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
