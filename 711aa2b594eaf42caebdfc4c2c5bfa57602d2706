@@ -25,6 +25,662 @@
     },
     {
       "key": {
+        "uuid": "b58b7982_03aa4fb8",
+        "filename": "chrome/android/java/res/layout/modal_dialog_view.xml",
+        "patchSetId": 2
+      },
+      "lineNbr": 6,
+      "author": {
+        "id": 1122966
+      },
+      "writtenOn": "2017-11-09T00:35:47Z",
+      "side": 1,
+      "message": "Is our goal to look as similar to Android UI as possible? Or will Chrome have a \"custom\" UI?",
+      "parentUuid": "258940db_d0a16cd3",
+      "range": {
+        "startLine": 6,
+        "startChar": 36,
+        "endLine": 6,
+        "endChar": 55
+      },
+      "revId": "711aa2b594eaf42caebdfc4c2c5bfa57602d2706",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f17893ee_0bb6df38",
+        "filename": "chrome/android/java/res/values/dimens.xml",
+        "patchSetId": 2
+      },
+      "lineNbr": 195,
+      "author": {
+        "id": 1122966
+      },
+      "writtenOn": "2017-11-09T00:35:47Z",
+      "side": 1,
+      "message": "Why is the vertical margin 16dp?",
+      "range": {
+        "startLine": 195,
+        "startChar": 50,
+        "endLine": 195,
+        "endChar": 54
+      },
+      "revId": "711aa2b594eaf42caebdfc4c2c5bfa57602d2706",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b6942c29_3ecdb1da",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/ChromeTabbedActivity.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 2155,
+      "author": {
+        "id": 1122966
+      },
+      "writtenOn": "2017-11-09T00:35:47Z",
+      "side": 1,
+      "message": "nit: This public method should have a JavaDoc",
+      "range": {
+        "startLine": 2155,
+        "startChar": 4,
+        "endLine": 2155,
+        "endChar": 58
+      },
+      "revId": "711aa2b594eaf42caebdfc4c2c5bfa57602d2706",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0af14135_14e201d1",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/modaldialog/ModalDialog.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 52,
+      "author": {
+        "id": 1122966
+      },
+      "writtenOn": "2017-11-09T00:35:47Z",
+      "side": 1,
+      "message": "nit: I\u0027d mark this is as @Nullable so that future engineers know that it can be null at a glance.",
+      "range": {
+        "startLine": 52,
+        "startChar": 4,
+        "endLine": 52,
+        "endChar": 44
+      },
+      "revId": "711aa2b594eaf42caebdfc4c2c5bfa57602d2706",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "efa80e87_c0a4baba",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/modaldialog/ModalDialog.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 120,
+      "author": {
+        "id": 1122966
+      },
+      "writtenOn": "2017-11-09T00:35:47Z",
+      "side": 1,
+      "message": "nit: I\u0027d use TextUtils.isEmpty() here to prevent NPE\u0027s if the text hasn\u0027t been set.",
+      "range": {
+        "startLine": 119,
+        "startChar": 7,
+        "endLine": 120,
+        "endChar": 51
+      },
+      "revId": "711aa2b594eaf42caebdfc4c2c5bfa57602d2706",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b760462e_ad45bb5a",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/modaldialog/ModalDialog.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 141,
+      "author": {
+        "id": 1122966
+      },
+      "writtenOn": "2017-11-09T00:35:47Z",
+      "side": 1,
+      "message": "nit: capitalize Android",
+      "range": {
+        "startLine": 141,
+        "startChar": 63,
+        "endLine": 141,
+        "endChar": 70
+      },
+      "revId": "711aa2b594eaf42caebdfc4c2c5bfa57602d2706",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "428f41f5_7320b4bd",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/modaldialog/ModalDialog.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 215,
+      "author": {
+        "id": 1122966
+      },
+      "writtenOn": "2017-11-09T00:35:47Z",
+      "side": 1,
+      "message": "nit: getControllerForTest?",
+      "range": {
+        "startLine": 215,
+        "startChar": 22,
+        "endLine": 215,
+        "endChar": 34
+      },
+      "revId": "711aa2b594eaf42caebdfc4c2c5bfa57602d2706",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a474c4c6_397c26c5",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/modaldialog/TabModalDialogManager.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 33,
+      "author": {
+        "id": 1122966
+      },
+      "writtenOn": "2017-11-09T00:35:47Z",
+      "side": 1,
+      "message": "nit: at a time",
+      "range": {
+        "startLine": 33,
+        "startChar": 48,
+        "endLine": 33,
+        "endChar": 59
+      },
+      "revId": "711aa2b594eaf42caebdfc4c2c5bfa57602d2706",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "09039abf_d46230d9",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/modaldialog/TabModalDialogManager.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 53,
+      "author": {
+        "id": 1122966
+      },
+      "writtenOn": "2017-11-09T00:35:47Z",
+      "side": 1,
+      "message": "It looks like we\u0027re dismissing dialogs when entering the tab switcher and when selecting a tab. Do we dismiss any other times? Should we (e.g. when the user navigates to a new URL)?",
+      "revId": "711aa2b594eaf42caebdfc4c2c5bfa57602d2706",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e00faad1_bf065994",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/modaldialog/TabModalDialogManager.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 55,
+      "author": {
+        "id": 1122966
+      },
+      "writtenOn": "2017-11-09T00:35:47Z",
+      "side": 1,
+      "message": "nit: .. for the dialog container when the sheet is opened...",
+      "range": {
+        "startLine": 55,
+        "startChar": 67,
+        "endLine": 55,
+        "endChar": 75
+      },
+      "revId": "711aa2b594eaf42caebdfc4c2c5bfa57602d2706",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "481ba721_f2bf8b99",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/modaldialog/TabModalDialogManager.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 59,
+      "author": {
+        "id": 1122966
+      },
+      "writtenOn": "2017-11-09T00:35:47Z",
+      "side": 1,
+      "message": "How many dialogs do we expect to queue up? Should we use a LinkedHashSet to make lookups easy?",
+      "range": {
+        "startLine": 59,
+        "startChar": 18,
+        "endLine": 59,
+        "endChar": 22
+      },
+      "revId": "711aa2b594eaf42caebdfc4c2c5bfa57602d2706",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0024ea93_fc7f2722",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/modaldialog/TabModalDialogManager.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 76,
+      "author": {
+        "id": 1122966
+      },
+      "writtenOn": "2017-11-09T00:35:47Z",
+      "side": 1,
+      "message": "What does it mean to be restricted?",
+      "range": {
+        "startLine": 76,
+        "startChar": 43,
+        "endLine": 76,
+        "endChar": 52
+      },
+      "revId": "711aa2b594eaf42caebdfc4c2c5bfa57602d2706",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "aa86de6d_1ef62f92",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/modaldialog/TabModalDialogManager.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 79,
+      "author": {
+        "id": 1122966
+      },
+      "writtenOn": "2017-11-09T00:35:47Z",
+      "side": 1,
+      "message": "Are there times when the container is in front of the browser controls?\n\nIt\u0027d be helpful to elaborate on the expected behavior w/ some examples.",
+      "range": {
+        "startLine": 79,
+        "startChar": 52,
+        "endLine": 79,
+        "endChar": 94
+      },
+      "revId": "711aa2b594eaf42caebdfc4c2c5bfa57602d2706",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "756b8f43_33d748e1",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/modaldialog/TabModalDialogManager.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 103,
+      "author": {
+        "id": 1122966
+      },
+      "writtenOn": "2017-11-09T00:35:47Z",
+      "side": 1,
+      "message": "Does the margin need to be adjusted depending on whether the toolbar is showing?\n\nAlso, what is the scrim vertical margin used for?",
+      "range": {
+        "startLine": 102,
+        "startChar": 7,
+        "endLine": 103,
+        "endChar": 78
+      },
+      "revId": "711aa2b594eaf42caebdfc4c2c5bfa57602d2706",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "51abc88c_e540c000",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/modaldialog/TabModalDialogManager.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 135,
+      "author": {
+        "id": 1122966
+      },
+      "writtenOn": "2017-11-09T00:35:47Z",
+      "side": 1,
+      "message": "Typically #handleBackPress() returns a boolean indicating whether the back press was consumed. For this method, that would look like:\n\nif (mCurrentDialog \u003d\u003d null) return false;\n\nmCurrentDialog.dismissNoAction();\nreturn true;",
+      "revId": "711aa2b594eaf42caebdfc4c2c5bfa57602d2706",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ce81af08_d290c802",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/modaldialog/TabModalDialogManager.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 142,
+      "author": {
+        "id": 1122966
+      },
+      "writtenOn": "2017-11-09T00:35:47Z",
+      "side": 1,
+      "message": "nit: ...should be brought to the front.",
+      "range": {
+        "startLine": 142,
+        "startChar": 51,
+        "endLine": 142,
+        "endChar": 66
+      },
+      "revId": "711aa2b594eaf42caebdfc4c2c5bfa57602d2706",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9864acea_bfe922c5",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/modaldialog/TabModalDialogManager.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 223,
+      "author": {
+        "id": 1122966
+      },
+      "writtenOn": "2017-11-09T00:35:47Z",
+      "side": 1,
+      "message": "Is it possible to make the overflow menu enabled in the future?",
+      "range": {
+        "startLine": 223,
+        "startChar": 25,
+        "endLine": 223,
+        "endChar": 57
+      },
+      "revId": "711aa2b594eaf42caebdfc4c2c5bfa57602d2706",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "483f85d3_f457c933",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/modaldialog/TabModalDialogManager.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 248,
+      "author": {
+        "id": 1122966
+      },
+      "writtenOn": "2017-11-09T00:35:47Z",
+      "side": 1,
+      "message": "In contextual search, we hide the action mode bar without actually clearing the selection. I believe we do this through ContentViewCore#preserveSelectionOnNextLossOfFocus() then we switch the focus to the Contextual Search ContentViewCore. I wonder if something similar is possible here? That way the selection would persist and the copy-paste action bar would be available again after the dialog is dismissed and the CVC regains focus.",
+      "range": {
+        "startLine": 248,
+        "startChar": 61,
+        "endLine": 248,
+        "endChar": 84
+      },
+      "revId": "711aa2b594eaf42caebdfc4c2c5bfa57602d2706",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9760d23f_e7db8ff5",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/modaldialog/TabModalDialogManager.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 251,
+      "author": {
+        "id": 1122966
+      },
+      "writtenOn": "2017-11-09T00:35:47Z",
+      "side": 1,
+      "message": "What\u0027s forcing the toolbar to show?",
+      "range": {
+        "startLine": 251,
+        "startChar": 15,
+        "endLine": 251,
+        "endChar": 36
+      },
+      "revId": "711aa2b594eaf42caebdfc4c2c5bfa57602d2706",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5c73d0fa_044f99fe",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/modaldialog/TabModalDialogManager.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 253,
+      "author": {
+        "id": 1122966
+      },
+      "writtenOn": "2017-11-09T00:35:47Z",
+      "side": 1,
+      "message": "nit: This TODO doesn\u0027t seem to go with the if (mHasBottomControls) block. Should it be located somewhere else?",
+      "range": {
+        "startLine": 252,
+        "startChar": 12,
+        "endLine": 253,
+        "endChar": 66
+      },
+      "revId": "711aa2b594eaf42caebdfc4c2c5bfa57602d2706",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8a627a75_5117897f",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/modaldialog/TabModalDialogManager.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 255,
+      "author": {
+        "id": 1122966
+      },
+      "writtenOn": "2017-11-09T00:35:47Z",
+      "side": 1,
+      "message": "If the sheet is open when a webpage requests to show a modal dialog, I think we should wait to show the dialog until after the user has closed the sheet.\n\nWe also probably need some thought around how to handle a scenario where the user takes some action that currently causes the sheet to open while a modal dialog is showing. For example, if a dialog is showing and the user taps on a download notification, should we hide the dialog and open the bottom sheet w/ downloads selected? Then when the sheet closes, should we re-show the dialog?",
+      "range": {
+        "startLine": 255,
+        "startChar": 16,
+        "endLine": 255,
+        "endChar": 78
+      },
+      "revId": "711aa2b594eaf42caebdfc4c2c5bfa57602d2706",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a29668c4_5694d5bf",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/modaldialog/TabModalDialogManager.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 264,
+      "author": {
+        "id": 1122966
+      },
+      "writtenOn": "2017-11-09T00:35:47Z",
+      "side": 1,
+      "message": "Checkout TabModelSelectorTabModelObserver. I think it will handle adding an observer to each model for you.",
+      "range": {
+        "startLine": 262,
+        "startChar": 12,
+        "endLine": 264,
+        "endChar": 13
+      },
+      "revId": "711aa2b594eaf42caebdfc4c2c5bfa57602d2706",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9de4c05e_f6073c87",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/modaldialog/TabModalDialogManager.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 266,
+      "author": {
+        "id": 1122966
+      },
+      "writtenOn": "2017-11-09T00:35:47Z",
+      "side": 1,
+      "message": "Is this for the toolbar shadow?",
+      "range": {
+        "startLine": 266,
+        "startChar": 74,
+        "endLine": 266,
+        "endChar": 81
+      },
+      "revId": "711aa2b594eaf42caebdfc4c2c5bfa57602d2706",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6314082b_e7512a9b",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/modaldialog/javascript/JavascriptModalDialog.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 33,
+      "author": {
+        "id": 1122966
+      },
+      "writtenOn": "2017-11-09T00:35:47Z",
+      "side": 1,
+      "message": "Optional nit: consider combing this method with the constructor and making mCustomLayout, et. al., final.",
+      "range": {
+        "startLine": 33,
+        "startChar": 17,
+        "endLine": 33,
+        "endChar": 26
+      },
+      "revId": "711aa2b594eaf42caebdfc4c2c5bfa57602d2706",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "58b92004_3bbc6e65",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/modaldialog/javascript/JavascriptModalDialog.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 47,
+      "author": {
+        "id": 1122966
+      },
+      "writtenOn": "2017-11-09T00:35:47Z",
+      "side": 1,
+      "message": "What sort of discrepancies happened when hiding the text view?",
+      "range": {
+        "startLine": 47,
+        "startChar": 68,
+        "endLine": 47,
+        "endChar": 93
+      },
+      "revId": "711aa2b594eaf42caebdfc4c2c5bfa57602d2706",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b804142e_4a38b4b4",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/modaldialog/javascript/JavascriptModalDialog.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 56,
+      "author": {
+        "id": 1122966
+      },
+      "writtenOn": "2017-11-09T00:35:47Z",
+      "side": 1,
+      "message": "Does View#canScrollVertictically() work?",
+      "range": {
+        "startLine": 55,
+        "startChar": 32,
+        "endLine": 56,
+        "endChar": 84
+      },
+      "revId": "711aa2b594eaf42caebdfc4c2c5bfa57602d2706",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "84d48453_aa9a35e7",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/modaldialog/javascript/JavascriptModalDialog.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 57,
+      "author": {
+        "id": 1122966
+      },
+      "writtenOn": "2017-11-09T00:35:47Z",
+      "side": 1,
+      "message": "Why is the scrollview only focusable when it\u0027s scrollable?",
+      "range": {
+        "startLine": 57,
+        "startChar": 24,
+        "endLine": 57,
+        "endChar": 53
+      },
+      "revId": "711aa2b594eaf42caebdfc4c2c5bfa57602d2706",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2bc9936a_7253123f",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/modaldialog/javascript/JavascriptModalDialog.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 71,
+      "author": {
+        "id": 1122966
+      },
+      "writtenOn": "2017-11-09T00:35:47Z",
+      "side": 1,
+      "message": "nit: TextUtils.isEmpty() will also check for empty strings, which should remove the need for the .length() check below",
+      "range": {
+        "startLine": 71,
+        "startChar": 9,
+        "endLine": 71,
+        "endChar": 39
+      },
+      "revId": "711aa2b594eaf42caebdfc4c2c5bfa57602d2706",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3cfb3c55_e2764054",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/modaldialog/javascript/JavascriptModalDialog.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 88,
+      "author": {
+        "id": 1122966
+      },
+      "writtenOn": "2017-11-09T00:35:47Z",
+      "side": 1,
+      "message": "Does the suppress checkbox suppress future JavaScript dialogs?",
+      "range": {
+        "startLine": 88,
+        "startChar": 22,
+        "endLine": 88,
+        "endChar": 70
+      },
+      "revId": "711aa2b594eaf42caebdfc4c2c5bfa57602d2706",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "a0fd9cd3_df32961d",
         "filename": "chrome/android/java_sources.gni",
         "patchSetId": 2
