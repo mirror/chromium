@@ -1,0 +1,354 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "261d60c6_3f64d72e",
+        "filename": "third_party/WebKit/Source/core/dom/Element.cpp",
+        "patchSetId": 4
+      },
+      "lineNbr": 594,
+      "author": {
+        "id": 1125304
+      },
+      "writtenOn": "2017-11-09T21:55:58Z",
+      "side": 1,
+      "message": "Please remove debugging logs. Here and elsewhere.",
+      "revId": "cf69fd4f25fdd5390a1567fc4f6852ac09cab1aa",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "894578ff_3f512bae",
+        "filename": "third_party/WebKit/Source/core/input/ScrollManager.cpp",
+        "patchSetId": 4
+      },
+      "lineNbr": 465,
+      "author": {
+        "id": 1125304
+      },
+      "writtenOn": "2017-11-09T21:55:58Z",
+      "side": 1,
+      "message": "These fields appear to be per \"gesture\" and not per \"scroll sequence\".\n\nScroll customization uses scroll sequence to talk about the chain of all scrollers\nfor a single scroll update.\n\nBut in this case these field care about if any scroll was consumed for scroll sequence\nduring the *whole scroll gesture* (and not just a single update). I believe the \nemphasis should be on the latter and not the former.",
+      "range": {
+        "startLine": 465,
+        "startChar": 2,
+        "endLine": 465,
+        "endChar": 35
+      },
+      "revId": "cf69fd4f25fdd5390a1567fc4f6852ac09cab1aa",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f6dcb138_77fe4070",
+        "filename": "third_party/WebKit/Source/core/input/ScrollManager.cpp",
+        "patchSetId": 4
+      },
+      "lineNbr": 504,
+      "author": {
+        "id": 1125304
+      },
+      "writtenOn": "2017-11-09T21:55:58Z",
+      "side": 1,
+      "message": "This whole thing can move into a function. In which case you can turn many of \nthe conditionals into early exists too.",
+      "revId": "cf69fd4f25fdd5390a1567fc4f6852ac09cab1aa",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2c5ca602_b819466b",
+        "filename": "third_party/WebKit/Source/core/input/ScrollManager.cpp",
+        "patchSetId": 4
+      },
+      "lineNbr": 504,
+      "author": {
+        "id": 1125304
+      },
+      "writtenOn": "2017-11-09T21:55:58Z",
+      "side": 1,
+      "message": "Why is this not: scroll_gesture_handling_node_ instead?\n\nI mean this is dispatching scroll end to current handling node. That seems to\nbe the natural node that we should be snapping.",
+      "range": {
+        "startLine": 504,
+        "startChar": 8,
+        "endLine": 504,
+        "endChar": 42
+      },
+      "revId": "cf69fd4f25fdd5390a1567fc4f6852ac09cab1aa",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "fd6ab9b3_75b63c42",
+        "filename": "third_party/WebKit/Source/core/input/ScrollManager.cpp",
+        "patchSetId": 4
+      },
+      "lineNbr": 513,
+      "author": {
+        "id": 1125304
+      },
+      "writtenOn": "2017-11-09T21:55:58Z",
+      "side": 1,
+      "message": "nit: I think it is more succinct and readable to use conditionals to determine snap axis\nand then use that to call into GetSnapPosition. e.g.,\n\nSnapAxis axis \u003d X | Y | Both // depending on boolean flags.\nsnap_offset \u003d snap_coordinator-\u003eGetSnapPosition(*layout_box, axis);",
+      "revId": "cf69fd4f25fdd5390a1567fc4f6852ac09cab1aa",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2c0d4bd8_7363d06a",
+        "filename": "third_party/WebKit/Source/core/input/ScrollManager.cpp",
+        "patchSetId": 4
+      },
+      "lineNbr": 525,
+      "author": {
+        "id": 1125304
+      },
+      "writtenOn": "2017-11-09T21:55:58Z",
+      "side": 1,
+      "message": "Please add a TODO making it clear that we need to actually animate this in future.",
+      "range": {
+        "startLine": 524,
+        "startChar": 0,
+        "endLine": 525,
+        "endChar": 78
+      },
+      "revId": "cf69fd4f25fdd5390a1567fc4f6852ac09cab1aa",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0bffbffc_b7e67e77",
+        "filename": "third_party/WebKit/Source/core/input/ScrollManager.cpp",
+        "patchSetId": 4
+      },
+      "lineNbr": 530,
+      "author": {
+        "id": 1125304
+      },
+      "writtenOn": "2017-11-09T21:55:58Z",
+      "side": 1,
+      "message": "I believe snapping should happen after we dispatch scroll end in case\nscroll end callback want to do some scrolling itself!",
+      "range": {
+        "startLine": 530,
+        "startChar": 4,
+        "endLine": 530,
+        "endChar": 36
+      },
+      "revId": "cf69fd4f25fdd5390a1567fc4f6852ac09cab1aa",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9e7f7cff_afb179fa",
+        "filename": "third_party/WebKit/Source/core/page/scrolling/SnapCoordinator.cpp",
+        "patchSetId": 4
+      },
+      "lineNbr": 53,
+      "author": {
+        "id": 1125304
+      },
+      "writtenOn": "2017-11-09T21:55:58Z",
+      "side": 1,
+      "message": "Why not use new_container here.",
+      "range": {
+        "startLine": 53,
+        "startChar": 13,
+        "endLine": 53,
+        "endChar": 38
+      },
+      "revId": "cf69fd4f25fdd5390a1567fc4f6852ac09cab1aa",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6faa202d_29ada5a1",
+        "filename": "third_party/WebKit/Source/core/page/scrolling/SnapCoordinator.cpp",
+        "patchSetId": 4
+      },
+      "lineNbr": 68,
+      "author": {
+        "id": 1125304
+      },
+      "writtenOn": "2017-11-09T21:55:58Z",
+      "side": 1,
+      "message": "Only need to do these updates if new_container !\u003d old_container",
+      "range": {
+        "startLine": 64,
+        "startChar": 2,
+        "endLine": 68,
+        "endChar": 1
+      },
+      "revId": "cf69fd4f25fdd5390a1567fc4f6852ac09cab1aa",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f58b4255_296feb25",
+        "filename": "third_party/WebKit/Source/core/page/scrolling/SnapCoordinator.cpp",
+        "patchSetId": 4
+      },
+      "lineNbr": 127,
+      "author": {
+        "id": 1125304
+      },
+      "writtenOn": "2017-11-09T21:55:58Z",
+      "side": 1,
+      "message": "The method really needs some good documentation (prefferrably with ascii art that\ndemonstrate the box alignment computation that it does. See for example  [1]\n\n[1] https://chromium.googlesource.com/chromium/src/+/8a28390aab5f6910589f084c7975a78f6e2f3fe2/third_party/WebKit/Source/core/layout/README.md#scroll-origin-vs_offset-vs_position",
+      "range": {
+        "startLine": 126,
+        "startChar": 0,
+        "endLine": 127,
+        "endChar": 77
+      },
+      "revId": "cf69fd4f25fdd5390a1567fc4f6852ac09cab1aa",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2a206f1e_640bf67f",
+        "filename": "third_party/WebKit/Source/core/page/scrolling/SnapCoordinator.cpp",
+        "patchSetId": 4
+      },
+      "lineNbr": 131,
+      "author": {
+        "id": 1125304
+      },
+      "writtenOn": "2017-11-09T21:55:58Z",
+      "side": 1,
+      "message": "I think it is best to keep computations in LayoutUnit and only\nconvert to Double etc. at the end to reduce error.",
+      "range": {
+        "startLine": 131,
+        "startChar": 27,
+        "endLine": 131,
+        "endChar": 55
+      },
+      "revId": "cf69fd4f25fdd5390a1567fc4f6852ac09cab1aa",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1559c6ca_d542e8ac",
+        "filename": "third_party/WebKit/Source/core/page/scrolling/SnapCoordinator.cpp",
+        "patchSetId": 4
+      },
+      "lineNbr": 142,
+      "author": {
+        "id": 1125304
+      },
+      "writtenOn": "2017-11-09T21:55:58Z",
+      "side": 1,
+      "message": "Two notes: \n1. This is walking the layout tree up to compute relative offset. Instead of doing it\n   twice once for X and once for Y it should happen once. I think it is just a matter of adding\n   a new method to LayoutBox.\n\n2. I believe this assumes that container is the area ancestor in layout tree\n  otherwise offset method return an incorrect value. If this is true, we should \n  document here why the condition hold true for snap_area and snap_container.",
+      "range": {
+        "startLine": 139,
+        "startChar": 0,
+        "endLine": 142,
+        "endChar": 74
+      },
+      "revId": "cf69fd4f25fdd5390a1567fc4f6852ac09cab1aa",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "23a0084b_90f8474f",
+        "filename": "third_party/WebKit/Source/core/page/scrolling/SnapCoordinator.cpp",
+        "patchSetId": 4
+      },
+      "lineNbr": 153,
+      "author": {
+        "id": 1125304
+      },
+      "writtenOn": "2017-11-09T21:55:58Z",
+      "side": 1,
+      "message": "what if this is a calculated value? In general I don\u0027t think this is the place\nto do this (length -\u003e  leyout unit) calculation. \n\nI am not an expert here but it seems these belong to LayoutBoxModelObject. See \nLayoutBoxModelObject::ComputedCSSPaddingLeft() for some ideas or reach out to\nsome style experts.",
+      "range": {
+        "startLine": 151,
+        "startChar": 0,
+        "endLine": 153,
+        "endChar": 56
+      },
+      "revId": "cf69fd4f25fdd5390a1567fc4f6852ac09cab1aa",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "fb625749_a723174c",
+        "filename": "third_party/WebKit/Source/core/page/scrolling/SnapCoordinator.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 45,
+      "author": {
+        "id": 1125304
+      },
+      "writtenOn": "2017-11-09T21:55:58Z",
+      "side": 1,
+      "message": "nit: There is no term SnapContainer. So I suggest using snap container as it is\nused in the class comment. Similarly for SnapArea.",
+      "range": {
+        "startLine": 45,
+        "startChar": 48,
+        "endLine": 45,
+        "endChar": 61
+      },
+      "revId": "cf69fd4f25fdd5390a1567fc4f6852ac09cab1aa",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ffc387e6_cac12758",
+        "filename": "third_party/WebKit/Source/core/page/scrolling/SnapCoordinator.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 65,
+      "author": {
+        "id": 1125304
+      },
+      "writtenOn": "2017-11-09T21:55:58Z",
+      "side": 1,
+      "message": "Shouldn\u0027t these all be private?",
+      "range": {
+        "startLine": 62,
+        "startChar": 1,
+        "endLine": 65,
+        "endChar": 12
+      },
+      "revId": "cf69fd4f25fdd5390a1567fc4f6852ac09cab1aa",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "53ddc29a_411e7e0a",
+        "filename": "third_party/WebKit/Source/platform/scroll/ScrollSnapData.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 142,
+      "author": {
+        "id": 1125304
+      },
+      "writtenOn": "2017-11-09T21:55:58Z",
+      "side": 1,
+      "message": "nit: not snap points.",
+      "range": {
+        "startLine": 142,
+        "startChar": 9,
+        "endLine": 142,
+        "endChar": 19
+      },
+      "revId": "cf69fd4f25fdd5390a1567fc4f6852ac09cab1aa",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
