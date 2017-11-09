@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "1c050f7b_f18e4bd3",
+        "filename": "components/viz/service/display/direct_renderer.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 668,
+      "author": {
+        "id": 1228419
+      },
+      "writtenOn": "2017-11-09T20:02:12Z",
+      "side": 0,
+      "message": "Looks like this false is not covered in the new cl. When will BindFramebufferToTexture be false?",
+      "range": {
+        "startLine": 668,
+        "startChar": 2,
+        "endLine": 668,
+        "endChar": 14
+      },
+      "revId": "e90c1f7c2699453a150a46b34c90c905185cd008",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
