@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "c49acb7f_b427ec96",
+        "filename": "media/blink/webmediaplayer_impl.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 1450,
+      "author": {
+        "id": 1129179
+      },
+      "writtenOn": "2017-11-09T23:36:31Z",
+      "side": 1,
+      "message": "On second thought, we don\u0027t want to DCHECK here. Please remove it. Very sorry for the back and forth.\n\nI realized later that this condition is hit in the repro steps described by the bug (i.e. set MSE duration to infinity, and remove all source buffers). This actually a bigger issue (we probably don\u0027t want to fire ended in such a case), but we need to file a separate bug to clarify in the MSE/HMLT5 spec what should be done when all tracks are disabled.",
+      "range": {
+        "startLine": 1450,
+        "startChar": 2,
+        "endLine": 1450,
+        "endChar": 8
+      },
+      "revId": "27007942758932efe9f5c862ba2e3b3ed7bb0fd3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
