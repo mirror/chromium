@@ -866,7 +866,7 @@ void QuicChromiumClientSession::OnStreamFrame(const QuicStreamFrame& frame) {
         NetworkChangeNotifier::kInvalidNetworkHandle,
         connection()->peer_address().impl().socket_address(),
         migration_net_log);
-  
+
     migration_net_log.EndEvent(
         NetLogEventType::QUIC_CONNECTION_MIGRATION_TRIGGERED);
   }
@@ -1468,6 +1468,33 @@ void QuicChromiumClientSession::OnSuccessfulVersionNegotiation(
   QuicSpdySession::OnSuccessfulVersionNegotiation(version);
 }
 
+void QuicChromiumClientSession::OnConnectivityProbingReceived(
+    const QuicSocketAddress& self_address,
+    const QuicSocketAddress& peer_address) {
+  if (self_address == connection()->self_address() &&
+      peer_address == connection()->peer_address()) {
+    LOG(ERROR) << "zhongyi_log: Client received a mtu discovery";
+    return;
+  }
+
+  if (self_address != connection()->self_address()) {
+    // This is a probing response.
+    LOG(ERROR) << "zhongyi_log: Client received a probing response with new "
+                  "self_address "
+               << self_address.ToString();
+    // TODO(zhongyi): what boolean to use to cancel probing?
+    if (probing_writer_) {
+      OnProbingSuccessful(self_address);
+      CHECK(!probing_writer_);
+    } else {
+      LOG(ERROR) << "zhongyi_log: probing has been cancelled";
+    }
+  } else if (peer_address != connection()->peer_address()) {
+    // This is a probing request.
+    NOTREACHED();
+  }
+}
+
 int QuicChromiumClientSession::HandleWriteError(
     int error_code,
     scoped_refptr<QuicChromiumPacketWriter::ReusableIOBuffer> packet) {
@@ -2056,6 +2083,19 @@ MigrationResult QuicChromiumClientSession::Migrate(
   }
   HistogramAndLogMigrationSuccess(migration_net_log, connection_id());
   return MigrationResult::SUCCESS;
+}
+
+void QuicChromiumClientSession::OnProbingSuccessful(const QuicSocketAddress& self_address) {
+  if (!probing_reader_ || !probing_writer_) {
+    LOG(ERROR) << "zhongyi_log: Client: Probing is cancelled";
+    probing_reader_.reset();
+    probing_writer_.reset();
+    return;
+  }
+  packet_readers_.push_back(std::move(probing_reader_));
+  connection()->SetSelfAddress(self_address);
+  connection()->SetQuicPacketWriter(probing_writer_.release(),
+                                   /*owns_writer*/ true);
 }
 
 bool QuicChromiumClientSession::MigrateToSocket(

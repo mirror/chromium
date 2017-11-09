@@ -124,6 +124,11 @@ class QUIC_EXPORT_PRIVATE QuicConnectionVisitorInterface {
   virtual void OnSuccessfulVersionNegotiation(
       const QuicTransportVersion& version) = 0;
 
+  // Called when a connectivity probing has been received by the connection.
+  virtual void OnConnectivityProbingReceived(
+      const QuicSocketAddress& self_address,
+      const QuicSocketAddress& peer_address) = 0;
+
   // Called when a blocked socket becomes writable.
   virtual void OnCanWrite() = 0;
 

@@ -382,6 +382,9 @@ class NET_EXPORT_PRIVATE QuicChromiumClientSession
                           ConnectionCloseSource source) override;
   void OnSuccessfulVersionNegotiation(
       const QuicTransportVersion& version) override;
+  void OnConnectivityProbingReceived(
+      const QuicSocketAddress& self_address,
+      const QuicSocketAddress& peer_address) override;
   void OnPathDegrading() override;
   bool HasOpenDynamicStreams() const override;
 
@@ -467,6 +470,8 @@ class NET_EXPORT_PRIVATE QuicChromiumClientSession
                           IPEndPoint peer_address,
                           bool close_sesion_on_error,
                           const NetLogWithSource& migration_net_log);
+
+  void OnProbingSuccessful(const QuicSocketAddress& self_address);
 
   // Migrates session onto new socket, i.e., starts reading from
   // |socket| in addition to any previous sockets, and sets |writer|
