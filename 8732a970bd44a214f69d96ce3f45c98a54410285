@@ -1,0 +1,96 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "de8317a6_4ffb82db",
+        "filename": "chrome/browser/notifications/notification_image_retainer.cc",
+        "patchSetId": 43
+      },
+      "lineNbr": 65,
+      "author": {
+        "id": 1138489
+      },
+      "writtenOn": "2017-11-09T14:24:35Z",
+      "side": 1,
+      "message": "If image_directory_ is empty, I think you should exit here with error, as the following CreateDirectoryAndGetError is likely going to fail anyway.",
+      "range": {
+        "startLine": 65,
+        "startChar": 9,
+        "endLine": 65,
+        "endChar": 33
+      },
+      "revId": "8732a970bd44a214f69d96ce3f45c98a54410285",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5746d621_6e04f54e",
+        "filename": "chrome/browser/notifications/notification_platform_bridge_win.cc",
+        "patchSetId": 43
+      },
+      "lineNbr": 465,
+      "author": {
+        "id": 1138489
+      },
+      "writtenOn": "2017-11-09T14:24:35Z",
+      "side": 1,
+      "message": "Please specify explicitly here that it\u0027s a unique_ptr\u003cNotification\u003e.",
+      "range": {
+        "startLine": 465,
+        "startChar": 2,
+        "endLine": 465,
+        "endChar": 24
+      },
+      "revId": "8732a970bd44a214f69d96ce3f45c98a54410285",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e1e9cfcd_72486dfd",
+        "filename": "chrome/browser/notifications/notification_platform_bridge_win.cc",
+        "patchSetId": 43
+      },
+      "lineNbr": 471,
+      "author": {
+        "id": 1138489
+      },
+      "writtenOn": "2017-11-09T14:24:35Z",
+      "side": 1,
+      "message": "Race condition here: unique_ptr might destroy the object before NotificationPlatformBridgeWinImpl has a chance to display it. You can use base::Passed to pass the unique_ptr there instead.",
+      "range": {
+        "startLine": 471,
+        "startChar": 32,
+        "endLine": 471,
+        "endChar": 50
+      },
+      "revId": "8732a970bd44a214f69d96ce3f45c98a54410285",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "02fbd489_ec3e1f6c",
+        "filename": "chrome/browser/notifications/notification_template_builder.cc",
+        "patchSetId": 43
+      },
+      "lineNbr": 87,
+      "author": {
+        "id": 1138489
+      },
+      "writtenOn": "2017-11-09T14:24:35Z",
+      "side": 1,
+      "message": "nit: no curly braces necessary for one-line if statements.",
+      "range": {
+        "startLine": 87,
+        "startChar": 0,
+        "endLine": 87,
+        "endChar": 39
+      },
+      "revId": "8732a970bd44a214f69d96ce3f45c98a54410285",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
