@@ -119,6 +119,24 @@
     },
     {
       "key": {
+        "uuid": "1fff5551_f7305fa1",
+        "filename": "chrome/browser/translate/translate_browsertest.cc",
+        "patchSetId": 11
+      },
+      "lineNbr": 294,
+      "author": {
+        "id": 1002172
+      },
+      "writtenOn": "2017-11-09T06:49:17Z",
+      "side": 1,
+      "message": "agreed",
+      "parentUuid": "5eba7465_214afe6f",
+      "revId": "3fef5755753535ce28094d20c21ec3e80a6836af",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "a17e246d_707498fa",
         "filename": "content/browser/frame_host/navigation_controller_impl_browsertest.cc",
         "patchSetId": 11
