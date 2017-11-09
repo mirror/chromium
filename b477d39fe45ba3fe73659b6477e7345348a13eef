@@ -1,0 +1,72 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "eb58a1b3_91857801",
+        "filename": "chrome/browser/media/media_engagement_contents_observer.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 430,
+      "author": {
+        "id": 1115974
+      },
+      "writtenOn": "2017-11-09T13:50:14Z",
+      "side": 1,
+      "message": "Would it make sense for this method to take a std::optional\u003cMediaPlayerId\u003e? When empty, it would update `playback_timer_` (that wouldn\u0027t go away) so we keep `playback_timer_` and therefore do not change the current behaviour. WDYT?",
+      "revId": "b477d39fe45ba3fe73659b6477e7345348a13eef",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "434f55cd_eb6d6419",
+        "filename": "chrome/browser/media/media_engagement_contents_observer.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 187,
+      "author": {
+        "id": 1115974
+      },
+      "writtenOn": "2017-11-09T13:50:14Z",
+      "side": 1,
+      "message": "nit: add ONLY for testing.",
+      "revId": "b477d39fe45ba3fe73659b6477e7345348a13eef",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6c3871a1_e5072bf8",
+        "filename": "chrome/test/data/media/engagement/engagement_test.js",
+        "patchSetId": 5
+      },
+      "lineNbr": 10,
+      "author": {
+        "id": 1115974
+      },
+      "writtenOn": "2017-11-09T13:50:14Z",
+      "side": 1,
+      "message": "nit: would `let` work here instead of `var`?",
+      "revId": "b477d39fe45ba3fe73659b6477e7345348a13eef",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b3be8e2a_33b44da2",
+        "filename": "chrome/test/data/media/engagement/engagement_test.js",
+        "patchSetId": 5
+      },
+      "lineNbr": 13,
+      "author": {
+        "id": 1115974
+      },
+      "writtenOn": "2017-11-09T13:50:14Z",
+      "side": 1,
+      "message": "What about:\n```\nelements[i].addEventListener(\u0027play\u0027, () \u003d\u003e {\n  [...]\n}, { once: true });\n```\n\nI wonder if using `once` would strengthen the test.",
+      "revId": "b477d39fe45ba3fe73659b6477e7345348a13eef",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
