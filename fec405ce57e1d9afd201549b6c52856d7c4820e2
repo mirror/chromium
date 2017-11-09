@@ -2,6 +2,40 @@
   "comments": [
     {
       "key": {
+        "uuid": "af9d7900_d3c7e1aa",
+        "filename": "content/public/common/url_loader.mojom",
+        "patchSetId": 11
+      },
+      "lineNbr": 20,
+      "author": {
+        "id": 1001472
+      },
+      "writtenOn": "2017-11-09T11:09:18Z",
+      "side": 1,
+      "message": "I wonder if we want to also move this mojo definition to services/network now and start using network.mojo.URLLoaderStatus. (We\u0027ll anyway need to do so at some point)\n\n(It also feels we could also stop using Native for this one, but maybe not in this patch)",
+      "revId": "fec405ce57e1d9afd201549b6c52856d7c4820e2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "266d2256_ddaffa81",
+        "filename": "content/public/common/url_loader_status.typemap",
+        "patchSetId": 11
+      },
+      "lineNbr": 7,
+      "author": {
+        "id": 1001472
+      },
+      "writtenOn": "2017-11-09T11:09:18Z",
+      "side": 1,
+      "message": "Do we need this?",
+      "revId": "fec405ce57e1d9afd201549b6c52856d7c4820e2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "b948a703_63eb6076",
         "filename": "extensions/browser/DEPS",
         "patchSetId": 11
