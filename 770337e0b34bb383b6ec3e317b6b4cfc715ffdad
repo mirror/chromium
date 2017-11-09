@@ -2,6 +2,52 @@
   "comments": [
     {
       "key": {
+        "uuid": "8dc7a790_5e1a0220",
+        "filename": "ash/display/display_manager_unittest.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 3833,
+      "author": {
+        "id": 1125479
+      },
+      "writtenOn": "2017-11-09T02:06:35Z",
+      "side": 1,
+      "message": "These constexpr changes are not needed. Please revert. Those are just const local variables.",
+      "range": {
+        "startLine": 3833,
+        "startChar": 7,
+        "endLine": 3833,
+        "endChar": 11
+      },
+      "revId": "770337e0b34bb383b6ec3e317b6b4cfc715ffdad",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "bb1687a6_e4a3666c",
+        "filename": "ui/display/manager/chromeos/display_change_observer.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 148,
+      "author": {
+        "id": 1125479
+      },
+      "writtenOn": "2017-11-09T02:06:35Z",
+      "side": 1,
+      "message": "Add a comment here to explain that when the flag is disabled we default to extended ... etc.\n\nYou probably still need a TODO, since this flag will be removed at some point.",
+      "range": {
+        "startLine": 148,
+        "startChar": 25,
+        "endLine": 148,
+        "endChar": 51
+      },
+      "revId": "770337e0b34bb383b6ec3e317b6b4cfc715ffdad",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "547f316d_737c4942",
         "filename": "ui/display/manager/chromeos/update_display_configuration_task.cc",
         "patchSetId": 1
@@ -30,6 +76,29 @@
       "writtenOn": "2017-11-09T02:00:04Z",
       "side": 1,
       "message": "I think you can just update this condition instead.",
+      "revId": "770337e0b34bb383b6ec3e317b6b4cfc715ffdad",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "cac86270_0b74c48b",
+        "filename": "ui/display/manager/chromeos/update_display_configuration_task.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 219,
+      "author": {
+        "id": 1125479
+      },
+      "writtenOn": "2017-11-09T02:06:35Z",
+      "side": 1,
+      "message": "Please, refactor this entire block. There\u0027s a lot of duplication.",
+      "range": {
+        "startLine": 198,
+        "startChar": 0,
+        "endLine": 219,
+        "endChar": 69
+      },
       "revId": "770337e0b34bb383b6ec3e317b6b4cfc715ffdad",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
