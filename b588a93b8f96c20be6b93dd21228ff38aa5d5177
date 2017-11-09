@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "290c003a_dafd646e",
+        "filename": "third_party/WebKit/Source/core/dom/SecurityContext.h",
+        "patchSetId": 16
+      },
+      "lineNbr": 95,
+      "author": {
+        "id": 1115949
+      },
+      "writtenOn": "2017-11-09T05:33:29Z",
+      "side": 1,
+      "message": "Can we make this protected + FrameImpl as friends?",
+      "range": {
+        "startLine": 95,
+        "startChar": 0,
+        "endLine": 95,
+        "endChar": 30
+      },
+      "revId": "b588a93b8f96c20be6b93dd21228ff38aa5d5177",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
