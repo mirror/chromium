@@ -37,6 +37,24 @@
     },
     {
       "key": {
+        "uuid": "142515cb_b022a265",
+        "filename": "base/mac/sdk_forward_declarations.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 209,
+      "author": {
+        "id": 1002092
+      },
+      "writtenOn": "2017-11-09T22:51:41Z",
+      "side": 1,
+      "message": "\u003e Thanks for catching this. I guess I was also thrown off by the fact that we have these other 10.11 forward declarations which we should get rid of?\n\nYeah I think so... Pretty sure these now become redundant as soon as we update the toolchain.",
+      "parentUuid": "3cd575d8_d218d697",
+      "revId": "55678ab92f9aca4da53f04a6f7e115c369b36d28",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "119b5bf6_0c9634a6",
         "filename": "chrome/browser/ui/cocoa/task_manager_mac.mm",
         "patchSetId": 1
