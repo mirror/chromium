@@ -46,6 +46,30 @@
       "revId": "f9adfef868a223fc20fed5c4499e3faf54a862c8",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "849e11a4_a6327adc",
+        "filename": "ui/views/widget/desktop_aura/desktop_window_tree_host_x11.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 1522,
+      "author": {
+        "id": 1115904
+      },
+      "writtenOn": "2017-11-09T19:22:33Z",
+      "side": 1,
+      "message": "I\u0027m mildly horrified but ok. Year of the Linux Desktop!\n\nBlending in with other applications is more important in general when using system titlebars. You (almost always) already aren\u0027t going to match the non-gtk theme when using system titlebars so don\u0027t go to extra effort here.",
+      "parentUuid": "9368d9fb_80627a97",
+      "range": {
+        "startLine": 1520,
+        "startChar": 4,
+        "endLine": 1522,
+        "endChar": 79
+      },
+      "revId": "f9adfef868a223fc20fed5c4499e3faf54a862c8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
