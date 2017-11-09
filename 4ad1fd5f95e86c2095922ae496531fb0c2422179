@@ -1,0 +1,44 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "4027e3d4_ee87e734",
+        "filename": "chrome/browser/chromeos/attestation/enrollment_policy_observer.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 4,
+      "author": {
+        "id": 1126309
+      },
+      "writtenOn": "2017-11-09T19:48:39Z",
+      "side": 1,
+      "message": "(just a note) I see that this file is modeled after attestation_policy_observer.cc, so I won\u0027t post any style nits that refer to the copied code, as it doesn\u0027t make much sense to clean up only one half.",
+      "revId": "4ad1fd5f95e86c2095922ae496531fb0c2422179",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "506d4fbe_016359b9",
+        "filename": "chrome/browser/chromeos/attestation/enrollment_policy_observer_unittest.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 76,
+      "author": {
+        "id": 1126309
+      },
+      "writtenOn": "2017-11-09T19:48:39Z",
+      "side": 1,
+      "message": "nit: Remove the comment.",
+      "range": {
+        "startLine": 76,
+        "startChar": 4,
+        "endLine": 76,
+        "endChar": 28
+      },
+      "revId": "4ad1fd5f95e86c2095922ae496531fb0c2422179",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
