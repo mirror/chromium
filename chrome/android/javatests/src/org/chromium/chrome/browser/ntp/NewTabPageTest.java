@@ -145,6 +145,7 @@ public class NewTabPageTest {
         InstrumentationRegistry.getInstrumentation().waitForIdleSync();
         mRenderTestRule.render(mTileGridLayout, "most_visited");
         mRenderTestRule.render(mFakebox, "fakebox");
+        RenderTestRule.sanitize(mNtp.getView());
         mRenderTestRule.render(mNtp.getView().getRootView(), "new_tab_page");
 
         // Scroll to search bar
