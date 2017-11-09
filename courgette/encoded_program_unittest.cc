@@ -177,4 +177,10 @@ TEST(EncodedProgramTest, TestWriteAddress) {
                           sinks.stream(kStreamRel32Addresses)));
 }
 
+TEST(BlahTest, Fail) {
+  std::vector<int> v;
+  int* ptr = &v[0];
+  EXPECT_EQ(ptr, ptr);
+}
+
 }  // namespace courgette
