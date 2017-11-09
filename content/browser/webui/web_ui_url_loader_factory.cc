@@ -13,6 +13,7 @@
 #include "base/single_thread_task_runner.h"
 #include "base/strings/string_piece.h"
 #include "base/task_scheduler/post_task.h"
+#include "content/browser/bad_message.h"
 #include "content/browser/blob_storage/blob_internals_url_loader.h"
 #include "content/browser/blob_storage/chrome_blob_storage_context.h"
 #include "content/browser/frame_host/frame_tree_node.h"
@@ -207,14 +208,12 @@ void StartURLLoader(const ResourceRequest& request,
 class WebUIURLLoaderFactory : public mojom::URLLoaderFactory,
                               public FrameTreeNode::Observer {
  public:
-  WebUIURLLoaderFactory(FrameTreeNode* ftn)
-      : frame_tree_node_id_(ftn->frame_tree_node_id()),
-        storage_partition_(static_cast<StoragePartitionImpl*>(
-            ftn->current_frame_host()->GetProcess()->GetStoragePartition())) {
-    ftn->AddObserver(this);
+  WebUIURLLoaderFactory(FrameTreeNode* ftn, const std::string& scheme)
+      : frame_tree_node_(ftn), scheme_(scheme) {
+    frame_tree_node_->AddObserver(this);
   }
 
-  ~WebUIURLLoaderFactory() override {}
+  ~WebUIURLLoaderFactory() override { frame_tree_node_->RemoveObserver(this); }
 
   mojom::URLLoaderFactoryPtr CreateBinding() {
     mojom::URLLoaderFactoryPtr factory;
@@ -232,8 +231,16 @@ class WebUIURLLoaderFactory : public mojom::URLLoaderFactory,
                             const net::MutableNetworkTrafficAnnotationTag&
                                 traffic_annotation) override {
     DCHECK_CURRENTLY_ON(BrowserThread::UI);
+
+    if (request.url.scheme() != scheme_) {
+      ReceivedBadMessage(frame_tree_node_->current_frame_host()->GetProcess(),
+                         bad_message::WEBUI_BAD_SCHEME_ACCESS);
+      client->OnComplete(ResourceRequestCompletionStatus(net::ERR_FAILED));
+      return;
+    }
+
     if (request.url.host_piece() == kChromeUINetworkViewCacheHost) {
-      storage_partition_->GetNetworkContext()->HandleViewCacheRequest(
+      GetStoragePartition()->GetNetworkContext()->HandleViewCacheRequest(
           request.url, std::move(client));
       return;
     }
@@ -244,7 +251,7 @@ class WebUIURLLoaderFactory : public mojom::URLLoaderFactory,
           base::BindOnce(&StartBlobInternalsURLLoader, request,
                          client.PassInterface(),
                          base::Unretained(ChromeBlobStorageContext::GetFor(
-                             storage_partition_->browser_context()))));
+                             GetStoragePartition()->browser_context()))));
       return;
     }
 
@@ -262,9 +269,9 @@ class WebUIURLLoaderFactory : public mojom::URLLoaderFactory,
     BrowserThread::PostTask(
         BrowserThread::IO, FROM_HERE,
         base::BindOnce(
-            &StartURLLoader, request, frame_tree_node_id_,
+            &StartURLLoader, request, frame_tree_node_->frame_tree_node_id(),
             client.PassInterface(),
-            storage_partition_->browser_context()->GetResourceContext()));
+            GetStoragePartition()->browser_context()->GetResourceContext()));
   }
 
   void Clone(mojom::URLLoaderFactoryRequest request) override {
@@ -273,12 +280,22 @@ class WebUIURLLoaderFactory : public mojom::URLLoaderFactory,
 
   // FrameTreeNode::Observer implementation:
   void OnFrameTreeNodeDestroyed(FrameTreeNode* node) override {
-    g_web_ui_url_loader_factories.Get().erase(frame_tree_node_id_);
+    g_web_ui_url_loader_factories.Get().erase(
+        frame_tree_node_->frame_tree_node_id());
   }
 
+  const std::string& scheme() const { return scheme_; }
+
  private:
-  int frame_tree_node_id_;
-  StoragePartitionImpl* storage_partition_;
+  StoragePartitionImpl* GetStoragePartition() {
+    return static_cast<StoragePartitionImpl*>(
+        frame_tree_node_->current_frame_host()
+            ->GetProcess()
+            ->GetStoragePartition());
+  }
+
+  FrameTreeNode* frame_tree_node_;
+  std::string scheme_;
   mojo::BindingSet<mojom::URLLoaderFactory> loader_factory_bindings_;
 
   DISALLOW_COPY_AND_ASSIGN(WebUIURLLoaderFactory);
@@ -286,11 +303,14 @@ class WebUIURLLoaderFactory : public mojom::URLLoaderFactory,
 
 }  // namespace
 
-mojom::URLLoaderFactoryPtr CreateWebUIURLLoader(FrameTreeNode* node) {
+mojom::URLLoaderFactoryPtr CreateWebUIURLLoader(FrameTreeNode* node,
+                                                const std::string& scheme) {
   int ftn_id = node->frame_tree_node_id();
-  if (g_web_ui_url_loader_factories.Get()[ftn_id].get() == nullptr)
+  if (g_web_ui_url_loader_factories.Get()[ftn_id].get() == nullptr ||
+      g_web_ui_url_loader_factories.Get()[ftn_id]->scheme() != scheme) {
     g_web_ui_url_loader_factories.Get()[ftn_id] =
-        std::make_unique<WebUIURLLoaderFactory>(node);
+        std::make_unique<WebUIURLLoaderFactory>(node, scheme);
+  }
   return g_web_ui_url_loader_factories.Get()[ftn_id]->CreateBinding();
 }
 
