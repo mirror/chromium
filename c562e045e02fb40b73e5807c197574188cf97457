@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "aecc2a3f_bb0bc354",
+        "filename": "third_party/WebKit/Source/devtools/front_end/test_runner/TestRunner.js",
+        "patchSetId": 3
+      },
+      "lineNbr": 483,
+      "author": {
+        "id": 1113672
+      },
+      "writtenOn": "2017-11-09T09:09:13Z",
+      "side": 1,
+      "message": "I\u0027m not sure I understand why is this needed.\n\nIs this because the DOCTYPE has to be the very first tag? In this case, I\u0027d rather fix TestRunner.loadHTML to add a base tag after the doctype, if any.",
+      "range": {
+        "startLine": 483,
+        "startChar": 11,
+        "endLine": 483,
+        "endChar": 24
+      },
+      "revId": "c562e045e02fb40b73e5807c197574188cf97457",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
