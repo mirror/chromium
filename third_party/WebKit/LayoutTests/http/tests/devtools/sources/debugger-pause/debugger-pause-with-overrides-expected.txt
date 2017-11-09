@@ -1,8 +1,11 @@
+CONSOLE ERROR: line 57: Uncaught TypeError: Cannot read property 'dispatchMessage' of undefined
+CONSOLE ERROR: line 57: Uncaught TypeError: Cannot read property 'dispatchMessage' of undefined
+CONSOLE ERROR: line 57: Uncaught TypeError: Cannot read property 'dispatchMessage' of undefined
 Tests that debugger will stop on "debugger" statement w/ overriden string, etc.
 
 Set timer for test function.
 Script execution paused.
 Call stack:
-    0) testFunction (debugger-pause-with-overrides.html:10)
+    0) testFunction (debugger-pause-with-overrides.js:19)
 Script execution resumed.
 
