@@ -21,6 +21,7 @@
 #include "core/page/scrolling/OverscrollController.h"
 #include "core/page/scrolling/RootScrollerController.h"
 #include "core/page/scrolling/ScrollState.h"
+#include "core/page/scrolling/SnapCoordinator.h"
 #include "core/paint/PaintLayer.h"
 #include "platform/Histogram.h"
 #include "platform/wtf/PtrUtil.h"
@@ -51,6 +52,8 @@ void ScrollManager::ClearGestureScrollState() {
   scroll_gesture_handling_node_ = nullptr;
   previous_gesture_scrolled_element_ = nullptr;
   delta_consumed_for_scroll_sequence_ = false;
+  did_scroll_x_for_scroll_sequence_ = false;
+  did_scroll_y_for_scroll_sequence_ = false;
   current_scroll_chain_.clear();
 
   if (Page* page = frame_->GetPage()) {
@@ -308,6 +311,7 @@ void ScrollManager::RecordScrollRelatedMetrics(const WebGestureDevice device) {
 
 WebInputEventResult ScrollManager::HandleGestureScrollBegin(
     const WebGestureEvent& gesture_event) {
+  LOG(ERROR) << "Gesture Scroll Begin~~~";
   Document* document = frame_->GetDocument();
 
   if (document->GetLayoutViewItem().IsNull())
@@ -317,12 +321,16 @@ WebInputEventResult ScrollManager::HandleGestureScrollBegin(
   // ancestor with a layoutObject.  Needed for <option> and <optgroup> elements
   // so we can touch scroll <select>s
   while (scroll_gesture_handling_node_ &&
-         !scroll_gesture_handling_node_->GetLayoutObject())
+         !scroll_gesture_handling_node_->GetLayoutObject()) {
+    LOG(ERROR) << scroll_gesture_handling_node_;
     scroll_gesture_handling_node_ =
         scroll_gesture_handling_node_->ParentOrShadowHostNode();
+  }
 
-  if (!scroll_gesture_handling_node_)
+  if (!scroll_gesture_handling_node_) {
+    LOG(ERROR) << "so sad, no gesture handling node";
     scroll_gesture_handling_node_ = frame_->GetDocument()->documentElement();
+  }
 
   if (!scroll_gesture_handling_node_ ||
       !scroll_gesture_handling_node_->GetLayoutObject())
@@ -365,6 +373,7 @@ WebInputEventResult ScrollManager::HandleGestureScrollBegin(
 
 WebInputEventResult ScrollManager::HandleGestureScrollUpdate(
     const WebGestureEvent& gesture_event) {
+  LOG(ERROR) << "kGestureScrollUpdate!!!";
   DCHECK_EQ(gesture_event.GetType(), WebInputEvent::kGestureScrollUpdate);
 
   Node* node = scroll_gesture_handling_node_.Get();
@@ -442,11 +451,19 @@ WebInputEventResult ScrollManager::HandleGestureScrollUpdate(
   CustomizedScroll(*scroll_state);
   previous_gesture_scrolled_element_ =
       scroll_state->CurrentNativeScrollingElement();
+  if (!previous_gesture_scrolled_element_) {
+    LOG(ERROR) << "not scrolled";
+  } else {
+    LOG(ERROR) << "scrolled!!";
+  }
   delta_consumed_for_scroll_sequence_ =
       scroll_state->DeltaConsumedForScrollSequence();
 
   bool did_scroll_x = scroll_state->deltaX() != delta.Width();
   bool did_scroll_y = scroll_state->deltaY() != delta.Height();
+
+  did_scroll_x_for_scroll_sequence_ |= did_scroll_x;
+  did_scroll_y_for_scroll_sequence_ |= did_scroll_y;
 
   if ((!previous_gesture_scrolled_element_ ||
        !IsViewportScrollingElement(*previous_gesture_scrolled_element_)) &&
@@ -462,6 +479,7 @@ WebInputEventResult ScrollManager::HandleGestureScrollUpdate(
 
 WebInputEventResult ScrollManager::HandleGestureScrollEnd(
     const WebGestureEvent& gesture_event) {
+  LOG(ERROR) << "GestureScrollEnd";
   Node* node = scroll_gesture_handling_node_;
 
   if (node && node->GetLayoutObject()) {
@@ -482,6 +500,33 @@ WebInputEventResult ScrollManager::HandleGestureScrollEnd(
         delta_consumed_for_scroll_sequence_;
     ScrollState* scroll_state =
         ScrollState::Create(std::move(scroll_state_data));
+
+    if (previous_gesture_scrolled_element_) {
+      LOG(ERROR) << "There is previous scrolled element";
+      SnapCoordinator* snap_coordinator =
+          frame_->GetDocument()->GetSnapCoordinator();
+      LayoutBox* layout_box =
+          previous_gesture_scrolled_element_->GetLayoutBox();
+      if (snap_coordinator && layout_box) {
+        ScrollOffset snap_offset;
+        if (did_scroll_x_for_scroll_sequence_) {
+          if (did_scroll_y_for_scroll_sequence_) {
+            snap_offset =
+                snap_coordinator->GetSnapPosition(*layout_box, kSnapAxisBoth);
+          } else {
+            snap_offset =
+                snap_coordinator->GetSnapPosition(*layout_box, kSnapAxisX);
+          }
+        } else if (did_scroll_y_for_scroll_sequence_) {
+          snap_offset =
+              snap_coordinator->GetSnapPosition(*layout_box, kSnapAxisY);
+        }
+        layout_box->GetScrollableArea()->SetScrollOffset(snap_offset,
+                                                         kProgrammaticScroll);
+      }
+    } else {
+      LOG(ERROR) << "no previous scrolled element";
+    }
     CustomizedScroll(*scroll_state);
   }
 
@@ -542,17 +587,25 @@ WebInputEventResult ScrollManager::HandleGestureScrollEvent(
     LocalFrameView* view = frame_->View();
     LayoutPoint view_point = view->RootFrameToContents(
         FlooredIntPoint(gesture_event.PositionInRootFrame()));
+    LOG(ERROR) << view_point.ToString();
     HitTestRequest request(HitTestRequest::kReadOnly);
     HitTestResult result(request, view_point);
     document->GetLayoutViewItem().HitTest(result);
 
     event_target = result.InnerNode();
+    if (event_target) {
+      LOG(ERROR) << event_target;
+    } else {
+      LOG(ERROR) << "couldn't find";
+    }
 
     last_gesture_scroll_over_embedded_content_view_ =
         result.IsOverEmbeddedContentView();
     scroll_gesture_handling_node_ = event_target;
     previous_gesture_scrolled_element_ = nullptr;
     delta_consumed_for_scroll_sequence_ = false;
+    did_scroll_x_for_scroll_sequence_ = false;
+    did_scroll_y_for_scroll_sequence_ = false;
 
     if (!scrollbar)
       scrollbar = result.GetScrollbar();

@@ -591,7 +591,7 @@ void Element::NativeDistributeScroll(ScrollState& scroll_state) {
 
   const double delta_x = scroll_state.deltaX();
   const double delta_y = scroll_state.deltaY();
-
+  LOG(ERROR) << "NativeDistributeScroll";
   CallApplyScroll(scroll_state);
 
   if (delta_x != scroll_state.deltaX() || delta_y != scroll_state.deltaY())
@@ -599,6 +599,7 @@ void Element::NativeDistributeScroll(ScrollState& scroll_state) {
 }
 
 void Element::CallDistributeScroll(ScrollState& scroll_state) {
+  LOG(ERROR) << "calling distributescroll";
   ScrollStateCallback* callback =
       GetScrollCustomizationCallbacks().GetDistributeScroll(this);
 
@@ -630,6 +631,7 @@ void Element::CallDistributeScroll(ScrollState& scroll_state) {
 void Element::NativeApplyScroll(ScrollState& scroll_state) {
   // All elements in the scroll chain should be boxes.
   DCHECK(!GetLayoutObject() || GetLayoutObject()->IsBox());
+  LOG(ERROR) << "NativeApplyScroll";
 
   if (scroll_state.FullyConsumed())
     return;
@@ -653,6 +655,7 @@ void Element::NativeApplyScroll(ScrollState& scroll_state) {
   if (!box_to_scroll)
     return;
 
+  LOG(ERROR) << "Let's scroll!!!~~~~";
   ScrollResult result = LayoutBoxItem(box_to_scroll)
                             .EnclosingBox()
                             .Scroll(ScrollGranularity(static_cast<int>(
@@ -696,6 +699,13 @@ void Element::CallApplyScroll(ScrollState& scroll_state) {
                                        .GetPage()
                                        ->GlobalRootScrollerController()
                                        .IsViewportScrollCallback(callback);
+  LOG(ERROR) << "reached here!!";
+  if (callback) {
+    LOG(ERROR) << static_cast<int>(callback->NativeScrollBehavior()) << ", "
+               << this;
+  } else {
+    LOG(ERROR) << "no callback";
+  }
 
   if (!callback || disable_custom_callbacks) {
     NativeApplyScroll(scroll_state);
