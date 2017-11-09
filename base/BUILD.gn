@@ -410,6 +410,8 @@ jumbo_component("base") {
     "linux_util.h",
     "location.cc",
     "location.h",
+    "log_util.cc",
+    "log_util.h",
     "logging.cc",
     "logging.h",
     "logging_win.cc",

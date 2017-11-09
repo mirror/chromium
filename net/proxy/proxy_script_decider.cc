@@ -10,6 +10,7 @@
 #include "base/bind_helpers.h"
 #include "base/compiler_specific.h"
 #include "base/format_macros.h"
+#include "base/log_util.h"
 #include "base/logging.h"
 #include "base/metrics/histogram_macros.h"
 #include "base/strings/string_util.h"
@@ -92,9 +93,12 @@ ProxyScriptDecider::ProxyScriptDecider(
       net_log_(NetLogWithSource::Make(net_log,
                                       NetLogSourceType::PROXY_SCRIPT_DECIDER)),
       fetch_pac_bytes_(false),
-      quick_check_enabled_(true) {}
+      quick_check_enabled_(true) {
+  logging::ScopedLogDuration log1("ProxyScriptDecider::ProxyScriptDecider");
+}
 
 ProxyScriptDecider::~ProxyScriptDecider() {
+  logging::ScopedLogDuration log1("ProxyScriptDecider::~ProxyScriptDecider");
   if (next_state_ != STATE_NONE)
     Cancel();
 }
@@ -102,9 +106,12 @@ ProxyScriptDecider::~ProxyScriptDecider() {
 int ProxyScriptDecider::Start(
     const ProxyConfig& config, const base::TimeDelta wait_delay,
     bool fetch_pac_bytes, const CompletionCallback& callback) {
+  logging::ScopedLogDuration log1("ProxyScriptDecider::Start");
   DCHECK_EQ(STATE_NONE, next_state_);
   DCHECK(!callback.is_null());
   DCHECK(config.HasAutomaticSettings());
+
+  LOG(INFO) << "wait_delay = " << wait_delay.InSecondsF() << " seconds";
 
   net_log_.BeginEvent(NetLogEventType::PROXY_SCRIPT_DECIDER);
 
@@ -133,6 +140,7 @@ int ProxyScriptDecider::Start(
 }
 
 void ProxyScriptDecider::OnShutdown() {
+  logging::ScopedLogDuration log1("ProxyScriptDecider::OnShutdown");
   // Don't do anything if idle.
   if (next_state_ == STATE_NONE)
     return;
@@ -164,6 +172,8 @@ ProxyScriptDecider::script_data() const {
 ProxyScriptDecider::PacSourceList ProxyScriptDecider::
     BuildPacSourcesFallbackList(
     const ProxyConfig& config) const {
+  logging::ScopedLogDuration log1(
+      "ProxyScriptDecider::BuildPacSourcesFallbackList");
   PacSourceList pac_sources;
   if (config.auto_detect()) {
     pac_sources.push_back(PacSource(PacSource::WPAD_DHCP, GURL(kWpadUrl)));
@@ -175,6 +185,7 @@ ProxyScriptDecider::PacSourceList ProxyScriptDecider::
 }
 
 void ProxyScriptDecider::OnIOCompletion(int result) {
+  logging::ScopedLogDuration log1("ProxyScriptDecider::OnIOCompletion");
   DCHECK_NE(STATE_NONE, next_state_);
   int rv = DoLoop(result);
   if (rv != ERR_IO_PENDING) {
@@ -184,6 +195,7 @@ void ProxyScriptDecider::OnIOCompletion(int result) {
 }
 
 int ProxyScriptDecider::DoLoop(int result) {
+  logging::ScopedLogDuration log1("ProxyScriptDecider::DoLoop");
   DCHECK_NE(next_state_, STATE_NONE);
   int rv = result;
   do {
@@ -228,17 +240,23 @@ int ProxyScriptDecider::DoLoop(int result) {
 }
 
 void ProxyScriptDecider::DoCallback(int result) {
+  logging::ScopedLogDuration log1("ProxyScriptDecider::DoCallback");
   DCHECK_NE(ERR_IO_PENDING, result);
   DCHECK(!callback_.is_null());
   callback_.Run(result);
 }
 
 int ProxyScriptDecider::DoWait() {
+  logging::ScopedLogDuration log1("ProxyScriptDecider::DoWait");
   next_state_ = STATE_WAIT_COMPLETE;
 
   // If no waiting is required, continue on to the next state.
-  if (wait_delay_.ToInternalValue() == 0)
+  if (wait_delay_.ToInternalValue() == 0) {
+    LOG(INFO) << "No delay";
     return OK;
+  }
+
+  LOG(INFO) << "Starting timer for " << wait_delay_.InSecondsF() << " seconds";
 
   // Otherwise wait the specified amount of time.
   wait_timer_.Start(FROM_HERE, wait_delay_, this,
@@ -248,6 +266,7 @@ int ProxyScriptDecider::DoWait() {
 }
 
 int ProxyScriptDecider::DoWaitComplete(int result) {
+  logging::ScopedLogDuration log1("ProxyScriptDecider::DoWaitComplete");
   DCHECK_EQ(OK, result);
   if (wait_delay_.ToInternalValue() != 0) {
     net_log_.EndEventWithNetErrorCode(
@@ -261,6 +280,7 @@ int ProxyScriptDecider::DoWaitComplete(int result) {
 }
 
 int ProxyScriptDecider::DoQuickCheck() {
+  logging::ScopedLogDuration log1("ProxyScriptDecider::DoQuickCheck");
   DCHECK(quick_check_enabled_);
   if (!proxy_script_fetcher_ || !proxy_script_fetcher_->GetRequestContext() ||
       !proxy_script_fetcher_->GetRequestContext()->host_resolver()) {
@@ -292,6 +312,7 @@ int ProxyScriptDecider::DoQuickCheck() {
 }
 
 int ProxyScriptDecider::DoQuickCheckComplete(int result) {
+  logging::ScopedLogDuration log1("ProxyScriptDecider::DoQuickCheckComplete");
   DCHECK(quick_check_enabled_);
   base::TimeDelta delta = base::Time::Now() - quick_check_start_time_;
   if (result == OK)
@@ -307,6 +328,7 @@ int ProxyScriptDecider::DoQuickCheckComplete(int result) {
 }
 
 int ProxyScriptDecider::DoFetchPacScript() {
+  logging::ScopedLogDuration log1("ProxyScriptDecider::DoFetchPacScript");
   DCHECK(fetch_pac_bytes_);
 
   next_state_ = STATE_FETCH_PAC_SCRIPT_COMPLETE;
@@ -322,6 +344,7 @@ int ProxyScriptDecider::DoFetchPacScript() {
                  &effective_pac_url));
 
   if (pac_source.type == PacSource::WPAD_DHCP) {
+    LOG(INFO) << "Trying DHCP";
     if (!dhcp_proxy_script_fetcher_) {
       net_log_.AddEvent(NetLogEventType::PROXY_SCRIPT_DECIDER_HAS_NO_FETCHER);
       return ERR_UNEXPECTED;
@@ -343,6 +366,7 @@ int ProxyScriptDecider::DoFetchPacScript() {
 }
 
 int ProxyScriptDecider::DoFetchPacScriptComplete(int result) {
+  logging::ScopedLogDuration log1("ProxyScriptDecider::DoFetchPacScriptComplete");
   DCHECK(fetch_pac_bytes_);
 
   net_log_.EndEventWithNetErrorCode(
@@ -355,16 +379,21 @@ int ProxyScriptDecider::DoFetchPacScriptComplete(int result) {
 }
 
 int ProxyScriptDecider::DoVerifyPacScript() {
+  logging::ScopedLogDuration log1("ProxyScriptDecider::DoVerifyPacScript");
   next_state_ = STATE_VERIFY_PAC_SCRIPT_COMPLETE;
 
   // This is just a heuristic. Ideally we would try to parse the script.
-  if (fetch_pac_bytes_ && !LooksLikePacScript(pac_script_))
+  if (fetch_pac_bytes_ && !LooksLikePacScript(pac_script_)) {
+    LOG(INFO) << "Does not look like PAC script";
     return ERR_PAC_SCRIPT_FAILED;
+  }
 
+  LOG(INFO) << "Looks like PAC script";
   return OK;
 }
 
 int ProxyScriptDecider::DoVerifyPacScriptComplete(int result) {
+  logging::ScopedLogDuration log1("ProxyScriptDecider::DoVerifyPacScriptComplete");
   if (result != OK)
     return TryToFallbackPacSource(result);
 
@@ -416,6 +445,7 @@ int ProxyScriptDecider::DoVerifyPacScriptComplete(int result) {
 }
 
 int ProxyScriptDecider::TryToFallbackPacSource(int error) {
+  logging::ScopedLogDuration log1("ProxyScriptDecider::TryToFallbackPacSource");
   DCHECK_LT(error, 0);
 
   if (current_pac_source_index_ + 1 >= pac_sources_.size()) {
@@ -471,6 +501,7 @@ void ProxyScriptDecider::DidComplete() {
 }
 
 void ProxyScriptDecider::Cancel() {
+  logging::ScopedLogDuration log1("ProxyScriptDecider::Cancel");
   DCHECK_NE(STATE_NONE, next_state_);
 
   net_log_.AddEvent(NetLogEventType::CANCELLED);
