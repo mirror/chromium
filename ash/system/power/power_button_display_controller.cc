@@ -8,6 +8,7 @@
 #include "ash/media_controller.h"
 #include "ash/public/cpp/ash_switches.h"
 #include "ash/shell.h"
+#include "ash/system/power/lock_screen_note_controller.h"
 #include "ash/touch/touch_devices_controller.h"
 #include "ash/wm/tablet_mode/tablet_mode_controller.h"
 #include "base/command_line.h"
@@ -34,7 +35,10 @@ bool IsTabletModeActive() {
 
 PowerButtonDisplayController::PowerButtonDisplayController(
     base::TickClock* tick_clock)
-    : tick_clock_(tick_clock), weak_ptr_factory_(this) {
+    : tick_clock_(tick_clock),
+      lock_screen_note_controller_(
+          std::make_unique<LockScreenNoteController>(tick_clock)),
+      weak_ptr_factory_(this) {
   chromeos::DBusThreadManager::Get()->GetPowerManagerClient()->AddObserver(
       this);
   ui::InputDeviceManager::GetInstance()->AddObserver(this);
@@ -55,6 +59,13 @@ PowerButtonDisplayController::~PowerButtonDisplayController() {
 }
 
 void PowerButtonDisplayController::SetDisplayForcedOff(bool forced_off) {
+  if (!lock_screen_note_controller_->HandleDisplayForcedOff(
+          forced_off,
+          base::Bind(&PowerButtonDisplayController::SetDisplayForcedOff,
+                     weak_ptr_factory_.GetWeakPtr(), forced_off))) {
+    return;
+  }
+
   if (backlights_forced_off_ == forced_off)
     return;
 
@@ -130,8 +141,13 @@ void PowerButtonDisplayController::OnMouseEvent(ui::MouseEvent* event) {
 }
 
 void PowerButtonDisplayController::OnStylusStateChanged(ui::StylusState state) {
-  if (state == ui::StylusState::REMOVED)
-    SetDisplayForcedOff(false);
+  if (state != ui::StylusState::REMOVED)
+    return;
+
+  if (backlights_forced_off_ || screen_state_ == ScreenState::ON)
+    lock_screen_note_controller_->AttemptNoteLaunchForStylusEject();
+
+  SetDisplayForcedOff(false);
 }
 
 void PowerButtonDisplayController::GetInitialBacklightsForcedOff() {
