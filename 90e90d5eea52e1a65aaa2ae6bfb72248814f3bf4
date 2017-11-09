@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "74a5e4e7_57a32606",
+        "filename": "media/cdm/cdm_adapter.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 575,
+      "author": {
+        "id": 1002182
+      },
+      "writtenOn": "2017-11-09T16:28:41Z",
+      "side": 1,
+      "message": "Also add a trace event here?",
+      "revId": "90e90d5eea52e1a65aaa2ae6bfb72248814f3bf4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
