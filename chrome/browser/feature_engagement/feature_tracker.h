@@ -50,7 +50,7 @@ class FeatureTracker : public SessionDurationUpdater::Observer,
   // SessionDurationUpdater::Observer:
   void OnSessionEnded(base::TimeDelta total_session_time) override;
 
-  // Returns whether or not the promo should be displayed.
+  // Returns if a user is new, whether or not the promo should be displayed.
   bool ShouldShowPromo();
 
  protected:
@@ -64,6 +64,10 @@ class FeatureTracker : public SessionDurationUpdater::Observer,
   // Returns the required session time in minutes for the FeatureTracker's
   // subclass to show its promo.
   base::TimeDelta GetSessionTimeRequiredToShow();
+
+  // Whether the user has been created at least 24 hours before the chrome
+  // variations configuration.
+  bool IsNewUser();
 
  private:
   // Notifies In-Product Help and removes the session duration obverser if the

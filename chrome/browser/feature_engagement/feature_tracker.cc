@@ -4,13 +4,19 @@
 
 #include "chrome/browser/feature_engagement/feature_tracker.h"
 
+#include "base/files/file_util.h"
 #include "base/metrics/field_trial_params.h"
 #include "base/strings/string_number_conversions.h"
 #include "base/time/time.h"
 #include "chrome/browser/feature_engagement/tracker_factory.h"
+#include "chrome/browser/first_run/first_run.h"
 #include "components/feature_engagement/public/event_constants.h"
 #include "components/feature_engagement/public/feature_constants.h"
 #include "components/feature_engagement/public/tracker.h"
+
+namespace {
+constexpr double twenty_four_hours_in_seconds = 86400;
+}
 
 namespace feature_engagement {
 
@@ -51,7 +57,7 @@ bool FeatureTracker::ShouldShowPromo() {
         session_duration_updater_.GetCumulativeElapsedSessionTime());
   }
 
-  return GetTracker()->ShouldTriggerHelpUI(*feature_);
+  return IsNewUser() ? GetTracker()->ShouldTriggerHelpUI(*feature_) : false;
 }
 
 Tracker* FeatureTracker::GetTracker() const {
@@ -92,6 +98,37 @@ bool FeatureTracker::HasEnoughSessionTimeElapsed(
     base::TimeDelta total_session_time) {
   return total_session_time.InSeconds() >=
          GetSessionTimeRequiredToShow().InSeconds();
+}
+
+bool FeatureTracker::IsNewUser() {
+  // Gets the date in seconds the experiment was released.
+  std::string field_trial_string_value = base::GetFieldTrialParamValueByFeature(
+      *feature_, "x_date_released_in_seconds");
+  double field_trial_double_value;
+  // If the field trial param is misconfigured, directly return false.
+  if (!base::StringToDouble(field_trial_string_value,
+                            &field_trial_double_value)) {
+    return false;
+  }
+
+  base::TimeDelta new_user_threshold =
+      base::TimeDelta::FromSeconds(twenty_four_hours_in_seconds);
+  // Gets the date in seconds the experiment was released.
+  std::string new_user_threshold_string_value =
+      base::GetFieldTrialParamValueByFeature(
+          *feature_, "x_new_user_creation_time_threshold_in_seconds");
+  double new_user_threshold_double_value;
+  // If the field trial param is misconfigured, directly return false.
+  if (base::StringToDouble(new_user_threshold_string_value,
+                           &new_user_threshold_double_value)) {
+    new_user_threshold =
+        base::TimeDelta::FromSeconds(new_user_threshold_double_value);
+  }
+
+  // We consider a new user only if the first run sentinel has been created no
+  // more than 24 hours before the date released.
+  return (base::Time::FromDoubleT(field_trial_double_value) -
+          first_run::GetFirstRunSentinelCreationTime()) <= new_user_threshold;
 }
 
 }  // namespace feature_engagement
