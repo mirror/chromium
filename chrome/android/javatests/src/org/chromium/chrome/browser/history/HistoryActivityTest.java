@@ -12,6 +12,8 @@ import static android.support.test.espresso.intent.matcher.IntentMatchers.hasDat
 import static org.hamcrest.Matchers.allOf;
 import static org.hamcrest.Matchers.equalTo;
 
+import static org.chromium.chrome.test.util.browser.Features.EnableFeatures;
+
 import android.accounts.Account;
 import android.content.ClipData;
 import android.content.ClipboardManager;
