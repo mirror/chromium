@@ -34,6 +34,24 @@
       "revId": "688cb4c93799f0751a7ca0b730419db3e5c988b9",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "68a3c47f_105cd0d5",
+        "filename": "ash/accessibility/accessibility_focus_ring_controller.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 47,
+      "author": {
+        "id": 1250213
+      },
+      "writtenOn": "2017-11-09T21:50:25Z",
+      "side": 1,
+      "message": "I\u0027m doing this work in follow-up change https://chromium-review.googlesource.com/c/chromium/src/+/761246.",
+      "parentUuid": "d8e6b82e_d1f14dcc",
+      "revId": "688cb4c93799f0751a7ca0b730419db3e5c988b9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
