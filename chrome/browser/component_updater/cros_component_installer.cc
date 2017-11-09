@@ -30,6 +30,10 @@
     {{"env_version", "1.1"},                                                 \
      {"sha2hashstr",                                                         \
       "e9d960f84f628e1f42d05de4046bb5b3154b6f1f65c08412c6af57a29aecaffb"}}}, \
+   {"rtanalytics-light",                                                     \
+    {{"env_version", "1.0"}, {"sha2hashstr", "TODO(lasoren)"}}},             \
+   {"rtanalytics-heavy",                                                     \
+    {{"env_version", "1.0"}, {"sha2hashstr", "TODO(lasoren)"}}},             \
    {"star-cups-driver",                                                      \
     {{"env_version", "1.1"},                                                 \
      {"sha2hashstr",                                                         \
