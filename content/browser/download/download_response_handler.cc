@@ -170,10 +170,10 @@ void DownloadResponseHandler::OnStartLoadingResponseBody(
 }
 
 void DownloadResponseHandler::OnComplete(
-    const content::ResourceRequestCompletionStatus& completion_status) {
+    const network::URLLoaderStatus& status) {
   DownloadInterruptReason reason = HandleRequestCompletionStatus(
-      static_cast<net::Error>(completion_status.error_code),
-      has_strong_validators_, cert_status_, DOWNLOAD_INTERRUPT_REASON_NONE);
+      static_cast<net::Error>(status.error_code), has_strong_validators_,
+      cert_status_, DOWNLOAD_INTERRUPT_REASON_NONE);
 
   if (client_ptr_) {
     client_ptr_->OnStreamCompleted(
