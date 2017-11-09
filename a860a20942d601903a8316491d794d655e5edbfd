@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "6856460d_f00cde56",
+        "filename": "content/browser/service_worker/service_worker_version.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 123,
+      "author": {
+        "id": 1001216
+      },
+      "writtenOn": "2017-11-09T17:45:32Z",
+      "side": 0,
+      "message": "Looks like this was dead code from the start.  It was added in PS3 of https://codereview.chromium.org/843583005, but the use was removed by the time that CL landed.",
+      "revId": "a860a20942d601903a8316491d794d655e5edbfd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
