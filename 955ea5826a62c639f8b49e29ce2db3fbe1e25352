@@ -37,6 +37,24 @@
     },
     {
       "key": {
+        "uuid": "9e37ff4e_910d869e",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/ntp/cards/SuggestionsSection.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 324,
+      "author": {
+        "id": 1161814
+      },
+      "writtenOn": "2017-11-09T03:09:49Z",
+      "side": 1,
+      "message": "Actually, I am not sure this assertion is correct :)\nWhat if a user scrolls super-quickly on a super-slow device? Can it happen that some of the views in the middle of the scrolling do not get drawn?\n\nI changed the code to be more conservative. The previous assumption turned into a definition now, so I have nothing to assert any more ;)",
+      "parentUuid": "2bfadcab_ced7da49",
+      "revId": "955ea5826a62c639f8b49e29ce2db3fbe1e25352",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "6ea0622b_a83caa13",
         "filename": "chrome/android/java/src/org/chromium/chrome/browser/ntp/cards/SuggestionsSection.java",
         "patchSetId": 2
@@ -72,6 +90,24 @@
     },
     {
       "key": {
+        "uuid": "52d3e3e1_0ef0c167",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/ntp/cards/SuggestionsSection.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 330,
+      "author": {
+        "id": 1161814
+      },
+      "writtenOn": "2017-11-09T03:09:49Z",
+      "side": 1,
+      "message": "Fully agreed. I created a secondary ImpressionTracker for suggestions with an updated threshold that is used here.",
+      "parentUuid": "347c1e81_5e1481eb",
+      "revId": "955ea5826a62c639f8b49e29ce2db3fbe1e25352",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "89b09fbc_5fbf7573",
         "filename": "chrome/android/java/src/org/chromium/chrome/browser/ntp/cards/SuggestionsSection.java",
         "patchSetId": 2
@@ -86,6 +122,24 @@
       "revId": "955ea5826a62c639f8b49e29ce2db3fbe1e25352",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6258e878_ae4a57d6",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/ntp/cards/SuggestionsSection.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 463,
+      "author": {
+        "id": 1161814
+      },
+      "writtenOn": "2017-11-09T03:09:49Z",
+      "side": 1,
+      "message": "Correct.\n\nThis should never happen but this assumption does not make sense any more with the changed code.",
+      "parentUuid": "89b09fbc_5fbf7573",
+      "revId": "955ea5826a62c639f8b49e29ce2db3fbe1e25352",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -112,6 +166,30 @@
     },
     {
       "key": {
+        "uuid": "7bd9c576_b4ba433e",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/ntp/snippets/SnippetArticle.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 139,
+      "author": {
+        "id": 1161814
+      },
+      "writtenOn": "2017-11-09T03:09:49Z",
+      "side": 1,
+      "message": "Fair enough, done.",
+      "parentUuid": "c4ee347f_c2dc0c40",
+      "range": {
+        "startLine": 139,
+        "startChar": 8,
+        "endLine": 139,
+        "endChar": 45
+      },
+      "revId": "955ea5826a62c639f8b49e29ce2db3fbe1e25352",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "aa2a144a_ef9a0a63",
         "filename": "chrome/android/java/src/org/chromium/chrome/browser/ntp/snippets/SnippetArticle.java",
         "patchSetId": 2
@@ -123,6 +201,30 @@
       "writtenOn": "2017-10-31T17:44:48Z",
       "side": 1,
       "message": "Naming nit: using \"impressed\" as the passive voice / past participle of \"to impress\" feels weird here, as it is very easily confused with the adjective, which has a different meaning. Maybe just use \"seen\"?",
+      "range": {
+        "startLine": 145,
+        "startChar": 19,
+        "endLine": 145,
+        "endChar": 30
+      },
+      "revId": "955ea5826a62c639f8b49e29ce2db3fbe1e25352",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "638c5872_6ec8ecb1",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/ntp/snippets/SnippetArticle.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 145,
+      "author": {
+        "id": 1161814
+      },
+      "writtenOn": "2017-11-09T03:09:49Z",
+      "side": 1,
+      "message": "Ha ha, this has not occurred to me ;) I am impressed by your bright reviewer\u0027s eye!\n\nI now need to track two properties, I named them \n - \"seen\" for the previous \u003e\u003d2/3 threshold and \n - \"exposed\" for the new \u003e0 threshold.\nAny alternative naming proposals?",
+      "parentUuid": "aa2a144a_ef9a0a63",
       "range": {
         "startLine": 145,
         "startChar": 19,
@@ -155,6 +257,30 @@
       "revId": "955ea5826a62c639f8b49e29ce2db3fbe1e25352",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9bf94108_a1abbde2",
+        "filename": "chrome/android/junit/src/org/chromium/chrome/browser/ntp/cards/NewTabPageAdapterTest.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 514,
+      "author": {
+        "id": 1161814
+      },
+      "writtenOn": "2017-11-09T03:09:49Z",
+      "side": 1,
+      "message": "No, thanks! Removed.",
+      "parentUuid": "f3c47c2a_67eedf78",
+      "range": {
+        "startLine": 514,
+        "startChar": 8,
+        "endLine": 514,
+        "endChar": 23
+      },
+      "revId": "955ea5826a62c639f8b49e29ce2db3fbe1e25352",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
