@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "6fdf439f_9fce4c04",
+        "filename": "chrome/browser/android/oom_intervention/oom_intervention_tab_helper.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 72,
+      "author": {
+        "id": 1142059
+      },
+      "writtenOn": "2017-11-09T13:34:29Z",
+      "side": 1,
+      "message": "That this works properly is an artifact of tab_helper ordering in tab_helpers.cc. Would you add a comment above OomInterventionTabHelper there that it depends on the OutOfMemoryReporter?",
+      "revId": "bf1f3567d99472a9c03ede150fb8005e559a1ddd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
