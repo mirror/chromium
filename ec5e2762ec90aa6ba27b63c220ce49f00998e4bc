@@ -1,0 +1,73 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "c86c6fba_88d2475b",
+        "filename": "tools/metrics/histograms/histograms.xml",
+        "patchSetId": 7
+      },
+      "lineNbr": 28145,
+      "author": {
+        "id": 1002410
+      },
+      "writtenOn": "2017-11-09T18:37:40Z",
+      "side": 1,
+      "message": "nit: s/the real count/the actual number of imported passwords",
+      "range": {
+        "startLine": 28145,
+        "startChar": 62,
+        "endLine": 28145,
+        "endChar": 76
+      },
+      "revId": "ec5e2762ec90aa6ba27b63c220ce49f00998e4bc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "35eab264_42b504e1",
+        "filename": "tools/metrics/histograms/histograms.xml",
+        "patchSetId": 7
+      },
+      "lineNbr": 28145,
+      "author": {
+        "id": 1002410
+      },
+      "writtenOn": "2017-11-09T18:37:40Z",
+      "side": 1,
+      "message": "nit: s/the number/the reported number",
+      "range": {
+        "startLine": 28145,
+        "startChar": 9,
+        "endLine": 28145,
+        "endChar": 19
+      },
+      "revId": "ec5e2762ec90aa6ba27b63c220ce49f00998e4bc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "23ec8b70_f82c54e0",
+        "filename": "tools/metrics/histograms/histograms.xml",
+        "patchSetId": 7
+      },
+      "lineNbr": 28147,
+      "author": {
+        "id": 1002410
+      },
+      "writtenOn": "2017-11-09T18:37:40Z",
+      "side": 1,
+      "message": "nit: add \"in the reported value\", and perhaps s/counted/included",
+      "range": {
+        "startLine": 28147,
+        "startChar": 23,
+        "endLine": 28147,
+        "endChar": 30
+      },
+      "revId": "ec5e2762ec90aa6ba27b63c220ce49f00998e4bc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
