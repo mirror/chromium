@@ -128,6 +128,7 @@ class PageInfoBubbleView : public content::WebContentsObserver,
   base::string16 GetWindowTitle() const override;
   void AddedToWidget() override;
   bool ShouldShowCloseButton() const override;
+  base::string16 GetCloseButtonTooltipText() const override;
   void OnWidgetDestroying(views::Widget* widget) override;
   int GetDialogButtons() const override;
 

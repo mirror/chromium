@@ -261,6 +261,7 @@ void BubbleFrameView::GetWindowMask(const gfx::Size& size,
 
 void BubbleFrameView::ResetWindowControls() {
   close_->SetVisible(GetWidget()->widget_delegate()->ShouldShowCloseButton());
+  close_->SetTooltipText(GetWidget()->widget_delegate()->GetCloseButtonTooltipText());
 }
 
 void BubbleFrameView::UpdateWindowIcon() {

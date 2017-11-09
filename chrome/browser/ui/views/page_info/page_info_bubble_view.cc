@@ -602,6 +602,10 @@ bool PageInfoBubbleView::ShouldShowCloseButton() const {
   return true;
 }
 
+base::string16 PageInfoBubbleView::GetCloseButtonTooltipText() const {
+  return l10n_util::GetStringUTF16(IDS_PAGE_INFO_CLOSE_BUTTON_TOOLTIP);
+}
+
 void PageInfoBubbleView::OnWidgetDestroying(views::Widget* widget) {
   g_shown_bubble_type = BUBBLE_NONE;
   g_page_info_bubble = nullptr;

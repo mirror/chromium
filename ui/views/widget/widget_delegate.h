@@ -86,6 +86,9 @@ class VIEWS_EXPORT WidgetDelegate {
   // Returns true if the window should show a close button in the title bar.
   virtual bool ShouldShowCloseButton() const;
 
+  // Returns the tooltip text to use for the close button if one is shown.
+  virtual base::string16 GetCloseButtonTooltipText() const;
+
   // Returns true if the window should handle standard system commands, such as
   // close, minimize, maximize.
   virtual bool ShouldHandleSystemCommands() const;

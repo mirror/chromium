@@ -6,7 +6,9 @@
 
 #include "base/strings/utf_string_conversions.h"
 #include "services/ui/public/interfaces/window_manager_constants.mojom.h"
+#include "ui/base/l10n/l10n_util.h"
 #include "ui/gfx/image/image_skia.h"
+#include "ui/strings/grit/ui_strings.h"
 #include "ui/views/view.h"
 #include "ui/views/views_delegate.h"
 #include "ui/views/widget/widget.h"
@@ -92,6 +94,10 @@ bool WidgetDelegate::ShouldShowWindowTitle() const {
 
 bool WidgetDelegate::ShouldShowCloseButton() const {
   return true;
+}
+
+base::string16 WidgetDelegate::GetCloseButtonTooltipText() const {
+  return l10n_util::GetStringUTF16(IDS_APP_CLOSE);
 }
 
 bool WidgetDelegate::ShouldHandleSystemCommands() const {
