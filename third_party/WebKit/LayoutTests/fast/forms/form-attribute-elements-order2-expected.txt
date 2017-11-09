@@ -3,7 +3,6 @@ This test examines the order of the elements attribute of a form element with fo
 On success, you will see a series of "PASS" messages, followed by "TEST COMPLETE".
 
 
-
 - Test for the case where some elements have form attribute but some others not.
 PASS owner.elements.length is 3
 PASS owner.elements[0] is input1
@@ -44,6 +43,4 @@ PASS owner.elements[5] is after2
 PASS successfullyParsed is true
 
 TEST COMPLETE
-
-
 

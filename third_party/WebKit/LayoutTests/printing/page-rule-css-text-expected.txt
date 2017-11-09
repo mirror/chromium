@@ -4,7 +4,9 @@
 @page :first { border-width: 1px; }
 @page hello { color: green; }
 @page world:right { background-color: green; }
-@media print { @page somepage:first { margin: 3cm; } }
+@media print {
+  @page somepage:first { margin: 3cm; }
+}
 @page auto_page { size: auto; }
 @page square_page { size: 4in; }
 @page letter_page { size: letter; }

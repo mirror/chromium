@@ -1,4 +1,5 @@
-Test for bug 15436: Wrong proximity positions for XPath reverse axes.
+Test for bug 15436:
+Wrong proximity positions for XPath reverse axes.
 
 PASS document.evaluate('preceding-sibling::*[1]', document.getElementById('d3'), null, XPathResult.ANY_UNORDERED_NODE_TYPE, null).singleNodeValue.id is 'd2'
 PASS document.evaluate('preceding::*[1]', document.getElementById('d31'), null, XPathResult.ANY_UNORDERED_NODE_TYPE, null).singleNodeValue.id is 'd21'

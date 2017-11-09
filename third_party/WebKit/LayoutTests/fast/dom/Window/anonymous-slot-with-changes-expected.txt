@@ -35,11 +35,11 @@ PASS: eventData is [object Object] of type object
 PASS: eventData is [object Object] of type object
 PASS: eventData is [object Object] of type object
 PASS: eventData is [object Object] of type object
-PASS: eventData is of type object
-PASS: eventData is of type object
-PASS: eventData is of type object
-PASS: eventData is of type object
-PASS: eventData is of type object
+PASS: eventData is  of type object
+PASS: eventData is  of type object
+PASS: eventData is  of type object
+PASS: eventData is  of type object
+PASS: eventData is  of type object
 PASS: eventData is 1,2,3 of type object
 PASS: eventData is 1,2,3 of type object
 PASS: eventData is 1,2,3 of type object

@@ -1,4 +1,6 @@
- 
+
+
+
 Tests main resource content is correctly loaded and decoded using correct encoding.
 
 Requesting content: 

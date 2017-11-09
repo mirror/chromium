@@ -2,7 +2,6 @@ Tests a node moving documents while being touched.
 
 On success, you will see a series of "PASS" messages, followed by "TEST COMPLETE".
 
-
 Sending touchstart
 Received touchstart on DIV-target
 Received touchstart on #document-Main

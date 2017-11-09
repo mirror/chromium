@@ -4,4 +4,5 @@ The two boxes below should look the same.
 
 PASS
 
-🇬🇧 🇺🇸 🇬🇧 🇺🇸
+🇬🇧 🇺🇸
+🇬🇧 🇺🇸

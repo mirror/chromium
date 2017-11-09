@@ -1,4 +1,5 @@
-Tests console message when script is loaded with incorrect text/html mime type and the URL contains the '^' character.
+Tests console message when script is loaded with incorrect text/html mime
+type and the URL contains the '^' character.
 
 Bug 103248
 script-as-text-loadi…-with-caret.html:10 GET http://127.0.0.1:8000/devtools/network/resources/this-is-a-weird?querystring=with^carats^like^these^because^who^doesnt^love^strange^characters^in^urls 404 (Not Found)

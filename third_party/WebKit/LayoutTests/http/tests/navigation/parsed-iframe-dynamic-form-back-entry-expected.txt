@@ -1,4 +1,4 @@
-This test sees if starting with an empty iframe in the markup, dynamically adding form elements to it, and dynamically submitting the form result in an extra back/forward entry. It is important that these steps run after the initial load is complete, hence the setTimeout() for running the test.
+This test sees if starting with an empty iframe in the markup, dynamically adding form elements to it, and dynamically submitting the form result in an extra back/forward entry.  It is important that these steps run after the initial load is complete, hence the setTimeout() for running the test.
 
 
 ============== Back Forward List ==============

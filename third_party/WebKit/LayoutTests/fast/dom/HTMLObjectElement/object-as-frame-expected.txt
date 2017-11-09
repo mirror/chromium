@@ -8,4 +8,6 @@ Loading 'resources/object-as-frame-subframe-new.html#updated-contents-of-iframe'
 Loading 'resources/object-as-frame-subframe-new.html#updated-contents-of-object' in object...
 PASS window.frames[0].location.hash is "#updated-contents-of-iframe"
 PASS window.frames[1].location.hash is "#updated-contents-of-object"
- 
+
+
+

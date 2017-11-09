@@ -2,7 +2,6 @@ Exercise WebIDL type conversions.
 
 On success, you will see a series of "PASS" messages, followed by "TEST COMPLETE".
 
-
 converter = window.internals.typeConversions()
 
 converter.testLong = 0

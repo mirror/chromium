@@ -2,7 +2,6 @@ This test calls pushState with state objects of all the different object types s
 
 On success, you will see a series of "PASS" messages, followed by "TEST COMPLETE".
 
-
 PASS history.state is defined.
 
 history.state should initially be null.

@@ -3,7 +3,6 @@ Test scientific numbers on values for SVG presentation attributes.
 On success, you will see a series of "PASS" messages, followed by "TEST COMPLETE".
 
 
-
 Test positive exponent values with 'e'
 PASS text.style.baselineShift is "baseline"
 PASS text.style.baselineShift is "50"

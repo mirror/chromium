@@ -1,2 +1,2 @@
-
-TEST PASS: If this test doesn't leak when run with --enable-leak-detection
+TEST PASS: If this test doesn't leak when run with
+--enable-leak-detection

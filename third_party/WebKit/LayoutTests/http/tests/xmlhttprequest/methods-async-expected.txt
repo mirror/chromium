@@ -1,4 +1,5 @@
-Tests for bug 3812 - GET and POST should not be the only HTTP methods implemented in XMLHttpRequest.
+Tests for bug 3812 - 
+GET and POST should not be the only HTTP methods implemented in XMLHttpRequest.
 
 GET(""): GET(null bytes), Content-Type: null
 GET(null): GET(null bytes), Content-Type: null

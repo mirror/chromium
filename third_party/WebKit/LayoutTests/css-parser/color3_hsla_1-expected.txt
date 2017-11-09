@@ -3,7 +3,6 @@ Color test for resources/css-parsing-tests/color3_hsla_1.json
 
 On success, you will see a series of "PASS" messages, followed by "TEST COMPLETE".
 
-
 PASS colorTest.parseColor("hsla(0, 0%, 0%, 1)") is "rgb(0, 0, 0)"
 PASS colorTest.parseColor("hsla(30, 0%, 0%, 1)") is "rgb(0, 0, 0)"
 PASS colorTest.parseColor("hsla(60, 0%, 0%, 1)") is "rgb(0, 0, 0)"

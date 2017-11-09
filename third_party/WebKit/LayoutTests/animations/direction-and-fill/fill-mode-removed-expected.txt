@@ -1,4 +1,7 @@
-This test performs an animation of the left property with four different fill modes. It animates over 0.1 second with a 0.1 second delay. At the end of the animations, we remove the animation name which should cause the value to jump back to the unanimated style.
+This test performs an animation of the left property with four different
+fill modes. It animates over 0.1 second with a 0.1 second delay.
+At the end of the animations, we remove the animation name which should
+cause the value to jump back to the unanimated style.
 None
 Backwards
 Forwards

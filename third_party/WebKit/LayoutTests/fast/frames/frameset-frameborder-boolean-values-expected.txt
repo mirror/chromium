@@ -2,7 +2,6 @@ Check frameset frameborder attribute allows 1,yes for true and 0,no for false
 
 On success, you will see a series of "PASS" messages, followed by "TEST COMPLETE".
 
-
 frameborder=1 is true
 PASS frames[0].offsetWidth is 145
 PASS frames[1].offsetWidth is 145
@@ -36,4 +35,8 @@ PASS frames[1].offsetWidth is 147
 PASS successfullyParsed is true
 
 TEST COMPLETE
-        
+
+
+
+
+

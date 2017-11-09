@@ -1,1 +1,2 @@
-This test passes if alert() is not called. 
+This test passes if alert() is not called.
+

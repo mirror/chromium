@@ -2,7 +2,6 @@ This test checks that the event handlers ondrag and ondragover fire in that orde
 
 On success, you will see a series of "PASS" messages, followed by "TEST COMPLETE".
 
-
 PASS successfullyParsed is true
 
 TEST COMPLETE

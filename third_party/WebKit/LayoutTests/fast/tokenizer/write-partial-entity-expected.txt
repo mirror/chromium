@@ -1,4 +1,5 @@
-Test for http://bugs.webkit.org/show_bug.cgi?id=13166 REGRESSION (2005-10-16 - 2005-10-19): Ampersands showing up in the last column of the Gmail contacts table.
+Test for http://bugs.webkit.org/show_bug.cgi?id=13166
+        REGRESSION (2005-10-16 - 2005-10-19): Ampersands showing up in the last column of the Gmail contacts table.
 
 The following lines should all say “1 < 2”. They should not contain ampersands.
 

@@ -1,4 +1,5 @@
-This test checks that style sheets hosted inside shadow roots could be inspected.
+This test checks that style sheets hosted inside shadow roots
+could be inspected.
 
 
 Running: testInit

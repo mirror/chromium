@@ -3,7 +3,6 @@ Color test for resources/css-parsing-tests/color3.json
 
 On success, you will see a series of "PASS" messages, followed by "TEST COMPLETE".
 
-
 PASS colorTest.parseColor("") is "parse error"
 PASS colorTest.parseColor(" /* hey */\n") is "parse error"
 FAIL colorTest.parseColor("4") should be parse error. Was rgb(0, 0, 4).

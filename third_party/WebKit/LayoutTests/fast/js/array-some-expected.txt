@@ -1,11 +1,11 @@
 1.0 Single Argument Testing
-The following tests every with one argument, the callback. It should print whether the arrays [2, 5, 8, 1, 4] and [12, 5, 8, 1, 44] contain any numbers >= to 10 (false and true, respectively).
+The following tests every with one argument, the callback.  It should print whether the arrays [2, 5, 8, 1, 4] and [12, 5, 8, 1, 44] contain any numbers >= to 10 (false and true, respectively).
 
 false
 true
 
 2.0 Two Argument Testing
-The following tests every with two arguments, the callback and the applied "this" object. It should print whether the arrays [2, 5, 8, 1, 4] and [12, 5, 8, 1, 44] contain any numbers >= 8. Both should yield "true".
+The following tests every with two arguments, the callback and the applied "this" object.  It should print whether the arrays [2, 5, 8, 1, 4] and [12, 5, 8, 1, 44] contain any numbers >= 8. Both should yield "true".
 
 true
 true
@@ -14,13 +14,13 @@ true
 These tests the affects of array mutation during execution of some.
 
 3.1 Array Element Removal
-This test is equivalent to 1.0, with the exception that it tests whether elements are >= 44 instead of 10, and that it removes elements from the array on each visit. Both should thus yield "false" since undefined is not >= to 44.
+This test is equivalent to 1.0, with the exception that it tests whether elements are >= 44 instead of 10, and that it removes elements from the array on each visit.  Both should thus yield "false" since undefined is not >= to 44.
 
 false
 false
 
 3.2 Array Element Addition
-This test is equivalent to 1.0, with the exception that it adds elements greater than 10 to the end of the list. However, the results should be the same as those in 1.0 since some uses the original length to create the range it iterates over.
+This test is equivalent to 1.0, with the exception that it adds elements greater than 10 to the end of the list.  However, the results should be the same as those in 1.0 since some uses the original length to create the range it iterates over.
 
 false
 true
@@ -32,13 +32,13 @@ true
 true
 
 4.0 Exception Test
-This test uses a function that throws an exception, and thus halts the execution of some. There should be 2 exceptions thrown.
+This test uses a function that throws an exception, and thus halts the execution of some.  There should be 2 exceptions thrown.
 
 Exception thrown, execution halted!
 Exception thrown, execution halted!
 
 5.0 Wrong Type for Callback Test
-This test sends in incorrect types for the callback parameter of every. An exception should be thrown in each case. There should be 6 type errors (and no crashes!):
+This test sends in incorrect types for the callback parameter of every.  An exception should be thrown in each case.  There should be 6 type errors (and no crashes!):
 
 TypeError: 5 is not a function
 TypeError: wrong is not a function
@@ -47,7 +47,8 @@ TypeError: null is not a function
 TypeError: undefined is not a function
 TypeError: undefined is not a function
 
-6.0 Early Abortion ("Short Circuiting") This test is nearly identical to 1.0, except that it prints upon every call to the designated callback function. Since some aborts as soon as it finds one qualifying element, the first array should print 5 times, and the second only once.
+6.0 Early Abortion ("Short Circuiting")
+This test is nearly identical to 1.0, except that it prints upon every call to the designated callback function.  Since some aborts as soon as it finds one qualifying element, the first array should print 5 times, and the second only once.
 
 Testing element 2...
 Testing element 5...

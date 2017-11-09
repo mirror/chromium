@@ -2,7 +2,6 @@ Test to make sure WebKit adds just one element when applying inline style and re
 
 On success, you will see a series of "PASS" messages, followed by "TEST COMPLETE".
 
-
 PASS fontSize(4) on all of "hello <font size="4">world</font> WebKit" yields "<font size="4">hello world WebKit</font>"
 PASS fontName(Arial) on all of "hello <b><font face="Arial">world</font></b> WebKit" yields "<font face="Arial">hello <b>world</b> WebKit</font>"
 PASS italic(null) on all of "hello <u><i title="message">world </i><i>WebKit</i></u>" yields "<i>hello <u><span title="message">world </span>WebKit</u></i>"

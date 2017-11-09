@@ -1,4 +1,5 @@
-Test for rdar://problem/5766352: REGRESSION: XMLHttpRequest.abort() resets response status.
+Test for rdar://problem/5766352:
+REGRESSION: XMLHttpRequest.abort() resets response status.
 
 A newly created request. Response status: 0; statusText: ''; readyState: 0
 Opening...

@@ -2,7 +2,6 @@ Test IndexedDB: adds, gets, deletes, and re-gets a record in a variety of differ
 
 On success, you will see a series of "PASS" messages, followed by "TEST COMPLETE".
 
-
 data = [
         { name: 'inline key; key generator',
           autoIncrement: true,

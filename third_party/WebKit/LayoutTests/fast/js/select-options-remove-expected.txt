@@ -2,7 +2,6 @@ This test checks the behavior of the remove() method on the select.options objec
 
 On success, you will see a series of "PASS" messages, followed by "TEST COMPLETE".
 
-
 1.1 Remove (object) from empty Options
 PASS select1.options.remove(value) is undefined
 PASS select1.options.length is 0

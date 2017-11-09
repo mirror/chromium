@@ -1,5 +1,5 @@
 <rdar://problem/8636239> and https://bugs.webkit.org/show_bug.cgi?id=53785 - Extraneous back/forward entries with dynamically appended iframes.
-This page appends an iframe after onload. That iframe should *not* result in a new back/forward entry in the session history.
+This page appends an iframe after onload.  That iframe should *not* result in a new back/forward entry in the session history.
 
 
 ============== Back Forward List ==============

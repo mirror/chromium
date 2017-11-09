@@ -2,7 +2,6 @@ Test the order when there are pending open (with upgrade) and delete calls.
 
 On success, you will see a series of "PASS" messages, followed by "TEST COMPLETE".
 
-
 dbname = "deletedatabase-delayed-by-versionchange.html"
 indexedDB.deleteDatabase(dbname)
 indexedDB.open(dbname)

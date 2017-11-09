@@ -1,4 +1,5 @@
-This page tests var declarations that attempt to shadow interesting global properties in interesting ways. Bug 16644.
+This page tests var declarations that attempt to shadow interesting global properties in
+interesting ways. Bug 16644.
 
 If the test passes, you'll see a series of PASS messages below.
 

@@ -2,7 +2,6 @@ HTMLFormElement::reportValidity() with cases that event handlers called by repor
 
 On success, you will see a series of "PASS" messages, followed by "TEST COMPLETE".
 
-
 The target form is removed.
 PASS $("f1").reportValidity() is false
 

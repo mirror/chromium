@@ -3,7 +3,6 @@ Test IndexedDB's key generator behavior.
 On success, you will see a series of "PASS" messages, followed by "TEST COMPLETE".
 
 
-
 Verify that each object store has an independent key generator.
 dbname = "key-generator.html"
 indexedDB.deleteDatabase(dbname)

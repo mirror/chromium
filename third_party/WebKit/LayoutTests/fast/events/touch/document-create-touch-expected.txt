@@ -2,7 +2,6 @@ This tests support for the document.createTouch API.
 
 On success, you will see a series of "PASS" messages, followed by "TEST COMPLETE".
 
-
 PASS "createTouch" in document is true
 PASS touch is non-null.
 PASS touch.target is box

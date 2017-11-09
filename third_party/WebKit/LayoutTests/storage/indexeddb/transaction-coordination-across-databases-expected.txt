@@ -2,7 +2,6 @@ Check that transactions in different databases can run in parallel.
 
 On success, you will see a series of "PASS" messages, followed by "TEST COMPLETE".
 
-
 dbname = "transaction-coordination-across-databases.html"
 dbname1 = dbname + '1'
 dbname2 = dbname + '2'

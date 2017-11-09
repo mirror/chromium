@@ -2,7 +2,6 @@ Test IndexedDB's cursor skips deleted entries.
 
 On success, you will see a series of "PASS" messages, followed by "TEST COMPLETE".
 
-
 dbname = "cursor-skip-deleted.html"
 indexedDB.deleteDatabase(dbname)
 indexedDB.open(dbname)

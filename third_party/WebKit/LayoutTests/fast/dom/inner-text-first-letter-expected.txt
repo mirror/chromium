@@ -2,7 +2,6 @@ This tests a letter with :first-letter applied is present in innerText.
 
 On success, you will see a series of "PASS" messages, followed by "TEST COMPLETE".
 
-
 PASS document.getElementById('divFirst').innerText is document.getElementById('divNormal').innerText
 PASS document.getElementById('pFirst').innerText is document.getElementById('pNormal').innerText
 PASS document.getElementById('collapsedSpaceFirst').innerText is document.getElementById('collapsedSpaceNormal').innerText

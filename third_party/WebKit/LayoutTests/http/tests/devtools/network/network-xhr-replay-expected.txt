@@ -7,7 +7,8 @@ CONSOLE MESSAGE: line 5: XHR loaded: 5
 CONSOLE MESSAGE: line 5: XHR loaded: 6
 CONSOLE MESSAGE: line 5: XHR loaded: 7
 CONSOLE MESSAGE: line 5: XHR loaded: 8
-Tests XHR replaying. Bug 95187
+Tests XHR replaying.
+Bug 95187
 
 Running: testGetStaticAsync
 Dumping request: 

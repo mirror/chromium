@@ -1,8 +1,6 @@
-
 Test that when the hit test of input event in an iframe does not hit anything (not even the html/body), the input event is still captured the iframe's document
 
 On success, you will see a series of "PASS" messages, followed by "TEST COMPLETE".
-
 
 PASS successfullyParsed is true
 

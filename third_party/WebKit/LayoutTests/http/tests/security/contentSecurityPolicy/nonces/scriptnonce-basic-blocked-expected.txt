@@ -6,4 +6,6 @@ CONSOLE ERROR: line 16: Refused to execute inline script because it violates the
 
 CONSOLE ERROR: line 19: Refused to execute inline script because it violates the following Content Security Policy directive: "script-src 'nonce-noncynonce'". Either the 'unsafe-inline' keyword, a hash ('sha256-DnnF++Kbf/s2EyTBk12Rw2Ouq//L7GY5pcHSc6IZe6U='), or a nonce ('nonce-...') is required to enable inline execution.
 
-This tests the effect of a valid script-nonce value. It passes if three console warnings are visible, and the two PASS alerts are executed.
+This tests the effect of a valid script-nonce value. It passes if
+            three console warnings are visible, and the two PASS alerts are
+            executed.

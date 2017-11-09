@@ -2,7 +2,6 @@ Test that specifying a version when opening a non-existent db causes an upgraden
 
 On success, you will see a series of "PASS" messages, followed by "TEST COMPLETE".
 
-
 dbname = "intversion-open-with-version.html"
 indexedDB.deleteDatabase(dbname)
 Should trigger:

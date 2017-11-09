@@ -1,4 +1,7 @@
-This test whether a script can read the rules from a cross-origin style sheet in the presence of redirects. For more information on why we block this, please see https://bugs.webkit.org/show_bug.cgi?id=20527.
+This test whether a script can read the rules from a cross-origin style
+sheet in the presence of redirects.  For more information on why we block
+this, please see
+https://bugs.webkit.org/show_bug.cgi?id=20527.
 
 Test begins.
 == Same-Origin to Cross-Origin ==

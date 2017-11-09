@@ -2,7 +2,6 @@ Testing case-sensitivity for the svg:foreignObject tag in html.
 
 On success, you will see a series of "PASS" messages, followed by "TEST COMPLETE".
 
-
 Node.localName is normalized to camel-case inside <svg>, lower-case otherwise.
 
 PASS fo1.localName is "foreignobject"
@@ -49,6 +48,7 @@ PASS getComputedStyle(fo4).fontWeight is "700"
 PASS successfullyParsed is true
 
 TEST COMPLETE
+
 This text should be green and bold
 This text should be green and bold
 This text should be green, not bold

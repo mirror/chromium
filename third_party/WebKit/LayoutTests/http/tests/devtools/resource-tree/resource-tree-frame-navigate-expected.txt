@@ -1,7 +1,6 @@
 CONSOLE MESSAGE: line 4: iframe loaded
 Tests resource tree model on iframe navigation, compares resource tree against golden. Every line is important.
 
-
 Before navigation
 ====================================
 Resources:

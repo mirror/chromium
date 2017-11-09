@@ -1,9 +1,9 @@
 Click the empty area on the left
 Click the empty areain middle
+
 Click event should be fired when it occurs within culled inline.
 
 On success, you will see a series of "PASS" messages, followed by "TEST COMPLETE".
-
 
 PASS document.elementFromPoint(x, y).id is "clickme1"
 LABEL that is a parent of INPUT is clicked.

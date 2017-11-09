@@ -1,4 +1,4 @@
-Copy/pasting list items in a list. This test should be run with DRT for pasteboard access.
+Copy/pasting list items in a list.  This test should be run with DRT for pasteboard access.
 
 PASS
 

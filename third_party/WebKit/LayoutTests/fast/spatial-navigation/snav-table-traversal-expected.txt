@@ -1,6 +1,16 @@
-a	a	a
-a	a	a
-a	a	a
+a	
+a	
+a
+
+
+a	
+a	
+a
+
+
+a	
+a	
+a
 End of table traversal test
 PASS successfullyParsed is true
 

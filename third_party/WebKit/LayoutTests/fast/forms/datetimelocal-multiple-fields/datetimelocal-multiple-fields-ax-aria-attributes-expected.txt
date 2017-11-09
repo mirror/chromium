@@ -2,7 +2,6 @@ This test checks aria-help attribute of fields in multiple fields datetime-local
 
 On success, you will see a series of "PASS" messages, followed by "TEST COMPLETE".
 
-
 Non-empty value
 PASS focusedFieldValueDescription() is "Month, AXValueDescription: 10, 1, 12"
 PASS focusedFieldValueDescription() is "Day, AXValueDescription: 09, 1, 31"

@@ -2,7 +2,6 @@ Ensure IndexedDB transactions created before open onsuccess have correct metadat
 
 On success, you will see a series of "PASS" messages, followed by "TEST COMPLETE".
 
-
 dbname = "metadata-race.html"
 indexedDB.deleteDatabase(dbname)
 indexedDB.open(dbname)

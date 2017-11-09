@@ -1,2 +1,5 @@
 CONSOLE MESSAGE: line 8: PASS: childList mutation event fired from HTML parser change.
-Test result is dumped on console.log. foo bar
+Test result is dumped on console.log.
+
+foo
+bar

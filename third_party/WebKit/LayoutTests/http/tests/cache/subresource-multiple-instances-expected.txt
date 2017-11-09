@@ -1,4 +1,5 @@
-Verifies that resources are loaded only once during the initial document load, but are reloaded if they are requested again later and can not be cached.
+Verifies that resources are loaded only once during the initial document
+load, but are reloaded if they are requested again later and can not be cached.
 
 PASS firstRandomNumber is non-zero.
 PASS secondRandomNumber is non-zero.

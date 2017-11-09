@@ -1,4 +1,5 @@
-This test checks whether one (and only one) HEAD element is created for various HTML documents. See Bug 7321 REGRESSION: style tag in body causes two head elements to appear in the DOM.
+This test checks whether one (and only one) HEAD element is created for various HTML documents.
+See Bug 7321REGRESSION: style tag in body causes two head elements to appear in the DOM.
 
 PASS successfullyParsed is true
 

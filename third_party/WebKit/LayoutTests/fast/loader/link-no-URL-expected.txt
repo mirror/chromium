@@ -1,1 +1,2 @@
-If it didn't crash, the browser passed the test. The bug was a problem with link elements with no URL.
+If it didn't crash, the browser passed the test.
+The bug was a problem with link elements with no URL.

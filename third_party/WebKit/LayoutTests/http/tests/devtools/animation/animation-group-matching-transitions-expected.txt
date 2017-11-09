@@ -1,4 +1,5 @@
-Tests the matching performed in AnimationModel of groups composed of transitions, which are applied through a variety of selectors.
+Tests the matching performed in AnimationModel of groups composed of transitions,
+which are applied through a variety of selectors.
 
 >> resetElement('node1'); startTransition('node1')
 New group #0 started.

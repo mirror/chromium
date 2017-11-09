@@ -1,4 +1,5 @@
-Test for bug 15437: XPath substring-after function is broken.
+Test for bug 15437:
+XPath substring-after function is broken.
 
 PASS document.evaluate("substring-after('abcde', 'd')", document, null, XPathResult.STRING_TYPE, null).stringValue is 'e'
 PASS document.evaluate("substring-after('abcde', 'f')", document, null, XPathResult.STRING_TYPE, null).stringValue is ''

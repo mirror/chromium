@@ -1,4 +1,5 @@
- 
+
+
 
 --------
 Frame: '<!--framePath //<!--frame0-->-->'
@@ -6,6 +7,7 @@ Frame: '<!--framePath //<!--frame0-->-->'
 Frame-with-link-to-navigate
 localhost
 Test PASSED
+
 Click me
 
 --------

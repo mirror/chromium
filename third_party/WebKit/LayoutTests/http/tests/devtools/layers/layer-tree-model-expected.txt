@@ -1,4 +1,3 @@
-
 Initial layer tree
 #document (9)
     iframe#frame (10)

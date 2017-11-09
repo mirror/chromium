@@ -1,4 +1,5 @@
-This test verifies that a button that receives a mouse down event does not receive a corresponding mouse up event when the mouse up happens outside the button.
+This test verifies that a button that receives a mouse down event does not receive
+a corresponding mouse up event when the mouse up happens outside the button.
 
 If the test passes, you'll see a PASS message below.
 

@@ -2,7 +2,6 @@ Verify the use of IDBVersionChangeEventInit
 
 On success, you will see a series of "PASS" messages, followed by "TEST COMPLETE".
 
-
 event = new IDBVersionChangeEvent('default')
 PASS event instanceof IDBVersionChangeEvent is true
 PASS event.type is "default"

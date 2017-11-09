@@ -2,7 +2,6 @@ Ensure cursor calls behave as expected after cursor has run to the end.
 
 On success, you will see a series of "PASS" messages, followed by "TEST COMPLETE".
 
-
 dbname = "cursor-finished.html"
 
 prepareDatabase():

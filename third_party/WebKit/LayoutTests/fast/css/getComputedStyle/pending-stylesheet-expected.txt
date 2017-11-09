@@ -1,3 +1,4 @@
-Test the behavior of getComputedStyle when it is called on an element with display: none; while there are pending style sheets.
+Test the behavior of getComputedStyle when it is called on an element with
+display: none; while there are pending style sheets.
 
 PASS

@@ -30,6 +30,7 @@ PASS window.getComputedStyle(ops).background is not window.getComputedStyle(viol
 PASS window.getComputedStyle(clonedOps).background is not window.getComputedStyle(violetOps).background
 PASS ops.id is "ops"
 PASS ops.id is clonedOps.id
+
 This is a div (nodes)
 This is a div. (node 1 or 2)
 This is a div. (node 1 or 2)

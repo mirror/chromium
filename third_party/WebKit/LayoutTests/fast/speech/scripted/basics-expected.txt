@@ -2,7 +2,6 @@ Tests the basics of the Speech JavaScript API
 
 On success, you will see a series of "PASS" messages, followed by "TEST COMPLETE".
 
-
 PASS 'webkitSpeechRecognition' in self is true
 PASS webkitSpeechRecognition == null is false
 PASS speechReco == null is false

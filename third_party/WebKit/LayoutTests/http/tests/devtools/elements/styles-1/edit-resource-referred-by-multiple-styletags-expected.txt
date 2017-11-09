@@ -1,7 +1,6 @@
 Tests that editing sourcecode which is referred by multiple stylesheets (via sourceURL comment) updates all stylesheets.
 
 Inspected node
-
 Headers count: 3
 
 Running: Make edits with Sources Panel

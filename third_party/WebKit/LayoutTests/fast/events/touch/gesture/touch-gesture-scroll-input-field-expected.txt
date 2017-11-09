@@ -1,8 +1,6 @@
-
 This tests that an input text field can be properly scrolled with touch gestures
 
 On success, you will see a series of "PASS" messages, followed by "TEST COMPLETE".
-
 
 PASS successfullyParsed is true
 

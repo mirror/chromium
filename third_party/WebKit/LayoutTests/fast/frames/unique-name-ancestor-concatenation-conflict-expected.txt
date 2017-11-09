@@ -1,4 +1,5 @@
-  
+
+
 
 --------
 Frame: 'foo'
@@ -8,12 +9,12 @@ Frame: 'foo'
 --------
 Frame: 'foo/bar'
 --------
-  
+
 
 --------
 Frame: 'bar'
 --------
-  
+
 
 --------
 Frame: '<!--framePath //foo/bar/<!--frame0-->-->'

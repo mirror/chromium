@@ -2,7 +2,6 @@ Tests various scenarios for caret position when direction is auto
 
 On success, you will see a series of "PASS" messages, followed by "TEST COMPLETE".
 
-
 PASS textarea.value is "א!"
 1. Caret is at right if text is in LTR direction
 PASS textarea.value is "א!\nhello"

@@ -2,7 +2,6 @@ Tests the order of onclick and onchange
 
 On success, you will see a series of "PASS" messages, followed by "TEST COMPLETE".
 
-
 Tests for checkboxes:
 PASS message is ""
 PASS message is "clicked"
@@ -54,4 +53,10 @@ PASS message is "changed"
 PASS successfullyParsed is true
 
 TEST COMPLETE
-     
+
+
+
+
+
+
+

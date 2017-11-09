@@ -2,7 +2,6 @@ Percentage margins on absolutely positioned elements are relative to the contain
 
 On success, you will see a series of "PASS" messages, followed by "TEST COMPLETE".
 
-
 PASS successfullyParsed is true
 
 TEST COMPLETE

@@ -2,7 +2,6 @@ This tests removing multiple elements by RemoveFormat command.
 
 On success, you will see a series of "PASS" messages, followed by "TEST COMPLETE".
 
-
 PASS RemoveFormat on all of "hello" yields "hello"
 PASS RemoveFormat on all of "<i>hello</i> <u>world</u>" yields "hello world"
 PASS RemoveFormat on all of "<b><u>hello</u> world</b> <a href="http://webkit.org/"><em>WebKit</em></a>" yields "hello world <a href="http://webkit.org/">WebKit</a>"

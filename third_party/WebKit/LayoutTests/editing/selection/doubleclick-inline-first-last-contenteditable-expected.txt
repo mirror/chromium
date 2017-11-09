@@ -2,7 +2,6 @@ Test to check if last and first word can be selected when they double-clicked (B
 
 On success, you will see a series of "PASS" messages, followed by "TEST COMPLETE".
 
-
 PASS window.getSelection().toString() is 'selectme1'
 PASS window.selectedByModify is 'selectme1'
 PASS window.getSelection().toString() is 'selectme2'

@@ -2,7 +2,6 @@ Check stepping-up and -down for time input fields from renderer. No cases of emp
 
 On success, you will see a series of "PASS" messages, followed by "TEST COMPLETE".
 
-
 Function arguments are (value, step, min, max, [keySequence]).
 Normal cases
 PASS stepUp("07:13", null, null, null) is "07:14"

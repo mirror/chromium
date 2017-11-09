@@ -1,7 +1,6 @@
-Test to make sure we can toggle text decorations correctly. The first three tests give different result on mac only.
+Test to make sure we can toggle text decorations correctly.  The first three tests give different result on mac only.
 
 On success, you will see a series of "PASS" messages, followed by "TEST COMPLETE".
-
 
 Platform: mac
 PASS one bold command converted "<u><b>hello</b> world</u>" to "<u>hello world</u>

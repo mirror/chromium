@@ -39,6 +39,7 @@ PASS window.getComputedStyle(gridAutoMaxContentMinHeightWithBorderAndPadding, ''
 PASS successfullyParsed is true
 
 TEST COMPLETE
+
 XX
 XXX
 XX
