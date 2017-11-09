@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "5277deb9_5b8507f3",
+        "filename": "chrome/browser/ui/certificate_dialogs.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 39,
+      "author": {
+        "id": 1002844
+      },
+      "writtenOn": "2017-11-09T19:04:38Z",
+      "side": 1,
+      "message": "kNumCerts could be confusing, maybe kNumCertFileTypes?",
+      "range": {
+        "startLine": 39,
+        "startChar": 2,
+        "endLine": 39,
+        "endChar": 11
+      },
+      "revId": "419fbd3fc1c80653b8d62dbb7dc8552d00978a03",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
