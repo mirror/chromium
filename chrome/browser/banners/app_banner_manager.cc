@@ -447,7 +447,8 @@ void AppBannerManager::MediaStartedPlaying(const MediaPlayerInfo& media_info,
 }
 
 void AppBannerManager::MediaStoppedPlaying(const MediaPlayerInfo& media_info,
-                                           const MediaPlayerId& id) {
+                                           const MediaPlayerId& id,
+                                           bool reached_end_of_stream) {
   active_media_players_.erase(std::remove(active_media_players_.begin(),
                                           active_media_players_.end(), id),
                               active_media_players_.end());

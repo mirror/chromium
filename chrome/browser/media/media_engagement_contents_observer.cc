@@ -256,7 +256,8 @@ void MediaEngagementContentsObserver::MediaResized(const gfx::Size& size,
 
 void MediaEngagementContentsObserver::MediaStoppedPlaying(
     const MediaPlayerInfo& media_player_info,
-    const MediaPlayerId& media_player_id) {
+    const MediaPlayerId& media_player_id,
+    bool reached_end_of_stream) {
   GetPlayerState(media_player_id).playing = false;
   MaybeInsertRemoveSignificantPlayer(media_player_id);
   UpdateTimer(media_player_id);
