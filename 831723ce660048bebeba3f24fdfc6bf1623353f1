@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "7ff5c57f_81a46552",
+        "filename": "tools/metrics/histograms/enums.xml",
+        "patchSetId": 4
+      },
+      "lineNbr": 41483,
+      "author": {
+        "id": 1002410
+      },
+      "writtenOn": "2017-11-09T22:00:15Z",
+      "side": 1,
+      "message": "Optional nit: It might be easier to scan the labels if they used a briefer notation, e.g. \"2.4GHz → 2.4GHz\".",
+      "range": {
+        "startLine": 41483,
+        "startChar": 24,
+        "endLine": 41483,
+        "endChar": 52
+      },
+      "revId": "831723ce660048bebeba3f24fdfc6bf1623353f1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
