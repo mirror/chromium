@@ -22,6 +22,30 @@
       "revId": "9601a4b4e87dea40034fb87e6275678550eeb587",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5ad0e3b7_88d2134f",
+        "filename": "gpu/command_buffer/tests/fuzzer_main.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 462,
+      "author": {
+        "id": 1148065
+      },
+      "writtenOn": "2017-11-09T21:58:24Z",
+      "side": 1,
+      "message": "Changed to a LOG_IF to not abort on GL_OUT_OF_MEMORY.",
+      "parentUuid": "6ecc432e_cea9091d",
+      "range": {
+        "startLine": 462,
+        "startChar": 4,
+        "endLine": 462,
+        "endChar": 51
+      },
+      "revId": "9601a4b4e87dea40034fb87e6275678550eeb587",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
