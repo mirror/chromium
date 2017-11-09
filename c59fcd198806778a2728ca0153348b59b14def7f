@@ -34,6 +34,24 @@
       "revId": "c59fcd198806778a2728ca0153348b59b14def7f",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c2288b1e_b52a06c8",
+        "filename": "third_party/WebKit/Source/core/dom/Node.cpp",
+        "patchSetId": 4
+      },
+      "lineNbr": 750,
+      "author": {
+        "id": 1247388
+      },
+      "writtenOn": "2017-11-09T07:35:30Z",
+      "side": 1,
+      "message": "I see, OK then.",
+      "parentUuid": "ce249a33_22f5b266",
+      "revId": "c59fcd198806778a2728ca0153348b59b14def7f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
