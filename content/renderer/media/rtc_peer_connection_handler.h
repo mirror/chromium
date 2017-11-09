@@ -183,7 +183,7 @@ class CONTENT_EXPORT RTCPeerConnectionHandler
   // Stop recording an event log.
   void StopEventLog();
 
-  // RTC event log fragments sent back from PeerConnection land here.
+  // When an RTC event log is sent back from PeerConnection, it arrives here.
   void OnRtcEventLogWrite(const std::string& output);
 
  protected:

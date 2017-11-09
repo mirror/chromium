@@ -52,7 +52,7 @@ IPC_MESSAGE_CONTROL2(PeerConnectionTracker_StartEventLogFile,
                      int /* peer_connection_local_id */,
                      IPC::PlatformFileForTransit /* file */)
 IPC_MESSAGE_CONTROL1(PeerConnectionTracker_StartEventLogOutput,
-                     int /* peer_connection_local_id */)
+                     int /* peer_connection_id */)
 IPC_MESSAGE_CONTROL1(PeerConnectionTracker_StopEventLog,
                      int /* peer_connection_local_id */)
 
