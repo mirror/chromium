@@ -258,7 +258,7 @@ public class SuggestionsSection extends InnerNode {
         // reports suggest otherwise.
         // We put an assert in here to cause a crash in debug builds only - so hopefully we can
         // track down what's going wrong.
-        assert (mStatus == null) == FeatureUtilities.isChromeHomeEnabled();
+        assert(mStatus == null) == FeatureUtilities.isChromeHomeEnabled();
         if (mStatus != null) {
             mStatus.setVisible(!hasSuggestions());
         }

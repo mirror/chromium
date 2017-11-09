@@ -11,8 +11,8 @@
 #include <hidclass.h>
 
 extern "C" {
-#include <hidsdi.h>
 #include <hidpi.h>
+#include <hidsdi.h>
 }
 
 #include "base/macros.h"
