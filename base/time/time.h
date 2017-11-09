@@ -464,7 +464,7 @@ class BASE_EXPORT Time : public time_internal::TimeBase<Time> {
   // like the Win32 SYSTEMTIME structure or the Unix "struct tm" with a few
   // additions and changes to prevent errors.
   struct BASE_EXPORT Exploded {
-    int year;          // Four digit year "2007"
+    int year;          // Four digit year "2007".
     int month;         // 1-based month (values 1 = January, etc.)
     int day_of_week;   // 0-based day of week (0 = Sunday, etc.)
     int day_of_month;  // 1-based day of month (1-31)
