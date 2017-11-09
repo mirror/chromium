@@ -142,6 +142,24 @@
     },
     {
       "key": {
+        "uuid": "a27da4ea_fc41f627",
+        "filename": "chrome/app/chromeos_strings.grdp",
+        "patchSetId": 13
+      },
+      "lineNbr": 3383,
+      "author": {
+        "id": 1000191
+      },
+      "writtenOn": "2017-11-09T00:00:31Z",
+      "side": 1,
+      "message": "\u003e I already consulted with PM (Olga). This description is limited to the keyboard shortcut helper. See the other reply.\n\n\u0027Window up\u0027 would be better than this IMHO. If there is a group designing a replacement, maybe get input from them (since presumably there will still be labels in the new implementation?)",
+      "parentUuid": "52fa4d9e_7e3d8277",
+      "revId": "aeb28297e96fa4e36a83ae58c4a2a3372c566675",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "2ef88250_5ff38a3c",
         "filename": "chrome/browser/resources/chromeos/keyboard_overlay.css",
         "patchSetId": 13
