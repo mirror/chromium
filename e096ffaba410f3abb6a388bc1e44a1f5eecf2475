@@ -16,6 +16,24 @@
       "revId": "e096ffaba410f3abb6a388bc1e44a1f5eecf2475",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "814343b9_ef0c843b",
+        "filename": "components/storage_monitor/storage_monitor_chromeos.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 97,
+      "author": {
+        "id": 1001934
+      },
+      "writtenOn": "2017-11-09T00:26:10Z",
+      "side": 0,
+      "message": "Ya, I should have left myself more comments.",
+      "parentUuid": "77a1ad7f_bce3bbd4",
+      "revId": "e096ffaba410f3abb6a388bc1e44a1f5eecf2475",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
