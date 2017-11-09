@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "b9776442_3e3c2eb2",
+        "filename": "content/public/android/java/src/org/chromium/content/browser/picker/DateTimePickerDialog.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 236,
+      "author": {
+        "id": 1167294
+      },
+      "writtenOn": "2017-11-09T04:35:36Z",
+      "side": 1,
+      "message": "This constructor is deprecated; should I suppress the warning? This code only ever runs on L \u0026 L-MR1, so it should continue to be safe (it\u0027s not safe to use the constructor on \u003e\u003d O).",
+      "range": {
+        "startLine": 236,
+        "startChar": 16,
+        "endLine": 236,
+        "endChar": 21
+      },
+      "revId": "0b6656541b91b047d1b16c3ade23dde2a5f02b0a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
