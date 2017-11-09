@@ -1,0 +1,73 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "21881108_3dae3676",
+        "filename": "components/metrics/net/net_metrics_log_uploader.cc",
+        "patchSetId": 19
+      },
+      "lineNbr": 24,
+      "author": {
+        "id": 1103654
+      },
+      "writtenOn": "2017-11-09T19:05:11Z",
+      "side": 1,
+      "message": "Nit: const char",
+      "range": {
+        "startLine": 24,
+        "startChar": 0,
+        "endLine": 24,
+        "endChar": 4
+      },
+      "revId": "75b352f3637ba5e1c7e37c054f3b1c29d15dcfdc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "bd95dd93_87ff46b8",
+        "filename": "components/metrics/net/net_metrics_log_uploader.cc",
+        "patchSetId": 19
+      },
+      "lineNbr": 134,
+      "author": {
+        "id": 1103654
+      },
+      "writtenOn": "2017-11-09T19:05:11Z",
+      "side": 1,
+      "message": "Nit: This can be omitted since default is empty string.",
+      "range": {
+        "startLine": 134,
+        "startChar": 31,
+        "endLine": 134,
+        "endChar": 0
+      },
+      "revId": "75b352f3637ba5e1c7e37c054f3b1c29d15dcfdc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a88a0e2b_5b548ad7",
+        "filename": "components/metrics/net/net_metrics_log_uploader.cc",
+        "patchSetId": 19
+      },
+      "lineNbr": 167,
+      "author": {
+        "id": 1103654
+      },
+      "writtenOn": "2017-11-09T19:05:11Z",
+      "side": 1,
+      "message": "Why are we using a locally defined flag? I suggest using a base::Feature instead.",
+      "range": {
+        "startLine": 167,
+        "startChar": 35,
+        "endLine": 167,
+        "endChar": 0
+      },
+      "revId": "75b352f3637ba5e1c7e37c054f3b1c29d15dcfdc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
