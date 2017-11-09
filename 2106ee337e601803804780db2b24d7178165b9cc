@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "6ede60d7_84025b64",
+        "filename": "net/cert/cert_verify_proc_android.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 326,
+      "author": {
+        "id": 1002844
+      },
+      "writtenOn": "2017-11-09T23:18:40Z",
+      "side": 0,
+      "message": "I tried looking through the history for any justification for this pattern, but it seems to have been imported from the private clank branch. I didn\u0027t try to find the history for that.",
+      "revId": "2106ee337e601803804780db2b24d7178165b9cc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}

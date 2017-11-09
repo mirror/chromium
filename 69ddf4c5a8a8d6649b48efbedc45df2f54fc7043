@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "c54b7856_c6ea7df2",
+        "filename": "net/cert/x509_util.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 106,
+      "author": {
+        "id": 1002844
+      },
+      "writtenOn": "2017-11-09T23:18:40Z",
+      "side": 1,
+      "message": "Any opinions? I also considered adding a variant of X509Certificate::GetDEREncoded, but it seemed a bit weird to have it in X509Certificate since it\u0027s just operating on a vanilla CRYPTO_BUFFER. (Though x509_util doesn\u0027t seem perfect either. There is some other CRYPTO_BUFFER helpers here already though.)",
+      "revId": "69ddf4c5a8a8d6649b48efbedc45df2f54fc7043",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
