@@ -210,15 +210,17 @@ LoadV8FileResult MapOpenedFile(const OpenedFileMap::mapped_type& file_region,
   return V8_LOAD_SUCCESS;
 }
 
-void GetMappedFileData(base::MemoryMappedFile* mapped_file,
+bool GetMappedFileData(base::MemoryMappedFile* mapped_file,
                        v8::StartupData* data) {
   if (mapped_file) {
     data->data = reinterpret_cast<const char*>(mapped_file->data());
     data->raw_size = static_cast<int>(mapped_file->length());
-  } else {
-    data->data = nullptr;
-    data->raw_size = 0;
+    return true;
   }
+
+  data->data = nullptr;
+  data->raw_size = 0;
+  return false;
 }
 
 }  // namespace
@@ -338,14 +340,14 @@ void V8Initializer::Initialize(IsolateHolder::ScriptMode mode,
 
 #if defined(V8_USE_EXTERNAL_STARTUP_DATA)
   v8::StartupData natives;
-  natives.data = reinterpret_cast<const char*>(g_mapped_natives->data());
-  natives.raw_size = static_cast<int>(g_mapped_natives->length());
+  v8::StartupData snapshot;
+  GetV8ExternalSnapshotData(&natives, &snapshot);
   v8::V8::SetNativesDataBlob(&natives);
 
-  if (g_mapped_snapshot) {
-    v8::StartupData snapshot;
-    snapshot.data = reinterpret_cast<const char*>(g_mapped_snapshot->data());
-    snapshot.raw_size = static_cast<int>(g_mapped_snapshot->length());
+  if (g_mapped_v8_context_snapshot) {
+    GetV8ContextSnapshotData(&snapshot);
+  }
+  if (snapshot.data) {
     v8::V8::SetSnapshotDataBlob(&snapshot);
   }
 #endif  // V8_USE_EXTERNAL_STARTUP_DATA
@@ -410,8 +412,14 @@ void V8Initializer::LoadV8ContextSnapshotFromFD(base::PlatformFile snapshot_pf,
 }
 
 // static
-void V8Initializer::GetV8ContextSnapshotData(v8::StartupData* snapshot) {
-  GetMappedFileData(g_mapped_v8_context_snapshot, snapshot);
+int V8Initializer::GetV8ContextSnapshotData(v8::StartupData* snapshot) {
+  if (GetMappedFileData(g_mapped_v8_context_snapshot, snapshot))
+    return 2;
+#if defined(V8_USE_EXTERNAL_STARTUP_DATA)
+  if (GetMappedFileData(g_mapped_snapshot, snapshot))
+    return 1;
+#endif  // V8_USE_EXTERNAL_STARTUP_DATA
+  return 0;
 }
 
 }  // namespace gin
