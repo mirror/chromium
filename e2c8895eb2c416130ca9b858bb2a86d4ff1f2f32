@@ -2,6 +2,23 @@
   "comments": [
     {
       "key": {
+        "uuid": "63b3f366_b15f3efa",
+        "filename": "chrome/browser/chromeos/arc/intent_helper/arc_settings_service.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 429,
+      "author": {
+        "id": 1115919
+      },
+      "writtenOn": "2017-11-09T05:24:42Z",
+      "side": 1,
+      "message": "style: could you use newer APIs?\n\nconst base::Value* value \u003d pref-\u003eGetValue();\nDCHECK(value-\u003eis_bool());\nbackup_settings-\u003eSetBackupEnabled(value-\u003eGetBool(), ...);",
+      "revId": "e2c8895eb2c416130ca9b858bb2a86d4ff1f2f32",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "fb6312fa_f0fab01f",
         "filename": "chrome/browser/chromeos/arc/intent_helper/arc_settings_service.cc",
         "patchSetId": 1
