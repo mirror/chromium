@@ -229,6 +229,24 @@
       "revId": "ce799ce036a1963cbffc8f1b0a22575869e62ac6",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7f5c208d_a7ad4000",
+        "filename": "services/metrics/public/cpp/mojo_ukm_recorder.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 47,
+      "author": {
+        "id": 1124674
+      },
+      "writtenOn": "2017-11-09T19:42:26Z",
+      "side": 1,
+      "message": "What I am not sure about with that approach is how mojo interface pointers behave when the Service/Connector that they were created for shutdown?  Do they remain viable?  If so, then yes, we can probably just initialize a singleton MUR.",
+      "parentUuid": "d451a3e0_11aa93b1",
+      "revId": "ce799ce036a1963cbffc8f1b0a22575869e62ac6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
