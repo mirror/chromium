@@ -348,7 +348,7 @@ void WebRTCInternals::EnableEventLogRecordings(
   DCHECK_CURRENTLY_ON(BrowserThread::UI);
 #if BUILDFLAG(ENABLE_WEBRTC)
 #if defined(OS_ANDROID)
-  EnableEventLogRecordingsOnAllRenderProcessHosts();
+  EnableLocalEventLogRecordingsOnAllRenderProcessHosts();
 #else
   DCHECK(web_contents);
   DCHECK(!select_file_dialog_);
@@ -367,10 +367,11 @@ void WebRTCInternals::DisableEventLogRecordings() {
   event_log_recordings_ = false;
   // Tear down the dialog since the user has unchecked the event log checkbox.
   select_file_dialog_ = nullptr;
+
   for (RenderProcessHost::iterator i(
            content::RenderProcessHost::AllHostsIterator());
        !i.IsAtEnd(); i.Advance())
-    i.GetCurrentValue()->StopWebRTCEventLog();
+    i.GetCurrentValue()->StopLocalRtcEventLogging();
 #endif
 }
 
@@ -418,7 +419,7 @@ void WebRTCInternals::FileSelected(const base::FilePath& path,
   switch (selection_type_) {
     case SelectionType::kRtcEventLogs:
       event_log_recordings_file_path_ = path;
-      EnableEventLogRecordingsOnAllRenderProcessHosts();
+      EnableLocalEventLogRecordingsOnAllRenderProcessHosts();
       break;
     case SelectionType::kAudioDebugRecordings:
       audio_debug_recordings_file_path_ = path;
@@ -523,14 +524,15 @@ void WebRTCInternals::EnableAudioDebugRecordingsOnAllRenderProcessHosts() {
                                 audio_debug_recordings_file_path_));
 }
 
-void WebRTCInternals::EnableEventLogRecordingsOnAllRenderProcessHosts() {
+void WebRTCInternals::EnableLocalEventLogRecordingsOnAllRenderProcessHosts() {
   DCHECK_CURRENTLY_ON(BrowserThread::UI);
 
   event_log_recordings_ = true;
-  for (RenderProcessHost::iterator i(
-           content::RenderProcessHost::AllHostsIterator());
-       !i.IsAtEnd(); i.Advance())
-    i.GetCurrentValue()->StartWebRTCEventLog(event_log_recordings_file_path_);
+  for (auto it = content::RenderProcessHost::AllHostsIterator(); !it.IsAtEnd();
+       it.Advance()) {
+    it.GetCurrentValue()->StartLocalRtcEventLogging(
+        event_log_recordings_file_path_);
+  }
 }
 #endif
 
