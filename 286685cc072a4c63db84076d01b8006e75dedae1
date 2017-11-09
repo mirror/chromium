@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "0328c05f_d5ae6bbd",
+        "filename": "content/browser/renderer_host/input/synthetic_gesture_controller_unittest.cc",
+        "patchSetId": 17
+      },
+      "lineNbr": 155,
+      "author": {
+        "id": 1002681
+      },
+      "writtenOn": "2017-11-09T21:28:43Z",
+      "side": 1,
+      "message": "On non-Android, the tick multiplier might be (say) 53 pixels but we can stuff whatever delta we want in the wheel event (i.e. if you have a precision trackpad we\u0027ll have precision pixel deltas but if the event comes from an actual wheel it\u0027ll use 53 pixels per tick). So this name tries to disambiguate that to make it clear we\u0027re not just getting the tick size - we actually want to know if there\u0027s a minimum granularity supported by the wheel events coming from the OS. On non-Android we return 0 here to indicate there isn\u0027t a minimum granularity (the deltas are floats).",
+      "parentUuid": "4c677cd5_c66e5eb4",
+      "range": {
+        "startLine": 155,
+        "startChar": 19,
+        "endLine": 155,
+        "endChar": 37
+      },
+      "revId": "286685cc072a4c63db84076d01b8006e75dedae1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "a4c07713_7896276b",
         "filename": "content/browser/renderer_host/input/synthetic_smooth_move_gesture.cc",
         "patchSetId": 17
@@ -36,6 +60,30 @@
       "writtenOn": "2017-11-09T19:35:31Z",
       "side": 1,
       "message": "Hmmm, it isn\u0027t just a platform thing, right?\n\nOn windows we could hit either case?",
+      "range": {
+        "startLine": 160,
+        "startChar": 12,
+        "endLine": 160,
+        "endChar": 21
+      },
+      "revId": "286685cc072a4c63db84076d01b8006e75dedae1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c401752a_f77b95a6",
+        "filename": "content/browser/renderer_host/input/synthetic_smooth_move_gesture.cc",
+        "patchSetId": 17
+      },
+      "lineNbr": 160,
+      "author": {
+        "id": 1002681
+      },
+      "writtenOn": "2017-11-09T21:28:43Z",
+      "side": 1,
+      "message": "I\u0027ve reworded but essentially what I meant is on platforms whose wheel events work on discrete ticks. I think that\u0027s just Android since all other platforms have a delta with a \"ticks\" field if you want to use it. Android\u0027s MotionEvent actually just has a \"number of ticks\" and a \"multiplier\" fields.",
+      "parentUuid": "a4c07713_7896276b",
       "range": {
         "startLine": 160,
         "startChar": 12,
@@ -71,6 +119,30 @@
     },
     {
       "key": {
+        "uuid": "d12d1850_703592a8",
+        "filename": "content/browser/renderer_host/input/synthetic_smooth_move_gesture.cc",
+        "patchSetId": 17
+      },
+      "lineNbr": 164,
+      "author": {
+        "id": 1002681
+      },
+      "writtenOn": "2017-11-09T21:28:43Z",
+      "side": 1,
+      "message": "This code accumulates delta in current_move_segment_total_delta_ which tracks the delta _applied_. The delta for each event is then generated based on the current time (and what the current delta should be) and the amount of delta we\u0027ve already applied. Thus, if we prevent accumulating it the next time we tick we\u0027ll generate a bigger delta. I\u0027ve reworded the comment to try and make it clearer.",
+      "parentUuid": "0cb8be75_c602f915",
+      "range": {
+        "startLine": 163,
+        "startChar": 58,
+        "endLine": 164,
+        "endChar": 14
+      },
+      "revId": "286685cc072a4c63db84076d01b8006e75dedae1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "89e9d95c_7902bb6c",
         "filename": "content/browser/renderer_host/render_widget_host_view_android.cc",
         "patchSetId": 17
@@ -94,6 +166,30 @@
     },
     {
       "key": {
+        "uuid": "c9774186_4ce7d284",
+        "filename": "content/browser/renderer_host/render_widget_host_view_android.cc",
+        "patchSetId": 17
+      },
+      "lineNbr": 759,
+      "author": {
+        "id": 1002681
+      },
+      "writtenOn": "2017-11-09T21:28:43Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "89e9d95c_7902bb6c",
+      "range": {
+        "startLine": 759,
+        "startChar": 11,
+        "endLine": 759,
+        "endChar": 14
+      },
+      "revId": "286685cc072a4c63db84076d01b8006e75dedae1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "f7ebc244_1393f268",
         "filename": "content/browser/renderer_host/render_widget_host_view_android.cc",
         "patchSetId": 17
@@ -105,6 +201,30 @@
       "writtenOn": "2017-11-09T19:35:31Z",
       "side": 1,
       "message": "as a theme setting?",
+      "range": {
+        "startLine": 762,
+        "startChar": 69,
+        "endLine": 763,
+        "endChar": 12
+      },
+      "revId": "286685cc072a4c63db84076d01b8006e75dedae1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c7ce77fb_ad23b207",
+        "filename": "content/browser/renderer_host/render_widget_host_view_android.cc",
+        "patchSetId": 17
+      },
+      "lineNbr": 763,
+      "author": {
+        "id": 1002681
+      },
+      "writtenOn": "2017-11-09T21:28:43Z",
+      "side": 1,
+      "message": "changed the whole sentence to be more accurate. Should be typo free now.",
+      "parentUuid": "f7ebc244_1393f268",
       "range": {
         "startLine": 762,
         "startChar": 69,
