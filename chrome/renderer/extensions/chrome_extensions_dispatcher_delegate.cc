@@ -249,6 +249,8 @@ void ChromeExtensionsDispatcherDelegate::PopulateSourceMap(
   source_map->RegisterSource(
       "webrtcDesktopCapturePrivate",
       IDR_WEBRTC_DESKTOP_CAPTURE_PRIVATE_CUSTOM_BINDINGS_JS);
+  source_map->RegisterSource("webrtcLoggingPrivate",
+                             IDR_WEBRTC_LOGGING_PRIVATE_CUSTOM_BINDINGS_JS);
   source_map->RegisterSource("webstore", IDR_WEBSTORE_CUSTOM_BINDINGS_JS);
 
 
