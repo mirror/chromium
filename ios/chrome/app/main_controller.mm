@@ -371,7 +371,8 @@ const int kExternalFilesCleanupDelaySeconds = 60;
 // Shows the tab switcher UI.
 - (void)showTabSwitcher;
 // Starts a voice search on the current BVC.
-- (void)startVoiceSearchInCurrentBVCWithOriginView:(UIView*)originView;
+- (void)startVoiceSearchInCurrentBVCWithOriginViewInfo:
+    (const ViewInfo*)originViewInfo;
 // Dismisses the tab switcher UI without animation into the given model.
 - (void)dismissTabSwitcherWithoutAnimationInModel:(TabModel*)tabModel;
 // Dismisses |signinInteractionCoordinator|.
@@ -1344,7 +1345,8 @@ const int kExternalFilesCleanupDelaySeconds = 60;
 
 - (void)startVoiceSearch:(StartVoiceSearchCommand*)command {
   if (!_isProcessingTabSwitcherCommand) {
-    [self startVoiceSearchInCurrentBVCWithOriginView:command.originView];
+    [self
+        startVoiceSearchInCurrentBVCWithOriginViewInfo:command.originViewInfo];
     _isProcessingVoiceSearchCommand = YES;
     dispatch_after(dispatch_time(DISPATCH_TIME_NOW,
                                  kExpectedTransitionDurationInNanoSeconds),
@@ -1635,15 +1637,16 @@ const int kExternalFilesCleanupDelaySeconds = 60;
   [self closeSettingsAnimated:YES completion:completion];
 }
 
-- (void)startVoiceSearchInCurrentBVCWithOriginView:(UIView*)originView {
+- (void)startVoiceSearchInCurrentBVCWithOriginViewInfo:
+    (const ViewInfo*)originViewInfo {
   // If the background (non-current) BVC is playing TTS audio, call
   // -startVoiceSearch on it to stop the TTS.
   BrowserViewController* backgroundBVC =
       self.mainBVC == self.currentBVC ? self.otrBVC : self.mainBVC;
   if (backgroundBVC.playingTTS)
-    [backgroundBVC startVoiceSearchWithOriginView:originView];
+    [backgroundBVC startVoiceSearchWithOriginViewInfo:originViewInfo];
   else
-    [self.currentBVC startVoiceSearchWithOriginView:originView];
+    [self.currentBVC startVoiceSearchWithOriginViewInfo:originViewInfo];
 }
 
 #pragma mark - Preferences Management
@@ -2133,7 +2136,7 @@ const int kExternalFilesCleanupDelaySeconds = 60;
     case START_VOICE_SEARCH:
       if (@available(iOS 11, *)) {
         return ^{
-          [self startVoiceSearchInCurrentBVCWithOriginView:nil];
+          [self startVoiceSearchInCurrentBVCWithOriginViewInfo:nullptr];
         };
       } else {
         return ^{
@@ -2147,11 +2150,11 @@ const int kExternalFilesCleanupDelaySeconds = 60;
           // Add a timer here and hope this will be enough so that voice search
           // is triggered after second applicationDidBecomeActive.
           // TODO(crbug.com/766951): remove this workaround.
-          dispatch_after(dispatch_time(DISPATCH_TIME_NOW, 100 * NSEC_PER_MSEC),
-                         dispatch_get_main_queue(), ^{
-                           [self
-                               startVoiceSearchInCurrentBVCWithOriginView:nil];
-                         });
+          dispatch_after(
+              dispatch_time(DISPATCH_TIME_NOW, 100 * NSEC_PER_MSEC),
+              dispatch_get_main_queue(), ^{
+                [self startVoiceSearchInCurrentBVCWithOriginViewInfo:nullptr];
+              });
 
         };
       }

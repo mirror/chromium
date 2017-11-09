@@ -9,11 +9,18 @@
 
 #import "ios/public/provider/chrome/browser/voice/logo_animation_controller.h"
 
+class ViewInfo;
+
 // Protocol used by UIViewControllers that present VoiceSearch.
 @protocol VoiceSearchPresenter<LogoAnimationControllerOwnerOwner, NSObject>
 
 // The button that was tapped in order to trigger VoiceSearch.
+// TODO(crbug.com/783037): Remove as third portion of 3-sided patch and use
+// ViewInfo instead.
 @property(nonatomic, readonly) UIView* voiceSearchButton;
+
+// The ViewInfo for the button that was tapped to trigger VoiceSearch
+@property(nonatomic, readonly) const ViewInfo* voiceSearchOriginViewInfo;
 
 @end
 
