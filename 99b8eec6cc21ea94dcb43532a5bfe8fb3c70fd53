@@ -89,6 +89,24 @@
     },
     {
       "key": {
+        "uuid": "92fc0615_89565c05",
+        "filename": "cc/paint/paint_op_buffer.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 1849,
+      "author": {
+        "id": 1145109
+      },
+      "writtenOn": "2017-11-09T11:35:37Z",
+      "side": 1,
+      "message": "Done. Made compute the skip so AllocatePaintOp directly allocated the memory for the op.",
+      "parentUuid": "047cac4f_8fa85601",
+      "revId": "99b8eec6cc21ea94dcb43532a5bfe8fb3c70fd53",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "7cda1350_6d23481f",
         "filename": "cc/paint/paint_op_buffer.cc",
         "patchSetId": 2
@@ -135,6 +153,24 @@
       "writtenOn": "2017-11-06T19:48:04Z",
       "side": 1,
       "message": "Can you update DeserializationFailures to additionally use the MakeFromMemory path?\n\nCan you also add paint record shaders to test_flags? (Maybe we need test_records as well.)",
+      "revId": "99b8eec6cc21ea94dcb43532a5bfe8fb3c70fd53",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "56444ded_bc5c156a",
+        "filename": "cc/paint/paint_op_buffer_unittest.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 2200,
+      "author": {
+        "id": 1145109
+      },
+      "writtenOn": "2017-11-09T11:35:37Z",
+      "side": 1,
+      "message": "I updated DeserializationFailures. This change still wouldn\u0027t add deserialization for paint record shaders. I want to set up ScopedImageFlags during serialization in a subsequent patch, so we have the raster scale wiring when adding it. I\u0027ll add the record shaders when adding that serialization.",
+      "parentUuid": "8e652a3e_7586aa6e",
       "revId": "99b8eec6cc21ea94dcb43532a5bfe8fb3c70fd53",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
