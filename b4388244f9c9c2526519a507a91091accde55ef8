@@ -22,6 +22,30 @@
       "revId": "b4388244f9c9c2526519a507a91091accde55ef8",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b945bf4b_96839588",
+        "filename": "AUTHORS",
+        "patchSetId": 4
+      },
+      "lineNbr": 893,
+      "author": {
+        "id": 1249643
+      },
+      "writtenOn": "2017-11-09T11:49:03Z",
+      "side": 1,
+      "message": "I am contributing on as an individual.",
+      "parentUuid": "5475df73_d11f9dcb",
+      "range": {
+        "startLine": 893,
+        "startChar": 8,
+        "endLine": 893,
+        "endChar": 9
+      },
+      "revId": "b4388244f9c9c2526519a507a91091accde55ef8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
