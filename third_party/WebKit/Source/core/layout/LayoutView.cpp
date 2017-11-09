@@ -41,7 +41,6 @@
 #include "core/page/ChromeClient.h"
 #include "core/page/Page.h"
 #include "core/paint/PaintLayer.h"
-#include "core/paint/ViewPaintInvalidator.h"
 #include "core/paint/ViewPainter.h"
 #include "core/paint/compositing/PaintLayerCompositor.h"
 #include "core/svg/SVGDocumentExtensions.h"
@@ -450,11 +449,6 @@ void LayoutView::ComputeSelfHitTestRects(Vector<LayoutRect>& rects,
                              LayoutSize(GetFrameView()->ContentsSize())));
 }
 
-PaintInvalidationReason LayoutView::InvalidatePaint(
-    const PaintInvalidatorContext& context) const {
-  return ViewPaintInvalidator(*this, context).InvalidatePaint();
-}
-
 void LayoutView::Paint(const PaintInfo& paint_info,
                        const LayoutPoint& paint_offset) const {
   ViewPainter(*this).Paint(paint_info, paint_offset);
@@ -798,12 +792,14 @@ float LayoutView::ZoomFactor() const {
   return frame_view_->GetFrame().PageZoomFactor();
 }
 
-const LayoutBox& LayoutView::RootBox() const {
-  Element* document_element = GetDocument().documentElement();
-  DCHECK(document_element);
-  DCHECK(document_element->GetLayoutObject());
-  DCHECK(document_element->GetLayoutObject()->IsBox());
-  return ToLayoutBox(*document_element->GetLayoutObject());
+const LayoutBox* LayoutView::RootBox() const {
+  const auto* document_element = GetDocument().documentElement();
+  if (!document_element)
+    return nullptr;
+  const auto* document_layout_object = document_element->GetLayoutObject();
+  if (!document_layout_object || !document_layout_object->IsBox())
+    return nullptr;
+  return ToLayoutBox(document_layout_object);
 }
 
 void LayoutView::UpdateAfterLayout() {
