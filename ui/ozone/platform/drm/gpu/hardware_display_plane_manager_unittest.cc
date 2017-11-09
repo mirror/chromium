@@ -7,9 +7,12 @@
 #include <memory>
 
 #include "base/macros.h"
+#include "base/test/scoped_task_environment.h"
 #include "testing/gtest/include/gtest/gtest.h"
 #include "ui/ozone/platform/drm/gpu/crtc_controller.h"
 #include "ui/ozone/platform/drm/gpu/fake_plane_info.h"
+#include "ui/ozone/platform/drm/gpu/hardware_display_plane_manager_atomic.h"
+#include "ui/ozone/platform/drm/gpu/hardware_display_plane_manager_legacy.h"
 #include "ui/ozone/platform/drm/gpu/mock_drm_device.h"
 #include "ui/ozone/platform/drm/gpu/mock_hardware_display_plane_manager.h"
 #include "ui/ozone/platform/drm/gpu/mock_scanout_buffer.h"
@@ -226,6 +229,68 @@ TEST(HardwareDisplayPlaneManagerLegacyTest, UnusedPlanesAreReleased) {
   EXPECT_EQ(0, drm->get_overlay_clear_call_count());
   EXPECT_TRUE(drm->plane_manager()->Commit(&hdpl, false));
   EXPECT_EQ(1, drm->get_overlay_clear_call_count());
+}
+
+class HardwareDisplayPlaneManagerWaitForRenderTest : public testing::Test {
+ protected:
+  HardwareDisplayPlaneManagerWaitForRenderTest() = default;
+
+  void UseLegacyManager();
+  void UseAtomicManager();
+  void WaitForRender();
+
+  std::unique_ptr<ui::HardwareDisplayPlaneManager> plane_manager_;
+  bool wait_task_called = false;
+  bool callback_called = false;
+
+  base::test::ScopedTaskEnvironment task_env_{
+      base::test::ScopedTaskEnvironment::MainThreadType::DEFAULT,
+      base::test::ScopedTaskEnvironment::ExecutionMode::QUEUED};
+
+ private:
+  DISALLOW_COPY_AND_ASSIGN(HardwareDisplayPlaneManagerWaitForRenderTest);
+};
+
+void HardwareDisplayPlaneManagerWaitForRenderTest::WaitForRender() {
+  auto set_true = [](bool* b) { *b = true; };
+  plane_manager_->WaitForRender(base::BindOnce(set_true, &wait_task_called),
+                                base::BindOnce(set_true, &callback_called));
+}
+
+void HardwareDisplayPlaneManagerWaitForRenderTest::UseLegacyManager() {
+  plane_manager_ = std::make_unique<ui::HardwareDisplayPlaneManagerLegacy>();
+}
+
+void HardwareDisplayPlaneManagerWaitForRenderTest::UseAtomicManager() {
+  plane_manager_ = std::make_unique<ui::HardwareDisplayPlaneManagerAtomic>();
+}
+
+TEST_F(HardwareDisplayPlaneManagerWaitForRenderTest,
+       LegacyWaitsAsynchronously) {
+  UseLegacyManager();
+  WaitForRender();
+
+  EXPECT_FALSE(wait_task_called);
+  EXPECT_FALSE(callback_called);
+
+  task_env_.RunUntilIdle();
+
+  EXPECT_TRUE(wait_task_called);
+  EXPECT_TRUE(callback_called);
+}
+
+TEST_F(HardwareDisplayPlaneManagerWaitForRenderTest,
+       AtomicWaitsAsynchronously) {
+  UseAtomicManager();
+  WaitForRender();
+
+  EXPECT_FALSE(wait_task_called);
+  EXPECT_FALSE(callback_called);
+
+  task_env_.RunUntilIdle();
+
+  EXPECT_TRUE(wait_task_called);
+  EXPECT_TRUE(callback_called);
 }
 
 }  // namespace

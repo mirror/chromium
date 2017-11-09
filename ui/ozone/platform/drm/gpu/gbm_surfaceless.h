@@ -72,13 +72,13 @@ class GbmSurfaceless : public gl::SurfacelessEGL {
 
     bool ready = false;
     std::vector<gl::GLSurfaceOverlay> overlays;
+    base::OnceClosure render_wait_task;
     SwapCompletionCallback callback;
   };
 
   void SubmitFrame();
 
   EGLSyncKHR InsertFence(bool implicit);
-  void FenceRetired(PendingFrame* frame);
 
   void SwapCompleted(const SwapCompletionCallback& callback,
                      gfx::SwapResult result);
