@@ -1,21 +1,15 @@
-<html>
-<head>
-<script src="../../../inspector/inspector-test.js"></script>
-<script src="../../../inspector/debugger-test.js"></script>
-<script src="../../../inspector/live-edit-test.js"></script>
-<script src="resources/edit-me.js"></script>
-<script src="resources/edit-me-2.js"></script>
-<script src="resources/edit-me-when-paused.js"></script>
+// Copyright 2017 The Chromium Authors. All rights reserved.
+// Use of this source code is governed by a BSD-style license that can be
+// found in the LICENSE file.
 
-<script>
-function loadScriptWithSyntaxError()
-{
-    var script = document.createElement("script");
-    script.src = "resources/edit-me-syntax-error.js";
-    document.head.appendChild(script);
-}
+(async function() {
+  TestRunner.addResult(`Tests live edit feature.\n`);
+  await TestRunner.loadModule('sources_test_runner');
+  await TestRunner.showPanel('sources');
+  await TestRunner.addScriptTag('resources/edit-me.js');
+  await TestRunner.addScriptTag('resources/edit-me-2.js');
+  await TestRunner.addScriptTag('resources/edit-me-when-paused.js');
 
-function test() {
   var panel = UI.panels.sources;
 
   SourcesTestRunner.runDebuggerTestSuite([
@@ -37,12 +31,9 @@ function test() {
       }
     },
 
-    function testLiveEditSyntaxError(next) {
-      TestRunner.evaluateInPage('loadScriptWithSyntaxError()', showScriptSource);
-
-      function showScriptSource() {
-        SourcesTestRunner.showScriptSource('edit-me-syntax-error.js', didShowScriptSource);
-      }
+    async function testLiveEditSyntaxError(next) {
+      await TestRunner.addScriptTag('resources/edit-me-syntax-error.js');
+      SourcesTestRunner.showScriptSource('edit-me-syntax-error.js', didShowScriptSource);
 
       function didShowScriptSource(sourceFrame) {
         SourcesTestRunner.replaceInSource(sourceFrame, ',"I\'m good"', '"I\'m good"');
@@ -88,7 +79,7 @@ function test() {
 
       function didEditScriptSource() {
         SourcesTestRunner.resumeExecution(SourcesTestRunner.waitUntilPaused.bind(
-            InspectorTest, SourcesTestRunner.resumeExecution.bind(InspectorTest, next)));
+            SourcesTestRunner, SourcesTestRunner.resumeExecution.bind(SourcesTestRunner, next)));
       }
     },
 
@@ -149,14 +140,4 @@ function test() {
     SourcesTestRunner.replaceInSource(sourceFrame, string, replacement);
     SourcesTestRunner.commitSource(sourceFrame);
   }
-};
-
-</script>
-
-</head>
-
-<body onload="runTest()">
-<p>Tests live edit feature.</p>
-
-</body>
-</html>
+})();
