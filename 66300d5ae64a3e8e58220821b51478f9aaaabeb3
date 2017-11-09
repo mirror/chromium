@@ -2,6 +2,29 @@
   "comments": [
     {
       "key": {
+        "uuid": "65d68303_caad3cc9",
+        "filename": "third_party/WebKit/LayoutTests/fast/mediastream/getusermedia-constraints.html",
+        "patchSetId": 12
+      },
+      "lineNbr": 72,
+      "author": {
+        "id": 1143639
+      },
+      "writtenOn": "2017-11-09T17:39:16Z",
+      "side": 1,
+      "message": "This works, but consider returning Promise.reject() instead to avoid relying on the content of the catch.\nAlso consider using ()\u003d\u003e notation since it can save some space and improve readability for these one liners",
+      "range": {
+        "startLine": 72,
+        "startChar": 41,
+        "endLine": 72,
+        "endChar": 47
+      },
+      "revId": "66300d5ae64a3e8e58220821b51478f9aaaabeb3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "fc3f1d5b_4e16dbb7",
         "filename": "third_party/WebKit/LayoutTests/fast/mediastream/getusermedia-constraints.html",
         "patchSetId": 12
