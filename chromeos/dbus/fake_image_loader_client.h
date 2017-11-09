@@ -26,6 +26,10 @@ class CHROMEOS_EXPORT FakeImageLoaderClient : public ImageLoaderClient {
                          const std::string& version,
                          const std::string& component_folder_abs_path,
                          DBusMethodCallback<bool> callback) override;
+  void RegisterComponentBlocking(
+      const std::string& name,
+      const std::string& version,
+      const std::string& component_folder_abs_path) override;
   void LoadComponent(const std::string& name,
                      DBusMethodCallback<std::string> callback) override;
   void RemoveComponent(const std::string& name,

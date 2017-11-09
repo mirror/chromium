@@ -40,6 +40,20 @@ class ImageLoaderClientImpl : public ImageLoaderClient {
                                       std::move(callback)));
   }
 
+  void RegisterComponentBlocking(
+      const std::string& name,
+      const std::string& version,
+      const std::string& component_folder_abs_path) override {
+    dbus::MethodCall method_call(imageloader::kImageLoaderServiceInterface,
+                                 imageloader::kRegisterComponent);
+    dbus::MessageWriter writer(&method_call);
+    writer.AppendString(name);
+    writer.AppendString(version);
+    writer.AppendString(component_folder_abs_path);
+    proxy_->CallMethodAndBlock(&method_call,
+                               dbus::ObjectProxy::TIMEOUT_USE_DEFAULT);
+  }
+
   void LoadComponent(const std::string& name,
                      DBusMethodCallback<std::string> callback) override {
     dbus::MethodCall method_call(imageloader::kImageLoaderServiceInterface,

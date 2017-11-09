@@ -18,6 +18,11 @@ void FakeImageLoaderClient::RegisterComponent(
   std::move(callback).Run(base::nullopt);
 }
 
+void FakeImageLoaderClient::RegisterComponentBlocking(
+    const std::string& name,
+    const std::string& version,
+    const std::string& component_folder_abs_path) {}
+
 void FakeImageLoaderClient::LoadComponent(
     const std::string& name,
     DBusMethodCallback<std::string> callback) {

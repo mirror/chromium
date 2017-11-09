@@ -28,6 +28,11 @@ class CHROMEOS_EXPORT ImageLoaderClient : public DBusClient {
                                  const std::string& component_folder_abs_path,
                                  DBusMethodCallback<bool> callback) = 0;
 
+  virtual void RegisterComponentBlocking(
+      const std::string& name,
+      const std::string& version,
+      const std::string& component_folder_abs_path) = 0;
+
   // Mounts a component given the |name| and return the mount point (if call is
   // successful).
   virtual void LoadComponent(const std::string& name,
