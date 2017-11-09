@@ -73,6 +73,30 @@
     },
     {
       "key": {
+        "uuid": "0ab1fb9b_48bae4c0",
+        "filename": "chrome/test/media_router/media_router_integration_browsertest.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 245,
+      "author": {
+        "id": 1190572
+      },
+      "writtenOn": "2017-11-09T18:14:59Z",
+      "side": 1,
+      "message": "That would work for cases in which we\u0027re expecting a route to be created, but not for cases where we\u0027re expecting the CreateRoute() callback to be called with an error and OnRoutesUpdated() doesn\u0027t get called.",
+      "parentUuid": "d7953d25_655bcb31",
+      "range": {
+        "startLine": 242,
+        "startChar": 0,
+        "endLine": 245,
+        "endChar": 40
+      },
+      "revId": "3d55b14c5ef805de56f8aa5d562cb0784d6b4ffd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "ca43190a_4c644712",
         "filename": "chrome/test/media_router/media_router_integration_browsertest.cc",
         "patchSetId": 6
