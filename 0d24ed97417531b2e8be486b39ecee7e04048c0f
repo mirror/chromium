@@ -22,6 +22,30 @@
       "revId": "0d24ed97417531b2e8be486b39ecee7e04048c0f",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "37923e21_f2ef94cb",
+        "filename": "content/public/test/browser_test_base.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 246,
+      "author": {
+        "id": 1197698
+      },
+      "writtenOn": "2017-11-09T21:36:32Z",
+      "side": 1,
+      "message": "This TODO also should remove now.",
+      "parentUuid": "bfd282e1_28649f3c",
+      "range": {
+        "startLine": 245,
+        "startChar": 0,
+        "endLine": 246,
+        "endChar": 42
+      },
+      "revId": "0d24ed97417531b2e8be486b39ecee7e04048c0f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
