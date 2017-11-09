@@ -92,6 +92,19 @@ InfoBar* InfoBarManager::ReplaceInfoBar(InfoBar* old_infobar,
   return new_infobar_ptr;
 }
 
+std::vector<InfoBar*> InfoBarManager::GetInfoBarsForId(
+    InfoBarDelegate::InfoBarIdentifier id) const {
+  InfoBars matching_infobars;
+  for (InfoBars::const_iterator i(infobars_.begin()); i != infobars_.end();
+       ++i) {
+    if ((*i)->delegate()->GetIdentifier() == id) {
+      matching_infobars.push_back(*i);
+    }
+  }
+
+  return matching_infobars;
+}
+
 void InfoBarManager::AddObserver(Observer* obs) {
   observer_list_.AddObserver(obs);
 }
