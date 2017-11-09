@@ -3,9 +3,9 @@
 // found in the LICENSE file.
 
 #include "ash/accessibility/accessibility_controller.h"
-#include "ash/accessibility_types.h"
 #include "ash/login_status.h"
 #include "ash/magnifier/magnification_controller.h"
+#include "ash/public/cpp/accessibility_types.h"
 #include "ash/public/cpp/ash_pref_names.h"
 #include "ash/shell.h"
 #include "ash/shell_test_api.h"
