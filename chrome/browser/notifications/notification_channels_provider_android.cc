@@ -281,6 +281,23 @@ bool NotificationChannelsProviderAndroid::SetWebsiteSetting(
   const std::string origin_string = origin.Serialize();
 
   ContentSetting setting = content_settings::ValueToContentSetting(value);
+
+  auto existing_channel = cached_channels_.find(origin_string);
+
+  bool delete_channel = false;
+  if (setting == CONTENT_SETTING_DEFAULT ||
+      (setting == CONTENT_SETTING_ALLOW &&
+       existing_channel->second.status == NotificationChannelStatus::BLOCKED) ||
+      (setting == CONTENT_SETTING_BLOCK &&
+       existing_channel->second.status == NotificationChannelStatus::ENABLED)) {
+    delete_channel = true;
+  }
+
+  if (existing_channel != cached_channels_.end() && delete_channel) {
+    bridge_->DeleteChannel(existing_channel->second.id);
+    cached_channels_.erase(existing_channel);
+  }
+
   switch (setting) {
     case CONTENT_SETTING_ALLOW:
       CreateChannelIfRequired(origin_string,
@@ -291,11 +308,6 @@ bool NotificationChannelsProviderAndroid::SetWebsiteSetting(
                               NotificationChannelStatus::BLOCKED);
       break;
     case CONTENT_SETTING_DEFAULT: {
-      auto channel_to_delete = cached_channels_.find(origin_string);
-      if (channel_to_delete != cached_channels_.end()) {
-        bridge_->DeleteChannel(channel_to_delete->second.id);
-        cached_channels_.erase(channel_to_delete);
-      }
       break;
     }
     default:
