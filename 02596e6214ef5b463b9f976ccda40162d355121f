@@ -1,0 +1,72 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "934a89ce_67498df2",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 1
+      },
+      "lineNbr": 12,
+      "author": {
+        "id": 1115974
+      },
+      "writtenOn": "2017-11-09T11:19:02Z",
+      "side": 1,
+      "message": "Can you remove the entries from TestExpectations too?",
+      "revId": "02596e6214ef5b463b9f976ccda40162d355121f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f35266ee_fa873553",
+        "filename": "third_party/WebKit/LayoutTests/media/controls/controls-video-keynav-space-vol.html",
+        "patchSetId": 1
+      },
+      "lineNbr": 44,
+      "author": {
+        "id": 1115974
+      },
+      "writtenOn": "2017-11-09T11:19:02Z",
+      "side": 1,
+      "message": "Maybe we could chain this block and the previous one as otherwise, they might race eachother?",
+      "revId": "02596e6214ef5b463b9f976ccda40162d355121f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "dc2fcca7_ec6b6572",
+        "filename": "third_party/WebKit/LayoutTests/media/controls/controls-video-keynav.html",
+        "patchSetId": 1
+      },
+      "lineNbr": 25,
+      "author": {
+        "id": 1115974
+      },
+      "writtenOn": "2017-11-09T11:19:02Z",
+      "side": 1,
+      "message": "Should this be part of the chain below to strengthen the test?",
+      "revId": "02596e6214ef5b463b9f976ccda40162d355121f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "491e73a3_021f558a",
+        "filename": "third_party/WebKit/LayoutTests/media/controls/controls-video-keynav.html",
+        "patchSetId": 1
+      },
+      "lineNbr": 49,
+      "author": {
+        "id": 1115974
+      },
+      "writtenOn": "2017-11-09T11:19:02Z",
+      "side": 1,
+      "message": "This is working because JS is weird but maybe move this just below `assert_true(video.paused)`?",
+      "revId": "02596e6214ef5b463b9f976ccda40162d355121f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
