@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "cad2f74a_e00a1932",
+        "filename": "chrome/browser/ui/views/autofill/save_card_bubble_views.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 122,
+      "author": {
+        "id": 1002092
+      },
+      "writtenOn": "2017-11-09T03:25:20Z",
+      "side": 1,
+      "message": "This might be a memory leak (RemoveChildView doesn\u0027t delete its arg). Usually we\u0027d tear out views early with `delete content_view_;` on this line instead. (~View() destructor will do the right thing).\n\nBut actually I think a better fix is just to remove the |content_view_| data member. Here, do\n\n\nRemoveAllChildViews(true /* deletechildren */);\nAddChildView(CreateRequestCvcView().release());\n\n\nI\u0027m pretty sure there should only ever be one child view of |this| (i.e. the result of DialogDelegate::GetContentsView()). The footnote_view is owned by the NonClientFrameView.",
+      "revId": "0bfb77e00978ee987c1058494438aa6a92a10cc6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e3713b3c_0006d8e9",
+        "filename": "chrome/browser/ui/views/autofill/save_card_bubble_views.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 396,
+      "author": {
+        "id": 1002092
+      },
+      "writtenOn": "2017-11-09T03:25:20Z",
+      "side": 1,
+      "message": "and here, AddChildView(CreateMainContentView().release());",
+      "revId": "0bfb77e00978ee987c1058494438aa6a92a10cc6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
