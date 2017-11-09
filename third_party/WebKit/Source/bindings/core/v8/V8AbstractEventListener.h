@@ -42,7 +42,7 @@
 namespace blink {
 
 class Event;
-class WorkerGlobalScope;
+class WorkerOrWorkletGlobalScope;
 
 // There are two kinds of event listeners: HTML or non-HMTL. onload,
 // onfocus, etc (attributes) are always HTML event handler type; Event
@@ -149,7 +149,7 @@ class CORE_EXPORT V8AbstractEventListener : public EventListener {
   v8::Isolate* isolate_;
 
   // nullptr unless this listener belongs to a worker.
-  Member<WorkerGlobalScope> worker_global_scope_;
+  Member<WorkerOrWorkletGlobalScope> worker_global_scope_;
 
   SelfKeepAlive<V8AbstractEventListener> keep_alive_;
 };

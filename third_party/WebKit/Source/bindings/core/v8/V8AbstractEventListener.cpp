@@ -60,7 +60,7 @@ V8AbstractEventListener::V8AbstractEventListener(bool is_attribute,
         InstanceCounters::kJSEventListenerCounter);
   else
     worker_global_scope_ =
-        ToWorkerGlobalScope(CurrentExecutionContext(isolate));
+        ToWorkerOrWorkletGlobalScope(CurrentExecutionContext(isolate));
 }
 
 V8AbstractEventListener::~V8AbstractEventListener() {
