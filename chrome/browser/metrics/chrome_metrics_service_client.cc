@@ -400,16 +400,6 @@ ChromeMetricsServiceClient::ChromeMetricsServiceClient(
 
 ChromeMetricsServiceClient::~ChromeMetricsServiceClient() {
   DCHECK_CALLED_ON_VALID_SEQUENCE(sequence_checker_);
-  base::GlobalHistogramAllocator* allocator =
-      base::GlobalHistogramAllocator::Get();
-  if (allocator) {
-    // A normal shutdown is almost complete so there is no benefit in keeping a
-    // file with no new data to be processed during the next startup sequence.
-    // Deleting the file during shutdown adds an extra disk-access or two to
-    // shutdown but eliminates the unnecessary processing of the contents during
-    // startup only to find nothing.
-    allocator->DeletePersistentLocation();
-  }
 }
 
 // static
