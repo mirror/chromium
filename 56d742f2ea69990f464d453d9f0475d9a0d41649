@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "3378d43b_6ff2b4ec",
+        "filename": "chrome/app/settings_strings.grdp",
+        "patchSetId": 8
+      },
+      "lineNbr": 3666,
+      "author": {
+        "id": 1115445
+      },
+      "writtenOn": "2017-11-09T21:30:36Z",
+      "side": 1,
+      "message": "We don\u0027t list programs, just files. Worth dropping _AND_PROGRAMS?",
+      "revId": "56d742f2ea69990f464d453d9f0475d9a0d41649",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
