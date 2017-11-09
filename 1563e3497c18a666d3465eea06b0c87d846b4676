@@ -22,6 +22,30 @@
       "revId": "1563e3497c18a666d3465eea06b0c87d846b4676",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a4b1a671_605716ee",
+        "filename": "components/ntp_snippets/remote/remote_suggestions_scheduler_impl.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 531,
+      "author": {
+        "id": 1161814
+      },
+      "writtenOn": "2017-11-09T17:33:08Z",
+      "side": 1,
+      "message": "I added a comment to explain it.\n\nI did not want to introduce a new trigger type just for this corner case (this would require to define new fetching intervals for this new trigger type at many places).",
+      "parentUuid": "689225a6_7d4e3eea",
+      "range": {
+        "startLine": 531,
+        "startChar": 36,
+        "endLine": 531,
+        "endChar": 50
+      },
+      "revId": "1563e3497c18a666d3465eea06b0c87d846b4676",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
