@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "86de3174_57083fca",
+        "filename": "components/previews/content/previews_optimization_guide_hints.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 22,
+      "author": {
+        "id": 1133190
+      },
+      "writtenOn": "2017-11-09T19:50:32Z",
+      "side": 1,
+      "message": "probably better to do in OGService. added todo there.",
+      "parentUuid": "41d1aa5e_fc11ed3c",
+      "range": {
+        "startLine": 22,
+        "startChar": 39,
+        "endLine": 22,
+        "endChar": 55
+      },
+      "revId": "9fcf340e5e2b041751fb0dbff898b11187133a3f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "d686da3c_d6cdcc7f",
         "filename": "components/previews/content/previews_optimization_guide_hints.cc",
         "patchSetId": 2
@@ -88,6 +112,30 @@
     },
     {
       "key": {
+        "uuid": "e150edc2_c6d5b5cd",
+        "filename": "components/previews/content/previews_optimization_guide_hints.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 73,
+      "author": {
+        "id": 1133190
+      },
+      "writtenOn": "2017-11-09T19:50:32Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "2b16efbe_6c6a85da",
+      "range": {
+        "startLine": 73,
+        "startChar": 4,
+        "endLine": 73,
+        "endChar": 10
+      },
+      "revId": "9fcf340e5e2b041751fb0dbff898b11187133a3f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "39c92ec9_87ee388a",
         "filename": "components/previews/content/previews_optimization_guide_hints.cc",
         "patchSetId": 2
@@ -108,6 +156,30 @@
       "revId": "9fcf340e5e2b041751fb0dbff898b11187133a3f",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b765f9d2_be9c5690",
+        "filename": "components/previews/content/previews_optimization_guide_hints.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 117,
+      "author": {
+        "id": 1133190
+      },
+      "writtenOn": "2017-11-09T19:50:32Z",
+      "side": 1,
+      "message": "i see an example here doing something similar:\nhttps://cs.chromium.org/chromium/src/components/policy/core/browser/url_blacklist_manager.cc\n\nbut anyways i think calling reset would destroy the pointer. you could release the internal pointer then call the reset but that\u0027s more function calls.",
+      "parentUuid": "39c92ec9_87ee388a",
+      "range": {
+        "startLine": 117,
+        "startChar": 2,
+        "endLine": 117,
+        "endChar": 11
+      },
+      "revId": "9fcf340e5e2b041751fb0dbff898b11187133a3f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -134,6 +206,30 @@
     },
     {
       "key": {
+        "uuid": "01c8e09e_c837f547",
+        "filename": "components/previews/content/previews_optimization_guide_hints.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 36,
+      "author": {
+        "id": 1133190
+      },
+      "writtenOn": "2017-11-09T19:50:32Z",
+      "side": 1,
+      "message": "yea i struggled a bunch with this naming. i figure that if we ever go with a different impl (i.e. not component updater), then we\u0027d have to rename this anyway. added comment instead.",
+      "parentUuid": "e71e4887_8a2986d0",
+      "range": {
+        "startLine": 36,
+        "startChar": 6,
+        "endLine": 36,
+        "endChar": 36
+      },
+      "revId": "9fcf340e5e2b041751fb0dbff898b11187133a3f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "34518242_49c1e516",
         "filename": "components/previews/content/previews_optimization_guide_hints.h",
         "patchSetId": 2
@@ -154,6 +250,30 @@
       "revId": "9fcf340e5e2b041751fb0dbff898b11187133a3f",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "54251f9e_4a84a2f2",
+        "filename": "components/previews/content/previews_optimization_guide_hints.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 53,
+      "author": {
+        "id": 1133190
+      },
+      "writtenOn": "2017-11-09T19:50:32Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "34518242_49c1e516",
+      "range": {
+        "startLine": 53,
+        "startChar": 3,
+        "endLine": 53,
+        "endChar": 13
+      },
+      "revId": "9fcf340e5e2b041751fb0dbff898b11187133a3f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -180,6 +300,30 @@
     },
     {
       "key": {
+        "uuid": "4d73b713_8fc3ff05",
+        "filename": "components/previews/content/previews_optimization_guide_hints.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 58,
+      "author": {
+        "id": 1133190
+      },
+      "writtenOn": "2017-11-09T19:50:32Z",
+      "side": 1,
+      "message": "Ack - proto is already in the namespace of the param so i think we\u0027re good without it.",
+      "parentUuid": "5f81a813_8027e93e",
+      "range": {
+        "startLine": 58,
+        "startChar": 34,
+        "endLine": 58,
+        "endChar": 50
+      },
+      "revId": "9fcf340e5e2b041751fb0dbff898b11187133a3f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "c3b1e4db_e6d2a32f",
         "filename": "components/previews/content/previews_optimization_guide_hints.h",
         "patchSetId": 2
@@ -200,6 +344,30 @@
       "revId": "9fcf340e5e2b041751fb0dbff898b11187133a3f",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "10177c0c_319297d8",
+        "filename": "components/previews/content/previews_optimization_guide_hints.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 81,
+      "author": {
+        "id": 1133190
+      },
+      "writtenOn": "2017-11-09T19:50:32Z",
+      "side": 1,
+      "message": "added not owned instead.",
+      "parentUuid": "c3b1e4db_e6d2a32f",
+      "range": {
+        "startLine": 80,
+        "startChar": 6,
+        "endLine": 81,
+        "endChar": 33
+      },
+      "revId": "9fcf340e5e2b041751fb0dbff898b11187133a3f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
