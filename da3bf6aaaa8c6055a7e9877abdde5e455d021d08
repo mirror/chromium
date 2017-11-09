@@ -22,6 +22,30 @@
       "revId": "da3bf6aaaa8c6055a7e9877abdde5e455d021d08",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7197e634_588d1727",
+        "filename": "chrome/utility/chrome_content_utility_client.cc",
+        "patchSetId": 10
+      },
+      "lineNbr": 73,
+      "author": {
+        "id": 1002246
+      },
+      "writtenOn": "2017-11-09T19:49:20Z",
+      "side": 1,
+      "message": "It prevents the GN dependency checker from flagging those include as not in the deps of that file. The GN dependency checker ignores ifdef macros so on platforms where these ifdef\u0027s prevent these includes from being included, it would still complain that the target that builds that file needs to depend on the target with these includes.",
+      "parentUuid": "361ca4ba_da7a3eb1",
+      "range": {
+        "startLine": 73,
+        "startChar": 58,
+        "endLine": 73,
+        "endChar": 70
+      },
+      "revId": "da3bf6aaaa8c6055a7e9877abdde5e455d021d08",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
