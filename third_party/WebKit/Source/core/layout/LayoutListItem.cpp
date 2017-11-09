@@ -140,7 +140,7 @@ static LayoutObject* GetParentOfFirstLineBox(LayoutBlockFlow* curr,
 
     if (!curr_child->IsLayoutBlockFlow() ||
         (curr_child->IsBox() && ToLayoutBox(curr_child)->IsWritingModeRoot()))
-      break;
+      return curr_child;
 
     if (curr->IsListItem() && in_quirks_mode && curr_child->GetNode() &&
         (IsHTMLUListElement(*curr_child->GetNode()) ||
@@ -168,7 +168,8 @@ static LayoutObject* FirstNonMarkerChild(LayoutObject* parent) {
 // 2. Manage the logicalHeight of marker_container(marker's anonymous parent):
 // If marker is the only child of marker_container, set logicalHeight of
 // marker_container to 0px; else restore it to logicalHeight of <li>.
-bool LayoutListItem::DealWithOverflow(const LayoutObject* line_box_parent) {
+bool LayoutListItem::PrepareForBlockDirectionAlign(
+    const LayoutObject* line_box_parent) {
   LayoutObject* marker_parent = marker_->Parent();
   // Deal with the situation of layout tree changed.
   if (marker_parent && marker_parent->IsAnonymous()) {
@@ -225,10 +226,13 @@ bool LayoutListItem::UpdateMarkerLocation() {
       marker_->IsInside() ? this : GetParentOfFirstLineBox(this, marker_);
 
   if (!marker_->IsInside() && line_box_parent &&
-      line_box_parent->HasOverflowClip())
+      (line_box_parent->HasOverflowClip() ||
+       !line_box_parent->IsLayoutBlockFlow() ||
+       (line_box_parent->IsBox() &&
+        ToLayoutBox(line_box_parent)->IsWritingModeRoot())))
     need_block_direction_align_ = true;
   if (need_block_direction_align_)
-    return DealWithOverflow(line_box_parent);
+    return PrepareForBlockDirectionAlign(line_box_parent);
 
   if (!line_box_parent) {
     // If the marker is currently contained inside an anonymous box, then we
@@ -259,10 +263,40 @@ void LayoutListItem::AddOverflowFromChildren() {
   PositionListMarker();
 }
 
+// Find a LayoutBlockFlow descendant for LayoutBlock.
+static LayoutObject* FindBlockFlowDescendant(const LayoutObject* object) {
+  if (!object || !object->IsLayoutBlock())
+    return nullptr;
+  const LayoutBlock* block = ToLayoutBlock(object);
+
+  for (LayoutBox* curr = block->FirstChildBox(); curr;
+       curr = curr->NextSiblingBox()) {
+    if (!curr->IsFloatingOrOutOfFlowPositioned()) {
+      if (curr->IsLayoutBlockFlow())
+        return curr;
+      if (curr->IsLayoutBlock())
+        return FindBlockFlowDescendant(curr);
+    }
+  }
+  return nullptr;
+}
+
 // Align marker_inline_box in block direction according to line_box_root's
 // baseline.
 void LayoutListItem::AlignMarkerInBlockDirection() {
   LayoutObject* line_box_parent = GetParentOfFirstLineBox(this, marker_);
+
+  // Don't align marker if line_box_parent has a different writing-mode.
+  // Just let marker positioned at the left-top of line_box_parent.
+  if (line_box_parent->IsBox() &&
+      ToLayoutBox(line_box_parent)->IsWritingModeRoot())
+    return;
+
+  // To the objects which is LayoutBlock not LayoutBlockFlow, we need to find a
+  // LayoutBlockFlow in its children.
+  if (!line_box_parent->IsLayoutBlockFlow())
+    line_box_parent = FindBlockFlowDescendant(line_box_parent);
+
   if (line_box_parent && line_box_parent->IsLayoutBlockFlow()) {
     LayoutBlockFlow* line_box_parent_block = ToLayoutBlockFlow(line_box_parent);
     RootInlineBox* line_box_root = line_box_parent_block->FirstRootBox();
