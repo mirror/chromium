@@ -66,8 +66,14 @@ bool EnumTraits<media::mojom::DecodeError,
 mojo::ScopedSharedBufferHandle
 StructTraits<media::mojom::BitstreamBufferDataView, media::BitstreamBuffer>::
     memory_handle(const media::BitstreamBuffer& input) {
-  return mojo::WrapSharedMemoryHandle(input.handle(), input.handle().GetSize(),
-                                      false);
+  base::SharedMemoryHandle input_handle =
+      base::SharedMemory::DuplicateHandle(input.handle());
+  if (!base::SharedMemory::IsHandleValid(input_handle)) {
+    DLOG(ERROR) << "Failed to duplicate handle of BitstreamBuffer";
+    return mojo::ScopedSharedBufferHandle();
+  }
+  return mojo::WrapSharedMemoryHandle(input_handle, input.size(),
+                                      true /* read_only */);
 }
 
 // static
