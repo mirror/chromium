@@ -32,19 +32,11 @@ static ScopedJavaLocalRef<jobjectArray> GetCertificateChain(
     return ScopedJavaLocalRef<jobjectArray>();
 
   std::vector<std::string> cert_chain;
-  net::X509Certificate::OSCertHandles cert_handles =
-      cert->GetIntermediateCertificates();
-  // Make sure the peer's own cert is the first in the chain, if it's not
-  // already there.
-  if (cert_handles.empty() || cert_handles[0] != cert->os_cert_handle())
-    cert_handles.insert(cert_handles.begin(), cert->os_cert_handle());
-
-  cert_chain.reserve(cert_handles.size());
-  for (auto* handle : cert_handles) {
-    std::string cert_bytes;
-    net::X509Certificate::GetDEREncoded(handle, &cert_bytes);
-    cert_chain.push_back(cert_bytes);
-  }
+  cert_chain.reserve(1 + cert->GetIntermediateCertificates().size());
+  cert_chain.push_back(
+      net::x509_util::CryptoBufferAsStringPiece(cert->os_cert_handle()));
+  for (auto* handle : cert->GetIntermediateCertificates())
+    cert_chain.push_back(net::x509_util::CryptoBufferAsStringPiece(handle));
 
   return base::android::ToJavaArrayOfByteArray(env, cert_chain);
 }
