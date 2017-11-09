@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "dd8c3e92_5ab99e39",
+        "filename": "chrome/browser/extensions/data_deleter.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 104,
+      "author": {
+        "id": 1115745
+      },
+      "writtenOn": "2017-11-09T18:59:00Z",
+      "side": 1,
+      "message": "This is the object that\u0027s leaking if it\u0027s not successfully called twice before the test ends.  What if we handle this by leveraging the callback storage?  Does something like this work?\n\n// above\nvoid CallbackHelper(int* counts,\n                    int expected_counts,\n                    const base::Closure\u0026 callback) {\n  if (++(*counts) \u003d\u003d expected_counts)\n    callback.Run();\n}\n\n// here\nauto callback_helper \u003d base::Bind(\u0026CallbackHelper, base::Owned(new int(0)), 2);\n\nand then use callback_helper instead of wrapper-\u003eWrappingCallback().\n\nThis way, when the final reference to the callback is deleted, it will also delete the owned integer count.\n\nWDYT?\n\nA more robust solution would be to make this clear-cookies functionality a more supported scenario, and have an object that kicks off both tasks and also monitors for CookieMonster (or other significant entity) deletion, and deletes itself if it sees any.  But that\u0027s likely over-architected for this use case.",
+      "revId": "54d41c29078ba10b0d310bd0fb7a88c2d07ee890",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
