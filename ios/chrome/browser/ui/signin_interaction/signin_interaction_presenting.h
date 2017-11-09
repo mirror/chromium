@@ -18,10 +18,13 @@
                      animated:(BOOL)animated
                    completion:(ProceduralBlock)completion;
 
-// Presents |viewController| at the top of the presentation hierarchy.
-- (void)presentTopViewController:(UIViewController*)viewController
-                        animated:(BOOL)animated
-                      completion:(ProceduralBlock)completion;
+// Presents |viewController| from |baseViewController|. |animated| determines
+// if the presentation is animated or not. |completion| is run after
+// |viewController| is presented.
+- (void)presentViewController:(UIViewController*)viewController
+           baseViewController:(UIViewController*)baseViewController
+                     animated:(BOOL)animated
+                   completion:(ProceduralBlock)completion;
 
 // Dismisses the presented view controller.
 - (void)dismissViewControllerAnimated:(BOOL)animated

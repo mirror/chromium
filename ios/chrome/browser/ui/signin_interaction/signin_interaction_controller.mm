@@ -40,6 +40,9 @@ using signin_ui::CompletionCallback;
   CompletionCallback completionCallback_;
   ChromeSigninViewController* signinViewController_;
   ChromeIdentityInteractionManager* identityInteractionManager_;
+  // The identity interaction navigation controller, or the top most view
+  // controller above it.
+  __weak UIViewController* identityInteractionTopViewController_;
   ChromeIdentity* signInIdentity_;
   BOOL identityAdded_;
 }
@@ -232,6 +235,7 @@ using signin_ui::CompletionCallback;
      presentViewController:(UIViewController*)viewController
                   animated:(BOOL)animated
                 completion:(ProceduralBlock)completion {
+  identityInteractionTopViewController_ = viewController;
   [self.presenter presentViewController:viewController
                                animated:animated
                              completion:completion];
@@ -279,9 +283,10 @@ using signin_ui::CompletionCallback;
     // |presentingViewController_|), to avoid an awkward transition (dismissing
     // |identityInteractionManager_|, followed by presenting
     // |signinViewController_|).
-    [self.presenter presentTopViewController:signinViewController_
-                                    animated:YES
-                                  completion:nil];
+    [self.presenter presentViewController:signinViewController_
+                       baseViewController:identityInteractionTopViewController_
+                                 animated:YES
+                               completion:nil];
   } else {
     [self.presenter presentViewController:signinViewController_
                                  animated:YES
