@@ -34,6 +34,24 @@
       "revId": "475e0ca8294c90a5ea6c05f9a26194e0eeb0d93d",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a00081da_9eb92065",
+        "filename": "ash/system/web_notification/login_state_notification_blocker.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 28,
+      "author": {
+        "id": 1000045
+      },
+      "writtenOn": "2017-11-09T15:00:17Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "9130ac43_633dd97e",
+      "revId": "475e0ca8294c90a5ea6c05f9a26194e0eeb0d93d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
