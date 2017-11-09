@@ -15,11 +15,10 @@ iframe {
   <body style='height:500px; width: 500px; padding: 0; margin: 0;'>
     <script>
       window.name = 'innerFrame';
-      var testEventList = ['pointerup', 'pointerdown', 'pointermove',
-                           'touchstart', 'touchmove', 'touchend',
-                           'mouseup', 'mousedown', 'mousemove'];
+      var testEventList = ['pointerup', 'pointerdown', 'pointermove'];
       testEventList.forEach(function(eventName) {
         document.documentElement.addEventListener(eventName, function(event) {
+          console.log(event.type + ' ' + event.pointerType + ' ' + event.view.name + ' ' + event.clientX +  ' ' + event.clientY);
           top.document.events.push(event);
         });
       });
@@ -30,7 +29,16 @@ iframe {
 <div id='console'></div>
 
 <script>
+
 window.name = 'outerFrame';
+
+      var testEventList = ['pointerup', 'pointerdown', 'pointermove'
+];
+      testEventList.forEach(function(eventName) {
+        document.documentElement.addEventListener(eventName, function(event) {
+          console.log(event.type + ' ' + event.pointerType + ' ' + event.view.name + ' ' + event.clientX +  ' ' + event.clientY);
+        });
+      });
 
 var attributes = [
     'clientX',
