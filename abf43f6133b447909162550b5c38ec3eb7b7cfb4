@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "35f46c7c_b02cb9c2",
+        "filename": "ios/build/bots/chromium.mac/ios-device.json",
+        "patchSetId": 2
+      },
+      "lineNbr": 5,
+      "author": {
+        "id": 1003211
+      },
+      "writtenOn": "2017-11-09T21:18:00Z",
+      "side": 1,
+      "message": "Terribly minor thing, but can you uppercase this i? It\u0027s the start of a new sentence.",
+      "range": {
+        "startLine": 5,
+        "startChar": 5,
+        "endLine": 5,
+        "endChar": 6
+      },
+      "revId": "abf43f6133b447909162550b5c38ec3eb7b7cfb4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
