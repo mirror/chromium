@@ -50,6 +50,9 @@ PlatformSensorConfiguration PlatformSensorFusion::GetDefaultConfiguration() {
 bool PlatformSensorFusion::StartSensor(
     const PlatformSensorConfiguration& configuration) {
   DCHECK(!SourcesNotReady());
+  // Remove all the previously added source configs.
+  StopSensor();
+
   for (const auto& pair : source_sensors_) {
     if (!pair.second->StartListening(this, configuration))
       return false;
