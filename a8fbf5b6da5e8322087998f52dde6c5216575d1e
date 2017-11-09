@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "8e4359ca_60099814",
+        "filename": "chrome/browser/chromeos/arc/arc_session_manager.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 721,
+      "author": {
+        "id": 1115919
+      },
+      "writtenOn": "2017-11-09T13:49:48Z",
+      "side": 1,
+      "message": "Clarification: do we want to start mini instance for other cases, like for OOBE or L708 (\u003d Accept ToS, but for some reason (e.g. force shutdown), ARC is stopped, then re-sign-in case, or ARC is managed, and both prefs for checkbox are managed, too, case)?\n\nIf both are yes, then how about moving this to around L704?",
+      "revId": "a8fbf5b6da5e8322087998f52dde6c5216575d1e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
