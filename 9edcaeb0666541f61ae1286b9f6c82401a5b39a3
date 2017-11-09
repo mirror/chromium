@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "5eee29db_e4313760",
+        "filename": "components/safe_browsing/base_resource_throttle.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 173,
+      "author": {
+        "id": 1144039
+      },
+      "writtenOn": "2017-11-09T18:58:59Z",
+      "side": 1,
+      "message": "Please add comments for these members.",
+      "range": {
+        "startLine": 172,
+        "startChar": 2,
+        "endLine": 173,
+        "endChar": 37
+      },
+      "revId": "9edcaeb0666541f61ae1286b9f6c82401a5b39a3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6bd6b2a6_00982f61",
+        "filename": "components/safe_browsing/browser/browser_url_loader_throttle.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 122,
+      "author": {
+        "id": 1144039
+      },
+      "writtenOn": "2017-11-09T18:58:59Z",
+      "side": 1,
+      "message": "nit: it might be useful to explain this condition in words as a comment",
+      "range": {
+        "startLine": 122,
+        "startChar": 5,
+        "endLine": 122,
+        "endChar": 54
+      },
+      "revId": "9edcaeb0666541f61ae1286b9f6c82401a5b39a3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}

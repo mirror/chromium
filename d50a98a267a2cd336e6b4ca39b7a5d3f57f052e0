@@ -16,6 +16,24 @@
       "revId": "d50a98a267a2cd336e6b4ca39b7a5d3f57f052e0",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e1e145b9_ecbf2c67",
+        "filename": "components/safe_browsing/base_resource_throttle.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 350,
+      "author": {
+        "id": 1144039
+      },
+      "writtenOn": "2017-11-09T18:58:59Z",
+      "side": 1,
+      "message": "Your reasoning looks right to me. Thanks for catching this.\nWere you able to repto this on the device in some way?\n\n+nparker FYI.",
+      "parentUuid": "10aeb59c_7a86d5fb",
+      "revId": "d50a98a267a2cd336e6b4ca39b7a5d3f57f052e0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
