@@ -16,6 +16,24 @@
       "revId": "6a1df181aa67979c36f89f9b9b0213a39f4928fb",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "92ac8854_c6dff33e",
+        "filename": "ios/chrome/browser/ui/bookmarks/bookmark_home_view_controller.mm",
+        "patchSetId": 3
+      },
+      "lineNbr": 198,
+      "author": {
+        "id": 1178855
+      },
+      "writtenOn": "2017-11-09T03:58:02Z",
+      "side": 1,
+      "message": "Thanks for the tip.  I use viewWillAppear instead.",
+      "parentUuid": "e4b6d36d_42fd7749",
+      "revId": "6a1df181aa67979c36f89f9b9b0213a39f4928fb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
