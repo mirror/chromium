@@ -25,7 +25,7 @@ declare_args() {
       (current_cpu == "arm64" || current_cpu == "x64")
 
   # Enables ProGuard obfuscation of Chromium packages.
-  enable_proguard_obfuscation = false
+  enable_proguard_obfuscation = true
 
   # Enable multidex in release builds.
   multidex_in_release = false
