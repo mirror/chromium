@@ -43,6 +43,7 @@ import org.chromium.base.test.util.MinAndroidSdkLevel;
 import org.chromium.components.autofill.AutofillProvider;
 import org.chromium.net.test.util.TestWebServer;
 
+import java.io.ByteArrayInputStream;
 import java.net.URL;
 import java.util.ArrayList;
 import java.util.List;
@@ -469,6 +470,28 @@ public class AwAutofillTest {
 
         public CallbackHelper getCancelCallbackHelper() {
             return mCancelCallbackHelper;
+        }
+    }
+
+    private static class AwAutofillTestClient extends TestAwContentsClient {
+        public interface ShouldInterceptRequestImpl {
+            AwWebResourceResponse shouldInterceptRequest(AwWebResourceRequest request);
+        }
+
+        private ShouldInterceptRequestImpl mShouldInterceptRequestImpl;
+
+        public void setShouldInterceptRequestImpl(ShouldInterceptRequestImpl impl) {
+            mShouldInterceptRequestImpl = impl;
+        }
+
+        @Override
+        public AwWebResourceResponse shouldInterceptRequest(AwWebResourceRequest request) {
+            AwWebResourceResponse response = null;
+            if (mShouldInterceptRequestImpl != null) {
+                response = mShouldInterceptRequestImpl.shouldInterceptRequest(request);
+            }
+            if (response != null) return response;
+            return super.shouldInterceptRequest(request);
         }
     }
 
