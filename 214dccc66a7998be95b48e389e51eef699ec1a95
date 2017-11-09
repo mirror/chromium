@@ -16,6 +16,74 @@
       "revId": "214dccc66a7998be95b48e389e51eef699ec1a95",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "afbad091_83d5cba8",
+        "filename": "content/renderer/loader/web_url_loader_impl.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 759,
+      "author": {
+        "id": 1115881
+      },
+      "writtenOn": "2017-11-09T10:50:06Z",
+      "side": 0,
+      "message": "This is used by the network service, and your change won\u0027t fix the issue in network service mode but we\u0027ll address it soon for that case. This code shouldn\u0027t be removed in the meantime.",
+      "revId": "214dccc66a7998be95b48e389e51eef699ec1a95",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "76c2d74d_34f291a9",
+        "filename": "content/renderer/loader/web_url_loader_impl.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 857,
+      "author": {
+        "id": 1115881
+      },
+      "writtenOn": "2017-11-09T10:50:06Z",
+      "side": 0,
+      "message": "This code shouldn\u0027t be removed for similar reasons.",
+      "revId": "214dccc66a7998be95b48e389e51eef699ec1a95",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "54cae011_9960e626",
+        "filename": "content/renderer/loader/web_url_loader_impl.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 904,
+      "author": {
+        "id": 1115881
+      },
+      "writtenOn": "2017-11-09T10:50:06Z",
+      "side": 0,
+      "message": "This code shouldn\u0027t be removed for similar reasons.",
+      "revId": "214dccc66a7998be95b48e389e51eef699ec1a95",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "738e13d5_ad4bedbd",
+        "filename": "content/renderer/loader/web_url_loader_impl.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 929,
+      "author": {
+        "id": 1115881
+      },
+      "writtenOn": "2017-11-09T10:50:06Z",
+      "side": 0,
+      "message": "This one is ok to remove :).",
+      "revId": "214dccc66a7998be95b48e389e51eef699ec1a95",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
