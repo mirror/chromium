@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "bea2559f_6940e1f2",
+        "filename": "ui/webui/resources/js/cr/ui/focus_outline_manager.js",
+        "patchSetId": 10
+      },
+      "lineNbr": 31,
+      "author": {
+        "id": 1003321
+      },
+      "writtenOn": "2017-11-09T00:36:20Z",
+      "side": 1,
+      "message": "where\u0027s this used?",
+      "range": {
+        "startLine": 31,
+        "startChar": 4,
+        "endLine": 31,
+        "endChar": 35
+      },
+      "revId": "2d41b5cff3093ff82645341358dee58c50980b95",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
