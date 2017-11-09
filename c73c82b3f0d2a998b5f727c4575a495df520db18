@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "a1c09e1d_c1744adc",
+        "filename": "third_party/WebKit/Source/core/inspector/InspectorAnimationAgent.cpp",
+        "patchSetId": 2
+      },
+      "lineNbr": 109,
+      "author": {
+        "id": 1001365
+      },
+      "writtenOn": "2017-11-09T17:18:01Z",
+      "side": 1,
+      "message": "I don\u0027t think so. See construction here:\nhttps://cs.chromium.org/chromium/src/third_party/WebKit/Source/core/animation/css/CSSAnimations.cpp?dr\u003dCSs\u0026l\u003d814\nUnless timing_iteration_delay can be zero causing us to divide by zero?\n\nJust read the offsets directly and DCHECK?",
+      "revId": "c73c82b3f0d2a998b5f727c4575a495df520db18",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
