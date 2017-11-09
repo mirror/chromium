@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "e2495af5_7b5b8716",
+        "filename": "chrome/test/mini_installer/config/chrome_beta_not_installed.prop",
+        "patchSetId": 21
+      },
+      "lineNbr": 18,
+      "author": {
+        "id": 1228990
+      },
+      "writtenOn": "2017-11-09T07:00:32Z",
+      "side": 1,
+      "message": "Done. Yea, I recall that we don\u0027t auto update Chromium for users.",
+      "parentUuid": "53984a5a_49bd1a3e",
+      "range": {
+        "startLine": 18,
+        "startChar": 24,
+        "endLine": 18,
+        "endChar": 56
+      },
+      "revId": "489202c0979e8b94b33f15e62e4d85732b28444b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "671603e4_805b7911",
         "filename": "chrome/test/mini_installer/variable_expander.py",
         "patchSetId": 21
@@ -39,6 +63,24 @@
       "revId": "489202c0979e8b94b33f15e62e4d85732b28444b",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "87dcc8bc_c54b125b",
+        "filename": "chrome/test/mini_installer/variable_expander.py",
+        "patchSetId": 21
+      },
+      "lineNbr": 205,
+      "author": {
+        "id": 1228990
+      },
+      "writtenOn": "2017-11-09T07:00:32Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "671603e4_805b7911",
+      "revId": "489202c0979e8b94b33f15e62e4d85732b28444b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
