@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "30cbaa27_445ef9d7",
+        "filename": "cc/animation/scroll_timeline.cc",
+        "patchSetId": 21
+      },
+      "lineNbr": 55,
+      "author": {
+        "id": 1212214
+      },
+      "writtenOn": "2017-11-09T19:51:39Z",
+      "side": 1,
+      "message": "I assume you are referring to startScrollOffset, endScrollOffset, and fill? Those are currently unsupported in Blink. Support for Blink and cc could be added to this CL, but it is already ~650 lines and I feel that\u0027s outside the scope of the CL (which is to bring cc/ to Blink ScrollTimeline parity).\n\nI can follow this CL with one to add the three variables on both Blink and cc/ side if there\u0027s a demand for them.",
+      "parentUuid": "ae7f9225_056e3e28",
+      "revId": "1c89fbe6f77720042e605d8f48cf896d224f9ef2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "7731369a_eacd47da",
         "filename": "cc/animation/worklet_animation_player.cc",
         "patchSetId": 21
@@ -36,6 +54,24 @@
     },
     {
       "key": {
+        "uuid": "3da58d40_dd066bbd",
+        "filename": "cc/animation/worklet_animation_player.cc",
+        "patchSetId": 21
+      },
+      "lineNbr": 58,
+      "author": {
+        "id": 1212214
+      },
+      "writtenOn": "2017-11-09T19:51:39Z",
+      "side": 1,
+      "message": "It is currently not. |monotonic_time| is just the time from base::TimeTicks::now(), which is the current workstation time. I\u0027ve removed this comment because it\u0027s just misleading. I don\u0027t think we should attempt to fix the underlying bug crbug.com/780151 in this CL.",
+      "parentUuid": "7731369a_eacd47da",
+      "revId": "1c89fbe6f77720042e605d8f48cf896d224f9ef2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "9e2ca6a0_d565e630",
         "filename": "cc/animation/worklet_animation_player.cc",
         "patchSetId": 21
@@ -50,6 +86,24 @@
       "revId": "1c89fbe6f77720042e605d8f48cf896d224f9ef2",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f3d04857_97e6c6b2",
+        "filename": "cc/animation/worklet_animation_player.cc",
+        "patchSetId": 21
+      },
+      "lineNbr": 61,
+      "author": {
+        "id": 1212214
+      },
+      "writtenOn": "2017-11-09T19:51:39Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "9e2ca6a0_d565e630",
+      "revId": "1c89fbe6f77720042e605d8f48cf896d224f9ef2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
