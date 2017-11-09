@@ -152,8 +152,12 @@ bool DisplayManager::SetDisplayConfiguration(
   std::set<int64_t> removed_display_ids =
       base::STLSetDifference<std::set<int64_t>>(existing_display_ids,
                                                 display_ids);
-  for (int64_t display_id : removed_display_ids)
+  LOG(ERROR) << "DisplayManager::SetDisplayConfiguration displays:" << displays.size() << " removed:" << removed_display_ids.size();
+  for (int64_t display_id : removed_display_ids) {
     display_list.RemoveDisplay(display_id);
+    // Destroy the ws::Display; any exisitng root window will be orphaned.
+    DestroyDisplay(GetDisplayById(display_id));
+  }
 
   for (auto& pair : user_display_managers_)
     pair.second->CallOnDisplaysChanged();

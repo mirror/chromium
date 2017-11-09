@@ -280,9 +280,11 @@ void WindowManagerState::AddSystemModalWindow(ServerWindow* window) {
 
 void WindowManagerState::DeleteWindowManagerDisplayRoot(
     ServerWindow* display_root) {
+  LOG(ERROR) << "MSW DeleteWindowManagerDisplayRoot "; 
   for (auto iter = orphaned_window_manager_display_roots_.begin();
        iter != orphaned_window_manager_display_roots_.end(); ++iter) {
     if ((*iter)->root() == display_root) {
+      LOG(ERROR) << "MSW DeleteWindowManagerDisplayRoot found orphan"; 
       orphaned_window_manager_display_roots_.erase(iter);
       return;
     }
@@ -291,6 +293,7 @@ void WindowManagerState::DeleteWindowManagerDisplayRoot(
   for (auto iter = window_manager_display_roots_.begin();
        iter != window_manager_display_roots_.end(); ++iter) {
     if ((*iter)->root() == display_root) {
+      LOG(ERROR) << "MSW DeleteWindowManagerDisplayRoot found root"; 
       (*iter)->display()->RemoveWindowManagerDisplayRoot((*iter).get());
       window_manager_display_roots_.erase(iter);
       return;
