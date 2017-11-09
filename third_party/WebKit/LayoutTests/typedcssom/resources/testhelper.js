@@ -26,3 +26,14 @@ function newDivWithStyle(style) {
   target.style = style;
   return target;
 }
+
+// Hacky way of creating a CSSVariableReferenceValue
+// since it doesn't expose a constructor.
+function createReferenceValue(variable, fallback) {
+  const varExpr = fallback ?
+    'var(' + variable + ', ' + fallback + ')' :
+    'var(' + variable + ')';
+
+  const unparsedValue = newDivWithStyle('color:' + varExpr).styleMap.get('color');
+  return unparsedValue[0];
+}
