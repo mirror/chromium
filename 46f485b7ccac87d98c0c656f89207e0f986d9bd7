@@ -2,6 +2,23 @@
   "comments": [
     {
       "key": {
+        "uuid": "7d6aa3aa_d1ab2449",
+        "filename": "content/browser/service_worker/service_worker_provider_host.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 565,
+      "author": {
+        "id": 1000128
+      },
+      "writtenOn": "2017-11-09T16:57:02Z",
+      "side": 1,
+      "message": "I think mojo enums are signed, so we must also check use_counter_feature \u003c 0, I believe.\n\nIt might be safer to write this as:\n\nif (feature \u003e\u003d static_cast\u003cuint32_t\u003e(blink::mojom::WebFeature::kNumberOfFeatures)\n  return;\nblink::mojom::WebFeature web_feature \u003d static_cast\u003c...\u003e(feature)\n\n?",
+      "revId": "46f485b7ccac87d98c0c656f89207e0f986d9bd7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "e46e6bdc_d336ac79",
         "filename": "content/renderer/service_worker/service_worker_dispatcher.h",
         "patchSetId": 7
@@ -31,6 +48,23 @@
       "side": 1,
       "message": "ohh, thanks a lot. My carelessness...",
       "parentUuid": "e46e6bdc_d336ac79",
+      "revId": "46f485b7ccac87d98c0c656f89207e0f986d9bd7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "da21be43_234eea77",
+        "filename": "content/renderer/service_worker/service_worker_provider_context_unittest.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 380,
+      "author": {
+        "id": 1000128
+      },
+      "writtenOn": "2017-11-09T16:57:02Z",
+      "side": 1,
+      "message": "Could we also call CountFeature() before client is set? If I understand correctly, that will save the feature usage in the set, and once SetClient is called it gets propagated to the client.",
       "revId": "46f485b7ccac87d98c0c656f89207e0f986d9bd7",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -69,6 +103,23 @@
       "revId": "46f485b7ccac87d98c0c656f89207e0f986d9bd7",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "2dd70d38_6d451bfa",
+        "filename": "content/renderer/service_worker/web_service_worker_provider_impl.h",
+        "patchSetId": 7
+      },
+      "lineNbr": 70,
+      "author": {
+        "id": 1000128
+      },
+      "writtenOn": "2017-11-09T16:57:02Z",
+      "side": 1,
+      "message": "// For UseCounter purposes. Called when the controller service worker used a feature. It is counted as if it were a feature usage from the page.",
+      "revId": "46f485b7ccac87d98c0c656f89207e0f986d9bd7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     },
     {
       "key": {
@@ -119,6 +170,24 @@
       "side": 1,
       "message": "Sg. Maybe we could also elaborate a bit more? \"|provider_client_| is implemented by blink::SWContainer and this pointer\u0027s nullified when its execution context is destroyed. (|this| is attached to the same context, but could live longer until the context is GC\u0027ed)\"",
       "parentUuid": "e8e013fd_129d7723",
+      "revId": "46f485b7ccac87d98c0c656f89207e0f986d9bd7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "272d0f88_4d3b164b",
+        "filename": "content/renderer/service_worker/web_service_worker_provider_impl.h",
+        "patchSetId": 7
+      },
+      "lineNbr": 106,
+      "author": {
+        "id": 1000128
+      },
+      "writtenOn": "2017-11-09T16:57:02Z",
+      "side": 1,
+      "message": "Sounds good, and if we have the comment here we can remove all the \"The document might have been destroyed\" comments in the .cc.",
+      "parentUuid": "d9183dc5_754ba098",
       "revId": "46f485b7ccac87d98c0c656f89207e0f986d9bd7",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": false
