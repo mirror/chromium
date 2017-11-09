@@ -17,6 +17,7 @@
 #include "components/viz/service/display/software_output_device.h"
 #include "components/viz/service/viz_service_export.h"
 #include "gpu/command_buffer/common/texture_in_use_response.h"
+#include "gpu/vulkan/vulkan_surface.h"
 #include "ui/gfx/color_space.h"
 
 namespace gfx {
@@ -118,6 +119,9 @@ class VIZ_SERVICE_EXPORT OutputSurface {
   // implementation must call OutputSurfaceClient::DidReceiveSwapBuffersAck()
   // after returning from this method in order to unblock the next frame.
   virtual void SwapBuffers(OutputSurfaceFrame frame) = 0;
+
+  // Gives the Vulkan surface created when enable_vulkan flag is set.
+  virtual gpu::VulkanSurface* GetVulkanSurface() = 0;
 
  protected:
   struct OutputSurface::Capabilities capabilities_;
