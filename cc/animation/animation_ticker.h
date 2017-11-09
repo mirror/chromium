@@ -42,7 +42,9 @@ class CC_ANIMATION_EXPORT AnimationTicker {
     virtual base::TimeTicks GetTimeForAnimation(const Animation&) const = 0;
   };
 
-  explicit AnimationTicker(AnimationPlayer* animation_player);
+  explicit AnimationTicker(AnimationPlayer* animation_player,
+                           int id,
+                           ElementId element_id = ElementId());
   ~AnimationTicker();
 
   // ElementAnimations object where this controller is listed.
@@ -156,6 +158,7 @@ class CC_ANIMATION_EXPORT AnimationTicker {
   void PushPropertiesTo(AnimationTicker* animation_ticker_impl);
 
   std::string AnimationsToString() const;
+  int id() const { return id_; }
 
  private:
   void StartAnimations(base::TimeTicks monotonic_time);
@@ -169,6 +172,7 @@ class CC_ANIMATION_EXPORT AnimationTicker {
 
   std::vector<std::unique_ptr<Animation>> animations_;
   AnimationPlayer* animation_player_;
+  int id_;
   ElementId element_id_;
 
   // element_animations_ is non-null if controller is attached to an element.

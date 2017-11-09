@@ -7,11 +7,11 @@
 #include "base/memory/ptr_util.h"
 #include "cc/animation/animation_host.h"
 #include "cc/animation/animation_id_provider.h"
-#include "cc/animation/animation_player.h"
 #include "cc/animation/animation_ticker.h"
 #include "cc/animation/element_animations.h"
 #include "cc/animation/keyframed_animation_curve.h"
 #include "cc/animation/scroll_offset_animation_curve.h"
+#include "cc/animation/single_animation_player.h"
 #include "cc/animation/timing_function.h"
 #include "cc/animation/transform_operations.h"
 #include "cc/base/time_util.h"
@@ -295,8 +295,8 @@ int AddOpacityStepsToPlayer(AnimationPlayer* player,
 void AddAnimationToElementWithPlayer(ElementId element_id,
                                      scoped_refptr<AnimationTimeline> timeline,
                                      std::unique_ptr<Animation> animation) {
-  scoped_refptr<AnimationPlayer> player =
-      AnimationPlayer::Create(AnimationIdProvider::NextPlayerId());
+  scoped_refptr<SingleAnimationPlayer> player =
+      SingleAnimationPlayer::Create(AnimationIdProvider::NextPlayerId());
   timeline->AttachPlayer(player);
   player->AttachElement(element_id);
   DCHECK(player->element_animations());
@@ -348,8 +348,8 @@ int AddAnimatedFilterToElementWithPlayer(
     double duration,
     float start_brightness,
     float end_brightness) {
-  scoped_refptr<AnimationPlayer> player =
-      AnimationPlayer::Create(AnimationIdProvider::NextPlayerId());
+  scoped_refptr<SingleAnimationPlayer> player =
+      SingleAnimationPlayer::Create(AnimationIdProvider::NextPlayerId());
   timeline->AttachPlayer(player);
   player->AttachElement(element_id);
   DCHECK(player->element_animations());
@@ -363,8 +363,8 @@ int AddAnimatedTransformToElementWithPlayer(
     double duration,
     int delta_x,
     int delta_y) {
-  scoped_refptr<AnimationPlayer> player =
-      AnimationPlayer::Create(AnimationIdProvider::NextPlayerId());
+  scoped_refptr<SingleAnimationPlayer> player =
+      SingleAnimationPlayer::Create(AnimationIdProvider::NextPlayerId());
   timeline->AttachPlayer(player);
   player->AttachElement(element_id);
   DCHECK(player->element_animations());
@@ -377,8 +377,8 @@ int AddAnimatedTransformToElementWithPlayer(
     double duration,
     TransformOperations start_operations,
     TransformOperations operations) {
-  scoped_refptr<AnimationPlayer> player =
-      AnimationPlayer::Create(AnimationIdProvider::NextPlayerId());
+  scoped_refptr<SingleAnimationPlayer> player =
+      SingleAnimationPlayer::Create(AnimationIdProvider::NextPlayerId());
   timeline->AttachPlayer(player);
   player->AttachElement(element_id);
   DCHECK(player->element_animations());
@@ -393,8 +393,8 @@ int AddOpacityTransitionToElementWithPlayer(
     float start_opacity,
     float end_opacity,
     bool use_timing_function) {
-  scoped_refptr<AnimationPlayer> player =
-      AnimationPlayer::Create(AnimationIdProvider::NextPlayerId());
+  scoped_refptr<SingleAnimationPlayer> player =
+      SingleAnimationPlayer::Create(AnimationIdProvider::NextPlayerId());
   timeline->AttachPlayer(player);
   player->AttachElement(element_id);
   DCHECK(player->element_animations());

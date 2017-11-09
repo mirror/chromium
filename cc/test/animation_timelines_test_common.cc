@@ -7,10 +7,10 @@
 #include "base/memory/ptr_util.h"
 #include "cc/animation/animation_events.h"
 #include "cc/animation/animation_id_provider.h"
-#include "cc/animation/animation_player.h"
 #include "cc/animation/animation_ticker.h"
 #include "cc/animation/animation_timeline.h"
 #include "cc/animation/element_animations.h"
+#include "cc/animation/single_animation_player.h"
 #include "cc/base/filter_operation.h"
 #include "cc/base/filter_operations.h"
 #include "ui/gfx/transform.h"
@@ -351,6 +351,7 @@ AnimationTimelinesTest::AnimationTimelinesTest()
       host_(nullptr),
       host_impl_(nullptr),
       timeline_id_(AnimationIdProvider::NextTimelineId()),
+      single_player_id_(AnimationIdProvider::NextPlayerId()),
       player_id_(AnimationIdProvider::NextPlayerId()),
       next_test_layer_id_(0) {
   host_ = client_.host();
@@ -364,6 +365,7 @@ AnimationTimelinesTest::~AnimationTimelinesTest() {
 
 void AnimationTimelinesTest::SetUp() {
   timeline_ = AnimationTimeline::Create(timeline_id_);
+  single_player_ = SingleAnimationPlayer::Create(single_player_id_);
   player_ = AnimationPlayer::Create(player_id_);
 }
 
@@ -398,10 +400,10 @@ void AnimationTimelinesTest::CreateTestImplLayer(
 
 void AnimationTimelinesTest::AttachTimelinePlayerLayer() {
   host_->AddAnimationTimeline(timeline_);
-  timeline_->AttachPlayer(player_);
-  player_->AttachElement(element_id_);
+  timeline_->AttachPlayer(single_player_);
+  single_player_->AttachElement(element_id_);
 
-  element_animations_ = player_->element_animations();
+  element_animations_ = single_player_->element_animations();
 }
 
 void AnimationTimelinesTest::CreateImplTimelineAndPlayer() {
@@ -412,16 +414,17 @@ void AnimationTimelinesTest::CreateImplTimelineAndPlayer() {
 void AnimationTimelinesTest::GetImplTimelineAndPlayerByID() {
   timeline_impl_ = host_impl_->GetTimelineById(timeline_id_);
   EXPECT_TRUE(timeline_impl_);
-  player_impl_ = timeline_impl_->GetPlayerById(player_id_);
-  EXPECT_TRUE(player_impl_);
+  single_player_impl_ =
+      (SingleAnimationPlayer*)timeline_impl_->GetPlayerById(single_player_id_);
+  EXPECT_TRUE(single_player_impl_);
 
-  element_animations_impl_ = player_impl_->element_animations();
+  element_animations_impl_ = single_player_impl_->element_animations();
 }
 
 void AnimationTimelinesTest::ReleaseRefPtrs() {
-  player_ = nullptr;
+  single_player_ = nullptr;
   timeline_ = nullptr;
-  player_impl_ = nullptr;
+  single_player_impl_ = nullptr;
   timeline_impl_ = nullptr;
 }
 
@@ -464,12 +467,12 @@ int AnimationTimelinesTest::NextTestLayerId() {
 
 bool AnimationTimelinesTest::CheckTickerTimelineNeedsPushProperties(
     bool needs_push_properties) const {
-  DCHECK(player_);
+  DCHECK(single_player_);
   DCHECK(timeline_);
 
   bool result = true;
 
-  AnimationTicker* ticker = player_->animation_ticker();
+  AnimationTicker* ticker = single_player_->animation_ticker();
   if (ticker->needs_push_properties() != needs_push_properties) {
     ADD_FAILURE() << "ticker->needs_push_properties() expected to be "
                   << needs_push_properties;

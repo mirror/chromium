@@ -9,7 +9,7 @@
 namespace cc {
 
 WorkletAnimationPlayer::WorkletAnimationPlayer(int id, const std::string& name)
-    : AnimationPlayer(id), name_(name) {}
+    : SingleAnimationPlayer(id), name_(name) {}
 
 WorkletAnimationPlayer::~WorkletAnimationPlayer() {}
 
@@ -30,7 +30,7 @@ void WorkletAnimationPlayer::SetLocalTime(base::TimeDelta local_time) {
 }
 
 void WorkletAnimationPlayer::Tick(base::TimeTicks monotonic_time) {
-  animation_ticker_->Tick(monotonic_time, this);
+  animation_ticker()->Tick(monotonic_time, this);
 }
 
 base::TimeTicks WorkletAnimationPlayer::GetTimeForAnimation(
@@ -42,7 +42,7 @@ base::TimeTicks WorkletAnimationPlayer::GetTimeForAnimation(
 
 void WorkletAnimationPlayer::PushPropertiesTo(
     AnimationPlayer* animation_player_impl) {
-  AnimationPlayer::PushPropertiesTo(animation_player_impl);
+  SingleAnimationPlayer::PushPropertiesTo(animation_player_impl);
   static_cast<WorkletAnimationPlayer*>(animation_player_impl)
       ->SetLocalTime(local_time_);
 }

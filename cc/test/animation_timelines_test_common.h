@@ -18,8 +18,8 @@
 
 namespace cc {
 
-class AnimationPlayer;
 class AnimationTicker;
+class SingleAnimationPlayer;
 
 class TestLayer {
  public:
@@ -268,16 +268,19 @@ class AnimationTimelinesTest : public testing::Test {
   AnimationHost* host_impl_;
 
   const int timeline_id_;
+  const int single_player_id_;
   const int player_id_;
   ElementId element_id_;
 
   int next_test_layer_id_;
 
   scoped_refptr<AnimationTimeline> timeline_;
+  scoped_refptr<SingleAnimationPlayer> single_player_;
   scoped_refptr<AnimationPlayer> player_;
   scoped_refptr<ElementAnimations> element_animations_;
 
   scoped_refptr<AnimationTimeline> timeline_impl_;
+  scoped_refptr<SingleAnimationPlayer> single_player_impl_;
   scoped_refptr<AnimationPlayer> player_impl_;
   scoped_refptr<ElementAnimations> element_animations_impl_;
 };

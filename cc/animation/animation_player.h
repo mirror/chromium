@@ -47,7 +47,8 @@ class CC_ANIMATION_EXPORT AnimationPlayer
   virtual scoped_refptr<AnimationPlayer> CreateImplInstance() const;
 
   int id() const { return id_; }
-  ElementId element_id() const;
+  virtual ElementId element_id() const;
+  bool IsElementAttached(ElementId id) const;
 
   // Parent AnimationHost. AnimationPlayer can be detached from
   // AnimationTimeline.
@@ -61,32 +62,37 @@ class CC_ANIMATION_EXPORT AnimationPlayer
   const AnimationTimeline* animation_timeline() const {
     return animation_timeline_;
   }
-  void SetAnimationTimeline(AnimationTimeline* timeline);
+  virtual void SetAnimationTimeline(AnimationTimeline* timeline);
 
-  AnimationTicker* animation_ticker() const { return animation_ticker_.get(); }
+  AnimationTicker* animation_ticker() const;
+  std::vector<AnimationTicker*> animation_tickers(ElementId element_id);
 
-  // TODO(smcgruer): Only used by a ui/ unittest: remove.
-  bool has_any_animation() const;
+  //// TODO(smcgruer): Only used by a ui/ unittest: remove.
+  // bool has_any_animation() const;
 
-  scoped_refptr<ElementAnimations> element_animations() const;
+  // TODO(yigu): The return type is required only in tests. Boolean is used in
+  // other cases. Need to support group effects. Could be removed for non-single
+  // case.
+  virtual scoped_refptr<ElementAnimations> element_animations() const;
 
   void set_animation_delegate(AnimationDelegate* delegate) {
     animation_delegate_ = delegate;
   }
 
-  void AttachElement(ElementId element_id);
-  void DetachElement();
+  virtual void AttachElement(ElementId element_id);
+  virtual void DetachElement();
 
-  void AddAnimation(std::unique_ptr<Animation> animation);
-  void PauseAnimation(int animation_id, double time_offset);
-  void RemoveAnimation(int animation_id);
-  void AbortAnimation(int animation_id);
-  void AbortAnimations(TargetProperty::Type target_property,
-                       bool needs_completion);
+  virtual void AddAnimation(std::unique_ptr<Animation> animation);
+  virtual void PauseAnimation(int animation_id, double time_offset);
+  virtual void RemoveAnimation(int animation_id);
+  virtual void AbortAnimation(int animation_id);
+  virtual void AbortAnimations(TargetProperty::Type target_property,
+                               bool needs_completion);
 
   virtual void PushPropertiesTo(AnimationPlayer* player_impl);
 
-  void UpdateState(bool start_ready_animations, AnimationEvents* events);
+  virtual void UpdateState(bool start_ready_animations,
+                           AnimationEvents* events);
   virtual void Tick(base::TimeTicks monotonic_time);
 
   void AddToTicking();
@@ -106,23 +112,31 @@ class CC_ANIMATION_EXPORT AnimationPlayer
   // Make animations affect active elements if and only if they affect
   // pending elements. Any animations that no longer affect any elements
   // are deleted.
-  void ActivateAnimations();
+  virtual void ActivateAnimations();
 
   // Returns the animation animating the given property that is either
   // running, or is next to run, if such an animation exists.
-  Animation* GetAnimation(TargetProperty::Type target_property) const;
+  virtual Animation* GetAnimation(TargetProperty::Type target_property) const;
 
-  std::string ToString() const;
+  virtual std::string ToString() const;
 
   void SetNeedsCommit();
 
   virtual bool IsWorkletAnimationPlayer() const;
+  void AddTicker(std::unique_ptr<AnimationTicker>);
+
+  void DebugElementToTickerMap();
 
  private:
   friend class base::RefCounted<AnimationPlayer>;
 
-  void RegisterPlayer();
-  void UnregisterPlayer();
+  // void RegisterPlayer(ElementId element_id);
+  // void UnregisterPlayer();
+  void FakeMap();
+
+ protected:
+  explicit AnimationPlayer(int id);
+  virtual ~AnimationPlayer();
 
   AnimationHost* animation_host_;
   AnimationTimeline* animation_timeline_;
@@ -130,11 +144,13 @@ class CC_ANIMATION_EXPORT AnimationPlayer
 
   int id_;
 
- protected:
-  explicit AnimationPlayer(int id);
-  virtual ~AnimationPlayer();
-
+  AnimationTicker* GetUniqueTickerForSingleAnimationPlayer() const;
   std::unique_ptr<AnimationTicker> animation_ticker_;
+  using ElementToTickerMap =
+      std::unordered_map<ElementId,
+                         std::unordered_set<std::unique_ptr<AnimationTicker>>,
+                         ElementIdHash>;
+  ElementToTickerMap element_to_ticker_map_;
 
   DISALLOW_COPY_AND_ASSIGN(AnimationPlayer);
 };

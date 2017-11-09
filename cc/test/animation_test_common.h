@@ -14,7 +14,7 @@
 #include "cc/trees/element_id.h"
 
 namespace cc {
-class AnimationPlayer;
+class SingleAnimationPlayer;
 }
 
 namespace gfx {
