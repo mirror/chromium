@@ -1,0 +1,89 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "0e59337c_36e9ddff",
+        "filename": "ash/shelf/shelf.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 138,
+      "author": {
+        "id": 1001118
+      },
+      "writtenOn": "2017-11-09T18:55:43Z",
+      "side": 1,
+      "message": "optional nit: use |value| for the param name",
+      "revId": "a101a64c26237b4037c376d5181abe2d22fdea4f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "327f235d_b1e6f807",
+        "filename": "ash/shelf/shelf.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 189,
+      "author": {
+        "id": 1001118
+      },
+      "writtenOn": "2017-11-09T18:55:43Z",
+      "side": 1,
+      "message": "nit: reflow comment.",
+      "revId": "a101a64c26237b4037c376d5181abe2d22fdea4f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c053efb3_7235c1e0",
+        "filename": "ash/shelf/shelf_controller.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 324,
+      "author": {
+        "id": 1001118
+      },
+      "writtenOn": "2017-11-09T18:55:43Z",
+      "side": 1,
+      "message": "nit: consider \"// Only animate into tablet mode if the shelf alignment will not change.\"",
+      "revId": "a101a64c26237b4037c376d5181abe2d22fdea4f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3f5a14b7_7a07f333",
+        "filename": "ash/shelf/shelf_controller.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 336,
+      "author": {
+        "id": 1001118
+      },
+      "writtenOn": "2017-11-09T18:55:43Z",
+      "side": 1,
+      "message": "nit: // Only animate out of tablet mode if the shelf alignment will not change.",
+      "revId": "a101a64c26237b4037c376d5181abe2d22fdea4f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9eda7edb_7417f93d",
+        "filename": "ash/shelf/shelf_view.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 1892,
+      "author": {
+        "id": 1001118
+      },
+      "writtenOn": "2017-11-09T18:55:43Z",
+      "side": 1,
+      "message": "optional nit: this check isn\u0027t necessary",
+      "revId": "a101a64c26237b4037c376d5181abe2d22fdea4f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
