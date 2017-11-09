@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "71a9b7d2_26401cac",
+        "filename": "build/android/pylib/utils/maven_downloader.py",
+        "patchSetId": 6
+      },
+      "lineNbr": 44,
+      "author": {
+        "id": 1123275
+      },
+      "writtenOn": "2017-11-09T12:11:41Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "8d79db60_19254be9",
+      "range": {
+        "startLine": 44,
+        "startChar": 46,
+        "endLine": 44,
+        "endChar": 52
+      },
+      "revId": "a3549e34097cba527b48c9f3daec5b39832b64aa",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "b57ed2f6_7780eaab",
         "filename": "build/android/pylib/utils/maven_downloader.py",
         "patchSetId": 6
@@ -39,6 +63,24 @@
       "revId": "a3549e34097cba527b48c9f3daec5b39832b64aa",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9dcf32c4_9f8165e0",
+        "filename": "build/android/pylib/utils/maven_downloader.py",
+        "patchSetId": 6
+      },
+      "lineNbr": 48,
+      "author": {
+        "id": 1123275
+      },
+      "writtenOn": "2017-11-09T12:11:41Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "b57ed2f6_7780eaab",
+      "revId": "a3549e34097cba527b48c9f3daec5b39832b64aa",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -59,6 +101,24 @@
     },
     {
       "key": {
+        "uuid": "9ab35460_02ace8ee",
+        "filename": "build/android/pylib/utils/maven_downloader.py",
+        "patchSetId": 6
+      },
+      "lineNbr": 61,
+      "author": {
+        "id": 1123275
+      },
+      "writtenOn": "2017-11-09T12:11:41Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "009c5ce6_393e3d11",
+      "revId": "a3549e34097cba527b48c9f3daec5b39832b64aa",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "e8c00e20_23ed205b",
         "filename": "build/android/pylib/utils/maven_downloader.py",
         "patchSetId": 6
@@ -73,6 +133,24 @@
       "revId": "a3549e34097cba527b48c9f3daec5b39832b64aa",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9bdfe59b_cc95cb0a",
+        "filename": "build/android/pylib/utils/maven_downloader.py",
+        "patchSetId": 6
+      },
+      "lineNbr": 89,
+      "author": {
+        "id": 1123275
+      },
+      "writtenOn": "2017-11-09T12:11:41Z",
+      "side": 1,
+      "message": "Yes, it just skips the download",
+      "parentUuid": "e8c00e20_23ed205b",
+      "revId": "a3549e34097cba527b48c9f3daec5b39832b64aa",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -93,6 +171,24 @@
     },
     {
       "key": {
+        "uuid": "c96faa21_11bafb6f",
+        "filename": "build/android/pylib/utils/maven_downloader.py",
+        "patchSetId": 6
+      },
+      "lineNbr": 91,
+      "author": {
+        "id": 1123275
+      },
+      "writtenOn": "2017-11-09T12:11:41Z",
+      "side": 1,
+      "message": "Added a class level constant. If we need to update it we can always do something like we do for  _repo_path.",
+      "parentUuid": "fe35183a_98c82561",
+      "revId": "a3549e34097cba527b48c9f3daec5b39832b64aa",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "67b06a26_723c1e43",
         "filename": "build/android/pylib/utils/maven_downloader.py",
         "patchSetId": 6
@@ -107,6 +203,24 @@
       "revId": "a3549e34097cba527b48c9f3daec5b39832b64aa",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5f51bd17_1447df37",
+        "filename": "build/android/pylib/utils/maven_downloader.py",
+        "patchSetId": 6
+      },
+      "lineNbr": 98,
+      "author": {
+        "id": 1123275
+      },
+      "writtenOn": "2017-11-09T12:11:41Z",
+      "side": 1,
+      "message": "That\u0027s really cool! And the speed boost is really worth it!",
+      "parentUuid": "67b06a26_723c1e43",
+      "revId": "a3549e34097cba527b48c9f3daec5b39832b64aa",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -127,6 +241,24 @@
     },
     {
       "key": {
+        "uuid": "3119f425_a48550ab",
+        "filename": "build/android/pylib/utils/maven_downloader.py",
+        "patchSetId": 6
+      },
+      "lineNbr": 101,
+      "author": {
+        "id": 1123275
+      },
+      "writtenOn": "2017-11-09T12:11:41Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "79eb51be_187429c5",
+      "revId": "a3549e34097cba527b48c9f3daec5b39832b64aa",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "29994e44_b917eb50",
         "filename": "build/android/pylib/utils/maven_downloader.py",
         "patchSetId": 6
@@ -141,6 +273,24 @@
       "revId": "a3549e34097cba527b48c9f3daec5b39832b64aa",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4e6c386b_39a4b3b2",
+        "filename": "build/android/pylib/utils/maven_downloader.py",
+        "patchSetId": 6
+      },
+      "lineNbr": 104,
+      "author": {
+        "id": 1123275
+      },
+      "writtenOn": "2017-11-09T12:11:41Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "29994e44_b917eb50",
+      "revId": "a3549e34097cba527b48c9f3daec5b39832b64aa",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -161,6 +311,24 @@
     },
     {
       "key": {
+        "uuid": "1bf0ce85_957dc86b",
+        "filename": "build/android/pylib/utils/maven_downloader.py",
+        "patchSetId": 6
+      },
+      "lineNbr": 108,
+      "author": {
+        "id": 1123275
+      },
+      "writtenOn": "2017-11-09T12:11:41Z",
+      "side": 1,
+      "message": "tried that first, causes \"SyntaxError: only named arguments may follow *expression\"",
+      "parentUuid": "63590527_5b346304",
+      "revId": "a3549e34097cba527b48c9f3daec5b39832b64aa",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "2affac0b_173c8e6d",
         "filename": "tools/android/roll/update_support_library.py",
         "patchSetId": 6
@@ -172,6 +340,24 @@
       "writtenOn": "2017-11-08T16:54:09Z",
       "side": 1,
       "message": "noqa?",
+      "revId": "a3549e34097cba527b48c9f3daec5b39832b64aa",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "10184f3e_7215c7e1",
+        "filename": "tools/android/roll/update_support_library.py",
+        "patchSetId": 6
+      },
+      "lineNbr": 20,
+      "author": {
+        "id": 1123275
+      },
+      "writtenOn": "2017-11-09T12:11:41Z",
+      "side": 1,
+      "message": "To disable the warning[1] saying that all the imports have to be at the top. Since we need to modify sys.path I can\u0027t do much about it. Let me know if you\u0027d prefer me to just remove it, it\u0027s not blocking submit anyway, devs can just ignore the error when running a lint.\n\n[1]: https://stackoverflow.com/q/45346575/1725655",
+      "parentUuid": "2affac0b_173c8e6d",
       "revId": "a3549e34097cba527b48c9f3daec5b39832b64aa",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -192,6 +378,24 @@
       "revId": "a3549e34097cba527b48c9f3daec5b39832b64aa",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e4576a29_d53c9dc3",
+        "filename": "tools/android/roll/update_support_library.py",
+        "patchSetId": 6
+      },
+      "lineNbr": 68,
+      "author": {
+        "id": 1123275
+      },
+      "writtenOn": "2017-11-09T12:11:41Z",
+      "side": 1,
+      "message": "I was catching specifically assertion errors because I know what the error is and assumed the message is enough and the trace is not necessary... Also I think it looks messy when I see one, usually start assuming it\u0027s a bug in the script rather than a user error \u003e.\u003e\n\nAnyway, removed the catch and the asserts.",
+      "parentUuid": "55d686c2_cd1b01f0",
+      "revId": "a3549e34097cba527b48c9f3daec5b39832b64aa",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
