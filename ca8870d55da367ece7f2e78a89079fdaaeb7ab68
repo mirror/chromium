@@ -1,0 +1,259 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "56d6c2b6_d1a40fc3",
+        "filename": "components/viz/host/host_frame_sink_manager_unittest.cc",
+        "patchSetId": 15
+      },
+      "lineNbr": 115,
+      "author": {
+        "id": 1115911
+      },
+      "writtenOn": "2017-11-09T10:22:59Z",
+      "side": 1,
+      "message": "Delete this?",
+      "revId": "ca8870d55da367ece7f2e78a89079fdaaeb7ab68",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "683f862d_837896bd",
+        "filename": "components/viz/host/host_frame_sink_manager_unittest.cc",
+        "patchSetId": 15
+      },
+      "lineNbr": 261,
+      "author": {
+        "id": 1115911
+      },
+      "writtenOn": "2017-11-09T10:22:59Z",
+      "side": 1,
+      "message": "You never actually use the child support in this test. Maybe a map is unnecessary? Just create a single \"parent\" support.",
+      "revId": "ca8870d55da367ece7f2e78a89079fdaaeb7ab68",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "643b588b_0ce37b37",
+        "filename": "components/viz/host/host_frame_sink_manager_unittest.cc",
+        "patchSetId": 15
+      },
+      "lineNbr": 263,
+      "author": {
+        "id": 1115911
+      },
+      "writtenOn": "2017-11-09T10:22:59Z",
+      "side": 1,
+      "message": "I don\u0027t think this is necessary? FrameSinkManagerImpl is already created in SetUp?",
+      "revId": "ca8870d55da367ece7f2e78a89079fdaaeb7ab68",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "02c5a160_6375c0b4",
+        "filename": "components/viz/host/host_frame_sink_manager_unittest.cc",
+        "patchSetId": 15
+      },
+      "lineNbr": 266,
+      "author": {
+        "id": 1115911
+      },
+      "writtenOn": "2017-11-09T10:22:59Z",
+      "side": 1,
+      "message": "I don\u0027t think you need any of these frame_sink_manager lines.",
+      "revId": "ca8870d55da367ece7f2e78a89079fdaaeb7ab68",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "daef2e64_250e262f",
+        "filename": "components/viz/host/host_frame_sink_manager_unittest.cc",
+        "patchSetId": 15
+      },
+      "lineNbr": 282,
+      "author": {
+        "id": 1115911
+      },
+      "writtenOn": "2017-11-09T10:22:59Z",
+      "side": 1,
+      "message": "Maybe this file should be in the test namespace?",
+      "revId": "ca8870d55da367ece7f2e78a89079fdaaeb7ab68",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5b89e06a_0f9eb5f0",
+        "filename": "components/viz/host/host_frame_sink_manager_unittest.cc",
+        "patchSetId": 15
+      },
+      "lineNbr": 297,
+      "author": {
+        "id": 1115911
+      },
+      "writtenOn": "2017-11-09T10:22:59Z",
+      "side": 1,
+      "message": "No need to get the parents surface again.",
+      "revId": "ca8870d55da367ece7f2e78a89079fdaaeb7ab68",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7b875c3a_88785b9b",
+        "filename": "components/viz/host/host_frame_sink_manager_unittest.cc",
+        "patchSetId": 15
+      },
+      "lineNbr": 302,
+      "author": {
+        "id": 1115911
+      },
+      "writtenOn": "2017-11-09T10:22:59Z",
+      "side": 1,
+      "message": "activated",
+      "revId": "ca8870d55da367ece7f2e78a89079fdaaeb7ab68",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f4cb3ed8_a3100113",
+        "filename": "components/viz/host/host_frame_sink_manager_unittest.cc",
+        "patchSetId": 15
+      },
+      "lineNbr": 309,
+      "author": {
+        "id": 1115911
+      },
+      "writtenOn": "2017-11-09T10:22:59Z",
+      "side": 1,
+      "message": "All this tear down is likely unnecessary",
+      "revId": "ca8870d55da367ece7f2e78a89079fdaaeb7ab68",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "36e6c7c6_3c4f92c9",
+        "filename": "components/viz/test/fake_host_frame_sink_client.h",
+        "patchSetId": 15
+      },
+      "lineNbr": 23,
+      "author": {
+        "id": 1115911
+      },
+      "writtenOn": "2017-11-09T10:22:59Z",
+      "side": 1,
+      "message": "uint32_t last_frame_token_seen() const { return last_frame_token_seen_; }",
+      "revId": "ca8870d55da367ece7f2e78a89079fdaaeb7ab68",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c6ef87df_e1534506",
+        "filename": "components/viz/test/fake_host_frame_sink_client.h",
+        "patchSetId": 15
+      },
+      "lineNbr": 26,
+      "author": {
+        "id": 1115911
+      },
+      "writtenOn": "2017-11-09T10:22:59Z",
+      "side": 1,
+      "message": "maybe call last_frame_token_seen_?\n\nThe new style is typically to initialize here:\n\nuint32_t last_frame_token_seen_ \u003d 0u;",
+      "revId": "ca8870d55da367ece7f2e78a89079fdaaeb7ab68",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a08a8547_cb706c16",
+        "filename": "content/browser/renderer_host/offscreen_canvas_surface_impl.h",
+        "patchSetId": 15
+      },
+      "lineNbr": 57,
+      "author": {
+        "id": 1115911
+      },
+      "writtenOn": "2017-11-09T10:22:59Z",
+      "side": 1,
+      "message": "Put the implementation in the cc file and add a TODO(yiyix, fsamuel): To complete plumbing of frame tokens for offscreen canvas.",
+      "revId": "ca8870d55da367ece7f2e78a89079fdaaeb7ab68",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c0deedd7_15b6aad5",
+        "filename": "content/browser/renderer_host/render_widget_host_view_android.h",
+        "patchSetId": 15
+      },
+      "lineNbr": 241,
+      "author": {
+        "id": 1115911
+      },
+      "writtenOn": "2017-11-09T10:22:59Z",
+      "side": 1,
+      "message": "Instead of implementing the same thing for every RenderWidgetHostView, maybe add this to RenderWidgetHostViewBase? It\u0027s the same implementations for all the RWHVs, right?",
+      "revId": "ca8870d55da367ece7f2e78a89079fdaaeb7ab68",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2e897433_ec7881a8",
+        "filename": "services/ui/ws/server_window.h",
+        "patchSetId": 15
+      },
+      "lineNbr": 243,
+      "author": {
+        "id": 1115911
+      },
+      "writtenOn": "2017-11-09T10:22:59Z",
+      "side": 1,
+      "message": "Implement this in the cc file and add a TODO(yiyix, fsamuel): Implement frame token propagation for Mus.",
+      "revId": "ca8870d55da367ece7f2e78a89079fdaaeb7ab68",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a96ec282_b6cbc717",
+        "filename": "ui/aura/local/layer_tree_frame_sink_local.h",
+        "patchSetId": 15
+      },
+      "lineNbr": 73,
+      "author": {
+        "id": 1115911
+      },
+      "writtenOn": "2017-11-09T10:22:59Z",
+      "side": 1,
+      "message": "Maybe implement this in the cc file and add a TODO(yiyix, fsamuel): Implement frame token propagation for LayerTreeFrameSinkLocal.",
+      "revId": "ca8870d55da367ece7f2e78a89079fdaaeb7ab68",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "fef19df3_73cbe861",
+        "filename": "ui/compositor/compositor.h",
+        "patchSetId": 15
+      },
+      "lineNbr": 395,
+      "author": {
+        "id": 1115911
+      },
+      "writtenOn": "2017-11-09T10:22:59Z",
+      "side": 1,
+      "message": "move implementation to cc file and add TODO(yiyix, fsamuel): Implement frame token propagation for Compositor.",
+      "revId": "ca8870d55da367ece7f2e78a89079fdaaeb7ab68",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
