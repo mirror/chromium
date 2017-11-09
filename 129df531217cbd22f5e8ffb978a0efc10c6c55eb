@@ -1,0 +1,84 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "3674dfb4_0dad897b",
+        "filename": "chrome/browser/extensions/api/cryptotoken_private/cryptotoken_private_api.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 24,
+      "author": {
+        "id": 1126309
+      },
+      "writtenOn": "2017-11-09T15:45:31Z",
+      "side": 1,
+      "message": "nit: \"CryptotokenRegisterProfilePrefs\", in order make it clear that it\u0027s talking about per-profile settings?",
+      "range": {
+        "startLine": 24,
+        "startChar": 5,
+        "endLine": 24,
+        "endChar": 29
+      },
+      "revId": "129df531217cbd22f5e8ffb978a0efc10c6c55eb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "60a48cc1_a033c41b",
+        "filename": "components/policy/resources/policy_templates.json",
+        "patchSetId": 4
+      },
+      "lineNbr": 4697,
+      "author": {
+        "id": 1126309
+      },
+      "writtenOn": "2017-11-09T15:45:31Z",
+      "side": 1,
+      "message": "nit: Do you think the \"website-sharing\" tag could be relevant for this policy?",
+      "revId": "129df531217cbd22f5e8ffb978a0efc10c6c55eb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f20c4e6a_923c79ab",
+        "filename": "components/policy/resources/policy_templates.json",
+        "patchSetId": 4
+      },
+      "lineNbr": 4698,
+      "author": {
+        "id": 1126309
+      },
+      "writtenOn": "2017-11-09T15:45:31Z",
+      "side": 1,
+      "message": "nit: The words \"Privacy CA\" should not be localized, is that correct? Then please tag them as non-translatable using with the \u003cph\u003e element.",
+      "range": {
+        "startLine": 4698,
+        "startChar": 252,
+        "endLine": 4698,
+        "endChar": 262
+      },
+      "revId": "129df531217cbd22f5e8ffb978a0efc10c6c55eb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3c39c237_03409a7b",
+        "filename": "components/policy/resources/policy_templates.json",
+        "patchSetId": 4
+      },
+      "lineNbr": 4701,
+      "author": {
+        "id": 1126309
+      },
+      "writtenOn": "2017-11-09T15:45:31Z",
+      "side": 1,
+      "message": "nit: Normally we ask the policy descriptions to also include a clear statement of the default behavior - something along these lines:\n\n  If this policy is unset, the attestation certificate is not sent directly to sites.\n\n(Actually, is this \"the cert not being sent\" only a future behavior? Should then this part of the description talk about two different cases - one for Chrome 64 with your changes and another for the previous versions?)",
+      "revId": "129df531217cbd22f5e8ffb978a0efc10c6c55eb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
