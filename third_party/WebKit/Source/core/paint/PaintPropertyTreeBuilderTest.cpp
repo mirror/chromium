@@ -3436,7 +3436,8 @@ static const FragmentData& FragmentAt(LayoutObject* obj, unsigned count) {
   return *fragment;
 }
 
-TEST_P(PaintPropertyTreeBuilderTest, PaintOffsetsUnderMultiColumnScrolled) {
+TEST_P(PaintPropertyTreeBuilderTest,
+       PaintOffsetAndClipUnderMultiColumnScrolled) {
   SetBodyInnerHTML(R"HTML(
     <!doctype HTML>
     <div style='columns: 1;'>
@@ -3457,6 +3458,31 @@ TEST_P(PaintPropertyTreeBuilderTest, PaintOffsetsUnderMultiColumnScrolled) {
                                  ->PaintOffsetTranslation()
                                  ->Matrix()
                                  .To2DTranslation());
+}
+
+TEST_P(PaintPropertyTreeBuilderTest, PaintOffsetsUnderMultiColumnWithOutline) {
+  SetBodyInnerHTML(R"HTML(
+    <div style='columns: 2; height: 100px'>
+      <div id=target1 style='outline: 2px solid black; width: 100px;
+          height: 100px'></div>
+      <div id=target2 style='outline: 2px solid black; width: 100px;
+          height: 100px'></div>
+    </div>
+  )HTML");
+
+  LayoutObject* target1 = GetLayoutObjectByElementId("target1");
+
+  // Outline does not affect paint offset, since it is positioned to the
+  // top-left of the border box.
+  EXPECT_EQ(LayoutPoint(8, 8), target1->FirstFragment().PaintOffset());
+  // |target1| is only in the first column.
+  EXPECT_FALSE(target1->FirstFragment().NextFragment());
+
+  LayoutObject* target2 = GetLayoutObjectByElementId("target2");
+  EXPECT_EQ(LayoutPoint(LayoutUnit(400.5f), LayoutUnit(8.0f)),
+            target2->FirstFragment().PaintOffset());
+  // |target1| is only in the second column.
+  EXPECT_FALSE(target2->FirstFragment().NextFragment());
 }
 
 TEST_P(PaintPropertyTreeBuilderTest,
