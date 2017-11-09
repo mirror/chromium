@@ -50,6 +50,9 @@ TEST(FrameProcessingTimeEstimatorTest, EstimateDeltaAndKeyFrame) {
 
   estimator.SetBandwidthKbps(50);
   estimator.SetBandwidthKbps(150);
+
+  EXPECT_EQ(100, estimator.AverageBandwidthKbps());
+
   EXPECT_EQ(base::TimeDelta::FromMilliseconds(10),
             estimator.EstimatedProcessingTime(true));
   EXPECT_EQ(base::TimeDelta::FromMilliseconds(1),
@@ -58,6 +61,15 @@ TEST(FrameProcessingTimeEstimatorTest, EstimateDeltaAndKeyFrame) {
             estimator.EstimatedTransitTime(true));
   EXPECT_EQ(base::TimeDelta::FromMilliseconds(4),
             estimator.EstimatedTransitTime(false));
+
+  EXPECT_EQ(60, estimator.EstimatedFrameSize());
+
+  EXPECT_EQ(base::TimeDelta::FromMicroseconds(2800),
+            estimator.EstimatedProcessingTime());
+  EXPECT_EQ(base::TimeDelta::FromMicroseconds(4800),
+            estimator.EstimatedTransitTime());
+
+  EXPECT_EQ(30, estimator.EstimatedFrameRate());
 }
 
 TEST(FrameProcessingTimeEstimatorTest, NegativeBandwidthShouldBeDropped) {
@@ -67,7 +79,7 @@ TEST(FrameProcessingTimeEstimatorTest, NegativeBandwidthShouldBeDropped) {
   estimator.FinishFrame(CreateEncodedFrame(true, 100));
   estimator.SetBandwidthKbps(100);
   estimator.SetBandwidthKbps(-100);
-  ASSERT_EQ(base::TimeDelta::FromMilliseconds(8),
+  EXPECT_EQ(base::TimeDelta::FromMilliseconds(8),
             estimator.EstimatedTransitTime(true));
 }
 
@@ -77,14 +89,21 @@ TEST(FrameProcessingTimeEstimatorTest, ShouldNotReturn0WithOnlyKeyFrames) {
   estimator.TimeElapseMs(10);
   estimator.FinishFrame(CreateEncodedFrame(true, 100));
   estimator.SetBandwidthKbps(100);
-  ASSERT_EQ(base::TimeDelta::FromMilliseconds(10),
+  EXPECT_EQ(base::TimeDelta::FromMilliseconds(10),
             estimator.EstimatedProcessingTime(true));
-  ASSERT_EQ(base::TimeDelta::FromMilliseconds(8),
+  EXPECT_EQ(base::TimeDelta::FromMilliseconds(8),
             estimator.EstimatedTransitTime(true));
-  ASSERT_EQ(base::TimeDelta::FromMilliseconds(10),
+  EXPECT_EQ(base::TimeDelta::FromMilliseconds(10),
             estimator.EstimatedProcessingTime(false));
-  ASSERT_EQ(base::TimeDelta::FromMilliseconds(8),
+  EXPECT_EQ(base::TimeDelta::FromMilliseconds(8),
             estimator.EstimatedTransitTime(false));
+
+  EXPECT_EQ(base::TimeDelta::FromMilliseconds(10),
+            estimator.EstimatedProcessingTime());
+  EXPECT_EQ(base::TimeDelta::FromMilliseconds(8),
+            estimator.EstimatedTransitTime());
+  EXPECT_EQ(100, estimator.EstimatedFrameSize());
+  EXPECT_EQ(30, estimator.EstimatedFrameRate());
 }
 
 TEST(FrameProcessingTimeEstimatorTest, ShouldNotReturn0WithOnlyDeltaFrames) {
@@ -93,20 +112,118 @@ TEST(FrameProcessingTimeEstimatorTest, ShouldNotReturn0WithOnlyDeltaFrames) {
   estimator.TimeElapseMs(1);
   estimator.FinishFrame(CreateEncodedFrame(false, 50));
   estimator.SetBandwidthKbps(100);
-  ASSERT_EQ(base::TimeDelta::FromMilliseconds(1),
+  EXPECT_EQ(base::TimeDelta::FromMilliseconds(1),
             estimator.EstimatedProcessingTime(false));
-  ASSERT_EQ(base::TimeDelta::FromMilliseconds(4),
+  EXPECT_EQ(base::TimeDelta::FromMilliseconds(4),
             estimator.EstimatedTransitTime(false));
-  ASSERT_EQ(base::TimeDelta::FromMilliseconds(1),
+  EXPECT_EQ(base::TimeDelta::FromMilliseconds(1),
             estimator.EstimatedProcessingTime(true));
-  ASSERT_EQ(base::TimeDelta::FromMilliseconds(4),
+  EXPECT_EQ(base::TimeDelta::FromMilliseconds(4),
             estimator.EstimatedTransitTime(true));
+
+  EXPECT_EQ(base::TimeDelta::FromMilliseconds(1),
+            estimator.EstimatedProcessingTime());
+  EXPECT_EQ(base::TimeDelta::FromMilliseconds(4),
+            estimator.EstimatedTransitTime());
+  EXPECT_EQ(50, estimator.EstimatedFrameSize());
+  EXPECT_EQ(30, estimator.EstimatedFrameRate());
 }
 
-TEST(FrameProcessingTimeEstimatorTest, ShouldReturn0WithNoRecords) {
+TEST(FrameProcessingTimeEstimatorTest, ShouldReturnDefaultValueWithoutRecords) {
   TestFrameProcessingTimeEstimator estimator;
-  ASSERT_EQ(base::TimeDelta(), estimator.EstimatedProcessingTime(true));
-  ASSERT_EQ(base::TimeDelta(), estimator.EstimatedProcessingTime(false));
+  EXPECT_EQ(base::TimeDelta(), estimator.EstimatedProcessingTime(true));
+  EXPECT_EQ(base::TimeDelta(), estimator.EstimatedProcessingTime(false));
+  EXPECT_EQ(base::TimeDelta(), estimator.EstimatedProcessingTime());
+  EXPECT_EQ(0, estimator.EstimatedFrameSize());
+  EXPECT_EQ(1, estimator.EstimatedFrameRate());
+
+  for (int i = 0; i < 10; i++) {
+    estimator.StartFrame();
+    if (i % 5 == 0) {
+      // Fake a key-frame.
+      estimator.TimeElapseMs(100);
+      estimator.FinishFrame(CreateEncodedFrame(true, 100));
+    } else {
+      // Fake a delta-frame.
+      estimator.TimeElapseMs(50);
+      estimator.FinishFrame(CreateEncodedFrame(false, 50));
+    }
+  }
+  EXPECT_EQ(1, estimator.EstimatedFrameRate());
+}
+
+TEST(FrameProcessingTimeEstimatorTest,
+     ShouldEstimateFrameRateFromProcessingTime) {
+  // Processing times are much longer than transit times, so the estimation of
+  // the frame rate should depend on the processing time.
+  TestFrameProcessingTimeEstimator estimator;
+  for (int i = 0; i < 10; i++) {
+    estimator.StartFrame();
+    if (i % 5 == 0) {
+      // Fake a key-frame.
+      estimator.TimeElapseMs(100);
+      estimator.FinishFrame(CreateEncodedFrame(true, 100));
+    } else {
+      // Fake a delta-frame.
+      estimator.TimeElapseMs(50);
+      estimator.FinishFrame(CreateEncodedFrame(false, 50));
+    }
+  }
+  estimator.SetBandwidthKbps(100);
+
+  EXPECT_EQ(base::TimeDelta::FromMilliseconds(60),
+            estimator.EstimatedProcessingTime());
+  EXPECT_EQ(17, estimator.EstimatedFrameRate());
+}
+
+TEST(FrameProcessingTimeEstimatorTest,
+     ShouldEstimateFrameRateFromTransitTime) {
+  // Transit times are much longer than processing times, so the estimation of
+  // the frame rate should depend on the transit time.
+  TestFrameProcessingTimeEstimator estimator;
+  for (int i = 0; i < 10; i++) {
+    estimator.StartFrame();
+    if (i % 5 == 0) {
+      // Fake a key-frame.
+      estimator.TimeElapseMs(10);
+      estimator.FinishFrame(CreateEncodedFrame(true, 100));
+    } else {
+      // Fake a delta-frame.
+      estimator.TimeElapseMs(1);
+      estimator.FinishFrame(CreateEncodedFrame(false, 50));
+    }
+  }
+  estimator.SetBandwidthKbps(10);
+
+  EXPECT_EQ(base::TimeDelta::FromMilliseconds(48),
+            estimator.EstimatedTransitTime());
+  EXPECT_EQ(21, estimator.EstimatedFrameRate());
+}
+
+TEST(FrameProcessingTimeEstimatorTest,
+     ShouldNotReturnNegativeEstimatedFrameRate) {
+  // Both processing times and transit times are extremely long, estimator
+  // should return 1.
+  TestFrameProcessingTimeEstimator estimator;
+  for (int i = 0; i < 10; i++) {
+    estimator.StartFrame();
+    if (i % 5 == 0) {
+      // Fake a key-frame.
+      estimator.TimeElapseMs(10000);
+      estimator.FinishFrame(CreateEncodedFrame(true, 1000));
+    } else {
+      // Fake a delta-frame.
+      estimator.TimeElapseMs(5000);
+      estimator.FinishFrame(CreateEncodedFrame(false, 500));
+    }
+  }
+  estimator.SetBandwidthKbps(1);
+
+  EXPECT_EQ(base::TimeDelta::FromMilliseconds(6000),
+            estimator.EstimatedProcessingTime());
+  EXPECT_EQ(base::TimeDelta::FromMilliseconds(4800),
+            estimator.EstimatedTransitTime());
+  EXPECT_EQ(1, estimator.EstimatedFrameRate());
 }
 
 }  // namespace remoting
