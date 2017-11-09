@@ -228,6 +228,24 @@
       "revId": "87f0fb87e85e6b6f23f6ff467558bafdb59fe06e",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "39a600f2_52e70d49",
+        "filename": "ui/display/manager/display_manager.cc",
+        "patchSetId": 14
+      },
+      "lineNbr": 1241,
+      "author": {
+        "id": 1001118
+      },
+      "writtenOn": "2017-11-09T00:46:50Z",
+      "side": 1,
+      "message": "Returning false in FindMirrorMode (or bailing from ParseDisplays early) if chromeos::IsRunningAsSystemCompositor() is false does indeed fall back to software mirroring earlier, and never adds the displays to the hardware mirroring list (the origins are different). I made that change, reverted changes here and in GetDisplayLayout. Thanks for the tip!\n\nI\u0027ll have to test the software fallback behavior on a device (presumably you\u0027re asking about cash?) tomorrow, if you\u0027d find that info helpful. What conditions would you like to know about? (I\u0027m guessing my external monitor has a different resolution and that would cause software fallback, probably from DisplayConfigurator::DisplayLayoutManagerImpl::ParseDisplays / FindMirrorMode).",
+      "parentUuid": "88d43836_9b2c4e81",
+      "revId": "87f0fb87e85e6b6f23f6ff467558bafdb59fe06e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
