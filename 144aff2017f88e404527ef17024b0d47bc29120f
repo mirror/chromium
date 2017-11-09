@@ -1,0 +1,558 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "df04b460_5d4cde27",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 5
+      },
+      "lineNbr": 9,
+      "author": {
+        "id": 1178124
+      },
+      "writtenOn": "2017-11-09T14:22:34Z",
+      "side": 1,
+      "message": "what does \"component file\" mean?",
+      "range": {
+        "startLine": 9,
+        "startChar": 49,
+        "endLine": 9,
+        "endChar": 63
+      },
+      "revId": "144aff2017f88e404527ef17024b0d47bc29120f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8634a932_65c3cade",
+        "filename": "chrome_elf/whitelist/whitelist_component.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 20,
+      "author": {
+        "id": 1178124
+      },
+      "writtenOn": "2017-11-09T14:22:34Z",
+      "side": 1,
+      "message": "is there some other place in the code or the product or something that uses these same hardcoded paths? if yes, is there a sensible comment you could put here that references the other place?",
+      "revId": "144aff2017f88e404527ef17024b0d47bc29120f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1b7aeb90_3108c489",
+        "filename": "chrome_elf/whitelist/whitelist_component.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 21,
+      "author": {
+        "id": 1178124
+      },
+      "writtenOn": "2017-11-09T14:22:34Z",
+      "side": 1,
+      "message": "why \".txt\"? it\u0027s not a text file.",
+      "range": {
+        "startLine": 21,
+        "startChar": 52,
+        "endLine": 21,
+        "endChar": 55
+      },
+      "revId": "144aff2017f88e404527ef17024b0d47bc29120f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ee77387d_87ebf604",
+        "filename": "chrome_elf/whitelist/whitelist_component.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 25,
+      "author": {
+        "id": 1178124
+      },
+      "writtenOn": "2017-11-09T14:22:34Z",
+      "side": 1,
+      "message": "consider returning a reference rather than a pointer. i find that the *foo at the point of use adds noise.",
+      "revId": "144aff2017f88e404527ef17024b0d47bc29120f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "fbd3fc28_d637582c",
+        "filename": "chrome_elf/whitelist/whitelist_component.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 30,
+      "author": {
+        "id": 1178124
+      },
+      "writtenOn": "2017-11-09T14:22:34Z",
+      "side": 1,
+      "message": "nit: you could get rid of these two functions and use regular old g_foo statics since they\u0027re fundamental types.",
+      "revId": "144aff2017f88e404527ef17024b0d47bc29120f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "02eba1c4_1e4e1179",
+        "filename": "chrome_elf/whitelist/whitelist_component.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 52,
+      "author": {
+        "id": 1178124
+      },
+      "writtenOn": "2017-11-09T14:22:34Z",
+      "side": 1,
+      "message": "omit \"else\" following return in the \"if\" clause.",
+      "range": {
+        "startLine": 52,
+        "startChar": 4,
+        "endLine": 52,
+        "endChar": 8
+      },
+      "revId": "144aff2017f88e404527ef17024b0d47bc29120f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2c113ec3_d32b80a8",
+        "filename": "chrome_elf/whitelist/whitelist_component.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 64,
+      "author": {
+        "id": 1178124
+      },
+      "writtenOn": "2017-11-09T14:22:34Z",
+      "side": 1,
+      "message": "nit:\n  return CompareHashes(...) \u003c 0;",
+      "revId": "144aff2017f88e404527ef17024b0d47bc29120f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "af118e61_1caf3044",
+        "filename": "chrome_elf/whitelist/whitelist_component.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 72,
+      "author": {
+        "id": 1178124
+      },
+      "writtenOn": "2017-11-09T14:22:34Z",
+      "side": 1,
+      "message": "static assert or something ARCH_CPU_LITTLE_ENDIAN?",
+      "revId": "144aff2017f88e404527ef17024b0d47bc29120f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "cc8e6d69_6c1a00c2",
+        "filename": "chrome_elf/whitelist/whitelist_component.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 82,
+      "author": {
+        "id": 1178124
+      },
+      "writtenOn": "2017-11-09T14:22:34Z",
+      "side": 1,
+      "message": "nit: inline this below -- the local var adds nothing today",
+      "range": {
+        "startLine": 82,
+        "startChar": 42,
+        "endLine": 82,
+        "endChar": 58
+      },
+      "revId": "144aff2017f88e404527ef17024b0d47bc29120f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "77fb826a_87ff545d",
+        "filename": "chrome_elf/whitelist/whitelist_component.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 94,
+      "author": {
+        "id": 1178124
+      },
+      "writtenOn": "2017-11-09T14:22:34Z",
+      "side": 1,
+      "message": "isn\u0027t this safer:\n  assert(*module_array_size \u003c\u003d UINT_MAX / sizeof(PackedWhitelistModule));\nit also makes the rhs a constant expression",
+      "revId": "144aff2017f88e404527ef17024b0d47bc29120f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "55543b6e_499f22d1",
+        "filename": "chrome_elf/whitelist/whitelist_component.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 98,
+      "author": {
+        "id": 1178124
+      },
+      "writtenOn": "2017-11-09T14:22:34Z",
+      "side": 1,
+      "message": "nit: uint8_t for consistency with PackedWhitelistModule?",
+      "range": {
+        "startLine": 98,
+        "startChar": 51,
+        "endLine": 98,
+        "endChar": 55
+      },
+      "revId": "144aff2017f88e404527ef17024b0d47bc29120f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a28727c8_a3dcdf76",
+        "filename": "chrome_elf/whitelist/whitelist_component.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 102,
+      "author": {
+        "id": 1178124
+      },
+      "writtenOn": "2017-11-09T14:22:34Z",
+      "side": 1,
+      "message": "delete[] *module_array;\n*module_array \u003d nullptr;\n*module_array_size \u003d 0;",
+      "revId": "144aff2017f88e404527ef17024b0d47bc29120f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d8cf0cab_b6520676",
+        "filename": "chrome_elf/whitelist/whitelist_component.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 104,
+      "author": {
+        "id": 1178124
+      },
+      "writtenOn": "2017-11-09T14:22:34Z",
+      "side": 1,
+      "message": "should the file be ignored if there\u0027s extra data after what was just read?",
+      "revId": "144aff2017f88e404527ef17024b0d47bc29120f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "18421bc8_a3f62717",
+        "filename": "chrome_elf/whitelist/whitelist_component.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 106,
+      "author": {
+        "id": 1178124
+      },
+      "writtenOn": "2017-11-09T14:22:34Z",
+      "side": 1,
+      "message": "WhitelistLookup requires that it be sorted. it seems that this shouldn\u0027t be a debug check since the data is coming from an untrusted source.",
+      "revId": "144aff2017f88e404527ef17024b0d47bc29120f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "22fad62c_22887eab",
+        "filename": "chrome_elf/whitelist/whitelist_component.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 135,
+      "author": {
+        "id": 1178124
+      },
+      "writtenOn": "2017-11-09T14:22:34Z",
+      "side": 1,
+      "message": "omit extra parens",
+      "range": {
+        "startLine": 135,
+        "startChar": 9,
+        "endLine": 135,
+        "endChar": 18
+      },
+      "revId": "144aff2017f88e404527ef17024b0d47bc29120f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4bd74bb9_c5b58b2e",
+        "filename": "chrome_elf/whitelist/whitelist_component.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 151,
+      "author": {
+        "id": 1178124
+      },
+      "writtenOn": "2017-11-09T14:22:34Z",
+      "side": 1,
+      "message": "*wl_array_size\n(and here\u0027s one reason why i think it\u0027s better to either use a regular g_array_size global or to have GetComponentArraySize() return a reference.)",
+      "range": {
+        "startLine": 151,
+        "startChar": 7,
+        "endLine": 151,
+        "endChar": 20
+      },
+      "revId": "144aff2017f88e404527ef17024b0d47bc29120f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "fc44350b_88ec035a",
+        "filename": "chrome_elf/whitelist/whitelist_component.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 156,
+      "author": {
+        "id": 1178124
+      },
+      "writtenOn": "2017-11-09T14:22:34Z",
+      "side": 1,
+      "message": "#include \u003cstdio.h\u003e",
+      "range": {
+        "startLine": 156,
+        "startChar": 4,
+        "endLine": 156,
+        "endChar": 12
+      },
+      "revId": "144aff2017f88e404527ef17024b0d47bc29120f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4ca29db2_6cc80263",
+        "filename": "chrome_elf/whitelist/whitelist_component.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 161,
+      "author": {
+        "id": 1178124
+      },
+      "writtenOn": "2017-11-09T14:22:34Z",
+      "side": 1,
+      "message": "nit: data() rather than c_str() here and below since you\u0027re not relying on or touching the terminator.",
+      "range": {
+        "startLine": 161,
+        "startChar": 47,
+        "endLine": 161,
+        "endChar": 52
+      },
+      "revId": "144aff2017f88e404527ef17024b0d47bc29120f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "141c1282_c1c88848",
+        "filename": "chrome_elf/whitelist/whitelist_component.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 189,
+      "author": {
+        "id": 1178124
+      },
+      "writtenOn": "2017-11-09T14:22:34Z",
+      "side": 1,
+      "message": "?  return InitComponentFile();?",
+      "revId": "144aff2017f88e404527ef17024b0d47bc29120f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f994db1d_ffb2cc32",
+        "filename": "chrome_elf/whitelist/whitelist_component.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 16,
+      "author": {
+        "id": 1178124
+      },
+      "writtenOn": "2017-11-09T14:22:34Z",
+      "side": 1,
+      "message": "nit: omit \" \u003d 0\"",
+      "range": {
+        "startLine": 16,
+        "startChar": 10,
+        "endLine": 16,
+        "endChar": 14
+      },
+      "revId": "144aff2017f88e404527ef17024b0d47bc29120f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1984d708_7a94c78f",
+        "filename": "chrome_elf/whitelist/whitelist_component.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 24,
+      "author": {
+        "id": 1178124
+      },
+      "writtenOn": "2017-11-09T14:22:34Z",
+      "side": 1,
+      "message": "how about IsModuleWhitelisted or something? seems more natural to write:\n\n  if (IsModuleWhitelisted(...)) {\n    // load it up!\n  }",
+      "revId": "144aff2017f88e404527ef17024b0d47bc29120f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e0e173a7_b134a5fe",
+        "filename": "chrome_elf/whitelist/whitelist_component_format.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 12,
+      "author": {
+        "id": 1178124
+      },
+      "writtenOn": "2017-11-09T14:22:34Z",
+      "side": 1,
+      "message": "maybe kCurrent? perhaps the currently-in-use version isn\u0027t the most-recently-created version? feel free to ignore me.",
+      "range": {
+        "startLine": 12,
+        "startChar": 2,
+        "endLine": 12,
+        "endChar": 9
+      },
+      "revId": "144aff2017f88e404527ef17024b0d47bc29120f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b7ea85ce_9dd53adf",
+        "filename": "chrome_elf/whitelist/whitelist_component_unittest.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 29,
+      "author": {
+        "id": 1178124
+      },
+      "writtenOn": "2017-11-09T14:22:34Z",
+      "side": 1,
+      "message": "nit: constexpr const wchar_t* kComponent...",
+      "revId": "144aff2017f88e404527ef17024b0d47bc29120f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3e0b9b88_73f6d209",
+        "filename": "chrome_elf/whitelist/whitelist_component_unittest.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 46,
+      "author": {
+        "id": 1178124
+      },
+      "writtenOn": "2017-11-09T14:22:34Z",
+      "side": 1,
+      "message": "wdyt of making this (std::vector\u003cTestModule\u003e* test_modules, std::vector\u003cPackedWhitelistModule\u003e* packed_modules) so that this function can just push_back or what have you rather than rely on the caller providing the right amount of memory?",
+      "range": {
+        "startLine": 46,
+        "startChar": 43,
+        "endLine": 46,
+        "endChar": 57
+      },
+      "revId": "144aff2017f88e404527ef17024b0d47bc29120f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "fca9afa0_971d7de4",
+        "filename": "chrome_elf/whitelist/whitelist_component_unittest.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 100,
+      "author": {
+        "id": 1178124
+      },
+      "writtenOn": "2017-11-09T14:22:34Z",
+      "side": 1,
+      "message": "can you rejigger things somehow so that this test uses base::ScopedTempDir (CreateUniqueTempDir()) and operates in that? it\u0027s not great for it to muck within the developer\u0027s real user data dir.",
+      "revId": "144aff2017f88e404527ef17024b0d47bc29120f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5e8cb94a_660ab30b",
+        "filename": "chrome_elf/whitelist/whitelist_component_unittest.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 110,
+      "author": {
+        "id": 1178124
+      },
+      "writtenOn": "2017-11-09T14:22:34Z",
+      "side": 1,
+      "message": "#include \u003cutility\u003e",
+      "range": {
+        "startLine": 110,
+        "startChar": 22,
+        "endLine": 110,
+        "endChar": 31
+      },
+      "revId": "144aff2017f88e404527ef17024b0d47bc29120f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1fc55dd6_3f90a356",
+        "filename": "chrome_elf/whitelist/whitelist_component_unittest.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 122,
+      "author": {
+        "id": 1178124
+      },
+      "writtenOn": "2017-11-09T14:22:34Z",
+      "side": 1,
+      "message": "wdyt of opening the file with FLAG_SHARE_DELETE | FLAG_DELETE_ON_CLOSE and holding it open throughout the test? this way it\u0027ll be deleted even if the test crashes.",
+      "revId": "144aff2017f88e404527ef17024b0d47bc29120f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d1bd488d_062db0cb",
+        "filename": "chrome_elf/whitelist/whitelist_component_unittest.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 131,
+      "author": {
+        "id": 1178124
+      },
+      "writtenOn": "2017-11-09T14:22:34Z",
+      "side": 1,
+      "message": "DISALLOW_COPY_AND_ASSIGN",
+      "revId": "144aff2017f88e404527ef17024b0d47bc29120f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
