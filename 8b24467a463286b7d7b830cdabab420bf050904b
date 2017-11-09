@@ -2,6 +2,91 @@
   "comments": [
     {
       "key": {
+        "uuid": "6d4e7020_9e2b81fd",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 18
+      },
+      "lineNbr": 12,
+      "author": {
+        "id": 1123405
+      },
+      "writtenOn": "2017-11-09T20:55:47Z",
+      "side": 1,
+      "message": "And run on on linux_chromium_chromeos_rel_ng",
+      "revId": "8b24467a463286b7d7b830cdabab420bf050904b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8ca9a4d8_a92bbbab",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 18
+      },
+      "lineNbr": 19,
+      "author": {
+        "id": 1123405
+      },
+      "writtenOn": "2017-11-09T20:55:47Z",
+      "side": 1,
+      "message": "This is not only an idea anymore.",
+      "revId": "8b24467a463286b7d7b830cdabab420bf050904b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ae07a42e_9896172c",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 18
+      },
+      "lineNbr": 22,
+      "author": {
+        "id": 1123405
+      },
+      "writtenOn": "2017-11-09T20:55:47Z",
+      "side": 1,
+      "message": "This is not true anymore, they\u0027re now running on linux_chromium_chromeos_rel_ng trybot! :)",
+      "revId": "8b24467a463286b7d7b830cdabab420bf050904b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "69e3bd2d_b8197a09",
+        "filename": "media/gpu/vaapi_video_decode_accelerator.h",
+        "patchSetId": 18
+      },
+      "lineNbr": 88,
+      "author": {
+        "id": 1123405
+      },
+      "writtenOn": "2017-11-09T20:55:47Z",
+      "side": 1,
+      "message": "Do we have any macro like FRIEND_TEST in Chromium?",
+      "revId": "8b24467a463286b7d7b830cdabab420bf050904b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "616ad579_488c9082",
+        "filename": "media/gpu/vaapi_video_decode_accelerator_unittest.cc",
+        "patchSetId": 18
+      },
+      "lineNbr": 25,
+      "author": {
+        "id": 1123405
+      },
+      "writtenOn": "2017-11-09T20:55:47Z",
+      "side": 1,
+      "message": "does it make any sense to have a global static variable?\nDon\u0027t we usually put stuff in an anonymous namespace to avoid name collisions?",
+      "revId": "8b24467a463286b7d7b830cdabab420bf050904b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "9d2a4296_1f7bc4d6",
         "filename": "media/gpu/vaapi_video_decode_accelerator_unittest.cc",
         "patchSetId": 18
@@ -19,6 +104,23 @@
         "endLine": 102,
         "endChar": 11
       },
+      "revId": "8b24467a463286b7d7b830cdabab420bf050904b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "34e5c4ec_57bcfd76",
+        "filename": "media/gpu/vaapi_video_decode_accelerator_unittest.cc",
+        "patchSetId": 18
+      },
+      "lineNbr": 203,
+      "author": {
+        "id": 1123405
+      },
+      "writtenOn": "2017-11-09T20:55:47Z",
+      "side": 1,
+      "message": "nit: can we add something like /* no prefix */ for the first parameter?",
       "revId": "8b24467a463286b7d7b830cdabab420bf050904b",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
