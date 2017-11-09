@@ -49,6 +49,29 @@
     },
     {
       "key": {
+        "uuid": "08361c02_e89a8b10",
+        "filename": "ios/chrome/browser/ssl/ios_ssl_error_handler.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 62,
+      "author": {
+        "id": 1123009
+      },
+      "writtenOn": "2017-11-09T00:02:37Z",
+      "side": 1,
+      "message": "const GURL\u0026",
+      "range": {
+        "startLine": 62,
+        "startChar": 42,
+        "endLine": 62,
+        "endChar": 53
+      },
+      "revId": "1e0de2a8a912772d963ef9e0387740eb061e4872",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "12e5987c_9cf2c5ef",
         "filename": "ios/chrome/browser/ssl/ios_ssl_error_handler.h",
         "patchSetId": 1
@@ -65,6 +88,98 @@
         "startChar": 23,
         "endLine": 77,
         "endChar": 33
+      },
+      "revId": "1e0de2a8a912772d963ef9e0387740eb061e4872",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6d8c6e10_603b0d66",
+        "filename": "ios/chrome/browser/ssl/ios_ssl_error_handler.mm",
+        "patchSetId": 1
+      },
+      "lineNbr": 68,
+      "author": {
+        "id": 1123009
+      },
+      "writtenOn": "2017-11-09T00:02:37Z",
+      "side": 1,
+      "message": "nit: Is it possible to use MakeUnique here?",
+      "range": {
+        "startLine": 68,
+        "startChar": 12,
+        "endLine": 68,
+        "endChar": 22
+      },
+      "revId": "1e0de2a8a912772d963ef9e0387740eb061e4872",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "96fdda64_7bceb153",
+        "filename": "ios/chrome/browser/ssl/ios_ssl_error_handler.mm",
+        "patchSetId": 1
+      },
+      "lineNbr": 70,
+      "author": {
+        "id": 1123009
+      },
+      "writtenOn": "2017-11-09T00:02:37Z",
+      "side": 1,
+      "message": "nit: do we need this variable?",
+      "range": {
+        "startLine": 70,
+        "startChar": 22,
+        "endLine": 70,
+        "endChar": 35
+      },
+      "revId": "1e0de2a8a912772d963ef9e0387740eb061e4872",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3d13e689_b11ff77f",
+        "filename": "ios/chrome/browser/ssl/ios_ssl_error_handler.mm",
+        "patchSetId": 1
+      },
+      "lineNbr": 108,
+      "author": {
+        "id": 1123009
+      },
+      "writtenOn": "2017-11-09T00:02:37Z",
+      "side": 1,
+      "message": "tab_helper-\u003edetector()-\u003eDetectCaptivePortal(\n    GURL(CaptivePortalDetector::kDefaultURL),\n    base::BindOnce(\u0026IOSSSLErrorHandler::HandleCaptivePortalDetectionResult,\n                   weak_error_handler), NO_TRAFFIC_ANNOTATION_YET);",
+      "range": {
+        "startLine": 108,
+        "startChar": 4,
+        "endLine": 108,
+        "endChar": 48
+      },
+      "revId": "1e0de2a8a912772d963ef9e0387740eb061e4872",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f0a0156c_7ce9150f",
+        "filename": "ios/chrome/browser/ssl/ios_ssl_error_handler.mm",
+        "patchSetId": 1
+      },
+      "lineNbr": 152,
+      "author": {
+        "id": 1123009
+      },
+      "writtenOn": "2017-11-09T00:02:37Z",
+      "side": 1,
+      "message": "Do you think it would be useful to tell that HandleCaptivePortalDetectionResult will not be called?",
+      "range": {
+        "startLine": 152,
+        "startChar": 51,
+        "endLine": 152,
+        "endChar": 55
       },
       "revId": "1e0de2a8a912772d963ef9e0387740eb061e4872",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
