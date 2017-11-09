@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "00b8140a_adc5fbc5",
+        "filename": "chrome/test/base/in_process_browser_test_browsertest.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 154,
+      "author": {
+        "id": 1197698
+      },
+      "writtenOn": "2017-11-09T17:08:03Z",
+      "side": 1,
+      "message": "removed.",
+      "parentUuid": "10659a60_e423d516",
+      "revId": "54837f90c14e7f9525ce15348d5f660d0c5747ad",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "00d08db4_1a94fa81",
         "filename": "content/public/test/browser_test_base.cc",
         "patchSetId": 6
@@ -33,6 +51,24 @@
       "revId": "54837f90c14e7f9525ce15348d5f660d0c5747ad",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "cb07b258_ec6651bb",
+        "filename": "content/public/test/browser_test_base.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 261,
+      "author": {
+        "id": 1197698
+      },
+      "writtenOn": "2017-11-09T17:08:03Z",
+      "side": 1,
+      "message": "Sorry, I forgot to remove this part. We dont need this now, since we have DCHECK ensure no switch.",
+      "parentUuid": "00d08db4_1a94fa81",
+      "revId": "54837f90c14e7f9525ce15348d5f660d0c5747ad",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
