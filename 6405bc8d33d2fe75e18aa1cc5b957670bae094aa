@@ -97,6 +97,30 @@
     },
     {
       "key": {
+        "uuid": "77dd95be_2ae4f204",
+        "filename": "pdf/out_of_process_instance.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 174,
+      "author": {
+        "id": 1002410
+      },
+      "writtenOn": "2017-11-09T18:30:06Z",
+      "side": 1,
+      "message": "I\u0027m a bit concerned that a DCHECK is not a sufficiently hard failure.  I could easily imagine PDFium being rolled without anyone exercising this code, and hence not noticing the failure for a while.  This would lead to corrupted data being sent back to the server in the meantime.\n\nHence, I\u0027d still prefer one of the two options that I suggested above: either use a sparse histogram, which is probably the easiest and safest route; or explicitly handle out-of-bounds values (_plus_ an alert to developers that the constant should be updated).",
+      "parentUuid": "ce2c4880_151dab3e",
+      "range": {
+        "startLine": 174,
+        "startChar": 37,
+        "endLine": 174,
+        "endChar": 0
+      },
+      "revId": "6405bc8d33d2fe75e18aa1cc5b957670bae094aa",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "571fb539_397085ea",
         "filename": "tools/metrics/histograms/enums.xml",
         "patchSetId": 4
