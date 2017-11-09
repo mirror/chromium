@@ -19,7 +19,7 @@
         {
           "object": "LayoutBlockFlow DIV",
           "rect": [8, 8, 100, 300],
-          "reason": "geometry"
+          "reason": "background"
         }
       ]
     }
@@ -27,7 +27,7 @@
   "objectPaintInvalidations": [
     {
       "object": "LayoutBlockFlow DIV",
-      "reason": "geometry"
+      "reason": "background"
     }
   ]
 }

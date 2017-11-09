@@ -42,6 +42,9 @@ class CORE_EXPORT BoxPaintInvalidator {
 
   PaintInvalidationReason ComputePaintInvalidationReason();
 
+  const LayoutBox& BackgroundBox() const;
+  bool BackgroundBoxSizeChanged() const;
+
   void IncrementallyInvalidatePaint(PaintInvalidationReason,
                                     const LayoutRect& old_rect,
                                     const LayoutRect& new_rect);

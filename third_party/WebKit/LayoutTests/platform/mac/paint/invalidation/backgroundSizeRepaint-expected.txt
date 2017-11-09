@@ -9,12 +9,12 @@
         {
           "object": "LayoutBlockFlow DIV",
           "rect": [19, 329, 200, 60],
-          "reason": "geometry"
+          "reason": "background"
         },
         {
           "object": "LayoutBlockFlow DIV",
           "rect": [19, 169, 200, 60],
-          "reason": "geometry"
+          "reason": "background"
         },
         {
           "object": "LayoutBlockFlow DIV id='b'",
@@ -32,7 +32,7 @@
   "objectPaintInvalidations": [
     {
       "object": "LayoutBlockFlow DIV",
-      "reason": "geometry"
+      "reason": "background"
     },
     {
       "object": "LayoutBlockFlow DIV id='a'",
@@ -40,7 +40,7 @@
     },
     {
       "object": "LayoutBlockFlow DIV",
-      "reason": "geometry"
+      "reason": "background"
     },
     {
       "object": "LayoutBlockFlow DIV id='b'",
