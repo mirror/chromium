@@ -207,6 +207,30 @@
     },
     {
       "key": {
+        "uuid": "552f874e_43ec9fd1",
+        "filename": "components/previews/content/previews_optimization_guide_hints.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 117,
+      "author": {
+        "id": 1133190
+      },
+      "writtenOn": "2017-11-09T21:55:58Z",
+      "side": 1,
+      "message": "im pretty sure that move frees up the previous version based on me running code on this page http://coliru.stacked-crooked.com/view?id\u003d85264f528caaad76 (linked from the std::unique_ptr cpp reference page)\n\na move is still needed in this case as we need to take ownership of Hints within PreviewsOptimizationGuideHints. fwiw, i\u0027ve only seen reset if the object is created in this method. (i.e. hints_.reset(new Hints))",
+      "parentUuid": "40002d5b_85c4f496",
+      "range": {
+        "startLine": 117,
+        "startChar": 2,
+        "endLine": 117,
+        "endChar": 11
+      },
+      "revId": "9fcf340e5e2b041751fb0dbff898b11187133a3f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "e71e4887_8a2986d0",
         "filename": "components/previews/content/previews_optimization_guide_hints.h",
         "patchSetId": 2
@@ -275,6 +299,30 @@
       "revId": "9fcf340e5e2b041751fb0dbff898b11187133a3f",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d53064ae_229c59e2",
+        "filename": "components/previews/content/previews_optimization_guide_hints.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 36,
+      "author": {
+        "id": 1133190
+      },
+      "writtenOn": "2017-11-09T21:55:58Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "fdc02fcc_c54c0462",
+      "range": {
+        "startLine": 36,
+        "startChar": 6,
+        "endLine": 36,
+        "endChar": 36
+      },
+      "revId": "9fcf340e5e2b041751fb0dbff898b11187133a3f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
