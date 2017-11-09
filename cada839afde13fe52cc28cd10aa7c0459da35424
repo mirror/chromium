@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "fa61fefe_b7f4d201",
+        "filename": "ios/chrome/browser/ios_chrome_flag_descriptions.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 111,
+      "author": {
+        "id": 1123009
+      },
+      "writtenOn": "2017-11-09T23:38:06Z",
+      "side": 1,
+      "message": "I don\u0027t want them to be visible until the feature is usable. Sorry, updated CL description to explicitly mention that.",
+      "parentUuid": "915564ce_c7bdeca3",
+      "revId": "cada839afde13fe52cc28cd10aa7c0459da35424",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "16b70b39_ab9f93f5",
         "filename": "ios/web/public/features.h",
         "patchSetId": 2
@@ -30,6 +48,24 @@
       "writtenOn": "2017-11-09T23:30:25Z",
       "side": 1,
       "message": "Are you expecting to launch these separately? If not, then do you need two flags?",
+      "revId": "cada839afde13fe52cc28cd10aa7c0459da35424",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6ac31bb4_a47026cd",
+        "filename": "ios/web/public/features.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 20,
+      "author": {
+        "id": 1123009
+      },
+      "writtenOn": "2017-11-09T23:38:06Z",
+      "side": 1,
+      "message": "Yes. I will lunch them separately. First PassKit, which is simpler and then Download Manager. Also updated CL description to answer this question.",
+      "parentUuid": "16b70b39_ab9f93f5",
       "revId": "cada839afde13fe52cc28cd10aa7c0459da35424",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
