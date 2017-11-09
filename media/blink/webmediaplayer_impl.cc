@@ -1095,14 +1095,8 @@ size_t WebMediaPlayerImpl::VideoDecodedByteCount() const {
 
 bool WebMediaPlayerImpl::CopyVideoTextureToPlatformTexture(
     gpu::gles2::GLES2Interface* gl,
-    unsigned int target,
-    unsigned int texture,
-    unsigned internal_format,
-    unsigned format,
-    unsigned type,
-    int level,
-    bool premultiply_alpha,
-    bool flip_y,
+    cc::TexParams params,
+    cc::TexFormat format,
     int already_uploaded_id,
     VideoFrameUploadMetadata* out_metadata) {
   DCHECK(main_task_runner_->BelongsToCurrentThread());
@@ -1133,8 +1127,7 @@ bool WebMediaPlayerImpl::CopyVideoTextureToPlatformTexture(
                            context_provider_->GrContext());
   }
   return video_renderer_.CopyVideoFrameTexturesToGLTexture(
-      context_3d, gl, video_frame.get(), target, texture, internal_format,
-      format, type, level, premultiply_alpha, flip_y);
+      context_3d, gl, video_frame.get(), params, format);
 }
 
 void WebMediaPlayerImpl::ComputeFrameUploadMetadata(

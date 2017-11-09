@@ -351,8 +351,8 @@ bool HTMLVideoElement::CopyVideoTextureToPlatformTexture(
     return false;
 
   return GetWebMediaPlayer()->CopyVideoTextureToPlatformTexture(
-      gl, target, texture, internal_format, format, type, level,
-      premultiply_alpha, flip_y, already_uploaded_id, out_metadata);
+      gl, {target, texture, level, premultiply_alpha, flip_y},
+      {internal_format, format, type}, already_uploaded_id, out_metadata);
 }
 
 bool HTMLVideoElement::TexImageImpl(
@@ -372,8 +372,8 @@ bool HTMLVideoElement::TexImageImpl(
   if (!GetWebMediaPlayer())
     return false;
   return GetWebMediaPlayer()->TexImageImpl(
-      function_id, target, gl, texture, level, internalformat, format, type,
-      xoffset, yoffset, zoffset, flip_y, premultiply_alpha);
+      function_id, gl, {target, texture, level, flip_y, premultiply_alpha},
+      {internalformat, format, type}, {xoffset, yoffset, zoffset});
 }
 
 bool HTMLVideoElement::HasAvailableVideoFrame() const {
