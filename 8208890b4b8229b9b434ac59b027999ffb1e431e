@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "6e7b6606_894f5b0a",
+        "filename": "third_party/WebKit/Source/bindings/core/v8/custom/V8DocumentCustom.cpp",
+        "patchSetId": 4
+      },
+      "lineNbr": 92,
+      "author": {
+        "id": 1002507
+      },
+      "writtenOn": "2017-11-09T09:31:22Z",
+      "side": 1,
+      "message": "Replace line 88 - 92 with the following:\n\n  V8SetReturnValue(info, opened_window);\n\nThis works for both of null and non-null cases, and line 92 is not correct (info.Holder() here is a Document, but you\u0027re casting it to DOMWindow).",
+      "revId": "8208890b4b8229b9b434ac59b027999ffb1e431e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
