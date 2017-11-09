@@ -22,6 +22,30 @@
       "revId": "6733d6b01442d94b04d9ecb22e1cdc2ff1bfa1ba",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ed474651_4cf7d775",
+        "filename": "chrome/browser/ui/passwords/password_manager_porter_unittest.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 184,
+      "author": {
+        "id": 1168044
+      },
+      "writtenOn": "2017-11-09T10:21:07Z",
+      "side": 1,
+      "message": "If I replace TestBrowserThreadBundle with ScopedTaskEnvironment, the tests crash when mojo stuff are destroyed. I\u0027d rather let it be for now.\n\nAlso, TestBrowserThreadBundle and ScopedTaskEnvironment can\u0027t exist next to each other, despite the documentation saying otherwise.",
+      "parentUuid": "eff7e98f_013d2fc3",
+      "range": {
+        "startLine": 184,
+        "startChar": 11,
+        "endLine": 184,
+        "endChar": 34
+      },
+      "revId": "6733d6b01442d94b04d9ecb22e1cdc2ff1bfa1ba",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
