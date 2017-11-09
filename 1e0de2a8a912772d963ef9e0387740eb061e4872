@@ -49,6 +49,30 @@
     },
     {
       "key": {
+        "uuid": "dcc46163_dc129026",
+        "filename": "ios/chrome/browser/ssl/ios_ssl_error_handler.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 52,
+      "author": {
+        "id": 1148810
+      },
+      "writtenOn": "2017-11-09T22:42:21Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "f91fcf9b_3ea32609",
+      "range": {
+        "startLine": 52,
+        "startChar": 15,
+        "endLine": 52,
+        "endChar": 0
+      },
+      "revId": "1e0de2a8a912772d963ef9e0387740eb061e4872",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "08361c02_e89a8b10",
         "filename": "ios/chrome/browser/ssl/ios_ssl_error_handler.h",
         "patchSetId": 1
@@ -69,6 +93,30 @@
       "revId": "1e0de2a8a912772d963ef9e0387740eb061e4872",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8ddc95d6_2ee16a04",
+        "filename": "ios/chrome/browser/ssl/ios_ssl_error_handler.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 62,
+      "author": {
+        "id": 1148810
+      },
+      "writtenOn": "2017-11-09T22:42:21Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "08361c02_e89a8b10",
+      "range": {
+        "startLine": 62,
+        "startChar": 42,
+        "endLine": 62,
+        "endChar": 53
+      },
+      "revId": "1e0de2a8a912772d963ef9e0387740eb061e4872",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -95,6 +143,30 @@
     },
     {
       "key": {
+        "uuid": "60760a95_6d07f591",
+        "filename": "ios/chrome/browser/ssl/ios_ssl_error_handler.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 77,
+      "author": {
+        "id": 1148810
+      },
+      "writtenOn": "2017-11-09T22:42:21Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "12e5987c_9cf2c5ef",
+      "range": {
+        "startLine": 77,
+        "startChar": 23,
+        "endLine": 77,
+        "endChar": 33
+      },
+      "revId": "1e0de2a8a912772d963ef9e0387740eb061e4872",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "6d8c6e10_603b0d66",
         "filename": "ios/chrome/browser/ssl/ios_ssl_error_handler.mm",
         "patchSetId": 1
@@ -115,6 +187,30 @@
       "revId": "1e0de2a8a912772d963ef9e0387740eb061e4872",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "726770af_48eb47d3",
+        "filename": "ios/chrome/browser/ssl/ios_ssl_error_handler.mm",
+        "patchSetId": 1
+      },
+      "lineNbr": 68,
+      "author": {
+        "id": 1148810
+      },
+      "writtenOn": "2017-11-09T22:42:21Z",
+      "side": 1,
+      "message": "Using MakeUnique would require the constructor to be public, which is why I am using WrapUnique. I did look into other WebStateUserData objects and WrapUnique is the common pattern there as well.",
+      "parentUuid": "6d8c6e10_603b0d66",
+      "range": {
+        "startLine": 68,
+        "startChar": 12,
+        "endLine": 68,
+        "endChar": 22
+      },
+      "revId": "1e0de2a8a912772d963ef9e0387740eb061e4872",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -141,6 +237,30 @@
     },
     {
       "key": {
+        "uuid": "ec9f709d_0e7bf03e",
+        "filename": "ios/chrome/browser/ssl/ios_ssl_error_handler.mm",
+        "patchSetId": 1
+      },
+      "lineNbr": 70,
+      "author": {
+        "id": 1148810
+      },
+      "writtenOn": "2017-11-09T22:42:21Z",
+      "side": 1,
+      "message": "No, removed.",
+      "parentUuid": "96fdda64_7bceb153",
+      "range": {
+        "startLine": 70,
+        "startChar": 22,
+        "endLine": 70,
+        "endChar": 35
+      },
+      "revId": "1e0de2a8a912772d963ef9e0387740eb061e4872",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "3d13e689_b11ff77f",
         "filename": "ios/chrome/browser/ssl/ios_ssl_error_handler.mm",
         "patchSetId": 1
@@ -164,6 +284,30 @@
     },
     {
       "key": {
+        "uuid": "3bd99208_cfa64d5d",
+        "filename": "ios/chrome/browser/ssl/ios_ssl_error_handler.mm",
+        "patchSetId": 1
+      },
+      "lineNbr": 108,
+      "author": {
+        "id": 1148810
+      },
+      "writtenOn": "2017-11-09T22:42:21Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "3d13e689_b11ff77f",
+      "range": {
+        "startLine": 108,
+        "startChar": 4,
+        "endLine": 108,
+        "endChar": 48
+      },
+      "revId": "1e0de2a8a912772d963ef9e0387740eb061e4872",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "f0a0156c_7ce9150f",
         "filename": "ios/chrome/browser/ssl/ios_ssl_error_handler.mm",
         "patchSetId": 1
@@ -184,6 +328,30 @@
       "revId": "1e0de2a8a912772d963ef9e0387740eb061e4872",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "88b8706f_7a82bf49",
+        "filename": "ios/chrome/browser/ssl/ios_ssl_error_handler.mm",
+        "patchSetId": 1
+      },
+      "lineNbr": 152,
+      "author": {
+        "id": 1148810
+      },
+      "writtenOn": "2017-11-09T22:42:21Z",
+      "side": 1,
+      "message": "I added a note above this where I now explicitly cancel the captive portal detection.",
+      "parentUuid": "f0a0156c_7ce9150f",
+      "range": {
+        "startLine": 152,
+        "startChar": 51,
+        "endLine": 152,
+        "endChar": 55
+      },
+      "revId": "1e0de2a8a912772d963ef9e0387740eb061e4872",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
