@@ -140,6 +140,30 @@
       "revId": "7a2aac4f8ef2c2ce2f3ce5dcba232fd5a7539e22",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d687a6bb_2361a905",
+        "filename": "chrome/browser/sessions/session_data_deleter.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 127,
+      "author": {
+        "id": 1000763
+      },
+      "writtenOn": "2017-11-09T23:05:22Z",
+      "side": 1,
+      "message": "I\u0027m pretty sure we\u0027re relying on this behavior all over the place, but let me add Ken to make sure of that.\n\nOne other comment on this. If the set of cookies is large this is going to result in a large set of mojo IPCs. Would it be better to move this function into the service?",
+      "parentUuid": "4ac99a70_2482c02e",
+      "range": {
+        "startLine": 127,
+        "startChar": 8,
+        "endLine": 127,
+        "endChar": 60
+      },
+      "revId": "7a2aac4f8ef2c2ce2f3ce5dcba232fd5a7539e22",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
