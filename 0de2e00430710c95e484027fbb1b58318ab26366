@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "b06677cc_db2f2629",
+        "filename": "third_party/WebKit/public/platform/WebSecurityOrigin.h",
+        "patchSetId": 8
+      },
+      "lineNbr": 48,
+      "author": {
+        "id": 1115949
+      },
+      "writtenOn": "2017-11-09T03:10:40Z",
+      "side": 1,
+      "message": "(In a separate CL) Would you add a class comment when should this be used?",
+      "revId": "0de2e00430710c95e484027fbb1b58318ab26366",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
