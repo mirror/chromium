@@ -1,0 +1,72 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "21c2774d_0a96e936",
+        "filename": "chrome/browser/ui/views/harmony/harmony_typography_provider.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 168,
+      "author": {
+        "id": 1002092
+      },
+      "writtenOn": "2017-11-09T03:02:33Z",
+      "side": 1,
+      "message": "\u0026\u0026 style \u003d\u003d STYLE_PRIMARY? (otherwise embedded Links will not be blue, etc.)",
+      "revId": "d388fff5439f811edf21f2afb35598674eac6ba4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f7c18831_af6107e1",
+        "filename": "chrome/browser/ui/views/harmony/harmony_typography_provider.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 170,
+      "author": {
+        "id": 1002092
+      },
+      "writtenOn": "2017-11-09T03:02:33Z",
+      "side": 1,
+      "message": "otherwise - nit: no curlies (consistent with line 153)",
+      "revId": "d388fff5439f811edf21f2afb35598674eac6ba4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "884e3944_f3906709",
+        "filename": "ui/views/style/typography.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 53,
+      "author": {
+        "id": 1002092
+      },
+      "writtenOn": "2017-11-09T03:02:33Z",
+      "side": 1,
+      "message": ".. for body text.",
+      "revId": "d388fff5439f811edf21f2afb35598674eac6ba4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "811ad9e0_53464b03",
+        "filename": "ui/views/style/typography.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 54,
+      "author": {
+        "id": 1002092
+      },
+      "writtenOn": "2017-11-09T03:02:33Z",
+      "side": 1,
+      "message": "alphabetize",
+      "revId": "d388fff5439f811edf21f2afb35598674eac6ba4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
