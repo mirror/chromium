@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "980c9726_41070cb1",
+        "filename": "third_party/WebKit/Source/devtools/front_end/emulation/DeviceModeView.js",
+        "patchSetId": 4
+      },
+      "lineNbr": 104,
+      "author": {
+        "id": 1000379
+      },
+      "writtenOn": "2017-11-09T10:24:30Z",
+      "side": 1,
+      "message": "I think this is going to reset from 0 to some value, which is not intended.\nWhy don\u0027t we use setWidthAndScaleToFit here instead?",
+      "revId": "b3a46e2952e4603013d8a4369054340311b085ad",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
