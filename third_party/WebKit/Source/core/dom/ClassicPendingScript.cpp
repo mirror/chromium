@@ -44,14 +44,10 @@ ClassicPendingScript* ClassicPendingScript::Fetch(
   // Step 2. Set request's client to settings object. [spec text]
   //
   // Note: |element_document| corresponds to the settings object.
-  ScriptResource* resource =
-      ScriptResource::Fetch(params, element_document.Fetcher(), nullptr);
-  if (!resource)
+  pending_script->SetResource(ScriptResource::Fetch(
+      params, element_document.Fetcher(), pending_script));
+  if (!pending_script->GetResource())
     return nullptr;
-  pending_script->SetResource(resource);
-  resource->AddClient(
-      pending_script,
-      element_document.GetTaskRunner(TaskType::kUnspecedLoading).get());
   pending_script->CheckState();
   return pending_script;
 }
