@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "22b2a90d_598a22a9",
+        "filename": "chrome/browser/content_settings/tab_specific_content_settings.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 332,
+      "author": {
+        "id": 1142059
+      },
+      "writtenOn": "2017-11-09T05:03:06Z",
+      "side": 0,
+      "message": "Probably not intended?",
+      "revId": "5e48f901879796bf05fe124fdf82b45fe1d47bf2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}

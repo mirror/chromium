@@ -1,0 +1,123 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "4ebdbedf_9639f67c",
+        "filename": "chrome/browser/content_settings/framebust_block_tab_helper.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 7,
+      "author": {
+        "id": 1142059
+      },
+      "writtenOn": "2017-11-09T05:03:06Z",
+      "side": 1,
+      "message": "no longer used",
+      "revId": "e1058efe7086d52d93c0ab9d54d9c59dd25ac098",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f1e55760_3c4dec15",
+        "filename": "chrome/browser/content_settings/framebust_block_tab_helper.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 31,
+      "author": {
+        "id": 1142059
+      },
+      "writtenOn": "2017-11-09T05:03:06Z",
+      "side": 1,
+      "message": "#include \"base/logging.h\"",
+      "revId": "e1058efe7086d52d93c0ab9d54d9c59dd25ac098",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6b0a4d2c_1d503598",
+        "filename": "chrome/browser/content_settings/framebust_block_tab_helper.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 50,
+      "author": {
+        "id": 1142059
+      },
+      "writtenOn": "2017-11-09T05:03:06Z",
+      "side": 1,
+      "message": "Maybe also navigation_handle-\u003eIsSameDocument",
+      "revId": "e1058efe7086d52d93c0ab9d54d9c59dd25ac098",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a3210c4c_38df7e76",
+        "filename": "chrome/browser/content_settings/framebust_block_tab_helper.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 59,
+      "author": {
+        "id": 1142059
+      },
+      "writtenOn": "2017-11-09T05:03:06Z",
+      "side": 1,
+      "message": "#include \"url/gurl.h\"",
+      "revId": "e1058efe7086d52d93c0ab9d54d9c59dd25ac098",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b67025b4_fc82fe6c",
+        "filename": "chrome/browser/content_settings/framebust_block_tab_helper.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 67,
+      "author": {
+        "id": 1142059
+      },
+      "writtenOn": "2017-11-09T05:03:06Z",
+      "side": 1,
+      "message": "#include \"base/macros.h\"",
+      "revId": "e1058efe7086d52d93c0ab9d54d9c59dd25ac098",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a2cbcc8d_66a08f28",
+        "filename": "chrome/browser/ui/browser.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 1403,
+      "author": {
+        "id": 1142059
+      },
+      "writtenOn": "2017-11-09T05:03:06Z",
+      "side": 1,
+      "message": "Is it always guaranteed to have this tab-helper? Note that there are some WebContents that don\u0027t have all the tab helpers added (offline pages maybe?).",
+      "revId": "e1058efe7086d52d93c0ab9d54d9c59dd25ac098",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "af376a2a_59682857",
+        "filename": "chrome/browser/ui/content_settings/content_setting_bubble_model_browsertest.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 301,
+      "author": {
+        "id": 1142059
+      },
+      "writtenOn": "2017-11-09T05:03:06Z",
+      "side": 1,
+      "message": "No longer used",
+      "revId": "e1058efe7086d52d93c0ab9d54d9c59dd25ac098",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
