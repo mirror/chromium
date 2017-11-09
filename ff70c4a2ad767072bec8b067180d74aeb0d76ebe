@@ -1,0 +1,96 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "ba1ff2a7_e22fcce0",
+        "filename": "chrome/browser/notifications/notification_permission_context.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 161,
+      "author": {
+        "id": 1186534
+      },
+      "writtenOn": "2017-11-09T04:53:16Z",
+      "side": 1,
+      "message": "This class no longer needs the ContentSettingsType argument, since it is always CONTENT_SETTINGS_TYPE_NOTIFICATIONS (e.g. see all the other PermissionContext subclasses). We can remove this argument and simply pass CONTENT_SETTINGS_TYPE_NOTIFICATIONS to the base class constructor.",
+      "range": {
+        "startLine": 161,
+        "startChar": 3,
+        "endLine": 161,
+        "endChar": 45
+      },
+      "revId": "ff70c4a2ad767072bec8b067180d74aeb0d76ebe",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "500186fb_192bd8e5",
+        "filename": "chrome/browser/notifications/notification_permission_context_unittest.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 200,
+      "author": {
+        "id": 1186534
+      },
+      "writtenOn": "2017-11-09T04:53:16Z",
+      "side": 1,
+      "message": "Nit: please indent this at the same 2 space level as the rest of this test.",
+      "range": {
+        "startLine": 187,
+        "startChar": 4,
+        "endLine": 200,
+        "endChar": 36
+      },
+      "revId": "ff70c4a2ad767072bec8b067180d74aeb0d76ebe",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c7277392_914fcbe6",
+        "filename": "chrome/browser/permissions/permission_util.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 153,
+      "author": {
+        "id": 1186534
+      },
+      "writtenOn": "2017-11-09T04:53:16Z",
+      "side": 1,
+      "message": "This method is now a no-op (it simply returns the argument) so it can be removed now. All of its callers can simply use the |type| passed in as an argument in place of calling the method.",
+      "range": {
+        "startLine": 150,
+        "startChar": 0,
+        "endLine": 153,
+        "endChar": 1
+      },
+      "revId": "ff70c4a2ad767072bec8b067180d74aeb0d76ebe",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "64c9fcc7_078b64cc",
+        "filename": "content/public/browser/permission_type.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 17,
+      "author": {
+        "id": 1186534
+      },
+      "writtenOn": "2017-11-09T04:53:16Z",
+      "side": 1,
+      "message": "Nit: please put:\n\n// Unified with NOTIFICATIONS in M64 (see crbug.com/781672).\n// PUSH_MESSAGING \u003d 2,\n\nThat way it is clear in the code why a number is skipped here.",
+      "range": {
+        "startLine": 17,
+        "startChar": 2,
+        "endLine": 17,
+        "endChar": 15
+      },
+      "revId": "ff70c4a2ad767072bec8b067180d74aeb0d76ebe",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
