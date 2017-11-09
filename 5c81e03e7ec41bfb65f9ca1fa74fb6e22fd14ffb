@@ -1,0 +1,225 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "4b4d50e1_56c315d9",
+        "filename": "third_party/WebKit/Source/platform/heap/Bits.h",
+        "patchSetId": 14
+      },
+      "lineNbr": 9,
+      "author": {
+        "id": 1115916
+      },
+      "writtenOn": "2017-11-09T09:35:42Z",
+      "side": 1,
+      "message": "Shall we move the functions of the file to platform/wtf/BitwiseOperations.h? Also can we add a unittest for the functions?\n\nYou could land this part before landing the main part of this CL.",
+      "revId": "5c81e03e7ec41bfb65f9ca1fa74fb6e22fd14ffb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "707fdf7e_107b0165",
+        "filename": "third_party/WebKit/Source/platform/heap/Bits.h",
+        "patchSetId": 14
+      },
+      "lineNbr": 37,
+      "author": {
+        "id": 1115916
+      },
+      "writtenOn": "2017-11-09T09:35:42Z",
+      "side": 1,
+      "message": "Would you add an example? What does this function return for 00100010?",
+      "revId": "5c81e03e7ec41bfb65f9ca1fa74fb6e22fd14ffb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "54767ffc_f14f1dbb",
+        "filename": "third_party/WebKit/Source/platform/heap/Bits.h",
+        "patchSetId": 14
+      },
+      "lineNbr": 59,
+      "author": {
+        "id": 1115916
+      },
+      "writtenOn": "2017-11-09T09:35:42Z",
+      "side": 1,
+      "message": "Would you add an example? What does this function return for 00100010?",
+      "revId": "5c81e03e7ec41bfb65f9ca1fa74fb6e22fd14ffb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "84207c24_4b53ba5c",
+        "filename": "third_party/WebKit/Source/platform/heap/HeapPage.cpp",
+        "patchSetId": 14
+      },
+      "lineNbr": 687,
+      "author": {
+        "id": 1115916
+      },
+      "writtenOn": "2017-11-09T09:35:42Z",
+      "side": 1,
+      "message": "Instead of passing offset_, can we use the |this| address? We won\u0027t need offset_ in the first place. ObjectStartIndexAndBit() can use |this|.",
+      "revId": "5c81e03e7ec41bfb65f9ca1fa74fb6e22fd14ffb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "fea8a5fb_9e07506d",
+        "filename": "third_party/WebKit/Source/platform/heap/HeapPage.cpp",
+        "patchSetId": 14
+      },
+      "lineNbr": 747,
+      "author": {
+        "id": 1115916
+      },
+      "writtenOn": "2017-11-09T09:35:42Z",
+      "side": 1,
+      "message": "As far as I read this CL, it\u0027s not coherent whether free list entries are registered to the bitmap or not. In some cases free list entries are registered. In other cases, not.\n\nFor example, at line 746, you don\u0027t call SetBit().\n\nCan we make it coherent? I\u0027d prefer not registering free list entries at all.",
+      "revId": "5c81e03e7ec41bfb65f9ca1fa74fb6e22fd14ffb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "55e3e171_4238ac17",
+        "filename": "third_party/WebKit/Source/platform/heap/HeapPage.h",
+        "patchSetId": 14
+      },
+      "lineNbr": 467,
+      "author": {
+        "id": 1115916
+      },
+      "writtenOn": "2017-11-09T09:35:42Z",
+      "side": 1,
+      "message": "hint \u003d\u003e address_maybe_pointing_to_the_middle_of_object",
+      "revId": "5c81e03e7ec41bfb65f9ca1fa74fb6e22fd14ffb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c7e702f4_d1272747",
+        "filename": "third_party/WebKit/Source/platform/heap/HeapPage.h",
+        "patchSetId": 14
+      },
+      "lineNbr": 496,
+      "author": {
+        "id": 1115916
+      },
+      "writtenOn": "2017-11-09T09:35:42Z",
+      "side": 1,
+      "message": "What\u0027s the size of this table? Can we add a comment about it?",
+      "revId": "5c81e03e7ec41bfb65f9ca1fa74fb6e22fd14ffb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "94188283_1e0d2666",
+        "filename": "third_party/WebKit/Source/platform/heap/HeapPage.h",
+        "patchSetId": 14
+      },
+      "lineNbr": 575,
+      "author": {
+        "id": 1115916
+      },
+      "writtenOn": "2017-11-09T09:35:42Z",
+      "side": 1,
+      "message": "VerifyObjectStartBitmap()",
+      "revId": "5c81e03e7ec41bfb65f9ca1fa74fb6e22fd14ffb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "19ba711e_7b38ee11",
+        "filename": "third_party/WebKit/Source/platform/heap/HeapPage.h",
+        "patchSetId": 14
+      },
+      "lineNbr": 845,
+      "author": {
+        "id": 1115916
+      },
+      "writtenOn": "2017-11-09T09:35:42Z",
+      "side": 1,
+      "message": "VerifyObjectStartBitmap()",
+      "revId": "5c81e03e7ec41bfb65f9ca1fa74fb6e22fd14ffb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b08fa69e_3ba6686c",
+        "filename": "third_party/WebKit/Source/platform/heap/HeapPage.h",
+        "patchSetId": 14
+      },
+      "lineNbr": 1075,
+      "author": {
+        "id": 1115916
+      },
+      "writtenOn": "2017-11-09T09:35:42Z",
+      "side": 1,
+      "message": "Can we use PageFromObject, or at least share the implementation with PageFromObject?",
+      "revId": "5c81e03e7ec41bfb65f9ca1fa74fb6e22fd14ffb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "795ddf86_b81854af",
+        "filename": "third_party/WebKit/Source/platform/heap/HeapPage.h",
+        "patchSetId": 14
+      },
+      "lineNbr": 1103,
+      "author": {
+        "id": 1115916
+      },
+      "writtenOn": "2017-11-09T09:35:42Z",
+      "side": 1,
+      "message": "map_index \u003d\u003e cell_index",
+      "revId": "5c81e03e7ec41bfb65f9ca1fa74fb6e22fd14ffb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b8380963_3bda6c8e",
+        "filename": "third_party/WebKit/Source/platform/heap/HeapPage.h",
+        "patchSetId": 14
+      },
+      "lineNbr": 1118,
+      "author": {
+        "id": 1115916
+      },
+      "writtenOn": "2017-11-09T09:35:42Z",
+      "side": 1,
+      "message": "map_index \u003d\u003e cell_index",
+      "revId": "5c81e03e7ec41bfb65f9ca1fa74fb6e22fd14ffb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d0a06ea2_3aef1d0d",
+        "filename": "third_party/WebKit/Source/platform/heap/HeapPage.h",
+        "patchSetId": 14
+      },
+      "lineNbr": 1158,
+      "author": {
+        "id": 1115916
+      },
+      "writtenOn": "2017-11-09T09:35:42Z",
+      "side": 1,
+      "message": "This code is a bit misleading.\n\nIf |page| is a LargeObjectPage, how is it guaranteed that |page| is pointing to the beginning of the page? ...yes, it\u0027s guaranteed because LargeObjectPage will call HeapObjectHeader() only for that large object (which locates at the very beginning of the large object page).\n\nTo avoid the confusion, can we add two constructors for HeapObjectHeader()? One for objects in NormalPage and the other for LargeObjectPage. Then we can remove the IsLargeObjectPage() check.",
+      "revId": "5c81e03e7ec41bfb65f9ca1fa74fb6e22fd14ffb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
