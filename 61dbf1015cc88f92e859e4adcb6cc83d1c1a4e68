@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "ae5a7b15_d0fce1cd",
+        "filename": "third_party/WebKit/Source/core/dom/ng/SlotAssignmentTest.cpp",
+        "patchSetId": 4
+      },
+      "lineNbr": 1,
+      "author": {
+        "id": 1115903
+      },
+      "writtenOn": "2017-11-09T08:16:23Z",
+      "side": 1,
+      "message": "Done. Made it snake_case for consistency.",
+      "parentUuid": "8929d7f2_04111afb",
+      "revId": "61dbf1015cc88f92e859e4adcb6cc83d1c1a4e68",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "81465837_d36f93b5",
         "filename": "third_party/WebKit/Source/core/dom/ng/SlotAssignmentTest.cpp",
         "patchSetId": 4
@@ -33,6 +51,24 @@
       "revId": "61dbf1015cc88f92e859e4adcb6cc83d1c1a4e68",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f33976e5_c8a7ffb9",
+        "filename": "third_party/WebKit/Source/core/dom/ng/SlotAssignmentTest.cpp",
+        "patchSetId": 4
+      },
+      "lineNbr": 84,
+      "author": {
+        "id": 1115903
+      },
+      "writtenOn": "2017-11-09T08:16:23Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "81465837_d36f93b5",
+      "revId": "61dbf1015cc88f92e859e4adcb6cc83d1c1a4e68",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -53,6 +89,24 @@
     },
     {
       "key": {
+        "uuid": "e986b122_fcd0077b",
+        "filename": "third_party/WebKit/Source/core/dom/ng/SlotAssignmentTest.cpp",
+        "patchSetId": 4
+      },
+      "lineNbr": 116,
+      "author": {
+        "id": 1115903
+      },
+      "writtenOn": "2017-11-09T08:16:23Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "c3a498a7_d5d2ac16",
+      "revId": "61dbf1015cc88f92e859e4adcb6cc83d1c1a4e68",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "6f5d49c3_14ea6e0f",
         "filename": "third_party/WebKit/Source/core/dom/ng/SlotAssignmentTest.cpp",
         "patchSetId": 4
@@ -70,6 +124,24 @@
     },
     {
       "key": {
+        "uuid": "731fb0a0_e88ba99a",
+        "filename": "third_party/WebKit/Source/core/dom/ng/SlotAssignmentTest.cpp",
+        "patchSetId": 4
+      },
+      "lineNbr": 123,
+      "author": {
+        "id": 1115903
+      },
+      "writtenOn": "2017-11-09T08:16:23Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "6f5d49c3_14ea6e0f",
+      "revId": "61dbf1015cc88f92e859e4adcb6cc83d1c1a4e68",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "43c729c8_5024daf9",
         "filename": "third_party/WebKit/Source/core/dom/ng/SlotAssignmentTest.cpp",
         "patchSetId": 4
@@ -81,6 +153,24 @@
       "writtenOn": "2017-11-09T07:14:50Z",
       "side": 1,
       "message": "How about:\n\nShadowRoot* root \u003d host-\u003eGetShadowRoot();\nASSERT_NE(nullptr, root);\nEXPECT_EQ(root-\u003eGetType(), ShadowRootType::kOpen);",
+      "revId": "61dbf1015cc88f92e859e4adcb6cc83d1c1a4e68",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "75f0f23b_b8b43aac",
+        "filename": "third_party/WebKit/Source/core/dom/ng/SlotAssignmentTest.cpp",
+        "patchSetId": 4
+      },
+      "lineNbr": 124,
+      "author": {
+        "id": 1115903
+      },
+      "writtenOn": "2017-11-09T08:16:23Z",
+      "side": 1,
+      "message": "Ah, that might be better if we get a closed shadow root here. We get a better error message.\nBut I think that is a kind of redundant; 1 line becomes 3 lines.\n\nI don\u0027t have a strong opinion, but let me choose 1 line here.",
+      "parentUuid": "43c729c8_5024daf9",
       "revId": "61dbf1015cc88f92e859e4adcb6cc83d1c1a4e68",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
