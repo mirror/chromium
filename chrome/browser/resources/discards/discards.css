@@ -1,0 +1,90 @@
+/* Copyright 2017 The Chromium Authors. All rights reserved.
+ * Use of this source code is governed by a BSD-style license that can be
+ * found in the LICENSE file. */
+
+table {
+  border-collapse: collapse;
+}
+
+table td,
+table th {
+  border: 1px solid #777;
+  padding-left: 4px;
+  padding-right: 4px;
+}
+
+table th {
+  background: rgb(224, 236, 255);
+  cursor: pointer;
+  padding-bottom: 4px;
+  padding-right: 16px;
+  padding-top: 4px;
+  white-space: nowrap;
+}
+
+table td.title-cell {
+  vertical-align: middle;
+}
+
+table td div.favicon-div {
+  float: left;
+  height: 16px;
+  width: 16px;
+}
+
+.inactive-link {
+  opacity: 0.5;
+  text-decoration: underline;
+}
+
+.active-link {
+  cursor: pointer;
+  text-decoration: underline;
+}
+
+table td.title-cell {
+  max-width: 200px;
+  overflow: hidden;
+  white-space: nowrap;
+}
+
+table td.boolean-cell {
+  text-align: center;
+}
+
+table td div.favicon-div {
+  display: inline-block;
+  margin-right: 3px;
+  overflow: hidden;
+  white-space: nowrap;
+}
+
+table td div.title-div {
+  display: inline-block;
+  overflow: hidden;
+  white-space: nowrap;
+}
+
+table td.tab-url-cell {
+  max-width: 200px;
+  overflow: hidden;
+  white-space: nowrap;
+}
+
+table td div.is-auto-discardable-link {
+  font-size: 75%;
+}
+
+table tr:hover {
+  background: rgb(255, 255, 187);
+}
+
+th.sort-column::after {
+  content: '▲';
+  position: absolute;
+}
+
+th[sort-reverse].sort-column::after {
+  content: '▼';
+  position: absolute;
+}
