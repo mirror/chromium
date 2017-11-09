@@ -5,6 +5,8 @@
 #ifndef CHROME_BROWSER_SESSIONS_SESSION_RESTORE_OBSERVER_H_
 #define CHROME_BROWSER_SESSIONS_SESSION_RESTORE_OBSERVER_H_
 
+#include <stddef.h>
+
 namespace content {
 class WebContents;
 }
