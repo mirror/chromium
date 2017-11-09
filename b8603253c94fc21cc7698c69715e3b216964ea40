@@ -1,0 +1,72 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "a291c50e_3818a36c",
+        "filename": "net/spdy/chromium/http2_push_promise_index.cc",
+        "patchSetId": 11
+      },
+      "lineNbr": 100,
+      "author": {
+        "id": 1120845
+      },
+      "writtenOn": "2017-11-09T19:13:20Z",
+      "side": 1,
+      "message": "|it| -\u003e |url_it-\u003esecond| ?",
+      "revId": "b8603253c94fc21cc7698c69715e3b216964ea40",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "496ad183_f4edc569",
+        "filename": "net/spdy/chromium/http2_push_promise_index.h",
+        "patchSetId": 11
+      },
+      "lineNbr": 32,
+      "author": {
+        "id": 1120845
+      },
+      "writtenOn": "2017-11-09T19:13:20Z",
+      "side": 1,
+      "message": "minor nit: there are two \"on\"",
+      "revId": "b8603253c94fc21cc7698c69715e3b216964ea40",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c1ae9efe_0dc6d080",
+        "filename": "net/spdy/chromium/http2_push_promise_index.h",
+        "patchSetId": 11
+      },
+      "lineNbr": 49,
+      "author": {
+        "id": 1120845
+      },
+      "writtenOn": "2017-11-09T19:13:20Z",
+      "side": 1,
+      "message": "You mentioned this offline that the flow of the methods which goes from Http2PushPromiseIndex to SpdySession and back to Http2PushPromiseIndex is meandering. I agree with you.\n\nHow about instead of having \"ValidatePushedStream\" and \"OnPushedStreamClaimed\", there is only one delegate method (probably \"Claim\") that returns true if validation passed and the stream is considered \"claimed\" by the Delegate/SpdySession and false otherwise?\n\nThat way we do not need to round trip and the possibility in the design for re-entrancy. \n\nWDYT?",
+      "revId": "b8603253c94fc21cc7698c69715e3b216964ea40",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e5c20822_673f1358",
+        "filename": "net/spdy/chromium/spdy_session.cc",
+        "patchSetId": 11
+      },
+      "lineNbr": 797,
+      "author": {
+        "id": 1120845
+      },
+      "writtenOn": "2017-11-09T19:13:20Z",
+      "side": 1,
+      "message": "If the stream is claimed here, how does Http2PushPromiseIndex get updated?",
+      "revId": "b8603253c94fc21cc7698c69715e3b216964ea40",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
