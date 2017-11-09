@@ -6,6 +6,7 @@
 #define REMOTING_CLIENT_JNI_JNI_RUNTIME_DELEGATE_H_
 
 #include <jni.h>
+#include <memory>
 #include <string>
 
 #include "base/android/scoped_java_ref.h"
@@ -57,6 +58,7 @@ class JniRuntimeDelegate : public ChromotingClientRuntime::Delegate {
   // Detaches JVM from the current thread, then signals. Doesn't own |waiter|.
   void DetachFromVmAndSignal(base::WaitableEvent* waiter);
 
+  std::unique_ptr<OAuthTokenGetter> token_getter_;
   ChromotingClientRuntime* runtime_;
 
   friend struct base::DefaultSingletonTraits<JniRuntimeDelegate>;
