@@ -1,0 +1,55 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "125d8d89_76ad33ca",
+        "filename": "media/test/data/eme_player_js/player_utils.js",
+        "patchSetId": 3
+      },
+      "lineNbr": 72,
+      "author": {
+        "id": 1115974
+      },
+      "writtenOn": "2017-11-09T11:06:10Z",
+      "side": 1,
+      "message": "style: you could do\n```\nreturn mediaKeys.getStatusForPolicy({\n  minHdcpVersion: hdcpVersion\n}).then(keyStatus \u003d\u003e {\n  if (keyStatus \u003d\u003d expectedResult) {\n  [...]\n});",
+      "revId": "6128b4810b7a40d137b7331924d6ce8cb3cc1a8e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "fb11343f_df743b5b",
+        "filename": "third_party/WebKit/LayoutTests/media/encrypted-media/encrypted-media-getstatusforpolicy.html",
+        "patchSetId": 3
+      },
+      "lineNbr": 43,
+      "author": {
+        "id": 1115974
+      },
+      "writtenOn": "2017-11-09T11:06:10Z",
+      "side": 1,
+      "message": "Can you add a test for throwing getter, this should throw:\n```\nnavigator.requestMediaKeySystemAccess({[...]}).then(access \u003d\u003e {\n  return access.createMediaKeys();\n}).then(() \u003d\u003e {\n  return getStatusForHdcpPolicy({ get minHdcpVersion() { throw \u0027throwing getter\u0027; } });\n});\n```",
+      "revId": "6128b4810b7a40d137b7331924d6ce8cb3cc1a8e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3cb57e5d_506d05a1",
+        "filename": "third_party/WebKit/Source/modules/encryptedmedia/MediaKeysGetStatusForPolicy.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 20,
+      "author": {
+        "id": 1115974
+      },
+      "writtenOn": "2017-11-09T11:06:10Z",
+      "side": 1,
+      "message": "`const MediaKeysPolicy\u0026`?",
+      "revId": "6128b4810b7a40d137b7331924d6ce8cb3cc1a8e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
