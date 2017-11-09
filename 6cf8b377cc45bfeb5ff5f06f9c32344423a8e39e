@@ -49,6 +49,30 @@
     },
     {
       "key": {
+        "uuid": "0dff8253_0af08319",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/partnerbookmarks/PartnerBookmarksReader.java",
+        "patchSetId": 6
+      },
+      "lineNbr": 135,
+      "author": {
+        "id": 1230128
+      },
+      "writtenOn": "2017-11-09T16:39:58Z",
+      "side": 1,
+      "message": "Added a synchronized block for mShutDown.",
+      "parentUuid": "f221a20f_f83f10d6",
+      "range": {
+        "startLine": 135,
+        "startChar": 8,
+        "endLine": 135,
+        "endChar": 25
+      },
+      "revId": "6cf8b377cc45bfeb5ff5f06f9c32344423a8e39e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "3c7e48b2_0c31c32d",
         "filename": "chrome/browser/android/bookmarks/partner_bookmarks_reader.cc",
         "patchSetId": 6
@@ -93,6 +117,30 @@
       "revId": "6cf8b377cc45bfeb5ff5f06f9c32344423a8e39e",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0d42c807_c0f3c643",
+        "filename": "chrome/browser/android/bookmarks/partner_bookmarks_reader.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 313,
+      "author": {
+        "id": 1230128
+      },
+      "writtenOn": "2017-11-09T16:39:58Z",
+      "side": 1,
+      "message": "Ack, I\u0027ll add this shortly in a followup CL.",
+      "parentUuid": "e77a500b_ad876c97",
+      "range": {
+        "startLine": 313,
+        "startChar": 6,
+        "endLine": 313,
+        "endChar": 71
+      },
+      "revId": "6cf8b377cc45bfeb5ff5f06f9c32344423a8e39e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
