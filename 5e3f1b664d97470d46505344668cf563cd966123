@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "9391822c_bc5bc886",
+        "filename": "components/autofill/core/browser/autofill_wallet_data_type_controller.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 46,
+      "author": {
+        "id": 1002186
+      },
+      "writtenOn": "2017-11-09T22:56:07Z",
+      "side": 1,
+      "message": "nit: Given this is specifically reporting an error about policy, I\u0027d suggest renaming to DisableForPolicy or something like that (ReportUnrecoverableError makes it sound like this should be triggered for general errors). Same for the other files with this method.",
+      "range": {
+        "startLine": 46,
+        "startChar": 7,
+        "endLine": 46,
+        "endChar": 31
+      },
+      "revId": "5e3f1b664d97470d46505344668cf563cd966123",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
