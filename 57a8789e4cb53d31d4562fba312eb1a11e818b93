@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "6498e0c4_a0e60837",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 6
+      },
+      "lineNbr": 13,
+      "author": {
+        "id": 1196069
+      },
+      "writtenOn": "2017-11-09T20:09:26Z",
+      "side": 1,
+      "message": "Yes, that\u0027s do a problem. But we have to do it in some cases, say, H264 encoder on Windows accepts I420 only. We use I444 whenever possible.",
+      "parentUuid": "0b5b8bc3_cf0d42d5",
+      "range": {
+        "startLine": 13,
+        "startChar": 14,
+        "endLine": 13,
+        "endChar": 64
+      },
+      "revId": "57a8789e4cb53d31d4562fba312eb1a11e818b93",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "df7e45b0_570f647a",
         "filename": "remoting/codec/DEPS",
         "patchSetId": 6
@@ -36,6 +60,30 @@
       "writtenOn": "2017-11-09T06:48:48Z",
       "side": 1,
       "message": "Hmm...I\u0027m not totally comfortable with having an external dependency on media/cast code. I\u0027m worried that we might end up changing something that turns out to harm remoting\u0027s performance. However, let me think about this a bit more before you do anything about it: I need some time to think about the pros/cons of alternative approaches. :)",
+      "range": {
+        "startLine": 9,
+        "startChar": 0,
+        "endLine": 9,
+        "endChar": 16
+      },
+      "revId": "57a8789e4cb53d31d4562fba312eb1a11e818b93",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e3957c47_7f515451",
+        "filename": "remoting/codec/DEPS",
+        "patchSetId": 6
+      },
+      "lineNbr": 9,
+      "author": {
+        "id": 1196069
+      },
+      "writtenOn": "2017-11-09T20:09:26Z",
+      "side": 1,
+      "message": "Sure.\n\nThe goal of this change is to avoid duplicating the logic within Chromium: both chromecast and chromoting have own VP8 encoder wrappers. It\u0027s neither efficient nor maintainable.\n\nTo you concern about the impacting to the chromoting\u0027s performance. I think it should be fine, the duty of the encoder is to ensure the highest image quality within the limited bitrate and time. I do not see a very strong difference of the goal in encoder side between chromecast and chromoting.\nMore important, currently this is only an experiment feature, we won\u0027t choose cast encoder by default without evaluating the impact.",
+      "parentUuid": "df7e45b0_570f647a",
       "range": {
         "startLine": 9,
         "startChar": 0,
