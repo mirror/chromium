@@ -2,12 +2,23 @@
 // Use of this source code is governed by a BSD-style license that can be
 // found in the LICENSE file.
 
-#include "ios/chrome/browser/ui/tools_menu/tools_menu_constants.h"
+#include "ios/chrome/browser/ui/tools_menu/public/tools_menu_constants.h"
 
 #if !defined(__has_feature) || !__has_feature(objc_arc)
 #error "This file requires ARC support."
 #endif
 
+// Tools menu presentation notifications.
+NSString* const kToolsMenuWillShowNotification =
+    @"kToolsMenuWillShowNotification";
+NSString* const kToolsMenuWillHideNotification =
+    @"kToolsMenuWillHideNotification";
+NSString* const kToolsMenuDidShowNotification =
+    @"kToolsMenuDidShowNotification";
+NSString* const kToolsMenuDidHideNotification =
+    @"kToolsMenuDidHideNotification";
+
+// Tools menu item IDs.
 NSString* const kToolsMenuNewTabId = @"kToolsMenuNewTabId";
 NSString* const kToolsMenuNewIncognitoTabId = @"kToolsMenuNewIncognitoTabId";
 NSString* const kToolsMenuCloseAllTabsId = @"kToolsMenuCloseAllTabsId";

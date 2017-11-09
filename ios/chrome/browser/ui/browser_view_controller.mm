@@ -171,9 +171,9 @@
 #include "ios/chrome/browser/ui/toolbar/toolbar_model_delegate_ios.h"
 #include "ios/chrome/browser/ui/toolbar/toolbar_model_ios.h"
 #import "ios/chrome/browser/ui/toolbar/web_toolbar_controller.h"
+#import "ios/chrome/browser/ui/tools_menu/public/tools_menu_configuration_provider.h"
+#import "ios/chrome/browser/ui/tools_menu/public/tools_menu_presentation_provider.h"
 #import "ios/chrome/browser/ui/tools_menu/tools_menu_configuration.h"
-#import "ios/chrome/browser/ui/tools_menu/tools_menu_view_item.h"
-#import "ios/chrome/browser/ui/tools_menu/tools_popup_controller.h"
 #include "ios/chrome/browser/ui/ui_util.h"
 #import "ios/chrome/browser/ui/uikit_ui_util.h"
 #import "ios/chrome/browser/ui/util/pasteboard_util.h"
@@ -395,6 +395,7 @@ NSString* const kBrowserViewControllerSnackbarCategory =
                                     TabModelObserver,
                                     TabSnapshottingDelegate,
                                     TabStripPresentation,
+                                    ToolsMenuConfigurationProvider,
                                     UIGestureRecognizerDelegate,
                                     UpgradeCenterClientProtocol,
                                     VoiceSearchBarDelegate,
@@ -1214,6 +1215,7 @@ applicationCommandEndpoint:(id<ApplicationCommands>)applicationCommandEndpoint {
 - (void)setVisible:(BOOL)visible {
   if (_visible == visible)
     return;
+
   _visible = visible;
 }
 
@@ -1880,8 +1882,10 @@ applicationCommandEndpoint:(id<ApplicationCommands>)applicationCommandEndpoint {
       new ToolbarModelDelegateIOS([_model webStateList]));
   _toolbarModelIOS.reset([_dependencyFactory
       newToolbarModelIOSWithDelegate:_toolbarModelDelegate.get()]);
-  _toolbarCoordinator =
-      [[LegacyToolbarCoordinator alloc] initWithBaseViewController:self];
+  _toolbarCoordinator = [[LegacyToolbarCoordinator alloc]
+          initWithBaseViewController:self
+      toolsMenuConfigurationProvider:self
+                          dispatcher:self.dispatcher];
   _toolbarCoordinator.tabModel = _model;
   [_toolbarCoordinator
       setWebToolbar:[_dependencyFactory
@@ -2120,12 +2124,6 @@ applicationCommandEndpoint:(id<ApplicationCommands>)applicationCommandEndpoint {
   if (isPrerenderTab && !_toolbarModelIOS->IsLoading())
     [_toolbarCoordinator showPrerenderingAnimation];
 
-  // Also update the loading state for the tools menu (that is really an
-  // extension of the toolbar on the iPhone).
-  if (!IsIPadIdiom())
-    [[_toolbarCoordinator toolsPopupController]
-        setIsTabLoading:_toolbarModelIOS->IsLoading()];
-
   auto* findHelper = FindTabHelper::FromWebState(tab.webState);
   if (findHelper && findHelper->IsFindUIActive()) {
     [self showFindBarWithAnimation:NO
@@ -2154,7 +2152,7 @@ applicationCommandEndpoint:(id<ApplicationCommands>)applicationCommandEndpoint {
 }
 
 - (void)dismissPopups {
-  [_toolbarCoordinator dismissToolsMenuPopup];
+  [self.dispatcher dismissToolsMenu];
   [self.dispatcher hidePageInfo];
   [_tabHistoryCoordinator dismissHistoryPopup];
   [self.tabTipBubblePresenter dismissAnimated:YES];
@@ -4189,6 +4187,83 @@ bubblePresenterForFeature:(const base::Feature&)feature
   return card;
 }
 
+#pragma mark - Tools Menu Configuration delegate
+
+- (void)prepareForToolsMenuPresentationByCoordinator:
+    (ToolsMenuCoordinator*)coordinator {
+  DCHECK(_browserState);
+  DCHECK(self.visible || self.dismissingModal);
+
+  // Dismiss the omnibox (if open).
+  [_toolbarCoordinator cancelOmniboxEdit];
+  // Dismiss the soft keyboard (if open).
+  [[_model currentTab].webController dismissKeyboard];
+  // Dismiss Find in Page focus.
+  [self updateFindBar:NO shouldFocus:NO];
+
+  if (self.incognitoTabTipBubblePresenter.isUserEngaged) {
+    base::RecordAction(UserMetricsAction("NewIncognitoTabTipTargetSelected"));
+  }
+}
+
+- (ToolsMenuConfiguration*)menuConfigurationForToolsMenuCoordinator:
+    (ToolsMenuCoordinator*)coordinator {
+  ToolsMenuConfiguration* configuration =
+      [[ToolsMenuConfiguration alloc] initWithDisplayView:[self view]
+                                       baseViewController:self];
+  configuration.requestStartTime = [NSDate date].timeIntervalSinceReferenceDate;
+
+  if ([_model count] == 0)
+    [configuration setNoOpenedTabs:YES];
+
+  if (_isOffTheRecord)
+    [configuration setInIncognito:YES];
+
+  if (!_readingListMenuNotifier) {
+    _readingListMenuNotifier = [[ReadingListMenuNotifier alloc]
+        initWithReadingList:ReadingListModelFactory::GetForBrowserState(
+                                _browserState)];
+  }
+
+  feature_engagement::Tracker* engagementTracker =
+      feature_engagement::TrackerFactory::GetForBrowserState(_browserState);
+  if (engagementTracker->ShouldTriggerHelpUI(
+          feature_engagement::kIPHBadgedReadingListFeature)) {
+    [configuration setShowReadingListNewBadge:YES];
+    [configuration setEngagementTracker:engagementTracker];
+  }
+  [configuration setReadingListMenuNotifier:_readingListMenuNotifier];
+
+  [configuration setUserAgentType:self.userAgentType];
+
+  if (self.incognitoTabTipBubblePresenter.triggerFollowUpAction) {
+    [configuration setHighlightNewIncognitoTabCell:YES];
+    [self.incognitoTabTipBubblePresenter setTriggerFollowUpAction:NO];
+  }
+
+  return configuration;
+}
+
+- (BOOL)shouldHighlightBookmarkButtonForToolsMenuCoordinator:
+    (ToolsMenuCoordinator*)coordinator {
+  return [_model currentTab] ? _toolbarModelIOS->IsCurrentTabBookmarked() : NO;
+}
+
+- (BOOL)shouldShowFindBarForToolsMenuCoordinator:
+    (ToolsMenuCoordinator*)coordinator {
+  return [_model currentTab] ? self.canShowFindBar : NO;
+}
+
+- (BOOL)shouldShowShareMenuForToolsMenuCoordinator:
+    (ToolsMenuCoordinator*)coordinator {
+  return [_model currentTab] ? self.canShowShareMenu : NO;
+}
+
+- (BOOL)isTabLoadingForToolsMenuCoordinator:(ToolsMenuCoordinator*)coordinator {
+  return ([_model currentTab] && !IsIPadIdiom()) ? _toolbarModelIOS->IsLoading()
+                                                 : NO;
+}
+
 #pragma mark - BrowserCommands
 
 - (void)goBack {
@@ -4218,73 +4293,6 @@ bubblePresenterForFeature:(const base::Feature&)feature
   [_bookmarkInteractionController
       presentBookmarkForTab:[_model currentTab]
         currentlyBookmarked:_toolbarModelIOS->IsCurrentTabBookmarkedByUser()];
-}
-
-- (void)showToolsMenu {
-  DCHECK(_browserState);
-  DCHECK(self.visible || self.dismissingModal);
-
-  // Record the time this menu was requested; to be stored in the configuration
-  // object.
-  NSDate* showToolsMenuPopupRequestDate = [NSDate date];
-
-  // Dismiss the omnibox (if open).
-  [_toolbarCoordinator cancelOmniboxEdit];
-  // Dismiss the soft keyboard (if open).
-  [[_model currentTab].webController dismissKeyboard];
-  // Dismiss Find in Page focus.
-  [self updateFindBar:NO shouldFocus:NO];
-
-  ToolsMenuConfiguration* configuration =
-      [[ToolsMenuConfiguration alloc] initWithDisplayView:[self view]
-                                       baseViewController:self];
-  configuration.requestStartTime =
-      showToolsMenuPopupRequestDate.timeIntervalSinceReferenceDate;
-  if ([_model count] == 0)
-    [configuration setNoOpenedTabs:YES];
-
-  if (_isOffTheRecord)
-    [configuration setInIncognito:YES];
-
-  if (!_readingListMenuNotifier) {
-    _readingListMenuNotifier = [[ReadingListMenuNotifier alloc]
-        initWithReadingList:ReadingListModelFactory::GetForBrowserState(
-                                _browserState)];
-  }
-
-  feature_engagement::Tracker* engagementTracker =
-      feature_engagement::TrackerFactory::GetForBrowserState(_browserState);
-  if (engagementTracker->ShouldTriggerHelpUI(
-          feature_engagement::kIPHBadgedReadingListFeature)) {
-    [configuration setShowReadingListNewBadge:YES];
-    [configuration setEngagementTracker:engagementTracker];
-  }
-  [configuration setReadingListMenuNotifier:_readingListMenuNotifier];
-
-  [configuration setUserAgentType:self.userAgentType];
-
-  if (self.incognitoTabTipBubblePresenter.triggerFollowUpAction) {
-    [configuration setHighlightNewIncognitoTabCell:YES];
-    [self.incognitoTabTipBubblePresenter setTriggerFollowUpAction:NO];
-  }
-
-  if (self.incognitoTabTipBubblePresenter.isUserEngaged) {
-    base::RecordAction(UserMetricsAction("NewIncognitoTabTipTargetSelected"));
-  }
-
-  [_toolbarCoordinator showToolsMenuPopupWithConfiguration:configuration];
-
-  ToolsPopupController* toolsPopupController =
-      [_toolbarCoordinator toolsPopupController];
-  if ([_model currentTab]) {
-    BOOL isBookmarked = _toolbarModelIOS->IsCurrentTabBookmarked();
-    [toolsPopupController setIsCurrentPageBookmarked:isBookmarked];
-    [toolsPopupController setCanShowFindBar:self.canShowFindBar];
-    [toolsPopupController setCanShowShareMenu:self.canShowShareMenu];
-
-    if (!IsIPadIdiom())
-      [toolsPopupController setIsTabLoading:_toolbarModelIOS->IsLoading()];
-  }
 }
 
 - (void)openNewTab:(OpenNewTabCommand*)command {
@@ -4595,7 +4603,7 @@ bubblePresenterForFeature:(const base::Feature&)feature
   [_paymentRequestManager cancelRequest];
   [_printController dismissAnimated:YES];
   _printController = nil;
-  [_toolbarCoordinator dismissToolsMenuPopup];
+  [self.dispatcher dismissToolsMenu];
   [_contextMenuCoordinator stop];
   [self dismissRateThisAppDialog];
 
@@ -4989,7 +4997,7 @@ bubblePresenterForFeature:(const base::Feature&)feature
 }
 
 - (BOOL)preventSideSwipe {
-  if ([_toolbarCoordinator toolsPopupController])
+  if ([_toolbarCoordinator isShowingToolsMenu])
     return YES;
 
   if (_voiceSearchController && _voiceSearchController->IsVisible())
