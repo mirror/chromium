@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "eff7e98f_013d2fc3",
+        "filename": "chrome/browser/ui/passwords/password_manager_porter_unittest.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 184,
+      "author": {
+        "id": 1002541
+      },
+      "writtenOn": "2017-11-09T09:05:08Z",
+      "side": 1,
+      "message": "We should not need any named BrowserThreads, so perhaps ScopedTaskEnvironment is enough? In that case, ScopedTaskEnvironment::RunUntilIdle() should likely replace RunLoop().RunUntilIdle(). See https://chromium.googlesource.com/chromium/src/+/master/docs/task_scheduler_migration.md for some background.",
+      "range": {
+        "startLine": 184,
+        "startChar": 11,
+        "endLine": 184,
+        "endChar": 34
+      },
+      "revId": "6733d6b01442d94b04d9ecb22e1cdc2ff1bfa1ba",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
