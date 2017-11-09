@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "5a0adba1_2cde5644",
+        "filename": "third_party/WebKit/LayoutTests/http/tests/devtools/service-workers/service-workers-redundant-expected.txt",
+        "patchSetId": 1
+      },
+      "lineNbr": 105,
+      "author": {
+        "id": 1161850
+      },
+      "writtenOn": "2017-11-09T00:23:17Z",
+      "side": 1,
+      "message": "The service worker tests just dump the entire dom, and they contain hidden codemirror measuring elements.",
+      "revId": "38541fe32da63538f1583faca0ac7a0b68b4d385",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
