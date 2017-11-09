@@ -1,0 +1,26 @@
+enum LockMode { "shared", "exclusive" };
+
+dictionary LockOptions {
+  LockMode mode = "exclusive";
+  boolean ifAvailable = false;
+};
+
+callback LockGrantedCallback = any (Lock lock);
+
+[Exposed=(Window,Worker)]
+partial interface Navigator {
+  readonly attribute LockManager locks;
+};
+
+[Exposed=(Window,Worker)]
+interface LockManager {
+  Promise<any> acquire((DOMString or sequence<DOMString>) scope,
+                       LockRequestCallback callback,
+                       optional LockOptions options);
+};
+
+[Exposed=(Window,Worker)]
+interface Lock {
+  readonly attribute FrozenArray<DOMString> scope;
+  readonly attribute LockMode mode;
+};

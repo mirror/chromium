@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<title>Web Locks API: Exclusive Mode</title>
+<script src="/resources/testharness.js"></script>
+<script src="/resources/testharnessreport.js"></script>
+<script>
+'use strict';
+
+promise_test(async t => {
+  const granted = [];
+  function grant(n) { return () => { granted.push(n); }; }
+
+  await Promise.all([
+    navigator.locks.acquire(['a', 'b'], grant(1)),
+    navigator.locks.acquire(['b', 'c'], grant(2)),
+    navigator.locks.acquire(['c'], grant(3))
+  ]);
+  assert_array_equals(granted, [1, 2, 3]);
+}, 'Lock requests are granted in order');
+
+promise_test(async t => {
+  const granted = [];
+  function grant(n) { return () => { granted.push(n); }; }
+
+  let ps;
+  await navigator.locks.acquire('a', async lock => {
+    ps = Promise.all([
+      // This will be blocked.
+      navigator.locks.acquire(['a', 'b'], grant(1)),
+      // But this should be grantable immediately.
+      navigator.locks.acquire(['c', 'd'], grant(2))
+    ]);
+  });
+
+  await ps;
+  assert_array_equals(granted, [2, 1]);
+}, 'Requests with non-overlapping scopes can be granted');
+
+</script>
