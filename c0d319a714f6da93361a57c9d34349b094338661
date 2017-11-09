@@ -22,6 +22,30 @@
       "revId": "c0d319a714f6da93361a57c9d34349b094338661",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b31d9472_012ece80",
+        "filename": "chrome/browser/previews/previews_infobar_tab_helper.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 115,
+      "author": {
+        "id": 1147716
+      },
+      "writtenOn": "2017-11-09T17:54:25Z",
+      "side": 1,
+      "message": "Done and added mention of upcoming PreviewsUserData to use instead.",
+      "parentUuid": "713899ce_193de485",
+      "range": {
+        "startLine": 115,
+        "startChar": 35,
+        "endLine": 115,
+        "endChar": 38
+      },
+      "revId": "c0d319a714f6da93361a57c9d34349b094338661",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
