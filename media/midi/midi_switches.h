@@ -14,10 +14,6 @@
 namespace midi {
 namespace features {
 
-#if defined(OS_ANDROID)
-MIDI_EXPORT extern const base::Feature kMidiManagerAndroid;
-#endif
-
 #if defined(OS_WIN)
 MIDI_EXPORT extern const base::Feature kMidiManagerWinrt;
 #endif
