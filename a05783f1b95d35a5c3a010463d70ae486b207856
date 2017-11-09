@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "d0a078d1_1c78f817",
+        "filename": "chrome/common/extensions/api/windows.json",
+        "patchSetId": 8
+      },
+      "lineNbr": 228,
+      "author": {
+        "id": 1130134
+      },
+      "writtenOn": "2017-11-09T22:22:30Z",
+      "side": 1,
+      "message": "BTW: Please let me know if there is some kind of follow-up I should do, to make sure the new parameter/property is properly documented.",
+      "range": {
+        "startLine": 228,
+        "startChar": 15,
+        "endLine": 228,
+        "endChar": 30
+      },
+      "revId": "a05783f1b95d35a5c3a010463d70ae486b207856",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
