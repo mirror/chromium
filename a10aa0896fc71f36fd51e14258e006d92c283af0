@@ -1,0 +1,55 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "ff79b2b5_b669eca4",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 10
+      },
+      "lineNbr": 10,
+      "author": {
+        "id": 1115974
+      },
+      "writtenOn": "2017-11-09T11:37:05Z",
+      "side": 1,
+      "message": "Do we have plans to move these content/renderer/ users out of //content?",
+      "revId": "a10aa0896fc71f36fd51e14258e006d92c283af0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b951960d_af831e17",
+        "filename": "content/browser/manifest/manifest_manager_host.cc",
+        "patchSetId": 10
+      },
+      "lineNbr": 71,
+      "author": {
+        "id": 1115974
+      },
+      "writtenOn": "2017-11-09T11:37:05Z",
+      "side": 1,
+      "message": "Instead of adding `debug_info` everywhere, would it make sense to have a different call for this that would for now only be used by DevTools?",
+      "revId": "a10aa0896fc71f36fd51e14258e006d92c283af0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "da6102c5_d75e12cd",
+        "filename": "content/renderer/render_frame_impl.cc",
+        "patchSetId": 10
+      },
+      "lineNbr": 4916,
+      "author": {
+        "id": 1115974
+      },
+      "writtenOn": "2017-11-09T11:37:05Z",
+      "side": 1,
+      "message": "style: drop { }",
+      "revId": "a10aa0896fc71f36fd51e14258e006d92c283af0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
