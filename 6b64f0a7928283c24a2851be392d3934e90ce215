@@ -1,0 +1,96 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "9a8cec8e_aaae946d",
+        "filename": "chrome/browser/notifications/notification_permission_context_unittest.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 182,
+      "author": {
+        "id": 1186534
+      },
+      "writtenOn": "2017-11-09T01:58:34Z",
+      "side": 1,
+      "message": "\"Web notifications\"",
+      "range": {
+        "startLine": 182,
+        "startChar": 3,
+        "endLine": 182,
+        "endChar": 48
+      },
+      "revId": "6b64f0a7928283c24a2851be392d3934e90ce215",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9bb21978_d9e7e1d2",
+        "filename": "chrome/browser/notifications/notification_permission_context_unittest.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 187,
+      "author": {
+        "id": 1186534
+      },
+      "writtenOn": "2017-11-09T01:58:34Z",
+      "side": 1,
+      "message": "This can probably be removed.",
+      "range": {
+        "startLine": 187,
+        "startChar": 5,
+        "endLine": 187,
+        "endChar": 22
+      },
+      "revId": "6b64f0a7928283c24a2851be392d3934e90ce215",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b7dace1f_99f63c85",
+        "filename": "content/browser/push_messaging/push_messaging_manager.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 544,
+      "author": {
+        "id": 1186534
+      },
+      "writtenOn": "2017-11-09T01:58:34Z",
+      "side": 1,
+      "message": "Nit: notifications",
+      "range": {
+        "startLine": 544,
+        "startChar": 21,
+        "endLine": 544,
+        "endChar": 35
+      },
+      "revId": "6b64f0a7928283c24a2851be392d3934e90ce215",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e46678ab_cec37c8a",
+        "filename": "content/public/browser/permission_type.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 15,
+      "author": {
+        "id": 1186534
+      },
+      "writtenOn": "2017-11-09T01:58:34Z",
+      "side": 1,
+      "message": "As the comment says, this enum is used for UMA histograms and must be treated as append only. Changing the existing numbers here like this will break telemetry.",
+      "range": {
+        "startLine": 15,
+        "startChar": 11,
+        "endLine": 15,
+        "endChar": 25
+      },
+      "revId": "6b64f0a7928283c24a2851be392d3934e90ce215",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
