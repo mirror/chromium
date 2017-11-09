@@ -49,24 +49,28 @@ class TestBackgroundProfilingTriggers : public BackgroundProfilingTriggers {
 };
 
 OSMemDumpPtr GetFakeOSMemDump(uint32_t resident_set_kb,
-                              uint32_t private_footprint_kb) {
+                              uint32_t private_footprint_kb,
+                              uint32_t shared_footprint_kb) {
   using memory_instrumentation::mojom::VmRegion;
   std::vector<memory_instrumentation::mojom::VmRegionPtr> vm_regions;
   return memory_instrumentation::mojom::OSMemDump::New(
-      resident_set_kb, private_footprint_kb, std::move(vm_regions));
+      resident_set_kb, private_footprint_kb, shared_footprint_kb,
+      std::move(vm_regions));
 }
 
 void PopulateMetrics(GlobalMemoryDumpPtr& global_dump,
                      base::ProcessId pid,
                      ProcessType process_type,
                      uint32_t resident_set_kb,
-                     uint32_t private_memory_kb) {
+                     uint32_t private_memory_kb,
+                     uint32_t shared_footprint_kb) {
   ProcessMemoryDumpPtr pmd(
       memory_instrumentation::mojom::ProcessMemoryDump::New());
   pmd->pid = pid;
   pmd->process_type = process_type;
   pmd->chrome_dump = memory_instrumentation::mojom::ChromeMemDump::New();
-  pmd->os_dump = GetFakeOSMemDump(resident_set_kb, private_memory_kb);
+  pmd->os_dump =
+      GetFakeOSMemDump(resident_set_kb, private_memory_kb, shared_footprint_kb);
   global_dump->process_dumps.push_back(std::move(pmd));
 }
 
@@ -74,12 +78,12 @@ GlobalMemoryDumpPtr GetLargeMemoryDump() {
   GlobalMemoryDumpPtr dump(
       memory_instrumentation::mojom::GlobalMemoryDump::New());
   PopulateMetrics(dump, 1, ProcessType::BROWSER, kProcessMallocTriggerKb,
-                  kProcessMallocTriggerKb);
+                  kProcessMallocTriggerKb, kProcessMallocTriggerKb);
   PopulateMetrics(dump, 2, ProcessType::RENDERER, kProcessMallocTriggerKb,
-                  kProcessMallocTriggerKb);
-  PopulateMetrics(dump, 3, ProcessType::RENDERER, 1, 1);
+                  kProcessMallocTriggerKb, kProcessMallocTriggerKb);
+  PopulateMetrics(dump, 3, ProcessType::RENDERER, 1, 1, 1);
   PopulateMetrics(dump, 4, ProcessType::GPU, kProcessMallocTriggerKb,
-                  kProcessMallocTriggerKb);
+                  kProcessMallocTriggerKb, kProcessMallocTriggerKb);
   return dump;
 }
 
@@ -99,7 +103,7 @@ TEST(BackgroungProfilingTriggersTest, OnReceivedMemoryDump) {
   // A small browser process doesn't trigger a report.
   GlobalMemoryDumpPtr dump_browser(
       memory_instrumentation::mojom::GlobalMemoryDump::New());
-  PopulateMetrics(dump_browser, 1, ProcessType::BROWSER, 1, 1);
+  PopulateMetrics(dump_browser, 1, ProcessType::BROWSER, 1, 1, 1);
   triggers.OnReceivedMemoryDump(true, std::move(dump_browser));
   EXPECT_TRUE(triggers.pids_.empty());
 
@@ -112,7 +116,7 @@ TEST(BackgroungProfilingTriggersTest, OnReceivedMemoryDump) {
   // A small gpu process doesn't trigger a report.
   GlobalMemoryDumpPtr dump_gpu(
       memory_instrumentation::mojom::GlobalMemoryDump::New());
-  PopulateMetrics(dump_gpu, 1, ProcessType::GPU, 1, 1);
+  PopulateMetrics(dump_gpu, 1, ProcessType::GPU, 1, 1, 1);
   triggers.OnReceivedMemoryDump(true, std::move(dump_gpu));
   EXPECT_TRUE(triggers.pids_.empty());
 
