@@ -22,6 +22,30 @@
       "revId": "3e1134c2477b654d115f56c75c1e590b8d50f97d",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "392eacc1_7fb061fa",
+        "filename": "ui/events/event.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 1128,
+      "author": {
+        "id": 1109584
+      },
+      "writtenOn": "2017-11-09T21:57:42Z",
+      "side": 1,
+      "message": "Could we also update the last_key_event in here so that subsequent synthetic events get appropriate flags?",
+      "parentUuid": "7b46a6c8_5a161929",
+      "range": {
+        "startLine": 1122,
+        "startChar": 0,
+        "endLine": 1128,
+        "endChar": 6
+      },
+      "revId": "3e1134c2477b654d115f56c75c1e590b8d50f97d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
