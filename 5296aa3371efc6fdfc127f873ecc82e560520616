@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "64f0d6c6_b2b45873",
+        "filename": "content/browser/service_worker/service_worker_version.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 546,
+      "author": {
+        "id": 1001472
+      },
+      "writtenOn": "2017-11-09T07:11:09Z",
+      "side": 1,
+      "message": "I think almost all methods (or all methods) of this class run on IO thread, maybe no need to write this here or have \u0027all functions of this class run on the IO thread unless otherwise commented\u0027 as a class-level comment.\n\nAlso: looks like there\u0027re some method order shuffling, can we keep the order same in the .cc and in .h?",
+      "revId": "5296aa3371efc6fdfc127f873ecc82e560520616",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
