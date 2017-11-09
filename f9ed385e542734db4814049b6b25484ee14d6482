@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "859d6be7_686aca57",
+        "filename": "services/ui/ws/window_tree.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 1227,
+      "author": {
+        "id": 1115904
+      },
+      "writtenOn": "2017-11-09T21:58:02Z",
+      "side": 1,
+      "message": "Not a fan of the overloading methods by type, but it looks like there\u0027s a lot of that in this file, so ok.",
+      "range": {
+        "startLine": 1227,
+        "startChar": 17,
+        "endLine": 1227,
+        "endChar": 39
+      },
+      "revId": "f9ed385e542734db4814049b6b25484ee14d6482",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    }
+  ]
+}
