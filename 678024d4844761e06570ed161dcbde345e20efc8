@@ -1,0 +1,130 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "f47a2c60_7d9eef1f",
+        "filename": "net/http/http_server_properties_impl.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 150,
+      "author": {
+        "id": 1116006
+      },
+      "writtenOn": "2017-11-09T19:38:59Z",
+      "side": 1,
+      "message": "Could we merge this loop with the previous loop so that we only walk the map once?",
+      "range": {
+        "startLine": 150,
+        "startChar": 50,
+        "endLine": 150,
+        "endChar": 0
+      },
+      "revId": "678024d4844761e06570ed161dcbde345e20efc8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "77166407_4cc8a496",
+        "filename": "net/http/http_server_properties_impl.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 153,
+      "author": {
+        "id": 1116006
+      },
+      "writtenOn": "2017-11-09T19:38:59Z",
+      "side": 1,
+      "message": "I wonder if it would make sense to use base::flat_map for these two?",
+      "range": {
+        "startLine": 153,
+        "startChar": 14,
+        "endLine": 153,
+        "endChar": 15
+      },
+      "revId": "678024d4844761e06570ed161dcbde345e20efc8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "48d0a85c_365fe7e9",
+        "filename": "net/http/http_server_properties_impl.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 154,
+      "author": {
+        "id": 1116006
+      },
+      "writtenOn": "2017-11-09T19:38:59Z",
+      "side": 1,
+      "message": "As it happens, QuicServerId includes PrivacyMode. By including this as the key in this map we\u0027ll be prevented from doing speculative 0-RTT from across PrivacyMode boundaries in this way. I wondering if it would be better to have the key in this map just be host:port.",
+      "range": {
+        "startLine": 154,
+        "startChar": 19,
+        "endLine": 154,
+        "endChar": 31
+      },
+      "revId": "678024d4844761e06570ed161dcbde345e20efc8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4d3965fc_49adb9a0",
+        "filename": "net/http/http_server_properties_impl.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 163,
+      "author": {
+        "id": 1116006
+      },
+      "writtenOn": "2017-11-09T19:38:59Z",
+      "side": 1,
+      "message": "nit: GetCanonicalAltSvcHost()",
+      "revId": "678024d4844761e06570ed161dcbde345e20efc8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c0900942_dc8aeac2",
+        "filename": "net/http/http_server_properties_impl.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 172,
+      "author": {
+        "id": 1116006
+      },
+      "writtenOn": "2017-11-09T19:38:59Z",
+      "side": 1,
+      "message": "nit: \"... canonical alt-svc host ...\"",
+      "range": {
+        "startLine": 172,
+        "startChar": 26,
+        "endLine": 172,
+        "endChar": 30
+      },
+      "revId": "678024d4844761e06570ed161dcbde345e20efc8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "59434259_83173d09",
+        "filename": "net/http/http_server_properties_impl.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 179,
+      "author": {
+        "id": 1116006
+      },
+      "writtenOn": "2017-11-09T19:38:59Z",
+      "side": 1,
+      "message": "Your call, but I\u0027d probably just call this \"UpdateCanonicalServerInfoMap()\"\n\nnit: I\u0027m not sure I\u0027d call this argument \"origin\" it\u0027s it\u0027s not a scheme/host/port.",
+      "revId": "678024d4844761e06570ed161dcbde345e20efc8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
