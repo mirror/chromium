@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "896369c2_1496e3e9",
+        "filename": "ios/web/web_state/web_state_impl.mm",
+        "patchSetId": 2
+      },
+      "lineNbr": 334,
+      "author": {
+        "id": 1123009
+      },
+      "writtenOn": "2017-11-09T21:40:10Z",
+      "side": 1,
+      "message": "This new API contract is more closer to //content and generally make more sense to me. But could you please update the header comment to explain that the method returns. \n\nAlso could you please add a test for this API. I assume that none of existing tests have failed.",
+      "range": {
+        "startLine": 334,
+        "startChar": 51,
+        "endLine": 334,
+        "endChar": 65
+      },
+      "revId": "992b4a40af0a15736b9dcfe3acd78a129b7d5b7d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
