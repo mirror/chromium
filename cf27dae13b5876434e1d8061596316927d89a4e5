@@ -34,6 +34,24 @@
       "revId": "cf27dae13b5876434e1d8061596316927d89a4e5",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d9627fb2_99385839",
+        "filename": "chrome/browser/ui/browser_navigator.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 358,
+      "author": {
+        "id": 1130134
+      },
+      "writtenOn": "2017-11-09T17:24:21Z",
+      "side": 0,
+      "message": "Hmmm... the other CL passed tryjobs (one layout test needs to have its expectations updated, but this seems fine [the test is testing an implementation rather than web-visible behavior - I had to already update it once when fixing middle-click process allocation]).\n\nBut - I think I\u0027d rather do the |source_site_instance| removal in a separate CL (to mitigate risk and not block the window.name lookup granularity fix).  FWIW, I\u0027ve chatted with Alex and he says that we should have enough coverage in this area to be relatively confident based on the green tryjobs.\n\nAt any rate - I plan to follow-up with further discussion in the other CL.  Does that sound good?",
+      "parentUuid": "8da3c035_52faa243",
+      "revId": "cf27dae13b5876434e1d8061596316927d89a4e5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
