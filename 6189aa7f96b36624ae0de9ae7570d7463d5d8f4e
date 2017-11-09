@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "b327bbc1_f2d161f9",
+        "filename": "chrome/android/javatests/src/org/chromium/chrome/browser/browseractions/BrowserActionActivityTest.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 88,
+      "author": {
+        "id": 1233200
+      },
+      "writtenOn": "2017-11-09T00:49:55Z",
+      "side": 1,
+      "message": "The BrowserActionsItem requires a PendingIntent which need Context to construct, so it cannot be static.",
+      "parentUuid": "636f78ee_dd43dfab",
+      "range": {
+        "startLine": 88,
+        "startChar": 29,
+        "endLine": 88,
+        "endChar": 50
+      },
+      "revId": "6189aa7f96b36624ae0de9ae7570d7463d5d8f4e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "ab5df769_699325aa",
         "filename": "chrome/android/javatests/src/org/chromium/chrome/browser/browseractions/BrowserActionActivityTest.java",
         "patchSetId": 1
@@ -48,6 +72,30 @@
     },
     {
       "key": {
+        "uuid": "30c33b07_155a2d60",
+        "filename": "chrome/android/javatests/src/org/chromium/chrome/browser/browseractions/BrowserActionActivityTest.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 90,
+      "author": {
+        "id": 1233200
+      },
+      "writtenOn": "2017-11-09T00:49:55Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "ab5df769_699325aa",
+      "range": {
+        "startLine": 90,
+        "startChar": 29,
+        "endLine": 90,
+        "endChar": 50
+      },
+      "revId": "6189aa7f96b36624ae0de9ae7570d7463d5d8f4e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "491ab1d1_0b595005",
         "filename": "chrome/android/javatests/src/org/chromium/chrome/browser/browseractions/BrowserActionActivityTest.java",
         "patchSetId": 1
@@ -59,6 +107,30 @@
       "writtenOn": "2017-11-08T23:26:14Z",
       "side": 1,
       "message": "why do we need this check?  Is it a vector drawable?",
+      "range": {
+        "startLine": 218,
+        "startChar": 43,
+        "endLine": 218,
+        "endChar": 56
+      },
+      "revId": "6189aa7f96b36624ae0de9ae7570d7463d5d8f4e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a8ccb476_3874e92c",
+        "filename": "chrome/android/javatests/src/org/chromium/chrome/browser/browseractions/BrowserActionActivityTest.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 218,
+      "author": {
+        "id": 1233200
+      },
+      "writtenOn": "2017-11-09T00:49:55Z",
+      "side": 1,
+      "message": "Yes, this is a vectordrawable for L+, so pre L we throw an exception and the drawable will be null.",
+      "parentUuid": "491ab1d1_0b595005",
       "range": {
         "startLine": 218,
         "startChar": 43,
