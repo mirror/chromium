@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "6d6a7530_a40c6d83",
+        "filename": "chrome/browser/extensions/api/networking_private/networking_private_credentials_getter_win.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 20,
+      "author": {
+        "id": 1002246
+      },
+      "writtenOn": "2017-11-09T05:29:14Z",
+      "side": 1,
+      "message": "Removed (left-over from printing thread-name during development). Weird it did not get flagged by the linter warning since it\u0027s not ordered right.",
+      "parentUuid": "270fc12f_71f30051",
+      "revId": "9dcb7bceb88580c2ff24c7c8b47641ab95c1bd7c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "0bdc5be2_1b4839e4",
         "filename": "chrome/services/wifi_util_win/OWNERS",
         "patchSetId": 8
@@ -36,6 +54,24 @@
     },
     {
       "key": {
+        "uuid": "d97431cf_bdf16bd0",
+        "filename": "chrome/services/wifi_util_win/OWNERS",
+        "patchSetId": 8
+      },
+      "lineNbr": 2,
+      "author": {
+        "id": 1002246
+      },
+      "writtenOn": "2017-11-09T05:29:14Z",
+      "side": 1,
+      "message": "Oh, I though you were the original author.\nI was going to propose to add my name in there as well to be fair, but I am already an owner of chrome/services. Logging at the git blame I didn\u0027t see a clear author of the Windows part.\nDo you have anyone to suggest?",
+      "parentUuid": "0bdc5be2_1b4839e4",
+      "revId": "9dcb7bceb88580c2ff24c7c8b47641ab95c1bd7c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "9711e282_aedcf4ba",
         "filename": "chrome/services/wifi_util_win/public/interfaces/BUILD.gn",
         "patchSetId": 8
@@ -47,6 +83,24 @@
       "writtenOn": "2017-11-09T03:32:27Z",
       "side": 1,
       "message": "wifi_credentials_getter.mojom does not use common:common_custom_types, right?",
+      "revId": "9dcb7bceb88580c2ff24c7c8b47641ab95c1bd7c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d9dd2728_24bd1e21",
+        "filename": "chrome/services/wifi_util_win/public/interfaces/BUILD.gn",
+        "patchSetId": 8
+      },
+      "lineNbr": 14,
+      "author": {
+        "id": 1002246
+      },
+      "writtenOn": "2017-11-09T05:29:14Z",
+      "side": 1,
+      "message": "Removed.",
+      "parentUuid": "9711e282_aedcf4ba",
       "revId": "9dcb7bceb88580c2ff24c7c8b47641ab95c1bd7c",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -70,6 +124,24 @@
     },
     {
       "key": {
+        "uuid": "4d2f601b_621ef3ef",
+        "filename": "chrome/services/wifi_util_win/wifi_credentials_getter.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 8,
+      "author": {
+        "id": 1002246
+      },
+      "writtenOn": "2017-11-09T05:29:14Z",
+      "side": 1,
+      "message": "Removed.",
+      "parentUuid": "b1d03106_28daf31b",
+      "revId": "9dcb7bceb88580c2ff24c7c8b47641ab95c1bd7c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "0a68d681_abc9df07",
         "filename": "chrome/utility/chrome_content_utility_client.cc",
         "patchSetId": 8
@@ -87,6 +159,24 @@
     },
     {
       "key": {
+        "uuid": "ca346850_c8047871",
+        "filename": "chrome/utility/chrome_content_utility_client.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 312,
+      "author": {
+        "id": 1002246
+      },
+      "writtenOn": "2017-11-09T05:29:14Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "0a68d681_abc9df07",
+      "revId": "9dcb7bceb88580c2ff24c7c8b47641ab95c1bd7c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "d07afccc_ad9dbc01",
         "filename": "chrome/utility/chrome_content_utility_client.cc",
         "patchSetId": 8
@@ -98,6 +188,24 @@
       "writtenOn": "2017-11-09T03:32:27Z",
       "side": 1,
       "message": "Formerly, this interface was added only if the utility process is running elevated.  As a service, its get added regardless of elevation, which seems scary.\n\nIn fact, it hard to tell which of the services being adding in this routine need process elevation or not.  If the utility process is running elevated, perhaps we should only be adding elevated services here?  If the process is not running elevated, then only add the non-elevated services?  (We do that for mojo interfaces, see comment below).",
+      "revId": "9dcb7bceb88580c2ff24c7c8b47641ab95c1bd7c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6ab4e2ab_76a2731c",
+        "filename": "chrome/utility/chrome_content_utility_client.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 314,
+      "author": {
+        "id": 1002246
+      },
+      "writtenOn": "2017-11-09T05:29:14Z",
+      "side": 1,
+      "message": "Good point.\nI guess once we are done moving process launching to the service manager it won\u0027t be an issue anymore as we\u0027ll only register the started service in the process). But in the meantime we\u0027ll probably have to restrict it.\ntsepez@, what\u0027s your take on it?",
+      "parentUuid": "d07afccc_ad9dbc01",
       "revId": "9dcb7bceb88580c2ff24c7c8b47641ab95c1bd7c",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
