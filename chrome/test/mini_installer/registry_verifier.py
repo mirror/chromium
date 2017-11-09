@@ -34,6 +34,8 @@ class RegistryVerifier(verifier.Verifier):
         'MULTI_SZ': _winreg.REG_MULTI_SZ,
         'NONE': _winreg.REG_NONE,
         'SZ': _winreg.REG_SZ,
+        'KEY_WOW64_32KEY': _winreg.KEY_WOW64_32KEY,
+        'KEY_WOW64_64KEY': _winreg.KEY_WOW64_64KEY,
     }
     if value_type not in value_type_mapping:
       raise KeyError("Unknown registry value type '%s'" % value_type)
@@ -67,8 +69,14 @@ class RegistryVerifier(verifier.Verifier):
     try:
       # Query the Windows registry for the registry key. It will throw a
       # WindowsError if the key doesn't exist.
+      wow_key = _winreg.KEY_WOW64_32KEY
+      if 'values' in expectation:
+        wow_key = self._ValueTypeConstant(expectation['wow_key'])
+      elif variable_expander.Expand('BITNESS') == 'x64':
+        wow_key = _winreg.KEY_WOW64_64KEY
+
       key_handle = _winreg.OpenKey(self._RootKeyConstant(root_key), sub_key, 0,
-                                   _winreg.KEY_QUERY_VALUE)
+                                   _winreg.KEY_QUERY_VALUE | wow_key)
     except WindowsError:
       # Key doesn't exist. See that it matches the expectation.
       assert expectation['exists'] != 'required', ('Registry key %s is '
