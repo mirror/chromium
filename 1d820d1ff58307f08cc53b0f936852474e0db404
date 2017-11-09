@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "aa1c512f_bfff30fc",
+        "filename": "base/win/com_init_check_hook.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 23,
+      "author": {
+        "id": 1003325
+      },
+      "writtenOn": "2017-11-09T23:28:10Z",
+      "side": 1,
+      "message": "Nit: Use the full path here: http://crbug.com/737090",
+      "range": {
+        "startLine": 23,
+        "startChar": 51,
+        "endLine": 23,
+        "endChar": 63
+      },
+      "revId": "1d820d1ff58307f08cc53b0f936852474e0db404",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
