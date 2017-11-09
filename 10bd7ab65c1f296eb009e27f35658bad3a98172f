@@ -52,6 +52,24 @@
       "revId": "10bd7ab65c1f296eb009e27f35658bad3a98172f",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "36e34dd6_0116e517",
+        "filename": "chrome/browser/extensions/api/tabs/tabs_api.cc",
+        "patchSetId": 20
+      },
+      "lineNbr": 219,
+      "author": {
+        "id": 1001380
+      },
+      "writtenOn": "2017-11-09T16:13:35Z",
+      "side": 1,
+      "message": "Ah sorry my mistake. I mixed up with WINDOW_STATE and SHOW_STATE. lgtm then.",
+      "parentUuid": "97852d83_96ab3bea",
+      "revId": "10bd7ab65c1f296eb009e27f35658bad3a98172f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
