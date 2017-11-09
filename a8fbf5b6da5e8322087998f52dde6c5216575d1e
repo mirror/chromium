@@ -16,6 +16,23 @@
       "revId": "a8fbf5b6da5e8322087998f52dde6c5216575d1e",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d2a8f65b_33b3b5aa",
+        "filename": "chrome/browser/chromeos/arc/arc_session_manager.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 723,
+      "author": {
+        "id": 1000303
+      },
+      "writtenOn": "2017-11-09T20:20:03Z",
+      "side": 1,
+      "message": "To not break master, you probably want to guard this with ShouldArcOnlyStartAfterLogin() for now (until your run_oci work is done.)\n\n if (!ShouldArcOnlyStartAfterLogin())\n   arc_session_runner_-\u003eRequestStart(ArcInstanceMode::MINI_INSTANCE);",
+      "revId": "a8fbf5b6da5e8322087998f52dde6c5216575d1e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
