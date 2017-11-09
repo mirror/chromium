@@ -246,6 +246,24 @@
       "revId": "87f0fb87e85e6b6f23f6ff467558bafdb59fe06e",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "974c82fc_fed90871",
+        "filename": "ui/display/manager/display_manager.cc",
+        "patchSetId": 14
+      },
+      "lineNbr": 1241,
+      "author": {
+        "id": 1146978
+      },
+      "writtenOn": "2017-11-09T16:43:14Z",
+      "side": 1,
+      "message": "I was mostly wondering if returning false in FindMirrorMode()/ParseDisplays() was all that happened on device. It sounds like that is the case though!",
+      "parentUuid": "39a600f2_52e70d49",
+      "revId": "87f0fb87e85e6b6f23f6ff467558bafdb59fe06e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
