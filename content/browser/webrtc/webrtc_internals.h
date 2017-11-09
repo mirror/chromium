@@ -153,9 +153,9 @@ class CONTENT_EXPORT WebRTCInternals : public RenderProcessHostObserver,
   // |audio_debug_recordings_file_path_|.
   void EnableAudioDebugRecordingsOnAllRenderProcessHosts();
 
-  // Enables event log recordings on all render process hosts using
+  // Enables local RTC event log recordings on all render process hosts using
   // |event_log_recordings_file_path_|.
-  void EnableEventLogRecordingsOnAllRenderProcessHosts();
+  void EnableLocalEventLogRecordingsOnAllRenderProcessHosts();
 #endif
 
   // Updates the number of open PeerConnections. Called when a PeerConnection
