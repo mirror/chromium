@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "10b22e24_6bd0c400",
+        "filename": "chrome/browser/printing/print_job.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 483,
+      "author": {
+        "id": 1001934
+      },
+      "writtenOn": "2017-11-09T22:21:22Z",
+      "side": 1,
+      "message": "Random new line.",
+      "revId": "2485ba6f3670a3ceb3231795683f2a32ed80f4b7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
