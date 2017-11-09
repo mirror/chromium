@@ -84,6 +84,30 @@
     },
     {
       "key": {
+        "uuid": "6e19f85d_3e1608b3",
+        "filename": "gpu/command_buffer/service/scheduler.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 233,
+      "author": {
+        "id": 1128437
+      },
+      "writtenOn": "2017-11-09T00:02:16Z",
+      "side": 1,
+      "message": "Storing release sequence id is better as it avoids acquiring the lock and map lookup in SyncPointManager on every call to GetSequenceId. Since release_sequence can be null in Add/RemoveWaitFence, you\u0027ll need to add another param for the id. It may make sense to move the release_sequence-\u003eAdd/RemoveWaitingPriority calls out of Sequence::Add/RemoveWaitFence and into the Scheduler methods that call that.",
+      "parentUuid": "f2ee82a1_349cd243",
+      "range": {
+        "startLine": 233,
+        "startChar": 47,
+        "endLine": 233,
+        "endChar": 58
+      },
+      "revId": "dea014b616d39bb3276ba9b017f5e9a512da9a5e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "0c7891b5_bc9c1e95",
         "filename": "gpu/command_buffer/service/scheduler_unittest.cc",
         "patchSetId": 4

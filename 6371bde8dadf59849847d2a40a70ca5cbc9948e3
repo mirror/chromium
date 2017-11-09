@@ -1,0 +1,78 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "87c1e47d_463df461",
+        "filename": "gpu/command_buffer/service/scheduler_unittest.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 114,
+      "author": {
+        "id": 1128437
+      },
+      "writtenOn": "2017-11-09T00:02:16Z",
+      "side": 1,
+      "message": "nit: Does sequence_info_.emplace(std::make_pair(sequence_key, std::move(SequenceInfo(...))) not work? If not, can we lose the const to make this more readable?",
+      "revId": "6371bde8dadf59849847d2a40a70ca5cbc9948e3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e632e23c_ff414b55",
+        "filename": "gpu/command_buffer/service/scheduler_unittest.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 133,
+      "author": {
+        "id": 1128437
+      },
+      "writtenOn": "2017-11-09T00:02:16Z",
+      "side": 1,
+      "message": "nit: same as above",
+      "revId": "6371bde8dadf59849847d2a40a70ca5cbc9948e3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "273de7f8_9c9c7919",
+        "filename": "gpu/command_buffer/service/scheduler_unittest.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 177,
+      "author": {
+        "id": 1128437
+      },
+      "writtenOn": "2017-11-09T00:02:16Z",
+      "side": 1,
+      "message": "nit: should this be a constant e.g. kNamespaceId?",
+      "revId": "6371bde8dadf59849847d2a40a70ca5cbc9948e3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "55a529de_1b2f53ba",
+        "filename": "gpu/command_buffer/service/scheduler_unittest.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 283,
+      "author": {
+        "id": 1128437
+      },
+      "writtenOn": "2017-11-09T00:02:16Z",
+      "side": 1,
+      "message": "nit: this should not release 0 since task 0 does the same",
+      "range": {
+        "startLine": 283,
+        "startChar": 25,
+        "endLine": 283,
+        "endChar": 27
+      },
+      "revId": "6371bde8dadf59849847d2a40a70ca5cbc9948e3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
