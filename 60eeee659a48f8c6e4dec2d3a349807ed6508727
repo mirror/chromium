@@ -1,0 +1,372 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "d2ab47d8_70f3ff6a",
+        "filename": "chrome/browser/signin/chrome_signin_helper_browsertest.cc",
+        "patchSetId": 10
+      },
+      "lineNbr": 16,
+      "author": {
+        "id": 1175129
+      },
+      "writtenOn": "2017-11-09T16:44:35Z",
+      "side": 1,
+      "message": "nit: Is this include necessary?",
+      "range": {
+        "startLine": 16,
+        "startChar": 19,
+        "endLine": 16,
+        "endChar": 36
+      },
+      "revId": "60eeee659a48f8c6e4dec2d3a349807ed6508727",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "74e03ea6_c53f4c10",
+        "filename": "chrome/browser/signin/chrome_signin_helper_browsertest.cc",
+        "patchSetId": 10
+      },
+      "lineNbr": 18,
+      "author": {
+        "id": 1175129
+      },
+      "writtenOn": "2017-11-09T16:44:35Z",
+      "side": 1,
+      "message": "nit: Is this include necessary?",
+      "range": {
+        "startLine": 18,
+        "startChar": 42,
+        "endLine": 18,
+        "endChar": 57
+      },
+      "revId": "60eeee659a48f8c6e4dec2d3a349807ed6508727",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "91369342_f645acad",
+        "filename": "chrome/browser/signin/chrome_signin_helper_browsertest.cc",
+        "patchSetId": 10
+      },
+      "lineNbr": 21,
+      "author": {
+        "id": 1175129
+      },
+      "writtenOn": "2017-11-09T16:44:35Z",
+      "side": 1,
+      "message": "nit: Is this include necessary?",
+      "range": {
+        "startLine": 21,
+        "startChar": 41,
+        "endLine": 21,
+        "endChar": 58
+      },
+      "revId": "60eeee659a48f8c6e4dec2d3a349807ed6508727",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "aabacec9_b9aaca5f",
+        "filename": "chrome/browser/signin/chrome_signin_helper_browsertest.cc",
+        "patchSetId": 10
+      },
+      "lineNbr": 24,
+      "author": {
+        "id": 1175129
+      },
+      "writtenOn": "2017-11-09T16:44:35Z",
+      "side": 1,
+      "message": "nit: Is this include necessary?",
+      "range": {
+        "startLine": 24,
+        "startChar": 34,
+        "endLine": 24,
+        "endChar": 43
+      },
+      "revId": "60eeee659a48f8c6e4dec2d3a349807ed6508727",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2aaef907_c00958ae",
+        "filename": "chrome/browser/signin/chrome_signin_helper_browsertest.cc",
+        "patchSetId": 10
+      },
+      "lineNbr": 28,
+      "author": {
+        "id": 1175129
+      },
+      "writtenOn": "2017-11-09T16:44:35Z",
+      "side": 1,
+      "message": "nit: Shouldn\u0027t this be \n\n#include \"net/url_request/url_request.h\"\n#include \"net/url_request/url_request_context.h\"\nand maybe #include \"net/url_request/url_request_context_getter.h\"\n\n// do we need something specifically from url_request_test_util.h?",
+      "range": {
+        "startLine": 28,
+        "startChar": 26,
+        "endLine": 28,
+        "endChar": 47
+      },
+      "revId": "60eeee659a48f8c6e4dec2d3a349807ed6508727",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "69dcdd42_646b42b5",
+        "filename": "chrome/browser/signin/chrome_signin_helper_browsertest.cc",
+        "patchSetId": 10
+      },
+      "lineNbr": 33,
+      "author": {
+        "id": 1175129
+      },
+      "writtenOn": "2017-11-09T16:44:35Z",
+      "side": 1,
+      "message": "nit: If you don\u0027t want to define this here, maybe it\u0027s possible to use GaiaUrls::GetInstance()-\u003egaia_url()\n\nAlso, IIRC the rule of no complex types used in globals applies to this too.",
+      "range": {
+        "startLine": 33,
+        "startChar": 11,
+        "endLine": 33,
+        "endChar": 19
+      },
+      "revId": "60eeee659a48f8c6e4dec2d3a349807ed6508727",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e3cd30cf_a3fcceb4",
+        "filename": "chrome/browser/signin/chrome_signin_helper_browsertest.cc",
+        "patchSetId": 10
+      },
+      "lineNbr": 39,
+      "author": {
+        "id": 1175129
+      },
+      "writtenOn": "2017-11-09T16:44:35Z",
+      "side": 1,
+      "message": "nit: Consider including these in the anonymous namespace too",
+      "range": {
+        "startLine": 39,
+        "startChar": 5,
+        "endLine": 39,
+        "endChar": 23
+      },
+      "revId": "60eeee659a48f8c6e4dec2d3a349807ed6508727",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7a2dab3f_64af4203",
+        "filename": "chrome/browser/signin/chrome_signin_helper_browsertest.cc",
+        "patchSetId": 10
+      },
+      "lineNbr": 42,
+      "author": {
+        "id": 1175129
+      },
+      "writtenOn": "2017-11-09T16:44:35Z",
+      "side": 1,
+      "message": "nit: expected_has_header ?",
+      "range": {
+        "startLine": 42,
+        "startChar": 7,
+        "endLine": 42,
+        "endChar": 22
+      },
+      "revId": "60eeee659a48f8c6e4dec2d3a349807ed6508727",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f7e2fe15_dce2d14d",
+        "filename": "chrome/browser/signin/chrome_signin_helper_browsertest.cc",
+        "patchSetId": 10
+      },
+      "lineNbr": 44,
+      "author": {
+        "id": 1175129
+      },
+      "writtenOn": "2017-11-09T16:44:35Z",
+      "side": 1,
+      "message": "nit: #include \"testing/gtest/include/gtest/gtest.h\"",
+      "range": {
+        "startLine": 44,
+        "startChar": 2,
+        "endLine": 44,
+        "endChar": 11
+      },
+      "revId": "60eeee659a48f8c6e4dec2d3a349807ed6508727",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b348fc5b_10cdd615",
+        "filename": "chrome/browser/signin/chrome_signin_helper_browsertest.cc",
+        "patchSetId": 10
+      },
+      "lineNbr": 53,
+      "author": {
+        "id": 1175129
+      },
+      "writtenOn": "2017-11-09T16:44:35Z",
+      "side": 1,
+      "message": "nit: const std::string\u0026",
+      "range": {
+        "startLine": 53,
+        "startChar": 43,
+        "endLine": 53,
+        "endChar": 54
+      },
+      "revId": "60eeee659a48f8c6e4dec2d3a349807ed6508727",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7b4195e7_dcfe941c",
+        "filename": "chrome/browser/signin/chrome_signin_helper_browsertest.cc",
+        "patchSetId": 10
+      },
+      "lineNbr": 70,
+      "author": {
+        "id": 1175129
+      },
+      "writtenOn": "2017-11-09T16:44:35Z",
+      "side": 1,
+      "message": "nit: Consider adding a comment that |expected_header_value| is the expected value of the \"X-Chrome-Connected\" header.",
+      "range": {
+        "startLine": 70,
+        "startChar": 5,
+        "endLine": 70,
+        "endChar": 32
+      },
+      "revId": "60eeee659a48f8c6e4dec2d3a349807ed6508727",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "db7baab9_770212b3",
+        "filename": "chrome/browser/signin/chrome_signin_helper_browsertest.cc",
+        "patchSetId": 10
+      },
+      "lineNbr": 71,
+      "author": {
+        "id": 1175129
+      },
+      "writtenOn": "2017-11-09T16:44:35Z",
+      "side": 1,
+      "message": "nit:const std::string\u0026",
+      "range": {
+        "startLine": 71,
+        "startChar": 38,
+        "endLine": 71,
+        "endChar": 44
+      },
+      "revId": "60eeee659a48f8c6e4dec2d3a349807ed6508727",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "85b7fcb2_592c13dc",
+        "filename": "chrome/browser/signin/chrome_signin_helper_browsertest.cc",
+        "patchSetId": 10
+      },
+      "lineNbr": 78,
+      "author": {
+        "id": 1175129
+      },
+      "writtenOn": "2017-11-09T16:44:35Z",
+      "side": 1,
+      "message": "nit: #include \"content/public/browser/browser_thread.h\"",
+      "range": {
+        "startLine": 78,
+        "startChar": 26,
+        "endLine": 78,
+        "endChar": 42
+      },
+      "revId": "60eeee659a48f8c6e4dec2d3a349807ed6508727",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "34d13430_15332f3a",
+        "filename": "chrome/browser/signin/chrome_signin_helper_browsertest.cc",
+        "patchSetId": 10
+      },
+      "lineNbr": 80,
+      "author": {
+        "id": 1175129
+      },
+      "writtenOn": "2017-11-09T16:44:35Z",
+      "side": 1,
+      "message": "Have you considered passing profile-\u003eGetRequestContext() to TestMirrorRequestForProfileOnIOThread instead, and running GetURLRequestContext() in TestMirrorRequestForProfileOnIOThread on the passed value? \n\nIIUC that\u0027s the standard way to get at the profile\u0027s request context.",
+      "range": {
+        "startLine": 80,
+        "startChar": 60,
+        "endLine": 80,
+        "endChar": 70
+      },
+      "revId": "60eeee659a48f8c6e4dec2d3a349807ed6508727",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6e6417fa_b0e5f20e",
+        "filename": "chrome/browser/signin/chrome_signin_helper_browsertest.cc",
+        "patchSetId": 10
+      },
+      "lineNbr": 94,
+      "author": {
+        "id": 1175129
+      },
+      "writtenOn": "2017-11-09T16:44:35Z",
+      "side": 1,
+      "message": "nit: #include \"components/signin/core/account_id/account_id.h\"",
+      "range": {
+        "startLine": 94,
+        "startChar": 8,
+        "endLine": 94,
+        "endChar": 17
+      },
+      "revId": "60eeee659a48f8c6e4dec2d3a349807ed6508727",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8d13b746_21b0fbfa",
+        "filename": "chrome/browser/signin/chrome_signin_helper_browsertest.cc",
+        "patchSetId": 10
+      },
+      "lineNbr": 120,
+      "author": {
+        "id": 1175129
+      },
+      "writtenOn": "2017-11-09T16:44:35Z",
+      "side": 1,
+      "message": "For my understanding: Why is this being set here and not being set in TestMirrorRequestChromeOsNotChildAccount?\n\nA comment would be nice explaining why this is necessary / what it means.",
+      "range": {
+        "startLine": 120,
+        "startChar": 27,
+        "endLine": 120,
+        "endChar": 53
+      },
+      "revId": "60eeee659a48f8c6e4dec2d3a349807ed6508727",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
