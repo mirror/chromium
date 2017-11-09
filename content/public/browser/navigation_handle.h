@@ -26,6 +26,7 @@ class HttpResponseHeaders;
 
 namespace content {
 struct GlobalRequestID;
+class NavigationUIData;
 class NavigationData;
 class NavigationThrottle;
 class RenderFrameHost;
@@ -116,6 +117,9 @@ class CONTENT_EXPORT NavigationHandle {
 
   // Used for specifying a base URL for pages loaded via data URLs.
   virtual const GURL& GetBaseURLForDataURL() = 0;
+
+  // Returns the NavigationUIData created at the start of the navigation.
+  virtual NavigationUIData* GetNavigationUIData() const = 0;
 
   // Parameters available at network request start time ------------------------
   //

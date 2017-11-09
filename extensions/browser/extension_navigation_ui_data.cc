@@ -14,7 +14,10 @@ ExtensionNavigationUIData::ExtensionNavigationUIData() {}
 ExtensionNavigationUIData::ExtensionNavigationUIData(
     content::NavigationHandle* navigation_handle,
     int tab_id,
-    int window_id) {
+    int window_id,
+    WindowOpenDisposition disposition,
+    bool had_target_contents,
+    bool is_from_app) {
   // TODO(clamy): See if it would be possible to have just one source for the
   // FrameData that works both for navigations and subresources loads.
   frame_data_.frame_id = ExtensionApiFrameIdMap::GetFrameId(navigation_handle);
@@ -33,6 +36,10 @@ ExtensionNavigationUIData::ExtensionNavigationUIData(
     is_web_view_ = false;
     web_view_instance_id_ = web_view_rules_registry_id_ = 0;
   }
+
+  disposition_ = disposition;
+  had_target_contents_ = had_target_contents;
+  is_from_app_ = is_from_app;
 }
 
 std::unique_ptr<ExtensionNavigationUIData> ExtensionNavigationUIData::DeepCopy()
@@ -43,6 +50,9 @@ std::unique_ptr<ExtensionNavigationUIData> ExtensionNavigationUIData::DeepCopy()
   copy->is_web_view_ = is_web_view_;
   copy->web_view_instance_id_ = web_view_instance_id_;
   copy->web_view_rules_registry_id_ = web_view_rules_registry_id_;
+  copy->disposition_ = disposition_;
+  copy->had_target_contents_ = had_target_contents_;
+  copy->is_from_app_ = is_from_app_;
   return copy;
 }
 

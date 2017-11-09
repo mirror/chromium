@@ -6,8 +6,11 @@
 
 #include "base/memory/ptr_util.h"
 #include "chrome/browser/sessions/session_tab_helper.h"
+#include "chrome/browser/ui/browser_finder.h"
+#include "chrome/browser/ui/extra_navigation_info_utils.h"
 #include "content/public/browser/navigation_handle.h"
 #include "extensions/features/features.h"
+#include "ui/base/window_open_disposition.h"
 
 ChromeNavigationUIData::ChromeNavigationUIData() {}
 
@@ -19,8 +22,22 @@ ChromeNavigationUIData::ChromeNavigationUIData(
   int tab_id = session_tab_helper ? session_tab_helper->session_id().id() : -1;
   int window_id =
       session_tab_helper ? session_tab_helper->window_id().id() : -1;
+
+  WindowOpenDisposition disposition;
+  bool had_target_contents;
+  bool is_from_app;
+  std::tie(disposition, had_target_contents, is_from_app) =
+      chrome::GetExtraNavigationInfo(navigation_handle->GetWebContents());
+
   extension_data_ = base::MakeUnique<extensions::ExtensionNavigationUIData>(
-      navigation_handle, tab_id, window_id);
+      navigation_handle, tab_id, window_id, disposition, had_target_contents,
+      is_from_app);
+
+  Browser* browser =
+      chrome::FindBrowserWithWebContents(navigation_handle->GetWebContents());
+  chrome::SetExtraNavigationInfo(
+      navigation_handle->GetWebContents(), WindowOpenDisposition::CURRENT_TAB,
+      true /* had_target_contents */, browser ? browser->is_app() : false);
 #endif
 }
 
