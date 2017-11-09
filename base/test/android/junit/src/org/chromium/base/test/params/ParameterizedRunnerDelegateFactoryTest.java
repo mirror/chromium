@@ -18,7 +18,7 @@ import org.chromium.base.test.params.ParameterizedRunnerDelegateFactory.Paramete
 
 import java.lang.reflect.Method;
 import java.util.ArrayList;
-import java.util.Collections;
+import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -72,13 +72,34 @@ public class ParameterizedRunnerDelegateFactoryTest {
     }
 
     static class ExampleTestClass {
+        private static class MethodParamsA implements ParameterGenerator {
+            @Override
+            public Iterable<ParameterSet> getParameters() {
+                return Arrays.asList(
+                        new ParameterSet().value("a").name("testWithValue_a"),
+                        new ParameterSet().value("b").name("testWithValue_b")
+                );
+            }
+        }
+
         @SuppressWarnings("unused")
-        @UseMethodParameter("A")
+        @UseMethodParameter(MethodParamsA.class)
         @Test
         public void testA(String a) {}
 
+        public static class MethodParamsB implements ParameterGenerator {
+            @Override
+            public Iterable<ParameterSet> getParameters() {
+                return Arrays.asList(
+                        new ParameterSet().value(1).name("testWithValue_1"),
+                        new ParameterSet().value(2).name("testWithValue_2"),
+                        new ParameterSet().value(3).name("testWithValue_3")
+                );
+            }
+        }
+
         @SuppressWarnings("unused")
-        @UseMethodParameter("B")
+        @UseMethodParameter(MethodParamsB.class)
         @Test
         public void testB(int b) {}
 
@@ -94,8 +115,7 @@ public class ParameterizedRunnerDelegateFactoryTest {
     public void testBadRunnerDelegateWithIncorrectValidationCall() throws Throwable {
         ParameterizedRunnerDelegateFactory factory = new ParameterizedRunnerDelegateFactory();
         TestClass testClass = new TestClass(BadExampleRunnerDelegate.LalaTestClass.class);
-        factory.createRunner(
-                testClass, null, Collections.emptyMap(), BadExampleRunnerDelegate.class);
+        factory.createRunner(testClass, null, BadExampleRunnerDelegate.class);
     }
 
     @Test(expected = IllegalArgumentException.class)
@@ -113,21 +133,9 @@ public class ParameterizedRunnerDelegateFactoryTest {
 
     @Test
     public void testGenerateParameterizedFrameworkMethod() throws Throwable {
-        Map<String, List<ParameterSet>> map = new HashMap<>();
-        List<ParameterSet> listA = new ArrayList<>();
-        listA.add(new ParameterSet().value("a").name("testWithValue_a"));
-        listA.add(new ParameterSet().value("b").name("testWithValue_b"));
-
-        List<ParameterSet> listB = new ArrayList<>();
-        listB.add(new ParameterSet().value(1).name("testWithValue_1"));
-        listB.add(new ParameterSet().value(2).name("testWithValue_2"));
-        listB.add(new ParameterSet().value(3).name("testWithValue_3"));
-        map.put("A", listA);
-        map.put("B", listB);
-
         List<FrameworkMethod> methods =
                 ParameterizedRunnerDelegateFactory.generateUnmodifiableFrameworkMethodList(
-                        new TestClass(ExampleTestClass.class), map, "");
+                        new TestClass(ExampleTestClass.class), "");
 
         Assert.assertEquals(methods.size(), 6);
 
@@ -159,7 +167,7 @@ public class ParameterizedRunnerDelegateFactoryTest {
         map.put("A", listA);
         map.put("B", listB);
         ParameterizedRunnerDelegateFactory.generateUnmodifiableFrameworkMethodList(
-                new TestClass(ExampleTestClass.class), map, "");
+                new TestClass(ExampleTestClass.class), "");
     }
 
     @Test(expected = AssertionError.class)
@@ -170,7 +178,7 @@ public class ParameterizedRunnerDelegateFactoryTest {
         map.put("A", listA);
         //Missing ParameterSet list under group "B"
         ParameterizedRunnerDelegateFactory.generateUnmodifiableFrameworkMethodList(
-                new TestClass(ExampleTestClass.class), map, "");
+                new TestClass(ExampleTestClass.class), "");
     }
 
     @Test(expected = AssertionError.class)
@@ -186,6 +194,6 @@ public class ParameterizedRunnerDelegateFactoryTest {
         map.put("B", listB);
         map.put("C", listC);
         ParameterizedRunnerDelegateFactory.generateUnmodifiableFrameworkMethodList(
-                new TestClass(ExampleTestClass.class), map, "");
+                new TestClass(ExampleTestClass.class), "");
     }
 }

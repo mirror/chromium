@@ -19,29 +19,29 @@ public class ParameterAnnotations {
     @Retention(RetentionPolicy.RUNTIME)
     @Target(ElementType.METHOD)
     public @interface UseMethodParameter {
-        String value();
+        Class<? extends ParameterGenerator> value();
     }
 
     /**
      * Annotation for methods that should be called before running a test with method parameters.
-     * @see MethodParameter
+     * @see ParameterGenerator
      * @see UseMethodParameterAfter
      */
     @Retention(RetentionPolicy.RUNTIME)
     @Target(ElementType.METHOD)
     public @interface UseMethodParameterBefore {
-        String value();
+        Class<? extends ParameterGenerator> value();
     }
 
     /**
      * Annotation for methods that should be called after running a test with method parameters.
-     * @see MethodParameter
+     * @see ParameterGenerator
      * @see UseMethodParameterBefore
      */
     @Retention(RetentionPolicy.RUNTIME)
     @Target(ElementType.METHOD)
     public @interface UseMethodParameterAfter {
-        String value();
+        Class<? extends ParameterGenerator> value();
     }
 
     /**
@@ -50,15 +50,6 @@ public class ParameterAnnotations {
     @Retention(RetentionPolicy.RUNTIME)
     @Target(ElementType.FIELD)
     public @interface ClassParameter {}
-
-    /**
-     * Annotation for static field of a `List<ParameterSet>` for certain test methods
-     */
-    @Retention(RetentionPolicy.RUNTIME)
-    @Target(ElementType.FIELD)
-    public @interface MethodParameter {
-        String value();
-    }
 
     /**
      * Annotation for static field of a `List<ParameterSet>` of TestRule
