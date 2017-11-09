@@ -1,0 +1,108 @@
+Name
+
+    CHROMIUM_gpu_fence
+
+Name Strings
+
+    GL_CHROMIUM_gpu_fence
+
+Version
+
+    Last Modifed Date: November 8, 2017
+
+Dependencies
+
+    OpenGL ES 2.0 is required.
+
+Overview
+
+    This extension supports cross-process context synchronization.
+
+    A "gpu fence" is a synchronization point in a GL stream that can be
+    converted to and from an IPC-transportable "gpu fence handle" object.
+
+    The intended use is that one process creates a new gpu fence, extracts
+    a gpu fence handle from it, transports that to another process via IPC
+    (IPC details are out of scope for this extension), and the receiving
+    process creates its own gpu fence from it. Then, a server wait on the
+    receiving process gpu fence ensures that all commands on that context
+    take effect after the sending process gpu fence has signaled.
+
+    This extension does not implement any new GLES commands or parameters,
+    the interface uses ContextSupport methods in association with GpuFence
+    objects that wrap implementation-specific pre-existing GLES commands.
+
+    See also the ANDROID_native_fence_sync extension which is used to
+    implement the GpuFence class on Android.
+
+Issues
+
+    None
+
+New Procedures and Functions
+
+    The command
+
+        ContextSupport()->CreateGpuFence(
+            const base::Callback<void(const gfx::GpuFenceHandle&)>&)
+
+    creates a new gpu fence, inserts it in the command stream, extracts
+    a gpu fence handle, and passes that handle to the provided callback
+    function.
+
+    The command
+
+        ContextSupport()->InsertGpuFence(const gfx::GpuFenceHandle&);
+
+    converts the provided gpu fence handle to a gpu fence, inserts
+    it into the command stream, and issues a server wait to synchronize
+    with the source stream.
+
+    A usage example for two-process synchronization is to sequence access to a
+    globally shared drawable such as an AHardwareBuffer on Android, where the
+    writer uses a local GL context and the reader is a command buffer context
+    in the GPU process. The writer process draws into an AHardwareBuffer-backed
+    GLImage in the local GL context, then creates a gpu fence to mark the end
+    of drawing operations:
+
+        // ... write to the shared drawable in local context
+        std::unique_ptr<gpu::GpuFence> gpu_fence = gpu::GpuFenceImpl::CreateNew();
+
+    Then the writer process sends this gpu fence handle to the GPU process to
+    create a matching gpu fence that won't be passed until drawing is complete:
+
+        ContextSupport()->InsertGpuFence(gpu_fence->GetHandle());
+        // ... read from the shared drawable via command buffer
+
+    If a process wants to consume a drawable that was produced through a
+    command buffer context in the GPU process, the sequence is as follows:
+
+        void callback(const gfx::GpuFenceHandle& handle) {
+            std::unique_ptr<gpu::GpuFence> gpu_fence =
+                gpu::GpuFenceImpl::CreateFromHandle(handle);
+            gpu_fence->ServerWait();
+            // ... read from the shared drawable in local context
+        }
+
+        // ... write to the shared drawable via command buffer
+        ContextSupport()->CreateGpuFence(callback)
+
+    For cases where the image is used through a different command buffer
+    channel, WaitSyncTokenCHROMIUM() or equivalent should be used to
+    sequence among command buffer operations as usual.
+
+New Tokens
+
+    None.
+
+Errors
+
+    None.
+
+New State
+
+    None.
+
+Revision History
+
+    11/8/2017    Documented the extension

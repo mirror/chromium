@@ -45,6 +45,7 @@
 #include "gpu/ipc/service/gpu_memory_tracking.h"
 #include "gpu/ipc/service/gpu_watchdog_thread.h"
 #include "gpu/ipc/service/image_transport_surface.h"
+#include "ui/gfx/gpu_fence_handle.h"
 #include "ui/gl/gl_bindings.h"
 #include "ui/gl/gl_context.h"
 #include "ui/gl/gl_image.h"
@@ -298,6 +299,8 @@ bool GpuCommandBufferStub::OnMessageReceived(const IPC::Message& message) {
     IPC_MESSAGE_HANDLER(GpuCommandBufferMsg_DestroyImage, OnDestroyImage);
     IPC_MESSAGE_HANDLER(GpuCommandBufferMsg_CreateStreamTexture,
                         OnCreateStreamTexture)
+    IPC_MESSAGE_HANDLER(GpuCommandBufferMsg_CreateGpuFence, OnCreateGpuFence)
+    IPC_MESSAGE_HANDLER(GpuCommandBufferMsg_InsertGpuFence, OnInsertGpuFence)
     IPC_MESSAGE_UNHANDLED(handled = false)
   IPC_END_MESSAGE_MAP()
 
@@ -1069,6 +1072,28 @@ void GpuCommandBufferStub::OnSignalQuery(uint32_t query_id, uint32_t id) {
   }
   // Something went wrong, run callback immediately.
   OnSignalAck(id);
+}
+
+void GpuCommandBufferStub::OnCreateGpuFenceComplete(
+    uint32_t create_id, const gfx::GpuFenceHandle& handle) {
+  Send(new GpuCommandBufferMsg_CreateGpuFenceComplete(
+      route_id_, create_id, handle));
+ }
+
+void GpuCommandBufferStub::OnCreateGpuFence(uint32_t create_id) {
+  TRACE_EVENT0("gpu", __FUNCTION__);
+  //LOG(INFO) << __FUNCTION__ << ";;; start, create_id=" << create_id;
+
+  decoder_->CreateGpuFence(
+      create_id,
+      base::Bind(&GpuCommandBufferStub::OnCreateGpuFenceComplete,
+                 this->AsWeakPtr(), create_id));
+}
+
+void GpuCommandBufferStub::OnInsertGpuFence(const gfx::GpuFenceHandle& handle) {
+  TRACE_EVENT0("gpu", __FUNCTION__);
+
+  decoder_->InsertGpuFence(handle);
 }
 
 void GpuCommandBufferStub::OnFenceSyncRelease(uint64_t release) {
