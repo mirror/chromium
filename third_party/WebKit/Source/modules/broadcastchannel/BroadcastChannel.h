@@ -5,10 +5,10 @@
 #ifndef BroadcastChannel_h
 #define BroadcastChannel_h
 
+#include "bindings/core/v8/ActiveScriptWrappableAdapter.h"
 #include "core/dom/ContextLifecycleObserver.h"
 #include "core/dom/events/EventTarget.h"
 #include "mojo/public/cpp/bindings/associated_binding.h"
-#include "platform/bindings/ActiveScriptWrappable.h"
 #include "platform/weborigin/SecurityOrigin.h"
 #include "public/platform/modules/broadcastchannel/broadcast_channel.mojom-blink.h"
 
@@ -16,10 +16,11 @@ namespace blink {
 
 class ScriptValue;
 
-class BroadcastChannel final : public EventTargetWithInlineData,
-                               public ActiveScriptWrappable<BroadcastChannel>,
-                               public ContextLifecycleObserver,
-                               public mojom::blink::BroadcastChannelClient {
+class BroadcastChannel final
+    : public EventTargetWithInlineData,
+      public ActiveScriptWrappableAdapter<BroadcastChannel>,
+      public ContextLifecycleObserver,
+      public mojom::blink::BroadcastChannelClient {
   DEFINE_WRAPPERTYPEINFO();
   USING_GARBAGE_COLLECTED_MIXIN(BroadcastChannel);
   USING_PRE_FINALIZER(BroadcastChannel, Dispose);

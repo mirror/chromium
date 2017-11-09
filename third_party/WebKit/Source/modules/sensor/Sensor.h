@@ -5,6 +5,7 @@
 #ifndef Sensor_h
 #define Sensor_h
 
+#include "bindings/core/v8/ActiveScriptWrappableAdapter.h"
 #include "core/dom/ContextLifecycleObserver.h"
 #include "core/dom/DOMHighResTimeStamp.h"
 #include "core/dom/DOMTimeStamp.h"
@@ -14,7 +15,6 @@
 #include "modules/sensor/SensorOptions.h"
 #include "modules/sensor/SensorProxy.h"
 #include "platform/WebTaskRunner.h"
-#include "platform/bindings/ActiveScriptWrappable.h"
 #include "platform/bindings/ScriptWrappable.h"
 #include "platform/heap/Handle.h"
 
@@ -25,7 +25,7 @@ class ExceptionState;
 class ExecutionContext;
 
 class Sensor : public EventTargetWithInlineData,
-               public ActiveScriptWrappable<Sensor>,
+               public ActiveScriptWrappableAdapter<Sensor>,
                public ContextLifecycleObserver,
                public SensorProxy::Observer {
   USING_GARBAGE_COLLECTED_MIXIN(Sensor);

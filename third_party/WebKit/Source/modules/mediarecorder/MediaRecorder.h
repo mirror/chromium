@@ -6,6 +6,7 @@
 #define MediaRecorder_h
 
 #include <memory>
+#include "bindings/core/v8/ActiveScriptWrappableAdapter.h"
 #include "core/dom/PausableObject.h"
 #include "core/dom/events/EventTarget.h"
 #include "modules/EventTargetModules.h"
@@ -13,7 +14,6 @@
 #include "modules/mediarecorder/MediaRecorderOptions.h"
 #include "modules/mediastream/MediaStream.h"
 #include "platform/AsyncMethodRunner.h"
-#include "platform/bindings/ActiveScriptWrappable.h"
 #include "public/platform/WebMediaRecorderHandler.h"
 #include "public/platform/WebMediaRecorderHandlerClient.h"
 
@@ -26,7 +26,7 @@ class ExceptionState;
 class MODULES_EXPORT MediaRecorder final
     : public EventTargetWithInlineData,
       public WebMediaRecorderHandlerClient,
-      public ActiveScriptWrappable<MediaRecorder>,
+      public ActiveScriptWrappableAdapter<MediaRecorder>,
       public PausableObject {
   USING_GARBAGE_COLLECTED_MIXIN(MediaRecorder);
   DEFINE_WRAPPERTYPEINFO();

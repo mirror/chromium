@@ -5,10 +5,10 @@
 #ifndef PermissionStatus_h
 #define PermissionStatus_h
 
+#include "bindings/core/v8/ActiveScriptWrappableAdapter.h"
 #include "core/dom/PausableObject.h"
 #include "core/dom/events/EventTarget.h"
 #include "mojo/public/cpp/bindings/binding.h"
-#include "platform/bindings/ActiveScriptWrappable.h"
 #include "platform/heap/Handle.h"
 #include "platform/wtf/text/AtomicString.h"
 #include "platform/wtf/text/WTFString.h"
@@ -21,10 +21,11 @@ class ScriptPromiseResolver;
 
 // Expose the status of a given permission type for the current
 // ExecutionContext.
-class PermissionStatus final : public EventTargetWithInlineData,
-                               public ActiveScriptWrappable<PermissionStatus>,
-                               public PausableObject,
-                               public mojom::blink::PermissionObserver {
+class PermissionStatus final
+    : public EventTargetWithInlineData,
+      public ActiveScriptWrappableAdapter<PermissionStatus>,
+      public PausableObject,
+      public mojom::blink::PermissionObserver {
   USING_GARBAGE_COLLECTED_MIXIN(PermissionStatus);
   DEFINE_WRAPPERTYPEINFO();
   USING_PRE_FINALIZER(PermissionStatus, Dispose);

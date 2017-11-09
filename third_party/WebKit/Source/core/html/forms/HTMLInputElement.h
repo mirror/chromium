@@ -26,11 +26,11 @@
 #define HTMLInputElement_h
 
 #include "base/gtest_prod_util.h"
+#include "bindings/core/v8/ActiveScriptWrappableAdapter.h"
 #include "core/CoreExport.h"
 #include "core/html/forms/FileChooser.h"
 #include "core/html/forms/StepRange.h"
 #include "core/html/forms/TextControlElement.h"
-#include "platform/bindings/ActiveScriptWrappable.h"
 
 namespace blink {
 
@@ -49,7 +49,7 @@ struct DateTimeChooserParameters;
 
 class CORE_EXPORT HTMLInputElement
     : public TextControlElement,
-      public ActiveScriptWrappable<HTMLInputElement> {
+      public ActiveScriptWrappableAdapter<HTMLInputElement> {
   DEFINE_WRAPPERTYPEINFO();
   USING_GARBAGE_COLLECTED_MIXIN(HTMLInputElement);
 

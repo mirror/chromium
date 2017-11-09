@@ -28,6 +28,7 @@
 #define HTMLMediaElement_h
 
 #include <memory>
+#include "bindings/core/v8/ActiveScriptWrappableAdapter.h"
 #include "bindings/core/v8/ExceptionState.h"
 #include "bindings/core/v8/Nullable.h"
 #include "bindings/core/v8/ScriptPromise.h"
@@ -40,7 +41,6 @@
 #include "platform/Supplementable.h"
 #include "platform/WebTaskRunner.h"
 #include "platform/audio/AudioSourceProvider.h"
-#include "platform/bindings/ActiveScriptWrappable.h"
 #include "platform/bindings/TraceWrapperMember.h"
 #include "platform/network/mime/MIMETypeRegistry.h"
 #include "public/platform/WebAudioSourceProviderClient.h"
@@ -80,7 +80,7 @@ class WebRemotePlaybackClient;
 class CORE_EXPORT HTMLMediaElement
     : public HTMLElement,
       public Supplementable<HTMLMediaElement>,
-      public ActiveScriptWrappable<HTMLMediaElement>,
+      public ActiveScriptWrappableAdapter<HTMLMediaElement>,
       public PausableObject,
       private WebMediaPlayerClient {
   DEFINE_WRAPPERTYPEINFO();

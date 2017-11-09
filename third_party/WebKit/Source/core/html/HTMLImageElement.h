@@ -24,12 +24,12 @@
 #ifndef HTMLImageElement_h
 #define HTMLImageElement_h
 
+#include "bindings/core/v8/ActiveScriptWrappableAdapter.h"
 #include "core/CoreExport.h"
 #include "core/html/HTMLElement.h"
 #include "core/html/HTMLImageLoader.h"
 #include "core/html/canvas/ImageElementBase.h"
 #include "core/html/forms/FormAssociated.h"
-#include "platform/bindings/ActiveScriptWrappable.h"
 #include "platform/graphics/GraphicsTypes.h"
 #include "platform/heap/HeapAllocator.h"
 #include "platform/loader/fetch/FetchParameters.h"
@@ -44,7 +44,7 @@ class ShadowRoot;
 class CORE_EXPORT HTMLImageElement final
     : public HTMLElement,
       public ImageElementBase,
-      public ActiveScriptWrappable<HTMLImageElement>,
+      public ActiveScriptWrappableAdapter<HTMLImageElement>,
       public FormAssociated {
   DEFINE_WRAPPERTYPEINFO();
   USING_GARBAGE_COLLECTED_MIXIN(HTMLImageElement);

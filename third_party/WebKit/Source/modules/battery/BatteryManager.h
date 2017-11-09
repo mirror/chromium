@@ -5,6 +5,7 @@
 #ifndef BatteryManager_h
 #define BatteryManager_h
 
+#include "bindings/core/v8/ActiveScriptWrappableAdapter.h"
 #include "bindings/core/v8/ScriptPromise.h"
 #include "bindings/core/v8/ScriptPromiseProperty.h"
 #include "core/dom/ContextLifecycleObserver.h"
@@ -12,15 +13,15 @@
 #include "core/frame/PlatformEventController.h"
 #include "modules/EventTargetModules.h"
 #include "modules/battery/battery_status.h"
-#include "platform/bindings/ActiveScriptWrappable.h"
 #include "platform/heap/Handle.h"
 
 namespace blink {
 
-class BatteryManager final : public EventTargetWithInlineData,
-                             public ActiveScriptWrappable<BatteryManager>,
-                             public PausableObject,
-                             public PlatformEventController {
+class BatteryManager final
+    : public EventTargetWithInlineData,
+      public ActiveScriptWrappableAdapter<BatteryManager>,
+      public PausableObject,
+      public PlatformEventController {
   DEFINE_WRAPPERTYPEINFO();
   USING_GARBAGE_COLLECTED_MIXIN(BatteryManager);
 

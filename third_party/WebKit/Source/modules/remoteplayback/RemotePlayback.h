@@ -5,13 +5,13 @@
 #ifndef RemotePlayback_h
 #define RemotePlayback_h
 
+#include "bindings/core/v8/ActiveScriptWrappableAdapter.h"
 #include "bindings/core/v8/ScriptPromise.h"
 #include "core/dom/ContextLifecycleObserver.h"
 #include "core/dom/ExecutionContext.h"
 #include "core/dom/events/EventTarget.h"
 #include "modules/ModulesExport.h"
 #include "mojo/public/cpp/bindings/binding.h"
-#include "platform/bindings/ActiveScriptWrappable.h"
 #include "platform/bindings/TraceWrapperMember.h"
 #include "platform/heap/Handle.h"
 #include "platform/wtf/Compiler.h"
@@ -45,7 +45,7 @@ struct WebPresentationInfo;
 class MODULES_EXPORT RemotePlayback final
     : public EventTargetWithInlineData,
       public ContextLifecycleObserver,
-      public ActiveScriptWrappable<RemotePlayback>,
+      public ActiveScriptWrappableAdapter<RemotePlayback>,
       public WebRemotePlaybackClient,
       public WebPresentationAvailabilityObserver,
       public WebPresentationConnection,

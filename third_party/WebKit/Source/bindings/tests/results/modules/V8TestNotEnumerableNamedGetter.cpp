@@ -51,7 +51,7 @@ const WrapperTypeInfo& TestNotEnumerableNamedGetter::wrapper_type_info_ = V8Test
 
 // not [ActiveScriptWrappable]
 static_assert(
-    !std::is_base_of<ActiveScriptWrappableBase, TestNotEnumerableNamedGetter>::value,
+    !std::is_base_of<ActiveScriptWrappable, TestNotEnumerableNamedGetter>::value,
     "TestNotEnumerableNamedGetter inherits from ActiveScriptWrappable<>, but is not specifying "
     "[ActiveScriptWrappable] extended attribute in the IDL file.  "
     "Be consistent.");

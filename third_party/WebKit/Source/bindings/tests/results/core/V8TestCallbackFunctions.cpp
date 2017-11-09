@@ -56,7 +56,7 @@ const WrapperTypeInfo& TestCallbackFunctions::wrapper_type_info_ = V8TestCallbac
 
 // not [ActiveScriptWrappable]
 static_assert(
-    !std::is_base_of<ActiveScriptWrappableBase, TestCallbackFunctions>::value,
+    !std::is_base_of<ActiveScriptWrappable, TestCallbackFunctions>::value,
     "TestCallbackFunctions inherits from ActiveScriptWrappable<>, but is not specifying "
     "[ActiveScriptWrappable] extended attribute in the IDL file.  "
     "Be consistent.");

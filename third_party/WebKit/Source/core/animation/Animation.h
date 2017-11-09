@@ -32,6 +32,7 @@
 #define Animation_h
 
 #include <memory>
+#include "bindings/core/v8/ActiveScriptWrappableAdapter.h"
 #include "bindings/core/v8/ExceptionState.h"
 #include "bindings/core/v8/ScriptPromise.h"
 #include "bindings/core/v8/ScriptPromiseProperty.h"
@@ -45,7 +46,6 @@
 #include "core/dom/events/EventTarget.h"
 #include "platform/animation/CompositorAnimationDelegate.h"
 #include "platform/animation/CompositorAnimationPlayerClient.h"
-#include "platform/bindings/ActiveScriptWrappable.h"
 #include "platform/graphics/CompositorElementId.h"
 #include "platform/heap/Handle.h"
 #include "platform/wtf/RefPtr.h"
@@ -57,11 +57,12 @@ class Element;
 class ExceptionState;
 class TreeScope;
 
-class CORE_EXPORT Animation final : public EventTargetWithInlineData,
-                                    public ActiveScriptWrappable<Animation>,
-                                    public ContextLifecycleObserver,
-                                    public CompositorAnimationDelegate,
-                                    public CompositorAnimationPlayerClient {
+class CORE_EXPORT Animation final
+    : public EventTargetWithInlineData,
+      public ActiveScriptWrappableAdapter<Animation>,
+      public ContextLifecycleObserver,
+      public CompositorAnimationDelegate,
+      public CompositorAnimationPlayerClient {
   DEFINE_WRAPPERTYPEINFO();
   USING_GARBAGE_COLLECTED_MIXIN(Animation);
 

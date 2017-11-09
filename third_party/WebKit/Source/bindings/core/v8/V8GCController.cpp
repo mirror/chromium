@@ -33,6 +33,7 @@
 #include <algorithm>
 #include <unordered_map>
 #include <unordered_set>
+#include "bindings/core/v8/ActiveScriptWrappableAdapter.h"
 #include "bindings/core/v8/RetainedDOMInfo.h"
 #include "bindings/core/v8/V8AbstractEventListener.h"
 #include "bindings/core/v8/V8BindingForCore.h"
@@ -44,7 +45,6 @@
 #include "core/html/imports/HTMLImportsController.h"
 #include "core/inspector/InspectorTraceEvents.h"
 #include "platform/Histogram.h"
-#include "platform/bindings/ActiveScriptWrappable.h"
 #include "platform/bindings/ScriptWrappableVisitor.h"
 #include "platform/bindings/WrapperTypeInfo.h"
 #include "platform/instrumentation/tracing/TraceEvent.h"
@@ -158,7 +158,7 @@ class HeapSnaphotWrapperVisitor : public ScriptWrappableVisitor,
     current_parent_ = nullptr;
 
     TracePrologue();
-    ActiveScriptWrappableBase::TraceActiveScriptWrappables(isolate_, this);
+    ActiveScriptWrappable::TraceActiveScriptWrappables(isolate_, this);
     AdvanceTracing(
         0,
         v8::EmbedderHeapTracer::AdvanceTracingActions(

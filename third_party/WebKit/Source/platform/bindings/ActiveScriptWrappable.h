@@ -23,11 +23,11 @@ class ScriptWrappableVisitor;
  * thread-specific list. They keep their wrappers and dependant objects alive
  * as long as they have pending activity.
  */
-class PLATFORM_EXPORT ActiveScriptWrappableBase : public GarbageCollectedMixin {
-  WTF_MAKE_NONCOPYABLE(ActiveScriptWrappableBase);
+class PLATFORM_EXPORT ActiveScriptWrappable : public GarbageCollectedMixin {
+  WTF_MAKE_NONCOPYABLE(ActiveScriptWrappable);
 
  public:
-  ActiveScriptWrappableBase();
+  ActiveScriptWrappable();
 
   static void TraceActiveScriptWrappables(v8::Isolate*,
                                           ScriptWrappableVisitor*);
@@ -36,27 +36,6 @@ class PLATFORM_EXPORT ActiveScriptWrappableBase : public GarbageCollectedMixin {
   virtual bool IsContextDestroyed() const = 0;
   virtual bool DispatchHasPendingActivity() const = 0;
   virtual ScriptWrappable* ToScriptWrappable() = 0;
-};
-
-template <typename T>
-class ActiveScriptWrappable : public ActiveScriptWrappableBase {
-  WTF_MAKE_NONCOPYABLE(ActiveScriptWrappable);
-
- public:
-  ActiveScriptWrappable() {}
-
- protected:
-  bool IsContextDestroyed() const final {
-    const auto* execution_context =
-        static_cast<const T*>(this)->GetExecutionContext();
-    return !execution_context || execution_context->IsContextDestroyed();
-  }
-
-  bool DispatchHasPendingActivity() const final {
-    return static_cast<const T*>(this)->HasPendingActivity();
-  }
-
-  ScriptWrappable* ToScriptWrappable() final { return static_cast<T*>(this); }
 };
 
 }  // namespace blink

@@ -26,12 +26,12 @@
 #ifndef SpeechRecognition_h
 #define SpeechRecognition_h
 
+#include "bindings/core/v8/ActiveScriptWrappableAdapter.h"
 #include "core/dom/ContextLifecycleObserver.h"
 #include "modules/EventTargetModules.h"
 #include "modules/ModulesExport.h"
 #include "modules/speech/SpeechGrammarList.h"
 #include "modules/speech/SpeechRecognitionResult.h"
-#include "platform/bindings/ActiveScriptWrappable.h"
 #include "platform/heap/Handle.h"
 #include "platform/wtf/Compiler.h"
 #include "platform/wtf/text/WTFString.h"
@@ -47,7 +47,7 @@ class SpeechRecognitionError;
 
 class MODULES_EXPORT SpeechRecognition final
     : public EventTargetWithInlineData,
-      public ActiveScriptWrappable<SpeechRecognition>,
+      public ActiveScriptWrappableAdapter<SpeechRecognition>,
       public ContextLifecycleObserver {
   USING_GARBAGE_COLLECTED_MIXIN(SpeechRecognition);
   DEFINE_WRAPPERTYPEINFO();

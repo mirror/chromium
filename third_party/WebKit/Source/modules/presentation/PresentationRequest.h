@@ -5,12 +5,12 @@
 #ifndef PresentationRequest_h
 #define PresentationRequest_h
 
+#include "bindings/core/v8/ActiveScriptWrappableAdapter.h"
 #include "bindings/core/v8/ScriptPromise.h"
 #include "core/dom/ContextLifecycleObserver.h"
 #include "core/dom/events/EventTarget.h"
 #include "modules/ModulesExport.h"
 #include "modules/presentation/PresentationPromiseProperty.h"
-#include "platform/bindings/ActiveScriptWrappable.h"
 #include "platform/heap/Handle.h"
 #include "platform/heap/Heap.h"
 #include "platform/weborigin/KURL.h"
@@ -22,7 +22,7 @@ namespace blink {
 // which websites can start or join presentation connections.
 class MODULES_EXPORT PresentationRequest final
     : public EventTargetWithInlineData,
-      public ActiveScriptWrappable<PresentationRequest>,
+      public ActiveScriptWrappableAdapter<PresentationRequest>,
       public ContextClient {
   USING_GARBAGE_COLLECTED_MIXIN(PresentationRequest);
   DEFINE_WRAPPERTYPEINFO();

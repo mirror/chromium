@@ -24,6 +24,7 @@
 #define XMLHttpRequest_h
 
 #include <memory>
+#include "bindings/core/v8/ActiveScriptWrappableAdapter.h"
 #include "bindings/core/v8/ScriptString.h"
 #include "core/dom/DocumentParserClient.h"
 #include "core/dom/ExceptionCode.h"
@@ -31,7 +32,6 @@
 #include "core/loader/ThreadableLoaderClient.h"
 #include "core/xmlhttprequest/XMLHttpRequestEventTarget.h"
 #include "core/xmlhttprequest/XMLHttpRequestProgressEventThrottle.h"
-#include "platform/bindings/ActiveScriptWrappable.h"
 #include "platform/bindings/ScriptWrappable.h"
 #include "platform/bindings/TraceWrapperMember.h"
 #include "platform/heap/Handle.h"
@@ -66,11 +66,12 @@ class URLSearchParams;
 class WebDataConsumerHandle;
 class XMLHttpRequestUpload;
 
-class XMLHttpRequest final : public XMLHttpRequestEventTarget,
-                             private ThreadableLoaderClient,
-                             public DocumentParserClient,
-                             public ActiveScriptWrappable<XMLHttpRequest>,
-                             public PausableObject {
+class XMLHttpRequest final
+    : public XMLHttpRequestEventTarget,
+      private ThreadableLoaderClient,
+      public DocumentParserClient,
+      public ActiveScriptWrappableAdapter<XMLHttpRequest>,
+      public PausableObject {
   DEFINE_WRAPPERTYPEINFO();
   USING_GARBAGE_COLLECTED_MIXIN(XMLHttpRequest);
 

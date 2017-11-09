@@ -32,6 +32,7 @@
 #define MutationObserver_h
 
 #include "base/gtest_prod_util.h"
+#include "bindings/core/v8/ActiveScriptWrappableAdapter.h"
 #include "core/CoreExport.h"
 #include "core/dom/ContextLifecycleObserver.h"
 #include "core/dom/ExecutionContext.h"
@@ -65,7 +66,7 @@ using MutationRecordVector = HeapVector<Member<MutationRecord>>;
 
 class CORE_EXPORT MutationObserver final
     : public ScriptWrappable,
-      public ActiveScriptWrappable<MutationObserver>,
+      public ActiveScriptWrappableAdapter<MutationObserver>,
       public ContextClient {
   DEFINE_WRAPPERTYPEINFO();
   USING_GARBAGE_COLLECTED_MIXIN(MutationObserver);

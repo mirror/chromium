@@ -24,9 +24,9 @@
 #ifndef HTMLPlugInElement_h
 #define HTMLPlugInElement_h
 
+#include "bindings/core/v8/ActiveScriptWrappableAdapter.h"
 #include "core/CoreExport.h"
 #include "core/html/HTMLFrameOwnerElement.h"
-#include "platform/bindings/ActiveScriptWrappable.h"
 #include "platform/bindings/SharedPersistent.h"
 #include "v8/include/v8.h"
 
@@ -44,7 +44,7 @@ enum PreferPlugInsForImagesOption {
 
 class CORE_EXPORT HTMLPlugInElement
     : public HTMLFrameOwnerElement,
-      public ActiveScriptWrappable<HTMLPlugInElement> {
+      public ActiveScriptWrappableAdapter<HTMLPlugInElement> {
   USING_GARBAGE_COLLECTED_MIXIN(HTMLPlugInElement);
 
  public:

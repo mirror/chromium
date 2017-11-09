@@ -29,8 +29,8 @@
 #ifndef AudioScheduledSourceNode_h
 #define AudioScheduledSourceNode_h
 
+#include "bindings/core/v8/ActiveScriptWrappableAdapter.h"
 #include "modules/webaudio/AudioNode.h"
-#include "platform/bindings/ActiveScriptWrappable.h"
 
 namespace blink {
 
@@ -137,7 +137,7 @@ class AudioScheduledSourceHandler : public AudioHandler {
 
 class AudioScheduledSourceNode
     : public AudioNode,
-      public ActiveScriptWrappable<AudioScheduledSourceNode> {
+      public ActiveScriptWrappableAdapter<AudioScheduledSourceNode> {
   USING_GARBAGE_COLLECTED_MIXIN(AudioScheduledSourceNode);
   DEFINE_WRAPPERTYPEINFO();
 

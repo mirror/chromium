@@ -57,7 +57,7 @@ const WrapperTypeInfo& TestInterfaceGarbageCollected::wrapper_type_info_ = V8Tes
 
 // not [ActiveScriptWrappable]
 static_assert(
-    !std::is_base_of<ActiveScriptWrappableBase, TestInterfaceGarbageCollected>::value,
+    !std::is_base_of<ActiveScriptWrappable, TestInterfaceGarbageCollected>::value,
     "TestInterfaceGarbageCollected inherits from ActiveScriptWrappable<>, but is not specifying "
     "[ActiveScriptWrappable] extended attribute in the IDL file.  "
     "Be consistent.");

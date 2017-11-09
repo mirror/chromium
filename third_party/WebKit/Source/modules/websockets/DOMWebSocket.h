@@ -34,6 +34,7 @@
 #include <stddef.h>
 #include <stdint.h>
 #include <memory>
+#include "bindings/core/v8/ActiveScriptWrappableAdapter.h"
 #include "core/dom/PausableObject.h"
 #include "core/dom/events/EventListener.h"
 #include "core/dom/events/EventTarget.h"
@@ -43,7 +44,6 @@
 #include "modules/websockets/WebSocketChannel.h"
 #include "modules/websockets/WebSocketChannelClient.h"
 #include "platform/Timer.h"
-#include "platform/bindings/ActiveScriptWrappable.h"
 #include "platform/bindings/ScriptWrappable.h"
 #include "platform/heap/Handle.h"
 #include "platform/weborigin/KURL.h"
@@ -60,10 +60,11 @@ class ExceptionState;
 class ExecutionContext;
 class StringOrStringSequence;
 
-class MODULES_EXPORT DOMWebSocket : public EventTargetWithInlineData,
-                                    public ActiveScriptWrappable<DOMWebSocket>,
-                                    public PausableObject,
-                                    public WebSocketChannelClient {
+class MODULES_EXPORT DOMWebSocket
+    : public EventTargetWithInlineData,
+      public ActiveScriptWrappableAdapter<DOMWebSocket>,
+      public PausableObject,
+      public WebSocketChannelClient {
   DEFINE_WRAPPERTYPEINFO();
   USING_GARBAGE_COLLECTED_MIXIN(DOMWebSocket);
 

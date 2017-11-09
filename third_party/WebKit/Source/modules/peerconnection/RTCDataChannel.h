@@ -27,11 +27,11 @@
 
 #include <memory>
 #include "base/gtest_prod_util.h"
+#include "bindings/core/v8/ActiveScriptWrappableAdapter.h"
 #include "core/dom/PausableObject.h"
 #include "core/typed_arrays/ArrayBufferViewHelpers.h"
 #include "modules/EventTargetModules.h"
 #include "platform/Timer.h"
-#include "platform/bindings/ActiveScriptWrappable.h"
 #include "platform/heap/Handle.h"
 #include "platform/wtf/Compiler.h"
 #include "public/platform/WebRTCDataChannelHandler.h"
@@ -50,7 +50,7 @@ struct WebRTCDataChannelInit;
 class MODULES_EXPORT RTCDataChannel final
     : public EventTargetWithInlineData,
       public WebRTCDataChannelHandlerClient,
-      public ActiveScriptWrappable<RTCDataChannel>,
+      public ActiveScriptWrappableAdapter<RTCDataChannel>,
       public PausableObject {
   USING_GARBAGE_COLLECTED_MIXIN(RTCDataChannel);
   DEFINE_WRAPPERTYPEINFO();
