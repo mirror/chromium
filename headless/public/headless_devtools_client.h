@@ -8,6 +8,7 @@
 #include <memory>
 
 #include "base/macros.h"
+#include "base/values.h"
 #include "headless/public/headless_export.h"
 
 namespace headless {
