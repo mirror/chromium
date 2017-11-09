@@ -34,6 +34,24 @@
       "revId": "d227907d4c7148e5d6d04e64f63bcea56f8cb1d0",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3723bc23_1810aa49",
+        "filename": "base/process/kill_posix.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 149,
+      "author": {
+        "id": 1174099
+      },
+      "writtenOn": "2017-11-09T04:19:58Z",
+      "side": 1,
+      "message": "\u003e Done.  Though I think I\u0027ll just use a generic \"-1\" instead of using the WTERMSIG.\n\nThat’s fine. Not using the precise signal number does lose a small bit of information that GetExitCodeProcess() conveys on Windows, namely, it disambiguates crash causes. For example, we normally see SIGTRAP for CHECK() failures, and sometimes it’s nice to know that. But if you don’t think that this is important, then I’m OK with -1 as a catch-all for “didn’t exit cleanly, abnormal termination.”",
+      "parentUuid": "e8f847b2_8ed30655",
+      "revId": "d227907d4c7148e5d6d04e64f63bcea56f8cb1d0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
