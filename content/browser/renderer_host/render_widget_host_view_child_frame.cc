@@ -860,6 +860,12 @@ void RenderWidgetHostViewChildFrame::OnFirstSurfaceActivation(
   SendSurfaceInfoToEmbedderImpl(surface_info, sequence);
 }
 
+void RenderWidgetHostViewChildFrame::OnFrameTokenChanged(uint32_t frame_token) {
+  if (frame_connector_)
+    frame_connector_->GetRootRenderWidgetHostView()->OnFrameTokenChanged(
+        frame_token);
+}
+
 void RenderWidgetHostViewChildFrame::SetNeedsBeginFrames(
     bool needs_begin_frames) {
   if (support_)
