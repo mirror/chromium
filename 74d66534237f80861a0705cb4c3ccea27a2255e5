@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "2bc01807_832ca062",
+        "filename": "chrome/browser/client_hints/client_hints.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 48,
+      "author": {
+        "id": 1001472
+      },
+      "writtenOn": "2017-11-09T02:32:35Z",
+      "side": 1,
+      "message": "nit: you can use !SchemeIsHTTPOrHTTPS",
+      "revId": "74d66534237f80861a0705cb4c3ccea27a2255e5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2420a119_7d583f87",
+        "filename": "third_party/WebKit/Source/core/loader/FrameFetchContext.cpp",
+        "patchSetId": 2
+      },
+      "lineNbr": 178,
+      "author": {
+        "id": 1001472
+      },
+      "writtenOn": "2017-11-09T02:32:35Z",
+      "side": 1,
+      "message": "Should this also check if it\u0027s for http or https?  We\u0027re doing slightly different checks from GetAdditionalNavigationRequestClientHintsHeaders, which feels a bit weird.",
+      "revId": "74d66534237f80861a0705cb4c3ccea27a2255e5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
