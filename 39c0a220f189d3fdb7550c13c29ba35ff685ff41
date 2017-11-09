@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "2674021a_ebb82303",
+        "filename": "gin/per_isolate_data.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 31,
+      "author": {
+        "id": 1002763
+      },
+      "writtenOn": "2017-11-09T11:39:41Z",
+      "side": 1,
+      "message": "As a high level point, before I go into a detailed review, I want to make sure this solves your bug. \n\nSince the task runners are shared pointers, they will still live after the PerIsolateData has been destroyed (if held by background tasks) - as such the tasks will still get posted to them. Having read your doc again, I think the sequeunce of events you describe is not quite correct - you mention that the task runner is deleted in WebThreadSupportingGC::ShutdownOnThread, however this isn\u0027t always the actual task runner being used here (e.g., if base::ThreadTaskRunnerHandle::Get() is called you get the default task runner, and if the Blink Scheduler is enabled you get the V8TaskRunner [1]).\n\nAs such, there might still be tasks posted after the PerIsolateData has been deleted. I think this is OK since the task runner doesn\u0027t access PerIsolateData, however it does mean we still need to be careful to ensure that we drain all tasks before the isolate itself destroyed. Would it make sense to add an API to V8TaskRunner to drain the queue and call that when the isolate is being destroyed (similar to what you did in default platform)?\n\n[1] https://cs.chromium.org/chromium/src/third_party/WebKit/Source/bindings/core/v8/V8Initializer.cpp?l\u003d611",
+      "revId": "39c0a220f189d3fdb7550c13c29ba35ff685ff41",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
