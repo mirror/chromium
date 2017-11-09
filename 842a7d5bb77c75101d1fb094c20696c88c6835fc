@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "fd368bde_a018aca7",
+        "filename": "third_party/WebKit/Source/core/html/media/HTMLVideoElement.cpp",
+        "patchSetId": 2
+      },
+      "lineNbr": 355,
+      "author": {
+        "id": 1114374
+      },
+      "writtenOn": "2017-11-09T13:40:52Z",
+      "side": 1,
+      "message": "It becomes a bit anonymous and magic using unnamed objects created on the fly. I would prefer something more explicitly named, especially since this is intended to make the code more readable, but it\u0027s up to people more familiar with the media code (-\u003e mlamouri)",
+      "range": {
+        "startLine": 354,
+        "startChar": 13,
+        "endLine": 355,
+        "endChar": 14
+      },
+      "revId": "842a7d5bb77c75101d1fb094c20696c88c6835fc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
