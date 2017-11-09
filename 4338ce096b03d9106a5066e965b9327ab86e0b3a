@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "10474d2c_80fbd139",
+        "filename": "chrome/browser/chromeos/arc/intent_helper/arc_settings_service.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 434,
+      "author": {
+        "id": 1118346
+      },
+      "writtenOn": "2017-11-09T07:00:44Z",
+      "side": 1,
+      "message": "Could you file a bug? We always forget TODO without associated bugs...",
+      "range": {
+        "startLine": 434,
+        "startChar": 7,
+        "endLine": 434,
+        "endChar": 19
+      },
+      "revId": "4338ce096b03d9106a5066e965b9327ab86e0b3a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
