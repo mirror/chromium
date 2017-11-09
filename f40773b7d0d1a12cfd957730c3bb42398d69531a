@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "c4e39786_a706ba0d",
+        "filename": "third_party/WebKit/LayoutTests/external/wpt/media-capabilities/decodingInfo.html",
+        "patchSetId": 2
+      },
+      "lineNbr": 14,
+      "author": {
+        "id": 1129179
+      },
+      "writtenOn": "2017-11-09T23:31:35Z",
+      "side": 1,
+      "message": "Do we need to update these to strings as well? They don\u0027t seem to be failing on the bot, but I don\u0027t follow how it works. Do they implicitly become strings?",
+      "range": {
+        "startLine": 14,
+        "startChar": 2,
+        "endLine": 14,
+        "endChar": 11
+      },
+      "revId": "f40773b7d0d1a12cfd957730c3bb42398d69531a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
