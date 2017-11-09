@@ -10,8 +10,8 @@
 #include "content/public/browser/global_request_id.h"
 #include "content/public/common/previews_state.h"
 #include "content/public/common/resource_type.h"
-#include "third_party/WebKit/public/platform/WebPageVisibilityState.h"
 #include "third_party/WebKit/public/platform/WebReferrerPolicy.h"
+#include "third_party/WebKit/public/platform/web_page_visibility_state.mojom.h"
 #include "ui/base/page_transition_types.h"
 
 namespace net {
@@ -138,7 +138,7 @@ class ResourceRequestInfo {
 
   // Returns the associated visibility state at the time the request was started
   // in the renderer.
-  virtual blink::WebPageVisibilityState GetVisibilityState() const = 0;
+  virtual blink::mojom::WebPageVisibilityState GetVisibilityState() const = 0;
 
   // Returns the associated page transition type.
   virtual ui::PageTransition GetPageTransition() const = 0;

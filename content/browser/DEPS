@@ -131,6 +131,7 @@ include_rules = [
   "+third_party/WebKit/public/platform/modules/websockets/websocket.mojom.h",
   "+third_party/WebKit/public/platform/oom_intervention.mojom.h",
   "+third_party/WebKit/public/platform/reporting.mojom.h",
+  "+third_party/WebKit/public/platform/web_page_visibility_state.mojom.h",
   "+third_party/WebKit/public/public_features.h",
   "+third_party/WebKit/public/web/WebAXEnums.h",
   "+third_party/WebKit/public/web/WebConsoleMessage.h",

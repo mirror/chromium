@@ -20,6 +20,7 @@
 #include "third_party/WebKit/public/platform/WebCoalescedInputEvent.h"
 #include "third_party/WebKit/public/platform/WebURL.h"
 #include "third_party/WebKit/public/platform/WebURLResponse.h"
+#include "third_party/WebKit/public/platform/web_page_visibility_state.mojom.h"
 #include "third_party/WebKit/public/web/WebDocument.h"
 #include "third_party/WebKit/public/web/WebElement.h"
 #include "third_party/WebKit/public/web/WebFrameWidget.h"
@@ -255,7 +256,8 @@ void WebViewPlugin::DidFailLoading(const WebURLError& error) {
 WebViewPlugin::WebViewHelper::WebViewHelper(WebViewPlugin* plugin,
                                             const WebPreferences& preferences)
     : plugin_(plugin) {
-  web_view_ = WebView::Create(this, blink::kWebPageVisibilityStateVisible);
+  web_view_ =
+      WebView::Create(this, blink::mojom::WebPageVisibilityState::kVisible);
   // ApplyWebPreferences before making a WebLocalFrame so that the frame sees a
   // consistent view of our preferences.
   content::RenderView::ApplyWebPreferences(preferences, web_view_);
