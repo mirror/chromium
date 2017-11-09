@@ -1,0 +1,26 @@
+<!doctype html>
+<meta charset="utf-8">
+<title>Async Cookes: cookieStore.has()</title>
+<link rel="author" href="pwnall@chromium.org" title="Victor Costan">
+<script src="../../resources/testharness.js"></script>
+<script src="../../resources/testharnessreport.js"></script>
+<script>
+'use strict';
+
+promise_test(async testCase => {
+  await cookieStore.set('cookie-name', 'cookie-value');
+  const result_after_set = await cookieStore.has('cookie-name');
+  assert_equals(result_after_set, true);
+
+  try { await cookieStore.delete('cookie-name'); } catch (e) {}
+}, 'cookieStore.has returns true for cookie set by cookieStore.set()');
+
+promise_test(async testCase => {
+  await cookieStore.delete('cookie-name');
+  const result_after_delete = await cookieStore.has('cookie-name');
+  assert_equals(result_after_delete, false);
+
+  try { await cookieStore.delete('cookie-name'); } catch (e) {}
+}, 'cookieStore.has returns false for cookie deleted by cookieStore.delete()');
+
+</script>

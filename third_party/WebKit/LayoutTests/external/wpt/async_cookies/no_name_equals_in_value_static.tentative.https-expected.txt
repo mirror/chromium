@@ -1,4 +1,4 @@
 This is a testharness.js-based test.
-FAIL Cookie Store Tests (testNoNameEqualsInValue) assert_equals: testDeleteCookies failures: TypeError: cookieStore.delete is not a function,TypeError: cookieStore.delete is not a function,TypeError: cookieStore.delete is not a function,TypeError: cookieStore.delete is not a function,TypeError: cookieStore.delete is not a function,TypeError: cookieStore.delete is not a function,TypeError: cookieStore.delete is not a function,TypeError: cookieStore.delete is not a function,TypeError: cookieStore.delete is not a function,TypeError: cookieStore.delete is not a function,TypeError: cookieStore.delete is not a function,TypeError: cookieStore.delete is not a function expected 0 but got 12
+FAIL Cookie Store Tests (testNoNameEqualsInValue) promise_test: Unhandled rejection with value: object "Error: Expected promise rejection when setting a cookie with no name and "=" in value"
 Harness: the test ran to completion.
 
