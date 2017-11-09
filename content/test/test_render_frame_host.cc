@@ -23,6 +23,7 @@
 #include "content/public/test/browser_side_navigation_test_utils.h"
 #include "content/test/test_navigation_url_loader.h"
 #include "content/test/test_render_view_host.h"
+#include "content/test/test_render_widget_host.h"
 #include "mojo/public/cpp/bindings/interface_request.h"
 #include "net/base/load_flags.h"
 #include "net/http/http_response_headers.h"
@@ -583,6 +584,10 @@ service_manager::mojom::InterfaceProviderRequest
 TestRenderFrameHost::CreateStubInterfaceProviderRequest() {
   ::service_manager::mojom::InterfaceProviderPtr dead_interface_provider_proxy;
   return mojo::MakeRequest(&dead_interface_provider_proxy);
+}
+
+TestRenderWidgetHost* TestRenderFrameHost::GetTestRenderWidgetHost() {
+  return static_cast<TestRenderWidgetHost*>(GetRenderWidgetHost());
 }
 
 }  // namespace content

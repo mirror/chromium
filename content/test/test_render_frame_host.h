@@ -22,6 +22,8 @@ struct FrameHostMsg_DidCommitProvisionalLoad_Params;
 
 namespace content {
 
+class TestRenderWidgetHost;
+
 class TestRenderFrameHostCreationObserver : public WebContentsObserver {
  public:
   explicit TestRenderFrameHostCreationObserver(WebContents* web_contents);
@@ -168,6 +170,9 @@ class TestRenderFrameHost : public RenderFrameHostImpl,
   // implementation, but will never receive any interface requests.
   static service_manager::mojom::InterfaceProviderRequest
   CreateStubInterfaceProviderRequest();
+
+  // Same as GetRenderWidgetHost but cast to a TestRenderWidgetHost.
+  TestRenderWidgetHost* GetTestRenderWidgetHost();
 
  private:
   class NavigationInterceptor;
