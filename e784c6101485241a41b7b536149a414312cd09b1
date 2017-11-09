@@ -16,6 +16,24 @@
       "revId": "e784c6101485241a41b7b536149a414312cd09b1",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "aa819583_2334d75c",
+        "filename": "build/config/android/rules.gni",
+        "patchSetId": 2
+      },
+      "lineNbr": 339,
+      "author": {
+        "id": 1229425
+      },
+      "writtenOn": "2017-11-09T14:01:46Z",
+      "side": 1,
+      "message": "No, should we try to remove one of them? In WebRTC, we only need package_output_dir.",
+      "parentUuid": "ec9d71a5_acdfecc8",
+      "revId": "e784c6101485241a41b7b536149a414312cd09b1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
