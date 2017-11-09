@@ -230,7 +230,7 @@ public class DateTimePickerDialog extends AlertDialog implements OnClickListener
             return mWrappedResources;
         }
 
-        private class WrappedResources extends Resources {
+        private static class WrappedResources extends Resources {
             WrappedResources(AssetManager assets, DisplayMetrics displayMetrics,
                     Configuration configuration) {
                 super(assets, displayMetrics, configuration);
