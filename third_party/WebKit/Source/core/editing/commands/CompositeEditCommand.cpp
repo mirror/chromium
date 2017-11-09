@@ -149,6 +149,11 @@ bool CompositeEditCommand::Apply() {
 
   LocalFrame* frame = GetDocument().GetFrame();
   DCHECK(frame);
+  // directional is stored at the top level command, so that before and after
+  // executing command same directional will be there.
+  SetSelectionIsDirectional(frame->Selection().IsDirectional());
+  GetUndoStep()->SetSelectionIsDirectional(SelectionIsDirectional());
+
   EditingState editing_state;
   EventQueueScope event_queue_scope;
   DoApply(&editing_state);
@@ -202,6 +207,7 @@ void CompositeEditCommand::ApplyCommandToComposite(
     EditCommand* command,
     EditingState* editing_state) {
   command->SetParent(this);
+  command->SetSelectionIsDirectional(SelectionIsDirectional());
   command->DoApply(editing_state);
   if (editing_state->IsAborted()) {
     command->SetParent(nullptr);
@@ -1402,7 +1408,6 @@ void CompositeEditCommand::MoveParagraphs(
   int start_index = -1;
   int end_index = -1;
   int destination_index = -1;
-  bool original_is_directional = EndingSelection().IsDirectional();
   if (should_preserve_selection == kPreserveSelection &&
       !EndingSelection().IsNone()) {
     VisiblePosition visible_start = EndingVisibleSelection().VisibleStart();
@@ -1541,7 +1546,6 @@ void CompositeEditCommand::MoveParagraphs(
   const VisibleSelection& destination_selection =
       CreateVisibleSelection(SelectionInDOMTree::Builder()
                                  .Collapse(destination.ToPositionWithAffinity())
-                                 .SetIsDirectional(original_is_directional)
                                  .Build());
   if (EndingSelection().IsNone()) {
     // We abort executing command since |destination| becomes invisible.
@@ -1601,7 +1605,6 @@ void CompositeEditCommand::MoveParagraphs(
       CreateVisibleSelection(SelectionInDOMTree::Builder()
                                  .Collapse(start_range.StartPosition())
                                  .Extend(end_range.StartPosition())
-                                 .SetIsDirectional(original_is_directional)
                                  .Build());
   SetEndingSelection(
       SelectionForUndoStep::From(visible_selection.AsSelection()));
@@ -1709,7 +1712,6 @@ bool CompositeEditCommand::BreakOutOfEmptyListItem(
   SetEndingSelection(SelectionForUndoStep::From(
       SelectionInDOMTree::Builder()
           .Collapse(Position::FirstPositionInNode(*new_block))
-          .SetIsDirectional(EndingSelection().IsDirectional())
           .Build()));
 
   style->PrepareToApplyAt(EndingSelection().Start());
@@ -1769,11 +1771,10 @@ bool CompositeEditCommand::BreakOutOfEmptyMailBlockquotedParagraph(
       return false;
     GetDocument().UpdateStyleAndLayoutIgnorePendingStylesheets();
   }
-  SetEndingSelection(SelectionForUndoStep::From(
-      SelectionInDOMTree::Builder()
-          .Collapse(at_br.ToPositionWithAffinity())
-          .SetIsDirectional(EndingSelection().IsDirectional())
-          .Build()));
+  SetEndingSelection(
+      SelectionForUndoStep::From(SelectionInDOMTree::Builder()
+                                     .Collapse(at_br.ToPositionWithAffinity())
+                                     .Build()));
 
   // If this is an empty paragraph there must be a line break here.
   if (!LineBreakExistsAtVisiblePosition(caret))

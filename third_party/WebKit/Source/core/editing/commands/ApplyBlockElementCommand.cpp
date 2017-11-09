@@ -87,7 +87,6 @@ void ApplyBlockElementCommand::DoApply(EditingState* editing_state) {
     builder.Collapse(visible_start.ToPositionWithAffinity());
     if (new_end.IsNotNull())
       builder.Extend(new_end);
-    builder.SetIsDirectional(EndingSelection().IsDirectional());
     const SelectionInDOMTree& new_selection = builder.Build();
     if (new_selection.IsNone())
       return;
@@ -123,7 +122,6 @@ void ApplyBlockElementCommand::DoApply(EditingState* editing_state) {
           SelectionInDOMTree::Builder()
               .Collapse(start.ToPositionWithAffinity())
               .Extend(end.DeepEquivalent())
-              .SetIsDirectional(EndingSelection().IsDirectional())
               .Build()));
     }
   }
@@ -155,7 +153,6 @@ void ApplyBlockElementCommand::FormatSelection(
     SetEndingSelection(SelectionForUndoStep::From(
         SelectionInDOMTree::Builder()
             .Collapse(Position::BeforeNode(*placeholder))
-            .SetIsDirectional(EndingSelection().IsDirectional())
             .Build()));
     return;
   }
