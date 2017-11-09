@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "eec56e94_0ecf1800",
+        "filename": "chrome/browser/offline_pages/prefetch/prefetch_importer_impl.cc",
+        "patchSetId": 14
+      },
+      "lineNbr": 111,
+      "author": {
+        "id": 1115922
+      },
+      "writtenOn": "2017-11-09T00:36:15Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "dab2205e_de8fecab",
+      "revId": "6ab416ae2b9c5fa30be8b9e86249224c6f346077",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "0dbdcf33_71167930",
         "filename": "components/offline_pages/core/prefetch/import_completed_task.cc",
         "patchSetId": 14
@@ -42,6 +60,30 @@
     },
     {
       "key": {
+        "uuid": "71efcc04_b56f86fd",
+        "filename": "components/offline_pages/core/prefetch/import_completed_task.cc",
+        "patchSetId": 14
+      },
+      "lineNbr": 73,
+      "author": {
+        "id": 1115922
+      },
+      "writtenOn": "2017-11-09T00:36:15Z",
+      "side": 1,
+      "message": "Yes.",
+      "parentUuid": "0dbdcf33_71167930",
+      "range": {
+        "startLine": 71,
+        "startChar": 0,
+        "endLine": 73,
+        "endChar": 55
+      },
+      "revId": "6ab416ae2b9c5fa30be8b9e86249224c6f346077",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "076562a1_b4887e92",
         "filename": "components/offline_pages/core/prefetch/import_completed_task_unittest.cc",
         "patchSetId": 14
@@ -53,6 +95,30 @@
       "writtenOn": "2017-11-07T21:59:06Z",
       "side": 1,
       "message": "Thanks for lowering our tech debt! :)",
+      "range": {
+        "startLine": 16,
+        "startChar": 39,
+        "endLine": 16,
+        "endChar": 51
+      },
+      "revId": "6ab416ae2b9c5fa30be8b9e86249224c6f346077",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "67895c05_2a451c4c",
+        "filename": "components/offline_pages/core/prefetch/import_completed_task_unittest.cc",
+        "patchSetId": 14
+      },
+      "lineNbr": 16,
+      "author": {
+        "id": 1115922
+      },
+      "writtenOn": "2017-11-09T00:36:15Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "076562a1_b4887e92",
       "range": {
         "startLine": 16,
         "startChar": 39,
