@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "959726cd_03a02e28",
+        "filename": "chrome/browser/consent_auditor/consent_auditor_factory.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 42,
+      "author": {
+        "id": 1118331
+      },
+      "writtenOn": "2017-11-09T15:31:20Z",
+      "side": 1,
+      "message": "Done. Thanks for catching this. I was trying to mimic what I saw other factories doing, but apparently I misunderstood.",
+      "parentUuid": "947c9b2c_b0f69c72",
+      "revId": "d83c16ba7e7b342863ec4ae4d38921db4f2c6171",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "50542871_0eef777b",
         "filename": "components/consent_auditor/consent_auditor.cc",
         "patchSetId": 9
@@ -36,6 +54,24 @@
     },
     {
       "key": {
+        "uuid": "895b045a_bac0b9fc",
+        "filename": "components/consent_auditor/consent_auditor.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 32,
+      "author": {
+        "id": 1118331
+      },
+      "writtenOn": "2017-11-09T15:31:20Z",
+      "side": 1,
+      "message": "I wanted to take advantage of the fact that product version lives in //components too, so this piece of information doesn\u0027t have to make a roundtrip //components -\u003e //chrome -\u003e //components.\n\nBut I think you\u0027re right, it\u0027s a parameter like the other two. Let\u0027s do that.",
+      "parentUuid": "50542871_0eef777b",
+      "revId": "d83c16ba7e7b342863ec4ae4d38921db4f2c6171",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "e40f36b2_d300b038",
         "filename": "components/consent_auditor/consent_auditor.cc",
         "patchSetId": 9
@@ -50,6 +86,24 @@
       "revId": "d83c16ba7e7b342863ec4ae4d38921db4f2c6171",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e83054bd_237c203b",
+        "filename": "components/consent_auditor/consent_auditor.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 57,
+      "author": {
+        "id": 1118331
+      },
+      "writtenOn": "2017-11-09T15:31:20Z",
+      "side": 1,
+      "message": "Done. I feel like in those movies when someone is frozen and wakes up in the future...",
+      "parentUuid": "e40f36b2_d300b038",
+      "revId": "d83c16ba7e7b342863ec4ae4d38921db4f2c6171",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }

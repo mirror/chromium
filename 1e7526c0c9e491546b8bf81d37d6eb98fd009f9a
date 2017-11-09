@@ -436,6 +436,24 @@
     },
     {
       "key": {
+        "uuid": "ffc2ac80_568e8f15",
+        "filename": "components/consent_auditor/consent_auditor.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 56,
+      "author": {
+        "id": 1118331
+      },
+      "writtenOn": "2017-11-09T15:31:20Z",
+      "side": 1,
+      "message": "\u003e Ok, great. If we know that the German UMA string in Chrome 99 was incorrect, I think it would be easier to check if a user consented to a German string in this version than to actually ship this string with future Chrome versions? \n\nExactly. This is what I meant by \"practical\" :)\n\n\u003e Maybe we should add a static recordConsent() helper function in chrome/browser that is responsible to supply all the parameters that are not available in content/?\n\nWell, that\u0027s basically what the factory is for, no? It takes a Profile and extracts all possible information from it. The UI language will be one of them. The only thing you need to supply after that is the actual string you want to record.",
+      "parentUuid": "1d2a345c_f53b8d0e",
+      "revId": "1e7526c0c9e491546b8bf81d37d6eb98fd009f9a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "68de539f_d86bfec4",
         "filename": "components/consent_auditor/consent_auditor.h",
         "patchSetId": 6
@@ -729,6 +747,24 @@
       "side": 1,
       "message": "I think it is more clean because with \"confirmation \u0026\u0026 confirmation-\u003eis_string()\", you don\u0027t know which case failed. By only asserting not-null, you know what exactly happened.",
       "parentUuid": "6477858e_cc57afea",
+      "revId": "1e7526c0c9e491546b8bf81d37d6eb98fd009f9a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "c4a62012_0d325e7f",
+        "filename": "components/consent_auditor/consent_auditor_unittest.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 67,
+      "author": {
+        "id": 1118331
+      },
+      "writtenOn": "2017-11-09T15:31:20Z",
+      "side": 1,
+      "message": "Ok, yeah, that\u0027s true.",
+      "parentUuid": "a49d65b2_96e491ec",
       "revId": "1e7526c0c9e491546b8bf81d37d6eb98fd009f9a",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": false
