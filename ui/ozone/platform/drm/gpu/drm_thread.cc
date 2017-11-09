@@ -189,24 +189,30 @@ void DrmThread::GetScanoutFormats(
 void DrmThread::SchedulePageFlip(gfx::AcceleratedWidget widget,
                                  const std::vector<OverlayPlane>& planes,
                                  base::OnceClosure render_wait_task,
+                                 base::OnceClosure no_render_wait_task,
+                                 base::ScopedFD render_fence_fd,
                                  SwapCompletionOnceCallback callback) {
   scoped_refptr<ui::DrmDevice> drm_device =
       device_manager_->GetDrmDevice(widget);
+  bool has_valid_render_fence_fd = render_fence_fd.is_valid();
 
-  base::OnceClosure render_done_callback =
-      base::Bind(&DrmThread::SchedulePageFlipNoWait, weak_factory_.GetWeakPtr(),
-                 widget, planes, base::Passed(&callback));
+  base::OnceClosure render_done_callback = base::Bind(
+      &DrmThread::SchedulePageFlipNoWait, weak_factory_.GetWeakPtr(), widget,
+      planes, base::Passed(&render_fence_fd), base::Passed(&callback));
 
-  drm_device->plane_manager()->WaitForRender(std::move(render_wait_task),
-                                             std::move(render_done_callback));
+  drm_device->plane_manager()->WaitForRender(
+      std::move(render_wait_task), std::move(no_render_wait_task),
+      has_valid_render_fence_fd, std::move(render_done_callback));
 }
 
 void DrmThread::SchedulePageFlipNoWait(gfx::AcceleratedWidget widget,
                                        const std::vector<OverlayPlane>& planes,
+                                       base::ScopedFD render_fence_fd,
                                        SwapCompletionOnceCallback callback) {
   DrmWindow* window = screen_manager_->GetWindow(widget);
   if (window) {
-    bool result = window->SchedulePageFlip(planes, std::move(callback));
+    bool result = window->SchedulePageFlip(planes, std::move(render_fence_fd),
+                                           std::move(callback));
     CHECK(result) << "DrmThread::SchedulePageFlip failed.";
   } else {
     std::move(callback).Run(gfx::SwapResult::SWAP_ACK);

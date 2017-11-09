@@ -246,6 +246,7 @@ void HardwareDisplayPlaneManager::ResetCurrentPlaneList(
   plane_list->plane_list.clear();
   plane_list->legacy_page_flips.clear();
   plane_list->atomic_property_set.reset(drmModeAtomicAlloc());
+  plane_list->render_fence_fd.reset();
 }
 
 void HardwareDisplayPlaneManager::BeginFrame(

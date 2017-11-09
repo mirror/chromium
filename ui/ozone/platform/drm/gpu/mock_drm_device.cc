@@ -9,7 +9,6 @@
 #include "base/logging.h"
 #include "testing/gtest/include/gtest/gtest.h"
 #include "third_party/skia/include/core/SkCanvas.h"
-#include "ui/ozone/platform/drm/gpu/mock_hardware_display_plane_manager.h"
 
 namespace ui {
 
@@ -38,7 +37,8 @@ MockDrmDevice::MockDrmDevice()
       page_flip_expectation_(true),
       create_dumb_buffer_expectation_(true),
       use_sync_flips_(false),
-      current_framebuffer_(0) {
+      current_framebuffer_(0),
+      mock_hardware_display_plane_manager_(nullptr) {
   plane_manager_.reset(new HardwareDisplayPlaneManagerLegacy());
 }
 
@@ -61,8 +61,9 @@ MockDrmDevice::MockDrmDevice(bool use_sync_flips,
       create_dumb_buffer_expectation_(true),
       use_sync_flips_(use_sync_flips),
       current_framebuffer_(0) {
-  plane_manager_.reset(
-      new MockHardwareDisplayPlaneManager(this, crtcs, planes_per_crtc));
+  mock_hardware_display_plane_manager_ =
+      new MockHardwareDisplayPlaneManager(this, crtcs, planes_per_crtc);
+  plane_manager_.reset(mock_hardware_display_plane_manager_);
 }
 
 MockDrmDevice::~MockDrmDevice() {}
@@ -243,6 +244,10 @@ void MockDrmDevice::RunCallbacks() {
     callbacks_.pop();
     callback.Run(0, base::TimeTicks());
   }
+}
+
+MockHardwareDisplayPlaneManager* MockDrmDevice::mock_plane_manager() const {
+  return mock_hardware_display_plane_manager_;
 }
 
 }  // namespace ui

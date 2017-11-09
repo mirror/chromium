@@ -7,6 +7,7 @@
 #include <drm_fourcc.h>
 #include <utility>
 
+#include "base/posix/eintr_wrapper.h"
 #include "testing/gtest/include/gtest/gtest.h"
 #include "ui/ozone/platform/drm/gpu/fake_plane_info.h"
 #include "ui/ozone/platform/drm/gpu/mock_scanout_buffer.h"
@@ -92,6 +93,7 @@ void MockHardwareDisplayPlaneManager::SetPlaneProperties(
             });
 
   ResetPlaneCount();
+  ResetPlaneRenderFenceFDs();
 }
 
 void MockHardwareDisplayPlaneManager::SetCrtcInfo(
@@ -99,6 +101,7 @@ void MockHardwareDisplayPlaneManager::SetCrtcInfo(
   crtcs_ = crtcs;
   planes_.clear();
   ResetPlaneCount();
+  ResetPlaneRenderFenceFDs();
 }
 
 bool MockHardwareDisplayPlaneManager::DisableOverlayPlanes(
@@ -124,6 +127,10 @@ bool MockHardwareDisplayPlaneManager::SetPlaneData(
   EXPECT_NE(-1, LookupCrtcIndex(crtc_id));
   EXPECT_TRUE(hw_plane->CanUseForCrtc(LookupCrtcIndex(crtc_id)));
   EXPECT_FALSE(hw_plane->in_use());
+  if (plane_list->render_fence_fd.is_valid()) {
+    plane_render_fence_fds_.emplace_back(
+        HANDLE_EINTR(dup(plane_list->render_fence_fd.get())));
+  }
   plane_count_++;
   return HardwareDisplayPlaneManagerLegacy::SetPlaneData(
       plane_list, hw_plane, overlay, crtc_id, src_rect, crtc);
@@ -135,6 +142,18 @@ int MockHardwareDisplayPlaneManager::plane_count() const {
 
 void MockHardwareDisplayPlaneManager::ResetPlaneCount() {
   plane_count_ = 0;
+}
+
+std::vector<int> MockHardwareDisplayPlaneManager::plane_render_fence_fds()
+    const {
+  std::vector<int> ret;
+  for (const auto& scoped_fd : plane_render_fence_fds_)
+    ret.push_back(scoped_fd.get());
+  return ret;
+}
+
+void MockHardwareDisplayPlaneManager::ResetPlaneRenderFenceFDs() {
+  plane_render_fence_fds_.clear();
 }
 
 }  // namespace ui

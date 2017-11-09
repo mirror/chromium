@@ -16,6 +16,7 @@
 #include "third_party/skia/include/core/SkRefCnt.h"
 #include "third_party/skia/include/core/SkSurface.h"
 #include "ui/ozone/platform/drm/gpu/drm_device.h"
+#include "ui/ozone/platform/drm/gpu/mock_hardware_display_plane_manager.h"
 
 namespace ui {
 
@@ -56,6 +57,8 @@ class MockDrmDevice : public DrmDevice {
     const auto it = crtc_cursor_map_.find(crtc);
     return it != crtc_cursor_map_.end() ? it->second : 0;
   }
+
+  MockHardwareDisplayPlaneManager* mock_plane_manager() const;
 
   void RunCallbacks();
 
@@ -144,6 +147,8 @@ class MockDrmDevice : public DrmDevice {
   std::map<uint32_t, uint32_t> crtc_cursor_map_;
 
   base::queue<PageFlipCallback> callbacks_;
+
+  MockHardwareDisplayPlaneManager* mock_hardware_display_plane_manager_;
 
   DISALLOW_COPY_AND_ASSIGN(MockDrmDevice);
 };
