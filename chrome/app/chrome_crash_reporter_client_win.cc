@@ -227,7 +227,6 @@ ChromeCrashReporterClient::ChromeCrashReporterClient() {}
 
 ChromeCrashReporterClient::~ChromeCrashReporterClient() {}
 
-#if !defined(NACL_WIN64)
 // static
 void ChromeCrashReporterClient::InitializeCrashReportingForProcess() {
   static ChromeCrashReporterClient* instance = nullptr;
@@ -254,7 +253,6 @@ void ChromeCrashReporterClient::InitializeCrashReportingForProcess() {
         install_static::UTF16ToUTF8(user_data_dir));
   }
 }
-#endif  // NACL_WIN64
 
 bool ChromeCrashReporterClient::GetAlternativeCrashDumpLocation(
     base::string16* crash_dir) {

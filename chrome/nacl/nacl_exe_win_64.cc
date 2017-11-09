@@ -8,16 +8,8 @@
 #include "build/build_config.h"
 #include "chrome/app/chrome_crash_reporter_client_win.h"
 #include "chrome/install_static/product_install_details.h"
-#include "components/crash/content/app/breakpad_win.h"
 #include "components/nacl/loader/nacl_helper_win_64.h"
 #include "content/public/common/content_switches.h"
-
-namespace {
-
-base::LazyInstance<ChromeCrashReporterClient>::Leaky g_chrome_crash_client =
-    LAZY_INSTANCE_INITIALIZER;
-
-} // namespace
 
 int APIENTRY wWinMain(HINSTANCE instance, HINSTANCE, wchar_t*, int) {
 #if defined(OS_WIN)
@@ -27,11 +19,7 @@ int APIENTRY wWinMain(HINSTANCE instance, HINSTANCE, wchar_t*, int) {
   base::AtExitManager exit_manager;
   base::CommandLine::Init(0, NULL);
 
-  std::string process_type =
-      base::CommandLine::ForCurrentProcess()->GetSwitchValueASCII(
-          switches::kProcessType);
-  crash_reporter::SetCrashReporterClient(g_chrome_crash_client.Pointer());
-  breakpad::InitCrashReporter(process_type);
+  ChromeCrashReporterClient::InitializeCrashReportingForProcess();
 
   return nacl::NaClWin64Main();
 }
