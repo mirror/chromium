@@ -682,6 +682,7 @@ QuicStreamFactory::QuicStreamFactory(
     size_t max_packet_length,
     const std::string& user_agent_id,
     bool store_server_configs_in_properties,
+    bool close_sessions_on_ip_change,
     bool mark_quic_broken_when_network_blackholes,
     int idle_connection_timeout_seconds,
     int reduced_ping_timeout_seconds,
@@ -724,7 +725,10 @@ QuicStreamFactory::QuicStreamFactory(
       yield_after_packets_(kQuicYieldAfterPacketsRead),
       yield_after_duration_(QuicTime::Delta::FromMilliseconds(
           kQuicYieldAfterDurationMilliseconds)),
-      migrate_sessions_on_network_change_(migrate_sessions_on_network_change),
+      close_sessions_on_ip_change_(close_sessions_on_ip_change),
+      migrate_sessions_on_network_change_(
+          migrate_sessions_on_network_change &&
+          NetworkChangeNotifier::AreNetworkHandlesSupported()),
       migrate_sessions_early_(migrate_sessions_early &&
                               migrate_sessions_on_network_change_),
       allow_server_migration_(allow_server_migration),
@@ -763,10 +767,15 @@ QuicStreamFactory::QuicStreamFactory(
   // migrate_sessions_on_network_change is set to true.
   if (migrate_sessions_early)
     DCHECK(migrate_sessions_on_network_change);
+  // close_sessions_on_ip_change and migrate_sessions_on_network_change should
+  // never be simultaneously set to true.
+  DCHECK(!(close_sessions_on_ip_change && migrate_sessions_on_network_change));
 
-  NetworkChangeNotifier::AddIPAddressObserver(this);
-  if (NetworkChangeNotifier::AreNetworkHandlesSupported())
+  if (migrate_sessions_on_network_change_) {
     NetworkChangeNotifier::AddNetworkObserver(this);
+  } else if (close_sessions_on_ip_change_) {
+    NetworkChangeNotifier::AddIPAddressObserver(this);
+  }
 }
 
 QuicStreamFactory::~QuicStreamFactory() {
@@ -780,9 +789,11 @@ QuicStreamFactory::~QuicStreamFactory() {
     active_cert_verifier_jobs_.erase(active_cert_verifier_jobs_.begin());
   if (ssl_config_service_.get())
     ssl_config_service_->RemoveObserver(this);
-  NetworkChangeNotifier::RemoveIPAddressObserver(this);
-  if (NetworkChangeNotifier::AreNetworkHandlesSupported())
+  if (migrate_sessions_on_network_change_) {
     NetworkChangeNotifier::RemoveNetworkObserver(this);
+  } else if (close_sessions_on_ip_change_) {
+    NetworkChangeNotifier::RemoveIPAddressObserver(this);
+  }
 }
 
 void QuicStreamFactory::set_require_confirmation(bool require_confirmation) {
@@ -1156,16 +1167,11 @@ void QuicStreamFactory::ClearCachedStatesInCryptoConfig(
 }
 
 void QuicStreamFactory::OnIPAddressChanged() {
-  // Do nothing if connection migration is in use.
-  if (migrate_sessions_on_network_change_)
-    return;
   CloseAllSessions(ERR_NETWORK_CHANGED, QUIC_IP_ADDRESS_CHANGED);
   set_require_confirmation(true);
 }
 
 void QuicStreamFactory::OnNetworkConnected(NetworkHandle network) {
-  if (!migrate_sessions_on_network_change_)
-    return;
   ScopedConnectionMigrationEventLog scoped_event_log(net_log_,
                                                      "OnNetworkConnected");
   QuicStreamFactory::SessionIdMap::iterator it = all_sessions_.begin();
@@ -1178,19 +1184,15 @@ void QuicStreamFactory::OnNetworkConnected(NetworkHandle network) {
 }
 
 void QuicStreamFactory::OnNetworkMadeDefault(NetworkHandle network) {
-  if (!migrate_sessions_on_network_change_)
-    return;
-  DCHECK_NE(NetworkChangeNotifier::kInvalidNetworkHandle, network);
   ScopedConnectionMigrationEventLog scoped_event_log(net_log_,
                                                      "OnNetworkMadeDefault");
+  DCHECK_NE(NetworkChangeNotifier::kInvalidNetworkHandle, network);
   MaybeMigrateOrCloseSessions(network, /*close_if_cannot_migrate=*/false,
                               scoped_event_log.net_log());
   set_require_confirmation(true);
 }
 
 void QuicStreamFactory::OnNetworkDisconnected(NetworkHandle network) {
-  if (!migrate_sessions_on_network_change_)
-    return;
   ScopedConnectionMigrationEventLog scoped_event_log(net_log_,
                                                      "OnNetworkDisconnected");
   NetworkHandle new_network = FindAlternateNetwork(network);
