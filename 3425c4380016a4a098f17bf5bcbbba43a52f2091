@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "770210bc_f269ea72",
+        "filename": "ios/chrome/browser/ui/signin_interaction/signin_interaction_controller.mm",
+        "patchSetId": 4
+      },
+      "lineNbr": 45,
+      "author": {
+        "id": 1163361
+      },
+      "writtenOn": "2017-11-09T16:29:04Z",
+      "side": 1,
+      "message": "When identity interaction is presented, the nav controller is passed through to the callback. So the nav controller is set at that time.",
+      "parentUuid": "0dafa891_715154ed",
+      "range": {
+        "startLine": 45,
+        "startChar": 27,
+        "endLine": 45,
+        "endChar": 64
+      },
+      "revId": "3425c4380016a4a098f17bf5bcbbba43a52f2091",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "600c3984_ea0ac41a",
         "filename": "ios/chrome/browser/ui/signin_interaction/signin_interaction_controller.mm",
         "patchSetId": 4
@@ -36,6 +60,30 @@
       "writtenOn": "2017-11-09T09:50:01Z",
       "side": 1,
       "message": "Does this need to be reset when |viewController| is dismissed?",
+      "range": {
+        "startLine": 238,
+        "startChar": 2,
+        "endLine": 238,
+        "endChar": 39
+      },
+      "revId": "3425c4380016a4a098f17bf5bcbbba43a52f2091",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "62158d98_0a58f5db",
+        "filename": "ios/chrome/browser/ui/signin_interaction/signin_interaction_controller.mm",
+        "patchSetId": 4
+      },
+      "lineNbr": 238,
+      "author": {
+        "id": 1163361
+      },
+      "writtenOn": "2017-11-09T16:29:04Z",
+      "side": 1,
+      "message": "I\u0027m exploring more into this.",
+      "parentUuid": "600c3984_ea0ac41a",
       "range": {
         "startLine": 238,
         "startChar": 2,
