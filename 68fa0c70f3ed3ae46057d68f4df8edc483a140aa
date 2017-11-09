@@ -22,6 +22,30 @@
       "revId": "68fa0c70f3ed3ae46057d68f4df8edc483a140aa",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f520be99_394ef5bb",
+        "filename": "device/geolocation/location_arbitrator.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 24,
+      "author": {
+        "id": 1177311
+      },
+      "writtenOn": "2017-11-09T02:40:23Z",
+      "side": 1,
+      "message": "Yep! :D \nDone.",
+      "parentUuid": "5ea94ec7_dcff2867",
+      "range": {
+        "startLine": 24,
+        "startChar": 3,
+        "endLine": 24,
+        "endChar": 78
+      },
+      "revId": "68fa0c70f3ed3ae46057d68f4df8edc483a140aa",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
