@@ -362,6 +362,12 @@ enum class SnapshotViewOption {
 }
 
 - (void)setOtrTabModel:(TabModel*)otrModel {
+  if (_onLoadActiveModel == nil) {
+    _onLoadActiveModel = otrModel;
+  } else if (_onLoadActiveModel == [_tabSwitcherModel otrTabModel]) {
+    _onLoadActiveModel = nil;
+  }
+
   [_cache setMainTabModel:[_cache mainTabModel] otrTabModel:otrModel];
   [_tabSwitcherModel setMainTabModel:[_tabSwitcherModel mainTabModel]
                          otrTabModel:otrModel];
@@ -1182,8 +1188,6 @@ enum class SnapshotViewOption {
       tabSwitcherPanelController.sessionType;
   TabModel* tabModel = [self tabModelForSessionType:panelSessionType];
   [tabModel setCurrentTab:tab];
-  [self.delegate tabSwitcher:self
-      dismissTransitionWillStartWithActiveModel:tabModel];
   [self tabSwitcherDismissWithModel:tabModel animated:YES];
   if (panelSessionType == TabSwitcherSessionType::OFF_THE_RECORD_SESSION) {
     base::RecordAction(

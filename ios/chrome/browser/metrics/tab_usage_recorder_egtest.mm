@@ -101,6 +101,7 @@ void NewMainTabWithURL(const GURL& url, const std::string& word) {
 // Opens 2 new tabs with different URLs.
 void OpenTwoTabs() {
   chrome_test_util::CloseAllTabsInCurrentMode();
+  [[GREYUIThreadExecutor sharedInstance] drainUntilIdle];
 
   const GURL url1 = web::test::HttpServer::MakeUrl(kTestUrl1);
   const GURL url2 = web::test::HttpServer::MakeUrl(kTestUrl2);
@@ -196,6 +197,8 @@ void CloseTabAtIndexAndSync(NSUInteger i) {
   // This test opens three tabs.
   const int numberOfTabs = 3;
   chrome_test_util::CloseAllTabsInCurrentMode();
+  [[GREYUIThreadExecutor sharedInstance] drainUntilIdle];
+
   // Open three tabs with http:// urls.
   for (NSUInteger i = 0; i < numberOfTabs; i++) {
     chrome_test_util::OpenNewTab();
@@ -358,6 +361,8 @@ void CloseTabAtIndexAndSync(NSUInteger i) {
   };
 
   chrome_test_util::CloseAllTabsInCurrentMode();
+  [[GREYUIThreadExecutor sharedInstance] drainUntilIdle];
+
   GURL URL = web::test::HttpServer::MakeUrl(kTestUrl1);
   NewMainTabWithURL(URL, kURL1FirstWord);
   OpenNewIncognitoTabUsingUIAndEvictMainTabs();

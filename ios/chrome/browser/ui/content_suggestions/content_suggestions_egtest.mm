@@ -802,8 +802,9 @@ GREYElementInteraction* CellWithMatcher(id<GREYMatcher> matcher) {
   [ChromeEarlGrey goBack];
 
   [[self class] closeAllTabs];
-
   chrome_test_util::OpenNewTab();
+  [[GREYUIThreadExecutor sharedInstance] drainUntilIdle];
+
   [[EarlGrey selectElementWithMatcher:
                  chrome_test_util::StaticTextWithAccessibilityLabel(pageTitle)]
       performAction:grey_longPress()];

@@ -135,6 +135,8 @@ NSString* const kIncognitoCookieValue = @"rainbow";
   // Finally, closes all incognito tabs while still in normal tab.
   // Checks that incognito cookie is gone.
   GREYAssert(chrome_test_util::CloseAllIncognitoTabs(), @"Tabs did not close");
+  [[GREYUIThreadExecutor sharedInstance] drainUntilIdle];
+
   chrome_test_util::OpenNewTab();
   [ChromeEarlGrey
       loadURL:web::test::HttpServer::MakeUrl(kTestUrlIncognitoBrowsing)];
@@ -163,6 +165,8 @@ NSString* const kIncognitoCookieValue = @"rainbow";
 
   // Closes all incognito tabs and switch back to a normal tab.
   GREYAssert(chrome_test_util::CloseAllIncognitoTabs(), @"Tabs did not close");
+  [[GREYUIThreadExecutor sharedInstance] drainUntilIdle];
+
   chrome_test_util::OpenNewTab();
   [ChromeEarlGrey
       loadURL:web::test::HttpServer::MakeUrl(kTestUrlNormalBrowsing)];
@@ -208,6 +212,8 @@ NSString* const kIncognitoCookieValue = @"rainbow";
   // Closes all incognito tabs and then switching back to a normal tab. Verifies
   // that the cookie set earlier is still there.
   GREYAssert(chrome_test_util::CloseAllIncognitoTabs(), @"Tabs did not close");
+  [[GREYUIThreadExecutor sharedInstance] drainUntilIdle];
+
   chrome_test_util::OpenNewTab();
   [ChromeEarlGrey
       loadURL:web::test::HttpServer::MakeUrl(kTestUrlNormalBrowsing)];
