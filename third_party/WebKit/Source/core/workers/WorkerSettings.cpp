@@ -20,6 +20,9 @@ void WorkerSettings::CopyFlagValuesFromSettings(Settings* settings) {
       settings->GetStrictlyBlockBlockableMixedContent();
   settings->GetGenericFontFamilySettings().IsolatedCopyTo(
       generic_font_family_settings_);
+  service_worker_code_cache_install_options_ =
+      static_cast<V8ServiceWorkerCodeCacheInstallOptions>(
+          settings->GetServiceWorkerCodeCacheInstall());
 }
 
 }  // namespace blink
