@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "4a9852f7_6f543b9f",
+        "filename": "chrome/browser/ui/cocoa/download/md_download_item_view.mm",
+        "patchSetId": 2
+      },
+      "lineNbr": 288,
+      "author": {
+        "id": 1160249
+      },
+      "writtenOn": "2017-11-09T19:45:34Z",
+      "side": 0,
+      "message": "The fix for this crash could also just be nilling out suppressButton instead of switching to KVO, but KVO seemed more ObjC-like. What do you think?",
+      "revId": "53e403100ccac10b70cf1096db35bcbfa1554a2e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
