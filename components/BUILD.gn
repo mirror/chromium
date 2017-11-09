@@ -415,6 +415,7 @@ if (!is_ios) {
     data = [
       "$root_out_dir/components_tests_resources.pak",
       "$root_out_dir/content_shell.pak",
+      "$root_out_dir/v8_context_snapshot.bin",
       "test/data/",
       "dom_distiller/core/javascript/",
       "security_state/content/testdata/",
@@ -454,6 +455,7 @@ if (!is_ios) {
       "//services/service_manager/public/cpp",
       "//testing/gmock",
       "//testing/gtest",
+      "//tools/v8_context_snapshot",
       "//ui/base",
       "//url",
     ]
