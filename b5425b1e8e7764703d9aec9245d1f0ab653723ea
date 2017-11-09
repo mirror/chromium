@@ -1,0 +1,73 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "a596c28c_ed4ce8a8",
+        "filename": "chrome/browser/ui/browser.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 736,
+      "author": {
+        "id": 1000763
+      },
+      "writtenOn": "2017-11-09T17:18:48Z",
+      "side": 1,
+      "message": "If you do this, it means you don\u0027t track *any* browsers, right? That doesn\u0027t seem right.",
+      "range": {
+        "startLine": 736,
+        "startChar": 41,
+        "endLine": 736,
+        "endChar": 72
+      },
+      "revId": "b5425b1e8e7764703d9aec9245d1f0ab653723ea",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "70d244eb_a0647dfa",
+        "filename": "chrome/browser/ui/browser_list.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 256,
+      "author": {
+        "id": 1000763
+      },
+      "writtenOn": "2017-11-09T17:18:48Z",
+      "side": 1,
+      "message": "There is no guarantee this the close will complete (it may be aborted).",
+      "range": {
+        "startLine": 256,
+        "startChar": 18,
+        "endLine": 256,
+        "endChar": 43
+      },
+      "revId": "b5425b1e8e7764703d9aec9245d1f0ab653723ea",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "410b78b7_372b323c",
+        "filename": "components/keep_alive_registry/keep_alive_registry.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 34,
+      "author": {
+        "id": 1000763
+      },
+      "writtenOn": "2017-11-09T17:18:48Z",
+      "side": 1,
+      "message": "I suspect a for loop would be shorter and more readable.",
+      "range": {
+        "startLine": 30,
+        "startChar": 2,
+        "endLine": 34,
+        "endChar": 58
+      },
+      "revId": "b5425b1e8e7764703d9aec9245d1f0ab653723ea",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
