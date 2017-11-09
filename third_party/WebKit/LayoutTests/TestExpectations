@@ -3859,3 +3859,11 @@ crbug.com/781171 [ Android ] external/wpt/css/css-timing/step-timing-functions-o
 
 # Sheriff failures 2017-11-07
 crbug.com/782067 [ Mac10.10 Mac10.11 ] fast/css/no-recalc-on-no-op-inline-style-changes.html [ Pass Failure ]
+
+# Double tap on modern media controls is a bit more complicated on Mac but
+# since we are not targeting Mac yet we can come back and fix this later.
+crbug.com/783154 [ Mac ] virtual/modern-media-controls/media/controls/modern/doubletap-on-play-button.html [ Skip ]
+crbug.com/783154 [ Mac ] virtual/modern-media-controls/media/controls/modern/doubletap-to-toggle-fullscreen.html [ Skip ]
+crbug.com/783154 [ Mac ] virtual/modern-media-controls/media/controls/modern/singletap-on-outside.html [ Skip ]
+crbug.com/783154 [ Mac ] virtual/modern-media-controls/media/controls/modern/singletap-on-play-button.html [ Skip ]
+crbug.com/783154 [ Mac ] virtual/modern-media-controls/media/controls/modern/slow-doubletap.html [ Skip ]
