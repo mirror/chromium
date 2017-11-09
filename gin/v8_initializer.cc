@@ -338,14 +338,14 @@ void V8Initializer::Initialize(IsolateHolder::ScriptMode mode,
 
 #if defined(V8_USE_EXTERNAL_STARTUP_DATA)
   v8::StartupData natives;
-  natives.data = reinterpret_cast<const char*>(g_mapped_natives->data());
-  natives.raw_size = static_cast<int>(g_mapped_natives->length());
+  v8::StartupData snapshot;
+  GetV8ExternalSnapshotData(&natives, &snapshot);
   v8::V8::SetNativesDataBlob(&natives);
 
-  if (g_mapped_snapshot) {
-    v8::StartupData snapshot;
-    snapshot.data = reinterpret_cast<const char*>(g_mapped_snapshot->data());
-    snapshot.raw_size = static_cast<int>(g_mapped_snapshot->length());
+  if (g_mapped_v8_context_snapshot) {
+    GetV8ContextSnapshotData(&snapshot);
+  }
+  if (snapshot.data) {
     v8::V8::SetSnapshotDataBlob(&snapshot);
   }
 #endif  // V8_USE_EXTERNAL_STARTUP_DATA

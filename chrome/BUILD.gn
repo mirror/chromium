@@ -23,6 +23,7 @@ import("//ppapi/features/features.gni")
 import("//third_party/WebKit/public/public_features.gni")
 import("//third_party/widevine/cdm/widevine.gni")
 import("//tools/resources/generate_resource_whitelist.gni")
+import("//tools/v8_context_snapshot/v8_context_snapshot.gni")
 import("//v8/gni/v8.gni")
 
 if (is_android) {
@@ -336,6 +337,9 @@ if (!is_android && !is_mac) {
       data = [
         "$root_out_dir/chrome_200_percent.pak",
       ]
+      if (use_v8_context_snapshot) {
+        data += [ "$root_output_dir/v8_context_snapshot.bin" ]
+      }
       if (!is_win && use_aura) {
         sources += [ "app/chrome_exe_main_aura.cc" ]
       }
