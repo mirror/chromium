@@ -577,8 +577,6 @@ ExtensionFunction::ResponseAction WindowsCreateFunction::Run() {
     bool set_self_as_opener = create_data->set_self_as_opener &&  // present?
                               *create_data->set_self_as_opener;  // set to true?
     navigate_params.opener = set_self_as_opener ? render_frame_host() : nullptr;
-    navigate_params.source_site_instance =
-        render_frame_host()->GetSiteInstance();
 
     chrome::Navigate(&navigate_params);
   }
