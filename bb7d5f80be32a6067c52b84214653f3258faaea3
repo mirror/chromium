@@ -1,0 +1,61 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "bb10f5f1_0a8d5a4d",
+        "filename": "chrome/browser/ui/views/hover_button.cc",
+        "patchSetId": 14
+      },
+      "lineNbr": 124,
+      "author": {
+        "id": 1002092
+      },
+      "writtenOn": "2017-11-09T23:55:32Z",
+      "side": 1,
+      "message": "const base::string16 accessible_name \u003d \n\n(initializing a reference with a temporary is allowed in the C++ standard, but it confuses some people - e.g. ~wrt when the destructor is called)",
+      "range": {
+        "startLine": 124,
+        "startChar": 4,
+        "endLine": 124,
+        "endChar": 41
+      },
+      "revId": "bb7d5f80be32a6067c52b84214653f3258faaea3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3122012b_b94e1eb7",
+        "filename": "chrome/browser/ui/views/hover_button.cc",
+        "patchSetId": 14
+      },
+      "lineNbr": 183,
+      "author": {
+        "id": 1002092
+      },
+      "writtenOn": "2017-11-09T23:55:32Z",
+      "side": 1,
+      "message": "I think this needs something like\n\nif (!HitTestPoint(point))\n  return nullptr;\n\n(similar to Label::GetTooltipHandlerForPoint)\n\nthis might come up when the parent view is asked for the tooltip handler in View::GetTooltipHandlerForPoint -- without that check, a subview might claim all the area in the parent.",
+      "revId": "bb7d5f80be32a6067c52b84214653f3258faaea3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2938d940_2199c120",
+        "filename": "chrome/browser/ui/views/hover_button.cc",
+        "patchSetId": 14
+      },
+      "lineNbr": 185,
+      "author": {
+        "id": 1002092
+      },
+      "writtenOn": "2017-11-09T23:55:32Z",
+      "side": 1,
+      "message": "nit: maybe\n\n  if (title_ \u0026\u0026 subtitle_)\n    return this;\n  return title_ ? title_ : label();",
+      "revId": "bb7d5f80be32a6067c52b84214653f3258faaea3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}

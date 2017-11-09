@@ -37,6 +37,24 @@
     },
     {
       "key": {
+        "uuid": "9818a2a2_7275198e",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 13
+      },
+      "lineNbr": 16,
+      "author": {
+        "id": 1002092
+      },
+      "writtenOn": "2017-11-09T23:55:32Z",
+      "side": 1,
+      "message": "\u003e I don\u0027t mind, but there wasn\u0027t a specific ProfileChooserView \"update to harmony\" bug I could find. (The bug in line 18 below is the one for the Page Info bubble.) Sooo I think it would be weird to post screenshots of the ProfileChooserView in a bug about Page Info? Should I make a new bug? :/ Or do you know of one I missed?\n\u003e \n\u003e (Also the screenshot is shared with everyone with the link via my chromium.org account so it\u0027s definitely externally visible.)\n\nYeah I don\u0027t think there\u0027s a bug for the profile chooser for Harmony, since it\u0027s not a \"dialog\". Rather than being Harmonized, it will move straight to mocks for `DICE` - http://go/ydezy (internal), and http://crbug.com/716052 [there should probably be a \"UI\" bug that cbrug/716052 is blocked on at some point, but I couldn\u0027t find one].\n\nthe drive link is fine.",
+      "parentUuid": "a84f44fd_6e280e1f",
+      "revId": "48615d33e15425403b0c899a8474677e607ac25d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "014ce666_6c29d94c",
         "filename": "chrome/browser/ui/views/harmony/chrome_layout_provider.h",
         "patchSetId": 13
@@ -66,6 +84,24 @@
       "side": 1,
       "message": "Done, thanks for the suggestions!\n\nI left off the _PADDING_ part of the enum name though because I think all the other enum names used to have it and it got removed? So it seems more consistent to not have it.",
       "parentUuid": "014ce666_6c29d94c",
+      "revId": "48615d33e15425403b0c899a8474677e607ac25d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "83d65bcb_911cb215",
+        "filename": "chrome/browser/ui/views/harmony/chrome_layout_provider.h",
+        "patchSetId": 13
+      },
+      "lineNbr": 57,
+      "author": {
+        "id": 1002092
+      },
+      "writtenOn": "2017-11-09T23:55:32Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "231fddeb_6a76d13a",
       "revId": "48615d33e15425403b0c899a8474677e607ac25d",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": false
@@ -104,6 +140,24 @@
       "revId": "48615d33e15425403b0c899a8474677e607ac25d",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4c308f4f_8c1d141f",
+        "filename": "chrome/browser/ui/views/hover_button.cc",
+        "patchSetId": 13
+      },
+      "lineNbr": 39,
+      "author": {
+        "id": 1002092
+      },
+      "writtenOn": "2017-11-09T23:55:32Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "89a26cfb_d5cc7b2c",
+      "revId": "48615d33e15425403b0c899a8474677e607ac25d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
