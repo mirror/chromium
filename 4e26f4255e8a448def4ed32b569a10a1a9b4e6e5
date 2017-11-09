@@ -16,6 +16,24 @@
       "revId": "4e26f4255e8a448def4ed32b569a10a1a9b4e6e5",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "64283fa5_8e697c03",
+        "filename": "components/viz/service/frame_sinks/frame_sink_manager_impl.cc",
+        "patchSetId": 44
+      },
+      "lineNbr": 433,
+      "author": {
+        "id": 1174470
+      },
+      "writtenOn": "2017-11-09T14:18:40Z",
+      "side": 1,
+      "message": "Video detector grabs them from surface manager.",
+      "parentUuid": "61f981e2_a2b4ea98",
+      "revId": "4e26f4255e8a448def4ed32b569a10a1a9b4e6e5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
