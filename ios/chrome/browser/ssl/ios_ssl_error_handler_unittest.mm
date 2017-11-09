@@ -5,8 +5,10 @@
 #include "ios/chrome/browser/ssl/ios_ssl_error_handler.h"
 
 #include "base/mac/bind_objc_block.h"
+#include "base/test/scoped_feature_list.h"
 #include "ios/chrome/browser/browser_state/test_chrome_browser_state.h"
 #import "ios/chrome/browser/ssl/captive_portal_detector_tab_helper.h"
+#include "ios/chrome/browser/ssl/captive_portal_features.h"
 #include "ios/web/public/interstitials/web_interstitial.h"
 #import "ios/web/public/test/web_test_with_web_state.h"
 #import "ios/web/public/web_state/web_state.h"
@@ -55,6 +57,9 @@ class IOSSSLErrorHandlerTest : public web::WebTestWithWebState {
 
 // Tests non-overridable error handling.
 TEST_F(IOSSSLErrorHandlerTest, NonOverridable) {
+  base::test::ScopedFeatureList scoped_feature_list;
+  scoped_feature_list.InitAndDisableFeature(kCaptivePortalFeature);
+
   net::SSLInfo ssl_info;
   ssl_info.cert = cert();
   GURL url(kTestHostName);
@@ -79,6 +84,9 @@ TEST_F(IOSSSLErrorHandlerTest, NonOverridable) {
 // Tests proceed with overridable error.
 // Flaky: http://crbug.com/660343.
 TEST_F(IOSSSLErrorHandlerTest, DISABLED_OverridableProceed) {
+  base::test::ScopedFeatureList scoped_feature_list;
+  scoped_feature_list.InitAndDisableFeature(kCaptivePortalFeature);
+
   net::SSLInfo ssl_info;
   ssl_info.cert = cert();
   GURL url(kTestHostName);
@@ -102,6 +110,9 @@ TEST_F(IOSSSLErrorHandlerTest, DISABLED_OverridableProceed) {
 
 // Tests do not proceed with overridable error.
 TEST_F(IOSSSLErrorHandlerTest, OverridableDontProceed) {
+  base::test::ScopedFeatureList scoped_feature_list;
+  scoped_feature_list.InitAndDisableFeature(kCaptivePortalFeature);
+
   net::SSLInfo ssl_info;
   ssl_info.cert = cert();
   GURL url(kTestHostName);
