@@ -1,0 +1,89 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "fa2c913f_32bbf601",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 8
+      },
+      "lineNbr": 18,
+      "author": {
+        "id": 1002864
+      },
+      "writtenOn": "2017-11-09T04:45:56Z",
+      "side": 1,
+      "message": "add 705744?",
+      "revId": "5cbef023fe57d02dcf9f8d9ed34b7e278aec89ac",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "11a4bf9a_d4fcfda9",
+        "filename": "content/browser/streams/stream_metadata.h",
+        "patchSetId": 8
+      },
+      "lineNbr": 9,
+      "author": {
+        "id": 1002864
+      },
+      "writtenOn": "2017-11-09T04:45:56Z",
+      "side": 1,
+      "message": "not used?",
+      "revId": "5cbef023fe57d02dcf9f8d9ed34b7e278aec89ac",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "dc7c802f_67d8aa71",
+        "filename": "content/browser/streams/stream_url_request_job.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 143,
+      "author": {
+        "id": 1002864
+      },
+      "writtenOn": "2017-11-09T04:45:56Z",
+      "side": 1,
+      "message": "how about trying metadata first and then returning after copying?\n\nI also wonder if it\u0027s better to have failed_response_info_ override the metadata, meaning that request verification happens first and then we look at the response.",
+      "revId": "5cbef023fe57d02dcf9f8d9ed34b7e278aec89ac",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "00db2b22_59deac0e",
+        "filename": "content/browser/streams/stream_url_request_job.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 152,
+      "author": {
+        "id": 1002864
+      },
+      "writtenOn": "2017-11-09T04:45:56Z",
+      "side": 1,
+      "message": "Looks the way raw_body_bytes_ is updated is correct.\n\ntotal_received_bytes() is just forwarded, which is different from raw_body_bytes_. I was a bit concerned with the difference initially, but it looks not a big deal.",
+      "revId": "5cbef023fe57d02dcf9f8d9ed34b7e278aec89ac",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "456c6543_9b53a51f",
+        "filename": "content/browser/streams/stream_url_request_job_unittest.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 185,
+      "author": {
+        "id": 1002864
+      },
+      "writtenOn": "2017-11-09T04:45:56Z",
+      "side": 1,
+      "message": "shouldn\u0027t this also be tested with OnResponseStarted() called?",
+      "revId": "5cbef023fe57d02dcf9f8d9ed34b7e278aec89ac",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}

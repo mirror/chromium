@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "98a00237_912e118a",
+        "filename": "content/browser/loader/stream_resource_handler.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 10,
+      "author": {
+        "id": 1002864
+      },
+      "writtenOn": "2017-11-09T04:45:56Z",
+      "side": 0,
+      "message": "looks this is also still used at L71 in the new file",
+      "revId": "214dccc66a7998be95b48e389e51eef699ec1a95",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
