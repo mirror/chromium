@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "c2b89325_c26b6d37",
+        "filename": "media/audio/win/audio_low_latency_output_win.cc",
+        "patchSetId": 10
+      },
+      "lineNbr": 138,
+      "author": {
+        "id": 1201454
+      },
+      "writtenOn": "2017-11-09T13:16:31Z",
+      "side": 1,
+      "message": "I think the parentheses are unnecessary.",
+      "revId": "7720a43ec3d40fc59a0f4159044500deffc6ec1d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6822ab03_464b3fb3",
+        "filename": "tools/metrics/histograms/histograms.xml",
+        "patchSetId": 10
+      },
+      "lineNbr": 32296,
+      "author": {
+        "id": 1201454
+      },
+      "writtenOn": "2017-11-09T13:16:31Z",
+      "side": 1,
+      "message": "Looks like whitespace here got messed up by formatting tool.",
+      "revId": "7720a43ec3d40fc59a0f4159044500deffc6ec1d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
