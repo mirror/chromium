@@ -4,6 +4,8 @@
 
 package org.chromium.content.browser.framehost;
 
+import org.chromium.base.Callback;
+import org.chromium.base.ThreadUtils;
 import org.chromium.base.UnguessableToken;
 import org.chromium.base.annotations.CalledByNative;
 import org.chromium.base.annotations.JNINamespace;
@@ -66,6 +68,14 @@ public class RenderFrameHostImpl implements RenderFrameHost {
     }
 
     @Override
+    public void getCanonicalURLForSharing(Callback<String> callback) {
+        if (mNativeRenderFrameHostAndroid == 0) {
+            ThreadUtils.postOnUiThread(() -> { callback.onResult(null); });
+        }
+        nativeGetCanonicalURLForSharing(mNativeRenderFrameHostAndroid, callback);
+    }
+
+    @Override
     public InterfaceProvider getRemoteInterfaces() {
         return mInterfaceProvider;
     }
@@ -90,6 +100,8 @@ public class RenderFrameHostImpl implements RenderFrameHost {
     }
 
     private native String nativeGetLastCommittedURL(long nativeRenderFrameHostAndroid);
+    private native void nativeGetCanonicalURLForSharing(
+            long nativeRenderFrameHostAndroid, Callback<String> callback);
     private native UnguessableToken nativeGetAndroidOverlayRoutingToken(
             long nativeRenderFrameHostAndroid);
 }
