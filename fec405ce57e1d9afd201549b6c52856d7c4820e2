@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "26f28a4b_5f501a63",
+        "filename": "content/public/common/url_loader.mojom",
+        "patchSetId": 11
+      },
+      "lineNbr": 20,
+      "author": {
+        "id": 1002172
+      },
+      "writtenOn": "2017-11-09T11:51:05Z",
+      "side": 1,
+      "message": "I talked with Yutaka about this, but if we want to do so before finishing mojo migration, or precisely said before removing old chrome IPC code path, we need extra works to use such new mojo types over Chrome IPC. So, we decided not to use mojo now, but just do directory moving, and convert types once the old code path is removed.",
+      "parentUuid": "af9d7900_d3c7e1aa",
+      "revId": "fec405ce57e1d9afd201549b6c52856d7c4820e2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "266d2256_ddaffa81",
         "filename": "content/public/common/url_loader_status.typemap",
         "patchSetId": 11
@@ -33,6 +51,24 @@
       "revId": "fec405ce57e1d9afd201549b6c52856d7c4820e2",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1a373b37_45739c9e",
+        "filename": "content/public/common/url_loader_status.typemap",
+        "patchSetId": 11
+      },
+      "lineNbr": 7,
+      "author": {
+        "id": 1002172
+      },
+      "writtenOn": "2017-11-09T11:51:05Z",
+      "side": 1,
+      "message": "yep, mojo ipc traits still need the file to serialize this native object. this is actually used even we do not pass the object over process, but even do it inside the renderer.",
+      "parentUuid": "266d2256_ddaffa81",
+      "revId": "fec405ce57e1d9afd201549b6c52856d7c4820e2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
