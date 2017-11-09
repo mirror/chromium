@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "8535151c_99b32ce0",
+        "filename": "tools/fuchsia/local-sdk.py",
+        "patchSetId": 1
+      },
+      "lineNbr": 34,
+      "author": {
+        "id": 1001445
+      },
+      "writtenOn": "2017-11-09T20:21:43Z",
+      "side": 1,
+      "message": "should be \u0027-p\u0027, \u0027target\u0027, and s/target/project/ for the variable name. the \u0027-t\u0027 will go away once the remaining callers do",
+      "revId": "b10632dc4c381ac0de8b5820fc76e7eff843f56d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6d0367f3_da8a9bc6",
+        "filename": "tools/fuchsia/local-sdk.py",
+        "patchSetId": 1
+      },
+      "lineNbr": 36,
+      "author": {
+        "id": 1001445
+      },
+      "writtenOn": "2017-11-09T20:21:43Z",
+      "side": 1,
+      "message": "Soon (TM) i\u0027m going to extend this to allow specifying multiples, so for arm this will be able to say that it wants to build for zircon-qemu-arm64 + zircon-hikey960-arm64 + zircon-gauss-arm64 and produce bits that allow running in qemu, hikey, and gauss. that\u0027s not quite ready yet, though",
+      "revId": "b10632dc4c381ac0de8b5820fc76e7eff843f56d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
