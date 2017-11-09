@@ -46,6 +46,30 @@
       "revId": "2752074224f5445fdde72b9f2759eacde2e43f9d",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "3e8715dc_2ff8e076",
+        "filename": "media/gpu/vaapi_wrapper.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 143,
+      "author": {
+        "id": 1103654
+      },
+      "writtenOn": "2017-11-09T18:47:33Z",
+      "side": 1,
+      "message": "Using an enumeration sounds good here.",
+      "parentUuid": "35398f07_0aa0ca01",
+      "range": {
+        "startLine": 143,
+        "startChar": 37,
+        "endLine": 143,
+        "endChar": 54
+      },
+      "revId": "2752074224f5445fdde72b9f2759eacde2e43f9d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
