@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "036639d0_99ed4b70",
+        "filename": "net/http/http_cache_unittest.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 1082,
+      "author": {
+        "id": 1116284
+      },
+      "writtenOn": "2017-11-09T17:08:03Z",
+      "side": 1,
+      "message": "s/stil/still/",
+      "range": {
+        "startLine": 1082,
+        "startChar": 47,
+        "endLine": 1082,
+        "endChar": 51
+      },
+      "revId": "de2b8a4c73c4722a9d43964637ab6abbe5654334",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
