@@ -49,6 +49,30 @@
     },
     {
       "key": {
+        "uuid": "ab640dc5_c578a84e",
+        "filename": "ios/web/public/web_state/global_web_state_observer.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 26,
+      "author": {
+        "id": 1190590
+      },
+      "writtenOn": "2017-11-09T17:01:53Z",
+      "side": 1,
+      "message": "Thanks for the clarification. I didn\u0027t realize there are two separate cases. Updated the comment to reflect that.",
+      "parentUuid": "6ec31da2_91edf9e9",
+      "range": {
+        "startLine": 26,
+        "startChar": 6,
+        "endLine": 26,
+        "endChar": 28
+      },
+      "revId": "a86a59c7dba53d6727616336abe2ae2f3ce9bd63",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "488d5c9c_ed39462a",
         "filename": "ios/web/public/web_state/global_web_state_observer.h",
         "patchSetId": 2
@@ -63,6 +87,24 @@
       "revId": "a86a59c7dba53d6727616336abe2ae2f3ce9bd63",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "90e4db25_317eed5f",
+        "filename": "ios/web/public/web_state/global_web_state_observer.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 29,
+      "author": {
+        "id": 1190590
+      },
+      "writtenOn": "2017-11-09T17:01:53Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "488d5c9c_ed39462a",
+      "revId": "a86a59c7dba53d6727616336abe2ae2f3ce9bd63",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
