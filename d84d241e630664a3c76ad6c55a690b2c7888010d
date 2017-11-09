@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "b3df2459_b2fb5f39",
+        "filename": "extensions/common/api/media_perception_private.idl",
+        "patchSetId": 5
+      },
+      "lineNbr": 76,
+      "author": {
+        "id": 1198274
+      },
+      "writtenOn": "2017-11-09T22:32:07Z",
+      "side": 1,
+      "message": "Changed the variable names.\n\nI have a preference towards ComponentType because it maps directly to a particular component that will be loaded, which to me is closer to a set \"type\" than a feature set, which sounds like something where you can pick many things from a list of options.",
+      "parentUuid": "d29ee2e9_9f32a6ee",
+      "range": {
+        "startLine": 76,
+        "startChar": 18,
+        "endLine": 76,
+        "endChar": 31
+      },
+      "revId": "d84d241e630664a3c76ad6c55a690b2c7888010d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "278ef14c_3efe5a17",
         "filename": "extensions/common/api/media_perception_private.idl",
         "patchSetId": 5
@@ -42,6 +66,24 @@
     },
     {
       "key": {
+        "uuid": "80b1982a_04acc48c",
+        "filename": "extensions/common/api/media_perception_private.idl",
+        "patchSetId": 5
+      },
+      "lineNbr": 244,
+      "author": {
+        "id": 1198274
+      },
+      "writtenOn": "2017-11-09T22:32:07Z",
+      "side": 1,
+      "message": "That\u0027s a good point. I added a note about that and also added STOPPED to the list of statuses so that clients of the API can have process shutdown.",
+      "parentUuid": "278ef14c_3efe5a17",
+      "revId": "d84d241e630664a3c76ad6c55a690b2c7888010d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "f37b5f42_2e424db6",
         "filename": "extensions/common/api/media_perception_private.idl",
         "patchSetId": 5
@@ -56,6 +98,24 @@
       "revId": "d84d241e630664a3c76ad6c55a690b2c7888010d",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7fcdb23b_ae51485d",
+        "filename": "extensions/common/api/media_perception_private.idl",
+        "patchSetId": 5
+      },
+      "lineNbr": 250,
+      "author": {
+        "id": 1198274
+      },
+      "writtenOn": "2017-11-09T22:32:07Z",
+      "side": 1,
+      "message": "We will leave managing of components to the ComponentUpdater API, which is responsible for loading and mounting the desired component when requested, and also for deleting or replacing components when they are no longer needed or need updating.\n\nI think it\u0027s very likely that this will be the last significant modification to this MPP API. We are actively working on go/mpp-v2 and after discussing with rkc@ it seems that creating a new parallel API (while this one still serves its purpose until deprecation) gives us a bit more flexibility. For that reason, I\u0027m not sure we need to think too deeply about how this API will support multiple components, concurrent components, etc whereas for the new API we will be sure to be meticulous.",
+      "parentUuid": "f37b5f42_2e424db6",
+      "revId": "d84d241e630664a3c76ad6c55a690b2c7888010d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
