@@ -86,6 +86,10 @@ class ASH_EXPORT PowerButtonController
     return screenshot_controller_.get();
   }
 
+  PowerButtonDisplayController* display_controller_for_test() {
+    return display_controller_.get();
+  }
+
   TabletPowerButtonController* tablet_power_button_controller_for_test() {
     return tablet_controller_.get();
   }

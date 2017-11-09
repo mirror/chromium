@@ -31,6 +31,10 @@ class TabletPowerButtonControllerTestApi {
   // returns true. Otherwise, returns false.
   bool TriggerShutdownTimeout() WARN_UNUSED_RESULT;
 
+  // If timer for launching lock screen note is running, it stops is, runs its
+  // tasks and returns true. Otherwise, returns false.
+  bool TriggerLockScreenNoteLaunchTimeout() WARN_UNUSED_RESULT;
+
   // Sends |event| to |controller_->display_controller_|.
   void SendKeyEvent(ui::KeyEvent* event);
 
