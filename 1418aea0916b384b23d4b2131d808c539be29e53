@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "febed983_f12bd48c",
+        "filename": "pdf/paint_aggregator.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 270,
+      "author": {
+        "id": 1001934
+      },
+      "writtenOn": "2017-11-09T22:38:19Z",
+      "side": 1,
+      "message": "Maybe? I\u0027m going to play it safe and remove the check, and in all of this method\u0027s call stacks.",
+      "parentUuid": "954eab0b_fd40033f",
+      "range": {
+        "startLine": 270,
+        "startChar": 42,
+        "endLine": 270,
+        "endChar": 76
+      },
+      "revId": "1418aea0916b384b23d4b2131d808c539be29e53",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "9b0a7730_7a6b4652",
         "filename": "pdf/paint_manager.cc",
         "patchSetId": 1
@@ -45,6 +69,30 @@
       "revId": "1418aea0916b384b23d4b2131d808c539be29e53",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d807ff09_9e44e442",
+        "filename": "pdf/paint_manager.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 146,
+      "author": {
+        "id": 1001934
+      },
+      "writtenOn": "2017-11-09T22:38:19Z",
+      "side": 1,
+      "message": "Ya, probably.",
+      "parentUuid": "9b0a7730_7a6b4652",
+      "range": {
+        "startLine": 145,
+        "startChar": 2,
+        "endLine": 146,
+        "endChar": 11
+      },
+      "revId": "1418aea0916b384b23d4b2131d808c539be29e53",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
