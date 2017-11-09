@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "4a5aab97_a0d016a5",
+        "filename": "chrome/browser/extensions/api/tabs/tabs_api.cc",
+        "patchSetId": 20
+      },
+      "lineNbr": 219,
+      "author": {
+        "id": 1001380
+      },
+      "writtenOn": "2017-11-09T15:06:03Z",
+      "side": 1,
+      "message": "Adding new state has more implication. (at least you need to update ash state implementations) Do you really need this? Can you just check the pin property instead?",
+      "revId": "10bd7ab65c1f296eb009e27f35658bad3a98172f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
