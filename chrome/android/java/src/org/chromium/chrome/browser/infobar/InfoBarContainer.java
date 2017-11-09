@@ -277,6 +277,10 @@ public class InfoBarContainer extends SwipableOverlayView {
         mLayout.addAnimationListener(listener);
     }
 
+    public void removeAnimationListener(InfoBarAnimationListener listener) {
+        mLayout.removeAnimationListener(listener);
+    }
+
     /**
      * Returns true if any animations are pending or in progress.
      */

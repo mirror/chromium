@@ -6,6 +6,7 @@ package org.chromium.chrome.browser.survey;
 
 import android.content.Context;
 import android.content.SharedPreferences;
+import android.os.Handler;
 import android.support.annotation.VisibleForTesting;
 import android.text.TextUtils;
 
@@ -15,6 +16,9 @@ import org.chromium.base.StrictModeContext;
 import org.chromium.base.metrics.RecordUserAction;
 import org.chromium.chrome.R;
 import org.chromium.chrome.browser.ChromeSwitches;
+import org.chromium.chrome.browser.infobar.InfoBarContainer;
+import org.chromium.chrome.browser.infobar.InfoBarContainerLayout.Item;
+import org.chromium.chrome.browser.infobar.InfoBarIdentifier;
 import org.chromium.chrome.browser.infobar.SurveyInfoBar;
 import org.chromium.chrome.browser.infobar.SurveyInfoBarDelegate;
 import org.chromium.chrome.browser.preferences.ChromePreferenceManager;
@@ -33,17 +37,21 @@ import org.chromium.content_public.browser.WebContentsObserver;
 /**
  * Class that controls if and when to show surveys related to the Chrome Home experiment.
  */
-public class ChromeHomeSurveyController {
+public class ChromeHomeSurveyController implements InfoBarContainer.InfoBarAnimationListener {
     public static final String SURVEY_INFO_BAR_DISPLAYED_KEY =
             "chrome_home_survey_info_bar_displayed";
     public static final String PARAM_NAME = "survey_override_site_id";
 
     private static final String TRIAL_NAME = "ChromeHome";
+    private static final long FIVE_SECONDS_IN_MS = 5000;
 
     static final long ONE_WEEK_IN_MILLIS = 604800000L;
     static final String SURVEY_INFOBAR_DISMISSED_KEY = "chrome_home_survey_info_bar_dismissed";
 
     private TabModelSelector mTabModelSelector;
+    private Handler mLoggingHandler;
+    private Runnable mRecordDisplayedRunnable;
+    private Tab mTab;
 
     private ChromeHomeSurveyController() {
         // Empty constructor.
@@ -82,6 +90,7 @@ public class ChromeHomeSurveyController {
             }
         };
         surveyController.downloadSurvey(context, siteId, onSuccessRunnable);
+        initLoggingHandler();
     }
 
     private boolean doesUserQualifyForSurvey() {
@@ -96,9 +105,9 @@ public class ChromeHomeSurveyController {
     }
 
     private void onSurveyAvailable(String siteId) {
-        Tab tab = mTabModelSelector.getCurrentTab();
-        if (isValidTabForSurvey(tab)) {
-            showSurveyInfoBar(tab, siteId);
+        mTab = mTabModelSelector.getCurrentTab();
+        if (isValidTabForSurvey(mTab)) {
+            showSurveyInfoBar(mTab, siteId);
             return;
         }
 
@@ -115,18 +124,21 @@ public class ChromeHomeSurveyController {
     }
 
     private void showSurveyInfoBar(Tab tab, String siteId) {
+        tab.getInfoBarContainer().addAnimationListener(this);
         WebContents webContents = tab.getWebContents();
         if (webContents.isLoading()) {
             webContents.addObserver(new WebContentsObserver() {
                 @Override
                 public void didFinishLoad(long frameId, String validatedUrl, boolean isMainFrame) {
                     if (!isMainFrame) return;
-                    showSurveyInfoBar(webContents, siteId);
+                    SurveyInfoBar.showSurveyInfoBar(webContents, siteId, true,
+                            R.drawable.chrome_sync_logo, getSurveyInfoBarDelegate());
                     webContents.removeObserver(this);
                 }
             });
         } else {
-            showSurveyInfoBar(webContents, siteId);
+            SurveyInfoBar.showSurveyInfoBar(webContents, siteId, true, R.drawable.chrome_sync_logo,
+                    getSurveyInfoBarDelegate());
         }
     }
 
@@ -135,13 +147,6 @@ public class ChromeHomeSurveyController {
             return PrivacyPreferencesManager.getInstance()
                     .isUsageAndCrashReportingPermittedByUser();
         }
-    }
-
-    private void showSurveyInfoBar(WebContents webContents, String siteId) {
-        SurveyInfoBar.showSurveyInfoBar(
-                webContents, siteId, true, R.drawable.chrome_sync_logo, getSurveyInfoBarDelegate());
-        SharedPreferences sharedPreferences = ContextUtils.getAppSharedPreferences();
-        sharedPreferences.edit().putBoolean(SURVEY_INFO_BAR_DISPLAYED_KEY, true).apply();
     }
 
     @VisibleForTesting
@@ -173,6 +178,22 @@ public class ChromeHomeSurveyController {
         return new ChromeHomeSurveyController();
     }
 
+    @Override
+    public void notifyAnimationFinished(int animationType) {}
+
+    @Override
+    public void notifyAllAnimationsFinished(Item frontInfoBar) {
+        if (frontInfoBar == null) return;
+
+        mLoggingHandler.removeCallbacksAndMessages(null);
+
+        // If the survey info bar is in front, start the countdown to log that it was displayed.
+        if (frontInfoBar.getInfoBarIdentifier() != InfoBarIdentifier.SURVEY_INFOBAR_ANDROID) {
+            return;
+        }
+        mLoggingHandler.postDelayed(mRecordDisplayedRunnable, FIVE_SECONDS_IN_MS);
+    }
+
     /**
      * @return The survey info bar delegate containing actions specific to the Chrome Home survey.
      */
@@ -181,8 +202,7 @@ public class ChromeHomeSurveyController {
 
             @Override
             public void onSurveyInfoBarClosed() {
-                SharedPreferences sharedPreferences = ContextUtils.getAppSharedPreferences();
-                sharedPreferences.edit().putBoolean(SURVEY_INFOBAR_DISMISSED_KEY, true).apply();
+                recordInfoBarDisplayed();
             }
 
             @Override
@@ -194,6 +214,25 @@ public class ChromeHomeSurveyController {
             public String getSurveyPromptString() {
                 return ContextUtils.getApplicationContext().getString(
                         R.string.chrome_home_survey_prompt);
+            }
+        };
+    }
+
+    // Logs that the info bar was displayed to prevent it from appearing in the future.
+    private void recordInfoBarDisplayed() {
+        SharedPreferences sharedPreferences = ContextUtils.getAppSharedPreferences();
+        sharedPreferences.edit().putBoolean(SURVEY_INFOBAR_DISMISSED_KEY, true).apply();
+        mLoggingHandler.removeCallbacksAndMessages(null);
+        mTab.getInfoBarContainer().removeAnimationListener(this);
+    }
+
+    // Initializes the handler and its runnable, which will log that the survey info bar was shown.
+    private void initLoggingHandler() {
+        mLoggingHandler = new Handler();
+        mRecordDisplayedRunnable = new Runnable() {
+            @Override
+            public void run() {
+                recordInfoBarDisplayed();
             }
         };
     }
