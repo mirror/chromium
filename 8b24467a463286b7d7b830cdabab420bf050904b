@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "accddfac_e0492929",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 18
+      },
+      "lineNbr": 12,
+      "author": {
+        "id": 1113991
+      },
+      "writtenOn": "2017-11-09T21:19:18Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "6d4e7020_9e2b81fd",
+      "revId": "8b24467a463286b7d7b830cdabab420bf050904b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "8ca9a4d8_a92bbbab",
         "filename": "/COMMIT_MSG",
         "patchSetId": 18
@@ -33,6 +51,24 @@
       "revId": "8b24467a463286b7d7b830cdabab420bf050904b",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9e1b3710_6b6a0651",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 18
+      },
+      "lineNbr": 19,
+      "author": {
+        "id": 1113991
+      },
+      "writtenOn": "2017-11-09T21:19:18Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "8ca9a4d8_a92bbbab",
+      "revId": "8b24467a463286b7d7b830cdabab420bf050904b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -53,6 +89,24 @@
     },
     {
       "key": {
+        "uuid": "72678128_9438a49c",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 18
+      },
+      "lineNbr": 22,
+      "author": {
+        "id": 1113991
+      },
+      "writtenOn": "2017-11-09T21:19:18Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "ae07a42e_9896172c",
+      "revId": "8b24467a463286b7d7b830cdabab420bf050904b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "69e3bd2d_b8197a09",
         "filename": "media/gpu/vaapi_video_decode_accelerator.h",
         "patchSetId": 18
@@ -70,6 +124,24 @@
     },
     {
       "key": {
+        "uuid": "353d8e6b_c9ef04ef",
+        "filename": "media/gpu/vaapi_video_decode_accelerator.h",
+        "patchSetId": 18
+      },
+      "lineNbr": 88,
+      "author": {
+        "id": 1113991
+      },
+      "writtenOn": "2017-11-09T21:19:18Z",
+      "side": 1,
+      "message": "FRIEND_TEST_ALL_PREFIXES (FRIEND_TEST should not be used [1]),\nbut then we\u0027d need to add every test case by name, see e.g.\nhttps://cs.chromium.org/chromium/src/base/pickle.h?type\u003dcs\u0026q\u003dFRIEND_TEST_ALL_PREFIXES\u0026sq\u003dpackage:chromium\u0026l\u003d330\n\n\n[1] https://cs.chromium.org/chromium/src/PRESUBMIT.py?type\u003dcs\u0026q\u003dFRIEND_TEST\u0026sq\u003dpackage:chromium\u0026l\u003d194",
+      "parentUuid": "69e3bd2d_b8197a09",
+      "revId": "8b24467a463286b7d7b830cdabab420bf050904b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "616ad579_488c9082",
         "filename": "media/gpu/vaapi_video_decode_accelerator_unittest.cc",
         "patchSetId": 18
@@ -84,6 +156,24 @@
       "revId": "8b24467a463286b7d7b830cdabab420bf050904b",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ec41a017_8e345c11",
+        "filename": "media/gpu/vaapi_video_decode_accelerator_unittest.cc",
+        "patchSetId": 18
+      },
+      "lineNbr": 25,
+      "author": {
+        "id": 1113991
+      },
+      "writtenOn": "2017-11-09T21:19:18Z",
+      "side": 1,
+      "message": "Uh, yeah, anonymous :-)\nAlso removed the static.",
+      "parentUuid": "616ad579_488c9082",
+      "revId": "8b24467a463286b7d7b830cdabab420bf050904b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -110,6 +200,30 @@
     },
     {
       "key": {
+        "uuid": "123b8149_ff3f86a9",
+        "filename": "media/gpu/vaapi_video_decode_accelerator_unittest.cc",
+        "patchSetId": 18
+      },
+      "lineNbr": 102,
+      "author": {
+        "id": 1113991
+      },
+      "writtenOn": "2017-11-09T21:19:18Z",
+      "side": 1,
+      "message": "We create a |mock_decoder_| by pointer and pass the ownership\nto |vda_|, retaining a pointer here to add EXPECT_CALL()s.\nRephrased.",
+      "parentUuid": "9d2a4296_1f7bc4d6",
+      "range": {
+        "startLine": 102,
+        "startChar": 5,
+        "endLine": 102,
+        "endChar": 11
+      },
+      "revId": "8b24467a463286b7d7b830cdabab420bf050904b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "34e5c4ec_57bcfd76",
         "filename": "media/gpu/vaapi_video_decode_accelerator_unittest.cc",
         "patchSetId": 18
@@ -124,6 +238,24 @@
       "revId": "8b24467a463286b7d7b830cdabab420bf050904b",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0d5640f8_0477937f",
+        "filename": "media/gpu/vaapi_video_decode_accelerator_unittest.cc",
+        "patchSetId": 18
+      },
+      "lineNbr": 203,
+      "author": {
+        "id": 1113991
+      },
+      "writtenOn": "2017-11-09T21:19:18Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "34e5c4ec_57bcfd76",
+      "revId": "8b24467a463286b7d7b830cdabab420bf050904b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
