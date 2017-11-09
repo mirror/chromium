@@ -72,6 +72,31 @@ import java.util.concurrent.TimeUnit;
 public class WebappActivity extends SingleTabActivity {
     public static final String WEBAPP_SCHEME = "webapp";
 
+    public enum ActivityType {
+        WEBAPP(0),
+        WEBAPK(1),
+        TRUSTED_WEB_ACTIVITY(2);
+
+        private final int mValue;
+
+        ActivityType(int value) {
+            mValue = value;
+        }
+
+        public int getValue() {
+            return mValue;
+        }
+
+        public static ActivityType getEnum(int value) {
+            for (ActivityType e : ActivityType.values()) {
+                if (e.getValue() == value) {
+                    return e;
+                }
+            }
+            return null;
+        }
+    }
+
     private static final String TAG = "WebappActivity";
     private static final String HISTOGRAM_NAVIGATION_STATUS = "Webapp.NavigationStatus";
     private static final long MS_BEFORE_NAVIGATING_BACK_FROM_INTERSTITIAL = 1000;
@@ -675,7 +700,14 @@ public class WebappActivity extends SingleTabActivity {
      *         this is a Trusted Web Activity.
      */
     public CustomTabsSessionToken getBrowserSession() {
+        if (mTrustedWebContentProvider == null) return null;
         return mTrustedWebContentProvider.getSession();
+    }
+
+    public ActivityType getActivityType() {
+        if (getBrowserSession() != null) return ActivityType.TRUSTED_WEB_ACTIVITY;
+        if (getNativeClientPackageName() != null) return ActivityType.WEBAPK;
+        return ActivityType.WEBAPP;
     }
 
     /**
@@ -846,7 +878,7 @@ public class WebappActivity extends SingleTabActivity {
 
     @Override
     protected TabDelegate createTabDelegate(boolean incognito) {
-        return new WebappTabDelegate(incognito);
+        return new WebappTabDelegate(incognito, getActivityType());
     }
 
     // We're temporarily disable CS on webapp since there are some issues. (http://crbug.com/471950)
