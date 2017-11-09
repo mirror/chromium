@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "5e1c0d42_5ec1755c",
+        "filename": "chrome/browser/ui/tabs/tab_utils.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 342,
+      "author": {
+        "id": 1231235
+      },
+      "writtenOn": "2017-11-09T18:11:18Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "dd5df954_e18fd9d5",
+      "range": {
+        "startLine": 340,
+        "startChar": 0,
+        "endLine": 342,
+        "endChar": 17
+      },
+      "revId": "d74b66764a07d1519e50a00a19f773668b0bdd39",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "63c4705c_487f21df",
         "filename": "chrome/browser/ui/tabs/tab_utils.cc",
         "patchSetId": 4
@@ -36,6 +60,30 @@
       "writtenOn": "2017-11-09T04:17:56Z",
       "side": 1,
       "message": "Hmm...It feels like all of this can be simplified to:\n\n  if (mute \u0026\u0026 !chrome::CanToggleAudioMute(contents))\n    return TabMutedResult::FAIL_TABCAPTURE;\n\n...since, if somehow something got muted that shouldn\u0027t have been, and now the caller is trying to unmute the tab, we should allow that to proceed for any reason. WDYT?",
+      "range": {
+        "startLine": 390,
+        "startChar": 0,
+        "endLine": 397,
+        "endChar": 5
+      },
+      "revId": "d74b66764a07d1519e50a00a19f773668b0bdd39",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2217f601_80dba742",
+        "filename": "chrome/browser/ui/tabs/tab_utils.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 397,
+      "author": {
+        "id": 1231235
+      },
+      "writtenOn": "2017-11-09T18:11:18Z",
+      "side": 1,
+      "message": "That makes sense to me, though if that\u0027s the case, maybe CanToggleAudioMute should actually be called CanMuteAudio. Is it definitely the case that you can always unmute a WebContents where CanToggleAudioMute is false?",
+      "parentUuid": "63c4705c_487f21df",
       "range": {
         "startLine": 390,
         "startChar": 0,
