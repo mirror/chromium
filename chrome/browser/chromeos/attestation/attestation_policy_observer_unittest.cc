@@ -183,15 +183,15 @@ TEST_F(AttestationPolicyObserverTest, IgnoreUnknownCertFormat) {
 }
 
 TEST_F(AttestationPolicyObserverTest, DBusFailureRetry) {
-  SetupMocks(MOCK_NEW_KEY, "");
+  SetupMocks();
+
   // Simulate a DBus failure.
   cryptohome_client_.SetServiceIsAvailable(false);
 
   // Emulate delayed service initialization.
-  // Run() instantiates an Observer, which synchronously calls
-  // TpmAttestationDoesKeyExist() and fails. During this call, we make the
-  // service available in the next run, so on retry, it will successfully
-  // return the result.
+  // Run() instantiates an Observer, which tries to get a certificate and
+  // fails. During this call, we make the service available in the next run,
+  // so on retry, it will successfully return the result.
   base::ThreadTaskRunnerHandle::Get()->PostTask(
       FROM_HERE, base::BindOnce(
                      [](FakeCryptohomeClient* cryptohome_client) {
@@ -199,9 +199,6 @@ TEST_F(AttestationPolicyObserverTest, DBusFailureRetry) {
                      },
                      base::Unretained(&cryptohome_client_)));
   Run();
-  EXPECT_EQ(CreatePayload(),
-            cryptohome_client_.GetTpmAttestationDeviceKeyPayload(
-                kEnterpriseMachineKey));
 }
 
 }  // namespace attestation
