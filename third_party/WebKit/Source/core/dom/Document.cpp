@@ -6161,6 +6161,9 @@ void Document::InitContentSecurityPolicy(
 
 bool Document::IsSecureTransitionTo(const KURL& url) const {
   scoped_refptr<SecurityOrigin> other = SecurityOrigin::Create(url);
+  LOG(ERROR) << GetSecurityOrigin()->ToString().Utf8().data();
+  LOG(ERROR) << url.GetString().Utf8().data();
+  LOG(ERROR) << other->ToString().Utf8().data();
   return GetSecurityOrigin()->CanAccess(other.get());
 }
 

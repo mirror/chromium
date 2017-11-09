@@ -34,6 +34,7 @@ class TestRenderFrame : public RenderFrameImpl {
     return current_history_item_;
   }
 
+  void WillSendRequest(blink::WebURLRequest& request) override;
   void Navigate(const CommonNavigationParams& common_params,
                 const StartNavigationParams& start_params,
                 const RequestNavigationParams& request_params);
@@ -56,6 +57,9 @@ class TestRenderFrame : public RenderFrameImpl {
 
   std::unique_ptr<FrameHostMsg_DidCommitProvisionalLoad_Params>
   TakeLastCommitParams();
+
+  service_manager::mojom::InterfaceProviderRequest
+  TakeLastInterfaceProviderRequest();
 
  private:
   explicit TestRenderFrame(RenderFrameImpl::CreateParams params);

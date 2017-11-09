@@ -675,6 +675,7 @@ void DocumentLoader::CommitNavigation(const AtomicString& mime_type,
       owner_document = ToLocalFrame(owner_frame)->GetDocument();
   }
   bool should_reuse_default_view = frame_->ShouldReuseDefaultView(Url());
+  LOG(ERROR) << should_reuse_default_view;
   DCHECK(frame_->GetPage());
 
   ParserSynchronizationPolicy parsing_policy = kAllowAsynchronousParsing;

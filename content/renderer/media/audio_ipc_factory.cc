@@ -6,6 +6,7 @@
 
 #include <utility>
 
+#include "base/debug/stack_trace.h"
 #include "base/logging.h"
 #include "base/memory/ptr_util.h"
 #include "base/single_thread_task_runner.h"
@@ -82,28 +83,27 @@ void AudioIPCFactory::RegisterRemoteFactoryOnIOThread(
     mojom::RendererAudioOutputStreamFactoryPtrInfo factory_ptr_info) {
   DCHECK(io_task_runner_->BelongsToCurrentThread());
   DCHECK(UsingMojoFactories());
-  std::pair<StreamFactoryMap::iterator, bool> emplace_result =
-      factory_ptrs_.emplace(frame_id,
-                            mojo::MakeProxy(std::move(factory_ptr_info)));
 
-  DCHECK(emplace_result.second) << "Attempt to register a factory for a "
-                                   "frame which already has a factory "
-                                   "registered.";
-
-  auto& emplaced_factory = emplace_result.first->second;
+  // A new RendererAudioOutputStreamFactory interface connection is requested on
+  // each non-same-document navigation. The error handler for the previous
+  // interface connection, however, might fire before this method, after this
+  // method, or not at all, based on how far the request end made it.
+  auto& emplaced_factory = factory_ptrs_[frame_id];
   DCHECK(emplaced_factory.is_bound())
       << "Factory is not bound to a remote implementation.";
 
   // Unretained is safe because |this| owns the binding, so a connection error
   // cannot trigger after destruction.
   emplaced_factory.set_connection_error_handler(
-      base::BindOnce(&AudioIPCFactory::MaybeDeregisterRemoteFactory,
+      base::BindOnce(&AudioIPCFactory::MaybeDeregisterRemoteFactoryOnIOThread,
                      base::Unretained(this), frame_id));
 }
 
 void AudioIPCFactory::MaybeDeregisterRemoteFactoryOnIOThread(int frame_id) {
   DCHECK(io_task_runner_->BelongsToCurrentThread());
   DCHECK(UsingMojoFactories());
+  base::debug::StackTrace().Print();
+
   // This function can be called both by the frame and the connection error
   // handler of the factory pointer. Calling erase multiple times even though
   // there is nothing to erase is safe, so we don't have to handle this in any
