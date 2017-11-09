@@ -107,6 +107,24 @@
     },
     {
       "key": {
+        "uuid": "46540829_85da0501",
+        "filename": "chrome/browser/ui/views/extensions/pwa_confirmation_view.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 87,
+      "author": {
+        "id": 1002092
+      },
+      "writtenOn": "2017-11-09T03:07:19Z",
+      "side": 1,
+      "message": "\u003e Done. However I have used font_list() in the new code in order to call gfx::ElideText. Is that OK?\n\nI think we can get rid of the gfx::ElideText call..",
+      "parentUuid": "ed13fe8f_797bcd48",
+      "revId": "39a39f749f82168c103ff2827b1b617a7978854f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "9fb975b6_7c895fc7",
         "filename": "chrome/browser/ui/views/extensions/pwa_confirmation_view.cc",
         "patchSetId": 6

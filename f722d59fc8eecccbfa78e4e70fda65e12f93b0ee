@@ -1,0 +1,631 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "aa20f154_9f30f1c3",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 9
+      },
+      "lineNbr": 7,
+      "author": {
+        "id": 1002092
+      },
+      "writtenOn": "2017-11-09T03:07:19Z",
+      "side": 1,
+      "message": "CL descriptions usually have a bit more. E.g. a justification for the change if it\u0027s not obvious  - see https://www.chromium.org/developers/contributing-code#TOC-Writing-commit-descriptions",
+      "revId": "f722d59fc8eecccbfa78e4e70fda65e12f93b0ee",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "dce4886a_480fc642",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 9
+      },
+      "lineNbr": 8,
+      "author": {
+        "id": 1002092
+      },
+      "writtenOn": "2017-11-09T03:07:19Z",
+      "side": 1,
+      "message": "can you add a BUG\u003d Line? Then, we usually add UX mocks (if available), and a screenshot of the dialog to the bug.",
+      "revId": "f722d59fc8eecccbfa78e4e70fda65e12f93b0ee",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9b317e68_c701dd91",
+        "filename": "chrome/browser/ui/browser_dialogs.h",
+        "patchSetId": 9
+      },
+      "lineNbr": 123,
+      "author": {
+        "id": 1002092
+      },
+      "writtenOn": "2017-11-09T03:07:19Z",
+      "side": 1,
+      "message": "Is this being replaced?",
+      "revId": "f722d59fc8eecccbfa78e4e70fda65e12f93b0ee",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e73b43e1_658cb378",
+        "filename": "chrome/browser/ui/browser_dialogs.h",
+        "patchSetId": 9
+      },
+      "lineNbr": 130,
+      "author": {
+        "id": 1002092
+      },
+      "writtenOn": "2017-11-09T03:07:19Z",
+      "side": 1,
+      "message": "Nothing seems to call this - is that easy to add in this CL as well?",
+      "revId": "f722d59fc8eecccbfa78e4e70fda65e12f93b0ee",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8d85f415_22eb62ea",
+        "filename": "chrome/browser/ui/views/extensions/pwa_confirmation_view.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 39,
+      "author": {
+        "id": 1002092
+      },
+      "writtenOn": "2017-11-09T03:07:19Z",
+      "side": 1,
+      "message": "comment about this?",
+      "revId": "f722d59fc8eecccbfa78e4e70fda65e12f93b0ee",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "80e2ad2d_03381eb4",
+        "filename": "chrome/browser/ui/views/extensions/pwa_confirmation_view.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 41,
+      "author": {
+        "id": 1002092
+      },
+      "writtenOn": "2017-11-09T03:07:19Z",
+      "side": 1,
+      "message": "I don\u0027t think it\u0027s necessary to pass in these arguments. That can remove some #includes from the .h. I would just read directly from |web_app_info_| in InitializeView, or do something like\n\n std::string title \u003d web_app_info_.title;\n GURL app_url \u003d web_app_info_.app_url;\n ..\n\nat the start of the method",
+      "revId": "f722d59fc8eecccbfa78e4e70fda65e12f93b0ee",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "da34774c_cc297571",
+        "filename": "chrome/browser/ui/views/extensions/pwa_confirmation_view.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 50,
+      "author": {
+        "id": 1002092
+      },
+      "writtenOn": "2017-11-09T03:07:19Z",
+      "side": 1,
+      "message": "why WINDOW and not MODAL_TYPE_CHILD? (is window-modal intentional? We\u0027re trying to get rid of WINDOW_MODAL and replace them all with tab-modals (i.e. CHILD)). Maybe a screenshot/mock will help to clarify the context here",
+      "revId": "f722d59fc8eecccbfa78e4e70fda65e12f93b0ee",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "670aecb7_c9e3b565",
+        "filename": "chrome/browser/ui/views/extensions/pwa_confirmation_view.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 74,
+      "author": {
+        "id": 1002092
+      },
+      "writtenOn": "2017-11-09T03:07:19Z",
+      "side": 1,
+      "message": "is IDS_CANCEL different to IDS_APP_CANCEL  that the default DialogDelegate provides? We tend to call super::GetDialogButtonLabel(..) if that gives the right result for one (or both) of the strings.",
+      "range": {
+        "startLine": 74,
+        "startChar": 68,
+        "endLine": 74,
+        "endChar": 78
+      },
+      "revId": "f722d59fc8eecccbfa78e4e70fda65e12f93b0ee",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0656a824_eefa37b7",
+        "filename": "chrome/browser/ui/views/extensions/pwa_confirmation_view.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 80,
+      "author": {
+        "id": 1002092
+      },
+      "writtenOn": "2017-11-09T03:07:19Z",
+      "side": 1,
+      "message": "IconView -\u003e CreateIconView",
+      "range": {
+        "startLine": 80,
+        "startChar": 34,
+        "endLine": 80,
+        "endChar": 42
+      },
+      "revId": "f722d59fc8eecccbfa78e4e70fda65e12f93b0ee",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8c274283_2de3acfa",
+        "filename": "chrome/browser/ui/views/extensions/pwa_confirmation_view.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 89,
+      "author": {
+        "id": 1002092
+      },
+      "writtenOn": "2017-11-09T03:07:19Z",
+      "side": 1,
+      "message": "is this needed? (comment?) - ImageView::GetImageSize() defaults to image::size();",
+      "revId": "f722d59fc8eecccbfa78e4e70fda65e12f93b0ee",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a0103fad_4533fce5",
+        "filename": "chrome/browser/ui/views/extensions/pwa_confirmation_view.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 95,
+      "author": {
+        "id": 1002092
+      },
+      "writtenOn": "2017-11-09T03:07:19Z",
+      "side": 1,
+      "message": "TitleLabel -\u003e CreateNameLabel",
+      "revId": "f722d59fc8eecccbfa78e4e70fda65e12f93b0ee",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0d702e6e_25677ebd",
+        "filename": "chrome/browser/ui/views/extensions/pwa_confirmation_view.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 103,
+      "author": {
+        "id": 1002092
+      },
+      "writtenOn": "2017-11-09T03:07:19Z",
+      "side": 1,
+      "message": "Using gfx::ElideText can cause the text to get out of sync with the View width. If some translation gives you dialog button text that add up to 500px across, the view needs to size up to accomodate that.\n\nThere is Label::SetElideBehaviour, but I think ELIDE_TAIL is default. Does simply setting the label width do the right thing?",
+      "revId": "f722d59fc8eecccbfa78e4e70fda65e12f93b0ee",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4ba97e24_ce2d1310",
+        "filename": "chrome/browser/ui/views/extensions/pwa_confirmation_view.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 108,
+      "author": {
+        "id": 1002092
+      },
+      "writtenOn": "2017-11-09T03:07:19Z",
+      "side": 1,
+      "message": "I think this is taken care of for you then too -- see Label::ShouldShowDefaultTooltip",
+      "revId": "f722d59fc8eecccbfa78e4e70fda65e12f93b0ee",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ecab1086_22fc404a",
+        "filename": "chrome/browser/ui/views/extensions/pwa_confirmation_view.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 114,
+      "author": {
+        "id": 1002092
+      },
+      "writtenOn": "2017-11-09T03:07:19Z",
+      "side": 1,
+      "message": "CreateOriginLabel",
+      "range": {
+        "startLine": 114,
+        "startChar": 30,
+        "endLine": 114,
+        "endChar": 41
+      },
+      "revId": "f722d59fc8eecccbfa78e4e70fda65e12f93b0ee",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c20b2f14_9d27626e",
+        "filename": "chrome/browser/ui/views/extensions/pwa_confirmation_view.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 119,
+      "author": {
+        "id": 1002092
+      },
+      "writtenOn": "2017-11-09T03:07:19Z",
+      "side": 1,
+      "message": "ChromeTextContext:: ChromeTextStyle:: not needed",
+      "range": {
+        "startLine": 119,
+        "startChar": 6,
+        "endLine": 119,
+        "endChar": 25
+      },
+      "revId": "f722d59fc8eecccbfa78e4e70fda65e12f93b0ee",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4ef1fc66_84feff9e",
+        "filename": "chrome/browser/ui/views/extensions/pwa_confirmation_view.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 137,
+      "author": {
+        "id": 1002092
+      },
+      "writtenOn": "2017-11-09T03:07:19Z",
+      "side": 1,
+      "message": "I think it\u0027s TEXT for both? (what spacing is used on the mocks?)",
+      "revId": "f722d59fc8eecccbfa78e4e70fda65e12f93b0ee",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ad9e93cc_f49a73c7",
+        "filename": "chrome/browser/ui/views/extensions/pwa_confirmation_view.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 145,
+      "author": {
+        "id": 1002092
+      },
+      "writtenOn": "2017-11-09T03:07:19Z",
+      "side": 1,
+      "message": "Can this icon be part of the FrameView instead? (i.e. via WidgetDelegate::GetWindowIcon()?) Then you don\u0027t have to worry about the layout so much.",
+      "revId": "f722d59fc8eecccbfa78e4e70fda65e12f93b0ee",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e2768b70_421dff7a",
+        "filename": "chrome/browser/ui/views/extensions/pwa_confirmation_view.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 147,
+      "author": {
+        "id": 1002092
+      },
+      "writtenOn": "2017-11-09T03:07:19Z",
+      "side": 1,
+      "message": "`this-\u003e` not needed. But you might need to keep the concrete type of the LayoutManager* instance and add views to that instead. see below.",
+      "revId": "f722d59fc8eecccbfa78e4e70fda65e12f93b0ee",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a9d8131c_14b58b52",
+        "filename": "chrome/browser/ui/views/extensions/pwa_confirmation_view.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 151,
+      "author": {
+        "id": 1002092
+      },
+      "writtenOn": "2017-11-09T03:07:19Z",
+      "side": 1,
+      "message": "I think you want GridLayout. BoxLayout doesn\u0027t have a neat way to give things a specific width... You can also avoid the nesting under a vanilla View*. BoxLayout is pretty rare in dialog code still.",
+      "revId": "f722d59fc8eecccbfa78e4e70fda65e12f93b0ee",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7fbfdaf5_801ab27f",
+        "filename": "chrome/browser/ui/views/extensions/pwa_confirmation_view.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 154,
+      "author": {
+        "id": 1002092
+      },
+      "writtenOn": "2017-11-09T03:07:19Z",
+      "side": 1,
+      "message": "hum - this is new. Harmony automatically sizes dialogs, so the plan is to grep for this string once Harmony is launched and just delete any layout code that depends on it -- making the width 0 should Just Work with --secondary-ui-md. If not, Something Is Wrong.\n\nI think the approach you should use is to override ClientView::CalculatePreferredSize(). call super::CalcualtePreferredSize(), then call SizeToMax(gfx::Size(DISTANCE_MODAL_DIALOG_WIDTH_CONTAINING_MULTILINE_TEXT - margins.width(), 0)) on it and return that.",
+      "revId": "f722d59fc8eecccbfa78e4e70fda65e12f93b0ee",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e612e1fc_cab2f08d",
+        "filename": "chrome/browser/ui/views/extensions/pwa_confirmation_view.h",
+        "patchSetId": 9
+      },
+      "lineNbr": 17,
+      "author": {
+        "id": 1002092
+      },
+      "writtenOn": "2017-11-09T03:07:19Z",
+      "side": 1,
+      "message": "nit: static isn\u0027t needed here (const/constexpr at namespace scope implicitly has internal linkage). And TBH I don\u0027t really like those ExtensionIcons constants - the names are meaningless, and no better than (in fact a lot worse than) EXTENSION_ICON_SIZE_48, EXTENSION_ICON_SIZE_32, etc. I would just initialize this to 48 here and remove the extension/common/constants dependency",
+      "revId": "f722d59fc8eecccbfa78e4e70fda65e12f93b0ee",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "057adcc5_6ab3dee5",
+        "filename": "chrome/browser/ui/views/extensions/pwa_confirmation_view.h",
+        "patchSetId": 9
+      },
+      "lineNbr": 21,
+      "author": {
+        "id": 1002092
+      },
+      "writtenOn": "2017-11-09T03:07:19Z",
+      "side": 1,
+      "message": "this is probably a good place to expand the acronym as well",
+      "range": {
+        "startLine": 21,
+        "startChar": 21,
+        "endLine": 21,
+        "endChar": 24
+      },
+      "revId": "f722d59fc8eecccbfa78e4e70fda65e12f93b0ee",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a36dc15b_9830d8c6",
+        "filename": "chrome/browser/ui/views/extensions/pwa_confirmation_view.h",
+        "patchSetId": 9
+      },
+      "lineNbr": 31,
+      "author": {
+        "id": 1002092
+      },
+      "writtenOn": "2017-11-09T03:07:19Z",
+      "side": 1,
+      "message": "nit: just\n\n // views::DialogDelegateView:\n\n(we tend to only mention classes on the `class.. : public .. {` line, and go for a terse comment these days)",
+      "revId": "f722d59fc8eecccbfa78e4e70fda65e12f93b0ee",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f6da89b0_d4f672a1",
+        "filename": "chrome/browser/ui/views/extensions/pwa_confirmation_view.h",
+        "patchSetId": 9
+      },
+      "lineNbr": 42,
+      "author": {
+        "id": 1002092
+      },
+      "writtenOn": "2017-11-09T03:07:19Z",
+      "side": 1,
+      "message": "perhaps |title| -\u003e name throughout (except when you have to get it from WebApplicationInfo), so it\u0027s not confused with the dialog title (GetWindowTitle)",
+      "range": {
+        "startLine": 42,
+        "startChar": 5,
+        "endLine": 42,
+        "endChar": 12
+      },
+      "revId": "f722d59fc8eecccbfa78e4e70fda65e12f93b0ee",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "55e02642_95361d7d",
+        "filename": "chrome/browser/ui/views/extensions/pwa_confirmation_view.h",
+        "patchSetId": 9
+      },
+      "lineNbr": 42,
+      "author": {
+        "id": 1002092
+      },
+      "writtenOn": "2017-11-09T03:07:19Z",
+      "side": 1,
+      "message": "perhaps |title| -\u003e name throughout (except when you have to get it from WebApplicationInfo), so it\u0027s not confused with the dialog title (GetWindowTitle)",
+      "range": {
+        "startLine": 42,
+        "startChar": 5,
+        "endLine": 42,
+        "endChar": 12
+      },
+      "revId": "f722d59fc8eecccbfa78e4e70fda65e12f93b0ee",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a4db0fee_ed1d5de0",
+        "filename": "chrome/browser/ui/views/extensions/pwa_confirmation_view_browsertest.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 23,
+      "author": {
+        "id": 1002092
+      },
+      "writtenOn": "2017-11-09T03:07:19Z",
+      "side": 1,
+      "message": "bmap -\u003e bitmap. Or just call allocN32 on icon_info.data",
+      "revId": "f722d59fc8eecccbfa78e4e70fda65e12f93b0ee",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c97cdae2_3286df99",
+        "filename": "chrome/browser/ui/views/extensions/pwa_confirmation_view_browsertest.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 24,
+      "author": {
+        "id": 1002092
+      },
+      "writtenOn": "2017-11-09T03:07:19Z",
+      "side": 1,
+      "message": "Are there ideas you can steal from bookmark_app_helper_browsertest.cc to get move coverage ? (i.e. call via ShowPWAInstallDialog rather than building a mock WebApplicaitonInfo). You could maybe just add test cases to that file..",
+      "revId": "f722d59fc8eecccbfa78e4e70fda65e12f93b0ee",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d51e61fb_79a5dfe2",
+        "filename": "chrome/browser/ui/views/extensions/pwa_confirmation_view_browsertest.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 27,
+      "author": {
+        "id": 1002092
+      },
+      "writtenOn": "2017-11-09T03:07:19Z",
+      "side": 1,
+      "message": "iconinf -\u003e icon_info",
+      "range": {
+        "startLine": 27,
+        "startChar": 33,
+        "endLine": 27,
+        "endChar": 40
+      },
+      "revId": "f722d59fc8eecccbfa78e4e70fda65e12f93b0ee",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "be20f2b1_1734638d",
+        "filename": "chrome/browser/ui/views/extensions/pwa_confirmation_view_browsertest.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 32,
+      "author": {
+        "id": 1002092
+      },
+      "writtenOn": "2017-11-09T03:07:19Z",
+      "side": 1,
+      "message": "style guide says no abbreviations (go/cppguide#General_Naming_Rules) (this is too much like Working As Intended). maybe app_info or web_app_info",
+      "range": {
+        "startLine": 32,
+        "startChar": 23,
+        "endLine": 32,
+        "endChar": 26
+      },
+      "revId": "f722d59fc8eecccbfa78e4e70fda65e12f93b0ee",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "62d0e2b0_147bb2eb",
+        "filename": "chrome/browser/ui/views/extensions/pwa_confirmation_view_browsertest.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 35,
+      "author": {
+        "id": 1002092
+      },
+      "writtenOn": "2017-11-09T03:07:19Z",
+      "side": 1,
+      "message": "ASCIIToUTF16, same below",
+      "range": {
+        "startLine": 35,
+        "startChar": 24,
+        "endLine": 35,
+        "endChar": 35
+      },
+      "revId": "f722d59fc8eecccbfa78e4e70fda65e12f93b0ee",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "34b7c2aa_fe66ff3b",
+        "filename": "chrome/browser/ui/views/extensions/pwa_confirmation_view_browsertest.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 50,
+      "author": {
+        "id": 1002092
+      },
+      "writtenOn": "2017-11-09T03:07:19Z",
+      "side": 1,
+      "message": "does just passing nulltpr work? Otherwise chrome::AppInstallationAcceptanceCallback().",
+      "range": {
+        "startLine": 50,
+        "startChar": 17,
+        "endLine": 50,
+        "endChar": 67
+      },
+      "revId": "f722d59fc8eecccbfa78e4e70fda65e12f93b0ee",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c7d94a4f_aba1b0b4",
+        "filename": "chrome/browser/ui/views/extensions/pwa_confirmation_view_browsertest.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 59,
+      "author": {
+        "id": 1002092
+      },
+      "writtenOn": "2017-11-09T03:07:19Z",
+      "side": 1,
+      "message": "nit: each test should have a comment describing why it exists.",
+      "revId": "f722d59fc8eecccbfa78e4e70fda65e12f93b0ee",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0fab6bd6_ef63d383",
+        "filename": "chrome/browser/ui/views/extensions/web_app_info_image_source.h",
+        "patchSetId": 9
+      },
+      "lineNbr": 22,
+      "author": {
+        "id": 1002092
+      },
+      "writtenOn": "2017-11-09T03:07:19Z",
+      "side": 1,
+      "message": "// gfx::ImageSkiaSource:",
+      "revId": "f722d59fc8eecccbfa78e4e70fda65e12f93b0ee",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
