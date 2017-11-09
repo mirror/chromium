@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "15c6641c_303b1e78",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/partnerbookmarks/PartnerBookmarksCache.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 29,
+      "author": {
+        "id": 1230128
+      },
+      "writtenOn": "2017-11-09T18:19:22Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "19247639_bca0f3b4",
+      "range": {
+        "startLine": 29,
+        "startChar": 4,
+        "endLine": 29,
+        "endChar": 10
+      },
+      "revId": "a57c9fdafcf2f23d393bea337beaed9b004b59d6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "5e551b24_63624b28",
         "filename": "chrome/android/java/src/org/chromium/chrome/browser/partnerbookmarks/PartnerBookmarksCache.java",
         "patchSetId": 4
@@ -48,6 +72,30 @@
     },
     {
       "key": {
+        "uuid": "1b19bc38_75507d10",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/partnerbookmarks/PartnerBookmarksCache.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 55,
+      "author": {
+        "id": 1230128
+      },
+      "writtenOn": "2017-11-09T18:19:22Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "5e551b24_63624b28",
+      "range": {
+        "startLine": 55,
+        "startChar": 25,
+        "endLine": 55,
+        "endChar": 26
+      },
+      "revId": "a57c9fdafcf2f23d393bea337beaed9b004b59d6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "5752be26_37c04ddc",
         "filename": "chrome/android/java_sources.gni",
         "patchSetId": 4
@@ -68,6 +116,30 @@
       "revId": "a57c9fdafcf2f23d393bea337beaed9b004b59d6",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "97632a46_cd9129c5",
+        "filename": "chrome/android/java_sources.gni",
+        "patchSetId": 4
+      },
+      "lineNbr": 1612,
+      "author": {
+        "id": 1230128
+      },
+      "writtenOn": "2017-11-09T18:19:22Z",
+      "side": 1,
+      "message": "Mistakenly assumed because of the SharedPreferences it had to be on the device, moved it to a Robolectric JUnit test.",
+      "parentUuid": "5752be26_37c04ddc",
+      "range": {
+        "startLine": 1612,
+        "startChar": 3,
+        "endLine": 1612,
+        "endChar": 12
+      },
+      "revId": "a57c9fdafcf2f23d393bea337beaed9b004b59d6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
