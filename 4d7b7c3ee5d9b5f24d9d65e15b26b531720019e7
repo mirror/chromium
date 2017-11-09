@@ -1,0 +1,118 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "b30756c8_f24e9f1a",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 7
+      },
+      "lineNbr": 7,
+      "author": {
+        "id": 1115745
+      },
+      "writtenOn": "2017-11-09T23:05:21Z",
+      "side": 1,
+      "message": "let\u0027s also clean up the CL description in the style of the others.",
+      "revId": "4d7b7c3ee5d9b5f24d9d65e15b26b531720019e7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "79ca9e6e_9dac9000",
+        "filename": "chrome/common/extensions/docs/examples/api/history/historyOverride/logic.js",
+        "patchSetId": 7
+      },
+      "lineNbr": 20,
+      "author": {
+        "id": 1115745
+      },
+      "writtenOn": "2017-11-09T23:05:21Z",
+      "side": 1,
+      "message": "instead of this, what if we just do:\nremoveButton.addEventListener(\u0027click\u0027, function() {\n  chrome.history.deleteUrl({url: item.url});\n});",
+      "revId": "4d7b7c3ee5d9b5f24d9d65e15b26b531720019e7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "85b976a5_6a85c022",
+        "filename": "chrome/common/extensions/docs/examples/api/history/historyOverride/logic.js",
+        "patchSetId": 7
+      },
+      "lineNbr": 30,
+      "author": {
+        "id": 1115745
+      },
+      "writtenOn": "2017-11-09T23:05:21Z",
+      "side": 1,
+      "message": "nit: if (",
+      "range": {
+        "startLine": 30,
+        "startChar": 4,
+        "endLine": 30,
+        "endChar": 8
+      },
+      "revId": "4d7b7c3ee5d9b5f24d9d65e15b26b531720019e7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2d682425_724ea4e1",
+        "filename": "chrome/common/extensions/docs/examples/api/history/historyOverride/logic.js",
+        "patchSetId": 7
+      },
+      "lineNbr": 33,
+      "author": {
+        "id": 1115745
+      },
+      "writtenOn": "2017-11-09T23:05:21Z",
+      "side": 1,
+      "message": "nit: let",
+      "range": {
+        "startLine": 33,
+        "startChar": 4,
+        "endLine": 33,
+        "endChar": 7
+      },
+      "revId": "4d7b7c3ee5d9b5f24d9d65e15b26b531720019e7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "faaab54c_516d5816",
+        "filename": "chrome/common/extensions/docs/examples/api/history/historyOverride/logic.js",
+        "patchSetId": 7
+      },
+      "lineNbr": 39,
+      "author": {
+        "id": 1115745
+      },
+      "writtenOn": "2017-11-09T23:05:21Z",
+      "side": 1,
+      "message": "nit: no need for \u0027\u0027 around keys in js objects.",
+      "revId": "4d7b7c3ee5d9b5f24d9d65e15b26b531720019e7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "695e2798_6724539a",
+        "filename": "chrome/common/extensions/docs/examples/api/history/historyOverride/logic.js",
+        "patchSetId": 7
+      },
+      "lineNbr": 53,
+      "author": {
+        "id": 1115745
+      },
+      "writtenOn": "2017-11-09T23:05:21Z",
+      "side": 1,
+      "message": "It\u0027s a bit weird to have a click handler on the whole history div.  See suggestion above for how we might be able to avoid this.",
+      "revId": "4d7b7c3ee5d9b5f24d9d65e15b26b531720019e7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
