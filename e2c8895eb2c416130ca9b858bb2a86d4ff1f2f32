@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "03fafb5f_f981c83c",
+        "filename": "chrome/browser/chromeos/arc/intent_helper/arc_settings_service.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 429,
+      "author": {
+        "id": 1000172
+      },
+      "writtenOn": "2017-11-09T06:56:34Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "63b3f366_b15f3efa",
+      "revId": "e2c8895eb2c416130ca9b858bb2a86d4ff1f2f32",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "fb6312fa_f0fab01f",
         "filename": "chrome/browser/chromeos/arc/intent_helper/arc_settings_service.cc",
         "patchSetId": 1
@@ -42,6 +60,30 @@
     },
     {
       "key": {
+        "uuid": "33b38377_ef8c77ea",
+        "filename": "chrome/browser/chromeos/arc/intent_helper/arc_settings_service.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 434,
+      "author": {
+        "id": 1000172
+      },
+      "writtenOn": "2017-11-09T06:56:34Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "fb6312fa_f0fab01f",
+      "range": {
+        "startLine": 434,
+        "startChar": 0,
+        "endLine": 434,
+        "endChar": 76
+      },
+      "revId": "e2c8895eb2c416130ca9b858bb2a86d4ff1f2f32",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "6efea068_3b366af6",
         "filename": "components/arc/common/backup_settings.mojom",
         "patchSetId": 1
@@ -62,6 +104,30 @@
       "revId": "e2c8895eb2c416130ca9b858bb2a86d4ff1f2f32",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4b5eb721_eadc391a",
+        "filename": "components/arc/common/backup_settings.mojom",
+        "patchSetId": 1
+      },
+      "lineNbr": 11,
+      "author": {
+        "id": 1000172
+      },
+      "writtenOn": "2017-11-09T06:56:34Z",
+      "side": 1,
+      "message": "I believe it\u0027s fine, since the old method IntentHelperInstance.SendBroadcast() has been so.\n\n\nWe may change our mind, but we can always add the version with a callback later at that timing.\nFor now, since we have no idea on the concrete usecase in the future (is it sufficient if only the finish timing is notified, or do we need success/failure bool flag, or more detailed error code? ...), I don\u0027t think we can add a sensible one at this point.",
+      "parentUuid": "6efea068_3b366af6",
+      "range": {
+        "startLine": 11,
+        "startChar": 0,
+        "endLine": 11,
+        "endChar": 49
+      },
+      "revId": "e2c8895eb2c416130ca9b858bb2a86d4ff1f2f32",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
