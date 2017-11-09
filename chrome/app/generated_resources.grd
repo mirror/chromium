@@ -5391,7 +5391,7 @@ the Bookmarks menu.">
         Automatically sign in to websites using stored credentials. When the feature is disabled, you will be asked for confirmation every time before signing in to a website.
       </message>
       <message name="IDS_PASSWORDS_VIA_FEDERATION" desc="Text for federated credential's value.">
-        with <ph name="PROVIDER">$1<ex>facebook.com</ex></ph>
+        Sing in with <ph name="PROVIDER">$1<ex>facebook.com</ex></ph>
       </message>
       <message name="IDS_PASSWORDS_PAGE_SEARCH_PASSWORDS" desc="Placeholder text shown in password table search box">
         Search passwords
