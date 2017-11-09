@@ -70,6 +70,12 @@ class ChromePasswordProtectionServiceBrowserTest : public InProcessBrowserTest {
         observer.InvokeActionForTesting(action);
       }
     }
+    if (ui_type == PasswordProtectionService::CHROME_SETTINGS) {
+      service->OnUserAction(
+          browser()->tab_strip_model()->GetActiveWebContents(),
+          safe_browsing::PasswordProtectionService::CHROME_SETTINGS,
+          safe_browsing::PasswordProtectionService::CHANGE_PASSWORD);
+    }
   }
 
   void SimulateGaiaPasswordChanged(ChromePasswordProtectionService* service) {

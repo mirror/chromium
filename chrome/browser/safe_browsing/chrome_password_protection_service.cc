@@ -704,6 +704,8 @@ void ChromePasswordProtectionService::HandleUserActionOnModalWarning(
         navigation_id, PasswordReuseDialogInteraction::WARNING_ACTION_TAKEN);
     // Opens chrome://settings page in a new tab.
     OpenUrlInNewTab(GURL(chrome::kChromeUISettingsURL), web_contents);
+    RecordWarningAction(PasswordProtectionService::CHROME_SETTINGS,
+                        PasswordProtectionService::SHOWN);
   } else if (action == PasswordProtectionService::IGNORE_WARNING) {
     // No need to change state.
     LogPasswordReuseDialogInteraction(
@@ -735,6 +737,8 @@ void ChromePasswordProtectionService::HandleUserActionOnPageInfo(
 
     // Opens chrome://settings page in a new tab.
     OpenUrlInNewTab(GURL(chrome::kChromeUISettingsURL), web_contents);
+    RecordWarningAction(PasswordProtectionService::CHROME_SETTINGS,
+                        PasswordProtectionService::SHOWN);
     return;
   }
 
