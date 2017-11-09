@@ -47,6 +47,7 @@ class CompositorLock;
 
 namespace exo {
 class Surface;
+class ShellSurfaceWidgetWrapper;
 
 enum class Orientation { PORTRAIT, LANDSCAPE };
 
@@ -299,6 +300,12 @@ class ShellSurface : public SurfaceTreeHost,
   // Overridden from ui::CompositorLockClient:
   void CompositorLockTimedOut() override;
 
+  // Sends the state change event to client.
+  void SendWindowStateChangeEvent(ash::mojom::WindowStateType current_state,
+                                  ash::mojom::WindowStateType next_state);
+
+  BoundsMode bounds_mode() const { return bounds_mode_; }
+
   Surface* surface_for_testing() { return root_surface(); }
 
  private:
@@ -359,7 +366,7 @@ class ShellSurface : public SurfaceTreeHost,
   // crbug.com/765954
   void EnsureCompositorIsLockedForOrientationChange();
 
-  views::Widget* widget_ = nullptr;
+  std::unique_ptr<ShellSurfaceWidgetWrapper> widget_wrapper_;
   aura::Window* parent_;
   BoundsMode bounds_mode_ = BoundsMode::SHELL;
   int64_t primary_display_id_;
