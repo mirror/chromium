@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "08f01514_64e13ddc",
+        "filename": "components/user_manager/scoped_user_manager_enabler.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 19,
+      "author": {
+        "id": 1000101
+      },
+      "writtenOn": "2017-11-09T19:03:16Z",
+      "side": 1,
+      "message": "I personally prefer ScopedUserManager. :)",
+      "parentUuid": "51e84993_35a17f8f",
+      "revId": "3dbf21cc9b5893a2795c67c9a5f2d4efea64b6f9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "ff179878_c5866e18",
         "filename": "components/user_manager/scoped_user_manager_enabler.h",
         "patchSetId": 1
