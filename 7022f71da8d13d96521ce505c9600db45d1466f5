@@ -37,6 +37,24 @@
     },
     {
       "key": {
+        "uuid": "3cb2b8de_39256b2f",
+        "filename": "build/android/pylib/utils/maven_downloader.py",
+        "patchSetId": 8
+      },
+      "lineNbr": 59,
+      "author": {
+        "id": 1181690
+      },
+      "writtenOn": "2017-11-09T15:22:42Z",
+      "side": 1,
+      "message": "Yeah, if it\u0027s not used, remove it. We can always dig it out of the git history.",
+      "parentUuid": "c81f75f2_20998eb8",
+      "revId": "7022f71da8d13d96521ce505c9600db45d1466f5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "35fb29ed_99b23f5f",
         "filename": "build/android/pylib/utils/maven_downloader.py",
         "patchSetId": 8
