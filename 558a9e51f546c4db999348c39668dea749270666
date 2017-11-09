@@ -73,6 +73,30 @@
     },
     {
       "key": {
+        "uuid": "4a21f37a_8cc7fe95",
+        "filename": "components/autofill/content/renderer/html_based_username_detector.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 489,
+      "author": {
+        "id": 1145779
+      },
+      "writtenOn": "2017-11-09T13:30:37Z",
+      "side": 1,
+      "message": "\u003e I can still see it in the newest patch set (8) :).\noh, excuse me. Sometimes they come back :)",
+      "parentUuid": "be56b8a0_46b4cda3",
+      "range": {
+        "startLine": 489,
+        "startChar": 6,
+        "endLine": 489,
+        "endChar": 24
+      },
+      "revId": "558a9e51f546c4db999348c39668dea749270666",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "58313599_5c80e147",
         "filename": "components/autofill/content/renderer/html_based_username_detector.h",
         "patchSetId": 7
@@ -235,6 +259,30 @@
       "revId": "558a9e51f546c4db999348c39668dea749270666",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "37093f60_0f7995fa",
+        "filename": "components/autofill/content/renderer/password_autofill_agent.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 889,
+      "author": {
+        "id": 1145779
+      },
+      "writtenOn": "2017-11-09T13:30:37Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "4adb47e0_83d629be",
+      "range": {
+        "startLine": 889,
+        "startChar": 20,
+        "endLine": 889,
+        "endChar": 59
+      },
+      "revId": "558a9e51f546c4db999348c39668dea749270666",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
