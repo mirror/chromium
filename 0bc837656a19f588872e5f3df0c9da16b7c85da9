@@ -1,0 +1,72 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "8b481f48_5000af5d",
+        "filename": "ash/shelf/shelf_controller.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 154,
+      "author": {
+        "id": 1001118
+      },
+      "writtenOn": "2017-11-09T15:59:08Z",
+      "side": 1,
+      "message": "Use display::Screen::GetScreen()-\u003eGetDisplayNearestWindow(shelf-\u003eGetWindow()) instead of looping here.",
+      "revId": "0bc837656a19f588872e5f3df0c9da16b7c85da9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "caab8f20_e1a53b17",
+        "filename": "ash/shelf/shelf_controller.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 51,
+      "author": {
+        "id": 1001118
+      },
+      "writtenOn": "2017-11-09T15:59:08Z",
+      "side": 1,
+      "message": "I hope this function won\u0027t be needed, but it could be static.",
+      "revId": "0bc837656a19f588872e5f3df0c9da16b7c85da9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "80798caa_a420607b",
+        "filename": "ash/shelf/shelf_view.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 1519,
+      "author": {
+        "id": 1001118
+      },
+      "writtenOn": "2017-11-09T15:59:08Z",
+      "side": 1,
+      "message": "I suppose this checks the pref instead of the current value because both this and ShelfController are TabletModeObservers, and they might be notified in an unknown order (ie. the currently alignment might already be the BOTTOM forced for tablet mode)? If so, please consider instead making ShelfController set the |is_tablet_mode_animation_running_| flag directly (and maybe move the flag to Shelf instead of ShelfView), rather than working around the complexity of observer ordering.",
+      "revId": "0bc837656a19f588872e5f3df0c9da16b7c85da9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e4e67580_94d5a016",
+        "filename": "ash/shelf/shelf_view.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 1521,
+      "author": {
+        "id": 1001118
+      },
+      "writtenOn": "2017-11-09T15:59:08Z",
+      "side": 1,
+      "message": "Add curly braces for two-line conditional",
+      "revId": "0bc837656a19f588872e5f3df0c9da16b7c85da9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
