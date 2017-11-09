@@ -17,6 +17,8 @@
 #include "chrome/browser/safe_browsing/chrome_cleaner/chrome_cleaner_state_change_observer_win.h"
 #endif
 
+class PrefChangeRegistrar;
+
 namespace content {
 class WebUIMessageHandler;
 }
@@ -53,6 +55,11 @@ class MdSettingsUI : public content::WebUIController,
   void UpdateCleanupDataSource(bool cleanupEnabled, bool partnerPowered);
   std::unique_ptr<safe_browsing::ChromeCleanerStateChangeObserver>
       cleanup_observer_;
+#endif
+
+#if defined(SAFE_BROWSING_DB_LOCAL)
+  void UpdateChangePasswordDataSource();
+  std::unique_ptr<PrefChangeRegistrar> pref_change_registrar_;
 #endif
 
   DISALLOW_COPY_AND_ASSIGN(MdSettingsUI);
