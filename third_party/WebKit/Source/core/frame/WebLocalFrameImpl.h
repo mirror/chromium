@@ -385,6 +385,7 @@ class CORE_EXPORT WebLocalFrameImpl final
   // If the parameter is true, allow the document to be scrolled.
   // Otherwise, disallow scrolling.
   void SetCanHaveScrollbars(bool) override;
+  bool CanHaveScrollbars() const override;
 
   WebFrameClient* Client() const { return client_; }
   void SetClient(WebFrameClient* client) { client_ = client; }

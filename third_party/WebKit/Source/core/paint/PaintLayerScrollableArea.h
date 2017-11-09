@@ -492,6 +492,9 @@ class CORE_EXPORT PaintLayerScrollableArea final
 
   void Trace(blink::Visitor*) override;
 
+  void SetCanHaveScrollbars(bool val) { can_have_scrollbars_ = val; }
+  bool GetCanHaveScrollbars() const { return can_have_scrollbars_; }
+
  private:
   explicit PaintLayerScrollableArea(PaintLayer&);
 
@@ -616,6 +619,7 @@ class CORE_EXPORT PaintLayerScrollableArea final
   uint32_t non_composited_main_thread_scrolling_reasons_;
 
   bool has_been_disposed_;
+  bool can_have_scrollbars_;
 };
 
 DEFINE_TYPE_CASTS(PaintLayerScrollableArea,
