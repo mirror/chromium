@@ -141,6 +141,30 @@
       "revId": "6cf8b377cc45bfeb5ff5f06f9c32344423a8e39e",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "a24e03fe_67febbe6",
+        "filename": "chrome/browser/android/bookmarks/partner_bookmarks_reader.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 313,
+      "author": {
+        "id": 1230128
+      },
+      "writtenOn": "2017-11-09T16:50:49Z",
+      "side": 1,
+      "message": "I added the error condition FAILURE_CONNECTION_ERROR and a check in OnGetFaviconFromServerFinished to handle this instead of adding it in a followup CL.",
+      "parentUuid": "0d42c807_c0f3c643",
+      "range": {
+        "startLine": 313,
+        "startChar": 6,
+        "endLine": 313,
+        "endChar": 71
+      },
+      "revId": "6cf8b377cc45bfeb5ff5f06f9c32344423a8e39e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
