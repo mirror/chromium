@@ -44,6 +44,7 @@
 #include "net/url_request/url_request_test_job.h"
 #include "net/url_request/url_request_test_util.h"
 #include "testing/gtest/include/gtest/gtest.h"
+#include "third_party/WebKit/public/platform/web_page_visibility_state.mojom.h"
 #include "url/origin.h"
 
 namespace content {
@@ -159,9 +160,9 @@ class NavigationURLLoaderTest : public testing::Test {
     common_params.allow_download = allow_download;
 
     std::unique_ptr<NavigationRequestInfo> request_info(
-        new NavigationRequestInfo(common_params, begin_params, url, true, false,
-                                  false, -1, false, false,
-                                  blink::kWebPageVisibilityStateVisible));
+        new NavigationRequestInfo(
+            common_params, begin_params, url, true, false, false, -1, false,
+            false, blink::mojom::WebPageVisibilityState::kVisible));
     return NavigationURLLoader::Create(
         browser_context_->GetResourceContext(),
         BrowserContext::GetDefaultStoragePartition(browser_context_.get()),

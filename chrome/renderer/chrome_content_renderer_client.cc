@@ -124,6 +124,7 @@
 #include "third_party/WebKit/public/platform/WebURLResponse.h"
 #include "third_party/WebKit/public/platform/modules/fetch/fetch_api_request.mojom-shared.h"
 #include "third_party/WebKit/public/platform/scheduler/renderer_process_type.h"
+#include "third_party/WebKit/public/platform/web_page_visibility_state.mojom.h"
 #include "third_party/WebKit/public/web/WebDocument.h"
 #include "third_party/WebKit/public/web/WebElement.h"
 #include "third_party/WebKit/public/web/WebHeap.h"
@@ -1367,11 +1368,11 @@ ChromeContentRendererClient::GetPrescientNetworking() {
 
 bool ChromeContentRendererClient::ShouldOverridePageVisibilityState(
     const content::RenderFrame* render_frame,
-    blink::WebPageVisibilityState* override_state) {
+    blink::mojom::WebPageVisibilityState* override_state) {
   if (!prerender::PrerenderHelper::IsPrerendering(render_frame))
     return false;
 
-  *override_state = blink::kWebPageVisibilityStatePrerender;
+  *override_state = blink::mojom::WebPageVisibilityState::kPrerender;
   return true;
 }
 

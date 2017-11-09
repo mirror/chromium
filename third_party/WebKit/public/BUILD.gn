@@ -808,6 +808,7 @@ mojom("mojo_bindings") {
     "platform/referrer.mojom",
     "platform/reporting.mojom",
     "platform/site_engagement.mojom",
+    "platform/web_page_visibility_state.mojom",
     "web/console_message.mojom",
     "web/selection_menu_behavior.mojom",
     "web/shared_worker_creation_context_type.mojom",
