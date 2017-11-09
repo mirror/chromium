@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "7f4e90cb_9feee427",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 6
+      },
+      "lineNbr": 11,
+      "author": {
+        "id": 1115881
+      },
+      "writtenOn": "2017-11-09T17:59:04Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "533b41d1_ed8c04cd",
+      "revId": "3fcbda8e71b7f4bec2c144ff19fff1fa9e696b49",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "4389fe65_b9a4faae",
         "filename": "/COMMIT_MSG",
         "patchSetId": 6
@@ -36,6 +54,24 @@
     },
     {
       "key": {
+        "uuid": "85d7b5e5_f92e1109",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 6
+      },
+      "lineNbr": 13,
+      "author": {
+        "id": 1115881
+      },
+      "writtenOn": "2017-11-09T17:59:04Z",
+      "side": 1,
+      "message": "I\u0027m hoping it would - though we\u0027d need to make sure and add a test.",
+      "parentUuid": "4389fe65_b9a4faae",
+      "revId": "3fcbda8e71b7f4bec2c144ff19fff1fa9e696b49",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "355e6f5c_0bde98d8",
         "filename": "content/browser/browser_url_handler_impl.cc",
         "patchSetId": 6
@@ -47,6 +83,24 @@
       "writtenOn": "2017-11-06T04:00:37Z",
       "side": 1,
       "message": "Not needed anymore?  (Same in several other files.)",
+      "revId": "3fcbda8e71b7f4bec2c144ff19fff1fa9e696b49",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "49985fbb_6476d3c8",
+        "filename": "content/browser/browser_url_handler_impl.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 15,
+      "author": {
+        "id": 1115881
+      },
+      "writtenOn": "2017-11-09T17:59:04Z",
+      "side": 1,
+      "message": "No it is used. The files were using IsRenderDebugURL without having the include explicitly listed. Since the function moved to content/public/common/url_utils.h I need to include it to still have the files compile.",
+      "parentUuid": "355e6f5c_0bde98d8",
       "revId": "3fcbda8e71b7f4bec2c144ff19fff1fa9e696b49",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -99,6 +153,54 @@
     },
     {
       "key": {
+        "uuid": "049a0192_b64d0c30",
+        "filename": "content/public/common/url_utils.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 45,
+      "author": {
+        "id": 1115881
+      },
+      "writtenOn": "2017-11-09T17:59:04Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "b4370d38_3873a884",
+      "range": {
+        "startLine": 45,
+        "startChar": 33,
+        "endLine": 45,
+        "endChar": 37
+      },
+      "revId": "3fcbda8e71b7f4bec2c144ff19fff1fa9e696b49",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "36b4b7ee_b7817a3a",
+        "filename": "content/public/common/url_utils.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 45,
+      "author": {
+        "id": 1115881
+      },
+      "writtenOn": "2017-11-09T17:59:04Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "c7c52164_a8ef339a",
+      "range": {
+        "startLine": 45,
+        "startChar": 48,
+        "endLine": 45,
+        "endChar": 52
+      },
+      "revId": "3fcbda8e71b7f4bec2c144ff19fff1fa9e696b49",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "e478158a_8e4730fc",
         "filename": "content/public/test/navigation_simulator.cc",
         "patchSetId": 6
@@ -122,6 +224,30 @@
     },
     {
       "key": {
+        "uuid": "a18ce7d2_3ea1a9a2",
+        "filename": "content/public/test/navigation_simulator.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 830,
+      "author": {
+        "id": 1115881
+      },
+      "writtenOn": "2017-11-09T17:59:04Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "e478158a_8e4730fc",
+      "range": {
+        "startLine": 830,
+        "startChar": 21,
+        "endLine": 830,
+        "endChar": 25
+      },
+      "revId": "3fcbda8e71b7f4bec2c144ff19fff1fa9e696b49",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "2bde833d_dc73a5f5",
         "filename": "content/renderer/render_frame_impl.cc",
         "patchSetId": 6
@@ -133,6 +259,24 @@
       "writtenOn": "2017-11-06T04:00:37Z",
       "side": 1,
       "message": "Hmm, I think we might have a problem here, particularly if we\u0027re trying to ensure that debug URLs don\u0027t commit.\n\nI was a bit surprised to see how this works.  Apparently, chrome://crash (which is kChromeUICrashURL) gets handled in MaybeHandleDebugURL, but if it has a path appended, it\u0027s meant to fall through and be handled in this function.  This function can then handle it or not based on certain paths, and it might return false here or at the end if it doesn\u0027t find a match.\n\nI\u0027m still a bit confused, because it doesn\u0027t look like such URLs will return from IsRendererDebugURL in the browser process.  That means they could cause the same problems in PlzNav that we\u0027re trying to address in this CL.\n\nI wonder if we need to restructure this?  One straw man approach would be to return true for chrome://crash with arbitrary paths in IsRendererDebugURL, call MaybeTriggerAsanError at the beginning of MaybeHandleDebugURL instead of the end, and handle any other path following chrome://crash the way we would handle chrome://crash itself.\n\n(Guessing we\u0027d want to include a test for that, showing the old approach was broken in PlzNav?)",
+      "revId": "3fcbda8e71b7f4bec2c144ff19fff1fa9e696b49",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0855bfc4_cb86ec47",
+        "filename": "content/renderer/render_frame_impl.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 779,
+      "author": {
+        "id": 1115881
+      },
+      "writtenOn": "2017-11-09T17:59:04Z",
+      "side": 1,
+      "message": "I didn\u0027t know about that. I\u0027ve tried another approach. We compute before handling the URL whether it should proceed or not. If it shouldn\u0027t proceed, we always stop the navigation, even if the URL wasn\u0027t handled. We do not expect it to commit anyway. This way we shouldn\u0027t risk missing one of the URLs we were supposed to handled.",
+      "parentUuid": "2bde833d_dc73a5f5",
       "revId": "3fcbda8e71b7f4bec2c144ff19fff1fa9e696b49",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -162,6 +306,30 @@
     },
     {
       "key": {
+        "uuid": "a64fd43e_c1676931",
+        "filename": "content/renderer/render_frame_impl.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 6098,
+      "author": {
+        "id": 1115881
+      },
+      "writtenOn": "2017-11-09T17:59:04Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "ef70000a_81282de8",
+      "range": {
+        "startLine": 6098,
+        "startChar": 5,
+        "endLine": 6098,
+        "endChar": 15
+      },
+      "revId": "3fcbda8e71b7f4bec2c144ff19fff1fa9e696b49",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "10f3b6f5_43b603da",
         "filename": "content/renderer/render_frame_impl.cc",
         "patchSetId": 6
@@ -185,6 +353,30 @@
     },
     {
       "key": {
+        "uuid": "38d69b7a_3bc9daf2",
+        "filename": "content/renderer/render_frame_impl.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 6101,
+      "author": {
+        "id": 1115881
+      },
+      "writtenOn": "2017-11-09T17:59:04Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "10f3b6f5_43b603da",
+      "range": {
+        "startLine": 6101,
+        "startChar": 51,
+        "endLine": 6101,
+        "endChar": 66
+      },
+      "revId": "3fcbda8e71b7f4bec2c144ff19fff1fa9e696b49",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "9e1c63c8_33239969",
         "filename": "content/renderer/render_frame_impl.cc",
         "patchSetId": 6
@@ -196,6 +388,30 @@
       "writtenOn": "2017-11-06T04:00:37Z",
       "side": 1,
       "message": "I\u0027m curious why we need the !frame_-\u003eIsLoading() condition.  (And is this something the new Mojo interface will help us avoid, by letting us delete just the corresponding mojom::Navigation?)\n\nActually, I suppose this is related to what the desired behavior is.  When we navigate to a debug URL, are we intentionally leaving the debug URL in the omnibox until the user clears it?  I guess that\u0027s what we do today, so maybe that\u0027s ok?  Probably worth leaving a comment to that effect.  (It\u0027s reasonable to leave chrome://kill in the address bar above the sad tab, for example, since the user just typed it and this was the outcome.  It\u0027s possible to get the original URL back by hitting escape.)\n\nIf we had wanted to clear the omnibox, I\u0027d be worried about not sending the IPC in corner cases here, but I\u0027m guessing the DidStopLoading IPC doesn\u0027t update the address bar anyway.",
+      "range": {
+        "startLine": 6103,
+        "startChar": 31,
+        "endLine": 6103,
+        "endChar": 51
+      },
+      "revId": "3fcbda8e71b7f4bec2c144ff19fff1fa9e696b49",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0295f81c_32b9debb",
+        "filename": "content/renderer/render_frame_impl.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 6103,
+      "author": {
+        "id": 1115881
+      },
+      "writtenOn": "2017-11-09T17:59:04Z",
+      "side": 1,
+      "message": "If we tried to have the renderer debug URL commit in a renderer that was already loading (a previous document), we shouldn\u0027t inform the browser process that it stopped loading, since it is still in a loading state.\n\nThis is one of the issues with using DidStopLoading to mean that the renderer stopped processing the navigation it was asked to commit. With the new Mojo interface, we\u0027d just destroy the NavigationClient instead (though in this case I\u0027m thinking of having a different path for renderer debug URLs).",
+      "parentUuid": "9e1c63c8_33239969",
       "range": {
         "startLine": 6103,
         "startChar": 31,

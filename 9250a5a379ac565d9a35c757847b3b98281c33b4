@@ -16,6 +16,24 @@
       "revId": "9250a5a379ac565d9a35c757847b3b98281c33b4",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c7fb61e3_d8624920",
+        "filename": "content/browser/frame_host/render_frame_host_manager_browsertest.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 1857,
+      "author": {
+        "id": 1115881
+      },
+      "writtenOn": "2017-11-09T17:59:04Z",
+      "side": 0,
+      "message": "That\u0027s the reasoning. To enforce this, I have added renderer debug URLs to URLs that can not be committed by a renderer process. This should result in a renderer-process kill if the renderer tries to do it. Let me know if you prefer a DCHECK.",
+      "parentUuid": "3f43f25d_b8a9be47",
+      "revId": "9250a5a379ac565d9a35c757847b3b98281c33b4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
