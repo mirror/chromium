@@ -11,7 +11,9 @@
 #include "bindings/core/v8/V8ObjectBuilder.h"
 #include "bindings/core/v8/WorkerOrWorkletScriptController.h"
 #include "bindings/modules/v8/V8AudioParamDescriptor.h"
+#include "bindings/modules/v8/V8AudioWorkletProcessor.h"
 #include "core/dom/ExceptionCode.h"
+#include "core/dom/MessagePort.h"
 #include "core/typed_arrays/DOMTypedArray.h"
 #include "core/workers/GlobalScopeCreationParams.h"
 #include "modules/webaudio/AudioBuffer.h"
@@ -72,8 +74,8 @@ void AudioWorkletGlobalScope::registerProcessor(
     return;
   }
 
-  v8::Local<v8::Function> class_definition_local =
-      v8::Local<v8::Function>::Cast(class_definition.V8Value());
+  v8::Local<v8::Object> class_definition_local =
+      v8::Local<v8::Object>::Cast(class_definition.V8Value());
 
   v8::Local<v8::Value> prototype_value_local;
   bool prototype_extracted =
@@ -136,37 +138,48 @@ void AudioWorkletGlobalScope::registerProcessor(
   processor_definition_map_.Set(name, definition);
 }
 
-AudioWorkletProcessor* AudioWorkletGlobalScope::CreateInstance(
+AudioWorkletProcessor* AudioWorkletGlobalScope::CreateProcessor(
     const String& name,
-    float sample_rate) {
+    float sample_rate,
+    MessagePortChannel message_port_channel) {
   DCHECK(IsContextThread());
 
+  // TODO(hongchan): do this only once when the association between
+  // BaseAudioContext and AudioWorkletGlobalScope is established.
   sample_rate_ = sample_rate;
+
+  AudioWorkletProcessor* processor =
+      CreateProcessorInternal(name, message_port_channel);
+  processor_instances_.push_back(processor);
+
+  return processor;
+}
+
+AudioWorkletProcessor* AudioWorkletGlobalScope::CreateProcessorInternal(
+  const String& name,
+  MessagePortChannel message_port_channel) {
+  DCHECK(IsContextThread());
 
   AudioWorkletProcessorDefinition* definition = FindDefinition(name);
   if (!definition)
     return nullptr;
 
+  processor_init_params_.Set(name, std::move(message_port_channel));
+
   ScriptState* script_state = ScriptController()->GetScriptState();
   ScriptState::Scope scope(script_state);
-
-  // V8 object instance construction: this construction process is here to make
-  // the AudioWorkletProcessor class a thin wrapper of V8::Object instance.
   v8::Isolate* isolate = script_state->GetIsolate();
-  v8::Local<v8::Object> instance_local;
-  if (!V8ObjectConstructor::NewInstance(isolate,
-                                        definition->ConstructorLocal(isolate))
-           .ToLocal(&instance_local)) {
+  v8::Local<v8::Value> result;
+  if (!V8ScriptRunner::CallAsConstructor(isolate,
+                                         definition->ConstructorLocal(isolate),
+                                         ExecutionContext::From(script_state),
+                                         0, nullptr)
+          .ToLocal(&result)) {
     return nullptr;
   }
 
-  AudioWorkletProcessor* processor = AudioWorkletProcessor::Create(this, name);
-  DCHECK(processor);
-
-  processor->SetInstance(isolate, instance_local);
-  processor_instances_.push_back(processor);
-
-  return processor;
+  processor_init_params_.Clear();
+  return V8AudioWorkletProcessor::ToImplWithTypeCheck(isolate, result);
 }
 
 bool AudioWorkletGlobalScope::Process(
@@ -252,10 +265,12 @@ bool AudioWorkletGlobalScope::Process(
   // Perform JS function process() in AudioWorkletProcessor instance. The actual
   // V8 operation happens here to make the AudioWorkletProcessor class a thin
   // wrapper of v8::Object instance.
+  v8::Local<v8::Value> processor_handle =
+      ToV8(processor, script_state->GetContext()->Global(), isolate);
   v8::Local<v8::Value> local_result;
   if (!V8ScriptRunner::CallFunction(definition->ProcessLocal(isolate),
                                     ExecutionContext::From(script_state),
-                                    processor->InstanceLocal(isolate),
+                                    processor_handle,
                                     WTF_ARRAY_LENGTH(argv),
                                     argv,
                                     isolate).ToLocal(&local_result)) {
@@ -312,6 +327,10 @@ AudioWorkletGlobalScope::WorkletProcessorInfoListForSynchronization() {
     }
   }
   return processor_info_list;
+}
+
+ProcessorInitParams* AudioWorkletGlobalScope::GetProcessorInitParams() {
+  return &processor_init_params_;
 }
 
 void AudioWorkletGlobalScope::Trace(blink::Visitor* visitor) {

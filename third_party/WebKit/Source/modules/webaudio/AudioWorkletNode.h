@@ -18,6 +18,7 @@ class AudioWorkletProcessor;
 class BaseAudioContext;
 class CrossThreadAudioParamInfo;
 class ExceptionState;
+class MessagePort;
 
 // AudioWorkletNode is a user-facing interface of custom audio processor in
 // Web Audio API. The integration of WebAudio renderer is done via
@@ -93,6 +94,7 @@ class AudioWorkletNode final : public AudioNode,
 
   // IDL
   AudioParamMap* parameters() const;
+  MessagePort* port() const;
 
   virtual void Trace(blink::Visitor*);
 
@@ -100,9 +102,11 @@ class AudioWorkletNode final : public AudioNode,
   AudioWorkletNode(BaseAudioContext&,
                    const String& name,
                    const AudioWorkletNodeOptions&,
-                   const Vector<CrossThreadAudioParamInfo>);
+                   const Vector<CrossThreadAudioParamInfo>,
+                   MessagePort* node_port);
 
   Member<AudioParamMap> parameter_map_;
+  Member<MessagePort> node_port_;
 };
 
 }  // namespace blink
