@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "673cd4ef_df63607e",
+        "filename": "cc/tiles/software_image_decode_cache.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 360,
+      "author": {
+        "id": 1145109
+      },
+      "writtenOn": "2017-11-09T18:02:18Z",
+      "side": 1,
+      "message": "You think its possible to have this logic for updating the key map while erasing the image in a common method? I\u0027m always a bit scared about this tracking getting out of sync because its difficult to enforce.",
+      "range": {
+        "startLine": 359,
+        "startChar": 6,
+        "endLine": 360,
+        "endChar": 71
+      },
+      "revId": "ed25a47017e266926cdf97fb5259931d7bcb3375",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
