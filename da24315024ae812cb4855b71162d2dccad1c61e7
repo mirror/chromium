@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "b3ca7d68_a69cc11f",
+        "filename": "third_party/WebKit/Source/core/url/URLSearchParams.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 161,
+      "author": {
+        "id": 1002864
+      },
+      "writtenOn": "2017-11-09T09:39:19Z",
+      "side": 1,
+      "message": "the other changes look good.\n\nadditionally, can we just remove this line? the only other caller of SetInput() is DOMURL::UpdateSearchParams(), which sets is_in_update_ to true before calling this.",
+      "revId": "da24315024ae812cb4855b71162d2dccad1c61e7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
