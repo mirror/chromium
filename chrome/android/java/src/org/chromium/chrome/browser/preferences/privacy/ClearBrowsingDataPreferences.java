@@ -40,6 +40,7 @@ import org.chromium.chrome.browser.tabmodel.document.TabDelegate;
 import org.chromium.chrome.browser.widget.TintedDrawable;
 import org.chromium.components.signin.ChromeSigninController;
 
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.EnumSet;
 import java.util.concurrent.TimeUnit;
@@ -380,20 +381,22 @@ public class ClearBrowsingDataPreferences extends PreferenceFragment
      */
     protected TimePeriodSpinnerOption[] getTimePeriodSpinnerOptions() {
         Activity activity = getActivity();
-
-        TimePeriodSpinnerOption[] options = new TimePeriodSpinnerOption[] {
-                new TimePeriodSpinnerOption(TimePeriod.LAST_HOUR,
-                        activity.getString(R.string.clear_browsing_data_period_hour)),
-                new TimePeriodSpinnerOption(TimePeriod.LAST_DAY,
-                        activity.getString(R.string.clear_browsing_data_period_day)),
-                new TimePeriodSpinnerOption(TimePeriod.LAST_WEEK,
-                        activity.getString(R.string.clear_browsing_data_period_week)),
-                new TimePeriodSpinnerOption(TimePeriod.FOUR_WEEKS,
-                        activity.getString(R.string.clear_browsing_data_period_four_weeks)),
-                new TimePeriodSpinnerOption(TimePeriod.ALL_TIME,
-                        activity.getString(R.string.clear_browsing_data_period_everything))};
-
-        return options;
+        ArrayList<TimePeriodSpinnerOption> options = new ArrayList<TimePeriodSpinnerOption>();
+        options.add(new TimePeriodSpinnerOption(TimePeriod.LAST_HOUR,
+                activity.getString(R.string.clear_browsing_data_period_hour)));
+        options.add(new TimePeriodSpinnerOption(
+                TimePeriod.LAST_DAY, activity.getString(R.string.clear_browsing_data_period_day)));
+        options.add(new TimePeriodSpinnerOption(TimePeriod.LAST_WEEK,
+                activity.getString(R.string.clear_browsing_data_period_week)));
+        options.add(new TimePeriodSpinnerOption(TimePeriod.FOUR_WEEKS,
+                activity.getString(R.string.clear_browsing_data_period_four_weeks)));
+        if (ChromeFeatureList.isEnabled(ChromeFeatureList.CLEAR_OLD_BROWSING_DATA)) {
+            options.add(new TimePeriodSpinnerOption(TimePeriod.OLDER_THAN_30_DAYS,
+                    activity.getString(R.string.clear_browsing_data_period_older_than_30_days)));
+        }
+        options.add(new TimePeriodSpinnerOption(TimePeriod.ALL_TIME,
+                activity.getString(R.string.clear_browsing_data_period_everything)));
+        return options.toArray(new TimePeriodSpinnerOption[0]);
     }
 
     /**
