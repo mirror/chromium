@@ -36,6 +36,23 @@
     },
     {
       "key": {
+        "uuid": "ef087cda_bb256da0",
+        "filename": "media/renderers/paint_canvas_video_renderer.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 957,
+      "author": {
+        "id": 1130490
+      },
+      "writtenOn": "2017-11-09T17:59:03Z",
+      "side": 1,
+      "message": "i\u0027m not sure why cases like this are more or less error-prone / readable than before.",
+      "revId": "842a7d5bb77c75101d1fb094c20696c88c6835fc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "fd368bde_a018aca7",
         "filename": "third_party/WebKit/Source/core/html/media/HTMLVideoElement.cpp",
         "patchSetId": 2
@@ -71,6 +88,30 @@
       "side": 1,
       "message": "I agree that being more explicit about the object would be better. If not created on the stack, at least a comment to help the reader.",
       "parentUuid": "fd368bde_a018aca7",
+      "range": {
+        "startLine": 354,
+        "startChar": 13,
+        "endLine": 355,
+        "endChar": 14
+      },
+      "revId": "842a7d5bb77c75101d1fb094c20696c88c6835fc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "fda62cb7_32bfdd4a",
+        "filename": "third_party/WebKit/Source/core/html/media/HTMLVideoElement.cpp",
+        "patchSetId": 2
+      },
+      "lineNbr": 355,
+      "author": {
+        "id": 1130490
+      },
+      "writtenOn": "2017-11-09T17:59:03Z",
+      "side": 1,
+      "message": "why does this function not take the structs, rather than the ints?  more generally, what criteria did you use to decide how far up the stack to push the structs?\n\nfor me, the issue is that they\u0027re all still ints; one could swap the arguments around and it would compile fine and simply not work.  i\u0027m not sure how to add compile-time type safety, though, without a really cumbersome type conversion.\n\nfor example, one could define an enum class for each of the gl types that mirrors the gl constants (same numeric value) for type safety.  then, one would have functions on the new cc::Tex* structs that would static_cast the enum back to int.\n\nas in,:\n\nstruct Params {\n  enum class Target {\n    kTexture2D \u003d GL_TEXTURE2D,\n    kTexture.. \u003d GL_...\n  };\n\n  // use this where we use \"params.target\" now.\n  int target() { return static_cast\u003cint\u003e(target_); }\n\n  private:\n  Target target_;\n}\n\nbut, in that case, one now has two sets of constants that one must keep in sync.  i suspect that\u0027s more trouble than it\u0027s worth for type safety.\n\nthe conversion from gl constant to enum constant is also tricky; i\u0027m not sure that it\u0027s defined to static_cast\u003c\u003e from int to enum class.  i don\u0027t remember the rules.",
+      "parentUuid": "cdae403c_5a72d680",
       "range": {
         "startLine": 354,
         "startChar": 13,
