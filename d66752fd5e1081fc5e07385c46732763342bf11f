@@ -181,6 +181,24 @@
     },
     {
       "key": {
+        "uuid": "cd0bb207_84846816",
+        "filename": "docs/testing/json_test_results_format.md",
+        "patchSetId": 6
+      },
+      "lineNbr": 47,
+      "author": {
+        "id": 1003232
+      },
+      "writtenOn": "2017-11-09T00:51:10Z",
+      "side": 1,
+      "message": "Apart from rising to the bait of debating what \"the correct thing\" might be -- :) -- I was going to say that I don\u0027t actually think the choice is that important one way or another right now, since I think the format has more important flaws regardless. So, whichever way you wanted to go would\u0027ve been okay by me.",
+      "parentUuid": "ba4fbcc7_895be490",
+      "revId": "d66752fd5e1081fc5e07385c46732763342bf11f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "a83ba1fa_ed36459c",
         "filename": "docs/testing/json_test_results_format.md",
         "patchSetId": 6
