@@ -22,6 +22,30 @@
       "revId": "04be4f85d14c86f1cf7149367ab072aef043bda4",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2dd502f2_8d810a4d",
+        "filename": "net/android/javatests/src/org/chromium/net/NetworkChangeNotifierTest.java",
+        "patchSetId": 10
+      },
+      "lineNbr": 969,
+      "author": {
+        "id": 1002888
+      },
+      "writtenOn": "2017-11-09T19:42:26Z",
+      "side": 1,
+      "message": "I think it\u0027s related to the bindProcessToNetwork() method above on line 957.  I\u0027m removing that method for now and I\u0027ll try and file a bug against the Android test runner after this lands.",
+      "parentUuid": "68c0e5d8_176c17b5",
+      "range": {
+        "startLine": 969,
+        "startChar": 15,
+        "endLine": 969,
+        "endChar": 0
+      },
+      "revId": "04be4f85d14c86f1cf7149367ab072aef043bda4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
