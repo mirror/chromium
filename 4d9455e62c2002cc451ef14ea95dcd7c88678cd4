@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "cf513190_b2036118",
+        "filename": "chrome/browser/extensions/extension_web_ui.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 99,
+      "author": {
+        "id": 1001727
+      },
+      "writtenOn": "2017-11-09T20:10:40Z",
+      "side": 1,
+      "message": "Couple of clarification Q as I\u0027m not very familiar with this code:\n\nQ: This function can set one entry to be active, but it doesn\u0027t set other to active \u003d false. My understanding is that multiple override url can be active at a time, but the earlier installed (see q below) active one will apply. Can you confirm?\n\nQ: |list|\u0027s order is guaranteed to be install time order, right? i.e. that ensures HandleChromeURLOverride works correctly.",
+      "revId": "4d9455e62c2002cc451ef14ea95dcd7c88678cd4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ba2514b3_2bc39cea",
+        "filename": "chrome/browser/extensions/extension_web_ui.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 154,
+      "author": {
+        "id": 1001727
+      },
+      "writtenOn": "2017-11-09T20:10:40Z",
+      "side": 1,
+      "message": "With the new code, we can\u0027t have multiple entries for one extension anymore, right? Is this code to clean up older entries or are there other ways where we could end up with multiple entries?",
+      "revId": "4d9455e62c2002cc451ef14ea95dcd7c88678cd4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
