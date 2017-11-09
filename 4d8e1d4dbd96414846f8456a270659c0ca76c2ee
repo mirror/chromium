@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "3adaff45_61f66cc4",
+        "filename": "third_party/WebKit/LayoutTests/http/tests/devtools/sources/debugger-ui/watch-expressions-panel-switch.js",
+        "patchSetId": 1
+      },
+      "lineNbr": 44,
+      "author": {
+        "id": 1165714
+      },
+      "writtenOn": "2017-11-09T23:26:37Z",
+      "side": 1,
+      "message": "tricky code 😜",
+      "revId": "4d8e1d4dbd96414846f8456a270659c0ca76c2ee",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
