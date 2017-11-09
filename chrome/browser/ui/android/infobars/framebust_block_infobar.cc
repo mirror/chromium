@@ -17,16 +17,16 @@
 #include "content/public/browser/web_contents.h"
 #include "jni/FramebustBlockInfoBar_jni.h"
 
-namespace {
+typedef infobars::InfoBarDelegate::InfoBarIdentifier InfoBarIdentifier;
 
+namespace {
 class FramebustBlockInfoBarDelegate : public infobars::InfoBarDelegate {
  public:
-  FramebustBlockInfoBarDelegate(const GURL& blocked_url)
+  explicit FramebustBlockInfoBarDelegate(const GURL& blocked_url)
       : infobars::InfoBarDelegate(), blocked_url_(blocked_url) {}
 
-  infobars::InfoBarDelegate::InfoBarIdentifier GetIdentifier() const override {
-    return infobars::InfoBarDelegate::InfoBarIdentifier::
-        FRAMEBUST_BLOCK_INFOBAR_ANDROID;
+  InfoBarIdentifier GetIdentifier() const override {
+    return InfoBarIdentifier::FRAMEBUST_BLOCK_INFOBAR_ANDROID;
   }
 
   bool EqualsDelegate(infobars::InfoBarDelegate* delegate) const override {
@@ -69,6 +69,18 @@ void FramebustBlockInfoBar::Show(
     content::WebContents* web_contents,
     std::unique_ptr<FramebustBlockMessageDelegate> message_delegate) {
   InfoBarService* service = InfoBarService::FromWebContents(web_contents);
-  service->AddInfoBar(
-      base::WrapUnique(new FramebustBlockInfoBar(std::move(message_delegate))));
+  auto existing_infobars = service->GetInfoBarsForId(
+      InfoBarIdentifier::FRAMEBUST_BLOCK_INFOBAR_ANDROID);
+
+  // We close the previous infobar before showing the new one, so we should
+  // never have more than one.
+  DCHECK_LE(existing_infobars.size(), 1u);
+
+  std::unique_ptr<InfoBar> new_infobar =
+      base::WrapUnique(new FramebustBlockInfoBar(std::move(message_delegate)));
+  if (existing_infobars.empty()) {
+    service->AddInfoBar(std::move(new_infobar));
+  } else {
+    service->ReplaceInfoBar(existing_infobars.front(), std::move(new_infobar));
+  }
 }

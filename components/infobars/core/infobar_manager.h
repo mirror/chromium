@@ -78,6 +78,10 @@ class InfoBarManager {
   InfoBar* ReplaceInfoBar(InfoBar* old_infobar,
                           std::unique_ptr<InfoBar> new_infobar);
 
+  // Returns the infobars whose delegate matches the provided |id|.
+  std::vector<InfoBar*> GetInfoBarsForId(
+      InfoBarDelegate::InfoBarIdentifier id) const;
+
   // Returns the number of infobars for this tab.
   size_t infobar_count() const { return infobars_.size(); }
 
