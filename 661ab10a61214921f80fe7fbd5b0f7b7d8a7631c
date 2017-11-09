@@ -140,6 +140,30 @@
       "revId": "661ab10a61214921f80fe7fbd5b0f7b7d8a7631c",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "0a94e23e_b562f0b9",
+        "filename": "net/http/http_cache_writers.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 143,
+      "author": {
+        "id": 1116284
+      },
+      "writtenOn": "2017-11-09T17:12:18Z",
+      "side": 1,
+      "message": "The test harness can provide a method, ShouldKeepEntry() that reaches into HttpCacheWriters-\u003eshould_keep_entry_ and returns it.",
+      "parentUuid": "e6cde591_f7498f2a",
+      "range": {
+        "startLine": 143,
+        "startChar": 7,
+        "endLine": 143,
+        "endChar": 32
+      },
+      "revId": "661ab10a61214921f80fe7fbd5b0f7b7d8a7631c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
