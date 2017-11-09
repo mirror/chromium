@@ -239,6 +239,30 @@
     },
     {
       "key": {
+        "uuid": "be63bd47_67ebf0e5",
+        "filename": "components/data_reduction_proxy/core/browser/network_properties_manager.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 13,
+      "author": {
+        "id": 1116492
+      },
+      "writtenOn": "2017-11-09T20:34:38Z",
+      "side": 1,
+      "message": "Ok, can you get rid of the |io_task_runner| then?\n\nIIUC, if you do decide to make a copy of the map of NetworkProperties, then the class only has to PostTask to the UI thread to write updates, and it doesn\u0027t have to ask for the new NetworkProperties when the network changes since it can just look it up in the map.\n\nIf you don\u0027t make a copy, this class could still just PostTask to the UI thread to write updates and PostTaskAndReplyWithResult() to the UI thread to get the new NetworkProperties when the network changes.\n\nEither way, I don\u0027t think |io_task_runner| is needed. You could just add a ThreadChecker to the class for the IO thread work, couldn\u0027t you?",
+      "parentUuid": "6e078244_c6d38545",
+      "range": {
+        "startLine": 12,
+        "startChar": 3,
+        "endLine": 13,
+        "endChar": 63
+      },
+      "revId": "7ba2971930f1aaf7c5164e10651f18e6a1197c6f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "87183b86_fc126a37",
         "filename": "components/data_reduction_proxy/core/browser/network_properties_manager.h",
         "patchSetId": 5

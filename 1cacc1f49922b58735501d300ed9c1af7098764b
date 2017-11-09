@@ -1,0 +1,73 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "f2906a5e_1fff229f",
+        "filename": "components/data_reduction_proxy/core/browser/network_properties_manager.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 12,
+      "author": {
+        "id": 1116492
+      },
+      "writtenOn": "2017-11-09T20:34:38Z",
+      "side": 1,
+      "message": "nit: Could this be a scoped_refptr\u003cbase::SequencedTaskRunner\u003e instead?",
+      "range": {
+        "startLine": 12,
+        "startChar": 24,
+        "endLine": 12,
+        "endChar": 46
+      },
+      "revId": "1cacc1f49922b58735501d300ed9c1af7098764b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7d16b4c9_1ea1f2c1",
+        "filename": "components/data_reduction_proxy/core/browser/network_properties_manager.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 17,
+      "author": {
+        "id": 1116492
+      },
+      "writtenOn": "2017-11-09T20:34:38Z",
+      "side": 1,
+      "message": "nit: I don\u0027t think this DCHECK is really necessary, since the PrefService already DCHECKs that it\u0027s only used on the UI thread, and (as of this CL) the ctor isn\u0027t doing any UI thread exclusive work.",
+      "range": {
+        "startLine": 17,
+        "startChar": 26,
+        "endLine": 17,
+        "endChar": 48
+      },
+      "revId": "1cacc1f49922b58735501d300ed9c1af7098764b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5a80dee1_41ac65fa",
+        "filename": "components/data_reduction_proxy/core/browser/network_properties_manager.h",
+        "patchSetId": 7
+      },
+      "lineNbr": 67,
+      "author": {
+        "id": 1116492
+      },
+      "writtenOn": "2017-11-09T20:34:38Z",
+      "side": 1,
+      "message": "nit: the class is already enforcing that the NetworkProperties will only be used on one thread at a time, so could you remove the \"io_\" prefix?",
+      "range": {
+        "startLine": 67,
+        "startChar": 20,
+        "endLine": 67,
+        "endChar": 42
+      },
+      "revId": "1cacc1f49922b58735501d300ed9c1af7098764b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
