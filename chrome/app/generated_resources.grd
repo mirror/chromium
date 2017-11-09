@@ -5424,6 +5424,9 @@ the Bookmarks menu.">
       <message name="IDS_PASSWORD_MANAGER_CANCEL_BUTTON" desc="Label for the 'dismiss' button in the Manage Password bubble/Update Password infobar. These UIs ask the user if they wish to perform some action with saved passwords, e.g. updating or deleting them; the button dismisses the UI without taking the suggested action.">
         Nope
       </message>
+      <message name="IDS_PASSWORD_MANAGER_SIGNIN_VIA_FEDERATION" desc="Text for password replacement for federated credential in save prompt.">
+        Sign in with <ph name="PROVIDER">$1<ex>facebook.com</ex></ph>
+      </message>
       <if expr="not is_android">
         <message name="IDS_PASSWORD_MANAGER_EDIT_BUTTON" desc="Edit button text for password manager">
           Edit
