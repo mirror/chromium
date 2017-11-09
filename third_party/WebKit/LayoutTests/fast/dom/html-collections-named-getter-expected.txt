@@ -2,7 +2,6 @@ This tests verifies that namedItem and named getter returns the first matched it
 
 On success, you will see a series of "PASS" messages, followed by "TEST COMPLETE".
 
-
 document.all
 PASS document.all instanceof HTMLAllCollection is true
 FAIL document.all instanceof HTMLCollection should be true. Was false.

@@ -2,7 +2,6 @@ Test that setting and getting grid-column-end and grid-row-end works as expected
 
 On success, you will see a series of "PASS" messages, followed by "TEST COMPLETE".
 
-
 Test getting grid-column-end and grid-row-end set through CSS
 PASS getComputedStyle(gridElement, '').getPropertyValue('grid-column') is "auto / auto"
 PASS getComputedStyle(gridElement, '').getPropertyValue('grid-column-start') is "auto"

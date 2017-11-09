@@ -2,7 +2,6 @@ Verifies that pointercancel events are fired correctly on touch.
 
 On success, you will see a series of "PASS" messages, followed by "TEST COMPLETE".
 
-
 --- single drag tests ---
 
 -- preventDefault on none, without notifyStartOfTouchScroll --

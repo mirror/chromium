@@ -1,4 +1,7 @@
-This scenario verifies that the cyan "container" element scrolls properly with squashing enabled. The "container" element should not squash into a composited layer mapping owned by the fixed position layer or its descendant, since this would make it behave like a fixed position element during composited scrolling.
+This scenario verifies that the cyan "container" element scrolls properly with squashing enabled.
+      The "container" element should not squash into a composited layer mapping owned by the fixed
+      position layer or its descendant, since this would make it behave like a fixed position
+      element during composited scrolling.
 
 CASE 1, original layer tree:
 {
@@ -32,6 +35,7 @@ CASE 1, original layer tree:
     }
   ]
 }
+
 CASE 2, scrolling y to 80, the "container" element should remain positioned with respect to the scrolled document, the fixed-pos layer compensates for the new scroll position:
 {
   "layers": [

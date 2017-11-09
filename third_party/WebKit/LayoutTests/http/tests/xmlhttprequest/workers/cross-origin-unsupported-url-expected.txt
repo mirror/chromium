@@ -14,7 +14,6 @@ CONSOLE ERROR: line 1: Failed to load tel:1234: Cross origin requests are only s
 
 On success, you will see a series of "PASS" messages, followed by "TEST COMPLETE".
 
-
 Starting worker: ../resources/cross-origin-unsupported-url.js
 PASS [Worker] errorEvent.name is "NetworkError"
 PASS [Worker] errorEvent.type is "error"

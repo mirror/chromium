@@ -1,4 +1,5 @@
-Test for bug 97929: Extract HTTP Content-Language header.
+Test for bug 97929:
+Extract HTTP Content-Language header.
 
 ==> Value extracted from malformed HTTP "Content-Language" header...
 PASS window.getComputedStyle(document.getElementById("x")).webkitLocale == '"es"' || window.getComputedStyle(document.getElementById("x")).webkitLocale == "auto" is true

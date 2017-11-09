@@ -1,4 +1,7 @@
 PASS for LTR
 PASS for RTL
+
 foo bar baz qux quux
-שוּרה שוּרה שוּרה שוּרה שוּרה
+שוּרה שוּרה
+שוּרה
+שוּרה שוּרה

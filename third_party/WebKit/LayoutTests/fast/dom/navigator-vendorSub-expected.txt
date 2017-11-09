@@ -1,3 +1,4 @@
-Tests for bug 8110: Define navigator.vendorSub (bcms.gov.uk doesn't allow access to login page).
+Tests for bug 8110: 
+Define navigator.vendorSub (bcms.gov.uk doesn't allow access to login page).
 
 navigator.vendorSub: '' (should not be undefined or null)

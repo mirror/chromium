@@ -2,7 +2,6 @@ Test IndexedDB IDBDatabase internal delete pending flag
 
 On success, you will see a series of "PASS" messages, followed by "TEST COMPLETE".
 
-
 dbname = "database-deletepending-flag.html"
 indexedDB.deleteDatabase(dbname)
 indexedDB.open(dbname, 5)

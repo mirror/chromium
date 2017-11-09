@@ -1,4 +1,5 @@
 This tests for a crash indent a selection that starts just before a ToDo.
 
-⇒	ToDo content
+⇒	
+ToDo content
 PASS

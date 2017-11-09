@@ -2,7 +2,6 @@ This test checks aria-help attribute of fields in multiple fields date input UI.
 
 On success, you will see a series of "PASS" messages, followed by "TEST COMPLETE".
 
-
 Initial empty state
 PASS focusedElementDescription() is "Month, AXValueDescription: mm, intValue:0, range:1-12"
 PASS focusedElementDescription() is "Day, AXValueDescription: dd, intValue:0, range:1-31"

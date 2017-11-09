@@ -2,8 +2,16 @@ This tests for a crash when indenting a table that is not entirely selected.
 
 
 
-One	Two
-Three	Four
+
+
+One	
+Two
+
+
+Three	
+Four
+
+
 
 
 

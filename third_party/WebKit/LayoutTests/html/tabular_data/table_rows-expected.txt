@@ -2,7 +2,6 @@ Test behavior of the HTMLTableElement rows attribute in cases where there is unu
 
 On success, you will see a series of "PASS" messages, followed by "TEST COMPLETE".
 
-
 PASS checkRowNesting("col") is 0
 PASS checkRowNesting("colgroup") is 0
 PASS checkRowNesting("div") is 0

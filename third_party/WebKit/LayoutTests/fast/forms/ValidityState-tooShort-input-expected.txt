@@ -2,7 +2,6 @@ Tests for tooShort flag with <input> elements.
 
 On success, you will see a series of "PASS" messages, followed by "TEST COMPLETE".
 
-
 No minlength and no value
 PASS input.validity.tooShort is false
 

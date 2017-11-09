@@ -3,7 +3,6 @@ Color test for resources/css-parsing-tests/color3_keywords.json
 
 On success, you will see a series of "PASS" messages, followed by "TEST COMPLETE".
 
-
 PASS colorTest.parseColor("transparent") is "rgba(0, 0, 0, 0)"
 PASS colorTest.parseColor("Transparent") is "rgba(0, 0, 0, 0)"
 PASS colorTest.parseColor("\\transparent") is "rgba(0, 0, 0, 0)"

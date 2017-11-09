@@ -1,4 +1,5 @@
-This test verifies the touch event handlers tracked for the compositor for elements with various touch-action settings.
+This test verifies the touch event handlers tracked for the compositor for
+elements with various touch-action settings.
 
 PASS successfullyParsed is true
 

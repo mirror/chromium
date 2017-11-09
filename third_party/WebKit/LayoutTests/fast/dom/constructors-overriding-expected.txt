@@ -1,4 +1,5 @@
-This page tests whether certain global constructors are read-only. Previous versions of WebKit incorrectly made them read-only.
+This page tests whether certain global constructors are read-only. Previous versions of WebKit incorrectly
+   made them read-only.
 
 If the test passes, you'll see a series of pass message below.
 

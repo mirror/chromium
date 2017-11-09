@@ -1,6 +1,9 @@
 SUCCESS!
 
 
+
 text
 block
-new ruby textmore textruby text
+new ruby text
+more text
+ruby text

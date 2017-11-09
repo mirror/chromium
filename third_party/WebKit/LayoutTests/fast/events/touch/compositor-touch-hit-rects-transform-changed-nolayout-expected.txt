@@ -1,4 +1,5 @@
-This test verifies the touch event target rects are updated correctly when an element transfroms without causing layout.
+This test verifies the touch event target rects are updated correctly when
+an element transfroms without causing layout.
 
 [object HTMLDivElement]: #document (100, 100, 50, 50)
 

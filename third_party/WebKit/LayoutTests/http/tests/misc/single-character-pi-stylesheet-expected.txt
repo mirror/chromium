@@ -1,1 +1,2 @@
-This text should be styled green. PASS.
+This text should be styled green.
+ PASS.

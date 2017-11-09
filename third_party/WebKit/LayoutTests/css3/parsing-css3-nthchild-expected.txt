@@ -8,6 +8,8 @@ Rules from the stylesheet:
 #h:nth-child(-1n-10) { color: green; }
 #n:nth-child(-1n-1) { color: green; }
 #o:nth-child(-1n+13) { color: green; }
+
+
 Expected result:
 
 #a:nth-child(1n-1) { color: green; }
