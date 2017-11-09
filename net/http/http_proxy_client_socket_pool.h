@@ -32,6 +32,7 @@ class HttpProxyClientSocketWrapper;
 class NetLog;
 class NetworkQualityProvider;
 class ProxyDelegate;
+class QuicStreamFactory;
 class SSLClientSocketPool;
 class SSLSocketParams;
 class SpdySessionPool;
@@ -48,11 +49,16 @@ class NET_EXPORT_PRIVATE HttpProxySocketParams
   HttpProxySocketParams(
       const scoped_refptr<TransportSocketParams>& transport_params,
       const scoped_refptr<SSLSocketParams>& ssl_params,
+      const HostPortPair& quic_proxy_server,
+      QuicTransportVersion quic_version,
+      PrivacyMode quic_privacy_mode,
+      int quic_cert_verify_flags,
       const std::string& user_agent,
       const HostPortPair& endpoint,
       HttpAuthCache* http_auth_cache,
       HttpAuthHandlerFactory* http_auth_handler_factory,
       SpdySessionPool* spdy_session_pool,
+      QuicStreamFactory* quic_stream_factory,
       bool tunnel,
       ProxyDelegate* proxy_delegate);
 
@@ -62,6 +68,10 @@ class NET_EXPORT_PRIVATE HttpProxySocketParams
   const scoped_refptr<SSLSocketParams>& ssl_params() const {
     return ssl_params_;
   }
+  const HostPortPair& quic_proxy_server() const { return quic_proxy_server_; }
+  QuicTransportVersion quic_version() const { return quic_version_; }
+  PrivacyMode quic_privacy_mode() const { return quic_privacy_mode_; }
+  int quic_cert_verify_flags() const { return quic_cert_verify_flags_; }
   const std::string& user_agent() const { return user_agent_; }
   const HostPortPair& endpoint() const { return endpoint_; }
   HttpAuthCache* http_auth_cache() const { return http_auth_cache_; }
@@ -70,6 +80,9 @@ class NET_EXPORT_PRIVATE HttpProxySocketParams
   }
   SpdySessionPool* spdy_session_pool() {
     return spdy_session_pool_;
+  }
+  QuicStreamFactory* quic_stream_factory() const {
+    return quic_stream_factory_;
   }
   const HostResolver::RequestInfo& destination() const;
   bool tunnel() const { return tunnel_; }
@@ -84,7 +97,14 @@ class NET_EXPORT_PRIVATE HttpProxySocketParams
 
   const scoped_refptr<TransportSocketParams> transport_params_;
   const scoped_refptr<SSLSocketParams> ssl_params_;
+
+  const HostPortPair quic_proxy_server_;
+  QuicTransportVersion quic_version_;
+  PrivacyMode quic_privacy_mode_;
+  int quic_cert_verify_flags_;
+
   SpdySessionPool* spdy_session_pool_;
+  QuicStreamFactory* quic_stream_factory_;
   const std::string user_agent_;
   const HostPortPair endpoint_;
   HttpAuthCache* const http_auth_cache_;
