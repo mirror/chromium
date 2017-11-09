@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "d2fb86ee_c30b7af5",
+        "filename": "third_party/WebKit/Source/core/paint/PaintLayerScrollableArea.cpp",
+        "patchSetId": 10
+      },
+      "lineNbr": 1356,
+      "author": {
+        "id": 1139071
+      },
+      "writtenOn": "2017-11-09T12:32:35Z",
+      "side": 1,
+      "message": "This could be a valid change. We are calculating needsHorizontalScrollbar based on the vertical scrollbar width. Once we realize if vertical scrollbar is not required, then we need to recompute horizontal scrollbar is really required or not. PTAL.",
+      "revId": "39aeafd07dee402111cc4de6b0edd89e4dee645f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
