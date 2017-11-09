@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "b537a70e_7f5870a5",
+        "filename": "third_party/android_platform/development/scripts/symbol.py",
+        "patchSetId": 2
+      },
+      "lineNbr": 605,
+      "author": {
+        "id": 1143954
+      },
+      "writtenOn": "2017-11-09T00:49:53Z",
+      "side": 1,
+      "message": "The reason I have \"global\" here is that I don\u0027t want to pass this huge symbols around in multiprocess pool. I think when you call pool.map(func, args), python will create a copy of args and slows it down. Correct me if I am wrong though. Creating copy of big symbols object defeats the purpose of speeding it up. I tried to pass symbols to pool.map on line 614 and it takes more time to resolve symbols.",
+      "revId": "02fe941c6f1f9a0a944dbadbc824696a03fad8b9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
