@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "285c16be_6c92f0f7",
+        "filename": "third_party/WebKit/Source/core/events/PointerEventFactory.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 78,
+      "author": {
+        "id": 1163594
+      },
+      "writtenOn": "2017-11-09T21:03:23Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "d94fb7c4_17365982",
+      "range": {
+        "startLine": 78,
+        "startChar": 20,
+        "endLine": 78,
+        "endChar": 55
+      },
+      "revId": "81d55afba537b8359f851ceec7c45a525c041da2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "ba3c0ff4_0ec0b31e",
         "filename": "third_party/WebKit/Source/core/events/PointerEventFactory.h",
         "patchSetId": 1
@@ -39,6 +63,24 @@
       "revId": "81d55afba537b8359f851ceec7c45a525c041da2",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2beb86ed_d338bfa3",
+        "filename": "third_party/WebKit/Source/core/events/PointerEventFactory.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 33,
+      "author": {
+        "id": 1163594
+      },
+      "writtenOn": "2017-11-09T21:03:23Z",
+      "side": 1,
+      "message": "Actually the view is set from the DOMWindow which both of the APIs already have. The LocalFrame in the other API is used for scaling of the event which when I followed it seems it is coming from the DOMWindow itself. So I removed it to make it similar to this API.",
+      "parentUuid": "ba3c0ff4_0ec0b31e",
+      "revId": "81d55afba537b8359f851ceec7c45a525c041da2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -65,6 +107,30 @@
     },
     {
       "key": {
+        "uuid": "847a37ab_9bcd5764",
+        "filename": "third_party/WebKit/Source/core/events/PointerEventFactory.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 41,
+      "author": {
+        "id": 1163594
+      },
+      "writtenOn": "2017-11-09T21:03:23Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "2b16f5cf_1acce100",
+      "range": {
+        "startLine": 41,
+        "startChar": 23,
+        "endLine": 41,
+        "endChar": 32
+      },
+      "revId": "81d55afba537b8359f851ceec7c45a525c041da2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "a7a7129d_38268756",
         "filename": "third_party/WebKit/Source/core/events/PointerEventFactoryTest.cpp",
         "patchSetId": 1
@@ -79,6 +145,24 @@
       "revId": "81d55afba537b8359f851ceec7c45a525c041da2",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c8d46c40_191d7eff",
+        "filename": "third_party/WebKit/Source/core/events/PointerEventFactoryTest.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 42,
+      "author": {
+        "id": 1163594
+      },
+      "writtenOn": "2017-11-09T21:03:23Z",
+      "side": 1,
+      "message": "I realized it was just harder to have separate function header and implementations here in a single test file. So I\u0027m going to move them all into the class as we go if that is okay.",
+      "parentUuid": "a7a7129d_38268756",
+      "revId": "81d55afba537b8359f851ceec7c45a525c041da2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -102,6 +186,30 @@
       "revId": "81d55afba537b8359f851ceec7c45a525c041da2",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4dc2120a_e1fc14c0",
+        "filename": "third_party/WebKit/Source/core/input/PointerEventManager.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 440,
+      "author": {
+        "id": 1163594
+      },
+      "writtenOn": "2017-11-09T21:03:23Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "86514bfe_e23f3538",
+      "range": {
+        "startLine": 440,
+        "startChar": 13,
+        "endLine": 440,
+        "endChar": 34
+      },
+      "revId": "81d55afba537b8359f851ceec7c45a525c041da2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
