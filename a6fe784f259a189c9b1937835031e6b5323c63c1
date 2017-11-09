@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "fd5153ed_3eca44bf",
+        "filename": "components/autofill/core/browser/credit_card.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 225,
+      "author": {
+        "id": 1003016
+      },
+      "writtenOn": "2017-11-09T12:10:07Z",
+      "side": 1,
+      "message": "Consider making this private if it\u0027s no longer used publicly (can\u0027t tell easily)",
+      "revId": "a6fe784f259a189c9b1937835031e6b5323c63c1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
