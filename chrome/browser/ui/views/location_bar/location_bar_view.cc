@@ -227,6 +227,12 @@ void LocationBarView::Init() {
     AddChildView(image_view);
   }
 
+  framebust_block_icon_view_ = new ContentSettingImageView(
+      std::make_unique<ContentSettingFramebustBlockImageModel>(), this,
+      font_list);
+  framebust_block_icon_view_->SetVisible(true);
+  AddChildView(framebust_block_icon_view_);
+
   auto add_icon = [this](BubbleIconView* icon_view) -> void {
     icon_view->Init();
     icon_view->SetVisible(false);
@@ -447,6 +453,7 @@ gfx::Size LocationBarView::CalculatePreferredSize() const {
   // Compute width of omnibox-trailing content.
   int trailing_width = edge_thickness;
   trailing_width += IncrementalMinimumWidth(star_view_) +
+                    IncrementalMinimumWidth(framebust_block_icon_view_) +
                     IncrementalMinimumWidth(translate_icon_view_) +
                     IncrementalMinimumWidth(save_credit_card_icon_view_) +
                     IncrementalMinimumWidth(manage_passwords_icon_view_) +
@@ -535,6 +542,7 @@ void LocationBarView::Layout() {
   add_trailing_decoration(intent_picker_view_);
 #endif
   add_trailing_decoration(star_view_);
+  add_trailing_decoration(framebust_block_icon_view_);
   add_trailing_decoration(find_bar_icon_);
   add_trailing_decoration(translate_icon_view_);
   add_trailing_decoration(save_credit_card_icon_view_);
@@ -615,6 +623,7 @@ void LocationBarView::OnNativeThemeChanged(const ui::NativeTheme* theme) {
 
 void LocationBarView::Update(const WebContents* contents) {
   RefreshContentSettingViews();
+  RefreshFramebustBlockIconView();
   RefreshZoomView();
   RefreshTranslateIcon();
   RefreshSaveCreditCardIconView();
@@ -707,6 +716,16 @@ bool LocationBarView::RefreshContentSettingViews() {
       visibility_changed = true;
   }
   return visibility_changed;
+}
+
+bool LocationBarView::RefreshFramebustBlockIconView() {
+  DCHECK(framebust_block_icon_view_);
+  WebContents* web_contents = GetWebContents();
+  if (!web_contents)
+    return false;
+  const bool was_visible = framebust_block_icon_view_->visible();
+  framebust_block_icon_view_->Update(web_contents);
+  return was_visible != framebust_block_icon_view_->visible();
 }
 
 bool LocationBarView::RefreshZoomView() {
@@ -874,6 +893,13 @@ void LocationBarView::FocusSearch() {
 
 void LocationBarView::UpdateContentSettingsIcons() {
   if (RefreshContentSettingViews()) {
+    Layout();
+    SchedulePaint();
+  }
+}
+
+void LocationBarView::UpdateFramebustBlockIcon() {
+  if (RefreshFramebustBlockIconView()) {
     Layout();
     SchedulePaint();
   }

@@ -271,6 +271,8 @@ class LocationBarView : public LocationBar,
   // of at least one of the views in |content_setting_views_| changed.
   bool RefreshContentSettingViews();
 
+  bool RefreshFramebustBlockIconView();
+
   // Updates the view for the zoom icon based on the current tab's zoom. Returns
   // true if the visibility of the view changed.
   bool RefreshZoomView();
@@ -314,6 +316,7 @@ class LocationBarView : public LocationBar,
   void AcceptInput() override;
   void FocusSearch() override;
   void UpdateContentSettingsIcons() override;
+  void UpdateFramebustBlockIcon() override;
   void UpdateManagePasswordsIconAndBubble() override;
   void UpdateSaveCreditCardIcon() override;
   void UpdateFindBarIconVisibility() override;
@@ -412,6 +415,8 @@ class LocationBarView : public LocationBar,
 
   // The star for bookmarking.
   StarView* star_view_ = nullptr;
+
+  ContentSettingImageView* framebust_block_icon_view_ = nullptr;
 
   // An [x] that appears in touch mode (when the OSK is visible) and allows the
   // user to clear all text.

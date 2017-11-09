@@ -15,6 +15,7 @@
 #include "chrome/browser/bookmarks/bookmark_model_factory.h"
 #include "chrome/browser/browser_process.h"
 #include "chrome/browser/client_hints/client_hints_observer.h"
+#include "chrome/browser/content_settings/framebust_block_tab_helper.h"
 #include "chrome/browser/content_settings/mixed_content_settings_tab_helper.h"
 #include "chrome/browser/content_settings/sound_content_setting_observer.h"
 #include "chrome/browser/content_settings/tab_specific_content_settings.h"
@@ -280,6 +281,7 @@ void TabHelpers::AttachTabHelpers(WebContents* web_contents) {
   extensions::ChromeExtensionWebContentsObserver::CreateForWebContents(
       web_contents);
   extensions::WebNavigationTabObserver::CreateForWebContents(web_contents);
+  FramebustBlockTabHelper::CreateForWebContents(web_contents);
   HungPluginTabHelper::CreateForWebContents(web_contents);
   JavaScriptDialogTabHelper::CreateForWebContents(web_contents);
   ManagePasswordsUIController::CreateForWebContents(web_contents);

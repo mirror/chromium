@@ -39,6 +39,7 @@
 #include "chrome/browser/browser_process.h"
 #include "chrome/browser/browser_shutdown.h"
 #include "chrome/browser/chrome_notification_types.h"
+#include "chrome/browser/content_settings/framebust_block_tab_helper.h"
 #include "chrome/browser/content_settings/mixed_content_settings_tab_helper.h"
 #include "chrome/browser/content_settings/tab_specific_content_settings.h"
 #include "chrome/browser/custom_handlers/protocol_handler_registry.h"
@@ -1395,6 +1396,17 @@ void Browser::OnAudioStateChanged(content::WebContents* web_contents,
       TabSpecificContentSettings::FromWebContents(web_contents);
   if (content_settings)
     content_settings->OnAudioStateChanged(is_audible);
+}
+
+void Browser::OnDidBlockFramebust(content::WebContents* web_contents,
+                                  const GURL& url) {
+  FramebustBlockTabHelper* framebust_block_tab_helper =
+      FramebustBlockTabHelper::FromWebContents(web_contents);
+  if (!framebust_block_tab_helper)
+    return;
+
+  framebust_block_tab_helper->AddBlockedUrl(url);
+  window_->GetLocationBar()->UpdateFramebustBlockIcon();
 }
 
 bool Browser::IsMouseLocked() const {
