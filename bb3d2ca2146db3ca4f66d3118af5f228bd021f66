@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "0b4a9c6d_baf00cda",
+        "filename": "third_party/WebKit/Source/core/page/SpatialNavigation.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 134,
+      "author": {
+        "id": 1243466
+      },
+      "writtenOn": "2017-11-09T13:18:53Z",
+      "side": 1,
+      "message": "Even though I\u0027m not native in english, \u0027navigated\u0027 looks like it finding focusable candidate.\nHow about CanBeContainerForDirection()?",
+      "parentUuid": "8694610f_90fb1433",
+      "range": {
+        "startLine": 134,
+        "startChar": 5,
+        "endLine": 134,
+        "endChar": 19
+      },
+      "revId": "bb3d2ca2146db3ca4f66d3118af5f228bd021f66",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "a8313fa3_2ec12672",
         "filename": "third_party/WebKit/Source/core/page/SpatialNavigationTest.cpp",
         "patchSetId": 3
