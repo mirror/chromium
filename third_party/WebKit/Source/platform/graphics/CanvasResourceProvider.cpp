@@ -317,11 +317,7 @@ std::unique_ptr<CanvasResourceProvider> CanvasResourceProvider::Create(
     switch (resourceTypeFallbackList[i]) {
       case kTextureGpuMemoryBufferResourceType:
         DCHECK(SharedGpuContext::IsGpuCompositingEnabled());
-        if (RuntimeEnabledFeatures::Canvas2dImageChromiumEnabled() &&
-            !context_provider_wrapper->ContextProvider()
-                 ->GetGpuFeatureInfo()
-                 .IsWorkaroundEnabled(
-                     gpu::DISABLE_GPU_MEMORY_BUFFERS_AS_RENDER_TARGETS)) {
+        if (RuntimeEnabledFeatures::Canvas2dImageChromiumEnabled()) {
           if (!gpu::IsImageFromGpuMemoryBufferFormatSupported(
                   colorParams.GetBufferFormat(),
                   context_provider_wrapper->ContextProvider()
