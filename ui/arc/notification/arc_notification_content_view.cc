@@ -116,7 +116,18 @@ class ArcNotificationContentView::EventForwarder : public ui::EventHandler {
         widget->OnScrollEvent(located_event->AsScrollEvent());
       } else if (located_event->IsGestureEvent() &&
                  event->type() != ui::ET_GESTURE_TAP) {
-        widget->OnGestureEvent(located_event->AsGestureEvent());
+        bool event_for_android_only = false;
+        if (event->type() == ui::ET_GESTURE_SCROLL_BEGIN && owner_->surface_) {
+          gfx::RectF rect(owner_->item_->GetSwipeInputRect());
+          owner_->surface_->GetContentWindow()->transform().TransformRect(
+              &rect);
+          event_for_android_only =
+              rect.Contains(located_event->x(), located_event->y());
+        }
+
+        if (!event_for_android_only) {
+          widget->OnGestureEvent(located_event->AsGestureEvent());
+        }
       }
     }
 
