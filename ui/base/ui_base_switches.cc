@@ -53,6 +53,10 @@ const char kDisableTouchDragDrop[] = "disable-touch-drag-drop";
 // Enables touch event based drag and drop.
 const char kEnableTouchDragDrop[] = "enable-touch-drag-drop";
 
+// Forces high-contrast mode in native UI drawing, regardless of system
+// settings.
+const char kForceHighContrast[] = "force-high-contrast";
+
 // TODO(dcastagna): Draw debug quad borders only when it is actually
 // an overlay candidate.
 // Renders a border around GL composited overlay candidate quads to

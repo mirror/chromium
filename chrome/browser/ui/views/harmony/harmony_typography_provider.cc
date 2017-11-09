@@ -34,6 +34,9 @@ bool ShouldIgnoreHarmonySpec(const ui::NativeTheme& theme) {
   if (ui::NativeThemeWin::IsUsingHighContrastTheme())
     return true;
 #endif
+  if (theme.UsesHighContrastColors())
+    return true;
+
   constexpr auto kTestColorId = ui::NativeTheme::kColorId_LabelEnabledColor;
   return theme.GetSystemColor(kTestColorId) != SK_ColorBLACK;
 }

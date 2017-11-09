@@ -420,6 +420,11 @@ class NATIVE_THEME_EXPORT NativeTheme {
   // Notify observers of native theme changes.
   void NotifyObservers();
 
+  // Returns whether this NativeTheme uses higher-contrast colors, controlled by
+  // system accessibility settings.
+  // TODO(ellyjones): merge this with NativeThemeWin::IsUsingHighContrastTheme.
+  virtual bool UsesHighContrastColors() const = 0;
+
  protected:
   NativeTheme();
   virtual ~NativeTheme();
