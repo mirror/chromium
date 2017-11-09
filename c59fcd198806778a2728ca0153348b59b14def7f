@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "e81f9138_190a3685",
+        "filename": "third_party/WebKit/Source/core/dom/Node.cpp",
+        "patchSetId": 4
+      },
+      "lineNbr": 750,
+      "author": {
+        "id": 1247388
+      },
+      "writtenOn": "2017-11-09T06:59:55Z",
+      "side": 1,
+      "message": "LGTM, but why not combine this condition with the previous condition? (checking IncrementalShadowDOMEnabled)",
+      "revId": "c59fcd198806778a2728ca0153348b59b14def7f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
