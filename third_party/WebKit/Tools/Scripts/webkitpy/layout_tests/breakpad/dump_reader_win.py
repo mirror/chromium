@@ -47,6 +47,11 @@ class DumpReaderWin(DumpReader):
     def check_is_functional(self):
         return self._check_cdb_available()
 
+    def crash_dumps_directory(self):
+        path = super(DumpReaderWin, self).crash_dumps_directory()
+        # Crashpad stores finished crash report files in a subdirectory.
+        return self._host.filesystem.join(path, 'completed')
+
     def _file_extension(self):
         return 'txt'
 

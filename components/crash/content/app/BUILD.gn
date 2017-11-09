@@ -223,51 +223,6 @@ source_set("app_non_mac_win") {
   }
 }
 
-# TODO(mark): https://crbug.com/466890: remove this target.
-#
-# This is a temporary target provided for Mac Breakpad users that have not
-# yet migrated to Crashpad (namely content_shell). This target will be
-# removed shortly and all consumers will be expected to use Crashpad as
-# the Mac crash-reporting client. See the comment in the
-# crash_component_non_mac target for more details.
-static_library("app_breakpad_mac_win_to_be_deleted") {
-  deps = [
-    ":app_non_mac_win",
-  ]
-
-  if (is_mac || is_win) {
-    sources = [
-      "breakpad_mac.h",
-      "breakpad_mac.mm",
-      "breakpad_win.cc",
-      "breakpad_win.h",
-    ]
-
-    defines = [ "CRASH_IMPLEMENTATION" ]
-
-    public_deps = [
-      ":lib",
-    ]
-    deps += [
-      "//base",
-      "//base:base_static",
-      "//components/crash/core/common",
-      "//content/public/common:result_codes",
-      "//sandbox",
-      "//third_party/breakpad:client",
-    ]
-
-    if (is_mac) {
-      deps += [ "//third_party/breakpad" ]
-    }
-
-    if (is_win) {
-      deps += [ "//third_party/breakpad:breakpad_handler" ]
-      libs = [ "userenv.lib" ]
-    }
-  }
-}
-
 if (is_mac) {
   static_library("breakpad_stubs") {
     sources = [

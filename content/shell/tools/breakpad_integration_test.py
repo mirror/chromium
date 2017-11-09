@@ -45,7 +45,7 @@ def run_test(options, crash_dir, additional_arguments = []):
 
   print "# Retrieve crash dump."
   dmp_dir = crash_dir
-  if sys.platform == 'darwin':
+  if sys.platform in ('darwin', 'win32'):
     # TODO(crbug.com/782923): This test should not reach directly into the
     # Crashpad database, but instead should use crashpad_database_util.
     dmp_dir = os.path.join(dmp_dir, 'completed')
@@ -55,7 +55,7 @@ def run_test(options, crash_dir, additional_arguments = []):
     raise Exception(failure)
   dmp_file = dmp_files[0]
 
-  if sys.platform not in ('win32', 'darwin'):
+  if sys.platform not in ('darwin', 'win32'):
     minidump = os.path.join(crash_dir, 'minidump')
     dmp_to_minidump = os.path.join(breakpad_tools_dir, 'dmp2minidump.py')
     cmd = [dmp_to_minidump, dmp_file, minidump]
@@ -146,19 +146,7 @@ def main():
   crash_service = None
 
   try:
-    if sys.platform == 'win32':
-      print "# Starting crash service."
-      crash_service_exe = os.path.join(options.build_dir,
-                                       'content_shell_crash_service.exe')
-      cmd = [crash_service_exe, '--dumps-dir=%s' % crash_dir]
-      if options.verbose:
-        print ' '.join(cmd)
-      failure = 'Failed to start crash service.'
-      crash_service = subprocess.Popen(cmd)
-      # We add a delay here to give the crash service some time to create
-      # the pipe it uses to communicate with the content shell.
-      time.sleep(1)
-    else:
+    if sys.platform != 'win32':
       print "# Generate symbols."
       global symbols_dir
       breakpad_tools_dir = os.path.join(
