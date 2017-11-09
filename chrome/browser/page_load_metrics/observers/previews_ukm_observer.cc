@@ -13,8 +13,10 @@
 #include "chrome/browser/previews/previews_infobar_delegate.h"
 #include "chrome/common/page_load_metrics/page_load_timing.h"
 #include "components/data_reduction_proxy/core/browser/data_reduction_proxy_data.h"
+#include "components/previews/content/previews_content_util.h"
 #include "components/ukm/ukm_source.h"
 #include "content/public/browser/navigation_handle.h"
+#include "content/public/common/previews_state.h"
 #include "services/metrics/public/cpp/ukm_entry_builder.h"
 #include "services/metrics/public/cpp/ukm_recorder.h"
 
@@ -26,6 +28,7 @@ const char kPreviewsName[] = "Previews";
 const char kPreviewsServerLoFi[] = "server_lofi";
 const char kPreviewsClientLoFi[] = "client_lofi";
 const char kPreviewsLitePage[] = "lite_page";
+const char kPreviewsNoScript[] = "noscript";
 const char kPreviewsOptOut[] = "opt_out";
 
 }  // namespace
@@ -52,6 +55,12 @@ PreviewsUKMObserver::OnCommit(content::NavigationHandle* navigation_handle,
       chrome_navigation_data->GetDataReductionProxyData();
   if (data && data->used_data_reduction_proxy() && data->lite_page_received()) {
     lite_page_seen_ = true;
+  }
+  content::PreviewsState previews_state =
+      chrome_navigation_data->previews_state();
+  if (previews_state && previews::GetMainFramePreviewsType(previews_state) ==
+                            previews::PreviewsType::NOSCRIPT) {
+    noscript_seen_ = true;
   }
 
   return CONTINUE_OBSERVING;
@@ -86,7 +95,8 @@ void PreviewsUKMObserver::OnComplete(
 void PreviewsUKMObserver::RecordPreviewsTypes(
     const page_load_metrics::PageLoadExtraInfo& info) {
   // Only record previews types when they occur.
-  if (!server_lofi_seen_ && !client_lofi_seen_ && !lite_page_seen_)
+  if (!server_lofi_seen_ && !client_lofi_seen_ && !lite_page_seen_ &&
+      !noscript_seen_)
     return;
   ukm::UkmRecorder* ukm_recorder = ukm::UkmRecorder::Get();
   if (!ukm_recorder)
@@ -99,6 +109,8 @@ void PreviewsUKMObserver::RecordPreviewsTypes(
     builder->AddMetric(kPreviewsClientLoFi, true);
   if (lite_page_seen_)
     builder->AddMetric(kPreviewsLitePage, true);
+  if (noscript_seen_)
+    builder->AddMetric(kPreviewsNoScript, true);
   if (opt_out_occurred_)
     builder->AddMetric(kPreviewsOptOut, true);
 }
