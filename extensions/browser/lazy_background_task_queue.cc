@@ -189,7 +189,8 @@ void LazyBackgroundTaskQueue::Observe(
           content::Source<content::BrowserContext>(source).ptr();
       ExtensionHost* host =
            content::Details<ExtensionHost>(details).ptr();
-      if (host->extension_host_type() == VIEW_TYPE_EXTENSION_BACKGROUND_PAGE) {
+      if (host->extension_host_type() == VIEW_TYPE_EXTENSION_BACKGROUND_PAGE &&
+          host->extension()) {
         ProcessPendingTasks(NULL, browser_context, host->extension());
       }
       break;

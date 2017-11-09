@@ -75,8 +75,14 @@ void ExtensionRegistry::TriggerOnUnloaded(const Extension* extension,
                                           UnloadedExtensionReason reason) {
   CHECK(extension);
   DCHECK(!enabled_extensions_.Contains(extension->id()));
-  for (auto& observer : observers_)
-    observer.OnExtensionUnloaded(browser_context_, extension, reason);
+  std::vector<ExtensionRegistryObserver*> observers;
+  for (auto& observer : observers_) {
+    observers.push_back(&observer);
+  }
+  std::reverse(observers.begin(), observers.end());
+  for (auto* observer : observers) {
+    observer->OnExtensionUnloaded(browser_context_, extension, reason);
+  }
 }
 
 void ExtensionRegistry::TriggerOnWillBeInstalled(const Extension* extension,

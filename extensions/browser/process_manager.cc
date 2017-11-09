@@ -610,6 +610,7 @@ void ProcessManager::Observe(int type,
     case extensions::NOTIFICATION_EXTENSION_HOST_DESTROYED: {
       ExtensionHost* host = content::Details<ExtensionHost>(details).ptr();
       if (background_hosts_.erase(host)) {
+        CHECK(host->extension());
         ClearBackgroundPageData(host->extension()->id());
         background_page_data_[host->extension()->id()].since_suspended.reset(
             new base::ElapsedTimer());
