@@ -361,14 +361,17 @@ static PositionTemplate<Strategy> PreviousBoundaryAlgorithm(
   string.PushRange(suffix_string.Data(), suffix_string.Size());
 
   SimplifiedBackwardsTextIteratorAlgorithm<Strategy> it(
-      EphemeralRangeTemplate<Strategy>(start, end));
+      EphemeralRangeTemplate<Strategy>(start, end),
+      TextIteratorBehavior::Builder()
+          .SetEmitsSmallXForTextSecurity(true)
+          .Build());
   unsigned next = 0;
   bool need_more_context = false;
   while (!it.AtEnd()) {
-    bool in_text_security_mode = it.IsInTextSecurityMode();
     // iterate to get chunks until the searchFunction returns a non-zero
     // value.
-    if (!in_text_security_mode) {
+    // TODO(editing-dev): We should get rid of redundant scope.
+    {
       int run_offset = 0;
       do {
         run_offset += it.CopyTextTo(&string, run_offset, string.Capacity());
@@ -378,11 +381,6 @@ static PositionTemplate<Strategy> PreviousBoundaryAlgorithm(
       } while (!next && run_offset < it.length());
       if (next)
         break;
-    } else {
-      // Treat bullets used in the text security mode as regular
-      // characters when looking for boundaries
-      string.PushCharacters('x', it.length());
-      next = 0;
     }
     it.Advance();
   }
