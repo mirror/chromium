@@ -1,0 +1,113 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "4a2a100a_5a23d509",
+        "filename": "third_party/WebKit/Source/core/layout/LayoutView.cpp",
+        "patchSetId": 4
+      },
+      "lineNbr": 797,
+      "author": {
+        "id": 1116039
+      },
+      "writtenOn": "2017-11-09T21:57:42Z",
+      "side": 1,
+      "message": "Why can these be null now?",
+      "range": {
+        "startLine": 797,
+        "startChar": 7,
+        "endLine": 797,
+        "endChar": 23
+      },
+      "revId": "5c4766dd8a9077fbfe1f2506ff76b8980e1f41ef",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "382b3d64_38ddd602",
+        "filename": "third_party/WebKit/Source/core/paint/BoxPaintInvalidator.cpp",
+        "patchSetId": 4
+      },
+      "lineNbr": 276,
+      "author": {
+        "id": 1116039
+      },
+      "writtenOn": "2017-11-09T21:57:42Z",
+      "side": 1,
+      "message": "turn this into a DCHECK since you\u0027re guarding the call site now?",
+      "revId": "5c4766dd8a9077fbfe1f2506ff76b8980e1f41ef",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a6f4c369_c70726c0",
+        "filename": "third_party/WebKit/Source/core/paint/BoxPaintInvalidator.cpp",
+        "patchSetId": 4
+      },
+      "lineNbr": 281,
+      "author": {
+        "id": 1116039
+      },
+      "writtenOn": "2017-11-09T21:57:42Z",
+      "side": 1,
+      "message": "suggest a helper like IsFull(BackgroundInvalidationType)",
+      "range": {
+        "startLine": 281,
+        "startChar": 7,
+        "endLine": 281,
+        "endChar": 35
+      },
+      "revId": "5c4766dd8a9077fbfe1f2506ff76b8980e1f41ef",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "19dd046f_d730ce59",
+        "filename": "third_party/WebKit/Source/core/paint/BoxPaintInvalidator.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 43,
+      "author": {
+        "id": 1116039
+      },
+      "writtenOn": "2017-11-09T21:57:42Z",
+      "side": 1,
+      "message": "nit: kFullWithoutGeometryChange should come before kFullWithGeometryChange, so that the list is ordered by \"amount\" of invalidation :)",
+      "range": {
+        "startLine": 43,
+        "startChar": 4,
+        "endLine": 43,
+        "endChar": 30
+      },
+      "revId": "5c4766dd8a9077fbfe1f2506ff76b8980e1f41ef",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "30e48f50_24142bee",
+        "filename": "third_party/WebKit/Source/core/paint/BoxPaintInvalidator.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 50,
+      "author": {
+        "id": 1116039
+      },
+      "writtenOn": "2017-11-09T21:57:42Z",
+      "side": 1,
+      "message": "add a comment to clarify that this is just the box for background size computations, not the box that owns the background layers",
+      "range": {
+        "startLine": 50,
+        "startChar": 19,
+        "endLine": 50,
+        "endChar": 32
+      },
+      "revId": "5c4766dd8a9077fbfe1f2506ff76b8980e1f41ef",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
