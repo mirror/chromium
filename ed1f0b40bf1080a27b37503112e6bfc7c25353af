@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "dc934c25_f296eecb",
+        "filename": "net/tools/transport_security_state_generator/input_file_parsers.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 170,
+      "author": {
+        "id": 1146496
+      },
+      "writtenOn": "2017-11-09T19:18:53Z",
+      "side": 1,
+      "message": "No, the \u0027policy\u0027 field will only be used by the auto-roller and (afterwards) for automated pruning. The generator will not use the value of this field and it will not be used in the output.\n\nI plan to update the generator in a follow-up with a check for this field to keep the JSON file clean.\n\nMoved the field down into its own category as you suggested.",
+      "parentUuid": "7cdd591b_3fe66350",
+      "revId": "ed1f0b40bf1080a27b37503112e6bfc7c25353af",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "ff5f461a_7645cfc1",
         "filename": "net/tools/transport_security_state_generator/input_file_parsers.cc",
         "patchSetId": 4
@@ -33,6 +51,24 @@
       "revId": "ed1f0b40bf1080a27b37503112e6bfc7c25353af",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "fbb025cb_9f559ab2",
+        "filename": "net/tools/transport_security_state_generator/input_file_parsers.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 299,
+      "author": {
+        "id": 1146496
+      },
+      "writtenOn": "2017-11-09T19:18:53Z",
+      "side": 1,
+      "message": "Sorry, I should have made it clearer that this is part of a series of CLs. My plan is to make the policy field mandatory and enforce this (in ParseJSON) . To do that all entries first need a policy field, which isn\u0027t possible until the field is whitelisted.\n\nThe plan is to do this in 4 CLs:\n 1. The current auto-roller has already been updated to include the policy field for new entries (https://github.com/chromium/hstspreload.org/pull/130)\n 2. This CL whitelists the policy field in the generator\n 3. Land a (WIP) CL that assigns a policy to each entry (https://chromium-review.googlesource.com/c/chromium/src/+/757596)\n 4. Land a CL that makes the policy field mandatory and validates the values (in ParseJSON)",
+      "parentUuid": "ff5f461a_7645cfc1",
+      "revId": "ed1f0b40bf1080a27b37503112e6bfc7c25353af",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
