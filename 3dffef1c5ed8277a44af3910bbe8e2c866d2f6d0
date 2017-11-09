@@ -16,6 +16,24 @@
       "revId": "3dffef1c5ed8277a44af3910bbe8e2c866d2f6d0",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7b29b328_e19eb226",
+        "filename": "base/files/memory_mapped_file.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 77,
+      "author": {
+        "id": 1160859
+      },
+      "writtenOn": "2017-11-09T18:08:06Z",
+      "side": 1,
+      "message": "hmm. all the file size types in base are signed int64_t e.g.\n\nbool GetFileSize(const FilePath\u0026 file_path, int64_t* file_size);\n\nint64_t FileEnumerator::FileInfo::GetSize()\n\non windows the 64-bit unsigned is cast down to 64-bit signed. Not sure why... probably a POSIX thing?",
+      "parentUuid": "4fb6b16c_6f9865ba",
+      "revId": "3dffef1c5ed8277a44af3910bbe8e2c866d2f6d0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
