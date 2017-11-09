@@ -156,6 +156,9 @@ struct CONTENT_EXPORT ResourceRequest {
   // The routing id of the RenderFrame.
   int render_frame_id = 0;
 
+  // A browser-global identifier for the frame in the page.
+  int frame_tree_node_id = 0;
+
   // True if |frame_id| is the main frame of a RenderView.
   bool is_main_frame = false;
 
