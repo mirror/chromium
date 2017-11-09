@@ -183,6 +183,7 @@
 #include "ios/chrome/browser/ui/ui_util.h"
 #import "ios/chrome/browser/ui/uikit_ui_util.h"
 #import "ios/chrome/browser/ui/util/pasteboard_util.h"
+#import "ios/chrome/browser/ui/util/view_info.h"
 #import "ios/chrome/browser/ui/voice/text_to_speech_player.h"
 #include "ios/chrome/browser/upgrade/upgrade_center.h"
 #import "ios/chrome/browser/web/blocked_popup_tab_helper.h"
@@ -540,7 +541,7 @@ NSString* const kBrowserViewControllerSnackbarCategory =
   ReadingListMenuNotifier* _readingListMenuNotifier;
 
   // The view used by the voice search presentation animation.
-  __weak UIView* _voiceSearchButton;
+  std::unique_ptr<ViewInfo> _voiceSearchOriginViewInfo;
 
   // Coordinator for the share menu (Activity Services).
   ActivityServiceLegacyCoordinator* _activityServiceCoordinator;
@@ -1717,7 +1718,7 @@ applicationCommandEndpoint:(id<ApplicationCommands>)applicationCommandEndpoint {
   ProceduralBlock startVoiceSearchIfNecessaryBlock = ^void() {
     if (_startVoiceSearchAfterNewTabAnimation) {
       _startVoiceSearchAfterNewTabAnimation = NO;
-      [self startVoiceSearchWithOriginView:nil];
+      [self startVoiceSearchWithOriginViewInfo:nullptr];
     }
   };
 
@@ -4765,8 +4766,9 @@ bubblePresenterForFeature:(const base::Feature&)feature
   }
 }
 
-- (void)startVoiceSearchWithOriginView:(UIView*)originView {
-  _voiceSearchButton = originView;
+- (void)startVoiceSearchWithOriginViewInfo:(const ViewInfo*)originViewInfo {
+  _voiceSearchOriginViewInfo =
+      originViewInfo ? base::MakeUnique<ViewInfo>(*originViewInfo) : nullptr;
   // Delay Voice Search until new tab animations have finished.
   if (self.inNewTabAnimation) {
     _startVoiceSearchAfterNewTabAnimation = YES;
@@ -5257,7 +5259,11 @@ bubblePresenterForFeature:(const base::Feature&)feature
 #pragma mark - VoiceSearchPresenter
 
 - (UIView*)voiceSearchButton {
-  return _voiceSearchButton;
+  return nil;
+}
+
+- (const ViewInfo*)voiceSearchOriginViewInfo {
+  return _voiceSearchOriginViewInfo.get();
 }
 
 - (id<LogoAnimationControllerOwner>)logoAnimationControllerOwner {
