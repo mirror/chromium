@@ -59,9 +59,9 @@ class TestCommonDecoder : public CommonDecoder {
   explicit TestCommonDecoder(CommandBufferServiceBase* command_buffer_service)
       : CommonDecoder(command_buffer_service) {}
   error::Error DoCommand(unsigned int command,
-                         unsigned int arg_count,
+                         unsigned int command_size,
                          const volatile void* cmd_data) {
-    return DoCommonCommand(command, arg_count, cmd_data);
+    return DoCommonCommand(command, command_size, cmd_data);
   }
 
   CommonDecoder::Bucket* GetBucket(uint32_t id) const {
@@ -84,16 +84,16 @@ class CommonDecoderTest : public testing::Test {
 
   template <typename T>
   error::Error ExecuteCmd(const T& cmd) {
-    static_assert(T::kArgFlags == cmd::kFixed,
-                  "T::kArgFlags should equal cmd::kFixed");
-    return decoder_.DoCommand(cmd.header.command, cmd.header.size - 1, &cmd);
+    static_assert((T::cmd_flags & CMD_FLAG_IMMEDIATE) == 0,
+                  "T should not be immediate");
+    return decoder_.DoCommand(cmd.header.command, cmd.header.size, &cmd);
   }
 
   template <typename T>
   error::Error ExecuteImmediateCmd(const T& cmd, size_t data_size) {
-    static_assert(T::kArgFlags == cmd::kAtLeastN,
-                  "T::kArgFlags should equal cmd::kAtLeastN");
-    return decoder_.DoCommand(cmd.header.command, cmd.header.size - 1, &cmd);
+    static_assert((T::cmd_flags & CMD_FLAG_IMMEDIATE) != 0,
+                  "T should be immediate");
+    return decoder_.DoCommand(cmd.header.command, cmd.header.size, &cmd);
   }
 
   template <typename T>
@@ -112,7 +112,7 @@ const size_t CommonDecoderTest::kBufferSize;
 const uint32_t CommonDecoderTest::kInvalidShmId;
 
 TEST_F(CommonDecoderTest, DoCommonCommandInvalidCommand) {
-  EXPECT_EQ(error::kUnknownCommand, decoder_.DoCommand(999999, 0, NULL));
+  EXPECT_EQ(error::kUnknownCommand, decoder_.DoCommand(999999, 1, NULL));
 }
 
 TEST_F(CommonDecoderTest, HandleNoop) {

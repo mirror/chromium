@@ -171,13 +171,13 @@ class GPU_EXPORT CommonDecoder {
   // Executes a common command.
   // Parameters:
   //    command: the command index.
-  //    arg_count: the number of CommandBufferEntry arguments.
+  //    command_size: the size of the command in entries.
   //    cmd_data: the command data.
   // Returns:
   //   error::kNoError if no error was found, one of
   //   error::Error otherwise.
   error::Error DoCommonCommand(unsigned int command,
-                               unsigned int arg_count,
+                               unsigned int command_size,
                                const volatile void* cmd_data);
 
   // Gets an name for a common command.
@@ -206,9 +206,8 @@ class GPU_EXPORT CommonDecoder {
   // A struct to hold info about each command.
   struct CommandInfo {
     CmdHandler cmd_handler;
-    uint8_t arg_flags;   // How to handle the arguments for this command
+    uint16_t min_size;   // Minimum number of entries necessary for this command
     uint8_t cmd_flags;   // How to handle this command
-    uint16_t arg_count;  // How many arguments are expected for this command.
   };
 
   // A table of CommandInfo for all the commands.
