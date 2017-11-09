@@ -34,6 +34,23 @@
       "revId": "34fc7fcb50363143a7d3a2ad383f305e48dc9bd8",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "298e738d_5fc0a164",
+        "filename": "components/browsing_data/core/browsing_data_utils.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 45,
+      "author": {
+        "id": 1183839
+      },
+      "writtenOn": "2017-11-09T14:41:29Z",
+      "side": 1,
+      "message": "Please move the new enum value after ALL_TIME. We are storing values of this enum directly in preferences to remember the last selection and the values would get mixed up otherwise.",
+      "revId": "34fc7fcb50363143a7d3a2ad383f305e48dc9bd8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
