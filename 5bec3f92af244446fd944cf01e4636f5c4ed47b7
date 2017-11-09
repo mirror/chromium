@@ -49,6 +49,30 @@
     },
     {
       "key": {
+        "uuid": "d601fafd_ca2da4f8",
+        "filename": "chrome/browser/browser_process_impl.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 581,
+      "author": {
+        "id": 1115968
+      },
+      "writtenOn": "2017-11-09T19:38:59Z",
+      "side": 1,
+      "message": "Ah, makes sense.  May need to make a NetworkService available for tests at some point, not sure, but for now, this seems fine.",
+      "parentUuid": "22cb33ab_29b8584d",
+      "range": {
+        "startLine": 581,
+        "startChar": 8,
+        "endLine": 581,
+        "endChar": 18
+      },
+      "revId": "5bec3f92af244446fd944cf01e4636f5c4ed47b7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "f89a9c06_5b5d17b0",
         "filename": "content/public/common/network_connection_tracker.cc",
         "patchSetId": 4

@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "e60e0d26_ff553580",
+        "filename": "content/public/common/network_connection_tracker.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 52,
+      "author": {
+        "id": 1115968
+      },
+      "writtenOn": "2017-11-09T19:38:59Z",
+      "side": 1,
+      "message": "This sentence seems a bit awkward.\n\nMaybe \"Starts listening for connection notifications from |network_service|. Observers may be added and GetConnectionType called, but no network information will be provided until this method is called. For unit tests, this class can be subclassed, and OnInitialConnectionType / OnNetworkChanged may be called directly, instead of providing a NetworkService.\"",
+      "range": {
+        "startLine": 52,
+        "startChar": 40,
+        "endLine": 52,
+        "endChar": 53
+      },
+      "revId": "db873fc930ec2baf77b81ee7ed75495e5e10b5fb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
