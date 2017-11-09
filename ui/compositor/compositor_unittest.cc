@@ -19,6 +19,7 @@
 #include "ui/compositor/layer.h"
 #include "ui/compositor/test/context_factories_for_test.h"
 #include "ui/compositor/test/draw_waiter_for_test.h"
+#include "ui/compositor/test/fake_context_factory.h"
 
 using testing::Mock;
 using testing::_;
@@ -51,6 +52,8 @@ class CompositorTest : public testing::Test {
   }
 
   void DestroyCompositor() { compositor_.reset(); }
+
+  void SetCompositor(Compositor* compositor) { compositor_.reset(compositor); }
 
  protected:
   virtual scoped_refptr<base::SingleThreadTaskRunner> CreateTaskRunner() = 0;
@@ -120,6 +123,28 @@ class CompositorObserverForLocks : public CompositorObserver {
 class MockCompositorLockClient : public ui::CompositorLockClient {
  public:
   MOCK_METHOD0(CompositorLockTimedOut, void());
+};
+
+class MyFakeContextFactory : public FakeContextFactory {
+ public:
+  MyFakeContextFactory(base::Closure quit_closure)
+      : FakeContextFactory(), quit_closure_(quit_closure) {}
+  ~MyFakeContextFactory() override = default;
+
+  void CreateLayerTreeFrameSink(base::WeakPtr<Compositor> compositor) override {
+    EXPECT_FALSE(inside_);
+    inside_ = true;
+
+    auto widget = compositor->ReleaseAcceleratedWidget();
+    compositor->SetAcceleratedWidget(widget);
+
+    quit_closure_.Run();
+    quit_closure_.Reset();
+  }
+
+ private:
+  bool inside_ = false;
+  base::Closure quit_closure_;
 };
 
 }  // namespace
@@ -475,6 +500,21 @@ TEST_F(CompositorTestWithMessageLoop, MAYBE_CreateAndReleaseOutputSurface) {
   compositor()->ScheduleDraw();
   DrawWaiterForTest::WaitForCompositingEnded(compositor());
   compositor()->SetRootLayer(nullptr);
+}
+
+TEST_F(CompositorTestWithMessageLoop, NoCreateLayerTreeFrameSinkReEntry) {
+  base::RunLoop loop;
+  MyFakeContextFactory context_factory(loop.QuitClosure());
+
+  SetCompositor(new Compositor(
+      compositor()->context_factory_private()->AllocateFrameSinkId(),
+      &context_factory, compositor()->context_factory_private(),
+      CreateTaskRunner(), false /* enable_surface_synchronization */,
+      false /* enable_pixel_canvas */));
+  compositor()->SetAcceleratedWidget(gfx::kNullAcceleratedWidget);
+  compositor()->SetVisible(false);
+
+  loop.Run();
 }
 
 }  // namespace ui
