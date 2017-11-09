@@ -104,6 +104,24 @@
     },
     {
       "key": {
+        "uuid": "ed9dc294_b7966f37",
+        "filename": "media/audio/win/core_audio_util_win.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 311,
+      "author": {
+        "id": 1153409
+      },
+      "writtenOn": "2017-11-09T11:43:43Z",
+      "side": 1,
+      "message": "\u003e Log HRESULT as well",
+      "parentUuid": "7b66ba7d_0de399be",
+      "revId": "9b6a92f45a6428b67bb53f395ed71b3bbf449d66",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "efb257de_aea4c803",
         "filename": "media/audio/win/core_audio_util_win.cc",
         "patchSetId": 7
@@ -132,6 +150,24 @@
       "writtenOn": "2017-11-07T14:02:26Z",
       "side": 1,
       "message": "PREFERRED_PARAM_... (prefix)",
+      "revId": "9b6a92f45a6428b67bb53f395ed71b3bbf449d66",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "df0c3206_4f6d97f6",
+        "filename": "media/audio/win/core_audio_util_win.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 319,
+      "author": {
+        "id": 1153409
+      },
+      "writtenOn": "2017-11-09T11:43:43Z",
+      "side": 1,
+      "message": "\u003e PREFERRED_PARAM_... (prefix)",
+      "parentUuid": "2c0ee2f8_f7dc5c3d",
       "revId": "9b6a92f45a6428b67bb53f395ed71b3bbf449d66",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -183,6 +219,24 @@
       "writtenOn": "2017-11-07T14:02:26Z",
       "side": 1,
       "message": "We can probably move the check into CreateClientInternal()? (otherwise, we need to add a DCHECK there anyways)",
+      "revId": "9b6a92f45a6428b67bb53f395ed71b3bbf449d66",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d5634c4e_b1f6bd6e",
+        "filename": "media/audio/win/core_audio_util_win.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 569,
+      "author": {
+        "id": 1153409
+      },
+      "writtenOn": "2017-11-09T11:43:43Z",
+      "side": 1,
+      "message": "\u003e We can probably move the check into CreateClientInternal()? (otherwise, we need to add a DCHECK there anyways)",
+      "parentUuid": "5434aa14_079b7cf9",
       "revId": "9b6a92f45a6428b67bb53f395ed71b3bbf449d66",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
