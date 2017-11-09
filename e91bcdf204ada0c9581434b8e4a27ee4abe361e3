@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "fc023055_2ffabc34",
+        "filename": "chrome/browser/ui/views/passwords/manage_password_items_view.cc",
+        "patchSetId": 10
+      },
+      "lineNbr": 47,
+      "author": {
+        "id": 1126912
+      },
+      "writtenOn": "2017-11-09T20:29:34Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "4f2aa7c0_5429202c",
+      "revId": "e91bcdf204ada0c9581434b8e4a27ee4abe361e3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "7a6aaecd_d009a252",
         "filename": "chrome/browser/ui/views/passwords/manage_password_items_view.cc",
         "patchSetId": 10
@@ -33,6 +51,24 @@
       "revId": "e91bcdf204ada0c9581434b8e4a27ee4abe361e3",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e1dfdc22_2aa8f2a9",
+        "filename": "chrome/browser/ui/views/passwords/manage_password_items_view.cc",
+        "patchSetId": 10
+      },
+      "lineNbr": 72,
+      "author": {
+        "id": 1126912
+      },
+      "writtenOn": "2017-11-09T20:29:34Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "7a6aaecd_d009a252",
+      "revId": "e91bcdf204ada0c9581434b8e4a27ee4abe361e3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -53,6 +89,24 @@
     },
     {
       "key": {
+        "uuid": "a7e6d084_79b6987e",
+        "filename": "chrome/browser/ui/views/passwords/manage_password_items_view.cc",
+        "patchSetId": 10
+      },
+      "lineNbr": 77,
+      "author": {
+        "id": 1126912
+      },
+      "writtenOn": "2017-11-09T20:29:34Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "e48ad82f_b25e1c72",
+      "revId": "e91bcdf204ada0c9581434b8e4a27ee4abe361e3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "6130dc80_7d6861c2",
         "filename": "chrome/browser/ui/views/passwords/manage_password_items_view.cc",
         "patchSetId": 10
@@ -70,6 +124,24 @@
     },
     {
       "key": {
+        "uuid": "aeb5b8a6_69cde77f",
+        "filename": "chrome/browser/ui/views/passwords/manage_password_items_view.cc",
+        "patchSetId": 10
+      },
+      "lineNbr": 79,
+      "author": {
+        "id": 1126912
+      },
+      "writtenOn": "2017-11-09T20:29:34Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "6130dc80_7d6861c2",
+      "revId": "e91bcdf204ada0c9581434b8e4a27ee4abe361e3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "b5ca4037_078405ad",
         "filename": "chrome/browser/ui/views/passwords/manage_password_items_view.cc",
         "patchSetId": 10
@@ -84,6 +156,24 @@
       "revId": "e91bcdf204ada0c9581434b8e4a27ee4abe361e3",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e9afab1e_13d3e93d",
+        "filename": "chrome/browser/ui/views/passwords/manage_password_items_view.cc",
+        "patchSetId": 10
+      },
+      "lineNbr": 90,
+      "author": {
+        "id": 1126912
+      },
+      "writtenOn": "2017-11-09T20:29:34Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "b5ca4037_078405ad",
+      "revId": "e91bcdf204ada0c9581434b8e4a27ee4abe361e3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -110,6 +200,30 @@
     },
     {
       "key": {
+        "uuid": "e30e85c6_1fb1e0e6",
+        "filename": "chrome/browser/ui/views/passwords/manage_password_items_view.cc",
+        "patchSetId": 10
+      },
+      "lineNbr": 158,
+      "author": {
+        "id": 1126912
+      },
+      "writtenOn": "2017-11-09T20:29:34Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "de6939f2_327a1770",
+      "range": {
+        "startLine": 158,
+        "startChar": 39,
+        "endLine": 158,
+        "endChar": 55
+      },
+      "revId": "e91bcdf204ada0c9581434b8e4a27ee4abe361e3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "8cc46ef2_920e8891",
         "filename": "chrome/browser/ui/views/passwords/manage_password_items_view.cc",
         "patchSetId": 10
@@ -124,6 +238,24 @@
       "revId": "e91bcdf204ada0c9581434b8e4a27ee4abe361e3",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "833c010c_a48eb720",
+        "filename": "chrome/browser/ui/views/passwords/manage_password_items_view.cc",
+        "patchSetId": 10
+      },
+      "lineNbr": 206,
+      "author": {
+        "id": 1126912
+      },
+      "writtenOn": "2017-11-09T20:29:34Z",
+      "side": 1,
+      "message": "I moved this to the base class now so it should have the same lifetime implications. Not sure if the same is correct here though.",
+      "parentUuid": "8cc46ef2_920e8891",
+      "revId": "e91bcdf204ada0c9581434b8e4a27ee4abe361e3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -150,6 +282,30 @@
     },
     {
       "key": {
+        "uuid": "0b7c693e_7aa703cb",
+        "filename": "chrome/browser/ui/views/passwords/manage_password_items_view.h",
+        "patchSetId": 10
+      },
+      "lineNbr": 41,
+      "author": {
+        "id": 1126912
+      },
+      "writtenOn": "2017-11-09T20:29:34Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "a8a03e14_7bbbdf72",
+      "range": {
+        "startLine": 41,
+        "startChar": 26,
+        "endLine": 41,
+        "endChar": 49
+      },
+      "revId": "e91bcdf204ada0c9581434b8e4a27ee4abe361e3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "48bf5269_6f3c4fe0",
         "filename": "chrome/browser/ui/views/passwords/manage_password_items_view.h",
         "patchSetId": 10
@@ -167,6 +323,24 @@
     },
     {
       "key": {
+        "uuid": "38c78e3f_1262b2e0",
+        "filename": "chrome/browser/ui/views/passwords/manage_password_items_view.h",
+        "patchSetId": 10
+      },
+      "lineNbr": 63,
+      "author": {
+        "id": 1126912
+      },
+      "writtenOn": "2017-11-09T20:29:34Z",
+      "side": 1,
+      "message": "Only doing DISALLOW_ASSIGN because otherwise I\u0027d need to declare a default move constructor for the vector emplace_back call. Keeping in this file to use std::vector which needs storage size.",
+      "parentUuid": "48bf5269_6f3c4fe0",
+      "revId": "e91bcdf204ada0c9581434b8e4a27ee4abe361e3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "f8c0db3c_f5730124",
         "filename": "chrome/browser/ui/views/passwords/manage_password_items_view.h",
         "patchSetId": 10
@@ -181,6 +355,24 @@
       "revId": "e91bcdf204ada0c9581434b8e4a27ee4abe361e3",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9cbf3d91_6ce66cad",
+        "filename": "chrome/browser/ui/views/passwords/manage_password_items_view.h",
+        "patchSetId": 10
+      },
+      "lineNbr": 83,
+      "author": {
+        "id": 1126912
+      },
+      "writtenOn": "2017-11-09T20:29:34Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "f8c0db3c_f5730124",
+      "revId": "e91bcdf204ada0c9581434b8e4a27ee4abe361e3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -216,6 +408,24 @@
       "revId": "e91bcdf204ada0c9581434b8e4a27ee4abe361e3",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "fb6ca005_53e915e1",
+        "filename": "chrome/browser/ui/views/passwords/manage_passwords_bubble_view.cc",
+        "patchSetId": 10
+      },
+      "lineNbr": 930,
+      "author": {
+        "id": 1126912
+      },
+      "writtenOn": "2017-11-09T20:29:34Z",
+      "side": 1,
+      "message": ".. returning would be good but outside the scope of this CL I think (though I wish we could move the ownership to TabDialogs). This more closely aligns both platform that have to use ::manage_passwords_bubble() to get the dialog.",
+      "parentUuid": "24a5b78e_78bc8f43",
+      "revId": "e91bcdf204ada0c9581434b8e4a27ee4abe361e3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -272,6 +482,24 @@
     },
     {
       "key": {
+        "uuid": "e620e339_7cb8a3a0",
+        "filename": "chrome/browser/ui/views/passwords/manage_passwords_bubble_view.h",
+        "patchSetId": 10
+      },
+      "lineNbr": 58,
+      "author": {
+        "id": 1126912
+      },
+      "writtenOn": "2017-11-09T20:29:34Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "778b111f_ee24bce9",
+      "revId": "e91bcdf204ada0c9581434b8e4a27ee4abe361e3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "b9499727_f4a9ec65",
         "filename": "chrome/browser/ui/views/passwords/manage_passwords_bubble_view.h",
         "patchSetId": 10
@@ -307,6 +535,24 @@
     },
     {
       "key": {
+        "uuid": "add0a555_96164371",
+        "filename": "chrome/browser/ui/views/passwords/manage_passwords_bubble_view.h",
+        "patchSetId": 10
+      },
+      "lineNbr": 127,
+      "author": {
+        "id": 1126912
+      },
+      "writtenOn": "2017-11-09T20:29:34Z",
+      "side": 1,
+      "message": "Done (moved to base class). Hopefully we can move ownership into TabDialog at some point and not have these finicky globals.",
+      "parentUuid": "0d8ff0ad_13121c7a",
+      "revId": "e91bcdf204ada0c9581434b8e4a27ee4abe361e3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "461342c8_f0b87c7a",
         "filename": "chrome/browser/ui/views/tab_dialogs_views.cc",
         "patchSetId": 10
@@ -339,6 +585,24 @@
       "revId": "e91bcdf204ada0c9581434b8e4a27ee4abe361e3",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e7407c8a_b3c27641",
+        "filename": "chrome/browser/ui/views/tab_dialogs_views.cc",
+        "patchSetId": 10
+      },
+      "lineNbr": 82,
+      "author": {
+        "id": 1126912
+      },
+      "writtenOn": "2017-11-09T20:29:34Z",
+      "side": 1,
+      "message": "Agreed. Done. Thanks for the great feedback.",
+      "parentUuid": "0fc41ec3_4f494c5a",
+      "revId": "e91bcdf204ada0c9581434b8e4a27ee4abe361e3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
