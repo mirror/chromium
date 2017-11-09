@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "d6c5a4ed_1d3d7831",
+        "filename": "net/quic/chromium/quic_stream_factory.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 115,
+      "author": {
+        "id": 1116006
+      },
+      "writtenOn": "2017-11-09T19:04:16Z",
+      "side": 0,
+      "message": "This is a good change, but let\u0027s do it in a stand-alone CL to make things simpler.",
+      "range": {
+        "startLine": 115,
+        "startChar": 37,
+        "endLine": 115,
+        "endChar": 0
+      },
+      "revId": "03a30419355403f58ddb5027d3acbd9a091b804b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}

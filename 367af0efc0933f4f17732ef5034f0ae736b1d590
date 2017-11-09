@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "5a2d40bd_48e7c75b",
+        "filename": "net/socket/client_socket_pool_manager.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 174,
+      "author": {
+        "id": 1116006
+      },
+      "writtenOn": "2017-11-09T19:04:16Z",
+      "side": 1,
+      "message": "It looks like all but quic_version are redundant with other data. Can we use the existing params instead?",
+      "range": {
+        "startLine": 174,
+        "startChar": 6,
+        "endLine": 174,
+        "endChar": 7
+      },
+      "revId": "367af0efc0933f4f17732ef5034f0ae736b1d590",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}

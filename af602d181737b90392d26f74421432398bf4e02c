@@ -1,0 +1,165 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "d5561ea5_8dd7ec5c",
+        "filename": "net/http/http_proxy_client_socket_wrapper.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 91,
+      "author": {
+        "id": 1116006
+      },
+      "writtenOn": "2017-11-09T19:04:16Z",
+      "side": 1,
+      "message": "why the change to add an explicit \".get() \u003d\u003d nullptr\"?",
+      "range": {
+        "startLine": 91,
+        "startChar": 53,
+        "endLine": 91,
+        "endChar": 0
+      },
+      "revId": "af602d181737b90392d26f74421432398bf4e02c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b05a86a9_f5b445dc",
+        "filename": "net/http/http_proxy_client_socket_wrapper.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 91,
+      "author": {
+        "id": 1116006
+      },
+      "writtenOn": "2017-11-09T19:04:16Z",
+      "side": 1,
+      "message": "why the change to add an explicit \".get() \u003d\u003d nullptr\"?",
+      "range": {
+        "startLine": 91,
+        "startChar": 53,
+        "endLine": 91,
+        "endChar": 0
+      },
+      "revId": "af602d181737b90392d26f74421432398bf4e02c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "49303abc_f3daf36a",
+        "filename": "net/http/http_proxy_client_socket_wrapper.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 94,
+      "author": {
+        "id": 1116006
+      },
+      "writtenOn": "2017-11-09T19:04:16Z",
+      "side": 1,
+      "message": "This expression is quite tricky to read. Can you add a comment, at least?",
+      "range": {
+        "startLine": 94,
+        "startChar": 50,
+        "endLine": 94,
+        "endChar": 0
+      },
+      "revId": "af602d181737b90392d26f74421432398bf4e02c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e30546b7_596ea1d0",
+        "filename": "net/http/http_proxy_client_socket_wrapper.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 94,
+      "author": {
+        "id": 1116006
+      },
+      "writtenOn": "2017-11-09T19:04:16Z",
+      "side": 1,
+      "message": "This expression is quite tricky to read. Can you add a comment, at least?",
+      "range": {
+        "startLine": 94,
+        "startChar": 50,
+        "endLine": 94,
+        "endChar": 0
+      },
+      "revId": "af602d181737b90392d26f74421432398bf4e02c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c22b4d17_f5479cbe",
+        "filename": "net/http/http_proxy_client_socket_wrapper.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 67,
+      "author": {
+        "id": 1116006
+      },
+      "writtenOn": "2017-11-09T19:04:16Z",
+      "side": 1,
+      "message": "How is this different from endpoint?",
+      "range": {
+        "startLine": 67,
+        "startChar": 44,
+        "endLine": 67,
+        "endChar": 0
+      },
+      "revId": "af602d181737b90392d26f74421432398bf4e02c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8d324d13_a6a4f726",
+        "filename": "net/http/http_proxy_client_socket_wrapper.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 70,
+      "author": {
+        "id": 1116006
+      },
+      "writtenOn": "2017-11-09T19:04:16Z",
+      "side": 1,
+      "message": "I\u0027m surprised we don\u0027t already need privacy mode and cert verification flags. Are they perhaps in transport and ssl params?",
+      "range": {
+        "startLine": 70,
+        "startChar": 33,
+        "endLine": 70,
+        "endChar": 0
+      },
+      "revId": "af602d181737b90392d26f74421432398bf4e02c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "10cc2e25_fcfc4608",
+        "filename": "net/http/http_proxy_client_socket_wrapper.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 180,
+      "author": {
+        "id": 1116006
+      },
+      "writtenOn": "2017-11-09T19:04:16Z",
+      "side": 1,
+      "message": "Why did this change?",
+      "range": {
+        "startLine": 180,
+        "startChar": 39,
+        "endLine": 180,
+        "endChar": 0
+      },
+      "revId": "af602d181737b90392d26f74421432398bf4e02c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
