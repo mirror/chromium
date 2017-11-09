@@ -22,6 +22,30 @@
       "revId": "2fa125309be698567447d804996f38f502352748",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8d7901e5_dc0650b0",
+        "filename": "ios/web/public/download/download_task_observer.h",
+        "patchSetId": 8
+      },
+      "lineNbr": 24,
+      "author": {
+        "id": 1123009
+      },
+      "writtenOn": "2017-11-09T16:00:58Z",
+      "side": 1,
+      "message": "Thank you for catching this!",
+      "parentUuid": "213a829e_ff1e1d78",
+      "range": {
+        "startLine": 24,
+        "startChar": 33,
+        "endLine": 24,
+        "endChar": 51
+      },
+      "revId": "2fa125309be698567447d804996f38f502352748",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
