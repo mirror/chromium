@@ -22,6 +22,30 @@
       "revId": "b7e1fb9055c91000cf776fad1d4bb51922ee71a3",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6114eaea_693ce517",
+        "filename": "third_party/WebKit/LayoutTests/external/wpt/encoding/legacy-mb-japanese/iso-2022-jp/iso2022jp-encode-form-errors-stateful.html",
+        "patchSetId": 7
+      },
+      "lineNbr": 22,
+      "author": {
+        "id": 1204072
+      },
+      "writtenOn": "2017-11-09T17:36:56Z",
+      "side": 1,
+      "message": "I think I can\u0027t:\n\n- escape() is required because encodeURI{,Component} encodes using UTF-8, and would falsely imply that non-ASCII characters are expected to work here -- which they won\u0027t, as the data URI has ISO-2022-JP charset; likewise\n- unescape() is required because the encoded byte sequence we\u0027re trying to decode and verify represents ISO-2022-JP data rather than the UTF-8 expected by decodeURI{,Component}\n\nAdded a comment explaining this.",
+      "parentUuid": "9c94fc2d_258a3e06",
+      "range": {
+        "startLine": 22,
+        "startChar": 52,
+        "endLine": 22,
+        "endChar": 58
+      },
+      "revId": "b7e1fb9055c91000cf776fad1d4bb51922ee71a3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
