@@ -190,6 +190,30 @@
     },
     {
       "key": {
+        "uuid": "a04b67ad_53850ca6",
+        "filename": "remoting/codec/cast_software_video_encoder_adapter.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 82,
+      "author": {
+        "id": 1157930
+      },
+      "writtenOn": "2017-11-09T00:22:27Z",
+      "side": 1,
+      "message": "A key frame is always independent, but an independent frame is not necessarily being a key frame.:)",
+      "parentUuid": "74fe86aa_29fb1370",
+      "range": {
+        "startLine": 82,
+        "startChar": 59,
+        "endLine": 82,
+        "endChar": 70
+      },
+      "revId": "f63f49591980b76fbe3d2f1ceca998a350bdd89a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "8574ea4d_6bcf0713",
         "filename": "remoting/codec/cast_software_video_encoder_adapter.h",
         "patchSetId": 5
