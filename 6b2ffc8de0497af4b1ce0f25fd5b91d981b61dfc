@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "0f81b3c3_36e90bb8",
+        "filename": "media/gpu/android/surface_chooser_helper.h",
+        "patchSetId": 7
+      },
+      "lineNbr": 23,
+      "author": {
+        "id": 1150472
+      },
+      "writtenOn": "2017-11-09T22:52:12Z",
+      "side": 1,
+      "message": "s/standalong/standalone",
+      "range": {
+        "startLine": 23,
+        "startChar": 19,
+        "endLine": 23,
+        "endChar": 29
+      },
+      "revId": "6b2ffc8de0497af4b1ce0f25fd5b91d981b61dfc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
