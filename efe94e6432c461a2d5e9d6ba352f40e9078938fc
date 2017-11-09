@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "c0c8e970_c0e7ce6f",
+        "filename": "extensions/browser/api/bluetooth_low_energy/bluetooth_low_energy_event_router.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 893,
+      "author": {
+        "id": 1133035
+      },
+      "writtenOn": "2017-11-09T22:09:38Z",
+      "side": 0,
+      "message": "Thanks for working on this!\n\nWhen changing an API as widely used as Bluetooth special attention needs to be taken in order to avoid breaking its clients. Please take some time to understand how this class is using GattDiscoveryCompleteForService and ensure that by deleting the function we are not breaking any of the clients features. By looking at the code you are deleting here, it seems we would stop dispaching the OnServiceAdded event.",
+      "revId": "efe94e6432c461a2d5e9d6ba352f40e9078938fc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
