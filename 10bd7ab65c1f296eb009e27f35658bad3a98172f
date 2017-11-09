@@ -16,6 +16,24 @@
       "revId": "10bd7ab65c1f296eb009e27f35658bad3a98172f",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "94f54e99_754a7726",
+        "filename": "chrome/browser/extensions/api/tabs/tabs_api.cc",
+        "patchSetId": 20
+      },
+      "lineNbr": 219,
+      "author": {
+        "id": 1145669
+      },
+      "writtenOn": "2017-11-09T15:30:04Z",
+      "side": 1,
+      "message": "This here is needed as we added a new state to chrome.windows.create/update API [1]. So for example calling chrome.windows.create({url: ..., state: \u0027locked-fullscreen\u0027}) or chrome.windows.update(window.id, {state: \u0027locked-fullscreen\u0027}).\n\nTying back to your previous comment:\n\u003e Yes, you should be able to just set that property to TRUSTED_PINNED when the application requested to be locked. No need to add new SHOW_STATE.\nI abandoned the idea of adding a new SHOW_STATE, but I need the new WINDOW_STATE (which will tie to the same SHOW_STATE_FULLSCREEN as WINDOW_STATE_FULLSCREEN). AFAIK WINDOW_STATEs are used only in extensions/ code. Sorry if I\u0027m misunderstanding your point.\n\n[1] https://chromium-review.googlesource.com/c/chromium/src/+/723422/20/chrome/common/extensions/api/windows.json",
+      "parentUuid": "4a5aab97_a0d016a5",
+      "revId": "10bd7ab65c1f296eb009e27f35658bad3a98172f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
