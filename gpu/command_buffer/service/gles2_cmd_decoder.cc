@@ -5471,6 +5471,8 @@ error::Error GLES2DecoderImpl::DoCommandsImpl(unsigned int num_commands,
       process_pos += size;
       cmd_data += size;
     }
+    if (context_group_->progress_reporter())
+      context_group_->progress_reporter()->ReportProgress();
   }
 
   *entries_processed = process_pos;
