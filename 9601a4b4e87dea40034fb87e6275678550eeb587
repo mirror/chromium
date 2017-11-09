@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "6ecc432e_cea9091d",
+        "filename": "gpu/command_buffer/tests/fuzzer_main.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 462,
+      "author": {
+        "id": 1105284
+      },
+      "writtenOn": "2017-11-09T21:34:46Z",
+      "side": 1,
+      "message": "ANGLE currently only generates messages if the error has a message attached to it, I will make an update to generate a generic \"there was an error\" message for all errors if one is missing.\n\nThis should also check that the error is not OUT_OF_MEMORY.  ANGLE (and all drivers I\u0027ve seen) put the error enum in the message id.",
+      "range": {
+        "startLine": 462,
+        "startChar": 4,
+        "endLine": 462,
+        "endChar": 51
+      },
+      "revId": "9601a4b4e87dea40034fb87e6275678550eeb587",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
