@@ -165,6 +165,10 @@ class ChromePasswordProtectionService : public PasswordProtectionService {
   void UpdateSecurityState(SBThreatType threat_type,
                            content::WebContents* web_contents) override;
 
+  void RemoveUnhandledSyncPasswordReuseOnURLsDeleted(
+      bool all_history,
+      const history::URLRows& deleted_rows) override;
+
   // Gets |account_info_| based on |profile_|.
   AccountInfo GetAccountInfo();
 
@@ -206,6 +210,9 @@ class ChromePasswordProtectionService : public PasswordProtectionService {
                            VerifyUpdateSecurityState);
   FRIEND_TEST_ALL_PREFIXES(ChromePasswordProtectionServiceTest,
                            VerifyGetChangePasswordURL);
+  FRIEND_TEST_ALL_PREFIXES(
+      ChromePasswordProtectionServiceTest,
+      VerifyUnhandledSyncPasswordReuseUponClearHistoryDeletion);
   FRIEND_TEST_ALL_PREFIXES(ChromePasswordProtectionServiceBrowserTest,
                            VerifyCheckGaiaPasswordChange);
 
