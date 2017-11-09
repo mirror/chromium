@@ -921,6 +921,24 @@ SDK.DOMNode = class {
       this.scrollIntoViewIfNeeded(true);
     }
   }
+
+  async focus() {
+    var node = this.enclosingElementOrSelf();
+    var object = await node.resolveToObject('');
+    if (object)
+      await object.callFunctionPromise(focus);
+    object.release();
+    node.highlightForTwoSeconds();
+    this._domModel.target().pageAgent().bringToFront();
+
+    /**
+     * @suppressReceiverCheck
+     * @this {!Element}
+     */
+    function focus() {
+      this.focus();
+    }
+  }
 };
 
 /**
