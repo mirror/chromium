@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "fc3f1d5b_4e16dbb7",
+        "filename": "third_party/WebKit/LayoutTests/fast/mediastream/getusermedia-constraints.html",
+        "patchSetId": 12
+      },
+      "lineNbr": 86,
+      "author": {
+        "id": 1143639
+      },
+      "writtenOn": "2017-11-09T12:59:44Z",
+      "side": 1,
+      "message": "You don\u0027t need the catch. If the promise rejects, the promise_test will fail. Also, the message is incorrect because \u0027getUserMedia should have succeeded\u0027  in this case.\nYou don\u0027t need the then() either.",
+      "revId": "66300d5ae64a3e8e58220821b51478f9aaaabeb3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
