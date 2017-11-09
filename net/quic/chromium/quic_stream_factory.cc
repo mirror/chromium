@@ -1270,6 +1270,8 @@ int QuicStreamFactory::ConfigureSocket(DatagramClientSocket* socket,
                                        NetworkHandle network) {
   socket->UseNonBlockingIO();
 
+  LOG(ERROR) << "Configure socket for address " << addr.ToString();
+
   int rv;
   if (migrate_sessions_on_network_change_) {
     // If caller leaves network unspecified, use current default network.

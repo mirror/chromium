@@ -663,6 +663,7 @@ QuicChromiumClientSession::QuicChromiumClientSession(
     NetLog* net_log)
     : QuicSpdyClientSessionBase(connection, push_promise_index, config),
       server_id_(server_id),
+      probing_pending_(false),
       require_confirmation_(require_confirmation),
       migrate_session_early_(migrate_session_early),
       migrate_session_on_network_change_(migrate_sessions_on_network_change),
@@ -851,6 +852,24 @@ void QuicChromiumClientSession::OnStreamFrame(const QuicStreamFrame& frame) {
 
   // Record number of frames per stream in packet.
   UMA_HISTOGRAM_COUNTS_1M("Net.QuicNumStreamFramesPerStreamInPacket", 1);
+  if (!probing_pending_) {
+    probing_pending_ = true;
+    LOG(ERROR) << "=========== ZHONGYI SEND PROBING ==========";
+    const NetLogWithSource migration_net_log = NetLogWithSource::Make(
+        net_log_.net_log(), NetLogSourceType::QUIC_CONNECTION_MIGRATION);
+    migration_net_log.BeginEvent(
+        NetLogEventType::QUIC_CONNECTION_MIGRATION_TRIGGERED,
+        base::Bind(&NetLogQuicConnectionMigrationTriggerCallback,
+                   "zhongyi force the connection migration"));
+
+    SendConnectivityProbing(
+        NetworkChangeNotifier::kInvalidNetworkHandle,
+        connection()->peer_address().impl().socket_address(),
+        migration_net_log);
+  
+    migration_net_log.EndEvent(
+        NetLogEventType::QUIC_CONNECTION_MIGRATION_TRIGGERED);
+  }
 
   return QuicSpdySession::OnStreamFrame(frame);
 }
@@ -1733,6 +1752,12 @@ void QuicChromiumClientSession::OnProofVerifyDetailsAvailable(
 }
 
 void QuicChromiumClientSession::StartReading() {
+  if (probing_reader_) {
+    LOG(ERROR) << ">>>> probing reader starts reading =====";
+    probing_reader_->StartReading();
+    LOG(ERROR) << "<<<< probing reader finishes reading ======";
+  }
+
   for (auto& packet_reader : packet_readers_) {
     packet_reader->StartReading();
   }
@@ -2065,8 +2090,10 @@ MigrationResult QuicChromiumClientSession::SendConnectivityProbing(
     NetworkChangeNotifier::NetworkHandle network,
     IPEndPoint peer_address,
     const NetLogWithSource& migration_net_log) {
+  LOG(ERROR) << "0";
   if (!stream_factory_)
     return MigrationResult::FAILURE;
+  LOG(ERROR) << "1";
 
   // Create and configure socket on |network|
   probing_socket_ =
@@ -2078,14 +2105,18 @@ MigrationResult QuicChromiumClientSession::SendConnectivityProbing(
         "Socket configuration failed");
     return MigrationResult::FAILURE;
   }
+  LOG(ERROR) << "2";
 
   // Create new packet reader and writer on the new socket.
   probing_reader_.reset(new QuicChromiumPacketReader(
       probing_socket_.get(), clock_, this, yield_after_packets_,
       yield_after_duration_, net_log_));
+
   probing_writer_.reset(new QuicChromiumPacketWriter(probing_socket_.get()));
   probing_writer_->set_delegate(this);
 
+  sockets_.push_back(std::move(probing_socket_));
+  StartReading();
   // TODO(zhongyi): add logics similar to MigrateToSocket() to address packet
   // reading.
   connection()->SendProbingPacket(probing_writer_.get());

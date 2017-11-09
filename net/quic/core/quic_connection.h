@@ -766,6 +766,13 @@ class QUIC_EXPORT_PRIVATE QuicConnection
   friend class test::QuicConnectionPeer;
   friend class test::PacketSavingConnection;
 
+  enum ProbingPacketStatus {
+    NO_FRAME_RECEIVED,
+    FIRST_PING_RECEIVED,
+    REMAINING_PADDING_RECEIVED,
+    INVALID_PROBING,
+  };
+
   typedef std::list<SerializedPacket> QueuedPacketList;
 
   // Notifies the visitor of the close and marks the connection as disconnected.
@@ -866,6 +873,7 @@ class QUIC_EXPORT_PRIVATE QuicConnection
   void CheckIfApplicationLimited();
 
   QuicFramer framer_;
+  ProbingPacketStatus probing_packet_status_;
   QuicConnectionHelperInterface* helper_;  // Not owned.
   QuicAlarmFactory* alarm_factory_;        // Not owned.
   PerPacketOptions* per_packet_options_;   // Not owned.

@@ -587,6 +587,7 @@ class NET_EXPORT_PRIVATE QuicChromiumClientSession
   void NotifyFactoryOfSessionClosed();
 
   QuicServerId server_id_;
+  bool probing_pending_;
   bool require_confirmation_;
   bool migrate_session_early_;
   bool migrate_session_on_network_change_;
