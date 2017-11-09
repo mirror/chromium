@@ -175,14 +175,23 @@ EffectModel* EffectInput::Convert(
     const DictionarySequenceOrDictionary& effect_input,
     ExecutionContext* execution_context,
     ExceptionState& exception_state) {
+  // Returning a null EffectModel is equivalent to having no keyframes.
+  // TODO(smcgruer): The element is allowed to be null; remove !element check.
   if (effect_input.IsNull() || !element)
     return nullptr;
 
+  // DictionarySequence is explicitly an array of dictionaries, i.e. the
+  // keyframes are in array-form.
   if (effect_input.IsDictionarySequence()) {
     return ConvertArrayForm(*element, effect_input.GetAsDictionarySequence(),
                             execution_context, exception_state);
   }
 
+  // Check whether @@iterator is defined; if so the keyframes are in array-form,
+  // otherwise they are in object-form.
+  //
+  // TODO(smcgruer): Is this path ever taken? An object with Symbol.iterator
+  // defined on it just becomes a DictionarySequence?
   const Dictionary& dictionary = effect_input.GetAsDictionary();
   DictionaryIterator iterator = dictionary.GetIterator(execution_context);
   if (!iterator.IsNull()) {
@@ -315,13 +324,19 @@ static bool GetPropertyIndexedKeyframeValues(
   return !exception_state.HadException();
 }
 
+// Implements the procedure to "process a keyframes argument" from the
+// web-animations spec, for an object form keyframes argument.
+//
+// See http://w3c.github.io/web-animations/#process-a-keyframes-argument
 EffectModel* EffectInput::ConvertObjectForm(
     Element& element,
     const Dictionary& keyframe_dictionary,
     ExecutionContext* execution_context,
     ExceptionState& exception_state) {
-  StringKeyframeVector keyframes;
+  // First, extract the contents of the BasePropertyIndexedKeyframe; the
+  // offset, easing, and composite information.
 
+  // TODO(smcgruer): Support a sequence of easings.
   String timing_function_string;
   scoped_refptr<TimingFunction> timing_function = nullptr;
   if (DictionaryHelper::Get(keyframe_dictionary, "easing",
@@ -332,6 +347,7 @@ EffectModel* EffectInput::ConvertObjectForm(
       return nullptr;
   }
 
+  // TODO(smcgruer): Support a sequence of offsets.
   Nullable<double> offset;
   if (DictionaryHelper::Get(keyframe_dictionary, "offset", offset) &&
       !offset.IsNull()) {
@@ -339,13 +355,29 @@ EffectModel* EffectInput::ConvertObjectForm(
       return nullptr;
   }
 
+  // TODO(smcgruer): Support a sequence of composites.
   String composite_string;
   DictionaryHelper::Get(keyframe_dictionary, "composite", composite_string);
 
+  // Next extract all properties from the input argument and iterate through
+  // them, processing each as a list of values for that property.
   const Vector<String>& keyframe_properties =
       keyframe_dictionary.GetPropertyNames(exception_state);
   if (exception_state.HadException())
     return nullptr;
+
+  // Steps 5.2 - 5.4 state that the user agent is to:
+  //
+  //   * Create sets of property-specific keyframes with no offset.
+  //   * Calculate computed offsets for each set of keyframes individually.
+  //   * Join the sets together and merge those with identical computed offsets.
+  //
+  // This is equivalent to just keeping a hashmap from computed offset to a
+  // single keyframe, and doing so simplifies the parsing logic.
+  //
+  // TODO(smcgruer): Is a double key safe; do we need a custom key comparator?
+  HashMap<double, scoped_refptr<StringKeyframe>> keyframes;
+
   for (const auto& property : keyframe_properties) {
     if (property == "offset" || property == "composite" ||
         property == "easing") {
@@ -358,35 +390,96 @@ EffectModel* EffectInput::ConvertObjectForm(
                                           values))
       return nullptr;
 
+    // Now either create a keyframe (or retrieve and augment an existing one)
+    // for each value this property maps to. As explained above, this loop
+    // performs both the initial creation and merging mentioned in the spec.
     size_t num_keyframes = values.size();
     for (size_t i = 0; i < num_keyframes; ++i) {
-      scoped_refptr<StringKeyframe> keyframe = StringKeyframe::Create();
+      // As all offsets are null for these keyframes, the computed offset is
+      // just the fractional position of each keyframe in the array.
+      //
+      // The only special case is that when there is only one keyframe the sole
+      // computed offset is defined as 1.
+      double computed_offset =
+          (num_keyframes == 1) ? 1 : i / double(num_keyframes - 1);
 
-      if (!offset.IsNull())
-        keyframe->SetOffset(offset.Get());
-      else if (num_keyframes == 1)
-        keyframe->SetOffset(1.0);
-      else
-        keyframe->SetOffset(i / (num_keyframes - 1.0));
+      auto result = keyframes.insert(computed_offset, nullptr);
+      if (result.is_new_entry)
+        result.stored_value->value = StringKeyframe::Create();
 
-      if (timing_function)
-        keyframe->SetEasing(timing_function);
-
-      if (composite_string == "add")
-        keyframe->SetComposite(EffectModel::kCompositeAdd);
-      // TODO(alancutter): Support "accumulate" keyframe composition.
-
-      SetKeyframeValue(element, *keyframe.get(), property, values[i],
-                       execution_context);
-      keyframes.push_back(keyframe);
+      SetKeyframeValue(element, *result.stored_value->value.get(), property,
+                       values[i], execution_context);
     }
   }
 
-  std::sort(keyframes.begin(), keyframes.end(), Keyframe::CompareOffsets);
+  // 5.3 Sort processed keyframes by the computed keyframe offset of each
+  // keyframe in increasing order.
+  //
+  // TODO(smcgruer): There must be a way to sort a HashMap or at least the
+  // Keys() of a hashmap without using a Vector?
+  Vector<double> keys;
+  for (const auto& key : keyframes.Keys())
+    keys.push_back(key);
+  std::sort(keys.begin(), keys.end());
+
+  // 5.5 - 5.12 deals with assigning the user-specified offset, easing, and
+  // composite properties to the keyframes.
+  StringKeyframeVector results;
+  for (const double& key : keys) {
+    auto keyframe = keyframes.at(key);
+
+    // TODO(smcgruer): Support a sequence of offsets.
+    if (!offset.IsNull())
+      keyframe->SetOffset(offset.Get());
+
+    // TODO(smcgruer): Support a sequence of easings.
+    if (timing_function)
+      keyframe->SetEasing(timing_function);
+
+    // TODO(smcgruer): Support a sequence of composites.
+    if (composite_string == "add")
+      keyframe->SetComposite(EffectModel::kCompositeAdd);
+    // TODO(alancutter): Support "accumulate" keyframe composition.
+
+    results.push_back(keyframe);
+  }
+
+  // 6. If processed keyframes is not loosely sorted by offset, throw a
+  // TypeError and abort these steps.
+  double previous_offset = 0.0;
+  for (const auto& keyframe : results) {
+    if (!IsNull(keyframe->Offset())) {
+      if (keyframe->Offset() < previous_offset) {
+        exception_state.ThrowTypeError(
+            "Offsets must be montonically non-decreasing.");
+        return nullptr;
+      }
+      previous_offset = keyframe->Offset();
+    }
+  }
+
+  // 7. If there exist any keyframe in processed keyframes whose keyframe offset
+  // is non-null and less than zero or greater than one, throw a TypeError and
+  // abort these steps.
+  //
+  // TODO(smcgruer): The spec strictly orders steps 6 and 7; do we need to or
+  // can we check this above?
+  for (const auto& keyframe : results) {
+    double offset = keyframe->Offset();
+    if (!IsNull(offset) && (offset < 0 || offset > 1)) {
+      exception_state.ThrowTypeError(
+          "Offsets must be null or in the range [0,1].");
+      return nullptr;
+    }
+  }
+
+  // TODO(smcgruer): Implement steps 8, 9 of the spec. These concern removing
+  // unsupported property values, and parsing the easing property. The spec is
+  // very clear that the easing property parsing happens here.
 
   DCHECK(!exception_state.HadException());
 
-  return CreateEffectModelFromKeyframes(element, keyframes, exception_state);
+  return CreateEffectModelFromKeyframes(element, results, exception_state);
 }
 
 }  // namespace blink
