@@ -362,6 +362,19 @@ enum class SnapshotViewOption {
 }
 
 - (void)setOtrTabModel:(TabModel*)otrModel {
+  // When the last incognito tab is closed, the OTR TabModel is destroyed and
+  // recreated.  TabSwitcherController must ensure that it does not hold a stale
+  // pointer to the defunct TabModel.  When setting the OTR model to nil, reset
+  // the |_onLoadActiveModel| variable if needed.  If |_onLoadActiveModel| is
+  // already nil, interpret that as a signal that it used to point to an OTR
+  // model that was destroyed, and therefore should be reset to point to the new
+  // model that is being set by this method.
+  if (_onLoadActiveModel == nil) {
+    _onLoadActiveModel = otrModel;
+  } else if (_onLoadActiveModel == [_tabSwitcherModel otrTabModel]) {
+    _onLoadActiveModel = nil;
+  }
+
   [_cache setMainTabModel:[_cache mainTabModel] otrTabModel:otrModel];
   [_tabSwitcherModel setMainTabModel:[_tabSwitcherModel mainTabModel]
                          otrTabModel:otrModel];
@@ -1182,8 +1195,6 @@ enum class SnapshotViewOption {
       tabSwitcherPanelController.sessionType;
   TabModel* tabModel = [self tabModelForSessionType:panelSessionType];
   [tabModel setCurrentTab:tab];
-  [self.delegate tabSwitcher:self
-      dismissTransitionWillStartWithActiveModel:tabModel];
   [self tabSwitcherDismissWithModel:tabModel animated:YES];
   if (panelSessionType == TabSwitcherSessionType::OFF_THE_RECORD_SESSION) {
     base::RecordAction(
