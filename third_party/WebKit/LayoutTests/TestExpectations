@@ -3625,6 +3625,9 @@ crbug.com/626703 [ Win Debug ] external/wpt/encoding/legacy-mb-tchinese/big5/big
 
 crbug.com/766129 svg/wicd/test-rightsizing-b.xhtml [ Failure Pass ]
 
+crbug.com/776009 inspector-protocol/sessions/dom-modification.js [ Skip ]
+crbug.com/721408 http/tests/inspector-protocol/network/request-interception-patterns.js [ Skip ]
+
 # These tests have a low level amount of flakyness on Mac and Windows and are
 # failing everywhere. Disabling for now.
 crbug.com/655458 crbug.com/721814 external/wpt/WebCryptoAPI/idlharness.html [ Skip ]

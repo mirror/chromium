@@ -933,7 +933,7 @@ void InspectorPageAgent::PageLayoutInvalidated(bool resized) {
 void InspectorPageAgent::WindowCreated(LocalFrame* created) {
   if (enabled_ &&
       state_->booleanProperty(PageAgentState::kAutoAttachToCreatedPages, false))
-    client_->WaitForCreateWindow(created);
+    client_->WaitForCreateWindow(this, created);
 }
 
 void InspectorPageAgent::WindowOpen(Document* document,
