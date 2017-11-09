@@ -69,6 +69,24 @@
       "revId": "0960be601cb6927a43f8a2838e73835ed331f03f",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a267ba3c_e0b53be9",
+        "filename": "chrome/common/extensions/manifest_unittest.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 89,
+      "author": {
+        "id": 1115745
+      },
+      "writtenOn": "2017-11-09T22:04:00Z",
+      "side": 1,
+      "message": "Maybe - they seem a bit out of place here.",
+      "parentUuid": "914f7ee1_f5715f51",
+      "revId": "0960be601cb6927a43f8a2838e73835ed331f03f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
