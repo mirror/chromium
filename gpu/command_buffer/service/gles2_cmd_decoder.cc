@@ -59,6 +59,7 @@
 #include "gpu/command_buffer/service/memory_tracking.h"
 #include "gpu/command_buffer/service/path_manager.h"
 #include "gpu/command_buffer/service/program_manager.h"
+#include "gpu/command_buffer/service/progress_reporter.h"
 #include "gpu/command_buffer/service/query_manager.h"
 #include "gpu/command_buffer/service/renderbuffer_manager.h"
 #include "gpu/command_buffer/service/sampler_manager.h"
@@ -5471,6 +5472,8 @@ error::Error GLES2DecoderImpl::DoCommandsImpl(unsigned int num_commands,
       process_pos += size;
       cmd_data += size;
     }
+    if (group_->progress_reporter())
+      group_->progress_reporter()->ReportProgress();
   }
 
   *entries_processed = process_pos;
