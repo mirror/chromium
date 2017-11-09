@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "e1a8deac_38ab8185",
+        "filename": "content/network/restricted_cookie_manager.cc",
+        "patchSetId": 10
+      },
+      "lineNbr": 87,
+      "author": {
+        "id": 1163599
+      },
+      "writtenOn": "2017-11-09T14:18:39Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "28bb340a_bd04c98f",
+      "revId": "c08eb8a325f46e970e19d24826fa6271d518dd8f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "1d209576_61742120",
         "filename": "content/network/restricted_cookie_manager_unittest.cc",
         "patchSetId": 10
@@ -33,6 +51,24 @@
       "revId": "c08eb8a325f46e970e19d24826fa6271d518dd8f",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "359751a2_c5693f47",
+        "filename": "content/network/restricted_cookie_manager_unittest.cc",
+        "patchSetId": 10
+      },
+      "lineNbr": 125,
+      "author": {
+        "id": 1163599
+      },
+      "writtenOn": "2017-11-09T14:18:39Z",
+      "side": 1,
+      "message": "50% Done.\n\nI liked both suggestions. Unfortunately, I can follow at most one of them, so I went for the first one.\n\nASSERT_* macros return from the current function (no magic exception throwing) so they only work when used directly in the TEST_* functions/methods. I like the idea of removing boilerplate, so I figured that moving this to a common place is more important than not using CHECK.\n\nI assume you knew all this, and the \"? (not sure)\" in your feedback is intended to let me choose what to follow. I\u0027m documenting the reasoning for posterity.",
+      "parentUuid": "1d209576_61742120",
+      "revId": "c08eb8a325f46e970e19d24826fa6271d518dd8f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -53,6 +89,24 @@
     },
     {
       "key": {
+        "uuid": "ce9e072a_ba5caf24",
+        "filename": "content/network/restricted_cookie_manager_unittest.cc",
+        "patchSetId": 10
+      },
+      "lineNbr": 131,
+      "author": {
+        "id": 1163599
+      },
+      "writtenOn": "2017-11-09T14:18:39Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "e8a7ae0e_8ff6eb19",
+      "revId": "c08eb8a325f46e970e19d24826fa6271d518dd8f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "0dc3a785_28488e48",
         "filename": "content/network/restricted_cookie_manager_unittest.cc",
         "patchSetId": 10
@@ -67,6 +121,24 @@
       "revId": "c08eb8a325f46e970e19d24826fa6271d518dd8f",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c581fd3f_0d46e5ea",
+        "filename": "content/network/restricted_cookie_manager_unittest.cc",
+        "patchSetId": 10
+      },
+      "lineNbr": 132,
+      "author": {
+        "id": 1163599
+      },
+      "writtenOn": "2017-11-09T14:18:39Z",
+      "side": 1,
+      "message": "Done.\n\nThanks for the suggestion, this really made the tests more readable!\n\nI opted for SetSessionCookie (as in session-expiring) because I expect to need other helpers as I add more tests. I also left the path as an argument because it doesn\u0027t add much weight to the tests (it only caused a line wrapping once so far) and I expect to use it in future tests.",
+      "parentUuid": "0dc3a785_28488e48",
+      "revId": "c08eb8a325f46e970e19d24826fa6271d518dd8f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -87,6 +159,24 @@
     },
     {
       "key": {
+        "uuid": "be548196_22682ad5",
+        "filename": "third_party/WebKit/LayoutTests/http/tests/storage/async_cookies/bug774626.html",
+        "patchSetId": 10
+      },
+      "lineNbr": 4,
+      "author": {
+        "id": 1163599
+      },
+      "writtenOn": "2017-11-09T14:18:39Z",
+      "side": 1,
+      "message": "Done.\n\nI also renamed the file so it\u0027ll be more suitable for moving to WPT, and I added the spec link to all tests.",
+      "parentUuid": "c7b48c85_cf35698a",
+      "revId": "c08eb8a325f46e970e19d24826fa6271d518dd8f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "5fd6b8db_4003f835",
         "filename": "third_party/WebKit/LayoutTests/http/tests/storage/async_cookies/cookieStore_delete_arguments.html",
         "patchSetId": 10
@@ -101,6 +191,24 @@
       "revId": "c08eb8a325f46e970e19d24826fa6271d518dd8f",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "495813df_8ef63606",
+        "filename": "third_party/WebKit/LayoutTests/http/tests/storage/async_cookies/cookieStore_delete_arguments.html",
+        "patchSetId": 10
+      },
+      "lineNbr": 1,
+      "author": {
+        "id": 1163599
+      },
+      "writtenOn": "2017-11-09T14:18:39Z",
+      "side": 1,
+      "message": "Done\n\nI\u0027ve added tests to each method that include name in options combined with another meaningful option (to check the other option is not ignored).",
+      "parentUuid": "5fd6b8db_4003f835",
+      "revId": "c08eb8a325f46e970e19d24826fa6271d518dd8f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -121,6 +229,24 @@
     },
     {
       "key": {
+        "uuid": "1e91bc8e_becb8c73",
+        "filename": "third_party/WebKit/LayoutTests/http/tests/storage/async_cookies/cookieStore_delete_arguments.html",
+        "patchSetId": 10
+      },
+      "lineNbr": 3,
+      "author": {
+        "id": 1163599
+      },
+      "writtenOn": "2017-11-09T14:18:39Z",
+      "side": 1,
+      "message": "Done.\n\nThank you for catching! I had \"cokie\" earlier... I can\u0027t seem to be able to type this correctly :(",
+      "parentUuid": "cac80b5c_13e22e88",
+      "revId": "c08eb8a325f46e970e19d24826fa6271d518dd8f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "5be60e3c_6e3055ed",
         "filename": "third_party/WebKit/LayoutTests/http/tests/storage/async_cookies/cookieStore_delete_arguments.html",
         "patchSetId": 10
@@ -135,6 +261,24 @@
       "revId": "c08eb8a325f46e970e19d24826fa6271d518dd8f",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7884449f_ac3dba96",
+        "filename": "third_party/WebKit/LayoutTests/http/tests/storage/async_cookies/cookieStore_delete_arguments.html",
+        "patchSetId": 10
+      },
+      "lineNbr": 5,
+      "author": {
+        "id": 1163599
+      },
+      "writtenOn": "2017-11-09T14:18:39Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "5be60e3c_6e3055ed",
+      "revId": "c08eb8a325f46e970e19d24826fa6271d518dd8f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -155,6 +299,24 @@
     },
     {
       "key": {
+        "uuid": "0b4713bd_31f7290b",
+        "filename": "third_party/WebKit/LayoutTests/http/tests/storage/async_cookies/cookieStore_delete_arguments.html",
+        "patchSetId": 10
+      },
+      "lineNbr": 25,
+      "author": {
+        "id": 1163599
+      },
+      "writtenOn": "2017-11-09T14:18:39Z",
+      "side": 1,
+      "message": "testCase.add_cleanup() does not support Promises yet: https://github.com/w3c/web-platform-tests/issues/6075\n\nI added an async_cleanup wrapper/workaround with an explanation in all tests. It\u0027s not as thorough as add_cleanup, because it won\u0027t fire on test failures. I think this is enough for now, because the issue above will be fixed, and then we\u0027ll be able to remove the workaround.",
+      "parentUuid": "cd31b88f_e18cb929",
+      "revId": "c08eb8a325f46e970e19d24826fa6271d518dd8f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "11da369f_2577c1dc",
         "filename": "third_party/WebKit/LayoutTests/http/tests/storage/async_cookies/cookieStore_delete_arguments.html",
         "patchSetId": 10
@@ -169,6 +331,24 @@
       "revId": "c08eb8a325f46e970e19d24826fa6271d518dd8f",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "80085550_48d589ce",
+        "filename": "third_party/WebKit/LayoutTests/http/tests/storage/async_cookies/cookieStore_delete_arguments.html",
+        "patchSetId": 10
+      },
+      "lineNbr": 38,
+      "author": {
+        "id": 1163599
+      },
+      "writtenOn": "2017-11-09T14:18:39Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "11da369f_2577c1dc",
+      "revId": "c08eb8a325f46e970e19d24826fa6271d518dd8f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -189,6 +369,24 @@
     },
     {
       "key": {
+        "uuid": "bad22043_8c80dd7d",
+        "filename": "third_party/WebKit/LayoutTests/http/tests/storage/async_cookies/cookieStore_getAll_arguments.html",
+        "patchSetId": 10
+      },
+      "lineNbr": 74,
+      "author": {
+        "id": 1163599
+      },
+      "writtenOn": "2017-11-09T14:18:39Z",
+      "side": 1,
+      "message": "Done.\n\nThank you for catching this copy-paste typo!",
+      "parentUuid": "6ad6b334_dd378820",
+      "revId": "c08eb8a325f46e970e19d24826fa6271d518dd8f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "96a7e099_591a56d5",
         "filename": "third_party/WebKit/LayoutTests/http/tests/storage/async_cookies/cookieStore_getAll_arguments.html",
         "patchSetId": 10
@@ -203,6 +401,24 @@
       "revId": "c08eb8a325f46e970e19d24826fa6271d518dd8f",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9bbd48a1_c8952219",
+        "filename": "third_party/WebKit/LayoutTests/http/tests/storage/async_cookies/cookieStore_getAll_arguments.html",
+        "patchSetId": 10
+      },
+      "lineNbr": 87,
+      "author": {
+        "id": 1163599
+      },
+      "writtenOn": "2017-11-09T14:18:39Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "96a7e099_591a56d5",
+      "revId": "c08eb8a325f46e970e19d24826fa6271d518dd8f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -223,6 +439,24 @@
     },
     {
       "key": {
+        "uuid": "7ecf9b77_553e8af6",
+        "filename": "third_party/WebKit/LayoutTests/http/tests/storage/async_cookies/cookieStore_get_arguments.html",
+        "patchSetId": 10
+      },
+      "lineNbr": 1,
+      "author": {
+        "id": 1163599
+      },
+      "writtenOn": "2017-11-09T14:18:39Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "ee5ea101_069794c8",
+      "revId": "c08eb8a325f46e970e19d24826fa6271d518dd8f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "fe53f5c4_0b875e9c",
         "filename": "third_party/WebKit/LayoutTests/http/tests/storage/async_cookies/document_has.html",
         "patchSetId": 10
@@ -237,6 +471,24 @@
       "revId": "c08eb8a325f46e970e19d24826fa6271d518dd8f",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b11cbb70_0aea8853",
+        "filename": "third_party/WebKit/LayoutTests/http/tests/storage/async_cookies/document_has.html",
+        "patchSetId": 10
+      },
+      "lineNbr": 12,
+      "author": {
+        "id": 1163599
+      },
+      "writtenOn": "2017-11-09T14:18:39Z",
+      "side": 1,
+      "message": "I inlined the variable and the result looks reasonable. Thank you for the suggestion!",
+      "parentUuid": "fe53f5c4_0b875e9c",
+      "revId": "c08eb8a325f46e970e19d24826fa6271d518dd8f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -257,6 +509,24 @@
     },
     {
       "key": {
+        "uuid": "fbb32f82_b6d00081",
+        "filename": "third_party/WebKit/Source/modules/cookie_store/CookieStore.cpp",
+        "patchSetId": 10
+      },
+      "lineNbr": 31,
+      "author": {
+        "id": 1163599
+      },
+      "writtenOn": "2017-11-09T14:18:39Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "2a918bcc_02278a07",
+      "revId": "c08eb8a325f46e970e19d24826fa6271d518dd8f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "fe8cf943_8e06d74a",
         "filename": "third_party/WebKit/Source/modules/cookie_store/CookieStore.cpp",
         "patchSetId": 10
@@ -274,6 +544,24 @@
     },
     {
       "key": {
+        "uuid": "b2f6060b_fc6e7ada",
+        "filename": "third_party/WebKit/Source/modules/cookie_store/CookieStore.cpp",
+        "patchSetId": 10
+      },
+      "lineNbr": 71,
+      "author": {
+        "id": 1163599
+      },
+      "writtenOn": "2017-11-09T14:18:39Z",
+      "side": 1,
+      "message": "Yup.\n\nI followed the 2-space-before-comments rule, and then clang-format did this instead. I agree that it\u0027s nicer.",
+      "parentUuid": "fe8cf943_8e06d74a",
+      "revId": "c08eb8a325f46e970e19d24826fa6271d518dd8f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "75b55635_0b5bda36",
         "filename": "third_party/WebKit/Source/modules/cookie_store/CookieStore.cpp",
         "patchSetId": 10
@@ -288,6 +576,24 @@
       "revId": "c08eb8a325f46e970e19d24826fa6271d518dd8f",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9e725378_d8eea733",
+        "filename": "third_party/WebKit/Source/modules/cookie_store/CookieStore.cpp",
+        "patchSetId": 10
+      },
+      "lineNbr": 97,
+      "author": {
+        "id": 1163599
+      },
+      "writtenOn": "2017-11-09T14:18:39Z",
+      "side": 1,
+      "message": "I plan to write something algorithmic, following what you did with IndexedDB. Except that (unless I get pushback) I plan to use a single exception type everywhere. I figured this will avoid a class of minor interop headaches and exception ordering tests :)",
+      "parentUuid": "75b55635_0b5bda36",
+      "revId": "c08eb8a325f46e970e19d24826fa6271d518dd8f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -314,6 +620,30 @@
     },
     {
       "key": {
+        "uuid": "f86cf5b4_5334ff12",
+        "filename": "third_party/WebKit/Source/modules/cookie_store/CookieStore.cpp",
+        "patchSetId": 10
+      },
+      "lineNbr": 239,
+      "author": {
+        "id": 1163599
+      },
+      "writtenOn": "2017-11-09T14:18:39Z",
+      "side": 1,
+      "message": "Done.\n\nFor the record, this contradicts feedback I got from haraken@ at https://chromium-review.googlesource.com/c/chromium/src/+/602673/21/third_party/WebKit/Source/modules/cookie_store/CookieStore.idl#31\n\nI\u0027m following your preference because it\u0027s likely that it\u0027s based on more recent style changes.",
+      "parentUuid": "79c33c16_ee52008e",
+      "range": {
+        "startLine": 239,
+        "startChar": 27,
+        "endLine": 239,
+        "endChar": 44
+      },
+      "revId": "c08eb8a325f46e970e19d24826fa6271d518dd8f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "36c9d81c_15f629d8",
         "filename": "third_party/WebKit/Source/modules/cookie_store/CookieStore.cpp",
         "patchSetId": 10
@@ -328,6 +658,24 @@
       "revId": "c08eb8a325f46e970e19d24826fa6271d518dd8f",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e79ba4c8_4ec1bc58",
+        "filename": "third_party/WebKit/Source/modules/cookie_store/CookieStore.cpp",
+        "patchSetId": 10
+      },
+      "lineNbr": 272,
+      "author": {
+        "id": 1163599
+      },
+      "writtenOn": "2017-11-09T14:18:39Z",
+      "side": 1,
+      "message": "Done.",
+      "parentUuid": "36c9d81c_15f629d8",
+      "revId": "c08eb8a325f46e970e19d24826fa6271d518dd8f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -348,6 +696,24 @@
     },
     {
       "key": {
+        "uuid": "97f800ce_5c27c3e6",
+        "filename": "third_party/WebKit/Source/modules/cookie_store/CookieStore.cpp",
+        "patchSetId": 10
+      },
+      "lineNbr": 318,
+      "author": {
+        "id": 1163599
+      },
+      "writtenOn": "2017-11-09T14:18:39Z",
+      "side": 1,
+      "message": "Done.\n\nIt doesn\u0027t need to be an instance method, thank you!\n\nI\u0027ve made it a static method, mostly because I want to have all of them listed under DoRead. Please let me know if you think it\u0027s better to have these be in CookieStore.cpp\u0027s anonymous namespace.",
+      "parentUuid": "de429521_6d48298a",
+      "revId": "c08eb8a325f46e970e19d24826fa6271d518dd8f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "ac87638b_104f8b90",
         "filename": "third_party/WebKit/Source/modules/cookie_store/CookieStore.cpp",
         "patchSetId": 10
@@ -362,6 +728,24 @@
       "revId": "c08eb8a325f46e970e19d24826fa6271d518dd8f",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "95d16998_fbb09986",
+        "filename": "third_party/WebKit/Source/modules/cookie_store/CookieStore.cpp",
+        "patchSetId": 10
+      },
+      "lineNbr": 360,
+      "author": {
+        "id": 1163599
+      },
+      "writtenOn": "2017-11-09T14:18:39Z",
+      "side": 1,
+      "message": "Done.\n\nI added comments explaining what happens here, in DoRead(), and in ToCanonicalCookie() and ToBackendOptions(). The functions doing the converting throw exceptions when returning null. The bindings code will turn the thrown exceptions into promise rejections.\n\nWhile I could reject the promises rejections explicitly, I think that using the bindings support for exceptions results in less verbose code.",
+      "parentUuid": "ac87638b_104f8b90",
+      "revId": "c08eb8a325f46e970e19d24826fa6271d518dd8f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -382,6 +766,24 @@
     },
     {
       "key": {
+        "uuid": "20594bd6_c52c834d",
+        "filename": "third_party/WebKit/Source/modules/cookie_store/CookieStore.idl",
+        "patchSetId": 10
+      },
+      "lineNbr": 31,
+      "author": {
+        "id": 1163599
+      },
+      "writtenOn": "2017-11-09T14:18:39Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "2fb5b5d3_9f24384c",
+      "revId": "c08eb8a325f46e970e19d24826fa6271d518dd8f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "13671e1d_cfdbb96e",
         "filename": "third_party/WebKit/Source/modules/cookie_store/CookieStoreGetOptions.idl",
         "patchSetId": 10
@@ -399,6 +801,24 @@
     },
     {
       "key": {
+        "uuid": "13b34103_9c5d7f10",
+        "filename": "third_party/WebKit/Source/modules/cookie_store/CookieStoreGetOptions.idl",
+        "patchSetId": 10
+      },
+      "lineNbr": 13,
+      "author": {
+        "id": 1163599
+      },
+      "writtenOn": "2017-11-09T14:18:39Z",
+      "side": 1,
+      "message": "Done.\n\nThanks for bringing this up! I read the discussion at https://github.com/heycam/webidl/issues/84 and it seems like USVString is advisable for strings sent over the wire. I think this applies to the name, value, url, domain, and path arguments / members in this API, so I\u0027ve switched them over.\n\nI don\u0027t think there\u0027s a single DOMString left. I suppose this makes sense for an API centered around HTTP.",
+      "parentUuid": "13671e1d_cfdbb96e",
+      "revId": "c08eb8a325f46e970e19d24826fa6271d518dd8f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "9d7375fd_51649ddd",
         "filename": "third_party/WebKit/Source/modules/cookie_store/CookieStoreSetOptions.idl",
         "patchSetId": 10
@@ -413,6 +833,24 @@
       "revId": "c08eb8a325f46e970e19d24826fa6271d518dd8f",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4f138fa8_61f2804e",
+        "filename": "third_party/WebKit/Source/modules/cookie_store/CookieStoreSetOptions.idl",
+        "patchSetId": 10
+      },
+      "lineNbr": 8,
+      "author": {
+        "id": 1163599
+      },
+      "writtenOn": "2017-11-09T14:18:39Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "9d7375fd_51649ddd",
+      "revId": "c08eb8a325f46e970e19d24826fa6271d518dd8f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
