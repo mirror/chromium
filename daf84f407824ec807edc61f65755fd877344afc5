@@ -1,0 +1,73 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "d065605a_4fee2b51",
+        "filename": "third_party/WebKit/LayoutTests/external/wpt/paint-timing/first-image-child.html",
+        "patchSetId": 2
+      },
+      "lineNbr": 27,
+      "author": {
+        "id": 1116050
+      },
+      "writtenOn": "2017-11-09T14:43:07Z",
+      "side": 1,
+      "message": "function() { testPaintEntries(); } -\u003e\ntestPaintEntries",
+      "range": {
+        "startLine": 27,
+        "startChar": 18,
+        "endLine": 27,
+        "endChar": 30
+      },
+      "revId": "daf84f407824ec807edc61f65755fd877344afc5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "61e15231_3cc86a1d",
+        "filename": "third_party/WebKit/LayoutTests/external/wpt/paint-timing/first-image-child.html",
+        "patchSetId": 2
+      },
+      "lineNbr": 40,
+      "author": {
+        "id": 1116050
+      },
+      "writtenOn": "2017-11-09T14:43:07Z",
+      "side": 1,
+      "message": "This is reasonable. The other option that comes to mind would be a sharedArrayBuffer.\n\nI don\u0027t have any preference between the two of them.",
+      "range": {
+        "startLine": 40,
+        "startChar": 20,
+        "endLine": 40,
+        "endChar": 45
+      },
+      "revId": "daf84f407824ec807edc61f65755fd877344afc5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "eb08ac73_383ac252",
+        "filename": "third_party/WebKit/LayoutTests/external/wpt/paint-timing/first-image-child.html",
+        "patchSetId": 2
+      },
+      "lineNbr": 43,
+      "author": {
+        "id": 1116050
+      },
+      "writtenOn": "2017-11-09T14:43:07Z",
+      "side": 1,
+      "message": "Should this be a t.step, or just a setTimeout?\n\nAlso, this is equivalent to:\nt.step(testPaintEntries);",
+      "range": {
+        "startLine": 43,
+        "startChar": 10,
+        "endLine": 43,
+        "endChar": 14
+      },
+      "revId": "daf84f407824ec807edc61f65755fd877344afc5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
