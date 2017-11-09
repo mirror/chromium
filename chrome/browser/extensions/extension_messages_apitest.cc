@@ -35,6 +35,7 @@
 #include "chrome/common/chrome_paths.h"
 #include "chrome/common/chrome_switches.h"
 #include "chrome/test/base/ui_test_utils.h"
+#include "components/crx_file/id_util.h"
 #include "content/public/browser/notification_registrar.h"
 #include "content/public/browser/notification_service.h"
 #include "content/public/test/browser_test_utils.h"
@@ -245,9 +246,11 @@ class ExternallyConnectableMessagingTest : public MessagingApiTest {
 
   Result CanConnectAndSendMessagesToIFrame(const Extension* extension,
                                            const char* message = NULL) {
+    LOG(WARNING) << "Finding frame";
     content::RenderFrameHost* frame = content::FrameMatchingPredicate(
         browser()->tab_strip_model()->GetActiveWebContents(),
         base::Bind(&content::FrameIsChildOfMainFrame));
+    LOG(WARNING) << "Checking messaging";
     return CanConnectAndSendMessagesToFrame(frame, extension, message);
   }
 
@@ -261,6 +264,7 @@ class ExternallyConnectableMessagingTest : public MessagingApiTest {
         extension->is_platform_app() ? "true" : "false",
         message ? base::StringPrintf("'%s'", message).c_str() : "undefined");
     CHECK(content::ExecuteScriptAndExtractInt(frame, command, &result));
+    LOG(WARNING) << "Injected";
     return static_cast<Result>(result);
   }
 
@@ -463,6 +467,7 @@ class ExternallyConnectableMessagingTest : public MessagingApiTest {
               "}\n"
               "chrome.runtime.onMessageExternal.addListener(\n"
               "    function(message, sender, reply) {\n"
+              "  console.warn('Received message: ' + JSON.stringify(message));\n"
               "  reply({ message: message, sender: sender });\n"
               "  maybeClose(message);\n"
               "});\n"
@@ -991,17 +996,24 @@ IN_PROC_BROWSER_TEST_P(ExternallyConnectableMessagingTest,
 // permission. Iframe should work.
 IN_PROC_BROWSER_TEST_P(ExternallyConnectableMessagingTest,
                        FromIframeWithPermission) {
+  LOG(WARNING) << "Beginning";
   scoped_refptr<const Extension> extension = LoadChromiumConnectableExtension();
 
   ui_test_utils::NavigateToURL(browser(), google_com_url());
+  LOG(WARNING) << "Start";
   EXPECT_EQ(NAMESPACE_NOT_DEFINED,
             CanConnectAndSendMessagesToMainFrame(extension.get()));
+  LOG(WARNING) << "Middle";
   EXPECT_FALSE(AreAnyNonWebApisDefinedForMainFrame());
 
+  LOG(WARNING) <<"Almost";
   ASSERT_TRUE(AppendIframe(chromium_org_url()));
 
+  LOG(WARNING) << "There";
   EXPECT_EQ(OK, CanConnectAndSendMessagesToIFrame(extension.get()));
+  LOG(WARNING) << "and";
   EXPECT_FALSE(AreAnyNonWebApisDefinedForIFrame());
+  LOG(WARNING) << "Done";
 }
 
 // Tests connection from an iframe without permission within a tab that does.
@@ -1277,7 +1289,7 @@ IN_PROC_BROWSER_TEST_P(ExternallyConnectableMessagingTest,
   scoped_refptr<const Extension> invalid =
       ExtensionBuilder()
           // A bit scary that this works...
-          .SetID("invalid")
+          .SetID(crx_file::id_util::GenerateId("invalid"))
           .SetManifest(DictionaryBuilder()
                            .Set("name", "Fake extension")
                            .Set("version", "1")

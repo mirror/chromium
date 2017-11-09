@@ -55,6 +55,7 @@ v8::Local<v8::Object> APIBindingsSystem::CreateAPIInstance(
 
 std::unique_ptr<APIBinding> APIBindingsSystem::CreateNewAPIBinding(
     const std::string& api_name) {
+  LOG(WARNING) << "Creating api binding: " << api_name;
   const base::DictionaryValue& api_schema = get_api_schema_.Run(api_name);
 
   const base::ListValue* function_definitions = nullptr;
@@ -121,6 +122,7 @@ void APIBindingsSystem::FireEventInContext(const std::string& event_name,
 
 APIBindingHooks* APIBindingsSystem::GetHooksForAPI(
     const std::string& api_name) {
+  LOG(WARNING) << "Getting hooks for: " << api_name;
   DCHECK(api_bindings_.empty())
       << "Hook registration must happen before creating any binding instances.";
   std::unique_ptr<APIBindingHooks>& hooks = binding_hooks_[api_name];

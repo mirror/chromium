@@ -184,6 +184,7 @@ bool NativeRendererMessagingService::ContextHasMessagePort(
     const PortId& port_id) {
   if (one_time_message_handler_.HasPort(script_context, port_id))
     return true;
+  v8::HandleScope handle_scope(script_context->isolate());
   MessagingPerContextData* data =
       GetPerContextData(script_context->v8_context(), false);
   return data && base::ContainsKey(data->ports, port_id);
@@ -198,16 +199,21 @@ void NativeRendererMessagingService::DispatchOnConnectToListeners(
     const ExtensionMsg_ExternalConnectionInfo& info,
     const std::string& tls_channel_id,
     const std::string& event_name) {
+  LOG(WARNING) << "Dispatching on connect to listeners: " << event_name;
   v8::Isolate* isolate = script_context->isolate();
   v8::HandleScope handle_scope(isolate);
   v8::Local<v8::Context> v8_context = script_context->v8_context();
+  v8::Context::Scope context_scope(v8_context);
 
+  LOG(WARNING) << "Pre make";
   gin::DataObjectBuilder sender_builder(isolate);
+  LOG(WARNING) << "Make";
   if (!info.source_id.empty())
     sender_builder.Set("id", info.source_id);
   if (!info.source_url.is_empty())
     sender_builder.Set("url", info.source_url.spec());
-  sender_builder.Set("frameId", source->frame_id);
+  if (source->frame_id >= 0)
+    sender_builder.Set("frameId", source->frame_id);
 
   const Extension* extension = script_context->extension();
   if (extension) {
@@ -233,14 +239,11 @@ void NativeRendererMessagingService::DispatchOnConnectToListeners(
 
   v8::Local<v8::Object> sender = sender_builder.Build();
 
+  LOG(WARNING) << "Channel name: " << channel_name;
   if (channel_name == "chrome.extension.sendRequest" ||
       channel_name == "chrome.runtime.sendMessage") {
-    OneTimeMessageHandler::Event event =
-        channel_name == "chrome.extension.sendRequest"
-            ? OneTimeMessageHandler::Event::ON_REQUEST
-            : OneTimeMessageHandler::Event::ON_MESSAGE;
     one_time_message_handler_.AddReceiver(script_context, target_port_id,
-                                          sender, event);
+                                          sender, event_name);
     return;
   }
 
@@ -256,11 +259,13 @@ void NativeRendererMessagingService::DispatchOnMessageToListeners(
     ScriptContext* script_context,
     const Message& message,
     const PortId& target_port_id) {
+  LOG(WARNING) << "Dispatching on message: " << message.data;
   v8::Isolate* isolate = script_context->isolate();
   v8::HandleScope handle_scope(isolate);
 
   if (one_time_message_handler_.DeliverMessage(script_context, message,
                                                target_port_id)) {
+    LOG(WARNING) << "Handled";
     return;
   }
 

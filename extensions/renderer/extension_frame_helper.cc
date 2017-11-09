@@ -25,6 +25,7 @@
 #include "third_party/WebKit/public/web/WebConsoleMessage.h"
 #include "third_party/WebKit/public/web/WebDocument.h"
 #include "third_party/WebKit/public/web/WebLocalFrame.h"
+#include "v8/include/v8.h"
 
 namespace extensions {
 
@@ -131,6 +132,39 @@ std::vector<content::RenderFrame*> ExtensionFrameHelper::GetExtensionFrames(
 }
 
 // static
+v8::Local<v8::Value> ExtensionFrameHelper::GetV8MainFrames(
+    v8::Local<v8::Context> context,
+    const std::string& extension_id,
+    int browser_window_id,
+    int tab_id,
+    ViewType view_type) {
+  std::vector<content::RenderFrame*> render_frames =
+      GetExtensionFrames(extension_id, browser_window_id, tab_id, view_type);
+  v8::Local<v8::Array> v8_frames = v8::Array::New(context->GetIsolate());
+
+  int v8_index = 0;
+  for (content::RenderFrame* frame : render_frames) {
+    if (!frame->IsMainFrame())
+      continue;
+
+    blink::WebLocalFrame* web_frame = frame->GetWebFrame();
+    if (!blink::WebFrame::ScriptCanAccess(web_frame))
+      continue;
+
+    v8::Local<v8::Context> frame_context = web_frame->MainWorldScriptContext();
+    if (!frame_context.IsEmpty()) {
+      v8::Local<v8::Value> window = frame_context->Global();
+      CHECK(!window.IsEmpty());
+      v8::Maybe<bool> maybe =
+          v8_frames->CreateDataProperty(context, v8_index++, window);
+      CHECK(maybe.IsJust() && maybe.FromJust());
+    }
+  }
+
+  return v8_frames;
+}
+
+// static
 content::RenderFrame* ExtensionFrameHelper::GetBackgroundPageFrame(
     const std::string& extension_id) {
   for (const ExtensionFrameHelper* helper : g_frame_helpers.Get()) {
@@ -144,6 +178,23 @@ content::RenderFrame* ExtensionFrameHelper::GetBackgroundPageFrame(
     }
   }
   return nullptr;
+}
+
+// static
+v8::Local<v8::Value> ExtensionFrameHelper::GetV8BackgroundPageMainFrame(
+    v8::Isolate* isolate,
+    const std::string& extension_id) {
+  content::RenderFrame* main_frame = GetBackgroundPageFrame(extension_id);
+
+  v8::Local<v8::Value> background_page;
+  blink::WebLocalFrame* web_frame =
+      main_frame ? main_frame->GetWebFrame() : nullptr;
+  if (web_frame && blink::WebFrame::ScriptCanAccess(web_frame))
+    background_page = web_frame->MainWorldScriptContext()->Global();
+  else
+    background_page = v8::Undefined(isolate);
+
+  return background_page;
 }
 
 // static

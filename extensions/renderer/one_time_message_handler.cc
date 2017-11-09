@@ -29,9 +29,6 @@ namespace extensions {
 
 namespace {
 
-constexpr char kRuntimeOnMessage[] = "runtime.onMessage";
-constexpr char kExtensionOnRequest[] = "extension.onRequest";
-
 // An opener port in the context; i.e., the caller of runtime.sendMessage.
 struct OneTimeOpener {
   int request_id = -1;
@@ -41,7 +38,7 @@ struct OneTimeOpener {
 // A receiver port in the context; i.e., a listener to runtime.onMessage.
 struct OneTimeReceiver {
   int routing_id = MSG_ROUTING_NONE;
-  const char* event_name = nullptr;
+  std::string event_name;
   v8::Global<v8::Object> sender;
 };
 
@@ -170,7 +167,7 @@ void OneTimeMessageHandler::SendMessage(
 void OneTimeMessageHandler::AddReceiver(ScriptContext* script_context,
                                         const PortId& target_port_id,
                                         v8::Local<v8::Object> sender,
-                                        Event event) {
+                                        const std::string& event_name) {
   DCHECK(!target_port_id.is_opener);
   DCHECK_NE(script_context->context_id(), target_port_id.context_id);
 
@@ -184,8 +181,7 @@ void OneTimeMessageHandler::AddReceiver(ScriptContext* script_context,
   OneTimeReceiver& receiver = data->receivers[target_port_id];
   receiver.sender.Reset(isolate, sender);
   receiver.routing_id = RoutingIdForScriptContext(script_context);
-  receiver.event_name =
-      event == Event::ON_REQUEST ? kExtensionOnRequest : kRuntimeOnMessage;
+  receiver.event_name = event_name;
 }
 
 bool OneTimeMessageHandler::DeliverMessage(ScriptContext* script_context,
@@ -341,7 +337,8 @@ bool OneTimeMessageHandler::DisconnectOpener(ScriptContext* script_context,
   DCHECK_NE(-1, port.request_id);
 
   bindings_system_->api_system()->request_handler()->CompleteRequest(
-      port.request_id, std::vector<v8::Local<v8::Value>>(), error_message);
+      port.request_id, std::vector<v8::Local<v8::Value>>(),
+      error_message.empty() ? "The message port closed before a response was received." : error_message);
 
   data->openers.erase(iter);
   return handled;

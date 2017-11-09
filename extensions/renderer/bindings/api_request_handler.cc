@@ -59,6 +59,7 @@ int APIRequestHandler::StartRequest(v8::Local<v8::Context> context,
                                     v8::Local<v8::Function> callback,
                                     v8::Local<v8::Function> custom_callback,
                                     binding::RequestThread thread) {
+  LOG(WARNING) << "Starting Request: " << method << ", custom: " << custom_callback.IsEmpty();
   auto request = std::make_unique<Request>();
 
   // The request id is primarily used in the renderer to associate an API
@@ -72,6 +73,7 @@ int APIRequestHandler::StartRequest(v8::Local<v8::Context> context,
   // (ExtensionHostMsg_Request).
   // base::UnguessableToken is another good option.
   int request_id = next_request_id_++;
+  LOG(WARNING) << "ID: " << request_id;
   request->request_id = request_id;
 
   if (!custom_callback.IsEmpty() || !callback.IsEmpty()) {
@@ -82,6 +84,7 @@ int APIRequestHandler::StartRequest(v8::Local<v8::Context> context,
     // APIRequestHandler, but we need to curry in the other values.
     std::vector<v8::Local<v8::Value>> callback_args;
     if (!custom_callback.IsEmpty()) {
+      LOG(WARNING) << "Custom callback included";
       // TODO(devlin): The |request| object in the JS bindings includes
       // properties for callback, callbackSchema, args, stack, id, and
       // customCallback. Of those, it appears that we only use stack, args, and
@@ -145,6 +148,7 @@ void APIRequestHandler::CompleteRequest(
     int request_id,
     const std::vector<v8::Local<v8::Value>>& response_args,
     const std::string& error) {
+  LOG(WARNING) << "Complete request: " << request_id;
   auto iter = pending_requests_.find(request_id);
   // The request may have been removed if the context was invalidated before a
   // response is ready.

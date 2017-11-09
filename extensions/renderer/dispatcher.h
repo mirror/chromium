@@ -56,6 +56,7 @@ namespace extensions {
 class ContentWatcher;
 class DispatcherDelegate;
 class ExtensionBindingsSystem;
+class IPCMessageSender;
 class ScriptContext;
 class ScriptInjectionManager;
 struct EventFilteringInfo;
@@ -133,6 +134,10 @@ class Dispatcher : public content::RenderThreadObserver,
                                 const std::string& module_name,
                                 const std::string& function_name,
                                 const base::ListValue& args);
+
+  std::unique_ptr<ExtensionBindingsSystem> CreateBindingsSystem(
+      std::unique_ptr<IPCMessageSender> ipc_sender,
+      ResourceBundleSourceMap* source_map);
 
   // Returns a list of (module name, resource id) pairs for the JS modules to
   // add to the source map.
