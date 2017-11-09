@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "f36fcc66_e07ffb10",
+        "filename": "chrome/browser/ui/cocoa/browser_window_controller_private.mm",
+        "patchSetId": 3
+      },
+      "lineNbr": 597,
+      "author": {
+        "id": 1000022
+      },
+      "writtenOn": "2017-11-09T13:32:31Z",
+      "side": 1,
+      "message": "this comment now doesn\u0027t make much sense - if we want to hide both titlebar and toolbar, why hide them only if there\u0027s a toolbar, and not just when there\u0027s a titlebar? I think part of the CL description should actually be in this comment so future readers aren\u0027t puzzled :)",
+      "range": {
+        "startLine": 597,
+        "startChar": 67,
+        "endLine": 597,
+        "endChar": 74
+      },
+      "revId": "e5b759a26499784b32165093fbf8fbaaa87dd0f5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b886835f_9a108feb",
+        "filename": "chrome/browser/ui/cocoa/browser_window_controller_private.mm",
+        "patchSetId": 3
+      },
+      "lineNbr": 603,
+      "author": {
+        "id": 1000022
+      },
+      "writtenOn": "2017-11-09T13:32:31Z",
+      "side": 1,
+      "message": "thank you for restructuring this code like this - it\u0027s much easier to understand now :)",
+      "range": {
+        "startLine": 603,
+        "startChar": 8,
+        "endLine": 603,
+        "endChar": 16
+      },
+      "revId": "e5b759a26499784b32165093fbf8fbaaa87dd0f5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
