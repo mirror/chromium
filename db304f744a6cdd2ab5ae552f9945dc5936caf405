@@ -1,0 +1,89 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "ad72f7a4_3b4a774f",
+        "filename": "components/favicon_base/favicon_types.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 25,
+      "author": {
+        "id": 1002691
+      },
+      "writtenOn": "2017-11-09T23:49:53Z",
+      "side": 1,
+      "message": "Can the comments here be more explicit and SUPER SCARY about not changing the values since they\u0027re persisted to UMA?",
+      "revId": "db304f744a6cdd2ab5ae552f9945dc5936caf405",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "98cf0dfd_8d7da404",
+        "filename": "components/favicon_base/favicon_types.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 33,
+      "author": {
+        "id": 1002691
+      },
+      "writtenOn": "2017-11-09T23:49:53Z",
+      "side": 1,
+      "message": "When we rely on specific integer values, I prefer being explicit. At least with the first one. When it says \"\u003d 0\" it\u0027s a signal to me that \"the values of this enum are not arbitrary\".",
+      "revId": "db304f744a6cdd2ab5ae552f9945dc5936caf405",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8dc8f001_bebc7a89",
+        "filename": "components/favicon_base/favicon_types.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 39,
+      "author": {
+        "id": 1002691
+      },
+      "writtenOn": "2017-11-09T23:49:53Z",
+      "side": 1,
+      "message": "Having both \"max\" and \"count\" seems unfortunate. Is there a way to have only one of these?",
+      "revId": "db304f744a6cdd2ab5ae552f9945dc5936caf405",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d8b61773_05f6bd93",
+        "filename": "ios/web/public/favicon_url.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 20,
+      "author": {
+        "id": 1002691
+      },
+      "writtenOn": "2017-11-09T23:49:53Z",
+      "side": 1,
+      "message": "\u003d 0 also if you do it in the other one.",
+      "revId": "db304f744a6cdd2ab5ae552f9945dc5936caf405",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "fdd5c42a_167d738e",
+        "filename": "ios/web/public/favicon_url.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 27,
+      "author": {
+        "id": 1002691
+      },
+      "writtenOn": "2017-11-09T23:49:53Z",
+      "side": 1,
+      "message": "Optional while we\u0027re updating things: it might be nice if this class was moveable.",
+      "revId": "db304f744a6cdd2ab5ae552f9945dc5936caf405",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
