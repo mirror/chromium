@@ -70,6 +70,30 @@
       "revId": "af683088e0429fec13624501a2b6b1109474bbf3",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "73fe7e04_0100482d",
+        "filename": "net/dns/dns_config_service_posix.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 403,
+      "author": {
+        "id": 1120845
+      },
+      "writtenOn": "2017-11-09T17:52:04Z",
+      "side": 1,
+      "message": "Looks great! Thanks",
+      "parentUuid": "e4184e7e_35385e3a",
+      "range": {
+        "startLine": 403,
+        "startChar": 18,
+        "endLine": 403,
+        "endChar": 32
+      },
+      "revId": "af683088e0429fec13624501a2b6b1109474bbf3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
