@@ -1,0 +1,61 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "3f541235_599c5faa",
+        "filename": "chrome/browser/consent_auditor/consent_auditor_factory.cc",
+        "patchSetId": 11
+      },
+      "lineNbr": 17,
+      "author": {
+        "id": 1116027
+      },
+      "writtenOn": "2017-11-09T17:26:01Z",
+      "side": 1,
+      "message": "Is this now preferred to base::Singleton? Should we convert the other factories?",
+      "revId": "d67c359015046a9644c5b99e0e15a88b932ec0c5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "650be285_856bf044",
+        "filename": "chrome/browser/consent_auditor/consent_auditor_factory.h",
+        "patchSetId": 11
+      },
+      "lineNbr": 15,
+      "author": {
+        "id": 1116027
+      },
+      "writtenOn": "2017-11-09T17:26:01Z",
+      "side": 1,
+      "message": "If you use a static global then you don\u0027t need DefaultSingletonTraits.",
+      "range": {
+        "startLine": 11,
+        "startChar": 0,
+        "endLine": 15,
+        "endChar": 0
+      },
+      "revId": "d67c359015046a9644c5b99e0e15a88b932ec0c5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9d9f84a2_875d2c23",
+        "filename": "chrome/browser/consent_auditor/consent_auditor_factory.h",
+        "patchSetId": 11
+      },
+      "lineNbr": 35,
+      "author": {
+        "id": 1116027
+      },
+      "writtenOn": "2017-11-09T17:26:01Z",
+      "side": 1,
+      "message": "ditto, this can be removed if you use a global static.",
+      "revId": "d67c359015046a9644c5b99e0e15a88b932ec0c5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
