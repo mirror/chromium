@@ -69,6 +69,30 @@
       "revId": "6cf8b377cc45bfeb5ff5f06f9c32344423a8e39e",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e77a500b_ad876c97",
+        "filename": "chrome/browser/android/bookmarks/partner_bookmarks_reader.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 313,
+      "author": {
+        "id": 1144344
+      },
+      "writtenOn": "2017-11-09T07:12:47Z",
+      "side": 1,
+      "message": "Since we set fallback_to_server \u003d false in this CL, we are free to address this issue in the next CL if you want. This CL looks good to land except the thread safety issue.",
+      "parentUuid": "3c7e48b2_0c31c32d",
+      "range": {
+        "startLine": 313,
+        "startChar": 6,
+        "endLine": 313,
+        "endChar": 71
+      },
+      "revId": "6cf8b377cc45bfeb5ff5f06f9c32344423a8e39e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
