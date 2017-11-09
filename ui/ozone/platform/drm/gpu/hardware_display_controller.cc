@@ -11,6 +11,7 @@
 
 #include "base/logging.h"
 #include "base/memory/ptr_util.h"
+#include "base/posix/eintr_wrapper.h"
 #include "base/trace_event/trace_event.h"
 #include "third_party/skia/include/core/SkCanvas.h"
 #include "ui/gfx/geometry/point.h"
@@ -84,19 +85,22 @@ void HardwareDisplayController::Disable() {
 
 bool HardwareDisplayController::SchedulePageFlip(
     const OverlayPlaneList& plane_list,
+    base::ScopedFD render_fence_fd,
     SwapCompletionOnceCallback callback) {
-  return ActualSchedulePageFlip(plane_list, false /* test_only */,
-                                std::move(callback));
+  return ActualSchedulePageFlip(plane_list, std::move(render_fence_fd),
+                                false /* test_only */, std::move(callback));
 }
 
 bool HardwareDisplayController::TestPageFlip(
     const OverlayPlaneList& plane_list) {
-  return ActualSchedulePageFlip(plane_list, true /* test_only */,
+  return ActualSchedulePageFlip(plane_list, base::ScopedFD(),
+                                true /* test_only */,
                                 base::BindOnce(&EmptyFlipCallback));
 }
 
 bool HardwareDisplayController::ActualSchedulePageFlip(
     const OverlayPlaneList& plane_list,
+    base::ScopedFD render_fence_fd,
     bool test_only,
     SwapCompletionOnceCallback callback) {
   TRACE_EVENT0("drm", "HDC::SchedulePageFlip");
@@ -126,9 +130,16 @@ bool HardwareDisplayController::ActualSchedulePageFlip(
 
   bool status = true;
   for (const auto& controller : crtc_controllers_) {
-    status &= controller->SchedulePageFlip(
-        owned_hardware_planes_[controller->drm().get()].get(), pending_planes,
-        test_only, page_flip_request);
+    HardwareDisplayPlaneList* planes =
+        owned_hardware_planes_[controller->drm().get()].get();
+
+    if (render_fence_fd.is_valid() && !planes->render_fence_fd.is_valid()) {
+      planes->render_fence_fd =
+          base::ScopedFD(HANDLE_EINTR(dup(render_fence_fd.get())));
+    }
+
+    status &= controller->SchedulePageFlip(planes, pending_planes, test_only,
+                                           page_flip_request);
   }
 
   for (const auto& planes : owned_hardware_planes_) {

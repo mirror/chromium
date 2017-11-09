@@ -237,23 +237,30 @@ class HardwareDisplayPlaneManagerWaitForRenderTest : public testing::Test {
 
   void UseLegacyManager();
   void UseAtomicManager();
-  void WaitForRender();
+  void WaitForRender(bool has_fence_fd);
 
   std::unique_ptr<ui::HardwareDisplayPlaneManager> plane_manager_;
   bool wait_task_called = false;
+  bool no_wait_task_called = false;
   bool callback_called = false;
 
   base::test::ScopedTaskEnvironment task_env_{
       base::test::ScopedTaskEnvironment::MainThreadType::DEFAULT,
       base::test::ScopedTaskEnvironment::ExecutionMode::QUEUED};
 
+  static constexpr bool with_fence_fd = true;
+  static constexpr bool without_fence_fd = false;
+
  private:
   DISALLOW_COPY_AND_ASSIGN(HardwareDisplayPlaneManagerWaitForRenderTest);
 };
 
-void HardwareDisplayPlaneManagerWaitForRenderTest::WaitForRender() {
+void HardwareDisplayPlaneManagerWaitForRenderTest::WaitForRender(
+    bool has_fence_fd) {
   auto set_true = [](bool* b) { *b = true; };
   plane_manager_->WaitForRender(base::BindOnce(set_true, &wait_task_called),
+                                base::BindOnce(set_true, &no_wait_task_called),
+                                has_fence_fd,
                                 base::BindOnce(set_true, &callback_called));
 }
 
@@ -266,30 +273,66 @@ void HardwareDisplayPlaneManagerWaitForRenderTest::UseAtomicManager() {
 }
 
 TEST_F(HardwareDisplayPlaneManagerWaitForRenderTest,
-       LegacyWaitsAsynchronously) {
+       LegacyWithoutFenceFDWaitsAsynchronously) {
   UseLegacyManager();
-  WaitForRender();
+  WaitForRender(without_fence_fd);
 
   EXPECT_FALSE(wait_task_called);
+  EXPECT_FALSE(no_wait_task_called);
   EXPECT_FALSE(callback_called);
 
   task_env_.RunUntilIdle();
 
   EXPECT_TRUE(wait_task_called);
+  EXPECT_FALSE(no_wait_task_called);
   EXPECT_TRUE(callback_called);
 }
 
 TEST_F(HardwareDisplayPlaneManagerWaitForRenderTest,
-       AtomicWaitsAsynchronously) {
-  UseAtomicManager();
-  WaitForRender();
+       LegacyWithFenceFDWaitsAsynchronously) {
+  UseLegacyManager();
+  WaitForRender(with_fence_fd);
 
   EXPECT_FALSE(wait_task_called);
+  EXPECT_FALSE(no_wait_task_called);
   EXPECT_FALSE(callback_called);
 
   task_env_.RunUntilIdle();
 
   EXPECT_TRUE(wait_task_called);
+  EXPECT_FALSE(no_wait_task_called);
+  EXPECT_TRUE(callback_called);
+}
+
+TEST_F(HardwareDisplayPlaneManagerWaitForRenderTest,
+       AtomicWithoutFenceFDWaitsAsynchronously) {
+  UseAtomicManager();
+  WaitForRender(without_fence_fd);
+
+  EXPECT_FALSE(wait_task_called);
+  EXPECT_FALSE(no_wait_task_called);
+  EXPECT_FALSE(callback_called);
+
+  task_env_.RunUntilIdle();
+
+  EXPECT_TRUE(wait_task_called);
+  EXPECT_FALSE(no_wait_task_called);
+  EXPECT_TRUE(callback_called);
+}
+
+TEST_F(HardwareDisplayPlaneManagerWaitForRenderTest,
+       AtomicWithFenceFDDoesNotWait) {
+  UseAtomicManager();
+  WaitForRender(with_fence_fd);
+
+  EXPECT_FALSE(wait_task_called);
+  EXPECT_FALSE(no_wait_task_called);
+  EXPECT_FALSE(callback_called);
+
+  task_env_.RunUntilIdle();
+
+  EXPECT_FALSE(wait_task_called);
+  EXPECT_TRUE(no_wait_task_called);
   EXPECT_TRUE(callback_called);
 }
 

@@ -8,6 +8,7 @@
 #include <memory>
 #include <vector>
 
+#include "base/files/scoped_file.h"
 #include "base/macros.h"
 #include "base/memory/weak_ptr.h"
 #include "ui/gfx/native_widget_types.h"
@@ -73,12 +74,14 @@ class GbmSurfaceless : public gl::SurfacelessEGL {
     bool ready = false;
     std::vector<gl::GLSurfaceOverlay> overlays;
     base::OnceClosure render_wait_task;
+    base::OnceClosure no_render_wait_task;
+    base::ScopedFD render_fence_fd;
     SwapCompletionCallback callback;
   };
 
   void SubmitFrame();
 
-  EGLSyncKHR InsertFence(bool implicit);
+  EGLSyncKHR InsertFence();
 
   void SwapCompleted(const SwapCompletionCallback& callback,
                      gfx::SwapResult result);
@@ -92,6 +95,7 @@ class GbmSurfaceless : public gl::SurfacelessEGL {
   std::unique_ptr<gfx::VSyncProvider> vsync_provider_;
   std::vector<std::unique_ptr<PendingFrame>> unsubmitted_frames_;
   bool has_implicit_external_sync_;
+  bool has_native_fence_sync_;
   bool last_swap_buffers_result_ = true;
   bool swap_buffers_pending_ = false;
   bool rely_on_implicit_sync_ = false;

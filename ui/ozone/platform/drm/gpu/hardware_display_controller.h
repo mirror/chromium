@@ -15,6 +15,7 @@
 #include <vector>
 
 #include "base/callback.h"
+#include "base/files/scoped_file.h"
 #include "base/macros.h"
 #include "base/time/time.h"
 #include "ui/gfx/swap_result.h"
@@ -117,6 +118,7 @@ class HardwareDisplayController {
   // Note that this function does not block. Also, this function should not be
   // called again before the page flip occurrs.
   bool SchedulePageFlip(const OverlayPlaneList& plane_list,
+                        base::ScopedFD render_fence_fd,
                         SwapCompletionOnceCallback callback);
 
   // Returns true if the page flip with the |plane_list| would succeed. This
@@ -159,6 +161,7 @@ class HardwareDisplayController {
 
  private:
   bool ActualSchedulePageFlip(const OverlayPlaneList& plane_list,
+                              base::ScopedFD render_fence_fd,
                               bool test_only,
                               SwapCompletionOnceCallback callback);
 

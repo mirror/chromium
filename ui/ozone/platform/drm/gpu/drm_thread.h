@@ -86,6 +86,8 @@ class DrmThread : public base::Thread,
   void SchedulePageFlip(gfx::AcceleratedWidget widget,
                         const std::vector<OverlayPlane>& planes,
                         base::OnceClosure render_wait_task,
+                        base::OnceClosure no_render_wait_task,
+                        base::ScopedFD render_fence_fd,
                         SwapCompletionOnceCallback callback);
   void GetVSyncParameters(
       gfx::AcceleratedWidget widget,
@@ -144,6 +146,7 @@ class DrmThread : public base::Thread,
  private:
   void SchedulePageFlipNoWait(gfx::AcceleratedWidget widget,
                               const std::vector<OverlayPlane>& planes,
+                              base::ScopedFD render_fence_fd,
                               SwapCompletionOnceCallback callback);
 
   std::unique_ptr<DrmDeviceManager> device_manager_;

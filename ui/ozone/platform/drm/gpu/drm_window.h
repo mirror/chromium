@@ -7,6 +7,7 @@
 
 #include <vector>
 
+#include "base/files/scoped_file.h"
 #include "base/macros.h"
 #include "base/timer/timer.h"
 #include "ui/gfx/geometry/point.h"
@@ -86,6 +87,7 @@ class DrmWindow {
   void MoveCursor(const gfx::Point& location);
 
   bool SchedulePageFlip(const std::vector<OverlayPlane>& planes,
+                        base::ScopedFD render_fence_fd,
                         SwapCompletionOnceCallback callback);
   std::vector<OverlayCheckReturn_Params> TestPageFlip(
       const std::vector<OverlayCheck_Params>& overlay_params);
