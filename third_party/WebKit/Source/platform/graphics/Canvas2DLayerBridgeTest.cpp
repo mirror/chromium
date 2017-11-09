@@ -102,11 +102,18 @@ class Canvas2DLayerBridgePtr {
 class MockGLES2InterfaceWithImageSupport : public FakeGLES2Interface {
  public:
   MOCK_METHOD0(Flush, void());
-  MOCK_METHOD4(CreateImageCHROMIUM,
-               GLuint(ClientBuffer, GLsizei, GLsizei, GLenum));
-  MOCK_METHOD1(DestroyImageCHROMIUM, void(GLuint));
-  MOCK_METHOD2(GenTextures, void(GLsizei, GLuint*));
-  MOCK_METHOD2(DeleteTextures, void(GLsizei, const GLuint*));
+
+  GLuint CreateImageCHROMIUM(ClientBuffer, GLsizei, GLsizei, GLenum) override {
+    return ++create_image_count_;
+  }
+  void DestroyImageCHROMIUM(GLuint) override { ++destroy_image_count_; }
+
+  GLuint CreateImageCount() { return create_image_count_; }
+  GLuint DestroyImageCount() { return destroy_image_count_; }
+
+ private:
+  GLuint create_image_count_ = 0;
+  GLuint destroy_image_count_ = 0;
 };
 
 class FakePlatformSupport : public TestingPlatformSupport {

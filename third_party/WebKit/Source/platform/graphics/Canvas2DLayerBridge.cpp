@@ -226,7 +226,6 @@ void Canvas2DLayerBridge::Hibernate() {
   hibernation_image_ = temp_hibernation_surface->makeImageSnapshot();
   ResetResourceProvider();
   layer_->ClearTexture();
-
   // shouldBeDirectComposited() may have changed.
   if (image_buffer_)
     image_buffer_->SetNeedsCompositingUpdate();
