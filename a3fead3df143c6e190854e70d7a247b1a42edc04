@@ -1,0 +1,72 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "3bd61962_711ef0c5",
+        "filename": "chrome/browser/media/media_engagement_contents_observer.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 114,
+      "author": {
+        "id": 1115974
+      },
+      "writtenOn": "2017-11-09T13:40:42Z",
+      "side": 1,
+      "message": "nit: better to say \"when visit ends\" as the code triggering `MaybeCommitPendingData(kVisitEnd)` might change and this comment will unlikely be updated.",
+      "revId": "a3fead3df143c6e190854e70d7a247b1a42edc04",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5ef1dd90_a3f039a2",
+        "filename": "chrome/browser/media/media_engagement_contents_observer.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 121,
+      "author": {
+        "id": 1115974
+      },
+      "writtenOn": "2017-11-09T13:40:42Z",
+      "side": 1,
+      "message": "style: drop { }",
+      "revId": "a3fead3df143c6e190854e70d7a247b1a42edc04",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3b310509_32fd27ba",
+        "filename": "chrome/browser/media/media_engagement_contents_observer.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 155,
+      "author": {
+        "id": 1115974
+      },
+      "writtenOn": "2017-11-09T13:40:42Z",
+      "side": 1,
+      "message": "A `DCHECK_EQ(kVisitEnd, trigger);` is worth a thousand words :)",
+      "revId": "a3fead3df143c6e190854e70d7a247b1a42edc04",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "de1307ed_7b17acb4",
+        "filename": "chrome/browser/media/media_engagement_contents_observer.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 385,
+      "author": {
+        "id": 1115974
+      },
+      "writtenOn": "2017-11-09T13:40:42Z",
+      "side": 1,
+      "message": "Above, you check that `id` isn\u0027t present. The result here wouldn\u0027t be determinated. C++ in debug often initialise `int` to 0 and `bool` to `false` but this maybe behave differently, regardless of DCHECK_IS_ON.",
+      "revId": "a3fead3df143c6e190854e70d7a247b1a42edc04",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
