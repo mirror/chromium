@@ -260,6 +260,8 @@ class BLINK_EXPORT WebFrameClient {
   virtual void DidUpdateToUniqueOrigin(
       bool is_potentially_trustworthy_unique_origin) {}
 
+  virtual void DidUpdateAboutBlank(const WebURL& url) {}
+
   // The sandbox flags or container policy have changed for a child frame of
   // this frame.
   virtual void DidChangeFramePolicy(
