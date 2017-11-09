@@ -2,35 +2,32 @@
 // Use of this source code is governed by a BSD-style license that can be
 // found in the LICENSE file.
 
-#ifndef CHROME_BROWSER_CHROMEOS_LOGIN_USERS_SCOPED_USER_MANAGER_ENABLER_H_
-#define CHROME_BROWSER_CHROMEOS_LOGIN_USERS_SCOPED_USER_MANAGER_ENABLER_H_
+#ifndef COMPONENTS_USER_MANAGER_SCOPED_USER_MANAGER_H_
+#define COMPONENTS_USER_MANAGER_SCOPED_USER_MANAGER_H_
 
 #include "base/macros.h"
+#include "components/user_manager/user_manager_export.h"
 
 namespace user_manager {
+
 class UserManager;
-}
-
-namespace chromeos {
-
-class ChromeUserManager;
 
 // Helper class for unit tests. Initializes the UserManager singleton to the
 // given |user_manager| and tears it down again on destruction. If the singleton
 // had already been initialized, its previous value is restored after tearing
 // down |user_manager|.
-class ScopedUserManagerEnabler {
+class USER_MANAGER_EXPORT ScopedUserManager {
  public:
   // Takes ownership of |user_manager|.
-  explicit ScopedUserManagerEnabler(ChromeUserManager* user_manager);
-  ~ScopedUserManagerEnabler();
+  explicit ScopedUserManager(UserManager* user_manager);
+  ~ScopedUserManager();
 
  private:
   user_manager::UserManager* previous_user_manager_;
 
-  DISALLOW_COPY_AND_ASSIGN(ScopedUserManagerEnabler);
+  DISALLOW_COPY_AND_ASSIGN(ScopedUserManager);
 };
 
-}  // namespace chromeos
+}  // namespace user_manager
 
-#endif  // CHROME_BROWSER_CHROMEOS_LOGIN_USERS_SCOPED_USER_MANAGER_ENABLER_H_
+#endif  // COMPONENTS_USER_MANAGER_SCOPED_USER_MANAGER_H_

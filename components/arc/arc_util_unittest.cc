@@ -42,7 +42,7 @@ class ScopedArcFeature {
 };
 
 // Helper to enable user_manager::FakeUserManager while it is in scope.
-// TODO(xiyuan): Remove after ScopedUserManagerEnabler is moved to user_manager.
+// TODO(xiyuan): Remove after ScopedUserManager is moved to user_manager.
 class ScopedUserManager {
  public:
   explicit ScopedUserManager(user_manager::UserManager* user_manager)

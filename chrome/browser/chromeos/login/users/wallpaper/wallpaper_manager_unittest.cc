@@ -16,7 +16,6 @@
 #include "base/files/scoped_temp_dir.h"
 #include "chrome/browser/chromeos/login/startup_utils.h"
 #include "chrome/browser/chromeos/login/users/fake_chrome_user_manager.h"
-#include "chrome/browser/chromeos/login/users/scoped_user_manager_enabler.h"
 #include "chrome/browser/chromeos/settings/cros_settings.h"
 #include "chrome/browser/chromeos/settings/device_settings_service.h"
 #include "chrome/browser/prefs/browser_prefs.h"
@@ -26,6 +25,7 @@
 #include "chromeos/settings/cros_settings_provider.h"
 #include "components/prefs/pref_service.h"
 #include "components/prefs/testing_pref_service.h"
+#include "components/user_manager/scoped_user_manager.h"
 #include "testing/gtest/include/gtest/gtest.h"
 #include "ui/gfx/image/image.h"
 
@@ -64,7 +64,7 @@ class WallpaperManagerCacheTest : public AshTestBase {
 
  private:
   FakeChromeUserManager* fake_user_manager_;
-  ScopedUserManagerEnabler scoped_user_manager_;
+  user_manager::ScopedUserManager scoped_user_manager_;
 };
 
 TEST_F(WallpaperManagerCacheTest, VerifyWallpaperCache) {

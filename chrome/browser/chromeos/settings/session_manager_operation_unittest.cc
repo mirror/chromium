@@ -16,7 +16,6 @@
 #include "base/macros.h"
 #include "base/memory/ref_counted.h"
 #include "base/time/time.h"
-#include "chrome/browser/chromeos/login/users/scoped_user_manager_enabler.h"
 #include "chrome/browser/chromeos/ownership/owner_settings_service_chromeos.h"
 #include "chrome/browser/chromeos/ownership/owner_settings_service_chromeos_factory.h"
 #include "chrome/browser/chromeos/settings/device_settings_test_helper.h"
@@ -28,6 +27,7 @@
 #include "components/policy/proto/chrome_device_policy.pb.h"
 #include "components/policy/proto/device_management_backend.pb.h"
 #include "components/user_manager/fake_user_manager.h"
+#include "components/user_manager/scoped_user_manager.h"
 #include "content/public/test/test_browser_thread_bundle.h"
 #include "content/public/test/test_utils.h"
 #include "crypto/rsa_private_key.h"
@@ -114,7 +114,7 @@ class SessionManagerOperationTest : public testing::Test {
   scoped_refptr<ownership::MockOwnerKeyUtil> owner_key_util_;
 
   chromeos::FakeChromeUserManager* user_manager_;
-  ScopedUserManagerEnabler user_manager_enabler_;
+  user_manager::ScopedUserManager user_manager_enabler_;
 
   std::unique_ptr<TestingProfile> profile_;
   OwnerSettingsServiceChromeOS* service_;

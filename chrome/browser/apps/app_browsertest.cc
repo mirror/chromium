@@ -64,9 +64,9 @@
 
 #if defined(OS_CHROMEOS)
 #include "chrome/browser/chromeos/login/users/mock_user_manager.h"
-#include "chrome/browser/chromeos/login/users/scoped_user_manager_enabler.h"
 #include "chromeos/dbus/dbus_thread_manager.h"
 #include "chromeos/dbus/fake_power_manager_client.h"
+#include "components/user_manager/scoped_user_manager.h"
 #endif
 
 using content::WebContents;
@@ -1282,8 +1282,8 @@ class RestartDeviceTest : public PlatformAppBrowserTest {
     PlatformAppBrowserTest::SetUpOnMainThread();
 
     mock_user_manager_ = new chromeos::MockUserManager;
-    user_manager_enabler_.reset(
-        new chromeos::ScopedUserManagerEnabler(mock_user_manager_));
+    user_manager_enabler_ =
+        std::make_unique<user_manager::ScopedUserManager>(mock_user_manager_);
 
     EXPECT_CALL(*mock_user_manager_, IsUserLoggedIn())
         .WillRepeatedly(testing::Return(true));
@@ -1310,7 +1310,7 @@ class RestartDeviceTest : public PlatformAppBrowserTest {
  private:
   chromeos::FakePowerManagerClient* power_manager_client_;
   chromeos::MockUserManager* mock_user_manager_;
-  std::unique_ptr<chromeos::ScopedUserManagerEnabler> user_manager_enabler_;
+  std::unique_ptr<user_manager::ScopedUserManager> user_manager_enabler_;
 
   DISALLOW_COPY_AND_ASSIGN(RestartDeviceTest);
 };

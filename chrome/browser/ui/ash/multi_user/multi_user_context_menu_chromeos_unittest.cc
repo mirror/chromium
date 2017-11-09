@@ -11,11 +11,11 @@
 #include "base/macros.h"
 #include "base/strings/stringprintf.h"
 #include "chrome/browser/chromeos/login/users/fake_chrome_user_manager.h"
-#include "chrome/browser/chromeos/login/users/scoped_user_manager_enabler.h"
 #include "chrome/browser/ui/ash/multi_user/multi_user_context_menu.h"
 #include "chrome/browser/ui/ash/multi_user/multi_user_window_manager.h"
 #include "chrome/browser/ui/ash/multi_user/multi_user_window_manager_chromeos.h"
 #include "components/signin/core/account_id/account_id.h"
+#include "components/user_manager/scoped_user_manager.h"
 #include "ui/aura/window.h"
 #include "ui/base/models/menu_model.h"
 
@@ -61,7 +61,7 @@ class MultiUserContextMenuChromeOSTest : public AshTestBase {
   chrome::MultiUserWindowManagerChromeOS* multi_user_window_manager_;
   // Owned by |user_manager_enabler_|.
   chromeos::FakeChromeUserManager* fake_user_manager_ = nullptr;
-  chromeos::ScopedUserManagerEnabler user_manager_enabler_;
+  user_manager::ScopedUserManager user_manager_enabler_;
 
   DISALLOW_COPY_AND_ASSIGN(MultiUserContextMenuChromeOSTest);
 };
