@@ -1,19 +1,23 @@
-<html>
-<head>
-<script src="../../../inspector/inspector-test.js"></script>
-<script src="../../../inspector/debugger-test.js"></script>
-<script>
-function generateErrorScripts()
-{
-    for (var i = 0; i < 2000; ++i) {
-        try {
-          eval("#BAD SCRIPT# " + i);
-        } catch(e) {
-        }
-    }
-}
+// Copyright 2017 The Chromium Authors. All rights reserved.
+// Use of this source code is governed by a BSD-style license that can be
+// found in the LICENSE file.
 
-function test() {
+(async function() {
+  TestRunner.addResult(`Tests that DiscardedAnonymousScriptSource event is fired and workspace is cleared.\n`);
+  await TestRunner.loadModule('sources_test_runner');
+  await TestRunner.showPanel('sources');
+  await TestRunner.evaluateInPagePromise(`
+      function generateErrorScripts()
+      {
+          for (var i = 0; i < 2000; ++i) {
+              try {
+                eval("#BAD SCRIPT# " + i);
+              } catch(e) {
+              }
+          }
+      }
+  `);
+
   SourcesTestRunner.startDebuggerTest(step1);
   var discardedScripts = 0;
 
@@ -30,12 +34,4 @@ function test() {
     TestRunner.addResult('Remaining UISourceCodes: ' + codes.length);
     SourcesTestRunner.completeDebuggerTest();
   }
-}
-</script>
-</head>
-<body onload="runTest()">
-<p>
-Tests that DiscardedAnonymousScriptSource event is fired and workspace is cleared.
-</p>
-</body>
-</html>
+})();

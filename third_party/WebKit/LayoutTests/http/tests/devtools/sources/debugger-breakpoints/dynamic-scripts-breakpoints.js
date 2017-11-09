@@ -1,20 +1,14 @@
-<html>
-<head>
-<script src="../../../inspector/inspector-test.js"></script>
-<script src="../../../inspector/debugger-test.js"></script>
-<script src="../debugger/resources/load-dynamic-script.js"></script>
-<script>
-function foobar()
-{
-    var i = 0;
-    var j = 0;
-    var k = i + j;
-}
+// Copyright 2017 The Chromium Authors. All rights reserved.
+// Use of this source code is governed by a BSD-style license that can be
+// found in the LICENSE file.
 
-foobar();
-</script>
-<script>
-function test() {
+(async function() {
+  TestRunner.addResult(
+      `Tests that there is no exception in front-end on page reload when breakpoint is set in HTML document and some dynamic scripts are loaded before the script with the breakpoint is loaded.`);
+  await TestRunner.loadModule('sources_test_runner');
+  await TestRunner.showPanel('sources');
+  await TestRunner.navigatePromise('resources/dynamic-scripts-breakpoints.html');
+
   Bindings.breakpointManager._storage._breakpoints = {};
   var panel = UI.panels.sources;
 
@@ -38,7 +32,7 @@ function test() {
     TestRunner.addResult('Setting breakpoint:');
     TestRunner.addSniffer(
         Bindings.BreakpointManager.ModelBreakpoint.prototype, '_addResolvedLocation', breakpointResolved);
-    SourcesTestRunner.setBreakpoint(sourceFrame, 11, '', true);
+    SourcesTestRunner.setBreakpoint(sourceFrame, 7, '', true);
   }
 
   function breakpointResolved(location) {
@@ -55,11 +49,4 @@ function test() {
   function onPageReloaded() {
     SourcesTestRunner.completeDebuggerTest();
   }
-}
-</script>
-</head>
-<body onload="runTest()">
-<p>Tests that there is no exception in front-end on page reload when breakpoint is set in HTML document and some dynamic scripts are loaded before the script with the breakpoint is loaded.</p>
-<a href="https://bugs.webkit.org/show_bug.cgi?id=99598">Bug 99598</a>
-</body>
-</html>
+})();

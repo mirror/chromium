@@ -1,85 +1,15 @@
-<html>
-<head>
-<script src="../../../inspector/inspector-test.js"></script>
-<script src="../../../inspector/elements-test.js"></script>
-<script src="../../../inspector/debugger-test.js"></script>
-<script>
+// Copyright 2017 The Chromium Authors. All rights reserved.
+// Use of this source code is governed by a BSD-style license that can be
+// found in the LICENSE file.
 
-function appendElement(parentId, childId)
-{
-    var child = document.createElement("div");
-    child.id = childId;
-    document.getElementById(parentId).appendChild(child);
-}
+(async function() {
+  TestRunner.addResult(`Tests DOM breakpoints.`);
+  await TestRunner.loadModule('elements_test_runner');
+  await TestRunner.loadModule('sources_test_runner');
+  await TestRunner.showPanel('sources');
+  await TestRunner.showPanel('elements');
+  await TestRunner.navigatePromise('resources/dom-breakpoints.html');
 
-function modifyAttribute(elementId, name, value)
-{
-    var element = document.getElementById(elementId);
-    element.setAttribute(name, value);
-}
-
-function modifyAttrNode(elementId, name, value)
-{
-    var element = document.getElementById(elementId);
-    element.attributes[name].value = value;
-}
-
-function setAttrNode(elementId, name, value)
-{
-    var element = document.getElementById(elementId);
-    var attr = document.createAttribute(name);
-    attr.value = value;
-    element.attributes.setNamedItem(attr);
-}
-
-function modifyStyleAttribute(elementId, name, value)
-{
-    var element = document.getElementById(elementId);
-    element.style.setProperty(name, value);
-}
-
-function removeElement(elementId)
-{
-    var element = document.getElementById(elementId);
-    element.parentNode.removeChild(element);
-}
-
-function setInnerHTML(elementId, html)
-{
-    var element = document.getElementById(elementId);
-    element.innerHTML = html;
-}
-
-function breakDebugger()
-{
-    debugger;
-}
-
-function authorShadowRoot()
-{
-    return document.getElementById("hostElement").shadowRoot;
-}
-
-function authorShadowElement(id)
-{
-    return authorShadowRoot().getElementById(id);
-}
-
-function appendElementToAuthorShadowTree(parentId, childId)
-{
-    var child = document.createElement("div");
-    child.id = childId;
-    authorShadowElement(parentId).appendChild(child);
-}
-
-function appendElementToOpenShadowRoot(childId)
-{
-    var child = document.createElement("div");
-    child.id = childId;
-    authorShadowRoot().appendChild(child);
-}
-
-function test() {
   var pane = self.runtime.sharedInstance(Components.DOMBreakpointsSidebarPane);
   var rootElement;
   var outerElement;
@@ -293,25 +223,4 @@ function test() {
     }
 
   ]);
-}
-
-</script>
-</head>
-
-<body onload="runTest()">
-<p>
-Tests DOM breakpoints. <a href="https://bugs.webkit.org/show_bug.cgi?id=42886">Bug 42886</a>
-</p>
-
-<div id="rootElement" style="color: red">
-<div id="elementToRemove"></div>
-</div>
-
-<div id="hostElement"></div>
-<script>
-var root = document.getElementById("hostElement").createShadowRoot();
-root.innerHTML = "<div id='outerElement' style='red'><input id='input'/></div>";
-</script>
-
-</body>
-</html>
+})();
