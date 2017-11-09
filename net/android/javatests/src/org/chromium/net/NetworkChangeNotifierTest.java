@@ -953,4 +953,36 @@ public class NetworkChangeNotifierTest {
         mReceiver.onReceive(InstrumentationRegistry.getTargetContext(), intent);
         Assert.assertFalse(NetworkChangeNotifier.isOnline());
     }
+
+    private static void bindProcessToNetwork(
+            ConnectivityManager connectivityManager, Network network) {
+        if (Build.VERSION.SDK_INT < Build.VERSION_CODES.M) {
+            ConnectivityManager.setProcessDefaultNetwork(network);
+        } else {
+            connectivityManager.bindProcessToNetwork(network);
+        }
+    }
+
+    /**
+     * Tests NetworkChangeNotifier.isProcessBoundToNetwork().
+     */
+    @Test
+    @MediumTest
+    @Feature({"Android-AppBase"})
+    public void testIsProcessBoundToNetwork() throws Exception {
+        if (Build.VERSION.SDK_INT < Build.VERSION_CODES.LOLLIPOP) {
+            return;
+        }
+        ConnectivityManager connectivityManager =
+                (ConnectivityManager) InstrumentationRegistry.getTargetContext().getSystemService(
+                        Context.CONNECTIVITY_SERVICE);
+        Network network = connectivityManager.getActiveNetwork();
+        Assert.assertFalse(NetworkChangeNotifier.isProcessBoundToNetwork());
+        if (network != null) {
+            bindProcessToNetwork(connectivityManager, network);
+            Assert.assertTrue(NetworkChangeNotifier.isProcessBoundToNetwork());
+        }
+        bindProcessToNetwork(connectivityManager, null);
+        Assert.assertFalse(NetworkChangeNotifier.isProcessBoundToNetwork());
+    }
 }
