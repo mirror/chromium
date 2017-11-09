@@ -135,7 +135,9 @@ class CONTENT_EXPORT ServiceWorkerRegistration
   // Triggers the [[ClearRegistration]] algorithm when the currently
   // active version has no controllees. Deletes this registration
   // from storage immediately.
-  void ClearWhenReady();
+  // |callback| will be called when the registration has been deleted from
+  // storage, it does not wait for [[ClearRegistration]] to finish.
+  void ClearWhenReady(const StatusCallback& callback);
 
   // Restores this registration in storage and cancels the pending
   // [[ClearRegistration]] algorithm.
