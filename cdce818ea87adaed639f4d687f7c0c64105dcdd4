@@ -145,6 +145,30 @@
     },
     {
       "key": {
+        "uuid": "7410db48_57943152",
+        "filename": "build/mac/find_sdk.py",
+        "patchSetId": 1
+      },
+      "lineNbr": 57,
+      "author": {
+        "id": 1214214
+      },
+      "writtenOn": "2017-11-09T12:05:47Z",
+      "side": 1,
+      "message": "Changed the check to `\u0027.app/Contents/Developer\u0027 in sdk_dir`. This seems good enough. Thanks, everyone!",
+      "parentUuid": "39f5f843_cb2c0437",
+      "range": {
+        "startLine": 57,
+        "startChar": 32,
+        "endLine": 57,
+        "endChar": 63
+      },
+      "revId": "cdce818ea87adaed639f4d687f7c0c64105dcdd4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "8ee0fa8c_744f794b",
         "filename": "build/mac/find_sdk.py",
         "patchSetId": 1
@@ -177,6 +201,24 @@
       "revId": "cdce818ea87adaed639f4d687f7c0c64105dcdd4",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e6679d0d_ec6c9ba4",
+        "filename": "build/mac/find_sdk.py",
+        "patchSetId": 1
+      },
+      "lineNbr": 58,
+      "author": {
+        "id": 1214214
+      },
+      "writtenOn": "2017-11-09T12:05:47Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "d2f6303b_36e2a529",
+      "revId": "cdce818ea87adaed639f4d687f7c0c64105dcdd4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
