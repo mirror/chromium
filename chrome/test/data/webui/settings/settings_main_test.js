@@ -290,10 +290,15 @@ cr.define('settings_main_page', function() {
       assertFalse(basicPage.showChangePassword);
       assertFalse(!!basicPage.$$('settings-change-password-page'));
 
-      cr.webUIListenerCallback('change-password-on-show');
+      cr.webUIListenerCallback('show-change-password-card');
       Polymer.dom.flush();
       assertTrue(basicPage.showChangePassword);
       assertTrue(!!basicPage.$$('settings-change-password-page'));
+
+      cr.webUIListenerCallback('hide-change-password-card');
+      Polymer.dom.flush();
+      assertFalse(basicPage.showChangePassword);
+      assertFalse(!!basicPage.$$('settings-change-password-page'));
     });
   });
 });
