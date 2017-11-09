@@ -1710,7 +1710,7 @@ jumbo_source_set("browser") {
       # browser_accessibility_cocoa.mm defines a constant
       # NSAccessibilitySelectedTextMarkerRangeAttribute to the same
       # string.
-      "accessibility/browser_accessibility_cocoa.mm",
+#      "accessibility/browser_accessibility_cocoa.mm",
     ]
   }
 
