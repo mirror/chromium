@@ -47,27 +47,11 @@ source_set("util") {
   ]
 }
 
-source_set("unit_tests") {
+source_set("view_info") {
   configs += [ "//build/config/compiler:enable_arc" ]
-  testonly = true
   sources = [
-    "CRUILabel+AttributeUtils_unittest.mm",
-    "constraints_ui_util_unittest.mm",
-    "core_text_util_unittest.mm",
-    "label_link_controller_unittest.mm",
-    "label_observer_unittest.mm",
-    "manual_text_framer_unittest.mm",
-    "named_guide_unittest.mm",
-    "text_region_mapper_unittest.mm",
-  ]
-  deps = [
-    ":constraints_ui",
-    ":util",
-    "//base",
-    "//ios/third_party/material_components_ios",
-    "//ios/third_party/material_roboto_font_loader_ios",
-    "//testing/gtest",
-    "//url",
+    "view_info.h",
+    "view_info.mm",
   ]
 }
 
@@ -80,4 +64,30 @@ source_set("constraints_ui") {
     "//base",
   ]
   configs += [ "//build/config/compiler:enable_arc" ]
+}
+
+source_set("unit_tests") {
+  configs += [ "//build/config/compiler:enable_arc" ]
+  testonly = true
+  sources = [
+    "CRUILabel+AttributeUtils_unittest.mm",
+    "constraints_ui_util_unittest.mm",
+    "core_text_util_unittest.mm",
+    "label_link_controller_unittest.mm",
+    "label_observer_unittest.mm",
+    "manual_text_framer_unittest.mm",
+    "named_guide_unittest.mm",
+    "text_region_mapper_unittest.mm",
+    "view_info_unittest.mm",
+  ]
+  deps = [
+    ":constraints_ui",
+    ":util",
+    ":view_info",
+    "//base",
+    "//ios/third_party/material_components_ios",
+    "//ios/third_party/material_roboto_font_loader_ios",
+    "//testing/gtest",
+    "//url",
+  ]
 }
