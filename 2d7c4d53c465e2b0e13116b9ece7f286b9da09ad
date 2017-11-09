@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "e561c7c7_6f6766bf",
+        "filename": "build/mac/find_sdk.py",
+        "patchSetId": 3
+      },
+      "lineNbr": 70,
+      "author": {
+        "id": 1174099
+      },
+      "writtenOn": "2017-11-09T18:40:23Z",
+      "side": 1,
+      "message": "May also need to run xcode-select.",
+      "range": {
+        "startLine": 69,
+        "startChar": 0,
+        "endLine": 70,
+        "endChar": 31
+      },
+      "revId": "2d7c4d53c465e2b0e13116b9ece7f286b9da09ad",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
