@@ -43,6 +43,7 @@
 #include "mojo/public/cpp/bindings/interface_ptr.h"
 #include "services/service_manager/public/cpp/interface_provider.h"
 #include "third_party/WebKit/common/origin_trials/trial_token_validator.h"
+#include "third_party/WebKit/public/platform/modules/serviceworker/service_worker.mojom.h"
 #include "third_party/WebKit/public/platform/modules/serviceworker/service_worker_event_status.mojom.h"
 #include "ui/base/mojo/window_open_disposition.mojom.h"
 #include "url/gurl.h"
@@ -71,7 +72,8 @@ struct ServiceWorkerVersionInfo;
 // one of them is activated. This class connects the actual script with a
 // running worker.
 class CONTENT_EXPORT ServiceWorkerVersion
-    : public base::RefCounted<ServiceWorkerVersion>,
+    : public blink::mojom::ServiceWorkerHost,
+      public base::RefCounted<ServiceWorkerVersion>,
       public EmbeddedWorkerInstance::Listener {
  public:
   // TODO(crbug.com/755477): LegacyStatusCallback which does not use
@@ -540,6 +542,12 @@ class CONTENT_EXPORT ServiceWorkerVersion
 
   void OnStartSentAndScriptEvaluated(ServiceWorkerStatusCode status);
 
+  // Implements blink::mojom::ServiceWorkerHost.
+  // These functions all run on the IO thread.
+  void ClearCachedMetadata(const GURL& url) override;
+
+  void OnClearCachedMetadataFinished(int64_t callback_id, int result);
+
   // Message handlers.
 
   // This corresponds to the spec's get(id) steps.
@@ -564,8 +572,6 @@ class CONTENT_EXPORT ServiceWorkerVersion
 
   void OnSetCachedMetadata(const GURL& url, const std::vector<char>& data);
   void OnSetCachedMetadataFinished(int64_t callback_id, int result);
-  void OnClearCachedMetadata(const GURL& url);
-  void OnClearCachedMetadataFinished(int64_t callback_id, int result);
 
   void OnPostMessageToClient(
       const std::string& client_uuid,
@@ -695,6 +701,9 @@ class CONTENT_EXPORT ServiceWorkerVersion
 
   std::unique_ptr<ServiceWorkerInstalledScriptsSender>
       installed_scripts_sender_;
+
+  // Bound on IO thread.
+  mojo::AssociatedBinding<blink::mojom::ServiceWorkerHost> binding_;
 
   // The number of fetch event responses that the service worker is streaming to
   // the browser process. We try to not stop the service worker while there is
