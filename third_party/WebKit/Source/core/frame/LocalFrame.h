@@ -188,7 +188,7 @@ class CORE_EXPORT LocalFrame final : public Frame,
                                         const FloatSize& expected_size) const;
 
   bool InViewSourceMode() const;
-  void SetInViewSourceMode(bool = true);
+  void SetInViewSourceMode(bool mode = true);
 
   void SetPageZoomFactor(float);
   float PageZoomFactor() const { return page_zoom_factor_; }
