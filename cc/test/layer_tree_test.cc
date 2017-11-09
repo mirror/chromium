@@ -12,8 +12,8 @@
 #include "base/threading/thread_task_runner_handle.h"
 #include "cc/animation/animation.h"
 #include "cc/animation/animation_host.h"
-#include "cc/animation/animation_player.h"
 #include "cc/animation/animation_ticker.h"
+#include "cc/animation/single_animation_player.h"
 #include "cc/animation/timing_function.h"
 #include "cc/base/switches.h"
 #include "cc/input/input_handler.h"
@@ -556,7 +556,7 @@ void LayerTreeTest::EndTestAfterDelayMs(int delay_milliseconds) {
 }
 
 void LayerTreeTest::PostAddAnimationToMainThreadPlayer(
-    AnimationPlayer* player_to_receive_animation) {
+    SingleAnimationPlayer* player_to_receive_animation) {
   main_task_runner_->PostTask(
       FROM_HERE,
       base::BindOnce(&LayerTreeTest::DispatchAddAnimationToPlayer,
@@ -565,7 +565,7 @@ void LayerTreeTest::PostAddAnimationToMainThreadPlayer(
 }
 
 void LayerTreeTest::PostAddInstantAnimationToMainThreadPlayer(
-    AnimationPlayer* player_to_receive_animation) {
+    SingleAnimationPlayer* player_to_receive_animation) {
   main_task_runner_->PostTask(
       FROM_HERE,
       base::BindOnce(&LayerTreeTest::DispatchAddAnimationToPlayer,
@@ -574,7 +574,7 @@ void LayerTreeTest::PostAddInstantAnimationToMainThreadPlayer(
 }
 
 void LayerTreeTest::PostAddLongAnimationToMainThreadPlayer(
-    AnimationPlayer* player_to_receive_animation) {
+    SingleAnimationPlayer* player_to_receive_animation) {
   main_task_runner_->PostTask(
       FROM_HERE,
       base::BindOnce(&LayerTreeTest::DispatchAddAnimationToPlayer,
@@ -749,7 +749,7 @@ void LayerTreeTest::RealEndTest() {
 }
 
 void LayerTreeTest::DispatchAddAnimationToPlayer(
-    AnimationPlayer* player_to_receive_animation,
+    SingleAnimationPlayer* player_to_receive_animation,
     double animation_duration) {
   DCHECK(main_task_runner_->BelongsToCurrentThread());
 

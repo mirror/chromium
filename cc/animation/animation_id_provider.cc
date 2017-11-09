@@ -11,6 +11,7 @@ base::AtomicSequenceNumber g_next_animation_id;
 base::AtomicSequenceNumber g_next_group_id;
 base::AtomicSequenceNumber g_next_timeline_id;
 base::AtomicSequenceNumber g_next_player_id;
+base::AtomicSequenceNumber g_next_ticker_id;
 
 int AnimationIdProvider::NextAnimationId() {
   // Animation IDs start from 1.
@@ -28,6 +29,10 @@ int AnimationIdProvider::NextTimelineId() {
 
 int AnimationIdProvider::NextPlayerId() {
   return g_next_player_id.GetNext() + 1;
+}
+
+int AnimationIdProvider::NextTickerId() {
+  return g_next_ticker_id.GetNext() + 1;
 }
 
 }  // namespace cc

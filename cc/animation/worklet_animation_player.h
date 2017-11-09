@@ -9,6 +9,7 @@
 #include "cc/animation/animation_export.h"
 #include "cc/animation/animation_player.h"
 #include "cc/animation/animation_ticker.h"
+#include "cc/animation/single_animation_player.h"
 
 namespace cc {
 
@@ -16,7 +17,7 @@ namespace cc {
 // timing to be controlled by an animator instance that is running in a
 // AnimationWorkletGlobalScope.
 class CC_ANIMATION_EXPORT WorkletAnimationPlayer final
-    : public AnimationPlayer,
+    : public SingleAnimationPlayer,
       AnimationTicker::AnimationTimeProvider {
  public:
   WorkletAnimationPlayer(int id, const std::string& name);
