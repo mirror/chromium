@@ -1,0 +1,61 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "540587d9_3274812f",
+        "filename": "net/quic/chromium/quic_http_utils.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 20,
+      "author": {
+        "id": 1116006
+      },
+      "writtenOn": "2017-11-09T19:29:32Z",
+      "side": 1,
+      "message": "Do we need to distinguish between the first two cases in the histogram data? I think we can probably infer this from the field trial group. But maybe there\u0027s still value in having it in the histogram?",
+      "revId": "e56383b1713ab61ee67e65f93eb1251110df2f0b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "33eb43bb_c2f88ec6",
+        "filename": "net/quic/chromium/quic_http_utils.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 57,
+      "author": {
+        "id": 1116006
+      },
+      "writtenOn": "2017-11-09T19:29:32Z",
+      "side": 1,
+      "message": "I don\u0027t think I understand the motivation for moving this code. Can you elaborate? It seems like this would change behavior.",
+      "range": {
+        "startLine": 57,
+        "startChar": 43,
+        "endLine": 57,
+        "endChar": 0
+      },
+      "revId": "e56383b1713ab61ee67e65f93eb1251110df2f0b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3723f9e0_b49c2ab7",
+        "filename": "net/quic/chromium/quic_http_utils.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 84,
+      "author": {
+        "id": 1116006
+      },
+      "writtenOn": "2017-11-09T19:29:32Z",
+      "side": 1,
+      "message": "A common trick we use when the same histogram want\u0027s to be logged from two places it to make a helper function like:\n\nRecordAltSvcFormat(mode) {\n  UMA_HISTOGRAM_ENUMERATION(\"Net.QuicFilterSupportedAltSvcVersionsInput\", \n     mode, FILTER_SUPPORTED_ALTSVC_VERSIONS_INPUT_VALUE_MAX);\n}\n\nThen at the callsite:\n\nRecordAltSvcFormat(IETF_SUPPORTED_READ_IETF_FORMAT);",
+      "revId": "e56383b1713ab61ee67e65f93eb1251110df2f0b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
