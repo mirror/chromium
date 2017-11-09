@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "f5ddf3c3_0433d05a",
+        "filename": "third_party/WebKit/Source/bindings/scripts/v8_interface.py",
+        "patchSetId": 4
+      },
+      "lineNbr": 414,
+      "author": {
+        "id": 1001470
+      },
+      "writtenOn": "2017-11-09T09:23:28Z",
+      "side": 1,
+      "message": "Ack\n\nWe don\u0027t directly use those variables, so we should do refactoring of these functions,\nand it can be an option to use multi-dimensional dict in Jinja context.",
+      "parentUuid": "bf197786_d8c4d747",
+      "range": {
+        "startLine": 414,
+        "startChar": 78,
+        "endLine": 414,
+        "endChar": 98
+      },
+      "revId": "7752b8b6a25c24de5dbc8a7667ab30b5b95849f3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "4bdc6beb_adee45da",
         "filename": "third_party/WebKit/Source/bindings/templates/attributes.cpp.tmpl",
         "patchSetId": 4
@@ -48,6 +72,30 @@
     },
     {
       "key": {
+        "uuid": "2a0668a9_099c214f",
+        "filename": "third_party/WebKit/Source/bindings/templates/attributes.cpp.tmpl",
+        "patchSetId": 4
+      },
+      "lineNbr": 584,
+      "author": {
+        "id": 1001470
+      },
+      "writtenOn": "2017-11-09T09:23:28Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "4bdc6beb_adee45da",
+      "range": {
+        "startLine": 584,
+        "startChar": 9,
+        "endLine": 584,
+        "endChar": 49
+      },
+      "revId": "7752b8b6a25c24de5dbc8a7667ab30b5b95849f3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "94f009dc_c71f1fb1",
         "filename": "third_party/WebKit/Source/bindings/templates/interface_base.cpp.tmpl",
         "patchSetId": 4
@@ -62,6 +110,24 @@
       "revId": "7752b8b6a25c24de5dbc8a7667ab30b5b95849f3",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d63ca1b9_1fff1cd6",
+        "filename": "third_party/WebKit/Source/bindings/templates/interface_base.cpp.tmpl",
+        "patchSetId": 4
+      },
+      "lineNbr": 970,
+      "author": {
+        "id": 1001470
+      },
+      "writtenOn": "2017-11-09T09:23:28Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "94f009dc_c71f1fb1",
+      "revId": "7752b8b6a25c24de5dbc8a7667ab30b5b95849f3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -82,6 +148,24 @@
     },
     {
       "key": {
+        "uuid": "a2f113d2_7266a35c",
+        "filename": "third_party/WebKit/Source/bindings/templates/interface_base.cpp.tmpl",
+        "patchSetId": 4
+      },
+      "lineNbr": 985,
+      "author": {
+        "id": 1001470
+      },
+      "writtenOn": "2017-11-09T09:23:28Z",
+      "side": 1,
+      "message": "|has_install_conditional_features_on_global_func| is same with |c_e_as.constructor_type| if it is taken as a boolean type, so this condition check is not needed.",
+      "parentUuid": "f53905b0_51a1127a",
+      "revId": "7752b8b6a25c24de5dbc8a7667ab30b5b95849f3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "752490f5_54d48f7a",
         "filename": "third_party/WebKit/Source/bindings/tests/idls/modules/TestInterfaceSecureContextPartial.idl",
         "patchSetId": 4
@@ -96,6 +180,24 @@
       "revId": "7752b8b6a25c24de5dbc8a7667ab30b5b95849f3",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "25a271cc_570bcf08",
+        "filename": "third_party/WebKit/Source/bindings/tests/idls/modules/TestInterfaceSecureContextPartial.idl",
+        "patchSetId": 4
+      },
+      "lineNbr": 7,
+      "author": {
+        "id": 1001470
+      },
+      "writtenOn": "2017-11-09T09:23:28Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "752490f5_54d48f7a",
+      "revId": "7752b8b6a25c24de5dbc8a7667ab30b5b95849f3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
