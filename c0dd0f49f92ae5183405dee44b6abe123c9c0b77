@@ -16,6 +16,24 @@
       "revId": "c0dd0f49f92ae5183405dee44b6abe123c9c0b77",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "279d7146_b8d8118b",
+        "filename": "ash/wm/overview/overview_window_drag_controller.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 37,
+      "author": {
+        "id": 1160212
+      },
+      "writtenOn": "2017-11-09T20:45:47Z",
+      "side": 1,
+      "message": "I did, manually, though in portrait mode lines 44-46 never happen because the top margin for overview mode is thicker than the top snap region. I did not use std::abs because the bug said in the direction of the snap region.",
+      "parentUuid": "efcf083a_5c530444",
+      "revId": "c0dd0f49f92ae5183405dee44b6abe123c9c0b77",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
