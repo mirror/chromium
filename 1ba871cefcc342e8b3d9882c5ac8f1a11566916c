@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "2364c265_f2d6f2cc",
+        "filename": "chrome/browser/ui/tabs/tab_data_experimental.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 37,
+      "author": {
+        "id": 1002691
+      },
+      "writtenOn": "2017-11-09T23:09:56Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "aa90d96c_02e12e46",
+      "range": {
+        "startLine": 37,
+        "startChar": 0,
+        "endLine": 37,
+        "endChar": 2
+      },
+      "revId": "1ba871cefcc342e8b3d9882c5ac8f1a11566916c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "d19faee4_1e837ac6",
         "filename": "chrome/browser/ui/tabs/tab_data_experimental.cc",
         "patchSetId": 8
@@ -45,6 +69,30 @@
       "revId": "1ba871cefcc342e8b3d9882c5ac8f1a11566916c",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5972fed3_6a863d64",
+        "filename": "chrome/browser/ui/tabs/tab_data_experimental.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 45,
+      "author": {
+        "id": 1002691
+      },
+      "writtenOn": "2017-11-09T23:09:56Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "d19faee4_1e837ac6",
+      "range": {
+        "startLine": 45,
+        "startChar": 6,
+        "endLine": 45,
+        "endChar": 27
+      },
+      "revId": "1ba871cefcc342e8b3d9882c5ac8f1a11566916c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -71,6 +119,30 @@
     },
     {
       "key": {
+        "uuid": "23e546d6_c84f1b96",
+        "filename": "chrome/browser/ui/tabs/tab_data_experimental.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 56,
+      "author": {
+        "id": 1002691
+      },
+      "writtenOn": "2017-11-09T23:09:56Z",
+      "side": 1,
+      "message": "Ack, I added a TODO.",
+      "parentUuid": "68b95421_a463078a",
+      "range": {
+        "startLine": 56,
+        "startChar": 2,
+        "endLine": 56,
+        "endChar": 31
+      },
+      "revId": "1ba871cefcc342e8b3d9882c5ac8f1a11566916c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "5dfcddbc_84f28e4f",
         "filename": "chrome/browser/ui/tabs/tab_data_experimental.h",
         "patchSetId": 8
@@ -91,6 +163,30 @@
       "revId": "1ba871cefcc342e8b3d9882c5ac8f1a11566916c",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9e656b6d_268cfbf3",
+        "filename": "chrome/browser/ui/tabs/tab_data_experimental.h",
+        "patchSetId": 8
+      },
+      "lineNbr": 20,
+      "author": {
+        "id": 1002691
+      },
+      "writtenOn": "2017-11-09T23:09:56Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "5dfcddbc_84f28e4f",
+      "range": {
+        "startLine": 20,
+        "startChar": 44,
+        "endLine": 20,
+        "endChar": 48
+      },
+      "revId": "1ba871cefcc342e8b3d9882c5ac8f1a11566916c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -117,6 +213,30 @@
     },
     {
       "key": {
+        "uuid": "82534c4b_6b485a50",
+        "filename": "chrome/browser/ui/tabs/tab_data_experimental.h",
+        "patchSetId": 8
+      },
+      "lineNbr": 57,
+      "author": {
+        "id": 1002691
+      },
+      "writtenOn": "2017-11-09T23:09:56Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "b3c98def_488436cd",
+      "range": {
+        "startLine": 55,
+        "startChar": 5,
+        "endLine": 57,
+        "endChar": 32
+      },
+      "revId": "1ba871cefcc342e8b3d9882c5ac8f1a11566916c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "167df140_13c89391",
         "filename": "chrome/browser/ui/tabs/tab_strip_model_experimental.cc",
         "patchSetId": 8
@@ -128,6 +248,30 @@
       "writtenOn": "2017-11-09T22:07:35Z",
       "side": 1,
       "message": "Double the observers is tricky... I guess you\u0027re thinking eventually we merge the two, or perhaps make the experimental one the real one?",
+      "range": {
+        "startLine": 176,
+        "startChar": 2,
+        "endLine": 177,
+        "endChar": 34
+      },
+      "revId": "1ba871cefcc342e8b3d9882c5ac8f1a11566916c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "413cb49d_0b6118cb",
+        "filename": "chrome/browser/ui/tabs/tab_strip_model_experimental.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 177,
+      "author": {
+        "id": 1002691
+      },
+      "writtenOn": "2017-11-09T23:09:56Z",
+      "side": 1,
+      "message": "Yes, for now I need to keep the old one for the external observers (there are dozens) so the rest of the browser goes. My new one is just for the tab strip. This makes me think I should rename my new one (will do it in the next patch) to be a \"UI\" observer or something so the split is more clear.",
+      "parentUuid": "167df140_13c89391",
       "range": {
         "startLine": 176,
         "startChar": 2,
@@ -163,6 +307,30 @@
     },
     {
       "key": {
+        "uuid": "a82cbf63_f1263f97",
+        "filename": "chrome/browser/ui/tabs/tab_strip_model_experimental.h",
+        "patchSetId": 8
+      },
+      "lineNbr": 103,
+      "author": {
+        "id": 1002691
+      },
+      "writtenOn": "2017-11-09T23:09:56Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "d9cf7698_47ed5018",
+      "range": {
+        "startLine": 103,
+        "startChar": 29,
+        "endLine": 103,
+        "endChar": 49
+      },
+      "revId": "1ba871cefcc342e8b3d9882c5ac8f1a11566916c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "24f36a46_85da76ee",
         "filename": "chrome/browser/ui/views/frame/browser_view.cc",
         "patchSetId": 8
@@ -174,6 +342,30 @@
       "writtenOn": "2017-11-09T22:07:35Z",
       "side": 1,
       "message": "Is there really a reason to restrict this to windows?",
+      "range": {
+        "startLine": 2118,
+        "startChar": 12,
+        "endLine": 2118,
+        "endChar": 18
+      },
+      "revId": "1ba871cefcc342e8b3d9882c5ac8f1a11566916c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "62465b88_f2b9772c",
+        "filename": "chrome/browser/ui/views/frame/browser_view.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 2118,
+      "author": {
+        "id": 1002691
+      },
+      "writtenOn": "2017-11-09T23:09:56Z",
+      "side": 1,
+      "message": "I didn\u0027t test it on Linux :) I may start working a bit on Linux for the compile speed in which case I\u0027ll probably enable on all views platforms (it definitely requires views).",
+      "parentUuid": "24f36a46_85da76ee",
       "range": {
         "startLine": 2118,
         "startChar": 12,
