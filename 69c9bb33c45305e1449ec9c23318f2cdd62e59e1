@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "ae69a69c_ca168e46",
+        "filename": "chrome/browser/android/bookmarks/partner_bookmarks_reader.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 309,
+      "author": {
+        "id": 1144344
+      },
+      "writtenOn": "2017-11-09T21:25:29Z",
+      "side": 1,
+      "message": "It might be useful to use UMA to track the distribution of |status|. This can be in a followup CL.",
+      "range": {
+        "startLine": 309,
+        "startChar": 29,
+        "endLine": 309,
+        "endChar": 59
+      },
+      "revId": "69c9bb33c45305e1449ec9c23318f2cdd62e59e1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a2ac7b40_01439bf1",
+        "filename": "chrome/browser/android/bookmarks/partner_bookmarks_reader.h",
+        "patchSetId": 8
+      },
+      "lineNbr": 37,
+      "author": {
+        "id": 1144344
+      },
+      "writtenOn": "2017-11-09T21:25:29Z",
+      "side": 1,
+      "message": "Nit: the comment in GoogleFaviconServerRequestStatus is clearer:\nRequest sent out and a connection error occurred (no valid HTTP response received).\n\nIt\u0027s more than offline. Faulty network can also lead to this.",
+      "range": {
+        "startLine": 37,
+        "startChar": 5,
+        "endLine": 37,
+        "endChar": 28
+      },
+      "revId": "69c9bb33c45305e1449ec9c23318f2cdd62e59e1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
