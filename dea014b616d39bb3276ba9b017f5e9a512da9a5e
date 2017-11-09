@@ -108,6 +108,30 @@
     },
     {
       "key": {
+        "uuid": "f3e58686_6e8e6486",
+        "filename": "gpu/command_buffer/service/scheduler.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 233,
+      "author": {
+        "id": 1116061
+      },
+      "writtenOn": "2017-11-09T01:23:34Z",
+      "side": 1,
+      "message": "Done.  I kept the calls inside the sequence in order to keep the priority propagation clear.\n\nI\u0027ve also removed most of the TryScheduleSequence() calls done from the Scheduler.  The Streams do it themselves in UpdateSchedulingPriority(), or when they become enabled.",
+      "parentUuid": "6e19f85d_3e1608b3",
+      "range": {
+        "startLine": 233,
+        "startChar": 47,
+        "endLine": 233,
+        "endChar": 58
+      },
+      "revId": "dea014b616d39bb3276ba9b017f5e9a512da9a5e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "0c7891b5_bc9c1e95",
         "filename": "gpu/command_buffer/service/scheduler_unittest.cc",
         "patchSetId": 4
