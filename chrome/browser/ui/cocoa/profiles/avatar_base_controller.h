@@ -42,6 +42,9 @@ class ProfileUpdateObserver;
 // The avatar button view.
 @property(readonly, nonatomic) NSButton* buttonView;
 
+// The menu controller, if the menu is open.
+@property(nonatomic, readonly, getter=isMenuOpened) BOOL menuOpened;
+
 // Designated initializer.
 - (id)initWithBrowser:(Browser*)browser;
 
@@ -55,6 +58,9 @@ class ProfileUpdateObserver;
                           withMode:(BrowserWindow::AvatarBubbleMode)mode
                    withServiceType:(signin::GAIAServiceType)serviceType
                    fromAccessPoint:(signin_metrics::AccessPoint)accessPoint;
+
+// Called when the avatar bubble is closing.
+- (void)bubbleWillClose;
 
 // Called when the avatar bubble will close.
 - (void)bubbleWillClose:(NSNotification*)notif;
