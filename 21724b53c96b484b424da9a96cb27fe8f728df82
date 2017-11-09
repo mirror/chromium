@@ -1,0 +1,221 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "2344d0a2_8c5be23f",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 4
+      },
+      "lineNbr": 12,
+      "author": {
+        "id": 1002092
+      },
+      "writtenOn": "2017-11-09T05:16:52Z",
+      "side": 1,
+      "message": "ditto comment wrt screenshot",
+      "revId": "21724b53c96b484b424da9a96cb27fe8f728df82",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b897910f_445fe1dc",
+        "filename": "chrome/browser/ui/views/hover_button.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 120,
+      "author": {
+        "id": 1002092
+      },
+      "writtenOn": "2017-11-09T05:16:52Z",
+      "side": 1,
+      "message": "maybe comment\n\n~// No maximum width, to get a single line label.",
+      "revId": "21724b53c96b484b424da9a96cb27fe8f728df82",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "33a2ae7d_9e8e13bf",
+        "filename": "chrome/browser/ui/views/hover_button.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 163,
+      "author": {
+        "id": 1002092
+      },
+      "writtenOn": "2017-11-09T05:16:52Z",
+      "side": 1,
+      "message": "Maybe ApplyHintStyleToRange(..)?",
+      "range": {
+        "startLine": 163,
+        "startChar": 18,
+        "endLine": 163,
+        "endChar": 40
+      },
+      "revId": "21724b53c96b484b424da9a96cb27fe8f728df82",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f22f119f_52ebda57",
+        "filename": "chrome/browser/ui/views/hover_button.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 166,
+      "author": {
+        "id": 1002092
+      },
+      "writtenOn": "2017-11-09T05:16:52Z",
+      "side": 1,
+      "message": "STYLE_SECONDARY? OR STYLE_HINT (I think DISABLED is lighter under harmony)",
+      "range": {
+        "startLine": 166,
+        "startChar": 40,
+        "endLine": 166,
+        "endChar": 54
+      },
+      "revId": "21724b53c96b484b424da9a96cb27fe8f728df82",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "93cc3237_e3292060",
+        "filename": "chrome/browser/ui/views/page_info/page_info_bubble_view.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 176,
+      "author": {
+        "id": 1002092
+      },
+      "writtenOn": "2017-11-09T05:16:52Z",
+      "side": 1,
+      "message": "return a unique_pt\u003cHoverButton\u003e ?",
+      "range": {
+        "startLine": 176,
+        "startChar": 0,
+        "endLine": 176,
+        "endChar": 12
+      },
+      "revId": "21724b53c96b484b424da9a96cb27fe8f728df82",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "252ec651_73e8d72d",
+        "filename": "chrome/browser/ui/views/page_info/page_info_bubble_view.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 182,
+      "author": {
+        "id": 1002092
+      },
+      "writtenOn": "2017-11-09T05:16:52Z",
+      "side": 1,
+      "message": "\u003d std::make_unique\u003cNonAcces..\u003e() ?",
+      "range": {
+        "startLine": 182,
+        "startChar": 40,
+        "endLine": 182,
+        "endChar": 46
+      },
+      "revId": "21724b53c96b484b424da9a96cb27fe8f728df82",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "079f1e5a_c6455512",
+        "filename": "chrome/browser/ui/views/page_info/page_info_bubble_view.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 191,
+      "author": {
+        "id": 1002092
+      },
+      "writtenOn": "2017-11-09T05:16:52Z",
+      "side": 1,
+      "message": "initialize on this line?",
+      "revId": "21724b53c96b484b424da9a96cb27fe8f728df82",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6073fb37_4dae87c6",
+        "filename": "chrome/browser/ui/views/page_info/page_info_bubble_view.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 194,
+      "author": {
+        "id": 1002092
+      },
+      "writtenOn": "2017-11-09T05:16:52Z",
+      "side": 1,
+      "message": "would it be nicer to always pass a gfx::Range to SetTitleText? i.e.\n\nbutton-\u003eSetTitleTextWithHintRange(l10n_util::GetStringUTF16(title_resource_id), gfx::Range());\n\nthis avoids some logic being triggered twice",
+      "revId": "21724b53c96b484b424da9a96cb27fe8f728df82",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b9667958_77826615",
+        "filename": "chrome/browser/ui/views/page_info/page_info_bubble_view.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 563,
+      "author": {
+        "id": 1002092
+      },
+      "writtenOn": "2017-11-09T05:16:52Z",
+      "side": 1,
+      "message": "I\u0027d remove the \"harmony\" bit from the arg name. Eventually it will be assumed.",
+      "range": {
+        "startLine": 563,
+        "startChar": 6,
+        "endLine": 563,
+        "endChar": 28
+      },
+      "revId": "21724b53c96b484b424da9a96cb27fe8f728df82",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "73ff0bce_ed0cb4d9",
+        "filename": "chrome/browser/ui/views/page_info/page_info_bubble_view.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 582,
+      "author": {
+        "id": 1002092
+      },
+      "writtenOn": "2017-11-09T05:16:52Z",
+      "side": 1,
+      "message": "in light of recent discussions, it might be worth pulling this out into a anon-namespace helper function like\n\n\nbool UseHarmonyStyle() {\n  return ui::MaterialDesignController::IsSecondaryUiMaterial();\n}\n\nand seeing if there\u0027s anything else calling IsSecondaryUiMaterial() that isn\u0027t strictly dependent on what the rest of the UI does.",
+      "revId": "21724b53c96b484b424da9a96cb27fe8f728df82",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0a655be0_66c8e929",
+        "filename": "chrome/browser/ui/views/page_info/page_info_bubble_view.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 991,
+      "author": {
+        "id": 1002092
+      },
+      "writtenOn": "2017-11-09T05:16:52Z",
+      "side": 1,
+      "message": "this should pass source-\u003eid() -- I don\u0027t think that it\u0027s safe to pass a raw View* via PostTask.",
+      "revId": "21724b53c96b484b424da9a96cb27fe8f728df82",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
