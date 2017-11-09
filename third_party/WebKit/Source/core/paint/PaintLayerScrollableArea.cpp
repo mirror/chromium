@@ -1353,6 +1353,28 @@ void PaintLayerScrollableArea::ComputeScrollbarExistence(
     else if (v_mode == kScrollbarAlwaysOff)
       needs_vertical_scrollbar = false;
   }
+
+  if (!needs_vertical_scrollbar && needs_horizontal_scrollbar) {
+    LayoutUnit client_width =
+        LayoutContentRect(kIncludeScrollbars).Width() -
+        VerticalScrollbarWidth(kIgnorePlatformAndCSSOverlayScrollbarSize);
+    if (HasVerticalScrollbar()) {
+      client_width += VerticalScrollbar()->ScrollbarThickness();
+      if (ScrollWidth() <= client_width)
+        needs_horizontal_scrollbar = false;
+    }
+  }
+
+  if (!needs_horizontal_scrollbar && needs_vertical_scrollbar) {
+    LayoutUnit client_height =
+        LayoutContentRect(kIncludeScrollbars).Height() -
+        HorizontalScrollbarHeight(kIgnorePlatformAndCSSOverlayScrollbarSize);
+    if (HasHorizontalScrollbar()) {
+      client_height += HorizontalScrollbar()->ScrollbarThickness();
+      if (ScrollHeight() <= client_height)
+        needs_vertical_scrollbar = false;
+    }
+  }
 }
 
 bool PaintLayerScrollableArea::TryRemovingAutoScrollbars(
