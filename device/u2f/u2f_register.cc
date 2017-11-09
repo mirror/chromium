@@ -47,7 +47,7 @@ void U2fRegister::OnTryDevice(U2fReturnCode return_code,
   switch (return_code) {
     case U2fReturnCode::SUCCESS:
       state_ = State::COMPLETE;
-      cb_.Run(return_code, response_data);
+      cb_.Run(return_code, response_data, std::vector<uint8_t>());
       break;
     case U2fReturnCode::CONDITIONS_NOT_SATISFIED:
       // Waiting for user touch, move on and try this device later
