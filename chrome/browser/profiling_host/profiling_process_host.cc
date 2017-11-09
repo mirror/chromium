@@ -8,6 +8,7 @@
 #include "base/base_switches.h"
 #include "base/command_line.h"
 #include "base/files/file_util.h"
+#include "base/metrics/field_trial_params.h"
 #include "base/metrics/histogram_macros.h"
 #include "base/process/process_iterator.h"
 #include "base/strings/string_number_conversions.h"
@@ -83,6 +84,10 @@ base::trace_event::TraceConfig GetBackgroundTracingConfig() {
 }  // namespace
 
 namespace profiling {
+
+const base::Feature kOOPHeapProfilingFeature{"OOPHeapProfiling",
+                                             base::FEATURE_DISABLED_BY_DEFAULT};
+const char kOOPHeapProfilingFeatureMode[] = "mode";
 
 bool ProfilingProcessHost::has_started_ = false;
 
@@ -326,7 +331,8 @@ void ProfilingProcessHost::AddClientToProfilingService(
 ProfilingProcessHost::Mode ProfilingProcessHost::GetCurrentMode() {
   const base::CommandLine* cmdline = base::CommandLine::ForCurrentProcess();
 #if BUILDFLAG(USE_ALLOCATOR_SHIM)
-  if (cmdline->HasSwitch(switches::kMemlog)) {
+  if (cmdline->HasSwitch(switches::kMemlog) ||
+      base::FeatureList::IsEnabled(kOOPHeapProfilingFeature)) {
     if (cmdline->HasSwitch(switches::kEnableHeapProfiling)) {
       // PartitionAlloc doesn't support chained allocation hooks so we can't
       // run both heap profilers at the same time.
@@ -336,7 +342,15 @@ ProfilingProcessHost::Mode ProfilingProcessHost::GetCurrentMode() {
       return Mode::kNone;
     }
 
-    std::string mode = cmdline->GetSwitchValueASCII(switches::kMemlog);
+    std::string mode;
+    // Respect the commandline switch above the field trial.
+    if (cmdline->HasSwitch(switches::kMemlog)) {
+      mode = cmdline->GetSwitchValueASCII(switches::kMemlog);
+    } else {
+      mode = base::GetFieldTrialParamValueByFeature(
+          kOOPHeapProfilingFeature, kOOPHeapProfilingFeatureMode);
+    }
+
     if (mode == switches::kMemlogModeAll)
       return Mode::kAll;
     if (mode == switches::kMemlogModeMinimal)
@@ -371,6 +385,7 @@ ProfilingProcessHost* ProfilingProcessHost::Start(
   host->metrics_timer_.Start(
       FROM_HERE, base::TimeDelta::FromHours(24),
       base::Bind(&ProfilingProcessHost::ReportMetrics, base::Unretained(host)));
+
   return host;
 }
 

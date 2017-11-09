@@ -5,6 +5,11 @@
 #ifndef CHROME_BROWSER_PROFILING_HOST_PROFILING_PROCESS_HOST_H_
 #define CHROME_BROWSER_PROFILING_HOST_PROFILING_PROCESS_HOST_H_
 
+#include <memory>
+#include <string>
+#include <vector>
+
+#include "base/feature_list.h"
 #include "base/macros.h"
 #include "base/memory/singleton.h"
 #include "base/process/process.h"
@@ -26,6 +31,9 @@ class FilePath;
 }
 
 namespace profiling {
+
+extern const base::Feature kOOPHeapProfilingFeature;
+extern const char kOOPHeapProfilingFeatureMode[];
 
 // Represents the browser side of the profiling process (//chrome/profiling).
 //
