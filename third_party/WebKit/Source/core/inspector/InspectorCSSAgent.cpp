@@ -54,6 +54,7 @@
 #include "core/css/parser/CSSParser.h"
 #include "core/css/parser/CSSParserContext.h"
 #include "core/css/properties/CSSProperty.h"
+#include "core/css/properties/Longhand.h"
 #include "core/css/resolver/StyleResolver.h"
 #include "core/css/resolver/StyleRuleUsageTracker.h"
 #include "core/dom/DOMException.h"

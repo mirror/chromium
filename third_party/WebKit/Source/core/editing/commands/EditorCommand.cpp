@@ -35,6 +35,7 @@
 #include "core/css/CSSIdentifierValue.h"
 #include "core/css/CSSPropertyValueSet.h"
 #include "core/css/CSSValueList.h"
+#include "core/css/properties/Longhand.h"
 #include "core/dom/DocumentFragment.h"
 #include "core/dom/TagCollection.h"
 #include "core/dom/events/Event.h"
