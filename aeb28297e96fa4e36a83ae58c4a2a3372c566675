@@ -160,6 +160,24 @@
     },
     {
       "key": {
+        "uuid": "4ec9ce61_31166b55",
+        "filename": "chrome/app/chromeos_strings.grdp",
+        "patchSetId": 13
+      },
+      "lineNbr": 3383,
+      "author": {
+        "id": 1147616
+      },
+      "writtenOn": "2017-11-09T00:36:21Z",
+      "side": 1,
+      "message": "The new label would be full description \"Move active window to above display\", here is the mock: https://gallery.googleplex.com/projects/MCHbtQVoQ2HCZaz7gfsqSw6O\n\nI changed to Window up/down/left/right now and removed CSS font-size adjustment. And left a TODO to remind me or the developer of new keyboard shortcut UI to update the description.",
+      "parentUuid": "a27da4ea_fc41f627",
+      "revId": "aeb28297e96fa4e36a83ae58c4a2a3372c566675",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "2ef88250_5ff38a3c",
         "filename": "chrome/browser/resources/chromeos/keyboard_overlay.css",
         "patchSetId": 13

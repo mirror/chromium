@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "2266eb1d_8f6e9765",
+        "filename": "ash/accelerators/accelerator_controller.cc",
+        "patchSetId": 14
+      },
+      "lineNbr": 263,
+      "author": {
+        "id": 1147616
+      },
+      "writtenOn": "2017-11-09T00:36:21Z",
+      "side": 1,
+      "message": "enum class doesn\u0027t have default ctor.\n\nIf we have else {} for NOTREACHED(), compiler will report “variable \u0027direction\u0027 is used uninitialized whenever \u0027if\u0027 condition is false”.\n\nCompiler suggested me to remove the the last \u0027if\u0027 if its condition is always true.\n\nI updated the code. PTAL.",
+      "parentUuid": "b8613103_4f0988c0",
+      "revId": "07a9856e1c3232280308d9355250096efbc3c5e1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "3b833c3c_72b830f7",
         "filename": "ash/display/display_move_window_util.cc",
         "patchSetId": 14
@@ -30,6 +48,24 @@
       "writtenOn": "2017-11-09T00:00:31Z",
       "side": 1,
       "message": "continue?",
+      "revId": "07a9856e1c3232280308d9355250096efbc3c5e1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a328e5d4_1427d6ad",
+        "filename": "ash/display/display_move_window_util.cc",
+        "patchSetId": 14
+      },
+      "lineNbr": 112,
+      "author": {
+        "id": 1147616
+      },
+      "writtenOn": "2017-11-09T00:36:21Z",
+      "side": 1,
+      "message": "yes, i missed continue.",
+      "parentUuid": "3b833c3c_72b830f7",
       "revId": "07a9856e1c3232280308d9355250096efbc3c5e1",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
