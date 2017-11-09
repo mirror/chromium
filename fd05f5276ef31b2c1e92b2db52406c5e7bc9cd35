@@ -1,0 +1,96 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "3bbd8418_cc28aca7",
+        "filename": "content/renderer/service_worker/service_worker_provider_context.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 304,
+      "author": {
+        "id": 1161621
+      },
+      "writtenOn": "2017-11-09T06:40:04Z",
+      "side": 1,
+      "message": "nit: I think this is redundant with line302.",
+      "range": {
+        "startLine": 304,
+        "startChar": 2,
+        "endLine": 304,
+        "endChar": 16
+      },
+      "revId": "fd05f5276ef31b2c1e92b2db52406c5e7bc9cd35",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8d556cdd_018fa7a8",
+        "filename": "content/renderer/service_worker/service_worker_provider_context.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 309,
+      "author": {
+        "id": 1161621
+      },
+      "writtenOn": "2017-11-09T06:40:04Z",
+      "side": 1,
+      "message": "nit: Using |state| is better? To align with following lines.",
+      "range": {
+        "startLine": 309,
+        "startChar": 2,
+        "endLine": 309,
+        "endChar": 19
+      },
+      "revId": "fd05f5276ef31b2c1e92b2db52406c5e7bc9cd35",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "90286653_7506bdcc",
+        "filename": "content/renderer/service_worker/web_service_worker_provider_impl.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 61,
+      "author": {
+        "id": 1161621
+      },
+      "writtenOn": "2017-11-09T06:40:04Z",
+      "side": 1,
+      "message": "I don\u0027t think we need to reset a raw pointer member explicitly in dtor, just making this dtor \u003d default should be enough.",
+      "range": {
+        "startLine": 61,
+        "startChar": 2,
+        "endLine": 61,
+        "endChar": 29
+      },
+      "revId": "fd05f5276ef31b2c1e92b2db52406c5e7bc9cd35",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7554bce3_5f9db5ac",
+        "filename": "content/renderer/service_worker/web_service_worker_provider_impl.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 71,
+      "author": {
+        "id": 1161621
+      },
+      "writtenOn": "2017-11-09T06:40:04Z",
+      "side": 1,
+      "message": "How about:\n  provider_client_ \u003d client;\n  if (!provider_client_) {\n    return;\n  }",
+      "range": {
+        "startLine": 66,
+        "startChar": 2,
+        "endLine": 71,
+        "endChar": 28
+      },
+      "revId": "fd05f5276ef31b2c1e92b2db52406c5e7bc9cd35",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
