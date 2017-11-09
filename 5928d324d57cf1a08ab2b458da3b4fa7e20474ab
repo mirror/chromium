@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "767bcfdf_340dd8be",
+        "filename": "gpu/command_buffer/service/scheduler.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 100,
+      "author": {
+        "id": 1128437
+      },
+      "writtenOn": "2017-11-09T01:31:35Z",
+      "side": 1,
+      "message": "nit: release_sequence_id since release_id is a sync point term with a specific meaning",
+      "revId": "5928d324d57cf1a08ab2b458da3b4fa7e20474ab",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
