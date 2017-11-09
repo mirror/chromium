@@ -166,6 +166,7 @@ SkImageInfo GetSkImageInfo(const scoped_refptr<StaticBitmapImage>& image) {
                            skia_image->refColorSpace());
 }
 
+// This function results in a readback due to using SkImage::readPixels().
 scoped_refptr<Uint8Array> CopyImageData(
     const scoped_refptr<StaticBitmapImage>& input,
     const SkImageInfo& info) {
@@ -209,48 +210,45 @@ scoped_refptr<StaticBitmapImage> NewImageFromRaster(
       SkImage::MakeFromRaster(pixmap, freePixels, pixels));
 }
 
-scoped_refptr<StaticBitmapImage> NewImageFromRaster(
-    const SkImageInfo& info,
-    std::unique_ptr<uint8_t[]>& image_pixels) {
-  SkPixmap pixmap(info, image_pixels.get(), info.minRowBytes());
-  return StaticBitmapImage::Create(SkImage::MakeRasterCopy(pixmap));
+static inline bool PremulCodePathAllowed(
+    const ImageBitmap::ParsedOptions& options) {
+  return options.premultiply_alpha || !options.source_is_unpremul;
 }
 
 scoped_refptr<StaticBitmapImage> FlipImageVertically(
     scoped_refptr<StaticBitmapImage> input,
     const ImageBitmap::ParsedOptions& parsed_options) {
   sk_sp<SkImage> image = input->PaintImageForCurrentFrame().GetSkImage();
-  // If image is unpremul and premultiply alpha is none, we have to avoid
-  // SkSurface code path, which only supports premul. This code path may result
-  // in a GPU readback if |input| is texture backed since CopyImageData() uses
-  // SkImage::readPixels() to extract the pixels from SkImage.
-  if (image->alphaType() == kUnpremul_SkAlphaType &&
-      !parsed_options.premultiply_alpha) {
-    scoped_refptr<Uint8Array> image_pixels = CopyImageData(input);
-    if (!image_pixels)
+  if (PremulCodePathAllowed(parsed_options)) {
+    // Use Skia to flip the image by drawing it on a surface.
+    sk_sp<SkSurface> surface = SkSurface::MakeRaster(GetSkImageInfo(input));
+    if (!surface)
       return nullptr;
-    SkImageInfo info = GetSkImageInfo(input.get());
-    unsigned image_row_bytes = info.width() * info.bytesPerPixel();
-    for (int i = 0; i < info.height() / 2; i++) {
-      unsigned top_first_element = i * image_row_bytes;
-      unsigned top_last_element = (i + 1) * image_row_bytes;
-      unsigned bottom_first_element = (info.height() - 1 - i) * image_row_bytes;
-      std::swap_ranges(image_pixels->Data() + top_first_element,
-                       image_pixels->Data() + top_last_element,
-                       image_pixels->Data() + bottom_first_element);
-    }
-    return NewImageFromRaster(info, std::move(image_pixels));
+    SkCanvas* canvas = surface->getCanvas();
+    canvas->scale(1, -1);
+    canvas->translate(0, -input->height());
+    canvas->drawImage(image.get(), 0, 0);
+    return StaticBitmapImage::Create(surface->makeImageSnapshot(),
+                                     input->ContextProviderWrapper());
   }
 
-  // Otherwise, we can use Skia to flip the image by drawing it on a surface.
-  sk_sp<SkSurface> surface = SkSurface::MakeRaster(GetSkImageInfo(input));
-  if (!surface)
+  // Unpremul code path may result in a GPU readback if |input| is texture
+  // backed since CopyImageData() uses  SkImage::readPixels() to extract the
+  // pixels from SkImage.
+  scoped_refptr<Uint8Array> image_pixels = CopyImageData(input);
+  if (!image_pixels)
     return nullptr;
-  SkCanvas* canvas = surface->getCanvas();
-  canvas->scale(1, -1);
-  canvas->translate(0, -input->height());
-  canvas->drawImage(image.get(), 0, 0);
-  return StaticBitmapImage::Create(surface->makeImageSnapshot());
+  SkImageInfo info = GetSkImageInfo(input);
+  unsigned image_row_bytes = info.width() * info.bytesPerPixel();
+  for (int i = 0; i < info.height() / 2; i++) {
+    unsigned top_first_element = i * image_row_bytes;
+    unsigned top_last_element = (i + 1) * image_row_bytes;
+    unsigned bottom_first_element = (info.height() - 1 - i) * image_row_bytes;
+    std::swap_ranges(image_pixels->Data() + top_first_element,
+                     image_pixels->Data() + top_last_element,
+                     image_pixels->Data() + bottom_first_element);
+  }
+  return NewImageFromRaster(info, std::move(image_pixels));
 }
 
 scoped_refptr<StaticBitmapImage> GetImageWithAlphaDisposition(
@@ -265,54 +263,61 @@ scoped_refptr<StaticBitmapImage> GetImageWithAlphaDisposition(
 
   SkImageInfo info = GetSkImageInfo(image.get());
   info = info.makeAlphaType(alpha_type);
-  scoped_refptr<Uint8Array> dst_pixels =
-      CopyImageData(image, info.makeColorSpace(nullptr));
-  if (!dst_pixels)
+
+  // Premul to unpremul: we have to readback the pixels
+  if (alpha_type == kUnpremul_SkAlphaType) {
+    // Set the color space of the ImageInfo to nullptr to unpremul in gamma
+    // encoded space
+    scoped_refptr<Uint8Array> dst_pixels =
+        CopyImageData(image, info.makeColorSpace(nullptr));
+    if (!dst_pixels)
+      return nullptr;
+    return NewImageFromRaster(info, std::move(dst_pixels));
+  }
+
+  // Unpremul to premul: draw on a surface. Avoid sRGB gamma transfer curve.
+  if (SkColorSpace::Equals(SkColorSpace::MakeSRGB().get(), info.colorSpace()))
+    info = info.makeColorSpace(nullptr);
+  sk_sp<SkSurface> surface = SkSurface::MakeRaster(info);
+  if (!surface)
     return nullptr;
-  return NewImageFromRaster(info, std::move(dst_pixels));
+  surface->getCanvas()->drawImage(skia_image.get(), 0, 0);
+  return StaticBitmapImage::Create(surface->makeImageSnapshot(),
+                                   image->ContextProviderWrapper());
 }
 
 scoped_refptr<StaticBitmapImage> ScaleImage(
     scoped_refptr<StaticBitmapImage>&& image,
-    unsigned resize_width,
-    unsigned resize_height,
-    SkFilterQuality resize_quality) {
-  auto sk_image = image->PaintImageForCurrentFrame().GetSkImage();
-  // SkImage::scalePixels() only works in premul. If the input is unpremul, we
-  // convert it to premul.
-  bool converted_to_premul = false;
-  if (sk_image->alphaType() == kUnpremul_SkAlphaType) {
-    image = GetImageWithAlphaDisposition(std::move(image), kPremultiplyAlpha);
-    sk_image = image->PaintImageForCurrentFrame().GetSkImage();
-    if (!sk_image.get())
-      return nullptr;
-    converted_to_premul = true;
-  }
+    const ImageBitmap::ParsedOptions& parsed_options) {
   auto image_info = GetSkImageInfo(image);
-  // Avoid sRGB transfer function by setting the color space to nullptr.
+  auto sk_image = image->PaintImageForCurrentFrame().GetSkImage();
+
+  SkImageInfo resized_info = image_info.makeWH(parsed_options.resize_width,
+                                               parsed_options.resize_height);
   if (SkColorSpace::Equals(image_info.colorSpace(),
                            SkColorSpace::MakeSRGB().get()))
-    image_info = image_info.makeColorSpace(nullptr);
-  SkImageInfo resized_info = image_info.makeWH(resize_width, resize_height);
+    resized_info = resized_info.makeColorSpace(nullptr);
+
   auto resized_data =
       SkData::MakeUninitialized(resized_info.computeMinByteSize());
   if (!resized_data)
     return nullptr;
+
   SkPixmap resized_pixmap(resized_info, resized_data->writable_data(),
                           resized_info.minRowBytes());
-  sk_image->scalePixels(resized_pixmap, resize_quality);
-  // Tag the resized Pixmap with the correct color space.
-  resized_pixmap.setColorSpace(GetSkImageInfo(image).refColorSpace());
-  auto resized_sk_image = SkImage::MakeRasterCopy(resized_pixmap);
-  scoped_refptr<StaticBitmapImage> resized_image = StaticBitmapImage::Create(
-      resized_sk_image, image->ContextProviderWrapper());
+  sk_image->scalePixels(resized_pixmap, parsed_options.resize_quality);
 
-  // If the source image was unpremul, unpremul the resized image.
-  if (converted_to_premul) {
-    resized_image = GetImageWithAlphaDisposition(std::move(resized_image),
-                                                 kDontPremultiplyAlpha);
+  // If needed, reset the alpha type.
+  if (image_info.alphaType() == kUnpremul_SkAlphaType) {
+    resized_pixmap.reset(
+        resized_pixmap.info().makeAlphaType(kUnpremul_SkAlphaType),
+        resized_pixmap.addr(), resized_pixmap.rowBytes());
   }
-  return resized_image;
+
+  // Tag the resized pixmap with the correct color space.
+  resized_pixmap.setColorSpace(image_info.refColorSpace());
+  return StaticBitmapImage::Create(SkImage::MakeRasterCopy(resized_pixmap),
+                                   image->ContextProviderWrapper());
 }
 
 scoped_refptr<StaticBitmapImage> ApplyColorSpaceConversion(
@@ -391,6 +396,17 @@ static scoped_refptr<StaticBitmapImage> CropImageAndApplyColorSpaceConversion(
     skia_image = ImageBitmap::GetSkImageFromDecoder(std::move(decoder));
     if (!skia_image)
       return nullptr;
+
+    // In the case where the source image is lazy-decoded, image_ may not be in
+    // a decoded state, we trigger it here.
+    SkPixmap pixmap;
+    if (!skia_image->isTextureBacked() && !skia_image->peekPixels(&pixmap)) {
+      sk_sp<SkSurface> surface =
+          SkSurface::MakeRaster(GetSkImageInfo(StaticBitmapImage::Create(
+              skia_image, image->ContextProviderWrapper())));
+      surface->getCanvas()->drawImage(skia_image.get(), 0, 0);
+      skia_image = surface->makeImageSnapshot();
+    }
   }
 
   if (src_rect != img_rect)
@@ -405,32 +421,40 @@ static scoped_refptr<StaticBitmapImage> CropImageAndApplyColorSpaceConversion(
       (parsed_options.resize_width * parsed_options.resize_height <
        result->Size().Area());
   bool up_scaling = parsed_options.should_scale_input && !down_scaling;
+
   // resize if down-scaling
   if (down_scaling) {
-    result =
-        ScaleImage(std::move(result), parsed_options.resize_width,
-                   parsed_options.resize_height, parsed_options.resize_quality);
+    result = ScaleImage(std::move(result), parsed_options);
+    if (!result)
+      return nullptr;
   }
 
   // flip if needed
-  if (parsed_options.flip_y)
+  if (parsed_options.flip_y) {
     result = FlipImageVertically(std::move(result), parsed_options);
+    if (!result)
+      return nullptr;
+  }
 
   // color convert if needed
-  if (parsed_options.has_color_space_conversion)
+  if (parsed_options.has_color_space_conversion) {
     result = ApplyColorSpaceConversion(std::move(result), parsed_options);
+    if (!result)
+      return nullptr;
+  }
 
   // premultiply / unpremultiply if needed
   result = GetImageWithAlphaDisposition(std::move(result),
                                         parsed_options.premultiply_alpha
                                             ? kPremultiplyAlpha
                                             : kDontPremultiplyAlpha);
+  if (!result)
+    return nullptr;
+
   // resize if up-scaling
-  if (up_scaling) {
-    result =
-        ScaleImage(std::move(result), parsed_options.resize_width,
-                   parsed_options.resize_height, parsed_options.resize_quality);
-  }
+  if (up_scaling)
+    result = ScaleImage(std::move(result), parsed_options);
+
   return result;
 }
 
@@ -441,32 +465,14 @@ ImageBitmap::ImageBitmap(ImageElementBase* image,
   scoped_refptr<Image> input = image->CachedImage()->GetImage();
   ParsedOptions parsed_options =
       ParseOptions(options, crop_rect, image->BitmapSourceSize());
+  parsed_options.source_is_unpremul =
+      (input->PaintImageForCurrentFrame().GetSkImage()->alphaType() ==
+       kUnpremul_SkAlphaType);
   if (DstBufferSizeHasOverflow(parsed_options))
     return;
 
   image_ =
       CropImageAndApplyColorSpaceConversion(std::move(input), parsed_options);
-  if (!image_)
-    return;
-
-  // In the case where the source image is lazy-decoded, m_image may not be in
-  // a decoded state, we trigger it here.
-  sk_sp<SkImage> sk_image = image_->PaintImageForCurrentFrame().GetSkImage();
-  SkPixmap pixmap;
-  if (!sk_image->isTextureBacked() && !sk_image->peekPixels(&pixmap)) {
-    sk_sp<SkColorSpace> dst_color_space =
-        parsed_options.color_params.GetSkColorSpace();
-    SkColorType dst_color_type = parsed_options.color_params.GetSkColorType();
-    SkImageInfo image_info =
-        SkImageInfo::Make(sk_image->width(), sk_image->height(), dst_color_type,
-                          kPremul_SkAlphaType, dst_color_space);
-    sk_sp<SkSurface> surface = SkSurface::MakeRaster(image_info);
-    surface->getCanvas()->drawImage(sk_image, 0, 0);
-    image_ = ApplyColorSpaceConversion(
-        StaticBitmapImage::Create(surface->makeImageSnapshot(),
-                                  input->ContextProviderWrapper()),
-        parsed_options);
-  }
   if (!image_)
     return;
 
@@ -578,6 +584,7 @@ ImageBitmap::ImageBitmap(ImageData* data,
                          const ImageBitmapOptions& options) {
   ParsedOptions parsed_options =
       ParseOptions(options, crop_rect, data->BitmapSourceSize());
+  parsed_options.source_is_unpremul = true;
   if (DstBufferSizeHasOverflow(parsed_options))
     return;
 
@@ -593,19 +600,43 @@ ImageBitmap::ImageBitmap(ImageData* data,
     return;
   }
 
-  int byte_length =
-      src_rect.Size().Area() * parsed_options.color_params.BytesPerPixel();
-  std::unique_ptr<uint8_t[]> image_pixels(new uint8_t[byte_length]);
+  // Copy / color convert the pixels
+  scoped_refptr<ArrayBuffer> pixels_buffer = ArrayBuffer::CreateOrNull(
+      src_rect.Size().Area(), parsed_options.color_params.BytesPerPixel());
+  if (!pixels_buffer)
+    return;
+  unsigned byte_length = pixels_buffer->ByteLength();
+  scoped_refptr<Uint8Array> image_pixels =
+      Uint8Array::Create(std::move(pixels_buffer), 0, byte_length);
+  if (!image_pixels)
+    return;
   if (!data->ImageDataInCanvasColorSettings(
           parsed_options.color_params.ColorSpace(),
-          parsed_options.color_params.PixelFormat(), image_pixels,
+          parsed_options.color_params.PixelFormat(), image_pixels->Data(),
           kN32ColorType, &src_rect))
     return;
+
+  // Create Image object
   SkImageInfo info = SkImageInfo::Make(
       src_rect.Width(), src_rect.Height(),
       parsed_options.color_params.GetSkColorType(), kUnpremul_SkAlphaType,
       parsed_options.color_params.GetSkColorSpaceForSkSurfaces());
-  image_ = NewImageFromRaster(info, image_pixels);
+  image_ = NewImageFromRaster(info, std::move(image_pixels));
+  if (!image_)
+    return;
+
+  // down-scaling has higher priority than other tasks, up-scaling has lower.
+  bool down_scaling =
+      parsed_options.should_scale_input &&
+      (parsed_options.resize_width * parsed_options.resize_height <
+       image_->Size().Area());
+  bool up_scaling = parsed_options.should_scale_input && !down_scaling;
+
+  // resize if down-scaling
+  if (down_scaling)
+    image_ = ScaleImage(std::move(image_), parsed_options);
+  if (!image_)
+    return;
 
   // premultiply if needed
   if (parsed_options.premultiply_alpha)
@@ -616,15 +647,12 @@ ImageBitmap::ImageBitmap(ImageData* data,
   // flip if needed
   if (parsed_options.flip_y)
     image_ = FlipImageVertically(std::move(image_), parsed_options);
+  if (!image_)
+    return;
 
-  // resize if needed
-  if (parsed_options.should_scale_input) {
-    image_ =
-        ScaleImage(std::move(image_), parsed_options.resize_width,
-                   parsed_options.resize_height, parsed_options.resize_quality);
-    if (!image_)
-      return;
-  }
+  // resize if up-scaling
+  if (up_scaling)
+    image_ = ScaleImage(std::move(image_), parsed_options);
 }
 
 ImageBitmap::ImageBitmap(ImageBitmap* bitmap,
@@ -635,6 +663,9 @@ ImageBitmap::ImageBitmap(ImageBitmap* bitmap,
     return;
   ParsedOptions parsed_options =
       ParseOptions(options, crop_rect, input->Size());
+  parsed_options.source_is_unpremul =
+      (input->PaintImageForCurrentFrame().GetSkImage()->alphaType() ==
+       kUnpremul_SkAlphaType);
   if (DstBufferSizeHasOverflow(parsed_options))
     return;
 
@@ -652,6 +683,9 @@ ImageBitmap::ImageBitmap(scoped_refptr<StaticBitmapImage> image,
   bool origin_clean = image->OriginClean();
   ParsedOptions parsed_options =
       ParseOptions(options, crop_rect, image->Size());
+  parsed_options.source_is_unpremul =
+      (image->PaintImageForCurrentFrame().GetSkImage()->alphaType() ==
+       kUnpremul_SkAlphaType);
   if (DstBufferSizeHasOverflow(parsed_options))
     return;
 
