@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "65e22d62_f55d7aed",
+        "filename": "ui/gfx/icc_profile.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 117,
+      "author": {
+        "id": 1115926
+      },
+      "writtenOn": "2017-11-09T00:38:46Z",
+      "side": 1,
+      "message": "is_valid_ and is_parametric_ needs comments to explain what they mean.",
+      "range": {
+        "startLine": 117,
+        "startChar": 7,
+        "endLine": 117,
+        "endChar": 16
+      },
+      "revId": "664f811cb46ab1acccd1f50abadbc1fba8f08232",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
