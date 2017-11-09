@@ -1,0 +1,55 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "1ceaa10e_942db856",
+        "filename": "chrome/browser/chromeos/login/screens/terms_of_service_screen.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 95,
+      "author": {
+        "id": 1000623
+      },
+      "writtenOn": "2017-11-09T15:25:15Z",
+      "side": 1,
+      "message": "Chrome OS here and below",
+      "revId": "4e1c9f4d26ad2c270f34aeb2179507e552930497",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "35e2e953_64fe881c",
+        "filename": "chrome/browser/chromeos/login/screens/terms_of_service_screen.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 130,
+      "author": {
+        "id": 1000623
+      },
+      "writtenOn": "2017-11-09T15:25:15Z",
+      "side": 1,
+      "message": "Shouldn\u0027t we use a weak pointer here?",
+      "revId": "4e1c9f4d26ad2c270f34aeb2179507e552930497",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "28727128_8b34818a",
+        "filename": "chrome/browser/chromeos/login/screens/terms_of_service_screen.h",
+        "patchSetId": 8
+      },
+      "lineNbr": 51,
+      "author": {
+        "id": 1000623
+      },
+      "writtenOn": "2017-11-09T15:25:15Z",
+      "side": 1,
+      "message": "Add function comment. Maybe this should be renamed to OnDownloaded",
+      "revId": "4e1c9f4d26ad2c270f34aeb2179507e552930497",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
