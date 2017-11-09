@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "2bded72b_850812eb",
+        "filename": "chrome/browser/consent_auditor/consent_auditor_factory.cc",
+        "patchSetId": 11
+      },
+      "lineNbr": 17,
+      "author": {
+        "id": 1118331
+      },
+      "writtenOn": "2017-11-09T17:32:49Z",
+      "side": 1,
+      "message": "I was a bit hesitant, since I only found one other factory doing this :) But I really don\u0027t need anything else from base::Singleton - maybe some of them do. Bernhard?",
+      "parentUuid": "3f541235_599c5faa",
+      "revId": "d67c359015046a9644c5b99e0e15a88b932ec0c5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "650be285_856bf044",
         "filename": "chrome/browser/consent_auditor/consent_auditor_factory.h",
         "patchSetId": 11
@@ -42,6 +60,30 @@
     },
     {
       "key": {
+        "uuid": "d9d75ea1_82ad72ab",
+        "filename": "chrome/browser/consent_auditor/consent_auditor_factory.h",
+        "patchSetId": 11
+      },
+      "lineNbr": 15,
+      "author": {
+        "id": 1118331
+      },
+      "writtenOn": "2017-11-09T17:32:49Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "650be285_856bf044",
+      "range": {
+        "startLine": 11,
+        "startChar": 0,
+        "endLine": 15,
+        "endChar": 0
+      },
+      "revId": "d67c359015046a9644c5b99e0e15a88b932ec0c5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "9d9f84a2_875d2c23",
         "filename": "chrome/browser/consent_auditor/consent_auditor_factory.h",
         "patchSetId": 11
@@ -56,6 +98,24 @@
       "revId": "d67c359015046a9644c5b99e0e15a88b932ec0c5",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6b5e4a93_88508c2b",
+        "filename": "chrome/browser/consent_auditor/consent_auditor_factory.h",
+        "patchSetId": 11
+      },
+      "lineNbr": 35,
+      "author": {
+        "id": 1118331
+      },
+      "writtenOn": "2017-11-09T17:32:49Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "9d9f84a2_875d2c23",
+      "revId": "d67c359015046a9644c5b99e0e15a88b932ec0c5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
