@@ -147,7 +147,8 @@ class SiteEngagementService::Helper
     void MediaStartedPlaying(const MediaPlayerInfo& media_info,
                              const MediaPlayerId& id) override;
     void MediaStoppedPlaying(const MediaPlayerInfo& media_info,
-                             const MediaPlayerId& id) override;
+                             const MediaPlayerId& id,
+                             bool reached_end_of_stream) override;
     void WasShown() override;
     void WasHidden() override;
 

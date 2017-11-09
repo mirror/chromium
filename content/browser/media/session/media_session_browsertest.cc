@@ -90,7 +90,8 @@ class MediaSessionBrowserTest : public ContentBrowserTest {
     }
 
     void MediaStoppedPlaying(const MediaPlayerInfo& info,
-                             const MediaPlayerId& id) override {
+                             const MediaPlayerId& id,
+                             bool reached_end_of_stream) override {
       if (type_ != Type::kStop)
         return;
 

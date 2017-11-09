@@ -214,7 +214,8 @@ class AutomationWebContentsObserver
   }
 
   void MediaStoppedPlaying(const MediaPlayerInfo& video_type,
-                           const MediaPlayerId& id) override {
+                           const MediaPlayerId& id,
+                           bool reached_end_of_stream) override {
     std::vector<content::AXEventNotificationDetails> details;
     content::AXEventNotificationDetails detail;
     detail.ax_tree_id = id.first->GetAXTreeID();

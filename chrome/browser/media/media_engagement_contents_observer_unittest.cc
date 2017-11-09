@@ -27,7 +27,7 @@ class MediaEngagementContentsObserverTest
     : public ChromeRenderViewHostTestHarness {
  public:
   MediaEngagementContentsObserverTest()
-      : task_runner_(new base::TestMockTimeTaskRunner()){};
+      : task_runner_(new base::TestMockTimeTaskRunner()) {}
 
   void SetUp() override {
     scoped_feature_list_.InitFromCommandLine("RecordMediaEngagementScores",
@@ -103,7 +103,7 @@ class MediaEngagementContentsObserverTest
     content::WebContentsObserver::MediaPlayerInfo player_info(true, true);
     content::WebContentsObserver::MediaPlayerId player_id =
         std::make_pair(nullptr /* RenderFrameHost */, id);
-    contents_observer_->MediaStoppedPlaying(player_info, player_id);
+    contents_observer_->MediaStoppedPlaying(player_info, player_id, false);
   }
 
   void SimulateMutedStateChange(int id, bool muted) {
