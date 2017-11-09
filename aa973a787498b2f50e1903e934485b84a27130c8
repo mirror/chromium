@@ -34,6 +34,24 @@
       "revId": "aa973a787498b2f50e1903e934485b84a27130c8",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5a6f30ef_a400bf8a",
+        "filename": "components/viz/service/display/direct_renderer.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 623,
+      "author": {
+        "id": 1228419
+      },
+      "writtenOn": "2017-11-09T22:30:12Z",
+      "side": 1,
+      "message": "Sorry, you are right.",
+      "parentUuid": "a36e619e_54e6d9b4",
+      "revId": "aa973a787498b2f50e1903e934485b84a27130c8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
