@@ -3420,14 +3420,32 @@ http://cs/file:chrome/histograms.xml - but prefer this file for new entries.
   </summary>
 </histogram>
 
-<histogram name="Ash.TouchView.TouchViewActivePercentage" units="%">
-  <owner>girard@chromium.org</owner>
-  <summary>The proportion of time spent in TouchView during a session.</summary>
+<histogram name="Ash.TouchView.TouchViewActiveLandscapeTotal" units="ms">
+  <owner>minch@chromium.org</owner>
+  <summary>
+    The total time that user stay in landscape of tablet mode during a session.
+  </summary>
 </histogram>
 
-<histogram name="Ash.TouchView.TouchViewActiveTotal" units="seconds">
+<histogram name="Ash.TouchView.TouchViewActivePercentage" units="%">
   <owner>girard@chromium.org</owner>
-  <summary>The total time that TouchView is active during a session.</summary>
+  <summary>
+    The proportion of time spent in tablet mode during a session.
+  </summary>
+</histogram>
+
+<histogram name="Ash.TouchView.TouchViewActivePortraitTotal" units="ms">
+  <owner>minch@chromium.org</owner>
+  <summary>
+    The total time that user stay in portrait of tablet mode during a session.
+  </summary>
+</histogram>
+
+<histogram name="Ash.TouchView.TouchViewActiveTotal" units="minutes">
+  <owner>girard@chromium.org</owner>
+  <summary>
+    The total time that user stay in tablet mode during a session.
+  </summary>
 </histogram>
 
 <histogram name="Ash.TouchView.TouchViewInactive" units="ms">
@@ -3435,10 +3453,10 @@ http://cs/file:chrome/histograms.xml - but prefer this file for new entries.
   <summary>The length of time between TouchView activations.</summary>
 </histogram>
 
-<histogram name="Ash.TouchView.TouchViewInactiveTotal" units="seconds">
+<histogram name="Ash.TouchView.TouchViewInactiveTotal" units="minutes">
   <owner>girard@chromium.org</owner>
   <summary>
-    The total time that TouchView is not active during a session.
+    The total time that user stay in laptop mode during a session.
   </summary>
 </histogram>
 

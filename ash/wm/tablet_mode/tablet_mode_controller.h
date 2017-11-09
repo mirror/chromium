@@ -23,6 +23,8 @@
 #include "chromeos/dbus/power_manager_client.h"
 #include "mojo/public/cpp/bindings/binding_set.h"
 #include "mojo/public/cpp/bindings/interface_ptr_set.h"
+#include "third_party/WebKit/public/platform/modules/screen_orientation/WebScreenOrientationLockType.h"
+#include "ui/display/display_observer.h"
 #include "ui/gfx/geometry/vector3d_f.h"
 
 namespace aura {
@@ -54,7 +56,8 @@ class ASH_EXPORT TabletModeController
       public mojom::TabletModeController,
       public ShellObserver,
       public WindowTreeHostManager::Observer,
-      public SessionObserver {
+      public SessionObserver,
+      public display::DisplayObserver {
  public:
   // Used for keeping track if the user wants the machine to behave as a
   // clamshell/tabletmode regardless of hardware orientation.
@@ -125,6 +128,10 @@ class ASH_EXPORT TabletModeController
   void SuspendImminent(power_manager::SuspendImminent::Reason reason) override;
   void SuspendDone(const base::TimeDelta& sleep_duration) override;
 
+  // display::DisplayObserver:
+  void OnDisplayMetricsChanged(const display::Display& display,
+                               uint32_t changed_metrics) override;
+
  private:
   friend class TabletModeControllerTest;
   friend class TabletModeWindowManagerTest;
@@ -180,6 +187,9 @@ class ASH_EXPORT TabletModeController
   // certain way regardless of configuration.
   bool AllowEnterExitTabletMode() const;
 
+  bool IsScreenOrientationLandscape(
+      blink::WebScreenOrientationLockType screen_orientation) const;
+
   // The maximized window manager (if enabled).
   std::unique_ptr<TabletModeWindowManager> tablet_mode_window_manager_;
 
@@ -197,6 +207,14 @@ class ASH_EXPORT TabletModeController
   base::Time tabletmode_usage_interval_start_time_;
   base::TimeDelta total_tabletmode_time_;
   base::TimeDelta total_non_tabletmode_time_;
+
+  // Tracks time spent in landscape or portrait orientation in tablet mode.
+  base::Time tabletmode_orientation_start_time_;
+  base::TimeDelta total_landscape_time_;
+  base::TimeDelta total_portrait_time_;
+
+  blink::WebScreenOrientationLockType screen_orientation_ =
+      blink::kWebScreenOrientationLockDefault;
 
   // Tracks the last time we received a lid open event. This is used to suppress
   // erroneous accelerometer readings as the lid is opened but the accelerometer
