@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "e757df37_711e83c6",
+        "filename": "third_party/WebKit/Source/controller/BlinkInitializer.cpp",
+        "patchSetId": 3
+      },
+      "lineNbr": 131,
+      "author": {
+        "id": 1000379
+      },
+      "writtenOn": "2017-11-09T17:28:21Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "e6c6a612_c5774d7b",
+      "revId": "c0da9f03374f740927322b3b5f3eda8493dc523b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "1e7754c6_613114c4",
         "filename": "third_party/WebKit/Source/controller/BlinkInitializer.cpp",
         "patchSetId": 3
@@ -33,6 +51,24 @@
       "revId": "c0da9f03374f740927322b3b5f3eda8493dc523b",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6b42b605_cdbe7cfe",
+        "filename": "third_party/WebKit/Source/controller/BlinkInitializer.cpp",
+        "patchSetId": 3
+      },
+      "lineNbr": 139,
+      "author": {
+        "id": 1000379
+      },
+      "writtenOn": "2017-11-09T17:28:21Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "1e7754c6_613114c4",
+      "revId": "c0da9f03374f740927322b3b5f3eda8493dc523b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -53,6 +89,24 @@
     },
     {
       "key": {
+        "uuid": "80133c3f_b00ed1f5",
+        "filename": "third_party/WebKit/Source/controller/DevToolsFrontendImpl.cpp",
+        "patchSetId": 3
+      },
+      "lineNbr": 74,
+      "author": {
+        "id": 1000379
+      },
+      "writtenOn": "2017-11-09T17:28:21Z",
+      "side": 1,
+      "message": "Exactly!",
+      "parentUuid": "2ebd1adc_2a4ff32c",
+      "revId": "c0da9f03374f740927322b3b5f3eda8493dc523b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "ac8bb5d8_4e4a4bf3",
         "filename": "third_party/WebKit/Source/controller/DevToolsFrontendImpl.cpp",
         "patchSetId": 3
@@ -67,6 +121,24 @@
       "revId": "c0da9f03374f740927322b3b5f3eda8493dc523b",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6e88771f_b6bf09ce",
+        "filename": "third_party/WebKit/Source/controller/DevToolsFrontendImpl.cpp",
+        "patchSetId": 3
+      },
+      "lineNbr": 108,
+      "author": {
+        "id": 1000379
+      },
+      "writtenOn": "2017-11-09T17:28:21Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "ac8bb5d8_4e4a4bf3",
+      "revId": "c0da9f03374f740927322b3b5f3eda8493dc523b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
