@@ -2,6 +2,40 @@
   "comments": [
     {
       "key": {
+        "uuid": "9c70985e_2974a33f",
+        "filename": "content/renderer/media/webmediaplayer_ms.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 165,
+      "author": {
+        "id": 1115974
+      },
+      "writtenOn": "2017-11-09T14:02:48Z",
+      "side": 1,
+      "message": "Why not `const T\u0026`?",
+      "revId": "842a7d5bb77c75101d1fb094c20696c88c6835fc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "dabca84e_6981244f",
+        "filename": "content/renderer/media/webmediaplayer_ms.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 173,
+      "author": {
+        "id": 1115974
+      },
+      "writtenOn": "2017-11-09T14:02:48Z",
+      "side": 1,
+      "message": "Same as above and many places throughout this CL.",
+      "revId": "842a7d5bb77c75101d1fb094c20696c88c6835fc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "fd368bde_a018aca7",
         "filename": "third_party/WebKit/Source/core/html/media/HTMLVideoElement.cpp",
         "patchSetId": 2
@@ -13,6 +47,30 @@
       "writtenOn": "2017-11-09T13:40:52Z",
       "side": 1,
       "message": "It becomes a bit anonymous and magic using unnamed objects created on the fly. I would prefer something more explicitly named, especially since this is intended to make the code more readable, but it\u0027s up to people more familiar with the media code (-\u003e mlamouri)",
+      "range": {
+        "startLine": 354,
+        "startChar": 13,
+        "endLine": 355,
+        "endChar": 14
+      },
+      "revId": "842a7d5bb77c75101d1fb094c20696c88c6835fc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "cdae403c_5a72d680",
+        "filename": "third_party/WebKit/Source/core/html/media/HTMLVideoElement.cpp",
+        "patchSetId": 2
+      },
+      "lineNbr": 355,
+      "author": {
+        "id": 1115974
+      },
+      "writtenOn": "2017-11-09T14:02:48Z",
+      "side": 1,
+      "message": "I agree that being more explicit about the object would be better. If not created on the stack, at least a comment to help the reader.",
+      "parentUuid": "fd368bde_a018aca7",
       "range": {
         "startLine": 354,
         "startChar": 13,
