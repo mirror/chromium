@@ -220,7 +220,8 @@ GEN('#else');
 GEN('#define MAYBE_Filtering Filtering');
 GEN('#endif');
 TEST_F('CrExtensionsItemListTest', 'MAYBE_Filtering', function() {
-  mocha.grep(assert(extension_item_list_tests.TestNames.Filtering)).run();
+  mocha.runTest(extension_item_list_tests.TestNames.Filtering);
+  //mocha.grep(assert(extension_item_list_tests.TestNames.Filtering)).run();
 });
 
 // This test is flaky on Mac10.9 Tests (dbg). See https://crbug.com/771099.
