@@ -3,8 +3,10 @@
 // found in the LICENSE file.
 
 #import "ios/chrome/browser/ui/activity_services/canonical_url_retriever.h"
+#import "ios/chrome/browser/ui/activity_services/canonical_url_retriever_private.h"
 
 #include "base/mac/bind_objc_block.h"
+#include "base/metrics/histogram_macros.h"
 #include "base/strings/utf_string_conversions.h"
 #include "base/values.h"
 #import "ios/chrome/browser/procedural_block_types.h"
@@ -17,19 +19,69 @@
 
 namespace {
 // Script to access the canonical URL from a web page.
-char kCanonicalURLScript[] =
+const char kCanonicalURLScript[] =
     "(function() {"
     "  var linkNode = document.querySelector(\"link[rel='canonical']\");"
     "  return linkNode ? linkNode.getAttribute(\"href\") : \"\";"
     "})()";
 
+// Logs |result| in the IOS.CanonicalURLResult histogram.
+void LogCanonicalUrlResultHistogram(
+    activity_services::CanonicalURLResult result) {
+  UMA_HISTOGRAM_ENUMERATION(activity_services::kCanonicalURLResultHistogram,
+                            result,
+                            activity_services::CANONICAL_URL_RESULT_COUNT);
+}
+
+// Logs the result if a valid canonical URL is found. |canonical_url| is the
+// canonical URL that was found, and |visible_url| is the page's URL that is
+// visible in the omnibox.
+void LogValidCanonicalUrlFoundResult(const GURL& canonical_url,
+                                     const GURL& visible_url) {
+  // Check if |canonical_url| is HTTPS to determine result.
+  if (!canonical_url.SchemeIsCryptographic()) {
+    LogCanonicalUrlResultHistogram(
+        activity_services::FAILED_CANONICAL_URL_NOT_HTTPS);
+  } else {
+    // Check whether |visible_url| and |canonical_url| are the same to determine
+    // which success bucket to log.
+    if (visible_url == canonical_url) {
+      LogCanonicalUrlResultHistogram(
+          activity_services::SUCCESS_CANONICAL_URL_SAME_AS_VISIBLE);
+    } else {
+      LogCanonicalUrlResultHistogram(
+          activity_services::SUCCESS_CANONICAL_URL_DIFFERENT_FROM_VISIBLE);
+    }
+  }
+}
+
 // Converts a |value| to a GURL. Returns an empty GURL if |value| is not a valid
 // URL.
 GURL UrlFromValue(const base::Value* value) {
   GURL canonical_url;
-  if (value && value->is_string()) {
+  bool canonical_url_found = false;
+
+  if (value && value->is_string() && !value->GetString().empty()) {
     canonical_url = GURL(value->GetString());
+
+    // This variable is required for metrics collection in order to distinguish
+    // between the no canonical URL found and the invalid canonical URL found
+    // cases. The |canonical_url| GURL cannot be relied upon to distinguish
+    // between these cases because GURLs created with invalid URLs can be
+    // constructed as empty GURLs.
+    canonical_url_found = true;
   }
+
+  if (!canonical_url_found) {
+    // Log result if no canonical URL is found.
+    LogCanonicalUrlResultHistogram(
+        activity_services::FAILED_NO_CANONICAL_URL_DEFINED);
+  } else if (!canonical_url.is_valid()) {
+    // Log result if an invalid canonical URL is found.
+    LogCanonicalUrlResultHistogram(
+        activity_services::FAILED_CANONICAL_URL_INVALID);
+  }
+
   return canonical_url.is_valid() ? canonical_url : GURL::EmptyGURL();
 }
 }  // namespace
@@ -38,7 +90,10 @@ namespace activity_services {
 void RetrieveCanonicalUrl(web::WebState* web_state,
                           ProceduralBlockWithURL completion) {
   // Do not use the canonical URL if the page is not secured with HTTPS.
-  if (!web_state->GetVisibleURL().SchemeIsCryptographic()) {
+  const GURL& visible_url = web_state->GetVisibleURL();
+  if (!visible_url.SchemeIsCryptographic()) {
+    LogCanonicalUrlResultHistogram(
+        activity_services::FAILED_VISIBLE_URL_NOT_HTTPS);
     completion(GURL::EmptyGURL());
     return;
   }
@@ -46,6 +101,9 @@ void RetrieveCanonicalUrl(web::WebState* web_state,
   void (^javascript_completion)(const base::Value*) =
       ^(const base::Value* value) {
         GURL canonical_url = UrlFromValue(value);
+
+        if (!canonical_url.is_empty())
+          LogValidCanonicalUrlFoundResult(canonical_url, visible_url);
 
         // If the canonical URL is not HTTPS, pass an empty GURL so that there
         // is not a downgrade from the HTTPS visible URL.
