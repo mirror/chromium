@@ -31,8 +31,6 @@
 #include "bindings/core/v8/V8CacheOptions.h"
 #include "core/CoreExport.h"
 #include "core/dom/ExecutionContext.h"
-#include "core/dom/events/EventListener.h"
-#include "core/dom/events/EventTarget.h"
 #include "core/frame/DOMTimerCoordinator.h"
 #include "core/frame/DOMWindowBase64.h"
 #include "core/frame/csp/ContentSecurityPolicy.h"
@@ -56,17 +54,15 @@ class FontFaceSet;
 class ConsoleMessage;
 class ExceptionState;
 class OffscreenFontSelector;
-class V8AbstractEventListener;
 class WorkerLocation;
 class WorkerNavigator;
 class WorkerThread;
 struct GlobalScopeCreationParams;
 
 class CORE_EXPORT WorkerGlobalScope
-    : public EventTargetWithInlineData,
+    : public WorkerOrWorkletGlobalScope,
       public ActiveScriptWrappable<WorkerGlobalScope>,
       public SecurityContext,
-      public WorkerOrWorkletGlobalScope,
       public Supplementable<WorkerGlobalScope>,
       public DOMWindowBase64 {
   DEFINE_WRAPPERTYPEINFO();
@@ -96,9 +92,6 @@ class CORE_EXPORT WorkerGlobalScope
 
   void ExceptionUnhandled(int exception_id);
 
-  void RegisterEventListener(V8AbstractEventListener*);
-  void DeregisterEventListener(V8AbstractEventListener*);
-
   // WorkerGlobalScope
   WorkerGlobalScope* self() { return this; }
   WorkerLocation* location() const;
@@ -116,17 +109,6 @@ class CORE_EXPORT WorkerGlobalScope
 
   // WorkerUtils
   virtual void importScripts(const Vector<String>& urls, ExceptionState&);
-
-  // ScriptWrappable
-  v8::Local<v8::Object> Wrap(v8::Isolate*,
-                             v8::Local<v8::Object> creation_context) final;
-  v8::Local<v8::Object> AssociateWithWrapper(
-      v8::Isolate*,
-      const WrapperTypeInfo*,
-      v8::Local<v8::Object> wrapper) final;
-
-  // ScriptWrappable
-  bool HasPendingActivity() const override;
 
   // ExecutionContext
   const KURL& Url() const final { return url_; }
@@ -149,11 +131,6 @@ class CORE_EXPORT WorkerGlobalScope
 
   // EventTarget
   ExecutionContext* GetExecutionContext() const final;
-
-  // WorkerOrWorkletGlobalScope
-  ScriptWrappable* GetScriptWrappable() const final {
-    return const_cast<WorkerGlobalScope*>(this);
-  }
 
   double TimeOrigin() const { return time_origin_; }
   WorkerSettings* GetWorkerSettings() const { return worker_settings_.get(); }
@@ -230,8 +207,6 @@ class CORE_EXPORT WorkerGlobalScope
   DOMTimerCoordinator timers_;
 
   const double time_origin_;
-
-  HeapHashSet<Member<V8AbstractEventListener>> event_listeners_;
 
   HeapHashMap<int, Member<ErrorEvent>> pending_error_events_;
   int last_pending_error_event_id_ = 0;
