@@ -29,9 +29,8 @@ class WorkerReportingProxy;
 struct GlobalScopeCreationParams;
 
 class CORE_EXPORT WorkletGlobalScope
-    : public ScriptWrappable,
+    : public WorkerOrWorkletGlobalScope,
       public SecurityContext,
-      public WorkerOrWorkletGlobalScope,
       public ActiveScriptWrappable<WorkletGlobalScope> {
   DEFINE_WRAPPERTYPEINFO();
   USING_GARBAGE_COLLECTED_MIXIN(WorkletGlobalScope);
@@ -41,11 +40,6 @@ class CORE_EXPORT WorkletGlobalScope
 
   bool IsWorkletGlobalScope() const final { return true; }
 
-  // WorkerOrWorkletGlobalScope
-  ScriptWrappable* GetScriptWrappable() const final {
-    return const_cast<WorkletGlobalScope*>(this);
-  }
-
   void EvaluateClassicScript(
       const KURL& script_url,
       String source_code,
@@ -54,15 +48,6 @@ class CORE_EXPORT WorkletGlobalScope
   // Always returns false here as worklets don't have a #close() method on
   // the global.
   bool IsClosing() const final { return false; }
-
-  // ScriptWrappable
-  v8::Local<v8::Object> Wrap(v8::Isolate*,
-                             v8::Local<v8::Object> creation_context) final;
-  v8::Local<v8::Object> AssociateWithWrapper(
-      v8::Isolate*,
-      const WrapperTypeInfo*,
-      v8::Local<v8::Object> wrapper) final;
-  bool HasPendingActivity() const override;
 
   ExecutionContext* GetExecutionContext() const;
 

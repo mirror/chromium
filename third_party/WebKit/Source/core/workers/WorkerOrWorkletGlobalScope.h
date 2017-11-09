@@ -7,6 +7,7 @@
 
 #include "bindings/core/v8/V8CacheOptions.h"
 #include "core/dom/ExecutionContext.h"
+#include "core/dom/events/EventTarget.h"
 #include "core/frame/WebFeatureForward.h"
 #include "core/workers/WorkerClients.h"
 #include "platform/wtf/BitVector.h"
@@ -14,25 +15,36 @@
 namespace blink {
 
 class ResourceFetcher;
-class ScriptWrappable;
+class V8AbstractEventListener;
 class WorkerOrWorkletScriptController;
 class WorkerReportingProxy;
 class WorkerThread;
 
-class CORE_EXPORT WorkerOrWorkletGlobalScope : public ExecutionContext {
+class CORE_EXPORT WorkerOrWorkletGlobalScope : public EventTargetWithInlineData,
+                                               public ExecutionContext {
  public:
   WorkerOrWorkletGlobalScope(v8::Isolate*,
                              WorkerClients*,
                              WorkerReportingProxy&);
   ~WorkerOrWorkletGlobalScope() override;
 
+  // EventTarget
+  const AtomicString& InterfaceName() const override { return g_null_atom; };
+
+  // ScriptWrappable
+  v8::Local<v8::Object> Wrap(v8::Isolate*,
+                             v8::Local<v8::Object> creation_context) final;
+  v8::Local<v8::Object> AssociateWithWrapper(
+      v8::Isolate*,
+      const WrapperTypeInfo*,
+      v8::Local<v8::Object> wrapper) final;
+  bool HasPendingActivity() const override;
+
   // ExecutionContext
   bool IsWorkerOrWorkletGlobalScope() const final { return true; }
   bool IsJSExecutionForbidden() const final;
   void DisableEval(const String& error_message) final;
   bool CanExecuteScripts(ReasonForCallingCanExecuteScripts) final;
-
-  virtual ScriptWrappable* GetScriptWrappable() const = 0;
 
   // Evaluates the given main script as a classic script (as opposed to a module
   // script).
@@ -51,6 +63,9 @@ class CORE_EXPORT WorkerOrWorkletGlobalScope : public ExecutionContext {
   // Should be called before destroying the global scope object. Allows
   // sub-classes to perform any cleanup needed.
   virtual void Dispose();
+
+  void RegisterEventListener(V8AbstractEventListener*);
+  void DeregisterEventListener(V8AbstractEventListener*);
 
   // Called from UseCounter to record API use in this execution context.
   void CountFeature(WebFeature);
@@ -76,6 +91,7 @@ class CORE_EXPORT WorkerOrWorkletGlobalScope : public ExecutionContext {
   WorkerReportingProxy& ReportingProxy() { return reporting_proxy_; }
 
   void Trace(blink::Visitor*) override;
+  void TraceWrappers(const ScriptWrappableVisitor*) const override;
 
   scoped_refptr<WebTaskRunner> GetTaskRunner(TaskType) override;
 
@@ -85,6 +101,8 @@ class CORE_EXPORT WorkerOrWorkletGlobalScope : public ExecutionContext {
   Member<WorkerOrWorkletScriptController> script_controller_;
 
   WorkerReportingProxy& reporting_proxy_;
+
+  HeapHashSet<Member<V8AbstractEventListener>> event_listeners_;
 
   // This is the set of features that this worker has used.
   BitVector used_features_;
