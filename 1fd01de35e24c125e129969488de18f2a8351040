@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "daad4678_f4dbe506",
+        "filename": "third_party/WebKit/Source/core/layout/ng/ng_container_fragment_builder.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 116,
+      "author": {
+        "id": 1161294
+      },
+      "writtenOn": "2017-11-09T00:35:06Z",
+      "side": 1,
+      "message": "I\u0027ve reworked the code to be more understandable.\nNow there is AddInlineOutOfFlowCandidate\nNGOutOfFlowPositionedCandidate has two fields that are used to specify that direction\nis line-relative:  is_line_relative, and line_direction/",
+      "parentUuid": "0b989fb0_a4d6542d",
+      "revId": "1fd01de35e24c125e129969488de18f2a8351040",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "34775e8a_96be8bf4",
         "filename": "third_party/WebKit/Source/core/layout/ng/ng_container_fragment_builder.cc",
         "patchSetId": 2
@@ -42,6 +60,30 @@
     },
     {
       "key": {
+        "uuid": "999041a9_efb24da5",
+        "filename": "third_party/WebKit/Source/core/layout/ng/ng_container_fragment_builder.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 120,
+      "author": {
+        "id": 1161294
+      },
+      "writtenOn": "2017-11-09T00:35:06Z",
+      "side": 1,
+      "message": "No. These are two separate directions, one is for child, one is for fragment....",
+      "parentUuid": "34775e8a_96be8bf4",
+      "range": {
+        "startLine": 120,
+        "startChar": 42,
+        "endLine": 120,
+        "endChar": 52
+      },
+      "revId": "1fd01de35e24c125e129969488de18f2a8351040",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "032868f7_bda8fc76",
         "filename": "third_party/WebKit/Source/core/layout/ng/ng_container_fragment_builder.h",
         "patchSetId": 2
@@ -56,6 +98,24 @@
       "revId": "1fd01de35e24c125e129969488de18f2a8351040",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "fe9c335c_4c54a589",
+        "filename": "third_party/WebKit/Source/core/layout/ng/ng_container_fragment_builder.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 120,
+      "author": {
+        "id": 1161294
+      },
+      "writtenOn": "2017-11-09T00:35:06Z",
+      "side": 1,
+      "message": "Two fields are in:\nbool is_line_relative;         // True if offset is relative to line, not fragment.\nTextDirection line_direction;",
+      "parentUuid": "032868f7_bda8fc76",
+      "revId": "1fd01de35e24c125e129969488de18f2a8351040",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
