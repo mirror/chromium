@@ -57,6 +57,10 @@
 
 #if BUILDFLAG(ENABLE_EXTENSIONS)
 #include "chrome/utility/extensions/extensions_handler.h"
+#if defined(OS_WIN)
+#include "chrome/services/wifi_util_win/public/interfaces/constants.mojom.h"
+#include "chrome/services/wifi_util_win/wifi_util_win_service.h"
+#endif
 #endif
 
 #if BUILDFLAG(ENABLE_MUS)
@@ -241,6 +245,16 @@ bool ChromeContentUtilityClient::OnMessageReceived(
 
 void ChromeContentUtilityClient::RegisterServices(
     ChromeContentUtilityClient::StaticServiceMap* services) {
+  if (utility_process_running_elevated_) {
+#if defined(OS_WIN) && BUILDFLAG(ENABLE_EXTENSIONS)
+    service_manager::EmbeddedServiceInfo service_info;
+    service_info.factory =
+        base::Bind(&chrome::WifiUtilWinService::CreateService);
+    services->emplace(chrome::mojom::kWifiUtilWinServiceName, service_info);
+#endif
+    return;
+  }
+
 #if BUILDFLAG(ENABLE_PRINTING)
   service_manager::EmbeddedServiceInfo pdf_compositor_info;
   pdf_compositor_info.factory =
@@ -294,7 +308,7 @@ void ChromeContentUtilityClient::RegisterServices(
   }
 #endif
 
-  if (!utility_process_running_elevated_) {
+  {
     service_manager::EmbeddedServiceInfo service_info;
     service_info.factory = base::Bind(&patch::PatchService::CreateService);
     services->emplace(patch::mojom::kServiceName, service_info);
