@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "a84f44fd_6e280e1f",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 13
+      },
+      "lineNbr": 16,
+      "author": {
+        "id": 1160861
+      },
+      "writtenOn": "2017-11-09T07:23:18Z",
+      "side": 1,
+      "message": "I don\u0027t mind, but there wasn\u0027t a specific ProfileChooserView \"update to harmony\" bug I could find. (The bug in line 18 below is the one for the Page Info bubble.) Sooo I think it would be weird to post screenshots of the ProfileChooserView in a bug about Page Info? Should I make a new bug? :/ Or do you know of one I missed?\n\n(Also the screenshot is shared with everyone with the link via my chromium.org account so it\u0027s definitely externally visible.)",
+      "parentUuid": "b4433852_05dd0145",
+      "revId": "48615d33e15425403b0c899a8474677e607ac25d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "014ce666_6c29d94c",
         "filename": "chrome/browser/ui/views/harmony/chrome_layout_provider.h",
         "patchSetId": 13
@@ -36,6 +54,24 @@
     },
     {
       "key": {
+        "uuid": "231fddeb_6a76d13a",
+        "filename": "chrome/browser/ui/views/harmony/chrome_layout_provider.h",
+        "patchSetId": 13
+      },
+      "lineNbr": 57,
+      "author": {
+        "id": 1160861
+      },
+      "writtenOn": "2017-11-09T07:23:18Z",
+      "side": 1,
+      "message": "Done, thanks for the suggestions!\n\nI left off the _PADDING_ part of the enum name though because I think all the other enum names used to have it and it got removed? So it seems more consistent to not have it.",
+      "parentUuid": "014ce666_6c29d94c",
+      "revId": "48615d33e15425403b0c899a8474677e607ac25d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "cf8941aa_49fb1ef7",
         "filename": "chrome/browser/ui/views/hover_button.cc",
         "patchSetId": 13
@@ -47,6 +83,24 @@
       "writtenOn": "2017-11-09T04:40:05Z",
       "side": 1,
       "message": "do you know the context for this? it would be nice to comment here about why this is done/necessary - it\u0027s not obvious to me.",
+      "revId": "48615d33e15425403b0c899a8474677e607ac25d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "89a26cfb_d5cc7b2c",
+        "filename": "chrome/browser/ui/views/hover_button.cc",
+        "patchSetId": 13
+      },
+      "lineNbr": 39,
+      "author": {
+        "id": 1160861
+      },
+      "writtenOn": "2017-11-09T07:23:18Z",
+      "side": 1,
+      "message": "I don\u0027t know the original context, so this might be a lie, but I think it was set so that if there was a tooltip, it would show when hovering over anywhere on the entire button and not only when only hovering over the label. Except I don\u0027t think any tooltip was actually set - only the accessible name (and this is true for the old code and this patchset). It looks like |Button| sets the accessible name from the tooltip text, and not the other way around.\n\nI fixed this by using |label()| or |title_| tooltips when there is no |subtitle_|, and setting our own tooltip when both |title_| and |subtitle_| exist, hopefully that\u0027s better. I checked and hovering over anywhere on the button shows a tooltip when strings are too long. Do you think this needs a test?\n\nI also moved this particular line back to the third constructor because we\u0027re using label() as a tooltip handler again (sometimes).\n\nThanks for poking at this :)",
+      "parentUuid": "cf8941aa_49fb1ef7",
       "revId": "48615d33e15425403b0c899a8474677e607ac25d",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
