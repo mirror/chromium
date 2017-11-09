@@ -51,6 +51,7 @@
 #include "content/public/common/content_constants.h"
 #include "net/base/registry_controlled_domains/registry_controlled_domain.h"
 #include "net/cookies/canonical_cookie.h"
+#include "services/metrics/public/cpp/ukm_builders.h"
 #include "storage/common/fileapi/file_system_types.h"
 
 using content::BrowserThread;
@@ -835,8 +836,37 @@ void TabSpecificContentSettings::OnSoundContentSettingUpdated() {
 }
 
 void TabSpecificContentSettings::CheckSoundBlocked(bool is_audible) {
-  if (is_audible && GetSoundContentSetting() == CONTENT_SETTING_BLOCK)
+  if (is_audible && GetSoundContentSetting() == CONTENT_SETTING_BLOCK) {
     OnContentBlocked(CONTENT_SETTINGS_TYPE_SOUND);
+    RecordSiteMutedUKM();
+  }
+}
+
+void TabSpecificContentSettings::RecordSiteMutedUKM() {
+  ukm::UkmRecorder* recorder = ukm::UkmRecorder::Get();
+  ukm::SourceId source_id = ukm::UkmRecorder::GetNewSourceID();
+  recorder->UpdateSourceURL(source_id, web_contents()->GetLastCommittedURL());
+  ukm::builders::Media_SiteMuted(source_id)
+      .SetMuteReason(GetSiteMutedReason())
+      .Record(recorder);
+}
+
+TabSpecificContentSettings::MuteReason
+TabSpecificContentSettings::GetSiteMutedReason() {
+  Profile* profile =
+      Profile::FromBrowserContext(web_contents()->GetBrowserContext());
+  const HostContentSettingsMap* map =
+      HostContentSettingsMapFactory::GetForProfile(profile);
+  const GURL url = web_contents()->GetLastCommittedURL();
+  content_settings::SettingInfo info;
+  map->GetWebsiteSetting(url, url, CONTENT_SETTINGS_TYPE_SOUND, std::string(),
+                         &info);
+
+  if (info.primary_pattern == ContentSettingsPattern::Wildcard() &&
+      info.secondary_pattern == ContentSettingsPattern::Wildcard()) {
+    return MuteReason::kMuteByDefault;
+  }
+  return MuteReason::kSiteException;
 }
 
 ContentSetting TabSpecificContentSettings::GetSoundContentSetting() const {
