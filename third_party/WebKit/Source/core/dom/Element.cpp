@@ -3093,10 +3093,7 @@ void Element::setInnerHTML(const StringOrTrustedHTML& string_or_html,
                     ? string_or_html.GetAsString()
                     : string_or_html.GetAsTrustedHTML()->toString();
 
-  // TODO(mkwst): This is an ugly hack that will be resolved once `TreatNullAs`
-  // is treated as an extended attribute on the `DOMString` type rather than
-  // as an extended attribute on the attribute. https://crbug.com/714866
-  if (html == "null")
+  if (string_or_html.IsNull())
     html = "";
 
   SetInnerHTMLFromString(html, exception_state);
@@ -3155,10 +3152,7 @@ void Element::setOuterHTML(const StringOrTrustedHTML& string_or_html,
                     ? string_or_html.GetAsString()
                     : string_or_html.GetAsTrustedHTML()->toString();
 
-  // TODO(mkwst): This is an ugly hack that will be resolved once `TreatNullAs`
-  // is treated as an extended attribute on the `DOMString` type rather than
-  // as an extended attribute on the attribute. https://crbug.com/714866
-  if (html == "null")
+  if (string_or_html.IsNull())
     html = "";
 
   SetOuterHTMLFromString(html, exception_state);
