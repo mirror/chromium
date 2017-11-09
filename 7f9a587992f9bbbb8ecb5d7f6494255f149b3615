@@ -22,6 +22,30 @@
       "revId": "7f9a587992f9bbbb8ecb5d7f6494255f149b3615",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "fb2e8e6b_5f50562d",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/widget/thumbnail_cache_entry.proto",
+        "patchSetId": 1
+      },
+      "lineNbr": 13,
+      "author": {
+        "id": 1249210
+      },
+      "writtenOn": "2017-11-09T14:47:21Z",
+      "side": 1,
+      "message": "Thanks, I agree that would be much nicer, but it looks like that\u0027s only supported in google3?\nhttps://cs.corp.google.com/piper///depot/google3/net/proto2/compiler/java/internal/generator.cc?rcl\u003d163515796\u0026l\u003d115\n\nAnd when I try it in Chrome, I get this error:\nutil.build_utils.CalledProcessError: Command failed: ( cd /usr/local/google/code/clankium/src/out/Debug; clang_x64/protoc --proto_path ../../chrome/android/java/src/org/chromium/chrome/browser/widget --java_out\u003dlite\u003dtrue:/tmp/tmpxylbGt ../../chrome/android/java/src/org/chromium/chrome/browser/widget/thumbnail_cache_entry.proto )\n--java_out: thumbnail_cache_entry.proto: Unknown generator option: lite",
+      "parentUuid": "f466cac8_7e6de38e",
+      "range": {
+        "startLine": 13,
+        "startChar": 35,
+        "endLine": 13,
+        "endChar": 0
+      },
+      "revId": "7f9a587992f9bbbb8ecb5d7f6494255f149b3615",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
