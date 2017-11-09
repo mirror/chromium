@@ -1,0 +1,113 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "82ff9dce_6ce43be0",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 42
+      },
+      "lineNbr": 6,
+      "author": {
+        "id": 1002246
+      },
+      "writtenOn": "2017-11-09T22:53:07Z",
+      "side": 1,
+      "message": "There should be a one line title.",
+      "revId": "7c6aadaae3071b249bb96fc29ebf637f4225453f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f72a4356_651adda4",
+        "filename": "chrome/browser/net/chrome_mojo_proxy_resolver_factory.cc",
+        "patchSetId": 42
+      },
+      "lineNbr": 53,
+      "author": {
+        "id": 1002246
+      },
+      "writtenOn": "2017-11-09T22:53:07Z",
+      "side": 1,
+      "message": "Nit: create",
+      "range": {
+        "startLine": 53,
+        "startChar": 5,
+        "endLine": 53,
+        "endChar": 12
+      },
+      "revId": "7c6aadaae3071b249bb96fc29ebf637f4225453f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a982afa0_8262988c",
+        "filename": "chrome/browser/net/chrome_mojo_proxy_resolver_factory.h",
+        "patchSetId": 42
+      },
+      "lineNbr": 28,
+      "author": {
+        "id": 1002246
+      },
+      "writtenOn": "2017-11-09T22:53:07Z",
+      "side": 1,
+      "message": "Nit: creates",
+      "range": {
+        "startLine": 28,
+        "startChar": 29,
+        "endLine": 28,
+        "endChar": 36
+      },
+      "revId": "7c6aadaae3071b249bb96fc29ebf637f4225453f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "46ae5b0d_09149dee",
+        "filename": "chrome/browser/net/chrome_mojo_proxy_resolver_factory_browsertest.cc",
+        "patchSetId": 42
+      },
+      "lineNbr": 196,
+      "author": {
+        "id": 1002246
+      },
+      "writtenOn": "2017-11-09T22:53:07Z",
+      "side": 1,
+      "message": "Nit: make const",
+      "range": {
+        "startLine": 196,
+        "startChar": 40,
+        "endLine": 196,
+        "endChar": 41
+      },
+      "revId": "7c6aadaae3071b249bb96fc29ebf637f4225453f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e1267768_576d041e",
+        "filename": "content/public/network/url_request_context_builder_mojo.h",
+        "patchSetId": 42
+      },
+      "lineNbr": 29,
+      "author": {
+        "id": 1002246
+      },
+      "writtenOn": "2017-11-09T22:53:07Z",
+      "side": 1,
+      "message": "Typo: ProxyService",
+      "range": {
+        "startLine": 29,
+        "startChar": 58,
+        "endLine": 29,
+        "endChar": 69
+      },
+      "revId": "7c6aadaae3071b249bb96fc29ebf637f4225453f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
