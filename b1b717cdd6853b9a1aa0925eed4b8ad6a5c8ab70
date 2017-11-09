@@ -1,0 +1,113 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "40f51e9d_752bf86b",
+        "filename": "extensions/browser/api/declarative_net_request/ruleset_manager.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 196,
+      "author": {
+        "id": 1001727
+      },
+      "writtenOn": "2017-11-09T02:08:07Z",
+      "side": 1,
+      "message": "Should this check go above line 186?\n\n1. This would potentially pollute the UMA\n2. |url| and |first_party_origin| isn\u0027t required to decide this.",
+      "revId": "b1b717cdd6853b9a1aa0925eed4b8ad6a5c8ab70",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "49c4ad18_1afde009",
+        "filename": "extensions/browser/api/declarative_net_request/ruleset_manager.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 207,
+      "author": {
+        "id": 1001727
+      },
+      "writtenOn": "2017-11-09T02:08:07Z",
+      "side": 1,
+      "message": "Since we\u0027re not utilizing rules_map_\u0027s std::map property as much, should this be a vector instead? Only downside is removal would require O(n) search then O(1) delete, but that\u0027s infrequent compared to ShouldXRequest, two points:\n- iterating vector would be much faster than iterating a map\n- maps have complex structure, and vector would be simpler. (Q: how many extensions would one user have with dnr in them?)",
+      "range": {
+        "startLine": 207,
+        "startChar": 7,
+        "endLine": 207,
+        "endChar": 36
+      },
+      "revId": "b1b717cdd6853b9a1aa0925eed4b8ad6a5c8ab70",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "fa7c47f1_ead8d903",
+        "filename": "extensions/browser/api/declarative_net_request/ruleset_manager.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 59,
+      "author": {
+        "id": 1001727
+      },
+      "writtenOn": "2017-11-09T02:08:07Z",
+      "side": 1,
+      "message": "nit: must",
+      "range": {
+        "startLine": 59,
+        "startChar": 36,
+        "endLine": 59,
+        "endChar": 42
+      },
+      "revId": "b1b717cdd6853b9a1aa0925eed4b8ad6a5c8ab70",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "291d3df9_e09f26b7",
+        "filename": "extensions/browser/api/declarative_net_request/ruleset_matcher.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 120,
+      "author": {
+        "id": 1001727
+      },
+      "writtenOn": "2017-11-09T02:08:07Z",
+      "side": 1,
+      "message": "Can you add a comment about what this means? It\u0027s not immediately obvious from FindMatch\u0027s signature.",
+      "range": {
+        "startLine": 120,
+        "startChar": 22,
+        "endLine": 120,
+        "endChar": 53
+      },
+      "revId": "b1b717cdd6853b9a1aa0925eed4b8ad6a5c8ab70",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ee3c74a7_77570d8a",
+        "filename": "extensions/browser/api/declarative_net_request/ruleset_matcher.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 133,
+      "author": {
+        "id": 1001727
+      },
+      "writtenOn": "2017-11-09T02:08:07Z",
+      "side": 1,
+      "message": "Instead of copying redirect_url() field to std::string, we can use StringPiece and construct this directly to GURL where needed, right?",
+      "range": {
+        "startLine": 133,
+        "startChar": 18,
+        "endLine": 133,
+        "endChar": 49
+      },
+      "revId": "b1b717cdd6853b9a1aa0925eed4b8ad6a5c8ab70",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
