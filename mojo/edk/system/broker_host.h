@@ -12,7 +12,6 @@
 #include "base/process/process_handle.h"
 #include "base/strings/string_piece.h"
 #include "mojo/edk/embedder/embedder.h"
-#include "mojo/edk/embedder/platform_handle_vector.h"
 #include "mojo/edk/embedder/scoped_platform_handle.h"
 #include "mojo/edk/system/channel.h"
 
@@ -39,12 +38,12 @@ class BrokerHost : public Channel::Delegate,
  private:
   ~BrokerHost() override;
 
-  bool PrepareHandlesForClient(PlatformHandleVector* handles);
+  bool PrepareHandlesForClient(ScopedPlatformHandleVector* handles);
 
   // Channel::Delegate:
   void OnChannelMessage(const void* payload,
                         size_t payload_size,
-                        ScopedPlatformHandleVectorPtr handles) override;
+                        ScopedPlatformHandleVector handles) override;
   void OnChannelError(Channel::Error error) override;
 
   // base::MessageLoop::DestructionObserver:
