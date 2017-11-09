@@ -141,7 +141,6 @@ class VrShellGl : public device::mojom::VRPresentationProvider {
                              base::TimeTicks current_time);
   void HandleControllerAppButtonActivity(
       const gfx::Vector3dF& controller_direction);
-  void CreateUiSurface();
 
   void OnContentFrameAvailable();
   void OnWebVRFrameAvailable();
