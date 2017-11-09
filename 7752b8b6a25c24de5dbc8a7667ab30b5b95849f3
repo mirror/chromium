@@ -62,6 +62,40 @@
       "revId": "7752b8b6a25c24de5dbc8a7667ab30b5b95849f3",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f53905b0_51a1127a",
+        "filename": "third_party/WebKit/Source/bindings/templates/interface_base.cpp.tmpl",
+        "patchSetId": 4
+      },
+      "lineNbr": 985,
+      "author": {
+        "id": 1115916
+      },
+      "writtenOn": "2017-11-09T07:32:22Z",
+      "side": 1,
+      "message": "Just help me understand: What is this change for?",
+      "revId": "7752b8b6a25c24de5dbc8a7667ab30b5b95849f3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "752490f5_54d48f7a",
+        "filename": "third_party/WebKit/Source/bindings/tests/idls/modules/TestInterfaceSecureContextPartial.idl",
+        "patchSetId": 4
+      },
+      "lineNbr": 7,
+      "author": {
+        "id": 1115916
+      },
+      "writtenOn": "2017-11-09T07:32:22Z",
+      "side": 1,
+      "message": "Can we add [SecureContext] to existing IDL tests of partial interfaces?\n\n(I don\u0027t really want to increase # of testing IDLs since it increases the size of CLs that touch the IDL compiler.)",
+      "revId": "7752b8b6a25c24de5dbc8a7667ab30b5b95849f3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
