@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "361ca4ba_da7a3eb1",
+        "filename": "chrome/utility/chrome_content_utility_client.cc",
+        "patchSetId": 10
+      },
+      "lineNbr": 73,
+      "author": {
+        "id": 1144039
+      },
+      "writtenOn": "2017-11-09T19:09:26Z",
+      "side": 1,
+      "message": "what does this comment do?",
+      "range": {
+        "startLine": 73,
+        "startChar": 58,
+        "endLine": 73,
+        "endChar": 70
+      },
+      "revId": "da3bf6aaaa8c6055a7e9877abdde5e455d021d08",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
