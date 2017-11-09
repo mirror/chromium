@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "342ae27e_09a25f1b",
+        "filename": "third_party/WebKit/Source/platform/heap/Bits.h",
+        "patchSetId": 14
+      },
+      "lineNbr": 9,
+      "author": {
+        "id": 1131764
+      },
+      "writtenOn": "2017-11-09T13:37:36Z",
+      "side": 1,
+      "message": "Done: https://chromium-review.googlesource.com/c/chromium/src/+/758415",
+      "parentUuid": "4b4d50e1_56c315d9",
+      "revId": "5c81e03e7ec41bfb65f9ca1fa74fb6e22fd14ffb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "707fdf7e_107b0165",
         "filename": "third_party/WebKit/Source/platform/heap/Bits.h",
         "patchSetId": 14
@@ -36,6 +54,24 @@
     },
     {
       "key": {
+        "uuid": "ce4a7188_d1138be8",
+        "filename": "third_party/WebKit/Source/platform/heap/Bits.h",
+        "patchSetId": 14
+      },
+      "lineNbr": 37,
+      "author": {
+        "id": 1131764
+      },
+      "writtenOn": "2017-11-09T13:37:36Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "707fdf7e_107b0165",
+      "revId": "5c81e03e7ec41bfb65f9ca1fa74fb6e22fd14ffb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "54767ffc_f14f1dbb",
         "filename": "third_party/WebKit/Source/platform/heap/Bits.h",
         "patchSetId": 14
@@ -50,6 +86,24 @@
       "revId": "5c81e03e7ec41bfb65f9ca1fa74fb6e22fd14ffb",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6e1ce707_e91ffa79",
+        "filename": "third_party/WebKit/Source/platform/heap/Bits.h",
+        "patchSetId": 14
+      },
+      "lineNbr": 59,
+      "author": {
+        "id": 1131764
+      },
+      "writtenOn": "2017-11-09T13:37:36Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "54767ffc_f14f1dbb",
+      "revId": "5c81e03e7ec41bfb65f9ca1fa74fb6e22fd14ffb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -87,6 +141,24 @@
     },
     {
       "key": {
+        "uuid": "610bc865_6ad17891",
+        "filename": "third_party/WebKit/Source/platform/heap/HeapPage.cpp",
+        "patchSetId": 14
+      },
+      "lineNbr": 747,
+      "author": {
+        "id": 1131764
+      },
+      "writtenOn": "2017-11-09T13:37:36Z",
+      "side": 1,
+      "message": "FreeListEntries always create the entry because they inherit from HeapObjectHeader.",
+      "parentUuid": "fea8a5fb_9e07506d",
+      "revId": "5c81e03e7ec41bfb65f9ca1fa74fb6e22fd14ffb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "55e3e171_4238ac17",
         "filename": "third_party/WebKit/Source/platform/heap/HeapPage.h",
         "patchSetId": 14
@@ -101,6 +173,24 @@
       "revId": "5c81e03e7ec41bfb65f9ca1fa74fb6e22fd14ffb",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "adb09161_216ca31b",
+        "filename": "third_party/WebKit/Source/platform/heap/HeapPage.h",
+        "patchSetId": 14
+      },
+      "lineNbr": 467,
+      "author": {
+        "id": 1131764
+      },
+      "writtenOn": "2017-11-09T13:37:36Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "55e3e171_4238ac17",
+      "revId": "5c81e03e7ec41bfb65f9ca1fa74fb6e22fd14ffb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -121,6 +211,24 @@
     },
     {
       "key": {
+        "uuid": "d38021db_4f26b89d",
+        "filename": "third_party/WebKit/Source/platform/heap/HeapPage.h",
+        "patchSetId": 14
+      },
+      "lineNbr": 496,
+      "author": {
+        "id": 1131764
+      },
+      "writtenOn": "2017-11-09T13:37:36Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "c7e702f4_d1272747",
+      "revId": "5c81e03e7ec41bfb65f9ca1fa74fb6e22fd14ffb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "94188283_1e0d2666",
         "filename": "third_party/WebKit/Source/platform/heap/HeapPage.h",
         "patchSetId": 14
@@ -138,6 +246,24 @@
     },
     {
       "key": {
+        "uuid": "66116613_691895e4",
+        "filename": "third_party/WebKit/Source/platform/heap/HeapPage.h",
+        "patchSetId": 14
+      },
+      "lineNbr": 575,
+      "author": {
+        "id": 1131764
+      },
+      "writtenOn": "2017-11-09T13:37:36Z",
+      "side": 1,
+      "message": "Had that name before. I\u0027d like to keep the long one as it indicates that we verify the bitmap against the current pageload of the page.",
+      "parentUuid": "94188283_1e0d2666",
+      "revId": "5c81e03e7ec41bfb65f9ca1fa74fb6e22fd14ffb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "19ba711e_7b38ee11",
         "filename": "third_party/WebKit/Source/platform/heap/HeapPage.h",
         "patchSetId": 14
@@ -152,6 +278,24 @@
       "revId": "5c81e03e7ec41bfb65f9ca1fa74fb6e22fd14ffb",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d3b154ef_4e104184",
+        "filename": "third_party/WebKit/Source/platform/heap/HeapPage.h",
+        "patchSetId": 14
+      },
+      "lineNbr": 845,
+      "author": {
+        "id": 1131764
+      },
+      "writtenOn": "2017-11-09T13:37:36Z",
+      "side": 1,
+      "message": "There will potentially be more things we can verify, that\u0027s why it has a generic name. See the comments of Hannes.",
+      "parentUuid": "19ba711e_7b38ee11",
+      "revId": "5c81e03e7ec41bfb65f9ca1fa74fb6e22fd14ffb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -189,6 +333,24 @@
     },
     {
       "key": {
+        "uuid": "2871278a_e53957f5",
+        "filename": "third_party/WebKit/Source/platform/heap/HeapPage.h",
+        "patchSetId": 14
+      },
+      "lineNbr": 1103,
+      "author": {
+        "id": 1131764
+      },
+      "writtenOn": "2017-11-09T13:37:36Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "795ddf86_b81854af",
+      "revId": "5c81e03e7ec41bfb65f9ca1fa74fb6e22fd14ffb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "b8380963_3bda6c8e",
         "filename": "third_party/WebKit/Source/platform/heap/HeapPage.h",
         "patchSetId": 14
@@ -203,6 +365,24 @@
       "revId": "5c81e03e7ec41bfb65f9ca1fa74fb6e22fd14ffb",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d7fa6096_c60579db",
+        "filename": "third_party/WebKit/Source/platform/heap/HeapPage.h",
+        "patchSetId": 14
+      },
+      "lineNbr": 1118,
+      "author": {
+        "id": 1131764
+      },
+      "writtenOn": "2017-11-09T13:37:36Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "b8380963_3bda6c8e",
+      "revId": "5c81e03e7ec41bfb65f9ca1fa74fb6e22fd14ffb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {

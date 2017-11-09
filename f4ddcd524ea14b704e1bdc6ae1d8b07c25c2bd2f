@@ -46,6 +46,30 @@
       "revId": "f4ddcd524ea14b704e1bdc6ae1d8b07c25c2bd2f",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e746d950_e6e1cdcf",
+        "filename": "third_party/WebKit/Source/platform/heap/HeapPage.h",
+        "patchSetId": 16
+      },
+      "lineNbr": 459,
+      "author": {
+        "id": 1131764
+      },
+      "writtenOn": "2017-11-09T13:37:36Z",
+      "side": 1,
+      "message": "The code right now should be consistent (see other comment).\n\nThe reason I kept the bit for free space is simply because it does not require changing the code that searches for valid pointers on the stack\n\nWith bit for free space:\n  header \u003d FindHeader(pointer)\n  if !header-\u003eIsFree() return header\n  return nullptr\n\nWithout bit for free space\n  header \u003d FindHeader(pointer)\n  if (header + header-\u003esize() \u003c pointer)\n    return header\n  return nullptr\n\nI will think about the tradeoff here and how to maintain it across sweeping and compaction.",
+      "parentUuid": "f99d22c6_56ee68dd",
+      "range": {
+        "startLine": 459,
+        "startChar": 22,
+        "endLine": 459,
+        "endChar": 39
+      },
+      "revId": "f4ddcd524ea14b704e1bdc6ae1d8b07c25c2bd2f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
