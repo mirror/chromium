@@ -1,0 +1,148 @@
+// Copyright 2017 The Chromium Authors. All rights reserved.
+// Use of this source code is governed by a BSD-style license that can be
+// found in the LICENSE file.
+
+#include "chrome/browser/chromeos/login/login_manager_test.h"
+#include "chrome/browser/chromeos/login/startup_utils.h"
+#include "chrome/browser/chromeos/profiles/profile_helper.h"
+#include "chrome/browser/prefs/incognito_mode_prefs.h"
+#include "chrome/browser/profiles/profile.h"
+#include "chrome/browser/profiles/profile_io_data.h"
+#include "chrome/browser/profiles/profile_manager.h"
+#include "chrome/browser/signin/chrome_signin_helper.h"
+#include "chrome/browser/ui/browser.h"
+#include "chrome/common/pref_names.h"
+#include "chrome/test/base/in_process_browser_test.h"
+#include "chromeos/chromeos_switches.cc"
+#include "components/prefs/pref_service.h"
+#include "components/session_manager/core/session_manager.h"
+#include "components/signin/core/browser/profile_management_switches.h"
+#include "components/signin/core/browser/signin_header_helper.h"
+#include "components/signin/core/browser/signin_pref_names.h"
+#include "components/user_manager/user.h"
+#include "components/user_manager/user_manager.h"
+#include "components/user_manager/user_type.h"
+#include "content/public/browser/resource_context.h"
+#include "content/public/test/browser_test.h"
+#include "net/traffic_annotation/network_traffic_annotation_test_helper.h"
+#include "net/url_request/url_request_test_util.h"
+#include "url/gurl.h"
+
+namespace {
+
+const GURL kGaiaUrl("https://accounts.google.com");
+const char kChromeConnectedHeader[] = "X-Chrome-Connected";
+const char kUserEmail[] = "user@gmail.com";
+
+}  // namespace
+
+void CheckRequestHeader(net::URLRequest* url_request,
+                        const char* header_name,
+                        const std::string& expected_header_value) {
+  bool expected_result = !expected_header_value.empty();
+  std::string actual_header_value;
+  EXPECT_EQ(expected_result, url_request->extra_request_headers().GetHeader(
+                                 header_name, &actual_header_value))
+      << header_name << ": " << actual_header_value;
+  if (expected_result) {
+    EXPECT_EQ(expected_header_value, actual_header_value);
+  }
+}
+
+void TestMirrorRequestForProfileOnIOThread(ProfileIOData* profile_io,
+                                           std::string expected_header_value) {
+  DCHECK_CURRENTLY_ON(content::BrowserThread::IO);
+
+  ASSERT_TRUE(profile_io->GetMainRequestContext());
+  std::unique_ptr<net::URLRequest> request =
+      profile_io->GetMainRequestContext()->CreateRequest(
+          kGaiaUrl, net::DEFAULT_PRIORITY, nullptr,
+          TRAFFIC_ANNOTATION_FOR_TESTS);
+  signin::FixAccountConsistencyRequestHeader(request.get(), GURL(), profile_io);
+
+  ASSERT_EQ(7, signin::PROFILE_MODE_INCOGNITO_DISABLED |
+                   signin::PROFILE_MODE_ADD_ACCOUNT_DISABLED |
+                   signin::PROFILE_MODE_SWITCH_ACCOUNT_DISABLED);
+  CheckRequestHeader(request.get(), kChromeConnectedHeader,
+                     expected_header_value);
+}
+
+void TestMirrorRequestForProfile(Profile* profile,
+                                 std::string expected_header_value) {
+  DCHECK_CURRENTLY_ON(content::BrowserThread::UI);
+
+  ProfileIOData* profile_io =
+      ProfileIOData::FromResourceContext(profile->GetResourceContext());
+
+  base::RunLoop run_loop;
+  content::BrowserThread::PostTaskAndReply(
+      content::BrowserThread::IO, FROM_HERE,
+      base::BindOnce(TestMirrorRequestForProfileOnIOThread, profile_io,
+                     expected_header_value),
+      run_loop.QuitClosure());
+  run_loop.Run();
+}
+
+class ChromeSigninHelperTest : public chromeos::LoginManagerTest {
+ protected:
+  ~ChromeSigninHelperTest() override {}
+
+  ChromeSigninHelperTest()
+      : LoginManagerTest(false),
+        account_id_(AccountId::FromUserEmail(kUserEmail)) {}
+
+  const AccountId account_id_;
+
+ private:
+  DISALLOW_COPY_AND_ASSIGN(ChromeSigninHelperTest);
+};
+
+IN_PROC_BROWSER_TEST_F(ChromeSigninHelperTest,
+                       PRE_TestMirrorRequestChromeOsChildAccount) {
+  RegisterUser(account_id_.GetUserEmail());
+  chromeos::StartupUtils::MarkOobeCompleted();
+}
+
+// Mirror is enabled for child accounts.
+IN_PROC_BROWSER_TEST_F(ChromeSigninHelperTest,
+                       TestMirrorRequestChromeOsChildAccount) {
+  // On Chrome OS this is false.
+  ASSERT_FALSE(signin::IsAccountConsistencyMirrorEnabled());
+  // Child user
+  LoginUser(account_id_.GetUserEmail());
+  user_manager::User* user = user_manager::UserManager::Get()->GetActiveUser();
+  ASSERT_EQ(user, user_manager::UserManager::Get()->GetPrimaryUser());
+  ASSERT_EQ(user, user_manager::UserManager::Get()->FindUser(account_id_));
+  user->SetIsChild(true);
+
+  Profile* profile = chromeos::ProfileHelper::Get()->GetProfileByUser(user);
+  PrefService* prefs = profile->GetPrefs();
+  prefs->SetInteger(prefs::kIncognitoModeAvailability,
+                    IncognitoModePrefs::DISABLED);
+
+  TestMirrorRequestForProfile(profile,
+                              "mode=7,enable_account_consistency=true");
+}
+
+IN_PROC_BROWSER_TEST_F(ChromeSigninHelperTest,
+                       PRE_TestMirrorRequestChromeOsNotChildAccount) {
+  RegisterUser(account_id_.GetUserEmail());
+  chromeos::StartupUtils::MarkOobeCompleted();
+}
+
+// Mirror is enabled for child accounts.
+IN_PROC_BROWSER_TEST_F(ChromeSigninHelperTest,
+                       TestMirrorRequestChromeOsNotChildAccount) {
+  // On Chrome OS this is false.
+  ASSERT_FALSE(signin::IsAccountConsistencyMirrorEnabled());
+  // Not a child user
+  LoginUser(account_id_.GetUserEmail());
+  user_manager::User* user = user_manager::UserManager::Get()->GetActiveUser();
+  ASSERT_EQ(user, user_manager::UserManager::Get()->GetPrimaryUser());
+  ASSERT_EQ(user, user_manager::UserManager::Get()->FindUser(account_id_));
+  user->SetIsChild(false);
+
+  Profile* profile = chromeos::ProfileHelper::Get()->GetProfileByUser(user);
+
+  TestMirrorRequestForProfile(profile, "");
+}
