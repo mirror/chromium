@@ -98,6 +98,8 @@ scoped_refptr<SimpleFontData> CSSFontFace::GetFontData(
 
   while (!sources_.IsEmpty()) {
     Member<CSSFontFaceSource>& source = sources_.front();
+    if (source->IsFailurePeriod())
+      return nullptr;
     if (scoped_refptr<SimpleFontData> result = source->GetFontData(
             font_description,
             segmented_font_face_->GetFontSelectionCapabilities())) {

@@ -49,6 +49,7 @@ class CORE_EXPORT CSSFontFaceSource
   virtual bool IsLoading() const { return false; }
   virtual bool IsLoaded() const { return true; }
   virtual bool IsValid() const { return true; }
+  virtual bool IsFailurePeriod() const { return false; }
 
   scoped_refptr<SimpleFontData> GetFontData(const FontDescription&,
                                             const FontSelectionCapabilities&);

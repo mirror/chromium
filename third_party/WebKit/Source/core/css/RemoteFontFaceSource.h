@@ -39,6 +39,7 @@ class RemoteFontFaceSource final : public CSSFontFaceSource,
   bool IsLoading() const override;
   bool IsLoaded() const override;
   bool IsValid() const override;
+  bool IsFailurePeriod() const override { return period_ == kFailurePeriod; }
   DisplayPeriod GetDisplayPeriod() const { return period_; }
 
   void BeginLoadIfNeeded() override;
