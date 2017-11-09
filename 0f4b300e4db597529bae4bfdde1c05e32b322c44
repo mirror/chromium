@@ -1,0 +1,107 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "b56d2914_8e243395",
+        "filename": "ui/base/clipboard/clipboard_aurax11.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 417,
+      "author": {
+        "id": 1000042
+      },
+      "writtenOn": "2017-11-09T18:06:25Z",
+      "side": 1,
+      "message": "Atom (along with XID and probably others) are still in the global namespace, right? maybe those have less risk of conflicts, though.\n\nmight be out-of-scope for this change, but ui/gfx/x/x11_types.h typedefs an XAtom type. should we be using that here instead of Atom?",
+      "revId": "0f4b300e4db597529bae4bfdde1c05e32b322c44",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "50271d61_84b59a23",
+        "filename": "ui/gfx/x/x11.h",
+        "patchSetId": 9
+      },
+      "lineNbr": 14,
+      "author": {
+        "id": 1000042
+      },
+      "writtenOn": "2017-11-09T18:06:25Z",
+      "side": 1,
+      "message": "nit: finish this sentence",
+      "revId": "0f4b300e4db597529bae4bfdde1c05e32b322c44",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "292cf5f5_ad9dd3fd",
+        "filename": "ui/gfx/x/x11.h",
+        "patchSetId": 9
+      },
+      "lineNbr": 17,
+      "author": {
+        "id": 1000042
+      },
+      "writtenOn": "2017-11-09T18:06:25Z",
+      "side": 1,
+      "message": "nit: Xlib",
+      "range": {
+        "startLine": 17,
+        "startChar": 61,
+        "endLine": 17,
+        "endChar": 65
+      },
+      "revId": "0f4b300e4db597529bae4bfdde1c05e32b322c44",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "bd34566c_392449f0",
+        "filename": "ui/gfx/x/x11.h",
+        "patchSetId": 9
+      },
+      "lineNbr": 18,
+      "author": {
+        "id": 1000042
+      },
+      "writtenOn": "2017-11-09T18:06:25Z",
+      "side": 1,
+      "message": "nit: s/did/do/",
+      "range": {
+        "startLine": 18,
+        "startChar": 46,
+        "endLine": 18,
+        "endChar": 49
+      },
+      "revId": "0f4b300e4db597529bae4bfdde1c05e32b322c44",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "dc1176c4_9fe96616",
+        "filename": "ui/gfx/x/x11.h",
+        "patchSetId": 9
+      },
+      "lineNbr": 43,
+      "author": {
+        "id": 1000042
+      },
+      "writtenOn": "2017-11-09T18:06:25Z",
+      "side": 1,
+      "message": "nit: x11",
+      "range": {
+        "startLine": 43,
+        "startChar": 10,
+        "endLine": 43,
+        "endChar": 13
+      },
+      "revId": "0f4b300e4db597529bae4bfdde1c05e32b322c44",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
