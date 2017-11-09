@@ -87,6 +87,24 @@
       "revId": "0c5bd980da840951e79fffdcd41936ed26bbd4b6",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9aeaf2cb_ad401a9b",
+        "filename": "third_party/WebKit/Source/core/page/FocusController.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 1094,
+      "author": {
+        "id": 1121234
+      },
+      "writtenOn": "2017-11-09T12:34:27Z",
+      "side": 1,
+      "message": "Both variables should be of same type to declare inside first section of for loop by separating using comma. So I took the declaration out.",
+      "parentUuid": "62a73799_1944b174",
+      "revId": "0c5bd980da840951e79fffdcd41936ed26bbd4b6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
