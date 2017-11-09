@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "7cdd591b_3fe66350",
+        "filename": "net/tools/transport_security_state_generator/input_file_parsers.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 170,
+      "author": {
+        "id": 1000193
+      },
+      "writtenOn": "2017-11-09T18:17:35Z",
+      "side": 1,
+      "message": "Question: will \u0027policy\u0027 be factored in to the generated file?\n\nAll the other fields contribute to the output TSS, but I\u0027m guessing this one won\u0027t (or it would be used to filter entries, rather than be emitted alongside entries).\n\nIf that\u0027s the case, it might be worth a comment and documentation here, and perhaps moving it down to ~line 182, to indicate that there\u0027s a set of keys which factor in to the generation, and a set of keys that are recognized-but-ignored.\n\ne.g.\n\n// Valid keys in the input JSON that will be included in the output.\n...\n\n// Keys that are valid, but not included in the output.\n\n(or probably some better way to word things)",
+      "revId": "ed1f0b40bf1080a27b37503112e6bfc7c25353af",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ff5f461a_7645cfc1",
+        "filename": "net/tools/transport_security_state_generator/input_file_parsers.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 299,
+      "author": {
+        "id": 1000193
+      },
+      "writtenOn": "2017-11-09T18:17:35Z",
+      "side": 1,
+      "message": "Question: From a data-validation standpoint, you don\u0027t validate whether or not policy is present or what datatype it should be.\n\nIt\u0027s unclear whether ParseJSON is meant to enforce schema (as it effectively does), or whether it\u0027s only meant to enforce schema enough for what it will output in |pinsets| and |entries|.\n\nPut differently:\n- Should ParseJSON enforce constraints on \"policy\"\n  - Should \u0027policy\u0027 always be present?\n  - Should \u0027policy\u0027 always be a string?\n  - Should \u0027policy\u0027 contain specific, known values?\n\nI can see arguments either way, so please don\u0027t feel you have to change, so much as it may be worth documenting why (if not) :)",
+      "revId": "ed1f0b40bf1080a27b37503112e6bfc7c25353af",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
