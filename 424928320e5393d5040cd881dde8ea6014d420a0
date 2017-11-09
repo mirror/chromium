@@ -1,0 +1,119 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "d606c0cd_90f9910c",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/customtabs/CustomTabActivity.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 302,
+      "author": {
+        "id": 1116074
+      },
+      "writtenOn": "2017-11-09T19:29:25Z",
+      "side": 1,
+      "message": "I really feel like this and the above should be in a static call somewhere inside /webapp/ package. The naming and all of that will be confusing when taken out of context. mStartTime is not really the start time for the custom tab for example, we do already have that for all AsyncInitializationActivity classes. An unsuspecting person might use that as start time and may be misled.\n\nIs there any static/singleton controller logic in webapp space these can go?",
+      "range": {
+        "startLine": 302,
+        "startChar": 66,
+        "endLine": 302,
+        "endChar": 67
+      },
+      "revId": "424928320e5393d5040cd881dde8ea6014d420a0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "01ebef08_3d78553b",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/customtabs/CustomTabIntentDataProvider.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 62,
+      "author": {
+        "id": 1116074
+      },
+      "writtenOn": "2017-11-09T19:29:25Z",
+      "side": 1,
+      "message": "Remove EXTRA_ from the name. Going with the above name, these can be BROWSER_LAUNCH_SOURCE_NONE, BROWSER_LAUNCH_SOURCE_WEBAPP....\n\nand lets define a proper intdef interface like CustomTabsUiType above.",
+      "range": {
+        "startLine": 62,
+        "startChar": 28,
+        "endLine": 62,
+        "endChar": 53
+      },
+      "revId": "424928320e5393d5040cd881dde8ea6014d420a0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "66087cf0_ce1b51e2",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/customtabs/CustomTabIntentDataProvider.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 97,
+      "author": {
+        "id": 1116074
+      },
+      "writtenOn": "2017-11-09T19:29:25Z",
+      "side": 1,
+      "message": "This would be a bit confusing when you take into account that for almost all \"regular\" custom tabs, the source of open will make us think \"Android app launching the tab\". So lets find a different name for this and clarify that it is WebApp/Browser specific.\n\nEXTRA_(BROWSER/WEB)_LAUNCH_SOURCE or something of the sort.",
+      "range": {
+        "startLine": 97,
+        "startChar": 39,
+        "endLine": 97,
+        "endChar": 45
+      },
+      "revId": "424928320e5393d5040cd881dde8ea6014d420a0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1c78fa25_70acd928",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/customtabs/CustomTabIntentDataProvider.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 99,
+      "author": {
+        "id": 1116074
+      },
+      "writtenOn": "2017-11-09T19:29:25Z",
+      "side": 1,
+      "message": "The namespace for the string should be \"org.chromium.chrome.browser.customtabs.\", android.support... is for extras we will eventually migrate to the support lib.",
+      "range": {
+        "startLine": 99,
+        "startChar": 40,
+        "endLine": 99,
+        "endChar": 60
+      },
+      "revId": "424928320e5393d5040cd881dde8ea6014d420a0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "34244c44_cd50c5ae",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/webapps/WebappActivity.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 849,
+      "author": {
+        "id": 1116074
+      },
+      "writtenOn": "2017-11-09T19:29:25Z",
+      "side": 1,
+      "message": "I think there might be a better way to extract this info from the activity.\n\nDo we care about TrustedWebActivities launching custom tabs and want to make a different extra value for them here? I think we may want to.",
+      "range": {
+        "startLine": 849,
+        "startChar": 53,
+        "endLine": 849,
+        "endChar": 63
+      },
+      "revId": "424928320e5393d5040cd881dde8ea6014d420a0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
