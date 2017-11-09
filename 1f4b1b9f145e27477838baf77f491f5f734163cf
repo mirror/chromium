@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "7bdf2df0_704c71bb",
+        "filename": "chrome/browser/ui/webui/settings/md_settings_ui.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 229,
+      "author": {
+        "id": 1144209
+      },
+      "writtenOn": "2017-11-09T22:50:51Z",
+      "side": 1,
+      "message": "Thanks for pointing this out.\nI refactored ChangePasswordHandler class extensively. Now no need to change this md_settings_ui class any more.",
+      "parentUuid": "0d90cf77_48b28432",
+      "range": {
+        "startLine": 229,
+        "startChar": 21,
+        "endLine": 229,
+        "endChar": 22
+      },
+      "revId": "1f4b1b9f145e27477838baf77f491f5f734163cf",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "1ab760d6_f7b00d42",
         "filename": "chrome/browser/ui/webui/settings/md_settings_ui.cc",
         "patchSetId": 2
@@ -39,6 +63,24 @@
       "revId": "1f4b1b9f145e27477838baf77f491f5f734163cf",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b0f95cd5_1e028950",
+        "filename": "chrome/browser/ui/webui/settings/md_settings_ui.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 373,
+      "author": {
+        "id": 1144209
+      },
+      "writtenOn": "2017-11-09T22:50:51Z",
+      "side": 1,
+      "message": "Agreed. Using loadTimeData() doesn\u0027t make sense any more. I\u0027ve refactored ChangePasswordHandler extensively to simplified its code. Now, there\u0027s no need to change md_setting_ui class any more.\n\nThanks for the suggestion and all the pointers!",
+      "parentUuid": "1ab760d6_f7b00d42",
+      "revId": "1f4b1b9f145e27477838baf77f491f5f734163cf",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
