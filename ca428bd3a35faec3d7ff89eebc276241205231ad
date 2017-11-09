@@ -34,6 +34,24 @@
       "revId": "ca428bd3a35faec3d7ff89eebc276241205231ad",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "fb83d3d6_6f5fd4ca",
+        "filename": "chrome/browser/ssl/ssl_error_navigation_throttle_unittest.cc",
+        "patchSetId": 25
+      },
+      "lineNbr": 137,
+      "author": {
+        "id": 1121739
+      },
+      "writtenOn": "2017-11-09T01:49:28Z",
+      "side": 1,
+      "message": "I\u0027m mainly interested in testing that the throttle asynchronously cancels.\n\nBut also the error code and the HTML.\n\nAs far as I know, none of them are available from the NavigationHandle if we model CallWillFailRequestForTesting() on similar methods.\n\nWhile discussing this with Emily, we came up with the idea of mocking out CancelDeferredNavigation in TestSSLErrorNavigationThrottle. I\u0027ll try that if I don\u0027t hear from you or clamy@ about this by tomorrow. :-)",
+      "parentUuid": "fd8cdb2b_d7d63447",
+      "revId": "ca428bd3a35faec3d7ff89eebc276241205231ad",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
