@@ -46,6 +46,30 @@
       "revId": "6733d6b01442d94b04d9ecb22e1cdc2ff1bfa1ba",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "87906193_d3c8fd38",
+        "filename": "chrome/browser/ui/passwords/password_manager_porter_unittest.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 184,
+      "author": {
+        "id": 1002541
+      },
+      "writtenOn": "2017-11-09T10:27:34Z",
+      "side": 1,
+      "message": "Fair enough, but could you please at least document the issue with mojo crashes as the reason to use the bundle in a code comment?\n\n(I once used TestBrowserThreadBundle and ScopedTaskEnvironment together, and it worked. The order of construction mattered, though. Looking at test_browser_thread_bundle.h, it seems that the environment is contained in the bundle now, so maybe that replaced the ability to use both. If you feel generous, submitting a CL to fix the documentation and asking gab@ for review would be a nice thing to do.)",
+      "parentUuid": "ed474651_4cf7d775",
+      "range": {
+        "startLine": 184,
+        "startChar": 11,
+        "endLine": 184,
+        "endChar": 34
+      },
+      "revId": "6733d6b01442d94b04d9ecb22e1cdc2ff1bfa1ba",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
