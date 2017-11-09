@@ -47,6 +47,11 @@ chrome.test.runTests([
     chrome.tabs.create({ url: getURL('browserThenRendererInitiated/a.html') });
   },
 
+  /*
+
+  avi@ says: Disabling for now; this is reliant on the broken ordering of tab
+  title setting in the NTP code. Fix.
+
   function newTab() {
     // Test for crbug.com/27208.
     expect([
@@ -65,6 +70,8 @@ chrome.test.runTests([
 
     chrome.tabs.create({ url: 'chrome://newtab/' });
   },
+
+  */
 
   /*
   // TODO(rafaelw) -- This is disabled because this test is flakey.
