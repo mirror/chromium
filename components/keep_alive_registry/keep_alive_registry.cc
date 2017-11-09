@@ -26,6 +26,12 @@ bool KeepAliveRegistry::IsKeepingAlive() const {
   return registered_count_ > 0;
 }
 
+bool KeepAliveRegistry::IsKeepingAliveNonBrowserOrigins() const {
+  return !(registered_count_ > 0 &&
+           static_cast<OriginMap::size_type>(registered_count_) ==
+               registered_keep_alives_.count(KeepAliveOrigin::BROWSER));
+}
+
 bool KeepAliveRegistry::IsRestartAllowed() const {
   return registered_count_ == restart_allowed_count_;
 }
