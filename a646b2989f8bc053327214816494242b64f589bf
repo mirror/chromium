@@ -16,6 +16,24 @@
       "revId": "a646b2989f8bc053327214816494242b64f589bf",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "cca2e207_a1def03c",
+        "filename": "ui/chromeos/events/event_rewriter_chromeos.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 771,
+      "author": {
+        "id": 1109710
+      },
+      "writtenOn": "2017-11-09T22:05:21Z",
+      "side": 1,
+      "message": "https://crbug.com/146204\n\nChromeOS maps the Caps Lock key to F16 in XKB (xkeyboard-config-2.15-remap-capslock.patch) and remaps it back to Caps Lock (or the used-specific key) here. It looks like this was to avoid X11 toggling CapsLock mode under us when the user maps the key to something else, so I suspect that could be removed now that ChromeOS no longer uses X11 anywhere.",
+      "parentUuid": "ebb0b100_2754d0f0",
+      "revId": "a646b2989f8bc053327214816494242b64f589bf",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
