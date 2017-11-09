@@ -30,6 +30,9 @@ class BLINK_PLATFORM_EXPORT ChildScheduler {
   // time if no idle time is available.
   virtual scoped_refptr<SingleThreadIdleTaskRunner> IdleTaskRunner() = 0;
 
+  virtual scoped_refptr<base::SingleThreadTaskRunner>
+  IPCListenerTaskRunner() = 0;
+
   // Returns true if there is high priority work pending on the main thread
   // and the caller should yield to let the scheduler service that work. Note
   // that this is a stricter condition than |IsHighPriorityWorkAnticipated|,

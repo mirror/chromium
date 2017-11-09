@@ -21,6 +21,12 @@ class SingleThreadTaskRunner;
 struct UserMetricsAction;
 }
 
+namespace blink {
+namespace scheduler {
+class ChildScheduler;
+}
+}  // namespace blink
+
 namespace service_manager {
 class Connector;
 }
@@ -74,6 +80,8 @@ class CONTENT_EXPORT ChildThread : public IPC::Sender {
   // Returns a connector that can be used to bind interfaces exposed by other
   // services.
   virtual service_manager::Connector* GetConnector() = 0;
+
+  virtual blink::scheduler::ChildScheduler* GetScheduler() = 0;
 
   virtual scoped_refptr<base::SingleThreadTaskRunner> GetIOTaskRunner() = 0;
 

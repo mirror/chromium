@@ -320,6 +320,11 @@ RendererSchedulerImpl::IdleTaskRunner() {
 }
 
 scoped_refptr<base::SingleThreadTaskRunner>
+RendererSchedulerImpl::IPCListenerTaskRunner() {
+  return base::ThreadTaskRunnerHandle::Get();
+}
+
+scoped_refptr<base::SingleThreadTaskRunner>
 RendererSchedulerImpl::LoadingTaskRunner() {
   helper_.CheckOnValidThread();
   return default_loading_task_queue_;

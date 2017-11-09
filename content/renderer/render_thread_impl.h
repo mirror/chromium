@@ -243,6 +243,7 @@ class CONTENT_EXPORT RenderThreadImpl
       mojo::ScopedInterfaceEndpointHandle handle) override;
 
   // ChildThread implementation via ChildThreadImpl:
+  blink::scheduler::ChildScheduler* GetScheduler() override;
   scoped_refptr<base::SingleThreadTaskRunner> GetIOTaskRunner() override;
 
   // CompositorDependencies implementation.

@@ -91,6 +91,7 @@ class CONTENT_EXPORT ChildThreadImpl
   void RecordComputedAction(const std::string& action) override;
   ServiceManagerConnection* GetServiceManagerConnection() override;
   service_manager::Connector* GetConnector() override;
+  blink::scheduler::ChildScheduler* GetScheduler() override;
   scoped_refptr<base::SingleThreadTaskRunner> GetIOTaskRunner() override;
   void SetFieldTrialGroup(const std::string& trial_name,
                           const std::string& group_name) override;

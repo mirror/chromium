@@ -40,6 +40,11 @@ FakeRendererScheduler::IdleTaskRunner() {
   return nullptr;
 }
 
+scoped_refptr<base::SingleThreadTaskRunner>
+FakeRendererScheduler::IPCListenerTaskRunner() {
+  return nullptr;
+}
+
 std::unique_ptr<RenderWidgetSchedulingState>
 FakeRendererScheduler::NewRenderWidgetSchedulingState() {
   return nullptr;
