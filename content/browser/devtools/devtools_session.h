@@ -13,13 +13,16 @@
 #include "content/browser/devtools/devtools_agent_host_impl.h"
 #include "content/browser/devtools/protocol/devtools_domain_handler.h"
 #include "content/browser/devtools/protocol/protocol.h"
+#include "content/common/devtools.mojom.h"
+#include "mojo/public/cpp/bindings/binding.h"
 
 namespace content {
 
 class DevToolsAgentHostClient;
 class RenderFrameHostImpl;
 
-class DevToolsSession : public protocol::FrontendChannel {
+class DevToolsSession : public protocol::FrontendChannel,
+                        public mojom::DevToolsSessionHost {
  public:
   DevToolsSession(DevToolsAgentHostImpl* agent_host,
                   DevToolsAgentHostClient* client,
@@ -33,6 +36,8 @@ class DevToolsSession : public protocol::FrontendChannel {
   void SetRenderer(RenderProcessHost* process_host,
                    RenderFrameHostImpl* frame_host);
   void SetFallThroughForNotFound(bool value);
+  void AttachToAgent(const mojom::DevToolsAgentAssociatedPtr& agent);
+  void ReattachToAgent(const mojom::DevToolsAgentAssociatedPtr& agent);
 
   struct Message {
     std::string method;
@@ -46,6 +51,10 @@ class DevToolsSession : public protocol::FrontendChannel {
       const std::string& message,
       int* call_id,
       std::string* method);
+  void DispatchProtocolMessageToAgent(int call_id,
+                                      const std::string& method,
+                                      const std::string& message);
+  void InspectElement(const gfx::Point& point);
   bool ReceiveMessageChunk(const DevToolsMessageChunk& chunk);
   void SendMessageToClient(const std::string& message);
 
@@ -65,8 +74,10 @@ class DevToolsSession : public protocol::FrontendChannel {
   }
 
  private:
-  void SendMessageFromProcessor(int session_id, const std::string& message);
+  void SendMessageFromProcessorIPC(int session_id, const std::string& message);
+  void SendMessageFromProcessor(const std::string& message);
   void SendResponse(std::unique_ptr<base::DictionaryValue> response);
+  void MojoConnectionDestroyed();
 
   // protocol::FrontendChannel implementation.
   void sendProtocolResponse(
@@ -76,6 +87,13 @@ class DevToolsSession : public protocol::FrontendChannel {
       std::unique_ptr<protocol::Serializable> message) override;
   void flushProtocolNotifications() override;
 
+  // mojom::DevToolsSessionHost implementation.
+  void DispatchProtocolMessage(mojom::DevToolsMessageChunkPtr chunk) override;
+  void RequestNewWindow(int32_t frame_routing_id,
+                        RequestNewWindowCallback callback) override;
+
+  mojo::Binding<mojom::DevToolsSessionHost> binding_;
+  mojom::DevToolsSessionPtr session_ptr_;
   DevToolsAgentHostImpl* agent_host_;
   DevToolsAgentHostClient* client_;
   int session_id_;
