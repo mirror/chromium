@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "e51499e1_3cfd265b",
+        "filename": "media/audio/win/core_audio_util_win.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 45,
+      "author": {
+        "id": 1247905
+      },
+      "writtenOn": "2017-11-09T12:54:40Z",
+      "side": 1,
+      "message": "I propose to keep the name of the enum more generic to be used by future UMA Logging functions.\nSince the callback takes an HRESULT as parameter, this enum can be used by any other uma_log_cb for matching new histograms to functions that logged them.\n\nIs the comment above unclear?",
+      "parentUuid": "15b5cca1_4f818fd2",
+      "revId": "06a7eada521b04869226f529f605544a109b5ac6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "19eef7e1_8b0278ce",
         "filename": "media/audio/win/core_audio_util_win.cc",
         "patchSetId": 9
@@ -30,6 +48,24 @@
       "writtenOn": "2017-11-09T11:43:43Z",
       "side": 1,
       "message": "NOTREACHED() instead",
+      "revId": "06a7eada521b04869226f529f605544a109b5ac6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "923e04fa_1f2d9ab7",
+        "filename": "media/audio/win/core_audio_util_win.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 96,
+      "author": {
+        "id": 1247905
+      },
+      "writtenOn": "2017-11-09T12:54:40Z",
+      "side": 1,
+      "message": "Cool!",
+      "parentUuid": "19eef7e1_8b0278ce",
       "revId": "06a7eada521b04869226f529f605544a109b5ac6",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -53,6 +89,24 @@
     },
     {
       "key": {
+        "uuid": "a23faa98_c0f93f5d",
+        "filename": "media/audio/win/core_audio_util_win.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 332,
+      "author": {
+        "id": 1247905
+      },
+      "writtenOn": "2017-11-09T12:54:40Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "fdabc788_a6b42862",
+      "revId": "06a7eada521b04869226f529f605544a109b5ac6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "68388f29_cd7d4783",
         "filename": "media/audio/win/core_audio_util_win.cc",
         "patchSetId": 9
@@ -67,6 +121,24 @@
       "revId": "06a7eada521b04869226f529f605544a109b5ac6",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ede4fedc_6de0f281",
+        "filename": "media/audio/win/core_audio_util_win.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 362,
+      "author": {
+        "id": 1247905
+      },
+      "writtenOn": "2017-11-09T12:54:40Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "68388f29_cd7d4783",
+      "revId": "06a7eada521b04869226f529f605544a109b5ac6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -87,6 +159,24 @@
     },
     {
       "key": {
+        "uuid": "44ac28bf_079e5cac",
+        "filename": "media/audio/win/core_audio_util_win.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 367,
+      "author": {
+        "id": 1247905
+      },
+      "writtenOn": "2017-11-09T12:54:40Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "3120dff4_51c15cc1",
+      "revId": "06a7eada521b04869226f529f605544a109b5ac6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "0cfda07c_66d2ce9d",
         "filename": "media/audio/win/core_audio_util_win.cc",
         "patchSetId": 9
@@ -101,6 +191,24 @@
       "revId": "06a7eada521b04869226f529f605544a109b5ac6",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4160f37b_4f1ccca3",
+        "filename": "media/audio/win/core_audio_util_win.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 423,
+      "author": {
+        "id": 1247905
+      },
+      "writtenOn": "2017-11-09T12:54:40Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "0cfda07c_66d2ce9d",
+      "revId": "06a7eada521b04869226f529f605544a109b5ac6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -121,6 +229,24 @@
     },
     {
       "key": {
+        "uuid": "fd932565_9e70074d",
+        "filename": "media/audio/win/core_audio_util_win.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 649,
+      "author": {
+        "id": 1247905
+      },
+      "writtenOn": "2017-11-09T12:54:40Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "08713e89_a413370a",
+      "revId": "06a7eada521b04869226f529f605544a109b5ac6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "fa3e6626_6fc48d4b",
         "filename": "media/audio/win/core_audio_util_win_unittest.cc",
         "patchSetId": 9
@@ -132,6 +258,24 @@
       "writtenOn": "2017-11-09T11:43:43Z",
       "side": 1,
       "message": "This test will pass only if creation successful or fails at the very last step.\nWe need to add \"if histogram N registered success, then histogram N+1 count is 1\" logic",
+      "revId": "06a7eada521b04869226f529f605544a109b5ac6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7b4223e6_99b9b22c",
+        "filename": "media/audio/win/core_audio_util_win_unittest.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 517,
+      "author": {
+        "id": 1247905
+      },
+      "writtenOn": "2017-11-09T12:54:40Z",
+      "side": 1,
+      "message": "The creation of params for default device is expected to succeed (EXPECT_TRUE(output_params.IsValid());). I will add other tests making params creation fail in different steps.",
+      "parentUuid": "fa3e6626_6fc48d4b",
       "revId": "06a7eada521b04869226f529f605544a109b5ac6",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -155,6 +299,24 @@
     },
     {
       "key": {
+        "uuid": "94deb9d6_ff55e175",
+        "filename": "tools/metrics/histograms/histograms.xml",
+        "patchSetId": 9
+      },
+      "lineNbr": 32233,
+      "author": {
+        "id": 1247905
+      },
+      "writtenOn": "2017-11-09T12:54:40Z",
+      "side": 1,
+      "message": "Why? It explains where does the data come from and what it represents. Or do you think this is clear from histogram name?",
+      "parentUuid": "5fce0507_92463cfb",
+      "revId": "06a7eada521b04869226f529f605544a109b5ac6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "f15d748b_a9f286b3",
         "filename": "tools/metrics/histograms/histograms.xml",
         "patchSetId": 9
@@ -169,6 +331,24 @@
       "revId": "06a7eada521b04869226f529f605544a109b5ac6",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "858ee259_978468e1",
+        "filename": "tools/metrics/histograms/histograms.xml",
+        "patchSetId": 9
+      },
+      "lineNbr": 32235,
+      "author": {
+        "id": 1247905
+      },
+      "writtenOn": "2017-11-09T12:54:40Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "f15d748b_a9f286b3",
+      "revId": "06a7eada521b04869226f529f605544a109b5ac6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -189,6 +369,24 @@
     },
     {
       "key": {
+        "uuid": "5a47a116_b3cda734",
+        "filename": "tools/metrics/histograms/histograms.xml",
+        "patchSetId": 9
+      },
+      "lineNbr": 32295,
+      "author": {
+        "id": 1247905
+      },
+      "writtenOn": "2017-11-09T12:54:40Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "24e8b6f5_ee647b32",
+      "revId": "06a7eada521b04869226f529f605544a109b5ac6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "cbf4c607_f252144e",
         "filename": "tools/metrics/histograms/histograms.xml",
         "patchSetId": 9
@@ -203,6 +401,24 @@
       "revId": "06a7eada521b04869226f529f605544a109b5ac6",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5c0fddd5_21bbf265",
+        "filename": "tools/metrics/histograms/histograms.xml",
+        "patchSetId": 9
+      },
+      "lineNbr": 32306,
+      "author": {
+        "id": 1247905
+      },
+      "writtenOn": "2017-11-09T12:54:40Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "cbf4c607_f252144e",
+      "revId": "06a7eada521b04869226f529f605544a109b5ac6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
