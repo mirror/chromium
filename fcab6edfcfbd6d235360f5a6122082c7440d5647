@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "fb7aa4ff_441e1d8c",
+        "filename": "third_party/WebKit/Source/core/layout/LayoutBlockFlow.cpp",
+        "patchSetId": 7
+      },
+      "lineNbr": 4363,
+      "author": {
+        "id": 1144165
+      },
+      "writtenOn": "2017-11-09T07:31:30Z",
+      "side": 1,
+      "message": "nit: Could you copy the reason of creating new context to here:\n\n  // NGBlockNode cannot compute margin collapsing across NG/non-NG boundary.\n  // Create a new formatting context for non-NG node to prevent margin\n  // collapsing.",
+      "revId": "fcab6edfcfbd6d235360f5a6122082c7440d5647",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
