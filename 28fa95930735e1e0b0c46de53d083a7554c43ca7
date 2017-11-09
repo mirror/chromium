@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "d7be1468_a8701508",
+        "filename": "ios/chrome/browser/ui/toolbar/keyboard_assist/toolbar_keyboard_accessory_view.mm",
+        "patchSetId": 4
+      },
+      "lineNbr": 61,
+      "author": {
+        "id": 1139250
+      },
+      "writtenOn": "2017-11-09T13:02:39Z",
+      "side": 1,
+      "message": "seen offline: the images are 36 high. Changing the buttons to match.",
+      "parentUuid": "2467fa3c_f71c5bef",
+      "range": {
+        "startLine": 61,
+        "startChar": 34,
+        "endLine": 61,
+        "endChar": 35
+      },
+      "revId": "28fa95930735e1e0b0c46de53d083a7554c43ca7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "4332b624_9d99c562",
         "filename": "ios/chrome/browser/ui/toolbar/keyboard_assist/toolbar_keyboard_accessory_view.mm",
         "patchSetId": 4
@@ -45,6 +69,30 @@
       "revId": "28fa95930735e1e0b0c46de53d083a7554c43ca7",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c6ec5d45_f767d64c",
+        "filename": "ios/chrome/browser/ui/toolbar/keyboard_assist/toolbar_keyboard_accessory_view.mm",
+        "patchSetId": 4
+      },
+      "lineNbr": 110,
+      "author": {
+        "id": 1139250
+      },
+      "writtenOn": "2017-11-09T13:02:39Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "4332b624_9d99c562",
+      "range": {
+        "startLine": 106,
+        "startChar": 4,
+        "endLine": 110,
+        "endChar": 50
+      },
+      "revId": "28fa95930735e1e0b0c46de53d083a7554c43ca7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
