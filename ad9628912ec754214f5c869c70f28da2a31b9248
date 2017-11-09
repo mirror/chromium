@@ -36,6 +36,24 @@
     },
     {
       "key": {
+        "uuid": "93c73a34_5003489d",
+        "filename": "ui/ozone/platform/wayland/wayland_cursor.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 52,
+      "author": {
+        "id": 1175809
+      },
+      "writtenOn": "2017-11-09T22:03:33Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "5ae4b23a_5215228f",
+      "revId": "ad9628912ec754214f5c869c70f28da2a31b9248",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "3d7902fe_cda72ff4",
         "filename": "ui/ozone/platform/wayland/wayland_cursor.cc",
         "patchSetId": 2
@@ -47,6 +65,30 @@
       "writtenOn": "2017-08-31T16:09:19Z",
       "side": 1,
       "message": "I think this should create a skia bitmap with the expected format which uses your shm as a backing store, and then use skia to copy (so that any necessary conversions are done).",
+      "range": {
+        "startLine": 67,
+        "startChar": 2,
+        "endLine": 67,
+        "endChar": 8
+      },
+      "revId": "ad9628912ec754214f5c869c70f28da2a31b9248",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d223ef76_3c761df9",
+        "filename": "ui/ozone/platform/wayland/wayland_cursor.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 67,
+      "author": {
+        "id": 1175809
+      },
+      "writtenOn": "2017-11-09T22:03:33Z",
+      "side": 1,
+      "message": "Only comment I still need to address. Working on it.",
+      "parentUuid": "3d7902fe_cda72ff4",
       "range": {
         "startLine": 67,
         "startChar": 2,
@@ -99,6 +141,48 @@
     },
     {
       "key": {
+        "uuid": "7c53df23_8edc3224",
+        "filename": "ui/ozone/platform/wayland/wayland_cursor.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 41,
+      "author": {
+        "id": 1175809
+      },
+      "writtenOn": "2017-11-09T22:03:33Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "fff8d870_93c276f9",
+      "range": {
+        "startLine": 41,
+        "startChar": 7,
+        "endLine": 41,
+        "endChar": 22
+      },
+      "revId": "ad9628912ec754214f5c869c70f28da2a31b9248",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "f5eab2d9_cda96e37",
+        "filename": "ui/ozone/platform/wayland/wayland_cursor.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 41,
+      "author": {
+        "id": 1175809
+      },
+      "writtenOn": "2017-11-09T22:03:33Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "156d0d42_279b84fc",
+      "revId": "ad9628912ec754214f5c869c70f28da2a31b9248",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "059ce76e_b9d15383",
         "filename": "ui/ozone/platform/wayland/wayland_cursor.h",
         "patchSetId": 2
@@ -122,6 +206,30 @@
     },
     {
       "key": {
+        "uuid": "c47c328b_39abcc02",
+        "filename": "ui/ozone/platform/wayland/wayland_cursor.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 50,
+      "author": {
+        "id": 1175809
+      },
+      "writtenOn": "2017-11-09T22:03:33Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "059ce76e_b9d15383",
+      "range": {
+        "startLine": 50,
+        "startChar": 38,
+        "endLine": 50,
+        "endChar": 48
+      },
+      "revId": "ad9628912ec754214f5c869c70f28da2a31b9248",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "a850af5d_4d3c69f9",
         "filename": "ui/ozone/platform/wayland/wayland_pointer.cc",
         "patchSetId": 2
@@ -139,6 +247,24 @@
     },
     {
       "key": {
+        "uuid": "ecd20723_dbea169f",
+        "filename": "ui/ozone/platform/wayland/wayland_pointer.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 18,
+      "author": {
+        "id": 1175809
+      },
+      "writtenOn": "2017-11-09T22:03:33Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "a850af5d_4d3c69f9",
+      "revId": "ad9628912ec754214f5c869c70f28da2a31b9248",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "58446579_f32ed6a0",
         "filename": "ui/ozone/platform/wayland/wayland_window.h",
         "patchSetId": 2
@@ -150,6 +276,24 @@
       "writtenOn": "2017-09-11T15:06:10Z",
       "side": 1,
       "message": "can you add a sufficiency of const to enforce that it\u0027s immutable? Or is that too tedious?",
+      "revId": "ad9628912ec754214f5c869c70f28da2a31b9248",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ec0b1d16_59920382",
+        "filename": "ui/ozone/platform/wayland/wayland_window.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 83,
+      "author": {
+        "id": 1175809
+      },
+      "writtenOn": "2017-11-09T22:03:33Z",
+      "side": 1,
+      "message": "This is a good point.\n\ndrm_cursor.h has also the same \u0027immutable\u0027 comment, but I am not sure declaring it \u0027const\u0027 is actually reasonable.",
+      "parentUuid": "58446579_f32ed6a0",
       "revId": "ad9628912ec754214f5c869c70f28da2a31b9248",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
