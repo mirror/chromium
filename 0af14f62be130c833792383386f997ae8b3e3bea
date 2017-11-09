@@ -92,6 +92,30 @@
       "revId": "0af14f62be130c833792383386f997ae8b3e3bea",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d61b1061_4ea436e0",
+        "filename": "third_party/WebKit/Source/platform/wtf/BitwiseOperations.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 40,
+      "author": {
+        "id": 1131764
+      },
+      "writtenOn": "2017-11-09T12:35:26Z",
+      "side": 1,
+      "message": "Cool! Removed this file.",
+      "parentUuid": "931b16cc_f7ff52b1",
+      "range": {
+        "startLine": 40,
+        "startChar": 18,
+        "endLine": 40,
+        "endChar": 38
+      },
+      "revId": "0af14f62be130c833792383386f997ae8b3e3bea",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
