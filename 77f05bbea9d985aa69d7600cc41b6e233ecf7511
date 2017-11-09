@@ -1,0 +1,89 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "94eaceb4_e15026a5",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/vr_shell/VrShellDelegate.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 1126,
+      "author": {
+        "id": 1002161
+      },
+      "writtenOn": "2017-11-09T20:44:06Z",
+      "side": 1,
+      "message": "nit: Do you need this to be private? You could probably remove the static function above and directly call hasAudioPremission() from VrShellImpl if you make this one public and rename to hasAudioPermission?",
+      "revId": "77f05bbea9d985aa69d7600cc41b6e233ecf7511",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "aad0fc08_36630794",
+        "filename": "chrome/app/generated_resources.grd",
+        "patchSetId": 2
+      },
+      "lineNbr": 11227,
+      "author": {
+        "id": 1002161
+      },
+      "writtenOn": "2017-11-09T20:44:06Z",
+      "side": 1,
+      "message": "nit: you probably dont need to mention voice search in the description.",
+      "revId": "77f05bbea9d985aa69d7600cc41b6e233ecf7511",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b64666d3_6ed04a34",
+        "filename": "chrome/browser/vr/elements/audio_permission_prompt.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 14,
+      "author": {
+        "id": 1002161
+      },
+      "writtenOn": "2017-11-09T20:44:06Z",
+      "side": 1,
+      "message": "Ideally, this element should be composited by a Rect backgroud, microphone VectorIcon, a text element and two buttons. We probably don\u0027t need to create a special audio_permission_prompt_texture (see button.cc file for example). It is probably not a trivial change though and I dont want to block this CL. It is important though. So perhaps add a TODO and create a crbug?",
+      "revId": "77f05bbea9d985aa69d7600cc41b6e233ecf7511",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "60fa50b4_0bca68c0",
+        "filename": "chrome/browser/vr/elements/audio_permission_prompt_texture.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 1,
+      "author": {
+        "id": 1002161
+      },
+      "writtenOn": "2017-11-09T20:44:06Z",
+      "side": 1,
+      "message": "assuming that we want to get rid of this file in the near future. So I didn\u0027t take a close look at this file.",
+      "revId": "77f05bbea9d985aa69d7600cc41b6e233ecf7511",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4df8d47c_63543184",
+        "filename": "chrome/browser/vr/ui_scene_manager.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 1207,
+      "author": {
+        "id": 1002161
+      },
+      "writtenOn": "2017-11-09T20:44:06Z",
+      "side": 1,
+      "message": "nit if (!enabled)",
+      "revId": "77f05bbea9d985aa69d7600cc41b6e233ecf7511",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
