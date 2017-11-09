@@ -159,6 +159,24 @@
     },
     {
       "key": {
+        "uuid": "e8620ca4_144ef958",
+        "filename": "chrome/browser/notifications/notification_image_retainer.cc",
+        "patchSetId": 28
+      },
+      "lineNbr": 76,
+      "author": {
+        "id": 1002032
+      },
+      "writtenOn": "2017-11-09T14:44:42Z",
+      "side": 1,
+      "message": "I really do not know. How about this:\n\nLet `t` be the default on-screen display time for an Action Center notification\nLet `n` be the number of notifications that can be shown on-screen at once\n\ndelay \u003d t * (n + 1)",
+      "parentUuid": "cd029853_bf1e5f2e",
+      "revId": "a48fa450178212ffa45fd47b13cf15fa58872b70",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "4fe33377_ce1a0957",
         "filename": "chrome/browser/notifications/notification_image_retainer.cc",
         "patchSetId": 28
@@ -293,6 +311,24 @@
       "side": 1,
       "message": "How far do you envision going here? Testing that the actual files make it to disk and get cleaned up?",
       "parentUuid": "64e1c46e_7b9d62b5",
+      "revId": "a48fa450178212ffa45fd47b13cf15fa58872b70",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f453b10e_a6f8d5eb",
+        "filename": "chrome/browser/notifications/notification_image_retainer.h",
+        "patchSetId": 28
+      },
+      "lineNbr": 27,
+      "author": {
+        "id": 1002032
+      },
+      "writtenOn": "2017-11-09T14:44:42Z",
+      "side": 1,
+      "message": "Yes",
+      "parentUuid": "22f578fa_42f688e7",
       "revId": "a48fa450178212ffa45fd47b13cf15fa58872b70",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true

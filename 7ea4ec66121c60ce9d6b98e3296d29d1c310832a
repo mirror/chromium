@@ -107,6 +107,24 @@
     },
     {
       "key": {
+        "uuid": "50e07ea9_97541cc1",
+        "filename": "chrome/browser/notifications/notification_platform_bridge_win.cc",
+        "patchSetId": 23
+      },
+      "lineNbr": 241,
+      "author": {
+        "id": 1002032
+      },
+      "writtenOn": "2017-11-09T14:44:42Z",
+      "side": 1,
+      "message": "\u003e GetDisplayed function comes in from another thread than the UI thread\n\nThat really should not be happening.\n\nMy goal here is to have a really clear separation between the two classes. If both have strict threading semantics in that their functionality *only* works on a single thread, that\u0027s super easy to reason about. Even a single exception will complicate the lifetime story. Let\u0027s be strict?",
+      "parentUuid": "6e47c73f_7ee8ba3f",
+      "revId": "7ea4ec66121c60ce9d6b98e3296d29d1c310832a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "918672fb_84f6f4cf",
         "filename": "chrome/browser/notifications/notification_platform_bridge_win.cc",
         "patchSetId": 23

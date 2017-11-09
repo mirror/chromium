@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "59796403_52709fd4",
+        "filename": "chrome/browser/notifications/notification_image_retainer.h",
+        "patchSetId": 38
+      },
+      "lineNbr": 33,
+      "author": {
+        "id": 1002032
+      },
+      "writtenOn": "2017-11-09T14:44:42Z",
+      "side": 1,
+      "message": "nit: explicit",
+      "revId": "5deb48707683a57c5cc8f1e092dc6c9e95366f8f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}

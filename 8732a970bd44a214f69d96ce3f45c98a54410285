@@ -2,6 +2,91 @@
   "comments": [
     {
       "key": {
+        "uuid": "8f26b6f1_47202690",
+        "filename": "chrome/browser/notifications/mock_notification_image_retainer.h",
+        "patchSetId": 43
+      },
+      "lineNbr": 19,
+      "author": {
+        "id": 1002032
+      },
+      "writtenOn": "2017-11-09T14:44:42Z",
+      "side": 1,
+      "message": "++docs",
+      "revId": "8732a970bd44a214f69d96ce3f45c98a54410285",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3431d894_e0dbcd3c",
+        "filename": "chrome/browser/notifications/mock_notification_image_retainer.h",
+        "patchSetId": 43
+      },
+      "lineNbr": 21,
+      "author": {
+        "id": 1002032
+      },
+      "writtenOn": "2017-11-09T14:44:42Z",
+      "side": 1,
+      "message": "~MockNotificationImageRetainer() override \u003d default;",
+      "revId": "8732a970bd44a214f69d96ce3f45c98a54410285",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "18d38e51_61a20881",
+        "filename": "chrome/browser/notifications/mock_notification_image_retainer.h",
+        "patchSetId": 43
+      },
+      "lineNbr": 23,
+      "author": {
+        "id": 1002032
+      },
+      "writtenOn": "2017-11-09T14:44:42Z",
+      "side": 1,
+      "message": "// NotificationImageRetainer implementation:",
+      "revId": "8732a970bd44a214f69d96ce3f45c98a54410285",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0281b575_59768d34",
+        "filename": "chrome/browser/notifications/notification_image_retainer.cc",
+        "patchSetId": 43
+      },
+      "lineNbr": 24,
+      "author": {
+        "id": 1002032
+      },
+      "writtenOn": "2017-11-09T14:44:42Z",
+      "side": 1,
+      "message": "nit:\n\n  constexpr base::FilePath::CharType kImageRoot[] \u003d\n      FILE_PATH_LITERAL(\"Notification Resources\");",
+      "revId": "8732a970bd44a214f69d96ce3f45c98a54410285",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ea7e409a_8d864216",
+        "filename": "chrome/browser/notifications/notification_image_retainer.cc",
+        "patchSetId": 43
+      },
+      "lineNbr": 30,
+      "author": {
+        "id": 1002032
+      },
+      "writtenOn": "2017-11-09T14:44:42Z",
+      "side": 1,
+      "message": "nit: update this comment. (ResourceFile?)",
+      "revId": "8732a970bd44a214f69d96ce3f45c98a54410285",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "de8317a6_4ffb82db",
         "filename": "chrome/browser/notifications/notification_image_retainer.cc",
         "patchSetId": 43
@@ -19,6 +104,125 @@
         "endLine": 65,
         "endChar": 33
       },
+      "revId": "8732a970bd44a214f69d96ce3f45c98a54410285",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "be7d7ac3_5420552b",
+        "filename": "chrome/browser/notifications/notification_image_retainer.cc",
+        "patchSetId": 43
+      },
+      "lineNbr": 78,
+      "author": {
+        "id": 1002032
+      },
+      "writtenOn": "2017-11-09T14:44:42Z",
+      "side": 1,
+      "message": "picked up -\u003e deleted",
+      "revId": "8732a970bd44a214f69d96ce3f45c98a54410285",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "95a128e2_8ce61f93",
+        "filename": "chrome/browser/notifications/notification_image_retainer.cc",
+        "patchSetId": 43
+      },
+      "lineNbr": 88,
+      "author": {
+        "id": 1002032
+      },
+      "writtenOn": "2017-11-09T14:44:42Z",
+      "side": 1,
+      "message": "Maybe document (in the header file) why this isn\u0027t a profile-bound directory?",
+      "revId": "8732a970bd44a214f69d96ce3f45c98a54410285",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0d968024_c1dde5cc",
+        "filename": "chrome/browser/notifications/notification_image_retainer.cc",
+        "patchSetId": 43
+      },
+      "lineNbr": 94,
+      "author": {
+        "id": 1002032
+      },
+      "writtenOn": "2017-11-09T14:44:42Z",
+      "side": 1,
+      "message": "DCHECK means we don\u0027t ever expect it to fail, so we shouldn\u0027t handle the failure case. Just always return data_dir.Append(kImageRoot);",
+      "revId": "8732a970bd44a214f69d96ce3f45c98a54410285",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1ebfef3c_c75d19c8",
+        "filename": "chrome/browser/notifications/notification_image_retainer.h",
+        "patchSetId": 43
+      },
+      "lineNbr": 33,
+      "author": {
+        "id": 1002032
+      },
+      "writtenOn": "2017-11-09T14:44:42Z",
+      "side": 1,
+      "message": "nit: explicit",
+      "revId": "8732a970bd44a214f69d96ce3f45c98a54410285",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "883ec568_129b633a",
+        "filename": "chrome/browser/notifications/notification_platform_bridge_win.cc",
+        "patchSetId": 43
+      },
+      "lineNbr": 155,
+      "author": {
+        "id": 1002032
+      },
+      "writtenOn": "2017-11-09T14:44:42Z",
+      "side": 1,
+      "message": "pass this as a scoped_refptr\u003c\u003e",
+      "revId": "8732a970bd44a214f69d96ce3f45c98a54410285",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b082d672_989cd926",
+        "filename": "chrome/browser/notifications/notification_platform_bridge_win.cc",
+        "patchSetId": 43
+      },
+      "lineNbr": 171,
+      "author": {
+        "id": 1002032
+      },
+      "writtenOn": "2017-11-09T14:44:42Z",
+      "side": 1,
+      "message": "DCHECK(task_runner_-\u003eRunsTasksInCurrentSequence());",
+      "revId": "8732a970bd44a214f69d96ce3f45c98a54410285",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7b5aa551_562a45a6",
+        "filename": "chrome/browser/notifications/notification_platform_bridge_win.cc",
+        "patchSetId": 43
+      },
+      "lineNbr": 450,
+      "author": {
+        "id": 1002032
+      },
+      "writtenOn": "2017-11-09T14:44:42Z",
+      "side": 1,
+      "message": "impl_ \u003d base::MakeRefCounted(task_runner_);",
       "revId": "8732a970bd44a214f69d96ce3f45c98a54410285",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -71,6 +275,23 @@
     },
     {
       "key": {
+        "uuid": "86acd719_f912e170",
+        "filename": "chrome/browser/notifications/notification_platform_bridge_win.h",
+        "patchSetId": 43
+      },
+      "lineNbr": 25,
+      "author": {
+        "id": 1002032
+      },
+      "writtenOn": "2017-11-09T14:44:42Z",
+      "side": 1,
+      "message": "nit: could we consider just including the header?",
+      "revId": "8732a970bd44a214f69d96ce3f45c98a54410285",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "02fbd489_ec3e1f6c",
         "filename": "chrome/browser/notifications/notification_template_builder.cc",
         "patchSetId": 43
@@ -88,6 +309,91 @@
         "endLine": 87,
         "endChar": 39
       },
+      "revId": "8732a970bd44a214f69d96ce3f45c98a54410285",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "caa6cf7c_7435d742",
+        "filename": "chrome/browser/notifications/notification_template_builder.cc",
+        "patchSetId": 43
+      },
+      "lineNbr": 88,
+      "author": {
+        "id": 1002032
+      },
+      "writtenOn": "2017-11-09T14:44:42Z",
+      "side": 1,
+      "message": "drop {} for one-line statements",
+      "revId": "8732a970bd44a214f69d96ce3f45c98a54410285",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7044a119_77ce6b59",
+        "filename": "chrome/browser/notifications/notification_template_builder.cc",
+        "patchSetId": 43
+      },
+      "lineNbr": 142,
+      "author": {
+        "id": 1002032
+      },
+      "writtenOn": "2017-11-09T14:44:42Z",
+      "side": 1,
+      "message": "fwiw, this\u0027ll have to be the same string that we get in the activation handlers, which the notification\u0027s ID will only be part of",
+      "revId": "8732a970bd44a214f69d96ce3f45c98a54410285",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "26cbb6ce_327c84de",
+        "filename": "chrome/browser/notifications/notification_template_builder.cc",
+        "patchSetId": 43
+      },
+      "lineNbr": 193,
+      "author": {
+        "id": 1002032
+      },
+      "writtenOn": "2017-11-09T14:44:42Z",
+      "side": 1,
+      "message": "Could we have a single method like the following?\n\nWriteImageElement(const gfx::Image\u0026 image, const GURL\u0026 origin, const char* placement)",
+      "revId": "8732a970bd44a214f69d96ce3f45c98a54410285",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0821b315_f675d211",
+        "filename": "chrome/browser/notifications/notification_template_builder.cc",
+        "patchSetId": 43
+      },
+      "lineNbr": 284,
+      "author": {
+        "id": 1002032
+      },
+      "writtenOn": "2017-11-09T14:44:42Z",
+      "side": 1,
+      "message": "Is this really the right way to convert a file path to UTF8? Why is this different from path.AsUTF8Unsafe()? Neither seems to be used excessively.",
+      "revId": "8732a970bd44a214f69d96ce3f45c98a54410285",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5b3b5077_d7d18be6",
+        "filename": "chrome/test/BUILD.gn",
+        "patchSetId": 43
+      },
+      "lineNbr": 3271,
+      "author": {
+        "id": 1002032
+      },
+      "writtenOn": "2017-11-09T14:44:42Z",
+      "side": 1,
+      "message": "Should these move to a Windows-only section?",
       "revId": "8732a970bd44a214f69d96ce3f45c98a54410285",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
