@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "af9f801a_3014730b",
+        "filename": "content/browser/frame_host/render_frame_host_impl.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 3484,
+      "author": {
+        "id": 1002532
+      },
+      "writtenOn": "2017-11-09T22:05:30Z",
+      "side": 1,
+      "message": "Good catch. This did work when testing, but because there were different webuitypes. Note there\u0027s a difference between chrome://dom-distiller (has webui bindings) and chrome-distiller:// (doesn\u0027t).\n\nSwitched to use enabled_bindings_.",
+      "parentUuid": "65ffe089_2b5b92e9",
+      "revId": "8a10b69c82ac887f12ad7f1e1e6061c51cedaec5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "14a45993_9c610852",
         "filename": "content/browser/webui/web_ui_url_loader_factory.cc",
         "patchSetId": 9
@@ -33,6 +51,24 @@
       "revId": "8a10b69c82ac887f12ad7f1e1e6061c51cedaec5",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4bde7bc4_068a68bc",
+        "filename": "content/browser/webui/web_ui_url_loader_factory.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 239,
+      "author": {
+        "id": 1002532
+      },
+      "writtenOn": "2017-11-09T22:05:30Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "14a45993_9c610852",
+      "revId": "8a10b69c82ac887f12ad7f1e1e6061c51cedaec5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
