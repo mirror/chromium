@@ -19,6 +19,23 @@
     },
     {
       "key": {
+        "uuid": "daef22fa_256e9c92",
+        "filename": "chrome/browser/chromeos/login/screens/terms_of_service_screen.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 100,
+      "author": {
+        "id": 1000101
+      },
+      "writtenOn": "2017-11-09T18:03:12Z",
+      "side": 1,
+      "message": "This is not exactly correct. There are two kind of terms of service screens. The one that shows up during OOBE (first time boot a device) is the EulaScreen. This only shows once.\n\nThe other one is this TermsOfServiceScreen. This shows up when a public session on an enrolled device starts and when the domain admin has setup a ToS for their domain. And this shows up everytime when the public session starts once setup.\n\nSuggest to revise to something lie:\n  \"When a public session on managed devices starts and admin has uploaded \"\n  \"a term of service document for the domain.\"",
+      "revId": "4e1c9f4d26ad2c270f34aeb2179507e552930497",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "35e2e953_64fe881c",
         "filename": "chrome/browser/chromeos/login/screens/terms_of_service_screen.cc",
         "patchSetId": 8
