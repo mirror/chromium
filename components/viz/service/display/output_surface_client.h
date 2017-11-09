@@ -20,7 +20,7 @@ class VIZ_SERVICE_EXPORT OutputSurfaceClient {
  public:
   // A notification that the swap of the backbuffer to the hardware is complete
   // and is now visible to the user.
-  virtual void DidReceiveSwapBuffersAck() = 0;
+  virtual void DidReceiveSwapBuffersAck(uint32_t count) = 0;
 
   // For surfaceless/ozone implementations to create damage for the next frame.
   virtual void SetNeedsRedrawRect(const gfx::Rect& damage_rect) = 0;
@@ -29,9 +29,11 @@ class VIZ_SERVICE_EXPORT OutputSurfaceClient {
   virtual void DidReceiveTextureInUseResponses(
       const gpu::TextureInUseResponses& responses) = 0;
 
-  // A notification for updating VSync parameters.
-  virtual void DidUpdateVSyncParameters(base::TimeTicks timebase,
-                                        base::TimeDelta interval) {}
+  // A notification for presentation.
+  virtual void DidPresentation(uint32_t count,
+                               base::TimeTicks timestamp,
+                               base::TimeDelta refresh,
+                               uint32_t flags) {}
 
  protected:
   virtual ~OutputSurfaceClient() {}

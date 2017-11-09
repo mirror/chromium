@@ -35,6 +35,8 @@ DisplayOutputSurface::DisplayOutputSurface(
   context_provider->SetUpdateVSyncParametersCallback(
       base::Bind(&DisplayOutputSurface::OnVSyncParametersUpdated,
                  weak_ptr_factory_.GetWeakPtr()));
+  context_provider->SetPresentationCallback(base::Bind(
+      &DisplayOutputSurface::OnPresentation, weak_ptr_factory_.GetWeakPtr()));
 }
 
 DisplayOutputSurface::~DisplayOutputSurface() {}
@@ -128,28 +130,36 @@ bool DisplayOutputSurface::HasExternalStencilTest() const {
 
 void DisplayOutputSurface::ApplyExternalStencil() {}
 
-void DisplayOutputSurface::DidReceiveSwapBuffersAck(gfx::SwapResult result) {
-  client_->DidReceiveSwapBuffersAck();
+void DisplayOutputSurface::DidReceiveSwapBuffersAck(gfx::SwapResult result,
+                                                    uint32_t count) {
+  client_->DidReceiveSwapBuffersAck(count);
 }
 
 void DisplayOutputSurface::OnGpuSwapBuffersCompleted(
     const std::vector<ui::LatencyInfo>& latency_info,
     gfx::SwapResult result,
+    uint32_t count,
     const gpu::GpuProcessHostedCALayerTreeParamsMac* params_mac) {
   for (const auto& latency : latency_info) {
     if (latency.latency_components().size() > 0)
       latency_tracker_.OnGpuSwapBuffersCompleted(latency);
   }
-  DidReceiveSwapBuffersAck(result);
+  DidReceiveSwapBuffersAck(result, count);
 }
 
 void DisplayOutputSurface::OnVSyncParametersUpdated(base::TimeTicks timebase,
                                                     base::TimeDelta interval) {
-  client_->DidUpdateVSyncParameters(timebase, interval);
   // TODO(brianderson): We should not be receiving 0 intervals.
   synthetic_begin_frame_source_->OnUpdateVSyncParameters(
       timebase,
       interval.is_zero() ? BeginFrameArgs::DefaultInterval() : interval);
+}
+
+void DisplayOutputSurface::OnPresentation(uint32_t count,
+                                          base::TimeTicks timestamp,
+                                          base::TimeDelta refresh,
+                                          uint32_t flags) {
+  client_->DidPresentation(count, timestamp, refresh, flags);
 }
 
 }  // namespace viz
