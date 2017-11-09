@@ -46,6 +46,30 @@
       "revId": "05172d7de8afca994d129190b341c938706a4d2b",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d7aa8a47_be98cae4",
+        "filename": "ui/gfx/color_space.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 221,
+      "author": {
+        "id": 1115926
+      },
+      "writtenOn": "2017-11-09T00:28:25Z",
+      "side": 1,
+      "message": "I was thinking simpler than that, just ask the ICC library to transform 0.5 into screen space and see what value you get, then just do gamma \u003d log(mapped_value) / log(0.5) and call it good enough for now.",
+      "parentUuid": "f0de8baf_9e46043b",
+      "range": {
+        "startLine": 221,
+        "startChar": 46,
+        "endLine": 221,
+        "endChar": 0
+      },
+      "revId": "05172d7de8afca994d129190b341c938706a4d2b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
