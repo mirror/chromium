@@ -38,6 +38,8 @@
   "homepage": "https://devtools.chrome.com",
   "devDependencies": {
     "ajv": "^5.1.5",
-    "eslint": "3.10.0"
+    "cheerio": "^1.0.0-rc.2",
+    "eslint": "3.10.0",
+    "recast": "^0.12.8"
   }
 }
