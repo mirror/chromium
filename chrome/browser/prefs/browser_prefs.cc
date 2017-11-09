@@ -31,6 +31,7 @@
 #include "chrome/browser/media/webrtc/media_capture_devices_dispatcher.h"
 #include "chrome/browser/media/webrtc/media_stream_devices_controller.h"
 #include "chrome/browser/metrics/chrome_metrics_service_client.h"
+#include "chrome/browser/metrics/tab_stats_tracker.h"
 #include "chrome/browser/net/nqe/ui_network_quality_estimator_service.h"
 #include "chrome/browser/net/prediction_options.h"
 #include "chrome/browser/net/predictor.h"
@@ -327,7 +328,6 @@ void RegisterLocalState(PrefRegistrySimple* registry) {
   browser_shutdown::RegisterPrefs(registry);
   BrowserProcessImpl::RegisterPrefs(registry);
   ChromeMetricsServiceClient::RegisterPrefs(registry);
-  ChromeTracingDelegate::RegisterPrefs(registry);
   variations::VariationsService::RegisterPrefs(registry);
   component_updater::RegisterPrefs(registry);
   ExternalProtocolHandler::RegisterPrefs(registry);
@@ -336,6 +336,7 @@ void RegisterLocalState(PrefRegistrySimple* registry) {
   GpuProfileCache::RegisterPrefs(registry);
   IntranetRedirectDetector::RegisterPrefs(registry);
   IOThread::RegisterPrefs(registry);
+  metrics::TabStatsTracker::RegisterPrefs(registry);
   network_time::NetworkTimeTracker::RegisterPrefs(registry);
   OriginTrialPrefs::RegisterPrefs(registry);
   PrefProxyConfigTrackerImpl::RegisterPrefs(registry);
