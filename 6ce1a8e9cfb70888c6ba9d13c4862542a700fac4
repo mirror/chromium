@@ -1,0 +1,78 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "9d62aec0_fbe60719",
+        "filename": "content/renderer/render_frame_impl.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 1835,
+      "author": {
+        "id": 1001168
+      },
+      "writtenOn": "2017-11-09T10:12:38Z",
+      "side": 1,
+      "message": "Move this comment to the previous line, so clang-format doesn\u0027t have weird wrapping.\n\nFWIW, I think it is OK to use an invalid / unset token if we\u0027re not actually going to consume it (assuming this doesn\u0027t ever get passed back directly over IPC--but if I understand correctly, it always gets stringified by devtools).\n\nBut since we\u0027re going to remove this... minor details like this don\u0027t really matter (and I\u0027m OK with this as-is).",
+      "range": {
+        "startLine": 1835,
+        "startChar": 18,
+        "endLine": 1835,
+        "endChar": 67
+      },
+      "revId": "6ce1a8e9cfb70888c6ba9d13c4862542a700fac4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "07c6b754_cc4e716a",
+        "filename": "third_party/DEPS",
+        "patchSetId": 8
+      },
+      "lineNbr": 4,
+      "author": {
+        "id": 1001168
+      },
+      "writtenOn": "2017-11-09T10:12:38Z",
+      "side": 1,
+      "message": "Please modify the DEPS for WebKit rather than //third_party.",
+      "revId": "6ce1a8e9cfb70888c6ba9d13c4862542a700fac4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ae6ba35a_77e798b7",
+        "filename": "third_party/WebKit/Source/core/frame/WebLocalFrameImpl.h",
+        "patchSetId": 8
+      },
+      "lineNbr": 264,
+      "author": {
+        "id": 1001168
+      },
+      "writtenOn": "2017-11-09T10:12:38Z",
+      "side": 1,
+      "message": "No default arg here either.",
+      "revId": "6ce1a8e9cfb70888c6ba9d13c4862542a700fac4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "dbd8ac8c_252be5be",
+        "filename": "third_party/WebKit/public/web/WebLocalFrame.h",
+        "patchSetId": 8
+      },
+      "lineNbr": 11,
+      "author": {
+        "id": 1001168
+      },
+      "writtenOn": "2017-11-09T10:12:38Z",
+      "side": 1,
+      "message": "Please group this with the other includes below.",
+      "revId": "6ce1a8e9cfb70888c6ba9d13c4862542a700fac4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
