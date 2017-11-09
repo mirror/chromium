@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "a48b5177_50a01cdb",
+        "filename": "ui/gfx/x/x11.h",
+        "patchSetId": 7
+      },
+      "lineNbr": 24,
+      "author": {
+        "id": 1114374
+      },
+      "writtenOn": "2017-11-09T09:36:25Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "e17d235c_f83162d6",
+      "range": {
+        "startLine": 24,
+        "startChar": 31,
+        "endLine": 24,
+        "endChar": 35
+      },
+      "revId": "e8f51b8e4769e24335430a136a1513c6a21873db",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "965021c1_2730a3a8",
         "filename": "ui/gfx/x/x11.h",
         "patchSetId": 7
@@ -39,6 +63,24 @@
       "revId": "e8f51b8e4769e24335430a136a1513c6a21873db",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1134d4ed_cd9b8965",
+        "filename": "ui/gfx/x/x11.h",
+        "patchSetId": 7
+      },
+      "lineNbr": 68,
+      "author": {
+        "id": 1114374
+      },
+      "writtenOn": "2017-11-09T09:36:25Z",
+      "side": 1,
+      "message": "That\u0027s what sed or rpl is for. I think X11 looks and feels better but not enough to violate the coding standard so I\u0027ve updated it.",
+      "parentUuid": "965021c1_2730a3a8",
+      "revId": "e8f51b8e4769e24335430a136a1513c6a21873db",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
