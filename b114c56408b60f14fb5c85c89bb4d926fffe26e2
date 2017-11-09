@@ -124,6 +124,24 @@
       "revId": "b114c56408b60f14fb5c85c89bb4d926fffe26e2",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "761db148_1c5d923b",
+        "filename": "chrome/browser/ui/views/frame/browser_non_client_frame_view_ash.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 329,
+      "author": {
+        "id": 1228419
+      },
+      "writtenOn": "2017-11-09T02:13:57Z",
+      "side": 1,
+      "message": "Thanks. I think the reason that there is no bug when the old code uses restore\u003dtrue, is that tab_strip_visible is false, so value of restore does not matter.\n\nBy more digging, kTopViewInset is introduced by Valery for overview mode (https://codereview.chromium.org/1951183002). Currently only overview and window_mirror_view use it, which are used for clip the header and create frameless mirrored window. This change restore\u003dfalse should be correct.",
+      "parentUuid": "2267d622_b88c392a",
+      "revId": "b114c56408b60f14fb5c85c89bb4d926fffe26e2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
