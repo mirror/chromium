@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "01fc7f62_10835841",
+        "filename": "ash/accelerators/accelerator_controller.cc",
+        "patchSetId": 15
+      },
+      "lineNbr": 270,
+      "author": {
+        "id": 1000191
+      },
+      "writtenOn": "2017-11-09T01:08:24Z",
+      "side": 1,
+      "message": "DCHECK(key_code \u003d\u003d ui::VKEY_DOWN);",
+      "revId": "47beaa9ea8196ae33f86adca0c0140f0b53decf0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
