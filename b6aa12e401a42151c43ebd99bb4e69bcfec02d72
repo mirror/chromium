@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "f1ae03e2_718c6eb9",
+        "filename": "third_party/WebKit/Source/core/editing/DOMSelection.h",
+        "patchSetId": 17
+      },
+      "lineNbr": 111,
+      "author": {
+        "id": 1210620
+      },
+      "writtenOn": "2017-11-09T17:38:15Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "e27b69b3_7a8a759e",
+      "revId": "b6aa12e401a42151c43ebd99bb4e69bcfec02d72",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "3e0ccfc7_bea28772",
         "filename": "third_party/WebKit/Source/core/editing/Editor.h",
         "patchSetId": 17
@@ -53,6 +71,24 @@
     },
     {
       "key": {
+        "uuid": "c05179b0_f370f62d",
+        "filename": "third_party/WebKit/Source/core/editing/FrameSelection.cpp",
+        "patchSetId": 17
+      },
+      "lineNbr": 373,
+      "author": {
+        "id": 1210620
+      },
+      "writtenOn": "2017-11-09T17:38:15Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "f6d1a370_9f03eec9",
+      "revId": "b6aa12e401a42151c43ebd99bb4e69bcfec02d72",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "f9e0b9c7_a28ce9e6",
         "filename": "third_party/WebKit/Source/core/editing/SelectionModifier.h",
         "patchSetId": 17
@@ -70,6 +106,24 @@
     },
     {
       "key": {
+        "uuid": "2c4d32cf_119022b8",
+        "filename": "third_party/WebKit/Source/core/editing/SelectionModifier.h",
+        "patchSetId": 17
+      },
+      "lineNbr": 53,
+      "author": {
+        "id": 1210620
+      },
+      "writtenOn": "2017-11-09T17:38:15Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "f9e0b9c7_a28ce9e6",
+      "revId": "b6aa12e401a42151c43ebd99bb4e69bcfec02d72",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "060011f9_244c750f",
         "filename": "third_party/WebKit/Source/core/editing/commands/TypingCommand.cpp",
         "patchSetId": 17
@@ -84,6 +138,24 @@
       "revId": "b6aa12e401a42151c43ebd99bb4e69bcfec02d72",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "eeb6a356_8979611c",
+        "filename": "third_party/WebKit/Source/core/editing/commands/TypingCommand.cpp",
+        "patchSetId": 17
+      },
+      "lineNbr": 348,
+      "author": {
+        "id": 1210620
+      },
+      "writtenOn": "2017-11-09T17:38:15Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "060011f9_244c750f",
+      "revId": "b6aa12e401a42151c43ebd99bb4e69bcfec02d72",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }

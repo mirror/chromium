@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "c63501c3_7a75492e",
+        "filename": "third_party/WebKit/Source/core/editing/DOMSelection.cpp",
+        "patchSetId": 15
+      },
+      "lineNbr": 86,
+      "author": {
+        "id": 1210620
+      },
+      "writtenOn": "2017-11-09T17:38:15Z",
+      "side": 1,
+      "message": "done",
+      "parentUuid": "f24a7fe0_00d46616",
+      "range": {
+        "startLine": 86,
+        "startChar": 45,
+        "endLine": 86,
+        "endChar": 56
+      },
+      "revId": "82548cadb2b41762084d50eecc07bf9858ebac56",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "540946b9_5cb86249",
         "filename": "third_party/WebKit/Source/core/editing/Editor.h",
         "patchSetId": 15
@@ -48,6 +72,30 @@
     },
     {
       "key": {
+        "uuid": "41d78898_a84bab53",
+        "filename": "third_party/WebKit/Source/core/editing/Editor.h",
+        "patchSetId": 15
+      },
+      "lineNbr": 247,
+      "author": {
+        "id": 1210620
+      },
+      "writtenOn": "2017-11-09T17:38:15Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "540946b9_5cb86249",
+      "range": {
+        "startLine": 247,
+        "startChar": 7,
+        "endLine": 247,
+        "endChar": 29
+      },
+      "revId": "82548cadb2b41762084d50eecc07bf9858ebac56",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "a6334567_ade39ca5",
         "filename": "third_party/WebKit/Source/core/editing/FrameSelection.cpp",
         "patchSetId": 15
@@ -59,6 +107,30 @@
       "writtenOn": "2017-11-06T23:45:13Z",
       "side": 1,
       "message": "Hmm, interesting. Is it like that, we no longer need SelectionModifier to return a directionality any more?",
+      "range": {
+        "startLine": 371,
+        "startChar": 0,
+        "endLine": 375,
+        "endChar": 23
+      },
+      "revId": "82548cadb2b41762084d50eecc07bf9858ebac56",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5e44435c_48554388",
+        "filename": "third_party/WebKit/Source/core/editing/FrameSelection.cpp",
+        "patchSetId": 15
+      },
+      "lineNbr": 375,
+      "author": {
+        "id": 1210620
+      },
+      "writtenOn": "2017-11-09T17:38:15Z",
+      "side": 1,
+      "message": "We can calculate the directionality change after the selection is modified.\nFor mac directionality becomes true for extent.",
+      "parentUuid": "a6334567_ade39ca5",
       "range": {
         "startLine": 371,
         "startChar": 0,
@@ -94,6 +166,30 @@
     },
     {
       "key": {
+        "uuid": "9babac16_5714bb62",
+        "filename": "third_party/WebKit/Source/core/editing/FrameSelection.h",
+        "patchSetId": 15
+      },
+      "lineNbr": 274,
+      "author": {
+        "id": 1210620
+      },
+      "writtenOn": "2017-11-09T17:38:15Z",
+      "side": 1,
+      "message": "https://www.w3.org/TR/selection-api/#definition mentions as\nEach selection has a direction, forwards, backwards, or directionless.",
+      "parentUuid": "1c3b1cd3_a66891ee",
+      "range": {
+        "startLine": 271,
+        "startChar": 34,
+        "endLine": 274,
+        "endChar": 31
+      },
+      "revId": "82548cadb2b41762084d50eecc07bf9858ebac56",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "fe95348b_043e03fa",
         "filename": "third_party/WebKit/Source/core/frame/WebLocalFrameImpl.cpp",
         "patchSetId": 15
@@ -105,6 +201,24 @@
       "writtenOn": "2017-11-06T23:45:13Z",
       "side": 1,
       "message": "SetIsDirectional(false) here",
+      "revId": "82548cadb2b41762084d50eecc07bf9858ebac56",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "59ff295d_8488f34b",
+        "filename": "third_party/WebKit/Source/core/frame/WebLocalFrameImpl.cpp",
+        "patchSetId": 15
+      },
+      "lineNbr": 1207,
+      "author": {
+        "id": 1210620
+      },
+      "writtenOn": "2017-11-09T17:38:15Z",
+      "side": 1,
+      "message": "SetSelectionOptions default value for is_directional is false.",
+      "parentUuid": "fe95348b_043e03fa",
       "revId": "82548cadb2b41762084d50eecc07bf9858ebac56",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true

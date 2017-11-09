@@ -352,6 +352,30 @@
     },
     {
       "key": {
+        "uuid": "5b68af4f_cd968ef0",
+        "filename": "third_party/WebKit/Source/core/editing/commands/TypingCommand.cpp",
+        "patchSetId": 12
+      },
+      "lineNbr": 798,
+      "author": {
+        "id": 1210620
+      },
+      "writtenOn": "2017-11-09T17:38:15Z",
+      "side": 1,
+      "message": "Done.",
+      "parentUuid": "b7136697_4da445f3",
+      "range": {
+        "startLine": 794,
+        "startChar": 2,
+        "endLine": 798,
+        "endChar": 3
+      },
+      "revId": "70fb290f90eec134e5fc6125fb564449a856c18e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "34c55bae_017d25d9",
         "filename": "third_party/WebKit/Source/core/editing/commands/TypingCommand.cpp",
         "patchSetId": 12

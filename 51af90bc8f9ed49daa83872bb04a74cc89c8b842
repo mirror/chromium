@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "604127c5_e127a16d",
+        "filename": "third_party/WebKit/Source/core/editing/SelectionModifier.cpp",
+        "patchSetId": 15
+      },
+      "lineNbr": 622,
+      "author": {
+        "id": 1210620
+      },
+      "writtenOn": "2017-11-09T17:38:15Z",
+      "side": 0,
+      "message": "Modify is called multiple times only from TypingCommand within scope, other wise it is called once. Since TypingCommand dont have range selection so i think we can reuse the directionality value.",
+      "parentUuid": "c6b4664f_8ccdf3be",
+      "revId": "51af90bc8f9ed49daa83872bb04a74cc89c8b842",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "e95c46f2_bef28b38",
         "filename": "third_party/WebKit/Source/core/editing/SelectionModifier.cpp",
         "patchSetId": 15
