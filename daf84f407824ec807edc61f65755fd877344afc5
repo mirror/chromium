@@ -140,6 +140,30 @@
       "revId": "daf84f407824ec807edc61f65755fd877344afc5",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e4d76369_d31683b3",
+        "filename": "third_party/WebKit/LayoutTests/external/wpt/paint-timing/first-image-child.html",
+        "patchSetId": 2
+      },
+      "lineNbr": 43,
+      "author": {
+        "id": 1116050
+      },
+      "writtenOn": "2017-11-09T15:51:08Z",
+      "side": 1,
+      "message": "Whoops. \n\nShould this just be a direct execution of testPaintEntries?",
+      "parentUuid": "aba7c41a_fcf9d27a",
+      "range": {
+        "startLine": 43,
+        "startChar": 10,
+        "endLine": 43,
+        "endChar": 14
+      },
+      "revId": "daf84f407824ec807edc61f65755fd877344afc5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
