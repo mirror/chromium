@@ -2,7 +2,6 @@ This test checks that text-justify parses properly the properties from CSS 3 Tex
 
 On success, you will see a series of "PASS" messages, followed by "TEST COMPLETE".
 
-
 Value 'none':
 PASS element.style.textJustify is 'none'
 PASS computedStyle.textJustify is 'none'

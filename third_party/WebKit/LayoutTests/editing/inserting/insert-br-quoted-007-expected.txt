@@ -1,6 +1,8 @@
 CONSOLE MESSAGE: line 18: SUCCESS! newline inserted AFTER quoted content
 
+
 Line of text
+
 
 
 

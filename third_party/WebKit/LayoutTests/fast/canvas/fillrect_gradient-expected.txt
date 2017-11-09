@@ -1,4 +1,5 @@
-Each square canvas should contain a colored gradient bordered by a narrow white margin and a black line. The column on the left contains linear gradients, the column on the right radial gradients.
+Each square canvas should contain a colored gradient bordered by a narrow white margin and a black line.
+The column on the left contains linear gradients, the column on the right radial gradients.
  Green to white
  Green to white to red
  Larger green to white to larger red

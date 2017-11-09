@@ -1,4 +1,5 @@
-This tests that having a <wbr> element or a positioned element and a float on the same line does not cause an assertion failure.
+This tests that having a <wbr> element or a positioned element and a float
+    on the same line does not cause an assertion failure.
 
  
  

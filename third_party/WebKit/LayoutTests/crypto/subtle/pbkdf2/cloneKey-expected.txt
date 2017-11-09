@@ -2,7 +2,6 @@ Tests structured cloning of PBKDF2 keys
 
 On success, you will see a series of "PASS" messages, followed by "TEST COMPLETE".
 
-
 PASS importedKey.extraProperty is "hi"
 PASS importedKey.type is "secret"
 PASS typeof importedKey.extractable is 'boolean'

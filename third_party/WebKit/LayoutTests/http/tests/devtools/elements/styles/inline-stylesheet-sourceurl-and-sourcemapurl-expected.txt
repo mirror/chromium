@@ -1,4 +1,5 @@
-Verify that in case of complex scenario with both sourceURL and sourceMappingURL in inline stylesheet the sourceMap is resolved properly.
+Verify that in case of complex scenario with both sourceURL and sourceMappingURL in inline stylesheet
+the sourceMap is resolved properly.
 
 
 Running: Adding style sheet

@@ -18,6 +18,7 @@ div .className #test::before {
     content: "test me";
     /* border: 1px solid black; */
 }
+
 === AST === 
 rule 0
     selector 0: "div"

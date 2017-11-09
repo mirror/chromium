@@ -1,11 +1,14 @@
 Tests DOMNode.cssPath()
 
-
 ид
-  
+
+
+
 класс
-   
-   
+
+
+
+
   html
     head
       head > meta

@@ -3,7 +3,6 @@ Test the parsing of box-shadow.
 On success, you will see a series of "PASS" messages, followed by "TEST COMPLETE".
 
 
-
 Negative blur radius value : 10px 10px -1px rgb(255, 0, 0)
 PASS cssRule.type is 1
 PASS declaration.length is 0

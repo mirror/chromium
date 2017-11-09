@@ -2,7 +2,6 @@ Test structured clone permutations in IndexedDB. File/FileList tests require Dum
 
 On success, you will see a series of "PASS" messages, followed by "TEST COMPLETE".
 
-
 dbname = "structured-clone.html"
 indexedDB.deleteDatabase(dbname)
 indexedDB.open(dbname)

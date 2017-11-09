@@ -2,7 +2,6 @@ Dispatch mouse click events in each column and check the result.
 
 On success, you will see a series of "PASS" messages, followed by "TEST COMPLETE".
 
-
 PASS successfullyParsed is true
 
 TEST COMPLETE
@@ -27,12 +26,18 @@ PASS event.offsetY is event.expectedOffsetY
 
 
 
+
+
+
 first
+
 
 second
 
 
+
 third
+
 
 
 fourth
@@ -41,7 +46,9 @@ fourth
 
 
 
+
 fifth
+
 
 
 

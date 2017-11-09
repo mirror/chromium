@@ -1,4 +1,5 @@
-Tests that setting invalid values for CSS property value does not break LiveSASS.
+Tests that setting invalid values for CSS property value does
+not break LiveSASS.
 
 $color: magenta;
 div {

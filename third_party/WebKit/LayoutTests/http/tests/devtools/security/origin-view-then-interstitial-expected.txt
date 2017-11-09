@@ -1,4 +1,5 @@
-Tests that the panel transitions to the overview view when navigating to an interstitial. Regression test for https://crbug.com/638601
+Tests that the panel transitions to the overview view when navigating
+to an interstitial. Regression test for https://crbug.com/638601
 
 Before selecting origin view:
 <DIV class=widget vbox security-main-view >

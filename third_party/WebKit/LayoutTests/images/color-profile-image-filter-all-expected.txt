@@ -1,25 +1,33 @@
-
 GRAYSCALE
 
-  
+
+
+
 NONE
 
-  
+
+
+
 BRIGHTNESS
 
-  
+
+
+
 SATURATION
 
- 
 SEPIA
 
-  
+
+
+
 BLUR
 
-  
+
+
+
 OPACITY
 
-  
+
+
+
 BLUR+HUE
-
-

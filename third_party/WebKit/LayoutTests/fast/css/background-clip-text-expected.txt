@@ -1,7 +1,6 @@
-This tests checks that the 'text' keyword is parsed correctly in the 'background-clip' and '-webkit-background-clip' properties, and that 'background-clip' is parsed correctly in the 'background' shorthand.
+This tests checks that the 'text' keyword is     parsed correctly in the 'background-clip' and '-webkit-background-clip'     properties, and that 'background-clip' is parsed correctly in the     'background' shorthand.
 
 On success, you will see a series of "PASS" messages, followed by "TEST COMPLETE".
-
 
 PASS test("background-clip: content-box", "background-clip") is "content-box"
 PASS test("background-clip: padding-box", "background-clip") is "padding-box"

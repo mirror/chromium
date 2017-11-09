@@ -1,7 +1,6 @@
-Test for bug 25379: Selecting a bank in American Express Pay Bill fails.
+Test for bug 25379:
+Selecting a bank in American Express Pay Bill fails.
 
 Both SELECT elements below should say PASS.
-
-
 
 PASS

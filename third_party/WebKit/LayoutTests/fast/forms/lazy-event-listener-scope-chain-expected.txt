@@ -2,7 +2,6 @@ This test tests that a lazy event listener attached to a form element keeps its 
 
 On success, you will see a series of "PASS" messages, followed by "TEST COMPLETE".
 
-
 PASS result is "abc"
 PASS result is "abc"
 PASS result is "abc"
@@ -12,4 +11,6 @@ TEST COMPLETE
 PASS successfullyParsed is true
 
 TEST COMPLETE
- 
+
+
+

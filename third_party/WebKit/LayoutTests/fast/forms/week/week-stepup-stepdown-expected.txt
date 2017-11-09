@@ -2,7 +2,6 @@ Check stepUp() and stepDown() behavior for type=week.
 
 On success, you will see a series of "PASS" messages, followed by "TEST COMPLETE".
 
-
 Invalid value
 PASS stepUp("", null, null) is "1970-W02"
 PASS stepDown("", null, null) is "1970-W01"

@@ -2,7 +2,6 @@ Tests the behavior of .formaction, .formenctype, .formmethod and .formtarget of 
 
 On success, you will see a series of "PASS" messages, followed by "TEST COMPLETE".
 
-
 Ordinary values for input:
 PASS input.formEnctype is ""
 PASS input.formMethod is ""

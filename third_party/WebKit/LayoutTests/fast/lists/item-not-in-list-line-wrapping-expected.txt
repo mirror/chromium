@@ -1,4 +1,5 @@
-Test for http://bugs.webkit.org/show_bug.cgi?id=12746 REGRESSION (r13853): List item's first line overflows containing div.
+Test for http://bugs.webkit.org/show_bug.cgi?id=12746
+        REGRESSION (r13853): List item's first line overflows containing div.
 
 Text should not overflow the yellow box.
 

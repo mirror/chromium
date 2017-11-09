@@ -8,6 +8,7 @@ input::-moz-focus-inner {
   border: 0;
   padding: 0;
 }
+
 === AST === 
 rule 0
     selector 0: "button::-moz-focus-inner"

@@ -1,4 +1,4 @@
-This tests that we no longer strip nulls from tags. This matches Firefox behavior.
+This tests that we no longer strip nulls from tags.  This matches Firefox behavior.
 
 Test Passed
 

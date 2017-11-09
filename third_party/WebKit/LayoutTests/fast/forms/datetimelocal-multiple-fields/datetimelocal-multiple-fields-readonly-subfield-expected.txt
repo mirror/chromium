@@ -2,7 +2,6 @@ Sub-fields in input[type=datetime-local] should be read-only in some cases. This
 
 On success, you will see a series of "PASS" messages, followed by "TEST COMPLETE".
 
-
 createInput argument order: min, max, step, value
 
 Hour field:

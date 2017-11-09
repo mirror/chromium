@@ -1,3 +1,1 @@
 Tests that elements panel updates dom tree structure upon setting attribute on non HTML elements. PASSes if there is no crash.
-
-

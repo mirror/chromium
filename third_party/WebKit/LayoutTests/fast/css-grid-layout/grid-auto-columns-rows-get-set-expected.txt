@@ -2,7 +2,6 @@ Test that setting and getting grid-auto-columns and grid-auto-rows works as expe
 
 On success, you will see a series of "PASS" messages, followed by "TEST COMPLETE".
 
-
 Test getting grid-auto-columns and grid-auto-rows set through CSS
 PASS window.getComputedStyle(gridAutoFixedFixed, '').getPropertyValue('grid-auto-rows') is "30px"
 PASS window.getComputedStyle(gridAutoFixedFixed, '').getPropertyValue('grid-auto-columns') is "50px"

@@ -1,4 +1,4 @@
- Sticky position constraint
+Sticky position constraint
 Model elements dump
 {
     _containingBlockRect : {

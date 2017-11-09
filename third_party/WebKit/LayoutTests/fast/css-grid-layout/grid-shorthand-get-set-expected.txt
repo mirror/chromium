@@ -2,7 +2,6 @@ This test checks that the 'grid' shorthand is properly parsed and the longhand p
 
 On success, you will see a series of "PASS" messages, followed by "TEST COMPLETE".
 
-
 Test getting the longhand values when shorthand is set through CSS.
 PASS window.getComputedStyle(gridWithNone, '').getPropertyValue('grid-template-columns') is "none"
 PASS window.getComputedStyle(gridWithNone, '').getPropertyValue('grid-template-rows') is "none"

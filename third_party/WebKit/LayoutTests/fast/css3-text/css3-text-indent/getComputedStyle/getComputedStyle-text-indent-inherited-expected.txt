@@ -2,7 +2,6 @@ This test checks that the value of text-indent is properly inherited to the chil
 
 On success, you will see a series of "PASS" messages, followed by "TEST COMPLETE".
 
-
 Value of ancestor is '10px':
 PASS window.getComputedStyle(ancestor).getPropertyValue('text-indent') is '10px'
 PASS window.getComputedStyle(child).getPropertyValue('text-indent') is '10px'

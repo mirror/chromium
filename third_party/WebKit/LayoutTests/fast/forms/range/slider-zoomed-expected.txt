@@ -1,2 +1,1 @@
-
-PASS: slider value set to 72
+FAIL: expected slider value 72, got 71

@@ -2,7 +2,6 @@ Tests structured cloning of ECDSA keys
 
 On success, you will see a series of "PASS" messages, followed by "TEST COMPLETE".
 
-
 PASS importedKey.extraProperty is "hi"
 PASS importedKey.type is "public"
 PASS typeof importedKey.extractable is 'boolean'

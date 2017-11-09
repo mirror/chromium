@@ -1,4 +1,5 @@
-Test the changing of an input type=TEXT to type=IMAGE, and vice versa. This test is to make sure that the height and width attributes are used for only IMAGE type.
+Test the changing of an input type=TEXT to type=IMAGE, and vice versa. This test is to make sure that
+the height and width attributes are used for only IMAGE type.
 
 Check metrics before the change:
 PASS text.offsetWidth == 19 is false

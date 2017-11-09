@@ -1,4 +1,5 @@
-This test verifies that only document.all is undetectable. Other HTMLCollections should be detectable.
+This test verifies that only document.all is undetectable.  Other
+HTMLCollections should be detectable.
 
 Passed: document.all is undetectable.
 Passed: document.images is detectable.

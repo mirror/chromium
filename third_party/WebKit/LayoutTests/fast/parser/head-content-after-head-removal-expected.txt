@@ -1,1 +1,2 @@
-If you can see this text without crashing, the test passed. Note: The title element did not end up in the document.
+If you can see this text without crashing, the test passed.
+Note: The title element did not end up in the document.

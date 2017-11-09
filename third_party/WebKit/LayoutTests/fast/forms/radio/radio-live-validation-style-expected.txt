@@ -2,7 +2,6 @@ Check if :valid/:invalid CSS pseudo selectors are lively applied
 
 On success, you will see a series of "PASS" messages, followed by "TEST COMPLETE".
 
-
 Removing a checked radio button from a required radio button group by a DOM tree mutation:
 PASS backgroundOf($("radio1")) is validColor
 PASS parent.removeChild($("radio2")); backgroundOf($("radio1")) is invalidColor

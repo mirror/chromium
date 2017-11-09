@@ -1,4 +1,5 @@
-Test entering full screen security restrictions. An iframe without an allow attribute is still permitted to fullscreen if the request comes from the containing document.
+Test entering full screen security restrictions. An iframe without an allow attribute
+is still permitted to fullscreen if the request comes from the containing document.
 
 To test manually, press any key - the page should enter full screen mode.
 

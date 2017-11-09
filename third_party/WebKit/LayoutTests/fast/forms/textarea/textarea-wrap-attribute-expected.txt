@@ -3,7 +3,6 @@ It is not "limited to only known values", and it is a DOMString attribute which 
 
 On success, you will see a series of "PASS" messages, followed by "TEST COMPLETE".
 
-
 If wrap attribute is not specified it should be empty String.
 PASS textArea.wrap is ''
 

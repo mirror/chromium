@@ -1,2 +1,3 @@
-To run this test manually, click the "Crash me" button. 
+To run this test manually, click the "Crash me" button.
+
 SUCCEEDED

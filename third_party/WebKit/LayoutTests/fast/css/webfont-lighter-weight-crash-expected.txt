@@ -1,1 +1,2 @@
-Tests that font-weight: lighter is handled for web fonts. Test passes if it does not crash.
+Tests that font-weight: lighter is handled for
+			web fonts. Test passes if it does not crash.

@@ -2,7 +2,6 @@ Test that wheel scrolling over the page scrollbar scrolls the page. We also plac
 
 On success, you will see a series of "PASS" messages, followed by "TEST COMPLETE".
 
-
 PASS window.scrollY is 30
 PASS overflowDiv.scrollTop is 0
 PASS successfullyParsed is true

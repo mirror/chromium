@@ -2,7 +2,6 @@ Tests for selectionDirection
 
 On success, you will see a series of "PASS" messages, followed by "TEST COMPLETE".
 
-
 input on Mac
 PASS selectionDirection was "none" after just creating
 PASS selectionDirection was "none" after focusing and setting selection by setSelectionRange(1, 2)

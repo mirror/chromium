@@ -1,11 +1,24 @@
 Cell A
 COLSPAN="2"
-ROWSPAN="2"	Cell B
+ROWSPAN="2"	
+Cell B
 COLSPAN="2"
-2,3	2,4
+
+
+2,3	
+2,4
+
+
 Cell C
-ROWSPAN="2"	3,2	3,3	3,4
-4,2	4,3	4,4
+ROWSPAN="2"	
+3,2	
+3,3	
+3,4
+
+
+4,2	
+4,3	
+4,4
 ----------------------
 { 0, 0 }
 Cell A COLSPAN="2" ROWSPAN="2"

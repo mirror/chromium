@@ -1,4 +1,4 @@
-Test for bug 34490: WebCore::ImageEventSender::dispatchPendingEvents() crashes in certain conditions.
+Test for bug 34490:
+WebCore::ImageEventSender::dispatchPendingEvents() crashes in certain conditions.
 
 PASS
-

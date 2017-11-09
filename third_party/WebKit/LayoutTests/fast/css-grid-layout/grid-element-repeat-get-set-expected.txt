@@ -2,7 +2,6 @@ Test that setting and getting grid-template-columns and grid-template-rows with 
 
 On success, you will see a series of "PASS" messages, followed by "TEST COMPLETE".
 
-
 Test getting grid-template-columns and grid-template-rows set through CSS
 PASS window.getComputedStyle(singleSingleTrackRepeatWithSize, '').getPropertyValue('grid-template-columns') is "120px"
 PASS window.getComputedStyle(singleSingleTrackRepeatWithSize, '').getPropertyValue('grid-template-rows') is "18px"

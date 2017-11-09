@@ -3,7 +3,6 @@ RadioNodeList should be rooted at form itself if detached from dom tree
 On success, you will see a series of "PASS" messages, followed by "TEST COMPLETE".
 
 
-
 form in dom tree
 PASS radioNodeList1.length is 3
 PASS radioNodeList2.length is 3

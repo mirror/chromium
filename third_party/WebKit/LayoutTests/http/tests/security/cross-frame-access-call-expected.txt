@@ -1,8 +1,6 @@
-
 ----- tests for calling methods of another frame using Function.call -----
 
 On success, you will see a series of "PASS" messages, followed by "TEST COMPLETE".
-
 
 PASS window.setTimeout.call(targetWindow, 'void(0);', 0) threw exception SecurityError: Blocked a frame with origin "http://127.0.0.1:8000" from accessing a cross-origin frame..
 PASS window.setInterval.call(targetWindow, 'void(0);', 0) threw exception SecurityError: Blocked a frame with origin "http://127.0.0.1:8000" from accessing a cross-origin frame..

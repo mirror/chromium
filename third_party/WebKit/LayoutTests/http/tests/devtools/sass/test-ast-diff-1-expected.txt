@@ -34,6 +34,7 @@ Verifies CSS AST property diff.
     display: flex;
     /* align-items: center; */
 }
+
 .change-property-name {
     background: red;
 }
@@ -67,6 +68,7 @@ Verifies CSS AST property diff.
     display: flex;
     align-items: center;
 }
+
 === Diff ===
 Changes for rule: .change-property-name
     [M] color: red

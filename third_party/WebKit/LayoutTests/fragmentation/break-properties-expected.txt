@@ -2,7 +2,6 @@ Test parsing and getComputedStyle behavior for break controlling properties
 
 On success, you will see a series of "PASS" messages, followed by "TEST COMPLETE".
 
-
 break-after:always
 PASS getComputedStyle(element)['break-after'] is "auto"
 PASS getComputedStyle(element)['-webkit-column-break-after'] is "auto"

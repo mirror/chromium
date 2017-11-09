@@ -2,7 +2,6 @@ Test IndexedDB ordering of pending open calls.
 
 On success, you will see a series of "PASS" messages, followed by "TEST COMPLETE".
 
-
 dbname = "open-ordering.html"
 indexedDB.deleteDatabase(dbname)
 indexedDB.open(dbname, 2)

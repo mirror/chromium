@@ -1,4 +1,5 @@
-Tests that valid parsed script notifications are received by front-end. Bug 52721
+Tests that valid parsed script notifications are received by front-end.
+Bug 52721
 
 script 1:
     start: 5:8

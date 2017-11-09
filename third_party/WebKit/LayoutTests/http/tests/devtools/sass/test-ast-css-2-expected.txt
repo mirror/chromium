@@ -9,6 +9,7 @@ Verifies AST of CSS with media query.
     }
 }
 
+
 === AST === 
 rule 0
     selector 0: "body"

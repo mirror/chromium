@@ -2,7 +2,6 @@ Test to ensure correct behaviour of Object.getOwnPropertyDescriptor
 
 On success, you will see a series of "PASS" messages, followed by "TEST COMPLETE".
 
-
 PASS Object.getOwnPropertyDescriptor({}, 'undefinedProperty') is undefined.
 PASS Object.getOwnPropertyDescriptor({definedProperty:'defined'}, 'definedProperty').value is "defined"
 PASS Object.getOwnPropertyDescriptor({definedProperty:'defined'}, 'definedProperty').hasOwnProperty('get') is false

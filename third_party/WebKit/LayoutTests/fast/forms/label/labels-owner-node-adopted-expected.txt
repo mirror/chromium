@@ -1,7 +1,7 @@
-This tests moving a node with labels property from one document to another. The labels node list should be updated when labels are modified in the new document.
+This tests moving a node with labels property from one document to another.
+The labels node list should be updated when labels are modified in the new document.
 
 On success, you will see a series of "PASS" messages, followed by "TEST COMPLETE".
-
 
 The input element initially have two label elements #label1 and #label2.
 PASS labels = input.labels; labels.length is 2

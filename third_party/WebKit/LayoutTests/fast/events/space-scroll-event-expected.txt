@@ -1,5 +1,4 @@
-Test for bug 16241: REGRESSION(r28669): Page scrolls down when you hit space key in text area.
+Test for bug 16241:
+REGRESSION(r28669): Page scrolls down when you hit space key in text area.
 
 To test manually, press Space - the page should not scroll.
-
-

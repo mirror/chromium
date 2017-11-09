@@ -2,7 +2,6 @@ Test to make sure text-decoration-style is computed properly.
 
 On success, you will see a series of "PASS" messages, followed by "TEST COMPLETE".
 
-
 Ancestor should not inherit 'dashed' value from parent (fallback to initial 'solid' value):
 PASS e.style.textDecorationStyle is ""
 PASS computedStyle.textDecorationStyle is "solid"

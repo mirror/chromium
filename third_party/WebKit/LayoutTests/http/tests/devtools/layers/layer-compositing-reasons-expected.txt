@@ -1,6 +1,5 @@
 translated
 translated individual
-
 backface hidden
 animated
 animated individual

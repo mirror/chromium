@@ -1,7 +1,6 @@
-Test touch adjustment over pseudo elements. Pseudo elements should be candidates for adjustment, but should not themselves be returned as valid target nodes.
+Test touch adjustment over pseudo elements.  Pseudo elements should be candidates for adjustment, but should not themselves be returned as valid target nodes.
 
 On success, you will see a series of "PASS" messages, followed by "TEST COMPLETE".
-
 
 Test touch area contained within the pseudo element.
 PASS adjustedNode.id is element.id

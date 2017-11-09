@@ -6,6 +6,7 @@ Verifies AST of SCSS with @for control statement.
         margin: 10px;
     }
 }
+
 === AST === 
 rule 0
     selector 0: ".box#{$i}"

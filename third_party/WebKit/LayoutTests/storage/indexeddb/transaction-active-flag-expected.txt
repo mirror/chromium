@@ -2,7 +2,6 @@ Test IndexedDB transaction internal active flag.
 
 On success, you will see a series of "PASS" messages, followed by "TEST COMPLETE".
 
-
 dbname = "transaction-active-flag.html"
 indexedDB.deleteDatabase(dbname)
 indexedDB.open(dbname)
