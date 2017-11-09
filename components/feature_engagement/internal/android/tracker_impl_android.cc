@@ -4,6 +4,7 @@
 
 #include "components/feature_engagement/internal/android/tracker_impl_android.h"
 
+#include <memory>
 #include <vector>
 
 #include "base/android/callback_android.h"
@@ -130,6 +131,26 @@ void TrackerImplAndroid::Dismissed(
   tracker_impl_->Dismissed(*features_[feature]);
 }
 
+base::android::ScopedJavaLocalRef<jobject>
+TrackerImplAndroid::AcquireDisplayLock(
+    JNIEnv* env,
+    const base::android::JavaRef<jobject>& jobj) {
+  std::unique_ptr<DisplayLockHandle> lock_handle =
+      tracker_impl_->AcquireDisplayLock();
+  if (!lock_handle)
+    return nullptr;
+
+  auto lock_handle_android =
+      std::make_unique<DisplayLockHandleAndroid>(std::move(lock_handle));
+
+  // Intentionally release ownership to Java.
+  // Callers are required to invoke DisplayLockHandleAndroid#release().
+  DisplayLockHandleAndroid* lock_handle_android_ptr =
+      lock_handle_android.release();
+
+  return lock_handle_android_ptr->GetJavaObject();
+}
+
 bool TrackerImplAndroid::IsInitialized(
     JNIEnv* env,
     const base::android::JavaRef<jobject>& jobj) {
@@ -148,4 +169,29 @@ void TrackerImplAndroid::AddOnInitializedCallback(
                  base::android::ScopedJavaGlobalRef<jobject>(j_callback_obj)));
 }
 
+DisplayLockHandleAndroid::DisplayLockHandleAndroid(
+    std::unique_ptr<DisplayLockHandle> display_lock_handle)
+    : display_lock_handle_(std::move(display_lock_handle)) {
+  JNIEnv* env = base::android::AttachCurrentThread();
+
+  java_obj_.Reset(env, Java_DisplayLockHandleAndroid_create(
+                           env, reinterpret_cast<intptr_t>(this))
+                           .obj());
+}
+
+DisplayLockHandleAndroid::~DisplayLockHandleAndroid() {
+  Java_DisplayLockHandleAndroid_clearNativePtr(
+      base::android::AttachCurrentThread(), java_obj_);
+}
+
+base::android::ScopedJavaLocalRef<jobject>
+DisplayLockHandleAndroid::GetJavaObject() {
+  return base::android::ScopedJavaLocalRef<jobject>(java_obj_);
+}
+
+void DisplayLockHandleAndroid::Release(
+    JNIEnv* env,
+    const base::android::JavaParamRef<jobject>& jobj) {
+  delete this;
+}
 }  // namespace feature_engagement
