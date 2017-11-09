@@ -39,6 +39,8 @@ source_set("passwords") {
     "password_generation_offer_view.h",
     "password_generation_offer_view.mm",
     "password_generation_prompt_delegate.h",
+    "password_manager_internals_service_factory.cc",
+    "password_manager_internals_service_factory.h",
     "password_tab_helper.h",
     "password_tab_helper.mm",
     "passwords_ui_delegate.h",
