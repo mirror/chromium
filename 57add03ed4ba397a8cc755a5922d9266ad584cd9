@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "997637ac_fa256dbd",
+        "filename": "chrome/browser/chromeos/system/tray_accessibility_browsertest.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 174,
+      "author": {
+        "id": 1000045
+      },
+      "writtenOn": "2017-11-09T21:46:19Z",
+      "side": 1,
+      "message": "I can put this at file scope, rename it to GetTray(), or both. I didn\u0027t do it so the diffs would be easier to read. Let me know if you want me to do it.",
+      "revId": "57add03ed4ba397a8cc755a5922d9266ad584cd9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}

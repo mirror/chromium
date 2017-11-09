@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "c83a4ee6_5412707e",
+        "filename": "chrome/browser/chromeos/system/tray_accessibility_browsertest.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 1646,
+      "author": {
+        "id": 1000045
+      },
+      "writtenOn": "2017-11-09T21:46:19Z",
+      "side": 0,
+      "message": "These 2 lines are the important part of this block of code, and I moved them to the login screen test case.",
+      "revId": "db5befa037fe7fc56a7631bd6eba522d2735b59c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
