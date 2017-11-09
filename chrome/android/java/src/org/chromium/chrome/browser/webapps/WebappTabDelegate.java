@@ -30,9 +30,11 @@ import java.net.URISyntaxException;
  */
 public class WebappTabDelegate extends TabDelegate {
     private static final String TAG = "WebappTabDelegate";
+    private boolean mIsWebApk;
 
-    public WebappTabDelegate(boolean incognito) {
+    public WebappTabDelegate(boolean incognito, boolean isWebApk) {
         super(incognito);
+        mIsWebApk = isWebApk;
     }
 
     @Override
@@ -49,6 +51,9 @@ public class WebappTabDelegate extends TabDelegate {
         intent.setData(Uri.parse(url));
         intent.putExtra(CustomTabIntentDataProvider.EXTRA_SEND_TO_EXTERNAL_DEFAULT_HANDLER, true);
         intent.putExtra(CustomTabIntentDataProvider.EXTRA_IS_OPENED_BY_CHROME, true);
+        intent.putExtra(CustomTabIntentDataProvider.EXTRA_SOURCE_OF_OPEN,
+                mIsWebApk ? CustomTabIntentDataProvider.EXTRA_SOURCE_OF_OPEN_WEBAPK
+                          : CustomTabIntentDataProvider.EXTRA_SOURCE_OF_OPEN_WEBAPP);
         addAsyncTabExtras(asyncParams, parentId, false /* isChromeUI */, assignedTabId, intent);
 
         IntentHandler.startActivityForTrustedIntent(intent);

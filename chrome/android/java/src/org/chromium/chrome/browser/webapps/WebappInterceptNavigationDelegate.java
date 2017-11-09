@@ -44,6 +44,10 @@ public class WebappInterceptNavigationDelegate extends InterceptNavigationDelega
             customTabIntent.intent.setPackage(mActivity.getPackageName());
             customTabIntent.intent.putExtra(
                     CustomTabIntentDataProvider.EXTRA_SEND_TO_EXTERNAL_DEFAULT_HANDLER, true);
+            customTabIntent.intent.putExtra(CustomTabIntentDataProvider.EXTRA_SOURCE_OF_OPEN,
+                    mActivity instanceof WebApkActivity
+                            ? CustomTabIntentDataProvider.EXTRA_SOURCE_OF_OPEN_WEBAPK
+                            : CustomTabIntentDataProvider.EXTRA_SOURCE_OF_OPEN_WEBAPP);
             customTabIntent.launchUrl(mActivity, Uri.parse(navigationParams.url));
             return true;
         }

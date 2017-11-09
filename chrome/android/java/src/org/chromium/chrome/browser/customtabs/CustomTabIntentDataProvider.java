@@ -59,6 +59,10 @@ public class CustomTabIntentDataProvider extends BrowserSessionDataProvider {
     public static final int CUSTOM_TABS_UI_TYPE_READER_MODE = 4;
     public static final int CUSTOM_TABS_UI_TYPE_MINIMAL_UI_WEBAPP = 5;
 
+    public static final int EXTRA_SOURCE_OF_OPEN_NONE = 0;
+    public static final int EXTRA_SOURCE_OF_OPEN_WEBAPP = 1;
+    public static final int EXTRA_SOURCE_OF_OPEN_WEBAPK = 2;
+
     /**
      * Herb: Extra that indicates whether or not the Custom Tab is being launched by an Intent fired
      * by Chrome itself.
@@ -89,6 +93,10 @@ public class CustomTabIntentDataProvider extends BrowserSessionDataProvider {
     /** Extra that enables the client to disable the download button in menu. */
     public static final String EXTRA_DISABLE_DOWNLOAD_BUTTON =
             "org.chromium.chrome.browser.customtabs.EXTRA_DISABLE_DOWNLOAD_BUTTON";
+
+    /** Indicates the source where the Custom Tab is opened. */
+    public static final String EXTRA_SOURCE_OF_OPEN =
+            "android.support.customtabs.EXTRA_SOURCE_OF_OPEN";
 
     // TODO(yusufo): Move this to CustomTabsIntent.
     /** Signals custom tabs to favor sending initial urls to external handler apps if possible. */
