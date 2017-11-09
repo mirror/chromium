@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "053afd7c_6c718a85",
+        "filename": "third_party/WebKit/Source/core/css/resolver/FontStyleResolver.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 9,
+      "author": {
+        "id": 1161824
+      },
+      "writtenOn": "2017-11-09T05:47:21Z",
+      "side": 1,
+      "message": "Nit: Does this actually need to be included here? It looks like a forward declaration should suffice.",
+      "revId": "ff28a39be098780512f0aac813918b8d567d9079",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
