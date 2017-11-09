@@ -53,6 +53,27 @@
   DCHECK(self.currentBVC == bvc);
 }
 
+#pragma mark - UIViewController methods
+
+- (void)presentViewController:(UIViewController*)viewControllerToPresent
+                     animated:(BOOL)flag
+                   completion:(void (^)())completion {
+  // If there is no activeViewController then this call will get inadvertently
+  // dropped.
+  DCHECK(self.currentBVC);
+  [self.currentBVC presentViewController:viewControllerToPresent
+                                animated:flag
+                              completion:completion];
+}
+
+- (void)dismissViewControllerAnimated:(BOOL)flag
+                           completion:(void (^)())completion {
+  // If there is no activeViewController then this call will get inadvertently
+  // dropped.
+  DCHECK(self.currentBVC);
+  [self.currentBVC dismissViewControllerAnimated:flag completion:completion];
+}
+
 - (UIViewController*)childViewControllerForStatusBarHidden {
   return self.currentBVC;
 }
