@@ -167,52 +167,6 @@ void SearchTabHelper::OnTabDeactivated() {
   ipc_router_.OnTabDeactivated();
 }
 
-void SearchTabHelper::DidStartNavigationToPendingEntry(
-    const GURL& url,
-    content::ReloadType reload_type) {
-  // TODO(jam): delete this method once PlzNavigate is turned on by default.
-  // When PlzNavigate is enabled, DidStartNavigation is called early enough such
-  // that there's no flickering. However when PlzNavigate is disabled,
-  // DidStartNavigation is called too late and "Untitled" shows up momentarily.
-  // The fix is to override this deprecated callback for the non-PlzNavigate
-  // case.
-  if (content::IsBrowserSideNavigationEnabled())
-    return;
-
-  if (search::IsNTPURL(url, profile())) {
-    // Set the title on any pending entry corresponding to the NTP. This
-    // prevents any flickering of the tab title.
-    content::NavigationEntry* entry =
-        web_contents_->GetController().GetPendingEntry();
-    if (entry) {
-      web_contents_->UpdateTitleForEntry(
-          entry, l10n_util::GetStringUTF16(IDS_NEW_TAB_TITLE));
-    }
-  }
-}
-
-void SearchTabHelper::DidStartNavigation(
-    content::NavigationHandle* navigation_handle) {
-  if (!content::IsBrowserSideNavigationEnabled())
-    return;
-
-  if (!navigation_handle->IsInMainFrame() ||
-      navigation_handle->IsSameDocument()) {
-    return;
-  }
-
-  if (search::IsNTPURL(navigation_handle->GetURL(), profile())) {
-    // Set the title on any pending entry corresponding to the NTP. This
-    // prevents any flickering of the tab title.
-    content::NavigationEntry* entry =
-        web_contents_->GetController().GetPendingEntry();
-    if (entry) {
-      web_contents_->UpdateTitleForEntry(
-          entry, l10n_util::GetStringUTF16(IDS_NEW_TAB_TITLE));
-    }
-  }
-}
-
 void SearchTabHelper::DidFinishNavigation(
       content::NavigationHandle* navigation_handle) {
   if (!navigation_handle->IsInMainFrame() ||
@@ -223,6 +177,14 @@ void SearchTabHelper::DidFinishNavigation(
     UMA_HISTOGRAM_ENUMERATION("InstantExtended.CacheableNTPLoad",
                               search::CACHEABLE_NTP_LOAD_SUCCEEDED,
                               search::CACHEABLE_NTP_LOAD_MAX);
+  }
+}
+
+void SearchTabHelper::DidFinishLoad(content::RenderFrameHost* render_frame_host,
+                                    const GURL& /* validated_url */) {
+  if (!render_frame_host->GetParent()) {
+    if (search::IsInstantNTP(web_contents_))
+      RecordNewTabLoadTime(web_contents_);
   }
 
   // Always set the title on the new tab page to be the one from our UI
@@ -242,14 +204,6 @@ void SearchTabHelper::DidFinishNavigation(
        search::NavEntryIsInstantNTP(web_contents_, entry))) {
     web_contents_->UpdateTitleForEntry(
         entry, l10n_util::GetStringUTF16(IDS_NEW_TAB_TITLE));
-  }
-}
-
-void SearchTabHelper::DidFinishLoad(content::RenderFrameHost* render_frame_host,
-                                    const GURL& /* validated_url */) {
-  if (!render_frame_host->GetParent()) {
-    if (search::IsInstantNTP(web_contents_))
-      RecordNewTabLoadTime(web_contents_);
   }
 }
 
