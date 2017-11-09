@@ -492,6 +492,23 @@
       "revId": "715dcf9e183e09a617bcb333a2777129ea405111",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8d04fbe3_8d3a03e2",
+        "filename": "third_party/WebKit/Source/platform/network/FormDataEncoder.cpp",
+        "patchSetId": 8
+      },
+      "lineNbr": 168,
+      "author": {
+        "id": 1163599
+      },
+      "writtenOn": "2017-11-09T22:56:08Z",
+      "side": 1,
+      "message": "I would still like to see a comment here explaining the decision.\n\nProposal: \"Characters that cannot be encoded using the form\u0027s encoding will be escaped using SGML number character references (\u0026#65; for A). This follows the behavior of Firefox and Edge.\"",
+      "revId": "715dcf9e183e09a617bcb333a2777129ea405111",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
