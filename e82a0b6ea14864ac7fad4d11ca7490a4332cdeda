@@ -37,6 +37,24 @@
     },
     {
       "key": {
+        "uuid": "97f2ab11_3d1f16e9",
+        "filename": "third_party/sqlite/amalgamation/shell.c",
+        "patchSetId": 4
+      },
+      "lineNbr": 1502,
+      "author": {
+        "id": 1115884
+      },
+      "writtenOn": "2017-11-09T16:50:47Z",
+      "side": 1,
+      "message": "Got it - you understand correctly - I just missed that.",
+      "parentUuid": "54969c34_25d64413",
+      "revId": "e82a0b6ea14864ac7fad4d11ca7490a4332cdeda",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "005e00b2_3ae1a754",
         "filename": "third_party/sqlite/patches/0003-Modify-default-VFS-to-support-WebDatabase.patch",
         "patchSetId": 4
