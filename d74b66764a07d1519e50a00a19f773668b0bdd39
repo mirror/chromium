@@ -93,6 +93,30 @@
       "revId": "d74b66764a07d1519e50a00a19f773668b0bdd39",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0db14867_e6e42d0a",
+        "filename": "chrome/browser/ui/tabs/tab_utils.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 397,
+      "author": {
+        "id": 1002076
+      },
+      "writtenOn": "2017-11-09T23:19:57Z",
+      "side": 1,
+      "message": "Hmm...Actually, the more I think about this, I was mistaken in my original comment: For some cases, mute toggle is disabled because the muting was forced (e.g., for tab capture, the user cannot unmute).\n\nSo, to answer your question: I think CanToggleAudioMute() is properly named.\n\nThe other question is: What logic should go here? Let me refine my suggestion to:\n\n  if (!chrome::CanToggleAudioMute(contents)) {\n    if (reason !\u003d TabMutedReason::CONTENT_SETTING)\n      return TabMutedResult::FAIL_TABCAPTURE;\n\n    // If we\u0027re just unmuting a chrome:// URL tab that had been muted because...\n    if (mute)\n      return TabMutedResult::FAIL_MUTE_DISALLOWED;\n  }\n\nNote that I think you want to use |reason| (i.e., the current reason) and not |GetTabAudioMutedReason(contents)| which is the reason for the prior toggle change. Also, the FAIL_TABCAPTURE enum (a.k.a. FAIL_MUTE_FORCED) was being overloaded: It\u0027d be nice if we added a FAIL_MUTE_DISALLOWED for this new case.\n\nLet me know if I\u0027m missing something. :)",
+      "parentUuid": "2217f601_80dba742",
+      "range": {
+        "startLine": 390,
+        "startChar": 0,
+        "endLine": 397,
+        "endChar": 5
+      },
+      "revId": "d74b66764a07d1519e50a00a19f773668b0bdd39",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
