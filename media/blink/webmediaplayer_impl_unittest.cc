@@ -39,6 +39,7 @@
 #include "third_party/WebKit/public/platform/WebSecurityOrigin.h"
 #include "third_party/WebKit/public/platform/WebSize.h"
 #include "third_party/WebKit/public/platform/WebSurfaceLayerBridge.h"
+#include "third_party/WebKit/public/platform/web_page_visibility_state.mojom.h"
 #include "third_party/WebKit/public/web/WebFrameClient.h"
 #include "third_party/WebKit/public/web/WebLocalFrame.h"
 #include "third_party/WebKit/public/web/WebScopedUserGesture.h"
@@ -257,9 +258,9 @@ class WebMediaPlayerImplTest : public testing::Test {
  public:
   WebMediaPlayerImplTest()
       : media_thread_("MediaThreadForTest"),
-        web_view_(
-            blink::WebView::Create(nullptr,
-                                   blink::kWebPageVisibilityStateVisible)),
+        web_view_(blink::WebView::Create(
+            nullptr,
+            blink::mojom::WebPageVisibilityState::kVisible)),
         web_local_frame_(
             blink::WebLocalFrame::CreateMainFrame(web_view_,
                                                   &web_frame_client_,

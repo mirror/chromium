@@ -9,13 +9,16 @@
 #include "core/loader/FrameLoadRequest.h"
 #include "platform/loader/fetch/SubstituteData.h"
 #include "public/platform/Platform.h"
+#include "public/platform/web_page_visibility_state.mojom-blink.h"
 #include "public/web/WebSettings.h"
 
 namespace blink {
 
 WorkerShadowPage::WorkerShadowPage(Client* client)
     : client_(client),
-      web_view_(WebViewImpl::Create(nullptr, kWebPageVisibilityStateVisible)),
+      web_view_(
+          WebViewImpl::Create(nullptr,
+                              mojom::blink::WebPageVisibilityState::kVisible)),
       main_frame_(WebLocalFrameImpl::CreateMainFrame(web_view_,
                                                      this,
                                                      nullptr,
