@@ -249,7 +249,11 @@ class ScheduledReload final : public ScheduledNavigation {
         kFrameLoadTypeReload, KURL(), ClientRedirectPolicy::kClientRedirect);
     if (resource_request.IsNull())
       return;
-    FrameLoadRequest request = FrameLoadRequest(nullptr, resource_request);
+    // The document mustn't have changed when the reload is scheduled and when
+    // it really happens.
+    DCHECK_EQ(frame->GetDocument(), OriginDocument());
+    FrameLoadRequest request =
+        FrameLoadRequest(frame->GetDocument(), resource_request);
     request.SetClientRedirect(ClientRedirectPolicy::kClientRedirect);
     MaybeLogScheduledNavigationClobber(
         ScheduledNavigationType::kScheduledReload, frame);
@@ -265,8 +269,14 @@ class ScheduledReload final : public ScheduledNavigation {
 
  private:
   explicit ScheduledReload(LocalFrame* frame)
-      : ScheduledNavigation(Reason::kReload, 0.0, nullptr, true, true),
-        frame_(frame) {}
+      : ScheduledNavigation(Reason::kReload,
+                            0.0,
+                            frame->GetDocument(),
+                            true,
+                            true),
+        frame_(frame) {
+    DCHECK(frame->GetDocument());
+  }
 
   Member<LocalFrame> frame_;
 };
