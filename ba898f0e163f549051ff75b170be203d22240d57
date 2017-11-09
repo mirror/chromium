@@ -55,6 +55,24 @@
     },
     {
       "key": {
+        "uuid": "fdd664b0_02fa47e2",
+        "filename": "tools/perf/measurements/smoothness.py",
+        "patchSetId": 4
+      },
+      "lineNbr": 78,
+      "author": {
+        "id": 1128435
+      },
+      "writtenOn": "2017-11-09T23:29:42Z",
+      "side": 1,
+      "message": "Yes. Right now interaction record is only created on the main renderer. AFAIK, there is no smoothness test cases that involve multi web domains yet.",
+      "parentUuid": "0a1978d4_ad9f587a",
+      "revId": "ba898f0e163f549051ff75b170be203d22240d57",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "7a4bc4b7_497c9958",
         "filename": "tools/perf/measurements/smoothness.py",
         "patchSetId": 4
