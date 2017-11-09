@@ -10,10 +10,12 @@
 #include <vector>
 
 #include "base/macros.h"
+#include "base/memory/weak_ptr.h"
 #include "build/build_config.h"
 #include "components/autofill/content/common/autofill_agent.mojom.h"
 #include "components/autofill/content/common/autofill_driver.mojom.h"
 #include "components/autofill/content/renderer/autofill_agent.h"
+#include "components/autofill/content/renderer/interacted_form_tracker.h"
 #include "components/autofill/content/renderer/password_form_conversion_utils.h"
 #include "components/autofill/content/renderer/provisionally_saved_password_form.h"
 #include "components/autofill/core/common/form_data_predictions.h"
@@ -31,7 +33,6 @@
 #endif
 
 namespace blink {
-class WebFormElementObserver;
 class WebInputElement;
 }
 
@@ -46,6 +47,7 @@ class PasswordGenerationAgent;
 
 // This class is responsible for filling password forms.
 class PasswordAutofillAgent : public content::RenderFrameObserver,
+                              public InteractedFormTracker::Observer,
                               public mojom::PasswordAutofillAgent {
  public:
   PasswordAutofillAgent(content::RenderFrame* render_frame,
@@ -69,6 +71,13 @@ class PasswordAutofillAgent : public content::RenderFrameObserver,
   void FindFocusedPasswordForm(
       FindFocusedPasswordFormCallback callback) override;
   void BlacklistedFormFound() override;
+
+  // InteractedFormTracker::Observer
+  void OnProvisionallySaveForm(const blink::WebFormElement& form,
+                               const blink::WebInputElement& element,
+                               ElementChangeSource source) override;
+  void OnFormSubmitted(const blink::WebFormElement& form) override;
+  void OnSuccessfulSubmission(SubmissionSource source) override;
 
   // WebFrameClient editor related calls forwarded by AutofillAgent.
   // If they return true, it indicates the event was consumed and should not
@@ -131,10 +140,6 @@ class PasswordAutofillAgent : public content::RenderFrameObserver,
   // Called when new form controls are inserted.
   void OnDynamicFormsSeen();
 
-  // Called when an AJAX has succesfully completed. Used to determine if
-  // a form has been submitted by AJAX without navigation.
-  void AJAXSucceeded();
-
   // Called when the user interacts with the page after a load. This is a
   // signal to make autofilled values of password input elements accessible to
   // JavaScript.
@@ -162,8 +167,6 @@ class PasswordAutofillAgent : public content::RenderFrameObserver,
   virtual bool FrameCanAccessPasswordManager();
 
  private:
-  class FormElementObserverCallback;
-
   // Ways to restrict which passwords are saved in ProvisionallySavePassword.
   enum ProvisionallySaveRestriction {
     RESTRICTION_NONE,
@@ -219,14 +222,11 @@ class PasswordAutofillAgent : public content::RenderFrameObserver,
   // RenderFrameObserver:
   void DidFinishDocumentLoad() override;
   void DidFinishLoad() override;
-  void FrameDetached() override;
   void DidStartProvisionalLoad(
       blink::WebDocumentLoader* document_loader) override;
   void WillCommitProvisionalLoad() override;
   void DidCommitProvisionalLoad(bool is_new_navigation,
                                 bool is_same_document_navigation) override;
-  void WillSendSubmitEvent(const blink::WebFormElement& form) override;
-  void WillSubmitForm(const blink::WebFormElement& form) override;
   void OnDestruct() override;
 
   // Scans the given frame for password forms and sends them up to the browser.
@@ -309,7 +309,11 @@ class PasswordAutofillAgent : public content::RenderFrameObserver,
   void OnSameDocumentNavigationCompleted(
       PasswordForm::SubmissionIndicatorEvent event);
 
-  const mojom::AutofillDriverPtr& GetAutofillDriver();
+  void FrameDetachedImpl();
+  void DidSubmitForm(const blink::WebFormElement& form);
+  void DidStartProvisionalLoad();
+
+  void HidePopup();
 
   // The logins we have filled so far with their associated info.
   WebInputToPasswordInfoMap web_input_to_password_info_;
@@ -353,7 +357,7 @@ class PasswordAutofillAgent : public content::RenderFrameObserver,
   // fields for individual forms.
   FormsPredictionsMap form_predictions_;
 
-  AutofillAgent* autofill_agent_;  // Weak reference.
+  base::WeakPtr<AutofillAgent> autofill_agent_;
   PasswordGenerationAgent* password_generation_agent_;  // Weak reference.
 
 #if !defined(OS_ANDROID) && !defined(OS_IOS)
@@ -363,8 +367,6 @@ class PasswordAutofillAgent : public content::RenderFrameObserver,
   mojom::PasswordManagerDriverPtr password_manager_driver_;
 
   mojo::Binding<mojom::PasswordAutofillAgent> binding_;
-
-  blink::WebFormElementObserver* form_element_observer_;
 
   bool blacklisted_form_found_ = false;
 
