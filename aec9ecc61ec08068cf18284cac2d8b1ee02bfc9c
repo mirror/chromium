@@ -1,0 +1,78 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "ec04fd87_20d74c04",
+        "filename": "third_party/WebKit/Source/devtools/front_end/sdk/DebuggerModel.js",
+        "patchSetId": 1
+      },
+      "lineNbr": 335,
+      "author": {
+        "id": 1000379
+      },
+      "writtenOn": "2017-11-09T11:05:25Z",
+      "side": 1,
+      "message": "No \"get\" functions in frontend. Call it resolve.",
+      "range": {
+        "startLine": 335,
+        "startChar": 8,
+        "endLine": 335,
+        "endChar": 26
+      },
+      "revId": "aec9ecc61ec08068cf18284cac2d8b1ee02bfc9c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2051e91a_eed7ebaf",
+        "filename": "third_party/WebKit/Source/devtools/front_end/sources/CallStackSidebarPane.js",
+        "patchSetId": 1
+      },
+      "lineNbr": 66,
+      "author": {
+        "id": 1000379
+      },
+      "writtenOn": "2017-11-09T11:05:25Z",
+      "side": 1,
+      "message": "Note that now since update is async, it could be re-entered. Perhaps, we could use a throttler here.",
+      "revId": "aec9ecc61ec08068cf18284cac2d8b1ee02bfc9c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a66ddd53_8eac357a",
+        "filename": "third_party/WebKit/Source/devtools/front_end/sources/CallStackSidebarPane.js",
+        "patchSetId": 1
+      },
+      "lineNbr": 121,
+      "author": {
+        "id": 1000379
+      },
+      "writtenOn": "2017-11-09T11:05:25Z",
+      "side": 1,
+      "message": "Are we going to cleanup promise creation frames?",
+      "revId": "aec9ecc61ec08068cf18284cac2d8b1ee02bfc9c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "988c1bd0_d1193f5b",
+        "filename": "third_party/WebKit/Source/devtools/front_end/sources/CallStackSidebarPane.js",
+        "patchSetId": 1
+      },
+      "lineNbr": 407,
+      "author": {
+        "id": 1000379
+      },
+      "writtenOn": "2017-11-09T11:05:25Z",
+      "side": 1,
+      "message": "Add debuggerModel. How did it compile?",
+      "revId": "aec9ecc61ec08068cf18284cac2d8b1ee02bfc9c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
