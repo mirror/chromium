@@ -48,14 +48,6 @@
 extern sandbox::TargetServices* g_utility_target_services;
 #endif
 
-namespace {
-
-std::unique_ptr<service_manager::Service> CreateVideoCaptureService() {
-  return std::make_unique<video_capture::ServiceImpl>();
-}
-
-}  // anonymous namespace
-
 namespace content {
 
 namespace {
@@ -133,7 +125,7 @@ void UtilityServiceFactory::RegisterServices(ServiceMap* services) {
   GetContentClient()->utility()->RegisterServices(services);
 
   service_manager::EmbeddedServiceInfo video_capture_info;
-  video_capture_info.factory = base::Bind(&CreateVideoCaptureService);
+  video_capture_info.factory = base::Bind(&video_capture::ServiceImpl::Create);
   services->insert(
       std::make_pair(video_capture::mojom::kServiceName, video_capture_info));
 

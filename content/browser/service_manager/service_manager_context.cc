@@ -61,8 +61,8 @@
 #include "services/service_manager/sandbox/sandbox_type.h"
 #include "services/service_manager/service_manager.h"
 #include "services/shape_detection/public/interfaces/constants.mojom.h"
-#include "services/video_capture/public/cpp/constants.h"
 #include "services/video_capture/public/interfaces/constants.mojom.h"
+#include "services/video_capture/service_impl.h"
 #include "services/viz/public/interfaces/constants.mojom.h"
 #include "ui/base/ui_features.h"
 
@@ -457,6 +457,15 @@ ServiceManagerContext::ServiceManagerContext() {
         resource_coordinator::mojom::kServiceName, resource_coordinator_info);
   }
 
+  if (features::IsVideoCaptureServiceEnabledForBrowserProcess()) {
+    service_manager::EmbeddedServiceInfo video_capture_info;
+    video_capture_info.factory =
+        base::Bind(&video_capture::ServiceImpl::Create);
+    video_capture_info.use_own_thread = true;
+    packaged_services_connection_->AddEmbeddedService(
+        video_capture::mojom::kServiceName, video_capture_info);
+  }
+
   ContentBrowserClient::StaticServiceMap services;
   GetContentClient()->browser()->RegisterInProcessServices(&services);
   for (const auto& entry : services) {
@@ -487,7 +496,7 @@ ServiceManagerContext::ServiceManagerContext() {
         base::ASCIIToUTF16("Network Service");
   }
 
-  if (base::FeatureList::IsEnabled(video_capture::kMojoVideoCapture)) {
+  if (features::IsVideoCaptureServiceEnabledForDedicatedUtilityProcess()) {
     out_of_process_services[video_capture::mojom::kServiceName] =
         base::ASCIIToUTF16("Video Capture Service");
   }
