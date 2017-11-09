@@ -22,6 +22,30 @@
       "revId": "db873fc930ec2baf77b81ee7ed75495e5e10b5fb",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a81316e7_df7878da",
+        "filename": "content/public/common/network_connection_tracker.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 52,
+      "author": {
+        "id": 1120845
+      },
+      "writtenOn": "2017-11-09T19:47:04Z",
+      "side": 1,
+      "message": "This is much clearer. Thanks for the suggestion!",
+      "parentUuid": "e60e0d26_ff553580",
+      "range": {
+        "startLine": 52,
+        "startChar": 40,
+        "endLine": 52,
+        "endChar": 53
+      },
+      "revId": "db873fc930ec2baf77b81ee7ed75495e5e10b5fb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
