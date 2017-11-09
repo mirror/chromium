@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "53920256_58d1a175",
+        "filename": "build/config/posix/BUILD.gn",
+        "patchSetId": 4
+      },
+      "lineNbr": 63,
+      "author": {
+        "id": 1001629
+      },
+      "writtenOn": "2017-11-09T00:14:59Z",
+      "side": 1,
+      "message": "This is a clang driver flag, not a linker flag. It should work with gold and BFD.ld too",
+      "revId": "a12ab62bdc2919f10b272f54110046ae28022c2d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
