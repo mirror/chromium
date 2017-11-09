@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "03a2af51_e39029af",
+        "filename": "chrome/common/pref_names.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 2510,
+      "author": {
+        "id": 1003321
+      },
+      "writtenOn": "2017-11-09T17:58:58Z",
+      "side": 1,
+      "message": "Note: this code was moved but didn\u0027t change.",
+      "range": {
+        "startLine": 2496,
+        "startChar": 0,
+        "endLine": 2510,
+        "endChar": 0
+      },
+      "revId": "f3458fb6e7031d2fd0867550b6b6c067bff7258f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7c19d31f_784a0882",
+        "filename": "chrome/common/pref_names.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 896,
+      "author": {
+        "id": 1003321
+      },
+      "writtenOn": "2017-11-09T17:58:58Z",
+      "side": 1,
+      "message": "Note: these names were moved but didn\u0027t change.",
+      "range": {
+        "startLine": 896,
+        "startChar": 0,
+        "endLine": 896,
+        "endChar": 46
+      },
+      "revId": "f3458fb6e7031d2fd0867550b6b6c067bff7258f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
