@@ -1635,6 +1635,10 @@ void RenderThreadImpl::OnAssociatedInterfaceRequest(
     ChildThreadImpl::OnAssociatedInterfaceRequest(name, std::move(handle));
 }
 
+blink::scheduler::ChildScheduler* RenderThreadImpl::GetScheduler() {
+  return GetRendererScheduler();
+}
+
 scoped_refptr<base::SingleThreadTaskRunner>
 RenderThreadImpl::GetIOTaskRunner() {
   return ChildProcess::current()->io_task_runner();
