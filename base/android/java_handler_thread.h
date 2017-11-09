@@ -49,11 +49,7 @@ class BASE_EXPORT JavaHandlerThread {
   void InitializeThread(JNIEnv* env,
                         const JavaParamRef<jobject>& obj,
                         jlong event);
-  void StopThread(JNIEnv* env, const JavaParamRef<jobject>& obj);
   void OnLooperStopped(JNIEnv* env, const JavaParamRef<jobject>& obj);
-
-  virtual void StartMessageLoop();
-  virtual void StopMessageLoop();
 
   void StopMessageLoopForTesting();
   void JoinForTesting();
@@ -74,6 +70,12 @@ class BASE_EXPORT JavaHandlerThread {
   base::MessageLoop* message_loop_ = nullptr;
 
  private:
+  void StartMessageLoop();
+  void StopMessageLoop();
+
+  void StopOnThread();
+  void QuitThreadSafely();
+
   ScopedJavaGlobalRef<jobject> java_thread_;
 };
 
