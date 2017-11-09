@@ -1,0 +1,418 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "28bb340a_bd04c98f",
+        "filename": "content/network/restricted_cookie_manager.cc",
+        "patchSetId": 10
+      },
+      "lineNbr": 87,
+      "author": {
+        "id": 1001349
+      },
+      "writtenOn": "2017-11-09T01:45:05Z",
+      "side": 1,
+      "message": "substr will create a temp string; how about base::StartsWith() ?",
+      "revId": "c08eb8a325f46e970e19d24826fa6271d518dd8f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1d209576_61742120",
+        "filename": "content/network/restricted_cookie_manager_unittest.cc",
+        "patchSetId": 10
+      },
+      "lineNbr": 125,
+      "author": {
+        "id": 1001349
+      },
+      "writtenOn": "2017-11-09T01:45:05Z",
+      "side": 1,
+      "message": "Can you move the CHECK into SetCanonicalCookie? And should it be an ASSERT_TRUE instead? (not sure)",
+      "revId": "c08eb8a325f46e970e19d24826fa6271d518dd8f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e8a7ae0e_8ff6eb19",
+        "filename": "content/network/restricted_cookie_manager_unittest.cc",
+        "patchSetId": 10
+      },
+      "lineNbr": 131,
+      "author": {
+        "id": 1001349
+      },
+      "writtenOn": "2017-11-09T01:45:05Z",
+      "side": 1,
+      "message": "Not new, but maybe /*secure_source\u003d*/, /*can_modify_httponly\u003d*/ here now that this is called far away from the method definition.",
+      "revId": "c08eb8a325f46e970e19d24826fa6271d518dd8f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0dc3a785_28488e48",
+        "filename": "content/network/restricted_cookie_manager_unittest.cc",
+        "patchSetId": 10
+      },
+      "lineNbr": 132,
+      "author": {
+        "id": 1001349
+      },
+      "writtenOn": "2017-11-09T01:45:05Z",
+      "side": 1,
+      "message": "Lots of boilerplate. How about another helper function, SetCanonicalCookieSimple(name, value, domain) ?",
+      "revId": "c08eb8a325f46e970e19d24826fa6271d518dd8f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c7b48c85_cf35698a",
+        "filename": "third_party/WebKit/LayoutTests/http/tests/storage/async_cookies/bug774626.html",
+        "patchSetId": 10
+      },
+      "lineNbr": 4,
+      "author": {
+        "id": 1001349
+      },
+      "writtenOn": "2017-11-09T01:45:05Z",
+      "side": 1,
+      "message": "How about adding the spec link if you\u0027re touching this?",
+      "revId": "c08eb8a325f46e970e19d24826fa6271d518dd8f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5fd6b8db_4003f835",
+        "filename": "third_party/WebKit/LayoutTests/http/tests/storage/async_cookies/cookieStore_delete_arguments.html",
+        "patchSetId": 10
+      },
+      "lineNbr": 1,
+      "author": {
+        "id": 1001349
+      },
+      "writtenOn": "2017-11-09T01:45:05Z",
+      "side": 1,
+      "message": "Seems to be missing test cases where name is in options and there are non-name options. (Doesn\u0027t need all permutations, but at least one.)",
+      "revId": "c08eb8a325f46e970e19d24826fa6271d518dd8f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "cac80b5c_13e22e88",
+        "filename": "third_party/WebKit/LayoutTests/http/tests/storage/async_cookies/cookieStore_delete_arguments.html",
+        "patchSetId": 10
+      },
+      "lineNbr": 3,
+      "author": {
+        "id": 1001349
+      },
+      "writtenOn": "2017-11-09T01:45:05Z",
+      "side": 1,
+      "message": "Typo: \"Cookes\" -\u003e \"Cookies\" (this file and the rest)",
+      "revId": "c08eb8a325f46e970e19d24826fa6271d518dd8f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5be60e3c_6e3055ed",
+        "filename": "third_party/WebKit/LayoutTests/http/tests/storage/async_cookies/cookieStore_delete_arguments.html",
+        "patchSetId": 10
+      },
+      "lineNbr": 5,
+      "author": {
+        "id": 1001349
+      },
+      "writtenOn": "2017-11-09T01:45:05Z",
+      "side": 1,
+      "message": "I think we typically just use /resources rather than ../../resources to make it easier to move these around.",
+      "revId": "c08eb8a325f46e970e19d24826fa6271d518dd8f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "cd31b88f_e18cb929",
+        "filename": "third_party/WebKit/LayoutTests/http/tests/storage/async_cookies/cookieStore_delete_arguments.html",
+        "patchSetId": 10
+      },
+      "lineNbr": 25,
+      "author": {
+        "id": 1001349
+      },
+      "writtenOn": "2017-11-09T01:45:05Z",
+      "side": 1,
+      "message": "testCase.add_cleanup() ? Or doesn\u0027t work yet because it\u0027s async?\n\nIf the latter, add a comment so a later reader understands, and maybe wrap in a helper function so that the catch-and-ignore doesn\u0027t look so awkward.",
+      "revId": "c08eb8a325f46e970e19d24826fa6271d518dd8f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "11da369f_2577c1dc",
+        "filename": "third_party/WebKit/LayoutTests/http/tests/storage/async_cookies/cookieStore_delete_arguments.html",
+        "patchSetId": 10
+      },
+      "lineNbr": 38,
+      "author": {
+        "id": 1001349
+      },
+      "writtenOn": "2017-11-09T01:45:05Z",
+      "side": 1,
+      "message": ".set should be .delete?",
+      "revId": "c08eb8a325f46e970e19d24826fa6271d518dd8f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6ad6b334_dd378820",
+        "filename": "third_party/WebKit/LayoutTests/http/tests/storage/async_cookies/cookieStore_getAll_arguments.html",
+        "patchSetId": 10
+      },
+      "lineNbr": 74,
+      "author": {
+        "id": 1001349
+      },
+      "writtenOn": "2017-11-09T01:45:05Z",
+      "side": 1,
+      "message": "get -\u003e getAll",
+      "revId": "c08eb8a325f46e970e19d24826fa6271d518dd8f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "96a7e099_591a56d5",
+        "filename": "third_party/WebKit/LayoutTests/http/tests/storage/async_cookies/cookieStore_getAll_arguments.html",
+        "patchSetId": 10
+      },
+      "lineNbr": 87,
+      "author": {
+        "id": 1001349
+      },
+      "writtenOn": "2017-11-09T01:45:05Z",
+      "side": 1,
+      "message": "get -\u003e getAll",
+      "revId": "c08eb8a325f46e970e19d24826fa6271d518dd8f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ee5ea101_069794c8",
+        "filename": "third_party/WebKit/LayoutTests/http/tests/storage/async_cookies/cookieStore_get_arguments.html",
+        "patchSetId": 10
+      },
+      "lineNbr": 1,
+      "author": {
+        "id": 1001349
+      },
+      "writtenOn": "2017-11-09T01:45:05Z",
+      "side": 1,
+      "message": "Seems to be missing test cases where name is in options and there are non-name options. (Doesn\u0027t need all permutations, but at least one.)",
+      "revId": "c08eb8a325f46e970e19d24826fa6271d518dd8f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "fe53f5c4_0b875e9c",
+        "filename": "third_party/WebKit/LayoutTests/http/tests/storage/async_cookies/document_has.html",
+        "patchSetId": 10
+      },
+      "lineNbr": 12,
+      "author": {
+        "id": 1001349
+      },
+      "writtenOn": "2017-11-09T01:45:05Z",
+      "side": 1,
+      "message": "Is the variable worth it, vs. just putting the await inside the assert?",
+      "revId": "c08eb8a325f46e970e19d24826fa6271d518dd8f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2a918bcc_02278a07",
+        "filename": "third_party/WebKit/Source/modules/cookie_store/CookieStore.cpp",
+        "patchSetId": 10
+      },
+      "lineNbr": 31,
+      "author": {
+        "id": 1001349
+      },
+      "writtenOn": "2017-11-09T01:45:05Z",
+      "side": 1,
+      "message": "Nit: capitalize/end with period.",
+      "revId": "c08eb8a325f46e970e19d24826fa6271d518dd8f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "fe8cf943_8e06d74a",
+        "filename": "third_party/WebKit/Source/modules/cookie_store/CookieStore.cpp",
+        "patchSetId": 10
+      },
+      "lineNbr": 71,
+      "author": {
+        "id": 1001349
+      },
+      "writtenOn": "2017-11-09T01:45:05Z",
+      "side": 1,
+      "message": "Did clang-format actually align these? (awesome!)",
+      "revId": "c08eb8a325f46e970e19d24826fa6271d518dd8f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "75b55635_0b5bda36",
+        "filename": "third_party/WebKit/Source/modules/cookie_store/CookieStore.cpp",
+        "patchSetId": 10
+      },
+      "lineNbr": 97,
+      "author": {
+        "id": 1001349
+      },
+      "writtenOn": "2017-11-09T01:45:05Z",
+      "side": 1,
+      "message": "I look forward to the spec for these cases. :)",
+      "revId": "c08eb8a325f46e970e19d24826fa6271d518dd8f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "79c33c16_ee52008e",
+        "filename": "third_party/WebKit/Source/modules/cookie_store/CookieStore.cpp",
+        "patchSetId": 10
+      },
+      "lineNbr": 239,
+      "author": {
+        "id": 1001349
+      },
+      "writtenOn": "2017-11-09T01:45:05Z",
+      "side": 1,
+      "message": "Should be CamelCase now. Can probably just be Delete()",
+      "range": {
+        "startLine": 239,
+        "startChar": 27,
+        "endLine": 239,
+        "endChar": 44
+      },
+      "revId": "c08eb8a325f46e970e19d24826fa6271d518dd8f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "36c9d81c_15f629d8",
+        "filename": "third_party/WebKit/Source/modules/cookie_store/CookieStore.cpp",
+        "patchSetId": 10
+      },
+      "lineNbr": 272,
+      "author": {
+        "id": 1001349
+      },
+      "writtenOn": "2017-11-09T01:45:05Z",
+      "side": 1,
+      "message": "Maybe a typedef here to improve readability?\n\n(or maybe it\u0027s just me - I have a hard time reading function pointer declarations)",
+      "revId": "c08eb8a325f46e970e19d24826fa6271d518dd8f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "de429521_6d48298a",
+        "filename": "third_party/WebKit/Source/modules/cookie_store/CookieStore.cpp",
+        "patchSetId": 10
+      },
+      "lineNbr": 318,
+      "author": {
+        "id": 1001349
+      },
+      "writtenOn": "2017-11-09T01:45:05Z",
+      "side": 1,
+      "message": "Does this need to be an instance method? Doesn\u0027t look like it\u0027s using the state.\n\n(Obviously we should be consistent. If we want to keep |this| alive until it\u0027s called, we should note that somewhere.)",
+      "revId": "c08eb8a325f46e970e19d24826fa6271d518dd8f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ac87638b_104f8b90",
+        "filename": "third_party/WebKit/Source/modules/cookie_store/CookieStore.cpp",
+        "patchSetId": 10
+      },
+      "lineNbr": 360,
+      "author": {
+        "id": 1001349
+      },
+      "writtenOn": "2017-11-09T01:45:05Z",
+      "side": 1,
+      "message": "Intentionally a no-op that resolves to undefined? Maybe a comment?",
+      "revId": "c08eb8a325f46e970e19d24826fa6271d518dd8f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2fb5b5d3_9f24384c",
+        "filename": "third_party/WebKit/Source/modules/cookie_store/CookieStore.idl",
+        "patchSetId": 10
+      },
+      "lineNbr": 31,
+      "author": {
+        "id": 1001349
+      },
+      "writtenOn": "2017-11-09T01:45:05Z",
+      "side": 1,
+      "message": "style nit: we don\u0027t generally wrap after the \u0027[\u0027 or before the \u0027]\u0027 for extended attributes on interface members.",
+      "revId": "c08eb8a325f46e970e19d24826fa6271d518dd8f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "13671e1d_cfdbb96e",
+        "filename": "third_party/WebKit/Source/modules/cookie_store/CookieStoreGetOptions.idl",
+        "patchSetId": 10
+      },
+      "lineNbr": 13,
+      "author": {
+        "id": 1001349
+      },
+      "writtenOn": "2017-11-09T01:45:05Z",
+      "side": 1,
+      "message": "USVString? (more of a spec question, I guess)",
+      "revId": "c08eb8a325f46e970e19d24826fa6271d518dd8f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9d7375fd_51649ddd",
+        "filename": "third_party/WebKit/Source/modules/cookie_store/CookieStoreSetOptions.idl",
+        "patchSetId": 10
+      },
+      "lineNbr": 8,
+      "author": {
+        "id": 1001349
+      },
+      "writtenOn": "2017-11-09T01:45:05Z",
+      "side": 1,
+      "message": "USVString for these? (probably, but that\u0027s a spec question)",
+      "revId": "c08eb8a325f46e970e19d24826fa6271d518dd8f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
