@@ -31,6 +31,7 @@
 #include <memory>
 #include "bindings/core/v8/V8CacheOptions.h"
 #include "bindings/core/v8/V8CacheStrategiesForCacheStorage.h"
+#include "bindings/core/v8/V8ServiceWorkerCodeCacheInstallOptions.h"
 #include "core/CoreExport.h"
 #include "core/dom/events/AddEventListenerOptionsDefaults.h"
 #include "core/editing/EditingBehaviorTypes.h"

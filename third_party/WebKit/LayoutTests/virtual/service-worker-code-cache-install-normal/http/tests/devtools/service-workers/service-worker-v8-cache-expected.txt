@@ -2,15 +2,31 @@ Tests V8 cache information of Service Worker Cache Storage in timeline
 
 
 --- Trace events while installing -------------
+v8.compile Properties:
+{
+    data : {
+        cacheProduceOptions : "code"
+        columnNumber : <number>
+        lineNumber : <number>
+        producedCacheSize : <number>
+        streamed : <boolean>
+        url : .../devtools/service-workers/resources/v8-cache-script.js
+    }
+    endTime : <number>
+    startTime : <number>
+    type : "v8.compile"
+}
+Text details for v8.compile: resources/v8-cache-script.js:1
 -----------------------------------------------
 --- Trace events while executing scripts ------
 v8.compile Properties:
 {
     data : {
-        cacheProduceOptions : "code"
-        columnNumber : 0
-        lineNumber : 0
-        producedCacheSize : <number>
+        cacheConsumeOptions : "code"
+        cacheRejected : false
+        columnNumber : <number>
+        consumedCacheSize : <number>
+        lineNumber : <number>
         streamed : <boolean>
         url : .../devtools/service-workers/resources/v8-cache-script.js
     }
@@ -24,9 +40,9 @@ v8.compile Properties:
     data : {
         cacheConsumeOptions : "code"
         cacheRejected : false
-        columnNumber : 0
+        columnNumber : <number>
         consumedCacheSize : <number>
-        lineNumber : 0
+        lineNumber : <number>
         streamed : <boolean>
         url : .../devtools/service-workers/resources/v8-cache-script.js
     }
