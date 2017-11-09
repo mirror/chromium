@@ -65,6 +65,24 @@
     },
     {
       "key": {
+        "uuid": "5842e056_10293e92",
+        "filename": "third_party/WebKit/LayoutTests/http/tests/serviceworker/chromium/sandboxed-iframe-navigator-serviceworker.html",
+        "patchSetId": 1
+      },
+      "lineNbr": 77,
+      "author": {
+        "id": 1115976
+      },
+      "writtenOn": "2017-11-09T22:13:19Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "79803b81_ddcf8ad0",
+      "revId": "424d2f4e2d2a3f4e7c79d2a109098b544f3619ec",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "c25c9e13_385eed69",
         "filename": "third_party/WebKit/LayoutTests/http/tests/serviceworker/chromium/sandboxed-iframe-navigator-serviceworker.html",
         "patchSetId": 1
@@ -79,6 +97,24 @@
       "revId": "424d2f4e2d2a3f4e7c79d2a109098b544f3619ec",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "84a38ab4_91335628",
+        "filename": "third_party/WebKit/LayoutTests/http/tests/serviceworker/chromium/sandboxed-iframe-navigator-serviceworker.html",
+        "patchSetId": 1
+      },
+      "lineNbr": 93,
+      "author": {
+        "id": 1115976
+      },
+      "writtenOn": "2017-11-09T22:13:19Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "c25c9e13_385eed69",
+      "revId": "424d2f4e2d2a3f4e7c79d2a109098b544f3619ec",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
