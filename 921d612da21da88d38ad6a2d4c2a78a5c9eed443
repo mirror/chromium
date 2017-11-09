@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "6ab99038_bff970cb",
+        "filename": "third_party/WebKit/Source/core/editing/commands/EditorCommand.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 2971,
+      "author": {
+        "id": 1123071
+      },
+      "writtenOn": "2017-11-09T06:04:27Z",
+      "side": 1,
+      "message": "Do moveToBeginningOfDocument and moveToEndOfDocument also suffer from the exact same issue?",
+      "revId": "921d612da21da88d38ad6a2d4c2a78a5c9eed443",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
