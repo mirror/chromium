@@ -1,0 +1,89 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "e27b69b3_7a8a759e",
+        "filename": "third_party/WebKit/Source/core/editing/DOMSelection.h",
+        "patchSetId": 17
+      },
+      "lineNbr": 111,
+      "author": {
+        "id": 1002258
+      },
+      "writtenOn": "2017-11-09T07:26:43Z",
+      "side": 1,
+      "message": "Let\u0027s make |UpdateFrameSelection()| to take |SetSelectionOptions| instead\nof adding |bool|.\n\nIn this way, we can unify two usage of |SetSelectionOptions::Builder()| in\n|UpdateFrameSelection()| by utilizing \n|SetSelectionOptions::Builder(const SetSelectionOptions\u0026)|",
+      "revId": "b6aa12e401a42151c43ebd99bb4e69bcfec02d72",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3e0ccfc7_bea28772",
+        "filename": "third_party/WebKit/Source/core/editing/Editor.h",
+        "patchSetId": 17
+      },
+      "lineNbr": 247,
+      "author": {
+        "id": 1002258
+      },
+      "writtenOn": "2017-11-09T07:26:43Z",
+      "side": 1,
+      "message": "Since |SetMark()| always takes |VisibleSelection| from |FrameSelection|,\nlet\u0027s pass |FrameSelection| as parameter, in another patch ;-), then we\ndon\u0027t need to have |SetMarkWithDirecitonal()|.",
+      "revId": "b6aa12e401a42151c43ebd99bb4e69bcfec02d72",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f6d1a370_9f03eec9",
+        "filename": "third_party/WebKit/Source/core/editing/FrameSelection.cpp",
+        "patchSetId": 17
+      },
+      "lineNbr": 373,
+      "author": {
+        "id": 1002258
+      },
+      "writtenOn": "2017-11-09T07:26:43Z",
+      "side": 1,
+      "message": "nit: This can be:\n\nconst direcional \u003d alter \u003d\u003d SelectionModifyAltertnation::kExtend ||\n  ShouldAlwaysUseDirectionalSelection(frame_)",
+      "revId": "b6aa12e401a42151c43ebd99bb4e69bcfec02d72",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f9e0b9c7_a28ce9e6",
+        "filename": "third_party/WebKit/Source/core/editing/SelectionModifier.h",
+        "patchSetId": 17
+      },
+      "lineNbr": 53,
+      "author": {
+        "id": 1002258
+      },
+      "writtenOn": "2017-11-09T07:26:43Z",
+      "side": 1,
+      "message": "Let\u0027s introduce SelectionModifier(const FrameSelection\u0026) to avoid introducing |bool| parameter.\n\nConstructors takes |VisibleSelection| from |FrameSelection| or\n|SelectionForUndoStep|, in \"TypingCommand.cpp\".\n\nFortunately, |SelectionForUndoStep| is always caret and it doesn\u0027t\naffect is_directional, see PrepareToExtendSelection().\n\nAfter calling Modify(), is_directional can be computed from alternation,\nMove \u003d no directional \u003d caret, Extend \u003d directional \u003d range.",
+      "revId": "b6aa12e401a42151c43ebd99bb4e69bcfec02d72",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "060011f9_244c750f",
+        "filename": "third_party/WebKit/Source/core/editing/commands/TypingCommand.cpp",
+        "patchSetId": 17
+      },
+      "lineNbr": 348,
+      "author": {
+        "id": 1002258
+      },
+      "writtenOn": "2017-11-09T07:26:43Z",
+      "side": 1,
+      "message": "nit: Could you move this comment in one line before L345?",
+      "revId": "b6aa12e401a42151c43ebd99bb4e69bcfec02d72",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
