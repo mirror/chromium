@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "213a829e_ff1e1d78",
+        "filename": "ios/web/public/download/download_task_observer.h",
+        "patchSetId": 8
+      },
+      "lineNbr": 24,
+      "author": {
+        "id": 1116027
+      },
+      "writtenOn": "2017-11-09T09:54:56Z",
+      "side": 1,
+      "message": "Can we pass the task as a \"const DownloadTask*\"?\n\nIt look like all methods that should be called on the task are \"const\" (Start is not, but should not be called at this point), except for RemoveObserver.\n\nWDYT?",
+      "range": {
+        "startLine": 24,
+        "startChar": 33,
+        "endLine": 24,
+        "endChar": 51
+      },
+      "revId": "2fa125309be698567447d804996f38f502352748",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
