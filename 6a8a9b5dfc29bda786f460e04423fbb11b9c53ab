@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "4f38ade0_561c6609",
+        "filename": "media/blink/webmediaplayer_impl.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 1529,
+      "author": {
+        "id": 1115974
+      },
+      "writtenOn": "2017-11-09T13:15:23Z",
+      "side": 1,
+      "message": "We are not allowed to record UKM for iframes.",
+      "revId": "6a8a9b5dfc29bda786f460e04423fbb11b9c53ab",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
