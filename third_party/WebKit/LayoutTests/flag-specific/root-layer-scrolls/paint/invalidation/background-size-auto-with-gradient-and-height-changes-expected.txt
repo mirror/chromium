@@ -19,7 +19,7 @@
         {
           "object": "LayoutBlockFlow DIV id='outer'",
           "rect": [8, 8, 784, 500],
-          "reason": "geometry"
+          "reason": "background"
         }
       ]
     }
@@ -27,7 +27,7 @@
   "objectPaintInvalidations": [
     {
       "object": "LayoutBlockFlow DIV id='outer'",
-      "reason": "geometry"
+      "reason": "background"
     }
   ]
 }

@@ -200,8 +200,52 @@ bool BoxPaintInvalidator::ShouldFullyInvalidateBackgroundOnLayoutOverflowChange(
   return false;
 }
 
+const LayoutBox& BoxPaintInvalidator::BackgroundBox() const {
+  if (box_.IsLayoutView()) {
+    // LayoutView's non-fixed-attachment background is positioned in the
+    // document element.
+    // See https://drafts.csswg.org/css-backgrounds-3/#root-background.
+    const auto* root_box = ToLayoutView(box_).RootBox();
+    if (root_box)
+      return *root_box;
+  }
+  return box_;
+}
+
+bool BoxPaintInvalidator::BackgroundBoxSizeChanged() const {
+  if (box_.IsDocumentElement() || box_.BackgroundStolenForBeingBody())
+    return false;
+
+  // Fixed attachment background is handled in LayoutView::layout().
+  // TODO(wangxianzhu): Combine code for fixed-attachment background when we
+  // enable rootLayerScrolling permanently.
+  if (box_.IsLayoutView() && box_.StyleRef().HasEntirelyFixedBackground())
+    return false;
+
+  const auto& background_box = BackgroundBox();
+  LayoutSize old_size = background_box.PreviousSize();
+  LayoutSize new_size = background_box.Size();
+  const auto& layers = box_.StyleRef().BackgroundLayers();
+  if (old_size.Width() != new_size.Width() &&
+      LayoutBox::MustInvalidateFillLayersPaintOnWidthChange(layers)) {
+    return true;
+  }
+  if (old_size.Height() != new_size.Height() &&
+      LayoutBox::MustInvalidateFillLayersPaintOnHeightChange(layers)) {
+    return true;
+  }
+
+  // TODO(pdr): Move the geometry invalidation reasons related to backgrounds
+  // from ComputeBackgroundInvalidation to here.
+
+  return false;
+}
+
 BoxPaintInvalidator::BackgroundInvalidationType
 BoxPaintInvalidator::ComputeBackgroundInvalidation() {
+  if (BackgroundBoxSizeChanged())
+    return BackgroundInvalidationType::kFull;
+
   if (box_.BackgroundChangedSinceLastPaintInvalidation())
     return BackgroundInvalidationType::kFull;
 

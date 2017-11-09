@@ -113,9 +113,6 @@ void ViewPainter::PaintBoxDecorationBackground(const PaintInfo& paint_info) {
       paints_base_background ? frame_view.BaseBackgroundColor() : Color();
   Color root_background_color =
       layout_view_.Style()->VisitedDependentColor(CSSPropertyBackgroundColor);
-  const LayoutObject* root_object =
-      document.documentElement() ? document.documentElement()->GetLayoutObject()
-                                 : nullptr;
 
   DrawingRecorder recorder(context, *display_item_client,
                            DisplayItem::kDocumentBackground);
@@ -146,17 +143,17 @@ void ViewPainter::PaintBoxDecorationBackground(const PaintInfo& paint_info) {
   bool background_renderable = true;
   TransformationMatrix transform;
   IntRect paint_rect = background_rect;
-  if (!root_object || !root_object->IsBox()) {
+  const LayoutObject* root_box = layout_view_.RootBox();
+  if (!root_box) {
     background_renderable = false;
-  } else if (root_object->HasLayer()) {
+  } else if (root_box->HasLayer()) {
     if (BoxModelObjectPainter::
             IsPaintingBackgroundOfPaintContainerIntoScrollingContentsLayer(
                 &layout_view_, paint_info)) {
       transform.Translate(layout_view_.ScrolledContentOffset().Width(),
                           layout_view_.ScrolledContentOffset().Height());
     }
-    const PaintLayer& root_layer =
-        *ToLayoutBoxModelObject(root_object)->Layer();
+    const PaintLayer& root_layer = *ToLayoutBoxModelObject(root_box)->Layer();
     LayoutPoint offset;
     root_layer.ConvertToLayerCoords(nullptr, offset);
     transform.Translate(offset.X(), offset.Y());
