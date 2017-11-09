@@ -28,6 +28,13 @@ class WebContents;
 struct DownloadInfo {
   explicit DownloadInfo(const net::URLRequest* request);
   DownloadInfo(const DownloadInfo& other);
+  DownloadInfo(const GURL& url,
+               const GURL& original_url,
+               const std::string& content_disposition,
+               const std::string& original_mime_type,
+               const std::string& user_agent,
+               const std::string& cookie,
+               const std::string& referer);
   ~DownloadInfo();
 
   // The URL from which we are downloading. This is the final URL after any
