@@ -52,6 +52,126 @@
       "revId": "688cb4c93799f0751a7ca0b730419db3e5c988b9",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "7e50d463_33803941",
+        "filename": "ash/accessibility/accessibility_focus_ring_controller.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 47,
+      "author": {
+        "id": 1000045
+      },
+      "writtenOn": "2017-11-09T22:28:52Z",
+      "side": 1,
+      "message": "nit: \"0.3f\" (I like to use trailing f for C++ floats)",
+      "parentUuid": "68a3c47f_105cd0d5",
+      "revId": "688cb4c93799f0751a7ca0b730419db3e5c988b9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "0487a226_c1c647ce",
+        "filename": "ash/accessibility/accessibility_focus_ring_controller.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 144,
+      "author": {
+        "id": 1000045
+      },
+      "writtenOn": "2017-11-09T22:28:52Z",
+      "side": 1,
+      "message": "nit: {} not needed for single-line if",
+      "revId": "688cb4c93799f0751a7ca0b730419db3e5c988b9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d0f040cb_8d65dbfb",
+        "filename": "ash/accessibility/accessibility_focus_ring_controller.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 145,
+      "author": {
+        "id": 1000045
+      },
+      "writtenOn": "2017-11-09T22:28:52Z",
+      "side": 1,
+      "message": "nit: std::make_unique\n\n(Our goal is no bare calls to \"new\" :-)",
+      "revId": "688cb4c93799f0751a7ca0b730419db3e5c988b9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7fd9598f_cb94455c",
+        "filename": "ash/accessibility/accessibility_focus_ring_controller.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 54,
+      "author": {
+        "id": 1000045
+      },
+      "writtenOn": "2017-11-09T22:28:52Z",
+      "side": 1,
+      "message": "nit: rects\n\nAre there any constraints on the rectangles? If not, this is fine, I was just wondering if they had to be non-overlapping or something.",
+      "revId": "688cb4c93799f0751a7ca0b730419db3e5c988b9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "236a7568_246a114c",
+        "filename": "ash/accessibility/accessibility_focus_ring_controller.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 57,
+      "author": {
+        "id": 1000045
+      },
+      "writtenOn": "2017-11-09T22:28:52Z",
+      "side": 1,
+      "message": "optional: Highlight*s* or HighlightRects?",
+      "revId": "688cb4c93799f0751a7ca0b730419db3e5c988b9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a8a1fb23_4868c287",
+        "filename": "ash/accessibility/accessibility_highlight_layer.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 75,
+      "author": {
+        "id": 1000045
+      },
+      "writtenOn": "2017-11-09T22:28:52Z",
+      "side": 1,
+      "message": "nit: for (gfx::Rect rect : rects_) if you can",
+      "revId": "688cb4c93799f0751a7ca0b730419db3e5c988b9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "cfe06cf8_7e8dba5a",
+        "filename": "ash/accessibility/accessibility_highlight_layer.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 21,
+      "author": {
+        "id": 1000045
+      },
+      "writtenOn": "2017-11-09T22:28:52Z",
+      "side": 1,
+      "message": "nit: explicit",
+      "revId": "688cb4c93799f0751a7ca0b730419db3e5c988b9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
