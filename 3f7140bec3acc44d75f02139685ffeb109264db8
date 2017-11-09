@@ -22,6 +22,30 @@
       "revId": "3f7140bec3acc44d75f02139685ffeb109264db8",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5d350012_c3b43454",
+        "filename": "components/arc/video_accelerator/chrome_arc_video_decode_accelerator.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 31,
+      "author": {
+        "id": 1000050
+      },
+      "writtenOn": "2017-11-09T21:43:07Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "2402fa34_906e47ea",
+      "range": {
+        "startLine": 31,
+        "startChar": 6,
+        "endLine": 31,
+        "endChar": 16
+      },
+      "revId": "3f7140bec3acc44d75f02139685ffeb109264db8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
