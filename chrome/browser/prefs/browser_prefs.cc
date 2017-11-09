@@ -185,6 +185,7 @@
 #include "components/omnibox/browser/omnibox_field_trial.h"
 #else
 #include "chrome/browser/gcm/gcm_product_util.h"
+#include "chrome/browser/metrics/tab_stats_tracker.h"
 #include "chrome/browser/signin/signin_promo.h"
 #include "chrome/browser/ui/startup/startup_browser_creator.h"
 #include "chrome/browser/ui/webui/foreign_session_handler.h"
@@ -372,6 +373,7 @@ void RegisterLocalState(PrefRegistrySimple* registry) {
 #endif
 
 #if !defined(OS_ANDROID)
+  metrics::TabStatsTracker::RegisterPrefs(registry);
   task_manager::TaskManagerInterface::RegisterPrefs(registry);
 #endif  // !defined(OS_ANDROID)
 
