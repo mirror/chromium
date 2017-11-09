@@ -70,6 +70,30 @@
       "revId": "a3789c11bf8d101b6018e5f016337e781b4a9ff4",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b842af82_faffc9a3",
+        "filename": "chrome/android/webapk/shell_apk/AndroidManifest.xml",
+        "patchSetId": 11
+      },
+      "lineNbr": 67,
+      "author": {
+        "id": 1117405
+      },
+      "writtenOn": "2017-11-09T04:26:34Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "1cd61f3c_fb2ad1bf",
+      "range": {
+        "startLine": 67,
+        "startChar": 90,
+        "endLine": 67,
+        "endChar": 96
+      },
+      "revId": "a3789c11bf8d101b6018e5f016337e781b4a9ff4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
