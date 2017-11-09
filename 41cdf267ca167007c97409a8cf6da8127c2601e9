@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "c8e3c88e_06f178d2",
+        "filename": "ios/chrome/browser/ui/tab_switcher/tab_switcher_controller_egtest.mm",
+        "patchSetId": 2
+      },
+      "lineNbr": 176,
+      "author": {
+        "id": 1163361
+      },
+      "writtenOn": "2017-11-09T22:19:03Z",
+      "side": 1,
+      "message": "Adding this test makes me want to add the following tests:\n1) testLeavingSwitcherFromIncognitoPanel\n2) testLeavingSwitcherFromOpenTabsPanel (using the close button)\nShould we make a bug to track this?",
+      "range": {
+        "startLine": 176,
+        "startChar": 0,
+        "endLine": 176,
+        "endChar": 45
+      },
+      "revId": "41cdf267ca167007c97409a8cf6da8127c2601e9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
