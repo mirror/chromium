@@ -16,6 +16,24 @@
       "revId": "aa973a787498b2f50e1903e934485b84a27130c8",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a36e619e_54e6d9b4",
+        "filename": "components/viz/service/display/direct_renderer.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 623,
+      "author": {
+        "id": 1000887
+      },
+      "writtenOn": "2017-11-09T21:50:58Z",
+      "side": 1,
+      "message": "I\u0027m not sure I\u0027m following.. CanSkipRenderPass is only called from DrawRenderPass, where as DrawRenderPassQuadInternal still calls UseRenderPass directly, so it wouldn\u0027t come here.",
+      "parentUuid": "7867da10_8fbd1a57",
+      "revId": "aa973a787498b2f50e1903e934485b84a27130c8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
