@@ -37,6 +37,24 @@
     },
     {
       "key": {
+        "uuid": "2e92eed4_aebf3bd2",
+        "filename": "cc/animation/scroll_timeline.cc",
+        "patchSetId": 21
+      },
+      "lineNbr": 55,
+      "author": {
+        "id": 1001365
+      },
+      "writtenOn": "2017-11-09T20:52:59Z",
+      "side": 1,
+      "message": "Oh I see, for some reason I thought you\u0027d already implemented these. Sounds good.",
+      "parentUuid": "30cbaa27_445ef9d7",
+      "revId": "1c89fbe6f77720042e605d8f48cf896d224f9ef2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "7731369a_eacd47da",
         "filename": "cc/animation/worklet_animation_player.cc",
         "patchSetId": 21
@@ -66,6 +84,24 @@
       "side": 1,
       "message": "It is currently not. |monotonic_time| is just the time from base::TimeTicks::now(), which is the current workstation time. I\u0027ve removed this comment because it\u0027s just misleading. I don\u0027t think we should attempt to fix the underlying bug crbug.com/780151 in this CL.",
       "parentUuid": "7731369a_eacd47da",
+      "revId": "1c89fbe6f77720042e605d8f48cf896d224f9ef2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "393c29ee_b1a667e2",
+        "filename": "cc/animation/worklet_animation_player.cc",
+        "patchSetId": 21
+      },
+      "lineNbr": 58,
+      "author": {
+        "id": 1001365
+      },
+      "writtenOn": "2017-11-09T20:52:59Z",
+      "side": 1,
+      "message": "Okay as long as it\u0027s tracked.",
+      "parentUuid": "3da58d40_dd066bbd",
       "revId": "1c89fbe6f77720042e605d8f48cf896d224f9ef2",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": false
