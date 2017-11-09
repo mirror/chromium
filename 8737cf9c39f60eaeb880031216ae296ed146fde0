@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "eae14d6d_8dda392e",
+        "filename": "chrome/browser/chromeos/login/screens/terms_of_service_screen.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 109,
+      "author": {
+        "id": 1211034
+      },
+      "writtenOn": "2017-11-09T06:54:31Z",
+      "side": 1,
+      "message": "nit: Please add \u0027.\u0027",
+      "revId": "8737cf9c39f60eaeb880031216ae296ed146fde0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
