@@ -22,6 +22,30 @@
       "revId": "40d14c1feabc1e1886626c44189b9790edc3d075",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0f4e5d29_49fe5db3",
+        "filename": "third_party/WebKit/Source/modules/gamepad/GamepadEvent.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 34,
+      "author": {
+        "id": 1136314
+      },
+      "writtenOn": "2017-11-09T22:30:15Z",
+      "side": 1,
+      "message": "Gamepad.timestamp isn\u0027t consistent across platforms or even between different data fetchers on the same platform, and often is implemented as a monotonically increasing counter. E.g., RawInputDataFetcher uses report_id which is simply incremented on each call to UpdateGamepad, and GamepadPlatformDataFetcherWin uses dwPacketNumber as reported from XInput. All DataFetcher implementations would need to be made consistent before using the timestamp to initialize the event.\n\nThe spec says this about Gamepad.timestamp:\n\n\u003e The value must be relative to the navigationStart attribute of the PerformanceTiming interface.\n\nhttps://www.w3.org/TR/gamepad/#gamepad-interface\n\nCurrently I think none of our DataFetchers do this part correctly. We would need to update them to set timestamps relative to navigationStart, and then convert back to system time when creating GamepadEvent.\n\nAlso note that GamepadEvent is only used for connection/disconnection events, not for button/axis changes (these are polled). The timestamp in Gamepad represents the most recently polled data, which isn\u0027t necessarily the same as the time of the connection/disconnection event.",
+      "parentUuid": "880843a6_54343d10",
+      "range": {
+        "startLine": 34,
+        "startChar": 4,
+        "endLine": 34,
+        "endChar": 66
+      },
+      "revId": "40d14c1feabc1e1886626c44189b9790edc3d075",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
