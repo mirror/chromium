@@ -23,6 +23,7 @@ import("//rlz/features/features.gni")
 import("//services/service_manager/public/service_manifest.gni")
 import("//services/catalog/public/tools/catalog.gni")
 import("//testing/test.gni")
+import("//tools/v8_context_snapshot/v8_context_snapshot.gni")
 import("//ui/base/ui_features.gni")
 import("//ui/views/features.gni")
 import("//v8/gni/v8.gni")
@@ -2987,6 +2988,10 @@ group("telemetry_perf_unittests") {
     # For smoke testing run_multiple_telemetry_benchmarks_as_googletest
     "//testing/scripts/run_multiple_telemetry_benchmarks_as_googletest.py",
   ]
+
+  if (use_v8_context_snapshot) {
+    data += [ "$root_output_dir/v8_context_snapshot.bin" ]
+  }
 
   if (enable_mus) {
     deps += [ "//chrome:chrome_test" ]
