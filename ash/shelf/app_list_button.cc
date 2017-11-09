@@ -47,6 +47,7 @@
 #include "ui/views/animation/flood_fill_ink_drop_ripple.h"
 #include "ui/views/animation/ink_drop_impl.h"
 #include "ui/views/animation/ink_drop_mask.h"
+#include "ui/views/border.h"
 #include "ui/views/painter.h"
 #include "ui/views/widget/widget.h"
 
@@ -66,7 +67,6 @@ AppListButton::AppListButton(InkDropButtonListener* listener,
                              Shelf* shelf)
     : views::ImageButton(nullptr),
       is_showing_app_list_(false),
-      background_color_(kShelfDefaultBaseColor),
       listener_(listener),
       shelf_view_(shelf_view),
       shelf_(shelf) {
@@ -97,6 +97,7 @@ AppListButton::AppListButton(InkDropButtonListener* listener,
       chromeos::switches::IsVoiceInteractionEnabled()) {
     InitializeVoiceInteractionOverlay();
   }
+  SetBorder(views::CreateSolidBorder(2, SK_ColorRED));
 }
 
 AppListButton::~AppListButton() {
@@ -106,47 +107,18 @@ AppListButton::~AppListButton() {
 }
 
 void AppListButton::OnAppListShown() {
-  // Set |last_event_is_back_event_| false to drop ink on the app list circle.
-  last_event_is_back_event_ = false;
-  AnimateInkDrop(views::InkDropState::ACTIVATED, nullptr);
   is_showing_app_list_ = true;
+  AnimateInkDrop(views::InkDropState::ACTIVATED, nullptr);
   shelf_->UpdateAutoHideState();
 }
 
 void AppListButton::OnAppListDismissed() {
-  // Set |last_event_is_back_event_| false to drop ink on the app list circle.
-  last_event_is_back_event_ = false;
-  AnimateInkDrop(views::InkDropState::DEACTIVATED, nullptr);
   is_showing_app_list_ = false;
+  AnimateInkDrop(views::InkDropState::DEACTIVATED, nullptr);
   shelf_->UpdateAutoHideState();
 }
 
-void AppListButton::UpdateShelfItemBackground(SkColor color) {
-  background_color_ = color;
-  SchedulePaint();
-}
-
 void AppListButton::OnGestureEvent(ui::GestureEvent* event) {
-  last_event_is_back_event_ = IsBackEvent(event->location());
-  // Handle gesture events that are on the back button.
-  if (last_event_is_back_event_) {
-    switch (event->type()) {
-      case ui::ET_GESTURE_TAP:
-        AnimateInkDrop(views::InkDropState::ACTION_TRIGGERED, event);
-        GenerateAndSendBackEvent(*event);
-        return;
-      case ui::ET_GESTURE_TAP_CANCEL:
-        AnimateInkDrop(views::InkDropState::HIDDEN, event);
-        return;
-      case ui::ET_GESTURE_TAP_DOWN:
-        AnimateInkDrop(views::InkDropState::ACTION_PENDING, event);
-        GenerateAndSendBackEvent(*event);
-        return;
-      default:
-        return;
-    }
-  }
-
   // Handle gesture events that are on the app list circle.
   switch (event->type()) {
     case ui::ET_GESTURE_SCROLL_BEGIN:
@@ -203,26 +175,14 @@ void AppListButton::OnGestureEvent(ui::GestureEvent* event) {
 }
 
 bool AppListButton::OnMousePressed(const ui::MouseEvent& event) {
-  last_event_is_back_event_ = IsBackEvent(event.location());
-  if (last_event_is_back_event_) {
-    AnimateInkDrop(views::InkDropState::ACTION_PENDING, &event);
-    GenerateAndSendBackEvent(*event.AsLocatedEvent());
-  } else {
-    ImageButton::OnMousePressed(event);
-    shelf_view_->PointerPressedOnButton(this, ShelfView::MOUSE, event);
-  }
+  ImageButton::OnMousePressed(event);
+  shelf_view_->PointerPressedOnButton(this, ShelfView::MOUSE, event);
   return true;
 }
 
 void AppListButton::OnMouseReleased(const ui::MouseEvent& event) {
-  last_event_is_back_event_ = IsBackEvent(event.location());
-  if (last_event_is_back_event_) {
-    AnimateInkDrop(views::InkDropState::ACTION_TRIGGERED, &event);
-    GenerateAndSendBackEvent(*event.AsLocatedEvent());
-  } else {
     ImageButton::OnMouseReleased(event);
     shelf_view_->PointerReleasedOnButton(this, ShelfView::MOUSE, false);
-  }
 }
 
 void AppListButton::OnMouseCaptureLost() {
@@ -243,8 +203,7 @@ void AppListButton::GetAccessibleNodeData(ui::AXNodeData* node_data) {
 
 std::unique_ptr<views::InkDropRipple> AppListButton::CreateInkDropRipple()
     const {
-  gfx::Point center = last_event_is_back_event_ ? GetBackButtonCenterPoint()
-                                                : GetAppListButtonCenterPoint();
+  gfx::Point center = GetAppListButtonCenterPoint();
   gfx::Rect bounds(center.x() - kAppListButtonRadius,
                    center.y() - kAppListButtonRadius, 2 * kAppListButtonRadius,
                    2 * kAppListButtonRadius);
@@ -277,94 +236,11 @@ std::unique_ptr<views::InkDrop> AppListButton::CreateInkDrop() {
 
 std::unique_ptr<views::InkDropMask> AppListButton::CreateInkDropMask() const {
   return std::make_unique<views::CircleInkDropMask>(
-      size(),
-      last_event_is_back_event_ ? GetBackButtonCenterPoint()
-                                : GetAppListButtonCenterPoint(),
-      kAppListButtonRadius);
+      size(), GetAppListButtonCenterPoint(), kAppListButtonRadius);
 }
 
 void AppListButton::PaintButtonContents(gfx::Canvas* canvas) {
-  const bool is_tablet_mode = Shell::Get()
-                                  ->tablet_mode_controller()
-                                  ->IsTabletModeWindowManagerEnabled();
-  const double current_animation_value =
-      shelf_view_->GetAppListButtonAnimationCurrentValue();
   gfx::PointF circle_center(GetAppListButtonCenterPoint());
-
-  // Paint the circular background.
-  cc::PaintFlags bg_flags;
-  bg_flags.setColor(background_color_);
-  bg_flags.setAntiAlias(true);
-  bg_flags.setStyle(cc::PaintFlags::kFill_Style);
-
-  if (is_tablet_mode || shelf_view_->is_tablet_mode_animation_running()) {
-    // Draw the tablet mode app list background. It will look something like
-    // [1] when the shelf is horizontal and [2] when the shelf is vertical,
-    // where 1. is the back button and 2. is the app launcher circle.
-    //                                      _____
-    // [1]   _______________         [2]   /  1. \
-    //      /               \             |       |
-    //      | 1.         2. |             |   2.  |
-    //      \_______________/              \_____/
-
-    // Calculate the rectangular bounds of the path. The primary axis will be
-    // the distance between the back button and app circle centers and the
-    // secondary axis will be 2 * |kAppListButtonRadius|. The origin will be
-    // situated such that the back button center and app circle center are
-    // located equal distance from the sides parallel to the primary axis. See
-    // diagrams below; (1) is the back button and (2) is the app circle.
-    //
-    //    ___________         ____(1)____
-    //    |         |         |         |
-    //   (1)       (2)        |         |
-    //    |_________|         |         |
-    //                        |___(2)___|
-    gfx::PointF back_center(GetBackButtonCenterPoint());
-    float min_x = std::min(back_center.x(), circle_center.x());
-
-    gfx::RectF background_bounds(
-        shelf_->PrimaryAxisValue(min_x, min_x - kAppListButtonRadius),
-        shelf_->PrimaryAxisValue(back_center.y() - kAppListButtonRadius,
-                                 back_center.y()),
-        shelf_->PrimaryAxisValue(std::abs(circle_center.x() - back_center.x()),
-                                 2 * kAppListButtonRadius),
-        shelf_->PrimaryAxisValue(
-            2 * kAppListButtonRadius,
-            std::abs(circle_center.y() - back_center.y())));
-
-    // Create the path by drawing two circles, one around the back button and
-    // one around the app list circle. Join them with the rectangle calculated
-    // previously.
-    SkPath path;
-    path.addCircle(circle_center.x(), circle_center.y(), kAppListButtonRadius);
-    path.addCircle(back_center.x(), back_center.y(), kAppListButtonRadius);
-    path.addRect(background_bounds.x(), background_bounds.y(),
-                 background_bounds.right(), background_bounds.bottom());
-    canvas->DrawPath(path, bg_flags);
-
-    // Draw the back button icon. Its flipping for RTL is handled by the
-    // FLIPS_IN_RTL flag set in the its .icon file.
-    gfx::ImageSkia back_button =
-        CreateVectorIcon(kShelfBackIcon, SK_ColorTRANSPARENT);
-
-    // Paint the back button in tablet mode and handle transition animations.
-    int opacity = is_tablet_mode ? 255 : 0;
-    if (shelf_view_->is_tablet_mode_animation_running()) {
-      if (current_animation_value <= 0.0) {
-        // The mode flipped but the animation hasn't begun, paint the old state.
-        opacity = is_tablet_mode ? 0 : 255;
-      } else {
-        // Animate 0->255 into tablet mode, animate 255->0 into normal mode.
-        opacity = static_cast<int>(current_animation_value * 255.0);
-        opacity = is_tablet_mode ? opacity : (255 - opacity);
-      }
-    }
-
-    canvas->DrawImageInt(back_button, back_center.x() - back_button.width() / 2,
-                         back_center.y() - back_button.height() / 2, opacity);
-  } else {
-    canvas->DrawCircle(circle_center, kAppListButtonRadius, bg_flags);
-  }
 
   // Paint a white ring as the foreground for the app list circle. The ceil/dsf
   // math assures that the ring draws sharply and is centered at all scale
@@ -420,63 +296,23 @@ gfx::Point AppListButton::GetAppListButtonCenterPoint() const {
   // back button arrow in addition to the app list button circle.
   const int x_mid = width() / 2.f;
   const int y_mid = height() / 2.f;
-  const bool is_tablet_mode = Shell::Get()->tablet_mode_controller() &&
-                              Shell::Get()
-                                  ->tablet_mode_controller()
-                                  ->IsTabletModeWindowManagerEnabled();
-  const bool is_animating = shelf_view_->is_tablet_mode_animation_running();
 
   const ShelfAlignment alignment = shelf_->alignment();
   if (alignment == SHELF_ALIGNMENT_BOTTOM ||
       alignment == SHELF_ALIGNMENT_BOTTOM_LOCKED) {
-    if (is_tablet_mode || is_animating) {
-      // In RTL, the app list circle is shown to the left of the back button.
-      return gfx::Point(
-          View::GetMirroredXInView(width() - kShelfButtonSize / 2.f),
-          kShelfButtonSize / 2.f);
-    }
     return gfx::Point(x_mid, x_mid);
   } else if (alignment == SHELF_ALIGNMENT_RIGHT) {
-    if (is_tablet_mode || is_animating) {
-      return gfx::Point(kShelfButtonSize / 2.f,
-                        height() - kShelfButtonSize / 2.f);
-    }
     return gfx::Point(y_mid, y_mid);
   } else {
     DCHECK_EQ(alignment, SHELF_ALIGNMENT_LEFT);
-    if (is_tablet_mode || is_animating) {
-      return gfx::Point(width() - kShelfButtonSize / 2.f,
-                        height() - kShelfButtonSize / 2.f);
-    }
     return gfx::Point(width() - y_mid, y_mid);
   }
 }
 
-gfx::Point AppListButton::GetBackButtonCenterPoint() const {
-  if (shelf_->alignment() == SHELF_ALIGNMENT_LEFT)
-    return gfx::Point(width() - kShelfButtonSize / 2.f, kShelfButtonSize / 2.f);
-
-  // In RTL, the app list circle is shown to the right of the back button. If
-  // the shelf orientation is not horizontal then the back button center x
-  // coordinate will be the same in LTR or RTL.
-  return gfx::Point(View::GetMirroredXInView(kShelfButtonSize / 2.f),
-                    kShelfButtonSize / 2.f);
-}
-
 void AppListButton::OnBoundsAnimationStarted() {
-  // TODO(crbug.com/758402): Update ink drop bounds with app list button bounds.
-  // Hides the app list button ink drop during a bounds animation.
-  if (is_showing_app_list_)
-    AnimateInkDrop(views::InkDropState::DEACTIVATED, nullptr);
 }
 
 void AppListButton::OnBoundsAnimationFinished() {
-  // TODO(crbug.com/758402): Update ink drop bounds with app list button bounds.
-  // Reactivate the app list button ink drop after a bounds animation is
-  // finished.
-  if (is_showing_app_list_)
-    AnimateInkDrop(views::InkDropState::ACTIVATED, nullptr);
-
   // Redraw to ensure the app list button is drawn at its expected final state.
   SchedulePaint();
 }
@@ -563,44 +399,6 @@ void AppListButton::StartVoiceInteractionAnimation() {
       state == mojom::VoiceInteractionState::STOPPED &&
       Shell::Get()->voice_interaction_controller()->setup_completed();
   voice_interaction_overlay_->StartAnimation(show_icon);
-}
-
-bool AppListButton::IsBackEvent(const gfx::Point& location) {
-  if (!Shell::Get()
-           ->tablet_mode_controller()
-           ->IsTabletModeWindowManagerEnabled()) {
-    return false;
-  }
-
-  return (location - GetBackButtonCenterPoint()).LengthSquared() <
-         (location - GetAppListButtonCenterPoint()).LengthSquared();
-}
-
-void AppListButton::GenerateAndSendBackEvent(
-    const ui::LocatedEvent& original_event) {
-  ui::EventType event_type;
-  switch (original_event.type()) {
-    case ui::ET_MOUSE_PRESSED:
-    case ui::ET_GESTURE_TAP_DOWN:
-      event_type = ui::ET_KEY_PRESSED;
-      break;
-    case ui::ET_MOUSE_RELEASED:
-    case ui::ET_GESTURE_TAP:
-      event_type = ui::ET_KEY_RELEASED;
-      base::RecordAction(base::UserMetricsAction("Tablet_BackButton"));
-      break;
-    default:
-      return;
-  }
-
-  // Send the back event to the root window of the app list button's widget.
-  const views::Widget* widget = GetWidget();
-  if (widget && widget->GetNativeWindow()) {
-    aura::Window* root_window = widget->GetNativeWindow()->GetRootWindow();
-    ui::KeyEvent key_event(event_type, ui::VKEY_BROWSER_BACK, ui::EF_NONE);
-    ignore_result(
-        root_window->GetHost()->event_sink()->OnEventFromSource(&key_event));
-  }
 }
 
 bool AppListButton::UseVoiceInteractionStyle() {
