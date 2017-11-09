@@ -70,6 +70,30 @@
       "revId": "6733d6b01442d94b04d9ecb22e1cdc2ff1bfa1ba",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "64ce7d2b_f4c41876",
+        "filename": "chrome/browser/ui/passwords/password_manager_porter_unittest.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 184,
+      "author": {
+        "id": 1168044
+      },
+      "writtenOn": "2017-11-09T10:45:30Z",
+      "side": 1,
+      "message": "I found a way for them to co-exist. I don\u0027t know to make mojo not crash without the TestBrowserThreadBundle, so I documented the issue",
+      "parentUuid": "87906193_d3c8fd38",
+      "range": {
+        "startLine": 184,
+        "startChar": 11,
+        "endLine": 184,
+        "endChar": 34
+      },
+      "revId": "6733d6b01442d94b04d9ecb22e1cdc2ff1bfa1ba",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
