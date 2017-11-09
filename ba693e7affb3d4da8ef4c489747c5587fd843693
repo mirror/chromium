@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "b2e263e3_1d08ec64",
+        "filename": "ios/chrome/browser/ui/tab_switcher/tab_switcher_controller.mm",
+        "patchSetId": 2
+      },
+      "lineNbr": 372,
+      "author": {
+        "id": 1000119
+      },
+      "writtenOn": "2017-11-09T16:05:17Z",
+      "side": 1,
+      "message": "I may try to rework this to not use nil as a sentinel value, but I wanted to get something uploaded.",
+      "revId": "ba693e7affb3d4da8ef4c489747c5587fd843693",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}

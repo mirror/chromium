@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "37d2e424_a552f5d7",
+        "filename": "ios/chrome/browser/ui/tab_switcher/tab_switcher_controller.mm",
+        "patchSetId": 2
+      },
+      "lineNbr": 1185,
+      "author": {
+        "id": 1000119
+      },
+      "writtenOn": "2017-11-09T16:05:17Z",
+      "side": 0,
+      "message": "If you track this through, this delegate method is already called in |tabSwitcherDismissWithModel:animated:| at line 837.  Calling it twice seems like a mistake.\n\nWhen the experiment is enabled, this call here triggers BVC presentation, and then the first line of |tabSwitcherDismissWithModel:animated:| tries to dismiss any modals, which ends up immediately dismissing the incoming BVC.  This breaks the transition, because the BVC never shows up after you tap on a tab in the switcher.",
+      "revId": "d8cc0afb39ed0c1bf7e701d800c11d7a5d29d820",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
