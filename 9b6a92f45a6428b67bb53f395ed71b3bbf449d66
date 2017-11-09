@@ -455,6 +455,24 @@
       "revId": "9b6a92f45a6428b67bb53f395ed71b3bbf449d66",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4b724e9b_67476ab1",
+        "filename": "media/audio/win/core_audio_util_win.h",
+        "patchSetId": 7
+      },
+      "lineNbr": 114,
+      "author": {
+        "id": 1247905
+      },
+      "writtenOn": "2017-11-09T13:01:27Z",
+      "side": 1,
+      "message": "Sure, I will address it in next PS",
+      "parentUuid": "e50cd846_09237e2c",
+      "revId": "9b6a92f45a6428b67bb53f395ed71b3bbf449d66",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
