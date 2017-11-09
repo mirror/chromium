@@ -4,6 +4,7 @@
 
 #include <string>
 
+#include "base/command_line.h"
 #include "base/files/file_path.h"
 #include "base/files/file_util.h"
 #include "base/files/scoped_temp_dir.h"
@@ -34,6 +35,7 @@
 #include "content/public/test/test_url_loader_client.h"
 #include "mojo/common/data_pipe_utils.h"
 #include "net/base/filename_util.h"
+#include "net/base/host_port_pair.h"
 #include "net/base/net_errors.h"
 #include "net/http/http_response_headers.h"
 #include "net/test/embedded_test_server/embedded_test_server.h"
@@ -361,6 +363,42 @@ IN_PROC_BROWSER_TEST_P(NetworkContextConfigurationFixedPortBrowserTest,
   EXPECT_EQ(*simple_loader_helper.response_body(), "Echo");
 }
 
+class NetworkContextConfigurationProxyOnStartBrowserTest
+    : public NetworkContextConfigurationBrowserTest {
+ public:
+  NetworkContextConfigurationProxyOnStartBrowserTest() {}
+  ~NetworkContextConfigurationProxyOnStartBrowserTest() override {}
+
+  void SetUpCommandLine(base::CommandLine* command_line) override {
+    command_line->AppendSwitchASCII(
+        switches::kProxyServer,
+        embedded_test_server()->host_port_pair().ToString());
+  }
+
+ private:
+};
+
+// Test that the command line switch makes it to the network service and is
+// respected.
+IN_PROC_BROWSER_TEST_P(NetworkContextConfigurationProxyOnStartBrowserTest,
+                       TestInitialProxyConfig) {
+  content::SimpleURLLoaderTestHelper simple_loader_helper;
+  std::unique_ptr<content::SimpleURLLoader> simple_loader =
+      content::SimpleURLLoader::Create();
+
+  content::ResourceRequest request;
+  // This URL should be directed to the test server because of the proxy.
+  request.url = GURL("http://jabberwocky:1872/echo");
+  simple_loader->DownloadToStringOfUnboundedSizeUntilCrashAndDie(
+      request, loader_factory(), TRAFFIC_ANNOTATION_FOR_TESTS,
+      simple_loader_helper.GetCallback());
+  simple_loader_helper.WaitForCallback();
+
+  EXPECT_EQ(net::OK, simple_loader->NetError());
+  ASSERT_TRUE(simple_loader_helper.response_body());
+  EXPECT_EQ(*simple_loader_helper.response_body(), "Echo");
+}
+
 // Instiates tests with a prefix indicating which NetworkContext is being
 // tested, and a suffix of "/0" if the network service is disabled and "/1" if
 // it's enabled.
@@ -389,5 +427,7 @@ IN_PROC_BROWSER_TEST_P(NetworkContextConfigurationFixedPortBrowserTest,
 INSTANTIATE_TEST_CASES_FOR_TEST_FIXTURE(NetworkContextConfigurationBrowserTest);
 INSTANTIATE_TEST_CASES_FOR_TEST_FIXTURE(
     NetworkContextConfigurationFixedPortBrowserTest);
+INSTANTIATE_TEST_CASES_FOR_TEST_FIXTURE(
+    NetworkContextConfigurationProxyOnStartBrowserTest);
 
 }  // namespace

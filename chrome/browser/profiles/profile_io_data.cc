@@ -39,7 +39,6 @@
 #include "chrome/browser/net/loading_predictor_observer.h"
 #include "chrome/browser/net/profile_network_context_service.h"
 #include "chrome/browser/net/profile_network_context_service_factory.h"
-#include "chrome/browser/net/proxy_service_factory.h"
 #include "chrome/browser/policy/cloud/policy_header_service_factory.h"
 #include "chrome/browser/policy/policy_helpers.h"
 #include "chrome/browser/predictors/loading_predictor.h"
@@ -82,6 +81,7 @@
 #include "content/public/browser/notification_service.h"
 #include "content/public/browser/resource_context.h"
 #include "content/public/common/content_switches.h"
+#include "content/public/common/proxy_config_traits.h"
 #include "content/public/network/ignore_errors_cert_verifier.h"
 #include "content/public/network/url_request_context_builder_mojo.h"
 #include "extensions/features/features.h"
@@ -99,9 +99,6 @@
 #include "net/http/transport_security_persister.h"
 #include "net/net_features.h"
 #include "net/nqe/network_quality_estimator.h"
-#include "net/proxy/proxy_config_service_fixed.h"
-#include "net/proxy/proxy_script_fetcher_impl.h"
-#include "net/proxy/proxy_service.h"
 #include "net/reporting/reporting_service.h"
 #include "net/ssl/channel_id_service.h"
 #include "net/ssl/client_cert_store.h"
@@ -394,9 +391,13 @@ void ProfileIOData::InitializeOnUIThread(Profile* profile) {
 
   params->io_thread = g_browser_process->io_thread();
 
+  content::mojom::NetworkContextParamsPtr main_network_context_params;
   ProfileNetworkContextServiceFactory::GetForContext(profile)
       ->SetUpProfileIODataMainContext(&params->main_network_context_request,
-                                      &params->main_network_context_params);
+                                      &main_network_context_params);
+  params->serialized_main_network_context_params =
+      content::mojom::NetworkContextParams::Serialize(
+          &main_network_context_params);
 
   params->cookie_settings = CookieSettingsFactory::GetForProfile(profile);
   params->host_content_settings_map =
@@ -434,8 +435,6 @@ void ProfileIOData::InitializeOnUIThread(Profile* profile) {
         new_tab_interceptor_service->CreateInterceptor();
   }
 
-  params->proxy_config_service = ProxyServiceFactory::CreateProxyConfigService(
-      profile->GetProxyConfigTracker());
 #if defined(OS_CHROMEOS)
   user_manager::UserManager* user_manager = user_manager::UserManager::Get();
   if (user_manager) {
@@ -1070,8 +1069,7 @@ void ProfileIOData::Init(
   builder->set_shared_http_auth_handler_factory(
       io_thread_globals->system_request_context->http_auth_handler_factory());
 
-  io_thread->SetUpProxyConfigService(
-      builder.get(), std::move(profile_params_->proxy_config_service));
+  io_thread->SetUpProxyService(builder.get());
 
   builder->set_network_delegate(std::move(network_delegate));
 
@@ -1161,11 +1159,16 @@ void ProfileIOData::Init(
   builder->SetCreateHttpTransactionFactoryCallback(
       base::BindOnce(&content::CreateDevToolsNetworkTransactionFactory));
 
+  content::mojom::NetworkContextParamsPtr main_network_context_params;
+  bool success = content::mojom::NetworkContextParams::Deserialize(
+      profile_params_->serialized_main_network_context_params,
+      &main_network_context_params);
+  DCHECK(success);
   main_network_context_ =
       io_thread_globals->network_service->CreateNetworkContextWithBuilder(
           std::move(profile_params_->main_network_context_request),
-          std::move(profile_params_->main_network_context_params),
-          std::move(builder), &main_request_context_);
+          std::move(main_network_context_params), std::move(builder),
+          &main_request_context_);
 
   if (chrome_network_delegate_unowned->domain_reliability_monitor()) {
     // Save a pointer to shut down Domain Reliability cleanly before the

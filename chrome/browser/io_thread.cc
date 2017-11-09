@@ -55,7 +55,6 @@
 #include "components/policy/policy_constants.h"
 #include "components/prefs/pref_registry_simple.h"
 #include "components/prefs/pref_service.h"
-#include "components/proxy_config/pref_proxy_config_tracker.h"
 #include "components/variations/variations_associated_data.h"
 #include "components/version_info/version_info.h"
 #include "content/public/browser/browser_thread.h"
@@ -63,6 +62,7 @@
 #include "content/public/browser/network_service_instance.h"
 #include "content/public/common/content_features.h"
 #include "content/public/common/content_switches.h"
+#include "content/public/common/proxy_config_traits.h"
 #include "content/public/common/user_agent.h"
 #include "content/public/network/ignore_errors_cert_verifier.h"
 #include "content/public/network/url_request_context_builder_mojo.h"
@@ -337,11 +337,6 @@ IOThread::IOThread(
       g_browser_process->platform_part()->browser_policy_connector_chromeos();
   allow_gssapi_library_load_ = connector->IsActiveDirectoryManaged();
 #endif
-  pref_proxy_config_tracker_.reset(
-      ProxyServiceFactory::CreatePrefProxyConfigTrackerOfLocalState(
-          local_state));
-  system_proxy_config_service_ = ProxyServiceFactory::CreateProxyConfigService(
-      pref_proxy_config_tracker_.get());
   ChromeNetworkDelegate::InitializePrefsOnUIThread(
       &system_enable_referrers_,
       nullptr,
@@ -387,9 +382,12 @@ IOThread::IOThread(
 
   BrowserThread::SetIOThreadDelegate(this);
 
+  content::mojom::NetworkContextParamsPtr network_context_params;
   system_network_context_manager->SetUp(&network_context_request_,
-                                        &network_context_params_,
+                                        &network_context_params,
                                         &is_quic_allowed_on_init_);
+  serialized_network_context_params_ =
+      content::mojom::NetworkContextParams::Serialize(&network_context_params);
 }
 
 IOThread::~IOThread() {
@@ -397,7 +395,6 @@ IOThread::~IOThread() {
   // be multiply constructed.
   BrowserThread::SetIOThreadDelegate(nullptr);
 
-  pref_proxy_config_tracker_->DetachFromPrefService();
   DCHECK(!globals_);
 
   // Destroy the old distributor to check that the observers list it holds is
@@ -587,7 +584,6 @@ void IOThread::CleanUp() {
   // Shutdown the HistogramWatcher on the IO thread.
   net::NetworkChangeNotifier::ShutdownHistogramWatcher();
 
-  system_proxy_config_service_.reset();
   delete globals_;
   globals_ = NULL;
 
@@ -729,9 +725,8 @@ bool IOThread::PacHttpsUrlStrippingEnabled() const {
   return pac_https_url_stripping_enabled_.GetValue();
 }
 
-void IOThread::SetUpProxyConfigService(
-    content::URLRequestContextBuilderMojo* builder,
-    std::unique_ptr<net::ProxyConfigService> proxy_config_service) const {
+void IOThread::SetUpProxyService(
+    content::URLRequestContextBuilderMojo* builder) const {
   const base::CommandLine& command_line =
       *base::CommandLine::ForCurrentProcess();
 
@@ -756,7 +751,6 @@ void IOThread::SetUpProxyConfigService(
       PacHttpsUrlStrippingEnabled()
           ? net::ProxyService::SanitizeUrlPolicy::SAFE
           : net::ProxyService::SanitizeUrlPolicy::UNSAFE);
-  builder->set_proxy_config_service(std::move(proxy_config_service));
 }
 
 content::mojom::NetworkService* IOThread::GetNetworkServiceOnUIThread() {
@@ -826,18 +820,21 @@ void IOThread::ConstructSystemRequestContext() {
 
   builder->set_ct_verifier(std::move(ct_verifier));
 
-  SetUpProxyConfigService(builder.get(),
-                          std::move(system_proxy_config_service_));
+  SetUpProxyService(builder.get());
 
   globals_->network_service = content::NetworkService::Create(
       std::move(network_service_request_), net_log_);
   if (!is_quic_allowed_on_init_)
     globals_->network_service->DisableQuic();
 
+  content::mojom::NetworkContextParamsPtr network_context_params;
+  bool success = content::mojom::NetworkContextParams::Deserialize(
+      serialized_network_context_params_, &network_context_params);
+  DCHECK(success);
   globals_->system_network_context =
       globals_->network_service->CreateNetworkContextWithBuilder(
           std::move(network_context_request_),
-          std::move(network_context_params_), std::move(builder),
+          std::move(network_context_params), std::move(builder),
           &globals_->system_request_context);
 
 #if defined(USE_NSS_CERTS)
