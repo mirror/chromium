@@ -2,38 +2,11 @@
 <link rel="import" href="settings_section.html">
 <link rel="import" href="print_preview_shared_css.html">
 <link rel="import" href="checkbox_radio_css.html">
+<link rel="import" href="input_css.html">
 
 <dom-module id="print-preview-copies-settings">
   <template>
-    <style include="print-preview-shared checkbox-radio">
-      input:invalid {
-        background: rgb(255, 240, 240);
-        color: rgb(140, 20, 20);
-      }
-
-      input[type='number'] {
-        -webkit-margin-end: 16px;
-        margin-bottom: 2.5px;
-        margin-top: 2.5px;
-      }
-
-      .settings-box {
-        align-items: center;
-        display: inline-flex;
-        width: 100%;
-      }
-
-      span.hint {
-        background: white;
-        color: rgb(140, 20, 20);
-        font-size: 0.9em;
-        font-weight: bold;
-        height: auto;
-        margin-bottom: -5px;
-        margin-top: 5px;
-        padding-bottom: 5px;
-        user-select: text;
-      }
+    <style include="print-preview-shared checkbox-radio input">
     </style>
     <print-preview-settings-section>
       <span slot="title" id="copies-label">$i18n{copiesLabel}</span>
