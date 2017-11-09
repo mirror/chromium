@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "b2b295c2_787702ef",
+        "filename": "chrome/browser/ui/cocoa/tab_contents/chrome_web_contents_view_delegate_mac.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 12,
+      "author": {
+        "id": 1244346
+      },
+      "writtenOn": "2017-11-09T13:25:40Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "c07e24eb_8535e4be",
+      "revId": "5115c451e0139e462dcd9f114e34531041e06e4f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "b40b7cc0_d652eeab",
         "filename": "chrome/browser/ui/cocoa/tab_contents/chrome_web_contents_view_delegate_mac.mm",
         "patchSetId": 2
@@ -33,6 +51,24 @@
       "revId": "5115c451e0139e462dcd9f114e34531041e06e4f",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ac0dd54c_27230dbe",
+        "filename": "chrome/browser/ui/cocoa/tab_contents/chrome_web_contents_view_delegate_mac.mm",
+        "patchSetId": 2
+      },
+      "lineNbr": 82,
+      "author": {
+        "id": 1244346
+      },
+      "writtenOn": "2017-11-09T13:25:40Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "b40b7cc0_d652eeab",
+      "revId": "5115c451e0139e462dcd9f114e34531041e06e4f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -53,6 +89,24 @@
     },
     {
       "key": {
+        "uuid": "e3b2561a_fa04b8dd",
+        "filename": "chrome/browser/ui/views/tab_contents/chrome_web_contents_view_delegate_views.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 50,
+      "author": {
+        "id": 1244346
+      },
+      "writtenOn": "2017-11-09T13:25:40Z",
+      "side": 1,
+      "message": "I didn\u0027t test SadTabHelper on mac_views_browser - but I think it\u0027s correct logic and now it work through ChromeWebContentsViewFocusHelper.",
+      "parentUuid": "92119a6f_4c75ddcb",
+      "revId": "5115c451e0139e462dcd9f114e34531041e06e4f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "d26dc6c9_1e0f20cd",
         "filename": "chrome/browser/ui/views/tab_contents/chrome_web_contents_view_delegate_views_mac.h",
         "patchSetId": 2
@@ -67,6 +121,24 @@
       "revId": "5115c451e0139e462dcd9f114e34531041e06e4f",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f84b6880_dc803a47",
+        "filename": "chrome/browser/ui/views/tab_contents/chrome_web_contents_view_delegate_views_mac.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 37,
+      "author": {
+        "id": 1244346
+      },
+      "writtenOn": "2017-11-09T13:25:40Z",
+      "side": 1,
+      "message": "done in ChromeWebContentsViewFocusHelper",
+      "parentUuid": "d26dc6c9_1e0f20cd",
+      "revId": "5115c451e0139e462dcd9f114e34531041e06e4f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -93,6 +165,30 @@
     },
     {
       "key": {
+        "uuid": "1e5225b6_3fed7d5c",
+        "filename": "chrome/browser/ui/views/tab_contents/chrome_web_contents_view_delegate_views_mac.mm",
+        "patchSetId": 2
+      },
+      "lineNbr": 21,
+      "author": {
+        "id": 1244346
+      },
+      "writtenOn": "2017-11-09T13:25:40Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "1e5a6f57_5c819bb4",
+      "range": {
+        "startLine": 21,
+        "startChar": 37,
+        "endLine": 21,
+        "endChar": 38
+      },
+      "revId": "5115c451e0139e462dcd9f114e34531041e06e4f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "234681c7_093efbaa",
         "filename": "chrome/browser/ui/views/tab_contents/chrome_web_contents_view_delegate_views_mac.mm",
         "patchSetId": 2
@@ -107,6 +203,24 @@
       "revId": "5115c451e0139e462dcd9f114e34531041e06e4f",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e089bc38_196e741c",
+        "filename": "chrome/browser/ui/views/tab_contents/chrome_web_contents_view_delegate_views_mac.mm",
+        "patchSetId": 2
+      },
+      "lineNbr": 64,
+      "author": {
+        "id": 1244346
+      },
+      "writtenOn": "2017-11-09T13:25:40Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "234681c7_093efbaa",
+      "revId": "5115c451e0139e462dcd9f114e34531041e06e4f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -127,6 +241,24 @@
     },
     {
       "key": {
+        "uuid": "bd451c04_0e6d6e55",
+        "filename": "content/browser/web_contents/web_contents_view.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 77,
+      "author": {
+        "id": 1244346
+      },
+      "writtenOn": "2017-11-09T13:25:40Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "c0b13144_e0adc768",
+      "revId": "5115c451e0139e462dcd9f114e34531041e06e4f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "12cd9091_cf14417b",
         "filename": "content/public/browser/interstitial_page.h",
         "patchSetId": 2
@@ -141,6 +273,24 @@
       "revId": "5115c451e0139e462dcd9f114e34531041e06e4f",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d05db1f0_b5162952",
+        "filename": "content/public/browser/interstitial_page.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 92,
+      "author": {
+        "id": 1244346
+      },
+      "writtenOn": "2017-11-09T13:25:40Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "12cd9091_cf14417b",
+      "revId": "5115c451e0139e462dcd9f114e34531041e06e4f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -167,6 +317,30 @@
     },
     {
       "key": {
+        "uuid": "b71e417d_435865dc",
+        "filename": "content/public/browser/web_contents_view_delegate.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 52,
+      "author": {
+        "id": 1244346
+      },
+      "writtenOn": "2017-11-09T13:25:40Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "78dc0417_f8755e14",
+      "range": {
+        "startLine": 52,
+        "startChar": 5,
+        "endLine": 52,
+        "endChar": 12
+      },
+      "revId": "5115c451e0139e462dcd9f114e34531041e06e4f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "67261a39_d42913f2",
         "filename": "content/public/browser/web_contents_view_delegate.h",
         "patchSetId": 2
@@ -187,6 +361,30 @@
       "revId": "5115c451e0139e462dcd9f114e34531041e06e4f",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a8f993f9_e1e39234",
+        "filename": "content/public/browser/web_contents_view_delegate.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 54,
+      "author": {
+        "id": 1244346
+      },
+      "writtenOn": "2017-11-09T13:25:40Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "67261a39_d42913f2",
+      "range": {
+        "startLine": 54,
+        "startChar": 62,
+        "endLine": 54,
+        "endChar": 72
+      },
+      "revId": "5115c451e0139e462dcd9f114e34531041e06e4f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -213,6 +411,30 @@
     },
     {
       "key": {
+        "uuid": "05d970b4_935dd6e9",
+        "filename": "content/public/browser/web_contents_view_delegate.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 56,
+      "author": {
+        "id": 1244346
+      },
+      "writtenOn": "2017-11-09T13:25:40Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "70ff8e0e_5365e1da",
+      "range": {
+        "startLine": 56,
+        "startChar": 5,
+        "endLine": 56,
+        "endChar": 73
+      },
+      "revId": "5115c451e0139e462dcd9f114e34531041e06e4f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "67aa3d95_3ee7df07",
         "filename": "content/public/browser/web_contents_view_delegate.h",
         "patchSetId": 2
@@ -230,6 +452,24 @@
     },
     {
       "key": {
+        "uuid": "a194c9b2_af6a974e",
+        "filename": "content/public/browser/web_contents_view_delegate.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 58,
+      "author": {
+        "id": 1244346
+      },
+      "writtenOn": "2017-11-09T13:25:40Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "67aa3d95_3ee7df07",
+      "revId": "5115c451e0139e462dcd9f114e34531041e06e4f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "a1f0e368_f01c8839",
         "filename": "content/public/browser/web_contents_view_delegate.h",
         "patchSetId": 2
@@ -244,6 +484,24 @@
       "revId": "5115c451e0139e462dcd9f114e34531041e06e4f",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "beae28ff_431dc69d",
+        "filename": "content/public/browser/web_contents_view_delegate.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 60,
+      "author": {
+        "id": 1244346
+      },
+      "writtenOn": "2017-11-09T13:25:40Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "a1f0e368_f01c8839",
+      "revId": "5115c451e0139e462dcd9f114e34531041e06e4f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
