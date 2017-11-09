@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "9c94fc2d_258a3e06",
+        "filename": "third_party/WebKit/LayoutTests/external/wpt/encoding/legacy-mb-japanese/iso-2022-jp/iso2022jp-encode-form-errors-stateful.html",
+        "patchSetId": 7
+      },
+      "lineNbr": 22,
+      "author": {
+        "id": 1115899
+      },
+      "writtenOn": "2017-11-09T17:14:19Z",
+      "side": 1,
+      "message": "You might want to use encodeURI and decodeURI or the Componenet version instead of escape/unescape.",
+      "range": {
+        "startLine": 22,
+        "startChar": 52,
+        "endLine": 22,
+        "endChar": 58
+      },
+      "revId": "b7e1fb9055c91000cf776fad1d4bb51922ee71a3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
