@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "4cb5e6a5_67070212",
+        "filename": "components/content_settings/core/test/content_settings_mock_provider.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 31,
+      "author": {
+        "id": 1187649
+      },
+      "writtenOn": "2017-11-09T18:34:14Z",
+      "side": 1,
+      "message": "This now copies the logic in the pref provider.",
+      "revId": "e506446e693448eeeed3bfe341bfd458996b2343",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    }
+  ]
+}
