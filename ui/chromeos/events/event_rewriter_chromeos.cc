@@ -767,6 +767,12 @@ bool EventRewriterChromeOS::RewriteModifierKeys(const ui::KeyEvent& key_event,
     state->key = remapped_key->result.key;
     incoming.flags |= characteristic_flag;
     characteristic_flag = remapped_key->flag;
+    if (incoming.key_code == ui::VKEY_CAPITAL ||
+        incoming.key_code == ui::VKEY_F16) {
+      // Caps Lock key is remapped to another key, so remove the Caps Lock
+      // modifier.
+      incoming.flags &= ~ui::EF_CAPS_LOCK_ON;
+    }
     if (remapped_key->remap_to == ui::chromeos::ModifierKey::kCapsLockKey)
       characteristic_flag |= ui::EF_CAPS_LOCK_ON;
     state->code = RelocateModifier(
