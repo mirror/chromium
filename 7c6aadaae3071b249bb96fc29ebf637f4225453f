@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "1e23475b_4387c9bf",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 42
+      },
+      "lineNbr": 6,
+      "author": {
+        "id": 1115968
+      },
+      "writtenOn": "2017-11-09T23:02:22Z",
+      "side": 1,
+      "message": "I did this one, too.",
+      "parentUuid": "82ff9dce_6ce43be0",
+      "revId": "7c6aadaae3071b249bb96fc29ebf637f4225453f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "f72a4356_651adda4",
         "filename": "chrome/browser/net/chrome_mojo_proxy_resolver_factory.cc",
         "patchSetId": 42
