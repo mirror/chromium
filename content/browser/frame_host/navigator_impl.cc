@@ -762,12 +762,6 @@ void NavigatorImpl::RequestOpenURL(
   params.user_gesture = user_gesture;
   params.triggering_event_info = triggering_event_info;
 
-  // RequestOpenURL is used only for local frames, so we can get here only if
-  // the navigation is initiated by a frame in the same SiteInstance as this
-  // frame.  Note that navigations on RenderFrameProxies do not use
-  // RequestOpenURL and go through RequestTransferURL instead.
-  params.source_site_instance = current_site_instance;
-
   params.source_render_frame_id = render_frame_host->GetRoutingID();
   params.source_render_process_id = render_frame_host->GetProcess()->GetID();
 
