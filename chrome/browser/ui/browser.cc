@@ -733,7 +733,7 @@ void Browser::OnWindowClosing() {
   // pages).
   bool should_quit_if_last_browser =
       browser_shutdown::IsTryingToQuit() ||
-      !KeepAliveRegistry::GetInstance()->IsKeepingAlive();
+      !KeepAliveRegistry::GetInstance()->IsKeepingAliveNonBrowserOrigins();
 
   if (should_quit_if_last_browser && ShouldStartShutdown())
     browser_shutdown::OnShutdownStarting(browser_shutdown::WINDOW_CLOSE);
@@ -2463,7 +2463,8 @@ bool Browser::ShouldHideUIForFullscreen() const {
 }
 
 bool Browser::ShouldStartShutdown() const {
-  return BrowserList::GetInstance()->size() <= 1;
+  return (BrowserList::GetInstance()->size() ==
+          BrowserList::GetInstance()->currently_closing_browsers_count() + 1);
 }
 
 bool Browser::MaybeCreateBackgroundContents(
