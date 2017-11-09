@@ -1,0 +1,113 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "fbfbfe3f_c4755e7a",
+        "filename": "third_party/WebKit/LayoutTests/http/tests/serviceworker/chromium/sandboxed-iframe-navigator-serviceworker.html",
+        "patchSetId": 1
+      },
+      "lineNbr": 32,
+      "author": {
+        "id": 1115976
+      },
+      "writtenOn": "2017-11-09T21:59:33Z",
+      "side": 1,
+      "message": "You don\u0027t have to wrap the function body with {} when it\u0027s one-line.\n\n  add_result_callback(() \u003d\u003e frame.remove());",
+      "range": {
+        "startLine": 32,
+        "startChar": 36,
+        "endLine": 32,
+        "endChar": 55
+      },
+      "revId": "983ee9b566679da7a9926ff23ea6b6c6148b2076",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9b2bcaa7_29fefb19",
+        "filename": "third_party/WebKit/LayoutTests/http/tests/serviceworker/chromium/sandboxed-iframe-navigator-serviceworker.html",
+        "patchSetId": 1
+      },
+      "lineNbr": 46,
+      "author": {
+        "id": 1115976
+      },
+      "writtenOn": "2017-11-09T21:59:33Z",
+      "side": 1,
+      "message": "ditto.",
+      "range": {
+        "startLine": 46,
+        "startChar": 36,
+        "endLine": 46,
+        "endChar": 55
+      },
+      "revId": "983ee9b566679da7a9926ff23ea6b6c6148b2076",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "679b9e44_8d2b0e79",
+        "filename": "third_party/WebKit/LayoutTests/http/tests/serviceworker/chromium/sandboxed-iframe-navigator-serviceworker.html",
+        "patchSetId": 1
+      },
+      "lineNbr": 62,
+      "author": {
+        "id": 1115976
+      },
+      "writtenOn": "2017-11-09T21:59:33Z",
+      "side": 1,
+      "message": "ditto.",
+      "range": {
+        "startLine": 62,
+        "startChar": 36,
+        "endLine": 62,
+        "endChar": 55
+      },
+      "revId": "983ee9b566679da7a9926ff23ea6b6c6148b2076",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5b3f2e73_98c78802",
+        "filename": "third_party/WebKit/LayoutTests/http/tests/serviceworker/chromium/sandboxed-iframe-navigator-serviceworker.html",
+        "patchSetId": 1
+      },
+      "lineNbr": 77,
+      "author": {
+        "id": 1115976
+      },
+      "writtenOn": "2017-11-09T21:59:33Z",
+      "side": 1,
+      "message": "ditto.",
+      "range": {
+        "startLine": 77,
+        "startChar": 36,
+        "endLine": 77,
+        "endChar": 55
+      },
+      "revId": "983ee9b566679da7a9926ff23ea6b6c6148b2076",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e06ca9a2_0db674cf",
+        "filename": "third_party/WebKit/LayoutTests/http/tests/serviceworker/chromium/sandboxed-iframe-navigator-serviceworker.html",
+        "patchSetId": 1
+      },
+      "lineNbr": 94,
+      "author": {
+        "id": 1115976
+      },
+      "writtenOn": "2017-11-09T21:59:33Z",
+      "side": 1,
+      "message": "For readability, how about citing the spec text?\n\n\"These flags only take effect when the nested browsing context of the iframe is navigated. Removing them, or removing the entire sandbox attribute, has no effect on an already-loaded page.\"",
+      "revId": "983ee9b566679da7a9926ff23ea6b6c6148b2076",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
