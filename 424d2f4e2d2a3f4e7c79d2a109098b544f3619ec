@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "79803b81_ddcf8ad0",
+        "filename": "third_party/WebKit/LayoutTests/http/tests/serviceworker/chromium/sandboxed-iframe-navigator-serviceworker.html",
+        "patchSetId": 1
+      },
+      "lineNbr": 77,
+      "author": {
+        "id": 1000128
+      },
+      "writtenOn": "2017-11-09T22:09:52Z",
+      "side": 1,
+      "message": "I kind of prefer just having the braces for consistency... I think this could even be add_result_callback(frame.remove) if we wanted to save space but it\u0027s too tricky.",
+      "revId": "424d2f4e2d2a3f4e7c79d2a109098b544f3619ec",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c25c9e13_385eed69",
+        "filename": "third_party/WebKit/LayoutTests/http/tests/serviceworker/chromium/sandboxed-iframe-navigator-serviceworker.html",
+        "patchSetId": 1
+      },
+      "lineNbr": 93,
+      "author": {
+        "id": 1000128
+      },
+      "writtenOn": "2017-11-09T22:09:52Z",
+      "side": 1,
+      "message": "Responding to nhiroki\u0027s comments on the other CL (https://chromium-review.googlesource.com/c/chromium/src/+/761410): I\u0027m pretty sure the \"Warning\" stuff is non-normative.\n\nI think the real spec text is:\n\"When an iframe element is inserted into a document that has a browsing context, the user agent must create a new browsing context, set the element\u0027s nested browsing context to the newly-created browsing context, and then process the iframe attributes for the \"first time\".\"\n\n\"create a new browsing context\" expands to:\n\"Let document be a new Document\" and \"Implement the sandboxing for document.\"\n\nI believe at this time the sandbox settings take hold. Later on the resource is fetched etc. But it\u0027s pretty hard to follow and point to a specific text.",
+      "revId": "424d2f4e2d2a3f4e7c79d2a109098b544f3619ec",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
