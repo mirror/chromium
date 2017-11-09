@@ -76,7 +76,8 @@ BrowserNonClientFrameViewAsh::BrowserNonClientFrameViewAsh(
       caption_button_container_(nullptr),
       back_button_(nullptr),
       window_icon_(nullptr),
-      hosted_app_button_container_(nullptr) {
+      hosted_app_button_container_(nullptr),
+      should_paint_for_v1_app_(true) {
   ash::wm::InstallResizeHandleWindowTargeterForWindow(frame->GetNativeWindow(),
                                                       nullptr);
   ash::Shell::Get()->AddShellObserver(this);
@@ -183,8 +184,12 @@ int BrowserNonClientFrameViewAsh::GetTopInset(bool restored) const {
     if (immersive_controller->IsEnabled() &&
         !immersive_controller->IsRevealed()) {
       return (-1) * browser_view()->GetTabStripHeight();
+    } else if (frame()->IsFullscreen()) {
+      return 0;
     }
-    return 0;
+    // For the other case we do not paint the header for v1 app in overview mode
+    // (translucent frame mode, should_paint_for_v1_app_ == false), the top
+    // inset may not be 0.
   }
 
   if (!browser_view()->IsTabStripVisible()) {
@@ -375,10 +380,12 @@ void BrowserNonClientFrameViewAsh::OnOverviewModeStarting() {
   frame()->GetNativeWindow()->SetProperty(aura::client::kTopViewColor,
                                           GetFrameColor());
   caption_button_container_->SetVisible(false);
+  SetShouldPaintHeaderForV1App(false);
 }
 
 void BrowserNonClientFrameViewAsh::OnOverviewModeEnded() {
   caption_button_container_->SetVisible(true);
+  SetShouldPaintHeaderForV1App(true);
 }
 
 ///////////////////////////////////////////////////////////////////////////////
@@ -500,5 +507,16 @@ bool BrowserNonClientFrameViewAsh::ShouldPaint() const {
   if (immersive_mode_controller->IsEnabled())
     return immersive_mode_controller->IsRevealed();
 
-  return !frame()->IsFullscreen();
+  if (frame()->IsFullscreen())
+    return false;
+
+  return should_paint_for_v1_app_ || browser_view()->IsBrowserTypeNormal();
+}
+
+void BrowserNonClientFrameViewAsh::SetShouldPaintHeaderForV1App(bool paint) {
+  if (should_paint_for_v1_app_ == paint)
+    return;
+
+  should_paint_for_v1_app_ = paint;
+  SchedulePaint();
 }
