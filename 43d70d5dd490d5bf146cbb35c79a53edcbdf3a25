@@ -22,6 +22,30 @@
       "revId": "43d70d5dd490d5bf146cbb35c79a53edcbdf3a25",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f86dab78_19020c1a",
+        "filename": "components/viz/service/display/direct_renderer.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 609,
+      "author": {
+        "id": 1000887
+      },
+      "writtenOn": "2017-11-09T20:08:21Z",
+      "side": 1,
+      "message": "Hm, you\u0027re right the order changed. But if the scissor is empty, and we\u0027re not doing to draw the pass, then I can\u0027t see why it should matter that we allocate a texture for it. There\u0027s no test that says we need to either.",
+      "parentUuid": "ea55ca4e_3e3ca263",
+      "range": {
+        "startLine": 609,
+        "startChar": 0,
+        "endLine": 609,
+        "endChar": 61
+      },
+      "revId": "43d70d5dd490d5bf146cbb35c79a53edcbdf3a25",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
