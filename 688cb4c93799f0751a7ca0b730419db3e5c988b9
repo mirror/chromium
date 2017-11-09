@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "20ad3783_353a0639",
+        "filename": "ash/accessibility/accessibility_focus_ring_controller.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 47,
+      "author": {
+        "id": 1000678
+      },
+      "writtenOn": "2017-11-09T17:09:58Z",
+      "side": 1,
+      "message": "This could be part of the color argument, but I don\u0027t feel as strongly.\nThis is fine if it works well for a range of colors in practice.",
+      "revId": "688cb4c93799f0751a7ca0b730419db3e5c988b9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
