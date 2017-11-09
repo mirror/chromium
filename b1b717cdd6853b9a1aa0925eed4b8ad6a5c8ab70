@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "3ceea641_3d1e4d3b",
+        "filename": "extensions/browser/api/declarative_net_request/ruleset_manager.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 196,
+      "author": {
+        "id": 1161815
+      },
+      "writtenOn": "2017-11-09T07:14:40Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "40f51e9d_752bf86b",
+      "revId": "b1b717cdd6853b9a1aa0925eed4b8ad6a5c8ab70",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "49c4ad18_1afde009",
         "filename": "extensions/browser/api/declarative_net_request/ruleset_manager.cc",
         "patchSetId": 5
@@ -30,6 +48,30 @@
       "writtenOn": "2017-11-09T02:08:07Z",
       "side": 1,
       "message": "Since we\u0027re not utilizing rules_map_\u0027s std::map property as much, should this be a vector instead? Only downside is removal would require O(n) search then O(1) delete, but that\u0027s infrequent compared to ShouldXRequest, two points:\n- iterating vector would be much faster than iterating a map\n- maps have complex structure, and vector would be simpler. (Q: how many extensions would one user have with dnr in them?)",
+      "range": {
+        "startLine": 207,
+        "startChar": 7,
+        "endLine": 207,
+        "endChar": 36
+      },
+      "revId": "b1b717cdd6853b9a1aa0925eed4b8ad6a5c8ab70",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b0d29d38_a4e11c54",
+        "filename": "extensions/browser/api/declarative_net_request/ruleset_manager.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 207,
+      "author": {
+        "id": 1161815
+      },
+      "writtenOn": "2017-11-09T07:14:40Z",
+      "side": 1,
+      "message": "Yeah I think we should maintain a list sorted from most to least recently installed extension. That way while Add/Remove ruleset will be O(n), as you said traversing will be faster and also if we keep it sorted, there won\u0027t be any need to have redundant ruleset evaluation. Probably we can even use base::flat_map/set. \n\nIs it ok if this is done in a separate CL? Would need to change some unrelated code.",
+      "parentUuid": "49c4ad18_1afde009",
       "range": {
         "startLine": 207,
         "startChar": 7,
@@ -65,6 +107,30 @@
     },
     {
       "key": {
+        "uuid": "68f94be4_f43d12c9",
+        "filename": "extensions/browser/api/declarative_net_request/ruleset_manager.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 59,
+      "author": {
+        "id": 1161815
+      },
+      "writtenOn": "2017-11-09T07:14:40Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "fa7c47f1_ead8d903",
+      "range": {
+        "startLine": 59,
+        "startChar": 36,
+        "endLine": 59,
+        "endChar": 42
+      },
+      "revId": "b1b717cdd6853b9a1aa0925eed4b8ad6a5c8ab70",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "291d3df9_e09f26b7",
         "filename": "extensions/browser/api/declarative_net_request/ruleset_matcher.cc",
         "patchSetId": 5
@@ -88,6 +154,30 @@
     },
     {
       "key": {
+        "uuid": "2e37dff5_48aec7b5",
+        "filename": "extensions/browser/api/declarative_net_request/ruleset_matcher.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 120,
+      "author": {
+        "id": 1161815
+      },
+      "writtenOn": "2017-11-09T07:14:40Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "291d3df9_e09f26b7",
+      "range": {
+        "startLine": 120,
+        "startChar": 22,
+        "endLine": 120,
+        "endChar": 53
+      },
+      "revId": "b1b717cdd6853b9a1aa0925eed4b8ad6a5c8ab70",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "ee3c74a7_77570d8a",
         "filename": "extensions/browser/api/declarative_net_request/ruleset_matcher.cc",
         "patchSetId": 5
@@ -108,6 +198,30 @@
       "revId": "b1b717cdd6853b9a1aa0925eed4b8ad6a5c8ab70",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4e3331f5_e9b54568",
+        "filename": "extensions/browser/api/declarative_net_request/ruleset_matcher.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 133,
+      "author": {
+        "id": 1161815
+      },
+      "writtenOn": "2017-11-09T07:14:40Z",
+      "side": 1,
+      "message": "Good idea, done.",
+      "parentUuid": "ee3c74a7_77570d8a",
+      "range": {
+        "startLine": 133,
+        "startChar": 18,
+        "endLine": 133,
+        "endChar": 49
+      },
+      "revId": "b1b717cdd6853b9a1aa0925eed4b8ad6a5c8ab70",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
