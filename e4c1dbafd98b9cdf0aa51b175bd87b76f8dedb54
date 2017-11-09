@@ -1,0 +1,573 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "99cb941d_c78c242c",
+        "filename": "ios/chrome/browser/ui/browser_view_controller.mm",
+        "patchSetId": 11
+      },
+      "lineNbr": 397,
+      "author": {
+        "id": 1163361
+      },
+      "writtenOn": "2017-11-09T00:35:19Z",
+      "side": 1,
+      "message": "I think you have to import this file.",
+      "range": {
+        "startLine": 397,
+        "startChar": 36,
+        "endLine": 397,
+        "endChar": 66
+      },
+      "revId": "e4c1dbafd98b9cdf0aa51b175bd87b76f8dedb54",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9121d91c_de4b83c6",
+        "filename": "ios/chrome/browser/ui/browser_view_controller.mm",
+        "patchSetId": 11
+      },
+      "lineNbr": 4220,
+      "author": {
+        "id": 1163361
+      },
+      "writtenOn": "2017-11-09T00:35:19Z",
+      "side": 1,
+      "message": "Be sure to pragma mark the end of this section with something else.",
+      "revId": "e4c1dbafd98b9cdf0aa51b175bd87b76f8dedb54",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d26da880_829fd6b3",
+        "filename": "ios/chrome/browser/ui/commands/tools_menu_commands.h",
+        "patchSetId": 11
+      },
+      "lineNbr": 11,
+      "author": {
+        "id": 1163361
+      },
+      "writtenOn": "2017-11-09T00:35:19Z",
+      "side": 1,
+      "message": "Let\u0027s keep this generic. The receiver may not be a dispatcher. \n\"Commands that trigger the presentation and dismissal...\"",
+      "range": {
+        "startLine": 10,
+        "startChar": 40,
+        "endLine": 11,
+        "endChar": 24
+      },
+      "revId": "e4c1dbafd98b9cdf0aa51b175bd87b76f8dedb54",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7e75111b_cbff32d0",
+        "filename": "ios/chrome/browser/ui/stack_view/stack_view_controller.mm",
+        "patchSetId": 11
+      },
+      "lineNbr": 204,
+      "author": {
+        "id": 1163361
+      },
+      "writtenOn": "2017-11-09T00:35:19Z",
+      "side": 1,
+      "message": "Import the file.",
+      "range": {
+        "startLine": 204,
+        "startChar": 34,
+        "endLine": 204,
+        "endChar": 64
+      },
+      "revId": "e4c1dbafd98b9cdf0aa51b175bd87b76f8dedb54",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c3f98c79_a452e3cd",
+        "filename": "ios/chrome/browser/ui/toolbar/toolbar_controller.h",
+        "patchSetId": 11
+      },
+      "lineNbr": 16,
+      "author": {
+        "id": 1163361
+      },
+      "writtenOn": "2017-11-09T00:35:19Z",
+      "side": 1,
+      "message": "nit: this can be forward declared.",
+      "range": {
+        "startLine": 16,
+        "startChar": 0,
+        "endLine": 16,
+        "endChar": 90
+      },
+      "revId": "e4c1dbafd98b9cdf0aa51b175bd87b76f8dedb54",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ef27ea07_c5623a38",
+        "filename": "ios/chrome/browser/ui/toolbar/toolbar_controller.h",
+        "patchSetId": 11
+      },
+      "lineNbr": 46,
+      "author": {
+        "id": 1163361
+      },
+      "writtenOn": "2017-11-09T00:35:19Z",
+      "side": 1,
+      "message": "nit: \"Provides information about the presentation state of the tools menu.\"\nThe fact that ToolbarController is involved is an implementation detail.",
+      "range": {
+        "startLine": 45,
+        "startChar": 3,
+        "endLine": 46,
+        "endChar": 40
+      },
+      "revId": "e4c1dbafd98b9cdf0aa51b175bd87b76f8dedb54",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e86124ce_0e07fcde",
+        "filename": "ios/chrome/browser/ui/toolbar/toolbar_controller.h",
+        "patchSetId": 11
+      },
+      "lineNbr": 96,
+      "author": {
+        "id": 1163361
+      },
+      "writtenOn": "2017-11-09T00:35:19Z",
+      "side": 1,
+      "message": "What do you think about inverting this to be more like UIKit\u0027s |isHidden| property? \nhttps://developer.apple.com/documentation/uikit/uiview/1622585-hidden",
+      "range": {
+        "startLine": 96,
+        "startChar": 0,
+        "endLine": 96,
+        "endChar": 64
+      },
+      "revId": "e4c1dbafd98b9cdf0aa51b175bd87b76f8dedb54",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ff849690_e2c4b02f",
+        "filename": "ios/chrome/browser/ui/toolbar/toolbar_controller.mm",
+        "patchSetId": 11
+      },
+      "lineNbr": 84,
+      "author": {
+        "id": 1163361
+      },
+      "writtenOn": "2017-11-09T00:35:19Z",
+      "side": 1,
+      "message": "Why is this needed if there is a public property with the same name? Synthesizing the property should be enough.",
+      "range": {
+        "startLine": 84,
+        "startChar": 0,
+        "endLine": 84,
+        "endChar": 72
+      },
+      "revId": "e4c1dbafd98b9cdf0aa51b175bd87b76f8dedb54",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "80169ec8_cb256728",
+        "filename": "ios/chrome/browser/ui/toolbar/toolbar_controller.mm",
+        "patchSetId": 11
+      },
+      "lineNbr": 309,
+      "author": {
+        "id": 1163361
+      },
+      "writtenOn": "2017-11-09T00:35:19Z",
+      "side": 1,
+      "message": "This method is a public method of this class, and therefore should be grouped with the public API methods.",
+      "range": {
+        "startLine": 309,
+        "startChar": 0,
+        "endLine": 309,
+        "endChar": 43
+      },
+      "revId": "e4c1dbafd98b9cdf0aa51b175bd87b76f8dedb54",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "75614077_c22e7f58",
+        "filename": "ios/chrome/browser/ui/toolbar/toolbar_controller.mm",
+        "patchSetId": 11
+      },
+      "lineNbr": 688,
+      "author": {
+        "id": 1163361
+      },
+      "writtenOn": "2017-11-09T00:35:19Z",
+      "side": 1,
+      "message": "#pragma mark - ToolsMenuPresentationProvider",
+      "range": {
+        "startLine": 684,
+        "startChar": 0,
+        "endLine": 688,
+        "endChar": 0
+      },
+      "revId": "e4c1dbafd98b9cdf0aa51b175bd87b76f8dedb54",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ae8ef7e4_cb3ae6dd",
+        "filename": "ios/chrome/browser/ui/toolbar/toolbar_coordinator.h",
+        "patchSetId": 11
+      },
+      "lineNbr": 14,
+      "author": {
+        "id": 1163361
+      },
+      "writtenOn": "2017-11-09T00:35:19Z",
+      "side": 1,
+      "message": "This can be forward declared.",
+      "range": {
+        "startLine": 14,
+        "startChar": 0,
+        "endLine": 14,
+        "endChar": 85
+      },
+      "revId": "e4c1dbafd98b9cdf0aa51b175bd87b76f8dedb54",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "71553265_7c77e988",
+        "filename": "ios/chrome/browser/ui/toolbar/toolbar_coordinator.h",
+        "patchSetId": 11
+      },
+      "lineNbr": 15,
+      "author": {
+        "id": 1163361
+      },
+      "writtenOn": "2017-11-09T00:35:19Z",
+      "side": 1,
+      "message": "Remove.",
+      "range": {
+        "startLine": 15,
+        "startChar": 0,
+        "endLine": 15,
+        "endChar": 84
+      },
+      "revId": "e4c1dbafd98b9cdf0aa51b175bd87b76f8dedb54",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8437c5df_84e8aa3e",
+        "filename": "ios/chrome/browser/ui/toolbar/toolbar_coordinator.h",
+        "patchSetId": 11
+      },
+      "lineNbr": 79,
+      "author": {
+        "id": 1163361
+      },
+      "writtenOn": "2017-11-09T00:35:19Z",
+      "side": 1,
+      "message": "Remove.",
+      "range": {
+        "startLine": 79,
+        "startChar": 0,
+        "endLine": 79,
+        "endChar": 48
+      },
+      "revId": "e4c1dbafd98b9cdf0aa51b175bd87b76f8dedb54",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "12dd080a_1abf70d2",
+        "filename": "ios/chrome/browser/ui/toolbar/toolbar_coordinator.mm",
+        "patchSetId": 11
+      },
+      "lineNbr": 111,
+      "author": {
+        "id": 1163361
+      },
+      "writtenOn": "2017-11-09T00:35:19Z",
+      "side": 1,
+      "message": "Is this in contrast to the tablet?",
+      "range": {
+        "startLine": 110,
+        "startChar": 54,
+        "endLine": 111,
+        "endChar": 45
+      },
+      "revId": "e4c1dbafd98b9cdf0aa51b175bd87b76f8dedb54",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ada7c273_6697aa4b",
+        "filename": "ios/chrome/browser/ui/toolbar/toolbar_coordinator.mm",
+        "patchSetId": 11
+      },
+      "lineNbr": 187,
+      "author": {
+        "id": 1163361
+      },
+      "writtenOn": "2017-11-09T00:35:19Z",
+      "side": 1,
+      "message": "Just this one belongs in #pragma mark - ToolsMenuPresentationStateProvider",
+      "range": {
+        "startLine": 187,
+        "startChar": 0,
+        "endLine": 187,
+        "endChar": 28
+      },
+      "revId": "e4c1dbafd98b9cdf0aa51b175bd87b76f8dedb54",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d3677567_93d41cfb",
+        "filename": "ios/chrome/browser/ui/tools_menu/public/tools_menu_configuration_provider.h",
+        "patchSetId": 11
+      },
+      "lineNbr": 31,
+      "author": {
+        "id": 1163361
+      },
+      "writtenOn": "2017-11-09T00:35:19Z",
+      "side": 1,
+      "message": "nit: space needed.",
+      "range": {
+        "startLine": 31,
+        "startChar": 17,
+        "endLine": 31,
+        "endChar": 21
+      },
+      "revId": "e4c1dbafd98b9cdf0aa51b175bd87b76f8dedb54",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "dca00cd1_f043b15f",
+        "filename": "ios/chrome/browser/ui/tools_menu/public/tools_menu_presentation_provider.h",
+        "patchSetId": 11
+      },
+      "lineNbr": 14,
+      "author": {
+        "id": 1163361
+      },
+      "writtenOn": "2017-11-09T00:35:19Z",
+      "side": 1,
+      "message": "This isn\u0027t necessary since there is only one required method.",
+      "range": {
+        "startLine": 14,
+        "startChar": 39,
+        "endLine": 14,
+        "endChar": 49
+      },
+      "revId": "e4c1dbafd98b9cdf0aa51b175bd87b76f8dedb54",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f86af223_1e5fb61e",
+        "filename": "ios/chrome/browser/ui/tools_menu/public/tools_menu_presentation_provider.h",
+        "patchSetId": 11
+      },
+      "lineNbr": 17,
+      "author": {
+        "id": 1163361
+      },
+      "writtenOn": "2017-11-09T00:35:19Z",
+      "side": 1,
+      "message": "In clean, did we decide to make this a CGRect, rather than passing a UI element?\nIs the button actually required, or just the location of the button for placement of the menu?",
+      "range": {
+        "startLine": 17,
+        "startChar": 3,
+        "endLine": 17,
+        "endChar": 12
+      },
+      "revId": "e4c1dbafd98b9cdf0aa51b175bd87b76f8dedb54",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e57fab0c_506a2e45",
+        "filename": "ios/chrome/browser/ui/tools_menu/public/tools_menu_presentation_state_provider.h",
+        "patchSetId": 11
+      },
+      "lineNbr": 13,
+      "author": {
+        "id": 1163361
+      },
+      "writtenOn": "2017-11-09T00:35:19Z",
+      "side": 1,
+      "message": "This isn\u0027t necessary since there is only one required method.",
+      "range": {
+        "startLine": 13,
+        "startChar": 44,
+        "endLine": 13,
+        "endChar": 54
+      },
+      "revId": "e4c1dbafd98b9cdf0aa51b175bd87b76f8dedb54",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1db4189f_5d424287",
+        "filename": "ios/chrome/browser/ui/tools_menu/tools_menu_coordinator.h",
+        "patchSetId": 11
+      },
+      "lineNbr": 12,
+      "author": {
+        "id": 1163361
+      },
+      "writtenOn": "2017-11-09T00:35:19Z",
+      "side": 1,
+      "message": "Forward declare.",
+      "range": {
+        "startLine": 11,
+        "startChar": 0,
+        "endLine": 12,
+        "endChar": 84
+      },
+      "revId": "e4c1dbafd98b9cdf0aa51b175bd87b76f8dedb54",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "94c4b760_e72a50f8",
+        "filename": "ios/chrome/browser/ui/tools_menu/tools_menu_coordinator.h",
+        "patchSetId": 11
+      },
+      "lineNbr": 31,
+      "author": {
+        "id": 1163361
+      },
+      "writtenOn": "2017-11-09T00:35:19Z",
+      "side": 1,
+      "message": "nit: comment.",
+      "range": {
+        "startLine": 31,
+        "startChar": 0,
+        "endLine": 31,
+        "endChar": 71
+      },
+      "revId": "e4c1dbafd98b9cdf0aa51b175bd87b76f8dedb54",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d7d7fcc0_f84cad2d",
+        "filename": "ios/chrome/browser/ui/tools_menu/tools_menu_coordinator.h",
+        "patchSetId": 11
+      },
+      "lineNbr": 36,
+      "author": {
+        "id": 1163361
+      },
+      "writtenOn": "2017-11-09T00:35:19Z",
+      "side": 1,
+      "message": "Remove if unused.",
+      "range": {
+        "startLine": 34,
+        "startChar": 0,
+        "endLine": 36,
+        "endChar": 0
+      },
+      "revId": "e4c1dbafd98b9cdf0aa51b175bd87b76f8dedb54",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c4c85d9e_35b40823",
+        "filename": "ios/chrome/browser/ui/tools_menu/tools_menu_coordinator.mm",
+        "patchSetId": 11
+      },
+      "lineNbr": 124,
+      "author": {
+        "id": 1163361
+      },
+      "writtenOn": "2017-11-09T00:35:19Z",
+      "side": 1,
+      "message": "RespondsToSelector is not necessary since the method is required.",
+      "range": {
+        "startLine": 124,
+        "startChar": 6,
+        "endLine": 124,
+        "endChar": 61
+      },
+      "revId": "e4c1dbafd98b9cdf0aa51b175bd87b76f8dedb54",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "42cdffa2_158a4584",
+        "filename": "ios/chrome/browser/ui/tools_menu/tools_popup_controller.h",
+        "patchSetId": 11
+      },
+      "lineNbr": 35,
+      "author": {
+        "id": 1163361
+      },
+      "writtenOn": "2017-11-09T00:35:19Z",
+      "side": 1,
+      "message": "include blocks header.",
+      "range": {
+        "startLine": 35,
+        "startChar": 33,
+        "endLine": 35,
+        "endChar": 48
+      },
+      "revId": "e4c1dbafd98b9cdf0aa51b175bd87b76f8dedb54",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "01d792e1_90d6199d",
+        "filename": "ios/chrome/browser/ui/tools_menu/tools_popup_controller.mm",
+        "patchSetId": 11
+      },
+      "lineNbr": 56,
+      "author": {
+        "id": 1163361
+      },
+      "writtenOn": "2017-11-09T00:35:19Z",
+      "side": 1,
+      "message": "ProceduralBlock",
+      "range": {
+        "startLine": 56,
+        "startChar": 33,
+        "endLine": 56,
+        "endChar": 47
+      },
+      "revId": "e4c1dbafd98b9cdf0aa51b175bd87b76f8dedb54",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
