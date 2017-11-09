@@ -88,7 +88,7 @@ class AppCacheUpdateJob::UpdateRequestBase {
 
   // Returns the traffic annotation information to be used for the outgoing
   // request.
-  net::NetworkTrafficAnnotationTag GetTrafficAnnotation() const;
+  static constexpr net::NetworkTrafficAnnotationTag GetTrafficAnnotation();
 };
 
 }  // namespace content
