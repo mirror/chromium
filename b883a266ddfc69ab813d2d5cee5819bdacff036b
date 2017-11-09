@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "bdded354_68c9d330",
+        "filename": "components/viz/host/host_frame_sink_manager.cc",
+        "patchSetId": 14
+      },
+      "lineNbr": 131,
+      "author": {
+        "id": 1158749
+      },
+      "writtenOn": "2017-11-09T03:42:56Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "4b1a6102_00acf2aa",
+      "revId": "b883a266ddfc69ab813d2d5cee5819bdacff036b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "bd0bd59d_041d5d94",
         "filename": "components/viz/host/host_frame_sink_manager.cc",
         "patchSetId": 14
@@ -33,6 +51,24 @@
       "revId": "b883a266ddfc69ab813d2d5cee5819bdacff036b",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "93a2070a_e099dcd2",
+        "filename": "components/viz/host/host_frame_sink_manager.cc",
+        "patchSetId": 14
+      },
+      "lineNbr": 135,
+      "author": {
+        "id": 1158749
+      },
+      "writtenOn": "2017-11-09T03:42:56Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "bd0bd59d_041d5d94",
+      "revId": "b883a266ddfc69ab813d2d5cee5819bdacff036b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -53,6 +89,24 @@
     },
     {
       "key": {
+        "uuid": "ee397a77_bd0e6d49",
+        "filename": "components/viz/service/frame_sinks/frame_sink_manager_impl.h",
+        "patchSetId": 14
+      },
+      "lineNbr": 155,
+      "author": {
+        "id": 1158749
+      },
+      "writtenOn": "2017-11-09T03:42:56Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "0b23d48b_57c1cda9",
+      "revId": "b883a266ddfc69ab813d2d5cee5819bdacff036b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "a0fa7b7b_6af7bd24",
         "filename": "content/browser/renderer_host/browser_compositor_view_mac.h",
         "patchSetId": 14
@@ -67,6 +121,24 @@
       "revId": "b883a266ddfc69ab813d2d5cee5819bdacff036b",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ece55eeb_2b2e9b15",
+        "filename": "content/browser/renderer_host/browser_compositor_view_mac.h",
+        "patchSetId": 14
+      },
+      "lineNbr": 32,
+      "author": {
+        "id": 1158749
+      },
+      "writtenOn": "2017-11-09T03:42:56Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "a0fa7b7b_6af7bd24",
+      "revId": "b883a266ddfc69ab813d2d5cee5819bdacff036b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -87,6 +159,24 @@
     },
     {
       "key": {
+        "uuid": "fae52f66_cc34f6d1",
+        "filename": "content/browser/renderer_host/browser_compositor_view_mac.mm",
+        "patchSetId": 14
+      },
+      "lineNbr": 473,
+      "author": {
+        "id": 1158749
+      },
+      "writtenOn": "2017-11-09T03:42:56Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "6e008da6_11f15ce6",
+      "revId": "b883a266ddfc69ab813d2d5cee5819bdacff036b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "ddaef578_dd4ea194",
         "filename": "content/browser/renderer_host/render_widget_host_view_android.cc",
         "patchSetId": 14
@@ -101,6 +191,24 @@
       "revId": "b883a266ddfc69ab813d2d5cee5819bdacff036b",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "80d02c37_ed56af26",
+        "filename": "content/browser/renderer_host/render_widget_host_view_android.cc",
+        "patchSetId": 14
+      },
+      "lineNbr": 1214,
+      "author": {
+        "id": 1158749
+      },
+      "writtenOn": "2017-11-09T03:42:56Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "ddaef578_dd4ea194",
+      "revId": "b883a266ddfc69ab813d2d5cee5819bdacff036b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -121,6 +229,24 @@
     },
     {
       "key": {
+        "uuid": "fa796b84_5cac3567",
+        "filename": "content/browser/renderer_host/render_widget_host_view_android.h",
+        "patchSetId": 14
+      },
+      "lineNbr": 241,
+      "author": {
+        "id": 1158749
+      },
+      "writtenOn": "2017-11-09T03:42:56Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "79442d04_130746cd",
+      "revId": "b883a266ddfc69ab813d2d5cee5819bdacff036b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "d24b1765_dd248575",
         "filename": "content/browser/renderer_host/render_widget_host_view_aura.h",
         "patchSetId": 14
@@ -135,6 +261,24 @@
       "revId": "b883a266ddfc69ab813d2d5cee5819bdacff036b",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e25c0832_9e166ff5",
+        "filename": "content/browser/renderer_host/render_widget_host_view_aura.h",
+        "patchSetId": 14
+      },
+      "lineNbr": 103,
+      "author": {
+        "id": 1158749
+      },
+      "writtenOn": "2017-11-09T03:42:56Z",
+      "side": 1,
+      "message": "or change all other call to ProcessFramesBeforeToken. I have all updated all names to OnFrameTokenChanged.",
+      "parentUuid": "d24b1765_dd248575",
+      "revId": "b883a266ddfc69ab813d2d5cee5819bdacff036b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -155,6 +299,24 @@
     },
     {
       "key": {
+        "uuid": "808d06b5_fbb82bf7",
+        "filename": "content/browser/renderer_host/render_widget_host_view_mac.h",
+        "patchSetId": 14
+      },
+      "lineNbr": 498,
+      "author": {
+        "id": 1158749
+      },
+      "writtenOn": "2017-11-09T03:42:56Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "3c714733_aa782361",
+      "revId": "b883a266ddfc69ab813d2d5cee5819bdacff036b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "3572b1de_d3bc3229",
         "filename": "content/browser/renderer_host/render_widget_host_view_mac.mm",
         "patchSetId": 14
@@ -169,6 +331,24 @@
       "revId": "b883a266ddfc69ab813d2d5cee5819bdacff036b",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "793e6226_a178fa78",
+        "filename": "content/browser/renderer_host/render_widget_host_view_mac.mm",
+        "patchSetId": 14
+      },
+      "lineNbr": 408,
+      "author": {
+        "id": 1158749
+      },
+      "writtenOn": "2017-11-09T03:42:56Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "3572b1de_d3bc3229",
+      "revId": "b883a266ddfc69ab813d2d5cee5819bdacff036b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -207,6 +387,24 @@
     },
     {
       "key": {
+        "uuid": "13a72c41_3f9f7fb5",
+        "filename": "services/ui/ws/server_window.h",
+        "patchSetId": 14
+      },
+      "lineNbr": 243,
+      "author": {
+        "id": 1158749
+      },
+      "writtenOn": "2017-11-09T03:42:56Z",
+      "side": 1,
+      "message": "As we have discussed in person, this will be implemented in a separated cl.",
+      "parentUuid": "a4d7ebbd_8b6e8789",
+      "revId": "b883a266ddfc69ab813d2d5cee5819bdacff036b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "0499bb98_005be579",
         "filename": "services/viz/privileged/interfaces/compositing/frame_sink_manager.mojom",
         "patchSetId": 14
@@ -221,6 +419,24 @@
       "revId": "b883a266ddfc69ab813d2d5cee5819bdacff036b",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "10091cb5_75e134b5",
+        "filename": "services/viz/privileged/interfaces/compositing/frame_sink_manager.mojom",
+        "patchSetId": 14
+      },
+      "lineNbr": 113,
+      "author": {
+        "id": 1158749
+      },
+      "writtenOn": "2017-11-09T03:42:56Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "0499bb98_005be579",
+      "revId": "b883a266ddfc69ab813d2d5cee5819bdacff036b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -276,6 +492,24 @@
     },
     {
       "key": {
+        "uuid": "ae5a8981_81cc690d",
+        "filename": "ui/android/delegated_frame_host_android.cc",
+        "patchSetId": 14
+      },
+      "lineNbr": 222,
+      "author": {
+        "id": 1158749
+      },
+      "writtenOn": "2017-11-09T03:42:56Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "10f50c8e_20880f4e",
+      "revId": "b883a266ddfc69ab813d2d5cee5819bdacff036b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "e2b7420f_ee807d4c",
         "filename": "ui/android/delegated_frame_host_android.h",
         "patchSetId": 14
@@ -290,6 +524,24 @@
       "revId": "b883a266ddfc69ab813d2d5cee5819bdacff036b",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "fef50c0b_92628075",
+        "filename": "ui/android/delegated_frame_host_android.h",
+        "patchSetId": 14
+      },
+      "lineNbr": 45,
+      "author": {
+        "id": 1158749
+      },
+      "writtenOn": "2017-11-09T03:42:56Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "e2b7420f_ee807d4c",
+      "revId": "b883a266ddfc69ab813d2d5cee5819bdacff036b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
