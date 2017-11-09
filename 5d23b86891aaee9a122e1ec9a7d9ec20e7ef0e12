@@ -22,6 +22,30 @@
       "revId": "5d23b86891aaee9a122e1ec9a7d9ec20e7ef0e12",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "bb2b775c_e47e2b82",
+        "filename": "components/optimization_guide/BUILD.gn",
+        "patchSetId": 13
+      },
+      "lineNbr": 5,
+      "author": {
+        "id": 1133190
+      },
+      "writtenOn": "2017-11-09T16:09:50Z",
+      "side": 1,
+      "message": "owners should have already been added in a previous CL. added READMe since it wasn\u0027t there already.",
+      "parentUuid": "343352c0_ac551294",
+      "range": {
+        "startLine": 5,
+        "startChar": 16,
+        "endLine": 5,
+        "endChar": 34
+      },
+      "revId": "5d23b86891aaee9a122e1ec9a7d9ec20e7ef0e12",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
