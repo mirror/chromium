@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "61a43a75_4c64c291",
+        "filename": "third_party/WebKit/LayoutTests/external/wpt/paint-timing/first-image-child.html",
+        "patchSetId": 2
+      },
+      "lineNbr": 27,
+      "author": {
+        "id": 1162220
+      },
+      "writtenOn": "2017-11-09T15:48:21Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "d065605a_4fee2b51",
+      "range": {
+        "startLine": 27,
+        "startChar": 18,
+        "endLine": 27,
+        "endChar": 30
+      },
+      "revId": "daf84f407824ec807edc61f65755fd877344afc5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "61e15231_3cc86a1d",
         "filename": "third_party/WebKit/LayoutTests/external/wpt/paint-timing/first-image-child.html",
         "patchSetId": 2
@@ -48,6 +72,30 @@
     },
     {
       "key": {
+        "uuid": "f29d4888_ff3179b1",
+        "filename": "third_party/WebKit/LayoutTests/external/wpt/paint-timing/first-image-child.html",
+        "patchSetId": 2
+      },
+      "lineNbr": 40,
+      "author": {
+        "id": 1162220
+      },
+      "writtenOn": "2017-11-09T15:48:21Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "61e15231_3cc86a1d",
+      "range": {
+        "startLine": 40,
+        "startChar": 20,
+        "endLine": 40,
+        "endChar": 45
+      },
+      "revId": "daf84f407824ec807edc61f65755fd877344afc5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "eb08ac73_383ac252",
         "filename": "third_party/WebKit/LayoutTests/external/wpt/paint-timing/first-image-child.html",
         "patchSetId": 2
@@ -59,6 +107,30 @@
       "writtenOn": "2017-11-09T14:43:07Z",
       "side": 1,
       "message": "Should this be a t.step, or just a setTimeout?\n\nAlso, this is equivalent to:\nt.step(testPaintEntries);",
+      "range": {
+        "startLine": 43,
+        "startChar": 10,
+        "endLine": 43,
+        "endChar": 14
+      },
+      "revId": "daf84f407824ec807edc61f65755fd877344afc5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "aba7c41a_fcf9d27a",
+        "filename": "third_party/WebKit/LayoutTests/external/wpt/paint-timing/first-image-child.html",
+        "patchSetId": 2
+      },
+      "lineNbr": 43,
+      "author": {
+        "id": 1162220
+      },
+      "writtenOn": "2017-11-09T15:48:21Z",
+      "side": 1,
+      "message": "testPaintEntries will attempt a check at a later time if the paint entries are not there yet, so there is no need for setTimeout here.",
+      "parentUuid": "eb08ac73_383ac252",
       "range": {
         "startLine": 43,
         "startChar": 10,
