@@ -6,8 +6,8 @@
 
 #include "ash/public/cpp/immersive/immersive_revealed_lock.h"
 #include "ash/public/cpp/window_properties.h"
+#include "ash/public/interfaces/window_state_type.mojom.h"
 #include "ash/shell.h"
-#include "ash/wm/window_state.h"
 #include "base/macros.h"
 #include "base/memory/ptr_util.h"
 #include "chrome/browser/chrome_notification_types.h"
@@ -349,8 +349,10 @@ void ImmersiveModeControllerAsh::Observe(
   // Auto hide the shelf in immersive browser fullscreen.
   bool in_tab_fullscreen = content::Source<FullscreenController>(source)->
       IsWindowFullscreenForTabOrPending();
-  ash::wm::GetWindowState(native_window_)
-      ->set_hide_shelf_when_fullscreen(in_tab_fullscreen);
+  native_window_->SetProperty(ash::kHideShelfWhenFullscreenKey,
+                              in_tab_fullscreen);
+  // TODO(erg): If I move this to a handler on change in WindowState, will that
+  // still work and will I able to pull it out.
   ash::Shell::Get()->UpdateShelfVisibility();
 }
 

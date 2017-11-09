@@ -201,7 +201,7 @@ IN_PROC_BROWSER_TEST_F(ScreenLockerTest, TestFullscreenExit) {
         ->ToggleBrowserFullscreenMode();
     waiter.Wait(false /* not locked */, true /* full screen */);
     EXPECT_TRUE(browser_window->IsFullscreen());
-    EXPECT_FALSE(window_state->hide_shelf_when_fullscreen());
+    EXPECT_FALSE(window_state->GetHideShelfWhenFullscreen());
     EXPECT_FALSE(tester->IsLocked());
   }
   {
@@ -210,7 +210,7 @@ IN_PROC_BROWSER_TEST_F(ScreenLockerTest, TestFullscreenExit) {
     tester->EmulateWindowManagerReady();
     waiter.Wait(true /* locked */, true /* full screen */);
     EXPECT_TRUE(browser_window->IsFullscreen());
-    EXPECT_FALSE(window_state->hide_shelf_when_fullscreen());
+    EXPECT_FALSE(window_state->GetHideShelfWhenFullscreen());
     EXPECT_TRUE(tester->IsLocked());
   }
   UserContext user_context(user_manager::StubAccountId());
@@ -246,7 +246,7 @@ IN_PROC_BROWSER_TEST_F(ScreenLockerTest, TestFullscreenExit) {
         ->EnterFullscreenModeForTab(web_contents, GURL());
     waiter.Wait(false /* not locked */, true /* fullscreen */);
     EXPECT_TRUE(browser_window->IsFullscreen());
-    EXPECT_TRUE(window_state->hide_shelf_when_fullscreen());
+    EXPECT_TRUE(window_state->GetHideShelfWhenFullscreen());
     EXPECT_FALSE(tester->IsLocked());
   }
   {
