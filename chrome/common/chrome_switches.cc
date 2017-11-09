@@ -873,6 +873,10 @@ const char kDisableHostedAppsInWindows[] = "disable-hosted-apps-in-windows";
 const char kDisableMacViewsNativeAppWindows[] =
     "disable-mac-views-native-app-windows";
 
+// Enables use of toolkit-views for profile chooser menu.
+const char kDisableMacViewsProfileChooser[] =
+    "disable-mac-views-profile-chooser";
+
 // Disables Translate experimental new UX which replaces the infobar.
 const char kDisableTranslateNewUX[] = "disable-translate-new-ux";
 
@@ -899,6 +903,9 @@ const char kEnableHostedAppsInWindows[] = "enable-hosted-apps-in-windows";
 // Enables use of toolkit-views based native app windows.
 const char kEnableMacViewsNativeAppWindows[] =
     "enable-mac-views-native-app-windows";
+
+// Enables use of toolkit-views for profile chooser menu.
+const char kEnableMacViewsProfileChooser[] = "enable-mac-views-profile-chooser";
 
 // Enables Translate experimental new UX which replaces the infobar.
 const char kEnableTranslateNewUX[] = "enable-translate-new-ux";
