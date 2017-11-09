@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "c6a3310e_a8b9b440",
+        "filename": "chrome/browser/safe_browsing/download_protection/check_client_download_request.h",
+        "patchSetId": 11
+      },
+      "lineNbr": 33,
+      "author": {
+        "id": 1002246
+      },
+      "writtenOn": "2017-11-09T23:56:36Z",
+      "side": 1,
+      "message": "No, it does not. Added one in chrome/browser/safe_browsing/BUILD.gn (no unconditional, only when this file is compiled).",
+      "parentUuid": "f0fbd785_4e775a7f",
+      "range": {
+        "startLine": 33,
+        "startChar": 4,
+        "endLine": 33,
+        "endChar": 22
+      },
+      "revId": "b479bb3d41cf871f7ca6b15f5d9386b88f85efbf",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "681027a1_858f07ba",
         "filename": "chrome/services/file_util/file_util_service.cc",
         "patchSetId": 11
@@ -48,6 +72,30 @@
     },
     {
       "key": {
+        "uuid": "f8a1cf72_3d0c4905",
+        "filename": "chrome/services/file_util/file_util_service.cc",
+        "patchSetId": 11
+      },
+      "lineNbr": 15,
+      "author": {
+        "id": 1002246
+      },
+      "writtenOn": "2017-11-09T23:56:36Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "681027a1_858f07ba",
+      "range": {
+        "startLine": 10,
+        "startChar": 0,
+        "endLine": 15,
+        "endChar": 6
+      },
+      "revId": "b479bb3d41cf871f7ca6b15f5d9386b88f85efbf",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "3ff5c1ad_0c7abfde",
         "filename": "chrome/services/file_util/public/cpp/BUILD.gn",
         "patchSetId": 11
@@ -59,6 +107,30 @@
       "writtenOn": "2017-11-09T23:17:50Z",
       "side": 1,
       "message": "Move this inside conditional above.",
+      "range": {
+        "startLine": 24,
+        "startChar": 4,
+        "endLine": 24,
+        "endChar": 35
+      },
+      "revId": "b479bb3d41cf871f7ca6b15f5d9386b88f85efbf",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a519cd63_ae09bb34",
+        "filename": "chrome/services/file_util/public/cpp/BUILD.gn",
+        "patchSetId": 11
+      },
+      "lineNbr": 24,
+      "author": {
+        "id": 1002246
+      },
+      "writtenOn": "2017-11-09T23:56:36Z",
+      "side": 1,
+      "message": "Done. I had to move the inconditional public_deps to the top, so public_deps is defined and I can do +\u003d Otherwise it would end up being:\n\nif (safe_browsing_mode \u003d\u003d 1) {\n  ...\n  public_deps \u003d [ ... ]\n}\npublic_deps +\u003d [ ... ]\n\nwhich makes GN unhappy when safe_browsing is !\u003d 1, as we are using +\u003d with public_deps which was not set yet.\nDo you know if there is a better way?",
+      "parentUuid": "3ff5c1ad_0c7abfde",
       "range": {
         "startLine": 24,
         "startChar": 4,
@@ -91,6 +163,30 @@
       "revId": "b479bb3d41cf871f7ca6b15f5d9386b88f85efbf",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2d0b218f_4ac39f39",
+        "filename": "chrome/services/file_util/public/cpp/sandboxed_dmg_analyzer_mac.cc",
+        "patchSetId": 11
+      },
+      "lineNbr": 77,
+      "author": {
+        "id": 1002246
+      },
+      "writtenOn": "2017-11-09T23:56:36Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "11d3e5cc_6c6f3229",
+      "range": {
+        "startLine": 77,
+        "startChar": 2,
+        "endLine": 77,
+        "endChar": 50
+      },
+      "revId": "b479bb3d41cf871f7ca6b15f5d9386b88f85efbf",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
