@@ -74,6 +74,9 @@ class RendererURLLoaderThrottle : public content::URLLoaderThrottle,
   base::TimeTicks defer_start_time_;
   bool deferred_ = false;
 
+  base::TimeDelta total_delay_;
+  bool user_action_involved_ = false;
+
   std::unique_ptr<mojo::BindingSet<mojom::UrlCheckNotifier>> notifier_bindings_;
 
   GURL original_url_;

@@ -84,6 +84,9 @@ class BrowserURLLoaderThrottle : public content::URLLoaderThrottle {
   base::TimeTicks defer_start_time_;
   bool deferred_ = false;
 
+  base::TimeDelta total_delay_;
+  bool user_action_involved_ = false;
+
   GURL original_url_;
 
   DISALLOW_COPY_AND_ASSIGN(BrowserURLLoaderThrottle);
