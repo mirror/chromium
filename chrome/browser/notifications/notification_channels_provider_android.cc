@@ -188,8 +188,14 @@ void NotificationChannelsProviderAndroid::MigrateToChannelsIfNecessary(
   std::unique_ptr<content_settings::RuleIterator> it(
       pref_provider->GetRuleIterator(CONTENT_SETTINGS_TYPE_NOTIFICATIONS,
                                      std::string(), false /* incognito */));
-  while (it && it->HasNext())
-    CreateChannelForRule(it->Next());
+  while (it && it->HasNext()) {
+    const content_settings::Rule& rule = it->Next();
+    CreateChannelForRule(rule);
+    pref_provider->SetWebsiteSetting(
+        rule.primary_pattern, rule.secondary_pattern,
+        CONTENT_SETTINGS_TYPE_NOTIFICATIONS,
+        content_settings::ResourceIdentifier(), nullptr);
+  }
   prefs->SetBoolean(prefs::kMigratedToSiteNotificationChannels, true);
 }
 
@@ -296,7 +302,7 @@ bool NotificationChannelsProviderAndroid::SetWebsiteSetting(
         bridge_->DeleteChannel(channel_to_delete->second.id);
         cached_channels_.erase(channel_to_delete);
       }
-      break;
+      return false;
     }
     default:
       // We rely on notification settings being one of ALLOW/BLOCK/DEFAULT.
