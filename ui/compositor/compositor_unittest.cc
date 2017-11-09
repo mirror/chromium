@@ -10,6 +10,7 @@
 #include "base/test/test_mock_time_task_runner.h"
 #include "base/threading/thread_task_runner_handle.h"
 #include "components/viz/common/frame_sinks/begin_frame_args.h"
+#include "components/viz/common/surfaces/frame_sink_id_allocator.h"
 #include "components/viz/common/surfaces/local_surface_id_allocator.h"
 #include "components/viz/service/surfaces/surface_manager.h"
 #include "components/viz/test/begin_frame_args_test.h"
@@ -19,6 +20,7 @@
 #include "ui/compositor/layer.h"
 #include "ui/compositor/test/context_factories_for_test.h"
 #include "ui/compositor/test/draw_waiter_for_test.h"
+#include "ui/compositor/test/fake_context_factory.h"
 
 using testing::Mock;
 using testing::_;
@@ -51,6 +53,8 @@ class CompositorTest : public testing::Test {
   }
 
   void DestroyCompositor() { compositor_.reset(); }
+
+  void SetCompositor(Compositor* compositor) { compositor_.reset(compositor); }
 
  protected:
   virtual scoped_refptr<base::SingleThreadTaskRunner> CreateTaskRunner() = 0;
@@ -120,6 +124,32 @@ class CompositorObserverForLocks : public CompositorObserver {
 class MockCompositorLockClient : public ui::CompositorLockClient {
  public:
   MOCK_METHOD0(CompositorLockTimedOut, void());
+};
+
+class MyFakeContextFactory : public FakeContextFactory {
+ public:
+  MyFakeContextFactory(base::Closure quit_closure)
+      : FakeContextFactory(), quit_closure_(quit_closure) {}
+  ~MyFakeContextFactory() override { EXPECT_TRUE(called_); }
+
+  void CreateLayerTreeFrameSink(base::WeakPtr<Compositor> compositor) override {
+    called_ = true;
+    EXPECT_FALSE(inside_);
+    inside_ = true;
+
+    compositor->SetVisible(false);
+
+    auto widget = compositor->ReleaseAcceleratedWidget();
+    compositor->SetAcceleratedWidget(widget);
+
+    quit_closure_.Run();
+    quit_closure_.Reset();
+  }
+
+ private:
+  bool inside_ = false;
+  bool called_ = false;
+  base::Closure quit_closure_;
 };
 
 }  // namespace
@@ -475,6 +505,21 @@ TEST_F(CompositorTestWithMessageLoop, MAYBE_CreateAndReleaseOutputSurface) {
   compositor()->ScheduleDraw();
   DrawWaiterForTest::WaitForCompositingEnded(compositor());
   compositor()->SetRootLayer(nullptr);
+}
+
+TEST(BasicCompositorTest, NoCreateLayerTreeFrameSinkReEntry) {
+  base::RunLoop loop;
+  MyFakeContextFactory context_factory(loop.QuitClosure());
+  constexpr uint32_t kDefaultClientId = 0u;
+  viz::FrameSinkIdAllocator id_allocator(kDefaultClientId);
+
+  Compositor compositor(id_allocator.NextFrameSinkId(), &context_factory,
+                        nullptr, base::ThreadTaskRunnerHandle::Get(),
+                        false /* enable_surface_synchronization */,
+                        false /* enable_pixel_canvas */);
+  compositor.SetAcceleratedWidget(gfx::kNullAcceleratedWidget);
+
+  loop.Run();
 }
 
 }  // namespace ui
