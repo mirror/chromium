@@ -4,6 +4,8 @@
 
 #include "ui/display/manager/chromeos/update_display_configuration_task.h"
 
+#include "base/command_line.h"
+#include "ui/display/display_switches.h"
 #include "ui/display/manager/chromeos/configure_displays_task.h"
 #include "ui/display/manager/chromeos/display_layout_manager.h"
 #include "ui/display/manager/chromeos/display_util.h"
@@ -191,6 +193,20 @@ MultipleDisplayState UpdateDisplayConfigurationTask::ChooseDisplayState()
     // If only one display is currently turned on, return the "single" state
     // so that its native mode will be used.
     return MULTIPLE_DISPLAY_STATE_SINGLE;
+  }
+
+  if (base::CommandLine::ForCurrentProcess()->HasSwitch(
+          ::switches::kEnableMultiMirroring)) {
+    if (num_displays >= 2) {
+      // Try to use the saved configuration; otherwise, default to extended.
+      DisplayConfigurator::StateController* state_controller =
+          layout_manager_->GetStateController();
+
+      if (!state_controller)
+        return MULTIPLE_DISPLAY_STATE_MULTI_EXTENDED;
+      return state_controller->GetStateForDisplayIds(cached_displays_);
+    }
+    return MULTIPLE_DISPLAY_STATE_INVALID;
   }
 
   if (num_displays == 2 || num_on_displays == 2) {
