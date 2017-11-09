@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "4fb6b16c_6f9865ba",
+        "filename": "base/files/memory_mapped_file.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 77,
+      "author": {
+        "id": 1174099
+      },
+      "writtenOn": "2017-11-09T18:00:15Z",
+      "side": 1,
+      "message": "Why’d you choose to do this in the signed domain?",
+      "revId": "3dffef1c5ed8277a44af3910bbe8e2c866d2f6d0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
