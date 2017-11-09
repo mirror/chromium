@@ -41,6 +41,7 @@
 #include "third_party/WebKit/public/platform/WebDoubleSize.h"
 #include "third_party/WebKit/public/platform/WebSize.h"
 #include "third_party/WebKit/public/platform/WebURLRequest.h"
+#include "third_party/WebKit/public/platform/web_page_visibility_state.mojom.h"
 #include "third_party/WebKit/public/web/WebConsoleMessage.h"
 #include "third_party/WebKit/public/web/WebDocument.h"
 #include "third_party/WebKit/public/web/WebElement.h"
@@ -582,8 +583,8 @@ void PrintRenderFrameHelper::PrintHeaderAndFooter(
                            page_layout.margin_top + page_layout.margin_bottom +
                                page_layout.content_height);
 
-  blink::WebView* web_view =
-      blink::WebView::Create(nullptr, blink::kWebPageVisibilityStateVisible);
+  blink::WebView* web_view = blink::WebView::Create(
+      nullptr, blink::mojom::WebPageVisibilityState::kVisible);
   web_view->GetSettings()->SetJavaScriptEnabled(true);
 
   class HeaderAndFooterClient final : public blink::WebFrameClient {
@@ -825,8 +826,8 @@ void PrepareFrameAndViewForPrint::CopySelection(
   WebPreferences prefs = preferences;
   prefs.javascript_enabled = false;
 
-  blink::WebView* web_view =
-      blink::WebView::Create(this, blink::kWebPageVisibilityStateVisible);
+  blink::WebView* web_view = blink::WebView::Create(
+      this, blink::mojom::WebPageVisibilityState::kVisible);
   owns_web_view_ = true;
   content::RenderView::ApplyWebPreferences(prefs, web_view);
   blink::WebLocalFrame* main_frame =
