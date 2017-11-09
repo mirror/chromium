@@ -30,7 +30,17 @@
           "type": "SZ",
           "data": "\"$LOCAL_APPDATA\\$CHROME_DIR_DEV\\Application\\$MINI_INSTALLER_FILE_VERSION\\Installer\\setup.exe\" --uninstall --chrome-dev --verbose-logging"
         },
-        "Version": {"type": "SZ", "data": "$MINI_INSTALLER_FILE_VERSION"}
+        "Version": {
+          "type": "SZ",
+          "data": "$MINI_INSTALLER_FILE_VERSION"
+        }
+      }
+    },
+    "HKEY_CURRENT_USER\\$CHROME_TOAST_ACTIVATOR_KEY_DEV\\LocalServer32": {
+      "exists": "required",
+      "values": {
+        "type": "SZ",
+        "data": "$LOCAL_APPDATA\\$CHROME_DIR_DEV\\Application\\chrome.exe"
       }
     },
     "HKEY_CURRENT_USER\\Software\\Classes\\$CHROME_SHORT_NAME_DEV$USER_SPECIFIC_REGISTRY_SUFFIX": {
