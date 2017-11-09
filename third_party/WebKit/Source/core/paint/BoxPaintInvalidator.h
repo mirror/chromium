@@ -36,11 +36,19 @@ class CORE_EXPORT BoxPaintInvalidator {
       const LayoutRect& old_layout_overflow,
       const LayoutRect& new_layout_overflow);
 
-  enum BackgroundInvalidationType { kNone = 0, kIncremental, kFull };
+  enum BackgroundInvalidationType {
+    kNone = 0,
+    kIncremental,
+    kFullWithGeometryChange,
+    kFullWithoutGeometryChange
+  };
   BackgroundInvalidationType ComputeBackgroundInvalidation();
   void InvalidateScrollingContentsBackground(BackgroundInvalidationType);
 
   PaintInvalidationReason ComputePaintInvalidationReason();
+
+  const LayoutBox& BackgroundBox() const;
+  bool BackgroundBoxSizeChanged() const;
 
   void IncrementallyInvalidatePaint(PaintInvalidationReason,
                                     const LayoutRect& old_rect,
