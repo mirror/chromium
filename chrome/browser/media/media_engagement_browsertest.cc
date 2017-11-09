@@ -6,6 +6,7 @@
 #include "base/run_loop.h"
 #include "base/strings/utf_string_conversions.h"
 #include "base/test/scoped_feature_list.h"
+#include "base/test/simple_test_clock.h"
 #include "base/test/test_mock_time_task_runner.h"
 #include "base/time/time.h"
 #include "chrome/browser/media/media_engagement_contents_observer.h"
@@ -70,7 +71,8 @@ class WasRecentlyAudibleWatcher {
 class MediaEngagementBrowserTest : public InProcessBrowserTest {
  public:
   MediaEngagementBrowserTest()
-      : task_runner_(new base::TestMockTimeTaskRunner()) {
+      : test_clock_(new base::SimpleTestClock()),
+        task_runner_(new base::TestMockTimeTaskRunner()) {
     http_server_.ServeFilesFromSourceDirectory(kMediaEngagementTestDataPath);
     http_server_origin2_.ServeFilesFromSourceDirectory(
         kMediaEngagementTestDataPath);
@@ -111,6 +113,7 @@ class MediaEngagementBrowserTest : public InProcessBrowserTest {
 
   void Advance(base::TimeDelta time) {
     task_runner_->FastForwardBy(time);
+    test_clock_->Advance(time);
     base::RunLoop().RunUntilIdle();
   }
 
@@ -199,6 +202,11 @@ class MediaEngagementBrowserTest : public InProcessBrowserTest {
   }
 
   void InjectTimerTaskRunner() {
+    if (GetService()->clock_.get() != test_clock_) {
+      DLOG(ERROR) << 1;
+      GetService()->clock_ = base::WrapUnique<base::Clock>(test_clock_);
+    }
+
     contents_observer()->SetTaskRunnerForTest(task_runner_);
   }
 
@@ -211,6 +219,8 @@ class MediaEngagementBrowserTest : public InProcessBrowserTest {
     DCHECK(mei_service->contents_observers_.size() == 1);
     return *mei_service->contents_observers_.begin();
   }
+
+  base::SimpleTestClock* test_clock_;
 
   net::EmbeddedTestServer http_server_;
   net::EmbeddedTestServer http_server_origin2_;
@@ -244,7 +254,7 @@ IN_PROC_BROWSER_TEST_F(MediaEngagementBrowserTest,
   LoadTestPageAndWaitForPlayAndAudible("engagement_test.html", false);
   Advance(base::TimeDelta::FromSeconds(1));
   CloseTab();
-  ExpectScores(1, 0, 1, 0);
+  ExpectScores(1, 0, 0, 0);
 }
 
 IN_PROC_BROWSER_TEST_F(MediaEngagementBrowserTest,
@@ -252,7 +262,7 @@ IN_PROC_BROWSER_TEST_F(MediaEngagementBrowserTest,
   LoadTestPageAndWaitForPlayAndAudible("engagement_test_audio.html", false);
   Advance(base::TimeDelta::FromSeconds(1));
   CloseTab();
-  ExpectScores(1, 0, 1, 0);
+  ExpectScores(1, 0, 0, 0);
 }
 
 IN_PROC_BROWSER_TEST_F(MediaEngagementBrowserTest,
@@ -294,7 +304,7 @@ IN_PROC_BROWSER_TEST_F(MediaEngagementBrowserTest,
   ExecuteScript("document.getElementById(\"media\").pause();");
   AdvanceMeaningfulPlaybackTime();
   CloseTab();
-  ExpectScores(1, 0, 1, 0);
+  ExpectScores(1, 0, 0, 0);
 }
 
 IN_PROC_BROWSER_TEST_F(MediaEngagementBrowserTest,
@@ -304,7 +314,7 @@ IN_PROC_BROWSER_TEST_F(MediaEngagementBrowserTest,
   ExecuteScript("document.getElementById(\"media\").pause();");
   AdvanceMeaningfulPlaybackTime();
   CloseTab();
-  ExpectScores(1, 0, 1, 0);
+  ExpectScores(1, 0, 0, 0);
 }
 
 IN_PROC_BROWSER_TEST_F(MediaEngagementBrowserTest,
@@ -431,4 +441,12 @@ IN_PROC_BROWSER_TEST_F(MediaEngagementBrowserTest, MultipleElements) {
   AdvanceMeaningfulPlaybackTime();
   CloseTab();
   ExpectScores(1, 1, 3, 2);
+}
+
+IN_PROC_BROWSER_TEST_F(MediaEngagementBrowserTest,
+                       RecordAudibleBasedOnShortTime) {
+  LoadTestPageAndWaitForPlayAndAudible("engagement_test.html", false);
+  Advance(base::TimeDelta::FromSeconds(4));
+  CloseTab();
+  ExpectScores(1, 0, 1, 0);
 }
