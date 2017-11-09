@@ -16,6 +16,24 @@
       "revId": "c1c51fc77373f641346b6720600a7c5cac0c8d62",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2561c2e4_6e052735",
+        "filename": "base/time/time.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 480,
+      "author": {
+        "id": 1103654
+      },
+      "writtenOn": "2017-11-09T18:26:29Z",
+      "side": 1,
+      "message": "This is still needed because e.g. iOS doesn\u0027t care about time_t size since it still uses the CF implementation.",
+      "parentUuid": "cfa13fca_4b8eb80e",
+      "revId": "c1c51fc77373f641346b6720600a7c5cac0c8d62",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
