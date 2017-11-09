@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "b58dd56d_b55bed50",
+        "filename": "chrome/browser/extensions/extension_web_ui.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 99,
+      "author": {
+        "id": 1115745
+      },
+      "writtenOn": "2017-11-09T20:21:45Z",
+      "side": 1,
+      "message": "\u003e Q: This function can set one entry to be active, but it doesn\u0027t set other to active \u003d false. My understanding is that multiple override url can be active at a time, but the earlier installed (see q below) active one will apply. Can you confirm?\n\n\"active\" is misleading here.  \"eligible\" would be more appropriate.  \"active\" indicates whether or not the override is valid, and so is false for e.g. disabled extensions.  We do this so that we preserve the order in the list across disables/enables.\n\n\u003e Q: |list|\u0027s order is guaranteed to be install time order, right? i.e. that ensures HandleChromeURLOverride works correctly.\nIt should be.",
+      "parentUuid": "cf513190_b2036118",
+      "revId": "4d9455e62c2002cc451ef14ea95dcd7c88678cd4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "ba2514b3_2bc39cea",
         "filename": "chrome/browser/extensions/extension_web_ui.cc",
         "patchSetId": 2
@@ -33,6 +51,24 @@
       "revId": "4d9455e62c2002cc451ef14ea95dcd7c88678cd4",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2d3655e8_4b1c40fd",
+        "filename": "chrome/browser/extensions/extension_web_ui.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 154,
+      "author": {
+        "id": 1115745
+      },
+      "writtenOn": "2017-11-09T20:21:45Z",
+      "side": 1,
+      "message": "This method actually does clean up older entries.  ValidateOverridesList() takes in a list and returns a clean copy, and here we only add the entry if we haven\u0027t seen the host (i.e., the ID) before.  There\u0027s also a unittest that verifies the dupes are cleaned up.",
+      "parentUuid": "ba2514b3_2bc39cea",
+      "revId": "4d9455e62c2002cc451ef14ea95dcd7c88678cd4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
