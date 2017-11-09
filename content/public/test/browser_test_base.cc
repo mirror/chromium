@@ -242,6 +242,13 @@ void BrowserTestBase::SetUp() {
 
   SetUpInProcessBrowserTestFixture();
 
+  // TODO(crbug.com/713390) should add DCHECK to ensure no feature changes in
+  // CommandLine after all cleanup finish.
+  // Should not use CommandLine to modify features. Please use ScopedFeatureList
+  // instead.
+  DCHECK(!command_line->HasSwitch(switches::kEnableFeatures));
+  DCHECK(!command_line->HasSwitch(switches::kDisableFeatures));
+
   // At this point, copy features to the command line, since BrowserMain will
   // wipe out the current feature list.
   std::string enabled_features;
