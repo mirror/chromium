@@ -333,6 +333,11 @@ struct StructTraits<media_router::mojom::MediaSinkDataView,
     return sink_internal.sink().icon_type();
   }
 
+  static media_router::MediaRouteProviderId provider_id(
+      const media_router::MediaSinkInternal& sink_internal) {
+    return sink_internal.sink().provider_id();
+  }
+
   static const media_router::MediaSinkInternal& extra_data(
       const media_router::MediaSinkInternal& sink_internal) {
     return sink_internal;
@@ -600,6 +605,43 @@ struct EnumTraits<media_router::mojom::RouteRequestResultCode,
         return true;
       case media_router::mojom::RouteRequestResultCode::CANCELLED:
         *output = media_router::RouteRequestResult::CANCELLED;
+        return true;
+    }
+    return false;
+  }
+};
+
+// MediaRouteProvider
+
+template <>
+struct EnumTraits<media_router::mojom::MediaRouteProvider::Id,
+                  media_router::MediaRouteProviderId> {
+  static media_router::mojom::MediaRouteProvider::Id ToMojom(
+      media_router::MediaRouteProviderId provider_id) {
+    switch (provider_id) {
+      case media_router::MediaRouteProviderId::EXTENSION:
+        return media_router::mojom::MediaRouteProvider::Id::EXTENSION;
+      case media_router::MediaRouteProviderId::WIRED_DISPLAY:
+        return media_router::mojom::MediaRouteProvider::Id::WIRED_DISPLAY;
+      case media_router::MediaRouteProviderId::UNKNOWN:
+        return media_router::mojom::MediaRouteProvider::Id::UNKNOWN;
+    }
+    NOTREACHED() << "Invalid MediaRouteProvider::Id: "
+                 << static_cast<int>(provider_id);
+    return media_router::mojom::MediaRouteProvider::Id::UNKNOWN;
+  }
+
+  static bool FromMojom(media_router::mojom::MediaRouteProvider::Id input,
+                        media_router::MediaRouteProviderId* provider_id) {
+    switch (input) {
+      case media_router::mojom::MediaRouteProvider::Id::EXTENSION:
+        *provider_id = media_router::MediaRouteProviderId::EXTENSION;
+        return true;
+      case media_router::mojom::MediaRouteProvider::Id::WIRED_DISPLAY:
+        *provider_id = media_router::MediaRouteProviderId::WIRED_DISPLAY;
+        return true;
+      case media_router::mojom::MediaRouteProvider::Id::UNKNOWN:
+        *provider_id = media_router::MediaRouteProviderId::UNKNOWN;
         return true;
     }
     return false;

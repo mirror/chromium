@@ -100,6 +100,12 @@ bool StructTraits<media_router::mojom::MediaSinkDataView,
 
   out->set_icon_type(icon_type);
 
+  media_router::MediaRouteProviderId provider_id;
+  if (!data.ReadProviderId(&provider_id))
+    return false;
+
+  out->set_provider_id(provider_id);
+
   if (!data.ReadExtraData(out))
     return false;
 
