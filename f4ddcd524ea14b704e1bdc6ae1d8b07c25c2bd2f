@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "12ed49c0_8c94b07f",
+        "filename": "third_party/WebKit/Source/platform/heap/HeapPage.h",
+        "patchSetId": 16
+      },
+      "lineNbr": 459,
+      "author": {
+        "id": 1119605
+      },
+      "writtenOn": "2017-11-09T13:18:43Z",
+      "side": 1,
+      "message": "We may want to think about only recording the start of real objects, not free space objects. That would be simpler and actually more efficient. WDYT?",
+      "range": {
+        "startLine": 459,
+        "startChar": 22,
+        "endLine": 459,
+        "endChar": 39
+      },
+      "revId": "f4ddcd524ea14b704e1bdc6ae1d8b07c25c2bd2f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
