@@ -34,6 +34,24 @@
       "revId": "3dffef1c5ed8277a44af3910bbe8e2c866d2f6d0",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "67856fe1_aad89ba8",
+        "filename": "base/files/memory_mapped_file.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 77,
+      "author": {
+        "id": 1174099
+      },
+      "writtenOn": "2017-11-09T18:14:31Z",
+      "side": 1,
+      "message": "\u003e hmm. all the file size types in base are signed int64_t e.g.\n\u003e \n\u003e bool GetFileSize(const FilePath\u0026 file_path, int64_t* file_size);\n\u003e \n\u003e int64_t FileEnumerator::FileInfo::GetSize()\n\u003e \n\u003e on windows the 64-bit unsigned is cast down to 64-bit signed. Not sure why... probably a POSIX thing?\n\nI think it’s safe (on some systems) to be able to reach into a file at an offset extending beyond the most maximum signed value. When you have a 32-bit off_t, for example, you should be able to successfully mmap() starting from 2GB minus one page, with a size of one or more pages. Admittedly you’re in the fringes at this point, and I’m not going to check the spec on this but it may even explicitly call it out as unspecified.\n\nIt’s of little practical impact because I don’t think we’ll see files that are larger than 8EB, but that’s why I asked.",
+      "parentUuid": "7b29b328_e19eb226",
+      "revId": "3dffef1c5ed8277a44af3910bbe8e2c866d2f6d0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
