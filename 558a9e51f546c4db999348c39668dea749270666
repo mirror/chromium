@@ -49,6 +49,30 @@
     },
     {
       "key": {
+        "uuid": "be56b8a0_46b4cda3",
+        "filename": "components/autofill/content/renderer/html_based_username_detector.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 489,
+      "author": {
+        "id": 1002541
+      },
+      "writtenOn": "2017-11-09T13:11:59Z",
+      "side": 1,
+      "message": "I can still see it in the newest patch set (8) :).",
+      "parentUuid": "4f8d78c0_39cf5876",
+      "range": {
+        "startLine": 489,
+        "startChar": 6,
+        "endLine": 489,
+        "endChar": 24
+      },
+      "revId": "558a9e51f546c4db999348c39668dea749270666",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "58313599_5c80e147",
         "filename": "components/autofill/content/renderer/html_based_username_detector.h",
         "patchSetId": 7
@@ -178,6 +202,30 @@
       "side": 1,
       "message": "\u003e Here we replace element.GetDocument().GetFrame() with render_frame()-\u003eGetWebFrame(). Are they always the same?\n\nTo be honesty, I\u0027m not pretty sure about frames. \n\nHere there is DCHECK for that\nhttps://cs.chromium.org/chromium/src/components/autofill/content/renderer/password_autofill_agent.cc?rcl\u003d17ec2b04258bf3ff5ffe1c21aa504c85c3384e20\u0026l\u003d1743\n\nSince we didn\u0027t face crashes, they should be equal.",
       "parentUuid": "e84ae226_be0b87ba",
+      "range": {
+        "startLine": 889,
+        "startChar": 20,
+        "endLine": 889,
+        "endChar": 59
+      },
+      "revId": "558a9e51f546c4db999348c39668dea749270666",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4adb47e0_83d629be",
+        "filename": "components/autofill/content/renderer/password_autofill_agent.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 889,
+      "author": {
+        "id": 1002541
+      },
+      "writtenOn": "2017-11-09T13:11:59Z",
+      "side": 1,
+      "message": "Thanks for pointing me to the DCHECK, that at least documents that we expect those frames to match. It might be worth duplicating that DCHECK just above this line for better documentation.",
+      "parentUuid": "795e45a0_9a64358b",
       "range": {
         "startLine": 889,
         "startChar": 20,
