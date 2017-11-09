@@ -2,6 +2,23 @@
   "comments": [
     {
       "key": {
+        "uuid": "80d3462a_bec94b3b",
+        "filename": "chrome/browser/DEPS",
+        "patchSetId": 4
+      },
+      "lineNbr": 9,
+      "author": {
+        "id": 1001934
+      },
+      "writtenOn": "2017-11-09T21:51:56Z",
+      "side": 1,
+      "message": "nit: alphabetical order",
+      "revId": "3821708238cb55b174a9228a20a60f5e62ac46e0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "6d721ed0_fe735d2c",
         "filename": "chrome/browser/extensions/api/media_galleries/media_galleries_api.cc",
         "patchSetId": 4
@@ -117,6 +134,23 @@
     },
     {
       "key": {
+        "uuid": "a06a787e_e333933a",
+        "filename": "chrome/services/media_util/media_util_service.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 22,
+      "author": {
+        "id": 1001934
+      },
+      "writtenOn": "2017-11-09T21:51:56Z",
+      "side": 1,
+      "message": "Is there an advantage to having this? Is it to be consistent with other services?",
+      "revId": "3821708238cb55b174a9228a20a60f5e62ac46e0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "aba28e82_abb3b0df",
         "filename": "chrome/services/media_util/public/cpp/BUILD.gn",
         "patchSetId": 4
@@ -134,6 +168,57 @@
         "endLine": 16,
         "endChar": 30
       },
+      "revId": "3821708238cb55b174a9228a20a60f5e62ac46e0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "cb328211_02af712c",
+        "filename": "chrome/services/media_util/public/cpp/DEPS",
+        "patchSetId": 4
+      },
+      "lineNbr": 3,
+      "author": {
+        "id": 1001934
+      },
+      "writtenOn": "2017-11-09T21:51:56Z",
+      "side": 1,
+      "message": "Alphabetical order.",
+      "revId": "3821708238cb55b174a9228a20a60f5e62ac46e0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b3e9bfd6_07a54722",
+        "filename": "chrome/services/media_util/public/cpp/safe_audio_video_checker.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 38,
+      "author": {
+        "id": 1001934
+      },
+      "writtenOn": "2017-11-09T21:51:56Z",
+      "side": 1,
+      "message": "static",
+      "revId": "3821708238cb55b174a9228a20a60f5e62ac46e0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "bd5488fa_ef45f081",
+        "filename": "chrome/utility/extensions/extensions_handler.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 18,
+      "author": {
+        "id": 1001934
+      },
+      "writtenOn": "2017-11-09T21:51:56Z",
+      "side": 1,
+      "message": "Also remove?",
       "revId": "3821708238cb55b174a9228a20a60f5e62ac46e0",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
