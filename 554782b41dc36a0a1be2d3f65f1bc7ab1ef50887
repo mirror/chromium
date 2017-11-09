@@ -119,6 +119,24 @@
     },
     {
       "key": {
+        "uuid": "9bf784be_a0cdfa6c",
+        "filename": "chrome/browser/extensions/api/webrtc_logging_private/webrtc_logging_private_apitest.cc",
+        "patchSetId": 17
+      },
+      "lineNbr": 459,
+      "author": {
+        "id": 1244443
+      },
+      "writtenOn": "2017-11-09T02:49:24Z",
+      "side": 1,
+      "message": "Ideally I would like to add tests that cover the following cases, but I failed to find a good example of how to setup the working dir in a test. I see some suggestions that I should be able to create a unique temp directory and supply kUserDataDir to the browser process (InProcessBrowserTest::CreateUserDataDirectory doesn\u0027t create a user data dir if one has already been supplied that way), but I\u0027m not confident that\u0027s the right way.\n\n# Cases\n * The directory entry shouldn\u0027t allow creation of new files.\n * When \"WebRTC Logs\" doesn\u0027t exist, calling getLogsDirectory should return an empty directory.\n * If the directory does exist, and contains some file, \n   - that file should be visible\n   - that file should be readable\n   - that file shouldn\u0027t be writable\n * [Super optional] If \"WebRTC Logs\" doesn\u0027t exist and cannot be created, the lastError should be set.",
+      "parentUuid": "cf3dbac5_8abaf2ad",
+      "revId": "554782b41dc36a0a1be2d3f65f1bc7ab1ef50887",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "e1fbe45a_24245afa",
         "filename": "chrome/browser/extensions/api/webrtc_logging_private/webrtc_logging_private_browsertest.cc",
         "patchSetId": 17
