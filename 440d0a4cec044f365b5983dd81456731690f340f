@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "efccd206_cbdcc430",
+        "filename": "components/previews/content/previews_optimization_guide_hints.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 88,
+      "author": {
+        "id": 1147716
+      },
+      "writtenOn": "2017-11-09T21:30:14Z",
+      "side": 1,
+      "message": "nit: \", not owned by this class\"  \u003d\u003e  \". Not owned.\"",
+      "range": {
+        "startLine": 87,
+        "startChar": 65,
+        "endLine": 88,
+        "endChar": 16
+      },
+      "revId": "440d0a4cec044f365b5983dd81456731690f340f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}

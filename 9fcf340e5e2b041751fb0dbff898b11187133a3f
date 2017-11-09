@@ -183,6 +183,30 @@
     },
     {
       "key": {
+        "uuid": "40002d5b_85c4f496",
+        "filename": "components/previews/content/previews_optimization_guide_hints.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 117,
+      "author": {
+        "id": 1147716
+      },
+      "writtenOn": "2017-11-09T21:30:14Z",
+      "side": 1,
+      "message": "This is fine pattern if only called once. I\u0027m worried if the assignment operator will free the previous version. Even if it does, I see reset() pretty consistently used when overwriting a unique_ptr.",
+      "parentUuid": "b765f9d2_be9c5690",
+      "range": {
+        "startLine": 117,
+        "startChar": 2,
+        "endLine": 117,
+        "endChar": 11
+      },
+      "revId": "9fcf340e5e2b041751fb0dbff898b11187133a3f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "e71e4887_8a2986d0",
         "filename": "components/previews/content/previews_optimization_guide_hints.h",
         "patchSetId": 2
@@ -227,6 +251,30 @@
       "revId": "9fcf340e5e2b041751fb0dbff898b11187133a3f",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "fdc02fcc_c54c0462",
+        "filename": "components/previews/content/previews_optimization_guide_hints.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 36,
+      "author": {
+        "id": 1147716
+      },
+      "writtenOn": "2017-11-09T21:30:14Z",
+      "side": 1,
+      "message": "I think PreviewsOptmizationGuideImpl is much better name in this case. The OptimizationGuide terminology in the interface name already binds it to the source of the guidance. I\u0027m not sure what other impl we might do other than testing one.",
+      "parentUuid": "01c8e09e_c837f547",
+      "range": {
+        "startLine": 36,
+        "startChar": 6,
+        "endLine": 36,
+        "endChar": 36
+      },
+      "revId": "9fcf340e5e2b041751fb0dbff898b11187133a3f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     },
     {
       "key": {
