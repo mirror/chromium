@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "22cb33ab_29b8584d",
+        "filename": "chrome/browser/browser_process_impl.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 581,
+      "author": {
+        "id": 1120845
+      },
+      "writtenOn": "2017-11-09T19:31:02Z",
+      "side": 1,
+      "message": "Good question. I tried to document this in the CL description.\n\nFor chrome/browser/signin/chrome_signin_client_unittest.cc, I need a way to mock out NetworkConnectionTracker(NCT) so it returns either online/offline signal in tests. \nI didn\u0027t find a way to get a mock mojom::NetworkService* ptr that isn\u0027t just a nullptr. \n\nWhen ChromeSigninClient is constructed, it registers itself as an observer of g_browser_process-\u003enetwork_connection_tracker(). |g_browser_process| is set up as TestingBrowserProcess in tests. ChromeSigninClient is initialized indirectly in a lot of unit tests, so TestingBrowserProcess needs to have a non-null NCT.  I didn\u0027t find a way to get a mock mojom::NetworkService* when construction NCT in TestingBrowserProcess.",
+      "parentUuid": "b5354d78_a2aa0ce3",
+      "range": {
+        "startLine": 581,
+        "startChar": 8,
+        "endLine": 581,
+        "endChar": 18
+      },
+      "revId": "5bec3f92af244446fd944cf01e4636f5c4ed47b7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "f89a9c06_5b5d17b0",
         "filename": "content/public/common/network_connection_tracker.cc",
         "patchSetId": 4
@@ -45,6 +69,30 @@
       "revId": "5bec3f92af244446fd944cf01e4636f5c4ed47b7",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "285789f7_6dd9a3c1",
+        "filename": "content/public/common/network_connection_tracker.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 45,
+      "author": {
+        "id": 1120845
+      },
+      "writtenOn": "2017-11-09T19:31:02Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "f89a9c06_5b5d17b0",
+      "range": {
+        "startLine": 45,
+        "startChar": 11,
+        "endLine": 45,
+        "endChar": 25
+      },
+      "revId": "5bec3f92af244446fd944cf01e4636f5c4ed47b7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
