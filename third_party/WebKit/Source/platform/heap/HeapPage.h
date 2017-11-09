@@ -129,6 +129,16 @@ class NormalPageArena;
 class PageMemory;
 class BaseArena;
 
+// Returns a random value.
+//
+// The implementation gets its randomness from the locations of 2 independent
+// sources of address space layout randomization: a function in a Chrome
+// executable image, and a function in an external DLL/so. This implementation
+// should be fast and small, and should have the benefit of requiring
+// attackers to discover and use 2 independent weak infoleak bugs, or 1
+// arbitrary infoleak bug (used twice).
+inline uint32_t GetRandomMagic();
+
 // HeapObjectHeader is a 64-bit (64-bit platforms) or 32-bit (32-bit platforms)
 // object that has the following layout:
 //
@@ -264,14 +274,7 @@ class PLATFORM_EXPORT HeapObjectHeader {
   void CheckHeader() const;
 
 #if defined(ARCH_CPU_64_BITS)
-  // Returns a random value.
-  //
-  // The implementation gets its randomness from the locations of 2 independent
-  // sources of address space layout randomization: a function in a Chrome
-  // executable image, and a function in an external DLL/so. This implementation
-  // should be fast and small, and should have the benefit of requiring
-  // attackers to discover and use 2 independent weak infoleak bugs, or 1
-  // arbitrary infoleak bug (used twice).
+  // Returns a random magic value.
   uint32_t GetMagic() const;
   uint32_t magic_;
 #endif  // defined(ARCH_CPU_64_BITS)
@@ -457,9 +460,16 @@ class BasePage {
 
   bool IsIncrementalMarking() const { return incremental_marking_; }
 
+  // Returns true if magic number is valid.
+  bool IsValid() const;
+
  private:
-  PageMemory* storage_;
-  BaseArena* arena_;
+  // Returns a random magic value.
+  uint32_t GetMagic() const;
+
+  uint32_t const magic_;
+  PageMemory* const storage_;
+  BaseArena* const arena_;
   BasePage* next_;
 
   // Track the sweeping state of a page. Set to false at the start of a sweep,
@@ -867,6 +877,7 @@ PLATFORM_EXPORT ALWAYS_INLINE BasePage* PageFromObject(const void* object) {
   Address address = reinterpret_cast<Address>(const_cast<void*>(object));
   BasePage* page = reinterpret_cast<BasePage*>(BlinkPageAddress(address) +
                                                kBlinkGuardPageSize);
+  CHECK(page->IsValid());
 #if DCHECK_IS_ON()
   DCHECK(page->Contains(address));
 #endif
@@ -947,6 +958,14 @@ ALWAYS_INLINE uint32_t RotateLeft16(uint32_t x) {
 }
 
 inline uint32_t HeapObjectHeader::GetMagic() const {
+  return GetRandomMagic() ^ 0x6e0b6ead;
+}
+
+inline uint32_t BasePage::GetMagic() const {
+  return GetRandomMagic() ^ 0xba5e4a9e;
+}
+
+inline uint32_t GetRandomMagic() {
 // Ignore C4319: It is OK to 0-extend into the high-order bits of the uintptr_t
 // on 64-bit, in this case.
 #if defined(COMPILER_MSVC)
@@ -1023,6 +1042,10 @@ NO_SANITIZE_ADDRESS inline void HeapObjectHeader::Unmark() {
   CheckHeader();
   DCHECK(IsMarked());
   encoded_ &= ~kHeaderMarkBitMask;
+}
+
+NO_SANITIZE_ADDRESS inline bool BasePage::IsValid() const {
+  return GetMagic() == magic_;
 }
 
 inline Address NormalPageArena::AllocateObject(size_t allocation_size,
