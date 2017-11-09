@@ -111,7 +111,14 @@ class CC_PAINT_EXPORT PaintOp {
   bool IsValid() const;
 
   struct SerializeOptions {
+    SerializeOptions();
+    SerializeOptions(ImageProvider* image_provider,
+                     SkCanvas* canvas,
+                     const SkMatrix& original_ctm);
+
     ImageProvider* image_provider = nullptr;
+    SkCanvas* canvas = nullptr;
+    SkMatrix original_ctm = SkMatrix::I();
   };
 
   struct DeserializeOptions {};
@@ -140,6 +147,9 @@ class CC_PAINT_EXPORT PaintOp {
   // For draw ops, returns true if a conservative bounding rect can be provided
   // for the op.
   static bool GetBounds(const PaintOp* op, SkRect* rect);
+
+  // Returns true if the op lies outside the current clip and should be skipped.
+  static bool QuickRejectDraw(const PaintOp* op, const SkCanvas* canvas);
 
   // Returns true if executing this op will require decoding of any lazy
   // generated images.
@@ -764,6 +774,11 @@ class CC_PAINT_EXPORT PaintOpBuffer : public SkRefCnt {
   void Playback(SkCanvas* canvas,
                 ImageProvider* image_provider = nullptr,
                 SkPicture::AbortCallback* callback = nullptr) const;
+
+  static sk_sp<PaintOpBuffer> MakeFromMemory(
+      const volatile void* input,
+      size_t input_size,
+      const PaintOp::DeserializeOptions& options);
 
   // Returns the size of the paint op buffer. That is, the number of ops
   // contained in it.
