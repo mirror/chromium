@@ -73,6 +73,30 @@
     },
     {
       "key": {
+        "uuid": "8de41fe7_56e5ad75",
+        "filename": "ash/display/display_manager_unittest.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 3833,
+      "author": {
+        "id": 1199459
+      },
+      "writtenOn": "2017-11-09T18:03:56Z",
+      "side": 1,
+      "message": "Should I change it back?",
+      "parentUuid": "1e6649ab_160afe9c",
+      "range": {
+        "startLine": 3833,
+        "startChar": 7,
+        "endLine": 3833,
+        "endChar": 11
+      },
+      "revId": "770337e0b34bb383b6ec3e317b6b4cfc715ffdad",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "bb1687a6_e4a3666c",
         "filename": "ui/display/manager/chromeos/display_change_observer.cc",
         "patchSetId": 1
