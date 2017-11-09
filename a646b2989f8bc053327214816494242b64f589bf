@@ -34,6 +34,24 @@
       "revId": "a646b2989f8bc053327214816494242b64f589bf",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8e1eca88_128c352d",
+        "filename": "ui/chromeos/events/event_rewriter_chromeos.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 771,
+      "author": {
+        "id": 1199459
+      },
+      "writtenOn": "2017-11-09T22:11:09Z",
+      "side": 1,
+      "message": "When the device is connected with an external keyboard and Caps Lock key is pressed, the key event will be F16 with a MOD3_DOWN flag. If user set \"Caps Lock -\u003e Control\" keyboard mapping, the rewritten key event will be Control with CAPS_LOCK_ON flag. Then to keep keyboard caps lock state synchronized with key event, InputMethodChromeOS [1] turns caps lock state on.\n\nSo the solution is to remove this CAPS_LOCK_ON flag.\n\n[1] https://cs.chromium.org/chromium/src/ui/base/ime/input_method_chromeos.cc?q\u003dinput_method_chromeos\u0026dr\u003dC\u0026l\u003d82",
+      "parentUuid": "ebb0b100_2754d0f0",
+      "revId": "a646b2989f8bc053327214816494242b64f589bf",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
