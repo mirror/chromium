@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "efcf083a_5c530444",
+        "filename": "ash/wm/overview/overview_window_drag_controller.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 37,
+      "author": {
+        "id": 1118421
+      },
+      "writtenOn": "2017-11-09T20:11:05Z",
+      "side": 1,
+      "message": "Did you test all the screen orientations? Should this just compare the abs value of the distance with kMinimumDragOffsetAlreadyInSnapRegionDp? i.e.:\nreturn (is_landscape? std::abs(distance.x()) : std::abs(distance.y()) \u003e\u003d OverviewWindowDragController::kMinimumDragOffsetAlreadyInSnapRegionDp;",
+      "revId": "c0dd0f49f92ae5183405dee44b6abe123c9c0b77",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
