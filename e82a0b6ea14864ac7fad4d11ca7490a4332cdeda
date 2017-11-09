@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "54969c34_25d64413",
+        "filename": "third_party/sqlite/amalgamation/shell.c",
+        "patchSetId": 4
+      },
+      "lineNbr": 1502,
+      "author": {
+        "id": 1163599
+      },
+      "writtenOn": "2017-11-09T10:24:52Z",
+      "side": 1,
+      "message": "I might not have understood your comment correctly. In that case, I apologize in advance for the unrelated answer!\n\nThis is the diff between our patched shell.c for 3.20.1 and our patched shell.c in 3.21.0. I think that the fact that you don\u0027t see sqlite_shell_init_icu in it is a good thing, because it means the patch was updated correctly. You can see the \"/* Begin evanm patch. */\" stuff at line 8066 in https://chromium-review.googlesource.com/c/chromium/src/+/754522/4/third_party/sqlite/amalgamation/shell.c\n\nThe sqlite_shell_init_icu function itself is defined in in third_party/sqlite/src/src/shell_icu_linux.c and third_party/sqlite/src/src/shell_icu_win.c, which are new files introduced by the 0005 patch. The fact that these files don\u0027t show up in the diff is a good thing, just like above.\n\nhttps://cs.chromium.org/chromium/src/third_party/sqlite/src/src/shell_icu_linux.c\nhttps://cs.chromium.org/chromium/src/third_party/sqlite/src/src/shell_icu_win.c",
+      "parentUuid": "ff5693f3_28b20698",
+      "revId": "e82a0b6ea14864ac7fad4d11ca7490a4332cdeda",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "005e00b2_3ae1a754",
         "filename": "third_party/sqlite/patches/0003-Modify-default-VFS-to-support-WebDatabase.patch",
         "patchSetId": 4
@@ -33,6 +51,24 @@
       "revId": "e82a0b6ea14864ac7fad4d11ca7490a4332cdeda",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "394d262a_953a2dd1",
+        "filename": "third_party/sqlite/patches/0003-Modify-default-VFS-to-support-WebDatabase.patch",
+        "patchSetId": 4
+      },
+      "lineNbr": 66,
+      "author": {
+        "id": 1163599
+      },
+      "writtenOn": "2017-11-09T10:24:52Z",
+      "side": 1,
+      "message": "Done. Thank you for catching this!",
+      "parentUuid": "005e00b2_3ae1a754",
+      "revId": "e82a0b6ea14864ac7fad4d11ca7490a4332cdeda",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -53,6 +89,24 @@
     },
     {
       "key": {
+        "uuid": "00e50166_2a05b1eb",
+        "filename": "third_party/sqlite/patches/0003-Modify-default-VFS-to-support-WebDatabase.patch",
+        "patchSetId": 4
+      },
+      "lineNbr": 97,
+      "author": {
+        "id": 1163599
+      },
+      "writtenOn": "2017-11-09T10:24:52Z",
+      "side": 1,
+      "message": "This name does not refer to a unixFile struct member. pUnused is a local variable introduced earlier. You can see it at line 5840 in https://chromium-review.googlesource.com/c/chromium/src/+/754522/4/third_party/sqlite/src/src/os_unix.c",
+      "parentUuid": "1d3c0c06_b2c727f0",
+      "revId": "e82a0b6ea14864ac7fad4d11ca7490a4332cdeda",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "f68fc887_f7f3ff8f",
         "filename": "third_party/sqlite/src/src/os_unix.c",
         "patchSetId": 4
@@ -67,6 +121,24 @@
       "revId": "e82a0b6ea14864ac7fad4d11ca7490a4332cdeda",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "fc6ba998_ba2c5bd9",
+        "filename": "third_party/sqlite/src/src/os_unix.c",
+        "patchSetId": 4
+      },
+      "lineNbr": 5923,
+      "author": {
+        "id": 1163599
+      },
+      "writtenOn": "2017-11-09T10:24:52Z",
+      "side": 1,
+      "message": "Nope, I brought it back. Thank you!",
+      "parentUuid": "f68fc887_f7f3ff8f",
+      "revId": "e82a0b6ea14864ac7fad4d11ca7490a4332cdeda",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
