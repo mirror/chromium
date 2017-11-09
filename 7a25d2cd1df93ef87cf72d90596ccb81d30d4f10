@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "e2a9ff72_752f13e3",
+        "filename": "third_party/WebKit/Source/bindings/core/v8/V8NodeFilterCondition.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 111,
+      "author": {
+        "id": 1002507
+      },
+      "writtenOn": "2017-11-09T09:46:47Z",
+      "side": 1,
+      "message": "Please use: platform/wtf/AutoReset.h\nor if it\u0027s already allowed to directly use base/, then please use base/auto_reset.h .\n\nGiven that you\u0027re going to use AutoReset, I\u0027d prefer putting the AutoReset just after line 67.",
+      "revId": "7a25d2cd1df93ef87cf72d90596ccb81d30d4f10",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
