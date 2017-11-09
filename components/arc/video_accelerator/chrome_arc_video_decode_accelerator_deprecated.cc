@@ -422,7 +422,7 @@ void ChromeArcVideoDecodeAcceleratorDeprecated::UseBuffer(
       // is_null() is false the first time the buffer is passed to the VDA.
       // In that case, VDA needs to import the buffer first.
       if (!output_info->gpu_memory_buffer_handle.is_null()) {
-        vda_->ImportBufferForPicture(index,
+        vda_->ImportBufferForPicture(index, media::PIXEL_FORMAT_UNKNOWN,
                                      output_info->gpu_memory_buffer_handle);
         // VDA takes ownership, so just clear out, don't close the handle.
         output_info->gpu_memory_buffer_handle = gfx::GpuMemoryBufferHandle();
