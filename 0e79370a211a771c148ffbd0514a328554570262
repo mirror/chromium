@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "7a5c6644_99285830",
+        "filename": "build/protoc_java.py",
+        "patchSetId": 8
+      },
+      "lineNbr": 36,
+      "author": {
+        "id": 1249210
+      },
+      "writtenOn": "2017-11-09T16:56:49Z",
+      "side": 1,
+      "message": "I\u0027m not sure I understand. There are a few differences between nano and lite generator (nano uses some generator args, and javanano_out instead of java_out.\n\nAre you suggesting putting more of the command line format of protoc into the call to protoc_java? What I kind of like about protoc_java currently is that it isolates the caller(s) from having to know about protoc command line details.",
+      "parentUuid": "1106a551_48183f25",
+      "revId": "0e79370a211a771c148ffbd0514a328554570262",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "df5a50b0_d6a9cb24",
         "filename": "build/protoc_java.py",
         "patchSetId": 8
@@ -30,6 +48,24 @@
       "writtenOn": "2017-11-07T16:06:28Z",
       "side": 1,
       "message": "Would it be worth adding an check here that \u0027LITE_RUNTIME\u0027 in open(proto_path).read()?",
+      "revId": "0e79370a211a771c148ffbd0514a328554570262",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3e46b6ef_a6fb1ea5",
+        "filename": "build/protoc_java.py",
+        "patchSetId": 8
+      },
+      "lineNbr": 51,
+      "author": {
+        "id": 1249210
+      },
+      "writtenOn": "2017-11-09T16:56:49Z",
+      "side": 1,
+      "message": "Ah yeah, that\u0027s a great idea. I added a check for all source files now.",
+      "parentUuid": "df5a50b0_d6a9cb24",
       "revId": "0e79370a211a771c148ffbd0514a328554570262",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true

@@ -34,6 +34,24 @@
       "revId": "1df1bad01175da996cdfc3166252f10edc217692",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5ca75dfd_0160086d",
+        "filename": "build/config/android/rules.gni",
+        "patchSetId": 7
+      },
+      "lineNbr": 3100,
+      "author": {
+        "id": 1249210
+      },
+      "writtenOn": "2017-11-09T16:56:49Z",
+      "side": 1,
+      "message": "Ah, thanks for noticing!\n\nI changed the argument to generate_lite, and made that false by default.",
+      "parentUuid": "861a38d9_b79f6b27",
+      "revId": "1df1bad01175da996cdfc3166252f10edc217692",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
