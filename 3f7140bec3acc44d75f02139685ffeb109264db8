@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "2402fa34_906e47ea",
+        "filename": "components/arc/video_accelerator/chrome_arc_video_decode_accelerator.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 31,
+      "author": {
+        "id": 1000303
+      },
+      "writtenOn": "2017-11-09T19:57:51Z",
+      "side": 1,
+      "message": "nit: remove?\n\n(sdk veyron_minnie R64-10088.0.0) yusukes@yusukes2 /ssd2/chromium/src $ git grep \u0027  // namespace$\u0027 | wc -l\n16049\n(sdk veyron_minnie R64-10088.0.0) yusukes@yusukes2 /ssd2/chromium/src $ git grep \u0027  // anonymous namespace\u0027 | wc -l\n558",
+      "range": {
+        "startLine": 31,
+        "startChar": 6,
+        "endLine": 31,
+        "endChar": 16
+      },
+      "revId": "3f7140bec3acc44d75f02139685ffeb109264db8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
