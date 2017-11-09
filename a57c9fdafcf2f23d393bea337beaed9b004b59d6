@@ -1,0 +1,73 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "19247639_bca0f3b4",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/partnerbookmarks/PartnerBookmarksCache.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 29,
+      "author": {
+        "id": 1116043
+      },
+      "writtenOn": "2017-11-09T17:20:36Z",
+      "side": 1,
+      "message": "should this be package protected and marked with @VisibleForTesting?",
+      "range": {
+        "startLine": 29,
+        "startChar": 4,
+        "endLine": 29,
+        "endChar": 10
+      },
+      "revId": "a57c9fdafcf2f23d393bea337beaed9b004b59d6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5e551b24_63624b28",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/partnerbookmarks/PartnerBookmarksCache.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 55,
+      "author": {
+        "id": 1116043
+      },
+      "writtenOn": "2017-11-09T17:20:36Z",
+      "side": 1,
+      "message": "braces required in java if the statement and condition don\u0027t fit on a single line (clang format needs to likely get updated for that)",
+      "range": {
+        "startLine": 55,
+        "startChar": 25,
+        "endLine": 55,
+        "endChar": 26
+      },
+      "revId": "a57c9fdafcf2f23d393bea337beaed9b004b59d6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5752be26_37c04ddc",
+        "filename": "chrome/android/java_sources.gni",
+        "patchSetId": 4
+      },
+      "lineNbr": 1612,
+      "author": {
+        "id": 1116043
+      },
+      "writtenOn": "2017-11-09T17:20:36Z",
+      "side": 1,
+      "message": "This looks like it could be a junit test instead of a instrumentation test.  Any reason we need it to be run on the device?",
+      "range": {
+        "startLine": 1612,
+        "startChar": 3,
+        "endLine": 1612,
+        "endChar": 12
+      },
+      "revId": "a57c9fdafcf2f23d393bea337beaed9b004b59d6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
