@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "890749cf_a2c2a702",
+        "filename": "ios/chrome/app/application_delegate/app_state_unittest.mm",
+        "patchSetId": 2
+      },
+      "lineNbr": 287,
+      "author": {
+        "id": 1116027
+      },
+      "writtenOn": "2017-11-09T13:44:10Z",
+      "side": 1,
+      "message": "style: this should be GetBrowserState() or browser_state() since it is a cheap inline method.",
+      "range": {
+        "startLine": 287,
+        "startChar": 27,
+        "endLine": 287,
+        "endChar": 42
+      },
+      "revId": "bf680a5a020995315b2493ae9ffd85f92afea9f2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
