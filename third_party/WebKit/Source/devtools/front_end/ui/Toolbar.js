@@ -43,6 +43,7 @@ UI.Toolbar = class {
     this.element = parentElement ? parentElement.createChild('div') : createElement('div');
     this.element.className = className;
     this.element.classList.add('toolbar');
+    this.element.addEventListener('keydown', this._onKeyDown.bind(this), false);
     this._enabled = true;
     this._shadowRoot = UI.createShadowRootWithCoreStyles(this.element, 'ui/toolbar.css');
     this._contentElement = this._shadowRoot.createChild('div', 'toolbar-shadow');
@@ -368,6 +369,39 @@ UI.Toolbar = class {
       }
     }
   }
+
+  /**
+   * @param {!Event} event
+   */
+  _onKeyDown(event) {
+    switch (event.key) {
+      case 'ArrowLeft':
+      case 'ArrowUp':
+        var previousItem = null;
+        for (var item of this._items) {
+          if (item.hasFocus()) {
+            if (previousItem)
+              previousItem.focus();
+            break;
+          }
+          if (item.enabled() && item.visible())
+            previousItem = item;
+        }
+        break;
+      case 'ArrowRight':
+      case 'ArrowDown':
+        var focusedItem = null;
+        for (var item of this._items) {
+          if (item.hasFocus()) {
+            focusedItem = item;
+          } else if (focusedItem && item.visible() && item.enabled()) {
+            item.focus();
+            break;
+          }
+        }
+        break;
+    }
+  }
 };
 
 /**
@@ -410,6 +444,24 @@ UI.ToolbarItem = class extends Common.Object {
    */
   _applyEnabledState(enabled) {
     this.element.disabled = !enabled;
+  }
+
+  focus() {
+    this.element.focus();
+  }
+
+  /**
+   * @return {boolean}
+   */
+  hasFocus() {
+    return this.element.hasFocus();
+  }
+
+  /**
+   * @return {boolean}
+   */
+  enabled() {
+    return this._enabled;
   }
 
   /**
@@ -605,6 +657,13 @@ UI.ToolbarInput = class extends UI.ToolbarItem {
     clearButton.addEventListener('click', () => this._internalSetValue('', true));
 
     this._updateEmptyStyles();
+  }
+
+  /**
+   * @override
+   */
+  focus() {
+    this._prompt.focus();
   }
 
   /**
@@ -1055,6 +1114,13 @@ UI.ToolbarCheckbox = class extends UI.ToolbarItem {
       this.element.title = tooltip;
     if (listener)
       this.inputElement.addEventListener('click', listener, false);
+  }
+
+  /**
+   * @override
+   */
+  focus() {
+    this.inputElement.focus();
   }
 
   /**

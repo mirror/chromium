@@ -132,6 +132,10 @@ UI.TextPrompt = class extends Common.Object {
     return this._proxyElement;
   }
 
+  focus() {
+    this._element.focus();
+  }
+
   detach() {
     this._removeFromElement();
     this._focusRestorer.restore();
