@@ -257,6 +257,7 @@ DownloadItemImpl::DownloadItemImpl(
       received_slices_(received_slices),
       net_log_(net_log),
       is_updating_observers_(false),
+      download_ukm_helper_(ukm::UkmRecorder::Get(), site_url),
       weak_ptr_factory_(this) {
   delegate_->Attach();
   DCHECK(state_ == COMPLETE_INTERNAL || state_ == INTERRUPTED_INTERNAL ||
@@ -303,6 +304,7 @@ DownloadItemImpl::DownloadItemImpl(DownloadItemImplDelegate* delegate,
       net_log_(net_log),
       is_updating_observers_(false),
       fetch_error_body_(info.fetch_error_body),
+      download_ukm_helper_(ukm::UkmRecorder::Get(), info.site_url),
       weak_ptr_factory_(this) {
   delegate_->Attach();
   Init(true /* actively downloading */, SRC_ACTIVE_DOWNLOAD);
@@ -337,6 +339,7 @@ DownloadItemImpl::DownloadItemImpl(
       destination_info_(path, path, 0, false, std::string(), base::Time()),
       net_log_(net_log),
       is_updating_observers_(false),
+      download_ukm_helper_(ukm::UkmRecorder::Get(), url),
       weak_ptr_factory_(this) {
   job_ = DownloadJobFactory::CreateJob(this, std::move(request_handle),
                                        DownloadCreateInfo(), true);
@@ -1303,6 +1306,7 @@ void DownloadItemImpl::Start(
     std::unique_ptr<DownloadFile> file,
     std::unique_ptr<DownloadRequestHandleInterface> req_handle,
     const DownloadCreateInfo& new_create_info) {
+  LOG(ERROR) << "joy: DownloadItemImpl::Start";
   DCHECK_CURRENTLY_ON(BrowserThread::UI);
   DCHECK(!download_file_.get());
   DVLOG(20) << __func__ << "() this=" << DebugString(true);
@@ -1367,7 +1371,16 @@ void DownloadItemImpl::Start(
       RecordParallelizableDownloadCount(NEW_DOWNLOAD_COUNT,
                                         IsParallelDownloadEnabled());
     }
-    RecordDownloadMimeType(mime_type_);
+
+    LOG(ERROR) << "joy: "
+               << "RecordDownloadMimeType: " << mime_type_;
+    int file_type = RecordDownloadMimeType(mime_type_);
+    LOG(ERROR) << "joy: "
+               << "RecordDownloadStartedFileType: " << file_type;
+    download_ukm_helper_.RecordDownloadStartedFileType(file_type);
+    download_ukm_helper_.RecordDownloadStartedComponent(0);
+    download_ukm_helper_.RecordDownloadStartedNumStreams(2);
+
     if (!GetBrowserContext()->IsOffTheRecord()) {
       RecordDownloadCount(NEW_DOWNLOAD_COUNT_NORMAL_PROFILE);
       RecordDownloadMimeTypeForNormalProfile(mime_type_);
