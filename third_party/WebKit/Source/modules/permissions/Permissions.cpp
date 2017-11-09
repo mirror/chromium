@@ -85,7 +85,7 @@ PermissionDescriptorPtr ParsePermission(ScriptState* script_state,
       return nullptr;
     }
 
-    return CreatePermissionDescriptor(PermissionName::PUSH_NOTIFICATIONS);
+    return CreatePermissionDescriptor(PermissionName::NOTIFICATIONS);
   }
   if (name == "midi") {
     MidiPermissionDescriptor midi_permission =

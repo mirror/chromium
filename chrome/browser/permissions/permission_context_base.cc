@@ -440,7 +440,7 @@ void PermissionContextBase::UpdateContentSetting(
 
 ContentSettingsType PermissionContextBase::content_settings_storage_type()
     const {
-  return PermissionUtil::GetContentSettingsStorageType(content_settings_type_);
+  return content_settings_type_;
 }
 
 bool PermissionContextBase::PermissionAllowedByFeaturePolicy(
