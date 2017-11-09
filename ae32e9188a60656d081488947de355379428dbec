@@ -70,6 +70,29 @@
       "revId": "ae32e9188a60656d081488947de355379428dbec",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "b6f6f809_19f57289",
+        "filename": "components/infobars/core/infobar_manager.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 82,
+      "author": {
+        "id": 1115907
+      },
+      "writtenOn": "2017-11-09T22:27:45Z",
+      "side": 1,
+      "message": "instead of adding this could we instead change AddInfoBar so that instead of always doing nothing if an infobar (delegate) already exists, optionally replace the existing one? i.e.\n\n  InfoBar* AddInfoBar(std::unique_ptr\u003cInfoBar\u003e infobar, bool replace_existing\u003dfalse);\n\n\"Add or update\" seems like a common pattern, at least with message center notifications we have a function along those lines.",
+      "range": {
+        "startLine": 82,
+        "startChar": 24,
+        "endLine": 82,
+        "endChar": 40
+      },
+      "revId": "ae32e9188a60656d081488947de355379428dbec",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
