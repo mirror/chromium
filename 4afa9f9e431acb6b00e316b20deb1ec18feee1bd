@@ -22,6 +22,30 @@
       "revId": "4afa9f9e431acb6b00e316b20deb1ec18feee1bd",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d54cda3d_1cc92f56",
+        "filename": "build/android/apk_operations.py",
+        "patchSetId": 1
+      },
+      "lineNbr": 102,
+      "author": {
+        "id": 1126674
+      },
+      "writtenOn": "2017-11-09T20:20:33Z",
+      "side": 1,
+      "message": "That\u0027s right. It matches AndroidManifest.xml behaviour, where you can use fully-qualified names, but if you don\u0027t, the : prefix is optional.",
+      "parentUuid": "e5c1746f_17dfa686",
+      "range": {
+        "startLine": 102,
+        "startChar": 9,
+        "endLine": 102,
+        "endChar": 10
+      },
+      "revId": "4afa9f9e431acb6b00e316b20deb1ec18feee1bd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
