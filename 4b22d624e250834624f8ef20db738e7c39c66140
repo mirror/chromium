@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "8508dc39_aadced35",
+        "filename": "chrome/browser/sessions/session_restore_observer.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 42,
+      "author": {
+        "id": 1000763
+      },
+      "writtenOn": "2017-11-09T02:05:18Z",
+      "side": 1,
+      "message": "This isn\u0027t entirely true as some may be in the foreground in other windows, right?",
+      "range": {
+        "startLine": 42,
+        "startChar": 50,
+        "endLine": 42,
+        "endChar": 62
+      },
+      "revId": "4b22d624e250834624f8ef20db738e7c39c66140",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1317e0e8_857cb170",
+        "filename": "chrome/browser/sessions/session_restore_observer.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 45,
+      "author": {
+        "id": 1000763
+      },
+      "writtenOn": "2017-11-09T02:05:18Z",
+      "side": 1,
+      "message": "Is there a reason you can\u0027t count the number of calls to OnWillRestoreTab()? Shouldn\u0027t that be the same as this?",
+      "range": {
+        "startLine": 45,
+        "startChar": 15,
+        "endLine": 45,
+        "endChar": 37
+      },
+      "revId": "4b22d624e250834624f8ef20db738e7c39c66140",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
