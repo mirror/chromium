@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "b948a703_63eb6076",
+        "filename": "extensions/browser/DEPS",
+        "patchSetId": 11
+      },
+      "lineNbr": 26,
+      "author": {
+        "id": 1002172
+      },
+      "writtenOn": "2017-11-09T10:40:42Z",
+      "side": 1,
+      "message": "+benwells",
+      "revId": "fec405ce57e1d9afd201549b6c52856d7c4820e2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
