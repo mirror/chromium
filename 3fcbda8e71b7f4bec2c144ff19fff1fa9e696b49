@@ -107,6 +107,24 @@
     },
     {
       "key": {
+        "uuid": "70e19c9a_d4cdc7bd",
+        "filename": "content/browser/browser_url_handler_impl.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 15,
+      "author": {
+        "id": 1001216
+      },
+      "writtenOn": "2017-11-09T22:33:03Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "49985fbb_6476d3c8",
+      "revId": "3fcbda8e71b7f4bec2c144ff19fff1fa9e696b49",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "c7c52164_a8ef339a",
         "filename": "content/public/common/url_utils.cc",
         "patchSetId": 6
@@ -283,6 +301,24 @@
     },
     {
       "key": {
+        "uuid": "53b919c7_e3fe70d7",
+        "filename": "content/renderer/render_frame_impl.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 779,
+      "author": {
+        "id": 1001216
+      },
+      "writtenOn": "2017-11-09T22:33:03Z",
+      "side": 1,
+      "message": "Thanks-- that almost works, but I don\u0027t think this is fixed yet.\n\n1) IsRendererDebugURL won\u0027t return true for chrome://crash/heap-overflow.  Doesn\u0027t that mean PlzNav will treat it as an error, even when it\u0027s supposed to work (i.e.., in an ASAN build)?  You might need to do an ASAN build to confirm.\n\n2) For the same reason, we won\u0027t return true from MaybeHandleDebugURL, since IsRendererDebugURL would return false.  That means we wouldn\u0027t early exit with DidStopLoading in NavigateInternal.\n\nI think we can fix it by changing IsRendererDebugURL to return true for any URL starting with chrome://crash when we\u0027re in one of these ASAN builds (i.e., the ifdefs above)?  Or did I misinterpret the code?",
+      "parentUuid": "0855bfc4_cb86ec47",
+      "revId": "3fcbda8e71b7f4bec2c144ff19fff1fa9e696b49",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "ef70000a_81282de8",
         "filename": "content/renderer/render_frame_impl.cc",
         "patchSetId": 6
@@ -421,6 +457,30 @@
       "revId": "3fcbda8e71b7f4bec2c144ff19fff1fa9e696b49",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "551b3dd0_900715d8",
+        "filename": "content/renderer/render_frame_impl.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 6103,
+      "author": {
+        "id": 1001216
+      },
+      "writtenOn": "2017-11-09T22:33:03Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "0295f81c_32b9debb",
+      "range": {
+        "startLine": 6103,
+        "startChar": 31,
+        "endLine": 6103,
+        "endChar": 51
+      },
+      "revId": "3fcbda8e71b7f4bec2c144ff19fff1fa9e696b49",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }

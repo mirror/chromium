@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "6ff3d32a_f1c34972",
+        "filename": "content/renderer/render_frame_impl.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 865,
+      "author": {
+        "id": 1001216
+      },
+      "writtenOn": "2017-11-09T22:33:03Z",
+      "side": 1,
+      "message": "Let\u0027s add something like:\nThese URLs do not commit, though they are intentionally left in the address bar above the effect they cause (e.g., a sad tab).",
+      "revId": "c4e459a175d004c16b6c60f5bd55954c94f50a33",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0906b530_9fc31ba8",
+        "filename": "content/renderer/render_frame_impl.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 6272,
+      "author": {
+        "id": 1001216
+      },
+      "writtenOn": "2017-11-09T22:33:03Z",
+      "side": 1,
+      "message": "Please add something like: \"while leaving the debug URL visible in the address bar.\"  That makes it clear that we\u0027re doing it intentionally.",
+      "revId": "c4e459a175d004c16b6c60f5bd55954c94f50a33",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
