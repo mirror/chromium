@@ -237,6 +237,24 @@
       "revId": "cdce818ea87adaed639f4d687f7c0c64105dcdd4",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1f1a490e_5a9d3e7b",
+        "filename": "build/mac/find_sdk.py",
+        "patchSetId": 1
+      },
+      "lineNbr": 58,
+      "author": {
+        "id": 1214214
+      },
+      "writtenOn": "2017-11-09T18:37:05Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "d9550a47_df9697ad",
+      "revId": "cdce818ea87adaed639f4d687f7c0c64105dcdd4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }

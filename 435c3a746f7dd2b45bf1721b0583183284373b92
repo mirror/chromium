@@ -16,6 +16,24 @@
       "revId": "435c3a746f7dd2b45bf1721b0583183284373b92",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "788f5cad_41eff6e4",
+        "filename": "build/mac/find_sdk.py",
+        "patchSetId": 2
+      },
+      "lineNbr": 61,
+      "author": {
+        "id": 1214214
+      },
+      "writtenOn": "2017-11-09T18:37:05Z",
+      "side": 1,
+      "message": "It’s guaranteed to end with `\u0027Platforms/MacOSX.platform/Developer/SDKs\u0027` because of the previous non-comment line.\n\nWe could do something like `tmp \u003d out.rstrip()` and then check that before appending `\u0027Platforms/…\u0027` but it doesn’t seem worth the hassle IMHO.",
+      "parentUuid": "3af29aa5_6f60f673",
+      "revId": "435c3a746f7dd2b45bf1721b0583183284373b92",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
