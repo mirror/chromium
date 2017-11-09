@@ -1070,6 +1070,8 @@ group("chromium_builder_perf") {
         "//chrome/installer/mini_installer:mini_installer",
         "//chrome/test:angle_perftests",
       ]
+    } else if (is_android) {
+      data_deps += [ "//chrome/test:angle_perftests" ]
     } else {
       data_deps +=
           [ "//third_party/breakpad:minidump_stackwalk($host_toolchain)" ]
