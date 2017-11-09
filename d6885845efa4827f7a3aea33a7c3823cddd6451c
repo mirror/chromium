@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "beef0f19_b1b5e69f",
+        "filename": "chrome/renderer/extensions/automation_internal_custom_bindings.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 755,
+      "author": {
+        "id": 1115745
+      },
+      "writtenOn": "2017-11-09T03:01:42Z",
+      "side": 0,
+      "message": "It seems like we\u0027d still want to clear the map here to invalidate the trees and remove all the delegates as the context is torn down?",
+      "revId": "d6885845efa4827f7a3aea33a7c3823cddd6451c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
