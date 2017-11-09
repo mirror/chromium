@@ -213,6 +213,7 @@ void TranslateUIDelegate::Translate() {
     prefs_->ResetTranslationDeniedCount(GetOriginalLanguageCode());
     prefs_->ResetTranslationIgnoredCount(GetOriginalLanguageCode());
     prefs_->IncrementTranslationAcceptedCount(GetOriginalLanguageCode());
+    prefs_->SetRecentTargetLanguage(GetTargetLanguageCode());
   }
 
   if (translate_manager_) {
