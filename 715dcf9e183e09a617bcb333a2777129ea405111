@@ -19,6 +19,40 @@
     },
     {
       "key": {
+        "uuid": "83641839_7d58f085",
+        "filename": "third_party/WebKit/LayoutTests/http/tests/local/fileapi/send-dragged-file-form.html",
+        "patchSetId": 8
+      },
+      "lineNbr": 3,
+      "author": {
+        "id": 1163599
+      },
+      "writtenOn": "2017-11-09T22:48:33Z",
+      "side": 1,
+      "message": "nit: \"dragged\" seems like an implementation detail -- it\u0027s not fundamental to the test, it just so happens that dragging is the only automated file \"picker\" we have.",
+      "revId": "715dcf9e183e09a617bcb333a2777129ea405111",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7bef715c_ec87f685",
+        "filename": "third_party/WebKit/LayoutTests/http/tests/local/fileapi/send-dragged-file-form.html",
+        "patchSetId": 8
+      },
+      "lineNbr": 4,
+      "author": {
+        "id": 1163599
+      },
+      "writtenOn": "2017-11-09T22:48:33Z",
+      "side": 1,
+      "message": "Please try wrapping to 80 chars. You can at least wrap before href\u003d",
+      "revId": "715dcf9e183e09a617bcb333a2777129ea405111",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "c6ca7e19_93586139",
         "filename": "third_party/WebKit/LayoutTests/http/tests/local/fileapi/send-dragged-file-form.html",
         "patchSetId": 8
@@ -30,6 +64,40 @@
       "writtenOn": "2017-11-09T22:29:56Z",
       "side": 1,
       "message": "Can just use \"/resources/testharness.js\"",
+      "revId": "715dcf9e183e09a617bcb333a2777129ea405111",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "52c757ad_02a39d68",
+        "filename": "third_party/WebKit/LayoutTests/http/tests/local/fileapi/send-dragged-file-form.html",
+        "patchSetId": 8
+      },
+      "lineNbr": 7,
+      "author": {
+        "id": 1163599
+      },
+      "writtenOn": "2017-11-09T22:48:33Z",
+      "side": 1,
+      "message": "In HTTP tests, I think you can use use href\u003d\"/resources/*\" which is supposed to make it easy to move tests around, if necessary.",
+      "revId": "715dcf9e183e09a617bcb333a2777129ea405111",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "dfb153d8_93c3adf4",
+        "filename": "third_party/WebKit/LayoutTests/http/tests/local/fileapi/send-dragged-file-form.html",
+        "patchSetId": 8
+      },
+      "lineNbr": 14,
+      "author": {
+        "id": 1163599
+      },
+      "writtenOn": "2017-11-09T22:48:33Z",
+      "side": 1,
+      "message": "You won\u0027t need the if if you put all the HTML elements you need above this \u003cscript\u003e.",
       "revId": "715dcf9e183e09a617bcb333a2777129ea405111",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -53,6 +121,159 @@
     },
     {
       "key": {
+        "uuid": "0ed7bf15_8be3ebc1",
+        "filename": "third_party/WebKit/LayoutTests/http/tests/local/fileapi/send-dragged-file-form.html",
+        "patchSetId": 8
+      },
+      "lineNbr": 20,
+      "author": {
+        "id": 1163599
+      },
+      "writtenOn": "2017-11-09T22:48:33Z",
+      "side": 1,
+      "message": "This looks over 80 chars. Please shorten or wrap.\n\nA reasonable out is \"This test relies on eventSender.beginDragWithFiles.\"",
+      "revId": "715dcf9e183e09a617bcb333a2777129ea405111",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "cb6d6d66_35979733",
+        "filename": "third_party/WebKit/LayoutTests/http/tests/local/fileapi/send-dragged-file-form.html",
+        "patchSetId": 8
+      },
+      "lineNbr": 22,
+      "author": {
+        "id": 1163599
+      },
+      "writtenOn": "2017-11-09T22:48:33Z",
+      "side": 1,
+      "message": "You\u0027re only using this in one place. Please inline it. If you have a good reason not to, at least define the variable close to where it\u0027s used.",
+      "revId": "715dcf9e183e09a617bcb333a2777129ea405111",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "cc77b553_39d33630",
+        "filename": "third_party/WebKit/LayoutTests/http/tests/local/fileapi/send-dragged-file-form.html",
+        "patchSetId": 8
+      },
+      "lineNbr": 23,
+      "author": {
+        "id": 1163599
+      },
+      "writtenOn": "2017-11-09T22:48:33Z",
+      "side": 1,
+      "message": "Unused variable?!",
+      "revId": "715dcf9e183e09a617bcb333a2777129ea405111",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d3961f25_57b45dfa",
+        "filename": "third_party/WebKit/LayoutTests/http/tests/local/fileapi/send-dragged-file-form.html",
+        "patchSetId": 8
+      },
+      "lineNbr": 24,
+      "author": {
+        "id": 1163599
+      },
+      "writtenOn": "2017-11-09T22:48:33Z",
+      "side": 1,
+      "message": "Please inline",
+      "revId": "715dcf9e183e09a617bcb333a2777129ea405111",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a8ee046c_4817def0",
+        "filename": "third_party/WebKit/LayoutTests/http/tests/local/fileapi/send-dragged-file-form.html",
+        "patchSetId": 8
+      },
+      "lineNbr": 25,
+      "author": {
+        "id": 1163599
+      },
+      "writtenOn": "2017-11-09T22:48:33Z",
+      "side": 1,
+      "message": "Please inline, or at least move close to where this is used.",
+      "revId": "715dcf9e183e09a617bcb333a2777129ea405111",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0605cbe0_53de4f3b",
+        "filename": "third_party/WebKit/LayoutTests/http/tests/local/fileapi/send-dragged-file-form.html",
+        "patchSetId": 8
+      },
+      "lineNbr": 27,
+      "author": {
+        "id": 1163599
+      },
+      "writtenOn": "2017-11-09T22:48:33Z",
+      "side": 1,
+      "message": "targetLoaded can be const and assigned immediately.\n\nresolveTargetLoaded is not necessary. Instead, find the iframe and set up the listener in the Promise function.\n\n\nconst targetLoaded \u003d new Promise(resolve \u003d\u003e {\n  const target \u003d document.getElementById(\u0027form-target-iframe\u0027);\n  target.onload \u003d () \u003d\u003e { resolve(); };\n});",
+      "revId": "715dcf9e183e09a617bcb333a2777129ea405111",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3b2b0ef0_bcaaaeef",
+        "filename": "third_party/WebKit/LayoutTests/http/tests/local/fileapi/send-dragged-file-form.html",
+        "patchSetId": 8
+      },
+      "lineNbr": 31,
+      "author": {
+        "id": 1163599
+      },
+      "writtenOn": "2017-11-09T22:48:33Z",
+      "side": 1,
+      "message": "Please use an HTML element instead of building it in JS. If you place it above the \u003cscript\u003e, you\u0027re guaranteed to have it available in the DOM by the time the script starts executing.",
+      "revId": "715dcf9e183e09a617bcb333a2777129ea405111",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f7627b1f_6c53fce3",
+        "filename": "third_party/WebKit/LayoutTests/http/tests/local/fileapi/send-dragged-file-form.html",
+        "patchSetId": 8
+      },
+      "lineNbr": 36,
+      "author": {
+        "id": 1163599
+      },
+      "writtenOn": "2017-11-09T22:48:33Z",
+      "side": 1,
+      "message": "Please use an HTML element instead of building it in JS. If you place it above the \u003cscript\u003e, you\u0027re guaranteed to have it available in the DOM by the time the script starts executing.",
+      "revId": "715dcf9e183e09a617bcb333a2777129ea405111",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d384b07e_ffbc848a",
+        "filename": "third_party/WebKit/LayoutTests/http/tests/local/fileapi/send-dragged-file-form.html",
+        "patchSetId": 8
+      },
+      "lineNbr": 44,
+      "author": {
+        "id": 1163599
+      },
+      "writtenOn": "2017-11-09T22:48:33Z",
+      "side": 1,
+      "message": "Same as above: please use an HTML element, then use getElementById to find it and attach listeners to it.",
+      "revId": "715dcf9e183e09a617bcb333a2777129ea405111",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "0c64b821_788bf594",
         "filename": "third_party/WebKit/LayoutTests/http/tests/local/fileapi/send-dragged-file-form.html",
         "patchSetId": 8
@@ -64,6 +285,57 @@
       "writtenOn": "2017-11-09T22:29:56Z",
       "side": 1,
       "message": "How about event \u003d\u003e event....() rather than relying on window.event which is still not implemented in all browsers?\n\n(Not a big deal, but since you need to write something before the \u003d\u003e anyway...)",
+      "revId": "715dcf9e183e09a617bcb333a2777129ea405111",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3cee2754_a009c5dd",
+        "filename": "third_party/WebKit/LayoutTests/http/tests/local/fileapi/send-dragged-file-form.html",
+        "patchSetId": 8
+      },
+      "lineNbr": 47,
+      "author": {
+        "id": 1163599
+      },
+      "writtenOn": "2017-11-09T22:48:33Z",
+      "side": 1,
+      "message": "I don\u0027t think you need to do any manual processing for drag and drop. Instead, call form.submit() after dispatching the mouse click, and get the File from the \u003cinput\u003e there.",
+      "revId": "715dcf9e183e09a617bcb333a2777129ea405111",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "333e70a9_b8cfcf05",
+        "filename": "third_party/WebKit/LayoutTests/http/tests/local/fileapi/send-dragged-file-form.html",
+        "patchSetId": 8
+      },
+      "lineNbr": 47,
+      "author": {
+        "id": 1163599
+      },
+      "writtenOn": "2017-11-09T22:48:33Z",
+      "side": 1,
+      "message": "I don\u0027t think you need to do any manual processing for drag and drop. Instead, call form.submit() after dispatching the mouse click, and get the File from the \u003cinput\u003e there.",
+      "revId": "715dcf9e183e09a617bcb333a2777129ea405111",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ada9bffc_9569adff",
+        "filename": "third_party/WebKit/LayoutTests/http/tests/local/fileapi/send-dragged-file-form.html",
+        "patchSetId": 8
+      },
+      "lineNbr": 60,
+      "author": {
+        "id": 1163599
+      },
+      "writtenOn": "2017-11-09T22:48:33Z",
+      "side": 1,
+      "message": "Please put CSS in \u003cstyle\u003e instead. Example: https://cs.chromium.org/chromium/src/third_party/WebKit/LayoutTests/fast/dnd/dropEffect-for-effectAllowed.html",
       "revId": "715dcf9e183e09a617bcb333a2777129ea405111",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -87,6 +359,23 @@
     },
     {
       "key": {
+        "uuid": "348acc01_7b872447",
+        "filename": "third_party/WebKit/LayoutTests/http/tests/local/fileapi/send-dragged-file-form.html",
+        "patchSetId": 8
+      },
+      "lineNbr": 69,
+      "author": {
+        "id": 1163599
+      },
+      "writtenOn": "2017-11-09T22:48:33Z",
+      "side": 1,
+      "message": "TODOs must have either bug numbers or (much less preferred) owners. I wouldn\u0027t call out anything in this test -- when the new API becomes available, the owner should search for eventSender.beginDragWithFiles and replace it in all tests.",
+      "revId": "715dcf9e183e09a617bcb333a2777129ea405111",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "93e9ca4c_7ac9277b",
         "filename": "third_party/WebKit/LayoutTests/http/tests/local/fileapi/send-dragged-file-form.html",
         "patchSetId": 8
@@ -104,6 +393,40 @@
     },
     {
       "key": {
+        "uuid": "732d6390_4f283d3c",
+        "filename": "third_party/WebKit/LayoutTests/http/tests/local/fileapi/send-dragged-file-form.html",
+        "patchSetId": 8
+      },
+      "lineNbr": 80,
+      "author": {
+        "id": 1163599
+      },
+      "writtenOn": "2017-11-09T22:48:33Z",
+      "side": 1,
+      "message": "\"response\" is a test implementation detail (you get the submitted form data via an echo script). I think it\u0027s better to refer to it as (submitted) form data. Please consider doing so in variable names and error messages.",
+      "revId": "715dcf9e183e09a617bcb333a2777129ea405111",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "344b109b_ec5bb034",
+        "filename": "third_party/WebKit/LayoutTests/http/tests/local/fileapi/send-dragged-file-form.html",
+        "patchSetId": 8
+      },
+      "lineNbr": 88,
+      "author": {
+        "id": 1163599
+      },
+      "writtenOn": "2017-11-09T22:48:33Z",
+      "side": 1,
+      "message": "The preferred style for expectations is \"multipart form data should have at least 2 lines\".",
+      "revId": "715dcf9e183e09a617bcb333a2777129ea405111",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "437b6b6b_39077ee7",
         "filename": "third_party/WebKit/LayoutTests/http/tests/local/fileapi/send-dragged-file-form.html",
         "patchSetId": 8
@@ -115,6 +438,23 @@
       "writtenOn": "2017-11-09T22:29:56Z",
       "side": 1,
       "message": "How about using `` strings, i.e. `Content-Disposition.... filename\u003d\"${expectEncodedBaseName}\"`",
+      "revId": "715dcf9e183e09a617bcb333a2777129ea405111",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "18d83763_85a25773",
+        "filename": "third_party/WebKit/LayoutTests/http/tests/local/fileapi/send-dragged-file-form.html",
+        "patchSetId": 8
+      },
+      "lineNbr": 101,
+      "author": {
+        "id": 1163599
+      },
+      "writtenOn": "2017-11-09T22:48:33Z",
+      "side": 1,
+      "message": "Are all these characters necessary? Is \"ABC\" + a non-BMP character sufficient to get coverage for this feature?",
       "revId": "715dcf9e183e09a617bcb333a2777129ea405111",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
