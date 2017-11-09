@@ -1,0 +1,55 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "b35def08_0ee51d32",
+        "filename": "chrome/browser/chromeos/login/session/chrome_session_manager.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 8,
+      "author": {
+        "id": 1115919
+      },
+      "writtenOn": "2017-11-09T13:37:31Z",
+      "side": 1,
+      "message": "Note: for lint fix in .cc",
+      "revId": "83ff2d12bf57dc46d2634ccbab45f85e77846945",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4f4b3ed7_77b5dc7b",
+        "filename": "chromeos/audio/cras_audio_handler.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 1478,
+      "author": {
+        "id": 1115919
+      },
+      "writtenOn": "2017-11-09T13:37:31Z",
+      "side": 1,
+      "message": "Note: this is moved from CrasAudioClient::GetNodes().\nNot sure if we should have this, but at least this is to prevent a possible regression trouble.\nMaybe we can remove? Anyway, IMO, it is out of scope.",
+      "revId": "83ff2d12bf57dc46d2634ccbab45f85e77846945",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7ee4ac8c_1a92c34c",
+        "filename": "chromeos/audio/cras_audio_handler.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 12,
+      "author": {
+        "id": 1115919
+      },
+      "writtenOn": "2017-11-09T13:37:31Z",
+      "side": 1,
+      "message": "Note: for lint fix.",
+      "revId": "83ff2d12bf57dc46d2634ccbab45f85e77846945",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
