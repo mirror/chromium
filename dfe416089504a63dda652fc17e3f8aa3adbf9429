@@ -140,6 +140,30 @@
       "revId": "dfe416089504a63dda652fc17e3f8aa3adbf9429",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8fc5aab0_fb9731ca",
+        "filename": "ui/views/controls/label.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 73,
+      "author": {
+        "id": 1000763
+      },
+      "writtenOn": "2017-11-09T17:04:44Z",
+      "side": 1,
+      "message": "Sorry, been thinking about this and haven\u0027t really been happy with any of it. The whole point of having a static function is so you can assume the return value won\u0027t change. If we\u0027re saying the default font used by a label might vary based on the hierarchy, then a static function isn\u0027t appropriate. Worse yet, it implies to really determine the font you need to add the label to a view with a widget and then get the font. No one does that nor would I expect anyone to want to do that.\n\nOriginally you wanted the View only for the color. I asked you to add the View to all for consistency, but I think I\u0027m willing to go back to just the color so that this problem is avoided. Sound good?",
+      "parentUuid": "ceff7716_e65991f9",
+      "range": {
+        "startLine": 73,
+        "startChar": 0,
+        "endLine": 73,
+        "endChar": 55
+      },
+      "revId": "dfe416089504a63dda652fc17e3f8aa3adbf9429",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
