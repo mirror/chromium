@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "ae7c1487_3b290210",
+        "filename": "ash/message_center/message_center_view.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 365,
+      "author": {
+        "id": 1127641
+      },
+      "writtenOn": "2017-11-09T22:08:00Z",
+      "side": 1,
+      "message": "iirc this information is cached, does it need to be reset when we enter/exit lock state?",
+      "revId": "ef0cd901fe414c46368603d427b11f2199bb0b61",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
