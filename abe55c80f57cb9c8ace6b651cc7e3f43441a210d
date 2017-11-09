@@ -96,6 +96,30 @@
     },
     {
       "key": {
+        "uuid": "b6b673c6_4e557d10",
+        "filename": "ios/chrome/browser/ui/tab_switcher/tab_switcher_controller.mm",
+        "patchSetId": 3
+      },
+      "lineNbr": 231,
+      "author": {
+        "id": 1163361
+      },
+      "writtenOn": "2017-11-09T23:36:20Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "f6349a2f_0c05b7c5",
+      "range": {
+        "startLine": 230,
+        "startChar": 4,
+        "endLine": 231,
+        "endChar": 66
+      },
+      "revId": "abe55c80f57cb9c8ace6b651cc7e3f43441a210d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "3322b6d5_453613f8",
         "filename": "ios/chrome/browser/ui/tab_switcher/tab_switcher_controller.mm",
         "patchSetId": 3
@@ -131,6 +155,30 @@
       "side": 1,
       "message": "The compiler does this check for us if we leave off the default.  If anyone adds a new value, this will fail to compile.",
       "parentUuid": "3322b6d5_453613f8",
+      "range": {
+        "startLine": 817,
+        "startChar": 4,
+        "endLine": 817,
+        "endChar": 19
+      },
+      "revId": "abe55c80f57cb9c8ace6b651cc7e3f43441a210d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f1820970_414dac12",
+        "filename": "ios/chrome/browser/ui/tab_switcher/tab_switcher_controller.mm",
+        "patchSetId": 3
+      },
+      "lineNbr": 817,
+      "author": {
+        "id": 1163361
+      },
+      "writtenOn": "2017-11-09T23:36:20Z",
+      "side": 1,
+      "message": "Good to know. That\u0027s pretty cool.",
+      "parentUuid": "153ac519_e8c20f86",
       "range": {
         "startLine": 817,
         "startChar": 4,
