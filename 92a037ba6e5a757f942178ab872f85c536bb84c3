@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "b674e976_cb00c801",
+        "filename": "ash/frame/custom_frame_view_ash.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 109,
+      "author": {
+        "id": 1228419
+      },
+      "writtenOn": "2017-11-09T20:56:49Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "a7cc58a4_6aff9916",
+      "revId": "92a037ba6e5a757f942178ab872f85c536bb84c3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "26530fcc_e9109830",
         "filename": "components/exo/shell_surface.cc",
         "patchSetId": 2
@@ -30,6 +48,24 @@
       "writtenOn": "2017-11-08T02:23:42Z",
       "side": 1,
       "message": "The code below should only be used for !frame_enabled_ no?",
+      "revId": "92a037ba6e5a757f942178ab872f85c536bb84c3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "26d67765_b0916096",
+        "filename": "components/exo/shell_surface.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 89,
+      "author": {
+        "id": 1228419
+      },
+      "writtenOn": "2017-11-09T20:56:49Z",
+      "side": 1,
+      "message": "You are right.",
+      "parentUuid": "26530fcc_e9109830",
       "revId": "92a037ba6e5a757f942178ab872f85c536bb84c3",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -53,6 +89,24 @@
     },
     {
       "key": {
+        "uuid": "258f94dc_2d411c5f",
+        "filename": "components/exo/shell_surface.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 99,
+      "author": {
+        "id": 1228419
+      },
+      "writtenOn": "2017-11-09T20:56:49Z",
+      "side": 1,
+      "message": "You are right!",
+      "parentUuid": "1f10f432_e9891473",
+      "revId": "92a037ba6e5a757f942178ab872f85c536bb84c3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "e1f77aa6_2e7c1da4",
         "filename": "components/exo/shell_surface.cc",
         "patchSetId": 2
@@ -70,6 +124,24 @@
     },
     {
       "key": {
+        "uuid": "626f1a9c_e06d381c",
+        "filename": "components/exo/shell_surface.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 101,
+      "author": {
+        "id": 1228419
+      },
+      "writtenOn": "2017-11-09T20:56:49Z",
+      "side": 1,
+      "message": "I searched the code, there some SetShape/UpdateShape functions around the code base, but no place to call it IIRC. Will remove it. Ah, the code is more concise now.",
+      "parentUuid": "e1f77aa6_2e7c1da4",
+      "revId": "92a037ba6e5a757f942178ab872f85c536bb84c3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "23029ffe_939a3ba4",
         "filename": "components/exo/shell_surface.cc",
         "patchSetId": 2
@@ -81,6 +153,24 @@
       "writtenOn": "2017-11-08T02:23:42Z",
       "side": 1,
       "message": "will optional work?",
+      "revId": "92a037ba6e5a757f942178ab872f85c536bb84c3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "666b5111_586d9841",
+        "filename": "components/exo/shell_surface.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 172,
+      "author": {
+        "id": 1228419
+      },
+      "writtenOn": "2017-11-09T20:56:49Z",
+      "side": 1,
+      "message": "Deleted.",
+      "parentUuid": "23029ffe_939a3ba4",
       "revId": "92a037ba6e5a757f942178ab872f85c536bb84c3",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
