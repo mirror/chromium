@@ -14,6 +14,7 @@
 #include "base/environment.h"
 #include "base/logging.h"
 #include "base/macros.h"
+#include "base/metrics/histogram_macros.h"
 #include "base/numerics/safe_conversions.h"
 #include "base/sys_info.h"
 #include "build/build_config.h"
@@ -137,6 +138,17 @@ static const struct {
     {VP9PROFILE_PROFILE1, VAProfileVP9Profile1},
     // TODO(mcasas): support other VP9 Profiles, https://crbug.com/778093.
 };
+
+// UMA errors that the LazyProfileInfos class reports.
+enum VAApiWrapperFailure {
+  VAAPI_ERROR = 0,
+  VAAPI_WRAPPER_FAILURES_MAX,
+};
+
+void ReportErrorToUMA() {
+  UMA_HISTOGRAM_ENUMERATION("Media.VAApi.Error", VAAPI_ERROR,
+                            VAAPI_WRAPPER_FAILURES_MAX + 1);
+}
 
 // This class is a wrapper around its |va_display_| (and its associated
 // |va_lock_|) to guarantee mutual exclusion and singleton behaviour.
@@ -1219,7 +1231,7 @@ VaapiWrapper::LazyProfileInfos::LazyProfileInfos() {
   static_assert(arraysize(supported_profiles_) == kCodecModeMax,
                 "The array size of supported profile is incorrect.");
   scoped_refptr<VaapiWrapper> vaapi_wrapper(new VaapiWrapper());
-  if (!vaapi_wrapper->VaInitialize(base::Bind(&base::DoNothing)))
+  if (!vaapi_wrapper->VaInitialize(base::Bind(&ReportErrorToUMA)))
     return;
   for (size_t i = 0; i < kCodecModeMax; ++i) {
     supported_profiles_[i] =

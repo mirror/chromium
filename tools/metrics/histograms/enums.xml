@@ -40908,6 +40908,10 @@ Called by update_traffic_annotation_histograms.py.-->
   <int value="3" label="FAILED_OTHER">Failed for other reason</int>
 </enum>
 
+<enum name="VAApiWrapperError">
+  <int value="0" label="VAAPI_ERROR"/>
+</enum>
+
 <enum name="VAJDADecoderFailure">
   <int value="0" label="VAAPI_ERROR"/>
 </enum>
