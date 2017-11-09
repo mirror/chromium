@@ -1,0 +1,107 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "d94fb7c4_17365982",
+        "filename": "third_party/WebKit/Source/core/events/PointerEventFactory.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 78,
+      "author": {
+        "id": 1125369
+      },
+      "writtenOn": "2017-11-09T19:04:37Z",
+      "side": 1,
+      "message": "PointerEventNameForEventType?",
+      "range": {
+        "startLine": 78,
+        "startChar": 20,
+        "endLine": 78,
+        "endChar": 55
+      },
+      "revId": "81d55afba537b8359f851ceec7c45a525c041da2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ba3c0ff4_0ec0b31e",
+        "filename": "third_party/WebKit/Source/core/events/PointerEventFactory.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 33,
+      "author": {
+        "id": 1125369
+      },
+      "writtenOn": "2017-11-09T19:04:37Z",
+      "side": 1,
+      "message": "Wondering about the function signature differences between this and the following Create(): why this one wouldn\u0027t need a Frame*?  With pointer-capture, mouse becomes similar to touch so both should have a similar view().  Could you please check if the view field is correct when both types of pointers are dragged off/into a subframe after capturing?",
+      "revId": "81d55afba537b8359f851ceec7c45a525c041da2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2b16f5cf_1acce100",
+        "filename": "third_party/WebKit/Source/core/events/PointerEventFactory.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 41,
+      "author": {
+        "id": 1125369
+      },
+      "writtenOn": "2017-11-09T19:04:37Z",
+      "side": 1,
+      "message": "This is from a past change: let\u0027s switch this to LocalDOMWindow*.  If it is ever needed to pass a RemoteDOMWindow, we will get a chance to think about it.",
+      "range": {
+        "startLine": 41,
+        "startChar": 23,
+        "endLine": 41,
+        "endChar": 32
+      },
+      "revId": "81d55afba537b8359f851ceec7c45a525c041da2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a7a7129d_38268756",
+        "filename": "third_party/WebKit/Source/core/events/PointerEventFactoryTest.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 42,
+      "author": {
+        "id": 1125369
+      },
+      "writtenOn": "2017-11-09T19:04:37Z",
+      "side": 1,
+      "message": "Please move the function definition off the class def, like the rest of the functions here.",
+      "revId": "81d55afba537b8359f851ceec7c45a525c041da2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "86514bfe_e23f3538",
+        "filename": "third_party/WebKit/Source/core/input/PointerEventManager.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 440,
+      "author": {
+        "id": 1125369
+      },
+      "writtenOn": "2017-11-09T19:04:37Z",
+      "side": 1,
+      "message": "Skip passing the id separately now.",
+      "range": {
+        "startLine": 440,
+        "startChar": 13,
+        "endLine": 440,
+        "endChar": 34
+      },
+      "revId": "81d55afba537b8359f851ceec7c45a525c041da2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
