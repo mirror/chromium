@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "bba172c2_57e8a06a",
+        "filename": "chrome/common/extensions/docs/examples/api/commands/default_command_override/background.js",
+        "patchSetId": 4
+      },
+      "lineNbr": 6,
+      "author": {
+        "id": 1115745
+      },
+      "writtenOn": "2017-11-09T22:16:23Z",
+      "side": 1,
+      "message": "It looks like we\u0027re calling query/query-like methods (getSelected) a fair amount here.  What about something like:\n\nchrome.tabs.query({currentWindow: true}, function(tabs) {\n  // Sort tabs according to their index in the window.\n  tabs.sort((a, b) \u003d\u003e { return a.index \u003c b.index; });\n  let activeIndex \u003d tabs.findIndex((tab) \u003d\u003e { return tab.active; });\n  let lastTab \u003d tabs.length - 1;\n  let newIndex \u003d -1;\n  if (command \u003d\u003d\u003d \u0027flip-tabs-forward\u0027)\n    newIndex \u003d activeIndex \u003d\u003d\u003d lastTab ? 0 : activeIndex + 1;\n  else  // \u0027flip-tabs-backwards\u0027\n    newIndex \u003d activeIndex \u003d\u003d\u003d 0 ? lastTab : activeIndex - 1;\n\n  chrome.tabs.update(tabs[newIndex].id, {active: true, highlighted: true});\n});",
+      "revId": "3976242c3a0e7fe38da5b60ea0d630d2a1de81b2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "78bdd5ab_5420abc9",
+        "filename": "chrome/common/extensions/docs/examples/api/commands/default_command_override/manifest.json",
+        "patchSetId": 4
+      },
+      "lineNbr": 17,
+      "author": {
+        "id": 1115745
+      },
+      "writtenOn": "2017-11-09T22:16:23Z",
+      "side": 1,
+      "message": "description says these should have shifts?",
+      "revId": "3976242c3a0e7fe38da5b60ea0d630d2a1de81b2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
