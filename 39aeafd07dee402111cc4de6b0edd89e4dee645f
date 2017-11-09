@@ -16,6 +16,24 @@
       "revId": "39aeafd07dee402111cc4de6b0edd89e4dee645f",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0c32caf4_428eb576",
+        "filename": "third_party/WebKit/Source/core/paint/PaintLayerScrollableArea.cpp",
+        "patchSetId": 10
+      },
+      "lineNbr": 1356,
+      "author": {
+        "id": 1001706
+      },
+      "writtenOn": "2017-11-09T17:22:52Z",
+      "side": 1,
+      "message": "The problem is that needs_vertical_scrollbar depends on has_horizontal_scrollbar, and needs_horizontal_scrollbar depends on has_vertical_scrollbar.  The whole point of pdr\u0027s patch was to break that cycle of dependency by considering both vertical and horizontal overflow at the same time:\n\nLayoutSize client_size_without_any_scrollbars \u003d LayoutContentRect(kIncludeScrollbars).Size();\nif (Box().HasAutoVerticalScrollbar()\n    \u0026\u0026 Box().HasAutoHorizontalScrollbar()\n    \u0026\u0026 ScrollWidth() \u003c\u003d client_size_without_any_scrollbars.Width()\n    \u0026\u0026 ScrollHeight() \u003c\u003d client_size_without_any_scrollbars.Height()) {\n  needs_horizontal_scrollbar \u003d needs_vertical_scrollbar \u003d false;\n}",
+      "parentUuid": "d2fb86ee_c30b7af5",
+      "revId": "39aeafd07dee402111cc4de6b0edd89e4dee645f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
