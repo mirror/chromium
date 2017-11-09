@@ -1693,17 +1693,6 @@ jumbo_source_set("browser") {
     "renderer_host/render_process_host_impl.cc",
   ]
 
-  if (is_win) {
-    jumbo_excluded_sources += [
-      # Mojo header node.h undefs SendMessage so things that include
-      # Windows headers can't be grouped with anything that might
-      # include node.h from mojo. Until we have figured out a way
-      # for mojo headers and Windows headers to live side by side.
-      "renderer_host/legacy_render_widget_host_win.cc",
-      "renderer_host/render_widget_host_view_aura.cc",
-    ]
-  }
-
   if (is_mac) {
     jumbo_excluded_sources += [
       # Both browser_accessibility_manager_mac.mm and
@@ -1853,9 +1842,6 @@ jumbo_source_set("browser") {
       # This prevents the inclusion of atlhost.h which paired
       # with the windows 8 sdk it does the wrong thing.
       "__ATLHOST_H__",
-
-      # Must be defined to get access to M_PI and M_PI_2 in VS.
-      "_USE_MATH_DEFINES",
     ]
     deps += [
       "//third_party/iaccessible2",
