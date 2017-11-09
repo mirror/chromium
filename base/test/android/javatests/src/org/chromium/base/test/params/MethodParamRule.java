@@ -14,22 +14,22 @@ import java.util.List;
 
 /**
  * Abstract base class for rules that are applied to test methods using
- * {@link org.chromium.base.test.params.ParameterAnnotations.MethodParameter method parameters}.
+ * {@link org.chromium.base.test.params.ParameterAnnotations.UseMethodParameter method parameters}.
  */
 public abstract class MethodParamRule implements MethodRule {
     @Override
     public Statement apply(final Statement base, FrameworkMethod method, Object target) {
         UseMethodParameter useMethodParameter = method.getAnnotation(UseMethodParameter.class);
         if (useMethodParameter == null) return base;
-        String parameterName = useMethodParameter.value();
+        Class<? extends ParameterGenerator> parameterGenerator = useMethodParameter.value();
 
         if (!(method instanceof ParameterizedFrameworkMethod)) return base;
         ParameterSet parameters = ((ParameterizedFrameworkMethod) method).getParameterSet();
         List<Object> values = parameters.getValues();
 
-        return applyParameterAndValues(base, target, parameterName, values);
+        return applyParameterAndValues(base, target, parameterGenerator, values);
     }
 
-    protected abstract Statement applyParameterAndValues(
-            final Statement base, Object target, String parameterName, List<Object> values);
+    protected abstract Statement applyParameterAndValues(final Statement base, Object target,
+            Class<? extends ParameterGenerator> parameterGenerator, List<Object> values);
 }

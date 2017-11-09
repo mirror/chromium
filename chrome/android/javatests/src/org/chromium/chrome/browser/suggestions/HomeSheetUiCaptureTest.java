@@ -20,12 +20,13 @@ import org.junit.Test;
 import org.junit.rules.MethodRule;
 import org.junit.runner.RunWith;
 
+import org.chromium.base.CommandLine;
 import org.chromium.base.ThreadUtils;
 import org.chromium.base.test.params.MethodParamAnnotationProcessor;
-import org.chromium.base.test.params.ParameterAnnotations.MethodParameter;
 import org.chromium.base.test.params.ParameterAnnotations.UseMethodParameter;
 import org.chromium.base.test.params.ParameterAnnotations.UseMethodParameterBefore;
 import org.chromium.base.test.params.ParameterAnnotations.UseRunnerDelegate;
+import org.chromium.base.test.params.ParameterGenerator;
 import org.chromium.base.test.params.ParameterSet;
 import org.chromium.base.test.params.ParameterizedRunner;
 import org.chromium.base.test.util.Feature;
@@ -38,12 +39,10 @@ import org.chromium.chrome.browser.test.ScreenShooter;
 import org.chromium.chrome.browser.widget.bottomsheet.BottomSheet;
 import org.chromium.chrome.test.ChromeJUnit4RunnerDelegate;
 import org.chromium.chrome.test.util.MenuUtils;
-import org.chromium.chrome.test.util.browser.Features;
 import org.chromium.chrome.test.util.browser.suggestions.SuggestionsDependenciesRule;
 import org.chromium.ui.test.util.UiRestriction;
 
 import java.util.Arrays;
-import java.util.List;
 
 /**
  * Tests for the appearance of the special states of the home sheet.
@@ -67,19 +66,24 @@ public class HomeSheetUiCaptureTest {
     @Rule
     public MethodRule mMethodParamAnnotationProcessor = new MethodParamAnnotationProcessor();
 
-    private static final String SIGNIN_PROMO = "SigninPromo";
-    @MethodParameter(SIGNIN_PROMO)
-    private static List<ParameterSet> sSigninPromoParams = Arrays.asList(
-            new ParameterSet().name("SigninPromoDisabled").value(false),
-            new ParameterSet().name("SigninPromoEnabled").value(true)
-    );
+    private static class SigninPromoParams implements ParameterGenerator {
+        @Override
+        public Iterable<ParameterSet> getParameters() {
+            return Arrays.asList(
+                  new ParameterSet().name("SigninPromoDisabled").value(false),
+                  new ParameterSet().name("SigninPromoEnabled").value(true)
+          );
+        }
+    }
 
-    @UseMethodParameterBefore(SIGNIN_PROMO)
+    @UseMethodParameterBefore(SigninPromoParams.class)
     public void applyEnableSigninPromoParam(boolean enableSigninPromo) {
         if (enableSigninPromo) {
-            Features.getInstance().enable(ChromeFeatureList.ANDROID_SIGNIN_PROMOS);
+            CommandLine.getInstance().appendSwitch(
+                    "enable-features=" + ChromeFeatureList.ANDROID_SIGNIN_PROMOS);
         } else {
-            Features.getInstance().disable(ChromeFeatureList.ANDROID_SIGNIN_PROMOS);
+            CommandLine.getInstance().appendSwitch(
+                    "disable-features=" + ChromeFeatureList.ANDROID_SIGNIN_PROMOS);
         }
     }
 
@@ -92,7 +96,7 @@ public class HomeSheetUiCaptureTest {
     @MediumTest
     @Feature({"UiCatalogue"})
     @ScreenShooter.Directory("SignInPromo")
-    @UseMethodParameter(SIGNIN_PROMO)
+    @UseMethodParameter(SigninPromoParams.class)
     public void testSignInPromo(boolean signinPromoEnabled) {
         assertThat(ChromeFeatureList.isEnabled(ChromeFeatureList.ANDROID_SIGNIN_PROMOS),
                 is(signinPromoEnabled));

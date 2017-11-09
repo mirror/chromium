@@ -21,8 +21,8 @@ import java.util.List;
  */
 public class MethodParamAnnotationProcessor extends MethodParamRule {
     @Override
-    protected Statement applyParameterAndValues(
-            final Statement base, Object target, String parameterName, List<Object> values) {
+    protected Statement applyParameterAndValues(final Statement base, Object target,
+            Class<? extends ParameterGenerator> parameterGenerator, List<Object> values) {
         final List<Method> beforeMethods = new ArrayList<>();
         final List<Method> afterMethods = new ArrayList<>();
         for (Method m : target.getClass().getDeclaredMethods()) {
@@ -31,13 +31,13 @@ public class MethodParamAnnotationProcessor extends MethodParamRule {
 
             UseMethodParameterBefore beforeAnnotation =
                     m.getAnnotation(UseMethodParameterBefore.class);
-            if (beforeAnnotation != null && beforeAnnotation.value().equals(parameterName)) {
+            if (beforeAnnotation != null && beforeAnnotation.value().equals(parameterGenerator)) {
                 beforeMethods.add(m);
             }
 
             UseMethodParameterAfter afterAnnotation =
                     m.getAnnotation(UseMethodParameterAfter.class);
-            if (afterAnnotation != null && afterAnnotation.value().equals(parameterName)) {
+            if (afterAnnotation != null && afterAnnotation.value().equals(parameterGenerator)) {
                 afterMethods.add(m);
             }
         }
