@@ -1,0 +1,142 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "d6bc93fb_c9fb9b78",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/infobar/InfoBarContainer.java",
+        "patchSetId": 12
+      },
+      "lineNbr": 280,
+      "author": {
+        "id": 1135279
+      },
+      "writtenOn": "2017-11-09T17:16:18Z",
+      "side": 1,
+      "message": "doc",
+      "range": {
+        "startLine": 280,
+        "startChar": 3,
+        "endLine": 280,
+        "endChar": 39
+      },
+      "revId": "7df5614634944f5dfa9c349cf61cce58482ae0dc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "05e8a133_dd558c69",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/infobar/SurveyInfoBar.java",
+        "patchSetId": 12
+      },
+      "lineNbr": 114,
+      "author": {
+        "id": 1135279
+      },
+      "writtenOn": "2017-11-09T17:16:18Z",
+      "side": 1,
+      "message": "doc; i.e. why is this different?",
+      "range": {
+        "startLine": 114,
+        "startChar": 3,
+        "endLine": 114,
+        "endChar": 32
+      },
+      "revId": "7df5614634944f5dfa9c349cf61cce58482ae0dc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9e92d4ca_90731bcc",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/survey/ChromeHomeSurveyController.java",
+        "patchSetId": 12
+      },
+      "lineNbr": 46,
+      "author": {
+        "id": 1135279
+      },
+      "writtenOn": "2017-11-09T17:16:18Z",
+      "side": 1,
+      "message": "Maybe REQUIRED_VISIBILITY_DURATION_MS? This is easier to read if the name describes what the constant is used for.",
+      "range": {
+        "startLine": 46,
+        "startChar": 30,
+        "endLine": 46,
+        "endChar": 45
+      },
+      "revId": "7df5614634944f5dfa9c349cf61cce58482ae0dc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "43c28d38_52e21d94",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/survey/ChromeHomeSurveyController.java",
+        "patchSetId": 12
+      },
+      "lineNbr": 194,
+      "author": {
+        "id": 1135279
+      },
+      "writtenOn": "2017-11-09T17:16:18Z",
+      "side": 1,
+      "message": "mRecordDisplayedRunnable is only used in one place (here):\n\nmLoggingHandler.postDelayed(() -\u003e recordInfoBarDisplayed(), FIVE_SECONDS_IN_MS);",
+      "range": {
+        "startLine": 194,
+        "startChar": 36,
+        "endLine": 194,
+        "endChar": 60
+      },
+      "revId": "7df5614634944f5dfa9c349cf61cce58482ae0dc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a20ac145_138063f1",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/survey/ChromeHomeSurveyController.java",
+        "patchSetId": 12
+      },
+      "lineNbr": 221,
+      "author": {
+        "id": 1135279
+      },
+      "writtenOn": "2017-11-09T17:16:18Z",
+      "side": 1,
+      "message": "nit: Javadoc above methods (and below).",
+      "range": {
+        "startLine": 221,
+        "startChar": 4,
+        "endLine": 221,
+        "endChar": 6
+      },
+      "revId": "7df5614634944f5dfa9c349cf61cce58482ae0dc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "59af0d8b_23444491",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/survey/ChromeHomeSurveyController.java",
+        "patchSetId": 12
+      },
+      "lineNbr": 231,
+      "author": {
+        "id": 1135279
+      },
+      "writtenOn": "2017-11-09T17:16:18Z",
+      "side": 1,
+      "message": "Do this in the constructor (or startDownload since this method is called from only one location)?",
+      "range": {
+        "startLine": 231,
+        "startChar": 8,
+        "endLine": 231,
+        "endChar": 40
+      },
+      "revId": "7df5614634944f5dfa9c349cf61cce58482ae0dc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
