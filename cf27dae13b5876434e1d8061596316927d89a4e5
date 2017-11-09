@@ -52,6 +52,24 @@
       "revId": "cf27dae13b5876434e1d8061596316927d89a4e5",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "91bbbde6_f16c0d13",
+        "filename": "chrome/browser/ui/browser_navigator.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 358,
+      "author": {
+        "id": 1001216
+      },
+      "writtenOn": "2017-11-09T19:18:07Z",
+      "side": 0,
+      "message": "Sorry, I was still trying to understand your previous comment about the impact of removing it.\n\nYou mentioned that RequestOpenURL is setting source_site_instance and not opener.  Would that impact your change here in CreateTargetContents, since we\u0027re no longer using source_site_instance?\n\nOr perhaps it doesn\u0027t, because kForceNewProcessForNewContents was always true in that case, and thus we never used source_site_instance on that path?  I guess that makes sense.\n\nI was also confused about how source_site_instance could have any effect after this CL outside of GetSourceProfile, but I completely missed that we\u0027re \"laundering\" it in LoadURLParams, such that it ends up in FrameNavigationEntry, NavigationRequest, and used in RenderFrameHostManager (among other places).  That totally changes my understanding of whether it\u0027s safe to remove.  :)  I now definitely think we should postpone that removal/discussion to another CL, since I haven\u0027t looked at what will make that safe to remove.\n\nI guess at a high level I\u0027m struggling with how to look at the new policy we\u0027re building.  Your CL description has a nice description of the exact differences being made, but there\u0027s a lot of subtlety in the old code (e.g., the RequestOpenURL case I stumbled on above).  Can you express what the new policy is somewhere?  For example, \"Always create new tabs in a new BrowsingInstance unless there\u0027s an opener?\"  If it\u0027s as simple as that, that\u0027s great.",
+      "parentUuid": "d9627fb2_99385839",
+      "revId": "cf27dae13b5876434e1d8061596316927d89a4e5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
