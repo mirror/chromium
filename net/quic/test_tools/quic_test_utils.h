@@ -308,6 +308,9 @@ class MockQuicConnectionVisitor : public QuicConnectionVisitorInterface {
   MOCK_CONST_METHOD0(HasOpenDynamicStreams, bool());
   MOCK_METHOD1(OnSuccessfulVersionNegotiation,
                void(const QuicTransportVersion& version));
+  MOCK_METHOD2(OnConnectivityProbingReceived,
+               void(const QuicSocketAddress& self_address,
+                    const QuicSocketAddress& peer_address));
   MOCK_METHOD0(OnConfigNegotiated, void());
   MOCK_METHOD0(PostProcessAfterData, void());
   MOCK_METHOD0(OnAckNeedsRetransmittableFrame, void());

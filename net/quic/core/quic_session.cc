@@ -163,6 +163,10 @@ void QuicSession::OnWriteBlocked() {
 void QuicSession::OnSuccessfulVersionNegotiation(
     const QuicTransportVersion& /*version*/) {}
 
+void QuicSession::OnConnectivityProbingReceived(
+    const QuicSocketAddress& self_address,
+    const QuicSocketAddress& peer_address) {}
+
 void QuicSession::OnPathDegrading() {}
 
 bool QuicSession::AllowSelfAddressChange() const {

@@ -977,6 +977,23 @@ void QuicConnection::OnPacketComplete() {
   if (probing_packet_status_ == REMAINING_PADDING_RECEIVED) {
     LOG(ERROR) << "zhongyi_log: probing packet received for "
                << last_header_.public_header.connection_id;
+    LOG(ERROR) << "zhongyi_log: ======== self address changed from ip:port "
+               << self_address_.ToString() << " to "
+               << last_packet_destination_address_.ToString();
+
+    // TODO(zhongyi): move this to OnProbeSuccessful.
+    if (perspective_ == Perspective::IS_CLIENT) {
+      if (self_address_ != last_packet_destination_address_) {
+        LOG(ERROR) << "zhongyi_log: " << ENDPOINT << "received a probing response"
+                   << " to " << last_packet_destination_address_.ToString();
+        visitor_->OnConnectivityProbingReceived(last_packet_destination_address_,
+                                                last_packet_source_address_);
+      } else if (peer_address_ != last_packet_source_address_) {
+        LOG(ERROR) << "zhongyi_log: " << ENDPOINT << "received a probing request"
+                   << " from " << last_packet_source_address_.ToString();
+        // TODO(zhongyi): also call visitor to report probing request.
+      }
+    }
   }
 
   QUIC_DVLOG(1) << ENDPOINT << "Got packet " << last_header_.packet_number
