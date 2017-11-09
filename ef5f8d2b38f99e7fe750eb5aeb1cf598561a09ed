@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "01a76d8b_f09fa1f7",
+        "filename": "third_party/WebKit/Source/core/layout/ng/inline/ng_inline_item.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 43,
+      "author": {
+        "id": 1002487
+      },
+      "writtenOn": "2017-11-09T16:57:04Z",
+      "side": 1,
+      "message": "I would prefer two separate DCHECK statements for style and layout_object, so that when they fail it\u0027s easy to see which one of them is null. But up to you.",
+      "revId": "ef5f8d2b38f99e7fe750eb5aeb1cf598561a09ed",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
