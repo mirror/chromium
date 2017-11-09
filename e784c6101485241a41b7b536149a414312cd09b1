@@ -34,6 +34,24 @@
       "revId": "e784c6101485241a41b7b536149a414312cd09b1",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f5214037_31b284c9",
+        "filename": "build/config/android/rules.gni",
+        "patchSetId": 2
+      },
+      "lineNbr": 339,
+      "author": {
+        "id": 1126674
+      },
+      "writtenOn": "2017-11-09T14:53:22Z",
+      "side": 1,
+      "message": "Yeah, at least in this change then, let\u0027s not add the new one. Maybe take ${jni_package} out of the directory path, such that base_output_dir \u003d\u003d package_output_dir.",
+      "parentUuid": "aa819583_2334d75c",
+      "revId": "e784c6101485241a41b7b536149a414312cd09b1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
