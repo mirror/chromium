@@ -48,6 +48,54 @@
     },
     {
       "key": {
+        "uuid": "873cae6c_82663638",
+        "filename": "net/http/http_cache.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 435,
+      "author": {
+        "id": 1172224
+      },
+      "writtenOn": "2017-11-09T16:44:33Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "5aa38c93_bd896393",
+      "range": {
+        "startLine": 435,
+        "startChar": 35,
+        "endLine": 435,
+        "endChar": 43
+      },
+      "revId": "661ab10a61214921f80fe7fbd5b0f7b7d8a7631c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "43edf93a_31321553",
+        "filename": "net/http/http_cache.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 435,
+      "author": {
+        "id": 1172224
+      },
+      "writtenOn": "2017-11-09T16:44:33Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "24f05cff_b67d9f4b",
+      "range": {
+        "startLine": 435,
+        "startChar": 51,
+        "endLine": 435,
+        "endChar": 64
+      },
+      "revId": "661ab10a61214921f80fe7fbd5b0f7b7d8a7631c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "1d46f3dd_d39785eb",
         "filename": "net/http/http_cache_writers.h",
         "patchSetId": 1
@@ -68,6 +116,30 @@
       "revId": "661ab10a61214921f80fe7fbd5b0f7b7d8a7631c",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e6cde591_f7498f2a",
+        "filename": "net/http/http_cache_writers.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 143,
+      "author": {
+        "id": 1172224
+      },
+      "writtenOn": "2017-11-09T16:44:33Z",
+      "side": 1,
+      "message": "ShouldKeepEntryForTesting is also used in the test , not just in the test harness class. In the tests the public method is needed.",
+      "parentUuid": "1d46f3dd_d39785eb",
+      "range": {
+        "startLine": 143,
+        "startChar": 7,
+        "endLine": 143,
+        "endChar": 32
+      },
+      "revId": "661ab10a61214921f80fe7fbd5b0f7b7d8a7631c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
