@@ -1668,6 +1668,7 @@ jumbo_source_set("unit_tests") {
     "page/PagePopupClientTest.cpp",
     "page/PrintContextTest.cpp",
     "page/SlotScopedTraversalTest.cpp",
+    "page/SpatialNavigationTest.cpp",
     "page/ViewportTest.cpp",
     "page/WindowFeaturesTest.cpp",
     "page/scrolling/RootScrollerTest.cpp",
