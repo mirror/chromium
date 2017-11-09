@@ -351,6 +351,21 @@ void SoftwareImageDecodeCache::UnrefImage(const ImageKey& key) {
       RemoveBudgetForImage(key, entry);
     if (entry->is_locked)
       entry->Unlock();
+    // If this entry didn't have any memory, and it's not a decode failure, then
+    // we might as well remove it from the cache to keep the number of entries
+    // bounded. We keep the decode failed entries in the map to ensure we don't
+    // try to decode them again.
+    if (!entry->memory && !entry->decode_failed) {
+      decoded_images_.Erase(decoded_image_it);
+      auto key_map_it = frame_key_to_image_keys_.find(key.frame_key());
+      DCHECK(key_map_it != frame_key_to_image_keys_.end());
+      auto key_it =
+          std::find(key_map_it->second.begin(), key_map_it->second.end(), key);
+      DCHECK(key_it != key_map_it->second.end());
+      key_map_it->second.erase(key_it);
+      if (key_map_it->second.empty())
+        frame_key_to_image_keys_.erase(key_map_it);
+    }
   }
 }
 
