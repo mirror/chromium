@@ -104,6 +104,24 @@
       "revId": "56e9e4360ae898d35a24187e7f7ee805ff04cd05",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "fc3ddf17_42b17b74",
+        "filename": "third_party/WebKit/Source/build/scripts/core/css/properties/templates/CSSProperty.h.tmpl",
+        "patchSetId": 3
+      },
+      "lineNbr": 60,
+      "author": {
+        "id": 1116008
+      },
+      "writtenOn": "2017-11-09T07:57:27Z",
+      "side": 1,
+      "message": "OK I changed the default properties to use Longhand instead of CSSProperty so not every property that is a longhand will return true for IsLonghand.",
+      "parentUuid": "f91e060b_98ee9375",
+      "revId": "56e9e4360ae898d35a24187e7f7ee805ff04cd05",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
