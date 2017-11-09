@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "3cd575d8_d218d697",
+        "filename": "base/mac/sdk_forward_declarations.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 209,
+      "author": {
+        "id": 1137614
+      },
+      "writtenOn": "2017-11-09T19:13:08Z",
+      "side": 1,
+      "message": "Thanks for catching this. I guess I was also thrown off by the fact that we have these other 10.11 forward declarations which we should get rid of?",
+      "parentUuid": "3ca37033_186a459e",
+      "revId": "55678ab92f9aca4da53f04a6f7e115c369b36d28",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "119b5bf6_0c9634a6",
         "filename": "chrome/browser/ui/cocoa/task_manager_mac.mm",
         "patchSetId": 1
@@ -39,6 +57,30 @@
       "revId": "55678ab92f9aca4da53f04a6f7e115c369b36d28",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ebcb46fb_6375ce9a",
+        "filename": "chrome/browser/ui/cocoa/task_manager_mac.mm",
+        "patchSetId": 1
+      },
+      "lineNbr": 256,
+      "author": {
+        "id": 1137614
+      },
+      "writtenOn": "2017-11-09T19:13:08Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "119b5bf6_0c9634a6",
+      "range": {
+        "startLine": 256,
+        "startChar": 51,
+        "endLine": 256,
+        "endChar": 70
+      },
+      "revId": "55678ab92f9aca4da53f04a6f7e115c369b36d28",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
