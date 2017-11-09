@@ -90,9 +90,32 @@ bool DisplayManager::SetDisplayConfiguration(
     LOG(ERROR) << "SetDisplayConfiguration called with mismatch in sizes";
     return false;
   }
-  size_t primary_display_index = displays.size();
+
   std::set<int64_t> display_ids;
-  size_t internal_display_index = displays.size();
+  size_t primary_display_index = std::numeric_limits<size_t>::max();
+  bool found_internal_display = false;
+
+  // Check the mirrors before potentially passing them to a unified display.
+  for (size_t i = 0; i < mirrors.size(); ++i) {
+    const display::Display& mirror = mirrors[i];
+    if (mirror.id() == display::kInvalidDisplayId) {
+      LOG(ERROR) << "SetDisplayConfiguration passed invalid display id";
+      return false;
+    }
+    if (mirror.id() == display::kUnifiedDisplayId) {
+      LOG(ERROR) << "SetDisplayConfiguration passed unified display in mirrors";
+      return false;
+    }
+    if (!display_ids.insert(mirror.id()).second) {
+      LOG(ERROR) << "SetDisplayConfiguration passed duplicate display id";
+      return false;
+    }
+    if (mirror.id() == primary_display_id) {
+      LOG(ERROR) << "SetDisplayConfiguration passed primary display in mirrors";
+      return false;
+    }
+    found_internal_display |= mirror.id() == internal_display_id;
+  }
   for (size_t i = 0; i < displays.size(); ++i) {
     const display::Display& display = displays[i];
     if (display.id() == display::kInvalidDisplayId) {
@@ -105,26 +128,30 @@ bool DisplayManager::SetDisplayConfiguration(
     }
     if (display.id() == primary_display_id)
       primary_display_index = i;
-    if (display.id() == internal_display_id)
-      internal_display_index = i;
+    found_internal_display |= display.id() == internal_display_id;
     Display* ws_display = GetDisplayById(display.id());
     if (!ws_display) {
-      LOG(ERROR) << "SetDisplayConfiguration passed unknown display id "
-                 << display.id();
-      return false;
+      if (display.id() == display::kUnifiedDisplayId) {
+        DCHECK_EQ(displays.size(), 1u);
+        DCHECK_GT(mirrors.size(), 1u);
+        NOTIMPLEMENTED() << "TODO(crbug.com/764472): Mus unified mode.";
+        // TODO(msw): Do not create a physical display for the unified display.
+        CreateDisplay(displays[0], viewport_metrics[i]);
+        ws_display = GetDisplayById(display.id());
+      } else {
+        LOG(ERROR) << "SetDisplayConfiguration passed unknown display id "
+                   << display.id();
+        return false;
+      }
     }
   }
-  if (primary_display_index == displays.size()) {
+  if (primary_display_index == std::numeric_limits<size_t>::max()) {
     LOG(ERROR) << "SetDisplayConfiguration primary id not in displays";
     return false;
   }
-  if (internal_display_index == displays.size() &&
+  if (!found_internal_display &&
       internal_display_id != display::kInvalidDisplayId) {
     LOG(ERROR) << "SetDisplayConfiguration internal display id not in displays";
-    return false;
-  }
-  if (!mirrors.empty()) {
-    NOTIMPLEMENTED() << "TODO(crbug.com/764472): Mus unified/mirroring modes.";
     return false;
   }
 
@@ -142,6 +169,19 @@ bool DisplayManager::SetDisplayConfiguration(
     ws_display->OnViewportMetricsChanged(viewport_metrics[i]);
     if (i != primary_display_index) {
       display_list.AddOrUpdateDisplay(displays[i],
+                                      display::DisplayList::Type::NOT_PRIMARY);
+    }
+  }
+  for (size_t i = 0; i < mirrors.size(); ++i) {
+    Display* ws_mirror = GetDisplayById(mirrors[i].id());
+    const auto& metrics = viewport_metrics[displays.size() + i];
+    if (!ws_mirror) {
+      // Recreate any mirror destination displays that were deleted by ash.
+      CreateDisplay(mirrors[i], metrics);
+    } else {
+      ws_mirror->SetDisplay(mirrors[i]);
+      ws_mirror->OnViewportMetricsChanged(metrics);
+      display_list.AddOrUpdateDisplay(mirrors[i],
                                       display::DisplayList::Type::NOT_PRIMARY);
     }
   }
@@ -218,6 +258,13 @@ void DisplayManager::DestroyDisplay(Display* display) {
     window_server_->OnDisplayDestroyed(display);
   }
   const int64_t display_id = display->GetId();
+  // Remove the display from the screen's display list, if it's still listed.
+  if (display::ScreenManager::HasInstance()) {
+    display::DisplayList& displays =
+        display::ScreenManager::GetInstance()->GetScreen()->display_list();
+    if (displays.FindDisplayById(display_id) != displays.displays().end())
+      displays.RemoveDisplay(display_id);
+  }
   delete display;
 
   // If we have no more roots left, let the app know so it can terminate.

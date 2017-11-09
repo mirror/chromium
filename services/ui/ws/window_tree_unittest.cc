@@ -1944,6 +1944,14 @@ TEST_F(WindowTreeManualDisplayTest,
       kDisplay2ScaleFactor,
       static_cast<TestPlatformDisplay*>(platform_display2)->cursor_scale());
 
+  // Make |display1| the default again, so we can delete the second display.
+  ASSERT_TRUE(display_manager->SetDisplayConfiguration(
+      displays, viewport_metrics, display_id1, display_id1, mirrors));
+  RunUntilIdle();
+  EXPECT_EQ("OnDisplaysChanged " + std::to_string(display_id1) + " " +
+                std::to_string(display_id2) + " " + std::to_string(display_id1),
+            display_manager_observer.GetAndClearObserverCalls());
+
   // Delete the second display, no notification should be sent.
   EXPECT_TRUE(window_manager_tree->DeleteWindow(display_root_id2));
   RunUntilIdle();
