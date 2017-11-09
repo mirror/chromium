@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "ad215acf_cfdb9bdf",
+        "filename": "chrome/app/generated_resources.grd",
+        "patchSetId": 5
+      },
+      "lineNbr": 8184,
+      "author": {
+        "id": 1000763
+      },
+      "writtenOn": "2017-11-09T23:42:35Z",
+      "side": 1,
+      "message": "I wouldn\u0027t describe these as the \u0027tabstrip menu\u0027 (that\u0027s separate then this), instead perhaps the \u0027browser window menu\u0027.",
+      "range": {
+        "startLine": 8184,
+        "startChar": 65,
+        "endLine": 8184,
+        "endChar": 89
+      },
+      "revId": "207c265522f2c63e1ec0448e54a00bdd86df507e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
