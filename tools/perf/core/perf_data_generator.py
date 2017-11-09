@@ -133,9 +133,16 @@ def get_fyi_waterfall_config():
 
 
 # Additional compile targets to add to builders.
+# On desktop builders, chromedriver is added as an additional compile target.
+# The perf waterfall builds this target for each commit, and the resulting
+# ChromeDriver is archived together with Chrome for use in bisecting.
 BUILDER_ADDITIONAL_COMPILE_TARGETS = {
     'Android Compile': ['microdump_stackwalk'],
     'Android arm64 Compile': ['microdump_stackwalk'],
+    'Linux Builder': ['chromedriver'],
+    'Mac Builder': ['chromedriver'],
+    'Win Builder': ['chromedriver'],
+    'Win x64 Builder': ['chromedriver'],
 }
 
 
