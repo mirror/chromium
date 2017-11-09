@@ -376,6 +376,8 @@ mojom("interfaces") {
     ":resource_type_bindings",
     "//mojo/common:common_custom_types",
     "//services/network/public/interfaces",
+    "//third_party/WebKit/public:blink_headers",
+    "//third_party/WebKit/public:mojo_bindings",
     "//url/mojo:url_mojom_gurl",
     "//url/mojo:url_mojom_origin",
   ]
