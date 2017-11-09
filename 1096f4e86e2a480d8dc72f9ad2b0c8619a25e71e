@@ -119,6 +119,30 @@
     },
     {
       "key": {
+        "uuid": "8b2e2d84_6b8c3588",
+        "filename": "components/cronet/native/cronet.mojom",
+        "patchSetId": 35
+      },
+      "lineNbr": 9,
+      "author": {
+        "id": 1002888
+      },
+      "writtenOn": "2017-11-09T16:47:25Z",
+      "side": 1,
+      "message": "I\u0027m not sure C has much of an idea of interfaces.  Perhaps a void* ?",
+      "parentUuid": "89e02f45_df078098",
+      "range": {
+        "startLine": 9,
+        "startChar": 19,
+        "endLine": 9,
+        "endChar": 0
+      },
+      "revId": "1096f4e86e2a480d8dc72f9ad2b0c8619a25e71e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "24a3c994_3ac69366",
         "filename": "components/cronet/native/cronet.mojom",
         "patchSetId": 35
@@ -148,6 +172,24 @@
       "side": 1,
       "message": "RawBuffer is a kludge to simplify code generation for an array of bytes. \nThe definition may change with the actual implementation, I haven\u0027t thought this through yet.",
       "parentUuid": "24a3c994_3ac69366",
+      "revId": "1096f4e86e2a480d8dc72f9ad2b0c8619a25e71e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7cb9c8e2_3627dcc1",
+        "filename": "components/cronet/native/cronet.mojom",
+        "patchSetId": 35
+      },
+      "lineNbr": 13,
+      "author": {
+        "id": 1002888
+      },
+      "writtenOn": "2017-11-09T16:47:25Z",
+      "side": 1,
+      "message": "I\u0027d vote to remove RawBuffer.  Can we use void* ?",
+      "parentUuid": "2c21eb17_eaa8c99c",
       "revId": "1096f4e86e2a480d8dc72f9ad2b0c8619a25e71e",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -377,6 +419,30 @@
     },
     {
       "key": {
+        "uuid": "ee5f294c_b71d93b9",
+        "filename": "components/cronet/native/cronet.mojom",
+        "patchSetId": 35
+      },
+      "lineNbr": 104,
+      "author": {
+        "id": 1002888
+      },
+      "writtenOn": "2017-11-09T16:47:25Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "ff28fdce_ae3a035e",
+      "range": {
+        "startLine": 104,
+        "startChar": 74,
+        "endLine": 104,
+        "endChar": 0
+      },
+      "revId": "1096f4e86e2a480d8dc72f9ad2b0c8619a25e71e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "b64768c3_ddf70e15",
         "filename": "components/cronet/native/cronet.mojom",
         "patchSetId": 35
@@ -547,6 +613,24 @@
       "side": 1,
       "message": "Yes, although this particular file defines actual API. \nWe still can generate it during the build, but will have to distribute it alongside the library.",
       "parentUuid": "b98298e2_26da9b3a",
+      "revId": "1096f4e86e2a480d8dc72f9ad2b0c8619a25e71e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e3ee218e_c0b8ea09",
+        "filename": "components/cronet/native/cronet.mojom_c.h",
+        "patchSetId": 35
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1002888
+      },
+      "writtenOn": "2017-11-09T16:47:25Z",
+      "side": 1,
+      "message": "In the long run I\u0027d vote to move to out/Debug/gen/components/cronet/native, but for now (so the API can be reviewed) can we move to a directory named \"generated\"?",
+      "parentUuid": "cd36e16d_bc65bab7",
       "revId": "1096f4e86e2a480d8dc72f9ad2b0c8619a25e71e",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
