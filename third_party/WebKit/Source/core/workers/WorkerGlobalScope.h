@@ -31,8 +31,6 @@
 #include "bindings/core/v8/V8CacheOptions.h"
 #include "core/CoreExport.h"
 #include "core/dom/ExecutionContext.h"
-#include "core/dom/events/EventListener.h"
-#include "core/dom/events/EventTarget.h"
 #include "core/frame/DOMTimerCoordinator.h"
 #include "core/frame/DOMWindowBase64.h"
 #include "core/frame/csp/ContentSecurityPolicy.h"
@@ -56,17 +54,15 @@ class FontFaceSet;
 class ConsoleMessage;
 class ExceptionState;
 class OffscreenFontSelector;
-class V8AbstractEventListener;
 class WorkerLocation;
 class WorkerNavigator;
 class WorkerThread;
 struct GlobalScopeCreationParams;
 
 class CORE_EXPORT WorkerGlobalScope
-    : public EventTargetWithInlineData,
+    : public WorkerOrWorkletGlobalScope,
       public ActiveScriptWrappable<WorkerGlobalScope>,
       public SecurityContext,
-      public WorkerOrWorkletGlobalScope,
       public Supplementable<WorkerGlobalScope>,
       public DOMWindowBase64 {
   DEFINE_WRAPPERTYPEINFO();
@@ -95,9 +91,6 @@ class CORE_EXPORT WorkerGlobalScope
   WorkerThread* GetThread() const final { return thread_; }
 
   void ExceptionUnhandled(int exception_id);
-
-  void RegisterEventListener(V8AbstractEventListener*);
-  void DeregisterEventListener(V8AbstractEventListener*);
 
   // WorkerGlobalScope
   WorkerGlobalScope* self() { return this; }
@@ -230,8 +223,6 @@ class CORE_EXPORT WorkerGlobalScope
   DOMTimerCoordinator timers_;
 
   const double time_origin_;
-
-  HeapHashSet<Member<V8AbstractEventListener>> event_listeners_;
 
   HeapHashMap<int, Member<ErrorEvent>> pending_error_events_;
   int last_pending_error_event_id_ = 0;

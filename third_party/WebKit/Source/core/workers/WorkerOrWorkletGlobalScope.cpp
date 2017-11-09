@@ -4,6 +4,7 @@
 
 #include "core/workers/WorkerOrWorkletGlobalScope.h"
 
+#include "bindings/core/v8/V8AbstractEventListener.h"
 #include "bindings/core/v8/WorkerOrWorkletScriptController.h"
 #include "core/frame/Deprecation.h"
 #include "core/inspector/ConsoleMessage.h"
@@ -93,6 +94,18 @@ bool WorkerOrWorkletGlobalScope::CanExecuteScripts(
 
 void WorkerOrWorkletGlobalScope::Dispose() {
   DCHECK(script_controller_);
+
+  HeapHashSet<Member<V8AbstractEventListener>> listeners;
+  listeners.swap(event_listeners_);
+  while (!listeners.IsEmpty()) {
+    for (const auto& listener : listeners)
+      listener->ClearListenerObject();
+    listeners.clear();
+    // Pick up any additions made while iterating.
+    listeners.swap(event_listeners_);
+  }
+  RemoveAllEventListeners();
+
   script_controller_->Dispose();
   script_controller_.Clear();
 
@@ -100,6 +113,22 @@ void WorkerOrWorkletGlobalScope::Dispose() {
     resource_fetcher_->StopFetching();
     resource_fetcher_->ClearContext();
   }
+}
+
+void WorkerOrWorkletGlobalScope::RegisterEventListener(
+    V8AbstractEventListener* event_listener) {
+  // TODO(sof): remove once crbug.com/677654 has been diagnosed.
+  CHECK(&ThreadState::FromObject(this)->Heap() ==
+        &ThreadState::FromObject(event_listener)->Heap());
+  bool new_entry = event_listeners_.insert(event_listener).is_new_entry;
+  CHECK(new_entry);
+}
+
+void WorkerOrWorkletGlobalScope::DeregisterEventListener(
+    V8AbstractEventListener* event_listener) {
+  auto it = event_listeners_.find(event_listener);
+  //  CHECK(it != event_listeners_.end() || closing_);
+  event_listeners_.erase(it);
 }
 
 scoped_refptr<WebTaskRunner> WorkerOrWorkletGlobalScope::GetTaskRunner(
@@ -111,7 +140,9 @@ scoped_refptr<WebTaskRunner> WorkerOrWorkletGlobalScope::GetTaskRunner(
 void WorkerOrWorkletGlobalScope::Trace(blink::Visitor* visitor) {
   visitor->Trace(resource_fetcher_);
   visitor->Trace(script_controller_);
+  visitor->Trace(event_listeners_);
   ExecutionContext::Trace(visitor);
+  EventTargetWithInlineData::Trace(visitor);
 }
 
 }  // namespace blink

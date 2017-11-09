@@ -29,9 +29,8 @@ class WorkerReportingProxy;
 struct GlobalScopeCreationParams;
 
 class CORE_EXPORT WorkletGlobalScope
-    : public ScriptWrappable,
+    : public WorkerOrWorkletGlobalScope,
       public SecurityContext,
-      public WorkerOrWorkletGlobalScope,
       public ActiveScriptWrappable<WorkletGlobalScope> {
   DEFINE_WRAPPERTYPEINFO();
   USING_GARBAGE_COLLECTED_MIXIN(WorkletGlobalScope);
