@@ -1,0 +1,188 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "aa90d96c_02e12e46",
+        "filename": "chrome/browser/ui/tabs/tab_data_experimental.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 37,
+      "author": {
+        "id": 1000763
+      },
+      "writtenOn": "2017-11-09T22:07:35Z",
+      "side": 1,
+      "message": "DISALLOW...?",
+      "range": {
+        "startLine": 37,
+        "startChar": 0,
+        "endLine": 37,
+        "endChar": 2
+      },
+      "revId": "1ba871cefcc342e8b3d9882c5ac8f1a11566916c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d19faee4_1e837ac6",
+        "filename": "chrome/browser/ui/tabs/tab_data_experimental.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 45,
+      "author": {
+        "id": 1000763
+      },
+      "writtenOn": "2017-11-09T22:07:35Z",
+      "side": 1,
+      "message": "Is this needed given you have it assigned in the header?",
+      "range": {
+        "startLine": 45,
+        "startChar": 6,
+        "endLine": 45,
+        "endChar": 27
+      },
+      "revId": "1ba871cefcc342e8b3d9882c5ac8f1a11566916c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "68b95421_a463078a",
+        "filename": "chrome/browser/ui/tabs/tab_data_experimental.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 56,
+      "author": {
+        "id": 1000763
+      },
+      "writtenOn": "2017-11-09T22:07:35Z",
+      "side": 1,
+      "message": "You\u0027ll want to use TabUIHelper at some point.",
+      "range": {
+        "startLine": 56,
+        "startChar": 2,
+        "endLine": 56,
+        "endChar": 31
+      },
+      "revId": "1ba871cefcc342e8b3d9882c5ac8f1a11566916c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5dfcddbc_84f28e4f",
+        "filename": "chrome/browser/ui/tabs/tab_data_experimental.h",
+        "patchSetId": 8
+      },
+      "lineNbr": 20,
+      "author": {
+        "id": 1000763
+      },
+      "writtenOn": "2017-11-09T22:07:35Z",
+      "side": 1,
+      "message": "optional: consider avoiding tab in this description, given it\u0027s rather ambiguous. I think you really mean WebContents.",
+      "range": {
+        "startLine": 20,
+        "startChar": 44,
+        "endLine": 20,
+        "endChar": 48
+      },
+      "revId": "1ba871cefcc342e8b3d9882c5ac8f1a11566916c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b3c98def_488436cd",
+        "filename": "chrome/browser/ui/tabs/tab_data_experimental.h",
+        "patchSetId": 8
+      },
+      "lineNbr": 57,
+      "author": {
+        "id": 1000763
+      },
+      "writtenOn": "2017-11-09T22:07:35Z",
+      "side": 1,
+      "message": "Move to next patch?",
+      "range": {
+        "startLine": 55,
+        "startChar": 5,
+        "endLine": 57,
+        "endChar": 32
+      },
+      "revId": "1ba871cefcc342e8b3d9882c5ac8f1a11566916c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "167df140_13c89391",
+        "filename": "chrome/browser/ui/tabs/tab_strip_model_experimental.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 177,
+      "author": {
+        "id": 1000763
+      },
+      "writtenOn": "2017-11-09T22:07:35Z",
+      "side": 1,
+      "message": "Double the observers is tricky... I guess you\u0027re thinking eventually we merge the two, or perhaps make the experimental one the real one?",
+      "range": {
+        "startLine": 176,
+        "startChar": 2,
+        "endLine": 177,
+        "endChar": 34
+      },
+      "revId": "1ba871cefcc342e8b3d9882c5ac8f1a11566916c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d9cf7698_47ed5018",
+        "filename": "chrome/browser/ui/tabs/tab_strip_model_experimental.h",
+        "patchSetId": 8
+      },
+      "lineNbr": 103,
+      "author": {
+        "id": 1000763
+      },
+      "writtenOn": "2017-11-09T22:07:35Z",
+      "side": 1,
+      "message": "const function too?",
+      "range": {
+        "startLine": 103,
+        "startChar": 29,
+        "endLine": 103,
+        "endChar": 49
+      },
+      "revId": "1ba871cefcc342e8b3d9882c5ac8f1a11566916c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "24f36a46_85da76ee",
+        "filename": "chrome/browser/ui/views/frame/browser_view.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 2118,
+      "author": {
+        "id": 1000763
+      },
+      "writtenOn": "2017-11-09T22:07:35Z",
+      "side": 1,
+      "message": "Is there really a reason to restrict this to windows?",
+      "range": {
+        "startLine": 2118,
+        "startChar": 12,
+        "endLine": 2118,
+        "endChar": 18
+      },
+      "revId": "1ba871cefcc342e8b3d9882c5ac8f1a11566916c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
