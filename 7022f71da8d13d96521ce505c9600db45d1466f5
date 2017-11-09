@@ -33,6 +33,23 @@
       "revId": "7022f71da8d13d96521ce505c9600db45d1466f5",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d2055534_6bddf914",
+        "filename": "tools/android/roll/update_support_library.py",
+        "patchSetId": 8
+      },
+      "lineNbr": 20,
+      "author": {
+        "id": 1181690
+      },
+      "writtenOn": "2017-11-09T14:37:46Z",
+      "side": 1,
+      "message": "er, also, nit: pull the # noqa\u0027s. If you need to disable specific pylint errors, do so w/ # pylint: disable\u003d\u003cerror name\u003e",
+      "revId": "7022f71da8d13d96521ce505c9600db45d1466f5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
