@@ -1,0 +1,72 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "a631cff3_5b837391",
+        "filename": "chrome/browser/extensions/api/tabs/tabs_api.cc",
+        "patchSetId": 19
+      },
+      "lineNbr": 258,
+      "author": {
+        "id": 1000045
+      },
+      "writtenOn": "2017-11-09T00:29:29Z",
+      "side": 1,
+      "message": "nit: Either document return value or rename to HasLockedStatePermission or similar.",
+      "revId": "95809c0ea7b011c1622bb05b654725b7775fddcc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c8dfa7a2_9e12b234",
+        "filename": "chrome/browser/extensions/api/tabs/tabs_api.cc",
+        "patchSetId": 19
+      },
+      "lineNbr": 597,
+      "author": {
+        "id": 1000045
+      },
+      "writtenOn": "2017-11-09T00:29:29Z",
+      "side": 1,
+      "message": "I would add a comment saying why this is \"trusted\" vs regular pin.",
+      "revId": "95809c0ea7b011c1622bb05b654725b7775fddcc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a34fe25a_6c3542c1",
+        "filename": "chrome/browser/extensions/window_open_apitest.cc",
+        "patchSetId": 19
+      },
+      "lineNbr": 414,
+      "author": {
+        "id": 1000045
+      },
+      "writtenOn": "2017-11-09T00:29:29Z",
+      "side": 1,
+      "message": "EXPECT_EQ, here and below",
+      "revId": "95809c0ea7b011c1622bb05b654725b7775fddcc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "409db20c_7110a237",
+        "filename": "chrome/browser/extensions/window_open_apitest.cc",
+        "patchSetId": 19
+      },
+      "lineNbr": 452,
+      "author": {
+        "id": 1000045
+      },
+      "writtenOn": "2017-11-09T00:29:29Z",
+      "side": 1,
+      "message": "nit: add // defined(OS_CHROMEOS) because the block is so long.",
+      "revId": "95809c0ea7b011c1622bb05b654725b7775fddcc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}

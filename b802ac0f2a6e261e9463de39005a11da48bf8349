@@ -37,6 +37,24 @@
     },
     {
       "key": {
+        "uuid": "0b80c368_3255d60f",
+        "filename": "chrome/browser/extensions/api/tabs/tabs_api.cc",
+        "patchSetId": 13
+      },
+      "lineNbr": 224,
+      "author": {
+        "id": 1000045
+      },
+      "writtenOn": "2017-11-09T00:29:29Z",
+      "side": 1,
+      "message": "I think \"locked\" is too ambiguous. I think \"locked-fullscreen\" is more clear. I would also be OK with \"pinned\" since that is what is used on Android.",
+      "parentUuid": "578562d9_3e7692b3",
+      "revId": "b802ac0f2a6e261e9463de39005a11da48bf8349",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "21a616f6_bc87c843",
         "filename": "chrome/browser/extensions/api/tabs/tabs_api.cc",
         "patchSetId": 13
