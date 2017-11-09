@@ -2976,15 +2976,6 @@ bool Editor::ExecuteCommand(const String& command_name, const String& value) {
     return GetFrame().GetEventHandler().BubblingScroll(
         kScrollDownIgnoringWritingMode, kScrollByDocument);
 
-  if (command_name == "showGuessPanel") {
-    // TODO(editing-dev): Use of updateStyleAndLayoutIgnorePendingStylesheets
-    // needs to be audited. see http://crbug.com/590369 for more details.
-    GetFrame().GetDocument()->UpdateStyleAndLayoutIgnorePendingStylesheets();
-
-    GetSpellChecker().ShowSpellingGuessPanel();
-    return true;
-  }
-
   return CreateCommand(command_name).Execute(value);
 }
 
