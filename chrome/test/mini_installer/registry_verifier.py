@@ -67,8 +67,12 @@ class RegistryVerifier(verifier.Verifier):
     try:
       # Query the Windows registry for the registry key. It will throw a
       # WindowsError if the key doesn't exist.
+      bitness = variable_expander.Expand('BITNESS')
+      regkey_bitness = _winreg.KEY_WOW64_32KEY
+      if bitness == 'x64':
+        regkey_bitness = _winreg.KEY_WOW64_64KEY
       key_handle = _winreg.OpenKey(self._RootKeyConstant(root_key), sub_key, 0,
-                                   _winreg.KEY_QUERY_VALUE)
+                                   _winreg.KEY_QUERY_VALUE | regkey_bitness)
     except WindowsError:
       # Key doesn't exist. See that it matches the expectation.
       assert expectation['exists'] != 'required', ('Registry key %s is '
