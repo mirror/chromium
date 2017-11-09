@@ -1,0 +1,61 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "96b1c970_68d18d6e",
+        "filename": "chrome/common/extensions/api/webrtc_logging_private.idl",
+        "patchSetId": 19
+      },
+      "lineNbr": 173,
+      "author": {
+        "id": 1115745
+      },
+      "writtenOn": "2017-11-09T13:54:41Z",
+      "side": 1,
+      "message": "typo: the",
+      "range": {
+        "startLine": 173,
+        "startChar": 60,
+        "endLine": 173,
+        "endChar": 65
+      },
+      "revId": "418681f48f4e0a47213194370ec7e51ef263d4d4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ab60b64d_6fb7df6c",
+        "filename": "chrome/renderer/extensions/chrome_extensions_dispatcher_delegate.cc",
+        "patchSetId": 19
+      },
+      "lineNbr": 252,
+      "author": {
+        "id": 1115745
+      },
+      "writtenOn": "2017-11-09T13:54:41Z",
+      "side": 1,
+      "message": "Should this be behind a #if BUILDFLAG(ENABLE_WEBRTC)?\n\n(Separately, for my own edification, when is that true or false?)",
+      "revId": "418681f48f4e0a47213194370ec7e51ef263d4d4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b6dd97c9_d1f5d157",
+        "filename": "chrome/test/data/extensions/api_test/webrtc_logging_private/get_logs_directory/test.js",
+        "patchSetId": 19
+      },
+      "lineNbr": 10,
+      "author": {
+        "id": 1115745
+      },
+      "writtenOn": "2017-11-09T13:54:41Z",
+      "side": 1,
+      "message": "Maybe also verify that directoryEntry is a file handle?  (e.g. through instanceof)",
+      "revId": "418681f48f4e0a47213194370ec7e51ef263d4d4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}

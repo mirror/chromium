@@ -137,6 +137,24 @@
     },
     {
       "key": {
+        "uuid": "b7de3290_9de90b79",
+        "filename": "chrome/browser/extensions/api/webrtc_logging_private/webrtc_logging_private_apitest.cc",
+        "patchSetId": 17
+      },
+      "lineNbr": 459,
+      "author": {
+        "id": 1115745
+      },
+      "writtenOn": "2017-11-09T13:54:41Z",
+      "side": 1,
+      "message": "What type of setup do you need?  It sounds like most of these could be accomplished by just writing to the WebRTC Logs directory (which I assume is in the user data dir or similar) - is there a reason that wouldn\u0027t work?",
+      "parentUuid": "9bf784be_a0cdfa6c",
+      "revId": "554782b41dc36a0a1be2d3f65f1bc7ab1ef50887",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "e1fbe45a_24245afa",
         "filename": "chrome/browser/extensions/api/webrtc_logging_private/webrtc_logging_private_browsertest.cc",
         "patchSetId": 17
