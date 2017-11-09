@@ -388,31 +388,34 @@ class GPU_EXPORT GLES2DecoderPassthroughImpl : public GLES2Decoder {
 
   GLES2DecoderClient* client_;
 
-  int commands_to_process_;
-
   DebugMarkerManager debug_marker_manager_;
   Logger logger_;
 
+#define COMMON_CMD_OP(name) \
+  Error ProxyHandle##name(uint32_t command_size, const volatile void* data);
+
+  COMMON_COMMAND_BUFFER_CMDS(COMMON_CMD_OP)
+#undef COMMON_CMD_OP
+
 #define GLES2_CMD_OP(name) \
-  Error Handle##name(uint32_t immediate_data_size, const volatile void* data);
+  Error Handle##name(uint32_t command_size, const volatile void* data);
 
   GLES2_COMMAND_LIST(GLES2_CMD_OP)
 #undef GLES2_CMD_OP
 
   using CmdHandler =
-      Error (GLES2DecoderPassthroughImpl::*)(uint32_t immediate_data_size,
+      Error (GLES2DecoderPassthroughImpl::*)(uint32_t command_size,
                                              const volatile void* data);
 
   // A struct to hold info about each command.
   struct CommandInfo {
     CmdHandler cmd_handler;
-    uint8_t arg_flags;   // How to handle the arguments for this scommand
-    uint8_t cmd_flags;   // How to handle this command
-    uint16_t arg_count;  // How many arguments are expected for this command.
+    uint16_t min_size;  // Minimum number of entries necessary for this command
+    uint8_t cmd_flags;  // How to handle this command
   };
 
   // A table of CommandInfo for all the commands.
-  static const CommandInfo command_info[kNumCommands - kFirstGLES2Command];
+  static const CommandInfo command_info[kNumCommands];
 
   // The GLApi to make the gl calls on.
   gl::GLApi* api_;

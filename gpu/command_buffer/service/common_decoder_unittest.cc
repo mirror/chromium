@@ -59,15 +59,47 @@ class TestCommonDecoder : public CommonDecoder {
   explicit TestCommonDecoder(CommandBufferServiceBase* command_buffer_service)
       : CommonDecoder(command_buffer_service) {}
   error::Error DoCommand(unsigned int command,
-                         unsigned int arg_count,
+                         unsigned int command_size,
                          const volatile void* cmd_data) {
-    return DoCommonCommand(command, arg_count, cmd_data);
+    if (command >= cmd::kNumCommands) {
+      return error::kUnknownCommand;
+    }
+    if (command_size < command_info[command].min_size) {
+      return error::kOutOfBounds;
+    }
+    return (this->*command_info[command].cmd_handler)(command_size, cmd_data);
   }
 
   CommonDecoder::Bucket* GetBucket(uint32_t id) const {
     return CommonDecoder::GetBucket(id);
   }
+
+ private:
+#define TEST_COMMON_DECODER_HANDLER_OP(name)                  \
+  error::Error ProxyHandle##name(uint32_t command_size,       \
+                                 const volatile void* data) { \
+    return Handle##name(command_size, data);                  \
+  }
+  COMMON_COMMAND_BUFFER_CMDS(TEST_COMMON_DECODER_HANDLER_OP)
+#undef TEST_COMMON_DECODER_HANDLER_OP
+
+  using CmdHandler = Error (TestCommonDecoder::*)(uint32_t command_size,
+                                                  const volatile void* data);
+  struct CommandInfo {
+    CmdHandler cmd_handler;
+    uint16_t min_size;
+  };
+  static const CommandInfo command_info[];
 };
+
+#define TEST_COMMON_DECODER_HANDLER_INFO_OP(name)     \
+  {                                                   \
+      &TestCommonDecoder::ProxyHandle##name,          \
+      sizeof(cmd::name) / sizeof(CommandBufferEntry), \
+  },
+constexpr TestCommonDecoder::CommandInfo TestCommonDecoder::command_info[] = {
+    COMMON_COMMAND_BUFFER_CMDS(TEST_COMMON_DECODER_HANDLER_INFO_OP)};
+#undef TEST_COMMON_DECODER_HANDLER_INFO_OP
 
 class CommonDecoderTest : public testing::Test {
  protected:
@@ -84,16 +116,16 @@ class CommonDecoderTest : public testing::Test {
 
   template <typename T>
   error::Error ExecuteCmd(const T& cmd) {
-    static_assert(T::kArgFlags == cmd::kFixed,
-                  "T::kArgFlags should equal cmd::kFixed");
-    return decoder_.DoCommand(cmd.header.command, cmd.header.size - 1, &cmd);
+    static_assert((T::cmd_flags & CMD_FLAG_IMMEDIATE) == 0,
+                  "T should not be immediate");
+    return decoder_.DoCommand(cmd.header.command, cmd.header.size, &cmd);
   }
 
   template <typename T>
   error::Error ExecuteImmediateCmd(const T& cmd, size_t data_size) {
-    static_assert(T::kArgFlags == cmd::kAtLeastN,
-                  "T::kArgFlags should equal cmd::kAtLeastN");
-    return decoder_.DoCommand(cmd.header.command, cmd.header.size - 1, &cmd);
+    static_assert((T::cmd_flags & CMD_FLAG_IMMEDIATE) != 0,
+                  "T should be immediate");
+    return decoder_.DoCommand(cmd.header.command, cmd.header.size, &cmd);
   }
 
   template <typename T>
@@ -110,10 +142,6 @@ class CommonDecoderTest : public testing::Test {
 
 const size_t CommonDecoderTest::kBufferSize;
 const uint32_t CommonDecoderTest::kInvalidShmId;
-
-TEST_F(CommonDecoderTest, DoCommonCommandInvalidCommand) {
-  EXPECT_EQ(error::kUnknownCommand, decoder_.DoCommand(999999, 0, NULL));
-}
 
 TEST_F(CommonDecoderTest, HandleNoop) {
   cmd::Noop cmd;

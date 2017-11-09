@@ -17,19 +17,6 @@ namespace {
 static const size_t kDefaultMaxBucketSize = 1u << 30;  // 1 GB
 }
 
-const CommonDecoder::CommandInfo CommonDecoder::command_info[] = {
-#define COMMON_COMMAND_BUFFER_CMD_OP(name)                       \
-  {                                                              \
-    &CommonDecoder::Handle##name, cmd::name::kArgFlags,          \
-        cmd::name::cmd_flags,                                    \
-        sizeof(cmd::name) / sizeof(CommandBufferEntry) - 1,      \
-  }                                                              \
-  ,  /* NOLINT */
-  COMMON_COMMAND_BUFFER_CMDS(COMMON_COMMAND_BUFFER_CMD_OP)
-  #undef COMMON_COMMAND_BUFFER_CMD_OP
-};
-
-
 CommonDecoder::Bucket::Bucket() : size_(0) {}
 
 CommonDecoder::Bucket::~Bucket() {}
@@ -196,7 +183,7 @@ const volatile void* AddressAfterStruct(const volatile T& pod) {
   return reinterpret_cast<const volatile uint8_t*>(&pod) + sizeof(pod);
 }
 
-// Returns the address of the frst byte after the struct.
+// Returns the address of the first byte after the struct.
 template <typename RETURN_TYPE, typename COMMAND_TYPE>
 RETURN_TYPE GetImmediateDataAs(const volatile COMMAND_TYPE& pod) {
   return static_cast<RETURN_TYPE>(
@@ -205,34 +192,12 @@ RETURN_TYPE GetImmediateDataAs(const volatile COMMAND_TYPE& pod) {
 
 }  // anonymous namespace.
 
-// Decode command with its arguments, and call the corresponding method.
-// Note: args is a pointer to the command buffer. As such, it could be changed
-// by a (malicious) client at any time, so if validation has to happen, it
-// should operate on a copy of them.
-error::Error CommonDecoder::DoCommonCommand(unsigned int command,
-                                            unsigned int arg_count,
-                                            const volatile void* cmd_data) {
-  if (command < arraysize(command_info)) {
-    const CommandInfo& info = command_info[command];
-    unsigned int info_arg_count = static_cast<unsigned int>(info.arg_count);
-    if ((info.arg_flags == cmd::kFixed && arg_count == info_arg_count) ||
-        (info.arg_flags == cmd::kAtLeastN && arg_count >= info_arg_count)) {
-      uint32_t immediate_data_size =
-          (arg_count - info_arg_count) * sizeof(CommandBufferEntry);  // NOLINT
-      return (this->*info.cmd_handler)(immediate_data_size, cmd_data);
-    } else {
-      return error::kInvalidArguments;
-    }
-  }
-  return error::kUnknownCommand;
-}
-
-error::Error CommonDecoder::HandleNoop(uint32_t immediate_data_size,
+error::Error CommonDecoder::HandleNoop(uint32_t command_size,
                                        const volatile void* cmd_data) {
   return error::kNoError;
 }
 
-error::Error CommonDecoder::HandleSetToken(uint32_t immediate_data_size,
+error::Error CommonDecoder::HandleSetToken(uint32_t command_size,
                                            const volatile void* cmd_data) {
   const volatile cmd::SetToken& args =
       *static_cast<const volatile cmd::SetToken*>(cmd_data);
@@ -240,7 +205,7 @@ error::Error CommonDecoder::HandleSetToken(uint32_t immediate_data_size,
   return error::kNoError;
 }
 
-error::Error CommonDecoder::HandleSetBucketSize(uint32_t immediate_data_size,
+error::Error CommonDecoder::HandleSetBucketSize(uint32_t command_size,
                                                 const volatile void* cmd_data) {
   const volatile cmd::SetBucketSize& args =
       *static_cast<const volatile cmd::SetBucketSize*>(cmd_data);
@@ -254,7 +219,7 @@ error::Error CommonDecoder::HandleSetBucketSize(uint32_t immediate_data_size,
   return error::kNoError;
 }
 
-error::Error CommonDecoder::HandleSetBucketData(uint32_t immediate_data_size,
+error::Error CommonDecoder::HandleSetBucketData(uint32_t command_size,
                                                 const volatile void* cmd_data) {
   const volatile cmd::SetBucketData& args =
       *static_cast<const volatile cmd::SetBucketData*>(cmd_data);
@@ -278,8 +243,10 @@ error::Error CommonDecoder::HandleSetBucketData(uint32_t immediate_data_size,
 }
 
 error::Error CommonDecoder::HandleSetBucketDataImmediate(
-    uint32_t immediate_data_size,
+    uint32_t command_size,
     const volatile void* cmd_data) {
+  uint32_t immediate_data_size = command_size * sizeof(CommandBufferEntry) -
+                                 sizeof(cmd::SetBucketDataImmediate);
   const volatile cmd::SetBucketDataImmediate& args =
       *static_cast<const volatile cmd::SetBucketDataImmediate*>(cmd_data);
   const volatile void* data = GetImmediateDataAs<const volatile void*>(args);
@@ -300,7 +267,7 @@ error::Error CommonDecoder::HandleSetBucketDataImmediate(
 }
 
 error::Error CommonDecoder::HandleGetBucketStart(
-    uint32_t immediate_data_size,
+    uint32_t command_size,
     const volatile void* cmd_data) {
   const volatile cmd::GetBucketStart& args =
       *static_cast<const volatile cmd::GetBucketStart*>(cmd_data);
@@ -338,7 +305,7 @@ error::Error CommonDecoder::HandleGetBucketStart(
   return error::kNoError;
 }
 
-error::Error CommonDecoder::HandleGetBucketData(uint32_t immediate_data_size,
+error::Error CommonDecoder::HandleGetBucketData(uint32_t command_size,
                                                 const volatile void* cmd_data) {
   const volatile cmd::GetBucketData& args =
       *static_cast<const volatile cmd::GetBucketData*>(cmd_data);

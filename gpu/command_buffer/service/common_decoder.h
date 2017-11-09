@@ -168,51 +168,27 @@ class GPU_EXPORT CommonDecoder {
   scoped_refptr<gpu::Buffer> GetSharedMemoryBuffer(unsigned int shm_id);
 
  protected:
-  // Executes a common command.
-  // Parameters:
-  //    command: the command index.
-  //    arg_count: the number of CommandBufferEntry arguments.
-  //    cmd_data: the command data.
-  // Returns:
-  //   error::kNoError if no error was found, one of
-  //   error::Error otherwise.
-  error::Error DoCommonCommand(unsigned int command,
-                               unsigned int arg_count,
-                               const volatile void* cmd_data);
-
   // Gets an name for a common command.
   const char* GetCommonCommandName(cmd::CommandId command_id) const;
 
- private:
   // Generate a member function prototype for each command in an automated and
   // typesafe way.
-#define COMMON_COMMAND_BUFFER_CMD_OP(name)                \
-  error::Error Handle##name(uint32_t immediate_data_size, \
-                            const volatile void* data);
+#define COMMON_COMMAND_BUFFER_CMD_OP(name) \
+  error::Error Handle##name(uint32_t command_size, const volatile void* data);
 
   COMMON_COMMAND_BUFFER_CMDS(COMMON_COMMAND_BUFFER_CMD_OP)
 
   #undef COMMON_COMMAND_BUFFER_CMD_OP
 
+ private:
   CommandBufferServiceBase* command_buffer_service_;
   size_t max_bucket_size_;
 
   typedef std::map<uint32_t, std::unique_ptr<Bucket>> BucketMap;
   BucketMap buckets_;
 
-  typedef Error (CommonDecoder::*CmdHandler)(uint32_t immediate_data_size,
+  typedef Error (CommonDecoder::*CmdHandler)(uint32_t command_size,
                                              const volatile void* data);
-
-  // A struct to hold info about each command.
-  struct CommandInfo {
-    CmdHandler cmd_handler;
-    uint8_t arg_flags;   // How to handle the arguments for this command
-    uint8_t cmd_flags;   // How to handle this command
-    uint16_t arg_count;  // How many arguments are expected for this command.
-  };
-
-  // A table of CommandInfo for all the commands.
-  static const CommandInfo command_info[];
 
   DISALLOW_COPY_AND_ASSIGN(CommonDecoder);
 };

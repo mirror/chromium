@@ -424,7 +424,6 @@ GLES2DecoderPassthroughImpl::GLES2DecoderPassthroughImpl(
     ContextGroup* group)
     : GLES2Decoder(command_buffer_service, outputter),
       client_(client),
-      commands_to_process_(0),
       debug_marker_manager_(),
       logger_(&debug_marker_manager_, client_),
       surface_(),
@@ -475,47 +474,39 @@ GLES2Decoder::Error GLES2DecoderPassthroughImpl::DoCommandsImpl(
     const volatile void* buffer,
     int num_entries,
     int* entries_processed) {
-  commands_to_process_ = num_commands;
   error::Error result = error::kNoError;
   const volatile CommandBufferEntry* cmd_data =
       static_cast<const volatile CommandBufferEntry*>(buffer);
   int process_pos = 0;
-  unsigned int command = 0;
+  unsigned int command_size = 0;
 
   while (process_pos < num_entries && result == error::kNoError &&
-         commands_to_process_--) {
-    const unsigned int size = cmd_data->value_header.size;
-    command = cmd_data->value_header.command;
-
-    if (size == 0) {
-      result = error::kInvalidSize;
-      break;
-    }
+         num_commands--) {
+    auto header = CommandHeader::FromVolatile(cmd_data->value_header);
+    command_size = header.size;
+    unsigned int command_index = header.command;
 
     // size can't overflow because it is 21 bits.
-    if (static_cast<int>(size) + process_pos > num_entries) {
+    if (static_cast<int>(command_size) + process_pos > num_entries) {
       result = error::kOutOfBounds;
       break;
     }
 
     if (DebugImpl && log_commands()) {
       LOG(ERROR) << "[" << logger_.GetLogPrefix() << "]"
-                 << "cmd: " << GetCommandName(command);
+                 << "cmd: " << GetCommandName(command_index);
     }
 
-    const unsigned int arg_count = size - 1;
-    unsigned int command_index = command - kFirstGLES2Command;
     if (command_index < arraysize(command_info)) {
       const CommandInfo& info = command_info[command_index];
-      unsigned int info_arg_count = static_cast<unsigned int>(info.arg_count);
-      if ((info.arg_flags == cmd::kFixed && arg_count == info_arg_count) ||
-          (info.arg_flags == cmd::kAtLeastN && arg_count >= info_arg_count)) {
+      unsigned int min_size = static_cast<unsigned int>(info.min_size);
+      if (command_size >= min_size) {
         bool doing_gpu_trace = false;
         if (DebugImpl && gpu_trace_commands_) {
           if (CMD_FLAG_GET_TRACE_LEVEL(info.cmd_flags) <= gpu_trace_level_) {
             doing_gpu_trace = true;
             gpu_tracer_->Begin(TRACE_DISABLED_BY_DEFAULT("gpu_decoder"),
-                               GetCommandName(command), kTraceDecoder);
+                               GetCommandName(command_index), kTraceDecoder);
           }
         }
 
@@ -523,36 +514,36 @@ GLES2Decoder::Error GLES2DecoderPassthroughImpl::DoCommandsImpl(
           VerifyServiceTextureObjectsExist();
         }
 
-        uint32_t immediate_data_size = (arg_count - info_arg_count) *
-                                       sizeof(CommandBufferEntry);  // NOLINT
-        if (info.cmd_handler) {
-          result = (this->*info.cmd_handler)(immediate_data_size, cmd_data);
-        } else {
-          result = error::kUnknownCommand;
-        }
+        result = (this->*info.cmd_handler)(command_size, cmd_data);
 
         if (DebugImpl && doing_gpu_trace) {
           gpu_tracer_->End(kTraceDecoder);
         }
       } else {
-        result = error::kInvalidArguments;
+        if (command_size == 0) {
+          result = error::kInvalidSize;
+        } else {
+          result = error::kInvalidArguments;
+        }
       }
     } else {
-      result = DoCommonCommand(command, arg_count, cmd_data);
+      result = error::kUnknownCommand;
     }
 
     if (result == error::kNoError && context_lost_) {
       result = error::kLostContext;
     }
 
-    if (result != error::kDeferCommandUntilLater) {
-      process_pos += size;
-      cmd_data += size;
-    }
+    process_pos += command_size;
+    cmd_data += command_size;
   }
 
-  if (entries_processed)
-    *entries_processed = process_pos;
+  if (result != error::kDeferCommandUntilLater) {
+    process_pos -= command_size;
+  }
+
+  DCHECK(entries_processed != nullptr);
+  *entries_processed = process_pos;
 
   return result;
 }
@@ -1978,15 +1969,6 @@ void GLES2DecoderPassthroughImpl::VerifyServiceTextureObjectsExist() {
   }
 }
 
-error::Error GLES2DecoderPassthroughImpl::HandleRasterCHROMIUM(
-    uint32_t immediate_data_size,
-    const volatile void* cmd_data) {
-  // TODO(enne): Add CHROMIUM_raster_transport extension support to the
-  // passthrough command buffer.
-  NOTIMPLEMENTED();
-  return error::kNoError;
-}
-
 bool GLES2DecoderPassthroughImpl::IsEmulatedFramebufferBound(
     GLenum target) const {
   if (!emulated_back_buffer_) {
@@ -2005,17 +1987,32 @@ bool GLES2DecoderPassthroughImpl::IsEmulatedFramebufferBound(
   return false;
 }
 
-#define GLES2_CMD_OP(name)                                               \
-  {                                                                      \
-      &GLES2DecoderPassthroughImpl::Handle##name, cmds::name::kArgFlags, \
-      cmds::name::cmd_flags,                                             \
-      sizeof(cmds::name) / sizeof(CommandBufferEntry) - 1,               \
+#define COMMON_CMD_OP(name)                                    \
+  error::Error GLES2DecoderPassthroughImpl::ProxyHandle##name( \
+      uint32_t command_size, const volatile void* data) {      \
+    return Handle##name(command_size, data);                   \
+  }
+
+COMMON_COMMAND_BUFFER_CMDS(COMMON_CMD_OP)
+#undef COMMON_CMD_OP
+
+#define COMMON_CMD_OP(name)                                                 \
+  {                                                                         \
+      &GLES2DecoderPassthroughImpl::ProxyHandle##name,                      \
+      sizeof(cmd::name) / sizeof(CommandBufferEntry), cmd::name::cmd_flags, \
+  }, /* NOLINT */
+
+#define GLES2_CMD_OP(name)                                                    \
+  {                                                                           \
+      &GLES2DecoderPassthroughImpl::Handle##name,                             \
+      sizeof(cmds::name) / sizeof(CommandBufferEntry), cmds::name::cmd_flags, \
   }, /* NOLINT */
 
 constexpr GLES2DecoderPassthroughImpl::CommandInfo
-    GLES2DecoderPassthroughImpl::command_info[] = {
-        GLES2_COMMAND_LIST(GLES2_CMD_OP)};
+    GLES2DecoderPassthroughImpl::command_info[] = {COMMON_COMMAND_BUFFER_CMDS(
+        COMMON_CMD_OP) GLES2_COMMAND_LIST(GLES2_CMD_OP)};
 
+#undef COMMON_CMD_OP
 #undef GLES2_CMD_OP
 
 }  // namespace gles2

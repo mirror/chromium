@@ -62,7 +62,7 @@ const volatile void* AddressAfterStruct(const volatile T& pod) {
   return reinterpret_cast<const volatile uint8_t*>(&pod) + sizeof(pod);
 }
 
-// Returns the address of the frst byte after the struct or NULL if size >
+// Returns the address of the first byte after the struct or NULL if size >
 // immediate_data_size.
 template <typename RETURN_TYPE, typename COMMAND_TYPE>
 RETURN_TYPE GetImmediateDataAs(const volatile COMMAND_TYPE& pod,

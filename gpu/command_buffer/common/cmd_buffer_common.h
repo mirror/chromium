@@ -17,16 +17,10 @@
 
 namespace gpu {
 
-namespace cmd {
-  enum ArgFlags {
-    kFixed = 0x0,
-    kAtLeastN = 0x1
-  };
-}  // namespace cmd
-
 // Pack & unpack Command cmd_flags
 #define CMD_FLAG_SET_TRACE_LEVEL(level)     ((level & 3) << 0)
 #define CMD_FLAG_GET_TRACE_LEVEL(cmd_flags) ((cmd_flags >> 0) & 3)
+#define CMD_FLAG_IMMEDIATE (1 << 2)
 
 // Computes the number of command buffer entries needed for a certain size. In
 // other words it rounds up to a multiple of entries.
@@ -57,16 +51,16 @@ struct CommandHeader {
   // variable sized commands like immediate commands or Noop.
   template <typename T>
   void SetCmd() {
-    static_assert(T::kArgFlags == cmd::kFixed,
-                  "T::kArgFlags should equal cmd::kFixed");
+    static_assert((T::cmd_flags & CMD_FLAG_IMMEDIATE) == 0,
+                  "T should not be immediate");
     Init(T::kCmdId, ComputeNumEntries(sizeof(T)));  // NOLINT
   }
 
   // Sets the header by a size in bytes of the immediate data after the command.
   template <typename T>
   void SetCmdBySize(uint32_t size_of_data_in_bytes) {
-    static_assert(T::kArgFlags == cmd::kAtLeastN,
-                  "T::kArgFlags should equal cmd::kAtLeastN");
+    static_assert((T::cmd_flags & CMD_FLAG_IMMEDIATE) != 0,
+                  "T should be immediate");
     Init(T::kCmdId,
          ComputeNumEntries(sizeof(T) + size_of_data_in_bytes));  // NOLINT
   }
@@ -74,8 +68,8 @@ struct CommandHeader {
   // Sets the header by a size in bytes.
   template <typename T>
   void SetCmdByTotalSize(uint32_t size_in_bytes) {
-    static_assert(T::kArgFlags == cmd::kAtLeastN,
-                  "T::kArgFlags should equal cmd::kAtLeastN");
+    static_assert((T::cmd_flags & CMD_FLAG_IMMEDIATE) != 0,
+                  "T should be immediate");
     DCHECK_GE(size_in_bytes, sizeof(T));  // NOLINT
     Init(T::kCmdId, ComputeNumEntries(size_in_bytes));
   }
@@ -117,8 +111,8 @@ static_assert(GPU_COMMAND_BUFFER_ENTRY_ALIGNMENT == 4,
 //   cmd: Address of command.
 template <typename T>
 void* ImmediateDataAddress(T* cmd) {
-  static_assert(T::kArgFlags == cmd::kAtLeastN,
-                "T::kArgFlags should equal cmd::kAtLeastN");
+  static_assert((T::cmd_flags & CMD_FLAG_IMMEDIATE) != 0,
+                "T should be immediate");
   return reinterpret_cast<char*>(cmd) + sizeof(*cmd);
 }
 
@@ -128,8 +122,8 @@ template <typename T>
 // Parameters:
 //   cmd: Address of command.
 void* NextCmdAddress(void* cmd) {
-  static_assert(T::kArgFlags == cmd::kFixed,
-                "T::kArgFlags should equal cmd::kFixed");
+  static_assert((T::cmd_flags & CMD_FLAG_IMMEDIATE) == 0,
+                "T should not be immediate");
   return reinterpret_cast<char*>(cmd) + sizeof(T);
 }
 
@@ -140,8 +134,8 @@ void* NextCmdAddress(void* cmd) {
 //   size_of_data_in_bytes: Size of the data for the command.
 template <typename T>
 void* NextImmediateCmdAddress(void* cmd, uint32_t size_of_data_in_bytes) {
-  static_assert(T::kArgFlags == cmd::kAtLeastN,
-                "T::kArgFlags should equal cmd::kAtLeastN");
+  static_assert((T::cmd_flags & CMD_FLAG_IMMEDIATE) != 0,
+                "T should be immediate");
   return reinterpret_cast<char*>(cmd) + sizeof(T) +   // NOLINT
       RoundSizeToMultipleOfEntries(size_of_data_in_bytes);
 }
@@ -154,8 +148,8 @@ void* NextImmediateCmdAddress(void* cmd, uint32_t size_of_data_in_bytes) {
 template <typename T>
 void* NextImmediateCmdAddressTotalSize(void* cmd,
                                        uint32_t total_size_in_bytes) {
-  static_assert(T::kArgFlags == cmd::kAtLeastN,
-                "T::kArgFlags should equal cmd::kAtLeastN");
+  static_assert((T::cmd_flags & CMD_FLAG_IMMEDIATE) != 0,
+                "T should be immediate");
   DCHECK_GE(total_size_in_bytes, sizeof(T));  // NOLINT
   return reinterpret_cast<char*>(cmd) +
       RoundSizeToMultipleOfEntries(total_size_in_bytes);
@@ -181,14 +175,14 @@ namespace cmd {
 
 // Common commands.
 enum CommandId {
-  #define COMMON_COMMAND_BUFFER_CMD_OP(name) k ## name,
+#define COMMON_COMMAND_BUFFER_CMD_OP(name) k##name,
 
   COMMON_COMMAND_BUFFER_CMDS(COMMON_COMMAND_BUFFER_CMD_OP)
 
-  #undef COMMON_COMMAND_BUFFER_CMD_OP
+#undef COMMON_COMMAND_BUFFER_CMD_OP
 
-  kNumCommands,
-  kLastCommonId = 255  // reserve 256 spaces for common commands.
+      kNumCommands,
+  kLastCommonId = kNumCommands - 1
 };
 
 static_assert(kNumCommands - 1 <= kLastCommonId, "too many commands");
@@ -199,8 +193,8 @@ const char* GetCommandName(CommandId id);
 struct Noop {
   typedef Noop ValueType;
   static const CommandId kCmdId = kNoop;
-  static const cmd::ArgFlags kArgFlags = cmd::kAtLeastN;
-  static const uint8_t cmd_flags = CMD_FLAG_SET_TRACE_LEVEL(3);
+  static const uint8_t cmd_flags =
+      CMD_FLAG_SET_TRACE_LEVEL(3) | CMD_FLAG_IMMEDIATE;
 
   void SetHeader(uint32_t skip_count) {
     DCHECK_GT(skip_count, 0u);
@@ -229,7 +223,6 @@ static_assert(offsetof(Noop, header) == 0,
 struct SetToken {
   typedef SetToken ValueType;
   static const CommandId kCmdId = kSetToken;
-  static const cmd::ArgFlags kArgFlags = cmd::kFixed;
   static const uint8_t cmd_flags = CMD_FLAG_SET_TRACE_LEVEL(3);
 
   void SetHeader() {
@@ -270,7 +263,6 @@ static_assert(offsetof(SetToken, token) == 4,
 struct SetBucketSize {
   typedef SetBucketSize ValueType;
   static const CommandId kCmdId = kSetBucketSize;
-  static const cmd::ArgFlags kArgFlags = cmd::kFixed;
   static const uint8_t cmd_flags = CMD_FLAG_SET_TRACE_LEVEL(3);
 
   void SetHeader() {
@@ -307,7 +299,6 @@ static_assert(offsetof(SetBucketSize, size) == 8,
 struct SetBucketData {
   typedef SetBucketData ValueType;
   static const CommandId kCmdId = kSetBucketData;
-  static const cmd::ArgFlags kArgFlags = cmd::kFixed;
   static const uint8_t cmd_flags = CMD_FLAG_SET_TRACE_LEVEL(3);
 
   void SetHeader() {
@@ -370,8 +361,8 @@ static_assert(offsetof(SetBucketData, shared_memory_offset) == 20,
 struct SetBucketDataImmediate {
   typedef SetBucketDataImmediate ValueType;
   static const CommandId kCmdId = kSetBucketDataImmediate;
-  static const cmd::ArgFlags kArgFlags = cmd::kAtLeastN;
-  static const uint8_t cmd_flags = CMD_FLAG_SET_TRACE_LEVEL(3);
+  static const uint8_t cmd_flags =
+      CMD_FLAG_SET_TRACE_LEVEL(3) | CMD_FLAG_IMMEDIATE;
 
   void SetHeader(uint32_t size) {
     header.SetCmdBySize<ValueType>(size);
@@ -426,7 +417,6 @@ static_assert(offsetof(SetBucketDataImmediate, size) == 12,
 struct GetBucketStart {
   typedef GetBucketStart ValueType;
   static const CommandId kCmdId = kGetBucketStart;
-  static const cmd::ArgFlags kArgFlags = cmd::kFixed;
   static const uint8_t cmd_flags = CMD_FLAG_SET_TRACE_LEVEL(3);
 
   typedef uint32_t Result;
@@ -497,7 +487,6 @@ static_assert(offsetof(GetBucketStart, data_memory_offset) == 24,
 struct GetBucketData {
   typedef GetBucketData ValueType;
   static const CommandId kCmdId = kGetBucketData;
-  static const cmd::ArgFlags kArgFlags = cmd::kFixed;
   static const uint8_t cmd_flags = CMD_FLAG_SET_TRACE_LEVEL(3);
 
   void SetHeader() {
