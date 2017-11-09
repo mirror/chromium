@@ -39,6 +39,8 @@ void LoadFileTypesFromDisk(const base::FilePath& pb_path) {
   if (pb_path.empty())
     return;
 
+  LOG(INFO) << "COMPONENT " << pb_path;
+
   VLOG(1) << "Reading Download File Types from file: " << pb_path.value();
   std::string binary_pb;
   if (!base::ReadFileToString(pb_path, &binary_pb)) {
@@ -82,6 +84,7 @@ void FileTypePoliciesComponentInstallerPolicy::ComponentReady(
     const base::Version& version,
     const base::FilePath& install_dir,
     std::unique_ptr<base::DictionaryValue> manifest) {
+  LOG(INFO) << "COMPONENT READY";
   VLOG(1) << "Component ready, version " << version.GetString() << " in "
           << install_dir.value();
 

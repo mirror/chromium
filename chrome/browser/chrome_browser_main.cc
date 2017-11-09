@@ -534,6 +534,7 @@ void RegisterComponentsForUpdate() {
     RegisterOriginTrialsComponent(cus, path);
 
     RegisterFileTypePoliciesComponent(cus, path);
+    LOG(INFO) << "COMPONENT REGISTER";
 
 #if BUILDFLAG(ENABLE_CAPTIVE_PORTAL_DETECTION)
     RegisterSSLErrorAssistantComponent(cus, path);
@@ -1183,6 +1184,7 @@ void ChromeBrowserMainParts::ServiceManagerConnectionStarted(
 }
 
 void ChromeBrowserMainParts::PreMainMessageLoopRun() {
+  LOG(INFO) << "COMPONENT PreMainMessageLoopRun";
 #if defined(USE_AURA)
   if (content::ServiceManagerConnection::GetForProcess() &&
       service_manager::ServiceManagerIsRemote()) {
@@ -1324,6 +1326,7 @@ void ChromeBrowserMainParts::PreBrowserStart() {
 }
 
 void ChromeBrowserMainParts::PostBrowserStart() {
+  LOG(INFO) << "COMPONENT PostBrowserStart";
   TRACE_EVENT0("startup", "ChromeBrowserMainParts::PostBrowserStart");
   for (size_t i = 0; i < chrome_extra_parts_.size(); ++i)
     chrome_extra_parts_[i]->PostBrowserStart();
@@ -1359,6 +1362,7 @@ void ChromeBrowserMainParts::PostBrowserStart() {
 }
 
 int ChromeBrowserMainParts::PreMainMessageLoopRunImpl() {
+  LOG(INFO) << "COMPONENT PreMainMessageLoopRunImpl";
   TRACE_EVENT0("startup", "ChromeBrowserMainParts::PreMainMessageLoopRunImpl");
 
   SCOPED_UMA_HISTOGRAM_LONG_TIMER("Startup.PreMainMessageLoopRunImplLongTime");

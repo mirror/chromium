@@ -247,6 +247,7 @@ bool ComponentInstaller::FindPreinstallation(
 void ComponentInstaller::StartRegistration(
     const scoped_refptr<RegistrationInfo>& registration_info,
     ComponentUpdateService* cus) {
+  LOG(INFO) << "COMPONENT StartRegistration";
   VLOG(1) << __func__ << " for " << installer_policy_->GetName();
   DCHECK(task_runner_.get());
   DCHECK(task_runner_->RunsTasksInCurrentSequence());
@@ -381,6 +382,7 @@ void ComponentInstaller::FinishRegistration(
     const scoped_refptr<RegistrationInfo>& registration_info,
     ComponentUpdateService* cus,
     const base::Closure& callback) {
+  LOG(INFO) << "COMPONENT FinishRegistration";
   VLOG(1) << __func__ << " for " << installer_policy_->GetName();
   DCHECK_CALLED_ON_VALID_THREAD(thread_checker_);
 
