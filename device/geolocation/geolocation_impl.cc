@@ -68,6 +68,7 @@ GeolocationImpl::GeolocationImpl(mojo::InterfaceRequest<Geolocation> request,
   DCHECK(context_);
   binding_.set_connection_error_handler(
       base::Bind(&GeolocationImpl::OnConnectionError, base::Unretained(this)));
+  GeolocationProvider::GetInstance()->UserDidOptIntoLocationServices();
 }
 
 GeolocationImpl::~GeolocationImpl() {

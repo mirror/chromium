@@ -11,7 +11,6 @@
 #include "content/public/browser/browser_thread.h"
 #include "content/public/browser/render_frame_host.h"
 #include "content/public/browser/web_contents.h"
-#include "device/geolocation/geolocation_provider.h"
 #include "url/origin.h"
 
 GeolocationPermissionContext::GeolocationPermissionContext(Profile* profile)
@@ -81,11 +80,6 @@ void GeolocationPermissionContext::UpdateTabContext(
   if (content_settings)
     content_settings->OnGeolocationPermissionSet(
         requesting_frame.GetOrigin(), allowed);
-
-  if (allowed) {
-    device::GeolocationProvider::GetInstance()
-        ->UserDidOptIntoLocationServices();
-  }
 }
 
 bool GeolocationPermissionContext::IsRestrictedToSecureOrigins() const {
