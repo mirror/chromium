@@ -130,16 +130,13 @@
                                             completion:completion];
 }
 
-- (void)presentTopViewController:(UIViewController*)viewController
-                        animated:(BOOL)animated
-                      completion:(ProceduralBlock)completion {
-  // TODO(crbug.com/754642): Stop using TopPresentedViewControllerFrom().
-  UIViewController* topController =
-      top_view_controller::TopPresentedViewControllerFrom(
-          self.presentingViewController);
-  [topController presentViewController:viewController
-                              animated:animated
-                            completion:completion];
+- (void)presentViewController:(UIViewController*)viewController
+           baseViewController:(UIViewController*)baseViewController
+                     animated:(BOOL)animated
+                   completion:(ProceduralBlock)completion {
+  [baseViewController presentViewController:viewController
+                                   animated:animated
+                                 completion:completion];
 }
 
 - (void)dismissViewControllerAnimated:(BOOL)animated
