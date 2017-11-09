@@ -11,12 +11,11 @@
 namespace blink {
 namespace {
 
-class NGColumnLayoutAlgorithmTest : public NGBaseLayoutAlgorithmTest {
+class NGColumnLayoutAlgorithmTest
+    : public NGBaseLayoutAlgorithmTest,
+      private ScopedLayoutNGFragmentCachingForTest {
  protected:
   void SetUp() override {
-    // Make sure to reset this, except for the one test that needs it.
-    RuntimeEnabledFeatures::SetLayoutNGFragmentCachingEnabled(false);
-
     NGBaseLayoutAlgorithmTest::SetUp();
     style_ = ComputedStyle::Create();
   }
