@@ -1,0 +1,55 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "b4433852_05dd0145",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 13
+      },
+      "lineNbr": 16,
+      "author": {
+        "id": 1002092
+      },
+      "writtenOn": "2017-11-09T04:40:05Z",
+      "side": 1,
+      "message": "can this be attached to the bug? I\u0027m not as confident around how long-lived, and externally-accessible drive links are.",
+      "revId": "48615d33e15425403b0c899a8474677e607ac25d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "014ce666_6c29d94c",
+        "filename": "chrome/browser/ui/views/harmony/chrome_layout_provider.h",
+        "patchSetId": 13
+      },
+      "lineNbr": 57,
+      "author": {
+        "id": 1002092
+      },
+      "writtenOn": "2017-11-09T04:40:05Z",
+      "side": 1,
+      "message": "nit: alphabetize the enum values, since I think we want this staying around. And I think \"content list\" needs more information in the comment. And the components should be rearranged so these remain together after sorting. i.e.\n\nDISTANCE_CONTENT_LIST_VERTICAL_PADDING_SINGLE,\nDISTANCE_CONTENT_LIST_VERTICAL_PADDING_MULTI,\n\n(\"Hover\" seems out of place - perhaps move to the comment.)\n\nE.g. ... A content list is a vertical stack of composite views that behaves like a menu...",
+      "revId": "48615d33e15425403b0c899a8474677e607ac25d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "cf8941aa_49fb1ef7",
+        "filename": "chrome/browser/ui/views/hover_button.cc",
+        "patchSetId": 13
+      },
+      "lineNbr": 39,
+      "author": {
+        "id": 1002092
+      },
+      "writtenOn": "2017-11-09T04:40:05Z",
+      "side": 1,
+      "message": "do you know the context for this? it would be nice to comment here about why this is done/necessary - it\u0027s not obvious to me.",
+      "revId": "48615d33e15425403b0c899a8474677e607ac25d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
