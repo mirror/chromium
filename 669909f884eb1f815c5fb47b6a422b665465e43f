@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "ec4fcca9_03003d97",
+        "filename": "chrome/browser/consent_auditor/consent_auditor_factory.cc",
+        "patchSetId": 10
+      },
+      "lineNbr": 17,
+      "author": {
+        "id": 1001606
+      },
+      "writtenOn": "2017-11-09T16:09:51Z",
+      "side": 1,
+      "message": "Nit: If you are okay with leaking the factory (which I think is fine here), you could use a static local.",
+      "range": {
+        "startLine": 17,
+        "startChar": 2,
+        "endLine": 17,
+        "endChar": 54
+      },
+      "revId": "669909f884eb1f815c5fb47b6a422b665465e43f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
