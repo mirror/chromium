@@ -49,6 +49,7 @@ enum class TabMutedResult {
   SUCCESS,
   FAIL_NOT_ENABLED,
   FAIL_TABCAPTURE,
+  FAIL_MUTE_DISALLOWED,
 };
 
 namespace chrome {
