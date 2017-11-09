@@ -1,0 +1,96 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "33b6f2c6_e928b813",
+        "filename": "media/base/android/java/src/org/chromium/media/MediaCodecBridge.java",
+        "patchSetId": 8
+      },
+      "lineNbr": 669,
+      "author": {
+        "id": 1123449
+      },
+      "writtenOn": "2017-11-09T22:34:12Z",
+      "side": 1,
+      "message": "Would it make sense to log some warning here, so that it\u0027s clear in the device logs why HDR content doesn\u0027t look right in this case?",
+      "range": {
+        "startLine": 667,
+        "startChar": 0,
+        "endLine": 669,
+        "endChar": 9
+      },
+      "revId": "8c4f09ecae1345b22c20d2880d790774b8143f03",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "fe5ca621_7c984adc",
+        "filename": "media/base/android/java/src/org/chromium/media/MediaCodecBridge.java",
+        "patchSetId": 8
+      },
+      "lineNbr": 730,
+      "author": {
+        "id": 1123449
+      },
+      "writtenOn": "2017-11-09T22:34:12Z",
+      "side": 1,
+      "message": "Same: log a warning here?",
+      "range": {
+        "startLine": 728,
+        "startChar": 0,
+        "endLine": 730,
+        "endChar": 9
+      },
+      "revId": "8c4f09ecae1345b22c20d2880d790774b8143f03",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "fce3511f_c449d7c5",
+        "filename": "media/base/android/media_codec_bridge_impl.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 278,
+      "author": {
+        "id": 1123449
+      },
+      "writtenOn": "2017-11-09T22:34:12Z",
+      "side": 1,
+      "message": "This looks confusing. Shouldn\u0027t this be just \"if (hdr_metadata) ...\" ?",
+      "range": {
+        "startLine": 278,
+        "startChar": 6,
+        "endLine": 278,
+        "endChar": 47
+      },
+      "revId": "8c4f09ecae1345b22c20d2880d790774b8143f03",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a652e294_8b2f5813",
+        "filename": "media/base/android/media_codec_bridge_impl.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 278,
+      "author": {
+        "id": 1123449
+      },
+      "writtenOn": "2017-11-09T22:34:12Z",
+      "side": 1,
+      "message": "This looks confusing. Shouldn\u0027t this be just \"if (hdr_metadata) ...\" ?",
+      "range": {
+        "startLine": 278,
+        "startChar": 6,
+        "endLine": 278,
+        "endChar": 47
+      },
+      "revId": "8c4f09ecae1345b22c20d2880d790774b8143f03",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
