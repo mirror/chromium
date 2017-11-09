@@ -2,7 +2,9 @@ This page tests whether custom properties on DOM objects persist after garbage c
 
 If the test passes, you'll see a series of 'PASS' messages below.
 
-Because neither WinIE nor FF has reasonable or predictable behavior in this scenario, this test just documents our behavior to ensure that we don't change it accidentally. It is not a prescription for how things should behave.
+Because neither WinIE nor FF has reasonable or predictable behavior in this scenario, this
+   test just documents our behavior to ensure that we don't change it accidentally. It is not
+   a prescription for how things should behave.
 
 DOM OBJECTS BEFORE GARBAGE COLLECTION:
 PASS: document.implementation.myCustomProperty should be 1 and is.
@@ -98,4 +100,3 @@ DOM EVENT BEFORE GARBAGE COLLECTION
 PASS: event.myCustomProperty should be 1 and is.
 DOM EVENT AFTER GARBAGE COLLECTION
 PASS: event.myCustomProperty should be 1 and is.
-

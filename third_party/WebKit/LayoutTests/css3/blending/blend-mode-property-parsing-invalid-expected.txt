@@ -3,7 +3,6 @@ Test the parsing of the mix-blend-mode property.
 On success, you will see a series of "PASS" messages, followed by "TEST COMPLETE".
 
 
-
 Too many parameters : overlay overlay
 PASS cssRule.type is 1
 PASS declaration.length is 0

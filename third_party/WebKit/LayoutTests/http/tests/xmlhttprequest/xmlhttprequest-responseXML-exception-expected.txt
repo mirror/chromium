@@ -1,4 +1,4 @@
-Test bug 12914 : Trying to access XMLHttpRequest.responseText or responseXML when they are not available should raise an exception
+Test bug 12914 :  Trying to access XMLHttpRequest.responseText or responseXML when they are not available should raise an exception
 
 Should see "PASS" four times:
 

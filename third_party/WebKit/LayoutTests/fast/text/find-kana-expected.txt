@@ -2,7 +2,6 @@ Tests find for strings with kana letters in them.
 
 On success, you will see a series of "PASS" messages, followed by "TEST COMPLETE".
 
-
 Exact matches first as a baseline
 
 PASS canFind(decomposedHalfwidthKatakanaLetterBa, decomposedHalfwidthKatakanaLetterBa) is true

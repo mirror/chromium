@@ -1,4 +1,4 @@
-Test for Bugzilla bug: 77028 Specified width CSS tables should not include border and padding as part of that width.
+Test for Bugzilla bug: 77028  Specified width CSS tables should not include border and padding as part of that width.
 For a CSS table with a specified width, border and padding should not be included as part of its width (for the content-box model).
 50%, content-box
 PASS

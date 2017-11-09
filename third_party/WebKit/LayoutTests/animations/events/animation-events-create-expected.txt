@@ -2,7 +2,6 @@ Test dynamic creation of AnimationEvent.
 
 On success, you will see a series of "PASS" messages, followed by "TEST COMPLETE".
 
-
 PASS document.createEvent exists
 
 Test creation of AnimationEvent

@@ -2,7 +2,6 @@ Tests that iframe content is available after iframe's load event fired. See bug 
 
 
 
-
 After frame navigate
 - <html>
     - <head>

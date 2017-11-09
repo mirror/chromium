@@ -1,3 +1,5 @@
-There should be a blue square below. Inner table's percent-driven width should affect the shrink-to-fit div.
+There should be a blue square below. Inner table's percent-driven width
+should affect the shrink-to-fit div.
 
+	
 PASS

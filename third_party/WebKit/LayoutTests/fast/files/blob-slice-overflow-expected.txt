@@ -1,2 +1,3 @@
-The excessive length passed to Blob.slice() should be trapped and result in a truncated slice being returned.
+The excessive length passed to Blob.slice() should be trapped and result in
+a truncated slice being returned.
 Blob slice length: 1

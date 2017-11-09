@@ -4,7 +4,6 @@ Tests that hover is lost from iframe when the mouse is moved from iframe to the 
 
 On success, you will see a series of "PASS" messages, followed by "TEST COMPLETE".
 
-
 PASS successfullyParsed is true
 
 TEST COMPLETE

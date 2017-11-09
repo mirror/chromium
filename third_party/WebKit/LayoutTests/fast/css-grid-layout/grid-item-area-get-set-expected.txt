@@ -2,7 +2,6 @@ This test checks that grid-area is properly parsed and stored internally.
 
 On success, you will see a series of "PASS" messages, followed by "TEST COMPLETE".
 
-
 Test getting grid-area set through CSS
 PASS getComputedStyle(gridItem, '').getPropertyValue('grid-row-start') is "1"
 PASS getComputedStyle(gridItem, '').getPropertyValue('grid-column-start') is "auto"

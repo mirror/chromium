@@ -1,5 +1,7 @@
 
+
 this is some vertical text
+
 Testcase for bug 102359: Caret is painted horizontally in vertical writing mode when there are no visible text.
 
 On success, you will see a series of "PASS" messages, followed by "TEST COMPLETE".

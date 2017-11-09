@@ -2,7 +2,6 @@ Test the extraction of the text surrounding an element.
 
 On success, you will see a series of "PASS" messages, followed by "TEST COMPLETE".
 
-
 PASS surroundingText('<button>.</button>12345<p id="here">6789 12345</p>6789<button>.</button>', 0, 100) is "12345 6789 12345 6789"
 PASS surroundingText('<button>.</button>12345<p id="here">6789 12345</p>6789<button>.</button>', 5, 6) is "89 123"
 PASS surroundingText('<button>.</button>12345<p id="here">6789 12345</p>6789<button>.</button>', 5, 0) is ""

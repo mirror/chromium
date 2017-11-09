@@ -2,7 +2,6 @@ Tests queryCommandState('justifyCenter'), queryCommandState('justifyFull'), quer
 
 On success, you will see a series of "PASS" messages, followed by "TEST COMPLETE".
 
-
 Caret
 PASS queryCommand('format') returns "" when selecting no selection on of "hello"
 PASS queryCommand('format') returns "left" when selecting first position of "hello"

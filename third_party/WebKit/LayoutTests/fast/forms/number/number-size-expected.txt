@@ -2,7 +2,6 @@ Test for size attribute of input
 
 On success, you will see a series of "PASS" messages, followed by "TEST COMPLETE".
 
-
 PASS spinButtonWidth is >= 1
 The content area of the number input without min/max/step attribute should have the same width as text input
 PASS number.offsetWidth is text.offsetWidth

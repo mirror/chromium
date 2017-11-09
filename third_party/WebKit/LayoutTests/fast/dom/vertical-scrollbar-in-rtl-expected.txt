@@ -6,6 +6,7 @@ zoom in and out preserve scroll position: Success
 resize preserves scroll position: Success
 PASS window.scrollY == -3425 became true
 PASS window.scrollY == 0 became true
+
 selectAll selects all document: Success
 PASS successfullyParsed is true
 

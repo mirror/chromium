@@ -1,4 +1,5 @@
-Test the (hover) media features. See Bug 136119 for details.
+Test the (hover) media features.
+    See Bug 136119 for details.
 
 ------------- with 'hover' hover -------------
 Query "(hover)": true

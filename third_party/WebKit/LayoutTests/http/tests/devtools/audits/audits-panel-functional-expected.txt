@@ -1,6 +1,11 @@
 Tests audit rules.
 
-   Text Link
+
+
+
+
+Text
+Link
 Page reloaded.
     Network Utilization
         [spritesheet-smallicons smallicon-red-ball severity] Combine external JavaScript (4)

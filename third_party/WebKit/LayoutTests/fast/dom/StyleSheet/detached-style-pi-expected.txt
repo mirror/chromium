@@ -1,4 +1,5 @@
-Bug 45205: Test that <xml-stylesheet> processing instructions only have stylesheets when in document.
+Bug 45205:
+Test that <xml-stylesheet> processing instructions only have stylesheets when in document.
 
 PASS successfullyParsed is true
 

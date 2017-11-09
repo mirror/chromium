@@ -2,7 +2,6 @@ Check the basic features of the ":placeholder-shown" pseudo class with the <text
 
 On success, you will see a series of "PASS" messages, followed by "TEST COMPLETE".
 
-
 PASS document.querySelectorAll(":placeholder-shown").length is 4
 PASS document.querySelectorAll(":placeholder-shown")[0] is document.getElementById("valid-placeholder")
 PASS document.querySelectorAll(":placeholder-shown")[1] is document.getElementById("valid-placeholder-with-value-attribute")

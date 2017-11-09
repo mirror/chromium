@@ -2,7 +2,6 @@ Various tests about radio button group.
 
 On success, you will see a series of "PASS" messages, followed by "TEST COMPLETE".
 
-
 Changing the name attribute of a radio button:
 PASS $("radio1-1").checked is true
 PASS $("radio1-2").checked is true

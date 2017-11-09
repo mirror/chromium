@@ -2,7 +2,6 @@ Tests form submission with method=dialog
 
 On success, you will see a series of "PASS" messages, followed by "TEST COMPLETE".
 
-
 Clicking outer-submit-empty-string
 PASS outer; dialog.open is false
 PASS outer; dialog.returnValue is ""
@@ -93,5 +92,4 @@ PASS successfullyParsed is true
 TEST COMPLETE
 
 
-  
 

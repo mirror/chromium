@@ -1,4 +1,5 @@
-This test checks some DOM object prototypes that WebKit has gotten wrong in the past. If the test passes, you'll see a series of 'PASS' messages below.
+This test checks some DOM object prototypes that WebKit has gotten wrong in the past.
+   If the test passes, you'll see a series of 'PASS' messages below.
 
 PASS: Object.prototype.isPrototypeOf(window.DOMException) should be true and is.
 PASS: Object.prototype.isPrototypeOf(window.Option) should be true and is.
@@ -7,4 +8,3 @@ PASS: Object.prototype.isPrototypeOf(styleSheet) should be true and is.
 PASS: Object.prototype.isPrototypeOf(cssRule) should be true and is.
 PASS: Object.prototype.isPrototypeOf(nodeList) should be true and is.
 PASS: Object.prototype.isPrototypeOf(namedNodesCollection) should be true and is.
-

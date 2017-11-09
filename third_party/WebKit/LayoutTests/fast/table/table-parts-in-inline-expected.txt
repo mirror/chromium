@@ -1,8 +1,26 @@
 Test that a table part child of an inline is wrapped inside an inline-table.
 
-This text should be on one line.
-This text should be on one line.
-This text should be on one line.
+This text
+should be
+
+on
+
+        one
+line.
+This text
+should be
+
+on
+
+        one
+line.
+This text
+should be
+
+on
+
+        one
+line.
 Testing cell:
 PASS firstTop is lastTop
 Testing row:

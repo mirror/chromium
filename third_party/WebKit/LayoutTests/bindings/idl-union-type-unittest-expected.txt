@@ -2,7 +2,6 @@ IDL union types unittests
 
 On success, you will see a series of "PASS" messages, followed by "TEST COMPLETE".
 
-
 Tests for attributes
 PASS unionTypesTest.doubleOrStringOrStringSequenceAttribute is 0
 PASS unionTypesTest.doubleOrStringOrStringSequenceAttribute is 3.14
