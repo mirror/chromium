@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "53422738_7f9ec23a",
+        "filename": "ios/build/bots/chromium.fyi/ios-simulator-cronet.json",
+        "patchSetId": 3
+      },
+      "lineNbr": 15,
+      "author": {
+        "id": 1003211
+      },
+      "writtenOn": "2017-11-09T21:25:52Z",
+      "side": 1,
+      "message": "Oh, can you remove these spaces for consistency (e.g. see target_cpu)?",
+      "revId": "cae1ac600be2ebb1d0a66ea9bb30788fea112194",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "82c7cadb_5b441b9b",
+        "filename": "ios/build/bots/chromium.mac/ios-simulator-cronet.json",
+        "patchSetId": 3
+      },
+      "lineNbr": 13,
+      "author": {
+        "id": 1003211
+      },
+      "writtenOn": "2017-11-09T21:25:52Z",
+      "side": 1,
+      "message": "Here too.",
+      "revId": "cae1ac600be2ebb1d0a66ea9bb30788fea112194",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
