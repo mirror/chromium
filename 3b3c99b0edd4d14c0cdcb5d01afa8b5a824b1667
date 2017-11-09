@@ -1,0 +1,96 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "6c1e8da1_4f37891e",
+        "filename": "base/test/android/javatests/src/org/chromium/base/test/params/ParameterizedRunnerDelegateFactory.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 67,
+      "author": {
+        "id": 1123275
+      },
+      "writtenOn": "2017-11-09T16:43:02Z",
+      "side": 1,
+      "message": "nit: update comment",
+      "range": {
+        "startLine": 67,
+        "startChar": 28,
+        "endLine": 67,
+        "endChar": 39
+      },
+      "revId": "3b3c99b0edd4d14c0cdcb5d01afa8b5a824b1667",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9441cd6c_86a8477b",
+        "filename": "base/test/android/javatests/src/org/chromium/base/test/params/ParameterizedRunnerDelegateFactory.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 84,
+      "author": {
+        "id": 1123275
+      },
+      "writtenOn": "2017-11-09T16:43:02Z",
+      "side": 1,
+      "message": "nit: map.contains()?",
+      "range": {
+        "startLine": 84,
+        "startChar": 53,
+        "endLine": 84,
+        "endChar": 56
+      },
+      "revId": "3b3c99b0edd4d14c0cdcb5d01afa8b5a824b1667",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c829eec6_9a61bd8e",
+        "filename": "base/test/android/javatests/src/org/chromium/base/test/params/ParameterizedRunnerDelegateFactory.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 102,
+      "author": {
+        "id": 1123275
+      },
+      "writtenOn": "2017-11-09T16:43:02Z",
+      "side": 1,
+      "message": "I was getting exceptions saying that the type is private when I tried that, had to use reflection to get the constructor and make it visible as a workaround... any idea why it works here?",
+      "range": {
+        "startLine": 102,
+        "startChar": 35,
+        "endLine": 102,
+        "endChar": 88
+      },
+      "revId": "3b3c99b0edd4d14c0cdcb5d01afa8b5a824b1667",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ebb5d0c9_cf58ec85",
+        "filename": "chrome/android/javatests/src/org/chromium/chrome/browser/suggestions/HomeSheetUiCaptureTest.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 82,
+      "author": {
+        "id": 1123275
+      },
+      "writtenOn": "2017-11-09T16:43:02Z",
+      "side": 1,
+      "message": "why not Features#enable?",
+      "range": {
+        "startLine": 82,
+        "startChar": 12,
+        "endLine": 82,
+        "endChar": 51
+      },
+      "revId": "3b3c99b0edd4d14c0cdcb5d01afa8b5a824b1667",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
