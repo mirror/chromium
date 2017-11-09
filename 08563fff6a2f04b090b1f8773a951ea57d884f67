@@ -1,0 +1,675 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "14cc6962_d5de202a",
+        "filename": "chrome/gpu/gpu_arc_video_decode_accelerator.cc",
+        "patchSetId": 14
+      },
+      "lineNbr": 7,
+      "author": {
+        "id": 1001027
+      },
+      "writtenOn": "2017-11-09T05:14:19Z",
+      "side": 1,
+      "message": "This will not be needed after rebase.",
+      "revId": "08563fff6a2f04b090b1f8773a951ea57d884f67",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e5f7014f_faca7e7d",
+        "filename": "chrome/gpu/gpu_arc_video_decode_accelerator.cc",
+        "patchSetId": 14
+      },
+      "lineNbr": 10,
+      "author": {
+        "id": 1001027
+      },
+      "writtenOn": "2017-11-09T05:14:19Z",
+      "side": 1,
+      "message": "Ditto.",
+      "revId": "08563fff6a2f04b090b1f8773a951ea57d884f67",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "03263b94_200f5bf8",
+        "filename": "chrome/gpu/gpu_arc_video_decode_accelerator.cc",
+        "patchSetId": 14
+      },
+      "lineNbr": 58,
+      "author": {
+        "id": 1001027
+      },
+      "writtenOn": "2017-11-09T05:14:19Z",
+      "side": 1,
+      "message": "Do we need this enum? Could we use arc::mojom::PortType?",
+      "revId": "08563fff6a2f04b090b1f8773a951ea57d884f67",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "486372e4_e11bdb80",
+        "filename": "chrome/gpu/gpu_arc_video_decode_accelerator.cc",
+        "patchSetId": 14
+      },
+      "lineNbr": 99,
+      "author": {
+        "id": 1001027
+      },
+      "writtenOn": "2017-11-09T05:14:19Z",
+      "side": 1,
+      "message": "Unexpected output format",
+      "revId": "08563fff6a2f04b090b1f8773a951ea57d884f67",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "fb2c869c_5d81aa5c",
+        "filename": "chrome/gpu/gpu_arc_video_decode_accelerator.cc",
+        "patchSetId": 14
+      },
+      "lineNbr": 103,
+      "author": {
+        "id": 1001027
+      },
+      "writtenOn": "2017-11-09T05:14:19Z",
+      "side": 1,
+      "message": "I\u0027d switch to INVALID_ARGUMENT here.",
+      "revId": "08563fff6a2f04b090b1f8773a951ea57d884f67",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "82f2164a_d79c85d2",
+        "filename": "chrome/gpu/gpu_arc_video_decode_accelerator.cc",
+        "patchSetId": 14
+      },
+      "lineNbr": 129,
+      "author": {
+        "id": 1001027
+      },
+      "writtenOn": "2017-11-09T05:14:19Z",
+      "side": 1,
+      "message": "I\u0027d switch to INVALID_ARGUMENT here.",
+      "revId": "08563fff6a2f04b090b1f8773a951ea57d884f67",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8a41b06f_3519ac3b",
+        "filename": "chrome/gpu/gpu_arc_video_decode_accelerator.cc",
+        "patchSetId": 14
+      },
+      "lineNbr": 234,
+      "author": {
+        "id": 1001027
+      },
+      "writtenOn": "2017-11-09T05:14:19Z",
+      "side": 1,
+      "message": "|client| is not needed anymore.",
+      "revId": "08563fff6a2f04b090b1f8773a951ea57d884f67",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7d2792ff_87aec902",
+        "filename": "chrome/gpu/gpu_arc_video_decode_accelerator.cc",
+        "patchSetId": 14
+      },
+      "lineNbr": 319,
+      "author": {
+        "id": 1001027
+      },
+      "writtenOn": "2017-11-09T05:14:19Z",
+      "side": 1,
+      "message": "It would be best not to use port/index anymore if only for protected buffer support. Also, in general, we are not validating port/index values coming from the client anymore, e.g. to verify that we allocate for values within the requested picture buffer ids/sizes, and we may need to be dropping secure buffer handles on dismissing the buffers as well.\n\nIn general, I think we may want to rethink this whole mechanism first. Perhaps we could remove protected buffer support from this CL and submit it separately later?",
+      "revId": "08563fff6a2f04b090b1f8773a951ea57d884f67",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "77b63719_b20a0c16",
+        "filename": "chrome/gpu/gpu_arc_video_decode_accelerator.cc",
+        "patchSetId": 14
+      },
+      "lineNbr": 388,
+      "author": {
+        "id": 1001027
+      },
+      "writtenOn": "2017-11-09T05:14:19Z",
+      "side": 1,
+      "message": "Perhaps we could unify these checks in Decode, Flush and make the requests/callbacks generic by doing something like below?\n\nstd::queue\u003cstd::pair\u003cOnceCallback, OnceCallback\u003e\u003e pending_requests_;\n\nvoid ExecuteRequest(base::OnceCallback request, base::OnceCallback callback) {\n  // If a callback is pending, postpone executing further tasks until the request\n  // associated with that callback is finished and the callback executed.\n  if (!pending_callback_.is_null()) {\n    pending_requests_.push(std::make_pair\u003crequest, callback\u003e);\n    return;\n  }\n\n  // This may be null if the request does not require a callback.\n  pending_callback_ \u003d std::move(callback);\n  request.Run();\n}",
+      "revId": "08563fff6a2f04b090b1f8773a951ea57d884f67",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6122140d_162793c8",
+        "filename": "chrome/gpu/gpu_arc_video_decode_accelerator.cc",
+        "patchSetId": 14
+      },
+      "lineNbr": 419,
+      "author": {
+        "id": 1001027
+      },
+      "writtenOn": "2017-11-09T05:14:19Z",
+      "side": 1,
+      "message": "What happens if this is not a SharedMemory handle?",
+      "revId": "08563fff6a2f04b090b1f8773a951ea57d884f67",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8502aa45_1299a66a",
+        "filename": "chrome/gpu/gpu_arc_video_decode_accelerator.cc",
+        "patchSetId": 14
+      },
+      "lineNbr": 439,
+      "author": {
+        "id": 1001027
+      },
+      "writtenOn": "2017-11-09T05:14:19Z",
+      "side": 1,
+      "message": "This would allow the client to crash the GPU process. Please instead if() return. We should also verify before checking this in l.432.",
+      "revId": "08563fff6a2f04b090b1f8773a951ea57d884f67",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "cf90e5fc_e28da73f",
+        "filename": "chrome/gpu/gpu_arc_video_decode_accelerator.h",
+        "patchSetId": 14
+      },
+      "lineNbr": 25,
+      "author": {
+        "id": 1001027
+      },
+      "writtenOn": "2017-11-09T05:14:19Z",
+      "side": 1,
+      "message": "Nit: comma should be at the end of the previous word.",
+      "range": {
+        "startLine": 25,
+        "startChar": 3,
+        "endLine": 25,
+        "endChar": 4
+      },
+      "revId": "08563fff6a2f04b090b1f8773a951ea57d884f67",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d2769161_e3daa8b6",
+        "filename": "chrome/gpu/gpu_arc_video_decode_accelerator.h",
+        "patchSetId": 14
+      },
+      "lineNbr": 41,
+      "author": {
+        "id": 1001027
+      },
+      "writtenOn": "2017-11-09T05:14:19Z",
+      "side": 1,
+      "message": "Normally we should override public interfaces with public methods. I didn\u0027t notice previously these were private in the old GAVDA, but I think we should move to public.",
+      "revId": "08563fff6a2f04b090b1f8773a951ea57d884f67",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d41d5d62_bbe37886",
+        "filename": "chrome/gpu/gpu_arc_video_decode_accelerator.h",
+        "patchSetId": 14
+      },
+      "lineNbr": 74,
+      "author": {
+        "id": 1001027
+      },
+      "writtenOn": "2017-11-09T05:14:19Z",
+      "side": 1,
+      "message": "s/const //",
+      "revId": "08563fff6a2f04b090b1f8773a951ea57d884f67",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8cfdd2a2_83495bfd",
+        "filename": "chrome/gpu/gpu_arc_video_decode_accelerator.h",
+        "patchSetId": 14
+      },
+      "lineNbr": 79,
+      "author": {
+        "id": 1001027
+      },
+      "writtenOn": "2017-11-09T05:14:19Z",
+      "side": 1,
+      "message": "Execute all pending requests until a request requiring a callback is encountered. When that happens, we need to explicitly wait for it to finish, before we continue executing subsequent requests, setting current_callback_ to the callback for that request and running it after the request finishes executing.",
+      "revId": "08563fff6a2f04b090b1f8773a951ea57d884f67",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "bab3714b_8676a710",
+        "filename": "chrome/gpu/gpu_arc_video_decode_accelerator.h",
+        "patchSetId": 14
+      },
+      "lineNbr": 90,
+      "author": {
+        "id": 1001027
+      },
+      "writtenOn": "2017-11-09T05:14:19Z",
+      "side": 1,
+      "message": "s/be/been/",
+      "revId": "08563fff6a2f04b090b1f8773a951ea57d884f67",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "140e70d3_28b1430d",
+        "filename": "chrome/gpu/gpu_arc_video_decode_accelerator.h",
+        "patchSetId": 14
+      },
+      "lineNbr": 92,
+      "author": {
+        "id": 1001027
+      },
+      "writtenOn": "2017-11-09T05:14:19Z",
+      "side": 1,
+      "message": "s/the previous/all the preceeding/",
+      "revId": "08563fff6a2f04b090b1f8773a951ea57d884f67",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b0064d2f_ff1d8201",
+        "filename": "chrome/gpu/gpu_arc_video_decode_accelerator.h",
+        "patchSetId": 14
+      },
+      "lineNbr": 93,
+      "author": {
+        "id": 1001027
+      },
+      "writtenOn": "2017-11-09T05:14:19Z",
+      "side": 1,
+      "message": "s/has/have/",
+      "revId": "08563fff6a2f04b090b1f8773a951ea57d884f67",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "27650307_d9cdf0dd",
+        "filename": "chrome/gpu/gpu_arc_video_decode_accelerator.h",
+        "patchSetId": 14
+      },
+      "lineNbr": 95,
+      "author": {
+        "id": 1001027
+      },
+      "writtenOn": "2017-11-09T05:14:19Z",
+      "side": 1,
+      "message": "s/ifGAVDA/if GAVDA/",
+      "revId": "08563fff6a2f04b090b1f8773a951ea57d884f67",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1848dab4_e3f79b19",
+        "filename": "chrome/gpu/gpu_arc_video_decode_accelerator.h",
+        "patchSetId": 14
+      },
+      "lineNbr": 96,
+      "author": {
+        "id": 1001027
+      },
+      "writtenOn": "2017-11-09T05:14:19Z",
+      "side": 1,
+      "message": "s/canceled/cancelled/",
+      "revId": "08563fff6a2f04b090b1f8773a951ea57d884f67",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1971efc8_cdb4d3df",
+        "filename": "chrome/gpu/gpu_arc_video_decode_accelerator.h",
+        "patchSetId": 14
+      },
+      "lineNbr": 97,
+      "author": {
+        "id": 1001027
+      },
+      "writtenOn": "2017-11-09T05:14:19Z",
+      "side": 1,
+      "message": "s/returned/executed/",
+      "revId": "08563fff6a2f04b090b1f8773a951ea57d884f67",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4c9f5d48_83211c4e",
+        "filename": "chrome/gpu/gpu_arc_video_decode_accelerator.h",
+        "patchSetId": 14
+      },
+      "lineNbr": 98,
+      "author": {
+        "id": 1001027
+      },
+      "writtenOn": "2017-11-09T05:14:19Z",
+      "side": 1,
+      "message": "Please remove this line.",
+      "revId": "08563fff6a2f04b090b1f8773a951ea57d884f67",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "48bdf236_35aeda27",
+        "filename": "chrome/gpu/gpu_arc_video_decode_accelerator.h",
+        "patchSetId": 14
+      },
+      "lineNbr": 99,
+      "author": {
+        "id": 1001027
+      },
+      "writtenOn": "2017-11-09T05:14:19Z",
+      "side": 1,
+      "message": "Perhaps s/on_error_/error_state_/",
+      "revId": "08563fff6a2f04b090b1f8773a951ea57d884f67",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1ac99221_9b3f962f",
+        "filename": "chrome/gpu/gpu_arc_video_decode_accelerator.h",
+        "patchSetId": 14
+      },
+      "lineNbr": 100,
+      "author": {
+        "id": 1001027
+      },
+      "writtenOn": "2017-11-09T05:14:19Z",
+      "side": 1,
+      "message": "#include \u003cqueue\u003e\n#include \"base/callback_forward.h\"",
+      "revId": "08563fff6a2f04b090b1f8773a951ea57d884f67",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b855bdab_64c03d34",
+        "filename": "chrome/gpu/gpu_arc_video_decode_accelerator.h",
+        "patchSetId": 14
+      },
+      "lineNbr": 103,
+      "author": {
+        "id": 1001027
+      },
+      "writtenOn": "2017-11-09T05:14:19Z",
+      "side": 1,
+      "message": "It\u0027s a bit confusing that we are using the ResetCallback type here. Could we perhaps use a more general/base callback type instead?\n\nI\u0027d also recommend s/current_callback_/pending_callback_/",
+      "revId": "08563fff6a2f04b090b1f8773a951ea57d884f67",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8708db92_c1b69d41",
+        "filename": "chrome/gpu/gpu_arc_video_decode_accelerator.h",
+        "patchSetId": 14
+      },
+      "lineNbr": 106,
+      "author": {
+        "id": 1001027
+      },
+      "writtenOn": "2017-11-09T05:14:19Z",
+      "side": 1,
+      "message": "#include \u003cmemory\u003e",
+      "revId": "08563fff6a2f04b090b1f8773a951ea57d884f67",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "418da521_7740f29f",
+        "filename": "chrome/gpu/gpu_arc_video_decode_accelerator.h",
+        "patchSetId": 14
+      },
+      "lineNbr": 115,
+      "author": {
+        "id": 1001027
+      },
+      "writtenOn": "2017-11-09T05:14:19Z",
+      "side": 1,
+      "message": "s/map/Map/",
+      "revId": "08563fff6a2f04b090b1f8773a951ea57d884f67",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4287b662_86017255",
+        "filename": "chrome/gpu/gpu_arc_video_decode_accelerator.h",
+        "patchSetId": 14
+      },
+      "lineNbr": 116,
+      "author": {
+        "id": 1001027
+      },
+      "writtenOn": "2017-11-09T05:14:19Z",
+      "side": 1,
+      "message": "Do we need this to be a map?",
+      "revId": "08563fff6a2f04b090b1f8773a951ea57d884f67",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e9d83257_c2dc2298",
+        "filename": "chrome/gpu/gpu_arc_video_decode_accelerator.h",
+        "patchSetId": 14
+      },
+      "lineNbr": 118,
+      "author": {
+        "id": 1001027
+      },
+      "writtenOn": "2017-11-09T05:14:19Z",
+      "side": 1,
+      "message": "#include \u003cmap\u003e",
+      "revId": "08563fff6a2f04b090b1f8773a951ea57d884f67",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "79ebcb14_06a9893c",
+        "filename": "components/arc/common/video_common.mojom",
+        "patchSetId": 14
+      },
+      "lineNbr": 69,
+      "author": {
+        "id": 1001027
+      },
+      "writtenOn": "2017-11-09T05:14:19Z",
+      "side": 1,
+      "message": "This should not be needed anymore.",
+      "revId": "08563fff6a2f04b090b1f8773a951ea57d884f67",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e6e9d742_8e92e0b9",
+        "filename": "components/arc/common/video_decode_accelerator.mojom",
+        "patchSetId": 14
+      },
+      "lineNbr": 8,
+      "author": {
+        "id": 1001027
+      },
+      "writtenOn": "2017-11-09T05:14:19Z",
+      "side": 1,
+      "message": "s/ and F/, F/",
+      "range": {
+        "startLine": 8,
+        "startChar": 43,
+        "endLine": 8,
+        "endChar": 46
+      },
+      "revId": "08563fff6a2f04b090b1f8773a951ea57d884f67",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9dc4f21f_095055a5",
+        "filename": "components/arc/common/video_decode_accelerator.mojom",
+        "patchSetId": 14
+      },
+      "lineNbr": 20,
+      "author": {
+        "id": 1001027
+      },
+      "writtenOn": "2017-11-09T05:14:19Z",
+      "side": 1,
+      "message": "This may not be shared memory anymore",
+      "range": {
+        "startLine": 20,
+        "startChar": 22,
+        "endLine": 20,
+        "endChar": 35
+      },
+      "revId": "08563fff6a2f04b090b1f8773a951ea57d884f67",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "00d5b61b_b9ea5bb5",
+        "filename": "components/arc/common/video_decode_accelerator.mojom",
+        "patchSetId": 14
+      },
+      "lineNbr": 23,
+      "author": {
+        "id": 1001027
+      },
+      "writtenOn": "2017-11-09T05:14:19Z",
+      "side": 1,
+      "message": "Please add a comment for this here or above.",
+      "revId": "08563fff6a2f04b090b1f8773a951ea57d884f67",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "14a678c9_0f5ae280",
+        "filename": "components/arc/common/video_decode_accelerator.mojom",
+        "patchSetId": 14
+      },
+      "lineNbr": 107,
+      "author": {
+        "id": 1001027
+      },
+      "writtenOn": "2017-11-09T05:14:19Z",
+      "side": 1,
+      "message": "s/ready/is ready/",
+      "range": {
+        "startLine": 107,
+        "startChar": 48,
+        "endLine": 107,
+        "endChar": 53
+      },
+      "revId": "08563fff6a2f04b090b1f8773a951ea57d884f67",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "287026e9_dabd4f65",
+        "filename": "components/arc/common/video_decode_accelerator.mojom",
+        "patchSetId": 14
+      },
+      "lineNbr": 109,
+      "author": {
+        "id": 1001027
+      },
+      "writtenOn": "2017-11-09T05:14:19Z",
+      "side": 1,
+      "message": "This comment is not required, the definition of Picture is above.",
+      "range": {
+        "startLine": 108,
+        "startChar": 3,
+        "endLine": 109,
+        "endChar": 17
+      },
+      "revId": "08563fff6a2f04b090b1f8773a951ea57d884f67",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8608aca7_85290c8b",
+        "filename": "components/arc/common/video_decode_accelerator.mojom",
+        "patchSetId": 14
+      },
+      "lineNbr": 111,
+      "author": {
+        "id": 1001027
+      },
+      "writtenOn": "2017-11-09T05:14:19Z",
+      "side": 1,
+      "message": "These comments should probably be moved to the Picture struct definition.",
+      "range": {
+        "startLine": 111,
+        "startChar": 6,
+        "endLine": 111,
+        "endChar": 15
+      },
+      "revId": "08563fff6a2f04b090b1f8773a951ea57d884f67",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ded80cdc_20814383",
+        "filename": "components/arc/common/video_decode_accelerator.mojom",
+        "patchSetId": 14
+      },
+      "lineNbr": 125,
+      "author": {
+        "id": 1001027
+      },
+      "writtenOn": "2017-11-09T05:14:19Z",
+      "side": 1,
+      "message": "This is a client implementation detail, which should probably not be a part of this interface.",
+      "range": {
+        "startLine": 124,
+        "startChar": 0,
+        "endLine": 125,
+        "endChar": 60
+      },
+      "revId": "08563fff6a2f04b090b1f8773a951ea57d884f67",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}

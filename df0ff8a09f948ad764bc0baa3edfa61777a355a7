@@ -1157,6 +1157,24 @@
     },
     {
       "key": {
+        "uuid": "0c4a5514_6b107bc0",
+        "filename": "chrome/gpu/gpu_arc_video_decode_accelerator.h",
+        "patchSetId": 10
+      },
+      "lineNbr": 89,
+      "author": {
+        "id": 1001027
+      },
+      "writtenOn": "2017-11-09T05:14:19Z",
+      "side": 1,
+      "message": "Per coding style, we shouldn\u0027t normally depend on other headers to include headers we need, unless that intention is specifically stated (https://google.github.io/styleguide/cppguide.html#Names_and_Order_of_Includes).",
+      "parentUuid": "d71e55cd_b65b7075",
+      "revId": "df0ff8a09f948ad764bc0baa3edfa61777a355a7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "71807654_49ec7451",
         "filename": "components/arc/common/video_decode_accelerator.mojom",
         "patchSetId": 10
