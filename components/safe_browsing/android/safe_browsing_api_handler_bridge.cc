@@ -11,6 +11,10 @@
 #include "base/android/jni_string.h"
 #include "base/containers/flat_set.h"
 #include "base/metrics/histogram_macros.h"
+#include "base/task_scheduler/post_task.h"
+#include "base/task_scheduler/task_scheduler.h"
+#include "base/task_scheduler/task_traits.h"
+#include "base/trace_event/trace_event.h"
 #include "components/safe_browsing/android/safe_browsing_api_handler_util.h"
 #include "components/safe_browsing/db/v4_protocol_manager_util.h"
 #include "content/public/browser/browser_thread.h"
@@ -131,15 +135,20 @@ void OnUrlCheckDone(JNIEnv* env,
 // SafeBrowsingApiHandlerBridge
 //
 SafeBrowsingApiHandlerBridge::SafeBrowsingApiHandlerBridge()
-    : checked_api_support_(false) {}
+    : checked_api_support_(false), weak_factory_(this) {
+  // The sequence checker is only concered about tasks sending requests to the
+  // SafetyNet API.
+  DETACH_FROM_SEQUENCE(sequence_checker_);
+}
 
 SafeBrowsingApiHandlerBridge::~SafeBrowsingApiHandlerBridge() {}
 
 bool SafeBrowsingApiHandlerBridge::CheckApiIsSupported() {
-  DCHECK_CURRENTLY_ON(BrowserThread::IO);
+  DCHECK_CALLED_ON_VALID_SEQUENCE(sequence_checker_);
   if (!checked_api_support_) {
     DVLOG(1) << "Checking API support.";
-    j_api_handler_ = Java_SafeBrowsingApiBridge_create(AttachCurrentThread());
+    j_api_handler_ = base::android::ScopedJavaGlobalRef<jobject>(
+        Java_SafeBrowsingApiBridge_create(AttachCurrentThread()));
     checked_api_support_ = true;
   }
   return j_api_handler_.obj() != nullptr;
@@ -150,7 +159,23 @@ void SafeBrowsingApiHandlerBridge::StartURLCheck(
     const GURL& url,
     const SBThreatTypeSet& threat_types) {
   DCHECK_CURRENTLY_ON(BrowserThread::IO);
+  if (!api_task_runner_) {
+    api_task_runner_ = base::CreateSequencedTaskRunnerWithTraits(
+        base::TaskTraits(base::MayBlock(), base::TaskPriority::USER_VISIBLE));
+  }
+  api_task_runner_->PostTask(
+      FROM_HERE,
+      base::BindOnce(&SafeBrowsingApiHandlerBridge::StartURLCheckAsync,
+                     weak_factory_.GetWeakPtr(), callback, url, threat_types));
+}
 
+void SafeBrowsingApiHandlerBridge::StartURLCheckAsync(
+    const URLCheckCallbackMeta& callback,
+    const GURL& url,
+    const SBThreatTypeSet& threat_types) {
+  DCHECK_CALLED_ON_VALID_SEQUENCE(sequence_checker_);
+  TRACE_EVENT0("safe_browsing",
+               "SafeBrowsingApiHandlerBridge::StartURLCheckAsync");
   if (!CheckApiIsSupported()) {
     // Mark all requests as safe. Only users who have an old, broken GMSCore or
     // have sideloaded Chrome w/o PlayStore should land here.
