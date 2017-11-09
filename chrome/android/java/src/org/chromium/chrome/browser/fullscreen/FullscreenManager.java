@@ -51,6 +51,16 @@ public abstract class FullscreenManager {
     public abstract int getTopControlsHeight();
 
     /**
+     * @return The height of the bottom controls in pixels.
+     */
+    public abstract int getBottomControlsHeight();
+
+    /**
+     * @return Whether or not the browser controls resize Blink's view size.
+     */
+    public abstract boolean controlsResizeView();
+
+    /**
      * @return Whether or not the browser controls are attached to the bottom of the screen.
      */
     public abstract boolean areBrowserControlsAtBottom();

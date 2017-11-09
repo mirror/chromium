@@ -197,6 +197,18 @@ bool WebContentsDelegate::ShouldBlockMediaRequest(const GURL& url) {
 }
 
 void WebContentsDelegate::SetOverlayMode(bool use_overlay_mode) {}
+
+int WebContentsDelegate::GetTopControlsHeight() const {
+  return 0;
+}
+
+int WebContentsDelegate::GetBottomControlsHeight() const {
+  return 0;
+}
+
+bool WebContentsDelegate::DoBrowserControlsShrinkBlinkSize() const {
+  return false;
+}
 #endif
 
 bool WebContentsDelegate::RequestPpapiBrokerPermission(
