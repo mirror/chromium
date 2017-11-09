@@ -35,8 +35,46 @@ class FrameProcessingTimeEstimator {
   // both capturing and encoding time.
   base::TimeDelta EstimatedProcessingTime(bool key_frame) const;
 
-  // Returns the estimated transit time of a frame.
+  // Returns the estimated transit time of a frame. Returns a fairly large value
+  // if no bandwidth estimations received.
   base::TimeDelta EstimatedTransitTime(bool key_frame) const;
+
+  // Returns the average bandwidth in kbps. Never returns negative value.
+  // TODO(zijiehe): This should be removed once we have a reliable bandwidth
+  // estimator.
+  int AverageBandwidthKbps() const;
+
+  // Returns the estimated size of next frames without needing to know whether
+  // it will be a key-frame or not: this function considers the historical ratio
+  // of the key-frames. Returns 0 if there is no records. Never returns negative
+  // values.
+  int EstimatedFrameSize() const;
+
+  // Returns the estimated processing time of next frames without needing to
+  // know whether it will be a key-frame or not: this function considers the
+  // historical ratio of the key-frames. Returns 0 if there is no records.
+  base::TimeDelta EstimatedProcessingTime() const;
+
+  // Returns the estimated transit time of next frames without needing to know
+  // whether it will be a key-frame or not: this function considers the
+  // historical ratio of the key-frames. Returns 0 if there is no records.
+  // Returns a fairly large value if no bandwidth estimations received.
+  base::TimeDelta EstimatedTransitTime() const;
+
+  // Returns the average interval between two frames based on recent frame
+  // samples.
+  base::TimeDelta RecentAverageFrameInterval() const;
+
+  // Returns the frame rate based on recent frame samples. Never returns zero
+  // or negative value.
+  int RecentFrameRate() const;
+
+  // Returns the predicted frame rate rounding in ceiling during the coming
+  // second (FPS). Never returns zero or negative value.
+  int PredictedFrameRate() const;
+
+  // Min(RecentFrameRate(), PredictedFrameRate()).
+  int EstimatedFrameRate() const;
 
  private:
   // A virtual function to replace base::TimeTicks::Now() for testing.
@@ -47,6 +85,13 @@ class FrameProcessingTimeEstimator {
   RunningSamples key_frame_processing_us_;
   RunningSamples key_frame_size_;
 
+  RunningSamples frame_finish_times_us_;
+
+  int64_t delta_frame_count_ = 0;
+  int64_t key_frame_count_ = 0;
+
+  // TODO(zijiehe): This should be removed once we have a reliable bandwidth
+  // estimator.
   RunningSamples bandwidth_kbps_;
 
   // The time when last StartFrame() is called.
