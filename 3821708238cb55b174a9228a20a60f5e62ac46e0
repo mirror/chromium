@@ -1,0 +1,142 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "6d721ed0_fe735d2c",
+        "filename": "chrome/browser/extensions/api/media_galleries/media_galleries_api.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 678,
+      "author": {
+        "id": 1113896
+      },
+      "writtenOn": "2017-11-09T20:40:01Z",
+      "side": 1,
+      "message": "auto parser \u003d base::MakeRefCounted\u003cchrome::SafeMediaMetadataParser\u003e",
+      "range": {
+        "startLine": 677,
+        "startChar": 2,
+        "endLine": 678,
+        "endChar": 41
+      },
+      "revId": "3821708238cb55b174a9228a20a60f5e62ac46e0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ae031710_49a918e3",
+        "filename": "chrome/browser/media_galleries/fileapi/supported_audio_video_checker.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 29,
+      "author": {
+        "id": 1113896
+      },
+      "writtenOn": "2017-11-09T20:40:01Z",
+      "side": 1,
+      "message": "Left-over debugging?",
+      "range": {
+        "startLine": 28,
+        "startChar": 0,
+        "endLine": 29,
+        "endChar": 35
+      },
+      "revId": "3821708238cb55b174a9228a20a60f5e62ac46e0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c44abb51_ec03e38f",
+        "filename": "chrome/browser/media_galleries/fileapi/supported_audio_video_checker.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 108,
+      "author": {
+        "id": 1113896
+      },
+      "writtenOn": "2017-11-09T20:40:01Z",
+      "side": 1,
+      "message": "BindOnce supports std::move.",
+      "range": {
+        "startLine": 108,
+        "startChar": 31,
+        "endLine": 108,
+        "endChar": 55
+      },
+      "revId": "3821708238cb55b174a9228a20a60f5e62ac46e0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "35467227_cd7dbe91",
+        "filename": "chrome/browser/media_galleries/fileapi/supported_audio_video_checker.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 123,
+      "author": {
+        "id": 1113896
+      },
+      "writtenOn": "2017-11-09T20:40:01Z",
+      "side": 1,
+      "message": "Ditto.",
+      "range": {
+        "startLine": 123,
+        "startChar": 21,
+        "endLine": 123,
+        "endChar": 45
+      },
+      "revId": "3821708238cb55b174a9228a20a60f5e62ac46e0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "45d090b4_4cbeeb6e",
+        "filename": "chrome/services/media_util/media_metadata_parser.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 144,
+      "author": {
+        "id": 1113896
+      },
+      "writtenOn": "2017-11-09T20:40:01Z",
+      "side": 1,
+      "message": "auto*",
+      "range": {
+        "startLine": 144,
+        "startChar": 2,
+        "endLine": 144,
+        "endChar": 39
+      },
+      "revId": "3821708238cb55b174a9228a20a60f5e62ac46e0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "aba28e82_abb3b0df",
+        "filename": "chrome/services/media_util/public/cpp/BUILD.gn",
+        "patchSetId": 4
+      },
+      "lineNbr": 16,
+      "author": {
+        "id": 1113896
+      },
+      "writtenOn": "2017-11-09T20:40:01Z",
+      "side": 1,
+      "message": "I don\u0027t see why these must be public_deps.",
+      "range": {
+        "startLine": 15,
+        "startChar": 0,
+        "endLine": 16,
+        "endChar": 30
+      },
+      "revId": "3821708238cb55b174a9228a20a60f5e62ac46e0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
