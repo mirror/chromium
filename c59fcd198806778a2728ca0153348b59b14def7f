@@ -16,6 +16,24 @@
       "revId": "c59fcd198806778a2728ca0153348b59b14def7f",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ce249a33_22f5b266",
+        "filename": "third_party/WebKit/Source/core/dom/Node.cpp",
+        "patchSetId": 4
+      },
+      "lineNbr": 750,
+      "author": {
+        "id": 1115903
+      },
+      "writtenOn": "2017-11-09T07:17:57Z",
+      "side": 1,
+      "message": "A good question. I just would like to exit early this function if the flag is disabled for readability.",
+      "parentUuid": "e81f9138_190a3685",
+      "revId": "c59fcd198806778a2728ca0153348b59b14def7f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
