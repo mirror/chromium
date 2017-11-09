@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "0b4e7cb9_830c8c7e",
+        "filename": "content/browser/background_fetch/background_fetch_data_manager_unittest.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 70,
+      "author": {
+        "id": 1204345
+      },
+      "writtenOn": "2017-11-09T19:49:43Z",
+      "side": 1,
+      "message": "ah yes. Although being in the anonymous namespace doesn\u0027t help there, if there\u0027s another one in the anonymous namespace.",
+      "parentUuid": "16068f40_89358212",
+      "revId": "d940b8e15ff6b11ed0babe5be0db978fb3a5fbf6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "e6d0e6dd_ade9bceb",
         "filename": "content/browser/background_fetch/background_fetch_data_manager_unittest.cc",
         "patchSetId": 7
@@ -33,6 +51,24 @@
       "revId": "d940b8e15ff6b11ed0babe5be0db978fb3a5fbf6",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4bce9195_b92807d5",
+        "filename": "content/browser/background_fetch/background_fetch_data_manager_unittest.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 202,
+      "author": {
+        "id": 1204345
+      },
+      "writtenOn": "2017-11-09T19:49:43Z",
+      "side": 1,
+      "message": "Interesting. I would have thought that was a type error. Guess it should have been an enum class. \n\nI guess the named tests were doing the inverse, but since they all pass anyway it made no difference.",
+      "parentUuid": "e6d0e6dd_ade9bceb",
+      "revId": "d940b8e15ff6b11ed0babe5be0db978fb3a5fbf6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
