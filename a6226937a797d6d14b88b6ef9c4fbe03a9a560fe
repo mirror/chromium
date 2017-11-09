@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "e879b35f_63b6078d",
+        "filename": "third_party/WebKit/Source/platform/heap/HeapPage.cpp",
+        "patchSetId": 12
+      },
+      "lineNbr": 577,
+      "author": {
+        "id": 1131764
+      },
+      "writtenOn": "2017-11-09T08:19:33Z",
+      "side": 1,
+      "message": "Done: Made it part of NormalPageArena::Verify for now. We should think of creating a method on Heap though that bubbles down and verifies as much as possible.",
+      "parentUuid": "b551f58f_70f1e3c8",
+      "range": {
+        "startLine": 577,
+        "startChar": 7,
+        "endLine": 577,
+        "endChar": 17
+      },
+      "revId": "a6226937a797d6d14b88b6ef9c4fbe03a9a560fe",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "68545c1b_b03b83f6",
         "filename": "third_party/WebKit/Source/platform/heap/HeapPage.cpp",
         "patchSetId": 12
@@ -36,6 +60,24 @@
       "writtenOn": "2017-11-09T07:39:26Z",
       "side": 1,
       "message": "I am wondering if we need the bit for free spaces?",
+      "revId": "a6226937a797d6d14b88b6ef9c4fbe03a9a560fe",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "fd0b1330_3d14f93a",
+        "filename": "third_party/WebKit/Source/platform/heap/HeapPage.cpp",
+        "patchSetId": 12
+      },
+      "lineNbr": 1625,
+      "author": {
+        "id": 1131764
+      },
+      "writtenOn": "2017-11-09T08:19:33Z",
+      "side": 1,
+      "message": "Free space don\u0027t contain the magic word. After Keishi\u0027s CL this can be rewritten as \n  object_header-\u003eIsValidOrZapped();",
+      "parentUuid": "68545c1b_b03b83f6",
       "revId": "a6226937a797d6d14b88b6ef9c4fbe03a9a560fe",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -65,6 +107,30 @@
     },
     {
       "key": {
+        "uuid": "0da34fa8_9f068723",
+        "filename": "third_party/WebKit/Source/platform/heap/HeapPage.h",
+        "patchSetId": 12
+      },
+      "lineNbr": 455,
+      "author": {
+        "id": 1131764
+      },
+      "writtenOn": "2017-11-09T08:19:33Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "2b6a7ba9_fb543eb9",
+      "range": {
+        "startLine": 455,
+        "startChar": 5,
+        "endLine": 455,
+        "endChar": 29
+      },
+      "revId": "a6226937a797d6d14b88b6ef9c4fbe03a9a560fe",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "886e5f37_f88d77b2",
         "filename": "third_party/WebKit/Source/platform/heap/HeapPage.h",
         "patchSetId": 12
@@ -88,6 +154,30 @@
     },
     {
       "key": {
+        "uuid": "2dd51991_da4a845e",
+        "filename": "third_party/WebKit/Source/platform/heap/HeapPage.h",
+        "patchSetId": 12
+      },
+      "lineNbr": 463,
+      "author": {
+        "id": 1131764
+      },
+      "writtenOn": "2017-11-09T08:19:33Z",
+      "side": 1,
+      "message": "Done: Were already there (private section).",
+      "parentUuid": "886e5f37_f88d77b2",
+      "range": {
+        "startLine": 463,
+        "startChar": 4,
+        "endLine": 463,
+        "endChar": 5
+      },
+      "revId": "a6226937a797d6d14b88b6ef9c4fbe03a9a560fe",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "28fc266d_1b2a73ac",
         "filename": "third_party/WebKit/Source/platform/heap/HeapPage.h",
         "patchSetId": 12
@@ -99,6 +189,30 @@
       "writtenOn": "2017-11-09T07:39:26Z",
       "side": 1,
       "message": "Yeah, this should totally go into an utility class.",
+      "range": {
+        "startLine": 1110,
+        "startChar": 10,
+        "endLine": 1110,
+        "endChar": 18
+      },
+      "revId": "a6226937a797d6d14b88b6ef9c4fbe03a9a560fe",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d816120f_d8c1434b",
+        "filename": "third_party/WebKit/Source/platform/heap/HeapPage.h",
+        "patchSetId": 12
+      },
+      "lineNbr": 1110,
+      "author": {
+        "id": 1131764
+      },
+      "writtenOn": "2017-11-09T08:19:33Z",
+      "side": 1,
+      "message": "Done: Created Bits.h (similar to bits.h in V8).",
+      "parentUuid": "28fc266d_1b2a73ac",
       "range": {
         "startLine": 1110,
         "startChar": 10,
