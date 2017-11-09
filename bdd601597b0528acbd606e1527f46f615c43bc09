@@ -1,0 +1,663 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "c5ad7b4f_8a3473e4",
+        "filename": "content/browser/frame_host/interstitial_page_impl_browsertest.cc",
+        "patchSetId": 11
+      },
+      "lineNbr": 83,
+      "author": {
+        "id": 1116026
+      },
+      "writtenOn": "2017-11-09T07:40:48Z",
+      "side": 1,
+      "message": "It\u0027s recommended to put the RunLoop on the stack and store the quit closure.",
+      "range": {
+        "startLine": 83,
+        "startChar": 4,
+        "endLine": 83,
+        "endChar": 13
+      },
+      "revId": "bdd601597b0528acbd606e1527f46f615c43bc09",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "06ac1dc2_0f9db900",
+        "filename": "content/browser/renderer_host/clipboard_host_impl.cc",
+        "patchSetId": 11
+      },
+      "lineNbr": 158,
+      "author": {
+        "id": 1116026
+      },
+      "writtenOn": "2017-11-09T07:40:48Z",
+      "side": 1,
+      "message": "Can we remove the unique_ptr?",
+      "range": {
+        "startLine": 158,
+        "startChar": 4,
+        "endLine": 158,
+        "endChar": 19
+      },
+      "revId": "bdd601597b0528acbd606e1527f46f615c43bc09",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2294e9a9_989e342d",
+        "filename": "content/browser/renderer_host/clipboard_host_impl.cc",
+        "patchSetId": 11
+      },
+      "lineNbr": 163,
+      "author": {
+        "id": 1116026
+      },
+      "writtenOn": "2017-11-09T07:40:48Z",
+      "side": 1,
+      "message": "std::move",
+      "range": {
+        "startLine": 163,
+        "startChar": 49,
+        "endLine": 163,
+        "endChar": 61
+      },
+      "revId": "bdd601597b0528acbd606e1527f46f615c43bc09",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "19e42579_8d0a9a44",
+        "filename": "content/browser/renderer_host/clipboard_host_impl.cc",
+        "patchSetId": 11
+      },
+      "lineNbr": 242,
+      "author": {
+        "id": 1116026
+      },
+      "writtenOn": "2017-11-09T07:40:48Z",
+      "side": 1,
+      "message": "Unwrapping is probably unnecessary. mojo::ScopedSharedBufferHandle should be sufficient.",
+      "range": {
+        "startLine": 242,
+        "startChar": 34,
+        "endLine": 242,
+        "endChar": 58
+      },
+      "revId": "bdd601597b0528acbd606e1527f46f615c43bc09",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "de45ae18_4ad36844",
+        "filename": "content/browser/renderer_host/clipboard_host_impl.cc",
+        "patchSetId": 11
+      },
+      "lineNbr": 285,
+      "author": {
+        "id": 1116026
+      },
+      "writtenOn": "2017-11-09T07:40:48Z",
+      "side": 1,
+      "message": "Wat?",
+      "revId": "bdd601597b0528acbd606e1527f46f615c43bc09",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f40cc86a_54855b8b",
+        "filename": "content/browser/renderer_host/clipboard_host_impl.h",
+        "patchSetId": 11
+      },
+      "lineNbr": 91,
+      "author": {
+        "id": 1116026
+      },
+      "writtenOn": "2017-11-09T07:40:48Z",
+      "side": 1,
+      "message": "Wat?",
+      "revId": "bdd601597b0528acbd606e1527f46f615c43bc09",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6493749d_dd599ceb",
+        "filename": "content/browser/renderer_host/clipboard_host_impl_mac.mm",
+        "patchSetId": 11
+      },
+      "lineNbr": 40,
+      "author": {
+        "id": 1116026
+      },
+      "writtenOn": "2017-11-09T07:40:48Z",
+      "side": 1,
+      "message": "Is it?",
+      "revId": "bdd601597b0528acbd606e1527f46f615c43bc09",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "fac0d923_83331a23",
+        "filename": "content/browser/renderer_host/clipboard_host_impl_mac.mm",
+        "patchSetId": 11
+      },
+      "lineNbr": 46,
+      "author": {
+        "id": 1116026
+      },
+      "writtenOn": "2017-11-09T07:40:48Z",
+      "side": 1,
+      "message": "Is this PostTask still necessary?",
+      "revId": "bdd601597b0528acbd606e1527f46f615c43bc09",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4f6034f7_0a8c7415",
+        "filename": "content/browser/renderer_host/clipboard_host_impl_unittest.cc",
+        "patchSetId": 11
+      },
+      "lineNbr": 56,
+      "author": {
+        "id": 1116026
+      },
+      "writtenOn": "2017-11-09T07:40:48Z",
+      "side": 1,
+      "message": "shared_memory_size",
+      "range": {
+        "startLine": 56,
+        "startChar": 29,
+        "endLine": 56,
+        "endChar": 48
+      },
+      "revId": "bdd601597b0528acbd606e1527f46f615c43bc09",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "741c8f5e_a556cd1b",
+        "filename": "content/browser/renderer_host/render_process_host_impl.cc",
+        "patchSetId": 11
+      },
+      "lineNbr": 1856,
+      "author": {
+        "id": 1116026
+      },
+      "writtenOn": "2017-11-09T07:40:48Z",
+      "side": 1,
+      "message": "Inline ChromeBlobStorageContext::GetFor(browser_context). It\u0027s only used once and, since it\u0027s moved, only usable once.",
+      "range": {
+        "startLine": 1856,
+        "startChar": 55,
+        "endLine": 1856,
+        "endChar": 75
+      },
+      "revId": "bdd601597b0528acbd606e1527f46f615c43bc09",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9f9c05ab_f8cb859f",
+        "filename": "content/common/clipboard.mojom",
+        "patchSetId": 11
+      },
+      "lineNbr": 11,
+      "author": {
+        "id": 1116026
+      },
+      "writtenOn": "2017-11-09T07:40:48Z",
+      "side": 1,
+      "message": "kPlaintext",
+      "range": {
+        "startLine": 11,
+        "startChar": 2,
+        "endLine": 11,
+        "endChar": 28
+      },
+      "revId": "bdd601597b0528acbd606e1527f46f615c43bc09",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1eb91373_217c74d7",
+        "filename": "content/common/clipboard.mojom",
+        "patchSetId": 11
+      },
+      "lineNbr": 12,
+      "author": {
+        "id": 1116026
+      },
+      "writtenOn": "2017-11-09T07:40:48Z",
+      "side": 1,
+      "message": "kHtml",
+      "range": {
+        "startLine": 12,
+        "startChar": 2,
+        "endLine": 12,
+        "endChar": 23
+      },
+      "revId": "bdd601597b0528acbd606e1527f46f615c43bc09",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "aa215bb5_6bd3cdf5",
+        "filename": "content/common/clipboard.mojom",
+        "patchSetId": 11
+      },
+      "lineNbr": 13,
+      "author": {
+        "id": 1116026
+      },
+      "writtenOn": "2017-11-09T07:40:48Z",
+      "side": 1,
+      "message": "kSmartPaste",
+      "range": {
+        "startLine": 13,
+        "startChar": 2,
+        "endLine": 13,
+        "endChar": 30
+      },
+      "revId": "bdd601597b0528acbd606e1527f46f615c43bc09",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "94701d81_5b325d84",
+        "filename": "content/common/clipboard.mojom",
+        "patchSetId": 11
+      },
+      "lineNbr": 14,
+      "author": {
+        "id": 1116026
+      },
+      "writtenOn": "2017-11-09T07:40:48Z",
+      "side": 1,
+      "message": "kBookmark",
+      "range": {
+        "startLine": 14,
+        "startChar": 2,
+        "endLine": 14,
+        "endChar": 27
+      },
+      "revId": "bdd601597b0528acbd606e1527f46f615c43bc09",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b2c815c4_87700d28",
+        "filename": "content/common/clipboard.mojom",
+        "patchSetId": 11
+      },
+      "lineNbr": 17,
+      "author": {
+        "id": 1116026
+      },
+      "writtenOn": "2017-11-09T07:40:48Z",
+      "side": 1,
+      "message": "Is a wrapper struct necessary?",
+      "range": {
+        "startLine": 17,
+        "startChar": 7,
+        "endLine": 17,
+        "endChar": 20
+      },
+      "revId": "bdd601597b0528acbd606e1527f46f615c43bc09",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b6812aa5_2eb650e6",
+        "filename": "content/common/clipboard.mojom",
+        "patchSetId": 11
+      },
+      "lineNbr": 37,
+      "author": {
+        "id": 1116026
+      },
+      "writtenOn": "2017-11-09T07:40:48Z",
+      "side": 1,
+      "message": "ReadHtml",
+      "range": {
+        "startLine": 37,
+        "startChar": 2,
+        "endLine": 37,
+        "endChar": 10
+      },
+      "revId": "bdd601597b0528acbd606e1527f46f615c43bc09",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "16cff023_70bd035d",
+        "filename": "content/common/clipboard.mojom",
+        "patchSetId": 11
+      },
+      "lineNbr": 43,
+      "author": {
+        "id": 1116026
+      },
+      "writtenOn": "2017-11-09T07:40:48Z",
+      "side": 1,
+      "message": "ReadRtf",
+      "range": {
+        "startLine": 43,
+        "startChar": 2,
+        "endLine": 43,
+        "endChar": 9
+      },
+      "revId": "bdd601597b0528acbd606e1527f46f615c43bc09",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "549489d1_1c162c20",
+        "filename": "content/common/clipboard.mojom",
+        "patchSetId": 11
+      },
+      "lineNbr": 57,
+      "author": {
+        "id": 1116026
+      },
+      "writtenOn": "2017-11-09T07:40:48Z",
+      "side": 1,
+      "message": "WriteHtml",
+      "range": {
+        "startLine": 57,
+        "startChar": 2,
+        "endLine": 57,
+        "endChar": 11
+      },
+      "revId": "bdd601597b0528acbd606e1527f46f615c43bc09",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "431f6246_15627029",
+        "filename": "content/common/clipboard.mojom",
+        "patchSetId": 11
+      },
+      "lineNbr": 80,
+      "author": {
+        "id": 1116026
+      },
+      "writtenOn": "2017-11-09T07:40:48Z",
+      "side": 1,
+      "message": "Is the async part important enough to be in the name?\n\nAlternatively, could this be WriteStringToFindPboard or something similar?",
+      "range": {
+        "startLine": 80,
+        "startChar": 23,
+        "endLine": 80,
+        "endChar": 28
+      },
+      "revId": "bdd601597b0528acbd606e1527f46f615c43bc09",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f1263b58_aef07c4e",
+        "filename": "content/common/clipboard_param_traits.h",
+        "patchSetId": 11
+      },
+      "lineNbr": 1,
+      "author": {
+        "id": 1116026
+      },
+      "writtenOn": "2017-11-09T07:40:48Z",
+      "side": 1,
+      "message": "clipboard_struct_traits.h",
+      "revId": "bdd601597b0528acbd606e1527f46f615c43bc09",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b6768aee_a0363e24",
+        "filename": "content/renderer/webclipboard_impl.cc",
+        "patchSetId": 11
+      },
+      "lineNbr": 47,
+      "author": {
+        "id": 1116026
+      },
+      "writtenOn": "2017-11-09T07:40:48Z",
+      "side": 1,
+      "message": "Be consistent about whether you check for sync call errors. I would skip checking and initialise the outputs appropriately.",
+      "revId": "bdd601597b0528acbd606e1527f46f615c43bc09",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a6988b8d_a839f17b",
+        "filename": "content/renderer/webclipboard_impl.cc",
+        "patchSetId": 11
+      },
+      "lineNbr": 145,
+      "author": {
+        "id": 1116026
+      },
+      "writtenOn": "2017-11-09T07:40:48Z",
+      "side": 1,
+      "message": "\u003d -1",
+      "range": {
+        "startLine": 145,
+        "startChar": 10,
+        "endLine": 145,
+        "endChar": 14
+      },
+      "revId": "bdd601597b0528acbd606e1527f46f615c43bc09",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a6108d70_bc78b782",
+        "filename": "content/renderer/webclipboard_impl.cc",
+        "patchSetId": 11
+      },
+      "lineNbr": 225,
+      "author": {
+        "id": 1116026
+      },
+      "writtenOn": "2017-11-09T07:40:48Z",
+      "side": 1,
+      "message": "std::move(data_object.custom_data)",
+      "range": {
+        "startLine": 225,
+        "startChar": 34,
+        "endLine": 225,
+        "endChar": 57
+      },
+      "revId": "bdd601597b0528acbd606e1527f46f615c43bc09",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "040d8fd4_1219e35c",
+        "filename": "content/renderer/webclipboard_impl.cc",
+        "patchSetId": 11
+      },
+      "lineNbr": 259,
+      "author": {
+        "id": 1116026
+      },
+      "writtenOn": "2017-11-09T07:40:48Z",
+      "side": 1,
+      "message": "Use mojo::SharedBufferHandle instead.",
+      "range": {
+        "startLine": 259,
+        "startChar": 24,
+        "endLine": 259,
+        "endChar": 36
+      },
+      "revId": "bdd601597b0528acbd606e1527f46f615c43bc09",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c3e650a6_19ce5ef7",
+        "filename": "ui/base/clipboard/mojo/BUILD.gn",
+        "patchSetId": 11
+      },
+      "lineNbr": 1,
+      "author": {
+        "id": 1116026
+      },
+      "writtenOn": "2017-11-09T07:40:48Z",
+      "side": 1,
+      "message": "Mojom file directories are meant to be named mojom now: https://chromium.googlesource.com/chromium/src/+/master/docs/security/mojo.md#naming-conventions",
+      "revId": "bdd601597b0528acbd606e1527f46f615c43bc09",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "388f6500_59f5c8bd",
+        "filename": "ui/base/clipboard/mojo/clipboard.mojom",
+        "patchSetId": 11
+      },
+      "lineNbr": 8,
+      "author": {
+        "id": 1116026
+      },
+      "writtenOn": "2017-11-09T07:40:48Z",
+      "side": 1,
+      "message": "kCopyPaste",
+      "range": {
+        "startLine": 8,
+        "startChar": 2,
+        "endLine": 8,
+        "endChar": 27
+      },
+      "revId": "bdd601597b0528acbd606e1527f46f615c43bc09",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a8ffc6a5_1913f66a",
+        "filename": "ui/base/clipboard/mojo/clipboard.mojom",
+        "patchSetId": 11
+      },
+      "lineNbr": 9,
+      "author": {
+        "id": 1116026
+      },
+      "writtenOn": "2017-11-09T07:40:48Z",
+      "side": 1,
+      "message": "kSelection",
+      "range": {
+        "startLine": 9,
+        "startChar": 2,
+        "endLine": 9,
+        "endChar": 26
+      },
+      "revId": "bdd601597b0528acbd606e1527f46f615c43bc09",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "da7bc67a_d49472b0",
+        "filename": "ui/base/clipboard/mojo/clipboard.mojom",
+        "patchSetId": 11
+      },
+      "lineNbr": 10,
+      "author": {
+        "id": 1116026
+      },
+      "writtenOn": "2017-11-09T07:40:48Z",
+      "side": 1,
+      "message": "kDrag",
+      "range": {
+        "startLine": 10,
+        "startChar": 2,
+        "endLine": 10,
+        "endChar": 21
+      },
+      "revId": "bdd601597b0528acbd606e1527f46f615c43bc09",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b27f2907_5b4b0149",
+        "filename": "ui/base/clipboard/mojo/clipboard.typemap",
+        "patchSetId": 11
+      },
+      "lineNbr": 9,
+      "author": {
+        "id": 1116026
+      },
+      "writtenOn": "2017-11-09T07:40:48Z",
+      "side": 1,
+      "message": "This should be implicit for all mojoms.",
+      "revId": "bdd601597b0528acbd606e1527f46f615c43bc09",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f67bcffd_ad788efe",
+        "filename": "ui/base/clipboard/mojo/clipboard_param_traits.h",
+        "patchSetId": 11
+      },
+      "lineNbr": 1,
+      "author": {
+        "id": 1116026
+      },
+      "writtenOn": "2017-11-09T07:40:48Z",
+      "side": 1,
+      "message": "clipboard_struct_traits.h",
+      "revId": "bdd601597b0528acbd606e1527f46f615c43bc09",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "599ab8f3_4736ae87",
+        "filename": "ui/base/clipboard/mojo/clipboard_param_traits.h",
+        "patchSetId": 11
+      },
+      "lineNbr": 9,
+      "author": {
+        "id": 1116026
+      },
+      "writtenOn": "2017-11-09T07:40:48Z",
+      "side": 1,
+      "message": "mojom-shared.h",
+      "range": {
+        "startLine": 9,
+        "startChar": 43,
+        "endLine": 9,
+        "endChar": 48
+      },
+      "revId": "bdd601597b0528acbd606e1527f46f615c43bc09",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
