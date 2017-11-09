@@ -2,6 +2,23 @@
   "comments": [
     {
       "key": {
+        "uuid": "ef3adf67_4e60ca4a",
+        "filename": "chrome/browser/notifications/notification_channels_provider_android.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 197,
+      "author": {
+        "id": 1000602
+      },
+      "writtenOn": "2017-11-09T22:03:12Z",
+      "side": 1,
+      "message": "I *think* it\u0027s ok to do this. My reasoning:\nRuleIteratorImpl::Next increments its underlying std::map iterator before it returns the current rule. So that even if we delete the element that it was previously pointing to it should be ok to use it/increment it again.",
+      "revId": "e506446e693448eeeed3bfe341bfd458996b2343",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "4cb5e6a5_67070212",
         "filename": "components/content_settings/core/test/content_settings_mock_provider.cc",
         "patchSetId": 2
