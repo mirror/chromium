@@ -79,6 +79,176 @@
       "revId": "012fa31f6c77145b8625cc46ee3beea781706e7e",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a79229e5_bb35379e",
+        "filename": "chrome/browser/resources/discards/discards.css",
+        "patchSetId": 2
+      },
+      "lineNbr": 20,
+      "author": {
+        "id": 1115893
+      },
+      "writtenOn": "2017-11-09T23:40:35Z",
+      "side": 1,
+      "message": "This breaks RTL. Use -webkit-padding-start, -webkit-padding-end instead (here and elsewhere).",
+      "revId": "012fa31f6c77145b8625cc46ee3beea781706e7e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "19d7c2f0_5f748053",
+        "filename": "chrome/browser/resources/discards/discards.css",
+        "patchSetId": 2
+      },
+      "lineNbr": 30,
+      "author": {
+        "id": 1115893
+      },
+      "writtenOn": "2017-11-09T23:40:35Z",
+      "side": 1,
+      "message": "Do you need to use float? In general it is considered \"old CSS\", useful before the existence of the flexbox model (aka, display:flex, see [1]). I don\u0027t know exactly how this UI looks, but I suggest giving it a try to remove usage of float.\n\n[1] https://css-tricks.com/snippets/css/a-guide-to-flexbox/",
+      "revId": "012fa31f6c77145b8625cc46ee3beea781706e7e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7e456d68_7cd5e15b",
+        "filename": "chrome/browser/resources/discards/discards.css",
+        "patchSetId": 2
+      },
+      "lineNbr": 75,
+      "author": {
+        "id": 1115893
+      },
+      "writtenOn": "2017-11-09T23:40:35Z",
+      "side": 1,
+      "message": "Nit: Percentage units suffer from compounding (the percentage is with respect to its parent, which is calculated based on its parent etc etc).\n\nHow about using rem units which only depend on the html element\u0027s font-size?",
+      "revId": "012fa31f6c77145b8625cc46ee3beea781706e7e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f82d0ab8_4ef5dde9",
+        "filename": "chrome/browser/resources/discards/discards.html",
+        "patchSetId": 2
+      },
+      "lineNbr": 17,
+      "author": {
+        "id": 1115893
+      },
+      "writtenOn": "2017-11-09T23:40:35Z",
+      "side": 1,
+      "message": "Nit: Probably equivalent to the shorter  \u003cscript src\u003d\"discards.js\"\u003e\u003c/script\u003e",
+      "revId": "012fa31f6c77145b8625cc46ee3beea781706e7e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "87191994_3fe104c0",
+        "filename": "chrome/browser/resources/discards/discards.html",
+        "patchSetId": 2
+      },
+      "lineNbr": 19,
+      "author": {
+        "id": 1115893
+      },
+      "writtenOn": "2017-11-09T23:40:35Z",
+      "side": 1,
+      "message": "Same here.",
+      "revId": "012fa31f6c77145b8625cc46ee3beea781706e7e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4ce762cf_ecd77144",
+        "filename": "chrome/browser/resources/discards/discards.html",
+        "patchSetId": 2
+      },
+      "lineNbr": 23,
+      "author": {
+        "id": 1115893
+      },
+      "writtenOn": "2017-11-09T23:40:35Z",
+      "side": 1,
+      "message": "Can we use the existing https://cs.chromium.org/chromium/src/ui/webui/resources/css/action_link.css instead? AFAIK this is meant to be used with \u003ca\u003e elements that don\u0027t actually cause a navigation, instead they invoke some other action.",
+      "revId": "012fa31f6c77145b8625cc46ee3beea781706e7e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "fd2adc0e_a0df8abe",
+        "filename": "chrome/browser/resources/discards/discards.html",
+        "patchSetId": 2
+      },
+      "lineNbr": 33,
+      "author": {
+        "id": 1115893
+      },
+      "writtenOn": "2017-11-09T23:40:35Z",
+      "side": 1,
+      "message": "I am assuming that this is an internal page with no intention to localize any of its strings? If so please mention this in a comment.",
+      "revId": "012fa31f6c77145b8625cc46ee3beea781706e7e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "54a5c9ab_5d5e389e",
+        "filename": "chrome/browser/resources/discards/discards.js",
+        "patchSetId": 2
+      },
+      "lineNbr": 7,
+      "author": {
+        "id": 1115893
+      },
+      "writtenOn": "2017-11-09T23:40:35Z",
+      "side": 1,
+      "message": "Nit: Since this is a new file, please use let/const instead of var. See [1]. Also you might want to add a file like [2] to cause PRESUBMIT checks to enforce that in the future.\n\n\n[1] https://chromium.googlesource.com/chromium/src/+/master/docs/es6_chromium.md#let-Block_Scoped-Variables.\n[2] https://cs.chromium.org/chromium/src/chrome/browser/resources/print_preview/.eslintrc.js",
+      "revId": "012fa31f6c77145b8625cc46ee3beea781706e7e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ac980519_df5f07b7",
+        "filename": "chrome/browser/resources/discards/discards.js",
+        "patchSetId": 2
+      },
+      "lineNbr": 90,
+      "author": {
+        "id": 1115893
+      },
+      "writtenOn": "2017-11-09T23:40:35Z",
+      "side": 1,
+      "message": "I am guessing that this file is currently not type checked by the JS Compiler, mostly because of https://bugs.chromium.org/p/chromium/issues/detail?id\u003d574512. But can you do a best effort to annotate all function parameters and return types with @param, @return?",
+      "revId": "012fa31f6c77145b8625cc46ee3beea781706e7e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "80e1a911_a40c16f8",
+        "filename": "chrome/browser/resources/discards/discards.js",
+        "patchSetId": 2
+      },
+      "lineNbr": 197,
+      "author": {
+        "id": 1115893
+      },
+      "writtenOn": "2017-11-09T23:40:35Z",
+      "side": 1,
+      "message": "Instead of programmatically creating a complex DOM structure, how about using a \u003ctemplate\u003e (which is addressing exactly that case)? See example from other WebUI pages at [1] and [2] and official example at [3].\n\n\n[1] https://cs.chromium.org/chromium/src/chrome/browser/resources/offline_pages/offline_internals.html?l\u003d71-80\n[2] https://cs.chromium.org/chromium/src/chrome/browser/resources/offline_pages/offline_internals.js?l\u003d36-51\n[3] https://developer.mozilla.org/en-US/docs/Web/HTML/Element/template#Example",
+      "revId": "012fa31f6c77145b8625cc46ee3beea781706e7e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
