@@ -1,0 +1,136 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "73f4e4b4_8d935ffd",
+        "filename": "chrome/browser/android/contextualsearch/contextual_search_ranker_logger_impl.cc",
+        "patchSetId": 10
+      },
+      "lineNbr": 34,
+      "author": {
+        "id": 1103654
+      },
+      "writtenOn": "2017-11-09T21:19:06Z",
+      "side": 1,
+      "message": "Nit: Add a newline after.",
+      "range": {
+        "startLine": 34,
+        "startChar": 11,
+        "endLine": 34,
+        "endChar": 0
+      },
+      "revId": "c66d5d47f3d93d5c1318224db3e753e9bb32bc60",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "006dde70_ff56796c",
+        "filename": "chrome/browser/android/contextualsearch/contextual_search_ranker_logger_impl.cc",
+        "patchSetId": 10
+      },
+      "lineNbr": 44,
+      "author": {
+        "id": 1103654
+      },
+      "writtenOn": "2017-11-09T21:19:06Z",
+      "side": 1,
+      "message": "Nit: const std::string\u0026 or StringPiece",
+      "revId": "c66d5d47f3d93d5c1318224db3e753e9bb32bc60",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b7a5123a_f5cba73f",
+        "filename": "chrome/browser/android/contextualsearch/contextual_search_ranker_logger_impl.cc",
+        "patchSetId": 10
+      },
+      "lineNbr": 51,
+      "author": {
+        "id": 1103654
+      },
+      "writtenOn": "2017-11-09T21:19:06Z",
+      "side": 1,
+      "message": "If you remove the CommandLine code below like I suggest, then this check is also not needed, because GetFieldTrialParamValueByFeature() will return an empty value when the Feature is not enabled.\n\nAlso, you may want to consider using FeatureParam\u003cstd::string\u003e here, which has a nicer API.\n\ne.g.\n\nconst base::FeatureParam\u003cstd::string\u003e kModelUrl{\u0026kContextualSearchRankerQuery, kContextualSearchRankerModelUrlParamName, \"\"};\n\nAnd then just kModelUrl.Get() from code that needs it.",
+      "range": {
+        "startLine": 51,
+        "startChar": 36,
+        "endLine": 51,
+        "endChar": 64
+      },
+      "revId": "c66d5d47f3d93d5c1318224db3e753e9bb32bc60",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "53ddbfdf_be832c8f",
+        "filename": "chrome/browser/android/contextualsearch/contextual_search_ranker_logger_impl.cc",
+        "patchSetId": 10
+      },
+      "lineNbr": 59,
+      "author": {
+        "id": 1103654
+      },
+      "writtenOn": "2017-11-09T21:19:06Z",
+      "side": 1,
+      "message": "I don\u0027t think this part is needed, because you should be able to override feature params from the command-line. See go/variations-params",
+      "range": {
+        "startLine": 59,
+        "startChar": 50,
+        "endLine": 59,
+        "endChar": 0
+      },
+      "revId": "c66d5d47f3d93d5c1318224db3e753e9bb32bc60",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ef510e65_f96ed515",
+        "filename": "chrome/browser/android/contextualsearch/contextual_search_ranker_logger_impl.cc",
+        "patchSetId": 10
+      },
+      "lineNbr": 150,
+      "author": {
+        "id": 1103654
+      },
+      "writtenOn": "2017-11-09T21:19:06Z",
+      "side": 1,
+      "message": "Nit: No {}\u0027s\n\nOr at least be consistent within the same file - since you\u0027re not using {} on line 131.",
+      "range": {
+        "startLine": 150,
+        "startChar": 17,
+        "endLine": 150,
+        "endChar": 0
+      },
+      "revId": "c66d5d47f3d93d5c1318224db3e753e9bb32bc60",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6b87ee74_a01f806d",
+        "filename": "tools/metrics/histograms/histograms.xml",
+        "patchSetId": 10
+      },
+      "lineNbr": 74848,
+      "author": {
+        "id": 1103654
+      },
+      "writtenOn": "2017-11-09T21:19:06Z",
+      "side": 1,
+      "message": "Nit: To make these names more readable, how about adding an extra . delimeter?\n\nSearch.ContextualSearchRanker.WasAbleToPredict\n\nSame for the others.",
+      "range": {
+        "startLine": 74848,
+        "startChar": 24,
+        "endLine": 74848,
+        "endChar": 62
+      },
+      "revId": "c66d5d47f3d93d5c1318224db3e753e9bb32bc60",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
