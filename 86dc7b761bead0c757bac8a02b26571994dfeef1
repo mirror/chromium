@@ -94,6 +94,30 @@
       "revId": "86dc7b761bead0c757bac8a02b26571994dfeef1",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8f8606ec_d40000d1",
+        "filename": "chrome/utility/importer/firefox_importer.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 382,
+      "author": {
+        "id": 1135394
+      },
+      "writtenOn": "2017-11-09T12:37:44Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "cc68507f_a2d9cfc8",
+      "range": {
+        "startLine": 382,
+        "startChar": 31,
+        "endLine": 382,
+        "endChar": 41
+      },
+      "revId": "86dc7b761bead0c757bac8a02b26571994dfeef1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
