@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "406a7e9e_5516d7cf",
+        "filename": "chrome/browser/resource_coordinator/resource_coordinator_web_contents_observer.cc",
+        "patchSetId": 11
+      },
+      "lineNbr": 32,
+      "author": {
+        "id": 1211219
+      },
+      "writtenOn": "2017-11-09T23:39:23Z",
+      "side": 1,
+      "message": "Instead of returning here, PageResourceCoordinator should fail gracefully with a nullptr connector. What you want to do is to pass in nullptr when ServiceManagerConnection is not available, and make PageResourceCoordinator::XXX returns when |!service_|. https://cs.chromium.org/chromium/src/services/resource_coordinator/public/cpp/page_resource_coordinator.cc?l\u003d19",
+      "range": {
+        "startLine": 32,
+        "startChar": 0,
+        "endLine": 32,
+        "endChar": 58
+      },
+      "revId": "6e230f532149c0444c414d904d87915fb98a6e3e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
