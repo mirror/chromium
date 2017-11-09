@@ -516,6 +516,24 @@
     },
     {
       "key": {
+        "uuid": "6b39248a_20a5027d",
+        "filename": "chrome/browser/ui/cocoa/profiles/avatar_base_controller.mm",
+        "patchSetId": 15
+      },
+      "lineNbr": 167,
+      "author": {
+        "id": 1002092
+      },
+      "writtenOn": "2017-11-09T06:31:54Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "00febd1b_4d502228",
+      "revId": "b7452963e270cd41a6a807cbe21fdc5557201b95",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "f755fe1d_00fa1d06",
         "filename": "chrome/browser/ui/cocoa/profiles/avatar_base_controller.mm",
         "patchSetId": 15
@@ -545,6 +563,24 @@
       "side": 1,
       "message": "Weird, since it is a NSObject property... It was designed to be used with a dot. But ok.",
       "parentUuid": "f755fe1d_00fa1d06",
+      "revId": "b7452963e270cd41a6a807cbe21fdc5557201b95",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "469faf42_8dd295dd",
+        "filename": "chrome/browser/ui/cocoa/profiles/avatar_base_controller.mm",
+        "patchSetId": 15
+      },
+      "lineNbr": 176,
+      "author": {
+        "id": 1002092
+      },
+      "writtenOn": "2017-11-09T06:31:54Z",
+      "side": 1,
+      "message": "\u003e Weird, since it is a NSObject property... It was designed to be used with a dot. But ok.\n\nyeah - Properties only came in with ObjC 2.0. This is just to be consistent with what other code in Chrome does.",
+      "parentUuid": "b869f7a7_4161e8b5",
       "revId": "b7452963e270cd41a6a807cbe21fdc5557201b95",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": false

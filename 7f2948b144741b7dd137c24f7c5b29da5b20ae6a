@@ -1,0 +1,243 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "e07cb47f_e4ab93f2",
+        "filename": "chrome/browser/ui/cocoa/profiles/profile_chooser_bridge_views.h",
+        "patchSetId": 19
+      },
+      "lineNbr": 8,
+      "author": {
+        "id": 1002092
+      },
+      "writtenOn": "2017-11-09T06:31:54Z",
+      "side": 1,
+      "message": "forward declare -- `@class NSView;`? I think that will work. The .mm should #import \u003cCocoa/Cocoa.h\u003e  (rather than #include)",
+      "revId": "7f2948b144741b7dd137c24f7c5b29da5b20ae6a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9821724d_d60ae713",
+        "filename": "chrome/browser/ui/cocoa/profiles/profile_chooser_bridge_views.h",
+        "patchSetId": 19
+      },
+      "lineNbr": 27,
+      "author": {
+        "id": 1002092
+      },
+      "writtenOn": "2017-11-09T06:31:54Z",
+      "side": 1,
+      "message": "nit: explicit  (unless you can pass a Widget* in as well :)",
+      "revId": "7f2948b144741b7dd137c24f7c5b29da5b20ae6a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7c2963c2_32e2dd69",
+        "filename": "chrome/browser/ui/cocoa/profiles/profile_chooser_bridge_views.h",
+        "patchSetId": 19
+      },
+      "lineNbr": 30,
+      "author": {
+        "id": 1002092
+      },
+      "writtenOn": "2017-11-09T06:31:54Z",
+      "side": 1,
+      "message": "profile_chooser_View -\u003e profile_chooser",
+      "range": {
+        "startLine": 30,
+        "startChar": 48,
+        "endLine": 30,
+        "endChar": 68
+      },
+      "revId": "7f2948b144741b7dd137c24f7c5b29da5b20ae6a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d947b167_827dcf3b",
+        "filename": "chrome/browser/ui/cocoa/profiles/profile_chooser_bridge_views.h",
+        "patchSetId": 19
+      },
+      "lineNbr": 36,
+      "author": {
+        "id": 1002092
+      },
+      "writtenOn": "2017-11-09T06:31:54Z",
+      "side": 1,
+      "message": "It\u0027s typical for the Add/Remove observer calls just happen in the constructor/destructor of ProfileChooserViewBridge. Plus there\u0027s only ever one \u0027source\u0027 widget per instance.\n\nIf you want to keep this, perhaps call it scoped_observer_ or registrar_ -- it\u0027s a bit confusing having a data member with the same name as a parent class (i.e. WidgetObserver)",
+      "revId": "7f2948b144741b7dd137c24f7c5b29da5b20ae6a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9887ab59_b11ce683",
+        "filename": "chrome/browser/ui/cocoa/profiles/profile_chooser_bridge_views.mm",
+        "patchSetId": 19
+      },
+      "lineNbr": 11,
+      "author": {
+        "id": 1002092
+      },
+      "writtenOn": "2017-11-09T06:31:54Z",
+      "side": 1,
+      "message": "nit: #import",
+      "revId": "7f2948b144741b7dd137c24f7c5b29da5b20ae6a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b93e21e6_2aec120e",
+        "filename": "chrome/browser/ui/cocoa/profiles/profile_chooser_bridge_views.mm",
+        "patchSetId": 19
+      },
+      "lineNbr": 13,
+      "author": {
+        "id": 1002092
+      },
+      "writtenOn": "2017-11-09T06:31:54Z",
+      "side": 1,
+      "message": "nit: #include",
+      "revId": "7f2948b144741b7dd137c24f7c5b29da5b20ae6a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5aae5ba7_2dce8a18",
+        "filename": "chrome/browser/ui/cocoa/profiles/profile_chooser_bridge_views.mm",
+        "patchSetId": 19
+      },
+      "lineNbr": 21,
+      "author": {
+        "id": 1002092
+      },
+      "writtenOn": "2017-11-09T06:31:54Z",
+      "side": 1,
+      "message": "these shouldn\u0027t be floats -- gfx::Rect uses int. gfx::Insets has a constexpr constructor, so I think the best approach would be something like\n\nconstexpr gfx::Insets kBubbleInsets(1, 1, 0, 1);",
+      "revId": "7f2948b144741b7dd137c24f7c5b29da5b20ae6a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "01eb959b_a7e2e07a",
+        "filename": "chrome/browser/ui/cocoa/profiles/profile_chooser_bridge_views.mm",
+        "patchSetId": 19
+      },
+      "lineNbr": 38,
+      "author": {
+        "id": 1002092
+      },
+      "writtenOn": "2017-11-09T06:31:54Z",
+      "side": 1,
+      "message": "Note this would be a use-after-free if [controller_ bubbleWillClose]; didn\u0027t post a task (which I don\u0027t think it should). At this point, the bubble definitely has closed, so it\u0027s a bit weird to call WillClose. I\u0027d suggest moving the RemoveObserver to the destructor (or rely on scoped_observer\u0027s destructor). This would be\n\nvoid ProfileChooserViewBridge::OnWidgetDestroying(views::Widget* widget) {\n  [controller_ bubbleDidClose];\n  // Note: |this| is deleted here.\n}",
+      "revId": "7f2948b144741b7dd137c24f7c5b29da5b20ae6a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "61884f3e_d6c68cd9",
+        "filename": "chrome/browser/ui/cocoa/profiles/profile_chooser_bridge_views.mm",
+        "patchSetId": 19
+      },
+      "lineNbr": 47,
+      "author": {
+        "id": 1002092
+      },
+      "writtenOn": "2017-11-09T06:31:54Z",
+      "side": 1,
+      "message": "nit: NSRect rect \u003d [anchor convertRect:[anchor bounds] toView:nil];",
+      "revId": "7f2948b144741b7dd137c24f7c5b29da5b20ae6a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "fdc4378e_be011122",
+        "filename": "chrome/browser/ui/cocoa/profiles/profile_chooser_bridge_views.mm",
+        "patchSetId": 19
+      },
+      "lineNbr": 53,
+      "author": {
+        "id": 1002092
+      },
+      "writtenOn": "2017-11-09T06:31:54Z",
+      "side": 1,
+      "message": "anchor_rect.Inset(kBubbleInsets);",
+      "revId": "7f2948b144741b7dd137c24f7c5b29da5b20ae6a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1aa6301f_26700025",
+        "filename": "chrome/browser/ui/cocoa/profiles/profile_chooser_bridge_views.mm",
+        "patchSetId": 19
+      },
+      "lineNbr": 55,
+      "author": {
+        "id": 1002092
+      },
+      "writtenOn": "2017-11-09T06:31:54Z",
+      "side": 1,
+      "message": "anchorWindow -\u003e anchor_window",
+      "range": {
+        "startLine": 55,
+        "startChar": 18,
+        "endLine": 55,
+        "endChar": 30
+      },
+      "revId": "7f2948b144741b7dd137c24f7c5b29da5b20ae6a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "cbe42dd3_5fa6a8c3",
+        "filename": "chrome/browser/ui/cocoa/profiles/profile_chooser_bridge_views.mm",
+        "patchSetId": 19
+      },
+      "lineNbr": 61,
+      "author": {
+        "id": 1002092
+      },
+      "writtenOn": "2017-11-09T06:31:54Z",
+      "side": 1,
+      "message": "profileChooserViewBridge -\u003e bridge (or something hacker_style)",
+      "range": {
+        "startLine": 61,
+        "startChar": 44,
+        "endLine": 61,
+        "endChar": 68
+      },
+      "revId": "7f2948b144741b7dd137c24f7c5b29da5b20ae6a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4cb7c108_71beb750",
+        "filename": "chrome/browser/ui/cocoa/profiles/profile_chooser_bridge_views.mm",
+        "patchSetId": 19
+      },
+      "lineNbr": 62,
+      "author": {
+        "id": 1002092
+      },
+      "writtenOn": "2017-11-09T06:31:54Z",
+      "side": 1,
+      "message": "yeah I think you can pass ProfileChooserView::GetCurrentBubbleWidget() in here and remove ObserveProfileChooserView",
+      "revId": "7f2948b144741b7dd137c24f7c5b29da5b20ae6a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
