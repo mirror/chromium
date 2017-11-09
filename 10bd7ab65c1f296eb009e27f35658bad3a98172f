@@ -34,6 +34,24 @@
       "revId": "10bd7ab65c1f296eb009e27f35658bad3a98172f",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "97852d83_96ab3bea",
+        "filename": "chrome/browser/extensions/api/tabs/tabs_api.cc",
+        "patchSetId": 20
+      },
+      "lineNbr": 219,
+      "author": {
+        "id": 1145669
+      },
+      "writtenOn": "2017-11-09T15:32:45Z",
+      "side": 1,
+      "message": "Technically I could create new chrome.windows.(un)lock_current_fullscreen API functions, but that would change this whole feature a bit.",
+      "parentUuid": "94f54e99_754a7726",
+      "revId": "10bd7ab65c1f296eb009e27f35658bad3a98172f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
