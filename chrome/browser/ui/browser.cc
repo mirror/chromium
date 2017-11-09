@@ -61,6 +61,7 @@
 #include "chrome/browser/first_run/first_run.h"
 #include "chrome/browser/infobars/infobar_service.h"
 #include "chrome/browser/lifetime/application_lifetime.h"
+#include "chrome/browser/media/router/presentation_receiver_window.h"
 #include "chrome/browser/media/webrtc/media_capture_devices_dispatcher.h"
 #include "chrome/browser/notifications/notification_ui_manager.h"
 #include "chrome/browser/pepper_broker_infobar_delegate.h"
@@ -558,9 +559,14 @@ Browser::~Browser() {
       g_browser_process->background_printing_manager()
           ->DeletePreviewContentsForBrowserContext(profile_);
 #endif
-      // An incognito profile is no longer needed, this indirectly frees
-      // its cache and cookies once it gets destroyed at the appropriate time.
-      ProfileDestroyer::DestroyProfileWhenAppropriate(profile_);
+      if (media_router::PresentationReceiverWindow::
+              IsPresentationReceiverWindowProfile(profile_)) {
+        media_router::PresentationReceiverWindow::DeleteProfile(profile_);
+      } else {
+        // An incognito profile is no longer needed, this indirectly frees
+        // its cache and cookies once it gets destroyed at the appropriate time.
+        ProfileDestroyer::DestroyProfileWhenAppropriate(profile_);
+      }
     }
   }
 
