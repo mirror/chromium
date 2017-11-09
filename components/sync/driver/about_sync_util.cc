@@ -296,12 +296,25 @@ std::string GetConnectionStatus(const SyncService::SyncTokenStatus& status) {
 
 }  // namespace
 
+std::unique_ptr<base::DictionaryValue> ConstructAboutInformation(
+    SyncService* service,
+    version_info::Channel channel) {
+  AccountInfo primary_account_info;
+#if 0
+  if (service->signin())
+    primary_account_info = service->signin()->GetAuthenticatedAccountInfo();
+#endif
+
+  return ConstructAboutInformationHelper(service, primary_account_info, channel);
+}
+
 // This function both defines the structure of the message to be returned and
 // its contents.  Most of the message consists of simple fields in about:sync
 // which are grouped into sections and populated with the help of the SyncStat
 // classes defined above.
-std::unique_ptr<base::DictionaryValue> ConstructAboutInformation(
+std::unique_ptr<base::DictionaryValue> ConstructAboutInformationHelper(
     SyncService* service,
+    AccountInfo primary_account_info,
     version_info::Channel channel) {
   auto about_info = std::make_unique<base::DictionaryValue>();
 
@@ -462,8 +475,14 @@ std::unique_ptr<base::DictionaryValue> ConstructAboutInformation(
     sync_id.SetValue(full_status.sync_id);
   if (is_status_valid && !full_status.invalidator_client_id.empty())
     invalidator_id.SetValue(full_status.invalidator_client_id);
-  if (service->signin())
-    username.SetValue(service->signin()->GetAuthenticatedAccountInfo().email);
+
+  // TODO(blundell): I want to get rid of the access to services->signin() here
+  // altogether. However, checking whether the primary account info email is
+  // empty as a guard doesn't do the same thing, as it results in the username
+  // showing up as unitialized rather than empty when the user isn't signed in.
+  if (service->signin()) {
+    username.SetValue(primary_account_info.email);
+  }
 
   const SyncService::SyncTokenStatus& token_status =
       service->GetSyncTokenStatus();
