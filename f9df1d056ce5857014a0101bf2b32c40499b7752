@@ -1,0 +1,44 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "432c0fab_9a5efcde",
+        "filename": "ash/wm/overview/window_selector_unittest.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 2654,
+      "author": {
+        "id": 1001380
+      },
+      "writtenOn": "2017-11-09T16:50:37Z",
+      "side": 1,
+      "message": "nit: /*is_dragging\u003d*/ is new format",
+      "range": {
+        "startLine": 2654,
+        "startChar": 54,
+        "endLine": 2654,
+        "endChar": 65
+      },
+      "revId": "f9df1d056ce5857014a0101bf2b32c40499b7752",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a5d41f20_d006b6c8",
+        "filename": "ash/wm/splitview/split_view_controller.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 318,
+      "author": {
+        "id": 1001380
+      },
+      "writtenOn": "2017-11-09T16:50:37Z",
+      "side": 1,
+      "message": "can you add comment why you need to update the snaped windows/divider even though it may have to exit?",
+      "revId": "f9df1d056ce5857014a0101bf2b32c40499b7752",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
