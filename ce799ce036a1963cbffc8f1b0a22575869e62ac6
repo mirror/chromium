@@ -157,6 +157,24 @@
       "revId": "ce799ce036a1963cbffc8f1b0a22575869e62ac6",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d451a3e0_11aa93b1",
+        "filename": "services/metrics/public/cpp/mojo_ukm_recorder.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 47,
+      "author": {
+        "id": 1115962
+      },
+      "writtenOn": "2017-11-09T15:22:11Z",
+      "side": 1,
+      "message": "This is getting beyond the context of this review, but here is my 2c:\nDo you think we\u0027d actually need to destroy MURs and create new ones in any given process? If not, perhaps MUR can just be a global process singleton initialized via LAZY_INSTANCE_INITIALIZER? Also, perhaps we don\u0027t really need to distinguish between \"primary\" and \"secondary\" beyond initialization for the most part? So there would be different way to initialize MUR vs UR, but once they are initialized both could be accessed by the same method.",
+      "parentUuid": "05d65a17_48e48634",
+      "revId": "ce799ce036a1963cbffc8f1b0a22575869e62ac6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
