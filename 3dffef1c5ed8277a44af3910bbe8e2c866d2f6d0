@@ -70,6 +70,24 @@
       "revId": "3dffef1c5ed8277a44af3910bbe8e2c866d2f6d0",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b3af3f8c_d868535a",
+        "filename": "base/files/memory_mapped_file.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 77,
+      "author": {
+        "id": 1174099
+      },
+      "writtenOn": "2017-11-09T18:28:08Z",
+      "side": 1,
+      "message": "\u003e hmm I worry if we allow file extension to files beyond signed int64_t and then the rest of base isn\u0027t able to perform e.g. a getSize() on these files, that could be even more undefined behavior here... (and it\u0027s behavior we should arguably be able to control since it\u0027s base that defines the API and not the OS).\n\u003e \n\u003e If you think we should change getSize() and base\u0027s understanding of maximum file length to be unsigned 64-bit then that\u0027s probably another whole set of CLs (and a whole new rabbit hole)...\n\u003e \n\u003e Or am I misunderstanding, are you just concerned about the edge case here?\n\nYou’re not misunderstanding AND I’m just concerned about the edge case. But I don’t think that you should increase the scope of this change.\n\nThe way I see it, all of these operations are broken in one way or another for large files today. If we wind up shifting the brokenness around a little as we improve things, that’s probably OK.\n\nBut this is also fine to check in as-is.",
+      "parentUuid": "acf3f799_717ca74b",
+      "revId": "3dffef1c5ed8277a44af3910bbe8e2c866d2f6d0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
