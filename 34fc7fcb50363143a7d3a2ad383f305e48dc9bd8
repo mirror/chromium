@@ -37,6 +37,24 @@
     },
     {
       "key": {
+        "uuid": "49de1396_11e1423a",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/preferences/privacy/ClearBrowsingDataPreferencesTab.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 56,
+      "author": {
+        "id": 1247638
+      },
+      "writtenOn": "2017-11-09T21:16:05Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "b366787d_3ae20d83",
+      "revId": "34fc7fcb50363143a7d3a2ad383f305e48dc9bd8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "298e738d_5fc0a164",
         "filename": "components/browsing_data/core/browsing_data_utils.h",
         "patchSetId": 1
@@ -51,6 +69,24 @@
       "revId": "34fc7fcb50363143a7d3a2ad383f305e48dc9bd8",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "dd484d23_4592d106",
+        "filename": "components/browsing_data/core/browsing_data_utils.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 45,
+      "author": {
+        "id": 1247638
+      },
+      "writtenOn": "2017-11-09T21:16:05Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "298e738d_5fc0a164",
+      "revId": "34fc7fcb50363143a7d3a2ad383f305e48dc9bd8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
