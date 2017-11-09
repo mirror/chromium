@@ -16,7 +16,6 @@
 #include "content/public/browser/render_process_host.h"
 #include "content/public/common/service_manager_connection.h"
 #include "content/public/common/service_names.mojom.h"
-#include "services/metrics/public/cpp/ukm_source_id.h"
 #include "services/resource_coordinator/public/cpp/page_resource_coordinator.h"
 #include "services/resource_coordinator/public/cpp/process_resource_coordinator.h"
 #include "services/resource_coordinator/public/cpp/resource_coordinator_features.h"
@@ -29,6 +28,10 @@ DEFINE_WEB_CONTENTS_USER_DATA_KEY(ResourceCoordinatorWebContentsObserver);
 ResourceCoordinatorWebContentsObserver::ResourceCoordinatorWebContentsObserver(
     content::WebContents* web_contents)
     : WebContentsObserver(web_contents) {
+  // |ServiceManagerConnection| is null in test.
+  if (!content::ServiceManagerConnection::GetForProcess())
+    return;
+
   service_manager::Connector* connector =
       content::ServiceManagerConnection::GetForProcess()->GetConnector();
 
@@ -60,10 +63,18 @@ bool ResourceCoordinatorWebContentsObserver::IsEnabled() {
 }
 
 void ResourceCoordinatorWebContentsObserver::WasShown() {
+  // |page_resource_coordinator_| is null in test.
+  if (!page_resource_coordinator_)
+    return;
+
   page_resource_coordinator_->SetVisibility(true);
 }
 
 void ResourceCoordinatorWebContentsObserver::WasHidden() {
+  // |page_resource_coordinator_| is null in test.
+  if (!page_resource_coordinator_)
+    return;
+
   page_resource_coordinator_->SetVisibility(false);
 }
 
