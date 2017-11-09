@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "f64e93e7_f8b15316",
+        "filename": "content/renderer/render_view_impl.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 2082,
+      "author": {
+        "id": 1234559
+      },
+      "writtenOn": "2017-11-09T15:28:11Z",
+      "side": 1,
+      "message": "in the test RenderViewImplScaleFactorTest.PreferredSizeWithScaleFactor after SetCanHaveScrollbars(false) is called, which will set the state as false, after SetDeviceScaleFactor(2.f); RenderViewImpl::OnResize() is called which will set the can_have_scrollbars_ value in LocalFrameView to true.",
+      "parentUuid": "909b604d_efdb0315",
+      "revId": "43af7b92233f8b51ff9570a2eb643beca054596f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "5b63f6ad_5fb0fa86",
         "filename": "third_party/WebKit/Source/core/frame/LocalFrameView.cpp",
         "patchSetId": 3
@@ -36,6 +54,24 @@
     },
     {
       "key": {
+        "uuid": "97d887cd_e2398546",
+        "filename": "third_party/WebKit/Source/core/frame/LocalFrameView.cpp",
+        "patchSetId": 3
+      },
+      "lineNbr": 689,
+      "author": {
+        "id": 1234559
+      },
+      "writtenOn": "2017-11-09T15:28:11Z",
+      "side": 1,
+      "message": "removed",
+      "parentUuid": "5b63f6ad_5fb0fa86",
+      "revId": "43af7b92233f8b51ff9570a2eb643beca054596f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "480e7fba_6636e7c7",
         "filename": "third_party/WebKit/Source/core/paint/PaintLayerScrollableArea.cpp",
         "patchSetId": 3
@@ -47,6 +83,24 @@
       "writtenOn": "2017-11-08T15:51:26Z",
       "side": 1,
       "message": "It looks to me like this is the important change.  I\u0027m not sure anything else in this patch is necessary.",
+      "revId": "43af7b92233f8b51ff9570a2eb643beca054596f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "426ff55a_199eea79",
+        "filename": "third_party/WebKit/Source/core/paint/PaintLayerScrollableArea.cpp",
+        "patchSetId": 3
+      },
+      "lineNbr": 1312,
+      "author": {
+        "id": 1234559
+      },
+      "writtenOn": "2017-11-09T15:28:11Z",
+      "side": 1,
+      "message": "moved to CanHaveOverflowScrollbars()",
+      "parentUuid": "480e7fba_6636e7c7",
       "revId": "43af7b92233f8b51ff9570a2eb643beca054596f",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
