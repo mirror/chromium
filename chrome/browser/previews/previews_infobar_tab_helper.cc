@@ -66,6 +66,15 @@ void PreviewsInfoBarTabHelper::DidFinishNavigation(
       !navigation_handle->HasCommitted() || navigation_handle->IsSameDocument())
     return;
 
+  previews_user_data_.reset();
+
+  // Store Previews information for this navigation.
+  ChromeNavigationData* nav_data = static_cast<ChromeNavigationData*>(
+      navigation_handle->GetNavigationData());
+  if (nav_data && nav_data->previews_user_data()) {
+    previews_user_data_ = nav_data->previews_user_data()->DeepCopy();
+  }
+
   // The infobar should only be told if the page was a reload if the previous
   // page displayed a timestamp.
   bool is_reload =
@@ -102,8 +111,6 @@ void PreviewsInfoBarTabHelper::DidFinishNavigation(
   }
 #endif  // BUILDFLAG(ENABLE_OFFLINE_PAGES)
 
-  ChromeNavigationData* nav_data = static_cast<ChromeNavigationData*>(
-      navigation_handle->GetNavigationData());
   if (nav_data) {
     previews::PreviewsType main_frame_preview =
         previews::GetMainFramePreviewsType(nav_data->previews_state());
