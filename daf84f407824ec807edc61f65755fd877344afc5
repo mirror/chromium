@@ -164,6 +164,30 @@
       "revId": "daf84f407824ec807edc61f65755fd877344afc5",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "06b8e1b9_ec4a8146",
+        "filename": "third_party/WebKit/LayoutTests/external/wpt/paint-timing/first-image-child.html",
+        "patchSetId": 2
+      },
+      "lineNbr": 43,
+      "author": {
+        "id": 1162220
+      },
+      "writtenOn": "2017-11-09T15:54:19Z",
+      "side": 1,
+      "message": "Oh yes I think that works in this case.",
+      "parentUuid": "e4d76369_d31683b3",
+      "range": {
+        "startLine": 43,
+        "startChar": 10,
+        "endLine": 43,
+        "endChar": 14
+      },
+      "revId": "daf84f407824ec807edc61f65755fd877344afc5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
