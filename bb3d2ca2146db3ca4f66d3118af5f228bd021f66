@@ -2,6 +2,29 @@
   "comments": [
     {
       "key": {
+        "uuid": "d72e7b51_81fec38f",
+        "filename": "third_party/WebKit/Source/core/page/SpatialNavigation.cpp",
+        "patchSetId": 3
+      },
+      "lineNbr": 323,
+      "author": {
+        "id": 1245462
+      },
+      "writtenOn": "2017-11-09T15:43:31Z",
+      "side": 1,
+      "message": "Let\u0027s call the argument \"direction\" instead? Type doesn\u0027t say much ;) We should probably fix this all over this file (in another CL).",
+      "range": {
+        "startLine": 323,
+        "startChar": 51,
+        "endLine": 323,
+        "endChar": 55
+      },
+      "revId": "bb3d2ca2146db3ca4f66d3118af5f228bd021f66",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "8694610f_90fb1433",
         "filename": "third_party/WebKit/Source/core/page/SpatialNavigation.h",
         "patchSetId": 3
@@ -37,6 +60,30 @@
       "side": 1,
       "message": "Even though I\u0027m not native in english, \u0027navigated\u0027 looks like it finding focusable candidate.\nHow about CanBeContainerForDirection()?",
       "parentUuid": "8694610f_90fb1433",
+      "range": {
+        "startLine": 134,
+        "startChar": 5,
+        "endLine": 134,
+        "endChar": 19
+      },
+      "revId": "bb3d2ca2146db3ca4f66d3118af5f228bd021f66",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "399d7360_6c2e0f81",
+        "filename": "third_party/WebKit/Source/core/page/SpatialNavigation.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 134,
+      "author": {
+        "id": 1245462
+      },
+      "writtenOn": "2017-11-09T15:43:31Z",
+      "side": 1,
+      "message": "Neither I am ;) CanBeContainerForDirection() seems a bit better... then it\u0027s clearer it\u0027s not just *any* container. Hmm. IsNavigableContainer() ?",
+      "parentUuid": "0b4a9c6d_baf00cda",
       "range": {
         "startLine": 134,
         "startChar": 5,
