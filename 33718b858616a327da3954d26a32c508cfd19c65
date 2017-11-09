@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "197c3405_b2bdb54b",
+        "filename": "components/viz/service/display/direct_renderer.cc",
+        "patchSetId": 18
+      },
+      "lineNbr": 616,
+      "author": {
+        "id": 1139801
+      },
+      "writtenOn": "2017-11-09T00:07:01Z",
+      "side": 1,
+      "message": "Better handle this in another cl.",
+      "parentUuid": "98df5bfe_a8d5a27b",
+      "range": {
+        "startLine": 616,
+        "startChar": 25,
+        "endLine": 616,
+        "endChar": 26
+      },
+      "revId": "33718b858616a327da3954d26a32c508cfd19c65",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "96087dbd_f0403755",
         "filename": "components/viz/service/display/direct_renderer.h",
         "patchSetId": 18
