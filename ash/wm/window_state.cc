@@ -328,6 +328,14 @@ void WindowState::RemoveObserver(WindowStateObserver* observer) {
   observer_list_.RemoveObserver(observer);
 }
 
+bool WindowState::GetHideShelfWhenFullscreen() const {
+  return window_->GetProperty(kHideShelfWhenFullscreenKey);
+}
+
+void WindowState::SetHideShelfWhenFullscreen(bool value) {
+  window_->SetProperty(kHideShelfWhenFullscreenKey, value);
+}
+
 bool WindowState::GetWindowPositionManaged() const {
   return window_->GetProperty(kWindowPositionManagedTypeKey);
 }

@@ -92,6 +92,9 @@ WindowManager::WindowManager(service_manager::Connector* connector,
       kCanConsumeSystemKeysKey, ash::mojom::kCanConsumeSystemKeys_Property,
       aura::PropertyConverter::CreateAcceptAnyValueCallback());
   property_converter_->RegisterPrimitiveProperty(
+      kHideShelfWhenFullscreenKey, ash::mojom::kHideShelfWhenFullscreen_Property,
+      aura::PropertyConverter::CreateAcceptAnyValueCallback());
+  property_converter_->RegisterPrimitiveProperty(
       kPanelAttachedKey, ui::mojom::WindowManager::kPanelAttached_Property,
       aura::PropertyConverter::CreateAcceptAnyValueCallback());
   property_converter_->RegisterPrimitiveProperty(
