@@ -52,6 +52,24 @@
       "revId": "a646b2989f8bc053327214816494242b64f589bf",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8b47249f_9c83f6a5",
+        "filename": "ui/chromeos/events/event_rewriter_chromeos.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 771,
+      "author": {
+        "id": 1000042
+      },
+      "writtenOn": "2017-11-09T22:12:03Z",
+      "side": 1,
+      "message": "thanks for the explanation. i\u0027m fully in favor of us removing hacks like this once we no longer need them, but until that happens, would you mind adding a comment with more detail here, weidong? :-)",
+      "parentUuid": "cca2e207_a1def03c",
+      "revId": "a646b2989f8bc053327214816494242b64f589bf",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
