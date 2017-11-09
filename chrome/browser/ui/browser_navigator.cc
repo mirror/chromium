@@ -250,13 +250,13 @@ void NormalizeDisposition(chrome::NavigateParams* params) {
 
 // Obtain the profile used by the code that originated the Navigate() request.
 Profile* GetSourceProfile(chrome::NavigateParams* params) {
-  // |source_site_instance| needs to be checked before |source_contents|. This
+  // |params->opener| needs to be checked before |params->source_contents|. This
   // might matter when chrome.windows.create is used to open multiple URLs,
   // which would reuse |params| and modify |params->source_contents| across
   // navigations.
-  if (params->source_site_instance) {
+  if (params->opener) {
     return Profile::FromBrowserContext(
-        params->source_site_instance->GetBrowserContext());
+        params->opener->GetSiteInstance()->GetBrowserContext());
   }
 
   if (params->source_contents) {
@@ -271,7 +271,6 @@ void LoadURLInContents(WebContents* target_contents,
                        const GURL& url,
                        chrome::NavigateParams* params) {
   NavigationController::LoadURLParams load_url_params(url);
-  load_url_params.source_site_instance = params->source_site_instance;
   load_url_params.referrer = params->referrer;
   load_url_params.frame_name = params->frame_name;
   load_url_params.frame_tree_node_id = params->frame_tree_node_id;
@@ -489,7 +488,6 @@ void Navigate(NavigateParams* params) {
     // source information that may cause state to be shared.
     params->opener = nullptr;
     params->source_contents = nullptr;
-    params->source_site_instance = nullptr;
     params->referrer = content::Referrer();
   }
 

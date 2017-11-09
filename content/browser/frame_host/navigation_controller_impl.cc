@@ -725,11 +725,9 @@ void NavigationControllerImpl::LoadURLWithParams(const LoadURLParams& params) {
       // Create an identical NavigationEntry with a new FrameNavigationEntry for
       // the target subframe.
       entry = GetLastCommittedEntry()->Clone();
-      entry->AddOrUpdateFrameEntry(
-          node, -1, -1, nullptr,
-          static_cast<SiteInstanceImpl*>(params.source_site_instance.get()),
-          params.url, params.referrer, params.redirect_chain, PageState(),
-          "GET", -1);
+      entry->AddOrUpdateFrameEntry(node, -1, -1, nullptr, nullptr, params.url,
+                                   params.referrer, params.redirect_chain,
+                                   PageState(), "GET", -1);
     }
   }
 
@@ -741,8 +739,6 @@ void NavigationControllerImpl::LoadURLWithParams(const LoadURLParams& params) {
     entry = NavigationEntryImpl::FromNavigationEntry(CreateNavigationEntry(
         params.url, params.referrer, params.transition_type,
         params.is_renderer_initiated, extra_headers_crlf, browser_context_));
-    entry->set_source_site_instance(
-        static_cast<SiteInstanceImpl*>(params.source_site_instance.get()));
     entry->SetRedirectChain(params.redirect_chain);
   }
 
