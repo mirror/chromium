@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "10659a60_e423d516",
+        "filename": "chrome/test/base/in_process_browser_test_browsertest.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 154,
+      "author": {
+        "id": 1002532
+      },
+      "writtenOn": "2017-11-09T16:47:22Z",
+      "side": 1,
+      "message": "since the logic is in content/ and base/, I don\u0027t think we need to retest this in chrome/ layer as well?",
+      "revId": "54837f90c14e7f9525ce15348d5f660d0c5747ad",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "00d08db4_1a94fa81",
+        "filename": "content/public/test/browser_test_base.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 261,
+      "author": {
+        "id": 1002532
+      },
+      "writtenOn": "2017-11-09T16:47:22Z",
+      "side": 1,
+      "message": "can you add some more comments about where these come from? I\u0027m assuming this is for user-specified features on the command line, like what our FYI bots use sometimes, right?",
+      "revId": "54837f90c14e7f9525ce15348d5f660d0c5747ad",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
