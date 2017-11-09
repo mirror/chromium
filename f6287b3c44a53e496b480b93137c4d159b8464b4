@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "39f97265_e378097e",
+        "filename": "device/geolocation/BUILD.gn",
+        "patchSetId": 4
+      },
+      "lineNbr": 77,
+      "author": {
+        "id": 1113941
+      },
+      "writtenOn": "2017-11-09T14:13:01Z",
+      "side": 0,
+      "message": "nit: is this change actually related to this CL?",
+      "revId": "f6287b3c44a53e496b480b93137c4d159b8464b4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}

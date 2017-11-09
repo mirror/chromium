@@ -1,0 +1,112 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "c3032de8_d490478c",
+        "filename": "services/device/geolocation/public_ip_address_location_notifier.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 65,
+      "author": {
+        "id": 1113941
+      },
+      "writtenOn": "2017-11-09T14:13:01Z",
+      "side": 1,
+      "message": "what are we waiting for in this case? We\u0027re not firing off any fetch here that I can see.",
+      "revId": "a27e661ccaadf616f1026b6fe739f6a0cf51f369",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "fc4aa95d_f1b4108c",
+        "filename": "services/device/geolocation/public_ip_address_location_notifier.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 79,
+      "author": {
+        "id": 1113941
+      },
+      "writtenOn": "2017-11-09T14:13:01Z",
+      "side": 1,
+      "message": "Why? This is not obvious to me.",
+      "revId": "a27e661ccaadf616f1026b6fe739f6a0cf51f369",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "378e1993_a366fa23",
+        "filename": "services/device/geolocation/public_ip_address_location_notifier.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 87,
+      "author": {
+        "id": 1113941
+      },
+      "writtenOn": "2017-11-09T14:13:01Z",
+      "side": 1,
+      "message": "WRT passing the WeakPtr, I assume (but please verify ;) that the cancelable task gets cancelled when it\u0027s destroyed (which it will be on the destruction of |this| since it\u0027s an ivar), and so passing the WeakPtr shouldn\u0027t be necessary here.",
+      "revId": "a27e661ccaadf616f1026b6fe739f6a0cf51f369",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "fc9cd116_015c7f0f",
+        "filename": "services/device/geolocation/public_ip_address_location_notifier.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 139,
+      "author": {
+        "id": 1113941
+      },
+      "writtenOn": "2017-11-09T14:13:01Z",
+      "side": 1,
+      "message": "hmm, why are we not either (a) passing any information to clients or (b) re-kicking off the request in this case?",
+      "range": {
+        "startLine": 139,
+        "startChar": 4,
+        "endLine": 139,
+        "endChar": 39
+      },
+      "revId": "a27e661ccaadf616f1026b6fe739f6a0cf51f369",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "056dfc55_136ef8dd",
+        "filename": "services/device/geolocation/public_ip_address_location_notifier.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 52,
+      "author": {
+        "id": 1113941
+      },
+      "writtenOn": "2017-11-09T14:13:01Z",
+      "side": 1,
+      "message": "Is it useful for clients to outlive this object (i.e., can clients still do useful things once this object has died)? If not, a better pattern might be for clients to get notified on this object\u0027s destruction and shut themselves down on that event.",
+      "revId": "a27e661ccaadf616f1026b6fe739f6a0cf51f369",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1fec87fa_692a4567",
+        "filename": "services/device/geolocation/public_ip_address_location_notifier.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 59,
+      "author": {
+        "id": 1113941
+      },
+      "writtenOn": "2017-11-09T14:13:01Z",
+      "side": 1,
+      "message": "nit: Wondering where this design came from. Was it observation in bringing up this CL?",
+      "revId": "a27e661ccaadf616f1026b6fe739f6a0cf51f369",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
