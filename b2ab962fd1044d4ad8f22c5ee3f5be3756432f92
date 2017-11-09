@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "a1255e41_6e7d4074",
+        "filename": "gpu/command_buffer/client/gles2_implementation.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 7228,
+      "author": {
+        "id": 1148065
+      },
+      "writtenOn": "2017-11-09T23:42:45Z",
+      "side": 1,
+      "message": "nit: this allocates memory, doesn\u0027t it? It seems unfortunate as the previous code would just keep things on the stack. Would there be any way (maybe as a follow-up) to do a small-buffer-optimization for this case (and maybe other small POBs), to keep it on the stack?",
+      "revId": "b2ab962fd1044d4ad8f22c5ee3f5be3756432f92",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
