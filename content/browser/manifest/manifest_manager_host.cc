@@ -67,7 +67,8 @@ void ManifestManagerHost::OnConnectionError() {
 void ManifestManagerHost::OnRequestManifestResponse(
     int request_id,
     const GURL& url,
-    const base::Optional<Manifest>& manifest) {
+    const base::Optional<Manifest>& manifest,
+    blink::mojom::ManifestDebugInfoPtr debug_info) {
   auto callback = std::move(*callbacks_.Lookup(request_id));
   callbacks_.Remove(request_id);
   callback.Run(url, manifest.value_or(Manifest()));
