@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "c8497d99_7a49dbb3",
+        "filename": "ios/web/navigation/legacy_navigation_manager_impl.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 54,
+      "author": {
+        "id": 1123009
+      },
+      "writtenOn": "2017-11-09T22:59:05Z",
+      "side": 1,
+      "message": "Do we need tests for this method?",
+      "range": {
+        "startLine": 54,
+        "startChar": 7,
+        "endLine": 54,
+        "endChar": 34
+      },
+      "revId": "768c18077566254b5f9516cc5fb7f005276701db",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3c2a3ce3_a044ace8",
+        "filename": "ios/web/web_state/js/resources/navigation.js",
+        "patchSetId": 3
+      },
+      "lineNbr": 67,
+      "author": {
+        "id": 1123009
+      },
+      "writtenOn": "2017-11-09T22:59:05Z",
+      "side": 1,
+      "message": "nit: Intercepts",
+      "range": {
+        "startLine": 67,
+        "startChar": 5,
+        "endLine": 67,
+        "endChar": 14
+      },
+      "revId": "768c18077566254b5f9516cc5fb7f005276701db",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
