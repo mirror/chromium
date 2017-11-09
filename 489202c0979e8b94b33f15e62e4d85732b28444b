@@ -49,6 +49,30 @@
     },
     {
       "key": {
+        "uuid": "0c34da3f_926cf0e1",
+        "filename": "chrome/test/mini_installer/config/chrome_beta_not_installed.prop",
+        "patchSetId": 21
+      },
+      "lineNbr": 18,
+      "author": {
+        "id": 1178124
+      },
+      "writtenOn": "2017-11-09T12:38:10Z",
+      "side": 1,
+      "message": "as mentioned, i think it\u0027s better for the various FOO_ACTIVATOR_FOO variables to contain only the CLSID. it\u0027s more clear if the prop files have the \u0027Software\\\\...\u0027 part that is common to all.",
+      "parentUuid": "e2495af5_7b5b8716",
+      "range": {
+        "startLine": 18,
+        "startChar": 24,
+        "endLine": 18,
+        "endChar": 56
+      },
+      "revId": "489202c0979e8b94b33f15e62e4d85732b28444b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "671603e4_805b7911",
         "filename": "chrome/test/mini_installer/variable_expander.py",
         "patchSetId": 21
