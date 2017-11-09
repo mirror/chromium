@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "9de8f914_87df429e",
+        "filename": "content/browser/media/media_web_contents_observer.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 262,
+      "author": {
+        "id": 1115974
+      },
+      "writtenOn": "2017-11-09T14:06:02Z",
+      "side": 1,
+      "message": "Having this call here is very weird. It should be in the caller. No need to fix this in this CL but I would l-g-t-m it in a follow-up :)",
+      "revId": "e405110afe07bf3b4c1930f812fbcb53307e46bb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
