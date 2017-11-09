@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "e7623e5b_3f8a7903",
+        "filename": "components/cronet/ios/cronet_metrics.h",
+        "patchSetId": 12
+      },
+      "lineNbr": 38,
+      "author": {
+        "id": 1002889
+      },
+      "writtenOn": "2017-11-09T20:44:58Z",
+      "side": 1,
+      "message": "nit: it needs comment like this - // COMPONENTS_CRONET_IOS_CRONET_METRICS_H_",
+      "range": {
+        "startLine": 38,
+        "startChar": 1,
+        "endLine": 38,
+        "endChar": 6
+      },
+      "revId": "2758fa69c1b2585b092bf52f2b48d3ebb1d7bba0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
