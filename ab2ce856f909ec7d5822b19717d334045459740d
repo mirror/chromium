@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "c46184d3_9d3ba4a1",
+        "filename": "third_party/WebKit/LayoutTests/http/tests/serviceworker/chromium/frame-detached-by-navigation.html",
+        "patchSetId": 3
+      },
+      "lineNbr": 22,
+      "author": {
+        "id": 1000128
+      },
+      "writtenOn": "2017-11-09T07:53:26Z",
+      "side": 0,
+      "message": "This assert was failing since crbug.com/713732.",
+      "revId": "ab2ce856f909ec7d5822b19717d334045459740d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
