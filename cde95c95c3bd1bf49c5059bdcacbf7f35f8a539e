@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "e6a4752e_afd053c1",
+        "filename": "tools/metrics/histograms/histograms.xml",
+        "patchSetId": 1
+      },
+      "lineNbr": 2294,
+      "author": {
+        "id": 1189880
+      },
+      "writtenOn": "2017-11-09T00:57:42Z",
+      "side": 1,
+      "message": "I double checked this and there is only 1 OEM folder per device. Fixed!",
+      "parentUuid": "546c5e5b_d03c65b2",
+      "range": {
+        "startLine": 2294,
+        "startChar": 44,
+        "endLine": 2294,
+        "endChar": 55
+      },
+      "revId": "cde95c95c3bd1bf49c5059bdcacbf7f35f8a539e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "24002663_f2673451",
         "filename": "ui/app_list/app_list_model.cc",
         "patchSetId": 1
@@ -45,6 +69,30 @@
       "revId": "cde95c95c3bd1bf49c5059bdcacbf7f35f8a539e",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9b9e633e_f425e8a9",
+        "filename": "ui/app_list/app_list_model.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 336,
+      "author": {
+        "id": 1189880
+      },
+      "writtenOn": "2017-11-09T00:57:42Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "24002663_f2673451",
+      "range": {
+        "startLine": 336,
+        "startChar": 60,
+        "endLine": 336,
+        "endChar": 64
+      },
+      "revId": "cde95c95c3bd1bf49c5059bdcacbf7f35f8a539e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -71,6 +119,30 @@
     },
     {
       "key": {
+        "uuid": "3912eee7_073780d8",
+        "filename": "ui/app_list/app_list_model.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 347,
+      "author": {
+        "id": 1189880
+      },
+      "writtenOn": "2017-11-09T00:57:42Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "3069fb6a_e3b8b4eb",
+      "range": {
+        "startLine": 347,
+        "startChar": 27,
+        "endLine": 347,
+        "endChar": 72
+      },
+      "revId": "cde95c95c3bd1bf49c5059bdcacbf7f35f8a539e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "96f27b7a_c86e3e10",
         "filename": "ui/app_list/views/app_list_view.cc",
         "patchSetId": 1
@@ -91,6 +163,30 @@
       "revId": "cde95c95c3bd1bf49c5059bdcacbf7f35f8a539e",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "73d0f1b3_1d2d85b0",
+        "filename": "ui/app_list/views/app_list_view.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 298,
+      "author": {
+        "id": 1189880
+      },
+      "writtenOn": "2017-11-09T00:57:42Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "96f27b7a_c86e3e10",
+      "range": {
+        "startLine": 298,
+        "startChar": 22,
+        "endLine": 298,
+        "endChar": 48
+      },
+      "revId": "cde95c95c3bd1bf49c5059bdcacbf7f35f8a539e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
