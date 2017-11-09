@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "713899ce_193de485",
+        "filename": "chrome/browser/previews/previews_infobar_tab_helper.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 115,
+      "author": {
+        "id": 1166490
+      },
+      "writtenOn": "2017-11-09T17:42:19Z",
+      "side": 1,
+      "message": "nit: change this to \"... renderer. crbug.com/782922\"",
+      "range": {
+        "startLine": 115,
+        "startChar": 35,
+        "endLine": 115,
+        "endChar": 38
+      },
+      "revId": "c0d319a714f6da93361a57c9d34349b094338661",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
