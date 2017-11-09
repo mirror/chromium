@@ -121,6 +121,30 @@
     },
     {
       "key": {
+        "uuid": "6ecbd2c1_8e9fbd56",
+        "filename": "pdf/out_of_process_instance.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 174,
+      "author": {
+        "id": 1241393
+      },
+      "writtenOn": "2017-11-09T19:35:36Z",
+      "side": 1,
+      "message": "Added a check to avoid logging out-of-bounds data in release.\n\nI\u0027m looking into sparse histograms, and it sounds like we\u0027d have to implement them in PPB_UMA_Private and add a new 0.4 version with the new API. If the scope of the work is similar to https://codereview.chromium.org/195793026 (which added a call and upgraded 0.2 to 0.3), then I\u0027d much rather do checking for now.",
+      "parentUuid": "77dd95be_2ae4f204",
+      "range": {
+        "startLine": 174,
+        "startChar": 37,
+        "endLine": 174,
+        "endChar": 0
+      },
+      "revId": "6405bc8d33d2fe75e18aa1cc5b957670bae094aa",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "571fb539_397085ea",
         "filename": "tools/metrics/histograms/enums.xml",
         "patchSetId": 4
