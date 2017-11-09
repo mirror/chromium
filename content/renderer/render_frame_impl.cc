@@ -1823,6 +1823,8 @@ void RenderFrameImpl::OnNavigate(
   DCHECK(!IsBrowserSideNavigationEnabled());
   TRACE_EVENT2("navigation,rail", "RenderFrameImpl::OnNavigate", "id",
                routing_id_, "url", common_params.url.possibly_invalid_spec());
+  if (devtools_agent_)
+    devtools_agent_->ContinueProgram();
   NavigateInternal(common_params, start_params, request_params,
                    std::unique_ptr<StreamOverrideParameters>(),
                    /*subresource_loader_factories=*/base::nullopt);
@@ -6995,6 +6997,11 @@ void RenderFrameImpl::HandlePepperImeCommit(const base::string16& text) {
 void RenderFrameImpl::RegisterMojoInterfaces() {
   GetAssociatedInterfaceRegistry()->AddInterface(
       base::Bind(&RenderFrameImpl::BindEngagement, weak_factory_.GetWeakPtr()));
+
+  if (devtools_agent_) {
+    GetAssociatedInterfaceRegistry()->AddInterface(base::Bind(
+        &DevToolsAgent::Bind, devtools_agent_->GetWeakPtr()));
+  }
 
   GetAssociatedInterfaceRegistry()->AddInterface(base::Bind(
       &RenderFrameImpl::BindMediaEngagement, weak_factory_.GetWeakPtr()));

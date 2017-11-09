@@ -15,6 +15,7 @@
 #include "build/build_config.h"
 #include "content/browser/devtools/devtools_agent_host_impl.h"
 #include "content/common/content_export.h"
+#include "content/common/devtools.mojom.h"
 #include "content/public/browser/web_contents_observer.h"
 #include "net/base/net_errors.h"
 
@@ -157,6 +158,7 @@ class CONTENT_EXPORT RenderFrameDevToolsAgentHost
 
   void SynchronousSwapCompositorFrame(
       viz::CompositorFrameMetadata frame_metadata);
+  bool EnsureAgent();
 
   class FrameHostHolder;
 
@@ -177,6 +179,7 @@ class CONTENT_EXPORT RenderFrameDevToolsAgentHost
 
   // The active host we are talking to.
   RenderFrameHostImpl* frame_host_ = nullptr;
+  mojom::DevToolsAgentAssociatedPtr agent_ptr_;
   base::flat_set<NavigationHandleImpl*> navigation_handles_;
   bool render_frame_alive_ = false;
 

@@ -8,6 +8,7 @@
 #include "base/json/json_writer.h"
 #include "content/browser/devtools/devtools_manager.h"
 #include "content/browser/devtools/protocol/protocol.h"
+#include "content/browser/devtools/render_frame_devtools_agent_host.h"
 #include "content/browser/frame_host/render_frame_host_impl.h"
 #include "content/public/browser/devtools_manager_delegate.h"
 
@@ -16,13 +17,16 @@ namespace content {
 DevToolsSession::DevToolsSession(DevToolsAgentHostImpl* agent_host,
                                  DevToolsAgentHostClient* client,
                                  int session_id)
-    : agent_host_(agent_host),
+    : binding_(this),
+      agent_host_(agent_host),
       client_(client),
       session_id_(session_id),
       process_(nullptr),
       host_(nullptr),
       dispatcher_(new protocol::UberDispatcher(this)),
-      chunk_processor_(base::Bind(&DevToolsSession::SendMessageFromProcessor,
+      chunk_processor_(base::Bind(&DevToolsSession::SendMessageFromProcessorIPC,
+                                  base::Unretained(this)),
+                       base::Bind(&DevToolsSession::SendMessageFromProcessor,
                                   base::Unretained(this))),
       weak_factory_(this) {}
 
@@ -56,14 +60,38 @@ void DevToolsSession::SetFallThroughForNotFound(bool value) {
   dispatcher_->setFallThroughForNotFound(value);
 }
 
+void DevToolsSession::AttachToAgent(
+    const mojom::DevToolsAgentAssociatedPtr& agent) {
+  mojom::DevToolsSessionHostPtr host_ptr;
+  binding_.Bind(mojo::MakeRequest(&host_ptr));
+  agent->AttachDevToolsSession(std::move(host_ptr), mojo::MakeRequest(&session_ptr_), base::Optional<std::string>());
+  session_ptr_.set_connection_error_handler(base::BindOnce(
+      &DevToolsSession::MojoConnectionDestroyed, base::Unretained(this)));
+}
+
+void DevToolsSession::ReattachToAgent(const mojom::DevToolsAgentAssociatedPtr& agent) {
+  mojom::DevToolsSessionHostPtr host_ptr;
+  binding_.Bind(mojo::MakeRequest(&host_ptr));
+  agent->AttachDevToolsSession(std::move(host_ptr), mojo::MakeRequest(&session_ptr_), state_cookie());
+  session_ptr_.set_connection_error_handler(base::BindOnce(
+      &DevToolsSession::MojoConnectionDestroyed, base::Unretained(this)));
+}
+
 void DevToolsSession::SendMessageToClient(const std::string& message) {
   client_->DispatchProtocolMessage(agent_host_, message);
 }
 
-void DevToolsSession::SendMessageFromProcessor(int session_id,
-                                               const std::string& message) {
+void DevToolsSession::SendMessageFromProcessorIPC(int session_id,
+                                                  const std::string& message) {
   if (session_id != session_id_)
     return;
+  int id = chunk_processor_.last_call_id();
+  waiting_for_response_messages_.erase(id);
+  client_->DispatchProtocolMessage(agent_host_, message);
+  // |this| may be deleted at this point.
+}
+
+void DevToolsSession::SendMessageFromProcessor(const std::string& message) {
   int id = chunk_processor_.last_call_id();
   waiting_for_response_messages_.erase(id);
   client_->DispatchProtocolMessage(agent_host_, message);
@@ -75,6 +103,11 @@ void DevToolsSession::SendResponse(
   std::string json;
   base::JSONWriter::Write(*response.get(), &json);
   client_->DispatchProtocolMessage(agent_host_, json);
+}
+
+void DevToolsSession::MojoConnectionDestroyed() {
+  binding_.Close();
+  session_ptr_.reset();
 }
 
 protocol::Response::Status DevToolsSession::Dispatch(
@@ -103,6 +136,19 @@ protocol::Response::Status DevToolsSession::Dispatch(
                                call_id, method);
 }
 
+void DevToolsSession::DispatchProtocolMessageToAgent(
+    int call_id,
+    const std::string& method,
+    const std::string& message) {
+  if (session_ptr_)
+    session_ptr_->DispatchProtocolMessage(call_id, method, message);
+}
+
+void DevToolsSession::InspectElement(const gfx::Point& point) {
+  if (session_ptr_)
+    session_ptr_->InspectElement(point);
+}
+
 bool DevToolsSession::ReceiveMessageChunk(const DevToolsMessageChunk& chunk) {
   return chunk_processor_.ProcessChunkedMessageFromAgent(chunk);
 }
@@ -119,6 +165,31 @@ void DevToolsSession::sendProtocolNotification(
 }
 
 void DevToolsSession::flushProtocolNotifications() {
+}
+
+void DevToolsSession::DispatchProtocolMessage(mojom::DevToolsMessageChunkPtr chunk) {
+  if (chunk_processor_.ProcessChunkedMessageFromAgent(std::move(chunk)))
+    return;
+
+  MojoConnectionDestroyed();
+  if (process_) {
+    bad_message::ReceivedBadMessage(
+        process_,
+        bad_message::RFH_INCONSISTENT_DEVTOOLS_MESSAGE);
+  }
+}
+
+void DevToolsSession::RequestNewWindow(int32_t frame_routing_id, RequestNewWindowCallback callback) {
+  bool success = false;
+  RenderFrameHostImpl* frame_host = process_ ? RenderFrameHostImpl::FromID(
+      process_->GetID(), frame_routing_id) : nullptr;
+  if (frame_host) {
+    scoped_refptr<DevToolsAgentHost> agent =
+        RenderFrameDevToolsAgentHost::GetOrCreateFor(
+            frame_host->frame_tree_node());
+    success = static_cast<DevToolsAgentHostImpl*>(agent.get())->Inspect();
+  }
+  std::move(callback).Run(success);
 }
 
 }  // namespace content

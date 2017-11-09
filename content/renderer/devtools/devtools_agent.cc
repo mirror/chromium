@@ -15,7 +15,9 @@
 #include "base/run_loop.h"
 #include "base/sequence_checker.h"
 #include "base/strings/string_number_conversions.h"
+#include "base/threading/thread_task_runner_handle.h"
 #include "base/trace_event/trace_event.h"
+#include "content/child/child_process.h"
 #include "content/common/devtools_messages.h"
 #include "content/common/frame_messages.h"
 #include "content/public/common/manifest.h"
@@ -42,7 +44,9 @@ namespace content {
 
 namespace {
 
-const size_t kMaxMessageChunkSize = IPC::Channel::kMaximumMessageSize / 4;
+// TODO(dgozman): somehow get this from a mojo config.
+// See kMaximumMojoMessageSize in services/service_manager/embedder/main.cc.
+const size_t kMaxMessageChunkSize = 128 * 1024 * 1024 / 4;
 const char kPageGetAppManifest[] = "Page.getAppManifest";
 
 class WebKitClientMessageLoopImpl
@@ -76,44 +80,90 @@ class WebKitClientMessageLoopImpl
   SEQUENCE_CHECKER(sequence_checker_);
 };
 
-typedef std::map<int, DevToolsAgent*> IdToAgentMap;
-base::LazyInstance<IdToAgentMap>::Leaky
-    g_agent_for_routing_id = LAZY_INSTANCE_INITIALIZER;
-
 } //  namespace
+
+class DevToolsAgent::MessageImpl : public WebDevToolsAgent::MessageDescriptor {
+ public:
+  MessageImpl(
+      base::WeakPtr<DevToolsAgent> agent,
+      const std::string& method,
+      const std::string& message)
+      : agent_(agent),
+        method_(method),
+        msg_(message) {
+  }
+  ~MessageImpl() override {}
+
+  WebDevToolsAgent* Agent() override {
+    if (!agent_)
+      return nullptr;
+    return agent_->GetWebAgent();
+  }
+  WebString Message() override { return WebString::FromUTF8(msg_); }
+  WebString Method() override { return WebString::FromUTF8(method_); }
+
+ private:
+  base::WeakPtr<DevToolsAgent> agent_;
+  std::string method_;
+  std::string msg_;
+
+  DISALLOW_COPY_AND_ASSIGN(MessageImpl);
+};
+
+class DevToolsAgent::SessionProxy : public mojom::DevToolsSession {
+ public:
+  SessionProxy(int session_id, scoped_refptr<base::SingleThreadTaskRunner> agent_task_runner, base::WeakPtr<DevToolsAgent> agent)
+      : session_id_(session_id),
+        agent_task_runner_(agent_task_runner),
+        agent_(agent),
+        binding_(this) {}
+  ~SessionProxy() override {}
+
+  void BindInterface(mojom::DevToolsSessionRequest session_request) {
+    binding_.Bind(std::move(session_request));
+    binding_.set_connection_error_handler(base::BindOnce(&SessionProxy::Detach, base::Unretained(this)));
+  }
+
+  void Detach() {
+    agent_task_runner_->PostTask(FROM_HERE, base::Bind(&DevToolsAgent::DetachSession, agent_, session_id_));
+  }
+
+  void Close() {
+    binding_.Close();
+    delete this;
+  }
+
+  // mojom::DevToolsSession implementation.
+  void DispatchProtocolMessage(int call_id, const std::string& method, const std::string& message) override {
+    if (WebDevToolsAgent::ShouldInterruptForMethod(WebString::FromUTF8(method))) {
+      WebDevToolsAgent::InterruptAndDispatch(session_id_, new DevToolsAgent::MessageImpl(agent_, method, message));
+    }
+    agent_task_runner_->PostTask(FROM_HERE, base::Bind(&DevToolsAgent::DispatchOnInspectorBackend, agent_, session_id_, call_id, method, message));
+  }
+
+  void InspectElement(const gfx::Point& point) override {
+    agent_task_runner_->PostTask(FROM_HERE, base::Bind(&DevToolsAgent::InspectElement, agent_, session_id_, point));
+  }
+
+ private:
+  int session_id_;
+  scoped_refptr<base::SingleThreadTaskRunner> agent_task_runner_;
+  base::WeakPtr<DevToolsAgent> agent_;
+  mojo::Binding<mojom::DevToolsSession> binding_;
+
+  DISALLOW_COPY_AND_ASSIGN(SessionProxy);
+};
 
 DevToolsAgent::DevToolsAgent(RenderFrameImpl* frame)
     : RenderFrameObserver(frame),
+      binding_(this),
       paused_(false),
       frame_(frame),
       weak_factory_(this) {
-  g_agent_for_routing_id.Get()[routing_id()] = this;
   frame_->GetWebFrame()->SetDevToolsAgentClient(this);
 }
 
 DevToolsAgent::~DevToolsAgent() {
-  g_agent_for_routing_id.Get().erase(routing_id());
-}
-
-// Called on the Renderer thread.
-bool DevToolsAgent::OnMessageReceived(const IPC::Message& message) {
-  bool handled = true;
-  IPC_BEGIN_MESSAGE_MAP(DevToolsAgent, message)
-    IPC_MESSAGE_HANDLER(DevToolsAgentMsg_Attach, OnAttach)
-    IPC_MESSAGE_HANDLER(DevToolsAgentMsg_Reattach, OnReattach)
-    IPC_MESSAGE_HANDLER(DevToolsAgentMsg_Detach, OnDetach)
-    IPC_MESSAGE_HANDLER(DevToolsAgentMsg_DispatchOnInspectorBackend,
-                        OnDispatchOnInspectorBackend)
-    IPC_MESSAGE_HANDLER(DevToolsAgentMsg_InspectElement, OnInspectElement)
-    IPC_MESSAGE_HANDLER(DevToolsAgentMsg_RequestNewWindow_ACK,
-                        OnRequestNewWindowACK)
-    IPC_MESSAGE_UNHANDLED(handled = false)
-  IPC_END_MESSAGE_MAP()
-
-  if (message.type() == FrameMsg_Navigate::ID)
-    ContinueProgram();  // Don't want to swallow the message.
-
-  return handled;
 }
 
 void DevToolsAgent::WidgetWillClose() {
@@ -124,17 +174,87 @@ void DevToolsAgent::OnDestruct() {
   delete this;
 }
 
+void DevToolsAgent::AttachDevToolsSession(
+    mojom::DevToolsSessionHostPtr session_host,
+    mojom::DevToolsSessionRequest session_request,
+    const base::Optional<std::string>& reattach_state) {
+  int session_id = ++last_session_id_;
+  if (reattach_state.has_value())
+    GetWebAgent()->Reattach(session_id, WebString::FromUTF8(reattach_state.value()));
+  else
+    GetWebAgent()->Attach(session_id);
+  SessionProxy* proxy = new SessionProxy(session_id, base::ThreadTaskRunnerHandle::Get(), weak_factory_.GetWeakPtr());
+  session_proxies_[session_id] = proxy;
+  session_host.set_connection_error_handler(base::BindOnce(
+      &DevToolsAgent::DetachSession, base::Unretained(this), session_id));
+  session_hosts_[session_id] = std::move(session_host);
+  ChildProcess::current()->io_task_runner()->PostTask(FROM_HERE,
+      base::Bind(&DevToolsAgent::SessionProxy::BindInterface,
+                 base::Unretained(proxy),
+                 base::Passed(std::move(session_request))));
+}
+
+void DevToolsAgent::DetachSession(int session_id) {
+  GetWebAgent()->Detach(session_id);
+
+  auto it_proxy = session_proxies_.find(session_id);
+  if (it_proxy != session_proxies_.end()) {
+    ChildProcess::current()->io_task_runner()->PostTask(FROM_HERE,
+        base::Bind(&DevToolsAgent::SessionProxy::Close,
+                   base::Unretained(it_proxy->second)));
+    session_proxies_.erase(it_proxy);
+  }
+
+  auto it_host = session_hosts_.find(session_id);
+  if (it_host != session_hosts_.end()) {
+    it_host->second.set_connection_error_handler(base::Closure());
+    session_hosts_.erase(it_host);
+  }
+}
+
 void DevToolsAgent::SendProtocolMessage(int session_id,
                                         int call_id,
                                         const blink::WebString& message,
                                         const blink::WebString& state_cookie) {
+  SendChunkedMessage(session_id, call_id, message.Utf8(), state_cookie.Utf8());
+}
+
+void DevToolsAgent::SendChunkedMessage(int session_id,
+                                       int call_id,
+                                       const std::string& message,
+                                       const std::string& post_state) {
   if (!send_protocol_message_callback_for_test_.is_null()) {
     send_protocol_message_callback_for_test_.Run(
-        session_id, call_id, message.Utf8(), state_cookie.Utf8());
+        session_id, call_id, message, post_state);
     return;
   }
-  SendChunkedProtocolMessage(this, routing_id(), session_id, call_id,
-                             message.Utf8(), state_cookie.Utf8());
+
+  auto it = session_hosts_.find(session_id);
+  if (it == session_hosts_.end())
+    return;
+
+  if (message.length() < kMaxMessageChunkSize) {
+    mojom::DevToolsMessageChunkPtr chunk = mojom::DevToolsMessageChunk::New();
+    chunk->message_size = message.size();
+    chunk->is_first = true;
+    chunk->data = message;
+    chunk->call_id = call_id;
+    chunk->post_state = post_state;
+    chunk->is_last = true;
+    it->second->DispatchProtocolMessage(std::move(chunk));
+    return;
+  }
+
+  for (size_t pos = 0; pos < message.length(); pos += kMaxMessageChunkSize) {
+    mojom::DevToolsMessageChunkPtr chunk = mojom::DevToolsMessageChunk::New();
+    chunk->is_first = pos == 0;
+    chunk->message_size = chunk->is_first ? message.size() : 0;
+    chunk->is_last = pos + kMaxMessageChunkSize >= message.length();
+    chunk->call_id = chunk->is_last ? call_id : 0;
+    chunk->post_state = chunk->is_last ? post_state : std::string();
+    chunk->data = message.substr(pos, kMaxMessageChunkSize);
+    it->second->DispatchProtocolMessage(std::move(chunk));
+  }
 }
 
 // static
@@ -156,12 +276,16 @@ void DevToolsAgent::DidExitDebugLoop() {
   paused_ = false;
 }
 
-bool DevToolsAgent::RequestDevToolsForFrame(blink::WebLocalFrame* webFrame) {
+bool DevToolsAgent::RequestDevToolsForFrame(
+    int session_id,
+    blink::WebLocalFrame* webFrame) {
   RenderFrameImpl* frame = RenderFrameImpl::FromWebFrame(webFrame);
   if (!frame)
     return false;
-  Send(new DevToolsAgentHostMsg_RequestNewWindow(routing_id(),
-      frame->GetRoutingID()));
+  auto it = session_hosts_.find(session_id);
+  if (it == session_hosts_.end())
+    return false;
+  it->second->RequestNewWindow(frame->GetRoutingID(), base::Bind(&DevToolsAgent::OnRequestNewWindowCompleted, weak_factory_.GetWeakPtr(), session_id));
   return true;
 }
 
@@ -186,70 +310,11 @@ void DevToolsAgent::SetCPUThrottlingRate(double rate) {
   DevToolsCPUThrottler::GetInstance()->SetThrottlingRate(rate);
 }
 
-// static
-DevToolsAgent* DevToolsAgent::FromRoutingId(int routing_id) {
-  IdToAgentMap::iterator it = g_agent_for_routing_id.Get().find(routing_id);
-  if (it != g_agent_for_routing_id.Get().end()) {
-    return it->second;
-  }
-  return nullptr;
-}
-
-// static
-void DevToolsAgent::SendChunkedProtocolMessage(IPC::Sender* sender,
-                                               int routing_id,
-                                               int session_id,
+void DevToolsAgent::DispatchOnInspectorBackend(int session_id,
                                                int call_id,
-                                               const std::string& message,
-                                               const std::string& post_state) {
-  DevToolsMessageChunk chunk;
-  chunk.message_size = message.size();
-  chunk.is_first = true;
-
-  if (message.length() < kMaxMessageChunkSize) {
-    chunk.data = message;
-    chunk.session_id = session_id;
-    chunk.call_id = call_id;
-    chunk.post_state = post_state;
-    chunk.is_last = true;
-    sender->Send(new DevToolsClientMsg_DispatchOnInspectorFrontend(
-                     routing_id, chunk));
-    return;
-  }
-
-  for (size_t pos = 0; pos < message.length(); pos += kMaxMessageChunkSize) {
-    chunk.is_last = pos + kMaxMessageChunkSize >= message.length();
-    chunk.session_id = session_id;
-    chunk.call_id = chunk.is_last ? call_id : 0;
-    chunk.post_state = chunk.is_last ? post_state : std::string();
-    chunk.data = message.substr(pos, kMaxMessageChunkSize);
-    sender->Send(new DevToolsClientMsg_DispatchOnInspectorFrontend(
-                     routing_id, chunk));
-    chunk.is_first = false;
-    chunk.message_size = 0;
-  }
-}
-
-void DevToolsAgent::OnAttach(int session_id) {
-  GetWebAgent()->Attach(session_id);
-  session_ids_.insert(session_id);
-}
-
-void DevToolsAgent::OnReattach(int session_id, const std::string& agent_state) {
-  GetWebAgent()->Reattach(session_id, WebString::FromUTF8(agent_state));
-  session_ids_.insert(session_id);
-}
-
-void DevToolsAgent::OnDetach(int session_id) {
-  GetWebAgent()->Detach(session_id);
-  session_ids_.erase(session_id);
-}
-
-void DevToolsAgent::OnDispatchOnInspectorBackend(int session_id,
-                                                 int call_id,
-                                                 const std::string& method,
-                                                 const std::string& message) {
-  TRACE_EVENT0("devtools", "DevToolsAgent::OnDispatchOnInspectorBackend");
+                                               const std::string& method,
+                                               const std::string& message) {
+  TRACE_EVENT0("devtools", "DevToolsAgent::DispatchOnInspectorBackend");
   if (method == kPageGetAppManifest) {
     ManifestManager* manager = frame_->manifest_manager();
     manager->GetManifest(base::BindOnce(&DevToolsAgent::GotManifest,
@@ -262,16 +327,16 @@ void DevToolsAgent::OnDispatchOnInspectorBackend(int session_id,
                                             WebString::FromUTF8(message));
 }
 
-void DevToolsAgent::OnInspectElement(int session_id, int x, int y) {
-  blink::WebFloatRect point_rect(x, y, 0, 0);
+void DevToolsAgent::InspectElement(int session_id, const gfx::Point& point) {
+  blink::WebFloatRect point_rect(point.x(), point.y(), 0, 0);
   frame_->GetRenderWidget()->ConvertWindowToViewport(&point_rect);
   GetWebAgent()->InspectElementAt(session_id,
                                   WebPoint(point_rect.x, point_rect.y));
 }
 
-void DevToolsAgent::OnRequestNewWindowACK(bool success) {
+void DevToolsAgent::OnRequestNewWindowCompleted(int session_id, bool success) {
   if (!success)
-    GetWebAgent()->FailedToRequestDevTools();
+    GetWebAgent()->FailedToRequestDevTools(session_id);
 }
 
 void DevToolsAgent::ContinueProgram() {
@@ -282,14 +347,23 @@ WebDevToolsAgent* DevToolsAgent::GetWebAgent() {
   return frame_->GetWebFrame()->DevToolsAgent();
 }
 
+void DevToolsAgent::Bind(mojom::DevToolsAgentAssociatedRequest request) {
+  binding_.Bind(std::move(request));
+}
+
+base::WeakPtr<DevToolsAgent> DevToolsAgent::GetWeakPtr() {
+  return weak_factory_.GetWeakPtr();
+}
+
 bool DevToolsAgent::IsAttached() {
-  return !!session_ids_.size();
+  return !!session_proxies_.size();
 }
 
 void DevToolsAgent::DetachAllSessions() {
-  for (int session_id : session_ids_)
-    GetWebAgent()->Detach(session_id);
-  session_ids_.clear();
+  for (auto& it : session_proxies_)
+    GetWebAgent()->Detach(it.first);
+  session_proxies_.clear();
+  session_hosts_.clear();
 }
 
 void DevToolsAgent::GotManifest(int session_id,
@@ -297,7 +371,7 @@ void DevToolsAgent::GotManifest(int session_id,
                                 const GURL& manifest_url,
                                 const Manifest& manifest,
                                 const ManifestDebugInfo& debug_info) {
-  if (!IsAttached())
+  if (session_proxies_.find(session_id) == session_proxies_.end())
     return;
 
   std::unique_ptr<base::DictionaryValue> response(new base::DictionaryValue());
@@ -328,8 +402,7 @@ void DevToolsAgent::GotManifest(int session_id,
 
   std::string json_message;
   base::JSONWriter::Write(*response, &json_message);
-  SendChunkedProtocolMessage(this, routing_id(), session_id, call_id,
-                             json_message, std::string());
+  SendChunkedMessage(session_id, call_id, json_message, std::string());
 }
 
 }  // namespace content
