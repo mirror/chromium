@@ -22,6 +22,30 @@
       "revId": "c06cb286d087ea6d9fd22a7175dfc9753b6d4e2e",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "353d9302_e12260b9",
+        "filename": "content/public/android/java/src/org/chromium/content/browser/androidoverlay/DialogOverlayImpl.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 129,
+      "author": {
+        "id": 1130490
+      },
+      "writtenOn": "2017-11-09T18:21:25Z",
+      "side": 1,
+      "message": "yeah, it\u0027s a little confusing.  i think i\u0027ll just delete most of it.",
+      "parentUuid": "4df8b9a7_7c03ef92",
+      "range": {
+        "startLine": 129,
+        "startChar": 11,
+        "endLine": 129,
+        "endChar": 57
+      },
+      "revId": "c06cb286d087ea6d9fd22a7175dfc9753b6d4e2e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
