@@ -12,13 +12,38 @@
 
 #include "base/i18n/break_iterator.h"
 #include "base/i18n/case_conversion.h"
+#include "base/feature_list.h"
 #include "base/strings/string_util.h"
+#include "components/omnibox/browser/break_iterator_adapter.h"
+#include "components/omnibox/browser/omnibox_field_trial.h"
 #include "net/base/escape.h"
 
 namespace {
 // The maximum number of characters to consider from an URL and page title
 // while matching user-typed terms.
 const size_t kMaxSignificantChars = 200;
+
+void String16VectorFromString16Internal(String16Vector& words,
+                                        base::string16 word,
+                                        WordStarts* word_starts,
+                                        size_t previous_postion,
+                                        bool break_on_space) {
+  size_t initial_whitespace = 0;
+  if (break_on_space) {
+    base::string16 trimmed_word;
+    base::TrimWhitespace(word, base::TRIM_LEADING, &trimmed_word);
+    initial_whitespace = word.length() - trimmed_word.length();
+    base::TrimWhitespace(trimmed_word, base::TRIM_TRAILING, &word);
+  }
+  if (word.empty())
+    return;
+  words.push_back(word);
+  if (!word_starts)
+    return;
+  size_t word_start = previous_postion + initial_whitespace;
+  if (word_start < kMaxSignificantChars)
+    word_starts->push_back(word_start);
+}
 }
 
 // Matches within URL and Title Strings ----------------------------------------
@@ -107,33 +132,37 @@ String16Set String16SetFromString16(const base::string16& cleaned_uni_string,
 String16Vector String16VectorFromString16(
     const base::string16& cleaned_uni_string,
     bool break_on_space,
-    WordStarts* word_starts) {
+    WordStarts* word_starts,
+    bool breaking_at_underscore) {
   if (word_starts)
     word_starts->clear();
-  base::i18n::BreakIterator iter(cleaned_uni_string,
-      break_on_space ? base::i18n::BreakIterator::BREAK_SPACE :
-          base::i18n::BreakIterator::BREAK_WORD);
+
+  base::i18n::BreakIterator::BreakType break_mode =
+      break_on_space ? base::i18n::BreakIterator::BREAK_SPACE
+                     : base::i18n::BreakIterator::BREAK_WORD;
+
+  static const bool experiment_enabled =
+      base::FeatureList::IsEnabled(omnibox::kBreakWordsAtUnderscores);
+
   String16Vector words;
-  if (!iter.Init())
-    return words;
-  while (iter.Advance()) {
-    if (break_on_space || iter.IsWord()) {
-      base::string16 word(iter.GetString());
-      size_t initial_whitespace = 0;
-      if (break_on_space) {
-        base::string16 trimmed_word;
-        base::TrimWhitespace(word, base::TRIM_LEADING, &trimmed_word);
-        initial_whitespace = word.length() - trimmed_word.length();
-        base::TrimWhitespace(trimmed_word, base::TRIM_TRAILING, &word);
-      }
-      if (word.empty())
-        continue;
-      words.push_back(word);
-      if (!word_starts)
-        continue;
-      size_t word_start = iter.prev() + initial_whitespace;
-      if (word_start < kMaxSignificantChars)
-        word_starts->push_back(word_start);
+
+  if ((experiment_enabled || breaking_at_underscore) && !break_on_space) {
+    BreakIteratorAdapter iter(cleaned_uni_string, break_mode);
+    if (!iter.Init())
+      return words;
+    while (iter.Advance()) {
+      if (break_on_space || iter.IsWord())
+        String16VectorFromString16Internal(words, iter.GetString(), word_starts,
+                                           iter.prev(), break_on_space);
+    }
+  } else {
+    base::i18n::BreakIterator iter(cleaned_uni_string, break_mode);
+    if (!iter.Init())
+      return words;
+    while (iter.Advance()) {
+      if (break_on_space || iter.IsWord())
+        String16VectorFromString16Internal(words, iter.GetString(), word_starts,
+                                           iter.prev(), break_on_space);
     }
   }
   return words;

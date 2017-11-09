@@ -148,11 +148,11 @@ class BASE_I18N_EXPORT BreakIterator {
   StringPiece16 GetStringPiece() const;
 
   // Returns the value of pos() returned before Advance() was last called.
-  size_t prev() const { return prev_; }
+  size_t prev() const;
 
   // Returns the current break position within the string,
   // or BreakIterator::npos when done.
-  size_t pos() const { return pos_; }
+  size_t pos() const;
 
  private:
   // ICU iterator, avoiding ICU ubrk.h dependence.
