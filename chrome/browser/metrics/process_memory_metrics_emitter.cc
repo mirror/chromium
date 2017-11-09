@@ -51,7 +51,10 @@ void EmitBrowserMemoryMetrics(const ProcessMemoryDumpPtr& pmd,
       pmd->os_dump->private_footprint_kb / 1024);
   UMA_HISTOGRAM_MEMORY_LARGE_MB("Memory.Browser.PrivateMemoryFootprint",
                                 pmd->os_dump->private_footprint_kb / 1024);
+  UMA_HISTOGRAM_MEMORY_LARGE_MB("Memory.Browser.SharedMemoryFootprint",
+                                pmd->os_dump->shared_footprint_kb / 1024);
   builder.SetPrivateMemoryFootprint(pmd->os_dump->private_footprint_kb / 1024);
+  builder.SetSharedMemoryFootprint(pmd->os_dump->shared_footprint_kb / 1024);
   if (uptime)
     builder.SetUptime(uptime.value().InSeconds());
   builder.Record(ukm_recorder);
@@ -68,6 +71,8 @@ void EmitBrowserMemoryMetrics(const ProcessMemoryDumpPtr& pmd,
                                   pmd->os_dump->private_footprint_kb / 1024);  \
     UMA_HISTOGRAM_MEMORY_LARGE_MB("Memory." type ".PrivateMemoryFootprint",    \
                                   pmd->os_dump->private_footprint_kb / 1024);  \
+    UMA_HISTOGRAM_MEMORY_LARGE_MB("Memory." type ".SharedMemoryFootprint",     \
+                                  pmd->os_dump->shared_footprint_kb / 1024);   \
     UMA_HISTOGRAM_MEMORY_LARGE_MB(                                             \
         "Memory.Experimental." type "2.PartitionAlloc",                        \
         pmd->chrome_dump->partition_alloc_total_kb / 1024);                    \
@@ -99,6 +104,7 @@ void EmitRendererMemoryMetrics(
   builder.SetResident(pmd->os_dump->resident_set_kb / 1024);
   builder.SetMalloc(pmd->chrome_dump->malloc_total_kb / 1024);
   builder.SetPrivateMemoryFootprint(pmd->os_dump->private_footprint_kb / 1024);
+  builder.SetSharedMemoryFootprint(pmd->os_dump->shared_footprint_kb / 1024);
   builder.SetPartitionAlloc(pmd->chrome_dump->partition_alloc_total_kb / 1024);
   builder.SetBlinkGC(pmd->chrome_dump->blink_gc_total_kb / 1024);
   builder.SetV8(pmd->chrome_dump->v8_total_kb / 1024);
@@ -277,9 +283,11 @@ void ProcessMemoryMetricsEmitter::CollateResults() {
     return;
 
   uint32_t private_footprint_total_kb = 0;
+  uint32_t shared_footprint_total_kb = 0;
   base::Time now = base::Time::Now();
   for (const ProcessMemoryDumpPtr& pmd : global_dump_->process_dumps) {
     private_footprint_total_kb += pmd->os_dump->private_footprint_kb;
+    shared_footprint_total_kb += pmd->os_dump->shared_footprint_kb;
     switch (pmd->process_type) {
       case memory_instrumentation::mojom::ProcessType::BROWSER: {
         EmitBrowserMemoryMetrics(pmd, ukm::UkmRecorder::GetNewSourceID(),
@@ -322,8 +330,11 @@ void ProcessMemoryMetricsEmitter::CollateResults() {
       private_footprint_total_kb / 1024);
   UMA_HISTOGRAM_MEMORY_LARGE_MB("Memory.Total.PrivateMemoryFootprint",
                                 private_footprint_total_kb / 1024);
+  UMA_HISTOGRAM_MEMORY_LARGE_MB("Memory.Total.SharedMemoryFootprint",
+                                shared_footprint_total_kb / 1024);
 
   ukm::builders::Memory_Experimental(ukm::UkmRecorder::GetNewSourceID())
       .SetTotal2_PrivateMemoryFootprint(private_footprint_total_kb / 1024)
+      .SetTotal2_SharedMemoryFootprint(shared_footprint_total_kb / 1024)
       .Record(GetUkmRecorder());
 }
