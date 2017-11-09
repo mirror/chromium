@@ -1141,7 +1141,7 @@ bool Node::CanParticipateInFlatTree() const {
 
 bool Node::IsActiveSlotOrActiveV0InsertionPoint() const {
   return (IsHTMLSlotElement(*this) &&
-          ToHTMLSlotElement(*this).SupportsDistribution()) ||
+          ToHTMLSlotElement(*this).SupportsAssignment()) ||
          IsActiveV0InsertionPoint(*this);
 }
 
@@ -2642,7 +2642,7 @@ void Node::CheckSlotChange(SlotChangeType slot_change_type) {
     Element* parent = parentElement();
     if (parent && IsHTMLSlotElement(parent)) {
       HTMLSlotElement& parent_slot = ToHTMLSlotElement(*parent);
-      DCHECK(parent_slot.SupportsDistribution());
+      DCHECK(parent_slot.SupportsAssignment());
       // The parent_slot's assigned nodes might not be calculated because they
       // are lazy evaluated later at UpdateDistribution() so we have to check it
       // here.
