@@ -22,6 +22,30 @@
       "revId": "86dc7b761bead0c757bac8a02b26571994dfeef1",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "359876f1_8b84f21b",
+        "filename": "chrome/utility/importer/firefox_importer.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 382,
+      "author": {
+        "id": 1135394
+      },
+      "writtenOn": "2017-11-09T00:17:47Z",
+      "side": 1,
+      "message": "Thanks for the review!\nMaybe that would be the correct number of imported passwords. In the same way, Import.IncludesPasswords.Firefox shouldn\u0027t be counted if users cancel an ongoing import, so 106 line should be moved to between 143 and 144 line and count only when \"!canceled()\". Before revising the patch, I wonder how much precisely we should gather these histograms. I mean, IMHO, those exceptional cases won\u0027t affect the histograms noticeably. And the fact that the next version of patch might ruin the readability of the original logic slightly, makes me hesitate.",
+      "parentUuid": "fe43ba0b_ff9104a7",
+      "range": {
+        "startLine": 382,
+        "startChar": 31,
+        "endLine": 382,
+        "endChar": 41
+      },
+      "revId": "86dc7b761bead0c757bac8a02b26571994dfeef1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
