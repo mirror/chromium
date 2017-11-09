@@ -1,0 +1,89 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "8929d7f2_04111afb",
+        "filename": "third_party/WebKit/Source/core/dom/ng/SlotAssignmentTest.cpp",
+        "patchSetId": 4
+      },
+      "lineNbr": 1,
+      "author": {
+        "id": 1000098
+      },
+      "writtenOn": "2017-11-09T07:14:50Z",
+      "side": 1,
+      "message": "Why this file name follows CamelCase.cpp style?",
+      "revId": "61dbf1015cc88f92e859e4adcb6cc83d1c1a4e68",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "81465837_d36f93b5",
+        "filename": "third_party/WebKit/Source/core/dom/ng/SlotAssignmentTest.cpp",
+        "patchSetId": 4
+      },
+      "lineNbr": 84,
+      "author": {
+        "id": 1000098
+      },
+      "writtenOn": "2017-11-09T07:14:50Z",
+      "side": 1,
+      "message": "You can use ScopedIncrementalShadowDOMForTest.\n\nSee https://chromium-review.googlesource.com/753170",
+      "revId": "61dbf1015cc88f92e859e4adcb6cc83d1c1a4e68",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c3a498a7_d5d2ac16",
+        "filename": "third_party/WebKit/Source/core/dom/ng/SlotAssignmentTest.cpp",
+        "patchSetId": 4
+      },
+      "lineNbr": 116,
+      "author": {
+        "id": 1000098
+      },
+      "writtenOn": "2017-11-09T07:14:50Z",
+      "side": 1,
+      "message": "Oh it\u0027s first time for me to see this raw string literal used...\n(just a comment)",
+      "revId": "61dbf1015cc88f92e859e4adcb6cc83d1c1a4e68",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6f5d49c3_14ea6e0f",
+        "filename": "third_party/WebKit/Source/core/dom/ng/SlotAssignmentTest.cpp",
+        "patchSetId": 4
+      },
+      "lineNbr": 123,
+      "author": {
+        "id": 1000098
+      },
+      "writtenOn": "2017-11-09T07:14:50Z",
+      "side": 1,
+      "message": "Can this be ASSERT_NE(nullptr, host) as this is in a unit test?\n\n(and ditto for the rest of all DCHECK()s in this file)",
+      "revId": "61dbf1015cc88f92e859e4adcb6cc83d1c1a4e68",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "43c729c8_5024daf9",
+        "filename": "third_party/WebKit/Source/core/dom/ng/SlotAssignmentTest.cpp",
+        "patchSetId": 4
+      },
+      "lineNbr": 124,
+      "author": {
+        "id": 1000098
+      },
+      "writtenOn": "2017-11-09T07:14:50Z",
+      "side": 1,
+      "message": "How about:\n\nShadowRoot* root \u003d host-\u003eGetShadowRoot();\nASSERT_NE(nullptr, root);\nEXPECT_EQ(root-\u003eGetType(), ShadowRootType::kOpen);",
+      "revId": "61dbf1015cc88f92e859e4adcb6cc83d1c1a4e68",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
