@@ -16,6 +16,24 @@
       "revId": "a7e6612e133d2b293ca490279c4184f1e36d793b",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "acfe8408_aa852cc2",
+        "filename": "third_party/WebKit/LayoutTests/virtual/threaded/fast/animationworklet/worklet-animation-creation.html",
+        "patchSetId": 2
+      },
+      "lineNbr": 80,
+      "author": {
+        "id": 1212214
+      },
+      "writtenOn": "2017-11-09T16:09:21Z",
+      "side": 1,
+      "message": "I considered this, but there is currently no state exposed in WorkletAnimation.idl that would let us determine if it was doing the \u0027right\u0027 thing for an animation with no target. I.e. I didn\u0027t want to write a (failing) test that just did:\n\n    // Shouldn\u0027t crash.\n    new WorkletAnimation(\u0027my-animation\u0027, [ effect_with_null_target ], document.timeline, {});\n    // End of test.",
+      "parentUuid": "cbac1274_2fe05ca4",
+      "revId": "a7e6612e133d2b293ca490279c4184f1e36d793b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
