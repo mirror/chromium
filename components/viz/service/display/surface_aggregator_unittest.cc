@@ -301,7 +301,7 @@ class SurfaceAggregatorTest : public testing::Test {
                          fallback_surface_id.is_valid()
                              ? base::Optional<SurfaceId>(fallback_surface_id)
                              : base::nullopt,
-                         default_background_color);
+                         default_background_color, false);
   }
 
   static void AddRenderPassQuad(RenderPass* pass, RenderPassId render_pass_id) {
@@ -1487,7 +1487,7 @@ TEST_F(SurfaceAggregatorValidSurfaceTest, AggregateSharedQuadStateProperties) {
   grandchild_surface_quad->SetNew(
       child_one_pass->shared_quad_state_list.back(), gfx::Rect(SurfaceSize()),
       gfx::Rect(SurfaceSize()), grandchild_surface_id, base::nullopt,
-      SK_ColorWHITE);
+      SK_ColorWHITE, false);
   AddSolidColorQuadWithBlendMode(SurfaceSize(), child_one_pass.get(),
                                  blend_modes[3]);
   QueuePassAsFrame(std::move(child_one_pass), child_one_local_surface_id,
@@ -1516,7 +1516,7 @@ TEST_F(SurfaceAggregatorValidSurfaceTest, AggregateSharedQuadStateProperties) {
   child_one_surface_quad->SetNew(root_pass->shared_quad_state_list.back(),
                                  gfx::Rect(SurfaceSize()),
                                  gfx::Rect(SurfaceSize()), child_one_surface_id,
-                                 base::nullopt, SK_ColorWHITE);
+                                 base::nullopt, SK_ColorWHITE, false);
   AddSolidColorQuadWithBlendMode(SurfaceSize(), root_pass.get(),
                                  blend_modes[4]);
   auto* child_two_surface_quad =
@@ -1524,7 +1524,7 @@ TEST_F(SurfaceAggregatorValidSurfaceTest, AggregateSharedQuadStateProperties) {
   child_two_surface_quad->SetNew(root_pass->shared_quad_state_list.back(),
                                  gfx::Rect(SurfaceSize()),
                                  gfx::Rect(SurfaceSize()), child_two_surface_id,
-                                 base::nullopt, SK_ColorWHITE);
+                                 base::nullopt, SK_ColorWHITE, false);
   AddSolidColorQuadWithBlendMode(SurfaceSize(), root_pass.get(),
                                  blend_modes[6]);
 
@@ -2350,7 +2350,7 @@ void SubmitCompositorFrameWithResources(ResourceId* resource_ids,
   if (child_id.is_valid()) {
     auto* surface_quad = pass->CreateAndAppendDrawQuad<SurfaceDrawQuad>();
     surface_quad->SetNew(sqs, gfx::Rect(0, 0, 1, 1), gfx::Rect(0, 0, 1, 1),
-                         child_id, base::nullopt, SK_ColorWHITE);
+                         child_id, base::nullopt, SK_ColorWHITE, false);
   }
 
   for (size_t i = 0u; i < num_resource_ids; ++i) {
@@ -2615,7 +2615,7 @@ TEST_F(SurfaceAggregatorWithResourcesTest, SecureOutputTexture) {
     auto* surface_quad = pass->CreateAndAppendDrawQuad<SurfaceDrawQuad>();
 
     surface_quad->SetNew(sqs, gfx::Rect(0, 0, 1, 1), gfx::Rect(0, 0, 1, 1),
-                         surface1_id, base::nullopt, SK_ColorWHITE);
+                         surface1_id, base::nullopt, SK_ColorWHITE, false);
     pass->copy_requests.push_back(CopyOutputRequest::CreateStubForTesting());
 
     CompositorFrame frame = test::MakeEmptyCompositorFrame();
