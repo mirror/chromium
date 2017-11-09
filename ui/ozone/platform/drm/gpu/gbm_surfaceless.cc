@@ -27,6 +27,10 @@ void WaitForFence(EGLDisplay display, EGLSyncKHR fence) {
   eglDestroySyncKHR(display, fence);
 }
 
+void DestroyFence(EGLDisplay display, EGLSyncKHR fence) {
+  eglDestroySyncKHR(display, fence);
+}
+
 }  // namespace
 
 GbmSurfaceless::GbmSurfaceless(GbmSurfaceFactory* surface_factory,
@@ -38,6 +42,7 @@ GbmSurfaceless::GbmSurfaceless(GbmSurfaceFactory* surface_factory,
       widget_(widget),
       has_implicit_external_sync_(
           HasEGLExtension("EGL_ARM_implicit_external_sync")),
+      has_native_fence_sync_(HasEGLExtension("EGL_ANDROID_native_fence_sync")),
       weak_factory_(this) {
   surface_factory_->RegisterSurface(window_->widget(), this);
   unsubmitted_frames_.push_back(std::make_unique<PendingFrame>());
@@ -107,9 +112,11 @@ void GbmSurfaceless::SwapBuffersAsync(const SwapCompletionCallback& callback) {
 
   // TODO: the following should be replaced by a per surface flush as it gets
   // implemented in GL drivers.
+  // We need to create the fence before flushing, since if we end up using
+  // a native fence, the fence sync fd is only available after a flush.
   EGLSyncKHR fence = EGL_NO_SYNC_KHR;
   if (!rely_on_implicit_sync_ || is_on_external_drm_device_) {
-    fence = InsertFence(has_implicit_external_sync_);
+    fence = InsertFence();
     if (!fence) {
       callback.Run(gfx::SwapResult::SWAP_FAILED);
       return;
@@ -139,9 +146,18 @@ void GbmSurfaceless::SwapBuffersAsync(const SwapCompletionCallback& callback) {
   // the first time we're testing it.
   if (rely_on_implicit_sync_ && !is_on_external_drm_device_) {
     frame->render_wait_task = base::BindOnce(&base::DoNothing);
+    frame->no_render_wait_task = base::BindOnce(&base::DoNothing);
   } else {
     frame->render_wait_task =
         base::BindOnce(&WaitForFence, GetDisplay(), fence);
+    frame->no_render_wait_task =
+        base::BindOnce(&DestroyFence, GetDisplay(), fence);
+  }
+
+  if (has_native_fence_sync_ && fence != EGL_NO_SYNC_KHR) {
+    int render_fence_fd = eglDupNativeFenceFDANDROID(GetDisplay(), fence);
+    DCHECK_NE(render_fence_fd, EGL_NO_NATIVE_FENCE_FD_ANDROID);
+    frame->render_fence_fd = base::ScopedFD(render_fence_fd);
   }
 
   frame->ready = true;
@@ -223,17 +239,27 @@ void GbmSurfaceless::SubmitFrame() {
     }
 
     window_->SchedulePageFlip(planes_, std::move(frame->render_wait_task),
+                              std::move(frame->no_render_wait_task),
+                              std::move(frame->render_fence_fd),
                               frame->callback);
     planes_.clear();
   }
 }
 
-EGLSyncKHR GbmSurfaceless::InsertFence(bool implicit) {
+EGLSyncKHR GbmSurfaceless::InsertFence() {
   const EGLint attrib_list[] = {EGL_SYNC_CONDITION_KHR,
                                 EGL_SYNC_PRIOR_COMMANDS_IMPLICIT_EXTERNAL_ARM,
                                 EGL_NONE};
-  return eglCreateSyncKHR(GetDisplay(), EGL_SYNC_FENCE_KHR,
-                          implicit ? attrib_list : NULL);
+  EGLSyncKHR fence = EGL_NO_SYNC_KHR;
+
+  if (has_native_fence_sync_) {
+    fence = eglCreateSyncKHR(GetDisplay(), EGL_SYNC_NATIVE_FENCE_ANDROID, NULL);
+  } else {
+    fence = eglCreateSyncKHR(GetDisplay(), EGL_SYNC_FENCE_KHR,
+                             has_implicit_external_sync_ ? attrib_list : NULL);
+  }
+
+  return fence;
 }
 
 void GbmSurfaceless::SwapCompleted(const SwapCompletionCallback& callback,

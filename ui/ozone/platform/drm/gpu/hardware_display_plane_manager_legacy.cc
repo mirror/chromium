@@ -112,6 +112,8 @@ bool HardwareDisplayPlaneManagerLegacy::DisableOverlayPlanes(
 
 void HardwareDisplayPlaneManagerLegacy::WaitForRender(
     base::OnceClosure render_wait_task,
+    base::OnceClosure no_render_wait_task,
+    bool has_valid_render_fence_fd,
     base::OnceClosure render_done_callback) {
   base::PostTaskWithTraitsAndReply(
       FROM_HERE,

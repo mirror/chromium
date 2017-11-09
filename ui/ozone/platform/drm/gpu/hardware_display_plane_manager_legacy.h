@@ -22,6 +22,8 @@ class HardwareDisplayPlaneManagerLegacy : public HardwareDisplayPlaneManager {
               bool test_only) override;
   bool DisableOverlayPlanes(HardwareDisplayPlaneList* plane_list) override;
   void WaitForRender(base::OnceClosure render_wait_task,
+                     base::OnceClosure no_render_wait_task,
+                     bool has_valid_render_fence_fd,
                      base::OnceClosure callback) override;
 
  protected:

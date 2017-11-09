@@ -45,7 +45,7 @@ bool HardwareDisplayPlaneManagerAtomic::Commit(
           static_cast<HardwareDisplayPlaneAtomic*>(plane);
       atomic_plane->SetPlaneData(plane_list->atomic_property_set.get(), 0, 0,
                                  gfx::Rect(), gfx::Rect(),
-                                 gfx::OVERLAY_TRANSFORM_NONE);
+                                 gfx::OVERLAY_TRANSFORM_NONE, -1);
     }
   }
 
@@ -87,6 +87,7 @@ bool HardwareDisplayPlaneManagerAtomic::Commit(
 
   plane_list->plane_list.clear();
   plane_list->atomic_property_set.reset(drmModeAtomicAlloc());
+  plane_list->render_fence_fd.reset();
   return true;
 }
 
@@ -102,7 +103,7 @@ bool HardwareDisplayPlaneManagerAtomic::DisableOverlayPlanes(
         static_cast<HardwareDisplayPlaneAtomic*>(plane);
     atomic_plane->SetPlaneData(plane_list->atomic_property_set.get(), 0, 0,
                                gfx::Rect(), gfx::Rect(),
-                               gfx::OVERLAY_TRANSFORM_NONE);
+                               gfx::OVERLAY_TRANSFORM_NONE, -1);
   }
   // The list of crtcs is only useful if flags contains DRM_MODE_PAGE_FLIP_EVENT
   // to get the pageflip callback. In this case we don't need to be notified
@@ -114,16 +115,26 @@ bool HardwareDisplayPlaneManagerAtomic::DisableOverlayPlanes(
   PLOG_IF(ERROR, !ret) << "Failed to commit properties for page flip.";
 
   plane_list->atomic_property_set.reset(drmModeAtomicAlloc());
+  plane_list->render_fence_fd.reset();
   return ret;
 }
 
 void HardwareDisplayPlaneManagerAtomic::WaitForRender(
     base::OnceClosure render_wait_task,
+    base::OnceClosure no_render_wait_task,
+    bool has_valid_render_fence_fd,
     base::OnceClosure render_done_callback) {
-  base::PostTaskWithTraitsAndReply(
-      FROM_HERE,
-      {base::MayBlock(), base::TaskShutdownBehavior::CONTINUE_ON_SHUTDOWN},
-      std::move(render_wait_task), std::move(render_done_callback));
+  if (has_valid_render_fence_fd) {
+    base::PostTaskWithTraitsAndReply(
+        FROM_HERE,
+        {base::MayBlock(), base::TaskShutdownBehavior::CONTINUE_ON_SHUTDOWN},
+        std::move(no_render_wait_task), std::move(render_done_callback));
+  } else {
+    base::PostTaskWithTraitsAndReply(
+        FROM_HERE,
+        {base::MayBlock(), base::TaskShutdownBehavior::CONTINUE_ON_SHUTDOWN},
+        std::move(render_wait_task), std::move(render_done_callback));
+  }
 }
 
 bool HardwareDisplayPlaneManagerAtomic::SetPlaneData(
@@ -140,7 +151,8 @@ bool HardwareDisplayPlaneManagerAtomic::SetPlaneData(
                                 : overlay.buffer->GetOpaqueFramebufferId();
   if (!atomic_plane->SetPlaneData(
           plane_list->atomic_property_set.get(), crtc_id, framebuffer_id,
-          overlay.display_bounds, src_rect, overlay.plane_transform)) {
+          overlay.display_bounds, src_rect, overlay.plane_transform,
+          plane_list->render_fence_fd.get())) {
     LOG(ERROR) << "Failed to set plane properties";
     return false;
   }
