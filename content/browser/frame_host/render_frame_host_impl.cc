@@ -355,16 +355,6 @@ void LookupRenderFrameHostOrProxy(int process_id,
     *rfph = RenderFrameProxyHost::FromID(process_id, routing_id);
 }
 
-// Forwards service requests to Service Manager.
-template <typename Interface>
-void ForwardRequest(const char* service_name,
-                    mojo::InterfaceRequest<Interface> request) {
-  // TODO(beng): This should really be using the per-profile connector.
-  service_manager::Connector* connector =
-      ServiceManagerConnection::GetForProcess()->GetConnector();
-  connector->BindInterface(service_name, std::move(request));
-}
-
 void CreatePaymentManager(RenderFrameHostImpl* rfh,
                           payments::mojom::PaymentManagerRequest request) {
   StoragePartitionImpl* storage_partition =
