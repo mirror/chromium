@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "c9aeed44_564d6dfd",
+        "filename": "chrome/android/junit/src/org/chromium/chrome/browser/partnerbookmarks/OWNERS",
+        "patchSetId": 5
+      },
+      "lineNbr": 1,
+      "author": {
+        "id": 1144344
+      },
+      "writtenOn": "2017-11-09T20:11:58Z",
+      "side": 1,
+      "message": "Does this work? File src/chrome/browser/partnerbookmarks/OWNERS does not exist.\nI think Ted meant chrome/android/java/src/org/chromium/chrome/browser/partnerbookmarks/OWNERS",
+      "range": {
+        "startLine": 1,
+        "startChar": 7,
+        "endLine": 1,
+        "endChar": 45
+      },
+      "revId": "385e755cc6f118e9ff7093390a33ed5ad8020ea9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
