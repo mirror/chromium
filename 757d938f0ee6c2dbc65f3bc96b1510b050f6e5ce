@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "c8818520_db083a25",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/infobar/SurveyInfoBar.java",
+        "patchSetId": 13
+      },
+      "lineNbr": 118,
+      "author": {
+        "id": 1122966
+      },
+      "writtenOn": "2017-11-09T22:13:17Z",
+      "side": 1,
+      "message": "While this may work now, I think it\u0027s prone to errors in the future. It should be reasonable for developers to assume #onCloseButtonClicked() is only called when the user clicks the close button.\n\n+mdjones@ - is there a better way to do this?",
+      "range": {
+        "startLine": 118,
+        "startChar": 9,
+        "endLine": 118,
+        "endChar": 37
+      },
+      "revId": "757d938f0ee6c2dbc65f3bc96b1510b050f6e5ce",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
