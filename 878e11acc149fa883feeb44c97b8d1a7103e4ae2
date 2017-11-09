@@ -1,0 +1,89 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "b9a5480d_1a2b319d",
+        "filename": "ash/lock_screen_action/lock_screen_note_launcher.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 26,
+      "author": {
+        "id": 1000045
+      },
+      "writtenOn": "2017-11-09T15:26:35Z",
+      "side": 1,
+      "message": "nit: put after constructor/destructor (and reorder .cc if needed)",
+      "revId": "878e11acc149fa883feeb44c97b8d1a7103e4ae2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "487292ff_40739125",
+        "filename": "ash/lock_screen_action/lock_screen_note_launcher.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 36,
+      "author": {
+        "id": 1000045
+      },
+      "writtenOn": "2017-11-09T15:26:35Z",
+      "side": 1,
+      "message": "nit: What is the return value?",
+      "revId": "878e11acc149fa883feeb44c97b8d1a7103e4ae2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "458d682a_976b836d",
+        "filename": "ash/lock_screen_action/lock_screen_note_launcher.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 44,
+      "author": {
+        "id": 1000045
+      },
+      "writtenOn": "2017-11-09T15:26:35Z",
+      "side": 1,
+      "message": "nit: provided",
+      "revId": "878e11acc149fa883feeb44c97b8d1a7103e4ae2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "03624eb5_162bbb62",
+        "filename": "ash/lock_screen_action/lock_screen_note_launcher_unittest.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 101,
+      "author": {
+        "id": 1000045
+      },
+      "writtenOn": "2017-11-09T15:26:35Z",
+      "side": 1,
+      "message": "nit: This is expect, above tests use assert, I would just do the same thing here for consistency, even if there is a subtle difference in meaning.",
+      "revId": "878e11acc149fa883feeb44c97b8d1a7103e4ae2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4decd590_5d220b61",
+        "filename": "ash/lock_screen_action/lock_screen_note_launcher_unittest.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 141,
+      "author": {
+        "id": 1000045
+      },
+      "writtenOn": "2017-11-09T15:26:35Z",
+      "side": 1,
+      "message": "Nice test coverage.",
+      "revId": "878e11acc149fa883feeb44c97b8d1a7103e4ae2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
