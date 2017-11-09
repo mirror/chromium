@@ -41,6 +41,11 @@ bool IsURLHandledByNetworkStack(const GURL& url) {
       return false;
   }
 
+  // Renderer debug URLs (e.g. chrome://kill) are handled in the renderer
+  // process directly and should not be sent to the network stack.
+  if (IsRendererDebugURL(url))
+    return false;
+
   // For you information, even though a "data:" url doesn't generate actual
   // network requests, it is handled by the network stack and so must return
   // true. The reason is that a few "data:" urls can't be handled locally. For
@@ -56,6 +61,19 @@ bool IsURLHandledByNetworkStack(const GURL& url) {
 bool IsURLHandledByNetworkService(const GURL& url) {
   return url.SchemeIsHTTPOrHTTPS() || url.SchemeIsWSOrWSS() ||
          url.SchemeIs(url::kFtpScheme) || url.SchemeIs(url::kGopherScheme);
+}
+
+bool IsRendererDebugURL(const GURL& url) {
+  if (!url.is_valid())
+    return false;
+
+  if (url.SchemeIs(url::kJavaScriptScheme))
+    return true;
+
+  return url == kChromeUICheckCrashURL || url == kChromeUIBadCastCrashURL ||
+         url == kChromeUICrashURL || url == kChromeUIDumpURL ||
+         url == kChromeUIKillURL || url == kChromeUIHangURL ||
+         url == kChromeUIShorthangURL || url == kChromeUIMemoryExhaustURL;
 }
 
 }  // namespace content
