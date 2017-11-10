@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "e75b6cb7_dd881d3b",
+        "filename": "components/consent_auditor/consent_auditor_unittest.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 101,
+      "author": {
+        "id": 1183839
+      },
+      "writtenOn": "2017-11-10T15:21:01Z",
+      "side": 1,
+      "message": "Maybe move this line down to LoadEntriesFromLocalConsentRecord, so it is similar to the other checks?",
+      "revId": "08236e311187eaf2abaa6fff6075eee9197a850c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "fc47a4c0_a725613a",
+        "filename": "components/consent_auditor/consent_auditor_unittest.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 103,
+      "author": {
+        "id": 1183839
+      },
+      "writtenOn": "2017-11-10T15:21:01Z",
+      "side": 1,
+      "message": "This line is in LoadEntriesFromLocalConsentRecord as well",
+      "revId": "08236e311187eaf2abaa6fff6075eee9197a850c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
