@@ -249,6 +249,7 @@ MockDataReductionProxyService::~MockDataReductionProxyService() {
 }
 
 TestDataReductionProxyIOData::TestDataReductionProxyIOData(
+    PrefService* prefs,
     const scoped_refptr<base::SingleThreadTaskRunner>& task_runner,
     std::unique_ptr<DataReductionProxyConfig> config,
     std::unique_ptr<DataReductionProxyEventCreator> event_creator,
@@ -256,7 +257,7 @@ TestDataReductionProxyIOData::TestDataReductionProxyIOData(
     std::unique_ptr<DataReductionProxyConfigurator> configurator,
     net::NetLog* net_log,
     bool enabled)
-    : DataReductionProxyIOData(),
+    : DataReductionProxyIOData(prefs, task_runner, task_runner),
       service_set_(false),
       pingback_reporting_fraction_(0.0f),
       test_request_options_(request_options.get()) {
@@ -495,9 +496,9 @@ DataReductionProxyTestContext::Builder::Build() {
 
   std::unique_ptr<TestDataReductionProxyIOData> io_data(
       new TestDataReductionProxyIOData(
-          task_runner, std::move(config), std::move(event_creator),
-          std::move(request_options), std::move(configurator), net_log.get(),
-          true /* enabled */));
+          pref_service.get(), task_runner, std::move(config),
+          std::move(event_creator), std::move(request_options),
+          std::move(configurator), net_log.get(), true /* enabled */));
   io_data->SetSimpleURLRequestContextGetter(request_context_getter);
 
   if (use_test_config_client_) {
