@@ -3,7 +3,7 @@
 // found in the LICENSE file.
 
 /** @fileoverview Suite of tests for extension-keyboard-shortcuts. */
-cr.define('extension_shortcut_input_tests', function() {
+cr.define('extension_shortcut_tests', function() {
   class DelegateMock extends TestBrowserProxy {
     constructor() {
       super(['setShortcutHandlingSuspended', 'updateExtensionCommand']);
@@ -30,7 +30,9 @@ cr.define('extension_shortcut_input_tests', function() {
     Basic: 'basic',
   };
 
-  suite('ExtensionShortcutInputTest', function() {
+  const suiteName = 'ExtensionShortcutTest';
+
+  suite(suiteName, function() {
     /** @type {extensions.ShortcutInput} */
     var input;
     setup(function() {
@@ -126,6 +128,7 @@ cr.define('extension_shortcut_input_tests', function() {
   });
 
   return {
+    suiteName: suiteName,
     TestNames: TestNames,
   };
 });
