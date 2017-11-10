@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "d9207eba_e47dfe3d",
+        "filename": "chrome/browser/vr/ui_renderer.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 39,
+      "author": {
+        "id": 1117479
+      },
+      "writtenOn": "2017-11-10T18:59:33Z",
+      "side": 1,
+      "message": "Good point.  Ian\u0027s said the controller looks okay w/o depth buffer but we should check with Gordon.  In the same way, this could hinder figure environmental models, unless we manually sort the triangles.  However, it sounds like it\u0027s a pretty big performance gain to shut this off.  I\u0027ll play with this more...",
+      "parentUuid": "7dc61a90_367b04f8",
+      "range": {
+        "startLine": 39,
+        "startChar": 4,
+        "endLine": 39,
+        "endChar": 13
+      },
+      "revId": "09fff237d55b1739f2b273ad9ec5d47d3552e4c8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "d263c50a_5fa16b58",
         "filename": "chrome/browser/vr/ui_renderer.cc",
         "patchSetId": 1
