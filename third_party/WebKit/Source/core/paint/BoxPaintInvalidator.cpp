@@ -200,10 +200,55 @@ bool BoxPaintInvalidator::ShouldFullyInvalidateBackgroundOnLayoutOverflowChange(
   return false;
 }
 
+const LayoutBox& BoxPaintInvalidator::BackgroundBox() const {
+  if (box_.IsLayoutView()) {
+    // LayoutView's non-fixed-attachment background is positioned in the
+    // document element.
+    // See https://drafts.csswg.org/css-backgrounds-3/#root-background.
+    const auto* root_box = ToLayoutView(box_).RootBox();
+    if (root_box)
+      return *root_box;
+  }
+  return box_;
+}
+
+bool BoxPaintInvalidator::BackgroundBoxSizeChanged() const {
+  if (box_.IsDocumentElement() || box_.BackgroundStolenForBeingBody())
+    return false;
+
+  // Fixed attachment background is handled in LayoutView::layout().
+  // TODO(wangxianzhu): Combine code for fixed-attachment background when we
+  // enable rootLayerScrolling permanently.
+  if (box_.IsLayoutView() && box_.StyleRef().HasEntirelyFixedBackground())
+    return false;
+
+  const auto& background_box = BackgroundBox();
+  LayoutSize old_size = background_box.PreviousSize();
+  LayoutSize new_size = background_box.Size();
+  const auto& layers = box_.StyleRef().BackgroundLayers();
+  if (old_size.Width() != new_size.Width() &&
+      LayoutBox::MustInvalidateFillLayersPaintOnWidthChange(layers)) {
+    return true;
+  }
+  if (old_size.Height() != new_size.Height() &&
+      LayoutBox::MustInvalidateFillLayersPaintOnHeightChange(layers)) {
+    return true;
+  }
+
+  return false;
+}
+
 BoxPaintInvalidator::BackgroundInvalidationType
 BoxPaintInvalidator::ComputeBackgroundInvalidation() {
+  if (BackgroundBoxSizeChanged())
+    return BackgroundInvalidationType::kFullWithGeometryChange;
+
+  // TODO(pdr): Move the geometry invalidation reasons related to backgrounds
+  // from ComputePaintInvalidationReason to here and return
+  // kFullWithGeometryChange.
+
   if (box_.BackgroundChangedSinceLastPaintInvalidation())
-    return BackgroundInvalidationType::kFull;
+    return BackgroundInvalidationType::kFullWithoutGeometryChange;
 
   bool layout_overflow_change_causes_invalidation =
       (BackgroundGeometryDependsOnLayoutOverflowRect() ||
@@ -221,21 +266,26 @@ BoxPaintInvalidator::ComputeBackgroundInvalidation() {
   // Layout overflow changed; decide full vs. incremental invalidation.
   if (ShouldFullyInvalidateBackgroundOnLayoutOverflowChange(
           old_layout_overflow, new_layout_overflow)) {
-    return BackgroundInvalidationType::kFull;
+    return BackgroundInvalidationType::kFullWithoutGeometryChange;
   }
   return BackgroundInvalidationType::kIncremental;
 }
 
 void BoxPaintInvalidator::InvalidateScrollingContentsBackground(
     BackgroundInvalidationType background_invalidation_type) {
-  if (!BackgroundPaintsOntoScrollingContentsLayer())
-    return;
+  DCHECK(BackgroundPaintsOntoScrollingContentsLayer());
   if (background_invalidation_type == BackgroundInvalidationType::kNone)
     return;
 
+  bool is_full_background_invalidation_type =
+      background_invalidation_type ==
+          BackgroundInvalidationType::kFullWithGeometryChange ||
+      background_invalidation_type ==
+          BackgroundInvalidationType::kFullWithoutGeometryChange;
+
   PaintInvalidationReason reason;
   if (RuntimeEnabledFeatures::SlimmingPaintV175Enabled()) {
-    reason = background_invalidation_type == BackgroundInvalidationType::kFull
+    reason = is_full_background_invalidation_type
                  ? PaintInvalidationReason::kBackgroundOnScrollingContentsLayer
                  : PaintInvalidationReason::kIncremental;
   } else {
@@ -245,7 +295,7 @@ void BoxPaintInvalidator::InvalidateScrollingContentsBackground(
     reason = PaintInvalidationReason::kBackgroundOnScrollingContentsLayer;
     const LayoutRect& old_layout_overflow = box_.PreviousLayoutOverflowRect();
     LayoutRect new_layout_overflow = box_.LayoutOverflowRect();
-    if (background_invalidation_type == BackgroundInvalidationType::kFull) {
+    if (is_full_background_invalidation_type) {
       ObjectPaintInvalidatorWithContext(box_, context_)
           .FullyInvalidatePaint(reason, old_layout_overflow,
                                 new_layout_overflow);
@@ -262,15 +312,21 @@ void BoxPaintInvalidator::InvalidateScrollingContentsBackground(
 }
 
 PaintInvalidationReason BoxPaintInvalidator::InvalidatePaint() {
-  BackgroundInvalidationType backgroundInvalidationType =
-      ComputeBackgroundInvalidation();
-  if (backgroundInvalidationType == BackgroundInvalidationType::kFull &&
-      !BackgroundPaintsOntoScrollingContentsLayer()) {
-    box_.GetMutableForPainting()
-        .SetShouldDoFullPaintInvalidationWithoutGeometryChange(
-            PaintInvalidationReason::kBackground);
+  auto background_invalidation = ComputeBackgroundInvalidation();
+  if (BackgroundPaintsOntoScrollingContentsLayer()) {
+    InvalidateScrollingContentsBackground(background_invalidation);
+  } else {
+    if (background_invalidation ==
+        BackgroundInvalidationType::kFullWithGeometryChange) {
+      box_.GetMutableForPainting().SetShouldDoFullPaintInvalidation(
+          PaintInvalidationReason::kGeometry);
+    } else if (background_invalidation ==
+               BackgroundInvalidationType::kFullWithoutGeometryChange) {
+      box_.GetMutableForPainting()
+          .SetShouldDoFullPaintInvalidationWithoutGeometryChange(
+              PaintInvalidationReason::kBackground);
+    }
   }
-  InvalidateScrollingContentsBackground(backgroundInvalidationType);
 
   PaintInvalidationReason reason = ComputePaintInvalidationReason();
   if (reason == PaintInvalidationReason::kIncremental) {

@@ -36,11 +36,21 @@ class CORE_EXPORT BoxPaintInvalidator {
       const LayoutRect& old_layout_overflow,
       const LayoutRect& new_layout_overflow);
 
-  enum BackgroundInvalidationType { kNone = 0, kIncremental, kFull };
+  enum BackgroundInvalidationType {
+    kNone = 0,
+    kIncremental,
+    kFullWithoutGeometryChange,
+    kFullWithGeometryChange,
+  };
   BackgroundInvalidationType ComputeBackgroundInvalidation();
   void InvalidateScrollingContentsBackground(BackgroundInvalidationType);
 
   PaintInvalidationReason ComputePaintInvalidationReason();
+
+  // The box for background size computations. Typically |box_| but can be
+  // different for LayoutView which can use the <html>'s size.
+  const LayoutBox& BackgroundBox() const;
+  bool BackgroundBoxSizeChanged() const;
 
   void IncrementallyInvalidatePaint(PaintInvalidationReason,
                                     const LayoutRect& old_rect,
