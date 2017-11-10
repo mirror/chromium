@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "ffc328ec_765ae89b",
+        "filename": "media/ffmpeg/ffmpeg_common_unittest.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 267,
+      "author": {
+        "id": 1001250
+      },
+      "writtenOn": "2017-11-10T18:55:48Z",
+      "side": 1,
+      "message": "I needed to update the hashes in enums.xml to include av1; I noticed it was out of date so updated it here. Can split this out if chcunningham@ wants.",
+      "parentUuid": "12237217_78b0b81b",
+      "range": {
+        "startLine": 267,
+        "startChar": 60,
+        "endLine": 267,
+        "endChar": 77
+      },
+      "revId": "fc10dab973eca5c2fe0025d9b5501cf6d31a7905",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "a08a13c0_23137015",
         "filename": "media/renderers/BUILD.gn",
         "patchSetId": 5
@@ -48,6 +72,30 @@
     },
     {
       "key": {
+        "uuid": "c3037eae_ec42796c",
+        "filename": "media/renderers/BUILD.gn",
+        "patchSetId": 5
+      },
+      "lineNbr": 44,
+      "author": {
+        "id": 1001250
+      },
+      "writtenOn": "2017-11-10T18:55:48Z",
+      "side": 1,
+      "message": "Good point, Done.",
+      "parentUuid": "a08a13c0_23137015",
+      "range": {
+        "startLine": 44,
+        "startChar": 0,
+        "endLine": 44,
+        "endChar": 51
+      },
+      "revId": "fc10dab973eca5c2fe0025d9b5501cf6d31a7905",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "662bb2e6_2751034c",
         "filename": "tools/metrics/histograms/enums.xml",
         "patchSetId": 5
@@ -59,6 +107,30 @@
       "writtenOn": "2017-11-10T03:18:11Z",
       "side": 1,
       "message": "Most of these seem unrelated?",
+      "range": {
+        "startLine": 17044,
+        "startChar": 37,
+        "endLine": 17044,
+        "endChar": 40
+      },
+      "revId": "fc10dab973eca5c2fe0025d9b5501cf6d31a7905",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "1f39c508_a989f41b",
+        "filename": "tools/metrics/histograms/enums.xml",
+        "patchSetId": 5
+      },
+      "lineNbr": 17044,
+      "author": {
+        "id": 1001250
+      },
+      "writtenOn": "2017-11-10T18:55:48Z",
+      "side": 1,
+      "message": "This table hasn\u0027t been updated in a while so there were more then av1 to add.",
+      "parentUuid": "662bb2e6_2751034c",
       "range": {
         "startLine": 17044,
         "startChar": 37,
