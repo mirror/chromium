@@ -124,6 +124,11 @@ class QUIC_EXPORT_PRIVATE QuicConnectionVisitorInterface {
   virtual void OnSuccessfulVersionNegotiation(
       const QuicTransportVersion& version) = 0;
 
+  // Called when a connectivity probing has been received by the connection.
+  virtual void OnConnectivityProbingReceived(
+      const QuicSocketAddress& self_address,
+      const QuicSocketAddress& peer_address) = 0;
+
   // Called when a blocked socket becomes writable.
   virtual void OnCanWrite() = 0;
 
@@ -662,6 +667,11 @@ class QUIC_EXPORT_PRIVATE QuicConnection
   QuicPacketWriter* writer() { return writer_; }
   const QuicPacketWriter* writer() const { return writer_; }
 
+  // Sends a probing packet of size |packet_size| using |probing_writer|.
+  // If the packet is acknowledge by the peer, probing will be marked as
+  // successful.
+  void SendProbingPacket(QuicPacketWriter* probing_writer);
+
   // Sends an MTU discovery packet of size |target_mtu|.  If the packet is
   // acknowledged by the peer, the maximum packet size will be increased to
   // |target_mtu|.
@@ -760,6 +770,13 @@ class QUIC_EXPORT_PRIVATE QuicConnection
  private:
   friend class test::QuicConnectionPeer;
   friend class test::PacketSavingConnection;
+
+  enum ProbingPacketStatus {
+    NO_FRAME_RECEIVED,
+    FIRST_PING_RECEIVED,
+    REMAINING_PADDING_RECEIVED,
+    INVALID_PROBING,
+  };
 
   typedef std::list<SerializedPacket> QueuedPacketList;
 
@@ -861,6 +878,7 @@ class QUIC_EXPORT_PRIVATE QuicConnection
   void CheckIfApplicationLimited();
 
   QuicFramer framer_;
+  ProbingPacketStatus probing_packet_status_;
   QuicConnectionHelperInterface* helper_;  // Not owned.
   QuicAlarmFactory* alarm_factory_;        // Not owned.
   PerPacketOptions* per_packet_options_;   // Not owned.

@@ -128,6 +128,8 @@ enum QuicFrameType {
   ACK_FRAME,
   // The path MTU discovery frame is encoded as a PING frame on the wire.
   MTU_DISCOVERY_FRAME,
+  // The path connectivity probing frame is encoded as a PING frame on the wire.
+  CONNECTIVITY_PROBING_FRAME,
   NUM_FRAME_TYPES
 };
 

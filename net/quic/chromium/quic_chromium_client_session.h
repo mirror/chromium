@@ -304,6 +304,7 @@ class NET_EXPORT_PRIVATE QuicChromiumClientSession
       bool require_confirmation,
       bool migrate_sesion_early,
       bool migrate_session_on_network_change,
+      bool migrate_session_on_network_change_v2,
       int yield_after_packets,
       QuicTime::Delta yield_after_duration,
       int cert_verify_flags,
@@ -382,6 +383,9 @@ class NET_EXPORT_PRIVATE QuicChromiumClientSession
                           ConnectionCloseSource source) override;
   void OnSuccessfulVersionNegotiation(
       const QuicTransportVersion& version) override;
+  void OnConnectivityProbingReceived(
+      const QuicSocketAddress& self_address,
+      const QuicSocketAddress& peer_address) override;
   void OnPathDegrading() override;
   bool HasOpenDynamicStreams() const override;
 
@@ -453,6 +457,13 @@ class NET_EXPORT_PRIVATE QuicChromiumClientSession
       bool close_if_cannot_migrate,
       const NetLogWithSource& migration_net_log);
 
+  // Direct migration.
+  void ForceMigrateOrCloseSession(
+      NetworkChangeNotifier::NetworkHandle new_network,
+      bool close_if_cannot_migrate,
+      const NetLogWithSource& migration_net_log);
+
+
   // Migrates session over to use alternate network if such is available.
   // If the migrate fails and |close_session_on_error| is true, session will
   // be closed.
@@ -468,6 +479,10 @@ class NET_EXPORT_PRIVATE QuicChromiumClientSession
                           bool close_sesion_on_error,
                           const NetLogWithSource& migration_net_log);
 
+  void OnProbingSuccessful(const QuicSocketAddress& self_address);
+
+  void CancelProbing();
+
   // Migrates session onto new socket, i.e., starts reading from
   // |socket| in addition to any previous sockets, and sets |writer|
   // to be the new default writer. Returns true if socket was
@@ -479,6 +494,11 @@ class NET_EXPORT_PRIVATE QuicChromiumClientSession
   bool MigrateToSocket(std::unique_ptr<DatagramClientSocket> socket,
                        std::unique_ptr<QuicChromiumPacketReader> reader,
                        std::unique_ptr<QuicChromiumPacketWriter> writer);
+
+  MigrationResult SendConnectivityProbing(
+      NetworkChangeNotifier::NetworkHandle network,
+      IPEndPoint peer_address,
+      const NetLogWithSource& migration_net_log);
 
   // Called when NetworkChangeNotifier notifies observers of a newly
   // connected network. Migrates this session to the newly connected
@@ -493,6 +513,10 @@ class NET_EXPORT_PRIVATE QuicChromiumClientSession
       NetworkChangeNotifier::NetworkHandle alternate_network,
       const NetLogWithSource& migration_net_log);
 
+  void OnNetworkDisconnectedV2(
+      NetworkChangeNotifier::NetworkHandle disconnected_network,
+      const NetLogWithSource& migration_net_log);
+
   // Called when NetworkChangeNotifier broadcats to observers of a new default
   // network. Migrates this session to |new_network| if appropriate.
   void OnNetworkMadeDefault(NetworkChangeNotifier::NetworkHandle new_network,
@@ -504,6 +528,8 @@ class NET_EXPORT_PRIVATE QuicChromiumClientSession
   // Called when migration alarm fires. If migration has not occurred
   // since alarm was set, closes session with error.
   void OnMigrationTimeout(size_t num_sockets);
+
+  void OnProbingTimeout();
 
   // Populates network error details for this session.
   void PopulateNetErrorDetails(NetErrorDetails* details) const;
@@ -582,9 +608,11 @@ class NET_EXPORT_PRIVATE QuicChromiumClientSession
   void NotifyFactoryOfSessionClosed();
 
   QuicServerId server_id_;
+  bool migration_pending_v2_;
   bool require_confirmation_;
   bool migrate_session_early_;
   bool migrate_session_on_network_change_;
+  bool migrate_session_on_network_change_v2_;
   QuicClock* clock_;  // Unowned.
   int yield_after_packets_;
   QuicTime::Delta yield_after_duration_;
@@ -631,6 +659,12 @@ class NET_EXPORT_PRIVATE QuicChromiumClientSession
   // Stores packet that witnesses socket write error. This packet is
   // written to a new socket after migration completes.
   scoped_refptr<QuicChromiumPacketWriter::ReusableIOBuffer> packet_;
+
+  NetworkChangeNotifier::NetworkHandle default_network_;
+  std::unique_ptr<DatagramClientSocket> probing_socket_;
+  std::unique_ptr<QuicChromiumPacketReader> probing_reader_;
+  std::unique_ptr<QuicChromiumPacketWriter> probing_writer_;
+
   // TODO(jri): Replace use of migration_pending_ sockets_.size().
   // When a task is posted for MigrateSessionOnError, pass in
   // sockets_.size(). Then in MigrateSessionOnError, check to see if
