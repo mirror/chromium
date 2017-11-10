@@ -10,8 +10,8 @@
 
 namespace net {
 
-SpdyPriority ConvertRequestPriorityToQuicPriority(
-    const RequestPriority priority) {
+NET_EXPORT_PRIVATE SpdyPriority
+ConvertRequestPriorityToQuicPriority(const RequestPriority priority) {
   DCHECK_GE(priority, MINIMUM_PRIORITY);
   DCHECK_LE(priority, MAXIMUM_PRIORITY);
   return static_cast<SpdyPriority>(HIGHEST - priority);
@@ -24,7 +24,7 @@ ConvertQuicPriorityToRequestPriority(SpdyPriority priority) {
                          : static_cast<RequestPriority>(HIGHEST - priority);
 }
 
-std::unique_ptr<base::Value> QuicRequestNetLogCallback(
+NET_EXPORT std::unique_ptr<base::Value> QuicRequestNetLogCallback(
     QuicStreamId stream_id,
     const SpdyHeaderBlock* headers,
     SpdyPriority priority,
@@ -37,7 +37,7 @@ std::unique_ptr<base::Value> QuicRequestNetLogCallback(
   return std::move(dict);
 }
 
-QuicTransportVersionVector FilterSupportedAltSvcVersions(
+NET_EXPORT QuicTransportVersionVector FilterSupportedAltSvcVersions(
     const SpdyAltSvcWireFormat::AlternativeService& quic_alt_svc,
     const QuicTransportVersionVector& supported_versions,
     bool support_ietf_format_quic_altsvc) {
