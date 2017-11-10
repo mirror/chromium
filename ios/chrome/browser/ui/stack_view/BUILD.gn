@@ -60,6 +60,7 @@ source_set("stack_view") {
     "//ios/chrome/browser/ui/toolbar/public:toolbar_base_feature",
     "//ios/chrome/browser/ui/tools_menu",
     "//ios/chrome/browser/ui/tools_menu:configuration",
+    "//ios/chrome/browser/ui/tools_menu/public",
     "//ios/chrome/common",
     "//ios/third_party/material_components_ios",
     "//ios/web",
