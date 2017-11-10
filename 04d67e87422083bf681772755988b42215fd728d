@@ -1,0 +1,84 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "c00aa5cf_c31480ef",
+        "filename": "base/command_line.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 160,
+      "author": {
+        "id": 1001934
+      },
+      "writtenOn": "2017-11-10T02:52:26Z",
+      "side": 1,
+      "message": "Isn\u0027t this function really ASCIIToStringType() ?",
+      "revId": "04d67e87422083bf681772755988b42215fd728d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "45dfb5ec_b66bc665",
+        "filename": "base/command_line.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 160,
+      "author": {
+        "id": 1001934
+      },
+      "writtenOn": "2017-11-10T02:52:26Z",
+      "side": 1,
+      "message": "const ref.",
+      "range": {
+        "startLine": 160,
+        "startChar": 48,
+        "endLine": 160,
+        "endChar": 65
+      },
+      "revId": "04d67e87422083bf681772755988b42215fd728d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c661bf80_86840e78",
+        "filename": "base/command_line.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 368,
+      "author": {
+        "id": 1001934
+      },
+      "writtenOn": "2017-11-10T02:52:26Z",
+      "side": 1,
+      "message": "You can apply GetCombinedSwitchString() (or whatever it gets rename to) here as well.",
+      "revId": "04d67e87422083bf681772755988b42215fd728d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5a302cf4_6bf29328",
+        "filename": "base/test/test_suite.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 363,
+      "author": {
+        "id": 1001934
+      },
+      "writtenOn": "2017-11-10T02:52:26Z",
+      "side": 1,
+      "message": "Did you mean to remove kEnableFeatures here, rather than kDisableFeatures twice?",
+      "range": {
+        "startLine": 363,
+        "startChar": 17,
+        "endLine": 363,
+        "endChar": 24
+      },
+      "revId": "04d67e87422083bf681772755988b42215fd728d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
