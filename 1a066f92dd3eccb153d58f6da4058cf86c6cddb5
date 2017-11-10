@@ -1,0 +1,169 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "02c44483_290f2d72",
+        "filename": "chrome/browser/about_flags.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 2145,
+      "author": {
+        "id": 1000158
+      },
+      "writtenOn": "2017-11-10T01:13:26Z",
+      "side": 1,
+      "message": "I moved Gamepad extensions next to WebVR since they should be enabled together.",
+      "revId": "1a066f92dd3eccb153d58f6da4058cf86c6cddb5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "30e6d740_80e84e05",
+        "filename": "chrome/browser/about_flags.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 2152,
+      "author": {
+        "id": 1000158
+      },
+      "writtenOn": "2017-11-10T01:13:26Z",
+      "side": 1,
+      "message": "This is the only VR-related that is this type, which looks a bit weird in the UI. It\u0027s interesting that Gamepad extensions is in in features:: but this is not.",
+      "range": {
+        "startLine": 2152,
+        "startChar": 5,
+        "endLine": 2152,
+        "endChar": 22
+      },
+      "revId": "1a066f92dd3eccb153d58f6da4058cf86c6cddb5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d371a557_a26deffb",
+        "filename": "chrome/browser/about_flags.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 2153,
+      "author": {
+        "id": 1000158
+      },
+      "writtenOn": "2017-11-10T01:13:26Z",
+      "side": 1,
+      "message": "Starting here, the flag names changed. I think this is fine since these are all only for testing (or disabling features that are enabled by default).",
+      "revId": "1a066f92dd3eccb153d58f6da4058cf86c6cddb5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4e68618f_e684d3ac",
+        "filename": "chrome/browser/about_flags.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 2155,
+      "author": {
+        "id": 1000158
+      },
+      "writtenOn": "2017-11-10T01:13:26Z",
+      "side": 1,
+      "message": "I moved this out of ENABLE_VR because there doesn\u0027t appear to be anything that requires VR device support for this to be used. It might not be useful, but it is in Blink code.\nI also made it supported on all platforms.\nklausw: ^",
+      "revId": "1a066f92dd3eccb153d58f6da4058cf86c6cddb5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1f888ce8_f35e0ab2",
+        "filename": "chrome/browser/about_flags.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 2158,
+      "author": {
+        "id": 1000158
+      },
+      "writtenOn": "2017-11-10T01:13:26Z",
+      "side": 1,
+      "message": "This is no longer behind OS_ANDROID. Once the code is generalized, there is no reason it can\u0027t be supported. It is labeled as kOsAndroid for now, though.",
+      "revId": "1a066f92dd3eccb153d58f6da4058cf86c6cddb5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2798cbf0_dbd253d7",
+        "filename": "chrome/browser/about_flags.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 2162,
+      "author": {
+        "id": 1000158
+      },
+      "writtenOn": "2017-11-10T01:13:26Z",
+      "side": 1,
+      "message": "There is nothing Android-specific about the next three.",
+      "revId": "1a066f92dd3eccb153d58f6da4058cf86c6cddb5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "dfc04e2c_a452d50c",
+        "filename": "chrome/browser/about_flags.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 2168,
+      "author": {
+        "id": 1000158
+      },
+      "writtenOn": "2017-11-10T01:13:26Z",
+      "side": 1,
+      "message": "I will make this kOsAndroid.",
+      "range": {
+        "startLine": 2168,
+        "startChar": 68,
+        "endLine": 2168,
+        "endChar": 74
+      },
+      "revId": "1a066f92dd3eccb153d58f6da4058cf86c6cddb5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c6c55283_fb5ffa37",
+        "filename": "chrome/browser/about_flags.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 2174,
+      "author": {
+        "id": 1000158
+      },
+      "writtenOn": "2017-11-10T01:13:26Z",
+      "side": 1,
+      "message": "These will always only apply to Android.",
+      "revId": "1a066f92dd3eccb153d58f6da4058cf86c6cddb5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0076751c_56e4f89d",
+        "filename": "chrome/browser/about_flags.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 2178,
+      "author": {
+        "id": 1000158
+      },
+      "writtenOn": "2017-11-10T01:13:26Z",
+      "side": 1,
+      "message": "ymalik: Please check these two and their names and descriptions. Also, are any of these controlled via Finch?",
+      "revId": "1a066f92dd3eccb153d58f6da4058cf86c6cddb5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
