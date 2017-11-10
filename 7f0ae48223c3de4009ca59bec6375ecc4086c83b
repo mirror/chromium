@@ -1,0 +1,55 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "96d66985_ab3acb66",
+        "filename": "chrome/browser/resources/settings/device_page/display.html",
+        "patchSetId": 2
+      },
+      "lineNbr": 31,
+      "author": {
+        "id": 1000191
+      },
+      "writtenOn": "2017-11-10T00:11:44Z",
+      "side": 1,
+      "message": "I think this would be a bit more clear as:\n\n#nightLightTemperatureDiv[disabled]",
+      "revId": "7f0ae48223c3de4009ca59bec6375ecc4086c83b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8bfe9a32_1e76b2bd",
+        "filename": "chrome/browser/resources/settings/device_page/display.html",
+        "patchSetId": 2
+      },
+      "lineNbr": 218,
+      "author": {
+        "id": 1000191
+      },
+      "writtenOn": "2017-11-10T00:11:44Z",
+      "side": 1,
+      "message": "disabled$\u003d\"[[!prefs.ash.night_light.enabled.value]]\"",
+      "revId": "7f0ae48223c3de4009ca59bec6375ecc4086c83b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ef6ca9b6_3a2dbddb",
+        "filename": "chrome/browser/resources/settings/device_page/display.js",
+        "patchSetId": 2
+      },
+      "lineNbr": 590,
+      "author": {
+        "id": 1000191
+      },
+      "writtenOn": "2017-11-10T00:11:44Z",
+      "side": 1,
+      "message": "Avoid putting layout (i.e. \u0027settings-box indented continuatio\u0027) into the JS like this. We have examples of appending to the class, but see my suggestion in the HTML file.",
+      "revId": "7f0ae48223c3de4009ca59bec6375ecc4086c83b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
