@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "6792ce09_0d99774e",
+        "filename": "third_party/WebKit/LayoutTests/http/tests/local/fileapi/send-dragged-file-form.html",
+        "patchSetId": 8
+      },
+      "lineNbr": 1,
+      "author": {
+        "id": 1204072
+      },
+      "writtenOn": "2017-11-10T00:21:48Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "d37df965_74f616f0",
+      "revId": "715dcf9e183e09a617bcb333a2777129ea405111",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "83641839_7d58f085",
         "filename": "third_party/WebKit/LayoutTests/http/tests/local/fileapi/send-dragged-file-form.html",
         "patchSetId": 8
@@ -36,6 +54,24 @@
     },
     {
       "key": {
+        "uuid": "8228597e_1d8c5525",
+        "filename": "third_party/WebKit/LayoutTests/http/tests/local/fileapi/send-dragged-file-form.html",
+        "patchSetId": 8
+      },
+      "lineNbr": 3,
+      "author": {
+        "id": 1204072
+      },
+      "writtenOn": "2017-11-10T00:21:48Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "83641839_7d58f085",
+      "revId": "715dcf9e183e09a617bcb333a2777129ea405111",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "7bef715c_ec87f685",
         "filename": "third_party/WebKit/LayoutTests/http/tests/local/fileapi/send-dragged-file-form.html",
         "patchSetId": 8
@@ -50,6 +86,24 @@
       "revId": "715dcf9e183e09a617bcb333a2777129ea405111",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e7b86d12_592dc363",
+        "filename": "third_party/WebKit/LayoutTests/http/tests/local/fileapi/send-dragged-file-form.html",
+        "patchSetId": 8
+      },
+      "lineNbr": 4,
+      "author": {
+        "id": 1204072
+      },
+      "writtenOn": "2017-11-10T00:21:48Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "7bef715c_ec87f685",
+      "revId": "715dcf9e183e09a617bcb333a2777129ea405111",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -87,6 +141,24 @@
     },
     {
       "key": {
+        "uuid": "dcad9bf3_b15de7a3",
+        "filename": "third_party/WebKit/LayoutTests/http/tests/local/fileapi/send-dragged-file-form.html",
+        "patchSetId": 8
+      },
+      "lineNbr": 7,
+      "author": {
+        "id": 1204072
+      },
+      "writtenOn": "2017-11-10T00:21:48Z",
+      "side": 1,
+      "message": "When I do that I get \"promise_test is not defined\". Is this different for tests inside \"local\"?",
+      "parentUuid": "52c757ad_02a39d68",
+      "revId": "715dcf9e183e09a617bcb333a2777129ea405111",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "dfb153d8_93c3adf4",
         "filename": "third_party/WebKit/LayoutTests/http/tests/local/fileapi/send-dragged-file-form.html",
         "patchSetId": 8
@@ -101,6 +173,24 @@
       "revId": "715dcf9e183e09a617bcb333a2777129ea405111",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5526bf0c_84e51ef5",
+        "filename": "third_party/WebKit/LayoutTests/http/tests/local/fileapi/send-dragged-file-form.html",
+        "patchSetId": 8
+      },
+      "lineNbr": 14,
+      "author": {
+        "id": 1204072
+      },
+      "writtenOn": "2017-11-10T00:21:48Z",
+      "side": 1,
+      "message": "Acknowledged, but no longer a savings due to factoring this into a helper library.",
+      "parentUuid": "dfb153d8_93c3adf4",
+      "revId": "715dcf9e183e09a617bcb333a2777129ea405111",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -138,6 +228,24 @@
     },
     {
       "key": {
+        "uuid": "af5713ab_b3f39317",
+        "filename": "third_party/WebKit/LayoutTests/http/tests/local/fileapi/send-dragged-file-form.html",
+        "patchSetId": 8
+      },
+      "lineNbr": 20,
+      "author": {
+        "id": 1204072
+      },
+      "writtenOn": "2017-11-10T00:21:48Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "0ed7bf15_8be3ebc1",
+      "revId": "715dcf9e183e09a617bcb333a2777129ea405111",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "cb6d6d66_35979733",
         "filename": "third_party/WebKit/LayoutTests/http/tests/local/fileapi/send-dragged-file-form.html",
         "patchSetId": 8
@@ -152,6 +260,24 @@
       "revId": "715dcf9e183e09a617bcb333a2777129ea405111",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1212c2ce_0890e9e3",
+        "filename": "third_party/WebKit/LayoutTests/http/tests/local/fileapi/send-dragged-file-form.html",
+        "patchSetId": 8
+      },
+      "lineNbr": 22,
+      "author": {
+        "id": 1204072
+      },
+      "writtenOn": "2017-11-10T00:21:48Z",
+      "side": 1,
+      "message": "Factored out as a parameter now; it varies across test cases",
+      "parentUuid": "cb6d6d66_35979733",
+      "revId": "715dcf9e183e09a617bcb333a2777129ea405111",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -172,6 +298,24 @@
     },
     {
       "key": {
+        "uuid": "6c033415_49e41f77",
+        "filename": "third_party/WebKit/LayoutTests/http/tests/local/fileapi/send-dragged-file-form.html",
+        "patchSetId": 8
+      },
+      "lineNbr": 23,
+      "author": {
+        "id": 1204072
+      },
+      "writtenOn": "2017-11-10T00:21:48Z",
+      "side": 1,
+      "message": "Deleted, thanks for catching that!",
+      "parentUuid": "cc77b553_39d33630",
+      "revId": "715dcf9e183e09a617bcb333a2777129ea405111",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "d3961f25_57b45dfa",
         "filename": "third_party/WebKit/LayoutTests/http/tests/local/fileapi/send-dragged-file-form.html",
         "patchSetId": 8
@@ -186,6 +330,24 @@
       "revId": "715dcf9e183e09a617bcb333a2777129ea405111",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4b2520cf_0e1d25b7",
+        "filename": "third_party/WebKit/LayoutTests/http/tests/local/fileapi/send-dragged-file-form.html",
+        "patchSetId": 8
+      },
+      "lineNbr": 24,
+      "author": {
+        "id": 1204072
+      },
+      "writtenOn": "2017-11-10T00:21:48Z",
+      "side": 1,
+      "message": "Factored out as a parameter (and renamed) as it varies across test cases",
+      "parentUuid": "d3961f25_57b45dfa",
+      "revId": "715dcf9e183e09a617bcb333a2777129ea405111",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -206,6 +368,24 @@
     },
     {
       "key": {
+        "uuid": "33e34bb9_77567540",
+        "filename": "third_party/WebKit/LayoutTests/http/tests/local/fileapi/send-dragged-file-form.html",
+        "patchSetId": 8
+      },
+      "lineNbr": 25,
+      "author": {
+        "id": 1204072
+      },
+      "writtenOn": "2017-11-10T00:21:48Z",
+      "side": 1,
+      "message": "Factored out as a parameter as it varies across test cases.",
+      "parentUuid": "a8ee046c_4817def0",
+      "revId": "715dcf9e183e09a617bcb333a2777129ea405111",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "0605cbe0_53de4f3b",
         "filename": "third_party/WebKit/LayoutTests/http/tests/local/fileapi/send-dragged-file-form.html",
         "patchSetId": 8
@@ -223,6 +403,24 @@
     },
     {
       "key": {
+        "uuid": "3dd1b956_07ccc3da",
+        "filename": "third_party/WebKit/LayoutTests/http/tests/local/fileapi/send-dragged-file-form.html",
+        "patchSetId": 8
+      },
+      "lineNbr": 27,
+      "author": {
+        "id": 1204072
+      },
+      "writtenOn": "2017-11-10T00:21:48Z",
+      "side": 1,
+      "message": "Thanks! Simplified even more, I think.",
+      "parentUuid": "0605cbe0_53de4f3b",
+      "revId": "715dcf9e183e09a617bcb333a2777129ea405111",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "3b2b0ef0_bcaaaeef",
         "filename": "third_party/WebKit/LayoutTests/http/tests/local/fileapi/send-dragged-file-form.html",
         "patchSetId": 8
@@ -234,6 +432,24 @@
       "writtenOn": "2017-11-09T22:48:33Z",
       "side": 1,
       "message": "Please use an HTML element instead of building it in JS. If you place it above the \u003cscript\u003e, you\u0027re guaranteed to have it available in the DOM by the time the script starts executing.",
+      "revId": "715dcf9e183e09a617bcb333a2777129ea405111",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0af4377b_4133ebc0",
+        "filename": "third_party/WebKit/LayoutTests/http/tests/local/fileapi/send-dragged-file-form.html",
+        "patchSetId": 8
+      },
+      "lineNbr": 31,
+      "author": {
+        "id": 1204072
+      },
+      "writtenOn": "2017-11-10T00:21:48Z",
+      "side": 1,
+      "message": "Is this still a savings now that the construction is factored out into the helper library?",
+      "parentUuid": "3b2b0ef0_bcaaaeef",
       "revId": "715dcf9e183e09a617bcb333a2777129ea405111",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -257,6 +473,24 @@
     },
     {
       "key": {
+        "uuid": "058891a0_813c0921",
+        "filename": "third_party/WebKit/LayoutTests/http/tests/local/fileapi/send-dragged-file-form.html",
+        "patchSetId": 8
+      },
+      "lineNbr": 36,
+      "author": {
+        "id": 1204072
+      },
+      "writtenOn": "2017-11-10T00:21:48Z",
+      "side": 1,
+      "message": "Since the refactoring into a helper library the attribute values are no longer constant (they vary across tests.) Is the language switch still needed?",
+      "parentUuid": "f7627b1f_6c53fce3",
+      "revId": "715dcf9e183e09a617bcb333a2777129ea405111",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "d384b07e_ffbc848a",
         "filename": "third_party/WebKit/LayoutTests/http/tests/local/fileapi/send-dragged-file-form.html",
         "patchSetId": 8
@@ -268,6 +502,24 @@
       "writtenOn": "2017-11-09T22:48:33Z",
       "side": 1,
       "message": "Same as above: please use an HTML element, then use getElementById to find it and attach listeners to it.",
+      "revId": "715dcf9e183e09a617bcb333a2777129ea405111",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "fc52fd76_14e9c92f",
+        "filename": "third_party/WebKit/LayoutTests/http/tests/local/fileapi/send-dragged-file-form.html",
+        "patchSetId": 8
+      },
+      "lineNbr": 44,
+      "author": {
+        "id": 1204072
+      },
+      "writtenOn": "2017-11-10T00:21:48Z",
+      "side": 1,
+      "message": "As above: is this language switch still needed, given the factoring out of common code and the varying parameter values across test cases?",
+      "parentUuid": "d384b07e_ffbc848a",
       "revId": "715dcf9e183e09a617bcb333a2777129ea405111",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -325,6 +577,24 @@
     },
     {
       "key": {
+        "uuid": "593f8ad6_c0f0b23b",
+        "filename": "third_party/WebKit/LayoutTests/http/tests/local/fileapi/send-dragged-file-form.html",
+        "patchSetId": 8
+      },
+      "lineNbr": 47,
+      "author": {
+        "id": 1204072
+      },
+      "writtenOn": "2017-11-10T00:21:48Z",
+      "side": 1,
+      "message": "event \u003d\u003e event....(): Done",
+      "parentUuid": "3cee2754_a009c5dd",
+      "revId": "715dcf9e183e09a617bcb333a2777129ea405111",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "ada9bffc_9569adff",
         "filename": "third_party/WebKit/LayoutTests/http/tests/local/fileapi/send-dragged-file-form.html",
         "patchSetId": 8
@@ -336,6 +606,24 @@
       "writtenOn": "2017-11-09T22:48:33Z",
       "side": 1,
       "message": "Please put CSS in \u003cstyle\u003e instead. Example: https://cs.chromium.org/chromium/src/third_party/WebKit/LayoutTests/fast/dnd/dropEffect-for-effectAllowed.html",
+      "revId": "715dcf9e183e09a617bcb333a2777129ea405111",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3e621578_9607d87a",
+        "filename": "third_party/WebKit/LayoutTests/http/tests/local/fileapi/send-dragged-file-form.html",
+        "patchSetId": 8
+      },
+      "lineNbr": 60,
+      "author": {
+        "id": 1204072
+      },
+      "writtenOn": "2017-11-10T00:21:48Z",
+      "side": 1,
+      "message": "Why? Is script-generated HTML+CSS not desirable for some reason?",
+      "parentUuid": "ada9bffc_9569adff",
       "revId": "715dcf9e183e09a617bcb333a2777129ea405111",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -359,6 +647,24 @@
     },
     {
       "key": {
+        "uuid": "f789fec4_f19379c0",
+        "filename": "third_party/WebKit/LayoutTests/http/tests/local/fileapi/send-dragged-file-form.html",
+        "patchSetId": 8
+      },
+      "lineNbr": 67,
+      "author": {
+        "id": 1204072
+      },
+      "writtenOn": "2017-11-10T00:21:48Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "0f32b2cb_47398214",
+      "revId": "715dcf9e183e09a617bcb333a2777129ea405111",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "348acc01_7b872447",
         "filename": "third_party/WebKit/LayoutTests/http/tests/local/fileapi/send-dragged-file-form.html",
         "patchSetId": 8
@@ -373,6 +679,24 @@
       "revId": "715dcf9e183e09a617bcb333a2777129ea405111",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4a96625a_174982a1",
+        "filename": "third_party/WebKit/LayoutTests/http/tests/local/fileapi/send-dragged-file-form.html",
+        "patchSetId": 8
+      },
+      "lineNbr": 69,
+      "author": {
+        "id": 1204072
+      },
+      "writtenOn": "2017-11-10T00:21:48Z",
+      "side": 1,
+      "message": "Deleted.",
+      "parentUuid": "348acc01_7b872447",
+      "revId": "715dcf9e183e09a617bcb333a2777129ea405111",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -393,6 +717,24 @@
     },
     {
       "key": {
+        "uuid": "586bd5cf_8ed69b6e",
+        "filename": "third_party/WebKit/LayoutTests/http/tests/local/fileapi/send-dragged-file-form.html",
+        "patchSetId": 8
+      },
+      "lineNbr": 71,
+      "author": {
+        "id": 1204072
+      },
+      "writtenOn": "2017-11-10T00:21:48Z",
+      "side": 1,
+      "message": "Deleted the comment.",
+      "parentUuid": "93e9ca4c_7ac9277b",
+      "revId": "715dcf9e183e09a617bcb333a2777129ea405111",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "732d6390_4f283d3c",
         "filename": "third_party/WebKit/LayoutTests/http/tests/local/fileapi/send-dragged-file-form.html",
         "patchSetId": 8
@@ -407,6 +749,24 @@
       "revId": "715dcf9e183e09a617bcb333a2777129ea405111",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4aa4ef3f_036cdbc2",
+        "filename": "third_party/WebKit/LayoutTests/http/tests/local/fileapi/send-dragged-file-form.html",
+        "patchSetId": 8
+      },
+      "lineNbr": 80,
+      "author": {
+        "id": 1204072
+      },
+      "writtenOn": "2017-11-10T00:21:48Z",
+      "side": 1,
+      "message": "Done.",
+      "parentUuid": "732d6390_4f283d3c",
+      "revId": "715dcf9e183e09a617bcb333a2777129ea405111",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -427,6 +787,24 @@
     },
     {
       "key": {
+        "uuid": "13a050a2_eacb7858",
+        "filename": "third_party/WebKit/LayoutTests/http/tests/local/fileapi/send-dragged-file-form.html",
+        "patchSetId": 8
+      },
+      "lineNbr": 88,
+      "author": {
+        "id": 1204072
+      },
+      "writtenOn": "2017-11-10T00:21:48Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "344b109b_ec5bb034",
+      "revId": "715dcf9e183e09a617bcb333a2777129ea405111",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "437b6b6b_39077ee7",
         "filename": "third_party/WebKit/LayoutTests/http/tests/local/fileapi/send-dragged-file-form.html",
         "patchSetId": 8
@@ -444,6 +822,24 @@
     },
     {
       "key": {
+        "uuid": "f3921716_4f47df8c",
+        "filename": "third_party/WebKit/LayoutTests/http/tests/local/fileapi/send-dragged-file-form.html",
+        "patchSetId": 8
+      },
+      "lineNbr": 96,
+      "author": {
+        "id": 1204072
+      },
+      "writtenOn": "2017-11-10T00:21:48Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "437b6b6b_39077ee7",
+      "revId": "715dcf9e183e09a617bcb333a2777129ea405111",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "18d83763_85a25773",
         "filename": "third_party/WebKit/LayoutTests/http/tests/local/fileapi/send-dragged-file-form.html",
         "patchSetId": 8
@@ -458,6 +854,24 @@
       "revId": "715dcf9e183e09a617bcb333a2777129ea405111",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3e260974_2cfd15e3",
+        "filename": "third_party/WebKit/LayoutTests/http/tests/local/fileapi/send-dragged-file-form.html",
+        "patchSetId": 8
+      },
+      "lineNbr": 101,
+      "author": {
+        "id": 1204072
+      },
+      "writtenOn": "2017-11-10T00:21:48Z",
+      "side": 1,
+      "message": "ABC\" + a non-BMP character is only sufficient to get the appearance of coverage, as I learned to my regret while writing this test; bug I found in https://crbug.com/782565 - I believe correctly testing this requires walking a stateful codec through a few transitions and ensuring at least basic functionality is unaffected.\n\n- ABC~ ensures the string starts with something we can read to ensure it is from the correct source; ~ is used because even some 1-byte otherwise-ASCII-like parts of ISO-2022-JP interpret it differently.\n- ¤ is inside Latin-1 and helps diagnose problems due to filesystem encoding or locale; it is also the \"simplest\" case needing substitution in ISO-2022-JP\n- • is inside Windows-1252 and helps diagnose problems due to filesystem encoding or locale and also ensures these aren\u0027t accidentally turned into e.g. control codes\n- ★ is inside ISO-2022-JP on a non-Kanji page and makes correct output easier to spot\n- 星 is inside ISO-2022-JP on a Kanji page and makes correct output easier to spot\n- 🌟 is outside the BMP and makes incorrect surrogate pair substitution detectable and ensures substitutions work correctly immediately after Kanji 2-byte ISO-2022-JP\n- 星 repeated here ensures the correct codec state is used after a non-BMP substitution\n- ★ repeated here also makes correct output easier to spot\n- • is inside Windows-1252 and again helps diagnose problems due to filesystem encoding or locale and also ensures substitutions work correctly immediately after non-Kanji 2-byte ISO-2022-JP\n- ¤ is inside Latin-1 and helps diagnose problems due to filesystem encoding or locale; again it is a \"simple\" substitution case and also ensures \n- ~XYZ ensures earlier errors don\u0027t lead to misencoding of simple ASCII\n\nOverall the near-symmetry makes common i18n mistakes like off-by-1-after-non-BMP easier to spot.",
+      "parentUuid": "18d83763_85a25773",
+      "revId": "715dcf9e183e09a617bcb333a2777129ea405111",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -495,6 +909,24 @@
     },
     {
       "key": {
+        "uuid": "a58fe0b4_b578fd42",
+        "filename": "third_party/WebKit/LayoutTests/http/tests/local/fileapi/send-dragged-file-form.html",
+        "patchSetId": 8
+      },
+      "lineNbr": 109,
+      "author": {
+        "id": 1204072
+      },
+      "writtenOn": "2017-11-10T00:21:48Z",
+      "side": 1,
+      "message": "Yes, it\u0027s stable because we use the actual boundary when constructing the expectation.",
+      "parentUuid": "ea763ac2_3992b87e",
+      "revId": "715dcf9e183e09a617bcb333a2777129ea405111",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "8d04fbe3_8d3a03e2",
         "filename": "third_party/WebKit/Source/platform/network/FormDataEncoder.cpp",
         "patchSetId": 8
@@ -509,6 +941,24 @@
       "revId": "715dcf9e183e09a617bcb333a2777129ea405111",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "09b042f2_e90b7229",
+        "filename": "third_party/WebKit/Source/platform/network/FormDataEncoder.cpp",
+        "patchSetId": 8
+      },
+      "lineNbr": 168,
+      "author": {
+        "id": 1204072
+      },
+      "writtenOn": "2017-11-10T00:21:48Z",
+      "side": 1,
+      "message": "Done. Apologies for not including this in the previous snapshot, I\u0027ve had the in-progress comment open in an editor for a while now.",
+      "parentUuid": "8d04fbe3_8d3a03e2",
+      "revId": "715dcf9e183e09a617bcb333a2777129ea405111",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }

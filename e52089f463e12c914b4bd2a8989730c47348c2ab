@@ -161,6 +161,24 @@
     },
     {
       "key": {
+        "uuid": "39b0de99_34a7d3bf",
+        "filename": "third_party/WebKit/Source/platform/network/FormDataEncoder.cpp",
+        "patchSetId": 2
+      },
+      "lineNbr": 168,
+      "author": {
+        "id": 1204072
+      },
+      "writtenOn": "2017-11-10T00:21:48Z",
+      "side": 1,
+      "message": "TL;DR: this aspect of multipart file upload (how to replace filename characters not representable in the form charset) is not currently specified in HTML. The change is standards-neutral.\n\nI\u0027ve added a comment explaining the situation.\n\nThis change is intended to match existing Firefox and Edge behavior, and address a long-standing FIXME Blink inherited from WebKit. A useful follow-up would be to propose a similar change to WebKit and see whether WebKit owners are open to accepting it. In any case, the behavior shared by Firefox and Edge already seems like a good candidate for future standardization work.",
+      "parentUuid": "ae294d18_2bd33a3a",
+      "revId": "e52089f463e12c914b4bd2a8989730c47348c2ab",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "1a1f6f9a_b205df44",
         "filename": "third_party/WebKit/Source/platform/network/FormDataEncoder.cpp",
         "patchSetId": 2
