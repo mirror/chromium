@@ -61,7 +61,7 @@ class MockServiceContextRef : public service_manager::ServiceContextRef {
 
 class MockVideoFrameFactory : public VideoFrameFactory {
  public:
-  MOCK_METHOD1(Initialize, void(InitCb init_cb));
+  MOCK_METHOD2(Initialize, void(bool wants_promotion_hint, InitCb init_cb));
   MOCK_METHOD1(MockSetSurfaceBundle, void(scoped_refptr<AVDASurfaceBundle>));
   MOCK_METHOD6(
       MockCreateVideoFrame,
@@ -139,8 +139,8 @@ class MediaCodecVideoDecoderTest : public testing::Test {
         base::MakeUnique<NiceMock<MockVideoFrameFactory>>();
     video_frame_factory_ = video_frame_factory.get();
     // Set up VFF to pass |surface_texture_| via its InitCb.
-    ON_CALL(*video_frame_factory_, Initialize(_))
-        .WillByDefault(RunCallback<0>(surface_texture));
+    ON_CALL(*video_frame_factory_, Initialize(_, _))
+        .WillByDefault(RunCallback<1>(surface_texture));
 
     auto* observable_mcvd = new DestructionObservableMCVD(
         gpu_preferences_, base::Bind(&OutputWithReleaseMailboxCb),
@@ -251,7 +251,7 @@ TEST_F(MediaCodecVideoDecoderTest, SmallVp8IsRejected) {
 
 TEST_F(MediaCodecVideoDecoderTest, InitializeDoesntInitSurfaceOrCodec) {
   CreateMcvd();
-  EXPECT_CALL(*video_frame_factory_, Initialize(_)).Times(0);
+  EXPECT_CALL(*video_frame_factory_, Initialize(_, _)).Times(0);
   EXPECT_CALL(*surface_chooser_, MockUpdateState()).Times(0);
   EXPECT_CALL(*codec_allocator_, MockCreateMediaCodecAsync(_, _)).Times(0);
   Initialize();
@@ -259,7 +259,7 @@ TEST_F(MediaCodecVideoDecoderTest, InitializeDoesntInitSurfaceOrCodec) {
 
 TEST_F(MediaCodecVideoDecoderTest, FirstDecodeTriggersFrameFactoryInit) {
   Initialize();
-  EXPECT_CALL(*video_frame_factory_, Initialize(_));
+  EXPECT_CALL(*video_frame_factory_, Initialize(_, _));
   mcvd_->Decode(fake_decoder_buffer_, decode_cb_.Get());
 }
 
@@ -313,8 +313,8 @@ TEST_F(MediaCodecVideoDecoderTest, CodecIsCreatedAfterSurfaceChosen) {
 
 TEST_F(MediaCodecVideoDecoderTest, FrameFactoryInitFailureIsAnError) {
   Initialize();
-  ON_CALL(*video_frame_factory_, Initialize(_))
-      .WillByDefault(RunCallback<0>(nullptr));
+  ON_CALL(*video_frame_factory_, Initialize(_, _))
+      .WillByDefault(RunCallback<1>(nullptr));
   EXPECT_CALL(decode_cb_, Run(DecodeStatus::DECODE_ERROR)).Times(1);
   EXPECT_CALL(*surface_chooser_, MockUpdateState()).Times(0);
   mcvd_->Decode(fake_decoder_buffer_, decode_cb_.Get());
