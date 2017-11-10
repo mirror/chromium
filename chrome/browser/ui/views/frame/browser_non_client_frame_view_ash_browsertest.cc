@@ -529,3 +529,95 @@ IN_PROC_BROWSER_TEST_F(BrowserNonClientFrameViewAshBackButtonTest,
   EXPECT_TRUE(frame_view->back_button_->visible());
   EXPECT_TRUE(frame_view->back_button_->enabled());
 }
+
+// Test the normal type browser's kTopViewInset is always 0.
+IN_PROC_BROWSER_TEST_F(BrowserNonClientFrameViewAshTest, V1KTopViewInset) {
+  aura::test::EnvTestHelper().SetAlwaysUseLastMouseLocation(true);
+  BrowserView* browser_view = BrowserView::GetBrowserViewForBrowser(browser());
+  ImmersiveModeController* immersive_mode_controller =
+      browser_view->immersive_mode_controller();
+  // We know we're using Ash, so static cast.
+  aura::Window* window =
+      static_cast<aura::Window*>(browser()->window()->GetNativeWindow());
+  EXPECT_FALSE(immersive_mode_controller->IsEnabled());
+  EXPECT_EQ(0, window->GetProperty(aura::client::kTopViewInset));
+
+  // The kTopViewInset should be 0 when in immersive mode.
+  {
+    std::unique_ptr<FullscreenNotificationObserver> waiter(
+        new FullscreenNotificationObserver());
+    chrome::ToggleFullscreenMode(browser());
+    waiter->Wait();
+  }
+  EXPECT_TRUE(immersive_mode_controller->IsEnabled());
+  EXPECT_EQ(0, window->GetProperty(aura::client::kTopViewInset));
+
+  // An immersive reveal shows the top of the frame.
+  std::unique_ptr<ImmersiveRevealedLock> revealed_lock(
+      immersive_mode_controller->GetRevealedLock(
+          ImmersiveModeController::ANIMATE_REVEAL_NO));
+  EXPECT_TRUE(immersive_mode_controller->IsRevealed());
+  EXPECT_EQ(0, window->GetProperty(aura::client::kTopViewInset));
+
+  // End the reveal and exit immersive mode.
+  // The kTopViewInset should be 0 when immersive mode is exited.
+  revealed_lock.reset();
+  {
+    std::unique_ptr<FullscreenNotificationObserver> waiter(
+        new FullscreenNotificationObserver());
+    chrome::ToggleFullscreenMode(browser());
+    waiter->Wait();
+  }
+  EXPECT_FALSE(immersive_mode_controller->IsEnabled());
+  EXPECT_EQ(0, window->GetProperty(aura::client::kTopViewInset));
+}
+
+// Test the V1 apps' kTopViewInset.
+IN_PROC_BROWSER_TEST_F(HostedAppNonClientFrameViewAshTest, V1KTopViewInset) {
+  browser()->window()->Close();
+
+  // Open a new browser window (app or tabbed depending on a parameter).
+  Browser::CreateParams params = Browser::CreateParams::CreateForApp(
+      "test_browser_app", true /* trusted_source */, gfx::Rect(),
+      browser()->profile(), true);
+  params.initial_show_state = ui::SHOW_STATE_DEFAULT;
+  Browser* browser = new Browser(params);
+  BrowserView* browser_view = BrowserView::GetBrowserViewForBrowser(browser);
+  ImmersiveModeController* immersive_mode_controller =
+      browser_view->immersive_mode_controller();
+  // We know we're using Ash, so static cast.
+  aura::Window* window =
+      static_cast<aura::Window*>(browser->window()->GetNativeWindow());
+  EXPECT_FALSE(immersive_mode_controller->IsEnabled());
+  EXPECT_LT(0, window->GetProperty(aura::client::kTopViewInset));
+
+  // The kTopViewInset should be 0 when in immersive mode.
+  {
+    std::unique_ptr<FullscreenNotificationObserver> waiter(
+        new FullscreenNotificationObserver());
+    chrome::ToggleFullscreenMode(browser);
+    waiter->Wait();
+  }
+  EXPECT_TRUE(immersive_mode_controller->IsEnabled());
+  EXPECT_EQ(0, window->GetProperty(aura::client::kTopViewInset));
+
+  // An immersive reveal shows the top of the frame.
+  std::unique_ptr<ImmersiveRevealedLock> revealed_lock(
+      immersive_mode_controller->GetRevealedLock(
+          ImmersiveModeController::ANIMATE_REVEAL_NO));
+  EXPECT_TRUE(immersive_mode_controller->IsRevealed());
+  EXPECT_EQ(0, window->GetProperty(aura::client::kTopViewInset));
+
+  // End the reveal and exit immersive mode.
+  // The kTopViewInset should be larger than 0 again when immersive mode is
+  // exited.
+  revealed_lock.reset();
+  {
+    std::unique_ptr<FullscreenNotificationObserver> waiter(
+        new FullscreenNotificationObserver());
+    chrome::ToggleFullscreenMode(browser);
+    waiter->Wait();
+  }
+  EXPECT_FALSE(immersive_mode_controller->IsEnabled());
+  EXPECT_LT(0, window->GetProperty(aura::client::kTopViewInset));
+}
