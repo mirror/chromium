@@ -213,9 +213,10 @@ WebRemoteFrameImpl* WebRemoteFrameImpl::FromFrame(RemoteFrame& frame) {
   return client->GetWebFrame();
 }
 
-void WebRemoteFrameImpl::SetReplicatedOrigin(const WebSecurityOrigin& origin) {
+void WebRemoteFrameImpl::SetReplicatedOrigin(
+    const WebMutableSecurityOrigin& origin) {
   DCHECK(GetFrame());
-  GetFrame()->GetSecurityContext()->SetReplicatedOrigin(origin);
+  GetFrame()->GetSecurityContext()->SetReplicatedOrigin(origin.Get());
 
   // If the origin of a remote frame changed, the accessibility object for the
   // owner element now points to a different child.

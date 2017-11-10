@@ -45,6 +45,38 @@ namespace blink {
 class SecurityOrigin;
 class WebURL;
 
+class WebMutableSecurityOrigin {
+ public:
+  ~WebMutableSecurityOrigin() { Reset(); }
+
+  WebMutableSecurityOrigin() {}
+  WebMutableSecurityOrigin(const WebMutableSecurityOrigin& s) { Assign(s); }
+  WebMutableSecurityOrigin& operator=(const WebMutableSecurityOrigin& s) {
+    Assign(s);
+    return *this;
+  }
+
+  BLINK_PLATFORM_EXPORT static WebMutableSecurityOrigin CreateFromString(
+      const WebString&);
+  BLINK_PLATFORM_EXPORT static WebMutableSecurityOrigin Create(const WebURL&);
+  BLINK_PLATFORM_EXPORT static WebMutableSecurityOrigin CreateUnique();
+
+  BLINK_PLATFORM_EXPORT void Reset();
+  BLINK_PLATFORM_EXPORT void Assign(const WebMutableSecurityOrigin&);
+
+#if INSIDE_BLINK
+  BLINK_PLATFORM_EXPORT WebMutableSecurityOrigin(scoped_refptr<SecurityOrigin>);
+  BLINK_PLATFORM_EXPORT SecurityOrigin* Get() const;
+#endif
+  // TODO(mkwst): A number of properties don't survive a round-trip
+  // ('document.domain', for instance).  We'll need to fix that for OOPI-enabled
+  // embedders, https://crbug.com/490074.
+  BLINK_PLATFORM_EXPORT WebMutableSecurityOrigin(const url::Origin&);
+
+ private:
+  WebPrivatePtr<SecurityOrigin> private_;
+};
+
 class WebSecurityOrigin {
  public:
   ~WebSecurityOrigin() { Reset(); }
@@ -63,6 +95,7 @@ class WebSecurityOrigin {
 
   BLINK_PLATFORM_EXPORT void Reset();
   BLINK_PLATFORM_EXPORT void Assign(const WebSecurityOrigin&);
+  BLINK_PLATFORM_EXPORT void Assign(const WebMutableSecurityOrigin&);
 
   bool IsNull() const { return private_.IsNull(); }
 
@@ -123,14 +156,6 @@ class WebSecurityOrigin {
   BLINK_PLATFORM_EXPORT operator url::Origin() const;
 
  private:
-  // Present only to facilitate conversion from 'url::Origin'; this constructor
-  // shouldn't be used anywhere else.
-  BLINK_PLATFORM_EXPORT static WebSecurityOrigin CreateFromTupleWithSuborigin(
-      const WebString& protocol,
-      const WebString& host,
-      int port,
-      const WebString& suborigin);
-
   WebPrivatePtr<SecurityOrigin> private_;
 };
 
