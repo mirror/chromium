@@ -157,6 +157,24 @@
       "revId": "aaa991da2523923e805dbeb47e0714855f7f157e",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d95cac9a_d9c303ba",
+        "filename": "third_party/WebKit/Source/platform/graphics/paint/FloatClipRectTest.cpp",
+        "patchSetId": 5
+      },
+      "lineNbr": 86,
+      "author": {
+        "id": 1002481
+      },
+      "writtenOn": "2017-11-10T20:25:07Z",
+      "side": 1,
+      "message": "I thought of several cases:\n\nCase 1: incremental invalidation of paint chunks on clip change:\n\n\u003cdiv style\u003d\"transform: rotate(45deg)\"\u003e\n  \u003cdiv id\u003d\"clip\" style\u003d\"overflow: hidden; width: 100px; height: 100px\"\u003e\n    ...\n  \u003c/div\u003e\n\u003c/div\u003e\n\nSuppose there is only root composited layer. The clip rect of target mapped to the root composited layer is the bounding box of (8,8, 100x100) rotated by 45deg, which is not a tight clip rect. At a time, target changes its height to 200px. In CompositedLayerRasterInvalidator, we detect the change of clip properties, and need to issue raster invalidation for the chunk. Because the old and new clip rects in composited layer are not tight, incremental invalidation doesn\u0027t apply.\n\nCase 2:\nWhen we map a opaque rect using MapLocalToAncestorVisualRect(), the IsTight flag is useful to know if the mapped visual rect is still opaque. (as trchen@ mentioned in https://bugs.chromium.org/p/chromium/issues/detail?id\u003d708741#c2). In the above HTML, if the mapping is through the rotation, we\u0027ll clear IsTight() flag to indicate that the mapped rect is not fully opaque.",
+      "parentUuid": "a6a343ff_ac7cf42c",
+      "revId": "aaa991da2523923e805dbeb47e0714855f7f157e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
