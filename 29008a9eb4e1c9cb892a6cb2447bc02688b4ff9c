@@ -1,0 +1,106 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "5c402f0f_5f556b57",
+        "filename": "chrome/browser/chromeos/power/power_metrics_reporter.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 25,
+      "author": {
+        "id": 1000042
+      },
+      "writtenOn": "2017-11-10T01:13:00Z",
+      "side": 1,
+      "message": "i\u0027m not sure why DailyEvent works like this instead of sticking to the usual base::ObserverList pattern.",
+      "revId": "29008a9eb4e1c9cb892a6cb2447bc02688b4ff9c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "83cfec38_d6423ad1",
+        "filename": "chrome/browser/chromeos/power/power_metrics_reporter.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 78,
+      "author": {
+        "id": 1000042
+      },
+      "writtenOn": "2017-11-10T01:13:00Z",
+      "side": 1,
+      "message": "CheckInterval (components/metrics/daily_event.cc@73) appears to fire on first-run. i don\u0027t know why, and i also don\u0027t know how to detect this. it\u0027s possible that it\u0027ll make the histograms harder to interpret by reporting 0 values on the first day.",
+      "revId": "29008a9eb4e1c9cb892a6cb2447bc02688b4ff9c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "171ae0c7_3b641672",
+        "filename": "chrome/browser/chromeos/power/power_metrics_reporter.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 88,
+      "author": {
+        "id": 1000042
+      },
+      "writtenOn": "2017-11-10T01:13:00Z",
+      "side": 1,
+      "message": "i debated whether i should use 100 or 1000 for these. in practice, i think it\u0027s unlikely that systems will dim more than 100 times in a day, but i suppose it\u0027s possible.\n\nbase/metrics/histogram_macros *does* say \"We recommend erring on the side of too large a range versus too short a range.\"...",
+      "revId": "29008a9eb4e1c9cb892a6cb2447bc02688b4ff9c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "71a98d40_1b2ec515",
+        "filename": "chrome/browser/chromeos/power/power_metrics_reporter.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 41,
+      "author": {
+        "id": 1000042
+      },
+      "writtenOn": "2017-11-10T01:13:00Z",
+      "side": 1,
+      "message": "opinions about whether i should make this private and friend the test class?",
+      "revId": "29008a9eb4e1c9cb892a6cb2447bc02688b4ff9c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6b30b5a7_c3560d56",
+        "filename": "chrome/common/pref_names.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 1872,
+      "author": {
+        "id": 1000042
+      },
+      "writtenOn": "2017-11-10T01:13:00Z",
+      "side": 1,
+      "message": "whoops, i\u0027ll add a comment here in the next revision.",
+      "revId": "29008a9eb4e1c9cb892a6cb2447bc02688b4ff9c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "be373c10_056efe9d",
+        "filename": "chrome/common/pref_names.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 22,
+      "author": {
+        "id": 1000042
+      },
+      "writtenOn": "2017-11-10T01:13:00Z",
+      "side": 1,
+      "message": "i\u0027m not sure what the \"below\" here refers to. :-/",
+      "revId": "29008a9eb4e1c9cb892a6cb2447bc02688b4ff9c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
