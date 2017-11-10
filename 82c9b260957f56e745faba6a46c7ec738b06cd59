@@ -88,6 +88,24 @@
       "revId": "82c9b260957f56e745faba6a46c7ec738b06cd59",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "e31a5b3f_64346a03",
+        "filename": "third_party/WebKit/Source/core/dom/Document.cpp",
+        "patchSetId": 18
+      },
+      "lineNbr": 5788,
+      "author": {
+        "id": 1000023
+      },
+      "writtenOn": "2017-11-10T07:08:53Z",
+      "side": 1,
+      "message": "\"how about calling Document::UpdateTitle with empty string, \"\"?\"\n\nI described how that fails in my previous response. If someone calls UpdateTitle() with an *empty* string, then yes, |raw_title_| is set to the empty string, but |title_| is set to the **null** string. It is then compared to the previous value of |title_|, and because the original value was constructed as the null string, there\u0027s no change. The function takes the *second* early return and no title update is sent.\n\nI cannot see how to evade the early returns.",
+      "parentUuid": "100e446e_b9a7c9fe",
+      "revId": "82c9b260957f56e745faba6a46c7ec738b06cd59",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
