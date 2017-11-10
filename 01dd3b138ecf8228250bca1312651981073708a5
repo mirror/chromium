@@ -1,0 +1,73 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "87f2dfa9_55985c13",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/webapps/WebappInterceptNavigationDelegate.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 26,
+      "author": {
+        "id": 1116074
+      },
+      "writtenOn": "2017-11-10T18:06:37Z",
+      "side": 1,
+      "message": "Sorry for misleading you here.. I just noticed this will not work if we have more than one WebApp type activity launching Custom Tabs. (It probably is an edge case, but definitely possible, since we can have multiple activities that are all started but not stopped yet.)\n\nI still think it makes sense to keep all this in a separate class in webapp namespace. So we don\u0027t need to change much. It probably makes sense to make this logger public and add an instance of it to CustomTabActivity though. (I think we wont be able to get away without creating an instance in all Custom Tab Activities.)",
+      "range": {
+        "startLine": 26,
+        "startChar": 16,
+        "endLine": 26,
+        "endChar": 17
+      },
+      "revId": "01dd3b138ecf8228250bca1312651981073708a5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7b4c0454_3d32a8a4",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/webapps/WebappInterceptNavigationDelegate.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 26,
+      "author": {
+        "id": 1116074
+      },
+      "writtenOn": "2017-11-10T18:06:37Z",
+      "side": 1,
+      "message": "..TimeSpent... s/d/t",
+      "range": {
+        "startLine": 26,
+        "startChar": 17,
+        "endLine": 26,
+        "endChar": 41
+      },
+      "revId": "01dd3b138ecf8228250bca1312651981073708a5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0ba15705_f193f14a",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/webapps/WebappInterceptNavigationDelegate.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 58,
+      "author": {
+        "id": 1116074
+      },
+      "writtenOn": "2017-11-10T18:06:37Z",
+      "side": 1,
+      "message": "javadocs for these two as well.",
+      "range": {
+        "startLine": 58,
+        "startChar": 11,
+        "endLine": 58,
+        "endChar": 17
+      },
+      "revId": "01dd3b138ecf8228250bca1312651981073708a5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
