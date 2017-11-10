@@ -353,6 +353,9 @@ Polymer({
 
   /** @private */
   openManuallyAddPrinterDialog_: function() {
+    if (this.showDiscoveryDialog_)
+      this.$$('add-printer-discovery-dialog').close();
+
     this.switchDialog_(
         this.currentDialog_, AddPrinterDialogs.MANUALLY,
         'showManuallyAddDialog_');
