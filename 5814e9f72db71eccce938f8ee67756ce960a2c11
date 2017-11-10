@@ -230,6 +230,24 @@
     },
     {
       "key": {
+        "uuid": "2f5a95bd_a0a0cd5c",
+        "filename": "device/sensors/android/javatests/src/org/chromium/device/sensors/DeviceSensorsTest.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 29,
+      "author": {
+        "id": 1149144
+      },
+      "writtenOn": "2017-11-10T22:56:16Z",
+      "side": 0,
+      "message": "Yes, we have fallback tests:\nhttps://cs.chromium.org/chromium/src/content/renderer/device_sensors/device_orientation_event_pump_unittest.cc?l\u003d287-288\nhttps://cs.chromium.org/chromium/src/content/browser/device_sensors/device_sensor_browsertest.cc?l\u003d322-323",
+      "parentUuid": "c57c2d33_ffdf40d3",
+      "revId": "5814e9f72db71eccce938f8ee67756ce960a2c11",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "d3e85117_a932d9ad",
         "filename": "device/sensors/android/javatests/src/org/chromium/device/sensors/DeviceSensorsTest.java",
         "patchSetId": 5
@@ -247,6 +265,24 @@
     },
     {
       "key": {
+        "uuid": "4c1d471f_d3dbd096",
+        "filename": "device/sensors/android/javatests/src/org/chromium/device/sensors/DeviceSensorsTest.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 407,
+      "author": {
+        "id": 1149144
+      },
+      "writtenOn": "2017-11-10T22:56:16Z",
+      "side": 0,
+      "message": "Thanks! I filed a bug on this and will follow up on that:\nhttps://bugs.chromium.org/p/chromium/issues/detail?id\u003d783969",
+      "parentUuid": "d3e85117_a932d9ad",
+      "revId": "5814e9f72db71eccce938f8ee67756ce960a2c11",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "ae4056f2_e321eba6",
         "filename": "device/sensors/android/javatests/src/org/chromium/device/sensors/DeviceSensorsTest.java",
         "patchSetId": 5
@@ -258,6 +294,24 @@
       "writtenOn": "2017-11-10T19:40:06Z",
       "side": 0,
       "message": "Do we have any tests for computation of angles from the rotation matrix in the new implementation?",
+      "revId": "5814e9f72db71eccce938f8ee67756ce960a2c11",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "821b66b7_7f47704b",
+        "filename": "device/sensors/android/javatests/src/org/chromium/device/sensors/DeviceSensorsTest.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 433,
+      "author": {
+        "id": 1149144
+      },
+      "writtenOn": "2017-11-10T22:56:16Z",
+      "side": 0,
+      "message": "Yes, we have tests for all the fusion sensor algorithms, including computation of angles from the rotation matrix:\n\nhttps://cs.chromium.org/chromium/src/services/device/generic_sensor/absolute_orientation_euler_angles_fusion_algorithm_using_accelerometer_and_magnetometer_unittest.cc\n\nhttps://cs.chromium.org/chromium/src/services/device/generic_sensor/linear_acceleration_fusion_algorithm_using_accelerometer_unittest.cc\n\nhttps://cs.chromium.org/chromium/src/services/device/generic_sensor/orientation_euler_angles_fusion_algorithm_using_quaternion_unittest.cc\n\nhttps://cs.chromium.org/chromium/src/services/device/generic_sensor/orientation_quaternion_fusion_algorithm_using_euler_angles_unittest.cc\n\nhttps://cs.chromium.org/chromium/src/services/device/generic_sensor/relative_orientation_euler_angles_fusion_algorithm_using_accelerometer_unittest.cc",
+      "parentUuid": "ae4056f2_e321eba6",
       "revId": "5814e9f72db71eccce938f8ee67756ce960a2c11",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true

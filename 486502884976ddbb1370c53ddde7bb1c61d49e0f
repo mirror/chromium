@@ -122,6 +122,24 @@
       "revId": "486502884976ddbb1370c53ddde7bb1c61d49e0f",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e436c124_56d6551b",
+        "filename": "services/device/public/cpp/generic_sensor/motion_data.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 5,
+      "author": {
+        "id": 1149144
+      },
+      "writtenOn": "2017-11-10T22:56:16Z",
+      "side": 1,
+      "message": "Thanks! I misunderstood the previous comment. I moved it to this CL\u0027s description.\n\nDone.",
+      "parentUuid": "742c565e_ae05188c",
+      "revId": "486502884976ddbb1370c53ddde7bb1c61d49e0f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
