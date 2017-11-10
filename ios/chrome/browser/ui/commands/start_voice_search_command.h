@@ -13,6 +13,8 @@
 // which the voice search present and dismiss animations will occur.
 @interface StartVoiceSearchCommand : GenericChromeCommand
 
+// TODO(crbug.com/783037): Replace with a location proxy object instead of
+// exposing a UIView.
 - (instancetype)initWithOriginView:(UIView*)view NS_DESIGNATED_INITIALIZER;
 
 - (instancetype)initWithTag:(NSInteger)tag NS_UNAVAILABLE;
