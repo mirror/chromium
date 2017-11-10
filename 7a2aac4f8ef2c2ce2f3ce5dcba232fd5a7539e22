@@ -308,6 +308,30 @@
       "revId": "7a2aac4f8ef2c2ce2f3ce5dcba232fd5a7539e22",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6af35ce1_9521df81",
+        "filename": "chrome/browser/sessions/session_data_deleter.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 127,
+      "author": {
+        "id": 1001809
+      },
+      "writtenOn": "2017-11-10T21:34:08Z",
+      "side": 1,
+      "message": "Awesome, thanks.\n\nScott, I\u0027m still on the \"session deletion isn\u0027t going to happen very often, it\u0027s not worth code complexity to handle it efficiently\" side of the scales, but I\u0027m happy to yield to the SME (you) if you disagree.",
+      "parentUuid": "5eeac9db_79e6a9ae",
+      "range": {
+        "startLine": 127,
+        "startChar": 8,
+        "endLine": 127,
+        "endChar": 60
+      },
+      "revId": "7a2aac4f8ef2c2ce2f3ce5dcba232fd5a7539e22",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
