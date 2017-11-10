@@ -22,6 +22,7 @@
 
 #include "core/css/StyleRuleImport.h"
 
+#include "core/css/CSSImportRule.h"
 #include "core/css/StyleSheetContents.h"
 #include "core/dom/Document.h"
 #include "core/loader/resource/CSSStyleSheetResource.h"
@@ -39,8 +40,7 @@ StyleRuleImport* StyleRuleImport::Create(const String& href,
 
 StyleRuleImport::StyleRuleImport(const String& href,
                                  scoped_refptr<MediaQuerySet> media)
-    : StyleRuleBase(kImport),
-      parent_style_sheet_(nullptr),
+    : parent_style_sheet_(nullptr),
       style_sheet_client_(new ImportedStyleSheetClient(this)),
       str_href_(href),
       media_queries_(media),
@@ -57,12 +57,12 @@ void StyleRuleImport::Dispose() {
   resource_ = nullptr;
 }
 
-void StyleRuleImport::TraceAfterDispatch(blink::Visitor* visitor) {
+void StyleRuleImport::Trace(blink::Visitor* visitor) {
   visitor->Trace(style_sheet_client_);
   visitor->Trace(parent_style_sheet_);
   visitor->Trace(style_sheet_);
   visitor->Trace(resource_);
-  StyleRuleBase::TraceAfterDispatch(visitor);
+  StyleRuleBase::Trace(visitor);
 }
 
 void StyleRuleImport::SetCSSStyleSheet(
@@ -146,6 +146,12 @@ void StyleRuleImport::RequestStyleSheet() {
     loading_ = true;
     resource_->AddClient(style_sheet_client_);
   }
+}
+
+CSSRule* StyleRuleImport::CreateCSSOMWrapperInternal(
+    CSSStyleSheet* parent_sheet) const {
+  return CSSImportRule::Create(const_cast<StyleRuleImport*>(this),
+                               parent_sheet);
 }
 
 }  // namespace blink
