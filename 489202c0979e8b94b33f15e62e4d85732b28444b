@@ -73,6 +73,30 @@
     },
     {
       "key": {
+        "uuid": "9420d52b_14c16462",
+        "filename": "chrome/test/mini_installer/config/chrome_beta_not_installed.prop",
+        "patchSetId": 21
+      },
+      "lineNbr": 18,
+      "author": {
+        "id": 1228990
+      },
+      "writtenOn": "2017-11-10T08:06:44Z",
+      "side": 1,
+      "message": "Sorry I misunderstood your earlier comment. It\u0027s fixed now.",
+      "parentUuid": "0c34da3f_926cf0e1",
+      "range": {
+        "startLine": 18,
+        "startChar": 24,
+        "endLine": 18,
+        "endChar": 56
+      },
+      "revId": "489202c0979e8b94b33f15e62e4d85732b28444b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "671603e4_805b7911",
         "filename": "chrome/test/mini_installer/variable_expander.py",
         "patchSetId": 21

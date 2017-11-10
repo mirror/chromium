@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "8834043f_fce1762a",
+        "filename": "chrome/installer/setup/install_worker.cc",
+        "patchSetId": 30
+      },
+      "lineNbr": 189,
+      "author": {
+        "id": 1228990
+      },
+      "writtenOn": "2017-11-10T08:06:44Z",
+      "side": 1,
+      "message": "I\u0027ve converted it back to WorkItem::kWow64Default.",
+      "parentUuid": "c03f7e08_568c8e6c",
+      "range": {
+        "startLine": 189,
+        "startChar": 59,
+        "endLine": 189,
+        "endChar": 74
+      },
+      "revId": "45f4696808607159b3beea8c0e95233a3f8f523f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "2408c623_d3587e1f",
         "filename": "chrome/test/mini_installer/config/chrome_beta_installed.prop",
         "patchSetId": 30
@@ -36,6 +60,24 @@
       "writtenOn": "2017-11-09T12:38:10Z",
       "side": 1,
       "message": "i think you may need to add new capabilities to the RegistryVerifier to make this work. the test generally runs with a 32-bit python.exe, so _winreg will look in the 32-bit hive. this happens to be correct for all of the Google Update keys, but will be wrong for this. the right thing will take a bit of work, since the bitness of python.exe has no relation to the bitness of the chrome installer. here are my suggestions:\n\n1. add support to VariableExpander.__init__ for sniffing out the bitness of Chrome (note that it figures out Chromium vs Google Chrome via sniffing). maybe add a variable to the mapping, or add a new member variable to hold this.\n2. change RegistryVerifier so that by default it uses the correct \"default\" hive based on the bitness of Chrome (KEY_WOW64_64KEY if Chrome is x64, or KEY_WOW64_32KEY if Chrome is x86).\n\nat this point, the registry verifier will behave predictably, in that it\u0027ll look in the 64-bit hive when testing 64-bit Chrome, and the 32-bit hive when testing 32-bit Chrome. this will cause new test failures, though, so we then need to:\n\n3. add support to RegistryVerifier for a new value in expectation dicts to override the default (e.g., \"wow_key\": \"KEY_WOW64_32KEY\").\n4. change existing prop files so that they explicitly list \"wow_key\": \"KEY_WOW64_32KEY\" for all registry access relating to Google Update. there may be others as well.\n\nit makes sense to do this in its own CL rather than mixing it with this one.",
+      "revId": "45f4696808607159b3beea8c0e95233a3f8f523f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1626491d_1726b076",
+        "filename": "chrome/test/mini_installer/config/chrome_beta_installed.prop",
+        "patchSetId": 30
+      },
+      "lineNbr": 39,
+      "author": {
+        "id": 1228990
+      },
+      "writtenOn": "2017-11-10T08:06:44Z",
+      "side": 1,
+      "message": "Thanks for the detailed suggestions. I\u0027ve updated the code accordlingly. I\u0027ll split this CL into two as suggested once I fix all the tests.",
+      "parentUuid": "2408c623_d3587e1f",
       "revId": "45f4696808607159b3beea8c0e95233a3f8f523f",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
