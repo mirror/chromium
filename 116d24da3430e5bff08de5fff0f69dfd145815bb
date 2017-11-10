@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "21f70879_89071339",
+        "filename": "chrome/browser/chrome_browser_main.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 1460,
+      "author": {
+        "id": 1002844
+      },
+      "writtenOn": "2017-11-10T23:43:12Z",
+      "side": 1,
+      "message": "update the comment in chrome/app/generated_resources.grd about it being linux-specific",
+      "range": {
+        "startLine": 1460,
+        "startChar": 29,
+        "endLine": 1460,
+        "endChar": 54
+      },
+      "revId": "116d24da3430e5bff08de5fff0f69dfd145815bb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
