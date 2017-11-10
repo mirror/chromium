@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "0eb98a3b_c9633399",
+        "filename": "cc/resources/video_resource_updater.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 63,
+      "author": {
+        "id": 1000887
+      },
+      "writtenOn": "2017-11-10T16:39:07Z",
+      "side": 1,
+      "message": "I dont recall why this is repeating if the hardware one isn\u0027t but it shouldn\u0027t be, I guess we\u0027ll address that in the future? If not it would make it harder to delete the software-specific fields like this, as mentioned by the TODOs.",
+      "revId": "440c37492a51a7c0bc3e0aaa205383813a5b5262",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
