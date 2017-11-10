@@ -31,6 +31,7 @@
 
 #include <memory>
 
+#include "platform/wtf/Allocator.h"
 #include "public/platform/modules/indexeddb/WebIDBCallbacks.h"
 
 namespace blink {
