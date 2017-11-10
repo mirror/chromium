@@ -21,6 +21,10 @@
 #include "services/service_manager/public/interfaces/service_factory.mojom.h"
 #include "testing/gtest/include/gtest/gtest.h"
 
+#if defined(OS_ANDROID)
+#include "net/android/network_change_notifier_factory_android.h"
+#endif
+
 namespace content {
 
 namespace {
@@ -359,6 +363,38 @@ class TestNetworkChangeManagerClient
   DISALLOW_COPY_AND_ASSIGN(TestNetworkChangeManagerClient);
 };
 
+class NetworkChangeTest : public testing::Test {
+ public:
+  NetworkChangeTest()
+      : scoped_task_environment_(
+            base::test::ScopedTaskEnvironment::MainThreadType::IO) {
+#if defined(OS_ANDROID)
+    // In non-testing code, this factory class lives on main/UI thread. Here it
+    // is fine to initialize it on network service's thread, because tests
+    // always access the factory delegate on the same thread.
+    network_change_notifier_factory_ =
+        std::make_unique<net::NetworkChangeNotifierFactoryAndroid>();
+    net::NetworkChangeNotifier::SetFactory(
+        network_change_notifier_factory_.get());
+#endif
+    service_ = NetworkServiceImpl::CreateForTesting();
+  }
+
+  ~NetworkChangeTest() override {
+    net::NetworkChangeNotifier::SetFactory(nullptr);
+  }
+
+  NetworkService* service() const { return service_.get(); }
+
+ private:
+  base::test::ScopedTaskEnvironment scoped_task_environment_;
+#if defined(OS_ANDROID)
+  std::unique_ptr<net::NetworkChangeNotifierFactoryAndroid>
+      network_change_notifier_factory_;
+#endif
+  std::unique_ptr<NetworkService> service_;
+};
+
 // mojom:NetworkChangeManager currently doesn't support ChromeOS, which has a
 // different code path to set up net::NetworkChangeNotifier.
 #if defined(OS_CHROMEOS) || defined(OS_FUCHSIA)
@@ -366,7 +402,7 @@ class TestNetworkChangeManagerClient
 #else
 #define MAYBE_NetworkChangeManagerRequest NetworkChangeManagerRequest
 #endif
-TEST_F(NetworkServiceTest, MAYBE_NetworkChangeManagerRequest) {
+TEST_F(NetworkChangeTest, MAYBE_NetworkChangeManagerRequest) {
   TestNetworkChangeManagerClient manager_client(service());
   net::NetworkChangeNotifier::NotifyObserversOfNetworkChangeForTests(
       net::NetworkChangeNotifier::CONNECTION_3G);
@@ -397,6 +433,15 @@ class NetworkServiceNetworkChangeTest
     void CreateService(service_manager::mojom::ServiceRequest request,
                        const std::string& name) override {
       if (name == mojom::kNetworkServiceName) {
+#if defined(OS_ANDROID)
+        // In non-testing code, this factory class lives on main/UI thread. Here
+        // it is fine to initialize it on network service's thread, because
+        // tests always access the factory delegate on the same thread.
+        // The factory object is intentionally leaky because it must outlive
+        // NetworkService.
+        net::NetworkChangeNotifier::SetFactory(
+            new net::NetworkChangeNotifierFactoryAndroid);
+#endif
         service_context_.reset(new service_manager::ServiceContext(
             NetworkServiceImpl::CreateForTesting(), std::move(request)));
         // Send a broadcast after NetworkService is actually created.
