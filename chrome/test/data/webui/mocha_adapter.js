@@ -65,6 +65,12 @@ function BrowserTestReporter(runner) {
   });
 }
 
+window.runMochaTest = function(testName) {
+  const escapedTestName = testName.replace(
+      /[\-\[\]\/\{\}\(\)\*\+\?\.\\\^\$\|]/g, "\\$&");
+  mocha.grep(new RegExp(`^${escapedTestName}$`)).run();
+};
+
 // Configure mocha.
 mocha.setup({
   // Use TDD interface instead of BDD.
