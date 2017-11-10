@@ -1,0 +1,61 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "b7ec6a40_f1d69a74",
+        "filename": "ios/web/download/download_controller_impl_unittest.mm",
+        "patchSetId": 2
+      },
+      "lineNbr": 25,
+      "author": {
+        "id": 1191445
+      },
+      "writtenOn": "2017-11-10T01:47:31Z",
+      "side": 1,
+      "message": "Is this used?",
+      "revId": "b1890c98e0934211dcf2a0e1d38429f2fd110d54",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c5c9204e_a4057c5a",
+        "filename": "ios/web/download/download_controller_impl_unittest.mm",
+        "patchSetId": 2
+      },
+      "lineNbr": 79,
+      "author": {
+        "id": 1191445
+      },
+      "writtenOn": "2017-11-10T01:47:31Z",
+      "side": 1,
+      "message": "Is it worth validating that OnDownloadControllerDestroyed is called when the DownloadController is destroyed?",
+      "revId": "b1890c98e0934211dcf2a0e1d38429f2fd110d54",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d13ec4a0_136ef54e",
+        "filename": "ios/web/public/test/fakes/fake_download_controller_delegate.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 31,
+      "author": {
+        "id": 1191445
+      },
+      "writtenOn": "2017-11-10T01:47:31Z",
+      "side": 1,
+      "message": "Typo?",
+      "range": {
+        "startLine": 31,
+        "startChar": 35,
+        "endLine": 31,
+        "endChar": 41
+      },
+      "revId": "b1890c98e0934211dcf2a0e1d38429f2fd110d54",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
