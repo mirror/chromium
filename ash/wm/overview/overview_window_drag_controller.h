@@ -26,6 +26,11 @@ class ASH_EXPORT OverviewWindowDragController {
   // Snapping distance between the dragged window with the screen edge. It's
   // useful especially for touch events.
   static constexpr int kScreenEdgeInsetForDrag = 200;
+  // The minimum offset that will be considered as a drag event.
+  static constexpr int kMinimumDragOffset = 5;
+  // The minimum offset that an item must be moved before it is considered a
+  // drag event, if the drag starts in one of the snap regions.
+  static constexpr int kMinimumDragOffsetAlreadyInSnapRegionDp = 48;
 
   explicit OverviewWindowDragController(WindowSelector* window_selector);
   ~OverviewWindowDragController();
@@ -51,6 +56,11 @@ class ASH_EXPORT OverviewWindowDragController {
   // Updates visuals for the user while dragging items around.
   void UpdatePhantomWindowAndWindowGrid(const gfx::Point& location_in_screen);
 
+  // Dragged items should not attempt to show the phantom window or snap if
+  // the drag started in a snap region and has not been dragged pass the
+  // threshold.
+  bool ShouldUpdatePhantomWindowOrSnap(const gfx::Point& event_location);
+
   SplitViewController::SnapPosition GetSnapPosition(
       const gfx::Point& location_in_screen) const;
 
@@ -68,6 +78,9 @@ class ASH_EXPORT OverviewWindowDragController {
 
   // The drag target window in the overview mode.
   WindowSelectorItem* item_ = nullptr;
+
+  // The location of the initial mouse/touch/gesture event in screen.
+  gfx::Point initial_event_location_;
 
   // The location of the previous mouse/touch/gesture event in screen.
   gfx::Point previous_event_location_;
