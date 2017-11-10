@@ -136,6 +136,10 @@ IPC::SyncMessageFilter* MockRenderThread::GetSyncMessageFilter() {
   return nullptr;
 }
 
+blink::scheduler::ChildScheduler* MockRenderThread::GetScheduler() {
+  return nullptr;
+}
+
 scoped_refptr<base::SingleThreadTaskRunner>
 MockRenderThread::GetIOTaskRunner() {
   return scoped_refptr<base::SingleThreadTaskRunner>();

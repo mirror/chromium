@@ -69,6 +69,7 @@
 #include "services/service_manager/public/cpp/interface_provider.h"
 #include "services/service_manager/runner/common/client_util.h"
 #include "services/service_manager/sandbox/sandbox_type.h"
+#include "third_party/WebKit/public/platform/scheduler/child/child_scheduler.h"
 
 #if defined(OS_POSIX)
 #include "base/posix/global_descriptors.h"
@@ -385,6 +386,10 @@ ChildThreadImpl::ChildThreadImpl(const Options& options)
   Init(options);
 }
 
+blink::scheduler::ChildScheduler* ChildThreadImpl::GetScheduler() {
+  return nullptr;
+}
+
 scoped_refptr<base::SingleThreadTaskRunner> ChildThreadImpl::GetIOTaskRunner() {
   if (IsInBrowserProcess())
     return browser_process_io_runner_;
@@ -432,10 +437,11 @@ void ChildThreadImpl::Init(const Options& options) {
   IPC::Logging::GetInstance();
 #endif
 
-  channel_ =
-      IPC::SyncChannel::Create(this, ChildProcess::current()->io_task_runner(),
-                               base::ThreadTaskRunnerHandle::Get(),
-                               ChildProcess::current()->GetShutDownEvent());
+  channel_ = IPC::SyncChannel::Create(
+      this, ChildProcess::current()->io_task_runner(),
+      GetScheduler() ? GetScheduler()->IPCTaskRunner()
+                     : base::ThreadTaskRunnerHandle::Get(),
+      ChildProcess::current()->GetShutDownEvent());
 #if BUILDFLAG(IPC_MESSAGE_LOG_ENABLED)
   if (!IsInBrowserProcess())
     IPC::Logging::GetInstance()->SetIPCSender(this);
