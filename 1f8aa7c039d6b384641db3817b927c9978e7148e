@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "18a196d6_b7db0f52",
+        "filename": "content/browser/frame_host/navigation_handle_impl.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 376,
+      "author": {
+        "id": 1115881
+      },
+      "writtenOn": "2017-11-10T15:37:20Z",
+      "side": 1,
+      "message": "DCHECK(state_ \u003e\u003d WILL_PROCESS_RESPONSE) should work.",
+      "revId": "1f8aa7c039d6b384641db3817b927c9978e7148e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "86f23fe6_7cceaece",
+        "filename": "content/test/test_render_frame_host.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 148,
+      "author": {
+        "id": 1115881
+      },
+      "writtenOn": "2017-11-10T15:37:20Z",
+      "side": 1,
+      "message": "I don\u0027t see this function being used. Is it still needed?",
+      "revId": "1f8aa7c039d6b384641db3817b927c9978e7148e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
