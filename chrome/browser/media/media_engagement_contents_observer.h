@@ -83,11 +83,13 @@ class MediaEngagementContentsObserver : public content::WebContentsObserver {
     kPlayerRemoved,
   };
 
-  void OnSignificantMediaPlaybackTime();
+  void OnSignificantMediaPlaybackTimeForPlayer(const MediaPlayerId& id);
+  void OnSignificantMediaPlaybackTimeForPage();
+  void UpdatePlayerTimer(const MediaPlayerId&);
+  void UpdatePageTimer();
   bool AreConditionsMet() const;
-  void UpdateTimer();
 
-  void SetTimerForTest(std::unique_ptr<base::Timer> timer);
+  void SetTaskRunnerForTest(scoped_refptr<base::SequencedTaskRunner>);
 
   // |this| is owned by |service_|.
   MediaEngagementService* service_;
@@ -184,7 +186,11 @@ class MediaEngagementContentsObserver : public content::WebContentsObserver {
 
   // Stores the ids of the players that were audible. The boolean will be true
   // if the player was significant.
-  std::map<MediaPlayerId, bool> audible_players_;
+  typedef std::pair<bool, std::unique_ptr<base::Timer>> AudiblePlayerRow;
+  std::map<MediaPlayerId, AudiblePlayerRow> audible_players_;
+
+  // The task runner to use when creating timers. It is used only for testing.
+  scoped_refptr<base::SequencedTaskRunner> task_runner_;
 
   url::Origin committed_origin_;
 
