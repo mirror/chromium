@@ -2,6 +2,115 @@
   "comments": [
     {
       "key": {
+        "uuid": "87621574_04c41b1c",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/omnibox/geo/GeolocationHeader.java",
+        "patchSetId": 12
+      },
+      "lineNbr": 395,
+      "author": {
+        "id": 1002272
+      },
+      "writtenOn": "2017-11-10T02:22:33Z",
+      "side": 1,
+      "message": "This is only called for searches, but I believe it can be called for non-default search engines. I could be wrong (I\u0027m not sure if Clank supports keyword searches like desktop does) but it\u0027s probably safest to leave this in.",
+      "revId": "ebc6f39d97582b711f1b211f7013e0ef03144710",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "12926d3e_3cf985a2",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/preferences/website/SingleWebsitePreferences.java",
+        "patchSetId": 12
+      },
+      "lineNbr": 859,
+      "author": {
+        "id": 1002272
+      },
+      "writtenOn": "2017-11-10T02:22:33Z",
+      "side": 1,
+      "message": "Are there other UI entry points to do similar things? E.g. removing browsing data?\n\nI\u0027d be more comfortable if this was done at a lower level somehow.",
+      "range": {
+        "startLine": 859,
+        "startChar": 36,
+        "endLine": 859,
+        "endChar": 65
+      },
+      "revId": "ebc6f39d97582b711f1b211f7013e0ef03144710",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d5defcc4_0d52d0ec",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/preferences/website/Website.java",
+        "patchSetId": 12
+      },
+      "lineNbr": 251,
+      "author": {
+        "id": 1002272
+      },
+      "writtenOn": "2017-11-10T02:22:33Z",
+      "side": 1,
+      "message": "Is it worth putting a DCHECK here to make sure value isn\u0027t ASK?",
+      "range": {
+        "startLine": 251,
+        "startChar": 56,
+        "endLine": 251,
+        "endChar": 61
+      },
+      "revId": "ebc6f39d97582b711f1b211f7013e0ef03144710",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "70073c7e_fffeb39c",
+        "filename": "chrome/browser/android/search_permissions/search_geolocation_disclosure_tab_helper.cc",
+        "patchSetId": 12
+      },
+      "lineNbr": 148,
+      "author": {
+        "id": 1002272
+      },
+      "writtenOn": "2017-11-10T02:22:33Z",
+      "side": 1,
+      "message": "Nit: s/And only/Only/",
+      "range": {
+        "startLine": 148,
+        "startChar": 5,
+        "endLine": 148,
+        "endChar": 8
+      },
+      "revId": "ebc6f39d97582b711f1b211f7013e0ef03144710",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e4bed376_9fed1db4",
+        "filename": "chrome/browser/android/search_permissions/search_geolocation_disclosure_tab_helper.cc",
+        "patchSetId": 12
+      },
+      "lineNbr": 224,
+      "author": {
+        "id": 1002272
+      },
+      "writtenOn": "2017-11-10T02:22:33Z",
+      "side": 1,
+      "message": "The goal of these metrics is to determine the effect of the disclosure - e.g. how many people manually turn off the geolocation setting due to seeing the disclosure. Prior to this change only users with ASK would see the disclosure, so we could compare the post disclosure setting with this one.\n\nI think the best thing to do is simply remove the ContentSetting version of these metrics.",
+      "range": {
+        "startLine": 224,
+        "startChar": 47,
+        "endLine": 224,
+        "endChar": 52
+      },
+      "revId": "ebc6f39d97582b711f1b211f7013e0ef03144710",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "8940daaa_52679a0e",
         "filename": "chrome/browser/android/search_permissions/search_permissions_service.cc",
         "patchSetId": 12
