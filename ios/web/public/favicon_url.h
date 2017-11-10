@@ -18,19 +18,20 @@ struct FaviconURL {
   // favicon_base::IconType.
   enum class IconType {
     kInvalid = 0,
-    kFavicon = 1 << 0,
-    kTouchIcon = 1 << 1,
-    kTouchPrecomposedIcon = 1 << 2,
-    kWebManifestIcon = 1 << 3,
-    kMax = kWebManifestIcon
+    kFavicon,
+    kTouchIcon,
+    kTouchPrecomposedIcon,
+    kWebManifestIcon,
   };
 
   FaviconURL();
   FaviconURL(const GURL& url,
              IconType type,
              const std::vector<gfx::Size>& sizes);
-  FaviconURL(const FaviconURL& other);
   ~FaviconURL();
+
+  FaviconURL(const FaviconURL&) = delete;
+  FaviconURL& operator=(const FaviconURL&) = delete;
 
   // The url of the icon.
   GURL icon_url;

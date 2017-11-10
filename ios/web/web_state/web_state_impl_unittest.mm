@@ -346,10 +346,11 @@ TEST_F(WebStateImplTest, ObserverTest) {
 
   // Test that FaviconUrlUpdated() is called.
   ASSERT_FALSE(observer->update_favicon_url_candidates_info());
-  web::FaviconURL favicon_url(GURL("https://chromium.test/"),
-                              web::FaviconURL::IconType::kTouchIcon,
-                              {gfx::Size(5, 6)});
-  web_state_->OnFaviconUrlUpdated({favicon_url});
+  const std::vector<web::FaviconURL> favicon_urls = {web::FaviconURL(
+      GURL("https://chromium.test/"), web::FaviconURL::IconType::kTouchIcon,
+      {gfx::Size(5, 6)})};
+  const web::FaviconURL& favicon_url = favicon_urls.front();
+  web_state_->OnFaviconUrlUpdated(favicon_urls);
   ASSERT_TRUE(observer->update_favicon_url_candidates_info());
   EXPECT_EQ(web_state_.get(),
             observer->update_favicon_url_candidates_info()->web_state);

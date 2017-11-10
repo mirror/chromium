@@ -13,8 +13,6 @@ FaviconURL::FaviconURL(const GURL& url,
                        const std::vector<gfx::Size>& sizes)
     : icon_url(url), icon_type(type), icon_sizes(sizes) {}
 
-FaviconURL::FaviconURL(const FaviconURL& other) = default;
-
 FaviconURL::~FaviconURL() {
 }
 
