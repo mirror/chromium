@@ -3,6 +3,9 @@
 // found in the LICENSE file.
 
 #include <stdint.h>
+
+#include <memory>
+
 #include "base/strings/utf_string_conversions.h"
 #include "base/test/scoped_feature_list.h"
 #include "build/build_config.h"
@@ -18,6 +21,7 @@
 #include "net/test/embedded_test_server/embedded_test_server.h"
 #include "net/test/embedded_test_server/http_request.h"
 #include "net/test/embedded_test_server/http_response.h"
+
 namespace content {
 
 // This class currently enables the network service feature, which allows us to
@@ -34,7 +38,7 @@ class AppCacheNetworkServiceBrowserTest : public ContentBrowserTest {
   std::unique_ptr<net::test_server::HttpResponse> HandleRequest(
       const net::test_server::HttpRequest& request) {
     request_count_++;
-    return std::unique_ptr<net::test_server::HttpResponse>();
+    return nullptr;
   }
 
   // Call this to reset the request_count_.
@@ -63,14 +67,13 @@ class AppCacheNetworkServiceBrowserTest : public ContentBrowserTest {
 // validating that request count for the last navigation.
 IN_PROC_BROWSER_TEST_F(AppCacheNetworkServiceBrowserTest,
                        VerifySubresourceFactoryClearedOnNewNavigation) {
-  std::unique_ptr<net::EmbeddedTestServer> embedded_test_server(
-      new net::EmbeddedTestServer());
-
+  auto embedded_test_server = std::make_unique<net::EmbeddedTestServer>();
   embedded_test_server->RegisterRequestHandler(
       base::Bind(&AppCacheNetworkServiceBrowserTest::HandleRequest,
                  base::Unretained(this)));
 
-  base::FilePath content_test_data(FILE_PATH_LITERAL("content/test/data"));
+  base::FilePath content_test_data;
+  PathService::Get(content::DIR_TEST_DATA, &content_test_data);
   embedded_test_server->AddDefaultHandlers(content_test_data);
 
   ASSERT_TRUE(embedded_test_server->Start());
