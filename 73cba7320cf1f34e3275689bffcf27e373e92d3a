@@ -34,6 +34,24 @@
       "revId": "73cba7320cf1f34e3275689bffcf27e373e92d3a",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "bd4a9515_e493aca9",
+        "filename": "chrome/browser/chromeos/certificate_provider/certificate_provider_service.cc",
+        "patchSetId": 15
+      },
+      "lineNbr": 275,
+      "author": {
+        "id": 1126309
+      },
+      "writtenOn": "2017-11-10T13:07:42Z",
+      "side": 1,
+      "message": "I see. Note only that \"OnServiceTaskRunner\" will likely be a worse choice, as it\u0027ll basically imply the UI thread.\n\nIt seems that SSLPrivateKey is currently called from an IO thread, so it\u0027s probably not too bad to leave the hashing being performed there.\n\nOffloading the hashing onto a background thread (via the PostTaskWithTraits() API) would be neater, but I won\u0027t insist on this as it\u0027s anyway not a regression from the previous behavior. But feel free to do this either :)",
+      "parentUuid": "a0cfd07c_b4dd29bb",
+      "revId": "73cba7320cf1f34e3275689bffcf27e373e92d3a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
