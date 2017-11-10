@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "3e33b20b_2699ca1a",
+        "filename": "third_party/WebKit/Source/platform/network/FormDataEncoder.cpp",
+        "patchSetId": 18
+      },
+      "lineNbr": 177,
+      "author": {
+        "id": 1163599
+      },
+      "writtenOn": "2017-11-10T02:30:48Z",
+      "side": 1,
+      "message": "nit: I\u0027d remove any text on \"how things were\". I think that what matters is why things are the way they are now.\n\nI\u0027d start with your comment about browser compatibility, because that\u0027s really the main reason. I\u0027d then add the background about the HTML standard and the number of the RFC it overrides, but don\u0027t think it\u0027s necessary to quote either standard.",
+      "revId": "986f4382d1ce4557948dbf4cc5f6dab949cf88d3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
