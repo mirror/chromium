@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "5e3902ef_f402c8c7",
+        "filename": "chrome/browser/ui/views/extensions/extension_install_dialog_view_browsertest.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 325,
+      "author": {
+        "id": 1115745
+      },
+      "writtenOn": "2017-11-10T03:12:29Z",
+      "side": 1,
+      "message": "Is Hesse\u0027s Siddhartha free of copyright?  If not, we can\u0027t distribute it here.",
+      "revId": "561d1483015f478233a2e74eafb614a5a42919f9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
