@@ -1,0 +1,119 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "018820ae_5b8ab11c",
+        "filename": "ios/net/crn_http_protocol_handler.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 10,
+      "author": {
+        "id": 1002889
+      },
+      "writtenOn": "2017-11-10T19:52:24Z",
+      "side": 1,
+      "message": "not needed. Use should be able to forward-declare class LoadTimingInfo here.",
+      "range": {
+        "startLine": 10,
+        "startChar": 14,
+        "endLine": 10,
+        "endChar": 25
+      },
+      "revId": "9fd698516e725926152e1f9f2d1fa1199567a673",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3a302395_1ff9a635",
+        "filename": "ios/net/crn_http_protocol_handler.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 36,
+      "author": {
+        "id": 1002889
+      },
+      "writtenOn": "2017-11-10T19:52:24Z",
+      "side": 1,
+      "message": "Need comment for public class",
+      "range": {
+        "startLine": 36,
+        "startChar": 6,
+        "endLine": 36,
+        "endChar": 21
+      },
+      "revId": "9fd698516e725926152e1f9f2d1fa1199567a673",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "853c4a8b_8cdc8bd7",
+        "filename": "ios/net/crn_http_protocol_handler.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 45,
+      "author": {
+        "id": 1002889
+      },
+      "writtenOn": "2017-11-10T19:52:24Z",
+      "side": 1,
+      "message": "const LoadTimingInfo\u0026 to avoid copying.\nThis will also need the task/request that finished.",
+      "range": {
+        "startLine": 45,
+        "startChar": 42,
+        "endLine": 45,
+        "endChar": 56
+      },
+      "revId": "9fd698516e725926152e1f9f2d1fa1199567a673",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "585b6ecb_38b8e3ed",
+        "filename": "ios/net/crn_http_protocol_handler.mm",
+        "patchSetId": 2
+      },
+      "lineNbr": 63,
+      "author": {
+        "id": 1002889
+      },
+      "writtenOn": "2017-11-10T19:52:24Z",
+      "side": 1,
+      "message": "Comments should be properly punctuated.",
+      "range": {
+        "startLine": 63,
+        "startChar": 26,
+        "endLine": 63,
+        "endChar": 41
+      },
+      "revId": "9fd698516e725926152e1f9f2d1fa1199567a673",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "08c263a8_437df17f",
+        "filename": "ios/net/crn_http_protocol_handler.mm",
+        "patchSetId": 2
+      },
+      "lineNbr": 739,
+      "author": {
+        "id": 1002889
+      },
+      "writtenOn": "2017-11-10T19:52:24Z",
+      "side": 1,
+      "message": "If anything this needs a check that g_metrics_delegate is not null.\nNo need to GetLoadTimingInfo if it is not set.",
+      "range": {
+        "startLine": 739,
+        "startChar": 2,
+        "endLine": 739,
+        "endChar": 20
+      },
+      "revId": "9fd698516e725926152e1f9f2d1fa1199567a673",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
