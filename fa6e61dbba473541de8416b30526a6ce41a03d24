@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "83485dbc_b02d4d5a",
+        "filename": "ash/accessibility/accessibility_highlight_layer.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 42,
+      "author": {
+        "id": 1250213
+      },
+      "writtenOn": "2017-11-10T00:33:33Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "afa57b68_3195acc7",
+      "revId": "fa6e61dbba473541de8416b30526a6ce41a03d24",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "df74642e_9a336a23",
         "filename": "ash/accessibility/accessibility_highlight_layer.cc",
         "patchSetId": 6
@@ -33,6 +51,24 @@
       "revId": "fa6e61dbba473541de8416b30526a6ce41a03d24",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "21482c09_7815c9ef",
+        "filename": "ash/accessibility/accessibility_highlight_layer.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 75,
+      "author": {
+        "id": 1250213
+      },
+      "writtenOn": "2017-11-10T00:33:33Z",
+      "side": 1,
+      "message": "Oops, missed this one. Done.",
+      "parentUuid": "df74642e_9a336a23",
+      "revId": "fa6e61dbba473541de8416b30526a6ce41a03d24",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
