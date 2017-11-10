@@ -148,6 +148,8 @@ class CORE_EXPORT Frame : public GarbageCollectedFinalized<Frame> {
 
   virtual void DidChangeVisibilityState();
 
+  virtual void DidPageStop();
+
   void UpdateUserActivationInFrameTree();
 
   bool HasBeenActivated() const {
