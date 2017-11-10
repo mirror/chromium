@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "109f70db_87280545",
+        "filename": "third_party/WebKit/Source/platform/graphics/paint/GeometryMapper.cpp",
+        "patchSetId": 5
+      },
+      "lineNbr": 299,
+      "author": {
+        "id": 1115878
+      },
+      "writtenOn": "2017-11-10T17:08:25Z",
+      "side": 0,
+      "message": "Why can this line be removed?",
+      "revId": "7f1c5627aef1313223c30509b1d6cf7eb50c2993",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b408eb86_3ea8ac1d",
+        "filename": "third_party/WebKit/Source/platform/graphics/paint/GeometryMapperTest.cpp",
+        "patchSetId": 5
+      },
+      "lineNbr": 20,
+      "author": {
+        "id": 1115878
+      },
+      "writtenOn": "2017-11-10T17:08:25Z",
+      "side": 0,
+      "message": "The refactoring in this file is extensive, please send it as a separate CL with no\nfunctionality change to make it easier to verify correctness.",
+      "revId": "7f1c5627aef1313223c30509b1d6cf7eb50c2993",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}

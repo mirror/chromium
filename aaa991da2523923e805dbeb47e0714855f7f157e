@@ -1,0 +1,72 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "c3d0ab14_00f0aa7a",
+        "filename": "third_party/WebKit/Source/platform/graphics/paint/FloatClipRect.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 47,
+      "author": {
+        "id": 1115878
+      },
+      "writtenOn": "2017-11-10T17:08:25Z",
+      "side": 1,
+      "message": "This is an orthogonal bugfix for HasRadius - prevoiusly it would not\nset has_radius_ when intersecting. Is this situation unittested?",
+      "revId": "aaa991da2523923e805dbeb47e0714855f7f157e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ce0f6590_66723c1f",
+        "filename": "third_party/WebKit/Source/platform/graphics/paint/FloatClipRect.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 78,
+      "author": {
+        "id": 1115878
+      },
+      "writtenOn": "2017-11-10T17:08:25Z",
+      "side": 1,
+      "message": "Why does rectilinear suffice? It\u0027s not immediately obvious to me why\nthere can\u0027t be a lossy matrix which happens to result in a\nrectilinear output. Either this needs a proof or you need to change it\nto check for certain types of matrices like translation or scale.",
+      "revId": "aaa991da2523923e805dbeb47e0714855f7f157e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7d786000_b4a51b7b",
+        "filename": "third_party/WebKit/Source/platform/graphics/paint/FloatClipRectTest.cpp",
+        "patchSetId": 5
+      },
+      "lineNbr": 59,
+      "author": {
+        "id": 1115878
+      },
+      "writtenOn": "2017-11-10T17:08:25Z",
+      "side": 1,
+      "message": "Is this the line expecting HasRadius to be false after intersection?",
+      "revId": "aaa991da2523923e805dbeb47e0714855f7f157e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "008eeec4_b72a32ce",
+        "filename": "third_party/WebKit/Source/platform/graphics/paint/FloatClipRectTest.cpp",
+        "patchSetId": 5
+      },
+      "lineNbr": 86,
+      "author": {
+        "id": 1115878
+      },
+      "writtenOn": "2017-11-10T17:08:25Z",
+      "side": 1,
+      "message": "Is under rotation a case we can actually handle anyway?",
+      "revId": "aaa991da2523923e805dbeb47e0714855f7f157e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
