@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "17b1d49e_d53d3b5c",
+        "filename": "chrome/browser/profiles/profile_window_browsertest.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 44,
+      "author": {
+        "id": 1000763
+      },
+      "writtenOn": "2017-11-10T20:54:16Z",
+      "side": 1,
+      "message": "How about excluding this file in BUILD.gn?",
+      "range": {
+        "startLine": 44,
+        "startChar": 0,
+        "endLine": 44,
+        "endChar": 25
+      },
+      "revId": "6b432cfa6320ad875095dbea3eccbc8919972ad1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
