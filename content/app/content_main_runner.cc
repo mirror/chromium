@@ -341,8 +341,6 @@ int RunZygote(const MainFunctionParams& main_function_params,
   ContentClientInitializer::Set(process_type, delegate);
 
   MainFunctionParams main_params(command_line);
-  main_params.zygote_child = true;
-
   std::unique_ptr<base::FieldTrialList> field_trial_list;
   InitializeFieldTrialAndFeatureList(&field_trial_list);
 
