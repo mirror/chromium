@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "da2d9bf9_2a0f6f2f",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 4
+      },
+      "lineNbr": 10,
+      "author": {
+        "id": 1251176
+      },
+      "writtenOn": "2017-11-10T11:59:16Z",
+      "side": 1,
+      "message": "\"miss usage\" -\u003e \"misuse\".",
+      "revId": "a783d5abc76998c16fc105476971402f8cd64232",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
