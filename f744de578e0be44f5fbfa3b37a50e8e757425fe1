@@ -1,0 +1,44 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "9114dba5_19411da5",
+        "filename": "chrome/browser/printing/cloud_print/privet_http.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 35,
+      "author": {
+        "id": 1001934
+      },
+      "writtenOn": "2017-11-10T02:32:55Z",
+      "side": 1,
+      "message": "Instead of reverting, can we just change OnceCallback to RepeatingCallback?",
+      "revId": "f744de578e0be44f5fbfa3b37a50e8e757425fe1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "68d7e2d0_63ad3239",
+        "filename": "chrome/browser/printing/cloud_print/privet_http_impl.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 120,
+      "author": {
+        "id": 1001934
+      },
+      "writtenOn": "2017-11-10T02:32:55Z",
+      "side": 1,
+      "message": "keep nullptr",
+      "range": {
+        "startLine": 120,
+        "startChar": 16,
+        "endLine": 120,
+        "endChar": 20
+      },
+      "revId": "f744de578e0be44f5fbfa3b37a50e8e757425fe1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
