@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "1ef3d7d2_f593b38e",
+        "filename": "content/network/network_service_impl.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 34,
+      "author": {
+        "id": 1120845
+      },
+      "writtenOn": "2017-11-10T20:02:39Z",
+      "side": 1,
+      "message": "Done. We won\u0027t trigger this path in production. I changed it to just return nullptr. I don\u0027t think any tests will fail. Those linked in the trybots seem unrelated.",
+      "parentUuid": "c14b14ba_b67d3ba3",
+      "range": {
+        "startLine": 34,
+        "startChar": 14,
+        "endLine": 34,
+        "endChar": 35
+      },
+      "revId": "6019354cbb8dbeb96c086a7cc78b52706c880f10",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "19894cb1_a3befcf1",
         "filename": "content/network/network_service_unittest.cc",
         "patchSetId": 9
@@ -54,6 +78,24 @@
       "side": 1,
       "message": "Sorry, I somehow managed to miss this file.\n\nAny reason not just move this extra logic into the main test fixture?",
       "parentUuid": "19894cb1_a3befcf1",
+      "revId": "6019354cbb8dbeb96c086a7cc78b52706c880f10",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "78f3fbb6_5106365a",
+        "filename": "content/network/network_service_unittest.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 384,
+      "author": {
+        "id": 1120845
+      },
+      "writtenOn": "2017-11-10T20:02:39Z",
+      "side": 1,
+      "message": "We can, but those NetworkServiceTests seem unrelated to NCN, so I didn\u0027t want to polute other tests and kept the test fixture separate.",
+      "parentUuid": "9174da2e_11ffd0fa",
       "revId": "6019354cbb8dbeb96c086a7cc78b52706c880f10",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
