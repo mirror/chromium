@@ -22,6 +22,30 @@
       "revId": "afe10a73f6e25352890cc6b22fe6c775af1d5e34",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a193d92b_554a5ab7",
+        "filename": "content/browser/service_worker/service_worker_provider_host.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 562,
+      "author": {
+        "id": 1223459
+      },
+      "writtenOn": "2017-11-10T07:15:17Z",
+      "side": 1,
+      "message": "Thanks, this was moved from ServiceWorkerContainer::CountFeature.  And the original background is https://bugs.chromium.org/p/chromium/issues/detail?id\u003d758419.\nDo you think we should move it back to ServiceWorkerContainer::CountFeature?",
+      "parentUuid": "08373cf0_018722e4",
+      "range": {
+        "startLine": 559,
+        "startChar": 0,
+        "endLine": 562,
+        "endChar": 17
+      },
+      "revId": "afe10a73f6e25352890cc6b22fe6c775af1d5e34",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
