@@ -1,0 +1,123 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "ba7f20ad_9b319a05",
+        "filename": "components/viz/service/gl/DEPS",
+        "patchSetId": 4
+      },
+      "lineNbr": 2,
+      "author": {
+        "id": 1000111
+      },
+      "writtenOn": "2017-11-10T20:22:56Z",
+      "side": 1,
+      "message": "It doesn\u0027t look like this is needed?",
+      "revId": "3d6ee72a909e34f97ea668c2b759919625a6e09e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "50420fd4_89394793",
+        "filename": "components/viz/service/gl/gpu_service_impl.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 253,
+      "author": {
+        "id": 1000111
+      },
+      "writtenOn": "2017-11-10T20:22:56Z",
+      "side": 1,
+      "message": "#else\n  NOTREACHED()\n\n(in the other cases below too)",
+      "revId": "3d6ee72a909e34f97ea668c2b759919625a6e09e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0f0d9f73_132c79e3",
+        "filename": "components/viz/service/main/BUILD.gn",
+        "patchSetId": 4
+      },
+      "lineNbr": 38,
+      "author": {
+        "id": 1000111
+      },
+      "writtenOn": "2017-11-10T20:22:56Z",
+      "side": 1,
+      "message": "Just //media/gpu",
+      "revId": "3d6ee72a909e34f97ea668c2b759919625a6e09e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "86ab7be4_0b779b15",
+        "filename": "content/browser/gpu/gpu_client.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 89,
+      "author": {
+        "id": 1000111
+      },
+      "writtenOn": "2017-11-10T20:22:56Z",
+      "side": 1,
+      "message": "I feel like these should trigger TerminateOnBadMessageReceived() on the associated child-process. (same for the below cases)",
+      "revId": "3d6ee72a909e34f97ea668c2b759919625a6e09e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "133cbf29_867b5a27",
+        "filename": "services/ui/public/cpp/gpu/gpu.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 116,
+      "author": {
+        "id": 1000111
+      },
+      "writtenOn": "2017-11-10T20:22:56Z",
+      "side": 1,
+      "message": "// defined(OS_CHROMEOS)",
+      "revId": "3d6ee72a909e34f97ea668c2b759919625a6e09e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7a296d8f_7fbd12ec",
+        "filename": "services/ui/ws/gpu_client.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 73,
+      "author": {
+        "id": 1000111
+      },
+      "writtenOn": "2017-11-10T20:22:56Z",
+      "side": 1,
+      "message": "Add a TODO here that this should allow this only for \u0027privileged\u0027 clients.\n\nIn mus, this ui::GpuClient services both the browser and the renderer. We would not want this to service the requests from the renderer process. (same for below)",
+      "revId": "3d6ee72a909e34f97ea668c2b759919625a6e09e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4e15f6f9_0085e744",
+        "filename": "ui/aura/env.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 131,
+      "author": {
+        "id": 1000111
+      },
+      "writtenOn": "2017-11-10T20:22:56Z",
+      "side": 1,
+      "message": "Can you expose ui::Gpu directly from here instead? e.g.\n\n  ui::Gpu* GetGpuConnection();",
+      "revId": "3d6ee72a909e34f97ea668c2b759919625a6e09e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
