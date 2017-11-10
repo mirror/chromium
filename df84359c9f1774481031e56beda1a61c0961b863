@@ -48,6 +48,30 @@
     },
     {
       "key": {
+        "uuid": "e6a00e01_26651351",
+        "filename": "services/device/generic_sensor/platform_sensor_fusion_unittest.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 109,
+      "author": {
+        "id": 1115688
+      },
+      "writtenOn": "2017-11-10T08:01:57Z",
+      "side": 1,
+      "message": "so that we can treat \u0027fusion_sensor_\u0027 as PlatformSensor::Client",
+      "parentUuid": "5af98d08_1907e12b",
+      "range": {
+        "startLine": 109,
+        "startChar": 2,
+        "endLine": 109,
+        "endChar": 53
+      },
+      "revId": "df84359c9f1774481031e56beda1a61c0961b863",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "a37fcb7d_25cdbc7f",
         "filename": "services/device/generic_sensor/platform_sensor_fusion_unittest.cc",
         "patchSetId": 1
@@ -59,6 +83,30 @@
       "writtenOn": "2017-11-09T18:26:22Z",
       "side": 1,
       "message": "Move this namespace and function to the beginning of this file?",
+      "range": {
+        "startLine": 159,
+        "startChar": 0,
+        "endLine": 163,
+        "endChar": 56
+      },
+      "revId": "df84359c9f1774481031e56beda1a61c0961b863",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "944f455e_130f105f",
+        "filename": "services/device/generic_sensor/platform_sensor_fusion_unittest.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 163,
+      "author": {
+        "id": 1115688
+      },
+      "writtenOn": "2017-11-10T08:01:57Z",
+      "side": 1,
+      "message": "I\u0027d prefer keeping it close to the place where it is used (no need to scroll up the code -- better readability)",
+      "parentUuid": "a37fcb7d_25cdbc7f",
       "range": {
         "startLine": 159,
         "startChar": 0,
@@ -91,6 +139,30 @@
       "revId": "df84359c9f1774481031e56beda1a61c0961b863",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f3f538ed_5eabf6f2",
+        "filename": "services/device/generic_sensor/platform_sensor_fusion_unittest.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 166,
+      "author": {
+        "id": 1115688
+      },
+      "writtenOn": "2017-11-10T08:01:57Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "3895f00e_1b495bb9",
+      "range": {
+        "startLine": 166,
+        "startChar": 4,
+        "endLine": 166,
+        "endChar": 34
+      },
+      "revId": "df84359c9f1774481031e56beda1a61c0961b863",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
