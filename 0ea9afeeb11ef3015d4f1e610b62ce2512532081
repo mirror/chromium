@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "cf58e440_42727aa2",
+        "filename": "chrome/browser/content_settings/framebust_block_tab_helper.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 21,
+      "author": {
+        "id": 1142059
+      },
+      "writtenOn": "2017-11-10T15:08:02Z",
+      "side": 1,
+      "message": "// There is expected to be at most one observer at a time.",
+      "revId": "0ea9afeeb11ef3015d4f1e610b62ce2512532081",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "66ead52c_dc9594e4",
+        "filename": "chrome/browser/ui/content_settings/content_setting_bubble_model_browsertest.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 304,
+      "author": {
+        "id": 1142059
+      },
+      "writtenOn": "2017-11-10T15:08:02Z",
+      "side": 1,
+      "message": "Optional: Honestly I think this deserves to be its own file, alongside the tab_helper. Can probably also test when there are multiple URLs, and you click some middle one.\n\nNow that the UI is finished, you can also write more end to end tests. E.g. navigate to a site which actually tries to framebust, and expect the UI to show etc etc. I don\u0027t think that\u0027s necessary in this CL though.",
+      "revId": "0ea9afeeb11ef3015d4f1e610b62ce2512532081",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
