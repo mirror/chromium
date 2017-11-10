@@ -740,10 +740,11 @@ TEST(HttpUtilTest, ParseContentType) {
       true,
       ""
     },
+    // Parameter name is "charset ", not "charset".  See https://crbug.com/772834.
     { "text/html; charset =utf-8",
       "text/html",
-      "utf-8",
-      true,
+      "",
+      false,
       ""
     },
     { "text/html; charset= utf-8",
@@ -764,11 +765,12 @@ TEST(HttpUtilTest, ParseContentType) {
       false,
       "\"WebKit-ada-df-dsf-adsfadsfs\""
     },
+    // Parameter name is "boundary ", not "boundary".  See https://crbug.com/772834.
     { "text/html; boundary =\"WebKit-ada-df-dsf-adsfadsfs\"",
       "text/html",
       "",
       false,
-      "\"WebKit-ada-df-dsf-adsfadsfs\""
+      ""
     },
     { "text/html; boundary= \"WebKit-ada-df-dsf-adsfadsfs\"",
       "text/html",

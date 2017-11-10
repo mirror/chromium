@@ -98,7 +98,12 @@ void HttpUtil::ParseContentType(const std::string& content_type_str,
 
       std::string::const_iterator param_name_begin = tokenizer.token_begin();
       std::string::const_iterator param_name_end = equals_sign;
-      TrimLWS(&param_name_begin, &param_name_end);
+      // Only trim leading whitespace from parameter name, not trailing
+      // whitespace.  See https://crbug.com/772834.
+      while (param_name_begin < param_name_end &&
+             HttpUtil::IsLWS(*param_name_begin)) {
+        ++param_name_begin;
+      }
 
       std::string::const_iterator param_value_begin = equals_sign + 1;
       std::string::const_iterator param_value_end = tokenizer.token_end();
@@ -139,30 +144,31 @@ void HttpUtil::ParseContentType(const std::string& content_type_str,
     }
   }
 
-  // if the server sent "*/*", it is meaningless, so do not store it.
-  // also, if type_val is the same as mime_type, then just update the
-  // charset.  however, if charset is empty and mime_type hasn't
-  // changed, then don't wipe-out an existing charset.  We
-  // also want to reject a mime-type if it does not include a slash.
-  // some servers give junk after the charset parameter, which may
+  // If the server sent "*/*", it is meaningless, so do not store it.
+  // Also, reject a mime-type if it does not include a slash.
+  // Some servers give junk after the charset parameter, which may
   // include a comma, so this check makes us a bit more tolerant.
-  if (content_type_str.length() != 0 &&
-      content_type_str != "*/*" &&
-      content_type_str.find_first_of('/') != std::string::npos) {
-    // Common case here is that mime_type is empty
-    bool eq = !mime_type->empty() &&
-              base::LowerCaseEqualsASCII(
-                  base::StringPiece(begin + type_val, begin + type_end),
-                  mime_type->data());
-    if (!eq) {
-      *mime_type = base::ToLowerASCII(
-          base::StringPiece(begin + type_val, begin + type_end));
-    }
-    if ((!eq && *had_charset) || type_has_charset) {
-      *had_charset = true;
-      *charset = base::ToLowerASCII(
-          base::StringPiece(begin + charset_val, begin + charset_end));
-    }
+  if (content_type_str.length() == 0 || content_type_str == "*/*" ||
+      content_type_str.find_first_of('/') == std::string::npos) {
+    return;
+  }
+
+  // If type_val is the same as mime_type, then just update the charset.
+  // However, if charset is empty and mime_type hasn't changed, then don't
+  // wipe-out an existing charset.
+  // It is common that mime_type is empty.
+  bool eq = !mime_type->empty() &&
+            base::LowerCaseEqualsASCII(
+                base::StringPiece(begin + type_val, begin + type_end),
+                mime_type->data());
+  if (!eq) {
+    *mime_type = base::ToLowerASCII(
+        base::StringPiece(begin + type_val, begin + type_end));
+  }
+  if ((!eq && *had_charset) || type_has_charset) {
+    *had_charset = true;
+    *charset = base::ToLowerASCII(
+        base::StringPiece(begin + charset_val, begin + charset_end));
   }
 }
 
