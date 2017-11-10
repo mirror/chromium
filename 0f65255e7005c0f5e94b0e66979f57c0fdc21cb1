@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "44c1d2d7_0c5cbf2f",
+        "filename": "chrome/browser/plugins/chrome_content_browser_client_plugins_part.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 45,
+      "author": {
+        "id": 1210615
+      },
+      "writtenOn": "2017-11-10T00:48:40Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "f9b0ed2b_72cce6c4",
+      "revId": "0f65255e7005c0f5e94b0e66979f57c0fdc21cb1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "2e9dfd89_a5b1bac0",
         "filename": "chrome/browser/plugins/plugin_info_host_impl.cc",
         "patchSetId": 4
@@ -36,6 +54,24 @@
     },
     {
       "key": {
+        "uuid": "c1c852f1_29bf06bd",
+        "filename": "chrome/browser/plugins/plugin_info_host_impl.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 314,
+      "author": {
+        "id": 1210615
+      },
+      "writtenOn": "2017-11-10T00:48:40Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "2e9dfd89_a5b1bac0",
+      "revId": "0f65255e7005c0f5e94b0e66979f57c0fdc21cb1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "8ecc8657_84c86a05",
         "filename": "chrome/common/plugin.mojom",
         "patchSetId": 4
@@ -47,6 +83,24 @@
       "writtenOn": "2017-11-09T09:32:10Z",
       "side": 1,
       "message": "These should be an optional array of structs instead of parallel arrays. See https://chromium.googlesource.com/chromium/src/+/master/docs/security/mojo.md#use-structured-types.",
+      "revId": "0f65255e7005c0f5e94b0e66979f57c0fdc21cb1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5f0b02ef_5374f683",
+        "filename": "chrome/common/plugin.mojom",
+        "patchSetId": 4
+      },
+      "lineNbr": 89,
+      "author": {
+        "id": 1210615
+      },
+      "writtenOn": "2017-11-10T00:48:40Z",
+      "side": 1,
+      "message": "What a hassle!\n\nDone.",
+      "parentUuid": "8ecc8657_84c86a05",
       "revId": "0f65255e7005c0f5e94b0e66979f57c0fdc21cb1",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
