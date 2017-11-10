@@ -154,6 +154,24 @@
     },
     {
       "key": {
+        "uuid": "3ee8b747_336047e3",
+        "filename": "chrome/browser/android/search_permissions/search_permissions_service.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 187,
+      "author": {
+        "id": 1002272
+      },
+      "writtenOn": "2017-11-10T01:57:08Z",
+      "side": 1,
+      "message": "What I meant is this can be replaced with:\nif (old_dse_origin \u003d\u003d new_dse_origin)\n  do nothing\n\nI don\u0027t think we need to worry about cases where the name changes but the origin doesn\u0027t.",
+      "parentUuid": "e444f39d_7d2920c7",
+      "revId": "affe9538cec53262aa466b25a496e552e112d849",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "fa0f79f7_08175d8b",
         "filename": "chrome/browser/android/search_permissions/search_permissions_service.cc",
         "patchSetId": 7
@@ -186,6 +204,24 @@
       "revId": "affe9538cec53262aa466b25a496e552e112d849",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2b910bfa_0ef11c52",
+        "filename": "chrome/browser/android/search_permissions/search_permissions_service.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 220,
+      "author": {
+        "id": 1002272
+      },
+      "writtenOn": "2017-11-10T01:57:08Z",
+      "side": 1,
+      "message": "This is good. It might be good to also handle the case of ASK in release builds (i.e. have both the DCHECK and the code to set ASK to BLOCK), but I\u0027ll leave that up to you.",
+      "parentUuid": "82551fce_e2ff7ca2",
+      "revId": "affe9538cec53262aa466b25a496e552e112d849",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -224,6 +260,24 @@
     },
     {
       "key": {
+        "uuid": "53c35c84_9a29d242",
+        "filename": "chrome/browser/android/search_permissions/search_permissions_service.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 222,
+      "author": {
+        "id": 1002272
+      },
+      "writtenOn": "2017-11-10T01:57:08Z",
+      "side": 1,
+      "message": "See above.",
+      "parentUuid": "ed714189_c265f203",
+      "revId": "affe9538cec53262aa466b25a496e552e112d849",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "77fe7ef6_36d56630",
         "filename": "chrome/browser/android/search_permissions/search_permissions_service.cc",
         "patchSetId": 7
@@ -256,6 +310,24 @@
       "revId": "affe9538cec53262aa466b25a496e552e112d849",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4e45b404_6fda33ec",
+        "filename": "chrome/browser/android/search_permissions/search_permissions_service.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 229,
+      "author": {
+        "id": 1002272
+      },
+      "writtenOn": "2017-11-10T01:57:08Z",
+      "side": 1,
+      "message": "Sorry, I meant to delete this comment but it slipped through. When I wrote it I was confused :)",
+      "parentUuid": "a4103661_d5b13c7c",
+      "revId": "affe9538cec53262aa466b25a496e552e112d849",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {

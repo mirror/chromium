@@ -1,0 +1,44 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "8940daaa_52679a0e",
+        "filename": "chrome/browser/android/search_permissions/search_permissions_service.cc",
+        "patchSetId": 12
+      },
+      "lineNbr": 327,
+      "author": {
+        "id": 1002272
+      },
+      "writtenOn": "2017-11-10T01:57:08Z",
+      "side": 1,
+      "message": "Should the case of the feature being disabled, but the setting to restore not being default, be handled?\n\nThat is the case where the feature was enabled but then disabled.",
+      "revId": "ebc6f39d97582b711f1b211f7013e0ef03144710",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3cdc101a_b31bb876",
+        "filename": "chrome/browser/android/search_permissions/search_permissions_service_unittest.cc",
+        "patchSetId": 12
+      },
+      "lineNbr": 77,
+      "author": {
+        "id": 1002272
+      },
+      "writtenOn": "2017-11-10T01:57:08Z",
+      "side": 1,
+      "message": "Can you add a test that ensures that if the feature is turned off, the behavior is the same as before?",
+      "range": {
+        "startLine": 77,
+        "startChar": 18,
+        "endLine": 77,
+        "endChar": 42
+      },
+      "revId": "ebc6f39d97582b711f1b211f7013e0ef03144710",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
