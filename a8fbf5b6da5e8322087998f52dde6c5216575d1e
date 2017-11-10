@@ -69,6 +69,24 @@
       "revId": "a8fbf5b6da5e8322087998f52dde6c5216575d1e",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "6ac6ef0b_04719d99",
+        "filename": "chrome/browser/chromeos/arc/arc_session_manager.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 723,
+      "author": {
+        "id": 1000303
+      },
+      "writtenOn": "2017-11-10T21:26:46Z",
+      "side": 1,
+      "message": "I think you can? The function is defined in components/arc/arc_util.h and that file is already #included here (component/ cannot call into chrome/ but the other way around is allowed.)",
+      "parentUuid": "aa132dc8_7b1329d1",
+      "revId": "a8fbf5b6da5e8322087998f52dde6c5216575d1e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
