@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "abf6b1a7_96c48cf7",
+        "filename": "ios/chrome/browser/ui/omnibox/omnibox_popup_view_controller.mm",
+        "patchSetId": 3
+      },
+      "lineNbr": 271,
+      "author": {
+        "id": 1116294
+      },
+      "writtenOn": "2017-11-10T15:13:39Z",
+      "side": 1,
+      "message": "nit empty line?",
+      "revId": "a97f3bc7eac543eb3088e0d8034abc0082be77da",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0b5b8a59_20437534",
+        "filename": "ios/chrome/browser/ui/omnibox/omnibox_popup_view_controller.mm",
+        "patchSetId": 3
+      },
+      "lineNbr": 296,
+      "author": {
+        "id": 1116294
+      },
+      "writtenOn": "2017-11-10T15:13:39Z",
+      "side": 1,
+      "message": "is this intentional?",
+      "revId": "a97f3bc7eac543eb3088e0d8034abc0082be77da",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
