@@ -24158,6 +24158,7 @@ from previous Chrome versions.
   <int value="-1963402827" label="enable-topchrome-md"/>
   <int value="-1962588488" label="SpeculativePreconnect:disabled"/>
   <int value="-1961648833" label="show_summary"/>
+  <int value="-1961062505" label="VrBrowsingInCustomTab:disabled"/>
   <int value="-1960567385" label="KeepPrefetchedContentSuggestions:enabled"/>
   <int value="-1957328398" label="MacSystemShareMenu:disabled"/>
   <int value="-1956349722" label="disable-smooth-scrolling"/>
@@ -24511,11 +24512,13 @@ from previous Chrome versions.
   <int value="-1022971520" label="enable-search-button-in-omnibox-for-str"/>
   <int value="-1022165708" label="BreakingNewsPush:disabled"/>
   <int value="-1020450980" label="gesture-deletion"/>
+  <int value="-1019967332" label="VrBrowsing:enabled"/>
   <int value="-1016202433" label="disable-add-to-shelf"/>
   <int value="-1015006759" label="ImportantSitesInCBD:disabled"/>
   <int value="-1014649471" label="committed-interstitials"/>
   <int value="-998255750" label="ExperimentalKeyboardLockUI:enabled"/>
   <int value="-996673716" label="enable-web-app-frame"/>
+  <int value="-994088375" label="VrBrowsingExperimentalRendering:enabled"/>
   <int value="-991253797"
       label="OmniboxSpeculativeServiceWorkerStartOnQueryInput:disabled"/>
   <int value="-984052166" label="DoodlesOnLocalNtp:enabled"/>
@@ -24586,6 +24589,7 @@ from previous Chrome versions.
   <int value="-820041355" label="enable-transition-compositing"/>
   <int value="-816984237" label="OfflinePagesAsyncDownload:enabled"/>
   <int value="-814097014" label="disable-session-crashed-bubble"/>
+  <int value="-813753274" label="VrBrowsing:disabled"/>
   <int value="-813474479" label="site-per-process"/>
   <int value="-812461825" label="AutofillCreditCardSigninPromo:enabled"/>
   <int value="-810684526"
@@ -24658,6 +24662,7 @@ from previous Chrome versions.
       label="ContentSuggestionsFaviconsFromNewServer:enabled"/>
   <int value="-604068396" label="disable-input-ime-api"/>
   <int value="-601384286" label="disable-contextual-search"/>
+  <int value="-600792432" label="WebVrAutopresentFromIntent:disabled"/>
   <int value="-599932554" label="DoodlesOnLocalNtp:disabled"/>
   <int value="-598050737" label="disable-es3-apis"/>
   <int value="-593536514" label="ExperimentalTabController:enabled"/>
@@ -24868,6 +24873,8 @@ from previous Chrome versions.
   <int value="7444737" label="NTPSuggestionsStandaloneUI:disabled"/>
   <int value="7533886" label="disable-offer-store-unmasked-wallet-cards"/>
   <int value="10458238" label="disable-print-preview-simplify"/>
+  <int value="11111111" label="VrBrowsingExperimentalFeatures:disabled"/>
+  <int value="11111112" label="VrBrowsingExperimentalFeatures:enabled"/>
   <int value="11698808" label="enable-dom-distiller-button-animation"/>
   <int value="27507364" label="apps-keep-chrome-alive"/>
   <int value="31848187" label="ViewsTaskManager:disabled"/>
@@ -24888,6 +24895,7 @@ from previous Chrome versions.
   <int value="64942701" label="OfflinePagesSvelteConcurrentLoading:disabled"/>
   <int value="67639499" label="stop-loading-in-background:disabled"/>
   <int value="70878462" label="WebAssembly:disabled"/>
+  <int value="73929836" label="VrBrowsingInCustomTab:enabled"/>
   <int value="75747474" label="disable-webview-signin-flow"/>
   <int value="78998551" label="disable-hosted-app-shim-creation"/>
   <int value="79503461" label="disable-account-consistency"/>
@@ -25430,6 +25438,7 @@ from previous Chrome versions.
   <int value="1617187093" label="enable-improved-a2hs"/>
   <int value="1622131033" label="ozone-test-single-overlay-support"/>
   <int value="1626824478" label="ExperimentalAppBanners:disabled"/>
+  <int value="1630988998" label="VrBrowsingExperimentalRendering:disabled"/>
   <int value="1632112977" label="ash-disable-tablet-autohide-titlebars"/>
   <int value="1633456034" label="chrome-home-swipe-logic"/>
   <int value="1634897915" label="password-import-export:enabled"/>
@@ -25585,6 +25594,7 @@ from previous Chrome versions.
   <int value="2059322877" label="new-avatar-menu"/>
   <int value="2063091429" label="OfflinePagesSharing:enabled"/>
   <int value="2067634730" label="LsdPermissionPrompt:disabled"/>
+  <int value="2067735898" label="WebVrAutopresentFromIntent:enabled"/>
   <int value="2071340353" label="progress-bar-completion"/>
   <int value="2071461362" label="disable-credit-card-scan"/>
   <int value="2076787478" label="OmniboxDisplayTitleForCurrentUrl:disabled"/>
