@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "08373cf0_018722e4",
+        "filename": "content/browser/service_worker/service_worker_provider_host.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 562,
+      "author": {
+        "id": 1001168
+      },
+      "writtenOn": "2017-11-10T06:52:23Z",
+      "side": 1,
+      "message": "I\u0027m a bit confused by this comment. We should always strive to keep our branches self-consistent, nor should side-by-side installs be sending IPCs between each other. If this is aiming to defend against bad values from the renderer, we should move it to where the IPC is initially received in the renderer.",
+      "range": {
+        "startLine": 559,
+        "startChar": 0,
+        "endLine": 562,
+        "endChar": 17
+      },
+      "revId": "afe10a73f6e25352890cc6b22fe6c775af1d5e34",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
