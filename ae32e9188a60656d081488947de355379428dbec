@@ -117,6 +117,30 @@
       "revId": "ae32e9188a60656d081488947de355379428dbec",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b68a0b4c_0db0499f",
+        "filename": "components/infobars/core/infobar_manager.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 82,
+      "author": {
+        "id": 1115907
+      },
+      "writtenOn": "2017-11-10T15:39:50Z",
+      "side": 1,
+      "message": "\u003e I started looking into doing this, but I\u0027m not sure it would be best here.\n\u003e A difference with the message center notifications is that there can be many infobars with the same ID, at least on Android. That is what is currently happening before this patch. \n\u003e So if we implement the \"replace_existing\" feature at the infobar manager level, there is some specifying to be done:\n\u003e - Do we define \"matching\" as having the same ID or as EqualsDelegate() returning true?\n\nDefinitely go on using EqualsDelegate (this requires the framebust infobar delegate to define \"matching\" for itself)\n\n\u003e - Do we allow a specific infobar to be replaced rather than the first that matches, or all of the ones matching?\n\nThe function already defines this (it stops at the first for which EqualsDelegate is true)\n\n\u003e \n\u003e [...] I\u0027m not too keen on having to add more complex methods and tests etc to the current infobar manager, esp. if I\u0027m going to be the sole user.\n\nIt\u0027s one small difference in InfobarManager (not even an extra line). From:\n\n  for (InfoBars::const_iterator i(infobars_.begin()); i !\u003d infobars_.end();\n       ++i) {\n    if ((*i)-\u003edelegate()-\u003eEqualsDelegate(infobar-\u003edelegate())) {\n      DCHECK_NE((*i)-\u003edelegate(), infobar-\u003edelegate());\n      return nullptr;\n    }\n  }\n\nTo:\n\n  for (const auto* old_infobar : infobars_) {\n    if (old_infobar-\u003edelegate()-\u003eEqualsDelegate(infobar-\u003edelegate())) {\n      DCHECK_NE(old_infobar-\u003edelegate(), infobar-\u003edelegate());\n      return replace_existing ? ReplaceInfoBar(old_infobar, std::move(infobar)) : nullptr;\n    }\n  }",
+      "parentUuid": "e6c0e62a_060e6600",
+      "range": {
+        "startLine": 82,
+        "startChar": 24,
+        "endLine": 82,
+        "endChar": 40
+      },
+      "revId": "ae32e9188a60656d081488947de355379428dbec",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
