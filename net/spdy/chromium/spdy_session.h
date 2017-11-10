@@ -233,7 +233,8 @@ class NET_EXPORT_PRIVATE SpdyStreamRequest {
 class NET_EXPORT SpdySession : public BufferedSpdyFramerVisitorInterface,
                                public SpdyFramerDebugVisitorInterface,
                                public MultiplexedSession,
-                               public HigherLayeredPool {
+                               public HigherLayeredPool,
+                               public Http2PushPromiseIndex::Delegate {
  public:
   // TODO(akalin): Use base::TickClock when it becomes available.
   typedef base::TimeTicks (*TimeFunc)(void);
@@ -283,9 +284,20 @@ class NET_EXPORT SpdySession : public BufferedSpdyFramerVisitorInterface,
   // reset).  Returns an error (not ERR_IO_PENDING) otherwise, and
   // resets |spdy_stream|.
   //
+  // If pushed_stream_id != kNoPushedStreamFound, then the pushed stream with
+  // pushed_stream_id is used.  An error is returned if it is not possible.
+  //
+  // If pushed_stream_id == kNoPushedStreamFound, then any matching pushed
+  // stream that has not been claimed by another request can be used.  This
+  // can happen, for example, with http scheme pushed streams that are not
+  // registered with Http2PushPromiseIndex and therefore are not claimed by
+  // requests until this point, or if the pushed stream was received from the
+  // server in the meanwhile.
+  //
   // If a stream was found and the stream is still open, the priority
   // of that stream is updated to match |priority|.
   int GetPushStream(const GURL& url,
+                    SpdyStreamId pushed_stream_id,
                     RequestPriority priority,
                     SpdyStream** spdy_stream,
                     const NetLogWithSource& stream_net_log);
@@ -315,7 +327,7 @@ class NET_EXPORT SpdySession : public BufferedSpdyFramerVisitorInterface,
   // TODO(wtc): rename this function and the Net.SpdyIPPoolDomainMatch
   // histogram because this function does more than verifying domain
   // authentication now.
-  bool VerifyDomainAuthentication(const SpdyString& domain);
+  bool VerifyDomainAuthentication(const SpdyString& domain) const;
 
   // Pushes the given producer into the write queue for
   // |stream|. |stream| is guaranteed to be activated before the
@@ -498,6 +510,10 @@ class NET_EXPORT SpdySession : public BufferedSpdyFramerVisitorInterface,
   // HigherLayeredPool implementation:
   bool CloseOneIdleConnection() override;
 
+  // Http2PushPromiseIndex::Delegate implementation:
+  bool ValidatePushedStream(const SpdySessionKey& key) const override;
+  void OnPushedStreamClaimed(const GURL& url, SpdyStreamId stream_id) override;
+
   // Dumps memory allocation stats to |stats|. Sets |*is_session_active| to
   // indicate whether session is active.
   // |stats| can be assumed as being default initialized upon entry.
@@ -586,8 +602,9 @@ class NET_EXPORT SpdySession : public BufferedSpdyFramerVisitorInterface,
   };
 
   // Container class for unclaimed pushed streams on a SpdySession.  Guarantees
-  // that |spdy_session_.pool_| gets notified every time a stream is pushed or
-  // an unclaimed pushed stream is claimed.
+  // that the Http2PushPromiseIndex instance belonging to SpdySessionPool gets
+  // notified every time a stream with https scheme is pushed by the server or
+  // an unclaimed pushed stream with https scheme is claimed.
   class UnclaimedPushedStreamContainer {
    public:
     struct PushedStreamInfo {
@@ -801,11 +818,6 @@ class NET_EXPORT SpdySession : public BufferedSpdyFramerVisitorInterface,
   // that |stream| may hold the last reference to the session.
   void DeleteStream(std::unique_ptr<SpdyStream> stream, int status);
 
-  // Check if we have a pending pushed-stream for this url
-  // Returns the stream if found (and returns it from the pending
-  // list). Returns NULL otherwise.
-  SpdyStream* GetActivePushStream(const GURL& url);
-
   void RecordPingRTTHistogram(base::TimeDelta duration);
   void RecordHistograms();
   void RecordProtocolErrorHistogram(SpdyProtocolErrorDetails details);
@@ -827,6 +839,9 @@ class NET_EXPORT SpdySession : public BufferedSpdyFramerVisitorInterface,
   // Called right before closing a (possibly-inactive) stream for a
   // reason other than being requested to by the stream.
   void LogAbandonedStream(SpdyStream* stream, Error status);
+
+  // Called when pushed stream is claimed by a request.
+  void LogPushStreamClaimed(const GURL& url, const SpdyStream& stream);
 
   // Called right before closing an active stream for a reason other
   // than being requested to by the stream.

@@ -5475,9 +5475,108 @@ TEST_F(SpdySessionTest, CancelReservedStreamOnHeadersReceived) {
   EXPECT_EQ(0u, session_->num_active_pushed_streams());
 
   SpdyStream* pushed_stream;
-  int rv = session_->GetPushStream(GURL(kPushedUrl), IDLE, &pushed_stream,
-                                   NetLogWithSource());
+  int rv = session_->GetPushStream(GURL(kPushedUrl), kNoPushedStreamFound, IDLE,
+                                   &pushed_stream, NetLogWithSource());
   ASSERT_THAT(rv, IsOk());
+  ASSERT_TRUE(pushed_stream);
+  test::StreamDelegateCloseOnHeaders delegate2(pushed_stream->GetWeakPtr());
+  pushed_stream->SetDelegate(&delegate2);
+
+  // Receive headers for pushed stream. Delegate will cancel the stream, ensure
+  // that all our counters are in consistent state.
+  data.Resume();
+  base::RunLoop().RunUntilIdle();
+  EXPECT_EQ(1u, session_->num_active_streams());
+  EXPECT_EQ(0u, session_->num_created_streams());
+  EXPECT_EQ(0u, session_->num_pushed_streams());
+  EXPECT_EQ(0u, session_->num_active_pushed_streams());
+
+  // Read EOF.
+  data.Resume();
+  base::RunLoop().RunUntilIdle();
+  EXPECT_TRUE(data.AllWriteDataConsumed());
+  EXPECT_TRUE(data.AllReadDataConsumed());
+}
+
+// Test GetPushStream() behavior with |pushed_stream_id| arguments different
+// from kNoPushedStreamFound.
+TEST_F(SpdySessionTest, GetPushStream) {
+  const char kPushedUrl[] = "https://www.example.org/a.dat";
+  SpdyHeaderBlock push_headers;
+  push_headers[":method"] = "GET";
+  spdy_util_.AddUrlToHeaderBlock(kPushedUrl, &push_headers);
+  SpdySerializedFrame push_promise(
+      spdy_util_.ConstructInitialSpdyPushFrame(std::move(push_headers), 2, 1));
+  SpdySerializedFrame headers_frame(
+      spdy_util_.ConstructSpdyPushHeaders(2, nullptr, 0));
+  MockRead reads[] = {
+      MockRead(ASYNC, ERR_IO_PENDING, 1), CreateMockRead(push_promise, 2),
+      MockRead(ASYNC, ERR_IO_PENDING, 4), CreateMockRead(headers_frame, 5),
+      MockRead(ASYNC, ERR_IO_PENDING, 7), MockRead(ASYNC, 0, 8),
+  };
+
+  SpdySerializedFrame req(
+      spdy_util_.ConstructSpdyGet(nullptr, 0, 1, LOWEST, true));
+  SpdySerializedFrame priority(
+      spdy_util_.ConstructSpdyPriority(2, 1, IDLE, true));
+  SpdySerializedFrame rst(
+      spdy_util_.ConstructSpdyRstStream(2, ERROR_CODE_CANCEL));
+  MockWrite writes[] = {
+      CreateMockWrite(req, 0), CreateMockWrite(priority, 3),
+      CreateMockWrite(rst, 6),
+  };
+
+  SequencedSocketData data(reads, arraysize(reads), writes, arraysize(writes));
+  session_deps_.socket_factory->AddSocketDataProvider(&data);
+
+  AddSSLSocketData();
+
+  CreateNetworkSession();
+  CreateSpdySession();
+
+  base::WeakPtr<SpdyStream> spdy_stream1 =
+      CreateStreamSynchronously(SPDY_REQUEST_RESPONSE_STREAM, session_,
+                                test_url_, LOWEST, NetLogWithSource());
+  ASSERT_TRUE(spdy_stream1);
+  EXPECT_EQ(0u, spdy_stream1->stream_id());
+  test::StreamDelegateDoNothing delegate1(spdy_stream1);
+  spdy_stream1->SetDelegate(&delegate1);
+
+  EXPECT_EQ(0u, session_->num_active_streams());
+  EXPECT_EQ(1u, session_->num_created_streams());
+  EXPECT_EQ(0u, session_->num_pushed_streams());
+  EXPECT_EQ(0u, session_->num_active_pushed_streams());
+
+  SpdyHeaderBlock headers(spdy_util_.ConstructGetHeaderBlock(kDefaultUrl));
+  spdy_stream1->SendRequestHeaders(std::move(headers), NO_MORE_DATA_TO_SEND);
+
+  // Run until 1st stream is activated.
+  EXPECT_EQ(0u, delegate1.stream_id());
+  base::RunLoop().RunUntilIdle();
+  EXPECT_EQ(1u, delegate1.stream_id());
+  EXPECT_EQ(1u, session_->num_active_streams());
+  EXPECT_EQ(0u, session_->num_created_streams());
+  EXPECT_EQ(0u, session_->num_pushed_streams());
+  EXPECT_EQ(0u, session_->num_active_pushed_streams());
+
+  // Run until pushed stream is created.
+  data.Resume();
+  base::RunLoop().RunUntilIdle();
+  EXPECT_EQ(2u, session_->num_active_streams());
+  EXPECT_EQ(0u, session_->num_created_streams());
+  EXPECT_EQ(1u, session_->num_pushed_streams());
+  EXPECT_EQ(0u, session_->num_active_pushed_streams());
+
+  SpdyStream* pushed_stream;
+  // GetPushStream() should return an error if there does not exist a pushed
+  // stream with ID |pushed_stream_id|.
+  int rv = session_->GetPushStream(GURL(kPushedUrl), /* pushed_stream_id = */ 4,
+                                   IDLE, &pushed_stream, NetLogWithSource());
+  EXPECT_THAT(rv, IsError(ERR_SPDY_PUSHED_STREAM_NOT_AVAILABLE));
+
+  rv = session_->GetPushStream(GURL(kPushedUrl), /* pushed_stream_id = */ 2,
+                               IDLE, &pushed_stream, NetLogWithSource());
+  EXPECT_THAT(rv, IsOk());
   ASSERT_TRUE(pushed_stream);
   test::StreamDelegateCloseOnHeaders delegate2(pushed_stream->GetWeakPtr());
   pushed_stream->SetDelegate(&delegate2);
