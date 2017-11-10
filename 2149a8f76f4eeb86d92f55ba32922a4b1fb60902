@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "f8dccc92_02e6f526",
+        "filename": "chrome/app/chromeos_strings.grdp",
+        "patchSetId": 3
+      },
+      "lineNbr": 9,
+      "author": {
+        "id": 1003321
+      },
+      "writtenOn": "2017-11-10T01:53:54Z",
+      "side": 0,
+      "message": "Apparently not",
+      "range": {
+        "startLine": 9,
+        "startChar": 4,
+        "endLine": 9,
+        "endChar": 24
+      },
+      "revId": "2149a8f76f4eeb86d92f55ba32922a4b1fb60902",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
