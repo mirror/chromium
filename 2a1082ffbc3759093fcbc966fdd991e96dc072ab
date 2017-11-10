@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "08f36b78_5f90e9ca",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/widget/bottomsheet/ChromeHomePromoDialog.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 197,
+      "author": {
+        "id": 1135279
+      },
+      "writtenOn": "2017-11-10T18:54:20Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "e2f16e16_7aeb9348",
+      "range": {
+        "startLine": 196,
+        "startChar": 7,
+        "endLine": 197,
+        "endChar": 90
+      },
+      "revId": "2a1082ffbc3759093fcbc966fdd991e96dc072ab",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "14da32c6_a4f1e94c",
         "filename": "chrome/android/java/strings/android_chrome_strings.grd",
         "patchSetId": 1
@@ -36,6 +60,30 @@
       "writtenOn": "2017-11-10T18:19:00Z",
       "side": 1,
       "message": "We should probably say something a little bit more about what the button does to make translation easier.",
+      "range": {
+        "startLine": 3196,
+        "startChar": 134,
+        "endLine": 3196,
+        "endChar": 170
+      },
+      "revId": "2a1082ffbc3759093fcbc966fdd991e96dc072ab",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "35f1fa2a_10f84c0d",
+        "filename": "chrome/android/java/strings/android_chrome_strings.grd",
+        "patchSetId": 1
+      },
+      "lineNbr": 3196,
+      "author": {
+        "id": 1135279
+      },
+      "writtenOn": "2017-11-10T18:54:20Z",
+      "side": 1,
+      "message": "Updates descriptions to include both the current state of chrome and the state after the button is pressed.",
+      "parentUuid": "14da32c6_a4f1e94c",
       "range": {
         "startLine": 3196,
         "startChar": 134,
