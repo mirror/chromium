@@ -2,15 +2,15 @@
 // Use of this source code is governed by a BSD-style license that can be
 // found in the LICENSE file.
 
-#ifndef THIRD_PARTY_WEBKIT_SOURCE_PLATFORM_SCHEDULER_BASE_ENQUEUE_ORDER_H_
-#define THIRD_PARTY_WEBKIT_SOURCE_PLATFORM_SCHEDULER_BASE_ENQUEUE_ORDER_H_
+#ifndef BASE_TASK_SEQUENCE_MANAGER_ENQUEUE_ORDER_
+#define BASE_TASK_SEQUENCE_MANAGER_ENQUEUE_ORDER_
 
 #include <stdint.h>
 
 #include "base/synchronization/lock.h"
 
-namespace blink {
-namespace scheduler {
+namespace base {
+namespace sequence_manager {
 namespace internal {
 
 using EnqueueOrder = uint64_t;
@@ -20,13 +20,14 @@ enum class EnqueueOrderValues : EnqueueOrder {
   // Invalid EnqueueOrder.
   NONE = 0,
 
-  // Earliest possible EnqueueOrder, to be used for fence blocking.
+  // Earliest possible EnqueueOrder, to be used for fence blocking (ref.
+  // InsertFencePosition::BEGINNING_OF_TIME).
   BLOCKING_FENCE = 1,
   FIRST = 2,
 };
 
-// A 64bit integer used to provide ordering of tasks. NOTE The scheduler assumes
-// these values will not overflow.
+// A 64bit integer used to provide ordering of tasks. NOTE The sequence manager
+// assumes these values will not overflow.
 class EnqueueOrderGenerator {
  public:
   EnqueueOrderGenerator();
@@ -37,16 +38,16 @@ class EnqueueOrderGenerator {
   EnqueueOrder GenerateNext();
 
   static bool IsValidEnqueueOrder(EnqueueOrder enqueue_order) {
-    return enqueue_order != 0ull;
+    return enqueue_order != static_cast<EnqueueOrder>(EnqueueOrderValues::NONE);
   }
 
  private:
   base::Lock lock_;
-  EnqueueOrder enqueue_order_;
+  EnqueueOrder next_ = static_cast<EnqueueOrder>(EnqueueOrderValues::FIRST);
 };
 
 }  // namespace internal
-}  // namespace scheduler
-}  // namespace blink
+}  // namespace sequence_manager
+}  // namespace base
 
-#endif  // THIRD_PARTY_WEBKIT_SOURCE_PLATFORM_SCHEDULER_BASE_ENQUEUE_ORDER_H_
+#endif  // BASE_TASK_SEQUENCE_MANAGER_ENQUEUE_ORDER_
