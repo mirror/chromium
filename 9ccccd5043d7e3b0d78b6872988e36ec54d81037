@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "dbfb9cc7_4107f3be",
+        "filename": "chrome/browser/chrome_content_browser_client.cc",
+        "patchSetId": 13
+      },
+      "lineNbr": 3137,
+      "author": {
+        "id": 1109754
+      },
+      "writtenOn": "2017-11-10T21:39:46Z",
+      "side": 1,
+      "message": "minor: seeing BUILDFLAG(ENABLE_EXTENSIONS) nearby, notice we could guard the WIN Wifi credentials getter with an\n\n  #if defined(OS_WIN) \u0026\u0026 BUILDFLAG(ENABLE_EXTENSIONS)\n\nhere. We could address that in a follow-up patch ...",
+      "revId": "9ccccd5043d7e3b0d78b6872988e36ec54d81037",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
