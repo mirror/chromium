@@ -1,0 +1,210 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "f48f2084_227950bb",
+        "filename": "remoting/base/running_samples.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 52,
+      "author": {
+        "id": 1000540
+      },
+      "writtenOn": "2017-11-10T01:59:43Z",
+      "side": 1,
+      "message": "This is undefined behavior if |data_points_| is empty. Document this in the function comment in .h file.",
+      "revId": "2668ef136897089373199f8524f7aaf831411129",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6cb483cf_1ff98f7b",
+        "filename": "remoting/base/running_samples.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 56,
+      "author": {
+        "id": 1000540
+      },
+      "writtenOn": "2017-11-10T01:59:43Z",
+      "side": 1,
+      "message": "Same here.",
+      "revId": "2668ef136897089373199f8524f7aaf831411129",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8d606c7d_8c7688dd",
+        "filename": "remoting/base/running_samples.h",
+        "patchSetId": 7
+      },
+      "lineNbr": 38,
+      "author": {
+        "id": 1000540
+      },
+      "writtenOn": "2017-11-10T01:59:43Z",
+      "side": 1,
+      "message": "Instead of adding these methods, would it make more sense to simply use a circular_deque directly in the calling code:\n  FrameProcessingTimeEstimator::RecentAverageFrameInterval()?\nThe calling code only uses these new methods you\u0027re adding. This class is doing extra work (summing the samples) that doesn\u0027t make sense for your use-case (increasing timestamp values).\n\nAlso, circular_deque can store Time values directly - you don\u0027t have to keep converting back and forth between microseconds. It\u0027s a much better fit for your use-case, I think.\n\nnit: Unix-naming-style getter methods should be inlined.",
+      "revId": "2668ef136897089373199f8524f7aaf831411129",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d4073249_80a31d0f",
+        "filename": "remoting/codec/frame_processing_time_estimator.h",
+        "patchSetId": 7
+      },
+      "lineNbr": 47,
+      "author": {
+        "id": 1000540
+      },
+      "writtenOn": "2017-11-10T01:59:43Z",
+      "side": 1,
+      "message": "It\u0027s not clear to me from this description: are you saying it returns a weighted mean of frame size based on ratio of key-frames to non-key-frames?",
+      "revId": "2668ef136897089373199f8524f7aaf831411129",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "bf7b9ae2_da82f237",
+        "filename": "remoting/codec/frame_processing_time_estimator.h",
+        "patchSetId": 7
+      },
+      "lineNbr": 47,
+      "author": {
+        "id": 1000540
+      },
+      "writtenOn": "2017-11-10T01:59:43Z",
+      "side": 1,
+      "message": "frame (singular)",
+      "range": {
+        "startLine": 47,
+        "startChar": 40,
+        "endLine": 47,
+        "endChar": 46
+      },
+      "revId": "2668ef136897089373199f8524f7aaf831411129",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6d0d179a_29042249",
+        "filename": "remoting/codec/frame_processing_time_estimator.h",
+        "patchSetId": 7
+      },
+      "lineNbr": 49,
+      "author": {
+        "id": 1000540
+      },
+      "writtenOn": "2017-11-10T01:59:43Z",
+      "side": 1,
+      "message": "are",
+      "range": {
+        "startLine": 49,
+        "startChar": 43,
+        "endLine": 49,
+        "endChar": 45
+      },
+      "revId": "2668ef136897089373199f8524f7aaf831411129",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5d66ceb8_c3593ab7",
+        "filename": "remoting/codec/frame_processing_time_estimator.h",
+        "patchSetId": 7
+      },
+      "lineNbr": 53,
+      "author": {
+        "id": 1000540
+      },
+      "writtenOn": "2017-11-10T01:59:43Z",
+      "side": 1,
+      "message": "frame (singular)",
+      "range": {
+        "startLine": 53,
+        "startChar": 51,
+        "endLine": 53,
+        "endChar": 57
+      },
+      "revId": "2668ef136897089373199f8524f7aaf831411129",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d462f092_cbf6d314",
+        "filename": "remoting/codec/frame_processing_time_estimator.h",
+        "patchSetId": 7
+      },
+      "lineNbr": 55,
+      "author": {
+        "id": 1000540
+      },
+      "writtenOn": "2017-11-10T01:59:43Z",
+      "side": 1,
+      "message": "are",
+      "range": {
+        "startLine": 55,
+        "startChar": 60,
+        "endLine": 55,
+        "endChar": 62
+      },
+      "revId": "2668ef136897089373199f8524f7aaf831411129",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a5627a66_00512445",
+        "filename": "remoting/codec/frame_processing_time_estimator.h",
+        "patchSetId": 7
+      },
+      "lineNbr": 58,
+      "author": {
+        "id": 1000540
+      },
+      "writtenOn": "2017-11-10T01:59:43Z",
+      "side": 1,
+      "message": "frame",
+      "range": {
+        "startLine": 58,
+        "startChar": 48,
+        "endLine": 58,
+        "endChar": 54
+      },
+      "revId": "2668ef136897089373199f8524f7aaf831411129",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2b7a7bee_496a684d",
+        "filename": "remoting/codec/frame_processing_time_estimator.h",
+        "patchSetId": 7
+      },
+      "lineNbr": 60,
+      "author": {
+        "id": 1000540
+      },
+      "writtenOn": "2017-11-10T01:59:43Z",
+      "side": 1,
+      "message": "are",
+      "range": {
+        "startLine": 60,
+        "startChar": 60,
+        "endLine": 60,
+        "endChar": 62
+      },
+      "revId": "2668ef136897089373199f8524f7aaf831411129",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
