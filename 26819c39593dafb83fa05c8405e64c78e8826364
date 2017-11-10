@@ -1,0 +1,101 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "55df069e_df211ba4",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 2
+      },
+      "lineNbr": 9,
+      "author": {
+        "id": 1159306
+      },
+      "writtenOn": "2017-11-10T18:36:04Z",
+      "side": 1,
+      "message": "Nit: schedules",
+      "range": {
+        "startLine": 9,
+        "startChar": 27,
+        "endLine": 9,
+        "endChar": 36
+      },
+      "revId": "26819c39593dafb83fa05c8405e64c78e8826364",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0c846753_79525ca9",
+        "filename": "chrome/browser/safe_browsing/chrome_cleaner/reporter_runner_win.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 567,
+      "author": {
+        "id": 1159306
+      },
+      "writtenOn": "2017-11-10T18:36:04Z",
+      "side": 1,
+      "message": "This comment should be on \"ScheduleInvocations\"",
+      "revId": "26819c39593dafb83fa05c8405e64c78e8826364",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "00b4530a_7d56be21",
+        "filename": "chrome/browser/safe_browsing/chrome_cleaner/reporter_runner_win.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 569,
+      "author": {
+        "id": 1159306
+      },
+      "writtenOn": "2017-11-10T18:36:04Z",
+      "side": 1,
+      "message": "It would be better to change this to Singleton\u003cReporterRunner\u003e::get() (see base/memory/singleton.h), and change each use of instance_ to GetInstance().",
+      "revId": "26819c39593dafb83fa05c8405e64c78e8826364",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ab6e37fb_5e846a67",
+        "filename": "chrome/browser/safe_browsing/chrome_cleaner/reporter_runner_win.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 594,
+      "author": {
+        "id": 1159306
+      },
+      "writtenOn": "2017-11-10T18:36:04Z",
+      "side": 1,
+      "message": "Since the ScopedClosureRunner will run on this return, OnSequenceDone will be called twice (once for this ScheduleInvocations, and again when the \"currently running\" invocation finishes.\n\nAlso is_currently_running_ will be reset to false even though an earlier invocation is still running.",
+      "revId": "26819c39593dafb83fa05c8405e64c78e8826364",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "66e8d113_f98bbaf9",
+        "filename": "chrome/browser/safe_browsing/chrome_cleaner/reporter_runner_win.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 71,
+      "author": {
+        "id": 1159306
+      },
+      "writtenOn": "2017-11-10T18:36:04Z",
+      "side": 1,
+      "message": "This comment needs updating: it doesn\u0027t schedule the next try any more.\n\nI find the second sentence hard to follow. How about \"If this is called again before |kDaysBetweenSuccessfulSwReporterRuns| subsequent calls will be ignored.\"",
+      "range": {
+        "startLine": 71,
+        "startChar": 52,
+        "endLine": 71,
+        "endChar": 73
+      },
+      "revId": "26819c39593dafb83fa05c8405e64c78e8826364",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}

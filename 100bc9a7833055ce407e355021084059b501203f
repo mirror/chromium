@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "1989a577_e7bfaf94",
+        "filename": "chrome/browser/safe_browsing/chrome_cleaner/reporter_runner_win.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 681,
+      "author": {
+        "id": 1159306
+      },
+      "writtenOn": "2017-11-10T18:36:04Z",
+      "side": 0,
+      "message": "This change seems out of scope for this patch. Can you split it out?",
+      "revId": "100bc9a7833055ce407e355021084059b501203f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
