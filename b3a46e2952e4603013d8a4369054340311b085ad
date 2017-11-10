@@ -16,6 +16,24 @@
       "revId": "b3a46e2952e4603013d8a4369054340311b085ad",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7908935c_8219bcac",
+        "filename": "third_party/WebKit/Source/devtools/front_end/emulation/DeviceModeView.js",
+        "patchSetId": 4
+      },
+      "lineNbr": 104,
+      "author": {
+        "id": 1230559
+      },
+      "writtenOn": "2017-11-10T19:07:06Z",
+      "side": 1,
+      "message": "Done.\n\nThat makes sense, we want this to change just the width setting but not height.  `setWidthAndScaleToFit()` was only introduced after `this._model.setSizeAndScaleToFit(width, 0);` was added, so it\u0027s likely that we wanted to do this from the beginning.",
+      "parentUuid": "980c9726_41070cb1",
+      "revId": "b3a46e2952e4603013d8a4369054340311b085ad",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
