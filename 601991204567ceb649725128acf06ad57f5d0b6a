@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "c8ac97ac_e0b96cee",
+        "filename": "testing/buildbot/chromium.linux.json",
+        "patchSetId": 3
+      },
+      "lineNbr": 1494,
+      "author": {
+        "id": 1181690
+      },
+      "writtenOn": "2017-11-10T20:47:10Z",
+      "side": 1,
+      "message": "This should be in https://codesearch.chromium.org/chromium/src/testing/buildbot/chromium.android.json?rcl\u003dff97fe783ab3ffb7d7b240c3bd6893d2a9622f83\u0026l\u003d3794 instead. bpastene has turned down the chromium.linux Android bots \u0026 just has to pull the configs.",
+      "revId": "601991204567ceb649725128acf06ad57f5d0b6a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "66928a5f_d0866a81",
+        "filename": "testing/buildbot/chromium.linux.json",
+        "patchSetId": 3
+      },
+      "lineNbr": 1499,
+      "author": {
+        "id": 1181690
+      },
+      "writtenOn": "2017-11-10T20:47:10Z",
+      "side": 1,
+      "message": "LARNG is on KTU84P/hammerhead.",
+      "revId": "601991204567ceb649725128acf06ad57f5d0b6a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
