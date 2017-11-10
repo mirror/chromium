@@ -69,6 +69,24 @@
       "revId": "722bf44b95dd8607d4e19046bc3a204c4d301020",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "f3ba0b0c_cf2c2ef5",
+        "filename": "components/subresource_filter/content/browser/content_activation_list_utils.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 38,
+      "author": {
+        "id": 1172224
+      },
+      "writtenOn": "2017-11-10T17:19:08Z",
+      "side": 1,
+      "message": "Do we still need ActivationList::ABUSIVE_ADS or can that be removed as well in addition to ALL_ADS?",
+      "parentUuid": "59795e95_bf174e5a",
+      "revId": "722bf44b95dd8607d4e19046bc3a204c4d301020",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
