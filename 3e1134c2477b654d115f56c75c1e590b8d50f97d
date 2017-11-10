@@ -70,6 +70,30 @@
       "revId": "3e1134c2477b654d115f56c75c1e590b8d50f97d",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "487760a6_51cb60b1",
+        "filename": "ui/events/event.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 1128,
+      "author": {
+        "id": 1109584
+      },
+      "writtenOn": "2017-11-10T14:26:40Z",
+      "side": 1,
+      "message": "SGTM",
+      "parentUuid": "3042ce0f_156ea92d",
+      "range": {
+        "startLine": 1122,
+        "startChar": 0,
+        "endLine": 1128,
+        "endChar": 6
+      },
+      "revId": "3e1134c2477b654d115f56c75c1e590b8d50f97d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
