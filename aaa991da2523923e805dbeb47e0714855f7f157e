@@ -229,6 +229,24 @@
       "revId": "aaa991da2523923e805dbeb47e0714855f7f157e",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "965f5e59_ff8e701b",
+        "filename": "third_party/WebKit/Source/platform/graphics/paint/FloatClipRectTest.cpp",
+        "patchSetId": 5
+      },
+      "lineNbr": 86,
+      "author": {
+        "id": 1002481
+      },
+      "writtenOn": "2017-11-10T23:59:08Z",
+      "side": 1,
+      "message": "\u003e Not sure what the resolution is here then - turn off tightness for non-translation transforms?\n\u003e Or are you saying ignore some other aspect of the comment?\n\nThis patch set already clears IsTight flag on rotation for non-infinite clip rects, but keeps the flag for infinite ones. The latest patch-set clears tightness on non-translate non-scale transforms, regardless of infinity.\n\nThe comment to be ignored explained why we clear IsTight on rotation, which has nothing to do with your question.",
+      "parentUuid": "eced9aae_85655b21",
+      "revId": "aaa991da2523923e805dbeb47e0714855f7f157e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
