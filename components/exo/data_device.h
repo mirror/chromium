@@ -8,8 +8,12 @@
 #include <cstdint>
 
 #include "base/macros.h"
+#include "components/exo/data_offer.h"
 #include "components/exo/data_offer_observer.h"
+#include "components/exo/surface.h"
+#include "components/exo/surface_observer.h"
 #include "components/exo/wm_helper.h"
+#include "ui/base/clipboard/clipboard_observer.h"
 
 namespace ui {
 class DropTargetEvent;
@@ -18,15 +22,65 @@ class DropTargetEvent;
 namespace exo {
 
 class DataDeviceDelegate;
-class DataOffer;
 class DataSource;
 class FileHelper;
-class Surface;
 
 enum class DndAction { kNone, kCopy, kMove, kAsk };
 
+template <typename T, typename O>
+using RegistrationFunc = void (T::*)(O*);
+
+template <typename T,
+          typename O,
+          RegistrationFunc<T, O> ADD = &T::AddObserver,
+          RegistrationFunc<T, O> REMOVE = &T::RemoveObserver>
+class Tracker {
+ public:
+  Tracker() : Tracker(nullptr, nullptr) {}
+  Tracker(T* target, O* observer) : target_(target), observer_(observer) {
+    Invoke(ADD);
+  }
+  ~Tracker() { reset(); }
+
+  T* get() { return target_; }
+  T* operator->() { return target_; }
+  T& operator*() { return *target_; }
+  operator bool() { return target_ != nullptr; }
+
+  void reset(T* target, O* observer) {
+    Invoke(REMOVE);
+    target_ = target;
+    observer_ = observer;
+    Invoke(ADD);
+  }
+
+  void reset() { reset(nullptr, nullptr); }
+
+ private:
+  void Invoke(RegistrationFunc<T, O> func) {
+    DCHECK(!!target_ == !!observer_);
+    if (!target_ || !observer_)
+      return;
+    (target_->*func)(observer_);
+  }
+  T* target_;
+  O* observer_;
+
+  DISALLOW_COPY_AND_ASSIGN(Tracker);
+};
+
+using DataOfferTracker = Tracker<DataOffer, DataOfferObserver>;
+using SurfaceTracker = Tracker<Surface,
+                               SurfaceObserver,
+                               &Surface::AddSurfaceObserver,
+                               &Surface::RemoveSurfaceObserver>;
+
 // DataDevice to start drag and drop and copy and paste oprations.
-class DataDevice : public WMHelper::DragDropObserver, public DataOfferObserver {
+class DataDevice : public WMHelper::DragDropObserver,
+                   public DataOfferObserver,
+                   public ui::ClipboardObserver,
+                   public aura::client::FocusChangeObserver,
+                   public SurfaceObserver {
  public:
   explicit DataDevice(DataDeviceDelegate* delegate, FileHelper* file_helper);
   ~DataDevice() override;
@@ -54,16 +108,27 @@ class DataDevice : public WMHelper::DragDropObserver, public DataOfferObserver {
   void OnDragExited() override;
   int OnPerformDrop(const ui::DropTargetEvent& event) override;
 
+  // Overridden from ui::ClipbaordObserver:
+  void OnClipboardDataChanged() override;
+
+  // Overridden from aura::client::FocusChangeObserver:
+  void OnWindowFocused(aura::Window* gained_focus,
+                       aura::Window* lost_focus) override;
+
   // Overridden from DataOfferObserver:
   void OnDataOfferDestroying(DataOffer* data_offer) override;
 
+  // Overridden from SurfaceObserver:
+  void OnSurfaceDestroying(Surface* surface) override;
+
  private:
   Surface* GetEffectiveTargetForEvent(const ui::DropTargetEvent& event) const;
-  void ClearDataOffer();
+  void SendSelection();
 
   DataDeviceDelegate* const delegate_;
   FileHelper* const file_helper_;
-  DataOffer* data_offer_;
+  DataOfferTracker data_offer_;
+  SurfaceTracker focused_surface_;
 
   DISALLOW_COPY_AND_ASSIGN(DataDevice);
 };
