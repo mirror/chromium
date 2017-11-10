@@ -195,6 +195,24 @@
     },
     {
       "key": {
+        "uuid": "667a93a3_e206cc76",
+        "filename": "services/ui/public/cpp/tests/gpu_unittest.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 103,
+      "author": {
+        "id": 1146978
+      },
+      "writtenOn": "2017-11-10T18:20:50Z",
+      "side": 1,
+      "message": "I couldn\u0027t get that to work before, but it turns out I just wasn\u0027t using the right type of RunLoop for nested tasks. Done.",
+      "parentUuid": "d87c2773_2a226292",
+      "revId": "bcf40191f7c7e5e378e110f3847aac04a0597a7f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "dd7030bb_ad6ea015",
         "filename": "services/ui/public/cpp/tests/gpu_unittest.cc",
         "patchSetId": 5
