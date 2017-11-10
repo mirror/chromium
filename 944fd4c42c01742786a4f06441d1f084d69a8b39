@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "b1752fdd_00d01147",
+        "filename": "media/gpu/android/mock_android_video_surface_chooser.h",
+        "patchSetId": 8
+      },
+      "lineNbr": 14,
+      "author": {
+        "id": 1130490
+      },
+      "writtenOn": "2017-11-10T17:38:04Z",
+      "side": 1,
+      "message": "good catch.  done.",
+      "parentUuid": "637f8a5f_557a433f",
+      "range": {
+        "startLine": 14,
+        "startChar": 6,
+        "endLine": 14,
+        "endChar": 36
+      },
+      "revId": "944fd4c42c01742786a4f06441d1f084d69a8b39",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "66f997f3_6ff75a18",
         "filename": "media/gpu/android/surface_chooser_helper.h",
         "patchSetId": 8
@@ -45,6 +69,30 @@
       "revId": "944fd4c42c01742786a4f06441d1f084d69a8b39",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "41ab3db5_1092d9cc",
+        "filename": "media/gpu/android/surface_chooser_helper.h",
+        "patchSetId": 8
+      },
+      "lineNbr": 6,
+      "author": {
+        "id": 1130490
+      },
+      "writtenOn": "2017-11-10T17:38:04Z",
+      "side": 1,
+      "message": "guess what i was going to call this class before i settled on SurfaceChooserHelper.  :)",
+      "parentUuid": "66f997f3_6ff75a18",
+      "range": {
+        "startLine": 6,
+        "startChar": 8,
+        "endLine": 6,
+        "endChar": 50
+      },
+      "revId": "944fd4c42c01742786a4f06441d1f084d69a8b39",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
