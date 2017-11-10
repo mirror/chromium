@@ -1,0 +1,25 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Strict//EN"
+  "http://www.w3.org/TR/html4/strict.dtd">
+<html>
+  <head>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1, user-scalable=0">
+    <style>
+      body {
+        margin: 0;
+        padding: 0;
+      }
+      img {
+          height:auto;
+          width:auto;
+          max-height:100vh;
+      }
+    </style>
+  </head>
+  <body>
+    <img></img>
+    <script>
+      // Avoid caching.
+      document.getElementsByTagName("img")[0].src = `../resources/Great_Wave_off_Kanagawa2.jpg?x=${Math.random()}`;
+    </script>
+  </body>
+</html>
