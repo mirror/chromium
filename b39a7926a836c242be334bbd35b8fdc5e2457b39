@@ -16,6 +16,24 @@
       "revId": "b39a7926a836c242be334bbd35b8fdc5e2457b39",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "033d5385_e7aab324",
+        "filename": "components/drive/job_scheduler.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 1150,
+      "author": {
+        "id": 1249643
+      },
+      "writtenOn": "2017-11-10T07:29:31Z",
+      "side": 1,
+      "message": "I got a feedback from Paul Jenson like this ↓\n\"I don\u0027t think it will run when disconnected; I think that is prevented by the IsOffline() check in GetCurrentAcceptedPriority().  I think it will run when OnNetworkChange() receives the CONNECTION_NONE signal which is sent immediately prior to all online signals, but is meant to trigger \"destructive\" actions like flushing caches and pools and jobs.\"\n\nSo I thought it would be terminated when offline before it goes to for loop.",
+      "parentUuid": "40401e1f_2fc222fa",
+      "revId": "b39a7926a836c242be334bbd35b8fdc5e2457b39",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
