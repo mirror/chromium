@@ -1,0 +1,1230 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "3e71ca0c_39df7309",
+        "filename": "content/browser/webauth/attestation_data.cc",
+        "patchSetId": 14
+      },
+      "lineNbr": 9,
+      "author": {
+        "id": 1003152
+      },
+      "writtenOn": "2017-11-10T14:06:24Z",
+      "side": 1,
+      "message": "nit: Unused.",
+      "revId": "09cab90fc4da0229ce404ba1afc0dc60f57b74dc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6141d526_631418ca",
+        "filename": "content/browser/webauth/attestation_data.cc",
+        "patchSetId": 14
+      },
+      "lineNbr": 21,
+      "author": {
+        "id": 1003152
+      },
+      "writtenOn": "2017-11-10T14:06:24Z",
+      "side": 1,
+      "message": "nit: I think no need to mention position 66 here anymore.",
+      "revId": "09cab90fc4da0229ce404ba1afc0dc60f57b74dc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "539168ac_37fd3126",
+        "filename": "content/browser/webauth/attestation_object.h",
+        "patchSetId": 14
+      },
+      "lineNbr": 35,
+      "author": {
+        "id": 1003152
+      },
+      "writtenOn": "2017-11-10T14:06:24Z",
+      "side": 1,
+      "message": "nit: make these const if possible",
+      "revId": "09cab90fc4da0229ce404ba1afc0dc60f57b74dc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0ad3d77c_47c9e455",
+        "filename": "content/browser/webauth/attestation_statement.h",
+        "patchSetId": 14
+      },
+      "lineNbr": 31,
+      "author": {
+        "id": 1003152
+      },
+      "writtenOn": "2017-11-10T14:06:24Z",
+      "side": 1,
+      "message": "nit: const std::string\u0026, blank line above",
+      "revId": "09cab90fc4da0229ce404ba1afc0dc60f57b74dc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4b14b927_6007f613",
+        "filename": "content/browser/webauth/attestation_statement.h",
+        "patchSetId": 14
+      },
+      "lineNbr": 37,
+      "author": {
+        "id": 1003152
+      },
+      "writtenOn": "2017-11-10T14:06:24Z",
+      "side": 1,
+      "message": "nit: const",
+      "revId": "09cab90fc4da0229ce404ba1afc0dc60f57b74dc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9a523e67_ca4e4f91",
+        "filename": "content/browser/webauth/authenticator_data.cc",
+        "patchSetId": 14
+      },
+      "lineNbr": 13,
+      "author": {
+        "id": 1003152
+      },
+      "writtenOn": "2017-11-10T14:06:24Z",
+      "side": 1,
+      "message": "nit: Unused?",
+      "revId": "09cab90fc4da0229ce404ba1afc0dc60f57b74dc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "63bee009_1846e7af",
+        "filename": "content/browser/webauth/authenticator_data.cc",
+        "patchSetId": 14
+      },
+      "lineNbr": 25,
+      "author": {
+        "id": 1003152
+      },
+      "writtenOn": "2017-11-10T14:06:24Z",
+      "side": 1,
+      "message": "#include \"base/value.h\"",
+      "revId": "09cab90fc4da0229ce404ba1afc0dc60f57b74dc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "eac4fc6f_0688764c",
+        "filename": "content/browser/webauth/authenticator_data.cc",
+        "patchSetId": 14
+      },
+      "lineNbr": 29,
+      "author": {
+        "id": 1003152
+      },
+      "writtenOn": "2017-11-10T14:06:24Z",
+      "side": 1,
+      "message": "nit: This variable need only be declared first on this line.",
+      "revId": "09cab90fc4da0229ce404ba1afc0dc60f57b74dc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f319041a_c09aa1b7",
+        "filename": "content/browser/webauth/authenticator_data.cc",
+        "patchSetId": 14
+      },
+      "lineNbr": 34,
+      "author": {
+        "id": 1003152
+      },
+      "writtenOn": "2017-11-10T14:06:24Z",
+      "side": 1,
+      "message": "std::move()",
+      "range": {
+        "startLine": 34,
+        "startChar": 6,
+        "endLine": 34,
+        "endChar": 22
+      },
+      "revId": "09cab90fc4da0229ce404ba1afc0dc60f57b74dc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "08bcc91f_8bf1f33a",
+        "filename": "content/browser/webauth/authenticator_data.cc",
+        "patchSetId": 14
+      },
+      "lineNbr": 51,
+      "author": {
+        "id": 1003152
+      },
+      "writtenOn": "2017-11-10T14:06:24Z",
+      "side": 1,
+      "message": "nit: \u0026front() \u003d\u003d data()",
+      "range": {
+        "startLine": 51,
+        "startChar": 58,
+        "endLine": 51,
+        "endChar": 63
+      },
+      "revId": "09cab90fc4da0229ce404ba1afc0dc60f57b74dc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8a117890_fb6606aa",
+        "filename": "content/browser/webauth/authenticator_impl.cc",
+        "patchSetId": 14
+      },
+      "lineNbr": 13,
+      "author": {
+        "id": 1003152
+      },
+      "writtenOn": "2017-11-10T14:06:24Z",
+      "side": 1,
+      "message": "nit: Is this used?",
+      "revId": "09cab90fc4da0229ce404ba1afc0dc60f57b74dc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "72dd3bb0_252c7c3c",
+        "filename": "content/browser/webauth/authenticator_impl.cc",
+        "patchSetId": 14
+      },
+      "lineNbr": 29,
+      "author": {
+        "id": 1003152
+      },
+      "writtenOn": "2017-11-10T14:06:24Z",
+      "side": 1,
+      "message": "nit: Please update this to std::make_unique and remove the include for ptr_util.h",
+      "revId": "09cab90fc4da0229ce404ba1afc0dc60f57b74dc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "bbdc9478_91a5352c",
+        "filename": "content/browser/webauth/authenticator_impl.cc",
+        "patchSetId": 14
+      },
+      "lineNbr": 41,
+      "author": {
+        "id": 1003152
+      },
+      "writtenOn": "2017-11-10T14:06:24Z",
+      "side": 1,
+      "message": "Include what you use: base/bind.h, base/bind_helpers.h",
+      "range": {
+        "startLine": 41,
+        "startChar": 30,
+        "endLine": 41,
+        "endChar": 40
+      },
+      "revId": "09cab90fc4da0229ce404ba1afc0dc60f57b74dc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0cbe8e1a_d69bfd63",
+        "filename": "content/browser/webauth/authenticator_impl.cc",
+        "patchSetId": 14
+      },
+      "lineNbr": 43,
+      "author": {
+        "id": 1003152
+      },
+      "writtenOn": "2017-11-10T14:06:24Z",
+      "side": 1,
+      "message": "Caching the origin makes me uneasy, as it increases the risk that it\u0027d be ever out of sync -- let\u0027s save the RFH and fetch this on domain on-demand all the time.",
+      "revId": "09cab90fc4da0229ce404ba1afc0dc60f57b74dc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7d53a9c9_91b78886",
+        "filename": "content/browser/webauth/authenticator_impl.cc",
+        "patchSetId": 14
+      },
+      "lineNbr": 55,
+      "author": {
+        "id": 1003152
+      },
+      "writtenOn": "2017-11-10T14:06:24Z",
+      "side": 1,
+      "message": "Please add a unittest with the usual const struct {} kTestCases[] structure, and verify behavior for various combinations of origins (https, about, data, etc.) and rp_id\u0027s (not provided, correct, illegal).",
+      "revId": "09cab90fc4da0229ce404ba1afc0dc60f57b74dc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a267faf0_a51b235a",
+        "filename": "content/browser/webauth/authenticator_impl.cc",
+        "patchSetId": 14
+      },
+      "lineNbr": 71,
+      "author": {
+        "id": 1003152
+      },
+      "writtenOn": "2017-11-10T14:06:24Z",
+      "side": 1,
+      "message": "Let\u0027s extract this to a method. That would easy unit testing a lot too.",
+      "range": {
+        "startLine": 55,
+        "startChar": 2,
+        "endLine": 71,
+        "endChar": 3
+      },
+      "revId": "09cab90fc4da0229ce404ba1afc0dc60f57b74dc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8791b080_be33b0cb",
+        "filename": "content/browser/webauth/authenticator_impl.cc",
+        "patchSetId": 14
+      },
+      "lineNbr": 82,
+      "author": {
+        "id": 1003152
+      },
+      "writtenOn": "2017-11-10T14:06:24Z",
+      "side": 1,
+      "message": "Hang on, if I am reading the spec right, this should be the security origin, not just a domain name, and irrespectively of what the caller of the Web API specifies.",
+      "revId": "09cab90fc4da0229ce404ba1afc0dc60f57b74dc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "171915dd_ba50a339",
+        "filename": "content/browser/webauth/authenticator_impl.cc",
+        "patchSetId": 14
+      },
+      "lineNbr": 100,
+      "author": {
+        "id": 1003152
+      },
+      "writtenOn": "2017-11-10T14:06:24Z",
+      "side": 1,
+      "message": "Please add a unit test for timeout.",
+      "revId": "09cab90fc4da0229ce404ba1afc0dc60f57b74dc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d2a7bd31_735724c4",
+        "filename": "content/browser/webauth/authenticator_impl.cc",
+        "patchSetId": 14
+      },
+      "lineNbr": 104,
+      "author": {
+        "id": 1003152
+      },
+      "writtenOn": "2017-11-10T14:06:24Z",
+      "side": 1,
+      "message": "I think, but not sure, that this should never be false outside of unittests that create little to no infrastructure.",
+      "range": {
+        "startLine": 104,
+        "startChar": 7,
+        "endLine": 104,
+        "endChar": 46
+      },
+      "revId": "09cab90fc4da0229ce404ba1afc0dc60f57b74dc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "cc557110_d8ec1ccd",
+        "filename": "content/browser/webauth/authenticator_impl.cc",
+        "patchSetId": 14
+      },
+      "lineNbr": 106,
+      "author": {
+        "id": 1003152
+      },
+      "writtenOn": "2017-11-10T14:06:24Z",
+      "side": 1,
+      "message": "return;",
+      "revId": "09cab90fc4da0229ce404ba1afc0dc60f57b74dc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "15676fc3_275e0c77",
+        "filename": "content/browser/webauth/authenticator_impl.cc",
+        "patchSetId": 14
+      },
+      "lineNbr": 123,
+      "author": {
+        "id": 1003152
+      },
+      "writtenOn": "2017-11-10T14:06:24Z",
+      "side": 1,
+      "message": "Do we want to support multiple simultaneous requests in-flight? It looks like that some logic in this class are prepared for it, but we still use a single u2f request, and a single timer. Making this consistent would also allow remove the need for the callback adaptors.\n\nFor now I\u0027d settle for one request at a time, with some error checking, we can improve that later if it\u0027s a MUST in the spec. That would allow storing stuff in member variables as opposed to callback arguments.",
+      "revId": "09cab90fc4da0229ce404ba1afc0dc60f57b74dc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "085216ae_433ff144",
+        "filename": "content/browser/webauth/authenticator_impl.cc",
+        "patchSetId": 14
+      },
+      "lineNbr": 133,
+      "author": {
+        "id": 1003152
+      },
+      "writtenOn": "2017-11-10T14:06:24Z",
+      "side": 1,
+      "message": "nit: s/data/u2f_register_response.",
+      "revId": "09cab90fc4da0229ce404ba1afc0dc60f57b74dc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "df525f49_1fd4f39c",
+        "filename": "content/browser/webauth/authenticator_impl.cc",
+        "patchSetId": 14
+      },
+      "lineNbr": 144,
+      "author": {
+        "id": 1003152
+      },
+      "writtenOn": "2017-11-10T14:06:24Z",
+      "side": 1,
+      "message": "Do we have a unit test that exercises INVALID_PARAMS?",
+      "range": {
+        "startLine": 144,
+        "startChar": 44,
+        "endLine": 144,
+        "endChar": 58
+      },
+      "revId": "09cab90fc4da0229ce404ba1afc0dc60f57b74dc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "353dde34_91bbebc2",
+        "filename": "content/browser/webauth/authenticator_impl.cc",
+        "patchSetId": 14
+      },
+      "lineNbr": 153,
+      "author": {
+        "id": 1003152
+      },
+      "writtenOn": "2017-11-10T14:06:24Z",
+      "side": 1,
+      "message": "Let\u0027s move the declaration/definition of this into an unnamed namespace in the .cc file.",
+      "revId": "09cab90fc4da0229ce404ba1afc0dc60f57b74dc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5673ed30_aad45a7e",
+        "filename": "content/browser/webauth/authenticator_impl.cc",
+        "patchSetId": 14
+      },
+      "lineNbr": 168,
+      "author": {
+        "id": 1003152
+      },
+      "writtenOn": "2017-11-10T14:06:24Z",
+      "side": 1,
+      "message": "nit: Move into an unnamed namespace.",
+      "revId": "09cab90fc4da0229ce404ba1afc0dc60f57b74dc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "433b39bb_9e410508",
+        "filename": "content/browser/webauth/authenticator_impl.cc",
+        "patchSetId": 14
+      },
+      "lineNbr": 178,
+      "author": {
+        "id": 1003152
+      },
+      "writtenOn": "2017-11-10T14:06:24Z",
+      "side": 1,
+      "message": "nit: Move the comment to the declaration in the header.",
+      "revId": "09cab90fc4da0229ce404ba1afc0dc60f57b74dc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4556a303_569ecec1",
+        "filename": "content/browser/webauth/authenticator_impl.cc",
+        "patchSetId": 14
+      },
+      "lineNbr": 189,
+      "author": {
+        "id": 1003152
+      },
+      "writtenOn": "2017-11-10T14:06:24Z",
+      "side": 1,
+      "message": "nit: Consolidate this comment with that at the declaration.",
+      "revId": "09cab90fc4da0229ce404ba1afc0dc60f57b74dc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "60ca1bf3_a864ba82",
+        "filename": "content/browser/webauth/authenticator_impl.h",
+        "patchSetId": 14
+      },
+      "lineNbr": 67,
+      "author": {
+        "id": 1003152
+      },
+      "writtenOn": "2017-11-10T14:06:24Z",
+      "side": 1,
+      "message": "nit: u2f_request_",
+      "revId": "09cab90fc4da0229ce404ba1afc0dc60f57b74dc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ce7915b2_03120614",
+        "filename": "content/browser/webauth/authenticator_impl_unittest.cc",
+        "patchSetId": 14
+      },
+      "lineNbr": 7,
+      "author": {
+        "id": 1003152
+      },
+      "writtenOn": "2017-11-10T14:06:24Z",
+      "side": 1,
+      "message": "nit: stdint.h and vector already included by the header of the class under test.",
+      "revId": "09cab90fc4da0229ce404ba1afc0dc60f57b74dc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "73cfa852_8ec16608",
+        "filename": "content/browser/webauth/authenticator_impl_unittest.cc",
+        "patchSetId": 14
+      },
+      "lineNbr": 48,
+      "author": {
+        "id": 1003152
+      },
+      "writtenOn": "2017-11-10T14:06:24Z",
+      "side": 1,
+      "message": "nit: Now it\u0027s fashionable to use constexpr kTestOrigin1[] \u003d ...",
+      "range": {
+        "startLine": 48,
+        "startChar": 0,
+        "endLine": 48,
+        "endChar": 10
+      },
+      "revId": "09cab90fc4da0229ce404ba1afc0dc60f57b74dc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "965eef60_7769c2c0",
+        "filename": "content/browser/webauth/authenticator_impl_unittest.cc",
+        "patchSetId": 14
+      },
+      "lineNbr": 52,
+      "author": {
+        "id": 1003152
+      },
+      "writtenOn": "2017-11-10T14:06:24Z",
+      "side": 1,
+      "message": "nit: s/const/constexpr/g where possible",
+      "range": {
+        "startLine": 52,
+        "startChar": 0,
+        "endLine": 52,
+        "endChar": 5
+      },
+      "revId": "09cab90fc4da0229ce404ba1afc0dc60f57b74dc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1a0c049a_8a932129",
+        "filename": "content/browser/webauth/authenticator_impl_unittest.cc",
+        "patchSetId": 14
+      },
+      "lineNbr": 54,
+      "author": {
+        "id": 1003152
+      },
+      "writtenOn": "2017-11-10T14:06:24Z",
+      "side": 1,
+      "message": "nit: Static not needed, everything inside an unnamed namespace has internal linkage by default.\n\nnit: You may see some bots complaining about static constructor calls. It\u0027s probably safer to replace all of these to constexpr char[] and constexpr uint8_t[].",
+      "revId": "09cab90fc4da0229ce404ba1afc0dc60f57b74dc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "131beb65_dbfaffc1",
+        "filename": "content/browser/webauth/authenticator_impl_unittest.cc",
+        "patchSetId": 14
+      },
+      "lineNbr": 78,
+      "author": {
+        "id": 1003152
+      },
+      "writtenOn": "2017-11-10T14:06:24Z",
+      "side": 1,
+      "message": "nit: kTestECPublicKeyCBOR",
+      "range": {
+        "startLine": 78,
+        "startChar": 39,
+        "endLine": 78,
+        "endChar": 41
+      },
+      "revId": "09cab90fc4da0229ce404ba1afc0dc60f57b74dc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f398cf48_9bf389c9",
+        "filename": "content/browser/webauth/authenticator_impl_unittest.cc",
+        "patchSetId": 14
+      },
+      "lineNbr": 100,
+      "author": {
+        "id": 1003152
+      },
+      "writtenOn": "2017-11-10T14:06:24Z",
+      "side": 1,
+      "message": "nit: s/u2f/U2F/g unless in local variable names.",
+      "revId": "09cab90fc4da0229ce404ba1afc0dc60f57b74dc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "843049f8_d2e5c7b5",
+        "filename": "content/browser/webauth/authenticator_impl_unittest.cc",
+        "patchSetId": 14
+      },
+      "lineNbr": 369,
+      "author": {
+        "id": 1003152
+      },
+      "writtenOn": "2017-11-10T14:06:24Z",
+      "side": 1,
+      "message": "nit: Even with the constants being raw arrays, you can use std::begin() and std::end() to initialize these vectors with them.",
+      "revId": "09cab90fc4da0229ce404ba1afc0dc60f57b74dc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2dd17e9f_ab70cf70",
+        "filename": "content/browser/webauth/authenticator_impl_unittest.cc",
+        "patchSetId": 14
+      },
+      "lineNbr": 471,
+      "author": {
+        "id": 1003152
+      },
+      "writtenOn": "2017-11-10T14:06:24Z",
+      "side": 1,
+      "message": "Let\u0027s have one or two intergration tests where the Mojo MakeCredential call succeeds.",
+      "revId": "09cab90fc4da0229ce404ba1afc0dc60f57b74dc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9c113371_f50e046e",
+        "filename": "content/browser/webauth/authenticator_utils.h",
+        "patchSetId": 14
+      },
+      "lineNbr": 11,
+      "author": {
+        "id": 1003152
+      },
+      "writtenOn": "2017-11-10T14:06:24Z",
+      "side": 1,
+      "message": "nit: Unused.",
+      "revId": "09cab90fc4da0229ce404ba1afc0dc60f57b74dc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2919801f_3b02134e",
+        "filename": "content/browser/webauth/authenticator_utils.h",
+        "patchSetId": 14
+      },
+      "lineNbr": 23,
+      "author": {
+        "id": 1003152
+      },
+      "writtenOn": "2017-11-10T14:06:24Z",
+      "side": 1,
+      "message": "nit: constexpr",
+      "range": {
+        "startLine": 23,
+        "startChar": 0,
+        "endLine": 23,
+        "endChar": 5
+      },
+      "revId": "09cab90fc4da0229ce404ba1afc0dc60f57b74dc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "85c22507_ba447ab1",
+        "filename": "content/browser/webauth/authenticator_utils.h",
+        "patchSetId": 14
+      },
+      "lineNbr": 34,
+      "author": {
+        "id": 1003152
+      },
+      "writtenOn": "2017-11-10T14:06:24Z",
+      "side": 1,
+      "message": "nit: blank line below",
+      "revId": "09cab90fc4da0229ce404ba1afc0dc60f57b74dc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7ccaf653_c6523133",
+        "filename": "content/browser/webauth/collected_client_data.cc",
+        "patchSetId": 14
+      },
+      "lineNbr": 36,
+      "author": {
+        "id": 1003152
+      },
+      "writtenOn": "2017-11-10T14:06:24Z",
+      "side": 1,
+      "message": "nit: encoded_challenge or base64_encoded_challenge?",
+      "range": {
+        "startLine": 36,
+        "startChar": 53,
+        "endLine": 36,
+        "endChar": 62
+      },
+      "revId": "09cab90fc4da0229ce404ba1afc0dc60f57b74dc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "add8cff5_faa11bee",
+        "filename": "content/browser/webauth/collected_client_data.cc",
+        "patchSetId": 14
+      },
+      "lineNbr": 56,
+      "author": {
+        "id": 1003152
+      },
+      "writtenOn": "2017-11-10T14:06:24Z",
+      "side": 1,
+      "message": "nit: Is this comment needed here?",
+      "revId": "09cab90fc4da0229ce404ba1afc0dc60f57b74dc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "556815ef_8698c23f",
+        "filename": "content/browser/webauth/collected_client_data.h",
+        "patchSetId": 14
+      },
+      "lineNbr": 14,
+      "author": {
+        "id": 1003152
+      },
+      "writtenOn": "2017-11-10T14:06:24Z",
+      "side": 1,
+      "message": "nit: Unused.",
+      "revId": "09cab90fc4da0229ce404ba1afc0dc60f57b74dc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c5a84722_21758be6",
+        "filename": "content/browser/webauth/ec_public_key.cc",
+        "patchSetId": 14
+      },
+      "lineNbr": 28,
+      "author": {
+        "id": 1003152
+      },
+      "writtenOn": "2017-11-10T14:06:24Z",
+      "side": 1,
+      "message": "std::move(x), std::move(y)",
+      "revId": "09cab90fc4da0229ce404ba1afc0dc60f57b74dc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d24b43e8_9659dea2",
+        "filename": "content/browser/webauth/ec_public_key.h",
+        "patchSetId": 14
+      },
+      "lineNbr": 31,
+      "author": {
+        "id": 1003152
+      },
+      "writtenOn": "2017-11-10T14:06:24Z",
+      "side": 1,
+      "message": "It seems that we cannot std::move |u2f_data| at all call sites because it needs to be passed into many of such Create methods, so let\u0027s take this by const reference.\n\nAlso, I\u0027d suggest renaming these methods that take out parts of the U2F responses to `Extract*`, e.g.: `ExtractFromU2FRegistrationResponse`.\n\nFeel free to shorten it, like ExtractFromU2FResponse or something, but then rename the argument from u2f_data to u2f_registration_response.",
+      "range": {
+        "startLine": 31,
+        "startChar": 45,
+        "endLine": 31,
+        "endChar": 74
+      },
+      "revId": "09cab90fc4da0229ce404ba1afc0dc60f57b74dc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7f16a639_c63e9457",
+        "filename": "content/browser/webauth/fido_attestation_statement.h",
+        "patchSetId": 14
+      },
+      "lineNbr": 22,
+      "author": {
+        "id": 1003152
+      },
+      "writtenOn": "2017-11-10T14:06:24Z",
+      "side": 1,
+      "message": "nit: x5c_certificate",
+      "revId": "09cab90fc4da0229ce404ba1afc0dc60f57b74dc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "19ca31f1_bd73ec46",
+        "filename": "content/browser/webauth/fido_attestation_statement.h",
+        "patchSetId": 14
+      },
+      "lineNbr": 25,
+      "author": {
+        "id": 1003152
+      },
+      "writtenOn": "2017-11-10T14:06:24Z",
+      "side": 1,
+      "message": "nit: Same story here: CreateFromU2F[Register]Response(u2f_register_response),\nor Extract...(const\u0026)",
+      "range": {
+        "startLine": 25,
+        "startChar": 51,
+        "endLine": 25,
+        "endChar": 57
+      },
+      "revId": "09cab90fc4da0229ce404ba1afc0dc60f57b74dc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9de74a92_db06f373",
+        "filename": "content/browser/webauth/fido_attestation_statement.h",
+        "patchSetId": 14
+      },
+      "lineNbr": 30,
+      "author": {
+        "id": 1003152
+      },
+      "writtenOn": "2017-11-10T14:06:24Z",
+      "side": 1,
+      "message": "Let\u0027s be consistent throughout the CL: CBOR or Cbor. Either is fine.",
+      "range": {
+        "startLine": 30,
+        "startChar": 27,
+        "endLine": 30,
+        "endChar": 31
+      },
+      "revId": "09cab90fc4da0229ce404ba1afc0dc60f57b74dc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "12417d7b_52fd4f04",
+        "filename": "content/browser/webauth/fido_attestation_statement.h",
+        "patchSetId": 14
+      },
+      "lineNbr": 30,
+      "author": {
+        "id": 1003152
+      },
+      "writtenOn": "2017-11-10T14:06:24Z",
+      "side": 1,
+      "message": "// AttestationStatement:\n... overrides ...",
+      "revId": "09cab90fc4da0229ce404ba1afc0dc60f57b74dc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "439d6cac_b25a4e48",
+        "filename": "content/browser/webauth/public_key.h",
+        "patchSetId": 14
+      },
+      "lineNbr": 10,
+      "author": {
+        "id": 1003152
+      },
+      "writtenOn": "2017-11-10T14:06:24Z",
+      "side": 1,
+      "message": "nit: Unused, as well as values.h",
+      "revId": "09cab90fc4da0229ce404ba1afc0dc60f57b74dc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ca23940b_5326f51f",
+        "filename": "content/browser/webauth/public_key.h",
+        "patchSetId": 14
+      },
+      "lineNbr": 23,
+      "author": {
+        "id": 1003152
+      },
+      "writtenOn": "2017-11-10T14:06:24Z",
+      "side": 1,
+      "message": "naming nit: EncodeAsCBOR[Bytes]?",
+      "range": {
+        "startLine": 23,
+        "startChar": 31,
+        "endLine": 23,
+        "endChar": 58
+      },
+      "revId": "09cab90fc4da0229ce404ba1afc0dc60f57b74dc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "643b6816_7539a208",
+        "filename": "content/browser/webauth/public_key.h",
+        "patchSetId": 14
+      },
+      "lineNbr": 30,
+      "author": {
+        "id": 1003152
+      },
+      "writtenOn": "2017-11-10T14:06:24Z",
+      "side": 1,
+      "message": "#include \"base/macros.h\"",
+      "revId": "09cab90fc4da0229ce404ba1afc0dc60f57b74dc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5cf86102_2b4d3225",
+        "filename": "content/browser/webauth/register_response_data.cc",
+        "patchSetId": 14
+      },
+      "lineNbr": 24,
+      "author": {
+        "id": 1003152
+      },
+      "writtenOn": "2017-11-10T14:06:24Z",
+      "side": 1,
+      "message": "optional nit: Some reviewers will nitpick on writing (16u, 0u).",
+      "range": {
+        "startLine": 24,
+        "startChar": 30,
+        "endLine": 24,
+        "endChar": 35
+      },
+      "revId": "09cab90fc4da0229ce404ba1afc0dc60f57b74dc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "795d70b4_2e95dc60",
+        "filename": "content/browser/webauth/register_response_data.cc",
+        "patchSetId": 14
+      },
+      "lineNbr": 25,
+      "author": {
+        "id": 1003152
+      },
+      "writtenOn": "2017-11-10T14:06:24Z",
+      "side": 1,
+      "message": "Include what you use: attestation_data.h",
+      "range": {
+        "startLine": 25,
+        "startChar": 18,
+        "endLine": 25,
+        "endChar": 33
+      },
+      "revId": "09cab90fc4da0229ce404ba1afc0dc60f57b74dc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d4b3dcae_4f48e67e",
+        "filename": "content/browser/webauth/register_response_data.cc",
+        "patchSetId": 14
+      },
+      "lineNbr": 26,
+      "author": {
+        "id": 1003152
+      },
+      "writtenOn": "2017-11-10T14:06:24Z",
+      "side": 1,
+      "message": "std::move(aaguid)",
+      "revId": "09cab90fc4da0229ce404ba1afc0dc60f57b74dc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7843e5a4_042cc525",
+        "filename": "content/browser/webauth/register_response_data.cc",
+        "patchSetId": 14
+      },
+      "lineNbr": 36,
+      "author": {
+        "id": 1003152
+      },
+      "writtenOn": "2017-11-10T14:06:24Z",
+      "side": 1,
+      "message": "std::move(counter)",
+      "revId": "09cab90fc4da0229ce404ba1afc0dc60f57b74dc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ed3c76f9_8c2a7195",
+        "filename": "content/browser/webauth/register_response_data.cc",
+        "patchSetId": 14
+      },
+      "lineNbr": 36,
+      "author": {
+        "id": 1003152
+      },
+      "writtenOn": "2017-11-10T14:06:24Z",
+      "side": 1,
+      "message": "nit: Let\u0027s make this a named variable |flags| for readability. \n\nAlso, it looks like the caller will never be able to pass any real values into here because  the flags are not exposed.\n\nLet\u0027s either remove this, and rely on the setters on the created instance.\n\nAlternatively, let\u0027s make the flags:\n\nclass AuthenticatorData {\npublic:\n enum class Flag : uint8_t {TEST_OF_USER_PRESENCE, ATTESTATION}\n using Flags \u003d uint8_t;\n...",
+      "range": {
+        "startLine": 36,
+        "startChar": 64,
+        "endLine": 36,
+        "endChar": 68
+      },
+      "revId": "09cab90fc4da0229ce404ba1afc0dc60f57b74dc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "65189986_2c32e5a0",
+        "filename": "content/browser/webauth/register_response_data.cc",
+        "patchSetId": 14
+      },
+      "lineNbr": 45,
+      "author": {
+        "id": 1003152
+      },
+      "writtenOn": "2017-11-10T14:06:24Z",
+      "side": 1,
+      "message": "nit: Either std::move() or make this also an Extract*(const\u0026...) type function.",
+      "range": {
+        "startLine": 45,
+        "startChar": 39,
+        "endLine": 45,
+        "endChar": 47
+      },
+      "revId": "09cab90fc4da0229ce404ba1afc0dc60f57b74dc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5534f463_e25d5849",
+        "filename": "content/browser/webauth/register_response_data.cc",
+        "patchSetId": 14
+      },
+      "lineNbr": 48,
+      "author": {
+        "id": 1003152
+      },
+      "writtenOn": "2017-11-10T14:06:24Z",
+      "side": 1,
+      "message": "nit: Please replace all calls to operator T::new() to std::make_unique\u003cT\u003e(..). An added benefit is that you don\u0027t need to spell out the variable type, you may just use auto.",
+      "range": {
+        "startLine": 48,
+        "startChar": 56,
+        "endLine": 48,
+        "endChar": 77
+      },
+      "revId": "09cab90fc4da0229ce404ba1afc0dc60f57b74dc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "afe0d643_f902bbf5",
+        "filename": "content/browser/webauth/register_response_data.h",
+        "patchSetId": 14
+      },
+      "lineNbr": 31,
+      "author": {
+        "id": 1003152
+      },
+      "writtenOn": "2017-11-10T14:06:24Z",
+      "side": 1,
+      "message": "nit: CreateFromU2FRegisterResponse",
+      "range": {
+        "startLine": 31,
+        "startChar": 47,
+        "endLine": 31,
+        "endChar": 53
+      },
+      "revId": "09cab90fc4da0229ce404ba1afc0dc60f57b74dc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2a78bc35_3bcd49a5",
+        "filename": "content/browser/webauth/register_response_data.h",
+        "patchSetId": 14
+      },
+      "lineNbr": 52,
+      "author": {
+        "id": 1003152
+      },
+      "writtenOn": "2017-11-10T14:06:24Z",
+      "side": 1,
+      "message": "style nit: You\u0027ll hate me for saying this, but apart from |raw_id|, the other getters have way too much logic to be inlined according to Chromium style. That will require changing the naming convention too, e.g. GetId.",
+      "revId": "09cab90fc4da0229ce404ba1afc0dc60f57b74dc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "dbb92f88_a0db5dcc",
+        "filename": "third_party/WebKit/LayoutTests/http/tests/credentialmanager/credentialscontainer-create-basics.html",
+        "patchSetId": 14
+      },
+      "lineNbr": 32,
+      "author": {
+        "id": 1003152
+      },
+      "writtenOn": "2017-11-10T14:06:24Z",
+      "side": 1,
+      "message": "Can we use |challenge| here? (Many occurrences below.)",
+      "range": {
+        "startLine": 32,
+        "startChar": 15,
+        "endLine": 32,
+        "endChar": 59
+      },
+      "revId": "09cab90fc4da0229ce404ba1afc0dc60f57b74dc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a9198f4e_799aea53",
+        "filename": "third_party/WebKit/LayoutTests/http/tests/credentialmanager/credentialscontainer-create-basics.html",
+        "patchSetId": 14
+      },
+      "lineNbr": 205,
+      "author": {
+        "id": 1003152
+      },
+      "writtenOn": "2017-11-10T14:06:24Z",
+      "side": 1,
+      "message": "Any way we could verify what rpId gets synthesized here?",
+      "revId": "09cab90fc4da0229ce404ba1afc0dc60f57b74dc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "df259c03_cafa4ff2",
+        "filename": "third_party/WebKit/LayoutTests/http/tests/credentialmanager/credentialscontainer-create-basics.html",
+        "patchSetId": 14
+      },
+      "lineNbr": 299,
+      "author": {
+        "id": 1003152
+      },
+      "writtenOn": "2017-11-10T14:06:24Z",
+      "side": 1,
+      "message": "This is not used.",
+      "revId": "09cab90fc4da0229ce404ba1afc0dc60f57b74dc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "81305c50_2cc4857b",
+        "filename": "third_party/WebKit/LayoutTests/http/tests/credentialmanager/credentialscontainer-create-basics.html",
+        "patchSetId": 14
+      },
+      "lineNbr": 322,
+      "author": {
+        "id": 1003152
+      },
+      "writtenOn": "2017-11-10T14:06:24Z",
+      "side": 1,
+      "message": "Let\u0027s (also) check `authenticatorData` here.",
+      "range": {
+        "startLine": 322,
+        "startChar": 39,
+        "endLine": 322,
+        "endChar": 54
+      },
+      "revId": "09cab90fc4da0229ce404ba1afc0dc60f57b74dc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
