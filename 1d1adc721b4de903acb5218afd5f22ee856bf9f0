@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "e2d415d4_f82fce00",
+        "filename": "ui/file_manager/file_manager/foreground/js/file_tasks.js",
+        "patchSetId": 4
+      },
+      "lineNbr": 496,
+      "author": {
+        "id": 1166720
+      },
+      "writtenOn": "2017-11-10T10:30:21Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "1855143f_48e1311c",
+      "range": {
+        "startLine": 496,
+        "startChar": 28,
+        "endLine": 496,
+        "endChar": 29
+      },
+      "revId": "1d1adc721b4de903acb5218afd5f22ee856bf9f0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "e1d9d2fe_dae98a5e",
         "filename": "ui/file_manager/file_manager/foreground/js/file_tasks.js",
         "patchSetId": 4
@@ -48,6 +72,30 @@
     },
     {
       "key": {
+        "uuid": "7a0eacf8_afac04aa",
+        "filename": "ui/file_manager/file_manager/foreground/js/file_tasks.js",
+        "patchSetId": 4
+      },
+      "lineNbr": 1011,
+      "author": {
+        "id": 1166720
+      },
+      "writtenOn": "2017-11-10T10:30:21Z",
+      "side": 1,
+      "message": "No. Removed.",
+      "parentUuid": "e1d9d2fe_dae98a5e",
+      "range": {
+        "startLine": 1011,
+        "startChar": 24,
+        "endLine": 1011,
+        "endChar": 48
+      },
+      "revId": "1d1adc721b4de903acb5218afd5f22ee856bf9f0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "d8b86d14_c3b8d9e4",
         "filename": "ui/file_manager/file_manager/foreground/js/task_controller.js",
         "patchSetId": 4
@@ -62,6 +110,24 @@
       "revId": "1d1adc721b4de903acb5218afd5f22ee856bf9f0",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "60800155_2f00c803",
+        "filename": "ui/file_manager/file_manager/foreground/js/task_controller.js",
+        "patchSetId": 4
+      },
+      "lineNbr": 421,
+      "author": {
+        "id": 1166720
+      },
+      "writtenOn": "2017-11-10T10:30:21Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "d8b86d14_c3b8d9e4",
+      "revId": "1d1adc721b4de903acb5218afd5f22ee856bf9f0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
