@@ -177,6 +177,24 @@
     },
     {
       "key": {
+        "uuid": "c707218f_289c87ea",
+        "filename": "chrome/browser/notifications/notification_image_retainer.cc",
+        "patchSetId": 28
+      },
+      "lineNbr": 76,
+      "author": {
+        "id": 1002500
+      },
+      "writtenOn": "2017-11-10T15:01:22Z",
+      "side": 1,
+      "message": "t \u003d 6 (seconds)\nn \u003d 1 \n\nThat makes 12.",
+      "parentUuid": "e8620ca4_144ef958",
+      "revId": "a48fa450178212ffa45fd47b13cf15fa58872b70",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "4fe33377_ce1a0957",
         "filename": "chrome/browser/notifications/notification_image_retainer.cc",
         "patchSetId": 28
@@ -329,6 +347,24 @@
       "side": 1,
       "message": "Yes",
       "parentUuid": "22f578fa_42f688e7",
+      "revId": "a48fa450178212ffa45fd47b13cf15fa58872b70",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f0a3a18d_231acb22",
+        "filename": "chrome/browser/notifications/notification_image_retainer.h",
+        "patchSetId": 28
+      },
+      "lineNbr": 27,
+      "author": {
+        "id": 1002500
+      },
+      "writtenOn": "2017-11-10T15:01:22Z",
+      "side": 1,
+      "message": "OK, done.",
+      "parentUuid": "f453b10e_a6f8d5eb",
       "revId": "a48fa450178212ffa45fd47b13cf15fa58872b70",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true

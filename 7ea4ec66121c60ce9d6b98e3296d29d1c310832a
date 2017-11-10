@@ -125,6 +125,24 @@
     },
     {
       "key": {
+        "uuid": "5b4b51d3_3c4a42c5",
+        "filename": "chrome/browser/notifications/notification_platform_bridge_win.cc",
+        "patchSetId": 23
+      },
+      "lineNbr": 241,
+      "author": {
+        "id": 1002500
+      },
+      "writtenOn": "2017-11-10T15:01:22Z",
+      "side": 1,
+      "message": "I agree. But we probably don\u0027t need to hold up this CL on the issue (since the function hasn\u0027t been fleshed out yet), so I\u0027ve added a TODO to add the DCHECK, once the function gets implemented.",
+      "parentUuid": "50e07ea9_97541cc1",
+      "revId": "7ea4ec66121c60ce9d6b98e3296d29d1c310832a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "918672fb_84f6f4cf",
         "filename": "chrome/browser/notifications/notification_platform_bridge_win.cc",
         "patchSetId": 23
