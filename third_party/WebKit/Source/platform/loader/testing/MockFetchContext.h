@@ -100,6 +100,10 @@ class MockFetchContext : public FetchContext {
     return frame_scheduler_->GetTaskRunner(TaskType::kUnspecedLoading);
   }
 
+  scoped_refptr<WebTaskRunner> GetLoadingControlTaskRunner() override {
+    return frame_scheduler_->GetTaskRunner(TaskType::kUnspecedLoading);
+  }
+
  private:
   class MockFrameScheduler final : public scheduler::FakeWebFrameScheduler {
    public:

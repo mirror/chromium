@@ -104,6 +104,7 @@ class WorkerFetchContext final : public BaseFetchContext {
                                ResourceRequest&) override;
   void SetFirstPartyCookieAndRequestorOrigin(ResourceRequest&) override;
   scoped_refptr<WebTaskRunner> GetLoadingTaskRunner() override;
+  scoped_refptr<WebTaskRunner> GetLoadingControlTaskRunner() override;
 
   void Trace(blink::Visitor*) override;
 

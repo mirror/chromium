@@ -351,6 +351,10 @@ scoped_refptr<WebTaskRunner> WorkerFetchContext::GetLoadingTaskRunner() {
   return loading_task_runner_;
 }
 
+scoped_refptr<WebTaskRunner> WorkerFetchContext::GetLoadingControlTaskRunner() {
+  return loading_task_runner_;
+}
+
 void WorkerFetchContext::Trace(blink::Visitor* visitor) {
   visitor->Trace(global_scope_);
   visitor->Trace(subresource_filter_);
