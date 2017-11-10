@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "b7755032_cc79e0ea",
+        "filename": "third_party/WebKit/Source/core/editing/commands/ApplyStyleCommand.cpp",
+        "patchSetId": 2
+      },
+      "lineNbr": 1491,
+      "author": {
+        "id": 1217339
+      },
+      "writtenOn": "2017-11-10T20:09:42Z",
+      "side": 1,
+      "message": "Nice catch.\nIf we remove inner scope variable, that can change the old code behavior by overriding outer scope |node| value.\nShould we do something here (rename inner variable |node| for instance)?",
+      "parentUuid": "b5ba2979_cb9f1fbc",
+      "range": {
+        "startLine": 1491,
+        "startChar": 6,
+        "endLine": 1491,
+        "endChar": 46
+      },
+      "revId": "b8257614ca277e176a6e853e06bd01ee15168154",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "4238307e_6b91cbec",
         "filename": "third_party/WebKit/Source/core/editing/serializers/Serialization.cpp",
         "patchSetId": 2
@@ -36,6 +60,30 @@
       "writtenOn": "2017-11-10T18:19:58Z",
       "side": 1,
       "message": "|parent_list_node| is always null if |first_node| is null.\n\nCan we make it more straightforward, like:\n\nif (first_node) {\n  if (... parent_list_node \u003d ...(FirstPositionInOrBeforeNode(*first_node), ...)) {\n    ...\n  }\n}",
+      "range": {
+        "startLine": 188,
+        "startChar": 0,
+        "endLine": 191,
+        "endChar": 0
+      },
+      "revId": "b8257614ca277e176a6e853e06bd01ee15168154",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7aeb827f_5132f2c5",
+        "filename": "third_party/WebKit/Source/core/editing/serializers/Serialization.cpp",
+        "patchSetId": 2
+      },
+      "lineNbr": 191,
+      "author": {
+        "id": 1217339
+      },
+      "writtenOn": "2017-11-10T20:09:42Z",
+      "side": 1,
+      "message": "OK, I wrapped that code in |if (first_node)| statement.",
+      "parentUuid": "4238307e_6b91cbec",
       "range": {
         "startLine": 188,
         "startChar": 0,
@@ -68,6 +116,30 @@
       "revId": "b8257614ca277e176a6e853e06bd01ee15168154",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "152a150a_c7f63881",
+        "filename": "third_party/WebKit/Source/core/editing/serializers/Serialization.cpp",
+        "patchSetId": 2
+      },
+      "lineNbr": 209,
+      "author": {
+        "id": 1217339
+      },
+      "writtenOn": "2017-11-10T20:09:42Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "00c72783_17c5d250",
+      "range": {
+        "startLine": 204,
+        "startChar": 0,
+        "endLine": 209,
+        "endChar": 56
+      },
+      "revId": "b8257614ca277e176a6e853e06bd01ee15168154",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }

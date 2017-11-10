@@ -72,6 +72,24 @@
     },
     {
       "key": {
+        "uuid": "6f59ef9e_c55ef59f",
+        "filename": "third_party/WebKit/Source/core/editing/commands/ReplaceSelectionCommand.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 1457,
+      "author": {
+        "id": 1217339
+      },
+      "writtenOn": "2017-11-10T20:09:42Z",
+      "side": 1,
+      "message": "Looks like after check in L1377 we can change/remove nodes from |inserted_nodes|, therefore I can\u0027t rely on that check.\n\nAdded TODO.",
+      "parentUuid": "3cdde2f9_b8e3c448",
+      "revId": "378caa6672d5e69dcebbd3ff8495e109cca602e3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "1900e818_8370ac6d",
         "filename": "third_party/WebKit/Source/core/editing/serializers/Serialization.cpp",
         "patchSetId": 1
@@ -136,6 +154,24 @@
       "side": 1,
       "message": "Adding a TODO would help.",
       "parentUuid": "a7a95810_dadd7c2b",
+      "revId": "378caa6672d5e69dcebbd3ff8495e109cca602e3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "fc0b8b6e_f925430e",
+        "filename": "third_party/WebKit/Source/core/editing/serializers/Serialization.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 422,
+      "author": {
+        "id": 1217339
+      },
+      "writtenOn": "2017-11-10T20:09:42Z",
+      "side": 1,
+      "message": "After closer look, I see that ParserTakeAllChildrenFrom will remove nodes from the given ContainerNode. So we can\u0027t make that a |const Node\u0026| and it should be just |Node\u0026|\n\nPS. How do you think, why function called |CommonAncestorContainer()| returns just |Node| but not ContainerNode and it is requited a type cast? Can we change that?",
+      "parentUuid": "99e67efc_3d5754be",
       "revId": "378caa6672d5e69dcebbd3ff8495e109cca602e3",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
