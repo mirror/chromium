@@ -107,7 +107,6 @@ ThreadState::ThreadState()
       persistent_region_(WTF::MakeUnique<PersistentRegion>()),
       start_of_stack_(reinterpret_cast<intptr_t*>(WTF::GetStackStart())),
       end_of_stack_(reinterpret_cast<intptr_t*>(WTF::GetStackStart())),
-      safe_point_scope_marker_(nullptr),
       sweep_forbidden_(false),
       no_allocation_count_(0),
       gc_forbidden_count_(0),
@@ -226,6 +225,8 @@ void ThreadState::VisitAsanFakeStackForPointer(Visitor* visitor, Address ptr) {
 NO_SANITIZE_ADDRESS
 NO_SANITIZE_THREAD
 void ThreadState::VisitStack(Visitor* visitor) {
+  SafePointScope safe_point_scope(current_gc_data_.stack_state, this);
+
   if (stack_state_ == BlinkGC::kNoHeapPointersOnStack)
     return;
 
@@ -236,9 +237,7 @@ void ThreadState::VisitStack(Visitor* visitor) {
   // If there is no scope marker the thread is blocked and we should
   // scan all the way to the recorded end stack pointer.
   Address* end = reinterpret_cast<Address*>(end_of_stack_);
-  Address* safe_point_scope_marker =
-      reinterpret_cast<Address*>(safe_point_scope_marker_);
-  Address* current = safe_point_scope_marker ? safe_point_scope_marker : end;
+  Address* current = end;
 
   // Ensure that current is aligned by address size otherwise the loop below
   // will read past start address.
@@ -253,15 +252,6 @@ void ThreadState::VisitStack(Visitor* visitor) {
     // Note: it may be tempting to get rid of |ptr| and simply use |current|
     // here, but that would be incorrect. We intentionally use a local
     // variable because we don't want to unpoison the original stack.
-    __msan_unpoison(&ptr, sizeof(ptr));
-#endif
-    heap_->CheckAndMarkPointer(visitor, ptr);
-    VisitAsanFakeStackForPointer(visitor, ptr);
-  }
-
-  for (Address ptr : safe_point_stack_copy_) {
-#if defined(MEMORY_SANITIZER)
-    // See the comment above.
     __msan_unpoison(&ptr, sizeof(ptr));
 #endif
     heap_->CheckAndMarkPointer(visitor, ptr);
@@ -1024,31 +1014,6 @@ void ThreadState::SafePoint(BlinkGC::StackState stack_state) {
   stack_state_ = BlinkGC::kHeapPointersOnStack;
 }
 
-#ifdef ADDRESS_SANITIZER
-// When we are running under AddressSanitizer with
-// detect_stack_use_after_return=1 then stack marker obtained from
-// SafePointScope will point into a fake stack.  Detect this case by checking if
-// it falls in between current stack frame and stack start and use an arbitrary
-// high enough value for it.  Don't adjust stack marker in any other case to
-// match behavior of code running without AddressSanitizer.
-NO_SANITIZE_ADDRESS static void* AdjustScopeMarkerForAdressSanitizer(
-    void* scope_marker) {
-  Address start = reinterpret_cast<Address>(WTF::GetStackStart());
-  Address end = reinterpret_cast<Address>(&start);
-  CHECK_LT(end, start);
-
-  if (end <= scope_marker && scope_marker < start)
-    return scope_marker;
-
-  // 256 is as good an approximation as any else.
-  const size_t kBytesToCopy = sizeof(Address) * 256;
-  if (static_cast<size_t>(start - end) < kBytesToCopy)
-    return start;
-
-  return end + kBytesToCopy;
-}
-#endif
-
 // TODO(haraken): The first void* pointer is unused. Remove it.
 using PushAllRegistersCallback = void (*)(void*, ThreadState*, intptr_t*);
 extern "C" void PushAllRegisters(void*, ThreadState*, PushAllRegistersCallback);
@@ -1057,27 +1022,19 @@ static void EnterSafePointAfterPushRegisters(void*,
                                              ThreadState* state,
                                              intptr_t* stack_end) {
   state->RecordStackEnd(stack_end);
-  state->CopyStackUntilSafePointScope();
 }
 
-void ThreadState::EnterSafePoint(BlinkGC::StackState stack_state,
-                                 void* scope_marker) {
+void ThreadState::EnterSafePoint(BlinkGC::StackState stack_state) {
   DCHECK(CheckThread());
-#ifdef ADDRESS_SANITIZER
-  if (stack_state == BlinkGC::kHeapPointersOnStack)
-    scope_marker = AdjustScopeMarkerForAdressSanitizer(scope_marker);
-#endif
-  DCHECK(stack_state == BlinkGC::kNoHeapPointersOnStack || scope_marker);
+  //DCHECK(stack_state == BlinkGC::kHeapPointersOnStack);
   DCHECK(IsGCForbidden());
   stack_state_ = stack_state;
-  safe_point_scope_marker_ = scope_marker;
   PushAllRegisters(nullptr, this, EnterSafePointAfterPushRegisters);
 }
 
 void ThreadState::LeaveSafePoint() {
   DCHECK(CheckThread());
   stack_state_ = BlinkGC::kHeapPointersOnStack;
-  ClearSafePointScopeMarker();
 }
 
 void ThreadState::AddObserver(BlinkGCObserver* observer) {
@@ -1102,32 +1059,6 @@ void ThreadState::ReportMemoryToV8() {
                  static_cast<int64_t>(reported_memory_to_v8_);
   isolate_->AdjustAmountOfExternalAllocatedMemory(diff);
   reported_memory_to_v8_ = current_heap_size;
-}
-
-void ThreadState::CopyStackUntilSafePointScope() {
-  if (!safe_point_scope_marker_ ||
-      stack_state_ == BlinkGC::kNoHeapPointersOnStack)
-    return;
-
-  Address* to = reinterpret_cast<Address*>(safe_point_scope_marker_);
-  Address* from = reinterpret_cast<Address*>(end_of_stack_);
-  CHECK_LT(from, to);
-  CHECK_LE(to, reinterpret_cast<Address*>(start_of_stack_));
-  size_t slot_count = static_cast<size_t>(to - from);
-// Catch potential performance issues.
-#if defined(LEAK_SANITIZER) || defined(ADDRESS_SANITIZER)
-  // ASan/LSan use more space on the stack and we therefore
-  // increase the allowed stack copying for those builds.
-  DCHECK_LT(slot_count, 2048u);
-#else
-  DCHECK_LT(slot_count, 1024u);
-#endif
-
-  DCHECK(!safe_point_stack_copy_.size());
-  safe_point_stack_copy_.resize(slot_count);
-  for (size_t i = 0; i < slot_count; ++i) {
-    safe_point_stack_copy_[i] = from[i];
-  }
 }
 
 void ThreadState::RegisterStaticPersistentNode(
@@ -1330,10 +1261,7 @@ void ThreadState::MarkPhaseVisitRoots() {
   Heap().VisitPersistentRoots(current_gc_data_.visitor.get());
 
   // 2. Trace objects reachable from the stack.
-  {
-    SafePointScope safe_point_scope(current_gc_data_.stack_state, this);
-    Heap().VisitStackRoots(current_gc_data_.visitor.get());
-  }
+  Heap().VisitStackRoots(current_gc_data_.visitor.get());
   current_gc_data_.marking_time_in_milliseconds +=
       WTF::MonotonicallyIncreasingTimeMS() - start_time;
 }

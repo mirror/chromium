@@ -392,7 +392,7 @@ class PLATFORM_EXPORT ThreadState {
   void SafePoint(BlinkGC::StackState);
 
   // Mark current thread as running inside safepoint.
-  void EnterSafePoint(BlinkGC::StackState, void*);
+  void EnterSafePoint(BlinkGC::StackState);
   void LeaveSafePoint();
 
   void RecordStackEnd(intptr_t* end_of_stack) { end_of_stack_ = end_of_stack; }
@@ -527,11 +527,6 @@ class PLATFORM_EXPORT ThreadState {
   ThreadState();
   ~ThreadState();
 
-  void ClearSafePointScopeMarker() {
-    safe_point_stack_copy_.clear();
-    safe_point_scope_marker_ = nullptr;
-  }
-
   // shouldScheduleIdleGC and shouldForceConservativeGC
   // implement the heuristics that are used to determine when to collect
   // garbage.
@@ -610,8 +605,6 @@ class PLATFORM_EXPORT ThreadState {
   intptr_t* start_of_stack_;
   intptr_t* end_of_stack_;
 
-  void* safe_point_scope_marker_;
-  Vector<Address> safe_point_stack_copy_;
   bool sweep_forbidden_;
   size_t no_allocation_count_;
   size_t gc_forbidden_count_;

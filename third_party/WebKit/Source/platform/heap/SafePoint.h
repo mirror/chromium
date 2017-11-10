@@ -19,7 +19,7 @@ class SafePointScope final {
                           ThreadState* state = ThreadState::Current())
       : state_(state) {
     if (state_) {
-      state_->EnterSafePoint(stack_state, this);
+      state_->EnterSafePoint(stack_state);
     }
   }
 
