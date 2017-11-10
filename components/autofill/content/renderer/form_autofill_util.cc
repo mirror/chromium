@@ -1357,6 +1357,7 @@ void WebFormControlElementToFormField(
   CR_DEFINE_STATIC_LOCAL(WebString, kRole, ("role"));
   CR_DEFINE_STATIC_LOCAL(WebString, kPlaceholder, ("placeholder"));
   CR_DEFINE_STATIC_LOCAL(WebString, kClass, ("class"));
+  CR_DEFINE_STATIC_LOCAL(WebString, kReadOnly, ("readonly"));
 
   // Save both id and name attributes, if present. If there is only one of them,
   // it will be saved to |name|. See HTMLFormControlElement::nameForAutofill.
@@ -1381,6 +1382,8 @@ void WebFormControlElementToFormField(
   if (element.HasAttribute(kClass))
     field->css_classes = element.GetAttribute(kClass).Utf16();
 
+  bool readonly = element.HasAttribute(kReadOnly);
+
   if (field_value_and_properties_map) {
     FieldValueAndPropertiesMaskMap::const_iterator it =
         field_value_and_properties_map->find(element);
@@ -1397,7 +1400,7 @@ void WebFormControlElementToFormField(
       IsSelectElement(element)) {
     field->is_autofilled = element.IsAutofilled();
     if (!g_prevent_layout)
-      field->is_focusable = element.IsFocusable();
+      field->is_focusable = element.IsFocusable() && !readonly;
     field->should_autocomplete = element.AutoComplete();
 
     // Use 'text-align: left|right' if set or 'direction' otherwise.
