@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "90369ac5_e5378eb4",
+        "filename": "chrome/renderer/chrome_content_renderer_client.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 250,
+      "author": {
+        "id": 1002532
+      },
+      "writtenOn": "2017-11-10T02:29:06Z",
+      "side": 0,
+      "message": "why remove this second check?",
+      "revId": "11b6818278c549a3889e4d2a90aa2bc3966882f2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
