@@ -188,6 +188,30 @@
       "revId": "7a2aac4f8ef2c2ce2f3ce5dcba232fd5a7539e22",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e9adc18a_cf1f91a4",
+        "filename": "chrome/browser/sessions/session_data_deleter.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 127,
+      "author": {
+        "id": 1002808
+      },
+      "writtenOn": "2017-11-10T18:20:52Z",
+      "side": 1,
+      "message": "Just to confirm with no uncertainty, yes it is safe to close a pipe after sending messages on it. The lifetime of the sending endpoint in no way constrains the lifetime of messages sent by it.\n\nSome thoughts regarding the batch operations:\n\n* Randy\u0027s rationale seems reasonable: the messages will be pipelined and context switches should be minimal.\n* Depending on the frequency with which these operations will happen in practice, it may or may not be worth going to the trouble of measuring performance before making a decision.\n* Augmenting the delete API to take a batch of cookies does seems like a straightforward change and is worth considering.\n* One caution regarding that approach though: if the number of cookies is effectively unbounded, batching them all in one request could exceed the maximum message length (~256 MiB). We\u0027d probably want to impose some reasonable limit on the number of requests we batch into a single IPC.",
+      "parentUuid": "2e1df9d3_4932fd96",
+      "range": {
+        "startLine": 127,
+        "startChar": 8,
+        "endLine": 127,
+        "endChar": 60
+      },
+      "revId": "7a2aac4f8ef2c2ce2f3ce5dcba232fd5a7539e22",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
