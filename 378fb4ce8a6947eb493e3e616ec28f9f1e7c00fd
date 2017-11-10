@@ -1,0 +1,96 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "d5dac983_f0b7e00c",
+        "filename": "chrome/browser/resources/settings/passwords_and_forms_page/autofill_section.html",
+        "patchSetId": 2
+      },
+      "lineNbr": 148,
+      "author": {
+        "id": 1116254
+      },
+      "writtenOn": "2017-11-10T01:26:46Z",
+      "side": 1,
+      "message": "nit: trailing space",
+      "range": {
+        "startLine": 148,
+        "startChar": 27,
+        "endLine": 148,
+        "endChar": 28
+      },
+      "revId": "378fb4ce8a6947eb493e3e616ec28f9f1e7c00fd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "67137778_bd8ba546",
+        "filename": "chrome/browser/resources/settings/passwords_and_forms_page/autofill_section.html",
+        "patchSetId": 2
+      },
+      "lineNbr": 160,
+      "author": {
+        "id": 1116254
+      },
+      "writtenOn": "2017-11-10T01:26:46Z",
+      "side": 1,
+      "message": "nit: trailing space",
+      "range": {
+        "startLine": 160,
+        "startChar": 44,
+        "endLine": 160,
+        "endChar": 45
+      },
+      "revId": "378fb4ce8a6947eb493e3e616ec28f9f1e7c00fd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "af9a9582_e792398d",
+        "filename": "chrome/browser/resources/settings/passwords_and_forms_page/autofill_section.html",
+        "patchSetId": 2
+      },
+      "lineNbr": 195,
+      "author": {
+        "id": 1116254
+      },
+      "writtenOn": "2017-11-10T01:26:46Z",
+      "side": 1,
+      "message": "Please add for a11y:\nicon-aria-label\u003d\"$i18n{noCreditCardsPolicy}\"",
+      "range": {
+        "startLine": 195,
+        "startChar": 13,
+        "endLine": 195,
+        "endChar": 32
+      },
+      "revId": "378fb4ce8a6947eb493e3e616ec28f9f1e7c00fd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e98eada6_16c528ec",
+        "filename": "chrome/browser/resources/settings/passwords_and_forms_page/autofill_section.html",
+        "patchSetId": 2
+      },
+      "lineNbr": 197,
+      "author": {
+        "id": 1116254
+      },
+      "writtenOn": "2017-11-10T01:26:46Z",
+      "side": 1,
+      "message": "Nit: indenting.\n\n      \u003cdiv id\u003d\"CreditCardsDisabledLabel\" class\u003d\"list-item\"\n          hidden$\u003d\"[[!isDisabled_(prefs.autofill.credit_card_enabled)]]\"\u003e\n        \u003ccr-policy-indicator indicator-type\u003d\"userPolicy\"\u003e\u003c/cr-policy-indicator\u003e\n        $i18n{noCreditCardsPolicy}\n      \u003c/div\u003e",
+      "range": {
+        "startLine": 195,
+        "startChar": 1,
+        "endLine": 197,
+        "endChar": 36
+      },
+      "revId": "378fb4ce8a6947eb493e3e616ec28f9f1e7c00fd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
