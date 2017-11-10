@@ -88,6 +88,33 @@ scoped_refptr<viz::ContextProvider> Gpu::CreateContextProvider(
       shared_context_provider, ui::command_buffer_metrics::MUS_CLIENT_CONTEXT);
 }
 
+#if defined(OS_CHROMEOS)
+void Gpu::CreateArcVideoDecodeAccelerator(
+    arc::mojom::VideoDecodeAcceleratorRequest vda_request) {
+  LOG(ERROR) << "PENG Gpu::CreateArcVideoDecodeAccelerator";
+  DCHECK(main_task_runner_->BelongsToCurrentThread());
+  if (!gpu_ || !gpu_.is_bound())
+    gpu_ = factory_.Run();
+  gpu_->CreateArcVideoDecodeAccelerator(std::move(vda_request));
+}
+
+void Gpu::CreateArcVideoEncodeAccelerator(
+    arc::mojom::VideoEncodeAcceleratorRequest vea_request) {
+  DCHECK(main_task_runner_->BelongsToCurrentThread());
+  if (!gpu_ || !gpu_.is_bound())
+    gpu_ = factory_.Run();
+  gpu_->CreateArcVideoEncodeAccelerator(std::move(vea_request));
+}
+
+void Gpu::CreateArcProtectedBufferManager(
+    arc::mojom::ProtectedBufferManagerRequest pbm_request) {
+  DCHECK(main_task_runner_->BelongsToCurrentThread());
+  if (!gpu_ || !gpu_.is_bound())
+    gpu_ = factory_.Run();
+  gpu_->CreateArcProtectedBufferManager(std::move(pbm_request));
+}
+#endif  // OS_CHROMEOS
+
 void Gpu::CreateJpegDecodeAccelerator(
     media::mojom::GpuJpegDecodeAcceleratorRequest jda_request) {
   DCHECK(main_task_runner_->BelongsToCurrentThread());
