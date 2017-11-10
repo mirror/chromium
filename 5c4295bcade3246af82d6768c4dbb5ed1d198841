@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "9c8af555_76a942c4",
+        "filename": "content/browser/frame_host/debug_urls.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 229,
+      "author": {
+        "id": 1115881
+      },
+      "writtenOn": "2017-11-10T14:23:30Z",
+      "side": 1,
+      "message": "I\u0027m very close to landing https://chromium-review.googlesource.com/c/chromium/src/+/731083 which moves this function. I\u0027ve included your change in the latest patchset there, so could you remove it from this CL? Thanks!",
+      "revId": "5c4295bcade3246af82d6768c4dbb5ed1d198841",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
