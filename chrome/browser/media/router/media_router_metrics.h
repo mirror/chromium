@@ -10,6 +10,7 @@
 #include "base/gtest_prod_util.h"
 #include "base/time/time.h"
 #include "chrome/browser/ui/webui/media_router/media_cast_mode.h"
+#include "chrome/common/media_router/media_sink.h"
 #include "chrome/common/media_router/mojo/dial_device_description_parser.mojom.h"
 #include "media/base/container_names.h"
 
@@ -84,11 +85,12 @@ class MediaRouterMetrics {
   static const char kHistogramMediaRouterCastingSource[];
   static const char kHistogramMediaRouterFileFormat[];
   static const char kHistogramMediaRouterFileSize[];
+  static const char kHistogramMediaSinkType[];
+  static const char kHistogramPresentationUrlType[];
   static const char kHistogramRouteCreationOutcome[];
   static const char kHistogramUiDialogPaint[];
   static const char kHistogramUiDialogLoadedWithData[];
   static const char kHistogramUiFirstAction[];
-  static const char kHistogramPresentationUrlType[];
 
   // Records where the user clicked to open the Media Router dialog.
   static void RecordMediaRouterDialogOrigin(
@@ -129,6 +131,9 @@ class MediaRouterMetrics {
 
   // Records the type of Presentation URL used by a web page.
   static void RecordPresentationUrlType(const GURL& url);
+
+  // Records the type of the sink that media is being Cast to.
+  static void RecordMediaSinkType(SinkIconType sink_icon_type);
 };
 
 }  // namespace media_router
