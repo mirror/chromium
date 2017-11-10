@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "7b85c548_616176d7",
+        "filename": "chrome/browser/vr/elements/ui_element.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 407,
+      "author": {
+        "id": 1000537
+      },
+      "writtenOn": "2017-11-10T21:50:44Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "f751b7de_e8892081",
+      "revId": "d5050bfe2eb6e8784843b692a1af6aaa84f11a74",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "0b6955eb_cdbcbbf6",
         "filename": "chrome/browser/vr/elements/ui_element.h",
         "patchSetId": 2
@@ -30,6 +48,24 @@
       "writtenOn": "2017-11-10T21:00:19Z",
       "side": 1,
       "message": "Per offline discussion: perhaps use something easier to understand instead of RectF to store the information?",
+      "revId": "d5050bfe2eb6e8784843b692a1af6aaa84f11a74",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4944eb6a_4ddb3c33",
+        "filename": "chrome/browser/vr/elements/ui_element.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 370,
+      "author": {
+        "id": 1000537
+      },
+      "writtenOn": "2017-11-10T21:50:44Z",
+      "side": 1,
+      "message": "Thanks for calling this out. I\u0027ve broken it into a size and local origin.",
+      "parentUuid": "0b6955eb_cdbcbbf6",
       "revId": "d5050bfe2eb6e8784843b692a1af6aaa84f11a74",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -53,6 +89,24 @@
     },
     {
       "key": {
+        "uuid": "601de098_a64cbdbb",
+        "filename": "chrome/browser/vr/elements/ui_element_unittest.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 44,
+      "author": {
+        "id": 1000537
+      },
+      "writtenOn": "2017-11-10T21:50:44Z",
+      "side": 1,
+      "message": "Nope, definitely redundant.",
+      "parentUuid": "363da16c_eb039ae2",
+      "revId": "d5050bfe2eb6e8784843b692a1af6aaa84f11a74",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "d64bfe70_3937bec3",
         "filename": "chrome/browser/vr/elements/ui_element_unittest.cc",
         "patchSetId": 2
@@ -67,6 +121,24 @@
       "revId": "d5050bfe2eb6e8784843b692a1af6aaa84f11a74",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e6ba355f_65c2e24a",
+        "filename": "chrome/browser/vr/elements/ui_element_unittest.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 58,
+      "author": {
+        "id": 1000537
+      },
+      "writtenOn": "2017-11-10T21:50:44Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "d64bfe70_3937bec3",
+      "revId": "d5050bfe2eb6e8784843b692a1af6aaa84f11a74",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
