@@ -212,6 +212,30 @@
       "revId": "7a2aac4f8ef2c2ce2f3ce5dcba232fd5a7539e22",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ea408b1c_40f215a5",
+        "filename": "chrome/browser/sessions/session_data_deleter.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 127,
+      "author": {
+        "id": 1001809
+      },
+      "writtenOn": "2017-11-10T18:38:23Z",
+      "side": 1,
+      "message": "Thanks, Ken!\n\nScott: Based on Ken\u0027s response, I\u0027d like to propose the following:\n* I\u0027ll switch the code over to a fire-and-forget model relying on the Mojo semantics of reliable message delivery after the send side of the pipe is closed.\n* I don\u0027t think session data deletion is going to happen very often (?), and I don\u0027t want the code complexity of handling the maximum message lengths (even individual cookies can be pretty large sometimes, though I haven\u0027t heard of \u003e 1MB), so I\u0027m inclined to leave the cookie lack of batching the way it currently is.\n\nWDYT?",
+      "parentUuid": "e9adc18a_cf1f91a4",
+      "range": {
+        "startLine": 127,
+        "startChar": 8,
+        "endLine": 127,
+        "endChar": 60
+      },
+      "revId": "7a2aac4f8ef2c2ce2f3ce5dcba232fd5a7539e22",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
