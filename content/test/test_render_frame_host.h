@@ -20,6 +20,10 @@
 
 struct FrameHostMsg_DidCommitProvisionalLoad_Params;
 
+namespace net {
+class HostPortPair;
+}
+
 namespace content {
 
 class TestRenderFrameHostCreationObserver : public WebContentsObserver {
@@ -140,6 +144,10 @@ class TestRenderFrameHost : public RenderFrameHostImpl,
   // interaction with the IO thread up until the response is ready to commit.
   void PrepareForCommit();
 
+  // Like PrepareForCommit, but with the socket address when needed.
+  void PrepareForCommitWithSocketAddress(
+      const net::HostPortPair& socket_address);
+
   // This method does the same as PrepareForCommit.
   // PlzNavigate: Beyond doing the same as PrepareForCommit, this method will
   // also simulate a server redirect to |redirect_url|. If the URL is empty the
@@ -179,6 +187,9 @@ class TestRenderFrameHost : public RenderFrameHostImpl,
                                   ui::PageTransition transition,
                                   int response_code,
                                   const ModificationCallback& callback);
+
+  void PrepareForCommitInternal(const GURL& redirect_url,
+                                const net::HostPortPair& socket_address);
 
   // Computes the page ID for a pending navigation in this RenderFrameHost;
   int32_t ComputeNextPageID();
