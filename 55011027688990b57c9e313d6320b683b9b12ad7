@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "c2a6b798_e767a2ed",
+        "filename": "components/viz/service/surfaces/surface.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 406,
+      "author": {
+        "id": 1115911
+      },
+      "writtenOn": "2017-11-10T20:44:59Z",
+      "side": 1,
+      "message": "so the client interprets 0 time as did not present frame?",
+      "revId": "55011027688990b57c9e313d6320b683b9b12ad7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
