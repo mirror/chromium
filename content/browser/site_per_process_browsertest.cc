@@ -286,6 +286,31 @@ double GetPageScaleFactor(Shell* shell) {
       .page_scale_factor;
 }
 
+class HitTestCallback {
+ public:
+  HitTestCallback(const base::Closure& quit_closure,
+                  viz::FrameSinkId id_expected)
+      : quit_closure_(quit_closure),
+        id_expected_(id_expected),
+        weak_ptr_factory_(this) {}
+  void Callback(const viz::FrameSinkId& id) {
+    ASSERT_EQ(id_expected_.client_id(), id.client_id());
+    ASSERT_EQ(id_expected_.sink_id(), id.sink_id());
+    quit_closure_.Run();
+  }
+
+  base::WeakPtr<HitTestCallback> GetWeakPtr() {
+    return weak_ptr_factory_.GetWeakPtr();
+  }
+
+ private:
+  base::Closure quit_closure_;
+  viz::FrameSinkId id_expected_;
+  base::WeakPtrFactory<HitTestCallback> weak_ptr_factory_;
+
+  DISALLOW_COPY_AND_ASSIGN(HitTestCallback);
+};
+
 // Helper function that performs a surface hittest.
 void SurfaceHitTestTestHelper(
     Shell* shell,
@@ -369,6 +394,19 @@ void SurfaceHitTestTestHelper(
   EXPECT_TRUE(main_frame_monitor.EventWasReceived());
   EXPECT_NEAR(2, main_frame_monitor.event().PositionInWidget().x, 2);
   EXPECT_NEAR(2, main_frame_monitor.event().PositionInWidget().y, 2);
+
+  // Check the renderer hit-test API return the correct frame for
+  // the cross site iframe.
+  base::RunLoop run_loop;
+  HitTestCallback hit_test_callback_child(
+      content::GetDeferredQuitTaskForRunLoop(&run_loop),
+      viz::FrameSinkId(root_view->GetRenderWidgetHost()->GetProcess()->GetID(),
+                       rwhv_child->GetRenderWidgetHost()->GetRoutingID()));
+  root->current_frame_host()->GetInputTargetClient()->FrameSinkIdAt(
+      gfx::Point(100, 100),
+      base::BindOnce(&HitTestCallback::Callback,
+                     hit_test_callback_child.GetWeakPtr()));
+  content::RunThisRunLoop(&run_loop);
 }
 
 class RedirectNotificationObserver : public NotificationObserver {
