@@ -2,6 +2,121 @@
   "comments": [
     {
       "key": {
+        "uuid": "16ad3ba2_675e6c78",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/partnerbookmarks/PartnerBookmarksReader.java",
+        "patchSetId": 8
+      },
+      "lineNbr": 47,
+      "author": {
+        "id": 1116043
+      },
+      "writtenOn": "2017-11-10T00:16:58Z",
+      "side": 1,
+      "message": "nit, I\u0027d call this mNumFaviconsInProgress...i\u0027d read it as a boolean as is.",
+      "range": {
+        "startLine": 47,
+        "startChar": 16,
+        "endLine": 47,
+        "endChar": 35
+      },
+      "revId": "69c9bb33c45305e1449ec9c23318f2cdd62e59e1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f039898d_032cbab5",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/partnerbookmarks/PartnerBookmarksReader.java",
+        "patchSetId": 8
+      },
+      "lineNbr": 107,
+      "author": {
+        "id": 1116043
+      },
+      "writtenOn": "2017-11-10T00:16:58Z",
+      "side": 1,
+      "message": "naively, this looks like a potential race, but it seems like it is called synchronously by the native code, so it will be incremented immediately (i.e. mFaviconsInProgress will be completely incremented by the time mFinishedReading is true).",
+      "range": {
+        "startLine": 107,
+        "startChar": 18,
+        "endLine": 107,
+        "endChar": 37
+      },
+      "revId": "69c9bb33c45305e1449ec9c23318f2cdd62e59e1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0bd2f315_b0936e68",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/partnerbookmarks/PartnerBookmarksReader.java",
+        "patchSetId": 8
+      },
+      "lineNbr": 131,
+      "author": {
+        "id": 1116043
+      },
+      "writtenOn": "2017-11-10T00:16:58Z",
+      "side": 1,
+      "message": "Hmm..will this crash?  Isn\u0027t mShutDown null at this point so unboxing would NPE?\n\nI think the same thing with mShutDown above.  We\u0027re synchronizing on null, which either crashes or doesn\u0027t do anything.\n\nI think you have to initialize mShutDown to false for this to play nice.  In general, I think synchronizing on \"this\" is ok in this situation (if we truly only use it for shutDown)",
+      "range": {
+        "startLine": 131,
+        "startChar": 16,
+        "endLine": 131,
+        "endChar": 25
+      },
+      "revId": "69c9bb33c45305e1449ec9c23318f2cdd62e59e1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "047cbeff_885af145",
+        "filename": "chrome/browser/android/bookmarks/partner_bookmarks_reader.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 224,
+      "author": {
+        "id": 1116043
+      },
+      "writtenOn": "2017-11-10T00:16:58Z",
+      "side": 1,
+      "message": "we won\u0027t call destroy on this class until all of these have been process, which is why Unretained is safe right?",
+      "range": {
+        "startLine": 224,
+        "startChar": 27,
+        "endLine": 224,
+        "endChar": 37
+      },
+      "revId": "69c9bb33c45305e1449ec9c23318f2cdd62e59e1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "726c36fb_c9f1830f",
+        "filename": "chrome/browser/android/bookmarks/partner_bookmarks_reader.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 243,
+      "author": {
+        "id": 1116043
+      },
+      "writtenOn": "2017-11-10T00:16:58Z",
+      "side": 1,
+      "message": "if (!large_icon_service_) ?",
+      "range": {
+        "startLine": 243,
+        "startChar": 6,
+        "endLine": 243,
+        "endChar": 25
+      },
+      "revId": "69c9bb33c45305e1449ec9c23318f2cdd62e59e1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "ae69a69c_ca168e46",
         "filename": "chrome/browser/android/bookmarks/partner_bookmarks_reader.cc",
         "patchSetId": 8
@@ -25,6 +140,29 @@
     },
     {
       "key": {
+        "uuid": "48b31d8a_d4183793",
+        "filename": "chrome/browser/android/bookmarks/partner_bookmarks_reader.h",
+        "patchSetId": 8
+      },
+      "lineNbr": 23,
+      "author": {
+        "id": 1116043
+      },
+      "writtenOn": "2017-11-10T00:16:58Z",
+      "side": 1,
+      "message": "I think we normally would put this as a static in the cc file.  I don\u0027t think chromium uses macros like this",
+      "range": {
+        "startLine": 23,
+        "startChar": 8,
+        "endLine": 23,
+        "endChar": 49
+      },
+      "revId": "69c9bb33c45305e1449ec9c23318f2cdd62e59e1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "a2ac7b40_01439bf1",
         "filename": "chrome/browser/android/bookmarks/partner_bookmarks_reader.h",
         "patchSetId": 8
@@ -41,6 +179,29 @@
         "startChar": 5,
         "endLine": 37,
         "endChar": 28
+      },
+      "revId": "69c9bb33c45305e1449ec9c23318f2cdd62e59e1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "11b3a1ed_3568b0e8",
+        "filename": "chrome/browser/android/bookmarks/partner_bookmarks_reader.h",
+        "patchSetId": 8
+      },
+      "lineNbr": 72,
+      "author": {
+        "id": 1116043
+      },
+      "writtenOn": "2017-11-10T00:16:58Z",
+      "side": 1,
+      "message": "why public for these?",
+      "range": {
+        "startLine": 72,
+        "startChar": 11,
+        "endLine": 72,
+        "endChar": 27
       },
       "revId": "69c9bb33c45305e1449ec9c23318f2cdd62e59e1",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
