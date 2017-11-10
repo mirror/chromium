@@ -57,6 +57,10 @@ class BrowserList {
     return last_active_browsers_.rend();
   }
 
+  size_t currently_closing_browsers_count() const {
+    return currently_closing_browsers_.size();
+  }
+
   static BrowserList* GetInstance();
 
   // Adds or removes |browser| from the list it is associated with. The browser
@@ -153,6 +157,8 @@ class BrowserList {
   // A vector of the browsers in this list that have been activated, in the
   // reverse order in which they were last activated.
   BrowserVector last_active_browsers_;
+  // A vector of the browsers that are currently in the closing state.
+  BrowserVector currently_closing_browsers_;
 
   // A list of observers which will be notified of every browser addition and
   // removal across all BrowserLists.
