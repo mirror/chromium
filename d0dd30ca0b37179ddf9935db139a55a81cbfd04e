@@ -1,0 +1,55 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "09d7d188_cfbfa665",
+        "filename": "content/browser/service_worker/service_worker_version.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 1015,
+      "author": {
+        "id": 1125915
+      },
+      "writtenOn": "2017-11-10T03:21:41Z",
+      "side": 1,
+      "message": "Could we have tests to exercise the new messages?",
+      "revId": "d0dd30ca0b37179ddf9935db139a55a81cbfd04e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "41b947ee_9e807c2b",
+        "filename": "content/browser/service_worker/service_worker_version.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 1651,
+      "author": {
+        "id": 1125915
+      },
+      "writtenOn": "2017-11-10T03:21:41Z",
+      "side": 1,
+      "message": "How about moving .Close() to around 1952-1956? I think it\u0027d be better to reset/close things at the same place.",
+      "revId": "d0dd30ca0b37179ddf9935db139a55a81cbfd04e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e3b17b18_d22a64fc",
+        "filename": "third_party/WebKit/public/platform/modules/serviceworker/service_worker.mojom",
+        "patchSetId": 5
+      },
+      "lineNbr": 25,
+      "author": {
+        "id": 1125915
+      },
+      "writtenOn": "2017-11-10T03:21:41Z",
+      "side": 1,
+      "message": "nit: you\u0027ve implemented",
+      "revId": "d0dd30ca0b37179ddf9935db139a55a81cbfd04e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
