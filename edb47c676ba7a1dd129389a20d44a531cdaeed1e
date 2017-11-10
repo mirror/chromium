@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "d2bae85e_7b7f4d0d",
+        "filename": "content/browser/frame_host/navigation_request.h",
+        "patchSetId": 12
+      },
+      "lineNbr": 192,
+      "author": {
+        "id": 1115999
+      },
+      "writtenOn": "2017-11-10T18:40:35Z",
+      "side": 1,
+      "message": "I\u0027ll remove the collide bit, but leave everything else.",
+      "parentUuid": "4b45d001_d83424b1",
+      "range": {
+        "startLine": 191,
+        "startChar": 41,
+        "endLine": 192,
+        "endChar": 35
+      },
+      "revId": "edb47c676ba7a1dd129389a20d44a531cdaeed1e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "9742b8f9_80cb255f",
         "filename": "content/test/test_render_frame_host.cc",
         "patchSetId": 12
@@ -36,6 +60,24 @@
       "writtenOn": "2017-11-10T14:15:50Z",
       "side": 1,
       "message": "Why not plumb through the input token?",
+      "revId": "edb47c676ba7a1dd129389a20d44a531cdaeed1e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4c5a0c6e_9055bf9c",
+        "filename": "content/test/test_render_frame_host.cc",
+        "patchSetId": 12
+      },
+      "lineNbr": 70,
+      "author": {
+        "id": 1115999
+      },
+      "writtenOn": "2017-11-10T18:40:35Z",
+      "side": 1,
+      "message": "Oversight, thanks.",
+      "parentUuid": "9742b8f9_80cb255f",
       "revId": "edb47c676ba7a1dd129389a20d44a531cdaeed1e",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -59,6 +101,24 @@
     },
     {
       "key": {
+        "uuid": "2f8396cb_37261dc4",
+        "filename": "third_party/WebKit/DEPS",
+        "patchSetId": 12
+      },
+      "lineNbr": 2,
+      "author": {
+        "id": 1115999
+      },
+      "writtenOn": "2017-11-10T18:40:35Z",
+      "side": 1,
+      "message": "I can move it to Source/core and to public/",
+      "parentUuid": "8655dc1c_89237186",
+      "revId": "edb47c676ba7a1dd129389a20d44a531cdaeed1e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "3bd1db1a_f8870f2e",
         "filename": "third_party/WebKit/Source/core/loader/FrameLoader.cpp",
         "patchSetId": 12
@@ -70,6 +130,24 @@
       "writtenOn": "2017-11-10T14:15:50Z",
       "side": 1,
       "message": "Would it be possible to plumb this through CreateDocumentLoader as well, rather than having to set it after the fact?",
+      "revId": "edb47c676ba7a1dd129389a20d44a531cdaeed1e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7aa45179_42a91953",
+        "filename": "third_party/WebKit/Source/core/loader/FrameLoader.cpp",
+        "patchSetId": 12
+      },
+      "lineNbr": 1787,
+      "author": {
+        "id": 1115999
+      },
+      "writtenOn": "2017-11-10T18:40:35Z",
+      "side": 1,
+      "message": "Let me try doing it in a separate patch - when I tried it at first, it turned into a bunch of base::UnguessableToken::Create() calls scattered over the source base, so I retreated.\n\nI wonder if we should be specializing these tokens for ease of understanding / follow up. I.e. in this case, we would be\n\nusing DevToolsNavigationToken \u003d base::UnguessableToken;\n\nthe only downside is that we need it on both sides, browser and renderer, would need to be exposed from web/ in renderer for content as well.",
+      "parentUuid": "3bd1db1a_f8870f2e",
       "revId": "edb47c676ba7a1dd129389a20d44a531cdaeed1e",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
