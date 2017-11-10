@@ -1,0 +1,96 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "ef7e0ed7_dd9859ce",
+        "filename": "third_party/WebKit/Source/platform/scheduler/base/thread_controller_impl.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 24,
+      "author": {
+        "id": 1002897
+      },
+      "writtenOn": "2017-11-10T19:13:58Z",
+      "side": 1,
+      "message": "Get rid of the message_loop_ member, which is never used, and replace this constructor with:\n\nThreadControllerImpl::ThreadControllerImpl::ThreadControllerImpl(\n    base::MessageLoop* message_loop,\n    std::unique_ptr\u003cbase::TickClock\u003e time_source)\n  : ThreadControllerImpl(message_loop-\u003etask_runner(), std::move(time_source)) {}",
+      "range": {
+        "startLine": 16,
+        "startChar": 0,
+        "endLine": 24,
+        "endChar": 65
+      },
+      "revId": "ea2116aa8b90f6064ff19936988b4a044fdb716e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b3d3c7e0_4e6e4186",
+        "filename": "third_party/WebKit/Source/platform/scheduler/base/thread_controller_impl.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 32,
+      "author": {
+        "id": 1002897
+      },
+      "writtenOn": "2017-11-10T19:13:58Z",
+      "side": 1,
+      "message": "In base, we just write:\n\n// ThreadController:",
+      "range": {
+        "startLine": 32,
+        "startChar": 2,
+        "endLine": 32,
+        "endChar": 37
+      },
+      "revId": "ea2116aa8b90f6064ff19936988b4a044fdb716e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4179dc40_222c6f54",
+        "filename": "third_party/WebKit/Source/platform/scheduler/base/thread_controller_impl.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 55,
+      "author": {
+        "id": 1002897
+      },
+      "writtenOn": "2017-11-10T19:13:58Z",
+      "side": 1,
+      "message": "Add a\nSEQUENCE_CHECKER(sequence_checker_);\nAnd use it in DoWork, IsNested, AddNestingObserver, RemoveNestingObserver, SetSequence.\nAnd maybe other methods?",
+      "range": {
+        "startLine": 55,
+        "startChar": 2,
+        "endLine": 55,
+        "endChar": 35
+      },
+      "revId": "ea2116aa8b90f6064ff19936988b4a044fdb716e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f334d0e0_55ba6e28",
+        "filename": "third_party/WebKit/Source/platform/scheduler/base/thread_controller_impl.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 60,
+      "author": {
+        "id": 1002897
+      },
+      "writtenOn": "2017-11-10T19:13:58Z",
+      "side": 1,
+      "message": "In base/, we use inline initialization:\n\nSequence* sequence_ \u003d nullptr;\n\nAnd remove initialization in constructor.",
+      "range": {
+        "startLine": 60,
+        "startChar": 2,
+        "endLine": 60,
+        "endChar": 22
+      },
+      "revId": "ea2116aa8b90f6064ff19936988b4a044fdb716e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
