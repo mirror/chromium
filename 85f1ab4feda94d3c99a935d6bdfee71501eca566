@@ -1,0 +1,55 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "484640fe_5ac95114",
+        "filename": "chrome/browser/media/media_engagement_contents_observer.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 315,
+      "author": {
+        "id": 1115974
+      },
+      "writtenOn": "2017-11-10T15:53:11Z",
+      "side": 1,
+      "message": "As long as you are moving this, maybe drop the `#if defined`?\n\nYou could simply remove this method actually.",
+      "revId": "85f1ab4feda94d3c99a935d6bdfee71501eca566",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d71e0844_9e84f72f",
+        "filename": "chrome/browser/media/media_engagement_contents_observer.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 446,
+      "author": {
+        "id": 1115974
+      },
+      "writtenOn": "2017-11-10T15:53:11Z",
+      "side": 1,
+      "message": "This comment seems off. Shouldn\u0027t it be about the player being audible?",
+      "revId": "85f1ab4feda94d3c99a935d6bdfee71501eca566",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f8b80cfd_9345c855",
+        "filename": "chrome/browser/media/media_engagement_contents_observer.h",
+        "patchSetId": 7
+      },
+      "lineNbr": 196,
+      "author": {
+        "id": 1115974
+      },
+      "writtenOn": "2017-11-10T15:53:11Z",
+      "side": 1,
+      "message": "Did you consider merging `audible_players_` and `player_timers_`? It may reduce the memory footprint (std::map overhead) but only useful if the code overhead is low.",
+      "revId": "85f1ab4feda94d3c99a935d6bdfee71501eca566",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
