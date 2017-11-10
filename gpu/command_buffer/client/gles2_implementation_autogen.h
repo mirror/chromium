@@ -1268,4 +1268,12 @@ void TexStorage2DImageCHROMIUM(GLenum target,
 void SetColorSpaceMetadataCHROMIUM(GLuint texture_id,
                                    GLColorSpace color_space) override;
 
+GLuint CreateGpuFenceCHROMIUM() override;
+
+GLuint DuplicateGpuFenceCHROMIUM(ClientGpuFence source) override;
+
+void WaitGpuFenceCHROMIUM(GLuint gpu_fence_id) override;
+
+void DestroyGpuFenceCHROMIUM(GLuint gpu_fence_id) override;
+
 #endif  // GPU_COMMAND_BUFFER_CLIENT_GLES2_IMPLEMENTATION_AUTOGEN_H_

@@ -195,6 +195,9 @@ class GLES2_IMPL_EXPORT GLES2Implementation
                        const base::Closure& callback) override;
   bool IsSyncTokenSignaled(const gpu::SyncToken& sync_token) override;
   void SignalQuery(uint32_t query, const base::Closure& callback) override;
+  void GetGpuFenceHandle(uint32_t gpu_fence_id,
+                         const base::Callback<void(const gfx::GpuFenceHandle&)>&
+                             callback) override;
   void SetAggressivelyFreeResources(bool aggressively_free_resources) override;
   void Swap() override;
   void SwapWithBounds(const std::vector<gfx::Rect>& rects) override;

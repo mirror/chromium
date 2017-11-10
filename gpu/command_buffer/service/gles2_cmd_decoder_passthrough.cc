@@ -1004,6 +1004,18 @@ void GLES2DecoderPassthroughImpl::ReturnFrontBuffer(const Mailbox& mailbox,
   in_use_color_textures_.erase(it);
 }
 
+#if 0
+void GLES2DecoderPassthroughImpl::CreateGpuFence(uint32_t create_id, const base::Callback<void(
+    const gfx::GpuFenceHandle& handle)>& callback) {
+  NOTIMPLEMENTED();
+}
+#endif
+
+void GLES2DecoderPassthroughImpl::InsertGpuFence(
+    const gfx::GpuFenceHandle& handle) {
+  NOTIMPLEMENTED();
+}
+
 bool GLES2DecoderPassthroughImpl::ResizeOffscreenFramebuffer(
     const gfx::Size& size) {
   DCHECK(offscreen_);
@@ -1233,6 +1245,10 @@ size_t GLES2DecoderPassthroughImpl::GetCreatedBackTextureCountForTest() {
 }
 
 gpu::gles2::QueryManager* GLES2DecoderPassthroughImpl::GetQueryManager() {
+  return nullptr;
+}
+
+gpu::gles2::GpuFenceManager* GLES2DecoderPassthroughImpl::GetGpuFenceManager() {
   return nullptr;
 }
 

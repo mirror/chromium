@@ -5247,6 +5247,39 @@ error::Error GLES2DecoderImpl::HandleTexStorage2DImageCHROMIUM(
   return error::kNoError;
 }
 
+error::Error GLES2DecoderImpl::HandleCreateGpuFenceINTERNAL(
+    uint32_t immediate_data_size,
+    const volatile void* cmd_data) {
+  const volatile gles2::cmds::CreateGpuFenceINTERNAL& c =
+      *static_cast<const volatile gles2::cmds::CreateGpuFenceINTERNAL*>(
+          cmd_data);
+  GLuint gpu_fence_id = static_cast<GLuint>(c.gpu_fence_id);
+  bool from_external = static_cast<bool>(c.from_external);
+  DoCreateGpuFenceINTERNAL(gpu_fence_id, from_external);
+  return error::kNoError;
+}
+
+error::Error GLES2DecoderImpl::HandleWaitGpuFenceCHROMIUM(
+    uint32_t immediate_data_size,
+    const volatile void* cmd_data) {
+  const volatile gles2::cmds::WaitGpuFenceCHROMIUM& c =
+      *static_cast<const volatile gles2::cmds::WaitGpuFenceCHROMIUM*>(cmd_data);
+  GLuint gpu_fence_id = static_cast<GLuint>(c.gpu_fence_id);
+  DoWaitGpuFenceCHROMIUM(gpu_fence_id);
+  return error::kNoError;
+}
+
+error::Error GLES2DecoderImpl::HandleDestroyGpuFenceCHROMIUM(
+    uint32_t immediate_data_size,
+    const volatile void* cmd_data) {
+  const volatile gles2::cmds::DestroyGpuFenceCHROMIUM& c =
+      *static_cast<const volatile gles2::cmds::DestroyGpuFenceCHROMIUM*>(
+          cmd_data);
+  GLuint gpu_fence_id = static_cast<GLuint>(c.gpu_fence_id);
+  DoDestroyGpuFenceCHROMIUM(gpu_fence_id);
+  return error::kNoError;
+}
+
 bool GLES2DecoderImpl::SetCapabilityState(GLenum cap, bool enabled) {
   switch (cap) {
     case GL_BLEND:
