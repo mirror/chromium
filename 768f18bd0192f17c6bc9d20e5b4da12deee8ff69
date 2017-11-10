@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "d6e847ac_63d5e8b7",
+        "filename": "chrome/browser/resources/print_preview/new/color_settings.html",
+        "patchSetId": 4
+      },
+      "lineNbr": 1,
+      "author": {
+        "id": 1182404
+      },
+      "writtenOn": "2017-11-10T00:08:45Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "6caa4b43_75550ac5",
+      "revId": "768f18bd0192f17c6bc9d20e5b4da12deee8ff69",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "202acca6_c4c91184",
         "filename": "chrome/browser/resources/print_preview/new/compiled_resources2.gyp",
         "patchSetId": 4
@@ -33,6 +51,24 @@
       "revId": "768f18bd0192f17c6bc9d20e5b4da12deee8ff69",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "454987fe_0d4cb621",
+        "filename": "chrome/browser/resources/print_preview/new/compiled_resources2.gyp",
+        "patchSetId": 4
+      },
+      "lineNbr": 16,
+      "author": {
+        "id": 1182404
+      },
+      "writtenOn": "2017-11-10T00:08:45Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "202acca6_c4c91184",
+      "revId": "768f18bd0192f17c6bc9d20e5b4da12deee8ff69",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -53,6 +89,24 @@
     },
     {
       "key": {
+        "uuid": "f5938b8a_2ee34d91",
+        "filename": "chrome/browser/resources/print_preview/new/compiled_resources2.gyp",
+        "patchSetId": 4
+      },
+      "lineNbr": 33,
+      "author": {
+        "id": 1182404
+      },
+      "writtenOn": "2017-11-10T00:08:45Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "89dd889d_8aa59dd4",
+      "revId": "768f18bd0192f17c6bc9d20e5b4da12deee8ff69",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "eb8af823_075c7944",
         "filename": "chrome/browser/resources/print_preview/new/dpi_settings.html",
         "patchSetId": 4
@@ -64,6 +118,24 @@
       "writtenOn": "2017-11-09T22:48:05Z",
       "side": 1,
       "message": "Are the \u003coption\u003e nodes going to be added later?",
+      "revId": "768f18bd0192f17c6bc9d20e5b4da12deee8ff69",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2a1bd387_e01835ef",
+        "filename": "chrome/browser/resources/print_preview/new/dpi_settings.html",
+        "patchSetId": 4
+      },
+      "lineNbr": 13,
+      "author": {
+        "id": 1182404
+      },
+      "writtenOn": "2017-11-10T00:08:45Z",
+      "side": 1,
+      "message": "This section (and media size) have to populate the option nodes from the printer capabilities, which are not implemented yet.",
+      "parentUuid": "eb8af823_075c7944",
       "revId": "768f18bd0192f17c6bc9d20e5b4da12deee8ff69",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -87,6 +159,24 @@
     },
     {
       "key": {
+        "uuid": "a1ecd9db_a7b9fc01",
+        "filename": "chrome/browser/resources/print_preview/new/input_settings_behavior.js",
+        "patchSetId": 4
+      },
+      "lineNbr": 8,
+      "author": {
+        "id": 1182404
+      },
+      "writtenOn": "2017-11-10T00:08:45Z",
+      "side": 1,
+      "message": "I was planning to use this (possibly with some modifications) for the \"Pages\" input as well, since that is the other input that requires validation since the user can type something invalid. It is a input type text field. But it might be possible to create a behavior which would be implemented by a number input element and the pages element and then have both scaling and copies contain the number input element. What do you think?",
+      "parentUuid": "60fced75_b6c6c3a2",
+      "revId": "768f18bd0192f17c6bc9d20e5b4da12deee8ff69",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "8081e4dd_ae9c14bb",
         "filename": "chrome/browser/resources/print_preview/new/input_settings_behavior.js",
         "patchSetId": 4
@@ -101,6 +191,24 @@
       "revId": "768f18bd0192f17c6bc9d20e5b4da12deee8ff69",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "753c4c11_c5d4b9da",
+        "filename": "chrome/browser/resources/print_preview/new/input_settings_behavior.js",
+        "patchSetId": 4
+      },
+      "lineNbr": 14,
+      "author": {
+        "id": 1182404
+      },
+      "writtenOn": "2017-11-10T00:08:45Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "8081e4dd_ae9c14bb",
+      "revId": "768f18bd0192f17c6bc9d20e5b4da12deee8ff69",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
