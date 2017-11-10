@@ -15,8 +15,6 @@ assert(enable_vr)
 
 static_library("vr_common") {
   sources = [
-    "//gpu/command_buffer/service/create_gr_gl_interface.cc",
-    "//gpu/command_buffer/service/create_gr_gl_interface.h",
     "animation_player.cc",
     "animation_player.h",
     "browser_ui_interface.h",
