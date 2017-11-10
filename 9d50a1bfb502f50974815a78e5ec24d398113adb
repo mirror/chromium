@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "900d6736_43cbbf69",
+        "filename": "chrome/browser/download/chrome_download_manager_delegate.cc",
+        "patchSetId": 14
+      },
+      "lineNbr": 506,
+      "author": {
+        "id": 1226039
+      },
+      "writtenOn": "2017-11-10T22:49:32Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "7f9a4773_31b0f53b",
+      "range": {
+        "startLine": 506,
+        "startChar": 2,
+        "endLine": 506,
+        "endChar": 40
+      },
+      "revId": "9d50a1bfb502f50974815a78e5ec24d398113adb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "94c12229_501d2beb",
         "filename": "chrome/browser/download/chrome_download_manager_delegate.h",
         "patchSetId": 14
@@ -45,6 +69,30 @@
       "revId": "9d50a1bfb502f50974815a78e5ec24d398113adb",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b2f0724f_d149e6e8",
+        "filename": "chrome/browser/download/chrome_download_manager_delegate.h",
+        "patchSetId": 14
+      },
+      "lineNbr": 195,
+      "author": {
+        "id": 1226039
+      },
+      "writtenOn": "2017-11-10T22:49:32Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "94c12229_501d2beb",
+      "range": {
+        "startLine": 195,
+        "startChar": 49,
+        "endLine": 195,
+        "endChar": 79
+      },
+      "revId": "9d50a1bfb502f50974815a78e5ec24d398113adb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -71,6 +119,30 @@
     },
     {
       "key": {
+        "uuid": "20d19a2b_a521ac84",
+        "filename": "components/download/downloader/in_progress/download_entry.cc",
+        "patchSetId": 14
+      },
+      "lineNbr": 15,
+      "author": {
+        "id": 1226039
+      },
+      "writtenOn": "2017-11-10T22:49:32Z",
+      "side": 1,
+      "message": "git cl format . keeps removing the space, so going to keep it out?",
+      "parentUuid": "2c925c68_15f5aade",
+      "range": {
+        "startLine": 15,
+        "startChar": 48,
+        "endLine": 15,
+        "endChar": 49
+      },
+      "revId": "9d50a1bfb502f50974815a78e5ec24d398113adb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "4e870ad0_6276489c",
         "filename": "components/download/downloader/in_progress/download_entry.h",
         "patchSetId": 14
@@ -91,6 +163,30 @@
       "revId": "9d50a1bfb502f50974815a78e5ec24d398113adb",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6b7e39b1_d28b799a",
+        "filename": "components/download/downloader/in_progress/download_entry.h",
+        "patchSetId": 14
+      },
+      "lineNbr": 17,
+      "author": {
+        "id": 1226039
+      },
+      "writtenOn": "2017-11-10T22:49:32Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "4e870ad0_6276489c",
+      "range": {
+        "startLine": 17,
+        "startChar": 16,
+        "endLine": 17,
+        "endChar": 33
+      },
+      "revId": "9d50a1bfb502f50974815a78e5ec24d398113adb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -117,6 +213,30 @@
     },
     {
       "key": {
+        "uuid": "a682640e_36b863ca",
+        "filename": "components/download/downloader/in_progress/in_progress_cache.h",
+        "patchSetId": 14
+      },
+      "lineNbr": 21,
+      "author": {
+        "id": 1226039
+      },
+      "writtenOn": "2017-11-10T22:49:32Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "122c022a_1959edba",
+      "range": {
+        "startLine": 20,
+        "startChar": 49,
+        "endLine": 21,
+        "endChar": 14
+      },
+      "revId": "9d50a1bfb502f50974815a78e5ec24d398113adb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "25e1c146_5f9d0d18",
         "filename": "components/download/downloader/in_progress/in_progress_conversions.cc",
         "patchSetId": 14
@@ -137,6 +257,30 @@
       "revId": "9d50a1bfb502f50974815a78e5ec24d398113adb",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "37fde7cc_a2787679",
+        "filename": "components/download/downloader/in_progress/in_progress_conversions.cc",
+        "patchSetId": 14
+      },
+      "lineNbr": 5,
+      "author": {
+        "id": 1226039
+      },
+      "writtenOn": "2017-11-10T22:49:32Z",
+      "side": 1,
+      "message": "Putting a comment to write unit tests in a separate CL.",
+      "parentUuid": "25e1c146_5f9d0d18",
+      "range": {
+        "startLine": 5,
+        "startChar": 53,
+        "endLine": 5,
+        "endChar": 78
+      },
+      "revId": "9d50a1bfb502f50974815a78e5ec24d398113adb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -163,6 +307,30 @@
     },
     {
       "key": {
+        "uuid": "93c667a9_287ede87",
+        "filename": "content/browser/download/download_manager_impl.cc",
+        "patchSetId": 14
+      },
+      "lineNbr": 220,
+      "author": {
+        "id": 1226039
+      },
+      "writtenOn": "2017-11-10T22:49:32Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "a9b0fae7_6911b421",
+      "range": {
+        "startLine": 218,
+        "startChar": 2,
+        "endLine": 220,
+        "endChar": 24
+      },
+      "revId": "9d50a1bfb502f50974815a78e5ec24d398113adb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "82481885_42e9a2ed",
         "filename": "content/browser/download/download_manager_impl.cc",
         "patchSetId": 14
@@ -186,6 +354,30 @@
     },
     {
       "key": {
+        "uuid": "1545caaf_fd5e6d9b",
+        "filename": "content/browser/download/download_manager_impl.cc",
+        "patchSetId": 14
+      },
+      "lineNbr": 301,
+      "author": {
+        "id": 1226039
+      },
+      "writtenOn": "2017-11-10T22:49:32Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "82481885_42e9a2ed",
+      "range": {
+        "startLine": 301,
+        "startChar": 6,
+        "endLine": 301,
+        "endChar": 24
+      },
+      "revId": "9d50a1bfb502f50974815a78e5ec24d398113adb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "7ee7ee8a_68d45fa5",
         "filename": "content/browser/download/download_manager_impl.cc",
         "patchSetId": 14
@@ -197,6 +389,30 @@
       "writtenOn": "2017-11-10T19:21:04Z",
       "side": 1,
       "message": "Do we ever have downloads in the INTERRUPTED state for a *long* time (e.g. failed downloads)?  I don\u0027t remember if we remove them from the history db or not.",
+      "range": {
+        "startLine": 304,
+        "startChar": 4,
+        "endLine": 304,
+        "endChar": 50
+      },
+      "revId": "9d50a1bfb502f50974815a78e5ec24d398113adb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3cef610b_0ca460b9",
+        "filename": "content/browser/download/download_manager_impl.cc",
+        "patchSetId": 14
+      },
+      "lineNbr": 304,
+      "author": {
+        "id": 1226039
+      },
+      "writtenOn": "2017-11-10T22:49:32Z",
+      "side": 1,
+      "message": "** ask min **",
+      "parentUuid": "7ee7ee8a_68d45fa5",
       "range": {
         "startLine": 304,
         "startChar": 4,
@@ -232,6 +448,30 @@
     },
     {
       "key": {
+        "uuid": "ded05942_42eb3e84",
+        "filename": "content/browser/download/download_manager_impl.cc",
+        "patchSetId": 14
+      },
+      "lineNbr": 508,
+      "author": {
+        "id": 1226039
+      },
+      "writtenOn": "2017-11-10T22:49:32Z",
+      "side": 1,
+      "message": "** pause \u0026 resume a download, see what happens -- need this piece of code in that place too **",
+      "parentUuid": "50c2f86b_58ecbf70",
+      "range": {
+        "startLine": 508,
+        "startChar": 2,
+        "endLine": 508,
+        "endChar": 18
+      },
+      "revId": "9d50a1bfb502f50974815a78e5ec24d398113adb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "845896f7_971c23d8",
         "filename": "content/browser/download/download_manager_impl.h",
         "patchSetId": 14
@@ -248,6 +488,53 @@
         "startChar": 0,
         "endLine": 42,
         "endChar": 66
+      },
+      "revId": "9d50a1bfb502f50974815a78e5ec24d398113adb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a4c11ef2_a14840bc",
+        "filename": "content/browser/download/download_manager_impl.h",
+        "patchSetId": 14
+      },
+      "lineNbr": 42,
+      "author": {
+        "id": 1226039
+      },
+      "writtenOn": "2017-11-10T22:49:32Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "845896f7_971c23d8",
+      "range": {
+        "startLine": 40,
+        "startChar": 0,
+        "endLine": 42,
+        "endChar": 66
+      },
+      "revId": "9d50a1bfb502f50974815a78e5ec24d398113adb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "df5874c5_03ca78ef",
+        "filename": "content/public/browser/download_manager_delegate.cc",
+        "patchSetId": 14
+      },
+      "lineNbr": 43,
+      "author": {
+        "id": 1226039
+      },
+      "writtenOn": "2017-11-10T22:49:32Z",
+      "side": 1,
+      "message": "** check # implementations of download manager delegate -- make sure to support null/null checks **",
+      "range": {
+        "startLine": 41,
+        "startChar": 0,
+        "endLine": 43,
+        "endChar": 1
       },
       "revId": "9d50a1bfb502f50974815a78e5ec24d398113adb",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
