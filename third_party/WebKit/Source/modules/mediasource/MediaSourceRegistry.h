@@ -48,7 +48,9 @@ class MediaSourceRegistry final : public URLRegistry {
   static MediaSourceRegistry& Registry();
 
   // Registers a blob URL referring to the specified media source.
-  void RegisterURL(SecurityOrigin*, const KURL&, URLRegistrable*) override;
+  void RegisterURL(const SecurityOrigin*,
+                   const KURL&,
+                   URLRegistrable*) override;
   void UnregisterURL(const KURL&) override;
   URLRegistrable* Lookup(const String&) override;
 

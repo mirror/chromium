@@ -46,7 +46,7 @@ class URLSecurityOriginMap {
  public:
   URLSecurityOriginMap() {}
   virtual ~URLSecurityOriginMap() {}
-  virtual SecurityOrigin* GetOrigin(const KURL&) = 0;
+  virtual const SecurityOrigin* GetOrigin(const KURL&) = 0;
 };
 
 }  // namespace blink

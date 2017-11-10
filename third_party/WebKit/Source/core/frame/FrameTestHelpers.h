@@ -153,10 +153,11 @@ WebLocalFrameImpl* CreateLocalChild(
     TestWebWidgetClient* = nullptr);
 
 // Helper for creating a remote child frame of a remote parent frame.
-WebRemoteFrameImpl* CreateRemoteChild(WebRemoteFrame& parent,
-                                      const WebString& name = WebString(),
-                                      scoped_refptr<SecurityOrigin> = nullptr,
-                                      TestWebRemoteFrameClient* = nullptr);
+WebRemoteFrameImpl* CreateRemoteChild(
+    WebRemoteFrame& parent,
+    const WebString& name = WebString(),
+    scoped_refptr<const SecurityOrigin> = nullptr,
+    TestWebRemoteFrameClient* = nullptr);
 
 // Forces to use mocked overlay scrollbars instead of the default native theme
 // scrollbars to avoid crash in Chromium code when it tries to load UI
@@ -284,7 +285,7 @@ class WebViewHelper {
   // nullptr as the SecurityOrigin results in a frame with a unique security
   // origin.
   WebViewImpl* InitializeRemote(TestWebRemoteFrameClient* = nullptr,
-                                scoped_refptr<SecurityOrigin> = nullptr,
+                                scoped_refptr<const SecurityOrigin> = nullptr,
                                 TestWebViewClient* = nullptr);
 
   // Load the 'Ahem' font to this WebView.

@@ -170,7 +170,7 @@ scoped_refptr<DOMWrapperWorld> DOMWrapperWorld::EnsureIsolatedWorld(
       new DOMWrapperWorld(isolate, WorldType::kIsolated, world_id));
 }
 
-typedef HashMap<int, scoped_refptr<SecurityOrigin>>
+typedef HashMap<int, scoped_refptr<const SecurityOrigin>>
     IsolatedWorldSecurityOriginMap;
 static IsolatedWorldSecurityOriginMap& IsolatedWorldSecurityOrigins() {
   DCHECK(IsMainThread());
@@ -178,7 +178,7 @@ static IsolatedWorldSecurityOriginMap& IsolatedWorldSecurityOrigins() {
   return map;
 }
 
-SecurityOrigin* DOMWrapperWorld::IsolatedWorldSecurityOrigin() {
+const SecurityOrigin* DOMWrapperWorld::IsolatedWorldSecurityOrigin() {
   DCHECK(this->IsIsolatedWorld());
   IsolatedWorldSecurityOriginMap& origins = IsolatedWorldSecurityOrigins();
   IsolatedWorldSecurityOriginMap::iterator it = origins.find(GetWorldId());
@@ -187,7 +187,7 @@ SecurityOrigin* DOMWrapperWorld::IsolatedWorldSecurityOrigin() {
 
 void DOMWrapperWorld::SetIsolatedWorldSecurityOrigin(
     int world_id,
-    scoped_refptr<SecurityOrigin> security_origin) {
+    scoped_refptr<const SecurityOrigin> security_origin) {
 #if DCHECK_IS_ON()
   DCHECK(IsIsolatedWorldId(world_id));
 #endif

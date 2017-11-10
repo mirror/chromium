@@ -112,9 +112,10 @@ class PLATFORM_EXPORT DOMWrapperWorld : public RefCounted<DOMWrapperWorld> {
   // Associates an isolated world (see above for description) with a security
   // origin. XMLHttpRequest instances used in that world will be considered
   // to come from that origin, not the frame's.
-  static void SetIsolatedWorldSecurityOrigin(int world_id,
-                                             scoped_refptr<SecurityOrigin>);
-  SecurityOrigin* IsolatedWorldSecurityOrigin();
+  static void SetIsolatedWorldSecurityOrigin(
+      int world_id,
+      scoped_refptr<const SecurityOrigin>);
+  const SecurityOrigin* IsolatedWorldSecurityOrigin();
 
   // Associated an isolated world with a Content Security Policy. Resources
   // embedded into the main world's DOM from script executed in an isolated

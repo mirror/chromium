@@ -41,7 +41,7 @@ MediaSourceRegistry& MediaSourceRegistry::Registry() {
   return instance;
 }
 
-void MediaSourceRegistry::RegisterURL(SecurityOrigin*,
+void MediaSourceRegistry::RegisterURL(const SecurityOrigin*,
                                       const KURL& url,
                                       URLRegistrable* registrable) {
   DCHECK_EQ(&registrable->Registry(), this);

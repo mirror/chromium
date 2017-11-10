@@ -170,11 +170,11 @@ PublicURLManager& ExecutionContext::GetPublicURLManager() {
   return *public_url_manager_;
 }
 
-SecurityOrigin* ExecutionContext::GetSecurityOrigin() {
+const SecurityOrigin* ExecutionContext::GetSecurityOrigin() {
   return GetSecurityContext().GetSecurityOrigin();
 }
 
-SecurityOrigin* ExecutionContext::GetMutableSecurityOrigin() {
+const SecurityOrigin* ExecutionContext::GetMutableSecurityOrigin() {
   return GetSecurityContext().GetMutableSecurityOrigin();
 }
 

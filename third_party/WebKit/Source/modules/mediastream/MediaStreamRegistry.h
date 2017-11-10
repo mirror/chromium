@@ -42,7 +42,9 @@ class MODULES_EXPORT MediaStreamRegistry final : public URLRegistry {
   static MediaStreamRegistry& Registry();
 
   // Registers a blob URL referring to the specified stream data.
-  void RegisterURL(SecurityOrigin*, const KURL&, URLRegistrable*) override;
+  void RegisterURL(const SecurityOrigin*,
+                   const KURL&,
+                   URLRegistrable*) override;
   void UnregisterURL(const KURL&) override;
   bool Contains(const String&) override;
 

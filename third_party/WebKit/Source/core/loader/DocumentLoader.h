@@ -223,9 +223,10 @@ class CORE_EXPORT DocumentLoader
                  const SubstituteData&,
                  ClientRedirectPolicy);
 
-  static bool ShouldClearWindowName(const LocalFrame&,
-                                    SecurityOrigin* previous_security_origin,
-                                    const Document& new_document);
+  static bool ShouldClearWindowName(
+      const LocalFrame&,
+      const SecurityOrigin* previous_security_origin,
+      const Document& new_document);
 
   Vector<KURL> redirect_chain_;
 

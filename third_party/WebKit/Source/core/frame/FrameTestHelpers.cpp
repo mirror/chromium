@@ -224,7 +224,7 @@ WebLocalFrameImpl* CreateLocalChild(WebRemoteFrame& parent,
 WebRemoteFrameImpl* CreateRemoteChild(
     WebRemoteFrame& parent,
     const WebString& name,
-    scoped_refptr<SecurityOrigin> security_origin,
+    scoped_refptr<const SecurityOrigin> security_origin,
     TestWebRemoteFrameClient* client) {
   auto owned_client = CreateDefaultClientIfNeeded(client);
   auto* frame = ToWebRemoteFrameImpl(parent.CreateRemoteChild(
@@ -300,7 +300,7 @@ WebViewImpl* WebViewHelper::InitializeAndLoad(
 
 WebViewImpl* WebViewHelper::InitializeRemote(
     TestWebRemoteFrameClient* web_remote_frame_client,
-    scoped_refptr<SecurityOrigin> security_origin,
+    scoped_refptr<const SecurityOrigin> security_origin,
     TestWebViewClient* web_view_client) {
   Reset();
 

@@ -47,7 +47,7 @@ void SecurityContext::Trace(blink::Visitor* visitor) {
 }
 
 void SecurityContext::SetSecurityOrigin(
-    scoped_refptr<SecurityOrigin> security_origin) {
+    scoped_refptr<const SecurityOrigin> security_origin) {
   security_origin_ = std::move(security_origin);
   UpdateFeaturePolicyOrigin();
 }
@@ -67,7 +67,7 @@ bool SecurityContext::ApplySandboxFlags(SandboxFlags mask,
 
   if (IsSandboxed(kSandboxOrigin) && GetSecurityOrigin() &&
       !GetSecurityOrigin()->IsUnique()) {
-    scoped_refptr<SecurityOrigin> security_origin =
+    scoped_refptr<const SecurityOrigin> security_origin =
         SecurityOrigin::CreateUnique();
     security_origin->SetUniqueOriginIsPotentiallyTrustworthy(
         is_potentially_trustworthy);
