@@ -37,6 +37,23 @@
     },
     {
       "key": {
+        "uuid": "c313c0a6_18972a5f",
+        "filename": "testing/scripts/upload_test_result_artifacts.py",
+        "patchSetId": 4
+      },
+      "lineNbr": 33,
+      "author": {
+        "id": 1000487
+      },
+      "writtenOn": "2017-11-10T20:29:28Z",
+      "side": 1,
+      "message": "this will fail on Windows; you need \u0027rb\u0027",
+      "revId": "6d438391e39e521adfd9bd9ffc9cc24b00fba759",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "eab095f7_1610e521",
         "filename": "testing/scripts/upload_test_result_artifacts.py",
         "patchSetId": 4
@@ -66,6 +83,58 @@
       "side": 1,
       "message": "I think we want to move to sha256 in the future? But I\u0027m fine starting with sha1 for now. I\u0027ll wait for maruel to comment to switch.",
       "parentUuid": "eab095f7_1610e521",
+      "revId": "6d438391e39e521adfd9bd9ffc9cc24b00fba759",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6e0e582b_97ab1be5",
+        "filename": "testing/scripts/upload_test_result_artifacts.py",
+        "patchSetId": 4
+      },
+      "lineNbr": 34,
+      "author": {
+        "id": 1000487
+      },
+      "writtenOn": "2017-11-10T20:29:28Z",
+      "side": 1,
+      "message": "Use sha256 right away.",
+      "parentUuid": "ceb77605_eaefc697",
+      "revId": "6d438391e39e521adfd9bd9ffc9cc24b00fba759",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6593836c_a167d8d7",
+        "filename": "testing/scripts/upload_test_result_artifacts.py",
+        "patchSetId": 4
+      },
+      "lineNbr": 35,
+      "author": {
+        "id": 1000487
+      },
+      "writtenOn": "2017-11-10T20:29:28Z",
+      "side": 1,
+      "message": "this will fail/be slow on large files, you need to chunk. Due to the way prefetching is implemented on OSes, 64kb chunks should give you the best performance.",
+      "revId": "6d438391e39e521adfd9bd9ffc9cc24b00fba759",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "70befb8c_7fcbc217",
+        "filename": "testing/scripts/upload_test_result_artifacts.py",
+        "patchSetId": 4
+      },
+      "lineNbr": 69,
+      "author": {
+        "id": 1000487
+      },
+      "writtenOn": "2017-11-10T20:29:28Z",
+      "side": 1,
+      "message": "this is a bit confusing, because key can either be a str or a tuple(str). It works in both cases as expected?",
       "revId": "6d438391e39e521adfd9bd9ffc9cc24b00fba759",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -142,6 +211,58 @@
     },
     {
       "key": {
+        "uuid": "d2a12989_d6f68f86",
+        "filename": "testing/scripts/upload_test_result_artifacts.py",
+        "patchSetId": 4
+      },
+      "lineNbr": 96,
+      "author": {
+        "id": 1000487
+      },
+      "writtenOn": "2017-11-10T20:29:28Z",
+      "side": 1,
+      "message": "It\u0027s not \"very\" hard, it\u0027s just not a priority yet.",
+      "parentUuid": "dd1fc2fe_df52ebd2",
+      "revId": "6d438391e39e521adfd9bd9ffc9cc24b00fba759",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4f93e6c1_22182216",
+        "filename": "testing/scripts/upload_test_result_artifacts.py",
+        "patchSetId": 4
+      },
+      "lineNbr": 101,
+      "author": {
+        "id": 1000487
+      },
+      "writtenOn": "2017-11-10T20:29:28Z",
+      "side": 1,
+      "message": "for test_run in itertools.chain.from_iterable(test_obj.get(\u0027artifacts\u0027) or []):",
+      "revId": "6d438391e39e521adfd9bd9ffc9cc24b00fba759",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "875bc45f_55fc154c",
+        "filename": "testing/scripts/upload_test_result_artifacts.py",
+        "patchSetId": 4
+      },
+      "lineNbr": 118,
+      "author": {
+        "id": 1000487
+      },
+      "writtenOn": "2017-11-10T20:29:28Z",
+      "side": 1,
+      "message": "What\u0027s the value of trying to be smart here?",
+      "revId": "6d438391e39e521adfd9bd9ffc9cc24b00fba759",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "276bb630_80e7afb7",
         "filename": "testing/scripts/upload_test_result_artifacts.py",
         "patchSetId": 4
@@ -189,6 +310,40 @@
       "side": 1,
       "message": "How do I do that for multiple files? Or do I just make this script only modify one file.",
       "parentUuid": "3ff60057_d0058dc6",
+      "revId": "6d438391e39e521adfd9bd9ffc9cc24b00fba759",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7d65bda4_4ca80c28",
+        "filename": "testing/scripts/upload_test_result_artifacts.py",
+        "patchSetId": 4
+      },
+      "lineNbr": 124,
+      "author": {
+        "id": 1000487
+      },
+      "writtenOn": "2017-11-10T20:29:28Z",
+      "side": 1,
+      "message": "when storing to a file, you may want to compact representation instead.",
+      "revId": "6d438391e39e521adfd9bd9ffc9cc24b00fba759",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "721ecc91_10c35d69",
+        "filename": "testing/scripts/upload_test_result_artifacts.py",
+        "patchSetId": 4
+      },
+      "lineNbr": 126,
+      "author": {
+        "id": 1000487
+      },
+      "writtenOn": "2017-11-10T20:29:28Z",
+      "side": 1,
+      "message": "you may want to use indent and separators and sort_keys here",
       "revId": "6d438391e39e521adfd9bd9ffc9cc24b00fba759",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
