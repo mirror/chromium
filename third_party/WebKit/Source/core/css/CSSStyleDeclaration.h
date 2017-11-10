@@ -23,6 +23,7 @@
 
 #include "core/CSSPropertyNames.h"
 #include "core/CoreExport.h"
+#include "core/dom/SecureContextMode.h"
 #include "platform/bindings/ScriptWrappable.h"
 #include "platform/wtf/Forward.h"
 #include "platform/wtf/Noncopyable.h"
@@ -34,6 +35,7 @@ class CSSRule;
 class CSSStyleSheet;
 class CSSValue;
 class ExceptionState;
+class ExecutionContext;
 
 class CORE_EXPORT CSSStyleDeclaration : public ScriptWrappable {
   DEFINE_WRAPPERTYPEINFO();
@@ -45,18 +47,22 @@ class CORE_EXPORT CSSStyleDeclaration : public ScriptWrappable {
   virtual CSSRule* parentRule() const = 0;
   String cssFloat() { return GetPropertyValueInternal(CSSPropertyFloat); }
   void setCSSFloat(const String& value, ExceptionState& exception_state) {
+    // secure_context_mode doesn't matter for setting the float property.
     SetPropertyInternal(CSSPropertyFloat, String(), value, false,
-                        exception_state);
+                        kInsecureContext, exception_state);
   }
   virtual String cssText() const = 0;
-  virtual void setCSSText(const String&, ExceptionState&) = 0;
+  virtual void setCSSText(const ExecutionContext*,
+                          const String&,
+                          ExceptionState&) = 0;
   virtual unsigned length() const = 0;
   virtual String item(unsigned index) const = 0;
   virtual String getPropertyValue(const String& property_name) = 0;
   virtual String getPropertyPriority(const String& property_name) = 0;
   virtual String GetPropertyShorthand(const String& property_name) = 0;
   virtual bool IsPropertyImplicit(const String& property_name) = 0;
-  virtual void setProperty(const String& property_name,
+  virtual void setProperty(const ExecutionContext*,
+                           const String& property_name,
                            const String& value,
                            const String& priority,
                            ExceptionState&) = 0;
@@ -76,6 +82,7 @@ class CORE_EXPORT CSSStyleDeclaration : public ScriptWrappable {
                                    const String& property_value,
                                    const String& value,
                                    bool important,
+                                   SecureContextMode,
                                    ExceptionState&) = 0;
 
   virtual bool CssPropertyMatches(CSSPropertyID, const CSSValue*) const = 0;

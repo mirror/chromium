@@ -150,7 +150,8 @@ void CSSSelectorWatch::WatchCSSSelectors(const Vector<String>& selectors) {
   CSSPropertyValueSet* callback_property_set =
       ImmutableCSSPropertyValueSet::Create(nullptr, 0, kUASheetMode);
 
-  CSSParserContext* context = CSSParserContext::Create(kUASheetMode);
+  CSSParserContext* context =
+      CSSParserContext::Create(kUASheetMode, kInsecureContext);
   for (const auto& selector : selectors) {
     CSSSelectorList selector_list =
         CSSParser::ParseSelector(context, nullptr, selector);

@@ -331,7 +331,8 @@ ImmutableCSSPropertyValueSet* CSSParserImpl::ParseCustomPropertySet(
   range.ConsumeWhitespace();
   if (!range.AtEnd())
     return nullptr;
-  CSSParserImpl parser(StrictCSSParserContext());
+  // DO NOT SUBMIT
+  CSSParserImpl parser(StrictCSSParserContext(kInsecureContext));
   parser.ConsumeDeclarationListForAtApply(block);
 
   return CreateCSSPropertyValueSet(parser.parsed_properties_,

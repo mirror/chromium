@@ -9,6 +9,7 @@
 #include "core/css/parser/CSSParser.h"
 #include "core/css/parser/CSSVariableParser.h"
 #include "core/css/resolver/CSSToStyleMap.h"
+#include "core/dom/Document.h"
 #include "core/frame/Deprecation.h"
 #include "core/svg/SVGElement.h"
 #include "core/svg/animation/SVGSMILElement.h"
@@ -220,8 +221,12 @@ scoped_refptr<TimingFunction> AnimationInputHelpers::ParseTimingFunction(
     return nullptr;
   }
 
+  // DO NOT SUBMIT
+  SecureContextMode secure_context_mode =
+      document ? document->SecureContextMode() : kInsecureContext;
   const CSSValue* value =
-      CSSParser::ParseSingleValue(CSSPropertyTransitionTimingFunction, string);
+      CSSParser::ParseSingleValue(CSSPropertyTransitionTimingFunction, string,
+                                  StrictCSSParserContext(secure_context_mode));
   if (!value || !value->IsValueList()) {
     DCHECK(!value || value->IsCSSWideKeyword());
     if (document) {

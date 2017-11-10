@@ -251,6 +251,7 @@ blink_core_sources("dom") {
     "ScriptedAnimationController.h",
     "ScriptedIdleTaskController.cpp",
     "ScriptedIdleTaskController.h",
+    "SecureContextMode.h",
     "SecurityContext.cpp",
     "SecurityContext.h",
     "ShadowRoot.cpp",
