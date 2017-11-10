@@ -38,6 +38,7 @@ source_set("commands") {
     "//components/browsing_data/core",
     "//components/signin/core/browser",
     "//ios/chrome/browser/ui/metrics",
+    "//ios/chrome/browser/ui/util:view_info",
     "//ios/web",
     "//net",
     "//url",

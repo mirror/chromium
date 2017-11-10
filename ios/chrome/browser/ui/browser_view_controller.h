@@ -26,6 +26,7 @@ class GURL;
 @class Tab;
 @class TabModel;
 @protocol TabStripFoldAnimation;
+class ViewInfo;
 
 namespace ios {
 class ChromeBrowserState;
@@ -132,7 +133,7 @@ applicationCommandEndpoint:(id<ApplicationCommands>)applicationCommandEndpoint
 
 // Shows the voice search UI. |originView|'s center is used for the presentation
 // and dismissal animations of the Voice Search UI. |originView| can be nil.
-- (void)startVoiceSearchWithOriginView:(UIView*)originView;
+- (void)startVoiceSearchWithOriginViewInfo:(const ViewInfo*)originViewInfo;
 
 // Focuses the omnibox.
 - (void)focusOmnibox;
