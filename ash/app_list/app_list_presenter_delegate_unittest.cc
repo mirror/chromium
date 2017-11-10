@@ -5,6 +5,7 @@
 #include <memory>
 
 #include "ash/app_list/test_app_list_presenter_impl.h"
+#include "ash/public/cpp/app_list/app_list_features.h"
 #include "ash/public/cpp/ash_switches.h"
 #include "ash/public/cpp/config.h"
 #include "ash/public/cpp/shelf_types.h"
@@ -19,7 +20,6 @@
 #include "ash/wm/window_util.h"
 #include "base/command_line.h"
 #include "base/macros.h"
-#include "ui/app_list/app_list_features.h"
 #include "ui/app_list/app_list_switches.h"
 #include "ui/app_list/views/app_list_main_view.h"
 #include "ui/app_list/views/app_list_view.h"

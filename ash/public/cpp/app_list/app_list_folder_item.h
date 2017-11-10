@@ -2,25 +2,25 @@
 // Use of this source code is governed by a BSD-style license that can be
 // found in the LICENSE file.
 
-#ifndef UI_APP_LIST_APP_LIST_FOLDER_ITEM_H_
-#define UI_APP_LIST_APP_LIST_FOLDER_ITEM_H_
+#ifndef ASH_PUBLIC_CPP_APP_LIST_APP_LIST_FOLDER_ITEM_H_
+#define ASH_PUBLIC_CPP_APP_LIST_APP_LIST_FOLDER_ITEM_H_
 
 #include <stddef.h>
 
 #include <string>
 #include <vector>
 
+#include "ash/public/cpp/app_list/app_list_item.h"
+#include "ash/public/cpp/app_list/app_list_item_list_observer.h"
+#include "ash/public/cpp/app_list/app_list_item_observer.h"
+#include "ash/public/cpp/app_list/folder_image.h"
 #include "base/macros.h"
 #include "ui/app_list/app_list_export.h"
-#include "ui/app_list/app_list_item.h"
-#include "ui/app_list/app_list_item_list_observer.h"
-#include "ui/app_list/app_list_item_observer.h"
-#include "ui/app_list/folder_image.h"
 
 namespace gfx {
 class ImageSkia;
 class Rect;
-}
+}  // namespace gfx
 
 namespace app_list {
 
@@ -53,7 +53,8 @@ class APP_LIST_EXPORT AppListFolderItem : public AppListItem,
   // the same size of the top item icon.
   // The Rect returned is in the same coordinates of |folder_icon_bounds|.
   gfx::Rect GetTargetIconRectInFolderForItem(
-      AppListItem* item, const gfx::Rect& folder_icon_bounds);
+      AppListItem* item,
+      const gfx::Rect& folder_icon_bounds);
 
   AppListItemList* item_list() { return item_list_.get(); }
   const AppListItemList* item_list() const { return item_list_.get(); }
@@ -91,4 +92,4 @@ class APP_LIST_EXPORT AppListFolderItem : public AppListItem,
 
 }  // namespace app_list
 
-#endif  // UI_APP_LIST_APP_LIST_FOLDER_ITEM_H_
+#endif  // ASH_PUBLIC_CPP_APP_LIST_APP_LIST_FOLDER_ITEM_H_

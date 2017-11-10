@@ -2,8 +2,8 @@
 // Use of this source code is governed by a BSD-style license that can be
 // found in the LICENSE file.
 
-#ifndef UI_APP_LIST_APP_LIST_CONSTANTS_H_
-#define UI_APP_LIST_APP_LIST_CONSTANTS_H_
+#ifndef ASH_PUBLIC_CPP_APP_LIST_APP_LIST_CONSTANTS_H_
+#define ASH_PUBLIC_CPP_APP_LIST_APP_LIST_CONSTANTS_H_
 
 #include <stddef.h>
 
@@ -219,4 +219,4 @@ APP_LIST_EXPORT const gfx::FontList& AppListAppTitleFont();
 
 }  // namespace app_list
 
-#endif  // UI_APP_LIST_APP_LIST_CONSTANTS_H_
+#endif  // ASH_PUBLIC_CPP_APP_LIST_APP_LIST_CONSTANTS_H_

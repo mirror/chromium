@@ -6,8 +6,8 @@
 
 #include <algorithm>
 
-#include "ui/app_list/app_list_constants.h"
-#include "ui/app_list/app_list_features.h"
+#include "ash/public/cpp/app_list/app_list_constants.h"
+#include "ash/public/cpp/app_list/app_list_features.h"
 #include "ui/app_list/views/app_list_folder_view.h"
 #include "ui/app_list/views/apps_container_view.h"
 #include "ui/compositor/scoped_layer_animation_settings.h"
