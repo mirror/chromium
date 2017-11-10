@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "65b86ff9_225ff483",
+        "filename": "content/browser/frame_host/render_frame_host_impl.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 1472,
+      "author": {
+        "id": 1130134
+      },
+      "writtenOn": "2017-11-10T16:48:09Z",
+      "side": 1,
+      "message": "Thanks for adding the bug reference :-)",
+      "range": {
+        "startLine": 1472,
+        "startChar": 28,
+        "endLine": 1472,
+        "endChar": 57
+      },
+      "revId": "3d1d54e05fdf45076b76610845ec1dfca6997691",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    }
+  ]
+}
