@@ -52,6 +52,24 @@
       "revId": "e47f8e09f88ccbdedd2471aae49acfc76481beef",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "afe80d07_62c57504",
+        "filename": "content/browser/download/download_item_impl.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 1509,
+      "author": {
+        "id": 1002532
+      },
+      "writtenOn": "2017-11-10T22:43:22Z",
+      "side": 1,
+      "message": "The TransitionTo(INTERRUPTED_TARGET_PENDING_INTERNAL) call you mention is only taken in the \"if (!IsCancellation(reason))\" case. However in the callstack above, reason\u003dDOWNLOAD_INTERRUPT_REASON_USER_CANCELED so it\u0027s not taken. Instead \"TransitionTo(CANCELLED_INTERNAL)\" is called.",
+      "parentUuid": "7d2aa2de_17dfee89",
+      "revId": "e47f8e09f88ccbdedd2471aae49acfc76481beef",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
