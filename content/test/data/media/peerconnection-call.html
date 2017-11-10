@@ -46,7 +46,8 @@
     });
     gLocalStream = null;
 
-    sendValueToTest('OK');
+    // Allow some time for the stop calls to actually be processed.
+    setTimeout(() => sendValueToTest('OK'), 1000);
   }
 
   // Test that we can setup a call with a video track and that the remote peer
