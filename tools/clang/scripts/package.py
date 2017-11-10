@@ -348,6 +348,21 @@ def main():
             filter=PrintTarProgress)
   MaybeUpload(args, objdumpdir, platform)
 
+  # Zip up llvm-supersize for Supersize.
+  llvm_supersize_dir = 'llvm-supersize-' + stamp
+  shutil.rmtree(llvm_supersize_dir, ignore_errors=True)
+  os.makedirs(os.path.join(llvm_supersize_dir, 'bin'))
+  for filename in ['llvm-cxxfilt', 'llvm-nm', 'llvm-objdump', 'llvm-readobj']:
+    shutil.copy(os.path.join(LLVM_RELEASE_DIR, 'bin', filename + exe_ext),
+                os.path.join(llvm_supersize_dir, 'bin'))
+  if sys.platform != 'win32':
+    os.symlink('llvm-readobj',
+               os.path.join(llvm_supersize_dir, 'bin', 'llvm-readelf'))
+  with tarfile.open(llvm_supersize_dir + '.tgz', 'w:gz') as tar:
+    tar.add(os.path.join(llvm_supersize_dir, 'bin'), arcname='bin',
+            filter=PrintTarProgress)
+  MaybeUpload(args, llvm_supersize_dir, platform)
+
   # On Mac, lld isn't part of the main zip.  Upload it in a separate zip.
   if sys.platform == 'darwin':
     llddir = 'lld-' + stamp

@@ -20,6 +20,8 @@
             gs://chromium-browser-clang/$x/translation_unit-$rev.tgz ; \
         gsutil.py cp -n -a public-read gs://chromium-browser-clang-staging/$x/llvm-code-coverage-$rev.tgz \
             gs://chromium-browser-clang/$x/llvm-code-coverage-$rev.tgz ; \
+        gsutil.py cp -n -a public-read gs://chromium-browser-clang-staging/$x/llvm-supersize-$rev.tgz \
+            gs://chromium-browser-clang/$x/llvm-supersize-$rev.tgz ; \
         done
     $ gsutil.py cp -n -a public-read gs://chromium-browser-clang-staging/Mac/lld-$rev.tgz \
           gs://chromium-browser-clang/Mac/lld-$rev.tgz
