@@ -1911,10 +1911,11 @@ applicationCommandEndpoint:(id<ApplicationCommands>)applicationCommandEndpoint {
   _sideSwipeController.toolbarInteractionHandler = _toolbarCoordinator;
   _toolbarCoordinator.tabModel = _model;
   [_toolbarCoordinator
-      setWebToolbar:[_dependencyFactory
-                        newWebToolbarControllerWithDelegate:self
-                                                  urlLoader:self
-                                                 dispatcher:self.dispatcher]];
+      setToolbarController:
+          [_dependencyFactory
+              newToolbarControllerWithDelegate:self
+                                     urlLoader:self
+                                    dispatcher:self.dispatcher]];
   [_dispatcher startDispatchingToTarget:_toolbarCoordinator
                             forProtocol:@protocol(OmniboxFocuser)];
   [_toolbarCoordinator setTabCount:[_model count]];
@@ -4807,7 +4808,8 @@ bubblePresenterForFeature:(const base::Feature&)feature
       }
     }
   } else {
-    relinquishedToolbarController = _toolbarCoordinator.webToolbarController;
+    relinquishedToolbarController = static_cast<ToolbarController*>(
+        _toolbarCoordinator.toolbarViewController);
     [_toolbarCoordinator.toolbarViewController
         willMoveToParentViewController:nil];
     [_toolbarCoordinator.toolbarViewController.view removeFromSuperview];
