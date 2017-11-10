@@ -356,9 +356,9 @@ void NavigationSimulator::ReadyToCommit() {
                               ++request_id);
     handle_->WillProcessResponse(
         render_frame_host_, scoped_refptr<net::HttpResponseHeaders>(),
-        net::HttpResponseInfo::ConnectionInfo(), SSLStatus(), global_id,
-        false /* should_replace_current_entry */, false /* is_download */,
-        false /* is_stream */, base::Closure(),
+        net::HttpResponseInfo::ConnectionInfo(), net::HostPortPair(),
+        SSLStatus(), global_id, false /* should_replace_current_entry */,
+        false /* is_download */, false /* is_stream */, base::Closure(),
         base::Callback<void(NavigationThrottle::ThrottleCheckResult)>());
   }
 
