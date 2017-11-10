@@ -373,6 +373,8 @@ void ResourceLoader::OnReceivedRedirect(net::URLRequest* unused,
 
 void ResourceLoader::OnAuthRequired(net::URLRequest* unused,
                                     net::AuthChallengeInfo* auth_info) {
+  net::URLRequest::Delegate::OnAuthRequired(unused, auth_info);
+  /*
   DCHECK_EQ(request_.get(), unused);
 
   ResourceRequestInfoImpl* info = GetRequestInfo();
@@ -389,6 +391,7 @@ void ResourceLoader::OnAuthRequired(net::URLRequest* unused,
   login_delegate_ = delegate_->CreateLoginDelegate(this, auth_info);
   if (!login_delegate_.get())
     request_->CancelAuth();
+    */
 }
 
 void ResourceLoader::OnCertificateRequested(
