@@ -73,6 +73,30 @@
     },
     {
       "key": {
+        "uuid": "bb32b324_3a0e2935",
+        "filename": "chrome/browser/thumbnails/thumbnail_tab_helper.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 173,
+      "author": {
+        "id": 1116059
+      },
+      "writtenOn": "2017-11-10T17:11:30Z",
+      "side": 1,
+      "message": "Good point :) Renamed.",
+      "parentUuid": "e99620e9_684d17b1",
+      "range": {
+        "startLine": 173,
+        "startChar": 32,
+        "endLine": 173,
+        "endChar": 42
+      },
+      "revId": "8d30a66713db26a6833bc4f9df1e792788180927",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "ddac69e6_f750eddb",
         "filename": "chrome/browser/thumbnails/thumbnail_tab_helper.cc",
         "patchSetId": 2
