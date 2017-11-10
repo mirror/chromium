@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "9d0a1f2a_40b68eff",
+        "filename": "tools/clang/scripts/package.py",
+        "patchSetId": 4
+      },
+      "lineNbr": 351,
+      "author": {
+        "id": 1125980
+      },
+      "writtenOn": "2017-11-10T21:20:32Z",
+      "side": 1,
+      "message": "I think you meant to say something else here, there is no \"llvm-supersize\".",
+      "revId": "6d6b3ad30542a25affe4e997118bae353a3748a9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
