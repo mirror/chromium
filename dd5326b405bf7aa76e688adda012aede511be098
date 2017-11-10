@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "f1d8fdd7_750df6cc",
+        "filename": "chrome/browser/ui/webui/interventions_internals/interventions_internals_page_handler.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 16,
+      "author": {
+        "id": 1243136
+      },
+      "writtenOn": "2017-11-10T18:01:09Z",
+      "side": 1,
+      "message": "nit: s/NoScriptPreviews/noScriptPreviews since it is also the id on html, or you could change the other to no-script-previews.",
+      "range": {
+        "startLine": 16,
+        "startChar": 34,
+        "endLine": 16,
+        "endChar": 35
+      },
+      "revId": "dd5326b405bf7aa76e688adda012aede511be098",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "877babcf_9f9b52d2",
+        "filename": "chrome/browser/ui/webui/interventions_internals/interventions_internals_page_handler_unittest.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 29,
+      "author": {
+        "id": 1243136
+      },
+      "writtenOn": "2017-11-10T18:01:09Z",
+      "side": 1,
+      "message": "Same issue.",
+      "range": {
+        "startLine": 29,
+        "startChar": 38,
+        "endLine": 29,
+        "endChar": 39
+      },
+      "revId": "dd5326b405bf7aa76e688adda012aede511be098",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
