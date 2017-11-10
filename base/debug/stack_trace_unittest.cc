@@ -316,5 +316,9 @@ TEST_F(StackTraceTest, MAYBE_StackEnd) {
 
 #endif  // BUILDFLAG(CAN_UNWIND_WITH_FRAME_POINTERS)
 
+TEST(Foo, Bar) {
+  EXPECT_TRUE(true);
+}
+
 }  // namespace debug
 }  // namespace base
