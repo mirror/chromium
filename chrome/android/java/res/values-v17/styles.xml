@@ -122,6 +122,14 @@
         <item name="chrometint">@color/dark_mode_tint</item>
     </style>
 
+    <style name="ModalDialogTheme" parent="AlertDialogTheme">
+        <item name="android:windowFrame">@null</item>
+        <item name="android:backgroundDimEnabled">false</item>
+        <item name="android:windowBackground">@android:color/transparent</item>
+        <item name="android:windowMinWidthMajor">100%</item>
+        <item name="android:windowMinWidthMinor">100%</item>
+    </style>
+
     <style name="SimpleDialog" parent="AlertDialogTheme">
         <item name="windowNoTitle">true</item>
         <item name="windowActionBar">false</item>

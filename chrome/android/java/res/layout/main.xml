@@ -54,6 +54,12 @@
                 android:inflatedId="@+id/bottombar"
                 android:layout="@layout/custom_tabs_bottombar" />
 
+            <FrameLayout
+                android:id="@+id/tab_modal_dialog_container"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:visibility="gone" />
+
             <org.chromium.chrome.browser.widget.FadingBackgroundView
                 android:id="@+id/fading_focus_target"
                 android:layout_width="match_parent"
