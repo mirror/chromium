@@ -51,6 +51,7 @@
 #include "content/public/common/content_constants.h"
 #include "net/base/registry_controlled_domains/registry_controlled_domain.h"
 #include "net/cookies/canonical_cookie.h"
+#include "services/metrics/public/cpp/ukm_builders.h"
 #include "storage/common/fileapi/file_system_types.h"
 
 using content::BrowserThread;
@@ -107,6 +108,7 @@ TabSpecificContentSettings::TabSpecificContentSettings(WebContents* tab)
       pending_protocol_handler_setting_(CONTENT_SETTING_DEFAULT),
       load_plugins_link_enabled_(true),
       microphone_camera_state_(MICROPHONE_CAMERA_NOT_ACCESSED),
+      logged_site_muted_ukm_(false),
       observer_(this) {
   ClearContentSettingsExceptForNavigationRelatedSettings();
   ClearNavigationRelatedContentSettings();
@@ -807,6 +809,9 @@ void TabSpecificContentSettings::DidFinishNavigation(
   GeolocationDidNavigate(navigation_handle);
   MidiDidNavigate(navigation_handle);
 
+  // Clear UKM bit.
+  logged_site_muted_ukm_ = false;
+
   if (web_contents()->GetVisibleURL().SchemeIsHTTPOrHTTPS()) {
     content_settings::RecordPluginsAction(
         content_settings::PLUGINS_ACTION_TOTAL_NAVIGATIONS);
@@ -835,8 +840,41 @@ void TabSpecificContentSettings::OnSoundContentSettingUpdated() {
 }
 
 void TabSpecificContentSettings::CheckSoundBlocked(bool is_audible) {
-  if (is_audible && GetSoundContentSetting() == CONTENT_SETTING_BLOCK)
+  if (is_audible && GetSoundContentSetting() == CONTENT_SETTING_BLOCK) {
     OnContentBlocked(CONTENT_SETTINGS_TYPE_SOUND);
+    RecordSiteMutedUKM();
+  }
+}
+
+void TabSpecificContentSettings::RecordSiteMutedUKM() {
+  // We only want to log 1 event per navigation.
+  if (logged_site_muted_ukm_)
+    return;
+  logged_site_muted_ukm_ = true;
+  ukm::UkmRecorder* recorder = ukm::UkmRecorder::Get();
+  ukm::SourceId source_id = ukm::UkmRecorder::GetNewSourceID();
+  recorder->UpdateSourceURL(source_id, web_contents()->GetLastCommittedURL());
+  ukm::builders::Media_SiteMuted(source_id)
+      .SetMuteReason(GetSiteMutedReason())
+      .Record(recorder);
+}
+
+TabSpecificContentSettings::MuteReason
+TabSpecificContentSettings::GetSiteMutedReason() {
+  Profile* profile =
+      Profile::FromBrowserContext(web_contents()->GetBrowserContext());
+  const HostContentSettingsMap* map =
+      HostContentSettingsMapFactory::GetForProfile(profile);
+  const GURL url = web_contents()->GetLastCommittedURL();
+  content_settings::SettingInfo info;
+  map->GetWebsiteSetting(url, url, CONTENT_SETTINGS_TYPE_SOUND, std::string(),
+                         &info);
+
+  if (info.primary_pattern == ContentSettingsPattern::Wildcard() &&
+      info.secondary_pattern == ContentSettingsPattern::Wildcard()) {
+    return MuteReason::kMuteByDefault;
+  }
+  return MuteReason::kSiteException;
 }
 
 ContentSetting TabSpecificContentSettings::GetSoundContentSetting() const {
