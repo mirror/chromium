@@ -1,0 +1,112 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "8f0f87ec_c915fb9c",
+        "filename": "third_party/WebKit/Tools/Scripts/webkitpy/common/net/git_cl.py",
+        "patchSetId": 1
+      },
+      "lineNbr": 73,
+      "author": {
+        "id": 1003190
+      },
+      "writtenOn": "2017-11-10T17:04:50Z",
+      "side": 1,
+      "message": "This function name is no longer exactly accurate.\n\nAlthough, wait_for_try_jobs_or_cl_closed is a bit clunky -- maybe we could use wait_for_cl_done and then explain more in the docstring?",
+      "revId": "771668bf16ba40425c6b2d267384e2cec9321580",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6b15b783_dfb0148b",
+        "filename": "third_party/WebKit/Tools/Scripts/webkitpy/common/net/git_cl.py",
+        "patchSetId": 1
+      },
+      "lineNbr": 75,
+      "author": {
+        "id": 1003190
+      },
+      "writtenOn": "2017-11-10T17:04:50Z",
+      "side": 1,
+      "message": "This is a good description, although PEP257 suggests that the summary line should fit on one line, and if that\u0027s not enough, that may be a sign that you want a short paragraph below. -- https://www.python.org/dev/peps/pep-0257/#multi-line-docstrings",
+      "revId": "771668bf16ba40425c6b2d267384e2cec9321580",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "47e7c4fc_152a447d",
+        "filename": "third_party/WebKit/Tools/Scripts/webkitpy/common/net/git_cl.py",
+        "patchSetId": 1
+      },
+      "lineNbr": 85,
+      "author": {
+        "id": 1003190
+      },
+      "writtenOn": "2017-11-10T17:04:50Z",
+      "side": 1,
+      "message": "Now this is done in multiple places, we could extract this out to a method on the GitCL class (more DRY).",
+      "revId": "771668bf16ba40425c6b2d267384e2cec9321580",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "30ca8da1_61862104",
+        "filename": "third_party/WebKit/Tools/Scripts/webkitpy/common/net/git_cl.py",
+        "patchSetId": 1
+      },
+      "lineNbr": 92,
+      "author": {
+        "id": 1003190
+      },
+      "writtenOn": "2017-11-10T17:04:50Z",
+      "side": 1,
+      "message": "Rather than returning a dict with special keys, what do you think about returning a namedtuple (like TryJobStatus above)? It doesn\u0027t need to have value checking like that one, it could just be something like:\n\n  CLStatus \u003d collections.namedtuple(\u0027CLStatus\u0027, (\u0027status\u0027, \u0027try_results\u0027))\n\nThe advantages of a namedtuple over a dict with special keys is:\n (1) it\u0027s guaranteed to have certain fields, no chance of typos in key names\n (2) it\u0027s easier to talk about, you can just say \"A XX object\" rather than \"a dict with the keys x and y...\"",
+      "revId": "771668bf16ba40425c6b2d267384e2cec9321580",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1bbb1ea6_52c1f115",
+        "filename": "third_party/WebKit/Tools/Scripts/webkitpy/common/net/git_cl.py",
+        "patchSetId": 1
+      },
+      "lineNbr": 94,
+      "author": {
+        "id": 1003190
+      },
+      "writtenOn": "2017-11-10T17:04:50Z",
+      "side": 1,
+      "message": "PEP8 suggests \"The preferred way of wrapping long lines is by using Python\u0027s implied line continuation inside parentheses, brackets and braces. Long lines can be broken over multiple lines by wrapping expressions in parentheses. These should be used in preference to using a backslash for line continuation.\" -- https://www.python.org/dev/peps/pep-0008/",
+      "revId": "771668bf16ba40425c6b2d267384e2cec9321580",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ee21501c_78b4c306",
+        "filename": "third_party/WebKit/Tools/Scripts/webkitpy/common/net/git_cl_unittest.py",
+        "patchSetId": 1
+      },
+      "lineNbr": 164,
+      "author": {
+        "id": 1003190
+      },
+      "writtenOn": "2017-11-10T17:04:50Z",
+      "side": 1,
+      "message": "Optionally you could remove this try job from the example since it\u0027s not relevant for this test.",
+      "range": {
+        "startLine": 159,
+        "startChar": 0,
+        "endLine": 164,
+        "endChar": 14
+      },
+      "revId": "771668bf16ba40425c6b2d267384e2cec9321580",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
