@@ -64,6 +64,9 @@ class WebMutableSecurityOrigin {
   BLINK_PLATFORM_EXPORT void Reset();
   BLINK_PLATFORM_EXPORT void Assign(const WebMutableSecurityOrigin&);
 
+  BLINK_PLATFORM_EXPORT void SetUniqueOriginIsPotentiallyTrustworthy(
+      bool is_unique_origin_potentially_trustworthy);
+
 #if INSIDE_BLINK
   BLINK_PLATFORM_EXPORT WebMutableSecurityOrigin(scoped_refptr<SecurityOrigin>);
   BLINK_PLATFORM_EXPORT SecurityOrigin* Get() const;
