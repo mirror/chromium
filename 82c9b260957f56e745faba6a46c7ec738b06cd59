@@ -52,6 +52,24 @@
       "revId": "82c9b260957f56e745faba6a46c7ec738b06cd59",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "908c34af_0fbc179f",
+        "filename": "third_party/WebKit/Source/core/dom/Document.cpp",
+        "patchSetId": 18
+      },
+      "lineNbr": 5788,
+      "author": {
+        "id": 1000023
+      },
+      "writtenOn": "2017-11-10T04:47:10Z",
+      "side": 1,
+      "message": "Ah, so there is the null String vs the empty String. I come from Chromeland where there isn\u0027t that distinction. Thank you for pointing that out; I think that makes my analysis above slightly inaccurate.\n\nI don\u0027t see an initializer for |raw_title_|, which should mean that it initializes to null. Therefore, if null strings compare as non-equal to empty strings, calling UpdateTitle(g_empty_string) will make it past the first early return.\n\nHowever, https://cs.chromium.org/chromium/src/third_party/WebKit/Source/core/dom/Document.cpp?rcl\u003debb92497e38ff5308f0ad678aabd980b84c1f746\u0026l\u003d1631 seems to catch this. If someone calls UpdateTitle() with an empty string, then |title_| is set to the null string. It is then compared to the previous title value, and because the original value was constructed as the null string, there\u0027s no change and no message is set.\n\nTherefore it doesn\u0027t seem to be the case that we can avoid calling DispatchDidReceiveTitle() directly. The call to DispatchDidReceiveTitle() inside of UpdateTitle() is very protected.",
+      "parentUuid": "df4b2694_55ead6a4",
+      "revId": "82c9b260957f56e745faba6a46c7ec738b06cd59",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
