@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "9a8bc176_8538d49f",
+        "filename": "ui/ozone/platform/wayland/wayland_touch.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 64,
+      "author": {
+        "id": 1250943
+      },
+      "writtenOn": "2017-11-10T11:15:27Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "7e8bf7ec_583da98f",
+      "revId": "cac98fb44e1acb363015ff4ed640e5f3522300e2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "27112b67_66d9082d",
         "filename": "ui/ozone/platform/wayland/wayland_touch.cc",
         "patchSetId": 1
@@ -30,6 +48,30 @@
       "writtenOn": "2017-11-07T20:24:38Z",
       "side": 1,
       "message": "Why does this need to be saved?\n\nI think you should be able to do\n\nTouchEvent touch_event(type, location, time_stamp, pointer_details);\ntouch-\u003ecallback_.Run(event);",
+      "range": {
+        "startLine": 71,
+        "startChar": 30,
+        "endLine": 71,
+        "endChar": 35
+      },
+      "revId": "cac98fb44e1acb363015ff4ed640e5f3522300e2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ba936aea_a82e373b",
+        "filename": "ui/ozone/platform/wayland/wayland_touch.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 71,
+      "author": {
+        "id": 1250943
+      },
+      "writtenOn": "2017-11-10T11:15:27Z",
+      "side": 1,
+      "message": "TouchEvent here need to saved to maintain event ordering(DOWN, MOVE, UP), e.g event dispatching on touchup should match the touchdown.",
+      "parentUuid": "27112b67_66d9082d",
       "range": {
         "startLine": 71,
         "startChar": 30,
@@ -89,6 +131,30 @@
     },
     {
       "key": {
+        "uuid": "9740d5d1_731bd2ce",
+        "filename": "ui/ozone/platform/wayland/wayland_touch.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 148,
+      "author": {
+        "id": 1250943
+      },
+      "writtenOn": "2017-11-10T11:15:27Z",
+      "side": 1,
+      "message": "I agree we don\u0027t need to do same thing again in Frame, I will address it in next patchset",
+      "parentUuid": "0baeff8e_990064ba",
+      "range": {
+        "startLine": 148,
+        "startChar": 0,
+        "endLine": 148,
+        "endChar": 40
+      },
+      "revId": "cac98fb44e1acb363015ff4ed640e5f3522300e2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "d70790fd_80cc8466",
         "filename": "ui/ozone/platform/wayland/wayland_touch.h",
         "patchSetId": 1
@@ -100,6 +166,30 @@
       "writtenOn": "2017-11-07T20:24:38Z",
       "side": 1,
       "message": "flat_map?\n\nSee guidelines in base/containers/README.md. Probably not unordered_map; the user doesn\u0027t have many fingers.",
+      "range": {
+        "startLine": 38,
+        "startChar": 22,
+        "endLine": 38,
+        "endChar": 25
+      },
+      "revId": "cac98fb44e1acb363015ff4ed640e5f3522300e2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b3eaeccf_c577f7d2",
+        "filename": "ui/ozone/platform/wayland/wayland_touch.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 38,
+      "author": {
+        "id": 1250943
+      },
+      "writtenOn": "2017-11-10T11:15:27Z",
+      "side": 1,
+      "message": "Thanks for pointing this",
+      "parentUuid": "d70790fd_80cc8466",
       "range": {
         "startLine": 38,
         "startChar": 22,
