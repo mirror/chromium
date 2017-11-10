@@ -112,7 +112,7 @@ void CreateTestFormsPredictionsMap(FormsPredictionsMap* predictions) {
   // 1st element.
   FormData form_data;
   test::CreateTestAddressFormData(&form_data);
-  ASSERT_TRUE(form_data.fields.size() >= 4);
+  ASSERT_GE(form_data.fields.size(), 4u);
   result_map[form_data][form_data.fields[0]] =
       PasswordFormFieldPredictionType::PREDICTION_USERNAME;
   result_map[form_data][form_data.fields[1]] =
@@ -273,7 +273,14 @@ void ExpectFormFieldData(const FormFieldData& expected,
 void ExpectFormData(const FormData& expected,
                     const base::Closure& closure,
                     const FormData& passed) {
-  EXPECT_EQ(expected, passed);
+  // For security reasons, we avoid sending an origin over IPC.  Therefore, the
+  // received origin should be an empty/invalid GURL.
+  EXPECT_EQ(GURL(), passed.origin);
+  // Restore the origin to help with the equality comparison below.
+  FormData actual(passed);
+  actual.origin = expected.origin;
+
+  EXPECT_EQ(expected, actual);
   closure.Run();
 }
 
@@ -287,7 +294,14 @@ void ExpectFormFieldDataPredictions(const FormFieldDataPredictions& expected,
 void ExpectFormDataPredictions(const FormDataPredictions& expected,
                                const base::Closure& closure,
                                const FormDataPredictions& passed) {
-  EXPECT_EQ(expected, passed);
+  // For security reasons, we avoid sending an origin over IPC.  Therefore, the
+  // received origin should be an empty/invalid GURL.
+  EXPECT_EQ(GURL(), passed.data.origin);
+  // Restore the origin to help with the equality comparison below.
+  FormDataPredictions actual(passed);
+  actual.data.origin = expected.data.origin;
+
+  EXPECT_EQ(expected, actual);
   closure.Run();
 }
 
@@ -309,14 +323,35 @@ void ExpectPasswordFormGenerationData(
 void ExpectPasswordForm(const PasswordForm& expected,
                         const base::Closure& closure,
                         const PasswordForm& passed) {
-  EXPECT_EQ(expected, passed);
+  // For security reasons, we avoid sending an origin over IPC.  Therefore, the
+  // received origin should be an empty/invalid GURL.
+  EXPECT_EQ(GURL(), passed.form_data.origin);
+  // Restore the origin to help with the equality comparison below.
+  PasswordForm actual(passed);
+  actual.form_data.origin = expected.form_data.origin;
+
+  EXPECT_EQ(expected, actual);
   closure.Run();
 }
 
 void ExpectFormsPredictionsMap(const FormsPredictionsMap& expected,
                                const base::Closure& closure,
                                const FormsPredictionsMap& passed) {
-  EXPECT_EQ(expected, passed);
+  // For security reasons, we avoid sending an origin over IPC.  Therefore, the
+  // received origin should be an empty/invalid GURL.
+  for (const auto& it : passed) {
+    const FormData& key(it.first);
+    EXPECT_EQ(GURL(), key.origin);
+  }
+  // Reset the origin to help with the equality comparison below.
+  FormsPredictionsMap expected_with_no_origin;
+  for (const auto& it : expected) {
+    FormData new_key(it.first);
+    new_key.origin = GURL();
+    expected_with_no_origin[new_key] = it.second;
+  }
+
+  EXPECT_EQ(expected_with_no_origin, passed);
   closure.Run();
 }
 

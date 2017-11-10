@@ -9,6 +9,7 @@
 #include <map>
 #include <memory>
 #include <set>
+#include <string>
 #include <vector>
 
 #include "base/command_line.h"
@@ -19,6 +20,7 @@
 #include "base/strings/string_util.h"
 #include "base/strings/utf_string_conversions.h"
 #include "build/build_config.h"
+#include "components/autofill/content/common/url_utils.h"
 #include "components/autofill/core/common/autofill_data_validation.h"
 #include "components/autofill/core/common/autofill_regexes.h"
 #include "components/autofill/core/common/autofill_switches.h"
@@ -1164,15 +1166,6 @@ ScopedLayoutPreventer::~ScopedLayoutPreventer() {
   DCHECK(g_prevent_layout) << "Is any other instance of ScopedLayoutPreventer "
                               "alive in the same process?";
   g_prevent_layout = false;
-}
-
-GURL StripAuthAndParams(const GURL& gurl) {
-  GURL::Replacements rep;
-  rep.ClearUsername();
-  rep.ClearPassword();
-  rep.ClearQuery();
-  rep.ClearRef();
-  return gurl.ReplaceComponents(rep);
 }
 
 bool ExtractFormData(const WebFormElement& form_element, FormData* data) {

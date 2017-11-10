@@ -23,6 +23,7 @@
 #include "base/strings/utf_string_conversions.h"
 #include "base/threading/thread_task_runner_handle.h"
 #include "build/build_config.h"
+#include "components/autofill/content/common/url_utils.h"
 #include "components/autofill/content/renderer/form_autofill_util.h"
 #include "components/autofill/content/renderer/password_form_conversion_utils.h"
 #include "components/autofill/content/renderer/renderer_save_password_progress_logger.h"
@@ -560,6 +561,16 @@ bool ShouldShowStandaloneManuallFallback(const blink::WebInputElement& element,
       !url.SchemeIs(url::kAboutScheme) &&
       base::FeatureList::IsEnabled(
           password_manager::features::kEnableManualFallbacksFillingStandalone));
+}
+
+bool AllPasswordFormsHaveTheSameOrigin(const std::vector<PasswordForm>& forms) {
+  if (forms.empty())
+    return true;
+
+  const GURL& origin = forms[0].form_data.origin;
+  return all_of(forms.begin(), forms.end(), [&origin](const PasswordForm& it) {
+    return it.form_data.origin == origin;
+  });
 }
 
 }  // namespace
@@ -1156,6 +1167,10 @@ void PasswordAutofillAgent::SendPasswordForms(bool only_visible) {
   }
 
   if (only_visible) {
+    // All forms need to have the same origin to be correctly restored by
+    // ContentPasswordManagerDriver::PasswordFormsRendered.
+    DCHECK(AllPasswordFormsHaveTheSameOrigin(password_forms));
+
     // Send the PasswordFormsRendered message regardless of whether
     // |password_forms| is empty. The empty |password_forms| are a possible
     // signal to the browser that a pending login attempt succeeded.
@@ -1178,6 +1193,10 @@ void PasswordAutofillAgent::SendPasswordForms(bool only_visible) {
           GetSignOnRealm(password_forms.back().origin);
     }
     if (!password_forms.empty()) {
+      // All forms need to have the same origin to be correctly restored by
+      // ContentPasswordManagerDriver::PasswordFormsParsed.
+      DCHECK(AllPasswordFormsHaveTheSameOrigin(password_forms));
+
       sent_request_to_store_ = true;
       GetPasswordManagerDriver()->PasswordFormsParsed(password_forms);
     }
@@ -1577,7 +1596,14 @@ void PasswordAutofillAgent::SetLoggingState(bool active) {
 
 void PasswordAutofillAgent::AutofillUsernameAndPasswordDataReceived(
     const FormsPredictionsMap& predictions) {
-  form_predictions_.insert(predictions.begin(), predictions.end());
+  FormsPredictionsMap fixed_predictions;
+  for (const auto& it : predictions) {
+    FormData form_data(it.first);
+    form_data.origin = GetCanonicalOriginForDocument();
+    fixed_predictions[form_data] = it.second;
+  }
+
+  form_predictions_.insert(fixed_predictions.begin(), fixed_predictions.end());
 }
 
 void PasswordAutofillAgent::FindFocusedPasswordForm(
@@ -1897,6 +1923,11 @@ bool PasswordAutofillAgent::FillFormOnPasswordReceived(
       &username_element, &password_element, fill_data, exact_username_match,
       false /* set_selection */, field_value_and_properties_map,
       registration_callback, logger);
+}
+
+GURL PasswordAutofillAgent::GetCanonicalOriginForDocument() const {
+  GURL document_url = render_frame()->GetWebFrame()->GetDocument().Url();
+  return StripAuthAndParams(document_url);
 }
 
 const mojom::AutofillDriverPtr& PasswordAutofillAgent::GetAutofillDriver() {
