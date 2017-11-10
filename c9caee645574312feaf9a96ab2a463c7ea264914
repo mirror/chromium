@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "863f34a7_0a74620d",
+        "filename": "components/viz/service/main/viz_main_impl.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 216,
+      "author": {
+        "id": 1124674
+      },
+      "writtenOn": "2017-11-10T20:06:49Z",
+      "side": 1,
+      "message": "Prefer\nukm_recorder_ \u003d ukm::MojoUkmRecorder::Create(connector);",
+      "range": {
+        "startLine": 216,
+        "startChar": 2,
+        "endLine": 216,
+        "endChar": 17
+      },
+      "revId": "c9caee645574312feaf9a96ab2a463c7ea264914",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
