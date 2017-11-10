@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "ef4dc11a_ad301df9",
+        "filename": "chrome/browser/vr/ui.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 119,
+      "author": {
+        "id": 1002161
+      },
+      "writtenOn": "2017-11-10T14:47:27Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "6eb0f747_2734ac2e",
+      "revId": "3a11b0a95a170122c000ccfed4e8bfd84f0503f2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "3fada6ba_9305e02f",
         "filename": "chrome/browser/vr/ui_scene_manager.cc",
         "patchSetId": 4
@@ -33,6 +51,24 @@
       "revId": "3a11b0a95a170122c000ccfed4e8bfd84f0503f2",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f31b7974_27236028",
+        "filename": "chrome/browser/vr/ui_scene_manager.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 607,
+      "author": {
+        "id": 1002161
+      },
+      "writtenOn": "2017-11-10T14:47:27Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "3fada6ba_9305e02f",
+      "revId": "3a11b0a95a170122c000ccfed4e8bfd84f0503f2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
