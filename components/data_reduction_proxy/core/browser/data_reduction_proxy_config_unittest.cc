@@ -35,6 +35,7 @@
 #include "components/data_reduction_proxy/core/browser/data_reduction_proxy_mutable_config_values.h"
 #include "components/data_reduction_proxy/core/browser/data_reduction_proxy_service.h"
 #include "components/data_reduction_proxy/core/browser/data_reduction_proxy_test_utils.h"
+#include "components/data_reduction_proxy/core/browser/network_properties_manager.h"
 #include "components/data_reduction_proxy/core/common/data_reduction_proxy_event_creator.h"
 #include "components/data_reduction_proxy/core/common/data_reduction_proxy_features.h"
 #include "components/data_reduction_proxy/core/common/data_reduction_proxy_params_test_utils.h"
@@ -218,11 +219,12 @@ class DataReductionProxyConfigTest : public testing::Test {
     return test_context_->GetConfiguredProxiesForHttp();
   }
 
+  base::MessageLoopForIO message_loop_;
+
+  std::unique_ptr<DataReductionProxyTestContext> test_context_;
+
  private:
   std::unique_ptr<net::NetworkChangeNotifier> network_change_notifier_;
-
-  base::MessageLoopForIO message_loop_;
-  std::unique_ptr<DataReductionProxyTestContext> test_context_;
   std::unique_ptr<TestDataReductionProxyParams> expected_params_;
 };
 
@@ -425,8 +427,13 @@ TEST_F(DataReductionProxyConfigTest, WarmupURL) {
 
     scoped_refptr<net::URLRequestContextGetter> request_context_getter_ =
         new net::TestURLRequestContextGetter(task_runner());
+
+    NetworkPropertiesManager network_properties_manager(
+        test_context_->pref_service(), test_context_->task_runner(),
+        test_context_->task_runner());
     config.InitializeOnIOThread(request_context_getter_.get(),
-                                request_context_getter_.get());
+                                request_context_getter_.get(),
+                                &network_properties_manager);
     RunUntilIdle();
 
     {
