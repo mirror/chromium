@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "c51a51df_c4ab97fa",
+        "filename": "chrome/browser/ssl/ssl_error_tab_helper_unittest.cc",
+        "patchSetId": 36
+      },
+      "lineNbr": 24,
+      "author": {
+        "id": 1121739
+      },
+      "writtenOn": "2017-11-10T22:57:46Z",
+      "side": 1,
+      "message": "estark@: FYI, looks like this is needed to avoid a crash in MetricsHelper due to an empty metric prefix.",
+      "revId": "724f3e52850b12c08d34fba2256b37697b4299ef",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    }
+  ]
+}
