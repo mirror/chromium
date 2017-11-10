@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "f3201990_e0400a1d",
+        "filename": "ios/web/web_state/ui/crw_web_controller.mm",
+        "patchSetId": 7
+      },
+      "lineNbr": 5240,
+      "author": {
+        "id": 1123009
+      },
+      "writtenOn": "2017-11-10T18:02:53Z",
+      "side": 0,
+      "message": "I think we can now move CRBProtocolObservers from base to chrome. Do you think it worth doing? If so would you mind filing a bug for this change?",
+      "range": {
+        "startLine": 5240,
+        "startChar": 18,
+        "endLine": 5240,
+        "endChar": 38
+      },
+      "revId": "16ad60e7f5c7db6055c73fbe5abd42fc78e13310",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
