@@ -608,9 +608,9 @@ void TestRunnerForSpecificView::SetIsolatedWorldSecurityOrigin(
   if (!(origin->IsString() || !origin->IsNull()))
     return;
 
-  WebSecurityOrigin web_origin;
+  WebMutableSecurityOrigin web_origin;
   if (origin->IsString()) {
-    web_origin = WebSecurityOrigin::CreateFromString(
+    web_origin = WebMutableSecurityOrigin::CreateFromString(
         V8StringToWebString(origin.As<v8::String>()));
   }
   web_view()->FocusedFrame()->SetIsolatedWorldSecurityOrigin(world_id,
