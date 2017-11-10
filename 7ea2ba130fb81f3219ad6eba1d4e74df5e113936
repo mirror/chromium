@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "39f72076_bcc108e8",
+        "filename": "chrome/test/data/webui/mocha_adapter.js",
+        "patchSetId": 4
+      },
+      "lineNbr": 68,
+      "author": {
+        "id": 1003321
+      },
+      "writtenOn": "2017-11-10T00:36:41Z",
+      "side": 1,
+      "message": "I\u0027m pretty wary of modifying objects like this. mocha is the actual object from mocha.js, and the other mocha.* functions are documented APIs for mocha. (runTest is a function on mocha\u0027s Runner object, so that\u0027s also a potential spot for confusion.)",
+      "range": {
+        "startLine": 68,
+        "startChar": 0,
+        "endLine": 68,
+        "endChar": 5
+      },
+      "revId": "7ea2ba130fb81f3219ad6eba1d4e74df5e113936",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
