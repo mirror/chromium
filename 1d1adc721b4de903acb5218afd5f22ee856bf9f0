@@ -1,0 +1,67 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "1855143f_48e1311c",
+        "filename": "ui/file_manager/file_manager/foreground/js/file_tasks.js",
+        "patchSetId": 4
+      },
+      "lineNbr": 496,
+      "author": {
+        "id": 1110159
+      },
+      "writtenOn": "2017-11-10T09:19:35Z",
+      "side": 1,
+      "message": "length \u003e\u003d 2 ?",
+      "range": {
+        "startLine": 496,
+        "startChar": 28,
+        "endLine": 496,
+        "endChar": 29
+      },
+      "revId": "1d1adc721b4de903acb5218afd5f22ee856bf9f0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e1d9d2fe_dae98a5e",
+        "filename": "ui/file_manager/file_manager/foreground/js/file_tasks.js",
+        "patchSetId": 4
+      },
+      "lineNbr": 1011,
+      "author": {
+        "id": 1110159
+      },
+      "writtenOn": "2017-11-10T09:19:35Z",
+      "side": 1,
+      "message": "Is this parameter still in use?",
+      "range": {
+        "startLine": 1011,
+        "startChar": 24,
+        "endLine": 1011,
+        "endChar": 48
+      },
+      "revId": "1d1adc721b4de903acb5218afd5f22ee856bf9f0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d8b86d14_c3b8d9e4",
+        "filename": "ui/file_manager/file_manager/foreground/js/task_controller.js",
+        "patchSetId": 4
+      },
+      "lineNbr": 421,
+      "author": {
+        "id": 1110159
+      },
+      "writtenOn": "2017-11-10T09:19:35Z",
+      "side": 1,
+      "message": "The \"openTasks.length \u003d\u003d 0\" case is already covered in FileTasks.getDefaultTask(), so I guess we don\u0027t need to check this condition.",
+      "revId": "1d1adc721b4de903acb5218afd5f22ee856bf9f0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
