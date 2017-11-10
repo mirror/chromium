@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "69cc5f1e_25ebf61b",
+        "filename": "content/browser/leveldb_wrapper_impl.cc",
+        "patchSetId": 15
+      },
+      "lineNbr": 704,
+      "author": {
+        "id": 1125359
+      },
+      "writtenOn": "2017-11-10T00:42:34Z",
+      "side": 0,
+      "message": "If we receive a GetAll() when load state is KEYS_ONLY, then it posts a task to load map. This would cause a load on keys-values-map and clear the keys-only-map, which should set map_state to unloaded while this is happening.\nI wanted to make this behavior more explicit by stating that a reload is required if there are load tasks. If you prefer you can make this a dcheck here, but I would like anyone changing this code to be aware of this. So, had this comment here.\nmaybe:\nDCHECK(map_state \u003d\u003d INVALID || on_load_complete_tasks_.empty()) in this function?",
+      "range": {
+        "startLine": 699,
+        "startChar": 42,
+        "endLine": 704,
+        "endChar": 70
+      },
+      "revId": "74759e42a0f78442c9ad8366d4e73dd46b40deee",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b1c909d1_66c036f4",
+        "filename": "content/browser/leveldb_wrapper_impl.h",
+        "patchSetId": 15
+      },
+      "lineNbr": 193,
+      "author": {
+        "id": 1125359
+      },
+      "writtenOn": "2017-11-10T00:42:34Z",
+      "side": 0,
+      "message": "Still think this is worth mentioning..",
+      "range": {
+        "startLine": 191,
+        "startChar": 33,
+        "endLine": 193,
+        "endChar": 38
+      },
+      "revId": "74759e42a0f78442c9ad8366d4e73dd46b40deee",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}

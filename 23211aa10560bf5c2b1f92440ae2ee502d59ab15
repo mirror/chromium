@@ -1,0 +1,153 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "7b0b9e71_ea3d8712",
+        "filename": "content/browser/leveldb_wrapper_impl.cc",
+        "patchSetId": 15
+      },
+      "lineNbr": 214,
+      "author": {
+        "id": 1125359
+      },
+      "writtenOn": "2017-11-10T00:42:34Z",
+      "side": 1,
+      "message": "If the map_state_ was LOADED_KEYS_ONLY and we have some changes in commit batch and new client gets added (desired cache mode is set to keys and values), then UnloadMapIfPossible will not clear the keys_only_map.\nIsMapLoaded() will still return true. But, we already sent SendOldValueOnMutations(false) to clients. We also have multiple clients changing values.\nold_value notifications must be sent and concurrent edits to the map must be handled. So, at this point we need the values for keys to maintain consistency in the map.\nThis is the reason the function is named IsReloadNeeded, not IsLoaded.",
+      "range": {
+        "startLine": 214,
+        "startChar": 7,
+        "endLine": 214,
+        "endChar": 18
+      },
+      "revId": "23211aa10560bf5c2b1f92440ae2ee502d59ab15",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0799f095_e879b543",
+        "filename": "content/browser/leveldb_wrapper_impl.cc",
+        "patchSetId": 15
+      },
+      "lineNbr": 371,
+      "author": {
+        "id": 1125359
+      },
+      "writtenOn": "2017-11-10T00:42:34Z",
+      "side": 1,
+      "message": "git cl format did this? feels like previous formatting was better? not sure the formatter is changed now!",
+      "range": {
+        "startLine": 371,
+        "startChar": 22,
+        "endLine": 371,
+        "endChar": 23
+      },
+      "revId": "23211aa10560bf5c2b1f92440ae2ee502d59ab15",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "bade1176_cc478005",
+        "filename": "content/browser/leveldb_wrapper_impl.cc",
+        "patchSetId": 15
+      },
+      "lineNbr": 490,
+      "author": {
+        "id": 1125359
+      },
+      "writtenOn": "2017-11-10T00:42:34Z",
+      "side": 1,
+      "message": "load_state_ \u003d INVALID.",
+      "revId": "23211aa10560bf5c2b1f92440ae2ee502d59ab15",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "34ea04e9_864ed7f7",
+        "filename": "content/browser/leveldb_wrapper_impl.cc",
+        "patchSetId": 15
+      },
+      "lineNbr": 533,
+      "author": {
+        "id": 1125359
+      },
+      "writtenOn": "2017-11-10T00:42:34Z",
+      "side": 1,
+      "message": "calculating inline seems more efficient. But, I don\u0027t really care too much.",
+      "range": {
+        "startLine": 533,
+        "startChar": 2,
+        "endLine": 533,
+        "endChar": 31
+      },
+      "revId": "23211aa10560bf5c2b1f92440ae2ee502d59ab15",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "572ff981_8d96e3f5",
+        "filename": "content/browser/leveldb_wrapper_impl.cc",
+        "patchSetId": 15
+      },
+      "lineNbr": 748,
+      "author": {
+        "id": 1125359
+      },
+      "writtenOn": "2017-11-10T00:42:34Z",
+      "side": 1,
+      "message": "Why don\u0027t we clear the keys-only map when desired_cache_mode is keys and values?\nThe memory usage of the map will be unnecessary",
+      "range": {
+        "startLine": 748,
+        "startChar": 6,
+        "endLine": 748,
+        "endChar": 52
+      },
+      "revId": "23211aa10560bf5c2b1f92440ae2ee502d59ab15",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b4e86479_ff10eb5d",
+        "filename": "content/browser/leveldb_wrapper_impl.h",
+        "patchSetId": 15
+      },
+      "lineNbr": 98,
+      "author": {
+        "id": 1125359
+      },
+      "writtenOn": "2017-11-10T00:42:34Z",
+      "side": 1,
+      "message": "before?",
+      "revId": "23211aa10560bf5c2b1f92440ae2ee502d59ab15",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "95dcf34a_f6a0bce2",
+        "filename": "content/browser/leveldb_wrapper_impl.h",
+        "patchSetId": 15
+      },
+      "lineNbr": 269,
+      "author": {
+        "id": 1125359
+      },
+      "writtenOn": "2017-11-10T00:42:34Z",
+      "side": 1,
+      "message": "nit: Should only be used when map is loaded. Else returns false always\nIsMapLoadedAndEmpty?",
+      "range": {
+        "startLine": 269,
+        "startChar": 7,
+        "endLine": 269,
+        "endChar": 17
+      },
+      "revId": "23211aa10560bf5c2b1f92440ae2ee502d59ab15",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
