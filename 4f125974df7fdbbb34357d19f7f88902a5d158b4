@@ -1,0 +1,55 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "695c88f7_dddbb3b3",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 6
+      },
+      "lineNbr": 7,
+      "author": {
+        "id": 1002927
+      },
+      "writtenOn": "2017-11-10T21:56:50Z",
+      "side": 1,
+      "message": "s/libobjdump/llvmobjdump/.\nMaybe refer to it as \"the llvmobjdump tarball\" or package.",
+      "revId": "4f125974df7fdbbb34357d19f7f88902a5d158b4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "26cf1b56_38292097",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 6
+      },
+      "lineNbr": 9,
+      "author": {
+        "id": 1002927
+      },
+      "writtenOn": "2017-11-10T21:56:50Z",
+      "side": 1,
+      "message": "s/lib/llvm/",
+      "revId": "4f125974df7fdbbb34357d19f7f88902a5d158b4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "07f0a213_b04776be",
+        "filename": "tools/clang/scripts/package.py",
+        "patchSetId": 6
+      },
+      "lineNbr": 348,
+      "author": {
+        "id": 1002927
+      },
+      "writtenOn": "2017-11-10T21:56:50Z",
+      "side": 1,
+      "message": "Shouldn\u0027t the symlink be the other way, i.e. llvm-readelf pointing to llvm-readobj?",
+      "revId": "4f125974df7fdbbb34357d19f7f88902a5d158b4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
