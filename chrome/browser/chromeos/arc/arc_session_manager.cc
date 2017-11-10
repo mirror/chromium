@@ -718,6 +718,9 @@ void ArcSessionManager::MaybeStartTermsOfServiceNegotiation() {
     terms_of_service_negotiator_ =
         std::make_unique<ArcTermsOfServiceDefaultNegotiator>(
             profile_->GetPrefs(), support_host_.get());
+    // Start the mini-container here to save time starting the container if the
+    // user decides to opt-in.
+    arc_session_runner_->RequestStart(ArcInstanceMode::MINI_INSTANCE);
   }
 
   if (!terms_of_service_negotiator_) {
