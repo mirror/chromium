@@ -1229,7 +1229,7 @@ void WallpaperManager::RemoveObserver(WallpaperManager::Observer* observer) {
   observers_.RemoveObserver(observer);
 }
 
-void WallpaperManager::Open() {
+void WallpaperManager::OpenWallpaperPicker() {
   if (wallpaper_manager_util::ShouldUseAndroidWallpapersApp(
           ProfileHelper::Get()->GetProfileByUser(
               user_manager::UserManager::Get()->GetActiveUser())) &&
@@ -1324,8 +1324,7 @@ void WallpaperManager::ShowDefaultWallpaperForTesting(
 // WallpaperManager, private: --------------------------------------------------
 
 WallpaperManager::WallpaperManager()
-    : binding_(this),
-      activation_client_observer_(this),
+    : activation_client_observer_(this),
       window_observer_(this),
       weak_factory_(this) {
   DCHECK_CURRENTLY_ON(BrowserThread::UI);
@@ -1344,19 +1343,6 @@ WallpaperManager::WallpaperManager()
        base::TaskShutdownBehavior::CONTINUE_ON_SHUTDOWN});
 
   user_manager::UserManager::Get()->AddObserver(this);
-
-  content::ServiceManagerConnection* connection =
-      content::ServiceManagerConnection::GetForProcess();
-  if (connection && connection->GetConnector()) {
-    // Connect to the wallpaper controller interface in the ash service.
-    ash::mojom::WallpaperControllerPtr wallpaper_controller_ptr;
-    connection->GetConnector()->BindInterface(ash::mojom::kServiceName,
-                                              &wallpaper_controller_ptr);
-    // Register this object as the wallpaper picker.
-    ash::mojom::WallpaperPickerPtr picker;
-    binding_.Bind(mojo::MakeRequest(&picker));
-    wallpaper_controller_ptr->SetWallpaperPicker(std::move(picker));
-  }
 }
 
 // static
