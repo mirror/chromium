@@ -211,6 +211,24 @@
       "revId": "aaa991da2523923e805dbeb47e0714855f7f157e",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "eced9aae_85655b21",
+        "filename": "third_party/WebKit/Source/platform/graphics/paint/FloatClipRectTest.cpp",
+        "patchSetId": 5
+      },
+      "lineNbr": 86,
+      "author": {
+        "id": 1002481
+      },
+      "writtenOn": "2017-11-10T20:55:47Z",
+      "side": 1,
+      "message": "I think we still need to distinguish tight and loose infinity clip rects. A loose infinity rect indicates that the actual visual clip can be anything. When intersecting a loose infinity rect with any clip rect, we should preserve the loose status. A tight infinity clip rect means there is strictly no clip. Intersection of a tight infinity clip rect with a tight clip rect should result a tight clip rect.\n\nThe latest patch fixed FloatClipRect::Map() for infinite clip rect. Now it clears is_tight_ when an infinite clip rect is rotated.",
+      "parentUuid": "cdfb0509_8fe84a85",
+      "revId": "aaa991da2523923e805dbeb47e0714855f7f157e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
