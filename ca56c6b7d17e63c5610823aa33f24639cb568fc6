@@ -1,0 +1,72 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "bee463d1_51bd5ad3",
+        "filename": "chrome/browser/ui/views/bookmarks/bookmark_editor_view.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 41,
+      "author": {
+        "id": 1001118
+      },
+      "writtenOn": "2017-11-10T17:20:35Z",
+      "side": 1,
+      "message": "nit: remove?",
+      "revId": "ca56c6b7d17e63c5610823aa33f24639cb568fc6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "bcc6101b_60a769e5",
+        "filename": "ui/views/bubble/bubble_dialog_delegate_unittest.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 22,
+      "author": {
+        "id": 1001118
+      },
+      "writtenOn": "2017-11-10T17:20:35Z",
+      "side": 1,
+      "message": "nit: remove?",
+      "revId": "ca56c6b7d17e63c5610823aa33f24639cb568fc6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f3ae12f8_edae29b4",
+        "filename": "ui/views/cocoa/bridged_native_widget.mm",
+        "patchSetId": 4
+      },
+      "lineNbr": 784,
+      "author": {
+        "id": 1001118
+      },
+      "writtenOn": "2017-11-10T17:20:35Z",
+      "side": 1,
+      "message": "nit: maybe do this before calling OnNativeWidgetDestroying?",
+      "revId": "ca56c6b7d17e63c5610823aa33f24639cb568fc6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f561085c_594e18d0",
+        "filename": "ui/views/window/dialog_observer.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 15,
+      "author": {
+        "id": 1001118
+      },
+      "writtenOn": "2017-11-10T17:20:35Z",
+      "side": 1,
+      "message": "nit: add a comment (something about the buttons changing?). I know it\u0027s kinda obvious since DialogModel only contains button-related info, but I think it\u0027d be nice to be clear.",
+      "revId": "ca56c6b7d17e63c5610823aa33f24639cb568fc6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
