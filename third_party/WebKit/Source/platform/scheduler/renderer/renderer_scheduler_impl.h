@@ -91,7 +91,8 @@ class PLATFORM_EXPORT RendererSchedulerImpl
   static const char* UseCaseToString(UseCase use_case);
   static const char* RAILModeToString(v8::RAILMode rail_mode);
 
-  RendererSchedulerImpl(scoped_refptr<SchedulerTqmDelegate> main_task_runner);
+  explicit RendererSchedulerImpl(
+      std::unique_ptr<TaskQueueManager> task_queue_manager);
   ~RendererSchedulerImpl() override;
 
   // RendererScheduler implementation:
