@@ -74,6 +74,7 @@
 #include "platform/graphics/CompositorMutatorClient.h"
 #include "platform/wtf/AutoReset.h"
 #include "platform/wtf/PtrUtil.h"
+#include "public/platform/web_page_visibility_state.mojom-blink.h"
 #include "public/web/WebAutofillClient.h"
 #include "public/web/WebPlugin.h"
 #include "public/web/WebRange.h"
@@ -1166,10 +1167,10 @@ HitTestResult WebFrameWidgetImpl::CoreHitTestResultAt(
 }
 
 void WebFrameWidgetImpl::SetVisibilityState(
-    WebPageVisibilityState visibility_state) {
+    mojom::WebPageVisibilityState visibility_state) {
   if (layer_tree_view_) {
     layer_tree_view_->SetVisible(visibility_state ==
-                                 kWebPageVisibilityStateVisible);
+                                 mojom::WebPageVisibilityState::kVisible);
   }
 }
 
