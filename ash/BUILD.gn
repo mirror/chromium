@@ -1399,6 +1399,8 @@ test("ash_unittests") {
     "utility/screenshot_controller_unittest.cc",
     "virtual_keyboard_controller_unittest.cc",
     "voice_interaction/voice_interaction_controller_unittest.cc",
+    "wallpaper/test_wallpaper_controller_client.cc",
+    "wallpaper/test_wallpaper_controller_client.h",
     "wallpaper/wallpaper_controller_unittest.cc",
     "window_user_data_unittest.cc",
     "wm/always_on_top_controller_unittest.cc",

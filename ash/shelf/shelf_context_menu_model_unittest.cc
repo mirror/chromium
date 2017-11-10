@@ -11,6 +11,7 @@
 #include "ash/shell.h"
 #include "ash/test/ash_test_base.h"
 #include "ash/test_shell_delegate.h"
+#include "ash/wallpaper/test_wallpaper_controller_client.h"
 #include "ash/wallpaper/wallpaper_controller.h"
 #include "ash/wm/tablet_mode/tablet_mode_controller.h"
 #include "base/strings/utf_string_conversions.h"
@@ -39,30 +40,6 @@ class ShelfContextMenuModelTest : public AshTestBase {
 
  private:
   DISALLOW_COPY_AND_ASSIGN(ShelfContextMenuModelTest);
-};
-
-// A test wallpaper picker class that counts the number of times it is opened.
-class TestWallpaperPicker : public mojom::WallpaperPicker {
- public:
-  TestWallpaperPicker() : binding_(this) {}
-  ~TestWallpaperPicker() override = default;
-
-  size_t open_count() const { return open_count_; }
-
-  mojom::WallpaperPickerPtr CreateInterfacePtr() {
-    mojom::WallpaperPickerPtr ptr;
-    binding_.Bind(mojo::MakeRequest(&ptr));
-    return ptr;
-  }
-
-  // mojom::WallpaperPicker:
-  void Open() override { open_count_++; }
-
- private:
-  size_t open_count_ = 0;
-  mojo::Binding<mojom::WallpaperPicker> binding_;
-
-  DISALLOW_COPY_AND_ASSIGN(TestWallpaperPicker);
 };
 
 // A test shelf item delegate that records the commands sent for execution.
@@ -141,13 +118,12 @@ TEST_F(ShelfContextMenuModelTest, Invocation) {
   ShelfContextMenuModel menu3(MenuItemList(), nullptr, primary_id);
   submenu = menu3.GetSubmenuModelAt(1);
   EXPECT_TRUE(submenu->IsItemCheckedAt(0));
-  TestWallpaperPicker picker;
-  Shell::Get()->wallpaper_controller()->SetWallpaperPicker(
-      picker.CreateInterfacePtr());
-  EXPECT_EQ(0u, picker.open_count());
+  TestWallpaperControllerClient client;
+  Shell::Get()->wallpaper_controller()->SetClient(
+      client.CreateInterfacePtrAndBind());
+  EXPECT_CALL(client, OpenWallpaperPicker());
   menu3.ActivatedAt(2);
   RunAllPendingInMessageLoop();
-  EXPECT_EQ(1u, picker.open_count());
 }
 
 // Tests the prepending of custom items in a shelf context menu.
