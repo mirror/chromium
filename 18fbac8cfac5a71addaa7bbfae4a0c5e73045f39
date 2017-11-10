@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "810a64c6_db3f5981",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/share/ShareMenuActionHandler.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 77,
+      "author": {
+        "id": 1116043
+      },
+      "writtenOn": "2017-11-10T17:25:42Z",
+      "side": 1,
+      "message": "We likely need a broader discussion around handlings of schemes in java.  Ideally, we have a single path that handles everything, and I\u0027m not entirely sure which way is approved by security.\n\nIn particular, we want to expose the equivalent of:\n\nGURL::SchemeIsCryptographic\n  bool SchemeIsCryptographic() const {\n    return SchemeIs(url::kHttpsScheme) || SchemeIs(url::kWssScheme) ||\n           SchemeIs(url::kHttpsSuboriginScheme);\n  }\n\nI\u0027m all for unifying it, but this method already exists in the codebase, so I\u0027m hardpressed to say I shouldn\u0027t be using it.\n\nAdded a TODO and filed a bug.  Will happily move all the tests to pure unit tests if we can.",
+      "parentUuid": "c28fed18_620512de",
+      "range": {
+        "startLine": 77,
+        "startChar": 46,
+        "endLine": 77,
+        "endChar": 86
+      },
+      "revId": "18fbac8cfac5a71addaa7bbfae4a0c5e73045f39",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "ea0d2322_9ad52e9f",
         "filename": "chrome/android/java/src/org/chromium/chrome/browser/share/ShareMenuActionHandler.java",
         "patchSetId": 4
@@ -36,6 +60,30 @@
       "writtenOn": "2017-11-10T14:00:56Z",
       "side": 1,
       "message": "Nit: given all these checks, it\u0027s not clear to me that RFHI::GetCanonicalUrlForSharing needs to check that frame_ is bound (since I would expect a main frame with a dead process to be showing the sad tab).",
+      "range": {
+        "startLine": 80,
+        "startChar": 0,
+        "endLine": 83,
+        "endChar": 9
+      },
+      "revId": "18fbac8cfac5a71addaa7bbfae4a0c5e73045f39",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "cf2a3be6_93485e1f",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/share/ShareMenuActionHandler.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 83,
+      "author": {
+        "id": 1116043
+      },
+      "writtenOn": "2017-11-10T17:25:42Z",
+      "side": 1,
+      "message": "Moved to a DCHECK(frame_) for now.",
+      "parentUuid": "ea0d2322_9ad52e9f",
       "range": {
         "startLine": 80,
         "startChar": 0,
@@ -71,6 +119,30 @@
     },
     {
       "key": {
+        "uuid": "917548e8_0b2fdca9",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/share/ShareMenuActionHandler.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 100,
+      "author": {
+        "id": 1116043
+      },
+      "writtenOn": "2017-11-10T17:25:42Z",
+      "side": 1,
+      "message": "Done, but this was simply moved code.",
+      "parentUuid": "583c4453_9c5ee4e7",
+      "range": {
+        "startLine": 100,
+        "startChar": 53,
+        "endLine": 100,
+        "endChar": 95
+      },
+      "revId": "18fbac8cfac5a71addaa7bbfae4a0c5e73045f39",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "7d4e76fe_80c5d025",
         "filename": "chrome/android/java/src/org/chromium/chrome/browser/share/ShareMenuActionHandler.java",
         "patchSetId": 4
@@ -82,6 +154,30 @@
       "writtenOn": "2017-11-10T07:43:55Z",
       "side": 1,
       "message": "Looks like cl format is not good at lambda expressions.",
+      "range": {
+        "startLine": 152,
+        "startChar": 41,
+        "endLine": 153,
+        "endChar": 25
+      },
+      "revId": "18fbac8cfac5a71addaa7bbfae4a0c5e73045f39",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "310e6346_f09b9aaf",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/share/ShareMenuActionHandler.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 153,
+      "author": {
+        "id": 1116043
+      },
+      "writtenOn": "2017-11-10T17:25:42Z",
+      "side": 1,
+      "message": "Reformatted like it was...although I find it to be totally unreadable in it\u0027s current state (double nested lambdas don\u0027t seem like a great win here)",
+      "parentUuid": "7d4e76fe_80c5d025",
       "range": {
         "startLine": 152,
         "startChar": 41,
@@ -117,6 +213,30 @@
     },
     {
       "key": {
+        "uuid": "56705275_12ec4d5b",
+        "filename": "chrome/android/javatests/src/org/chromium/chrome/browser/share/ShareMenuActionHandlerTest.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 67,
+      "author": {
+        "id": 1116043
+      },
+      "writtenOn": "2017-11-10T17:25:42Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "d2cb29e0_71baaa6c",
+      "range": {
+        "startLine": 67,
+        "startChar": 23,
+        "endLine": 67,
+        "endChar": 28
+      },
+      "revId": "18fbac8cfac5a71addaa7bbfae4a0c5e73045f39",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "ea252c79_4c5b6835",
         "filename": "chrome/android/javatests/src/org/chromium/chrome/browser/share/ShareMenuActionHandlerTest.java",
         "patchSetId": 4
@@ -140,6 +260,30 @@
     },
     {
       "key": {
+        "uuid": "9dac3f97_64a326a0",
+        "filename": "chrome/android/javatests/src/org/chromium/chrome/browser/share/ShareMenuActionHandlerTest.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 97,
+      "author": {
+        "id": 1116043
+      },
+      "writtenOn": "2017-11-10T17:25:42Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "ea252c79_4c5b6835",
+      "range": {
+        "startLine": 97,
+        "startChar": 83,
+        "endLine": 97,
+        "endChar": 90
+      },
+      "revId": "18fbac8cfac5a71addaa7bbfae4a0c5e73045f39",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "68c8d4b3_a735a091",
         "filename": "chrome/android/javatests/src/org/chromium/chrome/browser/share/ShareMenuActionHandlerTest.java",
         "patchSetId": 4
@@ -151,6 +295,30 @@
       "writtenOn": "2017-11-10T07:43:55Z",
       "side": 1,
       "message": "Should this be httpsUrl?",
+      "range": {
+        "startLine": 101,
+        "startChar": 28,
+        "endLine": 101,
+        "endChar": 35
+      },
+      "revId": "18fbac8cfac5a71addaa7bbfae4a0c5e73045f39",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f82829d9_9b7a96a4",
+        "filename": "chrome/android/javatests/src/org/chromium/chrome/browser/share/ShareMenuActionHandlerTest.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 101,
+      "author": {
+        "id": 1116043
+      },
+      "writtenOn": "2017-11-10T17:25:42Z",
+      "side": 1,
+      "message": "Indeed!",
+      "parentUuid": "68c8d4b3_a735a091",
       "range": {
         "startLine": 101,
         "startChar": 28,
