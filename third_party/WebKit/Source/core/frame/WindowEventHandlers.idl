@@ -46,6 +46,7 @@
     attribute EventHandler ononline;
     attribute EventHandler onpagehide;
     attribute EventHandler onpageshow;
+    [RuntimeEnabled=PageLifecycle] attribute EventHandler onpagestop;
     attribute EventHandler onpopstate;
     attribute EventHandler onrejectionhandled;
     attribute EventHandler onstorage;
