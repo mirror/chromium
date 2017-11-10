@@ -37,6 +37,24 @@
     },
     {
       "key": {
+        "uuid": "6a977016_4e0ef72f",
+        "filename": "chrome/browser/chromeos/power/power_metrics_reporter.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 25,
+      "author": {
+        "id": 1000042
+      },
+      "writtenOn": "2017-11-10T02:02:24Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "1ac38649_9de992de",
+      "revId": "29008a9eb4e1c9cb892a6cb2447bc02688b4ff9c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "83cfec38_d6423ad1",
         "filename": "chrome/browser/chromeos/power/power_metrics_reporter.cc",
         "patchSetId": 1
@@ -66,6 +84,24 @@
       "side": 1,
       "message": "It\u0027s so it can read the pref and fire if necessary, e.g. if Chrome hasn\u0027t been opened in the last day.\n\n\"// The first time we call CheckInterval, we read the time stored in prefs.\"\n\nThe fact that it also fires if the pref doesn\u0027t exist yet seems unfortunate, I guess it makes sense for some cases... maybe parameterize that behavior?\n\nOr maybe the DailyEventIntervalType \"First Run\" type can be used to exclude those events from histogram analysis with Dremel magic?",
       "parentUuid": "83cfec38_d6423ad1",
+      "revId": "29008a9eb4e1c9cb892a6cb2447bc02688b4ff9c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c28142f8_611be624",
+        "filename": "chrome/browser/chromeos/power/power_metrics_reporter.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 78,
+      "author": {
+        "id": 1000042
+      },
+      "writtenOn": "2017-11-10T02:02:24Z",
+      "side": 1,
+      "message": "i don\u0027t understand what you\u0027re suggesting by parameterizing the behavior. i don\u0027t think i can detect why OnDailyEvent was called without manually inspecting DailyEvent\u0027s pref beforehand.",
+      "parentUuid": "0553084f_947d0516",
       "revId": "29008a9eb4e1c9cb892a6cb2447bc02688b4ff9c",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -107,6 +143,24 @@
     },
     {
       "key": {
+        "uuid": "a950bdf9_faf494b6",
+        "filename": "chrome/browser/chromeos/power/power_metrics_reporter.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 88,
+      "author": {
+        "id": 1000042
+      },
+      "writtenOn": "2017-11-10T02:02:24Z",
+      "side": 1,
+      "message": "chrome.power only allows blocking screen-dimming, so i don\u0027t think this is a concern.",
+      "parentUuid": "16f916f9_102a0514",
+      "revId": "29008a9eb4e1c9cb892a6cb2447bc02688b4ff9c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "71a98d40_1b2ec515",
         "filename": "chrome/browser/chromeos/power/power_metrics_reporter.h",
         "patchSetId": 1
@@ -142,6 +196,24 @@
     },
     {
       "key": {
+        "uuid": "b85ba228_65b2f825",
+        "filename": "chrome/browser/chromeos/power/power_metrics_reporter.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 41,
+      "author": {
+        "id": 1000042
+      },
+      "writtenOn": "2017-11-10T02:02:24Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "c8317547_fd46f017",
+      "revId": "29008a9eb4e1c9cb892a6cb2447bc02688b4ff9c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "6b30b5a7_c3560d56",
         "filename": "chrome/common/pref_names.cc",
         "patchSetId": 1
@@ -156,6 +228,24 @@
       "revId": "29008a9eb4e1c9cb892a6cb2447bc02688b4ff9c",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "56d3e9d6_98934cc8",
+        "filename": "chrome/common/pref_names.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 1872,
+      "author": {
+        "id": 1000042
+      },
+      "writtenOn": "2017-11-10T02:02:24Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "6b30b5a7_c3560d56",
+      "revId": "29008a9eb4e1c9cb892a6cb2447bc02688b4ff9c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -191,6 +281,24 @@
       "revId": "29008a9eb4e1c9cb892a6cb2447bc02688b4ff9c",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "44225c37_9b4c5c7d",
+        "filename": "chrome/common/pref_names.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 22,
+      "author": {
+        "id": 1000042
+      },
+      "writtenOn": "2017-11-10T02:02:24Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "fd5644cb_4f6749dd",
+      "revId": "29008a9eb4e1c9cb892a6cb2447bc02688b4ff9c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
