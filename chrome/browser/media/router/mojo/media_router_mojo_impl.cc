@@ -870,4 +870,13 @@ mojom::MediaRouteProvider* MediaRouterMojoImpl::GetProviderForPresentation(
   return nullptr;
 }
 
+void MediaRouterMojoImpl::RecordSinkSelection(const std::string& sink_id) {
+  // TODO: probably makes sense to give provider ID to sink.
+  auto sink_and_provider_id = FindSinkAndProviderIdBySinkId(sink_id);
+  if (sink_and_provider_id) {
+    MediaRouterMetrics::RecordMediaSinkType(
+        sink_and_provider_id->first.icon_type());
+  }
+}
+
 }  // namespace media_router

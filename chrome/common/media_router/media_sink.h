@@ -18,15 +18,18 @@ namespace media_router {
 
 // IconTypes are listed in the order in which sinks should be sorted.
 // The order must stay in sync with
-// chrome/browser/resources/media_router/media_router_data.js.
+// chrome/browser/resources/media_router/media_router_data.js and the
+// MediaSinkType enum in tools/metrics/histograms/enums.xml.
 enum SinkIconType {
-  CAST,
-  CAST_AUDIO_GROUP,
-  CAST_AUDIO,
-  MEETING,
-  HANGOUT,
-  EDUCATION,
-  GENERIC
+  CAST = 0,
+  CAST_AUDIO_GROUP = 1,
+  CAST_AUDIO = 2,
+  MEETING = 3,
+  HANGOUT = 4,
+  EDUCATION = 5,
+  WIRED_DISPLAY = 6,
+  GENERIC = 7,
+  TOTAL_COUNT = 8  // Add new types above this line.
 };
 
 // Represents a sink to which media can be routed.
