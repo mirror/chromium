@@ -363,8 +363,7 @@ TtsAPI::TtsAPI(content::BrowserContext* context) {
   TtsEngineExtensionObserver::GetInstance(Profile::FromBrowserContext(context));
 }
 
-TtsAPI::~TtsAPI() {
-}
+TtsAPI::~TtsAPI() = default;
 
 static base::LazyInstance<
     BrowserContextKeyedAPIFactory<TtsAPI>>::DestructorAtExit g_factory =

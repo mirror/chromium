@@ -40,7 +40,7 @@ class TtsEngineExtensionObserverFactory
     DependsOn(extensions::EventRouterFactory::GetInstance());
   }
 
-  ~TtsEngineExtensionObserverFactory() override {}
+  ~TtsEngineExtensionObserverFactory() override = default;
 
   content::BrowserContext* GetBrowserContextToUse(
       content::BrowserContext* context) const override {
@@ -73,8 +73,7 @@ TtsEngineExtensionObserver::TtsEngineExtensionObserver(Profile* profile)
   event_router->RegisterObserver(this, tts_engine_events::kOnStop);
 }
 
-TtsEngineExtensionObserver::~TtsEngineExtensionObserver() {
-}
+TtsEngineExtensionObserver::~TtsEngineExtensionObserver() = default;
 
 bool TtsEngineExtensionObserver::SawExtensionLoad(
     const std::string& extension_id,
