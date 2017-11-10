@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "be7f880a_9da8e664",
+        "filename": "components/arc/common/timer.mojom",
+        "patchSetId": 8
+      },
+      "lineNbr": 18,
+      "author": {
+        "id": 1137924
+      },
+      "writtenOn": "2017-11-10T17:28:09Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "22f47f2f_e17df610",
+      "range": {
+        "startLine": 18,
+        "startChar": 2,
+        "endLine": 18,
+        "endChar": 16
+      },
+      "revId": "6eaabfc959477c84455ac93e44d5da52c3b00d43",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "d0d93196_cd9a08c1",
         "filename": "components/arc/common/timer.mojom",
         "patchSetId": 8
@@ -71,6 +95,30 @@
     },
     {
       "key": {
+        "uuid": "fb61f233_470dc49b",
+        "filename": "components/arc/common/timer.mojom",
+        "patchSetId": 8
+      },
+      "lineNbr": 21,
+      "author": {
+        "id": 1137924
+      },
+      "writtenOn": "2017-11-10T17:28:09Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "e0b7dc8c_1f2ef2d9",
+      "range": {
+        "startLine": 21,
+        "startChar": 9,
+        "endLine": 21,
+        "endChar": 13
+      },
+      "revId": "6eaabfc959477c84455ac93e44d5da52c3b00d43",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "06b484dd_596cf38d",
         "filename": "components/arc/common/timer.mojom",
         "patchSetId": 8
@@ -94,6 +142,30 @@
     },
     {
       "key": {
+        "uuid": "48c9285a_a7900048",
+        "filename": "components/arc/common/timer.mojom",
+        "patchSetId": 8
+      },
+      "lineNbr": 30,
+      "author": {
+        "id": 1137924
+      },
+      "writtenOn": "2017-11-10T17:28:09Z",
+      "side": 1,
+      "message": "That\u0027s an interesting idea. But I disagree, my job is to solve the problem of the instance not being able to set wakeup alarms. If anything it should mimic the instance\u0027s design / impl more. And the Android impl has one outstanding alarm per clock at any given time. The current interface is well suited to that.",
+      "parentUuid": "06b484dd_596cf38d",
+      "range": {
+        "startLine": 30,
+        "startChar": 2,
+        "endLine": 30,
+        "endChar": 14
+      },
+      "revId": "6eaabfc959477c84455ac93e44d5da52c3b00d43",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "d189567b_596e8a09",
         "filename": "components/arc/common/timer.mojom",
         "patchSetId": 8
@@ -105,6 +177,24 @@
       "writtenOn": "2017-10-24T05:26:14Z",
       "side": 1,
       "message": "i don\u0027t understand the interface, i think. does this mean that you can only create one timer per clock_id? i would\u0027ve expected expiration_fd to be the id that\u0027s used to identify which timer to set.",
+      "revId": "6eaabfc959477c84455ac93e44d5da52c3b00d43",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "dd4ba22c_92397c44",
+        "filename": "components/arc/common/timer.mojom",
+        "patchSetId": 8
+      },
+      "lineNbr": 32,
+      "author": {
+        "id": 1137924
+      },
+      "writtenOn": "2017-11-10T17:28:09Z",
+      "side": 1,
+      "message": "Yes, there is only one timer per clock_id. This is in accordance with Android\u0027s alarm service which only has one outstanding alarm per clock at any given time.\n\nYou identify the lone timer for each clock by it\u0027s clock id.",
+      "parentUuid": "d189567b_596e8a09",
       "revId": "6eaabfc959477c84455ac93e44d5da52c3b00d43",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -146,6 +236,42 @@
     },
     {
       "key": {
+        "uuid": "e58f059f_2bb51830",
+        "filename": "components/arc/common/timer.mojom",
+        "patchSetId": 8
+      },
+      "lineNbr": 36,
+      "author": {
+        "id": 1137924
+      },
+      "writtenOn": "2017-11-10T17:28:09Z",
+      "side": 1,
+      "message": "The JNI interface takes a timeval which is seconds and nanoseconds. That is where it comes from.",
+      "parentUuid": "38b2bd49_726dd88e",
+      "revId": "6eaabfc959477c84455ac93e44d5da52c3b00d43",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "691fc88c_75db88b9",
+        "filename": "components/arc/common/timer.mojom",
+        "patchSetId": 8
+      },
+      "lineNbr": 36,
+      "author": {
+        "id": 1137924
+      },
+      "writtenOn": "2017-11-10T17:28:09Z",
+      "side": 1,
+      "message": "Android doesn\u0027t have mojom::TimeDiff. Do you want me to work on cherry picking that ?",
+      "parentUuid": "cf275bd1_4db7017f",
+      "revId": "6eaabfc959477c84455ac93e44d5da52c3b00d43",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "f9012972_b81ba037",
         "filename": "components/arc/timer/arc_timer_bridge.cc",
         "patchSetId": 8
@@ -157,6 +283,30 @@
       "writtenOn": "2017-10-24T16:19:21Z",
       "side": 1,
       "message": "Since you\u0027re losing resolution anyways, how about\n\n base::TimeDelta::FromSeconds(seconds) +\n base::TimeDelta::FromMicroseconds(nanoseconds /\n                                   base::Time::kNanosecondsPerMicrosecond)",
+      "range": {
+        "startLine": 91,
+        "startChar": 20,
+        "endLine": 92,
+        "endChar": 66
+      },
+      "revId": "6eaabfc959477c84455ac93e44d5da52c3b00d43",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8aec3bfb_bf0ead63",
+        "filename": "components/arc/timer/arc_timer_bridge.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 92,
+      "author": {
+        "id": 1137924
+      },
+      "writtenOn": "2017-11-10T17:28:09Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "f9012972_b81ba037",
       "range": {
         "startLine": 91,
         "startChar": 20,
@@ -192,6 +342,54 @@
     },
     {
       "key": {
+        "uuid": "32900df6_f9aecfe0",
+        "filename": "components/arc/timer/arc_timer_impl.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 20,
+      "author": {
+        "id": 1137924
+      },
+      "writtenOn": "2017-11-10T17:28:09Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "8f27e81b_ebb99e6f",
+      "range": {
+        "startLine": 20,
+        "startChar": 12,
+        "endLine": 20,
+        "endChar": 30
+      },
+      "revId": "6eaabfc959477c84455ac93e44d5da52c3b00d43",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4e4b98e5_9325cd87",
+        "filename": "components/arc/timer/arc_timer_impl.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 20,
+      "author": {
+        "id": 1137924
+      },
+      "writtenOn": "2017-11-10T17:28:09Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "8f27e81b_ebb99e6f",
+      "range": {
+        "startLine": 20,
+        "startChar": 12,
+        "endLine": 20,
+        "endChar": 30
+      },
+      "revId": "6eaabfc959477c84455ac93e44d5da52c3b00d43",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "642492db_73da70f9",
         "filename": "components/arc/timer/arc_timer_impl.cc",
         "patchSetId": 8
@@ -209,6 +407,24 @@
     },
     {
       "key": {
+        "uuid": "71a8addd_707e66ab",
+        "filename": "components/arc/timer/arc_timer_impl.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 35,
+      "author": {
+        "id": 1137924
+      },
+      "writtenOn": "2017-11-10T17:28:09Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "642492db_73da70f9",
+      "revId": "6eaabfc959477c84455ac93e44d5da52c3b00d43",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "695a5c91_95ccd188",
         "filename": "components/arc/timer/arc_timer_impl.cc",
         "patchSetId": 8
@@ -220,6 +436,30 @@
       "writtenOn": "2017-10-24T16:19:21Z",
       "side": 1,
       "message": "nit: s/expiry/expiration/g across the whole change.",
+      "range": {
+        "startLine": 55,
+        "startChar": 48,
+        "endLine": 55,
+        "endChar": 54
+      },
+      "revId": "6eaabfc959477c84455ac93e44d5da52c3b00d43",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1e5e215e_022297f9",
+        "filename": "components/arc/timer/arc_timer_impl.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 55,
+      "author": {
+        "id": 1137924
+      },
+      "writtenOn": "2017-11-10T17:28:09Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "695a5c91_95ccd188",
       "range": {
         "startLine": 55,
         "startChar": 48,
@@ -255,6 +495,54 @@
     },
     {
       "key": {
+        "uuid": "0eac099e_67972cb2",
+        "filename": "components/arc/timer/arc_timer_impl.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 74,
+      "author": {
+        "id": 1137924
+      },
+      "writtenOn": "2017-11-10T17:28:09Z",
+      "side": 1,
+      "message": "The semantics are one timer per clock. Sending two clocks means we just ignore the rest. I think this is restrictive enough.",
+      "parentUuid": "c93d977d_c6d66020",
+      "range": {
+        "startLine": 70,
+        "startChar": 0,
+        "endLine": 74,
+        "endChar": 5
+      },
+      "revId": "6eaabfc959477c84455ac93e44d5da52c3b00d43",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8a2e6937_39b059f9",
+        "filename": "components/arc/timer/arc_timer_impl.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 74,
+      "author": {
+        "id": 1137924
+      },
+      "writtenOn": "2017-11-10T17:28:09Z",
+      "side": 1,
+      "message": "The semantics are one timer per clock, hence continuing seems okay. Generally, I\u0027m in favor of being as restrictive but this seems okay if I add a top level comment explaining the semantics.",
+      "parentUuid": "c93d977d_c6d66020",
+      "range": {
+        "startLine": 70,
+        "startChar": 0,
+        "endLine": 74,
+        "endChar": 5
+      },
+      "revId": "6eaabfc959477c84455ac93e44d5da52c3b00d43",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "2262c7af_84057856",
         "filename": "components/arc/timer/arc_timer_impl.cc",
         "patchSetId": 8
@@ -266,6 +554,30 @@
       "writtenOn": "2017-10-24T16:19:21Z",
       "side": 1,
       "message": "Why is this desirable?",
+      "range": {
+        "startLine": 83,
+        "startChar": 7,
+        "endLine": 83,
+        "endChar": 68
+      },
+      "revId": "6eaabfc959477c84455ac93e44d5da52c3b00d43",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a9f9cd95_7a16ff3c",
+        "filename": "components/arc/timer/arc_timer_impl.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 83,
+      "author": {
+        "id": 1137924
+      },
+      "writtenOn": "2017-11-10T17:28:09Z",
+      "side": 1,
+      "message": "Currently only BOOTTIME_ALARM is supported. In the future if Android wants to set REALTIME_ALARM this should be configurable.",
+      "parentUuid": "2262c7af_84057856",
       "range": {
         "startLine": 83,
         "startChar": 7,
@@ -301,6 +613,30 @@
     },
     {
       "key": {
+        "uuid": "e03762f1_212e2b43",
+        "filename": "components/arc/timer/arc_timer_impl.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 92,
+      "author": {
+        "id": 1137924
+      },
+      "writtenOn": "2017-11-10T17:28:09Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "5bb616a4_a99e91bb",
+      "range": {
+        "startLine": 89,
+        "startChar": 0,
+        "endLine": 92,
+        "endChar": 27
+      },
+      "revId": "6eaabfc959477c84455ac93e44d5da52c3b00d43",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "a27e58fe_3b9aff29",
         "filename": "components/arc/timer/arc_timer_impl.cc",
         "patchSetId": 8
@@ -324,6 +660,30 @@
     },
     {
       "key": {
+        "uuid": "ba14a17f_d15456d0",
+        "filename": "components/arc/timer/arc_timer_impl.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 129,
+      "author": {
+        "id": 1137924
+      },
+      "writtenOn": "2017-11-10T17:28:09Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "a27e58fe_3b9aff29",
+      "range": {
+        "startLine": 129,
+        "startChar": 19,
+        "endLine": 129,
+        "endChar": 35
+      },
+      "revId": "6eaabfc959477c84455ac93e44d5da52c3b00d43",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "76b414fe_94621ff7",
         "filename": "components/arc/timer/arc_timer_impl.cc",
         "patchSetId": 8
@@ -341,6 +701,24 @@
     },
     {
       "key": {
+        "uuid": "6968f388_656d4acd",
+        "filename": "components/arc/timer/arc_timer_impl.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 134,
+      "author": {
+        "id": 1137924
+      },
+      "writtenOn": "2017-11-10T17:28:09Z",
+      "side": 1,
+      "message": "Not required now as a Timer object is directly passed to the Instance.",
+      "parentUuid": "76b414fe_94621ff7",
+      "revId": "6eaabfc959477c84455ac93e44d5da52c3b00d43",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "5321dddf_b63b4d9d",
         "filename": "components/arc/timer/arc_timer_impl.cc",
         "patchSetId": 8
@@ -352,6 +730,30 @@
       "writtenOn": "2017-10-24T16:19:21Z",
       "side": 1,
       "message": "shouldn\u0027t this be 0x1? there have not been 171 timer expirations, and you\u0027ll write exactly once to the pipe for each expiration.",
+      "range": {
+        "startLine": 137,
+        "startChar": 24,
+        "endLine": 137,
+        "endChar": 28
+      },
+      "revId": "6eaabfc959477c84455ac93e44d5da52c3b00d43",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "61e721a9_cf28e0f7",
+        "filename": "components/arc/timer/arc_timer_impl.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 137,
+      "author": {
+        "id": 1137924
+      },
+      "writtenOn": "2017-11-10T17:28:09Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "5321dddf_b63b4d9d",
       "range": {
         "startLine": 137,
         "startChar": 24,
@@ -387,6 +789,30 @@
     },
     {
       "key": {
+        "uuid": "f28aa4a3_b26d3504",
+        "filename": "components/arc/timer/arc_timer_impl.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 139,
+      "author": {
+        "id": 1137924
+      },
+      "writtenOn": "2017-11-10T17:28:09Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "668887f8_17a8590f",
+      "range": {
+        "startLine": 139,
+        "startChar": 6,
+        "endLine": 139,
+        "endChar": 11
+      },
+      "revId": "6eaabfc959477c84455ac93e44d5da52c3b00d43",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "aa84d183_d003082b",
         "filename": "components/arc/timer/arc_timer_impl.cc",
         "patchSetId": 8
@@ -410,6 +836,30 @@
     },
     {
       "key": {
+        "uuid": "fe0d2183_d812117c",
+        "filename": "components/arc/timer/arc_timer_impl.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 141,
+      "author": {
+        "id": 1137924
+      },
+      "writtenOn": "2017-11-10T17:28:09Z",
+      "side": 1,
+      "message": "This is a bad state to be in. Akin to the kernel not respecting timerfd_ semantics. What would be worse is an app trying to recover and set timers again and we not having a timer object to do so. Basically, removing the timer is going to be a bunch of extra code for no functional gain.",
+      "parentUuid": "aa84d183_d003082b",
+      "range": {
+        "startLine": 141,
+        "startChar": 18,
+        "endLine": 141,
+        "endChar": 60
+      },
+      "revId": "6eaabfc959477c84455ac93e44d5da52c3b00d43",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "1765f2ef_1c32ae6c",
         "filename": "components/arc/timer/arc_timer_impl.h",
         "patchSetId": 8
@@ -421,6 +871,24 @@
       "writtenOn": "2017-10-24T16:51:57Z",
       "side": 1,
       "message": "can this be arc namespace?",
+      "revId": "6eaabfc959477c84455ac93e44d5da52c3b00d43",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4b8429c5_d6f8687a",
+        "filename": "components/arc/timer/arc_timer_impl.h",
+        "patchSetId": 8
+      },
+      "lineNbr": 20,
+      "author": {
+        "id": 1137924
+      },
+      "writtenOn": "2017-11-10T17:28:09Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "1765f2ef_1c32ae6c",
       "revId": "6eaabfc959477c84455ac93e44d5da52c3b00d43",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -538,6 +1006,30 @@
     },
     {
       "key": {
+        "uuid": "9b51b3e0_9cdedba4",
+        "filename": "components/arc/timer/arc_timer_impl.h",
+        "patchSetId": 8
+      },
+      "lineNbr": 56,
+      "author": {
+        "id": 1137924
+      },
+      "writtenOn": "2017-11-10T17:28:09Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "3053c4c9_7369c253",
+      "range": {
+        "startLine": 56,
+        "startChar": 22,
+        "endLine": 56,
+        "endChar": 32
+      },
+      "revId": "6eaabfc959477c84455ac93e44d5da52c3b00d43",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "c6a8d8ce_a270d478",
         "filename": "components/arc/timer/arc_timer_impl.h",
         "patchSetId": 8
@@ -549,6 +1041,24 @@
       "writtenOn": "2017-10-24T16:51:57Z",
       "side": 1,
       "message": "Looks like a constexpr? If so, pls use constant sorted array with constexpr, and use std::binarysearch() for simplicity and avoiding unnecessary performance consideration.\n\nThough, I still prefer enum in mojom definition.",
+      "revId": "6eaabfc959477c84455ac93e44d5da52c3b00d43",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "28b947cd_e9695405",
+        "filename": "components/arc/timer/arc_timer_impl.h",
+        "patchSetId": 8
+      },
+      "lineNbr": 62,
+      "author": {
+        "id": 1137924
+      },
+      "writtenOn": "2017-11-10T17:28:09Z",
+      "side": 1,
+      "message": "mojom now has an enum but I want to use int32_t in the final impl. I\u0027ve marked this as const. C++ std::set I think is a RB tree that has logn lookups. Binary search will do the same thing. This is just cleaner.",
+      "parentUuid": "c6a8d8ce_a270d478",
       "revId": "6eaabfc959477c84455ac93e44d5da52c3b00d43",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
