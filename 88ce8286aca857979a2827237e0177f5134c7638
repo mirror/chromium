@@ -1,0 +1,123 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "5f7b6a8b_3f473edb",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 14
+      },
+      "lineNbr": 14,
+      "author": {
+        "id": 1001500
+      },
+      "writtenOn": "2017-11-10T16:16:49Z",
+      "side": 1,
+      "message": "I thought the discussion was that we don\u0027t want them to load any network resources at all. Do we have currently such tests that fail with Network Service? If not, I\u0027d suggest we don\u0027t allow any WebUI to access the network at all.",
+      "revId": "88ce8286aca857979a2827237e0177f5134c7638",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "35c65dcb_3a352c96",
+        "filename": "content/browser/network_service_browsertest.cc",
+        "patchSetId": 14
+      },
+      "lineNbr": 87,
+      "author": {
+        "id": 1001500
+      },
+      "writtenOn": "2017-11-10T16:16:49Z",
+      "side": 1,
+      "message": "nit: one pattern to keep the full script as a single string (easier to read) is to use StringPrintf and pass the URL as the param to be replaced.",
+      "revId": "88ce8286aca857979a2827237e0177f5134c7638",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2fe50e5d_ed6c7775",
+        "filename": "content/browser/network_service_browsertest.cc",
+        "patchSetId": 14
+      },
+      "lineNbr": 101,
+      "author": {
+        "id": 1001500
+      },
+      "writtenOn": "2017-11-10T16:16:49Z",
+      "side": 1,
+      "message": "nit: Don\u0027t you expect the script execution to succeed? I\u0027d ASSERT_TRUE this function call to make it clear in test output what part failed.",
+      "revId": "88ce8286aca857979a2827237e0177f5134c7638",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "bb092aa7_ed33737c",
+        "filename": "content/browser/network_service_browsertest.cc",
+        "patchSetId": 14
+      },
+      "lineNbr": 127,
+      "author": {
+        "id": 1001500
+      },
+      "writtenOn": "2017-11-10T16:16:49Z",
+      "side": 1,
+      "message": "Since the behavior is to terminate the renderer process, let\u0027s add a watcher for that to ensure it happens.",
+      "revId": "88ce8286aca857979a2827237e0177f5134c7638",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e175abeb_13632be7",
+        "filename": "content/browser/webui/web_ui_url_loader_factory.cc",
+        "patchSetId": 14
+      },
+      "lineNbr": 211,
+      "author": {
+        "id": 1001500
+      },
+      "writtenOn": "2017-11-10T16:16:49Z",
+      "side": 1,
+      "message": "The WebUI is actually bound to RenderFrameHost, not to FrameTreeNode. It will be more correct to use the RFH to bind to. Otherwise cross-process navigation from WebUI to open web won\u0027t necessarily clear this object.",
+      "revId": "88ce8286aca857979a2827237e0177f5134c7638",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "750647c1_4c4b0838",
+        "filename": "content/browser/webui/web_ui_url_loader_factory.cc",
+        "patchSetId": 14
+      },
+      "lineNbr": 294,
+      "author": {
+        "id": 1001500
+      },
+      "writtenOn": "2017-11-10T16:16:49Z",
+      "side": 1,
+      "message": "If you associate this with the RFH, the StoragePartition won\u0027t change, so it will be safe to cache a pointer to it.",
+      "revId": "88ce8286aca857979a2827237e0177f5134c7638",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "377b7c03_ec6f3d23",
+        "filename": "content/browser/webui/web_ui_url_loader_factory.cc",
+        "patchSetId": 14
+      },
+      "lineNbr": 309,
+      "author": {
+        "id": 1001500
+      },
+      "writtenOn": "2017-11-10T16:16:49Z",
+      "side": 1,
+      "message": "nit: Using \"container[key]\" syntax will create an entry if one didn\u0027t exist. Using container.find() doesn\u0027t have that side effect.",
+      "revId": "88ce8286aca857979a2827237e0177f5134c7638",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
