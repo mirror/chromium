@@ -22,6 +22,30 @@
       "revId": "b9989cc59e16528901d66eb6a6821c7d187b5d87",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7260fb98_f8449cdb",
+        "filename": "components/viz/service/display/direct_renderer.cc",
+        "patchSetId": 10
+      },
+      "lineNbr": 629,
+      "author": {
+        "id": 1000887
+      },
+      "writtenOn": "2017-11-10T20:05:59Z",
+      "side": 1,
+      "message": "I think it is actually tied to the cache. Comment https://bugs.chromium.org/p/chromium/issues/detail?id\u003d783087#c24 tries to explain why.\n\nIf it\u0027s totally unrelated it should have been in another CL :/ But the unit test I added fails if it is not in the cache block. So at best it was wrong before, but we avoided crashing while doing incorrect things.\n\nI agree that when there\u0027s cache enabled, the rect is full. Let\u0027s look again at what the code was:\n\n  if (!texture-\u003eid()) {\n    texture-\u003eAllocate(size, RenderPassTextureHint(render_pass),\n                      BackbufferFormat(),\n                      current_frame()-\u003ecurrent_render_pass-\u003ecolor_space);\n  } else if (render_pass-\u003ecache_render_pass \u0026\u0026\n             !render_pass-\u003ehas_damage_from_contributing_content) {\n    return false;\n  } else if (current_frame()-\u003eComputeScissorRectForRenderPass().IsEmpty()) {\n    return false;\n  }\n\nHere the conditions are:\nif cache + !damageflag \u003d\u003e skip renderpass\nif empty scissor \u003d\u003e skip renderpass \u003c- this will do the wrong thing/crash\nif no texture \u003d\u003e don\u0027t skip renderpass\n\nIn the new code we have:\nif cache+damageflag \u003d\u003e don\u0027t skip renderpass\nif cache+non-empty scissor \u003d\u003e don\u0027t skip renderpass \u003c- this is new\nif cache+no texture \u003d\u003e don\u0027t skip renderpass\n\nSo you\u0027re right the damage check in here is different, we did not skip the cache before because of non-empty scissor. Instead we skipped when it was empty which was wrong (as demonstrated by unit test and causing the crashes).\n\nInstead we can do:\nif cache+!damageflag+texture \u003d\u003e skip renderpass\n\nWhat changed from the original code then?\n\n- We used to not skip renderpasss if no texture, this is still true both in cache and non-cache case.\n- We used to skip renderpass on empty scissor, we shouldn\u0027t so we don\u0027t.\n- We used to skip renderpass if cache and !damageflag, this is still the case, only if there\u0027s a texture, which matches.\n\nSo I think that\u0027ll work. I\u0027ll remove this line. I guess there isn\u0027t a unit test that breaks if DirectRenderer stops using the cache tho.\n\nDone. PTAL.",
+      "parentUuid": "0bcb99ad_87c485ac",
+      "range": {
+        "startLine": 629,
+        "startChar": 62,
+        "endLine": 629,
+        "endChar": 70
+      },
+      "revId": "b9989cc59e16528901d66eb6a6821c7d187b5d87",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
