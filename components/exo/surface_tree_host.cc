@@ -251,6 +251,10 @@ bool SurfaceTreeHost::OnBeginFrameDerivedImpl(const viz::BeginFrameArgs& args) {
 // ui::ContextFactoryObserver overrides:
 
 void SurfaceTreeHost::OnLostResources() {
+  // OnLostResources can b called for system tearing down, in this case we
+  // shouldn't do anything.
+  if (!WMHelper::HasInstance())
+    return;
   if (!host_window_->GetSurfaceId().is_valid() || !root_surface_)
     return;
   root_surface_->SurfaceHierarchyResourcesLost();
