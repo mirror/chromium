@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "39ff0fbf_99a00e5f",
+        "filename": "chrome/browser/favicon/content_favicon_driver_browsertest.cc",
+        "patchSetId": 27
+      },
+      "lineNbr": 313,
+      "author": {
+        "id": 1001934
+      },
+      "writtenOn": "2017-11-10T06:56:19Z",
+      "side": 1,
+      "message": "This is dead code right now. Android doesn\u0027t build this file. See also https://crbug.com/611756 for enabling browser_tests on Android, someday.",
+      "revId": "dad5b484bf97a8dd7cf4fa8d7d4d68efbae6736d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
