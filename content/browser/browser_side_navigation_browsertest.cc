@@ -457,15 +457,17 @@ IN_PROC_BROWSER_TEST_F(BrowserSideNavigationBrowserDisableWebSecurityTest,
       std::string(), net::LOAD_NORMAL, false, REQUEST_CONTEXT_TYPE_LOCATION,
       blink::WebMixedContentContextType::kBlockable, false,
       url::Origin::Create(data_url));
-  FrameHostMsg_BeginNavigation msg(rfh->GetRoutingID(), common_params,
-                                   begin_params);
+
+  mojom::FrameHostPtr frame_host_ptr;
+  mojo::Binding<mojom::FrameHost> binding(rfh,
+                                          mojo::MakeRequest(&frame_host_ptr));
+
+  frame_host_ptr->BeginNavigation(common_params, begin_params);
 
   // Receiving the invalid IPC message should lead to renderer process
   // termination.
   RenderProcessHostWatcher process_exit_observer(
       rfh->GetProcess(), RenderProcessHostWatcher::WATCH_FOR_PROCESS_EXIT);
-  IPC::IpcSecurityTestUtil::PwnMessageReceived(rfh->GetProcess()->GetChannel(),
-                                               msg);
   process_exit_observer.Wait();
 
   EXPECT_FALSE(ChildProcessSecurityPolicyImpl::GetInstance()->CanReadFile(
