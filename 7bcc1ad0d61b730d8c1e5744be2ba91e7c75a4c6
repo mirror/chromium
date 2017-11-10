@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "3ac4423f_cc3775e5",
+        "filename": "chrome/gpu/chrome_content_gpu_client.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 28,
+      "author": {
+        "id": 1000763
+      },
+      "writtenOn": "2017-11-10T18:10:46Z",
+      "side": 1,
+      "message": "Remove the USE_OZONE ifdefs (chromeos implies ozone).",
+      "range": {
+        "startLine": 28,
+        "startChar": 0,
+        "endLine": 28,
+        "endChar": 22
+      },
+      "revId": "7bcc1ad0d61b730d8c1e5744be2ba91e7c75a4c6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
