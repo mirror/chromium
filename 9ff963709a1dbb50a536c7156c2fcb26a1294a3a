@@ -16,6 +16,24 @@
       "revId": "9ff963709a1dbb50a536c7156c2fcb26a1294a3a",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "29ea0d69_72a91f0c",
+        "filename": "PRESUBMIT.py",
+        "patchSetId": 1
+      },
+      "lineNbr": 2574,
+      "author": {
+        "id": 1001934
+      },
+      "writtenOn": "2017-11-10T05:48:01Z",
+      "side": 1,
+      "message": "I didn\u0027t check, since I moved the check to chrome/PRESUBMIT.py.",
+      "parentUuid": "21429e21_c7fc535c",
+      "revId": "9ff963709a1dbb50a536c7156c2fcb26a1294a3a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
