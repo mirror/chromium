@@ -37,6 +37,24 @@
     },
     {
       "key": {
+        "uuid": "ae916b2b_93b715d2",
+        "filename": "build/protoc_java.py",
+        "patchSetId": 8
+      },
+      "lineNbr": 36,
+      "author": {
+        "id": 1249210
+      },
+      "writtenOn": "2017-11-10T13:28:25Z",
+      "side": 1,
+      "message": "Ah, sorry now I understand :)\n\nUpdated it as suggested to get rid of the string comparison to \"true\"",
+      "parentUuid": "7a5c6644_99285830",
+      "revId": "0e79370a211a771c148ffbd0514a328554570262",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "df5a50b0_d6a9cb24",
         "filename": "build/protoc_java.py",
         "patchSetId": 8
