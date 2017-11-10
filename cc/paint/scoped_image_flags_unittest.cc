@@ -58,9 +58,10 @@ TEST(ScopedImageFlagsTest, KeepsDecodesAlive) {
   PaintFlags flags;
   flags.setShader(record_shader);
   {
-    ScopedImageFlags scoped_flags(&provider, flags, SkMatrix::I());
-    ASSERT_TRUE(scoped_flags.decoded_flags());
-    SkPaint paint = scoped_flags.decoded_flags()->ToSkPaint();
+    ScopedImageFlags scoped_flags(&provider, &flags, SkMatrix::I(), 255);
+    ASSERT_TRUE(scoped_flags.flags());
+    EXPECT_NE(scoped_flags.flags(), &flags);
+    SkPaint paint = scoped_flags.flags()->ToSkPaint();
     ASSERT_TRUE(paint.getShader());
     EXPECT_EQ(provider.ref_count(), 3);
   }
