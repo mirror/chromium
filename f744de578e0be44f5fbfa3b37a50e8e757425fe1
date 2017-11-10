@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "0df58a59_a1e06d58",
+        "filename": "chrome/browser/printing/cloud_print/privet_http.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 35,
+      "author": {
+        "id": 1182404
+      },
+      "writtenOn": "2017-11-10T03:49:05Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "9114dba5_19411da5",
+      "revId": "f744de578e0be44f5fbfa3b37a50e8e757425fe1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "68d7e2d0_63ad3239",
         "filename": "chrome/browser/printing/cloud_print/privet_http_impl.cc",
         "patchSetId": 2
@@ -39,6 +57,30 @@
       "revId": "f744de578e0be44f5fbfa3b37a50e8e757425fe1",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "cd984eaf_cfdb0c7d",
+        "filename": "chrome/browser/printing/cloud_print/privet_http_impl.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 120,
+      "author": {
+        "id": 1182404
+      },
+      "writtenOn": "2017-11-10T03:49:05Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "68d7e2d0_63ad3239",
+      "range": {
+        "startLine": 120,
+        "startChar": 16,
+        "endLine": 120,
+        "endChar": 20
+      },
+      "revId": "f744de578e0be44f5fbfa3b37a50e8e757425fe1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
