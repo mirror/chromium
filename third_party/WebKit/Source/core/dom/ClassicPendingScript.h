@@ -117,7 +117,7 @@ class CORE_EXPORT ClassicPendingScript final
 
   const bool is_external_;
   ReadyState ready_state_;
-  bool integrity_failure_;
+  bool error_occurred_;
 
   // The request is intervened by document.write() intervention.
   bool intervened_ = false;
@@ -144,6 +144,8 @@ class CORE_EXPORT ClassicPendingScript final
   // doesn't break assumptions.
   // TODO(hiroshige): Check the state in more general way.
   bool prefinalizer_called_ = false;
+
+  Member<Resource> loaded_resource_;
 };
 
 }  // namespace blink

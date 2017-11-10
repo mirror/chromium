@@ -83,7 +83,7 @@ ClassicPendingScript::ClassicPendingScript(
       options_(options),
       is_external_(is_external),
       ready_state_(is_external ? kWaitingForResource : kReady),
-      integrity_failure_(false),
+      error_occurred_(false),
       is_currently_streaming_(false) {
   CHECK(GetElement());
   MemoryCoordinator::Instance().RegisterClient(this);
@@ -110,7 +110,6 @@ void ClassicPendingScript::Prefinalize() {
 void ClassicPendingScript::DisposeInternal() {
   MemoryCoordinator::Instance().UnregisterClient(this);
   SetResource(nullptr);
-  integrity_failure_ = false;
   CancelStreaming();
 }
 
@@ -132,16 +131,15 @@ void ClassicPendingScript::StreamingFinished() {
 
 void ClassicPendingScript::FinishWaitingForStreaming() {
   CheckState();
-  DCHECK(GetResource());
+  DCHECK(loaded_resource_);
   DCHECK_EQ(ready_state_, kWaitingForStreaming);
 
-  bool error_occurred = GetResource()->ErrorOccurred() || integrity_failure_;
-  AdvanceReadyState(error_occurred ? kErrorOccurred : kReady);
+  AdvanceReadyState(error_occurred_ ? kErrorOccurred : kReady);
 }
 
 void ClassicPendingScript::FinishReadyStreaming() {
   CheckState();
-  DCHECK(GetResource());
+  DCHECK(loaded_resource_);
   DCHECK_EQ(ready_state_, kReadyStreaming);
   AdvanceReadyState(kReady);
 }
@@ -179,10 +177,12 @@ void ClassicPendingScript::NotifyFinished(Resource* resource) {
   //
   // See https://crbug.com/500701 for more information.
   CheckState();
+  loaded_resource_ = resource;
   ScriptElementBase* element = GetElement();
+  error_occurred_ = resource->ErrorOccurred();
   if (element) {
     SubresourceIntegrityHelper::DoReport(element->GetDocument(),
-                                         GetResource()->IntegrityReportInfo());
+                                         resource->IntegrityReportInfo());
 
     // It is possible to get back a script resource with integrity metadata
     // for a request with an empty integrity attribute. In that case, the
@@ -190,8 +190,9 @@ void ClassicPendingScript::NotifyFinished(Resource* resource) {
     // integrity attribute isn't empty in addition to checking if the
     // resource has empty integrity metadata.
     if (!element->IntegrityAttributeValue().IsEmpty()) {
-      integrity_failure_ = GetResource()->IntegrityDisposition() !=
-                           ResourceIntegrityDisposition::kPassed;
+      if (resource->IntegrityDisposition() !=
+          ResourceIntegrityDisposition::kPassed)
+        error_occurred_ = true;
     }
   }
 
@@ -216,6 +217,7 @@ void ClassicPendingScript::NotifyAppendData(ScriptResource* resource) {
 
 void ClassicPendingScript::Trace(blink::Visitor* visitor) {
   visitor->Trace(streamer_);
+  visitor->Trace(loaded_resource_);
   ResourceOwner<ScriptResource>::Trace(visitor);
   MemoryCoordinatorClient::Trace(visitor);
   PendingScript::Trace(visitor);
@@ -233,11 +235,13 @@ ClassicScript* ClassicPendingScript::GetSource(const KURL& document_url,
     return ClassicScript::Create(source_code, options_);
   }
 
-  DCHECK(GetResource()->IsLoaded());
+  DCHECK(loaded_resource_);
+  DCHECK(loaded_resource_->IsLoaded());
   bool streamer_ready = (ready_state_ == kReady) && streamer_ &&
                         !streamer_->StreamingSuppressed();
-  ScriptSourceCode source_code(streamer_ready ? streamer_ : nullptr,
-                               GetResource());
+  ScriptSourceCode source_code(
+      streamer_ready ? streamer_ : nullptr,
+      static_cast<ScriptResource*>(loaded_resource_.Get()));
   return ClassicScript::Create(source_code, options_);
 }
 
@@ -291,6 +295,9 @@ void ClassicPendingScript::AdvanceReadyState(ReadyState new_ready_state) {
 
   bool old_is_ready = IsReady();
   ready_state_ = new_ready_state;
+
+  if (IsReady())
+    DCHECK(loaded_resource_);
 
   // Did we transition into a 'ready' state?
   if (IsReady() && !old_is_ready && IsWatchingForLoad())
@@ -394,14 +401,18 @@ bool ClassicPendingScript::IsCurrentlyStreaming() const {
 bool ClassicPendingScript::WasCanceled() const {
   if (!is_external_)
     return false;
-  return GetResource()->WasCanceled();
+  DCHECK(loaded_resource_);
+  return loaded_resource_->WasCanceled();
 }
 
 KURL ClassicPendingScript::UrlForTracing() const {
-  if (!is_external_ || !GetResource())
+  if (!is_external_)
     return NullURL();
 
-  return GetResource()->Url();
+  // TODO(hiroshige): I think I can remove this GetResource() but returning
+  // NullURL(). this doesn't non-tracing affect behavior.
+  return NullURL();
+  // return GetResource()->Url();
 }
 
 }  // namespace blink
