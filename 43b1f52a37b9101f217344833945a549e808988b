@@ -22,6 +22,30 @@
       "revId": "43b1f52a37b9101f217344833945a549e808988b",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8b86f47c_8609059c",
+        "filename": "chrome/browser/metrics/chrome_metrics_service_client.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 154,
+      "author": {
+        "id": 1001934
+      },
+      "writtenOn": "2017-11-10T19:50:13Z",
+      "side": 1,
+      "message": "I\u0027m meh about it for really short #if blocks. At ~10 lines or with nested #ifs, I put comments on the #endif. This file isn\u0027t consistent about it either. e.g. line 187.",
+      "parentUuid": "03ae81c8_1d155742",
+      "range": {
+        "startLine": 154,
+        "startChar": 6,
+        "endLine": 154,
+        "endChar": 0
+      },
+      "revId": "43b1f52a37b9101f217344833945a549e808988b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
