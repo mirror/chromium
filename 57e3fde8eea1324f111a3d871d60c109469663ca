@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "ae333cdf_c94fb5b4",
+        "filename": "third_party/WebKit/Source/core/events/PointerEventFactory.cpp",
+        "patchSetId": 2
+      },
+      "lineNbr": 109,
+      "author": {
+        "id": 1125369
+      },
+      "writtenOn": "2017-11-10T16:57:12Z",
+      "side": 1,
+      "message": "This expression looks confusing.  May be rename the |LocalDomWindow| param names to |domWindow| everywhere here.",
+      "range": {
+        "startLine": 109,
+        "startChar": 34,
+        "endLine": 109,
+        "endChar": 58
+      },
+      "revId": "57e3fde8eea1324f111a3d871d60c109469663ca",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
