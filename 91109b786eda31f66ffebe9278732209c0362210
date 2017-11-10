@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "61b699c0_6ac7a2b2",
+        "filename": "ios/web/download/download_task_impl.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 27,
+      "author": {
+        "id": 1123009
+      },
+      "writtenOn": "2017-11-10T22:33:21Z",
+      "side": 1,
+      "message": "Switched to SequenceChecker. DownloadTask still have comments that it can only be used on UI thread, which I think we should keep. WDYT?",
+      "parentUuid": "202ac102_3ba88a0a",
+      "range": {
+        "startLine": 27,
+        "startChar": 19,
+        "endLine": 27,
+        "endChar": 45
+      },
+      "revId": "91109b786eda31f66ffebe9278732209c0362210",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "2eb927b5_2822a2da",
         "filename": "ios/web/download/download_task_impl.h",
         "patchSetId": 5
@@ -48,6 +72,30 @@
     },
     {
       "key": {
+        "uuid": "b7461ccc_e6e4ed13",
+        "filename": "ios/web/download/download_task_impl.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 32,
+      "author": {
+        "id": 1123009
+      },
+      "writtenOn": "2017-11-10T22:33:21Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "2eb927b5_2822a2da",
+      "range": {
+        "startLine": 32,
+        "startChar": 19,
+        "endLine": 32,
+        "endChar": 28
+      },
+      "revId": "91109b786eda31f66ffebe9278732209c0362210",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "537d0b2c_19124d08",
         "filename": "ios/web/download/download_task_impl.h",
         "patchSetId": 5
@@ -62,6 +110,24 @@
       "revId": "91109b786eda31f66ffebe9278732209c0362210",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d7114d6d_635ab79a",
+        "filename": "ios/web/download/download_task_impl.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 42,
+      "author": {
+        "id": 1123009
+      },
+      "writtenOn": "2017-11-10T22:33:21Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "537d0b2c_19124d08",
+      "revId": "91109b786eda31f66ffebe9278732209c0362210",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -88,6 +154,30 @@
     },
     {
       "key": {
+        "uuid": "3287f0a0_142ac2fa",
+        "filename": "ios/web/download/download_task_impl.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 45,
+      "author": {
+        "id": 1123009
+      },
+      "writtenOn": "2017-11-10T22:33:21Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "b330e07e_bed60df2",
+      "range": {
+        "startLine": 45,
+        "startChar": 21,
+        "endLine": 45,
+        "endChar": 32
+      },
+      "revId": "91109b786eda31f66ffebe9278732209c0362210",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "ebc0ac28_d629f9e6",
         "filename": "ios/web/download/download_task_impl.h",
         "patchSetId": 5
@@ -99,6 +189,30 @@
       "writtenOn": "2017-11-10T13:03:27Z",
       "side": 1,
       "message": "Can you defined a type for this?\n\n  using CookieCallback \u003d base::Callback\u003cvoid(NSArray\u003cNSHTTPCookie*\u003e*);\n\nThe callback appears to be ran only once, can you use base::OnceCallback\u003c\u003e to enforce this? Any callback is convertible to a OnceCallback, so client code would not have to change.",
+      "range": {
+        "startLine": 80,
+        "startChar": 18,
+        "endLine": 80,
+        "endChar": 63
+      },
+      "revId": "91109b786eda31f66ffebe9278732209c0362210",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4932a5a5_3fc9eee5",
+        "filename": "ios/web/download/download_task_impl.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 80,
+      "author": {
+        "id": 1123009
+      },
+      "writtenOn": "2017-11-10T22:33:21Z",
+      "side": 1,
+      "message": "What would be the advantage of typedef? CookieCallback conveys no information about callback return type and arguments and would optimize code for reading rather than for writing. Style Guide explicitly calls out that code should be optimized for reading:\nhttp://go/objc-style#optimize-for-the-reader-not-the-writer\n\nIn many cases typedef helps to improve the formatting and as a result readability, but in this specific instance code without typedef does not look ugly. F.e. PropertiesBlock and DataBlock improve the formatting, so I used typedefs.",
+      "parentUuid": "ebc0ac28_d629f9e6",
       "range": {
         "startLine": 80,
         "startChar": 18,
@@ -128,6 +242,24 @@
     },
     {
       "key": {
+        "uuid": "dfdb954a_3a4a4cf2",
+        "filename": "ios/web/download/download_task_impl.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 115,
+      "author": {
+        "id": 1123009
+      },
+      "writtenOn": "2017-11-10T22:33:21Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "6b3926cf_ba60bf19",
+      "revId": "91109b786eda31f66ffebe9278732209c0362210",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "8a7ffbcd_c8216712",
         "filename": "ios/web/download/download_task_impl.mm",
         "patchSetId": 5
@@ -142,6 +274,24 @@
       "revId": "91109b786eda31f66ffebe9278732209c0362210",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "67de900c_5b6da146",
+        "filename": "ios/web/download/download_task_impl.mm",
+        "patchSetId": 5
+      },
+      "lineNbr": 29,
+      "author": {
+        "id": 1123009
+      },
+      "writtenOn": "2017-11-10T22:33:21Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "8a7ffbcd_c8216712",
+      "revId": "91109b786eda31f66ffebe9278732209c0362210",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -168,6 +318,30 @@
     },
     {
       "key": {
+        "uuid": "f5c387dc_51c79ebe",
+        "filename": "ios/web/download/download_task_impl.mm",
+        "patchSetId": 5
+      },
+      "lineNbr": 30,
+      "author": {
+        "id": 1123009
+      },
+      "writtenOn": "2017-11-10T22:33:21Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "3dc77bf4_c726a0cf",
+      "range": {
+        "startLine": 30,
+        "startChar": 26,
+        "endLine": 30,
+        "endChar": 76
+      },
+      "revId": "91109b786eda31f66ffebe9278732209c0362210",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "87f91905_c0bbc4b6",
         "filename": "ios/web/download/download_task_impl.mm",
         "patchSetId": 5
@@ -185,6 +359,24 @@
     },
     {
       "key": {
+        "uuid": "0467fa71_874184b4",
+        "filename": "ios/web/download/download_task_impl.mm",
+        "patchSetId": 5
+      },
+      "lineNbr": 46,
+      "author": {
+        "id": 1123009
+      },
+      "writtenOn": "2017-11-10T22:33:21Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "87f91905_c0bbc4b6",
+      "revId": "91109b786eda31f66ffebe9278732209c0362210",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "b31f9a39_ee1eea51",
         "filename": "ios/web/download/download_task_impl.mm",
         "patchSetId": 5
@@ -199,6 +391,24 @@
       "revId": "91109b786eda31f66ffebe9278732209c0362210",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "67f7c507_64902ade",
+        "filename": "ios/web/download/download_task_impl.mm",
+        "patchSetId": 5
+      },
+      "lineNbr": 57,
+      "author": {
+        "id": 1123009
+      },
+      "writtenOn": "2017-11-10T22:33:21Z",
+      "side": 1,
+      "message": "This is an interesting idea. I don\u0027t know if that\u0027s even possible with NSURLSessionTask API. I will start with DCEHCK that countOfBytesExpectedToReceive is GE than countOfBytesReceived and if it ever fires, we will make a decision. Please let me know if you have objections to this plan.",
+      "parentUuid": "b31f9a39_ee1eea51",
+      "revId": "91109b786eda31f66ffebe9278732209c0362210",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -225,6 +435,30 @@
     },
     {
       "key": {
+        "uuid": "993939e1_50001086",
+        "filename": "ios/web/download/download_task_impl.mm",
+        "patchSetId": 5
+      },
+      "lineNbr": 277,
+      "author": {
+        "id": 1123009
+      },
+      "writtenOn": "2017-11-10T22:33:21Z",
+      "side": 1,
+      "message": "In Objective-C I would definitely call completion block asynchronously. I don\u0027t feel that Chromium C++ code cares about sync/async consistency. Calling synchronously is simpler, faster and clients don\u0027t have to do any checks for iOS version. If you have a strong preference I will not fight for this. Or maybe I misunderstood the proposal?",
+      "parentUuid": "f366c738_c29cf997",
+      "range": {
+        "startLine": 277,
+        "startChar": 4,
+        "endLine": 277,
+        "endChar": 33
+      },
+      "revId": "91109b786eda31f66ffebe9278732209c0362210",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "e2d762f0_4b53d418",
         "filename": "ios/web/public/download/download_task_observer.h",
         "patchSetId": 5
@@ -239,6 +473,24 @@
       "revId": "91109b786eda31f66ffebe9278732209c0362210",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6617ab40_11202376",
+        "filename": "ios/web/public/download/download_task_observer.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 24,
+      "author": {
+        "id": 1123009
+      },
+      "writtenOn": "2017-11-10T22:33:21Z",
+      "side": 1,
+      "message": "Error during the rebasing. Sorry about that.",
+      "parentUuid": "e2d762f0_4b53d418",
+      "revId": "91109b786eda31f66ffebe9278732209c0362210",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
