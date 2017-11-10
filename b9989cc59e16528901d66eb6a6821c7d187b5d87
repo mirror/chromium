@@ -46,6 +46,30 @@
       "revId": "b9989cc59e16528901d66eb6a6821c7d187b5d87",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9c461d7a_9be12758",
+        "filename": "components/viz/service/display/direct_renderer.cc",
+        "patchSetId": 10
+      },
+      "lineNbr": 629,
+      "author": {
+        "id": 1228419
+      },
+      "writtenOn": "2017-11-10T21:21:23Z",
+      "side": 1,
+      "message": "You are right I should not add it in the same cache cl even though one reviewer asked to add it.\n\nTwo cases in old code will hit this empty branch:\n1. with cache: if there is some damage and also ScissorRect is empty as the same time, which indicates the content_rect is empty? This seems should never happen? Or there is some bug other place?\n2. without cache: the ScissorRect is empty. This is possible.\nIf 1 is not possible, then empty ScissorRect is not related to cache.\n\nAs you pointed out in the new code, with return false when cache and ScissorRect is not empty (most likely), then we will not have cache any more.",
+      "parentUuid": "7260fb98_f8449cdb",
+      "range": {
+        "startLine": 629,
+        "startChar": 62,
+        "endLine": 629,
+        "endChar": 70
+      },
+      "revId": "b9989cc59e16528901d66eb6a6821c7d187b5d87",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
