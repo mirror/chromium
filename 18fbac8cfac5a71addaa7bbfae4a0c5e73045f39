@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "3e8b22f0_9a2dc130",
+        "filename": "content/browser/frame_host/render_frame_host_impl.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 314,
+      "author": {
+        "id": 1116043
+      },
+      "writtenOn": "2017-11-10T01:00:20Z",
+      "side": 1,
+      "message": "@dcheng, obviously I didn\u0027t look close enough at your CL as you already added this in your patch.  nvm my comment towards you.  I\u0027ll just remove this and switch to your implementation:\n\nhttps://chromium-review.googlesource.com/c/chromium/src/+/755526/2/content/renderer/render_frame_impl.h",
+      "range": {
+        "startLine": 314,
+        "startChar": 7,
+        "endLine": 314,
+        "endChar": 32
+      },
+      "revId": "18fbac8cfac5a71addaa7bbfae4a0c5e73045f39",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
