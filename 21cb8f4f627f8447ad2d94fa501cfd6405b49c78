@@ -37,6 +37,24 @@
     },
     {
       "key": {
+        "uuid": "6b0b8b63_36913bdf",
+        "filename": "media/mojo/services/mojo_video_decoder_service.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 51,
+      "author": {
+        "id": 1130490
+      },
+      "writtenOn": "2017-11-10T19:13:26Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "31df9448_5bea272b",
+      "revId": "21cb8f4f627f8447ad2d94fa501cfd6405b49c78",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "735901ef_4cd75e75",
         "filename": "media/mojo/services/mojo_video_decoder_service.cc",
         "patchSetId": 1
@@ -69,6 +87,24 @@
       "revId": "21cb8f4f627f8447ad2d94fa501cfd6405b49c78",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f74bc835_c87ad5c7",
+        "filename": "media/mojo/services/mojo_video_decoder_service.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 71,
+      "author": {
+        "id": 1130490
+      },
+      "writtenOn": "2017-11-10T19:13:26Z",
+      "side": 1,
+      "message": "that\u0027s fair.  one could just as easily forget to clear video_frames_ in one place as forget to check it in another.  no objection to as-is.",
+      "parentUuid": "5157aed6_3e12ca47",
+      "revId": "21cb8f4f627f8447ad2d94fa501cfd6405b49c78",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
