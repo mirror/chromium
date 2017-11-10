@@ -2,6 +2,29 @@
   "comments": [
     {
       "key": {
+        "uuid": "09e09dbb_032e794a",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/partnerbookmarks/PartnerBookmarksReader.java",
+        "patchSetId": 9
+      },
+      "lineNbr": 117,
+      "author": {
+        "id": 1144344
+      },
+      "writtenOn": "2017-11-10T18:36:27Z",
+      "side": 1,
+      "message": "How about turning on this on canary channel, so that we can test it? Hopefully we can land this today.",
+      "range": {
+        "startLine": 117,
+        "startChar": 46,
+        "endLine": 117,
+        "endChar": 51
+      },
+      "revId": "789de09bde58d012293d8f0b4ad41f0d5917c3c7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "af858d83_520b1596",
         "filename": "chrome/android/java/src/org/chromium/chrome/browser/partnerbookmarks/PartnerBookmarksReader.java",
         "patchSetId": 9
