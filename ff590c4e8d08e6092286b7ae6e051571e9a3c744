@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "b5f0242d_91e98e78",
+        "filename": "content/public/common/webplugininfo.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 44,
+      "author": {
+        "id": 1116026
+      },
+      "writtenOn": "2017-11-10T02:17:19Z",
+      "side": 1,
+      "message": "std::move(v)",
+      "range": {
+        "startLine": 44,
+        "startChar": 63,
+        "endLine": 44,
+        "endChar": 64
+      },
+      "revId": "ff590c4e8d08e6092286b7ae6e051571e9a3c744",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "dd8940aa_90fde8ee",
+        "filename": "content/public/common/webplugininfo.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 44,
+      "author": {
+        "id": 1116026
+      },
+      "writtenOn": "2017-11-10T02:17:19Z",
+      "side": 1,
+      "message": "std::move(n)",
+      "range": {
+        "startLine": 44,
+        "startChar": 53,
+        "endLine": 44,
+        "endChar": 54
+      },
+      "revId": "ff590c4e8d08e6092286b7ae6e051571e9a3c744",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
