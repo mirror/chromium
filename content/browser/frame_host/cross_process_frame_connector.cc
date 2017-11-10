@@ -52,6 +52,9 @@ bool CrossProcessFrameConnector::OnMessageReceived(const IPC::Message& msg) {
     IPC_MESSAGE_HANDLER(FrameHostMsg_SetIsInert, OnSetIsInert)
     IPC_MESSAGE_HANDLER(FrameHostMsg_SatisfySequence, OnSatisfySequence)
     IPC_MESSAGE_HANDLER(FrameHostMsg_RequireSequence, OnRequireSequence)
+#if defined(USE_AURA)
+    IPC_MESSAGE_HANDLER(FrameHostMsg_UpdateFrameSinkId, OnUpdateFrameSinkId)
+#endif  // defined(USE_AURA)
     IPC_MESSAGE_UNHANDLED(handled = false)
   IPC_END_MESSAGE_MAP()
 
@@ -120,6 +123,13 @@ void CrossProcessFrameConnector::OnRequireSequence(
     const viz::SurfaceSequence& sequence) {
   GetFrameSinkManager()->surface_manager()->RequireSequence(id, sequence);
 }
+
+#if defined(USE_AURA)
+void CrossProcessFrameConnector::OnUpdateFrameSinkId(
+    const viz::FrameSinkId& frame_sink_id) {
+  view_->SetFrameSinkId(frame_sink_id);
+}
+#endif  // defined(USE_AURA)
 
 gfx::Rect CrossProcessFrameConnector::ChildFrameRect() {
   return frame_rect_in_dip_;
