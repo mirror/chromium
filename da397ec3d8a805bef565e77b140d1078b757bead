@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "1f867641_3cc46a41",
+        "filename": "components/viz/service/display/gl_renderer.cc",
+        "patchSetId": 23
+      },
+      "lineNbr": 3622,
+      "author": {
+        "id": 1000887
+      },
+      "writtenOn": "2017-11-10T00:32:02Z",
+      "side": 1,
+      "message": "This DCHECK will no longer hold in your CL, cuz UpdateRenderPassTextures() doesn\u0027t allocate the ScopedResource. Instead this function should return false if the id isnt in the map. If it\u0027s in the map, it has a non-null ScopedResource, so the 2nd DCHECK below still holds.",
+      "revId": "da397ec3d8a805bef565e77b140d1078b757bead",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
