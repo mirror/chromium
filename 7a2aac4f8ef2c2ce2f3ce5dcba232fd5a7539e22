@@ -284,6 +284,30 @@
       "revId": "7a2aac4f8ef2c2ce2f3ce5dcba232fd5a7539e22",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5eeac9db_79e6a9ae",
+        "filename": "chrome/browser/sessions/session_data_deleter.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 127,
+      "author": {
+        "id": 1002808
+      },
+      "writtenOn": "2017-11-10T21:27:24Z",
+      "side": 1,
+      "message": "Right now we just crash immediately on the sender side. This is mainly to ensure that we catch such instances as they arise, which as it turns out is fairly rare but still non-zero. (Aside: it used to be that we\u0027d shoot the sending process if we receive too large of a message in the browser, but that makes it very hard to identify offending code - and sometimes the offending code is in the browser itself.)\n\nIndividual messages do have some per-message allocation and serialization overhead which, although small, may be significantly amortized if you squash 100s+ of messages down into one.\n\nMy rule of thumb would be to cap the batch size at something reasonable like 64 MiB worth of data to leave plenty of wiggle room for internal protocol overhead.",
+      "parentUuid": "f6f6e234_98b9fcf1",
+      "range": {
+        "startLine": 127,
+        "startChar": 8,
+        "endLine": 127,
+        "endChar": 60
+      },
+      "revId": "7a2aac4f8ef2c2ce2f3ce5dcba232fd5a7539e22",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
