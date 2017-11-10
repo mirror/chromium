@@ -16,6 +16,24 @@
       "revId": "e47f8e09f88ccbdedd2471aae49acfc76481beef",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7d2aa2de_17dfee89",
+        "filename": "content/browser/download/download_item_impl.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 1509,
+      "author": {
+        "id": 1116010
+      },
+      "writtenOn": "2017-11-10T22:28:32Z",
+      "side": 1,
+      "message": "This is against the current DownloadItemImpl state machine.\nThis callback is scheduled when state_ \u003d\u003d TARGET_PENDING_INTERNAL || state_ \u003d\u003d INTERRUPTED_TARGET_PENDING_INTERNAL.\nAnd in DownloadItemImpl::InterruptWithPartialState(), if the state_ is the above 2 conditions, we set the state_ to INTERRUPTED_TARGET_PENDING_INTERNAL.  So it is wierd that the state_ will be CANCELLED_INTERNAL here",
+      "parentUuid": "84ac2d20_43d21c14",
+      "revId": "e47f8e09f88ccbdedd2471aae49acfc76481beef",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
