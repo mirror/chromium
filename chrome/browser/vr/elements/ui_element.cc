@@ -10,9 +10,9 @@
 #include "base/numerics/ranges.h"
 #include "base/stl_util.h"
 #include "base/time/time.h"
-#include "chrome/browser/vr/elements/ui_element_transform_operations.h"
 #include "third_party/WebKit/public/platform/WebGestureEvent.h"
 #include "ui/gfx/geometry/angle_conversions.h"
+#include "ui/gfx/geometry/rect_f.h"
 
 namespace vr {
 
@@ -146,7 +146,7 @@ bool UiElement::IsHitTestable() const {
 }
 
 void UiElement::SetSize(float width, float height) {
-  animation_player_.TransitionSizeTo(last_frame_time_, BOUNDS, size_,
+  animation_player_.TransitionSizeTo(last_frame_time_, BOUNDS, bounds_.size(),
                                      gfx::SizeF(width, height));
 }
 
@@ -164,26 +164,19 @@ bool UiElement::IsVisible() const {
 
 gfx::SizeF UiElement::size() const {
   DCHECK_LE(kUpdatedTexturesAndSizes, phase_);
-  return size_;
-}
-
-void UiElement::SetTransformOperations(
-    const UiElementTransformOperations& ui_element_transform_operations) {
-  animation_player_.TransitionTransformOperationsTo(
-      last_frame_time_, TRANSFORM, transform_operations_,
-      ui_element_transform_operations.operations());
+  return bounds_.size();
 }
 
 void UiElement::SetLayoutOffset(float x, float y) {
   if (x_centering() == LEFT) {
-    x += size_.width() / 2;
+    x += bounds_.width() / 2;
   } else if (x_centering() == RIGHT) {
-    x -= size_.width() / 2;
+    x -= bounds_.width() / 2;
   }
   if (y_centering() == TOP) {
-    y -= size_.height() / 2;
+    y -= bounds_.height() / 2;
   } else if (y_centering() == BOTTOM) {
-    y += size_.height() / 2;
+    y += bounds_.height() / 2;
   }
   cc::TransformOperations operations = layout_offset_;
   cc::TransformOperation& op = operations.at(0);
@@ -227,7 +220,8 @@ void UiElement::SetOpacity(float opacity) {
 }
 
 gfx::SizeF UiElement::GetTargetSize() const {
-  return animation_player_.GetTargetSizeValue(TargetProperty::BOUNDS, size_);
+  return animation_player_.GetTargetSizeValue(TargetProperty::BOUNDS,
+                                              bounds_.size());
 }
 
 cc::TransformOperations UiElement::GetTargetTransform() const {
@@ -284,7 +278,7 @@ void UiElement::OnUpdatedWorldSpaceTransform() {}
 
 gfx::SizeF UiElement::stale_size() const {
   DCHECK_LE(kUpdatedBindings, phase_);
-  return size_;
+  return bounds_.size();
 }
 
 void UiElement::AddChild(std::unique_ptr<UiElement> child) {
@@ -383,7 +377,7 @@ void UiElement::NotifyClientTransformOperationsAnimated(
 void UiElement::NotifyClientSizeAnimated(const gfx::SizeF& size,
                                          int target_property_id,
                                          cc::Animation* animation) {
-  size_ = size;
+  bounds_.set_size(size);
 }
 
 void UiElement::SetTransitionedProperties(
@@ -406,6 +400,36 @@ void UiElement::RemoveAnimation(int animation_id) {
 
 bool UiElement::IsAnimatingProperty(TargetProperty property) const {
   return animation_player_.IsAnimatingProperty(static_cast<int>(property));
+}
+
+void UiElement::DoLayOutChildren() {
+  LayOutChildren();
+  if (!bounds_contain_children_)
+    return;
+
+  gfx::RectF bounds;
+  bool first = false;
+  for (auto& child : children_) {
+    if (!child->IsVisible()) {
+      continue;
+    }
+    gfx::Point3F child_center;
+    child->LocalTransform().TransformPoint(&child_center);
+    gfx::RectF local_rect =
+        gfx::RectF(child_center.x() - 0.5 * child->size().width(),
+                   child_center.y() - 0.5 * child->size().height(),
+                   child->size().width(), child->size().height());
+    if (first) {
+      bounds = local_rect;
+      first = false;
+    } else {
+      bounds.Union(local_rect);
+    }
+  }
+
+  bounds.Inset(-x_padding_, -y_padding_);
+  bounds.set_origin(bounds.CenterPoint());
+  bounds_ = bounds;
 }
 
 void UiElement::LayOutChildren() {
@@ -440,7 +464,8 @@ void UiElement::UpdateComputedOpacity() {
 
 void UiElement::UpdateWorldSpaceTransformRecursive() {
   gfx::Transform transform;
-  transform.Scale(size_.width(), size_.height());
+  transform.Translate(bounds_.x(), bounds_.y());
+  transform.Scale(bounds_.width(), bounds_.height());
 
   // Compute an inheritable transformation that can be applied to this element,
   // and it's children, if applicable.
