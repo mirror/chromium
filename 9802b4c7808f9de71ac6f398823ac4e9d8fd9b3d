@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "f3d43a0a_c968c36a",
+        "filename": "gpu/command_buffer/client/gles2_implementation.cc",
+        "patchSetId": 20
+      },
+      "lineNbr": 434,
+      "author": {
+        "id": 1187745
+      },
+      "writtenOn": "2017-11-10T21:09:41Z",
+      "side": 1,
+      "message": "See code comment - I\u0027m unsure about the ordering semantics here, are there any cases where the control message (which does an immediate Send()) could arrive later than the following GL commands on helper_?",
+      "revId": "9802b4c7808f9de71ac6f398823ac4e9d8fd9b3d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}

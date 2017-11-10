@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "04b0fe86_f3855bf8",
+        "filename": "ui/gfx/gpu_fence.h",
+        "patchSetId": 19
+      },
+      "lineNbr": 29,
+      "author": {
+        "id": 1187745
+      },
+      "writtenOn": "2017-11-10T21:09:41Z",
+      "side": 1,
+      "message": "I\u0027ve moved this logic to a Close method on GpuFenceHandle so that this class doesn\u0027t need to know anything about the handle internals.",
+      "parentUuid": "085a337d_88418e65",
+      "revId": "293fb6b980cc348ce6851a0534597d6ec2f754c9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "dc76d7b2_fefdfd01",
         "filename": "ui/gfx/gpu_fence_handle.h",
         "patchSetId": 19
@@ -36,6 +54,24 @@
     },
     {
       "key": {
+        "uuid": "3e991d30_398c5a0c",
+        "filename": "ui/gfx/gpu_fence_handle.h",
+        "patchSetId": 19
+      },
+      "lineNbr": 30,
+      "author": {
+        "id": 1187745
+      },
+      "writtenOn": "2017-11-10T21:09:41Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "dc76d7b2_fefdfd01",
+      "revId": "293fb6b980cc348ce6851a0534597d6ec2f754c9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "7079489f_82a918a3",
         "filename": "ui/gl/gl_fence_egl.h",
         "patchSetId": 19
@@ -50,6 +86,24 @@
       "revId": "293fb6b980cc348ce6851a0534597d6ec2f754c9",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e313839e_81f306bb",
+        "filename": "ui/gl/gl_fence_egl.h",
+        "patchSetId": 19
+      },
+      "lineNbr": 35,
+      "author": {
+        "id": 1187745
+      },
+      "writtenOn": "2017-11-10T21:09:41Z",
+      "side": 1,
+      "message": "I\u0027ve rearranged it a bit. I want to preserve the property that the no-argument constructor makes a valid object, otherwise it\u0027s a bit of a trap since this is true for the other implementations.\n\nI\u0027ve added an additional (bool use_default_initialization) constructor to support calling the Initialize method separately with custom arguments.",
+      "parentUuid": "7079489f_82a918a3",
+      "revId": "293fb6b980cc348ce6851a0534597d6ec2f754c9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
