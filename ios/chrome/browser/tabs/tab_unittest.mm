@@ -58,7 +58,6 @@
 #endif
 
 namespace {
-const char kAppSettingsUrl[] = "app-settings://";
 const char kNewTabUrl[] = "chrome://newtab/";
 const char kGoogleUserUrl[] = "http://google.com";
 const char kGoogleRedirectUrl[] = "http://www.google.fr/";
@@ -112,13 +111,17 @@ const char kValidFilenameUrl[] = "http://www.hostname.com/filename.pdf";
 @end
 
 @implementation ExternalAppLauncherMock
-typedef BOOL (^openURLBlockType)(const GURL&, const GURL&, BOOL);
+typedef void (^requestToOpenUrlType)(const GURL&,
+                                     const GURL&,
+                                     BOOL,
+                                     void (^)(BOOL));
 
-- (BOOL)requestToOpenURL:(const GURL&)url
+- (void)requestToOpenURL:(const GURL&)url
            sourcePageURL:(const GURL&)sourceURL
-             linkClicked:(BOOL)linkClicked {
-  return static_cast<openURLBlockType>([self blockForSelector:_cmd])(
-      url, sourceURL, linkClicked);
+             linkClicked:(BOOL)linkClicked
+       completionHandler:(void (^)(BOOL))completionHandler {
+  static_cast<requestToOpenUrlType>([self blockForSelector:_cmd])(
+      url, sourceURL, linkClicked, completionHandler);
 }
 @end
 
@@ -327,11 +330,25 @@ TEST_F(TabTest, AddToHistoryWithRedirect) {
   CheckCurrentItem(results[0]);
 }
 
-TEST_F(TabTest, FailToOpenAppSettings) {
-  GURL app_settings_url = GURL(kAppSettingsUrl);
-  BOOL will_open_app_settings =
-      [tab_ openExternalURL:app_settings_url sourceURL:GURL() linkClicked:YES];
-  EXPECT_FALSE(will_open_app_settings);
+TEST_F(TabTest, FailToOpenDisallowedUrls) {
+  std::vector<std::string> test_urls;
+  test_urls.push_back("app-settings://");
+  test_urls.push_back("u2f-x-callback://");
+  test_urls.push_back("invalid-url");
+
+  for (std::string& test_url : test_urls) {
+    GURL url = GURL(test_url);
+    __block bool completion_called = false;
+    [tab_ openExternalURL:url
+                sourceURL:GURL()
+              linkClicked:YES
+               completion:^(BOOL success) {
+                 completion_called = true;
+                 EXPECT_FALSE(success)
+                     << ": expected failure on " << url.spec();
+               }];
+    EXPECT_TRUE(completion_called) << ": completion not called: " << url.spec();
+  }
 }
 
 // TODO(crbug.com/378098): Disabled because forward/back is now implemented in
