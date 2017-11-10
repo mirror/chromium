@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "98867820_003b6381",
+        "filename": "content/browser/download/download_item_impl.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 1382,
+      "author": {
+        "id": 1116010
+      },
+      "writtenOn": "2017-11-10T07:02:33Z",
+      "side": 1,
+      "message": "parallizable doesn\u0027t mean we are using 2 streams, parallel download could use more than 2 streams. And I don\u0027t think you can get the number of streams on start, as there could be delays and some streams are actually not working if server doesn\u0027t support parallel download.",
+      "revId": "39a9cbbc475e184606ac575518cec97ab9bfcacd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
