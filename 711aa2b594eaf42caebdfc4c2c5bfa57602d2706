@@ -437,6 +437,24 @@
     },
     {
       "key": {
+        "uuid": "22d0ea59_9e63b0ee",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/modaldialog/TabModalDialogManager.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 53,
+      "author": {
+        "id": 1122966
+      },
+      "writtenOn": "2017-11-10T17:50:21Z",
+      "side": 1,
+      "message": "This sounds like something we should look into later, but probably fine as is for this CL.",
+      "parentUuid": "29e33717_56dee97d",
+      "revId": "711aa2b594eaf42caebdfc4c2c5bfa57602d2706",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "e00faad1_bf065994",
         "filename": "chrome/android/java/src/org/chromium/chrome/browser/modaldialog/TabModalDialogManager.java",
         "patchSetId": 2
@@ -531,6 +549,30 @@
     },
     {
       "key": {
+        "uuid": "7b370818_67b6d34e",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/modaldialog/TabModalDialogManager.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 59,
+      "author": {
+        "id": 1122966
+      },
+      "writtenOn": "2017-11-10T17:50:21Z",
+      "side": 1,
+      "message": "Okay. LinkedList seems okay then.",
+      "parentUuid": "e6e35653_ed8c4f6e",
+      "range": {
+        "startLine": 59,
+        "startChar": 18,
+        "endLine": 59,
+        "endChar": 22
+      },
+      "revId": "711aa2b594eaf42caebdfc4c2c5bfa57602d2706",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "0024ea93_fc7f2722",
         "filename": "chrome/android/java/src/org/chromium/chrome/browser/modaldialog/TabModalDialogManager.java",
         "patchSetId": 2
@@ -575,6 +617,30 @@
       "revId": "711aa2b594eaf42caebdfc4c2c5bfa57602d2706",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "38e9d807_91b7db17",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/modaldialog/TabModalDialogManager.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 76,
+      "author": {
+        "id": 1122966
+      },
+      "writtenOn": "2017-11-10T17:50:21Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "cdb7d778_e2b0088d",
+      "range": {
+        "startLine": 76,
+        "startChar": 43,
+        "endLine": 76,
+        "endChar": 52
+      },
+      "revId": "711aa2b594eaf42caebdfc4c2c5bfa57602d2706",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -625,6 +691,30 @@
     },
     {
       "key": {
+        "uuid": "94173f86_b6f8da31",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/modaldialog/TabModalDialogManager.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 79,
+      "author": {
+        "id": 1122966
+      },
+      "writtenOn": "2017-11-10T17:50:21Z",
+      "side": 1,
+      "message": "Thanks for the explanation :)",
+      "parentUuid": "0b82abb3_576da923",
+      "range": {
+        "startLine": 79,
+        "startChar": 52,
+        "endLine": 79,
+        "endChar": 94
+      },
+      "revId": "711aa2b594eaf42caebdfc4c2c5bfa57602d2706",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "756b8f43_33d748e1",
         "filename": "chrome/android/java/src/org/chromium/chrome/browser/modaldialog/TabModalDialogManager.java",
         "patchSetId": 2
@@ -660,6 +750,30 @@
       "side": 1,
       "message": "Hm.. Yes but eventually the toolbar would be forced to show for tab modal dialog. Or we need to consider the case when tab modal can also fill the whole screen for future use case?\n\nThe scrim margin is that the scrim should be 16dp below/above the dialog container so that the dialog contents can be visually above the scrim, but the total distance should be just the size of the toolbar, so the margin for the dialog container is (toolbar height - 16dp).",
       "parentUuid": "756b8f43_33d748e1",
+      "range": {
+        "startLine": 102,
+        "startChar": 7,
+        "endLine": 103,
+        "endChar": 78
+      },
+      "revId": "711aa2b594eaf42caebdfc4c2c5bfa57602d2706",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8c6b0487_11aaf49a",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/modaldialog/TabModalDialogManager.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 103,
+      "author": {
+        "id": 1122966
+      },
+      "writtenOn": "2017-11-10T17:50:21Z",
+      "side": 1,
+      "message": "\u003e Or we need to consider the case when tab modal can also fill the whole screen for future use case?\n\nI think a fullscreen tab can trigger JS dialogs",
+      "parentUuid": "c700cfa4_873a371f",
       "range": {
         "startLine": 102,
         "startChar": 7,
@@ -801,6 +915,30 @@
     },
     {
       "key": {
+        "uuid": "8b62a657_3a36607c",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/modaldialog/TabModalDialogManager.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 223,
+      "author": {
+        "id": 1122966
+      },
+      "writtenOn": "2017-11-10T17:50:21Z",
+      "side": 1,
+      "message": "I flipped through the mocks and see the disabled menu button is per their spec, so no need to change it.",
+      "parentUuid": "d5069f20_a9a2e46e",
+      "range": {
+        "startLine": 223,
+        "startChar": 25,
+        "endLine": 223,
+        "endChar": 57
+      },
+      "revId": "711aa2b594eaf42caebdfc4c2c5bfa57602d2706",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "483f85d3_f457c933",
         "filename": "chrome/android/java/src/org/chromium/chrome/browser/modaldialog/TabModalDialogManager.java",
         "patchSetId": 2
@@ -845,6 +983,30 @@
       "revId": "711aa2b594eaf42caebdfc4c2c5bfa57602d2706",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4ee3bac9_3938c5e7",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/modaldialog/TabModalDialogManager.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 248,
+      "author": {
+        "id": 1122966
+      },
+      "writtenOn": "2017-11-10T17:50:21Z",
+      "side": 1,
+      "message": "Thanks for adding this!",
+      "parentUuid": "ac9f47b5_58702927",
+      "range": {
+        "startLine": 248,
+        "startChar": 61,
+        "endLine": 248,
+        "endChar": 84
+      },
+      "revId": "711aa2b594eaf42caebdfc4c2c5bfa57602d2706",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -895,6 +1057,30 @@
     },
     {
       "key": {
+        "uuid": "0941972a_5a2255a3",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/modaldialog/TabModalDialogManager.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 251,
+      "author": {
+        "id": 1122966
+      },
+      "writtenOn": "2017-11-10T17:50:21Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "d5f620c4_e6d368b8",
+      "range": {
+        "startLine": 251,
+        "startChar": 15,
+        "endLine": 251,
+        "endChar": 36
+      },
+      "revId": "711aa2b594eaf42caebdfc4c2c5bfa57602d2706",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "5c73d0fa_044f99fe",
         "filename": "chrome/android/java/src/org/chromium/chrome/browser/modaldialog/TabModalDialogManager.java",
         "patchSetId": 2
@@ -942,6 +1128,30 @@
     },
     {
       "key": {
+        "uuid": "2f6c625e_60ad8a54",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/modaldialog/TabModalDialogManager.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 253,
+      "author": {
+        "id": 1122966
+      },
+      "writtenOn": "2017-11-10T17:50:21Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "d058ba71_d215ecef",
+      "range": {
+        "startLine": 252,
+        "startChar": 12,
+        "endLine": 253,
+        "endChar": 66
+      },
+      "revId": "711aa2b594eaf42caebdfc4c2c5bfa57602d2706",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "8a627a75_5117897f",
         "filename": "chrome/android/java/src/org/chromium/chrome/browser/modaldialog/TabModalDialogManager.java",
         "patchSetId": 2
@@ -977,6 +1187,30 @@
       "side": 1,
       "message": "Waiting for sheet to close does seem more reasonable.\n\nI closed the sheet because on desktop, the url suggestion list is closed when a js dialog is requested (btw forgot to handle non-ChromeHome case).\n\nShould we follow what desktop does, or should show the dialog until the url is not focused or sheet is not opened?\n\nRegarding to the scenario that causes the sheet to open while a modal dialog is showing, I think the current implementation is okay since the dialog is set to be behind the sheet when the sheet is opened so it won\u0027t obscure anything on the sheet (that\u0027s similar to desktop that the url suggestion list draws over the dialog).",
       "parentUuid": "8a627a75_5117897f",
+      "range": {
+        "startLine": 255,
+        "startChar": 16,
+        "endLine": 255,
+        "endChar": 78
+      },
+      "revId": "711aa2b594eaf42caebdfc4c2c5bfa57602d2706",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "fd024089_143eac47",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/modaldialog/TabModalDialogManager.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 255,
+      "author": {
+        "id": 1122966
+      },
+      "writtenOn": "2017-11-10T17:50:21Z",
+      "side": 1,
+      "message": "\u003e Should we follow what desktop does, or should show the dialog until the url is not focused or sheet is not opened?\n\nI think we can follow desktop on the URL focused bit. My preference is for the sheet to remain open and the dialog to appear behind or when the sheet is closed. Let\u0027s follow-up with UX. I think we can adjust in a future CL.\n\n\n\u003e Regarding to the scenario that causes the sheet to open while a modal dialog is showing, I think the current implementation is okay since the dialog is set to be behind the sheet when the sheet is opened so it won\u0027t obscure anything on the sheet (that\u0027s similar to desktop that the url suggestion list draws over the dialog).\n\nThat sounds good to me.",
+      "parentUuid": "cd8ae3bd_ac2bd296",
       "range": {
         "startLine": 255,
         "startChar": 16,
@@ -1036,6 +1270,30 @@
     },
     {
       "key": {
+        "uuid": "4151aff6_6e5a07df",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/modaldialog/TabModalDialogManager.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 264,
+      "author": {
+        "id": 1122966
+      },
+      "writtenOn": "2017-11-10T17:50:21Z",
+      "side": 1,
+      "message": "\u003e Do you think it is okay to have a new TabModelSelectorTabModelObserver create/destroy every time the dialogs start showing? \n\nI think that would be fine. The current implementation is okay too, so whichever you prefer.",
+      "parentUuid": "829db463_b2b9748f",
+      "range": {
+        "startLine": 262,
+        "startChar": 12,
+        "endLine": 264,
+        "endChar": 13
+      },
+      "revId": "711aa2b594eaf42caebdfc4c2c5bfa57602d2706",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "9de4c05e_f6073c87",
         "filename": "chrome/android/java/src/org/chromium/chrome/browser/modaldialog/TabModalDialogManager.java",
         "patchSetId": 2
@@ -1071,6 +1329,30 @@
       "side": 1,
       "message": "This is for the requirement on the spec that the dialog contents can overlay 8dp of the toolbar.\n\nhttps://folio.googleplex.com/chrome-ux/mocks/418-clank-dialogs/011317_TabModalClankDialogs#%2F02_TabModalRuleSet.png%3Fz\u003dwidth",
       "parentUuid": "9de4c05e_f6073c87",
+      "range": {
+        "startLine": 266,
+        "startChar": 74,
+        "endLine": 266,
+        "endChar": 81
+      },
+      "revId": "711aa2b594eaf42caebdfc4c2c5bfa57602d2706",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5fae394e_fbded834",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/modaldialog/TabModalDialogManager.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 266,
+      "author": {
+        "id": 1122966
+      },
+      "writtenOn": "2017-11-10T17:50:21Z",
+      "side": 1,
+      "message": "Is this for the mock where the dialog overlaps the toolbar for svelte?\n\nI think this is fine for now, but let\u0027s checkout how this performs on really small screens when the keyboard is showing or at really small heights in multi-window mode. We may want to allow the dialog to overlap the toolbar more.. or we may have a hard requirement to keep the URL visible.",
+      "parentUuid": "d67afd11_f2585b64",
       "range": {
         "startLine": 266,
         "startChar": 74,
@@ -1177,6 +1459,30 @@
     },
     {
       "key": {
+        "uuid": "e76b5927_5808c7ee",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/modaldialog/javascript/JavascriptModalDialog.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 47,
+      "author": {
+        "id": 1122966
+      },
+      "writtenOn": "2017-11-10T17:50:21Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "f538d8aa_57961ef5",
+      "range": {
+        "startLine": 47,
+        "startChar": 68,
+        "endLine": 47,
+        "endChar": 93
+      },
+      "revId": "711aa2b594eaf42caebdfc4c2c5bfa57602d2706",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "b804142e_4a38b4b4",
         "filename": "chrome/android/java/src/org/chromium/chrome/browser/modaldialog/javascript/JavascriptModalDialog.java",
         "patchSetId": 2
@@ -1271,6 +1577,30 @@
     },
     {
       "key": {
+        "uuid": "f3a6a506_ae8720d5",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/modaldialog/javascript/JavascriptModalDialog.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 57,
+      "author": {
+        "id": 1122966
+      },
+      "writtenOn": "2017-11-10T17:50:21Z",
+      "side": 1,
+      "message": "If we set focusable to false, is the View still able to gain accessibility focus when TalkBack is enabled?",
+      "parentUuid": "7d7c397b_8862e73f",
+      "range": {
+        "startLine": 57,
+        "startChar": 24,
+        "endLine": 57,
+        "endChar": 53
+      },
+      "revId": "711aa2b594eaf42caebdfc4c2c5bfa57602d2706",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "2bc9936a_7253123f",
         "filename": "chrome/android/java/src/org/chromium/chrome/browser/modaldialog/javascript/JavascriptModalDialog.java",
         "patchSetId": 2
@@ -1318,6 +1648,30 @@
     },
     {
       "key": {
+        "uuid": "6d3cbb3b_9dd1a21d",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/modaldialog/javascript/JavascriptModalDialog.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 71,
+      "author": {
+        "id": 1122966
+      },
+      "writtenOn": "2017-11-10T17:50:21Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "1a4be119_8c55213d",
+      "range": {
+        "startLine": 71,
+        "startChar": 9,
+        "endLine": 71,
+        "endChar": 39
+      },
+      "revId": "711aa2b594eaf42caebdfc4c2c5bfa57602d2706",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "3cfb3c55_e2764054",
         "filename": "chrome/android/java/src/org/chromium/chrome/browser/modaldialog/javascript/JavascriptModalDialog.java",
         "patchSetId": 2
@@ -1353,6 +1707,30 @@
       "side": 1,
       "message": "Yes but it is only for app modal JS dialog, the design (from desktop) for tab modal dialog doesn\u0027t have this suppress box since user can now dismiss the dialogs by switching away.",
       "parentUuid": "3cfb3c55_e2764054",
+      "range": {
+        "startLine": 88,
+        "startChar": 22,
+        "endLine": 88,
+        "endChar": 70
+      },
+      "revId": "711aa2b594eaf42caebdfc4c2c5bfa57602d2706",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "44dae417_e6046bf6",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/modaldialog/javascript/JavascriptModalDialog.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 88,
+      "author": {
+        "id": 1122966
+      },
+      "writtenOn": "2017-11-10T17:50:21Z",
+      "side": 1,
+      "message": "Will you please expand the JavaDoc w/ a description of what the suppress checkbox is for?",
+      "parentUuid": "6083e7d6_ba624285",
       "range": {
         "startLine": 88,
         "startChar": 22,
