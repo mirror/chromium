@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "9fee2d5b_c5df3894",
+        "filename": "chrome/browser/policy/policy_browsertest.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 421,
+      "author": {
+        "id": 1126309
+      },
+      "writtenOn": "2017-11-10T14:56:40Z",
+      "side": 1,
+      "message": "nit: As you\u0027ve introduced this function, could you please use it throughout the old code in this file? There are 5 places where DIR_TEST_DATA is obtained.",
+      "range": {
+        "startLine": 421,
+        "startChar": 15,
+        "endLine": 421,
+        "endChar": 35
+      },
+      "revId": "dff7c9cfaed77a029aa35efd6e0efe3223099bff",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ab274eaa_a833c877",
+        "filename": "chrome/browser/policy/policy_browsertest.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 439,
+      "author": {
+        "id": 1126309
+      },
+      "writtenOn": "2017-11-10T14:56:40Z",
+      "side": 1,
+      "message": "nit: The explicit std::string constructor is unnecessary here (although I won\u0027t object if you specifically want to have it there).",
+      "range": {
+        "startLine": 439,
+        "startChar": 39,
+        "endLine": 439,
+        "endChar": 51
+      },
+      "revId": "dff7c9cfaed77a029aa35efd6e0efe3223099bff",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
