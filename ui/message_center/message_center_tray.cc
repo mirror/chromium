@@ -9,6 +9,7 @@
 #include "base/macros.h"
 #include "base/observer_list.h"
 #include "base/strings/utf_string_conversions.h"
+#include "base/threading/thread_task_runner_handle.h"
 #include "build/build_config.h"
 #include "ui/base/l10n/l10n_util.h"
 #include "ui/base/models/simple_menu_model.h"
@@ -125,6 +126,7 @@ bool MessageCenterTray::HideMessageCenterBubble() {
     return false;
   delegate_->HideMessageCenter();
   MarkMessageCenterHidden();
+
   return true;
 }
 
@@ -242,8 +244,14 @@ void MessageCenterTray::OnBlockingStateChanged(NotificationBlocker* blocker) {
 }
 
 void MessageCenterTray::OnMessageCenterChanged() {
-  if (message_center_visible_ && message_center_->NotificationCount() == 0)
-    HideMessageCenterBubble();
+  if (message_center_visible_ && message_center_->NotificationCount() == 0) {
+    base::ThreadTaskRunnerHandle::Get()->PostTask(
+        FROM_HERE,
+        base::BindOnce(
+            base::IgnoreResult(&MessageCenterTray::HideMessageCenterBubble),
+            base::Unretained(this)));
+    return;
+  }
 
   if (popups_visible_ && !message_center_->HasPopupNotifications())
     HidePopupBubbleInternal();
