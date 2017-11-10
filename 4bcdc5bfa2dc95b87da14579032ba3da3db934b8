@@ -2,6 +2,29 @@
   "comments": [
     {
       "key": {
+        "uuid": "08f80d36_ab016276",
+        "filename": "chrome/browser/resources/md_extensions/sidebar.html",
+        "patchSetId": 2
+      },
+      "lineNbr": 20,
+      "author": {
+        "id": 1115893
+      },
+      "writtenOn": "2017-11-10T00:52:46Z",
+      "side": 1,
+      "message": "Why do we need to provide two values?\n\nThis element is used only within one context and either --side-bar-selected-color should always be defined, or var(--google-blue-700) should always be used.\n\nI could not find --side-bar-selected-color definition anywhere. Is it needed here?",
+      "range": {
+        "startLine": 20,
+        "startChar": 46,
+        "endLine": 20,
+        "endChar": 68
+      },
+      "revId": "4bcdc5bfa2dc95b87da14579032ba3da3db934b8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "0cf9bb7b_76b7d572",
         "filename": "chrome/browser/resources/md_extensions/sidebar.js",
         "patchSetId": 2
@@ -13,6 +36,24 @@
       "writtenOn": "2017-11-10T00:17:41Z",
       "side": 1,
       "message": "This can be changed to any of these if preferred:\n\nNumber(foo \u003d\u003d bar)  // This is fastest.\n+(foo \u003d\u003d bar)\nfoo \u003d\u003d bar | 0\n\n\nUsing ?: is slower than the options above by quite a bit, but it\u0027s only one call and ?: may be more readable, wdyt?\nfoo \u003d\u003d bar ? 1 : 0\n\n(there are other options we could consider too)",
+      "revId": "4bcdc5bfa2dc95b87da14579032ba3da3db934b8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f06a1a3c_ef8df0e4",
+        "filename": "chrome/browser/resources/md_extensions/sidebar.js",
+        "patchSetId": 2
+      },
+      "lineNbr": 16,
+      "author": {
+        "id": 1115893
+      },
+      "writtenOn": "2017-11-10T00:52:46Z",
+      "side": 1,
+      "message": "I don\u0027t think this matters much in this case, but out of curiosity, what is the difference of using the ternary operator vs the other options in absolute numbers?\n\nMy guess is that getCurrentPage() is the slowest part of this command, which exists in all versions you listed, so a bit surprised that you are meausing significant difference among the listed versions.",
+      "parentUuid": "0cf9bb7b_76b7d572",
       "revId": "4bcdc5bfa2dc95b87da14579032ba3da3db934b8",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
