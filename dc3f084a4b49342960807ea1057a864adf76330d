@@ -22,6 +22,30 @@
       "revId": "dc3f084a4b49342960807ea1057a864adf76330d",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b15af1d8_a896c055",
+        "filename": "third_party/WebKit/Source/platform/scheduler/base/task_queue_manager.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 137,
+      "author": {
+        "id": 1003325
+      },
+      "writtenOn": "2017-11-10T20:26:33Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "cc482a04_fce62193",
+      "range": {
+        "startLine": 137,
+        "startChar": 49,
+        "endLine": 137,
+        "endChar": 57
+      },
+      "revId": "dc3f084a4b49342960807ea1057a864adf76330d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
