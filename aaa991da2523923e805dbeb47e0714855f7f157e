@@ -193,6 +193,24 @@
       "revId": "aaa991da2523923e805dbeb47e0714855f7f157e",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a5b23942_f7c6ea93",
+        "filename": "third_party/WebKit/Source/platform/graphics/paint/FloatClipRectTest.cpp",
+        "patchSetId": 5
+      },
+      "lineNbr": 86,
+      "author": {
+        "id": 1115878
+      },
+      "writtenOn": "2017-11-10T20:55:33Z",
+      "side": 1,
+      "message": "Not sure what the resolution is here then - turn off tightness for non-translation transforms?\nOr are you saying ignore some other aspect of the comment?",
+      "parentUuid": "cdfb0509_8fe84a85",
+      "revId": "aaa991da2523923e805dbeb47e0714855f7f157e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
