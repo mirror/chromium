@@ -299,7 +299,8 @@ bool ResourceLoader::WillFollowRedirect(
     if (options.cors_handling_by_resource_fetcher ==
             kEnableCORSHandlingByResourceFetcher &&
         fetch_request_mode == network::mojom::FetchRequestMode::kCORS) {
-      scoped_refptr<SecurityOrigin> source_origin = options.security_origin;
+      scoped_refptr<const SecurityOrigin> source_origin =
+          options.security_origin;
       if (!source_origin.get())
         source_origin = Context().GetSecurityOrigin();
       WebSecurityOrigin source_web_origin(source_origin.get());
@@ -441,7 +442,8 @@ CORSStatus ResourceLoader::DetermineCORSStatus(const ResourceResponse& response,
   if (resource_->GetType() == Resource::Type::kMainResource)
     return CORSStatus::kNotApplicable;
 
-  SecurityOrigin* source_origin = resource_->Options().security_origin.get();
+  const SecurityOrigin* source_origin =
+      resource_->Options().security_origin.get();
 
   if (!source_origin)
     source_origin = Context().GetSecurityOrigin();
