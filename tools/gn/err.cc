@@ -145,23 +145,35 @@ Err::Err(const Value& value,
 }
 
 Err::Err(const Err& other) = default;
+Err::Err(Err&& other) noexcept = default;
 
 Err::~Err() {
 }
 
+Err& Err::operator=(const Err& other) = default;
+Err& Err::operator=(Err&& other) = default;
+
 void Err::PrintToStdout() const {
-  InternalPrintToStdout(false);
+  InternalPrintToStdout(false, true);
+}
+
+void Err::PrintNonfatalToStdout() const {
+  InternalPrintToStdout(false, false);
 }
 
 void Err::AppendSubErr(const Err& err) {
   sub_errs_.push_back(err);
 }
 
-void Err::InternalPrintToStdout(bool is_sub_err) const {
+void Err::InternalPrintToStdout(bool is_sub_err, bool is_fatal) const {
   DCHECK(has_error_);
 
-  if (!is_sub_err)
-    OutputString("ERROR ", DECORATION_RED);
+  if (!is_sub_err) {
+    if (is_fatal)
+      OutputString("ERROR ", DECORATION_RED);
+    else
+      OutputString("WARNING ", DECORATION_RED);
+  }
 
   // File name and location.
   const InputFile* input_file = location_.file();
@@ -191,5 +203,5 @@ void Err::InternalPrintToStdout(bool is_sub_err) const {
 
   // Sub errors.
   for (const auto& sub_err : sub_errs_)
-    sub_err.InternalPrintToStdout(true);
+    sub_err.InternalPrintToStdout(true, is_fatal);
 }
