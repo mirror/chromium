@@ -1,7 +1,6 @@
-This test makes sure that calling the window scrolling methods with a single non-dictionary argument or with a dictionary whose 'behavior' field is invalid throws an exception.
+This test makes sure that calling the window scrolling    methods with a single non-dictionary argument or with a dictionary     whose 'behavior' field is invalid throws an exception.
 
 On success, you will see a series of "PASS" messages, followed by "TEST COMPLETE".
-
 
 
 window.scrollTo Tests
@@ -72,4 +71,5 @@ PASS window.scrollBy({ left: x, top: y, behavior: 200 }) threw exception TypeErr
 PASS successfullyParsed is true
 
 TEST COMPLETE
+
 This box should force the window to have a scrollable area to test.

@@ -2,7 +2,6 @@ Ensures that the selection is not cleared when the user does a mousedown on a mo
 
 On success, you will see a series of "PASS" messages, followed by "TEST COMPLETE".
 
-
 PASS String(window.getSelection()) is "Select"
 PASS String(window.getSelection()) is "Select"
 PASS successfullyParsed is true

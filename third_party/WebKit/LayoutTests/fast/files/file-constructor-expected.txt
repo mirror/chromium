@@ -2,7 +2,6 @@ Test the File constructor.
 
 On success, you will see a series of "PASS" messages, followed by "TEST COMPLETE".
 
-
 PASS (new File([], 'world.html')) instanceof window.File is true
 PASS (new File(['hello'], 'world.html')) instanceof window.File is true
 PASS (new File(['hello'], 'world.html', {})) instanceof window.File is true

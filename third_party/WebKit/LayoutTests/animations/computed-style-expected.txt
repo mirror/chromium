@@ -2,7 +2,6 @@ This tests computed style values from animation properties.
 
 On success, you will see a series of "PASS" messages, followed by "TEST COMPLETE".
 
-
 PASS test1Style.animationName is 'anim1'
 PASS test2Style.animationName is 'anim2, anim3'
 PASS test3Style.animationName is 'anim1, anim2, anim3'

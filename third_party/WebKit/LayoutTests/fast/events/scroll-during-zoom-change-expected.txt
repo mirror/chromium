@@ -1,2 +1,3 @@
-Test for rdar://problem/6634768 Reproducible crash in Layer::updateScrollCornerStyle() using full-page zoom at MobileMe Contacts.
+Test for rdar://problem/6634768
+    Reproducible crash in Layer::updateScrollCornerStyle() using full-page zoom at MobileMe Contacts.
 The test passed if it did not crash.

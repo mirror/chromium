@@ -1,3 +1,4 @@
-Test for bug 37718: Crash when replaying a sequence of keyboard events.
+Test for bug 37718:
+Crash when replaying a sequence of keyboard events.
 
 PASS

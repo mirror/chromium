@@ -1,4 +1,7 @@
-This page verifies that eval, when called as a function, uses the "this" object provided by the call as its variable object, scope chain, and "this" object. However, if the "this" object is not the global object eval was originally associated with, eval throws an exception.
+This page verifies that eval, when called as a function, uses the "this" object
+provided by the call as its variable object, scope chain, and "this" object.
+However, if the "this" object is not the global object eval was originally
+associated with, eval throws an exception.
 
 If the test passes, you'll see a series of pass messages below.
 

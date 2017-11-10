@@ -2,7 +2,6 @@ getBoundingClientRect() called on a <br> returns a zero-width and -height rect p
 
 On success, you will see a series of "PASS" messages, followed by "TEST COMPLETE".
 
-
 PASS successfullyParsed is true
 
 TEST COMPLETE
@@ -16,6 +15,8 @@ PASS brRects[0].left is brRect.left
 PASS brRects[0].top is brRect.top
 PASS brRects[0].width is brRect.width
 PASS brRects[0].height is brRect.height
+
+
 Filler text.
 
 There's a line break element at the end of this sentence.

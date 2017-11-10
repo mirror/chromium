@@ -1,4 +1,5 @@
-Checks that async=false enforces execution order dynamically inserted scripts. See: http://www.whatwg.org/specs/web-apps/current-work/multipage/scripting-1.html#force-async
+Checks that async=false enforces execution order dynamically inserted scripts.
+See: http://www.whatwg.org/specs/web-apps/current-work/multipage/scripting-1.html#force-async
 slowAsync
 async
 load

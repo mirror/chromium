@@ -2,7 +2,6 @@ Ensures that repeated back and forward work for frame hash navigations.
 
 On success, you will see a series of "PASS" messages, followed by "TEST COMPLETE".
 
-
 First visit to foo.
 Gone back.
 Gone forward.

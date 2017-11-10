@@ -8,5 +8,4 @@ frame "<!--framePath //<!--frame0-->-->" - didFinishLoadForFrame
 main frame - didFinishDocumentLoadForFrame
 main frame - didHandleOnloadEventsForFrame
 main frame - didFinishLoadForFrame
-
 There should be no leaks when run with --enable-leak-detection

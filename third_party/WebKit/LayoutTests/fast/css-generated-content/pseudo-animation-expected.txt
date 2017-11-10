@@ -2,7 +2,6 @@ Animations on :before and :after pseudo elements should run
 
 On success, you will see a series of "PASS" messages, followed by "TEST COMPLETE".
 
-
 PASS successfullyParsed is true
 
 TEST COMPLETE
@@ -19,4 +18,6 @@ PASS computedTop is within 1 of 200
 PASS successfullyParsed is true
 
 TEST COMPLETE
- 
+
+
+

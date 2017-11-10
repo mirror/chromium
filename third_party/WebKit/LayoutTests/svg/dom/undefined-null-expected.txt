@@ -2,7 +2,6 @@ Check that |undefined| and |null| arguments do not cause crashes, but do throw e
 
 On success, you will see a series of "PASS" messages, followed by "TEST COMPLETE".
 
-
 SVGGeometryElement
 
 isPointInFill(SVGPoint point)

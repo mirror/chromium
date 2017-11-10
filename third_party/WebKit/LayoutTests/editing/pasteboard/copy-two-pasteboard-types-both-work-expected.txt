@@ -1,4 +1,4 @@
-Copy then paste. The output should read "FooBar"
+Copy then paste.  The output should read "FooBar"
 
 Data to copy: 
 Data pasted:

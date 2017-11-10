@@ -1,4 +1,6 @@
-This tests that squashed layers' offset from renderer is updated properly. If not properly updated, the two divs will appear to be aligned vertically in the pixel results, while really the blue div ('squashed') should be offset 100px left of the green ('host').
+This tests that squashed layers' offset from renderer is updated properly. If not properly updated,
+    the two divs will appear to be aligned vertically in the pixel results, while really the blue div
+    ('squashed') should be offset 100px left of the green ('host').
 
 {
   "layers": [

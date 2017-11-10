@@ -2,7 +2,6 @@ Tests for tooLong flag with <input> elements.
 
 On success, you will see a series of "PASS" messages, followed by "TEST COMPLETE".
 
-
 No maxlength and no value
 PASS input.validity.tooLong is false
 

@@ -1,4 +1,5 @@
-Test that removing a form attribute from an input element leaves any existing radio button group in the document in a valid state.
+Test that removing a form attribute from an input element leaves any
+existing radio button group in the  document in a valid state.
 
 - Verify initial state
 PASS rb1.checked is false
@@ -16,5 +17,9 @@ PASS rb5.checked is false
 PASS successfullyParsed is true
 
 TEST COMPLETE
-  
-  
+
+
+
+
+
+

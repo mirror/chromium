@@ -15,5 +15,6 @@ if (window.testRunner)
 	testRunner.dumpAsText();
 document.getElementById("content").firstChild.nodeValue = document.documentElement.innerHTML;
 </script></body>
-test 
+test
+
 

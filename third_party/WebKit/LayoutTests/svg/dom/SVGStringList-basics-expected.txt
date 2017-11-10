@@ -1,8 +1,8 @@
 ABC
+
 This is a test of the simple SVGStringList API parts.
 
 On success, you will see a series of "PASS" messages, followed by "TEST COMPLETE".
-
 
 PASS text1.requiredExtensions.numberOfItems is 3
 

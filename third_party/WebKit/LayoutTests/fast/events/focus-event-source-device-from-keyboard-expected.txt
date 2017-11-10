@@ -1,8 +1,6 @@
-
 Test that focus events from keyboard taps should have a sourceCapabilities and its firesTouchEvents should be false.
 
 On success, you will see a series of "PASS" messages, followed by "TEST COMPLETE".
-
 
 tests on div
 focus

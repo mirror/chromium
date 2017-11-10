@@ -1,6 +1,17 @@
-This test covers the various ways of accessing DOM elements through the window object by name, id or index, directly as properties of the window object. This lookup is supposed to include embed, form, image and object by name, and all elements by id. It should give the element itself in the case of a single match, or an HTMLCollection in the case of multiple matches; except that when iframes are involved, it will give the window object for the first iframe match.
+This test covers the various ways of accessing DOM elements through
+the window object by name, id or index, directly as properties of the
+window object. This lookup is supposed to include embed, form,
+image and object by name, and all elements by id. It should give the
+element itself in the case of a single match, or an HTMLCollection in
+the case of multiple matches; except that when iframes are involved,
+it will give the window object for the first iframe match.
 
-Our results match WinIE in all respects but one. We allow child frame names to take precedence over built-in and custom properties of the window object. This is the Mozilla behavior and is required to make some sites work because they use frame names that collide with built-in properties in Mozilla but not IE - specifically "toobar". See Radar 3870317.
+Our results match WinIE in all respects but one. We allow child
+frame names to take precedence over built-in and custom properties of
+the window object. This is the Mozilla behavior and is required to
+make some sites work because they use frame names that collide with
+built-in properties in Mozilla but not IE - specifically "toobar". See
+Radar 3870317.
 
 Results:
 
