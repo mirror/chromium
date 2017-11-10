@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "89838f0e_74a5e7c4",
+        "filename": "ios/chrome/browser/ui/browser_view_controller.mm",
+        "patchSetId": 4
+      },
+      "lineNbr": 1508,
+      "author": {
+        "id": 1000119
+      },
+      "writtenOn": "2017-11-10T01:02:33Z",
+      "side": 1,
+      "message": "I believe this is true, but I\u0027m not confident enough to turn this on yet for the containment case.",
+      "parentUuid": "811084d4_402d8f77",
+      "range": {
+        "startLine": 1508,
+        "startChar": 9,
+        "endLine": 1508,
+        "endChar": 42
+      },
+      "revId": "77b0c97161680dc10708ce77b0ad8fea5a22c094",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "cd4d3ef1_9e26bdc7",
         "filename": "ios/chrome/browser/ui/browser_view_controller.mm",
         "patchSetId": 4
@@ -36,6 +60,30 @@
       "writtenOn": "2017-11-09T21:18:38Z",
       "side": 1,
       "message": "What cases might this be, for my edification?",
+      "range": {
+        "startLine": 1516,
+        "startChar": 36,
+        "endLine": 1516,
+        "endChar": 69
+      },
+      "revId": "77b0c97161680dc10708ce77b0ad8fea5a22c094",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8956c96a_fb3fa06e",
+        "filename": "ios/chrome/browser/ui/browser_view_controller.mm",
+        "patchSetId": 4
+      },
+      "lineNbr": 1516,
+      "author": {
+        "id": 1000119
+      },
+      "writtenOn": "2017-11-10T01:02:33Z",
+      "side": 1,
+      "message": "BookmarksTestCase.testAccessibilityOnBookmarksEditPage manages to trigger this case on tablet, although it doesn\u0027t go wrong until tearDown.\n\nThe test presents an \"edit bookmark\" VC on top of the BVC, then dismisses it.  That dismissal doesn\u0027t go through BVC for some reason.  Without this change, we end up dismissing both the edit bookmarks pane as well as the BVC itself.  This puts the tab switcher into a bad state that crashes when you try to interact with it.",
+      "parentUuid": "cd4d3ef1_9e26bdc7",
       "range": {
         "startLine": 1516,
         "startChar": 36,
