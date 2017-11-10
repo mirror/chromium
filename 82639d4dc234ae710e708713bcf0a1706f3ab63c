@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "4d0ea373_0e838b68",
+        "filename": "ui/file_manager/file_manager/foreground/js/file_tasks.js",
+        "patchSetId": 2
+      },
+      "lineNbr": 1017,
+      "author": {
+        "id": 1110159
+      },
+      "writtenOn": "2017-11-10T08:29:53Z",
+      "side": 1,
+      "message": "Most recently executed one should be chosen from non-generic handlers.",
+      "revId": "82639d4dc234ae710e708713bcf0a1706f3ab63c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "583744e1_5a2f2c56",
+        "filename": "ui/file_manager/file_manager/foreground/js/file_tasks.js",
+        "patchSetId": 2
+      },
+      "lineNbr": 1029,
+      "author": {
+        "id": 1110159
+      },
+      "writtenOn": "2017-11-10T08:29:53Z",
+      "side": 1,
+      "message": "TODO(yamaguchi) ?",
+      "revId": "82639d4dc234ae710e708713bcf0a1706f3ab63c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
