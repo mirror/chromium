@@ -1,0 +1,119 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "28ce4975_55d371c7",
+        "filename": "third_party/WebKit/LayoutTests/media/controls/modern/doubletap-to-jump-backwards-at-start.html",
+        "patchSetId": 11
+      },
+      "lineNbr": 20,
+      "author": {
+        "id": 1231235
+      },
+      "writtenOn": "2017-11-10T18:13:05Z",
+      "side": 1,
+      "message": "If you let the player jump even in the first 10 seconds, will this test fail? IIUC, it would start playing, video.onplaying above would fire and set the time back to zero (it\u0027s likely already at zero), but then keep playing for 5 seconds and pass.",
+      "range": {
+        "startLine": 20,
+        "startChar": 4,
+        "endLine": 20,
+        "endChar": 48
+      },
+      "revId": "79f1c98da86e9cff4e1ad1c13c8579943e2af5e0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "316270ec_d9c67df4",
+        "filename": "third_party/WebKit/LayoutTests/media/controls/modern/singletap-on-outside.html",
+        "patchSetId": 11
+      },
+      "lineNbr": 3,
+      "author": {
+        "id": 1231235
+      },
+      "writtenOn": "2017-11-10T18:13:05Z",
+      "side": 1,
+      "message": "nit: extra \"player\" in title",
+      "range": {
+        "startLine": 3,
+        "startChar": 17,
+        "endLine": 3,
+        "endChar": 23
+      },
+      "revId": "79f1c98da86e9cff4e1ad1c13c8579943e2af5e0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "fcc8006b_3ad6b4fd",
+        "filename": "third_party/WebKit/LayoutTests/media/controls/modern/singletap-on-play-button.html",
+        "patchSetId": 11
+      },
+      "lineNbr": 3,
+      "author": {
+        "id": 1231235
+      },
+      "writtenOn": "2017-11-10T18:13:05Z",
+      "side": 1,
+      "message": "nit: title",
+      "range": {
+        "startLine": 3,
+        "startChar": 17,
+        "endLine": 3,
+        "endChar": 23
+      },
+      "revId": "79f1c98da86e9cff4e1ad1c13c8579943e2af5e0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9c29c7da_25a07236",
+        "filename": "third_party/WebKit/Source/modules/media_controls/elements/MediaControlOverlayPlayButtonElement.cpp",
+        "patchSetId": 11
+      },
+      "lineNbr": 34,
+      "author": {
+        "id": 1231235
+      },
+      "writtenOn": "2017-11-10T18:13:05Z",
+      "side": 1,
+      "message": "I think you switched width and height here. Also, it would probably be cleaner to use DomRect\u0027s left, right, top, and bottom methods here (+- margin)",
+      "range": {
+        "startLine": 34,
+        "startChar": 57,
+        "endLine": 34,
+        "endChar": 63
+      },
+      "revId": "79f1c98da86e9cff4e1ad1c13c8579943e2af5e0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "21ceb6f3_bf683b2a",
+        "filename": "third_party/WebKit/Source/modules/media_controls/elements/MediaControlOverlayPlayButtonElement.cpp",
+        "patchSetId": 11
+      },
+      "lineNbr": 119,
+      "author": {
+        "id": 1231235
+      },
+      "writtenOn": "2017-11-10T18:13:05Z",
+      "side": 1,
+      "message": "Is it definitely the case that for times 0:01-0:09 we wouldn\u0027t allow the tap to go to the beginning? I\u0027d personally prefer it to go to the beginning, but I know that UX doesn\u0027t always agree with me :)",
+      "range": {
+        "startLine": 119,
+        "startChar": 60,
+        "endLine": 119,
+        "endChar": 0
+      },
+      "revId": "79f1c98da86e9cff4e1ad1c13c8579943e2af5e0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
