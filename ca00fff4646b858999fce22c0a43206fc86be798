@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "c6022317_1598d282",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 15
+      },
+      "lineNbr": 38,
+      "author": {
+        "id": 1130134
+      },
+      "writtenOn": "2017-11-10T19:29:22Z",
+      "side": 1,
+      "message": "\u003e I have some race concerns about approach #2 (described below).  We may be able to deal with them, but I also wonder if it\u0027s worth considering a variation of these earlier approaches.\n\u003e \n\u003e It sounds like some RFOs care about getting notified before the DidCommit IPC goes out (e.g., PLT), while others want to run script before the document does anything.  It also sounds like WillCommitProvisionalLoad isn\u0027t suitable for the first group\u0027s needs.  Maybe we should have an RFO method that gets called from the current location of the RFO::DidCommitProvisionalLoad one,  and another one that gets called after the IPC?  We could then move any script execution cases to the latter one.\n\u003e \n\u003e As for naming, we could use some kind of PreCommit and PostCommit nomenclature.  Or maybe we could see if the earlier one would work for the two current users of WillCommitProvisionalLoad and simply move them over, letting us keep WillCommit and DidCommit?\n\nIndeed - I haven\u0027t (yet) tried changing the timing of WillCommitProvisionalLoad and it does seem like a promising idea.  Thanks for pointing this out.\n\u003e \n\u003e (Not sure if this is worth pursuing, but I thought I\u0027d point it out as an option to avoid the race concerns.)\n\nThanks for raising this and pointing out that reordering RFO::DidCommitProvisionalLoad can work if we move PLT to a new method like RFO::DidCommitProvisionalLoad_PreIPC.\n\nThe main reasons why I I went ahead with the PostTask approach were\n\n1) Daniel didn\u0027t like the extra RFO method when I mentioned this option on team chat.  OTOH, I didn\u0027t back then consider moving the call to RFO::WillCommitProvisionalLoad to later / to the same time when RFO::DidCommitProvisionalLoad call happens before this CL.\n\n2) Reordering of RFO callbacks won\u0027t help with DevToolsClient::DidClearWindowObject case, because it is trigerred without going through RFO.  I\u0027ve added some more notes in the CR comment in the content/renderer/devtools/devtools_frontend_impl.cc file.\n\nFor now I kept the PostTask approach for the DevTools case, but other than that I switched to the approach that changes the timings of RFO::WillCommit... and RFO::DidCommit... calls (and also removed WebUI test changes that are not needed with this approach).",
+      "parentUuid": "2a169cfb_364a8243",
+      "revId": "ca00fff4646b858999fce22c0a43206fc86be798",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "4838a319_9f033047",
         "filename": "chrome/browser/renderer_host/render_process_host_chrome_browsertest.cc",
         "patchSetId": 15
@@ -42,6 +60,30 @@
     },
     {
       "key": {
+        "uuid": "0d655c3c_5cf63268",
+        "filename": "chrome/browser/renderer_host/render_process_host_chrome_browsertest.cc",
+        "patchSetId": 15
+      },
+      "lineNbr": 106,
+      "author": {
+        "id": 1130134
+      },
+      "writtenOn": "2017-11-10T19:29:22Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "4838a319_9f033047",
+      "range": {
+        "startLine": 106,
+        "startChar": 14,
+        "endLine": 106,
+        "endChar": 20
+      },
+      "revId": "ca00fff4646b858999fce22c0a43206fc86be798",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "ddad0903_fae4a201",
         "filename": "chrome/renderer/chrome_render_frame_observer.cc",
         "patchSetId": 15
@@ -59,6 +101,24 @@
     },
     {
       "key": {
+        "uuid": "dce56dc5_8ee25532",
+        "filename": "chrome/renderer/chrome_render_frame_observer.cc",
+        "patchSetId": 15
+      },
+      "lineNbr": 381,
+      "author": {
+        "id": 1130134
+      },
+      "writtenOn": "2017-11-10T19:29:22Z",
+      "side": 1,
+      "message": "\u003e I worry about a time of check to time of use bug here, with the posted task.  If we can\u0027t do this in the same task as DidCommitProvisionalLoad (after the IPC is sent), maybe we should verify that the frame is still on the same page and still has WebUI bindings before running the script?\n\nYou\u0027re right - I should have added verification that this is still the same document.  Done (in patchset #17).\n\u003e \n\u003e Potentially worse, I wonder if the page might able to start parsing and running its own scripts before these injected scripts run if we post them in a task.  That might defeat the purpose of injecting it right at the start.\n\nThat\u0027s a valid concern.  To some extent the concern might be mitigated by the fact that this injection functionality is only used by tests (this CL adds a ForTesting suffix to ChromeRenderFrameObserver::ExecuteWebUIJavaScriptForTesting [aka chrome::mojom::ChromeRenderFrame::ExecuteWebUIJavaScriptForTesting]).\n\nFWIW, I\u0027ve removed PostTask here in the most recent patchset.  Done?",
+      "parentUuid": "ddad0903_fae4a201",
+      "revId": "ca00fff4646b858999fce22c0a43206fc86be798",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "22a3f1d7_ef7c8330",
         "filename": "content/renderer/devtools/devtools_frontend_impl.cc",
         "patchSetId": 15
@@ -70,6 +130,24 @@
       "writtenOn": "2017-11-06T23:23:24Z",
       "side": 1,
       "message": "Same concern about TOCTOU bugs.  Presumably this object doesn\u0027t go away when the document changes?  Maybe it should check that the URL is as expected here.",
+      "revId": "ca00fff4646b858999fce22c0a43206fc86be798",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "38b28a36_e76f63fe",
+        "filename": "content/renderer/devtools/devtools_frontend_impl.cc",
+        "patchSetId": 15
+      },
+      "lineNbr": 46,
+      "author": {
+        "id": 1130134
+      },
+      "writtenOn": "2017-11-10T19:29:22Z",
+      "side": 1,
+      "message": "Good catch.  I\u0027ve added checking that the document URL didn\u0027t change.\n\n\nI also wondered whether I should also call |weak_factory_.InvalidateWeakPtrs()| somewhere (at the beginning of RFO::DidClearWindowObject?  in a new override of RFO::DidFinishLoad?).  I didn\u0027t do this, because 1) it seemed ad-hoc (unless |weak_factory_| is renamed to something navigation/script-specific) and therefore fragile and 2) it seemed unnecessary given the URL checking.  WDYT (for here and for the other PostTask;  this is [for now] assuming that we might still end up pursuing the PostTask approach)?\n\n\nNote that this RenderFrameImpl::ExecuteJavaScript would still happen *before* the DidCommitProvisionalLoad IPC, even after changing the timings of RFO calls.  This is because this script execution is not trigerred via RFO, but instead goes like this:\n\n    #2 0x7f214486e199 content::RenderFrameImpl::OnJavaScriptExecuteRequest()\n    #3 0x7f214487a0f3 content::RenderFrameImpl::ExecuteJavaScript()\n    #4 0x7f214468655f content::DevToolsClient::DidClearWindowObject()\n    #5 0x7f21448890a8 content::RenderFrameImpl::DidClearWindowObject()\n    #6 0x7f2138f4d5e1 blink::LocalFrameClientImpl::DispatchDidClearWindowObjectInMainWorld()\n    #7 0x7f2139892bfb blink::FrameLoader::DispatchDidClearWindowObjectInMainWorld()\n    #8 0x7f213869b40b blink::LocalWindowProxy::Initialize()\n    #9 0x7f213873146a blink::WindowProxy::SetGlobalProxy()\n    #10 0x7f213873213b blink::WindowProxyManager::SetGlobalProxies()\n    #11 0x7f2138f80d13 blink::WebFrame::Swap()\n    #12 0x7f21448762ff content::RenderFrameImpl::SwapIn()\n    #13 0x7f21448856da content::RenderFrameImpl::DidCommitProvisionalLoad()\n    ...\n\nI am a bit hesitant to try and change the timing of blink::WebFrame::Swap.  WDYT?  Is the PostTask good enough here?\n\n\nFWIW, I see that the script execution here happens only for DevTools windows (via DevToolsFrontendHostImpl::DevToolsFrontendHostImpl which executes contents of third_party/WebKit/Source/devtools/front_end/devtools_compatibility.js OR via DevToolsFrontendHost::SetupExtensionsAPI which I think can execute arbitrary scripts requested by DevTools extensions - see \u0026Delegate::RegisterExtensionsAPI).",
+      "parentUuid": "22a3f1d7_ef7c8330",
       "revId": "ca00fff4646b858999fce22c0a43206fc86be798",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -99,6 +177,30 @@
     },
     {
       "key": {
+        "uuid": "e57389ab_83ef35e2",
+        "filename": "content/renderer/render_frame_impl.cc",
+        "patchSetId": 15
+      },
+      "lineNbr": 2151,
+      "author": {
+        "id": 1130134
+      },
+      "writtenOn": "2017-11-10T19:29:22Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "ae495d99_ede9aa5c",
+      "range": {
+        "startLine": 2151,
+        "startChar": 36,
+        "endLine": 2151,
+        "endChar": 43
+      },
+      "revId": "ca00fff4646b858999fce22c0a43206fc86be798",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "3289a3b5_5e449b01",
         "filename": "content/renderer/render_frame_impl.cc",
         "patchSetId": 15
@@ -122,6 +224,30 @@
     },
     {
       "key": {
+        "uuid": "af6f1ec2_18c63fac",
+        "filename": "content/renderer/render_frame_impl.cc",
+        "patchSetId": 15
+      },
+      "lineNbr": 2191,
+      "author": {
+        "id": 1130134
+      },
+      "writtenOn": "2017-11-10T19:29:22Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "3289a3b5_5e449b01",
+      "range": {
+        "startLine": 2191,
+        "startChar": 36,
+        "endLine": 2191,
+        "endChar": 43
+      },
+      "revId": "ca00fff4646b858999fce22c0a43206fc86be798",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "e306bf10_aac6fa7d",
         "filename": "content/renderer/render_frame_impl.cc",
         "patchSetId": 15
@@ -133,6 +259,24 @@
       "writtenOn": "2017-11-06T23:23:24Z",
       "side": 1,
       "message": "Is this the right way to detect that?  There\u0027s logic around committed_first_load_ and current_history_item_ in lines 3886-3903 which seems related, though I worry about dcheng\u0027s comments about removing part of it.",
+      "revId": "ca00fff4646b858999fce22c0a43206fc86be798",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a1b546cf_5e7eb2d4",
+        "filename": "content/renderer/render_frame_impl.cc",
+        "patchSetId": 15
+      },
+      "lineNbr": 4445,
+      "author": {
+        "id": 1130134
+      },
+      "writtenOn": "2017-11-10T19:29:22Z",
+      "side": 1,
+      "message": "Let\u0027s leave this comment unresolved and ask Daniel.  I assumed that the only way a document can have an empty/null URL is it is the initial, empty document.  I think the UMA logic cares about slightly different timing - e.g. |committed_first_load_| remains |false| when committing the 1st  real URL (and in case of the script-related DCHECK we do not want to suppress the DCHECK at this point).",
+      "parentUuid": "e306bf10_aac6fa7d",
       "revId": "ca00fff4646b858999fce22c0a43206fc86be798",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
