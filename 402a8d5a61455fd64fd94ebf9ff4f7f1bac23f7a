@@ -96,6 +96,30 @@
     },
     {
       "key": {
+        "uuid": "25878af4_afc65365",
+        "filename": "ios/chrome/browser/ui/util/view_info.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 26,
+      "author": {
+        "id": 1163361
+      },
+      "writtenOn": "2017-11-10T18:48:26Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "d296f3ac_e43c04b0",
+      "range": {
+        "startLine": 26,
+        "startChar": 7,
+        "endLine": 26,
+        "endChar": 16
+      },
+      "revId": "402a8d5a61455fd64fd94ebf9ff4f7f1bac23f7a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "ba91580b_0b753901",
         "filename": "ios/chrome/browser/ui/util/view_info.h",
         "patchSetId": 2
