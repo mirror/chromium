@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "838f433b_85135283",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/util/UrlUtilities.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 105,
+      "author": {
+        "id": 1001606
+      },
+      "writtenOn": "2017-11-10T16:15:37Z",
+      "side": 1,
+      "message": "This should go on the next line.",
+      "range": {
+        "startLine": 105,
+        "startChar": 8,
+        "endLine": 105,
+        "endChar": 25
+      },
+      "revId": "b8bb7f0fcc59f062aeaac51e945045d92b21c877",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
