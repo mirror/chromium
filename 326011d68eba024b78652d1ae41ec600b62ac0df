@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "b7382050_a68ea854",
+        "filename": "chrome/browser/prefs/browser_prefs.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 383,
+      "author": {
+        "id": 1001606
+      },
+      "writtenOn": "2017-11-10T11:02:51Z",
+      "side": 1,
+      "message": "Would you mind moving this before the ENABLE_EXTENSIONS section and then merging / sorting the `!defined(OS_ANDROID)` sections?",
+      "range": {
+        "startLine": 380,
+        "startChar": 0,
+        "endLine": 383,
+        "endChar": 0
+      },
+      "revId": "326011d68eba024b78652d1ae41ec600b62ac0df",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
