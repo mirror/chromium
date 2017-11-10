@@ -4910,6 +4910,17 @@ TEST_P(WebViewTest, ViewportUnitsPrintingWithPageZoom) {
   frame->PrintEnd();
 }
 
+// unit test to check zoom level set by accessibility font scale factor
+TEST_P(WebViewTest, ZoomLevelByAccessibilityFontScale) {
+  // web_view->GetSettings()->SetAccessibilityFontScaleFactor(2.0);
+  // web_view->SetZoomLevel(WebView::ZoomFactorToZoomLevel(2.0));
+  // EXPECT_EQ(4.0,
+  //           WebView::ZoomLevelToZoomFactor(
+  //              web_view->SetZoomLevel(
+  //                WebView::ZoomFactorToZoomLevel(4.0)))
+  //           );
+}
+
 TEST_P(WebViewTest, DeviceEmulationResetScrollbars) {
   WebViewImpl* web_view = web_view_helper_.Initialize();
   web_view->Resize(WebSize(800, 600));

@@ -2735,6 +2735,13 @@ double WebViewImpl::SetZoomLevel(double zoom_level) {
       zoom_factor *= zoom_factor_for_device_scale_factor_;
     }
   }
+  if (GetPage()) {
+    zoom_factor =
+        zoom_factor
+            ? zoom_factor *
+                  GetPage()->GetSettings().GetAccessibilityFontScaleFactor()
+            : GetPage()->GetSettings().GetAccessibilityFontScaleFactor();
+  }
   PropagateZoomFactorToLocalFrameRoots(page_->MainFrame(), zoom_factor);
 
   return zoom_level_;
